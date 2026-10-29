@@ -1,0 +1,421 @@
+# Prom of Doom student portrait round 1. Human-approved Conductor t-019.
+# 48 permanent core identities plus 2 legacy guest asset slots. Zuzu is one person;
+#
+# alien-discipline is his playable core; animal-technical-training is his legacy arrival scene.
+# Approval to generate is recorded, but YAML alone does not create ArtJobs.
+# Dry run: python scripts/enqueue_art_requests.py projects/comet-city-academy/art/IDENTITY-PORTRAITS-ROUND-1.yaml
+# Authenticated submit: same command with --live; refresh with --status.
+# After DONE, run scripts/export_round_art.py with --manifest utils/cometAcademy/artManifest.ts
+# --manifest-root comet-city-academy --manifest-const PROM_ART; asset includes full prefix.
+round: 1
+series: prom-of-doom
+project_slug: comet-city-academy
+designer: Prom of Doom Art Workshop
+is_public: true
+is_mature: false
+auto_submit: true
+status: awaiting-submission
+lanes:
+- key: krea2-student
+  label: Krea 2 student portrait
+  engine: krea2
+  prompt: prose
+subjects:
+- key: student-accident-fire
+  entity: accident-fire
+  title: "Dez Okafor student portrait"
+  asset: comet-city-academy/identities/accident-fire/student
+  size: 832x1216
+  prompt_prose: "A broad-shouldered young man with dark brown skin, short black curls and a faint orange glow under the skin of his forearms, wearing a worn navy academy coat over a white line-cook shirt and thick quilted oven mitts. He stands in an academy workshop holding both mitted hands away from a nervous younger classmate, orange welding sparks flying from a broken drone on the steel table. Orange light glows from his hands against cool blue window light. Medium-full shot at eye level. Hand-painted comic illustration with bold ink outlines and saturated gouache color."
+  origin: accident
+  affinity: fire
+- key: student-accident-air
+  entity: accident-air
+  title: "Pip Marchetti student portrait"
+  asset: comet-city-academy/identities/accident-air/student
+  size: 832x1216
+  prompt_prose: "A small wiry young woman with light olive skin, a windblown dark brown pixie cut and a pale branching lightning scar down her left arm, wearing a faded red skydiving jumpsuit tied at the waist over a grey academy hoodie. She hovers a hand above the flagstones of the academy courtyard with her knees pulled up, gripping a stair rail, while classmates walk past on the ground below her. Bright overcast daylight, wind tugging at her hair. Low-angle medium-full shot. Hand-painted comic illustration with bold ink outlines and saturated gouache color."
+  origin: accident
+  affinity: air
+- key: student-accident-earth
+  entity: accident-earth
+  title: "Tug Brannigan student portrait"
+  asset: comet-city-academy/identities/accident-earth/student
+  size: 832x1216
+  prompt_prose: "A stocky barrel-chested young man with ruddy pale skin, a shaved head, a thick red beard and grey granite patches across his knuckles and cheekbones, wearing a mud-stained orange tunnel-crew vest over a navy academy sweatshirt. He sits on a bench in the academy locker room pressing one stone-grey palm flat against a cracked concrete wall, a crumpled transit authority letter in his other fist. Cold fluorescent light from above. Medium shot. Hand-painted comic illustration with bold ink outlines and saturated gouache color."
+  origin: accident
+  affinity: earth
+- key: student-accident-water
+  entity: accident-water
+  title: "Marisol Reyes student portrait"
+  asset: comet-city-academy/identities/accident-water/student
+  size: 832x1216
+  prompt_prose: "A slim young woman with warm tan skin, long black hair that is always dripping wet and faint blue ripples of gill skin along her throat, wearing a navy academy blazer over a damp turquoise swim top. She sits alone on a wooden bench in a marble hallway outside a courtroom, hugging a thick binder of legal papers to her chest while water pools on the bench and drips onto the floor. Cool morning light from tall windows. Medium shot. Hand-painted comic illustration with bold ink outlines and saturated gouache color."
+  origin: accident
+  affinity: water
+- key: student-accident-discipline
+  entity: accident-discipline
+  title: "Kenji Watanabe-Cole student portrait"
+  asset: comet-city-academy/identities/accident-discipline/student
+  size: 832x1216
+  prompt_prose: "A lean young man with light brown skin, a short black topknot and a small pale starburst scar on his left temple, wearing a navy kendo hakama and white practice jacket under an academy windbreaker. In the academy dojo he stands perfectly still holding a wooden practice sword while a sparring partner's strike hangs in mid-swing a hand's width from his shoulder, dust motes motionless in the air around them. Afternoon light through paper screens. Medium-full shot. Hand-painted comic illustration with bold ink outlines and saturated gouache color."
+  origin: accident
+  affinity: discipline
+- key: student-accident-genius
+  entity: accident-genius
+  title: "Otto Fairweather student portrait"
+  asset: comet-city-academy/identities/accident-genius/student
+  size: 832x1216
+  prompt_prose: "A tall gangly young woman with freckled pale skin, a frizzy copper-red bun stuck through with pencils and faint green stains on her fingertips, wearing an oversized lab coat with scorched cuffs over a mustard academy sweater. She stands at a chalkboard covered in dense chalk equations, chalk in one hand, glancing sideways at a smiling friend in the doorway while her other hand hides a small scrap of paper behind her back. Warm classroom lamplight. Medium shot. Hand-painted comic illustration with bold ink outlines and saturated gouache color."
+  origin: accident
+  affinity: genius
+- key: student-accident-birthright
+  entity: accident-birthright
+  title: "Gus Valcourt-Hale student portrait"
+  asset: comet-city-academy/identities/accident-birthright/student
+  size: 832x1216
+  prompt_prose: "A tall slim young man with pale skin, slicked-back blond hair and a narrow face, wearing a pressed navy academy blazer, with an old faded crimson-and-gold cape fused to his back at the shoulders and trailing to the floor. In the academy trophy hall he stands among glass cases of old hero helmets and medals, tugging at the frayed hem of the heavy antique cape with one hand, while three grinning classmates point at it from the background. Warm museum spotlights. Medium-full shot. Hand-painted comic illustration with bold ink outlines and saturated gouache color."
+  origin: accident
+  affinity: birthright
+- key: student-accident-social
+  entity: accident-social
+  title: "Fen Halloran student portrait"
+  asset: comet-city-academy/identities/accident-social/student
+  size: 832x1216
+  prompt_prose: "A lanky young adult with pale freckled skin, a shaggy dyed-green mullet and silver rings in both ears, wearing a patched denim jacket covered in safety pins over an academy t-shirt, with a battered acoustic guitar on a strap. Under a concrete underpass beside a tall broadcasting tower they sit on an upturned crate with the guitar quiet across their knees, looking warily at a half-circle of smiling classmates swaying with their eyes closed. A faint gold shimmer hangs around the guitar strings. Dusk streetlight. Medium-wide shot. Hand-painted comic illustration with bold ink outlines and saturated gouache color."
+  origin: accident
+  affinity: social
+- key: student-mutant-fire
+  entity: mutant-fire
+  title: "Ruby Szabo student portrait"
+  asset: comet-city-academy/identities/mutant-fire/student
+  size: 832x1216
+  prompt_prose: "A petite young woman with fair skin, soot-smudged freckles and short ember-red hair with small gold flames flickering at the tips, wearing a charcoal fire-resistant academy jumpsuit and a red bandana around her neck. She sits cross-legged on her dormitory bed holding a thick leather journal shut with both hands, small gold healing flames curling from her fingertips across the unburnt brown leather. A strip of six registration photographs of her face is pinned to the wall beside the bed. Warm firelight in a dim blue room. Medium shot. Hand-painted comic illustration with bold ink outlines and saturated gouache color."
+  origin: mutant
+  affinity: fire
+- key: student-mutant-air
+  entity: mutant-air
+  title: "Corvin Ashe student portrait"
+  asset: comet-city-academy/identities/mutant-air/student
+  size: 832x1216
+  prompt_prose: "A tall thin young man with light brown skin, black curls, rows of dark grey feathers along both forearms and large folded dark grey wings rising from his shoulder blades, wearing an oversized black overcoat slit at the back for his wings and a knitted academy scarf. On the academy roof he flinches and pulls his folded wings tight as a classmate reaches toward his back with an open hand, the overcoat sliding off one shoulder. Windy grey morning sky with pigeons scattering. Medium-full shot from slightly below. Hand-painted comic illustration with bold ink outlines and saturated gouache color."
+  origin: mutant
+  affinity: air
+- key: student-mutant-earth
+  entity: mutant-earth
+  title: "Hattie Nkemelu student portrait"
+  asset: comet-city-academy/identities/mutant-earth/student
+  size: 832x1216
+  prompt_prose: "A seven-and-a-half-foot-tall broad young woman with deep brown skin, close-cropped natural hair and smooth slate-grey mineral plates along her cheekbones, shoulders and forearms, wearing a custom-tailored oversized academy blazer and wide grey trousers. She stoops in the back row of a class photograph on the academy front steps, smiling nervously, while a photographer behind a tripod waves her toward the middle and classmates in blazers turn to look up at her. Bright spring daylight. Wide shot. Hand-painted comic illustration with bold ink outlines and saturated gouache color."
+  origin: mutant
+  affinity: earth
+- key: student-mutant-water
+  entity: mutant-water
+  title: "Ilya Sorokin-Baptiste student portrait"
+  asset: comet-city-academy/identities/mutant-water/student
+  size: 832x1216
+  prompt_prose: "A lean young man with pale olive skin, short wet sandy curls, gill slits behind both ears and webbed fingers, wearing a dripping dark blue wetsuit under an unbuttoned academy blazer. He sits at a lecture-hall desk misting his own neck with a squeeze bottle, a puddle spreading under his chair, while two classmates in the next row lean away with their hands over their noses. Grey daylight through tall classroom windows. Medium shot. Hand-painted comic illustration with bold ink outlines and saturated gouache color."
+  origin: mutant
+  affinity: water
+- key: student-mutant-discipline
+  entity: mutant-discipline
+  title: "Asha Venkataraman student portrait"
+  asset: comet-city-academy/identities/mutant-discipline/student
+  size: 832x1216
+  prompt_prose: "A poised young woman with medium brown skin, a long black braid and a second pair of slender arms below her first, wearing a fitted maroon dance top, loose black training trousers and small brass bells at her ankles. In the academy training hall she holds a classical dance pose with all four hands shaped into precise gestures, while a combat instructor beside her points at a rack of wooden training staves. Polished wooden floor, warm late-afternoon light through high windows. Full-body shot at eye level. Hand-painted comic illustration with bold ink outlines and saturated gouache color."
+  origin: mutant
+  affinity: discipline
+- key: student-mutant-genius
+  entity: mutant-genius
+  title: "Theo Lindqvist student portrait"
+  asset: comet-city-academy/identities/mutant-genius/student
+  size: 832x1216
+  prompt_prose: "A twenty-year-old with pale skin, short dark hair and a subtle crystalline growth behind the temples, wearing a loose teal cardigan over a grey academy shirt. They sit at a cluttered coffee-shop table drawing a complex rescue plan across a pile of napkins while a classmate watches with a worried frown. A small paper wall calendar beside them has rows of days crossed out in pencil. Warm cafe light. Medium shot. Hand-painted comic illustration with bold ink outlines and saturated gouache color."
+  origin: mutant
+  affinity: genius
+- key: student-mutant-birthright
+  entity: mutant-birthright
+  title: "Seraphine Delacroix-Moon student portrait"
+  asset: comet-city-academy/identities/mutant-birthright/student
+  size: 832x1216
+  prompt_prose: "A statuesque young woman with dark brown skin, a high crown of silver-white braids and large white feathered wings folded at her back, wearing a cream academy blazer with gold buttons over a white high-collared shirt. She stands beneath a long row of oil paintings of winged ancestors in armor, her own wings drooping, holding a heavy ceremonial gold breastplate awkwardly in both hands. Late golden light from tall gallery windows. Medium-full shot. Hand-painted comic illustration with bold ink outlines and saturated gouache color."
+  origin: mutant
+  affinity: birthright
+- key: student-mutant-social
+  entity: mutant-social
+  title: "Lucky Mbatha student portrait"
+  asset: comet-city-academy/identities/mutant-social/student
+  size: 832x1216
+  prompt_prose: "A handsome young man with deep brown skin, a neat high-top fade, a wide easy smile and a small beige adhesive patch on the side of his neck, wearing a bright yellow bomber jacket over an academy polo shirt. He sits at the end of a long table in the busy academy cafeteria eating alone, pressing the patch on his neck with two fingers, as one classmate sets a lunch tray down across from him. Bright overhead light. Medium-wide shot. Hand-painted comic illustration with bold ink outlines and saturated gouache color."
+  origin: mutant
+  affinity: social
+- key: student-tech-fire
+  entity: tech-fire
+  title: "Vee Castellanos student portrait"
+  asset: comet-city-academy/identities/tech-fire/student
+  size: 832x1216
+  prompt_prose: "A muscular young woman with light brown skin, an undercut of black hair in a short ponytail and old burn scars across her knuckles, wearing a scorched leather welding apron over a black academy tank top, with a heavy homemade steel gauntlet with glowing orange vents on her right arm. In a cramped garage workshop she pulls a welding blanket over the gauntlet as two academy engineers in white lab coats peer in under the half-open roll-up door holding a briefcase. Orange glow from the gauntlet vents, cold blue daylight from the doorway. Medium shot. Hand-painted comic illustration with bold ink outlines and saturated gouache color."
+  origin: tech
+  affinity: fire
+- key: student-tech-air
+  entity: tech-air
+  title: "Jun-ho Park student portrait"
+  asset: comet-city-academy/identities/tech-air/student
+  size: 832x1216
+  prompt_prose: "A slim young man with light skin, spiky black hair dyed blue at the tips and racing goggles pushed up on his forehead, wearing a sleek charcoal wingsuit with small fans at the wrists and ankles under an open academy hoodie. He stands on a training tower ledge checking a large stopwatch strapped to his wrist, one foot tapping, while racing drones circle in the sky behind him. Bright cloudy afternoon, wind tugging the wingsuit fabric. Low-angle medium-full shot. Hand-painted comic illustration with bold ink outlines and saturated gouache color."
+  origin: tech
+  affinity: air
+- key: student-tech-earth
+  entity: tech-earth
+  title: "Delphine Okonkwo student portrait"
+  asset: comet-city-academy/identities/tech-earth/student
+  size: 832x1216
+  prompt_prose: "A sturdy young woman with dark brown skin, short locs tied back with a bandana and a small scar through one eyebrow, wearing grease-stained yellow coveralls, steel-toed boots and a battered white hard hat. She sits in the open cockpit of a two-legged yellow walking excavator in the academy yard, gripping the control levers and staring at a snapped steel rebar rod lying in the dirt in front of the machine. Dusty golden afternoon light. Medium-wide shot. Hand-painted comic illustration with bold ink outlines and saturated gouache color."
+  origin: tech
+  affinity: earth
+- key: student-tech-water
+  entity: tech-water
+  title: "Nalani Kahale student portrait"
+  asset: comet-city-academy/identities/tech-water/student
+  size: 832x1216
+  prompt_prose: "A strong young woman with brown skin and long wavy black hair pulled into a high ponytail, wearing a bulky rebuilt orange-and-white rescue diving suit open to the waist over an academy t-shirt. On a windy harbor pier she holds a brass dive helmet against her hip and glares across the water at a coast guard station with its shutters pulled down and an empty boat slip. Grey stormy morning. Medium-full shot. Hand-painted comic illustration with bold ink outlines and saturated gouache color."
+  origin: tech
+  affinity: water
+- key: student-tech-discipline
+  entity: tech-discipline
+  title: "Marcus Fairbanks student portrait"
+  asset: comet-city-academy/identities/tech-discipline/student
+  size: 832x1216
+  prompt_prose: "An athletic young man with dark brown skin, a shaved head, a trimmed beard and two carbon-fiber running-blade prosthetics below the knee, wearing a red academy track jacket and black running shorts. At dawn he crouches in a sprint start on the academy running track, jaw set, while three coaches in tracksuits stand by the far bleachers with their arms folded. Low pink dawn light and long shadows. Low-angle wide shot. Hand-painted comic illustration with bold ink outlines and saturated gouache color."
+  origin: tech
+  affinity: discipline
+- key: student-tech-genius
+  entity: tech-genius
+  title: "Lionel Marsh student portrait"
+  asset: comet-city-academy/identities/tech-genius/student
+  size: 832x1216
+  prompt_prose: "A lean adult human inventor with light brown skin, dark wavy hair, a sharp curious face, oversized brass safety goggles and a green coat covered in frog-footed mechanical sketches, wearing an emerald academy lab coat over a charcoal vest, heavy brass goggles and a spring-loaded green F.R.O.G. leap harness strapped to his boots. At the hospital roof at night a human inventor, still entirely human, demonstrates a huge green brass-jointed F.R.O.G. leap harness before independent safety chemists, goggles sliding down his nose as the spring boots compress. An unopened vial of dangerous amber serum is sealed in a clear case nearby. Warm work lights against a cobalt skyline. Full-body action shot. Hand-painted comic illustration with bold ink outlines and saturated gouache color."
+  origin: tech
+  affinity: genius
+- key: student-tech-birthright
+  entity: tech-birthright
+  title: "Bart Sterling student portrait"
+  asset: comet-city-academy/identities/tech-birthright/student
+  size: 832x1216
+  prompt_prose: "A tall square-jawed young man with pale skin, perfectly styled chestnut hair and a tight anxious smile, wearing a tailored navy academy blazer over a silver armor undersuit. In a gleaming corporate workshop he stands beside an empty open suit of silver-and-blue power armor with his hands in his blazer pockets, looking at his own reflection in its polished chest plate, while lawyers in grey suits wait by the door holding folders. Cold white showroom light. Medium-full shot. Hand-painted comic illustration with bold ink outlines and saturated gouache color."
+  origin: tech
+  affinity: birthright
+- key: student-tech-social
+  entity: tech-social
+  title: "Dani Mercado student portrait"
+  asset: comet-city-academy/identities/tech-social/student
+  size: 832x1216
+  prompt_prose: "A slender young adult with tan skin, a sleek black bob with bleached front streaks and a septum ring, wearing chunky white livestream glasses with a tiny red recording light and an oversized pink windbreaker over an academy shirt. They stand alone at the edge of a crowded evening protest square holding a phone on a selfie stick, the glasses projecting small floating face outlines over the people around them while the phone screen fills with pink hearts. Streetlights and neon. Medium shot. Hand-painted comic illustration with bold ink outlines and saturated gouache color."
+  origin: tech
+  affinity: social
+- key: student-magic-fire
+  entity: magic-fire
+  title: "Hollis Graymalkin student portrait"
+  asset: comet-city-academy/identities/magic-fire/student
+  size: 832x1216
+  prompt_prose: "A plump young woman with pale skin, rosy cheeks and a long auburn braid streaked with grey, wearing a wax-spattered brown shop apron over a moss-green academy cardigan. Behind the counter of a cramped candle shop she cups a single burning taper in both hands while a small salamander made of flame curls around the wick and looks up at her face. Hundreds of unlit candles line the shelves behind her. Warm candlelight in a dark shop. Close medium shot. Hand-painted comic illustration with bold ink outlines and saturated gouache color."
+  origin: magic
+  affinity: fire
+- key: student-magic-air
+  entity: magic-air
+  title: "Ambrose Fairlie student portrait"
+  asset: comet-city-academy/identities/magic-air/student
+  size: 832x1216
+  prompt_prose: "A slight young man with pale skin, wavy light-brown hair and large grey eyes, wearing a white choir collar under a grey academy cardigan. In the back row of a lecture hall he whispers to a classmate behind one hand, while the papers on his desk lift and swirl in a small private gust and rain clouds gather at the window. Grey stormy light. Medium shot. Hand-painted comic illustration with bold ink outlines and saturated gouache color."
+  origin: magic
+  affinity: air
+- key: student-magic-earth
+  entity: magic-earth
+  title: "Mavis Mayhew student portrait"
+  asset: comet-city-academy/identities/magic-earth/student
+  size: 832x1216
+  prompt_prose: "A powerful elderly woman with rich brown skin, deep smile lines, silver hair braided into two high buns and a formidable grin, wearing a voluminous patchwork shawl over a red cardigan, sturdy lace-up boots, a tool belt of luminous rune needles and yellow school-bus keys. A fierce elderly woman with silver double buns and rune-stitched patchwork shawl perches on the roof of an old yellow school bus as luminous knitting needles coax the cobblestones beneath a harbor boarding house into a protective ramp. A grown tenant-council leader argues with her below. Golden twilight and pink rune light. Wide shot. Hand-painted comic illustration with bold ink outlines and saturated gouache color."
+  origin: magic
+  affinity: earth
+- key: student-magic-water
+  entity: magic-water
+  title: "Caspian Lowe student portrait"
+  asset: comet-city-academy/identities/magic-water/student
+  size: 832x1216
+  prompt_prose: "A lanky young man with tan skin, a pencil mustache, slicked-back black hair and silver rings on every finger, wearing a shabby maroon velvet magician waistcoat over a white academy shirt. Alone in a classroom after hours he leans over a dented silver bowl of water on a desk, where a reflection of himself lying still on a rainy rooftop ripples on the surface, and grips the edge of the desk. Dim blue dusk light. Close medium shot. Hand-painted comic illustration with bold ink outlines and saturated gouache color."
+  origin: magic
+  affinity: water
+- key: student-magic-discipline
+  entity: magic-discipline
+  title: "Ada Ibekwe student portrait"
+  asset: comet-city-academy/identities/magic-discipline/student
+  size: 832x1216
+  prompt_prose: "A tall lean young woman with deep brown skin, a shaved head and a row of small iron rings along one ear, wearing a faded saffron mountain-order robe belted with rope under an academy jacket, and leather sandals. On a stone stair outside the academy at dawn she kneels with a wooden staff across her knees, eyes open and fixed on a line of valley refugees carrying bundles along the road below. Cold blue dawn light under a gold sky. Medium-wide shot. Hand-painted comic illustration with bold ink outlines and saturated gouache color."
+  origin: magic
+  affinity: discipline
+- key: student-magic-genius
+  entity: magic-genius
+  title: "Lucan Ferro student portrait"
+  asset: comet-city-academy/identities/magic-genius/student
+  size: 832x1216
+  prompt_prose: "A thin young man with olive skin, black hair falling into his eyes, wire-rim glasses and ink-stained fingers, wearing a rumpled tweed jacket over an academy sweater. Late at night in a mathematics classroom he stands before a blackboard covered in chalk equations, where one glowing equation in the middle has opened into a small doorway of violet light, an older professor’s tweed coat hanging on an empty chair behind him. Dark room lit by the violet glow. Medium shot. Hand-painted comic illustration with bold ink outlines and saturated gouache color."
+  origin: magic
+  affinity: genius
+- key: student-magic-birthright
+  entity: magic-birthright
+  title: "Isadora Blackwood student portrait"
+  asset: comet-city-academy/identities/magic-birthright/student
+  size: 832x1216
+  prompt_prose: "A pale young woman with long straight black hair, a sharp face, dark plum lipstick and a silver crescent-moon pendant, wearing a long black academy coat over a deep plum dress and fingerless lace gloves. In an attic hung with drying herbs she sits on the floorboards with a huge leather-bound grimoire open on her lap, its pages lifting on their own, holding a faded photograph of a dark-haired woman up to the candlelight. Warm candlelight and cold moonlight from a round window. Medium shot. Hand-painted comic illustration with bold ink outlines and saturated gouache color."
+  origin: magic
+  affinity: birthright
+- key: student-magic-social
+  entity: magic-social
+  title: "Remy Lafleur student portrait"
+  asset: comet-city-academy/identities/magic-social/student
+  size: 832x1216
+  prompt_prose: "A charming young man with medium brown skin, a thin mustache, a neat black pompadour and one gold tooth, wearing a glittering emerald sequined cabaret jacket over a white academy shirt. He stands on a small cabaret stage under a pink spotlight while the crowd at the tables rises to applaud, and at the back of the dim room a tall shadowed stranger in a top hat with glowing white eyes sits alone tapping a pocket watch. Medium-wide shot. Hand-painted comic illustration with bold ink outlines and saturated gouache color."
+  origin: magic
+  affinity: social
+- key: student-alien-fire
+  entity: alien-fire
+  title: "Ixi Solenne student portrait"
+  asset: comet-city-academy/identities/alien-fire/student
+  size: 832x1216
+  prompt_prose: "A slender young alien woman with luminous golden skin that glows brighter in sunlight, short white-gold hair and solid amber eyes, wearing a faded academy hoodie over a plain grey refugee jumpsuit. She stands at an immigration office counter clutching her academy enrollment folder to her chest while a clerk behind glass studies a computer, sunlight from a high window making her skin glow. Families wait on rows of plastic chairs behind her. Bright midday light. Medium-wide shot. Hand-painted comic illustration with bold ink outlines and saturated gouache color."
+  origin: alien
+  affinity: fire
+- key: student-alien-air
+  entity: alien-air
+  title: "Quillon Vey student portrait"
+  asset: comet-city-academy/identities/alien-air/student
+  size: 832x1216
+  prompt_prose: "A tall willowy alien with pale lilac translucent skin, a drifting cloud of white vapor in place of hair and long fine fingers, their feet floating a hand above the floor, wearing flowing pale blue diplomatic sashes over an academy blazer. In a classroom they float above their desk holding a stack of homework out at arm’s length with both hands and bowing to it formally, while the teacher at the chalkboard turns to stare. Soft morning light. Medium shot. Hand-painted comic illustration with bold ink outlines and saturated gouache color."
+  origin: alien
+  affinity: air
+- key: student-alien-earth
+  entity: alien-earth
+  title: "Kesh Tarrow student portrait"
+  asset: comet-city-academy/identities/alien-earth/student
+  size: 832x1216
+  prompt_prose: "A broad heavy alien man with a body of dark grey crystalline stone streaked with purple quartz veins and glowing violet eyes, wearing an extra-large academy sweatshirt stretched over his stone shoulders. In a natural history museum hall he stands stiffly with his arms pressed to his sides beside an empty display plinth, while a tourist family raises a camera and its flash bursts white. Cool museum spotlights. Medium-full shot. Hand-painted comic illustration with bold ink outlines and saturated gouache color."
+  origin: alien
+  affinity: earth
+- key: student-alien-water
+  entity: alien-water
+  title: "Thessaly Nauren student portrait"
+  asset: comet-city-academy/identities/alien-water/student
+  size: 832x1216
+  prompt_prose: "A graceful young alien woman with glossy blue-green skin, small dark fins in place of ears, long trailing kelp-green hair and large black eyes, wearing a shimmering silver wrap dress under an academy cardigan. At the end of a long wooden pier at sunset she sits with her feet in the water, seals, gulls and silver fish gathered close in the waves around her, gazing out at the open horizon. Warm orange sunset light. Wide shot. Hand-painted comic illustration with bold ink outlines and saturated gouache color."
+  origin: alien
+  affinity: water
+- key: student-alien-discipline
+  entity: alien-discipline
+  title: "Zuzu student portrait"
+  asset: comet-city-academy/identities/alien-discipline/student
+  size: 832x1216
+  prompt_prose: "A short stocky adult koala assassin with round fluffy grey ears, a charcoal button nose, alert amber eyes, compact paws and a weatherworn silhouette, wearing a rust-red weird-west desert duster over layered dark leather sword harnesses and a battered katana at his side. A very short stocky grey koala assassin with fluffy round ears and amber eyes stands on a desk far taller than himself in his rust-red weird-west desert duster. His battered katana rests on two chairs while adult academy cadets watch the absurdly precise crouching demonstration. Indigo gym floodlights, cinematic low-angle wide shot. Hand-painted comic illustration with bold ink outlines and saturated gouache color."
+  origin: alien
+  affinity: discipline
+- key: student-alien-genius
+  entity: alien-genius
+  title: "Oorin Faal student portrait"
+  asset: comet-city-academy/identities/alien-genius/student
+  size: 832x1216
+  prompt_prose: "A small slender alien man with smooth pale blue skin, an elongated hairless skull, four long fingers on each hand and large silver eyes, wearing a white high-collared tunic under an academy lab coat. In a university chemistry lab he leans over a student's bubbling flask with a delighted smile and pats the glass gently, while the student and a professor behind him glare. Bright laboratory light. Medium shot. Hand-painted comic illustration with bold ink outlines and saturated gouache color."
+  origin: alien
+  affinity: genius
+- key: student-alien-birthright
+  entity: alien-birthright
+  title: "Ysolde Quarren student portrait"
+  asset: comet-city-academy/identities/alien-birthright/student
+  size: 832x1216
+  prompt_prose: "A tall young woman with pale silvery skin, long platinum hair, violet eyes and a shimmering band of tiny scales across her forehead, wearing a thrift-store denim jacket over an academy shirt and chipped black nail polish. In a cramped foster-home bedroom she stares into a tall mirror, where a robed royal court kneels behind her reflection holding out a glass crown, while the real room behind her holds only a narrow bed and a lamp. Dim lamplight and a cold glow from the mirror. Medium shot. Hand-painted comic illustration with bold ink outlines and saturated gouache color."
+  origin: alien
+  affinity: birthright
+- key: student-alien-social
+  entity: alien-social
+  title: "Pellanor Six student portrait"
+  asset: comet-city-academy/identities/alien-social/student
+  size: 832x1216
+  prompt_prose: "A slim alien with smooth amber chitin skin, a narrow head patterned with hexagons, large compound eyes and two short antennae, wearing a plain grey academy jumpsuit. They huddle in a chair in a silent library study carrel with both hands cupped over their antennae, while a row of classmates nearby work quietly in headphones. Soft lamplight. Medium shot. Hand-painted comic illustration with bold ink outlines and saturated gouache color."
+  origin: alien
+  affinity: social
+- key: student-psychic-fire
+  entity: psychic-fire
+  title: "Cassidy Molloy student portrait"
+  asset: comet-city-academy/identities/psychic-fire/student
+  size: 832x1216
+  prompt_prose: "A wiry young woman with pale freckled skin, a messy copper-red shag haircut and dark circles under her eyes, wearing a red flannel shirt over an academy t-shirt. She sits on the edge of her dormitory bed holding an orange pill bottle in one hand, a small red fire extinguisher standing on the floor beside the bed and a scorched brown ring on the window curtain. Grey early-morning light. Medium shot. Hand-painted comic illustration with bold ink outlines and saturated gouache color."
+  origin: psychic
+  affinity: fire
+- key: student-psychic-air
+  entity: psychic-air
+  title: "Avery Kwan student portrait"
+  asset: comet-city-academy/identities/psychic-air/student
+  size: 832x1216
+  prompt_prose: "A slim young adult with light skin, a short black asymmetric haircut and calm dark eyes, wearing pale blue nursing scrubs under an academy windbreaker and white sneakers. In a concrete apartment stairwell they float cross-legged in midair between two landings, holding a phone to one ear with a guilty smile. Yellow stairwell light. Low-angle medium-full shot. Hand-painted comic illustration with bold ink outlines and saturated gouache color."
+  origin: psychic
+  affinity: air
+- key: student-psychic-earth
+  entity: psychic-earth
+  title: "Rafa Medeiros student portrait"
+  asset: comet-city-academy/identities/psychic-earth/student
+  size: 832x1216
+  prompt_prose: "A stocky young man with warm brown skin, short wavy black hair and a neat beard, wearing thick brown leather work gloves and a canvas geology vest full of rock samples over an academy shirt. On the steps of the old city hall he pulls off one glove and lays his bare palm on a weathered granite cornerstone, eyes wide, as faint grey images of past crowds and stonemasons shimmer on the stone around his hand. Overcast afternoon light. Medium shot. Hand-painted comic illustration with bold ink outlines and saturated gouache color."
+  origin: psychic
+  affinity: earth
+- key: student-psychic-water
+  entity: psychic-water
+  title: "Lior Ben-Ami student portrait"
+  asset: comet-city-academy/identities/psychic-water/student
+  size: 832x1216
+  prompt_prose: "A tall young man with olive skin, curly dark hair, a short beard and gentle sea-grey eyes, wearing a heavy cream cable-knit fisherman sweater and an academy scarf. On a rocky shore below a white lighthouse he stands with one hand over his chest as the waves around his boots rise and fall with his breathing, a crying stranger sitting on the rocks nearby. Overcast blue-grey evening light. Wide shot. Hand-painted comic illustration with bold ink outlines and saturated gouache color."
+  origin: psychic
+  affinity: water
+- key: student-psychic-discipline
+  entity: psychic-discipline
+  title: "Mei Lin Zhao student portrait"
+  asset: comet-city-academy/identities/psychic-discipline/student
+  size: 832x1216
+  prompt_prose: "A small compact young woman with light skin, a sleek black bob with blunt bangs and calm narrow eyes, wearing a grey academy cardigan over a black martial-arts top, with reading glasses on a chain. Between tall public library shelves she sidesteps a thrown punch from a sparring partner while still reading the open book in her hand, as two classmates beside her argue at her with raised hands. Warm library lamplight. Medium-full shot. Hand-painted comic illustration with bold ink outlines and saturated gouache color."
+  origin: psychic
+  affinity: discipline
+- key: student-psychic-genius
+  entity: psychic-genius
+  title: "Ezra Calloway student portrait"
+  asset: comet-city-academy/identities/psychic-genius/student
+  size: 832x1216
+  prompt_prose: "A lanky pale young man with neat sandy-blond hair, a nervous smile and a faint violet glow at his temples, wearing a pressed academy blazer and a loosened tie. In an exam hall he sits at a desk with his pen stopped mid-stroke, glancing up at an examiner pacing the aisle, while faint translucent images of other students' thoughts float above their heads. Bright fluorescent light. Medium-wide shot. Hand-painted comic illustration with bold ink outlines and saturated gouache color."
+  origin: psychic
+  affinity: genius
+- key: student-psychic-birthright
+  entity: psychic-birthright
+  title: "Celestine Arbogast student portrait"
+  asset: comet-city-academy/identities/psychic-birthright/student
+  size: 832x1216
+  prompt_prose: "A slight young woman with pale skin, long pale-blonde hair and milky white irises that glow faintly, wearing a high-necked midnight-blue velvet dress under an academy blazer and a string of pearls. During a decorating party in the academy ballroom she stands motionless holding a paper streamer, staring up at a glittering twelve-sided crystal chandelier while classmates on ladders laugh and hang strings of lights around her. Warm party lights. Medium-wide shot. Hand-painted comic illustration with bold ink outlines and saturated gouache color."
+  origin: psychic
+  affinity: birthright
+- key: student-psychic-social
+  entity: psychic-social
+  title: "Juniper Okeke student portrait"
+  asset: comet-city-academy/identities/psychic-social/student
+  size: 832x1216
+  prompt_prose: "A curvy young woman with deep brown skin, big round glasses and natural hair in two puffs, wearing a mustard cardigan over an academy shirt with a pencil tucked behind one ear. In a busy academy hallway she clutches a notebook to her chest as classmates turn their backs and whisper, faint gold threads drifting from their heads toward her. Bright hallway light. Medium shot. Hand-painted comic illustration with bold ink outlines and saturated gouache color."
+  origin: psychic
+  affinity: social
+- key: student-animal-technical-training
+  entity: animal-technical-training
+  title: "Zuzu student portrait"
+  asset: comet-city-academy/identities/animal-technical-training/student
+  size: 832x1216
+  prompt_prose: "A chubby, very short koala ronin with grey fur, a big round head and a small round belly, wearing a dark terracotta poncho, an orange scarf and a wide-brimmed woven straw hat. In the academy training gym, his katana sheathed on his back, he stands on a vaulting box demonstrating a low crouching dodge, while a row of adult cadets in grey training uniforms copy his pose on the mats below. Bright gym lights. Medium-wide shot. Hand-painted comic illustration with bold ink outlines and saturated gouache color."
+  guest_slot: true
+- key: student-stellar-navigation
+  entity: stellar-navigation
+  title: "Tess Helio student portrait"
+  asset: comet-city-academy/identities/stellar-navigation/student
+  size: 832x1216
+  prompt_prose: "A lean young woman with East Asian features, shoulder-length black hair and silver wire goggles on her forehead, wearing a navy jumpsuit under a worn midnight-blue flight jacket with patched pockets and a long tan woven scarf. In an academy administration office she holds a scratched folded star chart tight against her chest while a smiling administrator gestures toward a large photocopier, a small boxy starship waiting on the landing pad outside the window. Afternoon light. Medium shot. Hand-painted comic illustration with bold ink outlines and saturated gouache color."
+  guest_slot: true
