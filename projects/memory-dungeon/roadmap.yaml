@@ -639,7 +639,7 @@ tasks:
   - id: t-029
     milestone: m3
     title: "Establish full enemy, item, achievements and unlock economy"
-    status: claimed
+    status: review
     depends_on: t-021
     passes: 0
     stakes: reversible
@@ -657,7 +657,9 @@ tasks:
       Scoped adversarial combat save repair: bind restored 4x4 combat checkpoints to the authored room enemy identity, max HP, attack cadence, telegraph, player health and focus; retain legitimate legacy guardian/sprite saves. Three Kind Robots files changed with per-room tamper regressions. Focused PR and exact-head CI follow. The larger 96-enemy, 128-item, 64-achievement, 64-unlock economy and production art remain unfinished.
 
       2026-10-29 9:02 AM PT: Merged Kind Robots PR #4437 (squash 42d93d04895d01022227b31245f5ac0caefe5fee) after all 14 exact-head workflows succeeded on fbf8cd9f926a958e0a5d89e16c820b5a585bd659. Combat checkpoint restoration now binds all nine authored rooms to enemy name, maxHp, damage, attack interval, telegraph, 4x4 board and initial player health/focus caps; wrong-room and inflated-stat saves safely return to the map. Legacy sprite/guardian saves, forged-state and per-room regressions pass. Contract Tests #40906510017, TypeScript #40906509829, formatting #40906510456, Memory browser #40906509678. Initial formatting failure corrected. Master issue #4136 comment 6501768189. No ArtJobs or deployment. Return READY for 96 enemies, 128 items, 64 achievements, 64 permanent unlocks, action-replay validation and art/QA. Not For Human Gate.
-    updated: '2026-10-29T19:46:44Z'
+
+      Scoped adversarial checkpoint increment: validate saved pair positions against the original seeded deal or an earned redeal turn, and reject more than two matched pairs per player action. Includes forged-layout, seed-swap, impossible-victory and genuine-redeal regression cases. Focused Kind Robots PR and exact-head CI follow. This does not prove every action or complete the 96-enemy / 128-item / 64-achievement / 64-unlock economy.
+    updated: '2026-10-29T20:05:00Z'
     owner: worker
     claimed_by: 2026-10-29T194644Z-memory-dungeon-t-029-df73
     claimed_at: '2026-10-29T19:46:44Z'
