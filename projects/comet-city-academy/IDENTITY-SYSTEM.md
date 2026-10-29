@@ -55,6 +55,12 @@ The playable prototype uses 6 origins × 8 affinities = **48 signature IDs** and
 
 **No arbitrary alignment toggle.** Transformation prerequisites must be legible: completed personal quests, actionable evidence, values under pressure, agreement with a mentor/partner (when applicable), public actions, and civilian consequences. A role change alters gameplay, resources, risks, enemy counters and authored dialogue, not simply a label.
 
+## Signature villain henchmen (2026-10-29 PT)
+
+Each of the **48 permanent villains** has one original *named one-hit henchman breed*, with its own named spokesperson, appearance, telegraphed battlefield move, counterplay and personal loyalty fault line. Read the 48-row [Villain Henchman Bestiary](VILLAIN-HENCHMEN.md) and its linked Kind Robots `utils/cometAcademy/villainHenchmen.json`, indexed by the exact, stable `signature`. This is **one henchman family per existing villain**, **not** a fourth playable form or 48 new origin/affinity heroes. The same association is used by Every Villain Tactics.
+
+Common henchmen are one-hit *routs, stuns or disarms*, not automatic death scenes. Their species and named representative should carry agency and can switch allegiances; the primary mastermind's at least two independently motivated, persistent accomplices are a different narrative layer and still mandatory. New ArtJobs, actual `SPECIES` Facet records, playable patrol deployments and tactical special moves have **not** been delivered merely by the authored catalogue.
+
 ## Guaranteed heel turn without fake choice
 
 **Every full 30-day run has at least one real heel turn.** Seed-select from a pool of **at least four authored candidates** with different motives, dates, evidence trails and faction triggers. The betrayal must be foreshadowed and change at least one mission, rescue, social relationship and climax option. Avoid cheap reveal-only twists.
