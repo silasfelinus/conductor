@@ -627,7 +627,7 @@ tasks:
   - id: t-029
     milestone: m3
     title: "Establish full enemy, item, achievements and unlock economy"
-    status: review
+    status: ready
     depends_on: t-021
     passes: 0
     stakes: reversible
@@ -643,10 +643,9 @@ tasks:
       2026-10-29 PT: Merged Kind Robots PR #4436 (squash 0b844f19779f32c8d21b58b752f928e5fce2479c), head 50b996ef7f587607e1bf4f5c264ce493e7aaa1e6, after all 14 exact-head Actions workflows completed successfully: Contract Tests #40894828803 (four shards), TypeScript #40894828900, formatting #40894828948 and Memory Dungeon browser interruption #40894830117. Combat checkpoint restoration now rejects missing/renumbered pairs, half-matched pairs, forged obstacle inventories and health/outcome contradictions, with legitimate 5x5 obstacle and terminal-state regressions. Two Memory Dungeon files only; no ArtJobs, deploy or schema changes. Return READY for 96 enemies, 128 items, 64 achievements, 64 permanent unlocks, production art and multi-seed balance; not For Human Gate.
 
       Scoped adversarial combat save repair: bind restored 4x4 combat checkpoints to the authored room enemy identity, max HP, attack cadence, telegraph, player health and focus; retain legitimate legacy guardian/sprite saves. Three Kind Robots files changed with per-room tamper regressions. Focused PR and exact-head CI follow. The larger 96-enemy, 128-item, 64-achievement, 64-unlock economy and production art remain unfinished.
-    updated: '2026-10-29T15:53:12Z'
-    owner: worker
-    claimed_by: 2026-10-29T155049Z-memory-dungeon-t029-8c3a
-    claimed_at: '2026-10-29T15:50:49Z'
+
+      2026-10-29 9:02 AM PT: Merged Kind Robots PR #4437 (squash 42d93d04895d01022227b31245f5ac0caefe5fee) after all 14 exact-head workflows succeeded on fbf8cd9f926a958e0a5d89e16c820b5a585bd659. Combat checkpoint restoration now binds all nine authored rooms to enemy name, maxHp, damage, attack interval, telegraph, 4x4 board and initial player health/focus caps; wrong-room and inflated-stat saves safely return to the map. Legacy sprite/guardian saves, forged-state and per-room regressions pass. Contract Tests #40906510017, TypeScript #40906509829, formatting #40906510456, Memory browser #40906509678. Initial formatting failure corrected. Master issue #4136 comment 6501768189. No ArtJobs or deployment. Return READY for 96 enemies, 128 items, 64 achievements, 64 permanent unlocks, action-replay validation and art/QA. Not For Human Gate.
+    updated: '2026-10-29T16:02:03Z'
   - id: t-031
     milestone: m4
     title: "Adversarial balance, continuity and cross-world reachability suite"
