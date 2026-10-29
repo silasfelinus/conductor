@@ -1,153 +1,225 @@
 {
-  "generated_at": "2026-10-28T14:00:01.986004+00:00",
+  "generated_at": "2026-10-29T14:00:02.071374+00:00",
   "host": "alexandria",
   "new": [
     {
       "baseline": null,
-      "container": "rainbowbutterflies",
-      "count": 4,
-      "fingerprint": "cbdbd021247d",
-      "sample": "statusMessage: 'Internal Server Error',",
-      "severity": "error",
-      "skeleton": "statusmessage: <str>,"
-    },
-    {
-      "baseline": null,
-      "container": "scoopspress",
-      "count": 2,
-      "fingerprint": "4f9dc000e38b",
-      "sample": "[Wed Oct 28 06:56:40.447431 2026] [php:warn] [pid 40:tid 40] [client 85.11.187.21:0] PHP Warning:  POST Content-Length of 15657436 bytes exceeds the limit of 8388608 bytes in Unknown on line 0",
+      "container": "prowlarr",
+      "count": 68,
+      "fingerprint": "2ac6eb61720c",
+      "sample": "[Warn] Cardigann: Request for TorrentDownload failed with status GatewayTimeout. Retrying in 1.7092896s.",
       "severity": "warn",
-      "skeleton": "[<ts>] [php:warn] [pid <num>:tid <num>] [client <ip>] php warning: post content-length of <hex> bytes exceeds the limit of <num> bytes in unknown on line <num>"
+      "skeleton": "[warn] cardigann: request for torrentdownload failed with status gatewaytimeout. retrying in <num>."
     },
     {
       "baseline": null,
-      "container": "rainbowbutterflies",
-      "count": 2,
-      "fingerprint": "e8347798f9a2",
-      "sample": "FetchError: [GET] \"https://kindrobots.org/api/rainbow/directory\": 500 Internal Server Error",
+      "container": "prowlarr",
+      "count": 6,
+      "fingerprint": "3193c613f43d",
+      "sample": "[Warn] Cardigann: HTTP Error - Res: HTTP/2.0 [GET] https://www.torrentdownload.info/searchd?q=Mega%20Man%20Gear%20Masters: 504.GatewayTimeout (16 bytes)",
+      "severity": "warn",
+      "skeleton": "[warn] cardigann: http error - res: http/<num> [get] <url> <num>.gatewaytimeout (<num> bytes)"
+    },
+    {
+      "baseline": null,
+      "container": "prowlarr",
+      "count": 6,
+      "fingerprint": "62a36275aaa5",
+      "sample": "[Warn] Cardigann: Unable to connect to TorrentDownload at [https://www.torrentdownload.info/searchd?q=Mega%20Man%20Gear%20Masters]. Indexer's server is unavailable. Try again later. HTTP request faile",
+      "severity": "warn",
+      "skeleton": "[warn] cardigann: unable to connect to torrentdownload at [<url> indexer's server is unavailable. try again later. http request failed: [<num>:gatewaytimeout] [get] at [<url>"
+    },
+    {
+      "baseline": null,
+      "container": "prowlarr",
+      "count": 6,
+      "fingerprint": "9bd89fd6b222",
+      "sample": "[v2.7.0.5723] NzbDrone.Common.Http.HttpException: HTTP request failed: [504:GatewayTimeout] [GET] at [https://www.torrentdownload.info/searchd?q=Mega%20Man%20Gear%20Masters]",
       "severity": "error",
-      "skeleton": "fetcherror: [get] \"<url> <num> internal server error"
+      "skeleton": "[v2.<num>.<num>] nzbdrone.common.http.httpexception: http request failed: [<num>:gatewaytimeout] [get] at [<url>"
     },
     {
       "baseline": null,
-      "container": "rainbowbutterflies",
-      "count": 2,
-      "fingerprint": "690c09acfce7",
-      "sample": "cause: FetchError: [GET] \"https://kindrobots.org/api/rainbow/directory\": 500 Internal Server Error",
+      "container": "yac",
+      "count": 1,
+      "fingerprint": "37e94e6e7425",
+      "sample": "WARN  2026-10-28T11:43:40.678 QSqlDatabasePrivate::addDatabase: duplicate connection name '/comics/.yacreaderlibrary/library.ydb15072c225400', old connection removed.",
+      "severity": "warn",
+      "skeleton": "warn <ts> qsqldatabaseprivate<ip>adddatabase: duplicate connection name '<path>"
+    },
+    {
+      "baseline": null,
+      "container": "prowlarr",
+      "count": 1,
+      "fingerprint": "fdf2c7db2a3e",
+      "sample": "[Warn] Cardigann: TorrentDownload server is currently unavailable. https://www.torrentdownload.info/searchd?q=Scoundrel Http request timed out",
+      "severity": "warn",
+      "skeleton": "[warn] cardigann: torrentdownload server is currently unavailable. <url> http request timed out"
+    },
+    {
+      "baseline": null,
+      "container": "audiobookshelf",
+      "count": 1,
+      "fingerprint": "402346345312",
+      "sample": "[2026-10-28 08:26:20.631] INFO: [SocketAuthority] Socket sHADjte1OvHSFMA9AAAp disconnected from client \"superkate\" after 145701ms (Reason: ping timeout)",
+      "severity": "other",
+      "skeleton": "[<ts>] info: [socketauthority] socket shadjte1ovhsfma9aaap disconnected from client <str> after <num> (reason: ping timeout)"
+    },
+    {
+      "baseline": null,
+      "container": "audiobookshelf",
+      "count": 1,
+      "fingerprint": "79ba2bba7333",
+      "sample": "[2026-10-28 12:11:09.824] INFO: [SocketAuthority] Socket LGuVwyvuakawu19AAAAr disconnected from client \"superkate\" after 95017ms (Reason: ping timeout)",
+      "severity": "other",
+      "skeleton": "[<ts>] info: [socketauthority] socket lguvwyvuakawu19aaaar disconnected from client <str> after <num> (reason: ping timeout)"
+    },
+    {
+      "baseline": null,
+      "container": "audiobookshelf",
+      "count": 1,
+      "fingerprint": "4f6c2ae56aee",
+      "sample": "[2026-10-28 12:13:48.324] INFO: [SocketAuthority] Socket BUk5spb9t-tpZppAAAAt disconnected from client \"superkate\" after 95158ms (Reason: ping timeout)",
+      "severity": "other",
+      "skeleton": "[<ts>] info: [socketauthority] socket buk5spb9t-tpzppaaaat disconnected from client <str> after <num> (reason: ping timeout)"
+    },
+    {
+      "baseline": null,
+      "container": "audiobookshelf",
+      "count": 1,
+      "fingerprint": "cffc1f88be02",
+      "sample": "[2026-10-28 13:23:46.572] INFO: [SocketAuthority] Socket sHKtnVx8YShk53TAAAAv disconnected from client \"superkate\" after 120673ms (Reason: ping timeout)",
+      "severity": "other",
+      "skeleton": "[<ts>] info: [socketauthority] socket shktnvx8yshk53taaaav disconnected from client <str> after <num> (reason: ping timeout)"
+    },
+    {
+      "baseline": null,
+      "container": "audiobookshelf",
+      "count": 1,
+      "fingerprint": "c63f2b3ee088",
+      "sample": "[2026-10-28 13:34:35.001] INFO: [SocketAuthority] Socket 11xqo0ZfSHNqYkeEAAAz disconnected from client \"superkate\" after 248215ms (Reason: ping timeout)",
+      "severity": "other",
+      "skeleton": "[<ts>] info: [socketauthority] socket 11xqo0zfshnqykeeaaaz disconnected from client <str> after <num> (reason: ping timeout)"
+    },
+    {
+      "baseline": null,
+      "container": "audiobookshelf",
+      "count": 1,
+      "fingerprint": "545e671aa965",
+      "sample": "[2026-10-28 14:03:08.138] INFO: [SocketAuthority] Socket teDD-HO2gR4jjGHIAAA1 disconnected from client \"superkate\" after 95062ms (Reason: ping timeout)",
+      "severity": "other",
+      "skeleton": "[<ts>] info: [socketauthority] socket tedd-ho2gr4jjghiaaa1 disconnected from client <str> after <num> (reason: ping timeout)"
+    },
+    {
+      "baseline": null,
+      "container": "audiobookshelf",
+      "count": 1,
+      "fingerprint": "879925ae9f75",
+      "sample": "[2026-10-28 17:25:52.269] INFO: [SocketAuthority] Socket gE1y5fOP9iSH8rVeAAA3 disconnected from client \"superkate\" after 120285ms (Reason: ping timeout)",
+      "severity": "other",
+      "skeleton": "[<ts>] info: [socketauthority] socket ge1y5fop9ish8rveaaa3 disconnected from client <str> after <num> (reason: ping timeout)"
+    },
+    {
+      "baseline": null,
+      "container": "audiobookshelf",
+      "count": 1,
+      "fingerprint": "520c93d068a4",
+      "sample": "[2026-10-28 17:29:53.307] INFO: [SocketAuthority] Socket XV8YPvT4qQQAs3SgAAA5 disconnected from client \"superkate\" after 44992ms (Reason: ping timeout)",
+      "severity": "other",
+      "skeleton": "[<ts>] info: [socketauthority] socket xv8ypvt4qqqas3sgaaa5 disconnected from client <str> after <num> (reason: ping timeout)"
+    },
+    {
+      "baseline": null,
+      "container": "audiobookshelf",
+      "count": 1,
+      "fingerprint": "35200ebd797b",
+      "sample": "[2026-10-28 17:31:21.084] INFO: [SocketAuthority] Socket -SRmp-oKV5QglStsAAA9 disconnected from client \"superkate\" after 44972ms (Reason: ping timeout)",
+      "severity": "other",
+      "skeleton": "[<ts>] info: [socketauthority] socket -srmp-okv5qglstsaaa9 disconnected from client <str> after <num> (reason: ping timeout)"
+    },
+    {
+      "baseline": null,
+      "container": "kapowarr",
+      "count": 1,
+      "fingerprint": "91dfc24eb5ca",
+      "sample": "Invalid session N2zPhzq1ex1fMlyvAAAC (further occurrences of this error will be logged with level INFO)",
       "severity": "error",
-      "skeleton": "cause: fetcherror: [get] \"<url> <num> internal server error"
+      "skeleton": "invalid session n2zphzq1ex1fmlyvaaac (further occurrences of this error will be logged with level info)"
     },
     {
       "baseline": null,
-      "container": "rainbowbutterflies",
-      "count": 2,
-      "fingerprint": "a4d993fc4c19",
-      "sample": "error: true,",
+      "container": "kapowarr",
+      "count": 1,
+      "fingerprint": "d61a84112fd3",
+      "sample": "\u001b[1;31:40m[06:17:46][ERROR] Could not queue what the search found for volume 2530 (Lobo); continuing with the rest of the library",
       "severity": "error",
-      "skeleton": "error: true,"
+      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][error] could not queue what the search found for volume <num> (lobo); continuing with the rest of the library"
     },
     {
       "baseline": null,
-      "container": "rainbowbutterflies",
-      "count": 2,
-      "fingerprint": "dfa60325e54e",
-      "sample": "message: 'Server Error'",
+      "container": "kapowarr",
+      "count": 1,
+      "fingerprint": "d28e108f8422",
+      "sample": "\u001b[1;31:40m[06:46:38][WARNING] Could not find a current Weekly Pack post on GetComics",
+      "severity": "warn",
+      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][warning] could not find a current weekly pack post on getcomics"
+    },
+    {
+      "baseline": null,
+      "container": "kapowarr",
+      "count": 1,
+      "fingerprint": "17f53a381c06",
+      "sample": "\u001b[1;31:40m[06:57:49][ERROR] Publisher automation failed for other|black fury: brasil|1|2026-10-14",
       "severity": "error",
-      "skeleton": "message: <str>"
+      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][error] publisher automation failed for other|black fury: brasil|<num>|<date>"
     },
     {
       "baseline": null,
-      "container": "netdata",
+      "container": "kapowarr",
       "count": 1,
-      "fingerprint": "12a90c844302",
-      "sample": "time=2026-10-27T20:41:00.513-07:00 comm=cgroup-network source=collector level=error tid=3553044  msg=\"Cannot find a cgroup PID from cgroup '<REDACTED-BLOB>'\"",
+      "fingerprint": "5a74294f1ed3",
+      "sample": "\u001b[1;31:40m[06:58:21][ERROR] Publisher automation failed for midnight factory|coffin girls|1|2026-10-14",
       "severity": "error",
-      "skeleton": "time=<ts> comm=cgroup-network source=collector level=error tid=<num> msg=<str>"
+      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][error] publisher automation failed for midnight factory|coffin girls|<num>|<date>"
     },
     {
       "baseline": null,
-      "container": "audiobookshelf",
+      "container": "kapowarr",
       "count": 1,
-      "fingerprint": "60e6c7453267",
-      "sample": "[2026-10-27 08:23:58.432] INFO: [SocketAuthority] Socket vG2RfEjeCOJL6Ul6AAAP disconnected from client \"superkate\" after 120203ms (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket vg2rfejecojl6ul6aaap disconnected from client <str> after <num> (reason: ping timeout)"
+      "fingerprint": "06f86e81295b",
+      "sample": "\u001b[1;31:40m[06:58:44][ERROR] Publisher automation failed for other|flytrap company|9|2026-10-14",
+      "severity": "error",
+      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][error] publisher automation failed for other|flytrap company|<num>|<date>"
     },
     {
       "baseline": null,
-      "container": "audiobookshelf",
+      "container": "kapowarr",
       "count": 1,
-      "fingerprint": "8fb3c44d16e8",
-      "sample": "[2026-10-27 08:30:58.148] INFO: [SocketAuthority] Socket qRRXDR0-91-4mLB3AAAR disconnected from client \"superkate\" after 95117ms (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket qrrxdr0-<num>-4mlb3aaar disconnected from client <str> after <num> (reason: ping timeout)"
+      "fingerprint": "3cd985e487d7",
+      "sample": "\u001b[1;31:40m[06:59:24][ERROR] Publisher automation failed for keenspot|johnny reb's fear machine|1|2026-10-14",
+      "severity": "error",
+      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][error] publisher automation failed for keenspot|johnny reb's fear machine|<num>|<date>"
     },
     {
       "baseline": null,
-      "container": "audiobookshelf",
+      "container": "kapowarr",
       "count": 1,
-      "fingerprint": "e49bef0dd6a0",
-      "sample": "[2026-10-27 09:46:27.598] INFO: [SocketAuthority] Socket DxK2LsnEIefneO2DAAAT disconnected from client \"superkate\" after 120600ms (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket dxk2lsneiefneo2daaat disconnected from client <str> after <num> (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "b356b6ef41c3",
-      "sample": "[2026-10-27 09:49:04.212] INFO: [SocketAuthority] Socket exFYW_Jzp39fdYSqAAAV disconnected from client \"superkate\" after 95161ms (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket exfyw_jzp39fdysqaaav disconnected from client <str> after <num> (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "8ba88e99c096",
-      "sample": "[2026-10-27 15:50:33.172] INFO: [SocketAuthority] Socket yl6QWWAunTUC87SuAAAX disconnected from client \"superkate\" after 44957ms (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket yl6qwwauntuc87suaaax disconnected from client <str> after <num> (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "a643ebfceb5a",
-      "sample": "[2026-10-27 15:52:26.333] INFO: [SocketAuthority] Socket yGY_5fNwDGFDOI5bAAAZ disconnected from client \"superkate\" after 120629ms (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket ygy_5fnwdgfdoi5baaaz disconnected from client <str> after <num> (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "270a4cd215bb",
-      "sample": "[2026-10-27 15:59:20.385] INFO: [SocketAuthority] Socket 7Prfzi4EFlC7zSTvAAAd disconnected from client \"superkate\" after 44980ms (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket 7prfzi4eflc7zstvaaad disconnected from client <str> after <num> (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "f7a6982fc961",
-      "sample": "[2026-10-27 17:33:56.795] INFO: [SocketAuthority] Socket 2Egyu06bRgaxi8-SAAAh disconnected from client \"superkate\" after 120394ms (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket 2egyu06brgaxi8-saaah disconnected from client <str> after <num> (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "9ea7befb361d",
-      "sample": "[2026-10-27 18:08:38.244] INFO: [SocketAuthority] Socket yB1juw5CygtWy0V-AAAj disconnected from client \"superkate\" after 120086ms (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket yb1juw5cygtwy0v-aaaj disconnected from client <str> after <num> (reason: ping timeout)"
+      "fingerprint": "0c137e85a178",
+      "sample": "\u001b[1;31:40m[06:59:27][ERROR] Publisher automation failed for keenspot|junior high horrors: run & hide|1|2026-10-14",
+      "severity": "error",
+      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][error] publisher automation failed for keenspot|junior high horrors: run & hide|<num>|<date>"
     }
   ],
   "quiet": [
+    {
+      "baseline": 84.0,
+      "container": "radarr",
+      "count": 0,
+      "fingerprint": "53883f24d246",
+      "sample": "[Error] DownloadMonitoringService: Couldn't process tracked download The Home 2025 1080p AMZN WEB-DL DDP5.1 Atmos x265-TBMovies",
+      "severity": "error",
+      "skeleton": "[error] downloadmonitoringservice: couldn't process tracked download the home <num> 1080p amzn web-dl ddp5.<num> atmos x265-tbmovies"
+    },
     {
       "baseline": 24.0,
       "container": "sonarr",
@@ -158,7 +230,7 @@
       "skeleton": "[error] taskextensions: task error"
     },
     {
-      "baseline": 23.0,
+      "baseline": 22.5,
       "container": "qbit",
       "count": 0,
       "fingerprint": "b51302f9d222",
@@ -167,7 +239,7 @@
       "skeleton": "<ts> resolve: cannot resolve host address: us-california.privacy.network:<num> (temporary failure in name resolution)"
     },
     {
-      "baseline": 12.0,
+      "baseline": 11.5,
       "container": "qbit",
       "count": 0,
       "fingerprint": "d00417be0245",
@@ -181,283 +253,337 @@
     "containers_scanned": 44,
     "containers_total": 44,
     "high_cardinality": [],
-    "lines_matched": 4240,
-    "lines_read": 135518,
-    "signatures_total": 127,
+    "lines_matched": 2541,
+    "lines_read": 165601,
+    "signatures_total": 228,
     "truncated": []
   },
   "spiking": [
     {
       "baseline": 0.0,
-      "container": "proxysql",
-      "count": 2559,
-      "fingerprint": "b0c0bb192fa5",
-      "sample": "2026-10-27 07:01:44 mysql_connection.cpp:1357:handler(): [ERROR] Failed to mysql_real_connect() on 10:mariadb-kindrobots2:3306 , FD (Conn:102 , MyDS:102) , 1045: Access denied for user 'kindrobot'@'pr",
-      "severity": "error",
-      "skeleton": "<ts> mysql_connection.cpp<ip>handler(): [error] failed to mysql_real_connect() on <num>:mariadb-kindrobots2:<num> , fd (conn:<num> , myds:<num>) , <num>: access denied for user <str>@<str> (using password: <redacted>)."
-    },
-    {
-      "baseline": 4.0,
-      "container": "KindRobots",
-      "count": 165,
-      "fingerprint": "3d84f1a8fd12",
-      "sample": "Operation rejected: {",
-      "severity": "other",
-      "skeleton": "operation rejected: {"
-    },
-    {
-      "baseline": 4.0,
-      "container": "KindRobots",
-      "count": 165,
-      "fingerprint": "bb9501289941",
-      "sample": "name: 'Error',",
-      "severity": "error",
-      "skeleton": "name: <str>,"
+      "container": "kapowarr",
+      "count": 338,
+      "fingerprint": "5f87adda8786",
+      "sample": "\u001b[1;31:40m[05:25:50][WARNING] Unable to add indexer download; fail_reason=\"The indexer could not be reached just now\"",
+      "severity": "warn",
+      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][warning] unable to add indexer download; fail_reason=<str>"
     },
     {
       "baseline": 0.0,
-      "container": "proxysql",
-      "count": 101,
-      "fingerprint": "ffdd93561a95",
-      "sample": "2026-10-27 07:01:44 MySQL_Monitor.cpp:1488:monitor_connect_thread(): [ERROR] Server mariadb-kindrobots2:3306 is returning \"Access denied\" for monitoring user",
-      "severity": "error",
-      "skeleton": "<ts> mysql_monitor.cpp<ip>monitor_connect_thread(): [error] server mariadb-kindrobots2:<num> is returning <str> for monitoring user"
+      "container": "kapowarr",
+      "count": 327,
+      "fingerprint": "16185a7aa503",
+      "sample": "\u001b[1;31:40m[05:28:41][WARNING] Failed to enqueue download: This release does not match the issue you asked for. Use Download anyway (next to Download) to add it regardless.",
+      "severity": "warn",
+      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][warning] failed to enqueue download: this release does not match the issue you asked for. use download anyway (next to download) to add it regardless."
     },
     {
       "baseline": 0.0,
-      "container": "auth",
-      "count": 22,
-      "fingerprint": "c0197fc71f93",
-      "sample": "time=\"2026-10-27T10:33:45-07:00\" level=error msg=\"Target URL '/blog/' has an insecure scheme '', only the 'https' and 'wss' schemes are supported so session cookies can be transmitted securely\" method",
+      "container": "scoopspress",
+      "count": 95,
+      "fingerprint": "e9aa591b1dc1",
+      "sample": "[Wed Oct 28 17:41:33.807817 2026] [autoindex:error] [pid 45:tid 45] [client 20.194.27.148:0] AH01276: Cannot serve directory /var/www/html/wp-includes/: No matching DirectoryIndex (index.php,index.htm",
       "severity": "error",
-      "skeleton": "time=<str> level=error msg=\"target url '<path>"
+      "skeleton": "[<ts>] [autoindex:error] [pid <num>:tid <num>] [client <ip>] ah01276: cannot serve directory <path>"
+    },
+    {
+      "baseline": 8.0,
+      "container": "hairpress",
+      "count": 83,
+      "fingerprint": "b32e674d9dd1",
+      "sample": "[Wed Oct 28 20:16:52.338708 2026] [autoindex:error] [pid 19:tid 19] [client 20.211.122.120:0] AH01276: Cannot serve directory /var/www/html/wp-includes/: No matching DirectoryIndex (index.php,index.ht",
+      "severity": "error",
+      "skeleton": "[<ts>] [autoindex:error] [pid <num>:tid <num>] [client <ip>] ah01276: cannot serve directory <path>"
+    },
+    {
+      "baseline": 0.0,
+      "container": "kapowarr",
+      "count": 79,
+      "fingerprint": "9dfcdf588b86",
+      "sample": "Traceback (most recent call last):",
+      "severity": "error",
+      "skeleton": "traceback (most recent call last):"
+    },
+    {
+      "baseline": 0.0,
+      "container": "kapowarr",
+      "count": 76,
+      "fingerprint": "ff956128a2d9",
+      "sample": "\u001b[1;31:40m[05:00:56][WARNING] GET request failed for url https://prowlarr.acrocatranch.com/38/api (SocketTimeoutError: Timeout on reading data from socket). Retrying for round 2...",
+      "severity": "warn",
+      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][warning] get request failed for url <url> (sockettimeouterror: timeout on reading data from socket). retrying for round <num>..."
+    },
+    {
+      "baseline": 0.0,
+      "container": "kapowarr",
+      "count": 31,
+      "fingerprint": "6de099e9b4f5",
+      "sample": "\u001b[1;31:40m[05:17:42][WARNING] GET to https://prowlarr.acrocatranch.com/38/api is rate limited; not asking again for 44s. Retrying would only spend more of the quota that is exhausted.",
+      "severity": "warn",
+      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][warning] get to <url> is rate limited; not asking again for <num>. retrying would only spend more of the quota that is exhausted."
+    },
+    {
+      "baseline": 0.0,
+      "container": "prowlarr",
+      "count": 26,
+      "fingerprint": "32387a50af4d",
+      "sample": "error code: 521",
+      "severity": "error",
+      "skeleton": "error code: <num>"
+    },
+    {
+      "baseline": 0.0,
+      "container": "kapowarr",
+      "count": 26,
+      "fingerprint": "6c8b3d58f4a7",
+      "sample": "\u001b[1;31:40m[05:00:47][WARNING] The file/folder /content/Spider-Man/Ultimate Spider-Man Omnibus (2022)/Ultimate.Spider-Man.004._Shan-Empire_.cbz-xpost.cbz already exists; replacing with downloaded file",
+      "severity": "warn",
+      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][warning] the file/folder <path>"
+    },
+    {
+      "baseline": 0.0,
+      "container": "prowlarr",
+      "count": 21,
+      "fingerprint": "50644f7835da",
+      "sample": "[Warn] Cardigann: [torrentdownload] Invalid category for value: 'AdultPornDVD'",
+      "severity": "warn",
+      "skeleton": "[warn] cardigann: [torrentdownload] invalid category for value: <str>"
+    },
+    {
+      "baseline": 0.0,
+      "container": "prowlarr",
+      "count": 21,
+      "fingerprint": "fbff6d0bedfc",
+      "sample": "[Warn] Cardigann: Invalid Release: '[REAL-572] The Fiendish Fellatio Inferno XXVIII - Kokoa Aisu and Riri Kuribayash..' from indexer: TorrentDownload. No categories provided.",
+      "severity": "warn",
+      "skeleton": "[warn] cardigann: invalid release: <str> from indexer: torrentdownload. no categories provided."
     }
   ],
   "top": [
     {
       "baseline": null,
-      "container": "proxysql",
-      "count": 2559,
-      "fingerprint": "b0c0bb192fa5",
-      "sample": "2026-10-27 07:01:44 mysql_connection.cpp:1357:handler(): [ERROR] Failed to mysql_real_connect() on 10:mariadb-kindrobots2:3306 , FD (Conn:102 , MyDS:102) , 1045: Access denied for user 'kindrobot'@'pr",
-      "severity": "error",
-      "skeleton": "<ts> mysql_connection.cpp<ip>handler(): [error] failed to mysql_real_connect() on <num>:mariadb-kindrobots2:<num> , fd (conn:<num> , myds:<num>) , <num>: access denied for user <str>@<str> (using password: <redacted>)."
-    },
-    {
-      "baseline": null,
-      "container": "proxysql",
-      "count": 422,
-      "fingerprint": "a9cfc33818b3",
-      "sample": "2026-10-27 07:01:15 MySQL_Thread.cpp:4786:ProcessAllSessions_Healthy0(): [WARNING] Closing unhealthy client connection 172.21.0.1:33156 , user 'kindrobot' , hostgroup 10 , connection 0",
+      "container": "kapowarr",
+      "count": 338,
+      "fingerprint": "5f87adda8786",
+      "sample": "\u001b[1;31:40m[05:25:50][WARNING] Unable to add indexer download; fail_reason=\"The indexer could not be reached just now\"",
       "severity": "warn",
-      "skeleton": "<ts> mysql_thread.cpp<ip>processallsessions_healthy0(): [warning] closing unhealthy client connection <ip> , user <str> , hostgroup <num> , connection <num>"
+      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][warning] unable to add indexer download; fail_reason=<str>"
     },
     {
       "baseline": null,
-      "container": "KindRobots",
-      "count": 165,
-      "fingerprint": "3d84f1a8fd12",
-      "sample": "Operation rejected: {",
-      "severity": "other",
-      "skeleton": "operation rejected: {"
-    },
-    {
-      "baseline": null,
-      "container": "KindRobots",
-      "count": 165,
-      "fingerprint": "bb9501289941",
-      "sample": "name: 'Error',",
-      "severity": "error",
-      "skeleton": "name: <str>,"
-    },
-    {
-      "baseline": null,
-      "container": "requests",
-      "count": 120,
-      "fingerprint": "b0b22d3dd961",
-      "sample": "2026-10-28T11:34:20.354Z [error][Sonarr Scan]: Failed to process Sonarr media {\"errorMessage\":\"[TMDB] Failed to get TV show using the external TVDB ID: No show returned from API for ID 271317\",\"title\"",
-      "severity": "error",
-      "skeleton": "<ts> [error][sonarr scan]: failed to process sonarr media {<str>:<str>,<str>:<str>}"
-    },
-    {
-      "baseline": null,
-      "container": "proxysql",
-      "count": 101,
-      "fingerprint": "ffdd93561a95",
-      "sample": "2026-10-27 07:01:44 MySQL_Monitor.cpp:1488:monitor_connect_thread(): [ERROR] Server mariadb-kindrobots2:3306 is returning \"Access denied\" for monitoring user",
-      "severity": "error",
-      "skeleton": "<ts> mysql_monitor.cpp<ip>monitor_connect_thread(): [error] server mariadb-kindrobots2:<num> is returning <str> for monitoring user"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 86,
-      "fingerprint": "2107195e439a",
-      "sample": "2026-10-28T01:21:05.290313Z  WARN ThreadId(08) journal_registry::registry::monitor: 23: Failed to send file system event: receiver dropped (channel closed)",
-      "severity": "error",
-      "skeleton": "<ts> warn threadid(<num>) journal_registry<ip>registry<ip>monitor: <num>: failed to send file system event: receiver dropped (channel closed)"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 70,
-      "fingerprint": "24756dae8afd",
-      "sample": "time=2026-10-27T18:21:13.469-07:00 comm=spawn-unnamed source=collector level=warning tid=1794479  msg=\"SPAWN SERVER: child with pid 1794480 (request 1) exited with exit code 1: /usr/libexec/netdata/pl",
+      "container": "kapowarr",
+      "count": 327,
+      "fingerprint": "16185a7aa503",
+      "sample": "\u001b[1;31:40m[05:28:41][WARNING] Failed to enqueue download: This release does not match the issue you asked for. Use Download anyway (next to Download) to add it regardless.",
       "severity": "warn",
-      "skeleton": "time=<ts> comm=spawn-unnamed source=collector level=warning tid=<num> msg=\"spawn server: child with pid <num> (request <num>) exited with exit code <num>: <path>"
-    },
-    {
-      "baseline": null,
-      "container": "radarr",
-      "count": 63,
-      "fingerprint": "53883f24d246",
-      "sample": "[Error] DownloadMonitoringService: Couldn't process tracked download The Home 2025 1080p AMZN WEB-DL DDP5.1 Atmos x265-TBMovies",
-      "severity": "error",
-      "skeleton": "[error] downloadmonitoringservice: couldn't process tracked download the home <num> 1080p amzn web-dl ddp5.<num> atmos x265-tbmovies"
+      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][warning] failed to enqueue download: this release does not match the issue you asked for. use download anyway (next to download) to add it regardless."
     },
     {
       "baseline": null,
       "container": "scoopspress",
-      "count": 50,
+      "count": 254,
       "fingerprint": "6497ddc377f6",
-      "sample": "[Wed Oct 28 05:30:15.301939 2026] [php:warn] [pid 33:tid 33] [client 75.111.66.70:0] PHP Warning:  Undefined variable $enable_postal_code in <REDACTED-BLOB>.cf7sa.front.action.php on line 90",
+      "sample": "[Wed Oct 28 17:40:51.956323 2026] [php:warn] [pid 21:tid 21] [client 20.194.27.148:0] PHP Warning:  Undefined variable $enable_postal_code in <REDACTED-BLOB>.cf7sa.front.action.php on line 90",
       "severity": "warn",
       "skeleton": "[<ts>] [php:warn] [pid <num>:tid <num>] [client <ip>] php warning: undefined variable $enable_postal_code in <redacted-blob>.cf7sa.front.action.php on line <num>"
     },
     {
       "baseline": null,
+      "container": "proxysql",
+      "count": 191,
+      "fingerprint": "a9cfc33818b3",
+      "sample": "2026-10-28 17:15:53 MySQL_Thread.cpp:4786:ProcessAllSessions_Healthy0(): [WARNING] Closing unhealthy client connection 172.21.0.1:33292 , user 'kindrobot_migrate' , hostgroup 30 , connection 65353",
+      "severity": "warn",
+      "skeleton": "<ts> mysql_thread.cpp<ip>processallsessions_healthy0(): [warning] closing unhealthy client connection <ip> , user <str> , hostgroup <num> , connection <num>"
+    },
+    {
+      "baseline": null,
+      "container": "requests",
+      "count": 118,
+      "fingerprint": "b0b22d3dd961",
+      "sample": "2026-10-29T11:34:44.843Z [error][Sonarr Scan]: Failed to process Sonarr media {\"errorMessage\":\"[TMDB] Failed to get TV show using the external TVDB ID: No show returned from API for ID 280923\",\"title\"",
+      "severity": "error",
+      "skeleton": "<ts> [error][sonarr scan]: failed to process sonarr media {<str>:<str>,<str>:<str>}"
+    },
+    {
+      "baseline": null,
+      "container": "scoopspress",
+      "count": 95,
+      "fingerprint": "e9aa591b1dc1",
+      "sample": "[Wed Oct 28 17:41:33.807817 2026] [autoindex:error] [pid 45:tid 45] [client 20.194.27.148:0] AH01276: Cannot serve directory /var/www/html/wp-includes/: No matching DirectoryIndex (index.php,index.htm",
+      "severity": "error",
+      "skeleton": "[<ts>] [autoindex:error] [pid <num>:tid <num>] [client <ip>] ah01276: cannot serve directory <path>"
+    },
+    {
+      "baseline": null,
       "container": "netdata",
-      "count": 48,
+      "count": 87,
+      "fingerprint": "2107195e439a",
+      "sample": "2026-10-29T01:41:09.523731Z  WARN ThreadId(09) journal_registry::registry::monitor: 23: Failed to send file system event: receiver dropped (channel closed)",
+      "severity": "error",
+      "skeleton": "<ts> warn threadid(<num>) journal_registry<ip>registry<ip>monitor: <num>: failed to send file system event: receiver dropped (channel closed)"
+    },
+    {
+      "baseline": null,
+      "container": "hairpress",
+      "count": 83,
+      "fingerprint": "b32e674d9dd1",
+      "sample": "[Wed Oct 28 20:16:52.338708 2026] [autoindex:error] [pid 19:tid 19] [client 20.211.122.120:0] AH01276: Cannot serve directory /var/www/html/wp-includes/: No matching DirectoryIndex (index.php,index.ht",
+      "severity": "error",
+      "skeleton": "[<ts>] [autoindex:error] [pid <num>:tid <num>] [client <ip>] ah01276: cannot serve directory <path>"
+    },
+    {
+      "baseline": null,
+      "container": "kapowarr",
+      "count": 79,
+      "fingerprint": "9dfcdf588b86",
+      "sample": "Traceback (most recent call last):",
+      "severity": "error",
+      "skeleton": "traceback (most recent call last):"
+    },
+    {
+      "baseline": null,
+      "container": "kapowarr",
+      "count": 76,
+      "fingerprint": "ff956128a2d9",
+      "sample": "\u001b[1;31:40m[05:00:56][WARNING] GET request failed for url https://prowlarr.acrocatranch.com/38/api (SocketTimeoutError: Timeout on reading data from socket). Retrying for round 2...",
+      "severity": "warn",
+      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][warning] get request failed for url <url> (sockettimeouterror: timeout on reading data from socket). retrying for round <num>..."
+    },
+    {
+      "baseline": null,
+      "container": "prowlarr",
+      "count": 68,
+      "fingerprint": "2ac6eb61720c",
+      "sample": "[Warn] Cardigann: Request for TorrentDownload failed with status GatewayTimeout. Retrying in 1.7092896s.",
+      "severity": "warn",
+      "skeleton": "[warn] cardigann: request for torrentdownload failed with status gatewaytimeout. retrying in <num>."
+    },
+    {
+      "baseline": null,
+      "container": "netdata",
+      "count": 66,
       "fingerprint": "8ef3774a1987",
-      "sample": "time=2026-10-27T19:13:31.267-07:00 comm=apps.plugin source=collector level=error errno=\"3, No such process\" tid=1792081  msg=\"Cannot process /host/proc/2462342/status (command 'my_print_defaul')\"",
+      "sample": "time=2026-10-28T18:50:48.499-07:00 comm=apps.plugin source=collector level=error errno=\"3, No such process\" tid=3128563  msg=\"Cannot process /host/proc/3252060/cgroup (command 'mariadbd-safe')\"",
       "severity": "error",
       "skeleton": "time=<ts> comm=apps.plugin source=collector level=error errno=<str> tid=<num> msg=\"cannot process <path>"
     },
     {
       "baseline": null,
       "container": "netdata",
+      "count": 65,
+      "fingerprint": "24756dae8afd",
+      "sample": "time=2026-10-28T18:41:19.566-07:00 comm=spawn-unnamed source=collector level=warning tid=3131221  msg=\"SPAWN SERVER: child with pid 3131222 (request 1) exited with exit code 1: /usr/libexec/netdata/pl",
+      "severity": "warn",
+      "skeleton": "time=<ts> comm=spawn-unnamed source=collector level=warning tid=<num> msg=\"spawn server: child with pid <num> (request <num>) exited with exit code <num>: <path>"
+    },
+    {
+      "baseline": null,
+      "container": "netdata",
       "count": 39,
       "fingerprint": "29a758d0ae5d",
-      "sample": "time=2026-10-27T18:21:03.027-07:00 comm=tc-qos-helper.sh source=collector level=warning tid=1792131 thread=tc-qos-helper request=\"'/usr/libexec/netdata/plugins.d/tc-qos-helper.sh' '1' \" msg=\"FireQOS i",
+      "sample": "time=2026-10-28T18:41:07.154-07:00 comm=tc-qos-helper.sh source=collector level=warning tid=3128626 thread=tc-qos-helper request=\"'/usr/libexec/netdata/plugins.d/tc-qos-helper.sh' '1' \" msg=\"FireQOS i",
       "severity": "warn",
       "skeleton": "time=<ts> comm=tc-qos-helper.sh source=collector level=warning tid=<num> thread=tc-qos-helper request=\"'<path>"
     },
     {
       "baseline": null,
+      "container": "kapowarr",
+      "count": 31,
+      "fingerprint": "6de099e9b4f5",
+      "sample": "\u001b[1;31:40m[05:17:42][WARNING] GET to https://prowlarr.acrocatranch.com/38/api is rate limited; not asking again for 44s. Retrying would only spend more of the quota that is exhausted.",
+      "severity": "warn",
+      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][warning] get to <url> is rate limited; not asking again for <num>. retrying would only spend more of the quota that is exhausted."
+    },
+    {
+      "baseline": null,
       "container": "netdata",
-      "count": 28,
+      "count": 29,
       "fingerprint": "b4a4f3c0319b",
-      "sample": "time=2026-10-27T18:21:02.996-07:00 comm=spawn-plugins source=collector level=warning tid=1790779  msg=\"SPAWN SERVER: child with pid 1792113 (request 10) exited with exit code 1: /bin/sh -c \\\"exec /usr",
+      "sample": "time=2026-10-28T18:41:07.112-07:00 comm=spawn-plugins source=collector level=warning tid=3127001  msg=\"SPAWN SERVER: child with pid 3128588 (request 9) exited with exit code 1: /bin/sh -c \\\"exec /usr/",
       "severity": "warn",
       "skeleton": "time=<ts> comm=spawn-plugins source=collector level=warning tid=<num> msg=\"spawn server: child with pid <num> (request <num>) exited with exit code <num>: <path>"
     },
     {
       "baseline": null,
-      "container": "auth",
-      "count": 22,
-      "fingerprint": "c0197fc71f93",
-      "sample": "time=\"2026-10-27T10:33:45-07:00\" level=error msg=\"Target URL '/blog/' has an insecure scheme '', only the 'https' and 'wss' schemes are supported so session cookies can be transmitted securely\" method",
+      "container": "prowlarr",
+      "count": 26,
+      "fingerprint": "32387a50af4d",
+      "sample": "error code: 521",
       "severity": "error",
-      "skeleton": "time=<str> level=error msg=\"target url '<path>"
+      "skeleton": "error code: <num>"
     },
     {
       "baseline": null,
-      "container": "scoopspress",
-      "count": 19,
-      "fingerprint": "e9aa591b1dc1",
-      "sample": "[Wed Oct 28 06:19:38.338196 2026] [autoindex:error] [pid 36:tid 36] [client 20.194.27.148:0] AH01276: Cannot serve directory /var/www/html/wp-includes/: No matching DirectoryIndex (index.php,index.htm",
-      "severity": "error",
-      "skeleton": "[<ts>] [autoindex:error] [pid <num>:tid <num>] [client <ip>] ah01276: cannot serve directory <path>"
+      "container": "kapowarr",
+      "count": 26,
+      "fingerprint": "6c8b3d58f4a7",
+      "sample": "\u001b[1;31:40m[05:00:47][WARNING] The file/folder /content/Spider-Man/Ultimate Spider-Man Omnibus (2022)/Ultimate.Spider-Man.004._Shan-Empire_.cbz-xpost.cbz already exists; replacing with downloaded file",
+      "severity": "warn",
+      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][warning] the file/folder <path>"
     },
     {
       "baseline": null,
-      "container": "hairpress",
-      "count": 19,
-      "fingerprint": "b32e674d9dd1",
-      "sample": "[Wed Oct 28 06:01:25.205021 2026] [autoindex:error] [pid 21:tid 21] [client 20.194.27.148:0] AH01276: Cannot serve directory /var/www/html/wp-includes/: No matching DirectoryIndex (index.php,index.htm",
-      "severity": "error",
-      "skeleton": "[<ts>] [autoindex:error] [pid <num>:tid <num>] [client <ip>] ah01276: cannot serve directory <path>"
+      "container": "prowlarr",
+      "count": 21,
+      "fingerprint": "50644f7835da",
+      "sample": "[Warn] Cardigann: [torrentdownload] Invalid category for value: 'AdultPornDVD'",
+      "severity": "warn",
+      "skeleton": "[warn] cardigann: [torrentdownload] invalid category for value: <str>"
+    },
+    {
+      "baseline": null,
+      "container": "prowlarr",
+      "count": 21,
+      "fingerprint": "fbff6d0bedfc",
+      "sample": "[Warn] Cardigann: Invalid Release: '[REAL-572] The Fiendish Fellatio Inferno XXVIII - Kokoa Aisu and Riri Kuribayash..' from indexer: TorrentDownload. No categories provided.",
+      "severity": "warn",
+      "skeleton": "[warn] cardigann: invalid release: <str> from indexer: torrentdownload. no categories provided."
     },
     {
       "baseline": null,
       "container": "proxysql",
       "count": 18,
       "fingerprint": "9caf510b320a",
-      "sample": "2026-10-27 09:42:14 MySQL_Session.cpp:5667:<REDACTED-BLOB>(): [WARNING] Error during query on (10,mariadb-kindrobots2,3306,3999): 1062, Duplicate entry 'compartmented-mourner' for key 'Facet_slug_key'",
+      "sample": "2026-10-28 09:07:51 MySQL_Session.cpp:5667:<REDACTED-BLOB>(): [WARNING] Error during query on (10,mariadb-kindrobots2,3306,30038): 1062, Duplicate entry 'compartmented-mourner' for key 'Facet_slug_key",
       "severity": "warn",
       "skeleton": "<ts> mysql_session.cpp:<num>:<redacted-blob>(): [warning] error during query on (<num>,mariadb-kindrobots2,<num>,<num>): <num>, duplicate entry <str> for key <str>"
     },
     {
       "baseline": null,
-      "container": "proxysql",
-      "count": 12,
-      "fingerprint": "7ada29ceece5",
-      "sample": "2026-10-27 07:01:24 MyHGC.cpp:202:get_random_MySrvC(): [ERROR] Hostgroup 10 has no servers available! Checking servers shunned for more than 1 second",
-      "severity": "error",
-      "skeleton": "<ts> myhgc.cpp<ip>get_random_mysrvc(): [error] hostgroup <num> has no servers available! checking servers shunned for more than <num> second"
-    },
-    {
-      "baseline": null,
-      "container": "proxysql",
-      "count": 10,
-      "fingerprint": "127fc0b30822",
-      "sample": "2026-10-27 07:01:15 MySQL_Thread.cpp:4475:process_data_on_data_stream(): [WARNING] Detected broken idle connection on mariadb-kindrobots2:3306",
+      "container": "kapowarr",
+      "count": 17,
+      "fingerprint": "2cdf70273bde",
+      "sample": "\u001b[1;31:40m[05:49:34][WARNING] GET request to https://archive.<REDACTED-BLOB>%20Avengers%20001%20%282013%29%20%28Digital%29%20%28Zone-Empire%29%20%28Pdf%20by%20ACN%29.pdf returned with code 403",
       "severity": "warn",
-      "skeleton": "<ts> mysql_thread.cpp<ip>process_data_on_data_stream(): [warning] detected broken idle connection on mariadb-kindrobots2:<num>"
+      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][warning] get request to <url> returned with code <num>"
     },
     {
       "baseline": null,
-      "container": "proxysql",
-      "count": 10,
-      "fingerprint": "b55fd5e80411",
-      "sample": "2026-10-27 07:01:24 MySQL_Monitor.cpp:3412:monitor_ping(): [ERROR] Server mariadb-kindrobots2:3306 missed 3 heartbeats, shunning it and killing all the connections. Disabling other checks until the no",
+      "container": "kapowarr",
+      "count": 16,
+      "fingerprint": "bdf55f360fff",
+      "sample": "\u001b[1;31:40m[06:03:27][WARNING] Refused by Cloudflare without a cf-mitigated: challenge header, so FlareSolverr was not asked. If this is a challenge, that header is what Kapowarr looks for.",
+      "severity": "warn",
+      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][warning] refused by cloudflare without a cf-mitigated: challenge header, so flaresolverr was not asked. if this is a challenge, that header is what kapowarr looks for."
+    },
+    {
+      "baseline": null,
+      "container": "kapowarr",
+      "count": 16,
+      "fingerprint": "be33d366519a",
+      "sample": "--- Logging error ---",
       "severity": "error",
-      "skeleton": "<ts> mysql_monitor.cpp<ip>monitor_ping(): [error] server mariadb-kindrobots2:<num> missed <num> heartbeats, shunning it and killing all the connections. disabling other checks until the node comes back online."
+      "skeleton": "--- logging error ---"
     },
     {
       "baseline": null,
       "container": "radarr",
-      "count": 9,
+      "count": 15,
       "fingerprint": "83d95d9043e3",
       "sample": "[Warn] HttpClient: HTTP Error - Res: HTTP/2.0 [GET] https://api.nzbplanet.<REDACTED-BLOB>.nzb&i=425756&r=(removed) 510.NotExtended (1807 bytes)",
       "severity": "warn",
       "skeleton": "[warn] httpclient: http error - res: http/<num> [get] <url> <num>.notextended (<num> bytes)"
-    },
-    {
-      "baseline": null,
-      "container": "radarr",
-      "count": 9,
-      "fingerprint": "faca9d640225",
-      "sample": "[v6.4.4.10685] NzbDrone.Common.Http.HttpException: HTTP request failed: [510:NotExtended] [GET] at [https://api.nzbplanet.<REDACTED-BLOB>.nzb&i=425756&r=(removed)   at NzbDrone.Common.Http.HttpClient.",
-      "severity": "error",
-      "skeleton": "[v6.<num>.<num>] nzbdrone.common.http.httpexception: http request failed: [<num>:notextended] [get] at [<url> at nzbdrone.common.http.httpclient.executeasync(httprequest request) in .<path>"
-    },
-    {
-      "baseline": null,
-      "container": "proxysql",
-      "count": 8,
-      "fingerprint": "8da141147da1",
-      "sample": "2026-10-27 08:22:45 MySQL_Thread.cpp:4786:ProcessAllSessions_Healthy0(): [WARNING] Closing unhealthy client connection 172.21.0.1:50418 , user 'unknown' , hostgroup -1 , connection 0",
-      "severity": "warn",
-      "skeleton": "<ts> mysql_thread.cpp<ip>processallsessions_healthy0(): [warning] closing unhealthy client connection <ip> , user <str> , hostgroup -<num> , connection <num>"
-    },
-    {
-      "baseline": null,
-      "container": "proxysql",
-      "count": 7,
-      "fingerprint": "d558b7812f86",
-      "sample": "2026-10-27 07:01:29 MySQL_Session.cpp:3536:handler_again___status_CONNECTING_SERVER(): [ERROR] Max connect timeout reached while reaching hostgroup 10 after 10000ms . HG status: [{\"Bytes_recv\":\"372205",
-      "severity": "error",
-      "skeleton": "<ts> mysql_session.cpp<ip>handler_again___status_connecting_server(): [error] max connect timeout reached while reaching hostgroup <num> after <num> . hg status: [{<str>:<str>,<str>:<str>,<str>:<str>,<str>:<str>,<str>:<str>,<str>:<str>,<str>:<str>,<str>:<str>,<str>:<str>,<str>:<str>,<str>:<str>,<str"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 6,
-      "fingerprint": "381cf7bc9913",
-      "sample": "time=2026-10-27T19:06:06.001-07:00 level=error msg=\"Get \\\"http://%2Fvar%2Frun%2Fdocker.sock/v1.47/info\\\": context deadline exceeded\" plugin=go.d collector=docker job=local config_source=\"stock/file re",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str><url> context deadline exceeded<str>stock/file reader\""
     }
   ],
   "version": 1,
