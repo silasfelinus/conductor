@@ -75,18 +75,19 @@ tasks:
   - id: t-003
     milestone: m2
     title: "Playable First Bell battle in all four authored perspectives"
-    status: review
+    status: done
     depends_on: [t-001, t-002]
-    owner: worker
     claimed_by: 2026-10-29T201500Z-every-villain-tactics-t003-f4q8
     claimed_at: '2026-10-29T20:15:00Z'
-    updated: '2026-10-29T20:35:00Z'
+    updated: '2026-10-29T20:35:10Z'
     passes: 0
     stakes: reversible
     note: |-
       One complete start-to-ending seeded battle with two tactical approaches, independently authored hero/villain/henchman/sidekick dialogue, cinematic opening, multiple triggered exchanges, closing/ending, and a first bespoke fixed-cast route. Correct flip/strike/hit/death animations and accessible alternatives. Treat this as Playbook Kit Vignette, not full Saga.
 
       Implemented First Bell campaign vignette with distinct authored hero/villain/henchman/sidekick opening, alarm, first-down turning-point, victory and defeat scenes; two approach routes and meaningful battle effects for rescue, containment, mercy and pressure. Backdraft's default fixed-cast route includes personal origin dialogue; other chosen leads remain exploratory roster previews, not counted as completed personal routes. Cinematic choice overlay, accessibility keyboard, card strike/hit/dodge/defeat animations and reduced-motion support implemented. Awaiting PR and full CI; rendered multi-device QA unverified.
+
+      Merged Kind Robots PR #4447 as af3a9cfe on main; 23/23 checks passed. Four authored perspectives with opening, turn alarm, rival-down reckoning, victory/defeat scenes, two infiltration routes, rescue/evidence/mercy effects, one bespoke Backdraft route and accessible animated card combat. No production deploy or public publishing claimed. Remaining 48 personal routes and six-level expansion stay roadmap work.
   - id: t-004
     milestone: m2
     title: "Map designer with terrain, cover, spawns, objectives and testing"
@@ -115,7 +116,7 @@ tasks:
   - id: t-006
     milestone: m2
     title: "Save/load battle and level state including RNG and fired events"
-    status: waiting
+    status: ready
     depends_on: t-003
     owner: null
     passes: 0
