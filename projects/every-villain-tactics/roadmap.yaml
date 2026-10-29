@@ -102,11 +102,8 @@ tasks:
   - id: t-004
     milestone: m2
     title: "Map designer with terrain, cover, spawns, objectives and testing"
-    status: review
-    owner: worker
-    claimed_by: 20261029T220707976Z-tactics-t004-c6f2
-    claimed_at: '2026-10-29T22:07:07.976Z'
-    updated: '2026-10-29T22:11:20.894Z'
+    status: ready
+    updated: '2026-10-29T22:31:22.235Z'
     depends_on: t-002
     passes: 0
     stakes: reversible
@@ -118,6 +115,8 @@ tasks:
       Merged Kind Robots PR #4451 as 3dfd9ace on main with all 16 head checks completed successfully. Delivered editable 9x6 walls, directional cover, elevation, squad/rival lead spawns, objective and turn limit, secrets and hazard markers, First Bell/fountain quad/science lab/plaza presets, validation and seeded battle playtests using the actual stage map, LOS, deterministic hit math and AI. This is a t-004 Vignette increment, NOT the full editor deliverable. Remaining t-004 work includes runtime destructible props, actual hazard and secret effects, reinforcement waves/AI scripting, flexible victory/failure criteria, and editor playtest coverage for each. Stage drafts are not persisted/shared yet; the linked t-005/t-006/t-011 tasks own cinematic editing, save-state and community sharing. No authentic new art, authored Picnic Panic battle, production deployment or final visual acceptance claimed.
 
       Submitted a scoped live-enemy editor increment: Picnic Panic preset now uses Cornerstone's three named one-hit Warren Wreckers instead of generic rival heroes. A real deterministic two-turn burrow telegraphs safe tile destinations, supports blocked-tunnel counterplay, and applies normal attack, overwatch and shared LOS rules on emergence. The board displays accessible dust warnings. Added seeded studio regression tests; the six-mission editor, destructible props, hazard effects, expanded waves, civilian rescue and ArtJobs remain separate unfinished work.
+
+      Merged Kind Robots PR #4454 as cbb6bb5796728627c1943b844bd739b2dbecd3fd after all 16 final head workflows passed. Picnic Panic now spawns Foreman Thumpkin and two one-hit Warren Wreckers with deterministic next-turn burrow warning rings, blocked-emergence counterplay and real combat/LOS/overwatch rules. New seeded tests prove the behavior. This is a scoped t-004 live encounter increment; stage sharing, destructive scenery, active hazards, civilian rescue, lieutenant boss AI, original art, 96 personalized levels and narrative cinematics remain unfinished and separately tracked. Return READY.
   - id: t-005
     milestone: m2
     title: "Opening/triggered/closing conversation tree and cinematic editor"
