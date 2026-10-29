@@ -24,17 +24,16 @@ jobs:
     env:
       KR_BASE_URL: https://kindrobots.org
     steps:
-      # An older auto-art-generate run might already have read this manifest
-      # with auto_submit enabled. Let it finish and persist its ArtJob IDs
+      # Initial sweep run 40976134477 read this manifest with auto_submit enabled. Let it finish and persist its ArtJob IDs
       # before the dedicated submitter reads current main, avoiding repeats.
-      - name: Wait for any existing general art sweep to finish
+      - name: Wait for the original pre-fix art sweep to finish
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
           for attempt in $(seq 1 150); do
-            active="$(gh api -X GET repos/${{ github.repository }}/actions/workflows/auto-art-generate.yml/runs --jq '[.workflow_runs[] | select(.status == "in_progress" or .status == "queued" or .status == "pending" or .status == "waiting")] | length' -f per_page=25)"
-            if [ "${active:-0}" -eq 0 ]; then exit 0; fi
+            status="$(gh api -X GET repos/${{ github.repository }}/actions/runs/40976134477 --jq '.status')"
+            if [ "$status" = "completed" ]; then exit 0; fi
             echo "General art sweep in progress; waiting to reuse any accepted Capes ArtJob IDs."
             sleep 60
           done
