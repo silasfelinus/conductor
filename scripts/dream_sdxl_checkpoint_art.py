@@ -109,7 +109,7 @@ ZUZU_MENTION = re.compile(r"\b(zuzu|koala)\b", re.IGNORECASE)
 # ZUZU_MENTION matched every asset and drew Zuzu's canon into a heron's
 # portrait; the world is the setting, so the title stays out of the frame.
 KREA_ONLY_CLAUSES = (
-    (r"\bestablishing scene art for the moment titled\s+", ""),
+    (r"\bestablishing scene art(?: for the moment titled\s+|,\s*)", ""),
     (r",?\s*foreground figures reacting,\s*uncluttered staging so the event reads at a glance", ""),
     ((r",?\s*cast the (?:figures|people) who appear naturally across many species, ages, "
       r"body sizes, body shapes,(?: and)? gender presentations"

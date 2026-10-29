@@ -111,6 +111,19 @@ def _join(*parts: object) -> str:
     return prompt[:MAX_PROMPT_CHARS].rstrip(" ,")
 
 
+def _lower_first(text: object) -> str:
+    """Lower-case a sentence's first letter so it reads as a clause ("A rider" ->
+    "a rider"), leaving an acronym or initialism ("SCP entity") alone."""
+    text = _clean(text)
+    if len(text) > 1 and text[0].isupper() and not text[1].isupper():
+        return text[0].lower() + text[1:]
+    return text
+
+
+def _article(word: str) -> str:
+    return "an" if _clean(word)[:1].lower() in "aeiou" else "a"
+
+
 def _a(name: str) -> str:
     name = _clean(name)
     if re.match(r"(?i)^(the|a|an)\s", name):
@@ -208,17 +221,23 @@ def world_prompt(title: str, idea: str, vibe_line: str, vibe_art: str = "",
     )
 
 
-# `known_for`, `carries`, and `role_drive` are complete sentences under the
-# card-copy contract (dream_prose_quality), so they are introduced with a colon
-# rather than spliced into a grammatical stem — "a place known for Its prismatic
-# chambers turn ..." is not a phrase an image model can use.
+# `known_for`, `role_drive` and a reward's `grants` are card copy: complete
+# sentences about what a place is famous for, what a person wants, or what an
+# item does in play. They used to ride into the prompt behind a colon label --
+# "known for: A tollhouse ... who accept stories, trinkets and favours",
+# "the bearing of someone driven by this: She ... wants to retire with one case
+# solved", "its purpose readable in its shape: Burning a pinch hides the user
+# from anyone watching from further than a bowshot". None of it is visible, and
+# Silas called the prompts obviously substandard (2026-10-29). The look, the
+# art direction, what a character carries and the staged moment are the
+# picture; the card copy stays on the card. `known_for` and `role_drive` are
+# still accepted so callers need not change.
 def location_prompt(title: str, art_direction: str, known_for: str,
                     best_scene: str, world_title: str, vibe_line: str,
                     style: str | None = None) -> str:
     return _join(
         f"{_clean(art_direction)} — {_the(title)}",
-        f"known for: {_clean(known_for)}" if known_for else "",
-        f"staged at its most telling moment: {_clean(best_scene)}" if best_scene else "",
+        f"at its most telling moment, {_lower_first(best_scene)}" if best_scene else "",
         _world_context(world_title, vibe_line),
         CARD_FRAMING,
         # Same fix as world_prompt above: a fact, not a condition.
@@ -235,8 +254,7 @@ def character_prompt(name: str, look: str, role_drive: str, carries: str,
     return _join(
         f"character portrait of {_clean(name)}",
         _clean(look),
-        f"visibly carrying: {_clean(carries)}" if carries else "",
-        f"the bearing of someone driven by this: {_clean(role_drive)}" if role_drive else "",
+        f"carrying {_lower_first(carries)}" if carries else "",
         _world_context(world_title, vibe_line),
         CARD_FRAMING,
         "single figure, three-quarter view from the waist up, close-up, "
@@ -279,7 +297,6 @@ def reward_prompt(name: str, reward_type: str, look: str, grants: str,
         return _join(
             f"{_clean(name)}, a single practiced technique caught mid-use",
             manifestation,
-            f"the effect itself is the subject: {grants}" if grants else "",
             _world_context(world_title, vibe_line),
             CARD_FRAMING,
             # "no full figure, no faces, no onlookers" put three people nouns in
@@ -292,7 +309,7 @@ def reward_prompt(name: str, reward_type: str, look: str, grants: str,
             "tight centered composition on the effect, cropped close so that only one "
             "pair of hands enters at the very edge to work it, "
             "wrists cropped tightly",
-            f"rendered with the weight given a {rarity} ability" if rarity else "",
+            f"rendered with the weight given {_article(rarity)} {rarity} ability" if rarity else "",
             style,
             NO_TEXT,
         )
@@ -300,13 +317,12 @@ def reward_prompt(name: str, reward_type: str, look: str, grants: str,
     return _join(
         f"{_a(name)}, one object alone",
         look or f"a crafted object whose form makes plain what it does: {grants}",
-        f"its purpose readable in its shape: {grants}" if grants and look else "",
         _world_context(world_title, vibe_line),
         CARD_FRAMING,
         "museum-like object study, the object centered in close-up, resting on a "
         "bare surface or floating against a simple ground, close enough to read material and wear",
         UNPEOPLED,
-        f"rendered with the reverence given a {rarity} artifact" if rarity else "",
+        f"rendered with the reverence given {_article(rarity)} {rarity} artifact" if rarity else "",
         style,
         NO_TEXT,
     )
@@ -316,7 +332,9 @@ def scenario_prompt(title: str, setup: str, location_title: str,
                     world_title: str, vibe_line: str,
                     style: str | None = None) -> str:
     return _join(
-        f"establishing scene art for the moment titled {_clean(title)}",
+        # The scenario's title is a caption, and a caption is lettering to a
+        # caption-trained model; the setup describes the moment itself.
+        "establishing scene art",
         _clean(setup),
         f"staged at {_clean(location_title)}" if location_title else "",
         _world_context(world_title, vibe_line),
