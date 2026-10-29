@@ -1,0 +1,151 @@
+# High-priority shared Capes/Prom style benchmark. 36 private ArtJobs once auto-submit executes on reviewed main.
+# Six identical subjects, one fixed seed per subject across six genuinely non-Flux / non-furry-first candidates.
+# Krea 2 is explicitly requested by Silas despite its distinct technical lineage; no generic Flux model lanes.
+# ArtJob IDs are written into subjects[].jobs after accepted enqueue. This manifest is NOT evidence of generated images.
+{
+  "round": "capes-western-style-check-v1",
+  "series": "prom-of-doom-and-every-villain-tactics",
+  "project_slug": "comet-city-academy",
+  "designer": "Capes Style Check 2026-10-29",
+  "is_public": false,
+  "is_mature": false,
+  "cast_loras": false,
+  "priority": 900,
+  "auto_submit": true,
+  "status": "awaiting-submission",
+  "lanes": [
+    {
+      "key": "krea2",
+      "label": "Krea 2 (concrete prose)",
+      "engine": "krea2",
+      "prompt": "prose",
+      "suffix": "clean Western animated superhero key art, bold readable silhouettes, professionally inked contours, controlled hand-painted color"
+    },
+    {
+      "key": "arthemy",
+      "label": "Arthemy Western Art v3",
+      "engine": "comfy",
+      "checkpoint": "Illustrious/arthemyWesternArt_v30.safetensors",
+      "prompt": "tags",
+      "prefix": "masterpiece, best quality, amazing quality, absurdres, very aesthetic, western comics (style), toon (style), mature American television animation, sharply inked anatomy",
+      "suffix": "premium mature action animation, graphic silhouettes, saturated gouache color",
+      "steps": 30,
+      "cfg": 5,
+      "sampler": "euler_ancestral"
+    },
+    {
+      "key": "nova-comic",
+      "label": "Nova Comic XL v2",
+      "engine": "comfy",
+      "checkpoint": "Illustrious/novaComicXL_v20.safetensors",
+      "prompt": "tags",
+      "prefix": "masterpiece, best quality, amazing quality, western comic book (style), professional ink art, strong readable silhouettes",
+      "suffix": "limited cel shaded palette, dramatic illustrated superhero graphic novel",
+      "steps": 28,
+      "cfg": 5,
+      "sampler": "euler_ancestral"
+    },
+    {
+      "key": "illustrij",
+      "label": "Illustrij v2.1",
+      "engine": "comfy",
+      "checkpoint": "Illustrious/illustrij_v21.safetensors",
+      "prompt": "tags",
+      "prefix": "masterpiece, best quality, very aesthetic, illustration, comic book art, mature western animation, lineart",
+      "suffix": "bold graphic shapes, cel shading, expressive eyes and brows",
+      "steps": 28,
+      "cfg": 5,
+      "sampler": "euler_ancestral"
+    },
+    {
+      "key": "dreamshaper",
+      "label": "DreamShaper XL",
+      "engine": "comfy",
+      "checkpoint": "SDXL/dreamshaperXL_v21TurboDPMSDE.safetensors",
+      "prompt": "prose",
+      "suffix": "hand-inked mature Western animated superhero illustration, precise faces, readable costumes, flat cel shadows",
+      "steps": 6,
+      "cfg": 2,
+      "sampler": "dpmpp_2m_sde"
+    },
+    {
+      "key": "unstable",
+      "label": "Unstable Diffusers SDXL",
+      "engine": "comfy",
+      "checkpoint": "SDXL/sdxlUnstableDiffusers_nihilmania.safetensors",
+      "prompt": "prose",
+      "suffix": "adult western comic-book animation key art, clear ink contours, graphic anatomy, crisp painterly cel shade",
+      "steps": 28,
+      "cfg": 7,
+      "sampler": "dpmpp_2m"
+    }
+  ],
+  "subjects": [
+    {
+      "key": "cornerstone-hero",
+      "title": "Cornerstone / hero poster",
+      "size": "832x1216",
+      "seed": 629101,
+      "prompt_prose": "Full-length portrait of Tug Brannigan as the superhero Cornerstone: stocky pale-skinned young adult man with a shaved head and heavy red beard, grey granite plates across his knuckles and cheekbones. He braces both stone forearms under a cracked concrete arch beside the large fountain in a college quad, protecting three people who shelter behind him. A dusty blue protective suit with orange road-worker straps, serious protective face, broken masonry lifting around his hands. Low hero camera, vertical poster composition, sky-blue daylight and amber rim light, clean bold ink outlines and hand-painted cel-shadow colors, mature Western superhero animation.",
+      "prompt_tags": "1man, young adult man, pale skin, shaved head, red beard, stocky muscular build, stony knuckles, stony cheekbones, superhero suit, blue suit, orange construction straps, full body, low angle, stoic expression, heroic pose, damaged college quad, giant fountain, cracked concrete arch, levitating rocks, people sheltering behind hero, dramatic daytime lighting, comic book key art, mature western animation, clean lineart, cel shading",
+      "negative": "lettering, title text, logo, watermark, signature, 3d render, photograph, childish chibi proportions, plush toy, duplicated limbs, deformed hands",
+      "asset": "comet-city-academy/style-check-v1/cornerstone-hero",
+      "jobs": {}
+    },
+    {
+      "key": "backdraft-villain",
+      "title": "Backdraft / villain poster",
+      "size": "832x1216",
+      "seed": 629102,
+      "prompt_prose": "Full-length villain portrait of Dez Okafor as Backdraft: broad-shouldered dark-brown-skinned young adult man with short black curls and fire-lit orange forearms, wearing a charred navy academy coat redesigned as a black and copper armored coat with a torn red-orange shoulder cape. He stands calmly inside the municipal insurance archive, one hand on an open filing cabinet, orange fire curling around stacks of policy folders, heavy iron rafters and a sprinkler pipe overhead. Smug controlled expression, low angle, vertical poster framing, hard amber firelight against deep indigo shadows, mature Western animated superhero key art, inked contour and hand-painted cel shadows.",
+      "prompt_tags": "1man, young adult man, dark brown skin, short black curls, broad shoulders, black and copper armored coat, red-orange torn half cape, glowing fiery forearms, confident villain expression, full body, low angle, burning insurance records archive, filing cabinets, paper folders, orange flames, iron rafters, dramatic indigo shadows, mature western comic animation, ink outlines, painterly cel shading",
+      "negative": "text, lettering, watermark, logo, photorealism, glossy 3d, anime schoolgirl, toy render, duplicate person, excessive limbs",
+      "asset": "comet-city-academy/style-check-v1/backdraft-villain",
+      "jobs": {}
+    },
+    {
+      "key": "warren-wreckers",
+      "title": "Warren Wreckers / henchman poster",
+      "size": "832x1216",
+      "seed": 629103,
+      "prompt_prose": "A dynamic vertical villain henchman group poster: three stout upright rabbit-person tunnel workers erupt through a broken city-plaza sidewalk. Each has visible rabbit ears, dusty workwear, diamond-toothed incisors, headlamp hardhat, and a different silhouette. Foreman Thumpkin in the center is older and broad with a yellow site helmet, a chalked city-tunnel map in one paw and a union badge; two smaller workers scramble from fresh circular dirt rings beside a toppled picnic basket and folding table. Strong low-angle composition, serious threatening action with a trace of deadpan character comedy, mature Western animated comic illustration, graphic ink linework, grounded stone and cloth materials, shadowed cobalt and warm terracotta palette.",
+      "prompt_tags": "three rabbit humanoid tunnel workers, large rabbit ears, buck teeth, hard hats, headlamps, dirt-stained construction clothes, foreman central figure, yellow helmet, map in hand, union badge, two smaller workers, cracked pavement, city picnic plaza, dust rings, fallen picnic basket, full bodies, action group composition, low angle, mature western animated comic, dramatic inked contours, painterly cel shadows",
+      "negative": "words, signs, watermark, logo, cute plush toys, 3d cartoon, infant proportions, extra arms, merged faces, duplicate characters",
+      "asset": "comet-city-academy/style-check-v1/warren-wreckers",
+      "jobs": {}
+    },
+    {
+      "key": "mags-hardpan",
+      "title": "Mags Hardpan / lieutenant poster",
+      "size": "832x1216",
+      "seed": 629104,
+      "prompt_prose": "Full-length character key art of Mags Hardpan, Cornerstone's independent second-in-command: a broad granite-armored adult seismic drummer, weathered face, closely cropped salt-and-pepper hair, thick quarry-work shoulder plates and a battered orange work sash. Mags plants one boot on a fractured concrete step and strikes a massive bass drum carved from stone with two reinforced mallets, causing visible concentric cracks to ripple across the floor. Smart severe expression with human vulnerability, distinct silhouette with the drum clearly separate from the body, dramatic low-angle vertical composition, deep slate and gold worksite light, hand-inked mature Western animated superhero illustration.",
+      "prompt_tags": "1person, mature adult, broad muscular build, short salt and pepper hair, weathered face, granite shoulder armor, orange work sash, stone bass drum, two mallets, pounding a drum, concentric cracks, fractured concrete floor, full body, dynamic low angle, serious commanding expression, dramatic warm key light, mature western animated graphic novel, clean contour inks, cel shaded",
+      "negative": "text, title lettering, signature, watermark, shiny toy plastic, photographic skin, multiple extra hands, extra drums",
+      "asset": "comet-city-academy/style-check-v1/mags-hardpan",
+      "jobs": {}
+    },
+    {
+      "key": "science-lab",
+      "title": "Science lab / emotional story scene",
+      "size": "1344x768",
+      "seed": 629105,
+      "prompt_prose": "Wide cinematic narrative illustration inside a cramped college science laboratory. At left a young human male scientist wearing improvised spring-loaded leap gear over a pale laboratory coat braces against a stainless steel bench, face determined, preparing to jump toward a broken emergency valve. At right a young adult female teammate with dark skin and short braided hair recoils with wide alarmed eyes, gripping the edge of a lab table. A transparent experimental chamber cracks between them, green vapor jetting sideways, glass fragments and hanging electrical cables catching cold cyan and amber hazard lights. Clear separate emotional performances and readable faces, wide horizontal 16:9 comic-animation staging, mature Western hand-painted cel-shadow look.",
+      "prompt_tags": "2people, young adult male scientist, human face, lab coat, spring loaded leg gear, determined expression, young adult female scientist, dark skin, short braided hair, shocked expression, science laboratory interior, stainless workbenches, ruptured glass experiment chamber, green vapor, scattered glass, dangling wires, cyan light, amber warning light, wide cinematic composition, mature western TV animation, graphic ink linework, controlled cel shadows",
+      "negative": "text, watermark, logo, panel borders, duplicate heads, extra limbs, photorealism, 3d game render, anime chibi, cute animal ears",
+      "asset": "comet-city-academy/style-check-v1/science-lab",
+      "jobs": {}
+    },
+    {
+      "key": "firewall-standee",
+      "title": "Firewall / tactical 2:1 standee",
+      "size": "1536x768",
+      "seed": 629106,
+      "prompt_prose": "A single full-body tactical game character standee on a flat pale slate studio backdrop, very wide 2:1 canvas: Priya, the young adult superhero Firewall, South Asian woman with dark eyes and long black hair in a practical braided bun, wearing a compact midnight-blue and copper engineering suit with rectangular circuit panels, flexible armored gloves and utility boots. She holds a small bright blue holographic defensive firewall panel beside one arm. Both boots visible, head and fingers complete, centered silhouette occupying the middle half of the wide frame, empty space on both sides for card-game movement, three-quarter action stance, mature Western animated superhero character illustration, clean dark line art, crisp cel-shaded forms.",
+      "prompt_tags": "1woman, young adult south asian woman, brown skin, dark eyes, black hair in braided bun, blue and copper engineering hero suit, circuit panel armor, tactical boots, protective gloves, small blue holographic shield, full body, head to toe, standing, three quarter view, centered, horizontal 2:1 composition, plain pale slate background, ample side space, mature western animation model sheet, clean outlines, cel shading",
+      "negative": "text, watermark, framed card, multiple figures, legs cropped, feet cropped, head cropped, photograph, 3d render, doll, extra fingers",
+      "asset": "comet-city-academy/style-check-v1/firewall-standee",
+      "jobs": {}
+    }
+  ]
+}
