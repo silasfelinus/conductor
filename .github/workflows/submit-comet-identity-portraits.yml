@@ -1,0 +1,57 @@
+name: Submit approved Prom of Doom student portraits
+
+# The human-approved Conductor t-019 round is the only resource this workflow
+# can enqueue. A pull request cannot invoke it with repository secrets.
+on:
+  push:
+    branches: [main]
+    paths:
+      - projects/comet-city-academy/art/IDENTITY-PORTRAITS-ROUND-1.yaml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: comet-identity-student-portraits-round-1
+  cancel-in-progress: false
+
+jobs:
+  submit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install pyyaml pytest
+      - name: Validate the approved 50-cell round before external submission
+        run: python -m pytest tests/test_comet_identity_portrait_round.py -q
+      - name: Enqueue unsubmitted portraits only, with ArtJob provenance
+        id: enqueue
+        env:
+          KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+        run: |
+          set -euo pipefail
+          if [[ -z "$KR_API_TOKEN" ]]; then
+            echo "::warning::KR_API_TOKEN is not configured. Approved portrait round remains unsubmitted."
+            exit 0
+          fi
+          python scripts/enqueue_art_requests.py \
+            projects/comet-city-academy/art/IDENTITY-PORTRAITS-ROUND-1.yaml --live
+      - name: Save real ArtJob IDs back to the round
+        if: always()
+        run: |
+          set -euo pipefail
+          path=projects/comet-city-academy/art/IDENTITY-PORTRAITS-ROUND-1.yaml
+          if git diff --quiet -- "$path"; then
+            echo "No new ArtJob ids recorded."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "$path"
+          git commit -m "art(prom): record queued Krea2 student portrait ArtJob IDs"
+          git push origin HEAD:main
