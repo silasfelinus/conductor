@@ -112,8 +112,8 @@ tasks:
   - id: t-004
     milestone: m2
     title: "Map designer with terrain, cover, spawns, objectives and testing"
-    status: ready
-    updated: '2026-10-29T22:31:22.235Z'
+    status: claimed
+    updated: '2026-10-29T23:47:10.965Z'
     depends_on: t-002
     passes: 0
     stakes: reversible
@@ -127,6 +127,11 @@ tasks:
       Submitted a scoped live-enemy editor increment: Picnic Panic preset now uses Cornerstone's three named one-hit Warren Wreckers instead of generic rival heroes. A real deterministic two-turn burrow telegraphs safe tile destinations, supports blocked-tunnel counterplay, and applies normal attack, overwatch and shared LOS rules on emergence. The board displays accessible dust warnings. Added seeded studio regression tests; the six-mission editor, destructible props, hazard effects, expanded waves, civilian rescue and ArtJobs remain separate unfinished work.
 
       Merged Kind Robots PR #4454 as cbb6bb5796728627c1943b844bd739b2dbecd3fd after all 16 final head workflows passed. Picnic Panic now spawns Foreman Thumpkin and two one-hit Warren Wreckers with deterministic next-turn burrow warning rings, blocked-emergence counterplay and real combat/LOS/overwatch rules. New seeded tests prove the behavior. This is a scoped t-004 live encounter increment; stage sharing, destructive scenery, active hazards, civilian rescue, lieutenant boss AI, original art, 96 personalized levels and narrative cinematics remain unfinished and separately tracked. Return READY.
+
+      Bounded map-studio battle increment: use the actual 48-signature villain lieutenant catalogue, add a Quarry lair playtest with Cornerstone's powered four-HP Mags Hardpan, distinct from 1-HP Warren Wrecker henchmen and Foreman Thumpkin's minor-captain role. Implement telegraphed seismic mechanic with actionable shot/move counter, battle UI and deterministic playtest. Keep 48 levels and bosses unfinished.
+    owner: worker
+    claimed_by: 2026-10-29T234700Z-every-villain-t004-lieutenant-m8f6
+    claimed_at: '2026-10-29T23:47:10.965Z'
   - id: t-005
     milestone: m2
     title: "Opening/triggered/closing conversation tree and cinematic editor"
