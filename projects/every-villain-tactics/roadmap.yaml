@@ -60,21 +60,22 @@ tasks:
   - id: t-002
     milestone: m1
     title: "Create deterministic movement, cover, LOS and accuracy mechanics"
-    status: review
-    owner: worker
+    status: done
     claimed_by: 2026-10-29T101000Z-every-villain-tactics-t002-c9v4
     claimed_at: '2026-10-29T10:10:00Z'
-    updated: '2026-10-29T10:10:48.306Z'
+    updated: '2026-10-29T20:05:00Z'
     passes: 0
     stakes: reversible
     note: |-
       Pure seeded tile/elevation combat engine: pathfinding, AP, directional half/full cover, line blockers, high ground, range, flank, statuses, overwatch, attack hit and damage. Show LOS/available targets/hit percentages from a hovered destination BEFORE moving; display formula breakdown and use exactly that formula for resolved attacks and enemy AI.
 
       Pure seeded combat system implemented in kind_robots branch worker/every-villain-tactics-t-002-20261029-c9v4. Integrates movement AP and dash cost, direction-sensitive half/full cover, flank/elevation, obstructed LOS, suppression/guard statuses, overwatch reactions and cover-aware deterministic AI. First Bell now exposes exact projected hit formula and AP on the command deck, including mobile odds preview. Added combat regression tests and CI runner; review and final CI required.
+
+      Kind Robots PR #4430 merged at 3aa72a1; all 23 head checks completed successfully. Pure AP/movement/pathfinding, directional cover, flank/high-ground LOS, deterministic attack previews and resolution, suppression, overwatch reactions, cover-aware rival AI, UI controls, target list, and regression suite. No production deployment or rendered cross-device acceptance claimed.
   - id: t-003
     milestone: m2
     title: "Playable First Bell battle in all four authored perspectives"
-    status: waiting
+    status: ready
     depends_on: [t-001, t-002]
     owner: null
     passes: 0
@@ -88,7 +89,7 @@ tasks:
   - id: t-004
     milestone: m2
     title: "Map designer with terrain, cover, spawns, objectives and testing"
-    status: waiting
+    status: ready
     depends_on: t-002
     owner: null
     passes: 0
