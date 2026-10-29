@@ -425,7 +425,7 @@ tasks:
   - id: t-019
     milestone: m3
     title: "Author identity portrait prompts: 48 people plus 2 guests, student form first, as an auto_submit round"
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     approved_by_human: true
@@ -440,9 +440,11 @@ tasks:
       them as projects/comet-city-academy/art/IDENTITY-PORTRAITS-ROUND-1.yaml with assets
       comet-city-academy/identities/<signature>/student and auto_submit: true, and dry-run them
       with enqueue_art_requests.py. Export with scripts/export_round_art.py --manifest when DONE.
+
+      Authored an approved 50-cell Krea2 student portrait production ledger in projects/comet-city-academy/art/IDENTITY-PORTRAITS-ROUND-1.yaml: all 48 core signatures, preserved Zuzu guest scene and Tess Helio visitor. Canon-correct physical descriptions and distinct scripted academy poses; exact assets named for existing Kind Robots art manifest. Auto-submit is explicitly gated to reviewed main with credential, deduplicates by recorded ArtJob IDs and never claims queued or delivered images before provenance. New pytest exercise invokes real enqueue script dry-run and validates identity count, jobs emptiness, prompt safety and Zuzu visual continuity. CI and PR pending.
     claimed_by: 2026-10-29T230000Z-comet-t019-portraits-7cd2
     claimed_at: '2026-10-29T23:17:29.946Z'
-    updated: '2026-10-29T23:17:29.946Z'
+    updated: '2026-10-29T23:26:19.379Z'
 
   - id: t-020
     milestone: m3
