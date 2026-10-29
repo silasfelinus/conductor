@@ -1,0 +1,8 @@
+version: 1
+project: memory-dungeon
+task: t-029
+operation: review
+session: 2026-10-29T204828Z-memory-dungeon-t-029-11f7e92
+updated: '2026-10-29T20:53:00Z'
+note: >-
+  Scoped adversarial combat checkpoint fix prepared: cap replay validation at 512 turns and reject invalid, unknown or impossible weapon cooldown entries instead of silently clearing them on reload. Regression tests cover forged 100000-turn saves, invalid cooldowns, valid active cooldowns and older missing-ledger saves. Kind Robots focused PR and exact-head CI to follow. Full enemy/item/unlock economy, production art and campaign QA remain open.
