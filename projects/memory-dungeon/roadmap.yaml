@@ -611,7 +611,7 @@ tasks:
   - id: t-029
     milestone: m3
     title: "Establish full enemy, item, achievements and unlock economy"
-    status: review
+    status: ready
     depends_on: t-021
     passes: 0
     stakes: reversible
@@ -619,10 +619,9 @@ tasks:
       Across 16 realms target 96 distinct enemy identities, 128 item definitions (16 relics, 32 charms, 48 tools/consumables, 32 keys/mementos), 64 achievements and 64 non-stat-inflation permanent unlocks. Four ordinary enemies plus elite/guardian per realm. Verify drop boundedness, meaningful tradeoffs and playstyle parity with multi-seed sims; author gallery art prompts.
 
       Scoped adversarial economy repair: make Dark Briar duels, original-Briar challengers and minefield vault rewards idempotent across repeated completion and save restoration. Focused Kind Robots PR and exact-head checks follow. Broader 96-enemy/128-item/64-achievement/64-unlock economy remains open.
-    owner: worker
-    claimed_by: 2026-10-29T094617Z-memory-dungeon-t-029-7a91
-    claimed_at: '2026-10-29T09:46:19.313Z'
-    updated: '2026-10-29T09:47:55.607Z'
+
+      2026-10-29 PT: Merged kind_robots PR #4429 at fbce49c61c04b687b0b58c7166e8c0ef9853936c after all 15 exact-head workflows passed on eb8f155f815b0e0dc38de70a6347fb0fab8d3f0b. Fixed duplicate loot from restored/repeated Dark Briar duels, original-Briar sprite/patrol bouts and 8x8/10x10 minefield completions using a common one-time reward ledger. 64 seeded 80-attempt reward simulations, save roundtrips and independent reality ledgers are regression tested in verifyMemoryWorld. Initial changed-file Prettier failure corrected; final formatting, TypeScript, four contract shards, layout and Memory browser workflows passed. No new ArtJobs or deployment. Return READY for the remaining enemy/item/achievement/unlock economy and art; not For Human Gate.
+    updated: '2026-10-29T09:56:03.155Z'
   - id: t-031
     milestone: m4
     title: "Adversarial balance, continuity and cross-world reachability suite"
