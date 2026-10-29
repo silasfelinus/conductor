@@ -1,0 +1,18 @@
+version: 1
+project: comet-city-academy
+task: t-012
+operation: ready
+owner: worker
+session: 2026-10-29T234100Z-comet-t012-portrait-state-a9c1
+updated: '2026-10-29T23:42:44.825Z'
+note: >-
+  Merged Conductor PR #6796 as 26feff7da6453f057a3d25c7e565731e4d7c45d0
+  after 4/4 green workflows. The human-approved 50-row Krea2 portrait
+  ledger has 50 real distinct ArtJob IDs 50372-50421, so marked it
+  submitted instead of awaiting-submission. Updated pytest to run the
+  real enqueue dry run safely at any lifecycle stage: zero pending jobs
+  once queued, unique positive IDs, and future ArtImage status records.
+  This increment creates no new jobs. Broader t-012 remains incomplete:
+  poll render DONE/FAILED, deliver WebP exports into Kind Robots manifest,
+  then verify actual character art, 48 villain levels, campaign QA and
+  final human acceptance.
