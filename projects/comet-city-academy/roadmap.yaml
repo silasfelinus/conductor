@@ -35,6 +35,14 @@ notes_from_silas: |
   The seven-day original demo in kind_robots PR #4183 is a valid starting
   slice only, NOT the final calendar or canonical game shape. Preserve saved
   games through explicit versioning or First Week compatibility.
+  2026-10-29 PT: Each of the 48 existing power signatures has one unique
+  origin starter mission, a specific antagonist lair level, and a new
+  powerful, named second-in-command distinct from other heroes and the
+  smaller one-hit henchman species' named captain. Allow different
+  hero/villain combinations in tactical play. Reflect the authored
+  story/locales in Prom's 30-day day/night game without overwriting
+  canonical maps, save structures or 48 permanent identities.
+  Full authored slate: POWER-OPENINGS-LAIRS-AND-LIEUTENANTS.md.
   Definitive content bible: DESIGN-BRIEF.md. Master issue:
   https://github.com/silasfelinus/kind_robots/issues/4181
   2026-10-26 PT: NEW identity evolution scope. Every one of the 48
@@ -567,3 +575,35 @@ tasks:
       multi-seed tests are required before calling gameplay/art finished.
       Do not replace the two independently motivated named accomplices per
       mastermind, or duplicate the Oct 29 special t-023 intake task.
+  - id: t-025
+    milestone: m3
+    title: "Integrate 48 unique power origins and villain lairs into Prom day-night narrative"
+    status: waiting
+    depends_on: [t-003, t-021]
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Reuse 48 fully authored power-origin crises and 48 villain-lair
+      concepts from POWER-OPENINGS-LAIRS-AND-LIEUTENANTS.md as accessible,
+      character-sensitive day and night incidents with unique power
+      solutions, geographic continuity, nontrivial choice and
+      discoverable secrets. Do not change Prom's 30-day schedule, save
+      format or existing 48 identities to fake level completeness.
+      Tactical counterpart owns fully playable standalone arena maps.
+  - id: t-026
+    milestone: m3
+    title: "Author and integrate 48 independent lieutenant motives and choices"
+    status: waiting
+    depends_on: [t-016, t-025]
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      One original 4-HP-benchmark powered second-in-command per villain,
+      different from all 48 permanent heroes, their dramatic foil and
+      the named captain of the one-hit species crew. Deliver persistent
+      relationship, moral agency, defection and negotiation paths for
+      each; a lieutenant may be defeated, recruited or abandon the
+      villain on a scripted basis. Reuse canonical identityCampaignStages
+      lookup and link actual validated ArtJobs.

@@ -24,6 +24,16 @@ notes_from_silas: |
   Existing Prom of Doom codenames stay permanent across roles, and its 30-day
   game and saved runs remain untouched. First campaign is Prom of Doom: Crossfire.
   Master issue: https://github.com/silasfelinus/kind_robots/issues/4407
+  2026-10-29 PT second expansion: In addition to 48 permanent superhero
+  identities, each signature now owns one unique power-specific starting
+  mission and one villain-owned lair tactical level. The villain commands
+  one unique powered four-HP-benchmark second-in-command distinct from
+  the existing one-hit named henchman species and minor species captain.
+  Do not use another of the 48 heroes as that second-in-command: those
+  heroes remain dramatic foil rivals. Cross-match any hero's origin opener
+  with any selected villain's lair. Keep the 6-mission story campaign,
+  fixed 48 personal routes, and production gates intact. Full authored
+  48x3 slate is in Prom of Doom POWER-OPENINGS-LAIRS-AND-LIEUTENANTS.md.
   2026-10-29 PT: Require a cinematic splash / New / Continue split into story and
   one-shot battles, Settings and a progress Scrapbook. The generic campaign may
   pair any hero against any hero-villain, while each of the 48 identities also
@@ -338,3 +348,67 @@ tasks:
       stage-by-stage scripts, allies, special matchup dialogue, secrets
       and ending. Generic player-chosen any-hero-versus-any-hero story remains
       playable and different. Coverage audit must distinguish the two.
+  - id: t-021
+    milestone: m3
+    title: "Ship 48 power-specific playable origin opening battles"
+    status: waiting
+    depends_on: [t-005, t-017]
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      48/48 authored metadata blueprints and typed lookup now exist in Kind
+      Robots identityCampaignStages.json; the dossier displays those concepts.
+      Make each origin a physically unique playable opening with an original
+      arena, power-only solution, meaningful alternative choice, durable
+      consequences and distinct cinematic intro; support arbitrary hero role.
+      Start with one complete vertical slice and adversarial playtest before
+      scaling. Do not count the authored 48 as 48 tested maps.
+  - id: t-022
+    milestone: m3
+    title: "Build 48 villain-owned lairs with changing tactical environments"
+    status: waiting
+    depends_on: [t-011, t-021]
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Each canonical villain signature contributes its own lair when facing
+      any playable protagonist. Implement 48 distinct physical stage
+      layouts with environmental phase shifts, terrain/cover consequences,
+      discoverable secrets, meaningful mission objective and story
+      ramifications. Reuse the shared editor instead of 48 disconnected
+      one-off map engines. Independently verify generic and bespoke
+      foil matchups, actual art and authored endings.
+  - id: t-023
+    milestone: m3
+    title: "Implement 48 empowered second-in-command bosses with defections"
+    status: waiting
+    depends_on: [t-017, t-018]
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      One named independent lieutenant per canonical villain, NOT another
+      permanent hero and NOT the named captain of the one-hit minions.
+      Use the 48 authored profiles from identityCampaignStages.json;
+      start with a four-hit-point boss benchmark and distinctive telegraphed
+      area/terrain mechanic, visible counter, motives and reversible
+      negotiation, betrayal or mercy state. Support lair phase control,
+      seed-stable enemy AI and durable encounter history. Existing 48
+      species crews remain one-hit; never inflate their durability.
+  - id: t-024
+    milestone: m4
+    title: "Audit 96 built levels, 48 lieutenants and verified original art"
+    status: waiting
+    depends_on: [t-022, t-023, t-012]
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Verify each of the 48 origin battles, 48 lair stages, and 48 multi-hit
+      named lieutenant encounters through seeded runs, cross-match
+      adversarial pairings, breakable environment/secret conditions,
+      phone/tablet/desktop visual QA, and durable ArtJob/ArtImage
+      provenance. Authoring records count as concepts, not maps or art.
+      Keep human design and public-release gates separate.
