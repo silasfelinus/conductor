@@ -1,0 +1,20 @@
+version: 1
+project: memory-dungeon
+task: t-040
+operation: ready
+session: 2026-10-29T034927Z-memory-dungeon-t-040-8c6d
+updated: '2026-10-29T04:00:06Z'
+note: >-
+  Partial House atlas alignment increment merged as kind_robots PR #4423,
+  squash f10f47dec14383c0564f0532bae3f6d51f5b1c6e. Removed grid padding/gaps,
+  squared the 36 clickable hitboxes, lowered painted-map obscuration and kept
+  outer-edge keyboard focus outlines inside both original and mirrored maps.
+  New contract assertions; all 14 exact-head Actions workflows passed on
+  fe7ca13be02052687576653140aa674dbd15fcff (Contract Tests #40814820167,
+  TypeScript #40814820204, Layout #40814820212, Formatting #40814820236).
+  No new ArtJobs. Existing Krea2 atlas ArtJobs #50365 and #50366 remain PENDING
+  with 0/2 delivered and null ArtImage IDs in latest committed HOUSE-ATLAS-STATUS.json;
+  fresh media HEAD could not run in this sandbox (DNS resolution failure).
+  Remaining: verify delivered image URLs, painted six-by-six room topology,
+  rendered 390/768/1440 layout, keyboard, reduced-motion and save/resume.
+  Issue kind_robots#4380 stays open; project ACTIVE, no deployment or human gate.
