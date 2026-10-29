@@ -178,6 +178,15 @@ def build_request(ledger, lane, subject, source_image=None, last_image=None):
         "isPublic": bool(ledger.get("is_public", False)),
         "isMature": bool(ledger.get("is_mature", False)),
     }
+    # Priority is a queue scheduling hint, not a claim of rendering or delivery.
+    # Subject overrides allow urgent repair cells without resubmitting a whole
+    # style comparison. Preserve each accepted ArtJob's recorded ID on retry.
+    priority = subject.get("priority", ledger.get("priority"))
+    if priority is not None:
+        priority = int(priority)
+        if priority < 0 or priority > 1000:
+            raise ValueError("Art ledger priority must be between 0 and 1000")
+        body["priority"] = priority
     if lane.get("checkpoint"):
         body["checkpoint"] = lane["checkpoint"]
     if lane["engine"] in SDXL_ENGINES:
