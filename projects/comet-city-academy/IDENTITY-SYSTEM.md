@@ -55,6 +55,12 @@ The playable prototype uses 6 origins × 8 affinities = **48 signature IDs** and
 
 **No arbitrary alignment toggle.** Transformation prerequisites must be legible: completed personal quests, actionable evidence, values under pressure, agreement with a mentor/partner (when applicable), public actions, and civilian consequences. A role change alters gameplay, resources, risks, enemy counters and authored dialogue, not simply a label.
 
+## Power-origin stages, villain lairs and independent lieutenants
+
+The single-name 48-character canon now has **one unique origin opening per power identity**, **one unique antagonist lair per villain identity**, and **one separate powered lieutenant per villain**. These support the existing roster without minting a new stable name for any of the 48. Each lieutenant is an independent, named number two with a battlefield trick, telegraphed counter and reason to stay loyal or defect; they must not be conflated with (1) a one-hit minor species captain, (2) an existing permanent hero who is the narrative foil, or (3) an unrelated major accomplice who happens to visit the chapter. Every route may use one or more of those categories, but the **command relationship is explicitly owned by the villain signature**.
+
+The full 48×3 slate is in [POWER-OPENINGS-LAIRS-AND-LIEUTENANTS.md](POWER-OPENINGS-LAIRS-AND-LIEUTENANTS.md) and the Kind Robots typed `campaignStagesFor(signature)` catalogue. All missions and bosses still require playability, ArtJob provenance and tests before claiming completion.
+
 ## Signature villain henchmen (2026-10-29 PT)
 
 Each of the **48 permanent villains** has one original *named one-hit henchman breed*, with its own named spokesperson, appearance, telegraphed battlefield move, counterplay and personal loyalty fault line. Read the 48-row [Villain Henchman Bestiary](VILLAIN-HENCHMEN.md) and its linked Kind Robots `utils/cometAcademy/villainHenchmen.json`, indexed by the exact, stable `signature`. This is **one henchman family per existing villain**, **not** a fourth playable form or 48 new origin/affinity heroes. The same association is used by Every Villain Tactics.
