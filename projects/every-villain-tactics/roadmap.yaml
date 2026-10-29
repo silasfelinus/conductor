@@ -24,6 +24,17 @@ notes_from_silas: |
   Existing Prom of Doom codenames stay permanent across roles, and its 30-day
   game and saved runs remain untouched. First campaign is Prom of Doom: Crossfire.
   Master issue: https://github.com/silasfelinus/kind_robots/issues/4407
+  2026-10-29 PT: Require a cinematic splash / New / Continue split into story and
+  one-shot battles, Settings and a progress Scrapbook. The generic campaign may
+  pair any hero against any hero-villain, while each of the 48 identities also
+  receives its own scripted foil matchup with exclusive scenes and ending.
+  Add one-hit burrowing bunny men, teleporting imps and haunted toys as lackey
+  types; each hero has an individual active ability and differentiated attack
+  range, movement, tank/support role. Give combat rounds deterministic points
+  for no knockouts, no damage and secrets, persisted into the Scrapbook.
+  Priority venues: college quad with a huge central fountain, cramped science
+  lab, and a City Plaza picnic one-shot ambushed by bunny men.
+  Do not present prototype map presets as finished authored scenarios/art.
 milestones:
   - id: m1
     title: "SHAPE - art-led front end, combat mathematics and role matrix"
@@ -243,3 +254,74 @@ tasks:
     note: >-
       FOR SILAS: Explicitly approve any public game release, external access to
       community level gallery or publishing; admin previews are internal only.
+
+  - id: t-016
+    milestone: m2
+    title: "Cinematic front menu, story/one-shot modes, settings and scrapbook shell"
+    status: ready
+    depends_on: t-003
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Front-load splash with New and Continue for both story and replayable one-shot
+      fights, Settings, and a visually explorable scrapbook. Ground Continue and
+      awarded scrapbook tiles in t-006 saves (never fake progress); preserve the
+      admin-only route and original Prom saves. Story supports flexible foil
+      selection without erasing exclusive fixed-cast arcs. Phone/desktop console QA.
+  - id: t-017
+    milestone: m3
+    title: "Distinct signature hero powers and tactical range/mobility/defense roles"
+    status: ready
+    depends_on: t-002
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Define actual stats, short/mid/long range weapon profiles, mobility,
+      defenses/tanking/support and at least one named mechanically distinct
+      power per each of the 48 canonical heroes. Seeded legal-target previews,
+      special cooldowns/AP/status/AI parity, accessibility and encounter balance.
+      Start with a small tested roster subset, then verify 48/48 authored powers.
+  - id: t-018
+    milestone: m3
+    title: "One-hit henchmen and Picnic Panic one-shot encounter"
+    status: waiting
+    depends_on: [t-004, t-017]
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Add distinct one-hit burrowing bunny men surfacing from board tiles,
+      teleporting imps, and malfunctioning toy swarms. SPECIES Facets for
+      non-human lackeys. Build and write City Plaza Picnic Panic as a replayable
+      one-shot using editor maps, with objectives, encounter timing and
+      opening/triggered/final scenes. Named elites are exceptions to one-hit.
+  - id: t-019
+    milestone: m3
+    title: "Deterministic post-battle points and earned scrapbook achievements"
+    status: waiting
+    depends_on: [t-006, t-016]
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Mission-end scored breakdown for flawless survival, zero damage,
+      no knockouts, optional secrets, rescues and tactical bonuses, with
+      explicit eligible conditions. Replay-safe recorded points, scrapbook
+      heroes won with, villains beaten and authored route discoveries.
+      Distinguish end-of-turn summaries from mission completion.
+  - id: t-020
+    milestone: m3
+    title: "48 canonical hero-villain foil pairings beyond generic story mode"
+    status: waiting
+    depends_on: t-009
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Each of the 48 fixed-cast protagonist paths names a deliberately
+      selected other hero as bespoke villain foil and has genuinely distinct
+      stage-by-stage scripts, allies, special matchup dialogue, secrets
+      and ending. Generic player-chosen any-hero-versus-any-hero story remains
+      playable and different. Coverage audit must distinguish the two.
