@@ -1,0 +1,79 @@
+name: Submit high-priority Capes western style bakeoff
+
+# Authorized private art submission after review and merge to main only.
+# Shares the auto-art-generate concurrency lock: no duplicate 36-cell sweep.
+on:
+  push:
+    branches: [main]
+    paths:
+      - projects/comet-city-academy/art/CAPES-WESTERN-STYLE-CHECK-ROUND-1.yaml
+      - .github/workflows/submit-capes-style-check.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: auto-art-generate
+  cancel-in-progress: false
+
+jobs:
+  submit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      KR_BASE_URL: https://kindrobots.org
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install pyyaml pytest
+      - name: Verify 36 approved private prompt/engine/priority requests
+        run: python -m pytest tests/test_capes_style_bakeoff.py -q
+      - name: Enqueue only unsubmitted Capes cells
+        env:
+          KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+        run: |
+          if [ -z "$KR_API_TOKEN" ]; then
+            echo "::warning::KR_API_TOKEN absent: Capes prompts remain staged, not submitted."
+            exit 0
+          fi
+          python scripts/enqueue_art_requests.py projects/comet-city-academy/art/CAPES-WESTERN-STYLE-CHECK-ROUND-1.yaml --live
+          python scripts/enqueue_art_requests.py projects/comet-city-academy/art/CAPES-WESTERN-STYLE-CHECK-ROUND-1.yaml --status
+      - name: Save actual ArtJob IDs without force pushing
+        if: always()
+        run: |
+          set -euo pipefail
+          path=projects/comet-city-academy/art/CAPES-WESTERN-STYLE-CHECK-ROUND-1.yaml
+          if git diff --quiet -- "$path"; then
+            echo "No new accepted ArtJob ids to persist."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "$path"
+          git commit -m "art(capes): record accepted style-check ArtJob IDs [skip ci]"
+          for attempt in 1 2 3 4 5; do
+            if git push origin HEAD:main; then exit 0; fi
+            git fetch origin main
+            git rebase origin/main || exit 1
+            sleep "$attempt"
+          done
+          echo "::error::Could not persist Capes ArtJob IDs."
+          exit 1
+      - name: Report accepted cell count
+        run: |
+          python - <<'PY'
+          import yaml
+          path = "projects/comet-city-academy/art/CAPES-WESTERN-STYLE-CHECK-ROUND-1.yaml"
+          d = yaml.safe_load(open(path))
+          count = sum(bool(s.get("jobs", {}).get(l["key"])) for s in d["subjects"] for l in d["lanes"])
+          print(f"Capes style check: {count}/36 durable ArtJob IDs recorded in this workflow checkout")
+          if count < 36:
+              print("::warning::Some cells remain unsubmitted. The ledger preserves them for retry.")
+          PY
