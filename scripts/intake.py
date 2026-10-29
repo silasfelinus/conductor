@@ -62,7 +62,7 @@ ART_PROMPTS_HEADER = """# art-prompts.yaml — Image queue for Conductor project
 #   4. Save to the image_path listed below.
 #   5. Run `python scripts/build_workspace.py` to refresh the workspace.
 #
-# Status values: pending
+# Status values: pending, needs-prompt (no prompt written yet; never rendered)
 
 """
 
@@ -98,43 +98,37 @@ def write_art_prompts(data: dict) -> None:
 # project scaffolded 2026-10-03..06 sat at status: pending behind that 422 while
 # Auto Art Generate stayed green (its consume steps are continue-on-error).
 NO_TEXT = "every surface bare and unmarked"
-# Pitch copy about runtime cost ("No LLM at runtime.") describes the product, not the
-# picture, and is itself a negation; drop any sentence that mentions an LLM.
-_LLM_SENTENCE = re.compile(r"[^.;]*\bLLM\b[^.;]*[.;]?", re.I)
+# The project description is pitch copy, not a picture. Pasting it in as the
+# subject ("flat minimal app icon, Turn the Rebel Button into a playful 100-press
+# journey: after ten presses the button moves, shrinks, hides behind walls ...")
+# gave Krea a feature list to paint: a generic orb with REBEL BUTTON lettered
+# across it (2026-10-27). Silas called the results obviously substandard
+# (2026-10-29). Art is built only from a concrete visual subject; without one the
+# variants wait at NEEDS_PROMPT, which no queue renders, until someone writes it.
+NEEDS_PROMPT = "needs-prompt"
+ART_SIZES = {"icon": "256x256", "card": "512x768", "hero": "1280x720"}
+ART_FRAMING = {
+    "icon": "one bold subject centred on a plain bright backdrop, cel-shaded with glossy "
+            "highlights and a bold dark outline, premium game icon, square composition",
+    "card": "vertical 2:3 portrait composition with a clear foreground subject and layered "
+            "depth, hand-painted game illustration with rich saturated color and warm rim light",
+    "hero": "wide 16:9 landscape with a strong foreground anchor and a deep atmospheric "
+            "background, cinematic hand-painted game illustration",
+}
 
 
-def strip_llm_copy(text: str) -> str:
-    return " ".join(_LLM_SENTENCE.sub(" ", text).split())
-
-
-def art_essence(slug: str, desc: str) -> str:
-    essence = strip_llm_copy(desc).rstrip(".;, ")
-    return essence or f"{titleize(slug)} project"
-
-
-def default_art_entry(slug: str, desc: str) -> dict:
-    essence = art_essence(slug, desc)
-    return {
-        "project": slug,
-        "icon": {
-            "image_path": f"projects/images/{slug}-icon.webp",
-            "size": "256x256",
-            "status": "pending",
-            "prompt": f"flat minimal app icon, {essence}, bold clean vector shapes, square composition, {NO_TEXT}",
-        },
-        "card": {
-            "image_path": f"projects/images/{slug}-card.webp",
-            "size": "512x768",
-            "status": "pending",
-            "prompt": f"flat minimal portrait illustration, {essence}, centered subject on soft gradient backdrop, 2:3 portrait composition, {NO_TEXT}",
-        },
-        "hero": {
-            "image_path": f"projects/images/{slug}-hero.webp",
-            "size": "1280x720",
-            "status": "pending",
-            "prompt": f"flat minimal wide panoramic, {essence}, cinematic scale, 16:9 landscape, {NO_TEXT}",
-        },
-    }
+def default_art_entry(slug: str, subject: str = "") -> dict:
+    subject = " ".join(str(subject or "").split()).rstrip(".;, ")
+    entry: dict = {"project": slug}
+    for variant, size in ART_SIZES.items():
+        asset = {"image_path": f"projects/images/{slug}-{variant}.webp", "size": size}
+        if subject:
+            asset["status"] = "pending"
+            asset["prompt"] = f"{subject}, {ART_FRAMING[variant]}, {NO_TEXT}"
+        else:
+            asset["status"] = NEEDS_PROMPT
+        entry[variant] = asset
+    return entry
 
 
 def _insert_list_item(text: str, item: str, before: str | None = None) -> str:
@@ -274,7 +268,7 @@ def register_override(slug: str, kind: str) -> None:
     print(f"✓ Registered {slug} in project-overrides.yaml")
 
 
-def register_art_prompts(slug: str, desc: str) -> None:
+def register_art_prompts(slug: str, subject: str = "") -> None:
     """Append the icon/card/hero block by text surgery instead of a yaml round-trip.
 
     write_art_prompts() re-emits the whole file from a parsed dict, which drops
@@ -291,7 +285,7 @@ def register_art_prompts(slug: str, desc: str) -> None:
         print(f"  (art-prompts.yaml already has entries for {slug})")
         return
 
-    entry = default_art_entry(slug, desc)
+    entry = default_art_entry(slug, subject)
     block = yaml.safe_dump(
         [entry], sort_keys=False, allow_unicode=True, width=88, default_flow_style=False
     )
@@ -306,7 +300,12 @@ def register_art_prompts(slug: str, desc: str) -> None:
         return
 
     ART_PROMPTS_FILE.write_text(text)
-    print(f"✓ Queued {slug} icon/card/hero prompts in projects/art-prompts.yaml")
+    if subject:
+        print(f"✓ Queued {slug} icon/card/hero prompts in projects/art-prompts.yaml")
+    else:
+        print(f"! {slug} icon/card/hero are {NEEDS_PROMPT} in projects/art-prompts.yaml: write a "
+              "concrete prompt for each (what is visible, not what the project does) and set "
+              "status: pending, or re-run intake with --art-subject")
 
 
 def design_brief_text(title: str, goal: str, today: str) -> str:
@@ -391,6 +390,9 @@ def main(argv=None):
     parser.add_argument("--goal", default="", help="One-line goal — seeds DESIGN-BRIEF.md and the CONTROL.md block")
     parser.add_argument("--repo", default=None, help="GitHub repo (owner/name), or omit for no external repo")
     parser.add_argument("--desc", default="", help="Short description (falls back to --goal)")
+    parser.add_argument("--art-subject", default="",
+                        help="What the project art shows, as a picture: 'a glossy red arcade button "
+                             "running away on springy legs'. Omit and the art waits at needs-prompt")
     args = parser.parse_args(argv)
 
     slug = slugify(args.slug)
@@ -452,7 +454,7 @@ tasks:
 
     register_priority(slug)
     register_override(slug, args.kind)
-    register_art_prompts(slug, desc or f"{titleize(slug)} project")
+    register_art_prompts(slug, args.art_subject)
     register_control_block(slug, args.kind, goal)
 
     print(f"\nNext: edit projects/{slug}/roadmap.yaml + DESIGN-BRIEF.md to fill in milestones, tasks, and the brief.")

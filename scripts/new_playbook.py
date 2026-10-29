@@ -108,6 +108,7 @@ def main(argv=None) -> int:
     parser.add_argument("--goal", default="", help="One-line definition of done")
     parser.add_argument("--notes", default="", help="Silas's direction, verbatim, for notes_from_silas")
     parser.add_argument("--blueprint", default="", help="File holding a Playbook Forge blueprint (pitch text or JSON)")
+    parser.add_argument("--art-subject", default="", help="What the project art shows, as a picture (see intake.py)")
     args = parser.parse_args(argv)
 
     blueprint = read_blueprint(Path(args.blueprint).read_text()) if args.blueprint else None
@@ -125,6 +126,7 @@ def main(argv=None) -> int:
         "--goal", goal,
         "--repo", "silasfelinus/kind_robots",
         "--desc", f"{title}: a playbook game on the Playbook Kit.",
+        "--art-subject", args.art_subject,
     ])
 
     project_dir = intake.PROJECTS_DIR / slug

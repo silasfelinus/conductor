@@ -66,7 +66,7 @@ ART_PROMPTS_HEADER = """# art-prompts.yaml — Image queue for Conductor project
 #   5. Save to the image_path listed below.
 #   6. Run `python scripts/build_workspace.py` to refresh the workspace.
 #
-# Status values: pending
+# Status values: pending, needs-prompt (no prompt written yet; never rendered)
 
 """
 
@@ -178,7 +178,10 @@ def image_exists(slug, variant, sub):
 def normalize_pending_variant(slug, variant, sub):
     normalized = dict(sub)
     normalized["image_path"] = normalized.get("image_path") or default_image_path(slug, variant)
-    normalized["status"] = "pending"
+    # A variant with no prompt yet stays needs-prompt (scripts/intake.py), so the
+    # queue never renders it; anything else missing on disk is pending.
+    needs_prompt = str(sub.get("status") or "").strip().lower() == "needs-prompt"
+    normalized["status"] = "needs-prompt" if needs_prompt and not sub.get("prompt") else "pending"
     return normalized
 
 

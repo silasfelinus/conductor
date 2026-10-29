@@ -236,6 +236,14 @@ GLACIER_CLOCK = (
 )
 
 
+def test_zuzu_scenario_drops_the_untitled_scene_opener_too():
+    body = GLACIER_CLOCK.replace("establishing scene art for the moment titled The Glacier Clock Forest, ",
+                                 "establishing scene art, ")
+    positive, _ = compose_checkpoint_prompt(body, "arthemy", "zuzu-gamebook")
+    assert "establishing scene art" not in positive
+    assert "Zuzu crosses a clockwork forest" in positive
+
+
 def test_zuzu_scenario_drops_krea_clauses_that_commission_a_second_koala():
     """ArtJob 40269 (2026-10-18) drew a small koala riding Zuzu's hat."""
     positive, _ = compose_checkpoint_prompt(GLACIER_CLOCK, "arthemy", "zuzu-gamebook")

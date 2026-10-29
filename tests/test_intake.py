@@ -236,13 +236,39 @@ def test_default_art_prompts_pass_the_negation_contract():
     # scaffolded 2026-10-03..06 sat at status: pending behind it.
     import scripts.repair_negation_art_prompts as negation
 
-    entry = intake.default_art_entry("lantern-garden", "Tap to light lanterns in a night garden.")
+    entry = intake.default_art_entry("lantern-garden", "paper lanterns glowing in a night garden")
     for variant in ("icon", "card", "hero"):
         prompt = entry[variant]["prompt"]
+        assert entry[variant]["status"] == "pending"
+        assert prompt.startswith("paper lanterns glowing in a night garden, ")
         assert negation.violations(prompt) == [], prompt
         assert intake.NO_TEXT in prompt
 
 
-def test_art_essence_drops_llm_runtime_copy():
-    assert intake.art_essence("x", "Tap to light lanterns. No LLM at runtime.") == "Tap to light lanterns"
-    assert intake.art_essence("x", "Pure client-side game, no LLM.") == "X project"
+def test_art_without_a_visual_subject_waits_instead_of_painting_the_pitch():
+    # Rebel Button's art was "flat minimal app icon, Turn the Rebel Button into a playful
+    # 100-press journey: ..." -- the description pasted in as the subject (2026-10-27).
+    entry = intake.default_art_entry("rebel-button")
+    for variant in ("icon", "card", "hero"):
+        assert entry[variant]["status"] == intake.NEEDS_PROMPT
+        assert "prompt" not in entry[variant]
+
+
+def test_intake_never_puts_the_description_in_the_art_prompt(tmp_path, monkeypatch):
+    root, _ = _fixture_repo(tmp_path, monkeypatch)
+    desc = "Turn the button into a playful 100-press journey"
+    intake.main(["press-toy", "--kind", "software", "--desc", desc])
+    art = yaml.safe_load((root / "projects" / "art-prompts.yaml").read_text())
+    entry = next(e for e in art["images"] if e["project"] == "press-toy")
+    assert all(entry[v]["status"] == intake.NEEDS_PROMPT for v in ("icon", "card", "hero"))
+    assert desc not in (root / "projects" / "art-prompts.yaml").read_text()
+
+
+def test_needs_prompt_survives_the_workspace_rewrite():
+    import scripts.build_workspace as workspace
+
+    held = workspace.normalize_pending_variant("press-toy", "icon", {"status": "needs-prompt"})
+    assert held["status"] == "needs-prompt"
+    written = workspace.normalize_pending_variant(
+        "press-toy", "icon", {"status": "needs-prompt", "prompt": "a red button on springy legs"})
+    assert written["status"] == "pending"

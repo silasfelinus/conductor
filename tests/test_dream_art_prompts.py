@@ -37,7 +37,49 @@ SEASONING = dict(
 def test_item_prompt_leads_with_the_object_not_its_function():
     prompt = dap.reward_prompt(**LADLE)
     assert prompt.startswith("a single Tidefortune Ladle, one object alone")
-    assert prompt.index("dented tin ladle") < prompt.index("hidden fortune")
+    assert "dented tin ladle" in prompt
+    # What it does in play is card copy, not something visible (2026-10-29).
+    assert "hidden fortune" not in prompt
+
+
+def test_card_copy_stays_out_of_every_prompt():
+    """Silas, 2026-10-29: "obviously sub standard". Each label below carried a
+    sentence of card copy -- fame, motive, game effect -- into the picture."""
+    skill = dap.reward_prompt(**SEASONING)
+    character = dap.character_prompt(
+        "Marshal Oyuki Hakuro", "a tall grey heron in a faded indigo haori",
+        "She wants to retire with one case solved the honest way.",
+        "A long-barrelled flintlock wrapped in white silk.", "Zuzu", "Dust everywhere.")
+    location = dap.location_prompt(
+        "Tanuki Tollhouse", "a squat timber tollhouse on a red-rock pass",
+        "Toll keepers accept stories as readily as coin.",
+        "A rider pays with a single copper button.", "Zuzu", "Dust everywhere.")
+    scenario = dap.scenario_prompt(
+        "Copper Button at the Toll", "a heron lays a copper button on the counter",
+        "Tanuki Tollhouse", "Zuzu", "Dust everywhere.")
+    for prompt in (dap.reward_prompt(**LADLE), skill, character, location, scenario):
+        for label in ("known for:", "visibly carrying:", "driven by this:",
+                      "readable in its shape:", "effect itself is the subject:",
+                      "most telling moment:", "moment titled"):
+            assert label not in prompt, (label, prompt)
+    assert "reprogram edible nanites" not in skill
+    assert "retire" not in character
+    assert "carrying a long-barrelled flintlock wrapped in white silk" in character
+    assert "accept stories" not in location
+    assert "at its most telling moment, a rider pays with a single copper button" in location
+    assert "Copper Button at the Toll" not in scenario
+    assert scenario.startswith("establishing scene art, a heron lays a copper button")
+
+
+def test_rarity_takes_the_right_article():
+    assert "given an uncommon ability" in dap.reward_prompt(**SEASONING)
+    assert "given a rare artifact" in dap.reward_prompt(**LADLE)
+    assert "a uncommon" not in dap.reward_prompt(**{**LADLE, "rarity": "UNCOMMON"})
+
+
+def test_legacy_item_with_no_look_still_describes_itself_from_its_effect():
+    prompt = dap.reward_prompt(**{**LADLE, "look": ""})
+    assert "a crafted object whose form makes plain what it does" in prompt
 
 
 @pytest.mark.parametrize("reward", [LADLE, SEASONING], ids=["item", "skill"])
