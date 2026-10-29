@@ -91,18 +91,18 @@ tasks:
   - id: t-004
     milestone: m2
     title: "Map designer with terrain, cover, spawns, objectives and testing"
-    status: claimed
+    status: review
     depends_on: t-002
     owner: worker
     claimed_by: 2026-10-29T210100Z-every-villain-tactics-t004-ix7f
     claimed_at: '2026-10-29T21:01:00Z'
-    updated: '2026-10-29T21:01:00Z'
+    updated: '2026-10-29T21:13:00Z'
     passes: 0
     stakes: reversible
-    note: >-
-      Admin in-browser paintable tile/elevation/obstacle editor with destructible
-      props, squad spawn areas, victory/fail criteria, reinforcements, hazards,
-      timings and AI behavior. Playtest in editor with exact game rules.
+    note: |-
+      Admin in-browser paintable tile/elevation/obstacle editor with destructible props, squad spawn areas, victory/fail criteria, reinforcements, hazards, timings and AI behavior. Playtest in editor with exact game rules.
+
+      Submitted editable 9x6 studio implementation: fountain/quad, lab, plaza and First Bell stage presets; wall/cover/elevation/spawn/secret/hazard brushes, legality and accessible UI, seeded combat playtesting and regression CI. Initial editor is intentionally a Vignette slice. Fully interactive hazards, reinforcements, scripted triggers and saved/community-level editing remain t-004/t-005/t-011 follow-on scope; do not call them complete.
   - id: t-005
     milestone: m2
     title: "Opening/triggered/closing conversation tree and cinematic editor"
