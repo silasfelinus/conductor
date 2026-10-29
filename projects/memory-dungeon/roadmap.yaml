@@ -230,11 +230,11 @@ tasks:
   - id: t-001
     milestone: m1
     title: "Seeded expedition reducer, room schema and Classic adapter"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 2026-10-29T075126Z-memory-dungeon-t-001-6b9e74
     claimed_at: '2026-10-29T07:50:40.562Z'
-    updated: '2026-10-29T07:50:40.562Z'
+    updated: '2026-10-29T07:52:17.853Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -243,6 +243,8 @@ tasks:
       Scoped seeded-run foundation hardening: original and mirrored House save restoration now refuse HD-36 visits before an earned Hearth verdict, even when a forged visited array contains a graph-connected path. Existing earned original legacy and mirrored endings remain restorable. Four focused code/test files on Kind Robots branch; exact-head CI and merge follow. Full seeded expedition reducer and three-floor simulator remain outstanding; return READY after partial merge.
 
       2026-10-28 PT: Scoped House save-integrity increment merged in kind_robots PR #4426 at 779546b12c169a3c7113e381ea694fdf835bf7cf. Exact final head dfe12124649add93bea9b8bac801360365db4da4 passed all 14 workflows: Contract Tests #40831551803, TypeScript #40831551837, formatting #40831551821, browser interruption #40831551850. Original and mirrored HD-36 visits now require a Hearth verdict during save restoration; forged final-room decisions and contradictory endings cannot bypass the exit. Legacy earned endings preserved. Master issue #4136 comment 6490108647. No new ArtJobs, deploy or public release. Return READY: full seeded expedition reducer, deterministic three-floor simulator, and Classic adapter remain unimplemented. Warden passage gate and rendered device acceptance remain further work. Not For Human Gate.
+
+      Scoped Warden-passage restore validation prepared for original and mirrored House. Prevent HD-33+ visits without guardian clearance, preserve legitimate Hearth routes and legacy earned saves, and add adversarial regressions. Exact-head CI and merge pending; seeded expedition reducer and three-floor simulator remain open.
   - id: t-002
     milestone: m1
     title: "Optional scope feedback on story and complexity"
@@ -343,8 +345,8 @@ tasks:
   - id: t-009
     milestone: m3
     title: "Author floor story, recurring cast and consequential decisions"
-    status: ready
-    updated: '2026-10-29T06:07:19.553Z'
+    status: claimed
+    updated: '2026-10-29T07:58:10Z'
     passes: 0
     stakes: reversible
     note: >-
@@ -379,6 +381,9 @@ tasks:
       Scoped Scylla/Char House companion-dialogue increment prepared on worker/memory-dungeon-t-009-twins-landing-c6e8: twelve choice-dependent beats at HD-10, HD-11 and HD-30, with the fully earned sisters quest payoff gated on a Briar meeting, Char's rescue, her ward conversation and final dialogue. Authored-choice, missing-prerequisite, forged-choice and save-restoration regression tests added. Exact-head CI and merge follow; wider narrative, painted art and rendered game acceptance remain open.
 
       2026-10-28 PT: Merged Kind Robots PR #4425, squash 2a0bb24965672d9ed24c4067d6646e6a7fc671cb, after all 14 exact-head Actions workflows passed on 08bb5e2e4d6eb625a2da01ddbe7d2ef0c8d01dd5 (Contract Tests #40826712816, TypeScript #40826712880, formatting #40826712787, browser interruption #40826712752). Added twelve authored Scylla/Char companion beats at HD-10/HD-11/HD-30. The fully earned landing branch requires the original Briar meeting, HD-10 improvisation, HD-11 charm conversation and HD-30 talk; partial, forged, resting and shortcut routes retain distinct outcomes and explicit costs. Source choices, quest state, serialization and restoration are tested. Initial assertion mismatch corrected before final green. No new ArtJobs or deployment. Return READY for further campaign writing, rendered art delivery and device/adversarial acceptance; not For Human Gate.
+    owner: worker
+    claimed_by: 2026-10-29T075810Z-memory-dungeon-t-009-74c2e9
+    claimed_at: '2026-10-29T07:58:10Z'
   - id: t-010
     milestone: m3
     title: "Ship riddle and logic minigame framework plus authored puzzle pack"
