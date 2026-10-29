@@ -630,3 +630,26 @@ tasks:
       content kind) so progress reports never conflate authored text
       with built maps, rendered art or playtested combat. Reviewer
       kaizen from PR #6793; claims nothing is playable yet.
+
+  - id: t-028
+    milestone: m3
+    title: "HIGH PRIORITY · Capes shared Western-art checkpoint style gate and 36-job render review"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Silas Oct 29 PT explicitly approved a high-priority checkpoint bakeoff:
+      the same six concrete character/scene concepts across Krea 2, Arthemy
+      Western Art, Nova Comic, Illustrij, DreamShaper XL Turbo and Unstable
+      Diffusers. Exclude generic Flux, Pony and furry-first checkpoints.
+      Ledger art/CAPES-WESTERN-STYLE-CHECK-ROUND-1.yaml uses auto_submit,
+      fixed per-subject seeds, model-appropriate prompt grammar, private
+      renders and priority 900. Check numeric ArtJob IDs after auto-art-generate
+      actually enqueues; then inspect 36 true ArtImages and failures. The
+      /admin/capes style-gate-first console has live job status, side-by-side
+      art and local scoring; do not claim submitted from YAML or rendered
+      from DONE without verifying image paths. Shared art bible and game
+      production style remain a human editorial gate. After approval,
+      produce the first Cornerstone/Backdraft/Firewall card and standee
+      family using shared Prom/Tactics ArtImage keys.
