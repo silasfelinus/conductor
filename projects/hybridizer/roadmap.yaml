@@ -85,21 +85,22 @@ tasks:
   - id: t-004
     milestone: m2
     title: "Persist global canonical unordered pairs and recursive fusion provenance"
-    status: review
-    owner: worker
+    status: done
     claimed_by: 20261028T233353172Z-hybridizer-t004-9f7c
     claimed_at: '2026-10-28T23:33:53.172Z'
-    updated: '2026-10-28T23:36:59.723Z'
+    updated: '2026-10-29T00:16:36.010Z'
     passes: 0
     stakes: reversible
     note: |-
       Model deduplicated pair keys on stable input identities, composition revision and model recipe, atomic claim/lookup and failure retry; preserve lineage and make prior hybrids reusable ingredients. Two inputs make 19,900 unique unordered starter pairs, not 4,000. Preserve provenance to prevent cache poison and enforce art visibility.
 
       Durable unordered pair keys, recursive provenance DAG, authenticated public/owner visibility boundaries, global discovery lookup and local fallback added in Kind Robots worker branch. Await full PR checks.
+
+      Kind Robots PR #4408 merged at 31b44a1 after 23/23 checks green, including TypeScript, Prisma generated client and migration parity, four contract shards, and Docker production build. Shared fusion cache is on main, additive migration pending self-hosted rollout. Space Couch parser blocker repaired in separate green PR #4415.
   - id: t-005
     milestone: m2
     title: "Connect ArtJob queue, background completion notification and missed-result retry"
-    status: waiting
+    status: ready
     depends_on: t-004
     owner: null
     passes: 0
@@ -123,7 +124,7 @@ tasks:
   - id: t-007
     milestone: m3
     title: "Pre-generate and verify curated 4,000 launch hybrids"
-    status: waiting
+    status: ready
     depends_on: t-004
     owner: null
     passes: 0
@@ -136,7 +137,7 @@ tasks:
   - id: t-008
     milestone: m2
     title: "Accept user-submitted ingredient images securely"
-    status: waiting
+    status: ready
     depends_on: t-004
     owner: null
     passes: 0
