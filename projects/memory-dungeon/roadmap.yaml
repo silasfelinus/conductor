@@ -712,8 +712,8 @@ tasks:
   - id: t-034
     milestone: m2
     title: "Polish World One as a complete one-screen console with save slots"
-    status: review
-    updated: '2026-10-29T00:52:20Z'
+    status: ready
+    updated: '2026-10-29T00:58:00Z'
     depends_on: t-022
     passes: 0
     stakes: reversible
@@ -797,9 +797,8 @@ tasks:
       2026-10-28 PT: Merged kind_robots PR #4416 (squash 46082ce3f3090cd3c6ee70461a8b1e160ade7e8e) after all 14 exact-head Actions workflows passed on 0bc474f4f6c0b64dc23ba2f4b08a055cf1a56072 (Contract Tests #40790268561, TypeScript #40790268537, formatting #40790268610, browser interruption #40790268565). Mirrored House restoration now rejects choices, completed trials and solved puzzles in unvisited chambers, preventing forged HD-35 verdicts and recall echoes; current-room legacy compatibility retained. Three-file regression-tested patch. Master issue #4136 comment 6483921438 has evidence. No new ArtJobs, deployment or rendered QA. Return READY for graph-aware traversal, painted House atlas acceptance and device tests; not For Human Gate.
 
       Scoped adversarial save-restoration hardening: reject inherited JavaScript prototype keys masquerading as original/mirrored House rooms. Both restore paths, room lookup and regression tests updated. Kind Robots PR and exact-head CI pending.
-    owner: worker
-    claimed_by: 2026-10-29T004740Z-memory-dungeon-t-034-a8c4e
-    claimed_at: '2026-10-29T00:47:40Z'
+
+      2026-10-28 PT: Merged Kind Robots PR #4419 (82bd84f8457d98f1e15b4c79ad43175c574f3b8b) after all 14 exact-head workflows passed on 4ccdde8d011d657cd349de0cead7d3f6f9c01a1b. Both House save restorers and room lookup now reject inherited prototype-key fake room IDs; adversarial tests cover constructor, toString and __proto__, fake decisions and mirrored challenges. Master issue #4136 comment 6484865403 has evidence. Branch deleted. No new ArtJobs or deployment. Return READY for graph-aware traversal, House atlas delivery and rendered console QA; not For Human Gate.
 
   - id: t-035
     milestone: m3
