@@ -1,7 +1,7 @@
 # Slime City: three-format playtest comparison (t-016)
 
 **Status:** evidence for Silas's format decision (t-013), **not** a decision. No mode was chosen, removed or hard-coded. All three stay playable at `/admin/slime-city`.
-**Date:** 2026-10-30. **Code:** Kind Robots PR #4496 (t-002 hardening), which adds the CPU, the rules below and the headless harness.
+**Date:** 2026-10-30. **Code:** Kind Robots PR #4496, merged as `f5269545` (t-002 hardening). It adds the CPU, the rules below and the headless harness.
 
 ## How this was tested
 
