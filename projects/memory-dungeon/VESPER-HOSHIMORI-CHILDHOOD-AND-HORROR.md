@@ -1,5 +1,7 @@
 # Vesper's Hoshimori: A childhood, a betrayal, and a village that folds inward
 
+> **Continuity update, 2026-10-30:** These remain Worlds Seven and Eight in the revised **twelve-world** campaign. Worlds Nine through Twelve now revisit Briar, Earth, the sea and Hoshimori as a unified memory-collision finale. See `TWELVE-REALITY-COLLISION-FINALE.md` for the superseding campaign count and Char viewpoint.
+
 **Latest direction: Silas, 2026-10-30 PT.** This supersedes the earlier Pip-centered emotional spine of `HOSHIMORI-YOKAI-PAIR.md`, while retaining Pip's authored ledger and Red Oven subplot. This is production canon for **e07/e08**, not a new ninth world, new map, or unearned art-delivery claim. The original branch of each world-pair must end in a consequential decision. Existing `e07` warm-site and `e08` machine IDs, 8×8 geography, Earth photo reservations, save IDs, e07 protagonist lens and existing e08 Scylla viewpoint remain stable.
 
 ## Whose childhood?
