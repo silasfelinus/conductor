@@ -378,8 +378,8 @@ tasks:
   - id: t-007
     milestone: m3
     title: "Deliver academy key, map, follower emotion and injury art"
-    status: ready
-    updated: '2026-10-30T10:45:57+00:00'
+    status: claimed
+    updated: '2026-10-30T11:40:41Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -398,6 +398,9 @@ tasks:
       Verified 144 Prom of Doom personal outcome requests lacked all ArtJob IDs. A scoped credentialed workflow now reconciles prior server ArtJobs before posting only unrecorded personal requests and checkpoints every accepted ID. Repaired unsafe Krea2 negative prompt wording. Review app and workflow CI, merge when green, then verify real ArtJob IDs. Image delivery remains pending.
 
       Triage 2026-10-30: stale claim from 2026-10-27 with no open PR, released. Next step is export, not generation. kind_robots #4481 ships the 14 origin/affinity plates (#4470). About 520 more DONE renders across MAPS-AND-MASTERMINDS, SECOND-MASTERMINDS, MISSION-REACTIONS, RUNTIME-BEATS, CONSEQUENCES, PERSONAL-CONSEQUENCES, IDENTITY-OUTCOMES, IDENTITY-PORTRAITS and PROM-OF-DOOM-FINALE ledgers are not exported. Runtime already asks promArt() for many of those keys. Export them with scripts/export_round_art.py using --max-edge to keep the repo addition near the Zuzu Gamebook precedent (425 files / 24 MB), not about 85 MB at full size. Skip the retired COMPOSITE-POWERS ledger. Injured-follower art is still unverified.
+    owner: worker
+    claimed_by: 2026-10-30T11:36:33-artexp-0190
+    claimed_at: '2026-10-30T11:40:41Z'
   - id: t-008
     milestone: m3
     title: "Illustrate all patrol, location, relationship and ending branches"
