@@ -22,6 +22,8 @@ Source-of-truth request ledger: `art/CAPES-WESTERN-STYLE-CHECK-ROUND-1.yaml`. It
 5. **DreamShaper XL Turbo:** concrete scene prose, distilled six steps CFG2 DPM++2M SDE. Do not give Turbo a conventional 30-step sampler.
 6. **Unstable Diffusers nihilmania:** SDXL prose, 28 steps CFG7 DPM++2M.
 
+The additional **map and expressive portrait** check lives in `art/CAPES-WESTERN-STYLE-CHECK-MAP-PORTRAIT.yaml` (two additional subjects × the same six checkpoint lanes). Preserve its separate twelve ArtJob receipts and existing images: the preferred checkpoint decision neither collapses these comparisons nor authorizes duplicate submissions.
+
 The exact checkpoint paths come from the existing Kind Robots Playbook art lanes and the established Ecotone checkpoint bake-off. This is an experiment across verified configuration names, **not a live machine inventory assertion**. A failed model-load must remain FAILED, be investigated and explicitly revised; never silently route a cell to an unrelated checkpoint.
 
 **The six exact concepts**
