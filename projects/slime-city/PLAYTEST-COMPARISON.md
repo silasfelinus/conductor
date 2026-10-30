@@ -169,3 +169,108 @@ All crew art is still the interim CSS and glyph stand-in; no generated art is sh
 ## Suggested next steps (for Silas to choose; none are started)
 - **Silas:** play each format for one match at `/admin/slime-city` after the next rollout and answer t-013 (preferred cadence and board, or a hybrid).
 - **Agents, reversible:** t-004 crew data pass (Meat Exchange down, Bloodfairies' fragility, 0-damage armor matchups); t-003 objective toggles (for example a MEATBALL score-or-yardage tiebreak, or BLACKOUT without the round-20 HP decision); t-005 additional CPU personas (turtle, rusher) for a second comparison pass.
+
+## After rebalance: 2026-10-30 (t-004 crews, t-003 objective variants)
+
+**Code:** Kind Robots PR #4520 (`claude/slime-city-crews-22947`). Same harness, same seeds: `npx tsx utils/scripts/slimeCityPlaytest.ts 20` (default rules) and `npx tsx utils/scripts/slimeCityPlaytest.ts 10 --variants`. Everything below is CPU against CPU, as before. No final rule was chosen; that is still Silas's call in t-013.
+
+### What changed (t-004)
+- **Six legal ten-card decks.** Each deck has 4 creatures and 6 specials: at least one spell, trap and equipment, and exactly one signature card. That is 60 authored cards in total.
+- **Crew identity and counterplay.** Each crew has its own keywords, play pattern and named counter, all shown in THE ARMORY:
+
+| Crew | Play pattern | Signature | Counterplay |
+| --- | --- | --- | --- |
+| Gene Riot Catgirls | AMBUSH (first blow +2), REGEN while out of reach, Catnip Overdrive re-arms the ambush, Laser Pointer roots | Madame Chimera | Splash and explosions, snares, debt |
+| Punk Bloodfairies | SWARM (+1 attack beside a friend), LEECH, Moshpit Massacre (splash that only hits enemies) | Queen Safety Pin | Armor, explosions, isolating a lone fairy |
+| Ironjaw Chrome Ogres | Armor, BULLDOZE (in the lanes, shoves a blocker back), plating, Wrecking Fist | Maw-9000 | PIERCE, debt, snares |
+| Riot Saints | VOLATILE (explodes on death and chains through friend and foe), Confetti Cannon (splash that hits everyone) | Grand Detonator | Spacing, armor, healing |
+| Undertow Intelligence | Two armed traps, SNARE, PIERCE, Drain Sonar (reveals enemies and disarms traps) | Drowned Oracle | Bodies: swarms and regeneration walk through traps |
+| Meat Exchange | COLLECT: each damaging blow puts the opponent 1 mana in debt (at most 2), paid from the next refill or, in BLOODRUSH, straight from the bank. Foreclosure, Hidden Fees | The Meat Mogul (now 6 mana) | An early rush, pierce |
+
+- **Meat Exchange nerf.** Debt Collector now costs 2 mana and has 2 HP, so it is no longer the 1-mana, 3-HP over-performer.
+- **BLACKOUT armies.** Each crew now has its own five-fighter hidden army.
+- **Tuning method.** Card stats were tuned with a greedy search over the headless simulator (8–10 seeds per step), then checked at 20 seeds.
+
+### Before / after: crew win share, default rules (20 seeds, 600 matches per format)
+
+| Crew | BLACKOUT before → after | MEATBALL before → after | BLOODRUSH before → after |
+| --- | --- | --- | --- |
+| Gene Riot Catgirls | 49.0 → **76.0** ✗ | 24.3 → 41.5 | 62.8 → 59.8 |
+| Punk Bloodfairies | 33.3 → 42.0 | 62.5 → 48.8 | 33.8 → 53.3 |
+| Ironjaw Chrome Ogres | 44.0 → 58.0 | 36.0 → 48.3 | 56.5 → 46.3 |
+| Riot Saints | 37.5 → 49.3 | 51.5 → 49.8 | 36.8 → 41.3 |
+| Undertow Intelligence | 64.3 → **32.3** ✗ | 51.0 → 48.3 | 28.8 → 55.5 |
+| Meat Exchange | 72.0 → 42.5 | 74.8 → **63.5** ✗ | 81.5 → 44.0 |
+| Cells inside 40–60% | 7 of 18 → **15 of 18** | | |
+
+**Honest status: the 40–60% target is not met.** Three cells are still outside it:
+- **Catgirls in BLACKOUT, 76%.** Regeneration and ambush in long, fogged brawls decide the HP tiebreak at round 20. Moving REGEN to "only out of reach" and rebuilding their army only lowered this from 93% to 76%.
+- **Undertow in BLACKOUT, 32%.** The CPU barely uses traps in BLACKOUT (0.4 per side per match), so the crew's main strength is idle there.
+- **Meat Exchange in MEATBALL, 63.5%.** Debt is strongest when every round refills mana.
+
+Some pairings are also strongly intransitive. In BLOODRUSH, for example, Ironjaw beats Meat Exchange 99–1 but loses to Undertow 7.5–92.5. These are the next t-004 slice.
+
+Other default-rules metrics, before → after:
+
+| Metric | BLACKOUT | MEATBALL | BLOODRUSH |
+| --- | --- | --- | --- |
+| Draws | 0.8 → 2.0% | 27.2 → **43.7%** | 8.2 → 18.2% |
+| Hit the limit | 30.5 → 46.5% | 44.5 → 77.7% | 15.3 → 23.8% |
+| First / second side wins | 53/46 → 52/46 | 36/37 → 27/30 | **40/52 → 40/42** |
+| Comeback wins | 47.7 → 64.2% | 7.7 → 5.3% | 6.7 → 9.3% |
+| Spell / trap / equipment plays per side | 7.9 / 1.3 / 4.0 → 14.1 / 0.4 / 4.3 | 20.3 / 10.5 / 13.0 → 39.9 / 5.9 / 21.8 | 5.1 / 3.7 / 0.4 → 9.1 / 1.4 / 0.3 |
+
+Richer decks (heals, splash and roots) made the default lane formats grindier. MEATBALL now draws 44% of the time under its default rules, which is why the t-003 variants below matter.
+
+**BLOODRUSH seat edge.** The second-side edge fell from 52/40 to 42/40 with the new crew data alone. Most of the old gap came from Meat Exchange, which won as either side.
+
+### t-003: objective variants (10 seeds, 300 matches per row)
+Every variant is **off by default**. All are selectable in the lab under RULE VARIANTS, which restarts the match on the same seed so a tester can compare directly. Per-format results:
+
+| Format | Rules | Draws | Hit the limit* | First / second side | Decided by | Crew spread |
+| --- | --- | --- | --- | --- | --- | --- |
+| BLACKOUT | default | 2.3% | 48.0% | 46 / 52 | flag 48, rout 4, time 46 | 34–73% |
+| BLACKOUT | giant monster | 0.0% | 1.7% | 49 / 51 | flag 21, rout 8, **monster 69** | 24–67% |
+| BLACKOUT | sudden death | 0.3% | 48.0% | 47 / 53 | flag 49, rout 4, time 47 | 34–73% |
+| MEATBALL | default | 44.0% | 78.0% | 24 / 32 | score 22, time 34 | 42–60% |
+| MEATBALL | giant monster | 17.3% | 26.0% | 39 / 44 | score 14, monster 60, time 9 | 38–68% |
+| MEATBALL | rout (26 KOs) | 5.3% | 8.0% | 46 / 48 | score 17, rout 74 | **9–84%** |
+| MEATBALL | lane momentum | 22.7% | 59.0% | 41 / 37 | score 40, time 37 | 34–61% |
+| MEATBALL | sudden death | 34.3% | 78.0% | 30 / 36 | score 32, time 34 | 42–66% |
+| MEATBALL | yardage tiebreak | 1.3% | 78.0% | 47 / 52 | score 22, time 77 | 28–70% |
+| MEATBALL | momentum + sudden death + tiebreak | **1.3%** | 59.0% | **49 / 49** | score 52, time 47 | 36–58% |
+| BLOODRUSH | default | 17.0% | 24.0% | 39 / 44 | score 73, time 10 | 44–56% |
+| BLOODRUSH | giant monster | 10.7% | 17.7% | **25 / 64** | score 67, monster 15, time 7 | 37–61% |
+| BLOODRUSH | rout (18 KOs) | 2.7% | 0.0% | 49 / 48 | score 62, rout 36 | 40–61% |
+| BLOODRUSH | lane momentum | 3.3% | 10.3% | **50 / 46** | score 89, time 8 | 35–67% |
+| BLOODRUSH | sudden death | 16.3% | 24.0% | 40 / 44 | score 74, time 10 | 44–55% |
+| BLOODRUSH | yardage tiebreak | 3.0% | 24.0% | 51 / 46 | score 73, time 24 | 45–56% |
+| BLOODRUSH | rush initiative swap | 13.7% | 21.0% | **34 / 53** | score 77, time 9 | 42–59% |
+| BLOODRUSH | momentum + tiebreak | 1.0% | 10.3% | 51 / 48 | score 89, time 10 | **33–67%** |
+
+\*Includes matches that went to sudden-death extra time.
+
+**How each variant works:**
+- **Giant monster.** A neutral monster sits on a central square (HP 20 in BLACKOUT, 36 in MEATBALL, 30 in BLOODRUSH; attack 2–3, armor 1). It blocks its square and swats the weakest adjacent fighter each exchange. Fighters with no adjacent enemy hit it, and damage spells can target it. The killing blow wins. A tie goes to whoever dealt more in the final exchange, then to whoever dealt more across the match.
+- **Rout.** The first side to reach the knockout target wins.
+- **Lane momentum.** After 4 rounds (in BLOODRUSH, 4 beats) without a breakthrough, fighters in the opponent's half move one extra square per move until someone scores. An earlier version that gave +1 attack had no measurable effect on draws (46% → 47%), so it was replaced.
+- **Sudden death.** A tie at the clock adds 4 rounds in BLACKOUT, 6 in MEATBALL or 30 ticks in BLOODRUSH. In the lanes, the next breakthrough wins.
+- **Yardage tiebreak.** If the lanes are still tied at the end, the side whose surviving fighters stand further upfield wins.
+- **Rush initiative swap.** On every other beat, the CPU commits its plays before the human side.
+
+**Agent recommendation (for Silas, not a decision):**
+- **MEATBALL:** test **lane momentum + sudden death + yardage tiebreak** together. Draws fall from 44% to 1.3%, the seat split is 49/49, breakthroughs decide 52% of matches instead of 22%, and the crew spread stays 36–58%.
+  - The monster also cuts draws, but it turns the format into "kill the monster" (60%).
+  - Rout widens the crew spread to 9–84%, so it is not recommended for the lanes.
+- **BLOODRUSH:** **lane momentum** (optionally with the tiebreak) fixes both draws (17% → 3%) and the seat split (50/46). It does widen crew spread to 35–67%, so it needs a crew pass if adopted.
+  - **Do not adopt** the rush initiative swap: it made the second-side edge worse (34/53).
+  - **Do not adopt** the monster in BLOODRUSH: the seat split went to 25/64.
+- **BLACKOUT:** the default needs no tiebreak help (2% draws).
+  - The **giant monster** is the strongest candidate for Silas's "neutral giant monster" win path. It halves match length (8.7 rounds against 15.1) and nearly removes clock decisions (time 1.7%).
+  - Watch two things if it is adopted: it ends 69% of matches, which crowds out the flag, and the crew spread widens to 24–67%.
+- **Sudden death** alone barely helps: few BLACKOUT matches tie on HP, and MEATBALL draws only fall from 44% to 34%.
+
+**Limits:**
+- These are CPU-versus-CPU results. The CPU was taught the monster and the new cards (it hunts the monster in BLACKOUT, leans toward its lane in the lanes, and saves a killing spell for it), but a human will exploit things it does not.
+- The variant runs use 10 seeds per pairing, so each cell's noise is about ±3–5 points.
+- Screenshots of the new ARMORY cards, rule toggles and monster board were checked at 390, 768 and 1440 px (no overflow) but are not committed here. All crew art is still the interim glyph stand-in (t-017 owns real art).
