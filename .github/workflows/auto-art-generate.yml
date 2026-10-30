@@ -228,6 +228,21 @@ jobs:
             --queue-file projects/memory-dungeon/art/HOUSE-ATLAS-REQUESTS.yaml \
             --id-prefix memory-dungeon-saturate-house-atlas-
 
+      # Four playable Earth Chronicle photos were authored without media requests.
+      # Keep their direct-media receipts separate from the original 752-job audit.
+      - name: Submit Memory Dungeon Earth Chronicle ArtJobs
+        id: memory_dungeon_earth_photo_submit
+        if: ${{ steps.krhealth.outputs.up == 'true' && steps.memory_dungeon_reconcile.outcome == 'success' }}
+        continue-on-error: true
+        working-directory: conductor
+        env:
+          KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+          KR_MEDIA_ORIGIN: https://media.acrocatranch.com
+        run: |
+          python scripts/consume_art_requests_to_media.py --live --submit-only --limit 0 \
+            --queue-file projects/memory-dungeon/art/EARTH-PHOTO-REQUESTS.yaml \
+            --id-prefix memory-dungeon-saturate-earth-photo-
+
       # The generic art consumers below can run for hours. Save the ArtJob IDs
       # NOW, not at the end of the 150-minute rendering workflow. A cancelled
       # workflow must not orphan accepted jobs and then enqueue them again.
@@ -237,7 +252,7 @@ jobs:
         run: |
           git config user.name "conductor-bot"
           git config user.email "conductor-bot@users.noreply.github.com"
-          git add projects/art-prompts.yaml projects/memory-dungeon/art/KNOWN-ART-REQUESTS.yaml projects/memory-dungeon/art/HOUSE-ATLAS-REQUESTS.yaml
+          git add projects/art-prompts.yaml projects/memory-dungeon/art/KNOWN-ART-REQUESTS.yaml projects/memory-dungeon/art/HOUSE-ATLAS-REQUESTS.yaml projects/memory-dungeon/art/EARTH-PHOTO-REQUESTS.yaml
           if git diff --staged --quiet; then
             echo "Memory Dungeon ledgers already match submitted ArtJobs."
           else
@@ -266,6 +281,11 @@ jobs:
         if: ${{ steps.krhealth.outputs.up == 'true' && steps.memory_dungeon_reconcile.outcome == 'success' }}
         working-directory: conductor
         run: python scripts/audit_memory_dungeon_house_atlases.py --require-jobs
+
+      - name: Verify four Earth Chronicle ArtJob receipts
+        if: ${{ steps.krhealth.outputs.up == 'true' && steps.memory_dungeon_reconcile.outcome == 'success' }}
+        working-directory: conductor
+        run: python scripts/audit_memory_dungeon_earth_photos.py --require-jobs
 
       # Submission receipts alone cannot prove a render reached the media host.
       # Probe the two NEW House atlas jobs separately from the immutable 752-job
