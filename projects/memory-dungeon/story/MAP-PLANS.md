@@ -16,7 +16,7 @@
 | e06 | Scylla · Twisted palace | SAME palace and planned escape | Rewritten testimony, coercive repetition and altered routes | Outline/branch state; map missing |
 | e07 | Vesper · Warm Hoshimori | Cedar bridge, orchard atlas, Red Oven, paper theatre, South Watch | Betrayal/redemption and communal refuge choices | 64 authored; 21/36 Oven rooms |
 | e08 | Scylla POV / Vesper arc · Dark Hoshimori | SAME bridge, oven, map and shrine | Recursive domestic architecture, night procession, living addresses | 16 site briefs; playable map missing |
-| **e09** | **Researcher · Briar collision** | SAME Briar geography, office and sea-root overlaps | Forest monsters in office, submerged House paths | Crossover pitch only |
+| **e09** | **Pip · Briar collision** | SAME Briar geography, office and sea-root overlaps | Forest monsters in office, submerged House paths | Crossover pitch only |
 | **e10** | **Morrow · Earth collision** | SAME Earth geography, Hoshimori shelter and Briar canopy | Yōkai at work, impossible commuter timetables | Crossover pitch only |
 | **e11** | **Playable Char · Sea collision** | SAME sea palace, subway station and Vesper route | Alternative Char memories, flooded transit, stolen maps | Crossover pitch only |
 | **e12** | **Vesper · Hoshimori collision** | SAME Hoshimori geography, wolf-road and tide-gate overlays | The final question of what belongs on an atlas | Crossover pitch only |
@@ -37,7 +37,7 @@
 
 ### e09 · Briar, the forest between floors
 
-Original 8×8 forest paths remain the primary geography. Layer an office corridor across the House, sea-roots under the wolf road, and a distant paper-lantern ward above a refugee path. Write scenes where one rule breaks another: a timecard cannot convince a Briar wolf to let an evacuee leave; tide-current mapping can bypass House roots but threatens a hidden family.
+Original 8×8 forest paths remain the primary geography. **Pip is the controllable finale lead.** Layer an office corridor across the House, sea-roots under the wolf road, and a distant paper-lantern ward above a refugee path. Write scenes where one rule breaks another: a timecard cannot convince a Briar wolf to let an evacuee leave; tide-current mapping can bypass House roots but threatens a hidden family.
 
 **Required recovery:** `briar-office-key` (city rules) and `briar-tide-roots` (sea rules). Neither can be found by merely walking onto the marker; each needs a story/puzzle resolution. Save both in the shared fragment ledger and hand them to Morrow's next map.
 
