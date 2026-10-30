@@ -3,12 +3,15 @@
 # These four artPath targets are used by the existing Chronicle panel.
 # Keep this ledger separate from the historical 752-request audit and the House atlases.
 # Auto Art Generate submits durable Krea2 ArtJobs; queued/DONE are not delivered.
+# Existing media at 01/02 has no verifiable ArtJob provenance. Force a fresh traceable
+# render instead of accepting a pre-existing URL as evidence of production.
 # Do not mark art complete until the ArtImage and unauthenticated media URL are verified.
 requests:
 - id: memory-dungeon-saturate-earth-photo-01
   source_photo_id: earth-01
   source: memory-dungeon
-  status: done
+  status: pending
+  force: true
   target_repo: silasfelinus/kind_robots
   project_slug: memory-dungeon
   image_path: public/images/memory-dungeon/earth-photographs/dismissal.webp
@@ -23,7 +26,8 @@ requests:
 - id: memory-dungeon-saturate-earth-photo-02
   source_photo_id: earth-02
   source: memory-dungeon
-  status: done
+  status: pending
+  force: true
   target_repo: silasfelinus/kind_robots
   project_slug: memory-dungeon
   image_path: public/images/memory-dungeon/earth-photographs/gathering.webp
