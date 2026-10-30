@@ -626,21 +626,18 @@ tasks:
   - id: t-025
     milestone: m3
     title: "Author and build the other three Act I overworlds and dungeons"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 2026-10-30T205023Z-memory-dungeon-t-025-e03-f3d8
     claimed_at: '2026-10-30T20:50:23Z'
-    updated: '2026-10-30T20:50:23Z'
+    updated: '2026-10-30T20:54:00Z'
     depends_on: t-022
     passes: 0
     stakes: reversible
-    note: >-
-      Worlds 2-4: Hearth & Hunger, Glass Orchard and Undertide Crown.
-      Each has a distinct 64-cell map and 36-room dungeon, 2 Earth
-      photographs, its own NPC conflicts, 4 regular enemies, elite,
-      guardian, and one cross-realm connection. Break into scoped
-      reviewed PRs per world. Test walkable geography, alternatives
-      and progression into Act II.
+    note: |-
+      Worlds 2-4: Hearth & Hunger, Glass Orchard and Undertide Crown. Each has a distinct 64-cell map and 36-room dungeon, 2 Earth photographs, its own NPC conflicts, 4 regular enemies, elite, guardian, and one cross-realm connection. Break into scoped reviewed PRs per world. Test walkable geography, alternatives and progression into Act II.
+
+      Scoped e03 Morrow Earth first district: 16 connected authored modern-Earth sites, 32 distinct consequential decisions, two fixed photograph sites, eight source-validated failed-magic accounts, replay-safe saved state and 96-seed adversarial tests. Implementation PR and exact-head CI follow. This is an engine/content slice, not yet wired into /play/memory, not an e03 clear, not an art delivery, and not a complete 64-site/36-room experience.
   - id: t-026
     milestone: m3
     title: "Author and build Act II: Stories We Inherit"
