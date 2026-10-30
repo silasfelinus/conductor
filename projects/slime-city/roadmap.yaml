@@ -189,37 +189,19 @@ tasks:
   - id: t-007
     milestone: m3
     title: "Expand seven-district city map into navigable authored overworld"
-    status: ready
+    status: claimed
     depends_on: t-001
     owner: worker
     passes: 0
     stakes: reversible
-    note: >-
-      Replace prototype responsive stylized skyline with traceable
-      generated painted panoramas, selectable streets/districts,
-      NPC rival bouts, faction campaigns and deck/shop navigation.
-      Distinct neighborhoods for engineered catgirls, punk bloodfairies,
-      chrome ogres, spies, rioters, market and Pitworks; player choices
-      should matter. Viewport screenshots at 390/768/1440/XL,
-      no dead buttons or clipped accessible content.
+    note: |-
+      Replace prototype responsive stylized skyline with traceable generated painted panoramas, selectable streets/districts, NPC rival bouts, faction campaigns and deck/shop navigation. Distinct neighborhoods for engineered catgirls, punk bloodfairies, chrome ogres, spies, rioters, market and Pitworks; player choices should matter. Viewport screenshots at 390/768/1440/XL, no dead buttons or clipped accessible content.
+      PARTIAL 2026-10-30, back to ready: Kind Robots PR #4499 (5247328c) merged with all 23 checks green. It shipped a session-only walkable overworld (utils/slimeCity/city.ts). Nine named streets join the seven districts and travel follows streets. There are 7 original named rivals, covering every crew and all three formats. Each district has one two-option street decision that moves standing and heat and changes that rival's bout terms (mana, armor, HP, one fewer sentinel, an armed trap, or the clock). Wins clear champions and raise standing; losses raise heat; heat 3 gives every rival +1 mana. Needle Alley and Crown Market are gated by citywide standing, and three champions open the Grand Pit. The UI has lit streets, pin status, a dossier below the map, WALK/FIGHT/QUICK MATCH, a city status bar and BACK TO THE CITY. Rendered at 390/768/1440 in Chromium with no overflow. Tests: verifySlimeCityOverworld (connectivity, gates, heat, terms on real matches, full store flow). REMAINS: painted generated district panoramas (needs real ArtJobs, t-017), deck/shop navigation, faction campaign chapters (t-009), and persistence (deliberately none yet).
 
-      PARTIAL 2026-10-30, back to ready: Kind Robots PR #4499 (5247328c) merged with all 23
-      checks green. It shipped a session-only walkable overworld (utils/slimeCity/city.ts).
-      Nine named streets join the seven districts and travel follows streets. There are 7
-      original named rivals, covering every crew and all three formats. Each district has one
-      two-option street decision that moves standing and heat and changes that rival's bout
-      terms (mana, armor, HP, one fewer sentinel, an armed trap, or the clock). Wins clear
-      champions and raise standing; losses raise heat; heat 3 gives every rival +1 mana.
-      Needle Alley and Crown Market are gated by citywide standing, and three champions open
-      the Grand Pit. The UI has lit streets, pin status, a dossier below the map,
-      WALK/FIGHT/QUICK MATCH, a city status bar and BACK TO THE CITY. Rendered at 390/768/1440
-      in Chromium with no overflow. Tests: verifySlimeCityOverworld (connectivity, gates,
-      heat, terms on real matches, full store flow). REMAINS: painted generated district
-      panoramas (needs real ArtJobs, t-017), deck/shop navigation, faction campaign chapters
-      (t-009), and persistence (deliberately none yet).
-    claimed_by: 2026-10-30T122400Z-slime-city-t007-7c3e
-    claimed_at: '2026-10-30T12:23:25Z'
-    updated: '2026-10-30T12:52:23Z'
+      Continue the Slime City city-overworld milestone from its existing partial state. Focus on substantive playable district progression and high-quality console interaction while other sessions own t-003/t-004 and t-017 art.
+    claimed_by: 2026-10-30T204018Z-slime-city-t007-c84f
+    claimed_at: '2026-10-30T20:40:18Z'
+    updated: '2026-10-30T20:40:18Z'
     implementation_pr: 'silasfelinus/kind_robots#4499'
   - id: t-008
     milestone: m3
