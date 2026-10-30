@@ -36,7 +36,7 @@ A researcher is tricked into swapping lives with fey changeling Morrow. In a dan
 | **Act III: Scylla** | e05 · Days before the sisters' landward escape | e06 · A rewritten mermaid kingdom |
 | **Act IV: Vesper** | e07 · Hoshimori, their childhood home | e08 · Recursive, grotesque yōkai nightmare |
 
-After Act IV, **e09–e12 are one connected finale**, not two more original/dark pairs: revisit Briar with the researcher, Earth with Morrow, the sea with **playable Char**, and Hoshimori with Vesper. Scylla and Pip remain essential characters. Char's death in e04 is **conditional**; do not erase her witnessed death by casually switching viewpoint. She can be played in a branched future or time-displaced context with an explicit, authored causal explanation.
+After Act IV, **e09–e12 are one connected finale**, not two more original/dark pairs: revisit Briar with **playable Pip**, Earth with Morrow, the sea with **playable Char**, and Hoshimori with Vesper. Scylla and Pip remain essential characters. Char's death in e04 is **conditional**; do not erase her witnessed death by casually switching viewpoint. She can be played in a branched future or time-displaced context with an explicit, authored causal explanation.
 
 ## What's actually built?
 
