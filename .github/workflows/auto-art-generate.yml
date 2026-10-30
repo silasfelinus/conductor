@@ -168,7 +168,9 @@ jobs:
 
       - name: Verify Memory Dungeon art submission contracts
         working-directory: conductor
-        run: python -m unittest discover -s tests -p 'test_memory_dungeon_art_queue.py'
+        run: |
+          python -m unittest discover -s tests -p 'test_memory_dungeon_art_queue.py'
+          python -m unittest discover -s tests -p 'test_memory_dungeon_hoshimori_style.py'
 
       - name: Recover unrecorded Memory Dungeon ArtJob IDs
         id: memory_dungeon_reconcile
@@ -243,6 +245,22 @@ jobs:
             --queue-file projects/memory-dungeon/art/EARTH-PHOTO-REQUESTS.yaml \
             --id-prefix memory-dungeon-saturate-earth-photo-
 
+      # Hoshimori e07's first eight private concept/style proofs are new art,
+      # separate from the 752 Briar/House baseline and the Earth photographs.
+      # Submit before the long renderer and checkpoint all accepted IDs.
+      - name: Submit Memory Dungeon Hoshimori warm style proofs
+        id: memory_dungeon_hoshimori_style_submit
+        if: ${{ steps.krhealth.outputs.up == 'true' && steps.memory_dungeon_reconcile.outcome == 'success' }}
+        continue-on-error: true
+        working-directory: conductor
+        env:
+          KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+          KR_MEDIA_ORIGIN: https://media.acrocatranch.com
+        run: |
+          python scripts/consume_art_requests_to_media.py --live --submit-only --limit 0 \\
+            --queue-file projects/memory-dungeon/art/HOSHIMORI-WARM-STYLE-PROOFS.yaml \\
+            --id-prefix memory-dungeon-hoshimori-e07-style-
+
       # The generic art consumers below can run for hours. Save the ArtJob IDs
       # NOW, not at the end of the 150-minute rendering workflow. A cancelled
       # workflow must not orphan accepted jobs and then enqueue them again.
@@ -252,7 +270,7 @@ jobs:
         run: |
           git config user.name "conductor-bot"
           git config user.email "conductor-bot@users.noreply.github.com"
-          git add projects/art-prompts.yaml projects/memory-dungeon/art/KNOWN-ART-REQUESTS.yaml projects/memory-dungeon/art/HOUSE-ATLAS-REQUESTS.yaml projects/memory-dungeon/art/EARTH-PHOTO-REQUESTS.yaml
+          git add projects/art-prompts.yaml projects/memory-dungeon/art/KNOWN-ART-REQUESTS.yaml projects/memory-dungeon/art/HOUSE-ATLAS-REQUESTS.yaml projects/memory-dungeon/art/EARTH-PHOTO-REQUESTS.yaml projects/memory-dungeon/art/HOSHIMORI-WARM-STYLE-PROOFS.yaml
           if git diff --staged --quiet; then
             echo "Memory Dungeon ledgers already match submitted ArtJobs."
           else
@@ -286,6 +304,12 @@ jobs:
         if: ${{ steps.krhealth.outputs.up == 'true' && steps.memory_dungeon_reconcile.outcome == 'success' }}
         working-directory: conductor
         run: python scripts/audit_memory_dungeon_earth_photos.py --require-jobs
+
+      - name: Verify eight Hoshimori warm style ArtJob receipts
+        id: memory_dungeon_hoshimori_style_receipts
+        if: ${{ steps.krhealth.outputs.up == 'true' && steps.memory_dungeon_reconcile.outcome == 'success' }}
+        working-directory: conductor
+        run: python scripts/audit_memory_dungeon_hoshimori_style.py --require-jobs
 
       # Submission receipts alone cannot prove a render reached the media host.
       # Probe the two NEW House atlas jobs separately from the immutable 752-job
