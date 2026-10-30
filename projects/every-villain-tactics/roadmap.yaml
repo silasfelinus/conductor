@@ -377,8 +377,8 @@ tasks:
   - id: t-016
     milestone: m2
     title: "Cinematic front menu, story/one-shot modes, settings and scrapbook shell"
-    status: claimed
-    updated: '2026-10-30T20:36:26Z'
+    status: done
+    updated: '2026-10-30T20:45:50Z'
     depends_on: t-003
     passes: 0
     stakes: reversible
@@ -405,10 +405,22 @@ tasks:
       verifyEveryVillainFrontMenu. REMAINING for done: flexible rival-foil selection in New
       Story (only the squad lead is selectable; rivals stay the First Bell trio), and the
       battle console itself is still cramped at 390px (pre-existing).
+
+      2026-10-30: The last missing piece shipped in kind_robots#4517 (squash 9cfefaee; all 20
+      triggered checks green). New Story now has a Rival foil portrait strip (48 heroes,
+      villain-outcome art). Squad duplicates are disabled; the default stays First Bell's
+      written rival, Skyline. The foil fights with their own role and power. Saves store an
+      optional foilSignature only for a non-default foil, so old saves are byte-identical; a
+      duplicate or dropped foil is refused. Labels state honestly that a non-default foil
+      plays the shared script (bespoke matchups are t-020), and Backdraft's fixed-cast route
+      is untouched. Together with #4505 the original scope is met: front splash; New, Continue
+      and One-Shot (8 presets); Settings; save-grounded Scrapbook; admin route; Prom saves
+      untouched; Playwright QA of the menu at 390/768/1440. Known issue for t-013: the battle
+      board itself is still cramped at 390px.
     owner: worker
     claimed_by: 2026-10-30T13:12:40Z-every-villain-tactics-m7r3
     claimed_at: '2026-10-30T20:36:26Z'
-    implementation_pr: 'silasfelinus/kind_robots#4505'
+    implementation_pr: 'silasfelinus/kind_robots#4517'
   - id: t-017
     milestone: m3
     title: "Distinct signature hero powers and tactical range/mobility/defense roles"
