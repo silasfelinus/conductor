@@ -188,7 +188,7 @@ tasks:
   - id: t-014
     milestone: m2
     title: "Make villain variability and functional console sub-screens playable"
-    status: claimed
+    status: done
     depends_on: t-013
     owner: worker
     passes: 0
@@ -199,9 +199,27 @@ tasks:
       Scrapbook/yearbook, Settings/save/load/card backs and full illustrated
       scene views. Record villain appearances, cinematic choices, romance,
       affinity and alternate early endings. No decorative dead tabs.
+
+      2026-10-30 (kind_robots#4504, merged 64688e7d): Play/Hero/Crew/Case
+      File/Scrapbook/Settings console tabs read the real save. Hero: identity art, aliases
+      with locked unearned forms, power and signature, vow, 6 stats, standings, bonds, record.
+      Crew: 12 people, face-down until met, mood portraits (students/<id>-<mood>), trust,
+      injury and bench day, romance/partner/sidekick/triad, betrayal. Case File: spoiler-safe
+      seeded mastermind file (omens, interference, accomplices as met, antagonist from day
+      15). Scrapbook: earned moments with shipped art, cross-term mastermind dossiers, 12
+      ending plates. Settings: text speed, art toggle, 4 card backs, PROM1 save-code
+      export/import through restoreAcademy, confirmed reset (NEW TERM now asks first). Villain
+      variability: all 8 masterminds have authored day 2-7 omens and a days 5-7 interference
+      that jams one power field (-1 in dispatchModifier); one accusation on days 5-14 breaks
+      it (+2 influence) or costs +1 threat. Validated save field suspect. Fixed AcademyOpening
+      TDZ crash that blanked New Game. verifyCometConsoleScreens: two seeds with different
+      masterminds from New Game to day 15. Rendered at 390/768/1440 in a Vite harness with
+      Playwright; no shell scroll. Limits: one autosave slot plus a save code (no multiple
+      named slots); no sound/contrast settings.
     claimed_by: 2026-10-30T12:46:10Z-prom-console-q7m3
     claimed_at: '2026-10-30T12:45:26Z'
-    updated: '2026-10-30T12:45:26Z'
+    updated: '2026-10-30T13:33:01Z'
+    implementation_pr: 'silasfelinus/kind_robots#4504'
   - id: t-015
     milestone: m4
     title: "Verify revised seven-day slice against thirty-day contracts at all widths"
