@@ -9,6 +9,6 @@
 
 **Implementers and scheduling agents:** [compact live roadmap](roadmap.yaml) · [current twelve-world canon](TWELVE-REALITY-COLLISION-FINALE.md) · [full archived historical task record](archive/roadmap-2026-10-30-pre-12-world-slim.yaml).
 
-**Current narrative:** 12 worlds. Four character acts with a familiar place and its dark reimagining (Briar, Morrow's Earth, Scylla's sea kingdom, Vesper's Hoshimori), then four overlapping world-collision maps led by the human protagonist, Morrow, **Char** and Vesper. Preserve player-earned decisions, existing map IDs, Classic Match and private player spoilers.
+**Current narrative:** 12 worlds. Four character acts with a familiar place and its dark reimagining (Briar, Morrow's Earth, Scylla's sea kingdom, Vesper's Hoshimori), then four overlapping world-collision maps led by **Pip**, Morrow, **Char** and Vesper. The current e01/e02 runtime still uses the displaced researcher as its camera; a Pip-centered first-act playable POV is a separate implementation step. Preserve player-earned decisions, existing map IDs, Classic Match and private player spoilers.
 
 **Production truth:** the linked plans are progressively detailed briefs. Only code/tests and actual delivered ArtImages establish what is playable or visually completed. Older sixteen-world plans are archived history, not active canon.
