@@ -30,6 +30,8 @@ A ``wan`` or ``ltx`` lane makes image-to-video clips: ``source_image_id`` is the
 ``negative``; the lane sets ``fps`` and ``output_format`` (animated ``webp`` by default).
 ``mask_box: [l, t, r, b]`` (fractions of the composed source) makes the edit masked: only that box may
 change, and the job goes to ``/api/comfy/kontext/enqueue`` with a generated mask (white = change).
+``entity_art: {type: facet, id: N}`` (optional ``field``, default ``imagePath``) sends the enqueue
+route's ``entityArt``, so the finished image attaches to that record on completion.
 
 Usage:
     python scripts/enqueue_art_requests.py LEDGER            # dry run, print requests
@@ -233,7 +235,39 @@ def build_request(ledger, lane, subject, source_image=None, last_image=None):
     seed = subject.get("seed", lane.get("seed"))
     if seed is not None:
         body["seed"] = int(seed)
+    entity_art = build_entity_art(subject)
+    if entity_art:
+        if lane["engine"] in SOURCE_ENGINES:
+            raise ValueError(f"{subject.get('key')}: entity_art recreates from a prompt; use a prompt-only lane")
+        body["entityArt"] = entity_art
     return body
+
+
+ENTITY_ART_TYPES = ("bot", "dream", "character", "scenario", "reward", "facet", "project", "achievement", "resource")
+
+
+def build_entity_art(subject):
+    """``entity_art: {type, id, field}`` on a subject -> the enqueue route's ``entityArt``.
+
+    Kind Robots attaches the finished image to that record on completion
+    (applyEntityArtCompletion), so a Facet ledger cell lands on Facet.imagePath with
+    no second pass; the prior image, if any, is archived rather than overwritten.
+    The route composes the record's own context and house style tail onto the prompt.
+    """
+    spec = subject.get("entity_art")
+    if not spec:
+        return None
+    kind = str(spec.get("type") or "").strip().lower()
+    entity_id = spec.get("id")
+    if kind not in ENTITY_ART_TYPES or not isinstance(entity_id, int) or entity_id <= 0:
+        raise ValueError(f"{subject.get('key')}: entity_art needs a known type and a positive integer id")
+    return {
+        "entityType": kind,
+        "entityId": entity_id,
+        "field": str(spec.get("field") or "imagePath"),
+        "preserveOriginal": True,
+        "mode": "recreate",
+    }
 
 
 def contract_rows(cells):

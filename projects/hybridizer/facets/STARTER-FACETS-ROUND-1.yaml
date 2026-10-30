@@ -1,0 +1,922 @@
+# Hybridizer t-006: canonical Facets for the starter ingredients that had none.
+# Created through POST /api/facets by scripts/ensure_ledger_facets.py (idempotent by slug;
+# facet_id is written back). Taxonomy: real animals ANIMAL; monsters and fantastical
+# lifeforms SPECIES; roles ARCHETYPE; fruit and curios OTHER. Titles that would repeat a
+# COLOR Facet are qualified (Orange Fruit, Blueberry Fruit, Pomegranate Fruit); the game
+# keeps its own starter titles and links by facet_id.
+# Art: projects/hybridizer/art/STARTER-INGREDIENTS-ROUND-1.yaml (entity_art -> Facet.imagePath).
+round: hybridizer-starter-facets-20261030
+project_slug: hybridizer
+designer: hybridizer-starter-catalog
+facets:
+- key: tiger
+  slug: tiger
+  title: Tiger
+  taxonomy: ANIMAL
+  group_key: animal
+  group_label: Animals
+  description: The largest wild cat, orange with black stripes, a solitary hunter of forests and grasslands in Asia.
+  art_prompt: Tiger. A Bengal tiger with bright orange fur, bold black stripes, a white chest and amber eyes stands
+    at full length on a mossy boulder in a green forest clearing in warm afternoon light.
+  facet_id: 2981
+- key: leopard
+  slug: leopard
+  title: Leopard
+  taxonomy: ANIMAL
+  group_key: animal
+  group_label: Animals
+  description: A spotted big cat of Africa and Asia that climbs trees easily and often rests on a high branch.
+  art_prompt: Leopard. A leopard with golden fur covered in black rosettes lies stretched along a thick acacia branch,
+    one paw hanging down, long tail curled, under a pale blue savanna sky.
+  facet_id: 2982
+- key: cheetah
+  slug: cheetah
+  title: Cheetah
+  taxonomy: ANIMAL
+  group_key: animal
+  group_label: Animals
+  description: The fastest land animal, a slim spotted cat with black tear lines running from its eyes to its mouth.
+  art_prompt: Cheetah. A cheetah with a slim tan body, solid black spots, long legs and black tear lines on its
+    face stands alert on a low termite mound in short golden grass at sunrise.
+  facet_id: 2983
+- key: jaguar
+  slug: jaguar
+  title: Jaguar
+  taxonomy: ANIMAL
+  group_key: animal
+  group_label: Animals
+  description: The big cat of the Americas, stocky and powerful, with large rosettes and a strong swimming habit.
+  art_prompt: Jaguar. A jaguar with a heavy golden body marked by large black rosettes wades through a shallow jungle
+    river, head raised, green leaves and hanging vines along the bank.
+  facet_id: 2984
+- key: serval
+  slug: serval
+  title: Serval
+  taxonomy: ANIMAL
+  group_key: animal
+  group_label: Animals
+  description: A long-legged wild cat of African grasslands with very large ears and a spotted coat.
+  art_prompt: Serval. A serval with long slender legs, huge upright ears and a golden coat with black spots stands
+    in tall green grass, head tilted toward a sound, soft morning light.
+  facet_id: 2985
+- key: giant-panda
+  slug: giant-panda
+  title: Giant Panda
+  taxonomy: ANIMAL
+  group_key: animal
+  group_label: Animals
+  description: A black-and-white bear from the mountain bamboo forests of China that eats bamboo for most of the
+    day.
+  art_prompt: Giant Panda. A giant panda with a round white body, black legs, black ears and black eye patches sits
+    upright in a bamboo grove, holding a green bamboo stalk to its mouth.
+  facet_id: 2986
+- key: giraffe
+  slug: giraffe
+  title: Giraffe
+  taxonomy: ANIMAL
+  group_key: animal
+  group_label: Animals
+  description: The tallest living animal, with a very long neck, patterned coat and two short horn-like ossicones.
+  art_prompt: Giraffe. A giraffe with a long neck, a patchwork coat of brown shapes on cream, and two short ossicones
+    stretches up to eat leaves from a flat-topped acacia tree on a sunny savanna.
+  facet_id: 2987
+- key: elephant
+  slug: elephant
+  title: Elephant
+  taxonomy: ANIMAL
+  group_key: animal
+  group_label: Animals
+  description: The largest land animal, grey and wrinkled, with a long trunk, wide ears and ivory tusks.
+  art_prompt: Elephant. An African elephant with grey wrinkled skin, wide flapping ears, curved ivory tusks and
+    a long trunk raised in greeting walks across dry red earth beside a waterhole.
+  facet_id: 2988
+- key: rhinoceros
+  slug: rhinoceros
+  title: Rhinoceros
+  taxonomy: ANIMAL
+  group_key: animal
+  group_label: Animals
+  description: A massive grey plant-eater with thick folded skin and one or two horns on its nose.
+  art_prompt: Rhinoceros. A white rhinoceros with thick grey skin, a broad square mouth and two horns on its snout
+    stands in short green grass beside a muddy wallow in bright daylight.
+  facet_id: 2989
+- key: hippopotamus
+  slug: hippopotamus
+  title: Hippopotamus
+  taxonomy: ANIMAL
+  group_key: animal
+  group_label: Animals
+  description: A huge, barrel-shaped African animal that spends its days in rivers and comes onto land at night
+    to graze.
+  art_prompt: Hippopotamus. A hippopotamus with a barrel-shaped grey-pink body, small ears and a wide open mouth
+    showing big tusks stands in a shallow brown river, water up to its knees.
+  facet_id: 2990
+- key: bison
+  slug: bison
+  title: Bison
+  taxonomy: ANIMAL
+  group_key: animal
+  group_label: Animals
+  description: A heavy North American grazer with a shaggy brown hump, a big head and short curved horns.
+  art_prompt: Bison. An American bison with a shaggy dark brown hump, thick woolly head, short curved black horns
+    and a beard stands on a snowy prairie, breath steaming in cold air.
+  facet_id: 2991
+- key: moose
+  slug: moose
+  title: Moose
+  taxonomy: ANIMAL
+  group_key: animal
+  group_label: Animals
+  description: The largest deer, with long legs, a drooping nose and wide flat antlers on the males.
+  art_prompt: Moose. A bull moose with long dark legs, a drooping snout, a dangling throat bell and wide flat palmate
+    antlers stands knee-deep in a calm northern lake at dawn.
+  facet_id: 2992
+- key: reindeer
+  slug: reindeer
+  title: Reindeer
+  taxonomy: ANIMAL
+  group_key: animal
+  group_label: Animals
+  description: A cold-climate deer of the Arctic tundra; both males and females grow branching antlers.
+  art_prompt: Reindeer. A reindeer with a thick grey-brown coat, a white neck ruff and tall branching antlers stands
+    on snowy tundra under a pale pink winter sky.
+  facet_id: 2993
+- key: mountain-goat
+  slug: mountain-goat
+  title: Mountain Goat
+  taxonomy: ANIMAL
+  group_key: animal
+  group_label: Animals
+  description: A white, sure-footed climber of North American mountains with short black horns.
+  art_prompt: Mountain Goat. A mountain goat with a thick shaggy white coat, short black horns and a small beard
+    stands balanced on a narrow rock ledge high above a mountain valley.
+  facet_id: 2994
+- key: ibex
+  slug: ibex
+  title: Ibex
+  taxonomy: ANIMAL
+  group_key: animal
+  group_label: Animals
+  description: A wild mountain goat of the Alps with huge ridged horns that curve back over its body.
+  art_prompt: Ibex. An Alpine ibex with a brown-grey coat and enormous ridged horns curving back over its shoulders
+    stands on a steep rocky cliff against a bright blue sky.
+  facet_id: 2995
+- key: musk-ox
+  slug: musk-ox
+  title: Musk Ox
+  taxonomy: ANIMAL
+  group_key: animal
+  group_label: Animals
+  description: An Arctic grazer with a long shaggy coat that reaches the ground and broad horns curving down across
+    its forehead.
+  art_prompt: Musk Ox. A musk ox with a long dark brown coat hanging to the ground and thick horns curving down
+    and out from its forehead stands on windswept snowy tundra.
+  facet_id: 2996
+- key: flying-squirrel
+  slug: flying-squirrel
+  title: Flying Squirrel
+  taxonomy: ANIMAL
+  group_key: animal
+  group_label: Animals
+  description: A small squirrel that glides between trees on a furry membrane stretched between its front and back
+    legs.
+  art_prompt: Flying Squirrel. A southern flying squirrel with soft grey-brown fur, huge dark eyes and its gliding
+    membrane spread wide glides between two tree trunks at dusk.
+  facet_id: 2997
+- key: flying-fox
+  slug: flying-fox
+  title: Flying Fox
+  taxonomy: ANIMAL
+  group_key: animal
+  group_label: Animals
+  description: A large fruit bat with a fox-like face and leathery wings that roosts in trees by day.
+  art_prompt: Flying Fox. A flying fox fruit bat with a fox-shaped russet face, large dark eyes and wide black leathery
+    wings hangs upside down from a tree branch, wrapped half in one wing.
+  facet_id: 2998
+- key: wolf
+  slug: wolf
+  title: Wolf
+  taxonomy: ANIMAL
+  group_key: animal
+  group_label: Animals
+  description: A wild canine that lives and hunts in family packs across forests and tundra.
+  art_prompt: Wolf. A grey wolf with a thick grey and cream coat, pale yellow eyes and a bushy tail stands on a
+    snowy forest trail between tall pine trees.
+  facet_id: 2999
+- key: coyote
+  slug: coyote
+  title: Coyote
+  taxonomy: ANIMAL
+  group_key: animal
+  group_label: Animals
+  description: A lean wild dog of North America with tawny fur, large pointed ears and a bushy tail.
+  art_prompt: Coyote. A coyote with tawny grey fur, tall pointed ears, a narrow snout and a black-tipped bushy tail
+    stands on a desert ridge with sagebrush and red rocks in evening light.
+  facet_id: 3000
+- key: mole
+  slug: mole
+  title: Mole
+  taxonomy: ANIMAL
+  group_key: animal
+  group_label: Animals
+  description: A small burrowing mammal with velvety black fur, tiny eyes and broad pink digging hands.
+  art_prompt: Mole. A European mole with velvety black fur, a pink pointed snout and wide pink shovel-shaped front
+    paws pushes up out of a fresh mound of brown soil on a green lawn.
+  facet_id: 3001
+- key: shrew
+  slug: shrew
+  title: Shrew
+  taxonomy: ANIMAL
+  group_key: animal
+  group_label: Animals
+  description: A tiny mouse-sized mammal with a long pointed nose that eats insects and is always on the move.
+  art_prompt: Shrew. A common shrew with brown fur, a long pointed twitching snout and tiny dark eyes sniffs along
+    a mossy log on the forest floor among fallen leaves.
+  facet_id: 3002
+- key: bat
+  slug: bat
+  title: Bat
+  taxonomy: ANIMAL
+  group_key: animal
+  group_label: Animals
+  description: A small flying mammal with thin leathery wings that hunts insects at night using sound.
+  art_prompt: Bat. A little brown bat with soft brown fur, big rounded ears and thin dark wings spread wide flies
+    across a deep blue night sky near a full moon.
+  facet_id: 3003
+- key: vampire-bat
+  slug: vampire-bat
+  title: Vampire Bat
+  taxonomy: ANIMAL
+  group_key: animal
+  group_label: Animals
+  description: A small bat of Central and South America with a flat nose, sharp front teeth and the ability to walk
+    on all fours.
+  art_prompt: Vampire Bat. A common vampire bat with grey-brown fur, a flat pug-like nose, pointed ears and two
+    small sharp front teeth crouches on all fours on a cave rock, wings folded.
+  facet_id: 3004
+- key: kakapo
+  slug: kakapo
+  title: Kakapo
+  taxonomy: ANIMAL
+  group_key: animal
+  group_label: Animals
+  description: A heavy, flightless green parrot from New Zealand that is active at night and climbs trees.
+  art_prompt: Kakapo. A kakapo, a plump flightless parrot with moss-green speckled feathers, a pale owl-like face
+    and a big grey beak, waddles across a fern-covered forest floor at night.
+  facet_id: 3005
+- key: secretary-bird
+  slug: secretary-bird
+  title: Secretary Bird
+  taxonomy: ANIMAL
+  group_key: animal
+  group_label: Animals
+  description: A tall African bird of prey with long legs, a feathered crest and a habit of stamping on snakes.
+  art_prompt: Secretary Bird. A secretary bird with long black-and-white legs, grey body feathers, bright orange
+    facial skin and a crest of long black quill feathers strides through dry golden grassland.
+  facet_id: 3006
+- key: owl
+  slug: owl
+  title: Owl
+  taxonomy: ANIMAL
+  group_key: animal
+  group_label: Animals
+  description: A night-hunting bird with a round face, large forward-facing eyes and silent wings.
+  art_prompt: Owl. A great horned owl with mottled brown feathers, tall ear tufts and big round yellow eyes perches
+    on a mossy tree branch under a starry night sky.
+  facet_id: 3007
+- key: barn-owl
+  slug: barn-owl
+  title: Barn Owl
+  taxonomy: ANIMAL
+  group_key: animal
+  group_label: Animals
+  description: A pale owl with a heart-shaped white face that hunts mice over fields at night.
+  art_prompt: Barn Owl. A barn owl with a white heart-shaped face, dark eyes and golden-buff wings speckled with
+    grey sits on a wooden fence post beside a moonlit hay field.
+  facet_id: 3008
+- key: penguin
+  slug: penguin
+  title: Penguin
+  taxonomy: ANIMAL
+  group_key: animal
+  group_label: Animals
+  description: A flightless black-and-white seabird that swims with flipper wings and nests on cold coasts.
+  art_prompt: Penguin. A gentoo penguin with a black back, a white belly, an orange beak and a white stripe over
+    its head stands upright on a pebbly Antarctic beach beside icy blue water.
+  facet_id: 3009
+- key: emperor-penguin
+  slug: emperor-penguin
+  title: Emperor Penguin
+  taxonomy: ANIMAL
+  group_key: animal
+  group_label: Animals
+  description: The largest penguin, with golden-yellow patches on its neck, raising its chick on the Antarctic ice.
+  art_prompt: Emperor Penguin. An emperor penguin with a sleek black head, a white belly and bright golden-yellow
+    neck patches stands tall on flat Antarctic sea ice with a grey fluffy chick at its feet.
+  facet_id: 3010
+- key: pelican
+  slug: pelican
+  title: Pelican
+  taxonomy: ANIMAL
+  group_key: animal
+  group_label: Animals
+  description: A large water bird with a long bill and a stretchy throat pouch it uses to scoop up fish.
+  art_prompt: Pelican. A brown pelican with grey-brown feathers, a white head and a long bill with a full throat
+    pouch stands on a wooden pier post above calm blue sea water.
+  facet_id: 3011
+- key: crane
+  slug: crane
+  title: Crane
+  taxonomy: ANIMAL
+  group_key: animal
+  group_label: Animals
+  description: A tall wading bird with long legs and neck, famous for its leaping courtship dances.
+  art_prompt: Crane. A red-crowned crane with white feathers, black neck and wing tips and a small red patch on
+    its head leaps with wings spread wide on a snowy marsh.
+  facet_id: 3012
+- key: heron
+  slug: heron
+  title: Heron
+  taxonomy: ANIMAL
+  group_key: animal
+  group_label: Animals
+  description: A long-legged wading bird that stands still in shallow water and spears fish with its sharp bill.
+  art_prompt: Heron. A grey heron with long legs, a long S-curved neck, a sharp yellow bill and a black head stripe
+    stands motionless in a reedy pond at dawn.
+  facet_id: 3013
+- key: swan
+  slug: swan
+  title: Swan
+  taxonomy: ANIMAL
+  group_key: animal
+  group_label: Animals
+  description: A large white water bird with a long curved neck that glides on lakes and rivers.
+  art_prompt: Swan. A mute swan with pure white feathers, a long curved neck and an orange bill with a black knob
+    glides across a calm green lake under willow trees.
+  facet_id: 3014
+- key: goose
+  slug: goose
+  title: Goose
+  taxonomy: ANIMAL
+  group_key: animal
+  group_label: Animals
+  description: A loud, sturdy water bird that grazes on grass and flies in V-shaped flocks.
+  art_prompt: Goose. A white domestic goose with an orange beak and orange feet stands in green grass beside a farm
+    pond, wings half open and beak open in a honk.
+  facet_id: 3015
+- key: duck
+  slug: duck
+  title: Duck
+  taxonomy: ANIMAL
+  group_key: animal
+  group_label: Animals
+  description: A common water bird with a flat bill and webbed feet that dabbles for food on ponds.
+  art_prompt: Duck. A male mallard duck with a glossy green head, a white neck ring, a yellow bill and a brown chest
+    floats on a calm blue pond among lily pads.
+  facet_id: 3016
+- key: chameleon
+  slug: chameleon
+  title: Chameleon
+  taxonomy: ANIMAL
+  group_key: animal
+  group_label: Animals
+  description: A slow-moving lizard with turret eyes that move separately, a curled tail and skin that changes colour.
+  art_prompt: Chameleon. A panther chameleon with bright green, turquoise and orange skin, turret eyes and a curled
+    tail grips a thin branch, long sticky tongue shooting toward a cricket.
+  facet_id: 3017
+- key: gecko
+  slug: gecko
+  title: Gecko
+  taxonomy: ANIMAL
+  group_key: animal
+  group_label: Animals
+  description: A small lizard with sticky toe pads that lets it walk up walls and across ceilings.
+  art_prompt: Gecko. A leopard gecko with yellow skin covered in black spots, big dark eyes and a thick striped
+    tail climbs across a smooth grey rock in warm light.
+  facet_id: 3018
+- key: gila-monster
+  slug: gila-monster
+  title: Gila Monster
+  taxonomy: ANIMAL
+  group_key: animal
+  group_label: Animals
+  description: A heavy venomous lizard of the American Southwest with beaded black and orange skin.
+  art_prompt: Gila Monster. A Gila monster with beaded skin in black and bright orange bands, a thick short tail
+    and a broad head walks slowly across red desert sand beside a cactus.
+  facet_id: 3019
+- key: tortoise
+  slug: tortoise
+  title: Tortoise
+  taxonomy: ANIMAL
+  group_key: animal
+  group_label: Animals
+  description: A slow land reptile carrying a high domed shell, known for living a very long time.
+  art_prompt: Tortoise. A sulcata tortoise with a high domed tan shell made of ridged plates and thick scaly legs
+    walks across dry grass, chewing a yellow flower.
+  facet_id: 3020
+- key: snapping-turtle
+  slug: snapping-turtle
+  title: Snapping Turtle
+  taxonomy: ANIMAL
+  group_key: animal
+  group_label: Animals
+  description: A large freshwater turtle with a rough shell, a hooked beak and a strong bite.
+  art_prompt: Snapping Turtle. A common snapping turtle with a rough dark brown shell, a big head with a hooked
+    beak and a long ridged tail sits on a muddy riverbank among green reeds.
+  facet_id: 3021
+- key: alligator
+  slug: alligator
+  title: Alligator
+  taxonomy: ANIMAL
+  group_key: animal
+  group_label: Animals
+  description: A large reptile of the American southeast with a broad rounded snout and dark armoured back.
+  art_prompt: Alligator. An American alligator with dark olive armoured skin, a broad rounded snout and visible
+    teeth lies on a muddy bank at the edge of a green cypress swamp.
+  facet_id: 3022
+- key: crocodile
+  slug: crocodile
+  title: Crocodile
+  taxonomy: ANIMAL
+  group_key: animal
+  group_label: Animals
+  description: A large river reptile with a long pointed snout and teeth that show even when its mouth is closed.
+  art_prompt: Crocodile. A Nile crocodile with grey-green scaly armour, a long narrow snout and an open toothy mouth
+    basks on a sandy riverbank in hot sunlight.
+  facet_id: 3023
+- key: anaconda
+  slug: anaconda
+  title: Anaconda
+  taxonomy: ANIMAL
+  group_key: animal
+  group_label: Animals
+  description: A giant South American snake that lives in swamps and rivers and is among the heaviest snakes on
+    Earth.
+  art_prompt: Anaconda. A green anaconda with a thick olive-green body covered in black oval spots coils on a muddy
+    riverbank among water plants in a South American rainforest.
+  facet_id: 3024
+- key: cobra
+  slug: cobra
+  title: Cobra
+  taxonomy: ANIMAL
+  group_key: animal
+  group_label: Animals
+  description: A venomous snake that raises its head and spreads a wide hood when it feels threatened.
+  art_prompt: Cobra. An Indian cobra with smooth tan scales rises upright with its wide hood spread, showing a dark
+    spectacle pattern on the back of the hood, on dry sandy ground.
+  facet_id: 3025
+- key: rattlesnake
+  slug: rattlesnake
+  title: Rattlesnake
+  taxonomy: ANIMAL
+  group_key: animal
+  group_label: Animals
+  description: A venomous American snake with a rattle at the tip of its tail that it shakes as a warning.
+  art_prompt: Rattlesnake. A western diamondback rattlesnake with brown diamond patterns along its back lies coiled
+    on desert sand, head raised and striped rattle held up at the tail tip.
+  facet_id: 3026
+- key: salamander
+  slug: salamander
+  title: Salamander
+  taxonomy: ANIMAL
+  group_key: animal
+  group_label: Animals
+  description: A small amphibian with smooth moist skin, short legs and a long tail that lives in damp forests.
+  art_prompt: Salamander. A fire salamander with glossy black skin marked with bright yellow spots and stripes crawls
+    over wet green moss on the forest floor after rain.
+  facet_id: 3027
+- key: poison-dart-frog
+  slug: poison-dart-frog
+  title: Poison Dart Frog
+  taxonomy: ANIMAL
+  group_key: animal
+  group_label: Animals
+  description: A tiny rainforest frog with brightly coloured skin that warns predators it is poisonous.
+  art_prompt: Poison Dart Frog. A blue poison dart frog with bright cobalt-blue skin covered in small black spots
+    sits on a wet green leaf in a misty rainforest.
+  facet_id: 3028
+- key: tree-frog
+  slug: tree-frog
+  title: Tree Frog
+  taxonomy: ANIMAL
+  group_key: animal
+  group_label: Animals
+  description: A small climbing frog with sticky round toe pads and large eyes that lives among leaves.
+  art_prompt: Tree Frog. A red-eyed tree frog with bright green skin, huge red eyes, blue and yellow striped sides
+    and orange toes clings to a broad green leaf at night.
+  facet_id: 3029
+- key: bullfrog
+  slug: bullfrog
+  title: Bullfrog
+  taxonomy: ANIMAL
+  group_key: animal
+  group_label: Animals
+  description: A big North American frog with a deep, booming call and a large round eardrum behind each eye.
+  art_prompt: Bullfrog. An American bullfrog with olive-green skin, a pale yellow throat, big golden eyes and round
+    eardrums sits on a lily pad in a calm pond.
+  facet_id: 3030
+- key: giant-squid
+  slug: giant-squid
+  title: Giant Squid
+  taxonomy: ANIMAL
+  group_key: animal
+  group_label: Animals
+  description: A huge deep-sea squid with eight arms, two very long feeding tentacles and the largest eyes of any
+    animal.
+  art_prompt: Giant Squid. A giant squid with a long reddish body, huge round eyes, eight arms and two very long
+    tentacles lined with suckers swims through dark blue deep ocean water.
+  facet_id: 3031
+- key: jellyfish
+  slug: jellyfish
+  title: Jellyfish
+  taxonomy: ANIMAL
+  group_key: animal
+  group_label: Animals
+  description: A soft, see-through sea animal with a bell-shaped body and long trailing tentacles.
+  art_prompt: Jellyfish. A sea nettle jellyfish with a translucent golden-orange bell and long thin trailing tentacles
+    and frilly mouth arms drifts through clear blue ocean water.
+  facet_id: 3032
+- key: nautilus
+  slug: nautilus
+  title: Nautilus
+  taxonomy: ANIMAL
+  group_key: animal
+  group_label: Animals
+  description: An ancient sea animal living inside a coiled, striped shell, with many small tentacles around its
+    head.
+  art_prompt: Nautilus. A chambered nautilus with a smooth coiled white shell striped in reddish-brown bands and
+    a cluster of small tentacles swims through dark blue water near a coral reef.
+  facet_id: 3033
+- key: lobster
+  slug: lobster
+  title: Lobster
+  taxonomy: ANIMAL
+  group_key: animal
+  group_label: Animals
+  description: A large sea crustacean with a hard shell, two big claws and long antennae.
+  art_prompt: Lobster. An American lobster with a dark blue-green shell, two large claws raised, long red antennae
+    and a fanned tail walks across a rocky sea floor.
+  facet_id: 3034
+- key: sea-urchin
+  slug: sea-urchin
+  title: Sea Urchin
+  taxonomy: ANIMAL
+  group_key: animal
+  group_label: Animals
+  description: A round sea animal covered in long movable spines that grazes on rocks and seaweed.
+  art_prompt: Sea Urchin. A purple sea urchin, a round body covered in long purple spines, sits on a rock in a shallow
+    tide pool beside green seaweed and small pink anemones.
+  facet_id: 3035
+- key: anglerfish
+  slug: anglerfish
+  title: Anglerfish
+  taxonomy: ANIMAL
+  group_key: animal
+  group_label: Animals
+  description: A deep-sea fish with a huge mouth and a glowing lure on a stalk above its head.
+  art_prompt: Anglerfish. A deep-sea anglerfish with a dark round body, a huge mouth full of long needle teeth and
+    a glowing blue lure dangling from a stalk on its head floats in black deep water.
+  facet_id: 3036
+- key: horse
+  slug: horse
+  title: Horse
+  taxonomy: ANIMAL
+  group_key: animal
+  group_label: Animals
+  description: A large hoofed animal with a flowing mane and tail, ridden and worked alongside people for thousands
+    of years.
+  art_prompt: Horse. A chestnut horse with a glossy red-brown coat, a flowing dark mane and tail and a white blaze
+    on its face stands in a green meadow with wildflowers.
+  facet_id: 3037
+- key: cow
+  slug: cow
+  title: Cow
+  taxonomy: ANIMAL
+  group_key: animal
+  group_label: Animals
+  description: A large farm animal that grazes on grass and gives milk, often with black-and-white patches.
+  art_prompt: Cow. A Holstein cow with a black-and-white patched coat, a pink nose and a brass bell on a leather
+    collar stands in a green pasture chewing grass.
+  facet_id: 3038
+- key: pig
+  slug: pig
+  title: Pig
+  taxonomy: ANIMAL
+  group_key: animal
+  group_label: Animals
+  description: A stout farm animal with a round snout, curly tail and a strong sense of smell.
+  art_prompt: Pig. A pink farm pig with a round snout, floppy ears, a few dark spots and a curly tail stands in
+    a muddy farmyard puddle beside a wooden fence.
+  facet_id: 3039
+- key: werewolf
+  slug: werewolf
+  title: Werewolf
+  taxonomy: SPECIES
+  group_key: species
+  group_label: Species
+  description: A person who turns into a wolf-like creature under the full moon, walking upright with fur, claws
+    and a wolf's head.
+  art_prompt: Werewolf. A werewolf with a grey wolf's head, shaggy grey fur over a tall muscular body, clawed hands
+    and torn trousers stands upright in a moonlit pine forest under a full moon.
+  facet_id: 3040
+- key: unicorn
+  slug: unicorn
+  title: Unicorn
+  taxonomy: SPECIES
+  group_key: species
+  group_label: Species
+  description: A white horse with a single spiral horn on its forehead, from old European legend.
+  art_prompt: Unicorn. A white unicorn with a long silver mane and tail, cloven hooves and a single spiral golden
+    horn on its forehead stands in a sunlit forest glade among bluebells.
+  facet_id: 3041
+- key: phoenix
+  slug: phoenix
+  title: Phoenix
+  taxonomy: SPECIES
+  group_key: species
+  group_label: Species
+  description: A legendary fire bird with blazing red and gold feathers that is reborn from its own ashes.
+  art_prompt: Phoenix. A phoenix, a large bird with blazing red, orange and gold feathers, a long flowing tail and
+    wings spread wide, rises from a nest of glowing embers against a dark sky.
+  facet_id: 3042
+- key: alien
+  slug: alien
+  title: Alien
+  taxonomy: SPECIES
+  group_key: species
+  group_label: Species
+  description: A visitor from another planet, here the classic small grey being with a large head and big black
+    eyes.
+  art_prompt: Alien. A small grey alien with a large bald head, big glossy black almond eyes, a thin body and long
+    three-fingered hands stands on a grassy hill beside a silver flying saucer at night.
+  facet_id: 3043
+- key: cyborg
+  slug: cyborg
+  title: Cyborg
+  taxonomy: SPECIES
+  group_key: species
+  group_label: Species
+  description: A person whose body is partly machine, with mechanical limbs and implants joined to living flesh.
+  art_prompt: Cyborg. A cyborg woman with a human face, one glowing blue mechanical eye, a polished silver robotic
+    arm and metal plates along her shoulder stands in a neon-lit city street at night.
+  facet_id: 3044
+- key: pirate
+  slug: pirate
+  title: Pirate
+  taxonomy: ARCHETYPE
+  group_key: class
+  group_label: Classes and Roles
+  description: A sea robber of the old sailing ships, with a cutlass, a tricorn hat and a love of treasure.
+  art_prompt: Pirate. A pirate with a black tricorn hat, a red bandana, a long coat, a striped shirt and a cutlass
+    in hand stands on the deck of a wooden sailing ship, a parrot on one shoulder.
+  facet_id: 3045
+- key: astronaut
+  slug: astronaut
+  title: Astronaut
+  taxonomy: ARCHETYPE
+  group_key: class
+  group_label: Classes and Roles
+  description: A person trained to travel in space, wearing a pressurised suit and helmet.
+  art_prompt: Astronaut. An astronaut in a white space suit with a round helmet and gold reflective visor floats
+    outside a space station, Earth glowing blue and white below.
+  facet_id: 3046
+- key: knight
+  slug: knight
+  title: Knight
+  taxonomy: ARCHETYPE
+  group_key: class
+  group_label: Classes and Roles
+  description: An armoured warrior of the medieval age who fights on horseback with sword, lance and shield.
+  art_prompt: Knight. A knight in shining steel plate armour with a plumed helmet, a long sword and a shield painted
+    with a red lion stands in front of a stone castle gate.
+  facet_id: 3047
+- key: banana
+  slug: banana
+  title: Banana
+  taxonomy: OTHER
+  group_key: fruit
+  group_label: Fruit
+  description: A long curved tropical fruit with a yellow peel and soft sweet flesh.
+  art_prompt: Banana. A single ripe yellow banana with a few small brown freckles lies on a plain wooden table in
+    soft morning light.
+  facet_id: 3048
+- key: apple
+  slug: apple
+  title: Apple
+  taxonomy: OTHER
+  group_key: fruit
+  group_label: Fruit
+  description: A round crisp fruit that grows on trees, here a shiny red one with a short stem and a leaf.
+  art_prompt: Apple. A shiny red apple with a short brown stem and one green leaf sits on a plain wooden table in
+    soft window light.
+  facet_id: 3049
+- key: orange
+  slug: orange-fruit
+  title: Orange Fruit
+  taxonomy: OTHER
+  group_key: fruit
+  group_label: Fruit
+  description: A round citrus fruit with a bright orange peel and juicy segments inside.
+  art_prompt: Orange Fruit. A whole round orange with dimpled bright orange peel and a small green leaf at the stem
+    sits beside one half cut open to show juicy segments, on a plain wooden table.
+  facet_id: 3050
+- key: strawberry
+  slug: strawberry
+  title: Strawberry
+  taxonomy: OTHER
+  group_key: fruit
+  group_label: Fruit
+  description: A small red berry covered in tiny seeds with a green leafy cap.
+  art_prompt: Strawberry. A ripe red strawberry with tiny yellow seeds on its skin and a fresh green leafy cap sits
+    on a plain light wooden table.
+  facet_id: 3051
+- key: pineapple
+  slug: pineapple
+  title: Pineapple
+  taxonomy: OTHER
+  group_key: fruit
+  group_label: Fruit
+  description: A tropical fruit with a rough golden diamond-patterned skin and a crown of spiky leaves.
+  art_prompt: Pineapple. A whole pineapple with golden-brown diamond-patterned skin and a tall crown of spiky green
+    leaves stands upright on a plain wooden table.
+  facet_id: 3052
+- key: watermelon
+  slug: watermelon
+  title: Watermelon
+  taxonomy: OTHER
+  group_key: fruit
+  group_label: Fruit
+  description: A large striped green melon with sweet red flesh and black seeds.
+  art_prompt: Watermelon. A whole striped green watermelon lies beside one thick wedge showing bright red juicy
+    flesh and black seeds, on a plain wooden table.
+  facet_id: 3053
+- key: mango
+  slug: mango
+  title: Mango
+  taxonomy: OTHER
+  group_key: fruit
+  group_label: Fruit
+  description: A tropical stone fruit with smooth red-to-yellow skin and sweet orange flesh.
+  art_prompt: Mango. A ripe mango with smooth skin blushing from green to red and yellow sits beside one half cut
+    open to show bright orange flesh, on a plain wooden table.
+  facet_id: 3054
+- key: peach
+  slug: peach
+  title: Peach
+  taxonomy: OTHER
+  group_key: fruit
+  group_label: Fruit
+  description: A round soft fruit with fuzzy pink-orange skin and sweet juicy flesh.
+  art_prompt: Peach. A ripe peach with fuzzy skin blushing pink and orange and a small green leaf at the stem sits
+    on a plain wooden table in warm light.
+  facet_id: 3055
+- key: kiwi-fruit
+  slug: kiwi-fruit
+  title: Kiwi Fruit
+  taxonomy: OTHER
+  group_key: fruit
+  group_label: Fruit
+  description: An egg-shaped fruit with fuzzy brown skin and bright green flesh around tiny black seeds.
+  art_prompt: Kiwi Fruit. A whole fuzzy brown kiwi fruit sits beside one half cut open to show bright green flesh,
+    a pale centre and a ring of tiny black seeds, on a plain wooden table.
+  facet_id: 3056
+- key: lemon
+  slug: lemon
+  title: Lemon
+  taxonomy: OTHER
+  group_key: fruit
+  group_label: Fruit
+  description: A bright yellow citrus fruit with a sour juicy inside.
+  art_prompt: Lemon. A whole bright yellow lemon with a small green leaf sits beside one half cut open to show pale
+    yellow juicy segments, on a plain wooden table.
+  facet_id: 3057
+- key: lime
+  slug: lime
+  title: Lime
+  taxonomy: OTHER
+  group_key: fruit
+  group_label: Fruit
+  description: A small green citrus fruit with a sharp sour juice.
+  art_prompt: Lime. A whole glossy green lime sits beside one half cut open to show pale green juicy segments, on
+    a plain wooden table.
+  facet_id: 3058
+- key: cherry
+  slug: cherry
+  title: Cherry
+  taxonomy: OTHER
+  group_key: fruit
+  group_label: Fruit
+  description: A small round red stone fruit that grows in pairs on long green stems.
+  art_prompt: Cherry. A pair of shiny dark red cherries joined by long green stems with one small leaf lies on a
+    plain wooden table.
+  facet_id: 3059
+- key: blueberry
+  slug: blueberry-fruit
+  title: Blueberry Fruit
+  taxonomy: OTHER
+  group_key: fruit
+  group_label: Fruit
+  description: A small round dark blue berry with a dusty bloom and a little crown at the top.
+  art_prompt: Blueberry Fruit. A small heap of round dark blue blueberries with a pale dusty bloom and tiny star-shaped
+    crowns sits on a plain wooden table beside one green leaf.
+  facet_id: 3060
+- key: raspberry
+  slug: raspberry
+  title: Raspberry
+  taxonomy: OTHER
+  group_key: fruit
+  group_label: Fruit
+  description: A soft red berry made of many tiny round drupelets, hollow in the middle.
+  art_prompt: Raspberry. A few ripe red raspberries made of tiny round bumps, one turned to show its hollow centre,
+    sit on a plain wooden table beside a green leaf.
+  facet_id: 3061
+- key: dragon-fruit
+  slug: dragon-fruit
+  title: Dragon Fruit
+  taxonomy: OTHER
+  group_key: fruit
+  group_label: Fruit
+  description: A cactus fruit with bright pink skin, green-tipped scales and white flesh dotted with black seeds.
+  art_prompt: Dragon Fruit. A whole dragon fruit with bright pink skin and green-tipped leafy scales sits beside
+    one half cut open to show white flesh speckled with tiny black seeds, on a plain wooden table.
+  facet_id: 3062
+- key: coconut
+  slug: coconut
+  title: Coconut
+  taxonomy: OTHER
+  group_key: fruit
+  group_label: Fruit
+  description: The large hard-shelled fruit of the coconut palm, hairy brown outside and white inside.
+  art_prompt: Coconut. A hairy brown coconut sits beside one half cracked open to show thick white flesh inside,
+    on pale beach sand under a palm leaf.
+  facet_id: 3063
+- key: avocado
+  slug: avocado
+  title: Avocado
+  taxonomy: OTHER
+  group_key: fruit
+  group_label: Fruit
+  description: A pear-shaped fruit with bumpy dark green skin, creamy pale green flesh and a large round seed.
+  art_prompt: Avocado. A whole avocado with bumpy dark green skin sits beside one half cut open to show creamy pale
+    green flesh and a large round brown seed, on a plain wooden table.
+  facet_id: 3064
+- key: pumpkin
+  slug: pumpkin
+  title: Pumpkin
+  taxonomy: OTHER
+  group_key: fruit
+  group_label: Fruit
+  description: A large round orange squash with deep ribs and a thick curly stem.
+  art_prompt: Pumpkin. A large round orange pumpkin with deep vertical ribs and a thick curly green-brown stem sits
+    on straw in an autumn field.
+  facet_id: 3065
+- key: pomegranate
+  slug: pomegranate-fruit
+  title: Pomegranate Fruit
+  taxonomy: OTHER
+  group_key: fruit
+  group_label: Fruit
+  description: A round red fruit with a leathery skin and a crown, packed inside with juicy ruby seeds.
+  art_prompt: Pomegranate Fruit. A whole red pomegranate with a small crown on top sits beside one half broken open
+    to show hundreds of glossy ruby-red seeds, on a plain wooden table.
+  facet_id: 3066
+- key: grapes
+  slug: grapes
+  title: Grapes
+  taxonomy: OTHER
+  group_key: fruit
+  group_label: Fruit
+  description: A bunch of small round juicy fruits growing together on a branching stem.
+  art_prompt: Grapes. A full bunch of round purple grapes with a dusty bloom hangs from a green vine stem with two
+    broad grape leaves, against a sunny vineyard.
+  facet_id: 3067
+- key: disco-ball
+  slug: disco-ball
+  title: Disco Ball
+  taxonomy: OTHER
+  group_key: curio
+  group_label: Curios
+  description: A sphere covered in hundreds of small mirror tiles that scatters spots of light around a room.
+  art_prompt: Disco Ball. A large mirrored disco ball covered in small square mirror tiles hangs from a chain, scattering
+    bright white spots of light across a dark dance floor.
+  facet_id: 3068
+- key: mushroom
+  slug: mushroom
+  title: Mushroom
+  taxonomy: OTHER
+  group_key: curio
+  group_label: Curios
+  description: A fungus with a rounded cap and a stem, here the red cap with white spots of old fairy tales.
+  art_prompt: Mushroom. A fly agaric mushroom with a bright red cap covered in white spots and a thick white stem
+    with a frilly ring grows from green moss on the forest floor.
+  facet_id: 3069
+- key: cupcake
+  slug: cupcake
+  title: Cupcake
+  taxonomy: OTHER
+  group_key: curio
+  group_label: Curios
+  description: A small cake baked in a paper cup and topped with a swirl of frosting.
+  art_prompt: Cupcake. A vanilla cupcake in a pink paper case topped with a tall swirl of white frosting, rainbow
+    sprinkles and one red cherry sits on a small white plate.
+  facet_id: 3070

@@ -636,3 +636,29 @@ def test_submit_fetches_both_frames_of_a_video_cell(tmp_path):
     )
     assert sent[0]["firstImageBase64"].endswith(",7") and sent[0]["secondImageBase64"].endswith(",8")
     assert sent[1]["firstImageBase64"].endswith(",7") and "secondImageBase64" not in sent[1]
+
+
+def test_entity_art_subject_attaches_the_render_to_its_record():
+    lane = {"key": "krea2", "engine": "krea2", "prompt": "prose"}
+    subject = {"key": "tiger", "size": "1024x1024", "prompt_prose": "Tiger. A tiger on a rock.",
+               "entity_art": {"type": "facet", "id": 4321}}
+    body = enq.build_request({"project_slug": "hybridizer"}, lane, subject)
+    assert body["entityArt"] == {"entityType": "facet", "entityId": 4321, "field": "imagePath",
+                                 "preserveOriginal": True, "mode": "recreate"}
+
+
+def test_entity_art_refuses_a_missing_id_or_a_source_lane():
+    import pytest
+
+    lane = {"key": "krea2", "engine": "krea2", "prompt": "prose"}
+    with pytest.raises(ValueError):
+        enq.build_request({}, lane, {"key": "x", "prompt_prose": "a", "entity_art": {"type": "facet", "id": None}})
+    kontext = {"key": "k", "engine": "kontext", "prompt": "prose"}
+    with pytest.raises(ValueError):
+        enq.build_request({}, kontext, {"key": "x", "prompt_prose": "a", "entity_art": {"type": "facet", "id": 7}},
+                          source_image="data:image/png;base64,")
+
+
+def test_subject_without_entity_art_sends_none():
+    body = enq.build_request(LEDGER, LEDGER["lanes"][0], LEDGER["subjects"][0])
+    assert "entityArt" not in body
