@@ -207,9 +207,8 @@ tasks:
   - id: t-007
     milestone: m3
     title: "Expand seven-district city map into navigable authored overworld"
-    status: review
+    status: ready
     depends_on: t-001
-    owner: worker
     passes: 0
     stakes: reversible
     note: |-
@@ -219,10 +218,9 @@ tasks:
       Continue the Slime City city-overworld milestone from its existing partial state. Focus on substantive playable district progression and high-quality console interaction while other sessions own t-003/t-004 and t-017 art.
 
       A focused follow-on overworld increment adds nine authored first-crossing street decisions with gameplay consequences, city panel presentation, session-only memory, and a deterministic contract expansion. Pending CI, preview verification, and review before this partial task returns ready.
-    claimed_by: 2026-10-30T204018Z-slime-city-t007-c84f
-    claimed_at: '2026-10-30T20:40:18Z'
-    updated: '2026-10-30T20:47:15Z'
-    implementation_pr: 'silasfelinus/kind_robots#4499'
+
+      PARTIAL 2026-10-30 PT: Kind Robots PR #4518 merged to main at dbf28b9794b275020a002d3a00e79b7caa429737 after 20 successful checks, including TypeScript, layout, formatting and mandatory Slime City prototype/store/overworld game contracts. Nine named streets now have first-crossing authored scenes with two distinct player decisions each, 18 total outcomes. Street choices change district standing, city heat, and the next rival bout's real opening mana/HP/armor, combining with existing district choices. The city map displays progress and highlights resolved streets; unresolved encounters block travelling or rival fights. Session-only, no accounts or persistent currency. Further t-007 work remains: actual generated district panoramas (art queue t-017), meaningful deck/shop navigation (after t-004), faction story chapters (t-009) and eventual saved progress. This partial increment is done; re-open task for next worker.
+    updated: '2026-10-30T21:06:05Z'
   - id: t-008
     milestone: m3
     title: "Ship earned Meat economy, safe card shop and random PvE encounters"
