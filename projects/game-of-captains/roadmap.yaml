@@ -167,8 +167,8 @@ tasks:
   - id: t-008
     milestone: m3
     title: "Deliver Space Couch painted red-sofa ship, pocket-room, shield, crew and world art"
-    status: claimed
-    updated: '2026-10-30T11:40:39Z'
+    status: ready
+    updated: '2026-10-30T11:51:44Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -179,9 +179,24 @@ tasks:
       2026-10-27 PT cast redesign tranche merged: Conductor PR #6759 (9f39f1e849164660dedc42108cc277f029755fb8), app PR #4353 (d1ed41f468944a765edb58022f048ea14b6bdaff). All 4 Conductor and 17 Kind Robots current-head workflow groups passed. The 66 Krea2 canonical portraits (6 captains, 12 playable plus 4 future crew, three expressions each) are authored at CAST-REDESIGN-ROUND-2.yaml with auto_submit, versioned portraits/v2 keys and legacy fallback. Post-merge audit found 0/66 ArtJob IDs, 0/66 DONE and 0 exported v2 assets at that time. Continue via automatic art sweep, reconcile actual ArtJob IDs, inspect render quality, export .webp and update app generated art manifest, validate crops at phone/tablet/desktop, then finish remaining title/icon, couch room, 12 worlds, antagonists and story consequence art. No art-complete or human design gate.
 
       Triage 2026-10-30: cheapest visible win is export, not generation. CAST-REDESIGN-ROUND-2 has 66/66 DONE v2 captain/crew portraits (ArtImage 257797+), but none are under kind_robots public/game-of-captains (only 21 legacy renders). Run scripts/export_round_art.py with --max-edge, rebuild utils/gameOfCaptains/artManifest.ts, then render the 12 worlds, 8 antagonists, couch, pocket room, starmap and 20 casino venues (t-027 handoff).
+
+      2026-10-30 PT art export (no new generation): kind_robots PR #4483 merged at
+      fd9bd2396382fbe159d6fb1ecd0d44d4afe27e06, all 21 checks green. Shipped 18 CAST-REDESIGN-
+      ROUND-2 v2 portraits (6 captains + 12 playable crew, 640px) that portraitArt() prefers
+      over legacy faces, plus 10 RUNTIME-BEATS-ROUND-1 scenes (missions refugees/archive/bar,
+      antagonists auditor/moth/curdle, 4 base endings, 960px); WARP_ART 21 -> 49. Trio
+      interlude now reads faces via portraitArt so it shows v2 too; verifyGameOfCaptains
+      asserts every captain/crew face resolves to its v2 URL and every exported beat key
+      resolves. Contact sheet reviewed. Not exported because no runtime lookup exists yet: 48
+      defiant/vulnerable expression variants, 12 future-crew (nyra/gleam/harrow/edda)
+      portraits, 18 OPENING-TITLES, 21 CONSEQUENCES, 8 legacy pair portraits; REDSHIRTS-200
+      and SERENDIPITY-CASINOS-20 have 0 DONE rows. Remaining for this task: wiring expression
+      variants (e.g. injury/defeat states), ship/pocket-room/starmap/world art, the other 5
+      antagonists and 27 missions/12 earned endings, which still have no renders.
     owner: worker
     claimed_by: 2026-10-30T11:36:33-artexp-0190
     claimed_at: '2026-10-30T11:40:39Z'
+    implementation_pr: 'silasfelinus/kind_robots#4483'
   - id: t-009
     milestone: m3
     title: "Deliver unique mission outcome, conversation and ending illustration coverage"
