@@ -112,8 +112,8 @@ tasks:
   - id: t-004
     milestone: m2
     title: "Map designer with terrain, cover, spawns, objectives and testing"
-    status: review
-    updated: '2026-10-29T23:52:54.237Z'
+    status: ready
+    updated: '2026-10-30T00:06:48.513Z'
     depends_on: t-002
     passes: 0
     stakes: reversible
@@ -131,9 +131,8 @@ tasks:
       Bounded map-studio battle increment: use the actual 48-signature villain lieutenant catalogue, add a Quarry lair playtest with Cornerstone's powered four-HP Mags Hardpan, distinct from 1-HP Warren Wrecker henchmen and Foreman Thumpkin's minor-captain role. Implement telegraphed seismic mechanic with actionable shot/move counter, battle UI and deterministic playtest. Keep 48 levels and bosses unfinished.
 
       Added an actual seeded playable Quarry lieutenant editor preset, sharing existing tactical movement, LOS, hit chance, overwatch and burrowing. Mags Hardpan from canonical Cornerstone dossier is an independent four-HP seismic lieutenant; Foreman Thumpkin remains the 1-HP Warren Wrecker species captain, accompanied by a second 1-HP burrower. Mags marks 3x3 danger one turn ahead; squad can dodge or interrupt with normal hit. Added accessible tile highlights, clear authored dialogue and seeded mechanic tests. One boss prototype only: 48 lieutenants and 96 story stages remain authored concepts, not playable or painted. Kind Robots PR/CI pending.
-    owner: worker
-    claimed_by: 2026-10-29T234700Z-every-villain-t004-lieutenant-m8f6
-    claimed_at: '2026-10-29T23:47:10.965Z'
+
+      Merged Kind Robots PR #4459 as 4adf16c1671d213bfb719d0d63c79655e4320885 after all 16/16 latest-head checks passed. New playable Quarry lair Stage Studio preset demonstrates Cornerstone's separate four-HP Mags Hardpan lieutenant versus two one-hit Warren Wrecker SPECIES minions, one named Foreman Thumpkin, with existing burrow AI. Mags marks the exact 3x3 quake tiles a full turn before impact. Legal normal shot hits interrupt the drum; legal player movement avoids damage. Seeded checks cover identity/HP distinction, telegraph, determinism, applied quake, dodge, interrupts, studio map, client preview and accessible warning. This remains one actual boss battle, not all 48 lieutenants or 96 stages. Remaining t-004 editor features, civilian rescue, destructible scenery, full authored scenes, SPECIES DB/ArtJob provenance, other lieutenants, save-sharing, visual screenshots, final human gates remain open. Re-arm for development.
   - id: t-005
     milestone: m2
     title: "Opening/triggered/closing conversation tree and cinematic editor"
