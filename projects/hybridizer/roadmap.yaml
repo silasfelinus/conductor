@@ -149,7 +149,7 @@ tasks:
   - id: t-007
     milestone: m3
     title: "Pre-generate and verify curated 4,000 launch hybrids"
-    status: claimed
+    status: ready
     depends_on: t-004
     owner: worker
     passes: 0
@@ -159,9 +159,21 @@ tasks:
       without cross-product explosion; schedule batches with immutable pair
       keys and explicit art-workflow provenance. Verify each delivered image,
       not a submitted prompt count. Human-visible progress against 4,000.
+
+      2026-10-30 progress: launch pipeline live. kind_robots #4484 (art prompt: the hybrid
+      itself as one blended creature or object on a plain backdrop, no jar/specimen/lab
+      staging; admin POST /api/hybridizer/batch) and #4512 (batch priority 90: behind
+      interactive 100 and project runtime art, ahead of bulk backfill). conductor #6815:
+      deterministic 4,000-pair LAUNCH-PAIRS.json (36-pair showcase first, every starter used
+      35-75 times) and the 20-minute 'Hybridizer launch batch' workflow, which keeps a
+      60-render window full and marks a hybrid delivered only after its image URL answers. At
+      close: 96/4,000 submitted, 36 verified delivered (the full showcase, reviewed on a
+      contact sheet; Silas approved the look). The workflow keeps running unattended; reopen
+      to done when the ledger reaches 4,000 verified.
     claimed_by: 20261030T112000Z-hybridizer-t007-q7h2
     claimed_at: '2026-10-30T11:41:43Z'
-    updated: '2026-10-30T11:41:43Z'
+    updated: '2026-10-30T21:34:04Z'
+    implementation_pr: 'silasfelinus/kind_robots#4484'
   - id: t-008
     milestone: m2
     title: "Accept user-submitted ingredient images securely"
