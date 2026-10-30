@@ -223,7 +223,7 @@ tasks:
   - id: t-015
     milestone: m4
     title: "Verify revised seven-day slice against thirty-day contracts at all widths"
-    status: claimed
+    status: done
     depends_on: t-014
     owner: worker
     passes: 0
@@ -237,9 +237,26 @@ tasks:
       verification: main image and primary action visible; no shell scroll.
 
       2026-10-30: promoted to ready because its dependency t-014 closed (kind_robots#4504).
-    updated: '2026-10-30T14:02:33Z'
+
+      2026-10-30 (kind_robots#4521, merged e97c3c00; report conductor#6852): played the real
+      page by clicking only at 390/768/1440 from New Game through day 8. Covered opening,
+      night-three split, district patrols, injury and infirmary visit, a full consent-first
+      romance (listen/help/invite/date), all six console tabs top and bottom, save code
+      export, NEW TERM, title import, reload autosave, and 80-press keyboard Tab. Audited
+      errors, overflow, broken images, clipped text and unreachable buttons; zero issues after
+      six fixes: stray > and empty after-action box; 30 day lights overflowing the 390 px
+      header; crushed phone roster posters; relationship panel persisting into the next day;
+      console tabs opening mid-scroll, with the scene now a banner on narrow screens while
+      reading; no way to load a save code after NEW TERM (title Settings now imports).
+      verifyCometPlaytestReadiness (in test:comet-city-academy) traces 4 seeds x 7 days
+      map>scene>night>debrief with autosave and save-code deep-equality and pins each fix.
+      PLAYTEST-READINESS.md has 12 screenshots, known gaps (days 9-30 not click-tested at
+      every width, placeholder art, tactical fights not replayed) and a first-time tester
+      script. Needs Silas: Imani Calder name collision, and approval for outside testers.
+    updated: '2026-10-30T21:06:22Z'
     claimed_by: 2026-10-30T14:03:40Z-prom-playtest-k4v9
     claimed_at: '2026-10-30T14:02:33Z'
+    implementation_pr: 'silasfelinus/kind_robots#4521'
   - id: t-016
     milestone: m2
     title: "Build playable student-hero-villain evolution, betrayal and accomplice state"
