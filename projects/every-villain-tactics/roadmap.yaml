@@ -178,7 +178,7 @@ tasks:
   - id: t-005
     milestone: m2
     title: "Opening/triggered/closing conversation tree and cinematic editor"
-    status: claimed
+    status: done
     depends_on: t-004
     owner: worker
     passes: 0
@@ -188,9 +188,29 @@ tasks:
       branches, state effects and triggers for turn, tile, line of sight,
       health, rescue, objective, faction, kill, secret and chained conditions.
       Graph validator detects unreachable nodes, softlocks and missing actors/art.
+
+      2026-10-30: Shipped in two kind_robots PRs, each 22/22 green: #4510 (5e029a94) and #4513
+      (squash merged after it). sceneGraph.ts handles opening/triggered/closing scenes. Lines
+      carry speaker (narrator, a stage unit or a canonical identity), an optional role tag
+      (the hero/villain/henchman/sidekick), emotion (6, mapped to the speaker's shipped
+      portrait) and camera (4). Choices (2-3) can set a flag, heal or suppress. Conditional
+      branches check a flag, the player's viewpoint, whether a unit still stands, or which
+      team outnumbers the other. Triggers: round, tile, line of sight, health, kills, rescues,
+      secret, objective progress, faction lead, after-scene, flag (chained) and closing by
+      outcome. Triggers latch into the save's fired history, and choice effects apply once
+      when a scene finishes. The graph validator reports broken links, unreachable lines,
+      softlocks, unknown actors, actors without shipped art, impossible triggers or
+      conditions, unset flags, chain cycles and duplicate openings. Saves accept only this
+      stage's scene ids and settable flags. The studio MAP/SCENES pane is the cinematic
+      editor: scene list; trigger params; per-line speaker, role, emotion, camera and text;
+      THEN targets; choices with targets and effects; IF branches; preview. Boiler Room Breach
+      ships an original 7-scene script. Scripts travel in share codes through the strict
+      importer. Verifier: verifyEveryVillainScenes. Scripts for the six campaign missions
+      belong to t-007; server sharing belongs to t-011.
     claimed_by: 2026-10-30T13:12:40Z-every-villain-tactics-m7r3
     claimed_at: '2026-10-30T14:03:46Z'
-    updated: '2026-10-30T14:03:46Z'
+    updated: '2026-10-30T20:35:51Z'
+    implementation_pr: 'silasfelinus/kind_robots#4513'
   - id: t-006
     milestone: m2
     title: "Save/load battle and level state including RNG and fired events"
@@ -225,7 +245,7 @@ tasks:
   - id: t-007
     milestone: m3
     title: "Write and implement all six distinctive tactical story missions"
-    status: waiting
+    status: ready
     depends_on: [t-003, t-005, t-006]
     owner: null
     passes: 0
@@ -282,7 +302,7 @@ tasks:
   - id: t-011
     milestone: m3
     title: "Save, fork, share and browse versioned community levels"
-    status: waiting
+    status: ready
     depends_on: [t-004, t-005]
     owner: null
     passes: 0
@@ -486,7 +506,7 @@ tasks:
   - id: t-021
     milestone: m3
     title: "Ship 48 power-specific playable origin opening battles"
-    status: waiting
+    status: ready
     depends_on: [t-005, t-017]
     owner: null
     passes: 0
