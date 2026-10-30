@@ -751,8 +751,8 @@ tasks:
   - id: t-031
     milestone: m3
     title: "HIGH PRIORITY · Begin private Unstable Diffusers production for canonical Prom/Tactics cast"
-    status: ready
-    updated: '2026-10-30T10:45:58+00:00'
+    status: claimed
+    updated: '2026-10-30T12:30:31Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -761,3 +761,6 @@ tasks:
       Staged 14 private canon-safe Unstable Diffusers production requests plus tests on worker/comet-city-academy-t-031-unstable-production-b4q7. Existing benchmark jobs 50509, 50515 and 50530 are referenced but deliberately not resubmitted. Pending CI, PR merge, then ArtJob acceptance.
 
       Triage 2026-10-30: conductor #6804 merged, but only 4 of 14 production cells were accepted and rendered (ArtJobs 50549-50552 -> ArtImages 257792-257795, all four standees). The other 10 posters/portraits never got job IDs, and the ledger still says awaiting-submission. Next: find why the submit run skipped them (Auto Art Generate log / art_queue_health), submit them without resubmitting 50549-50552, record IDs, then export the delivered WebPs.
+    owner: worker
+    claimed_by: 2026-10-30T12:40:00Z-artfill-r4q8
+    claimed_at: '2026-10-30T12:30:31Z'
