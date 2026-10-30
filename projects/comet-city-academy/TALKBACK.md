@@ -21,3 +21,6 @@
 **What to improve:** Roadmap notes grow with each scoped pass; keep new `notes_from_silas` entries to a pointer plus the bible file name.
 
 **Kaizen:** t-027 added to keep a per-count authored/queued/rendered/playtested tracker so progress claims never conflate stages.
+
+## 2026-10-30 — Reviewer: PR #6825 (Unstable unblock, Prom runtime refill, franchise-safe re-renders)
+Merged (squash 9017e41). Art ledgers/prompts only, reversible, CI green. The five held franchise look-alike jobs are marked REJECTED in their own ledgers and replaced by original-costume re-render prompts; a test pins that no DONE status remains on held keys. Pattern worth keeping: reject-in-ledger plus replacement round, rather than deleting art.
