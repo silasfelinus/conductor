@@ -332,8 +332,8 @@ tasks:
   - id: t-016
     milestone: m2
     title: "Cinematic front menu, story/one-shot modes, settings and scrapbook shell"
-    status: claimed
-    updated: '2026-10-30T13:04:12Z'
+    status: ready
+    updated: '2026-10-30T13:32:22Z'
     depends_on: t-003
     passes: 0
     stakes: reversible
@@ -343,9 +343,27 @@ tasks:
       Scoped cinematic intro increment for both Prom of Doom and Every Villain Tactics. Shared 192 role-key reveal definitions, accessible CSS comic panel with typography over real art, image fallback, keyboard dismissal, reduced-motion support, automatic first appearances and replay via character dossiers. The default six-subject Capes checkpoint review is already under a different claimed task t-028; no duplicate art jobs created. Remaining full tactical splash/new/continue/settings/scrapbook shell and complete ArtJobs are still unfinished; return t-016 ready.
 
       The shared comic-character introduction slice was merged to Kind Robots main in PR #4461 at 62f2ad0 after 18/18 fresh CI checks passed and a non-force conflict reconciliation. Responsive accessible 48-character role-key reveals now exist in both Prom of Doom and the Tactical training console. This is NOT completion of tactical New/Continue/Settings/Scrapbook, saved first-seen ledger, verified original art delivery, or human visual QA. Return t-016 to ready for its remaining named shell work. Art export issue kind_robots#4470 tracks the already-rendered but unshipped six origins and eight affinities.
+
+      2026-10-30: Merged kind_robots#4505 as b3564f33 after 22/22 green checks. Title screen
+      over shipped Prom art (front/splash-v2) with New Story, Continue, One-Shot, Settings,
+      Scrapbook and a way back to the console (HUD MENU button). New Story picks 1 of 4
+      viewpoints (lead outcome art) and any of the 48 leads; Backdraft is labelled the only
+      bespoke fixed-cast route. Continue resumes the newest valid t-006 slot. One-Shot lists
+      Picnic Panic plus 5 studio presets. Settings: animation speed off/fast/normal/cinematic,
+      confirm-before-end-turn (two-press END TURN), threat preview (reachable tiles visible to
+      rival shooters, exact rival formula, hovered-tile odds), restore defaults and erase
+      saves+scrapbook behind confirm. Scrapbook: 12 pages, one per recordable trigger,
+      unlocked only from validated saves; no points or medals (t-019). Keyboard roving/Escape;
+      Playwright-rendered at 390/768/1440 in a component harness with no page errors or
+      overflow. Also fixed a #4494 bug: createSave structuredClone'd Vue reactive state, so
+      browser SAVE/autosave never wrote; regression test added. New verifier
+      verifyEveryVillainFrontMenu. REMAINING for done: flexible rival-foil selection in New
+      Story (only the squad lead is selectable; rivals stay the First Bell trio), and the
+      battle console itself is still cramped at 390px (pre-existing).
     owner: worker
     claimed_by: 2026-10-30T13:12:40Z-every-villain-tactics-m7r3
     claimed_at: '2026-10-30T13:04:12Z'
+    implementation_pr: 'silasfelinus/kind_robots#4505'
   - id: t-017
     milestone: m3
     title: "Distinct signature hero powers and tactical range/mobility/defense roles"
