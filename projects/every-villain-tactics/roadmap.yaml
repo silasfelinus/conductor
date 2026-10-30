@@ -313,7 +313,7 @@ tasks:
   - id: t-017
     milestone: m3
     title: "Distinct signature hero powers and tactical range/mobility/defense roles"
-    status: claimed
+    status: done
     depends_on: t-002
     owner: worker
     passes: 0
@@ -324,9 +324,29 @@ tasks:
       power per each of the 48 canonical heroes. Seeded legal-target previews,
       special cooldowns/AP/status/AI parity, accessibility and encounter balance.
       Start with a small tested roster subset, then verify 48/48 authored powers.
+
+      2026-10-30: Shipped in kind_robots#4490 (squash 7b12e664) after 23/23 green checks. All
+      48 canonical heroes have a tactical role (8 roles: striker, skirmisher, tank,
+      controller, duelist, sniper, guardian, support) with short/mid/long weapon falloff
+      curves, aim, mobility (walk/dash), HP and defense, and one previewed signature active
+      power with AP cost, threat/target tiles, a recharge (2-3 turns) or once-per-battle
+      limit. 42 powers are generated from the canonical Prom origin x affinity power data (8
+      affinity families x 6 origin modifiers, test-verified as 48 mechanically distinct
+      fingerprints) and 6 are hand-authored for the First Bell cast: Backdraft Flare, Updraft
+      Catch, Heartbeat Quake, Thermite Cut, Adhesive Pad Volley, Grand Illusion. The new
+      verifyEveryVillainPowers test runs 395 seeded preview-vs-resolution checks (only strikes
+      roll RNG, with the displayed shot formula plus an aim bonus), confirms allies are never
+      harmed, checks recharge limits, and checks AI determinism with rival use of powers
+      across all 48 rosters. Console: POWER action (key P), gold target tiles and outlined
+      threat tiles, an effect list, role lines, and role and power on all 48 dossier cards.
+      Prom of Doom interludes opt out (roles: false), so their saves and balance are
+      unchanged, and the EVT workflow now runs the Prom tactical suites. Balance is sanity-
+      tested only (stat ranges, weapon ordering, AI usage); human playtest tuning is part of
+      t-014.
     claimed_by: 2026-10-30T11:40:00Z-every-villain-tactics-k7q2
     claimed_at: '2026-10-30T11:37:47Z'
-    updated: '2026-10-30T11:37:47Z'
+    updated: '2026-10-30T12:12:31Z'
+    implementation_pr: 'silasfelinus/kind_robots#4490'
   - id: t-018
     milestone: m3
     title: "One-hit henchmen and Picnic Panic one-shot encounter"
