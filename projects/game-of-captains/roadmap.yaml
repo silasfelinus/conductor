@@ -227,7 +227,7 @@ tasks:
   - id: t-010
     milestone: m4
     title: "Run antagonist-by-captain-by-crew adversarial and every-ending seeded traces"
-    status: claimed
+    status: done
     depends_on: t-007
     owner: worker
     passes: 0
@@ -236,9 +236,27 @@ tasks:
       From-new-game action logs for all 16 endings, noninterventionist/exploiter/legalist/rescuer,
       depleted fuel/hull, absent and wounded crew, missed calls, low-trust diplomacy, strange event
       orders, old saves and softlock probes.
+
+      2026-10-30 (session 2026-10-30T14:02:23Z-goc-t010-q7m3): DONE via kind_robots#4522.
+      - spaceCouchTraceHarness.ts plays the page's own path from a new game, using the store's compositions: background and star chart, travel, expedition quests, episode decks, call, transit, order, errands, romance, trio interludes and finale.
+      - Every state it reaches must save and load intact, keep finite and in-range stats, read without template leaks, and leave at least one control that moves the voyage (softlock probe).
+      - verifyGameOfCaptainsTraces.test.ts runs in test:game-of-captains (184 voyages, about 15s):
+        - 8 antagonists x 6 captains with a counter officer aboard, under rotating rescuer, noninterventionist, exploiter, legalist, misser and depleted/absent-crew styles;
+        - all 16 endings x 6 captains, with pinned seeds;
+        - the counter council for all 8 nemeses, plus its refusal when no counsel is aboard;
+        - 12 random-press walks;
+        - 6 real saves written by engine a34da8fa (before today's merges), played on to endings;
+        - bare version-1 saves.
+      - npm run test:game-of-captains:traces (--full) played 2,116 voyages, including one walk for each of the 220 parties. All OK, no softlock.
+      - Defect fixed: a star or clone coda suffix on the ending title broke the ending-art lookup (endingFamilyTitle).
+      - Findings left for Silas or t-011:
+        - Trust is dominated by the episode decks, so A MOTION OF NO CONFIDENCE needs a deliberately mutinous plan.
+        - Acts II and III reuse a 17-card galactic quest deck, so about 36 of 59 cards repeat per voyage.
+        - The playbook run review stores coda-suffixed ending titles.
     claimed_by: 2026-10-30T14:02:23Z-goc-t010-q7m3
     claimed_at: '2026-10-30T14:02:23Z'
-    updated: '2026-10-30T14:02:23Z'
+    updated: '2026-10-30T21:19:37Z'
+    implementation_pr: 'silasfelinus/kind_robots#4522'
   - id: t-011
     milestone: m4
     title: "Independently red-team Space Couch humor, ethics and couch/force bubble visuals"
