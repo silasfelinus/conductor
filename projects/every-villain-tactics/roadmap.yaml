@@ -149,15 +149,18 @@ tasks:
   - id: t-006
     milestone: m2
     title: "Save/load battle and level state including RNG and fired events"
-    status: ready
+    status: claimed
     depends_on: t-003
-    owner: null
+    owner: worker
     passes: 0
     stakes: reversible
     note: >-
       Persist reproducible seeded state, unit positions/conditions, story flags,
       trigger history and schema version; multiple save slots, migration and
       tests. Do not disturb original Prom of Doom saved games.
+    claimed_by: 2026-10-30T12:55:00Z-every-villain-tactics-s6v1
+    claimed_at: '2026-10-30T12:01:31Z'
+    updated: '2026-10-30T12:01:31Z'
   - id: t-007
     milestone: m3
     title: "Write and implement all six distinctive tactical story missions"
