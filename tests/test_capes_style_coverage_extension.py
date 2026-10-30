@@ -4,6 +4,7 @@ from pathlib import Path
 import yaml
 
 from scripts.enqueue_art_requests import build_request, compose_prompt
+from scripts.repair_negation_art_prompts import violations
 
 ROOT = Path(__file__).resolve().parents[1]
 BASE = ROOT / "projects/comet-city-academy/art"
@@ -48,6 +49,7 @@ def test_style_check_covers_six_core_production_categories():
             assert r["isPublic"] is False
             assert r["seed"] == s["seed"]
             assert r["promptString"] == compose_prompt(lane, s)
+            assert violations(r["promptString"]) == [], (s["key"], lane["key"])
             assert r["width"] > 0 and r["height"] > 0
             saved = (s.get("jobs") or {}).get(lane["key"])
             assert saved is None or (isinstance(saved, int) and saved > 0)
@@ -66,4 +68,5 @@ def test_map_has_real_topology_and_portrait_tests_facial_acting():
     assert portrait["size"] == "896x1152"
     for feature in ("brown skin", "eyebrows", "dark expressive eyes", "determination"):
         assert feature in portrait["prompt_prose"].lower()
-    assert "no words" in portrait["prompt_prose"].lower()
+    assert "bare and unmarked" in portrait["prompt_prose"].lower()
+    assert "text" in portrait["negative"].lower()
