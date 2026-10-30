@@ -47,4 +47,4 @@ def test_party_adventure_packs_are_low_priority_and_disjoint():
         _check(data, 60)
         assets += [subject["asset"] for subject in data["subjects"]]
     assert all(asset.startswith("game-of-captains/trios/") for asset in assets)
-    assert len(assets) == len(frozenset(assets)) == 850
+    assert len(assets) == len(frozenset(assets)) == 1100
