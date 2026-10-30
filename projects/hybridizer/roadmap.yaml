@@ -101,18 +101,19 @@ tasks:
   - id: t-005
     milestone: m2
     title: "Connect ArtJob queue, background completion notification and missed-result retry"
-    status: review
+    status: done
     depends_on: t-004
-    owner: worker
     claimed_by: 20261029T001709584Z-hybridizer-t005-6d82
     claimed_at: '2026-10-29T00:17:09.584Z'
-    updated: '2026-10-29T00:21:44.868Z'
+    updated: '2026-10-30T10:45:58+00:00'
     passes: 0
     stakes: reversible
     note: |-
       Existing Krea2/Arthemy queue and ArtImage linkage, idempotent request, bounded concurrency, retained status, polling plus optional in-app notification; never block play or pretend a requested render is complete.
 
       Added Krea2 ArtJob enqueue/retry with scoped generation auth, durable global fusion/job link, bounded concurrency, stable seeds, status reconciliation and background UI completion notices on a Kind Robots worker branch. Preparing focused PR and CI; no jobs have been submitted to production and delivery is not yet verified.
+
+      Triage 2026-10-30: kind_robots #4418 merged and is live (production /api/version = main 0bb3088). Enqueue/status routes, server/utils/hybridizerArt.ts, store poll/notice/retry (same-job retry cap 2, 3 active jobs per user) are on main and test:hybridizer-art runs in contract CI. End-to-end delivery is not yet proven (no live fusion exists yet); that smoke test belongs to the t-007 pilot / t-009 QA. The #4408 migration is NOT pending: the compose migrate service runs every deploy and the HybridizerFusion query succeeds in production.
   - id: t-006
     milestone: m3
     title: "Reconcile all 200 input Facets and audit real image availability"

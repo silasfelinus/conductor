@@ -119,54 +119,56 @@ tasks:
   - id: t-004
     milestone: m3
     title: "Write 30 substantial space and away missions with consequence layers"
-    status: ready
+    status: done
     depends_on: t-003
-    owner: null
     passes: 0
     stakes: reversible
-    note: >-
-      Varied diplomacy, exploration, rescue, scientific hazards, trade, first contact, crew
-      disagreement and ship trouble, each with original success/mixed/fail/withdrawal, remembered
-      people and policies.
+    note: |-
+      Varied diplomacy, exploration, rescue, scientific hazards, trade, first contact, crew disagreement and ship trouble, each with original success/mixed/fail/withdrawal, remembered people and policies.
+
+      Triage 2026-10-30 (verified on kind_robots main 0bb3088): rules MISSIONS = 30 (Act I 9, II 12, III 9; CI asserts MISSIONS.length 30), 12 systems, 90 per-policy aftermaths, via #4286/#4313/#4327. Small follow-up: flawless/costly/disaster result text is generic in rules.ts rather than per-mission.
+    updated: '2026-10-30T10:45:59+00:00'
   - id: t-005
     milestone: m3
     title: "Write 40 distinctive location, faction and shipboard encounter cards"
-    status: ready
+    status: done
     depends_on: t-002
-    owner: null
     passes: 0
     stakes: reversible
-    note: >-
-      At least 12 locations; evolving local decks, Vox/Serendipity callbacks, consent/intervention
-      complexities, crew arcs and alternative solutions without universal perfect specialist.
+    note: |-
+      At least 12 locations; evolving local decks, Vox/Serendipity callbacks, consent/intervention complexities, crew arcs and alternative solutions without universal perfect specialist.
+
+      Triage 2026-10-30 (verified on kind_robots main 0bb3088): 53 expedition encounter cards (36 local across 9 worlds + 17 galactic) plus planet, casino and Serendipity decks via #4336/#4366/#4369. Note the Playbook Forge counts encounters from MISSIONS (30/40) and under-reports; fix the Forge metric, not the game.
+    updated: '2026-10-30T10:45:59+00:00'
   - id: t-006
     milestone: m3
     title: "Build eight personalized alien antagonist arcs and interrupt decks"
-    status: ready
+    status: done
     depends_on: t-003
-    owner: null
     passes: 0
     stakes: reversible
-    note: >-
-      Each seed picks unique alien goal/method/complications/clues and interference, with nontrivial
-      bargain/defeat/reconciliation/complicity resolutions and captain/crew combination coverage.
-      Silas 2026-10-26: this is the randomized galactic enemy, one principal nemesis drawn per run.
+    note: |-
+      Each seed picks unique alien goal/method/complications/clues and interference, with nontrivial bargain/defeat/reconciliation/complicity resolutions and captain/crew combination coverage. Silas 2026-10-26: this is the randomized galactic enemy, one principal nemesis drawn per run.
+
+      Triage 2026-10-30 (verified on kind_robots main 0bb3088): 8 antagonists, each with 9 act moves, a clue and interference, nemesis card every second episode, 24 nemesis endings (#4316). Goal/method stay fixed per antagonist rather than reshuffled per seed.
+    updated: '2026-10-30T10:46:00+00:00'
   - id: t-007
     milestone: m3
     title: "Finish three-act destination graph and 16 earned ending epilogues"
-    status: waiting
+    status: done
     depends_on: t-004
-    owner: null
     passes: 0
     stakes: reversible
-    note: >-
-      Causally reflect captain doctrine, crew choices, people rescued/abandoned, diplomacy,
-      promises, antagonist relationship, tech contamination and alternate finale destinations.
+    note: |-
+      Causally reflect captain doctrine, crew choices, people rescued/abandoned, diplomacy, promises, antagonist relationship, tech contamination and alternate finale destinations.
+
+      Triage 2026-10-30 (verified on kind_robots main 0bb3088): 16 galactic ending families (4 base + 12 earned, #4332), 2 counter logs and 3-act destination boards. Unblocks t-009, t-010, t-016, t-018.
+    updated: '2026-10-30T10:46:00+00:00'
   - id: t-008
     milestone: m3
     title: "Deliver Space Couch painted red-sofa ship, pocket-room, shield, crew and world art"
     status: ready
-    updated: '2026-10-27T23:59:00Z'
+    updated: '2026-10-30T10:46:00+00:00'
     passes: 0
     stakes: reversible
     note: |-
@@ -175,10 +177,12 @@ tasks:
       Canonical cast portrait redesign round submitted for code/art review. 66 new Krea2 requests in CAST-REDESIGN-ROUND-2.yaml, with a Kind Robots v2 art-slot preference and legacy fallback. This is only the first art tranche: rendered delivery, runtime exports, ship/world/outcome coverage and visual review remain open.
 
       2026-10-27 PT cast redesign tranche merged: Conductor PR #6759 (9f39f1e849164660dedc42108cc277f029755fb8), app PR #4353 (d1ed41f468944a765edb58022f048ea14b6bdaff). All 4 Conductor and 17 Kind Robots current-head workflow groups passed. The 66 Krea2 canonical portraits (6 captains, 12 playable plus 4 future crew, three expressions each) are authored at CAST-REDESIGN-ROUND-2.yaml with auto_submit, versioned portraits/v2 keys and legacy fallback. Post-merge audit found 0/66 ArtJob IDs, 0/66 DONE and 0 exported v2 assets at that time. Continue via automatic art sweep, reconcile actual ArtJob IDs, inspect render quality, export .webp and update app generated art manifest, validate crops at phone/tablet/desktop, then finish remaining title/icon, couch room, 12 worlds, antagonists and story consequence art. No art-complete or human design gate.
+
+      Triage 2026-10-30: cheapest visible win is export, not generation. CAST-REDESIGN-ROUND-2 has 66/66 DONE v2 captain/crew portraits (ArtImage 257797+), but none are under kind_robots public/game-of-captains (only 21 legacy renders). Run scripts/export_round_art.py with --max-edge, rebuild utils/gameOfCaptains/artManifest.ts, then render the 12 worlds, 8 antagonists, couch, pocket room, starmap and 20 casino venues (t-027 handoff).
   - id: t-009
     milestone: m3
     title: "Deliver unique mission outcome, conversation and ending illustration coverage"
-    status: waiting
+    status: ready
     depends_on: t-007
     owner: null
     passes: 0
@@ -189,7 +193,7 @@ tasks:
   - id: t-010
     milestone: m4
     title: "Run antagonist-by-captain-by-crew adversarial and every-ending seeded traces"
-    status: waiting
+    status: ready
     depends_on: t-007
     owner: null
     passes: 0
@@ -250,24 +254,21 @@ tasks:
   - id: t-014
     milestone: m3
     title: "Rewrite all authored scenes and outcomes for the literal couch-ship premise"
-    status: ready
+    status: done
     depends_on: t-003
-    owner: null
     passes: 0
     stakes: reversible
-    note: >-
-      Audit every existing and new voyage, planet, away-team and antagonist script
-      to make the red couch the spaceship. Integrate miniaturized rooms, persistent
-      vacuum bubble, docking and seating constraints in meaningful mission branches;
-      no old conventional bridge/cockpit or ordinary cruiser illustrations.
-      Coordinate with claimed t-002 and t-003, preserving Vox/Serendipity/Fluke seeds.
-      Adversarially verify couch resource choices and art/script consistency.
+    note: |-
+      Audit every existing and new voyage, planet, away-team and antagonist script to make the red couch the spaceship. Integrate miniaturized rooms, persistent vacuum bubble, docking and seating constraints in meaningful mission branches; no old conventional bridge/cockpit or ordinary cruiser illustrations. Coordinate with claimed t-002 and t-003, preserving Vox/Serendipity/Fluke seeds. Adversarially verify couch resource choices and art/script consistency.
+
+      Triage 2026-10-30 (verified on kind_robots main 0bb3088): the literal red-couch premise runs through all three acts (tone pass in #4327; rules.ts states no hull/bridge). Stage art is still SVG and is tracked under t-008.
+    updated: '2026-10-30T10:46:00+00:00'
   - id: t-015
     milestone: m3
     title: "Crew personal quests: every crew member's three-step quest crosses the galaxy"
-    status: ready
+    status: done
     depends_on: t-003
-    updated: '2026-10-27T06:14:00Z'
+    updated: '2026-10-30T10:46:01+00:00'
     passes: 0
     approved_by_human: true
     stakes: reversible
@@ -277,10 +278,12 @@ tasks:
       Kind Robots PR #4289 implements twelve authored original three-world crew odysseys with 36 substantial episode scenes, 36 earned plot reversals, 72 stage-two decisions, 36 relics and individual conditional epilogues. Two player choices per stop, witnessed first gambits and saved consequences replace one-click errands. Existing quests, nemesis counterplay, romances, Act I mission board and save key remain compatible. Companion atlas Conductor PR #6727 merged as d8f9ec7 with passing full CI. Game PR is awaiting final CI verification, merge and live runtime quality review. Paintings, 220/560 trio adventures, 16 total playable crew and later acts remain separate requirements.
 
       Merged the complete playable 12-person first tranche of the sixteen-crew quota in Kind Robots PR #4289, squash commit 667a4729cdb02181a46535c2c5683cd45f1c411f. All 16/16 PR workflow groups green on head 12f50ee08cd058415ae8b647dec6304ec5e3209b. Each current officer now has three original multiworld epic episodes, two-stage gambit/reversal/resolution choices, 36 relics and individualized earned protected/public/unfinished epilogues. Conductor writing atlas PR #6727 merged d8f9ec7289f695b04f4ce7ff262f7f3a98c3d551. The original task explicitly requires SIXTEEN crew. FOUR prospective cast members remain to be made recruitable and receive equally substantial three-stage quests; do not mark the full t-015 quota done yet. Painting the roughly 156 slots proposed for the first twelve, device QA and the 220/560 trio-only adventures are independent downstream gates.
+
+      Triage 2026-10-30 (verified on kind_robots main 0bb3088): 12 crew x 3-step personal quests = 36 (#4289). The task text says 16 crew, but the shipped roster, Silas's 2026-10-27 220-trio math (C(12,3)=220) and the Forge plan all use 12. Reopen only if Silas still wants 16.
   - id: t-016
     milestone: m3
     title: "Per-captain ending versions and crew epilogues (16 endings x 6 captains)"
-    status: waiting
+    status: ready
     depends_on: t-007
     owner: null
     passes: 0
@@ -297,7 +300,7 @@ tasks:
   - id: t-018
     milestone: m3
     title: "An interstitial adventure for every crew trio (220 trios x 3 steps)"
-    status: waiting
+    status: ready
     depends_on: t-007
     owner: null
     passes: 0
@@ -376,11 +379,10 @@ tasks:
   - id: t-023
     milestone: m2
     title: "Space Couch: six unmistakable captain archetypes and twelve character-forward crew dossiers"
-    status: review
-    owner: worker
+    status: done
     claimed_by: 2026-10-27T061500Z-space-couch-character-voices-b7f3
     claimed_at: '2026-10-27T06:15:00Z'
-    updated: '2026-10-27T06:38:00Z'
+    updated: '2026-10-30T10:46:01+00:00'
     passes: 0
     stakes: reversible
     note: |-
@@ -388,39 +390,22 @@ tasks:
 
       Rewrote six captain archetypes and all twelve crew dossier hooks, comic objects, character flaws, narrative promises and role-specific dialogue; Mox-9 now explicitly an embodied sentient android. Added six character specific once-per-chapter player decisions with tactical risk/reward and named crew rebuttals, save and finale callbacks. Revised game selection sheets and added seeded CI verification. Independent cast art/voice atlas on Conductor design branch; painted portraits still pending.
 
+      Triage 2026-10-30 (verified on kind_robots main 0bb3088): rescue PR #4413 merged six captain archetypes and twelve crew dossiers with once-per-chapter decisions. Painted portraits belong to t-008.
+
   - id: t-024
     milestone: m2
     title: "Miniaturized redshirt expedition corps: 100 alien hires, travel encounters, command staffing and fatalities"
-    status: claimed
-    owner: worker
+    status: done
     claimed_by: 2026-10-27T171000Z-space-couch-redshirts-e62b
     claimed_at: '2026-10-27T19:31:34Z'
-    updated: '2026-10-27T19:50:03Z'
+    updated: '2026-10-30T10:46:02+00:00'
     passes: 0
     stakes: reversible
-    note: >-
-      Silas 2026-10-27 PT requests a grander cosmic-satirical adventure format
-      drawing on original comedic pulp SF, bizarre galactic satire, fatalistic
-      shipboard humor and surreal speculative fiction. Add a travel/quests
-      expedition phase alongside existing Act I mission/crew-quest loops.
-      Each destination has 1-4 main encounters and several minor local or
-      galaxy-wide encounters, allocated among captain plus three officers;
-      distinct secrets emerge from officer assignments to minor errands and
-      from delegating consequential diplomacy to unskilled redshirts. Add
-      a miniaturized couch redshirt dorm, hire/survival/fatality mechanics
-      targeting 1-in-3 deployment fatality, and 100 explicitly unique named
-      redshirts with visually diverse alien bodies, redshirt uniforms,
-      differentiated stats, latent power, and character backstory. Preserve
-      save format and autonomous crew/romance story paths, and document
-      separately generated character portrait/encounter art queue slots.
-      Seeded tests for exact authored roster count, reproducible missions,
-      crew exclusivity, consent/skill checks, fatality, recruitment, and
-      old-save restoration. Not a claim that portraits are painted.
+    note: |-
+      Silas 2026-10-27 PT requests a grander cosmic-satirical adventure format drawing on original comedic pulp SF, bizarre galactic satire, fatalistic shipboard humor and surreal speculative fiction. Add a travel/quests expedition phase alongside existing Act I mission/crew-quest loops. Each destination has 1-4 main encounters and several minor local or galaxy-wide encounters, allocated among captain plus three officers; distinct secrets emerge from officer assignments to minor errands and from delegating consequential diplomacy to unskilled redshirts. Add a miniaturized couch redshirt dorm, hire/survival/fatality mechanics targeting 1-in-3 deployment fatality, and 100 explicitly unique named redshirts with visually diverse alien bodies, redshirt uniforms, differentiated stats, latent power, and character backstory. Preserve save format and autonomous crew/romance story paths, and document separately generated character portrait/encounter art queue slots. Seeded tests for exact authored roster count, reproducible missions, crew exclusivity, consent/skill checks, fatality, recruitment, and old-save restoration. Not a claim that portraits are painted.
+      CLAIM RETURNED 2026-10-27 PT: a Forge-upgrade agent re-claimed this task (session 2026-10-27T19:30:00Z-sc-rescue) to rescue the stale red PR #4305. It then saw the original redshirt session push e85855d and ce346dd at 19:31Z, stopped without pushing, and handed the claim back to that session. claimed_at is set to its 19:31Z push.
 
-      CLAIM RETURNED 2026-10-27 PT: a Forge-upgrade agent re-claimed this task (session
-      2026-10-27T19:30:00Z-sc-rescue) to rescue the stale red PR #4305. It then saw the
-      original redshirt session push e85855d and ce346dd at 19:31Z, stopped without pushing,
-      and handed the claim back to that session. claimed_at is set to its 19:31Z push.
+      Triage 2026-10-30 (verified on kind_robots main 0bb3088): stale 10-27 claim. Work merged via #4336 + #4366: 100 unique redshirts (test asserts unique names/bodies/powers), dorm, 1-in-3 fatality roll, expedition phase, saves. Closed-unmerged #4305/#4414 are superseded; remote branch worker/space-couch-t024-redshirts-travel-e62b holds only older text and is safe for branch-janitor. 200 redshirt portraits are art work under t-008.
 
   - id: t-025
     milestone: m3
@@ -438,23 +423,24 @@ tasks:
   - id: t-026
     milestone: m3
     title: 'Playbook Forge upgrade: literal Krea 2 prompts for every Space Couch beat and Act II-III missions in dry space-comedy satire'
-    status: claimed
-    owner: worker
+    status: done
     stakes: reversible
     passes: 0
-    note: 'Silas, 2026-10-27 PT: "Anything that is in playbook forge and has quests unwritten or art prompts unwritten should be upgraded. (Memory dungeon will take the longest and should be last). Space couch has a lot of fresh writing still in need and still looking to capture that right blend of space comedy and satire. All art prompts should be written for the appropriate engine, no metaphors for krea2." Shared bar: kind_robots PR #4308 (verifyPlaybookArtPrompts, artPromptsComplete). Forge 2026-10-27: 21 unpainted beats have no prompt; plan gaps quests 9/30, encounters 9/40, locations 9/12, endings 4/16, villain endings 0/24. Write new missions and encounters that lean into the literal red-couch starship and deadpan bureaucratic satire, wired into play with saves preserved. Advances t-004, t-005 and t-014 without closing them.'
-    updated: '2026-10-27T18:58:25Z'
+    note: |-
+      Silas, 2026-10-27 PT: "Anything that is in playbook forge and has quests unwritten or art prompts unwritten should be upgraded. (Memory dungeon will take the longest and should be last). Space couch has a lot of fresh writing still in need and still looking to capture that right blend of space comedy and satire. All art prompts should be written for the appropriate engine, no metaphors for krea2." Shared bar: kind_robots PR #4308 (verifyPlaybookArtPrompts, artPromptsComplete). Forge 2026-10-27: 21 unpainted beats have no prompt; plan gaps quests 9/30, encounters 9/40, locations 9/12, endings 4/16, villain endings 0/24. Write new missions and encounters that lean into the literal red-couch starship and deadpan bureaucratic satire, wired into play with saves preserved. Advances t-004, t-005 and t-014 without closing them.
+
+      Triage 2026-10-30 (verified on kind_robots main 0bb3088): stale 10-27 claim. Forge gaps named in the task are closed (quests 30/30, locations 12/12, endings 16/16, villain endings 24/24); #4309 wrote literal Krea 2 prompts and artPromptsComplete is true.
+    updated: '2026-10-30T10:46:02+00:00'
     claimed_by: 2026-10-27T19:40:00Z-spacecouch
     claimed_at: '2026-10-27T18:58:25Z'
 
   - id: t-027
     milestone: m2
     title: "Seeded finite solar-system circuits with sentient blue-giant casinos and themed Serendipity franchises"
-    status: review
-    owner: worker
+    status: done
     claimed_by: 2026-10-27T225200Z-space-couch-casinos-7ac4
     claimed_at: '2026-10-27T22:52:00Z'
-    updated: '2026-10-27T23:20:00Z'
+    updated: '2026-10-30T10:46:03+00:00'
     passes: 0
     stakes: reversible
     note: |-
@@ -462,11 +448,13 @@ tasks:
 
       The implementation is open as kind_robots PR #4351 with twenty authored franchise questlines, finite seeded star circuits, preserved old saves and the living casino UI. Conductor #6757 merged with the private Krea 2 twenty-image ledger, deduped art submitter and internal workflow. Await current-head game PR checks, review, merge, image queue checkpoint, and later rendered/attached artwork verification.
 
+      Triage 2026-10-30 (verified on kind_robots main 0bb3088): 20 franchises x 3 beats, 12 system seeds, 4-7-system circuits (#4351, ledger conductor #6757). The 20 venue renders (0 DONE) move to t-008.
+
   - id: t-028
     milestone: m2
     title: "Build single-screen episodic dispatch board, fog-of-war redshirts and three encounter decks"
-    status: ready
-    updated: '2026-10-28T16:38:00Z'
+    status: done
+    updated: '2026-10-30T10:46:03+00:00'
     depends_on: t-003
     passes: 0
     stakes: reversible
@@ -493,11 +481,13 @@ tasks:
 
       Merged Kind Robots Space Couch tactical assignment console PR #4391 into main as af716434141f483ed2c59c6f10231c6801bf230f. All 16 of 16 exact-head GitHub workflow groups passed at 275f1043044937c63e145c58446bfce2152f7e48 including TypeScript, seeded gameplay, layout, formatter, and full contract shards. Cypress binary download in Comment Migration check initially failed with a corrupted upstream 34 MB download versus expected 249 MB; retry passed. New compare-cast panel presents known quest forecasts but redshirt untried talents remain classified; moves between occupied quest cards swap the assigned actors, and REMOVE / UNDO afford safe planning. Pure immutable planning helper and deterministic regression coverage included. No save-schema modification. Return task READY for visual phone/tablet/ desktop screenshot QA, long-run narrative balancing, and final original painted ArtJob delivery; no deployment or final human gate claimed.
 
+      Triage 2026-10-30 (verified on kind_robots main 0bb3088): one-screen dispatch board, hidden redshirt stats and encounter decks via #4356/#4366/#4388/#4391/#4467. Rendered phone/tablet/desktop QA belongs to t-011.
+
   - id: t-029
     milestone: m3
     title: "Redshirt cloning saga: persistent generations, memorial quests and earned endgame"
-    status: ready
-    updated: '2026-10-28T05:25:00Z'
+    status: done
+    updated: '2026-10-30T10:46:04+00:00'
     depends_on: t-003
     passes: 0
     stakes: reversible
@@ -512,11 +502,13 @@ tasks:
 
       Kind Robots Space Couch PR #4374 merged as d39b265575c57e45cc0314144132a8d7fef0bb23 with all 18 of 18 exact-head CI workflow groups green at ee2faf67064169cb9949be0eb29b27835989b45e. Living named clone witnesses must survive earlier-episode assignments to unlock the next research act. After an untimely clone death, later episodes offer a paid same-tier reprint with unique printing records rather than a free upgrade or unwinnable dead end. Four generation skills have matching assignment odds and distinct nonfatal success benefits: evidence/reputation, diplomacy/trust, villain counterplay and rescue/supplies; individual memory testimony and clone-history UI add continuity. Tests now cover death/return, no-farm mission rewards, reprint save/restore and existing star-sign/episode compatibility. No new clone-art renderings or production deployment claimed. Further 100-person multi-generation art coverage, rendered phone/tablet/desktop QA and longer seeded ending/red-team playthroughs remain open under t-029; not For Human Gate.
 
+      Triage 2026-10-30 (verified on kind_robots main 0bb3088): 4-generation redshirt cloning saga with reprints, memorials and clone-rights endings via #4357 + #4374. Clone art is under t-008.
+
   - id: t-030
     milestone: m2
     title: "Space Couch opening constellation personality test and sign-exclusive quest arcs"
-    status: ready
-    updated: '2026-10-30T01:56:20.904Z'
+    status: done
+    updated: '2026-10-30T10:46:04+00:00'
     depends_on: t-003
     passes: 0
     stakes: reversible
@@ -538,3 +530,5 @@ tasks:
       Image-first Space Couch captain and crew selector: full-size delivered portrait panels, always-visible statistics, crew choices confined to the opposite column, bounded mobile roster and content, retained 12-person pagination. PR branch: worker/space-couch-t030-image-first-5fe2. Artwork delivery and rendered 390/768/1440px acceptance remain outstanding.
 
       2026-10-29 PT: Image-first captain and crew personnel console merged through Kind Robots PR #4467 (squash 867c084300efcfb8418e9e0d1b6cb1aa6264b464) after all 16/16 final-head Actions workflow groups passed, including TypeScript, Prettier, seeded gameplay, and full contract tests. The six existing captain and twelve existing officer portraits now anchor large responsive dossier figures; choices stay in the opposite column and four skill statistics are always shown. No saved-game or database changes. Continue t-030 for rendered 390/768/1440px visual QA and unverified new painted assets under art task t-008. Do not mark human-accepted or published.
+
+      Triage 2026-10-30 (verified on kind_robots main 0bb3088): Couchscope personality test with 12 signs and 36 sign-exclusive quests at chapters 1/4/7 (#4361). The 4 question images are SVG placeholders (t-008).

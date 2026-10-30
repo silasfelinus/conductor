@@ -102,7 +102,7 @@ tasks:
   - id: t-012
     milestone: m2
     title: "Promote the seven-day demo into Capes & Tassels name and genuine day/night map slice"
-    status: ready
+    status: done
     passes: 0
     stakes: reversible
     note: |-
@@ -147,11 +147,13 @@ tasks:
       Post-submission correctness repair: updated identity portrait ledger status to submitted after confirming 50 unique real ArtJob IDs 50372-50421. Fixed dry-run pytest contract to accept both approved pre-submission and queued post-submission states, ensure recorded job IDs are distinct positive integers, and reject pretend ArtImage delivery. No new ArtJobs requested and no existing jobs repeated. CI pending.
 
       Merged Conductor PR #6796 as 26feff7da6453f057a3d25c7e565731e4d7c45d0 after 4/4 green workflows. The human-approved 50-row Krea2 portrait ledger has 50 real distinct ArtJob IDs 50372-50421, so marked it submitted instead of awaiting-submission. Updated pytest to run the real enqueue dry run safely at any lifecycle stage: zero pending jobs once queued, unique positive IDs, and future ArtImage status records. This increment creates no new jobs. Broader t-012 remains incomplete: poll render DONE/FAILED, deliver WebP exports into Kind Robots manifest, then verify actual character art, 48 villain levels, campaign QA and final human acceptance.
-    updated: '2026-10-29T23:42:44.825Z'
+
+      Triage 2026-10-30: the original slice (Capes & Tassels display brand on the same route/slug/save, explicit first 7 of 30 days, two consistent campus/town maps sharing node IDs, day location draws, night dispatch with hero/villain/rogue/shared missions and 1-3 follower staffing, save migration) is on main via #4188/#4273 and #4213/#4221. Later appended scope (portrait polling/export, 48 villain levels, campaign QA, human acceptance) is owned by t-007/t-017, every-villain-tactics, t-015 and t-011. Closing unblocks t-013.
+    updated: '2026-10-30T10:45:58+00:00'
   - id: t-013
     milestone: m2
     title: "Make follower/romance and injury/infirmary interactions playable in the week-one slice"
-    status: waiting
+    status: ready
     depends_on: t-012
     owner: null
     passes: 0
@@ -194,7 +196,7 @@ tasks:
   - id: t-016
     milestone: m2
     title: "Build playable student-hero-villain evolution, betrayal and accomplice state"
-    status: waiting
+    status: ready
     depends_on: t-003
     passes: 0
     stakes: reversible
@@ -245,11 +247,8 @@ tasks:
   - id: t-002
     milestone: m1
     title: "Write 30-day cast/power/romance villain and connected-map bible"
-    status: review
-    owner: worker
-    claimed_by: 20261029T221600Z-comet-t002-lairs-d83a
-    claimed_at: '2026-10-29T22:16:00Z'
-    updated: '2026-10-29T22:29:54.976Z'
+    status: ready
+    updated: '2026-10-30T10:45:57+00:00'
     passes: 0
     stakes: reversible
     note: |-
@@ -276,11 +275,13 @@ tasks:
       MERGED focused villain-henchman bible slice: Conductor PR #6791 as 38da5c2 (all 6 head workflows successful) and Kind Robots PR #4452 as 8e2a21a (all 14 head workflows successful). Every one of 48 existing stable villain signatures now has one original one-hit SPECIES design, named captain, visual, telegraphed battlefield move, counter and loyalty hook. Added typed henchmanForVillain lookup, roster parity test, and Playbook Slices CI. Story/design briefs cross-link the full bestiary and tactical integration; separate t-024 waits on t-003 for playable Prom deployment. Provisional Granny Mayhem, Dr. Frog and Zuzu ideas are documented but not wrongly assigned fake signature IDs before t-021 roster reconciliation. Full t-002 thirty-day cast/map/ finale bible, actual SPECIES database rows, ArtJobs, live minion AI, encounter scripts and production visual QA still remain; return READY.
 
       Submitted scoped lore and product increment: 48 original power-origin start level blueprints, 48 villain-specific lair phases with tactical secrets, 48 powered independent number-two lieutenant bosses with counters and motives. Kind Robots JSON and typed lookup are backed by a full 48-signature parity test and an interactive catalogue inside the existing internal tactical hero dossier. Conductor design briefs and Prom/tactical roadmaps define the 96 playable stage implementation + 48 lieutenant AI follow-ons. This is an authored/inspectable catalogue, not 96 implemented battles or delivered original art. The complete 30-day bible task remains open.
+
+      Triage 2026-10-30: review with no open PR, returned to ready as partial. Merged increments are #6648/#6649/#6668/#6791 and kind_robots #4455. Still missing: 8 romanceable adults (3 exist), the two negotiated throuple arcs (no triad code on main), and the 16-recruit bible. This is the cheapest real content gap and also feeds t-005 and t-013.
   - id: t-003
     milestone: m2
     title: "Build 30-day day/night map, dispatch, relationship and save engine"
-    status: ready
-    updated: '2026-10-30T08:46:54.284Z'
+    status: done
+    updated: '2026-10-30T10:45:57+00:00'
     depends_on: t-001
     passes: 0
     stakes: reversible
@@ -330,10 +331,12 @@ tasks:
       Scoped partial development: earned ally lieutenants now return as a controllable 4-HP squad card on future night patrol battles with one once-per-battle visible signature-geometry attack targeting actual rivals, guaranteed friendly-fire safety and persisted one-use charge. A truce instead removes the lieutenant's command squad and leaves rival holdouts. Extra validation requires a prior canonical ally outcome before an allied unit can appear in a loaded save, with unit-name and charge tampering rejected. A 48-signature deterministic regression suite covers previews, damage, persistence, differences between truce and alliance, and friendly-fire safety. In Kind Robots branch worker/comet-city-academy-t-003-field-loyalty-d9b1; CI and merge still pending. This is combat content, not a rendered art delivery or production deployment. Keep broad t-003 scope open.
 
       PARTIAL WORK MERGED in Kind Robots PR #4479, squash commit 0359b657bdbae64af9fb17b966a107912b63f9d5, all 20 latest-head GitHub workflows passed including Playbook Slices Gameplay, TypeScript, Every Villain Tactics, Prettier, Playbook Kit, four Contract Test shards, and Publish Production Container. A previously earned day-23+ lieutenant defection now deploys the canonical named four-HP lieutenant as a selectable squad unit in later night tactical battles. The ally has one saved, once-per-battle two-AP affinity-specific signature attack with exact previewed threat cells, real damage on enemy units and no friendly fire. A ceasefire instead removes the lieutenant command squad from subsequent enemy composition; the main rival and independent holdout remain. Saved ally spawn requires a validated prior same-signature defection record, checks canonical name and one-use charge, and rejects forged alliances. 48-profile seeded tests cover deployment, no overlap, damage parity, saved one-use charge, tamper resistance and ceasefire battle balance. Preserved existing dialogue contracts and previous Quarry boss behavior. This is not rendered painted art, responsive device QA, 48 independently hand-authored AI behavior graphs, or verified self-hosted deployment. Broad t-003 remains open and returns to ready for development.
+
+      Triage 2026-10-30: the original scope (seeded day/night with 30 scripted anchors and weekly location draws, 1-3 hero/villain/rogue/shared dispatch, real-vs-simulated stakes, consent romance, follower injury/infirmary, timed villains, versioned saves with first-week conversion, no runtime LLM) is on main via #4226, #4213/#4221, #4242/#4245, #4253, #4404. Recent increments (#4469-#4479 lairs, lieutenants, defection, reinforcements) kept re-arming this task for work that belongs elsewhere. Leftovers re-homed: painted art -> t-007/t-008, every-branch graph -> t-009, width QA -> t-015, 48 hand-authored lieutenant AIs -> t-026 and every-villain-tactics/t-023. Closing unblocks t-004, t-016, t-024, t-025.
   - id: t-004
     milestone: m3
     title: "Author at least 36 good/evil/rogue patrol cases with meaningful results"
-    status: waiting
+    status: ready
     depends_on: t-003
     owner: null
     passes: 0
@@ -372,8 +375,8 @@ tasks:
   - id: t-007
     milestone: m3
     title: "Deliver academy key, map, follower emotion and injury art"
-    status: review
-    updated: '2026-10-27T17:45:00Z'
+    status: ready
+    updated: '2026-10-30T10:45:57+00:00'
     passes: 0
     stakes: reversible
     note: |-
@@ -390,9 +393,8 @@ tasks:
       Added four distinct Krea 2 mastermind portrait requests to open Conductor PR #6697 (Mercy Circuit, Mirror Chancellor, Orchard Engine, Static Commissioner). PR security and handoff checks passed but full Worker PR CI failed on pre-existing Memory Dungeon queue ledger inconsistency: projects/art-prompts.yaml has zero memory-dungeon-saturate requests versus 525 in KNOWN-ART-REQUESTS.yaml, violating tests/test_memory_dungeon_art_queue.py. Do not circumvent CI, merge, or claim ArtJobs. PR remains OPEN pending separate reconciliation or test repair by appropriate owner. Resume task after CI is green, merge, verify auto_submit generated real ArtJob IDs and rendered URLs, and integrate. Task remains incomplete for character continuity/injury portraits/visual device QA.
 
       Verified 144 Prom of Doom personal outcome requests lacked all ArtJob IDs. A scoped credentialed workflow now reconciles prior server ArtJobs before posting only unrecorded personal requests and checkpoints every accepted ID. Repaired unsafe Krea2 negative prompt wording. Review app and workflow CI, merge when green, then verify real ArtJob IDs. Image delivery remains pending.
-    owner: worker
-    claimed_by: 2026-10-27T172100Z-comet-city-academy-t-007-prom-art-n7q4
-    claimed_at: '2026-10-27T17:21:00Z'
+
+      Triage 2026-10-30: stale claim from 2026-10-27 with no open PR, released. Next step is export, not generation. kind_robots #4481 ships the 14 origin/affinity plates (#4470). About 520 more DONE renders across MAPS-AND-MASTERMINDS, SECOND-MASTERMINDS, MISSION-REACTIONS, RUNTIME-BEATS, CONSEQUENCES, PERSONAL-CONSEQUENCES, IDENTITY-OUTCOMES, IDENTITY-PORTRAITS and PROM-OF-DOOM-FINALE ledgers are not exported. Runtime already asks promArt() for many of those keys. Export them with scripts/export_round_art.py using --max-edge to keep the repo addition near the Zuzu Gamebook precedent (425 files / 24 MB), not about 85 MB at full size. Skip the retired COMPOSITE-POWERS ledger. Injured-follower art is still unverified.
   - id: t-008
     milestone: m3
     title: "Illustrate all patrol, location, relationship and ending branches"
@@ -587,7 +589,7 @@ tasks:
   - id: t-024
     milestone: m3
     title: "Deploy 48 named one-hit villain henchman species in night patrol and Yearbook"
-    status: waiting
+    status: ready
     depends_on: t-003
     owner: null
     passes: 0
@@ -653,28 +655,16 @@ tasks:
   - id: t-028
     milestone: m3
     title: "HIGH PRIORITY · Capes shared Western-art checkpoint style gate and 36-job render review"
-    status: claimed
-    owner: worker
+    status: done
     passes: 0
     stakes: reversible
-    note: >-
-      Silas Oct 29 PT explicitly approved a high-priority checkpoint bakeoff:
-      the same six concrete character/scene concepts across Krea 2, Arthemy
-      Western Art, Nova Comic, Illustrij, DreamShaper XL Turbo and Unstable
-      Diffusers. Exclude generic Flux, Pony and furry-first checkpoints.
-      Ledger art/CAPES-WESTERN-STYLE-CHECK-ROUND-1.yaml uses dedicated main-only submission,
-      fixed per-subject seeds, model-appropriate prompt grammar, private
-      renders and priority 900. Check numeric ArtJob IDs after auto-art-generate
-      actually enqueues; then inspect 36 true ArtImages and failures. The
-      /admin/capes style-gate-first console has live job status, side-by-side
-      art and local scoring; do not claim submitted from YAML or rendered
-      from DONE without verifying image paths. Shared art bible and game
-      production style remain a human editorial gate. After approval,
-      produce the first Cornerstone/Backdraft/Firewall card and standee
-      family using shared Prom/Tactics ArtImage keys.
+    note: |-
+      Silas Oct 29 PT explicitly approved a high-priority checkpoint bakeoff: the same six concrete character/scene concepts across Krea 2, Arthemy Western Art, Nova Comic, Illustrij, DreamShaper XL Turbo and Unstable Diffusers. Exclude generic Flux, Pony and furry-first checkpoints. Ledger art/CAPES-WESTERN-STYLE-CHECK-ROUND-1.yaml uses dedicated main-only submission, fixed per-subject seeds, model-appropriate prompt grammar, private renders and priority 900. Check numeric ArtJob IDs after auto-art-generate actually enqueues; then inspect 36 true ArtImages and failures. The /admin/capes style-gate-first console has live job status, side-by-side art and local scoring; do not claim submitted from YAML or rendered from DONE without verifying image paths. Shared art bible and game production style remain a human editorial gate. After approval, produce the first Cornerstone/Backdraft/Firewall card and standee family using shared Prom/Tactics ArtImage keys.
+
+      Triage 2026-10-30: the checkpoint bakeoff did its job. 32 of 36 style jobs were accepted (50504-50535) and Silas chose Unstable Diffusers (nihilmania) as primary for Prom and Tactics, recorded in #6803. The first card/standee family moved to t-031. Map/portrait comparison jobs 50536-50547 are still PENDING. Poll them as reference only; they no longer gate anything.
     claimed_by: 20261030T000453558Z-capes-t028-q7m4
     claimed_at: '2026-10-30T00:04:53.558Z'
-    updated: '2026-10-30T00:04:53.558Z'
+    updated: '2026-10-30T10:45:58+00:00'
   - id: t-029
     milestone: m3
     title: "HIGH PRIORITY · Extend Capes checkpoint bakeoff with campus/city map and expression portrait"
@@ -709,14 +699,13 @@ tasks:
   - id: t-031
     milestone: m3
     title: "HIGH PRIORITY · Begin private Unstable Diffusers production for canonical Prom/Tactics cast"
-    status: review
-    owner: worker
-    claimed_by: 20261030T042205471Z-capes-t031-unstable-b4q7
-    claimed_at: '2026-10-30T04:22:05.471Z'
-    updated: '2026-10-30T04:23:43.620Z'
+    status: ready
+    updated: '2026-10-30T10:45:58+00:00'
     passes: 0
     stakes: reversible
     note: |-
       Silas approved production art on October 29 PT after selecting Unstable Diffusers nihilmania as primary for Prom of Doom and Every Villain Tactics. Create an independent private, auto-submitted, idempotent production ledger for Cornerstone (accident-earth), Backdraft (accident-fire) and Dr. Frog (tech-genius). Preserve existing benchmark ArtJobs, older art and canonical identity keys; do not enqueue duplicates or treat accepted jobs as rendered. Cover paired hero/villain posters, tactical 2:1 standees and expressive story/portrait work. The earlier Firewall/Priya style-test subject is not the tech-genius permanent playable identity in identityArcs.json and must remain a separate experimental asset until canon is reconciled. Verify production ledger contracts, accepted ArtJob IDs and, when possible, rendered ArtImages and accessible paths before wiring delivery. No publishing, paid generation or public release.
 
       Staged 14 private canon-safe Unstable Diffusers production requests plus tests on worker/comet-city-academy-t-031-unstable-production-b4q7. Existing benchmark jobs 50509, 50515 and 50530 are referenced but deliberately not resubmitted. Pending CI, PR merge, then ArtJob acceptance.
+
+      Triage 2026-10-30: conductor #6804 merged, but only 4 of 14 production cells were accepted and rendered (ArtJobs 50549-50552 -> ArtImages 257792-257795, all four standees). The other 10 posters/portraits never got job IDs, and the ledger still says awaiting-submission. Next: find why the submit run skipped them (Auto Art Generate log / art_queue_health), submit them without resubmitting 50549-50552, record IDs, then export the delivered WebPs.
