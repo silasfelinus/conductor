@@ -333,7 +333,7 @@ tasks:
   - id: t-018
     milestone: m3
     title: "An interstitial adventure for every crew trio (220 trios x 3 steps)"
-    status: claimed
+    status: done
     depends_on: t-007
     owner: worker
     passes: 0
@@ -345,14 +345,24 @@ tasks:
       is an adventure across an insane universe, and we're just along for the ride." Each trio gets
       its own three-step adventure between the main beats (660 scenes), written dry, with authored
       art prompts. Forge plan partyAdventureSteps 3 (kind_robots #4272).
+
+      2026-10-30 (session 2026-10-30T11:47:12Z-spacecouch-q7r2): all 220 = C(12,3) trios
+      authored and on main. The 100 previously missing parties were written as batches D
+      (kind_robots#4487, a2ea530), G (#4493, 2799be8), I (#4497, 4bbec7d) and J (#4500,
+      be9657c), 25 each in CrewId combination order. Each has a three-step Act II interlude
+      built from those crew members' dossiers, two endings and five literal Krea 2 prompts;
+      prompts pass verifyPlaybookArtPrompts. verifyGameOfCaptainsTrios now asserts 220/220,
+      and the Forge factors partyAdventureSteps/partyEndings read 3/2. No art submitted: 500
+      new trio art slots are prompted and unrendered.
     claimed_by: 2026-10-30T11:47:12Z-spacecouch-q7r2
     claimed_at: '2026-10-30T11:38:41Z'
-    updated: '2026-10-30T11:38:41Z'
+    updated: '2026-10-30T12:52:00Z'
+    implementation_pr: 'silasfelinus/kind_robots#4500'
 
   - id: t-019
     milestone: m3
     title: "Endings of their own: two per crew trio (440) and three per galactic boss (24)"
-    status: waiting
+    status: done
     depends_on: t-016
     owner: null
     passes: 0
@@ -363,6 +373,14 @@ tasks:
       galactic boss ... we should just have more interesting things than four endings planned
       anyway." 440 trio endings and 24 boss endings, each written and painted, on top of the sixteen
       per-captain endings (t-016). Forge plan partyEndings 2, villainEndings 3 (kind_robots #4272).
+
+      2026-10-30 (session 2026-10-30T11:47:12Z-spacecouch-q7r2): 440/440 trio endings exist (2
+      per party across all 220 parties, batches A-J; the last 200 via kind_robots#4487, #4493,
+      #4497, #4500). Every ending is reachable by some run of three choices (contract-tested)
+      and has a literal Krea 2 prompt. Boss endings were already 24/24. Painting remains art-
+      queue work, not part of this close-out.
+    updated: '2026-10-30T12:52:14Z'
+    implementation_pr: 'silasfelinus/kind_robots#4500'
 
   - id: t-017
     milestone: m2
