@@ -327,7 +327,7 @@ tasks:
   - id: t-016
     milestone: m1
     title: "Adversarially playtest and compare the three square-grid rule variants"
-    status: claimed
+    status: done
     depends_on: t-001
     owner: worker
     passes: 0
@@ -340,9 +340,22 @@ tasks:
       input reachability and real-time burden. Deliver a concise
       comparative report with desktop/phone screenshots and retain
       each playable variant. No agent unilateral final-mode decision.
+
+      DONE 2026-10-30: projects/slime-city/PLAYTEST-COMPARISON.md compares 1,800 seeded CPU-
+      vs-CPU matches (600 per format; all 30 ordered crew pairings x 20 seeds) on the Kind
+      Robots f5269545 engine. Reproduce with: npx tsx utils/scripts/slimeCityPlaytest.ts 20.
+      Headlines. BLACKOUT: mean 12.4 rounds; 69% flag runs, 30% clock; first-initiative 53/46;
+      48% comebacks; 14% decided by round 4. MEATBALL: 27% draws and 44.5% reach round 30;
+      most card play and lead changes; crews most polarised. BLOODRUSH: median 44 ticks; 82%
+      breakthroughs; second side 52/40. Meat Exchange over-performs in all three (72/75/82%)
+      and Catgirls sit at 24% in MEATBALL. Rule-sensitivity runs are included. Nine
+      screenshots (projects/slime-city/playtest/*.webp) are Chromium renders of the real page
+      component, store and engine at 390/768/1440 in a Vite harness. The deployed admin site
+      was NOT captured: it needs the DB and admin auth. No mode was chosen; the verdict stays
+      with Silas in t-013.
     claimed_by: 2026-10-30T113900Z-slime-city-t016-7c3e
     claimed_at: '2026-10-30T11:37:59Z'
-    updated: '2026-10-30T11:37:59Z'
+    updated: '2026-10-30T12:40:27Z'
   - id: t-017
     milestone: m2
     title: "Queue and verify distinct art for teams, districts and specials"
