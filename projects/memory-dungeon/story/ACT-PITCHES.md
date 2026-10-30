@@ -4,9 +4,9 @@
 
 **Editorial status:** current 2026-10-30 authoring direction. Do not confuse a pitch with implemented, tested gameplay. Reveal levels belong to the player experience; the following includes spoilers.
 
-## Act I · The researcher, Briar and its underside (e01/e02)
+## Act I · Pip, the displaced researcher and Briar's underside (e01/e02)
 
-**Opening:** A contemporary Earth researcher wakes trapped in fey changeling Morrow's life. Pip introduces the rules of survival. Scylla and Char are identical adult mermaid princesses with very different dispositions; Oren Pike, their hooded royal headsman, organizes impossible logistics. Vesper, a dusty-grey moth-folk cartographer, helps navigate forbidden paths. The wolf road, House That Remembers and refugee camps present supposed predators who may be protectors.
+**Opening:** A contemporary Earth researcher wakes trapped in fey changeling Morrow's life. Pip is the character-focused guide through two twisted fairy-tale worlds, initially shown through the researcher's existing in-game perspective. Making Pip directly controllable in these earlier stages is a separate runtime change. Scylla and Char are identical adult mermaid princesses with very different dispositions; Oren Pike, their hooded royal headsman, organizes impossible logistics. Vesper, a dusty-grey moth-folk cartographer, helps navigate forbidden paths. The wolf road, House That Remembers and refugee camps present supposed predators who may be protectors.
 
 **Inversion:** The same 8×8 Briar map gains threatening alternate testimony and a 6×6 mirrored House. Vesper's copied map helped one person escape and exposed another household. Decide between inviting witnesses into the village's protection and keeping village gates sealed, carrying real later-world consequences. **This is the researcher's first ethical choice, not a clean good/evil meter.**
 
@@ -38,7 +38,7 @@
 
 ## Finale · Four returns, four worlds collapsing together (e09–e12)
 
-**e09 · Researcher returns to Briar.** The House's corridors intersect an office floor and saltwater root network. Old wolves menace employees who have no idea what a wolf-road oath is. Recover two memory fragments from Earth and the sea before leaving. The player's original injustice is still real.
+**e09 · Playable Pip returns to Briar.** The House's corridors intersect an office floor and saltwater root network. Pip must use his memories of witnesses and broken promises to navigate the overlapping rules. Old wolves menace employees who have no idea what a wolf-road oath is. Recover two memory fragments from Earth and the sea before leaving. The player's original injustice is still real.
 
 **e10 · Morrow returns to Earth.** A yōkai household guardian holds the overnight office shift, and a Briar forest grows across the transit timetable. Morrow must choose whom the city protects when his beloved daily life is under threat. Recover two fragments from Hoshimori and Briar. The old future-market choice IDs may survive serialized data, but public scenes must now be about the broken Earth city.
 
