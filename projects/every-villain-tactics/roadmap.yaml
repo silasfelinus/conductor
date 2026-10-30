@@ -112,8 +112,8 @@ tasks:
   - id: t-004
     milestone: m2
     title: "Map designer with terrain, cover, spawns, objectives and testing"
-    status: ready
-    updated: '2026-10-30T00:06:48.513Z'
+    status: claimed
+    updated: '2026-10-30T12:13:40Z'
     depends_on: t-002
     passes: 0
     stakes: reversible
@@ -133,6 +133,9 @@ tasks:
       Added an actual seeded playable Quarry lieutenant editor preset, sharing existing tactical movement, LOS, hit chance, overwatch and burrowing. Mags Hardpan from canonical Cornerstone dossier is an independent four-HP seismic lieutenant; Foreman Thumpkin remains the 1-HP Warren Wrecker species captain, accompanied by a second 1-HP burrower. Mags marks 3x3 danger one turn ahead; squad can dodge or interrupt with normal hit. Added accessible tile highlights, clear authored dialogue and seeded mechanic tests. One boss prototype only: 48 lieutenants and 96 story stages remain authored concepts, not playable or painted. Kind Robots PR/CI pending.
 
       Merged Kind Robots PR #4459 as 4adf16c1671d213bfb719d0d63c79655e4320885 after all 16/16 latest-head checks passed. New playable Quarry lair Stage Studio preset demonstrates Cornerstone's separate four-HP Mags Hardpan lieutenant versus two one-hit Warren Wrecker SPECIES minions, one named Foreman Thumpkin, with existing burrow AI. Mags marks the exact 3x3 quake tiles a full turn before impact. Legal normal shot hits interrupt the drum; legal player movement avoids damage. Seeded checks cover identity/HP distinction, telegraph, determinism, applied quake, dodge, interrupts, studio map, client preview and accessible warning. This remains one actual boss battle, not all 48 lieutenants or 96 stages. Remaining t-004 editor features, civilian rescue, destructible scenery, full authored scenes, SPECIES DB/ArtJob provenance, other lieutenants, save-sharing, visual screenshots, final human gates remain open. Re-arm for development.
+    owner: worker
+    claimed_by: 2026-10-30T12:40:00Z-every-villain-tactics-h4p9
+    claimed_at: '2026-10-30T12:13:40Z'
   - id: t-005
     milestone: m2
     title: "Opening/triggered/closing conversation tree and cinematic editor"
