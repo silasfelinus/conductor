@@ -381,7 +381,7 @@ tasks:
   - id: t-017
     milestone: m2
     title: "Queue and verify distinct art for teams, districts and specials"
-    status: claimed
+    status: ready
     depends_on: t-001
     owner: worker
     passes: 0
@@ -393,6 +393,18 @@ tasks:
       through real ArtJobs; show per-asset pending/done/failed
       provenance and connect verified ArtImages in the internal lab.
       Never substitute CSS illustrations or prompt text for delivered art.
+
+      2026-10-30 art refill: conductor #6828 (7aa20da) added projects/slime-city/art/CREWS-
+      DISTRICTS-CARDS-ROUND-1.yaml, an auto-submit Krea 2 ledger at priority 650. It covers 6
+      crew hero scenes, 7 district panoramas, all 36 prototype cards and 3 board layouts
+      (blackout/gridiron/bloodrush), keyed by prototypes.ts ids as slime-
+      city/{crews,districts,cards,boards}/<id>. 51 are queued as jobs 52035-52085; slime-card-
+      plating hit HTTP 502 and is retrying. Prompts are original (projects/slime-city/ART-
+      PROMPTS.md never existed): all adults, slapstick non-gory violence. Next: once DONE,
+      review renders, export to public/slime-city via scripts/export_round_art.py, and wire a
+      small manifest and lookup into /admin/slime-city (the lab currently shows card symbols)
+      with per-asset pending/done/failed provenance. Not done until verified ArtImages show in
+      the lab.
     claimed_by: 2026-10-30T12:40:00Z-artfill-r4q8
     claimed_at: '2026-10-30T12:30:34Z'
-    updated: '2026-10-30T12:30:34Z'
+    updated: '2026-10-30T13:54:38Z'
