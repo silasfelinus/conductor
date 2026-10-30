@@ -63,7 +63,9 @@ def inspect(path: Path = LEDGER, require_jobs: bool = False) -> list[str]:
             if row.get("status") != "pending":
                 errors.append(f"{photo_id}: no ArtJob ID but marked complete")
             if row.get("force") is not True:
-                errors.append(f"{photo_id}: missing ArtJob must force a traceable render")
+                errors.append(
+                    f"{photo_id}: missing ArtJob must force a traceable render"
+                )
             if require_jobs:
                 errors.append(f"{photo_id}: no durable ArtJob ID")
     for missing in sorted(set(EXPECTED) - seen):
