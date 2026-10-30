@@ -1,0 +1,12 @@
+version: 1
+project: hybridizer
+task: t-005
+operation: done
+verify_pr: silasfelinus/kind_robots#4418
+note: >-
+  Triage 2026-10-30: kind_robots #4418 merged and is live (production /api/version = main 0bb3088).
+  Enqueue/status routes, server/utils/hybridizerArt.ts, store poll/notice/retry (same-job retry cap 2,
+  3 active jobs per user) are on main and test:hybridizer-art runs in contract CI. End-to-end delivery
+  is not yet proven (no live fusion exists yet); that smoke test belongs to the t-007 pilot / t-009 QA.
+  The #4408 migration is NOT pending: the compose migrate service runs every deploy and the
+  HybridizerFusion query succeeds in production.
