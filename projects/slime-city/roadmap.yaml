@@ -3,17 +3,17 @@ project: slime-city
 kind: software
 autonomous: true
 goal: >-
-  Build an image-first, full-screen browser collectible card strategy game
-  set in a vividly grotesque post-apocalyptic fantasy megacity. Players field
-  four card types on a genuine five-edge pentagonal coliseum, conceal and
-  later reveal combatants, move/turn with action points, earn incrementing
-  mana, and resolve directional attacks/block simultaneously at round end.
-  Three distinct victories (flag, neutral beast, enemy rout) coexist.
-  Ship five asymmetric colored factions including green cyber-ogres, an
-  explorable district overworld, AI/faction campaigns, Meat economy,
-  challenges, collection/decks, direct multiplayer challenges, verifiable
-  card/art provenance, replayable seeded adversarial tests and separate
-  human acceptance and public-publishing gates.
+  Develop an image-first Slime City digital collectible-card battle game
+  using a rectangular grid of square cells and orthogonal movement.
+  Compare three genuinely playable formats before final rules selection:
+  8x8 Stratego-style concealed armies, 12x6 turn-based football-lane
+  deployments, and 14x6 timed real-time waves. Build six distinct
+  crew identities including genetically engineered catgirls, punk
+  bloodfairies and cybernetic ogres, sharing five school colors and
+  four card types. Anchor experimentation in a vivid seven-district
+  city map. Later expand faction campaigns, earned Meat/card economy,
+  deck building, persistent challenges, multiplayer, artwork and
+  replay-verified combat, retaining separate human creative and release gates.
 notes_from_silas: |
   2026-10-29 PT: New Conductor project, working name Slime City.
   Collectible digital card battles inspired by chess, strategy,
@@ -37,13 +37,23 @@ notes_from_silas: |
   Final name is not yet chosen. Do not confuse a design brief or image
   prompts with working mechanics, submitted jobs or finished illustrations.
   Assumptions and test rules live in DESIGN-BRIEF.md and may be revised.
+  2026-10-30 PT OVERRIDES THE PENTAGON DESIGN ABOVE: Simplify combat to
+  a rectangular board of square cells with orthogonal moves; no
+  cumbersome facing/directional block. Genetically engineered
+  catgirls and punk bloodfairies each get a real unique team, alongside
+  the cybernetic ogres. Do NOT choose Stratego versus a football-like
+  lane battlefield or real time versus turns yet. Develop teams,
+  an explorable city overworld and distinctive special cards, and
+  give Silas several playable, comparable proof-of-concept modes
+  at varying field sizes and tempos. Keep prototypes for hands-on
+  evaluation before final combat rules are locked.
 milestones:
   - id: m1
-    title: "FIRST BLOOD — playable illustrated duel"
+    title: "FIRST BLOOD — playable three-format comparison lab"
     weight: 30
     status: not-started
   - id: m2
-    title: "FIVE COLORS — robust combat, cards and rival AI"
+    title: "FIVE COLORS, SIX CREWS — cards, combat and rival AI"
     weight: 25
     status: not-started
   - id: m3
@@ -57,106 +67,127 @@ milestones:
 tasks:
   - id: t-001
     milestone: m1
-    title: "Ship an impressive internal one-screen first duel with real five-sided board"
+    title: "Build three playable square-grid prototypes, teams, city and special cards"
     status: review
     owner: worker
     passes: 0
     stakes: reversible
-    note: |-
-      First implementation in kind_robots at /admin/slime-city must be a cinematic art-led console, not a placeholder: arena, obvious two bases, banner, giant-monster pit, five-edge tile/rotation display, detailed original art or traceable painted-image request plus polished interim illustration, hand with creature/spell/trap/equipment examples, hidden placement, later reveal/movement, turn and round end, directional damage forecast and three objective indicators. Build the pure TypeScript deterministic command resolver alongside the shell and show a full seeded tutorial match. Ship screenshots at phone/tablet/desktop widths per frontend-verification runbook.
-
-      Silas changed the gameplay brief on 2026-10-30 PT: switch from pentagons to rectangular square-grid prototype variants. Build a comparative internal combat lab with Stratego-style hidden deployment, football-like lanes and an experimental real-time cadence plus teams, districts, and special cards.
-
-      Three square-grid simulations, six team rosters, thirty-six sample cards, seven district selections and an admin-only console are implemented in the kind_robots worker branch. Review and CI for both companion PRs are pending, with rendered mobile/desktop verification still outstanding.
+    note: >-
+      SILAS 2026-10-30 PT overrides earlier pentagonal rules. Create a
+      discoverable ADMIN-only /admin/slime-city single-screen comparison
+      console with 8x8 hidden-army BLACKOUT (Stratego-like), 12x6
+      turn-based lane MEATBALL and 14x6 real-time BLOODRUSH. Orthogonal
+      square movement, simple adjacent simultaneous combat, mana,
+      concealed units, card targeting and win paths. Six named teams
+      including gene-catgirls, punk bloodfairies and cyber-ogres,
+      seven illustrated/stylized districts, creature/spell/trap/
+      equipment examples. Implement testable pure TypeScript engine,
+      Pinia lab state and timer; no reward persistence or public launch.
+      Do not call CSS art generated artwork. Seeded tests, TS checks
+      and phone/tablet/desktop visual QA required before marking ready
+      for final subjective feedback. Shared external-facing release
+      remains gated.
     claimed_by: 2026-10-30T081006Z-slime-city-t001-4d81
     claimed_at: '2026-10-30T08:10:06Z'
     updated: '2026-10-30T08:30:19Z'
   - id: t-002
     milestone: m1
-    title: "Harden pentagonal topology, facing, AP, mana and simultaneous combat"
+    title: "Harden square movement, fog-of-war, action costs and three cadences"
     status: waiting
     depends_on: t-001
     owner: null
     passes: 0
     stakes: reversible
     note: >-
-      Test actual edge-to-edge Cairo-style pentagon neighbors and reciprocal
-      edge mapping, pathing and line of sight, rotations and cardinal
-      orientation, deployment/reveal timing, round 1/2 mana, one move
-      or edge turn per AP, attack[5]/block[5] aggregation, combat
-      snapshots and double knockouts. Rat and centurion golden fixtures;
-      deterministic logs and replay hash.
+      Validate 8x8, 12x6 and 14x6 coordinate topology, only four
+      orthogonal neighbors, occupied collision, hidden placement and
+      fair reveal/attack, movement AP, per-round mana and card timing.
+      Test simultaneous adjacent damage minus armor, double knockout,
+      real-time pause/resume consistency, football scoring, AI spawn
+      fairness and ghost/pile-up exploits, seeded command replays.
+      Remove old pentagon/facing/twist logic everywhere in this game.
+      Honest proof-of-concept limitations belong in the UI tutorial.
   - id: t-003
     milestone: m1
-    title: "Prove flag, monster and enemy-rout win paths in three authored tutorials"
+    title: "Experiment with flag, monster and rout objectives across prototype boards"
     status: waiting
-    depends_on: t-002
+    depends_on: [t-002, t-016]
     owner: null
     passes: 0
     stakes: reversible
     note: >-
-      Build three cinematic scenario tutorials. Carrier pick/drop/return,
-      off-axis neutral beast AI and all-sides retaliation, nontrivial rout
-      eligibility, tie outcomes, no early empty-board victory, earned
-      win screens and rewards. Show counters and failure cases for each.
+      After initial comparative playtests, create toggles or authored
+      scenarios for flag capture/return, neutral beast kill, and fighter
+      rout with reversible rules; assess whether they belong in hidden
+      army games, advancing lanes, timed waves, or a deliberate hybrid.
+      Test victory ties, early board emptiness, carrier rules, target
+      counterplay, score pacing and accessibility. Do not lock this
+      into all modes without evidence or a human design verdict.
   - id: t-004
     milestone: m2
-    title: "Author and test five distinct faction starters and card-effect grammar"
+    title: "Expand five mana colors into six distinct authored crews and special decks"
     status: waiting
     depends_on: t-002
     owner: null
     passes: 0
     stakes: reversible
     note: >-
-      Red random chaos, Blue trap intelligence, Purple speed/horde,
-      Green Ironjaw cybernetic ogres, Gold Meat Exchange control.
-      Four card types each. Create unique themed names and card text,
-      starter deck lists, keywords and counterplay, cost/HP/AP/
-      five-way attack-and-block data, explicit public RNG outcomes and
-      safe audited effects. No placeholders as a final faction roster.
+      Six crews (Gene Riot Catgirls BLUE, Punk Bloodfairies PURPLE,
+      Ironjaw Chrome Ogres GREEN, Riot Saints RED, Undertow
+      Intelligence BLUE, Meat Exchange GOLD) retain independent
+      character and campaign identities. Extend starter 3-creature/
+      3-special POC roster into legitimate legal decks with creature,
+      spell, trap and equipment types, intuitive game rules, named
+      counters, collectible artwork provenance and tests. Five colors
+      need not mean five teams. Inspect role coverage, swarm,
+      control, armor, mana economy and RNG readability.
   - id: t-005
     milestone: m2
-    title: "Implement tactical AI, match replay and adversarial balance suite"
+    title: "Implement competitive square-grid AI and comparative match replays"
     status: waiting
     depends_on: [t-003, t-004]
     owner: null
     passes: 0
     stakes: reversible
     note: >-
-      CPU considers concealment, directional facing, route congestion,
-      equipment, block, traps, flag, beast and rout goals; multiple
-      aggression profiles. Seed-stable full-match replay. Cross-faction
-      matches with win-rate and objective distribution, exploit and
-      opening-hand checks, loop/timeout recovery, no unearned awards.
+      CPU plays hidden armies with meaningful information limits,
+      defends endzones, sends tactical runners and uses special cards.
+      Test resource constraints, multi-team matchup balance, lane
+      congestion, time-pressure fairness, seeded replays, multiple
+      opponent personas and honest ties. Preserve reproducible
+      failures and show compact analytical comparison of the three
+      formats rather than declaring a winner from one test.
   - id: t-006
     milestone: m2
-    title: "Build art-first collection, five-color decks and detailed card reveal UI"
+    title: "Build premium illustrated collection, teams and deck editor"
     status: waiting
     depends_on: t-004
     owner: null
     passes: 0
     stakes: reversible
     note: >-
-      Collectible gallery, set/rarity/copies, deck legality and visual
-      builder, 3D card-turn and combat-strike feedback, search/filter,
-      readable edge stat chrome, accessibility and reduced-motion,
-      art source audit and actual ArtJob/ArtImage links. Report missing
-      card art rather than treating vector scaffolding as completion.
+      Promote POC roster and specials into a beautiful illustrated
+      collection with each crew's signature character and verified
+      portrait art; visual deck builder, rarity, copies, card type,
+      legal deck checks and faction colors. Inspect accessible last
+      gallery item, card targeting, keyboard/gamepad and reduced
+      motion. Never report CSS/vector mockups as real ArtJobs.
   - id: t-007
     milestone: m3
-    title: "Build explorable illustrated city map with working district destinations"
+    title: "Expand seven-district city map into navigable authored overworld"
     status: waiting
     depends_on: t-001
     owner: null
     passes: 0
     stakes: reversible
     note: >-
-      One-screen travel map for Pitworks, Ironjaw Foundry, Undertow,
-      Blood Alley/Night Market, Redline Riot, Meat Exchange and
-      Rotting Crown. District panoramas, unlock states, CPU battles,
-      shop, cards, faction chapter entry, challenge board, daily
-      encounter pull and user challenge flows. Visually verify
-      navigation, touch, keyboard/gamepad at 390/768/1440/XL.
+      Replace prototype responsive stylized skyline with traceable
+      generated painted panoramas, selectable streets/districts,
+      NPC rival bouts, faction campaigns and deck/shop navigation.
+      Distinct neighborhoods for engineered catgirls, punk bloodfairies,
+      chrome ogres, spies, rioters, market and Pitworks; player choices
+      should matter. Viewport screenshots at 390/768/1440/XL,
+      no dead buttons or clipped accessible content.
   - id: t-008
     milestone: m3
     title: "Ship earned Meat economy, safe card shop and random PvE encounters"
@@ -173,20 +204,22 @@ tasks:
       concurrency, exploit paths and collection persistence.
   - id: t-009
     milestone: m3
-    title: "Write and implement five genuinely distinct faction campaigns"
+    title: "Write and implement six genuinely different crew campaigns"
     status: waiting
     depends_on: [t-004, t-007]
     owner: null
     passes: 0
     stakes: reversible
     note: >-
-      Red chaotic spectacle, Blue undercity spy thriller, Purple
-      nocturnal goblin/vampire revolution, Green cyber-ogre foundry
-      rebellion, Gold corpse-market plutocracy. Unique named
-      rivals, story missions, conditional dialogue, boss rematches,
-      authored victories/failures and different final chapter/endings.
-      Implement one truly playable branch first, then the others;
-      seed-stable complete-playthrough tests and source-traced art.
+      Gene Riot Catgirls escaping their creators, Punk Bloodfairies
+      organizing wild city uprising, cyber-ogres revolting against
+      foundry owners, Riot Saints' explosive comedy, Undertow's
+      information war, and Meat Exchange's rotten oligarchy.
+      Different rivals, branching dialogue, authored rewards,
+      earned endings and provenance-linked character/location art.
+      A faction color is NOT a story and a paragraph is NOT an
+      implemented playable campaign. Build one full vertical slice
+      and test it before adding other chapters.
   - id: t-010
     milestone: m3
     title: "Create daily, weekly and evergreen missions with earned progression"
@@ -216,22 +249,23 @@ tasks:
       matchmaking or externally announced multiplayer until approved.
   - id: t-012
     milestone: m4
-    title: "Asset coverage, full adversarial playtest and console-grade visual QA"
+    title: "Full card and campaign coverage, prototype evaluation and visual QA"
     status: waiting
     depends_on: [t-009, t-010, t-011]
     owner: null
     passes: 0
     stakes: reversible
     note: >-
-      Audit all five starter decks, campaign content and real
-      ArtJobs/ArtImages, no missing portrait/arena/monster art,
-      seeded full match and campaign replays, balance and edge
-      mechanics, collection integrity, responsive 390/768/1440/XL,
-      gamepad/keyboard/touch, reduced motion and offline/reconnect.
-      Preserve failure/secret outcome evidence before human gate.
+      Complete six team campaigns, balanced specials and collection,
+      replay/provenance audit, end-to-end AI and PvP tests, all three
+      formats retained for comparison until Silas makes final
+      combat decision. Confirm real ArtJobs/ArtImages, responsive
+      rendered 390/768/1440/XL, gamepad/keyboard/touch, motion
+      reduction, reconnect and resource exploits. Record a final
+      design recommendation; subjective acceptance remains human.
   - id: t-013
     milestone: m1
-    title: "Optional scope/course correction checkpoint"
+    title: "Optional scope/course correction, final rules chosen after prototype comparison"
     status: needs-human
     gate_reason: creative-approval
     soft_gate: true
@@ -239,11 +273,13 @@ tasks:
     passes: 0
     stakes: reversible
     note: >-
-      FOR SILAS: Review projects/slime-city/DESIGN-BRIEF.md. The
-      working title Slime City and five factions are provisional.
-      Confirm or correct round-one mana interpretation, colored
-      archetypes, size of deck and balance targets or city styling.
-      This is a soft scope check: development is NOT blocked on it.
+      FOR SILAS: Play /admin/slime-city after the next self-hosted
+      rollout and compare BLACKOUT (hidden turn-based army), MEATBALL
+      (football lane turns), and BLOODRUSH (timed real-time).
+      Tell us which cadence/board you prefer or request a hybrid.
+      The Slime City name, colors and mana are still adjustable.
+      This is an optional design conversation, not a blocker:
+      continue building and testing while awaiting your verdict.
   - id: t-014
     milestone: m4
     title: "Subjective acceptance of the finished internal game"
@@ -275,3 +311,35 @@ tasks:
       promotion, real user multiplayer/social exposure and any
       live publication explicitly. Project registration, planning
       and internal previews are not that authorization.
+
+  - id: t-016
+    milestone: m1
+    title: "Adversarially playtest and compare the three square-grid rule variants"
+    status: waiting
+    depends_on: t-001
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Produce multiple seeded and manual runs of BLACKOUT 8x8,
+      MEATBALL 12x6 and BLOODRUSH 14x6. Measure first meaningful
+      decision, clarity, tension, match duration, 6-team counterplay,
+      clogged lanes, stalemates, comeback frequency, card usefulness,
+      input reachability and real-time burden. Deliver a concise
+      comparative report with desktop/phone screenshots and retain
+      each playable variant. No agent unilateral final-mode decision.
+  - id: t-017
+    milestone: m2
+    title: "Queue and verify distinct art for teams, districts and specials"
+    status: waiting
+    depends_on: t-001
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Generate 6 unmistakably different crew hero illustrations,
+      7 district panoramic keys, 3 board layouts and first 36
+      collectible creature/spell/trap/equipment card illustrations
+      through real ArtJobs; show per-asset pending/done/failed
+      provenance and connect verified ArtImages in the internal lab.
+      Never substitute CSS illustrations or prompt text for delivered art.
