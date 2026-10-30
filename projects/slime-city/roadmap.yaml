@@ -1,0 +1,279 @@
+# New original digital strategy CCG. Display title intentionally provisional.
+project: slime-city
+kind: software
+autonomous: true
+goal: >-
+  Build an image-first, full-screen browser collectible card strategy game
+  set in a vividly grotesque post-apocalyptic fantasy megacity. Players field
+  four card types on a genuine five-edge pentagonal coliseum, conceal and
+  later reveal combatants, move/turn with action points, earn incrementing
+  mana, and resolve directional attacks/block simultaneously at round end.
+  Three distinct victories (flag, neutral beast, enemy rout) coexist.
+  Ship five asymmetric colored factions including green cyber-ogres, an
+  explorable district overworld, AI/faction campaigns, Meat economy,
+  challenges, collection/decks, direct multiplayer challenges, verifiable
+  card/art provenance, replayable seeded adversarial tests and separate
+  human acceptance and public-publishing gates.
+notes_from_silas: |
+  2026-10-29 PT: New Conductor project, working name Slime City.
+  Collectible digital card battles inspired by chess, strategy,
+  Warmachine, Hearthstone, Magic: The Gathering, Cards and Tankards
+  and SolForge. Color factions: RED random chaos, BLUE traps,
+  PURPLE fast horde, two additional colors, and a dedicated cybernetic
+  ogre faction. Pentagonal coliseum; hidden placement now, later reveal
+  and movement; each move or 72-degree turn costs an action point.
+  At the end of a full round all revealed creatures attack in all
+  five printed directions, with directional block. Example rat attacks
+  1 in all five directions with zero block; centurion deals 2 in front
+  and blocks the first point of incoming damage on all sides.
+  Win by returning the flag to base, defeating the neutral giant
+  monster, or eliminating the enemy force. Highly colorful, grungy,
+  post-apocalyptic fantasy megacity with goblins, ogres, vampires,
+  cybernetics and absurdly over-the-top comic violence. AAA single-screen
+  interface with illustrated city overworld: CPU fights, Meat currency,
+  Meat card shop, campaign with a unique faction story, card collection,
+  user challenges, Meat-bought random encounters, daily/weekly/permanent
+  challenges, rewards and cards of CREATURE/SPELL/TRAP/EQUIPMENT types.
+  Final name is not yet chosen. Do not confuse a design brief or image
+  prompts with working mechanics, submitted jobs or finished illustrations.
+  Assumptions and test rules live in DESIGN-BRIEF.md and may be revised.
+milestones:
+  - id: m1
+    title: "FIRST BLOOD — playable illustrated duel"
+    weight: 30
+    status: not-started
+  - id: m2
+    title: "FIVE COLORS — robust combat, cards and rival AI"
+    weight: 25
+    status: not-started
+  - id: m3
+    title: "THE CITY EATS — overworld, stories and economy"
+    weight: 25
+    status: not-started
+  - id: m4
+    title: "CROWN THE PIT — online, polish and acceptance"
+    weight: 20
+    status: not-started
+tasks:
+  - id: t-001
+    milestone: m1
+    title: "Ship an impressive internal one-screen first duel with real five-sided board"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      First implementation in kind_robots at /admin/slime-city must be
+      a cinematic art-led console, not a placeholder: arena, obvious two
+      bases, banner, giant-monster pit, five-edge tile/rotation display,
+      detailed original art or traceable painted-image request plus polished
+      interim illustration, hand with creature/spell/trap/equipment
+      examples, hidden placement, later reveal/movement, turn and round
+      end, directional damage forecast and three objective indicators.
+      Build the pure TypeScript deterministic command resolver alongside
+      the shell and show a full seeded tutorial match. Ship screenshots
+      at phone/tablet/desktop widths per frontend-verification runbook.
+  - id: t-002
+    milestone: m1
+    title: "Harden pentagonal topology, facing, AP, mana and simultaneous combat"
+    status: waiting
+    depends_on: t-001
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Test actual edge-to-edge Cairo-style pentagon neighbors and reciprocal
+      edge mapping, pathing and line of sight, rotations and cardinal
+      orientation, deployment/reveal timing, round 1/2 mana, one move
+      or edge turn per AP, attack[5]/block[5] aggregation, combat
+      snapshots and double knockouts. Rat and centurion golden fixtures;
+      deterministic logs and replay hash.
+  - id: t-003
+    milestone: m1
+    title: "Prove flag, monster and enemy-rout win paths in three authored tutorials"
+    status: waiting
+    depends_on: t-002
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Build three cinematic scenario tutorials. Carrier pick/drop/return,
+      off-axis neutral beast AI and all-sides retaliation, nontrivial rout
+      eligibility, tie outcomes, no early empty-board victory, earned
+      win screens and rewards. Show counters and failure cases for each.
+  - id: t-004
+    milestone: m2
+    title: "Author and test five distinct faction starters and card-effect grammar"
+    status: waiting
+    depends_on: t-002
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Red random chaos, Blue trap intelligence, Purple speed/horde,
+      Green Ironjaw cybernetic ogres, Gold Meat Exchange control.
+      Four card types each. Create unique themed names and card text,
+      starter deck lists, keywords and counterplay, cost/HP/AP/
+      five-way attack-and-block data, explicit public RNG outcomes and
+      safe audited effects. No placeholders as a final faction roster.
+  - id: t-005
+    milestone: m2
+    title: "Implement tactical AI, match replay and adversarial balance suite"
+    status: waiting
+    depends_on: [t-003, t-004]
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      CPU considers concealment, directional facing, route congestion,
+      equipment, block, traps, flag, beast and rout goals; multiple
+      aggression profiles. Seed-stable full-match replay. Cross-faction
+      matches with win-rate and objective distribution, exploit and
+      opening-hand checks, loop/timeout recovery, no unearned awards.
+  - id: t-006
+    milestone: m2
+    title: "Build art-first collection, five-color decks and detailed card reveal UI"
+    status: waiting
+    depends_on: t-004
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Collectible gallery, set/rarity/copies, deck legality and visual
+      builder, 3D card-turn and combat-strike feedback, search/filter,
+      readable edge stat chrome, accessibility and reduced-motion,
+      art source audit and actual ArtJob/ArtImage links. Report missing
+      card art rather than treating vector scaffolding as completion.
+  - id: t-007
+    milestone: m3
+    title: "Build explorable illustrated city map with working district destinations"
+    status: waiting
+    depends_on: t-001
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      One-screen travel map for Pitworks, Ironjaw Foundry, Undertow,
+      Blood Alley/Night Market, Redline Riot, Meat Exchange and
+      Rotting Crown. District panoramas, unlock states, CPU battles,
+      shop, cards, faction chapter entry, challenge board, daily
+      encounter pull and user challenge flows. Visually verify
+      navigation, touch, keyboard/gamepad at 390/768/1440/XL.
+  - id: t-008
+    milestone: m3
+    title: "Ship earned Meat economy, safe card shop and random PvE encounters"
+    status: waiting
+    depends_on: [t-005, t-006, t-007]
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Server-ledger match payout, earned card unlocks, loss consolation,
+      transparently priced Meat card purchases and PvE encounter draws,
+      explicit pool/minimum returns, rate control and no real-money
+      monetization or cash-out. Test farming, replay double-grants,
+      concurrency, exploit paths and collection persistence.
+  - id: t-009
+    milestone: m3
+    title: "Write and implement five genuinely distinct faction campaigns"
+    status: waiting
+    depends_on: [t-004, t-007]
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Red chaotic spectacle, Blue undercity spy thriller, Purple
+      nocturnal goblin/vampire revolution, Green cyber-ogre foundry
+      rebellion, Gold corpse-market plutocracy. Unique named
+      rivals, story missions, conditional dialogue, boss rematches,
+      authored victories/failures and different final chapter/endings.
+      Implement one truly playable branch first, then the others;
+      seed-stable complete-playthrough tests and source-traced art.
+  - id: t-010
+    milestone: m3
+    title: "Create daily, weekly and evergreen missions with earned progression"
+    status: waiting
+    depends_on: t-008
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Pacific-time reset, task category and eligibility, exact rewards,
+      no reclaims/double grants, persistent achievements, independent
+      challenges for different faction/flag/boss/rout/deck playstyles.
+      No pressure mechanics or premium currencies.
+  - id: t-011
+    milestone: m4
+    title: "Build secure player challenges, saves and reconnectable matches"
+    status: waiting
+    depends_on: [t-005, t-008]
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Direct friend invitations in internal preview, turn ownership,
+      hidden-information redaction, server validation, timeouts,
+      deterministic shuffle/RNG, disconnection resume, permissions,
+      accessible turn log, anti-cheat adversarial tests. No public
+      matchmaking or externally announced multiplayer until approved.
+  - id: t-012
+    milestone: m4
+    title: "Asset coverage, full adversarial playtest and console-grade visual QA"
+    status: waiting
+    depends_on: [t-009, t-010, t-011]
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Audit all five starter decks, campaign content and real
+      ArtJobs/ArtImages, no missing portrait/arena/monster art,
+      seeded full match and campaign replays, balance and edge
+      mechanics, collection integrity, responsive 390/768/1440/XL,
+      gamepad/keyboard/touch, reduced motion and offline/reconnect.
+      Preserve failure/secret outcome evidence before human gate.
+  - id: t-013
+    milestone: m1
+    title: "Optional scope/course correction checkpoint"
+    status: needs-human
+    gate_reason: creative-approval
+    soft_gate: true
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      FOR SILAS: Review projects/slime-city/DESIGN-BRIEF.md. The
+      working title Slime City and five factions are provisional.
+      Confirm or correct round-one mana interpretation, colored
+      archetypes, size of deck and balance targets or city styling.
+      This is a soft scope check: development is NOT blocked on it.
+  - id: t-014
+    milestone: m4
+    title: "Subjective acceptance of the finished internal game"
+    status: waiting
+    depends_on: t-012
+    owner: null
+    passes: 0
+    stakes: reversible
+    gate_human: true
+    gate_reason: subjective-acceptance
+    note: >-
+      FOR SILAS: After complete game, visual and content QA, play
+      the internal preview at desktop/mobile and accept or give
+      design feedback. Agents must finish all reversible fixes
+      before presenting this gate. Your creative approval does
+      not authorize external release.
+  - id: t-015
+    milestone: m4
+    title: "Authorize public Play launch and community exposure separately"
+    status: waiting
+    depends_on: t-014
+    owner: null
+    passes: 0
+    stakes: outward-facing
+    gate_human: true
+    gate_reason: publish
+    note: >-
+      FOR SILAS: Only after internal acceptance, authorize public
+      promotion, real user multiplayer/social exposure and any
+      live publication explicitly. Project registration, planning
+      and internal previews are not that authorization.
