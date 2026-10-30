@@ -1,0 +1,252 @@
+# First canon-safe Unstable Diffusers production pack, shared by Prom of Doom and Every Villain Tactics.
+# Human-approved checkpoint decision: 2026-10-29 PT. This ledger submits 14 NEW cells only.
+# Reuse, DO NOT re-enqueue, benchmark Cornerstone hero poster job 50509, Backdraft villain
+# poster job 50515, and human Dr. Frog laboratory scene job 50530 if image QA approves.
+# The Firewall/Priya checkpoint examples are experimental; tech-genius canon is Dr. Lionel Marsh.
+# ArtJob acceptance is not proof of rendering, final media URL or delivered game integration.
+round: capes-unstable-production-families-v1
+series: prom-of-doom-and-every-villain-tactics
+project_slug: comet-city-academy
+designer: Capes Unstable Diffusers Shared Production
+is_public: false
+is_mature: false
+cast_loras: false
+priority: 900
+auto_submit: true
+status: awaiting-submission
+benchmark_reference_jobs:
+  cornerstone_hero_poster: 50509
+  backdraft_villain_poster: 50515
+  dr_frog_science_story: 50530
+lanes:
+- key: unstable-production
+  label: Unstable Diffusers nihilmania (approved house model)
+  engine: comfy
+  checkpoint: SDXL/sdxlUnstableDiffusers_nihilmania.safetensors
+  prompt: prose
+  suffix: "Mature Western superhero animation key art, compelling facial acting, precise human anatomy or intentional amphibian transformation, bold clean ink contour, painterly flat cel-shadows, textured controlled comic color, readable shapes at card and tactical scale."
+  steps: 28
+  cfg: 7
+  sampler: dpmpp_2m
+subjects:
+- key: cornerstone-villain-poster
+  lane: unstable-production
+  entity: accident-earth
+  title: "Cornerstone villain poster"
+  asset: comet-city-academy/identities/accident-earth/poster-villain
+  size: 832x1216
+  seed: 630101
+  prompt_prose: >-
+    Full-length dramatic antagonist poster of Tobias Tug Brannigan, the same stocky pale adult man with a
+    shaved head, heavy red beard and granite patches across his knuckles and cheekbones as Cornerstone the
+    rescuer. He stands beneath an illegally excavated bank tower in the subterranean Deed Below, dark
+    dusty-blue quarry jacket with orange construction straps and stone-armored forearms. His hand holds a
+    reinforced tunnel support in place while the foundation above splinters, making it clear that he could
+    let it fall. Low camera angle, heavy slate rock and amber work lights, firm human face, all feet and
+    hands visible.
+  negative: "text, lettering, typography, word bubbles, logo, watermark, signature, graphic UI, photorealistic skin, 3d game render, toys, generic anime chibi, extra limbs, cropped head, cropped feet, deformed hands, merged characters, unintended duplicate people"
+- key: cornerstone-hero-standee
+  lane: unstable-production
+  entity: accident-earth
+  title: "Cornerstone hero tactical standee"
+  asset: comet-city-academy/identities/accident-earth/model-hero-2x1
+  size: 1536x768
+  seed: 630102
+  prompt_prose: >-
+    A single full-body game standee of Tobias Tug Brannigan as heroic Cornerstone, stocky pale adult man,
+    shaved head, heavy red beard and granite patches on cheekbones and knuckles. Dusty blue armored rescue
+    suit with orange road-worker straps, enormous rugged stone forearms held protectively forward.
+    Standing on an unmarked flat pale-slate studio floor, neutral matching plain backdrop, character
+    centered in the middle half of a wide 2:1 frame with generous clear space on both sides. Both heavy
+    boots, both hands and entire head visible, three-quarter fighting stance, precise recognisable
+    silhouette.
+  negative: "text, lettering, typography, word bubbles, logo, watermark, signature, graphic UI, photorealistic skin, 3d game render, toys, generic anime chibi, extra limbs, cropped head, cropped feet, deformed hands, merged characters, unintended duplicate people"
+- key: cornerstone-villain-standee
+  lane: unstable-production
+  entity: accident-earth
+  title: "Cornerstone villain tactical standee"
+  asset: comet-city-academy/identities/accident-earth/model-villain-2x1
+  size: 1536x768
+  seed: 630103
+  prompt_prose: >-
+    A single full-body game standee of Tobias Tug Brannigan as villainous Cornerstone, same stocky pale
+    adult man, shaved head, heavy red beard and gray granite patches over cheeks and fists. Heavy
+    charcoal-blue quarry coat crossed by frayed orange safety straps, thick stone-coated forearms,
+    battered work boots. He holds a fractured concrete foundation block suspended in his raised left fist,
+    his right arm lowered in a calculating threatening stance. Neutral pale-slate unmarked studio
+    backdrop, centered character within middle half of extremely wide 2:1 composition, complete head, both
+    boots and hands, consistent physical identity with heroic Cornerstone.
+  negative: "text, lettering, typography, word bubbles, logo, watermark, signature, graphic UI, photorealistic skin, 3d game render, toys, generic anime chibi, extra limbs, cropped head, cropped feet, deformed hands, merged characters, unintended duplicate people"
+- key: cornerstone-resolve-portrait
+  lane: unstable-production
+  entity: accident-earth
+  title: "Cornerstone portrait: protective resolve"
+  asset: comet-city-academy/identities/accident-earth/portrait-resolve
+  size: 896x1152
+  seed: 630104
+  prompt_prose: >-
+    Chest-up emotional portrait of Tobias Tug Brannigan, stocky pale adult man with shaved head, thick red
+    beard and gray granite flecks on his cheekbones. In the dusty-blue academy rescue suit with orange
+    worker straps, he watches a school bus half suspended over a sunken street through the smoky window of
+    an emergency tunnel. His brow is tight with worry but his jaw is determined; one chipped stone hand
+    presses firmly against the wall. Focused readable facial expression and close detail in eyes, face and
+    protective costume, vertical character-card composition.
+  negative: "text, lettering, typography, word bubbles, logo, watermark, signature, graphic UI, photorealistic skin, 3d game render, toys, generic anime chibi, extra limbs, cropped head, cropped feet, deformed hands, merged characters, unintended duplicate people"
+- key: backdraft-hero-poster
+  lane: unstable-production
+  entity: accident-fire
+  title: "Backdraft hero poster"
+  asset: comet-city-academy/identities/accident-fire/poster-hero
+  size: 832x1216
+  seed: 630105
+  prompt_prose: >-
+    Full-body heroic key poster of Dez Okafor as Backdraft, broad-shouldered adult Black man with
+    dark-brown skin, short black curls and orange heat glowing beneath both forearms. He wears a repaired
+    navy academy rescue coat with reflective copper heat-shield panels and orange safety webbing, no
+    menacing cape. He carries a frightened child out of a burning food-truck kitchen inside a curved
+    translucent thermal shield while fire curls away from his body, rescuers visible through steam at the
+    curb. Low heroic camera, confident but gentle expression, dramatic amber glow against clean blue dusk,
+    complete anatomy and feet, bold readable composition.
+  negative: "text, lettering, typography, word bubbles, logo, watermark, signature, graphic UI, photorealistic skin, 3d game render, toys, generic anime chibi, extra limbs, cropped head, cropped feet, deformed hands, merged characters, unintended duplicate people"
+- key: backdraft-hero-standee
+  lane: unstable-production
+  entity: accident-fire
+  title: "Backdraft hero tactical standee"
+  asset: comet-city-academy/identities/accident-fire/model-hero-2x1
+  size: 1536x768
+  seed: 630106
+  prompt_prose: >-
+    Single full-body wide tactical standee of Dez Okafor as hero Backdraft, broad-shouldered adult Black
+    man with dark-brown skin and short black curls, orange light under the skin of his arms. A dark-navy
+    firefighter-inspired armor coat, copper heat shield pads, safety-orange strips, thick black boots and
+    fingerless insulated gloves. He stands protective and upright with one forearm projecting a
+    translucent orange shield that curls heat away from allies. Character occupies the middle half of wide
+    2:1 pale-slate studio backdrop with no environment or text, complete hands, head and feet visible,
+    clear silhouette and centered shadow.
+  negative: "text, lettering, typography, word bubbles, logo, watermark, signature, graphic UI, photorealistic skin, 3d game render, toys, generic anime chibi, extra limbs, cropped head, cropped feet, deformed hands, merged characters, unintended duplicate people"
+- key: backdraft-villain-standee
+  lane: unstable-production
+  entity: accident-fire
+  title: "Backdraft villain tactical standee"
+  asset: comet-city-academy/identities/accident-fire/model-villain-2x1
+  size: 1536x768
+  seed: 630107
+  prompt_prose: >-
+    One full-body centered game standee of Dez Okafor as villain Backdraft, same broad-shouldered adult
+    Black man, dark-brown skin, short black curls and glowing orange arms. Charred navy academy coat
+    becomes elegant black-and-copper armored insurance racketeer's coat with one torn red-orange shoulder
+    cape. His left hand holds a slim copper claims ledger without words, while the right hand quietly
+    compresses a contained ring of orange heat. Unmarked pale-slate studio backdrop, complete figure and
+    boots, strong readable three-quarter stance, ample empty side margins in 2:1 canvas, not a second
+    person.
+  negative: "text, lettering, typography, word bubbles, logo, watermark, signature, graphic UI, photorealistic skin, 3d game render, toys, generic anime chibi, extra limbs, cropped head, cropped feet, deformed hands, merged characters, unintended duplicate people"
+- key: backdraft-doubt-portrait
+  lane: unstable-production
+  entity: accident-fire
+  title: "Backdraft portrait: moral doubt"
+  asset: comet-city-academy/identities/accident-fire/portrait-doubt
+  size: 896x1152
+  seed: 630108
+  prompt_prose: >-
+    Tight chest-up expressive portrait of Dez Okafor, an adult Black man with dark-brown skin, short black
+    curls and a subtle orange glow at his exposed wrists. In a smoke-stained navy academy coat with copper
+    rescue plates, he looks down at the quilted oven mitts in his hands and hesitates outside his younger
+    sister's hospital room. His eyebrows are lowered, eyes soft with fear of hurting someone he loves;
+    cool hospital corridor light contrasts with warm ember reflections. Emotional facial acting and
+    consistent recognizable design in a vertical comic portrait, no writing on walls.
+  negative: "text, lettering, typography, word bubbles, logo, watermark, signature, graphic UI, photorealistic skin, 3d game render, toys, generic anime chibi, extra limbs, cropped head, cropped feet, deformed hands, merged characters, unintended duplicate people"
+- key: frog-hero-poster
+  lane: unstable-production
+  entity: tech-genius
+  title: "Dr. Frog heroic human poster"
+  asset: comet-city-academy/identities/tech-genius/poster-hero
+  size: 832x1216
+  seed: 630109
+  prompt_prose: >-
+    Full-body heroic science-action poster of Dr. Lionel Marsh, a human adult inventor called Dr. Frog,
+    with an intelligent human face, short dark slightly unruly hair, pale green laboratory coat over a
+    navy armored undersuit, compact brass spring-loaded leap braces strapped around his calves and boots,
+    adhesive rescue pads across a utility belt. He leaps across a collapsing glass science wing roof to
+    catch a stranded student while his frog-footed green glider unfolds behind him. His face remains
+    entirely human, determined and compassionate. Vertical low-angle dynamic composition, clear hands and
+    boots, laboratory windows and realistic mechanical gear.
+  negative: "text, lettering, typography, word bubbles, logo, watermark, signature, graphic UI, photorealistic skin, 3d game render, toys, generic anime chibi, extra limbs, cropped head, cropped feet, deformed hands, merged characters, unintended duplicate people"
+- key: frog-villain-poster
+  lane: unstable-production
+  entity: tech-genius
+  title: "Evil Dr. Frog transformed villain poster"
+  asset: comet-city-academy/identities/tech-genius/poster-villain
+  size: 832x1216
+  seed: 630110
+  prompt_prose: >-
+    Full-body villain poster of Dr. Lionel Marsh after his untested transformation serum, now Evil Dr.
+    Frog, a huge emerald humanoid frog with wet mottled green skin, broad amphibian mouth, protruding
+    amber eyes, long webbed fingers and a heavy elastic tongue, recognizable human inventor's pale-green
+    laboratory coat torn around his transformed shoulders and a broken brass spring brace hanging from his
+    utility belt. He towers over a cracked mutagen tank in a neon green flooded laboratory, shattered
+    glass and research equipment behind him, one webbed palm raised before a struggling silhouette in a
+    chamber. Sinister but intelligent expression, dynamic mature superhero comic composition, fully
+    visible giant amphibian feet and hands.
+  negative: "text, lettering, typography, word bubbles, logo, watermark, signature, graphic UI, photorealistic skin, 3d game render, toys, generic anime chibi, extra limbs, cropped head, cropped feet, deformed hands, merged characters, unintended duplicate people"
+- key: frog-hero-standee
+  lane: unstable-production
+  entity: tech-genius
+  title: "Dr. Frog human hero tactical standee"
+  asset: comet-city-academy/identities/tech-genius/model-hero-2x1
+  size: 1536x768
+  seed: 630111
+  prompt_prose: >-
+    A single full-body centered tactical game standee of human Dr. Lionel Marsh in his heroic Dr. Frog
+    form before any serum use. Clever adult human inventor with short dark hair and fully human face, pale
+    green lab coat over dark navy rescue suit, compact brass spring-loaded mechanical jump braces on both
+    legs, frog-footed metal glider folded behind his shoulders, adhesive rescue pads on belt. He braces
+    for a springing sideways leap with one hand extended. Wide 2:1 neutral pale-slate studio background,
+    complete human hands and boots, middle-half centered silhouette, empty margins on both sides.
+  negative: "text, lettering, typography, word bubbles, logo, watermark, signature, graphic UI, photorealistic skin, 3d game render, toys, generic anime chibi, extra limbs, cropped head, cropped feet, deformed hands, merged characters, unintended duplicate people"
+- key: frog-villain-standee
+  lane: unstable-production
+  entity: tech-genius
+  title: "Evil Dr. Frog tactical standee"
+  asset: comet-city-academy/identities/tech-genius/model-villain-2x1
+  size: 1536x768
+  seed: 630112
+  prompt_prose: >-
+    A single full-body game standee of Evil Dr. Frog, Dr. Lionel Marsh transformed by his own unsafe power
+    serum into a large emerald-skinned humanoid frog, bulging amber eyes, broad amphibian mouth, long
+    webbed fingers and massive three-toed amphibian feet. Tattered recognizable pale-green lab coat and a
+    snapped brass leap brace on one leg link him to his human identity; a glowing sealed green serum vial
+    sits at his belt. Threatening crouched upright three-quarter pose with one long arm coiled for a
+    tongue-powered strike. Neutral unmarked pale-slate studio backdrop, wide 2:1 frame, creature centered
+    in middle half and complete head, hands and feet.
+  negative: "text, lettering, typography, word bubbles, logo, watermark, signature, graphic UI, photorealistic skin, 3d game render, toys, generic anime chibi, extra limbs, cropped head, cropped feet, deformed hands, merged characters, unintended duplicate people"
+- key: frog-serum-story
+  lane: unstable-production
+  entity: tech-genius
+  title: "Dr. Frog story: irreversible experiment"
+  asset: comet-city-academy/identities/tech-genius/story-transformation
+  size: 1344x768
+  seed: 630113
+  prompt_prose: >-
+    Wide cinematic science-laboratory narrative panel of adult human Dr. Lionel Marsh on the left
+    hesitating beside an open cabinet holding an emerald experimental serum vial, wearing a pale-green
+    coat and brass spring-loaded leap gear. On the right beyond a heavy transparent containment window is
+    a shadow of a much larger humanoid frog with webbed fingers, amber eyes and a torn lab coat reflected
+    across the glass; the staging makes it clear this is his feared possible future, not a second separate
+    scientist. Medical instruments, cracked tile and dim copper lab fixtures under cold blue and green
+    light. Clear human facial terror and consequential choice, readable 16:9 scene without labels or text.
+  negative: "text, lettering, typography, word bubbles, logo, watermark, signature, graphic UI, photorealistic skin, 3d game render, toys, generic anime chibi, extra limbs, cropped head, cropped feet, deformed hands, merged characters, unintended duplicate people"
+- key: frog-heel-portrait
+  lane: unstable-production
+  entity: tech-genius
+  title: "Evil Dr. Frog portrait: scientist regret"
+  asset: comet-city-academy/identities/tech-genius/portrait-heel
+  size: 896x1152
+  seed: 630114
+  prompt_prose: >-
+    Close-up chest-up villain portrait of Evil Dr. Frog, Dr. Lionel Marsh after transformation: expressive
+    amber bulging frog eyes, huge emerald amphibian head, mottled skin, webbed fingers gripping the frayed
+    collar of his old pale-green human lab coat. A brass spring-gear bracket sits broken on one shoulder.
+    His face carries scientific obsession and a flicker of regret rather than a cheerful animal mascot
+    grin. Green specimen-lab backlight and a darker navy background, strong facial readability for comic
+    conversations, vertical portrait composition, no text.
+  negative: "text, lettering, typography, word bubbles, logo, watermark, signature, graphic UI, photorealistic skin, 3d game render, toys, generic anime chibi, extra limbs, cropped head, cropped feet, deformed hands, merged characters, unintended duplicate people"
