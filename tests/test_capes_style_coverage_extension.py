@@ -68,4 +68,5 @@ def test_map_has_real_topology_and_portrait_tests_facial_acting():
     assert portrait["size"] == "896x1152"
     for feature in ("brown skin", "eyebrows", "dark expressive eyes", "determination"):
         assert feature in portrait["prompt_prose"].lower()
-    assert "bare and unmarked" in portrait["prompt_prose"].lower()\n    assert "text" in portrait["negative"].lower()
+    assert "bare and unmarked" in portrait["prompt_prose"].lower()
+    assert "text" in portrait["negative"].lower()
