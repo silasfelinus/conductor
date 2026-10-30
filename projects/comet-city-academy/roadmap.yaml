@@ -681,12 +681,12 @@ tasks:
     implementation_pr: 'silasfelinus/kind_robots#4506'
   - id: t-023
     title: "Prom of Doom: ingest Oct 29 larger-than-life NPCs and SPECIES henchmen with real art"
-    status: claimed
+    status: ready
     stakes: reversible
     owner: worker
     passes: 0
     source_issue: "silasfelinus/kind_robots#4443"
-    updated: '2026-10-30T13:33:16Z'
+    updated: '2026-10-30T13:52:34Z'
     note: |-
       FROM GITHUB ISSUE silasfelinus/kind_robots#4443 (https://github.com/silasfelinus/kind_robots/issues/4443), opened by @silasfelinus on 2026-10-29. Imported by scripts/sync_github_issues.py. Reference the issue in the implementing PR (`Closes silasfelinus/kind_robots#4443`) so it closes on merge; the bridge closes it otherwise once this task is done.
 
@@ -704,8 +704,25 @@ tasks:
       - [ ] PRs with completed green checks, merged reversible code and task closeout. Keep public publication/release and irreversible changes behind the normal human gates.
 
       This task is specifically the **one-day Oct 29 special**, not a permanent rewrite of the 14-record Zuzu production writer. Do not wedge Prom rows into `zuzu_assets` and silently claim successful Daily Dream authoring.
+
+      2026-10-30 progress (kind_robots#4508, merged 28115019): all 8 Oct 29 characters are now
+      in kind_robots game data (utils/cometAcademy/octoberCast.ts). They keep stable keys
+      pod-20261029-01..08 and comet-city-academy provenance, with name/role/look/lore
+      preserved. Each has a distinct authored voice and lines. The 4 henchman leaders carry
+      SPECIES records (thunder-tux-stags, glassjaw-gargoyles, confetti-leeches, velvet-
+      widows). Portrait/splash/encounter prompts and cast/<slug>/* art keys live in data only;
+      no art was queued. Each character has a first-encounter patrol story on a non-
+      overlapping district window, with hero/villain/rogue choices, a refusal, an earned
+      secret, a next-morning callback and later-night dispatch effects. The patrol board shows
+      the cast member; the Scrapbook has a City Notables shelf. verifyCometOctoberCast plays
+      all 40 branches from a real seeded term with save round-trips. REMAINING for #4443 (left
+      open): create or dedupe the 4 SPECIES Facets and 8 Character rows through the sanctioned
+      API/seed pipeline and record their IDs; queue portrait/splash/encounter ArtJobs and
+      verify rendered attachments before export. Flag for Silas: Madame Afterparty's pitched
+      real name Imani Calder overlaps student Imani Vale and Ash Calder.
     claimed_by: 2026-10-30T12:46:10Z-prom-console-q7m3
     claimed_at: '2026-10-30T13:33:16Z'
+    implementation_pr: 'silasfelinus/kind_robots#4508'
   - id: t-024
     milestone: m3
     title: "Deploy 48 named one-hit villain henchman species in night patrol and Yearbook"
