@@ -2,7 +2,15 @@
 
 **Direction:** Silas, October 29, 2026 PT. Mature Western animated superhero storytelling, clean ink, expressive faces, graphic silhouettes and hand-painted cel shadows. References for *qualities*, not prompts to copy: the acting and clarity of Legend of Korra, dramatic superhero impact of Invincible, and the color/costume confidence of She-Ra.
 
-## Production gate first: 36 checkpoint-comparison ArtJobs
+## Selected production model and original checkpoint benchmark
+
+**Human selection, 2026-10-29 PT:** After evaluating art-model tests, Silas selected **Unstable Diffusers nihilmania** as the **preferred primary checkpoint for both Prom of Doom and Every Villain Tactics**. This is the default working visual direction for **new** character posters, villain art, henchman species, powered lieutenants, narrative expressions, character portraits, maps and 2:1 tactical standees. The other five benchmark checkpoints remain opt-in comparison/exception lanes, not co-equal defaults. Do not change old ArtJob checkpoint metadata or regenerate finished work without a specific continuity or quality reason.
+
+**Generation recipe:** `SDXL/sdxlUnstableDiffusers_nihilmania.safetensors` through Comfy, scene-first SDXL prose, DPM++ 2M, 28 steps, CFG 7 as the existing tested starting profile. Preserve concrete character anatomy, signature costume shapes and silhouette, mature Western comic/animation linework, expressive faces and readable action at both illustrated-card and small tactical sizes. Adapt prompts by asset category; use consistent character-reference and seed/provenance tracking. A failed checkpoint load is a visible failure to fix, never permission to silently substitute another model.
+
+The model choice is **not** a claim that all checkpoint test ArtJobs completed, that all Unstable images passed visual QA or that production art has been delivered. Keep actual ArtJob/ArtImage IDs, final media paths, continuity review and visual checks as separate requirements.
+
+### Original 36 checkpoint-comparison ArtJobs
 
 Source-of-truth request ledger: `art/CAPES-WESTERN-STYLE-CHECK-ROUND-1.yaml`. It is a **6 subjects × 6 checkpoint lanes** experiment with six fixed seeds, one per subject, the exact same spatial scene for each model, different prompt grammar tuned to the checkpoint. **Queue priority 900**, private ArtJobs via the dedicated main-only submission workflow; `auto_submit: false` avoids colliding with the general Art Generate sweep. The generic Flux, Flux2, Pony and furry-first engines are excluded. **Krea 2 is explicitly required** even though its Qwen lineage differs from SDXL/Illustrious. No other Flux model is used.
 
@@ -24,7 +32,7 @@ The exact checkpoint paths come from the existing Kind Robots Playbook art lanes
 5. **Human Dr. Frog scientist and teammate**, emotionally contrasted in a cramped science lab. Wide 16:9 narrative acting, no premature frog transformation.
 6. **Firewall** hero model on a simple neutral backdrop. Full-body 2:1 standee layout with complete feet and strong readability under UI transforms.
 
-**Scoring:** mature Western animation, facial acting, silhouette at tactical scale, cross-category consistency; 1–5 each, plus written notes. Judge six rows, not a single attractive poster. Choose a provisional **poster/story/standee split** only if the comparisons support it. First-party `/admin/capes` style-check board is the review entrypoint; it shows only real ArtJobs and protected ArtImages, not simulated completions. Ratings are local browser drafts, not an automatically approved globally deployed style.
+**Scoring:** mature Western animation, facial acting, silhouette at tactical scale, cross-category consistency; 1–5 each, plus written notes. Judge six rows, not a single attractive poster. Unstable Diffusers is the preferred working model across poster, story and standee categories by Silas's decision. Split individual categories to another checkpoint only with a recorded comparison-based reason; do not treat automatically averaged ratings as a new editorial override. First-party `/admin/capes` style-check board is the review entrypoint; it shows only real ArtJobs and protected ArtImages, not simulated completions. Ratings are local browser drafts, not an automatically approved globally deployed style.
 
 ## One shared asset system for both games
 
@@ -36,7 +44,7 @@ Back faces are deterministic data driven from canonical name/codename, origin, a
 
 **Stable naming:** `identities/<signature>/poster-hero`, `poster-villain`, `story-<emotion>`, `portrait-<emotion>`, `model-hero-2x1`, `model-villain-2x1`; `henchmen/<signature>/poster`, `captain-portrait`, `model-2x1`; `lieutenants/<signature>/poster`, `portrait`, `model-2x1`. Use existing ArtImage and ArtJob provenance, not new generic URL placeholders.
 
-**Rollout:** Before hundreds of renders, approve the style on the six subjects. Then fully produce 3 linked character families (Cornerstone, Backdraft, Firewall) through card front/back, emotional story art, UI portraits and tactical standees, preserving physical identity across outputs. Complete 48 permanent hero/villain forms before mass-producing supporting cast. Include negative-story, hit, knockout and unlock cards in adversarial device tests. Review the actual rendered screenshots at phone/tablet/desktop/XL.
+**Rollout:** With the preferred checkpoint now selected, inspect the real eight-subject benchmark output and verify asset-specific continuity before bulk production. Then fully produce 3 linked character families (Cornerstone, Backdraft, Firewall) through card front/back, emotional story art, UI portraits and tactical standees, preserving physical identity across outputs. Complete 48 permanent hero/villain forms before mass-producing supporting cast. Include negative-story, hit, knockout and unlock cards in adversarial device tests. Review the actual rendered screenshots at phone/tablet/desktop/XL.
 
 ## Evidence boundaries
 
@@ -44,6 +52,6 @@ Back faces are deterministic data driven from canonical name/codename, origin, a
 - **Accepted ArtJob:** requires a numeric `subjects[].jobs[lane-key]` returned by `/api/art/enqueue`.
 - **Rendered:** completed job with valid ArtImage ID.
 - **Delivered:** final accessible image path, intended game surface linked, visual QA passed.
-- **Chosen house style:** a separate human editorial decision, never automatically made by average scores.
+- **Chosen house model:** Silas selected Unstable Diffusers on 2026-10-29 PT. This satisfies checkpoint preference selection only; asset quality, delivered-art coverage, accessibility and final game acceptance remain separate checks.
 
 The dedicated Capes submission workflow runs the approved ledger on reviewed `main` with the connected production secret. The tool that submits records accepted IDs in-place and deduplicates further runs. A PR containing YAML **is not** proof of ArtJobs, and a green CI run is not a self-hosted deployment.
