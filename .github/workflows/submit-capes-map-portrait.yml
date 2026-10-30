@@ -1,0 +1,79 @@
+name: Submit Capes map + portrait checkpoint extension
+
+# Follow-on 12 cells to complement, never resubmit, the original 36-cell bakeoff.
+on:
+  push:
+    branches: [main]
+    paths:
+      - projects/comet-city-academy/art/CAPES-WESTERN-STYLE-CHECK-MAP-PORTRAIT.yaml
+      - .github/workflows/submit-capes-map-portrait.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+# This ledger has its own cells and fingerprints: do not cancel the first batch.
+concurrency:
+  group: capes-map-portrait-submit
+  cancel-in-progress: false
+
+jobs:
+  submit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    env:
+      KR_BASE_URL: https://kind-robots.vercel.app
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install pyyaml pytest
+      - name: Validate six checkpoints and 12 private non-Flux subjects
+        run: python -m pytest tests/test_capes_style_coverage_extension.py -q
+      - name: Enqueue only missing map and portrait cells
+        env:
+          KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+        run: |
+          if [ -z "$KR_API_TOKEN" ]; then
+            echo "::warning::KR_API_TOKEN not available: 12 prompts staged, no ArtJobs accepted."
+            exit 0
+          fi
+          python scripts/enqueue_art_requests.py projects/comet-city-academy/art/CAPES-WESTERN-STYLE-CHECK-MAP-PORTRAIT.yaml --live
+          python scripts/enqueue_art_requests.py projects/comet-city-academy/art/CAPES-WESTERN-STYLE-CHECK-MAP-PORTRAIT.yaml --status
+      - name: Persist real ArtJob IDs without force-pushing
+        if: always()
+        run: |
+          set -euo pipefail
+          path=projects/comet-city-academy/art/CAPES-WESTERN-STYLE-CHECK-MAP-PORTRAIT.yaml
+          if git diff --quiet -- "$path"; then
+            echo "No new accepted map/portrait ArtJob IDs."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "$path"
+          git commit -m "art(capes): record accepted map/portrait comparison job IDs [skip ci]"
+          for attempt in 1 2 3 4 5; do
+            if git push origin HEAD:main; then exit 0; fi
+            git fetch origin main
+            git rebase origin/main || exit 1
+            sleep "$attempt"
+          done
+          echo "::error::Could not persist accepted comparison job IDs."
+          exit 1
+      - name: Report verified submitted cells
+        run: |
+          python - <<'PY'
+          import yaml
+          path="projects/comet-city-academy/art/CAPES-WESTERN-STYLE-CHECK-MAP-PORTRAIT.yaml"
+          d=yaml.safe_load(open(path))
+          count=sum(isinstance(s.get("jobs",{}).get(l["key"]), int) and
+                    s["jobs"][l["key"]]>0 for s in d["subjects"] for l in d["lanes"])
+          print(f"Capes map/portrait extension: {count}/12 actual ArtJob IDs recorded")
+          if count<12: print("::warning::Remaining cells are staged, not queued.")
+          PY
