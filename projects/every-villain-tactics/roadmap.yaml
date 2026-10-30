@@ -112,8 +112,8 @@ tasks:
   - id: t-004
     milestone: m2
     title: "Map designer with terrain, cover, spawns, objectives and testing"
-    status: claimed
-    updated: '2026-10-30T13:32:41Z'
+    status: done
+    updated: '2026-10-30T13:52:55Z'
     depends_on: t-002
     passes: 0
     stakes: reversible
@@ -149,14 +149,36 @@ tasks:
       verifyEveryVillainLackeys and verifyEveryVillainPicnic. Remaining t-004: destructible
       props, active hazard/secret effects, reinforcement waves, flexible victory criteria,
       saved/shared drafts. No art claimed.
+
+      2026-10-30: Merged kind_robots#4507 as f1171fad after 22/22 green checks; completes the
+      original t-004 scope. New stageRules.ts with live rules copied into the battle
+      (state.rules) and runtime field state (state.field); rule-less stages are byte-identical
+      to before. Breakable props: 1-3 HP all-round half/full cover, chipped by every shot at a
+      sheltering unit (hit or miss, incl. overwatch/AI), by quakes and by fire; at 0 the cover
+      is gone. Ticking hazards at round end: fire burns occupants and props and spreads one
+      tile per round to a tile telegraphed a round ahead (standing on it stamps it out, cap
+      8); water is live on even rounds; weak floors count down and collapse into impassable
+      rubble, shoving the occupant for 1 damage. Telegraphed reinforcement waves of canonical
+      one-hit crews (Warren Wreckers/Wombat Ronin/Licensed Legends) arrive on hatches marked a
+      round early; occupying a hatch seals it. Flexible victory: defeat all (waits for pending
+      waves), survive N, hold zone N, defeat named boss, evacuate N civilians (with
+      impossible-rescue defeat); turn limit and squad wipe still fail. Saves verify
+      rules/field/terrain/arrived reinforcements and reject forged props, floors, fires and
+      waves. Studio: 6 new brushes, victory/wave controls, presets Boiler Room Breach and Hold
+      the Fountain Steps (also in the front-menu One-Shot list), a local draft shelf (12) and
+      plain-JSON share codes imported via a strict allow-list. Fixed: Picnic Panic triggers
+      fired from Warren Wreckers/civilians in other stages made Quarry saves unloadable.
+      Verifier verifyEveryVillainStageRules (seeded tests for each feature, 8 save forgeries,
+      export/import of all presets). Server publishing stays with t-011; AI-behavior choice is
+      the existing rival line-up selector. No art claimed.
     owner: worker
     claimed_by: 2026-10-30T13:12:40Z-every-villain-tactics-m7r3
     claimed_at: '2026-10-30T13:32:41Z'
-    implementation_pr: 'silasfelinus/kind_robots#4498'
+    implementation_pr: 'silasfelinus/kind_robots#4507'
   - id: t-005
     milestone: m2
     title: "Opening/triggered/closing conversation tree and cinematic editor"
-    status: waiting
+    status: ready
     depends_on: t-004
     owner: null
     passes: 0
@@ -404,7 +426,7 @@ tasks:
   - id: t-018
     milestone: m3
     title: "One-hit henchmen and Picnic Panic one-shot encounter"
-    status: waiting
+    status: ready
     depends_on: [t-004, t-017]
     owner: null
     passes: 0
