@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-10-30T13:09:02.688445+00:00",
+  "generated_at": "2026-10-30T22:28:14.505518+00:00",
   "summary": {
     "status": "clean",
     "roadmap_errors": 0,
-    "roadmap_warnings": 58,
+    "roadmap_warnings": 68,
     "project_forward_drift": 0,
     "project_reverse_orphans": 0,
     "project_unresolved": null,
@@ -15,7 +15,7 @@
   "openai_scheduled_agent": {
     "overdue": true,
     "last_activity": "2026-10-25T01:09:44+00:00",
-    "hours_since": 131.99,
+    "hours_since": 141.31,
     "stale_hours": 6.0,
     "marker": "openai-scheduled-",
     "note": "Legacy git diagnostic only: OPENAI-SCHEDULED-HEARTBEAT.json and coordination markers do not determine ChatGPT scheduler health. Native ChatGPT task metadata is authoritative for scheduler liveness."
@@ -35,19 +35,19 @@
     "unresolved": null
   },
   "roadmap_audit": {
-    "generated_at": "2026-10-30T13:09:02.688451+00:00",
+    "generated_at": "2026-10-30T22:28:14.505524+00:00",
     "summary": {
       "roadmaps": 93,
       "active_projects": 30,
       "continuous_projects": 3,
       "tasks": 2806,
-      "ready": 229,
-      "waiting": 259,
+      "ready": 234,
+      "waiting": 249,
       "needs_human": 40,
-      "in_progress": 50,
-      "done": 2212,
+      "in_progress": 45,
+      "done": 2222,
       "errors": 0,
-      "warnings": 58,
+      "warnings": 68,
       "info": 125
     },
     "errors": [],
@@ -64,7 +64,7 @@
         "code": "STALE_IN_PROGRESS",
         "project": "animation-manager",
         "task": "t-022",
-        "message": "Task has remained claimed for 36 days."
+        "message": "Task has remained claimed for 37 days."
       },
       {
         "severity": "warning",
@@ -85,7 +85,7 @@
         "code": "STALE_IN_PROGRESS",
         "project": "coloring-book",
         "task": "t-058",
-        "message": "Task has remained claimed for 32 days."
+        "message": "Task has remained claimed for 33 days."
       },
       {
         "severity": "warning",
@@ -103,6 +103,27 @@
       },
       {
         "severity": "warning",
+        "code": "STALE_CLAIM_FIELDS",
+        "project": "comet-city-academy",
+        "task": "t-022",
+        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
+      },
+      {
+        "severity": "warning",
+        "code": "STALE_CLAIM_FIELDS",
+        "project": "comet-city-academy",
+        "task": "t-023",
+        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
+      },
+      {
+        "severity": "warning",
+        "code": "STALE_CLAIM_FIELDS",
+        "project": "comet-city-academy",
+        "task": "t-031",
+        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
+      },
+      {
+        "severity": "warning",
         "code": "POSSIBLY_UNNECESSARY_GATE",
         "project": "comic-film",
         "task": "t-009",
@@ -113,7 +134,7 @@
         "code": "STALE_IN_PROGRESS",
         "project": "conductor",
         "task": "t-203",
-        "message": "Task has remained claimed for 28 days."
+        "message": "Task has remained claimed for 29 days."
       },
       {
         "severity": "warning",
@@ -141,14 +162,14 @@
         "code": "STALE_IN_PROGRESS",
         "project": "emperor-of-dust",
         "task": "t-049",
-        "message": "Task has remained review for 5 days."
+        "message": "Task has remained review for 6 days."
       },
       {
         "severity": "warning",
         "code": "STALE_IN_PROGRESS",
         "project": "emperor-of-dust",
         "task": "t-050",
-        "message": "Task has remained review for 5 days."
+        "message": "Task has remained review for 6 days."
       },
       {
         "severity": "warning",
@@ -156,13 +177,6 @@
         "project": "emperor-of-dust",
         "task": "t-060",
         "message": "Task has remained review for 4 days."
-      },
-      {
-        "severity": "warning",
-        "code": "STALE_CLAIM_FIELDS",
-        "project": "every-villain-tactics",
-        "task": "t-004",
-        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
       },
       {
         "severity": "warning",
@@ -176,6 +190,20 @@
         "code": "STALE_CLAIM_FIELDS",
         "project": "game-of-captains",
         "task": "t-008",
+        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
+      },
+      {
+        "severity": "warning",
+        "code": "STALE_CLAIM_FIELDS",
+        "project": "game-of-captains",
+        "task": "t-009",
+        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
+      },
+      {
+        "severity": "warning",
+        "code": "STALE_CLAIM_FIELDS",
+        "project": "hybridizer",
+        "task": "t-007",
         "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
       },
       {
@@ -315,8 +343,29 @@
         "severity": "warning",
         "code": "STALE_IN_PROGRESS",
         "project": "memory-dungeon",
+        "task": "t-007",
+        "message": "Task has remained review for 3 days."
+      },
+      {
+        "severity": "warning",
+        "code": "STALE_IN_PROGRESS",
+        "project": "memory-dungeon",
         "task": "t-030",
         "message": "Task has remained review for 3 days."
+      },
+      {
+        "severity": "warning",
+        "code": "STALE_IN_PROGRESS",
+        "project": "memory-dungeon",
+        "task": "t-037",
+        "message": "Task has remained review for 3 days."
+      },
+      {
+        "severity": "warning",
+        "code": "STALE_IN_PROGRESS",
+        "project": "memory-dungeon",
+        "task": "t-039",
+        "message": "Task has remained claimed for 3 days."
       },
       {
         "severity": "warning",
@@ -355,9 +404,23 @@
       },
       {
         "severity": "warning",
+        "code": "STALE_IN_PROGRESS",
+        "project": "shifting-desks",
+        "task": "t-044",
+        "message": "Task has remained review for 3 days."
+      },
+      {
+        "severity": "warning",
+        "code": "STALE_IN_PROGRESS",
+        "project": "shifting-desks",
+        "task": "t-045",
+        "message": "Task has remained review for 3 days."
+      },
+      {
+        "severity": "warning",
         "code": "STALE_CLAIM_FIELDS",
         "project": "slime-city",
-        "task": "t-007",
+        "task": "t-004",
         "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
       },
       {
@@ -366,6 +429,13 @@
         "project": "slime-city",
         "task": "t-014",
         "message": "Reversible software task is human-gated without an obvious hard-gate reason in its note."
+      },
+      {
+        "severity": "warning",
+        "code": "STALE_CLAIM_FIELDS",
+        "project": "slime-city",
+        "task": "t-017",
+        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
       },
       {
         "severity": "warning",
@@ -442,14 +512,14 @@
         "code": "STALE_IN_PROGRESS",
         "project": "zuzu-shifting-lands",
         "task": "t-036",
-        "message": "Task has remained claimed for 9 days."
+        "message": "Task has remained claimed for 10 days."
       },
       {
         "severity": "warning",
         "code": "STALE_IN_PROGRESS",
         "project": "zuzu-shifting-lands",
         "task": "t-043",
-        "message": "Task has remained review for 3 days."
+        "message": "Task has remained review for 4 days."
       },
       {
         "severity": "warning",
