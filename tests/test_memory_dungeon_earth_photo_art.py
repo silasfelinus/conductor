@@ -56,13 +56,20 @@ class EarthPhotoArtTests(unittest.TestCase):
         for photo_id in ("earth-01", "earth-02"):
             self.assertEqual(rows[photo_id]["status"], "pending")
             self.assertIs(rows[photo_id]["force"], True)
-            self.assertNotIn("last_art_job_id", rows[photo_id])
+            # Auto Art Generate checkpoints the fresh replacement ArtJob here; until
+            # then the row is still awaiting one. Either way it is never a bare DONE.
+            job_id = rows[photo_id].get("last_art_job_id")
+            if job_id is not None:
+                self.assertIsInstance(job_id, int)
+                self.assertGreater(job_id, 0)
 
     def test_receipt_free_completed_photo_cannot_pass_preflight(self):
         data = yaml.safe_load(LEDGER.read_text())
         with tempfile.TemporaryDirectory() as temp:
             path = Path(temp) / "requests.yaml"
             row = data["requests"][0]
+            # Exercise the receipt-free path; the live row may already hold a real ArtJob ID.
+            row.pop("last_art_job_id", None)
             row["status"] = "done"
             row.pop("force", None)
             path.write_text(yaml.safe_dump(data))
