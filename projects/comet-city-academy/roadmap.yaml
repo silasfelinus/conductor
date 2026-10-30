@@ -838,8 +838,8 @@ tasks:
   - id: t-031
     milestone: m3
     title: "HIGH PRIORITY · Begin private Unstable Diffusers production for canonical Prom/Tactics cast"
-    status: claimed
-    updated: '2026-10-30T12:30:31Z'
+    status: ready
+    updated: '2026-10-30T13:54:35Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -848,6 +848,22 @@ tasks:
       Staged 14 private canon-safe Unstable Diffusers production requests plus tests on worker/comet-city-academy-t-031-unstable-production-b4q7. Existing benchmark jobs 50509, 50515 and 50530 are referenced but deliberately not resubmitted. Pending CI, PR merge, then ArtJob acceptance.
 
       Triage 2026-10-30: conductor #6804 merged, but only 4 of 14 production cells were accepted and rendered (ArtJobs 50549-50552 -> ArtImages 257792-257795, all four standees). The other 10 posters/portraits never got job IDs, and the ledger still says awaiting-submission. Next: find why the submit run skipped them (Auto Art Generate log / art_queue_health), submit them without resubmitting 50549-50552, record IDs, then export the delivered WebPs.
+
+      2026-10-30 art refill: root cause for the 10 Unstable production cells with no job ids.
+      enqueue_art_requests.py --live skips contract-rejected cells, and these used
+      'poster'/'card composition' (format-vocabulary) plus 'no text'/'without words'/'not a
+      second person' (negation mirror). Conductor #6825 (9017e41) rewrote only those clauses;
+      the 10 cells are now jobs 50852-50861, and 50549-50552 were not resubmitted. The same PR
+      queued RUNTIME-REFILL-ROUND-1 (148 Krea 2 cells: 92 identity hero/villain splashes, 30
+      incident plates, 24 returns/*, the endings the-shield-changes-hands and the-transmitter-
+      goes-dark; jobs 50716-51782; 25 kr incident prompts carrying 'no words' were repaired,
+      and scarf/lightning-scar/logo cues replaced). It also queued FRANCHISE-SAFE-RERENDERS-
+      ROUND-1 (jobs 50711-50715) for the 5 keys held at export: mutant-air/student, mutant-
+      genius/hero, encounters/the-class-list-has-two-endings, psychic-
+      discipline/outcomes/villain, tech-genius/outcomes/student (back to canon Lionel Marsh).
+      The superseded renders are marked REJECTED in their ledgers. Next: review the Unstable
+      renders, export with scripts/export_round_art.py --max-edge, and cross-check promArt
+      keys. The t-007 export note still applies. Not done until images are in the game.
     owner: worker
     claimed_by: 2026-10-30T12:40:00Z-artfill-r4q8
     claimed_at: '2026-10-30T12:30:31Z'
