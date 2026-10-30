@@ -54,6 +54,19 @@ Every original/twisted pair must finish with **at least one irreversible or dura
 
 Keep existing serialized identifiers including `char-possible-future` for migration only; that identifier represents recovered witness testimony about the crossing, **not** a promise of certain death or a free return from it. No unseen world is shown on the player map. Gameplay stages for e03–e06 remain to be implemented; these are active authoring and reducer contracts, not claims of shipped end-to-end play.
 
+## QA acceptance matrix for the first conditional pair
+
+The first new scenes must run all **nine e04 × e05 paths**. For each of e04's **open / seal / divert** gate decisions, test all three Scylla responses **run again / stay / tell Char**. The test must establish, before allowing e06 completion:
+
+- e04 saves the actually chosen fate and the disclosed cost; the *present* Char is not overwritten by a later rendering of younger Char
+- e05 begins at the pre-departure palace **for each branch**, with the past Char unaware of the future; Char's dialogue changes after Scylla shares it
+- e06 preserves the same palace geography while changing traversal and witness stakes based on both decisions
+- the branch survives save/load, provides a fair noncombat route and a genuine pair-closing choice, and informs a later callback; no outcome is a dead end
+- historical saves without an e04 choice remain **unresolved**, never defaulting to “Char died”
+- the e04 risky gate advertises the anchor peril before selection, with its final consequence depicted in the present rather than revealed retroactively
+
+This is a planned source and authored-playtest matrix, **not** a claim that the e03–e06 maps currently render. Once those maps exist, run the same branch checks with real browser interactions and delivered illustrations.
+
 ## What is authored versus what is playable
 
 As of this direction, the application holds a sixteen-experience **campaign metadata contract**, not sixteen completed maps. Briar and Dark Briar have map/dungeon gameplay; e07 Hoshimori has a 64-site authored village and nine Red Oven rooms but is gated behind unimplemented e03–e06. The Scylla and Morrow pair entries are currently planned story/route contracts, **not finished, reachable 64-site maps**. e08 has only a design brief, no full implemented demonic yōkai world or verified ArtJobs. Do not claim eight playable overworlds.
