@@ -352,6 +352,46 @@ jobs:
             fi
           fi
 
+      # Eight Hoshimori concept proofs have durable receipts but still require
+      # exact ArtJob identity, ArtImage and fresh media HEAD evidence.
+      # This is not a visual-quality or map-grid geometry acceptance gate.
+      - name: Audit Hoshimori warm style render and media delivery
+        id: memory_dungeon_hoshimori_style_delivery
+        if: ${{ steps.krhealth.outputs.up == 'true' && steps.memory_dungeon_hoshimori_style_receipts.outcome == 'success' }}
+        continue-on-error: true
+        working-directory: conductor
+        env:
+          KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+          KR_MEDIA_ORIGIN: https://media.acrocatranch.com
+        run: |
+          python scripts/audit_memory_dungeon_hoshimori_style.py --live \
+            --report projects/memory-dungeon/art/HOSHIMORI-WARM-STYLE-STATUS.json
+
+      # Checkpoint before the long render consumer; no resubmission or
+      # promotion follows from a DONE ArtJob or a successful HEAD alone.
+      - name: Checkpoint Hoshimori style delivery status before rendering
+        if: ${{ steps.memory_dungeon_hoshimori_style_delivery.outcome == 'success' }}
+        working-directory: conductor
+        run: |
+          git config user.name "conductor-bot"
+          git config user.email "conductor-bot@users.noreply.github.com"
+          git add projects/memory-dungeon/art/HOSHIMORI-WARM-STYLE-STATUS.json
+          if git diff --staged --quiet; then
+            echo "Hoshimori style delivery status unchanged."
+          else
+            git commit -m "chore: checkpoint Hoshimori style media status [skip ci]"
+            pushed=false
+            for attempt in 1 2 3 4 5; do
+              if git push origin HEAD:main; then pushed=true; break; fi
+              echo "Hoshimori style status checkpoint push race (attempt $attempt)."
+              git pull --rebase --autostash origin main || exit 1
+            done
+            if [ "$pushed" != true ]; then
+              echo "::error::Could not persist Hoshimori style delivery evidence."
+              exit 1
+            fi
+          fi
+
       - name: Repair and requeue failed Kind Robots ArtJobs
         id: repair_failed
         if: ${{ steps.boxhealth.outputs.up == 'true' && steps.krhealth.outputs.up == 'true' }}

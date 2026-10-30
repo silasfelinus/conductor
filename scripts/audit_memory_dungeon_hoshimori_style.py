@@ -7,6 +7,7 @@ Keep these eight private style samples distinct from the historical 752-job set.
 from __future__ import annotations
 
 import argparse
+import json
 from pathlib import Path
 
 import yaml
@@ -76,15 +77,61 @@ def validate(data: dict, *, require_jobs: bool = False) -> dict[str, int | None]
     return receipts
 
 
+
+def audit_delivery(data: dict, jobs: list[dict], media_probe=None) -> dict:
+    """Prove each receipt's live ArtJob identity, ArtImage and fresh media HEAD."""
+    from audit_memory_dungeon_art_delivery import audit_jobs
+
+    receipts = [
+        {"id": PREFIX + slug, "jobId": job_id,
+         "imagePath": f"{DEST}{slug}.webp"}
+        for slug, job_id in validate(data, require_jobs=True).items()
+    ]
+    if media_probe is None:
+        return audit_jobs(receipts, jobs)
+    return audit_jobs(receipts, jobs, media_probe)
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--require-jobs", action="store_true")
+    parser.add_argument("--live", action="store_true",
+                        help="read existing ArtJobs and HEAD-check their exact media URLs")
+    parser.add_argument("--report", type=Path,
+                        help="write machine-readable evidence (live mode only)")
+    parser.add_argument("--require-delivered", action="store_true",
+                        help="fail until all eight ArtImages and fresh media HEADs are proven")
     args = parser.parse_args()
-    receipts = validate(yaml.safe_load(LEDGER.read_text()), require_jobs=args.require_jobs)
-    print(f"Hoshimori warm style: {sum(v is not None for v in receipts.values())}/8 durable ArtJob receipts")
-    for slug, job in receipts.items():
-        print(f"  {slug}: {job if job is not None else 'PENDING'}")
-    return 0
+    if (args.report or args.require_delivered) and not args.live:
+        parser.error("--report and --require-delivered require --live")
+    try:
+        data = yaml.safe_load(LEDGER.read_text(encoding="utf-8")) or {}
+        receipts = validate(data, require_jobs=args.require_jobs or args.live)
+        if args.live:
+            import consume_art_queue as consumer
+            from reconcile_memory_dungeon_art_jobs import server_jobs
+
+            if not consumer.KR_API_TOKEN:
+                raise RuntimeError("KR_API_TOKEN unavailable; no live delivery claim")
+            report = audit_delivery(data, server_jobs())
+            if args.report:
+                args.report.parent.mkdir(parents=True, exist_ok=True)
+                args.report.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
+            print(json.dumps({key: value for key, value in report.items()
+                              if key != "results"}, sort_keys=True))
+            for row in report["results"]:
+                print(f"  {row['status']}: {row['id']} (ArtJob {row['jobId']})")
+            if args.require_delivered and report["delivered"] != len(CATEGORIES):
+                return 2
+        else:
+            print(f"Hoshimori warm style: {sum(v is not None for v in receipts.values())}/8 durable ArtJob receipts")
+            for slug, job in receipts.items():
+                print(f"  {slug}: {job if job is not None else 'PENDING'}")
+            print("Submission contract verified; live render/media QA not checked.")
+        return 0
+    except (OSError, yaml.YAMLError, ValueError, RuntimeError) as error:
+        print(f"::error::Hoshimori style audit blocked: {error}")
+        return 1
 
 
 if __name__ == "__main__":
