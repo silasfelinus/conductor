@@ -118,7 +118,7 @@ tasks:
   - id: t-003
     milestone: m1
     title: "Experiment with flag, monster and rout objectives across prototype boards"
-    status: claimed
+    status: done
     depends_on: [t-002, t-016]
     owner: worker
     passes: 0
@@ -131,9 +131,25 @@ tasks:
       Test victory ties, early board emptiness, carrier rules, target
       counterplay, score pacing and accessibility. Do not lock this
       into all modes without evidence or a human design verdict.
+
+      DONE 2026-10-30: Kind Robots PR #4520 (3688a309) merged, all 21 checks green. Six
+      reversible rule variants, all OFF by default and selectable in the /admin/slime-city lab
+      (RULE VARIANTS toggles, aria-pressed, restart on the same seed): GIANT MONSTER (neutral
+      centre beast for all three boards; blocks its square, swats the weakest neighbour,
+      damage spells can target it; killing blow wins, ties by final-exchange then match
+      damage), lane ROUT (26/18 KOs), LANE MOMENTUM (scoring drought makes upfield runners
+      surge a square), SUDDEN DEATH extra time, YARDAGE TIEBREAK and a BLOODRUSH initiative
+      swap. CPU hunts the monster in BLACKOUT and finishes it with spells. Replays with
+      variants are tested (verifySlimeCityCrews). Measured effects (10 seeds, conductor
+      PLAYTEST-COMPARISON 'After rebalance'): MEATBALL momentum+sudden death+tiebreak draws 44
+      -> 1.3%, seats 49/49; BLOODRUSH momentum draws 17 -> 3%, seats 50/46; monster ends 69%
+      of BLACKOUT matches and halves length; rout widens lane crew spread to 9-84% (not
+      recommended); rush swap and BLOODRUSH monster worsen the seat split (34/53, 25/64).
+      Recommendations recorded; final rules stay with Silas in t-013.
     claimed_by: 2026-10-30T131200Z-slime-city-t003-27154
     claimed_at: '2026-10-30T13:09:21Z'
-    updated: '2026-10-30T13:09:21Z'
+    updated: '2026-10-30T21:12:17Z'
+    implementation_pr: 'silasfelinus/kind_robots#4520'
   - id: t-004
     milestone: m2
     title: "Expand five mana colors into six distinct authored crews and special decks"
