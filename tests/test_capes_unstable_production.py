@@ -65,7 +65,14 @@ def test_private_canonical_house_checkpoint_and_no_duplicate_benchmarks():
         expected_prefix = f"comet-city-academy/identities/{signature}/"
         assert subject["asset"].startswith(expected_prefix)
         actual[signature].add(subject["asset"][len(expected_prefix):])
-        assert not subject.get("jobs"), "New production cells must not carry fictional IDs"
+        jobs = subject.get("jobs") or {}
+        assert set(jobs).issubset({"unstable-production"})
+        assert all(
+            isinstance(job_id, int)
+            and job_id > 0
+            and job_id not in data["benchmark_reference_jobs"].values()
+            for job_id in jobs.values()
+        )
         assert subject["prompt_prose"]
         assert subject["negative"]
         request = build_request(data, render_lane, subject)
