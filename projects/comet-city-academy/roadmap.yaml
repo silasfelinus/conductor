@@ -223,7 +223,7 @@ tasks:
   - id: t-015
     milestone: m4
     title: "Verify revised seven-day slice against thirty-day contracts at all widths"
-    status: waiting
+    status: ready
     depends_on: t-014
     owner: null
     passes: 0
@@ -235,6 +235,9 @@ tasks:
       consent/triad conditions, autosave/load/migration and different villains.
       Full from-start 7-day action trace plus 390/768/1440 screenshot
       verification: main image and primary action visible; no shell scroll.
+
+      2026-10-30: promoted to ready because its dependency t-014 closed (kind_robots#4504).
+    updated: '2026-10-30T13:38:01Z'
   - id: t-016
     milestone: m2
     title: "Build playable student-hero-villain evolution, betrayal and accomplice state"
