@@ -34,7 +34,9 @@ def test_capes_style_check_six_by_six_and_engine_formulas():
     for subject in subjects:
         assert subject["asset"].startswith("comet-city-academy/style-check-v1/")
         assert "prompt_prose" in subject and "prompt_tags" in subject
-        assert subject.get("jobs") == {}
+        accepted = subject.get("jobs") or {}
+        assert set(accepted).issubset({lane["key"] for lane in lanes})
+        assert all(isinstance(job_id, int) and job_id > 0 for job_id in accepted.values())
         for lane in lanes:
             request = build_request(data, lane, subject)
             assert request["projectSlug"] == "comet-city-academy"
