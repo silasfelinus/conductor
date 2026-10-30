@@ -12609,3 +12609,7 @@ Worker pattern: good test depth and honest "procedural shapes, not painted art" 
   - #4411 `claude/forge-space-couch-act-three`: Act III (9 missions) conflicts in `pages/play/game-of-captains.vue`.
   - #4413 / #4414 (`t023` / `t024` task branches): conflict in `game-of-captains.vue` (+ a workflow file for t023). These back live tasks game-of-captains t-023/t-024; the owning Worker should rebase.
 - No Silas action needed except confirming #4412's branch deletion.
+
+## 2026-10-30 — Agent (reviewer): #6866 merged, #6865 held
+- #6866 (game-of-captains onboarding art ledger): single private YAML, 22 unique subject keys, all checks green. Squash-merged (46cc1d3). Prompts only; ArtJob/ArtImage IDs still need verification after Auto Art Generate runs.
+- #6865 (memory-dungeon 12-world canon + roadmap compaction): 27/27 checks green and archive SHA matches, but branch is behind main and a trial merge conflicts in CONTROL.md and memory-dungeon/roadmap.yaml. Not merged; commented. Worker must rebase and re-archive from the current main roadmap (not the stale bb0bde5c snapshot) so newer task state (e.g. t-043 done) isn't lost.
