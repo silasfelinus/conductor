@@ -650,3 +650,15 @@ Icon, card and hero are committed in `projects/images/` (2026-10-24 PT). Per Sil
 - `every-villain-tactics-hero.webp` (1280×720): Panoramic Comet City superhero high school rooftop and prom-lit skyline as an isometric collectible-card tactical battlefield, opposing character standees behind cover, cinematic lighting and strong depth, open dark edges for UI, bare unlettered surfaces.
 
 Prompts only. No rendered images or ArtJob completions are claimed; verify generated image files and final URLs before declaring coverage.
+
+## Slime City — original CCG project identity (requested 2026-10-29 PT)
+
+**Requests only, not submitted ArtJobs, completed assets or public marketing.** High-end, original painterly comic-dystopian fantasy, riotously colored acid-neon, grungy infrastructure, brutal slapstick and readable creature silhouettes. Unstable Diffusers may be evaluated as a visual checkpoint; keep final model/style selection test-driven. No titles or logos baked into illustration.
+- `slime-city-icon.webp` (256×256): A single emerald cybernetic ogre hand gripping a five-sided gladiatorial shield with violet, red, blue and gold circuitry, toxic-neon outline, distressed metal, square high-legibility emblem, no lettering.
+- `slime-city-card.webp` (512×768): Poster-size roaring cybernetic ogre champion in a shabby iridescent pentagonal coliseum, goblin announcer and vampire audience, lime-green armored jaw and gold scrapyard neon, richly illustrated collectible game box art, vertical crop and blank title-safe region.
+- `slime-city-hero.webp` (1280×720): Panoramic toxic-colored fantasy dystopia filled with tilted megatowers, junk-tech ogres, vampire gangs, goblin billboards and a giant pentagonal arena glowing over a toxic canal, exuberant cinematic painterly action, open dark corners for UI chrome, no text.
+- `slime-city-arena.webp` (1280×720): Top-down readable irregular Cairo-pentagon tiling of an immense death pit with two rival bases, a banner lane, off-axis giant monster pit, five-edge markings and color-coded lighting; no fake 6-sided hexagons, no printed labels.
+- `slime-city-factions.webp` (1280×720): Five distinct illustrated champions assembled in separate color environments: red demolition chaos punk, blue sewer-trap witch, purple vampiric rat-swarm tactician, green cybernetic ogre smith, gold corpse-market magnate; recognizable original character silhouettes, strong adult comic color and no text.
+- `slime-city-beast.webp` (1024×1024): Gigantic slobbering five-limbed sewer behemoth with industrial scaffolding fused into its back, ludicrous arena menace, detailed multidirectional anatomy and strong silhouette, painterly comedy-horror, no text.
+
+Verify provenance of finished generated assets before claiming coverage; keep prompts, checkpoint, seed, ArtJob and ArtImage references.
