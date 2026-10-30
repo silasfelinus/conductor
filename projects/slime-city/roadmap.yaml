@@ -81,7 +81,7 @@ tasks:
   - id: t-002
     milestone: m1
     title: "Harden square movement, fog-of-war, action costs and three cadences"
-    status: claimed
+    status: done
     depends_on: t-001
     owner: worker
     passes: 0
@@ -95,9 +95,26 @@ tasks:
       fairness and ghost/pile-up exploits, seeded command replays.
       Remove old pentagon/facing/twist logic everywhere in this game.
       Honest proof-of-concept limitations belong in the UI tutorial.
+
+      MERGED 2026-10-30: Kind Robots PR #4496 (f5269545), all 23 checks green. The CPU
+      (utils/slimeCity/cpu.ts) decides only from the redacted observe() view and plays
+      creature, spell, trap and equipment cards with its own mana. It respects AP and runs,
+      escorts and hunts the flag in BLACKOUT, defends lanes, and banks for BLOODRUSH waves.
+      BLACKOUT: 20-round limit with HP tiebreak; end-of-round flag pickup; carrier walks 1 AP;
+      a fallen carrier drops the flag in place; back-column return; seeded armies and flag
+      square; hidden fighters fight back; alternating initiative. Lanes: front-to-back flow
+      plus sidesteps (no pile-ups); 3+ AP sprint; field cap 6; one armed trap; each card once
+      per round; MEATBALL 30 rounds. BLOODRUSH: fixed 1 s ticks, banked mana, board beat every
+      2 ticks, 4-tick card rest, 150 ticks; pause/resume and between-tick plays tested through
+      the real Pinia store with mock timers. Also: command record + replayMatch, 60-line log,
+      per-match seeds with SAME SEED, hidden-info leak tests (CPU view byte-identical under
+      hidden perturbation, no enemy secrets in the log), and per-format HOW TO PLAY panels
+      with prototype limits. Pentagon/facing code is absent and the test asserts it. Tests:
+      verifySlimeCityLab + verifySlimeCityStore.
     claimed_by: 2026-10-30T113900Z-slime-city-t002-7c3e
     claimed_at: '2026-10-30T11:37:57Z'
-    updated: '2026-10-30T11:37:57Z'
+    updated: '2026-10-30T12:40:13Z'
+    implementation_pr: 'silasfelinus/kind_robots#4496'
   - id: t-003
     milestone: m1
     title: "Experiment with flag, monster and rout objectives across prototype boards"
