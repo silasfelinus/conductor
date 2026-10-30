@@ -50,6 +50,32 @@ class EarthPhotoArtTests(unittest.TestCase):
             self.assertTrue(any("duplicate photograph" in e for e in errors))
             self.assertTrue(any("Missing earth-02" in e for e in errors))
 
+    def test_preexisting_unattributed_photos_require_new_production_jobs(self):
+        data = yaml.safe_load(LEDGER.read_text())
+        rows = {row["source_photo_id"]: row for row in data["requests"]}
+        for photo_id in ("earth-01", "earth-02"):
+            self.assertEqual(rows[photo_id]["status"], "pending")
+            self.assertIs(rows[photo_id]["force"], True)
+            self.assertNotIn("last_art_job_id", rows[photo_id])
+
+    def test_receipt_free_completed_photo_cannot_pass_preflight(self):
+        data = yaml.safe_load(LEDGER.read_text())
+        with tempfile.TemporaryDirectory() as temp:
+            path = Path(temp) / "requests.yaml"
+            row = data["requests"][0]
+            row["status"] = "done"
+            row.pop("force", None)
+            path.write_text(yaml.safe_dump(data))
+            errors = inspect(path)
+            self.assertTrue(any("marked complete" in error for error in errors))
+            self.assertTrue(any("force a traceable render" in error for error in errors))
+            row["force"] = True
+            path.write_text(yaml.safe_dump(data))
+            self.assertTrue(any("marked complete" in error for error in inspect(path)))
+            row["status"] = "pending"
+            path.write_text(yaml.safe_dump(data))
+            self.assertEqual(inspect(path), [])
+
     def test_workflow_submits_and_checkpoints_earth_photo_receipts(self):
         workflow = yaml.safe_load((ROOT / ".github/workflows/auto-art-generate.yml").read_text())
         steps = workflow["jobs"]["generate"]["steps"]
