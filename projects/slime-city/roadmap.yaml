@@ -68,32 +68,20 @@ tasks:
   - id: t-001
     milestone: m1
     title: "Build three playable square-grid prototypes, teams, city and special cards"
-    status: review
-    owner: worker
+    status: done
     passes: 0
     stakes: reversible
-    note: >-
-      SILAS 2026-10-30 PT overrides earlier pentagonal rules. Create a
-      discoverable ADMIN-only /admin/slime-city single-screen comparison
-      console with 8x8 hidden-army BLACKOUT (Stratego-like), 12x6
-      turn-based lane MEATBALL and 14x6 real-time BLOODRUSH. Orthogonal
-      square movement, simple adjacent simultaneous combat, mana,
-      concealed units, card targeting and win paths. Six named teams
-      including gene-catgirls, punk bloodfairies and cyber-ogres,
-      seven illustrated/stylized districts, creature/spell/trap/
-      equipment examples. Implement testable pure TypeScript engine,
-      Pinia lab state and timer; no reward persistence or public launch.
-      Do not call CSS art generated artwork. Seeded tests, TS checks
-      and phone/tablet/desktop visual QA required before marking ready
-      for final subjective feedback. Shared external-facing release
-      remains gated.
+    note: |-
+      SILAS 2026-10-30 PT overrides earlier pentagonal rules. Create a discoverable ADMIN-only /admin/slime-city single-screen comparison console with 8x8 hidden-army BLACKOUT (Stratego-like), 12x6 turn-based lane MEATBALL and 14x6 real-time BLOODRUSH. Orthogonal square movement, simple adjacent simultaneous combat, mana, concealed units, card targeting and win paths. Six named teams including gene-catgirls, punk bloodfairies and cyber-ogres, seven illustrated/stylized districts, creature/spell/trap/ equipment examples. Implement testable pure TypeScript engine, Pinia lab state and timer; no reward persistence or public launch. Do not call CSS art generated artwork. Seeded tests, TS checks and phone/tablet/desktop visual QA required before marking ready for final subjective feedback. Shared external-facing release remains gated.
+
+      MERGED: Kind Robots PR #4478 (361faeecc3998e73ef44c22299623e05901540e5) implemented the private /admin/slime-city lab with Blackout 8x8, Meatball 12x6 and Bloodrush 14x6, six teams, thirty-six prototype cards, seven district selections, square-grid simulation, admin navigation and repeatable sample match controls. All 23 app checks passed, including TypeScript, Nuxt production build, four contract shards and the new Slime City deterministic contract. Conductor PR #6809 merged the superseding design, roadmap, CONTROL direction and square-grid art prompts after all 26 checks completed. This completes the implementation slice, NOT generated art, actual campaign/economy or public launch. The self-hosted site has no PR preview or automatic deploy; rendered 390/768/1440 screenshot acceptance is still outstanding and belongs to t-016, with additional actual art provenance in t-017. Neither is counted as delivered. No secrets, production economy or outward-facing publishing were touched.
     claimed_by: 2026-10-30T081006Z-slime-city-t001-4d81
     claimed_at: '2026-10-30T08:10:06Z'
-    updated: '2026-10-30T08:30:19Z'
+    updated: '2026-10-30T08:47:33Z'
   - id: t-002
     milestone: m1
     title: "Harden square movement, fog-of-war, action costs and three cadences"
-    status: waiting
+    status: ready
     depends_on: t-001
     owner: null
     passes: 0
@@ -175,7 +163,7 @@ tasks:
   - id: t-007
     milestone: m3
     title: "Expand seven-district city map into navigable authored overworld"
-    status: waiting
+    status: ready
     depends_on: t-001
     owner: null
     passes: 0
@@ -315,7 +303,7 @@ tasks:
   - id: t-016
     milestone: m1
     title: "Adversarially playtest and compare the three square-grid rule variants"
-    status: waiting
+    status: ready
     depends_on: t-001
     owner: null
     passes: 0
@@ -331,7 +319,7 @@ tasks:
   - id: t-017
     milestone: m2
     title: "Queue and verify distinct art for teams, districts and specials"
-    status: waiting
+    status: ready
     depends_on: t-001
     owner: null
     passes: 0
