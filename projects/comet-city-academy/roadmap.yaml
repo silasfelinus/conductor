@@ -627,12 +627,12 @@ tasks:
       [... truncated; read the full issue at https://github.com/silasfelinus/kind_robots/issues/4403]
   - id: t-022
     title: "Prom of Doom: rewrite nighttime patrol as player-led missions with authored secrets and roster growth"
-    status: claimed
+    status: ready
     stakes: reversible
     owner: worker
     passes: 0
     source_issue: "silasfelinus/kind_robots#4402"
-    updated: '2026-10-30T13:17:42Z'
+    updated: '2026-10-30T13:42:33Z'
     note: |-
       FROM GITHUB ISSUE silasfelinus/kind_robots#4402 (https://github.com/silasfelinus/kind_robots/issues/4402), opened by @silasfelinus on 2026-10-28. Imported by scripts/sync_github_issues.py. Reference the issue in the implementing PR (`Closes silasfelinus/kind_robots#4402`) so it closes on merge; the bridge closes it otherwise once this task is done.
 
@@ -658,8 +658,27 @@ tasks:
          Roster, injury, villain pressure and school consequences
 
       [... truncated; read the full issue at https://github.com/silasfelinus/kind_robots/issues/4402]
+
+      2026-10-30 progress (kind_robots#4506, merged 2acbaee0): the three commissioned examples
+      now ship as once-per-term district patrol stories. The Frog Under the Clocktower runs on
+      the academy roofs, days 6-11. Grandma's Last Stop runs in Transit Narrows, days 11-20.
+      The Rooftop With Two Shadows runs in the Narrows, days 21-28. Each has 3-4 approaches
+      graded success/mixed/failure (power match, standing, hostile betrayer), a non-dead-end
+      refusal and an earned secret (daytime lab or frog-serum clue; Mara plus an empath, or an
+      earlier rider patrol; a reconciled betrayer). Each also has a next-morning callback and
+      later-night dispatch modifiers. The roof split can injure the teammate you send. Story
+      saves are validated. Verified rather than built: 22 hidden two-person mission matchups
+      (missionTeams.ts; shown only once the exact team is assembled) and 7 multi-day threads
+      (4 existing clue threads plus 3 story threads). verifyCometPatrolStories plays 12 seeds
+      from New Game to the prom finale: average calls 1.7/3.5/5.0 early/mid/late, the rookie
+      starts alone, injuries and unstaffed or failed calls occur, no consecutive-night
+      repeats, and saves round-trip every night. REMAINING for #4402 (left open): 36 distinct
+      case families, the full mission-offer schema (urgency, faction, interference, callback
+      IDs) and five-state results for every board mission. Playtest notes: the Clocktower
+      starts on day 6 so the day-4/5 academy rotation contract stays.
     claimed_by: 2026-10-30T12:46:10Z-prom-console-q7m3
     claimed_at: '2026-10-30T13:17:42Z'
+    implementation_pr: 'silasfelinus/kind_robots#4506'
   - id: t-023
     title: "Prom of Doom: ingest Oct 29 larger-than-life NPCs and SPECIES henchmen with real art"
     status: claimed
