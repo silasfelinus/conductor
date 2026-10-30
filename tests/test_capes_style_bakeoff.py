@@ -11,7 +11,7 @@ LEDGER = Path(__file__).resolve().parents[1] / "projects/comet-city-academy/art/
 def test_capes_style_check_six_by_six_and_engine_formulas():
     data = yaml.safe_load(LEDGER.read_text())
     lanes, subjects = data["lanes"], data["subjects"]
-    assert data["auto_submit"] is True
+    assert data["auto_submit"] is False
     assert data["is_public"] is False
     assert data["priority"] == 900
     assert len(subjects) == len(lanes) == 6

@@ -4,7 +4,7 @@
 
 ## Production gate first: 36 checkpoint-comparison ArtJobs
 
-Source-of-truth request ledger: `art/CAPES-WESTERN-STYLE-CHECK-ROUND-1.yaml`. It is a **6 subjects × 6 checkpoint lanes** experiment with six fixed seeds, one per subject, the exact same spatial scene for each model, different prompt grammar tuned to the checkpoint. **Queue priority 900**, private ArtJobs, `auto_submit: true`. The generic Flux, Flux2, Pony and furry-first engines are excluded. **Krea 2 is explicitly required** even though its Qwen lineage differs from SDXL/Illustrious. No other Flux model is used.
+Source-of-truth request ledger: `art/CAPES-WESTERN-STYLE-CHECK-ROUND-1.yaml`. It is a **6 subjects × 6 checkpoint lanes** experiment with six fixed seeds, one per subject, the exact same spatial scene for each model, different prompt grammar tuned to the checkpoint. **Queue priority 900**, private ArtJobs via the dedicated main-only submission workflow; `auto_submit: false` avoids colliding with the general Art Generate sweep. The generic Flux, Flux2, Pony and furry-first engines are excluded. **Krea 2 is explicitly required** even though its Qwen lineage differs from SDXL/Illustrious. No other Flux model is used.
 
 **Lanes**
 1. **Krea 2:** concrete spatial scene prose, caption-friendly, no unexplained abstractions or metaphor-only art direction.
@@ -46,4 +46,4 @@ Back faces are deterministic data driven from canonical name/codename, origin, a
 - **Delivered:** final accessible image path, intended game surface linked, visual QA passed.
 - **Chosen house style:** a separate human editorial decision, never automatically made by average scores.
 
-The Conductor auto-art-generate workflow runs the opted-in ledger on reviewed `main` with the connected production secret. The tool that submits records accepted IDs in-place and deduplicates further runs. A PR containing YAML **is not** proof of ArtJobs, and a green CI run is not a self-hosted deployment.
+The dedicated Capes submission workflow runs the approved ledger on reviewed `main` with the connected production secret. The tool that submits records accepted IDs in-place and deduplicates further runs. A PR containing YAML **is not** proof of ArtJobs, and a green CI run is not a self-hosted deployment.

@@ -14,16 +14,31 @@ permissions:
   contents: write
 
 concurrency:
-  group: auto-art-generate
+  group: capes-western-style-submission
   cancel-in-progress: false
 
 jobs:
   submit:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 180
     env:
       KR_BASE_URL: https://kindrobots.org
     steps:
+      # Initial sweep run 40976134477 read this manifest with auto_submit enabled. Let it finish and persist its ArtJob IDs
+      # before the dedicated submitter reads current main, avoiding repeats.
+      - name: Wait for the original pre-fix art sweep to finish
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          for attempt in $(seq 1 150); do
+            status="$(gh api -X GET repos/${{ github.repository }}/actions/runs/40976134477 --jq '.status')"
+            if [ "$status" = "completed" ]; then exit 0; fi
+            echo "General art sweep in progress; waiting to reuse any accepted Capes ArtJob IDs."
+            sleep 60
+          done
+          echo "::error::General art sweep did not finish; aborting to avoid duplicate ArtJobs."
+          exit 1
       - uses: actions/checkout@v4
         with:
           ref: main
