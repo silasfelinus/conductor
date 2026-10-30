@@ -117,7 +117,7 @@ tasks:
   - id: t-006
     milestone: m3
     title: "Reconcile all 200 input Facets and audit real image availability"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -126,9 +126,26 @@ tasks:
       aliases, create missing reusable Facets with canonical taxonomy.
       Monster concepts (vampire, zombie, etc.) must be SPECIES. Do not create
       an invented monster taxonomy; produce traceable ArtJobs for missing art.
+
+      2026-10-30 close-out: all 200 starters pinned to one canonical Facet each, 200 unique
+      facetIds. 73 were already pinned. 34 title matches were confirmed as the correct Facets
+      with no duplicates (Cat, Dog, Rabbit, Lion and Mantis Shrimp reuse SPECIES Facets that
+      depict the literal animal). 3 aliases: Kiwi to Facet 243, Shoebill to 352, Hyena to 378.
+      90 Facets created via POST /api/facets, ids 2981-3070: 59 ANIMAL, 5 SPECIES, 3
+      ARCHETYPE, 23 OTHER. Ledger: projects/hybridizer/facets/STARTER-FACETS-ROUND-1.yaml. 90
+      self-hosted Krea 2 ArtJobs queued as 50561-50650 with entity_art onto Facet.imagePath
+      (art/STARTER-INGREDIENTS-ROUND-1.yaml). 69 still-pending jobs were raised from priority
+      200 to 700 at about 13:47 UTC with the coordinator's approval. All 90 jobs are DONE.
+      Verified on production at 20:40 UTC: 200/200 starters resolve to a Facet with a
+      fetchable image, reviewed on contact sheets as literal and centred with no jars. Game:
+      the store resolves art by facetId and shows an honest art-queued placeholder until
+      delivery (kind_robots #4491, deployed). Follow-up: utils/hybridizer/starterCatalog.json
+      still records artState art-queued for the 90 new starters. This is display-only because
+      the UI shows the image once present; flip them to facet-image in the next catalog touch.
     claimed_by: 2026-10-30T11:52:00Z-hybridizer-376a
     claimed_at: '2026-10-30T11:44:04Z'
-    updated: '2026-10-30T11:44:04Z'
+    updated: '2026-10-30T20:38:35Z'
+    implementation_pr: 'silasfelinus/conductor#6817'
   - id: t-007
     milestone: m3
     title: "Pre-generate and verify curated 4,000 launch hybrids"
