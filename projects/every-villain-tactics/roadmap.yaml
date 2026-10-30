@@ -152,7 +152,7 @@ tasks:
   - id: t-006
     milestone: m2
     title: "Save/load battle and level state including RNG and fired events"
-    status: claimed
+    status: done
     depends_on: t-003
     owner: worker
     passes: 0
@@ -161,9 +161,25 @@ tasks:
       Persist reproducible seeded state, unit positions/conditions, story flags,
       trigger history and schema version; multiple save slots, migration and
       tests. Do not disturb original Prom of Doom saved games.
+
+      2026-10-30: Shipped in kind_robots#4494 (squash 8a46c38d) after 22/22 green checks.
+      utils/everyVillainTactics/saves.ts provides an auto slot plus 3 manual slots under kr-
+      every-villain-tactics:save:*; Prom of Doom keys are untouched. Saves are schema v2: the
+      exact seeded battle (xorshift RNG state, units, statuses, power cooldowns,
+      burrow/seismic/signature warnings), the First Bell story run, and the new fired-trigger
+      history (story beats, fire alarm). A tested migration from the v1 pre-role battle shape
+      keeps legacy units on the default profile. A canonical-JSON checksum rejects edits. Each
+      load is also rebuilt against a fresh reference roster, so 20 tested forgeries with
+      recomputed checksums are rejected (HP, identity, role stats, power, cooldown, walls,
+      overlaps, terrain, roster, story endings without triggers, unknown fields, slot copying,
+      newer versions). Story and one-shot modes are isolated. Console: CONTINUE resumes the
+      newest valid slot, per-slot SAVE/LOAD shows summaries or refusal reasons, and each round
+      autosaves. The full t-016 splash/New/Continue/Settings/Scrapbook shell is not built;
+      t-016 owns it and can reuse these slots.
     claimed_by: 2026-10-30T12:55:00Z-every-villain-tactics-s6v1
     claimed_at: '2026-10-30T12:01:31Z'
-    updated: '2026-10-30T12:01:31Z'
+    updated: '2026-10-30T12:35:56Z'
+    implementation_pr: 'silasfelinus/kind_robots#4494'
   - id: t-007
     milestone: m3
     title: "Write and implement all six distinctive tactical story missions"
