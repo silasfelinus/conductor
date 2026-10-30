@@ -257,8 +257,8 @@ jobs:
           KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
           KR_MEDIA_ORIGIN: https://media.acrocatranch.com
         run: |
-          python scripts/consume_art_requests_to_media.py --live --submit-only --limit 0 \\
-            --queue-file projects/memory-dungeon/art/HOSHIMORI-WARM-STYLE-PROOFS.yaml \\
+          python scripts/consume_art_requests_to_media.py --live --submit-only --limit 0 \
+            --queue-file projects/memory-dungeon/art/HOSHIMORI-WARM-STYLE-PROOFS.yaml \
             --id-prefix memory-dungeon-hoshimori-e07-style-
 
       # The generic art consumers below can run for hours. Save the ArtJob IDs
