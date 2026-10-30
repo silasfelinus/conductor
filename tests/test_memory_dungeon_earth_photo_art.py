@@ -21,6 +21,10 @@ class EarthPhotoArtTests(unittest.TestCase):
         data = yaml.safe_load(LEDGER.read_text())
         with tempfile.TemporaryDirectory() as temp:
             path = Path(temp) / "requests.yaml"
+            # Exercise the missing-receipt gate with a deliberately empty fixture.
+            # The live ledger may gain real durable ArtJob IDs between runs.
+            for row in data["requests"]:
+                row.pop("last_art_job_id", None)
             path.write_text(yaml.safe_dump(data))
             self.assertEqual(len([e for e in inspect(path, require_jobs=True) if "no durable" in e]), 4)
             for index, row in enumerate(data["requests"]):
