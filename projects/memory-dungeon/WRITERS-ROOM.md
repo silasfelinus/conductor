@@ -17,6 +17,16 @@ A researcher is tricked into swapping lives with fey changeling Morrow. In a dan
 | **4. Endings and callbacks** | [Ending matrix](story/ENDING-MATRIX.md) | Five decisive choices, 32 core families, variant epilogues and spoiler safeguards |
 | **5. Deep evidence** | [Original notes archive](archive/roadmap-2026-10-30-pre-12-world-slim.yaml) | Exact full old roadmap, prior PRs, run IDs, art receipts, task discussion |
 
+## Quick starts for different writers
+
+**Pitching a new encounter?** Read [one act](story/ACT-PITCHES.md), find its recurring landmark in [the map atlas](story/MAP-PLANS.md), and follow the [scene packet](story/SCENE-ROOM.md). Only then open the implementation issue. You should not need the archived roadmap.
+
+**Expanding a particular map?** Start with [geography and immutable IDs](story/MAP-PLANS.md), follow the linked site registry in Kind Robots, and use the dark-mirror briefs only after the warm map's actual choice and saved consequence have been checked.
+
+**Writing an ending?** Start with [the five-axis ending matrix](story/ENDING-MATRIX.md) and choose one numbered family. Read **only** the scene handoffs supporting its earned facts. Different endings require a different culminating act, not just one sentence swapped in a common epilogue.
+
+**Researching why a decision was made?** Use the [exact archived full roadmap](archive/roadmap-2026-10-30-pre-12-world-slim.yaml) and original issue/PR references. Treat dated, superseded instructions as history rather than fresh canon.
+
 ## Canonical order
 
 | Role and act | First version | Dark/reimagined version |
