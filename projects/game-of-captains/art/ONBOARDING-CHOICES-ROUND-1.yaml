@@ -1,0 +1,197 @@
+# Private rendered-art handoff for Space Couch's illustrated captain-first onboarding.
+# Each subject is a separate painted asset, not an SVG stand-in.
+# Auto Art Generate picks up this ledger on Conductor main and records accepted ArtJob IDs.
+round: space-couch-onboarding-choices-1
+project_slug: game-of-captains
+designer: Space Couch personnel intake illustration campaign
+is_public: false
+is_mature: false
+cast_loras: false
+auto_submit: true
+lanes:
+- key: krea2
+  label: Painterly space-couch comedy concept art
+  engine: krea2
+  prompt: prose
+  suffix: Richly painted comic space opera, detailed velvet cloth and brass fittings, precise ink contours, violet starlight and golden theatrical rim light. The spacecraft is one long scarlet velvet couch traveling through vacuum within a faint translucent spherical protective bubble.
+subjects:
+- key: sc-onboarding-origin-courier
+  lane: krea2
+  entity: captain-origin-choice
+  title: "Space Couch background: courier"
+  asset: game-of-captains/origins/courier
+  size: 1024x1024
+  seed: 1035301
+  prompt_prose: >-
+    An interstellar courier in an amber traveling jacket vaults across a suspended checkpoint above a
+    starfield, a sealed parcel in one hand, toll booth lanterns hovering by the red upholstered couch.
+- key: sc-onboarding-origin-refugee
+  lane: krea2
+  entity: captain-origin-choice
+  title: "Space Couch background: refugee"
+  asset: game-of-captains/origins/refugee
+  size: 1024x1024
+  seed: 1035302
+  prompt_prose: >-
+    A displaced diplomat with neat silver braids and plum formal coat welcomes stranded travelers aboard an
+    impossibly long scarlet couch beside a closed orbital terminal, distant ruined home port beyond.
+- key: sc-onboarding-origin-archivist
+  lane: krea2
+  entity: captain-origin-choice
+  title: "Space Couch background: archivist"
+  asset: game-of-captains/origins/archivist
+  size: 1024x1024
+  seed: 1035303
+  prompt_prose: >-
+    A rebel archivist with ink stained fingers and cobalt robes unrolls a forbidden star chart across the
+    bright red couch, immense luminous archive shelves curve across the galaxy behind.
+- key: sc-onboarding-origin-mechanic
+  lane: krea2
+  entity: captain-origin-choice
+  title: "Space Couch background: mechanic"
+  asset: game-of-captains/origins/mechanic
+  size: 1024x1024
+  seed: 1035304
+  prompt_prose: >-
+    A broad-shouldered grease-stained mechanic wearing patched teal overalls calibrates a glowing refractive
+    shield around a red upholstered couch with a bread knife and a handheld voltmeter.
+- key: sc-onboarding-origin-auditor
+  lane: krea2
+  entity: captain-origin-choice
+  title: "Space Couch background: auditor"
+  asset: game-of-captains/origins/auditor
+  size: 1024x1024
+  seed: 1035305
+  prompt_prose: >-
+    A stern bespectacled former galactic auditor in a double-breasted coat surveys a collapsed planetary
+    bureaucracy, filing cabinets floating past the long tufted scarlet couch.
+- key: sc-onboarding-origin-entertainer
+  lane: krea2
+  entity: captain-origin-choice
+  title: "Space Couch background: entertainer"
+  asset: game-of-captains/origins/entertainer
+  size: 1024x1024
+  seed: 1035306
+  prompt_prose: >-
+    A charismatic casino dealer in a gold-trimmed burgundy jacket watches glowing chips and playing cards
+    spiral in zero gravity beside the scarlet couch, an interstellar gaming floor beyond.
+- key: sc-couchscope-question-01-answer-a
+  lane: krea2
+  entity: couchscope-answer-choice
+  title: "Space Couch Couchscope question 01 choice a"
+  asset: game-of-captains/couchscope/question-01-answer-a
+  size: 1024x768
+  seed: 1035401
+  prompt_prose: >-
+    A weary silver crescent moon wrapped in a knitted blanket sits on one end of a tufted red couch while a
+    mediator with a notebook calms a blazing golden sunrise on the other end.
+- key: sc-couchscope-question-01-answer-b
+  lane: krea2
+  entity: couchscope-answer-choice
+  title: "Space Couch Couchscope question 01 choice b"
+  asset: game-of-captains/couchscope/question-01-answer-b
+  size: 1024x768
+  seed: 1035402
+  prompt_prose: >-
+    A miniature team of auditors examines the golden sun through prism scopes while constellations of
+    accounting ledgers float over the red sofa, the sun looking suspicious.
+- key: sc-couchscope-question-01-answer-c
+  lane: krea2
+  entity: couchscope-answer-choice
+  title: "Space Couch Couchscope question 01 choice c"
+  asset: game-of-captains/couchscope/question-01-answer-c
+  size: 1024x768
+  seed: 1035403
+  prompt_prose: >-
+    An overconfident executive turns the lever of a planet-sized celestial clock, sunrise rolled into a later
+    calendar slot, the long red couch narrowly avoiding the moving sky.
+- key: sc-couchscope-question-02-answer-a
+  lane: krea2
+  entity: couchscope-answer-choice
+  title: "Space Couch Couchscope question 02 choice a"
+  asset: game-of-captains/couchscope/question-02-answer-a
+  size: 1024x768
+  seed: 1035404
+  prompt_prose: >-
+    Two versions of the same captain separated by one week sit politely on the red sofa sharing steaming tea,
+    a shimmering time aperture spinning behind them.
+- key: sc-couchscope-question-02-answer-b
+  lane: krea2
+  entity: couchscope-answer-choice
+  title: "Space Couch Couchscope question 02 choice b"
+  asset: game-of-captains/couchscope/question-02-answer-b
+  size: 1024x768
+  seed: 1035405
+  prompt_prose: >-
+    Two time-displaced identical captains compare fingerprints on illuminated cards and conflicting
+    identification badges across a foldout desk behind the red sofa.
+- key: sc-couchscope-question-02-answer-c
+  lane: krea2
+  entity: couchscope-answer-choice
+  title: "Space Couch Couchscope question 02 choice c"
+  asset: game-of-captains/couchscope/question-02-answer-c
+  size: 1024x768
+  seed: 1035406
+  prompt_prose: >-
+    Two versions of the captain dance across the air around a scarlet upholstered couch in zero gravity while
+    solemn office coworkers award staff morale points.
+- key: sc-couchscope-question-03-answer-a
+  lane: krea2
+  entity: couchscope-answer-choice
+  title: "Space Couch Couchscope question 03 choice a"
+  asset: game-of-captains/couchscope/question-03-answer-a
+  size: 1024x768
+  seed: 1035407
+  prompt_prose: >-
+    Tiny redshirt interns return a luminous miniature planet and a strange silver locket to delighted alien
+    owners at the planet-sized cosmic lost-property depot.
+- key: sc-couchscope-question-03-answer-b
+  lane: krea2
+  entity: couchscope-answer-choice
+  title: "Space Couch Couchscope question 03 choice b"
+  asset: game-of-captains/couchscope/question-03-answer-b
+  size: 1024x768
+  seed: 1035408
+  prompt_prose: >-
+    An archivist catalogs a mountain of alien relics in a galactic lost-property warehouse, glowing specimen
+    drawers stacked behind the red sofa and its protective air bubble.
+- key: sc-couchscope-question-03-answer-c
+  lane: krea2
+  entity: couchscope-answer-choice
+  title: "Space Couch Couchscope question 03 choice c"
+  asset: game-of-captains/couchscope/question-03-answer-c
+  size: 1024x768
+  seed: 1035409
+  prompt_prose: >-
+    A reckless intern proudly tries on a levitating royal crown while fellow redshirt coworkers recoil beneath
+    enormous artifact shelves, red couch hovering in the foreground.
+- key: sc-couchscope-question-04-answer-a
+  lane: krea2
+  entity: couchscope-answer-choice
+  title: "Space Couch Couchscope question 04 choice a"
+  asset: game-of-captains/couchscope/question-04-answer-a
+  size: 1024x768
+  seed: 1035410
+  prompt_prose: >-
+    A forgotten exhausted traveler is lifted from the edge of a collapsing star by a warm golden miracle, the
+    couch stretching toward them beneath a transparent protective shield.
+- key: sc-couchscope-question-04-answer-b
+  lane: krea2
+  entity: couchscope-answer-choice
+  title: "Space Couch Couchscope question 04 choice b"
+  asset: game-of-captains/couchscope/question-04-answer-b
+  size: 1024x768
+  seed: 1035411
+  prompt_prose: >-
+    An ordinary crew officer unveils a glittering trail of hidden evidence inside a cosmic boardroom, shocked
+    executives silhouetted beyond the illuminated scarlet couch.
+- key: sc-couchscope-question-04-answer-c
+  lane: krea2
+  entity: couchscope-answer-choice
+  title: "Space Couch Couchscope question 04 choice c"
+  asset: game-of-captains/couchscope/question-04-answer-c
+  size: 1024x768
+  seed: 1035412
+  prompt_prose: >-
+    A galaxy of many glowing doorways opens above the upholstered red couch while a captain hands over
+    resignation paperwork and cosmic administrators watch in horror.
