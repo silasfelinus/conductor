@@ -1,0 +1,141 @@
+# Companion to Capes Western style-check v1. Adds two missing production categories.
+# The first 36 cells are a separate durable ledger; never resubmit them here.
+round: capes-western-style-check-v1-map-portrait
+series: prom-of-doom-and-every-villain-tactics
+project_slug: comet-city-academy
+designer: Capes Style Check 2026-10-29 Map Portrait Extension
+is_public: false
+is_mature: false
+cast_loras: false
+priority: 900
+auto_submit: false
+status: awaiting-submission
+lanes:
+- key: krea2
+  label: Krea 2 (concrete prose)
+  engine: krea2
+  prompt: prose
+  suffix: clean Western animated superhero key art, bold readable silhouettes, professionally inked contours, controlled
+    hand-painted color
+- key: arthemy
+  label: Arthemy Western Art v3
+  engine: comfy
+  checkpoint: Illustrious/arthemyWesternArt_v30.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, absurdres, very aesthetic, western comics (style), toon (style),
+    mature American television animation, sharply inked anatomy
+  suffix: premium mature action animation, graphic silhouettes, saturated gouache color
+  steps: 30
+  cfg: 5
+  sampler: euler_ancestral
+- key: nova-comic
+  label: Nova Comic XL v2
+  engine: comfy
+  checkpoint: Illustrious/novaComicXL_v20.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, western comic book (style), professional ink art, strong readable
+    silhouettes
+  suffix: limited cel shaded palette, dramatic illustrated superhero graphic novel
+  steps: 28
+  cfg: 5
+  sampler: euler_ancestral
+- key: illustrij
+  label: Illustrij v2.1
+  engine: comfy
+  checkpoint: Illustrious/illustrij_v21.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, very aesthetic, illustration, comic book art, mature western animation, lineart
+  suffix: bold graphic shapes, cel shading, expressive eyes and brows
+  steps: 28
+  cfg: 5
+  sampler: euler_ancestral
+- key: dreamshaper
+  label: DreamShaper XL
+  engine: comfy
+  checkpoint: SDXL/dreamshaperXL_v21TurboDPMSDE.safetensors
+  prompt: prose
+  suffix: hand-inked mature Western animated superhero illustration, precise faces, readable costumes, flat cel
+    shadows
+  steps: 6
+  cfg: 2
+  sampler: dpmpp_2m_sde
+- key: unstable
+  label: Unstable Diffusers SDXL
+  engine: comfy
+  checkpoint: SDXL/sdxlUnstableDiffusers_nihilmania.safetensors
+  prompt: prose
+  suffix: adult western comic-book animation key art, clear ink contours, graphic anatomy, crisp painterly cel shade
+  steps: 28
+  cfg: 7
+  sampler: dpmpp_2m
+subjects:
+- key: academy-city-quad-map
+  title: Comet City Academy / campus and city navigable illustrated map
+  size: 1344x768
+  seed: 629107
+  prompt_prose: >-
+    A beautifully composed 3/4 overhead illustrated tactical map of Comet City Academy
+    campus and its neighboring downtown blocks, looking diagonally from the southwest.
+    A giant round stone fountain sits unmistakably at the center of the college quad,
+    with four radial walkable brick paths. North of the fountain is a gothic library,
+    west a warm red-brick dormitory, east a glass-fronted science building, south an
+    open picnic plaza with benches and shade trees. A road at the northwest campus
+    edge connects naturally to dense downtown shops and a transit stop, while a
+    sports field is visible to the far southeast. Clear traversable courtyards,
+    distinct building footprints, clean street intersections, layered rooftop heights,
+    strong readable terrain and cover silhouettes. Mature Western animated superhero
+    location key art, cinematic architectural rendering, crisp ink outlines,
+    hand-painted controlled cel shadows, restrained bold colors, consistent
+    geographically logical site adjacency. Landscape wide map illustration.
+    No labels, lettering, numbers, user interface, markers or watermark.
+  prompt_tags: >-
+    overhead three-quarter view, illustrated campus town map, mature western animated
+    comic location art, broad college quad, large round fountain at center, four
+    radial brick walkways, gothic library north, brick dormitory west, modern science
+    laboratory east, open picnic plaza south, benches, trees, town shops northwest,
+    street connecting campus to downtown, transit stop, distant southeast sports
+    field, traversable paths, clear street geometry, readable building footprints,
+    distinct roof levels, wide landscape, clean lineart, painted cel shading,
+    architectural storytelling, no characters, no words, no writing
+  negative: >-
+    lettering, labels, text, letters, street names, signage, captions, topographic
+    symbols, interface, minimap HUD, legend, watermark, fantasy dungeon, disconnected
+    roads, maze-like impossible paths, photo, realistic satellite map, toy 3d,
+    childish cartoon, fur, furry creatures, distorted buildings
+  asset: comet-city-academy/style-check-v1/academy-city-quad-map
+  jobs: {}
+- key: firewall-alert-portrait
+  title: Firewall / emotionally readable hero portrait
+  size: 896x1152
+  seed: 629108
+  prompt_prose: >-
+    Tight chest-up vertical character portrait of Priya, the superhero Firewall,
+    a young adult South Asian human woman with warm brown skin, dark expressive eyes
+    and long black hair tied into a functional braided bun. Her midnight-blue
+    and copper hero suit has a rigid square circuit collar and subtle copper
+    seams. She looks over one shoulder in surprised alarm, eyebrows raised and
+    eyes sharply focused while holding back fear with visible determination.
+    One small blue holographic rectangular shield shines near her jaw,
+    reflecting into the copper collar; the academy science lab behind is soft
+    and secondary. Mature Western animated superhero drama, nuanced facial
+    acting and natural diverse human anatomy, strong ink contours, cinematic
+    painterly cel shadows, two or three restrained color groups, editorial
+    character portrait composition, face occupying the central upper half,
+    entire hairline and shoulders visible, clear eyes at thumbnail scale.
+    No words, no lettering, no watermark.
+  prompt_tags: >-
+    portrait, head and shoulders, one young adult south asian human woman,
+    brown skin, dark eyes, black hair in braided bun, midnight blue superhero
+    engineer costume, copper circuit seams, square technical collar,
+    raised brows, startled eyes, determined mouth, alert surprised reaction,
+    one holographic blue rectangular shield beside jaw, simple softly blurred
+    science lab background, mature western animated television superhero
+    drama, nuanced expression, inked lineart, painted cel shadows, cinematic
+    portrait lighting, vertical headshot, no text
+  negative: >-
+    text, letters, name, logo, signature, watermark, animal ears, furry, muzzle,
+    schoolgirl, childlike face, anime giant eyes, photorealistic skin, plastic
+    3d toy, glamour pinup, open mouth exaggeration, extra faces, duplicated
+    eyes, cropped forehead, invisible hands
+  asset: comet-city-academy/style-check-v1/firewall-alert-portrait
+  jobs: {}
