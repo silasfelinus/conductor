@@ -51,14 +51,19 @@ class EarthPhotoArtTests(unittest.TestCase):
             self.assertTrue(any("Missing earth-02" in e for e in errors))
 
     def test_preexisting_unattributed_photos_require_new_production_jobs(self):
+        # The live ledger moves pending+force -> pending+receipt -> done+receipt as
+        # Auto Art Generate runs, so assert the invariant that holds at every stage:
+        # earth-01/02 are never complete without a fresh durable ArtJob receipt.
         data = yaml.safe_load(LEDGER.read_text())
         rows = {row["source_photo_id"]: row for row in data["requests"]}
         for photo_id in ("earth-01", "earth-02"):
-            self.assertEqual(rows[photo_id]["status"], "pending")
-            self.assertIs(rows[photo_id]["force"], True)
-            # Auto Art Generate checkpoints the fresh replacement ArtJob here; until
-            # then the row is still awaiting one. Either way it is never a bare DONE.
-            job_id = rows[photo_id].get("last_art_job_id")
+            row = rows[photo_id]
+            job_id = row.get("last_art_job_id")
+            if row["status"] == "pending":
+                self.assertIs(row["force"], True)
+            else:
+                self.assertEqual(row["status"], "done")
+                self.assertIsNotNone(job_id)
             if job_id is not None:
                 self.assertIsInstance(job_id, int)
                 self.assertGreater(job_id, 0)
