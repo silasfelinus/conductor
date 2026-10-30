@@ -279,8 +279,8 @@ tasks:
   - id: t-003
     milestone: m2
     title: "Build 30-day day/night map, dispatch, relationship and save engine"
-    status: review
-    updated: '2026-10-30T06:09:04.029Z'
+    status: ready
+    updated: '2026-10-30T06:19:32.384Z'
     depends_on: t-001
     passes: 0
     stakes: reversible
@@ -324,9 +324,8 @@ tasks:
       PARTIAL WORK MERGED in Kind Robots PR #4473 squash 0dbc62c7cb86c58459bb98038063757dca229427. All 20 latest-head GitHub workflows completed successfully, including TypeScript Type Check, seeded Playbook Slices Gameplay, Every Villain Tactics, formatting, full contract shards and build/publish image workflow. Late day-23+ villain lairs now deploy 48 distinct named 4-HP lieutenants with 8 real affinity attack footprints and 6 origin-based counter stations, visible exact danger cells, attack-to-damage parity, player disruption (1 AP), real shot interrupts, deterministic stagger recovery, comic-style boss entrance and hero/villain result panels. Early Quarry lieutenant and one-hit species behavior retained. Repaired objective AP lock after all enemies fall, hardened boss save validation, and added exhaustive 48 roster turn, counter and tampering tests. These are 8x6 compositional combat mechanics, not 48 fully hand-coded unique boss AI graphs, 48 cinematic dialogue trees, delivered ArtJobs or verified responsive visual QA. Keep task ready for next full-game development increment. Merge is not confirmation of self-hosted production deployment; publication remains gated.
 
       Scoped partial next Prom of Doom campaign milestone: a day-23+ wounded lieutenant can voluntarily join the protagonist or sign a civilian-safety ceasefire if the player finds the hidden lair evidence, approaches within two squares, and spends an action. The named individual lieutenant leaves battle alive, remains absent from later night boss encounters, and the settlement is carried by validated save history into reports, civic influence/danger and distinct day-30 finale callbacks. Full 48-person regression covers action/evidence/proximity gates, no-repeat fights, restoration, tampering, and ending scenes. Kind Robots implementation branch worker/comet-city-academy-t-003-parley-c27b. No rendered art or live deploy; awaiting scoped PR CI.
-    owner: worker
-    claimed_by: 20261030T060530621Z-prom-t003-parley-c27b
-    claimed_at: '2026-10-30T06:05:30.621Z'
+
+      PARTIAL WORK MERGED: Kind Robots #4475 squash commit 708c44f0b3607096b4960981afa1319a46c84eaf, all 19 latest-head GitHub workflows complete green including Academy gameplay, TypeScript, changed-file Prettier, four contract shards and published-container build. For day-23+ villain lair encounters, the player can earn two nonlethal lieutenant outcomes by uncovering the specific secret, reducing a living four-HP lieutenant to two HP, approaching within two squares and spending one action point. Ally and ceasefire choices persist in validated tactical outcome history, change district standing/danger and mission debriefs, remove the negotiated lieutenant from future night boss fights and insert named, distinct support callbacks into the graduation finale. Added battle negotiation and comic settlement UI, Pinia action and comprehensive 48-lieutenant cross-day/save/forgery tests. Older saved campaigns and first-week/origin fights remain compatible. Not completed: 48 hand-authored boss AI/cinematics, illustration ArtJobs, responsive live device QA, complete game polish or final human approval. Leave t-003 ready for subsequent development. GitHub merge does not establish self-hosted Unraid deployment.
   - id: t-004
     milestone: m3
     title: "Author at least 36 good/evil/rogue patrol cases with meaningful results"
