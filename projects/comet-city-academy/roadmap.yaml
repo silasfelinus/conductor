@@ -381,8 +381,8 @@ tasks:
   - id: t-007
     milestone: m3
     title: "Deliver academy key, map, follower emotion and injury art"
-    status: claimed
-    updated: '2026-10-30T11:40:41Z'
+    status: ready
+    updated: '2026-10-30T12:03:37Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -401,9 +401,34 @@ tasks:
       Verified 144 Prom of Doom personal outcome requests lacked all ArtJob IDs. A scoped credentialed workflow now reconciles prior server ArtJobs before posting only unrecorded personal requests and checkpoints every accepted ID. Repaired unsafe Krea2 negative prompt wording. Review app and workflow CI, merge when green, then verify real ArtJob IDs. Image delivery remains pending.
 
       Triage 2026-10-30: stale claim from 2026-10-27 with no open PR, released. Next step is export, not generation. kind_robots #4481 ships the 14 origin/affinity plates (#4470). About 520 more DONE renders across MAPS-AND-MASTERMINDS, SECOND-MASTERMINDS, MISSION-REACTIONS, RUNTIME-BEATS, CONSEQUENCES, PERSONAL-CONSEQUENCES, IDENTITY-OUTCOMES, IDENTITY-PORTRAITS and PROM-OF-DOOM-FINALE ledgers are not exported. Runtime already asks promArt() for many of those keys. Export them with scripts/export_round_art.py using --max-edge to keep the repo addition near the Zuzu Gamebook precedent (425 files / 24 MB), not about 85 MB at full size. Skip the retired COMPOSITE-POWERS ledger. Injured-follower art is still unverified.
+
+      2026-10-30 PT art export (no new generation), two kind_robots PRs, all checks green:
+      #4485 merged at 79c2ccc1ab185fd3f3e03599f393291398e8c985 (134 webps: 36 MISSION-
+      REACTIONS student mood faces, 46 IDENTITY-PORTRAITS student splashes, OPENING-REVAMP
+      splash-v2 + 3 vow plates + 3 identity hero/villain, all 8 mastermind portraits from
+      MAPS-AND-MASTERMINDS + SECOND-MASTERMINDS, 35 RUNTIME-BEATS
+      incidents/encounters/districts/endings, the finale destroy-antenna plate; wiring: vow
+      cards show their plate, studentPortrait falls back to the neutral reaction face,
+      ENDING_STAND_INS shows that plate for THE TRANSMITTER GOES DARK until its own painting
+      ships) and #4488 merged at 10ec0dd6b31046f713eff1ec4b176e825e753c8c (238 webps: 191/192
+      IDENTITY-OUTCOMES + 47/48 PERSONAL-CONSEQUENCES student outcomes; its hero/villain rows
+      are superseded per the ledger header). PROM_ART 23 -> 398; ~34 MB added at 960px
+      (students 512px). Every export cross-checked against keys the runtime requests;
+      verifyCometCityAcademy asserts they resolve; contact sheets reviewed. HELD BACK for re-
+      render (franchise look-alikes): identities/mutant-air/student, identities/mutant-
+      genius/hero, encounters/the-class-list-has-two-endings, identities/psychic-
+      discipline/outcomes/villain, identities/tech-genius/outcomes/student. Not exported (no
+      runtime lookup): CONSEQUENCES-ROUND-1 (21, undeployed narrative graph), 2 map plates, 12
+      finale choice/failure plates, dashboard-highlight-alt, 2 non-signature identity
+      portraits, UNSTABLE model-2x1 (t-031). Remaining: re-render the 5 held images;
+      hero/villain splashes for 45 more identities; base students/<id> portraits; returns/*
+      (24) and 30 later incident plates; endings THE SHIELD CHANGES HANDS / THE TRANSMITTER
+      GOES DARK; wire maps if a map view should show them; injured/emotional follower art per
+      original scope.
     owner: worker
     claimed_by: 2026-10-30T11:36:33-artexp-0190
     claimed_at: '2026-10-30T11:40:41Z'
+    implementation_pr: 'silasfelinus/kind_robots#4488'
   - id: t-008
     milestone: m3
     title: "Illustrate all patrol, location, relationship and ending branches"
