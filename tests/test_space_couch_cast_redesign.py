@@ -22,7 +22,7 @@ EXPRESSIONS = {"primary", "defiant", "vulnerable"}
 
 
 class SpaceCouchCastRedesignTests(unittest.TestCase):
-    def test_every_identity_has_three_unshipped_versioned_requests(self):
+    def test_every_identity_has_three_versioned_requests_and_traced_art(self):
         data = yaml.safe_load(LEDGER.read_text())
         self.assertEqual(data["project_slug"], "game-of-captains")
         self.assertIs(data["auto_submit"], True)
@@ -54,11 +54,19 @@ class SpaceCouchCastRedesignTests(unittest.TestCase):
             self.assertEqual(subject["asset"], expected)
             self.assertEqual(subject["lane"], "krea2")
             self.assertEqual(subject["size"], "1024x1024")
-            # No fake DONE or legacy art. The automatic sweep may later write PENDING
-            # lane status with a fresh job id, but never a finished image.
-            for lane_art in subject.get("art", {}).values():
-                self.assertNotEqual(lane_art.get("status"), "DONE")
-                self.assertIsNone(lane_art.get("art_image_id"))
+            # The private art sweep legitimately transitions requests to DONE.
+            # Completed requests must have a submitted Job and an ArtImage.
+            # Incomplete requests cannot claim an image just by listing a key.
+            for lane, lane_art in subject.get("art", {}).items():
+                if lane_art.get("status") == "DONE":
+                    job_id = subject.get("jobs", {}).get(lane)
+                    image_id = lane_art.get("art_image_id")
+                    self.assertIsInstance(job_id, int)
+                    self.assertGreater(job_id, 0)
+                    self.assertIsInstance(image_id, int)
+                    self.assertGreater(image_id, 0)
+                else:
+                    self.assertIsNone(lane_art.get("art_image_id"))
 
         expected = {
             (kind, identity, expression)
