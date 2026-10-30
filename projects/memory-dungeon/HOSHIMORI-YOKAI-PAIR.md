@@ -1,5 +1,7 @@
 # Memory Dungeon: The Hoshimori Pair (e07 / e08) — production plan
 
+**2026-10-30 superseding order and source-status note:** Hoshimori is the **fourth mandatory original→twisted pair**, not an optional branch. The existing e07 village now contains 64 connected authored sites and nine of 36 Red Oven rooms in Kind Robots source; the earlier 2026-10-29 inventory below is retained as historical evidence, not today's completion tally. e08 horror remains unimplemented and the preceding Morrow/Scylla worlds e03–e06 are not yet fully playable. Preserve the two fixed photo sites per reality. The sisters' fatal landward-departure history and player-reveal safeguards are defined in `EIGHT-PAIRED-WORLDS-CANON.md`; no early Hoshimori exposition may spoil it.
+
 **Decision:** Silas-directed creative redesign, 2026-10-29 PT. **Status:** approved direction for reversible internal authoring, **not shipped maps**. **Ownership:** Conductor coordinates scope; Kind Robots owns executable `/play/memory` scenes, saves, runtime art and UI. Preserve all established first-six experiences, especially the two Briar worlds, Morrow's real-world chapters, and Scylla/Char's shore and underwater chapters.
 
 ## What exists today, and why these two
