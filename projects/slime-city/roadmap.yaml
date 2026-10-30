@@ -153,41 +153,19 @@ tasks:
   - id: t-004
     milestone: m2
     title: "Expand five mana colors into six distinct authored crews and special decks"
-    status: claimed
+    status: review
     depends_on: t-002
     owner: worker
     passes: 0
     stakes: reversible
-    note: >-
-      Six crews (Gene Riot Catgirls BLUE, Punk Bloodfairies PURPLE,
-      Ironjaw Chrome Ogres GREEN, Riot Saints RED, Undertow
-      Intelligence BLUE, Meat Exchange GOLD) retain independent
-      character and campaign identities. Extend starter 3-creature/
-      3-special POC roster into legitimate legal decks with creature,
-      spell, trap and equipment types, intuitive game rules, named
-      counters, collectible artwork provenance and tests. Five colors
-      need not mean five teams. Inspect role coverage, swarm,
-      control, armor, mana economy and RNG readability.
+    note: |-
+      Six crews (Gene Riot Catgirls BLUE, Punk Bloodfairies PURPLE, Ironjaw Chrome Ogres GREEN, Riot Saints RED, Undertow Intelligence BLUE, Meat Exchange GOLD) retain independent character and campaign identities. Extend starter 3-creature/ 3-special POC roster into legitimate legal decks with creature, spell, trap and equipment types, intuitive game rules, named counters, collectible artwork provenance and tests. Five colors need not mean five teams. Inspect role coverage, swarm, control, armor, mana economy and RNG readability.
+      PARTIAL 2026-10-30, back to ready: Kind Robots PR #4520 (3688a309) merged, all 21 checks green. Six legal ten-card crew decks (60 authored cards; 4 creatures + 6 specials, one signature each, deckProblems() enforced) with distinct keywords and named counters: catgirls AMBUSH/REGEN (out of reach)/rearming Catnip Overdrive/Laser Pointer root; bloodfairies SWARM/LEECH/enemy-only Moshpit; Ironjaw armor/BULLDOZE; Riot Saints VOLATILE chains and friendly-fire Confetti Cannon; Undertow two armed traps/SNARE/PIERCE/Drain Sonar; Meat Exchange COLLECT mana debt (cap 2), Foreclosure, Hidden Fees, 6-mana Mogul. Per-crew BLACKOUT armies; CPU values every keyword and effect; hidden keywords redacted. Tests: new verifySlimeCityCrews contract plus lab/store/overworld. Balance (20 seeds, default rules, conductor PLAYTEST-COMPARISON 'After rebalance'): 15 of 18 crew-format cells inside 40-60% (was 7); Meat Exchange 72/75/82 -> 43/64/44; catgirls MEATBALL 24 -> 41.5; BLOODRUSH seats 40/52 -> 40/42. REMAINS: catgirls BLACKOUT 76%, Undertow BLACKOUT 32% (CPU barely uses traps in BLACKOUT), Meat Exchange MEATBALL 63.5%, strongly intransitive BLOODRUSH pairs (Ironjaw 99-1 vs Exchange, 7.5-92.5 vs Undertow); MEATBALL default draws rose 27 -> 44% (t-003 variants address it). Card art provenance stays t-017 (glyph stand-ins only).
 
-      PARTIAL 2026-10-30, back to ready: Kind Robots PR #4520 (3688a309) merged, all 21 checks
-      green. Six legal ten-card crew decks (60 authored cards; 4 creatures + 6 specials, one
-      signature each, deckProblems() enforced) with distinct keywords and named counters:
-      catgirls AMBUSH/REGEN (out of reach)/rearming Catnip Overdrive/Laser Pointer root;
-      bloodfairies SWARM/LEECH/enemy-only Moshpit; Ironjaw armor/BULLDOZE; Riot Saints
-      VOLATILE chains and friendly-fire Confetti Cannon; Undertow two armed
-      traps/SNARE/PIERCE/Drain Sonar; Meat Exchange COLLECT mana debt (cap 2), Foreclosure,
-      Hidden Fees, 6-mana Mogul. Per-crew BLACKOUT armies; CPU values every keyword and
-      effect; hidden keywords redacted. Tests: new verifySlimeCityCrews contract plus
-      lab/store/overworld. Balance (20 seeds, default rules, conductor PLAYTEST-COMPARISON
-      'After rebalance'): 15 of 18 crew-format cells inside 40-60% (was 7); Meat Exchange
-      72/75/82 -> 43/64/44; catgirls MEATBALL 24 -> 41.5; BLOODRUSH seats 40/52 -> 40/42.
-      REMAINS: catgirls BLACKOUT 76%, Undertow BLACKOUT 32% (CPU barely uses traps in
-      BLACKOUT), Meat Exchange MEATBALL 63.5%, strongly intransitive BLOODRUSH pairs (Ironjaw
-      99-1 vs Exchange, 7.5-92.5 vs Undertow); MEATBALL default draws rose 27 -> 44% (t-003
-      variants address it). Card art provenance stays t-017 (glyph stand-ins only).
+      Blackout-first overhaul linked to kind_robots issue #4535: open 10x6 arena, four seeded cards drawn from each ten-card crew deck per round, true played card consumption and discard cycling, full card inspection, manual attack commands with range highlights and summon delay, and CPU explicit attacks. Legacy concealed-army combat retained only for opt-in regression fixtures. Kind Robots implementation PR and CI pending; this is a partial t-004 slice, not 50-card-per-crew expansion or delivered Krea artwork.
     claimed_by: 2026-10-30T234505Z-slime-city-t004-blackout-c59d
     claimed_at: '2026-10-30T23:45:05Z'
-    updated: '2026-10-30T23:45:05Z'
+    updated: '2026-10-30T23:52:12Z'
     implementation_pr: 'silasfelinus/kind_robots#4520'
   - id: t-005
     milestone: m2
