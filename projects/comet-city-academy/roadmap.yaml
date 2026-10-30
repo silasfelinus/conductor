@@ -153,7 +153,7 @@ tasks:
   - id: t-013
     milestone: m2
     title: "Make follower/romance and injury/infirmary interactions playable in the week-one slice"
-    status: claimed
+    status: done
     depends_on: t-012
     owner: worker
     passes: 0
@@ -164,9 +164,27 @@ tasks:
       an explicitly negotiated non-instant triad preview, consequential
       partner/sidekick assignment, injured state through next day with an
       alternate infirmary action. Protect consent and staff-student boundaries.
+
+      MERGED Kind Robots PR #4489 as b93d33b2f2ef8685fc1221569e2102607deea562 after all 22
+      check runs passed (TypeScript, Seeded game-playthrough, four Contract shards, Changed-
+      file Prettier). Week-one slice now fully playable from an untouched seed: all six adult
+      classmates reachable in the daylight relationships panel from day 2 (previously night-
+      roster-only, empty on days 2-3); injured followers stay benched through the next day and
+      the day action can either Treat them (rejoin tonight) or Sit with them (trust +1, still
+      benched), with six distinct bedside scenes; visible mutual affinity (trust 0-5 plus each
+      romanceable adult's own closed/wary/kindred/curious read from form, vow, power and
+      danger; wary needs one more conversation before a date); consequential partner/sidekick
+      bonuses retained; and The Listening Accord (Imani + Nix), a five-beat explicitly
+      negotiated, non-instant triad where each adult consents separately and either can pause,
+      decline or withdraw without penalty. Seeded trace: romance day 5, first accord beat day
+      7. Staff-student boundary: faculty never romanceable. Tests: verifyCometCityAcademy
+      covers the week-one trace, wary pacing, visit vs treat, consent/injury/danger/trust
+      gating, pause/resume/decline/release, finale epilogue and forged-save replay rejection;
+      old saves still load.
     claimed_by: 2026-10-30T11:38:40Z-prom-t013-a7k2
     claimed_at: '2026-10-30T11:37:23Z'
-    updated: '2026-10-30T11:37:23Z'
+    updated: '2026-10-30T12:08:33Z'
+    implementation_pr: 'silasfelinus/kind_robots#4489'
   - id: t-014
     milestone: m2
     title: "Make villain variability and functional console sub-screens playable"
