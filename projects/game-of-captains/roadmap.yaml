@@ -304,7 +304,7 @@ tasks:
   - id: t-016
     milestone: m3
     title: "Per-captain ending versions and crew epilogues (16 endings x 6 captains)"
-    status: claimed
+    status: done
     depends_on: t-007
     owner: worker
     passes: 0
@@ -317,9 +317,18 @@ tasks:
       adds one epilogue line per crew member, not separate endings. Forge plan endingVersions
       per-hero with followerEpilogues (kind_robots#4255). Seeded traces in t-010 must cover every
       captain version.
+
+      All 16 galactic endings now have a version for each of the 6 captains (96/96): the 12
+      earned families from galacticEndings.ts plus 36 new lines for the 4 base logs and 2
+      counter logs (baseEndingCaptains.ts, kind_robots #4501, merged 69dfacb). Tests replay
+      every seeded ending trace under each captain and assert the captain's own line; all 96
+      versions are distinct. Crew epilogues already existed. Per-mission
+      flawless/costly/disaster text follows in #4502. Painted ending art remains art-queue
+      work (t-009).
     claimed_by: 2026-10-30T11:47:12Z-spacecouch-q7r2
     claimed_at: '2026-10-30T11:38:44Z'
-    updated: '2026-10-30T11:38:44Z'
+    updated: '2026-10-30T12:58:49Z'
+    implementation_pr: 'silasfelinus/kind_robots#4501'
 
   - id: t-018
     milestone: m3
