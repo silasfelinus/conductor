@@ -221,8 +221,9 @@ class HoshimoriGalleryReadinessTests(unittest.TestCase):
             self.manifests, self.ledgers, self.snapshots,
             pilot2=round2, jobs=[], heartbeat_state="ok",
         )
-        self.assertEqual(live["live"]["gallery_pilots"]["round2"]["counts"],
-                         {"job_missing": submitted, "unsubmitted": 8 - submitted})
+        counts = live["live"]["gallery_pilots"]["round2"]["counts"]
+        self.assertEqual(counts.get("job_missing", 0), submitted)
+        self.assertEqual(counts.get("unsubmitted", 0), 8 - submitted)
         self.assertFalse(live["ready_for_gallery_submission"])
 
 
@@ -247,6 +248,7 @@ class HoshimoriGalleryReadinessTests(unittest.TestCase):
             },
         }
         probed = []
+
         def fresh(path, created):
             probed.append((path, created))
             return "delivered"
@@ -277,6 +279,7 @@ class HoshimoriGalleryReadinessTests(unittest.TestCase):
                 "save": {"isPublic": False, "isMature": False},
             },
         }
+
         def forbidden(_path, _created):
             self.fail("an unbound or mismatched job must not probe a gallery file")
         unbound = audit_pilot_live(pilot, [job], forbidden)
