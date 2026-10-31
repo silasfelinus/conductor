@@ -1116,11 +1116,8 @@ tasks:
   - id: t-045
     milestone: m3
     title: "Hoshimori e07/e08 art: style proofs, map/oven atlases and two 30+2 collectible galleries"
-    status: review
-    owner: worker
-    claimed_by: 20261031T194702298Z-memory-dungeon-t045-queue-tier-7b9c2
-    claimed_at: '2026-10-31T19:47:02.298Z'
-    updated: '2026-10-31T19:49:15.299Z'
+    status: ready
+    updated: '2026-10-31T19:54:52.171Z'
     depends_on:
       - t-041
       - t-043
@@ -1174,6 +1171,8 @@ tasks:
       Prepared a bounded production priority pilot for the four existing e07/e08 map and Oven atlas ArtJobs (52108, 52109, 52234, 52235). Verified immutable receipt provenance, pending-only safety, dry-run and adversarial regressions. Focused Conductor PR and exact-head CI follow. This does not enqueue artwork, verify rendered media or finish the 64 collectible galleries.
 
       2026-10-31 PT: Merged Conductor PR #6891 (040db14c983be5436bb3b4a0e49b40479393c8cc), all eight Worker CI jobs green on b0966c0aee61ae176467ddf6f272a1d00b365959; 3227 Python tests passed, 53 skipped. Live one-shot workflow #41231988866 verified durable priority +1 updates to exactly four existing Hoshimori map/Oven ArtJobs 52108, 52109, 52234, 52235; no duplicates or media writes. The same audit still found 643 PENDING / 1 RUNNING globally, these four PENDING at ranks 623-626 and 0/20 Hoshimori style images delivered. Issue kind_robots#4136 comment 6547790927 has evidence. Return READY for relay throughput/high-priority queue investigation, rendered 8x8/6x6 geometry, 64 gallery ArtJobs, unlock integration and device QA. Memory Dungeon ACTIVE, not For Human Gate.
+
+      2026-10-31 PT: Merged Conductor PR #6892 (f530bbc05501b3de663e4da4c7bc8423df0b0676) after 22 exact-head passing checks and two skips on 1742d7eac0b51b8ca51d0f80effc8e7aa83475ed. Added read-only full-stats and DONE-updatedAt 1h/6h/24h throughput audit with eight adversarial tests and fail-closed pagination; live Hoshimori readiness workflow #41236331642 succeeded. Fresh snapshot: 606 PENDING, 1 RUNNING, zero stale RUNNING, 979 DONE rows updated in 24h (249 in 6h, 41 in 1h), 979 ArtImages created in 24h across all sources, all COMFY. These are activity proxies, not exact render completions or Hoshimori deliveries. Hoshimori 20/20 style ArtJobs still PENDING, 0 delivered; four map/Oven pilots at queue ranks 586-589. No new ArtJobs, queue writes, deploy or publication. Continue rendered style proof/media/geometry acceptance, then 64 gallery ArtJobs and unlock integration. Memory Dungeon ACTIVE, not For Human Gate.
   - id: t-046
     milestone: m4
     title: "Hoshimori pair adversarial acceptance: complete routes, companions, art and accessibility"
