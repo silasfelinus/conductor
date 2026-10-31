@@ -244,22 +244,27 @@ def audit_live(
         )
         live[world] = validate_style_snapshot(ledgers[world], result, world, validator)
     live_delivered = sum(row["snapshot_delivered"] for row in live.values())
+    first_gallery = audit_pilot_live(pilot, jobs, media_probe)
+    second_gallery = audit_pilot_live(pilot2, jobs, media_probe)
+    gallery_delivered = first_gallery["delivered"] + second_gallery["delivered"]
+    base["gallery_delivered_images"] = gallery_delivered
     base["live"] = {
         "source": "authenticated_artjobs_and_fresh_media_head",
         "engine_heartbeat_state": heartbeat_state,
         "style_proofs": live,
         "style_delivered": live_delivered,
         "style_not_delivered": 20 - live_delivered,
-        "gallery_pilot": audit_pilot_live(pilot, jobs),
+        "gallery_pilot": first_gallery,
         "gallery_pilots": {
-            "round1": audit_pilot_live(pilot, jobs),
-            "round2": audit_pilot_live(pilot2, jobs),
+            "round1": first_gallery,
+            "round2": second_gallery,
         },
+        "gallery_delivered": gallery_delivered,
     }
     base["source"] = "live_reconciled_with_committed_snapshot"
     base["blockers"] = [
         f"{base['gallery_unsubmitted']}/64 gallery faces still lack durable ArtJob receipts",
-        "gallery pilot DONE rows require independent ArtImage and final-media acceptance",
+        f"{base['gallery_artjobs'] - gallery_delivered}/{base['gallery_artjobs']} submitted gallery faces lack verified bound media",
         f"{20 - live_delivered}/20 style proofs lack fresh verified media delivery",
         "visual inspection of the 8x8 maps, 6x6 atlases and style samples is required",
     ]
@@ -276,12 +281,12 @@ def audit_live(
     return base
 
 
-def audit_pilot_live(pilot: dict, jobs: list[dict]) -> dict:
-    """Reconcile the eight queued Krea2 requests without pretending they are files.
+def audit_pilot_live(pilot: dict, jobs: list[dict], media_probe=None) -> dict:
+    """Verify a gallery file only with a bound ArtJob, ArtImage and fresh media.
 
-    /api/art/enqueue stores the rendered prompt in the ArtJob payload but does
-    not bind the ledger's desired asset path to a deployed media file. A DONE
-    row and ArtImage ID are therefore *not* gallery delivery evidence.
+    Legacy /api/art/enqueue jobs carry prompts but no final destination binding.
+    They remain unverified even if DONE: a coincidentally existing image at the
+    intended path cannot prove that it came from this particular render.
     """
     by_id: dict[int, dict] = {}
     for job in jobs:
@@ -322,8 +327,36 @@ def audit_pilot_live(pilot: dict, jobs: list[dict]) -> dict:
         status = str(job.get("status") or "").upper()
         if status == "DONE":
             art_image_id = job.get("artImageId")
-            counts["done_media_unverified" if type(art_image_id) is int and art_image_id > 0
-                   else "done_without_artimage"] += 1
+            if type(art_image_id) is not int or art_image_id <= 0:
+                counts["done_without_artimage"] += 1
+                continue
+            binding = payload.get("conductorRequest")
+            expected_path = f"public/{subject['asset']}.webp"
+            if binding is None:
+                counts["done_media_unverified"] += 1
+                continue
+            if not isinstance(binding, dict) or any(
+                binding.get(key) != value for key, value in {
+                    "id": subject["key"],
+                    "imagePath": expected_path,
+                    "targetRepo": "silasfelinus/kind_robots",
+                }.items()
+            ):
+                counts["destination_mismatch"] += 1
+                continue
+            if media_probe is None:
+                from audit_memory_dungeon_art_delivery import probe_media
+                media_probe = probe_media
+            try:
+                media_state = media_probe(expected_path, job.get("createdAt"))
+            except Exception:
+                media_state = "media_unreachable"
+            accepted_states = {
+                "delivered", "media_unreachable", "media_stale", "media_not_image",
+                "media_wrong_format", "media_empty", "media_unproven",
+                "media_unsafe_path",
+            }
+            counts[media_state if media_state in accepted_states else "media_unproven"] += 1
         elif status in {"PENDING", "RUNNING", "FAILED", "CANCELLED"}:
             counts[status.lower()] += 1
         else:
@@ -333,8 +366,9 @@ def audit_pilot_live(pilot: dict, jobs: list[dict]) -> dict:
         "submitted": sum((row.get("jobs") or {}).get("krea2") is not None
                          for row in pilot["subjects"]),
         "counts": dict(sorted(counts.items())),
-        "delivered": 0,
-        "delivery_evidence": "not_checked_final_media",
+        "delivered": counts["delivered"],
+        "delivery_evidence": "bound_artjob_artimage_and_fresh_media_head"
+        if counts["delivered"] else "no_verified_bound_media",
     }
 
 
