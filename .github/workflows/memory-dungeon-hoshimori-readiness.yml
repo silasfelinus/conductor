@@ -12,6 +12,9 @@ on:
       - "scripts/audit_memory_dungeon_hoshimori_throughput.py"
       - "tests/test_memory_dungeon_hoshimori_throughput.py"
       - "projects/memory-dungeon/art/HOSHIMORI-*-GALLERY-BRIEFS.yaml"
+      - "projects/memory-dungeon/art/HOSHIMORI-GALLERY-PILOT-ROUND-1.yaml"
+      - "scripts/verify_memory_dungeon_hoshimori_gallery_pilot.py"
+      - "tests/test_memory_dungeon_hoshimori_gallery_pilot.py"
   workflow_dispatch:
 
 permissions:
@@ -32,6 +35,8 @@ jobs:
           python-version: "3.12"
       - name: Install manifest parser
         run: python -m pip install --disable-pip-version-check --quiet pyyaml
+      - name: Validate eight source-backed gallery production requests and durable IDs
+        run: python scripts/verify_memory_dungeon_hoshimori_gallery_pilot.py
       - name: Validate authored 64-face gallery and durable style receipts
         run: python scripts/audit_memory_dungeon_hoshimori_gallery_readiness.py
       - name: Check live Hoshimori ArtJobs, fresh media and engine heartbeat
