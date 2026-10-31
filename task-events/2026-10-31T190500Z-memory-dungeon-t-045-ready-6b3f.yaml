@@ -1,9 +1,0 @@
-version: 1
-project: memory-dungeon
-task: t-045
-operation: ready
-owner: worker
-session: 20261031T185041Z-memory-dungeon-t-045-priority-6b3f
-updated: '2026-10-31T19:05:00Z'
-note: >-
-  2026-10-31 PT: Merged Conductor PR #6891 (040db14c983be5436bb3b4a0e49b40479393c8cc), all eight Worker CI jobs green on b0966c0aee61ae176467ddf6f272a1d00b365959; 3227 Python tests passed, 53 skipped. Live one-shot workflow #41231988866 verified durable priority +1 updates to exactly four existing Hoshimori map/Oven ArtJobs 52108, 52109, 52234, 52235; no duplicates or media writes. The same audit still found 643 PENDING / 1 RUNNING globally, these four PENDING at ranks 623-626 and 0/20 Hoshimori style images delivered. Issue kind_robots#4136 comment 6547790927 has evidence. Return READY for relay throughput/high-priority queue investigation, rendered 8x8/6x6 geometry, 64 gallery ArtJobs, unlock integration and device QA. Memory Dungeon ACTIVE, not For Human Gate.
