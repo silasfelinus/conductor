@@ -394,11 +394,8 @@ tasks:
   - id: t-017
     milestone: m2
     title: "Queue and verify distinct art for teams, districts and specials"
-    status: review
-    claimed_by: 20261031T082251543Z-slime-city-t017-art-z8m2
-    claimed_at: '2026-10-31T08:22:51.543Z'
+    status: ready
     depends_on: t-001
-    owner: worker
     passes: 0
     stakes: reversible
     note: |-
@@ -406,4 +403,6 @@ tasks:
       2026-10-30 art refill: conductor #6828 (7aa20da) added projects/slime-city/art/CREWS- DISTRICTS-CARDS-ROUND-1.yaml, an auto-submit Krea 2 ledger at priority 650. It covers 6 crew hero scenes, 7 district panoramas, all 36 prototype cards and 3 board layouts (blackout/gridiron/bloodrush), keyed by prototypes.ts ids as slime- city/{crews,districts,cards,boards}/<id>. 51 are queued as jobs 52035-52085; slime-card- plating hit HTTP 502 and is retrying. Prompts are original (projects/slime-city/ART- PROMPTS.md never existed): all adults, slapstick non-gory violence. Next: once DONE, review renders, export to public/slime-city via scripts/export_round_art.py, and wire a small manifest and lookup into /admin/slime-city (the lab currently shows card symbols) with per-asset pending/done/failed provenance. Not done until verified ArtImages show in the lab.
 
       First authenticated ArtImage integration for Slime City internal lab is staged on worker/slime-city-t017-art-ledger-20261031T082251Z-z8m2. Conductor round-one ledger has 52 DONE subjects with unique ArtImage IDs: six crew portraits, seven district panoramas, 36 starter card illustrations, three arena scenes. Typed manifest records exact provenance; a Pinia loader requests private bytes with user JWT and exposes loaded/unavailable status. Artwork is wired into roster, city, campaign, cards, modes and arena. The other 24 starter cards remain honest fallbacks. Tests assert coverage and missingness. Delivered bytes and actual rendered browser screenshots NOT yet verified. Kind Robots CI and PR still pending.
-    updated: '2026-10-31T08:25:55.649Z'
+
+      PARTIAL 2026-10-31 PT: Merged Kind Robots PR #4551 (a2ddb7aa1612f938a292559e3a6df11ac1be559b), with 15/15 latest-head GitHub CI workflows successful, including TypeScript, changed-file formatting, layout and four contract shards. Conductor Krea 2 round-one ledger now records 52 DONE ArtImages: six crew paintings, seven district panoramas, 36 individual starter card paintings and three arena scenes; 52 IDs are unique. A typed immutable provenance manifest and account-authenticated transient blob image loader now drive actual image slots in internal Slime City roster, city, STORY splash, mode preview, arena, hand, card inspection, and collection. The UI exposes ArtImage IDs, loaded/unavailable state, and the remaining 24 missing card illustrations instead of counting queued or ledger-only renders as visible proof. Actual private media bytes and rendered visuals on the self-hosted deployment remain unverified, so t-017 must stay READY for next delivery-validation slice. No public files were exported, no permissions made public, and no production currency or database changes were made.
+    updated: '2026-10-31T08:34:27.451Z'
