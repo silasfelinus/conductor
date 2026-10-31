@@ -1,0 +1,17 @@
+version: 1
+project: slime-city
+task: t-007
+operation: review
+session: 20261031T195107790Z-slimecity-highlight-d58a
+updated: '2026-10-31T19:52:45.644Z'
+note: >-
+  User requested featured dashboard highlights for both new Play games,
+  Slime City and Hybridizer. Branch worker/slime-city-t007-home-highlights-
+  20261031T195107Z-d58a adds directly linked Featured experiences cards at
+  /play/slime-city and /play/hybridizer in the home visitor directory, both
+  categorized as Play and honestly labeled signed-in playtests. Their verified
+  Play URLs are used. Neither game has a public poster asset yet, so the cards
+  use distinct CSS graphic fallbacks rather than fake generated-art URLs.
+  A navigation regression asserts both highlights, destinations, disclosure
+  and fallback. Only navigation markup and a test changed; no database,
+  game mechanics, API permissions, public release or live deploy. CI pending.
