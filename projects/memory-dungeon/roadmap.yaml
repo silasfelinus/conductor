@@ -1105,8 +1105,8 @@ tasks:
   - id: t-045
     milestone: m3
     title: "Hoshimori e07/e08 art: style proofs, map/oven atlases and two 30+2 collectible galleries"
-    status: review
-    updated: '2026-10-31T11:51:00Z'
+    status: ready
+    updated: '2026-10-31T11:53:35.303Z'
     depends_on:
       - t-041
       - t-043
@@ -1138,9 +1138,8 @@ tasks:
       2026-10-31 PT: Merged Conductor PR #6882 at 8a7f02bd9a23f77c436034374b812d91121f9cc7 after 22 exact-head successful checks and 2 intentional skips on 8a495d65003c5d600a9581af181452aed598c556. Added stable queue-age bands and unknown-age counts to both Hoshimori live ArtJob/media audits, with deterministic boundary, timestamp, state and identity regressions and workflow preflight. Last live Auto Art Generate #41172766584 still showed all 20 existing Hoshimori ArtJobs PENDING, zero ArtImages delivered; render origin answered HTTP 404 but engine heartbeat was unavailable. Existing ArtJob IDs 52108-52115 and 52234-52245 preserved, no new requests or API writes. Keep t-045 READY for actual render/media investigation, 8x8/6x6 visual geometry acceptance, both 30+2 galleries, integration and device QA. Memory Dungeon remains ACTIVE.
 
       Authored 32 distinct Hoshimori e07 gallery face briefs (10 characters, 10 locations, 10 consequential events, 2 cross-realm collaborations) with source site anchors, unique future media destinations and regression contract. Authoring-only: existing 20 style ArtJobs remain pending and no new job or delivery is claimed. Focused Conductor PR and exact-head CI follow; e08 gallery, live media and UI remain open.
-    owner: worker
-    claimed_by: 20261031T114604Z-memory-dungeon-t045-gallery-9f2a
-    claimed_at: '2026-10-31T11:46:04Z'
+
+      2026-10-31 PT: Merged Conductor PR #6884 (squash 7db0ab362a4fe5b99643f7e6d6e8ab99e2500adf) after all 22 exact-head checks passed (2 intentional skips) on 02fbd0384af4ddd564a843afa5152985807e42e7. Authored Hoshimori e07 32 distinct gallery briefs: 10 characters, 10 locations, 10 consequential events, and 2 cross-realm pairings; stable IDs, source site titles, narrative hooks, unique media destinations and four contract tests. This is source content only: no new ArtJobs, ArtImages, delivered files, gallery unlock integration, or deployment. Preserve existing 20 pending style ArtJobs. Return READY for e08 30+2 gallery, actual render/relay diagnosis, media QA, map geometry and UI integration; Memory Dungeon remains ACTIVE, not For Human Gate.
   - id: t-046
     milestone: m4
     title: "Hoshimori pair adversarial acceptance: complete routes, companions, art and accessibility"
