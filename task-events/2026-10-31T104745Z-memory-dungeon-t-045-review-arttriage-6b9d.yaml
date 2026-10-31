@@ -1,0 +1,16 @@
+version: 1
+project: memory-dungeon
+task: t-045
+operation: review
+owner: worker
+session: 2026-10-31T104441Z-memory-dungeon-t-045-arttriage-6b9d
+updated: '2026-10-31T10:47:45Z'
+note: >-
+  Focused Hoshimori art-delivery triage: live e07/e08 audits now distinguish
+  pending/running ArtJob age bands from DONE, ArtImage and verified media;
+  deterministic tests cover 6h/24h/72h boundaries, unknown timestamps and
+  spoofed identity states. Existing 20 ArtJob IDs preserved. Conductor PR
+  and exact-head CI follow. Latest live Auto Art Generate #41172766584
+  found all 20 Hoshimori jobs pending (0 delivered) despite render-box HTTP
+  reachability; engine heartbeat was unavailable. The 30+2 galleries,
+  render integration and visual QA remain open.
