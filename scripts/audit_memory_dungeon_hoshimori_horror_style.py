@@ -12,6 +12,8 @@ from pathlib import Path
 
 import yaml
 
+from memory_dungeon_hoshimori_prompt_contract import validate_prompt
+
 ROOT = Path(__file__).resolve().parent.parent
 LEDGER = ROOT / "projects/memory-dungeon/art/HOSHIMORI-HORROR-STYLE-PROOFS.yaml"
 CATEGORIES = {
@@ -59,8 +61,7 @@ def validate(data: dict, *, require_jobs: bool = False) -> dict[str, int | None]
             raise ValueError(f"Incorrect repository/project for {slug}")
         if row.get("engine") != "krea2" or row.get("variant") != "image":
             raise ValueError(f"Incorrect render lane for {slug}")
-        if len(str(row.get("prompt") or "").strip()) < 120:
-            raise ValueError(f"Missing production prompt for {slug}")
+        validate_prompt(row.get("prompt"), slug)
         raw = row.get("last_art_job_id")
         if raw is None:
             if require_jobs:

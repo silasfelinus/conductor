@@ -38,9 +38,20 @@ class HoshimoriWarmStyleTests(unittest.TestCase):
         for row in self.data["requests"]:
             with self.subTest(request=row["id"]):
                 self.assertIsNone(re.search(
-                    r"\\b(?:card|poster|book cover)\\s+illustration\\b",
+                    r"\b(?:card|poster|book cover)\s+illustration\b",
                     row["prompt"], re.IGNORECASE,
                 ))
+
+    def test_preflight_rejects_production_422_prompt_shapes(self):
+        for phrase in (
+            "no text", "without lettering", "avoid visible typography",
+            "card illustration", "poster art", "book cover design",
+        ):
+            with self.subTest(phrase=phrase):
+                data = deepcopy(self.data)
+                data["requests"][0]["prompt"] += " " + phrase
+                with self.assertRaisesRegex(ValueError, "Krea2 prompt"):
+                    validate(data)
 
     def test_rejects_duplicate_id_or_path_and_cross_project_destination(self):
         data = deepcopy(self.data)
@@ -136,6 +147,9 @@ class HoshimoriWarmStyleTests(unittest.TestCase):
         workflow = yaml.safe_load((ROOT / ".github/workflows/auto-art-generate.yml").read_text())
         steps = workflow["jobs"]["generate"]["steps"]
         submit = next(s for s in steps if s.get("id") == "memory_dungeon_hoshimori_style_submit")
+        preflight = next(s for s in steps if s.get("name") ==
+                         "Verify Memory Dungeon art submission contracts")
+        self.assertLess(steps.index(preflight), steps.index(submit))
         self.assertIn("--submit-only", submit["run"])
         self.assertIn("HOSHIMORI-WARM-STYLE-PROOFS.yaml", submit["run"])
         self.assertIn("KR_API_TOKEN", submit["env"])
