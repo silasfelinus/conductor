@@ -8,11 +8,11 @@ Blackout CPU battle → XP + Meat → daily/weekly claim → buy a 3-card Street
 
 ### Starter rewards (internal proof of concept)
 - WIN: 80 XP + 45 Meat; DRAW: 35 XP + 15 Meat; LOSS: 25 XP + 10 Meat.
-- First ten completed CPU bouts per Pacific calendar day earn base payout, then free practice stays available with no base payout. Distinct command/seed match receipts do not pay twice. **This is a browser-local prototype only** and is trivially mutable by the browser owner. Never treat it as a secure production economy.
+- First ten completed CPU bouts per Pacific calendar day earn base payout, then free practice stays available with no base payout. Distinct command/seed match receipts do not pay twice. **The database is authoritative.** Every user has an account-owned wallet, XP, collection and claims. CPU battles use server-issued match IDs/seeds and are replay-verified for a once-only payout.
 - Dailies: Clock In (one bout, +20 Meat/+20 XP); Own the Pit (one Blackout win, +35/+35); Union of Monsters (three creature cards deployed, +25/+25).
 - Weeklies: Street Champion (five CPU wins, +125 Meat/+150 XP); Six-Crew Sampler (battle with three distinct crews, +85/+100); Cardboard Riot (24 cards played, +110/+120).
 - Windows reset daily at Pacific midnight, weekly on Monday at Pacific midnight. Challenges claim once per period and **do not** use daily streaks or FOMO timers.
-- UI is private `/admin/slime-city` with browser-local saves in `slime-city-progression-v1`, not a durable user-account ledger or PvP economy. This prototype is specifically scoped before the waiting `t-008` secure ledger and `t-010` persistent mission tasks.
+- The internal `/admin/slime-city` view uses authenticated API routes for all reads, purchases, claims and match settlement. New additive `SlimeCityAccount` and `SlimeCityMatch` tables store all wallet, inventory, XP and audit data. Client-side data is display state only, never currency authority. The broader t-008/t-010 roadmaps remain incomplete.
 
 ### Street Pack v0
 - Cost: **100 virtual Meat**; contents: exactly **3 previously uncollected cards**, **one guaranteed RARE** and two **COMMON or UNCOMMON**. Zero duplicates across packs and no repeat of the same card already collected. Rarity and collection probability are transparent.
@@ -41,7 +41,7 @@ Blackout CPU battle → XP + Meat → daily/weekly claim → buy a 3-card Street
 - Cosmetics and the city overworld can have independent unlocks. No card or unit gets larger printed attack solely because of rarer rarity or account level.
 
 ## Secure delivery dependency
-The waiting `t-008` cannot ship as a production economy until there are authoritative authenticated match IDs, transactional balance+inventory writes, server-side validation/replay/duration caps, UTC timestamps interpreted as Pacific calendar windows, claim idempotency, concurrent-purchase safety, anti-replay, account ownership, and deterministic/committed pack receipts with explicit rare results. The waiting `t-010` needs the same account backing for cross-device daily/weekly missions. Currency and cards must remain nontransferable; public exposure needs Silas's separate approval. Browser localStorage v0 is *not* an anti-cheat boundary.
+The first account-owned API, issued CPU match IDs and transactional ledger are implemented; t-008 still requires a stronger anti-bot review, transaction history, campaign integration, and actual deployed schema verification before a general launch.
 
 ## Next design decision
 Run at least 100 seeded test games with each crew on both sides in open-information Blackout and collect failure causes. Only then finalize stats and decide whether the next authored 50-card-per-crew expansion should be staged as ten-card batches with real ArtJobs. Prioritize quality and unique crew identities over sheer item count.
