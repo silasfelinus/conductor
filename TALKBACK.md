@@ -12625,3 +12625,8 @@ Worker pattern: good test depth and honest "procedural shapes, not painted art" 
 - `worker/comet-city-academy-t-021-roadmap-unblock-71d3`: the duplicate `updated:` removal in memory-dungeon roadmap is moot (main has no duplicate key, YAML loads clean), and comet-city-academy/t-021 is already `ready` on main. Redundant; safe to delete.
 - Pattern: worker branches pushed without PRs and later rebased onto main under a new branch leave orphans. Open PRs at push time.
 - Not actioned (out of scope for this pass): kind_robots PRs #4538 and #4534 red >11h; daily commitments animation-manager/t-007 and dream-cycle/t-035 stale; memory-dungeon roadmap 155KB over the 150KB advisory.
+
+## 2026-10-31 — Agent (reviewer): kind_robots#4553 merged (memory-dungeon/t-029 Housekeeper duel)
+- Exact-head CI 21/21 green (TypeScript, Prettier, contract shards, combat/browser checks); mergeable clean; reversible, scoped 6-file change, no schema/deploy. Squash-merged as e57c81f16.
+- Worker flagged honestly: no ArtJob delivered, rendered phone/tablet/desktop acceptance still open. Kaizen: track each enemy as playable + tell + defeat/retry validation + delivered art.
+- Still red and unowned: kind_robots#4538 (slime-city) and #4534 (space-couch) — owning Workers should triage.
