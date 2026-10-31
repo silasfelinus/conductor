@@ -1,0 +1,35 @@
+name: Memory Dungeon Hoshimori Art Readiness
+
+# Read-only production evidence. Never submits ArtJobs, writes media, deploys,
+# sends mail, or marks gallery briefs as delivered.
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/memory-dungeon-hoshimori-readiness.yml"
+      - "scripts/audit_memory_dungeon_hoshimori_gallery_readiness.py"
+      - "projects/memory-dungeon/art/HOSHIMORI-*-GALLERY-BRIEFS.yaml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    env:
+      KR_BASE_URL: https://kindrobots.org
+      KR_MEDIA_ORIGIN: https://media.acrocatranch.com
+      KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install manifest parser
+        run: python -m pip install --disable-pip-version-check --quiet pyyaml
+      - name: Validate authored 64-face gallery and durable style receipts
+        run: python scripts/audit_memory_dungeon_hoshimori_gallery_readiness.py
+      - name: Check live Hoshimori ArtJobs, fresh media and engine heartbeat
+        run: python scripts/audit_memory_dungeon_hoshimori_gallery_readiness.py --live
