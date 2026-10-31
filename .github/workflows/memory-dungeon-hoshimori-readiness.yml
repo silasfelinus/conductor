@@ -8,6 +8,7 @@ on:
     paths:
       - ".github/workflows/memory-dungeon-hoshimori-readiness.yml"
       - "scripts/audit_memory_dungeon_hoshimori_gallery_readiness.py"
+      - "scripts/audit_memory_dungeon_hoshimori_relay.py"
       - "projects/memory-dungeon/art/HOSHIMORI-*-GALLERY-BRIEFS.yaml"
   workflow_dispatch:
 
@@ -33,3 +34,5 @@ jobs:
         run: python scripts/audit_memory_dungeon_hoshimori_gallery_readiness.py
       - name: Check live Hoshimori ArtJobs, fresh media and engine heartbeat
         run: python scripts/audit_memory_dungeon_hoshimori_gallery_readiness.py --live
+      - name: Diagnose queue pause, relay claim polls and global priority blockers
+        run: python scripts/audit_memory_dungeon_hoshimori_relay.py
