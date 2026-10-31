@@ -1105,8 +1105,8 @@ tasks:
   - id: t-045
     milestone: m3
     title: "Hoshimori e07/e08 art: style proofs, map/oven atlases and two 30+2 collectible galleries"
-    status: ready
-    updated: '2026-10-31T10:50:55Z'
+    status: claimed
+    updated: '2026-10-31T11:46:04Z'
     depends_on:
       - t-041
       - t-043
@@ -1136,6 +1136,9 @@ tasks:
       Focused Hoshimori art-delivery triage: live e07/e08 audits now distinguish pending/running ArtJob age bands from DONE, ArtImage and verified media; deterministic tests cover 6h/24h/72h boundaries, unknown timestamps and spoofed identity states. Existing 20 ArtJob IDs preserved. Conductor PR and exact-head CI follow. Latest live Auto Art Generate #41172766584 found all 20 Hoshimori jobs pending (0 delivered) despite render-box HTTP reachability; engine heartbeat was unavailable. The 30+2 galleries, render integration and visual QA remain open.
 
       2026-10-31 PT: Merged Conductor PR #6882 at 8a7f02bd9a23f77c436034374b812d91121f9cc7 after 22 exact-head successful checks and 2 intentional skips on 8a495d65003c5d600a9581af181452aed598c556. Added stable queue-age bands and unknown-age counts to both Hoshimori live ArtJob/media audits, with deterministic boundary, timestamp, state and identity regressions and workflow preflight. Last live Auto Art Generate #41172766584 still showed all 20 existing Hoshimori ArtJobs PENDING, zero ArtImages delivered; render origin answered HTTP 404 but engine heartbeat was unavailable. Existing ArtJob IDs 52108-52115 and 52234-52245 preserved, no new requests or API writes. Keep t-045 READY for actual render/media investigation, 8x8/6x6 visual geometry acceptance, both 30+2 galleries, integration and device QA. Memory Dungeon remains ACTIVE.
+    owner: worker
+    claimed_by: 20261031T114604Z-memory-dungeon-t045-gallery-9f2a
+    claimed_at: '2026-10-31T11:46:04Z'
   - id: t-046
     milestone: m4
     title: "Hoshimori pair adversarial acceptance: complete routes, companions, art and accessibility"
