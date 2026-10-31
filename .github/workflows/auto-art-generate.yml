@@ -171,6 +171,7 @@ jobs:
         run: |
           python -m unittest discover -s tests -p 'test_memory_dungeon_art_queue.py'
           python -m unittest discover -s tests -p 'test_memory_dungeon_hoshimori_style.py'
+          python -m unittest discover -s tests -p 'test_memory_dungeon_hoshimori_horror_style.py'
 
       - name: Recover unrecorded Memory Dungeon ArtJob IDs
         id: memory_dungeon_reconcile
@@ -261,6 +262,21 @@ jobs:
             --queue-file projects/memory-dungeon/art/HOSHIMORI-WARM-STYLE-PROOFS.yaml \
             --id-prefix memory-dungeon-hoshimori-e07-style-
 
+      # Hoshimori e08 uses the same coordinates but a different original ink-horror
+      # visual grammar. Preserve its eight receipts independently from e07.
+      - name: Submit Memory Dungeon Hoshimori horror style proofs
+        id: memory_dungeon_hoshimori_horror_submit
+        if: ${{ steps.krhealth.outputs.up == 'true' && steps.memory_dungeon_reconcile.outcome == 'success' }}
+        continue-on-error: true
+        working-directory: conductor
+        env:
+          KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+          KR_MEDIA_ORIGIN: https://media.acrocatranch.com
+        run: |
+          python scripts/consume_art_requests_to_media.py --live --submit-only --limit 0 \
+            --queue-file projects/memory-dungeon/art/HOSHIMORI-HORROR-STYLE-PROOFS.yaml \
+            --id-prefix memory-dungeon-hoshimori-e08-style-
+
       # The generic art consumers below can run for hours. Save the ArtJob IDs
       # NOW, not at the end of the 150-minute rendering workflow. A cancelled
       # workflow must not orphan accepted jobs and then enqueue them again.
@@ -270,7 +286,7 @@ jobs:
         run: |
           git config user.name "conductor-bot"
           git config user.email "conductor-bot@users.noreply.github.com"
-          git add projects/art-prompts.yaml projects/memory-dungeon/art/KNOWN-ART-REQUESTS.yaml projects/memory-dungeon/art/HOUSE-ATLAS-REQUESTS.yaml projects/memory-dungeon/art/EARTH-PHOTO-REQUESTS.yaml projects/memory-dungeon/art/HOSHIMORI-WARM-STYLE-PROOFS.yaml
+          git add projects/art-prompts.yaml projects/memory-dungeon/art/KNOWN-ART-REQUESTS.yaml projects/memory-dungeon/art/HOUSE-ATLAS-REQUESTS.yaml projects/memory-dungeon/art/EARTH-PHOTO-REQUESTS.yaml projects/memory-dungeon/art/HOSHIMORI-WARM-STYLE-PROOFS.yaml projects/memory-dungeon/art/HOSHIMORI-HORROR-STYLE-PROOFS.yaml
           if git diff --staged --quiet; then
             echo "Memory Dungeon ledgers already match submitted ArtJobs."
           else
@@ -310,6 +326,12 @@ jobs:
         if: ${{ steps.krhealth.outputs.up == 'true' && steps.memory_dungeon_reconcile.outcome == 'success' }}
         working-directory: conductor
         run: python scripts/audit_memory_dungeon_hoshimori_style.py --require-jobs
+
+      - name: Verify eight Hoshimori horror style ArtJob receipts
+        id: memory_dungeon_hoshimori_horror_receipts
+        if: ${{ steps.krhealth.outputs.up == 'true' && steps.memory_dungeon_reconcile.outcome == 'success' }}
+        working-directory: conductor
+        run: python scripts/audit_memory_dungeon_hoshimori_horror_style.py --require-jobs
 
       # Submission receipts alone cannot prove a render reached the media host.
       # Probe the two NEW House atlas jobs separately from the immutable 752-job
@@ -388,6 +410,41 @@ jobs:
             done
             if [ "$pushed" != true ]; then
               echo "::error::Could not persist Hoshimori style delivery evidence."
+              exit 1
+            fi
+          fi
+
+      - name: Audit Hoshimori horror style render and media delivery
+        id: memory_dungeon_hoshimori_horror_delivery
+        if: ${{ steps.krhealth.outputs.up == 'true' && steps.memory_dungeon_hoshimori_horror_receipts.outcome == 'success' }}
+        continue-on-error: true
+        working-directory: conductor
+        env:
+          KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+          KR_MEDIA_ORIGIN: https://media.acrocatranch.com
+        run: |
+          python scripts/audit_memory_dungeon_hoshimori_horror_style.py --live \
+            --report projects/memory-dungeon/art/HOSHIMORI-HORROR-STYLE-STATUS.json
+
+      - name: Checkpoint Hoshimori horror style delivery status before rendering
+        if: ${{ steps.memory_dungeon_hoshimori_horror_delivery.outcome == 'success' }}
+        working-directory: conductor
+        run: |
+          git config user.name "conductor-bot"
+          git config user.email "conductor-bot@users.noreply.github.com"
+          git add projects/memory-dungeon/art/HOSHIMORI-HORROR-STYLE-STATUS.json
+          if git diff --staged --quiet; then
+            echo "Hoshimori horror style delivery status unchanged."
+          else
+            git commit -m "chore: checkpoint Hoshimori horror media status [skip ci]"
+            pushed=false
+            for attempt in 1 2 3 4 5; do
+              if git push origin HEAD:main; then pushed=true; break; fi
+              echo "Hoshimori horror status checkpoint push race (attempt $attempt)."
+              git pull --rebase --autostash origin main || exit 1
+            done
+            if [ "$pushed" != true ]; then
+              echo "::error::Could not persist Hoshimori horror delivery evidence."
               exit 1
             fi
           fi
