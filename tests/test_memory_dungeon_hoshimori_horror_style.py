@@ -2,6 +2,7 @@
 from copy import deepcopy
 from pathlib import Path
 import sys
+import re
 import unittest
 
 import yaml
@@ -36,6 +37,15 @@ class HoshimoriHorrorStyleTests(unittest.TestCase):
         self.assertTrue(any("Vesper" in r["prompt"] for r in rows))
         self.assertTrue(any("Scylla" in r["prompt"] for r in rows))
         self.assertTrue(all("Junji Ito" not in r["prompt"] for r in rows))
+
+    def test_positive_art_prompts_avoid_inert_negative_text_instructions(self):
+        for row in self.data["requests"]:
+            with self.subTest(request=row["id"]):
+                self.assertIsNone(re.search(
+                    r"\\bno\\s+(?:text|lettering|words|typography)\\b",
+                    row["prompt"], re.IGNORECASE,
+                ))
+                self.assertIn("every surface bare and unmarked", row["prompt"])
 
     def test_warm_and_horror_jobs_have_no_colliding_request_or_media_ids(self):
         warm_path = ROOT / "projects/memory-dungeon/art/HOSHIMORI-WARM-STYLE-PROOFS.yaml"
