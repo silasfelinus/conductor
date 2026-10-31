@@ -1105,8 +1105,8 @@ tasks:
   - id: t-045
     milestone: m3
     title: "Hoshimori e07/e08 art: style proofs, map/oven atlases and two 30+2 collectible galleries"
-    status: claimed
-    updated: '2026-10-31T10:44:41Z'
+    status: review
+    updated: '2026-10-31T10:47:45Z'
     depends_on:
       - t-041
       - t-043
@@ -1132,6 +1132,8 @@ tasks:
       Focused Hoshimori e07/e08 production preflight now rejects known Krea2 HTTP 422 prompt shapes (negative text-exclusion and physical card/poster format) before any new ArtJob is enqueued. Repaired two escaped regex tests that silently passed invalid prompts; added mutation tests and verified preflight workflow ordering. Existing twenty durable ArtJob IDs and media paths remain unchanged. Conductor PR and exact-head CI follow. ArtImage delivery and 30+2 galleries remain open.
 
       2026-10-31 PT: Merged Conductor PR #6881 (b77c14efb7f67cb85f9697ec8e3133a364521bd0) after exact-head Worker PR CI #41191724273, Security Audit #41191724315 and corrected handoff-template #41191814745 passed on 0507498b7187fc92cb68698991badc6474f90eb0. Fixed e07/e08 raw-regex escaping that let Krea2-rejected no-text/card-illustration prompts pass; both receipt validators now reject negative text/physical format instructions, with six adversarial mutations per realm before enqueue. Existing 20 Hoshimori ArtJobs (52108-52115, 52234-52245) unchanged. Last durable status remains 0/20 delivered, no ArtImages verified. Return READY for actual rendering, 8x8/6x6 geometry inspection, gallery 30+2 coverage and integration. No deployment or human gate.
+
+      Focused Hoshimori art-delivery triage: live e07/e08 audits now distinguish pending/running ArtJob age bands from DONE, ArtImage and verified media; deterministic tests cover 6h/24h/72h boundaries, unknown timestamps and spoofed identity states. Existing 20 ArtJob IDs preserved. Conductor PR and exact-head CI follow. Latest live Auto Art Generate #41172766584 found all 20 Hoshimori jobs pending (0 delivered) despite render-box HTTP reachability; engine heartbeat was unavailable. The 30+2 galleries, render integration and visual QA remain open.
     owner: worker
     claimed_by: 2026-10-31T104441Z-memory-dungeon-t-045-arttriage-6b9d
     claimed_at: '2026-10-31T10:44:41Z'
