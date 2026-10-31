@@ -77,9 +77,13 @@ def validate(data: dict, sources: dict[str, dict], *, require_jobs: bool = False
             raise ValueError(f"art status without ArtJob receipt: {face['id']}")
         if art:
             row = art["krea2"]
-            if not isinstance(row, dict) or row.get("status") not in {
-                "PENDING", "RUNNING", "DONE", "FAILED", "CANCELLED",
-            }:
+            status = row.get("status") if isinstance(row, dict) else None
+            # Status refresh may record HTTP5xx on a transient read failure;
+            # that is not a delivery claim and must not erase a valid job ID.
+            if not isinstance(status, str) or not (
+                status in {"PENDING", "RUNNING", "DONE", "FAILED", "CANCELLED", "REJECTED"}
+                or (status.startswith("HTTP") and status[4:].isdigit())
+            ):
                 raise ValueError(f"invalid art status: {face['id']}")
             image_id = row.get("art_image_id")
             if image_id is not None and (type(image_id) is not int or image_id <= 0):
