@@ -153,9 +153,8 @@ tasks:
   - id: t-004
     milestone: m2
     title: "Expand five mana colors into six distinct authored crews and special decks"
-    status: review
+    status: ready
     depends_on: t-002
-    owner: worker
     passes: 0
     stakes: reversible
     note: |-
@@ -163,10 +162,9 @@ tasks:
       PARTIAL 2026-10-30, back to ready: Kind Robots PR #4520 (3688a309) merged, all 21 checks green. Six legal ten-card crew decks (60 authored cards; 4 creatures + 6 specials, one signature each, deckProblems() enforced) with distinct keywords and named counters: catgirls AMBUSH/REGEN (out of reach)/rearming Catnip Overdrive/Laser Pointer root; bloodfairies SWARM/LEECH/enemy-only Moshpit; Ironjaw armor/BULLDOZE; Riot Saints VOLATILE chains and friendly-fire Confetti Cannon; Undertow two armed traps/SNARE/PIERCE/Drain Sonar; Meat Exchange COLLECT mana debt (cap 2), Foreclosure, Hidden Fees, 6-mana Mogul. Per-crew BLACKOUT armies; CPU values every keyword and effect; hidden keywords redacted. Tests: new verifySlimeCityCrews contract plus lab/store/overworld. Balance (20 seeds, default rules, conductor PLAYTEST-COMPARISON 'After rebalance'): 15 of 18 crew-format cells inside 40-60% (was 7); Meat Exchange 72/75/82 -> 43/64/44; catgirls MEATBALL 24 -> 41.5; BLOODRUSH seats 40/52 -> 40/42. REMAINS: catgirls BLACKOUT 76%, Undertow BLACKOUT 32% (CPU barely uses traps in BLACKOUT), Meat Exchange MEATBALL 63.5%, strongly intransitive BLOODRUSH pairs (Ironjaw 99-1 vs Exchange, 7.5-92.5 vs Undertow); MEATBALL default draws rose 27 -> 44% (t-003 variants address it). Card art provenance stays t-017 (glyph stand-ins only).
 
       Blackout-first overhaul linked to kind_robots issue #4535: open 10x6 arena, four seeded cards drawn from each ten-card crew deck per round, true played card consumption and discard cycling, full card inspection, manual attack commands with range highlights and summon delay, and CPU explicit attacks. Legacy concealed-army combat retained only for opt-in regression fixtures. Kind Robots implementation PR and CI pending; this is a partial t-004 slice, not 50-card-per-crew expansion or delivered Krea artwork.
-    claimed_by: 2026-10-30T234505Z-slime-city-t004-blackout-c59d
-    claimed_at: '2026-10-30T23:45:05Z'
-    updated: '2026-10-30T23:52:12Z'
-    implementation_pr: 'silasfelinus/kind_robots#4520'
+
+      PARTIAL Blackout-first increment shipped. Kind Robots PR #4537 merged at 15fd7e954e63ef442cba2c1e7a0ed84d6b2edf01 after 23/23 checks success (TypeScript, production image, mandatory Slime City contract, layout and Prettier). The open 10x6 arena starts empty and visible, faction decks of ten deal seeded four-card round hands, played cards leave the hand and cycle through the discard pile, and each side obeys identical card legality. Blackout uses explicit targeted attack commands with range and once-per-round summon-delay rules; enemy CPU chooses attacks from its observed view; action histories replay deterministically. Large card inspection and move/target highlighting are included. Old concealed-army setup remains opt-in test-only via classicFog. Conductor design directive PR #6868 merged, source master GitHub issue #4535 remains OPEN. REMAINS: authentic generated art integration and attack icons (ArtJob statuses in t-017), paced opponent action animation, Bloodrush cause-of-death UI, full art-first home screen, fifty extra cards per faction and final deck builder. No public deploy, production currency, or generated art completion claimed.
+    updated: '2026-10-31T00:10:10Z'
   - id: t-005
     milestone: m2
     title: "Implement competitive square-grid AI and comparative match replays"
