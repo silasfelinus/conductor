@@ -226,6 +226,101 @@ class HoshimoriGalleryReadinessTests(unittest.TestCase):
         self.assertFalse(live["ready_for_gallery_submission"])
 
 
+    def test_bound_done_gallery_requires_artimage_and_fresh_exact_media(self):
+        pilot = yaml.safe_load(PILOT_LEDGER.read_text(encoding="utf-8"))
+        subject = pilot["subjects"][0]
+        destination = f"public/{subject['asset']}.webp"
+        job = {
+            "id": subject["jobs"]["krea2"],
+            "projectSlug": "memory-dungeon",
+            "engine": "COMFY",
+            "status": "DONE",
+            "artImageId": 91234,
+            "createdAt": "2026-10-31T22:00:00Z",
+            "payload": {
+                "promptString": subject["prompt_prose"],
+                "save": {"isPublic": False, "isMature": False},
+                "conductorRequest": {
+                    "id": subject["key"], "imagePath": destination,
+                    "targetRepo": "silasfelinus/kind_robots",
+                },
+            },
+        }
+        probed = []
+        def fresh(path, created):
+            probed.append((path, created))
+            return "delivered"
+
+        report = audit_pilot_live(pilot, [job], fresh)
+        self.assertEqual(report["delivered"], 1)
+        self.assertEqual(report["counts"]["delivered"], 1)
+        self.assertEqual(probed, [(destination, job["createdAt"])])
+
+        stale = audit_pilot_live(pilot, [job], lambda _path, _created: "media_stale")
+        self.assertEqual(stale["delivered"], 0)
+        self.assertEqual(stale["counts"]["media_stale"], 1)
+
+        job["artImageId"] = None
+        missing_image = audit_pilot_live(pilot, [job], fresh)
+        self.assertEqual(missing_image["counts"]["done_without_artimage"], 1)
+        self.assertEqual(len(probed), 1)
+
+    def test_gallery_media_cannot_be_attributed_to_an_unbound_or_wrong_job(self):
+        pilot = yaml.safe_load(PILOT_LEDGER.read_text(encoding="utf-8"))
+        subject = pilot["subjects"][0]
+        job = {
+            "id": subject["jobs"]["krea2"],
+            "projectSlug": "memory-dungeon", "engine": "COMFY",
+            "status": "DONE", "artImageId": 91234,
+            "payload": {
+                "promptString": subject["prompt_prose"],
+                "save": {"isPublic": False, "isMature": False},
+            },
+        }
+        def forbidden(_path, _created):
+            self.fail("an unbound or mismatched job must not probe a gallery file")
+        unbound = audit_pilot_live(pilot, [job], forbidden)
+        self.assertEqual(unbound["counts"]["done_media_unverified"], 1)
+        self.assertEqual(unbound["delivered"], 0)
+
+        job["payload"]["conductorRequest"] = {
+            "id": subject["key"],
+            "imagePath": "public/images/memory-dungeon/other.webp",
+            "targetRepo": "silasfelinus/kind_robots",
+        }
+        wrong = audit_pilot_live(pilot, [job], forbidden)
+        self.assertEqual(wrong["counts"]["destination_mismatch"], 1)
+        self.assertEqual(wrong["delivered"], 0)
+
+    def test_live_gallery_media_count_is_not_style_or_submission_count(self):
+        pilot = yaml.safe_load(PILOT_LEDGER.read_text(encoding="utf-8"))
+        subject = pilot["subjects"][0]
+        job = {
+            "id": subject["jobs"]["krea2"],
+            "projectSlug": "memory-dungeon", "engine": "COMFY",
+            "status": "DONE", "artImageId": 91234,
+            "createdAt": "2026-10-31T22:00:00Z",
+            "payload": {
+                "promptString": subject["prompt_prose"],
+                "save": {"isPublic": False, "isMature": False},
+                "conductorRequest": {
+                    "id": subject["key"],
+                    "imagePath": f"public/{subject['asset']}.webp",
+                    "targetRepo": "silasfelinus/kind_robots",
+                },
+            },
+        }
+        report = audit_live(
+            self.manifests, self.ledgers, self.snapshots,
+            jobs=[job], heartbeat_state="ok",
+            media_probe=lambda _path, _created: "delivered",
+        )
+        self.assertEqual(report["gallery_delivered_images"], 1)
+        self.assertEqual(report["live"]["gallery_delivered"], 1)
+        self.assertEqual(report["live"]["style_delivered"], 0)
+        self.assertEqual(report["gallery_artjobs"], 16)
+        self.assertFalse(report["ready_for_gallery_submission"])
+
 
 if __name__ == "__main__":
     unittest.main()
