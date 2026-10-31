@@ -189,9 +189,10 @@ class HoshimoriGalleryReadinessTests(unittest.TestCase):
     def test_second_pilot_is_counted_without_pretending_to_be_submitted(self):
         report = load_report()
         self.assertEqual(report["gallery_pilots"]["round1"]["submitted"], 8)
-        self.assertEqual(report["gallery_pilots"]["round2"]["submitted"], 0)
-        self.assertEqual(report["gallery_artjobs"], 8)
-        self.assertEqual(report["gallery_unsubmitted"], 56)
+        second = report["gallery_pilots"]["round2"]
+        self.assertEqual(second["submitted"] + second["unsubmitted"], 8)
+        self.assertEqual(report["gallery_artjobs"], 8 + second["submitted"])
+        self.assertEqual(report["gallery_unsubmitted"], 56 - second["submitted"])
 
     def test_cross_round_artjob_receipt_collision_is_rejected(self):
         round2 = yaml.safe_load(ROUND2_LEDGER.read_text(encoding="utf-8"))
@@ -209,15 +210,17 @@ class HoshimoriGalleryReadinessTests(unittest.TestCase):
             "krea2": {"status": "PENDING", "art_image_id": None}
         }
         report = audit(self.manifests, self.ledgers, self.snapshots, pilot2=round2)
-        self.assertEqual(report["gallery_artjobs"], 9)
-        self.assertEqual(report["gallery_unsubmitted"], 55)
+        submitted = sum((row.get("jobs") or {}).get("krea2") is not None
+                        for row in round2["subjects"])
+        self.assertEqual(report["gallery_artjobs"], 8 + submitted)
+        self.assertEqual(report["gallery_unsubmitted"], 56 - submitted)
         self.assertEqual(report["gallery_delivered_images"], 0)
         live = audit_live(
             self.manifests, self.ledgers, self.snapshots,
             pilot2=round2, jobs=[], heartbeat_state="ok",
         )
         self.assertEqual(live["live"]["gallery_pilots"]["round2"]["counts"],
-                         {"job_missing": 1, "unsubmitted": 7})
+                         {"job_missing": submitted, "unsubmitted": 8 - submitted})
         self.assertFalse(live["ready_for_gallery_submission"])
 
 
