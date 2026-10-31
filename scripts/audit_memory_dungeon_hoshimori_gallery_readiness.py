@@ -20,6 +20,10 @@ import yaml
 from audit_memory_dungeon_hoshimori_style import validate as validate_warm_style
 from audit_memory_dungeon_hoshimori_horror_style import validate as validate_horror_style
 from memory_dungeon_hoshimori_prompt_contract import validate_prompt
+from verify_memory_dungeon_hoshimori_gallery_pilot import (
+    LEDGER as PILOT_LEDGER, validate as validate_pilot,
+)
+from enqueue_art_requests import compose_prompt
 
 ROOT = Path(__file__).resolve().parents[1]
 ART = ROOT / "projects/memory-dungeon/art"
@@ -122,7 +126,10 @@ def validate_style_snapshot(
             "snapshot_pending": counts["pending"], "snapshot_running": counts["running"]}
 
 
-def audit(manifests: dict[str, dict], ledgers: dict[str, dict], snapshots: dict[str, dict]) -> dict:
+def audit(
+    manifests: dict[str, dict], ledgers: dict[str, dict], snapshots: dict[str, dict],
+    *, pilot: dict | None = None,
+) -> dict:
     ids: set[str] = set()
     paths: set[str] = set()
     styles: dict[str, dict[str, int]] = {}
@@ -135,6 +142,20 @@ def audit(manifests: dict[str, dict], ledgers: dict[str, dict], snapshots: dict[
             paths.add(face["image_path"])
         styles[world] = validate_style_snapshot(ledgers[world], snapshots[world], world, validator)
 
+    if pilot is None:
+        pilot = yaml.safe_load(PILOT_LEDGER.read_text(encoding="utf-8"))
+    pilot_receipts = validate_pilot(pilot, manifests)
+    style_ids = {
+        job for world, (_, _, _, validator) in WORLDS.items()
+        for job in validator(ledgers[world], require_jobs=True).values()
+    }
+    pilot_ids = {
+        subject["jobs"]["krea2"] for subject in pilot["subjects"]
+        if (subject.get("jobs") or {}).get("krea2") is not None
+    }
+    if style_ids & pilot_ids:
+        raise ValueError("Gallery pilot reuses a style-proof ArtJob receipt")
+
     delivered = sum(row["snapshot_delivered"] for row in styles.values())
     pending = sum(row["snapshot_pending"] for row in styles.values())
     return {
@@ -142,15 +163,18 @@ def audit(manifests: dict[str, dict], ledgers: dict[str, dict], snapshots: dict[
         "worlds": ["e07", "e08"],
         "source": "committed_snapshot_not_live",
         "gallery_briefs": len(ids),
-        "gallery_artjobs": 0,
+        "gallery_artjobs": pilot_receipts["submitted"],
+        "gallery_unsubmitted": 64 - pilot_receipts["submitted"],
         "gallery_delivered_images": 0,
+        "gallery_pilot": pilot_receipts,
         "style_artjobs": sum(row["submitted"] for row in styles.values()),
         "style_snapshot_delivered": delivered,
         "style_snapshot_pending": pending,
         "style_by_world": styles,
         "ready_for_gallery_submission": False,
         "blockers": [
-            "64 gallery entries are briefs_only with auto_submit=false; no gallery ArtJob receipts",
+            f"{64 - pilot_receipts['submitted']}/64 gallery faces lack durable ArtJob receipts",
+            "the gallery pilot ledger records submissions, not verified ArtImage/media delivery",
             f"{20 - delivered}/20 style proofs lack verified delivery in the last committed snapshot",
             "a committed delivery snapshot is not a live render heartbeat or fresh media check",
         ],
@@ -161,7 +185,7 @@ def audit(manifests: dict[str, dict], ledgers: dict[str, dict], snapshots: dict[
 def audit_live(
     manifests: dict[str, dict], ledgers: dict[str, dict], snapshots: dict[str, dict],
     *, jobs: list[dict] | None = None, heartbeat_state: str | None = None,
-    media_probe=None,
+    media_probe=None, pilot: dict | None = None,
 ) -> dict:
     """Recheck existing receipts and media; never enqueue or mutate ArtJobs."""
     from datetime import datetime, timezone
@@ -187,7 +211,9 @@ def audit_live(
         except RuntimeError:
             heartbeat_state = engine.UNRESOLVED
 
-    base = audit(manifests, ledgers, snapshots)
+    if pilot is None:
+        pilot = yaml.safe_load(PILOT_LEDGER.read_text(encoding="utf-8"))
+    base = audit(manifests, ledgers, snapshots, pilot=pilot)
     delivery_auditors = {"e07": warm_delivery, "e08": horror_delivery}
     live = {}
     for world, (_, _, _, validator) in WORLDS.items():
@@ -205,10 +231,12 @@ def audit_live(
         "style_proofs": live,
         "style_delivered": live_delivered,
         "style_not_delivered": 20 - live_delivered,
+        "gallery_pilot": audit_pilot_live(pilot, jobs),
     }
     base["source"] = "live_reconciled_with_committed_snapshot"
     base["blockers"] = [
-        "64 gallery entries remain briefs_only without gallery ArtJob receipts",
+        f"{base['gallery_unsubmitted']}/64 gallery faces still lack durable ArtJob receipts",
+        "gallery pilot DONE rows require independent ArtImage and final-media acceptance",
         f"{20 - live_delivered}/20 style proofs lack fresh verified media delivery",
         "visual inspection of the 8x8 maps, 6x6 atlases and style samples is required",
     ]
@@ -223,6 +251,68 @@ def audit_live(
     # The authored 64 briefs carry no gallery receipts and auto_submit stays false.
     base["ready_for_gallery_submission"] = False
     return base
+
+
+def audit_pilot_live(pilot: dict, jobs: list[dict]) -> dict:
+    """Reconcile the eight queued Krea2 requests without pretending they are files.
+
+    /api/art/enqueue stores the rendered prompt in the ArtJob payload but does
+    not bind the ledger's desired asset path to a deployed media file. A DONE
+    row and ArtImage ID are therefore *not* gallery delivery evidence.
+    """
+    by_id: dict[int, dict] = {}
+    for job in jobs:
+        identifier = job.get("id")
+        if type(identifier) is int and identifier > 0:
+            if identifier in by_id:
+                raise ValueError(f"Duplicate live ArtJob identity: {identifier}")
+            by_id[identifier] = job
+    counts: Counter[str] = Counter()
+    for subject in pilot["subjects"]:
+        identifier = (subject.get("jobs") or {}).get("krea2")
+        if identifier is None:
+            counts["unsubmitted"] += 1
+            continue
+        job = by_id.get(identifier)
+        if job is None:
+            counts["job_missing"] += 1
+            continue
+        payload = job.get("payload") or {}
+        if isinstance(payload, str):
+            try:
+                payload = json.loads(payload)
+            except ValueError:
+                payload = {}
+        if not isinstance(payload, dict):
+            payload = {}
+        save = payload.get("save") or {}
+        if (
+            job.get("projectSlug") != "memory-dungeon"
+            or job.get("engine") != "COMFY"
+            or payload.get("promptString") != compose_prompt(pilot["lanes"][0], subject)
+            or not isinstance(save, dict)
+            or save.get("isPublic") is not False
+            or save.get("isMature") is not False
+        ):
+            counts["identity_mismatch"] += 1
+            continue
+        status = str(job.get("status") or "").upper()
+        if status == "DONE":
+            art_image_id = job.get("artImageId")
+            counts["done_media_unverified" if type(art_image_id) is int and art_image_id > 0
+                   else "done_without_artimage"] += 1
+        elif status in {"PENDING", "RUNNING", "FAILED", "CANCELLED"}:
+            counts[status.lower()] += 1
+        else:
+            counts["unknown_state"] += 1
+    return {
+        "total": len(pilot["subjects"]),
+        "submitted": sum((row.get("jobs") or {}).get("krea2") is not None
+                         for row in pilot["subjects"]),
+        "counts": dict(sorted(counts.items())),
+        "delivered": 0,
+        "delivery_evidence": "not_checked_final_media",
+    }
 
 
 def load_report(directory: Path = ART) -> dict:
