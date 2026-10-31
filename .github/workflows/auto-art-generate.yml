@@ -246,7 +246,7 @@ jobs:
             --queue-file projects/memory-dungeon/art/EARTH-PHOTO-REQUESTS.yaml \
             --id-prefix memory-dungeon-saturate-earth-photo-
 
-      # Hoshimori e07's first eight private concept/style proofs are new art,
+      # Hoshimori e07's ten private concept/style proofs are new art,
       # separate from the 752 Briar/House baseline and the Earth photographs.
       # Submit before the long renderer and checkpoint all accepted IDs.
       - name: Submit Memory Dungeon Hoshimori warm style proofs
@@ -263,7 +263,7 @@ jobs:
             --id-prefix memory-dungeon-hoshimori-e07-style-
 
       # Hoshimori e08 uses the same coordinates but a different original ink-horror
-      # visual grammar. Preserve its eight receipts independently from e07.
+      # visual grammar. Preserve its ten receipts independently from e07.
       - name: Submit Memory Dungeon Hoshimori horror style proofs
         id: memory_dungeon_hoshimori_horror_submit
         if: ${{ steps.krhealth.outputs.up == 'true' && steps.memory_dungeon_reconcile.outcome == 'success' }}
@@ -321,13 +321,13 @@ jobs:
         working-directory: conductor
         run: python scripts/audit_memory_dungeon_earth_photos.py --require-jobs
 
-      - name: Verify eight Hoshimori warm style ArtJob receipts
+      - name: Verify ten Hoshimori warm style ArtJob receipts
         id: memory_dungeon_hoshimori_style_receipts
         if: ${{ steps.krhealth.outputs.up == 'true' && steps.memory_dungeon_reconcile.outcome == 'success' }}
         working-directory: conductor
         run: python scripts/audit_memory_dungeon_hoshimori_style.py --require-jobs
 
-      - name: Verify eight Hoshimori horror style ArtJob receipts
+      - name: Verify ten Hoshimori horror style ArtJob receipts
         id: memory_dungeon_hoshimori_horror_receipts
         if: ${{ steps.krhealth.outputs.up == 'true' && steps.memory_dungeon_reconcile.outcome == 'success' }}
         working-directory: conductor
@@ -374,7 +374,7 @@ jobs:
             fi
           fi
 
-      # Eight Hoshimori concept proofs have durable receipts but still require
+      # Ten Hoshimori concept proofs per reality have durable receipts but still require
       # exact ArtJob identity, ArtImage and fresh media HEAD evidence.
       # This is not a visual-quality or map-grid geometry acceptance gate.
       - name: Audit Hoshimori warm style render and media delivery
