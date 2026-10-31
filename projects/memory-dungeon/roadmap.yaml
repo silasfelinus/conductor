@@ -666,7 +666,7 @@ tasks:
   - id: t-029
     milestone: m3
     title: "Establish full enemy, item, achievements and unlock economy"
-    status: claimed
+    status: review
     depends_on: t-021
     passes: 0
     stakes: reversible
@@ -728,7 +728,9 @@ tasks:
       Earth e03/e04 save integrity increment: new v2 checkpoints journal adjacent travel and once-only choices; hydration replays the journal rather than trusting serialized rewards, photos or exit choices. Existing v1 saves migrate via a legal reconstructed route. Added forged-teleport, remote-choice, duplicate, invalid-choice, bounded-history and legacy roundtrip tests. Focused Kind Robots PR and exact-head CI follow. This does not finish 96 enemies, 128 items, 12 remaining medals, 64 unlocks, art or rendered QA.
 
       2026-10-31 12:53 AM PT: Merged Kind Robots PR #4550 (squash 06c215ed61f2096f842192aac07b89ac84f5ca70) after all 15 exact-head workflows passed on 843b81a138666b5876625f6e043652200cba6b37, including Contract Tests #41182067789 (4/4 shards), TypeScript #41182067786, formatting #41182067832 and Memory browser #41182067645. New Earth e03/e04 saves journal and replay legal adjacent travel and once-only decisions before restoring photos, supplies or Char tide-gate outcome; old v1 saves migrate to legal v2 routes. Forged teleport, unvisited/duplicate/invalid choices, incomplete routes, oversize journal and migration regressions added. Initial Prettier failure corrected and exact-head CI rerun. No ArtJobs, deploy, schema change or final visual acceptance. Return READY for 12 remaining medals, 96 enemies, 128 items, 64 independent unlocks, production art, e05/e06 and device QA; not For Human Gate.
-    updated: '2026-10-31T08:52:01Z'
+
+      Scoped Earth Chronicle achievement increment: twelve original cosmetic medals tied to replay-validated e03/e04 travel and photograph choices, with Char's three tide-gate outcomes preserved. Awards only after campaign completion; seeded route combinations, forgery, idempotence, spoiler concealment and save restore checks added. Focused Kind Robots PR and exact-head CI follow. This does not finish 96 enemies, 128 items, 64 permanent unlocks, production art or full campaign/device acceptance.
+    updated: '2026-10-31T08:53:00Z'
     owner: worker
     claimed_by: 2026-10-31T085201Z-memory-dungeon-t-029-earth-medals-6a91
     claimed_at: '2026-10-31T08:52:01Z'
