@@ -1105,8 +1105,8 @@ tasks:
   - id: t-045
     milestone: m3
     title: "Hoshimori e07/e08 art: style proofs, map/oven atlases and two 30+2 collectible galleries"
-    status: review
-    updated: '2026-10-31T14:53:55Z'
+    status: ready
+    updated: '2026-10-31T14:57:30Z'
     depends_on:
       - t-041
       - t-043
@@ -1150,9 +1150,8 @@ tasks:
       2026-10-31 7:00 AM PT: Merged Conductor PR #6887 (bcee742c4caa0d957f415b10fd5928a98f1daaa9) after all 8 Worker CI jobs, security and handoff passed on exact head d6e8e7d35c5dd4828b5a014d619b417378f04f44. Added cross-gallery 64-face provenance audit, 11 adversarial tests and Memory Dungeon-only authenticated live ArtJob/media/engine heartbeat workflow. Live run #41207983628 at 6:59 AM PT: COMFY heartbeat OK but e07/e08 20/20 style ArtJobs still PENDING, zero RUNNING and zero delivered. No new gallery ArtJobs, ArtImages, deploy or public gate. Roadmap issue kind_robots#4136 comment 6544339107 has evidence. Return READY: diagnose relay queue claims/eligibility, then verify 8x8/6x6 visual geometry, deliver 64 gallery faces and integrate unlocks.
 
       Scoped read-only relay-claim diagnostic on worker/memory-dungeon-t-045-relay-poll-triage-7e91c2: compare 20 existing e07/e08 receipts with queue pause, attempt exhaustion, global priority sample and fresh COMFY claim polls. Tests and exact-head CI pending; no new ArtJobs or media.
-    owner: worker
-    claimed_by: 2026-10-31T14:48:25Z-memory-dungeon-t-045-7e91c2
-    claimed_at: '2026-10-31T14:48:25Z'
+
+      2026-10-31 7:56 AM PT: Merged Conductor PR #6889 at f7ec73bc64ce103625b0c5b63f39c33ff2f9b1f5 after all 22 exact-head checks passed (2 intentional skips) on 34adcf5f7d54e7d675cb09f2d9cd8df2ba8118f9. Read-only Hoshimori queue triage plus ten adversarial tests and live workflow #41212397300 confirmed queue NOT paused, one fresh COMFY claim poll, 737 global PENDING/1 RUNNING, all 20 Hoshimori style receipts PENDING with attempts remaining and 0/20 delivered. None of those 20 appears in the first 200 globally priority-sorted pending jobs: a substantial scheduling backlog precedes them; exact runnable rank and throughput remain unverified. No new ArtJobs, media, deploy or human gate. Master kind_robots#4136 comment 6545030100. Return READY: diagnose global priority/throughput without modifying other games, then deliver/visually inspect style proofs and 64 authored gallery faces; keep Memory Dungeon ACTIVE.
   - id: t-046
     milestone: m4
     title: "Hoshimori pair adversarial acceptance: complete routes, companions, art and accessibility"
