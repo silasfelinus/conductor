@@ -1105,11 +1105,8 @@ tasks:
   - id: t-045
     milestone: m3
     title: "Hoshimori e07/e08 art: style proofs, map/oven atlases and two 30+2 collectible galleries"
-    status: review
-    owner: worker
-    claimed_by: 2026-10-31T134840Z-memory-dungeon-t045-readiness-a7f9
-    claimed_at: '2026-10-31T13:48:40Z'
-    updated: '2026-10-31T13:51:46Z'
+    status: ready
+    updated: '2026-10-31T14:00:01Z'
     depends_on:
       - t-041
       - t-043
@@ -1149,6 +1146,8 @@ tasks:
       2026-10-31 5:55 AM PT: Merged Conductor PR #6885 (squash d082412c13566c6579146781594b35adef763368) after 22 exact-head successful checks and two intentional skips on 33f44e93433c4fa2eeb8b3ac5568e6d793d2c6e3. Authored 32 original Hoshimori e08 nightmare gallery briefs: 10 characters, 10 locations, 10 outcome events and two e06/e04 cross-realm collaborations. All sixteen currently source-backed night sites are represented with exact titles, unique image destinations and Krea2-safe prompts; five contract tests enforce budget, provenance, continuity and no premature delivery claims. e07/e08 now have 64 authored gallery briefs total, but ZERO new ArtJobs, ArtImages or verified gallery deliveries from this work. Preserve 20 previously pending Hoshimori style ArtJobs. Return READY for render relay diagnosis, actual art submissions and media verification, 8x8/6x6 geometry acceptance, gallery unlock integration, unfinished e08 map/dungeon content and rendered-device QA. No deploy or human gate.
 
       Scoped Hoshimori e07/e08 gallery readiness audit and adversarial regression tests prepared on worker/memory-dungeon-t-045-gallery-readiness-a7f9. Reconciles 64 authoring-only faces with 20 existing style ArtJob receipts and last committed media snapshots; does not enqueue jobs or claim live renders. Exact-head PR CI and merge verification follow.
+
+      2026-10-31 7:00 AM PT: Merged Conductor PR #6887 (bcee742c4caa0d957f415b10fd5928a98f1daaa9) after all 8 Worker CI jobs, security and handoff passed on exact head d6e8e7d35c5dd4828b5a014d619b417378f04f44. Added cross-gallery 64-face provenance audit, 11 adversarial tests and Memory Dungeon-only authenticated live ArtJob/media/engine heartbeat workflow. Live run #41207983628 at 6:59 AM PT: COMFY heartbeat OK but e07/e08 20/20 style ArtJobs still PENDING, zero RUNNING and zero delivered. No new gallery ArtJobs, ArtImages, deploy or public gate. Roadmap issue kind_robots#4136 comment 6544339107 has evidence. Return READY: diagnose relay queue claims/eligibility, then verify 8x8/6x6 visual geometry, deliver 64 gallery faces and integrate unlocks.
   - id: t-046
     milestone: m4
     title: "Hoshimori pair adversarial acceptance: complete routes, companions, art and accessibility"
