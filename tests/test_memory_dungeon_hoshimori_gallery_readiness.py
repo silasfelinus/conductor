@@ -10,7 +10,7 @@ import yaml
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 from audit_memory_dungeon_hoshimori_gallery_readiness import (  # noqa: E402
-    ART, WORLDS, audit, load_report,
+    ART, WORLDS, audit, audit_live, load_report,
 )
 
 
@@ -94,6 +94,41 @@ class HoshimoriGalleryReadinessTests(unittest.TestCase):
         self.snapshots["e08"]["results"].pop()
         with self.assertRaisesRegex(ValueError, "ten-row"):
             audit(self.manifests, self.ledgers, self.snapshots)
+
+    def test_live_missing_jobs_cannot_pass_visual_gate(self):
+        report = audit_live(
+            self.manifests, self.ledgers, self.snapshots,
+            jobs=[], heartbeat_state="silent",
+        )
+        self.assertEqual(report["live"]["style_not_delivered"], 20)
+        self.assertEqual(report["live"]["style_proofs"]["e07"]["snapshot_delivered"], 0)
+        self.assertFalse(report["ready_for_visual_review"])
+        self.assertFalse(report["ready_for_gallery_submission"])
+
+    def test_live_verified_style_proofs_require_visual_review_before_enqueue(self):
+        jobs = []
+        for world in WORLDS:
+            for request in self.ledgers[world]["requests"]:
+                jobs.append({
+                    "id": request["last_art_job_id"],
+                    "status": "DONE",
+                    "artImageId": request["last_art_job_id"] + 100000,
+                    "createdAt": "2026-10-30T00:00:00Z",
+                    "payload": {"conductorRequest": {
+                        "id": request["id"],
+                        "imagePath": request["image_path"],
+                        "targetRepo": "silasfelinus/kind_robots",
+                    }},
+                })
+        report = audit_live(
+            self.manifests, self.ledgers, self.snapshots,
+            jobs=jobs, heartbeat_state="ok",
+            media_probe=lambda _path, _created: "delivered",
+        )
+        self.assertEqual(report["live"]["style_delivered"], 20)
+        self.assertTrue(report["ready_for_visual_review"])
+        self.assertFalse(report["ready_for_gallery_submission"])
+        self.assertEqual(report["gallery_artjobs"], 0)
 
 
 if __name__ == "__main__":
