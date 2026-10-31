@@ -1,0 +1,21 @@
+version: 1
+project: slime-city
+task: t-007
+operation: review
+session: 20261031T112724999Z-slimecity-playmove-hybrid-c7e4
+updated: '2026-10-31T11:29:42.706Z'
+note: >-
+  Silas explicitly requested 2026-10-31 PT to move Slime City and Hybridizer
+  from Admin into the Play channel. This patch adds signed-in Play entries and
+  routes at /play/slime-city and /play/hybridizer, reusing existing Nuxt/Vue
+  game surfaces and Pinia stores, plus canonical Kind Robots project placements.
+  The original /admin URLs remain as ADMIN-restricted, navigation-hidden
+  compatibility entrypoints. Both new Play tabs require authentication because
+  Hybridizer's creation APIs are account-scoped and Slime City ArtImages are
+  not presently public. The authored Play tutorials accurately identify
+  unfinished art and account progression. Static navigation and route
+  tests protect both registrations and legacy role guards. This approval is
+  ONLY for Play placement for signed-in players, NOT blanket permission for
+  public marketing, payments, unreviewed uploads or multiplayer launch.
+  Hybridizer project's separate release gate remains unmodified. No DB or API
+  permission mutations. Source staged on worker/slime-city-hybridizer-play-20261031T112724Z-c7e4; CI and PR pending.
