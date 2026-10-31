@@ -7,7 +7,9 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 
-from audit_memory_dungeon_hoshimori_relay import analyze, receipt_index  # noqa: E402
+from audit_memory_dungeon_hoshimori_relay import (  # noqa: E402
+    analyze, fetch_pending_queue, receipt_index,
+)
 
 NOW = datetime(2026, 10, 31, 15, 0, tzinfo=timezone.utc)
 REQUEST = "memory-dungeon-hoshimori-e07-style-pip-portrait"
@@ -107,6 +109,108 @@ class HoshimoriRelayTriageTests(unittest.TestCase):
         self.assertEqual(report["style_states"]["done"], 1)
         self.assertEqual(report["pending_with_attempts_remaining"], 0)
         self.assertNotIn("delivered", report["style_states"])
+
+    def test_complete_queue_reveals_exact_comfy_runway_not_global_rank(self):
+        first = [
+            {"id": i, "priority": 100, "engine": "A1111", "attempts": 0}
+            for i in range(1, 201)
+        ]
+        last = [
+            {"id": 52110, "priority": 0, "engine": "COMFY", "attempts": 0}
+        ]
+        pages = {
+            1: {"jobs": first, "pagination": {
+                "page": 1, "pageSize": 200, "totalCount": 201,
+                "hasNextPage": True,
+            }},
+            2: {"jobs": last, "pagination": {
+                "page": 2, "pageSize": 200, "totalCount": 201,
+                "hasNextPage": False,
+            }},
+        }
+        snapshot = fetch_pending_queue(pages.get)
+        report = inspect(agents=[agent()], global_pending=snapshot)
+        self.assertEqual(report["global_pending_sample"]["first_hoshimori_position"], 201)
+        self.assertTrue(report["global_pending_sample"]["complete_snapshot"])
+        self.assertTrue(report["global_pending_sample"]["none_in_first_page"])
+        self.assertEqual(report["global_pending_sample"]["comfy_pending_with_attempts_remaining"], 1)
+        self.assertEqual(
+            report["global_pending_sample"]["hoshimori_priority_runway"],
+            [{"job_id": 52110, "global_pending_rank": 201,
+              "comfy_attempt_rank": 1, "priority": 0}],
+        )
+        self.assertIn("cannot prove", report["global_pending_sample"]["note"])
+
+    def test_incomplete_page_never_becomes_exact_rank(self):
+        page = {"jobs": [{"id": 1, "priority": 0}], "pagination": {
+            "page": 1, "pageSize": 200, "totalCount": 2,
+            "hasNextPage": False,
+        }}
+        with self.assertRaisesRegex(ValueError, "incomplete"):
+            fetch_pending_queue(lambda _: page)
+
+    def test_priority_order_drift_is_rejected(self):
+        page = {"jobs": [
+            {"id": 1, "priority": 0}, {"id": 2, "priority": 10}
+        ], "pagination": {
+            "page": 1, "pageSize": 200, "totalCount": 2,
+            "hasNextPage": False,
+        }}
+        with self.assertRaisesRegex(ValueError, "ordering"):
+            fetch_pending_queue(lambda _: page)
+
+    def test_duplicate_pending_job_is_rejected(self):
+        page = {"jobs": [
+            {"id": 1, "priority": 0}, {"id": 1, "priority": 0}
+        ], "pagination": {
+            "page": 1, "pageSize": 200, "totalCount": 2,
+            "hasNextPage": False,
+        }}
+        with self.assertRaisesRegex(ValueError, "duplicate"):
+            fetch_pending_queue(lambda _: page)
+
+    def test_failed_next_page_never_returns_partial_queue(self):
+        first = {"jobs": [
+            {"id": i, "priority": 0} for i in range(1, 201)
+        ], "pagination": {
+            "page": 1, "pageSize": 200, "totalCount": 201,
+            "hasNextPage": True,
+        }}
+        with self.assertRaisesRegex(RuntimeError, "page 2 unavailable"):
+            fetch_pending_queue(lambda page: first if page == 1 else None)
+
+    def test_inconsistent_pagination_total_is_rejected(self):
+        first = {"jobs": [
+            {"id": i, "priority": 1} for i in range(1, 201)
+        ], "pagination": {
+            "page": 1, "pageSize": 200, "totalCount": 201,
+            "hasNextPage": True,
+        }}
+        second = {"jobs": [{"id": 201, "priority": 0}], "pagination": {
+            "page": 2, "pageSize": 200, "totalCount": 202,
+            "hasNextPage": False,
+        }}
+        with self.assertRaisesRegex(ValueError, "pagination changed"):
+            fetch_pending_queue(lambda page: first if page == 1 else second)
+
+    def test_complete_queue_missing_pending_receipt_is_integrity_warning(self):
+        snapshot = {"jobs": [], "pagination": {"totalCount": 0}, "complete": True}
+        report = inspect(agents=[agent()], global_pending=snapshot)
+        self.assertEqual(report["verdict"], "pending_inventory_mismatch")
+        self.assertEqual(
+            report["global_pending_sample"]["missing_pending_receipt_ids"], [52110]
+        )
+        self.assertFalse(report["global_pending_sample"]["none_in_first_page"])
+
+    def test_done_receipt_does_not_invent_priority_starvation(self):
+        snapshot = {"jobs": [
+            {"id": i, "priority": 0, "engine": "COMFY", "attempts": 0}
+            for i in range(1, 201)
+        ], "pagination": {"totalCount": 200}, "complete": True}
+        report = inspect(jobs=[job(status="DONE")], agents=[agent()],
+                         global_pending=snapshot)
+        self.assertFalse(report["global_pending_sample"]["none_in_first_page"])
+        self.assertEqual(report["global_pending_sample"]["missing_pending_receipt_ids"], [])
 
 
 if __name__ == "__main__":

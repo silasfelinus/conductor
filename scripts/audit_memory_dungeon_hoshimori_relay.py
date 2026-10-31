@@ -28,6 +28,7 @@ from audit_memory_dungeon_art_delivery import job_identity
 POLL_FRESH_SECONDS = 300
 MAX_ATTEMPTS = 3
 GLOBAL_SAMPLE_SIZE = 200
+MAX_PENDING_PAGES = 25
 
 
 def _timestamp(value: object) -> datetime | None:
@@ -55,6 +56,64 @@ def receipt_index(directory: Path = ART) -> dict[int, tuple[str, str]]:
     if len(expected) != 20:
         raise ValueError("expected twenty independently verified style receipts")
     return expected
+
+
+def fetch_pending_queue(get_page, *, max_pages: int = MAX_PENDING_PAGES) -> dict[str, Any]:
+    """Read the entire sorted PENDING queue, or fail closed on an incomplete view.
+
+    A 200-row snapshot can exaggerate starvation: the claim endpoint filters
+    engines and attempts before its 50-candidate lookahead. This read-only
+    inventory never claims or reprioritizes a job.
+    """
+    rows: list[dict[str, Any]] = []
+    seen: set[int] = set()
+    total: int | None = None
+    last_sort_key: tuple[int, int] | None = None
+    for page in range(1, max_pages + 1):
+        data = get_page(page)
+        if not isinstance(data, dict):
+            raise RuntimeError(f"global PENDING queue page {page} unavailable")
+        pagination = data.get("pagination")
+        batch = data.get("jobs")
+        if not isinstance(pagination, dict) or not isinstance(batch, list):
+            raise ValueError("global PENDING queue omitted jobs or pagination")
+        count = pagination.get("totalCount")
+        if not isinstance(count, int) or isinstance(count, bool) or count < 0:
+            raise ValueError("invalid global PENDING total")
+        if total is None:
+            total = count
+        if count != total or pagination.get("page") != page:
+            raise ValueError("global PENDING pagination changed during audit")
+        if pagination.get("pageSize") != GLOBAL_SAMPLE_SIZE:
+            raise ValueError("global PENDING page size mismatch")
+        for row in batch:
+            if not isinstance(row, dict):
+                raise ValueError("malformed global PENDING row")
+            job_id = row.get("id")
+            priority = row.get("priority")
+            if (not isinstance(job_id, int) or isinstance(job_id, bool)
+                    or not isinstance(priority, int) or isinstance(priority, bool)
+                    or job_id in seen or job_id <= 0):
+                raise ValueError("duplicate or malformed global PENDING identity")
+            key = (-priority, job_id)
+            if last_sort_key is not None and key <= last_sort_key:
+                raise ValueError("global PENDING priority ordering changed")
+            last_sort_key = key
+            seen.add(job_id)
+            rows.append(row)
+        if len(rows) > total:
+            raise ValueError("global PENDING rows exceed reported total")
+        if not pagination.get("hasNextPage"):
+            if len(rows) != total:
+                raise ValueError("global PENDING snapshot is incomplete")
+            return {
+                "jobs": rows,
+                "pagination": {"totalCount": total},
+                "complete": True,
+            }
+        if len(batch) != GLOBAL_SAMPLE_SIZE:
+            raise ValueError("short global PENDING page claims more results")
+    raise RuntimeError("global PENDING queue exceeded safe pagination bound")
 
 
 def analyze(
@@ -127,12 +186,47 @@ def analyze(
     sample = sample if isinstance(sample, list) else []
     positions = [i for i, row in enumerate(sample)
                  if row.get("id") in receipts]
+    complete = (global_pending or {}).get("complete") is True
+    pending_receipt_ids = set(candidate_ids + exhausted)
+    observed_pending_ids = {row.get("id") for row in sample}
+    missing_pending_receipts = (
+        sorted(pending_receipt_ids - observed_pending_ids) if complete else []
+    )
+    comfy_attempts = [
+        row for row in sample
+        if row.get("engine") == "COMFY"
+        and isinstance(row.get("attempts"), int)
+        and not isinstance(row.get("attempts"), bool)
+        and row["attempts"] < MAX_ATTEMPTS
+    ]
+    comfy_rank = {row["id"]: i + 1 for i, row in enumerate(comfy_attempts)}
+    receipt_positions = [
+        {
+            "job_id": row["id"],
+            "global_pending_rank": i + 1,
+            "comfy_attempt_rank": comfy_rank.get(row["id"]),
+            "priority": row.get("priority"),
+        }
+        for i, row in enumerate(sample) if row.get("id") in receipts
+    ]
     top = {
         "sampled": len(sample),
         "global_pending_total": pagination.get("totalCount"),
+        "complete_snapshot": complete,
         "first_hoshimori_position": positions[0] + 1 if positions else None,
-        "none_in_first_page": bool(sample) and not positions,
-        "note": "Queue page sorted by priority DESC then ID ASC; not a claimable-rank guarantee.",
+        "none_in_first_page": bool(pending_receipt_ids) and
+            len(sample) >= GLOBAL_SAMPLE_SIZE and
+            not any(i < GLOBAL_SAMPLE_SIZE for i in positions),
+        "missing_pending_receipt_ids": missing_pending_receipts,
+        "comfy_pending_with_attempts_remaining": len(comfy_attempts) if complete else None,
+        "hoshimori_priority_runway": receipt_positions if complete else [],
+        "note": (
+            "Exact PENDING priority ranks; COMFY ranks filter engine and attempt budget "
+            "but cannot prove prompt/capability eligibility or account for stale RUNNING "
+            "jobs. The claim endpoint uses a 50-candidate lookahead."
+            if complete else
+            "Bounded sample only; not a claimable-rank guarantee."
+        ),
     }
     depth = (stats or {}).get("queueDepth") or {}
 
@@ -149,7 +243,9 @@ def analyze(
         blockers.append("No recent relay claim poll observed; process-local telemetry is inconclusive.")
     elif not compatible:
         blockers.append("Recent claim pollers did not advertise COMFY; this observation may be instance-local.")
-    if top["none_in_first_page"]:
+    if missing_pending_receipts:
+        blockers.append("Complete PENDING queue disagrees with Hoshimori receipt states; recheck concurrent updates.")
+    if top["none_in_first_page"] and not missing_pending_receipts:
         blockers.append("No Hoshimori job appears in the first 200 global PENDING rows; scheduling backlog may delay them.")
 
     if paused is True:
@@ -158,6 +254,8 @@ def analyze(
         verdict = "all_pending_attempts_exhausted"
     elif counts["missing"] or counts["identity_mismatch"]:
         verdict = "receipt_integrity_blocker"
+    elif missing_pending_receipts:
+        verdict = "pending_inventory_mismatch"
     elif not fresh:
         verdict = "claim_poll_unobserved_not_proven_down"
     elif not compatible:
@@ -212,7 +310,11 @@ def main() -> int:
         control = _get("/api/art/queue/control")
         agents = _get("/api/art/queue/relay-status")
         stats = _get("/api/art/queue/stats?summary=true")
-        pending = _get(f"/api/art/queue?status=PENDING&pageSize={GLOBAL_SAMPLE_SIZE}&page=1")
+        pending = fetch_pending_queue(
+            lambda page: _get(
+                f"/api/art/queue?status=PENDING&pageSize={GLOBAL_SAMPLE_SIZE}&page={page}"
+            )
+        )
         report = analyze(
             receipts, jobs,
             paused=control.get("paused") if control else None,
