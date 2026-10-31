@@ -157,6 +157,64 @@ def audit(manifests: dict[str, dict], ledgers: dict[str, dict], snapshots: dict[
     }
 
 
+
+def audit_live(
+    manifests: dict[str, dict], ledgers: dict[str, dict], snapshots: dict[str, dict],
+    *, jobs: list[dict] | None = None, heartbeat_state: str | None = None,
+    media_probe=None,
+) -> dict:
+    """Recheck existing receipts and media; never enqueue or mutate ArtJobs."""
+    from datetime import datetime, timezone
+
+    from audit_memory_dungeon_hoshimori_style import audit_delivery as warm_delivery
+    from audit_memory_dungeon_hoshimori_horror_style import audit_delivery as horror_delivery
+
+    if jobs is None:
+        import consume_art_queue as consumer
+        from reconcile_memory_dungeon_art_jobs import server_jobs
+
+        if not consumer.KR_API_TOKEN:
+            raise RuntimeError("KR_API_TOKEN unavailable; no live ArtJob verification")
+        jobs = server_jobs()
+
+    if heartbeat_state is None:
+        import check_engine_heartbeat as engine
+
+        try:
+            heartbeat_state, _ = engine.assess(
+                engine.fetch_uptime(), datetime.now(timezone.utc)
+            )
+        except RuntimeError:
+            heartbeat_state = engine.UNRESOLVED
+
+    base = audit(manifests, ledgers, snapshots)
+    delivery_auditors = {"e07": warm_delivery, "e08": horror_delivery}
+    live = {}
+    for world, (_, _, _, validator) in WORLDS.items():
+        audit_delivery = delivery_auditors[world]
+        result = (
+            audit_delivery(ledgers[world], jobs)
+            if media_probe is None
+            else audit_delivery(ledgers[world], jobs, media_probe)
+        )
+        live[world] = validate_style_snapshot(ledgers[world], result, world, validator)
+    live_delivered = sum(row["snapshot_delivered"] for row in live.values())
+    base["live"] = {
+        "source": "authenticated_artjobs_and_fresh_media_head",
+        "engine_heartbeat_state": heartbeat_state,
+        "style_proofs": live,
+        "style_delivered": live_delivered,
+        "style_not_delivered": 20 - live_delivered,
+    }
+    base["ready_for_visual_review"] = (
+        heartbeat_state == "ok" and live_delivered == 20
+    )
+    # Even twenty verified files still need agent visual QA before gallery enqueue.
+    # The authored 64 briefs carry no gallery receipts and auto_submit stays false.
+    base["ready_for_gallery_submission"] = False
+    return base
+
+
 def load_report(directory: Path = ART) -> dict:
     manifests, ledgers, snapshots = {}, {}, {}
     for world, (gallery, ledger, snapshot, _) in WORLDS.items():
@@ -168,12 +226,21 @@ def load_report(directory: Path = ART) -> dict:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--live", action="store_true",
+                        help="read current ArtJobs, media HEADs and authenticated engine heartbeat")
     parser.add_argument("--require-ready", action="store_true",
                         help="exit 2 while any real production/delivery work remains")
     args = parser.parse_args()
     try:
         report = load_report()
-    except (OSError, ValueError, KeyError, TypeError, yaml.YAMLError) as exc:
+        if args.live:
+            manifests, ledgers, snapshots = {}, {}, {}
+            for world, (gallery, ledger, snapshot, _) in WORLDS.items():
+                manifests[world] = yaml.safe_load((ART / gallery).read_text(encoding="utf-8"))
+                ledgers[world] = yaml.safe_load((ART / ledger).read_text(encoding="utf-8"))
+                snapshots[world] = json.loads((ART / snapshot).read_text(encoding="utf-8"))
+            report = audit_live(manifests, ledgers, snapshots)
+    except (OSError, ValueError, KeyError, TypeError, RuntimeError, yaml.YAMLError) as exc:
         print(f"::error::Hoshimori gallery readiness audit failed: {exc}")
         return 1
     print(json.dumps(report, indent=2, sort_keys=True))
