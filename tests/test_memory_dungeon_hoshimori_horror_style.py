@@ -24,12 +24,12 @@ class HoshimoriHorrorStyleTests(unittest.TestCase):
             row["last_art_job_id"] = 65001 + index
         return data
 
-    def test_eight_distinct_horror_proofs_preserve_world_and_subject_contract(self):
+    def test_ten_distinct_horror_proofs_preserve_world_and_subject_contract(self):
         receipts = validate(self.data)
         self.assertEqual(set(receipts), set(CATEGORIES))
         rows = self.data["requests"]
-        self.assertEqual(len(rows), 8)
-        self.assertEqual(len({r["image_path"] for r in rows}), 8)
+        self.assertEqual(len(rows), 10)
+        self.assertEqual(len({r["image_path"] for r in rows}), 10)
         self.assertTrue(all(r["page_url"].endswith("/play/memory") for r in rows))
         self.assertTrue(all("/hoshimori/e08/style-proofs/" in r["image_path"] for r in rows))
         self.assertEqual(sum(r["category"] == "portrait" for r in rows), 2)
@@ -62,8 +62,8 @@ class HoshimoriHorrorStyleTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "Unsubmitted"):
             validate(unsubmitted, require_jobs=True)
         data = self.with_receipts()
-        self.assertEqual(len(validate(data, require_jobs=True)), 8)
-        data["requests"][7]["last_art_job_id"] = data["requests"][0]["last_art_job_id"]
+        self.assertEqual(len(validate(data, require_jobs=True)), 10)
+        data["requests"][9]["last_art_job_id"] = data["requests"][0]["last_art_job_id"]
         with self.assertRaisesRegex(ValueError, "Duplicate ArtJob"):
             validate(data, require_jobs=True)
         data = self.with_receipts()
@@ -96,8 +96,8 @@ class HoshimoriHorrorStyleTests(unittest.TestCase):
             for row in data["requests"]
         ]
         report = audit_delivery(data, jobs, lambda *_: "delivered")
-        self.assertEqual(report["total"], 8)
-        self.assertEqual(report["delivered"], 8)
+        self.assertEqual(report["total"], 10)
+        self.assertEqual(report["delivered"], 10)
         jobs[0]["payload"]["conductorRequest"]["imagePath"] = data["requests"][1]["image_path"]
         jobs[1].pop("artImageId")
         report = audit_delivery(data, jobs, lambda *_: "media_stale")
