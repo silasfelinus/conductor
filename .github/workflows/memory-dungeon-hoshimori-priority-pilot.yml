@@ -1,0 +1,42 @@
+name: Memory Dungeon Hoshimori bounded priority pilot
+
+# One-shot internal art-queue operation. Runs only when this workflow lands
+# on main (or by explicit dispatch). No new ArtJobs, cancellations, or deploy.
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/memory-dungeon-hoshimori-priority-pilot.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: memory-dungeon-hoshimori-priority-pilot
+  cancel-in-progress: false
+
+jobs:
+  prioritize-existing-map-proofs:
+    if: github.repository == 'silasfelinus/conductor'
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    env:
+      KR_BASE_URL: https://kindrobots.org
+      KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+      KR_MEDIA_ORIGIN: https://media.acrocatranch.com
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install manifest parser
+        run: python -m pip install --disable-pip-version-check --quiet pyyaml
+      - name: Validate four immutable map/atlas receipts and priority safety
+        run: python -m unittest discover -s tests -p 'test_memory_dungeon_hoshimori_priority_pilot.py' -q
+      - name: Promote only four existing Hoshimori map and Oven atlas proofs
+        run: python scripts/memory_dungeon_hoshimori_priority_pilot.py --apply
+      - name: Verify queue ordering and actual claim/delivery state
+        run: |
+          python scripts/audit_memory_dungeon_hoshimori_relay.py
+          python scripts/audit_memory_dungeon_hoshimori_gallery_readiness.py --live
