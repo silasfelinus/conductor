@@ -37,7 +37,7 @@ class HoshimoriGalleryReadinessTests(unittest.TestCase):
         self.assertEqual(report["style_artjobs"], 20)
         self.assertFalse(report["ready_for_gallery_submission"])
         self.assertEqual(report["source"], "committed_snapshot_not_live")
-        self.assertEqual(len(report["blockers"]), 3)
+        self.assertEqual(len(report["blockers"]), 4)
 
     def test_gallery_duplicate_destination_fails(self):
         faces = self.manifests["e07"]["faces"]
