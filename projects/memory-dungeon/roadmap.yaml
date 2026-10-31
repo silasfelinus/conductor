@@ -574,7 +574,7 @@ tasks:
   - id: t-020
     milestone: m3
     title: "Adopt sixteen-realm canon, prototype prologue and compatibility inventory"
-    status: review
+    status: ready
     passes: 0
     stakes: reversible
     note: |-
@@ -593,10 +593,9 @@ tasks:
       2026-10-29 6:01 AM PT: Merged kind_robots PR #4434 (f5a1eaf2dfaba5a96648aff738564f08929fc0b1) fixing mirrored Dark Briar save restoration that accepted scene choices from revealed but never visited sites. Exact PR head c598fdf906970c2e0cd2a25eb15fafe04ae53587: 19/19 checks and 14/14 workflows passed, including Contract Tests #40877222798, TypeScript #40877222561, formatting #40877222783, and Memory browser #40877222662. Added forged witness/bridge/courier and valid-save regressions. No ArtJobs or deployment. Issue #4136 reopened because full campaign remains unfinished; comment 6497375925 records evidence. Return READY for character art, compatibility inventory and rendered 390/768/1440 acceptance; not For Human Gate.
 
       Scoped twelve-world save compatibility fix: archive retired e13-e16 history even when a version-2 checkpoint still carries those IDs in completed. Preserve old e09-e12 history separately from current collision finale; never grant new finale access from archived entries. Sixteen historical-subset and save-roundtrip regressions added. Kind Robots PR and exact-head CI follow; art, character visuals and rendered acceptance remain unfinished.
-    updated: '2026-10-31T16:50:00Z'
-    owner: worker
-    claimed_by: 2026-10-31T164522Z-memory-dungeon-t-020-compat-7f3b9
-    claimed_at: '2026-10-31T16:45:22Z'
+
+      2026-10-31 PT: Merged Kind Robots PR #4556 at 7c3d26d91e7996046cc0ca967c162f35bc5df5e1 after all 19 exact-head checks passed on 6b13c6a90d908027cac83c4c91d55085087d4421 (14 completed successful workflows, including four contract shards, TypeScript, changed-file Prettier, Memory Dungeon browser interruption). Fixed version-2 campaign restore silently discarding retired e13-e16 completed history: archive legacy IDs with deduplication, preserve old e09-e12 as historical only for pre-v2 saves, and never grant new collision-finale access from retired records. Added sixteen history-subset/save-roundtrip regressions plus old/mixed-save cases. No ArtJobs, images, UI changes or deployment. Return READY for remaining character art, full compatibility inventory and 390/768/1440 rendered acceptance; Memory Dungeon remains ACTIVE, not For Human Gate.
+    updated: '2026-10-31T17:00:00Z'
   - id: t-024
     milestone: m3
     title: "Playtest and polish Scylla, Char, Oren and recurring party arcs"
