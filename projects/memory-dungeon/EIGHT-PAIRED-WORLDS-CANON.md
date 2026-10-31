@@ -1,5 +1,7 @@
 # Memory Dungeon: Eight Overworlds, Eight Distortions
 
+> **SUPERSEDED 2026-10-30:** This is the historical eight-pair / sixteen-map version. The active authority is `TWELVE-REALITY-COLLISION-FINALE.md`: retain the first four original/twisted pairs (`e01–e08`), then build FOUR returning crossover maps (`e09–e12`), controlled as human protagonist, Morrow, Char and Vesper. Retire old `e13–e16` routing without deleting legacy saves. Vesper's Hoshimori childhood and Char's conditional World Four death/time displacement are defined in the later approved briefs. Do not use the 16-map counts below for roadmap or art-completion claims.
+
 **Authority:** Silas's 2026-10-30 PT correction to the playable sequence. This supersedes the earlier optional middle-pair interpretation in the Reimaginer brief and the older sixteen-independent-realm list. **Internal story and production bible; includes major spoilers. Do not render this document in game.**
 
 ## Structural contract
