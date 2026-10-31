@@ -1140,11 +1140,11 @@ tasks:
   - id: t-045
     milestone: m3
     title: "Hoshimori e07/e08 art: style proofs, map/oven atlases and two 30+2 collectible galleries"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 20261031T015709825Z-memory-dungeon-t-045-promptfix-d91f
     claimed_at: '2026-10-31T01:57:09.825Z'
-    updated: '2026-10-31T01:57:09.825Z'
+    updated: '2026-10-31T01:57:36.129Z'
     depends_on:
       - t-041
       - t-043
@@ -1156,6 +1156,8 @@ tasks:
       Scoped e08 Hoshimori original ink-horror style proof: eight distinct production requests, separate audit and workflow submit/checkpoint/live-delivery evidence. Focused Conductor PR and exact-head CI follow. Existing e07 ArtJobs 52108-52115 are preserved; e08 durable IDs and render delivery require the post-merge workflow. Both 30+2 galleries, additional scene/card proofs, map geometry and visual QA remain.
 
       2026-10-30 PT: Merged Conductor PR #6870 at ac3e1cbac169442f6a6d1fd5e5184cc17d5530b1 after 22 exact-head successful checks and two intentionally skipped on ebe2624f247e2b927072f51f38b4c666361da030. Added eight distinct e08 Hoshimori horror style requests, provenance/media audit, workflow submission and early receipt/status checkpoints. Existing warm ArtJobs 52108-52115 preserved. The merge triggers Auto Art Generate; durable e08 job IDs, ArtImage delivery, visual quality and map topology are not established by CI alone. Remaining: both 30+2 galleries, additional scene/card style samples, image integration and rendered device acceptance. Keep ACTIVE, not For Human Gate.
+
+      The first live e08 art submission failed 8/8 with HTTP 422 prompt-contract text-exclusion-pile because negative text exclusions entered positive Krea2 conditioning. Scoped repair replaces all eight with positive bare/unmarked surface descriptions and adds a regression guard. Focused PR and exact-head CI follow; no e08 ArtJob was accepted on failed run 41157636951.
   - id: t-046
     milestone: m4
     title: "Hoshimori pair adversarial acceptance: complete routes, companions, art and accessibility"
