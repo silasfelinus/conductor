@@ -1105,8 +1105,8 @@ tasks:
   - id: t-045
     milestone: m3
     title: "Hoshimori e07/e08 art: style proofs, map/oven atlases and two 30+2 collectible galleries"
-    status: ready
-    updated: '2026-10-31T14:00:01Z'
+    status: claimed
+    updated: '2026-10-31T14:48:25Z'
     depends_on:
       - t-041
       - t-043
@@ -1148,6 +1148,9 @@ tasks:
       Scoped Hoshimori e07/e08 gallery readiness audit and adversarial regression tests prepared on worker/memory-dungeon-t-045-gallery-readiness-a7f9. Reconciles 64 authoring-only faces with 20 existing style ArtJob receipts and last committed media snapshots; does not enqueue jobs or claim live renders. Exact-head PR CI and merge verification follow.
 
       2026-10-31 7:00 AM PT: Merged Conductor PR #6887 (bcee742c4caa0d957f415b10fd5928a98f1daaa9) after all 8 Worker CI jobs, security and handoff passed on exact head d6e8e7d35c5dd4828b5a014d619b417378f04f44. Added cross-gallery 64-face provenance audit, 11 adversarial tests and Memory Dungeon-only authenticated live ArtJob/media/engine heartbeat workflow. Live run #41207983628 at 6:59 AM PT: COMFY heartbeat OK but e07/e08 20/20 style ArtJobs still PENDING, zero RUNNING and zero delivered. No new gallery ArtJobs, ArtImages, deploy or public gate. Roadmap issue kind_robots#4136 comment 6544339107 has evidence. Return READY: diagnose relay queue claims/eligibility, then verify 8x8/6x6 visual geometry, deliver 64 gallery faces and integrate unlocks.
+    owner: worker
+    claimed_by: 2026-10-31T14:48:25Z-memory-dungeon-t-045-7e91c2
+    claimed_at: '2026-10-31T14:48:25Z'
   - id: t-046
     milestone: m4
     title: "Hoshimori pair adversarial acceptance: complete routes, companions, art and accessibility"
