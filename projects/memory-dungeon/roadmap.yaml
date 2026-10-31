@@ -1105,11 +1105,11 @@ tasks:
   - id: t-045
     milestone: m3
     title: "Hoshimori e07/e08 art: style proofs, map/oven atlases and two 30+2 collectible galleries"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 2026-10-31T154247Z-memory-dungeon-t-045-9f63
     claimed_at: '2026-10-31T15:42:47Z'
-    updated: '2026-10-31T15:42:47Z'
+    updated: '2026-10-31T15:49:00Z'
     depends_on:
       - t-041
       - t-043
@@ -1155,6 +1155,8 @@ tasks:
       Scoped read-only relay-claim diagnostic on worker/memory-dungeon-t-045-relay-poll-triage-7e91c2: compare 20 existing e07/e08 receipts with queue pause, attempt exhaustion, global priority sample and fresh COMFY claim polls. Tests and exact-head CI pending; no new ArtJobs or media.
 
       2026-10-31 7:56 AM PT: Merged Conductor PR #6889 at f7ec73bc64ce103625b0c5b63f39c33ff2f9b1f5 after all 22 exact-head checks passed (2 intentional skips) on 34adcf5f7d54e7d675cb09f2d9cd8df2ba8118f9. Read-only Hoshimori queue triage plus ten adversarial tests and live workflow #41212397300 confirmed queue NOT paused, one fresh COMFY claim poll, 737 global PENDING/1 RUNNING, all 20 Hoshimori style receipts PENDING with attempts remaining and 0/20 delivered. None of those 20 appears in the first 200 globally priority-sorted pending jobs: a substantial scheduling backlog precedes them; exact runnable rank and throughput remain unverified. No new ArtJobs, media, deploy or human gate. Master kind_robots#4136 comment 6545030100. Return READY: diagnose global priority/throughput without modifying other games, then deliver/visually inspect style proofs and 64 authored gallery faces; keep Memory Dungeon ACTIVE.
+
+      Exact PENDING queue rank and COMFY attempt-budget runway audit implemented with fail-closed paginated reads and adversarial regressions; PR and exact-head CI follow. No queue mutation, new ArtJobs, delivered media, or release.
   - id: t-046
     milestone: m4
     title: "Hoshimori pair adversarial acceptance: complete routes, companions, art and accessibility"
