@@ -187,6 +187,11 @@ def analyze(
     positions = [i for i, row in enumerate(sample)
                  if row.get("id") in receipts]
     complete = (global_pending or {}).get("complete") is True
+    pending_receipt_ids = set(candidate_ids + exhausted)
+    observed_pending_ids = {row.get("id") for row in sample}
+    missing_pending_receipts = (
+        sorted(pending_receipt_ids - observed_pending_ids) if complete else []
+    )
     comfy_attempts = [
         row for row in sample
         if row.get("engine") == "COMFY"
@@ -209,8 +214,10 @@ def analyze(
         "global_pending_total": pagination.get("totalCount"),
         "complete_snapshot": complete,
         "first_hoshimori_position": positions[0] + 1 if positions else None,
-        "none_in_first_page": len(sample) >= GLOBAL_SAMPLE_SIZE and
+        "none_in_first_page": bool(pending_receipt_ids) and
+            len(sample) >= GLOBAL_SAMPLE_SIZE and
             not any(i < GLOBAL_SAMPLE_SIZE for i in positions),
+        "missing_pending_receipt_ids": missing_pending_receipts,
         "comfy_pending_with_attempts_remaining": len(comfy_attempts) if complete else None,
         "hoshimori_priority_runway": receipt_positions if complete else [],
         "note": (
@@ -236,7 +243,9 @@ def analyze(
         blockers.append("No recent relay claim poll observed; process-local telemetry is inconclusive.")
     elif not compatible:
         blockers.append("Recent claim pollers did not advertise COMFY; this observation may be instance-local.")
-    if top["none_in_first_page"]:
+    if missing_pending_receipts:
+        blockers.append("Complete PENDING queue disagrees with Hoshimori receipt states; recheck concurrent updates.")
+    if top["none_in_first_page"] and not missing_pending_receipts:
         blockers.append("No Hoshimori job appears in the first 200 global PENDING rows; scheduling backlog may delay them.")
 
     if paused is True:
@@ -245,6 +254,8 @@ def analyze(
         verdict = "all_pending_attempts_exhausted"
     elif counts["missing"] or counts["identity_mismatch"]:
         verdict = "receipt_integrity_blocker"
+    elif missing_pending_receipts:
+        verdict = "pending_inventory_mismatch"
     elif not fresh:
         verdict = "claim_poll_unobserved_not_proven_down"
     elif not compatible:
