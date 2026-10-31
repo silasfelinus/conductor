@@ -172,6 +172,7 @@ jobs:
           python -m unittest discover -s tests -p 'test_memory_dungeon_art_queue.py'
           python -m unittest discover -s tests -p 'test_memory_dungeon_hoshimori_style.py'
           python -m unittest discover -s tests -p 'test_memory_dungeon_hoshimori_horror_style.py'
+          python -m unittest discover -s tests -p 'test_memory_dungeon_hoshimori_queue_triage.py'
 
       - name: Recover unrecorded Memory Dungeon ArtJob IDs
         id: memory_dungeon_reconcile

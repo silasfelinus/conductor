@@ -13,6 +13,7 @@ from pathlib import Path
 import yaml
 
 from memory_dungeon_hoshimori_prompt_contract import validate_prompt
+from memory_dungeon_hoshimori_queue_triage import annotate_queue_age
 
 ROOT = Path(__file__).resolve().parent.parent
 LEDGER = ROOT / "projects/memory-dungeon/art/HOSHIMORI-WARM-STYLE-PROOFS.yaml"
@@ -116,7 +117,8 @@ def main() -> int:
 
             if not consumer.KR_API_TOKEN:
                 raise RuntimeError("KR_API_TOKEN unavailable; no live delivery claim")
-            report = audit_delivery(data, server_jobs())
+            jobs = server_jobs()
+            report = annotate_queue_age(audit_delivery(data, jobs), jobs)
             if args.report:
                 args.report.parent.mkdir(parents=True, exist_ok=True)
                 args.report.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
