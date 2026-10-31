@@ -12618,3 +12618,10 @@ Worker pattern: good test depth and honest "procedural shapes, not painted art" 
 - `worker/comet-city-academy-t-021-roadmap-unblock-71d3` (1 commit): its dedupe of a duplicate `updated:` line in memory-dungeon/roadmap.yaml is already moot — main has no duplicate, and the branch is otherwise far behind main (diff vs main deletes ~5.5k lines). Do not merge; safe to delete.
 - `worker/memory-dungeon-t047-twelve-finale-canon-b1a7` (23 commits): main already carries TWELVE-REALITY-COLLISION-FINALE.md, WRITERS-ROOM.md and the story/*.md files; a trial merge conflicts in CONTROL.md and memory-dungeon/roadmap.yaml (roadmap compaction from a stale base would clobber ~200 commits of newer state). Same finding as the 2026-10-30 hold on #6865. Not merged; a Worker must rebase/re-archive from current main if any remaining delta (only the Pip/Briar drilldown alignment commits) is still wanted.
 - Also red/stale: kind_robots#4538 and #4534 (CI failure, 9–12h) — owning Workers should triage.
+
+## 2026-10-31 — Reviewer sweep: two stranded worker branches superseded (no merge needed)
+
+- `worker/memory-dungeon-t047-twelve-finale-canon-b1a7`: its canon/drilldown work already landed on main as 947f1ac20 (#6880, rebased). Branch is redundant; safe for `branch-janitor` to delete.
+- `worker/comet-city-academy-t-021-roadmap-unblock-71d3`: the duplicate `updated:` removal in memory-dungeon roadmap is moot (main has no duplicate key, YAML loads clean), and comet-city-academy/t-021 is already `ready` on main. Redundant; safe to delete.
+- Pattern: worker branches pushed without PRs and later rebased onto main under a new branch leave orphans. Open PRs at push time.
+- Not actioned (out of scope for this pass): kind_robots PRs #4538 and #4534 red >11h; daily commitments animation-manager/t-007 and dream-cycle/t-035 stale; memory-dungeon roadmap 155KB over the 150KB advisory.
