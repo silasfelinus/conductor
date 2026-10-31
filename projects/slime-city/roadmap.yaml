@@ -204,10 +204,7 @@ tasks:
   - id: t-007
     milestone: m3
     title: "Expand seven-district city map into navigable authored overworld"
-    status: review
-    owner: worker
-    claimed_by: 20261031T051413784Z-slime-city-t007-mission-f6d3
-    claimed_at: '2026-10-31T05:14:13.784Z'
+    status: ready
     depends_on: t-001
     passes: 0
     stakes: reversible
@@ -234,7 +231,9 @@ tasks:
       PARTIAL 2026-10-30 PT: Kind Robots PR #4544 merged as 46adf290583b219ac98c62480eec23ae9bc09a5c, all 15 current-head CI checks passed including TypeScript, Changed-file Prettier, Layout Contract, and all four Contract Tests shards. A shortest-path nine-street wayfinder now allows selecting far districts, walks one legal street at a time, preserves a selected destination through every first-crossing authored choice (no skipping), highlights the itinerary and next stop, and adds direct STORY and CARDS navigation from the city. Deterministic all-pairs path and full two-hop store regression tests landed. This is admin-only internal source code, not a live deployment or art delivery. REMAINS for t-007: proven delivered panoramas from t-017, further overworld art and integration, and eventually persisted campaign progress; server-account economy stays separately owned by t-008/#4538. The umbrella #4535 stays open. Reopen t-007 for the next substantive city slice.
 
       Faction story campaign chapters now point to canonical crew home districts, mark mission pins and provide route shortcuts, and launch optional story battles at the destination only after first-crossing street decisions. Existing direct STORY battles remain playable. Kind Robots feature branch worker/slime-city-t007-campaign-district-20261031T051413Z-f6d3 includes city/store/UI and all-crew navigation regressions. CI pending.
-    updated: '2026-10-31T05:15:37.947Z'
+
+      PARTIAL 2026-10-30 PT: Kind Robots PR #4546 merged to main as 9eb86f07b1264b8a011d2d7505663724edc9e82e with 15/15 current-head GitHub CI workflow checks passing (TypeScript, changed-file Prettier, layout, full four-shard Contract Tests). All six faction story chapters now identify their rival's real district. STORY can focus a marked city destination and route through existing streets; a faction mission can launch on arrival only after pending first-crossing decisions are resolved. Canonical Blackout chapter approaches, independent story progress, and direct STORY battles are preserved. Dedicated city and campaign regression tests cover six mappings, wayfinding, and blocked mission starts. This is an admin-only source merge, not a self-hosted deploy or generated art proof. REMAINS: t-017 verified painted faction/district art and manifest, fuller city/campaign integration, server-authoritative saved story progress, account-backed economy owned separately by PR #4538, and final visual QA. Keep t-007 ready and master #4535 open for subsequent slices.
+    updated: '2026-10-31T05:28:34.030Z'
   - id: t-008
     milestone: m3
     title: "Ship earned Meat economy, safe card shop and random PvE encounters"
