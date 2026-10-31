@@ -21,7 +21,8 @@ from audit_memory_dungeon_hoshimori_style import validate as validate_warm_style
 from audit_memory_dungeon_hoshimori_horror_style import validate as validate_horror_style
 from memory_dungeon_hoshimori_prompt_contract import validate_prompt
 from verify_memory_dungeon_hoshimori_gallery_pilot import (
-    LEDGER as PILOT_LEDGER, validate as validate_pilot,
+    LEDGER as PILOT_LEDGER, ROUND2_LEDGER, ROUND2_SELECTED,
+    validate as validate_pilot,
 )
 from enqueue_art_requests import compose_prompt
 
@@ -128,7 +129,7 @@ def validate_style_snapshot(
 
 def audit(
     manifests: dict[str, dict], ledgers: dict[str, dict], snapshots: dict[str, dict],
-    *, pilot: dict | None = None,
+    *, pilot: dict | None = None, pilot2: dict | None = None,
 ) -> dict:
     ids: set[str] = set()
     paths: set[str] = set()
@@ -144,18 +145,33 @@ def audit(
 
     if pilot is None:
         pilot = yaml.safe_load(PILOT_LEDGER.read_text(encoding="utf-8"))
+    if pilot2 is None:
+        pilot2 = yaml.safe_load(ROUND2_LEDGER.read_text(encoding="utf-8"))
     pilot_receipts = validate_pilot(pilot, manifests)
+    round2_receipts = validate_pilot(pilot2, manifests, selected=ROUND2_SELECTED)
     style_ids = {
         job for world, (_, _, _, validator) in WORLDS.items()
         for job in validator(ledgers[world], require_jobs=True).values()
     }
-    pilot_ids = {
-        subject["jobs"]["krea2"] for subject in pilot["subjects"]
-        if (subject.get("jobs") or {}).get("krea2") is not None
-    }
+    pilot_ids: set[int] = set()
+    pilot_faces: set[str] = set()
+    pilot_paths: set[str] = set()
+    for round_ledger in (pilot, pilot2):
+        for subject in round_ledger["subjects"]:
+            face_id, asset = subject["face_id"], subject["asset"]
+            if face_id in pilot_faces or asset in pilot_paths:
+                raise ValueError("Gallery pilots duplicate a face or destination across rounds")
+            pilot_faces.add(face_id)
+            pilot_paths.add(asset)
+            job_id = (subject.get("jobs") or {}).get("krea2")
+            if job_id is not None:
+                if job_id in pilot_ids:
+                    raise ValueError("Gallery pilots duplicate an ArtJob receipt across rounds")
+                pilot_ids.add(job_id)
     if style_ids & pilot_ids:
         raise ValueError("Gallery pilot reuses a style-proof ArtJob receipt")
 
+    gallery_submitted = pilot_receipts["submitted"] + round2_receipts["submitted"]
     delivered = sum(row["snapshot_delivered"] for row in styles.values())
     pending = sum(row["snapshot_pending"] for row in styles.values())
     return {
@@ -163,17 +179,18 @@ def audit(
         "worlds": ["e07", "e08"],
         "source": "committed_snapshot_not_live",
         "gallery_briefs": len(ids),
-        "gallery_artjobs": pilot_receipts["submitted"],
-        "gallery_unsubmitted": 64 - pilot_receipts["submitted"],
+        "gallery_artjobs": gallery_submitted,
+        "gallery_unsubmitted": 64 - gallery_submitted,
         "gallery_delivered_images": 0,
         "gallery_pilot": pilot_receipts,
+        "gallery_pilots": {"round1": pilot_receipts, "round2": round2_receipts},
         "style_artjobs": sum(row["submitted"] for row in styles.values()),
         "style_snapshot_delivered": delivered,
         "style_snapshot_pending": pending,
         "style_by_world": styles,
         "ready_for_gallery_submission": False,
         "blockers": [
-            f"{64 - pilot_receipts['submitted']}/64 gallery faces lack durable ArtJob receipts",
+            f"{64 - gallery_submitted}/64 gallery faces lack durable ArtJob receipts",
             "the gallery pilot ledger records submissions, not verified ArtImage/media delivery",
             f"{20 - delivered}/20 style proofs lack verified delivery in the last committed snapshot",
             "a committed delivery snapshot is not a live render heartbeat or fresh media check",
@@ -185,7 +202,7 @@ def audit(
 def audit_live(
     manifests: dict[str, dict], ledgers: dict[str, dict], snapshots: dict[str, dict],
     *, jobs: list[dict] | None = None, heartbeat_state: str | None = None,
-    media_probe=None, pilot: dict | None = None,
+    media_probe=None, pilot: dict | None = None, pilot2: dict | None = None,
 ) -> dict:
     """Recheck existing receipts and media; never enqueue or mutate ArtJobs."""
     from datetime import datetime, timezone
@@ -213,7 +230,9 @@ def audit_live(
 
     if pilot is None:
         pilot = yaml.safe_load(PILOT_LEDGER.read_text(encoding="utf-8"))
-    base = audit(manifests, ledgers, snapshots, pilot=pilot)
+    if pilot2 is None:
+        pilot2 = yaml.safe_load(ROUND2_LEDGER.read_text(encoding="utf-8"))
+    base = audit(manifests, ledgers, snapshots, pilot=pilot, pilot2=pilot2)
     delivery_auditors = {"e07": warm_delivery, "e08": horror_delivery}
     live = {}
     for world, (_, _, _, validator) in WORLDS.items():
@@ -232,6 +251,10 @@ def audit_live(
         "style_delivered": live_delivered,
         "style_not_delivered": 20 - live_delivered,
         "gallery_pilot": audit_pilot_live(pilot, jobs),
+        "gallery_pilots": {
+            "round1": audit_pilot_live(pilot, jobs),
+            "round2": audit_pilot_live(pilot2, jobs),
+        },
     }
     base["source"] = "live_reconciled_with_committed_snapshot"
     base["blockers"] = [

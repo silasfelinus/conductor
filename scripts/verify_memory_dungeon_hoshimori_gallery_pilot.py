@@ -15,13 +15,16 @@ import yaml
 ROOT = Path(__file__).resolve().parents[1]
 ART = ROOT / "projects/memory-dungeon/art"
 LEDGER = ART / "HOSHIMORI-GALLERY-PILOT-ROUND-1.yaml"
+ROUND2_LEDGER = ART / "HOSHIMORI-GALLERY-PILOT-ROUND-2.yaml"
 SELECTED = {"e07": (6, 7, 9, 10), "e08": (3, 4, 6, 7)}
+ROUND2_SELECTED = {"e07": (1, 2, 3, 4), "e08": (1, 2, 5, 8)}
 sys.path.insert(0, str(ROOT / "scripts"))
 from memory_dungeon_hoshimori_prompt_contract import validate_prompt  # noqa: E402
 from enqueue_art_requests import build_request  # noqa: E402
 
 
-def validate(data: dict, sources: dict[str, dict], *, require_jobs: bool = False) -> dict:
+def validate(data: dict, sources: dict[str, dict], *, require_jobs: bool = False,
+             selected: dict[str, tuple[int, ...]] = SELECTED) -> dict:
     if not isinstance(data, dict) or data.get("auto_submit") is not True:
         raise ValueError("pilot must be an opted-in production ledger")
     if any(data.get(k) != v for k, v in {
@@ -40,7 +43,7 @@ def validate(data: dict, sources: dict[str, dict], *, require_jobs: bool = False
     if not isinstance(subjects, list) or len(subjects) != 8:
         raise ValueError("pilot must contain eight gallery faces")
     expected = [
-        face for world, indices in SELECTED.items()
+        face for world, indices in selected.items()
         for index in indices for face in [sources[world]["faces"][index - 1]]
     ]
     seen_jobs: set[int] = set()
@@ -93,25 +96,30 @@ def validate(data: dict, sources: dict[str, dict], *, require_jobs: bool = False
     return {"faces": len(subjects), "submitted": len(seen_jobs), "unsubmitted": 8 - len(seen_jobs)}
 
 
-def load_and_validate(*, require_jobs: bool = False) -> dict:
-    data = yaml.safe_load(LEDGER.read_text(encoding="utf-8"))
+def load_and_validate(*, require_jobs: bool = False, round_number: int = 1) -> dict:
+    if round_number not in (1, 2):
+        raise ValueError("unknown Hoshimori gallery production round")
+    ledger = LEDGER if round_number == 1 else ROUND2_LEDGER
+    selected = SELECTED if round_number == 1 else ROUND2_SELECTED
+    data = yaml.safe_load(ledger.read_text(encoding="utf-8"))
     sources = {
         world: yaml.safe_load((ART / f"HOSHIMORI-{world.upper()}-GALLERY-BRIEFS.yaml").read_text(encoding="utf-8"))
         for world in SELECTED
     }
-    return validate(data, sources, require_jobs=require_jobs)
+    return validate(data, sources, require_jobs=require_jobs, selected=selected)
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--require-jobs", action="store_true")
+    parser.add_argument("--round", type=int, choices=(1, 2), default=1)
     args = parser.parse_args()
     try:
-        result = load_and_validate(require_jobs=args.require_jobs)
+        result = load_and_validate(require_jobs=args.require_jobs, round_number=args.round)
     except (OSError, yaml.YAMLError, ValueError) as exc:
         print(f"::error::Hoshimori gallery pilot invalid: {exc}", file=sys.stderr)
         return 1
-    print(f"Hoshimori gallery pilot: {result['faces']} source-backed faces; "
+    print(f"Hoshimori gallery pilot round {args.round}: {result['faces']} source-backed faces; "
           f"{result['submitted']} durable ArtJob IDs; {result['unsubmitted']} unsubmitted. "
           "No delivery or in-game integration inferred.")
     return 0
