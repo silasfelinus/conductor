@@ -17,13 +17,21 @@ class HoshimoriWarmStyleTests(unittest.TestCase):
     def setUp(self):
         self.data = yaml.safe_load(LEDGER.read_text())
 
-    def test_eight_private_canon_grounded_samples_are_distinct(self):
+    def with_receipts(self):
+        data = deepcopy(self.data)
+        for index, row in enumerate(data["requests"]):
+            row["last_art_job_id"] = 60001 + index
+        return data
+
+    def test_ten_private_canon_grounded_samples_are_distinct(self):
         receipts = validate(self.data)
         self.assertEqual(set(receipts), set(CATEGORIES))
-        self.assertEqual(len(receipts), 8)
-        self.assertEqual(len({r["image_path"] for r in self.data["requests"]}), 8)
+        self.assertEqual(len(receipts), 10)
+        self.assertEqual(len({r["image_path"] for r in self.data["requests"]}), 10)
         self.assertTrue(all(r["page_url"].endswith("/play/memory") for r in self.data["requests"]))
         self.assertTrue(all("hoshimori/e07/style-proofs/" in r["image_path"] for r in self.data["requests"]))
+        self.assertEqual(sum(r["category"] == "scene" for r in self.data["requests"]), 2)
+        self.assertEqual(sum(r["category"] == "card" for r in self.data["requests"]), 2)
 
     def test_rejects_duplicate_id_or_path_and_cross_project_destination(self):
         data = deepcopy(self.data)
@@ -39,23 +47,23 @@ class HoshimoriWarmStyleTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "repository"):
             validate(data)
 
-    def test_submission_gate_needs_eight_unique_positive_artjob_ids(self):
+    def test_submission_gate_needs_ten_unique_positive_artjob_ids(self):
         data = deepcopy(self.data)
         data["requests"][0].pop("last_art_job_id", None)
         with self.assertRaisesRegex(ValueError, "Unsubmitted"):
             validate(data, require_jobs=True)
         for index, row in enumerate(data["requests"]):
             row["last_art_job_id"] = 60001 + index
-        self.assertEqual(len(validate(data, require_jobs=True)), 8)
-        data["requests"][7]["last_art_job_id"] = data["requests"][0]["last_art_job_id"]
+        self.assertEqual(len(validate(data, require_jobs=True)), 10)
+        data["requests"][9]["last_art_job_id"] = data["requests"][0]["last_art_job_id"]
         with self.assertRaisesRegex(ValueError, "Duplicate ArtJob"):
             validate(data, require_jobs=True)
-        data["requests"][7]["last_art_job_id"] = -1
+        data["requests"][9]["last_art_job_id"] = -1
         with self.assertRaisesRegex(ValueError, "Invalid ArtJob"):
             validate(data, require_jobs=True)
 
-    def test_live_audit_proves_eight_exact_jobs_and_fresh_media(self):
-        data = deepcopy(self.data)
+    def test_live_audit_proves_ten_exact_jobs_and_fresh_media(self):
+        data = self.with_receipts()
         jobs = []
         for row in data["requests"]:
             jobs.append({
@@ -74,16 +82,16 @@ class HoshimoriWarmStyleTests(unittest.TestCase):
             heads.append((path, created))
             return "delivered"
         report = audit_delivery(data, jobs, head)
-        self.assertEqual(report["total"], 8)
-        self.assertEqual(report["delivered"], 8)
-        self.assertEqual(len(heads), 8)
+        self.assertEqual(report["total"], 10)
+        self.assertEqual(report["delivered"], 10)
+        self.assertEqual(len(heads), 10)
         self.assertEqual({path for path, _ in heads},
                          {row["image_path"] for row in data["requests"]})
         self.assertEqual({row["artImageId"] for row in report["results"]},
                          {row["last_art_job_id"] + 1000 for row in data["requests"]})
 
     def test_live_audit_rejects_wrong_identity_and_unproven_media(self):
-        data = deepcopy(self.data)
+        data = self.with_receipts()
         rows = data["requests"]
         jobs = []
         for row in rows:
@@ -104,7 +112,7 @@ class HoshimoriWarmStyleTests(unittest.TestCase):
         self.assertEqual(report["delivered"], 0)
         self.assertEqual(report["results"][0]["status"], "media_stale")
         self.assertEqual(report["results"][1]["status"], "job_identity_mismatch")
-        self.assertEqual(report["counts"]["pending"], 6)
+        self.assertEqual(report["counts"]["pending"], 8)
         jobs[0].pop("artImageId")
         report = audit_delivery(data, jobs, lambda *_: self.fail("no ArtImage means no HEAD"))
         self.assertEqual(report["results"][0]["status"], "done_without_art_image")

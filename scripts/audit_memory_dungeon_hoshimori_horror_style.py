@@ -2,7 +2,7 @@
 """Validate Hoshimori e08 horror style-proof destinations and durable ArtJob receipts.
 
 A successful submission is not proof of a rendered ArtImage or accepted artwork.
-Keep these eight private style samples distinct from the historical 752-job set.
+Keep these ten private style samples distinct from the historical 752-job set.
 """
 from __future__ import annotations
 
@@ -23,6 +23,8 @@ CATEGORIES = {
     "umbrella-door-keeper": ("yokai", "768x1024"),
     "procession-of-shut-doors": ("scene", "1344x768"),
     "unwritten-address-card": ("card", "768x1024"),
+    "folded-ward-evacuation": ("scene", "1344x768"),
+    "vesper-scylla-unwritten-passage": ("card", "768x1024"),
 }
 PREFIX = "memory-dungeon-hoshimori-e08-style-"
 DEST = "public/images/memory-dungeon/hoshimori/e08/style-proofs/"
@@ -31,7 +33,7 @@ DEST = "public/images/memory-dungeon/hoshimori/e08/style-proofs/"
 def validate(data: dict, *, require_jobs: bool = False) -> dict[str, int | None]:
     rows = data.get("requests") if isinstance(data, dict) else None
     if not isinstance(rows, list) or len(rows) != len(CATEGORIES):
-        raise ValueError("Expected exactly eight Hoshimori horror style requests")
+        raise ValueError("Expected exactly ten Hoshimori horror style requests")
     receipts: dict[str, int | None] = {}
     seen_paths: set[str] = set()
     seen_jobs: set[int] = set()
@@ -100,7 +102,7 @@ def main() -> int:
     parser.add_argument("--report", type=Path,
                         help="write machine-readable evidence (live mode only)")
     parser.add_argument("--require-delivered", action="store_true",
-                        help="fail until all eight ArtImages and fresh media HEADs are proven")
+                        help="fail until all ten ArtImages and fresh media HEADs are proven")
     args = parser.parse_args()
     if (args.report or args.require_delivered) and not args.live:
         parser.error("--report and --require-delivered require --live")
@@ -124,7 +126,7 @@ def main() -> int:
             if args.require_delivered and report["delivered"] != len(CATEGORIES):
                 return 2
         else:
-            print(f"Hoshimori horror style: {sum(v is not None for v in receipts.values())}/8 durable ArtJob receipts")
+            print(f"Hoshimori horror style: {sum(v is not None for v in receipts.values())}/{len(CATEGORIES)} durable ArtJob receipts")
             for slug, job in receipts.items():
                 print(f"  {slug}: {job if job is not None else 'PENDING'}")
             print("Submission contract verified; live render/media QA not checked.")
