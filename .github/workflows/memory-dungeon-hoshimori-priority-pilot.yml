@@ -33,7 +33,7 @@ jobs:
       - name: Install manifest parser
         run: python -m pip install --disable-pip-version-check --quiet pyyaml
       - name: Validate four immutable map/atlas receipts and priority safety
-        run: python -m unittest -q tests.test_memory_dungeon_hoshimori_priority_pilot
+        run: python -m unittest discover -s tests -p 'test_memory_dungeon_hoshimori_priority_pilot.py' -q
       - name: Promote only four existing Hoshimori map and Oven atlas proofs
         run: python scripts/memory_dungeon_hoshimori_priority_pilot.py --apply
       - name: Verify queue ordering and actual claim/delivery state
