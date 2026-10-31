@@ -17,6 +17,12 @@ class HoshimoriWarmStyleTests(unittest.TestCase):
     def setUp(self):
         self.data = yaml.safe_load(LEDGER.read_text())
 
+    def with_receipts(self):
+        data = deepcopy(self.data)
+        for index, row in enumerate(data["requests"]):
+            row["last_art_job_id"] = 60001 + index
+        return data
+
     def test_ten_private_canon_grounded_samples_are_distinct(self):
         receipts = validate(self.data)
         self.assertEqual(set(receipts), set(CATEGORIES))
@@ -24,6 +30,8 @@ class HoshimoriWarmStyleTests(unittest.TestCase):
         self.assertEqual(len({r["image_path"] for r in self.data["requests"]}), 10)
         self.assertTrue(all(r["page_url"].endswith("/play/memory") for r in self.data["requests"]))
         self.assertTrue(all("hoshimori/e07/style-proofs/" in r["image_path"] for r in self.data["requests"]))
+        self.assertEqual(sum(r["category"] == "scene" for r in self.data["requests"]), 2)
+        self.assertEqual(sum(r["category"] == "card" for r in self.data["requests"]), 2)
 
     def test_rejects_duplicate_id_or_path_and_cross_project_destination(self):
         data = deepcopy(self.data)
@@ -55,7 +63,7 @@ class HoshimoriWarmStyleTests(unittest.TestCase):
             validate(data, require_jobs=True)
 
     def test_live_audit_proves_ten_exact_jobs_and_fresh_media(self):
-        data = deepcopy(self.data)
+        data = self.with_receipts()
         jobs = []
         for row in data["requests"]:
             jobs.append({
@@ -83,7 +91,7 @@ class HoshimoriWarmStyleTests(unittest.TestCase):
                          {row["last_art_job_id"] + 1000 for row in data["requests"]})
 
     def test_live_audit_rejects_wrong_identity_and_unproven_media(self):
-        data = deepcopy(self.data)
+        data = self.with_receipts()
         rows = data["requests"]
         jobs = []
         for row in rows:
