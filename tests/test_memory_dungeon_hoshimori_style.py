@@ -2,6 +2,7 @@
 from copy import deepcopy
 from pathlib import Path
 import sys
+import re
 import unittest
 
 import yaml
@@ -32,6 +33,14 @@ class HoshimoriWarmStyleTests(unittest.TestCase):
         self.assertTrue(all("hoshimori/e07/style-proofs/" in r["image_path"] for r in self.data["requests"]))
         self.assertEqual(sum(r["category"] == "scene" for r in self.data["requests"]), 2)
         self.assertEqual(sum(r["category"] == "card" for r in self.data["requests"]), 2)
+
+    def test_prompts_avoid_rejected_physical_format_vocabulary(self):
+        for row in self.data["requests"]:
+            with self.subTest(request=row["id"]):
+                self.assertIsNone(re.search(
+                    r"\\b(?:card|poster|book cover)\\s+illustration\\b",
+                    row["prompt"], re.IGNORECASE,
+                ))
 
     def test_rejects_duplicate_id_or_path_and_cross_project_destination(self):
         data = deepcopy(self.data)
