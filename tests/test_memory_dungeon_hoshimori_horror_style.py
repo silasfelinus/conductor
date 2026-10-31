@@ -42,10 +42,21 @@ class HoshimoriHorrorStyleTests(unittest.TestCase):
         for row in self.data["requests"]:
             with self.subTest(request=row["id"]):
                 self.assertIsNone(re.search(
-                    r"\\bno\\s+(?:text|lettering|words|typography)\\b",
+                    r"\bno\s+(?:text|lettering|words|typography)\b",
                     row["prompt"], re.IGNORECASE,
                 ))
                 self.assertIn("every surface bare and unmarked", row["prompt"])
+
+    def test_preflight_rejects_production_422_prompt_shapes(self):
+        for phrase in (
+            "no text", "without lettering", "avoid visible typography",
+            "card illustration", "poster art", "book cover design",
+        ):
+            with self.subTest(phrase=phrase):
+                data = deepcopy(self.data)
+                data["requests"][0]["prompt"] += " " + phrase
+                with self.assertRaisesRegex(ValueError, "Krea2 prompt"):
+                    validate(data)
 
     def test_warm_and_horror_jobs_have_no_colliding_request_or_media_ids(self):
         warm_path = ROOT / "projects/memory-dungeon/art/HOSHIMORI-WARM-STYLE-PROOFS.yaml"
@@ -109,6 +120,9 @@ class HoshimoriHorrorStyleTests(unittest.TestCase):
         workflow = yaml.safe_load((ROOT / ".github/workflows/auto-art-generate.yml").read_text())
         steps = workflow["jobs"]["generate"]["steps"]
         submit = next(s for s in steps if s.get("id") == "memory_dungeon_hoshimori_horror_submit")
+        preflight = next(s for s in steps if s.get("name") ==
+                         "Verify Memory Dungeon art submission contracts")
+        self.assertLess(steps.index(preflight), steps.index(submit))
         receipt = next(s for s in steps if s.get("id") == "memory_dungeon_hoshimori_horror_receipts")
         delivery = next(s for s in steps if s.get("id") == "memory_dungeon_hoshimori_horror_delivery")
         checkpoint = next(s for s in steps if s.get("name") ==
