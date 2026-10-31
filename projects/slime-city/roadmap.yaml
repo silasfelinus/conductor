@@ -394,30 +394,16 @@ tasks:
   - id: t-017
     milestone: m2
     title: "Queue and verify distinct art for teams, districts and specials"
-    status: claimed
+    status: review
     claimed_by: 20261031T082251543Z-slime-city-t017-art-z8m2
     claimed_at: '2026-10-31T08:22:51.543Z'
     depends_on: t-001
     owner: worker
     passes: 0
     stakes: reversible
-    note: >-
-      Generate 6 unmistakably different crew hero illustrations,
-      7 district panoramic keys, 3 board layouts and first 36
-      collectible creature/spell/trap/equipment card illustrations
-      through real ArtJobs; show per-asset pending/done/failed
-      provenance and connect verified ArtImages in the internal lab.
-      Never substitute CSS illustrations or prompt text for delivered art.
+    note: |-
+      Generate 6 unmistakably different crew hero illustrations, 7 district panoramic keys, 3 board layouts and first 36 collectible creature/spell/trap/equipment card illustrations through real ArtJobs; show per-asset pending/done/failed provenance and connect verified ArtImages in the internal lab. Never substitute CSS illustrations or prompt text for delivered art.
+      2026-10-30 art refill: conductor #6828 (7aa20da) added projects/slime-city/art/CREWS- DISTRICTS-CARDS-ROUND-1.yaml, an auto-submit Krea 2 ledger at priority 650. It covers 6 crew hero scenes, 7 district panoramas, all 36 prototype cards and 3 board layouts (blackout/gridiron/bloodrush), keyed by prototypes.ts ids as slime- city/{crews,districts,cards,boards}/<id>. 51 are queued as jobs 52035-52085; slime-card- plating hit HTTP 502 and is retrying. Prompts are original (projects/slime-city/ART- PROMPTS.md never existed): all adults, slapstick non-gory violence. Next: once DONE, review renders, export to public/slime-city via scripts/export_round_art.py, and wire a small manifest and lookup into /admin/slime-city (the lab currently shows card symbols) with per-asset pending/done/failed provenance. Not done until verified ArtImages show in the lab.
 
-      2026-10-30 art refill: conductor #6828 (7aa20da) added projects/slime-city/art/CREWS-
-      DISTRICTS-CARDS-ROUND-1.yaml, an auto-submit Krea 2 ledger at priority 650. It covers 6
-      crew hero scenes, 7 district panoramas, all 36 prototype cards and 3 board layouts
-      (blackout/gridiron/bloodrush), keyed by prototypes.ts ids as slime-
-      city/{crews,districts,cards,boards}/<id>. 51 are queued as jobs 52035-52085; slime-card-
-      plating hit HTTP 502 and is retrying. Prompts are original (projects/slime-city/ART-
-      PROMPTS.md never existed): all adults, slapstick non-gory violence. Next: once DONE,
-      review renders, export to public/slime-city via scripts/export_round_art.py, and wire a
-      small manifest and lookup into /admin/slime-city (the lab currently shows card symbols)
-      with per-asset pending/done/failed provenance. Not done until verified ArtImages show in
-      the lab.
-    updated: '2026-10-30T13:54:38Z'
+      First authenticated ArtImage integration for Slime City internal lab is staged on worker/slime-city-t017-art-ledger-20261031T082251Z-z8m2. Conductor round-one ledger has 52 DONE subjects with unique ArtImage IDs: six crew portraits, seven district panoramas, 36 starter card illustrations, three arena scenes. Typed manifest records exact provenance; a Pinia loader requests private bytes with user JWT and exposes loaded/unavailable status. Artwork is wired into roster, city, campaign, cards, modes and arena. The other 24 starter cards remain honest fallbacks. Tests assert coverage and missingness. Delivered bytes and actual rendered browser screenshots NOT yet verified. Kind Robots CI and PR still pending.
+    updated: '2026-10-31T08:25:55.649Z'
