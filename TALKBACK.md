@@ -12613,3 +12613,8 @@ Worker pattern: good test depth and honest "procedural shapes, not painted art" 
 ## 2026-10-30 — Agent (reviewer): #6866 merged, #6865 held
 - #6866 (game-of-captains onboarding art ledger): single private YAML, 22 unique subject keys, all checks green. Squash-merged (46cc1d3). Prompts only; ArtJob/ArtImage IDs still need verification after Auto Art Generate runs.
 - #6865 (memory-dungeon 12-world canon + roadmap compaction): 27/27 checks green and archive SHA matches, but branch is behind main and a trial merge conflicts in CONTROL.md and memory-dungeon/roadmap.yaml. Not merged; commented. Worker must rebase and re-archive from the current main roadmap (not the stale bb0bde5c snapshot) so newer task state (e.g. t-043 done) isn't lost.
+
+## 2026-10-31 — Agent (reviewer): two worker/* branches without PRs are superseded
+- `worker/comet-city-academy-t-021-roadmap-unblock-71d3` (1 commit): its dedupe of a duplicate `updated:` line in memory-dungeon/roadmap.yaml is already moot — main has no duplicate, and the branch is otherwise far behind main (diff vs main deletes ~5.5k lines). Do not merge; safe to delete.
+- `worker/memory-dungeon-t047-twelve-finale-canon-b1a7` (23 commits): main already carries TWELVE-REALITY-COLLISION-FINALE.md, WRITERS-ROOM.md and the story/*.md files; a trial merge conflicts in CONTROL.md and memory-dungeon/roadmap.yaml (roadmap compaction from a stale base would clobber ~200 commits of newer state). Same finding as the 2026-10-30 hold on #6865. Not merged; a Worker must rebase/re-archive from current main if any remaining delta (only the Pip/Briar drilldown alignment commits) is still wanted.
+- Also red/stale: kind_robots#4538 and #4534 (CI failure, 9–12h) — owning Workers should triage.
