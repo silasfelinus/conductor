@@ -1117,8 +1117,8 @@ tasks:
   - id: t-045
     milestone: m3
     title: "Hoshimori e07/e08 art: style proofs, map/oven atlases and two 30+2 collectible galleries"
-    status: claimed
-    updated: '2026-10-31T22:50:00Z'
+    status: review
+    updated: '2026-10-31T23:01:00Z'
     depends_on:
       - t-041
       - t-043
@@ -1182,6 +1182,8 @@ tasks:
       Reconciled eight real Hoshimori gallery ArtJob receipts 52443-52450 into the 64-face readiness audit; added fail-closed live identity and unverified-media states with adversarial regressions. Focused Conductor PR and exact-head CI follow. No additional ArtJobs, verified ArtImages or deployment.
 
       2026-10-31 PT: Merged Conductor PR #6895 (94098e649ef793d43c591b377c7ee43a61736733) after exact-head Worker PR CI #41245269508 (3249 passed, 53 skipped), Security Audit and handoff passed on d21fe06a5d3f07eb28b158a4d2be6487ca24362a. Auto Art Generate #41241084919 durably submitted eight e07/e08 gallery ArtJobs 52443-52450. The readiness audit now truthfully reports 8/64 submitted, 56 unsubmitted and zero media deliveries verified; live identity validation rejects wrong project/prompt/visibility and never promotes DONE/ArtImage to delivered without final media. No new ArtJobs, media integration or deploy in this PR. Return READY for ArtImage/media verification, remaining gallery production, 8x8/6x6 geometry, unlock integration and rendered QA; keep ACTIVE, not For Human Gate.
+
+      Prepared second eight-face e07/e08 source-backed production ledger (Vesper, Pip, baker, kitsune, Scylla and Nurikabe), distinct from first eight ArtJobs and 20 style proofs. Added two-round provenance, duplicate receipt, and truthful pending-media audit with adversarial tests. Focused PR and exact-head CI follow; no new ArtJob IDs or rendered files claimed before the production workflow confirms them.
     owner: worker
     claimed_by: 20261031T225000Z-memory-dungeon-t045-gallery-round2-c83f
     claimed_at: '2026-10-31T22:50:00Z'
