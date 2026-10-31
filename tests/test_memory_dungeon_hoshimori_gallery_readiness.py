@@ -10,7 +10,7 @@ import yaml
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 from audit_memory_dungeon_hoshimori_gallery_readiness import (  # noqa: E402
-    ART, WORLDS, audit, audit_live, load_report,
+    ART, WORLDS, PILOT_LEDGER, audit, audit_live, audit_pilot_live, load_report,
 )
 
 
@@ -30,7 +30,9 @@ class HoshimoriGalleryReadinessTests(unittest.TestCase):
     def test_real_committed_inventory_is_authored_not_delivered(self):
         report = load_report()
         self.assertEqual(report["gallery_briefs"], 64)
-        self.assertEqual(report["gallery_artjobs"], 0)
+        self.assertEqual(report["gallery_artjobs"], 8)
+        self.assertEqual(report["gallery_unsubmitted"], 56)
+        self.assertEqual(report["gallery_pilot"]["submitted"], 8)
         self.assertEqual(report["gallery_delivered_images"], 0)
         self.assertEqual(report["style_artjobs"], 20)
         self.assertFalse(report["ready_for_gallery_submission"])
@@ -95,6 +97,57 @@ class HoshimoriGalleryReadinessTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "ten-row"):
             audit(self.manifests, self.ledgers, self.snapshots)
 
+    def test_gallery_pilot_cannot_reuse_a_style_job_receipt(self):
+        pilot = yaml.safe_load(PILOT_LEDGER.read_text(encoding="utf-8"))
+        pilot["subjects"][0]["jobs"]["krea2"] = self.ledgers["e07"]["requests"][0]["last_art_job_id"]
+        with self.assertRaisesRegex(ValueError, "reuses a style-proof"):
+            audit(self.manifests, self.ledgers, self.snapshots, pilot=pilot)
+
+    def test_pilot_job_identity_and_done_are_not_delivery(self):
+        pilot = yaml.safe_load(PILOT_LEDGER.read_text(encoding="utf-8"))
+        jobs = [
+            {
+                "id": subject["jobs"]["krea2"], "projectSlug": "memory-dungeon",
+                "engine": "COMFY", "status": "PENDING",
+                "payload": {"promptString": subject["prompt_prose"],
+                            "save": {"isPublic": False, "isMature": False}},
+            }
+            for subject in pilot["subjects"]
+        ]
+        report = audit_pilot_live(pilot, jobs)
+        self.assertEqual(report["counts"], {"pending": 8})
+        self.assertEqual(report["delivered"], 0)
+
+        jobs[0]["status"] = "DONE"
+        jobs[0]["artImageId"] = 777777
+        report = audit_pilot_live(pilot, jobs)
+        self.assertEqual(report["counts"], {"done_media_unverified": 1, "pending": 7})
+        self.assertEqual(report["delivered"], 0)
+
+    def test_pilot_forged_project_or_prompt_fails_identity(self):
+        pilot = yaml.safe_load(PILOT_LEDGER.read_text(encoding="utf-8"))
+        first = pilot["subjects"][0]
+        job = {
+            "id": first["jobs"]["krea2"], "projectSlug": "unrelated-game",
+            "engine": "COMFY", "status": "DONE", "artImageId": 123,
+            "payload": {"promptString": first["prompt_prose"],
+                        "save": {"isPublic": False, "isMature": False}},
+        }
+        report = audit_pilot_live(pilot, [job])
+        self.assertEqual(report["counts"], {"identity_mismatch": 1, "job_missing": 7})
+        job["projectSlug"] = "memory-dungeon"
+        job["payload"]["promptString"] = "unrelated image"
+        self.assertEqual(audit_pilot_live(pilot, [job])["counts"]["identity_mismatch"], 1)
+        job["payload"]["promptString"] = first["prompt_prose"]
+        job["payload"]["save"]["isPublic"] = True
+        self.assertEqual(audit_pilot_live(pilot, [job])["counts"]["identity_mismatch"], 1)
+
+    def test_pilot_duplicate_live_job_rows_fail_closed(self):
+        pilot = yaml.safe_load(PILOT_LEDGER.read_text(encoding="utf-8"))
+        job = {"id": pilot["subjects"][0]["jobs"]["krea2"]}
+        with self.assertRaisesRegex(ValueError, "Duplicate live ArtJob"):
+            audit_pilot_live(pilot, [job, dict(job)])
+
     def test_live_missing_jobs_cannot_pass_visual_gate(self):
         report = audit_live(
             self.manifests, self.ledgers, self.snapshots,
@@ -128,7 +181,8 @@ class HoshimoriGalleryReadinessTests(unittest.TestCase):
         self.assertEqual(report["live"]["style_delivered"], 20)
         self.assertTrue(report["ready_for_visual_review"])
         self.assertFalse(report["ready_for_gallery_submission"])
-        self.assertEqual(report["gallery_artjobs"], 0)
+        self.assertEqual(report["gallery_artjobs"], 8)
+        self.assertEqual(report["live"]["gallery_pilot"]["counts"]["job_missing"], 8)
 
 
 if __name__ == "__main__":
