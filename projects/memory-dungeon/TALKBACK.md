@@ -29,3 +29,11 @@
 - The first-stage Hoshimori work still has 36/64 sites, 9/36 Oven rooms, 30+2 gallery incomplete and the e03–e06 entry path blocked; keep the project ACTIVE.
 
 **Kaizen task:** deferred because t-045 already explicitly owns Hoshimori style-proof visual acceptance, atlases and gallery verification. Do not create a duplicate geometry task.
+
+## 2026-10-31 — Reviewer: PR #6874 archive done-task notes (merged)
+
+**Decision:** merged (squash, e70de7b). Reversible, scoped docs/roadmap-hygiene change: 9 done-task `note:` bodies moved verbatim to `HISTORY.md`; roadmap 168,738 → 141,646 bytes, clearing the 150KB oversize flag.
+
+**Verified:** CI green on head, `archive_done_task_notes.py --project memory-dungeon --verify-only` passes (every pointer resolves), roadmap YAML parses.
+
+**Pattern:** good use of the sanctioned archive helper rather than hand-editing notes. No kaizen task created — the helper already exists and the oversize flag is cleared.
