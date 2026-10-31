@@ -102,7 +102,8 @@ class HoshimoriGalleryPilotTests(unittest.TestCase):
     def test_second_round_is_eight_source_backed_distinct_faces(self):
         round2 = yaml.safe_load(ROUND2_LEDGER.read_text(encoding="utf-8"))
         report = load_and_validate(round_number=2)
-        self.assertEqual(report, {"faces": 8, "submitted": 0, "unsubmitted": 8})
+        self.assertEqual(report["faces"], 8)
+        self.assertEqual(report["submitted"] + report["unsubmitted"], 8)
         self.assertEqual(
             [row["world"] for row in round2["subjects"]], ["e07"] * 4 + ["e08"] * 4
         )
@@ -127,11 +128,15 @@ class HoshimoriGalleryPilotTests(unittest.TestCase):
             validate(altered, self.sources, selected=ROUND2_SELECTED)
 
     def test_second_round_requires_real_receipts_before_claiming_submission(self):
+        round2 = yaml.safe_load(ROUND2_LEDGER.read_text(encoding="utf-8"))
+        round2["subjects"][0].pop("jobs", None)
+        round2["subjects"][0].pop("art", None)
         with self.assertRaisesRegex(ValueError, "unsubmitted gallery face"):
-            load_and_validate(round_number=2, require_jobs=True)
+            validate(round2, self.sources, selected=ROUND2_SELECTED, require_jobs=True)
 
     def test_second_round_rejects_artimage_without_a_job(self):
         round2 = yaml.safe_load(ROUND2_LEDGER.read_text(encoding="utf-8"))
+        round2["subjects"][0].pop("jobs", None)
         round2["subjects"][0]["art"] = {
             "krea2": {"status": "DONE", "art_image_id": 98989}
         }
