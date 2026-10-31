@@ -1117,8 +1117,8 @@ tasks:
   - id: t-045
     milestone: m3
     title: "Hoshimori e07/e08 art: style proofs, map/oven atlases and two 30+2 collectible galleries"
-    status: ready
-    updated: '2026-10-31T23:01:01Z'
+    status: claimed
+    updated: '2026-10-31T23:47:18Z'
     depends_on:
       - t-041
       - t-043
@@ -1186,6 +1186,9 @@ tasks:
       Prepared second eight-face e07/e08 source-backed production ledger (Vesper, Pip, baker, kitsune, Scylla and Nurikabe), distinct from first eight ArtJobs and 20 style proofs. Added two-round provenance, duplicate receipt, and truthful pending-media audit with adversarial tests. Focused PR and exact-head CI follow; no new ArtJob IDs or rendered files claimed before the production workflow confirms them.
 
       2026-10-31 PT: Merged Conductor PR #6896 (squash 62d55f4520237f5b5b0efbb169e405eaadbe5dae), with 22 successful exact-head checks and two intentional skips on 984afa8906860a4f52f5a87b76cb272c762527c2; Worker CI #41250097648, Security Audit #41250097751 and handoff #41250097647 green. Added eight distinct e07/e08 source-backed gallery ArtJob requests (Vesper, Pip, baker, kitsune, Scylla, nurikabe), two-round provenance/receipt audits and seven adversarial tests. Existing first-round ArtJobs 52443-52450 and 20 style proofs untouched. Auto Art Generate #41250419398 and readiness #41250419313 triggered; round-two durable IDs and rendered media still require live verification. Return READY for receipts, remaining 48 faces, final-media QA, map/Oven geometry, unlock integration and gameplay QA. No deploy or human gate; Memory Dungeon ACTIVE.
+    owner: worker
+    claimed_by: 20261031T234718Z-memory-dungeon-t045-gallery-media-11
+    claimed_at: '2026-10-31T23:47:18Z'
   - id: t-046
     milestone: m4
     title: "Hoshimori pair adversarial acceptance: complete routes, companions, art and accessibility"
