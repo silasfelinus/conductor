@@ -11,7 +11,8 @@ import yaml
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 from verify_memory_dungeon_hoshimori_gallery_pilot import (  # noqa: E402
-    ART, LEDGER, SELECTED, load_and_validate, validate,
+    ART, LEDGER, ROUND2_LEDGER, ROUND2_SELECTED, SELECTED,
+    load_and_validate, validate,
 )
 
 
@@ -96,6 +97,47 @@ class HoshimoriGalleryPilotTests(unittest.TestCase):
         altered["is_public"] = True
         with self.assertRaisesRegex(ValueError, "settings changed"):
             validate(altered, self.sources)
+
+
+    def test_second_round_is_eight_source_backed_distinct_faces(self):
+        round2 = yaml.safe_load(ROUND2_LEDGER.read_text(encoding="utf-8"))
+        report = load_and_validate(round_number=2)
+        self.assertEqual(report, {"faces": 8, "submitted": 0, "unsubmitted": 8})
+        self.assertEqual(
+            [row["world"] for row in round2["subjects"]], ["e07"] * 4 + ["e08"] * 4
+        )
+        self.assertEqual(
+            {row["face_id"] for row in self.data["subjects"]}
+            & {row["face_id"] for row in round2["subjects"]}, set()
+        )
+        self.assertEqual(
+            {row["asset"] for row in self.data["subjects"]}
+            & {row["asset"] for row in round2["subjects"]}, set()
+        )
+
+    def test_second_round_rejects_forged_source_prompt_and_destination(self):
+        round2 = yaml.safe_load(ROUND2_LEDGER.read_text(encoding="utf-8"))
+        altered = deepcopy(round2)
+        altered["subjects"][0]["prompt_prose"] = "A generic moth portrait."
+        with self.assertRaisesRegex(ValueError, "source drift"):
+            validate(altered, self.sources, selected=ROUND2_SELECTED)
+        altered = deepcopy(round2)
+        altered["subjects"][4]["asset"] = self.data["subjects"][4]["asset"]
+        with self.assertRaisesRegex(ValueError, "source drift"):
+            validate(altered, self.sources, selected=ROUND2_SELECTED)
+
+    def test_second_round_requires_real_receipts_before_claiming_submission(self):
+        with self.assertRaisesRegex(ValueError, "unsubmitted gallery face"):
+            load_and_validate(round_number=2, require_jobs=True)
+
+    def test_second_round_rejects_artimage_without_a_job(self):
+        round2 = yaml.safe_load(ROUND2_LEDGER.read_text(encoding="utf-8"))
+        round2["subjects"][0]["art"] = {
+            "krea2": {"status": "DONE", "art_image_id": 98989}
+        }
+        with self.assertRaisesRegex(ValueError, "without ArtJob"):
+            validate(round2, self.sources, selected=ROUND2_SELECTED)
+
 
 
 if __name__ == "__main__":
