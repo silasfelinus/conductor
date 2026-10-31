@@ -31,9 +31,10 @@ class HoshimoriGalleryReadinessTests(unittest.TestCase):
     def test_real_committed_inventory_is_authored_not_delivered(self):
         report = load_report()
         self.assertEqual(report["gallery_briefs"], 64)
-        self.assertEqual(report["gallery_artjobs"], 8)
-        self.assertEqual(report["gallery_unsubmitted"], 56)
         self.assertEqual(report["gallery_pilot"]["submitted"], 8)
+        second = report["gallery_pilots"]["round2"]
+        self.assertEqual(report["gallery_artjobs"], 8 + second["submitted"])
+        self.assertEqual(report["gallery_unsubmitted"], 56 - second["submitted"])
         self.assertEqual(report["gallery_delivered_images"], 0)
         self.assertEqual(report["style_artjobs"], 20)
         self.assertFalse(report["ready_for_gallery_submission"])
@@ -182,7 +183,8 @@ class HoshimoriGalleryReadinessTests(unittest.TestCase):
         self.assertEqual(report["live"]["style_delivered"], 20)
         self.assertTrue(report["ready_for_visual_review"])
         self.assertFalse(report["ready_for_gallery_submission"])
-        self.assertEqual(report["gallery_artjobs"], 8)
+        self.assertEqual(report["gallery_artjobs"],
+                         8 + report["gallery_pilots"]["round2"]["submitted"])
         self.assertEqual(report["live"]["gallery_pilot"]["counts"]["job_missing"], 8)
 
 
