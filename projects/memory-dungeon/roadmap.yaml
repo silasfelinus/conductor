@@ -574,7 +574,7 @@ tasks:
   - id: t-020
     milestone: m3
     title: "Adopt sixteen-realm canon, prototype prologue and compatibility inventory"
-    status: claimed
+    status: review
     passes: 0
     stakes: reversible
     note: |-
@@ -591,7 +591,9 @@ tasks:
       Scoped Dark Briar save-provenance repair prepared: mirrored scene choices now require visited sites, not merely revealed tiles. Regression tests cover forged witness, shortcut and courier choices and legitimate checkpoint restoration. Await exact-head CI and merge; character art and rendered acceptance remain open.
 
       2026-10-29 6:01 AM PT: Merged kind_robots PR #4434 (f5a1eaf2dfaba5a96648aff738564f08929fc0b1) fixing mirrored Dark Briar save restoration that accepted scene choices from revealed but never visited sites. Exact PR head c598fdf906970c2e0cd2a25eb15fafe04ae53587: 19/19 checks and 14/14 workflows passed, including Contract Tests #40877222798, TypeScript #40877222561, formatting #40877222783, and Memory browser #40877222662. Added forged witness/bridge/courier and valid-save regressions. No ArtJobs or deployment. Issue #4136 reopened because full campaign remains unfinished; comment 6497375925 records evidence. Return READY for character art, compatibility inventory and rendered 390/768/1440 acceptance; not For Human Gate.
-    updated: '2026-10-31T16:45:22Z'
+
+      Scoped twelve-world save compatibility fix: archive retired e13-e16 history even when a version-2 checkpoint still carries those IDs in completed. Preserve old e09-e12 history separately from current collision finale; never grant new finale access from archived entries. Sixteen historical-subset and save-roundtrip regressions added. Kind Robots PR and exact-head CI follow; art, character visuals and rendered acceptance remain unfinished.
+    updated: '2026-10-31T16:50:00Z'
     owner: worker
     claimed_by: 2026-10-31T164522Z-memory-dungeon-t-020-compat-7f3b9
     claimed_at: '2026-10-31T16:45:22Z'

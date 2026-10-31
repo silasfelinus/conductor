@@ -1,9 +1,0 @@
-version: 1
-project: memory-dungeon
-task: t-020
-operation: review
-owner: worker
-session: 2026-10-31T164522Z-memory-dungeon-t-020-compat-7f3b9
-updated: '2026-10-31T16:50:00Z'
-note: >-
-  Scoped twelve-world save compatibility fix: archive retired e13-e16 history even when a version-2 checkpoint still carries those IDs in completed. Preserve old e09-e12 history separately from current collision finale; never grant new finale access from archived entries. Sixteen historical-subset and save-roundtrip regressions added. Kind Robots PR and exact-head CI follow; art, character visuals and rendered acceptance remain unfinished.
