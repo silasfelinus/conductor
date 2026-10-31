@@ -153,7 +153,7 @@ tasks:
   - id: t-004
     milestone: m2
     title: "Expand five mana colors into six distinct authored crews and special decks"
-    status: claimed
+    status: review
     depends_on: t-002
     owner: worker
     claimed_by: 2026-10-31T003120Z-slime-city-t004-progression-7c19
@@ -167,7 +167,9 @@ tasks:
       Blackout-first overhaul linked to kind_robots issue #4535: open 10x6 arena, four seeded cards drawn from each ten-card crew deck per round, true played card consumption and discard cycling, full card inspection, manual attack commands with range highlights and summon delay, and CPU explicit attacks. Legacy concealed-army combat retained only for opt-in regression fixtures. Kind Robots implementation PR and CI pending; this is a partial t-004 slice, not 50-card-per-crew expansion or delivered Krea artwork.
 
       PARTIAL Blackout-first increment shipped. Kind Robots PR #4537 merged at 15fd7e954e63ef442cba2c1e7a0ed84d6b2edf01 after 23/23 checks success (TypeScript, production image, mandatory Slime City contract, layout and Prettier). The open 10x6 arena starts empty and visible, faction decks of ten deal seeded four-card round hands, played cards leave the hand and cycle through the discard pile, and each side obeys identical card legality. Blackout uses explicit targeted attack commands with range and once-per-round summon-delay rules; enemy CPU chooses attacks from its observed view; action histories replay deterministically. Large card inspection and move/target highlighting are included. Old concealed-army setup remains opt-in test-only via classicFog. Conductor design directive PR #6868 merged, source master GitHub issue #4535 remains OPEN. REMAINS: authentic generated art integration and attack icons (ArtJob statuses in t-017), paced opponent action animation, Bloodrush cause-of-death UI, full art-first home screen, fifty extra cards per faction and final deck builder. No public deploy, production currency, or generated art completion claimed.
-    updated: '2026-10-31T00:31:20Z'
+
+      Reviewable partial progression/collection increment for user-directed Slime City design: browser-local XP/virtual Meat from CPU battles, daily/weekly Pacific challenge claims, ten paid-bout cap, one guaranteed rare and two unowned other cards per 100-Meat pack, immutable 60-card founder pool and gallery ownership badges. A six-faction counterplay matrix, 300-card next-set proposal and secure-ledger prerequisites are in Conductor PROGRESSION-AND-SETS.md. Not the t-008 server ledger nor production-safe t-010 persistent missions; no real money. Kind Robots implementation review and CI not yet finished.
+    updated: '2026-10-31T00:40:45Z'
   - id: t-005
     milestone: m2
     title: "Implement competitive square-grid AI and comparative match replays"
