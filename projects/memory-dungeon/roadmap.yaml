@@ -1117,8 +1117,8 @@ tasks:
   - id: t-045
     milestone: m3
     title: "Hoshimori e07/e08 art: style proofs, map/oven atlases and two 30+2 collectible galleries"
-    status: claimed
-    updated: '2026-10-31T20:42:29Z'
+    status: review
+    updated: '2026-10-31T21:01:00Z'
     depends_on:
       - t-041
       - t-043
@@ -1174,6 +1174,8 @@ tasks:
       2026-10-31 PT: Merged Conductor PR #6891 (040db14c983be5436bb3b4a0e49b40479393c8cc), all eight Worker CI jobs green on b0966c0aee61ae176467ddf6f272a1d00b365959; 3227 Python tests passed, 53 skipped. Live one-shot workflow #41231988866 verified durable priority +1 updates to exactly four existing Hoshimori map/Oven ArtJobs 52108, 52109, 52234, 52235; no duplicates or media writes. The same audit still found 643 PENDING / 1 RUNNING globally, these four PENDING at ranks 623-626 and 0/20 Hoshimori style images delivered. Issue kind_robots#4136 comment 6547790927 has evidence. Return READY for relay throughput/high-priority queue investigation, rendered 8x8/6x6 geometry, 64 gallery ArtJobs, unlock integration and device QA. Memory Dungeon ACTIVE, not For Human Gate.
 
       2026-10-31 PT: Merged Conductor PR #6892 (f530bbc05501b3de663e4da4c7bc8423df0b0676) after 22 exact-head passing checks and two skips on 1742d7eac0b51b8ca51d0f80effc8e7aa83475ed. Added read-only full-stats and DONE-updatedAt 1h/6h/24h throughput audit with eight adversarial tests and fail-closed pagination; live Hoshimori readiness workflow #41236331642 succeeded. Fresh snapshot: 606 PENDING, 1 RUNNING, zero stale RUNNING, 979 DONE rows updated in 24h (249 in 6h, 41 in 1h), 979 ArtImages created in 24h across all sources, all COMFY. These are activity proxies, not exact render completions or Hoshimori deliveries. Hoshimori 20/20 style ArtJobs still PENDING, 0 delivered; four map/Oven pilots at queue ranks 586-589. No new ArtJobs, queue writes, deploy or publication. Continue rendered style proof/media/geometry acceptance, then 64 gallery ArtJobs and unlock integration. Memory Dungeon ACTIVE, not For Human Gate.
+
+      Scoped eight-face Hoshimori gallery pilot staged with exact source prompts, distinct destinations, Krea2 auto-submit ledger and adversarial provenance checks. PR review and exact-head CI required before merge; ArtJob IDs, rendering and delivery must be verified separately. Preserve the other 56 gallery briefs.
     owner: worker
     claimed_by: 2026-10-31T20:42:29Z-memory-dungeon-t045-pilot-8e73
     claimed_at: '2026-10-31T20:42:29Z'
