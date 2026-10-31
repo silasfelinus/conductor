@@ -206,6 +206,16 @@ def audit_live(
         "style_delivered": live_delivered,
         "style_not_delivered": 20 - live_delivered,
     }
+    base["source"] = "live_reconciled_with_committed_snapshot"
+    base["blockers"] = [
+        "64 gallery entries remain briefs_only without gallery ArtJob receipts",
+        f"{20 - live_delivered}/20 style proofs lack fresh verified media delivery",
+        "visual inspection of the 8x8 maps, 6x6 atlases and style samples is required",
+    ]
+    if heartbeat_state != "ok":
+        base["blockers"].append(
+            f"render engine heartbeat is {heartbeat_state}; HTTP reachability is insufficient"
+        )
     base["ready_for_visual_review"] = (
         heartbeat_state == "ok" and live_delivered == 20
     )
