@@ -193,6 +193,25 @@ class HoshimoriRelayTriageTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "pagination changed"):
             fetch_pending_queue(lambda page: first if page == 1 else second)
 
+    def test_complete_queue_missing_pending_receipt_is_integrity_warning(self):
+        snapshot = {"jobs": [], "pagination": {"totalCount": 0}, "complete": True}
+        report = inspect(agents=[agent()], global_pending=snapshot)
+        self.assertEqual(report["verdict"], "pending_inventory_mismatch")
+        self.assertEqual(
+            report["global_pending_sample"]["missing_pending_receipt_ids"], [52110]
+        )
+        self.assertFalse(report["global_pending_sample"]["none_in_first_page"])
+
+    def test_done_receipt_does_not_invent_priority_starvation(self):
+        snapshot = {"jobs": [
+            {"id": i, "priority": 0, "engine": "COMFY", "attempts": 0}
+            for i in range(1, 201)
+        ], "pagination": {"totalCount": 200}, "complete": True}
+        report = inspect(jobs=[job(status="DONE")], agents=[agent()],
+                         global_pending=snapshot)
+        self.assertFalse(report["global_pending_sample"]["none_in_first_page"])
+        self.assertEqual(report["global_pending_sample"]["missing_pending_receipt_ids"], [])
+
 
 if __name__ == "__main__":
     unittest.main()
