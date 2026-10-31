@@ -37,3 +37,8 @@
 **Verified:** CI green on head, `archive_done_task_notes.py --project memory-dungeon --verify-only` passes (every pointer resolves), roadmap YAML parses.
 
 **Pattern:** good use of the sanctioned archive helper rather than hand-editing notes. No kaizen task created — the helper already exists and the oversize flag is cleared.
+
+## 2026-10-31 — Reviewer: t-047 canon branch (#6878 → #6880)
+- #6878 had green CI but conflicted with main in `roadmap.yaml` (13 hunks) and `CONTROL.md`. The branch's roadmap diff changed only task notes (no status/claim/dep changes), and main had already slimmed notes via #6874 while worker t-023 kept appending. Resolved by taking main's live roadmap and keeping the PR's CONTROL.md writer-access paragraph; docs were already on main. Superseded by #6880.
+- Pattern: a roadmap-wide note rewrite on a branch will always collide with task-event churn. Slim notes in a small PR cut from fresh main, or leave roadmap notes alone and add archive files only.
+- The comet-city-academy t-021 unblock branch (remove duplicate `updated:` line) was moot: the duplicate no longer exists on main. Branch left for branch-janitor.
