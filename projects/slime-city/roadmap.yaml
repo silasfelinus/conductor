@@ -204,11 +204,8 @@ tasks:
   - id: t-007
     milestone: m3
     title: "Expand seven-district city map into navigable authored overworld"
-    status: review
+    status: ready
     depends_on: t-001
-    owner: worker
-    claimed_by: 20261031T025443558Z-slime-city-t007-nova9
-    claimed_at: '2026-10-31T02:54:43.562Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -230,7 +227,9 @@ tasks:
       PARTIAL 2026-10-30 PT: Merged kind_robots PR #4542 (f15cd1f651dfdcb307e76b3ac26f25dd1322d088), all 15 workflows green, including TypeScript, formatting, layout and four contract shards. Silas requested a story campaign for every faction against each of the other factions. Delivered six independent authored five-chapter Blackout story paths (30 distinct rival conflicts), two narrative/tactical choices per chapter, deterministic battle modifiers, victory-locked progression, retryable defeat, two epilogues per faction and a dedicated responsive STORY console. New story progress remains session-only and does not award account XP, Meat, or cards. Future t-009 completion still requires account-backed saved campaign runs, delivered ArtImages and expanded character/cinematic content; t-017 owns art provenance. Public launch is not authorized. Continue t-007 for remaining city art and integration.
 
       Routed multi-street city wayfinding, destination continuity across authored street choices, and direct faction story and deck entry actions are implemented on Kind Robots worker/slime-city-t007-city-wayfinding-20261031T025443558Z. Regression contracts added; implementation PR CI and preview evidence pending.
-    updated: '2026-10-31T02:56:59.808Z'
+
+      PARTIAL 2026-10-30 PT: Kind Robots PR #4544 merged as 46adf290583b219ac98c62480eec23ae9bc09a5c, all 15 current-head CI checks passed including TypeScript, Changed-file Prettier, Layout Contract, and all four Contract Tests shards. A shortest-path nine-street wayfinder now allows selecting far districts, walks one legal street at a time, preserves a selected destination through every first-crossing authored choice (no skipping), highlights the itinerary and next stop, and adds direct STORY and CARDS navigation from the city. Deterministic all-pairs path and full two-hop store regression tests landed. This is admin-only internal source code, not a live deployment or art delivery. REMAINS for t-007: proven delivered panoramas from t-017, further overworld art and integration, and eventually persisted campaign progress; server-account economy stays separately owned by t-008/#4538. The umbrella #4535 stays open. Reopen t-007 for the next substantive city slice.
+    updated: '2026-10-31T03:08:49Z'
   - id: t-008
     milestone: m3
     title: "Ship earned Meat economy, safe card shop and random PvE encounters"
