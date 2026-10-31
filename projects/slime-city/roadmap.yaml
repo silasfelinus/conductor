@@ -204,7 +204,7 @@ tasks:
   - id: t-007
     milestone: m3
     title: "Expand seven-district city map into navigable authored overworld"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 20261031T101658030Z-slime-city-t007-citymod-b47e
     claimed_at: '2026-10-31T10:16:58.030Z'
@@ -236,7 +236,9 @@ tasks:
       Faction story campaign chapters now point to canonical crew home districts, mark mission pins and provide route shortcuts, and launch optional story battles at the destination only after first-crossing street decisions. Existing direct STORY battles remain playable. Kind Robots feature branch worker/slime-city-t007-campaign-district-20261031T051413Z-f6d3 includes city/store/UI and all-crew navigation regressions. CI pending.
 
       PARTIAL 2026-10-30 PT: Kind Robots PR #4546 merged to main as 9eb86f07b1264b8a011d2d7505663724edc9e82e with 15/15 current-head GitHub CI workflow checks passing (TypeScript, changed-file Prettier, layout, full four-shard Contract Tests). All six faction story chapters now identify their rival's real district. STORY can focus a marked city destination and route through existing streets; a faction mission can launch on arrival only after pending first-crossing decisions are resolved. Canonical Blackout chapter approaches, independent story progress, and direct STORY battles are preserved. Dedicated city and campaign regression tests cover six mappings, wayfinding, and blocked mission starts. This is an admin-only source merge, not a self-hosted deploy or generated art proof. REMAINS: t-017 verified painted faction/district art and manifest, fuller city/campaign integration, server-authoritative saved story progress, account-backed economy owned separately by PR #4538, and final visual QA. Keep t-007 ready and master #4535 open for subsequent slices.
-    updated: '2026-10-31T05:28:34.030Z'
+
+      City-launched faction story battles now inherit street decisions, district opening effects and citywide heat, combined with authored chapter choices. STORY quick-start still uses chapter terms only. Found and repaired base engine's previously silent opening player HP, enemy armor and fewer-rivals scenario bonuses on empty deployment boards; deferred bonuses now persist into newly deployed creatures and enemy capacity. City mission dossier displays actual combined terms and a delivered rival crew art slot. Regression contract tests cover composition, city campaign store route, new unit stats and direct-mode independence. Internal/admin-only source, no XP or Meat writes. Kind Robots feature branch worker/slime-city-t007-story-terms-20261031T101658Z-b47e; PR and CI pending.
+    updated: '2026-10-31T10:20:29.194Z'
   - id: t-008
     milestone: m3
     title: "Ship earned Meat economy, safe card shop and random PvE encounters"
