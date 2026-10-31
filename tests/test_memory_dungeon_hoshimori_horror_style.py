@@ -56,8 +56,11 @@ class HoshimoriHorrorStyleTests(unittest.TestCase):
         self.assertTrue(all(r["id"].startswith(PREFIX) for r in horror))
 
     def test_receipts_reject_missing_duplicate_or_wrong_destination(self):
+        unsubmitted = deepcopy(self.data)
+        for row in unsubmitted["requests"]:
+            row.pop("last_art_job_id", None)
         with self.assertRaisesRegex(ValueError, "Unsubmitted"):
-            validate(self.data, require_jobs=True)
+            validate(unsubmitted, require_jobs=True)
         data = self.with_receipts()
         self.assertEqual(len(validate(data, require_jobs=True)), 8)
         data["requests"][7]["last_art_job_id"] = data["requests"][0]["last_art_job_id"]
