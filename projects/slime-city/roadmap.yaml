@@ -204,7 +204,7 @@ tasks:
   - id: t-007
     milestone: m3
     title: "Expand seven-district city map into navigable authored overworld"
-    status: claimed
+    status: review
     claimed_by: 20261031T112724999Z-slimecity-playmove-hybrid-c7e4
     claimed_at: '2026-10-31T11:27:24.999Z'
     owner: worker
@@ -240,7 +240,9 @@ tasks:
       City-launched faction story battles now inherit street decisions, district opening effects and citywide heat, combined with authored chapter choices. STORY quick-start still uses chapter terms only. Found and repaired base engine's previously silent opening player HP, enemy armor and fewer-rivals scenario bonuses on empty deployment boards; deferred bonuses now persist into newly deployed creatures and enemy capacity. City mission dossier displays actual combined terms and a delivered rival crew art slot. Regression contract tests cover composition, city campaign store route, new unit stats and direct-mode independence. Internal/admin-only source, no XP or Meat writes. Kind Robots feature branch worker/slime-city-t007-story-terms-20261031T101658Z-b47e; PR and CI pending.
 
       PARTIAL 2026-10-31 PT: Kind Robots PR #4554 merged to main (5dd46da842837f1768484a1407a295e4a547a7f9), with all 15/15 latest-head GitHub Actions checks passed, including TypeScript, changed-file formatting, layout, and the four-shard gameplay contracts. City-launched faction chapter battles now add the actual street/district choice and city heat terms to their authored approach. STORY quick-start remains chapter-only. The city dossier displays accurate combined effects and an authenticated rival crew portrait. Fixed engine bug where starting an empty Blackout board silently discarded scenario HP and enemy armor bonuses: future summons inherit them, and fewerRivals limits the enemy field cap. New tests exercise mana, high heat, summon stats, enemy cap, and no browser XP or Meat changes. Source merged, not self-hosted deployed. MORE t-007 work remains: deeper city world encounters, complete art validation, independently durable saves, and final rendered visual QA. Keep t-007 ready and master #4535 open. Account progression PR #4538 owned by separate worker and not modified here.
-    updated: '2026-10-31T10:35:07.764Z'
+
+      Silas explicitly requested 2026-10-31 PT to move Slime City and Hybridizer from Admin into the Play channel. This patch adds signed-in Play entries and routes at /play/slime-city and /play/hybridizer, reusing existing Nuxt/Vue game surfaces and Pinia stores, plus canonical Kind Robots project placements. The original /admin URLs remain as ADMIN-restricted, navigation-hidden compatibility entrypoints. Both new Play tabs require authentication because Hybridizer's creation APIs are account-scoped and Slime City ArtImages are not presently public. The authored Play tutorials accurately identify unfinished art and account progression. Static navigation and route tests protect both registrations and legacy role guards. This approval is ONLY for Play placement for signed-in players, NOT blanket permission for public marketing, payments, unreviewed uploads or multiplayer launch. Hybridizer project's separate release gate remains unmodified. No DB or API permission mutations. Source staged on worker/slime-city-hybridizer-play-20261031T112724Z-c7e4; CI and PR pending.
+    updated: '2026-10-31T11:29:42.706Z'
   - id: t-008
     milestone: m3
     title: "Ship earned Meat economy, safe card shop and random PvE encounters"
