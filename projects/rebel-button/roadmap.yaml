@@ -66,7 +66,7 @@ tasks:
   - id: t-003
     milestone: m2
     title: "Escalating button: moves after press 10, shrinks, raises walls; seeded and state in a store"
-    status: ready
+    status: done
     owner: null
     passes: 0
     stakes: reversible
@@ -74,6 +74,8 @@ tasks:
       Extend the existing kind_robots Rebel Button rather than adding a new route. Presses 1-10 behave as today;
       from 11 the button relocates within its stage, scales down in steps, and walls appear in front of it.
       Press state lives in a Pinia store (components never touch localStorage). Phone/tablet/desktop widths.
+    completion_note: >
+      MERGED kind_robots PR #4560 as 32b973e (all 21 head checks green). Button wanders, shrinks (floor 30%) and raises up to 4 walls from press 11; seeded utils/rebelButtonStage.ts, Pinia rebelButtonStore (component no longer touches localStorage), test:rebel-button-stage in contract-tests. Walls are decorative until t-004 adds the cannon.
 
   - id: t-004
     milestone: m2
