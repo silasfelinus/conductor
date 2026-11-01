@@ -13,6 +13,10 @@
 5. **Callback (one later use):** a later world, reunion or one of the 32 ending families must reference an actual saved decision. Do not assert a witness who was never met.
 6. **Art/QA:** original setting and crossover source visually legible, separate scene/choice art targets, actual ArtJob receipt versus undelivered prompt, a deterministic save/replay test.
 
+### Writer-ready e09 Pip quests (still not playable)
+
+[The Briar Office Key and Tide Roots packets](BRIAR-COLLISION-PIP-QUESTS.json) give playable-lead Pip two fully voiced collision encounters with six consequential outcomes, two earned fragments and six e02 witness-verdict × e04 tide-gate history introductions. Their companion `tests/test_memory_dungeon_pip_briar_collision.py` checks all **54** two-quest route combinations, irreversible decisions, replay, forged-history rejection and unsubmitted-art accounting. The e02 labels are **writer semantics**, not fabricated runtime save IDs: the eventual adapter must derive them from earned Briar/Dark Briar decisions. These are **writer packets**, not e09 runtime locations, submitted ArtJobs, delivered art or a complete 64-site map. No visit-only fragment awards.
+
 ### Writer-ready e11 Char quests (still not playable)
 
 [The Sea Sister Bell and Unwritten Map packets](SEA-COLLISION-CHAR-QUESTS.json) contain two fully voiced encounters, six distinct decisions and nine e04 tide-gate × e05 departure history introductions. The contract explicitly requires earned e06 Char continuity before the playable e11 viewpoint can open; it does **not** resurrect the original Char, invent a prior decision, award a fragment for visiting a tile, or count proposed art as delivered. The companion `tests/test_memory_dungeon_char_sea_collision.py` simulates all 81 two-quest decision routes and rejects forged histories, repeated awards and rewritten choices. This is a **writer packet and state-contract test**, not runtime integration: e06 continuity, e11 scenes, durable ArtJobs, final media, device QA and playable callbacks still require implementation.

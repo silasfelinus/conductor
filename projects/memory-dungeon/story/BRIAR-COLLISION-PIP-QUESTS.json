@@ -1,0 +1,212 @@
+{
+  "schemaVersion": 1,
+  "status": "WRITER_PACKET_ONLY_NOT_PLAYABLE",
+  "world": "e09",
+  "viewpoint": "Pip",
+  "sourceCanon": "projects/memory-dungeon/TWELVE-REALITY-COLLISION-FINALE.md",
+  "authoringDatePT": "2026-10-31",
+  "entryContract": {
+    "requires": [
+      "earned-e02-briar-witness-verdict",
+      "earned-e04-tide-gate-choice"
+    ],
+    "semanticE02Values": [
+      "sealed-village",
+      "witness-open-village"
+    ],
+    "e02RuntimeMapping": "These are writer-only semantic labels; derive from actual earned Briar/Dark Briar decisions in Kind Robots. Never invent pairDecisions values.",
+    "e04Values": [
+      "open-the-tide-gate",
+      "seal-the-tide-gate",
+      "divert-the-current"
+    ],
+    "missingHistoryFallback": "Do not award e09 fragments or infer a default choice. Restore the earned e02/e04 record or provide a playable witness-recovery route before unlocking e09.",
+    "noCharResurrection": "A witnessed e04 death remains a loss; e09 Scylla may testify but cannot introduce a surviving original Char."
+  },
+  "histories": [
+    {
+      "e02": "sealed-village",
+      "e04": "open-the-tide-gate",
+      "openingDialogue": "PIP: 'The village shut its gates before the office grew through them. Now the wolf wants a badge, and the sea has taken Char.' SCYLLA: 'I saw her at the anchor. Please do not turn that into a password.'",
+      "continuity": "The sealed village still owes a hearing to outsiders; the original Char died at the tide gate, with no implied return."
+    },
+    {
+      "e02": "sealed-village",
+      "e04": "seal-the-tide-gate",
+      "openingDialogue": "PIP: 'We kept the forest doors closed. The commuters kept theirs closed too, because someone sealed the tide gate.' OREN: 'Then our rescue plan starts with two locked lists.'",
+      "continuity": "The village's sealed witness policy and stranded commuters both require separate remedies; Char survived."
+    },
+    {
+      "e02": "sealed-village",
+      "e04": "divert-the-current",
+      "openingDialogue": "PIP: 'We called the empty district safe to flood. The wolf calls an empty office safe to burn. I dislike how familiar that sounds.' OREN: 'I have names from both places.'",
+      "continuity": "The sealed village cannot cite the ruined district as uninhabited; Char survived the diversion."
+    },
+    {
+      "e02": "witness-open-village",
+      "e04": "open-the-tide-gate",
+      "openingDialogue": "PIP: 'We opened Briar to witnesses. Then the tide gate opened and Char died. A good door can still exact a terrible price.' SCYLLA: 'Tell the wolf that before it calls this a victory.'",
+      "continuity": "Briar's witnesses can help evacuate the office but cannot rewrite the original Char's witnessed death."
+    },
+    {
+      "e02": "witness-open-village",
+      "e04": "seal-the-tide-gate",
+      "openingDialogue": "PIP: 'Briar welcomed the people with stories. Earth's gate did not let its commuters out. We will need more than a friendly sign.' OREN: 'I can count everyone who is still missing.'",
+      "continuity": "The open witness network can support the rescue, but the stranded commuter debt remains; Char survived."
+    },
+    {
+      "e02": "witness-open-village",
+      "e04": "divert-the-current",
+      "openingDialogue": "PIP: 'Our witnesses found a way through the trees. They also found families in the district everyone called abandoned.' OREN: 'I have the evacuation count and the missing count. Neither is zero.'",
+      "continuity": "Briar's open witness network knows the district was inhabited; Char survived but the flood's damage remains."
+    }
+  ],
+  "scenes": [
+    {
+      "id": "briar-office-key",
+      "site": "The House That Remembers / night-shift accounting floor",
+      "fragment": "briar-office-key",
+      "opening": "The House That Remembers has acquired a fluorescent accounting department. Every time the clock punches midnight, the corridor folds back into a wolf road. A night-shift guard named Mara can prove which workers are trapped, but her badges have names that the wolf patrol considers stolen. Pip knows the wolf's oath language; the guard knows who is missing. Neither will surrender their list to the other. Behind the copy machine, a worker taps out a pair pattern on the door to keep the exit from vanishing.",
+      "dialogue": [
+        {
+          "speaker": "MARA",
+          "line": "My badge opens the stairwell. The wolf says it belongs to a person who never existed. I am standing right here."
+        },
+        {
+          "speaker": "WOLF CAPTAIN",
+          "line": "A shift is not an oath. Tell me who will answer if these people cross my road."
+        },
+        {
+          "speaker": "PIP",
+          "line": "We could ask them instead of deciding what their names mean. There is a door under that copier and it is getting smaller."
+        }
+      ],
+      "puzzle": "Pair the two clock stamps that mark a real shift change, then choose who controls the names. The stamps are shown on Mara's timecard and on the corridor clock; no blind memory test or combat toll.",
+      "choices": [
+        {
+          "id": "translate-shift-oath",
+          "label": "Translate the shift roster into a temporary wolf-road oath",
+          "visibleCost": "Pip owes the wolf captain a future escort shift; the office cannot leave until the oath expires.",
+          "reply": "PIP: 'I will stand the night watch. Their time belongs to them.' MARA: 'Put that in writing, in both languages.'",
+          "outcome": "Mara checks each worker's consent and Pip translates the roster into a one-night promise. The wolf opens a guarded stair. Pip stays behind to honor the shift before catching up.",
+          "savedFlag": "briar-office-night-oath",
+          "routeEffect": "guarded-stair-delayed-pip",
+          "laterCallback": "e10 Morrow may cite the signed shift oath when the office's yōkai guardian demands proof of rest and safe departure.",
+          "failureContinuation": "If the wolf rejects a worker's name, Mara brings the worker to testify in person and Pip renews only the disputed line; the key remains recoverable.",
+          "artSubject": "Moth-eaten wolf-road oath over an office timecard, Pip and a night-shift guard at a fluorescent forest stair."
+        },
+        {
+          "id": "redact-and-witness",
+          "label": "Publish the number of trapped workers, not their private names",
+          "visibleCost": "The wolf captain demands an independent witness, delaying the rescue while the corridor contracts.",
+          "reply": "MARA: 'A head count, not a hunting list.' PIP: 'Then I will witness the door, not own it.'",
+          "outcome": "Mara records a consent-based count and the wolf accepts a neutral witness to each departure. The office keeps its private roster, but the evacuation takes an extra watch.",
+          "savedFlag": "briar-office-redacted-witness",
+          "routeEffect": "slow-witness-evacuation",
+          "laterCallback": "e10 Morrow can reconcile the city's missing-worker count without exposing home addresses to the forest patrol.",
+          "failureContinuation": "If the witness misses the first bell, the guard shelters workers in the lit copy room until the second; no name is released without consent.",
+          "artSubject": "A giant paper head-count pinned between a wolf's claw and a copier, names blacked out, workers leaving by lamplight."
+        },
+        {
+          "id": "break-midnight-clock",
+          "label": "Break the clock and evacuate before the wolf can demand a roster",
+          "visibleCost": "The timecard archive is destroyed, leaving Morrow without reliable evidence of who worked this shift.",
+          "reply": "PIP: 'We save the people first. The clock can argue with me later.' MARA: 'Then help me remember the names.'",
+          "outcome": "The corridor stops folding and the workers escape. Mara preserves spoken testimonies, but the damaged archive leaves an employment dispute for Earth to resolve.",
+          "savedFlag": "briar-office-clock-broken",
+          "routeEffect": "fast-exit-lost-payroll",
+          "laterCallback": "e10 Morrow must rebuild the employment record from worker testimony rather than rely on the destroyed timecards.",
+          "failureContinuation": "If the broken clock seals the main stair, Mara leads everyone through the signed emergency exit; the archive loss remains a cost.",
+          "artSubject": "Pip striking a forest-grown office clock while frightened workers hurry through a splintering fluorescent hallway."
+        }
+      ],
+      "replay": "Exactly one irreversible decision and one fragment award. Reload restores the choice, cost and worker evidence; visiting the square alone awards nothing."
+    },
+    {
+      "id": "briar-tide-roots",
+      "site": "Wolf-road culvert / House root shelter",
+      "fragment": "briar-tide-roots",
+      "opening": "The wolf road now runs beneath the sea. Roots of the House That Remembers have woven a dry pocket around a family who fled both a census and a flood. Scylla's tide chart predicts the next current, but the ink is washing toward the family's hidden address. Oren can build a bridge from office furniture, and a young refugee named Ren insists that no rescue map be sold after the crossing. The tide turns in three bells; choosing the quickest route might expose the shelter to every patrol above.",
+      "dialogue": [
+        {
+          "speaker": "REN",
+          "line": "We can swim. We cannot survive another map with our house marked on it."
+        },
+        {
+          "speaker": "OREN",
+          "line": "I have six desks, two ropes, and three bells before the current reverses. We can save everyone if someone decides who sees the chart."
+        },
+        {
+          "speaker": "SCYLLA",
+          "line": "The sea remembers the way out. It does not have to remember where you sleep."
+        }
+      ],
+      "puzzle": "Use three visible tide marks and two matching root symbols to select a safe current. Incorrect order raises the water but opens a slower dry route; the scene never soft-locks a required fragment.",
+      "choices": [
+        {
+          "id": "private-tide-escort",
+          "label": "Take a private escort along the chart's hidden current",
+          "visibleCost": "The tide rises while Oren escorts the family, leaving him unavailable for the next immediate encounter.",
+          "reply": "OREN: 'No address leaves this culvert. My axe can hold a rope as well as a gate.'",
+          "outcome": "The family reaches the high bank unseen. Oren sacrifices a tactical advantage to keep the route secret, and Ren takes custody of the original chart.",
+          "savedFlag": "briar-roots-private-escort",
+          "routeEffect": "hidden-current-oren-delayed",
+          "laterCallback": "e11 Char can honor Ren's custody claim when Vesper's refuge atlas appears in the coral palace.",
+          "failureContinuation": "If the tide runs early, Oren shelters the party on the House's dry landing until the next ebb. No patrol learns the address.",
+          "artSubject": "Hooded Oren holding a rope bridge through submerged House roots, Scylla guiding a family by a folded private tide chart."
+        },
+        {
+          "id": "public-dam-crossing",
+          "label": "Dam the wolf road and open a public crossing",
+          "visibleCost": "The route is visible to patrols and the family must relocate their hidden shelter afterward.",
+          "reply": "SCYLLA: 'Everyone may cross. Nobody gets to keep a record of where Ren sleeps.' REN: 'Then help us move after.'",
+          "outcome": "A barricade of office desks diverts the current and strangers cross together. The family escapes, but Pip promises help relocating before the wolf patrol follows the new road.",
+          "savedFlag": "briar-roots-public-dam",
+          "routeEffect": "open-crossing-relocation-debt",
+          "laterCallback": "e11 Char hears Ren's relocation demand before deciding whether a public atlas can remain open.",
+          "failureContinuation": "If the dam breaks, Oren redirects evacuees to the high stair while the family carries its belongings to a new refuge.",
+          "artSubject": "Office desks stacked against a glowing seawater root tunnel, Pip and Scylla leading a public crossing while a wolf patrol approaches."
+        },
+        {
+          "id": "community-ferry-charter",
+          "label": "Let the families operate a timed ferry with revocable access",
+          "visibleCost": "The crossing is slower and the group must leave supplies to maintain a ferry watch.",
+          "reply": "REN: 'We will decide when the ferry runs. We will also decide when it stops.' PIP: 'A road with an owner who can say no. I can live with that.'",
+          "outcome": "The refugees set a three-bell schedule and keep the route's key. Scylla lends a tide marker; the party loses supplies but gains a witness-controlled passage.",
+          "savedFlag": "briar-roots-revocable-ferry",
+          "routeEffect": "slow-community-ferry",
+          "laterCallback": "e11 Char can cite the ferry's revocation rule when the palace registrar demands permanent access to Vesper's atlas.",
+          "failureContinuation": "If the first ferry misses the current, Ren keeps the family safe in the root pocket until the next marked bell; the charter is not voided.",
+          "artSubject": "Refugee-operated ferry of office doors in a sea-filled Briar culvert, Ren holding the bell and a revocable wooden pass."
+        }
+      ],
+      "replay": "Exactly one irreversible decision and one fragment award. A missed tide puzzle changes rescue pacing, not whether the fragment can be earned."
+    }
+  ],
+  "exitContract": {
+    "requiresFragments": [
+      "briar-office-key",
+      "briar-tide-roots"
+    ],
+    "noFragmentOnVisit": true,
+    "noRepeatAwards": true,
+    "forwardTo": "e10 Morrow's Earth collision",
+    "noRuntimeClaim": "Neither scene is wired into the 8x8 map, save reducer or final art pipeline."
+  },
+  "artProduction": {
+    "status": "NOT_SUBMITTED",
+    "artJobIds": [],
+    "deliveredImages": [],
+    "targets": [
+      "briar-office-key:opening",
+      "briar-office-key:translate-shift-oath",
+      "briar-office-key:redact-and-witness",
+      "briar-office-key:break-midnight-clock",
+      "briar-tide-roots:opening",
+      "briar-tide-roots:private-tide-escort",
+      "briar-tide-roots:public-dam-crossing",
+      "briar-tide-roots:community-ferry-charter"
+    ],
+    "policy": "Submit real art jobs separately with exact destination provenance. No prompts or SVGs count as delivered."
+  }
+}
