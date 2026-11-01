@@ -1,0 +1,417 @@
+{
+  "schemaVersion": 1,
+  "status": "WRITER_PACKET_ONLY_NOT_PLAYABLE",
+  "world": "e12",
+  "viewpoint": "Vesper",
+  "sourceCanon": "projects/memory-dungeon/TWELVE-REALITY-COLLISION-FINALE.md",
+  "authoringDatePT": "2026-11-01",
+  "premise": "The finale returns to Hoshimori's original 8x8 geography. Briar patrol law has taken over the childhood footbridge and the Red Oven's chimney reaches the royal tide gate. Vesper must account for a sold refugee map without making a second map of vulnerable homes. Char's causal identity, Scylla's remembered loss, Pip's Oven obligations, Morrow's human family and the eight earned fragments constrain every resolution.",
+  "entryContract": {
+    "requiresEarnedFragments": [
+      "briar-office-key",
+      "briar-tide-roots",
+      "earth-lantern-refuge-charter",
+      "earth-living-hours-ledger",
+      "sea-unwritten-map",
+      "sea-sister-bell"
+    ],
+    "requiresEarnedChoices": [
+      "e02",
+      "e04",
+      "e05",
+      "e06",
+      "e08",
+      "e10",
+      "e11-sea-sister-bell"
+    ],
+    "runtimeSources": {
+      "e02": "utils/memoryDungeon/reimaginerCampaign.ts",
+      "e04": "utils/memoryDungeon/reimaginerCampaign.ts",
+      "e05": "utils/memoryDungeon/reimaginerCampaign.ts",
+      "e06": "utils/memoryDungeon/reimaginerCampaign.ts",
+      "e08": "utils/memoryDungeon/reimaginerCampaign.ts",
+      "e10": "utils/memoryDungeon/reimaginerCampaign.ts",
+      "e11": "projects/memory-dungeon/story/SEA-COLLISION-CHAR-QUESTS.json"
+    },
+    "choiceValues": {
+      "e02": [
+        "protect-village",
+        "trust-witnesses"
+      ],
+      "e04": [
+        "open-the-tide-gate",
+        "seal-the-tide-gate",
+        "divert-the-current"
+      ],
+      "e05": [
+        "run-again",
+        "stay",
+        "tell-char"
+      ],
+      "e06": [
+        "protect-private-memory",
+        "publish-twin-testimony"
+      ],
+      "e08": [
+        "keep-shelter-charter",
+        "unbar-all-doors"
+      ],
+      "e10": [
+        "destroy-price-ledger",
+        "publish-price-ledger"
+      ],
+      "e11Bell": [
+        "two-consenting-witnesses",
+        "char-speaks-for-herself",
+        "community-jury"
+      ]
+    },
+    "missingHistoryFallback": "Keep e12 locked and direct the player to a playable recovery route for each missing earned fragment or causal choice. Never grant fragments on visit, synthesize e02 choices from a legacy save, or presume a living original Char on the fatal e04 branch.",
+    "charContinuity": "If e04 killed older Char, e11's playable Char must be the altered younger Char with an earned e06 continuity account. This writer packet cannot create that continuity by itself.",
+    "priorSaveSafety": "Legacy e09-e16 completion flags are archival, not new finale fragments. The e09/e10/e11 writer packets are not runtime events yet and cannot unlock e12 without their actual playable reducer events."
+  },
+  "historyOverlays": {
+    "e04": {
+      "open-the-tide-gate": {
+        "dialogue": "SCYLLA: 'The older Char died holding the gate while the commuters escaped. The Char who stands here is the younger woman whose later choices changed the second timeline. Neither of us can spend the first loss twice.'",
+        "cost": "The witnessed original death remains real; rescue of the commuters is earned, not undone."
+      },
+      "seal-the-tide-gate": {
+        "dialogue": "CHAR: 'I survived the sealed gate. The commuters did not get through. We need a counted rescue before anyone calls this repaired.'",
+        "cost": "Char survived, but stranded commuters still wait for an earned evacuation."
+      },
+      "divert-the-current": {
+        "dialogue": "CHAR: 'I survived because the water was diverted into a district someone called empty. Show me the people who worked there before you erase their address.'",
+        "cost": "Char survived, but the damaged district and unaccounted occupants remain owed restitution."
+      }
+    },
+    "e06": {
+      "publish-twin-testimony": {
+        "dialogue": "SCYLLA: 'The court made our account public. Char still chooses which part she will tell here, in her own words.'",
+        "cost": "Public testimony remains contestable evidence, not permission to disclose hidden refugee homes."
+      },
+      "protect-private-memory": {
+        "dialogue": "CHAR: 'Our private record stayed sealed. Bring witnesses for the bridge; do not pry open our childhood to make your paperwork easy.'",
+        "cost": "Private testimony stays protected; independent evidence must support the crossing."
+      }
+    },
+    "e08": {
+      "unbar-all-doors": {
+        "dialogue": "VESPER: 'We opened every Hoshimori exit. A free road still needs food and a watch chosen by the people using it.'",
+        "cost": "Open exits cannot be retroactively closed into a compulsory household registry."
+      },
+      "keep-shelter-charter": {
+        "dialogue": "VESPER: 'The village kept a voluntary refuge charter with fewer beds. A guest may leave even when the guardian is afraid.'",
+        "cost": "Revocable shelter rules and the smaller bed capacity remain binding."
+      }
+    },
+    "e11Bell": {
+      "two-consenting-witnesses": {
+        "dialogue": "CHAR: 'We kept two accounts with consenting witnesses. The bells may disagree; they do not own either sister.'",
+        "cost": "Parallel testimony requires a slow hearing and does not merge two historical people."
+      },
+      "char-speaks-for-herself": {
+        "dialogue": "CHAR: 'I spoke for myself in the palace. The missing original evidence remains a debt, not a hole for the registrar to fill.'",
+        "cost": "Char's present agency is recorded while original historical evidence remains incomplete."
+      },
+      "community-jury": {
+        "dialogue": "CHAR: 'The jury heard us. Their verdict was not a command for me to become the woman Scylla remembers.'",
+        "cost": "Community custody of the record requires a slow witnessed crossing."
+      }
+    }
+  },
+  "scenes": [
+    {
+      "id": "village-wolf-door",
+      "fragment": "village-wolf-door",
+      "site": "Hoshimori childhood footbridge 1,1, with the Briar wolf road and an Earth office turnstile",
+      "opening": "Vesper reaches the childhood footbridge where they first learned to draw a path that hid a family's door. Its cedar planks now feed an office turnstile. A Briar wolf in a borrowed security badge demands registered household addresses before allowing anyone across. The badge flashes ACCESS GRANTED when a name is spoken, then prints that name on a sheet the night procession can read. A refugee grandmother waits on the wrong bank with a child who has already been counted twice. Vesper recognizes the pencil notch in the rail: the route they once sold for a rescue and that another hand copied to hunt its passengers.",
+      "dialogue": [
+        {
+          "speaker": "VESPER",
+          "line": "I sold a way out. Someone sold it again as a way in. I cannot unsell the first map, but I can stop making the same bargain."
+        },
+        {
+          "speaker": "WOLF CAPTAIN",
+          "line": "The badge needs an address. My oath needs a person. I cannot patrol a blank."
+        },
+        {
+          "speaker": "PIP",
+          "line": "A count can be true without being a list of homes. The ledger already knows that trick."
+        },
+        {
+          "speaker": "GRANDMOTHER",
+          "line": "My granddaughter can tell you where she wants to go. She will not tell you where she sleeps."
+        },
+        {
+          "speaker": "OREN",
+          "line": "A temporary watch needs four witnesses, two lanterns and a departure time. None of those requires a child's address."
+        }
+      ],
+      "puzzle": "The turnstile displays four arrival marks but only three distinct travelers: the grandmother, the child and a returning night worker. The child's mark is duplicated when the wolf badge scans a reflected name. Match each physical traveler to the three witnessed crossing tokens; leave the duplicate unpaired and record only counts, never home addresses. The fallback is Pip's oral head count and Oren's hand-stamped escort tally, which costs a tide of delay but does not block the fragment.",
+      "choices": [
+        {
+          "id": "anonymous-witness-crossing",
+          "label": "Replace the badge registry with witnessed anonymous passage",
+          "visibleCost": "The wolf patrol loses its address-based search power; Oren must fund a staffed watch at every shift.",
+          "reply": "VESPER: 'You may guard the bridge. You may not own the destination.' WOLF CAPTAIN: 'Then I will learn to count arrivals, not bedrooms.'",
+          "outcome": "Three travelers cross with revocable tokens. Pip holds the count, the grandmother keeps the child's name, and the wolf's watch becomes an accountable service with no household directory.",
+          "savedFlag": "wolf-door-anonymous-watch",
+          "routeEffect": "staffed-anonymous-footbridge",
+          "laterCallback": "At the Last Door, a negotiated shared crossing can inherit the anonymous-token watch, but it still needs stewards and supplies.",
+          "failureContinuation": "If the badge refuses the blank tokens, Oren opens a hand-counted bridge lane under a time-limited truce; the patrol's grievance survives for the final hearing.",
+          "artSubject": "Cedar footbridge joining forest and office turnstile, wolf officer holding blank crossing token while grandmother guides a child."
+        },
+        {
+          "id": "decoy-map-with-expiry",
+          "label": "Use Vesper's old map as a timed decoy and destroy its copy key",
+          "visibleCost": "The patrol is misdirected for one tide, but Vesper must publicly admit which route was sold and compensate those exposed.",
+          "reply": "VESPER: 'This line was mine. The harm after it was not imaginary.' PIP: 'Then write the debt where the people hurt by it can see it.'",
+          "outcome": "The wolf follows an expiring false route while refugees cross the unmarked bank. Vesper surrenders the old copying key to a witness council and records restitution, not absolution.",
+          "savedFlag": "wolf-door-decoy-restitution",
+          "routeEffect": "temporary-decoy-with-restitution",
+          "laterCallback": "The Last Door can use the decoy only once; a permanent network must reject this copied route and pay the still-owed restitution.",
+          "failureContinuation": "If the wolf discovers the decoy early, Pip's ledger testimony delays the patrol long enough for a supervised crossing; the map's copied danger remains recorded.",
+          "artSubject": "Vesper holding a torn pencil atlas over a wolf-patrolled bridge, decoy path glowing and council witnesses watching."
+        },
+        {
+          "id": "wolf-oath-review",
+          "label": "Let the wolf captain guard a public threshold under a revocable oath",
+          "visibleCost": "The crossing opens slowly, and any household can revoke the patrol's authority after a witnessed abuse.",
+          "reply": "WOLF CAPTAIN: 'A guard who may be dismissed is a guard who must earn the post.' GRANDMOTHER: 'Then start by letting us pass.'",
+          "outcome": "A rotating civilian jury supervises the wolf captain's shift. The bridge remains public, names stay private, and the first crossing takes an extra night to organize.",
+          "savedFlag": "wolf-door-revocable-patrol",
+          "routeEffect": "jury-supervised-public-threshold",
+          "laterCallback": "The Last Door may borrow the jury model, but only with genuine recall rights for refugees and office workers.",
+          "failureContinuation": "If the captain refuses oversight, the jury suspends the patrol and Oren's escort team takes the first shift; no refugee must surrender an address.",
+          "artSubject": "Wolf captain setting a badge on a public table beside a Hoshimori cedar bridge, refugee jury holding revocation tokens."
+        }
+      ],
+      "replay": "A revisit restores the one earned decision, its concrete staffing, debt or delay cost, and the wolf-door fragment. Merely revealing the bridge or solving a visual match does not award it."
+    },
+    {
+      "id": "village-tidal-oven",
+      "fragment": "village-tidal-oven",
+      "site": "Red Oven 4,3, whose chimney opens onto the royal tide gate",
+      "opening": "The Red Oven's chimney now breathes seawater. Beneath the bakery, the royal tide gate pushes waves through a corridor built for flour carts. Refugees from Briar and the office crowd queue for bread while a furnace registrar asks each traveler to feed it one childhood memory as fuel. Every surrendered memory lights the route brighter, but a woman cannot remember the child she is carrying once she pays. Pip recognizes the Oven's original ledger and refuses to let its debt be settled with other people's childhoods. Char steps to the sluice with an axe-wielding Oren, insisting that a crossing built on coerced forgetting is another disaster, not a rescue.",
+      "dialogue": [
+        {
+          "speaker": "PIP",
+          "line": "My apprenticeship taught me how to bake for a hundred. It did not teach me to call a stolen memory flour."
+        },
+        {
+          "speaker": "CHAR",
+          "line": "I know what a gate can cost. Do not ask me to sign away somebody else's past."
+        },
+        {
+          "speaker": "OREN",
+          "line": "The tide will give us forty minutes. A dry ramp and two bread ovens can move the children first."
+        },
+        {
+          "speaker": "VESPER",
+          "line": "My map can mark the ramp without marking the homes. I will ask the families which lines I may keep."
+        },
+        {
+          "speaker": "FURNACE REGISTRAR",
+          "line": "I was built to remember every guest. Without their memories, how will I know they have eaten?"
+        }
+      ],
+      "puzzle": "Six meal tokens hang above the furnace, but the ledger has only five consenting diners and one token copied from a frightened child's memory. Pair five tokens to actual voluntary meal receipts, then place the copied token in the refusal slot instead of feeding it to the flame. The matching clue is printed in Pip's public bread tally, not in a secret prior optional quest. The fallback is to close the memory chute and use Oren's manual ration count, slowing the crossing but preserving every child's recollection.",
+      "choices": [
+        {
+          "id": "ordinary-bread-ration",
+          "label": "Feed the refugees with ordinary bread and take the slower dry ramp",
+          "visibleCost": "The last evacuees must shelter through one more tide; Oren's crew consumes the emergency flour reserve.",
+          "reply": "PIP: 'A hungry person deserves bread, not an invoice for childhood.' OREN: 'Then the last cart leaves at dawn. I can account for dawn.'",
+          "outcome": "Pip serves counted meals without memory payment. Char keeps the sluice stable while Oren escorts the final families over a dry ramp at dawn; food reserves run low but nobody loses a remembered face.",
+          "savedFlag": "oven-ordinary-bread-rations",
+          "routeEffect": "slow-dry-ramp-flour-reserve-debt",
+          "laterCallback": "Separation at the Last Door must retain a food corridor until the delayed evacuees reach shelter; shared crossings must fund ordinary meals.",
+          "failureContinuation": "If the flour runs out, the grandmother's communal kitchen contributes grain on a signed repayment plan; the final cart remains delayed, not abandoned.",
+          "artSubject": "Pip serving bread from a glowing red oven while Oren guides families up a dry ramp above an underwater tide gate."
+        },
+        {
+          "id": "rebuild-consent-hearth",
+          "label": "Rebuild the furnace as a voluntary hearth with no memory tithe",
+          "visibleCost": "The rebuilt Oven carries half as many travelers per tide and needs elected stewards from both shores.",
+          "reply": "VESPER: 'A blank space on the map can be a promise.' CHAR: 'Then write the right to refuse on the oven door.'",
+          "outcome": "Char dismantles the compulsory memory chute. The registrar becomes a voluntary keeper of anonymous meal counts, and families elect stewards to allocate the reduced crossing capacity.",
+          "savedFlag": "oven-consent-hearth-rebuilt",
+          "routeEffect": "half-capacity-elected-hearth",
+          "laterCallback": "A shared Last Door must accept the half-capacity limit and revocable guest rules; separation must provide a replacement refuge for the waiting families.",
+          "failureContinuation": "If the registrar resists the new pact, Pip uses the old bread ledger as evidence in a public hearing while Oren operates a temporary nonmagical stove.",
+          "artSubject": "Char lifting a rusted memory chute from the Red Oven, diverse shore stewards signing a hearth pact beside blue tidewater."
+        },
+        {
+          "id": "split-tide-escorts",
+          "label": "Split the rescue into a sea escort and an overland bread convoy",
+          "visibleCost": "The party must divide supplies and Char and Scylla cannot supervise both routes together.",
+          "reply": "CHAR: 'Two honest roads are safer than one hungry miracle.' SCYLLA: 'Then I will take the sea and you take the shore. I will not decide for you.'",
+          "outcome": "Char commands the dry convoy and Scylla guides the sea escort under separate witness logs. The Oven closes its memory mouth and refugees choose their route; the party bears a lasting supply shortage.",
+          "savedFlag": "oven-split-escort-supply-debt",
+          "routeEffect": "two-routes-scarce-supplies",
+          "laterCallback": "The Last Door inherits two independent evacuation corridors and must budget for both instead of claiming an effortless single portal.",
+          "failureContinuation": "If the sea current blocks Scylla's group, Oren sets a marked return buoy and the convoy waits for their confirmed arrival; no off-screen rescue is presumed.",
+          "artSubject": "Red Oven chimney joining a royal sea gate, Scylla steering a small boat while Char leads a bread convoy across cedar hills."
+        }
+      ],
+      "replay": "The Oven fragment is awarded only after a committed rescue decision. Revisit must preserve meal counts, supplies, any waiting families and Char's agency without granting a second fragment."
+    }
+  ],
+  "exitContract": {
+    "requiresAllEightFragments": [
+      "briar-office-key",
+      "briar-tide-roots",
+      "earth-lantern-refuge-charter",
+      "earth-living-hours-ledger",
+      "sea-unwritten-map",
+      "sea-sister-bell",
+      "village-wolf-door",
+      "village-tidal-oven"
+    ],
+    "requiresLocalCrisis": "The Last Door is a separate playable hearing at Hoshimori's original cedar bridge. Vesper must submit a consent-safe route and account for the Oven's supply or shelter debt; both e12 fragments and all six prior fragments must be earned.",
+    "finalChoiceIds": [
+      "disable-transit",
+      "free-transit"
+    ],
+    "finalChoiceRuntimeSource": "utils/memoryDungeon/reimaginerCampaign.ts",
+    "noFragmentOnVisit": true,
+    "noRepeatAwards": true,
+    "noEndingOnFragmentsAlone": true,
+    "noExtraEndingFamilies": "The e10 crossroad, e05 departure, e04 survival subbranches and e12 local quest decisions change epilogues and logistics, never the 32 five-bit core family keys.",
+    "noRuntimeClaim": "Neither e12 scene, the Last Door hearing, its 32 cinematics nor its art is wired to playable 8x8 exploration, save reducer or delivered media."
+  },
+  "endingContract": {
+    "bitOrder": [
+      "e02-witness",
+      "e04-char-lost",
+      "e06-public-testimony",
+      "e08-open-exits",
+      "e12-shared-crossing"
+    ],
+    "bitValues": {
+      "e02": {
+        "protect-village": 0,
+        "trust-witnesses": 1
+      },
+      "e04": {
+        "seal-the-tide-gate": 0,
+        "divert-the-current": 0,
+        "open-the-tide-gate": 1
+      },
+      "e06": {
+        "protect-private-memory": 0,
+        "publish-twin-testimony": 1
+      },
+      "e08": {
+        "keep-shelter-charter": 0,
+        "unbar-all-doors": 1
+      },
+      "e12": {
+        "disable-transit": 0,
+        "free-transit": 1
+      }
+    },
+    "coreFamilyCount": 32,
+    "coreKeyRule": "family = e02 + 2*e04 + 4*e06 + 8*e08 + 16*e12. No final choice is offered until all eight fragments, the local hearing and every earned history predicate are replay-verified.",
+    "exemplarStatus": "FOUR_AUTHORED_SCENE_EXEMPLARS_NOT_32_DELIVERED_CINEMATICS",
+    "exemplars": [
+      {
+        "key": "23",
+        "history": {
+          "e02": "trust-witnesses",
+          "e04": "open-the-tide-gate",
+          "e06": "publish-twin-testimony",
+          "e08": "keep-shelter-charter",
+          "e12": "free-transit"
+        },
+        "title": "The Bell That Was Not a Resurrection",
+        "location": "A witness platform spanning the cedar bridge and the sea gate",
+        "action": "Char opens a shared passage by striking the sister bell once for the younger life she chose, then lets Scylla ring it for the older Char who died. Neither voice is substituted for the other.",
+        "voices": "Pip reads the forest witnesses' names only with consent. Vesper returns the copying key to the families. Morrow's partner and children decide whether to visit, rather than being assigned a new home.",
+        "cost": "The original Char remains dead in the witnessed timeline. A staffed, revocable refuge and a public two-account archive must be maintained; rescued commuters remember who held the gate.",
+        "closing": "The two bells do not agree on a date. They agree that nobody must be erased to cross."
+      },
+      {
+        "key": "10",
+        "history": {
+          "e02": "protect-village",
+          "e04": "open-the-tide-gate",
+          "e06": "protect-private-memory",
+          "e08": "unbar-all-doors",
+          "e12": "disable-transit"
+        },
+        "title": "The Uncopied Farewell",
+        "location": "The final ferry landing after the worlds have begun to separate",
+        "action": "Vesper burns the duplicated transit key, not the refugees' private maps, and Oren schedules the last protected ferry before the unstable gate is disabled.",
+        "voices": "Scylla names the older Char's death without demanding the younger Char repeat it. Briar's closed village sends a guarded food cart; Pip preserves the names of those who consented to be counted.",
+        "cost": "The worlds separate; the sealed private testimony cannot settle every accusation, and families choosing different shores must rely on a slower consensual passage.",
+        "closing": "No road remained open forever. The last boat waited until everyone who wished to leave had answered."
+      },
+      {
+        "key": "25",
+        "history": {
+          "e02": "trust-witnesses",
+          "e04": "seal-the-tide-gate",
+          "e06": "protect-private-memory",
+          "e08": "unbar-all-doors",
+          "e12": "free-transit"
+        },
+        "title": "The Train That Still Needed Rescuing",
+        "location": "A cedar bridge stretched above the sealed commuter platform",
+        "action": "Char and Oren open a supervised shared corridor to the stranded commuters first; the final crossing does not declare itself complete until the missing passenger count is reconciled.",
+        "voices": "Morrow asks his Earth family whether they want an open doorway in their neighborhood. Pip's forest witnesses testify to the queue, and Vesper keeps the passengers' home addresses off the public atlas.",
+        "cost": "Char survived, but the delay harmed trapped workers. A public transport fund and night-shift stewards remain responsible for food, wages and the time the gate stole.",
+        "closing": "The first train was late by an impossible number of seasons. Someone was still there to meet it."
+      },
+      {
+        "key": "04",
+        "history": {
+          "e02": "protect-village",
+          "e04": "divert-the-current",
+          "e06": "publish-twin-testimony",
+          "e08": "keep-shelter-charter",
+          "e12": "disable-transit"
+        },
+        "title": "The District Nobody Had Counted",
+        "location": "The ruined maintenance district's final dry rooftop",
+        "action": "Vesper closes the unstable crossing only after Morrow and Char lead a witnessed search of the district that had been called abandoned. A rescue stair remains until the last survivor chooses a shore.",
+        "voices": "Char refuses a victory speech while district workers are missing. Scylla's public account records the diverted water; Pip's closed village supplies shelter under its limited guest charter.",
+        "cost": "Char survived, but buildings and wages were lost. The two worlds separate with a binding restitution claim, not a miraculous rebuilt neighborhood.",
+        "closing": "The map had once said EMPTY. Vesper left that word crossed out, and the names beneath it blank by choice."
+      }
+    ],
+    "epilogueAxes": [
+      "e04 three-way catastrophe and outstanding victims",
+      "e05 three-way Scylla agency",
+      "e07 atlas custody and restitution",
+      "e09 wolf and tide-root costs",
+      "e10 labor, shelter and price-ledger crossroad",
+      "e11 Char bell custody and identity",
+      "e12 bridge watch and Oven supply debts",
+      "Morrow's Earth family consent",
+      "Pip's Oven debt and saved witnesses"
+    ],
+    "playerSpoilerPolicy": "Never expose core family numbers, 32 ending catalogue or future Char fate to a player before the earned scene."
+  },
+  "artProduction": {
+    "status": "NOT_SUBMITTED",
+    "artJobIds": [],
+    "deliveredImages": [],
+    "targets": [
+      "village-wolf-door:anonymous-witness-crossing",
+      "village-wolf-door:decoy-map-with-expiry",
+      "village-wolf-door:wolf-oath-review",
+      "village-wolf-door:opening",
+      "village-tidal-oven:ordinary-bread-ration",
+      "village-tidal-oven:rebuild-consent-hearth",
+      "village-tidal-oven:split-tide-escorts",
+      "village-tidal-oven:opening",
+      "ending-exemplar:23",
+      "ending-exemplar:10",
+      "ending-exemplar:25",
+      "ending-exemplar:04"
+    ],
+    "policy": "These twelve illustration briefs are not production ArtJobs or delivered images. Track real job IDs, destination and ArtImage verification separately."
+  }
+}
