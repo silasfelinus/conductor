@@ -51,9 +51,11 @@ daily upgrades and Daily Tzaddik status. Priority-queue depth only when
 After the report, ask Silas what he wants — or proceed directly if his first message is a clear
 task. **Never ask Silas to choose the order of ready work** (2026-10-08: *"autonomous progress trumps
 letting me micromanage"*): pick by dependency, then priority, and report what you took. Asking is
-for genuine human gates only. **Unattended/trigger-fired runs:** the report is the preamble, not the
-job — run `python scripts/select_role.py`, act on it, and on `idle` walk AGENTS.md's fallback ladder.
-A run that ends with only a sweep report is a failed run.
+for genuine human gates only. **Unattended/trigger-fired runs:** nobody reads the report (the daily
+digest is Silas's view), so skip it — run `python scripts/select_role.py` first, act on it, and on
+`idle` walk AGENTS.md's fallback ladder. Run the sweep as `session_sweep.py --max-lines 3` and fix
+only what your role owns. End with at most five lines: what shipped, PR, what's next. A run that
+ends with only a sweep report is a failed run.
 
 ## Session end
 
