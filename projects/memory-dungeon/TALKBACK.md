@@ -58,3 +58,12 @@
 **Decision:** merged reversible Morrow e10 console PR #4599 (squash `2fee0bd9fa89ebbf158953a01ace7749bb673ae2`) after all 20 exact-head checks and 15 workflows passed on `950642af0a8db3c2b21afcbbe9afaaf77914772b`; reviewed six Memory Dungeon-only files. Contract Tests #41327943800 passed all four shards and aggregate, with TypeScript, Prettier, layout, scroll ownership and browser-interruption green. No deploy or production art.
 
 **What worked:** the new console uses replayed adjacent movement, earned e04/e07/e09 history and two fragment receipts without fabricating e10 completion. The earlier formatting failure was fixed on the same PR. **What to improve:** add a behavior-level interrupted-save/end-to-end cross-world gate test once e08 progression and e10's actual crossroad are built; today's integration checks are primarily structural. This is already covered by the open master roadmap and should not become a duplicate task. Master issue #4136 remains open and Memory Dungeon active.
+
+
+## 2026-11-01 PT | Reviewer green merge | memory-dungeon/t-038 | Kind Robots #4601
+
+**Decision:** merged reversible Morrow e10 crossroad PR #4601 (squash `2d9ad68b08a6e6975f403f718a2aad80166381a2`) after all 16 exact-head workflows passed on `d71620d6eeec462f83d0aae595050807b7f67bd0`. Contract Tests #41343823383 passed four shards plus verifier; TypeScript, formatting, layout, scroll ownership and Memory browser interruption succeeded. Six Memory Dungeon-only files; no unresolved reviews. No deployment or rendered ArtJobs.
+
+**What worked:** the clock-tower finale requires replayed adjacent travel, twelve unique decisions and both earned fragments before saving an e10 verdict; two outcomes preserve historical Scylla, Vesper and Pip decisions rather than fabricating consent or rescues. The earlier formatting failures were repaired on the same PR, with no weakened checks.
+
+**What to improve:** e08 remains the actual normal-play progression blocker, so the next implementation should complete its earned exit and adversarially test interrupted-save e08→e09→e10. Production images and the remaining authored sites still need independent verification. This work is already tracked under the open master task and #4136; do not create a duplicate kaizen task.
