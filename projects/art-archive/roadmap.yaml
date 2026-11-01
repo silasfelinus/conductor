@@ -628,7 +628,7 @@ tasks:
   - id: t-033
     milestone: m4
     title: "Confirm archive-preset ArtJobs are safe to always tag engine: 'A1111'"
-    status: claimed
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-016
@@ -660,7 +660,11 @@ tasks:
       The fix shape in this note (buildDefaultComfyWorkflow, the same family allowlist as
       generate-preview.post.ts, reject incompatible families, add this file to
       verifyComfyOnlyGeneration.ts) is the implementation. Build it. Do not re-ask.
-    updated: '2026-10-03T00:58:00Z'
+
+      2026-11-01 PT claim-staleness assessment (Silas: stale claims are more likely finished-
+      but-unrecorded than abandoned): no merged PR found for the engine-tag safety
+      confirmation (nearest: #2868/#2872/#2854 from 09-19). Claim released.
+    updated: '2026-11-01T11:02:05Z'
     gate_rechecked: '2026-09-30'
     owner: worker
     claimed_by: 2026-10-03T005800Z-art-archive-t-033-g5k9
@@ -909,12 +913,17 @@ tasks:
     implementation_pr: 'silasfelinus/kind_robots#3006'
   - id: t-044
     title: Make the archive dry-run/import scan finish within request limits (resumable or batched)
-    status: claimed
+    status: ready
     stakes: reversible
     owner: worker
     passes: 0
-    updated: '2026-10-03T07:55:00Z'
-    note: 'Filed by gate triage 2026-09-30. Conductor run 36672365799: POST /api/admin/art-archive/dry-run on production (kind_robots 431f499, with #2933/#2936 deployed) did not respond within 300s. Earlier attempts hung for 40+ minutes. A full synchronous scan of the private mount cannot fit in one HTTP request. Make it an async job (start, then poll status) or a cursor-batched scan, update scripts/run_art_archive_production_import.py to drive it, and re-run the dry-run workflow. Unblocks t-041.'
+    updated: '2026-11-01T11:02:05Z'
+    note: >-
+      Filed by gate triage 2026-09-30. Conductor run 36672365799: POST /api/admin/art-archive/dry-run on production (kind_robots 431f499, with #2933/#2936 deployed) did not respond within 300s. Earlier attempts hung for 40+ minutes. A full synchronous scan of the private mount cannot fit in one HTTP request. Make it an async job (start, then poll status) or a cursor-batched scan, update scripts/run_art_archive_production_import.py to drive it, and re-run the dry-run workflow. Unblocks t-041.
+
+      2026-11-01 PT claim-staleness assessment (Silas: stale claims are more likely finished-
+      but-unrecorded than abandoned): no async/cursor dry-run PR found after #2933/#2995.
+      Claim released.
     claimed_by: 20261003T0755Z-art-archive-t044-r8m4
     claimed_at: '2026-10-03T07:55:00Z'
 

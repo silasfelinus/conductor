@@ -536,7 +536,7 @@ tasks:
   - id: t-022
     milestone: m5
     title: "Wire daily_last_completed advancement to a same-commit PITCHES.yaml release entry"
-    status: claimed
+    status: ready
     owner: worker
     passes: 0
     stakes: reversible
@@ -553,9 +553,13 @@ tasks:
       select_role.py's daily-creative role output) to make advancing daily_last_completed
       and adding the matching PITCHES.yaml builds entry a single documented step, so this
       can't silently split across cycles again.
+
+      2026-11-01 PT claim-staleness assessment (Silas: stale claims are more likely finished-
+      but-unrecorded than abandoned): no merged PR advancing daily_last_completed with
+      PITCHES.yaml found. Claim released.
     claimed_by: openai-scheduled-2026-09-23T201650Z-animation-manager-t022-a11
     claimed_at: '2026-09-23T20:16:50Z'
-    updated: '2026-09-23T20:16:50Z'
+    updated: '2026-11-01T11:02:05Z'
 
   - id: t-023
     milestone: m5

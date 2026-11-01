@@ -283,8 +283,8 @@ tasks:
 - id: t-011
   milestone: m3
   title: "Run the Stripe checkout/webhook/fulfillment matrix end-to-end in TEST mode"
-  status: claimed
-  updated: '2026-10-06T04:45:47Z'
+  status: ready
+  updated: '2026-11-01T11:02:05Z'
   passes: 0
   stakes: outward-facing
   gate_human: false
@@ -341,6 +341,10 @@ tasks:
     check_pr_merged_drift re-flag this task every sweep (false positive reconciled
     2026-10-05, again 2026-10-06). Set implementation_pr to the PR that runs the live TEST-
     mode matrix when it lands. The 2026-10-06T04:45Z claim is live and was left untouched.
+
+    2026-11-01 PT claim-staleness assessment (Silas: stale claims are more likely finished-
+    but-unrecorded than abandoned): no TEST-mode matrix run recorded; blocker remains Stripe
+    test credentials plus a reachable database (soft access gate, see note). Claim released.
   owner: worker
   claimed_by: 20261006T-kind-economy-t011-a1
   claimed_at: '2026-10-06T04:45:47Z'
