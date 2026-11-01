@@ -1,0 +1,28 @@
+# Shifting Desks: quality and fun audit
+**1 November 2026 (PT)** | Shifting Desks / t-046 | internal editorial/engineering assessment, not Silas's subjective fun verdict.
+
+## Evidence and limits
+- The [Kind Robots 2,000-seed QA run](https://github.com/silasfelinus/kind_robots/actions/runs/41356911199) executed ten adversarial player strategies and 600 additional reward/replay campaigns: **0 state invariants failed, 0 softlocks, all 11 endings reached, 600/600 receipts verified, all ten milestones earned during the corpus, and the 30-run archive cap held**. Each successful run was a real TypeScript engine simulation, not a static story audit.
+- The same run recorded no never-seen encounter cards, two never-offered secret alternatives and 23 offered-but-never-selected options under its greedy test strategies. *Offered but unpicked is not the same as impossible:* these are reasons to improve exploration policies and playtest the clarity of stakes, not grounds to erase gates.
+- The browser suite in PR [#4605](https://github.com/silasfelinus/kind_robots/pull/4605) was **cancelled during Cypress**, not passed; no live phone/tablet/desktop or keyboard verification follows from the seeded tests. Art delivery and account persistence remain separately unverified.
+
+## Editorial judgment
+**The world has a persuasive comic spine.** Orientation's 90-day review on the first afternoon, Records' form needed to request itself, Toy Division's cheerfully weaponized Snuggle Sentinel, the Wellness evaluation of a person against themselves, and the Board's twelfth chair are distinctive escalations of a coherent corporate nightmare. This is a designed adventure, not a pile of random absurdism.
+
+**Callbacks supply the heart.** Pip's autonomy, Gus's union, Kevin's tank, Dale's anxieties, the Founder and the secret societies give consequences personal carriers. Eleven endings have different emotional temperatures: the Roach Union's dental benefits are a comic payoff; Early Retirement is gently terrifying; the Kind Rewrite makes accumulated humane choices matter; Permanent Adjournment earns its Kafkaesque silence. Avoid turning these into generic "+1 stat" rewards.
+
+**Choices carry meaningful costs.** The no-clean-wins contract works mechanically, but cost alone is insufficient. An earned late alternative must actually appear in the run's offered scenes, rather than requiring two unrelated lottery tickets. The two flagged routes exposed a real design problem here.
+
+**Difficulty is highly personality dependent.** In 200 seeds per attack, Complier finished 84%, Rebel 68%, Saint 66.5%, Schemer 67.5%, Coward 100% and Chaos Agent only 14.5%. That asymmetry suits a game about obedience and institutional risk. However, the near-certain Coward completion paired with few endings, and the 85.5% Chaos Agent elimination rate, deserve human testing for boredom and perceived fairness. Do not flatten these without player evidence.
+
+**Full-run pacing is substantial.** Test strategies averaged roughly 28–37 decisions per complete or terminated campaign. That's welcome for replayable late-game content, but the first five-minute sample must showcase a distinctive stranger, an irreversible tradeoff and a surprising consequence without expecting a player to finish five floors.
+
+## Concrete changes in this QA slice
+1. **Make the exit-policy clue chronological.** Previously `exit-interview-first/cite-the-policy` was on the first security-desk slot, yet `read-the-policy` was only awarded by `the-red-stapler/staple-your-packet` in the third slot. That combination could never be earned in normal play. The *signed exit form* now yields its hidden optional-participation clause, and the later red stapler offers a fourth, costly choice to staple that opt-out over the employee's signature. The epilogue's existing `opted-out-of-leaving` receipt is retained.
+2. **Honor deliberate Dale investments.** Sending Dale to Toys causes his Toy scene to be dealt when the Concept Lab remains open; forgiving him there carries the Wellness room into the board when that room remains open. An earned, suspenseful callback replaces two independent rare draws. The encounter still requires a choice, not free friendship. Structural closures retain authority.
+3. **Add a chronology invariant and a natural-deck regression.** Test the source/target location order, a genuine three-slot Orientation sequence, actual opt-out choice and flag, and many seeded department transitions for the Dale callback.
+
+## Release disposition
+**Mechanics: strong conditional pass**, subject to the changed-branch CI rerun. **Story and comedy: promising**, pending reader/playtester feedback on repetition, choice clarity, agency and payoff; not independently proven "fun." **Visual/front-end: not passed**, because its Cypress suite was cancelled. **Art: incomplete**, separately tracked. No new human publication gate is imposed by the QA: only t-020 authorizes Silas's final fun verdict and any outward promotion.
+
+Next high-value review: a human five-minute playthrough as a Coward and a Chaos Agent, with attention to why a choice was attractive before its outcome appears. Treat the 23 offered/unpicked routes as a *target list for curiosity-path tests*, not 23 automatic rewrites.
