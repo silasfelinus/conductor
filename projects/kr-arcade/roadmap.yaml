@@ -1271,11 +1271,11 @@ tasks:
   - id: t-075
     milestone: m8
     title: "Ribbon Riders depth slice 2: The first two fairgrounds"
-    status: claimed
+    status: ready
     owner: worker
     claimed_by: session_01Hi6Qwz5Vko2FtshPvXk6i3-m8
     claimed_at: '2026-10-12T09:28:11Z'
-    updated: '2026-10-12T09:28:11Z'
+    updated: '2026-11-01T11:02:05Z'
     passes: 0
     stakes: reversible
     depends_on: t-074
@@ -1287,6 +1287,11 @@ tasks:
       2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality
       improvements, they should not just be thin veneers of the old games. But newer, better, even more
       awesome."
+
+      2026-11-01 PT claim-staleness assessment (Silas: stale claims are more likely finished-
+      but-unrecorded than abandoned): no slice-2 (first two fairgrounds / Lantern Festival
+      Circuit) PR found; only slice 1 (#3592) and extra arenas (#3852, #3857). Released for
+      pickup.
 
   - id: t-076
     milestone: m8
@@ -1413,7 +1418,7 @@ tasks:
   - id: t-083
     milestone: m8
     title: "Pixel Hop depth slice 1: The board and rule engine"
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
     note: >-
@@ -1423,15 +1428,20 @@ tasks:
       Code: kind_robots utils/arcade/games/ (registry slug pixel-hop). Silas, 2026-10-11: "I need an
       assessment done of the other arcade games. I want the same level of quality improvements, they should
       not just be thin veneers of the old games. But newer, better, even more awesome."
+
+      2026-11-01 PT claim-staleness assessment (Silas: stale claims are more likely finished-
+      but-unrecorded than abandoned): slice 1 (board and rule engine) merged in
+      kind_robots#3644, with follow-on rule work in #3788/#3817/#3829/#3837. Claim never
+      closed.
     owner: worker
     claimed_by: art-medic-pixelhop-1018
     claimed_at: '2026-10-18T11:46:23Z'
-    updated: '2026-10-18T11:46:23Z'
+    updated: '2026-11-01T11:02:05Z'
 
   - id: t-084
     milestone: m8
     title: "Pixel Hop depth slice 2: Candy Comet and Rondo Ring"
-    status: waiting
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-083
@@ -1442,6 +1452,10 @@ tasks:
       applies. Code: kind_robots utils/arcade/games/ (registry slug pixel-hop). Silas, 2026-10-11: "I need an
       assessment done of the other arcade games. I want the same level of quality improvements, they should
       not just be thin veneers of the old games. But newer, better, even more awesome."
+
+      2026-11-01 PT: dependency t-083 closed done in the stale-claim reconciliation; promoted
+      to ready.
+    updated: '2026-11-01T11:08:47Z'
 
   - id: t-085
     milestone: m8

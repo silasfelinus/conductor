@@ -661,14 +661,14 @@ tasks:
       generate-preview.post.ts, reject incompatible families, add this file to
       verifyComfyOnlyGeneration.ts) is the implementation. Build it. Do not re-ask.
 
-      2026-11-01 PT: claim/review released by settle_inactive_projects.py — project is
-      `finished`, so no worker will pick this up; was `claimed`. Re-check any referenced
-      branch/PR before resuming if the project is reopened.
-    updated: '2026-11-01T11:34:00Z'
+      2026-11-01 PT claim-staleness assessment (Silas: stale claims are more likely finished-
+      but-unrecorded than abandoned): no merged PR found for the engine-tag safety
+      confirmation (nearest: #2868/#2872/#2854 from 09-19). Claim released.
+    updated: '2026-11-01T11:02:05Z'
     gate_rechecked: '2026-09-30'
     owner: worker
-    claimed_by: null
-    claimed_at: null
+    claimed_by: 2026-10-03T005800Z-art-archive-t-033-g5k9
+    claimed_at: '2026-10-03T00:58:00Z'
 
   - id: t-034
     milestone: m4
@@ -860,13 +860,13 @@ tasks:
     stakes: reversible
     owner: worker
     passes: 0
-    updated: '2026-11-01T11:34:00Z'
+    updated: '2026-11-01T11:02:05Z'
     note: >-
       Filed by gate triage 2026-09-30. Conductor run 36672365799: POST /api/admin/art-archive/dry-run on production (kind_robots 431f499, with #2933/#2936 deployed) did not respond within 300s. Earlier attempts hung for 40+ minutes. A full synchronous scan of the private mount cannot fit in one HTTP request. Make it an async job (start, then poll status) or a cursor-batched scan, update scripts/run_art_archive_production_import.py to drive it, and re-run the dry-run workflow. Unblocks t-041.
 
-      2026-11-01 PT: claim/review released by settle_inactive_projects.py — project is
-      `finished`, so no worker will pick this up; was `claimed`. Re-check any referenced
-      branch/PR before resuming if the project is reopened.
-    claimed_by: null
-    claimed_at: null
+      2026-11-01 PT claim-staleness assessment (Silas: stale claims are more likely finished-
+      but-unrecorded than abandoned): no async/cursor dry-run PR found after #2933/#2995.
+      Claim released.
+    claimed_by: 20261003T0755Z-art-archive-t044-r8m4
+    claimed_at: '2026-10-03T07:55:00Z'
 

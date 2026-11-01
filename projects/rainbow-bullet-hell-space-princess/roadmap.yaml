@@ -252,7 +252,7 @@ tasks:
   - id: t-011
     milestone: m4
     title: "Build lavish stage parallax, readable effects and character animation"
-    status: claimed
+    status: ready
     depends_on: [t-002, t-007]
     owner: worker
     passes: 0
@@ -272,9 +272,14 @@ tasks:
       Act I playtest: hit flash on damaged craft, craft shockwaves, pickup collect bursts and
       bobbing pickups, ship banking (#3805). Open: painted scenery planes per stage, sprite
       rigs, lens/bloom.
+
+      2026-11-01 PT claim-staleness assessment (Silas: stale claims are more likely finished-
+      but-unrecorded than abandoned): partial work merged (#3802, #3805); open items per the
+      10-17 progress note: painted scenery planes per stage, sprite rigs, lens/bloom. Claim
+      released.
     claimed_by: 2026-10-17T0630Z-rainbow-t-011-k8m2
     claimed_at: '2026-10-17T08:08:56Z'
-    updated: '2026-10-17T09:47:21Z'
+    updated: '2026-11-01T11:02:05Z'
   - id: t-012
     milestone: m4
     title: "Produce opening, between-stage dialogue, endings, sound and score"
@@ -292,7 +297,7 @@ tasks:
       slots. Preserve persistent ship/party state across seamless boss
       transitions, with rare optional tableau checkpoints after Acts III
       and V. See ACT-STRUCTURE.md. Do not mark done for a document alone.
-    status: claimed
+    status: ready
     depends_on: [t-002, t-009]
     owner: worker
     passes: 0
@@ -311,9 +316,14 @@ tasks:
       renames the crew in Lilt's lines to the pilots flown. Open: the 15 composition banter
       tracks with a 4-bit pilot mask, between-stage dialogue for Acts II-VIII at the same
       density, voice-optional subtitle treatment, cinematic ending boards.
+
+      2026-11-01 PT claim-staleness assessment (Silas: stale claims are more likely finished-
+      but-unrecorded than abandoned): partial work merged (#3803, #3806); open items per the
+      10-17 progress note: 15 banter tracks, Acts II-VIII between-stage dialogue, subtitles,
+      ending boards. Claim released.
     claimed_by: 2026-10-17T0630Z-rainbow-t-012-k8m2
     claimed_at: '2026-10-17T08:08:58Z'
-    updated: '2026-10-17T09:47:24Z'
+    updated: '2026-11-01T11:02:05Z'
   - id: t-013
     milestone: m5
     title: "Deterministic combat fairness, multiplayer soak and campaign QA"
@@ -459,7 +469,7 @@ tasks:
   - id: t-022
     milestone: m4
     title: "Kontext pass: recolour off-model frames, compose cutscenes and group art, and build layout-guided stage planes"
-    status: claimed
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: [t-020]
@@ -484,10 +494,15 @@ tasks:
       246453 far plates as style anchors; then test tiling and parallax in the real cabinet at 390/768/1440.
       (4) Pickups u04, u11, u12 redrawn to their WORLD-BIBLE shapes. Do not reroll anything t-020 already
       kept. Generated art is pre-approved internal work (AGENTS.md); public release stays gated by t-014.
+
+      2026-11-01 PT claim-staleness assessment (Silas: stale claims are more likely finished-
+      but-unrecorded than abandoned): no round-9 Kontext completion found; related art PRs
+      (#3772-#3794) landed but the ledger items are unverified. Claim released; verify against
+      art/ART-ROUND-9-KONTEXT.yaml before redoing.
     owner: worker
     claimed_by: 2026-10-15T063000Z-rainbow-kontext-r9-m4q8
     claimed_at: '2026-10-15T06:30:51Z'
-    updated: '2026-10-15T06:30:51Z'
+    updated: '2026-11-01T11:02:05Z'
   - id: t-023
     milestone: m4
     title: "Recut Acts II-VIII to the playtest pacing: shorter, denser, obstacles, repeat fire, callouts"

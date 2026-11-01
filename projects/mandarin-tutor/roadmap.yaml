@@ -618,16 +618,15 @@ tasks:
       glyphHistory field, ingested from the dump rather than the live API. The share-alike
       scope on that one field is accepted.
 
-      2026-11-01 PT: claim/review released by settle_inactive_projects.py — project is
-      `paused`, so no worker will pick this up; was `claimed`. Re-check any referenced
-      branch/PR before resuming if the project is reopened.
-    updated: '2026-11-01T11:34:00Z'
+      2026-11-01 PT claim-staleness assessment (Silas: stale claims are more likely finished-
+      but-unrecorded than abandoned): no glyph-history PR found. Claim released.
+    updated: '2026-11-01T11:02:05Z'
     gate_reason: legal
     gate_rechecked: '2026-09-30'
     approved_by_human: true
     owner: worker
-    claimed_by: null
-    claimed_at: null
+    claimed_by: 2026-10-03T115905Z-mandarin-tutor-t030-s6k4
+    claimed_at: '2026-10-03T11:59:05Z'
 
   - id: t-031
     milestone: m5

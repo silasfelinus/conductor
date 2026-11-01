@@ -3056,18 +3056,22 @@ tasks:
   stakes: reversible
   owner: worker
   passes: 0
-  updated: '2026-11-01T11:33:59Z'
+  updated: '2026-11-01T11:46:19Z'
   note: >-
     Kaizen follow-up to t-202: when check_roadmap_note_size flags a roadmap, run
     scripts/archive_done_task_notes.py --project <slug>, verify with --verify-only, and confirm the flag clears.
     Also keeps conductor with an open task (validate_roadmaps requires one for active projects).
 
+    2026-11-01 PT claim-staleness assessment (Silas: stale claims are more likely finished-
+    but-unrecorded than abandoned): no archive-notes pass recorded after the 10-01 claim;
+    run archive_done_task_notes.py for roadmaps over the advisory. Claim released.
+
     2026-11-01 PT: done in the token-essentialization pass 2 PR — archive_done_task_notes.py
     --all moved 235,961 bytes of done-task notes into per-project HISTORY.md (verify-only:
-    94 archives resolve), and archive_recurring_task_note.py archived 23 oversized live
+    every archive resolves), and archive_recurring_task_note.py archived 23 oversized live
     notes. memory-dungeon is now under the 150KB file threshold.
-  claimed_by: 01Hdnr6S
-  claimed_at: '2026-10-01T13:46:40Z'
+  claimed_by: null
+  claimed_at: null
 
 
 - id: t-204
