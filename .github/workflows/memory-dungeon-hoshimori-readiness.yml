@@ -15,6 +15,8 @@ on:
       - "projects/memory-dungeon/art/HOSHIMORI-GALLERY-PILOT-ROUND-1.yaml"
       - "projects/memory-dungeon/art/HOSHIMORI-GALLERY-PILOT-ROUND-2.yaml"
       - "projects/memory-dungeon/art/HOSHIMORI-GALLERY-BOUND-ROUND-3.yaml"
+      - "projects/memory-dungeon/art/HOSHIMORI-GALLERY-BOUND-ROUND-4.yaml"
+      - "tests/test_memory_dungeon_hoshimori_bound_gallery_round4.py"
       - "scripts/verify_memory_dungeon_hoshimori_bound_gallery.py"
       - "tests/test_memory_dungeon_hoshimori_bound_gallery.py"
       - "scripts/verify_memory_dungeon_hoshimori_gallery_pilot.py"
@@ -43,8 +45,10 @@ jobs:
         run: |
           python scripts/verify_memory_dungeon_hoshimori_gallery_pilot.py --round 1
           python scripts/verify_memory_dungeon_hoshimori_gallery_pilot.py --round 2
-      - name: Validate destination-bound third gallery batch
-        run: python scripts/verify_memory_dungeon_hoshimori_bound_gallery.py
+      - name: Validate both destination-bound gallery batches
+        run: |
+          python scripts/verify_memory_dungeon_hoshimori_bound_gallery.py --round 3
+          python scripts/verify_memory_dungeon_hoshimori_bound_gallery.py --round 4
       - name: Validate authored 64-face gallery and durable style receipts
         run: python scripts/audit_memory_dungeon_hoshimori_gallery_readiness.py
       - name: Check live Hoshimori ArtJobs, fresh media and engine heartbeat
