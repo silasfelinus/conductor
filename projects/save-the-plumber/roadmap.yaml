@@ -96,24 +96,10 @@ tasks:
     updated: '2026-10-22T10:30:00Z'
     passes: 0
     stakes: reversible
-    note: |-
+    note: >-
       REWRITTEN 2026-10-22 PT for Silas's Gen-2 direction (projects/kr-arcade/GEN2-STANDARD.md).
-      Write projects/save-the-plumber/GEN2-WORLDS.md: for each of the eight worlds an overworld
-      node graph (6-9 nodes: levels, a fortress with a mid-boss, a Hush House haunted maze, bonus
-      cottage, shop or item house, the world castle), which levels have a secret exit and which path
-      each exit opens, where the Valve Chapel switch palaces sit and which blocks they make solid
-      campaign-wide, the Upstream Sky special zone and its secret entrances, and a per-level beat
-      sheet (3-6 minute first clear, midpoint, sub-areas, the secret, the skill test). Reuse the 32
-      Gen-1 stages as rooms and set-pieces where they fit. The node graph must be machine-readable
-      enough to become savePlumberOverworld.ts data (t-011 ships World 1's graph as the template).
-      Overworld map plates per world are queued in art/GEN2-ROUND-1.yaml.
 
-      Original (superseded) brief:
-      World-by-world authored maps/beat sheets from WORLD-ATLAS.md: 32 unique level objectives and diagrams, 40+ distinct enemy behaviors, eight readable boss movesets, four-stage pacing, secrets, rewards, original soundtrack motifs, intro, chapter and ending illustrations. Plan collision/exits before painting. Use internal art pipeline and verify delivered assets.
-
-      Prior production-bible session was interrupted by Silas's more specific four-princess cast direction. No Save the Plumber production-bible deliverable was committed in that session. Return this task to ready for the next agent to author its 32-stage and 40+ behavior design catalog; retain existing WORLD-ATLAS and DESIGN-BRIEF without overwriting.
-
-      DONE 2026-10-22: GEN2-WORLDS.md (eight worlds of 7-9 nodes, 81 nodes, 13 secret exits, four Valve Chapels, the Upstream Sky zone, a Wild Tap wonder moment per course, six powers plus the Spare Thermos reserve and Gurgle the newt companion, per-course beat sheets) and gen2Worlds.json with validate_gen2_worlds.py (PASS). Next: t-011 follow-up makes savePlumberOverworld.ts data-driven from gen2Worlds.json (unlock by node, nine node kinds, save v3 keyed by node id; migrate via each node's Gen-1 stage, never by id).
+      Full history: projects/save-the-plumber/HISTORY.md#t-002
 
   - id: t-003
     milestone: m2
@@ -254,33 +240,9 @@ tasks:
     passes: 0
     stakes: reversible
     note: >-
-      REWRITTEN 2026-10-22 PT for the Gen-2 bar (projects/kr-arcade/GEN2-STANDARD.md sections 1
-      and 3). Ship in Kind Robots: (1) a pure overworld module (node graph per world, paths with
-      normal/secret unlock conditions, walking between revealed nodes, entering a level, revisits);
-      (2) save v2 with three slots: map position, per-level clear and secret-exit flags, Golden Gear
-      ids, switches, revealed paths, reserve item, lives, total time, deaths and completion percent,
-      migrating a v1 save into slot 1 rather than dropping it; (3) a walkable World 1 map screen in
-      the cabinet between stages, with completion marks per node, and a file-select screen with
-      per-slot percent. Later worlds' graphs come from t-002. Account sync is kr-arcade/t-163.
+      REWRITTEN 2026-10-22 PT for the Gen-2 bar (projects/kr-arcade/GEN2-STANDARD.md sections 1 and 3).
 
-      Pre-Gen-2 note, kept for history:
-      World map, exits/warps, collectibles, achievements, secret rooms,
-      coin-equivalent reward economy, save/continue, difficulty assists,
-      score and speedrun splits. Every planned secret is mechanically
-      discoverable in a blind run; no impossible dead-end levels.
-
-      2026-10-16: unblocked. All 32 stages are playable (t-006 to t-010 done). Already in
-      place: per-stage checkpoints, three hearts and lives, cabinet save/continue, secret pipe
-      rooms in 1-1, 2-2 and 3-2, and tokens with an extra life every 100. Still to build: map
-      exits/warps, achievements, difficulty assists, speedrun splits, a secret ending, and a
-      blind-run secrets audit.
-
-      DONE 2026-10-22: kind_robots#4030 merged (17c094c) after 23/23 checks green. Eight walkable world maps
-      (savePlumberOverworld.ts) with normal/secret-exit path unlocks, revisits and the castle road between
-      worlds; save v2 with three files (map node, clears, secret exits, gears, deaths, time) migrating v1 saves;
-      file select, map screen with locked stages dimmed and newly opened paths drawn in; verifySavePlumberOverworld
-      test. Fortresses, Hush Houses, Valve Chapels and real secret exits arrive with t-002/t-020/t-021; painted
-      map plates with t-024.
+      Full history: projects/save-the-plumber/HISTORY.md#t-011
     updated: '2026-10-16T14:04:32Z'
     implementation_pr: 'silasfelinus/kind_robots#4030'
 

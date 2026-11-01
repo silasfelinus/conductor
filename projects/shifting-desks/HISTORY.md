@@ -248,6 +248,16 @@ re-queued in ROUND-13 (t-032).
 Silas, 2026-10-20 PT: "In later levels, things might get more cronenbergian. I loved the giant cockroach appearance in the first act. Great tone." ART-DIRECTION.md now carries a per-floor tone ladder: one impossible thing treated as normal on the surface (Gus is the benchmark), toys a little too alive in Toy Division, the body starting to do paperwork in the Vault, and corporate biology in Sub-Level Zero. Its limits are no blood, wounds, exposed organs, pain, nudity or distress, and flesh that is always smooth and upholstered. DESIGN-BRIEF "Tone guardrails" points to it. Art round 14 (ROUND-14.yaml) queues nine forced Krea 2 renders, all passing the live checkArtPromptContract: the Wellness and Sub-Level Zero department arrivals, their six location card backs, and the Board grown into one long suit. The pack briefs take the new prompts, and the replaced prompts and seeds stay in ROUND-5/6 for a one-request revert. Delivery and review ride t-032; card text follows in t-034.
 <!-- note:end t-033 -->
 
+## t-034 — Tone ladder text pass: Wellness and Sub-Level Zero card flavor
+
+<!-- note:begin t-034 -->
+Carry the t-033 tone ladder into the words players actually read. The 48 Wellness and Sub-Level Zero encounter cards, both reviews and both window shifts should gain body-horror texture in their flavor_text and outcome text, in the ART-DIRECTION.md "Tone ladder" register: PAL's grilles that lean in, furniture that breathes, mutations reported cheerfully by HR, and the Board as one organism. Change no mechanics, ids, flags or grades, so BALANCE-REPORT and FLAG-MAP stay byte-identical, which proves it. Keep the brief's tone guardrails (no blood, wounds or self-harm). Mirror the text into the kind_robots utils/shiftingDesks/wellness.json and sub-level-zero.json snapshots (art_prompt too, so the nine t-033 station prompts and the Western Cartoon/Noir STYLE-CATALOG rows can follow), then check the desk at 390 and 1440.
+
+Lower-floor prose pass on canonical Conductor and Kind Robots branches. The source changes cover 48 encounter introductions, every choice-result text, two bosses and window shifts; runtime additionally adopts current station art prompts. Mechanical JSON fields remain unchanged. Preparing scoped PRs and CI.
+
+Shifting Desks lower-floor tone ladder is merged. Canonical Conductor PR https://github.com/silasfelinus/conductor/pull/6513 merged e29a4b59ec960baff5df2dfb41ff7b9e47527bae with all 23 checks completed green or intentionally skipped. Runtime Kind Robots PR https://github.com/silasfelinus/kind_robots/pull/4043 merged 055f442158a2fab69b9cbdcd2772b51d7ea3c134 with all 19 final-head checks completed green or intentionally skipped. All 48 Wellness and Sub-Level Zero encounter intros and every available choice outcome, both boss reviews, and two window shifts received distinct living-office details. Runtime prose matches canonical source and ten station art prompts match canonical briefs, with both runtime sourceSha fields stamped to Conductor merge e29a4b59ec960baff5df2dfb41ff7b9e47527bae. Structured before/after diff allowed only prose and art prompts; no flags, grades, costs, rolls or ending identifiers changed. t-032 art review and t-025 render evidence synchronization remain open, so playtest-only focus is not yet justified. No ArtJobs were submitted and no Alexandria deployment or browser screenshots were verified.
+<!-- note:end t-034 -->
+
 ## t-035 — Narrative coherence audit of Shifting Desks encounters and endings
 
 <!-- note:begin t-035 -->
@@ -285,3 +295,69 @@ Conductor PR #6467 has merged at c17ec700b4ca6d56a97b9872863cd20ec24d28a1, after
 
 Pass II complete: Conductor PR #6467 merged as c17ec700b4ca6d56a97b9872863cd20ec24d28a1 after 2933 Python tests, security and all Worker CI; Kind Robots PR #3996 merged as d943618bb6582fcfc2bbbef2e6b1f8ea65849926 after all 14 workflows completed green. The PR closes issue #3994. Shipped 25 Records prose improvements, six reachable Toy callbacks, 26 flag-aware epilogue passages, verified exact flag map; no ArtJobs, DB migrations or app visual layout edits. No Vercel preview found; Alexandria production deploy remains unverified.
 <!-- note:end t-036 -->
+
+## t-037 — Narrative pass III: reviews remember employee history and Board endings
+
+<!-- note:begin t-037 -->
+Silas, 2026-10-21 PT: "sounds great, keep it up" after passes I and II.
+Improve Records and Toy Division mandatory reviews with gated choices that
+recognize prior actions, then add final Board ending acknowledgements tied
+to the actual choices. Preserve seeded engine behavior, validators and art.
+Keep Wellness/Sub-Level Zero pack text free for independent t-034.
+Source and runtime snapshots must stay synchronized and both PRs green.
+
+Pass III merged on Conductor PR #6474 at f793d56caaf50cfd00376ef9baf44b967bde01ab (full Worker PR CI, security and handoff green) and Kind Robots PR #4006 at dfe5050368f012342049f69f7de1bf32690a79eb (all 17 applicable workflows green). Kept the seven-choice limit and added two-maximum deterministic case-file exhibits on Records and Toy review screens, plus 18 real flag-keyed Board ending passages. Canonical ending data is stamped in Kind Robots to the merged Conductor SHA. No new art jobs or database schema edits. Live Alexandria deployment and cross-device visual rendering were not verified.
+<!-- note:end t-037 -->
+
+## t-038 — Adversarial playtest follow-up: risk rewards, successor memory and gated-choice coverage
+
+<!-- note:begin t-038 -->
+Silas-directed follow-up 2026-10-22 PT after 2,000 adversarial seeded runs. Reward authored costly interventions, make safe outcomes feel consequential, make Successor terminations remembered in epilogues, and distinguish unreachable gated options from declined available ones in CI telemetry. Mirror canonical Conductor encounter changes into Kind Robots runtime; preserve no-clean-wins, source parity and all eleven endings.
+
+Canonical source PR silasfelinus/conductor#6490 merged d88e1a1f2cb13124fb7976b739ad0fd74372c6c4 and runtime PR silasfelinus/kind_robots#4021 merged 14a1b7762b8e1f1558b52ab4cdb756e2cc45563f. Added four success-only risky Forms with visible hints, persistent successor and choice consequences, and split 26 unpicked routes into 9 never offered versus 17 offered but not picked. Tested 2,000 seeded runs, 0 engine violations, all 11 endings. Conductor 25/25 and Kind Robots 23/23 GitHub check runs completed successfully or intentionally skipped. No external promotion or production deployment performed.
+
+Implemented and merged Conductor PR #6490 and Kind Robots PR #4021. All 25 Conductor and 23 application GitHub checks passed or were intentionally skipped. Canonical and runtime reward manifests are byte-identical on main. New risk awards and epilogue receipts shipped to main, with a green 2,000-run adversarial playtest (zero softlocks and all eleven endings observed). Browser rendering and Alexandria production deployment remain unverified. Wider public promotion stays gated by t-020.
+<!-- note:end t-038 -->
+
+## t-039 — Adversarial pass III: discoverable prerequisite chains and earned callbacks
+
+<!-- note:begin t-039 -->
+Silas, 2026-10-22 PT: approved follow-through on Shifting Desks adversarial playtest. Examine the nine never-offered conditional routes. Preserve original unlocks and no-clean-wins, but establish new earned alternate discovery paths with honest narrative cues and matching canonical/runtime source data. Add deterministic source-to-target gate tests and compare standard simulated choice coverage. No public promotion, deployment or art generation.
+
+Conductor PR #6494 merged fd58fbd13efb7f30439e9e365b08956f273fffa8 after all 25 check runs passed or were intentionally skipped. Kind Robots PR #4025 merged 619f791a070773fbda7474c7a9aeea1a1bca3eec after all 23 check runs passed or were intentionally skipped. Nine earned alternate prereq story chains, visible hints, distinct ending callbacks and tests added with canonical and runtime data byte-identical. Standard 2000-run adversarial test reduced never-offered choices from nine to two, never-picked from 26 to 24, without engine violations, stalls or losing any of eleven endings. No production deployment or promotion verified.
+
+Canonical Conductor PR #6494 and Kind Robots PR #4025 merged, 25 and 23 respective check runs green or intentionally skipped. Original hidden routes retained, nine alternative earned clue chains and nine epilogue callbacks tested. 2,000 standard seeded runs yielded zero engine violations, zero stalls, all eleven endings and two (formerly nine) never-offered options. No verified production deployment, browser render or promotion.
+<!-- note:end t-039 -->
+
+## t-040 — First-clear Personnel Archive: persistent illustrated milestones, endings and run dossiers
+
+<!-- note:begin t-040 -->
+P1, owner directive 2026-10-23 PT. A finished run must leave visible evidence of accomplishment, immediately and across browser reloads. First naturally reached ending unlocks an accessible one-screen Personnel Archive and clearly announces the unlock on the ending screen, with persistent navigation at the front desk and from the ending. Tabs: Milestones, Endings, Achievements, Runs (discoveries optional). Cards show art/badges, earned timestamp, progress, silhouette/redaction for locked, filled/partial for progress, distinct rare treatment without spoilers. Initial milestones: first completion, first ending, full five-department clear, first mutation, secret-society membership, successor use, Board approval, first test report, form thresholds; never award a milestone unearned. Persist bounded finished-run dossiers (end ID, job, society, mutation, floors, employee count, forms, grades, date, seed) idempotently on reload; migrate existing endingsFound/current finished save as fairly as evidence permits and never invent unseen run histories. Honor reduced motion and responsive internal gallery scroll. Existing ending-gallery collection must remain available and 11 ending IDs unchanged. Test first win, refresh, repeat win, no win, tampered saves, mobile widths.
+
+First-clear archive and mixed test reports landed in merged silasfelinus/kind_robots#4066 on 2026-10-23 PT; its Shifting Desks gameplay contract, TypeScript typecheck, and other recorded CI workflows passed. This task's original implementation scope is complete. Ending hero/badge art, ceremony, print cabinet, full visual acceptance and real-device QA remain independent follow-ups (t-032, t-041, t-042, t-044 through t-046).
+<!-- note:end t-040 -->
+
+## t-042 — End-of-run reward ceremony: achievement unlock, milestone progress and clear run summary
+
+<!-- note:begin t-042 -->
+P1. On first win show unlocked archive call-to-action; on every finish show earned ending hero, at least one linked achievement or milestone image/card, newly earned awards without duplicate unlock spam, progress toward remaining milestones, levels and departments cleared, mutations, society, files, successors, key incidents and next-play motivation. Render rewards above fold in the one-screen end panel without stealing all story text; no fake rewards and no spoilers for unseen paths. Existing Kind Robots achievements must remain authoritative when an achievement code exists; local milestone gallery supplements rather than duplicating global account rewards. Adversarial reload/double-resolve checks.
+
+Implemented an end-of-run reward ceremony on Kind Robots branch worker/shifting-desks-t-042-20261027T173845Z-gpt6-74a9. One-screen ending hero now shows earned and previously filed distinctions, authentic receipt stats and a non-spoiler milestone next target. Session-scoped award announcements are idempotent and do not retrigger on reload. Added pure tests for duplicate and phantom award suppression. PR and CI review in progress; no rendered art, public promotion or deployment claimed.
+
+DONE: silasfelinus/kind_robots#4306 merged as 824302d29e22cb560c21bf137e68b20245c0b262. End-of-run Personnel File now presents larger ending art, icon-backed awarded distinction, honest departments/files/employees/forms totals, job/society/mutation and next milestone progress. Newly-earned notices are session-only and deduplicated across repeated endings/reloads. Canonical Kind Robots achievements are unchanged. Verified the full PR workflow set: Shifting Desks gameplay contract, TypeScript Type Check, Layout Contract, changed-file Prettier, art/icon safety, schema parity, all four Contract Tests shards and verifier completed successfully. No PR preview exists and this merge is not evidence of a production deploy or visual acceptance. Remaining artwork and achievement images belong to t-032/t-041, printable dossier t-044, cabinet t-045 and full QA t-046; final fun/promotion gate t-020 remains human-controlled.
+<!-- note:end t-042 -->
+
+## t-043 — Test Results: credible mixed evaluations, liabilities and sharper HR writing
+
+<!-- note:begin t-043 -->
+P1. The first human full run had Empathy 13, Ingenuity 8, Obedience 7, Spite 6, all tagged Exceptional: unfun. Keep raw grades, seed, skill gates, thresholds and engine balance unchanged. Presentation may award at most one Exceptional; others gain relative or corporate liability descriptors (e.g. Productive Liability, Admirably Compliant, Valuable in Limited Amounts), with score-dependent and rank-dependent observations, paradoxical counterbalances and different report verdicts on repeat builds. No invented stat penalties or downgrading hidden numeric rolls. Preserve level/bar accessibility. Add golden case with 13/8/7/6, all-low and tied scores, varied seeded playthrough reports and first-read humor review. Any gameplay tradeoff proposal must be separate and balance-tested before touching mechanics.
+
+First-clear archive and mixed test reports landed in merged silasfelinus/kind_robots#4066 on 2026-10-23 PT; its Shifting Desks gameplay contract, TypeScript typecheck, and other recorded CI workflows passed. This task's original implementation scope is complete. Ending hero/badge art, ceremony, print cabinet, full visual acceptance and real-device QA remain independent follow-ups (t-032, t-041, t-042, t-044 through t-046).
+<!-- note:end t-043 -->
+
+## t-047 — Playbook Forge upgrade: write the missing 135th encounter
+
+<!-- note:begin t-047 -->
+Silas, 2026-10-27 PT: "Anything that is in playbook forge and has quests unwritten or art prompts unwritten should be upgraded. (Memory dungeon will take the longest and should be last). Space couch has a lot of fresh writing still in need and still looking to capture that right blend of space comedy and satire. All art prompts should be written for the appropriate engine, no metaphors for krea2." Shared bar: kind_robots PR #4308 (verifyPlaybookArtPrompts, artPromptsComplete). Forge 2026-10-27: encounters 134/135.
+DONE 2026-10-27 PT: kind_robots #4326 merged as 68c89a0 after 20/20 checks. Encounters 134->135: a fourth Consent Window applicant, Nadia the night nurse, who starts her signature awake and finishes it asleep. Seeded balance holds: rebel 47.5% eliminated, coward just over 2 Successors lost. No rendered window art yet.
+<!-- note:end t-047 -->

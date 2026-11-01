@@ -259,7 +259,7 @@ tasks:
   - id: t-014
     milestone: m2
     title: "Clip-model bake-off: why the lair/MV animations feel lackluster"
-    status: review
+    status: ready
     passes: 0
     stakes: reversible
     note: |-
@@ -272,10 +272,14 @@ tasks:
       Rescue review checkpoint for the stranded private bake-off comparison tooling branch. This PR is a partial, reversible preparation only; the task remains incomplete until real private clips and the comparison review exist.
 
       Retry after the prior Process task events run was cancelled by workflow concurrency. Rescue review checkpoint for the stranded private bake-off comparison tooling branch; this is partial preparation only.
-    updated: '2026-10-10T11:16:00Z'
+
+      2026-11-01 PT: claim/review released by settle_inactive_projects.py — project is
+      `paused`, so no worker will pick this up; was `review`. Re-check any referenced
+      branch/PR before resuming if the project is reopened.
+    updated: '2026-11-01T11:34:00Z'
     owner: worker
-    claimed_by: 2026-10-10T110300Z-zuzu-lair-t014-gpt56sol-4c91
-    claimed_at: '2026-10-10T11:03:00Z'
+    claimed_by: null
+    claimed_at: null
 
   - id: t-015
     milestone: m2

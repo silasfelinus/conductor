@@ -798,14 +798,10 @@ tasks:
   status: done
   stakes: reversible
   passes: 0
-  note: |-
-    Silas, 2026-10-23 PT: remove ruler name, honorific and portrait selection. Replace overlays-on-overlays with navigable scene screens: royal briefing, fishing map with one initially accessible spot, cinematic NPC visits, and a persistent art-led lakeside stage. Keep saves and existing game logic. Replace the opaque fishing minigame with two timed target stops followed by clearly instructed tap/release reeling. A first-time player must be able to catch a common fish reliably, with deterministic reducer tests.
+  note: >-
+    Silas, 2026-10-23 PT: remove ruler name, honorific and portrait selection.
 
-    Built a new one-screen console flow with map, lake, inline opening, royal briefings, catch reveal, shop, records and saves. Removed ruler name/honorific/photo pickers, hid the unseen ruler sprite, replaced the old repeated timing/tension encounters with a two-stop cast and forgiving tap/slack reel reducer, and added deterministic catch tests. App branch worker/ruler-hooked-t044-console-20261023; CI pending.
-
-    Silas revised the original ruler-cosmetic-removal request on 2026-10-23 PT: preserve ruler name, honorific and avatar selection, but integrate all three into an illustrated full-stage in-game coronation. The ruler is the unseen player point-of-view thereafter and must not appear in world, fishing, map, quest, catch or chronicle art. Updated kind_robots PR #4060 with a portrait carousel, local portrait upload, in-game name/title inscriptions, non-scrolling console route, ruler-free compositor and chronicle, and mandatory POV contract tests. CI running; art prompt pipeline must honor opening-only portraits too.
-
-    Merged silasfelinus/kind_robots#4060 to main at commit 7cb8b695ad3dc4cb4884f21e747ae4d934f7208c after all 14 GitHub Actions workflows completed successfully (TypeScript, full contract suite, layout, icon audit, formatting, Ruler Hooked game tests). Under Silas's revised direction, ruler name, honorific and portrait selection now belong to an illustrated, in-game coronation with large preset previews and optional custom image. The world, fishing, briefings and chronicles never render the player's face; only the opening does. Separated scene screens, one initial fishing spot, and easier two-stop plus tap/pause fishing are merged. Canonical first-person prompt instructions and opening-only portrait generation also merged via silasfelinus/conductor#6550. Production self-hosted deploy and rendered tablet/mobile visual acceptance remain unverified and are not claimed done.
+    Full history: projects/ruler-hooked/HISTORY.md#t-044
   updated: '2026-10-23T21:32:11.713Z'
   claimed_by: 2026-10-23T080000Z-ruler-hooked-t044-c6p4
   claimed_at: '2026-10-23T08:00:00Z'
@@ -959,15 +955,9 @@ tasks:
   stakes: reversible
   passes: 0
   note: >-
-    Silas, 2026-10-27 PT: "Anything that is in playbook forge and has quests unwritten or art prompts unwritten should be upgraded. (Memory dungeon will take the longest and should be last). Space couch has a lot of fresh writing still in need and still looking to capture that right blend of space comedy and satire. All art prompts should be written for the appropriate engine, no metaphors for krea2." Shared bar: kind_robots PR #4308 (verifyPlaybookArtPrompts, artPromptsComplete). Forge 2026-10-27: 87 unpainted beats have no prompt; plan gaps encounters 25/40, quests 3/6. Advances t-045 without closing it.
+    Silas, 2026-10-27 PT: "Anything that is in playbook forge and has quests unwritten or art prompts unwritten should be upgraded.
 
-    DONE 2026-10-27 PT: kind_robots #4311 (515d4a6, prompts), #4319 (07ed0ed, 15 encounters)
-    and #4324 (27f4dbb, 3 quest arcs), each merged with all checks green. Prompts are
-    114/114 with artPromptsComplete on, and one CAST_LOOK per character. Encounters went
-    from 25 to 49 (plan 40): faction incidents with follow-ups. Quests went from 3 to 6
-    (plan 6): Millrace Weir, Reed Shallows and Castle Moat open and close fishing species
-    through the new FishUnlock.closes. Species went from 15 to 18. Latent: arc.advance sets
-    the step on every active arc; harmless while at most one arc is pending. Advances t-045.
+    Full history: projects/ruler-hooked/HISTORY.md#t-052
   updated: '2026-10-27T19:27:55Z'
   claimed_by: 2026-10-27T00:00:00Z-rulerhooked
   claimed_at: '2026-10-27T18:59:13Z'

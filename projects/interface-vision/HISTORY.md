@@ -1219,3 +1219,17 @@ Scoped tablet navigation audit repair implemented on worker/interface-vision-t14
 
 Merged Kind Robots PR 3544 as e52b63312166375ec94309cf0afe12eca8cb233e after all 29 checks completed successfully on cf6dc18f038d1f55d36eb4242262f2e609711f20. Six geometry regression tests and six live tablet route/viewports passed; Tablet Navigation Audit run 38177070466 verified the approved adaptive menu widths. The fixture preserves bounds, anchoring, row density and genuine failure checks. No product UI or deployment changed. Conductor PR 5997 merged after all 23 checks passed, recording one quality retry and kaizen follow-up t-142 for failure screenshots. Broader responsive broken-art findings remain outside this focused audit repair.
 <!-- note:end t-141 -->
+
+## t-150 — Let logged-out visitors rate public games
+
+<!-- note:begin t-150 -->
+From Silas's 2026-10-26 PT fresh-visitor audit: no game on kindrobots.org has a single rating, partly because the arcade review form (components/arcade/arcade-reviews.vue) and the reaction form only accept signed-in users, and almost every visitor is anonymous. Add a guest star rating (optional short comment) for public games with abuse damping (per-browser and per-day rate limits, length caps, server-side moderation hold for comments, no IP stored in plain text), and show the share/give support card after a rating is posted. Keep signed-in reviews unchanged. Screenshot 390/768/1440 before handoff.
+
+Merged kind_robots#4238 (ffec7e1): guest star ratings via ArcadeGuestRating, hashed
+browser token, burst+daily limits, held notes. Not done: 390/768/1440 screenshots and a
+moderation UI to release held notes.
+
+Reconciled 2026-10-28: the moderation UI shipped in kind_robots#4358
+(pages/admin/guest-ratings.vue with /api/admin/guest-ratings release/dismiss).
+Only the 390/768/1440 screenshots remain unverified.
+<!-- note:end t-150 -->

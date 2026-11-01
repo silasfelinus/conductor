@@ -93,62 +93,20 @@ tasks:
     updated: '2026-10-25T21:20:00Z'
     passes: 0
     stakes: reversible
-    note: |-
-      Include original visual title screen, avatar/power selection, class/NPC conversation, real 1/2/3-person simulation board, unique location card, debrief, save and seeded tests; no placeholder web dashboard. Project registration with matching conductorSlug via canonical Kind Robots API/projection.
+    note: >-
+      Include original visual title screen, avatar/power selection, class/NPC conversation, real 1/2/3-person simulation board, unique location card, debrief, save and seeded tests; no placeholder web dashboard.
 
-      Implemented complete seven-day Academy vertical slice and Play route on worker/comet-city-academy-t001-20261025. Single-screen illustrated original title, powers, 1-3 volunteer simulator, incident debrief, school choices, earned prom demo ending, Pinia autosave and seeded test. Pending code PR CI; art is an original illustrated SVG panorama, not yet painted Arthemy delivery.
-
-      DONE 2026-10-25 PT. kind_robots #4183 squash merged as 3629b57e3c3f1694c3f9886acf9a9342b5176807 after all 23 checks completed successfully, including typecheck, navigation/layout, CSS formatting, four contract shards and production image build. Play route /play/comet-city-academy includes an illustrated single-screen original stage, six powers, seven-day first-week simulation with 1-3-person team dispatch, campus encounter, saved run and Comet Ball preview finale. Art is static illustrated vector stage (not completed painted ArtJobs). Companion game #4185 adds the two requested main dashboard cards. Full term, painted scene art, deep QA and final design acceptance remain separate roadmap tasks. Merge is not proof of self-hosted production deployment.
+      Full history: projects/comet-city-academy/HISTORY.md#t-001
   - id: t-012
     milestone: m2
     title: "Promote the seven-day demo into Capes & Tassels name and genuine day/night map slice"
     status: done
     passes: 0
     stakes: reversible
-    note: |-
-      Update Play route visible title, main dashboard highlight and project presentation, retaining comet-city-academy route, conductorSlug and old save. Replace first-week same-loop design with an explicit first 7 of 30 days, two mutually consistent campus/town maps using the exact same node IDs: town edge northwest on campus map, campus southeast on city map. Add real daytime location draws and nighttime patrol/dispatch slots, heroic/villain/rogue plus shared missions, 1-3 follower staffing, and save migration. This is the highest-priority next reversible playable slice, not a rewrite of t-001 or a release approval.
+    note: >-
+      Update Play route visible title, main dashboard highlight and project presentation, retaining comet-city-academy route, conductorSlug and old save.
 
-      Submitted save-compatible in-game display-brand update with Play title/menu, main home highlighted game cards, and tests. For Capes & Tassels this is only the title and week-one simulation clarification part of the larger map/day-night t-012; subsequent gameplay work remains open.
-
-      Merged kind_robots #4188 as 0f9c4843 after all 22 checks green. Capes & Tassels: Prom of Doom now appears as frontend/Play/home title and the seven-day prototype ends in a clearly identified prom-night training simulation. Existing saves and URLs preserved. This is PARTIAL t-012 only: implement two geographically matched maps, true daytime town/campus encounters, nighttime heroic/villain/rogue/shared patrols, explicit first seven of thirty days, save migration and Project database title verification. Do not treat t-012 or the thirty-day game as done.
-
-      Implemented a shared campus/town geographic graph with seven illustrated-map location selectors and reciprocal roads, deterministic non-repeating first-week scenes, map-first day exploration then night training or real patrols with hero/villain/rogue/shared cases. Preserved v1 mid-run saves by keeping their original dispatch-first transitions. Added per-run visit tracking, store autosave and seeded graph/save/playthrough tests. This is a partial t-012 vertical slice; full 30-day world, 24 location floor, commissioned painted maps, robust night case content and project metadata verification remain open.
-
-      MERGED partial map/day-night slice: Kind Robots PR #4213 squash-merged as debe1eec7226d8fec3cb27e3dfecd9c5c392cd40, all 21 latest checks successful including TypeScript, Playbook Slices Gameplay, Changed-file Prettier and four contract shards plus verifier. One canonical location graph powers Campus and Town projections, seven nonrepeating first-week encounter sites, map-first daylight encounter/night hero-villain-rogue-shared 1-3 follower dispatch/debrief, day 1-2 training and later authored real-night briefs plus 24 distinct outcomes. Old v1 saves keep original dispatch-first phase and encounter order. CI covered map coordinates, reciprocal roads, first-week action loops, old save restoration, crossover arrivals and night cases. No schema changes or delivered ArtJobs. t-012 remains open for 24+ sites, 30-day content and map depth, painted art, full visual width checks and Project metadata validation. Self-hosted production deployment not verified; no Vercel preview for this branch.
-
-      Added 24 connected canonical Comet City landmarks (12 campus and 12 civic), two accessible district map projections, 17 new distinct location stories with 34 authored choice consequences, persistent city/academy standings which change real night patrol outcomes, and saved-game preservation. Added geographic graph connectivity, new branch and trust effectiveness tests. t-012 remains partial: full thirty-day calendar, illustrated maps, seven-plus day content, locale-specific art and visual QA are not complete.
-
-      MERGED partial map-world expansion: Kind Robots PR #4221 squash-merged to main as 980338027382ed14c74011d0ab164cc5f4f3d933 after all 21 latest check runs succeeded, including TypeScript, seeded Playbook Slices Gameplay, formatting, four contract shards and aggregate verifier. Comet City now has 24 connected reusable location IDs (12 campus/12 city), 17 newly authored neighborhood encounters with 34 choice outcomes, accessible campus/town map pins and story cards, and saved Academy/City Standing effects on real patrol grades. All original seven landmark IDs and original v1 save/simulation flow remain intact. No purchased art jobs, database migration or release. Task remains ready for thirty-day calendar, full relationship/identity evolution, painted maps, 390/768/1440 QA, map art provenance and projection metadata checks. Vercel branch preview was unavailable, so physical-device visual review was not verified.
-
-      Implemented the opening-screen redesign, persistent Yearbook/earned-persona replays and Prom of Doom primary naming on an app PR. Thirty-day completion, painted replacement art and full map/relationship scope remain unfinished; this is a partial t-012 slice.
-
-      Merged Kind Robots #4273 as e9e2fd4d5ed44a281390ef81cc0980f8bfb5e99e after 19/19 completed successful checks. Prom of Doom now leads the Play and home branding with Capes & Tassels as the series. The first screen is a cinematic four-control title; origin and affinity use separate illustrated pickers, followed by six-stat identity card, selectable earned replay forms, three opening promises and tutorial. Yearbook records prior forms/endings and offers replay; 15 uniquely authored promise episodes across five weeks preserve and validate choices, branch callbacks affect day-30 support/epilogues, and city map exposes vow progress. Kind Robots retained existing URL and save migrations. Conductor #6715 merged 24 new Krea2 art prompts; #6717 merged new branding and identity canon. ART IS NOT DELIVERED: renders, exports, URL coverage for the other 46 character triptychs, 390/768/1440 visual QA and the full thirty-day polish remain open, so t-012 returns to ready for further work rather than being marked done.
-
-      Night patrol draft on Kind Robots branch: new campaigns start alone, nights 1-2 are internal monologues and self-led calls; night three unlocks a chosen friend and split-vs-concentrate two-catastrophe choice. Twelve mission refusals authored; legacy saved team boards retained. CI pending.
-
-      2026-10-28 PT: Merged verified Kind Robots #4404 as d4e4eb9f4a2303719fb3fe78cf56477df62a881a (17/17 GitHub workflows passed). Merged companion Conductor canon #6776 as 3a8f62fd5d9e75f76c7f821e9346b593ed0255a6 (6/6 latest checks passed). New 30-day runs have rookie solo monologues nights 1 and 2, third-night simultaneous rescues and friend phone call, real split/concentrate outcome choice, progressively larger night-call board, twelve authored refusal outcomes, and stable existing save support. Native 48 people now have one permanent hero name and three contextual splash images each, not 144 named personas; legacy quest illustration prompts and role names updated. PRs do not finish 36 mission cases, district patrol decks, complete follower story arcs, final painted ArtJobs, responsive visual QA or final human acceptance. Leave t-012 ready for the remaining full-game development; #4402 and #4403 are durable follow-up specs.
-
-      Prepared Kind Robots district night patrol slice: 4 map-anchored regions, 12 authored scenarios, 24 outcome paths, earned investigation/ally secret routes, independent protagonist patrol choice, overnight consequences persisted in save and carried into next morning. PR and CI follow.
-
-      Merged Kind Robots PR #4417 as b19ab0c774eaa6e26bbdba2fc61d96b868aac2d8 after 17/17 latest-head workflows passed, including seeded Academy gameplay, TypeScript, formatting, and all contract shards. Delivered 4 anchored night patrol regions, 12 authored district incidents, 24 consequence routes and 4 earned secret routes, a player-led patrol-vs-emergency alternative, named report feedback, persistent patrol history and next-day acknowledgments. Existing full-run save migration and nights 1-3 remained intact. This is an implemented incremental feature, NOT final completion: 36 named mission families, full social callbacks, original rendered patrol art and viewport visual QA remain open under #4402, #4403 and master #4181. Re-arm the broader t-012 roadmap as ready, and do not claim production deployment.
-
-      Wrote 12 expanded original Comet City night emergencies with 5 distinct results each (four grades plus refusal), giving new campaigns 24 total case families; old six- and twelve-case saves retain their decks. Added rescue-vs-investigate player tactic with odds/evidence consequences, four named ally-combination solutions, twelve bespoke follower reactions, 12 new illustration prompts (unrendered), and evidence/matching-power secret resolutions. Tests and PR pending.
-
-      2026-10-29 PT: Merged verified Kind Robots PR #4444 as a8abf2558c6530a6d400db8b5b0cf8e845db8f6e after 17/17 latest-head workflows passed. Fresh 30-day runs have 24 total unique night mission families with twelve new bespoke briefing, refusal, honors, pass, mixed and failure narratives; old 6/12-case saves retain original decks. Player-led new calls choose rescue versus evidence with distinct outcome/odds and saved clues, later power-match secret resolutions, four bespoke team routes, twelve distinct follower reactions, and twelve illustration prompts. No actual art was rendered or verified. Re-arm broader t-012 because twelve more mission families, fuller story callbacks, colorful character redesign, full art delivery, responsive visual QA and final human gate remain open.
-
-      Completed scoped Kind Robots branch worker/comet-t012-last12-e47d: twelve more authored city-scale missions including unique refusals, four grades, tactical decisions, district-secret power results, distinct school-morning callbacks, six team routes and twelve companion reactions. New 36-case saved deck version 4; all older 6/12/24-card versions stable. Twelve art prompts registered, no actual rendering. CI and PR pending.
-
-      Merged Kind Robots PR #4448 as 02ef14da0bdfb1c43612622385f81a6a4eabba91 after all 14/14 latest-head workflows passed (seeded game, TypeScript, Prettier, full contracts). Authored final twelve major missions with 5 distinct result paths per case (four grades plus refusal), rescue versus investigation, matching-power secrets, 6 new ally-duo solutions, 12 character reactions and 12 differentiated school-morning callbacks. Fresh runs now draw 36 authored main night missions by day 24 of the 30-day story. Old saves retain 6, 12 or 24 cases via unchanged deck versioning. Prompts for twelve new illustrations registered only; artwork not queued, rendered or delivered. Keep broad t-012 ready for 48-identity weirdness reconciliation including Granny Mayhem and Dr. Frog, actual art pipeline, visual cross-device QA, extended adversarial full-run testing and human acceptance. Merge does not confirm deployment.
-
-      Authored a 48-roster canon reconciliation in Kind Robots: Dr. Lionel Marsh (Dr. Frog, human leap gear then villain serum transformation) replaces tech-genius, Mavis Mayhew (Granny Mayhem) replaces magic-earth, and Zuzu, Koala Assassin enters alien-discipline rather than appearing twice as a roster guest. Stable signature IDs and prior derived combat fields preserved for old run restoration; updated 3 full identities, 3 four-act dramas, 3 detailed personal quest branches, 9 story illustration briefs, signature powers, cast portraits, and 3 villain minion types with unique commanders. Connected Every Villain Tactics appearance adjusted without changing stored unit IDs. CI and PR pending; artwork not yet rendered.
-
-      2026-10-29 PT: Merged Kind Robots PR #4456 with full 15/15 latest-head workflows green as 3061b65be6a561efd18f431035d26d04cc543405. Roster remains exactly 48 core people with stable signature IDs. Replaced tech-genius with human-inventor-then-mutated villain Dr. Frog (Lionel Marsh), magic-earth with rune-knitting Granny Mayhem (Mavis Mayhew), and alien-discipline with Zuzu Koala Assassin (previously only a visitor). All three retain original combat-field mappings to restore old saved campaigns. Updated three identity/role dossiers, three four-act stories, three questlines, nine quest-art briefs, identity splash prompts, cast looks, signature powers, three unique villain henchmen with named captains, and connected tactics text. Legacy Zuzu arrival event remains addressable but no duplicate roster entry. Old saved story labels on those signatures now follow the new canon; future content-version provenance would improve historical narrative retention. No artworks rendered or delivered and no live deployment verified. Broad t-012 remains ready for actual art jobs, 48 villain levels and lieutenants, responsive UI / adversarial campaign QA, and a human acceptance gate.
-
-      Post-submission correctness repair: updated identity portrait ledger status to submitted after confirming 50 unique real ArtJob IDs 50372-50421. Fixed dry-run pytest contract to accept both approved pre-submission and queued post-submission states, ensure recorded job IDs are distinct positive integers, and reject pretend ArtImage delivery. No new ArtJobs requested and no existing jobs repeated. CI pending.
-
-      Merged Conductor PR #6796 as 26feff7da6453f057a3d25c7e565731e4d7c45d0 after 4/4 green workflows. The human-approved 50-row Krea2 portrait ledger has 50 real distinct ArtJob IDs 50372-50421, so marked it submitted instead of awaiting-submission. Updated pytest to run the real enqueue dry run safely at any lifecycle stage: zero pending jobs once queued, unique positive IDs, and future ArtImage status records. This increment creates no new jobs. Broader t-012 remains incomplete: poll render DONE/FAILED, deliver WebP exports into Kind Robots manifest, then verify actual character art, 48 villain levels, campaign QA and final human acceptance.
-
-      Triage 2026-10-30: the original slice (Capes & Tassels display brand on the same route/slug/save, explicit first 7 of 30 days, two consistent campus/town maps sharing node IDs, day location draws, night dispatch with hero/villain/rogue/shared missions and 1-3 follower staffing, save migration) is on main via #4188/#4273 and #4213/#4221. Later appended scope (portrait polling/export, 48 villain levels, campaign QA, human acceptance) is owned by t-007/t-017, every-villain-tactics, t-015 and t-011. Closing unblocks t-013.
+      Full history: projects/comet-city-academy/HISTORY.md#t-012
     updated: '2026-10-30T10:45:58+00:00'
   - id: t-013
     milestone: m2
@@ -159,28 +117,9 @@ tasks:
     passes: 0
     stakes: reversible
     note: >-
-      Six individual followers, three adult romanceable NPCs, one sidekick
-      who can also be a romance, visible mutual affinity and compatibility,
-      an explicitly negotiated non-instant triad preview, consequential
-      partner/sidekick assignment, injured state through next day with an
-      alternate infirmary action. Protect consent and staff-student boundaries.
+      Six individual followers, three adult romanceable NPCs, one sidekick who can also be a romance, visible mutual affinity and compatibility, an explicitly negotiated non-instant triad preview, consequential partner/sidekick assignment, injured state through next day with an alterna
 
-      MERGED Kind Robots PR #4489 as b93d33b2f2ef8685fc1221569e2102607deea562 after all 22
-      check runs passed (TypeScript, Seeded game-playthrough, four Contract shards, Changed-
-      file Prettier). Week-one slice now fully playable from an untouched seed: all six adult
-      classmates reachable in the daylight relationships panel from day 2 (previously night-
-      roster-only, empty on days 2-3); injured followers stay benched through the next day and
-      the day action can either Treat them (rejoin tonight) or Sit with them (trust +1, still
-      benched), with six distinct bedside scenes; visible mutual affinity (trust 0-5 plus each
-      romanceable adult's own closed/wary/kindred/curious read from form, vow, power and
-      danger; wary needs one more conversation before a date); consequential partner/sidekick
-      bonuses retained; and The Listening Accord (Imani + Nix), a five-beat explicitly
-      negotiated, non-instant triad where each adult consents separately and either can pause,
-      decline or withdraw without penalty. Seeded trace: romance day 5, first accord beat day
-      7. Staff-student boundary: faculty never romanceable. Tests: verifyCometCityAcademy
-      covers the week-one trace, wary pacing, visit vs treat, consent/injury/danger/trust
-      gating, pause/resume/decline/release, finale epilogue and forged-save replay rejection;
-      old saves still load.
+      Full history: projects/comet-city-academy/HISTORY.md#t-013
     claimed_by: 2026-10-30T11:38:40Z-prom-t013-a7k2
     claimed_at: '2026-10-30T11:37:23Z'
     updated: '2026-10-30T12:08:33Z'
@@ -194,28 +133,9 @@ tasks:
     passes: 0
     stakes: reversible
     note: >-
-      Seed-select two different villains with separate methods/clues and
-      actual scene effects in demo; implement navigable Hero, Followers,
-      Scrapbook/yearbook, Settings/save/load/card backs and full illustrated
-      scene views. Record villain appearances, cinematic choices, romance,
-      affinity and alternate early endings. No decorative dead tabs.
+      Seed-select two different villains with separate methods/clues and actual scene effects in demo; implement navigable Hero, Followers, Scrapbook/yearbook, Settings/save/load/card backs and full illustrated scene views.
 
-      2026-10-30 (kind_robots#4504, merged 64688e7d): Play/Hero/Crew/Case
-      File/Scrapbook/Settings console tabs read the real save. Hero: identity art, aliases
-      with locked unearned forms, power and signature, vow, 6 stats, standings, bonds, record.
-      Crew: 12 people, face-down until met, mood portraits (students/<id>-<mood>), trust,
-      injury and bench day, romance/partner/sidekick/triad, betrayal. Case File: spoiler-safe
-      seeded mastermind file (omens, interference, accomplices as met, antagonist from day
-      15). Scrapbook: earned moments with shipped art, cross-term mastermind dossiers, 12
-      ending plates. Settings: text speed, art toggle, 4 card backs, PROM1 save-code
-      export/import through restoreAcademy, confirmed reset (NEW TERM now asks first). Villain
-      variability: all 8 masterminds have authored day 2-7 omens and a days 5-7 interference
-      that jams one power field (-1 in dispatchModifier); one accusation on days 5-14 breaks
-      it (+2 influence) or costs +1 threat. Validated save field suspect. Fixed AcademyOpening
-      TDZ crash that blanked New Game. verifyCometConsoleScreens: two seeds with different
-      masterminds from New Game to day 15. Rendered at 390/768/1440 in a Vite harness with
-      Playwright; no shell scroll. Limits: one autosave slot plus a save code (no multiple
-      named slots); no sound/contrast settings.
+      Full history: projects/comet-city-academy/HISTORY.md#t-014
     claimed_by: 2026-10-30T12:46:10Z-prom-console-q7m3
     claimed_at: '2026-10-30T12:45:26Z'
     updated: '2026-10-30T13:33:01Z'
@@ -229,30 +149,9 @@ tasks:
     passes: 0
     stakes: reversible
     note: >-
-      Seeded tests for day-night transitions, both aligned map projections,
-      1-3 hero/evil/rogue assignments, once-only cards, weekly gated events,
-      injured-follower exclusion and infirmary exception, relationship
-      consent/triad conditions, autosave/load/migration and different villains.
-      Full from-start 7-day action trace plus 390/768/1440 screenshot
-      verification: main image and primary action visible; no shell scroll.
+      Seeded tests for day-night transitions, both aligned map projections, 1-3 hero/evil/rogue assignments, once-only cards, weekly gated events, injured-follower exclusion and infirmary exception, relationship consent/triad conditions, autosave/load/migration and different villains.
 
-      2026-10-30: promoted to ready because its dependency t-014 closed (kind_robots#4504).
-
-      2026-10-30 (kind_robots#4521, merged 32f2c6bd; report conductor#6852): played the real
-      page by clicking only at 390/768/1440 from New Game through day 8. Covered opening,
-      night-three split, district patrols, injury and infirmary visit, a full consent-first
-      romance (listen/help/invite/date), all six console tabs top and bottom, save code
-      export, NEW TERM, title import, reload autosave, and 80-press keyboard Tab. Audited
-      errors, overflow, broken images, clipped text and unreachable buttons; zero issues after
-      six fixes: stray > and empty after-action box; 30 day lights overflowing the 390 px
-      header; crushed phone roster posters; relationship panel persisting into the next day;
-      console tabs opening mid-scroll, with the scene now a banner on narrow screens while
-      reading; no way to load a save code after NEW TERM (title Settings now imports).
-      verifyCometPlaytestReadiness (in test:comet-city-academy) traces 4 seeds x 7 days
-      map>scene>night>debrief with autosave and save-code deep-equality and pins each fix.
-      PLAYTEST-READINESS.md has 12 screenshots, known gaps (days 9-30 not click-tested at
-      every width, placeholder art, tactical fights not replayed) and a first-time tester
-      script. Needs Silas: Imani Calder name collision, and approval for outside testers.
+      Full history: projects/comet-city-academy/HISTORY.md#t-015
     updated: '2026-10-30T21:29:41Z'
     claimed_by: 2026-10-30T14:03:40Z-prom-playtest-k4v9
     claimed_at: '2026-10-30T14:02:33Z'
@@ -315,7 +214,7 @@ tasks:
     updated: '2026-10-30T12:36:06Z'
     passes: 0
     stakes: reversible
-    note: |-
+    note: >-
       Detail a thirty-day five-band story, six power families with week-specific unique approaches, sixteen recruits and eight romanceable adults across body and gender diversity, two mutually negotiated throuple arcs, twenty-four geographically consistent campus and city sites, eight villains and twelve endings. Reconcile the six existing prototype student IDs.
 
       Completed a scoped first creative writing/art round in conductor PR #6648, merged at 9eba77b54023a31279b4b0d931add1fd9ac17bd1. Authored three distinct thirty-day campaign encounters with nine methods, eighteen materially different success/failure consequences, and three candidate ending epilogues. The paired auto_submit Krea 2 ledger contains 21 literal illustration requests and a static source/ledger parity test. No runtime integration or rendered images yet; art generation must submit and assign ArtJob ids before claiming queue success. The full cast/power/map/finale bible is still unfinished, so t-002 returns ready rather than done.
@@ -324,19 +223,9 @@ tasks:
 
       Authored 48 distinct student, hero and villain identity triads in the Kind Robots runtime with protagonist, antagonist and partner hooks; integrated first-week identity preview and simulated foreshadowing. Added canonical 30-day six-track identity design, guaranteed NPC heel turn, accomplices and final-gate roadmap tasks. Full quest engine, 288 authored tracks and artwork remain unfinished.
 
-      Merged Conductor PR #6668 (68319fa) and Kind Robots PR #4204 (994cb888), all 21 latest Kind Robots check runs passed. Authored 48 distinct three-form identity entries with protag/antag/partner hooks, console previews, safe first-week nonbinding finale projection, and the IDENTITY-SYSTEM.md canon. The full cast, map, 30-day engine, 288 unique viewpoint/form quest tracks, guaranteed betrayal, accomplices, ArtJobs and adversarial QA remain open; t-002 returns ready for continued writing. This is a scoped first development slice, not completion of the whole cast bible.
+      Merged Conductor PR #6668 (68319fa) and Kind Robots PR #4204 (994cb888), all 21 latest Kind Robots check runs passed. Authored 48 distinct three-form identity entries with protag/antag/partner hooks, console previews, safe first-week nonbinding finale projection, and the IDENTITY-SYSTEM.md canon. [...]
 
-      Authored 48 civilian backstories and two crossover identities with playable seeded visitor decisions and hero/villain/relationship story previews in a focused Kind Robots PR. Full 288 tracks and thirty-day relationship mechanics remain open and will return to ready after review.
-
-      MERGED partial character-bible implementation: Kind Robots PR #4209 (869ff965cbaa04ecab1b3a38b82f50ada2b25ee2) passed all 16 completed workflows; Conductor canon PR #6674 (b70499a04a6d6c0b0f529ebf013050051b4b26f5) passed all 4. Authored 48 original civilian names/backstories plus original Zuzu and This Means Warp navigator Tess Helio crossovers, with distinct aliases, independent sidekick/partner/romance story previews, seeded first-week arrival choices and conditional finale callbacks. Old signature/save IDs retained. Outstanding t-002: complete full thirty-day cast, map, villains, and other authored bible material. t-016/017/018 own actual evolving protagonist/NPC graphs, mandatory foreshadowed betrayal, accomplices, rendered art, and adversarial coverage. Neither production deployment nor real painted guest art was verified.
-
-      Wrote 48 character-local evidence, witness, betrayal, relationship and art outcome records; integrated four individually grounded playable days and distinct saved hero/villain consequences into the Kind Robots app, with 576 branch-choice test assertions. Added 144 literal Krea2 art outcome requests and Conductor 48-person canon. Awaiting app and Conductor PR CI and review; not all 288 six-track adventures or finished paintings.
-
-      Delivered a scoped 48-identity personal quest expansion. Kind Robots PR #4284 merged as b1b176d9d6341e313588739dfe95432630327958 after 13/13 completed green workflows on latest head, including TypeScript, Seeded Playbook Gameplay, Changed-file Prettier and four Contract shards. Authored distinct 48 personal mysteries, named witnesses, betrayals and consent boundaries with four additional playable chapters on days 6, 9, 19 and 22, preserving existing serial chapters on 4, 12, 21 and 27. All 48 players can resolve 3 choices per chapter, saved with patrol and finale effects. Conductor PR #6722 merged as 25db52ee8a15, covering the 48-person canon and 144 literal Krea2 illustration requests. Requests are not rendered/exported images; no verified ArtJob IDs or live deployment. Further full 288 identity tracks, partner/romance agency and cross-follower relationships, artwork generation/QA and final 30-day playtests remain. Return to ready, not done or human gate.
-
-      Completed a focused character-bible authoring slice: 48 separately named, one-hit villain henchman breeds, each with a named face, silhouette, telegraphed tactic, counter and villain-specific motive. Companion runtime JSON/typed resolver and parity test will be reviewed in Kind Robots. Remaining thirty-day bible work, live enemies, actual SPECIES Facets, ArtJobs and 30-day story integration are not finished.
-
-      MERGED focused villain-henchman bible slice: Conductor PR #6791 as 38da5c2 (all 6 head workflows successful) and Kind Robots PR #4452 as 8e2a21a (all 14 head workflows successful). Every one of 48 existing stable villain signatures now has one original one-hit SPECIES design, named captain, visual, telegraphed battlefield move, counter and loyalty hook. Added typed henchmanForVillain lookup, roster parity test, and Playbook Slices CI. Story/design briefs cross-link the full bestiary and tactical integration; separate t-024 waits on t-003 for playable Prom deployment. Provisional Granny Mayhem, Dr. Frog and Zuzu ideas are documented but not wrongly assigned fake signature IDs before t-021 roster reconciliation. Full t-002 thirty-day cast/map/ finale bible, actual SPECIES database rows, ArtJobs, live minion AI, encounter scripts and production visual QA still remain; return READY.
+      [Earlier history (4,392 chars) archived verbatim to projects/comet-city-academy/T002-HISTORY.md -- read it there only when you need a specific past cycle. Append new cycles below, one short paragraph each.]
 
       Submitted scoped lore and product increment: 48 original power-origin start level blueprints, 48 villain-specific lair phases with tactical secrets, 48 powered independent number-two lieutenant bosses with counters and motives. Kind Robots JSON and typed lookup are backed by a full 48-signature parity test and an interactive catalogue inside the existing internal tactical hero dossier. Conductor design briefs and Prom/tactical roadmaps define the 96 playable stage implementation + 48 lieutenant AI follow-ons. This is an authored/inspectable catalogue, not 96 implemented battles or delivered original art. The complete 30-day bible task remains open.
 
@@ -373,54 +262,10 @@ tasks:
     depends_on: t-001
     passes: 0
     stakes: reversible
-    note: |-
-      Implement seeded day/night with scripted anchors and weekly location draws, one-to-three hero/villain/rogue/shared volunteer assignments, changing real versus simulated stakes, power solutions, romance consent and compatibility, follower injuries and infirmary recovery, timed villains and versioned saves including prior first-week conversion. No LLM at runtime.
+    note: >-
+      Implement seeded day/night with scripted anchors and weekly location draws, one-to-three hero/villain/rogue/shared volunteer assignments, changing real versus simulated stakes, power solutions, romance consent and compatibility, follower injuries and infirmary recovery, timed vil
 
-      First partial day-1-to-day-30 playable campaign engine implemented on an isolated Kind Robots branch: 30 authored daily anchors; four seeded mastermind strategies; full 30-day map/day-night/dispatch debrief loop; seven-day legacy saves retained; day-29 Guest List and four-way actual Prom of Doom catastrophe on day 30, not a rehearsal; wound state, assignment exclusions and daytime infirmary action; deterministic multi-seed run tests and migration assertions. NOT full roadmap t-003: full relationship consent, 8 mastermind schemes, 36 distinct patrols, branch art and adversarial QA still needed. Await PR CI and merge.
-
-      MERGED scoped 30-day campaign foundation via Kind Robots PR #4226, squash SHA 0703c336421871365c779cec716f53825fb3b5c5, after 21/21 latest CI checks green including TypeScript, seeded full-day-one-through-real-day-thirty playthrough, full contract shards, formatting and lint ratchet. New runs play thirty-day daytime map, authored daily anchors, night patrol, day-29 Guest List, genuine fourth-dance day-30 catastrophe, four tactical ending choices with prior guest support, four deterministic mastermind variations, injuries and daytime infirmary treatment. Existing seven-day saves and route preserved. NO claim of 36 unique patrols, eight mastermind schemes, complete romance/sidekick relationship engine, guaranteed foreshadowed NPC heel turn/accomplices, exact painted art runtime delivery, 390/768/1440 visual checks, self-hosted production deploy or fully complete thirty-day content. Task stays ready for these remaining requirements; t-016 remains blocked until t-003 is fully completed. Master issue #4181 tracks gaps.
-
-      Scoped next 30-day engine slice for review: eight physically differentiated seed-selected masterminds, 24 independent accomplices with motives and sabotage actions, seeded six-candidate day-8/day-15 warning and guaranteed day-20 heel turn, optional day-24 accountable reunion or continued separation, 3 accomplice reveal/exposure events on days 11/17/26 with night-team sabotage and finale consequence effects, saved-game compatibility and adversarial seeded tests. Eight villains and betrayal mechanics do not yet mean all 288 character quest tracks, romance and final QA are complete. PR and CI pending.
-
-      MERGED Kind Robots PR #4242 to main as 50900add5454e14d371cbe8969e037c4c77af780 after all 21 latest check runs passed including TypeScript, seeded Prom gameplay, Prettier, lint ratchet, four contract shards, aggregate verifier and architecture. Eight physically differentiated seed-selected masterminds (4 additional), 24 individually motivated named accomplices with unique sabotage, day-8/15 foreshadowing, guaranteed day-20 classmate heel turn among six seeds, day-24 voluntary supervised reconciliation or lasting separation, days 11/17/26 evidence/exposure leads, mechanically different dispatch and day-30 outcomes, UI plot case file and save-state validation. Old seven-day route and saved original mastermind IDs preserved. Task remains PARTIAL and ready for 36+ unique mission cases, fully authored relationship/romance/identity branches, additional companions, adaptive villain plans, complete art provenance, device QA and human gate prerequisites. Conductor art PR #6697 with four new Krea2 portraits remains open, blocked by unrelated Memory Dungeon art-queue regression test in Worker PR CI; no new ArtJobs counted.
-
-      Corrected scope: eight mastermind plans are scenario frameworks, NEVER an eight-villain character cap. New thirty-day runs seed a stable distinct antagonist chosen from the canonical 48 origin/affinity identities, excluding the protagonist. Each preserves realName, student/hero/villain personas, own villain skills and authored antagonist quest. A specific villain's stat strengths affect late-night scores and earned day-30 resolution; day-15 dossier, later story beats and final epilogues use that character's existing authored identity hooks. Old thirty-day saves without an opponentSignature remain unchanged; old seven-day saves also unchanged. Added 48x47 cross-roster adversarial tests, persisted-state validation and UI dossier. PR and CI pending. Remaining 288 unique authored viewpoint/form tracks and visual asset production are not completed by this integration.
-
-      MERGED Kind Robots PR #4245 as ef5cda381a58153876f0f4a0574ff5079a3f023c after all 21 check runs green (TypeScript, seeded gameplay, formatting, lint and full contracts). Scope correction: 48 canonical origin/affinity people are eligible villain identities, with individual backstory, student/hero/villain persona, stats and authored antagonist quest; eight city-scale mastermind plots are orthogonal reusable conspiracy frameworks and not an eight-person villain limit. New thirty-day runs deterministically persist an opponent identity other than the protagonist, use villain-person-specific day-15 clues/dossier, late patrol counterplay from hero and villain Smarts/Control, and villain-person-specific finale/earned epilogue. Verified each of 48 people can face all 47 others across seeds and preserved old seven-day and thirty-day saves lacking opponentSignature. This is not completion of 288 unique authored six-track quests, full hero/villain player transformation, romance, 36+ distinct missions, generated/rendered villain artwork, production deploy or device QA. Task remains ready for these further requirements; final human design gate remains blocked.
-
-      Partial 30-day protagonist evolution slice. On day 16 and day 23, each of the canonical 48 selectable people can voluntarily claim their existing, identity-specific hero or villain mantle after at least two appropriate prior protective or exploitative decisions, keep training, or later change path. The choice persists in AcademyRun; day/night dispatch grading differs by hero/villain affiliation, and individual role-specific finale epilogues and graduation trust change. Tests cover 48 characters, choices, role reversal, save validation and old full-run/legacy save fallback. No automatic alignment promotion, no false romance, no ArtJobs claimed, no final gate. Existing open evolution.ts foundation PR #4210 remains separate without file overlap. Await CI and safe PR merge.
-
-      MERGED Kind Robots PR #4250 into main as bba3a29521fa0fdfdac9556f08a65fb6efe1b3f9 after all 21 latest check runs green: TypeScript, seeded Playbook Slices Gameplay, changed-file formatting, architecture and complete four-shard contract verifier. All 48 canonical origin/affinity protagonists can now VOLUNTARILY take their own authored hero/villain mantle on day 16 after at least two protective/exploitative actions; day 23 offers accountable reconsideration/reversal with independent prerequisites, or retain the current form without automatic role selection. Persona-specific role text, real day/night dispatch modifiers, graduation standing and unique identity epilogues are in runtime; anti-tamper save validation and old first-week and thirty-day run compatibility passed. Fixed infirmary exploit: a real defector cannot be returned via medical treatment. Open unmerged evolution reducer PR #4210 remains separate and must be reconciled without duplicate authority. Remaining scopes include complete six-form/viewpoint quest branches for all 48 (288 authored tracks), 36+ truly distinct patrols, partner and optional consent-based romance, follower branching, fully delivered emotional/role/injury art with ArtJob provenance, full responsive adversarial device QA, and self-hosted production deploy verification. This partial task is ready, NOT done; t-016 remains dependency-gated and human final gate is blocked.
-
-      Scoped six-adult-classmate bond gameplay with individual personal dilemmas, two-daytime-action earned trust, optional distinct partner or sidekick, three optional adult romance routes requiring successive days and explicit mutual commitment; romance and field bonds remain independent. Social scenes consume daytime location choice, avoid critical mandatory narrative days, and cannot be used with injured/defected teammates. Partner/sidekick bonuses modify real patrol outcomes and narrative, and bonds are shown in prom epilogue. Adds saved-state validation, opt-outs, boundaries, tests. No full eight romance arcs, throuple or 48-character individual quest graphs claimed. PR and full CI pending; remain partial t-003, no ArtJobs claimed.
-
-      MERGED Kind Robots PR #4253 to main as fa3ba5ea630f18624b545b7c085e010fde0cd30e after 21/21 successful latest-head checks: TypeScript, seeded full Playbook gameplay, Prettier and all four contract shards plus verifier. Added six distinct adult classmate social stories with individually authored conflicts, voluntary help and refusal boundaries; three optional paced adult romance routes (Mina, Imani, Nix), with separate invitation and later mutual choice, no instant dates or coercion; independently earned partner and sidekick bonds and respectful release; relationship time costs a daytime map lead and cannot skip mandatory story events. Actual staffed partner/sidekick bonds affect patrol grades and reports and may surface in earned day-30 endings. Save validation includes consent, days, bonds, injured/defected roster exclusion, and older full/first-week saves. The play screen social panel has map fallback on legacy/mandatory days. NO claim of complete 16 follower cast, eight substantial romance routes, affirmative triad play, 48 bespoke long-form relationship stories, 36+ varied patrols, painted emotional/injured art or production deployment. Continue task t-003, do not mark done; t-016/017 remain dependency gated and final human gate blocked.
-
-      Built scoped Kind Robots quest-call redesign: one horizontal portrait poster row per mission, odds derived from the same score function as resolution, 72 custom mission reactions across a diverse 12-person roster, 12 potential unique solo/pair mission routes, two starting friends, saved contacts and voluntary day-action recruitment at distinct city landmarks. Added seeded tests; CI and artwork production remain under review. Existing legacy first-week saves remain unrestricted.
-
-      MERGED Kind Robots #4283 as 4b40ecac4fe58c8bc3b2ab00268c905c122f0a34 after 16 successful checks: one horizontal poster row with visible mission reaction for every recruited ally, shared real success-odds math, 72 tailored reactions, 12 unique individual/pair solutions, two close-friend starts, 12 voluntary encounter recruits from academy/city/faculty/lab/dimensional backgrounds, guarded save validation and expensive opt-in emergency city backup. MERGED Conductor #6720 as f5fee458005d377990395d391e74aaaba7f4b4d7 with 36 mood-specific portrait ArtJob prompts, not rendered assets. In direct continuation, MERGED Kind Robots #4285 as d6094c802c781798ab5a358e1110d260c52aec58 after 16/16 successful checks, including seeded 48-person stories and TypeScript: 48 unique four-act stories on days 4/12/21/27, three meaningful choices per act, paired counter-origin characters, adult romance as optional invitation with right to refuse, betrayal dilemmas, hero/villain/independent outcomes and saved history affecting day-30 ending, registered outcome art keys, all 48 chapter coverage tests. MERGED Conductor #6721 as 8d2341f08c6794033a25aeeb5c2db03824fe90be, 192 Krea2 outcome production prompts, not delivered paintings. Conductor t-017/t-018 remain gated and t-003 returns to ready for 36+ distinct patrols, broader relationship routes, full cast breadth, authentic ArtJob rendering, ending graph coverage, rendered phone/tablet/desktop QA and final human gate.
-
-      Partial 30-day campaign increment in Kind Robots worker/comet-city-academy-t-003-rival-tactics-7fc2: linked recommended 48-character rivals and playable persisted tactical fights to in-story night cases; battle outcome overrides auto mission grade. Requires CI on PR; do not mark broad task done (six-stage authored campaigns, painted art and device QA remain).
-
-      PARTIAL WORK COMPLETED: Kind Robots PR #4465 squash-merged at 88abdae6341f85b7eda5ce652aa6774f1313e3c1. Embedded playable, save-backed tactical interludes for self-led day 15+ night missions; 48 reciprocal suggested rivals, player hero/villain alignment, custom villain henchmen/captains and late lieutenants, zero-to-three recruited followers, and actual tactical grades integrated into debriefs. Verified all 20 PR workflow runs completed successfully, including TypeScript, contract tests, game playthroughs, tactics and formatting. Remaining t-003 and dedicated tactics tasks: authored 48 route encounter graphs with intro/finale maps, cinematic beats, adversarial device playtests and generated art verification. Keep ready for next increment; production Unraid Force Update is external and has not been performed.
-
-      Partial Prom of Doom follow-on: 48 individually identified origin levels plus 48 villain lair battlegrounds with distinct geometry built from existing authored signature stage catalog, physical mission objective, optional secret, saved deterministic turn-three cover/elevation transformation, hidden pre-reveal rival, and evidence consequences. Kind Robots implementation branch: worker/comet-city-academy-t-003-rival-arenas-4c71. Await PR CI. This is not 96 fully bespoke authored trigger trees or completed render-art QA.
-
-      PARTIAL WORK MERGED: Kind Robots PR #4469, squash 9cda00822cb3e0018036d7646e4385ba22bb9a72, after all 17 latest-head GitHub workflows finished successfully, including strict TypeScript, Playbook Slices Gameplay, Prettier and 4/4 contract shards. Prom of Doom now has 48 power-origin and 48 villain-lair distinct deterministic traversable battlefield geometries from canonical authored level blueprints; playable story missions from day 4, masked identity before antagonist reveal at day 15, distinct rival lairs later, required physical objective capture, optional secret pickup with narrative/civic consequences, once-only mid-battle elevation/cover shift persisted with battle, and regression coverage for map validity, 96 unique layouts, safe saves, debrief provenance. Work remains on bespoke 48× rival cinematic dialogue trees, distinct lieutenant special AI/counters, stage art provenance and live responsive human-reviewed device QA. Keep t-003 ready; public release not approved.
-
-      PARTIAL t-003: late villain lairs now deploy canonical individually named four-HP lieutenants with eight affinity-specific telegraphed attack geometries and six origin-specific disruption-station placements, rather than a shared quarry earthquake. Squad can spend an AP to counter at the marked station, shoot the windup, or evade exact highlighted tiles; boss loses a round on interruption. New comic-style boss entrance and hero/villain reckoning panel, all 48 profiles verified in seeded combat tests, save validation and post-battle objective recovery fixed. Implementation in kind_robots worker/comet-city-academy-t-003-signature-bosses-6e82; PR CI and merge pending. These are combinatorial signature mechanics, not 48 separately hand-scripted cinematic sequences or generated character artwork.
-
-      PARTIAL WORK MERGED in Kind Robots PR #4473 squash 0dbc62c7cb86c58459bb98038063757dca229427. All 20 latest-head GitHub workflows completed successfully, including TypeScript Type Check, seeded Playbook Slices Gameplay, Every Villain Tactics, formatting, full contract shards and build/publish image workflow. Late day-23+ villain lairs now deploy 48 distinct named 4-HP lieutenants with 8 real affinity attack footprints and 6 origin-based counter stations, visible exact danger cells, attack-to-damage parity, player disruption (1 AP), real shot interrupts, deterministic stagger recovery, comic-style boss entrance and hero/villain result panels. Early Quarry lieutenant and one-hit species behavior retained. Repaired objective AP lock after all enemies fall, hardened boss save validation, and added exhaustive 48 roster turn, counter and tampering tests. These are 8x6 compositional combat mechanics, not 48 fully hand-coded unique boss AI graphs, 48 cinematic dialogue trees, delivered ArtJobs or verified responsive visual QA. Keep task ready for next full-game development increment. Merge is not confirmation of self-hosted production deployment; publication remains gated.
-
-      Scoped partial next Prom of Doom campaign milestone: a day-23+ wounded lieutenant can voluntarily join the protagonist or sign a civilian-safety ceasefire if the player finds the hidden lair evidence, approaches within two squares, and spends an action. The named individual lieutenant leaves battle alive, remains absent from later night boss encounters, and the settlement is carried by validated save history into reports, civic influence/danger and distinct day-30 finale callbacks. Full 48-person regression covers action/evidence/proximity gates, no-repeat fights, restoration, tampering, and ending scenes. Kind Robots implementation branch worker/comet-city-academy-t-003-parley-c27b. No rendered art or live deploy; awaiting scoped PR CI.
-
-      PARTIAL WORK MERGED: Kind Robots #4475 squash commit 708c44f0b3607096b4960981afa1319a46c84eaf, all 19 latest-head GitHub workflows complete green including Academy gameplay, TypeScript, changed-file Prettier, four contract shards and published-container build. For day-23+ villain lair encounters, the player can earn two nonlethal lieutenant outcomes by uncovering the specific secret, reducing a living four-HP lieutenant to two HP, approaching within two squares and spending one action point. Ally and ceasefire choices persist in validated tactical outcome history, change district standing/danger and mission debriefs, remove the negotiated lieutenant from future night boss fights and insert named, distinct support callbacks into the graduation finale. Added battle negotiation and comic settlement UI, Pinia action and comprehensive 48-lieutenant cross-day/save/forgery tests. Older saved campaigns and first-week/origin fights remain compatible. Not completed: 48 hand-authored boss AI/cinematics, illustration ArtJobs, responsive live device QA, complete game polish or final human approval. Leave t-003 ready for subsequent development. GitHub merge does not establish self-hosted Unraid deployment.
-
-      Scoped partial development: earned ally lieutenants now return as a controllable 4-HP squad card on future night patrol battles with one once-per-battle visible signature-geometry attack targeting actual rivals, guaranteed friendly-fire safety and persisted one-use charge. A truce instead removes the lieutenant's command squad and leaves rival holdouts. Extra validation requires a prior canonical ally outcome before an allied unit can appear in a loaded save, with unit-name and charge tampering rejected. A 48-signature deterministic regression suite covers previews, damage, persistence, differences between truce and alliance, and friendly-fire safety. In Kind Robots branch worker/comet-city-academy-t-003-field-loyalty-d9b1; CI and merge still pending. This is combat content, not a rendered art delivery or production deployment. Keep broad t-003 scope open.
-
-      PARTIAL WORK MERGED in Kind Robots PR #4479, squash commit 0359b657bdbae64af9fb17b966a107912b63f9d5, all 20 latest-head GitHub workflows passed including Playbook Slices Gameplay, TypeScript, Every Villain Tactics, Prettier, Playbook Kit, four Contract Test shards, and Publish Production Container. A previously earned day-23+ lieutenant defection now deploys the canonical named four-HP lieutenant as a selectable squad unit in later night tactical battles. The ally has one saved, once-per-battle two-AP affinity-specific signature attack with exact previewed threat cells, real damage on enemy units and no friendly fire. A ceasefire instead removes the lieutenant command squad from subsequent enemy composition; the main rival and independent holdout remain. Saved ally spawn requires a validated prior same-signature defection record, checks canonical name and one-use charge, and rejects forged alliances. 48-profile seeded tests cover deployment, no overlap, damage parity, saved one-use charge, tamper resistance and ceasefire battle balance. Preserved existing dialogue contracts and previous Quarry boss behavior. This is not rendered painted art, responsive device QA, 48 independently hand-authored AI behavior graphs, or verified self-hosted deployment. Broad t-003 remains open and returns to ready for development.
-
-      Triage 2026-10-30: the original scope (seeded day/night with 30 scripted anchors and weekly location draws, 1-3 hero/villain/rogue/shared dispatch, real-vs-simulated stakes, consent romance, follower injury/infirmary, timed villains, versioned saves with first-week conversion, no runtime LLM) is on main via #4226, #4213/#4221, #4242/#4245, #4253, #4404. Recent increments (#4469-#4479 lairs, lieutenants, defection, reinforcements) kept re-arming this task for work that belongs elsewhere. Leftovers re-homed: painted art -> t-007/t-008, every-branch graph -> t-009, width QA -> t-015, 48 hand-authored lieutenant AIs -> t-026 and every-villain-tactics/t-023. Closing unblocks t-004, t-016, t-024, t-025.
+      Full history: projects/comet-city-academy/HISTORY.md#t-003
   - id: t-004
     milestone: m3
     title: "Author at least 36 good/evil/rogue patrol cases with meaningful results"
@@ -576,20 +421,10 @@ tasks:
     passes: 0
     approved_by_human: true
     stakes: reversible
-    note: |-
-      Silas 2026-10-26 submitted the 58 identity beats from the Playbook Forge ledger, which answers
-      the open question of whether to queue the roster portraits: yes. Those requests used
-      title-built prompts and were cancelled. Write a described-picture prompt for each person in
-      CHARACTER_ROSTER (kind_robots utils/cometAcademy/identityArcs.json plus the guests Zuzu and
-      Tess Helio), student form first, with hero and villain forms to follow. Each prompt covers
-      the person's look, origin and affinity cues, and pose. No names, titles or lettering. Write
-      them as projects/comet-city-academy/art/IDENTITY-PORTRAITS-ROUND-1.yaml with assets
-      comet-city-academy/identities/<signature>/student and auto_submit: true, and dry-run them
-      with enqueue_art_requests.py. Export with scripts/export_round_art.py --manifest when DONE.
+    note: >-
+      Silas 2026-10-26 submitted the 58 identity beats from the Playbook Forge ledger, which answers the open question of whether to queue the roster portraits: yes.
 
-      Authored an approved 50-cell Krea2 student portrait production ledger in projects/comet-city-academy/art/IDENTITY-PORTRAITS-ROUND-1.yaml: all 48 core signatures, preserved Zuzu guest scene and Tess Helio visitor. Canon-correct physical descriptions and distinct scripted academy poses; exact assets named for existing Kind Robots art manifest. Auto-submit is explicitly gated to reviewed main with credential, deduplicates by recorded ArtJob IDs and never claims queued or delivered images before provenance. New pytest exercise invokes real enqueue script dry-run and validates identity count, jobs emptiness, prompt safety and Zuzu visual continuity. CI and PR pending.
-
-      DONE authored and submitted approved student portrait round. Conductor PR #6795 merged as 0f715599f3c651dd413e80f512850c2e388f0908 after 4/4 GitHub workflows passed including full pytest and real enqueue dry run. Reviewed main-only submission automatically created and durably recorded 50 unique Krea2 ArtJobs #50372-#50421 in the round ledger. 48 core signature portraits plus Zuzu legacy guest scene and Tess Helio, with shared Zuzu design and 50 distinct physical descriptions/poses. This author/queue task is complete; job acceptance does NOT establish DONE render, ArtImage or exported/visible game artwork. Next separate follow-up: poll job statuses, selectively retry failures, export successful images with export_round_art.py --manifest and visually inspect continuity before calling art delivered.
+      Full history: projects/comet-city-academy/HISTORY.md#t-019
     claimed_by: 2026-10-29T230000Z-comet-t019-portraits-7cd2
     claimed_at: '2026-10-29T23:17:29.946Z'
     updated: '2026-10-29T23:34:37.650Z'
@@ -602,17 +437,9 @@ tasks:
     stakes: reversible
     passes: 0
     note: >-
-      Silas, 2026-10-27 PT: "Anything that is in playbook forge and has quests unwritten or art prompts unwritten should be upgraded. (Memory dungeon will take the longest and should be last). Space couch has a lot of fresh writing still in need and still looking to capture that right blend of space comedy and satire. All art prompts should be written for the appropriate engine, no metaphors for krea2." Shared bar: kind_robots PR #4308 (verifyPlaybookArtPrompts, artPromptsComplete). Forge 2026-10-27: 94 unpainted beats have no prompt; plan gaps encounters 30/60, endings 10/12. Port prompts from this project's art ledgers where they map to beats, rewriting any that are figurative.
+      Silas, 2026-10-27 PT: "Anything that is in playbook forge and has quests unwritten or art prompts unwritten should be upgraded.
 
-      DONE 2026-10-27 PT: kind_robots #4312 (c8e609e, prompts), #4320 (659c699, 30 encounters)
-      and #4325 (4e0ddf4, 2 endings), all checks green. Prompts are 126/126 with
-      artPromptsComplete on; castLooks.ts fixes one look per person, and the 50 identity
-      portraits are new. Encounters went from 30 to 60: 24 landmark return visits and 6 late
-      night calls. New runs use incidentDeckVersion 2; old saves keep the six-case rotation.
-      Endings went from 10 to 12 (THE SHIELD CHANGES HANDS, THE TRANSMITTER GOES DARK), both
-      reached from untouched 30-day runs in tests. Follow-up: 44 DONE RUNTIME-BEATS renders
-      still need export (playbook-kit t-017). MISSION-REACTIONS cast looks are being aligned
-      to castLooks before they render.
+      Full history: projects/comet-city-academy/HISTORY.md#t-020
     updated: '2026-10-27T19:28:00Z'
     claimed_by: 2026-10-27T18:10:00Z-forge-cca
     claimed_at: '2026-10-27T18:56:14Z'
@@ -822,10 +649,10 @@ tasks:
     status: done
     passes: 0
     stakes: reversible
-    note: |-
-      Silas Oct 29 PT explicitly approved a high-priority checkpoint bakeoff: the same six concrete character/scene concepts across Krea 2, Arthemy Western Art, Nova Comic, Illustrij, DreamShaper XL Turbo and Unstable Diffusers. Exclude generic Flux, Pony and furry-first checkpoints. Ledger art/CAPES-WESTERN-STYLE-CHECK-ROUND-1.yaml uses dedicated main-only submission, fixed per-subject seeds, model-appropriate prompt grammar, private renders and priority 900. Check numeric ArtJob IDs after auto-art-generate actually enqueues; then inspect 36 true ArtImages and failures. The /admin/capes style-gate-first console has live job status, side-by-side art and local scoring; do not claim submitted from YAML or rendered from DONE without verifying image paths. Shared art bible and game production style remain a human editorial gate. After approval, produce the first Cornerstone/Backdraft/Firewall card and standee family using shared Prom/Tactics ArtImage keys.
+    note: >-
+      Silas Oct 29 PT explicitly approved a high-priority checkpoint bakeoff: the same six concrete character/scene concepts across Krea 2, Arthemy Western Art, Nova Comic, Illustrij, DreamShaper XL Turbo and Unstable Diffusers.
 
-      Triage 2026-10-30: the checkpoint bakeoff did its job. 32 of 36 style jobs were accepted (50504-50535) and Silas chose Unstable Diffusers (nihilmania) as primary for Prom and Tactics, recorded in #6803. The first card/standee family moved to t-031. Map/portrait comparison jobs 50536-50547 are still PENDING. Poll them as reference only; they no longer gate anything.
+      Full history: projects/comet-city-academy/HISTORY.md#t-028
     claimed_by: 20261030T000453558Z-capes-t028-q7m4
     claimed_at: '2026-10-30T00:04:53.558Z'
     updated: '2026-10-30T10:45:58+00:00'
@@ -838,12 +665,10 @@ tasks:
     updated: '2026-10-30T02:02:57.700Z'
     passes: 0
     stakes: reversible
-    note: |-
-      Silas Oct 29 PT addendum: every checkpoint comparison must exercise core production categories hero poster, villain poster, henchman poster, large story illustration, illustrated map and readable character portrait. The existing six-by-six round already covers the first four and adds lieutenant and tactical standee. DO NOT restart or duplicate its 36 cells or take over claimed t-028. Add TWO genuinely new subjects, a consistent connected college quad / Comet City illustrated map and an emotionally expressive close portrait, across the same six approved non-furry, non-Flux checkpoint lanes using the same model-specific prompt grammar. Track 12 private priority-900 ArtJob IDs distinctly, enforce non-fictional image delivery and add two columns/rows to the style comparison UI. The global house style remains a human gate.
+    note: >-
+      Silas Oct 29 PT addendum: every checkpoint comparison must exercise core production categories hero poster, villain poster, henchman poster, large story illustration, illustrated map and readable character portrait.
 
-      Added two missing cross-check categories to the first Capes western-style comparison without touching the separate t-028 claimed 36-subject ledger: real connected college/city map spatial layout and Firewall emotional human portrait. Twelve new deterministic subject × checkpoint requests, preserving exact six Krea/Arthemy/Nova/Illustrij/DreamShaper/Unstable settings, private priority 900, and distinct job IDs. Separate on-main workflow submits only missing cells with idempotent ledger recording and real ArtJob provenance. Blueprint records are not rendered ArtImages; visual review, admin/capes inclusion and human style selection remain.
-
-      Conductor #6800 plus prompt-contract repair #6801 merged, all checks green. The dedicated main-only private priority-900 submit workflow 40988797631 accepted all twelve supplemental map and portrait ArtJobs (50536 through 50547) and persisted IDs. Kind Robots #4458 merged the extra two subjects into the admin style comparison as rows seven and eight. Rendering, ArtImage attachment, broader house-style acceptance and initial t-028 missing jobs remain separate gates.
+      Full history: projects/comet-city-academy/HISTORY.md#t-029
 
   - id: t-030
     milestone: m3
@@ -854,12 +679,10 @@ tasks:
     updated: '2026-10-30T02:02:57.700Z'
     passes: 0
     stakes: reversible
-    note: |-
-      Silas asks /admin/capes in Admin channel as a real, explorable art bible instead of only a checkpoint bakeoff. Keep the six-lane checkpoint proposals, show both original six and map/portrait addendum benchmarks with real private ArtJob status, then add browse/search/filter through the 48 canonical characters, paired hero/villain poster art slots, one-hit henchman families, independent powered lieutenants, portraits, standees, story reactions and comic intro plans. Reuse canonical identityArcs, villainHenchmen, identityCampaignStages and shipped art manifest rather than inventing statuses or painting placeholders. Extend the existing Capes style check page under active t-028 without colliding with its durable 36-job ledger. Label missing images as planned and render only linked delivered images. Keep admin role guard.
+    note: >-
+      Silas asks /admin/capes in Admin channel as a real, explorable art bible instead of only a checkpoint bakeoff.
 
-      Submitted a high-priority Admin Capes Bible expansion against the existing t-028 style-check feature branch. Keeps private six-model comparator but expands to eight subjects including the separately authored map and human portrait tests; exposes all 48 permanent hero/villain identity artwork pairs, villain-owned one-hit henchman species and separate powered lieutenants in a searchable two-column art atlas. Asset-plan sections include collectible posters, expressive story images, tactical standees and 192 character comic-intro concepts. The Admin channel tab and tutorial explicitly register the page. Uses only canonical IDs and shipped art-manifest URLs for actual images; placeholders state not attached. Full style checkpoint ownership and ArtJob submission remain with t-028/t-029.
-
-      Merged Kind Robots #4458 at df0111fe0d6a1cbf2603a359229981b435003955 after all 21 head workflows passed. The Admin channel now links /admin/capes and the shared Capes Bible includes eight by six checkpoint proposals, searchable 48 permanent heroes, paired villain and hero artwork, independent one-hit species and powered lieutenants with truthful attached/planned art slots, and production card/story/standee plans. Child PR #4466 was integrated. No public release or false ArtImage claim. Original t-028 remains open for four not-submitted ArtJobs and human style choice.
+      Full history: projects/comet-city-academy/HISTORY.md#t-030
   - id: t-031
     milestone: m3
     title: "HIGH PRIORITY · Begin private Unstable Diffusers production for canonical Prom/Tactics cast"

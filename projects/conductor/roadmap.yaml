@@ -3052,11 +3052,11 @@ tasks:
   implementation_pr: 'silasfelinus/conductor#5455'
 - id: t-203
   title: 'Archive done-task notes for any roadmap over the 150KB advisory threshold (storybook 129KB, conductor 119KB next)'
-  status: ready
+  status: done
   stakes: reversible
   owner: worker
   passes: 0
-  updated: '2026-11-01T11:02:05Z'
+  updated: '2026-11-01T11:46:19Z'
   note: >-
     Kaizen follow-up to t-202: when check_roadmap_note_size flags a roadmap, run
     scripts/archive_done_task_notes.py --project <slug>, verify with --verify-only, and confirm the flag clears.
@@ -3065,8 +3065,13 @@ tasks:
     2026-11-01 PT claim-staleness assessment (Silas: stale claims are more likely finished-
     but-unrecorded than abandoned): no archive-notes pass recorded after the 10-01 claim;
     run archive_done_task_notes.py for roadmaps over the advisory. Claim released.
-  claimed_by: 01Hdnr6S
-  claimed_at: '2026-10-01T13:46:40Z'
+
+    2026-11-01 PT: done in the token-essentialization pass 2 PR — archive_done_task_notes.py
+    --all moved 235,961 bytes of done-task notes into per-project HISTORY.md (verify-only:
+    every archive resolves), and archive_recurring_task_note.py archived 23 oversized live
+    notes. memory-dungeon is now under the 150KB file threshold.
+  claimed_by: null
+  claimed_at: null
 
 
 - id: t-204
@@ -3147,15 +3152,10 @@ tasks:
   owner: null
   passes: 0
   updated: '2026-10-25T14:45:20Z'
-  note: |-
-    Found 2026-10-13 PT (zuzu-showdown/t-032). Running `--status` on art/T021-ENDINGS.yaml flipped coyote-ending-1
-    and coyote-ending-2 from `status: REJECTED, art_image_id: null` back to `DONE` with the rejected images (245032,
-    245033), because refresh_status copies the job's result over whatever the ledger says. tools/endings.py then
-    shipped the rejected stills. Reverted by hand in the t-032 art PR. Fix: refresh_status leaves a subject's lane
-    alone while it is REJECTED (or the job id equals one listed under `rejected:`), and add a test.
+  note: >-
+    Found 2026-10-13 PT (zuzu-showdown/t-032).
 
-    Merged via #6635: refresh_status skips REJECTED lanes and job ids listed under
-    rejected:; two tests added.
+    Full history: projects/conductor/HISTORY.md#t-208
   implementation_pr: 'silasfelinus/conductor#6635'
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'

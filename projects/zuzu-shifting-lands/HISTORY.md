@@ -301,3 +301,23 @@ Seven special sourced V7 finale constellations (three high-road, three bitter da
 
 Completed seven distinct V7 authored finale constellations with three terminal phase narratives apiece, grounded against matching successful trial and boss turn/roll/target. Includes three harder hopeful legacies, three specific bitter exploitative conclusions, one restorative ending that does not erase prior harm, and tests for forged/duplicated/future results, legacy V6 fallback and no mid-run spoilers. Kind Robots PR #3978 squash merged 801b21d6e6b166359bb475203030f157ee69c167 after all 14 latest-head CI workflows succeeded including Shifting Lands Gameplay, TypeScript, formatting and four contract shards. Documented in docs/shifting-lands/V7-MORAL-CONSTELLATIONS.md. Independent t-033 artwork and t-036 card prose remain open. No change to V2-V7 save rules, art, production deploy or manual visual QA.
 <!-- note:end t-040 -->
+
+## t-041 — Adversarial Shifting Lands V7 playtests, simulated reviews and targeted gameplay fixes
+
+<!-- note:begin t-041 -->
+Silas requested adversarial playtests, reviews and implementation improvements. Test actual reducer playthroughs with incompatible strategies, unlucky seeds, save/replay integrity, resource scarcity, route/ending reachability and narrative causality. Preserve separate t-033 art and t-036 prose ownership. Publish evidence and prioritized simulated-review findings with a scoped, verified implementation PR; do not treat scripted strategies as human playtesters.
+
+Adversarial V7 gameplay fix and mock-review report implemented on worker/zuzu-shifting-lands-t041-playtest-20261022-1751. Awaiting Kind Robots scoped gameplay, TypeScript, formatting and contract CI.
+
+Merged silasfelinus/kind_robots#4051 at 73349f30862a1767ed60eacd174c12052c033d12 after all 14 PR-head CI workflows completed successfully, including Shifting Lands Gameplay, TypeScript, formatting, and full Contract Tests. Fixed mixed mercy/honesty Witness qualification and documented 1,500 seeded adversarial runs, 120/120 card draw coverage, per-land trial failure counts, and prioritized synthetic reviews. No human playtest, production deployment, or generated artwork claimed.
+<!-- note:end t-041 -->
+
+## t-042 — Shifting Lands V8 replay-safe benevolence and scouting balance
+
+<!-- note:begin t-042 -->
+Address adversarial t-041 gaps: Scout costs one health but had a 16.7% chance to beat Verge; compassion routes remain punished versus coercion. Create a replay-compatible V8 ruleset preserving V7 restores, earned witness/solidarity requirements and dark-route moral consequences. Make prepared scouting materially effective, compassionate choices worth earning, and demonstrate seeded playstyle outcomes plus anti-forgery tests. Coordinate separate art t-033 and prose t-036.
+
+Created separate V8 ruleset with earned compassionate trial odds, meaningful scouted routes, visible 2d6 success percentages, legacy V7 save isolation, and five-style seeded policy comparison. Awaiting Kind Robots PR CI before any merge, deployment or roadmap completion.
+
+Merged silasfelinus/kind_robots#4054 as 58359c64c713864d2e51e34318166cf11a38ddd0 after all sixteen latest-head CI workflows passed, including V7/V8 gameplay, TypeScript, formatting and full Contract Tests. New V8 journeys strengthen earned Witness, Solidarity, and 1-HP Scout routes, show exact 2d6 odds, preserve all V7 save ledgers, and simulate 300 matching seeds for each of five playstyles per version. Kind completion rose from 70.7 to 87.7 percent, cautious from 77.7 to 92.7 under the corrected probability-aware policy; dark-route outcomes were unchanged. No production deployment or human playtest claimed.
+<!-- note:end t-042 -->

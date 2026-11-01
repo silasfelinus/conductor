@@ -79,12 +79,10 @@ tasks:
     updated: '2026-10-25T21:29:09.583Z'
     passes: 0
     stakes: reversible
-    note: |-
-      Initial PR delivers original title art, six-style captain choice, crew selection, star-chart mission, 0-3 away assignments, ethical consequence, one seeded antagonist complication, debrief and saves with tests. No generic website. Matching conductorSlug Kind Robots Project record.
+    note: >-
+      Initial PR delivers original title art, six-style captain choice, crew selection, star-chart mission, 0-3 away assignments, ethical consequence, one seeded antagonist complication, debrief and saves with tests.
 
-      Implemented captain/crew selector, three-mission star-map voyage, away team staffing, persistent randomized antagonist, differentiated intervention dilemmas, multiple short-voyage finales and Pinia save/resume on Play. Original vector bridge art, Play tab and project placement, and both home highlight cards included. Pending implementation PR and CI; painted ArtJobs and full 3-act content remain separate tasks.
-
-      Merged the fully checked first Play voyage in kind_robots PR #4185, commit 29af913e95dad4719137c4bfbc6292ba76e74fb8: select captain and crew, run three missions, assign away-team, interact with random antagonist, debrief, save/resume and follow two dashboard featured links. All 24 checks completed successfully. This is a short playable slice with concept vector art, not the complete 3-act game. Next ready branding task t-013 sets display title This Means Warp without changing routes or saves.
+      Full history: projects/game-of-captains/HISTORY.md#t-001
   - id: t-002
     milestone: m1
     title: "Write This Means Warp captain, crew, location, antagonist and ethics bibles"
@@ -94,12 +92,10 @@ tasks:
     updated: '2026-10-27T00:41:00Z'
     passes: 0
     stakes: reversible
-    note: |-
-      Lock the This Means Warp title and original sci-fi comedy voice. Confirm Vox, sentient Serendipity and Fluke narrator seeds without rewriting them; author six captain perspectives, sixteen crew arcs, twelve substantial systems, eight antagonists, faction ethics doctrine, three-act clue graph and sixteen ending prerequisites.
+    note: >-
+      Lock the This Means Warp title and original sci-fi comedy voice.
 
-      Authored six distinct captain arcs, sixteen three-stage crew journeys, twelve destination hubs, eight seeded three-act antagonists including an evil AI planet-wide game dungeon, and sixteen ending families with captain-multiplied epilogues. Editorial source is linked from DESIGN-BRIEF; actual quests, art and full ending coverage remain later roadmap tasks. Conductor scoped PR forthcoming.
-
-      Merged the complete authoring bibles in Conductor PR #6705 (dbd510a08255357df6fb4dff64765daafc300662). Six captain dossiers, sixteen crew multi-system arcs, twelve star systems, eight seeded three-act nemeses including the Showrunner AI dungeon planet, nuanced intervention doctrine and sixteen earned ending families with six authored captain variant requirements are linked in DESIGN-BRIEF.md. The compatible first-slice captain/crew screen and eight seeded rivals merged to kind_robots PR #4263 (8d584ecbddf9f4e34d137fb0cd9991225fb04361). Full runtime quests, ninety-six epilogues, rendered art and QA remain explicitly open on successor tasks; no publication or final human gate.
+      Full history: projects/game-of-captains/HISTORY.md#t-002
   - id: t-003
     milestone: m2
     title: "Implement deterministic voyage, ship/away staffing, ethics and persistence engine"
@@ -107,12 +103,10 @@ tasks:
     depends_on: t-001
     passes: 0
     stakes: reversible
-    note: |-
+    note: >-
       Seeded ship and away assignments, crew skill/injury/trust/absence, intervention consequences, antagonist effects, star-map unlocking, resources, saves/migration and battle-tested fail paths; no LLM at play time.
 
-      Submitted persistent crew-driven star-chart detours integrated with the three-stop voyage. All 12 existing crew have three original world encounters, two ethically different approach choices, return consequences and save-safe progress. Eight nemeses receive named specialist counterplay unlocked by two witnessed stages, adding an earned final council option. Six captains add distinctive outcome-specific reckoning; exact full sixteen ending families, four more crew, painted art and multi-act campaign remain sequel tasks. App PR upcoming with seeded replay and scarce-supply tests.
-
-      Merged Kind Robots PR #4266 as 5705e103e4b16ea202fde80ae57da942ab4a8071, with 16 of 16 completed green workflow checks on head 2cff7186898c19d2af66d5bdaeef5b766d32f191. New deterministic crew-directed chapter detours, 36 authored personal encounters for 12 playable crew, eight nemesis-specific earned counterplay routes, six captain epilogues, scarcity and save safety checks. The existing main missions still work. Full campaign, remaining four recruitable crew, art delivery, and comprehensive ending routes remain follow-up work.
+      Full history: projects/game-of-captains/HISTORY.md#t-003
     claimed_by: 20261027T011100Z-space-couch-t003-b71c
     claimed_at: '2026-10-27T01:11:00Z'
     updated: '2026-10-27T01:34:02.442Z'
@@ -123,10 +117,10 @@ tasks:
     depends_on: t-003
     passes: 0
     stakes: reversible
-    note: |-
+    note: >-
       Varied diplomacy, exploration, rescue, scientific hazards, trade, first contact, crew disagreement and ship trouble, each with original success/mixed/fail/withdrawal, remembered people and policies.
 
-      Triage 2026-10-30 (verified on kind_robots main 0bb3088): rules MISSIONS = 30 (Act I 9, II 12, III 9; CI asserts MISSIONS.length 30), 12 systems, 90 per-policy aftermaths, via #4286/#4313/#4327. Small follow-up: flawless/costly/disaster result text is generic in rules.ts rather than per-mission.
+      Full history: projects/game-of-captains/HISTORY.md#t-004
     updated: '2026-10-30T10:45:59+00:00'
   - id: t-005
     milestone: m3
@@ -135,10 +129,10 @@ tasks:
     depends_on: t-002
     passes: 0
     stakes: reversible
-    note: |-
+    note: >-
       At least 12 locations; evolving local decks, Vox/Serendipity callbacks, consent/intervention complexities, crew arcs and alternative solutions without universal perfect specialist.
 
-      Triage 2026-10-30 (verified on kind_robots main 0bb3088): 53 expedition encounter cards (36 local across 9 worlds + 17 galactic) plus planet, casino and Serendipity decks via #4336/#4366/#4369. Note the Playbook Forge counts encounters from MISSIONS (30/40) and under-reports; fix the Forge metric, not the game.
+      Full history: projects/game-of-captains/HISTORY.md#t-005
     updated: '2026-10-30T10:45:59+00:00'
   - id: t-006
     milestone: m3
@@ -147,10 +141,10 @@ tasks:
     depends_on: t-003
     passes: 0
     stakes: reversible
-    note: |-
-      Each seed picks unique alien goal/method/complications/clues and interference, with nontrivial bargain/defeat/reconciliation/complicity resolutions and captain/crew combination coverage. Silas 2026-10-26: this is the randomized galactic enemy, one principal nemesis drawn per run.
+    note: >-
+      Each seed picks unique alien goal/method/complications/clues and interference, with nontrivial bargain/defeat/reconciliation/complicity resolutions and captain/crew combination coverage.
 
-      Triage 2026-10-30 (verified on kind_robots main 0bb3088): 8 antagonists, each with 9 act moves, a clue and interference, nemesis card every second episode, 24 nemesis endings (#4316). Goal/method stay fixed per antagonist rather than reshuffled per seed.
+      Full history: projects/game-of-captains/HISTORY.md#t-006
     updated: '2026-10-30T10:46:00+00:00'
   - id: t-007
     milestone: m3
@@ -171,7 +165,7 @@ tasks:
     updated: '2026-11-01T06:56:46Z'
     passes: 0
     stakes: reversible
-    note: |-
+    note: >-
       Deliver branded Space Couch project icon/card/hero, detailed red couch/force bubble/pocket room/starmap, original personnel and emotional portraits, Vox/Serendipity/Fluke continuity plates, twelve worlds and eight antagonist identities; verify final URLs, ArtJobs and render provenance rather than SVG/placeholders.
 
       Canonical cast portrait redesign round submitted for code/art review. 66 new Krea2 requests in CAST-REDESIGN-ROUND-2.yaml, with a Kind Robots v2 art-slot preference and legacy fallback. This is only the first art tranche: rendered delivery, runtime exports, ship/world/outcome coverage and visual review remain open.
@@ -184,23 +178,9 @@ tasks:
       fd9bd2396382fbe159d6fb1ecd0d44d4afe27e06, all 21 checks green. Shipped 18 CAST-REDESIGN-
       ROUND-2 v2 portraits (6 captains + 12 playable crew, 640px) that portraitArt() prefers
       over legacy faces, plus 10 RUNTIME-BEATS-ROUND-1 scenes (missions refugees/archive/bar,
-      antagonists auditor/moth/curdle, 4 base endings, 960px); WARP_ART 21 -> 49. Trio
-      interlude now reads faces via portraitArt so it shows v2 too; verifyGameOfCaptains
-      asserts every captain/crew face resolves to its v2 URL and every exported beat key
-      resolves. Contact sheet reviewed. Not exported because no runtime lookup exists yet: 48
-      defiant/vulnerable expression variants, 12 future-crew (nyra/gleam/harrow/edda)
-      portraits, 18 OPENING-TITLES, 21 CONSEQUENCES, 8 legacy pair portraits; REDSHIRTS-200
-      and SERENDIPITY-CASINOS-20 have 0 DONE rows. Remaining for this task: wiring expression
-      variants (e.g. injury/defeat states), ship/pocket-room/starmap/world art, the other 5
-      antagonists and 27 missions/12 earned endings, which still have no renders.
+      antagonists auditor/moth/curdle, 4 base endings, 960px); WARP_ART 21 -> 49. [...]
 
-      User requested continued Space Couch build on October 31 PT. Taking next unclaimed art-delivery slice: wire completed painted assets into live game presentation, with tests and truthful delivery accounting.
-
-      Continued t-008 painted-art delivery slice: 106 DONE ArtImage IDs from three existing Conductor rounds now have access-filtered runtime URLs in Kind Robots, powering voyage main stage, Serendipity venues, and painted title art. Older conventional-bridge static art is intentionally excluded. This is a scoped delivery increment, not completion of all ship/world/portrait art. Full t-008 visual acceptance and other painted inventory remain open.
-
-      October 31 PT scoped painted-art runtime slice merged in Kind Robots PR #4564, commit 10b04371783a2de6ac83569f8fc0028dc9c1f6a0. All 20 exact-head checks passed. Connected 106 DONE ArtImages (27 missions, 5 antagonists, 36 endings, 20 Serendipity venues, 18 opening scenes) to title, stage and casino screens via access-filtered art lookup. Existing 22 onboarding illustrations remain registered. Main verified clean; branch deleted. This task is NOT complete: artwork accessibility in authenticated self-hosted production, large image visual QA, full couch and pocket-room continuity, character expression variants, unfinished maps and remaining scenes still need delivery. No publishing or deployment has been authorized.
-
-      Continue user-requested Space Couch art delivery by connecting completed cast expression renders and illustrated pocket-room shipboard scenes to active play states. Preserve image access controls and existing saves.
+      [Earlier history (2,679 chars) archived verbatim to projects/game-of-captains/T008-HISTORY.md -- read it there only when you need a specific past cycle. Append new cycles below, one short paragraph each.]
 
       Scoped Space Couch art delivery: 44 DONE expression portraits are now served through the existing access-filtered ArtImage endpoint. Captain and crew dossiers expose three portraits, the away team shows defiant or vulnerable images based on assignment and injury, and briefing choices display the completed Holodeck, War Room and Infirmary artwork. Static contract tests include all unique keys. PR and CI pending. Do not mark the broader t-008 art campaign complete.
 
@@ -246,26 +226,9 @@ tasks:
     passes: 0
     stakes: reversible
     note: >-
-      From-new-game action logs for all 16 endings, noninterventionist/exploiter/legalist/rescuer,
-      depleted fuel/hull, absent and wounded crew, missed calls, low-trust diplomacy, strange event
-      orders, old saves and softlock probes.
+      From-new-game action logs for all 16 endings, noninterventionist/exploiter/legalist/rescuer, depleted fuel/hull, absent and wounded crew, missed calls, low-trust diplomacy, strange event orders, old saves and softlock probes.
 
-      2026-10-30 (session 2026-10-30T14:02:23Z-goc-t010-q7m3): DONE via kind_robots#4522.
-      - spaceCouchTraceHarness.ts plays the page's own path from a new game, using the store's compositions: background and star chart, travel, expedition quests, episode decks, call, transit, order, errands, romance, trio interludes and finale.
-      - Every state it reaches must save and load intact, keep finite and in-range stats, read without template leaks, and leave at least one control that moves the voyage (softlock probe).
-      - verifyGameOfCaptainsTraces.test.ts runs in test:game-of-captains (184 voyages, about 15s):
-        - 8 antagonists x 6 captains with a counter officer aboard, under rotating rescuer, noninterventionist, exploiter, legalist, misser and depleted/absent-crew styles;
-        - all 16 endings x 6 captains, with pinned seeds;
-        - the counter council for all 8 nemeses, plus its refusal when no counsel is aboard;
-        - 12 random-press walks;
-        - 6 real saves written by engine a34da8fa (before today's merges), played on to endings;
-        - bare version-1 saves.
-      - npm run test:game-of-captains:traces (--full) played 2,116 voyages, including one walk for each of the 220 parties. All OK, no softlock.
-      - Defect fixed: a star or clone coda suffix on the ending title broke the ending-art lookup (endingFamilyTitle).
-      - Findings left for Silas or t-011:
-        - Trust is dominated by the episode decks, so A MOTION OF NO CONFIDENCE needs a deliberately mutinous plan.
-        - Acts II and III reuse a 17-card galactic quest deck, so about 36 of 59 cards repeat per voyage.
-        - The playbook run review stores coda-suffixed ending titles.
+      Full history: projects/game-of-captains/HISTORY.md#t-010
     claimed_by: 2026-10-30T14:02:23Z-goc-t010-q7m3
     claimed_at: '2026-10-30T14:02:23Z'
     updated: '2026-10-30T21:19:37Z'
@@ -311,16 +274,10 @@ tasks:
     depends_on: t-001
     passes: 0
     stakes: reversible
-    note: |-
-      Once kind_robots PR #4185 has passed all checks and merged, update visible captain title, title-screen lettering, Play navigation, dashboard featured experience and owned Project presentation to This Means Warp. Keep Conductor slug game-of-captains, existing /play/game-of-captains deep link, save key, user progress and Fluke/Vox/Serendipity narrator entities unchanged. Ensure working captain/crew/away/log/settings navigation, no broken route, and screenshot plus seeded test coverage. If PR #4185 is still in review, do not clobber its branch; coordinate on merge order.
+    note: >-
+      Once kind_robots PR #4185 has passed all checks and merged, update visible captain title, title-screen lettering, Play navigation, dashboard featured experience and owned Project presentation to This Means Warp.
 
-      Submitted save-compatible in-game display-brand update with Play title/menu, main home highlighted game cards, and tests. For Capes & Tassels this is only the title and week-one simulation clarification part of the larger map/day-night t-012; subsequent gameplay work remains open.
-
-      Merged kind_robots #4188 as 0f9c4843 after all 22 checks green. Visible This Means Warp title, full-screen page, Play tab, home highlight and browser title now renamed; old route and save keys preserved. The existing Kind Robots Project database title field was not updated or verified in production (KR_API_TOKEN unavailable). This last metadata/API verification remains to be done under t-013. No further frontend rename required. Production self-hosted deploy has not been verified.
-
-      Space Couch user-directed renaming and couch-vessel gameplay shipped to kind_robots PR #4248, plus Conductor canon and Krea2/Arthemy art requests. Preserve game-of-captains routes and saves. Project database title and painted ArtJobs still unverified; mark incomplete rather than falsely done.
-
-      DONE 2026-10-26 PT: kind_robots #4248 merged 2026-10-26T23:35Z (Space Couch identity, share preview and covers from painted art). Production Project 2159 (conductorSlug game-of-captains) read "space-couch"; set to "Space Couch" through PATCH /api/projects/2159 and read back. Painted ArtJobs are tracked by t-008 and the RUNTIME-BEATS round, not this rename.
+      Full history: projects/game-of-captains/HISTORY.md#t-013
     updated: '2026-10-26T22:00:00Z'
 
   - id: t-014
@@ -330,10 +287,10 @@ tasks:
     depends_on: t-003
     passes: 0
     stakes: reversible
-    note: |-
-      Audit every existing and new voyage, planet, away-team and antagonist script to make the red couch the spaceship. Integrate miniaturized rooms, persistent vacuum bubble, docking and seating constraints in meaningful mission branches; no old conventional bridge/cockpit or ordinary cruiser illustrations. Coordinate with claimed t-002 and t-003, preserving Vox/Serendipity/Fluke seeds. Adversarially verify couch resource choices and art/script consistency.
+    note: >-
+      Audit every existing and new voyage, planet, away-team and antagonist script to make the red couch the spaceship.
 
-      Triage 2026-10-30 (verified on kind_robots main 0bb3088): the literal red-couch premise runs through all three acts (tone pass in #4327; rules.ts states no hull/bridge). Stage art is still SVG and is tracked under t-008.
+      Full history: projects/game-of-captains/HISTORY.md#t-014
     updated: '2026-10-30T10:46:00+00:00'
   - id: t-015
     milestone: m3
@@ -344,14 +301,10 @@ tasks:
     passes: 0
     approved_by_human: true
     stakes: reversible
-    note: |-
-      Silas 2026-10-26: "individual crew quests that take you around the universe." Each of the sixteen crew carries a personal quest of three steps set in different star systems; the away-team trio chosen decides which quests are live and so where the couch goes. Quest outcomes feed the crew epilogue lines in every ending (t-016). Dry absurdist register: crew grievances treated with total procedural seriousness. Forge plan: followerQuestSteps 3, locations 12 (kind_robots#4255); the ledger reads 0 of 3 steps built until this lands.
+    note: >-
+      Silas 2026-10-26: "individual crew quests that take you around the universe." Each of the sixteen crew carries a personal quest of three steps set in different star systems; the away-team trio chosen decides which quests are live and so where the couch goes.
 
-      Kind Robots PR #4289 implements twelve authored original three-world crew odysseys with 36 substantial episode scenes, 36 earned plot reversals, 72 stage-two decisions, 36 relics and individual conditional epilogues. Two player choices per stop, witnessed first gambits and saved consequences replace one-click errands. Existing quests, nemesis counterplay, romances, Act I mission board and save key remain compatible. Companion atlas Conductor PR #6727 merged as d8f9ec7 with passing full CI. Game PR is awaiting final CI verification, merge and live runtime quality review. Paintings, 220/560 trio adventures, 16 total playable crew and later acts remain separate requirements.
-
-      Merged the complete playable 12-person first tranche of the sixteen-crew quota in Kind Robots PR #4289, squash commit 667a4729cdb02181a46535c2c5683cd45f1c411f. All 16/16 PR workflow groups green on head 12f50ee08cd058415ae8b647dec6304ec5e3209b. Each current officer now has three original multiworld epic episodes, two-stage gambit/reversal/resolution choices, 36 relics and individualized earned protected/public/unfinished epilogues. Conductor writing atlas PR #6727 merged d8f9ec7289f695b04f4ce7ff262f7f3a98c3d551. The original task explicitly requires SIXTEEN crew. FOUR prospective cast members remain to be made recruitable and receive equally substantial three-stage quests; do not mark the full t-015 quota done yet. Painting the roughly 156 slots proposed for the first twelve, device QA and the 220/560 trio-only adventures are independent downstream gates.
-
-      Triage 2026-10-30 (verified on kind_robots main 0bb3088): 12 crew x 3-step personal quests = 36 (#4289). The task text says 16 crew, but the shipped roster, Silas's 2026-10-27 220-trio math (C(12,3)=220) and the Forge plan all use 12. Reopen only if Silas still wants 16.
+      Full history: projects/game-of-captains/HISTORY.md#t-015
   - id: t-016
     milestone: m3
     title: "Per-captain ending versions and crew epilogues (16 endings x 6 captains)"
@@ -362,20 +315,9 @@ tasks:
     approved_by_human: true
     stakes: reversible
     note: >-
-      Silas 2026-10-26: "different opening combos will create different end game endings ... a set
-      of three crew members isn't remarkably complex, but adding a captain to the mix will multiply
-      it." Write and paint each of the sixteen endings once per captain (96 versions); the crew trio
-      adds one epilogue line per crew member, not separate endings. Forge plan endingVersions
-      per-hero with followerEpilogues (kind_robots#4255). Seeded traces in t-010 must cover every
-      captain version.
+      Silas 2026-10-26: "different opening combos will create different end game endings ...
 
-      All 16 galactic endings now have a version for each of the 6 captains (96/96): the 12
-      earned families from galacticEndings.ts plus 36 new lines for the 4 base logs and 2
-      counter logs (baseEndingCaptains.ts, kind_robots #4501, merged 69dfacb). Tests replay
-      every seeded ending trace under each captain and assert the captain's own line; all 96
-      versions are distinct. Crew epilogues already existed. Per-mission
-      flawless/costly/disaster text follows in #4502. Painted ending art remains art-queue
-      work (t-009).
+      Full history: projects/game-of-captains/HISTORY.md#t-016
     claimed_by: 2026-10-30T11:47:12Z-spacecouch-q7r2
     claimed_at: '2026-10-30T11:38:44Z'
     updated: '2026-10-30T12:58:49Z'
@@ -392,19 +334,8 @@ tasks:
     stakes: reversible
     note: >-
       Silas 2026-10-27: "there are 220 different combinations of 3 crew members with 12 options.
-      that means each crew combo can get ... an interstitial unique multiple step adventure ... this
-      is an adventure across an insane universe, and we're just along for the ride." Each trio gets
-      its own three-step adventure between the main beats (660 scenes), written dry, with authored
-      art prompts. Forge plan partyAdventureSteps 3 (kind_robots #4272).
 
-      2026-10-30 (session 2026-10-30T11:47:12Z-spacecouch-q7r2): all 220 = C(12,3) trios
-      authored and on main. The 100 previously missing parties were written as batches D
-      (kind_robots#4487, a2ea530), G (#4493, 2799be8), I (#4497, 4bbec7d) and J (#4500,
-      be9657c), 25 each in CrewId combination order. Each has a three-step Act II interlude
-      built from those crew members' dossiers, two endings and five literal Krea 2 prompts;
-      prompts pass verifyPlaybookArtPrompts. verifyGameOfCaptainsTrios now asserts 220/220,
-      and the Forge factors partyAdventureSteps/partyEndings read 3/2. No art submitted: 500
-      new trio art slots are prompted and unrendered.
+      Full history: projects/game-of-captains/HISTORY.md#t-018
     claimed_by: 2026-10-30T11:47:12Z-spacecouch-q7r2
     claimed_at: '2026-10-30T11:38:41Z'
     updated: '2026-10-30T12:52:00Z'
@@ -420,16 +351,9 @@ tasks:
     approved_by_human: true
     stakes: reversible
     note: >-
-      Silas 2026-10-27: "each crew combo can get 2 unique endings ... even just the endings for each
-      galactic boss ... we should just have more interesting things than four endings planned
-      anyway." 440 trio endings and 24 boss endings, each written and painted, on top of the sixteen
-      per-captain endings (t-016). Forge plan partyEndings 2, villainEndings 3 (kind_robots #4272).
+      Silas 2026-10-27: "each crew combo can get 2 unique endings ...
 
-      2026-10-30 (session 2026-10-30T11:47:12Z-spacecouch-q7r2): 440/440 trio endings exist (2
-      per party across all 220 parties, batches A-J; the last 200 via kind_robots#4487, #4493,
-      #4497, #4500). Every ending is reachable by some run of three choices (contract-tested)
-      and has a literal Krea 2 prompt. Boss endings were already 24/24. Painting remains art-
-      queue work, not part of this close-out.
+      Full history: projects/game-of-captains/HISTORY.md#t-019
     updated: '2026-10-30T12:52:14Z'
     implementation_pr: 'silasfelinus/kind_robots#4500'
 
@@ -439,12 +363,10 @@ tasks:
     status: done
     passes: 0
     stakes: reversible
-    note: |-
-      User-directed adult romance: three authored scenes for a four-person relationship with captain, Vela, Taal and Omi, individual consent, boundaries, earned commitment, principled rejection and breakups; additional individual Rue and Tess relationship routes that may fail. Save choices under the existing voyage key, without stat penalties for romantic refusal or forced relationships. Add visual bounded-screen story encounters and deterministic tests for all routes, rejection, old-save restoration and earned epilogues. Isolate a pure romance module from the concurrently claimed core-voyage engine t-003. Additional rendered art remains t-008. See content/RELATIONSHIPS-BIBLE.md.
+    note: >-
+      User-directed adult romance: three authored scenes for a four-person relationship with captain, Vela, Taal and Omi, individual consent, boundaries, earned commitment, principled rejection and breakups; additional individual Rue and Tess relationship routes that may fail.
 
-      Authored and wired an optional three-chapter four-person alien romance with Vela, Taal and Omi, plus conditional Rue/Tess romance arcs, separate consent, pressure rejection and amicable breakups. Saves store relationship decisions on the existing VoyageRun object and original local key; finite ending epilogues respect the primary galactic finale. Added consent, save and seeded tests. Kind Robots implementation PR opening after this review event.
-
-      Merged complete optional first-voyage romance slice in Kind Robots PR #4268, commit f21510f6ad61ec5094b69f278599e5a03ed7b8c5. It adds the Three-scene Four-Cushion Accord among the captain, Vela, Taal and Omi, with independent consent, ethical rejection, amicable breakup and a committed four-person path. Optional Rue and Tess romantic stories have separate doctrine restrictions and non-happy branches. Pure story code, bounded-screen debrief dialogue with portrait fallbacks, saved relationship decisions and distinct final epilogues preserve the existing game-of-captains-voyage-v1 local storage key, mission stats and 3-officer roster. All 16/16 GitHub Actions workflows completed green on final PR head de17669cd28bd9ead15150d89ce6a23c6e8bb254, including game seeded tests, TypeScript, Prettier and contract shards. Original design brief and ROMANCE-BIBLE merged through Conductor #6711, commit c141f538a4c0f2140f49d5b012727f5eae7f96b7. Rendered romance illustrations, wider campaign consequences and real self-hosted deployment remain later art/quality tasks; no ArtJob IDs or production release verification claimed.
+      Full history: projects/game-of-captains/HISTORY.md#t-017
     claimed_by: 2026-10-27T012900Z-space-couch-t017-8f74
     claimed_at: '2026-10-27T01:29:00Z'
     updated: '2026-10-27T01:49:00Z'
@@ -455,12 +377,10 @@ tasks:
     status: done
     passes: 0
     stakes: reversible
-    note: |-
-      Silas 2026-10-26: expand and deepen each romance, at least one path for every crew member, and cross-crew paths. Extend t-017's consent-first three-scene romance engine to 12 individual courtships and six original crew-pair routes covering all 12 officers, preserving the Four-Cushion Accord, v1 saves and optional/non-punitive refusal. Give every route distinctive dialogue, incompatibilities, earned success, friendship, heartbreak and epilogue. Author the four not-yet-playable expansion crew paths separately, never count unimplemented art or cast as available. Validate seeded replay for each route and pair, old saves, duplicate actions and multi-role outcomes. Coordinate with independently in-flight Forge plan/roadmap PR #6714.
+    note: >-
+      Silas 2026-10-26: expand and deepen each romance, at least one path for every crew member, and cross-crew paths.
 
-      Authored 12 individual and six crew-pair three-part romance paths and preserved the four-person agreement. Kind Robots PR #4274 contains the reusable story engine, typed text catalogue, distinct negotiation and endings, off-duty autonomy and from-new-game coverage. Conductor #6716 adds readable canon for the twelve live officers and four future non-playable recruits. All merged work requires completed green checks.
-
-      Kind Robots PR #4274 merged to main as 1041ac7f9bd07991865ea9dd63d542919030289d. All thirteen pull-request workflow groups were completed and passed on final head f4989fa08b21b3de2373e8a56b6752d884cf3697, including game tests, TypeScript, formatting and all contract shards. Twelve solo three-stage romances, six additional cross-crew paths and the original four-person agreement are authored, playable, save compatible, consent-first and tested. Story atlas Conductor PR #6716 merged as de8b917d3e00f3a9c8bc89d320566a1bfac1d0ba with four green workflow groups. ArtJob portrait/outcome coverage, future four recruits and longform relationship continuity remain downstream work; self-hosted deployment not verified.
+      Full history: projects/game-of-captains/HISTORY.md#t-021
     claimed_by: 2026-10-27T022300Z-space-couch-t021-5cb9
     claimed_at: '2026-10-27T02:23:00Z'
     updated: '2026-10-27T02:53:00Z'
@@ -474,12 +394,10 @@ tasks:
     updated: '2026-10-27T04:53:00Z'
     passes: 0
     stakes: reversible
-    note: |-
-      Silas 2026-10-26 PT approved building a substantial branching Act I after gameplay-depth audit in kind_robots#4182. Deliver a replayable, choice-led Act I mission board with materially different reachable destinations, eight or more distinctive missions, persistent civilian/faction consequences, crew-enabled special routes, adversary callbacks, and a map-like choice interface in the art-forward couch game. Preserve v1 saved voyages, personal quests, romance scenes, ethical intervention and game result math. Test seeded trajectories from different crews, captains and decisions, expiration, reload and genuine state-dependent payoffs. This is an Act I milestone, not completion of t-004's 30 missions or t-007's full 3 acts.
+    note: >-
+      Silas 2026-10-26 PT approved building a substantial branching Act I after gameplay-depth audit in kind_robots#4182.
 
-      Added a playable three-stage branching Act I mission board with nine original mission families (six beyond the existing first voyage), twenty-seven unique ethical commands, persistent local-world decision flags, seeded villain mission sabotage, seven new crew synergies, world echoes and contextual final-epilogue memories. Compatible with prior version-one save keys and legacy original mission IDs. Branching and old-save seeded tests plus single-screen chart controls ready for CI review.
-
-      Kind Robots PR #4286 merged to main as 46264ddbc53ab50589c399114d66fc9694eba39e. All sixteen of sixteen GitHub Actions workflows completed green on final PR head f518166f64dbe36cabce569ed2fdef09999987af, including deterministic Space Couch seeded game replay, TypeScript, formatting, layout and four contract shards. Act I now has 9 distinct mission families and 3 selectable chapter boards, 27 world-specific ethical actions with saved civic flags and distinct aftermath prose, seeded antagonist-specific mechanical penalties, 7 additional pair synergies, changed subsequent access/odds and final civilian callbacks. Old voyage key and earlier mission identifiers remain compatible. No ArtJobs or production deploy/physical screen QA claimed. Full 30 mission, 40 encounter, 16 ending and 220+ trio adventure production tasks remain open.
+      Full history: projects/game-of-captains/HISTORY.md#t-022
 
   - id: t-023
     milestone: m2
@@ -490,12 +408,10 @@ tasks:
     updated: '2026-10-30T10:46:01+00:00'
     passes: 0
     stakes: reversible
-    note: |-
-      Silas 2026-10-26 PT requests six specific highly comic captain archetypes (genius punkette, bombastic wannabe hero, velvet horror-show host, stuttering bored time traveler, severely gothic recycled-fluid drinker, paranoid final girl promoted from janitor four weeks ago), and equally distinctive crew. Preserve all IDs, art keys, shared save format, roles and existing branching quests/romances. Rewrite selection sheet voice, folly, narrative promises, strengths and dramatic price for all 18. Make Mox-9 visibly an embodied sentient android struggling with its autonomy. Include captain-specific gameplay variation and crew counterpoints. Test unique hooks, saved games, opening identities and all playbook contracts before merging. No new art/render/deploy is claimed.
+    note: >-
+      Silas 2026-10-26 PT requests six specific highly comic captain archetypes (genius punkette, bombastic wannabe hero, velvet horror-show host, stuttering bored time traveler, severely gothic recycled-fluid drinker, paranoid final girl promoted from janitor four weeks ago), and equa
 
-      Rewrote six captain archetypes and all twelve crew dossier hooks, comic objects, character flaws, narrative promises and role-specific dialogue; Mox-9 now explicitly an embodied sentient android. Added six character specific once-per-chapter player decisions with tactical risk/reward and named crew rebuttals, save and finale callbacks. Revised game selection sheets and added seeded CI verification. Independent cast art/voice atlas on Conductor design branch; painted portraits still pending.
-
-      Triage 2026-10-30 (verified on kind_robots main 0bb3088): rescue PR #4413 merged six captain archetypes and twelve crew dossiers with once-per-chapter decisions. Painted portraits belong to t-008.
+      Full history: projects/game-of-captains/HISTORY.md#t-023
 
   - id: t-024
     milestone: m2
@@ -506,11 +422,10 @@ tasks:
     updated: '2026-10-30T10:46:02+00:00'
     passes: 0
     stakes: reversible
-    note: |-
-      Silas 2026-10-27 PT requests a grander cosmic-satirical adventure format drawing on original comedic pulp SF, bizarre galactic satire, fatalistic shipboard humor and surreal speculative fiction. Add a travel/quests expedition phase alongside existing Act I mission/crew-quest loops. Each destination has 1-4 main encounters and several minor local or galaxy-wide encounters, allocated among captain plus three officers; distinct secrets emerge from officer assignments to minor errands and from delegating consequential diplomacy to unskilled redshirts. Add a miniaturized couch redshirt dorm, hire/survival/fatality mechanics targeting 1-in-3 deployment fatality, and 100 explicitly unique named redshirts with visually diverse alien bodies, redshirt uniforms, differentiated stats, latent power, and character backstory. Preserve save format and autonomous crew/romance story paths, and document separately generated character portrait/encounter art queue slots. Seeded tests for exact authored roster count, reproducible missions, crew exclusivity, consent/skill checks, fatality, recruitment, and old-save restoration. Not a claim that portraits are painted.
-      CLAIM RETURNED 2026-10-27 PT: a Forge-upgrade agent re-claimed this task (session 2026-10-27T19:30:00Z-sc-rescue) to rescue the stale red PR #4305. It then saw the original redshirt session push e85855d and ce346dd at 19:31Z, stopped without pushing, and handed the claim back to that session. claimed_at is set to its 19:31Z push.
+    note: >-
+      Silas 2026-10-27 PT requests a grander cosmic-satirical adventure format drawing on original comedic pulp SF, bizarre galactic satire, fatalistic shipboard humor and surreal speculative fiction.
 
-      Triage 2026-10-30 (verified on kind_robots main 0bb3088): stale 10-27 claim. Work merged via #4336 + #4366: 100 unique redshirts (test asserts unique names/bodies/powers), dorm, 1-in-3 fatality roll, expedition phase, saves. Closed-unmerged #4305/#4414 are superseded; remote branch worker/space-couch-t024-redshirts-travel-e62b holds only older text and is safe for branch-janitor. 200 redshirt portraits are art work under t-008.
+      Full history: projects/game-of-captains/HISTORY.md#t-024
 
   - id: t-025
     milestone: m3
@@ -521,20 +436,20 @@ tasks:
     updated: '2026-10-27T18:10:00Z'
     passes: 0
     stakes: reversible
-    note: |-
-      User on October 27 PT explicitly requested immediate redshirt art submission while the home art generator has capacity. Reuse the exact 100 stable identities, anatomy, histories and powers in Kind Robots PR #4305; submit 100 recruitment portraits plus 100 secret-power action paintings to the authenticated Kind Robots ArtJob queue using an auto-submit Conductor ledger. Ensure consistent bright red uniforms with radically diverse alien body plans, unique seeded prompts and persistent ArtJob IDs, idempotent reruns and real provenance before calling art delivered. Render results and production manifests require separate verification.
+    note: >-
+      User on October 27 PT explicitly requested immediate redshirt art submission while the home art generator has capacity.
 
-      User explicitly requested live redshirt art batch submission on October 27 PT. Created and merged Conductor PR 6736, the 200-request Krea2 ledger, dedicated deduplicating credentialed submit script, safety tests and trigger workflow. Actual run 40556939008 completed successfully; fetched ledger from main afterward and verified exactly 200 unique accepted ArtJob IDs 48128-48327, one recruitment portrait and one secret-power plate for each of 100 stable rs-001..rs-100 aliens from Kind Robots PR 4305. The requested deliverable is authenticated ArtJob submission only. Images are not marked rendered, approved or wired to the client.
+      Full history: projects/game-of-captains/HISTORY.md#t-025
   - id: t-026
     milestone: m3
     title: 'Playbook Forge upgrade: literal Krea 2 prompts for every Space Couch beat and Act II-III missions in dry space-comedy satire'
     status: done
     stakes: reversible
     passes: 0
-    note: |-
-      Silas, 2026-10-27 PT: "Anything that is in playbook forge and has quests unwritten or art prompts unwritten should be upgraded. (Memory dungeon will take the longest and should be last). Space couch has a lot of fresh writing still in need and still looking to capture that right blend of space comedy and satire. All art prompts should be written for the appropriate engine, no metaphors for krea2." Shared bar: kind_robots PR #4308 (verifyPlaybookArtPrompts, artPromptsComplete). Forge 2026-10-27: 21 unpainted beats have no prompt; plan gaps quests 9/30, encounters 9/40, locations 9/12, endings 4/16, villain endings 0/24. Write new missions and encounters that lean into the literal red-couch starship and deadpan bureaucratic satire, wired into play with saves preserved. Advances t-004, t-005 and t-014 without closing them.
+    note: >-
+      Silas, 2026-10-27 PT: "Anything that is in playbook forge and has quests unwritten or art prompts unwritten should be upgraded.
 
-      Triage 2026-10-30 (verified on kind_robots main 0bb3088): stale 10-27 claim. Forge gaps named in the task are closed (quests 30/30, locations 12/12, endings 16/16, villain endings 24/24); #4309 wrote literal Krea 2 prompts and artPromptsComplete is true.
+      Full history: projects/game-of-captains/HISTORY.md#t-026
     updated: '2026-10-30T10:46:02+00:00'
     claimed_by: 2026-10-27T19:40:00Z-spacecouch
     claimed_at: '2026-10-27T18:58:25Z'
@@ -548,12 +463,10 @@ tasks:
     updated: '2026-10-30T10:46:03+00:00'
     passes: 0
     stakes: reversible
-    note: |-
-      Silas 2026-10-27 PT: keep each Space Couch voyage within a randomized bounded number of distinct solar systems, each with its own systemic conflict and revisitable identity. Every selected system has one casino built ON and AROUND a living Galactus-scale blue alien person, with its Serendipity franchise physically INSIDE or ON that casino. Never treat the bar and casino as separate destinations. Author at least twenty distinctive Serendipity themes (including Tex-Mex cantina and crumbling arcade- sports-bar variants), EACH with an independently illustrated venue and unique playable questline, not recolors or shuffled identical quest text. The blue giants' homeworld was colonized; the colonists call the use of their bodies as casinos a "fair" compromise. Treat the power imbalance and host consent as dramatic conflict, not a settled moral fact. Each visit draws randomized playable encounters within the combined casino/bar venue, with real decision/consequence differences, enduring system identity and seed/save compatibility. Keep Serendipity the separate sentient establishment and Vox its own voice. Update the game map/arrival/expedition UI, give honest art-prompt backlog, and add seeded replay/regression tests. Human art and release gates remain separate.
+    note: >-
+      Silas 2026-10-27 PT: keep each Space Couch voyage within a randomized bounded number of distinct solar systems, each with its own systemic conflict and revisitable identity.
 
-      The implementation is open as kind_robots PR #4351 with twenty authored franchise questlines, finite seeded star circuits, preserved old saves and the living casino UI. Conductor #6757 merged with the private Krea 2 twenty-image ledger, deduped art submitter and internal workflow. Await current-head game PR checks, review, merge, image queue checkpoint, and later rendered/attached artwork verification.
-
-      Triage 2026-10-30 (verified on kind_robots main 0bb3088): 20 franchises x 3 beats, 12 system seeds, 4-7-system circuits (#4351, ledger conductor #6757). The 20 venue renders (0 DONE) move to t-008.
+      Full history: projects/game-of-captains/HISTORY.md#t-027
 
   - id: t-028
     milestone: m2
@@ -563,30 +476,10 @@ tasks:
     depends_on: t-003
     passes: 0
     stakes: reversible
-    note: |-
-      Silas 2026-10-27: make the quest/encounter loop feel like a console game, not stacked web forms. Each episode: arrange captain, crew and miniaturized redshirt cards adjacent to visible quest cards to maximize forecast success; conceal untested redshirt stats and talent, reveal competence only after their first resolved field encounter. Quests take 1-3 days (mostly one), including carried assignments and deadlines. Then draw one each from distinct seeded planet, occupied blue-giant casino and Serendipity franchise encounter decks; include recurring plot/crew stories, daily inciting incidents, at least one nontrivial deterministic choice, faction consequences and replay-safe saves. Principal nemesis interrupts at least every second episode and returns in an earned finale; create faction/quest ending gates. Show one-screen compact TV-episode console with readable cards, focus/touch/keyboard selection, a clear resolution step, episode recap and cheesy 'tune in next week' stinger. Reuse existing 100 redshirts, Act I-III missions, living casino venues, Serendipity questlines, nemeses and legacy saved VoyageRun IDs. Coordinate with active t-024 expedition engine and t-026 campaign work, avoid rewriting their owned data or corrupting existing run saves. Ensure CI, seeded full-cycle tests and phone/tablet/desktop geometry; final creative approval only after other agent-owned coverage is actually complete.
+    note: >-
+      Silas 2026-10-27: make the quest/encounter loop feel like a console game, not stacked web forms.
 
-      Space Couch's first episodic dispatch/deck console implemented on app branch worker/space-couch-t028-episode-console-7b4f2. Card-based full-screen quest assignments, redshirt hidden talent until first encounter, seeded mission forecast and duration, parallel dispatch, planet/casino/Serendipity decks, every-other-chapter nemesis interrupt, earned faction-ending codas, legacy v1 saves and deterministic tests. Pending app PR CI and source/visual review. Remaining scope may require a subsequent task increment after verification.
-
-      2026-10-27 PT Space Couch episodic dispatch console first playable increment MERGED in kind_robots PR #4356 (b387db38ac2eec6b8177af8f42925404d0c5bfd8). All 19/19 PR workflow groups completed green (TypeScript, full contract, gameplay slice, format, layout contract, Docker container build). Implemented one-screen redshirt/crew/captain card assignments with classified redshirt skills until first encounter, 1-3-day majority-one-day contracts, seeded simultaneous resolution and consequences, authored planet inciting cards, unique planet/casino/Serendipity encounter decks, every second-episode persistent nemesis card, faction-conditioned ending codas and tune-in-next-week stingers; saved VoyageRun v1 compatible. Next agent-owned work: live rendered phone/tablet/desktop cross-width assessment once manually deployed, test a whole episode from fresh save and after resume, audit visual/card legibility, balance and mission-result prose consistency, extend deck variations and finale conditions and adversarially test long-run pacing. The app PR merged without a production deploy; do not mark the full t-028 creative or device-test objective complete until these checks pass. Do not park at final human approval yet.
-
-      2026-10-27 PT: Player-requested episode pacing refinement: replace 1-3-day redshirt quest contracts with one-round resolution, cap unique recruits at 8 originals per voyage including fallen identities, and remember tested per-skill stats across new voyages on this browser. Solar-system plot deck cards receive explicit captain/three-officer casting, seeded one- or two-seat capacity, skill forecasts and single-round results, preserving constellation/clone/venue story systems. Implementation branch worker/space-couch-t028-one-round-c31f, pending PR and full CI. No cloud-profile sync or deployed visual verification claimed.
-
-      User-requested one-round Space Couch encounter and redshirt scarcity pass merged in silasfelinus/kind_robots PR #4366 (squash commit 93b31f7d793e5b65dc53126750b0439bc6f2ff05), with 19/19 head-SHA GitHub Actions workflows green, including seeded gameplay, TypeScript, full four-shard contract suite, changed-file formatting, layout and production-container build. Six starter originals and only two additional unique recruitment contracts per voyage; casualty history still counts against the eight-original cap. Per-person, per-skill field reports saved in independent local-browser knowledge ledger across new voyages, without changing v1 saves. Every expedition quest now resolves in one simultaneous round; planet, casino, Serendipity, constellation and nemesis plot cards require named 1 or occasionally 2 command officers from captain + selected three crew, with seeded skill forecast, persisted outcome, consequence and recap. Reused prior clone and 12-sign story. Remaining creative/release gaps: visually inspect actual deployed phone/tablet/desktop card layout and long-play pacing, verify persona/device persistence expectation, review plot narrative consequences and delivered portraits; no live deploy or final human approval claimed. Return t-028 to READY rather than DONE.
-
-      Additional Space Couch polish increment in worker/space-couch-t028-interleaved-quests-b72c: allow unfinished minor redshirt quests to reopen after mandatory main quest dispatch and between successive planetary, blue-giant casino and Serendipity plot cards; retain completed deck state and one-round timing. Remove fictional successful-outcome prose and unearned venue credit when a command team fails its seeded check, preserve the attempt record without advancing host consent or bar stage, and gate earned faction standings on successful outcomes while retaining legacy save credits. Added deterministic failure, side-quest, resume and UI contract regression tests. Pending PR/CI; no device screenshot or live deploy claimed.
-
-      2026-10-27 PT: Kind Robots PR #4368 squash-MERGED into main at 0e332bed4502104b2b8f213e0c5a63c403cfac56 after 18 of 18 exact-head Actions groups completed successfully (TypeScript, seeded Space Couch gameplay, 4 contract shards, changed-file Prettier, layout and production-container build). Shipped UI access to unresolved minor redshirt quests after mandatory main quest dispatch and between subsequent planet/casino/Serendipity/constellation/nemesis plot scenes; existing one-round dispatch and deck draw histories survive interruption and v1 restoration. Fifteen authored choice-specific setback responses distinguish failed command objectives from earned successes. Failed blue-giant casino and Serendipity visits preserve an attempt record but cannot pretend host consent, award a completed venue beat or unlock undeserved reputation; faction finale scoring now ignores failed contemporary results while respecting old draw records. New interleave/failure/legacy regression suite passed. Verified code on main and merged PR state; successful container build is not evidence of live deployment. Keep READY for genuine rendered multi-device playtesting, long-run adversarial pacing, painted art verification and later final approval, not HUMAN GATE.
-
-      Continuation after merged Space Couch PR #4368 (0e332bed4502104b2b8f213e0c5a63c403cfac56, 19/19 CI green): authored encounter skill/crew spotlight pass in Kind Robots PR #4369. Episode opening teaser now matches the actual planet card; all 10 planet scenes and 8 casino incidents have theme-specific skill checks; the 20 Serendipity settings, 12 signs and 8 nemeses get consistent thematic requirements. A named crew specialist grants +12 chance on their connected planet plot; recurring successful two-person teams earn a capped +15 rapport bonus with Lead/Support labels and readable recaps. Full seeded regression and TypeScript/contract CI pending; no live device or art approval claimed.
-
-      2026-10-27 PT: Two Space Couch gameplay increments merged and verified. PR #4368 squash 0e332bed4502104b2b8f213e0c5a63c403cfac56 with 19/19 workflow groups green: side redshirt quests remain playable between seeded one-round plot encounters, failed casino/Serendipity attempts no longer advance completed venue objectives or fabricate outcomes, and new adversarial resume tests cover the transition. PR #4369 squash dd5c9e2d4fa526fc920d61b00cbad1463a9fbabc with 18/18 groups green: opening teaser references the actual planet story, 10 planet and 8 casino encounters plus 20 Serendipity venues, 12 star signs and eight nemeses have coherent thematic skill checks; connected officer +12 specialty and prior successful lead/support pairing +5 per win (capped +15), with display and seeded regression. Main verified. Master issue #4182 updated. Remaining: real device screenshot review, original delivered art, full multivoyage adversarial narrative balance, and possible account-backed redshirt memory; task remains READY, not DONE or human-gated. No independently verified live production rollout.
-
-      Scoped episode dispatch follow-up: added a mission-by-mission casting comparison console with known skill forecasts, explicitly classified untried redshirt aptitudes, safe one-to-one crew swaps, clear and undo, and deterministic tests. No saved VoyageRun schema or encounter mutation. Implemented on worker/space-couch-t028-compare-cast-6bd4; pending PR and exact-head CI before merge. Final rendered device QA, painted images and long-play analysis remain for future increments.
-
-      Merged Kind Robots Space Couch tactical assignment console PR #4391 into main as af716434141f483ed2c59c6f10231c6801bf230f. All 16 of 16 exact-head GitHub workflow groups passed at 275f1043044937c63e145c58446bfce2152f7e48 including TypeScript, seeded gameplay, layout, formatter, and full contract shards. Cypress binary download in Comment Migration check initially failed with a corrupted upstream 34 MB download versus expected 249 MB; retry passed. New compare-cast panel presents known quest forecasts but redshirt untried talents remain classified; moves between occupied quest cards swap the assigned actors, and REMOVE / UNDO afford safe planning. Pure immutable planning helper and deterministic regression coverage included. No save-schema modification. Return task READY for visual phone/tablet/ desktop screenshot QA, long-run narrative balancing, and final original painted ArtJob delivery; no deployment or final human gate claimed.
-
-      Triage 2026-10-30 (verified on kind_robots main 0bb3088): one-screen dispatch board, hidden redshirt stats and encounter decks via #4356/#4366/#4388/#4391/#4467. Rendered phone/tablet/desktop QA belongs to t-011.
+      Full history: projects/game-of-captains/HISTORY.md#t-028
 
   - id: t-029
     milestone: m3
@@ -596,18 +489,10 @@ tasks:
     depends_on: t-003
     passes: 0
     stakes: reversible
-    note: |-
-      Silas 2026-10-27 continuation: dead miniaturized redshirts can be recovered in later episodes as clones, but never as an unpriced resurrection. Track a stable original identity, generation count, clone history, field memories, accumulated discoveries, death memorial, abilities and consequences across save/restore. Original death still matters; the clone must become a distinct continuing character, not just an identical reset. Build escalating clone tiers, each requiring earned research, missions, scarce supplies and ethical choices. Introduce a substantial multi-episode authored clone questline that unlocks one tier at a time and requires increasingly advanced living clones for its later story beats; allow refusal, consent and non-clone alternatives. Future expeditions can bring back fallen personnel and use differentiated clone abilities, with player-visible generations, memories and mission consequences. Include clone-dependent faction reactions and unique finale/epilogue, not purely cosmetic progression. Preserve one hundred existing redshirt IDs, fog-of-war learning, independent casualty outcomes, seeded episode boards, old v1 save compatibility and the separate outstanding t-024/t-028/t-026 workers' changes. Reconcile those PRs rather than overwriting their files; ship tested staged playable progress and keep unfinished story/art scope open.
+    note: >-
+      Silas 2026-10-27 continuation: dead miniaturized redshirts can be recovered in later episodes as clones, but never as an unpriced resurrection.
 
-      First playable Red Thread clone-story tranche in Kind Robots PR #4357. Five authored chapters with branching consent/evidence/shortcut choices, 4 generations, field-experience/episode gating, memorial and lineage records, generation bonuses and unique clone-rights or coerced-copy finale codas. A versioned v1 save extension retains existing IDs. Compact clone lab integrated with the new episode console and tested in seeded gameplay and save restore. CI currently being verified. Concurrent t-034 duplicate-key blocker was surgically corrected before this event's retry. Art variants, UI geometry post-deploy and further adversarial whole-run review remain to complete before any human gate.
-
-      Kind Robots Space Couch PR #4357 merged at df1ccd739206ad2deb587211a73581a2bb2edbfd after 19 of 19 current-head workflow groups finished successfully (head b48b528b66093e59e73fc65038de62accb3c310c). Implemented a 5-act branching Red Thread storyline, four increasingly expensive and capable clone generations, previous-episode field experience and story gating, original memorial continuity, additive v1 save validation, console lab and crew-card badges, clone-rights/consent endings and seeded regression tests. Future t-029 increments remain: produce and verify each clone generation's distinct character artwork, visually inspect deployed phone/tablet/desktop geometry, and run longer adversarial whole-run/branch-ending simulations. No new clone portraits, live deployment or final human acceptance claimed.
-
-      Scoped next clone-saga increment under review: living-witness only story gates; paid same-generation reprints for clones killed before earning a later act; four generation-specific tactical mission traits; one-time mission breakout effects for reputation, trust, nemesis pressure or supplies; named personal memory testimony; visible signature and iteration hints in the console. Adversarial test covers failure, mortality, rerolls, save reload and reward farming. Kind Robots branch worker/space-couch-t029-clone-afterlives-6fa4b, PR and exact-head CI required before merge. Art generation and device QA remain outstanding. No production deployment approved.
-
-      Kind Robots Space Couch PR #4374 merged as d39b265575c57e45cc0314144132a8d7fef0bb23 with all 18 of 18 exact-head CI workflow groups green at ee2faf67064169cb9949be0eb29b27835989b45e. Living named clone witnesses must survive earlier-episode assignments to unlock the next research act. After an untimely clone death, later episodes offer a paid same-tier reprint with unique printing records rather than a free upgrade or unwinnable dead end. Four generation skills have matching assignment odds and distinct nonfatal success benefits: evidence/reputation, diplomacy/trust, villain counterplay and rescue/supplies; individual memory testimony and clone-history UI add continuity. Tests now cover death/return, no-farm mission rewards, reprint save/restore and existing star-sign/episode compatibility. No new clone-art renderings or production deployment claimed. Further 100-person multi-generation art coverage, rendered phone/tablet/desktop QA and longer seeded ending/red-team playthroughs remain open under t-029; not For Human Gate.
-
-      Triage 2026-10-30 (verified on kind_robots main 0bb3088): 4-generation redshirt cloning saga with reprints, memorials and clone-rights endings via #4357 + #4374. Clone art is under t-008.
+      Full history: projects/game-of-captains/HISTORY.md#t-029
 
   - id: t-030
     milestone: m2
@@ -617,26 +502,10 @@ tasks:
     depends_on: t-003
     passes: 0
     stakes: reversible
-    note: |-
-      User direction 2026-10-27 PT: Start every fresh Space Couch voyage with three or four distinct personality choices. Reveal one of a complete original fictional constellation zodiac (e.g. Northern Sloth and Princess Mantic Shrimp), allow returning to change answers before accepting the result, then retain the assessment and sign with the captain's saved voyage. No silent skip, fixed sign by captain choice, real-world horoscope, or unrelated form-driven website UI. Provide story-rich sign-gated exclusive quest cards on the actual episode board so only captains with the corresponding matching sign see and resolve their quests. Choices alter flags, narrative and finale recognition, with seeded deterministic eligibility and replay/farming guards. Preserve old v1 saves, existing captain/crew selections, persistent clone saga and other currently active PR authors. Test all reachable signs, redo/accept boundaries, profile restore, cross-sign quest exclusion, gating, draw sequencing, and endings. No publication or human gate until final design and visual QA.
+    note: >-
+      User direction 2026-10-27 PT: Start every fresh Space Couch voyage with three or four distinct personality choices.
 
-      Four-question original constellation assessment and cinematic full-screen opening implemented in Kind Robots PR #4361. The twelve fictional signs include Northern Sloth and Princess Mantic Shrimp. All twelve are reachable through valid 4-choice responses; explicit reveal and keep/change answers gate captain/crew launch. Thirty-six sign-exclusive episodic quests (three per sign; chapters 1/4/7) persist world flags and earn separate constellation finale codas. Existing version-1 voyage saves remain valid. Concurrent clone saga PR #4357 was merged into the exact PR branch by a normal two-parent reconciliation commit, preserving clone features. Seeded gameplay, changed-file formatting, TypeScript and other CI passed; remaining contract/container checks pending, then PR may merge if green. Further rendered phone/tablet/desktop visual QA and bespoke constellation paintings remain future acceptance gates, not a human gate yet.
-
-      2026-10-27 PT: Merged Kind Robots PR #4361 on main with squash commit 5f5090dc0c974d4659366c6e8325ea4707b3e024 after 19 of 19 exact-head CI workflow groups passed at ff99c55aee79d027d50786464139c110005111ec. Original four-question cinematic Couchscope now gates first captain/crew selection, scores 12 valid original constellation signs, offers explicit reveal, retake and keep. Three sign-only quests per constellation create 36 unique episodes unlocking on chapters 1/4/7; choices, flags and complete/unfinished constellation codas persist in validated v1 saves. Reconciled concurrent clone-saga PR #4357 via non-forced two-parent merge; clone lab and generation bonuses kept intact. Master issue #4182 has details. No claim of bespoke generated constellation paintings or live deployed device rendering. Return READY for phone/tablet/desktop QA, missing artwork, adversarial whole-run polish and final design acceptance; not For Human Gate.
-
-      Built the Space Couch console opening and six origin choices before Couchscope, added saved settings and title-screen captain log, guarded new game replacement, illustrated each question with unique fallback art and painted-render slots, and made question layouts size to the available single-screen shell. Kind Robots PR pending verification; painted ArtJob IDs and rendered phone/tablet/desktop review remain open.
-
-      Merged Kind Robots Space Couch opening console PR #4375 on main (squash commit 34d79cb13d69ae0d7fddf659d506ba9b3fedd3e3) after all 17 of 17 exact-head CI workflow groups completed successfully on branch head 41afade83b7befcf0432da8cf2c74c30972e234b. Shipped opening intro title screen, Start New Game / Continue / Settings / Captain's Log, six independent persisted captain origins, four-question illustrated bounded-height Couchscope, four original SVG fallback plates and durable painted-art slots. Preserved simultaneous clone-saga work from PR #4374 through non-forced two-parent reconciliation. No painted Krea2/Arthemy ArtJob IDs, final WebP render deliveries or live phone/tablet/desktop device screenshots verified. Return task READY for paintings, real-device visual QA and adversarial full-run polish, not For Human Gate. Track art task t-008 and game master issue #4182.
-
-      Space Couch follow-up: refactored background, captain and crew onboarding to a bounded single-screen, art-backed personnel console. A six-per-page crew roster makes all 12 officers selectable without scrolling; captain and crew dossiers have paged story/stats/route content. Changes and seeded UI contract tests are on branch worker/space-couch-t030-personnel-console-4e83. Review CI before merging. Painted ArtJobs and live three-device visual acceptance remain outstanding.
-
-      Merged Kind Robots Space Couch PR #4388 on main, squash commit 744c0383f1a0a634e8d4bb8ced44904812300c20, after 16/16 exact-head CI workflows completed successfully on c5cc0fe091c09d75c83c190d9a9e78611a519114. Background, captain and crew selection now have no-scroll full-height art-backed personnel layouts; all 12 crew are reached in two six-officer pages; dossier story/route/skills views and primary actions stay in the fixed console. Live 390/768/1440px screenshot acceptance and delivery of painted Krea2/Arthemy Couchscope imagery remain outstanding; no ArtJob URLs verified. Reopen t-030 for those final acceptance tasks, not For Human Gate yet.
-
-      Image-first Space Couch captain and crew selector: full-size delivered portrait panels, always-visible statistics, crew choices confined to the opposite column, bounded mobile roster and content, retained 12-person pagination. PR branch: worker/space-couch-t030-image-first-5fe2. Artwork delivery and rendered 390/768/1440px acceptance remain outstanding.
-
-      2026-10-29 PT: Image-first captain and crew personnel console merged through Kind Robots PR #4467 (squash 867c084300efcfb8418e9e0d1b6cb1aa6264b464) after all 16/16 final-head Actions workflow groups passed, including TypeScript, Prettier, seeded gameplay, and full contract tests. The six existing captain and twelve existing officer portraits now anchor large responsive dossier figures; choices stay in the opposite column and four skill statistics are always shown. No saved-game or database changes. Continue t-030 for rendered 390/768/1440px visual QA and unverified new painted assets under art task t-008. Do not mark human-accepted or published.
-
-      Triage 2026-10-30 (verified on kind_robots main 0bb3088): Couchscope personality test with 12 signs and 36 sign-exclusive quests at chapters 1/4/7 (#4361). The 4 question images are SVG placeholders (t-008).
+      Full history: projects/game-of-captains/HISTORY.md#t-030
   - id: t-020
     title: "Space Couch: captain-first illustrated onboarding"
     status: review

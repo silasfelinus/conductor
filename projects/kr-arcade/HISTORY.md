@@ -575,3 +575,17 @@ RAN 2026-10-20: added utils/scripts/verifyCabinetSinkSudsSaves.test.ts (kind_rob
 <!-- note:begin t-156 -->
 Silas, 2026-10-15: "our arcade needs support for achievements ... 3 achievements for each game, with art, and an achievements section. This should extend to any of our other games: Zuzu experiences, shifting desks, etc. I fully authorize making new art for anything." Shipped in silasfelinus/kind_robots#3700 (merge ca4997a): 117 game achievements across 39 games (32 cabinets judged from score/level/mastery at run end; Zuzu Showdown, Gamebook, Shifting Lands, Shifting Desks, Zuzu's Lair and Emperor of Dust fired at the deed; Zuzu Pinball through a new table feats channel), the cabinet pane and game sidebars list each game's three, /achievements gains section chips, and 14 outdated site jellybeans were re-pointed or replaced (retired rows deactivated, earned records kept). achievement-catalog-maintenance.yml seeds the rows and queues entity-backed Krea 2 badge art on merge. Rendered-art and live-earn verification is t-157.
 <!-- note:end t-156 -->
+
+## t-158 — Ghost Trail Gen-2 design: Bell Road overworld graph, secret exits, haunted houses
+
+<!-- note:begin t-158 -->
+Silas, 2026-10-22 PT: Ghost Trail too needs the concept evolution to Super Mario Bros 3 / Super Mario World depth ("not high priority"). Write projects/kr-arcade/ghost-trail/GEN2-BELL-ROAD.md: turn the six Gen-1 stages into an overworld of 20-28 nodes over six regions (stage acts become separate levels), with fortresses, a haunted boarding house per region whose exit is the puzzle, at least one secret exit per region, the hidden Canyon Shrine zone, and which relics and subweapons are found where. Machine-readable enough for a catalog module, following TEN-HOUR-ROADMAP.md's "data manifests, not a bigger switch" rule.
+DONE 2026-10-22: ghost-trail/GEN2-BELL-ROAD.md and bellRoad.json (validate_bell_road.py PASS: 28 nodes over six regions, every Gen-1 act kept as its own level so saves and relics carry over, six haunted houses, two new fortresses, the Canyon Shrine hub, 10 secret exits, a ghost-bell wonder moment per level, worst-case three-slot save 4.6 KB).
+<!-- note:end t-158 -->
+
+## t-159 — Ghost Trail Gen-2 art round 1: Bell Road map, regional maps, haunted house, shrine
+
+<!-- note:begin t-159 -->
+art/GHOST-TRAIL-GEN2-ROUND-1.yaml (8 subjects x Arthemy/Z-Image = 16 cells) submitted 2026-10-22 via scripts/sweep_art_ledgers.py. Review each render in the ledger (keep/reroll), then hand keepers to t-160.
+2026-10-22: all 16 DONE and reviewed in the ledger. Z-Image is the overworld-map lane (real top-down maps); Arthemy turned 'map' into character vignettes and is kept only as concept art. Next: hand the Z-Image maps to t-160.
+<!-- note:end t-159 -->
