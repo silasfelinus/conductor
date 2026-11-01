@@ -60,3 +60,13 @@ Conductor#6110's unchanged reviewed head merged in another session at `2026-10-1
 
 **Kaizen task:** t026 — replace the static epilogue template regex as sole UI proof with a reproducible mounted-component/browser-storage contract. No additional kaizen is needed for this bookkeeping entry.
 
+
+## November 1, 2026 — t-025 review (reviewer)
+
+**Decision:** merged conductor#6916 (squash 50408aaf4), 24 checks success/intentional skip; 8 unit tests re-run locally and passing. Scoped, reversible; no art marked delivered or kept.
+
+**Good:** retention keyed on rendered+verified evidence; distinct round IDs no longer collapse on a shared media path; concurrent-edit guard and no resubmission of completed art.
+
+**Improve:** PR body said "no local execution claim" though the tests were runnable — run them and report.
+
+**Kaizen:** the Worker's suggestion (extend live reconciliation to all authored art rounds and surface unresolved rows in the release dossier) is accepted; not enqueued this run to avoid a roadmap collision with the close-out branch.
