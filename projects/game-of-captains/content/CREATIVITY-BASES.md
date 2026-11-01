@@ -24,6 +24,21 @@ The authored species and art keys are in `utils/gameOfCaptains/alienSpecies.ts`;
 
 Deliberately vary body size, life stage, palette, social structure, movement, predation, sentience and habitat. Avoid making every species a paper-pushing bureaucrat with a clever species name, or copying terrestrial species without metamorphosis. Give each one a silhouette, an independently funny ecological behavior, a field-note reveal, and an image-keyed large splash. No collage and no lettering in art. The long red upholstered space couch and its invisible safety bubble remain recurring canonical props in contextual images, not mandatory clutter inside every creature portrait.
 
+## Emotional rock-paper-scissors, not outcome shopping
+
+**Three player-visible *actions*, three hidden results, three legible emotional situations.**
+The same action must be able to create a friendship, a ridiculous incident, or a retreat depending on the creature's cues. Do not title a button "Run Away," "Guarantee Friendship," "Record Alien," or "Chaos." The player chooses how the couch behaves; the alien chooses its response.
+
+| Creature's present state | Peaceful greeting | Quiet observation | Ridiculous improvisation |
+| --- | --- | --- | --- |
+| Wary or overwhelmed | Retreats from too much proximity | Chooses to approach and bond | Chaos, documented |
+| Playful or attention-seeking | Bonds through play | Unintended public spectacle, documented | Overwhelmed and retreats |
+| Protective or defensive | Intrusion triggers chaos, documented | Feels watched, retreats | A compassionate distraction creates trust |
+
+This is a balanced three-by-three design: every emotional state gives one bond, one chaotic record, and one escape; every player tactic can yield all three across situations. **The emotional clue is readable but not an outcome label.** Make it a fair interpretation, not hidden dice behind a decorative question.
+
+Consequences must extend beyond a sentence: a friendship lives in the scrapbook and can prompt a later callback; chaos becomes an embellished captain's-log incident and can change later first-contact rumors; retreat still informs a next encounter and must not make that species impossible to obtain. Do not tie a free optional collector encounter to unrecoverable ship damage, death, or mandatory mission failure. Every creature's field note, habitat and social situation should influence setup and aftermath; avoid the same generalized gag 101 times.
+
 ## Discovery without frustration
 
 - Encounter opportunities ride alongside **existing** chapters, expedition side routes, planetary/casino/Serendipity beats and late-game anomalies. One discovery opportunity per chapter is the pilot cap, not a mandatory menu before progression.
