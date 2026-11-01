@@ -53,7 +53,7 @@ class SnapshotTests(unittest.TestCase):
 
     def test_completed_submission_records_job_without_fake_delivery_or_verdict(self):
         blocked = preserve_completed_submissions([request()], art_dir=self.root)
-        self.assertEqual(blocked, set())
+        self.assertEqual(blocked, {REQUEST_ID})
         row = self.parsed()
         self.assertEqual(row["art_job_id"], 42163)
         self.assertEqual(row["status"], "requested")
@@ -79,12 +79,21 @@ class SnapshotTests(unittest.TestCase):
                 self.assertEqual(self.path.read_text(), LEDGER)
 
     def test_idempotent_and_conflicting_submission_not_overwritten(self):
-        self.assertEqual(preserve_completed_submissions([request()], art_dir=self.root), set())
+        self.assertEqual(preserve_completed_submissions([request()], art_dir=self.root), {REQUEST_ID})
         original = self.path.read_text()
-        self.assertEqual(preserve_completed_submissions([request()], art_dir=self.root), set())
+        self.assertEqual(preserve_completed_submissions([request()], art_dir=self.root), {REQUEST_ID})
         self.assertEqual(self.path.read_text(), original)
         self.assertEqual(preserve_completed_submissions([request(job_id=99999)], art_dir=self.root), {REQUEST_ID})
         self.assertEqual(self.path.read_text(), original)
+
+    def test_verified_image_and_media_evidence_allow_retirement(self):
+        delivered = LEDGER.replace("status: requested", "status: delivered")
+        delivered = delivered.replace("art_job_id: null", "art_job_id: 42163")
+        delivered = delivered.replace("art_image_id: null", "art_image_id: 252101")
+        delivered = delivered.replace("  verdict: null", "  delivery_check: 'ArtJob 42163 DONE; HEAD 200 image/webp and newer Last-Modified'\\n  verdict: null")
+        self.path.write_text(delivered, encoding="utf-8")
+        self.assertEqual(preserve_completed_submissions([request()], art_dir=self.root), set())
+        self.assertEqual(self.path.read_text(), delivered)
 
     def test_concurrent_edit_stops_before_write(self):
         def competing_editor(path):
