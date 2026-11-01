@@ -55,6 +55,7 @@ def test_all_six_earned_history_openings_preserve_causal_costs():
     assert {(h["e02"], h["e04"]) for h in PACKET["histories"]} == set(
         itertools.product(VERDICTS, GATES)
     )
+    assert len({h["openingDialogue"] for h in PACKET["histories"]}) == 6
     assert "writer-only" in PACKET["entryContract"]["e02RuntimeMapping"]
     assert "Never invent" in PACKET["entryContract"]["e02RuntimeMapping"]
     for history in PACKET["histories"]:
