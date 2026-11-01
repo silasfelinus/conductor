@@ -370,6 +370,8 @@ class HoshimoriGalleryReadinessTests(unittest.TestCase):
         from audit_memory_dungeon_hoshimori_gallery_readiness import ROUND4_LEDGER
         fourth = yaml.safe_load(ROUND4_LEDGER.read_text(encoding="utf-8"))
         fourth["requests"][0]["last_art_job_id"] = 69999
+        for request in fourth["requests"][1:]:
+            request.pop("last_art_job_id", None)
         report = audit_bound_live(fourth, [], lambda _path, _created: "delivered",
                                   round_number=4)
         self.assertEqual(report["delivered"], 0)
