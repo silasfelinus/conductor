@@ -1,0 +1,76 @@
+name: Memory Dungeon Hoshimori Bound Gallery Round 4
+
+# Scoped, idempotent eight-request ArtJob submission. Relay owns rendering.
+# This does not deploy the app or declare gallery media/player unlocks delivered.
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/memory-dungeon-hoshimori-bound-gallery.yml"
+      - "projects/memory-dungeon/art/HOSHIMORI-GALLERY-BOUND-ROUND-4.yaml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: memory-dungeon-hoshimori-bound-gallery
+  cancel-in-progress: false
+
+jobs:
+  submit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      KR_BASE_URL: https://kindrobots.org
+      KR_MEDIA_ORIGIN: https://media.acrocatranch.com
+      PYTHONUNBUFFERED: "1"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install manifest parser
+        run: python -m pip install --disable-pip-version-check --quiet pyyaml Pillow
+      - name: Source and destination preflight
+        run: |
+          python scripts/verify_memory_dungeon_hoshimori_bound_gallery.py --round 4
+          python -m unittest discover -s tests -p test_memory_dungeon_hoshimori_bound_gallery_round4.py -q
+      - name: Submit only this eight-face gallery batch
+        env:
+          KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+        run: |
+          set +e
+          python scripts/consume_art_requests_to_media.py --live --submit-only --limit 0 \
+            --queue-file projects/memory-dungeon/art/HOSHIMORI-GALLERY-BOUND-ROUND-4.yaml \
+            --id-prefix hoshimori-e0
+          result=$?
+          set -e
+          echo "submission_exit=$result" >> "$GITHUB_ENV"
+      - name: Checkpoint durable ArtJob receipts even after partial submission
+        run: |
+          set -euo pipefail
+          git config user.name "conductor-bot"
+          git config user.email "conductor-bot@users.noreply.github.com"
+          git add projects/memory-dungeon/art/HOSHIMORI-GALLERY-BOUND-ROUND-4.yaml
+          if ! git diff --cached --quiet; then
+            git commit -m "chore(memory): checkpoint bound Hoshimori gallery ArtJob receipts [skip ci]"
+            pushed=false
+            for attempt in 1 2 3 4 5; do
+              if git push origin HEAD:main; then pushed=true; break; fi
+              git pull --rebase --autostash origin main
+            done
+            if [ "$pushed" != true ]; then
+              echo "::error::ArtJobs may exist but receipt checkpoint failed"
+              exit 1
+            fi
+          fi
+      - name: Verify all eight live bound ArtJobs
+        env:
+          KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+        run: |
+          test "$submission_exit" = "0"
+          python scripts/verify_memory_dungeon_hoshimori_bound_gallery.py --round 4 --require-jobs --live
