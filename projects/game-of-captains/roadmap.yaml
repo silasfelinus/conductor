@@ -214,7 +214,7 @@ tasks:
   - id: t-009
     milestone: m3
     title: "Deliver unique mission outcome, conversation and ending illustration coverage"
-    status: claimed
+    status: review
     depends_on: t-007
     owner: worker
     passes: 0
@@ -224,9 +224,11 @@ tasks:
       2026-10-30 art refill (no delivery yet): conductor #6822 (5916213) and #6836 (0c12b67) queued 1,168 self-hosted Krea 2 ArtJobs from the literal kind_robots WARP_ART_PROMPTS, with assets equal to the keys artSlots.ts looks up. RUNTIME-SLOTS-ROUND-2: 68 cells (27 missions, 5 nemeses, 12 earned galactic endings, 24 nemesis endings), jobs 51703-51770. PARTY-ADVENTURES-ROUND-1 packs 1-7: 1,100 trio step/ending plates (all 220 trios), jobs 50862-52034 at priority 60; 7 pack-6/7 cells hit HTTP 502 and are retrying. Also recorded the never-refreshed results: Serendipity casinos 20/20 DONE and redshirts 195/200 DONE. 5 redshirt jobs were CANCELLED (rs-013 x2, rs-030 power, rs-036 x2); that ledger is owned by its targeted workflow. Next: once DONE, export with scripts/export_round_art.py --manifest utils/gameOfCaptains/artManifest.ts --manifest- root game-of-captains, review contact sheets, and export the 20 DONE venues (no export yet). Not done until images ship in the game.
 
       Continue Space Couch by delivering the 21 completed CONSEQUENCES-ROUND-1 Krea2 ArtImages as genuine authored decisions, deterministic success/failure, world flags, callbacks and earned epilogues in matching live missions. Preserve existing saves and access-filtered image delivery.
+
+      Implemented three authored Space Couch mission dilemmas from canonical CONSEQUENCES-ROUND-1 on the actual bar, archive and courtesy-reactor routes. Each has three distinct choices, deterministic crew/skill checks, success/failure text, persistent world flags, consequence meters, later callbacks and earned epilogues. Registered all 21 completed ArtImages with the existing authorized art route and showed outcome paintings on debrief. New regression tests cover 18 branch keys, seeded replay, restored saves and all three ending codas. Scope remains partial: further art campaigns and real browser QA remain outstanding. Open the Kind Robots PR and verify all exact-head CI before merge.
     claimed_by: 2026-11-01T092000Z-space-couch-t009-consequence-f6a94d
     claimed_at: '2026-11-01T09:20:00Z'
-    updated: '2026-11-01T09:20:00Z'
+    updated: '2026-11-01T09:45:00Z'
   - id: t-010
     milestone: m4
     title: "Run antagonist-by-captain-by-crew adversarial and every-ending seeded traces"
