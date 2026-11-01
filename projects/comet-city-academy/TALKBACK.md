@@ -35,3 +35,14 @@ Merged (squash 9017e41). Art ledgers/prompts only, reversible, CI green. The fiv
 **Remaining:** Task t-004 remains `ready` for delayed faction standing, injured-roster conflicts, more deeply authored moral approaches and callback branches across all 36 families. An authored text callback is not itself a complete persistent consequence system.
 
 **Kaizen:** Preserve the distinction between a player-led patrol, a delegated call, and an unanswered emergency in structured report provenance rather than inferring the choice only from display names.
+
+
+## 2026-10-31 PT · Worker · t-004 case-history gameplay · PR #4569
+
+**Shipped:** Kind Robots PR #4569 merged as `c412e3a` after 19/19 completed checks passed. Thirty-day campaigns now save a validated history of 36 authored case families and whether a call was left unanswered. Investigating in a district uses outcomes from the previous five nights as a bounded seeded mission modifier. Failed attempts and ignored emergencies are distinct, older saves retain compatibility, and duplicate history is rejected.
+
+**Adversarial finding:** An initial passive modifier changed the three established seeded campaign finales, including the canonical transmitter shutdown. Restored legacy rescue odds by applying the trust modifier only to a personally selected investigative approach. The 30-day seeded playthrough and new case-memory test both passed on the merged head.
+
+**Remaining:** t-004 returns to `ready` for broader roster injury follow-ups, faction relationships, and character-specific delayed callbacks. This was a gameplay effect and save contract, not final art or self-hosted deployment verification.
+
+**Kaizen:** Show local case memory in the investigation dossier, with a player-visible rationale for the trust bonus or cost.
