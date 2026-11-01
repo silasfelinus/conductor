@@ -204,7 +204,7 @@ tasks:
   - id: t-007
     milestone: m3
     title: "Expand seven-district city map into navigable authored overworld"
-    status: ready
+    status: claimed
     depends_on: t-001
     passes: 0
     stakes: reversible
@@ -245,7 +245,10 @@ tasks:
       User requested featured dashboard highlights for both new Play games, Slime City and Hybridizer. Branch worker/slime-city-t007-home-highlights- 20261031T195107Z-d58a adds directly linked Featured experiences cards at /play/slime-city and /play/hybridizer in the home visitor directory, both categorized as Play and honestly labeled signed-in playtests. Their verified Play URLs are used. Neither game has a public poster asset yet, so the cards use distinct CSS graphic fallbacks rather than fake generated-art URLs. A navigation regression asserts both highlights, destinations, disclosure and fallback. Only navigation markup and a test changed; no database, game mechanics, API permissions, public release or live deploy. CI pending.
 
       PARTIAL 2026-10-31 PT: Slime City and Hybridizer now have direct highlighted home dashboard Featured experiences entries in Kind Robots. PR #4558 merged into main, squash 3288ff084415b02dade09498bd3074ce7bbdeff4. All 16/16 latest-head checks completed successfully, including layout, navigation, Playbook gameplay, TypeScript, formatting and all four Contract Test shards. Home highlights route to /play/slime-city and /play/hybridizer with Play filtering, honest sign-in playtest labels and CSS illustrated placeholders because no public project poster has been delivered. The navigation test asserts routes and labels. Claim bookkeeping duplicate updated-key was resolved and review event applied. Scope limited to home visitor directory and navigation regression test: no database or API writes, permissions, economy, account grants or publish. Code merged; self-hosted production deployment and browser rendering not verified. Keep t-007 ready for the remaining authored overworld expansion and screenshot QA; do not close umbrella #4535.
-    updated: '2026-10-31T20:02:14.948Z'
+    updated: '2026-11-01T03:57:00Z'
+    owner: worker
+    claimed_by: 2026-11-01T035700Z-slime-city-t007-c92d
+    claimed_at: '2026-11-01T03:57:00Z'
   - id: t-008
     milestone: m3
     title: "Ship earned Meat economy, safe card shop and random PvE encounters"
