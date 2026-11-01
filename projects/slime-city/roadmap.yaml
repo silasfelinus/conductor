@@ -164,7 +164,7 @@ tasks:
   - id: t-007
     milestone: m3
     title: "Expand seven-district city map into navigable authored overworld"
-    status: review
+    status: done
     depends_on: t-001
     passes: 0
     stakes: reversible
@@ -181,8 +181,9 @@ tasks:
       PARTIAL 2026-11-01: Kind Robots PR #4579 merged to main at baf2bff763bc00ac277b774799c1755ca5c84dba after all 15 latest-head workflows passed, including TypeScript, changed-file formatting, viewport/layout contracts and all four gameplay contract shards. Added an authored Grand Pit finale after champion victory/aftermath and pending city crises. The two mutually exclusive resolutions (neighborhood charter versus new Pit Boss) change standing, heat and persistent session-only battle modifiers. Authored epilogues reflect earlier solidarity choices. The illustrated internal-city screen displays the finale and supports continued exploration, revisiting the ending and explicitly starting a new city run. Regression contracts exercise gating, irreversible session choices, contract availability only after final choice, battle impact and store navigation. This is a source merge, not a verified self-hosted production deployment or actual new ArtJob/ArtImage delivery. Remaining t-007 scope includes real generated panoramas (t-017), account-backed overworld saves and post-deployment responsive visual verification; keep kind_robots master issue #4535 open.
 
       Non-art city/campaign persistence increment: account-backed snapshots, admin-only GET/POST routes, cross-tab revision conflict protection, shared wallet preservation, pure schema validation, and contract tests. Implementation PR and full CI follow; no art wait, no deployment claimed.
-    updated: '2026-11-01T13:04:00Z'
-    owner: worker
+
+      Non-art overworld milestone delivered on main: Kind Robots PR #4596 merged as 59e3a83 after source, TypeScript, layout, and game-contract checks. Saved city routing, 9 street decisions, 7 districts, championship aftermaths, 3 crises, final city endings, and 6 faction campaigns now persist to the authenticated admin account with revision-CAS, strict validation, wallet preservation and sync recovery. Generated illustration receipts and placement remain separate art track t-017; cross-width post-deployment visual acceptance belongs to t-012/t-014. No public publishing or human approval implied.
+    updated: '2026-11-01T21:43:50Z'
     claimed_by: 2026-11-01T125400Z-slime-city-t007-q7b4
     claimed_at: '2026-11-01T12:54:00Z'
   - id: t-008
