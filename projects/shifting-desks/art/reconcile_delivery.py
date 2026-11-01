@@ -23,7 +23,7 @@ import yaml
 
 ROOT = Path(__file__).resolve().parents[3]
 ART_DIR = Path(__file__).resolve().parent
-ROUNDS = (13, 14, 15)
+ROUNDS = (13, 14, 15, 17)
 MEDIA_HOST = "media.acrocatranch.com"
 
 
