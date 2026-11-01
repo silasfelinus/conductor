@@ -2608,3 +2608,19 @@ pitches:
           - see PR for CI results
         deferred:
           - sandbox-access-gap (see SPEC.md "Sandbox verification gap")
+
+  - id: lighthouse-fog-sweep
+    title: Lighthouse Fog Sweep
+    status: shipped
+    priority: 99
+    surprise: A slow lighthouse beam sweeps drifting fog banks and makes hidden ship lights flare as it passes.
+    builds:
+      - version: 1
+        status: shipped
+        component: components/screenfx/lighthouse-fog-sweep.vue
+        pull_request: silasfelinus/kind_robots#4586
+        commit: 99e05bf5bef47067625e169b2e6e2dc994d7e19a
+        released_at: '2026-11-01T14:00:00Z'
+        verification:
+          - 18/18 CI checks green
+          - test:animation-catalog (87 effects)
