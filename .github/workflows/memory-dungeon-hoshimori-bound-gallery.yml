@@ -38,7 +38,7 @@ jobs:
       - name: Source and destination preflight
         run: |
           python scripts/verify_memory_dungeon_hoshimori_bound_gallery.py
-          python -m unittest -q tests.test_memory_dungeon_hoshimori_bound_gallery
+          python -m unittest discover -s tests -p test_memory_dungeon_hoshimori_bound_gallery.py -q
       - name: Submit only this eight-face gallery batch
         env:
           KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
