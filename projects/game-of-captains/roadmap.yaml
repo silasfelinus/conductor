@@ -214,9 +214,8 @@ tasks:
   - id: t-009
     milestone: m3
     title: "Deliver unique mission outcome, conversation and ending illustration coverage"
-    status: review
+    status: ready
     depends_on: t-007
-    owner: worker
     passes: 0
     stakes: reversible
     note: |-
@@ -226,9 +225,9 @@ tasks:
       Continue Space Couch by delivering the 21 completed CONSEQUENCES-ROUND-1 Krea2 ArtImages as genuine authored decisions, deterministic success/failure, world flags, callbacks and earned epilogues in matching live missions. Preserve existing saves and access-filtered image delivery.
 
       Implemented three authored Space Couch mission dilemmas from canonical CONSEQUENCES-ROUND-1 on the actual bar, archive and courtesy-reactor routes. Each has three distinct choices, deterministic crew/skill checks, success/failure text, persistent world flags, consequence meters, later callbacks and earned epilogues. Registered all 21 completed ArtImages with the existing authorized art route and showed outcome paintings on debrief. New regression tests cover 18 branch keys, seeded replay, restored saves and all three ending codas. Scope remains partial: further art campaigns and real browser QA remain outstanding. Open the Kind Robots PR and verify all exact-head CI before merge.
-    claimed_by: 2026-11-01T092000Z-space-couch-t009-consequence-f6a94d
-    claimed_at: '2026-11-01T09:20:00Z'
-    updated: '2026-11-01T09:45:00Z'
+
+      PR #4580 merged at Kind Robots main SHA 512a2838e5ae0fb8bb80b41b45556349eb728a32 with 20 of 20 exact-head workflow groups completed SUCCESS, main verified and feature branch deleted. The user-directed Space Couch case slice made three canonical mission dilemmas playable: nine choices, eighteen distinct deterministic success/failure branches, saved decisions, world flags, meter effects, later callbacks, and three conditional epilogues without overriding the primary ending. All twenty-one DONE Krea2 ArtImages 253649-253669, corresponding to ArtJobs 46429-46449, are mapped through the viewer-filtered art endpoint into stage and debrief presentation. Regression tests covered seeded replay, save restoration and exact story art keys. This is one completed slice of t-009, NOT full task completion: other mission and finale art, actual private media delivery and rendered phone/tablet/desktop QA remain. No deploy or publishing.
+    updated: '2026-11-01T09:47:00Z'
   - id: t-010
     milestone: m4
     title: "Run antagonist-by-captain-by-crew adversarial and every-ending seeded traces"
