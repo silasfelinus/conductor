@@ -51,6 +51,18 @@ the question.
   and not "read AGENTS.md first" unless it makes rule-bound changes (then name the section). `Explore`
   for read-only search; `model: "haiku"`/`"sonnet"` for mechanical lookups. Ask for a short
   conclusion. Git-mutating subagents need `isolation: 'worktree'` (hard rule 12).
+- **Don't babysit CI.** Each wake of a session re-reads its whole context (~80k tokens), so a turn
+  per "N checks pending" update costs as much as real work. After opening a PR, enable auto-merge
+  (GitHub MCP `enable_pr_auto_merge`, squash) and end the run; the next sweep's
+  `check_pr_merged_drift` reconciles the task. If you must stay to fix CI, wait in ONE blocking
+  call that returns only when every check has finished — no progress turns. (2026-11-01: 20 of an
+  hourly run's 21 turns were CI-wait wakes, ~40% of its cost.)
+- **Read at the level you need.** Portfolio → `python scripts/project_triage.py` (completion tier
+  and lanes per project); project → `show_task.py <project> --list`; task → `show_task.py <id>`.
+  Never open roadmaps to answer a portfolio question.
+- **Tier-A projects don't need writing sessions.** When `project_triage.py --tier A` lists a
+  project, its remaining work is art, QA-after-art, review→done reconciliation and Silas's gates.
+  Don't claim it for extra polish; move its art and close its review tasks.
 - **Recurring no-op cycles rest; gated ones don't re-arm.** `close_task.py ... ready --noop`
   (2h→48h backoff); a cycle whose next step is Silas's call goes to `needs-human`.
 - **Don't narrate history into instruction files.** This file and CLAUDE.md are paid for by every
@@ -350,8 +362,8 @@ Numbers are stable (TALKBACK cites them); full text and incidents: [`docs/agents
     in the foreground.
 12. `isolation: 'worktree'` is REQUIRED for any background Agent that mutates git state in a repo
     the foreground session is using.
-13. A delegated agent's "waiting for CI, will re-check" is not a live block: poll CI yourself, merge
-    when green, then stop the agent via `SendMessage`.
+13. A delegated agent's "waiting for CI, will re-check" is not a live block: enable auto-merge on
+    its PR (or wait once, blocking, per "Don't babysit CI"), then stop the agent via `SendMessage`.
 14. Secrets on the Unraid host live in `<checkout>/.secrets/` (`/mnt/user/appdata/kind_robots/.secrets/`),
     never under `/mnt/user/pc` (bulk non-secret data there is fine).
 15. Any command you hand a human must be incapable of printing a secret: presence checks, `sed
