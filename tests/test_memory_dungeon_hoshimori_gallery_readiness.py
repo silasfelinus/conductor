@@ -34,8 +34,8 @@ class HoshimoriGalleryReadinessTests(unittest.TestCase):
         self.assertEqual(report["gallery_pilot"]["submitted"], 8)
         second = report["gallery_pilots"]["round2"]
         bound = report["gallery_bound"]
-        self.assertEqual(report["gallery_artjobs"], 8 + second["submitted"] + bound["submitted"])
-        self.assertEqual(report["gallery_unsubmitted"], 56 - second["submitted"] - bound["submitted"])
+        self.assertEqual(report["gallery_artjobs"], 8 + second["submitted"] + bound["submitted"] + report["gallery_bound_round4"]["submitted"])
+        self.assertEqual(report["gallery_unsubmitted"], 56 - second["submitted"] - bound["submitted"] - report["gallery_bound_round4"]["submitted"])
         self.assertEqual(report["gallery_delivered_images"], 0)
         self.assertEqual(report["style_artjobs"], 20)
         self.assertFalse(report["ready_for_gallery_submission"])
@@ -186,7 +186,8 @@ class HoshimoriGalleryReadinessTests(unittest.TestCase):
         self.assertFalse(report["ready_for_gallery_submission"])
         self.assertEqual(report["gallery_artjobs"],
                          8 + report["gallery_pilots"]["round2"]["submitted"]
-                         + report["gallery_bound"]["submitted"])
+                         + report["gallery_bound"]["submitted"]
+                         + report["gallery_bound_round4"]["submitted"])
         self.assertEqual(report["live"]["gallery_pilot"]["counts"]["job_missing"], 8)
 
 
@@ -196,8 +197,8 @@ class HoshimoriGalleryReadinessTests(unittest.TestCase):
         second = report["gallery_pilots"]["round2"]
         self.assertEqual(second["submitted"] + second["unsubmitted"], 8)
         bound = report["gallery_bound"]
-        self.assertEqual(report["gallery_artjobs"], 8 + second["submitted"] + bound["submitted"])
-        self.assertEqual(report["gallery_unsubmitted"], 56 - second["submitted"] - bound["submitted"])
+        self.assertEqual(report["gallery_artjobs"], 8 + second["submitted"] + bound["submitted"] + report["gallery_bound_round4"]["submitted"])
+        self.assertEqual(report["gallery_unsubmitted"], 56 - second["submitted"] - bound["submitted"] - report["gallery_bound_round4"]["submitted"])
 
     def test_cross_round_artjob_receipt_collision_is_rejected(self):
         round2 = yaml.safe_load(ROUND2_LEDGER.read_text(encoding="utf-8"))
@@ -218,8 +219,8 @@ class HoshimoriGalleryReadinessTests(unittest.TestCase):
         submitted = sum((row.get("jobs") or {}).get("krea2") is not None
                         for row in round2["subjects"])
         bound = report["gallery_bound"]
-        self.assertEqual(report["gallery_artjobs"], 8 + submitted + bound["submitted"])
-        self.assertEqual(report["gallery_unsubmitted"], 56 - submitted - bound["submitted"])
+        self.assertEqual(report["gallery_artjobs"], 8 + submitted + bound["submitted"] + report["gallery_bound_round4"]["submitted"])
+        self.assertEqual(report["gallery_unsubmitted"], 56 - submitted - bound["submitted"] - report["gallery_bound_round4"]["submitted"])
         self.assertEqual(report["gallery_delivered_images"], 0)
         live = audit_live(
             self.manifests, self.ledgers, self.snapshots,
@@ -325,7 +326,8 @@ class HoshimoriGalleryReadinessTests(unittest.TestCase):
         self.assertEqual(report["gallery_delivered_images"], 1)
         self.assertEqual(report["live"]["gallery_delivered"], 1)
         self.assertEqual(report["live"]["style_delivered"], 0)
-        self.assertEqual(report["gallery_artjobs"], 16 + report["gallery_bound"]["submitted"])
+        self.assertEqual(report["gallery_artjobs"], 16 + report["gallery_bound"]["submitted"]
+                         + report["gallery_bound_round4"]["submitted"])
         self.assertFalse(report["ready_for_gallery_submission"])
 
 
