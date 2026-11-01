@@ -168,7 +168,7 @@ tasks:
 - id: t-010
   milestone: m4
   title: 'Store readiness: signing, privacy labels, account deletion, release checklist'
-  status: needs-human
+  status: cancelled
   owner: worker
   passes: 0
   stakes: outward-facing
@@ -184,12 +184,17 @@ tasks:
 
     GATE TRIAGE 2026-09-30 (session 20260930T0600Z-gate-triage, requested by Silas in
     session): Legitimate: public posting or store submission under Kind Robots' name.
-  claimed_by: scheduled-conductor-20260816T2130Z-conductorapp-t010
-  claimed_at: '2026-08-16T21:39:56Z'
-  updated: '2026-09-30T06:00:00Z'
+
+    2026-11-01 PT: cancelled unbuilt — project `conductor-app` is retired and Silas approved
+    closing retired projects' open work (2026-11-01 PT). Was `needs-human`. Reopen the
+    project to revive it.
+  claimed_by: null
+  claimed_at: null
+  updated: '2026-11-01T12:11:46Z'
   implementation_pr: 'silasfelinus/conductor#2345'
   gate_reason: publish
   gate_rechecked: '2026-09-30'
+  cancelled_reason: project-retired
 - id: t-011
   milestone: m1
   title: Add CI guard that every conductor write endpoint in kind_robots calls an auth guard

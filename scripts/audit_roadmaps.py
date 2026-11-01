@@ -32,6 +32,7 @@ VALID_STATUS = {
     "needs-human",
     "done",
     "challenged",
+    "cancelled",
 }
 # The three enum values AGENTS.md/CLAUDE.md define for a task's `stakes:` field.
 # validate_roadmaps.py hard-fails CI on this for open ("actionable") tasks only
@@ -41,7 +42,7 @@ VALID_STAKES = {"reversible", "outward-facing", "irreversible"}
 ACTIVE_STATES = {"active"}
 WORKABLE_STATES = {"active", "continuous"}
 IN_PROGRESS = {"claimed", "review"}
-TERMINAL = {"done"}
+TERMINAL = {"done", "cancelled"}
 OPEN_STATES = VALID_STATUS - TERMINAL
 STALE_DAYS = 3
 

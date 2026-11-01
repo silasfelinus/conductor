@@ -1808,7 +1808,7 @@ tasks:
   milestone: m6
   title: 'Decide how much entity context (Krea 2 / cfg-1 engines) belongs in the positive
     art prompt before the 1,152 queued negation-repair jobs render'
-  status: ready
+  status: cancelled
   gate_human: true
   stakes: reversible
   owner: null
@@ -1863,9 +1863,16 @@ tasks:
     keeps identity-only lines (Name, Type, Species, Genre) and drops the prose lines
     (Description, Effect, Flavor text, Existing art prompt), per ART-PROMPTS.md rule 6. Then
     re-queue affected jobs from the manifest and resubmit the 11 blocked Rewards.
-  updated: '2026-09-30T07:00:00Z'
+
+    2026-11-01 PT: cancelled unbuilt — project `kind-robots` is retired and Silas approved
+    closing retired projects' open work (2026-11-01 PT). Was `ready`. Reopen the project to
+    revive it.
+  updated: '2026-11-01T12:11:46Z'
   gate_rechecked: '2026-09-30'
   approved_by_human: true
+  cancelled_reason: project-retired
+  claimed_by: null
+  claimed_at: null
 
 - id: t-115
   milestone: m6
@@ -2017,12 +2024,20 @@ tasks:
   implementation_pr: 'silasfelinus/conductor#5172'
 - id: t-124
   title: Review the 65 Facets the art producer holds for catalog review
-  status: ready
+  status: cancelled
   stakes: reversible
   owner: null
   passes: 0
-  updated: '2026-09-30T09:00:00Z'
-  note: 'Filed 2026-09-30 from kind-robots/t-104''s final run. generate_facet_art.ts --write --repair-tainted held 65 Facets (61 repair targets) for catalog review. Almost all are sentence-title quirk and backstory Facets (ids 532-577, 1188-1297, e.g. ''Was once a duck. No one knows why, including them.''). The rest: setting-shaped (Circus 16), subject-shaped (Celtic Mythology 836, Eastern European Folklore 840, Oceanic Mythology 841), composite (One Thousand and One Nights Fantasy 843), parenthetical (Cli-Fi 780) and worldview-shaped personality Facets (Metaphysical 1035, Superstitious 1037). Decide per class: give sentence-titles a short visual title with the sentence kept as description, retype the genre-shaped ones, or mark them art-not-required. Then re-run the producer in dry-run and confirm blocked drops toward 0. Reversible catalog edits via the admin API.'
+  updated: '2026-11-01T12:11:46Z'
+  note: >-
+    Filed 2026-09-30 from kind-robots/t-104's final run. generate_facet_art.ts --write --repair-tainted held 65 Facets (61 repair targets) for catalog review. Almost all are sentence-title quirk and backstory Facets (ids 532-577, 1188-1297, e.g. 'Was once a duck. No one knows why, including them.'). The rest: setting-shaped (Circus 16), subject-shaped (Celtic Mythology 836, Eastern European Folklore 840, Oceanic Mythology 841), composite (One Thousand and One Nights Fantasy 843), parenthetical (Cli-Fi 780) and worldview-shaped personality Facets (Metaphysical 1035, Superstitious 1037). Decide per class: give sentence-titles a short visual title with the sentence kept as description, retype the genre-shaped ones, or mark them art-not-required. Then re-run the producer in dry-run and confirm blocked drops toward 0. Reversible catalog edits via the admin API.
+
+    2026-11-01 PT: cancelled unbuilt — project `kind-robots` is retired and Silas approved
+    closing retired projects' open work (2026-11-01 PT). Was `ready`. Reopen the project to
+    revive it.
+  cancelled_reason: project-retired
+  claimed_by: null
+  claimed_at: null
 
 - id: t-125
   milestone: m6
@@ -2058,12 +2073,12 @@ tasks:
 - id: t-127
   milestone: m6
   title: 'Simplify LoRA triage categories and add delete/resource-card actions'
-  status: ready
+  status: cancelled
   gate_human: false
   stakes: reversible
   owner: worker
   passes: 0
-  updated: '2026-11-01T11:34:00Z'
+  updated: '2026-11-01T12:11:46Z'
   note: |-
     Silas, 2026-10-04: LoRA triage should not offer CREATURE as a category; character LoRAs can be CHARACTER. Add the ability to delete a LoRA directly from the triage screen, and add a direct way to view that LoRA's Resource card from the same surface.
 
@@ -2072,8 +2087,13 @@ tasks:
     2026-11-01 PT: claim/review released by settle_inactive_projects.py — project is
     `retired`, so no worker will pick this up; was `review`. Re-check any referenced
     branch/PR before resuming if the project is reopened.
+
+    2026-11-01 PT: cancelled unbuilt — project `kind-robots` is retired and Silas approved
+    closing retired projects' open work (2026-11-01 PT). Was `ready`. Reopen the project to
+    revive it.
   claimed_by: null
   claimed_at: null
+  cancelled_reason: project-retired
 
 
 - id: t-128
@@ -2166,11 +2186,11 @@ tasks:
 - id: t-134
   milestone: m7
   title: 'Pose ControlNet lane on /api/art/enqueue (OpenPose skeleton in, posed figure out)'
-  status: ready
+  status: cancelled
   gate_human: false
   stakes: reversible
   passes: 0
-  updated: '2026-10-07T05:40:00Z'
+  updated: '2026-11-01T12:11:46Z'
   note: |-
     Filed by zuzu-showdown t-007 (the sprite bake-off), which needs a fighter drawn in an exact pose frame after frame. Today the enqueue route has no pose-conditioned graph: CONTROLNET exists only as a ResourceType and in the provenance/queue-affinity name patterns, and the Kontext lane can only be told a pose in words, which drifts (t-007's Kontext frames swapped a sheathed sword for a bare blade between frames and ignored "facing right").
 
@@ -2178,15 +2198,22 @@ tasks:
 
     Done when: a contract test builds the graph from a fixed skeleton and asserts the ControlNet nodes and strength; conductor's scripts/enqueue_art_requests.py forwards a subject's `pose_image` path; one live render of a stick-figure pose comes back in that pose. Then zuzu-showdown can re-run t-007's method A (projects/zuzu-showdown/art/T007-METHOD-A.yaml) with skeletons instead of pose prose.
 
+    2026-11-01 PT: cancelled unbuilt — project `kind-robots` is retired and Silas approved
+    closing retired projects' open work (2026-11-01 PT). Was `ready`. Reopen the project to
+    revive it.
+  cancelled_reason: project-retired
+  claimed_by: null
+  claimed_at: null
+
 
 - id: t-133
   milestone: m6
   title: 'Default the ArtJob queue to the first non-empty status section'
-  status: ready
+  status: cancelled
   gate_human: false
   stakes: reversible
   passes: 0
-  updated: '2026-11-01T11:34:00Z'
+  updated: '2026-11-01T12:11:46Z'
   note: |-
     Silas-directed 2026-10-06 from the live ArtJob queue: after a browser refresh the queue can open on an empty status section instead of showing useful jobs. On initial page load, choose the first non-empty concrete status in dashboard order (PENDING, RUNNING, FAILED, DONE, CANCELLED), then load that section. Preserve explicit user status choices after the initial default has been established. Add regression coverage for the startup selection contract.
 
@@ -2195,18 +2222,23 @@ tasks:
     2026-11-01 PT: claim/review released by settle_inactive_projects.py — project is
     `retired`, so no worker will pick this up; was `review`. Re-check any referenced
     branch/PR before resuming if the project is reopened.
+
+    2026-11-01 PT: cancelled unbuilt — project `kind-robots` is retired and Silas approved
+    closing retired projects' open work (2026-11-01 PT). Was `ready`. Reopen the project to
+    revive it.
   owner: worker
   claimed_by: null
   claimed_at: null
+  cancelled_reason: project-retired
 
 - id: t-135
   milestone: m6
   title: 'ArtJob queue: model affinity starves older jobs of another model indefinitely (maxBypass bounds position, not waits)'
-  status: ready
+  status: cancelled
   gate_human: false
   stakes: reversible
   passes: 0
-  updated: '2026-10-07T07:20:00Z'
+  updated: '2026-11-01T12:11:46Z'
   note: |-
     Found 2026-10-07 12:15 AM PT by zuzu-showdown t-010: 12 Kontext jobs (34438-34449, priority 100) sat PENDING and unclaimed for over an hour at the very front of the queue while the relay ran job after job of an Arthemy batch (priority 100, created after them) every ~25 s.
 
@@ -2215,6 +2247,13 @@ tasks:
     Worked around for t-010 by raising the 8 Coyote jobs to priority 101 through /api/art/queue/[id]/priority.
 
     Fix: bound the wait, not the position. Either count consecutive bypasses of the current oldest job (persist on the job or in queue control state) and take the oldest once it reaches maxBypass, or take the oldest when it has waited longer than a limit (createdAt; e.g. 15 minutes) regardless of affinity. Add a verify script that simulates a head of 12 jobs of model A behind a deep backlog of model B and asserts A is claimed within maxBypass picks.
+
+    2026-11-01 PT: cancelled unbuilt — project `kind-robots` is retired and Silas approved
+    closing retired projects' open work (2026-11-01 PT). Was `ready`. Reopen the project to
+    revive it.
+  cancelled_reason: project-retired
+  claimed_by: null
+  claimed_at: null
 
 
 
@@ -2396,21 +2435,27 @@ tasks:
 - id: t-148
   milestone: m6
   title: 'Universal end-of-run Playbook reviews linked to gameplay traces'
-  status: needs-human
-  claimed_by: 2026-10-26T105400Z-kind-robots-t-148-k6fw
-  claimed_at: '2026-10-26T10:54:00Z'
+  status: done
+  claimed_by: null
+  claimed_at: null
   gate_human: false
   stakes: reversible
   passes: 0
   source_issue: 'silasfelinus/kind_robots#4216'
-  updated: '2026-10-26T12:01:00Z'
+  updated: '2026-11-01T12:11:23Z'
   note: |-
     Silas-directed cross-playbook improvement: https://github.com/silasfelinus/kind_robots/issues/4216. Build a reusable persisted review contract and integrate all eight ending flows. Additive schema only, with admin-only history inspection and replay/restore coverage.
 
     Implementation in PR #4218 passed 35 check runs with one expected skip; seven prior failures repaired (Prisma generated-client log corruption and Emperor Node test shim). Review is code complete and verified; do not merge pending outward-facing release approval.
 
     All 35 runnable checks on implementation PR #4218 passed (one expected skip), including generated-client parity, TypeScript, seeded playthroughs and contract shards. Seven earlier failing checks were repaired; final outward-facing publication and production migration remain gated on Silas's explicit approval. Leave PR open.
+
+    2026-11-01 PT: reconciled to done — Silas merged kind_robots PR #4218 (Playbook ending
+    reviews with run histories) himself on 2026-10-26, which is the release decision this
+    note was waiting on. Schema-affecting: production is live only after the Alexandria
+    deploy runs its migration.
   soft_gate: false
+  implementation_pr: 'silasfelinus/kind_robots#4218'
 
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
   surfaces grow into one dependable application.

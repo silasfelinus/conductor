@@ -54,15 +54,20 @@ tasks:
 - id: t-003
   milestone: m1
   title: Survey scenarios and characters; propose the first three books
-  status: ready
+  status: cancelled
   owner: null
   passes: 0
   stakes: reversible
-  updated: '2026-10-02T00:00:00Z'
-  note: 'Read-only survey, write projects/kr-adventures/docs/survey.md: list public, non-mature Scenarios
-    and Characters that make good adventures, propose three book concepts (scenario, hero, premise, tone,
-    5 ending sketches), and recommend the content location and how /play pages load static JSON. No code
-    changes.'
+  updated: '2026-11-01T12:11:46Z'
+  note: >-
+    Read-only survey, write projects/kr-adventures/docs/survey.md: list public, non-mature Scenarios and Characters that make good adventures, propose three book concepts (scenario, hero, premise, tone, 5 ending sketches), and recommend the content location and how /play pages load static JSON. No code changes.
+
+    2026-11-01 PT: cancelled unbuilt — project `kr-adventures` is retired and Silas approved
+    closing retired projects' open work (2026-11-01 PT). Was `ready`. Reopen the project to
+    revive it.
+  cancelled_reason: project-retired
+  claimed_by: null
+  claimed_at: null
 - id: t-004
   milestone: m2
   title: Adventure schema, validator and tests (kind_robots utils/)
@@ -83,78 +88,127 @@ tasks:
 - id: t-005
   milestone: m2
   title: Reader page and library with a fixture book
-  status: ready
+  status: cancelled
   owner: null
   passes: 0
   stakes: reversible
-  updated: '2026-10-02T00:00:00Z'
-  note: '/play/adventures and /play/adventures/[slug], adventureStore: page text and art, choices, back
-    and restart, localStorage resume (try/catch), endings checklist. Art-first, usable at 375px. No network
-    except the static bundle.'
+  updated: '2026-11-01T12:11:46Z'
+  note: >-
+    /play/adventures and /play/adventures/[slug], adventureStore: page text and art, choices, back and restart, localStorage resume (try/catch), endings checklist. Art-first, usable at 375px. No network except the static bundle.
+
+    2026-11-01 PT: cancelled unbuilt — project `kr-adventures` is retired and Silas approved
+    closing retired projects' open work (2026-11-01 PT). Was `ready`. Reopen the project to
+    revive it.
+  cancelled_reason: project-retired
+  claimed_by: null
+  claimed_at: null
 - id: t-006
   milestone: m2
   title: 'Book 1: outline, full branching text and art prompts'
-  status: ready
+  status: cancelled
   owner: null
   passes: 0
   stakes: reversible
-  updated: '2026-10-02T00:00:00Z'
-  note: Author book 1 end to end as static JSON (about 50 nodes, 4 to 6 endings), reading every branch
-    through, then validate. Write the per-book style bible and node art prompts under the Krea 2 contract.
+  updated: '2026-11-01T12:11:46Z'
+  note: >-
+    Author book 1 end to end as static JSON (about 50 nodes, 4 to 6 endings), reading every branch through, then validate. Write the per-book style bible and node art prompts under the Krea 2 contract.
+
+    2026-11-01 PT: cancelled unbuilt — project `kr-adventures` is retired and Silas approved
+    closing retired projects' open work (2026-11-01 PT). Was `ready`. Reopen the project to
+    revive it.
+  cancelled_reason: project-retired
+  claimed_by: null
+  claimed_at: null
 - id: t-007
   milestone: m2
   title: 'Book 1: generate and commit all art, then review'
-  status: ready
+  status: cancelled
   owner: null
   passes: 0
   stakes: reversible
-  updated: '2026-10-02T00:00:00Z'
-  note: Queue the cover, ~50 node illustrations and ending plates through ArtJobs, keep prompt/model metadata,
-    regenerate weak ones, and commit with the bundle. Verify the hero looks consistent across pages.
+  updated: '2026-11-01T12:11:46Z'
+  note: >-
+    Queue the cover, ~50 node illustrations and ending plates through ArtJobs, keep prompt/model metadata, regenerate weak ones, and commit with the bundle. Verify the hero looks consistent across pages.
+
+    2026-11-01 PT: cancelled unbuilt — project `kr-adventures` is retired and Silas approved
+    closing retired projects' open work (2026-11-01 PT). Was `ready`. Reopen the project to
+    revive it.
+  cancelled_reason: project-retired
+  claimed_by: null
+  claimed_at: null
 - id: t-008
   milestone: m2
   title: Books 2 and 3 (text, art prompts, validation)
-  status: waiting
+  status: cancelled
   owner: null
   passes: 0
   stakes: reversible
-  updated: '2026-10-02T00:00:00Z'
+  updated: '2026-11-01T12:11:46Z'
   depends_on:
   - t-007
-  note: Repeat the authoring pipeline for the other two concepts from the survey. Depends on book 1 setting
-    the bar.
+  note: >-
+    Repeat the authoring pipeline for the other two concepts from the survey. Depends on book 1 setting the bar.
+
+    2026-11-01 PT: cancelled unbuilt — project `kr-adventures` is retired and Silas approved
+    closing retired projects' open work (2026-11-01 PT). Was `waiting`. Reopen the project
+    to revive it.
+  cancelled_reason: project-retired
+  claimed_by: null
+  claimed_at: null
 - id: t-009
   milestone: m2
   title: Books 2 and 3 art
-  status: waiting
+  status: cancelled
   owner: null
   passes: 0
   stakes: reversible
-  updated: '2026-10-02T00:00:00Z'
+  updated: '2026-11-01T12:11:46Z'
   depends_on:
   - t-008
-  note: Generate and commit art for both books.
+  note: >-
+    Generate and commit art for both books.
+
+    2026-11-01 PT: cancelled unbuilt — project `kr-adventures` is retired and Silas approved
+    closing retired projects' open work (2026-11-01 PT). Was `waiting`. Reopen the project
+    to revive it.
+  cancelled_reason: project-retired
+  claimed_by: null
+  claimed_at: null
 - id: t-010
   milestone: m3
   title: Path map, endings checklist and reader polish
-  status: waiting
+  status: cancelled
   owner: null
   passes: 0
   stakes: reversible
-  updated: '2026-10-02T00:00:00Z'
+  updated: '2026-11-01T12:11:46Z'
   depends_on:
   - t-009
-  note: Visited-branch map, unseen-ending hints, reading-size control, reduced motion, screenshots at
-    375, 768 and 1280.
+  note: >-
+    Visited-branch map, unseen-ending hints, reading-size control, reduced motion, screenshots at 375, 768 and 1280.
+
+    2026-11-01 PT: cancelled unbuilt — project `kr-adventures` is retired and Silas approved
+    closing retired projects' open work (2026-11-01 PT). Was `waiting`. Reopen the project
+    to revive it.
+  cancelled_reason: project-retired
+  claimed_by: null
+  claimed_at: null
 - id: t-011
   milestone: m3
   title: Acceptance with Silas
-  status: waiting
+  status: cancelled
   owner: null
   passes: 0
   stakes: reversible
-  updated: '2026-10-02T00:00:00Z'
+  updated: '2026-11-01T12:11:46Z'
   depends_on:
   - t-010
-  note: Hand over three complete books on main; resolves at needs-human. Scaling to ~10 books is a follow-up
-    he approves.
+  note: >-
+    Hand over three complete books on main; resolves at needs-human. Scaling to ~10 books is a follow-up he approves.
+
+    2026-11-01 PT: cancelled unbuilt — project `kr-adventures` is retired and Silas approved
+    closing retired projects' open work (2026-11-01 PT). Was `waiting`. Reopen the project
+    to revive it.
+  cancelled_reason: project-retired
+  claimed_by: null
+  claimed_at: null

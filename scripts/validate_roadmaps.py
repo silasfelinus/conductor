@@ -69,6 +69,7 @@ VALID_TASK_STATUSES = {
     "needs-human",
     "done",
     "challenged",
+    "cancelled",
 }
 VALID_TASK_STAKES = {"reversible", "outward-facing", "irreversible"}
 VALID_PROJECT_KINDS = {"software", "content", "proposal", "brainstorm", "infrastructure"}
@@ -115,6 +116,23 @@ def main() -> int:
         if status not in PROJECT_LIFECYCLE_STATUSES:
             print(f"invalid project lifecycle status for {slug}: {status}", file=sys.stderr)
             ok = False
+        # Member projects (Silas, 2026-11-01 PT: Daily Dream Workshop micro apps are "a subset
+        # of that one project") never compete in the first-tier `active` queue.
+        parent = cfg.get("parent")
+        if parent:
+            parent_cfg = overrides.get(str(parent))
+            if parent_cfg is None:
+                print(f"project {slug} names unknown parent {parent!r}", file=sys.stderr)
+                ok = False
+            elif str(parent_cfg.get("status", "active")) not in ("active", "continuous"):
+                print(f"project {slug}'s parent {parent} is not workable", file=sys.stderr)
+                ok = False
+            if status == "active":
+                print(
+                    f"member project {slug} (parent {parent}) cannot be `active`; use continuous or an inactive status",
+                    file=sys.stderr,
+                )
+                ok = False
     for path in sorted((ROOT / "projects").glob("*/roadmap.yaml")):
         data = yaml.safe_load(path.read_text(encoding="utf-8"))
         if not isinstance(data, dict) or not isinstance(data.get("tasks", []), list):
@@ -126,7 +144,7 @@ def main() -> int:
         override = overrides.get(slug, {})
         lifecycle = str(override.get("status", "active"))
         if overrides and lifecycle == "active":
-            open_tasks = [task for task in data["tasks"] if isinstance(task, dict) and task.get("status") != "done"]
+            open_tasks = [task for task in data["tasks"] if isinstance(task, dict) and task.get("status") not in ("done", "cancelled")]
             if not open_tasks:
                 print(
                     f"active project has no open tasks: {slug} -- reconcile its goal, add real work, or explicitly finish/pause it",

@@ -12,21 +12,28 @@ on 2026-10-06.
 What counts: a task in an inactive project whose status is `claimed`,
 `in-progress` or `review`. A leftover `claimed_by` on a gated or waiting task
 is provenance, not a live claim, and is not touched (resetting it would erase
-the gate). `ready`,
-`waiting`, `needs-human` and `blocked` tasks in a paused project are parked
-for revival and are left alone; they are only counted.
+the gate). `ready`, `waiting`, `needs-human` and `blocked` tasks in a paused or
+finished project are parked for revival and are left alone; they are only counted
+(Silas, 2026-11-01 PT: paused projects are back burner and keep their progress).
 
---apply returns each live task to `ready`, clears `claimed_by`/`claimed_at`,
-and appends a one-line dated note. It never marks anything `done` — a merged
-PR is a reconciliation for `check_pr_merged_drift.py --include-inactive` or
-a human, and it never deletes tasks.
+RETIRED projects keep no open work at all (Silas, 2026-11-01 PT, "Yes on bulk
+close"): every non-done task in a `retired` project is flagged, and --apply sets
+it to the terminal `cancelled` status with `cancelled_reason: project-retired`.
+Cancelled tasks leave the progress denominator and every open-task count.
+
+--apply returns each live task in a paused/finished project to `ready`, clears
+`claimed_by`/`claimed_at`, and appends a one-line dated note; it cancels retired
+projects' open tasks the same way. It never marks anything `done` — a merged PR
+is a reconciliation for `check_pr_merged_drift.py --include-inactive` or a
+human — and it never deletes tasks.
 
 Usage:
   python scripts/settle_inactive_projects.py            # report (exit 1 if live work found)
   python scripts/settle_inactive_projects.py --apply    # settle it in the working tree
   python scripts/settle_inactive_projects.py --json
 
-Exit codes: 0 = clean (or applied), 1 = live work found in an inactive project.
+Exit codes: 0 = clean (or applied), 1 = live work in an inactive project, or open
+work in a retired one.
 """
 from __future__ import annotations
 
@@ -47,11 +54,12 @@ from project_lifecycle import WORKABLE_PROJECT_STATUSES, lifecycle_status, load_
 
 LIVE_STATUSES = {"claimed", "in-progress", "review"}
 PARKED_STATUSES = {"ready", "waiting", "needs-human", "blocked", "challenged"}
+CLOSED_STATUSES = {"done", "cancelled"}
 
 
 def scan(root: Path = ROOT) -> dict:
     overrides = load_project_overrides(root / "project-overrides.yaml")
-    live, parked = [], {}
+    live, retired_open, parked = [], [], {}
     for path in sorted((root / "projects").glob("*/roadmap.yaml")):
         slug = path.parent.name
         if slug.startswith("_"):
@@ -62,12 +70,31 @@ def scan(root: Path = ROOT) -> dict:
         data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
         for task in data.get("tasks") or []:
             tstatus = str(task.get("status"))
-            if tstatus in LIVE_STATUSES:
+            if status == "retired" and tstatus not in CLOSED_STATUSES:
+                retired_open.append({"project": slug, "lifecycle": status, "task": str(task.get("id")),
+                                     "status": tstatus, "claimed_at": task.get("claimed_at")})
+            elif tstatus in LIVE_STATUSES:
                 live.append({"project": slug, "lifecycle": status, "task": str(task.get("id")),
                              "status": tstatus, "claimed_at": task.get("claimed_at")})
             elif tstatus in PARKED_STATUSES:
                 parked.setdefault(slug, {"lifecycle": status, "count": 0})["count"] += 1
-    return {"live": live, "parked": parked}
+    return {"live": live, "retired_open": retired_open, "parked": parked}
+
+
+def cancel_retired(root: Path, items: list[dict], today: str) -> None:
+    by_project: dict[str, list[dict]] = {}
+    for item in items:
+        by_project.setdefault(item["project"], []).append(item)
+    for slug, project_items in by_project.items():
+        path = root / "projects" / slug / "roadmap.yaml"
+        text = path.read_text(encoding="utf-8")
+        for item in project_items:
+            note = (f"{today} PT: cancelled unbuilt — project `{slug}` is retired and Silas approved "
+                    "closing retired projects' open work (2026-11-01 PT). Was "
+                    f"`{item['status']}`. Reopen the project to revive it.")
+            text = apply_close(text, item["task"], "cancelled", {
+                "cancelled_reason": "project-retired", "claimed_by": "null", "claimed_at": "null"}, note)
+        path.write_text(text, encoding="utf-8")
 
 
 def settle(root: Path, live: list[dict], today: str) -> None:
@@ -96,16 +123,19 @@ def main(argv: list[str] | None = None) -> int:
     else:
         parked = sum(v["count"] for v in result["parked"].values())
         print(f"inactive-project live work: {len(result['live'])} task(s); "
-              f"parked open tasks: {parked} across {len(result['parked'])} inactive project(s)")
-        for item in result["live"]:
+              f"retired-project open work: {len(result['retired_open'])} task(s); "
+              f"parked open tasks: {parked} across {len(result['parked'])} paused/finished project(s)")
+        for item in result["live"] + result["retired_open"][:20]:
             print(f"  - {item['project']}/{item['task']} [{item['lifecycle']}] {item['status']} "
                   f"(claimed_at {item['claimed_at']})")
-    if not result["live"]:
+    if not result["live"] and not result["retired_open"]:
         return 0
     if args.apply:
         today = datetime.now(ZoneInfo("America/Los_Angeles")).date().isoformat()
         settle(ROOT, result["live"], today)
-        print(f"settled {len(result['live'])} task(s) back to ready")
+        cancel_retired(ROOT, result["retired_open"], today)
+        print(f"settled {len(result['live'])} task(s) back to ready; "
+              f"cancelled {len(result['retired_open'])} retired-project task(s)")
         return 0
     return 1
 

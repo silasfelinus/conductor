@@ -25,6 +25,16 @@ def load_project_overrides(path: Path) -> dict[str, dict[str, Any]]:
     return {}
 
 
+def parent_slug(overrides: dict[str, dict[str, Any]], slug: str) -> str | None:
+    """The project this one is a member of (e.g. a Daily Dream Workshop app), or None."""
+    value = overrides.get(slug, {}).get("parent")
+    return str(value) if value else None
+
+
+def member_slugs(overrides: dict[str, dict[str, Any]], parent: str) -> list[str]:
+    return sorted(slug for slug in overrides if parent_slug(overrides, slug) == parent)
+
+
 def lifecycle_status(overrides: dict[str, dict[str, Any]], slug: str) -> str:
     value = str(overrides.get(slug, {}).get("status", "active"))
     return value if value in PROJECT_LIFECYCLE_STATUSES else "active"
