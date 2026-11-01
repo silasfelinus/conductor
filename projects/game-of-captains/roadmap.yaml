@@ -194,7 +194,7 @@ tasks:
   - id: t-009
     milestone: m3
     title: "Deliver unique mission outcome, conversation and ending illustration coverage"
-    status: review
+    status: ready
     depends_on: t-007
     passes: 0
     stakes: reversible
@@ -213,10 +213,9 @@ tasks:
       Delivered the first substantial finished-art integration with merged kind_robots #4585 (b891ff7): registered 798 DONE/ArtImage-backed party-interlude paintings across 161 crew trios, added selected-trio-only viewer-filtered lazy API/Pinia loading and portrait fallbacks; 19/19 exact-head CI checks including four contract shards passed. 302 trio images remain pending in Conductor art ledgers; broader choice/result/ending coverage, current authenticated live visual QA, and public asset availability remain agent/human gates. Task returned to ready for remaining art, not falsely marked done.
 
       Created 70 Krea 2 ArtJob requests for 10 planetary episode reveals and each ask/document/override success/failure. Existing 302 pending trio ArtJobs are already submitted and are not duplicated. Added precise episode art-key contract and UI fallback to Kind Robots; companion PRs pending exact-head CI. Does not claim renders delivered or full episode choice coverage beyond planetary deck.
-    updated: '2026-11-01T12:01:00Z'
-    owner: worker
-    claimed_by: 2026-11-01T114700Z-spacecouch-artcoverage-a73d
-    claimed_at: '2026-11-01T11:47:00Z'
+
+      Merged Kind Robots #4589 (a328481, 17/17 CI groups green) and Conductor #6909 (a56ff27, three required PR gates passed). The new non-public 70 Krea 2 planetary reveal and outcome requests are in the auto_submit ledger; Conductor Auto Art Generate run 41304962375 is processing. No new ArtJob IDs or DONE image IDs were verified yet, so submission/render/UI delivery is still OPEN. Existing 302 queued trio jobs were not duplicated. Full planet, casino, Serendipity, constellation, nemesis deck art contract totals 1,022 choices/reveals, 952 slots remain unqueued. Continue t-009 until generated assets are connected and viewed in authenticated UI.
+    updated: '2026-11-01T12:17:00Z'
   - id: t-010
     milestone: m4
     title: "Run antagonist-by-captain-by-crew adversarial and every-ending seeded traces"
