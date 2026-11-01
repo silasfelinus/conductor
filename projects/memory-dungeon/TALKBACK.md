@@ -42,3 +42,13 @@
 - #6878 had green CI but conflicted with main in `roadmap.yaml` (13 hunks) and `CONTROL.md`. The branch's roadmap diff changed only task notes (no status/claim/dep changes), and main had already slimmed notes via #6874 while worker t-023 kept appending. Resolved by taking main's live roadmap and keeping the PR's CONTROL.md writer-access paragraph; docs were already on main. Superseded by #6880.
 - Pattern: a roadmap-wide note rewrite on a branch will always collide with task-event churn. Slim notes in a small PR cut from fresh main, or leave roadmap notes alone and add archive files only.
 - The comet-city-academy t-021 unblock branch (remove duplicate `updated:` line) was moot: the duplicate no longer exists on main. Branch left for branch-janitor.
+
+## 2026-11-01 PT | Reviewer CI rescue | memory-dungeon/t-038 | Kind Robots #4597
+
+**Decision:** merged reversible e10 fragment-integration PR #4597 (squash `5f579ccd4229fe5e95b87271ed58a01eb59c9a11`) after all 14 exact-head workflows passed on `8a92604fcef20a0a1ba9e962019c4bb0d68ab431`.
+
+**What worked:** two Morrow collision encounters use existing fragment IDs, authored choice effects and replay-validated travel; 162 combinations cover earned e04/e07/e09 history, with forged-history, teleport and duplicate-fragment regressions. The patch stayed in five Memory Dungeon files and did not touch deployment, Classic Match or schema.
+
+**What to improve:** the original PR opened with a missing `string | undefined` guard and three unformatted files, causing TypeScript, changed-file Prettier and contract-ratchet failures. The first repair also omitted an argument separator in a test. CI diagnostics isolated both failures; repair the type narrowing and apply the exact formatter patch *before* the next PR, then verify the final exact head. No check or baseline was weakened.
+
+**Kaizen:** e10's actual player-facing console and local crossroad are already explicitly outstanding in the master task and #4136. Do not create a duplicate task; prioritize integration and e08's entry gate over more detached writer packets. ArtJobs remain unsubmitted.
