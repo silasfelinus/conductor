@@ -424,18 +424,17 @@ tasks:
   - id: t-004
     milestone: m3
     title: "Author at least 36 good/evil/rogue patrol cases with meaningful results"
-    status: review
+    status: ready
     depends_on: t-003
-    owner: worker
-    claimed_by: 2026-11-01T012224Z-prom-t004-q9k2
-    claimed_at: '2026-11-01T01:20:19.529Z'
-    updated: '2026-11-01T01:23:11.005Z'
+    updated: '2026-11-01T01:35:20.045Z'
     passes: 0
     stakes: reversible
     note: |-
       Create thirty-six distinct training, heroic, villainous and rogue/shared cases across five calendar bands; write meaningful success/mixed/failure/decline, roster conflicts, injuries, unique-power approaches and delayed faction callbacks. Clearly distinguish training simulation from real danger.
 
       Added five authored next-school-morning consequence callbacks for each of the twelve original real night cases, preserved all twenty-four expanded cases, wired original rescue/refusal outcomes into nextSchoolDay, and added seeded callback verification. Scoped PR pending CI; the broader delayed faction callback and injured-roster work remains.
+
+      Merged Kind Robots PR #4567 (squash 48bc9735ecd267349188f2facdb2ed7739474c9c) after all 19 checks completed green. Added 60 distinct next-morning outcomes across 12 original patrol cases, preserving the 24 expanded cases and patrol narrative priority. Tests cover 36 total case families, all five results per original case, and next-day routing. Remaining for t-004: delayed faction effects, injury-driven roster conflicts, and wider unique-power callbacks in the 24 expanded cases.
   - id: t-005
     milestone: m3
     title: "Author 30 daily anchors, 60 location cards and relationship scenes"
