@@ -61,7 +61,8 @@ def test_all_six_earned_history_openings_preserve_causal_costs():
         assert len(history["openingDialogue"]) > 130
         assert len(history["continuity"]) > 80
         if history["e04"] == "open-the-tide-gate":
-            assert "Char" in history["continuity"] and "death" in history["continuity"] or "Char died" in history["continuity"]
+            assert "Char" in history["continuity"]
+            assert any(word in history["continuity"] for word in ("died", "death"))
         else:
             assert "Char survived" in history["continuity"]
     assert "Do not award" in PACKET["entryContract"]["missingHistoryFallback"]
