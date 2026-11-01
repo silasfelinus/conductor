@@ -25,6 +25,9 @@ from verify_memory_dungeon_hoshimori_gallery_pilot import (
     validate as validate_pilot,
 )
 from enqueue_art_requests import compose_prompt
+from verify_memory_dungeon_hoshimori_bound_gallery import (
+    LEDGER as BOUND_LEDGER, source_faces as bound_faces, validate as validate_bound,
+)
 
 ROOT = Path(__file__).resolve().parents[1]
 ART = ROOT / "projects/memory-dungeon/art"
@@ -130,6 +133,7 @@ def validate_style_snapshot(
 def audit(
     manifests: dict[str, dict], ledgers: dict[str, dict], snapshots: dict[str, dict],
     *, pilot: dict | None = None, pilot2: dict | None = None,
+    bound: dict | None = None,
 ) -> dict:
     ids: set[str] = set()
     paths: set[str] = set()
@@ -149,6 +153,9 @@ def audit(
         pilot2 = yaml.safe_load(ROUND2_LEDGER.read_text(encoding="utf-8"))
     pilot_receipts = validate_pilot(pilot, manifests)
     round2_receipts = validate_pilot(pilot2, manifests, selected=ROUND2_SELECTED)
+    if bound is None:
+        bound = yaml.safe_load(BOUND_LEDGER.read_text(encoding="utf-8"))
+    bound_receipts = validate_bound(bound, bound_faces())
     style_ids = {
         job for world, (_, _, _, validator) in WORLDS.items()
         for job in validator(ledgers[world], require_jobs=True).values()
@@ -170,8 +177,13 @@ def audit(
                 pilot_ids.add(job_id)
     if style_ids & pilot_ids:
         raise ValueError("Gallery pilot reuses a style-proof ArtJob receipt")
+    bound_ids = {row["last_art_job_id"] for row in bound["requests"]
+                 if type(row.get("last_art_job_id")) is int}
+    if bound_ids & (pilot_ids | style_ids):
+        raise ValueError("Bound gallery reuses an existing ArtJob receipt")
 
-    gallery_submitted = pilot_receipts["submitted"] + round2_receipts["submitted"]
+    gallery_submitted = (pilot_receipts["submitted"] + round2_receipts["submitted"]
+                         + bound_receipts["submitted"])
     delivered = sum(row["snapshot_delivered"] for row in styles.values())
     pending = sum(row["snapshot_pending"] for row in styles.values())
     return {
@@ -184,6 +196,7 @@ def audit(
         "gallery_delivered_images": 0,
         "gallery_pilot": pilot_receipts,
         "gallery_pilots": {"round1": pilot_receipts, "round2": round2_receipts},
+        "gallery_bound": bound_receipts,
         "style_artjobs": sum(row["submitted"] for row in styles.values()),
         "style_snapshot_delivered": delivered,
         "style_snapshot_pending": pending,
@@ -203,6 +216,7 @@ def audit_live(
     manifests: dict[str, dict], ledgers: dict[str, dict], snapshots: dict[str, dict],
     *, jobs: list[dict] | None = None, heartbeat_state: str | None = None,
     media_probe=None, pilot: dict | None = None, pilot2: dict | None = None,
+    bound: dict | None = None,
 ) -> dict:
     """Recheck existing receipts and media; never enqueue or mutate ArtJobs."""
     from datetime import datetime, timezone
@@ -232,7 +246,9 @@ def audit_live(
         pilot = yaml.safe_load(PILOT_LEDGER.read_text(encoding="utf-8"))
     if pilot2 is None:
         pilot2 = yaml.safe_load(ROUND2_LEDGER.read_text(encoding="utf-8"))
-    base = audit(manifests, ledgers, snapshots, pilot=pilot, pilot2=pilot2)
+    if bound is None:
+        bound = yaml.safe_load(BOUND_LEDGER.read_text(encoding="utf-8"))
+    base = audit(manifests, ledgers, snapshots, pilot=pilot, pilot2=pilot2, bound=bound)
     delivery_auditors = {"e07": warm_delivery, "e08": horror_delivery}
     live = {}
     for world, (_, _, _, validator) in WORLDS.items():
@@ -246,7 +262,9 @@ def audit_live(
     live_delivered = sum(row["snapshot_delivered"] for row in live.values())
     first_gallery = audit_pilot_live(pilot, jobs, media_probe)
     second_gallery = audit_pilot_live(pilot2, jobs, media_probe)
-    gallery_delivered = first_gallery["delivered"] + second_gallery["delivered"]
+    bound_gallery = audit_bound_live(bound, jobs, media_probe)
+    gallery_delivered = (first_gallery["delivered"] + second_gallery["delivered"]
+                         + bound_gallery["delivered"])
     base["gallery_delivered_images"] = gallery_delivered
     base["live"] = {
         "source": "authenticated_artjobs_and_fresh_media_head",
@@ -259,6 +277,7 @@ def audit_live(
             "round1": first_gallery,
             "round2": second_gallery,
         },
+        "gallery_bound": bound_gallery,
         "gallery_delivered": gallery_delivered,
     }
     base["source"] = "live_reconciled_with_committed_snapshot"
@@ -370,6 +389,46 @@ def audit_pilot_live(pilot: dict, jobs: list[dict], media_probe=None) -> dict:
         "delivery_evidence": "bound_artjob_artimage_and_fresh_media_head"
         if counts["delivered"] else "no_verified_bound_media",
     }
+
+
+
+def audit_bound_live(bound: dict, jobs: list[dict], media_probe=None) -> dict:
+    """Inspect destination-bound third-round ArtJobs without inventing delivery."""
+    by_id = {job.get("id"): job for job in jobs if type(job.get("id")) is int}
+    if len(by_id) != len([job for job in jobs if type(job.get("id")) is int]):
+        raise ValueError("Duplicate live ArtJob identity in bound gallery audit")
+    validate_bound(bound, bound_faces(), live_jobs=by_id)
+    counts: Counter[str] = Counter()
+    for request in bound["requests"]:
+        receipt = request.get("last_art_job_id")
+        if receipt is None:
+            counts["unsubmitted"] += 1
+            continue
+        job = by_id[receipt]
+        state = str(job.get("status") or "").upper()
+        if state == "DONE":
+            if type(job.get("artImageId")) is not int or job["artImageId"] <= 0:
+                counts["done_without_artimage"] += 1
+                continue
+            if media_probe is None:
+                from audit_memory_dungeon_art_delivery import probe_media
+                media_probe = probe_media
+            try:
+                outcome = media_probe(request["image_path"], job.get("createdAt"))
+            except Exception:
+                outcome = "media_unreachable"
+            counts[outcome if outcome in {
+                "delivered", "media_unreachable", "media_stale", "media_not_image",
+                "media_wrong_format", "media_empty", "media_unproven", "media_unsafe_path",
+            } else "media_unproven"] += 1
+        elif state in {"PENDING", "RUNNING", "FAILED", "CANCELLED"}:
+            counts[state.lower()] += 1
+        else:
+            counts["unknown_state"] += 1
+    return {"total": 8, "submitted": sum(row.get("last_art_job_id") is not None
+                                          for row in bound["requests"]),
+            "counts": dict(sorted(counts.items())),
+            "delivered": counts["delivered"]}
 
 
 def load_report(directory: Path = ART) -> dict:
