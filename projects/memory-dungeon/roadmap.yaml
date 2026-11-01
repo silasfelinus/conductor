@@ -574,7 +574,7 @@ tasks:
   - id: t-020
     milestone: m3
     title: "Adopt sixteen-realm canon, prototype prologue and compatibility inventory"
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
     note: |-
@@ -607,7 +607,10 @@ tasks:
       Scoped v1 Earth/sea save migration now preserves the recorded order of player decisions, validates replayed flags and resource totals, and retains all revealed side passages and final position. Focused Kind Robots PR and exact-head CI follow; character art and rendered device acceptance remain open.
 
       2026-10-31 PT: Merged Kind Robots PR #4571 (squash 426c459e74e6db74be424b6eccd66d10bb34f3d8) after all 14 exact-head workflows passed on 0715a51201ed64624214840a8fc2f0830837b807, including Contract Tests #41266874630 (four shards plus verifier), TypeScript #41266874631, changed-file formatting #41266874699 and Memory browser interruption #41266874668. Legacy v1 e03-e06 migration now replays decisions in original order rather than DFS map order, preserves all revealed branches/final position, and rejects changed flags or supplies/trust/evidence/danger. Four-reality adversarial tests cover reordered choices and tampered totals. No new ArtJobs, schema changes, deployment or rendered-device acceptance. Return READY for remaining character art, save compatibility inventory and 390/768/1440 acceptance; Memory Dungeon remains ACTIVE, master #4136 open.
-    updated: '2026-11-01T02:56:43.602Z'
+    updated: '2026-11-01T03:43:54Z'
+    owner: worker
+    claimed_by: 20261101T034354Z-memory-dungeon-t020-compat-b4e9
+    claimed_at: '2026-11-01T03:43:54Z'
   - id: t-024
     milestone: m3
     title: "Playtest and polish Scylla, Char, Oren and recurring party arcs"
