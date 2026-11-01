@@ -523,3 +523,61 @@ tasks:
       Kind Robots PR #4534 implements captain-first onboarding, compact phone dossier, rewritten corporate Couchscope, and secure store-owned ArtImage lookup. Conductor PR #6866 merged with 22 DONE ArtJobs 52152-52173 and ArtImages 258444-258465. App final-head CI underway; merge only after all checks pass. Authenticated device screenshots and production deploy remain separately unverified, so do not mark accepted or publicly released.
     claimed_by: 2026-10-31T203900Z-space-couch-t020-f7e2c6
     claimed_at: '2026-10-31T20:39:00Z'
+  - id: t-031
+    title: "Space Couch: 101 absurd alien species, three-choice sightings, and escalating scrapbook oddities"
+    status: ready
+    stakes: reversible
+    owner: null
+    passes: 0
+    source_issue: "silasfelinus/kind_robots#4592"
+    updated: '2026-11-01'
+    note: |-
+      FROM GITHUB ISSUE silasfelinus/kind_robots#4592 (https://github.com/silasfelinus/kind_robots/issues/4592), opened by @silasfelinus on 2026-11-01. Imported by scripts/sync_github_issues.py. Reference the issue in the implementing PR (`Closes silasfelinus/kind_robots#4592`) so it closes on merge; the bridge closes it otherwise once this task is done.
+
+      ## Direction (Silas, 2026-11-01 PT)
+      Space Couch needs a silly, low-friction **101-species Alien Scrapbook**. Discovery must be attached to ordinary solar-system, planetary, Serendipity, expedition and late-voyage experiences, with a reusable three-choice micro-encounter. **Never offer seven interaction options**: three distinct dramatic outcomes are the sweet spot. At least two routes can create the scrapbook record (e.g. an absolute-chaos accident and unexpected friendship); a third may cause the creature to flee. A failed encounter is funny, never punishing.
+
+      **101 species**: 12 zodiac/horoscope oddities, 24 two-Earth-creature mashups, 20 earth-creature + cosmic-condition hybrids, 20 emotional/social oddballs, 15 ecology/colony/symbiosis designs, 10 legendary exceptions. Intentionally vary age, size, mood, palettes, body plan, predator/prey, social arrangement, ecology, identity and habitat. Full-sized splash illustration for each species via traceable non-public ArtJobs. Art must appear in the collectible gallery, with dignified image-sized fallbacks while rendering.
+
+      **Sticky but merciful**: Some are hard to find, none require a pixel hunt or infinite rerolls. Seeded reproducible sightings, gentle rarity ramps/pity, discovery across voyages, clear hints and near-miss callbacks. At milestones (e.g. 5, 12, 25, 50, 75, 100) unlock genuinely new absurd encounters and world callbacks, not merely +1 counters. All three options have distinctive prose and an actual consequence.
+
+      ## Implementation slices
+      - First: authored 101 catalogue and art slots, seeded encounter/discovery logic, 3-choice modal and reachable 101-card scrapbook, persistence across new voyages; start with illustrated pilot batch.
+      - Then: attach to episode decks and other genuine encounter families, server-backed user account persistence where available, complete 101 ArtJobs and verified URL/art delivery, milestones and rare species rules, seeded adversarial tests and browser QA.
+      - Keep separate final narrative + balance red-team and human acceptance gate; no public publication.
+
+      Creative baseline for future games: **three high-contrast choices with distinct tones, at least two paths to narrative reward, and collection growth that mutates the world**. Prefer memorable authored consequences over choice count or grind.
+
+      project:game-of-captains
+  - id: t-032
+    title: "Space Couch | Master Red Sofa Starship Playbook Roadmap"
+    status: ready
+    stakes: reversible
+    owner: null
+    passes: 0
+    source_issue: "silasfelinus/kind_robots#4182"
+    updated: '2026-11-01'
+    note: |-
+      FROM GITHUB ISSUE silasfelinus/kind_robots#4182 (https://github.com/silasfelinus/kind_robots/issues/4182), opened by @silasfelinus on 2026-10-25. Imported by scripts/sync_github_issues.py. Reference the issue in the implementing PR (`Closes silasfelinus/kind_robots#4182`) so it closes on merge; the bridge closes it otherwise once this task is done.
+
+      # Space Couch | Master Completion Roadmap
+
+      **CANON UPDATE: 2026-10-26 PT.** Space Couch supersedes the display title *This Means Warp*. The spaceship itself is a **long RED COUCH**, not a ship containing a couch, with an invisible force shield keeping the riders safely alive in space. Miniaturization technology unfolds temporary holodecks, war rooms, infirmaries and other rooms **behind the couch**. All gameplay, prose, art and future missions must reflect this fundamental vessel identity. Preserve `game-of-captains` project slug, `/play/game-of-captains` route, existing saves and Vox/Serendipity/Fluke continuity. See [app PR #4248](https://github.com/silasfelinus/kind_robots/pull/4248) and [Conductor PR #6700](https://github.com/silasfelinus/conductor/pull/6700). Krea2 couch/room art prompts are requested; **not yet verified as ArtJobs or rendered images**. The in-repo couch SVG is temporary concept art. The Kind Robots Project database title remains a separate verification task.
+
+      ---
+
+      # This Means Warp | Master Completion Roadmap
+
+      **ACTIVE / HIGH PRIORITY / AGENT-OWNED.** Former working title: **Game of Captains**. **This Means Warp** is the approved public-facing name; keep Conductor slug `game-of-captains`, existing Play link `/play/game-of-captains`, save identity and project associations stable. This master issue remains open until the *complete* game has passed agent-owned QA and Silas's final design approval.
+
+      ## Canonical specification (October 25, 2026)
+
+      **[Full design brief](https://github.com/silasfelinus/conductor/blob/main/projects/game-of-captains/DESIGN-BRIEF.md)** | **[Conductor task roadmap](https://github.com/silasfelinus/conductor/blob/main/projects/game-of-captains/roadmap.yaml)** | [Title/design revision PR #6644](https://github.com/silasfelinus/conductor/pull/6644).
+
+      **Premise:** Comedy science-fiction about the responsibilities and disasters of starship command. Pick your captain and senior crew, manage a real ship, travel through linked star systems and away-team missions, confront whether a more technologically powerful civilization should intervene when others cause harm, and live with the political and interpersonal consequences. Tonal inspirations: Space Quest, Red Dwarf, Hitchhiker's Guide, Star Wars, Star Trek, Lower Decks, Barbarella, The Orville. Write original cast, dialogue, situations and aesthetics.
+
+      **Voyage cycle:** select captain/starting crew → captain's log / bridge briefing → star chart and active calls → ship roles and 0–3 available away specialists → space/planetary encounter and **meaningful** intervention choice → randomized antagonist interferes → debrief ship damage, crew, factions, people helped/abandoned, promises and destinations → save/next chapter. The captain must remain personally accountable, and shipboard/away skills materially change mission outcomes. No universal moral "correct" answer to nonintervention.
+
+      **Antagonist:** one of **eight** seed-selected principal aliens, each with unique
+
+      [... truncated; read the full issue at https://github.com/silasfelinus/kind_robots/issues/4182]
