@@ -245,14 +245,21 @@ def request_is_complete(request):
 
 
 def normalize_art_requests(data):
+    from shifting_desks_round_evidence import (
+        is_round_request,
+        preserve_completed_submissions,
+    )
+
+    all_requests = data.get("requests") or []
+    protected_ids = preserve_completed_submissions(all_requests)
     requests = []
     seen = set()
 
-    for request in data.get("requests") or []:
+    for request in all_requests:
         if not isinstance(request, dict):
             continue
 
-        if request_is_complete(request):
+        if request_is_complete(request) and str(request.get("id") or "") not in protected_ids:
             continue
 
         image_path = str(request.get("image_path") or "").strip()
@@ -261,14 +268,22 @@ def normalize_art_requests(data):
             continue
 
         target_repo = str(request.get("target_repo") or request.get("repo") or "").strip()
-        key = (target_repo, image_path, source_url)
+        key = (
+            ("shifting-desks-round", str(request.get("id") or ""))
+            if is_round_request(request)
+            else (target_repo, image_path, source_url)
+        )
         if key in seen:
             continue
         seen.add(key)
 
         normalized = dict(request)
         normalized["id"] = str(normalized.get("id") or image_path or source_url).strip()
-        normalized["status"] = "pending"
+        normalized["status"] = (
+            "done" if is_round_request(request)
+            and str(request.get("status") or "").strip().lower() == "done"
+            else "pending"
+        )
         if image_path:
             normalized["image_path"] = image_path
         if target_repo:
