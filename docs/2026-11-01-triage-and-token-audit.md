@@ -34,7 +34,8 @@ and story passes, plus 3 `review` tasks stale since 10-22 to 10-24). Furthest: m
 1. **Watching CI.** The last hourly "Conductor Agent" run (2026-11-01 11:43Z) took 21 turns.
    20 of them were wakes saying "N checks pending", and each one re-read about 80k tokens of
    cached context. That is about 40% of the run's cost, spent watching. → Fixed in AGENTS.md:
-   enable auto-merge and end the run, or wait in one blocking call.
+   subscribe to the PR and end the turn (one wake when CI finishes). Auto-merge is refused on
+   this repo (no required checks), so it is not an option.
 2. **The full startup ritual runs on every hourly run.** That means about 65KB of required
    reading (AGENTS.md, CLAUDE.md, state-reconciliation, SOURCE_OF_TRUTH, a role playbook), a
    90-second sweep with about 9KB of output, and a 13-section report that nobody reads. It
