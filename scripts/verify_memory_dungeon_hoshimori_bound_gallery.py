@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
-"""Fail-closed validation for eight destination-bound Hoshimori gallery ArtJobs.
+"""Fail-closed validation for destination-bound Hoshimori gallery ArtJobs.
 
 The first sixteen gallery jobs used /api/art/enqueue without final media paths.
-This third batch deliberately uses the generic COMFY queue producer, which
-preserves conductorRequest, targetRepo and imagePath for relay delivery.
-An ArtJob receipt is not proof of ArtImage or playable gallery delivery.
+Later batches use the generic COMFY producer with conductorRequest, targetRepo
+and imagePath for relay delivery. A receipt is not verified image delivery.
 """
 from __future__ import annotations
 
@@ -18,14 +17,19 @@ import yaml
 ROOT = Path(__file__).resolve().parents[1]
 ART = ROOT / "projects/memory-dungeon/art"
 LEDGER = ART / "HOSHIMORI-GALLERY-BOUND-ROUND-3.yaml"
+ROUND4_LEDGER = ART / "HOSHIMORI-GALLERY-BOUND-ROUND-4.yaml"
 SELECTED = {"e07": (5, 8, 11, 12), "e08": (9, 10, 11, 12)}
+ROUND4_SELECTED = {"e07": (13, 14, 15, 16), "e08": (13, 14, 15, 16)}
 sys.path.insert(0, str(ROOT / "scripts"))
 import consume_art_queue as consumer  # noqa: E402
 
 
-def source_faces() -> list[dict]:
+def source_faces(round_number: int = 3) -> list[dict]:
+    if round_number not in (3, 4):
+        raise ValueError("unknown Hoshimori bound gallery round")
     faces = []
-    for world, numbers in SELECTED.items():
+    selected = SELECTED if round_number == 3 else ROUND4_SELECTED
+    for world, numbers in selected.items():
         source = yaml.safe_load(
             (ART / f"HOSHIMORI-{world.upper()}-GALLERY-BRIEFS.yaml").read_text(encoding="utf-8")
         )
@@ -35,7 +39,8 @@ def source_faces() -> list[dict]:
 
 
 def validate(data: dict, faces: list[dict], *, require_jobs: bool = False,
-             live_jobs: dict[int, dict] | None = None) -> dict:
+             live_jobs: dict[int, dict] | None = None,
+             round_number: int = 3) -> dict:
     requests = data.get("requests") if isinstance(data, dict) else None
     if not isinstance(requests, list) or len(requests) != 8 or len(faces) != 8:
         raise ValueError("bound gallery round requires eight authored requests")
@@ -43,6 +48,14 @@ def validate(data: dict, faces: list[dict], *, require_jobs: bool = False,
     for name in ("HOSHIMORI-GALLERY-PILOT-ROUND-1.yaml", "HOSHIMORI-GALLERY-PILOT-ROUND-2.yaml"):
         prior = yaml.safe_load((ART / name).read_text(encoding="utf-8"))
         existing.update(row["face_id"] for row in prior["subjects"])
+    prior_jobs: set[int] = set()
+    if round_number == 4:
+        previous = yaml.safe_load(LEDGER.read_text(encoding="utf-8"))
+        existing.update(row["id"] for row in previous["requests"])
+        prior_jobs = {row["last_art_job_id"] for row in previous["requests"]
+                      if type(row.get("last_art_job_id")) is int}
+    elif round_number != 3:
+        raise ValueError("unknown Hoshimori bound gallery round")
     seen_ids, seen_paths, seen_jobs = set(), set(), set()
     for request, face in zip(requests, faces):
         expected = {
@@ -80,7 +93,7 @@ def validate(data: dict, faces: list[dict], *, require_jobs: bool = False,
             raise ValueError(f"unbound/unsafe ArtJob request: {request['id']}")
         receipt = request.get("last_art_job_id")
         if receipt is not None:
-            if type(receipt) is not int or receipt <= 0 or receipt in seen_jobs:
+            if type(receipt) is not int or receipt <= 0 or receipt in seen_jobs or receipt in prior_jobs:
                 raise ValueError("invalid/duplicate durable ArtJob receipt")
             seen_jobs.add(receipt)
         elif require_jobs:
@@ -112,12 +125,14 @@ def validate(data: dict, faces: list[dict], *, require_jobs: bool = False,
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--round", type=int, choices=(3, 4), default=3)
     parser.add_argument("--require-jobs", action="store_true")
     parser.add_argument("--live", action="store_true",
                         help="GET each durable ArtJob and verify persisted destination binding")
     args = parser.parse_args()
     try:
-        data = yaml.safe_load(LEDGER.read_text(encoding="utf-8"))
+        ledger = LEDGER if args.round == 3 else ROUND4_LEDGER
+        data = yaml.safe_load(ledger.read_text(encoding="utf-8"))
         live = None
         if args.live:
             import consume_art_requests as requests
@@ -125,7 +140,8 @@ def main() -> int:
                 raise RuntimeError("KR_API_TOKEN missing for authenticated live receipt verification")
             live = {row["last_art_job_id"]: requests.fetch_job(row["last_art_job_id"])
                     for row in data["requests"] if type(row.get("last_art_job_id")) is int}
-        result = validate(data, source_faces(), require_jobs=args.require_jobs, live_jobs=live)
+        result = validate(data, source_faces(args.round), require_jobs=args.require_jobs,
+                          live_jobs=live, round_number=args.round)
     except (OSError, ValueError, KeyError, TypeError, RuntimeError, yaml.YAMLError) as exc:
         print(f"::error::Hoshimori bound gallery audit failed: {exc}", file=sys.stderr)
         return 1
