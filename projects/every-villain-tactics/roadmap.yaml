@@ -490,13 +490,10 @@ tasks:
   - id: t-019
     milestone: m3
     title: "Deterministic post-battle points and earned scrapbook achievements"
-    status: review
-    owner: worker
-    claimed_by: evt-t019-damage-20261101t014349213z
-    claimed_at: '2026-11-01T01:43:49.213Z'
+    status: ready
     depends_on: [t-006, t-016]
     passes: 0
-    updated: '2026-11-01T01:48:02.431Z'
+    updated: '2026-11-01T02:00:46.071Z'
     stakes: reversible
     note: |-
       Mission-end scored breakdown for flawless survival, zero damage, no knockouts, optional secrets, rescues and tactical bonuses, with explicit eligible conditions. Replay-safe recorded points, scrapbook heroes won with, villains beaten and authored route discoveries. Distinguish end-of-turn summaries from mission completion.
@@ -506,6 +503,8 @@ tasks:
       Merged kind_robots PR #4566 (squash 2c7258c567de71dd8f0212f330506720119986ef) after all 22 commit checks completed successfully. Shipped deterministic post-battle points, visible mission debrief, earned and de-duplicated scrapbook results, medals, score regression suite. Task remains open for true historical no-damage tracking, broader hidden-secret achievements, and hero/villain ledger.
 
       Added durable squad-damage history across gunfire, overwatch, powers and environmental hazards. The untouched medal now requires historical zero damage rather than healed full HP. Legacy saves remain compatible, cannot claim unrecorded flawless medals. Regression tests pending PR CI.
+
+      Merged Kind Robots PR #4568 as 9d2ab94dfc87c034682818e6348941cb11bfa75c after all 18 check runs completed successfully. Tactics now records historical squad damage across attacks, overwatch, powers, area hits, fire, water and collapsed floors. Untouched is earned only on a true no-damage victory; healed extraction does not qualify and old saves cannot invent provenance. Remaining task scope: secret-route medals, hero-villain history and campaign level achievements.
   - id: t-020
     milestone: m3
     title: "48 canonical hero-villain foil pairings beyond generic story mode"
