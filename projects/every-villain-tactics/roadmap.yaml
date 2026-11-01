@@ -490,20 +490,18 @@ tasks:
   - id: t-019
     milestone: m3
     title: "Deterministic post-battle points and earned scrapbook achievements"
-    status: claimed
+    status: review
     depends_on: [t-006, t-016]
     owner: worker
     passes: 0
     claimed_by: 2026-11-01T011831Z-evt-t019-p6u3
     claimed_at: '2026-11-01T01:15:00Z'
-    updated: '2026-11-01T01:15:53Z'
+    updated: '2026-11-01T01:18:04.021Z'
     stakes: reversible
-    note: >-
-      Mission-end scored breakdown for flawless survival, zero damage,
-      no knockouts, optional secrets, rescues and tactical bonuses, with
-      explicit eligible conditions. Replay-safe recorded points, scrapbook
-      heroes won with, villains beaten and authored route discoveries.
-      Distinguish end-of-turn summaries from mission completion.
+    note: |-
+      Mission-end scored breakdown for flawless survival, zero damage, no knockouts, optional secrets, rescues and tactical bonuses, with explicit eligible conditions. Replay-safe recorded points, scrapbook heroes won with, villains beaten and authored route discoveries. Distinguish end-of-turn summaries from mission completion.
+
+      Scored battle debriefs, save-grounded medals and replay-safe scrapbook history implemented on the scoped worker branch. Pending PR and CI review.
   - id: t-020
     milestone: m3
     title: "48 canonical hero-villain foil pairings beyond generic story mode"
