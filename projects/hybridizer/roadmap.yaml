@@ -189,18 +189,17 @@ tasks:
   - id: t-009
     milestone: m4
     title: "Adversarial QA, full-width layout review and final subjective acceptance"
-    status: review
+    status: ready
     depends_on: t-003
-    owner: worker
     passes: 0
     stakes: reversible
     note: |-
       Test cache races, A+B equivalence B+A, recursive lineage, unavailable artwork, auth, private uploads, failed/retried jobs, stale notifications, reduced motion, 390/768/1440/XL UI; no fake image completeness. Move to final human design verdict only after all agent work clears.
 
       Adversarial privacy audit found cross-account persistence of remote private discovery metadata. Scoped QA patch isolates offline drafts by authenticated user, discards legacy unscoped cached discoveries, rejects stale async session responses, and hides sharing/reactions for private discoveries. Further upload/production/art coverage and rendered viewport checks remain before final acceptance.
-    claimed_by: 2026-11-01T003100Z-hybridizer-t009-f8c291
-    claimed_at: '2026-11-01T00:31:00Z'
-    updated: '2026-11-01T00:43:00Z'
+
+      Adversarial privacy QA slice merged in kind_robots PR #4565 as aa72390c0790c79e1dda6f8caf8df1251d6249fb after all 18 GitHub workflow runs completed successfully (including TypeScript, contract shards, formatting, layout and content visibility). Fixes unscoped localStorage leakage of private server discoveries, scopes offline studies to authenticated user, guards cross-account stale async responses, and hides sharing/reactions for private fusions. Test assertions added. This is NOT completion of t-009: t-008 private custom uploads are still unimplemented, t-007 artwork is incomplete, and remaining auth/cache/job adversity plus rendered 390/768/1440/XL acceptance checks must be done before final human design verdict. No public-release approval.
+    updated: '2026-11-01T00:50:00Z'
   - id: t-010
     milestone: m4
     title: "Authorize external public release separately"
