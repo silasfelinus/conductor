@@ -90,7 +90,7 @@ class SnapshotTests(unittest.TestCase):
         delivered = LEDGER.replace("status: requested", "status: delivered")
         delivered = delivered.replace("art_job_id: null", "art_job_id: 42163")
         delivered = delivered.replace("art_image_id: null", "art_image_id: 252101")
-        delivered = delivered.replace("  verdict: null", "  delivery_check: 'ArtJob 42163 DONE; HEAD 200 image/webp and newer Last-Modified'\\n  verdict: null")
+        delivered = delivered.replace("  verdict: null", "  delivery_check: 'ArtJob 42163 DONE; HEAD 200 image/webp and newer Last-Modified'\n  verdict: null")
         self.path.write_text(delivered, encoding="utf-8")
         self.assertEqual(preserve_completed_submissions([request()], art_dir=self.root), set())
         self.assertEqual(self.path.read_text(), delivered)
