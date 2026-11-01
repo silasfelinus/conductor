@@ -13,6 +13,10 @@
 5. **Callback (one later use):** a later world, reunion or one of the 32 ending families must reference an actual saved decision. Do not assert a witness who was never met.
 6. **Art/QA:** original setting and crossover source visually legible, separate scene/choice art targets, actual ArtJob receipt versus undelivered prompt, a deterministic save/replay test.
 
+### Writer-ready e11 Char quests (still not playable)
+
+[The Sea Sister Bell and Unwritten Map packets](SEA-COLLISION-CHAR-QUESTS.json) contain two fully voiced encounters, six distinct decisions and nine e04 tide-gate × e05 departure history introductions. The contract explicitly requires earned e06 Char continuity before the playable e11 viewpoint can open; it does **not** resurrect the original Char, invent a prior decision, award a fragment for visiting a tile, or count proposed art as delivered. The companion `tests/test_memory_dungeon_char_sea_collision.py` simulates all 81 two-quest decision routes and rejects forged histories, repeated awards and rewritten choices. This is a **writer packet and state-contract test**, not runtime integration: e06 continuity, e11 scenes, durable ArtJobs, final media, device QA and playable callbacks still require implementation.
+
 ### Eight first-pass finale quest pitches (not yet playable)
 
 | World / fragment | Opening beat | Two choices and costs | Later payoff |

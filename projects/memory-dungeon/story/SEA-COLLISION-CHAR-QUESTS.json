@@ -1,0 +1,236 @@
+{
+  "schemaVersion": 1,
+  "status": "WRITER_PACKET_ONLY_NOT_PLAYABLE",
+  "world": "e11",
+  "viewpoint": "Char",
+  "sourceCanon": "projects/memory-dungeon/TWELVE-REALITY-COLLISION-FINALE.md",
+  "authoringDatePT": "2026-10-31",
+  "entryContract": {
+    "requires": [
+      "e04-earned-tide-gate-choice",
+      "e05-earned-scylla-departure",
+      "e06-earned-testimony-verdict",
+      "earned-e06-char-continuity"
+    ],
+    "missingContinuityFallback": "Do not open e11 or manufacture a surviving Char. Route to a new, playable e06 continuity rescue/witness scene with a fair noncombat solution; record Char's own consent and the causal path before unlocking e11.",
+    "rejectedClaims": [
+      "The older Char died and was resurrected for free.",
+      "Both versions of Char are the same physical person at once.",
+      "Char remembers Scylla's death witness without having heard it."
+    ]
+  },
+  "histories": [
+    {
+      "e04": "open-the-tide-gate",
+      "e05": "run-again",
+      "identity": "altered-younger-char",
+      "causalContract": "The older Char died holding the tide gate. This Char comes from the younger sisters' second departure, whose survival must be earned in e06; she does not inherit the dead Char's memories.",
+      "openingDialogue": "CHAR: 'I remember the shore, not the anchor. Stop looking at me as though I owe you her last breath.' SCYLLA: 'You owe her nothing. I owe you the truth.'",
+      "entryRequires": "earned-e06-char-continuity"
+    },
+    {
+      "e04": "open-the-tide-gate",
+      "e05": "stay",
+      "identity": "altered-younger-char",
+      "causalContract": "The older Char died at the gate. This Char grew from the younger sister who stayed below the sea; an earned e06 continuity witness must establish her independent route.",
+      "openingDialogue": "CHAR: 'You stayed because you feared a grave. I stayed because I wanted to see what our court would become.' SCYLLA: 'I kept confusing those reasons.'",
+      "entryRequires": "earned-e06-char-continuity"
+    },
+    {
+      "e04": "open-the-tide-gate",
+      "e05": "tell-char",
+      "identity": "informed-altered-char",
+      "causalContract": "The older Char died at the gate. The younger Char heard Scylla's warning and chose an altered future; e06 must record the choice and her survival without erasing the death.",
+      "openingDialogue": "CHAR: 'I know how she died. That doesn't mean I agreed to become her replacement.' SCYLLA: 'I won't ask you to.'",
+      "entryRequires": "earned-e06-char-continuity"
+    },
+    {
+      "e04": "seal-the-tide-gate",
+      "e05": "run-again",
+      "identity": "revised-survivor-char",
+      "causalContract": "The older Char survived the sealed gate; this playable Char follows an earned revised e06 departure, not a second body conjured into the same present.",
+      "openingDialogue": "CHAR: 'The station keeps counting the passengers we left behind. We are going back for names, not applause.'",
+      "entryRequires": "earned-e06-char-continuity"
+    },
+    {
+      "e04": "seal-the-tide-gate",
+      "e05": "stay",
+      "identity": "undersea-char",
+      "causalContract": "The older Char survived the sealed gate. The altered Char remained below the sea; e06 must reconcile her continuity without producing a duplicate.",
+      "openingDialogue": "CHAR: 'Staying was not the same as forgetting the people behind the gate. Show me the list.'",
+      "entryRequires": "earned-e06-char-continuity"
+    },
+    {
+      "e04": "seal-the-tide-gate",
+      "e05": "tell-char",
+      "identity": "informed-survivor-char",
+      "causalContract": "The older Char survived the sealed gate. The younger Char was told the danger and chose her own revised path, recorded by e06 witnesses.",
+      "openingDialogue": "CHAR: 'Scylla warned me. I made a decision. Now the station can stop asking my sister to speak for me.'",
+      "entryRequires": "earned-e06-char-continuity"
+    },
+    {
+      "e04": "divert-the-current",
+      "e05": "run-again",
+      "identity": "revised-survivor-char",
+      "causalContract": "The older Char survived but the maintenance district flooded. The revised e06 route keeps this Char continuous without making the district's victims imaginary.",
+      "openingDialogue": "CHAR: 'We chose the surface again. That does not turn the ruined district into an empty place.'",
+      "entryRequires": "earned-e06-char-continuity"
+    },
+    {
+      "e04": "divert-the-current",
+      "e05": "stay",
+      "identity": "undersea-char",
+      "causalContract": "The older Char survived the diversion. This Char's undersea continuity must be witnessed in e06; her decision to stay does not absolve the flood.",
+      "openingDialogue": "CHAR: 'There were people in the so-called abandoned district. Oren has their names. I want to hear them.'",
+      "entryRequires": "earned-e06-char-continuity"
+    },
+    {
+      "e04": "divert-the-current",
+      "e05": "tell-char",
+      "identity": "informed-survivor-char",
+      "causalContract": "The older Char survived the diversion. The younger Char chose her revised course after disclosure; e06 records consent and the district's continuing claim.",
+      "openingDialogue": "CHAR: 'I was told about the flood. I chose to help repair it. Those are two separate facts, Your Majesty.'",
+      "entryRequires": "earned-e06-char-continuity"
+    }
+  ],
+  "scenes": [
+    {
+      "id": "sea-unwritten-map",
+      "site": "Palace chart archive / Vesper's refuge atlas",
+      "fragment": "sea-unwritten-map",
+      "opening": "A sheet of Hoshimori paper floats against the coral ceiling, dry despite the seawater. Vesper's childhood pencil marks describe a corridor that no royal survey admits exists. A refugee child has drawn a door over the place where their family's name was erased. A court diver wants the map copied so rescuers can find everyone. The child says copying it is how the hunters found them last time.",
+      "dialogue": [
+        {
+          "speaker": "CHAR",
+          "line": "A map is a promise about where people can go. It is not permission to go looking for them."
+        },
+        {
+          "speaker": "OREN",
+          "line": "I can escort a party without writing their destination on a wall. It costs two guards and a whole tide."
+        },
+        {
+          "speaker": "CHILD",
+          "line": "Please don't make my home the easiest place to find."
+        }
+      ],
+      "choices": [
+        {
+          "id": "return-to-owners",
+          "label": "Give the atlas back to the refuge families",
+          "visibleCost": "The direct palace passage closes; the escort takes an extra tide.",
+          "reply": "CHAR: 'You decide where this belongs. I will remember the way without selling it.'",
+          "outcome": "The families accept custody. Oren opens a slower guarded passage, and the child chooses which landmarks may be shown to rescuers.",
+          "savedFlag": "sea-atlas-family-custody",
+          "routeEffect": "slow-private-escort",
+          "fragment": "sea-unwritten-map",
+          "laterCallback": "e12 Vesper asks the families, not the royal surveyor, whether a safe road may be published.",
+          "failureContinuation": "If the escort loses its tide window, Oren shelters the party in the old bell chamber and retries on the next ebb; no fragment is forfeited.",
+          "artSubject": "Dry paper atlas floating under water, child's hand covering a blank address, Char and hooded Oren beside a coral door."
+        },
+        {
+          "id": "consent-redacted-passage",
+          "label": "Negotiate a public route with addresses removed",
+          "visibleCost": "The public corridor may be copied and misused; a watch must remain to audit it.",
+          "reply": "CHAR: 'We can show a road without showing a bed. Tell me what you refuse to share.'",
+          "outcome": "The families authorize only the passage, with a revocable seal and an independent witness. Char keeps a list of what must never be published.",
+          "savedFlag": "sea-atlas-consented-passage",
+          "routeEffect": "public-redacted-watch",
+          "fragment": "sea-unwritten-map",
+          "laterCallback": "e12 a copy of the route reaches the wolf gate; the witness can revoke it if Vesper honors the charter.",
+          "failureContinuation": "If the copy spreads, the witness shuts the seal and Oren opens the private escort instead. The breach remains a recorded cost.",
+          "artSubject": "Char holds a translucent chart whose road glows but household marks are covered by consent seals."
+        },
+        {
+          "id": "sealed-oren-custody",
+          "label": "Ask Oren to carry a sealed, temporary route",
+          "visibleCost": "Oren cannot assist at the next skirmish while guarding the sealed route.",
+          "reply": "OREN: 'I can carry this without reading it. It is the first order today I trust.' CHAR: 'Then it expires when the last family crosses.'",
+          "outcome": "A one-tide route passes under Oren's seal. The families retain the key, and Char sacrifices immediate escort strength to preserve privacy.",
+          "savedFlag": "sea-atlas-expiring-escort",
+          "routeEffect": "temporary-sealed-route",
+          "fragment": "sea-unwritten-map",
+          "laterCallback": "e12 the seal expires; Vesper must earn fresh permission rather than inherit Oren's authority.",
+          "failureContinuation": "If the seal breaks, Char asks the families to choose a new courier. The party waits rather than forcing entry.",
+          "artSubject": "Hooded Oren carrying a wax-sealed folded atlas through a flooded station stair, Char watching the expiration sandglass."
+        }
+      ],
+      "puzzle": "Choose what may be recorded before the tide bell rings. No blind deduction and no required prior Vesper redemption.",
+      "replay": "One irreversible scene choice; the same choice restores on reload, no second fragment or resource payout."
+    },
+    {
+      "id": "sea-sister-bell",
+      "site": "Royal audience chamber / Earth station loudspeaker",
+      "fragment": "sea-sister-bell",
+      "opening": "The audience chamber now has a yellow safety line. Above the throne, an Earth station board announces CHAR ARRIVING and CHAR ARRIVING, two platforms with the same time. The first bell carries Scylla's memory of the gate. The second carries the voice of the Char standing here. The court registrar wants to merge the records into a single obedient sister. Char steps across the safety line and takes the speaking token herself.",
+      "dialogue": [
+        {
+          "speaker": "REGISTRAR",
+          "line": "Two records are a clerical impossibility. One must be struck."
+        },
+        {
+          "speaker": "SCYLLA",
+          "line": "I remember what happened at the crossing. That does not give me the right to decide what she remembers."
+        },
+        {
+          "speaker": "CHAR",
+          "line": "You can keep both bells. You cannot make either of them my mouth."
+        }
+      ],
+      "choices": [
+        {
+          "id": "two-consenting-witnesses",
+          "label": "Record both histories with separate witnesses",
+          "visibleCost": "The public hearing is delayed, and Scylla must face questions she cannot answer for Char.",
+          "reply": "CHAR: 'The first witness speaks about the gate. I speak about this room. Put two chairs at the table.'",
+          "outcome": "The registrar records Scylla's account of the original crossing and Char's present testimony separately. Neither record asserts that a lost older Char returned.",
+          "savedFlag": "sea-bell-parallel-testimony",
+          "routeEffect": "witness-hearing-delay",
+          "fragment": "sea-sister-bell",
+          "laterCallback": "e12 the last-door hearing distinguishes original losses from altered survivors before any repair is authorized.",
+          "failureContinuation": "If a witness refuses the public hearing, Oren arranges two sealed depositions with independent custody; the two histories remain distinct.",
+          "artSubject": "Two illuminated platform signs above a coral throne, two empty witness chairs, Char holding the speaking token."
+        },
+        {
+          "id": "char-speaks-for-herself",
+          "label": "Give the floor to Char's present testimony",
+          "visibleCost": "The original gate's unresolved questions remain open and demand later independent evidence.",
+          "reply": "CHAR: 'Ask me where I have been. Ask my sister what she saw. Do not ask either of us to become the other.'",
+          "outcome": "The court recognizes Char's account without requiring her to reenact a death she did not experience. Scylla's original record stays sealed but intact.",
+          "savedFlag": "sea-bell-char-agency",
+          "routeEffect": "private-original-evidence-debt",
+          "fragment": "sea-sister-bell",
+          "laterCallback": "e12 Char can refuse a reconciliation that would erase the old gate; independent witnesses must address the outstanding debt.",
+          "failureContinuation": "If the registrar denies the floor, Char and Oren move the hearing to the open station platform where every traveler can witness her refusal.",
+          "artSubject": "Char standing alone on a yellow platform line, Scylla behind her, two train announcements in impossible coral architecture."
+        },
+        {
+          "id": "community-jury",
+          "label": "Let affected travelers decide how the records are held",
+          "visibleCost": "The crossing remains closed until commuters and sea-court families agree on custody.",
+          "reply": "CHAR: 'The station called our names. The people it stranded should get a voice in what happens to the record.'",
+          "outcome": "A mixed jury keeps two sealed histories and creates a release procedure that requires the consent of each living witness.",
+          "savedFlag": "sea-bell-community-custody",
+          "routeEffect": "slow-jury-crossing",
+          "fragment": "sea-sister-bell",
+          "laterCallback": "e12 a shared crossing can cite this jury's consent process; a separated-world ending still owes protected access to the stranded.",
+          "failureContinuation": "If the jury deadlocks, the histories remain separately sealed and the party takes the guarded emergency route; no one is forced to recant.",
+          "artSubject": "Merfolk, commuters and refugees seated in a circle under a station board with two Char arrivals, Oren keeping minutes."
+        }
+      ],
+      "puzzle": "Match each bell to its witness by earned testimony, never by guessing which Char is real. Scylla's memory and Char's present account are both valid within their distinct histories.",
+      "replay": "One irreversible scene choice; a forged history, missing e06 continuity or repeated award must not unlock the fragment."
+    }
+  ],
+  "exitContract": {
+    "requiresFragments": [
+      "sea-unwritten-map",
+      "sea-sister-bell"
+    ],
+    "requiresLocalCrisis": "Palace/station custody hearing resolved with Char's own recorded choice",
+    "noFragmentOnVisit": true,
+    "noRepeatAwards": true,
+    "callbackWorld": "e12"
+  },
+  "artStatus": "CONCEPT_ONLY_NO_ARTJOBS",
+  "implementationStatus": "Writer-ready branching quest packet; requires runtime scene, save reducer, e06 continuity hook, art jobs and UI tests."
+}
