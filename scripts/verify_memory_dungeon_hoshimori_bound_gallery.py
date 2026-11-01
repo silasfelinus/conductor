@@ -40,7 +40,8 @@ def source_faces(round_number: int = 3) -> list[dict]:
 
 def validate(data: dict, faces: list[dict], *, require_jobs: bool = False,
              live_jobs: dict[int, dict] | None = None,
-             round_number: int = 3) -> dict:
+             round_number: int = 3,
+             allow_missing_live_jobs: bool = False) -> dict:
     requests = data.get("requests") if isinstance(data, dict) else None
     if not isinstance(requests, list) or len(requests) != 8 or len(faces) != 8:
         raise ValueError("bound gallery round requires eight authored requests")
@@ -101,6 +102,8 @@ def validate(data: dict, faces: list[dict], *, require_jobs: bool = False,
         if live_jobs is not None and receipt is not None:
             current = live_jobs.get(receipt)
             if not isinstance(current, dict):
+                if allow_missing_live_jobs:
+                    continue
                 raise ValueError(f"ArtJob {receipt} missing from live queue")
             actual = current.get("payload") or {}
             if isinstance(actual, str):
