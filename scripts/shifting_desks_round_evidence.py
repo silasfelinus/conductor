@@ -49,7 +49,7 @@ def preserve_completed_submissions(requests, *, art_dir=ART_DIR, before_write=No
     """Return ids that MUST remain in the queue until their evidence is safe.
 
     A completed queue request is removable only after its matching round ledger
-    contains the submitted ArtJob id. Missing subjects, mismatched destinations,
+    contains an ArtJob id, confirmed ArtImage and independently probed delivery. Missing subjects, mismatched destinations,
     invalid ids and conflicts remain held with status=done (never re-enqueued).
     Writes are minimal, comment-preserving and atomic, with a stale-read guard.
     """
@@ -100,6 +100,12 @@ def preserve_completed_submissions(requests, *, art_dir=ART_DIR, before_write=No
                 continue
             if recorded is None:
                 replacements[request_id] = job_id
+            if (
+                row.get("status") != "delivered"
+                or _job_id(row.get("art_image_id")) is None
+                or not str(row.get("delivery_check") or "").strip()
+            ):
+                blocked.add(request_id)
 
         if not replacements:
             continue
