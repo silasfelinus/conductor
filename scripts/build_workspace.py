@@ -268,7 +268,11 @@ def normalize_art_requests(data):
             continue
 
         target_repo = str(request.get("target_repo") or request.get("repo") or "").strip()
-        key = (target_repo, image_path, source_url)
+        key = (
+            ("shifting-desks-round", str(request.get("id") or ""))
+            if is_round_request(request)
+            else (target_repo, image_path, source_url)
+        )
         if key in seen:
             continue
         seen.add(key)
