@@ -10,8 +10,8 @@ import yaml
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 from audit_memory_dungeon_hoshimori_gallery_readiness import (  # noqa: E402
-    ART, WORLDS, PILOT_LEDGER, ROUND2_LEDGER,
-    audit, audit_live, audit_pilot_live, load_report,
+    ART, WORLDS, PILOT_LEDGER, ROUND2_LEDGER, BOUND_LEDGER,
+    audit, audit_live, audit_pilot_live, audit_bound_live, load_report,
 )
 
 
@@ -33,8 +33,9 @@ class HoshimoriGalleryReadinessTests(unittest.TestCase):
         self.assertEqual(report["gallery_briefs"], 64)
         self.assertEqual(report["gallery_pilot"]["submitted"], 8)
         second = report["gallery_pilots"]["round2"]
-        self.assertEqual(report["gallery_artjobs"], 8 + second["submitted"])
-        self.assertEqual(report["gallery_unsubmitted"], 56 - second["submitted"])
+        bound = report["gallery_bound"]
+        self.assertEqual(report["gallery_artjobs"], 8 + second["submitted"] + bound["submitted"])
+        self.assertEqual(report["gallery_unsubmitted"], 56 - second["submitted"] - bound["submitted"])
         self.assertEqual(report["gallery_delivered_images"], 0)
         self.assertEqual(report["style_artjobs"], 20)
         self.assertFalse(report["ready_for_gallery_submission"])
@@ -184,7 +185,8 @@ class HoshimoriGalleryReadinessTests(unittest.TestCase):
         self.assertTrue(report["ready_for_visual_review"])
         self.assertFalse(report["ready_for_gallery_submission"])
         self.assertEqual(report["gallery_artjobs"],
-                         8 + report["gallery_pilots"]["round2"]["submitted"])
+                         8 + report["gallery_pilots"]["round2"]["submitted"]
+                         + report["gallery_bound"]["submitted"])
         self.assertEqual(report["live"]["gallery_pilot"]["counts"]["job_missing"], 8)
 
 
@@ -193,8 +195,9 @@ class HoshimoriGalleryReadinessTests(unittest.TestCase):
         self.assertEqual(report["gallery_pilots"]["round1"]["submitted"], 8)
         second = report["gallery_pilots"]["round2"]
         self.assertEqual(second["submitted"] + second["unsubmitted"], 8)
-        self.assertEqual(report["gallery_artjobs"], 8 + second["submitted"])
-        self.assertEqual(report["gallery_unsubmitted"], 56 - second["submitted"])
+        bound = report["gallery_bound"]
+        self.assertEqual(report["gallery_artjobs"], 8 + second["submitted"] + bound["submitted"])
+        self.assertEqual(report["gallery_unsubmitted"], 56 - second["submitted"] - bound["submitted"])
 
     def test_cross_round_artjob_receipt_collision_is_rejected(self):
         round2 = yaml.safe_load(ROUND2_LEDGER.read_text(encoding="utf-8"))
@@ -214,8 +217,9 @@ class HoshimoriGalleryReadinessTests(unittest.TestCase):
         report = audit(self.manifests, self.ledgers, self.snapshots, pilot2=round2)
         submitted = sum((row.get("jobs") or {}).get("krea2") is not None
                         for row in round2["subjects"])
-        self.assertEqual(report["gallery_artjobs"], 8 + submitted)
-        self.assertEqual(report["gallery_unsubmitted"], 56 - submitted)
+        bound = report["gallery_bound"]
+        self.assertEqual(report["gallery_artjobs"], 8 + submitted + bound["submitted"])
+        self.assertEqual(report["gallery_unsubmitted"], 56 - submitted - bound["submitted"])
         self.assertEqual(report["gallery_delivered_images"], 0)
         live = audit_live(
             self.manifests, self.ledgers, self.snapshots,
@@ -321,8 +325,36 @@ class HoshimoriGalleryReadinessTests(unittest.TestCase):
         self.assertEqual(report["gallery_delivered_images"], 1)
         self.assertEqual(report["live"]["gallery_delivered"], 1)
         self.assertEqual(report["live"]["style_delivered"], 0)
-        self.assertEqual(report["gallery_artjobs"], 16)
+        self.assertEqual(report["gallery_artjobs"], 16 + report["gallery_bound"]["submitted"])
         self.assertFalse(report["ready_for_gallery_submission"])
+
+
+    def test_bound_gallery_receipts_cannot_alias_existing_pilots(self):
+        bound = yaml.safe_load(BOUND_LEDGER.read_text(encoding="utf-8"))
+        pilot = yaml.safe_load(PILOT_LEDGER.read_text(encoding="utf-8"))
+        bound["requests"][0]["last_art_job_id"] = pilot["subjects"][0]["jobs"]["krea2"]
+        with self.assertRaisesRegex(ValueError, "reuses an existing ArtJob"):
+            audit(self.manifests, self.ledgers, self.snapshots, bound=bound)
+
+    def test_bound_gallery_live_delivery_requires_exact_provenance_and_fresh_media(self):
+        from consume_art_queue import entry_to_job
+        bound = yaml.safe_load(BOUND_LEDGER.read_text(encoding="utf-8"))
+        first = bound["requests"][0]
+        first["last_art_job_id"] = 61234
+        payload = entry_to_job(first)["payload"]
+        job = {"id": 61234, "projectSlug": "memory-dungeon", "engine": "COMFY",
+               "status": "DONE", "artImageId": 70000,
+               "createdAt": "2026-10-31T23:00:00Z", "payload": payload}
+        result = audit_bound_live(bound, [job], lambda _path, _created: "delivered")
+        self.assertEqual(result["delivered"], 1)
+        self.assertEqual(result["counts"], {"delivered": 1, "unsubmitted": 7})
+        result = audit_bound_live(bound, [job], lambda _path, _created: "media_stale")
+        self.assertEqual(result["delivered"], 0)
+        self.assertEqual(result["counts"]["media_stale"], 1)
+        job["payload"]["conductorRequest"]["imagePath"] = "public/images/other.webp"
+        with self.assertRaisesRegex(ValueError, "live provenance mismatch"):
+            audit_bound_live(bound, [job], lambda _path, _created: "delivered")
+
 
 
 if __name__ == "__main__":
