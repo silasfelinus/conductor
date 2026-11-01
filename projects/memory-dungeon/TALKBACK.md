@@ -52,3 +52,9 @@
 **What to improve:** the original PR opened with a missing `string | undefined` guard and three unformatted files, causing TypeScript, changed-file Prettier and contract-ratchet failures. The first repair also omitted an argument separator in a test. CI diagnostics isolated both failures; repair the type narrowing and apply the exact formatter patch *before* the next PR, then verify the final exact head. No check or baseline was weakened.
 
 **Kaizen:** e10's actual player-facing console and local crossroad are already explicitly outstanding in the master task and #4136. Do not create a duplicate task; prioritize integration and e08's entry gate over more detached writer packets. ArtJobs remain unsubmitted.
+
+## 2026-11-01 PT | Reviewer green merge | memory-dungeon/t-038 | Kind Robots #4599
+
+**Decision:** merged reversible Morrow e10 console PR #4599 (squash `2fee0bd9fa89ebbf158953a01ace7749bb673ae2`) after all 20 exact-head checks and 15 workflows passed on `950642af0a8db3c2b21afcbbe9afaaf77914772b`; reviewed six Memory Dungeon-only files. Contract Tests #41327943800 passed all four shards and aggregate, with TypeScript, Prettier, layout, scroll ownership and browser-interruption green. No deploy or production art.
+
+**What worked:** the new console uses replayed adjacent movement, earned e04/e07/e09 history and two fragment receipts without fabricating e10 completion. The earlier formatting failure was fixed on the same PR. **What to improve:** add a behavior-level interrupted-save/end-to-end cross-world gate test once e08 progression and e10's actual crossroad are built; today's integration checks are primarily structural. This is already covered by the open master roadmap and should not become a duplicate task. Master issue #4136 remains open and Memory Dungeon active.
