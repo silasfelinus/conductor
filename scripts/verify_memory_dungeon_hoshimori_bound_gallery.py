@@ -122,7 +122,8 @@ def validate(data: dict, faces: list[dict], *, require_jobs: bool = False,
         seen_paths.add(request["image_path"])
     return {"authored": len(requests), "submitted": len(seen_jobs),
             "unsubmitted": len(requests) - len(seen_jobs),
-            "bound_live": len(seen_jobs) if live_jobs is not None else None,
+            "bound_live": sum(receipt in live_jobs for receipt in seen_jobs)
+            if live_jobs is not None else None,
             "delivered": "not verified; separate ArtImage and media audit required"}
 
 
