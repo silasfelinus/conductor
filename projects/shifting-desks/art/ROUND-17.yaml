@@ -1,0 +1,37 @@
+# Shifting Desks final media recovery (2026-11-01 PT).
+# The original ending ArtJobs 44064/44065 were DONE (ArtImages 252101/252102),
+# but their approved game media destination had no verified delivered render.
+# Do not enqueue if the destination already exists; consumer checks live media.
+# The recovery request is distinct and idempotent, and its render needs an
+# independent media provenance check and a separate visual KEEP before linking.
+round: shifting-desks-17
+project_slug: shifting-desks
+task: t-032
+queue: projects/art-prompts.yaml requests
+requested_at: '2026-11-01T21:54:01Z'
+negative_prompt: text, letters, words, numbers, logo, watermark, signature, photorealistic, photograph, 3d render, blurry, low quality, deformed, extra limbs, bad hands, cropped, collage, grid
+subjects:
+- key: ending-permanent-adjournment
+  kind: ending
+  title: Your Case Remains Under Consideration
+  card: permanent-adjournment
+  source_ref: kind_robots utils/shiftingDesks/endings.json endings[permanent-adjournment].epilogue.art_prompt
+  earlier_art_jobs:
+  - 44064
+  - 44065
+  earlier_art_images:
+  - 252101
+  - 252102
+  request_id: shifting-desks-r17-ending-permanent-adjournment
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 66003
+  target_path: kind_robots public/images/shifting-desks/endings/permanent-adjournment.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/endings/permanent-adjournment.webp
+  prompt: 'An endless beige executive waiting room under a sealed underground office, a small employee alone beneath an enormous stopped brass clock, successive vacant chairs stretching into deep shadow, unsettling papery human-shaped silhouettes behind a frosted meeting room door, darkly comic bureaucratic science-fiction, mid-century safety-manual illustration, screen-printed gouache with halftone grain, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition, every surface bare and unmarked'
+  status: requested
+  delivery_check: null
+  art_job_id: null
+  art_image_id: null
+  verdict: null
