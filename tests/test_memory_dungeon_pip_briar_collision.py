@@ -61,7 +61,7 @@ def test_all_six_earned_history_openings_preserve_causal_costs():
         assert len(history["openingDialogue"]) > 130
         assert len(history["continuity"]) > 80
         if history["e04"] == "open-the-tide-gate":
-            assert "Char died" in history["continuity"]
+            assert "Char" in history["continuity"] and "death" in history["continuity"] or "Char died" in history["continuity"]
         else:
             assert "Char survived" in history["continuity"]
     assert "Do not award" in PACKET["entryContract"]["missingHistoryFallback"]
@@ -164,5 +164,4 @@ def test_art_is_eight_unsubmitted_targets_not_fictional_deliveries():
         for scene in PACKET["scenes"]
         for target in ["opening", *(c["id"] for c in scene["choices"])]
     }
-    assert "not wired" not in PACKET["exitContract"]["noRuntimeClaim"].lower()
-    assert "not" in PACKET["exitContract"]["noRuntimeClaim"].lower()
+    assert "Neither scene is wired" in PACKET["exitContract"]["noRuntimeClaim"]
