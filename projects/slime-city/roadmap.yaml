@@ -134,18 +134,17 @@ tasks:
   - id: t-005
     milestone: m2
     title: "Implement competitive square-grid AI and comparative match replays"
-    status: review
+    status: ready
     depends_on: [t-003, t-004]
-    owner: worker
     passes: 0
     stakes: reversible
     note: |-
       CPU plays hidden armies with meaningful information limits, defends endzones, sends tactical runners and uses special cards. Test resource constraints, multi-team matchup balance, lane congestion, time-pressure fairness, seeded replays, multiple opponent personas and honest ties. Preserve reproducible failures and show compact analytical comparison of the three formats rather than declaring a winner from one test.
 
       Focused Blackout AI milestone: prioritize flag-carrier interception over low-HP bystanders; position visible-information defensive traps on approach and escape lanes rather than arbitrary flag-adjacent squares. Add deterministic hidden-info, target-priority and six-faction full-match seeded CPU contracts, preserving normal play and non-art execution. Source PR under CI. Further balancing, adversarial matrix, multi-variant replay evidence and readability testing stay in t-005.
-    claimed_by: 2026-11-01T234800Z-slime-city-t005-36af
-    claimed_at: '2026-11-01T23:48:00Z'
-    updated: '2026-11-01T23:48:16Z'
+
+      Kind Robots PR #4612 merged as 86ff0e98451aa7d26fc77878f69eadaf85485925. Blackout CPU now prioritizes visible flag-carrier interception, tactical trap placement along escape/flag approach, and deterministic threat-based target selection. TypeScript, 4 gameplay contract shards, source and layout checks passed; container build remained in-progress at merge and needs eventual result verification. New mandatory seeded tactics and six-faction match replay contract. Reopen t-005 for full all-pairs balance and opponent personas, offensive/defensive variants, readable paced actions and adversarial telemetry. Art t-017 remains independent. Public release and subjective acceptance not requested.
+    updated: '2026-11-01T23:57:10Z'
   - id: t-006
     milestone: m2
     title: "Build premium illustrated collection, teams and deck editor"
