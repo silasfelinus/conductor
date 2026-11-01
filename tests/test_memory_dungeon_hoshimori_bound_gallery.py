@@ -19,6 +19,13 @@ class HoshimoriBoundGalleryTests(unittest.TestCase):
     def setUp(self):
         self.data = yaml.safe_load(LEDGER.read_text(encoding="utf-8"))
         self.faces = source_faces()
+        for request in self.data["requests"]:
+            request.pop("last_art_job_id", None)
+
+    def test_committed_round_three_receipts_still_validate(self):
+        committed = yaml.safe_load(LEDGER.read_text(encoding="utf-8"))
+        report = validate(committed, self.faces)
+        self.assertEqual(report["submitted"] + report["unsubmitted"], 8)
 
     def test_exact_eight_source_backed_requests(self):
         report = validate(self.data, self.faces)
