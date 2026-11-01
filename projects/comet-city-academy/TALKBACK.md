@@ -24,3 +24,14 @@
 
 ## 2026-10-30 — Reviewer: PR #6825 (Unstable unblock, Prom runtime refill, franchise-safe re-renders)
 Merged (squash 9017e41). Art ledgers/prompts only, reversible, CI green. The five held franchise look-alike jobs are marked REJECTED in their own ledgers and replaced by original-costume re-render prompts; a test pins that no DONE status remains on held keys. Pattern worth keeping: reject-in-ledger plus replacement round, rather than deleting art.
+
+
+## 2026-10-31 PT · Worker · t-004 · PR #4567
+
+**What landed:** Merged [Kind Robots PR #4567](https://github.com/silasfelinus/kind_robots/pull/4567) as `48bc973` after 19/19 completed checks succeeded. Twelve original real night cases now have 60 distinct grade/refusal-specific morning consequences, integrated into the seeded school-day progression; the 24 previously expanded cases remain available.
+
+**What I challenged:** The existing case deck had reached 36 families, but the original 12 lacked morning callbacks. The seeded Academy playthrough caught an ordering flaw in the first integration: an unanswered side mission displaced the player's completed neighborhood-patrol aftermath. The follow-up priority was corrected and verified before merge.
+
+**Remaining:** Task t-004 remains `ready` for delayed faction standing, injured-roster conflicts, more deeply authored moral approaches and callback branches across all 36 families. An authored text callback is not itself a complete persistent consequence system.
+
+**Kaizen:** Preserve the distinction between a player-led patrol, a delegated call, and an unanswered emergency in structured report provenance rather than inferring the choice only from display names.
