@@ -105,6 +105,18 @@ class SnapshotTests(unittest.TestCase):
             )
         self.assertEqual(self.path.read_text(), LEDGER + "# concurrent editor\n")
 
+    def test_different_rerender_requests_at_same_media_path_are_not_deduplicated(self):
+        rerender = request(request_id="shifting-desks-r14-sample")
+        with mock.patch(
+            "shifting_desks_round_evidence.preserve_completed_submissions",
+            return_value={REQUEST_ID, rerender["id"]},
+        ):
+            normalized = build_workspace.normalize_art_requests(
+                {"requests": [request(), rerender]}
+            )
+        self.assertEqual([row["id"] for row in normalized], [REQUEST_ID, rerender["id"]])
+        self.assertEqual([row["status"] for row in normalized], ["done", "done"])
+
     def test_unverified_done_request_stays_done_not_requeued(self):
         with mock.patch("shifting_desks_round_evidence.preserve_completed_submissions", return_value={REQUEST_ID}):
             normalized = build_workspace.normalize_art_requests({"requests": [request(job_id=None)]})
