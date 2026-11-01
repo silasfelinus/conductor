@@ -37,6 +37,14 @@ The same action must be able to create a friendship, a ridiculous incident, or a
 
 This is a balanced three-by-three design: every emotional state gives one bond, one chaotic record, and one escape; every player tactic can yield all three across situations. **The emotional clue is readable but not an outcome label.** Make it a fair interpretation, not hidden dice behind a decorative question.
 
+### Buried information is part of the play
+
+Never print the emotional state as a label or announce the optimal answer. The player should find *evidence*, not instructions: a dropped object, a repeated invitation, something guarded from danger, a change of rhythm or light, an ecological detail the field guide mentioned several scenes earlier. Each of six creature families needs distinct environmental versions of all three emotional situations. Favor two modest clues over a sentence such as "a quiet pause seems to calm it," which solves the scene for the player.
+
+The player's history is meaningful: after contact, record the observed environmental tell, the action chosen, and the actual result in a **captain's marginalia** scrapbook entry. A later sighting can quote a previous observation from the same creature family, but it must *not* automatically match the current emotional state. The point is analogy and attentive reading, not the UI selecting the correct option.
+
+A careful reader should do better than random selection without needing an encyclopedic memory. The clues should be consistent and fair, not arbitrary mood dice disguised as a narrative. Failed guesses remain funny, recoverable, and worthy of a ship-log anecdote. Test that all eighteen category-by-emotion cue sets are genuinely different and that prior observations persist through save/restore.
+
 Consequences must extend beyond a sentence: a friendship lives in the scrapbook and can prompt a later callback; chaos becomes an embellished captain's-log incident and can change later first-contact rumors; retreat still informs a next encounter and must not make that species impossible to obtain. Do not tie a free optional collector encounter to unrecoverable ship damage, death, or mandatory mission failure. Every creature's field note, habitat and social situation should influence setup and aftermath; avoid the same generalized gag 101 times.
 
 ## Discovery without frustration
