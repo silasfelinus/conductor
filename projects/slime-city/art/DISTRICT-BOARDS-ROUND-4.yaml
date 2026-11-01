@@ -1,0 +1,219 @@
+# Slime City art round 4: a board per district per mode, plus the card back.
+# Silas, 2026-11-01: "those game boards definitely need art" / "Yes for all boards. Each team game has a different board, yes?"
+# Until now there were 3 boards (one per mode, round 1) shared by every district, and their prompts came back as
+# perspective street scenes. These are flat top-down floors sized to the grid: BLACKOUT 10x6 -> 1344x768,
+# BLOODRUSH 14x6 -> 1536x640. No painted grid: kind_robots draws the grid over the art (sc-board-floor).
+# MEATBALL is retired (Kind Robots #4607), so no gridiron floors. Card back feeds the deal flip in SlimeCityHand.
+# Wiring: kind_robots utils/slimeCity/artManifest.ts boards['<district>-<mode>'] (falls back to boards[mode]).
+# Queued != rendered != wired. Job ids and ArtImage ids are written back by the Auto Art Generate sweep.
+round: slime-city-district-boards-4
+project_slug: slime-city
+designer: Slime City district boards
+is_public: false
+is_mature: false
+cast_loras: false
+priority: 660
+auto_submit: true
+lanes:
+- key: krea2
+  label: Krea 2 Slime City board floors
+  engine: krea2
+  prompt: prose
+  suffix: Colorful grungy comic gouache, thick ink texture, rust, slime green and neon magenta accents, top-down tabletop
+    game mat.
+subjects:
+- key: slime-board-pitworks-blackout
+  lane: krea2
+  entity: board-floor
+  title: Slime City blackout board, pitworks
+  asset: slime-city/boards/pitworks-blackout
+  size: 1344x768
+  seed: 1084001
+  prompt_prose: 'Top-down painted game board floor for the Pitworks, the neutral Grand Pit district of sunken gladiator arenas
+    dug into a ruined highway interchange, laid out as a capture-the-flag skirmish floor: a wide clear open centre, a distinct
+    home edge on the left and enemy edge on the right. The ground is packed rust-orange dirt and cracked highway concrete,
+    chalk scuff marks, scattered skewer sticks and food-cart wrappers, warm orange floodlight pools. Seen straight down from
+    directly overhead and filling the whole frame edge to edge, like a flat tabletop game mat: an empty, quiet ground surface
+    with even lighting, richer detail gathered along the borders and a calm, readable middle so game pieces stand out on top.'
+- key: slime-board-pitworks-bloodrush
+  lane: krea2
+  entity: board-floor
+  title: Slime City bloodrush board, pitworks
+  asset: slime-city/boards/pitworks-bloodrush
+  size: 1536x640
+  seed: 1084002
+  prompt_prose: 'Top-down painted game board floor for the Pitworks, the neutral Grand Pit district of sunken gladiator arenas
+    dug into a ruined highway interchange, laid out as a long lane-rush arena floor: six faint horizontal lanes running left
+    to right, a scoring gate zone at the far left and far right ends. The ground is packed rust-orange dirt and cracked highway
+    concrete, chalk scuff marks, scattered skewer sticks and food-cart wrappers, warm orange floodlight pools. Seen straight
+    down from directly overhead and filling the whole frame edge to edge, like a flat tabletop game mat: an empty, quiet ground
+    surface with even lighting, richer detail gathered along the borders and a calm, readable middle so game pieces stand
+    out on top.'
+- key: slime-board-chimera-blackout
+  lane: krea2
+  entity: board-floor
+  title: Slime City blackout board, chimera
+  asset: slime-city/boards/chimera-blackout
+  size: 1344x768
+  seed: 1084003
+  prompt_prose: 'Top-down painted game board floor for Chimera Heights, the Gene Riot Catgirls'' turf of old gene-laboratory
+    towers turned cozy neighborhood, laid out as a capture-the-flag skirmish floor: a wide clear open centre, a distinct home
+    edge on the left and enemy edge on the right. The ground is cracked white lab tiles overgrown with catnip and ferns, spilled
+    blue serum puddles, paw-print trails, broken glass-dome shards, cool cobalt-blue twilight light. Seen straight down from
+    directly overhead and filling the whole frame edge to edge, like a flat tabletop game mat: an empty, quiet ground surface
+    with even lighting, richer detail gathered along the borders and a calm, readable middle so game pieces stand out on top.'
+- key: slime-board-chimera-bloodrush
+  lane: krea2
+  entity: board-floor
+  title: Slime City bloodrush board, chimera
+  asset: slime-city/boards/chimera-bloodrush
+  size: 1536x640
+  seed: 1084004
+  prompt_prose: 'Top-down painted game board floor for Chimera Heights, the Gene Riot Catgirls'' turf of old gene-laboratory
+    towers turned cozy neighborhood, laid out as a long lane-rush arena floor: six faint horizontal lanes running left to
+    right, a scoring gate zone at the far left and far right ends. The ground is cracked white lab tiles overgrown with catnip
+    and ferns, spilled blue serum puddles, paw-print trails, broken glass-dome shards, cool cobalt-blue twilight light. Seen
+    straight down from directly overhead and filling the whole frame edge to edge, like a flat tabletop game mat: an empty,
+    quiet ground surface with even lighting, richer detail gathered along the borders and a calm, readable middle so game
+    pieces stand out on top.'
+- key: slime-board-needles-blackout
+  lane: krea2
+  entity: board-floor
+  title: Slime City blackout board, needles
+  asset: slime-city/boards/needles-blackout
+  size: 1344x768
+  seed: 1084005
+  prompt_prose: 'Top-down painted game board floor for Needle Alley, the Punk Bloodfairies'' rooftop turf high above a canyon
+    street, laid out as a capture-the-flag skirmish floor: a wide clear open centre, a distinct home edge on the left and
+    enemy edge on the right. The ground is rain-slick tar roof with tangled cables, bottle-cap and safety-pin fairy nests,
+    magenta graffiti stencils and puddles reflecting purple neon. Seen straight down from directly overhead and filling the
+    whole frame edge to edge, like a flat tabletop game mat: an empty, quiet ground surface with even lighting, richer detail
+    gathered along the borders and a calm, readable middle so game pieces stand out on top.'
+- key: slime-board-needles-bloodrush
+  lane: krea2
+  entity: board-floor
+  title: Slime City bloodrush board, needles
+  asset: slime-city/boards/needles-bloodrush
+  size: 1536x640
+  seed: 1084006
+  prompt_prose: 'Top-down painted game board floor for Needle Alley, the Punk Bloodfairies'' rooftop turf high above a canyon
+    street, laid out as a long lane-rush arena floor: six faint horizontal lanes running left to right, a scoring gate zone
+    at the far left and far right ends. The ground is rain-slick tar roof with tangled cables, bottle-cap and safety-pin fairy
+    nests, magenta graffiti stencils and puddles reflecting purple neon. Seen straight down from directly overhead and filling
+    the whole frame edge to edge, like a flat tabletop game mat: an empty, quiet ground surface with even lighting, richer
+    detail gathered along the borders and a calm, readable middle so game pieces stand out on top.'
+- key: slime-board-foundry-blackout
+  lane: krea2
+  entity: board-floor
+  title: Slime City blackout board, foundry
+  asset: slime-city/boards/foundry-blackout
+  size: 1344x768
+  seed: 1084007
+  prompt_prose: 'Top-down painted game board floor for the Foundry, the Ironjaw Chrome Ogres'' factory floor, laid out as
+    a capture-the-flag skirmish floor: a wide clear open centre, a distinct home edge on the left and enemy edge on the right.
+    The ground is riveted steel plates, glowing molten-orange cracks and drainage channels, rusted conveyor tracks, oil stains
+    and green toxic haze pooling low. Seen straight down from directly overhead and filling the whole frame edge to edge,
+    like a flat tabletop game mat: an empty, quiet ground surface with even lighting, richer detail gathered along the borders
+    and a calm, readable middle so game pieces stand out on top.'
+- key: slime-board-foundry-bloodrush
+  lane: krea2
+  entity: board-floor
+  title: Slime City bloodrush board, foundry
+  asset: slime-city/boards/foundry-bloodrush
+  size: 1536x640
+  seed: 1084008
+  prompt_prose: 'Top-down painted game board floor for the Foundry, the Ironjaw Chrome Ogres'' factory floor, laid out as
+    a long lane-rush arena floor: six faint horizontal lanes running left to right, a scoring gate zone at the far left and
+    far right ends. The ground is riveted steel plates, glowing molten-orange cracks and drainage channels, rusted conveyor
+    tracks, oil stains and green toxic haze pooling low. Seen straight down from directly overhead and filling the whole frame
+    edge to edge, like a flat tabletop game mat: an empty, quiet ground surface with even lighting, richer detail gathered
+    along the borders and a calm, readable middle so game pieces stand out on top.'
+- key: slime-board-undertow-blackout
+  lane: krea2
+  entity: board-floor
+  title: Slime City blackout board, undertow
+  asset: slime-city/boards/undertow-blackout
+  size: 1344x768
+  seed: 1084009
+  prompt_prose: 'Top-down painted game board floor for the Undertow, Undertow Intelligence''s underground canal city, laid
+    out as a capture-the-flag skirmish floor: a wide clear open centre, a distinct home edge on the left and enemy edge on
+    the right. The ground is wet mossy brick walkways crossing shallow teal glowing slime water, rusted grates, coiled pipes
+    and floating lanterns, cool teal mist. Seen straight down from directly overhead and filling the whole frame edge to edge,
+    like a flat tabletop game mat: an empty, quiet ground surface with even lighting, richer detail gathered along the borders
+    and a calm, readable middle so game pieces stand out on top.'
+- key: slime-board-undertow-bloodrush
+  lane: krea2
+  entity: board-floor
+  title: Slime City bloodrush board, undertow
+  asset: slime-city/boards/undertow-bloodrush
+  size: 1536x640
+  seed: 1084010
+  prompt_prose: 'Top-down painted game board floor for the Undertow, Undertow Intelligence''s underground canal city, laid
+    out as a long lane-rush arena floor: six faint horizontal lanes running left to right, a scoring gate zone at the far
+    left and far right ends. The ground is wet mossy brick walkways crossing shallow teal glowing slime water, rusted grates,
+    coiled pipes and floating lanterns, cool teal mist. Seen straight down from directly overhead and filling the whole frame
+    edge to edge, like a flat tabletop game mat: an empty, quiet ground surface with even lighting, richer detail gathered
+    along the borders and a calm, readable middle so game pieces stand out on top.'
+- key: slime-board-crown-blackout
+  lane: krea2
+  entity: board-floor
+  title: Slime City blackout board, crown
+  asset: slime-city/boards/crown-blackout
+  size: 1344x768
+  seed: 1084011
+  prompt_prose: 'Top-down painted game board floor for Crown Market, the Meat Exchange''s gaudy gilded bazaar, laid out as
+    a capture-the-flag skirmish floor: a wide clear open centre, a distinct home edge on the left and enemy edge on the right.
+    The ground is polished gold-veined marble and checkered butcher tiles, brass scale weights, scattered coins and butcher-paper
+    parcels, velvet rope lines, warm gold lamplight. Seen straight down from directly overhead and filling the whole frame
+    edge to edge, like a flat tabletop game mat: an empty, quiet ground surface with even lighting, richer detail gathered
+    along the borders and a calm, readable middle so game pieces stand out on top.'
+- key: slime-board-crown-bloodrush
+  lane: krea2
+  entity: board-floor
+  title: Slime City bloodrush board, crown
+  asset: slime-city/boards/crown-bloodrush
+  size: 1536x640
+  seed: 1084012
+  prompt_prose: 'Top-down painted game board floor for Crown Market, the Meat Exchange''s gaudy gilded bazaar, laid out as
+    a long lane-rush arena floor: six faint horizontal lanes running left to right, a scoring gate zone at the far left and
+    far right ends. The ground is polished gold-veined marble and checkered butcher tiles, brass scale weights, scattered
+    coins and butcher-paper parcels, velvet rope lines, warm gold lamplight. Seen straight down from directly overhead and
+    filling the whole frame edge to edge, like a flat tabletop game mat: an empty, quiet ground surface with even lighting,
+    richer detail gathered along the borders and a calm, readable middle so game pieces stand out on top.'
+- key: slime-board-redline-blackout
+  lane: krea2
+  entity: board-floor
+  title: Slime City blackout board, redline
+  asset: slime-city/boards/redline-blackout
+  size: 1344x768
+  seed: 1084013
+  prompt_prose: 'Top-down painted game board floor for Redline Riot, the Riot Saints'' chaotic street gauntlet, laid out as
+    a capture-the-flag skirmish floor: a wide clear open centre, a distinct home edge on the left and enemy edge on the right.
+    The ground is scorched red asphalt with burnt tyre marks, toppled traffic cones, confetti and firework scorch rings, smashed
+    barricades along the edges, flickering red and white flare light. Seen straight down from directly overhead and filling
+    the whole frame edge to edge, like a flat tabletop game mat: an empty, quiet ground surface with even lighting, richer
+    detail gathered along the borders and a calm, readable middle so game pieces stand out on top.'
+- key: slime-board-redline-bloodrush
+  lane: krea2
+  entity: board-floor
+  title: Slime City bloodrush board, redline
+  asset: slime-city/boards/redline-bloodrush
+  size: 1536x640
+  seed: 1084014
+  prompt_prose: 'Top-down painted game board floor for Redline Riot, the Riot Saints'' chaotic street gauntlet, laid out as
+    a long lane-rush arena floor: six faint horizontal lanes running left to right, a scoring gate zone at the far left and
+    far right ends. The ground is scorched red asphalt with burnt tyre marks, toppled traffic cones, confetti and firework
+    scorch rings, smashed barricades along the edges, flickering red and white flare light. Seen straight down from directly
+    overhead and filling the whole frame edge to edge, like a flat tabletop game mat: an empty, quiet ground surface with
+    even lighting, richer detail gathered along the borders and a calm, readable middle so game pieces stand out on top.'
+- key: slime-card-back
+  lane: krea2
+  entity: card-back
+  title: Slime City card back
+  asset: slime-city/ui/card-back
+  size: 832x1216
+  seed: 1084015
+  prompt_prose: 'The back of a collectible trading card for Slime City: a symmetrical emblem of a grinning slime-green skull
+    dripping glowing ooze, framed by a ring of six small crew sigils (cat ear, fairy wing, chrome jaw, riot flame, periscope
+    eye, meat hook) over a deep purple-to-teal grunge background with rusted rivets and an ink-splatter border. Perfectly
+    centered and front-facing, a purely pictorial flat emblem design that reads clearly at thumbnail size.'
