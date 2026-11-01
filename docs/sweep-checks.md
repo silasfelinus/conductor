@@ -181,7 +181,10 @@ flags something and you need to know why it exists or how to fix it.
      month earlier). First check each flagged task's PR: merged → close it `done`
      (`check_pr_merged_drift.py --include-inactive`). Otherwise `--apply` returns it to `ready`,
      clears the claim and appends a dated note. Parked `ready`/`waiting`/`needs-human` tasks in
-     inactive projects are only counted; they wait for the project to be reopened. Exit 1 when flagged.
+     paused/finished projects are only counted; they wait for the project to be reopened. A
+     `retired` project keeps no open work (Silas, 2026-11-01 PT): `--apply` sets its open tasks to
+     `cancelled` with `cancelled_reason: project-retired` — first check whether a flagged task's PR
+     actually merged, which makes it `done` instead. Exit 1 when flagged.
 
 ## Step 7 — the dream docket (CLAUDE.md startup)
 

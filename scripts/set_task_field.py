@@ -81,6 +81,7 @@ ALLOWED_FIELDS = {
     "gate_human",
     "soft_gate",
     "approved_by_human",
+    "cancelled_reason",
     "depends_on",
     "note",
     "claimed_by",

@@ -39,8 +39,10 @@ def active_targets():
     entries = data.get("overrides", [])
     if isinstance(entries, dict):
         entries = [{"slug": k, **v} for k, v in entries.items()]
+    # Member projects (`parent:`, e.g. Daily Dream Workshop apps) are a subset of their parent
+    # (Silas, 2026-11-01 PT): an upgrade to one is recorded against the parent, not itself.
     return {e["slug"] for e in entries if isinstance(e, dict) and
-            e.get("status") in ("active", "continuous") and e.get("slug")}
+            e.get("status") in ("active", "continuous") and e.get("slug") and not e.get("parent")}
 
 
 def validate(date, docket):

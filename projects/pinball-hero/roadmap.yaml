@@ -50,12 +50,12 @@ tasks:
 - id: t-002
   milestone: m2
   title: Research BOM tiers and common-source parts
-  status: needs-human
+  status: cancelled
   owner: worker
   passes: 0
   stakes: reversible
   gate_human: true
-  updated: '2026-07-22T05:25:00Z'
+  updated: '2026-11-01T12:11:46Z'
   depends_on: t-001
   note: |-
     Create starter, solid, and deluxe bill-of-materials tiers. Favor reliable common parts: plywood
@@ -73,15 +73,22 @@ tasks:
     directly change BOM line items. Set approved_by_human: true and status: done (with any direction
     changes noted here) once satisfied. Unblocks: pinball-hero/t-004 (electronics and control plan), which
     needs the flipper-drive answer specifically.
+
+    2026-11-01 PT: cancelled unbuilt — project `pinball-hero` is retired and Silas approved
+    closing retired projects' open work (2026-11-01 PT). Was `needs-human`. Reopen the
+    project to revive it.
+  cancelled_reason: project-retired
+  claimed_by: null
+  claimed_at: null
 - id: t-003
   milestone: m3
   title: Specify the 3D printable model set
-  status: needs-human
+  status: cancelled
   owner: worker
   passes: 0
   stakes: reversible
   gate_human: true
-  updated: '2026-07-22T05:25:00Z'
+  updated: '2026-11-01T12:11:46Z'
   depends_on: t-001
   note: |-
     Define the printable model catalog: brackets, guides, wireforms substitutes, lane plastics, posts,
@@ -99,39 +106,54 @@ tasks:
     layout) -- same open questions as t-002, repeated because they affect which parts get modeled first.
     Set approved_by_human: true and status: done (with any direction changes noted here) once satisfied.
     Unblocks: pinball-hero/t-005 (final build package outline) and feeds t-004's mounting-interface needs.
+
+    2026-11-01 PT: cancelled unbuilt — project `pinball-hero` is retired and Silas approved
+    closing retired projects' open work (2026-11-01 PT). Was `needs-human`. Reopen the
+    project to revive it.
+  cancelled_reason: project-retired
+  claimed_by: null
+  claimed_at: null
 - id: t-004
   milestone: m4
   title: Design the electronics and control plan
-  status: waiting
+  status: cancelled
   owner:
   passes: 0
   stakes: reversible
-  updated: 2026-06-29
+  updated: '2026-11-01T12:11:46Z'
   depends_on:
   - t-001
   - t-002
-  note: 'Draft the control architecture for lights, sensors, buttons, audio, scoring, and solenoid-safe actuation if included.
-    Compare microcontroller and SBC options, identify safe power domains, fuse/protection needs, and document what should
-    remain low-voltage beginner-friendly.
+  note: >-
+    Draft the control architecture for lights, sensors, buttons, audio, scoring, and solenoid-safe actuation if included. Compare microcontroller and SBC options, identify safe power domains, fuse/protection needs, and document what should remain low-voltage beginner-friendly.
 
-    '
+    2026-11-01 PT: cancelled unbuilt — project `pinball-hero` is retired and Silas approved
+    closing retired projects' open work (2026-11-01 PT). Was `waiting`. Reopen the project
+    to revive it.
+  cancelled_reason: project-retired
+  claimed_by: null
+  claimed_at: null
 - id: t-005
   milestone: m5
   title: Assemble the first build-plan package outline
-  status: waiting
+  status: cancelled
   owner:
   passes: 0
   stakes: reversible
-  updated: 2026-06-29
+  updated: '2026-11-01T12:11:46Z'
   depends_on:
   - t-002
   - t-003
   - t-004
-  note: 'Produce the outline for the final deliverable: parts list by tier, printable files index, assembly order, calibration/testing
-    steps, safety checklist, maintenance notes, and upgrade paths. This is still a draft package and should stay needs-human
-    before publishing.
+  note: >-
+    Produce the outline for the final deliverable: parts list by tier, printable files index, assembly order, calibration/testing steps, safety checklist, maintenance notes, and upgrade paths. This is still a draft package and should stay needs-human before publishing.
 
-    '
+    2026-11-01 PT: cancelled unbuilt — project `pinball-hero` is retired and Silas approved
+    closing retired projects' open work (2026-11-01 PT). Was `waiting`. Reopen the project
+    to revive it.
+  cancelled_reason: project-retired
+  claimed_by: null
+  claimed_at: null
 - id: t-006
   milestone: m4
   title: Survey open-source pinball software stacks for project fit

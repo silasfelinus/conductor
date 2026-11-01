@@ -86,29 +86,45 @@ tasks:
 - id: t-004
   milestone: m4
   title: "One-click rollback via git revert"
-  status: blocked
+  status: cancelled
   owner:
   passes: 0
   stakes: outward-facing
   gate_human: true
   approved_by_human: false
-  note: >
+  note: >-
     Redirected to kind_robots. Any rollback UI belongs in conductor-page.vue,
     not in a standalone approval-portal app. Create a task in projects/kind-robots/roadmap.yaml
     when Silas is ready to build this. Ends needs-human until that decision is made.
 
+    2026-11-01 PT: cancelled unbuilt — project `approval-portal` is retired and Silas
+    approved closing retired projects' open work (2026-11-01 PT). Was `blocked`. Reopen the
+    project to revive it.
+  updated: '2026-11-01T12:11:46Z'
+  cancelled_reason: project-retired
+  claimed_by: null
+  claimed_at: null
+
 - id: t-005
   milestone: m5
   title: "Plan auth + deploy (do NOT deploy)"
-  status: blocked
+  status: cancelled
   owner:
   passes: 0
   stakes: irreversible
   gate_human: true
   approved_by_human: false
-  note: >
+  note: >-
     Redirected to kind_robots. Auth and deploy for the workspace belong to kind_robots,
     not a separate app. Create a task in projects/kind-robots/roadmap.yaml when ready.
     Ends needs-human until Silas decides to proceed.
+
+    2026-11-01 PT: cancelled unbuilt — project `approval-portal` is retired and Silas
+    approved closing retired projects' open work (2026-11-01 PT). Was `blocked`. Reopen the
+    project to revive it.
+  updated: '2026-11-01T12:11:46Z'
+  cancelled_reason: project-retired
+  claimed_by: null
+  claimed_at: null
 goal: Provide a clear human-review surface for inspecting, approving, redirecting, or rejecting gated Conductor work 
   without editing roadmap YAML by hand.

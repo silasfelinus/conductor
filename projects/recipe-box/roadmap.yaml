@@ -20,45 +20,58 @@ tasks:
 - id: t-001
   milestone: m1
   title: Write the app spec (what it is, who it serves, MVP screens)
-  status: needs-human
+  status: cancelled
   owner: worker
   passes: 0
   stakes: reversible
   gate_human: true
   approved_by_human: false
-  note: 'FOR SILAS: Wrote projects/recipe-box/SPEC.md -- the first-ever spec for this app (previously just an AppMaker scaffold
-    with no direction). It defines Recipe Box as a personal, cozy, single-user cooking companion (Flutter, ios/android): save
-    recipes with photo/ingredients/steps/tags, browse/search/favorite them, and a large-type ''Cook Mode'' detail view that
-    keeps the screen awake while cooking. MVP is fully local-only (on-device DB, no accounts, no backend) with JSON export/import
-    as the backup story; cloud sync, URL recipe import, meal planning, and shopping-list generation are flagged as reasonable
-    v2s, not MVP. TO APPROVE: read SPEC.md and either approve as-is (set approved_by_human: true, status: done) or leave edits/notes
-    for a revision pass -- in particular the accent-color choice (terracotta vs sage, see Visual direction) and the embedded-DB
-    package choice are left open for your preference. Approving unblocks t-002 (build the MVP in apps/recipe-box/).'
-  claimed_by: claude-conductor-burst-20260721T0937Z
-  claimed_at: '2026-07-21T09:06:57Z'
-  updated: '2026-07-21T09:08:11Z'
+  note: >-
+    FOR SILAS: Wrote projects/recipe-box/SPEC.md -- the first-ever spec for this app (previously just an AppMaker scaffold with no direction). It defines Recipe Box as a personal, cozy, single-user cooking companion (Flutter, ios/android): save recipes with photo/ingredients/steps/tags, browse/search/favorite them, and a large-type 'Cook Mode' detail view that keeps the screen awake while cooking. MVP is fully local-only (on-device DB, no accounts, no backend) with JSON export/import as the backup story; cloud sync, URL recipe import, meal planning, and shopping-list generation are flagged as reasonable v2s, not MVP. TO APPROVE: read SPEC.md and either approve as-is (set approved_by_human: true, status: done) or leave edits/notes for a revision pass -- in particular the accent-color choice (terracotta vs sage, see Visual direction) and the embedded-DB package choice are left open for your preference. Approving unblocks t-002 (build the MVP in apps/recipe-box/).
+
+    2026-11-01 PT: cancelled unbuilt — project `recipe-box` is retired and Silas approved
+    closing retired projects' open work (2026-11-01 PT). Was `needs-human`. Reopen the
+    project to revive it.
+  claimed_by: null
+  claimed_at: null
+  updated: '2026-11-01T12:11:46Z'
+  cancelled_reason: project-retired
 - id: t-002
   milestone: m2
   title: Build the MVP in apps/recipe-box/
-  status: waiting
+  status: cancelled
   owner:
   passes: 0
   stakes: reversible
   depends_on: t-001
-  note: 'Implement the approved spec. CI (app-ci.yml) must stay green.
+  note: >-
+    Implement the approved spec. CI (app-ci.yml) must stay green.
 
-    '
+    2026-11-01 PT: cancelled unbuilt — project `recipe-box` is retired and Silas approved
+    closing retired projects' open work (2026-11-01 PT). Was `waiting`. Reopen the project
+    to revive it.
+  updated: '2026-11-01T12:11:46Z'
+  cancelled_reason: project-retired
+  claimed_by: null
+  claimed_at: null
 - id: t-003
   milestone: m3
   title: 'Store readiness checklist (do NOT submit)'
-  status: waiting
+  status: cancelled
   owner:
   passes: 0
   stakes: outward-facing
   gate_human: true
   approved_by_human: false
   depends_on: t-002
-  note: 'Signing docs, privacy labels, release checklist. Submission itself is a separate needs-human action by Silas.
+  note: >-
+    Signing docs, privacy labels, release checklist. Submission itself is a separate needs-human action by Silas.
 
-    '
+    2026-11-01 PT: cancelled unbuilt — project `recipe-box` is retired and Silas approved
+    closing retired projects' open work (2026-11-01 PT). Was `waiting`. Reopen the project
+    to revive it.
+  updated: '2026-11-01T12:11:46Z'
+  cancelled_reason: project-retired
+  claimed_by: null
+  claimed_at: null
 goal: Develop Recipe Box into a useful, maintainable place to capture, organize, browse, and use recipes.

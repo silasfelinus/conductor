@@ -253,3 +253,51 @@ def test_duplicate_key_within_a_task_fails(_isolate_root, capsys):
 def test_duplicate_mapping_keys_function_directly():
     assert validate_roadmaps.duplicate_mapping_keys("a: 1\nb:\n  c: 2\n  c: 3\n") == [("c", 3, 4)]
     assert validate_roadmaps.duplicate_mapping_keys("tasks:\n- id: t-001\n- id: t-002\n") == []
+
+
+# --- 2026-11-01: member projects (parent:) and the cancelled status -----------
+
+def _overrides(root: Path, text: str) -> None:
+    (root / "project-overrides.yaml").write_text("overrides:\n" + text, encoding="utf-8")
+
+
+def test_member_project_cannot_be_active(_isolate_root, capsys):
+    _overrides(_isolate_root, "  - slug: hub\n    status: continuous\n"
+               "  - slug: app\n    status: active\n    parent: hub\n")
+    write_roadmap(_isolate_root, "hub", "project: hub\ntasks:\n- id: t-001\n  status: ready\n")
+    write_roadmap(_isolate_root, "app", "project: app\ntasks:\n- id: t-001\n  status: ready\n")
+    assert validate_roadmaps.main() == 1
+    assert "cannot be `active`" in capsys.readouterr().err
+
+
+def test_member_project_needs_known_workable_parent(_isolate_root, capsys):
+    _overrides(_isolate_root, "  - slug: hub\n    status: paused\n"
+               "  - slug: app\n    status: continuous\n    parent: hub\n"
+               "  - slug: orphan\n    status: continuous\n    parent: nowhere\n")
+    assert validate_roadmaps.main() == 1
+    err = capsys.readouterr().err
+    assert "parent hub is not workable" in err and "unknown parent 'nowhere'" in err
+
+
+def test_continuous_member_with_workable_parent_is_valid(_isolate_root, capsys):
+    _overrides(_isolate_root, "  - slug: hub\n    status: continuous\n"
+               "  - slug: app\n    status: continuous\n    parent: hub\n")
+    write_roadmap(_isolate_root, "app", "project: app\ntasks:\n- id: t-001\n  status: ready\n")
+    assert validate_roadmaps.main() == 0
+
+
+def test_cancelled_is_a_valid_closed_status(_isolate_root, capsys):
+    _overrides(_isolate_root, "  - slug: demo\n    status: active\n")
+    write_roadmap(_isolate_root, "demo", "project: demo\ntasks:\n- id: t-001\n  status: cancelled\n")
+    # Valid status, but it is closed: an active project with only cancelled work has no open tasks.
+    assert validate_roadmaps.main() == 1
+    err = capsys.readouterr().err
+    assert "invalid task status" not in err and "active project has no open tasks" in err
+
+
+def test_real_member_projects_sit_under_dream_cycle():
+    import yaml
+    data = yaml.safe_load((Path(__file__).resolve().parent.parent / "project-overrides.yaml").read_text())
+    members = {o["slug"]: o for o in data["overrides"] if o.get("parent")}
+    assert "kr-solitaire" in members and "kind-sliding-tile-gallery" in members
+    assert all(o["parent"] == "dream-cycle" and o["status"] != "active" for o in members.values())

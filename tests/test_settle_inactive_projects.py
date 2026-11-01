@@ -41,7 +41,18 @@ def _repo(tmp_path: Path, status: str) -> Path:
 
 def test_active_project_is_ignored(tmp_path):
     result = sip.scan(_repo(tmp_path, "active"))
-    assert result == {"live": [], "parked": {}}
+    assert result == {"live": [], "retired_open": [], "parked": {}}
+
+
+def test_retired_project_open_work_is_cancelled(tmp_path):
+    root = _repo(tmp_path, "retired")
+    result = sip.scan(root)
+    assert [i["task"] for i in result["retired_open"]] == ["t-001", "t-002", "t-003"]
+    sip.cancel_retired(root, result["retired_open"], "2026-11-01")
+    tasks = yaml.safe_load((root / "projects/demo/roadmap.yaml").read_text())["tasks"]
+    assert {t["status"] for t in tasks} == {"cancelled"}
+    assert all(t["cancelled_reason"] == "project-retired" and t["claimed_by"] is None for t in tasks)
+    assert sip.scan(root)["retired_open"] == []
 
 
 def test_inactive_project_flags_only_live_statuses(tmp_path):
@@ -51,7 +62,7 @@ def test_inactive_project_flags_only_live_statuses(tmp_path):
 
 
 def test_settle_releases_claim_and_keeps_gate(tmp_path):
-    root = _repo(tmp_path, "retired")
+    root = _repo(tmp_path, "finished")
     sip.settle(root, sip.scan(root)["live"], "2026-11-01")
     tasks = {t["id"]: t for t in yaml.safe_load((root / "projects/demo/roadmap.yaml").read_text())["tasks"]}
     assert tasks["t-001"]["status"] == "ready"
@@ -60,3 +71,10 @@ def test_settle_releases_claim_and_keeps_gate(tmp_path):
     assert "released by settle_inactive_projects.py" in tasks["t-001"]["note"]
     assert tasks["t-002"]["status"] == "needs-human" and tasks["t-002"]["claimed_by"] == "sess-2"
     assert sip.scan(root)["live"] == []
+
+
+def test_cancelled_tasks_leave_progress_denominator():
+    import build_status
+    tasks = [{"status": "done"}, {"status": "cancelled"}, {"status": "cancelled"}, {"status": "ready"}]
+    assert build_status.compute_progress([], tasks) == 50.0
+    assert build_status.compute_progress([], [{"status": "cancelled"}]) == 0.0

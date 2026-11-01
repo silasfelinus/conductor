@@ -43,6 +43,9 @@ def compute_progress(milestones: list[dict], tasks: list[dict] | None = None) ->
     if total_m and done_m > 0:
         return round(done_m / total_m * 100, 1)
     # Fall back to task-completion ratio when milestones are uninformative.
+    # `cancelled` tasks (closed unbuilt when Silas retires a project) leave the denominator.
+    # Mirrored in kind_robots server/utils/conductorRoadmap.ts computeProgress.
+    tasks = [t for t in tasks if t.get("status") != "cancelled"]
     if tasks:
         done_t = sum(1 for t in tasks if t.get("status") == "done")
         return round(done_t / len(tasks) * 100, 1)

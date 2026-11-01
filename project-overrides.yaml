@@ -4,6 +4,10 @@
 # status:   active | continuous | paused | retired | finished
 # priority: low | normal | high | urgent
 # kind:     software | content | proposal | brainstorm (overrides roadmap kind for UI)
+# parent:   optional slug. A member project (a Daily Dream Workshop micro app) keeps its own
+#           roadmap and endpoint but is never its own first-tier project: it must be
+#           continuous (or inactive), is ordered with its parent in priority.yaml, and Kind
+#           Robots lists it under the parent instead of in front-door/nav project lists.
 #
 # liveUrl/channelKey/tabKey below (where present) are an informational mirror
 # only, kept in sync by hand. Kind Robots owns these presentation fields
@@ -683,8 +687,9 @@ overrides:
     kind: software
 
   - slug: kr-solitaire
-    status: active
-    priority: normal
+    status: continuous # Daily Dream Workshop member app (Silas, 2026-11-01 PT): worked only as part of dream-cycle, never as a first-tier project
+    priority: low
+    parent: dream-cycle
     kind: software
 
   - slug: kr-adventures
@@ -693,13 +698,15 @@ overrides:
     kind: software
 
   - slug: kind-oracle
-    status: active
-    priority: normal
+    status: continuous # Daily Dream Workshop member app (Silas, 2026-11-01 PT): worked only as part of dream-cycle, never as a first-tier project
+    priority: low
+    parent: dream-cycle
     kind: software
 
   - slug: pocket-pet-robot
-    status: active
-    priority: normal
+    status: continuous # Daily Dream Workshop member app (Silas, 2026-11-01 PT): worked only as part of dream-cycle, never as a first-tier project
+    priority: low
+    parent: dream-cycle
     kind: software
 
   - slug: evolve-rebel-button
@@ -743,28 +750,33 @@ overrides:
     kind: software
 
   - slug: robot-sound-garden
-    status: active
-    priority: normal
+    status: continuous # Daily Dream Workshop member app (Silas, 2026-11-01 PT): worked only as part of dream-cycle, never as a first-tier project
+    priority: low
+    parent: dream-cycle
     kind: software
 
   - slug: kind-trivia-trail
-    status: active
-    priority: normal
+    status: continuous # Daily Dream Workshop member app (Silas, 2026-11-01 PT): worked only as part of dream-cycle, never as a first-tier project
+    priority: low
+    parent: dream-cycle
     kind: software
 
   - slug: kind-lantern-garden
-    status: active
-    priority: normal
+    status: continuous # Daily Dream Workshop member app (Silas, 2026-11-01 PT): worked only as part of dream-cycle, never as a first-tier project
+    priority: low
+    parent: dream-cycle
     kind: software
 
   - slug: robot-species-sorting-quiz
-    status: active
-    priority: normal
+    status: continuous # Daily Dream Workshop member app (Silas, 2026-11-01 PT): worked only as part of dream-cycle, never as a first-tier project
+    priority: low
+    parent: dream-cycle
     kind: software
 
   - slug: kind-daily-riddle
-    status: active
-    priority: normal
+    status: continuous # Daily Dream Workshop member app (Silas, 2026-11-01 PT): worked only as part of dream-cycle, never as a first-tier project
+    priority: low
+    parent: dream-cycle
     kind: software
 
   - slug: kr-arcade
@@ -783,8 +795,9 @@ overrides:
     kind: software
 
   - slug: kind-nonogram-gallery
-    status: active
-    priority: normal
+    status: continuous # Daily Dream Workshop member app (Silas, 2026-11-01 PT): worked only as part of dream-cycle, never as a first-tier project
+    priority: low
+    parent: dream-cycle
     kind: software
 
   - slug: zuzu-showdown
@@ -798,13 +811,15 @@ overrides:
     kind: software
 
   - slug: robot-paper-boat-regatta
-    status: active
-    priority: normal
+    status: continuous # Daily Dream Workshop member app (Silas, 2026-11-01 PT): worked only as part of dream-cycle, never as a first-tier project
+    priority: low
+    parent: dream-cycle
     kind: software
 
   - slug: kind-sliding-tile-gallery
-    status: active
-    priority: normal
+    status: continuous # Daily Dream Workshop member app (Silas, 2026-11-01 PT): worked only as part of dream-cycle, never as a first-tier project
+    priority: low
+    parent: dream-cycle
     kind: software
 
   - slug: emperor-of-dust

@@ -94,7 +94,7 @@ tasks:
 - id: t-005
   milestone: m2
   title: Make animation registration declarative and self-validating
-  status: blocked
+  status: cancelled
   owner:
   passes: 0
   stakes: reversible
@@ -110,49 +110,80 @@ tasks:
     CONSISTENCY HOLD 2026-08-29: animation-studio is retired and superseded by animation-manager; keep this dependent task
     blocked rather than incorrectly dependency-waiting.
 
-  updated: '2026-08-29T23:59:00Z'
+    2026-11-01 PT: cancelled unbuilt — project `animation-studio` is retired and Silas
+    approved closing retired projects' open work (2026-11-01 PT). Was `blocked`. Reopen the
+    project to revive it.
+
+  updated: '2026-11-01T12:11:46Z'
+  cancelled_reason: project-retired
+  claimed_by: null
+  claimed_at: null
 - id: t-006
   milestone: m4
   title: Build the Animation Manager in Kind Robots
-  status: waiting
+  status: cancelled
   owner:
   passes: 0
   stakes: reversible
   depends_on:
   - t-004
   - t-005
-  note: >
+  note: >-
     Build a store-driven manager that browses concepts and attempts, previews versions, records
     reactions, compares quality history, promotes a preferred build, retires stale attempts, and
     creates polish tasks. Components never call API routes directly.
 
+    2026-11-01 PT: cancelled unbuilt — project `animation-studio` is retired and Silas
+    approved closing retired projects' open work (2026-11-01 PT). Was `waiting`. Reopen the
+    project to revive it.
+  updated: '2026-11-01T12:11:46Z'
+  cancelled_reason: project-retired
+  claimed_by: null
+  claimed_at: null
+
 - id: t-007
   milestone: m4
   title: Audit and polish existing animation catalog
-  status: waiting
+  status: cancelled
   owner:
   passes: 0
   stakes: reversible
   depends_on:
   - t-006
-  note: >
+  note: >-
     Inventory every current effect, including stale preference entries such as removed Aurora.
     Record performance, interaction blocking, startup safety, reduced-motion support, lifecycle
     cleanup, visual quality, and reaction score. Polish the strongest candidates and retire or
     archive weak ones without silently deleting attempt history.
 
+    2026-11-01 PT: cancelled unbuilt — project `animation-studio` is retired and Silas
+    approved closing retired projects' open work (2026-11-01 PT). Was `waiting`. Reopen the
+    project to revive it.
+  updated: '2026-11-01T12:11:46Z'
+  cancelled_reason: project-retired
+  claimed_by: null
+  claimed_at: null
+
 - id: t-008
   milestone: m5
   title: Recurring research-pitch-build-polish animation cycle
-  status: waiting
+  status: cancelled
   owner:
   passes: 0
   stakes: reversible
   depends_on:
   - t-006
   - t-007
-  note: >
+  note: >-
     Standing autonomous loop: research selectively, keep the ranked pitch queue healthy, choose
     one high-value pitch or reaction-backed polish target, implement one scoped reversible change,
     verify it, and update attempt history. Prefer polishing a promising weak build over flooding
     the catalog with mediocre new effects. This may occupy a full Worker cycle.
+
+    2026-11-01 PT: cancelled unbuilt — project `animation-studio` is retired and Silas
+    approved closing retired projects' open work (2026-11-01 PT). Was `waiting`. Reopen the
+    project to revive it.
+  updated: '2026-11-01T12:11:46Z'
+  cancelled_reason: project-retired
+  claimed_by: null
+  claimed_at: null

@@ -136,6 +136,11 @@ Full procedure, with the history behind each step: [`docs/agents/picking-work.md
 3. **Lifecycle is authoritative** (`project-overrides.yaml`). Work `active` projects first;
    `continuous` only when no active project has claimable work. `paused`, `retired` and `finished`
    projects are off-limits — no claims, no reviews, no new tasks — until Silas changes the status.
+   Paused projects keep their open tasks (back burner, progress preserved); retired projects keep
+   none (cancelled). **Member projects** (`parent:` in `project-overrides.yaml`, e.g. the Daily
+   Dream Workshop micro apps under `dream-cycle`, Silas 2026-11-01 PT) are a subset of their parent,
+   never first-tier work: always `continuous`/inactive, ordered with the parent, and never picked
+   for the five daily upgrades or the audience-first front door ahead of first-tier projects.
 4. Honor CONTROL.md, then the project's `notes_from_silas`, over default ordering. `STATUS.md` is
    auto-generated; never edit it.
 5. Take the highest-priority `ready` task. An active project at zero open tasks is not
@@ -412,3 +417,6 @@ Side exits:
   next ready task. Document which kind in the task `note:`.
 - `challenged` — Worker disputes Reviewer decision; always resolves to `needs-human` or back to `ready`
 - `waiting` — dependency not yet met
+- `cancelled` — closed unbuilt, terminal like `done`; only when Silas cancels it or its project is
+  `retired` (`settle_inactive_projects.py --apply`, with `cancelled_reason`). Never an agent's call
+  on its own. Cancelled tasks leave progress and open-task counts.
