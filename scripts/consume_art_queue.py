@@ -101,6 +101,17 @@ def _enrich_generic_destination(entry: dict[str, Any], job: dict[str, Any]) -> N
         "pageUrl": page_url or None,
     }
 
+    # Explicit privacy on a destination-bound request survives the generic
+    # COMFY queue path. Omitted flags retain the existing queue defaults.
+    for source_key, save_key in (("is_public", "isPublic"), ("is_mature", "isMature")):
+        if source_key in entry:
+            if type(entry[source_key]) is not bool:
+                raise ValueError(f"{request_id}: {source_key} must be a boolean")
+            save = payload.setdefault("save", {})
+            if not isinstance(save, dict):
+                raise ValueError(f"{request_id}: invalid save policy")
+            save[save_key] = entry[source_key]
+
 
 def _enrich_daily_dream_job(entry: dict[str, Any], job: dict[str, Any]) -> None:
     """Preserve canonical Daily Dream destination, provenance, and attach target.
