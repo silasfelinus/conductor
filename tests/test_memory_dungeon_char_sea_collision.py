@@ -94,7 +94,7 @@ def test_each_scene_has_distinct_costs_dialogue_outcomes_and_callbacks():
     assert PACKET["artStatus"] == "CONCEPT_ONLY_NO_ARTJOBS"
 
 
-@pytest.mark.parametrize("fate,departure", itertools.product(FATES, DEPARTURES))
+@pytest.mark.parametrize("fate,departure", list(itertools.product(FATES, DEPARTURES)))
 def test_all_causal_histories_have_nine_nonblocking_quest_routes(fate, departure):
     scenes = PACKET["scenes"]
     for first, second in itertools.product(scenes[0]["choices"], scenes[1]["choices"]):
