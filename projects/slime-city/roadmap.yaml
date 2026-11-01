@@ -113,9 +113,8 @@ tasks:
   - id: t-004
     milestone: m2
     title: "Expand five mana colors into six distinct authored crews and special decks"
-    status: review
+    status: done
     depends_on: t-002
-    owner: worker
     claimed_by: 2026-10-31T003120Z-slime-city-t004-progression-7c19
     claimed_at: '2026-10-31T00:31:20Z'
     passes: 0
@@ -129,11 +128,13 @@ tasks:
       PARTIAL Blackout-first increment shipped. Kind Robots PR #4537 merged at 15fd7e954e63ef442cba2c1e7a0ed84d6b2edf01 after 23/23 checks success (TypeScript, production image, mandatory Slime City contract, layout and Prettier). The open 10x6 arena starts empty and visible, faction decks of ten deal seeded four-card round hands, played cards leave the hand and cycle through the discard pile, and each side obeys identical card legality. Blackout uses explicit targeted attack commands with range and once-per-round summon-delay rules; enemy CPU chooses attacks from its observed view; action histories replay deterministically. Large card inspection and move/target highlighting are included. Old concealed-army setup remains opt-in test-only via classicFog. Conductor design directive PR #6868 merged, source master GitHub issue #4535 remains OPEN. REMAINS: authentic generated art integration and attack icons (ArtJob statuses in t-017), paced opponent action animation, Bloodrush cause-of-death UI, full art-first home screen, fifty extra cards per faction and final deck builder. No public deploy, production currency, or generated art completion claimed.
 
       Reviewable partial progression/collection increment for user-directed Slime City design: browser-local XP/virtual Meat from CPU battles, daily/weekly Pacific challenge claims, ten paid-bout cap, one guaranteed rare and two unowned other cards per 100-Meat pack, immutable 60-card founder pool and gallery ownership badges. A six-faction counterplay matrix, 300-card next-set proposal and secure-ledger prerequisites are in Conductor PROGRESSION-AND-SETS.md. Not the t-008 server ledger nor production-safe t-010 persistent missions; no real money. Kind Robots implementation review and CI not yet finished.
-    updated: '2026-10-31T00:40:45Z'
+
+      Stale 2026-10-31 review reconciled after validating six distinct 10-card fully playable founder rosters, signature cards, ability/counterplay variety, 112 crew contract assertions and merged Blackout-first source PR #4537 (15fd7e9, 23/23 checks green). Original t-004 six-crew starter scope is complete. Additional Gutter Crown 300-card expansion and full deck editor remain t-006; CPU matchup/fog balance is t-005, server economy is t-008, illustrative card delivery is independent t-017. Closing stale review unlocks those worktracks; no art-ready or public release claim.
+    updated: '2026-11-01T21:46:00Z'
   - id: t-005
     milestone: m2
     title: "Implement competitive square-grid AI and comparative match replays"
-    status: waiting
+    status: ready
     depends_on: [t-003, t-004]
     owner: null
     passes: 0
@@ -149,7 +150,7 @@ tasks:
   - id: t-006
     milestone: m2
     title: "Build premium illustrated collection, teams and deck editor"
-    status: waiting
+    status: ready
     depends_on: t-004
     owner: null
     passes: 0
@@ -203,7 +204,7 @@ tasks:
   - id: t-009
     milestone: m3
     title: "Write and implement six genuinely different crew campaigns"
-    status: waiting
+    status: ready
     depends_on: [t-004, t-007]
     owner: null
     passes: 0
