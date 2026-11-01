@@ -1,5 +1,28 @@
 # Space Couch: playtest readiness
 
+## Update: November 1, 2026 PT, release-candidate pass
+
+**Verdict: ready for a guided INTERNAL mechanics/story playtest, not final art or human design acceptance.** The 2026-10-30 screenshot and trace evidence below remains useful historical proof, but several visible screens changed afterward. Do not use old screenshots as evidence that the CURRENT build works at 390/768/1440.
+
+- **Captain-first onboarding is merged:** [Kind Robots #4534](https://github.com/silasfelinus/kind_robots/pull/4534) places captain choice before background and replaces the Couchscope with a deliberately dubious corporate personality profile. Twenty-two associated choice illustrations were recorded DONE. The current onboarding flow still needs an authenticated visual click-through.
+- **Art progress beyond the old SVG snapshot:** [#4564](https://github.com/silasfelinus/kind_robots/pull/4564) wires 106 confirmed-DONE ArtImages (mission scenes, antagonists, endings, 20 Serendipity venues and 18 opening plates) through an access-filtered lookup; [#4572](https://github.com/silasfelinus/kind_robots/pull/4572) wires 44 cast expression plates plus three painted pocket rooms; [#4576](https://github.com/silasfelinus/kind_robots/pull/4576) presents the 18-frame illustrated opening reel; [#4580](https://github.com/silasfelinus/kind_robots/pull/4580) plays three consequential mission dilemmas and connects 21 choice/outcome images. DONE in an ArtJob ledger and referenced in code do **not** prove that a player can see them in a signed-in browser.
+- **Narrative QA:** the preexisting exhaustive 2,116-voyage seed battery and October 30 Playwright pass prove mechanics reachability on those commits, not a fresh post-art or post-onboarding visual pass. The new editorial rotation in [#4583](https://github.com/silasfelinus/kind_robots/pull/4583) addresses repeat planet cards, and must pass exact-head checks and merge before its fix can be counted.
+
+**The remaining agent-owned acceptance matrix**, not Silas's job: re-run signed-in full-path browser tests at 390×844, 768×1024 and 1440×900, confirm each illustrated choice/failed outcome actually displays and has accessible fallbacks, verify couch/force-bubble continuity in the painted frames, audit the 17-card Act II/III expedition repetition, and check trust/mutiny balance. Also test fresh/legacy save restoration after the new scenes. Record current screenshots and delivered ArtImage IDs, not just job queue counts. Then send Silas the runnable playtest URL and a concise list of known limitations for subjective verdict; **publication is a separate gate**.
+
+### Current guided tester path
+
+1. Open the approved internal Play route `/play/game-of-captains` with a signed-in test account. Verify the **red couch**, force bubble and opening reel, not a conventional bridge.
+2. Select **captain first**, then background, answer the four Couchscope questions, select crew, and start a new voyage. Verify the full-size portraits and each illustrated option.
+3. Travel, arrive, assign command officers to feature quests and optional redshirts to side stories. Inspect cards and their failure stakes before dispatch.
+4. Play each episode deck, test ask/document/override on different trips, and check whether the choice actually changes the later callback rather than just a numeric meter.
+5. Staff a call, pick a miniature room behind the couch, launch, advance days, choose an intervention policy, review the decision debrief and its correct outcome painting.
+6. Try a voluntary relationship scene, a crew's three-step quest and a trio interlude. Confirm independent refusals and save/continue at a mid-mission boundary.
+7. Complete all nine chapters and reach a finale. Confirm the ending family and boss variant, record any missing/incorrect art, and use the review screen to send confusion, laughter, repetitiveness or ethical concerns.
+
+---
+
+
 Written 2026-10-30 for the first human trials of `/play/game-of-captains`.
 The verdict is that **the game can go to testers**. Every screen from the
 title to an ending renders and can be clicked at phone, tablet and desktop
@@ -56,7 +79,7 @@ The traces are in kind_robots #4522:
 The Playwright click-through used the real page component at 390×844,
 768×1024 and 1440×900. The fixes are in kind_robots #4524.
 
-It went through title → background → captain → star chart → crew → travel →
+It went through title → captain → background → star chart → crew → travel →
 quest board → episode decks → staffing and launch → transit → order →
 debrief → party interlude → finale → ending. At every screen it audited for:
 - page errors;
@@ -98,8 +121,8 @@ seeded save, which explains the chapter jump and the odd trust value.
 
 ## Known gaps (tell testers)
 
-- **The voyage has no painted stage art yet.** Every call, nemesis and
-  ending appears on the drawn couch SVG. The 10 legacy bridge paintings
+- **At the October 30 snapshot there was no painted stage art yet.** Every call, nemesis and
+  ending then appeared on the drawn couch SVG; see the November 1 update for later wired paintings. The 10 legacy bridge paintings
   (3 calls, 3 nemeses, 4 endings) are off-identity and should be re-rendered
   with the couch, then removed from the art manifest. There is no
   party-interlude art yet, so the interlude shows the three crew portraits,
@@ -134,7 +157,7 @@ seeded save, which explains the chapter jump and the odd trust value.
 
 1. Open `/play/game-of-captains` in a fresh private window. Read the title
    screen. Can you tell what the game is before you click?
-2. **Start new game.** Pick a background, then a captain. Answer the four
+2. **Start new game.** Pick a captain, then a background. Answer the four
    star-chart questions and keep the constellation. Appoint three crew.
    Note any portrait or dossier that confused you.
 3. **Travel**, then **arrive**. On the quest board, put a captain or officer
