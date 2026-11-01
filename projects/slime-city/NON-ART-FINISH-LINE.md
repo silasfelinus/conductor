@@ -2,7 +2,7 @@
 
 **Human direction, November 1, 2026 PT:** Keep writing, gameplay, backend, testing, and UI development moving **regardless of the art queue**. Stop treating queued illustrations as blocking software. The only permitted art-only remaining work at the non-art handoff is rendering and placing illustrations that have already been **durably submitted** to the queue. Draft prompts and a ledger with `auto_submit: true` do **not** count as submitted until ArtJob IDs are recorded. Delivered art must still be verified independently.
 
-The Slime City design is BLACKOUT-first: visible monsters on a 10×6 grid with orthogonal movement, fair four-card hands, explicit attack and summon delay. BLOODRUSH remains a secondary play mode with intelligible deaths; MEATBALL remains an internal experiment. Do not re-open format indecision as a coding blocker. Keep public Play publication and optional creative acceptance separate human gates.
+The Slime City design is BLACKOUT-first: visible monsters on a 10×6 grid with orthogonal movement, fair four-card hands, explicit attack and summon delay. BLOODRUSH remains a secondary play mode with intelligible deaths; MEATBALL is retired from play (Silas, 2026-11-01 PT: "We aren’t even supposed to have meatball anymore"; Kind Robots #4607 removed it from the mode tabs and moved the Foundry and Crown Market champions to BLACKOUT; the gridiron engine survives only as a contract-test fixture). Do not re-open format indecision as a coding blocker. Keep public Play publication and optional creative acceptance separate human gates.
 
 ## Completion tracks
 
