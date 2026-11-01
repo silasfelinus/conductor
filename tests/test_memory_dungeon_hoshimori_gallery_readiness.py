@@ -359,5 +359,23 @@ class HoshimoriGalleryReadinessTests(unittest.TestCase):
 
 
 
+    def test_fourth_gallery_round_is_counted_without_false_delivery(self):
+        report = load_report()
+        fourth = report["gallery_bound_round4"]
+        self.assertEqual(fourth["authored"], 8)
+        self.assertEqual(fourth["submitted"] + fourth["unsubmitted"], 8)
+        self.assertEqual(report["gallery_delivered_images"], 0)
+
+    def test_missing_fourth_round_live_receipt_cannot_count_as_delivery(self):
+        from audit_memory_dungeon_hoshimori_gallery_readiness import ROUND4_LEDGER
+        fourth = yaml.safe_load(ROUND4_LEDGER.read_text(encoding="utf-8"))
+        fourth["requests"][0]["last_art_job_id"] = 69999
+        report = audit_bound_live(fourth, [], lambda _path, _created: "delivered",
+                                  round_number=4)
+        self.assertEqual(report["delivered"], 0)
+        self.assertEqual(report["counts"]["job_missing"], 1)
+
+
+
 if __name__ == "__main__":
     unittest.main()
