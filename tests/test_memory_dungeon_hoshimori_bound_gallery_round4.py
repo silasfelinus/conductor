@@ -20,9 +20,16 @@ class HoshimoriBoundGalleryRoundFourTests(unittest.TestCase):
     def setUp(self):
         self.data = yaml.safe_load(ROUND4_LEDGER.read_text(encoding="utf-8"))
         self.faces = source_faces(4)
+        for request in self.data["requests"]:
+            request.pop("last_art_job_id", None)
 
     def check(self, **kwargs):
         return validate(self.data, self.faces, round_number=4, **kwargs)
+
+    def test_committed_receipts_are_valid_before_and_after_submission(self):
+        committed = yaml.safe_load(ROUND4_LEDGER.read_text(encoding="utf-8"))
+        report = validate(committed, self.faces, round_number=4)
+        self.assertEqual(report["submitted"] + report["unsubmitted"], 8)
 
     def test_eight_unique_authored_location_faces(self):
         report = self.check()
