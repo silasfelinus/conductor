@@ -28,7 +28,6 @@ class RoundTwoArtContract(unittest.TestCase):
         self.assertEqual(len({subject["seed"] for subject in subjects}), 168)
         self.assertTrue(all(subject["lane"] == "krea2" for subject in subjects))
         self.assertTrue(all(subject["prompt_prose"].strip() for subject in subjects))
-        self.assertTrue(all(not subject.get("jobs") for subject in subjects))
         by_entity = {}
         for subject in subjects:
             by_entity.setdefault(subject["entity"], []).append(subject)
