@@ -164,7 +164,7 @@ tasks:
   - id: t-007
     milestone: m3
     title: "Expand seven-district city map into navigable authored overworld"
-    status: ready
+    status: claimed
     depends_on: t-001
     passes: 0
     stakes: reversible
@@ -189,7 +189,10 @@ tasks:
       Grand Pit ending branch and illustrated epilogue integrated into city UI, typed city state and Pinia store with story-priority gates, choice effects, replay navigation and deterministic tests. Source branch worker/slime-city-t007-grand-pit-finale-20261101-9d42. Pending PR review and full CI; partial t-007 only.
 
       PARTIAL 2026-11-01: Kind Robots PR #4579 merged to main at baf2bff763bc00ac277b774799c1755ca5c84dba after all 15 latest-head workflows passed, including TypeScript, changed-file formatting, viewport/layout contracts and all four gameplay contract shards. Added an authored Grand Pit finale after champion victory/aftermath and pending city crises. The two mutually exclusive resolutions (neighborhood charter versus new Pit Boss) change standing, heat and persistent session-only battle modifiers. Authored epilogues reflect earlier solidarity choices. The illustrated internal-city screen displays the finale and supports continued exploration, revisiting the ending and explicitly starting a new city run. Regression contracts exercise gating, irreversible session choices, contract availability only after final choice, battle impact and store navigation. This is a source merge, not a verified self-hosted production deployment or actual new ArtJob/ArtImage delivery. Remaining t-007 scope includes real generated panoramas (t-017), account-backed overworld saves and post-deployment responsive visual verification; keep kind_robots master issue #4535 open.
-    updated: '2026-11-01T11:51:00Z'
+    updated: '2026-11-01T12:54:00Z'
+    owner: worker
+    claimed_by: 2026-11-01T125400Z-slime-city-t007-q7b4
+    claimed_at: '2026-11-01T12:54:00Z'
   - id: t-008
     milestone: m3
     title: "Ship earned Meat economy, safe card shop and random PvE encounters"
