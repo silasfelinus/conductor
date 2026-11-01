@@ -290,3 +290,81 @@ First scene-writing slice updates 42 quest result texts and eight audience repli
 
 Delivered 42 rewritten quest outcomes plus eight throne-room responses across Days 1-3 in kind_robots PR #3987, merged at a55243e76b1d1f80722ccbb71db2ad97dfa48c98 after all 13 CI suites succeeded. Authored 22 new private anthropomorphic illustrated audience/conversation plates, canon and naming production guide, and a durable Auto Art Generate submission step in conductor PR #6454, merged at 2106dbd97f30be8e210a68891575181cef9e4d51 after all final CI passed. The resulting Auto Art Generate workflow 39572940760 ran the Emperor submission step with GitHub conclusion success. Individual ArtJob IDs, renders, deliveries, and runtime wiring are not yet confirmed; t-052 owns these later gates. New coverage tasks t-046..t-052 for all remaining acts and follower talks merged through conductor PR #6459.
 <!-- note:end t-045 -->
+
+## t-053 — Prevent Young Komodo flashing through the startup splash before the introduction
+
+<!-- note:begin t-053 -->
+Silas reported a flash of Young Komodo immediately before the Wasteland intro scene on 2026-10-21 PT. Mount the introduction before the splash fades and preserve first-scene text pacing. Verify the overlay and saved-run paths.
+
+Startup overlay regression fixed on worker/emperor-of-dust-t-053-intro-6f31: introduction first map scene pre-mounted beneath fading splash, narration deferred until visible, underlying briefing covered.
+
+Merged silasfelinus/kind_robots#4010 as 4b962e72bb2810ed17dd2cb8c423fd6b76a45640. All 21 GitHub checks completed successfully, including verifyEmperorFortress.test.ts, layout, formatting, TypeScript and contract shards. No branch preview or production deployment was performed; self-hosted deploy remains separate.
+<!-- note:end t-053 -->
+
+## t-054 — Recruit first followers through seeded throne-room audiences and pace early quests
+
+<!-- note:begin t-054 -->
+Silas, 2026-10-22 PT: remove automatic starting followers. Introduce one guaranteed recruit at court, one from a seed-randomized pool, and one from either of two pre-authored squabbling pairs (one recruit only). Carry the losing applicant's exclusion through saves/rewinds; avoid early quest overload; test choices, randomness, pacing and save integrity.
+
+Kind Robots PR #4022 implements three throne-room recruit encounters, exclusive authored rival pairs, permanent rejected-rival flags, and a quiet Day 1 quest board. Added seeded 40-run playtests and save/legacy checks; CI and final merge still being verified.
+
+Merged kind_robots#4022 (6c945b0) for mandatory court-only followers and early quest pacing, and kind_robots#4038 (36560c8) for the Day 1 rewind fix, CI adversarial harness and nightly schedule. All 14 GitHub checks on #4038 passed, including 552 full campaigns, 27,600 simulated days, 240 opening seeds, 480 rival-choice branches, 342 rewinds that selected different arrivals, and all 8 ending families. At most 2 Day 1 quests. Merged conductor#6507 (940945a) with the actual fresh policy-by-policy balance report. No public release, production deployment or ArtJob.
+<!-- note:end t-054 -->
+
+## t-055 — Inspect Iron Peace eligibility: spurn-all reaches it in 38/40 seeded campaigns
+
+<!-- note:begin t-055 -->
+Kaizen from t-054 (BALANCE-REPORT.md, 2026-10-22). The Favours-nobody policy lands Iron Peace in 38/40 seeds, which reads as thematically cheap. Inspect the ending's eligibility conditions in kind_robots and tighten the writing/conditions rather than loosening simulation thresholds; re-run the balance report afterward.
+
+
+Added a costly Day 47 Gate Watch writ, gated Iron Peace on signing it, and expanded seeded simulation coverage for a deliberate marshal policy. CI review and campaign balance validation pending.
+
+Merged Kind Robots #4042 as 5c0b747d643ce3154e56d73081e2cc294830e10a after all 14 checks passed. Day 47 Watch writ gives Iron Peace an explicit costly commitment and Day 49 enforces it; expanded the neutral-policy allegiance tally to include Mire Mothers and added a marshal playtest policy. Verified 592 campaigns and 29,600 game days: spurn-all earns 38/40 Open Roads and no Iron Peace or Witchwater; marshal earns 35/40 Iron Peace, all eight ending families remain reachable. Merged Conductor balance-report PR #6511 as bb63510ece07c006cf96718b425145fd0fb91ff6 after all latest checks green. No public release, production deployment or ArtJob.
+<!-- note:end t-055 -->
+
+## t-056 — Repair Day 1 tutorial and new-reign navigation; contain tablet quest display
+
+<!-- note:begin t-056 -->
+Silas, 2026-10-23 PT: tablet screenshot shows a Day 1 roster with Rook and Saffron together plus the original starter tutorial rather than the three seeded throne-room recruits. Investigate stale live deployment or legacy autosave separately from genuine UI defects. Update the introduction and New Reign flow to lead into Day 1 throne recruitment, and make the quest board and detail independently bounded/scrollable in portrait tablet and phone console layouts. Add checks for new-run state, the tutorial copy and the responsive quest-room scroll ownership. Do not overwrite legacy saves or assert a production deployment without independent verification.
+
+Corrected the starter-portrait introduction and new-run routing to Day 1 throne recruitment. Tablet quest board/detail now own bounded scroll areas, and added store and source-layout regression checks to the Emperor CI workflow. Await GitHub checks and verification of current live deployment separately.
+
+Kind Robots PR #4073 merged as 6a02ec7791bac7ebb6743c5cb995710768c03162, after all 16 CI workflows green. Replaced misleading four-starter intro with zero-roster Day 1 court recruitment, reset New Reign tutorial and room state, automatically open the Throne Room after an unstaffed Day 1 introduction, and repaired tablet quest-room overflow with one bounded scrolling region and normal-flow stacked board/details. Added real Pinia new-run assertions and source-layout guard into the nightly Emperor workflow. No production deployment performed or verified; screenshot strongly indicates older live code or persisted legacy run and requires post-deploy device QA.
+<!-- note:end t-056 -->
+
+## t-057 — Restore opaque, legible Emperor of Dust room panels over illustrated backgrounds
+
+<!-- note:begin t-057 -->
+Silas's 2026-10-23 PT tablet screenshot shows transparent Quest Room containers obscuring quest details, rewards, needs, roster, and dispatch actions over room artwork. Repair the shared visual panel colors without reducing artwork prominence or losing compact console layout. Add a regression guard to the Emperor layout test and review other shared panels.
+
+Quest Room and other illustrated fortress panels now use opaque shared ink surfaces instead of transparent color mixes; added an Emperor layout regression guard. Implementation branch worker/emperor-of-dust-t-057-contrast-4f8b1; awaiting PR checks.
+
+Merged silasfelinus/kind_robots#4074 into main as 66669d9a2323b22ad22d2dd90a241c37fe8e702a. All 16 head-commit GitHub Actions workflows completed successfully, including Emperor of Dust Dispatch Contract, TypeScript, Changed-File Formatting, Layout Contract, and four Contract Test shards. Shared fortress text panels, chips, and plates now use solid theme surfaces while background art stays intact; no game logic changes. No production deployment or real-device screenshot verified.
+<!-- note:end t-057 -->
+
+## t-058 — Enforce role-first narrative prose, never species-as-identity
+
+<!-- note:begin t-058 -->
+Silas, 2026-10-23 PT: people in Emperor of Dust must never be introduced or described by species in narration or dialogue, named or unnamed. Use a person's role, occupation, name, relationship, allegiance or deeds, such as traveler, farmer, petitioner, knight or vagrant. Exception: exact species is required for art prompts and cast metadata, with rare established in-world proper names such as Young Komodo. Preserve proper faction titles (Storm Crows, Mole Revolutionaries), real animals, and plot/state IDs. Correct Day 1 onboarding and player-visible scripted prose across acts, chance events, quest outcomes and character talks. Add a scoped species-as-identity regression check without mistaking faction names, species-locked art or literal animals for prose defects. Do not deploy or publish.
+
+Rewrote species-first identities across Day 1 recruit introductions, Act I–V court scenes, follower talks, random encounters, quest outcomes, epilogues, market visitors and betrayals. Positive art/cast species, explicit proper faction names and wildlife remain unchanged. Added seeded-CI narrative guard for 18 story files, with narrowly documented fauna/art exceptions. Pending CI and code review before merge; no production deployment.
+
+Canonical role-first narrative guide merged in Conductor PR #6541 as db933c2af4546896bce73b7e01d46e8e1c68a563. Kind Robots PR #4075 merged as 0992f05a1cd3e7bb84eb67023b62d1ea74918633 with all 15 checks successful, replacing species-as-identity in Day 1 recruits and the Act I–V prose, quest outcomes, talks and events. Follow-up Kind Robots PR #4077 merged as be4f4ee9eb7e6373cb6e665767c3d4174b5ae380 with all 14 PR checks green, eliminating further missed species descriptions and expanding the 18-file regression guard to cover canon species including hyena, gecko, capybara, leopard, heron, rhino, hen, porcupine and others. Positive art-prompt species/cast metadata, proper names, faction titles and actual wildlife were preserved. No production deployment or public publication performed or verified.
+<!-- note:end t-058 -->
+
+## t-059 — Complete exhaustive role-first editorial coverage of all Emperor player prose
+
+<!-- note:begin t-059 -->
+Silas, 2026-10-23 PT: finish the remaining parts of the no-species-as-identity rule not covered by t-058. Audit all follower biography/trait/ability/talk fields, NPC lines, quest descriptions, every outcome variant, daily/chance events, marketplace and codex strings, UI copy and scripted dialogue across all fortress source files. Fix species-based references to people in user-visible prose, including faction members, without changing actual animals, symbolic animal imagery, deliberate proper names (Young Komodo) or proper institution/faction names. Species and anatomy remain mandatory in positive art prompts and cast identity metadata. Expand nightly and PR CI coverage beyond the previously selected 19 files, with audited exemptions and adversarial fixtures; do not claim absolute natural-language completeness from a regex alone. Merge only after full checks green; no deployment.
+
+Thorough post-t058 species-as-identity correction across acts I-V, chores, betrayal and follower talk. Identified and corrected remaining Mole boy/prisoner/courier and Crow children/courier references; expanded regression guard to 33 prose source modules with negative tests for valid factions and wildlife. Code branch worker/emperor-of-dust-t-059-full-audit-8b71; CI and merge still pending; no deployment.
+
+Completed broad role-first Emperor of Dust prose editorial audit across Acts I-V, follower biographies, quests, outcomes, and 18 fortress screens plus route/store. Fixed surviving Mole boy/prisoner/diggers and Crow messenger/children labels, retained proper political faction names and species-locked art/cast data, tightened scene titles and a Tarn biography continuity typo, and expanded the narrative regression guard from 19 to 53 files. Merged silasfelinus/kind_robots#4090 at 40d8376db68864dba62788a4edba8ffefb98d053 after all 14 final-head CI workflows completed successfully, including Emperor dispatch, adversarial, TypeScript, layout, formatting and 4 contract shards. No production deployment, public release or Arthemy ArtJob performed.
+<!-- note:end t-059 -->
+
+## t-061 — Playbook Forge upgrade: close the last encounter and quest gaps (116/120 encounters, 97/100 quests)
+
+<!-- note:begin t-061 -->
+Silas, 2026-10-27 PT: "Anything that is in playbook forge and has quests unwritten or art prompts unwritten should be upgraded. (Memory dungeon will take the longest and should be last). Space couch has a lot of fresh writing still in need and still looking to capture that right blend of space comedy and satire. All art prompts should be written for the appropriate engine, no metaphors for krea2." Shared bar: kind_robots PR #4308 (verifyPlaybookArtPrompts, artPromptsComplete). Forge 2026-10-27: every beat is painted or has art; the plan is short four encounters and three quests.
+DONE 2026-10-27 PT: kind_robots #4322 merged as ea6455f after 20/20 checks. Four new audiences, each with a probe beat and a callback flag: Day 12 Brown Water, Day 28 The Post Comes Back, Day 31 Next Year in a Sack, Day 36 Over the Wall. Three new quests: Thirty-One Feet Down, Ninety-One Letters, The Carts in the Cut. Forge: encounters 116->120 (plan 120), quests 97->101 (plan 100). Adapter now counts quests posted inside audience beats and gives follower speakers follower art. The seven petitioners with rendered but unexported plates carry literal prompts (artPromptsComplete). The verifier now audits every node.
+<!-- note:end t-061 -->

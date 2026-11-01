@@ -173,126 +173,39 @@ tasks:
       - t-003
       - t-004
     note: >-
-      STANDING DAILY CONTRACT (Silas, 2026-09-23): target one genuinely new shipped screensaver per Pacific calendar day. Prefer the next buildable pitched animation; polish an existing effect only when no buildable pitch exists or a critical repair blocks a safe new release. Every completed daily attempt updates daily_last_checked to that Pacific date. Update daily_last_completed only after a new effect is merged, registered in the animation catalog, and therefore actually tryable. An honest no-op may satisfy today's check only when no buildable pitch can safely ship; it does not advance daily_last_completed, and the digest will continue to expose the stale release. Reconciliation (conductor scheduled sweep, state-reconciliation duty): task was left at status: review (claimed 2026-08-12T17:30:11Z by 20260812T1727-am-t007) even though kind_robots PR #1821 (Ant Farm Excavation screen FX) merged over 6 hours ago -- merged_at 2026-08-12T20:58:06Z, verified via GitHub MCP, all CI green. Rearmed to ready per recurring-task convention -- t-007 never reaches done; no code change, bookkeeping only. kind_robots#2135 merged (squash 2b49dc5) -- Marble Run Contraption shipped. All CI green (37/37 checks including Contract verifiers, TypeScript, layout-contract). Re-armed to ready per recurring-task convention. Cycle (conductor scheduled Agent run, 2026-08-29T02:27Z session, claude-scheduled-20260829T0227Z-am-t007): re-checked before doing any work (per convention) -- interface-vision/t-104's slice 57 and mermaids-of-venice/t-013's daily check had already run earlier this same hour with no new evidence (kind_robots main advanced by one commit since t-104's last check, d93fe3a home-page pass; grepped its changed files against both t-104 mechanical pools, zero new candidates). Every other active project's ready task was either genuinely blocked pending Silas (coat-dance/t-010 on t-003's source video) or deeply exhausted with an explicit no-new-lens note (model-builder/t-029 at 65+ cycles, media-watchlist/t-006 waiting on its own t-017 retire-or-v2 decision). Fell through to this continuous-lifecycle task per AGENTS.md's fallback rule, last run 2026-08-26 (marble-run-contraption). Built the next highest-priority unbuilt pitch (strandbeest-migration, priority 15, the top of the pitched queue) rather than a polish pass, since all six already-candidate pitches (koi-memory-pond, impossible-terrarium, ink-oracle, celestial-mobile, tiny-weather-front, ant-farm-excavation) are awaiting Reaction-evidence promotion, not further build work, and this sandbox has no live DB to read Reaction data anyway (SPEC.md's standing sandbox-access-gap). Implemented the real Jansen eight-bar leg linkage (the twelve holy-number link lengths + 15-unit crank radius) via circle-circle intersection with continuity-based branch selection, precomputed once into a 180-step lookup table per the pitch's own performance-risk note. [...]
+      STANDING DAILY CONTRACT (Silas, 2026-09-23): target one genuinely new shipped screensaver per Pacific calendar day. Prefer the next buildable pitched animation; polish an existing effect only when no buildable pitch exists or a critical repair blocks a safe new release. Every completed daily attempt updates daily_last_checked to that Pacific date. Update daily_last_completed only after a new effect is merged, registered in the animation catalog, and therefore actually tryable. An honest no-op may satisfy today's check only when no buildable pitch can safely ship; it does not advance daily_last_completed, and the digest will continue to expose the stale release. Reconciliation (conductor scheduled sweep, state-reconciliation duty): task was left at status: review (claimed 2026-08-12T17:30:11Z by 20260812T1727-am-t007) even though kind_robots PR #1821 (Ant Farm Excavation screen FX) merged over 6 hours ago -- merged_at 2026-08-12T20:58:06Z, verified via GitHub MCP, all CI green. Rearmed to ready per recurring-task convention -- t-007 never reaches done; no code change, bookkeeping only. kind_robots#2135 merged (squash 2b49dc5) -- Marble Run Contraption shipped. All CI green (37/37 checks including Contract verifiers, TypeScript, layout-contract). Re-armed to ready per recurring-task convention. Cycle (conductor scheduled Agent run, 2026-08-29T02:27Z session, claude-scheduled-20260829T0227Z-am-t007): re-checked before doing any work (per convention) -- interface-vision/t-104's slice 57 and mermaids-of-venice/t-013's daily check had already run earlier this same hour with no new evidence (kind_robots main advanced by one commit since t-104's last check, d93fe3a home-page pass; grepped its changed files against both t-104 mechanical pools, zero new candidates). Every other active project's ready task was either genuinely blocked pending Silas (coat-dance/t-010 on t-003's source video) or deeply exhausted with an explicit no-new-lens note (model-builder/t-029 at 65+ cycles, media-watchlist/t-006 waiting on its own t-017 retire-or-v2 decision). Fell through to this continuous-lifecycle task per AGENTS.md's fallback rule, last run 2026-08-26 (marble-run-contraption). [...]
 
-      [Earlier history (35,685 chars) archived verbatim to projects/animation-manager/T007-HISTORY.md -- read it there only when you need a specific past cycle. Append new cycles below, one short paragraph each.]
+      [Earlier history (7,953 chars) archived verbatim to projects/animation-manager/T007-HISTORY.md -- read it there only when you need a specific past cycle. Append new cycles below, one short paragraph each.]
 
-      [Kept from the archived history because other scripts read it:] Not fixed in this cycle (out of this task's scope -- a batch status-only
-      bookkeeping pass across 17 pitches deserves its own reviewed diff, not a rider on today's
-      new build); filed as animation-manager/t-023 for a future cycle. daily_last_checked
-      and daily_last_completed both advanced to 2026-09-27 (Pacific) -- a new effect shipped and
-      is registered/tryable today.
+      [Kept from the archived history because other scripts read it:] [Kept from the archived history because other scripts read it:] Not fixed in this cycle (out of this task's scope -- a batch status-only bookkeeping pass across 17 pitches deserves its own reviewed diff, not a rider on today's new build); filed as animation-manager/t-023 for a future cycle. daily_last_checked and daily_last_completed both advanced to 2026-09-27 (Pacific) -- a new effect shipped and is registered/tryable today.
 
-      Polished Moire Weave Engine so its signature evolution happens passively on page load, and strengthened the Animation Manager experience contract to prevent interaction-gated core visuals in startup-eligible wallpapers.
+      Cycle (2026-10-07): snow-globe-village had already shipped (kind_robots PR #3337, a39d061) without a ledger entry; recorded it in PITCHES.yaml and advanced the daily fields.
 
-      Merged Kind Robots PR #3086 (squash 492d5ad7242055640ee431e69c9e1984d41eb808) making Moire Weave Engine visibly evolve without interaction, merged Conductor PR #5384 to strengthen the passive-first experience contract, and merged Conductor PR #5385 to record the Moire v2 build lineage and updated acceptance criteria. Re-arming the recurring daily build lane after all implementation and project-ledger checks passed.
+      Cycle (2026-10-09): aurora-curtains had already shipped (kind_robots PR #3387, squash 8273f87, 12:52 AM PT) without a ledger entry; recorded it in PITCHES.yaml and advanced the daily fields.
 
-      Cycle (2026-09-29, session 20260929T0900Z-am-t007-pendulum): built pitch pendulum-wave-
-      garden (priority 31, top of the pitched queue). Closed-form 17-bob pendulum row on one
-      canvas; angle = A*cos(2*pi*(15+i)*t/40s) of a shared clock so unison recurs exactly each
-      cycle; hover nudges ease back, click restarts the clock (rate-limited); reduced motion
-      holds unison. Verified: eslint, prettier, vue-tsc --noEmit, test:animation-catalog (57
-      effects), test:animation-component-attempts; kind_robots PR #3101 merged (squash
-      2892b9d), all 29 checks green. Manual browser smoke deferred per sandbox-access-gap.
-      PITCHES.yaml promoted pitched -> candidate with build entry. Re-armed to ready per
-      recurring-task convention.
+      Cycle (2026-10-10): no pitched entry remained; authored and built lava-lamp-drift (kind_robots PR #3425, squash 4fc28ec, 29/29 checks green), recorded in PITCHES.yaml.
 
-      Cycle (2026-09-30, 20260930-am-t007): built pitch firefly-phase-sync (top of pitched
-      queue). 90-firefly discretized Kuramoto with cached 6-neighbor table and one glow
-      sprite; hover boosts local coupling, click reseeds, reduced motion holds a synced frame.
-      kind_robots PR #3116 merged (squash e5fffdb), all 29 checks green. Manual browser smoke
-      deferred per sandbox-access-gap. Re-armed to ready.
+      Cycle (2026-10-11): no pitched entry remained; authored and built jellyfish-drift-bloom (kind_robots PR #3533, squash b535876, 29/29 checks green), recorded in PITCHES.yaml.
 
-      Cycle (2026-10-01): built pitch bonsai-seasonal-growth (priority 30). Canvas bonsai,
-      per-tip lag-offset bud/canopy/colour/drop cycle, closed-form per-leaf fall, hover sway,
-      rate-limited click advances all tips. Verified via kind_robots CI (29 checks green);
-      local eslint/catalog test blocked by missing nuxt prepare; browser smoke deferred per
-      sandbox-access-gap. kind_robots PR #3153 merged (squash 2d6ae58). Re-armed to ready.
+      Cycle (2026-10-13 PT): no pitched entry remained; authored and built dandelion-seed- drift (kind_robots PR #3656, squash e334abc, 29/29 checks green after a prettier fix and one Prisma-download flake re-run), recorded in PITCHES.yaml.
 
-      Cycle (2026-10-02, am-t007): built pitch crease-fold-atlas (priority 29, top of pitched
-      queue). 8x5 rigid-panel sheet with column and row hinges; per-hinge staggered easing
-      through accordion/arch/eggcrate/stairs/bowl with flat rests; hover nudges creases,
-      rate-limited click advances, reduced motion holds one shape. kind_robots PR #3177
-      merged (squash f85a146). First push failed TypeScript (null context in a closure) and
-      the lint ratchet (prefer-const); both fixed, then 29 checks green. Manual browser smoke
-      deferred per sandbox-access-gap. Re-armed to ready.
+      Cycle (2026-10-14 PT): no pitched entry remained; authored and built paper-lantern-rise (kind_robots PR #3685, squash 081bbae, 34 checks green), recorded in PITCHES.yaml.
 
-      Cycle (2026-10-03, am-t007): built pitch split-flap-departures (priority 32, top of
-      pitched queue). 14x3 canvas split-flap board, tile state a pure function of the phrase
-      clock; hover holds a tile (capped), click skips dwell (rate-limited), reduced motion holds
-      a settled phrase. kind_robots PR #3204 merged (squash 909f548), all 29 checks green.
-      Browser smoke deferred per sandbox-access-gap. Re-armed to ready.
+      Cycle (2026-10-16 PT): glowworm-grotto shipped (kind_robots PR #3741, merged 11:50Z); claim left stalled by the shipping session, closed out by Conductor routine; recorded in PITCHES.yaml.
 
-      Cycle (2026-10-04, am-t007): pitch queue empty, so authored and built sundial-stone-
-      garden (nine stones, 70s day cycle of sliding shadows; hover lifts, rate-limited click
-      skips ahead, reduced motion holds an afternoon frame). kind_robots PR #3221 merged
-      (squash 7935378), all 29 checks green. Local checks blocked (no node_modules); browser
-      smoke deferred per sandbox-access-gap. Re-armed to ready.
+      Cycle (2026-10-17 PT): no pitched entry remained; authored and built dune-wind-ripples (kind_robots PR #3797, squash 9f24c72, 18/18 checks green), recorded in PITCHES.yaml.
 
-      Cycle (2026-10-05, am-t007): pitch queue empty, so authored and built lighthouse-fog-
-      beam (sweeping beam over a dark sea; fog puffs and ship hulls glow as it crosses them;
-      hover parts the fog, rate-limited click spins the beam ahead, reduced motion holds one
-      angle). kind_robots PR #3223 opened with squash auto-merge enabled once checks pass;
-      daily_last_completed NOT advanced until merge is confirmed. No local node_modules, so
-      CI is the only verification. Re-armed to ready.
-      Cycle (2026-10-06): #3223 had merged. Built night-train-window (parallax hills, lit village
-      windows, telegraph poles, following moon; hover fogs the glass, rate-limited click boosts
-      speed, reduced motion holds one frame). kind_robots PR #3258 merged (squash 8c3098a), all
-      29 checks green. No local node_modules; browser smoke deferred per sandbox-access-gap.
+      Cycle (2026-10-18 PT): no pitched entry remained; authored and built misty-mountain- ferry (kind_robots PR #3848, squash b102986, 18/18 checks green), recorded in PITCHES.yaml.
 
-      Cycle (2026-10-07): snow-globe-village had already shipped (kind_robots PR #3337,
-      a39d061) without a ledger entry; recorded it in PITCHES.yaml and advanced the daily
-      fields.
+      Cycle (2026-10-21 PT): no pitched entry remained; authored and built domino-spiral- cascade (kind_robots PR #3998, squash c292710, 18/18 checks green), recorded in PITCHES.yaml.
 
-      Cycle (2026-10-09): aurora-curtains had already shipped (kind_robots PR #3387, squash
-      8273f87, 12:52 AM PT) without a ledger entry; recorded it in PITCHES.yaml and advanced
-      the daily fields.
+      Cycle (2026-10-22 PT): no pitched entry remained; authored and built metronome-sync- shelf (kind_robots PR #4036, squash 25e4b37, 18/18 checks green), recorded in PITCHES.yaml.
 
-      Cycle (2026-10-10): no pitched entry remained; authored and built lava-lamp-drift
-      (kind_robots PR #3425, squash 4fc28ec, 29/29 checks green), recorded in PITCHES.yaml.
+      Cycle (2026-10-23 PT): no pitched entry remained; authored and built orbital- Cycle (2026-10-24 PT): no pitched entry remained; authored and built wind-chime-garden (kind_robots PR #4109, squash b0cb88e, 18/18 checks green), recorded in PITCHES.yaml. resonance-chords (kind_robots PR #4058, squash 3904a55, all checks green), recorded in PITCHES.yaml.
 
-      Cycle (2026-10-11): no pitched entry remained; authored and built jellyfish-drift-bloom
-      (kind_robots PR #3533, squash b535876, 29/29 checks green), recorded in PITCHES.yaml.
+      Cycle (2026-10-25): no pitched queue left, so built new effect newton-cradle-chain (two cradles, 1-2-3 ball momentum steps; hover glow, rate-limited click boost, reduced-motion static frame). kind_robots PR #4176 merged (squash b45f62d), 18/18 checks green. Local tests unavailable (no node_modules); CI covered catalog/typecheck. Re-armed to ready.
 
-      Cycle (2026-10-13 PT): no pitched entry remained; authored and built dandelion-seed-
-      drift (kind_robots PR #3656, squash e334abc, 29/29 checks green after a prettier fix and
-      one Prisma-download flake re-run), recorded in PITCHES.yaml.
-
-      Cycle (2026-10-14 PT): no pitched entry remained; authored and built paper-lantern-rise
-      (kind_robots PR #3685, squash 081bbae, 34 checks green), recorded in PITCHES.yaml.
-
-      Cycle (2026-10-16 PT): glowworm-grotto shipped (kind_robots PR #3741, merged 11:50Z);
-      claim left stalled by the shipping session, closed out by Conductor routine; recorded in
-      PITCHES.yaml.
-
-      Cycle (2026-10-17 PT): no pitched entry remained; authored and built dune-wind-ripples
-      (kind_robots PR #3797, squash 9f24c72, 18/18 checks green), recorded in PITCHES.yaml.
-
-      Cycle (2026-10-18 PT): no pitched entry remained; authored and built misty-mountain-
-      ferry (kind_robots PR #3848, squash b102986, 18/18 checks green), recorded in
-      PITCHES.yaml.
-
-      Cycle (2026-10-21 PT): no pitched entry remained; authored and built domino-spiral-
-      cascade (kind_robots PR #3998, squash c292710, 18/18 checks green), recorded in
-      PITCHES.yaml.
-
-      Cycle (2026-10-22 PT): no pitched entry remained; authored and built metronome-sync-
-      shelf (kind_robots PR #4036, squash 25e4b37, 18/18 checks green), recorded in
-      PITCHES.yaml.
-
-      Cycle (2026-10-23 PT): no pitched entry remained; authored and built orbital-
-      Cycle (2026-10-24 PT): no pitched entry remained; authored and built wind-chime-garden (kind_robots PR #4109, squash b0cb88e, 18/18 checks green), recorded in PITCHES.yaml.
-      resonance-chords (kind_robots PR #4058, squash 3904a55, all checks green), recorded in
-      PITCHES.yaml.
-
-      Cycle (2026-10-25): no pitched queue left, so built new effect newton-cradle-chain (two
-      cradles, 1-2-3 ball momentum steps; hover glow, rate-limited click boost, reduced-motion
-      static frame). kind_robots PR #4176 merged (squash b45f62d), 18/18 checks green. Local
-      tests unavailable (no node_modules); CI covered catalog/typecheck. Re-armed to ready.
-
-      Cycle (2026-10-26 PT): no pitched queue left, so built new effect abacus-bead-tides (nine rods,
-      closed-form tide of sliding beads; hover glow, rate-limited click ripple, reduced-motion static
-      frame). kind_robots PR #4203. Re-armed to ready.
+      Cycle (2026-10-26 PT): no pitched queue left, so built new effect abacus-bead-tides (nine rods, closed-form tide of sliding beads; hover glow, rate-limited click ripple, reduced-motion static frame). kind_robots PR #4203. Re-armed to ready.
     status: ready
     updated: '2026-10-25T10:54:15Z'
     implementation_pr: 'silasfelinus/kind_robots#4203'

@@ -648,3 +648,30 @@ Done 2026-10-10: silasfelinus/kind_robots#3442 merged (6048901). Known, not chan
 kind_robots #3448. Silas, play-testing the fun loop on 2026-10-10: "much better version. speedier, the loop is starting to make sense. we should be able to select fullscreen mode and toggle it. costs of fish we can't afford are a little hard to read. we aren't using space well enough. in general this is a one screen display that is taking up two screens." Then: "i sold the first demand, but i can never seem to readd it to the tank. it tells me that i don't have enough money after the proper amount had been spent."
 Done in #3448: two-column container-query layout (tank and roster beside a shop and upgrades side panel; phones stay one column), compact shop and upgrade rows, a fullscreen toggle in the tank HUD, opaque disabled price buttons. The re-order bug was client-side: tankStore.error was only cleared on page load, so a failed attempt's "not enough coins" stayed on screen after a later re-order succeeded. Each action now clears it, errors are a 7 s dismissible toast, and the book's Re-order button prints the price (bestiary entries now carry cost). Merged 2026-10-10 as kind_robots c154e89; reaches Alexandria with the next deploy (no schema change).
 <!-- note:end t-086 -->
+
+## t-087 — Console-first tank redesign with a cinematic intro and meaningful interstitials
+
+<!-- note:begin t-087 -->
+Silas, 2026-10-23 PT: redesign the existing playable tank as a clean, art-led, single-screen console game. Give the game a real intro, stronger interstitial moments, and clearly labelled separate controls for feeding, shopping, collection, decoration and bestiary without hiding the aquarium or removing existing persistence and canon story events. Preserve keyboard and mobile paths. Test the intro, actions, and both saved and empty tanks.
+
+Implemented console room navigation and staged the existing Charlotte/Wilbur intro as a cinematic. Implementation branch worker/cthulhuquarium-t087-console-20261023; CI and visual checks still required.
+
+Merged silasfelinus/kind_robots#4059 after all thirteen workflows completed successfully, including changed-file Prettier, icon audit, TypeScript and Contract Tests. The tank owns the stage; a room deck exposes existing systems in bounded panels, and the existing Charlotte/Wilbur intro plays cinematically. Production deployment and visual acceptance were not verified. Additional authored interstitial upgrades remain a future kaizen follow-up.
+<!-- note:end t-087 -->
+
+## t-088 — Distribute live feed across the aquarium and let nearby fish pursue it
+
+<!-- note:begin t-088 -->
+Silas, 2026-10-23: the Feed action still creates a uniform row of food entering from y=12, and step() steers all swimmers toward feed[0]. Spread food across independent entry points near the fed occupants, with safe scene margins and staggered depths, so consecutive taps do not create the same visual pattern. Assign nearby food targets to swimmers; preserve anchored/clinging fish behavior, wriggle and eating animations. Keep the server's feedHungry economy authoritative; do not synthesize earned nourishment client-side. Bound food particles for performance. Add deterministic geometry/target tests including mobile-sized hit areas, same-location fish, empty-swimmer and repeated-feed cases.
+
+Implemented deterministic scattered food positions for all fed fish (capped on dense tanks), independent nearby target selection per swimming creature, and tests for repeatability, overlapping fish, upper/lower fish, empty swimmer lists, stage margins and large tanks. Branch worker/cthulhuquarium-t088-feed-distribution-20261023t1037z; review and CI remain pending.
+
+Merged silasfelinus/kind_robots#4070 to main (afa131f5dd64fda81cd5eedea4784190eed63e1e) after all 14 CI workflows completed successfully including TypeScript, dedicated food self-test, formatting, layout, and all contract shards. Food now scatters around fed fish across the tank and nearby swimmers chase their closest morsels; server feedHungry authority remains intact. Art and production deployment were not changed. Cross-device visual acceptance and the earlier one-screen PR are tracked in t-089.
+<!-- note:end t-088 -->
+
+## t-097 — Playbook Forge upgrade: write the 16 empty thread beats and literal Krea 2 prompts for all 189 beats
+
+<!-- note:begin t-097 -->
+Silas, 2026-10-27 PT: "Anything that is in playbook forge and has quests unwritten or art prompts unwritten should be upgraded. (Memory dungeon will take the longest and should be last). Space couch has a lot of fresh writing still in need and still looking to capture that right blend of space comedy and satire. All art prompts should be written for the appropriate engine, no metaphors for krea2." Shared bar: kind_robots PR #4308 (verifyPlaybookArtPrompts, artPromptsComplete). Forge 2026-10-27: 16 thread beats have no body text and 189 beats have no prompt. Art stays queued by the existing pipeline.
+DONE 2026-10-27 PT: cthulhuquarium canon #78 (a9495a1) and kind_robots #4314 (9060834, 24/24 checks). The 16 empty thread beats (tank backgrounds) now carry museum-placard field notes, shown in play under Behind the glass and on Charlotte's handover. 189/189 beats prompted, artPromptsComplete on; the canon's frame/negation wording was fixed at source and validate_fish.py enforces it. Unrendered scene plates are held back from play until built.
+<!-- note:end t-097 -->

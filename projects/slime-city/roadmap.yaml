@@ -71,10 +71,10 @@ tasks:
     status: done
     passes: 0
     stakes: reversible
-    note: |-
-      SILAS 2026-10-30 PT overrides earlier pentagonal rules. Create a discoverable ADMIN-only /admin/slime-city single-screen comparison console with 8x8 hidden-army BLACKOUT (Stratego-like), 12x6 turn-based lane MEATBALL and 14x6 real-time BLOODRUSH. Orthogonal square movement, simple adjacent simultaneous combat, mana, concealed units, card targeting and win paths. Six named teams including gene-catgirls, punk bloodfairies and cyber-ogres, seven illustrated/stylized districts, creature/spell/trap/ equipment examples. Implement testable pure TypeScript engine, Pinia lab state and timer; no reward persistence or public launch. Do not call CSS art generated artwork. Seeded tests, TS checks and phone/tablet/desktop visual QA required before marking ready for final subjective feedback. Shared external-facing release remains gated.
+    note: >-
+      SILAS 2026-10-30 PT overrides earlier pentagonal rules.
 
-      MERGED: Kind Robots PR #4478 (361faeecc3998e73ef44c22299623e05901540e5) implemented the private /admin/slime-city lab with Blackout 8x8, Meatball 12x6 and Bloodrush 14x6, six teams, thirty-six prototype cards, seven district selections, square-grid simulation, admin navigation and repeatable sample match controls. All 23 app checks passed, including TypeScript, Nuxt production build, four contract shards and the new Slime City deterministic contract. Conductor PR #6809 merged the superseding design, roadmap, CONTROL direction and square-grid art prompts after all 26 checks completed. This completes the implementation slice, NOT generated art, actual campaign/economy or public launch. The self-hosted site has no PR preview or automatic deploy; rendered 390/768/1440 screenshot acceptance is still outstanding and belongs to t-016, with additional actual art provenance in t-017. Neither is counted as delivered. No secrets, production economy or outward-facing publishing were touched.
+      Full history: projects/slime-city/HISTORY.md#t-001
     claimed_by: 2026-10-30T081006Z-slime-city-t001-4d81
     claimed_at: '2026-10-30T08:10:06Z'
     updated: '2026-10-30T08:47:33Z'
@@ -87,30 +87,9 @@ tasks:
     passes: 0
     stakes: reversible
     note: >-
-      Validate 8x8, 12x6 and 14x6 coordinate topology, only four
-      orthogonal neighbors, occupied collision, hidden placement and
-      fair reveal/attack, movement AP, per-round mana and card timing.
-      Test simultaneous adjacent damage minus armor, double knockout,
-      real-time pause/resume consistency, football scoring, AI spawn
-      fairness and ghost/pile-up exploits, seeded command replays.
-      Remove old pentagon/facing/twist logic everywhere in this game.
-      Honest proof-of-concept limitations belong in the UI tutorial.
+      Validate 8x8, 12x6 and 14x6 coordinate topology, only four orthogonal neighbors, occupied collision, hidden placement and fair reveal/attack, movement AP, per-round mana and card timing.
 
-      MERGED 2026-10-30: Kind Robots PR #4496 (f5269545), all 23 checks green. The CPU
-      (utils/slimeCity/cpu.ts) decides only from the redacted observe() view and plays
-      creature, spell, trap and equipment cards with its own mana. It respects AP and runs,
-      escorts and hunts the flag in BLACKOUT, defends lanes, and banks for BLOODRUSH waves.
-      BLACKOUT: 20-round limit with HP tiebreak; end-of-round flag pickup; carrier walks 1 AP;
-      a fallen carrier drops the flag in place; back-column return; seeded armies and flag
-      square; hidden fighters fight back; alternating initiative. Lanes: front-to-back flow
-      plus sidesteps (no pile-ups); 3+ AP sprint; field cap 6; one armed trap; each card once
-      per round; MEATBALL 30 rounds. BLOODRUSH: fixed 1 s ticks, banked mana, board beat every
-      2 ticks, 4-tick card rest, 150 ticks; pause/resume and between-tick plays tested through
-      the real Pinia store with mock timers. Also: command record + replayMatch, 60-line log,
-      per-match seeds with SAME SEED, hidden-info leak tests (CPU view byte-identical under
-      hidden perturbation, no enemy secrets in the log), and per-format HOW TO PLAY panels
-      with prototype limits. Pentagon/facing code is absent and the test asserts it. Tests:
-      verifySlimeCityLab + verifySlimeCityStore.
+      Full history: projects/slime-city/HISTORY.md#t-002
     claimed_by: 2026-10-30T113900Z-slime-city-t002-7c3e
     claimed_at: '2026-10-30T11:37:57Z'
     updated: '2026-10-30T12:40:13Z'
@@ -124,28 +103,9 @@ tasks:
     passes: 0
     stakes: reversible
     note: >-
-      After initial comparative playtests, create toggles or authored
-      scenarios for flag capture/return, neutral beast kill, and fighter
-      rout with reversible rules; assess whether they belong in hidden
-      army games, advancing lanes, timed waves, or a deliberate hybrid.
-      Test victory ties, early board emptiness, carrier rules, target
-      counterplay, score pacing and accessibility. Do not lock this
-      into all modes without evidence or a human design verdict.
+      After initial comparative playtests, create toggles or authored scenarios for flag capture/return, neutral beast kill, and fighter rout with reversible rules; assess whether they belong in hidden army games, advancing lanes, timed waves, or a deliberate hybrid.
 
-      DONE 2026-10-30: Kind Robots PR #4520 (3688a309) merged, all 21 checks green. Six
-      reversible rule variants, all OFF by default and selectable in the /admin/slime-city lab
-      (RULE VARIANTS toggles, aria-pressed, restart on the same seed): GIANT MONSTER (neutral
-      centre beast for all three boards; blocks its square, swats the weakest neighbour,
-      damage spells can target it; killing blow wins, ties by final-exchange then match
-      damage), lane ROUT (26/18 KOs), LANE MOMENTUM (scoring drought makes upfield runners
-      surge a square), SUDDEN DEATH extra time, YARDAGE TIEBREAK and a BLOODRUSH initiative
-      swap. CPU hunts the monster in BLACKOUT and finishes it with spells. Replays with
-      variants are tested (verifySlimeCityCrews). Measured effects (10 seeds, conductor
-      PLAYTEST-COMPARISON 'After rebalance'): MEATBALL momentum+sudden death+tiebreak draws 44
-      -> 1.3%, seats 49/49; BLOODRUSH momentum draws 17 -> 3%, seats 50/46; monster ends 69%
-      of BLACKOUT matches and halves length; rout widens lane crew spread to 9-84% (not
-      recommended); rush swap and BLOODRUSH monster worsen the seat split (34/53, 25/64).
-      Recommendations recorded; final rules stay with Silas in t-013.
+      Full history: projects/slime-city/HISTORY.md#t-003
     claimed_by: 2026-10-30T131200Z-slime-city-t003-27154
     claimed_at: '2026-10-30T13:09:21Z'
     updated: '2026-10-30T21:12:17Z'
@@ -208,7 +168,7 @@ tasks:
     depends_on: t-001
     passes: 0
     stakes: reversible
-    note: |-
+    note: >-
       Replace prototype responsive stylized skyline with traceable generated painted panoramas, selectable streets/districts, NPC rival bouts, faction campaigns and deck/shop navigation. Distinct neighborhoods for engineered catgirls, punk bloodfairies, chrome ogres, spies, rioters, market and Pitworks; player choices should matter. Viewport screenshots at 390/768/1440/XL, no dead buttons or clipped accessible content.
       PARTIAL 2026-10-30, back to ready: Kind Robots PR #4499 (5247328c) merged with all 23 checks green. It shipped a session-only walkable overworld (utils/slimeCity/city.ts). Nine named streets join the seven districts and travel follows streets. There are 7 original named rivals, covering every crew and all three formats. Each district has one two-option street decision that moves standing and heat and changes that rival's bout terms (mana, armor, HP, one fewer sentinel, an armed trap, or the clock). Wins clear champions and raise standing; losses raise heat; heat 3 gives every rival +1 mana. Needle Alley and Crown Market are gated by citywide standing, and three champions open the Grand Pit. The UI has lit streets, pin status, a dossier below the map, WALK/FIGHT/QUICK MATCH, a city status bar and BACK TO THE CITY. Rendered at 390/768/1440 in Chromium with no overflow. Tests: verifySlimeCityOverworld (connectivity, gates, heat, terms on real matches, full store flow). REMAINS: painted generated district panoramas (needs real ArtJobs, t-017), deck/shop navigation, faction campaign chapters (t-009), and persistence (deliberately none yet).
 
@@ -216,37 +176,9 @@ tasks:
 
       A focused follow-on overworld increment adds nine authored first-crossing street decisions with gameplay consequences, city panel presentation, session-only memory, and a deterministic contract expansion. Pending CI, preview verification, and review before this partial task returns ready.
 
-      PARTIAL 2026-10-30 PT: Kind Robots PR #4518 merged to main at dbf28b9794b275020a002d3a00e79b7caa429737 after 20 successful checks, including TypeScript, layout, formatting and mandatory Slime City prototype/store/overworld game contracts. Nine named streets now have first-crossing authored scenes with two distinct player decisions each, 18 total outcomes. Street choices change district standing, city heat, and the next rival bout's real opening mana/HP/armor, combining with existing district choices. The city map displays progress and highlights resolved streets; unresolved encounters block travelling or rival fights. Session-only, no accounts or persistent currency. Further t-007 work remains: actual generated district panoramas (art queue t-017), meaningful deck/shop navigation (after t-004), faction story chapters (t-009) and eventual saved progress. This partial increment is done; re-open task for next worker.
+      PARTIAL 2026-10-30 PT: Kind Robots PR #4518 merged to main at dbf28b9794b275020a002d3a00e79b7caa429737 after 20 successful checks, including TypeScript, layout, formatting and mandatory Slime City prototype/store/overworld game contracts. Nine named streets now have first-crossing authored scenes with two distinct player decisions each, 18 total outcomes. [...]
 
-      Added seven post-champion district Blackout contracts in a scoped Kind Robots PR. Distinct opponents and conditions, local standing/heat outcomes, retry on defeat, no account reward writes. Continue t-007 after partial slice.
-
-      PARTIAL 2026-10-30 PT: Merged Kind Robots PR #4541, 15 checks green. Shipped seven post-champion Blackout contracts with distinct city consequences, retry and completion UI. Additional t-007 artwork, chapter depth and persistence remain.
-
-      Six faction-specific five-opponent Blackout campaign paths, 30 authored chapters, two tactical approaches per chapter, independently gated progression and variant endings are committed for review. Session-only internal preview; account rewards and public release untouched.
-
-      PARTIAL 2026-10-30 PT: Merged kind_robots PR #4542 (f15cd1f651dfdcb307e76b3ac26f25dd1322d088), all 15 workflows green, including TypeScript, formatting, layout and four contract shards. Silas requested a story campaign for every faction against each of the other factions. Delivered six independent authored five-chapter Blackout story paths (30 distinct rival conflicts), two narrative/tactical choices per chapter, deterministic battle modifiers, victory-locked progression, retryable defeat, two epilogues per faction and a dedicated responsive STORY console. New story progress remains session-only and does not award account XP, Meat, or cards. Future t-009 completion still requires account-backed saved campaign runs, delivered ArtImages and expanded character/cinematic content; t-017 owns art provenance. Public launch is not authorized. Continue t-007 for remaining city art and integration.
-
-      Routed multi-street city wayfinding, destination continuity across authored street choices, and direct faction story and deck entry actions are implemented on Kind Robots worker/slime-city-t007-city-wayfinding-20261031T025443558Z. Regression contracts added; implementation PR CI and preview evidence pending.
-
-      PARTIAL 2026-10-30 PT: Kind Robots PR #4544 merged as 46adf290583b219ac98c62480eec23ae9bc09a5c, all 15 current-head CI checks passed including TypeScript, Changed-file Prettier, Layout Contract, and all four Contract Tests shards. A shortest-path nine-street wayfinder now allows selecting far districts, walks one legal street at a time, preserves a selected destination through every first-crossing authored choice (no skipping), highlights the itinerary and next stop, and adds direct STORY and CARDS navigation from the city. Deterministic all-pairs path and full two-hop store regression tests landed. This is admin-only internal source code, not a live deployment or art delivery. REMAINS for t-007: proven delivered panoramas from t-017, further overworld art and integration, and eventually persisted campaign progress; server-account economy stays separately owned by t-008/#4538. The umbrella #4535 stays open. Reopen t-007 for the next substantive city slice.
-
-      Faction story campaign chapters now point to canonical crew home districts, mark mission pins and provide route shortcuts, and launch optional story battles at the destination only after first-crossing street decisions. Existing direct STORY battles remain playable. Kind Robots feature branch worker/slime-city-t007-campaign-district-20261031T051413Z-f6d3 includes city/store/UI and all-crew navigation regressions. CI pending.
-
-      PARTIAL 2026-10-30 PT: Kind Robots PR #4546 merged to main as 9eb86f07b1264b8a011d2d7505663724edc9e82e with 15/15 current-head GitHub CI workflow checks passing (TypeScript, changed-file Prettier, layout, full four-shard Contract Tests). All six faction story chapters now identify their rival's real district. STORY can focus a marked city destination and route through existing streets; a faction mission can launch on arrival only after pending first-crossing decisions are resolved. Canonical Blackout chapter approaches, independent story progress, and direct STORY battles are preserved. Dedicated city and campaign regression tests cover six mappings, wayfinding, and blocked mission starts. This is an admin-only source merge, not a self-hosted deploy or generated art proof. REMAINS: t-017 verified painted faction/district art and manifest, fuller city/campaign integration, server-authoritative saved story progress, account-backed economy owned separately by PR #4538, and final visual QA. Keep t-007 ready and master #4535 open for subsequent slices.
-
-      City-launched faction story battles now inherit street decisions, district opening effects and citywide heat, combined with authored chapter choices. STORY quick-start still uses chapter terms only. Found and repaired base engine's previously silent opening player HP, enemy armor and fewer-rivals scenario bonuses on empty deployment boards; deferred bonuses now persist into newly deployed creatures and enemy capacity. City mission dossier displays actual combined terms and a delivered rival crew art slot. Regression contract tests cover composition, city campaign store route, new unit stats and direct-mode independence. Internal/admin-only source, no XP or Meat writes. Kind Robots feature branch worker/slime-city-t007-story-terms-20261031T101658Z-b47e; PR and CI pending.
-
-      PARTIAL 2026-10-31 PT: Kind Robots PR #4554 merged to main (5dd46da842837f1768484a1407a295e4a547a7f9), with all 15/15 latest-head GitHub Actions checks passed, including TypeScript, changed-file formatting, layout, and the four-shard gameplay contracts. City-launched faction chapter battles now add the actual street/district choice and city heat terms to their authored approach. STORY quick-start remains chapter-only. The city dossier displays accurate combined effects and an authenticated rival crew portrait. Fixed engine bug where starting an empty Blackout board silently discarded scenario HP and enemy armor bonuses: future summons inherit them, and fewerRivals limits the enemy field cap. New tests exercise mana, high heat, summon stats, enemy cap, and no browser XP or Meat changes. Source merged, not self-hosted deployed. MORE t-007 work remains: deeper city world encounters, complete art validation, independently durable saves, and final rendered visual QA. Keep t-007 ready and master #4535 open. Account progression PR #4538 owned by separate worker and not modified here.
-
-      Silas explicitly requested 2026-10-31 PT to move Slime City and Hybridizer from Admin into the Play channel. This patch adds signed-in Play entries and routes at /play/slime-city and /play/hybridizer, reusing existing Nuxt/Vue game surfaces and Pinia stores, plus canonical Kind Robots project placements. The original /admin URLs remain as ADMIN-restricted, navigation-hidden compatibility entrypoints. Both new Play tabs require authentication because Hybridizer's creation APIs are account-scoped and Slime City ArtImages are not presently public. The authored Play tutorials accurately identify unfinished art and account progression. Static navigation and route tests protect both registrations and legacy role guards. This approval is ONLY for Play placement for signed-in players, NOT blanket permission for public marketing, payments, unreviewed uploads or multiplayer launch. Hybridizer project's separate release gate remains unmodified. No DB or API permission mutations. Source staged on worker/slime-city-hybridizer-play-20261031T112724Z-c7e4; CI and PR pending.
-
-      PARTIAL 2026-10-31 PT: Silas authorized moving Slime City and Hybridizer into the Play channel for signed-in users. Kind Robots PR #4555 merged into main, squash 5f6f644897ae1ba4f90f7d74de56c8ad3e6ef85b. All 16/16 latest-head GitHub Actions workflows passed, including navigation consolidation, layout, changed-file formatting, TypeScript, and four contract shards. Two new Play routes, content/channels/arcade tab docs, tutorials, updated Play room copy, and canonical Project placements are present. Both surfaces reuse existing page implementations and Pinia state. Legacy Admin URLs remain ADMIN-restricted with navigation-hidden tab records. Play routes require authentication; the separate Hybridizer and Slime City full public launch, marketing, multiplayer and public ArtImage gates are not silently cleared. No API, DB, schema, game mechanics or public artwork permissions were mutated. Source is merged, not yet verified deployed to Alexandria/Unraid. Keep t-007 ready for deeper city content, persistent story progress, artwork delivery validation and rendered visual QA. Keep Slime City umbrella #4535 open.
-
-      User requested featured dashboard highlights for both new Play games, Slime City and Hybridizer. Branch worker/slime-city-t007-home-highlights- 20261031T195107Z-d58a adds directly linked Featured experiences cards at /play/slime-city and /play/hybridizer in the home visitor directory, both categorized as Play and honestly labeled signed-in playtests. Their verified Play URLs are used. Neither game has a public poster asset yet, so the cards use distinct CSS graphic fallbacks rather than fake generated-art URLs. A navigation regression asserts both highlights, destinations, disclosure and fallback. Only navigation markup and a test changed; no database, game mechanics, API permissions, public release or live deploy. CI pending.
-
-      PARTIAL 2026-10-31 PT: Slime City and Hybridizer now have direct highlighted home dashboard Featured experiences entries in Kind Robots. PR #4558 merged into main, squash 3288ff084415b02dade09498bd3074ce7bbdeff4. All 16/16 latest-head checks completed successfully, including layout, navigation, Playbook gameplay, TypeScript, formatting and all four Contract Test shards. Home highlights route to /play/slime-city and /play/hybridizer with Play filtering, honest sign-in playtest labels and CSS illustrated placeholders because no public project poster has been delivered. The navigation test asserts routes and labels. Claim bookkeeping duplicate updated-key was resolved and review event applied. Scope limited to home visitor directory and navigation regression test: no database or API writes, permissions, economy, account grants or publish. Code merged; self-hosted production deployment and browser rendering not verified. Keep t-007 ready for the remaining authored overworld expansion and screenshot QA; do not close umbrella #4535.
-
-      Seven authored district championship aftermath choices now branch the city's reputation, heat, and subsequent local bout terms. The store and city console surface the choices, travel is gated until each decision is made, and adversarial city tests cover one-shot effects, cannot-skip travel, and contract continuation. Kind Robots feature branch worker/slime-city-t007-aftermath-20261101-c92d awaiting current-head CI review.
+      [Earlier history (11,604 chars) archived verbatim to projects/slime-city/T007-HISTORY.md -- read it there only when you need a specific past cycle. Append new cycles below, one short paragraph each.]
 
       PARTIAL 2026-10-31 PT: Kind Robots PR #4574 merged to main as 5f25e6176cfb26cc88a99ca2dd1e3b444140dbdc after ALL 15 latest-head GitHub Actions workflows succeeded, including TypeScript, changed-file formatting, layout and the four-shard contract suite. Seven distinct district championship aftermath stories now offer two exclusive choices each. Choice updates citywide standing and heat plus actual district follow-up bout terms; navigation, district contracts and local campaign shortcuts wait until the choice is resolved. Added deterministic city/store tests for one-time outcomes, invalid choices, travel blocking and follow-up battles. Admin-only source merge, not production deployment or new art. Further t-007 work remains: complete verified painted city art integration, deeper authored encounters, account-backed campaign saves and rendered visual QA. Keep umbrella kind_robots#4535 open; economy and art tasks remain separate.
 
@@ -393,26 +325,9 @@ tasks:
     passes: 0
     stakes: reversible
     note: >-
-      Produce multiple seeded and manual runs of BLACKOUT 8x8,
-      MEATBALL 12x6 and BLOODRUSH 14x6. Measure first meaningful
-      decision, clarity, tension, match duration, 6-team counterplay,
-      clogged lanes, stalemates, comeback frequency, card usefulness,
-      input reachability and real-time burden. Deliver a concise
-      comparative report with desktop/phone screenshots and retain
-      each playable variant. No agent unilateral final-mode decision.
+      Produce multiple seeded and manual runs of BLACKOUT 8x8, MEATBALL 12x6 and BLOODRUSH 14x6.
 
-      DONE 2026-10-30: projects/slime-city/PLAYTEST-COMPARISON.md compares 1,800 seeded CPU-
-      vs-CPU matches (600 per format; all 30 ordered crew pairings x 20 seeds) on the Kind
-      Robots f5269545 engine. Reproduce with: npx tsx utils/scripts/slimeCityPlaytest.ts 20.
-      Headlines. BLACKOUT: mean 12.4 rounds; 69% flag runs, 30% clock; first-initiative 53/46;
-      48% comebacks; 14% decided by round 4. MEATBALL: 27% draws and 44.5% reach round 30;
-      most card play and lead changes; crews most polarised. BLOODRUSH: median 44 ticks; 82%
-      breakthroughs; second side 52/40. Meat Exchange over-performs in all three (72/75/82%)
-      and Catgirls sit at 24% in MEATBALL. Rule-sensitivity runs are included. Nine
-      screenshots (projects/slime-city/playtest/*.webp) are Chromium renders of the real page
-      component, store and engine at 390/768/1440 in a Vite harness. The deployed admin site
-      was NOT captured: it needs the DB and admin auth. No mode was chosen; the verdict stays
-      with Silas in t-013.
+      Full history: projects/slime-city/HISTORY.md#t-016
     claimed_by: 2026-10-30T113900Z-slime-city-t016-7c3e
     claimed_at: '2026-10-30T11:37:59Z'
     updated: '2026-10-30T12:40:27Z'

@@ -547,15 +547,9 @@ tasks:
     stakes: reversible
     updated: '2026-10-22T10:30:00Z'
     note: >-
-      Write projects/rainbow-bullet-hell-space-princess/ROUTE-MAP.md: the eight Acts become nodes on a
-      branching route map (Star Fox 64 in spirit, original in content) with at least four alternate
-      stages (Kelp Nebula Bypass, Sunken Lighthouse Ring, Coral Comet Trail, Mirror Shoal; backdrops in
-      art/GEN2-ROUND-1.yaml), each branch opened by something done in the stage before (rescuing a
-      captive, saving an escort, destroying a hidden generator, a no-continue clear), plus a per-stage
-      medal goal and the routes that lead to each ending. Keep the three dialogue scenes per Act
-      (ACT-STRUCTURE.md) and say which branch changes which scene.
+      Write projects/rainbow-bullet-hell-space-princess/ROUTE-MAP.md: the eight Acts become nodes on a branching route map (Star Fox 64 in spirit, original in content) with at least four alternate stages (Kelp Nebula Bypass, Sunken Lighthouse Ring, Coral Comet Trail, Mirror Shoal; back
 
-      DONE 2026-10-22: ROUTE-MAP.md and rainbowRoute.json (validate_route.py PASS: 14 nodes, four alternate detour stages each gated by a mechanic already in code, finale on all 16 routes, 13 medals, Palace Hangar fittings bounded so fairness never moves, a three-slot save measured at 5.9 KB).
+      Full history: projects/rainbow-bullet-hell-space-princess/HISTORY.md#t-026
 
   - id: t-027
     milestone: m6
@@ -591,13 +585,9 @@ tasks:
     stakes: reversible
     updated: '2026-10-22T10:30:00Z'
     note: >-
-      art/GEN2-ROUND-1.yaml (6 subjects x Z-Image/Krea 2 = 12 cells) submitted 2026-10-22 via
-      scripts/sweep_art_ledgers.py. Review keepers in the ledger, then hand to t-027/t-028.
+      art/GEN2-ROUND-1.yaml (6 subjects x Z-Image/Krea 2 = 12 cells) submitted 2026-10-22 via scripts/sweep_art_ledgers.py.
 
-      2026-10-22: rendering (6 of 12 DONE at last check). Next: review keepers in the ledger and hand them to t-027/t-028.
-
-      DONE 2026-10-22: all 12 rendered and reviewed in the ledger; the six Krea 2 renders keep (route map, Palace
-      Hangar, Kelp Nebula Bypass, Sunken Lighthouse Ring, Coral Comet Trail, Mirror Shoal). Hand to t-027/t-028.
+      Full history: projects/rainbow-bullet-hell-space-princess/HISTORY.md#t-029
   - id: t-030
     milestone: m6
     title: "Gen-2 animation: animated pilot cut-ins, enemy sprite cycles and moving cutscenes"
@@ -619,19 +609,9 @@ tasks:
     stakes: reversible
     updated: '2026-10-24T02:52:58Z'
     note: >-
-      Silas, 2026-10-23 PT (verbatim): "we should remember runs between games, returning should put
-      us at the last checkpoint. If that isn't already implemented." Today the save is written only
-      at an Act's frame 0 (writeSave in rainbowPrincessPreview.ts) and readRainbowSave rejects any
-      checkpoint with frame > 0, so leaving mid-Act loses everything since the Act began. Write the
-      save at every section/boss checkpoint (Act I too), accept and validate those checkpoints on
-      load, and resume through the same rewind the CONTINUE? path uses. The continue menu names the
-      Act and section. Narrow slice of t-027's memory work; t-027 keeps save slots and the route map.
+      Silas, 2026-10-23 PT (verbatim): "we should remember runs between games, returning should put us at the last checkpoint.
 
-      DONE 2026-10-23 PT: kind_robots#4092 merged (da34189). The cabinet save is written at
-      every section and boss checkpoint (Act I included) and validated against the engine's
-      own checkpoint list on load (isRainbowCheckpoint). Continuing resumes the Act clock on
-      that checkpoint frame through the CONTINUE? rewind, and the flight log names the
-      section. All 34 Rainbow verifiers and 18 CI checks are green.
+      Full history: projects/rainbow-bullet-hell-space-princess/HISTORY.md#t-031
     claimed_by: 2026-10-24T024500Z-rainbow-t031-resume-q7m3
     claimed_at: '2026-10-24T02:42:12Z'
     implementation_pr: 'silasfelinus/kind_robots#4092'
@@ -644,19 +624,9 @@ tasks:
     stakes: reversible
     updated: '2026-10-24T03:15:20Z'
     note: >-
-      Silas, 2026-10-23 PT (verbatim): "We should have animations fo4 all projectiles, not these
-      identical circles." Most hostile fire falls through to one dark circle with a yellow rim.
-      Tag each shot with a look from the craft or boss that fired it (and inherit it through
-      bursts), then draw code-drawn animated shapes per look: spinning stars, pulsing jelly bells,
-      ink drops, bubbles, fin blades, prism shards, eclipse sparks. Keep the dark readability halo,
-      the hitbox and every fairness rule unchanged; calm motion slows the animation. Player shots
-      animate too (shimmer, trails).
+      Silas, 2026-10-23 PT (verbatim): "We should have animations fo4 all projectiles, not these identical circles." Most hostile fire falls through to one dark circle with a yellow rim.
 
-      DONE 2026-10-23 PT: kind_robots#4093 merged (b96288d). Every hostile shot carries a look
-      from the craft, guardian or boss that fired it, drawn by rainbowShotLooks.ts as one of
-      20 animated code-drawn shapes. Hitboxes and fairness are unchanged; the 8 px halo
-      softened. Pilot shots leave wakes. verifyRainbowEffects checks every plain pellet has a
-      look, 14+ looks across the campaign, and that each look animates.
+      Full history: projects/rainbow-bullet-hell-space-princess/HISTORY.md#t-032
     implementation_pr: 'silasfelinus/kind_robots#4093'
   - id: t-033
     milestone: m4
@@ -667,22 +637,9 @@ tasks:
     stakes: reversible
     updated: '2026-10-24T03:47:18Z'
     note: >-
-      Silas, 2026-10-23 PT (verbatim): "improve the dyamism: enemies should move and attack in
-      different ways." The plain craft of Acts I-III (picket, spiral, anchor, urchin, lantern,
-      relay, skimmer, coral, pistol, angler, skate) share one leftward drift plus a sine and an
-      aimed pellet. Give each its own movement (hover-and-strafe, true corkscrew loops, wall
-      bounces, jelly pulse-swims, ceiling/floor skims, manta swoops) and its own attack (bursts,
-      rotating fans, radial spikes, dropped bombs, lobbed shots), deterministic and telegraphed,
-      within the existing fairness and pacing tests.
+      Silas, 2026-10-23 PT (verbatim): "improve the dyamism: enemies should move and attack in different ways." The plain craft of Acts I-III (picket, spiral, anchor, urchin, lantern, relay, skimmer, coral, pistol, angler, skate) share one leftward drift plus a sine and an aimed pellet
 
-      DONE 2026-10-23 PT: kind_robots#4094 merged (a52ee28). Each Act I-III plain craft swims
-      and fires its own WORLD-BIBLE way: picket sidestep lead, spiral loop-the-loop with
-      turning spokes, anchor mines, urchin wall-roll with an 8-spine fan, lantern pulse-swim
-      with a gapped ring, relay link, skimmer rails with bead columns, coral floor lobs, skate
-      manta swoop. Courier pods past the left edge no longer take hits. Two scripted test bots
-      tightened (assertions unchanged); verifyRainbowCraftVariety is new. Side fix:
-      kind_robots#4095 repaired main's broken production image build (ecotone-board inline
-      handler from #4087).
+      Full history: projects/rainbow-bullet-hell-space-princess/HISTORY.md#t-033
     implementation_pr: 'silasfelinus/kind_robots#4094'
   - id: t-034
     milestone: m4
@@ -762,16 +719,9 @@ tasks:
     stakes: reversible
     updated: '2026-10-24T04:34:32Z'
     note: >-
-      DOODLE-DIRECTION.md step 3. Faction names in comms and HUD; each boss bar names its DOG commander; boss
-      fire drawn as bones, tennis balls and storm clouds, player fire as hearts and stars (decoration only, hitboxes
-      unchanged); bubble-letter titles and sticker pickups. Code-drawn first; swap in t-036 art as it lands.
+      DOODLE-DIRECTION.md step 3.
 
-      DONE 2026-10-23 PT (code-drawn layer): kind_robots#4097 merged. The C.A.T.S. squadron
-      and cat co-pilots appear on the Pilots tab. A DOG commander per boss is named on the
-      boss bar, barks on arrival, and is sent home with BAD DOG! on defeat. Boss fire is
-      bones, balls and clouds; pilot fire is hearts and stars. verifyRainbowDogs covers all
-      nine across the demo campaign. Painted commander art and the doodle UI skin follow from
-      t-036 once t-035 picks the engine.
+      Full history: projects/rainbow-bullet-hell-space-princess/HISTORY.md#t-037
     claimed_by: 2026-10-24T044500Z-rainbow-t037-dogs-z3c6
     claimed_at: '2026-10-24T04:26:43Z'
     implementation_pr: 'silasfelinus/kind_robots#4097'
@@ -797,14 +747,9 @@ tasks:
     stakes: reversible
     updated: '2026-10-24T05:39:28Z'
     note: >-
-      Silas withdrew the DOGS (PLOT-MOTHERLAND.md). Remove rainbowDogs.ts commanders, barks, BAD DOG send-off and
-      bone/ball/cloud boss fire (kind_robots#4097); keep C.A.T.S., co-pilots, heart and star pilot shots. Each super
-      cut-in becomes a Princess Kitty Power with the pilot's co-pilot.
+      Silas withdrew the DOGS (PLOT-MOTHERLAND.md).
 
-      DONE 2026-10-23 PT: kind_robots#4099 merged. Removed the DOGS layer: commanders, barks,
-      BAD DOG, and bone/ball/cloud boss fire; bosses fire their creatures' own looks again.
-      Kept C.A.T.S., co-pilots, and heart and star shots. Every super cut-in is a Princess
-      Kitty Power with the co-pilot's face. verifyRainbowCats replaces verifyRainbowDogs.
+      Full history: projects/rainbow-bullet-hell-space-princess/HISTORY.md#t-039
     claimed_by: 2026-10-24T053000Z-rainbow-t039-cats-p2w7
     claimed_at: '2026-10-24T05:29:38Z'
     implementation_pr: 'silasfelinus/kind_robots#4099'
@@ -817,18 +762,9 @@ tasks:
     stakes: reversible
     updated: '2026-10-24T05:46:56Z'
     note: >-
-      PLOT-MOTHERLAND.md. At Act V's memorial the crew realizes the Motherland is the colonizer; high lane TURN ON
-      THE EMPIRE (allegiance rebel), low lane STAY THE COURSE (loyal), majority of living pilots, tie stays the
-      course. Flag in checkpoints and saves; one allegiance line in each later Act's OPEN. Later slices: rebel-road
-      waves, two finale targets, allegiance endings.
+      PLOT-MOTHERLAND.md.
 
-      DONE 2026-10-23 PT (first slice): kind_robots#4100 merged. The Act V memorial plays the
-      three-line Motherland reveal, then the flown choice: high is TURN ON THE EMPIRE (rebel),
-      low is STAY THE COURSE (loyal); majority of living pilots, a tie stays the course.
-      Allegiance is kept in checkpoints and saves and restored on continue. The lead's A06-A08
-      OPEN lines answer it. The memorial now runs 510-1050 frames, and the demo flies both
-      roads. verifyRainbowMotherland is new. Next slices in PLOT-MOTHERLAND.md: rebel-road
-      waves, two finale targets, allegiance endings; t-041 reframes Acts I-V.
+      Full history: projects/rainbow-bullet-hell-space-princess/HISTORY.md#t-040
     implementation_pr: 'silasfelinus/kind_robots#4100'
   - id: t-041
     milestone: m6
@@ -839,12 +775,9 @@ tasks:
     stakes: reversible
     updated: '2026-10-24T06:25:14Z'
     note: >-
-      Early lines speak the Motherland's "pacification" story; Acts III-V plant the evidence (Motherland hardware,
-      colony ships behind the convoy, the creatures' carers at the depot). Keep three scenes per Act and Lilt's arc.
+      Early lines speak the Motherland's "pacification" story; Acts III-V plant the evidence (Motherland hardware, colony ships behind the convoy, the creatures' carers at the depot).
 
-      Merged kind_robots#4105 (f1a1659): Acts I-V speak the Motherland pacification story and
-      seed the evidence chain (beacons, lullaby, command codes and collar, colony ships,
-      caretakers); verifyRainbowEvidence pins it.
+      Full history: projects/rainbow-bullet-hell-space-princess/HISTORY.md#t-041
     claimed_by: 2026-10-24T061500Z-rainbow-t041-reframe-v3n6
     claimed_at: '2026-10-24T06:10:37Z'
     implementation_pr: 'silasfelinus/kind_robots#4105'

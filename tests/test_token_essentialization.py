@@ -215,3 +215,42 @@ def test_close_task_capped_rearm_rests_even_after_real_work():
     # A no-op on a capped task rests the longer of the cap and the backoff.
     assert close_task.rest_fields(capped, "ready", True, now=NOW)["rest_until"] == "2026-10-01T06:00:00Z"
     assert close_task.rest_fields({**capped, "noop_streak": 4}, "ready", True, now=NOW)["rest_until"] == "2026-10-02T06:00:00Z"
+
+
+# --- 2026-11-01 pass 2: topical docs + CONTROL.md slicing ---
+
+import show_control  # noqa: E402
+
+
+def test_agents_md_stays_core_sized():
+    # AGENTS.md is read in full and CLAUDE.md is injected into every session.
+    # Detail belongs in docs/agents/*.md; raise these only with a reason.
+    assert len((ROOT / "AGENTS.md").read_bytes()) < 36_000
+    assert len((ROOT / "CLAUDE.md").read_bytes()) < 10_000
+
+
+def test_agents_md_topical_doc_links_resolve():
+    import re
+    text = (ROOT / "AGENTS.md").read_text() + (ROOT / "CLAUDE.md").read_text()
+    links = sorted(set(re.findall(r"\(((?:docs|projects)/[^)\s#]+\.(?:md|yaml))\)", text)))
+    assert len(links) >= 10
+    for rel in links:
+        assert (ROOT / rel).is_file(), rel
+
+
+def test_show_control_slices_global_and_block():
+    text = (
+        "# CONTROL\nintro\n## Global overview  <- read\nglobal rule\n"
+        "## Per-project direction\n### alpha  (software)\nalpha rule\n"
+        "### beta (content)\nbeta rule\n"
+    )
+    global_text, blocks = show_control.split_control(text)
+    assert "global rule" in global_text and "alpha" not in global_text
+    assert sorted(blocks) == ["alpha", "beta"]
+    assert "alpha rule" in blocks["alpha"] and "beta" not in blocks["alpha"]
+
+
+def test_show_control_reads_real_file():
+    global_text, blocks = show_control.split_control((ROOT / "CONTROL.md").read_text())
+    assert global_text.startswith("## Global overview")
+    assert "memory-dungeon" in blocks

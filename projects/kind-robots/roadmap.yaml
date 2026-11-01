@@ -2058,18 +2058,22 @@ tasks:
 - id: t-127
   milestone: m6
   title: 'Simplify LoRA triage categories and add delete/resource-card actions'
-  status: review
+  status: ready
   gate_human: false
   stakes: reversible
   owner: worker
   passes: 0
-  updated: '2026-10-04T09:34:00Z'
+  updated: '2026-11-01T11:34:00Z'
   note: |-
     Silas, 2026-10-04: LoRA triage should not offer CREATURE as a category; character LoRAs can be CHARACTER. Add the ability to delete a LoRA directly from the triage screen, and add a direct way to view that LoRA's Resource card from the same surface.
 
     Implementation is complete on worker/kind-robots-t-127-lora-triage-20261004T091600Z. CREATURE is retired in the shared LoRA taxonomy with legacy CREATURE values normalizing to CHARACTER; LoRA triage reuses resourceGalleryStore.deleteResource without image cascade; and each triage card opens the canonical Resource card in-place. Source-level diff inspection is clean and the branch is 4 commits ahead / 0 behind main. Pre-PR executable CI is unavailable for this connector branch, and the local sandbox cannot resolve github.com, so pull-request CI is the next executable verification boundary.
-  claimed_by: 20261004T091600Z-kind-robots-t127-lora-triage-7f3a
-  claimed_at: '2026-10-04T09:25:00Z'
+
+    2026-11-01 PT: claim/review released by settle_inactive_projects.py — project is
+    `retired`, so no worker will pick this up; was `review`. Re-check any referenced
+    branch/PR before resuming if the project is reopened.
+  claimed_by: null
+  claimed_at: null
 
 
 - id: t-128
@@ -2122,11 +2126,11 @@ tasks:
 - id: t-131
   milestone: m6
   title: 'Rehome navigation tools and retire legacy surfaces'
-  status: review
+  status: done
   gate_human: false
   stakes: reversible
   passes: 0
-  updated: '2026-10-06T10:49:00Z'
+  updated: '2026-11-01T11:33:59Z'
   note: |-
     Silas-directed 2026-10-06 navigation cleanup:
     - Move Admin Users and Moderation out of the Admin navigation and expose them as admin-only buttons on Home > Account.
@@ -2136,9 +2140,13 @@ tasks:
     Preserve existing destination routes unless the implementation can safely remove a redundant navigation-only route without breaking direct links.
 
     Opened Kind Robots PR #3261 for the requested navigation cleanup. Navigation, layout, icon-safety, and Component Runtime Retirement checks are green; the full CI suite is still running before merge.
+
+    2026-11-01 PT: reconciled to done — kind_robots PR #3261 (Rehome navigation tools and
+    retire legacy surfaces) merged 2026-10-06 by Silas; the task had been left at review.
   owner: worker
   claimed_by: 20261006T103400Z-kind-robots-t131-nav-a4d9
   claimed_at: '2026-10-06T10:34:00Z'
+  implementation_pr: 'silasfelinus/kind_robots#3261'
 
 - id: t-132
   milestone: m6
@@ -2174,18 +2182,22 @@ tasks:
 - id: t-133
   milestone: m6
   title: 'Default the ArtJob queue to the first non-empty status section'
-  status: review
+  status: ready
   gate_human: false
   stakes: reversible
   passes: 0
-  updated: '2026-10-07T06:00:00Z'
+  updated: '2026-11-01T11:34:00Z'
   note: |-
     Silas-directed 2026-10-06 from the live ArtJob queue: after a browser refresh the queue can open on an empty status section instead of showing useful jobs. On initial page load, choose the first non-empty concrete status in dashboard order (PENDING, RUNNING, FAILED, DONE, CANCELLED), then load that section. Preserve explicit user status choices after the initial default has been established. Add regression coverage for the startup selection contract.
 
     Implementation is complete on worker/kind-robots-t133-default-filter-20261007T055600Z. Startup now loads fresh queue stats, selects PENDING -> RUNNING -> FAILED -> DONE -> CANCELLED by first non-zero count, retries once if the chosen section drains during the fetch race, and preserves established/manual selections. Added a dedicated source contract and wired it into Entity Art Manager CI.
+
+    2026-11-01 PT: claim/review released by settle_inactive_projects.py — project is
+    `retired`, so no worker will pick this up; was `review`. Re-check any referenced
+    branch/PR before resuming if the project is reopened.
   owner: worker
-  claimed_by: 20261007T055600Z-kind-robots-t133-default-filter-a91c
-  claimed_at: '2026-10-07T05:56:00Z'
+  claimed_by: null
+  claimed_at: null
 
 - id: t-135
   milestone: m6

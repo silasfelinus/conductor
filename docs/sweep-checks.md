@@ -174,6 +174,14 @@ flags something and you need to know why it exists or how to fix it.
      just means the next run has not happened yet. Act on `INACTIVE` (add a `project:<slug>` label
      or reactivate the project) and `TRIAGE` (Silas decides; label `conductor:skip` to silence).
      Exit 1 when flagged, 2 when a repo could not be read (usually token scope).
+   - `python scripts/settle_inactive_projects.py` — no task inside a paused/finished/retired project
+     may sit `claimed`, `in-progress` or `review` (2026-11-01). Workers skip inactive projects, so
+     such a task is never picked up again: it shows as live work on the Kind Robots board and keeps
+     a dead claim (the first audit found 10, oldest claimed 2026-09-27, one whose PR had merged a
+     month earlier). First check each flagged task's PR: merged → close it `done`
+     (`check_pr_merged_drift.py --include-inactive`). Otherwise `--apply` returns it to `ready`,
+     clears the claim and appends a dated note. Parked `ready`/`waiting`/`needs-human` tasks in
+     inactive projects are only counted; they wait for the project to be reopened. Exit 1 when flagged.
 
 ## Step 7 — the dream docket (CLAUDE.md startup)
 

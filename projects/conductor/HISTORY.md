@@ -2783,3 +2783,16 @@ parity (authenticated 200, lean projection). check_project_scaffold_drift.py rep
 drift; post-merge conductor-oversight refresh (76374961, 2026-10-11 13:03Z) shows parity
 checked with 0 forward/0 reverse drift, overall clean.
 <!-- note:end t-206 -->
+
+## t-208 — enqueue_art_requests.py --status overwrites hand-set REJECTED art statuses
+
+<!-- note:begin t-208 -->
+Found 2026-10-13 PT (zuzu-showdown/t-032). Running `--status` on art/T021-ENDINGS.yaml flipped coyote-ending-1
+and coyote-ending-2 from `status: REJECTED, art_image_id: null` back to `DONE` with the rejected images (245032,
+245033), because refresh_status copies the job's result over whatever the ledger says. tools/endings.py then
+shipped the rejected stills. Reverted by hand in the t-032 art PR. Fix: refresh_status leaves a subject's lane
+alone while it is REJECTED (or the job id equals one listed under `rejected:`), and add a test.
+
+Merged via #6635: refresh_status skips REJECTED lanes and job ids listed under
+rejected:; two tests added.
+<!-- note:end t-208 -->

@@ -248,3 +248,67 @@ Silas, 2026-10-19 PT, after playing the recut: "first level has much more dynami
 Silas, 2026-10-19 PT: "we REALLY need better music. think space opera, and more than a midi 8 note on repeat." kind_robots#3865: 21 cues (nine flights, nine bosses, guardians, ending, failure) rendered offline by scripts/rainbow-score (numpy orchestra, hand-written Act themes, seamless loops, -18 LUFS) under public/rainbow-princess-audio/, played by the cabinet mixer as a MusicLoop's recorded rendition with the sequenced chiptune as fallback. The same 21 cues are queued as ACE-Step ArtJobs #40796-#40816 (rainbowRecordedScore.ts briefs); when they render, review each take and swap it in (source 'ace', its ArtJob id). Done when the orchestral score is on main; the ACE swap is its own follow-up.
 Done 2026-10-19: kind_robots#3865 merged (654ec2d); all 21 orchestral cues play in the cabinet with the chiptune as fallback. ACE-Step takes #40796-#40816 still PENDING (render box idle); swapping them in is a follow-up once rendered.
 <!-- note:end t-025 -->
+
+## t-026 — Gen-2 route design: branching Luminous Ocean map, branch conditions, alternate stages
+
+<!-- note:begin t-026 -->
+Write projects/rainbow-bullet-hell-space-princess/ROUTE-MAP.md: the eight Acts become nodes on a branching route map (Star Fox 64 in spirit, original in content) with at least four alternate stages (Kelp Nebula Bypass, Sunken Lighthouse Ring, Coral Comet Trail, Mirror Shoal; backdrops in art/GEN2-ROUND-1.yaml), each branch opened by something done in the stage before (rescuing a captive, saving an escort, destroying a hidden generator, a no-continue clear), plus a per-stage medal goal and the routes that lead to each ending. Keep the three dialogue scenes per Act (ACT-STRUCTURE.md) and say which branch changes which scene.
+DONE 2026-10-22: ROUTE-MAP.md and rainbowRoute.json (validate_route.py PASS: 14 nodes, four alternate detour stages each gated by a mechanic already in code, finale on all 16 routes, 13 medals, Palace Hangar fittings bounded so fairness never moves, a three-slot save measured at 5.9 KB).
+<!-- note:end t-026 -->
+
+## t-029 — Gen-2 art round 1: route map, Palace Hangar and four alternate-stage backdrops
+
+<!-- note:begin t-029 -->
+art/GEN2-ROUND-1.yaml (6 subjects x Z-Image/Krea 2 = 12 cells) submitted 2026-10-22 via scripts/sweep_art_ledgers.py. Review keepers in the ledger, then hand to t-027/t-028.
+2026-10-22: rendering (6 of 12 DONE at last check). Next: review keepers in the ledger and hand them to t-027/t-028.
+DONE 2026-10-22: all 12 rendered and reviewed in the ledger; the six Krea 2 renders keep (route map, Palace Hangar, Kelp Nebula Bypass, Sunken Lighthouse Ring, Coral Comet Trail, Mirror Shoal). Hand to t-027/t-028.
+<!-- note:end t-029 -->
+
+## t-031 — Resume at the last checkpoint: the cabinet keeps every checkpoint, not just Act starts
+
+<!-- note:begin t-031 -->
+Silas, 2026-10-23 PT (verbatim): "we should remember runs between games, returning should put us at the last checkpoint. If that isn't already implemented." Today the save is written only at an Act's frame 0 (writeSave in rainbowPrincessPreview.ts) and readRainbowSave rejects any checkpoint with frame > 0, so leaving mid-Act loses everything since the Act began. Write the save at every section/boss checkpoint (Act I too), accept and validate those checkpoints on load, and resume through the same rewind the CONTINUE? path uses. The continue menu names the Act and section. Narrow slice of t-027's memory work; t-027 keeps save slots and the route map.
+DONE 2026-10-23 PT: kind_robots#4092 merged (da34189). The cabinet save is written at every section and boss checkpoint (Act I included) and validated against the engine's own checkpoint list on load (isRainbowCheckpoint). Continuing resumes the Act clock on that checkpoint frame through the CONTINUE? rewind, and the flight log names the section. All 34 Rainbow verifiers and 18 CI checks are green.
+<!-- note:end t-031 -->
+
+## t-032 — Animated projectiles: every enemy, guardian and boss shot family gets its own moving shape
+
+<!-- note:begin t-032 -->
+Silas, 2026-10-23 PT (verbatim): "We should have animations fo4 all projectiles, not these identical circles." Most hostile fire falls through to one dark circle with a yellow rim. Tag each shot with a look from the craft or boss that fired it (and inherit it through bursts), then draw code-drawn animated shapes per look: spinning stars, pulsing jelly bells, ink drops, bubbles, fin blades, prism shards, eclipse sparks. Keep the dark readability halo, the hitbox and every fairness rule unchanged; calm motion slows the animation. Player shots animate too (shimmer, trails).
+DONE 2026-10-23 PT: kind_robots#4093 merged (b96288d). Every hostile shot carries a look from the craft, guardian or boss that fired it, drawn by rainbowShotLooks.ts as one of 20 animated code-drawn shapes. Hitboxes and fairness are unchanged; the 8 px halo softened. Pilot shots leave wakes. verifyRainbowEffects checks every plain pellet has a look, 14+ looks across the campaign, and that each look animates.
+<!-- note:end t-032 -->
+
+## t-033 — Enemy dynamism: plain craft move and attack in distinct sea-life patterns
+
+<!-- note:begin t-033 -->
+Silas, 2026-10-23 PT (verbatim): "improve the dyamism: enemies should move and attack in different ways." The plain craft of Acts I-III (picket, spiral, anchor, urchin, lantern, relay, skimmer, coral, pistol, angler, skate) share one leftward drift plus a sine and an aimed pellet. Give each its own movement (hover-and-strafe, true corkscrew loops, wall bounces, jelly pulse-swims, ceiling/floor skims, manta swoops) and its own attack (bursts, rotating fans, radial spikes, dropped bombs, lobbed shots), deterministic and telegraphed, within the existing fairness and pacing tests.
+DONE 2026-10-23 PT: kind_robots#4094 merged (a52ee28). Each Act I-III plain craft swims and fires its own WORLD-BIBLE way: picket sidestep lead, spiral loop-the-loop with turning spokes, anchor mines, urchin wall-roll with an 8-spine fan, lantern pulse-swim with a gapped ring, relay link, skimmer rails with bead columns, coral floor lobs, skate manta swoop. Courier pods past the left edge no longer take hits. Two scripted test bots tightened (assertions unchanged); verifyRainbowCraftVariety is new. Side fix: kind_robots#4095 repaired main's broken production image build (ecotone-board inline handler from #4087).
+<!-- note:end t-033 -->
+
+## t-037 — C.A.T.S. vs DOGS in game: names, DOG commanders on boss bars and cut-ins, bones and hearts, doodle UI
+
+<!-- note:begin t-037 -->
+DOODLE-DIRECTION.md step 3. Faction names in comms and HUD; each boss bar names its DOG commander; boss fire drawn as bones, tennis balls and storm clouds, player fire as hearts and stars (decoration only, hitboxes unchanged); bubble-letter titles and sticker pickups. Code-drawn first; swap in t-036 art as it lands.
+DONE 2026-10-23 PT (code-drawn layer): kind_robots#4097 merged. The C.A.T.S. squadron and cat co-pilots appear on the Pilots tab. A DOG commander per boss is named on the boss bar, barks on arrival, and is sent home with BAD DOG! on defeat. Boss fire is bones, balls and clouds; pilot fire is hearts and stars. verifyRainbowDogs covers all nine across the demo campaign. Painted commander art and the doodle UI skin follow from t-036 once t-035 picks the engine.
+<!-- note:end t-037 -->
+
+## t-039 — Remove the DOGS; Princess Kitty Power cut-ins; boss fire back to each creature's own look
+
+<!-- note:begin t-039 -->
+Silas withdrew the DOGS (PLOT-MOTHERLAND.md). Remove rainbowDogs.ts commanders, barks, BAD DOG send-off and bone/ball/cloud boss fire (kind_robots#4097); keep C.A.T.S., co-pilots, heart and star pilot shots. Each super cut-in becomes a Princess Kitty Power with the pilot's co-pilot.
+DONE 2026-10-23 PT: kind_robots#4099 merged. Removed the DOGS layer: commanders, barks, BAD DOG, and bone/ball/cloud boss fire; bosses fire their creatures' own looks again. Kept C.A.T.S., co-pilots, and heart and star shots. Every super cut-in is a Princess Kitty Power with the co-pilot's face. verifyRainbowCats replaces verifyRainbowDogs.
+<!-- note:end t-039 -->
+
+## t-040 — The Motherland turn, first slice: Act V memorial reveal and the flown allegiance choice
+
+<!-- note:begin t-040 -->
+PLOT-MOTHERLAND.md. At Act V's memorial the crew realizes the Motherland is the colonizer; high lane TURN ON THE EMPIRE (allegiance rebel), low lane STAY THE COURSE (loyal), majority of living pilots, tie stays the course. Flag in checkpoints and saves; one allegiance line in each later Act's OPEN. Later slices: rebel-road waves, two finale targets, allegiance endings.
+DONE 2026-10-23 PT (first slice): kind_robots#4100 merged. The Act V memorial plays the three-line Motherland reveal, then the flown choice: high is TURN ON THE EMPIRE (rebel), low is STAY THE COURSE (loyal); majority of living pilots, a tie stays the course. Allegiance is kept in checkpoints and saves and restored on continue. The lead's A06-A08 OPEN lines answer it. The memorial now runs 510-1050 frames, and the demo flies both roads. verifyRainbowMotherland is new. Next slices in PLOT-MOTHERLAND.md: rebel-road waves, two finale targets, allegiance endings; t-041 reframes Acts I-V.
+<!-- note:end t-040 -->
+
+## t-041 — Reframe Acts I-V dialogue toward the Motherland reveal (develop as we go with Silas)
+
+<!-- note:begin t-041 -->
+Early lines speak the Motherland's "pacification" story; Acts III-V plant the evidence (Motherland hardware, colony ships behind the convoy, the creatures' carers at the depot). Keep three scenes per Act and Lilt's arc.
+Merged kind_robots#4105 (f1a1659): Acts I-V speak the Motherland pacification story and seed the evidence chain (beacons, lullaby, command codes and collar, colony ships, caretakers); verifyRainbowEvidence pins it.
+<!-- note:end t-041 -->
