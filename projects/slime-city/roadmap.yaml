@@ -333,7 +333,7 @@ tasks:
   - id: t-017
     milestone: m2
     title: "Queue and verify distinct art for teams, districts and specials"
-    status: review
+    status: ready
     depends_on: t-001
     passes: 0
     stakes: reversible
@@ -346,7 +346,6 @@ tasks:
       PARTIAL 2026-10-31 PT: Merged Kind Robots PR #4551 (a2ddb7aa1612f938a292559e3a6df11ac1be559b), with 15/15 latest-head GitHub CI workflows successful, including TypeScript, changed-file formatting, layout and four contract shards. Conductor Krea 2 round-one ledger now records 52 DONE ArtImages: six crew paintings, seven district panoramas, 36 individual starter card paintings and three arena scenes; 52 IDs are unique. A typed immutable provenance manifest and account-authenticated transient blob image loader now drive actual image slots in internal Slime City roster, city, STORY splash, mode preview, arena, hand, card inspection, and collection. The UI exposes ArtImage IDs, loaded/unavailable state, and the remaining 24 missing card illustrations instead of counting queued or ledger-only renders as visible proof. Actual private media bytes and rendered visuals on the self-hosted deployment remain unverified, so t-017 must stay READY for next delivery-validation slice. No public files were exported, no permissions made public, and no production currency or database changes were made.
 
       Round-two ledger authored for 168 new unique art slots (24 missing starter cards, 6 openings, 30 chapter scenes, 60 choice-result plates, 30 defeat plates, 12 endings, 6 attack-family icons) plus campaign aftermath text for every faction/choice/result. Companion Conductor and Kind Robots PRs under CI; live ArtJob IDs and visual delivery unverified until the auto-art sweep runs.
-    updated: '2026-11-01T12:24:00Z'
-    owner: worker
-    claimed_by: 2026-11-01T120800Z-slime-city-t017-cf82
-    claimed_at: '2026-11-01T12:08:00Z'
+
+      PARTIAL 2026-11-01 PT: Conductor PR #6911 merged at 7962f4de4a1458d29f512297ce5bbed4cb1da563 after Worker PR CI, security and handoff validation. Round-2 private auto_submit ledger defines 168 distinct Krea2 subjects: 24 remaining S0 cards, 6 openings, 30 chapter scenes, 60 choice outcomes, 30 defeat art, 12 endings, and 6 attack icons. Kind Robots companion PR #4591 merged at 21f357d673f6b959be49d55f1a4ebee48e209140 after 12/12 latest-head workflows passed; 120 unique written victory/loss passages now appear after the corresponding campaign battles. Auto Art Generate run #41306307982 was PENDING at verification, NOT confirmed submitted: zero new ArtJob IDs verified. Keep t-017 READY to reconcile accepted IDs after sweep, and check ArtImages/actual private delivery; do not re-enqueue duplicates. Existing 52 round-one DONE ArtImage IDs retained.
+    updated: '2026-11-01T12:29:00Z'
