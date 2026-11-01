@@ -349,7 +349,7 @@ class HoshimoriGalleryReadinessTests(unittest.TestCase):
                "createdAt": "2026-10-31T23:00:00Z", "payload": payload}
         result = audit_bound_live(bound, [job], lambda _path, _created: "delivered")
         self.assertEqual(result["delivered"], 1)
-        self.assertEqual(result["counts"], {"delivered": 1, "unsubmitted": 7})
+        self.assertEqual(result["counts"], {"delivered": 1, "job_missing": 7})
         result = audit_bound_live(bound, [job], lambda _path, _created: "media_stale")
         self.assertEqual(result["delivered"], 0)
         self.assertEqual(result["counts"]["media_stale"], 1)
