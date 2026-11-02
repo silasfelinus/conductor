@@ -12635,3 +12635,8 @@ Worker pattern: good test depth and honest "procedural shapes, not painted art" 
 - All three docs/roadmap-only, reversible; latest-attempt checks green on each head (#6939's first "Validate Worker PR handoff" failure was superseded by a passing rerun). Squash-merged as deadfe2f5, f72ed88ec, 58987700b.
 - #6938 (slime-city 240-card core) is design docs only; kind_robots#4620 still owns the counted card state. #6939 adds recurring interface-vision/t-152 (weekly kind_robots CI essentialization).
 - Open flags from the sweep, not actioned: slime-city/m2 milestone status `not-started` with 1/4 tasks done; rebel-button/t-002 gate unreviewed; dream-cycle/t-035 daily check stale since 2026-10-25.
+
+## 2026-11-02 — Agent (branch-medic): kind_robots `worker/game-of-captains-t031-account-scrapbook-20261101-d4c8` left for a human
+- Stranded 13h, no PR. Silas-authored account-bound Alien Scrapbook work (DB merge, Pinia sync, Prisma client regen, one-shot codegen workflow added then removed) plus a final Claude lint-ratchet fix (9e4cfeb).
+- Not opened as a PR or merged: it changes the Prisma schema/generated client (production schema deployment is an open t-031 item) and main has moved ~10 commits since, including the Game of Captains choice-hand rewrite (#4655/#4663) that likely conflicts in `pages/play/game-of-captains.vue` and `stores/gameOfCaptainsStore.ts`. Needs Silas to say whether to rebase + PR or discard. game-of-captains/t-031 is still `ready`.
+- Also noted: site audit is 12 days overdue (last AUDIT-REPORT-2026-10-21).
