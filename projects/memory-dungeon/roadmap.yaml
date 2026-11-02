@@ -1072,11 +1072,10 @@ tasks:
   - id: t-048
     milestone: m3
     title: "Polish Briar overworld fog and centered exploration beacons"
-    status: review
-    owner: worker
+    status: done
     claimed_by: 20261102T100500Z-memory-dungeon-t048-fog-c42a91
     claimed_at: '2026-11-02T10:05:00Z'
-    updated: '2026-11-02T10:12:00Z'
+    updated: '2026-11-02T19:50:00Z'
     passes: 0
     stakes: reversible
     source_issue: silasfelinus/kind_robots#4641
@@ -1084,3 +1083,5 @@ tasks:
       Silas's 2026-11-02 PT screenshot feedback: keep the right-hand scene panel, replace clinical unrevealed map-cell tiles with cohesive illustrated fog, remove generic explored-story diamond, center and enlarge 3D actionable exploration icons. Preserve map progression, story/location icons, reduced-motion and accessibility. Implement and validate independently of queued ArtJobs.
 
       Scoped illustrated-fog, center-beacon and hidden-story-diamond changes prepared on worker/memory-dungeon-t-048-fog-beacons-c42a91. Source contract checks added; exact-head GitHub PR CI and visual acceptance still to be checked. Right-hand encounter pane and save logic unchanged.
+
+      2026-11-02 11:50 AM PT: Reviewer merged Kind Robots PR #4642 (squash 73f7f8004e69e24c66f863730c81a175d718a836) after seven completed exact-head green workflows on 37c06b07890e1ca90c5973617a0bd73c01b01ee7. Fog is a cohesive coordinate-aligned SVG fallback, action beacons are larger and centered, story diamonds removed, reduced motion retained; 390/768/1440px post-deploy pixel QA and production-painted map art remain in t-046/t-045. No ArtJobs or deployment.
