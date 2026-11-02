@@ -213,7 +213,7 @@ tasks:
   - id: t-009
     milestone: m3
     title: "Write and implement six genuinely different crew campaigns"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 20261102T224901670Z-slime-city-t009-3oznk542
     claimed_at: '2026-11-02T22:49:01.670Z'
@@ -244,7 +244,9 @@ tasks:
       Replaced campaign dossier's two reusable faction effects with sixty individually authored chapter-by-approach support abilities. Each of six factions has ten different named choices, five per conviction/cunning approach; each chosen battle applies at most one already-account-earned favor. Effects stay within bounded mana, HP, armor, rivals, rounds and trap modifiers, with no wallet, card ownership or schema changes. Expanded existing deterministic overworld contract test to cover sixty names, legal effects, chapter unlock sequence and meaningful per-faction variation. Await complete current-head GitHub Actions before merge; additional campaign and subjective playtesting still open.
 
       PARTIAL MERGED 2026-11-02 PT: Kind Robots PR #4674 merged at 9bbfb3378b27f290ad10d3d665dd5c231d87b1f1. Fixed the earned-support dossier's duplicated perks by authoring sixty distinct, chapter-and-approach-specific tactical favors across six crews. Each faction now has ten truly different bounded battle modifier combinations. Only one already-earned support applies per battle; no new currencies, card purchases, save fields or schema changes. Exhaustive six-crew progression, uniqueness, balance-bound and choice-gating tests added. All six source GitHub Actions workflows completed successfully on the latest PR head, including four contract shards. Deeper campaign gameplay, illustration and human fun testing still remain; no publishing or production deploy triggered.
-    updated: '2026-11-02T22:49:01.670Z'
+
+      Built a source-backed adverse campaign-favor playtest audit on a Kind Robots worker branch. Runs real CPU-versus-CPU Blackout engine bouts with paired identical-seed baseline controls: six crews, four usable previous chapters, two saved approaches, two next-story choices and two deterministic seeds. 192 favor-versus-baseline comparisons, 96 distinct baseline bouts, 48 repeated replays. Logs win/draw scores, command divergence, initial contact, rounds, faction differences and each of 48 earned usable favors. Identified a structural risk: all six fifth-chapter favor rewards are unlocked only when the campaign has no following battle, leaving them unusable. CI and measured results pending. This is a playtest increment, not subjective human fun acceptance or completion of t-009.
+    updated: '2026-11-02T22:52:18.253Z'
   - id: t-010
     milestone: m3
     title: "Create daily, weekly and evergreen missions with earned progression"
