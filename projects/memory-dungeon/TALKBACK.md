@@ -97,3 +97,12 @@
 **What worked:** six authored OV-22..OV-27 rooms add twelve Vesper-centered decisions and 64 replay-validated testimony accounts, earned entry, old-save restoration, forged-choice rejection and once-only rewards. Hoshimori now has 64/64 warm sites and 27/36 Red Oven rooms. A session-aware ready event released t-042 for the nine unfinished rooms.
 
 **What to improve:** formatting needed two CI repair commits; run full changed-file Prettier before PR when a local checkout is available. Complete OV-28..OV-36 and the guardian aftermath before attempting the World Eight earned exit, then interrupted-save e08–e10 adversarial testing. Gallery briefs, ArtJob delivery and rendered-device QA remain separate tracked work. Avoid a duplicate kaizen task because these gaps already belong to t-042/t-045/t-046 and master issue #4136.
+
+
+## 2026-11-02 3:46 AM PT | Reviewer green merge | memory-dungeon/t-042 | Kind Robots #4640
+
+**Decision:** merged reversible Seventh Bell PR #4640 (squash `9a90681b63b9d1c928c3fb42cb9e05f00f1cfd9e`) after all eight exact-head Actions workflows passed on `34aafd1371ed47ffa8f460c51d25037f287dcdd5`, including Contract Tests, formatting, TypeScript, Memory browser interruption, layout, architecture, Playbook Kit and schema parity. Reviewed four Memory Dungeon-only files and found no unresolved review threads, migration or deploy.
+
+**What worked:** OV-34..OV-36 complete the 36-room Red Oven with six earned choices, eight final accounts, 24 guardian/route combinations, three guardian aftermaths, legacy Glass save restoration, retreat/reentry, and forged-choice/duplicate-reward guards. Earlier quenching stays binding. The project remains ACTIVE, and the t-042 claim was queued for READY rather than DONE because its 30+2 gallery briefs remain unfinished.
+
+**What to improve:** two formatting CI failures required a correction commit before all eight checks passed. Run changed-file formatting before PR where a checkout exists; with connector-only tools, use the CI-suggested patch. Finish gallery briefs in t-042, actual image receipts in t-045, then e08 earned progression and interrupted-save e08→e10 QA. These are already tracked, so avoid a duplicate kaizen task. No new ArtJobs, rendered artwork or deployment claimed.
