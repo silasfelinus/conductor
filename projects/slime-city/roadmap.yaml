@@ -134,7 +134,7 @@ tasks:
   - id: t-005
     milestone: m2
     title: "Implement competitive square-grid AI and comparative match replays"
-    status: claimed
+    status: review
     depends_on: [t-003, t-004]
     passes: 0
     stakes: reversible
@@ -144,7 +144,9 @@ tasks:
       Focused Blackout AI milestone: prioritize flag-carrier interception over low-HP bystanders; position visible-information defensive traps on approach and escape lanes rather than arbitrary flag-adjacent squares. Add deterministic hidden-info, target-priority and six-faction full-match seeded CPU contracts, preserving normal play and non-art execution. Source PR under CI. Further balancing, adversarial matrix, multi-variant replay evidence and readability testing stay in t-005.
 
       Kind Robots PR #4612 merged as 86ff0e98451aa7d26fc77878f69eadaf85485925. Blackout CPU now prioritizes visible flag-carrier interception, tactical trap placement along escape/flag approach, and deterministic threat-based target selection. TypeScript, 4 gameplay contract shards, source and layout checks passed; container build remained in-progress at merge and needs eventual result verification. New mandatory seeded tactics and six-faction match replay contract. Reopen t-005 for full all-pairs balance and opponent personas, offensive/defensive variants, readable paced actions and adversarial telemetry. Art t-017 remains independent. Public release and subjective acceptance not requested.
-    updated: '2026-11-02T00:00:00Z'
+
+      Non-art Blackout matchup telemetry and all-pairs CPU audit slice: fixes stalled-round board fingerprint to include traps, flag and monster; counts new combat per round rather than cumulative knockouts; adds six-crew ordered matchup summaries with per-side scoring, contact/dead-round/trap metrics, incomplete/duplicate matrix rejection, sample-size warnings, and seeded replay regression. Code PR pending checks; no art wait. Further balance changes, AI personas and competitive PvP remain open.
+    updated: '2026-11-02T00:17:35.351Z'
     owner: worker
     claimed_by: 2026-11-02T000000Z-slime-city-t005-m4b8
     claimed_at: '2026-11-02T00:00:00Z'
