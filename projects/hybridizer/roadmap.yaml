@@ -168,11 +168,11 @@ tasks:
   - id: t-009
     milestone: m4
     title: "Adversarial QA, full-width layout review and final subjective acceptance"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 20261102T102330Z-hybridizer-t-009-52ce
     claimed_at: '2026-11-02T10:26:43.508Z'
-    updated: '2026-11-02T10:26:43.508Z'
+    updated: '2026-11-02T10:33:42.122Z'
     depends_on: t-003
     passes: 0
     stakes: reversible
@@ -182,6 +182,8 @@ tasks:
       Adversarial privacy audit found cross-account persistence of remote private discovery metadata. Scoped QA patch isolates offline drafts by authenticated user, discards legacy unscoped cached discoveries, rejects stale async session responses, and hides sharing/reactions for private discoveries. Further upload/production/art coverage and rendered viewport checks remain before final acceptance.
 
       Adversarial privacy QA slice merged in kind_robots PR #4565 as aa72390c0790c79e1dda6f8caf8df1251d6249fb after all 18 GitHub workflow runs completed successfully (including TypeScript, contract shards, formatting, layout and content visibility). Fixes unscoped localStorage leakage of private server discoveries, scopes offline studies to authenticated user, guards cross-account stale async responses, and hides sharing/reactions for private fusions. Test assertions added. This is NOT completion of t-009: t-008 private custom uploads are still unimplemented, t-007 artwork is incomplete, and remaining auth/cache/job adversity plus rendered 390/768/1440/XL acceptance checks must be done before final human design verdict. No public-release approval.
+
+      2026-11-02 PT: Scoped atlas/remix QA implementation is in progress. Correct global discovery totals, image status visibility, browsable saved hybrids, and custom-weight revisions. t-009 remains open after this slice for the larger adversarial and cross-width acceptance campaign.
   - id: t-010
     milestone: m4
     title: "Authorize external public release separately"

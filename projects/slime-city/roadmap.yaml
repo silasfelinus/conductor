@@ -339,7 +339,7 @@ tasks:
   - id: t-017
     milestone: m2
     title: "Queue and verify distinct art for teams, districts and specials"
-    status: review
+    status: ready
     depends_on: t-001
     passes: 0
     stakes: reversible
@@ -354,10 +354,9 @@ tasks:
       Round-two ledger authored for 168 new unique art slots (24 missing starter cards, 6 openings, 30 chapter scenes, 60 choice-result plates, 30 defeat plates, 12 endings, 6 attack-family icons) plus campaign aftermath text for every faction/choice/result. Companion Conductor and Kind Robots PRs under CI; live ArtJob IDs and visual delivery unverified until the auto-art sweep runs.
 
       PARTIAL 2026-11-01 PT: Conductor PR #6911 merged at 7962f4de4a1458d29f512297ce5bbed4cb1da563 after Worker PR CI, security and handoff validation. Round-2 private auto_submit ledger defines 168 distinct Krea2 subjects: 24 remaining S0 cards, 6 openings, 30 chapter scenes, 60 choice outcomes, 30 defeat art, 12 endings, and 6 attack icons. Kind Robots companion PR #4591 merged at 21f357d673f6b959be49d55f1a4ebee48e209140 after 12/12 latest-head workflows passed; 120 unique written victory/loss passages now appear after the corresponding campaign battles. Auto Art Generate run #41306307982 was PENDING at verification, NOT confirmed submitted: zero new ArtJob IDs verified. Keep t-017 READY to reconcile accepted IDs after sweep, and check ArtImages/actual private delivery; do not re-enqueue duplicates. Existing 52 round-one DONE ArtImage IDs retained.
-    updated: '2026-11-02T10:51:00Z'
-    owner: worker
-    claimed_by: 2026-11-02T104515Z-slime-city-t017-art-192-c7f2
-    claimed_at: '2026-11-02T10:45:15Z'
+
+      Private art ledger PR #6951 merged at 48fd811 after all latest-head CI passed. 192 card illustrations from wave three, finale, and mercenaries are in three auto_submit ledgers; Auto Art Generate run #41429062635 is pending behind another active art sweep. Accepted Job IDs and rendered ArtImages have NOT yet been confirmed. Reopen t-017 once jobs have accepted receipts to verify private delivered bytes and attach the new card images. No duplicate requests or public publication.
+    updated: '2026-11-02T11:03:00Z'
   - id: t-018
     milestone: m2
     title: "Build 60 playable neutral mercenaries with legal faction mixing"
@@ -393,7 +392,7 @@ tasks:
   - id: t-020
     milestone: m2
     title: "Finish 132 faction cards at 40 per crew with diverse counterplay"
-    status: review
+    status: done
     depends_on: t-004
     passes: 0
     stakes: reversible
@@ -405,7 +404,8 @@ tasks:
       WAVE THREE MERGED: Kind Robots PR #4633 merged at 41eb163b6cba0ece after all eight latest-head CI workflows passed, including TypeScript, 4/4 contract shards, formatter and container build. Added 36 executable faction cards (six per crew, twelve rares), bringing the pool to 204 (144 faction plus 60 mercenary; 68 rares, 136 nonrares). This is only 36 of this task's 132 new cards: 96 more are needed, exactly 16 per faction. The full t-020 milestone remains INCOMPLETE; return to ready for the next worker to claim. Art remains a separate queue; no user production deployment or human acceptance is claimed.
 
       Complete remaining 96-card finale drafted on worker branch: exactly 16 per crew (6 creatures, 5 spells, 3 traps, 2 equipment). The full 300-card catalog and 100-rare pack economy are wired; test verifies every effect, three archetype decks per faction, account collection and 100 no-duplicate pack openings. Awaiting latest-head CI and merge. Artwork and human playtesting remain independent; no production deployment requested.
-    updated: '2026-11-02T09:45:00Z'
-    owner: worker
+
+      Kind Robots PR #4636 merged at acd792e with all latest-head workflows completed successfully. 300 original cards now in main: 40 per faction across six crews plus 60 mercenaries. Core deck legality, 100-pack exhaustion and individual playable effects passed contract tests. 192 new illustration requests are separately in conductor PR #6951. Artwork delivery and adversarial fun-testing are independent.
+    updated: '2026-11-02T10:58:00Z'
     claimed_by: 2026-11-02T093238Z-slime-city-t020-finale-m8q4
     claimed_at: '2026-11-02T09:41:01Z'

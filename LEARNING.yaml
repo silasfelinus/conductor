@@ -18460,3 +18460,13 @@ records:
   lesson: Migrating game cadence requires auditing all narrative integration tests with hard-coded opening
     mana and hand sizes, plus seed-dependent win-path assertions that should instead use controlled finishing
     fixtures.
+- date: '2026-11-02'
+  project: slime-city
+  task: t-020
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: Card quantity and pack ratios can be verified in CI before any images render, but constructed-deck
+    balance and subjective fun need full playtests.
