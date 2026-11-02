@@ -688,11 +688,11 @@ tasks:
   - id: t-035
     milestone: m4
     title: "Doodle direction bake-off: C.A.T.S. emblem, cat-ship key art, co-pilots, DOG commanders, restyled Maribel"
-    status: needs-human
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-11-02T09:18:04Z'
+    updated: '2026-11-02T11:23:38Z'
     note: >-
       DOODLE-DIRECTION.md step 1. Render the 1980s neon airbrush school-folder look on two or more engines before
       restyling anything: C.A.T.S. emblem, title key art of the four cat ships, the four cat co-pilots (Biscuit,
@@ -722,16 +722,22 @@ tasks:
       background; describe the co-pilots by color, including Biscuit's notched ear and a huge
       Butter; build exactly four cat ships by editing the existing ship sprites. Unblocks
       t-036 and t-038. Recommendation: approve. The emblem and co-pilots are on-direction.
+
+      2026-11-02 PT: Silas decided in session: "I don't know what the doodle issue is, but if
+      it involves making new art in a doodle style as an optional shift, do it." The doodle
+      look goes ahead as an OPTIONAL alternate style, and the shipped art stays the default.
+      Engine pick recorded above: Krea 2 for new art, Kontext for restyles. t-036 is
+      unblocked.
     gate_reason: creative-approval
   - id: t-036
     milestone: m4
     title: "Doodle restyle of the cast, ships, co-pilot cut-ins and the nine DOG commanders"
-    status: waiting
+    status: ready
     depends_on: [t-035]
     owner: null
     passes: 0
     stakes: reversible
-    updated: '2026-10-24T04:20:00Z'
+    updated: '2026-11-02T11:23:43Z'
     note: >-
       DOODLE-DIRECTION.md step 2. Kontext-restyle every approved princess asset from its identity lock (CAST-QA
       identity still binding); cat ships keeping each silhouette and P1-P4 glyph; super cut-ins with each pilot's
@@ -740,6 +746,18 @@ tasks:
       2026-10-23 PT: no DOG commanders (Silas withdrew the DOGS). Restyle the space-animal
       fleet as the villains instead, plus Princess Kitty Power cut-ins with each co-pilot
       (PLOT-MOTHERLAND.md).
+
+      2026-11-02 PT: Doodle set queued as an optional alternate look: art/DOODLE-SET-1.yaml
+      (93 cells, auto_submit, all pass the live contract). It restyles every shipped asset
+      into public/rainbow-princess-art/doodle/<same path>. The 12 princess assets come from
+      their CAST-MANIFEST identity-lock originals, with the bake-off fixes in the prompts.
+      Ships, 27 boss phases, 33 enemies and 3 pickups come from the shipped sprites on a
+      #00ff00 matte (key it out to alpha on export). The 8 stage cards, the hero plate and the
+      4 crew comms portraits are included too. The key art is a fresh Krea 2 render with
+      exactly four cat ships. Not included: the 8 wide stage foreground strips (8:1, beyond
+      Kontext's frame size); redraw those separately if the doodle stages need them. Next:
+      curate against DOODLE-DIRECTION.md and CAST-QA, export keepers with alpha, then t-037
+      wires a style toggle (default stays the current art).
   - id: t-037
     milestone: m4
     title: "C.A.T.S. vs DOGS in game: names, DOG commanders on boss bars and cut-ins, bones and hearts, doodle UI"

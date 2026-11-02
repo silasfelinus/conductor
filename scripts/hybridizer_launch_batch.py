@@ -3,9 +3,9 @@
 
 WHY THIS EXISTS. hybridizer/t-007 asks for 4,000 pre-generated public hybrids, scheduled in
 batches with immutable pair keys and explicit provenance, counting delivered images rather
-than submitted prompts. Kind Robots' admin-only POST /api/hybridizer/batch queues at most 100
-launch renders at a time below every other ArtJob's priority, so this script just keeps that
-window full and records what actually arrived:
+than submitted prompts. Kind Robots' admin-only POST /api/hybridizer/batch takes up to the whole
+launch set at low priority (Silas, 2026-11-02: "Hybridizer can just be low priority, submit all"),
+so one run submits every remaining pair and later runs only record what actually arrived:
 
 1. Refresh: for ledger entries not yet READY, read the public fusion status endpoint (which
    also reconciles delivery server-side). A READY entry is only marked verified after its

@@ -14,7 +14,8 @@ the returned ArtJob id is written back under ``subjects[].jobs[<lane>]`` so a
 re-run never submits the same cell twice. See
 projects/comic-creator/issues/zuzu-koala-assassin-01/ART-ROUND-3.yaml.
 
-A subject may carry ``source_image_id`` (an ArtImage id). Kontext lanes need one:
+A subject may carry ``source_image_id`` (an ArtImage id), or ``source_url`` (a file the site already
+serves, such as a shipped game asset with no ArtImage of its own). Kontext lanes need one:
 the image is fetched and sent as ``sourceImageBase64``, so an approved design can be
 re-posed (the 8-angle renders, comic-creator t-015). Kontext lanes may set ``steps``
 and ``guidance``. Any lane or subject may set ``seed`` (the subject's wins).
@@ -345,9 +346,20 @@ def job_id_of(subject, lane_key):
 
 
 def fetch_source_image(image_id):
-    """An ArtImage as a data URL, for a Kontext lane's sourceImageBase64."""
+    """An ArtImage as a data URL, for a Kontext lane's sourceImageBase64.
+
+    A subject's ``source_url`` arrives here as a string: an already-shipped file (a site path such
+    as ``/rainbow-princess-art/bosses/b01-phase1.webp`` or a full URL), fetched as it is served.
+    """
     import base64
     import urllib.request
+
+    if isinstance(image_id, str) and (image_id.startswith("/") or image_id.startswith("http")):
+        url = image_id if image_id.startswith("http") else core.KR_BASE_URL.rstrip("/") + image_id
+        with urllib.request.urlopen(urllib.request.Request(url), timeout=60) as response:
+            raw = response.read()
+            mime = response.headers.get_content_type() or "image/png"
+        return f"data:{mime};base64," + base64.b64encode(raw).decode()
 
     status, resp = core.http_json("GET", f"{core.KR_BASE_URL}/api/art/image/{image_id}", None, timeout=60)
     data = resp.get("data", resp) if isinstance(resp, dict) else {}
@@ -428,16 +440,34 @@ def compose_source(subject, fetch):
     ``fetch(image_id)`` returns a data URL. A plain source passes through untouched, so
     PIL is only needed when a subject crops or stitches.
     """
-    source = fetch(subject["source_image_id"])
+    source = fetch(subject.get("source_image_id") or subject["source_url"])
     crop, reference_id = subject.get("source_crop"), subject.get("reference_image_id")
     flip = bool(subject.get("source_flip"))
     pad = subject.get("source_pad")
-    if not crop and not reference_id and not flip and not pad:
+    # A shipped sprite is small and transparent: ``source_matte`` flattens it onto a solid colour
+    # (a chroma key the exporter removes again) and ``source_min_edge`` upscales it so Kontext has
+    # enough pixels to redraw (Rainbow doodle set, 2026-11-02).
+    matte, min_edge = subject.get("source_matte"), subject.get("source_min_edge")
+    if not crop and not reference_id and not flip and not pad and not matte and not min_edge:
         return source
     import base64
     import io
 
-    image = _crop(_decode_data_url(source), crop)
+    if matte:
+        from PIL import Image
+
+        raw = base64.b64decode(source.split(",", 1)[1])
+        rgba = Image.open(io.BytesIO(raw)).convert("RGBA")
+        flat = Image.new("RGB", rgba.size, matte)
+        flat.paste(rgba, mask=rgba.split()[3])
+        image = _crop(flat, crop)
+    else:
+        image = _crop(_decode_data_url(source), crop)
+    if min_edge and min(image.size) < int(min_edge):
+        from PIL import Image
+
+        scale = int(min_edge) / min(image.size)
+        image = image.resize((round(image.width * scale), round(image.height * scale)), Image.LANCZOS)
     if flip:
         from PIL import ImageOps
 
@@ -529,7 +559,7 @@ def submit(path, header, ledger, cells, post=None, fetch_source=None, live=None)
             print(f"  FAILED {subject['key']} [{lane['key']}]: prompt contract {rules}", file=sys.stderr)
             continue
         source = last = None
-        if lane["engine"] in SOURCE_ENGINES and subject.get("source_image_id"):
+        if lane["engine"] in SOURCE_ENGINES and (subject.get("source_image_id") or subject.get("source_url")):
             source = compose_source(subject, fetch)
         if lane["engine"] in VIDEO_ENGINES and subject.get("last_image_id"):
             last = fetch(subject["last_image_id"])
