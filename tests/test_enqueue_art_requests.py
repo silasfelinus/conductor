@@ -662,3 +662,45 @@ def test_entity_art_refuses_a_missing_id_or_a_source_lane():
 def test_subject_without_entity_art_sends_none():
     body = enq.build_request(LEDGER, LEDGER["lanes"][0], LEDGER["subjects"][0])
     assert "entityArt" not in body
+
+
+def test_submit_fetches_a_source_url_when_there_is_no_art_image(tmp_path):
+    """A shipped game file with no ArtImage of its own can be the Kontext source (doodle restyles)."""
+    ledger = {
+        "lanes": KONTEXT_LEDGER["lanes"],
+        "subjects": [{"key": "boss", "size": "1344x768", "prompt_prose": "restyle this boss",
+                      "source_url": "/rainbow-princess-art/bosses/b01-phase1.webp", "jobs": {}}],
+    }
+    path = tmp_path / "doodle.yaml"
+    path.write_text(yaml.safe_dump(ledger, sort_keys=False))
+    header, loaded = enq.load_ledger(path)
+    fetched, sent = [], []
+    enq.submit(
+        path,
+        header,
+        loaded,
+        list(enq.iter_cells(loaded)),
+        post=lambda body: (sent.append(body), (200, {"data": {"jobId": 9}}))[1],
+        fetch_source=lambda source: (fetched.append(source), "data:image/webp;base64,CCCC")[1],
+    )
+    assert fetched == ["/rainbow-princess-art/bosses/b01-phase1.webp"]
+    assert sent[0]["sourceImageBase64"] == "data:image/webp;base64,CCCC"
+
+
+def test_source_matte_flattens_a_transparent_sprite_and_upscales_it():
+    import base64
+    import io
+
+    from PIL import Image
+
+    sprite = Image.new("RGBA", (40, 20), (0, 0, 0, 0))
+    sprite.paste((255, 0, 0, 255), (10, 5, 30, 15))
+    buffer = io.BytesIO()
+    sprite.save(buffer, "PNG")
+    data_url = "data:image/png;base64," + base64.b64encode(buffer.getvalue()).decode()
+    subject = {"source_url": "/sprite.webp", "source_matte": "#00ff00", "source_min_edge": 200}
+    out = enq.compose_source(subject, lambda _source: data_url)
+    image = Image.open(io.BytesIO(base64.b64decode(out.split(",", 1)[1]))).convert("RGB")
+    assert image.size == (400, 200)
+    assert image.getpixel((5, 5)) == (0, 255, 0)
+    assert image.getpixel((200, 100))[0] > 200

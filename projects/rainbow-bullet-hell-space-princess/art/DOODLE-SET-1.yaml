@@ -1,0 +1,1303 @@
+# Rainbow Bullet Hell Space Princess: the doodle set (t-036), an OPTIONAL alternate look.
+# Silas, 2026-11-02 PT: "if it involves making new art in a doodle style as an optional shift, do it." The
+# shipped art stays the default; this restyles every shipped asset into DOODLE-DIRECTION.md's 1980s neon
+# airbrush school-folder look, delivered beside it under public/rainbow-princess-art/doodle/ so a style toggle
+# (t-037) can switch sets. Engines per the t-035 bake-off: Kontext restyles from each asset (princesses from
+# their CAST-MANIFEST identity-lock originals; sprites from the shipped file flattened on #00ff00 and upscaled,
+# keyed back out on export); Krea 2 draws the new key art with exactly four cat ships. Bake-off review fixes are
+# in the prompts (Solenne's skin and hair, Azure's black hair, Biscuit's torn ear, co-pilots by colour). The DOGS
+# stay withdrawn. Not included: the eight wide stage foreground strips (8:1, beyond Kontext's frame).
+# auto_submit: true. Private. CAST-QA still binds every princess keeper.
+round: rainbow-doodle-set-1
+project_slug: rainbow-bullet-hell-space-princess
+designer: Rainbow doodle set
+is_public: false
+is_mature: false
+cast_loras: false
+priority: 60
+auto_submit: true
+lanes:
+- key: kontext
+  label: Flux Kontext dev, doodle restyle from the shipped asset
+  engine: kontext
+  prompt: prose
+  steps: 20
+  guidance: 2.5
+- key: krea2
+  label: Krea 2 (bake-off engine pick for new art)
+  engine: krea2
+  prompt: prose
+subjects:
+- key: doodle-maribel-menu-portrait
+  lane: kontext
+  title: Maribel menu portrait, doodle style
+  asset: rainbow-princess-art/doodle/portraits/p1-maribel
+  size: 832x1216
+  seed: 870001
+  prompt_prose: 'Redraw this exact woman as 1980s neon rainbow airbrush school-folder sticker art: glossy, soft
+    airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars, on a rose pink rainbow
+    gradient background full of hearts, stars and sparkles, with a ginger tabby kitten with one notched, torn ear,
+    her cat co-pilot, perched on her shoulder. Keep her face, skin tone, hair, body shape, build and outfit exactly
+    the same; only the art style and background change. Her freckles stay clearly visible.'
+  source_image_id: 246030
+- key: doodle-maribel-comms-portrait
+  lane: kontext
+  title: Maribel comms portrait, doodle style
+  asset: rainbow-princess-art/doodle/comms/maribel
+  size: 768x768
+  seed: 870002
+  prompt_prose: 'Redraw this exact woman as 1980s neon rainbow airbrush school-folder sticker art: glossy, soft
+    airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars, on a rose pink rainbow
+    gradient background full of hearts, stars and sparkles, with a ginger tabby kitten with one notched, torn ear,
+    her cat co-pilot, perched on her shoulder. Keep her face, skin tone, hair, body shape, build and outfit exactly
+    the same; only the art style and background change. Her freckles stay clearly visible.'
+  source_image_id: 247448
+- key: doodle-maribel-super-cut-in
+  lane: kontext
+  title: Maribel super cut-in, doodle style
+  asset: rainbow-princess-art/doodle/cutins/maribel
+  size: 1488x512
+  seed: 870003
+  prompt_prose: 'Redraw this exact super cut-in as 1980s neon rainbow airbrush school-folder sticker art: glossy,
+    soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars: the same woman in the
+    same pose and framing, with a ginger tabby kitten with one notched, torn ear, her cat co-pilot, leaping beside
+    her, both glowing with a burst of rainbow power lines. Keep her face, skin tone, hair, build and outfit exactly
+    the same. Her freckles stay clearly visible.'
+  source_image_id: 247644
+- key: doodle-azure-menu-portrait
+  lane: kontext
+  title: Azure menu portrait, doodle style
+  asset: rainbow-princess-art/doodle/portraits/p2-azure
+  size: 832x1216
+  seed: 870004
+  prompt_prose: 'Redraw this exact woman as 1980s neon rainbow airbrush school-folder sticker art: glossy, soft
+    airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars, on a powder cyan rainbow
+    gradient background full of hearts, stars and sparkles, with a sleek Siamese kitten with cream fur and blue-grey
+    points, her cat co-pilot, perched on her shoulder. Keep her face, skin tone, hair, body shape, build and outfit
+    exactly the same; only the art style and background change. Her braided hair stays jet black.'
+  source_image_id: 246031
+- key: doodle-azure-comms-portrait
+  lane: kontext
+  title: Azure comms portrait, doodle style
+  asset: rainbow-princess-art/doodle/comms/azure
+  size: 768x768
+  seed: 870005
+  prompt_prose: 'Redraw this exact woman as 1980s neon rainbow airbrush school-folder sticker art: glossy, soft
+    airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars, on a powder cyan rainbow
+    gradient background full of hearts, stars and sparkles, with a sleek Siamese kitten with cream fur and blue-grey
+    points, her cat co-pilot, perched on her shoulder. Keep her face, skin tone, hair, body shape, build and outfit
+    exactly the same; only the art style and background change. Her braided hair stays jet black.'
+  source_image_id: 247454
+- key: doodle-azure-super-cut-in
+  lane: kontext
+  title: Azure super cut-in, doodle style
+  asset: rainbow-princess-art/doodle/cutins/azure
+  size: 1488x512
+  seed: 870006
+  prompt_prose: 'Redraw this exact super cut-in as 1980s neon rainbow airbrush school-folder sticker art: glossy,
+    soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars: the same woman in the
+    same pose and framing, with a sleek Siamese kitten with cream fur and blue-grey points, her cat co-pilot, leaping
+    beside her, both glowing with a burst of rainbow power lines. Keep her face, skin tone, hair, build and outfit
+    exactly the same. Her braided hair stays jet black.'
+  source_image_id: 247649
+- key: doodle-solenne-menu-portrait
+  lane: kontext
+  title: Solenne menu portrait, doodle style
+  asset: rainbow-princess-art/doodle/portraits/p3-solenne
+  size: 832x1216
+  seed: 870007
+  prompt_prose: 'Redraw this exact woman as 1980s neon rainbow airbrush school-folder sticker art: glossy, soft
+    airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars, on a sunny gold rainbow
+    gradient background full of hearts, stars and sparkles, with a huge fluffy golden Maine Coon cat, her cat co-pilot,
+    perched on her shoulder. Keep her face, skin tone, hair, body shape, build and outfit exactly the same; only
+    the art style and background change. Her deep brown skin and her black hair stay exactly the shade they are
+    in the original.'
+  source_image_id: 246032
+- key: doodle-solenne-comms-portrait
+  lane: kontext
+  title: Solenne comms portrait, doodle style
+  asset: rainbow-princess-art/doodle/comms/solenne
+  size: 768x768
+  seed: 870008
+  prompt_prose: 'Redraw this exact woman as 1980s neon rainbow airbrush school-folder sticker art: glossy, soft
+    airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars, on a sunny gold rainbow
+    gradient background full of hearts, stars and sparkles, with a huge fluffy golden Maine Coon cat, her cat co-pilot,
+    perched on her shoulder. Keep her face, skin tone, hair, body shape, build and outfit exactly the same; only
+    the art style and background change. Her deep brown skin and her black hair stay exactly the shade they are
+    in the original.'
+  source_image_id: 247460
+- key: doodle-solenne-super-cut-in
+  lane: kontext
+  title: Solenne super cut-in, doodle style
+  asset: rainbow-princess-art/doodle/cutins/solenne
+  size: 1488x512
+  seed: 870009
+  prompt_prose: 'Redraw this exact super cut-in as 1980s neon rainbow airbrush school-folder sticker art: glossy,
+    soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars: the same woman in the
+    same pose and framing, with a huge fluffy golden Maine Coon cat, her cat co-pilot, leaping beside her, both
+    glowing with a burst of rainbow power lines. Keep her face, skin tone, hair, build and outfit exactly the same.
+    Her deep brown skin and her black hair stay exactly the shade they are in the original.'
+  source_image_id: 247803
+- key: doodle-vivi-menu-portrait
+  lane: kontext
+  title: Vivi menu portrait, doodle style
+  asset: rainbow-princess-art/doodle/portraits/p4-vivi
+  size: 832x1216
+  seed: 870010
+  prompt_prose: 'Redraw this exact woman as 1980s neon rainbow airbrush school-folder sticker art: glossy, soft
+    airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars, on a lilac rainbow gradient
+    background full of hearts, stars and sparkles, with a small lilac hairless sphynx kitten in a tiny black leather
+    jacket, her cat co-pilot, perched on her shoulder. Keep her face, skin tone, hair, body shape, build and outfit
+    exactly the same; only the art style and background change. Her lilac and coral hair streaks stay as they are.'
+  source_image_id: 246033
+- key: doodle-vivi-comms-portrait
+  lane: kontext
+  title: Vivi comms portrait, doodle style
+  asset: rainbow-princess-art/doodle/comms/vivi
+  size: 768x768
+  seed: 870011
+  prompt_prose: 'Redraw this exact woman as 1980s neon rainbow airbrush school-folder sticker art: glossy, soft
+    airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars, on a lilac rainbow gradient
+    background full of hearts, stars and sparkles, with a small lilac hairless sphynx kitten in a tiny black leather
+    jacket, her cat co-pilot, perched on her shoulder. Keep her face, skin tone, hair, body shape, build and outfit
+    exactly the same; only the art style and background change. Her lilac and coral hair streaks stay as they are.'
+  source_image_id: 247799
+- key: doodle-vivi-super-cut-in
+  lane: kontext
+  title: Vivi super cut-in, doodle style
+  asset: rainbow-princess-art/doodle/cutins/vivi
+  size: 1488x512
+  seed: 870012
+  prompt_prose: 'Redraw this exact super cut-in as 1980s neon rainbow airbrush school-folder sticker art: glossy,
+    soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars: the same woman in the
+    same pose and framing, with a small lilac hairless sphynx kitten in a tiny black leather jacket, her cat co-pilot,
+    leaping beside her, both glowing with a burst of rainbow power lines. Keep her face, skin tone, hair, build
+    and outfit exactly the same. Her lilac and coral hair streaks stay as they are.'
+  source_image_id: 247844
+- key: doodle-comms-lilt
+  lane: kontext
+  title: Lilt comms portrait, doodle style
+  asset: rainbow-princess-art/doodle/comms/lilt
+  size: 768x768
+  seed: 870013
+  prompt_prose: 'Redraw this exact character as 1980s neon rainbow airbrush school-folder sticker art: glossy, soft
+    airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars, on a turquoise rainbow
+    gradient background with hearts, stars and sparkles. Keep their face, species, body shape, colours and outfit
+    exactly the same; only the art style and background change.'
+  source_url: /rainbow-princess-art/comms/lilt.webp
+  source_min_edge: 768
+- key: doodle-comms-nemi
+  lane: kontext
+  title: Nemi comms portrait, doodle style
+  asset: rainbow-princess-art/doodle/comms/nemi
+  size: 768x768
+  seed: 870014
+  prompt_prose: 'Redraw this exact character as 1980s neon rainbow airbrush school-folder sticker art: glossy, soft
+    airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars, on a turquoise rainbow
+    gradient background with hearts, stars and sparkles. Keep their face, species, body shape, colours and outfit
+    exactly the same; only the art style and background change.'
+  source_url: /rainbow-princess-art/comms/nemi.webp
+  source_min_edge: 768
+- key: doodle-comms-opal
+  lane: kontext
+  title: Opal comms portrait, doodle style
+  asset: rainbow-princess-art/doodle/comms/opal
+  size: 768x768
+  seed: 870015
+  prompt_prose: 'Redraw this exact character as 1980s neon rainbow airbrush school-folder sticker art: glossy, soft
+    airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars, on a turquoise rainbow
+    gradient background with hearts, stars and sparkles. Keep their face, species, body shape, colours and outfit
+    exactly the same; only the art style and background change.'
+  source_url: /rainbow-princess-art/comms/opal.webp
+  source_min_edge: 768
+- key: doodle-comms-purl
+  lane: kontext
+  title: Purl comms portrait, doodle style
+  asset: rainbow-princess-art/doodle/comms/purl
+  size: 768x768
+  seed: 870016
+  prompt_prose: 'Redraw this exact character as 1980s neon rainbow airbrush school-folder sticker art: glossy, soft
+    airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars, on a turquoise rainbow
+    gradient background with hearts, stars and sparkles. Keep their face, species, body shape, colours and outfit
+    exactly the same; only the art style and background change.'
+  source_url: /rainbow-princess-art/comms/purl.webp
+  source_min_edge: 768
+- key: doodle-ships-comet-crown
+  lane: kontext
+  title: comet-crown starfighter, doodle style
+  asset: rainbow-princess-art/doodle/ships/comet-crown
+  size: 656x512
+  seed: 870017
+  prompt_prose: 'Redraw this exact starfighter as a cute cat-shaped starfighter in 1980s neon rainbow airbrush school-folder
+    sticker art: glossy, soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple,
+    turquoise, lime, sunshine yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars:
+    keep its silhouette, colours and markings, and give it pointed cat ears, whisker lines and a curling tail. Keep
+    the flat bright green background exactly as it is, plain and even.'
+  source_url: /rainbow-princess-art/ships/comet-crown.webp
+  source_matte: '#00ff00'
+  source_min_edge: 512
+- key: doodle-ships-halo-fin
+  lane: kontext
+  title: halo-fin starfighter, doodle style
+  asset: rainbow-princess-art/doodle/ships/halo-fin
+  size: 960x512
+  seed: 870018
+  prompt_prose: 'Redraw this exact starfighter as a cute cat-shaped starfighter in 1980s neon rainbow airbrush school-folder
+    sticker art: glossy, soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple,
+    turquoise, lime, sunshine yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars:
+    keep its silhouette, colours and markings, and give it pointed cat ears, whisker lines and a curling tail. Keep
+    the flat bright green background exactly as it is, plain and even.'
+  source_url: /rainbow-princess-art/ships/halo-fin.webp
+  source_matte: '#00ff00'
+  source_min_edge: 512
+- key: doodle-ships-petal-wing
+  lane: kontext
+  title: petal-wing starfighter, doodle style
+  asset: rainbow-princess-art/doodle/ships/petal-wing
+  size: 1536x512
+  seed: 870019
+  prompt_prose: 'Redraw this exact starfighter as a cute cat-shaped starfighter in 1980s neon rainbow airbrush school-folder
+    sticker art: glossy, soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple,
+    turquoise, lime, sunshine yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars:
+    keep its silhouette, colours and markings, and give it pointed cat ears, whisker lines and a curling tail. Keep
+    the flat bright green background exactly as it is, plain and even.'
+  source_url: /rainbow-princess-art/ships/petal-wing.webp
+  source_matte: '#00ff00'
+  source_min_edge: 512
+- key: doodle-ships-prism-lance
+  lane: kontext
+  title: prism-lance starfighter, doodle style
+  asset: rainbow-princess-art/doodle/ships/prism-lance
+  size: 1472x512
+  seed: 870020
+  prompt_prose: 'Redraw this exact starfighter as a cute cat-shaped starfighter in 1980s neon rainbow airbrush school-folder
+    sticker art: glossy, soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple,
+    turquoise, lime, sunshine yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars:
+    keep its silhouette, colours and markings, and give it pointed cat ears, whisker lines and a curling tail. Keep
+    the flat bright green background exactly as it is, plain and even.'
+  source_url: /rainbow-princess-art/ships/prism-lance.webp
+  source_matte: '#00ff00'
+  source_min_edge: 512
+- key: doodle-bosses-b01-phase1
+  lane: kontext
+  title: b01-phase1 boss creature, doodle style
+  asset: rainbow-princess-art/doodle/bosses/b01-phase1
+  size: 768x512
+  seed: 870021
+  prompt_prose: 'Redraw this exact sea-creature boss in 1980s neon rainbow airbrush school-folder sticker art: glossy,
+    soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars: keep its silhouette, pose,
+    proportions and colours, and make it cute and cartoon-grumpy with big glossy eyes and a tiny storm cloud of
+    a scowl. Keep the flat bright green background exactly as it is, plain and even.'
+  source_url: /rainbow-princess-art/bosses/b01-phase1.webp
+  source_matte: '#00ff00'
+  source_min_edge: 512
+- key: doodle-bosses-b01-phase2
+  lane: kontext
+  title: b01-phase2 boss creature, doodle style
+  asset: rainbow-princess-art/doodle/bosses/b01-phase2
+  size: 752x512
+  seed: 870022
+  prompt_prose: 'Redraw this exact sea-creature boss in 1980s neon rainbow airbrush school-folder sticker art: glossy,
+    soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars: keep its silhouette, pose,
+    proportions and colours, and make it cute and cartoon-grumpy with big glossy eyes and a tiny storm cloud of
+    a scowl. Keep the flat bright green background exactly as it is, plain and even.'
+  source_url: /rainbow-princess-art/bosses/b01-phase2.webp
+  source_matte: '#00ff00'
+  source_min_edge: 512
+- key: doodle-bosses-b01-phase3
+  lane: kontext
+  title: b01-phase3 boss creature, doodle style
+  asset: rainbow-princess-art/doodle/bosses/b01-phase3
+  size: 752x512
+  seed: 870023
+  prompt_prose: 'Redraw this exact sea-creature boss in 1980s neon rainbow airbrush school-folder sticker art: glossy,
+    soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars: keep its silhouette, pose,
+    proportions and colours, and make it cute and cartoon-grumpy with big glossy eyes and a tiny storm cloud of
+    a scowl. Keep the flat bright green background exactly as it is, plain and even.'
+  source_url: /rainbow-princess-art/bosses/b01-phase3.webp
+  source_matte: '#00ff00'
+  source_min_edge: 512
+- key: doodle-bosses-b02-phase1
+  lane: kontext
+  title: b02-phase1 boss creature, doodle style
+  asset: rainbow-princess-art/doodle/bosses/b02-phase1
+  size: 512x512
+  seed: 870024
+  prompt_prose: 'Redraw this exact sea-creature boss in 1980s neon rainbow airbrush school-folder sticker art: glossy,
+    soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars: keep its silhouette, pose,
+    proportions and colours, and make it cute and cartoon-grumpy with big glossy eyes and a tiny storm cloud of
+    a scowl. Keep the flat bright green background exactly as it is, plain and even.'
+  source_url: /rainbow-princess-art/bosses/b02-phase1.webp
+  source_matte: '#00ff00'
+  source_min_edge: 512
+- key: doodle-bosses-b02-phase2
+  lane: kontext
+  title: b02-phase2 boss creature, doodle style
+  asset: rainbow-princess-art/doodle/bosses/b02-phase2
+  size: 512x528
+  seed: 870025
+  prompt_prose: 'Redraw this exact sea-creature boss in 1980s neon rainbow airbrush school-folder sticker art: glossy,
+    soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars: keep its silhouette, pose,
+    proportions and colours, and make it cute and cartoon-grumpy with big glossy eyes and a tiny storm cloud of
+    a scowl. Keep the flat bright green background exactly as it is, plain and even.'
+  source_url: /rainbow-princess-art/bosses/b02-phase2.webp
+  source_matte: '#00ff00'
+  source_min_edge: 512
+- key: doodle-bosses-b02-phase3
+  lane: kontext
+  title: b02-phase3 boss creature, doodle style
+  asset: rainbow-princess-art/doodle/bosses/b02-phase3
+  size: 576x512
+  seed: 870026
+  prompt_prose: 'Redraw this exact sea-creature boss in 1980s neon rainbow airbrush school-folder sticker art: glossy,
+    soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars: keep its silhouette, pose,
+    proportions and colours, and make it cute and cartoon-grumpy with big glossy eyes and a tiny storm cloud of
+    a scowl. Keep the flat bright green background exactly as it is, plain and even.'
+  source_url: /rainbow-princess-art/bosses/b02-phase3.webp
+  source_matte: '#00ff00'
+  source_min_edge: 512
+- key: doodle-bosses-b03-phase1
+  lane: kontext
+  title: b03-phase1 boss creature, doodle style
+  asset: rainbow-princess-art/doodle/bosses/b03-phase1
+  size: 768x512
+  seed: 870027
+  prompt_prose: 'Redraw this exact sea-creature boss in 1980s neon rainbow airbrush school-folder sticker art: glossy,
+    soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars: keep its silhouette, pose,
+    proportions and colours, and make it cute and cartoon-grumpy with big glossy eyes and a tiny storm cloud of
+    a scowl. Keep the flat bright green background exactly as it is, plain and even.'
+  source_url: /rainbow-princess-art/bosses/b03-phase1.webp
+  source_matte: '#00ff00'
+  source_min_edge: 512
+- key: doodle-bosses-b03-phase2
+  lane: kontext
+  title: b03-phase2 boss creature, doodle style
+  asset: rainbow-princess-art/doodle/bosses/b03-phase2
+  size: 800x512
+  seed: 870028
+  prompt_prose: 'Redraw this exact sea-creature boss in 1980s neon rainbow airbrush school-folder sticker art: glossy,
+    soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars: keep its silhouette, pose,
+    proportions and colours, and make it cute and cartoon-grumpy with big glossy eyes and a tiny storm cloud of
+    a scowl. Keep the flat bright green background exactly as it is, plain and even.'
+  source_url: /rainbow-princess-art/bosses/b03-phase2.webp
+  source_matte: '#00ff00'
+  source_min_edge: 512
+- key: doodle-bosses-b03-phase3
+  lane: kontext
+  title: b03-phase3 boss creature, doodle style
+  asset: rainbow-princess-art/doodle/bosses/b03-phase3
+  size: 752x512
+  seed: 870029
+  prompt_prose: 'Redraw this exact sea-creature boss in 1980s neon rainbow airbrush school-folder sticker art: glossy,
+    soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars: keep its silhouette, pose,
+    proportions and colours, and make it cute and cartoon-grumpy with big glossy eyes and a tiny storm cloud of
+    a scowl. Keep the flat bright green background exactly as it is, plain and even.'
+  source_url: /rainbow-princess-art/bosses/b03-phase3.webp
+  source_matte: '#00ff00'
+  source_min_edge: 512
+- key: doodle-bosses-b04-phase1
+  lane: kontext
+  title: b04-phase1 boss creature, doodle style
+  asset: rainbow-princess-art/doodle/bosses/b04-phase1
+  size: 864x512
+  seed: 870030
+  prompt_prose: 'Redraw this exact sea-creature boss in 1980s neon rainbow airbrush school-folder sticker art: glossy,
+    soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars: keep its silhouette, pose,
+    proportions and colours, and make it cute and cartoon-grumpy with big glossy eyes and a tiny storm cloud of
+    a scowl. Keep the flat bright green background exactly as it is, plain and even.'
+  source_url: /rainbow-princess-art/bosses/b04-phase1.webp
+  source_matte: '#00ff00'
+  source_min_edge: 512
+- key: doodle-bosses-b04-phase2
+  lane: kontext
+  title: b04-phase2 boss creature, doodle style
+  asset: rainbow-princess-art/doodle/bosses/b04-phase2
+  size: 832x512
+  seed: 870031
+  prompt_prose: 'Redraw this exact sea-creature boss in 1980s neon rainbow airbrush school-folder sticker art: glossy,
+    soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars: keep its silhouette, pose,
+    proportions and colours, and make it cute and cartoon-grumpy with big glossy eyes and a tiny storm cloud of
+    a scowl. Keep the flat bright green background exactly as it is, plain and even.'
+  source_url: /rainbow-princess-art/bosses/b04-phase2.webp
+  source_matte: '#00ff00'
+  source_min_edge: 512
+- key: doodle-bosses-b04-phase3
+  lane: kontext
+  title: b04-phase3 boss creature, doodle style
+  asset: rainbow-princess-art/doodle/bosses/b04-phase3
+  size: 832x512
+  seed: 870032
+  prompt_prose: 'Redraw this exact sea-creature boss in 1980s neon rainbow airbrush school-folder sticker art: glossy,
+    soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars: keep its silhouette, pose,
+    proportions and colours, and make it cute and cartoon-grumpy with big glossy eyes and a tiny storm cloud of
+    a scowl. Keep the flat bright green background exactly as it is, plain and even.'
+  source_url: /rainbow-princess-art/bosses/b04-phase3.webp
+  source_matte: '#00ff00'
+  source_min_edge: 512
+- key: doodle-bosses-b05-phase1
+  lane: kontext
+  title: b05-phase1 boss creature, doodle style
+  asset: rainbow-princess-art/doodle/bosses/b05-phase1
+  size: 1040x512
+  seed: 870033
+  prompt_prose: 'Redraw this exact sea-creature boss in 1980s neon rainbow airbrush school-folder sticker art: glossy,
+    soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars: keep its silhouette, pose,
+    proportions and colours, and make it cute and cartoon-grumpy with big glossy eyes and a tiny storm cloud of
+    a scowl. Keep the flat bright green background exactly as it is, plain and even.'
+  source_url: /rainbow-princess-art/bosses/b05-phase1.webp
+  source_matte: '#00ff00'
+  source_min_edge: 512
+- key: doodle-bosses-b05-phase2
+  lane: kontext
+  title: b05-phase2 boss creature, doodle style
+  asset: rainbow-princess-art/doodle/bosses/b05-phase2
+  size: 992x512
+  seed: 870034
+  prompt_prose: 'Redraw this exact sea-creature boss in 1980s neon rainbow airbrush school-folder sticker art: glossy,
+    soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars: keep its silhouette, pose,
+    proportions and colours, and make it cute and cartoon-grumpy with big glossy eyes and a tiny storm cloud of
+    a scowl. Keep the flat bright green background exactly as it is, plain and even.'
+  source_url: /rainbow-princess-art/bosses/b05-phase2.webp
+  source_matte: '#00ff00'
+  source_min_edge: 512
+- key: doodle-bosses-b05-phase3
+  lane: kontext
+  title: b05-phase3 boss creature, doodle style
+  asset: rainbow-princess-art/doodle/bosses/b05-phase3
+  size: 1040x512
+  seed: 870035
+  prompt_prose: 'Redraw this exact sea-creature boss in 1980s neon rainbow airbrush school-folder sticker art: glossy,
+    soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars: keep its silhouette, pose,
+    proportions and colours, and make it cute and cartoon-grumpy with big glossy eyes and a tiny storm cloud of
+    a scowl. Keep the flat bright green background exactly as it is, plain and even.'
+  source_url: /rainbow-princess-art/bosses/b05-phase3.webp
+  source_matte: '#00ff00'
+  source_min_edge: 512
+- key: doodle-bosses-b06-phase1
+  lane: kontext
+  title: b06-phase1 boss creature, doodle style
+  asset: rainbow-princess-art/doodle/bosses/b06-phase1
+  size: 1440x512
+  seed: 870036
+  prompt_prose: 'Redraw this exact sea-creature boss in 1980s neon rainbow airbrush school-folder sticker art: glossy,
+    soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars: keep its silhouette, pose,
+    proportions and colours, and make it cute and cartoon-grumpy with big glossy eyes and a tiny storm cloud of
+    a scowl. Keep the flat bright green background exactly as it is, plain and even.'
+  source_url: /rainbow-princess-art/bosses/b06-phase1.webp
+  source_matte: '#00ff00'
+  source_min_edge: 512
+- key: doodle-bosses-b06-phase2
+  lane: kontext
+  title: b06-phase2 boss creature, doodle style
+  asset: rainbow-princess-art/doodle/bosses/b06-phase2
+  size: 1312x512
+  seed: 870037
+  prompt_prose: 'Redraw this exact sea-creature boss in 1980s neon rainbow airbrush school-folder sticker art: glossy,
+    soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars: keep its silhouette, pose,
+    proportions and colours, and make it cute and cartoon-grumpy with big glossy eyes and a tiny storm cloud of
+    a scowl. Keep the flat bright green background exactly as it is, plain and even.'
+  source_url: /rainbow-princess-art/bosses/b06-phase2.webp
+  source_matte: '#00ff00'
+  source_min_edge: 512
+- key: doodle-bosses-b06-phase3
+  lane: kontext
+  title: b06-phase3 boss creature, doodle style
+  asset: rainbow-princess-art/doodle/bosses/b06-phase3
+  size: 1312x512
+  seed: 870038
+  prompt_prose: 'Redraw this exact sea-creature boss in 1980s neon rainbow airbrush school-folder sticker art: glossy,
+    soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars: keep its silhouette, pose,
+    proportions and colours, and make it cute and cartoon-grumpy with big glossy eyes and a tiny storm cloud of
+    a scowl. Keep the flat bright green background exactly as it is, plain and even.'
+  source_url: /rainbow-princess-art/bosses/b06-phase3.webp
+  source_matte: '#00ff00'
+  source_min_edge: 512
+- key: doodle-bosses-b07-phase1
+  lane: kontext
+  title: b07-phase1 boss creature, doodle style
+  asset: rainbow-princess-art/doodle/bosses/b07-phase1
+  size: 992x512
+  seed: 870039
+  prompt_prose: 'Redraw this exact sea-creature boss in 1980s neon rainbow airbrush school-folder sticker art: glossy,
+    soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars: keep its silhouette, pose,
+    proportions and colours, and make it cute and cartoon-grumpy with big glossy eyes and a tiny storm cloud of
+    a scowl. Keep the flat bright green background exactly as it is, plain and even.'
+  source_url: /rainbow-princess-art/bosses/b07-phase1.webp
+  source_matte: '#00ff00'
+  source_min_edge: 512
+- key: doodle-bosses-b07-phase2
+  lane: kontext
+  title: b07-phase2 boss creature, doodle style
+  asset: rainbow-princess-art/doodle/bosses/b07-phase2
+  size: 976x512
+  seed: 870040
+  prompt_prose: 'Redraw this exact sea-creature boss in 1980s neon rainbow airbrush school-folder sticker art: glossy,
+    soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars: keep its silhouette, pose,
+    proportions and colours, and make it cute and cartoon-grumpy with big glossy eyes and a tiny storm cloud of
+    a scowl. Keep the flat bright green background exactly as it is, plain and even.'
+  source_url: /rainbow-princess-art/bosses/b07-phase2.webp
+  source_matte: '#00ff00'
+  source_min_edge: 512
+- key: doodle-bosses-b07-phase3
+  lane: kontext
+  title: b07-phase3 boss creature, doodle style
+  asset: rainbow-princess-art/doodle/bosses/b07-phase3
+  size: 960x512
+  seed: 870041
+  prompt_prose: 'Redraw this exact sea-creature boss in 1980s neon rainbow airbrush school-folder sticker art: glossy,
+    soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars: keep its silhouette, pose,
+    proportions and colours, and make it cute and cartoon-grumpy with big glossy eyes and a tiny storm cloud of
+    a scowl. Keep the flat bright green background exactly as it is, plain and even.'
+  source_url: /rainbow-princess-art/bosses/b07-phase3.webp
+  source_matte: '#00ff00'
+  source_min_edge: 512
+- key: doodle-bosses-b08-phase1
+  lane: kontext
+  title: b08-phase1 boss creature, doodle style
+  asset: rainbow-princess-art/doodle/bosses/b08-phase1
+  size: 896x512
+  seed: 870042
+  prompt_prose: 'Redraw this exact sea-creature boss in 1980s neon rainbow airbrush school-folder sticker art: glossy,
+    soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars: keep its silhouette, pose,
+    proportions and colours, and make it cute and cartoon-grumpy with big glossy eyes and a tiny storm cloud of
+    a scowl. Keep the flat bright green background exactly as it is, plain and even.'
+  source_url: /rainbow-princess-art/bosses/b08-phase1.webp
+  source_matte: '#00ff00'
+  source_min_edge: 512
+- key: doodle-bosses-b08-phase2
+  lane: kontext
+  title: b08-phase2 boss creature, doodle style
+  asset: rainbow-princess-art/doodle/bosses/b08-phase2
+  size: 912x512
+  seed: 870043
+  prompt_prose: 'Redraw this exact sea-creature boss in 1980s neon rainbow airbrush school-folder sticker art: glossy,
+    soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars: keep its silhouette, pose,
+    proportions and colours, and make it cute and cartoon-grumpy with big glossy eyes and a tiny storm cloud of
+    a scowl. Keep the flat bright green background exactly as it is, plain and even.'
+  source_url: /rainbow-princess-art/bosses/b08-phase2.webp
+  source_matte: '#00ff00'
+  source_min_edge: 512
+- key: doodle-bosses-b08-phase3
+  lane: kontext
+  title: b08-phase3 boss creature, doodle style
+  asset: rainbow-princess-art/doodle/bosses/b08-phase3
+  size: 896x512
+  seed: 870044
+  prompt_prose: 'Redraw this exact sea-creature boss in 1980s neon rainbow airbrush school-folder sticker art: glossy,
+    soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars: keep its silhouette, pose,
+    proportions and colours, and make it cute and cartoon-grumpy with big glossy eyes and a tiny storm cloud of
+    a scowl. Keep the flat bright green background exactly as it is, plain and even.'
+  source_url: /rainbow-princess-art/bosses/b08-phase3.webp
+  source_matte: '#00ff00'
+  source_min_edge: 512
+- key: doodle-bosses-b09-phase1
+  lane: kontext
+  title: b09-phase1 boss creature, doodle style
+  asset: rainbow-princess-art/doodle/bosses/b09-phase1
+  size: 912x512
+  seed: 870045
+  prompt_prose: 'Redraw this exact sea-creature boss in 1980s neon rainbow airbrush school-folder sticker art: glossy,
+    soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars: keep its silhouette, pose,
+    proportions and colours, and make it cute and cartoon-grumpy with big glossy eyes and a tiny storm cloud of
+    a scowl. Keep the flat bright green background exactly as it is, plain and even.'
+  source_url: /rainbow-princess-art/bosses/b09-phase1.webp
+  source_matte: '#00ff00'
+  source_min_edge: 512
+- key: doodle-bosses-b09-phase2
+  lane: kontext
+  title: b09-phase2 boss creature, doodle style
+  asset: rainbow-princess-art/doodle/bosses/b09-phase2
+  size: 912x512
+  seed: 870046
+  prompt_prose: 'Redraw this exact sea-creature boss in 1980s neon rainbow airbrush school-folder sticker art: glossy,
+    soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars: keep its silhouette, pose,
+    proportions and colours, and make it cute and cartoon-grumpy with big glossy eyes and a tiny storm cloud of
+    a scowl. Keep the flat bright green background exactly as it is, plain and even.'
+  source_url: /rainbow-princess-art/bosses/b09-phase2.webp
+  source_matte: '#00ff00'
+  source_min_edge: 512
+- key: doodle-bosses-b09-phase3
+  lane: kontext
+  title: b09-phase3 boss creature, doodle style
+  asset: rainbow-princess-art/doodle/bosses/b09-phase3
+  size: 896x512
+  seed: 870047
+  prompt_prose: 'Redraw this exact sea-creature boss in 1980s neon rainbow airbrush school-folder sticker art: glossy,
+    soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars: keep its silhouette, pose,
+    proportions and colours, and make it cute and cartoon-grumpy with big glossy eyes and a tiny storm cloud of
+    a scowl. Keep the flat bright green background exactly as it is, plain and even.'
+  source_url: /rainbow-princess-art/bosses/b09-phase3.webp
+  source_matte: '#00ff00'
+  source_min_edge: 512
+- key: doodle-enemies-anchor
+  lane: kontext
+  title: anchor creature, doodle style
+  asset: rainbow-princess-art/doodle/enemies/anchor
+  size: 880x384
+  seed: 870048
+  prompt_prose: 'Redraw this exact sea creature in 1980s neon rainbow airbrush school-folder sticker art: glossy,
+    soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars: keep its silhouette, pose,
+    proportions and colours, and give it big glossy eyes and a dazed, sweet expression. Keep the flat bright green
+    background exactly as it is, plain and even.'
+  source_url: /rainbow-princess-art/enemies/anchor.webp
+  source_matte: '#00ff00'
+  source_min_edge: 384
+- key: doodle-enemies-angler
+  lane: kontext
+  title: angler creature, doodle style
+  asset: rainbow-princess-art/doodle/enemies/angler
+  size: 496x384
+  seed: 870049
+  prompt_prose: 'Redraw this exact sea creature in 1980s neon rainbow airbrush school-folder sticker art: glossy,
+    soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars: keep its silhouette, pose,
+    proportions and colours, and give it big glossy eyes and a dazed, sweet expression. Keep the flat bright green
+    background exactly as it is, plain and even.'
+  source_url: /rainbow-princess-art/enemies/angler.webp
+  source_matte: '#00ff00'
+  source_min_edge: 384
+- key: doodle-enemies-brood
+  lane: kontext
+  title: brood creature, doodle style
+  asset: rainbow-princess-art/doodle/enemies/brood
+  size: 384x656
+  seed: 870050
+  prompt_prose: 'Redraw this exact sea creature in 1980s neon rainbow airbrush school-folder sticker art: glossy,
+    soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars: keep its silhouette, pose,
+    proportions and colours, and give it big glossy eyes and a dazed, sweet expression. Keep the flat bright green
+    background exactly as it is, plain and even.'
+  source_url: /rainbow-princess-art/enemies/brood.webp
+  source_matte: '#00ff00'
+  source_min_edge: 384
+- key: doodle-enemies-bulwark
+  lane: kontext
+  title: bulwark creature, doodle style
+  asset: rainbow-princess-art/doodle/enemies/bulwark
+  size: 608x384
+  seed: 870051
+  prompt_prose: 'Redraw this exact sea creature in 1980s neon rainbow airbrush school-folder sticker art: glossy,
+    soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars: keep its silhouette, pose,
+    proportions and colours, and give it big glossy eyes and a dazed, sweet expression. Keep the flat bright green
+    background exactly as it is, plain and even.'
+  source_url: /rainbow-princess-art/enemies/bulwark.webp
+  source_matte: '#00ff00'
+  source_min_edge: 384
+- key: doodle-enemies-captive
+  lane: kontext
+  title: captive creature, doodle style
+  asset: rainbow-princess-art/doodle/enemies/captive
+  size: 672x384
+  seed: 870052
+  prompt_prose: 'Redraw this exact sea creature in 1980s neon rainbow airbrush school-folder sticker art: glossy,
+    soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars: keep its silhouette, pose,
+    proportions and colours, and give it big glossy eyes and a dazed, sweet expression. Keep the flat bright green
+    background exactly as it is, plain and even.'
+  source_url: /rainbow-princess-art/enemies/captive.webp
+  source_matte: '#00ff00'
+  source_min_edge: 384
+- key: doodle-enemies-clawstrike
+  lane: kontext
+  title: clawstrike creature, doodle style
+  asset: rainbow-princess-art/doodle/enemies/clawstrike
+  size: 880x384
+  seed: 870053
+  prompt_prose: 'Redraw this exact sea creature in 1980s neon rainbow airbrush school-folder sticker art: glossy,
+    soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars: keep its silhouette, pose,
+    proportions and colours, and give it big glossy eyes and a dazed, sweet expression. Keep the flat bright green
+    background exactly as it is, plain and even.'
+  source_url: /rainbow-princess-art/enemies/clawstrike.webp
+  source_matte: '#00ff00'
+  source_min_edge: 384
+- key: doodle-enemies-coral
+  lane: kontext
+  title: coral creature, doodle style
+  asset: rainbow-princess-art/doodle/enemies/coral
+  size: 512x384
+  seed: 870054
+  prompt_prose: 'Redraw this exact sea creature in 1980s neon rainbow airbrush school-folder sticker art: glossy,
+    soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars: keep its silhouette, pose,
+    proportions and colours, and give it big glossy eyes and a dazed, sweet expression. Keep the flat bright green
+    background exactly as it is, plain and even.'
+  source_url: /rainbow-princess-art/enemies/coral.webp
+  source_matte: '#00ff00'
+  source_min_edge: 384
+- key: doodle-enemies-courier
+  lane: kontext
+  title: courier creature, doodle style
+  asset: rainbow-princess-art/doodle/enemies/courier
+  size: 864x384
+  seed: 870055
+  prompt_prose: 'Redraw this exact sea creature in 1980s neon rainbow airbrush school-folder sticker art: glossy,
+    soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars: keep its silhouette, pose,
+    proportions and colours, and give it big glossy eyes and a dazed, sweet expression. Keep the flat bright green
+    background exactly as it is, plain and even.'
+  source_url: /rainbow-princess-art/enemies/courier.webp
+  source_matte: '#00ff00'
+  source_min_edge: 384
+- key: doodle-enemies-cutter
+  lane: kontext
+  title: cutter creature, doodle style
+  asset: rainbow-princess-art/doodle/enemies/cutter
+  size: 736x384
+  seed: 870056
+  prompt_prose: 'Redraw this exact sea creature in 1980s neon rainbow airbrush school-folder sticker art: glossy,
+    soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars: keep its silhouette, pose,
+    proportions and colours, and give it big glossy eyes and a dazed, sweet expression. Keep the flat bright green
+    background exactly as it is, plain and even.'
+  source_url: /rainbow-princess-art/enemies/cutter.webp
+  source_matte: '#00ff00'
+  source_min_edge: 384
+- key: doodle-enemies-dolphin
+  lane: kontext
+  title: dolphin creature, doodle style
+  asset: rainbow-princess-art/doodle/enemies/dolphin
+  size: 912x384
+  seed: 870057
+  prompt_prose: 'Redraw this exact sea creature in 1980s neon rainbow airbrush school-folder sticker art: glossy,
+    soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars: keep its silhouette, pose,
+    proportions and colours, and give it big glossy eyes and a dazed, sweet expression. Keep the flat bright green
+    background exactly as it is, plain and even.'
+  source_url: /rainbow-princess-art/enemies/dolphin.webp
+  source_matte: '#00ff00'
+  source_min_edge: 384
+- key: doodle-enemies-eel
+  lane: kontext
+  title: eel creature, doodle style
+  asset: rainbow-princess-art/doodle/enemies/eel
+  size: 752x384
+  seed: 870058
+  prompt_prose: 'Redraw this exact sea creature in 1980s neon rainbow airbrush school-folder sticker art: glossy,
+    soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars: keep its silhouette, pose,
+    proportions and colours, and give it big glossy eyes and a dazed, sweet expression. Keep the flat bright green
+    background exactly as it is, plain and even.'
+  source_url: /rainbow-princess-art/enemies/eel.webp
+  source_matte: '#00ff00'
+  source_min_edge: 384
+- key: doodle-enemies-guardian-bulwark
+  lane: kontext
+  title: guardian-bulwark creature, doodle style
+  asset: rainbow-princess-art/doodle/enemies/guardian-bulwark
+  size: 624x384
+  seed: 870059
+  prompt_prose: 'Redraw this exact sea creature in 1980s neon rainbow airbrush school-folder sticker art: glossy,
+    soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars: keep its silhouette, pose,
+    proportions and colours, and give it big glossy eyes and a dazed, sweet expression. Keep the flat bright green
+    background exactly as it is, plain and even.'
+  source_url: /rainbow-princess-art/enemies/guardian-bulwark.webp
+  source_matte: '#00ff00'
+  source_min_edge: 384
+- key: doodle-enemies-guardian-clawstrike
+  lane: kontext
+  title: guardian-clawstrike creature, doodle style
+  asset: rainbow-princess-art/doodle/enemies/guardian-clawstrike
+  size: 560x384
+  seed: 870060
+  prompt_prose: 'Redraw this exact sea creature in 1980s neon rainbow airbrush school-folder sticker art: glossy,
+    soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars: keep its silhouette, pose,
+    proportions and colours, and give it big glossy eyes and a dazed, sweet expression. Keep the flat bright green
+    background exactly as it is, plain and even.'
+  source_url: /rainbow-princess-art/enemies/guardian-clawstrike.webp
+  source_matte: '#00ff00'
+  source_min_edge: 384
+- key: doodle-enemies-guardian-courier
+  lane: kontext
+  title: guardian-courier creature, doodle style
+  asset: rainbow-princess-art/doodle/enemies/guardian-courier
+  size: 816x384
+  seed: 870061
+  prompt_prose: 'Redraw this exact sea creature in 1980s neon rainbow airbrush school-folder sticker art: glossy,
+    soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars: keep its silhouette, pose,
+    proportions and colours, and give it big glossy eyes and a dazed, sweet expression. Keep the flat bright green
+    background exactly as it is, plain and even.'
+  source_url: /rainbow-princess-art/enemies/guardian-courier.webp
+  source_matte: '#00ff00'
+  source_min_edge: 384
+- key: doodle-enemies-guardian-herald
+  lane: kontext
+  title: guardian-herald creature, doodle style
+  asset: rainbow-princess-art/doodle/enemies/guardian-herald
+  size: 880x384
+  seed: 870062
+  prompt_prose: 'Redraw this exact sea creature in 1980s neon rainbow airbrush school-folder sticker art: glossy,
+    soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars: keep its silhouette, pose,
+    proportions and colours, and give it big glossy eyes and a dazed, sweet expression. Keep the flat bright green
+    background exactly as it is, plain and even.'
+  source_url: /rainbow-princess-art/enemies/guardian-herald.webp
+  source_matte: '#00ff00'
+  source_min_edge: 384
+- key: doodle-enemies-guardian-lantern
+  lane: kontext
+  title: guardian-lantern creature, doodle style
+  asset: rainbow-princess-art/doodle/enemies/guardian-lantern
+  size: 384x416
+  seed: 870063
+  prompt_prose: 'Redraw this exact sea creature in 1980s neon rainbow airbrush school-folder sticker art: glossy,
+    soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars: keep its silhouette, pose,
+    proportions and colours, and give it big glossy eyes and a dazed, sweet expression. Keep the flat bright green
+    background exactly as it is, plain and even.'
+  source_url: /rainbow-princess-art/enemies/guardian-lantern.webp
+  source_matte: '#00ff00'
+  source_min_edge: 384
+- key: doodle-enemies-guardian-mirror
+  lane: kontext
+  title: guardian-mirror creature, doodle style
+  asset: rainbow-princess-art/doodle/enemies/guardian-mirror
+  size: 656x384
+  seed: 870064
+  prompt_prose: 'Redraw this exact sea creature in 1980s neon rainbow airbrush school-folder sticker art: glossy,
+    soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars: keep its silhouette, pose,
+    proportions and colours, and give it big glossy eyes and a dazed, sweet expression. Keep the flat bright green
+    background exactly as it is, plain and even.'
+  source_url: /rainbow-princess-art/enemies/guardian-mirror.webp
+  source_matte: '#00ff00'
+  source_min_edge: 384
+- key: doodle-enemies-guardian-salvager
+  lane: kontext
+  title: guardian-salvager creature, doodle style
+  asset: rainbow-princess-art/doodle/enemies/guardian-salvager
+  size: 480x384
+  seed: 870065
+  prompt_prose: 'Redraw this exact sea creature in 1980s neon rainbow airbrush school-folder sticker art: glossy,
+    soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars: keep its silhouette, pose,
+    proportions and colours, and give it big glossy eyes and a dazed, sweet expression. Keep the flat bright green
+    background exactly as it is, plain and even.'
+  source_url: /rainbow-princess-art/enemies/guardian-salvager.webp
+  source_matte: '#00ff00'
+  source_min_edge: 384
+- key: doodle-enemies-guardian-urchin
+  lane: kontext
+  title: guardian-urchin creature, doodle style
+  asset: rainbow-princess-art/doodle/enemies/guardian-urchin
+  size: 480x384
+  seed: 870066
+  prompt_prose: 'Redraw this exact sea creature in 1980s neon rainbow airbrush school-folder sticker art: glossy,
+    soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars: keep its silhouette, pose,
+    proportions and colours, and give it big glossy eyes and a dazed, sweet expression. Keep the flat bright green
+    background exactly as it is, plain and even.'
+  source_url: /rainbow-princess-art/enemies/guardian-urchin.webp
+  source_matte: '#00ff00'
+  source_min_edge: 384
+- key: doodle-enemies-hammerhead
+  lane: kontext
+  title: hammerhead creature, doodle style
+  asset: rainbow-princess-art/doodle/enemies/hammerhead
+  size: 736x384
+  seed: 870067
+  prompt_prose: 'Redraw this exact sea creature in 1980s neon rainbow airbrush school-folder sticker art: glossy,
+    soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars: keep its silhouette, pose,
+    proportions and colours, and give it big glossy eyes and a dazed, sweet expression. Keep the flat bright green
+    background exactly as it is, plain and even.'
+  source_url: /rainbow-princess-art/enemies/hammerhead.webp
+  source_matte: '#00ff00'
+  source_min_edge: 384
+- key: doodle-enemies-harbinger
+  lane: kontext
+  title: harbinger creature, doodle style
+  asset: rainbow-princess-art/doodle/enemies/harbinger
+  size: 384x384
+  seed: 870068
+  prompt_prose: 'Redraw this exact sea creature in 1980s neon rainbow airbrush school-folder sticker art: glossy,
+    soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars: keep its silhouette, pose,
+    proportions and colours, and give it big glossy eyes and a dazed, sweet expression. Keep the flat bright green
+    background exactly as it is, plain and even.'
+  source_url: /rainbow-princess-art/enemies/harbinger.webp
+  source_matte: '#00ff00'
+  source_min_edge: 384
+- key: doodle-enemies-lantern
+  lane: kontext
+  title: lantern creature, doodle style
+  asset: rainbow-princess-art/doodle/enemies/lantern
+  size: 384x480
+  seed: 870069
+  prompt_prose: 'Redraw this exact sea creature in 1980s neon rainbow airbrush school-folder sticker art: glossy,
+    soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars: keep its silhouette, pose,
+    proportions and colours, and give it big glossy eyes and a dazed, sweet expression. Keep the flat bright green
+    background exactly as it is, plain and even.'
+  source_url: /rainbow-princess-art/enemies/lantern.webp
+  source_matte: '#00ff00'
+  source_min_edge: 384
+- key: doodle-enemies-mirror
+  lane: kontext
+  title: mirror creature, doodle style
+  asset: rainbow-princess-art/doodle/enemies/mirror
+  size: 704x384
+  seed: 870070
+  prompt_prose: 'Redraw this exact sea creature in 1980s neon rainbow airbrush school-folder sticker art: glossy,
+    soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars: keep its silhouette, pose,
+    proportions and colours, and give it big glossy eyes and a dazed, sweet expression. Keep the flat bright green
+    background exactly as it is, plain and even.'
+  source_url: /rainbow-princess-art/enemies/mirror.webp
+  source_matte: '#00ff00'
+  source_min_edge: 384
+- key: doodle-enemies-picket
+  lane: kontext
+  title: picket creature, doodle style
+  asset: rainbow-princess-art/doodle/enemies/picket
+  size: 560x384
+  seed: 870071
+  prompt_prose: 'Redraw this exact sea creature in 1980s neon rainbow airbrush school-folder sticker art: glossy,
+    soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars: keep its silhouette, pose,
+    proportions and colours, and give it big glossy eyes and a dazed, sweet expression. Keep the flat bright green
+    background exactly as it is, plain and even.'
+  source_url: /rainbow-princess-art/enemies/picket.webp
+  source_matte: '#00ff00'
+  source_min_edge: 384
+- key: doodle-enemies-pistol
+  lane: kontext
+  title: pistol creature, doodle style
+  asset: rainbow-princess-art/doodle/enemies/pistol
+  size: 624x384
+  seed: 870072
+  prompt_prose: 'Redraw this exact sea creature in 1980s neon rainbow airbrush school-folder sticker art: glossy,
+    soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars: keep its silhouette, pose,
+    proportions and colours, and give it big glossy eyes and a dazed, sweet expression. Keep the flat bright green
+    background exactly as it is, plain and even.'
+  source_url: /rainbow-princess-art/enemies/pistol.webp
+  source_matte: '#00ff00'
+  source_min_edge: 384
+- key: doodle-enemies-relay
+  lane: kontext
+  title: relay creature, doodle style
+  asset: rainbow-princess-art/doodle/enemies/relay
+  size: 384x400
+  seed: 870073
+  prompt_prose: 'Redraw this exact sea creature in 1980s neon rainbow airbrush school-folder sticker art: glossy,
+    soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars: keep its silhouette, pose,
+    proportions and colours, and give it big glossy eyes and a dazed, sweet expression. Keep the flat bright green
+    background exactly as it is, plain and even.'
+  source_url: /rainbow-princess-art/enemies/relay.webp
+  source_matte: '#00ff00'
+  source_min_edge: 384
+- key: doodle-enemies-salvager
+  lane: kontext
+  title: salvager creature, doodle style
+  asset: rainbow-princess-art/doodle/enemies/salvager
+  size: 480x384
+  seed: 870074
+  prompt_prose: 'Redraw this exact sea creature in 1980s neon rainbow airbrush school-folder sticker art: glossy,
+    soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars: keep its silhouette, pose,
+    proportions and colours, and give it big glossy eyes and a dazed, sweet expression. Keep the flat bright green
+    background exactly as it is, plain and even.'
+  source_url: /rainbow-princess-art/enemies/salvager.webp
+  source_matte: '#00ff00'
+  source_min_edge: 384
+- key: doodle-enemies-skate
+  lane: kontext
+  title: skate creature, doodle style
+  asset: rainbow-princess-art/doodle/enemies/skate
+  size: 560x384
+  seed: 870075
+  prompt_prose: 'Redraw this exact sea creature in 1980s neon rainbow airbrush school-folder sticker art: glossy,
+    soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars: keep its silhouette, pose,
+    proportions and colours, and give it big glossy eyes and a dazed, sweet expression. Keep the flat bright green
+    background exactly as it is, plain and even.'
+  source_url: /rainbow-princess-art/enemies/skate.webp
+  source_matte: '#00ff00'
+  source_min_edge: 384
+- key: doodle-enemies-skimmer
+  lane: kontext
+  title: skimmer creature, doodle style
+  asset: rainbow-princess-art/doodle/enemies/skimmer
+  size: 384x448
+  seed: 870076
+  prompt_prose: 'Redraw this exact sea creature in 1980s neon rainbow airbrush school-folder sticker art: glossy,
+    soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars: keep its silhouette, pose,
+    proportions and colours, and give it big glossy eyes and a dazed, sweet expression. Keep the flat bright green
+    background exactly as it is, plain and even.'
+  source_url: /rainbow-princess-art/enemies/skimmer.webp
+  source_matte: '#00ff00'
+  source_min_edge: 384
+- key: doodle-enemies-spiral
+  lane: kontext
+  title: spiral creature, doodle style
+  asset: rainbow-princess-art/doodle/enemies/spiral
+  size: 688x384
+  seed: 870077
+  prompt_prose: 'Redraw this exact sea creature in 1980s neon rainbow airbrush school-folder sticker art: glossy,
+    soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars: keep its silhouette, pose,
+    proportions and colours, and give it big glossy eyes and a dazed, sweet expression. Keep the flat bright green
+    background exactly as it is, plain and even.'
+  source_url: /rainbow-princess-art/enemies/spiral.webp
+  source_matte: '#00ff00'
+  source_min_edge: 384
+- key: doodle-enemies-squid
+  lane: kontext
+  title: squid creature, doodle style
+  asset: rainbow-princess-art/doodle/enemies/squid
+  size: 560x384
+  seed: 870078
+  prompt_prose: 'Redraw this exact sea creature in 1980s neon rainbow airbrush school-folder sticker art: glossy,
+    soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars: keep its silhouette, pose,
+    proportions and colours, and give it big glossy eyes and a dazed, sweet expression. Keep the flat bright green
+    background exactly as it is, plain and even.'
+  source_url: /rainbow-princess-art/enemies/squid.webp
+  source_matte: '#00ff00'
+  source_min_edge: 384
+- key: doodle-enemies-turret
+  lane: kontext
+  title: turret creature, doodle style
+  asset: rainbow-princess-art/doodle/enemies/turret
+  size: 384x512
+  seed: 870079
+  prompt_prose: 'Redraw this exact sea creature in 1980s neon rainbow airbrush school-folder sticker art: glossy,
+    soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars: keep its silhouette, pose,
+    proportions and colours, and give it big glossy eyes and a dazed, sweet expression. Keep the flat bright green
+    background exactly as it is, plain and even.'
+  source_url: /rainbow-princess-art/enemies/turret.webp
+  source_matte: '#00ff00'
+  source_min_edge: 384
+- key: doodle-enemies-urchin
+  lane: kontext
+  title: urchin creature, doodle style
+  asset: rainbow-princess-art/doodle/enemies/urchin
+  size: 624x384
+  seed: 870080
+  prompt_prose: 'Redraw this exact sea creature in 1980s neon rainbow airbrush school-folder sticker art: glossy,
+    soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars: keep its silhouette, pose,
+    proportions and colours, and give it big glossy eyes and a dazed, sweet expression. Keep the flat bright green
+    background exactly as it is, plain and even.'
+  source_url: /rainbow-princess-art/enemies/urchin.webp
+  source_matte: '#00ff00'
+  source_min_edge: 384
+- key: doodle-pickups-charge
+  lane: kontext
+  title: charge power-up, doodle style
+  asset: rainbow-princess-art/doodle/pickups/charge
+  size: 384x384
+  seed: 870081
+  prompt_prose: 'Redraw this exact power-up icon in 1980s neon rainbow airbrush school-folder sticker art: glossy,
+    soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars: keep its shape and colours,
+    glossy like a puffy sticker. Keep the flat bright green background exactly as it is, plain and even.'
+  source_url: /rainbow-princess-art/pickups/charge.webp
+  source_matte: '#00ff00'
+  source_min_edge: 384
+- key: doodle-pickups-power
+  lane: kontext
+  title: power power-up, doodle style
+  asset: rainbow-princess-art/doodle/pickups/power
+  size: 512x384
+  seed: 870082
+  prompt_prose: 'Redraw this exact power-up icon in 1980s neon rainbow airbrush school-folder sticker art: glossy,
+    soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars: keep its shape and colours,
+    glossy like a puffy sticker. Keep the flat bright green background exactly as it is, plain and even.'
+  source_url: /rainbow-princess-art/pickups/power.webp
+  source_matte: '#00ff00'
+  source_min_edge: 384
+- key: doodle-pickups-shield
+  lane: kontext
+  title: shield power-up, doodle style
+  asset: rainbow-princess-art/doodle/pickups/shield
+  size: 384x384
+  seed: 870083
+  prompt_prose: 'Redraw this exact power-up icon in 1980s neon rainbow airbrush school-folder sticker art: glossy,
+    soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars: keep its shape and colours,
+    glossy like a puffy sticker. Keep the flat bright green background exactly as it is, plain and even.'
+  source_url: /rainbow-princess-art/pickups/shield.webp
+  source_matte: '#00ff00'
+  source_min_edge: 384
+- key: doodle-stages-s01-card
+  lane: kontext
+  title: s01-card stage card, doodle style
+  asset: rainbow-princess-art/doodle/stages/s01-card
+  size: 1344x768
+  seed: 870084
+  prompt_prose: 'Redraw this exact ocean scene as 1980s neon rainbow airbrush school-folder sticker art: glossy,
+    soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars: glowing neon airbrush
+    ocean waves under a starry deep-violet sky. Keep the same layout, horizon, landmarks and creatures in the same
+    places.'
+  source_url: /rainbow-princess-art/stages/s01-card.webp
+  source_min_edge: 768
+- key: doodle-stages-s02-card
+  lane: kontext
+  title: s02-card stage card, doodle style
+  asset: rainbow-princess-art/doodle/stages/s02-card
+  size: 1344x768
+  seed: 870085
+  prompt_prose: 'Redraw this exact ocean scene as 1980s neon rainbow airbrush school-folder sticker art: glossy,
+    soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars: glowing neon airbrush
+    ocean waves under a starry deep-violet sky. Keep the same layout, horizon, landmarks and creatures in the same
+    places.'
+  source_url: /rainbow-princess-art/stages/s02-card.webp
+  source_min_edge: 768
+- key: doodle-stages-s03-card
+  lane: kontext
+  title: s03-card stage card, doodle style
+  asset: rainbow-princess-art/doodle/stages/s03-card
+  size: 1344x768
+  seed: 870086
+  prompt_prose: 'Redraw this exact ocean scene as 1980s neon rainbow airbrush school-folder sticker art: glossy,
+    soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars: glowing neon airbrush
+    ocean waves under a starry deep-violet sky. Keep the same layout, horizon, landmarks and creatures in the same
+    places.'
+  source_url: /rainbow-princess-art/stages/s03-card.webp
+  source_min_edge: 768
+- key: doodle-stages-s04-card
+  lane: kontext
+  title: s04-card stage card, doodle style
+  asset: rainbow-princess-art/doodle/stages/s04-card
+  size: 1344x768
+  seed: 870087
+  prompt_prose: 'Redraw this exact ocean scene as 1980s neon rainbow airbrush school-folder sticker art: glossy,
+    soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars: glowing neon airbrush
+    ocean waves under a starry deep-violet sky. Keep the same layout, horizon, landmarks and creatures in the same
+    places.'
+  source_url: /rainbow-princess-art/stages/s04-card.webp
+  source_min_edge: 768
+- key: doodle-stages-s05-card
+  lane: kontext
+  title: s05-card stage card, doodle style
+  asset: rainbow-princess-art/doodle/stages/s05-card
+  size: 1344x768
+  seed: 870088
+  prompt_prose: 'Redraw this exact ocean scene as 1980s neon rainbow airbrush school-folder sticker art: glossy,
+    soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars: glowing neon airbrush
+    ocean waves under a starry deep-violet sky. Keep the same layout, horizon, landmarks and creatures in the same
+    places.'
+  source_url: /rainbow-princess-art/stages/s05-card.webp
+  source_min_edge: 768
+- key: doodle-stages-s06-card
+  lane: kontext
+  title: s06-card stage card, doodle style
+  asset: rainbow-princess-art/doodle/stages/s06-card
+  size: 1344x768
+  seed: 870089
+  prompt_prose: 'Redraw this exact ocean scene as 1980s neon rainbow airbrush school-folder sticker art: glossy,
+    soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars: glowing neon airbrush
+    ocean waves under a starry deep-violet sky. Keep the same layout, horizon, landmarks and creatures in the same
+    places.'
+  source_url: /rainbow-princess-art/stages/s06-card.webp
+  source_min_edge: 768
+- key: doodle-stages-s07-card
+  lane: kontext
+  title: s07-card stage card, doodle style
+  asset: rainbow-princess-art/doodle/stages/s07-card
+  size: 1344x768
+  seed: 870090
+  prompt_prose: 'Redraw this exact ocean scene as 1980s neon rainbow airbrush school-folder sticker art: glossy,
+    soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars: glowing neon airbrush
+    ocean waves under a starry deep-violet sky. Keep the same layout, horizon, landmarks and creatures in the same
+    places.'
+  source_url: /rainbow-princess-art/stages/s07-card.webp
+  source_min_edge: 768
+- key: doodle-stages-s08-card
+  lane: kontext
+  title: s08-card stage card, doodle style
+  asset: rainbow-princess-art/doodle/stages/s08-card
+  size: 1344x768
+  seed: 870091
+  prompt_prose: 'Redraw this exact ocean scene as 1980s neon rainbow airbrush school-folder sticker art: glossy,
+    soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars: glowing neon airbrush
+    ocean waves under a starry deep-violet sky. Keep the same layout, horizon, landmarks and creatures in the same
+    places.'
+  source_url: /rainbow-princess-art/stages/s08-card.webp
+  source_min_edge: 768
+- key: doodle-hero-pearl-palace
+  lane: kontext
+  title: Pearl Palace hero, doodle style
+  asset: rainbow-princess-art/doodle/hero-pearl-palace
+  size: 1344x768
+  seed: 870092
+  prompt_prose: 'Redraw this exact scene as 1980s neon rainbow airbrush school-folder sticker art: glossy, soft
+    airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine
+    yellow and tangerine, glitter sparkles, four-point twinkles, little hearts and stars: glowing neon airbrush
+    ocean and a pearl palace under a starry deep-violet sky. Keep the same layout, palace, horizon and composition.'
+  source_url: /rainbow-princess-art/hero-pearl-palace.webp
+- key: doodle-key-art-four-cat-ships
+  lane: krea2
+  title: 'C.A.T.S. key art: exactly four cat ships'
+  asset: rainbow-princess-art/doodle/key-art
+  size: 1344x768
+  seed: 870093
+  prompt_prose: 'Title key art in 1980s neon rainbow airbrush school-folder sticker art: glossy, soft airbrushed
+    shading, clean confident outlines, saturated hot pink, electric purple, turquoise, lime, sunshine yellow and
+    tangerine, glitter sparkles, four-point twinkles, little hearts and stars: exactly four cute cat-shaped starfighters
+    flying in a diamond formation over a glowing rainbow ocean toward a pearl palace on the horizon. One ship is
+    rose pink, one powder cyan, one sunny gold and one lilac; each has pointed cat ears, whisker lines and a curling
+    tail, with a rainbow exhaust trail behind it. Black starry space full of glitter sparkles, four-point twinkles
+    and little hearts.'
