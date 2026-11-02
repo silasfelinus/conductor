@@ -412,23 +412,15 @@ tasks:
   - id: t-021
     milestone: m4
     title: "Adversarial constructed-deck matchup audit for all six 300-card crews"
-    status: claimed
+    status: review
     depends_on: t-004
     owner: worker
     passes: 0
     stakes: reversible
-    note: >-
-      Silas 2026-11-02 PT: Once private card art has been submitted, playtest
-      the complete 300-card Blackout roster without waiting for renders.
-      Construct at least three different legal ten-card decks per faction
-      drawn from the actual account-collectible pool; use multiple seeded CPU
-      playthroughs against several rival crews and both seating orders.
-      Record first combat, dead turns, flag wins, knockouts, debt, roots,
-      shoves, card deployment frequency, deterministic replay, and high-cost
-      mana-banking viability. Detect overpowered loops, stalled/boring turns,
-      useless expensive cards, and missing hard counters. Fix verified code,
-      surface actual adversarial evidence and distinguish numeric balance from
-      subjective human fun and rendered art QA.
+    note: |-
+      Silas 2026-11-02 PT: Once private card art has been submitted, playtest the complete 300-card Blackout roster without waiting for renders. Construct at least three different legal ten-card decks per faction drawn from the actual account-collectible pool; use multiple seeded CPU playthroughs against several rival crews and both seating orders. Record first combat, dead turns, flag wins, knockouts, debt, roots, shoves, card deployment frequency, deterministic replay, and high-cost mana-banking viability. Detect overpowered loops, stalled/boring turns, useless expensive cards, and missing hard counters. Fix verified code, surface actual adversarial evidence and distinguish numeric balance from subjective human fun and rendered art QA.
+
+      Implemented 180 deterministic constructed-deck headless games: three legal ten-card archetypes for each crew versus all five rivals across two seeds. Captures win paths, first contact, dead rounds, banking, unit/card-use statistics, and validates 18 exact replays. Each round checks cards are neither duplicated nor lost. Awaiting latest-head GitHub CI before merge and concrete balance report.
     claimed_by: 2026-11-02T113800Z-slime-city-t021-c7f2
     claimed_at: '2026-11-02T11:38:00Z'
-    updated: '2026-11-02T11:38:00Z'
+    updated: '2026-11-02T11:41:00Z'
