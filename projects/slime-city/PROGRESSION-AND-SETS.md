@@ -46,4 +46,4 @@ The first account-owned API, issued CPU match IDs and transactional ledger are i
 Daily and weekly progression should reward broad gameplay, not force a single purchased faction or scarce card. Every launch-day challenge must be achievable using free loaner decks and should remain completable without opening packs. No consecutive-day streak penalties or compulsory purchases.
 
 ## Next design decision
-Run at least 100 seeded test games with each crew on both sides in open-information Blackout and collect failure causes. Only then finalize stats and decide whether the next authored 50-card-per-crew expansion should be staged as ten-card batches with real ArtJobs. Prioritize quality and unique crew identities over sheer item count.
+Run at least 100 seeded test games with each crew on both sides in open-information Blackout and collect failure causes. Then tune constructed builds using real matchup evidence, stage 22 more cards per crew to reach the 40-choice core, and keep ArtJob acceptance independently evidenced. Each crew needs three viable archetypes and a clear signature trick; prioritize fun and counterplay over raw card counts.
