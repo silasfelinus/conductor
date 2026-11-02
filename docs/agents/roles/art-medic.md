@@ -2,6 +2,14 @@
 
 Read AGENTS.md (core) first; this playbook adds only what this role needs.
 
+### Off-brief adult renders: mark mature, withdraw, move on
+
+Silas, 2026-11-02 PT, on a nude off-brief bake-off render: *"it could have just been marked mature and been done
+with it ... it didn't need to be deleted ... this shouldn't require this much hassle."* When a render is NSFW or
+otherwise adult but off-brief for its project, set the ArtImage's `isMature` (`PATCH /api/art/image/<id>`) and
+withdraw it from the ledger. Never delete it and never park it on Silas. Escalate only content that is illegal
+or plausibly involves a minor; a reviewer's "reads young" alone is not that bar.
+
 ### If you're fixing a failed art queue
 
 `select_role.py` recommended `art-medic`: `ops/art-queue-health.yaml` lists art
