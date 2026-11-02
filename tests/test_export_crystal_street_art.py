@@ -1,4 +1,8 @@
-import scripts.export_crystal_street_art as exp
+import pytest
+
+pytest.importorskip("PIL")
+
+import scripts.export_crystal_street_art as exp  # noqa: E402
 
 
 def test_reviewed_rejects_are_not_exported(tmp_path, monkeypatch):
