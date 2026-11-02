@@ -1,0 +1,250 @@
+# Memory Dungeon card-outcome gaps outside the event catalog (Silas, 2026-11-02 PT: "Yes, commission").
+# 1 pending: House HD-16 'duel' outcome, the only House choice whose houseIllustrationPath() file is missing
+#   (HEAD 404; every other House, Briar, Dark Briar and Dark House outcome is delivered). Prompt is the
+#   manifest's own brief (utils/memoryDungeon/artManifest.ts house-HD-16-choice-duel), word for word.
+# 15 deferred: Dark House puzzle answers (darkHouseChallenges.ts DARK_HOUSE_PUZZLES, 5 rooms x 3 options).
+#   PROPOSED convention /images/memory-dungeon/dark-briar/house/puzzles/<room>-<option>.webp, square, one object
+#   per option, every option pictured so the art never singles out the answer. No code reads this path yet: flip
+#   these to pending in the PR that adds darkHousePuzzleIllustrationPath() and passes it as the card image.
+# Priority 1, private, requests-format. Queued is not rendered; rendered is not delivered.
+requests:
+- id: "memory-dungeon-saturate-house-outcome-hd-16-duel"
+  source: memory-dungeon
+  status: pending
+  requested_at: "2026-11-02T22:00:00.000Z"
+  target_repo: silasfelinus/kind_robots
+  image_path: "public/images/memory-dungeon/house/rooms/outcomes/hd-16-duel.webp"
+  source_url: "/images/memory-dungeon/house/rooms/outcomes/hd-16-duel.webp"
+  page_url: https://kindrobots.org/play/memory
+  variant: image
+  engine: krea2
+  project_slug: memory-dungeon
+  priority: 1
+  size: "1344x768"
+  label: "Thornbound Housekeeper: Offer a nonlethal memory duel to prove you can protect the residents"
+  prompt: "The Thornbound Housekeeper, a stout middle-aged woman in armor of interlocking rootwood plates hung with dozens of brass keys, holding a long thorn broom across her body in a defensive stance. A moment later, closer in: an androgynous fey traveller with long pointed ears, short silver hair and a dark green cloak steps forward to offer a nonlethal memory duel to prove you can protect the residents. Medium shot. Hand-painted gouache and ink illustration, warm candlelight and deep green shadows."
+- id: "memory-dungeon-saturate-dark-house-puzzle-hd-03-north"
+  source: memory-dungeon
+  status: deferred
+  requested_at: "2026-11-02T22:00:00.000Z"
+  target_repo: silasfelinus/kind_robots
+  image_path: "public/images/memory-dungeon/dark-briar/house/puzzles/hd-03-north.webp"
+  source_url: "/images/memory-dungeon/dark-briar/house/puzzles/hd-03-north.webp"
+  page_url: https://kindrobots.org/play/memory
+  variant: image
+  engine: krea2
+  project_slug: memory-dungeon
+  priority: 1
+  size: "1024x1024"
+  label: "Boot-Rack Maze of Borrowed Routes: The snow-covered northern boots"
+  prompt: "A pair of worn leather travelling boots crusted with fresh white snow, standing on the northern end of a wooden boot rack. Close-up, centered. Hand-painted gouache and ink illustration under cold violet moonlight with silver-blue shadows."
+- id: "memory-dungeon-saturate-dark-house-puzzle-hd-03-south"
+  source: memory-dungeon
+  status: deferred
+  requested_at: "2026-11-02T22:00:00.000Z"
+  target_repo: silasfelinus/kind_robots
+  image_path: "public/images/memory-dungeon/dark-briar/house/puzzles/hd-03-south.webp"
+  source_url: "/images/memory-dungeon/dark-briar/house/puzzles/hd-03-south.webp"
+  page_url: https://kindrobots.org/play/memory
+  variant: image
+  engine: krea2
+  project_slug: memory-dungeon
+  priority: 1
+  size: "1024x1024"
+  label: "Boot-Rack Maze of Borrowed Routes: The muddy southern boots"
+  prompt: "A pair of worn leather travelling boots caked in wet brown river mud, standing on the southern end of a wooden boot rack. Close-up, centered. Hand-painted gouache and ink illustration under cold violet moonlight with silver-blue shadows."
+- id: "memory-dungeon-saturate-dark-house-puzzle-hd-03-same"
+  source: memory-dungeon
+  status: deferred
+  requested_at: "2026-11-02T22:00:00.000Z"
+  target_repo: silasfelinus/kind_robots
+  image_path: "public/images/memory-dungeon/dark-briar/house/puzzles/hd-03-same.webp"
+  source_url: "/images/memory-dungeon/dark-briar/house/puzzles/hd-03-same.webp"
+  page_url: https://kindrobots.org/play/memory
+  variant: image
+  engine: krea2
+  project_slug: memory-dungeon
+  priority: 1
+  size: "1024x1024"
+  label: "Boot-Rack Maze of Borrowed Routes: Both pairs mark the same road"
+  prompt: "Two pairs of worn leather travelling boots side by side on a wooden boot rack, their toes pointing down one shared road chalked on the floorboards. Close-up, centered. Hand-painted gouache and ink illustration under cold violet moonlight with silver-blue shadows."
+- id: "memory-dungeon-saturate-dark-house-puzzle-hd-08-first"
+  source: memory-dungeon
+  status: deferred
+  requested_at: "2026-11-02T22:00:00.000Z"
+  target_repo: silasfelinus/kind_robots
+  image_path: "public/images/memory-dungeon/dark-briar/house/puzzles/hd-08-first.webp"
+  source_url: "/images/memory-dungeon/dark-briar/house/puzzles/hd-08-first.webp"
+  page_url: https://kindrobots.org/play/memory
+  variant: image
+  engine: krea2
+  project_slug: memory-dungeon
+  priority: 1
+  size: "1024x1024"
+  label: "Staircase of Three Unfinished Apologies: The apology about the borrowed coat"
+  prompt: "A folded wool coat draped over a staircase banister with a sealed apology letter tucked into its pocket. Close-up, centered. Hand-painted gouache and ink illustration under cold violet moonlight with silver-blue shadows."
+- id: "memory-dungeon-saturate-dark-house-puzzle-hd-08-second"
+  source: memory-dungeon
+  status: deferred
+  requested_at: "2026-11-02T22:00:00.000Z"
+  target_repo: silasfelinus/kind_robots
+  image_path: "public/images/memory-dungeon/dark-briar/house/puzzles/hd-08-second.webp"
+  source_url: "/images/memory-dungeon/dark-briar/house/puzzles/hd-08-second.webp"
+  page_url: https://kindrobots.org/play/memory
+  variant: image
+  engine: krea2
+  project_slug: memory-dungeon
+  priority: 1
+  size: "1024x1024"
+  label: "Staircase of Three Unfinished Apologies: The apology about the broken bridge"
+  prompt: "A sealed apology letter resting on a broken stone bridge model beside a mason's trowel on a staircase landing. Close-up, centered. Hand-painted gouache and ink illustration under cold violet moonlight with silver-blue shadows."
+- id: "memory-dungeon-saturate-dark-house-puzzle-hd-08-third"
+  source: memory-dungeon
+  status: deferred
+  requested_at: "2026-11-02T22:00:00.000Z"
+  target_repo: silasfelinus/kind_robots
+  image_path: "public/images/memory-dungeon/dark-briar/house/puzzles/hd-08-third.webp"
+  source_url: "/images/memory-dungeon/dark-briar/house/puzzles/hd-08-third.webp"
+  page_url: https://kindrobots.org/play/memory
+  variant: image
+  engine: krea2
+  project_slug: memory-dungeon
+  priority: 1
+  size: "1024x1024"
+  label: "Staircase of Three Unfinished Apologies: The apology about the lost letter"
+  prompt: "A sealed apology letter beside an empty torn envelope on a staircase step. Close-up, centered. Hand-painted gouache and ink illustration under cold violet moonlight with silver-blue shadows."
+- id: "memory-dungeon-saturate-dark-house-puzzle-hd-13-cook"
+  source: memory-dungeon
+  status: deferred
+  requested_at: "2026-11-02T22:00:00.000Z"
+  target_repo: silasfelinus/kind_robots
+  image_path: "public/images/memory-dungeon/dark-briar/house/puzzles/hd-13-cook.webp"
+  source_url: "/images/memory-dungeon/dark-briar/house/puzzles/hd-13-cook.webp"
+  page_url: https://kindrobots.org/play/memory
+  variant: image
+  engine: krea2
+  project_slug: memory-dungeon
+  priority: 1
+  size: "1024x1024"
+  label: "Kitchen Printing Tomorrow's Menus: The cook became incapable of making bread"
+  prompt: "A cook's empty floury hands held open over a cold kneading board beside a bare bread tin. Close-up, centered. Hand-painted gouache and ink illustration under cold violet moonlight with silver-blue shadows."
+- id: "memory-dungeon-saturate-dark-house-puzzle-hd-13-count"
+  source: memory-dungeon
+  status: deferred
+  requested_at: "2026-11-02T22:00:00.000Z"
+  target_repo: silasfelinus/kind_robots
+  image_path: "public/images/memory-dungeon/dark-briar/house/puzzles/hd-13-count.webp"
+  source_url: "/images/memory-dungeon/dark-briar/house/puzzles/hd-13-count.webp"
+  page_url: https://kindrobots.org/play/memory
+  variant: image
+  engine: krea2
+  project_slug: memory-dungeon
+  priority: 1
+  size: "1024x1024"
+  label: "Kitchen Printing Tomorrow's Menus: The machine measured mistakes rather than meals served"
+  prompt: "A brass clockwork counting machine on a kitchen table showing a dial stopped at zero beside one warm imperfect loaf. Close-up, centered. Hand-painted gouache and ink illustration under cold violet moonlight with silver-blue shadows."
+- id: "memory-dungeon-saturate-dark-house-puzzle-hd-13-oven"
+  source: memory-dungeon
+  status: deferred
+  requested_at: "2026-11-02T22:00:00.000Z"
+  target_repo: silasfelinus/kind_robots
+  image_path: "public/images/memory-dungeon/dark-briar/house/puzzles/hd-13-oven.webp"
+  source_url: "/images/memory-dungeon/dark-briar/house/puzzles/hd-13-oven.webp"
+  page_url: https://kindrobots.org/play/memory
+  variant: image
+  engine: krea2
+  project_slug: memory-dungeon
+  priority: 1
+  size: "1024x1024"
+  label: "Kitchen Printing Tomorrow's Menus: The oven stopped producing any heat"
+  prompt: "A cold black iron oven with its door open and grey ash on the grate in a dim kitchen. Close-up, centered. Hand-painted gouache and ink illustration under cold violet moonlight with silver-blue shadows."
+- id: "memory-dungeon-saturate-dark-house-puzzle-hd-25-house"
+  source: memory-dungeon
+  status: deferred
+  requested_at: "2026-11-02T22:00:00.000Z"
+  target_repo: silasfelinus/kind_robots
+  image_path: "public/images/memory-dungeon/dark-briar/house/puzzles/hd-25-house.webp"
+  source_url: "/images/memory-dungeon/dark-briar/house/puzzles/hd-25-house.webp"
+  page_url: https://kindrobots.org/play/memory
+  variant: image
+  engine: krea2
+  project_slug: memory-dungeon
+  priority: 1
+  size: "1024x1024"
+  label: "Bargain Ledger of Two Truths: The House paid from its own savings"
+  prompt: "An open iron strongbox with an empty velvet lining on a desk beside a closed ledger. Close-up, centered. Hand-painted gouache and ink illustration under cold violet moonlight with silver-blue shadows."
+- id: "memory-dungeon-saturate-dark-house-puzzle-hd-25-workers"
+  source: memory-dungeon
+  status: deferred
+  requested_at: "2026-11-02T22:00:00.000Z"
+  target_repo: silasfelinus/kind_robots
+  image_path: "public/images/memory-dungeon/dark-briar/house/puzzles/hd-25-workers.webp"
+  source_url: "/images/memory-dungeon/dark-briar/house/puzzles/hd-25-workers.webp"
+  page_url: https://kindrobots.org/play/memory
+  variant: image
+  engine: krea2
+  project_slug: memory-dungeon
+  priority: 1
+  size: "1024x1024"
+  label: "Bargain Ledger of Two Truths: The villagers whose wages were withheld"
+  prompt: "A row of small cloth wage pouches tied with village thread, stacked beside an open ledger on a desk. Close-up, centered. Hand-painted gouache and ink illustration under cold violet moonlight with silver-blue shadows."
+- id: "memory-dungeon-saturate-dark-house-puzzle-hd-25-warden"
+  source: memory-dungeon
+  status: deferred
+  requested_at: "2026-11-02T22:00:00.000Z"
+  target_repo: silasfelinus/kind_robots
+  image_path: "public/images/memory-dungeon/dark-briar/house/puzzles/hd-25-warden.webp"
+  source_url: "/images/memory-dungeon/dark-briar/house/puzzles/hd-25-warden.webp"
+  page_url: https://kindrobots.org/play/memory
+  variant: image
+  engine: krea2
+  project_slug: memory-dungeon
+  priority: 1
+  size: "1024x1024"
+  label: "Bargain Ledger of Two Truths: The Warden donated its private wealth"
+  prompt: "A carved rootwood coffer with a single empty coin slot, sitting alone on a dark shelf. Close-up, centered. Hand-painted gouache and ink illustration under cold violet moonlight with silver-blue shadows."
+- id: "memory-dungeon-saturate-dark-house-puzzle-hd-34-lock"
+  source: memory-dungeon
+  status: deferred
+  requested_at: "2026-11-02T22:00:00.000Z"
+  target_repo: silasfelinus/kind_robots
+  image_path: "public/images/memory-dungeon/dark-briar/house/puzzles/hd-34-lock.webp"
+  source_url: "/images/memory-dungeon/dark-briar/house/puzzles/hd-34-lock.webp"
+  page_url: https://kindrobots.org/play/memory
+  variant: image
+  engine: krea2
+  project_slug: memory-dungeon
+  priority: 1
+  size: "1024x1024"
+  label: "Broken Doorway of Shared Repairs: Rebuild the permanently locked door"
+  prompt: "A heavy oak door bound with iron bands and a large padlock, set in a cracked stone doorway. Close-up, centered. Hand-painted gouache and ink illustration under cold violet moonlight with silver-blue shadows."
+- id: "memory-dungeon-saturate-dark-house-puzzle-hd-34-arch"
+  source: memory-dungeon
+  status: deferred
+  requested_at: "2026-11-02T22:00:00.000Z"
+  target_repo: silasfelinus/kind_robots
+  image_path: "public/images/memory-dungeon/dark-briar/house/puzzles/hd-34-arch.webp"
+  source_url: "/images/memory-dungeon/dark-briar/house/puzzles/hd-34-arch.webp"
+  page_url: https://kindrobots.org/play/memory
+  variant: image
+  engine: krea2
+  project_slug: memory-dungeon
+  priority: 1
+  size: "1024x1024"
+  label: "Broken Doorway of Shared Repairs: Remove every barrier around the opening"
+  prompt: "A bare open stone archway with river water spilling across its lowest step. Close-up, centered. Hand-painted gouache and ink illustration under cold violet moonlight with silver-blue shadows."
+- id: "memory-dungeon-saturate-dark-house-puzzle-hd-34-hinge"
+  source: memory-dungeon
+  status: deferred
+  requested_at: "2026-11-02T22:00:00.000Z"
+  target_repo: silasfelinus/kind_robots
+  image_path: "public/images/memory-dungeon/dark-briar/house/puzzles/hd-34-hinge.webp"
+  source_url: "/images/memory-dungeon/dark-briar/house/puzzles/hd-34-hinge.webp"
+  page_url: https://kindrobots.org/play/memory
+  variant: image
+  engine: krea2
+  project_slug: memory-dungeon
+  priority: 1
+  size: "1024x1024"
+  label: "Broken Doorway of Shared Repairs: Fit the raised ramp and hinged floodgate"
+  prompt: "A raised wooden ramp under a hinged oak floodgate standing half open in a stone doorway. Close-up, centered. Hand-painted gouache and ink illustration under cold violet moonlight with silver-blue shadows."
