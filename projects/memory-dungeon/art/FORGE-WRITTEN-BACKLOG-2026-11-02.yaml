@@ -1,0 +1,351 @@
+# Memory Dungeon: written-but-unqueued Playbook Forge beats (Silas, 2026-11-02 PT: "if it's written, it should be in the queue").
+# 29 beats of Playbook Studio game "memory-dungeon" whose authored artPrompt has no delivered file (production
+# /api/admin/playbook-ledger inventory), no conductor ledger entry (asset or prompt match) and no live or finished ArtJob
+# (Forge art-request notes and this project's queue, prompt match). Asset is the beat's runtime path where it has one,
+# else playbook/memory-dungeon/<node>. Priority 1: renders only when no game, Hybridizer or interactive job waits.
+# auto_submit: true. Private. Queued is not rendered; rendered is not delivered.
+round: memory-dungeon-forge-written-backlog-20261102
+project_slug: memory-dungeon
+designer: Playbook Forge written-art backlog
+is_public: false
+is_mature: false
+cast_loras: false
+priority: 1
+auto_submit: true
+lanes:
+- key: krea2
+  label: Krea 2, the Forge default lane
+  engine: krea2
+  prompt: prose
+subjects:
+- key: forge-photo-earth-05
+  lane: krea2
+  entity: playbook-thread
+  title: The Transit Lesson
+  playbook_node: photo:earth-05
+  asset: memory-dungeon/earth-photographs/earth-05
+  size: 1344x768
+  seed: 891000
+  prompt_prose: In a subway station, an androgynous adult in their thirties with short dark hair and a grey cardigan
+    frowns at a ticket machine screen while an older stranger in a raincoat points patiently at one button. Commuters
+    walk past behind them. Fluorescent station light. Medium shot. Candid 35mm colour photograph, natural light,
+    soft film grain.
+- key: forge-photo-earth-06
+  lane: krea2
+  entity: playbook-thread
+  title: The Failed Gesture
+  playbook_node: photo:earth-06
+  asset: memory-dungeon/earth-photographs/earth-06
+  size: 1344x768
+  seed: 891001
+  prompt_prose: An open hand raised above an office desk scattered with diagrams, a still glass of water beside
+    the papers, a plain wall clock in the background. Overhead fluorescent light. Medium close-up. Candid 35mm colour
+    photograph, natural light, soft film grain.
+- key: forge-photo-earth-07
+  lane: krea2
+  entity: playbook-thread
+  title: The First Impossible Rain
+  playbook_node: photo:earth-07
+  asset: memory-dungeon/earth-photographs/earth-07
+  size: 1344x768
+  seed: 891002
+  prompt_prose: A city intersection at night under falling rain that glows pale gold in the streetlights. Neighbors
+    in coats guide each other under a green pharmacy awning, one holding an elderly man by the arm. The red and
+    blue lights of an approaching ambulance blur in the distance. Wide shot. Candid 35mm colour photograph, natural
+    light, soft film grain.
+- key: forge-photo-earth-08
+  lane: krea2
+  entity: playbook-thread
+  title: The Research Shelter
+  playbook_node: photo:earth-08
+  asset: memory-dungeon/earth-photographs/earth-08
+  size: 1344x768
+  seed: 891003
+  prompt_prose: 'A university laboratory turned into an emergency shelter: folding cots between lab benches, stacked
+    water bottles and blankets, and a whiteboard covered in a grid of small marker ticks. A tired volunteer in a
+    lab coat checks a clipboard. Fluorescent light, dark storm clouds through the windows. Wide shot. Candid 35mm
+    colour photograph, natural light, soft film grain.'
+- key: forge-photo-earth-09
+  lane: krea2
+  entity: playbook-thread
+  title: A Very Formal Postcard
+  playbook_node: photo:earth-09
+  asset: memory-dungeon/earth-photographs/earth-09
+  size: 1344x768
+  seed: 891004
+  prompt_prose: A tidy desk with a postcard of a seaside town beside a sheet of travel instructions folded into
+    precise thirds and a fountain pen laid parallel to it. Window daylight. Close shot from above. Candid 35mm colour
+    photograph, natural light, soft film grain.
+- key: forge-photo-earth-11
+  lane: krea2
+  entity: playbook-thread
+  title: The Quiet Lesson
+  playbook_node: photo:earth-11
+  asset: memory-dungeon/earth-photographs/earth-11
+  size: 1344x768
+  seed: 891005
+  prompt_prose: An open laboratory notebook on a bench. A colleague's hand sketches a simple pencil drawing of an
+    apparatus while an androgynous adult in their thirties with short dark hair and a grey cardigan leans in to
+    watch. Daylight from a lab window. Close-medium shot. Candid 35mm colour photograph, natural light, soft film
+    grain.
+- key: forge-photo-earth-12
+  lane: krea2
+  entity: playbook-thread
+  title: An Honest Mistake
+  playbook_node: photo:earth-12
+  asset: memory-dungeon/earth-photographs/earth-12
+  size: 1344x768
+  seed: 891006
+  prompt_prose: In a shared office, an androgynous adult in their thirties with short dark hair and a grey cardigan
+    sits at a desk holding a red pen beside a printed chart with one error circled in red. Coworkers type at nearby
+    desks. Overcast window light. Medium shot. Candid 35mm colour photograph, natural light, soft film grain.
+- key: forge-photo-earth-13
+  lane: krea2
+  entity: playbook-thread
+  title: Bread for the Long Shift
+  playbook_node: photo:earth-13
+  asset: memory-dungeon/earth-photographs/earth-13
+  size: 1344x768
+  seed: 891007
+  prompt_prose: A night-shift break room with tired colleagues in scrubs and high-visibility vests. an androgynous
+    adult in their thirties with short dark hair and a grey cardigan passes around a paper bag of warm bread rolls,
+    and one colleague is laughing. Fluorescent light. Medium shot. Candid 35mm colour photograph, natural light,
+    soft film grain.
+- key: forge-photo-earth-14
+  lane: krea2
+  entity: playbook-thread
+  title: The Difficult Call
+  playbook_node: photo:earth-14
+  asset: memory-dungeon/earth-photographs/earth-14
+  size: 1344x768
+  seed: 891008
+  prompt_prose: A late-night apartment desk with a mobile phone face down beside a notepad of crossed-out lines,
+    a desk lamp, and the edge of a person's arm. Warm lamplight. Close shot. Candid 35mm colour photograph, natural
+    light, soft film grain.
+- key: forge-photo-earth-15
+  lane: krea2
+  entity: playbook-thread
+  title: A Door Left Unlocked
+  playbook_node: photo:earth-15
+  asset: memory-dungeon/earth-photographs/earth-15
+  size: 1344x768
+  seed: 891009
+  prompt_prose: A narrow apartment stairwell where two friends carry a secondhand wooden table up the stairs toward
+    an open doorway, a colleague holding the door. Daylight from a stair window. Medium shot. Candid 35mm colour
+    photograph, natural light, soft film grain.
+- key: forge-photo-earth-16
+  lane: krea2
+  entity: playbook-thread
+  title: The Empty Place Setting
+  playbook_node: photo:earth-16
+  asset: memory-dungeon/earth-photographs/earth-16
+  size: 1344x768
+  seed: 891010
+  prompt_prose: A modest apartment dining table set with mismatched thrift-store plates for three, plus a fourth
+    plate squeezed in at a corner, under a warm pendant lamp. The chairs are empty. Medium shot. Candid 35mm colour
+    photograph, natural light, soft film grain.
+- key: forge-photo-earth-17
+  lane: krea2
+  entity: playbook-thread
+  title: A Job Worth Keeping
+  playbook_node: photo:earth-17
+  asset: memory-dungeon/earth-photographs/earth-17
+  size: 1344x768
+  seed: 891011
+  prompt_prose: A small research group of six colleagues stands in a lab doorway for a staff photo. an androgynous
+    adult in their thirties with short dark hair and a grey cardigan stands at the end of the row, relaxed and smiling.
+    Bright overhead light. Medium-wide shot. Candid 35mm colour photograph, natural light, soft film grain.
+- key: forge-photo-earth-18
+  lane: krea2
+  entity: playbook-thread
+  title: The Volunteer Shift
+  playbook_node: photo:earth-18
+  asset: memory-dungeon/earth-photographs/earth-18
+  size: 1344x768
+  seed: 891012
+  prompt_prose: A corridor cork board crowded with pinned paper notes. A hand pins one small extra note into the
+    margin. Evening fluorescent light. Close shot. Candid 35mm colour photograph, natural light, soft film grain.
+- key: forge-photo-earth-19
+  lane: krea2
+  entity: playbook-thread
+  title: The First Real Celebration
+  playbook_node: photo:earth-19
+  asset: memory-dungeon/earth-photographs/earth-19
+  size: 1344x768
+  seed: 891013
+  prompt_prose: A small apartment party where an androgynous adult in their thirties with short dark hair and a
+    grey cardigan holds a lopsided homemade cake with lit candles, while a friend in a green sweater stands a step
+    away at the edge of the group, half smiling. Warm lamplight and paper streamers. Medium shot. Candid 35mm colour
+    photograph, natural light, soft film grain.
+- key: forge-photo-earth-20
+  lane: krea2
+  entity: playbook-thread
+  title: A Seat Beside the Window
+  playbook_node: photo:earth-20
+  asset: memory-dungeon/earth-photographs/earth-20
+  size: 1344x768
+  seed: 891014
+  prompt_prose: Two adults sit side by side in a quiet evening commuter train, their hands resting on the seat between
+    them and almost touching. City lights at dusk through the window. Shallow focus. Candid 35mm colour photograph,
+    natural light, soft film grain.
+- key: forge-photo-earth-22
+  lane: krea2
+  entity: playbook-thread
+  title: An Ordinary Tuesday
+  playbook_node: photo:earth-22
+  asset: memory-dungeon/earth-photographs/earth-22
+  size: 1344x768
+  seed: 891015
+  prompt_prose: A kitchen sink full of dishes with two mugs drying on a rack beside it. Off to one side, a small
+    paper drawing is held to the refrigerator door by a magnet, half out of view. Warm afternoon light. Close shot.
+    Candid 35mm colour photograph, natural light, soft film grain.
+- key: forge-photo-earth-23
+  lane: krea2
+  entity: playbook-thread
+  title: The Difficult Conversation
+  playbook_node: photo:earth-23
+  asset: memory-dungeon/earth-photographs/earth-23
+  size: 1344x768
+  seed: 891016
+  prompt_prose: Seen from across a sunny park, two adults sit facing each other at a small cafe table, leaning in
+    with their hands apart. Blurred passers-by cross the foreground. Long lens. Candid 35mm colour photograph, natural
+    light, soft film grain.
+- key: forge-photo-earth-24
+  lane: krea2
+  entity: playbook-thread
+  title: Shared Shelter
+  playbook_node: photo:earth-24
+  asset: memory-dungeon/earth-photographs/earth-24
+  size: 1344x768
+  seed: 891017
+  prompt_prose: A worn grey cardigan and a bright yellow raincoat hang on two hooks beside an apartment front door.
+    Wet autumn leaves are pressed against the frosted glass of the door. Grey daylight. Medium shot. Candid 35mm
+    colour photograph, natural light, soft film grain.
+- key: forge-photo-earth-25
+  lane: krea2
+  entity: playbook-thread
+  title: The Names Not Written
+  playbook_node: photo:earth-25
+  asset: memory-dungeon/earth-photographs/earth-25
+  size: 1344x768
+  seed: 891018
+  prompt_prose: A photograph restoration desk with a repaired black-and-white photograph under a lamp. A hand lays
+    a plain blank index slip face down beside it. A glass cabinet behind reflects tall archive shelves. Close shot.
+    Candid 35mm colour photograph, natural light, soft film grain.
+- key: forge-photo-earth-26
+  lane: krea2
+  entity: playbook-thread
+  title: The Future Rehearsal
+  playbook_node: photo:earth-26
+  asset: memory-dungeon/earth-photographs/earth-26
+  size: 1344x768
+  seed: 891019
+  prompt_prose: A sheet of paperwork lies under a glass of water on a kitchen table, and a thumb presses down on
+    one corner of the sheet. Soft indirect window light, shallow focus. Close-up. Candid 35mm colour photograph,
+    natural light, soft film grain.
+- key: forge-photo-earth-27
+  lane: krea2
+  entity: playbook-thread
+  title: The Possible Address
+  playbook_node: photo:earth-27
+  asset: memory-dungeon/earth-photographs/earth-27
+  size: 1344x768
+  seed: 891020
+  prompt_prose: A stack of cardboard moving boxes in an apartment hallway. The paper sticker on the top box has
+    an address scratched out and written again, slightly out of focus. Daylight from an open door. Medium shot.
+    Candid 35mm colour photograph, natural light, soft film grain.
+- key: forge-photo-earth-28
+  lane: krea2
+  entity: playbook-thread
+  title: An Invitation Not Opened
+  playbook_node: photo:earth-28
+  asset: memory-dungeon/earth-photographs/earth-28
+  size: 1344x768
+  seed: 891021
+  prompt_prose: A sealed cream envelope with one folded corner rests on a wooden mantelpiece beside a small out-of-focus
+    photograph of a sunny garden propped against the wall. Warm lamplight. Close shot. Candid 35mm colour photograph,
+    natural light, soft film grain.
+- key: forge-photo-earth-29
+  lane: krea2
+  entity: playbook-thread
+  title: The Small Shoes
+  playbook_node: photo:earth-29
+  asset: memory-dungeon/earth-photographs/earth-29
+  size: 1344x768
+  seed: 891022
+  prompt_prose: A thrift store aisle with racks of secondhand coats. In the foreground an adult customer browses
+    a coat rack, and on a low shelf in the far background sits a pair of small child's shoes. Fluorescent store
+    light. Medium-wide shot. Candid 35mm colour photograph, natural light, soft film grain.
+- key: forge-photo-earth-31
+  lane: krea2
+  entity: playbook-thread
+  title: The People You Did Not Meet
+  playbook_node: photo:earth-31
+  asset: memory-dungeon/earth-photographs/earth-31
+  size: 1344x768
+  seed: 891023
+  prompt_prose: A warm family kitchen in the evening, where an androgynous adult in their thirties with short dark
+    hair and a grey cardigan sits at the table helping two children, a boy and a girl, with crayons and drawings.
+    Pendant lamp light. Medium shot. Candid 35mm colour photograph, natural light, soft film grain.
+- key: forge-photo-earth-32
+  lane: krea2
+  entity: playbook-thread
+  title: A Door with More Than One Key
+  playbook_node: photo:earth-32
+  asset: memory-dungeon/earth-photographs/earth-32
+  size: 1344x768
+  seed: 891024
+  prompt_prose: 'A family stands at an open apartment front door in the evening: an androgynous adult in their thirties
+    with short dark hair and a grey cardigan, a second adult and two children, each looking at a different person
+    in the group. Beyond the door, the hallway carpet turns into green forest moss. Warm hallway light. Medium-wide
+    shot. Candid 35mm colour photograph, natural light, soft film grain.'
+- key: forge-monster-housekeeper
+  lane: krea2
+  entity: playbook-boss
+  title: Thornbound Housekeeper
+  playbook_node: monster:housekeeper
+  asset: memory-dungeon/monsters/thornbound-housekeeper
+  size: 1344x768
+  seed: 891025
+  prompt_prose: A sturdy middle-aged housekeeper in interlocking rootwood armor hung with dozens of brass keys stands
+    in a candlelit manor corridor. She holds a long thorn broom across her body, testing an adult traveler in a
+    fair memory duel. Four small luminous paired tiles float between them, her expression watchful rather than cruel.
+    Medium-wide original fantasy scene with warm lanternlight on her brass keys. Hand-painted gouache and ink illustration,
+    warm candlelight and deep green shadows.
+- key: forge-monster-moss-judge
+  lane: krea2
+  entity: playbook-boss
+  title: Moss Judge
+  playbook_node: monster:moss-judge
+  asset: memory-dungeon/monsters/moss-judge
+  size: 1344x768
+  seed: 891026
+  prompt_prose: A knee-high moss-covered sprite with a leaf cap, twig fingers and glinting green eyes stands on
+    a stone chessboard set into a woodland clearing, a tiny wooden whistle between her lips and a thin twig sword
+    raised in one hand. A grid of glowing pale squares hovers above the chessboard. Low-angle medium shot. Hand-painted
+    gouache and ink illustration under cold violet moonlight with silver-blue shadows.
+- key: forge-monster-unpaid-patrol
+  lane: krea2
+  entity: playbook-boss
+  title: Unpaid Patrol
+  playbook_node: monster:unpaid-patrol
+  asset: memory-dungeon/monsters/unpaid-patrol
+  size: 1344x768
+  seed: 891027
+  prompt_prose: Two forest guards in battered bark armor wrapped with thorny vines, one tall and lean, one short
+    and broad, charge side by side down a moonlit shortcut path with narrow spears lowered, rows of grey cloth medals
+    bouncing on their chests. A gate of woven thorns stands behind them. Low-angle medium-wide shot. Hand-painted
+    gouache and ink illustration under cold violet moonlight with silver-blue shadows.
+- key: forge-monster-empty-armor
+  lane: krea2
+  entity: playbook-boss
+  title: Empty Armor
+  playbook_node: monster:empty-armor
+  asset: memory-dungeon/monsters/empty-armor
+  size: 1344x768
+  seed: 891028
+  prompt_prose: An empty suit of polished royal plate armor with a thin gold circlet on its helm stands upright
+    on a rocky ridge beside an ancient signal fire, one gauntlet raised to strike, its open visor showing a hollow
+    dark interior. An old sentinel in a worn grey cloak watches from behind a boulder. A huge moon hangs behind
+    them. Low-angle wide shot. Hand-painted gouache and ink illustration under cold violet moonlight with silver-blue
+    shadows.

@@ -3,7 +3,7 @@
 
 WHY THIS EXISTS. hybridizer/t-007 asks for 4,000 pre-generated public hybrids, scheduled in
 batches with immutable pair keys and explicit provenance, counting delivered images rather
-than submitted prompts. Kind Robots' admin-only POST /api/hybridizer/batch queues at most 60
+than submitted prompts. Kind Robots' admin-only POST /api/hybridizer/batch queues at most 100
 launch renders at a time below every other ArtJob's priority, so this script just keeps that
 window full and records what actually arrived:
 

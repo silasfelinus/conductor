@@ -1,0 +1,161 @@
+# Cthulhuquarium: written-but-unqueued Playbook Forge beats (Silas, 2026-11-02 PT: "if it's written, it should be in the queue").
+# 9 beats of Playbook Studio game "cthulhuquarium" whose authored artPrompt has no delivered file (production
+# /api/admin/playbook-ledger inventory), no conductor ledger entry (asset or prompt match) and no live or finished ArtJob
+# (Forge art-request notes and this project's queue, prompt match). Asset is the beat's runtime path where it has one,
+# else playbook/cthulhuquarium/<node>. Priority 1: renders only when no game, Hybridizer or interactive job waits.
+# auto_submit: true. Private. Queued is not rendered; rendered is not delivered.
+round: cthulhuquarium-forge-written-backlog-20261102
+project_slug: cthulhuquarium
+designer: Playbook Forge written-art backlog
+is_public: false
+is_mature: false
+cast_loras: false
+priority: 1
+auto_submit: true
+lanes:
+- key: krea2
+  label: Krea 2, the Forge default lane
+  engine: krea2
+  prompt: prose
+subjects:
+- key: forge-scene-first-unlock
+  lane: krea2
+  entity: playbook-spine
+  title: First unlock
+  playbook_node: scene:first_unlock
+  asset: playbook/cthulhuquarium/scene:first_unlock
+  size: 1344x768
+  seed: 892000
+  prompt_prose: wide interior of a crowded Victorian aquarium curiosity shop lit by gaslight, behind a polished
+    wooden counter a tall old woman with a towering silver-white pompadour, kohl-rimmed eyes and oxblood lips, in
+    a high-necked black silk mourning gown with leg-of-mutton sleeves and black lace gloves lifts a black silk cloth
+    off a small glass specimen tank with one gloved hand raised high, a small bright orange fish inside the tank,
+    beside her a gangly stooped young man with long lank brown hair around a bald crown, round wire spectacles with
+    one taped lens, his right arm in a white plaster cast and sling and bandages on his nose and chin steadies the
+    tank with his left hand, dozens of murky green aquariums glowing on shelves in the dark behind them, hand-tinted
+    albumen carte-de-visite photograph, warm sepia and deep blacks, painted emerald tint on the tank glass
+- key: forge-scene-first-hatch
+  lane: krea2
+  entity: playbook-spine
+  title: First hatch
+  playbook_node: scene:first_hatch
+  asset: playbook/cthulhuquarium/scene:first_hatch
+  size: 1344x768
+  seed: 892001
+  prompt_prose: close interior view of a cramped gaslit Victorian fish hatchery, a translucent pale green egg split
+    open in a shallow glass nursery tray, a tiny pink finned creature with oversized eyes wriggling out among water
+    droplets, a gangly stooped young man with long lank brown hair around a bald crown, round wire spectacles with
+    one taped lens, his right arm in a white plaster cast and sling and bandages on his nose and chin bending close
+    over the tray with a clipboard in his left hand, tall shelves of green glass bottles and thin brass pipes behind
+    him, hand-tinted albumen carte-de-visite photograph, warm sepia, fine grain, pale moss-green tint
+- key: forge-scene-first-breed
+  lane: krea2
+  entity: playbook-spine
+  title: First breed
+  playbook_node: scene:first_breed
+  asset: playbook/cthulhuquarium/scene:first_breed
+  size: 1344x768
+  seed: 892002
+  prompt_prose: a Victorian specimen aquarium seen straight on through its glass front, two large spotted fish,
+    one blue and one gold, hovering on either side of a tiny new fish striped blue and gold among twisting kelp
+    and white porcelain cave ornaments, in front of the tank a gangly stooped young man with long lank brown hair
+    around a bald crown, round wire spectacles with one taped lens, his right arm in a white plaster cast and sling
+    and bandages on his nose and chin writes on a clipboard propped on his cast, behind him a tall old woman with
+    a towering silver-white pompadour, kohl-rimmed eyes and oxblood lips, in a high-necked black silk mourning gown
+    with leg-of-mutton sleeves and black lace gloves clasps her hands at her breast and smiles, green light from
+    the tank spilling across bare floorboards, hand-tinted albumen carte-de-visite photograph, warm sepia and deep
+    shadows
+- key: forge-scene-bestiary-complete
+  lane: krea2
+  entity: playbook-spine
+  title: Bestiary complete
+  playbook_node: scene:bestiary_complete
+  asset: playbook/cthulhuquarium/scene:bestiary_complete
+  size: 1344x768
+  seed: 892003
+  prompt_prose: an enormous hand-bound Victorian scrapbook lying open on an oak reading table, hundreds of small
+    coloured fish engravings pasted in neat rows across both pages, gilded page edges catching warm green lamplight,
+    a tall old woman with a towering silver-white pompadour, kohl-rimmed eyes and oxblood lips, in a high-necked
+    black silk mourning gown with leg-of-mutton sleeves and black lace gloves standing at the table with one gloved
+    hand resting on the open book, beside her a gangly stooped young man with long lank brown hair around a bald
+    crown, round wire spectacles with one taped lens, his right arm in a white plaster cast and sling and bandages
+    on his nose and chin smiling shyly, tall dark bookshelves receding behind them into shadow, hand-tinted albumen
+    carte-de-visite photograph, fine grain, warm sepia tint
+- key: forge-scene-milestone-bestiary-5
+  lane: krea2
+  entity: playbook-quest
+  title: 5 species catalogued
+  playbook_node: scene:milestone_bestiary_5
+  asset: background:kelp-stair
+  size: 1344x768
+  seed: 892004
+  prompt_prose: an aquarium room behind heavy red velvet curtains drawn back to either side, a wrought-iron spiral
+    staircase descending through tall swaying golden-brown kelp into dim green water, water droplets running down
+    wet stone walls, a tall old woman with a towering silver-white pompadour, kohl-rimmed eyes and oxblood lips,
+    in a high-necked black silk mourning gown with leg-of-mutton sleeves and black lace gloves standing beside the
+    curtain with one gloved arm extended palm up toward the staircase, hand-tinted albumen carte-de-visite photograph,
+    sepia shadows, painted Prussian green on the water
+- key: forge-scene-milestone-bestiary-20
+  lane: krea2
+  entity: playbook-quest
+  title: 20 species catalogued
+  playbook_node: scene:milestone_bestiary_20
+  asset: background:wreck-of-the-portsmouth
+  size: 1344x768
+  seed: 892005
+  prompt_prose: the broken hull of an old wooden sailing ship lying in a huge aquarium tank, dark timber ribs, a
+    rusting brass ship's bell covered in weed, small glowing blue and orange fish swimming between sealed cargo
+    crates, seen from a dry Victorian viewing gallery with pointed stone arches, a tall old woman with a towering
+    silver-white pompadour, kohl-rimmed eyes and oxblood lips, in a high-necked black silk mourning gown with leg-of-mutton
+    sleeves and black lace gloves standing in the gallery with one hand on a silver cane with an eel's head handle
+    and the other raised toward the wreck, hand-tinted albumen carte-de-visite photograph, grainy sepia, painted
+    aquamarine water, gaslight
+- key: forge-scene-milestone-first-evolution
+  lane: krea2
+  entity: playbook-quest
+  title: First evolution
+  playbook_node: scene:milestone_first_evolution
+  asset: background:hatchery
+  size: 1344x768
+  seed: 892006
+  prompt_prose: a long Victorian fish hatchery of glass shelves and green nursery tanks, in the nearest tank a grown
+    fish with wide fan-shaped fins spread beside the cracked empty shell it hatched from, a gangly stooped young
+    man with long lank brown hair around a bald crown, round wire spectacles with one taped lens, his right arm
+    in a white plaster cast and sling and bandages on his nose and chin bending close to the tank with a handwritten
+    notebook open in his left hand, a tall old woman with a towering silver-white pompadour, kohl-rimmed eyes and
+    oxblood lips, in a high-necked black silk mourning gown with leg-of-mutton sleeves and black lace gloves watching
+    from a far doorway, pale copper lamplight, hand-tinted albumen carte-de-visite photograph, deep blacks, painted
+    sea-green tint on the glass
+- key: forge-character-charlotte-fishmonger
+  lane: krea2
+  entity: playbook-follower
+  title: Charlotte Fishmonger
+  playbook_node: character:charlotte-fishmonger
+  asset: name:char-charlotte-fishmonger
+  size: 832x1216
+  seed: 892007
+  prompt_prose: full-length studio portrait of a grand gothic prima donna of seventy-eight, an old woman with a
+    deeply lined powdered face, a towering silver-white pompadour pierced with jet hatpins, a sharp aquiline nose,
+    high painted brows, heavy-lidded eyes rimmed in kohl, a beauty mark, oxblood lips in a wide warm smile, a high-necked
+    black silk taffeta mourning gown with enormous leg-of-mutton sleeves, jet-bead fringe and fish-scale sequins,
+    bustle and train pooled at her feet, a cameo brooch carved with an octopus at her throat, black lace fingerless
+    gloves and rings on every finger, one hand raised in a theatrical flourish and the other resting on a silver
+    cane with an eel's head handle, a painted studio backdrop of a gaslit aquarium hall with rows of murky green
+    tanks, hand-tinted albumen carte-de-visite photograph, deep blacks and warm sepia, painted tint on her cheeks
+    and lips
+- key: forge-character-wilbur-stint
+  lane: krea2
+  entity: playbook-follower
+  title: Wilbur Stint
+  playbook_node: character:wilbur-stint
+  asset: name:char-wilbur-stint
+  size: 832x1216
+  seed: 892008
+  prompt_prose: full-length studio portrait of a gangly stooped young man with hunched shoulders, his right arm
+    in a thick white plaster cast held in a sling, adhesive bandages across his nose, forehead and chin, a bald
+    patch on the crown of his head with long lank brown hair hanging past his shoulders around it, round wire spectacles
+    with one lens cracked and taped, a long droopy face with tired baggy eyes and stubble, three fingers of his
+    left hand wrapped in gauze, rumpled rolled shirtsleeves, a shabby waistcoat with one button gone, a pencil behind
+    his ear, rubber waders, a long-handled net held upright in his left hand, a faint brave smile, standing beside
+    a bubbling murky green aquarium tank, a painted studio backdrop of a gaslit aquarium hall, hand-tinted albumen
+    carte-de-visite photograph, warm sepia and deep blacks, painted tint on his cheeks and the white plasters
