@@ -2624,3 +2624,18 @@ pitches:
         verification:
           - 18/18 CI checks green
           - test:animation-catalog (87 effects)
+
+  - id: snow-globe-settle
+    title: Snow Globe Settle
+    status: shipped
+    priority: 99
+    surprise: Snow drifts down inside a glass globe around a lit cottage, and a click shakes it into a swirl that slowly settles.
+    builds:
+      - version: 1
+        status: shipped
+        component: components/screenfx/snow-globe-settle.vue
+        pull_request: silasfelinus/kind_robots#4654
+        commit: c38d072
+        released_at: '2026-11-02T14:00:00Z'
+        verification:
+          - registered in stores/animationCatalog.ts
