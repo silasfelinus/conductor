@@ -7,6 +7,7 @@
 #    GR-5, KN-2, KN-4, KN-5, KN-6. Care: no readable signage, no real race teams, and nobody shown using drugs.
 # Keepers export to kind_robots public/ecotone/<asset>.webp. Submit/refresh with scripts/enqueue_art_requests.py
 # (dry run by default; --live; --status). Private.
+# Review 2026-11-02 PT: keep GR-2 and KN-2 (kind_robots#4634); the other six are redone in ROUND-3B.yaml.
 round: ecotone-3
 project_slug: weird-humboldt
 designer: Ecotone
@@ -36,6 +37,10 @@ subjects:
     zimage:
       status: DONE
       art_image_id: 248901
+  verdict: 'redo in ROUND-3B: Fails the core fix. The chimp performer wears a full closed chimpanzee head (not pushed
+    up, no human face) with hairy bare feet, so he reads as a real ape; the otter is a full-head costume walking
+    upright and reads as an anthro otter; the prairie-dog hoods became plain knit beanies. Only the audience shows
+    human faces. Redo with half-masks or masks pushed up, faces fully visible.'
 - key: eco3-gr2
   asset: encounters/gr-2-something-to-share
   title: GR-2 Something to Share, the acrobats' blanket
@@ -51,6 +56,10 @@ subjects:
     zimage:
       status: DONE
       art_image_id: 248902
+  verdict: 'keep: shipped in kind_robots#4634. Matches: acrobats resting on a patchwork blanket with water bottles,
+    basket and food, a big gentle bearded man holding out a paper parcel, an upside-down acrobat behind, and a moss-topped
+    wooden puppet over the crowd. Minor drift (the inverted acrobat isn''t clearly in coveralls on a partner''s
+    shoulders). No readable signage, no drugs.'
 - key: eco3-gr4
   asset: encounters/gr-4-path-behind-the-stage
   title: GR-4 The Path Behind the Stage, the looping trail
@@ -66,6 +75,9 @@ subjects:
     zimage:
       status: DONE
       art_image_id: 248903
+  verdict: 'redo in ROUND-3B: Trail, eye-level green ribbons, mossy log and question-mark fiddleheads are right,
+    but the "banana slug in a racing helmet" is a cartoon banana with eyes, and the repeating log/ribbons uncanny
+    loop isn''t shown. Redo.'
 - key: eco3-gr5
   asset: encounters/gr-5-closing-bonfire
   title: GR-5 The Closing Bonfire, the last night of the fair
@@ -81,6 +93,9 @@ subjects:
     zimage:
       status: DONE
       art_image_id: 248904
+  verdict: 'redo in ROUND-3B: The central beat is missing: the "wicker redwood" is a living broadleaf tree that
+    isn''t burning, and the fire is a small separate campfire, not a great bonfire. No coastline in the smoke. Crowd,
+    puppet and lantern tables are fine. Redo.'
 - key: eco3-kn2
   asset: encounters/kn-2-the-afterparty
   title: KN-2 The Afterparty, the waterfront warehouse
@@ -96,6 +111,10 @@ subjects:
     zimage:
       status: DONE
       art_image_id: 248905
+  verdict: 'keep: shipped in kind_robots#4634. Matches: an old timber waterfront building in fog with a brass band
+    under string lights, costumed dancers, and the pickup with a CB antenna tied with a green ribbon. Minor: the
+    pedal sculpture isn''t visible inside and it reads dusk more than night. The small door sign is blank; no branding,
+    no drugs.'
 - key: eco3-kn4
   asset: encounters/kn-4-conscripted
   title: KN-4 Conscripted, the Banana Slug Express
@@ -111,6 +130,9 @@ subjects:
     zimage:
       status: DONE
       art_image_id: 248906
+  verdict: 'redo in ROUND-3B: The slug is a giant banana on wheels; the woman sits on it rather than on the cooler,
+    holds the antenna helmet herself (no crew in frame) and leans on the crutch instead of pointing it. There is
+    also a watermark/signature mark in the bottom-right corner. Redo.'
 - key: eco3-kn5
   asset: encounters/kn-5-the-bay-crossing
   title: KN-5 The Bay Crossing, slug and octopus in the fog
@@ -125,6 +147,9 @@ subjects:
     zimage:
       status: DONE
       art_image_id: 248907
+  verdict: 'redo in ROUND-3B: Seals, spectator boat, bell buoy and fog are right, but the slug is an unmanned banana
+    on wheels, and the octopus sits in a rowboat rather than being a pedal-powered sculpture crewed by costumed
+    racers. Redo.'
 - key: eco3-kn6
   asset: encounters/kn-6-the-ferndale-finish
   title: KN-6 The Ferndale Finish, Main Street and the cemetery hill
@@ -139,3 +164,6 @@ subjects:
     zimage:
       status: DONE
       art_image_id: 248908
+  verdict: 'redo in ROUND-3B: The finish banner has readable garbled text ("PEATHDOR!"), which breaks the no-readable-signage
+    rule, and the slug is a banana. Cemetery hill with the frock-coated flagman and the Victorian main street are
+    good; redo with a blank or patterned banner.'

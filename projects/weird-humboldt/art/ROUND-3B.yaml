@@ -1,0 +1,100 @@
+# Ecotone (weird-humboldt) art round 3B (t-034, 2026-11-02 PT review of ROUND-3). Redoes the six round-3 plates that missed:
+# the zoo tribute (full-head masks still read as a real ape and an anthro otter: now half-masks, faces showing), GR-4,
+# KN-4, KN-5, KN-6 (Z-Image painted the banana slug as a banana: now described as the real land slug) and GR-5 (the wicker
+# redwood was a living tree, unlit: now woven willow, fully aflame). Krea 2 is the bake-off's places lane and read the
+# nouns better; Z-Image rides along on the same prompts for comparison. Keepers export to kind_robots
+# public/ecotone/<asset>.webp. auto_submit: true. Private.
+round: ecotone-3b
+project_slug: weird-humboldt
+designer: Ecotone
+is_public: false
+is_mature: false
+cast_loras: false
+auto_submit: true
+lanes:
+- key: krea2
+  label: Krea 2 (places lane)
+  engine: krea2
+  prompt: prose
+  suffix: painterly illustration, coastal fog, redwood greens, teal and amber light
+- key: zimage
+  label: Z-Image Turbo (house lane)
+  engine: zimage
+  prompt: prose
+  suffix: painterly illustration, coastal fog, redwood greens, teal and amber light
+subjects:
+- key: eco3b-friends
+  title: friends redo
+  asset: encounters/friends-who-arent-here
+  size: 1344x768
+  seed: 65300
+  negative: text, letters, words, signage, logo, watermark, signature, banana fruit, cartoon, anthro animal, animal
+    people
+  prompt_prose: At night in a lantern-lit redwood park clearing, a troupe of adult human physical-theatre performers
+    puts on a tribute show for a small delighted audience sitting on blankets. Every performer wears only a small
+    papier-mache half-mask over the brow and nose or has it pushed up on top of the head, so each full human face,
+    eyes, cheeks and grin, is plainly visible. A grown man in a shaggy brown costume coat with a chimpanzee half-mask
+    pushed up on his forehead blows a raspberry; a grown woman in a sleek painted otter-print bodysuit with an otter
+    half-mask runs along a wooden fence beside a laughing child; three adult actors in knitted prairie-dog ear hoods
+    with their faces showing pop up from behind hay bales. Theatrical, warm and bittersweet.
+- key: eco3b-gr4
+  title: gr4 redo
+  asset: encounters/gr-4-path-behind-the-stage
+  size: 1344x768
+  seed: 65301
+  negative: text, letters, words, signage, logo, watermark, signature, banana fruit, cartoon, anthro animal, animal
+    people
+  prompt_prose: A narrow trail runs straight into old-growth redwoods, marked with green ribbons tied at eye level.
+    A fallen mossy log and a fern curled like a question mark sit beside the path. In the foreground, crossing a
+    root, is a real bright-yellow banana slug, a soft legless glossy land slug with two long eye stalks, wearing
+    a tiny toy racing helmet. Further down the trail the same mossy log, the same curled fern and the same ribbons
+    appear again and again, repeating faintly into the mist, quietly uncanny.
+- key: eco3b-gr5
+  title: gr5 redo
+  asset: encounters/gr-5-closing-bonfire
+  size: 1344x768
+  seed: 65302
+  negative: text, letters, words, signage, logo, watermark, signature, banana fruit, cartoon, anthro animal, animal
+    people
+  prompt_prose: The last night of a forest-edge festival. In the middle of a meadow a tall wicker sculpture woven
+    from pale willow branches in the shape of a redwood tree is fully engulfed in roaring orange flames, the centre
+    of a great bonfire. A crowd watches in silhouette. A giant moss-covered puppet bows beside the fire, two folding
+    tables hold clipboards and lanterns, and the smoke rising high above the flames curls into the faint outline
+    of a coastline.
+- key: eco3b-kn4
+  title: kn4 redo
+  asset: encounters/kn-4-conscripted
+  size: 1344x768
+  seed: 65303
+  negative: text, letters, words, signage, logo, watermark, signature, banana fruit, cartoon, anthro animal, animal
+    people
+  prompt_prose: 'Morning on a foggy bay waterfront. At the water''s edge waits a giant glossy bright-yellow banana
+    slug sculpture, shaped like the real Humboldt banana slug: a soft, legless, smooth land slug with a long rounded
+    body, a shiny wet-looking skin and two long eye stalks on its head, twelve feet long and mounted on bicycle
+    wheels. Beside it a woman sits on a blue cooler with a bag of frozen peas on her ankle, grinning and pointing
+    a crutch at the viewer, while her costumed race crew holds out a bicycle helmet with springy antennae on it.'
+- key: eco3b-kn5
+  title: kn5 redo
+  asset: encounters/kn-5-the-bay-crossing
+  size: 1344x768
+  seed: 65304
+  negative: text, letters, words, signage, logo, watermark, signature, banana fruit, cartoon, anthro animal, animal
+    people
+  prompt_prose: 'On a wide foggy bay, a giant glossy bright-yellow banana slug sculpture, shaped like the real Humboldt
+    banana slug: a soft, legless, smooth land slug with a long rounded body, a shiny wet-looking skin and two long
+    eye stalks on its head, built as a pedal-powered boat with a paddle wheel, crosses the water beside a pedal-powered
+    purple octopus sculpture boat, both crewed by people in homemade costumes. Small spectator boats follow, curious
+    harbor seals watch from the water, and a bell buoy sits in a bank of fog ahead.'
+- key: eco3b-kn6
+  title: kn6 redo
+  asset: encounters/kn-6-the-ferndale-finish
+  size: 1344x768
+  seed: 65305
+  negative: text, letters, words, signage, logo, watermark, signature, banana fruit, cartoon, anthro animal, animal
+    people
+  prompt_prose: 'A Victorian village main street lined with ornate painted gingerbread houses and cheering crowds.
+    Down the middle rolls a giant glossy bright-yellow banana slug sculpture, shaped like the real Humboldt banana
+    slug: a soft, legless, smooth land slug with a long rounded body, a shiny wet-looking skin and two long eye
+    stalks on its head, muddy from the race and mounted on bicycle wheels, toward a finish line marked by a black-and-white
+    checkered ribbon strung between two poles. On the green hillside above town, among old white headstones in an
+    oak-shaded cemetery, a man in a black frock coat waves a checkered flag.'

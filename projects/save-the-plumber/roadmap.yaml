@@ -429,7 +429,7 @@ tasks:
     owner: null
     passes: 0
     stakes: reversible
-    updated: '2026-10-22T10:30:00Z'
+    updated: '2026-11-02T09:17:22Z'
     note: >-
       art/GEN2-ROUND-1.yaml (36 subjects x krea2/zimage = 72 cells) submitted 2026-10-22 through
       scripts/sweep_art_ledgers.py (auto_submit). Done when every cell is DONE, reviewed in the ledger
@@ -438,6 +438,16 @@ tasks:
       2026-10-22 review of the first 14 renders: the Z-Image overworld maps are excellent (SMB3-style painted maps with empty clearings, a fortress, cottage and waterfall trail); far skies and arrival vistas also keep. Next: when the round is DONE, review the rest in the ledger, export keepers to the media host, and author per-map node coordinates matched to each plate's clearings so savePlumberOverworld.ts draws the painted map instead of the code-drawn land.
 
       2026-10-22: map plates shipped in silasfelinus/kind_robots#4034 (merged e1aa28c). The eight Krea 2 maps are public/save-the-plumber/maps/world-N.webp, every GEN2-WORLDS node is placed on its painted clearing, and the overworld runs on the GEN2-WORLDS graph with save v3. Remaining in this task: review the far-sky, vista, level-type and Pip-pose renders as they finish; the poses feed t-025.
+
+      2026-11-02 PT: GEN2-ROUND-1 curated; each subject's verdict is in the ledger. Krea 2
+      wins the far skies for worlds 1, 3, 5, 6, 7 and 8, all eight arrival vistas, the
+      fortress, Upstream Sky and the whole Pip pose set (on-model, facing right, steady
+      proportions). Z-Image wins Hush House and Valve Chapel. Redo is queued in
+      GEN2-ROUND-1-FIXES.yaml (auto_submit, 8 cells): skies 2 and 4 (foreground boats, piers
+      and floats in both lanes) and Pip's skid and hurt poses (the Krea 2 takes read as
+      walking). Vistas paint the heroine brown-haired, so future vista prompts must name Pip's
+      magenta bob. Nothing is exported yet: the game has no slot for skies, vistas or level-
+      type plates, and the poses feed t-025.
 
   - id: t-025
     milestone: m6

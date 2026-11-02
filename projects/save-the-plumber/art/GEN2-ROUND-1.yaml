@@ -6,6 +6,10 @@
 # will animate with WAN first/last-frame clips (the zuzu-pinball T019 croc recipe). Two lanes to pick from.
 # auto_submit: true -> scripts/sweep_art_ledgers.py submits and refreshes this ledger on every Auto Art Generate run.
 # Queued is not rendered; rendered is not shipped. Private.
+# Review 2026-11-02 PT: Krea 2 wins skies (6/8), all 8 vistas, fortress, Upstream Sky and the Pip pose set
+# (on-model, facing right, steady proportions); Z-Image wins Hush House and Valve Chapel. Redo: skies 2 and 4
+# (foreground boats/piers/floats in both lanes) and Pip skid/hurt (read as walking) in GEN2-ROUND-1-FIXES.yaml.
+# Vistas paint the heroine brown-haired: name Pip's magenta bob in any future vista prompt.
 round: save-the-plumber-gen2-1
 project_slug: save-the-plumber
 designer: Save the Plumber art bay
@@ -52,6 +56,7 @@ subjects:
     krea2: 'KEEP: house map plate, shipped as kind_robots public/save-the-plumber/maps/world-N.webp with nodes on
       its clearings'
     zimage: 'ALTERNATE: clean but too symmetrical next to the Krea 2 plate'
+  verdict: 'shipped: Krea 2 map in kind_robots#4034 (maps/world-N.webp)'
 - key: gen2-sky-1-bluebell-pipeworks
   entity: parallax-sky
   title: 'World 1 Bluebell Pipeworks: far sky parallax plate'
@@ -76,6 +81,8 @@ subjects:
     zimage:
       status: DONE
       art_image_id: 251304
+  verdict: 'keep krea2: Clean layered apricot/cerulean cloudscape, nothing in the foreground; tiles as a distant
+    layer. zimage puts a foreground pipe rail and a bluebell bed across the bottom.'
 - key: gen2-vista-1-bluebell-pipeworks
   entity: world-keyart
   title: 'World 1 Bluebell Pipeworks: world arrival vista'
@@ -99,6 +106,8 @@ subjects:
     zimage:
       status: DONE
       art_image_id: 251305
+  verdict: 'keep krea2: Golden-hour ridge view over pipe gardens and the squat brick pump tower, with the heroine
+    framed by valves. zimage''s tower reads as a factory, and its heroine is not on a ridge.'
 - key: gen2-map-2-tideglass-marina
   entity: overworld-map
   title: 'World 2 Tideglass Marina: overworld map'
@@ -128,6 +137,7 @@ subjects:
     krea2: 'KEEP: house map plate, shipped as kind_robots public/save-the-plumber/maps/world-N.webp with nodes on
       its clearings'
     zimage: 'ALTERNATE: clean but too symmetrical next to the Krea 2 plate'
+  verdict: 'shipped: Krea 2 map in kind_robots#4034 (maps/world-N.webp)'
 - key: gen2-sky-2-tideglass-marina
   entity: parallax-sky
   title: 'World 2 Tideglass Marina: far sky parallax plate'
@@ -151,6 +161,10 @@ subjects:
     zimage:
       status: DONE
       art_image_id: 251307
+  verdict: 'redo (GEN2-ROUND-1-FIXES): Both lanes fail as a far layer. krea2 (251327) has pier posts and a large
+    boat hull cut off at the right edge, which breaks the seamless edges. zimage (251307) has boats and a wooden
+    dock strip in the foreground. Re-render with sea haze only plus a faint distant harbour skyline; add boats,
+    piers and docks to the negative.'
 - key: gen2-vista-2-tideglass-marina
   entity: world-keyart
   title: 'World 2 Tideglass Marina: world arrival vista'
@@ -174,6 +188,8 @@ subjects:
     zimage:
       status: DONE
       art_image_id: 251308
+  verdict: 'keep krea2: Glass hulls, canal locks and a rusted drydock gantry under warm light; small figure on a
+    ridge. zimage figure is large and the right foreground has stray gem clutter.'
 - key: gen2-map-3-lantern-orchard
   entity: overworld-map
   title: 'World 3 Lantern Orchard: overworld map'
@@ -203,6 +219,7 @@ subjects:
     krea2: 'KEEP: house map plate, shipped as kind_robots public/save-the-plumber/maps/world-N.webp with nodes on
       its clearings'
     zimage: 'ALTERNATE: clean but too symmetrical next to the Krea 2 plate'
+  verdict: 'shipped: Krea 2 map in kind_robots#4034 (maps/world-N.webp)'
 - key: gen2-sky-3-lantern-orchard
   entity: parallax-sky
   title: 'World 3 Lantern Orchard: far sky parallax plate'
@@ -226,6 +243,9 @@ subjects:
     zimage:
       status: DONE
       art_image_id: 251310
+  verdict: 'keep krea2: Sunset clouds over a faint, hazy terraced-orchard horizon, with a soft apricot haze below;
+    works well as a distant plate. zimage has a near row of trees, lantern strings and a pavilion, all mid-ground
+    objects.'
 - key: gen2-vista-3-lantern-orchard
   entity: world-keyart
   title: 'World 3 Lantern Orchard: world arrival vista'
@@ -249,6 +269,8 @@ subjects:
     zimage:
       status: DONE
       art_image_id: 251311
+  verdict: 'keep krea2: Lantern-hung terraces and a glass conservatory, layered depth, figure framed under a tree.
+    zimage is good but has a stray floating plate prop and a flatter composition.'
 - key: gen2-map-4-clockwork-fair
   entity: overworld-map
   title: 'World 4 Clockwork Fair: overworld map'
@@ -278,6 +300,7 @@ subjects:
     krea2: 'KEEP: house map plate, shipped as kind_robots public/save-the-plumber/maps/world-N.webp with nodes on
       its clearings'
     zimage: 'ALTERNATE: clean but too symmetrical next to the Krea 2 plate'
+  verdict: 'shipped: Krea 2 map in kind_robots#4034 (maps/world-N.webp)'
 - key: gen2-sky-4-clockwork-fair
   entity: parallax-sky
   title: 'World 4 Clockwork Fair: far sky parallax plate'
@@ -301,6 +324,9 @@ subjects:
     zimage:
       status: DONE
       art_image_id: 251313
+  verdict: 'redo (GEN2-ROUND-1-FIXES): Both lanes fail. krea2 (251333) shows a parade of fully rendered floats and
+    a big wheel floating in the upper sky, clipped at the top. zimage (251313) puts gear carts, a big wheel and
+    a wall strip in the foreground. Re-render as pastel sky with only a faint far big-wheel silhouette on the horizon.'
 - key: gen2-vista-4-clockwork-fair
   entity: world-keyart
   title: 'World 4 Clockwork Fair: world arrival vista'
@@ -324,6 +350,8 @@ subjects:
     zimage:
       status: DONE
       art_image_id: 251314
+  verdict: 'keep krea2: Clocktop big wheel, coaster, parade floats and cotton candy in rich sunset light. zimage
+    has a foreground float that crowds the frame, and the heroine brandishes an oversized wrench.'
 - key: gen2-map-5-cloudrail-commons
   entity: overworld-map
   title: 'World 5 Cloudrail Commons: overworld map'
@@ -353,6 +381,7 @@ subjects:
     krea2: 'KEEP: house map plate, shipped as kind_robots public/save-the-plumber/maps/world-N.webp with nodes on
       its clearings'
     zimage: 'ALTERNATE: clean but too symmetrical next to the Krea 2 plate'
+  verdict: 'shipped: Krea 2 map in kind_robots#4034 (maps/world-N.webp)'
 - key: gen2-sky-5-cloudrail-commons
   entity: parallax-sky
   title: 'World 5 Cloudrail Commons: far sky parallax plate'
@@ -376,6 +405,8 @@ subjects:
     zimage:
       status: DONE
       art_image_id: 251316
+  verdict: 'keep krea2: Sea of sunset clouds with faint ropeway, windmill and airship silhouettes on the far horizon.
+    Strongly on-theme and nothing in the foreground. zimage is clean but almost empty of theme.'
 - key: gen2-vista-5-cloudrail-commons
   entity: world-keyart
   title: 'World 5 Cloudrail Commons: world arrival vista'
@@ -399,6 +430,8 @@ subjects:
     zimage:
       status: DONE
       art_image_id: 251362
+  verdict: 'keep krea2: Ropeway cars, windmills, an airship and a lightning-struck rail station: exactly the brief.
+    zimage includes a modern jet airliner (off-theme) and a tower that looks volcanic.'
 - key: gen2-map-6-crystal-underworks
   entity: overworld-map
   title: 'World 6 Crystal Underworks: overworld map'
@@ -428,6 +461,7 @@ subjects:
     krea2: 'KEEP: house map plate, shipped as kind_robots public/save-the-plumber/maps/world-N.webp with nodes on
       its clearings'
     zimage: 'ALTERNATE: clean but too symmetrical next to the Krea 2 plate'
+  verdict: 'shipped: Krea 2 map in kind_robots#4034 (maps/world-N.webp)'
 - key: gen2-sky-6-crystal-underworks
   entity: parallax-sky
   title: 'World 6 Crystal Underworks: far sky parallax plate'
@@ -451,6 +485,8 @@ subjects:
     zimage:
       status: DONE
       art_image_id: 251364
+  verdict: 'keep krea2: Misty crystal-spire silhouette on a violet/blue horizon, clean lower haze. zimage has a
+    dark stone wall with glowing alcoves across the foreground.'
 - key: gen2-vista-6-crystal-underworks
   entity: world-keyart
   title: 'World 6 Crystal Underworks: world arrival vista'
@@ -474,6 +510,8 @@ subjects:
     zimage:
       status: DONE
       art_image_id: 251365
+  verdict: 'keep krea2: Cavern mouth framing a giant geode filter, glowing sluice falls and a rope bridge. zimage
+    is a solid alternate but lacks the geode filter.'
 - key: gen2-map-7-night-market-rooftops
   entity: overworld-map
   title: 'World 7 Night Market Rooftops: overworld map'
@@ -503,6 +541,7 @@ subjects:
     krea2: 'KEEP: house map plate, shipped as kind_robots public/save-the-plumber/maps/world-N.webp with nodes on
       its clearings'
     zimage: 'ALTERNATE: clean but too symmetrical next to the Krea 2 plate'
+  verdict: 'shipped: Krea 2 map in kind_robots#4034 (maps/world-N.webp)'
 - key: gen2-sky-7-night-market-rooftops
   entity: parallax-sky
   title: 'World 7 Night Market Rooftops: far sky parallax plate'
@@ -526,6 +565,9 @@ subjects:
     zimage:
       status: DONE
       art_image_id: 251367
+  verdict: 'keep krea2: Dusk sky over a distant lantern-lit rooftop skyline band with a flat lower half; works as
+    a horizon layer. The band is a little busy, so tint or blur it slightly in-engine. zimage has foreground roofs
+    and chimneys.'
 - key: gen2-vista-7-night-market-rooftops
   entity: world-keyart
   title: 'World 7 Night Market Rooftops: world arrival vista'
@@ -549,6 +591,8 @@ subjects:
     zimage:
       status: DONE
       art_image_id: 251368
+  verdict: 'keep krea2: True midnight bazaar from the rooftops, with a clock spire and lanterns. zimage is a sunset
+    scene with a seated figure, so the night brief is missed.'
 - key: gen2-map-8-stardrain-citadel
   entity: overworld-map
   title: 'World 8 Stardrain Citadel: overworld map'
@@ -578,6 +622,7 @@ subjects:
     krea2: 'KEEP: house map plate, shipped as kind_robots public/save-the-plumber/maps/world-N.webp with nodes on
       its clearings'
     zimage: 'ALTERNATE: clean but too symmetrical next to the Krea 2 plate'
+  verdict: 'shipped: Krea 2 map in kind_robots#4034 (maps/world-N.webp)'
 - key: gen2-sky-8-stardrain-citadel
   entity: parallax-sky
   title: 'World 8 Stardrain Citadel: far sky parallax plate'
@@ -601,6 +646,8 @@ subjects:
     zimage:
       status: DONE
       art_image_id: 251370
+  verdict: 'keep krea2: Faint far citadel spire on a misty river plain under soft clouds; a good distant layer.
+    zimage has a dark foreground wall with dripping water.'
 - key: gen2-vista-8-stardrain-citadel
   entity: world-keyart
   title: 'World 8 Stardrain Citadel: world arrival vista'
@@ -624,6 +671,8 @@ subjects:
     zimage:
       status: DONE
       art_image_id: 251371
+  verdict: 'keep krea2: Machine citadel siphoning water skyward over a river plain; a strong finale image. zimage
+    has a game-style heart icon (franchise-adjacent) and a stray tiny figure.'
 - key: gen2-type-fortress
   entity: level-type
   title: 'Fortress interior: the Pump Tower'
@@ -645,6 +694,8 @@ subjects:
     zimage:
       status: DONE
       art_image_id: 251372
+  verdict: 'keep krea2: True interior: pistons, catwalks, light shafts, steam and a boss door up top, in brick and
+    copper. zimage reads as a flat exterior facade.'
 - key: gen2-type-hush-house
   entity: level-type
   title: 'Haunted maze: the Hush House'
@@ -667,6 +718,9 @@ subjects:
     zimage:
       status: DONE
       art_image_id: 251373
+  verdict: 'keep zimage: Readable dollhouse cross-section of looping rooms with stairs, mismatched doors, floating
+    teacups, ceiling drips and soft ghosts; the clearest maze layout. krea2 splits into black-gapped tiles that
+    read as a multi-panel collage, which the negative forbids.'
 - key: gen2-type-valve-chapel
   entity: level-type
   title: 'Switch palace: the Valve Chapel'
@@ -688,6 +742,9 @@ subjects:
     zimage:
       status: DONE
       art_image_id: 251374
+  verdict: 'keep zimage: Literal brief: a tiled chapel interior with the valve wheel on a pedestal, teal/gold stained
+    glass, pipes through the walls and a usable floor plane. krea2 is lusher but fuses the wheel into a rose window
+    on a shrine facade, so it is less usable as a room. Both lanes undersize the wheel (''enormous'').'
 - key: gen2-type-upstream-sky
   entity: level-type
   title: 'Special zone: Upstream Sky'
@@ -709,6 +766,9 @@ subjects:
     zimage:
       status: DONE
       art_image_id: 251375
+  verdict: 'keep krea2: Prismatic light columns, pipework islands and a starry daytime sky; dreamlike and unpeopled.
+    Its falls still read as falling down, so polish that if it is re-rendered. zimage has several small people on
+    its platforms (fails ''unpeopled'') and looks like a level mock-up.'
 - key: gen2-pip-pose-idle
   entity: heroine-pose
   title: 'Pip key pose: idle'
@@ -732,6 +792,8 @@ subjects:
     zimage:
       status: DONE
       art_image_id: 251376
+  verdict: 'keep krea2: Side view facing right, relaxed hip-cock, full body with margin, the set''s on-model reference.
+    zimage idle is front-facing (fails side view).'
 - key: gen2-pip-pose-run-contact
   entity: heroine-pose
   title: 'Pip key pose: run-contact'
@@ -755,6 +817,8 @@ subjects:
     zimage:
       status: DONE
       art_image_id: 251377
+  verdict: 'keep krea2: Clear forward stride with the scarf trailing, on-model and facing right. zimage is three-quarter
+    view with a ground shadow.'
 - key: gen2-pip-pose-run-passing
   entity: heroine-pose
   title: 'Pip key pose: run-passing'
@@ -778,6 +842,9 @@ subjects:
     zimage:
       status: DONE
       art_image_id: 251378
+  verdict: 'keep krea2: On-model run, but nearly the same stride as run-contact rather than a legs-together passing
+    position. Usable as a WAN keyframe pair; a tighter passing pose would help. zimage has a ground shadow and a
+    different face.'
 - key: gen2-pip-pose-jump-rise
   entity: heroine-pose
   title: 'Pip key pose: jump-rise'
@@ -800,6 +867,8 @@ subjects:
     zimage:
       status: DONE
       art_image_id: 251379
+  verdict: 'keep krea2: Knee-up launch with a fist forward, facing right, on-model. zimage faces left/front with
+    a ground shadow.'
 - key: gen2-pip-pose-jump-fall
   entity: heroine-pose
   title: 'Pip key pose: jump-fall'
@@ -823,6 +892,8 @@ subjects:
     zimage:
       status: DONE
       art_image_id: 251380
+  verdict: 'keep krea2: Good descent read with the scarf whipped up and the arms reaching down, facing right. The
+    best pose in the set.'
 - key: gen2-pip-pose-skid
   entity: heroine-pose
   title: 'Pip key pose: skid'
@@ -845,6 +916,10 @@ subjects:
     zimage:
       status: DONE
       art_image_id: 251381
+  verdict: 'keep krea2: Stand-in only. It is on-model, but it reads as a walk: there is no backward lean or braced
+    front heel. It also adds an off-model brown glove. Re-render on krea2 with the same recipe: lean back, front
+    boot braced, dust-free. zimage skid is three-quarter view, looks up and walks. Stand-in until the GEN2-ROUND-1-FIXES
+    re-render lands.'
 - key: gen2-pip-pose-climb
   entity: heroine-pose
   title: 'Pip key pose: climb'
@@ -868,6 +943,8 @@ subjects:
     zimage:
       status: DONE
       art_image_id: 251382
+  verdict: 'keep krea2: Side-on climb gripping a thin rail at the right edge. The prop touches the frame edge and
+    must be matted out or kept as a ladder layer. zimage uses a 3/4 stepladder and a different face.'
 - key: gen2-pip-pose-hurt
   entity: heroine-pose
   title: 'Pip key pose: hurt'
@@ -891,3 +968,6 @@ subjects:
     zimage:
       status: DONE
       art_image_id: 251383
+  verdict: 'keep krea2: Stand-in only. It is on-model, but it is a frowning walk with no recoil, knock-back or flinch,
+    so hurt does not read. Re-render on krea2: torso bent back, arms flung, one foot off the ground, facing right.
+    zimage hurt is front-facing with a shadow. Stand-in until the GEN2-ROUND-1-FIXES re-render lands.'

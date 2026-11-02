@@ -175,7 +175,16 @@ tasks:
       Implement Krea 2 Round 18 (9 compositions, auto-submit), dormant Arthemy Round 19 (sdxl-img2img at 0.28/0.43), proof-of-delivery + visually scored gate and tests. New workflows with no public thumbnails.
 
       Merged green Conductor PR #6555 (0eb74342bf0044a1693f3558c0257e734ddd5b7e) for Krea2 -> gated Arthemy img2img. Round 18 has 9 private auto-submit Krea compositions. Round 19 remains dormant until the real Krea images are DONE, visibly reviewed, score >=7/8 and all critical scene objects pass, and reviewed receipt SHA matches. The activated stage creates 6 Arthemy source-preserving img2img jobs with denoise .28/.43. A new post-sweep review workflow verifies delivery but never publishes private contact sheets to public GitHub artifacts. PR CI, security and handoff all succeeded. Auto Art Generate run 40036731336 launched after merge; confirm real new job IDs in ROUND-18 ledger before claiming submission accepted. Once Krea is reviewed, activate Round19 via another green PR and export only approved final WebPs in kind_robots. Temporary SVGs and wrong raccoon-head scene remain to replace. Task is NOT done.
-    updated: '2026-10-23T22:59:20Z'
+
+      2026-11-02 PT: ROUND-18 reviewed. a2-bell-view passes 8/8 (gb18-a2-bell-view-1, ArtImage
+      252193) and a4-bloom passes 7/8 (gb18-a4-bloom-3, 252199). a2-gift failed every seed
+      (best 6/8: the mark read as a cartoon face; seed 2 is a modern zip pouch; seed 3 has a
+      gallows-like frame). Its three rows are rerolled in place (the activator requires
+      exactly 9 subjects), with the mark described as a carved bandit's domino mask on a
+      single upright post. Round 19 activation waits on the gift re-review. Then fill
+      ROUND-18-SELECTIONS.yaml from a fresh krea-receipt.json and run
+      activate_zuzu_gamebook_stylepass.py --receipt.
+    updated: '2026-11-02T09:17:29Z'
   - id: t-007
     milestone: m3
     title: Integrate authored story bundle, chapter pacing and illustration manifest
@@ -260,7 +269,7 @@ tasks:
       2026-10-22 PT: Merged Kind Robots PR #4037, squash commit 4121d73ef0126a751cdf95d1d13b3c66a8173b8f, after all 13 current-head workflows passed (including four contract shards, TypeScript, changed-file formatting). Frozen 15 genuine complete end-to-end ending journeys comprising 1217 reducer actions in utils/scripts/fixtures/zuzuGamebookGolden.json, with deterministic replay and route/flag/item/resource/RNG fingerprints. Tested all six authored fights at 3/6/9/12 HP and 0/2/4 Resolve, four strategies and 90 seeded fights per configuration, correctly allowing recovery scene effects after losing. No gameplay rule changes, ArtJobs, or external publication. Triage: 3 HP produced zero wins in 90 seeds for each of four tactics versus the Croc, Abbess, and Hollis; inspect retreat routes, player risk signals and wounded pacing, while retaining meaningful defeat continuations. Recurring task rearmed; full visual QA and pending illustration work remain with the other roadmap tasks.
   - id: t-012
     milestone: m5
-    title: Redraw the two-character plates once the character LoRAs exist
+    title: "Two-character Zuzu plates: the LoRAs exist but don't stack (Zuzu fuses with a second LoRA; abbess LoRA paints human faces)"
     status: ready
     owner: null
     passes: 0
@@ -301,6 +310,8 @@ tasks:
       coyote's v1 LoRA still draws his right hand (t-023); stump plates keep the masked bandage edit. Following ROUND-12
       above, Zuzu and the abbess are `stacks: false` there: a subject naming either beside another character gets no
       default LoRAs, so the explicit per-subject `loras:` in ROUND-12..15 stay authoritative.
+
+      2026-11-02 PT retitle (Silas asked why it still says the LoRAs don't exist): they do, since 2026-10-11 (comic-creator/t-016). The old title was stale. What is left is the stacking problem above: Zuzu plus any second character LoRA fuses the two figures, and the abbess LoRA gives human faces even alone, so paired Zuzu moments ship as on-model single-figure plates. Real fix candidates: render each figure alone with its own LoRA and composite (Kontext reference-stitch, as enqueue_art_requests.py `reference_image_id` already supports), regional LoRA masks in ComfyUI, or a retrained abbess LoRA.
 
   - id: t-013
     milestone: m5

@@ -84,7 +84,9 @@ class HoshimoriGalleryReadinessTests(unittest.TestCase):
             audit(self.manifests, self.ledgers, self.snapshots)
 
     def test_style_snapshot_rejects_forged_totals(self):
-        self.snapshots["e08"]["delivered"] = 10
+        # Forge relative to the real snapshot: the scheduled media checkpoint moves the true
+        # count, and on 2026-11-02 it reached 10, the old hard-coded "forged" value.
+        self.snapshots["e08"]["delivered"] += 1
         with self.assertRaisesRegex(ValueError, "inconsistent"):
             audit(self.manifests, self.ledgers, self.snapshots)
 
