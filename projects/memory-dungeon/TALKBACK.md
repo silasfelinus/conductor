@@ -89,3 +89,11 @@
 **Decision:** merged reversible e10 finale continuity PR #4624 (squash `fe85ec71d169338d795f9984d2a5c277290a0d44`) after all 8 exact-head Actions workflows passed on `f35528847863f6ad1abd42018db85bcdef470345`, including Contract Tests, TypeScript, formatting, layout and Memory browser interruption. Reviewed two Memory Dungeon-only files; no unresolved review threads, schema changes or deployment.
 
 **What worked:** all eight authored e10 route encounters now have distinct, replay-earned opening and outcome callbacks for both clock-tower verdicts. Coverage guards against future authored routes lacking callbacks; tests cover 32 verdict/route combinations plus forged/missing decisions and save restoration. **What to improve:** the e08 earned completion gate remains the high-value blocker, followed by an interrupted-save e08→e09→e10 campaign test and production-art delivery. Those are already tracked in the active master roadmap and issue #4136; avoid a redundant kaizen task. No ArtJobs or rendered assets claimed.
+
+## 2026-11-01 PT | Reviewer green merge | memory-dungeon/t-042 | Kind Robots #4627
+
+**Decision:** merged reversible Saffron Wing PR #4627 (squash `86413bcdf8c8802a19682f84b82ee21d90ec7755`) after all eight exact-head Actions workflows passed on `829609f791d4c8e0c62dd854dd3dc6e782fea27f`, including Contract Tests, TypeScript, formatting, layout and Memory browser interruption. Four Memory Dungeon-only files; no unresolved review threads, migrations or deployment.
+
+**What worked:** six authored OV-22..OV-27 rooms add twelve Vesper-centered decisions and 64 replay-validated testimony accounts, earned entry, old-save restoration, forged-choice rejection and once-only rewards. Hoshimori now has 64/64 warm sites and 27/36 Red Oven rooms. A session-aware ready event released t-042 for the nine unfinished rooms.
+
+**What to improve:** formatting needed two CI repair commits; run full changed-file Prettier before PR when a local checkout is available. Complete OV-28..OV-36 and the guardian aftermath before attempting the World Eight earned exit, then interrupted-save e08–e10 adversarial testing. Gallery briefs, ArtJob delivery and rendered-device QA remain separate tracked work. Avoid a duplicate kaizen task because these gaps already belong to t-042/t-045/t-046 and master issue #4136.
