@@ -1,0 +1,188 @@
+# Memory Dungeon t-042: source-backed e07 gallery earning/reveal handoff.
+# PLAN ONLY: no gallery runtime integration, ArtJob, ArtImage or delivery is claimed.
+# Stable Hoshimori source: kind_robots/utils/memoryDungeon/hoshimoriWarm.ts.
+# Source snapshot SHA (blob): 696ca900c3ba56c65d9c10451d476a06e3360a2b
+# Card art/prompt authority: HOSHIMORI-E07-GALLERY-BRIEFS.yaml.
+# Local wave budget is 6+7+8+9; the two collaboration faces are separate.
+version: 1
+world: e07
+project: memory-dungeon
+stage: unlock_plan_only
+art_delivery: unverified
+save_source: memory-dungeon-hoshimori-e07-v1
+source_manifest: HOSHIMORI-E07-GALLERY-BRIEFS.yaml
+wave_sizes: [6, 7, 8, 9]
+local_unlock_rule: one_valid_saved_site_choice
+entries:
+  - id: hoshimori-e07-01-vesper-route-cartographer
+    category: character
+    wave: 1
+    site_key: "1,1"
+    any_site_choice: ["seat", "listen"]
+  - id: hoshimori-e07-02-pip-ledger-apprentice
+    category: character
+    wave: 1
+    site_key: "2,2"
+    any_site_choice: ["trace", "protect"]
+  - id: hoshimori-e07-03-oven-baker
+    category: character
+    wave: 1
+    site_key: "4,3"
+    any_site_choice: ["question", "serve"]
+  - id: hoshimori-e07-04-kitsune-clerk
+    category: character
+    wave: 1
+    site_key: "3,3"
+    any_site_choice: ["witness", "anonymous"]
+  - id: hoshimori-e07-05-tanuki-merchant
+    category: character
+    wave: 1
+    site_key: "2,4"
+    any_site_choice: ["audit", "trade"]
+  - id: hoshimori-e07-06-kappa-ferryman
+    category: character
+    wave: 1
+    site_key: "6,4"
+    any_site_choice: ["return", "labor"]
+  - id: hoshimori-e07-07-umbrella-worker
+    category: character
+    wave: 2
+    site_key: "3,4"
+    any_site_choice: ["mend", "release"]
+  - id: hoshimori-e07-08-borrowed-hearth-spirit
+    category: character
+    wave: 2
+    site_key: "5,5"
+    any_site_choice: ["host", "measure"]
+  - id: hoshimori-e07-09-tengu-weather-keeper
+    category: character
+    wave: 2
+    site_key: "7,1"
+    any_site_choice: ["pay", "signal"]
+  - id: hoshimori-e07-10-oni-stair-warden
+    category: character
+    wave: 2
+    site_key: "6,7"
+    any_site_choice: ["water", "plan"]
+  - id: hoshimori-e07-11-childhood-footbridge
+    category: location
+    wave: 2
+    site_key: "1,1"
+    any_site_choice: ["seat", "listen"]
+  - id: hoshimori-e07-12-orchard-atlas
+    category: location
+    wave: 2
+    site_key: "4,1"
+    any_site_choice: ["repair", "mark"]
+  - id: hoshimori-e07-13-red-oven-threshold
+    category: location
+    wave: 2
+    site_key: "4,3"
+    any_site_choice: ["question", "serve"]
+  - id: hoshimori-e07-14-paper-shadow-theatre
+    category: location
+    wave: 3
+    site_key: "3,8"
+    any_site_choice: ["ask", "perform"]
+  - id: hoshimori-e07-15-south-watch-assembly
+    category: location
+    wave: 3
+    site_key: "8,8"
+    any_site_choice: ["consent", "open"]
+  - id: hoshimori-e07-16-river-archive
+    category: location
+    wave: 3
+    site_key: "4,7"
+    any_site_choice: ["copy", "seal"]
+  - id: hoshimori-e07-17-lantern-refuge
+    category: location
+    wave: 3
+    site_key: "2,6"
+    any_site_choice: ["shelter", "witness"]
+  - id: hoshimori-e07-18-unsent-names-observatory
+    category: location
+    wave: 3
+    site_key: "8,1"
+    any_site_choice: ["ask", "erase"]
+  - id: hoshimori-e07-19-mirror-pond
+    category: location
+    wave: 3
+    site_key: "3,7"
+    any_site_choice: ["question", "protect"]
+  - id: hoshimori-e07-20-oathboat-landing
+    category: location
+    wave: 3
+    site_key: "7,8"
+    any_site_choice: ["witness", "decline"]
+  - id: hoshimori-e07-21-sold-road-testimony
+    category: event
+    wave: 3
+    site_key: "4,4"
+    any_site_choice: ["witness", "depart"]
+  - id: hoshimori-e07-22-registry-withheld
+    category: event
+    wave: 4
+    site_key: "3,3"
+    any_site_choice: ["witness", "anonymous"]
+  - id: hoshimori-e07-23-lantern-sequence
+    category: event
+    wave: 4
+    site_key: "1,2"
+    any_site_choice: ["tend", "borrow"]
+  - id: hoshimori-e07-24-slippers-returned
+    category: event
+    wave: 4
+    site_key: "1,3"
+    any_site_choice: ["return", "record"]
+  - id: hoshimori-e07-25-night-crew-evidence
+    category: event
+    wave: 4
+    site_key: "2,3"
+    any_site_choice: ["question", "hold"]
+    requires_earned_photo: true
+  - id: hoshimori-e07-26-difficult-call
+    category: event
+    wave: 4
+    site_key: "7,5"
+    any_site_choice: ["inquire", "respect"]
+    requires_earned_photo: true
+  - id: hoshimori-e07-27-orchard-tithe-audit
+    category: event
+    wave: 4
+    site_key: "6,5"
+    any_site_choice: ["challenge", "compensate"]
+  - id: hoshimori-e07-28-moss-stair-consent
+    category: event
+    wave: 4
+    site_key: "6,6"
+    any_site_choice: ["invite", "refuse"]
+  - id: hoshimori-e07-29-snowbell-escort
+    category: event
+    wave: 4
+    site_key: "7,6"
+    any_site_choice: ["signal", "wait"]
+  - id: hoshimori-e07-30-kindness-tax-hearing
+    category: event
+    wave: 4
+    site_key: "7,7"
+    any_site_choice: ["challenge", "relief"]
+  - id: hoshimori-e07-31-vesper-scylla-tide-charter
+    category: collaboration
+    wave: collaboration
+    site_key: "7,8"
+    any_site_choice: ["witness", "decline"]
+    requires_earned_cross_realm: e05
+  - id: hoshimori-e07-32-pip-morrow-night-shift
+    category: collaboration
+    wave: collaboration
+    site_key: "2,3"
+    any_site_choice: ["question", "hold"]
+    requires_earned_photo: true
+    requires_earned_cross_realm: e03
+# Runtime integration rules for t-033/t-045:
+# - Check progress.choices[site_key] against any_site_choice AFTER restoreHoshimoriWarm replay.
+# - A visit, fabricated flag, or raw client-side unlock bit is not sufficient evidence.
+# - The two fixed Earth photos require earned Chronicle evidence as well as site choice.
+# - Collaboration faces require an earned cross-realm encounter, not mere map availability.
+# - Persist gallery collection separately across legitimate runs; never rewrite old saves.
+# - Keep all 32 art destinations in the source manifest; verify actual delivered media separately.
