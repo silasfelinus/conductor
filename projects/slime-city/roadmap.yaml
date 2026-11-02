@@ -358,15 +358,16 @@ tasks:
   - id: t-018
     milestone: m2
     title: "Build 60 playable neutral mercenaries with legal faction mixing"
-    status: review
+    status: done
     depends_on: t-004
-    owner: worker
     passes: 0
     stakes: reversible
     note: |-
       Silas's 2026-11-01 PT revised 300-card roster: 40 cards per faction (240 including permanently free founders) plus 60 distinct neutral mercenary cards compatible with any of the six crews. Build neutrals as genuine executable CREATURE/SPELL/TRAP/EQUIPMENT cards with art slots, signed-in ownership, rare-guaranteed packs and one mandatory crew signature; initial deck cap is three mercenaries, reversible after adversarial testing. The adjacent Blackout rules revision is a three-mana per-turn grant with banking and a five-card hand that retains unplayed cards, voluntarily discards marked cards and refills to five; never immediately recycle played cards. Art delivery is not a blocker for tests, mechanics or text. Add exact deterministic replays, no-duplicate inventory, six-faction compatibility, rare exhaustion, constructed matches and explicit counterplay. Internal preview only; no production database resets or public publishing.
 
       PARTIAL: 60 neutral mercenary cards authored in Kind Robots worker branch: 20 creatures, 18 spells, 12 traps and 10 equipment; 20 rare and 40 other. Deck and collection wiring, legal neutral cap, account ownership and replay smoke tests are in code review; art remains separate. The rules revision for banked mana/five-card cycling is a separate follow-on slice and must not be considered implemented here.
+
+      DONE: Kind Robots #4626 merged at 50bd1df after 9/9 latest-head workflows completed successfully, including TypeScript, all contract shards and the container build. 60 original mercenaries (20 creatures, 18 spells, 12 traps, 10 equipment; 20 rares), any-faction legal mixing with max three neutrals, account ownership and rare-safe 168-card catalog. Gutter Crown #4620 merged first at 8972da4; synthetic two-parent merge preserved its Ogre shove changes. Art is separately pending; 3-mana banking and five-card hand are tracked as t-019.
     claimed_by: 2026-11-02T044600Z-slime-city-t018-a16b
     claimed_at: '2026-11-02T04:46:00Z'
-    updated: '2026-11-02T04:49:00Z'
+    updated: '2026-11-02T06:46:00Z'
