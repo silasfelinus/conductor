@@ -213,18 +213,17 @@ tasks:
   - id: t-009
     milestone: m3
     title: "Write and implement six genuinely different crew campaigns"
-    status: review
+    status: ready
     depends_on: [t-004, t-007]
-    owner: worker
     passes: 0
     stakes: reversible
     note: |-
       Gene Riot Catgirls escaping their creators, Punk Bloodfairies organizing wild city uprising, cyber-ogres revolting against foundry owners, Riot Saints' explosive comedy, Undertow's information war, and Meat Exchange's rotten oligarchy. Different rivals, branching dialogue, authored rewards, earned endings and provenance-linked character/location art. A faction color is NOT a story and a paragraph is NOT an implemented playable campaign. Build one full vertical slice and test it before adding other chapters.
 
       First campaign-depth increment: each of six crews has two distinct earned tactical echoes from prior chapter decisions. Previous victories visibly affect next-chapter Blackout opening conditions in both Story and city routes; losses do not unlock echoes or erase earned history. Added a six-crew deterministic test matrix. Source PR pending CI; further campaign depth, sourced illustration placement and human playtesting remain open.
-    claimed_by: 20261102T120308127Z-slime-city-t009-uyvvcvh
-    claimed_at: '2026-11-02T12:03:08.127Z'
-    updated: '2026-11-02T12:07:18.421Z'
+
+      PARTIAL MERGED 2026-11-02 PT: Kind Robots PR #4656 merged to main at 791ad976bc74d0f43766ed1ab83637e5447bad1e after all six latest-head GitHub Actions workflows passed: four contract shards, TypeScript, formatting, layout, architecture, schema parity and security checks. Twelve choice-specific campaign echoes now carry one prior victory into the next Blackout mission, with legible terms in Story and district launch, deterministic six-faction tests and independent account-saved progression. This is one substantial campaign-depth slice, not task completion. Continue richer character scenes, branching consequences and authored rewards; art placement and visual acceptance remain on their separate tracks. No self-hosted deployment or public publication was performed.
+    updated: '2026-11-02T12:18:09.361Z'
   - id: t-010
     milestone: m3
     title: "Create daily, weekly and evergreen missions with earned progression"
