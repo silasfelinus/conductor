@@ -1,0 +1,279 @@
+# Space Couch collector incidents: one outcome plate per option (6 incidents x a/b/c = 18).
+# PROPOSED KEY (none exists; options show icons only): <incident.illustrationKey>-<option.id>, e.g. aliens/milestone-5-b.
+# CODE CHANGE NEEDED: components/gameOfCaptains/alien-milestone.vue choices set
+# image: props.artwork?.[`${incident.illustrationKey}-${option.id}`]. Delivery: add each key -> ArtJob id to
+# utils/gameOfCaptains/alienArtJobs.ts (the alien-art route already resolves ArtJob ids). Priority 45 as
+# ALIEN-COLLECTOR-INCIDENTS-ROUND-1.
+round: space-couch-collector-choices-1
+project_slug: game-of-captains
+designer: Space Couch absurd natural history
+is_public: false
+is_mature: false
+cast_loras: false
+priority: 1
+auto_submit: true
+lanes:
+- key: krea2
+  label: Krea2 collector milestone choice outcomes
+  engine: krea2
+  prompt: prose
+subjects:
+- key: alien-milestone-5-a
+  lane: krea2
+  entity: alien-collector-choice
+  title: The Couch Has Acquired a Following / Declare it a royal procession
+  asset: game-of-captains/aliens/milestone-5-a
+  size: 1344x768
+  seed: 1850001
+  prompt_prose: 'A very long scarlet velvet couch with rolled armrests, deep button-tufted cushions and four short brass
+    feet, floating inside a thin clear bubble with a faint pale-blue rim, surrounded by original alien lifeforms. Five
+    unrelated species have followed the long red couch into a lopsided parade. The force bubble has become a mobile birdbath,
+    and someone has ordered matching hats. Outcome: The captain waves from a cushion. The marchers invent an anthem in
+    six incompatible time signatures. Local news reports that the couch has annexed a puddle. Hand-painted original science-fiction
+    comedy adventure painting, expressive dramatic acting, highly legible wide 16:9 scene, coherent organic creature
+    forms, tactile gouache pigment and warm ink contours, intricate imaginative environment, naturally bare and unmarked
+    surfaces.'
+- key: alien-milestone-5-b
+  lane: krea2
+  entity: alien-collector-choice
+  title: The Couch Has Acquired a Following / Ask who the banner belongs to
+  asset: game-of-captains/aliens/milestone-5-b
+  size: 1344x768
+  seed: 1850002
+  prompt_prose: 'A very long scarlet velvet couch with rolled armrests, deep button-tufted cushions and four short brass
+    feet, floating inside a thin clear bubble with a faint pale-blue rim, surrounded by original alien lifeforms. Five
+    unrelated species have followed the long red couch into a lopsided parade. The force bubble has become a mobile birdbath,
+    and someone has ordered matching hats. Outcome: It belongs to the little creature’s grandmother, who has searched
+    for it for three generations. Their reunion turns the parade into a mobile family picnic. Hand-painted original science-fiction
+    comedy adventure painting, expressive dramatic acting, highly legible wide 16:9 scene, coherent organic creature
+    forms, tactile gouache pigment and warm ink contours, intricate imaginative environment, naturally bare and unmarked
+    surfaces.'
+- key: alien-milestone-5-c
+  lane: krea2
+  entity: alien-collector-choice
+  title: The Couch Has Acquired a Following / Disguise the couch as a bus stop
+  asset: game-of-captains/aliens/milestone-5-c
+  size: 1344x768
+  seed: 1850003
+  prompt_prose: 'A very long scarlet velvet couch with rolled armrests, deep button-tufted cushions and four short brass
+    feet, floating inside a thin clear bubble with a faint pale-blue rim, surrounded by original alien lifeforms. Five
+    unrelated species have followed the long red couch into a lopsided parade. The force bubble has become a mobile birdbath,
+    and someone has ordered matching hats. Outcome: The procession boards an imaginary bus, realizes its mistake and
+    wanders off in six directions. The captain inherits a very authoritative timetable. Hand-painted original science-fiction
+    comedy adventure painting, expressive dramatic acting, highly legible wide 16:9 scene, coherent organic creature
+    forms, tactile gouache pigment and warm ink contours, intricate imaginative environment, naturally bare and unmarked
+    surfaces.'
+- key: alien-milestone-12-a
+  lane: krea2
+  entity: alien-collector-choice
+  title: The Intergalactic Census Calls / File a group adoption certificate
+  asset: game-of-captains/aliens/milestone-12-a
+  size: 1344x768
+  seed: 1850004
+  prompt_prose: 'A very long scarlet velvet couch with rolled armrests, deep button-tufted cushions and four short brass
+    feet, floating inside a thin clear bubble with a faint pale-blue rim, surrounded by original alien lifeforms. A census
+    official in a novelty squid hat boards the couch with a stack of forms taller than its backrest. Twelve species have
+    named the same red sofa as their next of kin. Outcome: The family tree blocks three customs lanes. The clerk stamps
+    APPROVED on every page, including the space between the pages. Hand-painted original science-fiction comedy adventure
+    painting, expressive dramatic acting, highly legible wide 16:9 scene, coherent organic creature forms, tactile gouache
+    pigment and warm ink contours, intricate imaginative environment, naturally bare and unmarked surfaces.'
+- key: alien-milestone-12-b
+  lane: krea2
+  entity: alien-collector-choice
+  title: The Intergalactic Census Calls / Insist the couch is soup
+  asset: game-of-captains/aliens/milestone-12-b
+  size: 1344x768
+  seed: 1850005
+  prompt_prose: 'A very long scarlet velvet couch with rolled armrests, deep button-tufted cushions and four short brass
+    feet, floating inside a thin clear bubble with a faint pale-blue rim, surrounded by original alien lifeforms. A census
+    official in a novelty squid hat boards the couch with a stack of forms taller than its backrest. Twelve species have
+    named the same red sofa as their next of kin. Outcome: A chef arrives to taste the shield. Three inspectors argue
+    about garnish until the captain becomes the subject of an emergency cookbook recall. Hand-painted original science-fiction
+    comedy adventure painting, expressive dramatic acting, highly legible wide 16:9 scene, coherent organic creature
+    forms, tactile gouache pigment and warm ink contours, intricate imaginative environment, naturally bare and unmarked
+    surfaces.'
+- key: alien-milestone-12-c
+  lane: krea2
+  entity: alien-collector-choice
+  title: The Intergalactic Census Calls / Request an extension until tuesday
+  asset: game-of-captains/aliens/milestone-12-c
+  size: 1344x768
+  seed: 1850006
+  prompt_prose: 'A very long scarlet velvet couch with rolled armrests, deep button-tufted cushions and four short brass
+    feet, floating inside a thin clear bubble with a faint pale-blue rim, surrounded by original alien lifeforms. A census
+    official in a novelty squid hat boards the couch with a stack of forms taller than its backrest. Twelve species have
+    named the same red sofa as their next of kin. Outcome: The clerk consults seven calendars and discovers none contain
+    Tuesday. Administration withdraws to investigate; the forms vanish into a diplomatic briefcase. Hand-painted original
+    science-fiction comedy adventure painting, expressive dramatic acting, highly legible wide 16:9 scene, coherent organic
+    creature forms, tactile gouache pigment and warm ink contours, intricate imaginative environment, naturally bare
+    and unmarked surfaces.'
+- key: alien-milestone-25-a
+  lane: krea2
+  entity: alien-collector-choice
+  title: Unauthorized Wildlife Fan Club / Invite the elder to speak
+  asset: game-of-captains/aliens/milestone-25-a
+  size: 1344x768
+  seed: 1850007
+  prompt_prose: 'A very long scarlet velvet couch with rolled armrests, deep button-tufted cushions and four short brass
+    feet, floating inside a thin clear bubble with a faint pale-blue rim, surrounded by original alien lifeforms. Twenty-five
+    documented alien species have formed a club in the folded room behind the couch. The first motion: Determine whether
+    the captain is a domesticated animal. Outcome: The elder asks members to stop describing each other as collectibles.
+    The club renames itself Friends of the Red Couch and elects its smallest member president. Hand-painted original
+    science-fiction comedy adventure painting, expressive dramatic acting, highly legible wide 16:9 scene, coherent organic
+    creature forms, tactile gouache pigment and warm ink contours, intricate imaginative environment, naturally bare
+    and unmarked surfaces.'
+- key: alien-milestone-25-b
+  lane: krea2
+  entity: alien-collector-choice
+  title: Unauthorized Wildlife Fan Club / Run for club president
+  asset: game-of-captains/aliens/milestone-25-b
+  size: 1344x768
+  seed: 1850008
+  prompt_prose: 'A very long scarlet velvet couch with rolled armrests, deep button-tufted cushions and four short brass
+    feet, floating inside a thin clear bubble with a faint pale-blue rim, surrounded by original alien lifeforms. Twenty-five
+    documented alien species have formed a club in the folded room behind the couch. The first motion: Determine whether
+    the captain is a domesticated animal. Outcome: The captain wins by a vote cast by the upholstery. The new constitution
+    requires a ceremonial nap every seventeen minutes, including during combat. Hand-painted original science-fiction
+    comedy adventure painting, expressive dramatic acting, highly legible wide 16:9 scene, coherent organic creature
+    forms, tactile gouache pigment and warm ink contours, intricate imaginative environment, naturally bare and unmarked
+    surfaces.'
+- key: alien-milestone-25-c
+  lane: krea2
+  entity: alien-collector-choice
+  title: Unauthorized Wildlife Fan Club / Resign before being nominated
+  asset: game-of-captains/aliens/milestone-25-c
+  size: 1344x768
+  seed: 1850009
+  prompt_prose: 'A very long scarlet velvet couch with rolled armrests, deep button-tufted cushions and four short brass
+    feet, floating inside a thin clear bubble with a faint pale-blue rim, surrounded by original alien lifeforms. Twenty-five
+    documented alien species have formed a club in the folded room behind the couch. The first motion: Determine whether
+    the captain is a domesticated animal. Outcome: The members accept the resignation, discover the captain was never
+    nominated, and dissolve into six disagreeing book groups. Hand-painted original science-fiction comedy adventure
+    painting, expressive dramatic acting, highly legible wide 16:9 scene, coherent organic creature forms, tactile gouache
+    pigment and warm ink contours, intricate imaginative environment, naturally bare and unmarked surfaces.'
+- key: alien-milestone-50-a
+  lane: krea2
+  entity: alien-collector-choice
+  title: The Counterfeit Couch Appears / Accept the upholstery duel
+  asset: game-of-captains/aliens/milestone-50-a
+  size: 1344x768
+  seed: 1850010
+  prompt_prose: 'A very long scarlet velvet couch with rolled armrests, deep button-tufted cushions and four short brass
+    feet, floating inside a thin clear bubble with a faint pale-blue rim, surrounded by original alien lifeforms. A second
+    long red couch drifts into view, woven entirely from sleeping aliens with miniature force bubbles. Outcome: Both
+    couches compete to become more comfortable. The resulting softness transforms a nearby asteroid belt into a mattress
+    showroom. The judges call it a draw. Hand-painted original science-fiction comedy adventure painting, expressive
+    dramatic acting, highly legible wide 16:9 scene, coherent organic creature forms, tactile gouache pigment and warm
+    ink contours, intricate imaginative environment, naturally bare and unmarked surfaces.'
+- key: alien-milestone-50-b
+  lane: krea2
+  entity: alien-collector-choice
+  title: The Counterfeit Couch Appears / Ask whether the other couch is tired
+  asset: game-of-captains/aliens/milestone-50-b
+  size: 1344x768
+  seed: 1850011
+  prompt_prose: 'A very long scarlet velvet couch with rolled armrests, deep button-tufted cushions and four short brass
+    feet, floating inside a thin clear bubble with a faint pale-blue rim, surrounded by original alien lifeforms. A second
+    long red couch drifts into view, woven entirely from sleeping aliens with miniature force bubbles. Outcome: The imitation
+    admits it has been carrying passengers without a break for millennia. Two couches spend a whole afternoon doing absolutely
+    nothing. Hand-painted original science-fiction comedy adventure painting, expressive dramatic acting, highly legible
+    wide 16:9 scene, coherent organic creature forms, tactile gouache pigment and warm ink contours, intricate imaginative
+    environment, naturally bare and unmarked surfaces.'
+- key: alien-milestone-50-c
+  lane: krea2
+  entity: alien-collector-choice
+  title: The Counterfeit Couch Appears / Pretend to be an ordinary bench
+  asset: game-of-captains/aliens/milestone-50-c
+  size: 1344x768
+  seed: 1850012
+  prompt_prose: 'A very long scarlet velvet couch with rolled armrests, deep button-tufted cushions and four short brass
+    feet, floating inside a thin clear bubble with a faint pale-blue rim, surrounded by original alien lifeforms. A second
+    long red couch drifts into view, woven entirely from sleeping aliens with miniature force bubbles. Outcome: The living
+    couch loses interest and wanders away to challenge a remarkably smug ottoman. Hand-painted original science-fiction
+    comedy adventure painting, expressive dramatic acting, highly legible wide 16:9 scene, coherent organic creature
+    forms, tactile gouache pigment and warm ink contours, intricate imaginative environment, naturally bare and unmarked
+    surfaces.'
+- key: alien-milestone-75-a
+  lane: krea2
+  entity: alien-collector-choice
+  title: The Congress of Things with Feet / Let everyone redesign the floor plan
+  asset: game-of-captains/aliens/milestone-75-a
+  size: 1344x768
+  seed: 1850013
+  prompt_prose: 'A very long scarlet velvet couch with rolled armrests, deep button-tufted cushions and four short brass
+    feet, floating inside a thin clear bubble with a faint pale-blue rim, surrounded by original alien lifeforms. Delegates
+    with zero to seventeen feet assemble behind the couch for a diplomatic summit. Each delegation has brought exactly
+    the wrong number of chairs. Outcome: The delegates invent a room that folds to any shape, including a respectful
+    absence of floors. Universal access passes by unanimous applause. Hand-painted original science-fiction comedy adventure
+    painting, expressive dramatic acting, highly legible wide 16:9 scene, coherent organic creature forms, tactile gouache
+    pigment and warm ink contours, intricate imaginative environment, naturally bare and unmarked surfaces.'
+- key: alien-milestone-75-b
+  lane: krea2
+  entity: alien-collector-choice
+  title: The Congress of Things with Feet / Count every foot as a vote
+  asset: game-of-captains/aliens/milestone-75-b
+  size: 1344x768
+  seed: 1850014
+  prompt_prose: 'A very long scarlet velvet couch with rolled armrests, deep button-tufted cushions and four short brass
+    feet, floating inside a thin clear bubble with a faint pale-blue rim, surrounded by original alien lifeforms. Delegates
+    with zero to seventeen feet assemble behind the couch for a diplomatic summit. Each delegation has brought exactly
+    the wrong number of chairs. Outcome: The seventeen-footed bloc attempts a coup. The footless caucus counters with
+    interpretive floating, forcing a constitutional recount. Hand-painted original science-fiction comedy adventure painting,
+    expressive dramatic acting, highly legible wide 16:9 scene, coherent organic creature forms, tactile gouache pigment
+    and warm ink contours, intricate imaginative environment, naturally bare and unmarked surfaces.'
+- key: alien-milestone-75-c
+  lane: krea2
+  entity: alien-collector-choice
+  title: The Congress of Things with Feet / Declare an indefinite tea break
+  asset: game-of-captains/aliens/milestone-75-c
+  size: 1344x768
+  seed: 1850015
+  prompt_prose: 'A very long scarlet velvet couch with rolled armrests, deep button-tufted cushions and four short brass
+    feet, floating inside a thin clear bubble with a faint pale-blue rim, surrounded by original alien lifeforms. Delegates
+    with zero to seventeen feet assemble behind the couch for a diplomatic summit. Each delegation has brought exactly
+    the wrong number of chairs. Outcome: Delegates scatter to find suitable cups. The summit never officially adjourns,
+    but everyone gets home satisfied. Hand-painted original science-fiction comedy adventure painting, expressive dramatic
+    acting, highly legible wide 16:9 scene, coherent organic creature forms, tactile gouache pigment and warm ink contours,
+    intricate imaginative environment, naturally bare and unmarked surfaces.'
+- key: alien-milestone-100-a
+  lane: krea2
+  entity: alien-collector-choice
+  title: One Empty Page Remains / Leave the final page open
+  asset: game-of-captains/aliens/milestone-100-a
+  size: 1344x768
+  seed: 1850016
+  prompt_prose: 'A very long scarlet velvet couch with rolled armrests, deep button-tufted cushions and four short brass
+    feet, floating inside a thin clear bubble with a faint pale-blue rim, surrounded by original alien lifeforms. A hundred
+    species have left their marks in the scrapbook. The last page is blank, yet a shadow keeps turning it from the other
+    side. Outcome: The voice is relieved. It has waited for someone who can accept a question without answering it. Outside
+    the bubble, a previously impossible trail of stars appears. Hand-painted original science-fiction comedy adventure
+    painting, expressive dramatic acting, highly legible wide 16:9 scene, coherent organic creature forms, tactile gouache
+    pigment and warm ink contours, intricate imaginative environment, naturally bare and unmarked surfaces.'
+- key: alien-milestone-100-b
+  lane: krea2
+  entity: alien-collector-choice
+  title: One Empty Page Remains / Copyright the shadow
+  asset: game-of-captains/aliens/milestone-100-b
+  size: 1344x768
+  seed: 1850017
+  prompt_prose: 'A very long scarlet velvet couch with rolled armrests, deep button-tufted cushions and four short brass
+    feet, floating inside a thin clear bubble with a faint pale-blue rim, surrounded by original alien lifeforms. A hundred
+    species have left their marks in the scrapbook. The last page is blank, yet a shadow keeps turning it from the other
+    side. Outcome: The shadow hires an attorney, who hires another attorney, who turns out to be the shadow. A temporary
+    black hole opens in the stationery aisle. Hand-painted original science-fiction comedy adventure painting, expressive
+    dramatic acting, highly legible wide 16:9 scene, coherent organic creature forms, tactile gouache pigment and warm
+    ink contours, intricate imaginative environment, naturally bare and unmarked surfaces.'
+- key: alien-milestone-100-c
+  lane: krea2
+  entity: alien-collector-choice
+  title: One Empty Page Remains / Close the book and take a nap
+  asset: game-of-captains/aliens/milestone-100-c
+  size: 1344x768
+  seed: 1850018
+  prompt_prose: 'A very long scarlet velvet couch with rolled armrests, deep button-tufted cushions and four short brass
+    feet, floating inside a thin clear bubble with a faint pale-blue rim, surrounded by original alien lifeforms. A hundred
+    species have left their marks in the scrapbook. The last page is blank, yet a shadow keeps turning it from the other
+    side. Outcome: The rustling stops. A gentle tapping resumes after the nap, and the empty page remains intact for
+    whenever the crew feels ready. Hand-painted original science-fiction comedy adventure painting, expressive dramatic
+    acting, highly legible wide 16:9 scene, coherent organic creature forms, tactile gouache pigment and warm ink contours,
+    intricate imaginative environment, naturally bare and unmarked surfaces.'

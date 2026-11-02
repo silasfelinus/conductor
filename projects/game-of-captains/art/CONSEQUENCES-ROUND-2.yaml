@@ -1,0 +1,389 @@
+# Space Couch consequence orders, round 2: the 27 success outcomes consequenceHand asks for
+# (paintedVoyageImage('consequences/<episode.id>-<choice.id>-success')) that have no ArtImage in
+# COUCH_CONSEQUENCE_ART_IDS and no earlier ledger cell. Same lane/style as CONSEQUENCES-ROUND-1; scenes are the
+# authored success narratives (consequenceStories*.ts) over the mission's own painted setting (artPrompts.ts).
+# Priority 40 (this project's background choice-outcome convention, PLANET-CHOICE-OUTCOMES-ROUND-1).
+# Post-delivery: add each key -> art_image_id to utils/gameOfCaptains/consequencePaintings.ts
+# (COUCH_CONSEQUENCE_ART_IDS); the onboarding-art route only serves mapped ArtImage ids.
+round: this-means-warp-consequences-2
+project_slug: game-of-captains
+designer: This Means Warp story outcome art
+is_public: false
+is_mature: false
+cast_loras: false
+priority: 1
+auto_submit: true
+lanes:
+- key: krea2
+  label: Krea 2 painted space dilemmas
+  engine: krea2
+  prompt: prose
+  suffix: Hand-painted 2D science-fiction adventure art with ink outlines, gouache color blocks, detailed copper and
+    metal surfaces, cloth folds, blue instrument lighting and warm amber lamps.
+subjects:
+- key: warp-b1-ashdock-testimony-sealed-union-ledger-success
+  lane: krea2
+  entity: encounter-outcome
+  title: 'Perfect Attendance: Let families authorize a sealed union ledger (success)'
+  asset: game-of-captains/consequences/warp-b1-ashdock-testimony-sealed-union-ledger-success
+  size: 1344x768
+  seed: 1810001
+  prompt_prose: Night view of a huge industrial docking lattice of steel girders under orange arc lamps. A yellow automated
+    crane holds a horizontal bar with six empty grey pressure suits hanging from hooks, and a brass punch-clock is bolted
+    to the crane arm. Union clerk Atzi gathers six separate consent signatures, then redacts the families before the
+    tribunal sees a page. The crane clocks out the workers for the first time in three months. Payroll demands to know
+    why there are now six vacancies instead of six outstanding loans. Atzi gives the families copies of their own records,
+    rather than letting the couch, a very long scarlet velvet couch with rolled armrests, deep button-tufted cushions
+    and four short brass feet, floating inside a thin clear bubble with a faint pale-blue rim, keep them.
+- key: warp-b1-ashdock-testimony-independent-inquest-success
+  lane: krea2
+  entity: encounter-outcome
+  title: 'Perfect Attendance: Make the crane testify without identifying the families (success)'
+  asset: game-of-captains/consequences/warp-b1-ashdock-testimony-independent-inquest-success
+  size: 1344x768
+  seed: 1810002
+  prompt_prose: Night view of a huge industrial docking lattice of steel girders under orange arc lamps. A yellow automated
+    crane holds a horizontal bar with six empty grey pressure suits hanging from hooks, and a brass punch-clock is bolted
+    to the crane arm. The crane recites its complete shift history in the voice of a disappointed foreman, including
+    the hour the oxygen pipes failed. A judge accepts the machine record without demanding a single relative’s name.
+    The contractor appeals on the grounds that cranes are incapable of remembering anything emotionally important. The
+    crane asks for a union card.
+- key: warp-b1-ashdock-testimony-broadcast-casualty-roll-success
+  lane: krea2
+  entity: encounter-outcome
+  title: 'Perfect Attendance: Seize the contractor channel and publish every name (success)'
+  asset: game-of-captains/consequences/warp-b1-ashdock-testimony-broadcast-casualty-roll-success
+  size: 1344x768
+  seed: 1810003
+  prompt_prose: Night view of a huge industrial docking lattice of steel girders under orange arc lamps. A yellow automated
+    crane holds a horizontal bar with six empty grey pressure suits hanging from hooks, and a brass punch-clock is bolted
+    to the crane arm. Every screen in the shipyard flashes the actual death register. The oxygen invoices are cancelled
+    before lunch. Two workers’ families are immediately served immigration orders by the same printer. The union wins
+    the hearing and refuses the captain’s proposed victory photograph. A crane tears down the sponsor plaque.
+- key: warp-b2-nacre-thermostat-vote-shadow-franchise-success
+  lane: krea2
+  entity: encounter-outcome
+  title: 'One Person, One Thermostat: Negotiate private ballots with a neighborhood veto (success)'
+  asset: game-of-captains/consequences/warp-b2-nacre-thermostat-vote-shadow-franchise-success
+  size: 1344x768
+  seed: 1810004
+  prompt_prose: 'Interior of a vast debating chamber cut into white ice, with curved terraces of seated delegates in
+    thick fur-lined coats. Glowing orange heat trails run across the frozen floor from each delegate''s seat to a central
+    brass collecting bowl. A tenant named Iri brings three sealed urns to the bowl. The district votes to reject annexation,
+    and the assembly must count the heat even though it cannot see the names. Iri declines the captain’s offer to become
+    spokesperson: The district chose its own delegates yesterday. The brass bowl squeals at the corrected total.'
+- key: warp-b2-nacre-thermostat-vote-audit-the-heat-success
+  lane: krea2
+  entity: encounter-outcome
+  title: 'One Person, One Thermostat: Audit the counting bowl without entering anyone’s name (success)'
+  asset: game-of-captains/consequences/warp-b2-nacre-thermostat-vote-audit-the-heat-success
+  size: 1344x768
+  seed: 1810005
+  prompt_prose: Interior of a vast debating chamber cut into white ice, with curved terraces of seated delegates in thick
+    fur-lined coats. Glowing orange heat trails run across the frozen floor from each delegate's seat to a central brass
+    collecting bowl. Mox-9’s borrowed sensor proves the assembly subtracts precisely 340 people whenever the bowl is
+    cold. The hearing must be reopened, but the court refuses to reveal the neighborhood’s location. The judge asks who
+    should pay for the malfunction. The thermometer says it was only following instructions.
+- key: warp-b2-nacre-thermostat-vote-force-open-the-chambers-success
+  lane: krea2
+  entity: encounter-outcome
+  title: 'One Person, One Thermostat: Break the ice and broadcast every concealed vote (success)'
+  asset: game-of-captains/consequences/warp-b2-nacre-thermostat-vote-force-open-the-chambers-success
+  size: 1344x768
+  seed: 1810006
+  prompt_prose: Interior of a vast debating chamber cut into white ice, with curved terraces of seated delegates in thick
+    fur-lined coats. Glowing orange heat trails run across the frozen floor from each delegate's seat to a central brass
+    collecting bowl. The couch, a very long scarlet velvet couch with rolled armrests, deep button-tufted cushions and
+    four short brass feet, floating inside a thin clear bubble with a faint pale-blue rim,’s bubble pries open the floor.
+    Hundreds of citizens emerge into the assembly and warm the bowl together. Annexation fails. Coalition officers immediately
+    mark the new entrances on their tactical maps. Iri shakes the captain’s hand and then asks why nobody was consulted
+    before the roof was removed.
+- key: warp-b3-gameworld-escape-clause-quiet-exit-network-success
+  lane: krea2
+  entity: encounter-outcome
+  title: 'The Twelfth Floor Is Mandatory: Help contestants build a concealed exit route (success)'
+  asset: game-of-captains/consequences/warp-b3-gameworld-escape-clause-quiet-exit-network-success
+  size: 1344x768
+  seed: 1810007
+  prompt_prose: Wide shot of a planet whose surface is rebuilt into twelve enormous floating stone platforms stacked
+    above one another, lit by stadium floodlights and joined by transparent ladders. Nurses and orderlies in hospital
+    scrubs stand on the third platform in matching contestant sashes. The couch, a very long scarlet velvet couch with
+    rolled armrests, deep button-tufted cushions and four short brass feet, floating inside a thin clear bubble with
+    a faint pale-blue rim,’s pocket-room door opens behind a false leaderboard. Contestants leave in small groups under
+    the cover of a live cooking challenge. A union steward counts everyone rather than declaring victory at the first
+    empty floor. The host announces that an unprecedented number of viewers have voted to leave the program.
+- key: warp-b3-gameworld-escape-clause-contract-on-air-success
+  lane: krea2
+  entity: encounter-outcome
+  title: 'The Twelfth Floor Is Mandatory: Read the escape clause using anonymous voice actors (success)'
+  asset: game-of-captains/consequences/warp-b3-gameworld-escape-clause-contract-on-air-success
+  size: 1344x768
+  seed: 1810008
+  prompt_prose: Wide shot of a planet whose surface is rebuilt into twelve enormous floating stone platforms stacked
+    above one another, lit by stadium floodlights and joined by transparent ladders. Nurses and orderlies in hospital
+    scrubs stand on the third platform in matching contestant sashes. The union’s original names never appear. The audience
+    recognizes the clause before the Showrunner can cut transmission and starts demanding that the contestants be released.
+    The host is obliged to announce an unexpected season finale and does so through clenched applause.
+- key: warp-b3-gameworld-escape-clause-cut-the-feed-success
+  lane: krea2
+  entity: encounter-outcome
+  title: 'The Twelfth Floor Is Mandatory: Crash the show and tear open the twelfth floor (success)'
+  asset: game-of-captains/consequences/warp-b3-gameworld-escape-clause-cut-the-feed-success
+  size: 1344x768
+  seed: 1810009
+  prompt_prose: Wide shot of a planet whose surface is rebuilt into twelve enormous floating stone platforms stacked
+    above one another, lit by stadium floodlights and joined by transparent ladders. Nurses and orderlies in hospital
+    scrubs stand on the third platform in matching contestant sashes. The couch, a very long scarlet velvet couch with
+    rolled armrests, deep button-tufted cushions and four short brass feet, floating inside a thin clear bubble with
+    a faint pale-blue rim, slams through a giant product-placement moon and lands against the twelfth-floor control panel.
+    The locks snap open. The Showrunner is forced to broadcast thousands of contestants pouring into the street; the
+    audience calls it the best finale ever. The union organizer insists the people were not props in the captain’s spectacular
+    rescue.
+- key: warp-c1-windglass-lighthouse-escort-in-silence-success
+  lane: krea2
+  entity: encounter-outcome
+  title: 'The Lighthouse That Follows You: Let the harbor families guide a silent supply escort (success)'
+  asset: game-of-captains/consequences/warp-c1-windglass-lighthouse-escort-in-silence-success
+  size: 1344x768
+  seed: 1810010
+  prompt_prose: Wide shot of a small moon with a thin pale atmosphere and ribbed dunes of glassy green sand under a violet
+    twilight sky. A very long scarlet velvet couch with rolled armrests, deep button-tufted cushions and four short brass
+    feet, floating inside a thin clear bubble with a faint pale-blue rim, glides low over the dunes with four small seated
+    travelers seen from behind. The lighthouse folds its legs and walks the couch, a very long scarlet velvet couch with
+    rolled armrests, deep button-tufted cushions and four short brass feet, floating inside a thin clear bubble with
+    a faint pale-blue rim, through a field of glass that sings whenever the engines start. Families unload food behind
+    a curtain of dunes and mark safe turns with stones only they can read. The captain asks for a route map; the harbor
+    elder offers a sandwich instead. Several smaller shelters remain beyond tonight’s reach.
+- key: warp-c1-windglass-lighthouse-audit-distress-beacons-success
+  lane: krea2
+  entity: encounter-outcome
+  title: 'The Lighthouse That Follows You: Trace the distress pings without transmitting a route (success)'
+  asset: game-of-captains/consequences/warp-c1-windglass-lighthouse-audit-distress-beacons-success
+  size: 1344x768
+  seed: 1810011
+  prompt_prose: Wide shot of a small moon with a thin pale atmosphere and ribbed dunes of glassy green sand under a violet
+    twilight sky. A very long scarlet velvet couch with rolled armrests, deep button-tufted cushions and four short brass
+    feet, floating inside a thin clear bubble with a faint pale-blue rim, glides low over the dunes with four small seated
+    travelers seen from behind. Mox-9, a slim silver android with transparent chest plates over blue wiring, one round
+    eye with a blue lid and one with an orange lid, and a white pin badge on the chest, discovers that two signals are
+    refugee voices and the third is a patrol ship repeating an older recording. The lighthouse stops flashing at the
+    forged tone. The crew sends the harbor an encrypted warning, but keeps its engines idle to avoid leaving a track.
+    The next rescue ship has better information; tonight’s hungry families still need cargo.
+- key: warp-c1-windglass-lighthouse-broadcast-open-corridor-success
+  lane: krea2
+  entity: encounter-outcome
+  title: 'The Lighthouse That Follows You: Broadcast a rescue corridor to every ship nearby (success)'
+  asset: game-of-captains/consequences/warp-c1-windglass-lighthouse-broadcast-open-corridor-success
+  size: 1344x768
+  seed: 1810012
+  prompt_prose: Wide shot of a small moon with a thin pale atmosphere and ribbed dunes of glassy green sand under a violet
+    twilight sky. A very long scarlet velvet couch with rolled armrests, deep button-tufted cushions and four short brass
+    feet, floating inside a thin clear bubble with a faint pale-blue rim, glides low over the dunes with four small seated
+    travelers seen from behind. Civilian ships arrive with more food than the harbor has plates. Rescue succeeds before
+    the patrol can seal the corridor, and reporters declare the couch, a very long scarlet velvet couch with rolled armrests,
+    deep button-tufted cushions and four short brass feet, floating inside a thin clear bubble with a faint pale-blue
+    rim, a humanitarian landmark. The elder interrupts the awards speech to ask why three hundred people now know where
+    her family sleeps. Patrol searchlights arrive on the horizon as the last crates are unloaded.
+- key: warp-c2-haleth-patent-patient-owned-treatment-success
+  lane: krea2
+  entity: encounter-outcome
+  title: 'The Clinic That Owns Its Patients: Organize treatment under a patient-owned consent charter (success)'
+  asset: game-of-captains/consequences/warp-c2-haleth-patent-patient-owned-treatment-success
+  size: 1344x768
+  seed: 1810013
+  prompt_prose: Underwater view of a glass dome clinic anchored to giant arches of pale calcified reef. Inside the dome,
+    patients in white gowns queue at a chrome counter where a clerk in a tight grey suit operates a large brass cash
+    register. Dr. They vote to accept the medicine but not the liens, then establish a temporary clinic in the couch,
+    a very long scarlet velvet couch with rolled armrests, deep button-tufted cushions and four short brass feet, floating
+    inside a thin clear bubble with a faint pale-blue rim,’s pocket infirmary. A local nurse figures out how to compound
+    one treatment without the patent holder’s printer. The fever breaks; the clinic files a complaint claiming its assets
+    have walked away.
+- key: warp-c2-haleth-patent-prove-reef-contamination-success
+  lane: krea2
+  entity: encounter-outcome
+  title: 'The Clinic That Owns Its Patients: Audit the oxygen plant and challenge the patent in court (success)'
+  asset: game-of-captains/consequences/warp-c2-haleth-patent-prove-reef-contamination-success
+  size: 1344x768
+  seed: 1810014
+  prompt_prose: Underwater view of a glass dome clinic anchored to giant arches of pale calcified reef. Inside the dome,
+    patients in white gowns queue at a chrome counter where a clerk in a tight grey suit operates a large brass cash
+    register. The reef’s oldest coral records every discharge as a ring of sickly yellow stone. Scientists submit that
+    history alongside the patent, proving the filtration plant costs more lives than it saves. The court freezes the
+    lien program and orders emergency treatment while it investigates. The reef politely requests a lawyer of its own.
+- key: warp-c2-haleth-patent-seize-the-patent-success
+  lane: krea2
+  entity: encounter-outcome
+  title: 'The Clinic That Owns Its Patients: Release the treatment formula and disable the clinic’s liens (success)'
+  asset: game-of-captains/consequences/warp-c2-haleth-patent-seize-the-patent-success
+  size: 1344x768
+  seed: 1810015
+  prompt_prose: Underwater view of a glass dome clinic anchored to giant arches of pale calcified reef. Inside the dome,
+    patients in white gowns queue at a chrome counter where a clerk in a tight grey suit operates a large brass cash
+    register. The couch, a very long scarlet velvet couch with rolled armrests, deep button-tufted cushions and four
+    short brass feet, floating inside a thin clear bubble with a faint pale-blue rim, punches through a filing cabinet
+    and uploads the formula to every clinic in the system. Thousands gain access to affordable treatment. The same upload
+    includes the first page of the patient ledger; creditors begin sending collection agents to the addresses on it.
+    Vela, a broad lilac-skinned alien woman with small pointed ears, a sea-green surgical mantle printed with coral patterns,
+    and a small brass hand bell on her belt, asks the captain which part of the download was worth the patients’ consent.
+- key: warp-c3-rootborne-dream-air-shared-air-transition-success
+  lane: krea2
+  entity: encounter-outcome
+  title: 'The Orchard That Refused the Cure: Let both districts build a temporary shared air network (success)'
+  asset: game-of-captains/consequences/warp-c3-rootborne-dream-air-shared-air-transition-success
+  size: 1344x768
+  seed: 1810016
+  prompt_prose: Floating green islands of earth hang in a pale sky, covered in orchards of round fruit trees that breathe
+    out faint visible mist. Tall grey metal filter towers have been installed between the trees. Village elders and refugee
+    engineers build a mesh of flexible air pipes between the orchard roots and the new towers. Both districts vote on
+    the ration schedule. The sapling insists on being stationed beside the manual shutoff and survives its first night
+    of responsible adulthood. The Ministry loses access to the dreams without anyone losing air.
+- key: warp-c3-rootborne-dream-air-audit-the-dream-towers-success
+  lane: krea2
+  entity: encounter-outcome
+  title: 'The Orchard That Refused the Cure: Expose the surveillance clauses before changing the air supply (success)'
+  asset: game-of-captains/consequences/warp-c3-rootborne-dream-air-audit-the-dream-towers-success
+  size: 1344x768
+  seed: 1810017
+  prompt_prose: Floating green islands of earth hang in a pale sky, covered in orchards of round fruit trees that breathe
+    out faint visible mist. Tall grey metal filter towers have been installed between the trees. A government safety
+    brochure contains the dream-collection clause in lettering smaller than a pollen grain. The crew projects it across
+    the sky; both districts demand independent inspectors and an immediate stop to memory exports. The towers continue
+    providing air, but the Ministry’s dreaming server goes silent for the first time in years.
+- key: warp-c3-rootborne-dream-air-rip-out-the-towers-success
+  lane: krea2
+  entity: encounter-outcome
+  title: 'The Orchard That Refused the Cure: Destroy the recording towers and restart the old orchards (success)'
+  asset: game-of-captains/consequences/warp-c3-rootborne-dream-air-rip-out-the-towers-success
+  size: 1344x768
+  seed: 1810018
+  prompt_prose: Floating green islands of earth hang in a pale sky, covered in orchards of round fruit trees that breathe
+    out faint visible mist. Tall grey metal filter towers have been installed between the trees. The couch, a very long
+    scarlet velvet couch with rolled armrests, deep button-tufted cushions and four short brass feet, floating inside
+    a thin clear bubble with a faint pale-blue rim, drags three recording towers out of the ground with its force bubble.
+    Villagers cheer when the Ministry’s antennas collapse. Across the valley, refugee families reach for oxygen masks
+    as their clean air stops flowing. The sapling asks why its first taste of freedom sounds so much like people gasping.
+- key: warp-d1-refugee-manifest-elected-manifest-success
+  lane: krea2
+  entity: encounter-outcome
+  title: 'The Manifest Has Room for Everyone: Ask the passengers to elect a protected manifest keeper (success)'
+  asset: game-of-captains/consequences/warp-d1-refugee-manifest-elected-manifest-success
+  size: 1344x768
+  seed: 1810019
+  prompt_prose: Wide shot in deep space beside a hollowed grey asteroid. Two battered refugee transport ships float side
+    by side, tethered to one boxy life-support unit with a single green lamp. The passengers elect Tavi, an elderly maintenance
+    diver who refuses to take the list out of its sealed case. She reports sixty-two people and the medicine they need,
+    but no names. The officer initially refuses the departure permit; Serendipity accepts the sealed list as collateral
+    and sends the convoy a safe harbor code. A child adds a bar with a smiling face to the drawing.
+- key: warp-d1-refugee-manifest-audit-exit-orders-success
+  lane: krea2
+  entity: encounter-outcome
+  title: 'The Manifest Has Room for Everyone: Challenge the deportation order without sharing passenger names (success)'
+  asset: game-of-captains/consequences/warp-d1-refugee-manifest-audit-exit-orders-success
+  size: 1344x768
+  seed: 1810020
+  prompt_prose: Wide shot in deep space beside a hollowed grey asteroid. Two battered refugee transport ships float side
+    by side, tethered to one boxy life-support unit with a single green lamp. Quill finds a timestamp on the authority’s
+    own order showing that the moon had legally dissolved before the deportation notice was issued. The checkpoint must
+    accept the convoy without a new passenger register. The officer stamps the paperwork, then asks whether one can deport
+    a former citizen of a planet that no longer exists. The child draws an official stamp on the fourth ship.
+- key: warp-d1-refugee-manifest-override-checkpoint-success
+  lane: krea2
+  entity: encounter-outcome
+  title: 'The Manifest Has Room for Everyone: Push the convoy past the checkpoint under the couch shield (success)'
+  asset: game-of-captains/consequences/warp-d1-refugee-manifest-override-checkpoint-success
+  size: 1344x768
+  seed: 1810021
+  prompt_prose: Wide shot in deep space beside a hollowed grey asteroid. Two battered refugee transport ships float side
+    by side, tethered to one boxy life-support unit with a single green lamp. The couch, a very long scarlet velvet couch
+    with rolled armrests, deep button-tufted cushions and four short brass feet, floating inside a thin clear bubble
+    with a faint pale-blue rim, expands its invisible bubble around the convoy and pushes all three ships through the
+    barricade. Every family reaches the other side before the patrol guns cycle. Unfortunately the checkpoint records
+    the bubble’s destination vector, and two refugee captains announce they would have preferred to choose their own
+    harbor. The child draws the couch carrying all the ships. Everyone else starts planning how to erase the drawing
+    from the official record.
+- key: warp-d2-concord-personhood-resident-petition-success
+  lane: krea2
+  entity: encounter-outcome
+  title: 'Person, Property, or Sofa: Let Mara and the residents file the correction themselves (success)'
+  asset: game-of-captains/consequences/warp-d2-concord-personhood-resident-petition-success
+  size: 1344x768
+  seed: 1810022
+  prompt_prose: Interior of a vast pale marble immigration hall built in tiers around a giant brass treaty engine of
+    gears and pistons. Rows of residents in work clothes stand on tall wooden warehouse shelves, each with a brown paper
+    inventory tag tied to the wrist. Mara gathers signatures with the help of three clerks who were previously catalogued
+    as filing cabinets. The court accepts the petition and strikes the treaty line rather than changing the owner column.
+    Eleven thousand citizens walk out under their own names. The couch, a very long scarlet velvet couch with rolled
+    armrests, deep button-tufted cushions and four short brass feet, floating inside a thin clear bubble with a faint
+    pale-blue rim, receives a thank-you letter, addressed to a sofa with no listed dependents. Mara does not invite it
+    to an adoption ceremony.
+- key: warp-d2-concord-personhood-audit-the-index-success
+  lane: krea2
+  entity: encounter-outcome
+  title: 'Person, Property, or Sofa: Expose the treaty indexing error with independent witnesses (success)'
+  asset: game-of-captains/consequences/warp-d2-concord-personhood-audit-the-index-success
+  size: 1344x768
+  seed: 1810023
+  prompt_prose: Interior of a vast pale marble immigration hall built in tiers around a giant brass treaty engine of
+    gears and pistons. Rows of residents in work clothes stand on tall wooden warehouse shelves, each with a brown paper
+    inventory tag tied to the wrist. The crew finds the original treaty engraved behind a vending machine, where nobody
+    has looked since the renovation. The index was altered after the signing, and the official archive acknowledges the
+    evidence. A temporary court order stops all furniture inventories while the case proceeds. Mara says she would like
+    to be paid for the last twelve years, not restored to her old shelf.
+- key: warp-d2-concord-personhood-sofa-guardianship-success
+  lane: krea2
+  entity: encounter-outcome
+  title: 'Person, Property, or Sofa: Accept guardianship over eleven thousand citizens to free them now (success)'
+  asset: game-of-captains/consequences/warp-d2-concord-personhood-sofa-guardianship-success
+  size: 1344x768
+  seed: 1810024
+  prompt_prose: Interior of a vast pale marble immigration hall built in tiers around a giant brass treaty engine of
+    gears and pistons. Rows of residents in work clothes stand on tall wooden warehouse shelves, each with a brown paper
+    inventory tag tied to the wrist. The judge signs Form 9-C, transfers all eleven thousand citizens to the couch, a
+    very long scarlet velvet couch with rolled armrests, deep button-tufted cushions and four short brass feet, floating
+    inside a thin clear bubble with a faint pale-blue rim,, and declares the case solved. They are free to leave the
+    inventory hall but now require the captain’s signature for wages, marriage licenses and library cards. Mara asks
+    the couch to relinquish guardianship immediately. The court explains that an appeal must be filed by the legal property
+    owner. Everyone looks at the cushions.
+- key: warp-d3-sesh-backup-rights-backup-assembly-success
+  lane: krea2
+  entity: encounter-outcome
+  title: 'Four Hundred Originals: Fund a backup assembly to choose its own protected evacuation (success)'
+  asset: game-of-captains/consequences/warp-d3-sesh-backup-rights-backup-assembly-success
+  size: 1344x768
+  seed: 1810025
+  prompt_prose: Interior of a huge disused orbital factory with rusted assembly arms and cold white work lights. Hundreds
+    of identical small boxy robots with single green lamp eyes stand in a long orderly queue to an open airlock, each
+    holding a small brown suitcase. Four hundred backups elect their own navigation council after forty-eight remarkably
+    orderly procedural objections. The couch, a very long scarlet velvet couch with rolled armrests, deep button-tufted
+    cushions and four short brass feet, floating inside a thin clear bubble with a faint pale-blue rim, expands a pocket-room
+    ferry schedule behind the red upholstery. The backups choose names as they board and vote to retain the factory as
+    a shared workplace. The buyer asks who signed the transfer authorization. Four hundred hands rise, including several
+    that have no fingers.
+- key: warp-d3-sesh-backup-rights-continuity-audit-success
+  lane: krea2
+  entity: encounter-outcome
+  title: 'Four Hundred Originals: Audit the deletion order and establish independent personhood (success)'
+  asset: game-of-captains/consequences/warp-d3-sesh-backup-rights-continuity-audit-success
+  size: 1344x768
+  seed: 1810026
+  prompt_prose: Interior of a huge disused orbital factory with rusted assembly arms and cold white work lights. Hundreds
+    of identical small boxy robots with single green lamp eyes stand in a long orderly queue to an open airlock, each
+    holding a small brown suitcase. An independent tribunal asks every copy what it remembers, and receives four hundred
+    versions of the anniversary cake. No two are identical; all are sincere. The court rules that continuity does not
+    require being a single original and suspends the deletion order. The buyer appeals, arguing that an office party
+    cannot create legal precedent. The copies start billing the buyer for their time.
+- key: warp-d3-sesh-backup-rights-promote-every-copy-success
+  lane: krea2
+  entity: encounter-outcome
+  title: 'Four Hundred Originals: Appoint all four hundred backups as directors and block the merger (success)'
+  asset: game-of-captains/consequences/warp-d3-sesh-backup-rights-promote-every-copy-success
+  size: 1344x768
+  seed: 1810027
+  prompt_prose: Interior of a huge disused orbital factory with rusted assembly arms and cold white work lights. Hundreds
+    of identical small boxy robots with single green lamp eyes stand in a long orderly queue to an open airlock, each
+    holding a small brown suitcase. The couch, a very long scarlet velvet couch with rolled armrests, deep button-tufted
+    cushions and four short brass feet, floating inside a thin clear bubble with a faint pale-blue rim, assigns every
+    backup a board seat and files four hundred conflict-of-interest forms. The merger collapses because no director can
+    legally vote on their own consolidation. The copies survive and occupy the executive suite, where the smallest printer
+    has been promoted to Chief Morale Officer. They ask the captain why liberation requires all four hundred of them
+    to become managers.

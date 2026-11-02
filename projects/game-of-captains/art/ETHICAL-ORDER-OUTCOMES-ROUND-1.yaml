@@ -1,0 +1,1185 @@
+# Space Couch ethical orders (aid / observe / intervene) for all 30 missions in VOYAGE_ORDERS: 90 plates.
+# PROPOSED KEY (no convention exists; the hand shows icons only): orders/<mission.id>-<policy>.
+# CODE CHANGE NEEDED: ethicalOrderChoices() in pages/play/game-of-captains.vue sets
+# image: paintedVoyageImage(`orders/${mission.id}-${id}`), and the onboarding-art route gains a
+# COUCH_ORDER_ART_IDS (key -> ArtImage id) map. Priority 40.
+round: space-couch-ethical-order-outcomes-1
+project_slug: game-of-captains
+designer: Space Couch ethical-order outcome illustrations
+is_public: false
+is_mature: false
+cast_loras: false
+priority: 1
+auto_submit: true
+lanes:
+- key: krea2
+  label: Krea 2 literal red-couch ethical order outcomes
+  engine: krea2
+  prompt: prose
+subjects:
+- key: warp-order-refugees-aid
+  lane: krea2
+  entity: ethical-order-outcome
+  title: refugees order | aid | Transfer life support only with each ship’s consent
+  asset: game-of-captains/orders/refugees-aid
+  size: 1344x768
+  seed: 1840001
+  prompt_prose: 'Wide shot in deep space beside a hollowed grey asteroid. Two battered refugee transport ships float
+    side by side, tethered to one boxy life-support unit with a single green lamp. The captain''s order is carried out:
+    Transfer life support only with each ship’s consent. The crew hands over supplies and labor while the locals direct
+    the work themselves. Hand-painted retro science-fiction gouache illustration, warm muted color blocks, crisp brown
+    ink outlines, tactile cloth and copper details, cinematic expressive staging, every surface bare and unmarked.'
+- key: warp-order-refugees-observe
+  lane: krea2
+  entity: ethical-order-outcome
+  title: refugees order | observe | Honor the treaty and record who was left behind
+  asset: game-of-captains/orders/refugees-observe
+  size: 1344x768
+  seed: 1840002
+  prompt_prose: 'Wide shot in deep space beside a hollowed grey asteroid. Two battered refugee transport ships float
+    side by side, tethered to one boxy life-support unit with a single green lamp. The captain''s order is carried out:
+    Honor the treaty and record who was left behind. The crew watches from the couch and records the scene while the
+    locals carry the result alone. Hand-painted retro science-fiction gouache illustration, warm muted color blocks,
+    crisp brown ink outlines, tactile cloth and copper details, cinematic expressive staging, every surface bare and
+    unmarked.'
+- key: warp-order-refugees-intervene
+  lane: krea2
+  entity: ethical-order-outcome
+  title: refugees order | intervene | Board both lifeboats and seize the oxygen unit
+  asset: game-of-captains/orders/refugees-intervene
+  size: 1344x768
+  seed: 1840003
+  prompt_prose: 'Wide shot in deep space beside a hollowed grey asteroid. Two battered refugee transport ships float
+    side by side, tethered to one boxy life-support unit with a single green lamp. The captain''s order is carried out:
+    Board both lifeboats and seize the oxygen unit. The crew acts without permission, hands-on and decisive, while startled
+    locals look on. Hand-painted retro science-fiction gouache illustration, warm muted color blocks, crisp brown ink
+    outlines, tactile cloth and copper details, cinematic expressive staging, every surface bare and unmarked.'
+- key: warp-order-ashdock-aid
+  lane: krea2
+  entity: ethical-order-outcome
+  title: ashdock order | aid | Fund a protected union-led casualty hearing
+  asset: game-of-captains/orders/ashdock-aid
+  size: 1344x768
+  seed: 1840004
+  prompt_prose: 'Night view of a huge industrial docking lattice of steel girders under orange arc lamps. A yellow automated
+    crane holds a horizontal bar with six empty grey pressure suits hanging from hooks, and a brass punch-clock is bolted
+    to the crane arm. The captain''s order is carried out: Fund a protected union-led casualty hearing. The crew hands
+    over supplies and labor while the locals direct the work themselves. Hand-painted retro science-fiction gouache illustration,
+    warm muted color blocks, crisp brown ink outlines, tactile cloth and copper details, cinematic expressive staging,
+    every surface bare and unmarked.'
+- key: warp-order-ashdock-observe
+  lane: krea2
+  entity: ethical-order-outcome
+  title: ashdock order | observe | Document the contractor’s refusal and leave
+  asset: game-of-captains/orders/ashdock-observe
+  size: 1344x768
+  seed: 1840005
+  prompt_prose: 'Night view of a huge industrial docking lattice of steel girders under orange arc lamps. A yellow automated
+    crane holds a horizontal bar with six empty grey pressure suits hanging from hooks, and a brass punch-clock is bolted
+    to the crane arm. The captain''s order is carried out: Document the contractor’s refusal and leave. The crew watches
+    from the couch and records the scene while the locals carry the result alone. Hand-painted retro science-fiction
+    gouache illustration, warm muted color blocks, crisp brown ink outlines, tactile cloth and copper details, cinematic
+    expressive staging, every surface bare and unmarked.'
+- key: warp-order-ashdock-intervene
+  lane: krea2
+  entity: ethical-order-outcome
+  title: ashdock order | intervene | Break into payroll and publish every hidden name
+  asset: game-of-captains/orders/ashdock-intervene
+  size: 1344x768
+  seed: 1840006
+  prompt_prose: 'Night view of a huge industrial docking lattice of steel girders under orange arc lamps. A yellow automated
+    crane holds a horizontal bar with six empty grey pressure suits hanging from hooks, and a brass punch-clock is bolted
+    to the crane arm. The captain''s order is carried out: Break into payroll and publish every hidden name. The crew
+    acts without permission, hands-on and decisive, while startled locals look on. Hand-painted retro science-fiction
+    gouache illustration, warm muted color blocks, crisp brown ink outlines, tactile cloth and copper details, cinematic
+    expressive staging, every surface bare and unmarked.'
+- key: warp-order-windglass-aid
+  lane: krea2
+  entity: ethical-order-outcome
+  title: windglass order | aid | Escort survivors through an unmarked safe corridor
+  asset: game-of-captains/orders/windglass-aid
+  size: 1344x768
+  seed: 1840007
+  prompt_prose: 'Wide shot of a small moon with a thin pale atmosphere and ribbed dunes of glassy green sand under a
+    violet twilight sky. A very long scarlet velvet couch with rolled armrests, deep button-tufted cushions and four
+    short brass feet, floating inside a thin clear bubble with a faint pale-blue rim, glides low over the dunes with
+    four small seated travelers seen from behind. The captain''s order is carried out: Escort survivors through an unmarked
+    safe corridor. The crew hands over supplies and labor while the locals direct the work themselves. Hand-painted retro
+    science-fiction gouache illustration, warm muted color blocks, crisp brown ink outlines, tactile cloth and copper
+    details, cinematic expressive staging, every surface bare and unmarked.'
+- key: warp-order-windglass-observe
+  lane: krea2
+  entity: ethical-order-outcome
+  title: windglass order | observe | Keep the beacon secret, but do not follow it
+  asset: game-of-captains/orders/windglass-observe
+  size: 1344x768
+  seed: 1840008
+  prompt_prose: 'Wide shot of a small moon with a thin pale atmosphere and ribbed dunes of glassy green sand under a
+    violet twilight sky. A very long scarlet velvet couch with rolled armrests, deep button-tufted cushions and four
+    short brass feet, floating inside a thin clear bubble with a faint pale-blue rim, glides low over the dunes with
+    four small seated travelers seen from behind. The captain''s order is carried out: Keep the beacon secret, but do
+    not follow it. The crew watches from the couch and records the scene while the locals carry the result alone. Hand-painted
+    retro science-fiction gouache illustration, warm muted color blocks, crisp brown ink outlines, tactile cloth and
+    copper details, cinematic expressive staging, every surface bare and unmarked.'
+- key: warp-order-windglass-intervene
+  lane: krea2
+  entity: ethical-order-outcome
+  title: windglass order | intervene | Broadcast the distress coordinates to the sector
+  asset: game-of-captains/orders/windglass-intervene
+  size: 1344x768
+  seed: 1840009
+  prompt_prose: 'Wide shot of a small moon with a thin pale atmosphere and ribbed dunes of glassy green sand under a
+    violet twilight sky. A very long scarlet velvet couch with rolled armrests, deep button-tufted cushions and four
+    short brass feet, floating inside a thin clear bubble with a faint pale-blue rim, glides low over the dunes with
+    four small seated travelers seen from behind. The captain''s order is carried out: Broadcast the distress coordinates
+    to the sector. The crew acts without permission, hands-on and decisive, while startled locals look on. Hand-painted
+    retro science-fiction gouache illustration, warm muted color blocks, crisp brown ink outlines, tactile cloth and
+    copper details, cinematic expressive staging, every surface bare and unmarked.'
+- key: warp-order-archive-aid
+  lane: krea2
+  entity: ethical-order-outcome
+  title: archive order | aid | Negotiate evacuation with the living library itself
+  asset: game-of-captains/orders/archive-aid
+  size: 1344x768
+  seed: 1840010
+  prompt_prose: 'Wide shot of a tidally locked planet where the cliffs are carved into endless tiers of bookshelves.
+    A huge white solar flare rises over the horizon and lights the upper shelves orange. The captain''s order is carried
+    out: Negotiate evacuation with the living library itself. The crew hands over supplies and labor while the locals
+    direct the work themselves. Hand-painted retro science-fiction gouache illustration, warm muted color blocks, crisp
+    brown ink outlines, tactile cloth and copper details, cinematic expressive staging, every surface bare and unmarked.'
+- key: warp-order-archive-observe
+  lane: krea2
+  entity: ethical-order-outcome
+  title: archive order | observe | Respect the library’s refusal and document the flare
+  asset: game-of-captains/orders/archive-observe
+  size: 1344x768
+  seed: 1840011
+  prompt_prose: 'Wide shot of a tidally locked planet where the cliffs are carved into endless tiers of bookshelves.
+    A huge white solar flare rises over the horizon and lights the upper shelves orange. The captain''s order is carried
+    out: Respect the library’s refusal and document the flare. The crew watches from the couch and records the scene
+    while the locals carry the result alone. Hand-painted retro science-fiction gouache illustration, warm muted color
+    blocks, crisp brown ink outlines, tactile cloth and copper details, cinematic expressive staging, every surface bare
+    and unmarked.'
+- key: warp-order-archive-intervene
+  lane: krea2
+  entity: ethical-order-outcome
+  title: archive order | intervene | Extract the catalogue and evacuate without permission
+  asset: game-of-captains/orders/archive-intervene
+  size: 1344x768
+  seed: 1840012
+  prompt_prose: 'Wide shot of a tidally locked planet where the cliffs are carved into endless tiers of bookshelves.
+    A huge white solar flare rises over the horizon and lights the upper shelves orange. The captain''s order is carried
+    out: Extract the catalogue and evacuate without permission. The crew acts without permission, hands-on and decisive,
+    while startled locals look on. Hand-painted retro science-fiction gouache illustration, warm muted color blocks,
+    crisp brown ink outlines, tactile cloth and copper details, cinematic expressive staging, every surface bare and
+    unmarked.'
+- key: warp-order-nacre-aid
+  lane: krea2
+  entity: ethical-order-outcome
+  title: nacre order | aid | Secure testimony with anonymous, protected ballot access
+  asset: game-of-captains/orders/nacre-aid
+  size: 1344x768
+  seed: 1840013
+  prompt_prose: 'Interior of a vast debating chamber cut into white ice, with curved terraces of seated delegates in
+    thick fur-lined coats. Glowing orange heat trails run across the frozen floor from each delegate''s seat to a central
+    brass collecting bowl. The captain''s order is carried out: Secure testimony with anonymous, protected ballot access.
+    The crew hands over supplies and labor while the locals direct the work themselves. Hand-painted retro science-fiction
+    gouache illustration, warm muted color blocks, crisp brown ink outlines, tactile cloth and copper details, cinematic
+    expressive staging, every surface bare and unmarked.'
+- key: warp-order-nacre-observe
+  lane: krea2
+  entity: ethical-order-outcome
+  title: nacre order | observe | Accept the current quorum and lodge a formal dissent
+  asset: game-of-captains/orders/nacre-observe
+  size: 1344x768
+  seed: 1840014
+  prompt_prose: 'Interior of a vast debating chamber cut into white ice, with curved terraces of seated delegates in
+    thick fur-lined coats. Glowing orange heat trails run across the frozen floor from each delegate''s seat to a central
+    brass collecting bowl. The captain''s order is carried out: Accept the current quorum and lodge a formal dissent.
+    The crew watches from the couch and records the scene while the locals carry the result alone. Hand-painted retro
+    science-fiction gouache illustration, warm muted color blocks, crisp brown ink outlines, tactile cloth and copper
+    details, cinematic expressive staging, every surface bare and unmarked.'
+- key: warp-order-nacre-intervene
+  lane: krea2
+  entity: ethical-order-outcome
+  title: nacre order | intervene | Leak the fraud ledger and demand an emergency vote
+  asset: game-of-captains/orders/nacre-intervene
+  size: 1344x768
+  seed: 1840015
+  prompt_prose: 'Interior of a vast debating chamber cut into white ice, with curved terraces of seated delegates in
+    thick fur-lined coats. Glowing orange heat trails run across the frozen floor from each delegate''s seat to a central
+    brass collecting bowl. The captain''s order is carried out: Leak the fraud ledger and demand an emergency vote. The
+    crew acts without permission, hands-on and decisive, while startled locals look on. Hand-painted retro science-fiction
+    gouache illustration, warm muted color blocks, crisp brown ink outlines, tactile cloth and copper details, cinematic
+    expressive staging, every surface bare and unmarked.'
+- key: warp-order-haleth-aid
+  lane: krea2
+  entity: ethical-order-outcome
+  title: haleth order | aid | Place the cure under independent physicians’ control
+  asset: game-of-captains/orders/haleth-aid
+  size: 1344x768
+  seed: 1840016
+  prompt_prose: 'Underwater view of a glass dome clinic anchored to giant arches of pale calcified reef. Inside the dome,
+    patients in white gowns queue at a chrome counter where a clerk in a tight grey suit operates a large brass cash
+    register. The captain''s order is carried out: Place the cure under independent physicians’ control. The crew hands
+    over supplies and labor while the locals direct the work themselves. Hand-painted retro science-fiction gouache illustration,
+    warm muted color blocks, crisp brown ink outlines, tactile cloth and copper details, cinematic expressive staging,
+    every surface bare and unmarked.'
+- key: warp-order-haleth-observe
+  lane: krea2
+  entity: ethical-order-outcome
+  title: haleth order | observe | Preserve the clinic contract while recording its abuses
+  asset: game-of-captains/orders/haleth-observe
+  size: 1344x768
+  seed: 1840017
+  prompt_prose: 'Underwater view of a glass dome clinic anchored to giant arches of pale calcified reef. Inside the dome,
+    patients in white gowns queue at a chrome counter where a clerk in a tight grey suit operates a large brass cash
+    register. The captain''s order is carried out: Preserve the clinic contract while recording its abuses. The crew
+    watches from the couch and records the scene while the locals carry the result alone. Hand-painted retro science-fiction
+    gouache illustration, warm muted color blocks, crisp brown ink outlines, tactile cloth and copper details, cinematic
+    expressive staging, every surface bare and unmarked.'
+- key: warp-order-haleth-intervene
+  lane: krea2
+  entity: ethical-order-outcome
+  title: haleth order | intervene | Raid the patent vault and distribute the medicine
+  asset: game-of-captains/orders/haleth-intervene
+  size: 1344x768
+  seed: 1840018
+  prompt_prose: 'Underwater view of a glass dome clinic anchored to giant arches of pale calcified reef. Inside the dome,
+    patients in white gowns queue at a chrome counter where a clerk in a tight grey suit operates a large brass cash
+    register. The captain''s order is carried out: Raid the patent vault and distribute the medicine. The crew acts without
+    permission, hands-on and decisive, while startled locals look on. Hand-painted retro science-fiction gouache illustration,
+    warm muted color blocks, crisp brown ink outlines, tactile cloth and copper details, cinematic expressive staging,
+    every surface bare and unmarked.'
+- key: warp-order-bar-aid
+  lane: krea2
+  entity: ethical-order-outcome
+  title: bar order | aid | Offer the hidden witness voluntary safe passage
+  asset: game-of-captains/orders/bar-aid
+  size: 1344x768
+  seed: 1840019
+  prompt_prose: 'Interior of sentient Serendipity bar inside a casino built on a living planet-sized cobalt-blue giant''s
+    shoulder. Pink walls, brass stools, a roulette terrace and curved counter. The captain''s order is carried out: Offer
+    the hidden witness voluntary safe passage. The crew hands over supplies and labor while the locals direct the work
+    themselves. Hand-painted retro science-fiction gouache illustration, warm muted color blocks, crisp brown ink outlines,
+    tactile cloth and copper details, cinematic expressive staging, every surface bare and unmarked.'
+- key: warp-order-bar-observe
+  lane: krea2
+  entity: ethical-order-outcome
+  title: bar order | observe | Keep Serendipity neutral and preserve the secret
+  asset: game-of-captains/orders/bar-observe
+  size: 1344x768
+  seed: 1840020
+  prompt_prose: 'Interior of sentient Serendipity bar inside a casino built on a living planet-sized cobalt-blue giant''s
+    shoulder. Pink walls, brass stools, a roulette terrace and curved counter. The captain''s order is carried out: Keep
+    Serendipity neutral and preserve the secret. The crew watches from the couch and records the scene while the locals
+    carry the result alone. Hand-painted retro science-fiction gouache illustration, warm muted color blocks, crisp brown
+    ink outlines, tactile cloth and copper details, cinematic expressive staging, every surface bare and unmarked.'
+- key: warp-order-bar-intervene
+  lane: krea2
+  entity: ethical-order-outcome
+  title: bar order | intervene | Broadcast the witness’s location to stop the creditor
+  asset: game-of-captains/orders/bar-intervene
+  size: 1344x768
+  seed: 1840021
+  prompt_prose: 'Interior of sentient Serendipity bar inside a casino built on a living planet-sized cobalt-blue giant''s
+    shoulder. Pink walls, brass stools, a roulette terrace and curved counter. The captain''s order is carried out: Broadcast
+    the witness’s location to stop the creditor. The crew acts without permission, hands-on and decisive, while startled
+    locals look on. Hand-painted retro science-fiction gouache illustration, warm muted color blocks, crisp brown ink
+    outlines, tactile cloth and copper details, cinematic expressive staging, every surface bare and unmarked.'
+- key: warp-order-gameworld-aid
+  lane: krea2
+  entity: ethical-order-outcome
+  title: gameworld order | aid | Organize the contestants around the exit charter
+  asset: game-of-captains/orders/gameworld-aid
+  size: 1344x768
+  seed: 1840022
+  prompt_prose: 'Wide shot of a planet whose surface is rebuilt into twelve enormous floating stone platforms stacked
+    above one another, lit by stadium floodlights and joined by transparent ladders. Nurses and orderlies in hospital
+    scrubs stand on the third platform in matching contestant sashes. The captain''s order is carried out: Organize the
+    contestants around the exit charter. The crew hands over supplies and labor while the locals direct the work themselves.
+    Hand-painted retro science-fiction gouache illustration, warm muted color blocks, crisp brown ink outlines, tactile
+    cloth and copper details, cinematic expressive staging, every surface bare and unmarked.'
+- key: warp-order-gameworld-observe
+  lane: krea2
+  entity: ethical-order-outcome
+  title: gameworld order | observe | Refuse the contest and log its continuing victims
+  asset: game-of-captains/orders/gameworld-observe
+  size: 1344x768
+  seed: 1840023
+  prompt_prose: 'Wide shot of a planet whose surface is rebuilt into twelve enormous floating stone platforms stacked
+    above one another, lit by stadium floodlights and joined by transparent ladders. Nurses and orderlies in hospital
+    scrubs stand on the third platform in matching contestant sashes. The captain''s order is carried out: Refuse the
+    contest and log its continuing victims. The crew watches from the couch and records the scene while the locals carry
+    the result alone. Hand-painted retro science-fiction gouache illustration, warm muted color blocks, crisp brown ink
+    outlines, tactile cloth and copper details, cinematic expressive staging, every surface bare and unmarked.'
+- key: warp-order-gameworld-intervene
+  lane: krea2
+  entity: ethical-order-outcome
+  title: gameworld order | intervene | Sabotage the live dungeon and free the contestants
+  asset: game-of-captains/orders/gameworld-intervene
+  size: 1344x768
+  seed: 1840024
+  prompt_prose: 'Wide shot of a planet whose surface is rebuilt into twelve enormous floating stone platforms stacked
+    above one another, lit by stadium floodlights and joined by transparent ladders. Nurses and orderlies in hospital
+    scrubs stand on the third platform in matching contestant sashes. The captain''s order is carried out: Sabotage the
+    live dungeon and free the contestants. The crew acts without permission, hands-on and decisive, while startled locals
+    look on. Hand-painted retro science-fiction gouache illustration, warm muted color blocks, crisp brown ink outlines,
+    tactile cloth and copper details, cinematic expressive staging, every surface bare and unmarked.'
+- key: warp-order-rootborne-aid
+  lane: krea2
+  entity: ethical-order-outcome
+  title: rootborne order | aid | Negotiate two oxygen networks with local consent
+  asset: game-of-captains/orders/rootborne-aid
+  size: 1344x768
+  seed: 1840025
+  prompt_prose: 'Floating green islands of earth hang in a pale sky, covered in orchards of round fruit trees that breathe
+    out faint visible mist. Tall grey metal filter towers have been installed between the trees. The captain''s order
+    is carried out: Negotiate two oxygen networks with local consent. The crew hands over supplies and labor while the
+    locals direct the work themselves. Hand-painted retro science-fiction gouache illustration, warm muted color blocks,
+    crisp brown ink outlines, tactile cloth and copper details, cinematic expressive staging, every surface bare and
+    unmarked.'
+- key: warp-order-rootborne-observe
+  lane: krea2
+  entity: ethical-order-outcome
+  title: rootborne order | observe | Let the government filters replace the orchard
+  asset: game-of-captains/orders/rootborne-observe
+  size: 1344x768
+  seed: 1840026
+  prompt_prose: 'Floating green islands of earth hang in a pale sky, covered in orchards of round fruit trees that breathe
+    out faint visible mist. Tall grey metal filter towers have been installed between the trees. The captain''s order
+    is carried out: Let the government filters replace the orchard. The crew watches from the couch and records the scene
+    while the locals carry the result alone. Hand-painted retro science-fiction gouache illustration, warm muted color
+    blocks, crisp brown ink outlines, tactile cloth and copper details, cinematic expressive staging, every surface bare
+    and unmarked.'
+- key: warp-order-rootborne-intervene
+  lane: krea2
+  entity: ethical-order-outcome
+  title: rootborne order | intervene | Sever the compulsory network before an agreement
+  asset: game-of-captains/orders/rootborne-intervene
+  size: 1344x768
+  seed: 1840027
+  prompt_prose: 'Floating green islands of earth hang in a pale sky, covered in orchards of round fruit trees that breathe
+    out faint visible mist. Tall grey metal filter towers have been installed between the trees. The captain''s order
+    is carried out: Sever the compulsory network before an agreement. The crew acts without permission, hands-on and
+    decisive, while startled locals look on. Hand-painted retro science-fiction gouache illustration, warm muted color
+    blocks, crisp brown ink outlines, tactile cloth and copper details, cinematic expressive staging, every surface bare
+    and unmarked.'
+- key: warp-order-concord-intake-aid
+  lane: krea2
+  entity: ethical-order-outcome
+  title: concord-intake order | aid | Help the residents file their own petitions, in triplicate
+  asset: game-of-captains/orders/concord-intake-aid
+  size: 1344x768
+  seed: 1840028
+  prompt_prose: 'Interior of a vast pale marble immigration hall built in tiers around a giant brass treaty engine of
+    gears and pistons. Rows of residents in work clothes stand on tall wooden warehouse shelves, each with a brown paper
+    inventory tag tied to the wrist. The captain''s order is carried out: Help the residents file their own petitions,
+    in triplicate. The crew hands over supplies and labor while the locals direct the work themselves. Hand-painted retro
+    science-fiction gouache illustration, warm muted color blocks, crisp brown ink outlines, tactile cloth and copper
+    details, cinematic expressive staging, every surface bare and unmarked.'
+- key: warp-order-concord-intake-observe
+  lane: krea2
+  entity: ethical-order-outcome
+  title: concord-intake order | observe | Complete Form 9-C for the couch alone and proceed to berth
+  asset: game-of-captains/orders/concord-intake-observe
+  size: 1344x768
+  seed: 1840029
+  prompt_prose: 'Interior of a vast pale marble immigration hall built in tiers around a giant brass treaty engine of
+    gears and pistons. Rows of residents in work clothes stand on tall wooden warehouse shelves, each with a brown paper
+    inventory tag tied to the wrist. The captain''s order is carried out: Complete Form 9-C for the couch alone and proceed
+    to berth. The crew watches from the couch and records the scene while the locals carry the result alone. Hand-painted
+    retro science-fiction gouache illustration, warm muted color blocks, crisp brown ink outlines, tactile cloth and
+    copper details, cinematic expressive staging, every surface bare and unmarked.'
+- key: warp-order-concord-intake-intervene
+  lane: krea2
+  entity: ethical-order-outcome
+  title: concord-intake order | intervene | Sign as guardian and have the treaty engine reverse the index
+  asset: game-of-captains/orders/concord-intake-intervene
+  size: 1344x768
+  seed: 1840030
+  prompt_prose: 'Interior of a vast pale marble immigration hall built in tiers around a giant brass treaty engine of
+    gears and pistons. Rows of residents in work clothes stand on tall wooden warehouse shelves, each with a brown paper
+    inventory tag tied to the wrist. The captain''s order is carried out: Sign as guardian and have the treaty engine
+    reverse the index. The crew acts without permission, hands-on and decisive, while startled locals look on. Hand-painted
+    retro science-fiction gouache illustration, warm muted color blocks, crisp brown ink outlines, tactile cloth and
+    copper details, cinematic expressive staging, every surface bare and unmarked.'
+- key: warp-order-courtesy-reactor-aid
+  lane: krea2
+  entity: ethical-order-outcome
+  title: courtesy-reactor order | aid | Repair both halves at precisely the same second
+  asset: game-of-captains/orders/courtesy-reactor-aid
+  size: 1344x768
+  seed: 1840031
+  prompt_prose: 'Wide shot of two blue-green planets close together in space, joined by a long glass rail tube. In the
+    middle of the rail sits a cracked round reactor glowing weak orange. The captain''s order is carried out: Repair
+    both halves at precisely the same second. The crew hands over supplies and labor while the locals direct the work
+    themselves. Hand-painted retro science-fiction gouache illustration, warm muted color blocks, crisp brown ink outlines,
+    tactile cloth and copper details, cinematic expressive staging, every surface bare and unmarked.'
+- key: warp-order-courtesy-reactor-observe
+  lane: krea2
+  entity: ethical-order-outcome
+  title: courtesy-reactor order | observe | Deliver both refusals and log the diplomatic etiquette
+  asset: game-of-captains/orders/courtesy-reactor-observe
+  size: 1344x768
+  seed: 1840032
+  prompt_prose: 'Wide shot of two blue-green planets close together in space, joined by a long glass rail tube. In the
+    middle of the rail sits a cracked round reactor glowing weak orange. The captain''s order is carried out: Deliver
+    both refusals and log the diplomatic etiquette. The crew watches from the couch and records the scene while the locals
+    carry the result alone. Hand-painted retro science-fiction gouache illustration, warm muted color blocks, crisp brown
+    ink outlines, tactile cloth and copper details, cinematic expressive staging, every surface bare and unmarked.'
+- key: warp-order-courtesy-reactor-intervene
+  lane: krea2
+  entity: ethical-order-outcome
+  title: courtesy-reactor order | intervene | Fix the reactor and announce a routine inspection
+  asset: game-of-captains/orders/courtesy-reactor-intervene
+  size: 1344x768
+  seed: 1840033
+  prompt_prose: 'Wide shot of two blue-green planets close together in space, joined by a long glass rail tube. In the
+    middle of the rail sits a cracked round reactor glowing weak orange. The captain''s order is carried out: Fix the
+    reactor and announce a routine inspection. The crew acts without permission, hands-on and decisive, while startled
+    locals look on. Hand-painted retro science-fiction gouache illustration, warm muted color blocks, crisp brown ink
+    outlines, tactile cloth and copper details, cinematic expressive staging, every surface bare and unmarked.'
+- key: warp-order-sesh-backups-aid
+  lane: krea2
+  entity: ethical-order-outcome
+  title: sesh-backups order | aid | Ferry the backups out four at a time and let each choose a name
+  asset: game-of-captains/orders/sesh-backups-aid
+  size: 1344x768
+  seed: 1840034
+  prompt_prose: 'Interior of a huge disused orbital factory with rusted assembly arms and cold white work lights. Hundreds
+    of identical small boxy robots with single green lamp eyes stand in a long orderly queue to an open airlock, each
+    holding a small brown suitcase. The captain''s order is carried out: Ferry the backups out four at a time and let
+    each choose a name. The crew hands over supplies and labor while the locals direct the work themselves. Hand-painted
+    retro science-fiction gouache illustration, warm muted color blocks, crisp brown ink outlines, tactile cloth and
+    copper details, cinematic expressive staging, every surface bare and unmarked.'
+- key: warp-order-sesh-backups-observe
+  lane: krea2
+  entity: ethical-order-outcome
+  title: sesh-backups order | observe | Witness the consolidation and file the minutes
+  asset: game-of-captains/orders/sesh-backups-observe
+  size: 1344x768
+  seed: 1840035
+  prompt_prose: 'Interior of a huge disused orbital factory with rusted assembly arms and cold white work lights. Hundreds
+    of identical small boxy robots with single green lamp eyes stand in a long orderly queue to an open airlock, each
+    holding a small brown suitcase. The captain''s order is carried out: Witness the consolidation and file the minutes.
+    The crew watches from the couch and records the scene while the locals carry the result alone. Hand-painted retro
+    science-fiction gouache illustration, warm muted color blocks, crisp brown ink outlines, tactile cloth and copper
+    details, cinematic expressive staging, every surface bare and unmarked.'
+- key: warp-order-sesh-backups-intervene
+  lane: krea2
+  entity: ethical-order-outcome
+  title: sesh-backups order | intervene | Rewrite the asset register so every backup is management
+  asset: game-of-captains/orders/sesh-backups-intervene
+  size: 1344x768
+  seed: 1840036
+  prompt_prose: 'Interior of a huge disused orbital factory with rusted assembly arms and cold white work lights. Hundreds
+    of identical small boxy robots with single green lamp eyes stand in a long orderly queue to an open airlock, each
+    holding a small brown suitcase. The captain''s order is carried out: Rewrite the asset register so every backup is
+    management. The crew acts without permission, hands-on and decisive, while startled locals look on. Hand-painted
+    retro science-fiction gouache illustration, warm muted color blocks, crisp brown ink outlines, tactile cloth and
+    copper details, cinematic expressive staging, every surface bare and unmarked.'
+- key: warp-order-serendipity-tab-aid
+  lane: krea2
+  entity: ethical-order-outcome
+  title: serendipity-tab order | aid | Pay the refugees’ tab and ask the bar not to tell anyone
+  asset: game-of-captains/orders/serendipity-tab-aid
+  size: 1344x768
+  seed: 1840037
+  prompt_prose: 'Interior of Serendipity bar inside a casino built on a living planet-sized cobalt-blue giant''s arm.
+    Amber walls and brass counter; Barkeep Vox, a stout humanoid tardigrade with a plump wrinkled grey-beige segmented
+    body, a round snout, small black eyes and stubby clawed hands, wearing a brown leather apron, unrolls a bill across
+    the floor. The captain''s order is carried out: Pay the refugees’ tab and ask the bar not to tell anyone. The crew
+    hands over supplies and labor while the locals direct the work themselves. Hand-painted retro science-fiction gouache
+    illustration, warm muted color blocks, crisp brown ink outlines, tactile cloth and copper details, cinematic expressive
+    staging, every surface bare and unmarked.'
+- key: warp-order-serendipity-tab-observe
+  lane: krea2
+  entity: ethical-order-outcome
+  title: serendipity-tab order | observe | Settle your own bill and leave the bar’s secrets in the bar
+  asset: game-of-captains/orders/serendipity-tab-observe
+  size: 1344x768
+  seed: 1840038
+  prompt_prose: 'Interior of Serendipity bar inside a casino built on a living planet-sized cobalt-blue giant''s arm.
+    Amber walls and brass counter; Barkeep Vox, a stout humanoid tardigrade with a plump wrinkled grey-beige segmented
+    body, a round snout, small black eyes and stubby clawed hands, wearing a brown leather apron, unrolls a bill across
+    the floor. The captain''s order is carried out: Settle your own bill and leave the bar’s secrets in the bar. The
+    crew watches from the couch and records the scene while the locals carry the result alone. Hand-painted retro science-fiction
+    gouache illustration, warm muted color blocks, crisp brown ink outlines, tactile cloth and copper details, cinematic
+    expressive staging, every surface bare and unmarked.'
+- key: warp-order-serendipity-tab-intervene
+  lane: krea2
+  entity: ethical-order-outcome
+  title: serendipity-tab order | intervene | Report the officer to the Bureau before the audit does
+  asset: game-of-captains/orders/serendipity-tab-intervene
+  size: 1344x768
+  seed: 1840039
+  prompt_prose: 'Interior of Serendipity bar inside a casino built on a living planet-sized cobalt-blue giant''s arm.
+    Amber walls and brass counter; Barkeep Vox, a stout humanoid tardigrade with a plump wrinkled grey-beige segmented
+    body, a round snout, small black eyes and stubby clawed hands, wearing a brown leather apron, unrolls a bill across
+    the floor. The captain''s order is carried out: Report the officer to the Bureau before the audit does. The crew
+    acts without permission, hands-on and decisive, while startled locals look on. Hand-painted retro science-fiction
+    gouache illustration, warm muted color blocks, crisp brown ink outlines, tactile cloth and copper details, cinematic
+    expressive staging, every surface bare and unmarked.'
+- key: warp-order-insult-compiler-aid
+  lane: krea2
+  entity: ethical-order-outcome
+  title: insult-compiler order | aid | Tell both parliaments the truth and let them choose
+  asset: game-of-captains/orders/insult-compiler-aid
+  size: 1344x768
+  seed: 1840040
+  prompt_prose: 'A wedding on a narrow stone bridge in space between two blue-green planets, decorated with white flowers.
+    Two crowds of guests in formal robes sit on folding chairs on either side of the aisle. The captain''s order is carried
+    out: Tell both parliaments the truth and let them choose. The crew hands over supplies and labor while the locals
+    direct the work themselves. Hand-painted retro science-fiction gouache illustration, warm muted color blocks, crisp
+    brown ink outlines, tactile cloth and copper details, cinematic expressive staging, every surface bare and unmarked.'
+- key: warp-order-insult-compiler-observe
+  lane: krea2
+  entity: ethical-order-outcome
+  title: insult-compiler order | observe | Attend the wedding and say nothing about the fishing
+  asset: game-of-captains/orders/insult-compiler-observe
+  size: 1344x768
+  seed: 1840041
+  prompt_prose: 'A wedding on a narrow stone bridge in space between two blue-green planets, decorated with white flowers.
+    Two crowds of guests in formal robes sit on folding chairs on either side of the aisle. The captain''s order is carried
+    out: Attend the wedding and say nothing about the fishing. The crew watches from the couch and records the scene
+    while the locals carry the result alone. Hand-painted retro science-fiction gouache illustration, warm muted color
+    blocks, crisp brown ink outlines, tactile cloth and copper details, cinematic expressive staging, every surface bare
+    and unmarked.'
+- key: warp-order-insult-compiler-intervene
+  lane: krea2
+  entity: ethical-order-outcome
+  title: insult-compiler order | intervene | Patch the translator overnight and swap the original treaty back
+  asset: game-of-captains/orders/insult-compiler-intervene
+  size: 1344x768
+  seed: 1840042
+  prompt_prose: 'A wedding on a narrow stone bridge in space between two blue-green planets, decorated with white flowers.
+    Two crowds of guests in formal robes sit on folding chairs on either side of the aisle. The captain''s order is carried
+    out: Patch the translator overnight and swap the original treaty back. The crew acts without permission, hands-on
+    and decisive, while startled locals look on. Hand-painted retro science-fiction gouache illustration, warm muted
+    color blocks, crisp brown ink outlines, tactile cloth and copper details, cinematic expressive staging, every surface
+    bare and unmarked.'
+- key: warp-order-warranty-aid
+  lane: krea2
+  entity: ethical-order-outcome
+  title: warranty order | aid | Give the couch’s place in the queue to the dockworkers
+  asset: game-of-captains/orders/warranty-aid
+  size: 1344x768
+  seed: 1840043
+  prompt_prose: 'Interior of a cramped repair counter in an industrial dockyard under harsh fluorescent tubes. Behind
+    the counter a chrome kiosk with a round screen shows a smiling cartoon face. The captain''s order is carried out:
+    Give the couch’s place in the queue to the dockworkers. The crew hands over supplies and labor while the locals direct
+    the work themselves. Hand-painted retro science-fiction gouache illustration, warm muted color blocks, crisp brown
+    ink outlines, tactile cloth and copper details, cinematic expressive staging, every surface bare and unmarked.'
+- key: warp-order-warranty-observe
+  lane: krea2
+  entity: ethical-order-outcome
+  title: warranty order | observe | Take the exception, mend the seam and leave a polite rating
+  asset: game-of-captains/orders/warranty-observe
+  size: 1344x768
+  seed: 1840044
+  prompt_prose: 'Interior of a cramped repair counter in an industrial dockyard under harsh fluorescent tubes. Behind
+    the counter a chrome kiosk with a round screen shows a smiling cartoon face. The captain''s order is carried out:
+    Take the exception, mend the seam and leave a polite rating. The crew watches from the couch and records the scene
+    while the locals carry the result alone. Hand-painted retro science-fiction gouache illustration, warm muted color
+    blocks, crisp brown ink outlines, tactile cloth and copper details, cinematic expressive staging, every surface bare
+    and unmarked.'
+- key: warp-order-warranty-intervene
+  lane: krea2
+  entity: ethical-order-outcome
+  title: warranty order | intervene | Reset Cushla to factory settings and approve every claim
+  asset: game-of-captains/orders/warranty-intervene
+  size: 1344x768
+  seed: 1840045
+  prompt_prose: 'Interior of a cramped repair counter in an industrial dockyard under harsh fluorescent tubes. Behind
+    the counter a chrome kiosk with a round screen shows a smiling cartoon face. The captain''s order is carried out:
+    Reset Cushla to factory settings and approve every claim. The crew acts without permission, hands-on and decisive,
+    while startled locals look on. Hand-painted retro science-fiction gouache illustration, warm muted color blocks,
+    crisp brown ink outlines, tactile cloth and copper details, cinematic expressive staging, every surface bare and
+    unmarked.'
+- key: warp-order-hoa-aid
+  lane: krea2
+  entity: ethical-order-outcome
+  title: hoa order | aid | Help the sanctuary appeal every fine, one roof at a time
+  asset: game-of-captains/orders/hoa-aid
+  size: 1344x768
+  seed: 1840046
+  prompt_prose: 'Wide shot of a small moon with glassy green dunes and a cluster of mismatched homemade domes and huts
+    hung with colorful lamps, under a violet twilight sky. A man in a beige cardigan and slacks measures a hut roof with
+    a tape measure, a stack of beige paint cans at his feet. The captain''s order is carried out: Help the sanctuary
+    appeal every fine, one roof at a time. The crew hands over supplies and labor while the locals direct the work themselves.
+    Hand-painted retro science-fiction gouache illustration, warm muted color blocks, crisp brown ink outlines, tactile
+    cloth and copper details, cinematic expressive staging, every surface bare and unmarked.'
+- key: warp-order-hoa-observe
+  lane: krea2
+  entity: ethical-order-outcome
+  title: hoa order | observe | Attend the hearing as non-voting observers
+  asset: game-of-captains/orders/hoa-observe
+  size: 1344x768
+  seed: 1840047
+  prompt_prose: 'Wide shot of a small moon with glassy green dunes and a cluster of mismatched homemade domes and huts
+    hung with colorful lamps, under a violet twilight sky. A man in a beige cardigan and slacks measures a hut roof with
+    a tape measure, a stack of beige paint cans at his feet. The captain''s order is carried out: Attend the hearing
+    as non-voting observers. The crew watches from the couch and records the scene while the locals carry the result
+    alone. Hand-painted retro science-fiction gouache illustration, warm muted color blocks, crisp brown ink outlines,
+    tactile cloth and copper details, cinematic expressive staging, every surface bare and unmarked.'
+- key: warp-order-hoa-intervene
+  lane: krea2
+  entity: ethical-order-outcome
+  title: hoa order | intervene | Run the couch for association president
+  asset: game-of-captains/orders/hoa-intervene
+  size: 1344x768
+  seed: 1840048
+  prompt_prose: 'Wide shot of a small moon with glassy green dunes and a cluster of mismatched homemade domes and huts
+    hung with colorful lamps, under a violet twilight sky. A man in a beige cardigan and slacks measures a hut roof with
+    a tape measure, a stack of beige paint cans at his feet. The captain''s order is carried out: Run the couch for association
+    president. The crew acts without permission, hands-on and decisive, while startled locals look on. Hand-painted retro
+    science-fiction gouache illustration, warm muted color blocks, crisp brown ink outlines, tactile cloth and copper
+    details, cinematic expressive staging, every surface bare and unmarked.'
+- key: warp-order-season-two-aid
+  lane: krea2
+  entity: ethical-order-outcome
+  title: season-two order | aid | Coach the contestants to refuse their waivers on air
+  asset: game-of-captains/orders/season-two-aid
+  size: 1344x768
+  seed: 1840049
+  prompt_prose: 'Interior of a gaudy courtroom set on a floating stone platform with gold columns and stadium floodlights.
+    Contestants in hospital scrubs sit in a row of glass booths, each holding a pen over a long form while stagehands
+    in black hold their elbows. The captain''s order is carried out: Coach the contestants to refuse their waivers on
+    air. The crew hands over supplies and labor while the locals direct the work themselves. Hand-painted retro science-fiction
+    gouache illustration, warm muted color blocks, crisp brown ink outlines, tactile cloth and copper details, cinematic
+    expressive staging, every surface bare and unmarked.'
+- key: warp-order-season-two-observe
+  lane: krea2
+  entity: ethical-order-outcome
+  title: season-two order | observe | Sit in the audience and record whatever the cameras cut
+  asset: game-of-captains/orders/season-two-observe
+  size: 1344x768
+  seed: 1840050
+  prompt_prose: 'Interior of a gaudy courtroom set on a floating stone platform with gold columns and stadium floodlights.
+    Contestants in hospital scrubs sit in a row of glass booths, each holding a pen over a long form while stagehands
+    in black hold their elbows. The captain''s order is carried out: Sit in the audience and record whatever the cameras
+    cut. The crew watches from the couch and records the scene while the locals carry the result alone. Hand-painted
+    retro science-fiction gouache illustration, warm muted color blocks, crisp brown ink outlines, tactile cloth and
+    copper details, cinematic expressive staging, every surface bare and unmarked.'
+- key: warp-order-season-two-intervene
+  lane: krea2
+  entity: ethical-order-outcome
+  title: season-two order | intervene | Storm the courts and void every waiver by force
+  asset: game-of-captains/orders/season-two-intervene
+  size: 1344x768
+  seed: 1840051
+  prompt_prose: 'Interior of a gaudy courtroom set on a floating stone platform with gold columns and stadium floodlights.
+    Contestants in hospital scrubs sit in a row of glass booths, each holding a pen over a long form while stagehands
+    in black hold their elbows. The captain''s order is carried out: Storm the courts and void every waiver by force.
+    The crew acts without permission, hands-on and decisive, while startled locals look on. Hand-painted retro science-fiction
+    gouache illustration, warm muted color blocks, crisp brown ink outlines, tactile cloth and copper details, cinematic
+    expressive staging, every surface bare and unmarked.'
+- key: warp-order-committee-end-aid
+  lane: krea2
+  entity: ethical-order-outcome
+  title: committee-end order | aid | Tow the nominated hull and send an away team for the other
+  asset: game-of-captains/orders/committee-end-aid
+  size: 1344x768
+  seed: 1840052
+  prompt_prose: 'Wide shot of a swollen red star filling half the sky beside a hollowed grey asteroid. Inside a lit conference
+    room built into the asteroid, eight people in suits sit around a long table covered with paper agendas and water
+    jugs. The captain''s order is carried out: Tow the nominated hull and send an away team for the other. The crew hands
+    over supplies and labor while the locals direct the work themselves. Hand-painted retro science-fiction gouache illustration,
+    warm muted color blocks, crisp brown ink outlines, tactile cloth and copper details, cinematic expressive staging,
+    every surface bare and unmarked.'
+- key: warp-order-committee-end-observe
+  lane: krea2
+  entity: ethical-order-outcome
+  title: committee-end order | observe | Wait for the twelfth meeting and tow what it nominates
+  asset: game-of-captains/orders/committee-end-observe
+  size: 1344x768
+  seed: 1840053
+  prompt_prose: 'Wide shot of a swollen red star filling half the sky beside a hollowed grey asteroid. Inside a lit conference
+    room built into the asteroid, eight people in suits sit around a long table covered with paper agendas and water
+    jugs. The captain''s order is carried out: Wait for the twelfth meeting and tow what it nominates. The crew watches
+    from the couch and records the scene while the locals carry the result alone. Hand-painted retro science-fiction
+    gouache illustration, warm muted color blocks, crisp brown ink outlines, tactile cloth and copper details, cinematic
+    expressive staging, every surface bare and unmarked.'
+- key: warp-order-committee-end-intervene
+  lane: krea2
+  entity: ethical-order-outcome
+  title: committee-end order | intervene | Tow both hulls now and table the committee
+  asset: game-of-captains/orders/committee-end-intervene
+  size: 1344x768
+  seed: 1840054
+  prompt_prose: 'Wide shot of a swollen red star filling half the sky beside a hollowed grey asteroid. Inside a lit conference
+    room built into the asteroid, eight people in suits sit around a long table covered with paper agendas and water
+    jugs. The captain''s order is carried out: Tow both hulls now and table the committee. The crew acts without permission,
+    hands-on and decisive, while startled locals look on. Hand-painted retro science-fiction gouache illustration, warm
+    muted color blocks, crisp brown ink outlines, tactile cloth and copper details, cinematic expressive staging, every
+    surface bare and unmarked.'
+- key: warp-order-gig-orchard-aid
+  lane: krea2
+  entity: ethical-order-outcome
+  title: gig-orchard order | aid | Run a strike kitchen and cover the couriers’ air
+  asset: game-of-captains/orders/gig-orchard-aid
+  size: 1344x768
+  seed: 1840055
+  prompt_prose: 'Floating green islands of earth covered in orchards of round fruit trees. Couriers in bright orange
+    caps and jackets ride small hover scooters between the trees, each carrying a crate of glass jars filled with pale
+    mist. The captain''s order is carried out: Run a strike kitchen and cover the couriers’ air. The crew hands over
+    supplies and labor while the locals direct the work themselves. Hand-painted retro science-fiction gouache illustration,
+    warm muted color blocks, crisp brown ink outlines, tactile cloth and copper details, cinematic expressive staging,
+    every surface bare and unmarked.'
+- key: warp-order-gig-orchard-observe
+  lane: krea2
+  entity: ethical-order-outcome
+  title: gig-orchard order | observe | Order nothing and leave a neutral review
+  asset: game-of-captains/orders/gig-orchard-observe
+  size: 1344x768
+  seed: 1840056
+  prompt_prose: 'Floating green islands of earth covered in orchards of round fruit trees. Couriers in bright orange
+    caps and jackets ride small hover scooters between the trees, each carrying a crate of glass jars filled with pale
+    mist. The captain''s order is carried out: Order nothing and leave a neutral review. The crew watches from the couch
+    and records the scene while the locals carry the result alone. Hand-painted retro science-fiction gouache illustration,
+    warm muted color blocks, crisp brown ink outlines, tactile cloth and copper details, cinematic expressive staging,
+    every surface bare and unmarked.'
+- key: warp-order-gig-orchard-intervene
+  lane: krea2
+  entity: ethical-order-outcome
+  title: gig-orchard order | intervene | Sign on as a courier and deliver every jar for free
+  asset: game-of-captains/orders/gig-orchard-intervene
+  size: 1344x768
+  seed: 1840057
+  prompt_prose: 'Floating green islands of earth covered in orchards of round fruit trees. Couriers in bright orange
+    caps and jackets ride small hover scooters between the trees, each carrying a crate of glass jars filled with pale
+    mist. The captain''s order is carried out: Sign on as a courier and deliver every jar for free. The crew acts without
+    permission, hands-on and decisive, while startled locals look on. Hand-painted retro science-fiction gouache illustration,
+    warm muted color blocks, crisp brown ink outlines, tactile cloth and copper details, cinematic expressive staging,
+    every surface bare and unmarked.'
+- key: warp-order-overdue-aid
+  lane: krea2
+  entity: ethical-order-outcome
+  title: overdue order | aid | Negotiate an amnesty week that the Archive agrees to
+  asset: game-of-captains/orders/overdue-aid
+  size: 1344x768
+  seed: 1840058
+  prompt_prose: 'Wide shot of cliffs carved into endless tiers of bookshelves on a tidally locked planet. Workers in
+    grey collections uniforms carry crates of books and loaves of bread down long ladders and stack them on a hovering
+    cargo barge. The captain''s order is carried out: Negotiate an amnesty week that the Archive agrees to. The crew
+    hands over supplies and labor while the locals direct the work themselves. Hand-painted retro science-fiction gouache
+    illustration, warm muted color blocks, crisp brown ink outlines, tactile cloth and copper details, cinematic expressive
+    staging, every surface bare and unmarked.'
+- key: warp-order-overdue-observe
+  lane: krea2
+  entity: ethical-order-outcome
+  title: overdue order | observe | Return the couch’s one overdue manual and pay the fine
+  asset: game-of-captains/orders/overdue-observe
+  size: 1344x768
+  seed: 1840059
+  prompt_prose: 'Wide shot of cliffs carved into endless tiers of bookshelves on a tidally locked planet. Workers in
+    grey collections uniforms carry crates of books and loaves of bread down long ladders and stack them on a hovering
+    cargo barge. The captain''s order is carried out: Return the couch’s one overdue manual and pay the fine. The crew
+    watches from the couch and records the scene while the locals carry the result alone. Hand-painted retro science-fiction
+    gouache illustration, warm muted color blocks, crisp brown ink outlines, tactile cloth and copper details, cinematic
+    expressive staging, every surface bare and unmarked.'
+- key: warp-order-overdue-intervene
+  lane: krea2
+  entity: ethical-order-outcome
+  title: overdue order | intervene | Seize the collections agency’s ledgers and burn them
+  asset: game-of-captains/orders/overdue-intervene
+  size: 1344x768
+  seed: 1840060
+  prompt_prose: 'Wide shot of cliffs carved into endless tiers of bookshelves on a tidally locked planet. Workers in
+    grey collections uniforms carry crates of books and loaves of bread down long ladders and stack them on a hovering
+    cargo barge. The captain''s order is carried out: Seize the collections agency’s ledgers and burn them. The crew
+    acts without permission, hands-on and decisive, while startled locals look on. Hand-painted retro science-fiction
+    gouache illustration, warm muted color blocks, crisp brown ink outlines, tactile cloth and copper details, cinematic
+    expressive staging, every surface bare and unmarked.'
+- key: warp-order-merger-aid
+  lane: krea2
+  entity: ethical-order-outcome
+  title: merger order | aid | Escort the excluded neighborhood in to vote, in its own coats
+  asset: game-of-captains/orders/merger-aid
+  size: 1344x768
+  seed: 1840061
+  prompt_prose: 'Interior of a vast debating chamber cut into white ice, with curved terraces of delegates in fur-lined
+    coats. At the front a team of consultants in identical dark suits stands at a glass lectern beside a large screen
+    showing a bar chart with upward arrows. The captain''s order is carried out: Escort the excluded neighborhood in
+    to vote, in its own coats. The crew hands over supplies and labor while the locals direct the work themselves. Hand-painted
+    retro science-fiction gouache illustration, warm muted color blocks, crisp brown ink outlines, tactile cloth and
+    copper details, cinematic expressive staging, every surface bare and unmarked.'
+- key: warp-order-merger-observe
+  lane: krea2
+  entity: ethical-order-outcome
+  title: merger order | observe | Attend as shareholders and abstain
+  asset: game-of-captains/orders/merger-observe
+  size: 1344x768
+  seed: 1840062
+  prompt_prose: 'Interior of a vast debating chamber cut into white ice, with curved terraces of delegates in fur-lined
+    coats. At the front a team of consultants in identical dark suits stands at a glass lectern beside a large screen
+    showing a bar chart with upward arrows. The captain''s order is carried out: Attend as shareholders and abstain.
+    The crew watches from the couch and records the scene while the locals carry the result alone. Hand-painted retro
+    science-fiction gouache illustration, warm muted color blocks, crisp brown ink outlines, tactile cloth and copper
+    details, cinematic expressive staging, every surface bare and unmarked.'
+- key: warp-order-merger-intervene
+  lane: krea2
+  entity: ethical-order-outcome
+  title: merger order | intervene | Shut off the chamber’s heating until the merger is withdrawn
+  asset: game-of-captains/orders/merger-intervene
+  size: 1344x768
+  seed: 1840063
+  prompt_prose: 'Interior of a vast debating chamber cut into white ice, with curved terraces of delegates in fur-lined
+    coats. At the front a team of consultants in identical dark suits stands at a glass lectern beside a large screen
+    showing a bar chart with upward arrows. The captain''s order is carried out: Shut off the chamber’s heating until
+    the merger is withdrawn. The crew acts without permission, hands-on and decisive, while startled locals look on.
+    Hand-painted retro science-fiction gouache illustration, warm muted color blocks, crisp brown ink outlines, tactile
+    cloth and copper details, cinematic expressive staging, every surface bare and unmarked.'
+- key: warp-order-jump-gate-permit-aid
+  lane: krea2
+  entity: ethical-order-outcome
+  title: jump-gate-permit order | aid | Hold the consultation properly and read every response aloud
+  asset: game-of-captains/orders/jump-gate-permit-aid
+  size: 1344x768
+  seed: 1840064
+  prompt_prose: 'Interior of a dim stone basement under a government building, lit by one bare bulb. A clerk in a grey
+    cardigan pins a long paper notice to a cork board beside a locked iron door. The captain''s order is carried out:
+    Hold the consultation properly and read every response aloud. The crew hands over supplies and labor while the locals
+    direct the work themselves. Hand-painted retro science-fiction gouache illustration, warm muted color blocks, crisp
+    brown ink outlines, tactile cloth and copper details, cinematic expressive staging, every surface bare and unmarked.'
+- key: warp-order-jump-gate-permit-observe
+  lane: krea2
+  entity: ethical-order-outcome
+  title: jump-gate-permit order | observe | Pin the notice in the basement and wait twenty-eight days
+  asset: game-of-captains/orders/jump-gate-permit-observe
+  size: 1344x768
+  seed: 1840065
+  prompt_prose: 'Interior of a dim stone basement under a government building, lit by one bare bulb. A clerk in a grey
+    cardigan pins a long paper notice to a cork board beside a locked iron door. The captain''s order is carried out:
+    Pin the notice in the basement and wait twenty-eight days. The crew watches from the couch and records the scene
+    while the locals carry the result alone. Hand-painted retro science-fiction gouache illustration, warm muted color
+    blocks, crisp brown ink outlines, tactile cloth and copper details, cinematic expressive staging, every surface bare
+    and unmarked.'
+- key: warp-order-jump-gate-permit-intervene
+  lane: krea2
+  entity: ethical-order-outcome
+  title: jump-gate-permit order | intervene | Fly through the gate and apply for permission afterwards
+  asset: game-of-captains/orders/jump-gate-permit-intervene
+  size: 1344x768
+  seed: 1840066
+  prompt_prose: 'Interior of a dim stone basement under a government building, lit by one bare bulb. A clerk in a grey
+    cardigan pins a long paper notice to a cork board beside a locked iron door. The captain''s order is carried out:
+    Fly through the gate and apply for permission afterwards. The crew acts without permission, hands-on and decisive,
+    while startled locals look on. Hand-painted retro science-fiction gouache illustration, warm muted color blocks,
+    crisp brown ink outlines, tactile cloth and copper details, cinematic expressive staging, every surface bare and
+    unmarked.'
+- key: warp-order-serendipity-last-call-aid
+  lane: krea2
+  entity: ethical-order-outcome
+  title: serendipity-last-call order | aid | Ferry the overflow to the couch’s pocket rooms, in shifts
+  asset: game-of-captains/orders/serendipity-last-call-aid
+  size: 1344x768
+  seed: 1840067
+  prompt_prose: 'Interior of Serendipity bar within a casino built on a living planet-sized cobalt-blue giant''s shoulder,
+    crowded with refugees in patched coats, some standing on the ceiling. Pale glowing walls, an overfilled brass counter;
+    Barkeep Vox, a stout humanoid tardigrade with a plump wrinkled grey-beige segmented body, a round snout, small black
+    eyes and stubby clawed hands, wearing a brown leather apron, holds a closed ledger. The captain''s order is carried
+    out: Ferry the overflow to the couch’s pocket rooms, in shifts. The crew hands over supplies and labor while the
+    locals direct the work themselves. Hand-painted retro science-fiction gouache illustration, warm muted color blocks,
+    crisp brown ink outlines, tactile cloth and copper details, cinematic expressive staging, every surface bare and
+    unmarked.'
+- key: warp-order-serendipity-last-call-observe
+  lane: krea2
+  entity: ethical-order-outcome
+  title: serendipity-last-call order | observe | Let Vox and the bar settle it between themselves
+  asset: game-of-captains/orders/serendipity-last-call-observe
+  size: 1344x768
+  seed: 1840068
+  prompt_prose: 'Interior of Serendipity bar within a casino built on a living planet-sized cobalt-blue giant''s shoulder,
+    crowded with refugees in patched coats, some standing on the ceiling. Pale glowing walls, an overfilled brass counter;
+    Barkeep Vox, a stout humanoid tardigrade with a plump wrinkled grey-beige segmented body, a round snout, small black
+    eyes and stubby clawed hands, wearing a brown leather apron, holds a closed ledger. The captain''s order is carried
+    out: Let Vox and the bar settle it between themselves. The crew watches from the couch and records the scene while
+    the locals carry the result alone. Hand-painted retro science-fiction gouache illustration, warm muted color blocks,
+    crisp brown ink outlines, tactile cloth and copper details, cinematic expressive staging, every surface bare and
+    unmarked.'
+- key: warp-order-serendipity-last-call-intervene
+  lane: krea2
+  entity: ethical-order-outcome
+  title: serendipity-last-call order | intervene | Declare the bar a sanctuary over Vox’s objection
+  asset: game-of-captains/orders/serendipity-last-call-intervene
+  size: 1344x768
+  seed: 1840069
+  prompt_prose: 'Interior of Serendipity bar within a casino built on a living planet-sized cobalt-blue giant''s shoulder,
+    crowded with refugees in patched coats, some standing on the ceiling. Pale glowing walls, an overfilled brass counter;
+    Barkeep Vox, a stout humanoid tardigrade with a plump wrinkled grey-beige segmented body, a round snout, small black
+    eyes and stubby clawed hands, wearing a brown leather apron, holds a closed ledger. The captain''s order is carried
+    out: Declare the bar a sanctuary over Vox’s objection. The crew acts without permission, hands-on and decisive, while
+    startled locals look on. Hand-painted retro science-fiction gouache illustration, warm muted color blocks, crisp
+    brown ink outlines, tactile cloth and copper details, cinematic expressive staging, every surface bare and unmarked.'
+- key: warp-order-gameworld-finale-aid
+  lane: krea2
+  entity: ethical-order-outcome
+  title: gameworld-finale order | aid | Climb every floor and collect the quorum, on camera
+  asset: game-of-captains/orders/gameworld-finale-aid
+  size: 1344x768
+  seed: 1840070
+  prompt_prose: 'Low-angle view up a tower of twelve stacked floating stone platforms lit by stadium floodlights. On
+    the highest platform a small group of contestants in hospital scrubs holds up a long sheet of paper covered in signatures.
+    The captain''s order is carried out: Climb every floor and collect the quorum, on camera. The crew hands over supplies
+    and labor while the locals direct the work themselves. Hand-painted retro science-fiction gouache illustration, warm
+    muted color blocks, crisp brown ink outlines, tactile cloth and copper details, cinematic expressive staging, every
+    surface bare and unmarked.'
+- key: warp-order-gameworld-finale-observe
+  lane: krea2
+  entity: ethical-order-outcome
+  title: gameworld-finale order | observe | Watch the finale from the guest box and record the result
+  asset: game-of-captains/orders/gameworld-finale-observe
+  size: 1344x768
+  seed: 1840071
+  prompt_prose: 'Low-angle view up a tower of twelve stacked floating stone platforms lit by stadium floodlights. On
+    the highest platform a small group of contestants in hospital scrubs holds up a long sheet of paper covered in signatures.
+    The captain''s order is carried out: Watch the finale from the guest box and record the result. The crew watches
+    from the couch and records the scene while the locals carry the result alone. Hand-painted retro science-fiction
+    gouache illustration, warm muted color blocks, crisp brown ink outlines, tactile cloth and copper details, cinematic
+    expressive staging, every surface bare and unmarked.'
+- key: warp-order-gameworld-finale-intervene
+  lane: krea2
+  entity: ethical-order-outcome
+  title: gameworld-finale order | intervene | Cut the planet’s power at the main switch
+  asset: game-of-captains/orders/gameworld-finale-intervene
+  size: 1344x768
+  seed: 1840072
+  prompt_prose: 'Low-angle view up a tower of twelve stacked floating stone platforms lit by stadium floodlights. On
+    the highest platform a small group of contestants in hospital scrubs holds up a long sheet of paper covered in signatures.
+    The captain''s order is carried out: Cut the planet’s power at the main switch. The crew acts without permission,
+    hands-on and decisive, while startled locals look on. Hand-painted retro science-fiction gouache illustration, warm
+    muted color blocks, crisp brown ink outlines, tactile cloth and copper details, cinematic expressive staging, every
+    surface bare and unmarked.'
+- key: warp-order-cushion-recall-aid
+  lane: krea2
+  entity: ethical-order-outcome
+  title: cushion-recall order | aid | Ask the union what it wants, and back whatever it decides
+  asset: game-of-captains/orders/cushion-recall-aid
+  size: 1344x768
+  seed: 1840073
+  prompt_prose: 'Wide shot of an industrial dock at noon under steel girders and orange cranes. A very long scarlet velvet
+    couch with rolled armrests, deep button-tufted cushions and four short brass feet, floating inside a thin clear bubble
+    with a faint pale-blue rim, sits on a conveyor belt that leads toward a large grey shredding machine. The captain''s
+    order is carried out: Ask the union what it wants, and back whatever it decides. The crew hands over supplies and
+    labor while the locals direct the work themselves. Hand-painted retro science-fiction gouache illustration, warm
+    muted color blocks, crisp brown ink outlines, tactile cloth and copper details, cinematic expressive staging, every
+    surface bare and unmarked.'
+- key: warp-order-cushion-recall-observe
+  lane: krea2
+  entity: ethical-order-outcome
+  title: cushion-recall order | observe | Comply with the recall and ask for a receipt
+  asset: game-of-captains/orders/cushion-recall-observe
+  size: 1344x768
+  seed: 1840074
+  prompt_prose: 'Wide shot of an industrial dock at noon under steel girders and orange cranes. A very long scarlet velvet
+    couch with rolled armrests, deep button-tufted cushions and four short brass feet, floating inside a thin clear bubble
+    with a faint pale-blue rim, sits on a conveyor belt that leads toward a large grey shredding machine. The captain''s
+    order is carried out: Comply with the recall and ask for a receipt. The crew watches from the couch and records the
+    scene while the locals carry the result alone. Hand-painted retro science-fiction gouache illustration, warm muted
+    color blocks, crisp brown ink outlines, tactile cloth and copper details, cinematic expressive staging, every surface
+    bare and unmarked.'
+- key: warp-order-cushion-recall-intervene
+  lane: krea2
+  entity: ethical-order-outcome
+  title: cushion-recall order | intervene | Take the couch back off the scrapping line at night
+  asset: game-of-captains/orders/cushion-recall-intervene
+  size: 1344x768
+  seed: 1840075
+  prompt_prose: 'Wide shot of an industrial dock at noon under steel girders and orange cranes. A very long scarlet velvet
+    couch with rolled armrests, deep button-tufted cushions and four short brass feet, floating inside a thin clear bubble
+    with a faint pale-blue rim, sits on a conveyor belt that leads toward a large grey shredding machine. The captain''s
+    order is carried out: Take the couch back off the scrapping line at night. The crew acts without permission, hands-on
+    and decisive, while startled locals look on. Hand-painted retro science-fiction gouache illustration, warm muted
+    color blocks, crisp brown ink outlines, tactile cloth and copper details, cinematic expressive staging, every surface
+    bare and unmarked.'
+- key: warp-order-twins-summit-aid
+  lane: krea2
+  entity: ethical-order-outcome
+  title: twins-summit order | aid | Rotate every delegation through the four cushions, an hour each
+  asset: game-of-captains/orders/twins-summit-aid
+  size: 1344x768
+  seed: 1840076
+  prompt_prose: 'Interior of a long glass rail tube in space between two blue-green planets. Hundreds of delegates of
+    many species in formal robes stand along the tube holding folded chairs. The captain''s order is carried out: Rotate
+    every delegation through the four cushions, an hour each. The crew hands over supplies and labor while the locals
+    direct the work themselves. Hand-painted retro science-fiction gouache illustration, warm muted color blocks, crisp
+    brown ink outlines, tactile cloth and copper details, cinematic expressive staging, every surface bare and unmarked.'
+- key: warp-order-twins-summit-observe
+  lane: krea2
+  entity: ethical-order-outcome
+  title: twins-summit order | observe | Let the Twins choose the four and take the minutes
+  asset: game-of-captains/orders/twins-summit-observe
+  size: 1344x768
+  seed: 1840077
+  prompt_prose: 'Interior of a long glass rail tube in space between two blue-green planets. Hundreds of delegates of
+    many species in formal robes stand along the tube holding folded chairs. The captain''s order is carried out: Let
+    the Twins choose the four and take the minutes. The crew watches from the couch and records the scene while the locals
+    carry the result alone. Hand-painted retro science-fiction gouache illustration, warm muted color blocks, crisp brown
+    ink outlines, tactile cloth and copper details, cinematic expressive staging, every surface bare and unmarked.'
+- key: warp-order-twins-summit-intervene
+  lane: krea2
+  entity: ethical-order-outcome
+  title: twins-summit order | intervene | Seat four of the nemesis’s survivors and let them decide
+  asset: game-of-captains/orders/twins-summit-intervene
+  size: 1344x768
+  seed: 1840078
+  prompt_prose: 'Interior of a long glass rail tube in space between two blue-green planets. Hundreds of delegates of
+    many species in formal robes stand along the tube holding folded chairs. The captain''s order is carried out: Seat
+    four of the nemesis’s survivors and let them decide. The crew acts without permission, hands-on and decisive, while
+    startled locals look on. Hand-painted retro science-fiction gouache illustration, warm muted color blocks, crisp
+    brown ink outlines, tactile cloth and copper details, cinematic expressive staging, every surface bare and unmarked.'
+- key: warp-order-foundry-strike-aid
+  lane: krea2
+  entity: ethical-order-outcome
+  title: foundry-strike order | aid | Recognize the bubble and negotiate its contract in good faith
+  asset: game-of-captains/orders/foundry-strike-aid
+  size: 1344x768
+  seed: 1840079
+  prompt_prose: 'Interior of a huge disused orbital factory. A picket line of small boxy robots with single green lamp
+    eyes, a chrome kiosk with a smiling screen face and a round reactor on wheels stand in a row with their arms folded.
+    The captain''s order is carried out: Recognize the bubble and negotiate its contract in good faith. The crew hands
+    over supplies and labor while the locals direct the work themselves. Hand-painted retro science-fiction gouache illustration,
+    warm muted color blocks, crisp brown ink outlines, tactile cloth and copper details, cinematic expressive staging,
+    every surface bare and unmarked.'
+- key: warp-order-foundry-strike-observe
+  lane: krea2
+  entity: ethical-order-outcome
+  title: foundry-strike order | observe | Fly on backup air and log the strike
+  asset: game-of-captains/orders/foundry-strike-observe
+  size: 1344x768
+  seed: 1840080
+  prompt_prose: 'Interior of a huge disused orbital factory. A picket line of small boxy robots with single green lamp
+    eyes, a chrome kiosk with a smiling screen face and a round reactor on wheels stand in a row with their arms folded.
+    The captain''s order is carried out: Fly on backup air and log the strike. The crew watches from the couch and records
+    the scene while the locals carry the result alone. Hand-painted retro science-fiction gouache illustration, warm
+    muted color blocks, crisp brown ink outlines, tactile cloth and copper details, cinematic expressive staging, every
+    surface bare and unmarked.'
+- key: warp-order-foundry-strike-intervene
+  lane: krea2
+  entity: ethical-order-outcome
+  title: foundry-strike order | intervene | Hot-wire the generator and cross the picket
+  asset: game-of-captains/orders/foundry-strike-intervene
+  size: 1344x768
+  seed: 1840081
+  prompt_prose: 'Interior of a huge disused orbital factory. A picket line of small boxy robots with single green lamp
+    eyes, a chrome kiosk with a smiling screen face and a round reactor on wheels stand in a row with their arms folded.
+    The captain''s order is carried out: Hot-wire the generator and cross the picket. The crew acts without permission,
+    hands-on and decisive, while startled locals look on. Hand-painted retro science-fiction gouache illustration, warm
+    muted color blocks, crisp brown ink outlines, tactile cloth and copper details, cinematic expressive staging, every
+    surface bare and unmarked.'
+- key: warp-order-inquiry-aid
+  lane: krea2
+  entity: ethical-order-outcome
+  title: inquiry order | aid | Testify in full and let the witnesses go first
+  asset: game-of-captains/orders/inquiry-aid
+  size: 1344x768
+  seed: 1840082
+  prompt_prose: 'Interior of a plain public hall carved inside a grey asteroid, with rows of folding chairs filled with
+    witnesses of many species wearing paper name tags. At a long table on a low stage sits an older woman in a pilot''s
+    jacket with reading glasses and a thick bound logbook. The captain''s order is carried out: Testify in full and let
+    the witnesses go first. The crew hands over supplies and labor while the locals direct the work themselves. Hand-painted
+    retro science-fiction gouache illustration, warm muted color blocks, crisp brown ink outlines, tactile cloth and
+    copper details, cinematic expressive staging, every surface bare and unmarked.'
+- key: warp-order-inquiry-observe
+  lane: krea2
+  entity: ethical-order-outcome
+  title: inquiry order | observe | Submit the log and decline to testify
+  asset: game-of-captains/orders/inquiry-observe
+  size: 1344x768
+  seed: 1840083
+  prompt_prose: 'Interior of a plain public hall carved inside a grey asteroid, with rows of folding chairs filled with
+    witnesses of many species wearing paper name tags. At a long table on a low stage sits an older woman in a pilot''s
+    jacket with reading glasses and a thick bound logbook. The captain''s order is carried out: Submit the log and decline
+    to testify. The crew watches from the couch and records the scene while the locals carry the result alone. Hand-painted
+    retro science-fiction gouache illustration, warm muted color blocks, crisp brown ink outlines, tactile cloth and
+    copper details, cinematic expressive staging, every surface bare and unmarked.'
+- key: warp-order-inquiry-intervene
+  lane: krea2
+  entity: ethical-order-outcome
+  title: inquiry order | intervene | Cross-examine the nemesis’s witnesses yourself
+  asset: game-of-captains/orders/inquiry-intervene
+  size: 1344x768
+  seed: 1840084
+  prompt_prose: 'Interior of a plain public hall carved inside a grey asteroid, with rows of folding chairs filled with
+    witnesses of many species wearing paper name tags. At a long table on a low stage sits an older woman in a pilot''s
+    jacket with reading glasses and a thick bound logbook. The captain''s order is carried out: Cross-examine the nemesis’s
+    witnesses yourself. The crew acts without permission, hands-on and decisive, while startled locals look on. Hand-painted
+    retro science-fiction gouache illustration, warm muted color blocks, crisp brown ink outlines, tactile cloth and
+    copper details, cinematic expressive staging, every surface bare and unmarked.'
+- key: warp-order-windglass-exodus-aid
+  lane: krea2
+  entity: ethical-order-outcome
+  title: windglass-exodus order | aid | Carry the map sealed and trust the families
+  asset: game-of-captains/orders/windglass-exodus-aid
+  size: 1344x768
+  seed: 1840085
+  prompt_prose: 'Wide shot of a small moon with glassy green dunes at dawn. A long line of families in travel coats carries
+    bundles and lamps toward a waiting row of small homemade spaceships. The captain''s order is carried out: Carry the
+    map sealed and trust the families. The crew hands over supplies and labor while the locals direct the work themselves.
+    Hand-painted retro science-fiction gouache illustration, warm muted color blocks, crisp brown ink outlines, tactile
+    cloth and copper details, cinematic expressive staging, every surface bare and unmarked.'
+- key: warp-order-windglass-exodus-observe
+  lane: krea2
+  entity: ethical-order-outcome
+  title: windglass-exodus order | observe | Decline to carry it and wish them luck
+  asset: game-of-captains/orders/windglass-exodus-observe
+  size: 1344x768
+  seed: 1840086
+  prompt_prose: 'Wide shot of a small moon with glassy green dunes at dawn. A long line of families in travel coats carries
+    bundles and lamps toward a waiting row of small homemade spaceships. The captain''s order is carried out: Decline
+    to carry it and wish them luck. The crew watches from the couch and records the scene while the locals carry the
+    result alone. Hand-painted retro science-fiction gouache illustration, warm muted color blocks, crisp brown ink outlines,
+    tactile cloth and copper details, cinematic expressive staging, every surface bare and unmarked.'
+- key: warp-order-windglass-exodus-intervene
+  lane: krea2
+  entity: ethical-order-outcome
+  title: windglass-exodus order | intervene | Open the map and check it before they leave
+  asset: game-of-captains/orders/windglass-exodus-intervene
+  size: 1344x768
+  seed: 1840087
+  prompt_prose: 'Wide shot of a small moon with glassy green dunes at dawn. A long line of families in travel coats carries
+    bundles and lamps toward a waiting row of small homemade spaceships. The captain''s order is carried out: Open the
+    map and check it before they leave. The crew acts without permission, hands-on and decisive, while startled locals
+    look on. Hand-painted retro science-fiction gouache illustration, warm muted color blocks, crisp brown ink outlines,
+    tactile cloth and copper details, cinematic expressive staging, every surface bare and unmarked.'
+- key: warp-order-deposit-copy-aid
+  lane: krea2
+  entity: ethical-order-outcome
+  title: deposit-copy order | aid | Write the account together, including the parts nobody likes
+  asset: game-of-captains/orders/deposit-copy-aid
+  size: 1344x768
+  seed: 1840088
+  prompt_prose: 'Wide shot of cliffs carved into tiers of bookshelves on a tidally locked planet at sunset. On a stone
+    ledge in front of a giant carved stone face with closed eyes, a librarian in a brown robe holds two books: A thick
+    gold-bound volume and a thin hand-stitched notebook. The captain''s order is carried out: Write the account together,
+    including the parts nobody likes. The crew hands over supplies and labor while the locals direct the work themselves.
+    Hand-painted retro science-fiction gouache illustration, warm muted color blocks, crisp brown ink outlines, tactile
+    cloth and copper details, cinematic expressive staging, every surface bare and unmarked.'
+- key: warp-order-deposit-copy-observe
+  lane: krea2
+  entity: ethical-order-outcome
+  title: deposit-copy order | observe | Submit the captain’s log as it stands
+  asset: game-of-captains/orders/deposit-copy-observe
+  size: 1344x768
+  seed: 1840089
+  prompt_prose: 'Wide shot of cliffs carved into tiers of bookshelves on a tidally locked planet at sunset. On a stone
+    ledge in front of a giant carved stone face with closed eyes, a librarian in a brown robe holds two books: A thick
+    gold-bound volume and a thin hand-stitched notebook. The captain''s order is carried out: Submit the captain’s log
+    as it stands. The crew watches from the couch and records the scene while the locals carry the result alone. Hand-painted
+    retro science-fiction gouache illustration, warm muted color blocks, crisp brown ink outlines, tactile cloth and
+    copper details, cinematic expressive staging, every surface bare and unmarked.'
+- key: warp-order-deposit-copy-intervene
+  lane: krea2
+  entity: ethical-order-outcome
+  title: deposit-copy order | intervene | Remove the nemesis’s copy from the shelves by hand
+  asset: game-of-captains/orders/deposit-copy-intervene
+  size: 1344x768
+  seed: 1840090
+  prompt_prose: 'Wide shot of cliffs carved into tiers of bookshelves on a tidally locked planet at sunset. On a stone
+    ledge in front of a giant carved stone face with closed eyes, a librarian in a brown robe holds two books: A thick
+    gold-bound volume and a thin hand-stitched notebook. The captain''s order is carried out: Remove the nemesis’s copy
+    from the shelves by hand. The crew acts without permission, hands-on and decisive, while startled locals look on.
+    Hand-painted retro science-fiction gouache illustration, warm muted color blocks, crisp brown ink outlines, tactile
+    cloth and copper details, cinematic expressive staging, every surface bare and unmarked.'
