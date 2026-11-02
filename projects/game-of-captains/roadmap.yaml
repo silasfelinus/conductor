@@ -603,3 +603,23 @@ tasks:
       2026-11-02 PT: Resource shortage and authentic story choice QA slice prepared. Standard aid/intervention no longer silently grant full benefits with empty stores; the running costs are shown before selecting a generic ethical order, and shortage flag and outcome prose are saved. Random-walk traces now exercise the two authored story decisions shown by the real page rather than generic fallback, with a new 12-voyage seeded test for choice/save parity. Exact-head CI pending. The issue #4182 remains an open master roadmap; art and final human acceptance separate.
 
       2026-11-02 PT: Scoped scarcity/real UI choice QA merged as kind_robots PR #4635, squash 6a86f1155cd413e3e3129c6562654e9ccb9a0b94. 11/11 exact-head checks green, including 2,116 whole voyages, 12 additional authored-choice voyages, TypeScript, formatting, schema, layout and container build verification. Generic Aid without supplies earns trust but not full reputation; underfunded Intervene incurs additional reputation cost and persistent shortage record. Random walks exercise actual Archive and Serendipity story options. Master remains unfinished for expanded authored scenarios, art delivery, visual cross-width acceptance and production verification.
+  - id: t-033
+    milestone: m3
+    title: "Curate, re-render and ship the 100 redshirt portraits and secret-power plates"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    lane: art
+    depends_on: [t-025]
+    source: silas-2026-11-02
+    note: >-
+      Silas, 2026-11-02 PT, on the Forge's 100 Redshirts page showing 0 portraits: "do we still have redshirt art gens to
+      do? ... yes go ahead". t-025 submitted all 200 cells on 2026-10-27 but no task owned review or delivery, so nothing
+      reached the game. 2026-11-02 review of REDSHIRTS-200-ROUND-1 (195 DONE, 5 cancelled): keep 20 of 98 portraits and
+      39 of 97 power plates (verdict on every subject); nearly every miss is an ordinary human in the tunic, because the
+      prompts led with a human name and asked for "the person ... individual face". REDSHIRTS-ROUND-2.yaml (auto_submit,
+      141 cells, all pass the live contract) re-renders the misses and the five cancelled cells creature-first. The 59
+      keepers ship to public/game-of-captains/redshirts/{portraits,secret-powers}/rs-NNN.webp, listed in WARP_ART, and the
+      Forge redshirt page falls back to them. Next: curate ROUND-2 the same way, export keepers, then wire the portraits
+      into the dispatch board (t-026 family) when it lands. Done when every rs-001..rs-100 has a shipped portrait and plate.
