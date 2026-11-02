@@ -2485,3 +2485,22 @@ tasks:
   stakes: reversible
   note: |-
     Audience-first follow-up from Silas's 2026-10-26 PT audit. Start once /admin/site-stats (kind_robots site-stats PR) has a week of production data, i.e. on or after 2026-11-02 PT; before then re-arm as a no-op. Read top pages, referrers and support:* events, find the two public pages where first-time visitors most often stop (a game they open and leave within a minute, a dead end such as the empty-mana art studio or the API-key storybook gate), and ship one scoped fix per page. Include any hesitation points Silas reports from the Crystal Street launch-week playtests. Report the before/after numbers in the PR body.
+
+- id: t-152
+  milestone: m6
+  title: "Weekly CI build-time essentialization for kind_robots workflows"
+  status: ready
+  passes: 0
+  stakes: reversible
+  recurring: true
+  min_rest_hours: 144
+  note: |-
+    Silas, 2026-11-02 PT: "I want to essentialize our kind robots build time. We did this a while back and it helped, it should be routine (weekly) maintenance. I want to make sure we aren't running unnecessary regression tests, outdated workflows that were meant to be run once, etc."
+
+    Baseline pass shipped as silasfelinus/kind_robots#4622 (139 -> 121 workflow files; a typical PR push ~17 -> ~8 workflows): folded 9 tiny per-PR workflows plus the Facet catalog contract into Contract Tests shards, moved the Prettier ratchet off the shard-2 long pole, added cancel-superseded concurrency to 68 PR workflows, dropped 7 push-to-main duplicate reruns, moved Responsive Layout Audit hourly -> daily (~45 runner-min/run), and retired 9 finished one-shot production lanes. Added utils/scripts/auditWorkflowBudget.mjs (`npm run test:workflow-budget` guard in shard 3; `npm run audit:workflow-budget` advisory report).
+
+    EACH WEEKLY SLICE: in kind_robots run `npm run audit:workflow-budget` and follow docs/ci-test-lifecycle.md "Weekly essentialization routine": retire one-shot lanes whose job is done (check last run via GitHub MCP list_workflow_runs), fold DB-free seconds-long workflows with whole-directory path filters into the lightest contract shard, drop push-to-main reruns of pure contracts, set CYPRESS_INSTALL_BINARY=0, and rebalance shards from the latest main Contract Tests job timings. Never fold/delete a job that may be a required check (TypeScript, Contract verifiers, Schema Migration Parity, verify) without confirming mergeable_state is not blocked. If the audit is clean and shard spread is under ~60s, record a one-line no-op and re-arm. Append one short paragraph per slice below; re-arm to ready after merge.
+  claimed_by: null
+  claimed_at: null
+  updated: '2026-11-02T03:40:00Z'
+  implementation_pr: 'silasfelinus/kind_robots#4622'
