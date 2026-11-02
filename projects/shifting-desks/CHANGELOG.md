@@ -48,3 +48,6 @@
 ## 2026-10-20 PT (round 13 review)
 - 24 of 25 round-13 re-renders landed (each is a new file, not the rejected render). Review: 15 keep, including Gus as a man-sized cockroach handing a new hire the form and Mail for Kevin with soup-can canisters (the ammunition read is gone). 9 still missed their gag and go to ROUND-15, recomposed around the one joke each.
 - link_art.py: 148/163 slots linked and probed live. The Kind Rewrite ending is still rendering, and round 14 (the tone ladder) has not started yet.
+
+## 2026-11-02 PT
+- Western Cartoon re-render, subject first (Silas: "that is not a cockroach"). The checkpoint composer puts the card's subject ahead of the style tags for this lane, and the lane style no longer asks for character portraits. 196 forced rows are queued: the full STYLE-CATALOG, now including Permanent Adjournment and Nadia. Roach cards name the insect first. Review ledger: art/ROUND-18.yaml. Details: ART-STYLE-PITCHES.md.

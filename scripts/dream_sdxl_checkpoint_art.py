@@ -39,9 +39,17 @@ CHECKPOINT_LANES = {
         "checkpoint": "Illustrious/arthemyWesternArt_v30.safetensors",
         "steps": 30, "cfg": 5.0, "sampler": "euler_ancestral",
         "scheduler": "normal",
-        "style": "masterpiece, best quality, amazing quality, absurdres, very aesthetic, western comics (style), toon (style), premium western animated feature key art, polished expressive character designs, warm orange rim lighting against emerald green office fluorescents, glossy inked shell highlights, strong theatrical gestures, cinematic low angle, rich stylized cel painting, inviting character warmth, playful institutional dread",
+        # 2026-11-02 (Silas: "that is not a cockroach"): the old style asked
+        # for "polished expressive character designs ... inviting character
+        # warmth" ahead of the subject, and Arthemy drew one centered
+        # antennaed woman in an arched doorway for nearly every card. Scene
+        # words only now; the subject leads (compose_checkpoint_prompt).
+        "style": "western comics (style), toon (style), premium western animated feature key art, full scene with detailed background, warm orange rim lighting against emerald green office fluorescents, cinematic staging, rich stylized cel painting, playful institutional dread",
     },
 }
+# Lanes whose rows lead with the subject and trail style and quality tags.
+# SDXL weights the first CLIP chunk most; a long style lead buried the card.
+SUBJECT_FIRST_LANES = {("shifting-desks", "western-cartoon")}
 ENGINE = "sdxl-checkpoint"
 SUPPORTED_PROJECTS = ("zuzu-gamebook", "emperor-of-dust", "shifting-desks")
 SHIFTING_DESKS_FAMILIES = {"corporate-noir", "western-cartoon"}
@@ -184,6 +192,9 @@ def compose_checkpoint_prompt(prompt: str, family: str, project: str,
             negative = f"{ZUZU_NEGATIVE}, {ZUZU_CANON_NEGATIVE}"
     clothed = CLOTHED if project in ZUZU_PROJECTS and figures and not canon else ""
     prefix = "" if style.startswith(ILLUSTRIOUS_PREFIX) else ILLUSTRIOUS_PREFIX
+    if (project, family) in SUBJECT_FIRST_LANES:
+        positive = ", ".join(part for part in (body, style, prefix) if part)
+        return positive, negative
     positive = ", ".join(part for part in (prefix, style, canon, clothed, body) if part)
     return positive, negative
 

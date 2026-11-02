@@ -214,11 +214,15 @@ def test_zuzu_in_frame_gets_canon_tags_costume_and_negatives():
     assert "lanky" not in plain and "human" in plain
 
 
-def test_shifting_desks_prompt_and_negative_are_unchanged_apart_from_dedup():
+def test_shifting_desks_western_cartoon_leads_with_the_subject():
+    # Silas, 2026-11-02: "that is not a cockroach". The style lead buried the
+    # card's subject; it now comes first and style and quality tags trail.
     style = CHECKPOINT_LANES["western-cartoon"]["style"]
     positive, negative = compose_checkpoint_prompt("Gus at the shop desk, people waiting", "western-cartoon", "shifting-desks")
-    assert positive == f"{style}, Gus at the shop desk, people waiting"
+    assert positive == f"Gus at the shop desk, people waiting, {style}, {ILLUSTRIOUS_PREFIX}"
     assert negative == "low quality, blurry, bad anatomy, disfigured, writing, text, watermark"
+    for portrait_bias in ("character designs", "character warmth", "Gus"):
+        assert portrait_bias not in style
 
 
 ZUZU_WORLD = (
