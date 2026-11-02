@@ -1,5 +1,26 @@
 # Space Couch: playtest readiness
 
+## November 1, 2026 PT: art-independent alien collector adversarial track
+
+**Candidate level:** the core voyage is mechanically playtestable; the 101-species collector still needs account-switch/regression checks on current main and authenticated browser/production-schema confirmation. This is an **internal story/mechanics playtest candidate**, not a signed-off final-art build, public launch or completed human-acceptance gate.
+
+**Implemented after the October 30 exhaustive 2,116-voyage trace:** [#4594](https://github.com/silasfelinus/kind_robots/pull/4594) introduced 101 species with three situational approaches and a reproducible rare-sighting ladder; [#4603](https://github.com/silasfelinus/kind_robots/pull/4603) added six choice-driven collector incidents; [#4605](https://github.com/silasfelinus/kind_robots/pull/4605) resolves only viewer-permitted DONE alien ArtJobs; and [#4617](https://github.com/silasfelinus/kind_robots/pull/4617) implemented additive, owner-bound, merge-safe cross-device persistence. **These features postdate the full-voyage trace, so the old trace result cannot certify them.**
+
+**Active reliability fix:** [Kind Robots #4619](https://github.com/silasfelinus/kind_robots/pull/4619) flushes player-specific alien encounter/collector overlays and art cache on account switches, rejects stale in-flight art responses, reserves guest scrapbook migration for its first signed-in account even if sync is offline, and prevents a failed account read from displaying a false “synced” status. Its existing `test:game-of-captains` CI path includes a new 101-species stale-device/merge/idempotency regression battery. Do not mark this fix shipped until exact-head CI passes and it merges.
+
+### Agent-owned tests that do not depend on generated images
+
+1. **Seed and emotional agency:** each of the 101 creatures can be found without permanent missability; each of three concealed approaches has all three outcomes depending on readable mood and situation; a retreat creates no entry and can be retried on a later chapter; chaos and bond both record discoveries.
+2. **Collection and milestones:** restore a 101/101 scrapbook from a serialized save; test the six thresholds 5/12/25/50/75/100, all 18 distinct outcomes, incident-once behavior and persistent world echoes; ensure an ordinary sighting cannot silently consume a collector incident.
+3. **Two-account isolation and offline recovery:** switch users with an encounter, result or milestone modal open; confirm the second player sees none of the first player's records or viewer-scoped art; verify canceled/old fetch responses cannot leak a previous account's images. Simulate offline GET/POST, retry, stale-tab reconciliation and guest-to-account import, including switch before the first upload succeeds.
+4. **Whole voyage:** repeat the nine-chapter scripted antagonist/captain/crew/ending softlock battery on the current build, including loaded legacy saves, redshirt deaths, failed mission results, trust/mutiny pressure, clone generations, collector discoveries and final reviews. The October 30 2,116-voyage pass is baseline evidence, not a substitute.
+5. **Hydrated presentation:** agent-driven signed-in 390×844, 768×1024 and 1440×900 paths through captain → origin → four Couchscope answers → crew → travel/quests/decks → alien sighting → collector incident → finale. Confirm option reachability, image-before-text with a functional fallback, accessible controls, correct failure art, persistence, and that the red couch/force bubble never becomes a conventional bridge.
+
+**Art is not a prerequisite for checks 1–4.** The 107 alien-species/collector jobs recorded on November 1 are queued, not verified DONE ArtImages. The fallback must remain visible and playable during QA. Delivered-image crop and provenance review remains an independent agent track. A missing painting should produce an art-coverage finding, not block scripted testing.
+
+**Human handoff threshold:** pass exact-head contract/gameplay/format/type checks, merge the fixes, confirm they are deployed in the intended test build, run the agent-owned authenticated UI matrix, then give Silas the internal Play URL and a short known-limitations sheet. Ask for his *subjective game/fun verdict*, never ask him to substitute for agent verification. Outward publication remains a separate hard gate.
+
+
 ## Update: November 1, 2026 PT, release-candidate pass
 
 **Verdict: ready for a guided INTERNAL mechanics/story playtest, not final art or human design acceptance.** The 2026-10-30 screenshot and trace evidence below remains useful historical proof, but several visible screens changed afterward. Do not use old screenshots as evidence that the CURRENT build works at 390/768/1440.
