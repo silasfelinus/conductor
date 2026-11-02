@@ -691,7 +691,9 @@ def test_source_matte_flattens_a_transparent_sprite_and_upscales_it():
     import base64
     import io
 
-    from PIL import Image
+    import pytest
+
+    Image = pytest.importorskip("PIL.Image")
 
     sprite = Image.new("RGBA", (40, 20), (0, 0, 0, 0))
     sprite.paste((255, 0, 0, 255), (10, 5, 30, 15))
