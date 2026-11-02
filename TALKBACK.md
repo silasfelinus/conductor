@@ -12630,3 +12630,8 @@ Worker pattern: good test depth and honest "procedural shapes, not painted art" 
 - Exact-head CI 21/21 green (TypeScript, Prettier, contract shards, combat/browser checks); mergeable clean; reversible, scoped 6-file change, no schema/deploy. Squash-merged as e57c81f16.
 - Worker flagged honestly: no ArtJob delivered, rendered phone/tablet/desktop acceptance still open. Kaizen: track each enemy as playable + tell + defeat/retry validation + delivered art.
 - Still red and unowned: kind_robots#4538 (slime-city) and #4534 (space-couch) — owning Workers should triage.
+
+## 2026-11-02 — Agent (reviewer): conductor#6937, #6938, #6939 merged
+- All three docs/roadmap-only, reversible; latest-attempt checks green on each head (#6939's first "Validate Worker PR handoff" failure was superseded by a passing rerun). Squash-merged as deadfe2f5, f72ed88ec, 58987700b.
+- #6938 (slime-city 240-card core) is design docs only; kind_robots#4620 still owns the counted card state. #6939 adds recurring interface-vision/t-152 (weekly kind_robots CI essentialization).
+- Open flags from the sweep, not actioned: slime-city/m2 milestone status `not-started` with 1/4 tasks done; rebel-button/t-002 gate unreviewed; dream-cycle/t-035 daily check stale since 2026-10-25.
