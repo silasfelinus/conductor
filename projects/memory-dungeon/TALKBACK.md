@@ -106,3 +106,11 @@
 **What worked:** OV-34..OV-36 complete the 36-room Red Oven with six earned choices, eight final accounts, 24 guardian/route combinations, three guardian aftermaths, legacy Glass save restoration, retreat/reentry, and forged-choice/duplicate-reward guards. Earlier quenching stays binding. The project remains ACTIVE, and the t-042 claim was queued for READY rather than DONE because its 30+2 gallery briefs remain unfinished.
 
 **What to improve:** two formatting CI failures required a correction commit before all eight checks passed. Run changed-file formatting before PR where a checkout exists; with connector-only tools, use the CI-suggested patch. Finish gallery briefs in t-042, actual image receipts in t-045, then e08 earned progression and interrupted-save e08→e10 QA. These are already tracked, so avoid a duplicate kaizen task. No new ArtJobs, rendered artwork or deployment claimed.
+
+## 2026-11-02 11:50 AM PT | Reviewer green merge | memory-dungeon/t-048 | Kind Robots #4642
+
+**Decision:** merged reversible fog-and-beacon PR #4642 (squash `73f7f8004e69e24c66f863730c81a175d718a836`) after seven exact-head workflows passed on `37c06b07890e1ca90c5973617a0bd73c01b01ee7`. Inspected all four Memory Dungeon-only changed files, source issue #4641 and review threads; no unresolved threads, migration or deploy.
+
+**What worked:** coordinate-aligned 8×8 illustrated forest fog replaces clinical unrevealed squares; story diamonds are removed; larger animated beacons center on actionable tiles with reduced-motion support. Tests cover fog alignment, overlap, beacon position and source contracts. The right-hand encounter pane and saved progress were not changed.
+
+**What to improve:** the SVG is a reversible illustrated fallback, not a delivered production-painted map. CI validates code but cannot prove 390/768/1440px pixel quality before a self-hosted deploy. Keep painted media delivery in t-045 and rendered-device acceptance in t-046; avoid duplicating those existing tasks. The unrelated e08 Bellroad PR #4667 has a cancelled-shard Contract Tests rerun in progress and must not be merged without its own complete green verification. No ArtJobs or deployment this review.
