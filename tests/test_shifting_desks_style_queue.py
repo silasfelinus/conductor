@@ -19,17 +19,18 @@ def test_style_catalog_and_unpruned_live_queue_requests_are_consistent():
     subjects = catalog["subjects"]
     # 110 original stations plus the 10 epilogue cards and the Window 9 desk (2026-10-14).
     # plus the Toy Division Recall Desk and its four applicants (2026-10-16).
-    assert len(subjects) == 194
-    assert len({(s["kind"], s["id"]) for s in subjects}) == 194
+    # plus the Permanent Adjournment ending and Nadia's window (2026-11-02).
+    assert len(subjects) == 196
+    assert len({(s["kind"], s["id"]) for s in subjects}) == 196
     assert all(s["prompt"] for s in subjects)
     assert all(s["classicImage"].startswith("/images/shifting-desks/") for s in subjects)
 
     all_requests = yaml.safe_load((ROOT / "projects/art-prompts.yaml").read_text())["requests"]
     entries = [e for e in all_requests if e.get("id", "").startswith(PREFIX)]
     # Art requests are ephemeral: the live queue prunes completed/delivered
-    # images. The durable 194-subject catalog owns coverage; 0..388 live
+    # images. The durable 196-subject catalog owns coverage; 0..392 live
     # records can remain depending on production progress.
-    assert 0 <= len(entries) <= 388
+    assert 0 <= len(entries) <= 392
     ids = [e["id"] for e in entries]
     targets = [e["image_path"] for e in entries]
     assert len(set(ids)) == len(set(targets)) == len(entries)
@@ -38,8 +39,8 @@ def test_style_catalog_and_unpruned_live_queue_requests_are_consistent():
     # 2026-10-15: Noir moved to Krea 2 film-noir prose; Western Cartoon stays Illustrious.
     noir = [e for e in entries if e.get("style_family") == "corporate-noir"]
     cartoon = [e for e in entries if e.get("checkpoint_family") == "western-cartoon"]
-    assert len(noir) <= 194
-    assert len(cartoon) <= 194
+    assert len(noir) <= 196
+    assert len(cartoon) <= 196
     assert all(e["engine"] == "krea2" and "checkpoint_family" not in e for e in noir)
     assert all(e["engine"] == "sdxl-checkpoint" for e in cartoon)
     assert all(e["prompt"].startswith("Black-and-white 1940s film noir") for e in noir)
@@ -57,13 +58,22 @@ def test_style_catalog_and_unpruned_live_queue_requests_are_consistent():
 
     counts = Counter(e.get("checkpoint_family") or e["style_family"] for e in entries)
     assert set(counts).issubset({"corporate-noir", "western-cartoon"})
-    assert all(0 <= count <= 194 for count in counts.values())
+    assert all(0 <= count <= 196 for count in counts.values())
     expected = {
         f"public/images/shifting-desks/styles/{style}/{s['classicImage'][len('/images/shifting-desks/'):]}"
         for style in ("corporate-noir", "western-cartoon")
         for s in subjects
     }
     assert set(targets).issubset(expected)
+    # 2026-11-02 subject-first re-render: the subject leads, Classic-only
+    # style words are gone, and Roach Union cards name the insect up front.
+    for e in cartoon:
+        assert e.get("force") is True
+        assert not e["prompt"].startswith(("masterpiece", "western comics"))
+        assert "warm approachable Gus" not in e["prompt"]
+        if "the-union-walkthrough" in e["image_path"]:
+            assert e["prompt"].startswith("(cockroach:1.3)")
+            assert "insect girl" in e["negative_prompt"]
 
 
 def test_western_cartoon_is_arhemy_not_rejected_furrytoonmix():
