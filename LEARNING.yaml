@@ -18449,3 +18449,14 @@ records:
   failure_category: null
   lesson: Faction expansions need dynamic collection-size assertions and exact-sha main reconciliation;
     don't let card-count tests hard-code the previous wave's population.
+- date: '2026-11-02'
+  project: slime-city
+  task: t-019
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: Migrating game cadence requires auditing all narrative integration tests with hard-coded opening
+    mana and hand sizes, plus seed-dependent win-path assertions that should instead use controlled finishing
+    fixtures.
