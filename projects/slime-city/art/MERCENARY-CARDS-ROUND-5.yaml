@@ -1,0 +1,562 @@
+# One private ArtJob per *new* playable card; older accepted card-art jobs are in rounds 1-4.
+# Queue requests are durable; auto_submit submits to POST /api/art/enqueue on Conductor main.
+# Keep job IDs, ArtImage IDs and delivery proof distinct. Never queue duplicates of existing IDs.
+# Source: kind_robots/utils/slimeCity/{gutterCrownWaveThree,gutterCrownFinaleA,gutterCrownFinaleB,mercenaryCards}.ts
+round: slime-city-neutral-mercenaries-5
+project_slug: slime-city
+designer: "Slime City 300-card core art expansion"
+is_public: false
+is_mature: false
+cast_loras: false
+priority: 615
+auto_submit: true
+lanes:
+  - key: krea2
+    label: "Krea 2 Slime City illustrated collectible cards"
+    engine: krea2
+    prompt: prose
+    suffix: >-
+      Western adult-animation gouache painting, mature playful postapocalyptic fantasy, crisp thick black ink contours,
+      vibrant high-contrast gouache shading, grounded expressive poses, expressive acting and distinctive costumes,
+      saturated colored rim-lighting, one continuous full-bleed vertical scene, every surface bare and unmarked.
+subjects:
+  - key: slime-r5-card-merc-bus-driver
+    lane: krea2
+    entity: card-art
+    title: "Gutterbus Driver"
+    asset: slime-city/cards/merc-bus-driver
+    size: 832x1216
+    seed: 1087001
+    prompt_prose: >-
+      An original collectible illustration of Gutterbus Driver: a bold three-quarter action portrait in a chaotic street encounter. Belongs to Independent Gutter Crown mercenary underworld, peculiar adult creatures and eccentric street operators, a rich mix of rusty turquoise, toxic emerald, magenta and streetlamp gold. Visual story to paint: The last bus leaves on a stolen schedule. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-merc-bribe-rat
+    lane: krea2
+    entity: card-art
+    title: "Bribe-Licked Rat"
+    asset: slime-city/cards/merc-bribe-rat
+    size: 832x1216
+    seed: 1087002
+    prompt_prose: >-
+      An original collectible illustration of Bribe-Licked Rat: a dramatic low-angle full-body pose in the middle of a strange city block. Belongs to Independent Gutter Crown mercenary underworld, peculiar adult creatures and eccentric street operators, a rich mix of rusty turquoise, toxic emerald, magenta and streetlamp gold. Visual story to paint: Quick enough to deliver a bribe before the punch arrives. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-merc-roof-dentist
+    lane: krea2
+    entity: card-art
+    title: "Rooftop Dentist"
+    asset: slime-city/cards/merc-roof-dentist
+    size: 832x1216
+    seed: 1087003
+    prompt_prose: >-
+      An original collectible illustration of Rooftop Dentist: an expressive medium-long portrait with motion and an unmistakable heroic silhouette. Belongs to Independent Gutter Crown mercenary underworld, peculiar adult creatures and eccentric street operators, a rich mix of rusty turquoise, toxic emerald, magenta and streetlamp gold. Visual story to paint: Rebuilds teeth on the roof of a pharmacy. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-merc-debt-slug
+    lane: krea2
+    entity: card-art
+    title: "Debt-Eating Slug"
+    asset: slime-city/cards/merc-debt-slug
+    size: 832x1216
+    seed: 1087004
+    prompt_prose: >-
+      An original collectible illustration of Debt-Eating Slug: a dynamic one-character spotlight with cinematic depth. Belongs to Independent Gutter Crown mercenary underworld, peculiar adult creatures and eccentric street operators, a rich mix of rusty turquoise, toxic emerald, magenta and streetlamp gold. Visual story to paint: Swallows overdue notices whole. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-merc-clock-grandma
+    lane: krea2
+    entity: card-art
+    title: "Clockwork Grandmother"
+    asset: slime-city/cards/merc-clock-grandma
+    size: 832x1216
+    seed: 1087005
+    prompt_prose: >-
+      An original collectible illustration of Clockwork Grandmother: a powerful head-to-toe portrait, costume details sharply rendered. Belongs to Independent Gutter Crown mercenary underworld, peculiar adult creatures and eccentric street operators, a rich mix of rusty turquoise, toxic emerald, magenta and streetlamp gold. Visual story to paint: She made the clock and refuses to move for anyone. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-merc-smog-moth
+    lane: krea2
+    entity: card-art
+    title: "Smog Moth Courier"
+    asset: slime-city/cards/merc-smog-moth
+    size: 832x1216
+    seed: 1087006
+    prompt_prose: >-
+      An original collectible illustration of Smog Moth Courier: an asymmetric animated-comic composition framed by the environment. Belongs to Independent Gutter Crown mercenary underworld, peculiar adult creatures and eccentric street operators, a rich mix of rusty turquoise, toxic emerald, magenta and streetlamp gold. Visual story to paint: Delivers invitations to a riot before it exists. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-merc-grease-oracle
+    lane: krea2
+    entity: card-art
+    title: "Grease Oracle"
+    asset: slime-city/cards/merc-grease-oracle
+    size: 832x1216
+    seed: 1087007
+    prompt_prose: >-
+      An original collectible illustration of Grease Oracle: a bold three-quarter action portrait in a chaotic street encounter. Belongs to Independent Gutter Crown mercenary underworld, peculiar adult creatures and eccentric street operators, a rich mix of rusty turquoise, toxic emerald, magenta and streetlamp gold. Visual story to paint: Predicts your slip, then sells you the pavement. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-merc-fungal-bouncer
+    lane: krea2
+    entity: card-art
+    title: "Fungal Bouncer"
+    asset: slime-city/cards/merc-fungal-bouncer
+    size: 832x1216
+    seed: 1087008
+    prompt_prose: >-
+      An original collectible illustration of Fungal Bouncer: a dramatic low-angle full-body pose in the middle of a strange city block. Belongs to Independent Gutter Crown mercenary underworld, peculiar adult creatures and eccentric street operators, a rich mix of rusty turquoise, toxic emerald, magenta and streetlamp gold. Visual story to paint: A mushroom with a clipboard. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-merc-discount-angel
+    lane: krea2
+    entity: card-art
+    title: "Discount Archangel"
+    asset: slime-city/cards/merc-discount-angel
+    size: 832x1216
+    seed: 1087009
+    prompt_prose: >-
+      An original collectible illustration of Discount Archangel: an expressive medium-long portrait with motion and an unmistakable heroic silhouette. Belongs to Independent Gutter Crown mercenary underworld, peculiar adult creatures and eccentric street operators, a rich mix of rusty turquoise, toxic emerald, magenta and streetlamp gold. Visual story to paint: A halo on clearance and wings with a recall notice. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-merc-union-owl
+    lane: krea2
+    entity: card-art
+    title: "Owl of All Trades"
+    asset: slime-city/cards/merc-union-owl
+    size: 832x1216
+    seed: 1087010
+    prompt_prose: >-
+      An original collectible illustration of Owl of All Trades: a dynamic one-character spotlight with cinematic depth. Belongs to Independent Gutter Crown mercenary underworld, peculiar adult creatures and eccentric street operators, a rich mix of rusty turquoise, toxic emerald, magenta and streetlamp gold. Visual story to paint: Certified in six crafts and three acts of sabotage. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-merc-sewer-sommelier
+    lane: krea2
+    entity: card-art
+    title: "Sewer Sommelier"
+    asset: slime-city/cards/merc-sewer-sommelier
+    size: 832x1216
+    seed: 1087011
+    prompt_prose: >-
+      An original collectible illustration of Sewer Sommelier: a powerful head-to-toe portrait, costume details sharply rendered. Belongs to Independent Gutter Crown mercenary underworld, peculiar adult creatures and eccentric street operators, a rich mix of rusty turquoise, toxic emerald, magenta and streetlamp gold. Visual story to paint: Pairs ancient drainwater with the tears of landlords. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-merc-skate-taxidermist
+    lane: krea2
+    entity: card-art
+    title: "Skating Taxidermist"
+    asset: slime-city/cards/merc-skate-taxidermist
+    size: 832x1216
+    seed: 1087012
+    prompt_prose: >-
+      An original collectible illustration of Skating Taxidermist: an asymmetric animated-comic composition framed by the environment. Belongs to Independent Gutter Crown mercenary underworld, peculiar adult creatures and eccentric street operators, a rich mix of rusty turquoise, toxic emerald, magenta and streetlamp gold. Visual story to paint: A museum escaped on roller skates. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-merc-auction-golem
+    lane: krea2
+    entity: card-art
+    title: "Auction Golem"
+    asset: slime-city/cards/merc-auction-golem
+    size: 832x1216
+    seed: 1087013
+    prompt_prose: >-
+      An original collectible illustration of Auction Golem: a bold three-quarter action portrait in a chaotic street encounter. Belongs to Independent Gutter Crown mercenary underworld, peculiar adult creatures and eccentric street operators, a rich mix of rusty turquoise, toxic emerald, magenta and streetlamp gold. Visual story to paint: Sells the space you are standing in. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-merc-spark-midwife
+    lane: krea2
+    entity: card-art
+    title: "Midwife of Sparks"
+    asset: slime-city/cards/merc-spark-midwife
+    size: 832x1216
+    seed: 1087014
+    prompt_prose: >-
+      An original collectible illustration of Midwife of Sparks: a dramatic low-angle full-body pose in the middle of a strange city block. Belongs to Independent Gutter Crown mercenary underworld, peculiar adult creatures and eccentric street operators, a rich mix of rusty turquoise, toxic emerald, magenta and streetlamp gold. Visual story to paint: Keeps every dangerous new idea alive. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-merc-traffic-witch
+    lane: krea2
+    entity: card-art
+    title: "Traffic Witch"
+    asset: slime-city/cards/merc-traffic-witch
+    size: 832x1216
+    seed: 1087015
+    prompt_prose: >-
+      An original collectible illustration of Traffic Witch: an expressive medium-long portrait with motion and an unmistakable heroic silhouette. Belongs to Independent Gutter Crown mercenary underworld, peculiar adult creatures and eccentric street operators, a rich mix of rusty turquoise, toxic emerald, magenta and streetlamp gold. Visual story to paint: Casts one red light directly into your knees. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-merc-picket-troll
+    lane: krea2
+    entity: card-art
+    title: "Picket Line Troll"
+    asset: slime-city/cards/merc-picket-troll
+    size: 832x1216
+    seed: 1087016
+    prompt_prose: >-
+      An original collectible illustration of Picket Line Troll: a dynamic one-character spotlight with cinematic depth. Belongs to Independent Gutter Crown mercenary underworld, peculiar adult creatures and eccentric street operators, a rich mix of rusty turquoise, toxic emerald, magenta and streetlamp gold. Visual story to paint: Walks the strike line in permanent overtime. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-merc-escape-crab
+    lane: krea2
+    entity: card-art
+    title: "Escape Artist Crab"
+    asset: slime-city/cards/merc-escape-crab
+    size: 832x1216
+    seed: 1087017
+    prompt_prose: >-
+      An original collectible illustration of Escape Artist Crab: a powerful head-to-toe portrait, costume details sharply rendered. Belongs to Independent Gutter Crown mercenary underworld, peculiar adult creatures and eccentric street operators, a rich mix of rusty turquoise, toxic emerald, magenta and streetlamp gold. Visual story to paint: Has escaped sixteen seafood restaurants. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-merc-living-scaffold
+    lane: krea2
+    entity: card-art
+    title: "Living Scaffolding"
+    asset: slime-city/cards/merc-living-scaffold
+    size: 832x1216
+    seed: 1087018
+    prompt_prose: >-
+      An original collectible illustration of Living Scaffolding: an asymmetric animated-comic composition framed by the environment. Belongs to Independent Gutter Crown mercenary underworld, peculiar adult creatures and eccentric street operators, a rich mix of rusty turquoise, toxic emerald, magenta and streetlamp gold. Visual story to paint: An entire building learned to unionize. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-merc-invisible-mime
+    lane: krea2
+    entity: card-art
+    title: "Invisible Mime"
+    asset: slime-city/cards/merc-invisible-mime
+    size: 832x1216
+    seed: 1087019
+    prompt_prose: >-
+      An original collectible illustration of Invisible Mime: a bold three-quarter action portrait in a chaotic street encounter. Belongs to Independent Gutter Crown mercenary underworld, peculiar adult creatures and eccentric street operators, a rich mix of rusty turquoise, toxic emerald, magenta and streetlamp gold. Visual story to paint: Silent, obvious, and still somehow behind you. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-merc-midnight-janitor
+    lane: krea2
+    entity: card-art
+    title: "Midnight Janitor"
+    asset: slime-city/cards/merc-midnight-janitor
+    size: 832x1216
+    seed: 1087020
+    prompt_prose: >-
+      An original collectible illustration of Midnight Janitor: a dramatic low-angle full-body pose in the middle of a strange city block. Belongs to Independent Gutter Crown mercenary underworld, peculiar adult creatures and eccentric street operators, a rich mix of rusty turquoise, toxic emerald, magenta and streetlamp gold. Visual story to paint: Mops up champions and takes no overtime. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-merc-misaddressed-parcel
+    lane: krea2
+    entity: card-art
+    title: "Misaddressed Parcel"
+    asset: slime-city/cards/merc-misaddressed-parcel
+    size: 832x1216
+    seed: 1087021
+    prompt_prose: >-
+      An original collectible illustration of Misaddressed Parcel: a punchy action snapshot showing an absurd special ability triggering. Belongs to Independent Gutter Crown mercenary underworld, peculiar adult creatures and eccentric street operators, a rich mix of rusty turquoise, toxic emerald, magenta and streetlamp gold. Visual story to paint: A package of emergency gauze. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-merc-crowd-lightning
+    lane: krea2
+    entity: card-art
+    title: "Crowd-Sourced Lightning"
+    asset: slime-city/cards/merc-crowd-lightning
+    size: 832x1216
+    seed: 1087022
+    prompt_prose: >-
+      An original collectible illustration of Crowd-Sourced Lightning: a vivid comic snapshot of spell energy arcing across a street. Belongs to Independent Gutter Crown mercenary underworld, peculiar adult creatures and eccentric street operators, a rich mix of rusty turquoise, toxic emerald, magenta and streetlamp gold. Visual story to paint: Hundreds of residents sign the petition; one enemy takes 2 damage. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-merc-unofficial-detour
+    lane: krea2
+    entity: card-art
+    title: "Unofficial Detour"
+    asset: slime-city/cards/merc-unofficial-detour
+    size: 832x1216
+    seed: 1087023
+    prompt_prose: >-
+      An original collectible illustration of Unofficial Detour: a character casting an active tactical spell in a crowded alley. Belongs to Independent Gutter Crown mercenary underworld, peculiar adult creatures and eccentric street operators, a rich mix of rusty turquoise, toxic emerald, magenta and streetlamp gold. Visual story to paint: A painted arrow leads directly into a dead end. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-merc-reputation-laundry
+    lane: krea2
+    entity: card-art
+    title: "Reputation Laundering"
+    asset: slime-city/cards/merc-reputation-laundry
+    size: 832x1216
+    seed: 1087024
+    prompt_prose: >-
+      An original collectible illustration of Reputation Laundering: the surprising visual consequence of a powerful tactical spell. Belongs to Independent Gutter Crown mercenary underworld, peculiar adult creatures and eccentric street operators, a rich mix of rusty turquoise, toxic emerald, magenta and streetlamp gold. Visual story to paint: Someone writes a glowing reference. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-merc-flashmob-diversion
+    lane: krea2
+    entity: card-art
+    title: "Flashmob Diversion"
+    asset: slime-city/cards/merc-flashmob-diversion
+    size: 832x1216
+    seed: 1087025
+    prompt_prose: >-
+      An original collectible illustration of Flashmob Diversion: the decisive magical activation at the instant of effect, visibly affecting a nearby target. Belongs to Independent Gutter Crown mercenary underworld, peculiar adult creatures and eccentric street operators, a rich mix of rusty turquoise, toxic emerald, magenta and streetlamp gold. Visual story to paint: The crowd joins a fighters cause. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-merc-jury-rigged-radar
+    lane: krea2
+    entity: card-art
+    title: "Jury-Rigged Radar"
+    asset: slime-city/cards/merc-jury-rigged-radar
+    size: 832x1216
+    seed: 1087026
+    prompt_prose: >-
+      An original collectible illustration of Jury-Rigged Radar: a clear magical action scene with striking source and effect shapes. Belongs to Independent Gutter Crown mercenary underworld, peculiar adult creatures and eccentric street operators, a rich mix of rusty turquoise, toxic emerald, magenta and streetlamp gold. Visual story to paint: One friendly fighter reports nearby hidden enemies and disarms traps within two squares. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-merc-allergy-season
+    lane: krea2
+    entity: card-art
+    title: "Allergy Season"
+    asset: slime-city/cards/merc-allergy-season
+    size: 832x1216
+    seed: 1087027
+    prompt_prose: >-
+      An original collectible illustration of Allergy Season: a punchy action snapshot showing an absurd special ability triggering. Belongs to Independent Gutter Crown mercenary underworld, peculiar adult creatures and eccentric street operators, a rich mix of rusty turquoise, toxic emerald, magenta and streetlamp gold. Visual story to paint: The whole city sneezes; deal a seeded 1–3 damage to a rival. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-merc-supervised-demo
+    lane: krea2
+    entity: card-art
+    title: "Supervised Demolition"
+    asset: slime-city/cards/merc-supervised-demo
+    size: 832x1216
+    seed: 1087028
+    prompt_prose: >-
+      An original collectible illustration of Supervised Demolition: a vivid comic snapshot of spell energy arcing across a street. Belongs to Independent Gutter Crown mercenary underworld, peculiar adult creatures and eccentric street operators, a rich mix of rusty turquoise, toxic emerald, magenta and streetlamp gold. Visual story to paint: Permits acquired. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-merc-unsupervised-demo
+    lane: krea2
+    entity: card-art
+    title: "Unsupervised Demolition"
+    asset: slime-city/cards/merc-unsupervised-demo
+    size: 832x1216
+    seed: 1087029
+    prompt_prose: >-
+      An original collectible illustration of Unsupervised Demolition: a character casting an active tactical spell in a crowded alley. Belongs to Independent Gutter Crown mercenary underworld, peculiar adult creatures and eccentric street operators, a rich mix of rusty turquoise, toxic emerald, magenta and streetlamp gold. Visual story to paint: Permits shredded. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-merc-mortgage-holiday
+    lane: krea2
+    entity: card-art
+    title: "Mortgage Holiday"
+    asset: slime-city/cards/merc-mortgage-holiday
+    size: 832x1216
+    seed: 1087030
+    prompt_prose: >-
+      An original collectible illustration of Mortgage Holiday: the surprising visual consequence of a powerful tactical spell. Belongs to Independent Gutter Crown mercenary underworld, peculiar adult creatures and eccentric street operators, a rich mix of rusty turquoise, toxic emerald, magenta and streetlamp gold. Visual story to paint: A tempting payment deferral. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-merc-secondhand-halo
+    lane: krea2
+    entity: card-art
+    title: "Secondhand Halo"
+    asset: slime-city/cards/merc-secondhand-halo
+    size: 832x1216
+    seed: 1087031
+    prompt_prose: >-
+      An original collectible illustration of Secondhand Halo: the decisive magical activation at the instant of effect, visibly affecting a nearby target. Belongs to Independent Gutter Crown mercenary underworld, peculiar adult creatures and eccentric street operators, a rich mix of rusty turquoise, toxic emerald, magenta and streetlamp gold. Visual story to paint: Give a friendly fighter regeneration; the halo may still be warm. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-merc-take-stairs
+    lane: krea2
+    entity: card-art
+    title: "Take the Stairs"
+    asset: slime-city/cards/merc-take-stairs
+    size: 832x1216
+    seed: 1087032
+    prompt_prose: >-
+      An original collectible illustration of Take the Stairs: a clear magical action scene with striking source and effect shapes. Belongs to Independent Gutter Crown mercenary underworld, peculiar adult creatures and eccentric street operators, a rich mix of rusty turquoise, toxic emerald, magenta and streetlamp gold. Visual story to paint: Elevators are for the syndicate. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-merc-streetlight-confession
+    lane: krea2
+    entity: card-art
+    title: "Streetlight Confession"
+    asset: slime-city/cards/merc-streetlight-confession
+    size: 832x1216
+    seed: 1087033
+    prompt_prose: >-
+      An original collectible illustration of Streetlight Confession: a punchy action snapshot showing an absurd special ability triggering. Belongs to Independent Gutter Crown mercenary underworld, peculiar adult creatures and eccentric street operators, a rich mix of rusty turquoise, toxic emerald, magenta and streetlamp gold. Visual story to paint: The truth hurts. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-merc-homebrew-antidote
+    lane: krea2
+    entity: card-art
+    title: "Homebrew Antidote"
+    asset: slime-city/cards/merc-homebrew-antidote
+    size: 832x1216
+    seed: 1087034
+    prompt_prose: >-
+      An original collectible illustration of Homebrew Antidote: a vivid comic snapshot of spell energy arcing across a street. Belongs to Independent Gutter Crown mercenary underworld, peculiar adult creatures and eccentric street operators, a rich mix of rusty turquoise, toxic emerald, magenta and streetlamp gold. Visual story to paint: One recipe, three warning labels. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-merc-whisper-network
+    lane: krea2
+    entity: card-art
+    title: "Whisper Network"
+    asset: slime-city/cards/merc-whisper-network
+    size: 832x1216
+    seed: 1087035
+    prompt_prose: >-
+      An original collectible illustration of Whisper Network: a character casting an active tactical spell in a crowded alley. Belongs to Independent Gutter Crown mercenary underworld, peculiar adult creatures and eccentric street operators, a rich mix of rusty turquoise, toxic emerald, magenta and streetlamp gold. Visual story to paint: A well-placed rumor becomes an invoice. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-merc-mothball-storm
+    lane: krea2
+    entity: card-art
+    title: "Mothball Storm"
+    asset: slime-city/cards/merc-mothball-storm
+    size: 832x1216
+    seed: 1087036
+    prompt_prose: >-
+      An original collectible illustration of Mothball Storm: the surprising visual consequence of a powerful tactical spell. Belongs to Independent Gutter Crown mercenary underworld, peculiar adult creatures and eccentric street operators, a rich mix of rusty turquoise, toxic emerald, magenta and streetlamp gold. Visual story to paint: A landlord fumigates the neighborhood. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-merc-festival-no-refunds
+    lane: krea2
+    entity: card-art
+    title: "Festival of No Refunds"
+    asset: slime-city/cards/merc-festival-no-refunds
+    size: 832x1216
+    seed: 1087037
+    prompt_prose: >-
+      An original collectible illustration of Festival of No Refunds: the decisive magical activation at the instant of effect, visibly affecting a nearby target. Belongs to Independent Gutter Crown mercenary underworld, peculiar adult creatures and eccentric street operators, a rich mix of rusty turquoise, toxic emerald, magenta and streetlamp gold. Visual story to paint: Refunds are forbidden. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-merc-union-solidarity
+    lane: krea2
+    entity: card-art
+    title: "Union Solidarity"
+    asset: slime-city/cards/merc-union-solidarity
+    size: 832x1216
+    seed: 1087038
+    prompt_prose: >-
+      An original collectible illustration of Union Solidarity: a clear magical action scene with striking source and effect shapes. Belongs to Independent Gutter Crown mercenary underworld, peculiar adult creatures and eccentric street operators, a rich mix of rusty turquoise, toxic emerald, magenta and streetlamp gold. Visual story to paint: Collective bargaining gets physical. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-merc-glass-echo
+    lane: krea2
+    entity: card-art
+    title: "Glass Echo Plate"
+    asset: slime-city/cards/merc-glass-echo
+    size: 832x1216
+    seed: 1087039
+    prompt_prose: >-
+      An original collectible illustration of Glass Echo Plate: a dangerous improvised street device with a dramatic activation spark. Belongs to Independent Gutter Crown mercenary underworld, peculiar adult creatures and eccentric street operators, a rich mix of rusty turquoise, toxic emerald, magenta and streetlamp gold. Visual story to paint: The tiniest chime in the sewer. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-merc-tourist-trapdoor
+    lane: krea2
+    entity: card-art
+    title: "Tourist Trapdoor"
+    asset: slime-city/cards/merc-tourist-trapdoor
+    size: 832x1216
+    seed: 1087040
+    prompt_prose: >-
+      An original collectible illustration of Tourist Trapdoor: a close-up of an inventive concealed hazard against a readable alley backdrop. Belongs to Independent Gutter Crown mercenary underworld, peculiar adult creatures and eccentric street operators, a rich mix of rusty turquoise, toxic emerald, magenta and streetlamp gold. Visual story to paint: Every postcard hides a hole. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-merc-concealed-tollbooth
+    lane: krea2
+    entity: card-art
+    title: "Concealed Tollbooth"
+    asset: slime-city/cards/merc-concealed-tollbooth
+    size: 832x1216
+    seed: 1087041
+    prompt_prose: >-
+      An original collectible illustration of Concealed Tollbooth: a richly detailed hidden contraption in the foreground, with an unsuspecting enemy about to trigger it. Belongs to Independent Gutter Crown mercenary underworld, peculiar adult creatures and eccentric street operators, a rich mix of rusty turquoise, toxic emerald, magenta and streetlamp gold. Visual story to paint: A toll payable in your next mana grant. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-merc-boomerang-buffet
+    lane: krea2
+    entity: card-art
+    title: "Boomerang Buffet"
+    asset: slime-city/cards/merc-boomerang-buffet
+    size: 832x1216
+    seed: 1087042
+    prompt_prose: >-
+      An original collectible illustration of Boomerang Buffet: a mischievous street snare seen from a ground-level angle just before impact. Belongs to Independent Gutter Crown mercenary underworld, peculiar adult creatures and eccentric street operators, a rich mix of rusty turquoise, toxic emerald, magenta and streetlamp gold. Visual story to paint: An all-you-can-eat sign returns at head height. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-merc-invisible-bump
+    lane: krea2
+    entity: card-art
+    title: "Invisible Speed Bump"
+    asset: slime-city/cards/merc-invisible-bump
+    size: 832x1216
+    seed: 1087043
+    prompt_prose: >-
+      An original collectible illustration of Invisible Speed Bump: a dangerous improvised street device with a dramatic activation spark. Belongs to Independent Gutter Crown mercenary underworld, peculiar adult creatures and eccentric street operators, a rich mix of rusty turquoise, toxic emerald, magenta and streetlamp gold. Visual story to paint: The road works have become their own government. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-merc-market-tripwire
+    lane: krea2
+    entity: card-art
+    title: "Night Market Tripwire"
+    asset: slime-city/cards/merc-market-tripwire
+    size: 832x1216
+    seed: 1087044
+    prompt_prose: >-
+      An original collectible illustration of Night Market Tripwire: a close-up of an inventive concealed hazard against a readable alley backdrop. Belongs to Independent Gutter Crown mercenary underworld, peculiar adult creatures and eccentric street operators, a rich mix of rusty turquoise, toxic emerald, magenta and streetlamp gold. Visual story to paint: Some bargains cost an ankle. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-merc-flooded-fusebox
+    lane: krea2
+    entity: card-art
+    title: "Flooded Fusebox"
+    asset: slime-city/cards/merc-flooded-fusebox
+    size: 832x1216
+    seed: 1087045
+    prompt_prose: >-
+      An original collectible illustration of Flooded Fusebox: a richly detailed hidden contraption in the foreground, with an unsuspecting enemy about to trigger it. Belongs to Independent Gutter Crown mercenary underworld, peculiar adult creatures and eccentric street operators, a rich mix of rusty turquoise, toxic emerald, magenta and streetlamp gold. Visual story to paint: One flooded socket, ten blocks without lights. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-merc-parking-meter
+    lane: krea2
+    entity: card-art
+    title: "Hostile Parking Meter"
+    asset: slime-city/cards/merc-parking-meter
+    size: 832x1216
+    seed: 1087046
+    prompt_prose: >-
+      An original collectible illustration of Hostile Parking Meter: a mischievous street snare seen from a ground-level angle just before impact. Belongs to Independent Gutter Crown mercenary underworld, peculiar adult creatures and eccentric street operators, a rich mix of rusty turquoise, toxic emerald, magenta and streetlamp gold. Visual story to paint: Even monsters must pay to stand here. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-merc-dog-eared-mine
+    lane: krea2
+    entity: card-art
+    title: "Dog-Eared Mine"
+    asset: slime-city/cards/merc-dog-eared-mine
+    size: 832x1216
+    seed: 1087047
+    prompt_prose: >-
+      An original collectible illustration of Dog-Eared Mine: a dangerous improvised street device with a dramatic activation spark. Belongs to Independent Gutter Crown mercenary underworld, peculiar adult creatures and eccentric street operators, a rich mix of rusty turquoise, toxic emerald, magenta and streetlamp gold. Visual story to paint: A discarded war manual still works. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-merc-cursed-sign
+    lane: krea2
+    entity: card-art
+    title: "Cursed Detour Sign"
+    asset: slime-city/cards/merc-cursed-sign
+    size: 832x1216
+    seed: 1087048
+    prompt_prose: >-
+      An original collectible illustration of Cursed Detour Sign: a close-up of an inventive concealed hazard against a readable alley backdrop. Belongs to Independent Gutter Crown mercenary underworld, peculiar adult creatures and eccentric street operators, a rich mix of rusty turquoise, toxic emerald, magenta and streetlamp gold. Visual story to paint: Route planning by vengeful committee. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-merc-ghoul-et-lot
+    lane: krea2
+    entity: card-art
+    title: "Ghoul-Et-Lot"
+    asset: slime-city/cards/merc-ghoul-et-lot
+    size: 832x1216
+    seed: 1087049
+    prompt_prose: >-
+      An original collectible illustration of Ghoul-Et-Lot: a richly detailed hidden contraption in the foreground, with an unsuspecting enemy about to trigger it. Belongs to Independent Gutter Crown mercenary underworld, peculiar adult creatures and eccentric street operators, a rich mix of rusty turquoise, toxic emerald, magenta and streetlamp gold. Visual story to paint: Foreclosed land bites back. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-merc-angry-bees
+    lane: krea2
+    entity: card-art
+    title: "Bag of Very Angry Bees"
+    asset: slime-city/cards/merc-angry-bees
+    size: 832x1216
+    seed: 1087050
+    prompt_prose: >-
+      An original collectible illustration of Bag of Very Angry Bees: a mischievous street snare seen from a ground-level angle just before impact. Belongs to Independent Gutter Crown mercenary underworld, peculiar adult creatures and eccentric street operators, a rich mix of rusty turquoise, toxic emerald, magenta and streetlamp gold. Visual story to paint: Never ask where the bag came from. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-merc-borrowed-kneepads
+    lane: krea2
+    entity: card-art
+    title: "Borrowed Kneepads"
+    asset: slime-city/cards/merc-borrowed-kneepads
+    size: 832x1216
+    seed: 1087051
+    prompt_prose: >-
+      An original collectible illustration of Borrowed Kneepads: a distinctive scavenged device being attached to a fighter during combat. Belongs to Independent Gutter Crown mercenary underworld, peculiar adult creatures and eccentric street operators, a rich mix of rusty turquoise, toxic emerald, magenta and streetlamp gold. Visual story to paint: A sensible hand-me-down. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-merc-squeaky-wheel
+    lane: krea2
+    entity: card-art
+    title: "Squeaky Wheel"
+    asset: slime-city/cards/merc-squeaky-wheel
+    size: 832x1216
+    seed: 1087052
+    prompt_prose: >-
+      An original collectible illustration of Squeaky Wheel: a close dramatic equipment portrait showing functional details. Belongs to Independent Gutter Crown mercenary underworld, peculiar adult creatures and eccentric street operators, a rich mix of rusty turquoise, toxic emerald, magenta and streetlamp gold. Visual story to paint: Gets the oil. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-merc-edible-kevlar
+    lane: krea2
+    entity: card-art
+    title: "Edible Kevlar"
+    asset: slime-city/cards/merc-edible-kevlar
+    size: 832x1216
+    seed: 1087053
+    prompt_prose: >-
+      An original collectible illustration of Edible Kevlar: the strange signature item in sharp foreground, being equipped by an adult street fighter. Belongs to Independent Gutter Crown mercenary underworld, peculiar adult creatures and eccentric street operators, a rich mix of rusty turquoise, toxic emerald, magenta and streetlamp gold. Visual story to paint: One bite of armor-jam gives a fighter SNARE: its hits prevent the next enemy move. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-merc-emergency-wings
+    lane: krea2
+    entity: card-art
+    title: "Emergency Wings"
+    asset: slime-city/cards/merc-emergency-wings
+    size: 832x1216
+    seed: 1087054
+    prompt_prose: >-
+      An original collectible illustration of Emergency Wings: a magical outfit or weapon upgrade gleaming on a fully illustrated fighter. Belongs to Independent Gutter Crown mercenary underworld, peculiar adult creatures and eccentric street operators, a rich mix of rusty turquoise, toxic emerald, magenta and streetlamp gold. Visual story to paint: Cardboard wings and confidence. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-merc-red-tape-scissors
+    lane: krea2
+    entity: card-art
+    title: "Red Tape Scissors"
+    asset: slime-city/cards/merc-red-tape-scissors
+    size: 832x1216
+    seed: 1087055
+    prompt_prose: >-
+      An original collectible illustration of Red Tape Scissors: a distinctive scavenged device being attached to a fighter during combat. Belongs to Independent Gutter Crown mercenary underworld, peculiar adult creatures and eccentric street operators, a rich mix of rusty turquoise, toxic emerald, magenta and streetlamp gold. Visual story to paint: Snip the forms and the armor. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-merc-theftproof-toolkit
+    lane: krea2
+    entity: card-art
+    title: "Theftproof Toolkit"
+    asset: slime-city/cards/merc-theftproof-toolkit
+    size: 832x1216
+    seed: 1087056
+    prompt_prose: >-
+      An original collectible illustration of Theftproof Toolkit: a close dramatic equipment portrait showing functional details. Belongs to Independent Gutter Crown mercenary underworld, peculiar adult creatures and eccentric street operators, a rich mix of rusty turquoise, toxic emerald, magenta and streetlamp gold. Visual story to paint: The entire clinic is in the case. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-merc-counterfeit-license
+    lane: krea2
+    entity: card-art
+    title: "Counterfeit License"
+    asset: slime-city/cards/merc-counterfeit-license
+    size: 832x1216
+    seed: 1087057
+    prompt_prose: >-
+      An original collectible illustration of Counterfeit License: the strange signature item in sharp foreground, being equipped by an adult street fighter. Belongs to Independent Gutter Crown mercenary underworld, peculiar adult creatures and eccentric street operators, a rich mix of rusty turquoise, toxic emerald, magenta and streetlamp gold. Visual story to paint: Permission to cause damage. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-merc-rooftop-map
+    lane: krea2
+    entity: card-art
+    title: "Rooftop Map"
+    asset: slime-city/cards/merc-rooftop-map
+    size: 832x1216
+    seed: 1087058
+    prompt_prose: >-
+      An original collectible illustration of Rooftop Map: a magical outfit or weapon upgrade gleaming on a fully illustrated fighter. Belongs to Independent Gutter Crown mercenary underworld, peculiar adult creatures and eccentric street operators, a rich mix of rusty turquoise, toxic emerald, magenta and streetlamp gold. Visual story to paint: Every ledge marked, no rooftop safe. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-merc-broken-halo
+    lane: krea2
+    entity: card-art
+    title: "Broken Halo"
+    asset: slime-city/cards/merc-broken-halo
+    size: 832x1216
+    seed: 1087059
+    prompt_prose: >-
+      An original collectible illustration of Broken Halo: a distinctive scavenged device being attached to a fighter during combat. Belongs to Independent Gutter Crown mercenary underworld, peculiar adult creatures and eccentric street operators, a rich mix of rusty turquoise, toxic emerald, magenta and streetlamp gold. Visual story to paint: An obsolete saints halo. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-merc-union-suit
+    lane: krea2
+    entity: card-art
+    title: "Union Suit"
+    asset: slime-city/cards/merc-union-suit
+    size: 832x1216
+    seed: 1087060
+    prompt_prose: >-
+      An original collectible illustration of Union Suit: a close dramatic equipment portrait showing functional details. Belongs to Independent Gutter Crown mercenary underworld, peculiar adult creatures and eccentric street operators, a rich mix of rusty turquoise, toxic emerald, magenta and streetlamp gold. Visual story to paint: Collective armor includes a shove. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
