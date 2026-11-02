@@ -3,6 +3,10 @@
 # DOGS. Six subjects on Z-Image Turbo and Krea 2 to see which engine holds the look before anything is restyled.
 # Prompts describe the era's qualities and never name an artist or brand. Princess likenesses are NOT drawn here
 # (the Kontext ledger DOODLE-BAKEOFF-KONTEXT-1.yaml restyles them from their identity locks). Private.
+# Review 2026-11-02 PT: engine pick KREA 2 for txt2img (holds the neon airbrush school-folder look; Z-Image reads as flat
+# modern kawaii). Kontext stays the engine for princess restyles. Keep: emblem 252575, co-pilots 252577, Maribel 252851,
+# Azure 252853, Vivi 252856 (alt 252857). Key art 252576 is engine evidence only (five ships, not four). Both Solenne
+# restyles fail CAST-QA (lightened skin, navy hair). Contact sheet went to Silas in session; t-035 waits on his look sign-off.
 round: rainbow-doodle-bakeoff-1
 project_slug: rainbow-bullet-hell-space-princess
 designer: Rainbow Space Princess art bay
@@ -40,6 +44,12 @@ subjects:
     krea2:
       status: DONE
       art_image_id: 252575
+  verdicts:
+    zimage: 'redo (2026-11-02): Flat vector with no airbrush shading, and the crown is a plain star stuck on the
+      head. It''s clean and has no text, but it reads as modern kawaii clip art rather than 1980s airbrush.'
+    krea2: 'keep (2026-11-02): The best image in the bake-off. An airbrushed rainbow ring, a tabby cat face with
+      a real star crown, glossy hearts and four-point sparkles on starry black. Reads as a 1980s folder sticker,
+      with no text.'
 - key: dd-key-art
   entity: title
   title: Title key art, four cat ships over a rainbow sea
@@ -61,6 +71,13 @@ subjects:
     krea2:
       status: DONE
       art_image_id: 252576
+  verdicts:
+    zimage: 'redo (2026-11-02): Four flying cats with no ships, a flat dark sea where the prompt asked for a glowing
+      rainbow ocean, and a tiny palace. No airbrush depth. It misses both the brief and the look.'
+    krea2: 'redo (2026-11-02): Strong style proof: rainbow exhaust trails, a glowing sea, a pearl palace, hearts
+      and sparkles, no text. But it draws FIVE cat ships (two yellow) instead of four, and the ships are cats strapped
+      to little rockets, not cat- shaped versions of the four ship silhouettes. Show it to Silas as evidence for
+      the engine, not as final key art.'
 - key: dd-copilots
   entity: cast
   title: The four cat co-pilots
@@ -82,6 +99,14 @@ subjects:
     krea2:
       status: DONE
       art_image_id: 252577
+  verdicts:
+    zimage: 'redo (2026-11-02): Charming, and all four breeds are right (the sphynx even has the jacket and a chain),
+      but it''s pastel chibi on lavender with no neon or airbrush. It''s off-direction, and the torn ear is missing
+      here too.'
+    krea2: 'keep (2026-11-02): An airbrushed rainbow gradient, glossy bubble helmets with star badges, and big glossy
+      eyes. The breeds read correctly: a ginger tabby, a seal-point Siamese, a huge golden Maine Coon and a lilac
+      sphynx in a leather jacket. No text. Minor: Biscuit''s torn ear doesn''t show, so call it out explicitly in
+      t-036.'
 - key: dd-king-rufus
   withdrawn:
     zimage: Silas withdrew the DOGS, 2026-10-23 PT (PLOT-MOTHERLAND.md)

@@ -1,0 +1,140 @@
+# Save the Plumber Gen-2 round 1 fixes (save-the-plumber t-024 / t-025, 2026-11-02 PT review of GEN2-ROUND-1).
+# Re-renders the four subjects neither lane landed: far skies 2 and 4 (both lanes painted boats, piers, floats or
+# walls in the foreground; these describe open air and push the theme to a tiny far horizon silhouette) and Pip's
+# skid and hurt poses (the Krea 2 takes read as walking; these describe the body angles). Krea 2 only, the lane
+# that won the round. Two seeds each. auto_submit: true. Private. Keepers replace the stand-ins in GEN2-ROUND-1.
+round: save-the-plumber-gen2-1-fixes
+project_slug: save-the-plumber
+designer: Save the Plumber art bay
+is_public: false
+is_mature: false
+cast_loras: false
+auto_submit: true
+lanes:
+- key: krea2
+  label: Krea 2 (house look of the 2026-10-13 plates)
+  engine: krea2
+  prompt: prose
+subjects:
+- key: gen2-sky-2-tideglass-marina-fix-1
+  lane: krea2
+  entity: parallax-sky
+  title: 'World 2 Tideglass Marina: far sky (fix)'
+  size: 1344x768
+  seed: 82101
+  negative: text, letters, words, numbers, logo, watermark, signature, photorealistic, photograph, 3d render, blurry,
+    collage, grid, multiple panels, border, frame, characters, people, creatures, boats, ships, piers, docks, floats,
+    carts, walls, railings, ground, foreground objects
+  prompt_prose: 'The far sky layer for a side-scrolling platformer set in Tideglass Marina: a vast open sky of soft
+    sea-glass green and coral clouds over a calm bright sea, with only a thin pale blue-grey skyline of distant
+    harbour roofs and canal-lock towers resting on the far horizon line, tiny and faded by sea haze, the whole lower
+    third a soft even haze of open air, seamless left and right edges, an unpeopled backdrop layer, modern storybook
+    side-scrolling platformer art, lavish hand-painted animation background, soft painterly brushwork, warm saturated
+    colour'
+- key: gen2-sky-4-clockwork-fair-fix-1
+  lane: krea2
+  entity: parallax-sky
+  title: 'World 4 Clockwork Fair: far sky (fix)'
+  size: 1344x768
+  seed: 82111
+  negative: text, letters, words, numbers, logo, watermark, signature, photorealistic, photograph, 3d render, blurry,
+    collage, grid, multiple panels, border, frame, characters, people, creatures, boats, ships, piers, docks, floats,
+    carts, walls, railings, ground, foreground objects
+  prompt_prose: 'The far sky layer for a side-scrolling platformer set in Clockwork Fair: a vast candy pink and
+    midnight blue evening sky with soft layered clouds and a few early stars, and only a tiny faded silhouette of
+    a giant big wheel and a coaster loop resting on the far horizon line, small and hazy with distance, the whole
+    lower third a soft even haze of open air, seamless left and right edges, an unpeopled backdrop layer, modern
+    storybook side-scrolling platformer art, lavish hand-painted animation background, soft painterly brushwork,
+    warm saturated colour'
+- key: gen2-pip-pose-skid-fix-1
+  lane: krea2
+  entity: heroine-pose
+  title: 'Pip key pose: skid (fix)'
+  size: 1024x1024
+  seed: 82121
+  negative: text, letters, logo, watermark, multiple characters, duplicate, sprite sheet, grid, cropped, background
+    scenery, shadow, photorealistic, 3d render, blurry, deformed, walking pose, standing still
+  prompt_prose: 'Pip, a determined young adult woman with pale freckled skin and a bright magenta bob haircut, brass
+    goggles on her forehead, mustard yellow overalls over a lavender shirt, a white scarf, navy boots and a small
+    wrench on her belt, full body side view facing right, braking hard from a full sprint: torso leaning far back
+    at a steep angle, front leg braced straight ahead with the boot heel planted, back knee deeply bent, arms flung
+    forward for balance, scarf whipping forward past her face, a spray of dust kicked up in front of her boots,
+    single character centred on a flat pure white background with generous margin, original storybook platformer
+    game character, bold clean dark outline, cel-shaded with soft painterly highlights, warm saturated colours,
+    consistent proportions'
+- key: gen2-pip-pose-hurt-fix-1
+  lane: krea2
+  entity: heroine-pose
+  title: 'Pip key pose: hurt (fix)'
+  size: 1024x1024
+  seed: 82131
+  negative: text, letters, logo, watermark, multiple characters, duplicate, sprite sheet, grid, cropped, background
+    scenery, shadow, photorealistic, 3d render, blurry, deformed, walking pose, standing still
+  prompt_prose: 'Pip, a determined young adult woman with pale freckled skin and a bright magenta bob haircut, brass
+    goggles on her forehead, mustard yellow overalls over a lavender shirt, a white scarf, navy boots and a small
+    wrench on her belt, full body side view facing right, knocked back by a hit: body arched backwards in mid-air
+    with both boots off the ground, arms thrown up and out, head snapped back with eyes squeezed shut and mouth
+    open in an "oof", goggles askew, a few small cartoon star sparks around her head, single character centred on
+    a flat pure white background with generous margin, original storybook platformer game character, bold clean
+    dark outline, cel-shaded with soft painterly highlights, warm saturated colours, consistent proportions'
+- key: gen2-sky-2-tideglass-marina-fix-2
+  lane: krea2
+  entity: parallax-sky
+  title: 'World 2 Tideglass Marina: far sky (fix)'
+  size: 1344x768
+  seed: 82102
+  negative: text, letters, words, numbers, logo, watermark, signature, photorealistic, photograph, 3d render, blurry,
+    collage, grid, multiple panels, border, frame, characters, people, creatures, boats, ships, piers, docks, floats,
+    carts, walls, railings, ground, foreground objects
+  prompt_prose: 'The far sky layer for a side-scrolling platformer set in Tideglass Marina: a vast open sky of soft
+    sea-glass green and coral clouds over a calm bright sea, with only a thin pale blue-grey skyline of distant
+    harbour roofs and canal-lock towers resting on the far horizon line, tiny and faded by sea haze, the whole lower
+    third a soft even haze of open air, seamless left and right edges, an unpeopled backdrop layer, modern storybook
+    side-scrolling platformer art, lavish hand-painted animation background, soft painterly brushwork, warm saturated
+    colour'
+- key: gen2-sky-4-clockwork-fair-fix-2
+  lane: krea2
+  entity: parallax-sky
+  title: 'World 4 Clockwork Fair: far sky (fix)'
+  size: 1344x768
+  seed: 82112
+  negative: text, letters, words, numbers, logo, watermark, signature, photorealistic, photograph, 3d render, blurry,
+    collage, grid, multiple panels, border, frame, characters, people, creatures, boats, ships, piers, docks, floats,
+    carts, walls, railings, ground, foreground objects
+  prompt_prose: 'The far sky layer for a side-scrolling platformer set in Clockwork Fair: a vast candy pink and
+    midnight blue evening sky with soft layered clouds and a few early stars, and only a tiny faded silhouette of
+    a giant big wheel and a coaster loop resting on the far horizon line, small and hazy with distance, the whole
+    lower third a soft even haze of open air, seamless left and right edges, an unpeopled backdrop layer, modern
+    storybook side-scrolling platformer art, lavish hand-painted animation background, soft painterly brushwork,
+    warm saturated colour'
+- key: gen2-pip-pose-skid-fix-2
+  lane: krea2
+  entity: heroine-pose
+  title: 'Pip key pose: skid (fix)'
+  size: 1024x1024
+  seed: 82122
+  negative: text, letters, logo, watermark, multiple characters, duplicate, sprite sheet, grid, cropped, background
+    scenery, shadow, photorealistic, 3d render, blurry, deformed, walking pose, standing still
+  prompt_prose: 'Pip, a determined young adult woman with pale freckled skin and a bright magenta bob haircut, brass
+    goggles on her forehead, mustard yellow overalls over a lavender shirt, a white scarf, navy boots and a small
+    wrench on her belt, full body side view facing right, braking hard from a full sprint: torso leaning far back
+    at a steep angle, front leg braced straight ahead with the boot heel planted, back knee deeply bent, arms flung
+    forward for balance, scarf whipping forward past her face, a spray of dust kicked up in front of her boots,
+    single character centred on a flat pure white background with generous margin, original storybook platformer
+    game character, bold clean dark outline, cel-shaded with soft painterly highlights, warm saturated colours,
+    consistent proportions'
+- key: gen2-pip-pose-hurt-fix-2
+  lane: krea2
+  entity: heroine-pose
+  title: 'Pip key pose: hurt (fix)'
+  size: 1024x1024
+  seed: 82132
+  negative: text, letters, logo, watermark, multiple characters, duplicate, sprite sheet, grid, cropped, background
+    scenery, shadow, photorealistic, 3d render, blurry, deformed, walking pose, standing still
+  prompt_prose: 'Pip, a determined young adult woman with pale freckled skin and a bright magenta bob haircut, brass
+    goggles on her forehead, mustard yellow overalls over a lavender shirt, a white scarf, navy boots and a small
+    wrench on her belt, full body side view facing right, knocked back by a hit: body arched backwards in mid-air
+    with both boots off the ground, arms thrown up and out, head snapped back with eyes squeezed shut and mouth
+    open in an "oof", goggles askew, a few small cartoon star sparks around her head, single character centred on
+    a flat pure white background with generous margin, original storybook platformer game character, bold clean
+    dark outline, cel-shaded with soft painterly highlights, warm saturated colours, consistent proportions'
