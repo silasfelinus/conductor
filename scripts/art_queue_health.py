@@ -43,7 +43,7 @@ import yaml
 
 ROOT = Path(__file__).resolve().parent.parent
 HEALTH_FILE = ROOT / "ops" / "art-queue-health.yaml"
-SOURCES = ("project-art", "requests", "kr-failed-jobs")
+SOURCES = ("project-art", "requests", "kr-failed-jobs", "ledgers")
 DEFAULT_PERSIST_DAYS = 2
 DETAIL_LIMIT = 240
 
@@ -64,6 +64,13 @@ FAILED = re.compile(r"^\s*FAILED (\S+): (.*)$")
 UNHANDLED_HEADER = re.compile(r"^\s*Unhandled FAILED ArtJobs \(\d+\):")
 UNHANDLED_JOB = re.compile(r"^\s*ArtJob (\d+): (engine=.*)$")
 RULE = re.compile(r"\[([a-z0-9][a-z0-9-]*)\]")
+# sweep_art_ledgers.py --live: "== projects/<slug>/art/<LEDGER>.yaml", then
+# enqueue_art_requests.py's "  FAILED <subject> [<lane>]: prompt contract ['rule', ...]".
+# 2026-11-02 PT: 138 cells across five game ledgers sat contract-rejected behind a "clean"
+# health file because this step's log was never recorded and the cell line has a lane.
+LEDGER_HEADER = re.compile(r"^== (\S+\.ya?ml)\s*$")
+LEDGER_CELL_FAILED = re.compile(r"^\s*FAILED (\S+) \[([^\]]+)\]: (.*)$")
+QUOTED_RULE = re.compile(r"'([a-z0-9][a-z0-9-]*)'")
 
 
 def _detail(text: str) -> str:
@@ -79,8 +86,39 @@ def _classify(error: str) -> str:
     return "error"
 
 
+def parse_ledger_log(text: str, source: str) -> list[dict]:
+    """One entry per ledger and failure kind, so 70 rejected cells are one line of work."""
+    grouped: dict[tuple[str, str], dict] = {}
+    ledger = "(unknown ledger)"
+    for line in text.splitlines():
+        header = LEDGER_HEADER.match(line)
+        if header:
+            ledger = header.group(1)
+            continue
+        match = LEDGER_CELL_FAILED.match(line)
+        if not match:
+            continue
+        cell, error = f"{match.group(1)} [{match.group(2)}]", match.group(3)
+        kind = _classify(error)
+        entry = grouped.setdefault((ledger, kind), {"target": ledger, "kind": kind, "cells": [], "rules": set()})
+        entry["cells"].append(cell)
+        entry["rules"].update(QUOTED_RULE.findall(error) or RULE.findall(error))
+    failures = []
+    for entry in grouped.values():
+        cells = entry.pop("cells")
+        rules = sorted(entry.pop("rules"))
+        if rules and entry["kind"] == "contract-rejected":
+            entry["rules"] = rules
+        entry["detail"] = _detail(f"{len(cells)} cell(s) skipped, e.g. {', '.join(cells[:3])}")
+        entry["source"] = source
+        failures.append(entry)
+    return failures
+
+
 def parse_log(text: str, source: str) -> list[dict]:
     """Failures named in one art step's output, in order of appearance."""
+    if source == "ledgers":
+        return parse_ledger_log(text, source)
     failures: list[dict] = []
     in_unhandled = False
     last: dict | None = None
