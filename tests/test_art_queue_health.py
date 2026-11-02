@@ -103,3 +103,35 @@ def test_record_is_stable_and_check_exits_on_work(tmp_path, capsys):
 
 def test_checked_in_health_file_parses():
     assert isinstance(health.load(), list)
+
+
+# sweep_art_ledgers.py --live, trimmed from the 2026-11-02 PT shape: rejected cells are
+# skipped by --live, so they must surface here or the box idles behind a clean file.
+LEDGER_LOG = """\
+== projects/game-of-captains/art/PLANET-CHOICE-OUTCOMES-ROUND-1.yaml
+  FAILED warp-planet-a-reveal [krea2]: prompt contract ['text-exclusion', 'text-exclusion-pile']
+  FAILED warp-planet-a-ask-success [krea2]: prompt contract ['people-negation', 'text-exclusion']
+0 submitted, 2 failed
+status: no jobs
+== projects/slime-city/art/ROUND-1.yaml
+  queued job 52658 for slime-s0-card-calico [krea2]
+1 submitted, 0 failed
+status: QUEUED=1
+== projects/slime-city/art/ROUND-2.yaml
+  FAILED slime-story-opening [krea2]: HTTP 503 upstream busy
+0 submitted, 1 failed
+swept 3 ledger(s), 2 with submission failures
+"""
+
+
+def test_ledger_sweep_failures_group_per_ledger():
+    failures = health.parse_log(LEDGER_LOG, "ledgers")
+    by_target = {(f["target"], f["kind"]): f for f in failures}
+    assert len(failures) == 2
+    rejected = by_target[("projects/game-of-captains/art/PLANET-CHOICE-OUTCOMES-ROUND-1.yaml", "contract-rejected")]
+    assert rejected["rules"] == ["people-negation", "text-exclusion", "text-exclusion-pile"]
+    assert rejected["detail"].startswith("2 cell(s) skipped")
+    assert rejected["source"] == "ledgers"
+    transient = by_target[("projects/slime-city/art/ROUND-2.yaml", "error")]
+    assert "rules" not in transient
+    assert health.actionable(failures, date(2026, 11, 2)) == [rejected]

@@ -623,8 +623,10 @@ jobs:
         working-directory: conductor
         env:
           KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+        # Tee'd so art_queue_health.py records contract-rejected cells, which --live skips.
         run: |
-          python scripts/sweep_art_ledgers.py --live
+          set -o pipefail
+          python scripts/sweep_art_ledgers.py --live 2>&1 | tee "$RUNNER_TEMP/art-ledgers.log"
 
       # Shifting Desks has 220 approved style requests. Hand all of them to
       # the durable ArtJob scheduler first, instead of blocking on each render
@@ -708,7 +710,8 @@ jobs:
           python scripts/art_queue_health.py record \
             --log kr-failed-jobs="$RUNNER_TEMP/art-kr-failed-jobs.log" \
             --log requests="$RUNNER_TEMP/art-requests.log" \
-            --log project-art="$RUNNER_TEMP/art-project-art.log"
+            --log project-art="$RUNNER_TEMP/art-project-art.log" \
+            --log ledgers="$RUNNER_TEMP/art-ledgers.log"
           python scripts/art_queue_health.py check || true
 
       - name: Commit conductor results

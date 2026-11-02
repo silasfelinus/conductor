@@ -170,18 +170,24 @@ tasks:
   - id: t-004
     milestone: m2
     title: "Art round 2: encounter scene plates (every lead, signature, finale, beat, deck card and meeting)"
-    status: claimed
+    status: ready
     depends_on: t-003
-    owner: worker
+    owner: null
     passes: 0
     stakes: reversible
     note: >-
       About 270 scene prompts already live in the JSON (`art` on each encounter). Build a
       ledger from them (generated art is pre-approved), batch it behind round 1, and deliver to
       /crystal-street/scenes/<encounter-id>.webp.
-    claimed_by: 2026-11-02T08:55:00Z-dazzling-goodall
-    claimed_at: '2026-11-02T08:29:53Z'
-    updated: '2026-11-02T08:29:53Z'
+
+      2026-11-02 PT: Round 2 ledger built and opted into auto_submit: projects/crystal-
+      street/art/ROUND-2-SCENES.yaml, 466 encounter scene plates (all scenes/<id> prompts from
+      kind_robots allArtPrompts() not yet delivered or in another ledger; 33 already
+      delivered). All 466 pass the live prompt contract. Queued is not delivered: next owner
+      runs --status, curates keepers with export_crystal_street_art.py --sheet, exports to
+      public/crystal-street/scenes/<id>.webp and PRs kind_robots. Released to ready while it
+      renders (~8-9h at current box throughput).
+    updated: '2026-11-02T08:34:43Z'
 
   - id: t-005
     milestone: m2
