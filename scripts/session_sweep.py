@@ -51,6 +51,8 @@ CHECKS: list[tuple[str, list[str], bool, bool]] = [
     ("check_recurring_churn", ["scripts/check_recurring_churn.py"], False, False),
     ("settle_inactive_projects", ["scripts/settle_inactive_projects.py"], False, False),
     ("art_queue_health", ["scripts/art_queue_health.py", "check"], False, False),
+    # Written art nobody queued (Silas, 2026-11-02: "if it's written, it should be in the queue").
+    ("scan_written_art", ["scripts/scan_written_art.py"], True, False),
     ("check_relay_version_drift", ["scripts/check_relay_version_drift.py"], True, False),
     ("issue_bridge", ["scripts/sync_github_issues.py", "--check"], True, False),
     ("dream_docket", ["scripts/build_dream_proposal.py", "--check", "--fetch"], True, True),

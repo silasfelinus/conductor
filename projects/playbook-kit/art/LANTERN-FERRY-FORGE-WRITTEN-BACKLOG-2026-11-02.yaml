@@ -1,0 +1,246 @@
+# The Lantern Ferry: written-but-unqueued Playbook Forge beats (Silas, 2026-11-02 PT: "if it's written, it should be in the queue").
+# 19 beats of Playbook Studio game "kit-lantern-ferry" whose authored artPrompt has no delivered file (production
+# /api/admin/playbook-ledger inventory), no conductor ledger entry (asset or prompt match) and no live or finished ArtJob
+# (Forge art-request notes and this project's queue, prompt match). Asset is the beat's runtime path where it has one,
+# else playbook/kit-lantern-ferry/<node>. Priority 1: renders only when no game, Hybridizer or interactive job waits.
+# auto_submit: true. Private. Queued is not rendered; rendered is not delivered.
+round: playbook-kit-kit-lantern-ferry-forge-written-backlog-20261102
+project_slug: playbook-kit
+designer: Playbook Forge written-art backlog
+is_public: false
+is_mature: false
+cast_loras: false
+priority: 1
+auto_submit: true
+lanes:
+- key: krea2
+  label: Krea 2, the Forge default lane
+  engine: krea2
+  prompt: prose
+subjects:
+- key: forge-premise
+  lane: krea2
+  entity: playbook-opening
+  title: The Lantern Ferry
+  playbook_node: premise
+  asset: playbook/kit-lantern-ferry/premise
+  size: 1344x768
+  seed: 894000
+  prompt_prose: A small wooden paddle ferry hung with glowing paper lanterns crosses a wide black river at night.
+    A huge concrete dam stands on the horizon with rows of lit windows along its top. At the bow a small rusty robot
+    with a glass lantern for a head holds up one arm. Amber lantern light reflects on the dark water. Wide shot
+    from low on the water, painted storybook illustration in amber and deep teal.
+- key: forge-cast-pim
+  lane: krea2
+  entity: playbook-follower
+  title: Pim
+  playbook_node: cast:pim
+  asset: playbook/kit-lantern-ferry/cast:pim
+  size: 832x1216
+  seed: 894001
+  prompt_prose: A small rusty robot stands on the wet planks of a ferry deck at night. Its head is a glass lantern
+    with a glowing wick inside, and two dark rivets above the flame serve as eyes. Its tin body is dotted with brass
+    rivets and wrapped in an oversized red wool rain scarf that trails on the deck. Warm light from its own head,
+    rain falling behind it. Close-up portrait at the robot’s eye level, painted storybook illustration in amber,
+    rust and teal.
+- key: forge-cast-ottoline
+  lane: krea2
+  entity: playbook-follower
+  title: Ottoline Reeve
+  playbook_node: cast:ottoline
+  asset: playbook/kit-lantern-ferry/cast:ottoline
+  size: 832x1216
+  seed: 894002
+  prompt_prose: An elderly woman with short white hair stands on a riverbank dock at night in a long brown oilskin
+    coat. A leather bandolier of brass map cases crosses her chest. Her sharp grey eyes look straight ahead through
+    round wire spectacles, and one hand rests on a rolled map. Lamplight from the right. Head and shoulders portrait,
+    painted storybook illustration in amber, brown and deep teal.
+- key: forge-cast-juno
+  lane: krea2
+  entity: playbook-follower
+  title: Juno Marsh
+  playbook_node: cast:juno
+  asset: playbook/kit-lantern-ferry/cast:juno
+  size: 832x1216
+  seed: 894003
+  prompt_prose: A lanky young woman with cropped black hair leans on a ferry rail in a patched plum velvet coat,
+    a plain wooden crate tucked under one arm. Her fingers are stained with blue ink and she wears a wry half-smile.
+    Paper lanterns glow behind her and rain beads on her shoulders. Waist-up portrait from slightly below, painted
+    storybook illustration in plum, amber and teal.
+- key: forge-cast-weir
+  lane: krea2
+  entity: playbook-boss
+  title: Ansel Weir
+  playbook_node: cast:weir
+  asset: playbook/kit-lantern-ferry/cast:weir
+  size: 1344x768
+  seed: 894004
+  prompt_prose: A tall middle-aged man in an immaculate tailored grey overcoat stands on a concrete dam walkway
+    in driving rain, smiling coldly at the viewer. An aide in a dark raincoat holds a black umbrella over him. Floodlights
+    on the dam light him from above and behind. Waist-up portrait at eye level, painted storybook illustration in
+    cold grey, steel blue and a little amber.
+- key: forge-cast-heron
+  lane: krea2
+  entity: playbook-thread
+  title: The Toll Heron
+  playbook_node: cast:heron
+  asset: playbook/kit-lantern-ferry/cast:heron
+  size: 1344x768
+  seed: 894005
+  prompt_prose: An enormous pale grey heron stands on a wooden mooring post in thick river fog, taller than a person.
+    It wears a small dark blue toll-keeper’s peaked cap and holds a thick leather ledger tucked under one wing.
+    Its yellow eye looks down at the viewer. Soft white fog light, black water below. Full-body view from low on
+    the water, painted storybook illustration in pale grey, white and deep teal.
+- key: forge-moment-cast-off
+  lane: krea2
+  entity: playbook-encounter
+  title: Cast off
+  playbook_node: moment:cast-off
+  asset: playbook/kit-lantern-ferry/moment:cast-off
+  size: 1344x768
+  seed: 894006
+  prompt_prose: A small paddle ferry hung with paper lanterns pulls away from an old wooden dock at night. The mooring
+    rope slides off a post into black water, the lanterns swing on their strings and the first rain dots the river.
+    Wide shot from the dock, painted storybook illustration in amber and deep teal.
+- key: forge-moment-pim-wakes
+  lane: krea2
+  entity: playbook-encounter
+  title: Pim wakes up
+  playbook_node: moment:pim-wakes
+  asset: playbook/kit-lantern-ferry/moment:pim-wakes
+  size: 1344x768
+  seed: 894007
+  prompt_prose: Close-up of a small rusty robot at the bow of a ferry, its glass lantern head flickering bright
+    as it sits up with one arm raised. Behind it, three passengers in rain coats lean back in surprise. Warm flame
+    light on their faces, rain in the dark. Close-up at deck level, painted storybook illustration in amber, rust
+    and teal.
+- key: forge-moment-ottoline-map
+  lane: krea2
+  entity: playbook-encounter
+  title: Every sandbar, every lie
+  playbook_node: moment:ottoline-map
+  asset: playbook/kit-lantern-ferry/moment:ottoline-map
+  size: 1344x768
+  seed: 894008
+  prompt_prose: Close-up of an old woman’s weathered hands unrolling a hand-drawn river map on a wooden table inside
+    a ferry cabin. A dam is circled in red pencil, and a second dam is drawn faintly behind it. A brass lantern
+    beside the map lights the paper from the left. Overhead close-up, painted storybook illustration in amber, cream
+    and red.
+- key: forge-moment-juno-dock-poem
+  lane: krea2
+  entity: playbook-encounter
+  title: A verse for every bridge
+  playbook_node: moment:juno-dock-poem
+  asset: playbook/kit-lantern-ferry/moment:juno-dock-poem
+  size: 1344x768
+  seed: 894009
+  prompt_prose: Night under an old stone bridge. A lanky young woman in a patched plum velvet coat stands on the
+    rail of a lantern-hung ferry, one hand raised, reciting up at the arch. Rain falls past the paper lanterns and
+    the young ferry pilot in a yellow oilskin watches her from the wheel. Medium shot from the deck, painted storybook
+    illustration in plum, amber and teal.
+- key: forge-moment-weir-on-the-bridge
+  lane: krea2
+  entity: playbook-encounter
+  title: The man on the bridge
+  playbook_node: moment:weir-on-the-bridge
+  asset: playbook/kit-lantern-ferry/moment:weir-on-the-bridge
+  size: 1344x768
+  seed: 894010
+  prompt_prose: Low-angle view of a tall man in an immaculate grey overcoat on a high concrete dam walkway in the
+    rain. He holds a black umbrella raised off his head in his right hand, tilted toward the river below. Floodlights
+    behind him make the rain bright. Painted storybook illustration in cold grey, steel blue and amber.
+- key: forge-moment-lanterners-vigil
+  lane: krea2
+  entity: playbook-encounter
+  title: A light in every window
+  playbook_node: moment:lanterners-vigil
+  asset: playbook/kit-lantern-ferry/moment:lanterners-vigil
+  size: 1344x768
+  seed: 894011
+  prompt_prose: A wide river valley at night seen from a hillside. Cottages line both banks and every cottage window
+    glows with a lantern. In the middle of the black river a small paddle ferry hung with lanterns crosses toward
+    the far bank. Stars above, a lit dam far upstream. Wide high shot, painted storybook illustration in amber and
+    deep teal.
+- key: forge-moment-keystone-crack
+  lane: krea2
+  entity: playbook-encounter
+  title: The crack
+  playbook_node: moment:keystone-crack
+  asset: playbook/kit-lantern-ferry/moment:keystone-crack
+  size: 1344x768
+  seed: 894012
+  prompt_prose: Close-up of a giant vertical crack running up a concrete dam wall, water seeping out of it in thin
+    dark streaks. A hand in a yellow oilskin sleeve holds a brass lantern up to the crack, lighting the wet concrete.
+    Darkness around the circle of light. Close-up from below, painted storybook illustration in amber, grey and
+    black-green.
+- key: forge-moment-heron-toll
+  lane: krea2
+  entity: playbook-encounter
+  title: The toll
+  playbook_node: moment:heron-toll
+  asset: playbook/kit-lantern-ferry/moment:heron-toll
+  size: 1344x768
+  seed: 894013
+  prompt_prose: In thick night fog an enormous pale grey heron in a small blue toll-keeper’s cap bends its long
+    neck over the deck of a small ferry toward a young pilot in a yellow oilskin. Thin glowing gold threads drift
+    from the pilot’s forehead into an open leather ledger held under the heron’s wing. Soft white fog light. Medium
+    shot from the deck, painted storybook illustration in pale grey, gold and deep teal.
+- key: forge-moment-juno-stern-dance
+  lane: krea2
+  entity: playbook-encounter
+  title: The stern, at midnight
+  playbook_node: moment:juno-stern-dance
+  asset: playbook/kit-lantern-ferry/moment:juno-stern-dance
+  size: 1344x768
+  seed: 894014
+  prompt_prose: 'Two people dance close together on the stern of a small ferry at midnight: a lanky young woman
+    in a plum velvet coat and a young pilot in a yellow oilskin. Beside them a wooden crate stands open, packed
+    with paper-wrapped fireworks. Paper lanterns overhead reflect in the black river. Medium shot from the stern
+    rail, painted storybook illustration in plum, amber and deep teal.'
+- key: forge-ending-every-lamp-lit
+  lane: krea2
+  entity: playbook-ending
+  title: Every Lamp Lit
+  playbook_node: ending:every-lamp-lit
+  asset: playbook/kit-lantern-ferry/ending:every-lamp-lit
+  size: 1344x768
+  seed: 894015
+  prompt_prose: Dawn on a muddy riverbank crowded with villagers holding paper lanterns, a small paddle ferry beached
+    on the shingle behind them. In front, an elderly woman in a brown oilskin coat hands a bundle of papers to two
+    inspectors in grey uniforms. Pale gold sunrise from the left, the lanterns still glowing. Wide shot at eye level,
+    painted storybook illustration in gold, amber and soft teal.
+- key: forge-ending-last-light-upriver
+  lane: krea2
+  entity: playbook-ending
+  title: Last Light Upriver
+  playbook_node: ending:last-light-upriver
+  asset: playbook/kit-lantern-ferry/ending:last-light-upriver
+  size: 1344x768
+  seed: 894016
+  prompt_prose: A tiny rusty robot with a glass lantern for a head stands alone on top of a stone flood gate at
+    night, its flame glowing. Rising black water pours over the gate around its feet. Far downstream a small paddle
+    ferry hung with lanterns drifts away. The robot’s light reflects in a long line on the water. Wide shot from
+    above, painted storybook illustration in amber and deep teal.
+- key: forge-ending-insurance-paid
+  lane: krea2
+  entity: playbook-ending
+  title: Insurance Paid
+  playbook_node: ending:insurance-paid
+  asset: playbook/kit-lantern-ferry/ending:insurance-paid
+  size: 1344x768
+  seed: 894017
+  prompt_prose: A polished brass plaque bolted to a wet concrete dam wall, engraved with a single name. Below it,
+    through still clear water, a sunken paper lantern and the rail of a small ferry rest on the riverbed. Grey morning
+    light from above. Close-up from the side, painted storybook illustration in brass, grey and murky green.
+- key: forge-ending-pim-takes-the-wheel
+  lane: krea2
+  entity: playbook-ending
+  title: Pim Takes the Wheel
+  playbook_node: ending:pim-takes-the-wheel
+  asset: playbook/kit-lantern-ferry/ending:pim-takes-the-wheel
+  size: 1344x768
+  seed: 894018
+  prompt_prose: A small paddle ferry hung with swinging paper lanterns surfs down the white water of a concrete
+    dam spillway at night. A tiny rusty robot with a glass lantern head stands at the wheel with its mouth open,
+    shouting. Passengers cling to the rails, laughing, spray flying around them. Dynamic wide shot from below the
+    spillway, painted storybook comic illustration in amber, white and teal.
