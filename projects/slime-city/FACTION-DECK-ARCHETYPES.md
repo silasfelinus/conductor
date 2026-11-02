@@ -1,23 +1,23 @@
-# Slime City: the 40-card-per-faction core and 50-card stretch
+# Slime City: six faction arsenals and the mercenary underground
 
-**Silas, November 1, 2026 PT (latest direction):** Aim for a base roster of about 200 cards, but, more importantly, give each of the six factions **40–50 distinct cards to choose from for its ten-card deck**. Since six × 40 = 240, the binding minimum is **240 total playable cards**, with **300 total** as the 50-per-faction stretch. This **supersedes** the older plan for 50 *additional* cards per faction plus the 60 founders (360 total). Card count is a means, not the design objective: make factions theatrical, mechanically distinct and actually fun.
+**Latest direction, 2026-11-01 PT:** Exactly **40 distinct playable cards per faction** across six factions, plus **60 independent neutral mercenaries** legal in any crew. This is **300 distinct cards total**. The 60 permanently free starter/founder cards are INCLUDED in the 240 faction cards. The previous 40–50-per-faction stretch is historical and superseded. Each faction still supports at least three mechanically different ten-card archetypes with genuine payoff, readable weakness and counterplay.
 
-## Counted milestones, including the always-free founders
+## Milestones and fair packs
 
-| Stage | Per faction | Total playable cards | New beyond first 60 | Rare-or-better | Other | Three-card packs at 1 rare + 2 other |
+| Stage | Faction cards | Neutral mercenaries | Total | Rare | Other | 1 rare + 2 other packs |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| Founders (S0) | 10 | 60 | 0 | 20 | 40 | 20 |
-| Gutter Crown waves 1 + 2 | 18 | 108 | 48 | 36 | 72 | 36 |
-| **Core complete** | **40** | **240** | **180** | **80** | **160** | **80** |
-| Full stretch | 50 | 300 | 240 | 100 | 200 | 100 |
+| Founders (S0) | 60 | 0 | 60 | 20 | 40 | 20 |
+| Gutter Crown wave 2 (PR #4620, only once merged) | 108 | 0 | 108 | 36 | 72 | 36 |
+| Six faction cores complete | 240 | 0 | 240 | 80 | 160 | 80 |
+| **Target complete** | **240** | **60** | **300** | **100** | **200** | **100** |
 
-The 108-card stage includes Kind Robots #4620, which must be **merged with latest-head green checks** before counting as live source; Round 4 art in Conductor #6936 is authored, **not verified ArtJob acceptance or delivered media**. Do not count art as a software dependency.
+The faction expansion after PR #4620 requires **22 new cards per faction**, 132 total: eight creatures, seven spells, four traps and three equipment each. Preserve the existing 44 rares + 88 other quota for these 132 cards, yielding 80 faction rares. The 60 mercenaries have 20 rares + 40 others; suggested functional mix: 20 creatures, 18 spells, 12 traps and 10 equipment. No scarcity-as-power premium. No filler cards. Every card must work in the actual engine and have a concrete tactical job, a counter, a unique written identity and an art provenance slot.
 
-**Next 132 playable cards to core:** 22 per faction. Each crew adds **eight creatures, seven spells, four traps and three equipment**. That creates a 40-card faction pool of roughly 15 creatures and 25 specials; legal decks still have exactly **four creatures and six specials**, require at least one spell, trap and equipment, retain the original signature, and do not duplicate cards. All starters are playable without purchases; all additional options are account-owned collections, never browser-local balances.
+**Mercenary legality:** Ten distinct cards, four creatures, six specials, at least one spell/trap/equipment, and exactly the required faction signature. At most three neutrals (at least seven faction cards) to protect the crew's identity. Founder cards remain free; neutral unlocks require the same account-owned collection checks as reserves. Shared neutral abilities may diversify a faction but must not replace its defining tricks. Mercenary cards receive their own inspected collection section and can be used in any compatible slot, with legal-deck and seeded replay coverage. The initial three-neutral ceiling is reversible after balance testing.
 
-**Per-crew rare quotas at the 240-card core:** Catgirls 14, Bloodfairies 13, Ironjaw 13, Riot Saints 13, Undertow 14, Meat Exchange 13. The existing 108-card pool has 7, 6, 6, 5, 7 and 5 rares respectively, so the 22 new cards per faction must include **7, 7, 7, 8, 7 and 8 rares**, with the remainder commons/uncommons. Sum: **44 rares + 88 normal cards**, maintaining 1:2 even for the final pack. Never mark an expansion rare just for power; rare is frequency, not superiority. Legendary rarity is a future label only after adapting the account and pack contract without changing the guarantee.
+**BLACKOUT resource/hand contract:** Start on three mana; add at most three new mana at the start of every later round; bank unused mana up to a provisional ten; debt reduces the incoming grant only. Start with five from the ten-card deck, keep every unplayed card unless explicitly marked for end-round discard, then draw back up to five. Played cards cannot return on the immediately next round, even if the draw pile reshuffles. Give human and CPU identical legal cycling, deterministic selection and public-readable explanations.
 
-**50-card stretch:** add ten optional distinct cards per crew once the 40-card pool proves fun and balanced. Add exactly 20 rare-or-better and 40 normals overall, producing 100 rare-guaranteed packs total. Revisit specialties, do not merely scale stats.
+**Art delivery is separate from gameplay delivery.** Pending ArtJobs and visual placeholders never count as finished art, but they also never postpone card implementation or adversarial testing.
 
 ## A faction should feel different even if the art fails to load
 
@@ -50,7 +50,7 @@ For every new card record: unique readable name, memorable faction-specific flav
 2. Execute actual successful battle commands for every creature, spell, trap and equipment; check cards with special preconditions separately. Verify replay is deterministic and enemies cannot see hidden information.
 3. Run adversarial seeded matchup matrices using **constructed decks**, including both seating orders and free founder decks. Track flag captures, knockouts, game duration, stalls, 0-HP traps, debt locks, CPU invalid actions and first meaningful choice. An archetype that cannot win without lucky draws needs repair, not cosmetic praise.
 4. Replay one exciting *and* one disastrous sequence from every faction. Inspect whether the player could predict results from the UI and whether the funny failures were legible.
-5. Test 80 rare-guaranteed, three-card packs to exhaustion at core size, with zero duplicates, no stranded cards and no purchase when either tier is exhausted. Check account ownership and concurrency, not just a local function.
+5. Test 100 rare-guaranteed, three-card packs to exhaustion at core size, with zero duplicates, no stranded cards and no purchase when either tier is exhausted. Check account ownership and concurrency, not just a local function.
 6. Render using image-shaped placeholders until the art processor reports accepted ArtJob IDs and individually verified delivered ArtImages. The visual finish stays on the independent art task, not a blocker for gameplay.
 
-**Implementation ordering:** merge/check #4620 (36 new cards, BULLDOZE), then deliver the next **22 cards per faction** in coherent, tested sub-archetype waves, checking pack ratios after each wave. The human game-fun and public-release gates remain separate and explicit.
+**Implementation ordering:** merge/check #4620 (36 new cards, BULLDOZE), then deliver the next **22 faction cards per crew** and **60 shared mercenary cards** in coherent tested waves, checking pack ratios and all six faction deck mixes after each wave. The human game-fun and public-release gates remain separate and explicit.
