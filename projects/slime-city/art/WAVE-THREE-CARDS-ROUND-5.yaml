@@ -1,0 +1,346 @@
+# One private ArtJob per *new* playable card; older accepted card-art jobs are in rounds 1-4.
+# Queue requests are durable; auto_submit submits to POST /api/art/enqueue on Conductor main.
+# Keep job IDs, ArtImage IDs and delivery proof distinct. Never queue duplicates of existing IDs.
+# Source: kind_robots/utils/slimeCity/{gutterCrownWaveThree,gutterCrownFinaleA,gutterCrownFinaleB,mercenaryCards}.ts
+round: slime-city-gutter-crown-wave-three-5
+project_slug: slime-city
+designer: "Slime City 300-card core art expansion"
+is_public: false
+is_mature: false
+cast_loras: false
+priority: 615
+auto_submit: true
+lanes:
+  - key: krea2
+    label: "Krea 2 Slime City illustrated collectible cards"
+    engine: krea2
+    prompt: prose
+    suffix: >-
+      Western adult-animation collectible-card illustration, mature playful postapocalyptic fantasy, crisp thick black ink contours,
+      vibrant high-contrast gouache shading, grounded expressive poses, clean readable silhouette for mobile,
+      saturated colored rim-lighting, one continuous full-bleed vertical scene, every surface bare and unmarked.
+subjects:
+  - key: slime-r5-card-s2-catgirls-backstreet-organ-donor
+    lane: krea2
+    entity: card-art
+    title: "Backstreet Organ Donor"
+    asset: slime-city/cards/s2-catgirls-backstreet-organ-donor
+    size: 832x1216
+    seed: 1085001
+    prompt_prose: >-
+      An original collectible illustration of Backstreet Organ Donor: a bold three-quarter action portrait in a chaotic street encounter. Belongs to Gene Riot Catgirls of Chimera Heights, cobalt-blue genetic laboratory neon, rooftop catnip gardens, patched jackets, cat ears and tails, improvised surgical biotech. Visual story to paint: The medics legal donor list has one name: the medic. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-s2-catgirls-parapet-ghost-kitten
+    lane: krea2
+    entity: card-art
+    title: "Parapet Ghost-Kitten"
+    asset: slime-city/cards/s2-catgirls-parapet-ghost-kitten
+    size: 832x1216
+    seed: 1085002
+    prompt_prose: >-
+      An original collectible illustration of Parapet Ghost-Kitten: a dramatic low-angle full-body pose in the middle of a strange city block. Belongs to Gene Riot Catgirls of Chimera Heights, cobalt-blue genetic laboratory neon, rooftop catnip gardens, patched jackets, cat ears and tails, improvised surgical biotech. Visual story to paint: The rooftops cutest nightmare pounces for an AMBUSH strike that ignores armor with PIERCE. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-s2-catgirls-emergency-molt
+    lane: krea2
+    entity: card-art
+    title: "Emergency Molt"
+    asset: slime-city/cards/s2-catgirls-emergency-molt
+    size: 832x1216
+    seed: 1085003
+    prompt_prose: >-
+      An original collectible illustration of Emergency Molt: a punchy freeze-frame showing an absurd special ability triggering. Belongs to Gene Riot Catgirls of Chimera Heights, cobalt-blue genetic laboratory neon, rooftop catnip gardens, patched jackets, cat ears and tails, improvised surgical biotech. Visual story to paint: Even stolen skin heals better than corporate insurance. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-s2-catgirls-needle-thread-ambush
+    lane: krea2
+    entity: card-art
+    title: "Needle-Thread Ambush"
+    asset: slime-city/cards/s2-catgirls-needle-thread-ambush
+    size: 832x1216
+    seed: 1085004
+    prompt_prose: >-
+      An original collectible illustration of Needle-Thread Ambush: a vivid comic snapshot of spell energy arcing across a street. Belongs to Gene Riot Catgirls of Chimera Heights, cobalt-blue genetic laboratory neon, rooftop catnip gardens, patched jackets, cat ears and tails, improvised surgical biotech. Visual story to paint: An entire strike team gets one stolen stealth trick. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-s2-catgirls-sterile-alley-wire
+    lane: krea2
+    entity: card-art
+    title: "Sterile Alley Wire"
+    asset: slime-city/cards/s2-catgirls-sterile-alley-wire
+    size: 832x1216
+    seed: 1085005
+    prompt_prose: >-
+      An original collectible illustration of Sterile Alley Wire: a richly detailed hidden contraption in the foreground, with an unsuspecting enemy about to trigger it. Belongs to Gene Riot Catgirls of Chimera Heights, cobalt-blue genetic laboratory neon, rooftop catnip gardens, patched jackets, cat ears and tails, improvised surgical biotech. Visual story to paint: A single hospital-grade suture stretched across the alley. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-s2-catgirls-lab-escape-atlas
+    lane: krea2
+    entity: card-art
+    title: "Lab Escape Atlas"
+    asset: slime-city/cards/s2-catgirls-lab-escape-atlas
+    size: 832x1216
+    seed: 1085006
+    prompt_prose: >-
+      An original collectible illustration of Lab Escape Atlas: a magical outfit or weapon upgrade gleaming on a fully illustrated fighter. Belongs to Gene Riot Catgirls of Chimera Heights, cobalt-blue genetic laboratory neon, rooftop catnip gardens, patched jackets, cat ears and tails, improvised surgical biotech. Visual story to paint: Every patent has a weakness highlighted in red. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-s2-bloodfairies-mosquito-disc-jockey
+    lane: krea2
+    entity: card-art
+    title: "Mosquito Disc Jockey"
+    asset: slime-city/cards/s2-bloodfairies-mosquito-disc-jockey
+    size: 832x1216
+    seed: 1085007
+    prompt_prose: >-
+      An original collectible illustration of Mosquito Disc Jockey: a bold three-quarter action portrait in a chaotic street encounter. Belongs to Punk Bloodfairies of Needle Alley, saturated violet and magenta rooftop stage lights, tiny adult winged punk fairies, safety pins, speakers and rain-slick neon. Visual story to paint: Keeps the mosh pit alive by stealing a little back on each hit. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-s2-bloodfairies-bassquake-colossus
+    lane: krea2
+    entity: card-art
+    title: "Bassquake Colossus"
+    asset: slime-city/cards/s2-bloodfairies-bassquake-colossus
+    size: 832x1216
+    seed: 1085008
+    prompt_prose: >-
+      An original collectible illustration of Bassquake Colossus: a dramatic low-angle full-body pose in the middle of a strange city block. Belongs to Punk Bloodfairies of Needle Alley, saturated violet and magenta rooftop stage lights, tiny adult winged punk fairies, safety pins, speakers and rain-slick neon. Visual story to paint: A walking speaker-stack. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-s2-bloodfairies-glitterglass-flood
+    lane: krea2
+    entity: card-art
+    title: "Glitterglass Flood"
+    asset: slime-city/cards/s2-bloodfairies-glitterglass-flood
+    size: 832x1216
+    seed: 1085009
+    prompt_prose: >-
+      An original collectible illustration of Glitterglass Flood: a punchy freeze-frame showing an absurd special ability triggering. Belongs to Punk Bloodfairies of Needle Alley, saturated violet and magenta rooftop stage lights, tiny adult winged punk fairies, safety pins, speakers and rain-slick neon. Visual story to paint: The chorus shatters every nearby window. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-s2-bloodfairies-afterparty-first-aid
+    lane: krea2
+    entity: card-art
+    title: "Afterparty First Aid"
+    asset: slime-city/cards/s2-bloodfairies-afterparty-first-aid
+    size: 832x1216
+    seed: 1085010
+    prompt_prose: >-
+      An original collectible illustration of Afterparty First Aid: a vivid comic snapshot of spell energy arcing across a street. Belongs to Punk Bloodfairies of Needle Alley, saturated violet and magenta rooftop stage lights, tiny adult winged punk fairies, safety pins, speakers and rain-slick neon. Visual story to paint: Nobody goes home until the smallest fairy is standing again. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-s2-bloodfairies-earworm-feedback
+    lane: krea2
+    entity: card-art
+    title: "Earworm Feedback"
+    asset: slime-city/cards/s2-bloodfairies-earworm-feedback
+    size: 832x1216
+    seed: 1085011
+    prompt_prose: >-
+      An original collectible illustration of Earworm Feedback: a dangerous improvised street device with a dramatic activation spark. Belongs to Punk Bloodfairies of Needle Alley, saturated violet and magenta rooftop stage lights, tiny adult winged punk fairies, safety pins, speakers and rain-slick neon. Visual story to paint: Play the wrong chord and the sidewalk grabs your boots. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-s2-bloodfairies-roadie-megaphone
+    lane: krea2
+    entity: card-art
+    title: "Roadie Megaphone"
+    asset: slime-city/cards/s2-bloodfairies-roadie-megaphone
+    size: 832x1216
+    seed: 1085012
+    prompt_prose: >-
+      An original collectible illustration of Roadie Megaphone: a close dramatic equipment portrait showing functional details. Belongs to Punk Bloodfairies of Needle Alley, saturated violet and magenta rooftop stage lights, tiny adult winged punk fairies, safety pins, speakers and rain-slick neon. Visual story to paint: The road crew can turn any solo act into a gang fight. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-s2-ironjaw-union-bridgebearer
+    lane: krea2
+    entity: card-art
+    title: "Union Bridgebearer"
+    asset: slime-city/cards/s2-ironjaw-union-bridgebearer
+    size: 832x1216
+    seed: 1085013
+    prompt_prose: >-
+      An original collectible illustration of Union Bridgebearer: a bold three-quarter action portrait in a chaotic street encounter. Belongs to Ironjaw Chrome Ogres of the Foundry, bronze-orange furnace light, green-skinned enormous chrome-jawed workers, riveted scrap armor, steel and union workshop detail. Visual story to paint: An industrial bridge with a union card. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-s2-ironjaw-foundry-lion
+    lane: krea2
+    entity: card-art
+    title: "Foundry Lion"
+    asset: slime-city/cards/s2-ironjaw-foundry-lion
+    size: 832x1216
+    seed: 1085014
+    prompt_prose: >-
+      An original collectible illustration of Foundry Lion: a dramatic low-angle full-body pose in the middle of a strange city block. Belongs to Ironjaw Chrome Ogres of the Foundry, bronze-orange furnace light, green-skinned enormous chrome-jawed workers, riveted scrap armor, steel and union workshop detail. Visual story to paint: Forged from the last working crane. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-s2-ironjaw-shift-change-shove
+    lane: krea2
+    entity: card-art
+    title: "Shift-Change Shove"
+    asset: slime-city/cards/s2-ironjaw-shift-change-shove
+    size: 832x1216
+    seed: 1085015
+    prompt_prose: >-
+      An original collectible illustration of Shift-Change Shove: a punchy freeze-frame showing an absurd special ability triggering. Belongs to Ironjaw Chrome Ogres of the Foundry, bronze-orange furnace light, green-skinned enormous chrome-jawed workers, riveted scrap armor, steel and union workshop detail. Visual story to paint: The unions nonviolent protest forms a very violent wedge. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-s2-ironjaw-spare-rivet-shower
+    lane: krea2
+    entity: card-art
+    title: "Spare Rivet Shower"
+    asset: slime-city/cards/s2-ironjaw-spare-rivet-shower
+    size: 832x1216
+    seed: 1085016
+    prompt_prose: >-
+      An original collectible illustration of Spare Rivet Shower: a vivid comic snapshot of spell energy arcing across a street. Belongs to Ironjaw Chrome Ogres of the Foundry, bronze-orange furnace light, green-skinned enormous chrome-jawed workers, riveted scrap armor, steel and union workshop detail. Visual story to paint: The foreman loads a lunch pail with rivets. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-s2-ironjaw-hydraulic-lockjaw
+    lane: krea2
+    entity: card-art
+    title: "Hydraulic Lockjaw"
+    asset: slime-city/cards/s2-ironjaw-hydraulic-lockjaw
+    size: 832x1216
+    seed: 1085017
+    prompt_prose: >-
+      An original collectible illustration of Hydraulic Lockjaw: a richly detailed hidden contraption in the foreground, with an unsuspecting enemy about to trigger it. Belongs to Ironjaw Chrome Ogres of the Foundry, bronze-orange furnace light, green-skinned enormous chrome-jawed workers, riveted scrap armor, steel and union workshop detail. Visual story to paint: A hidden steel jaw clamps down on the lane. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-s2-ironjaw-overtime-pistons
+    lane: krea2
+    entity: card-art
+    title: "Overtime Pistons"
+    asset: slime-city/cards/s2-ironjaw-overtime-pistons
+    size: 832x1216
+    seed: 1085018
+    prompt_prose: >-
+      An original collectible illustration of Overtime Pistons: a magical outfit or weapon upgrade gleaming on a fully illustrated fighter. Belongs to Ironjaw Chrome Ogres of the Foundry, bronze-orange furnace light, green-skinned enormous chrome-jawed workers, riveted scrap armor, steel and union workshop detail. Visual story to paint: Management calls it efficiency. Give a fighter one permanent maximum AP, making a slow iron wall finally march. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-s2-riot-fuse-lit-bicycle-courier
+    lane: krea2
+    entity: card-art
+    title: "Fuse-Lit Bicycle Courier"
+    asset: slime-city/cards/s2-riot-fuse-lit-bicycle-courier
+    size: 832x1216
+    seed: 1085019
+    prompt_prose: >-
+      An original collectible illustration of Fuse-Lit Bicycle Courier: a bold three-quarter action portrait in a chaotic street encounter. Belongs to Riot Saints of Redline, scarlet-and-hot-pink dangerous fireworks, gleeful adult demolition rebels in scavenged protective gear, twisted stadium scaffolds. Visual story to paint: There is a ticking package strapped to the handlebars. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-s2-riot-radioactive-parade-float
+    lane: krea2
+    entity: card-art
+    title: "Radioactive Parade Float"
+    asset: slime-city/cards/s2-riot-radioactive-parade-float
+    size: 832x1216
+    seed: 1085020
+    prompt_prose: >-
+      An original collectible illustration of Radioactive Parade Float: a dramatic low-angle full-body pose in the middle of a strange city block. Belongs to Riot Saints of Redline, scarlet-and-hot-pink dangerous fireworks, gleeful adult demolition rebels in scavenged protective gear, twisted stadium scaffolds. Visual story to paint: The city canceled the parade, so the parade ate the city. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-s2-riot-friendly-fire-rehearsal
+    lane: krea2
+    entity: card-art
+    title: "Friendly-Fire Rehearsal"
+    asset: slime-city/cards/s2-riot-friendly-fire-rehearsal
+    size: 832x1216
+    seed: 1085021
+    prompt_prose: >-
+      An original collectible illustration of Friendly-Fire Rehearsal: a punchy freeze-frame showing an absurd special ability triggering. Belongs to Riot Saints of Redline, scarlet-and-hot-pink dangerous fireworks, gleeful adult demolition rebels in scavenged protective gear, twisted stadium scaffolds. Visual story to paint: The safety drill is a terrible idea. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-s2-riot-homemade-bottle-rocket
+    lane: krea2
+    entity: card-art
+    title: "Homemade Bottle Rocket"
+    asset: slime-city/cards/s2-riot-homemade-bottle-rocket
+    size: 832x1216
+    seed: 1085022
+    prompt_prose: >-
+      An original collectible illustration of Homemade Bottle Rocket: a vivid comic snapshot of spell energy arcing across a street. Belongs to Riot Saints of Redline, scarlet-and-hot-pink dangerous fireworks, gleeful adult demolition rebels in scavenged protective gear, twisted stadium scaffolds. Visual story to paint: A friend of a friend invented ballistics. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-s2-riot-fusebox-fireworks
+    lane: krea2
+    entity: card-art
+    title: "Fusebox Fireworks"
+    asset: slime-city/cards/s2-riot-fusebox-fireworks
+    size: 832x1216
+    seed: 1085023
+    prompt_prose: >-
+      An original collectible illustration of Fusebox Fireworks: a dangerous improvised street device with a dramatic activation spark. Belongs to Riot Saints of Redline, scarlet-and-hot-pink dangerous fireworks, gleeful adult demolition rebels in scavenged protective gear, twisted stadium scaffolds. Visual story to paint: An unattended celebration beneath the bridge. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-s2-riot-last-stand-matchbook
+    lane: krea2
+    entity: card-art
+    title: "Last-Stand Matchbook"
+    asset: slime-city/cards/s2-riot-last-stand-matchbook
+    size: 832x1216
+    seed: 1085024
+    prompt_prose: >-
+      An original collectible illustration of Last-Stand Matchbook: a close dramatic equipment portrait showing functional details. Belongs to Riot Saints of Redline, scarlet-and-hot-pink dangerous fireworks, gleeful adult demolition rebels in scavenged protective gear, twisted stadium scaffolds. Visual story to paint: Nobody mentioned the blast radius at orientation. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-s2-undertow-drainpipe-interrogator
+    lane: krea2
+    entity: card-art
+    title: "Drainpipe Interrogator"
+    asset: slime-city/cards/s2-undertow-drainpipe-interrogator
+    size: 832x1216
+    seed: 1085025
+    prompt_prose: >-
+      An original collectible illustration of Drainpipe Interrogator: a bold three-quarter action portrait in a chaotic street encounter. Belongs to Undertow Intelligence from teal-lit sewer canals, brass goggles, periscopes, damp emerald bricks, clandestine spies and eerie lanterns. Visual story to paint: The detectives questions are so long they stop you walking. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-s2-undertow-subsurface-warden
+    lane: krea2
+    entity: card-art
+    title: "Subsurface Warden"
+    asset: slime-city/cards/s2-undertow-subsurface-warden
+    size: 832x1216
+    seed: 1085026
+    prompt_prose: >-
+      An original collectible illustration of Subsurface Warden: a dramatic low-angle full-body pose in the middle of a strange city block. Belongs to Undertow Intelligence from teal-lit sewer canals, brass goggles, periscopes, damp emerald bricks, clandestine spies and eerie lanterns. Visual story to paint: Deep beneath the city, a slow watchman traps intruders and REGENs between fights. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-s2-undertow-floodlight-leak
+    lane: krea2
+    entity: card-art
+    title: "Floodlight Leak"
+    asset: slime-city/cards/s2-undertow-floodlight-leak
+    size: 832x1216
+    seed: 1085027
+    prompt_prose: >-
+      An original collectible illustration of Floodlight Leak: a punchy freeze-frame showing an absurd special ability triggering. Belongs to Undertow Intelligence from teal-lit sewer canals, brass goggles, periscopes, damp emerald bricks, clandestine spies and eerie lanterns. Visual story to paint: The surveillance ledger is left on the wrong desk. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-s2-undertow-backwater-iou
+    lane: krea2
+    entity: card-art
+    title: "Backwater IOU"
+    asset: slime-city/cards/s2-undertow-backwater-iou
+    size: 832x1216
+    seed: 1085028
+    prompt_prose: >-
+      An original collectible illustration of Backwater IOU: a vivid comic snapshot of spell energy arcing across a street. Belongs to Undertow Intelligence from teal-lit sewer canals, brass goggles, periscopes, damp emerald bricks, clandestine spies and eerie lanterns. Visual story to paint: The Undertow keeps its receipts underwater. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-s2-undertow-culvert-tollwire
+    lane: krea2
+    entity: card-art
+    title: "Culvert Tollwire"
+    asset: slime-city/cards/s2-undertow-culvert-tollwire
+    size: 832x1216
+    seed: 1085029
+    prompt_prose: >-
+      An original collectible illustration of Culvert Tollwire: a richly detailed hidden contraption in the foreground, with an unsuspecting enemy about to trigger it. Belongs to Undertow Intelligence from teal-lit sewer canals, brass goggles, periscopes, damp emerald bricks, clandestine spies and eerie lanterns. Visual story to paint: A hidden checkpoint with a very literal fine print. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-s2-undertow-wiretap-spikes
+    lane: krea2
+    entity: card-art
+    title: "Wiretap Spikes"
+    asset: slime-city/cards/s2-undertow-wiretap-spikes
+    size: 832x1216
+    seed: 1085030
+    prompt_prose: >-
+      An original collectible illustration of Wiretap Spikes: a magical outfit or weapon upgrade gleaming on a fully illustrated fighter. Belongs to Undertow Intelligence from teal-lit sewer canals, brass goggles, periscopes, damp emerald bricks, clandestine spies and eerie lanterns. Visual story to paint: The listening post moves into the targets claws. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-s2-exchange-bargain-rate-collector
+    lane: krea2
+    entity: card-art
+    title: "Bargain-Rate Collector"
+    asset: slime-city/cards/s2-exchange-bargain-rate-collector
+    size: 832x1216
+    seed: 1085031
+    prompt_prose: >-
+      An original collectible illustration of Bargain-Rate Collector: a bold three-quarter action portrait in a chaotic street encounter. Belongs to Meat Exchange of gilded Crown Market, gold-veined butcher tiles, ridiculous corporate pinstripe suits, brass coin scales, decadent auction velvet. Visual story to paint: Shows up with a polite smile and a bill stapled to its fist. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-s2-exchange-golden-bailiff
+    lane: krea2
+    entity: card-art
+    title: "Golden Bailiff"
+    asset: slime-city/cards/s2-exchange-golden-bailiff
+    size: 832x1216
+    seed: 1085032
+    prompt_prose: >-
+      An original collectible illustration of Golden Bailiff: a dramatic low-angle full-body pose in the middle of a strange city block. Belongs to Meat Exchange of gilded Crown Market, gold-veined butcher tiles, ridiculous corporate pinstripe suits, brass coin scales, decadent auction velvet. Visual story to paint: An overdue summons in six tons of polished brass. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-s2-exchange-compound-interest-notice
+    lane: krea2
+    entity: card-art
+    title: "Compound Interest Notice"
+    asset: slime-city/cards/s2-exchange-compound-interest-notice
+    size: 832x1216
+    seed: 1085033
+    prompt_prose: >-
+      An original collectible illustration of Compound Interest Notice: a punchy freeze-frame showing an absurd special ability triggering. Belongs to Meat Exchange of gilded Crown Market, gold-veined butcher tiles, ridiculous corporate pinstripe suits, brass coin scales, decadent auction velvet. Visual story to paint: Two damage now, two mana owed next turn. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-s2-exchange-contract-amendment
+    lane: krea2
+    entity: card-art
+    title: "Contract Amendment"
+    asset: slime-city/cards/s2-exchange-contract-amendment
+    size: 832x1216
+    seed: 1085034
+    prompt_prose: >-
+      An original collectible illustration of Contract Amendment: a vivid comic snapshot of spell energy arcing across a street. Belongs to Meat Exchange of gilded Crown Market, gold-veined butcher tiles, ridiculous corporate pinstripe suits, brass coin scales, decadent auction velvet. Visual story to paint: A harmless-looking clause raises a fighters attack by one permanently. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-s2-exchange-invisible-lien
+    lane: krea2
+    entity: card-art
+    title: "Invisible Lien"
+    asset: slime-city/cards/s2-exchange-invisible-lien
+    size: 832x1216
+    seed: 1085035
+    prompt_prose: >-
+      An original collectible illustration of Invisible Lien: a dangerous improvised street device with a dramatic activation spark. Belongs to Meat Exchange of gilded Crown Market, gold-veined butcher tiles, ridiculous corporate pinstripe suits, brass coin scales, decadent auction velvet. Visual story to paint: A hidden parking fee larger than a house. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
+  - key: slime-r5-card-s2-exchange-executive-health-coverage
+    lane: krea2
+    entity: card-art
+    title: "Executive Health Coverage"
+    asset: slime-city/cards/s2-exchange-executive-health-coverage
+    size: 832x1216
+    seed: 1085036
+    prompt_prose: >-
+      An original collectible illustration of Executive Health Coverage: a close dramatic equipment portrait showing functional details. Belongs to Meat Exchange of gilded Crown Market, gold-veined butcher tiles, ridiculous corporate pinstripe suits, brass coin scales, decadent auction velvet. Visual story to paint: The insurance finally pays out to someone dangerous. Strong focal storytelling, humorous character attitude, sharply distinguished subject and environment.
