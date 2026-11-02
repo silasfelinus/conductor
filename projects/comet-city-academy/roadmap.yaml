@@ -745,3 +745,32 @@ tasks:
       **Relationships:** At least 16 individually written recruitable adult classmates/volunteers/staff, at least eight meaningful romanceable adults representing varied gender/body/identity, ov
 
       [... truncated; read the full issue at https://github.com/silasfelinus/kind_robots/issues/4181]
+  - id: t-033
+    title: "Prom of Doom: complete art-first animated card interactions across gameplay"
+    status: ready
+    stakes: reversible
+    owner: null
+    passes: 0
+    source_issue: "silasfelinus/kind_robots#4659"
+    updated: '2026-11-02'
+    note: |-
+      FROM GITHUB ISSUE silasfelinus/kind_robots#4659 (https://github.com/silasfelinus/kind_robots/issues/4659), opened by @silasfelinus on 2026-11-02. Imported by scripts/sync_github_issues.py. Reference the issue in the implementing PR (`Closes silasfelinus/kind_robots#4659`) so it closes on merge; the bridge closes it otherwise once this task is done.
+
+      ## Direction (2026-11-02 PT)
+      Prom of Doom should use an art-first, animated **card-based gameplay language** across the entire experience. The old assignment board nests a five-hero roster under *every* quest; it reads like administrative scheduling rather than playing a hero card.
+
+      Use Memory Dungeon, Ecotone and Slime City's stronger card and animation patterns as reference. The game should present an illustrated **quest/case first**, then let the player assign 1–3 heroes by playing cards from a persistent hand. Assignment is a deliberate move, not a checkbox.
+
+      ## Acceptance contract
+      - One active illustrated quest card, with clear next/previous mission choices and persistent commitments to all cases. No repeated hero roster under each incident.
+      - Single prominent animated hand: readable illustrations, large identities, power/trait signals, available vs injured/elsewhere, contextual reaction. Tap/click and keyboard to play or recall; drag/drop can supplement but never replace accessible controls.
+      - Motion system for deal, draw, lift, flip/reveal, play-to-slot, recall, outcome, earned/recruited cards and changing scenes. Respect prefers-reduced-motion, limit visual noise, and never make meaning depend on animation.
+      - The protagonist's own lead card and earned follower roster, 1–3 team slots, honest odds, special combinations, explicit player-vs-follower role, meaningful case consequences. Preserve the 30-day story engine, injury gating and saved selections.
+      - Apply the card interaction grammar to day exploration, choices, followers and relationships, night patrol, tactical interludes, case debrief and scrapbook unlocks. Don't merely re-skin giant text forms.
+      - Art first, use authored existing rendered assets and image-shaped fallbacks; do not block interaction while queued art is pending.
+      - One viewport at 390 / 768 / 1440 px. Scroll only inside owned panes, no second header, keyboard/accessibility and reduced-motion variants.
+      - Automated seeded adversarial tests: assignment persistence across mission switches, max 3 and exclusivity, unavailable allies, special routes, mission resolution, save/load, keyboard & motion preference contracts.
+      - Run a full 30-day playthrough and capture actual screenshots/interaction checks before declaring complete. Public release and subjective visual approval remain gated.
+
+      ## Implementation
+      First mission-hand / illustrated case-focus increment: PR #4657. That PR is not complete acceptance of this issue; continue through other screens and gameplay before closure.
