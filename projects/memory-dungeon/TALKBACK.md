@@ -75,3 +75,11 @@
 **What worked:** legal adjacent travel, once-only journal rewards, forged-choice rejection, stable art-shaped placeholders and continuity-sensitive narrative; the existing master issue remains open for the unfinished campaign.
 
 **What to improve:** this PR needed two successive formatting repairs before CI became green. Run changed-file formatting locally before submission, or apply the exact formatter suggestion once and recheck the entire changed file; avoid repeated CI-only patch loops. The highest-value gameplay work is still the already-tracked e08 earned completion gate and interrupted-save e08→e10 test, not another duplicate kaizen task. No ArtJob IDs or delivered images were produced.
+
+## 2026-11-01 PT | Reviewer green merge | memory-dungeon/t-038 | Kind Robots #4618
+
+**Decision:** merged reversible World Ten route-echo PR #4618 (squash `c53c42938a0d2b5cfe9a66ee1b2feece294069b1`) after all 15 exact-head Actions workflows passed on `92fdb1f876916138d4b97387e0dd5655ed8cb81d`; Contract Tests #41374983654 passed four shards and verifier. Three Memory Dungeon files, no unresolved reviews, schema changes or deploy.
+
+**What worked:** four earlier e10 encounters now feed eight earned callbacks into both clock-tower verdicts. The narrative reads replayed adjacent-travel journal choices, not serialized flags; tests exercise 16 verdict/route cases, missing or forged choices and JSON save restoration. Existing e04/e07/e09 history gates, fragment checks and Classic remain unchanged.
+
+**What to improve:** add an interrupted-save end-to-end campaign test from e08 through e10 once e08 is actually completable. It is already owned by the master issue and t-046's acceptance scope, so do not duplicate it as a new kaizen task. e09/e10 authored coverage, e11/e12, actual ArtJob delivery, gallery integration and rendered-device acceptance remain unfinished; keep the project ACTIVE and the issue open.
