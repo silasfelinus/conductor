@@ -871,17 +871,16 @@ tasks:
   - id: t-051
     milestone: m5
     title: "Twenty-follower barracks dialogue: rewrite branches and submit conversation art"
-    status: review
+    status: ready
     passes: 0
     stakes: reversible
     note: |-
       Audit every follower's barracks dialogue, personal-history revelations, friendship/romance boundaries, departure or death callbacks, and faction-specific choices across the 50-day run. Give each follower an individual voice and thorny competing loyalties, keep their canonical species and name, and make flags echo later. Rewrite/test before producing character-consistent scene plates for the most consequential early and late talks.
 
       Focused Kiyo continuity/ethics slice prepared in kind_robots worker/emperor-of-dust-t-051-20261102-6d8a. Correct six canonical romances; preserve Kiyo legacy conversation and choice IDs; add an independent infirmary ethics chain and distinct epilogue consequences with assertions. This is partial t-051 progress only: other follower dialogue audits and real conversation ArtJob submissions/delivery remain open.
-    owner: worker
-    claimed_by: 2026-11-02T042812Z-emperor-of-dust-t-051-6d8a
-    claimed_at: '2026-11-02T04:28:12Z'
-    updated: '2026-11-02T04:31:35Z'
+
+      2026-11-01 PT: Merged Kiyo canon/friendship and consequence slice in kind_robots#4625 (c812c71fd5dac71b09d8d4c8691de8b47796858d), with all 8 exact-head Actions workflows completed successfully (including Emperor fortress/adversarial, TypeScript, formatting and four contract shards). Merged four new private Kiyo art requests in conductor#6943 (8f0b5e2f8aa24c85d442fd8a0d586b60faebdf30) with all 4 checks green. Existing talk/option IDs preserved and legacy romance-state route made reachable as friendship. Art request manifest is not ArtJob submission, render, review, export or in-game wiring; no ArtJob IDs claimed. Remaining t-051: review the other followers and deliver accepted conversation art. Do not mark done or final human gate.
+    updated: '2026-11-02T04:43:02.821Z'
   - id: t-052
     milestone: m5
     title: "Illustrated scene delivery and full 50-day choice-and-art coverage audit"
