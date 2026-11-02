@@ -67,3 +67,11 @@
 **What worked:** the clock-tower finale requires replayed adjacent travel, twelve unique decisions and both earned fragments before saving an e10 verdict; two outcomes preserve historical Scylla, Vesper and Pip decisions rather than fabricating consent or rescues. The earlier formatting failures were repaired on the same PR, with no weakened checks.
 
 **What to improve:** e08 remains the actual normal-play progression blocker, so the next implementation should complete its earned exit and adversarially test interrupted-save e08→e09→e10. Production images and the remaining authored sites still need independent verification. This work is already tracked under the open master task and #4136; do not create a duplicate kaizen task.
+
+## 2026-11-01 PT | Reviewer green merge | memory-dungeon/t-038 | Kind Robots #4602
+
+**Decision:** merged reversible e10 connective-encounter PR #4602 (squash `ecb31cc6457903978be7ec32c2f2ecfc1ab7835a`) after all 14 exact-head Actions workflows passed on `66021727d239326b2055439b797e67d6465ba344`; Contract Tests ran all four shards plus verifier. Three Memory Dungeon-only files, no unresolved review threads, no migration or deployment. Eight original sites add sixteen replay-validated choices without replacing fragments, photographs or the clock-tower finale.
+
+**What worked:** legal adjacent travel, once-only journal rewards, forged-choice rejection, stable art-shaped placeholders and continuity-sensitive narrative; the existing master issue remains open for the unfinished campaign.
+
+**What to improve:** this PR needed two successive formatting repairs before CI became green. Run changed-file formatting locally before submission, or apply the exact formatter suggestion once and recheck the entire changed file; avoid repeated CI-only patch loops. The highest-value gameplay work is still the already-tracked e08 earned completion gate and interrupted-save e08→e10 test, not another duplicate kaizen task. No ArtJob IDs or delivered images were produced.
