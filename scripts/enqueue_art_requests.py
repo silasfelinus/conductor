@@ -53,10 +53,12 @@ import yaml
 
 try:
     from scripts import consume_art_queue_core as core
+    from scripts.art_ledger_authoring import ledger_problems
     from scripts.check_art_prompts_live_contract import run_contract
     from scripts.repair_negation_art_prompts import violations
 except ImportError:  # pragma: no cover - direct script execution
     import consume_art_queue_core as core
+    from art_ledger_authoring import ledger_problems
     from check_art_prompts_live_contract import run_contract
     from repair_negation_art_prompts import violations
 
@@ -541,6 +543,13 @@ def submit(path, header, ledger, cells, post=None, fetch_source=None, live=None)
     fetch_source = fetch_source or fetch_source_image
     cells = [(subject, lane) for subject, lane in cells if not job_id_of(subject, lane["key"])]
     broken = contract_rules(cells, live)
+    # A template-filled ledger passes the contract sentence by sentence and still describes
+    # nothing: 2026-11-02, 192 Slime City cards (#6951) rendered as interchangeable faction
+    # posters. Judged across the whole ledger; see scripts/art_ledger_authoring.py.
+    authoring = {}
+    for key, rule, _ in ledger_problems(ledger, only_unsubmitted=False):
+        authoring.setdefault(key, []).append(rule)
+    broken = [rules + authoring.get(subject.get("key"), []) for (subject, _), rules in zip(cells, broken)]
     fetched = {}
 
     def fetch(image_id):
