@@ -371,3 +371,46 @@ tasks:
     claimed_by: 2026-11-02T044600Z-slime-city-t018-a16b
     claimed_at: '2026-11-02T04:46:00Z'
     updated: '2026-11-02T06:46:00Z'
+  - id: t-019
+    milestone: m2
+    title: "Implement Blackout banked 3-mana turns and strategic five-card cycling"
+    status: ready
+    depends_on: t-004
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Silas 2026-11-01 PT: In primary Blackout each ten-card deck deals five
+      cards initially. Unplayed cards stay in hand across rounds by default.
+      The player can select any surviving hand cards to discard on END ROUND;
+      refill to five, never drawing cards actually played on the immediately
+      preceding turn even after a seeded reshuffle. The CPU receives the same
+      cycle and must choose its discards by a deterministic visible-board
+      policy. Start with three mana; each new round adds up to three mana,
+      banking unspent mana up to ten. Mana debt reduces the new allowance,
+      not the existing bank; any debt beyond one allowance rolls forward.
+      Rebalance 4-6 mana cards against banking, update tutorial/hand labels,
+      in-hand discard affordance, server-verified command replay, tests for
+      exhaustion and invalid discard commands. Preserve legacy classicFog,
+      Gridiron, BLOODRUSH and their tests. Internal preview only.
+  - id: t-020
+    milestone: m2
+    title: "Finish 132 faction cards at 40 per crew with diverse counterplay"
+    status: ready
+    depends_on: t-004
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      After the 60 founder cards, 12 reserve cards and 36 Gutter Crown
+      wave-two faction cards, six factions each have 18 playable cards.
+      Add exactly 22 distinct faction cards per crew, 132 total, yielding
+      40 per faction and 240 faction-specific total. The separate 60
+      mercenaries make a 300-card collection. Add 44 additional rares and
+      88 nonrares to retain exactly one rare and two others per pack, no
+      duplicates or exhausted-bucket inventory bugs. Require at least three
+      viable different ten-card archetypes per faction, flavorful unique
+      mechanics or synergistic consequences, readable counters, legal
+      faction ownership, verified seeded ability resolution and adverse
+      balance tests. Ship in coherent playable waves, art queue separate
+      and never a gameplay blocker. Do not count unmerged cards as done.
