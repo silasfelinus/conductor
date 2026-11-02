@@ -213,10 +213,7 @@ tasks:
   - id: t-009
     milestone: m3
     title: "Write and implement six genuinely different crew campaigns"
-    status: review
-    owner: worker
-    claimed_by: 20261102T205113610Z-slime-city-t009-l4him95w
-    claimed_at: '2026-11-02T20:51:13.610Z'
+    status: ready
     depends_on: [t-004, t-007]
     passes: 0
     stakes: reversible
@@ -236,7 +233,11 @@ tasks:
       PARTIAL MERGED 2026-11-02 PT: Kind Robots PR #4669 merged as 2c427c1b4153cc2c044abb0e6e01f3b91a430219. Authored 30 chapter-specific rival/leader conversations, 12 choice-memory callbacks and six defeat/rematch lines, illustrated in the existing Story interface. Further post-battle reactions, rewards, art verification and subjective playtesting remain on this task. No publish/deploy action claimed.
 
       Next campaign-depth increment in Kind Robots worker branch: 60 authored rival response lines for victory/defeat across thirty battles, plus twelve player reflections specific to the chosen conviction/cunning tactic. Last attempted approach is now saved even on a defeat, as an optional validated account-story field compatible with preexisting saves. The illustrated post-battle result appears before the next chapter or epilogue; no reward, matchmaking or currency effects. Added six-crew, five-chapter, both-approach result and legacy-save integrity coverage. Latest-head PR tests required before merge; full campaign and human fun acceptance remain open.
-    updated: '2026-11-02T20:56:31.970Z'
+
+      PARTIAL MERGED 2026-11-02 PT: Kind Robots PR #4672 landed on main at 26ae5525bdb1b55c6aa085eeafee805f71132a65, with all six latest-head GitHub Actions workflows and all contract shards passing. Added 60 authored rival aftermath lines for distinct win/loss outcomes across six five-chapter campaigns, plus twelve approach-sensitive protagonist reflections and an illustrated verdict panel before the next chapter/ending. Campaign saves now remember attempted conviction or cunning even after defeat; optional validated field preserves compatibility with prior saves, and older losses never invent choices. Added deterministic six-faction and validator edge-case tests. Task remains partially complete: deeper branching rewards, art placement, adversarial fun and human acceptance remain. No production deployment or public release was triggered.
+
+      PARTIAL MERGED 2026-11-02 PT: Kind Robots PR #4672 merged as 26ae5525bdb1b55c6aa085eeafee805f71132a65. Shipped sixty chapter-specific rival victory/defeat reactions, twelve conviction/cunning leader reflections and an illustrated aftermath panel; saved the last attempted tactic even on losses while preserving old account saves. Human QA, art and further campaign distinctiveness still remain open. No live deploy triggered.
+    updated: '2026-11-02T21:14:29.971Z'
   - id: t-010
     milestone: m3
     title: "Create daily, weekly and evergreen missions with earned progression"
