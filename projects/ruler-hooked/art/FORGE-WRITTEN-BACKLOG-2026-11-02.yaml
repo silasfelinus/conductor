@@ -1,0 +1,768 @@
+# The Ruler Is Hooked: written-but-unqueued Playbook Forge beats (Silas, 2026-11-02 PT: "if it's written, it should be in the queue").
+# 59 beats of Playbook Studio game "ruler-hooked" whose authored artPrompt has no delivered file (production
+# /api/admin/playbook-ledger inventory), no conductor ledger entry (asset or prompt match) and no live or finished ArtJob
+# (Forge art-request notes and this project's queue, prompt match). Asset is the beat's runtime path where it has one,
+# else playbook/ruler-hooked/<node>. Priority 1: renders only when no game, Hybridizer or interactive job waits.
+# auto_submit: true. Private. Queued is not rendered; rendered is not delivered.
+round: ruler-hooked-ruler-hooked-forge-written-backlog-20261102
+project_slug: ruler-hooked
+designer: Playbook Forge written-art backlog
+is_public: false
+is_mature: false
+cast_loras: false
+priority: 1
+auto_submit: true
+lanes:
+- key: krea2
+  label: Krea 2, the Forge default lane
+  engine: krea2
+  prompt: prose
+subjects:
+- key: forge-opening-1
+  lane: krea2
+  entity: playbook-opening
+  title: A quiet coronation
+  playbook_node: opening:1
+  asset: ruler-hooked/castle_grounds-humble
+  size: 1344x768
+  seed: 893000
+  prompt_prose: A small tidy grey stone castle with two short round towers on a green lawn beside a calm blue lake,
+    a vegetable garden of cabbages and bean poles, a laundry line of white sheets, and a wooden fishing dock reaching
+    into the water, one blue pennant on a tower. Warm morning sun from the left, wide view across the lawn. Cartoon
+    storybook painting with soft rounded shapes, loose brown ink lines and warm saturated colours.
+- key: forge-card-vex-model-village
+  lane: krea2
+  entity: playbook-encounter
+  title: Lakeview Terraces
+  playbook_node: card:vex-model-village
+  asset: ruler-hooked/card-vex-model-village
+  size: 1344x768
+  seed: 893001
+  prompt_prose: 'Vex, a broad well-fed warlock in his forties with olive skin, two short curled black horns, a purple
+    robe open over a mustard waistcoat, sets a large wooden scale model on a tackle box on the dock: rows of identical
+    tiny white cottages with little balconies climbing a green wooded hillside. He spreads his hands wide and smiles.
+    Bright midday light. Eye-level view from a wooden lakeside fishing dock, the tip of a bamboo fishing rod in
+    the lower left corner. Cartoon storybook painting with soft rounded shapes, loose brown ink lines and warm saturated
+    colours.'
+- key: forge-card-sela-tree-sit
+  lane: krea2
+  entity: playbook-encounter
+  title: The Last Oak
+  playbook_node: card:sela-tree-sit
+  asset: ruler-hooked/card-sela-tree-sit
+  size: 1344x768
+  seed: 893002
+  prompt_prose: On a hillside above rows of new white cottages, Sela, a slight elderly druid woman with dark brown
+    skin, white hair full of twigs and moss, a cloak of overlapping green leaves and bare feet, sits against the
+    trunk of a huge old oak with an iron chain around her waist and her arms folded. At the foot of the oak Captain
+    Cordelia, a powerfully built middle-aged woman with light brown skin, close-cropped grey hair, dented steel
+    half-armour and a blue tabard, looks up at her, and builders eat lunch on a pile of timber. Warm afternoon light.
+    Wide view from the lake shore. Cartoon storybook painting with soft rounded shapes, loose brown ink lines and
+    warm saturated colours.
+- key: forge-card-lake-watch
+  lane: krea2
+  entity: playbook-encounter
+  title: A Watch on the Water
+  playbook_node: card:lake-watch
+  asset: ruler-hooked/card-lake-watch
+  size: 1344x768
+  seed: 893003
+  prompt_prose: Captain Cordelia, a powerfully built middle-aged woman with light brown skin, close-cropped grey
+    hair, dented steel half-armour and a blue tabard, stands at the end of the dock at night holding up a brass
+    lantern and pointing across the lake, where a line of small rowboats with lanterns floats on the dark water.
+    Deep blue moonlight with warm lantern glow. Eye-level view from a wooden lakeside fishing dock, the tip of a
+    bamboo fishing rod in the lower left corner. Cartoon storybook painting with soft rounded shapes, loose brown
+    ink lines and warm saturated colours.
+- key: forge-card-brack-lures
+  lane: krea2
+  entity: playbook-encounter
+  title: Fell Off a Barge
+  playbook_node: card:brack-lures
+  asset: ruler-hooked/card-brack-lures
+  size: 1344x768
+  seed: 893004
+  prompt_prose: Brack, a rangy frog-folk smuggler with mottled green skin, a scruffy grey beard, a long brown oilskin
+    coat and a battered tricorn hat, crouches on the dock beside an open wooden crate full of shining fishing lures
+    in gold, silver and bright enamel, each in a twist of paper, and holds up a gold fish-shaped lure toward the
+    viewer with a wink. Soft grey morning light. Eye-level view from a wooden lakeside fishing dock, the tip of
+    a bamboo fishing rod in the lower left corner. Cartoon storybook painting with soft rounded shapes, loose brown
+    ink lines and warm saturated colours.
+- key: forge-card-brack-trial
+  lane: krea2
+  entity: playbook-encounter
+  title: Trial by Tackle
+  playbook_node: card:brack-trial
+  asset: ruler-hooked/card-brack-trial
+  size: 1344x768
+  seed: 893005
+  prompt_prose: Brack, a rangy frog-folk smuggler with mottled green skin, a scruffy grey beard, a long brown oilskin
+    coat and a battered tricorn hat, stands at the end of the dock with iron cuffs on his wrists, gripping a fishing
+    rod in both hands and grinning, while Captain Cordelia, a powerfully built middle-aged woman with light brown
+    skin, close-cropped grey hair, dented steel half-armour and a blue tabard, holds the end of his chain and frowns.
+    Villagers watch from the shore. Bright morning light. Eye-level view from a wooden lakeside fishing dock, the
+    tip of a bamboo fishing rod in the lower left corner. Cartoon storybook painting with soft rounded shapes, loose
+    brown ink lines and warm saturated colours.
+- key: forge-card-thistle-fish-exports
+  lane: krea2
+  entity: playbook-encounter
+  title: Export Rights
+  playbook_node: card:thistle-fish-exports
+  asset: ruler-hooked/card-thistle-fish-exports
+  size: 1344x768
+  seed: 893006
+  prompt_prose: Thistle, a tall envoy woman with deep brown skin, a high black braided bun, a high-collared plum
+    and silver travelling coat and white gloves, stands on the dock with her white gloves tucked into her belt,
+    holding a silver fish up by the tail in one bare hand and pointing at the far shore, where long foreign fishing
+    nets hang on poles over the water. Cool bright morning light. Eye-level view from a wooden lakeside fishing
+    dock, the tip of a bamboo fishing rod in the lower left corner. Cartoon storybook painting with soft rounded
+    shapes, loose brown ink lines and warm saturated colours.
+- key: forge-card-fish-tithe
+  lane: krea2
+  entity: playbook-encounter
+  title: A Levy on Fish
+  playbook_node: card:fish-tithe
+  asset: ruler-hooked/card-fish-tithe
+  size: 1344x768
+  seed: 893007
+  prompt_prose: Gristle, a thin stooped old tax clerk with grey skin, half-moon spectacles low on his nose and a
+    long black coat, stands at the end of the dock beside a set of brass weighing scales piled with small fish and
+    holds out an open hand toward the viewer, a wooden bucket of fish at his feet. Flat grey overcast light. Eye-level
+    view from a wooden lakeside fishing dock, the tip of a bamboo fishing rod in the lower left corner. Cartoon
+    storybook painting with soft rounded shapes, loose brown ink lines and warm saturated colours.
+- key: forge-card-fen-satire
+  lane: krea2
+  entity: playbook-encounter
+  title: A Song in the Square
+  playbook_node: card:fen-satire
+  asset: ruler-hooked/card-fen-satire
+  size: 1344x768
+  seed: 893008
+  prompt_prose: In a cobbled village square, Fen, a small round bard with freckled brown skin, a curly black topknot,
+    mismatched striped and checked layers and a battered lute with a red ribbon, stands on an upturned barrel singing
+    with the lute raised high, while a crowd of laughing villagers in aprons and caps sing along, one man stretching
+    his arms in a huge pretend yawn. Warm afternoon light. Eye-level view from the edge of the crowd. Cartoon storybook
+    painting with soft rounded shapes, loose brown ink lines and warm saturated colours.
+- key: forge-card-mossy-price
+  lane: krea2
+  entity: playbook-encounter
+  title: Mossy Names Her Price
+  playbook_node: card:mossy-price
+  asset: ruler-hooked/card-mossy-price
+  size: 1344x768
+  seed: 893009
+  prompt_prose: Mossy, an enormously round cheerful bog witch with silver-blue skin, long green hair of pond weed
+    and strings of clay beads and little glass bottles across her chest, stands on the dock holding out an empty
+    wicker basket toward the viewer with a broad grin, a thin crescent moon low in the evening sky behind her and
+    flowering vines covering the far treeline. Violet dusk light. Eye-level view from a wooden lakeside fishing
+    dock, the tip of a bamboo fishing rod in the lower left corner. Cartoon storybook painting with soft rounded
+    shapes, loose brown ink lines and warm saturated colours.
+- key: forge-card-public-dock
+  lane: krea2
+  entity: playbook-encounter
+  title: A Dock for Everyone
+  playbook_node: card:public-dock
+  asset: ruler-hooked/card-public-dock
+  size: 1344x768
+  seed: 893010
+  prompt_prose: Ash, a soft broad-shouldered young angler with warm tan skin, shaggy dark hair, patched brown waders
+    and an oversized blue wool coat, stands on the shore holding a flat cap in both hands and looking hopefully
+    at the viewer. Behind Ash an old grey village dock with missing planks sticks out into the lake, and village
+    children sit on the bank with fishing poles. Warm morning light. Eye-level view from a wooden lakeside fishing
+    dock, the tip of a bamboo fishing rod in the lower left corner. Cartoon storybook painting with soft rounded
+    shapes, loose brown ink lines and warm saturated colours.
+- key: forge-card-vex-sela-truce
+  lane: krea2
+  entity: playbook-encounter
+  title: An Unlikely Joint Venture
+  playbook_node: card:vex-sela-truce
+  asset: ruler-hooked/card-vex-sela-truce
+  size: 1344x768
+  seed: 893011
+  prompt_prose: Vex, a broad well-fed warlock in his forties with olive skin, two short curled black horns, a purple
+    robe open over a mustard waistcoat, and Sela, a slight elderly druid woman with dark brown skin, white hair
+    full of twigs and moss, a cloak of overlapping green leaves and bare feet, stand together on the dock holding
+    opposite ends of one long blueprint drawn with a wooden lodge among trees and gardens on its roofs, Vex smiling
+    broadly and Sela smiling stiffly. Bright morning light. Eye-level view from a wooden lakeside fishing dock,
+    the tip of a bamboo fishing rod in the lower left corner. Cartoon storybook painting with soft rounded shapes,
+    loose brown ink lines and warm saturated colours.
+- key: forge-card-quill-day-off
+  lane: krea2
+  entity: playbook-encounter
+  title: The Steward’s Request
+  playbook_node: card:quill-day-off
+  asset: ruler-hooked/card-quill-day-off
+  size: 1344x768
+  seed: 893012
+  prompt_prose: Quill, a slim upright steward in his fifties with light brown skin, a neat black bun pierced by
+    a long grey goose quill, round wire spectacles and a dark green high-collared coat with brass buttons, stands
+    on the dock with a thick bundle of papers tied with string under one arm and a straw sun hat in his other hand,
+    smiling with embarrassment. Soft morning light on a calm lake. Eye-level view from a wooden lakeside fishing
+    dock, the tip of a bamboo fishing rod in the lower left corner. Cartoon storybook painting with soft rounded
+    shapes, loose brown ink lines and warm saturated colours.
+- key: forge-card-nix-old-name
+  lane: krea2
+  entity: playbook-encounter
+  title: The Lake’s Old Name
+  playbook_node: card:nix-old-name
+  asset: ruler-hooked/card-nix-old-name
+  size: 1344x768
+  seed: 893013
+  prompt_prose: Nix, a tall translucent figure of clear lake water with drifting silt, water grass and a few old
+    copper coins turning inside its body, a smooth face with two pale glowing eyes, rises out of the dark water
+    at the end of the dock under a starry sky and holds out cupped watery hands toward the viewer, a small glowing
+    white pearl resting in them. Cool blue moonlight and mist on the water. Eye-level view from a wooden lakeside
+    fishing dock, the tip of a bamboo fishing rod in the lower left corner. Cartoon storybook painting with soft
+    rounded shapes, loose brown ink lines and warm saturated colours.
+- key: forge-card-drowned-surface
+  lane: krea2
+  entity: playbook-encounter
+  title: Something Floats Up
+  playbook_node: card:drowned-surface
+  asset: ruler-hooked/card-drowned-surface
+  size: 1344x768
+  seed: 893014
+  prompt_prose: Beside a small village dock, dozens of pale bloated carp float belly-up on murky green water while
+    a few have rolled over and begun to swim away. Villagers in aprons crowd the dock edge, pointing and holding
+    their noses. Grey overcast light. Eye-level view from a wooden lakeside fishing dock, the tip of a bamboo fishing
+    rod in the lower left corner. Cartoon storybook painting with soft rounded shapes, loose brown ink lines and
+    warm saturated colours.
+- key: forge-card-heron-delegation
+  lane: krea2
+  entity: playbook-encounter
+  title: The Heron Delegation
+  playbook_node: card:heron-delegation
+  asset: ruler-hooked/card-heron-delegation
+  size: 1344x768
+  seed: 893015
+  prompt_prose: Seven tall grey herons stand in a neat row along the dock planks, each on one leg, all facing the
+    viewer, the tallest heron in front with a silver fish lying at its feet. Reed beds and calm water behind them.
+    Soft golden morning light. Eye-level view from a wooden lakeside fishing dock, the tip of a bamboo fishing rod
+    in the lower left corner. Cartoon storybook painting with soft rounded shapes, loose brown ink lines and warm
+    saturated colours.
+- key: forge-card-weir-1
+  lane: krea2
+  entity: playbook-spine
+  title: A Wheel on the Outflow
+  playbook_node: card:weir-1
+  asset: ruler-hooked/card-weir-1
+  size: 1344x768
+  seed: 893016
+  prompt_prose: Vex, a broad well-fed warlock in his forties with olive skin, two short curled black horns, a purple
+    robe open over a mustard waistcoat, stands on the stone bank where a stream leaves the lake and holds up a drawing
+    of a stone weir with a big wooden mill wheel, smiling. Behind him the clear stream runs fast over pebbles into
+    a wooded valley. Bright spring morning light. Eye-level view from a wooden lakeside fishing dock, the tip of
+    a bamboo fishing rod in the lower left corner. Cartoon storybook painting with soft rounded shapes, loose brown
+    ink lines and warm saturated colours.
+- key: forge-card-weir-stone
+  lane: krea2
+  entity: playbook-spine
+  title: The Run Stalls
+  playbook_node: card:weir-stone
+  asset: ruler-hooked/card-weir-stone
+  size: 1344x768
+  seed: 893017
+  prompt_prose: Hundreds of huge grey sturgeon crowd the pool below a tall stone weir with a turning mill wheel,
+    their backs breaking the surface. Villagers on the bank lower big rope nets. In the millpond above, Nix, a tall
+    translucent figure of clear lake water with drifting silt, water grass and a few old copper coins turning inside
+    its body, a smooth face with two pale glowing eyes, rises to the waist and looks down at them. Cool grey spring
+    light. Wide view from the bank below the weir. Cartoon storybook painting with soft rounded shapes, loose brown
+    ink lines and warm saturated colours.
+- key: forge-card-weir-ladder
+  lane: krea2
+  entity: playbook-spine
+  title: Fish on the Stairs
+  playbook_node: card:weir-ladder
+  asset: ruler-hooked/card-weir-ladder
+  size: 1344x768
+  seed: 893018
+  prompt_prose: A stone weir with a wooden mill wheel, and up one side a stepped fish ladder of small stone pools
+    where silver trout leap from pool to pool. Villagers sit along the bank watching, and at the top Vex, a broad
+    well-fed warlock in his forties with olive skin, two short curled black horns, a purple robe open over a mustard
+    waistcoat, stands with folded arms and a small proud smile. Warm dusk light. Wide view from the bank below the
+    weir. Cartoon storybook painting with soft rounded shapes, loose brown ink lines and warm saturated colours.
+- key: forge-card-reed-1
+  lane: krea2
+  entity: playbook-spine
+  title: Who Owns the Shallows
+  playbook_node: card:reed-1
+  asset: ruler-hooked/card-reed-1
+  size: 1344x768
+  seed: 893019
+  prompt_prose: In a cove thick with tall green reeds, Thistle, a tall envoy woman with deep brown skin, a high
+    black braided bun, a high-collared plum and silver travelling coat and white gloves, stands in a small painted
+    boat pointing at the open water, and on the reedy bank Sela, a slight elderly druid woman with dark brown skin,
+    white hair full of twigs and moss, a cloak of overlapping green leaves and bare feet, holds a bundle of willow
+    wands with string, frowning. Herons stand in the reeds between them. Clear summer morning light. Eye-level view
+    from a wooden lakeside fishing dock, the tip of a bamboo fishing rod in the lower left corner. Cartoon storybook
+    painting with soft rounded shapes, loose brown ink lines and warm saturated colours.
+- key: forge-card-reed-marina
+  lane: krea2
+  entity: playbook-spine
+  title: The Marina Opens
+  playbook_node: card:reed-marina
+  asset: ruler-hooked/card-reed-marina
+  size: 1344x768
+  seed: 893020
+  prompt_prose: A new wooden marina in a deep cove crowded with brightly painted pleasure boats, their owners in
+    straw boaters tossing bread off the sterns, fat grey fish gathering in the shadow under the hulls. On the jetty
+    Thistle, a tall envoy woman with deep brown skin, a high black braided bun, a high-collared plum and silver
+    travelling coat and white gloves, holds out a small leather purse toward the viewer. Bright midday light. Eye-level
+    view from a wooden lakeside fishing dock, the tip of a bamboo fishing rod in the lower left corner. Cartoon
+    storybook painting with soft rounded shapes, loose brown ink lines and warm saturated colours.
+- key: forge-card-reed-nursery
+  lane: krea2
+  entity: playbook-spine
+  title: The Shallows Boil
+  playbook_node: card:reed-nursery
+  asset: ruler-hooked/card-reed-nursery
+  size: 1344x768
+  seed: 893021
+  prompt_prose: Sela, a slight elderly druid woman with dark brown skin, white hair full of twigs and moss, a cloak
+    of overlapping green leaves and bare feet, stands ankle-deep in a shallow reedy cove marked off with willow
+    wands and string, the clear water around her silver with thousands of tiny fish, and she raises one hand toward
+    the viewer with the palm out. Soft spring morning light. Eye-level view from a wooden lakeside fishing dock,
+    the tip of a bamboo fishing rod in the lower left corner. Cartoon storybook painting with soft rounded shapes,
+    loose brown ink lines and warm saturated colours.
+- key: forge-card-moat-1
+  lane: krea2
+  entity: playbook-spine
+  title: A Licence to Fish
+  playbook_node: card:moat-1
+  asset: ruler-hooked/card-moat-1
+  size: 1344x768
+  seed: 893022
+  prompt_prose: Gristle, a thin stooped old tax clerk with grey skin, half-moon spectacles low on his nose and a
+    long black coat, stands on a stone bridge over a green castle moat holding up a fan of small cream paper slips
+    with red wax stamps, while below him village anglers in caps sit along the moat wall with fishing poles. Flat
+    bright morning light. Eye-level view from the castle end of the bridge. Cartoon storybook painting with soft
+    rounded shapes, loose brown ink lines and warm saturated colours.
+- key: forge-card-moat-poachers
+  lane: krea2
+  entity: playbook-spine
+  title: Lanterns in the Moat
+  playbook_node: card:moat-poachers
+  asset: ruler-hooked/card-moat-poachers
+  size: 1344x768
+  seed: 893023
+  prompt_prose: 'At night beside the castle moat, Captain Cordelia, a powerfully built middle-aged woman with light
+    brown skin, close-cropped grey hair, dented steel half-armour and a blue tabard, holds up a lantern over a line
+    of caught poachers: Brack, a rangy frog-folk smuggler with mottled green skin, a scruffy grey beard, a long
+    brown oilskin coat and a battered tricorn hat, holding a dripping net and grinning, and a row of small old grandmothers
+    in shawls holding fishing poles. Deep blue night with warm lantern light. Eye-level view from the moat wall.
+    Cartoon storybook painting with soft rounded shapes, loose brown ink lines and warm saturated colours.'
+- key: forge-card-moat-crowded
+  lane: krea2
+  entity: playbook-spine
+  title: Forty Lines and Counting
+  playbook_node: card:moat-crowded
+  asset: ruler-hooked/card-moat-crowded
+  size: 1344x768
+  seed: 893024
+  prompt_prose: A castle moat packed shoulder to shoulder with village anglers whose fishing lines tangle in a knot
+    in the middle of the water, and in front of them Captain Cordelia, a powerfully built middle-aged woman with
+    light brown skin, close-cropped grey hair, dented steel half-armour and a blue tabard, holds a tangled ball
+    of line up toward the viewer. Bright midday light. Eye-level view from the castle bridge. Cartoon storybook
+    painting with soft rounded shapes, loose brown ink lines and warm saturated colours.
+- key: forge-ending-druid-utopia
+  lane: krea2
+  entity: playbook-ending
+  title: The Angler’s Grove
+  playbook_node: ending:druid-utopia
+  asset: ruler-hooked/ending-druid-utopia
+  size: 1344x768
+  seed: 893025
+  prompt_prose: 'A lakeside kingdom grown into one huge garden: flowering orchards and wild meadows run down to
+    the water, a small mossy stone castle covered in ivy, herons and otters in the shallows, and a wooden fishing
+    dock with a resting fishing rod and an overflowing basket of bright fish. Warm golden late afternoon light,
+    wide view from the lake. Cartoon storybook painting with soft rounded shapes, loose brown ink lines and warm
+    saturated colours.'
+- key: forge-ending-warlock-metropolis
+  lane: krea2
+  entity: playbook-ending
+  title: Boomtown by the Lake
+  playbook_node: ending:warlock-metropolis
+  asset: ruler-hooked/ending-warlock-metropolis
+  size: 1344x768
+  seed: 893026
+  prompt_prose: 'A lakeside boomtown: crooked brick towers, purple-roofed warehouses, cranes and smokestacks puffing
+    lavender smoke along the far shore, barges crowding the water, and in the foreground a small wooden fishing
+    dock with a tin bucket holding one tiny fish. Hazy orange sunset light, wide view. Cartoon storybook painting
+    with soft rounded shapes, loose brown ink lines and warm saturated colours.'
+- key: forge-ending-thistlewood-empire
+  lane: krea2
+  entity: playbook-ending
+  title: The Thistlewood Empire
+  playbook_node: ending:thistlewood-empire
+  asset: ruler-hooked/ending-thistlewood-empire
+  size: 1344x768
+  seed: 893027
+  prompt_prose: A lakeside castle trimmed in gold, its towers hung with plum and silver foreign banners beside blue
+    ones, wagon caravans streaming along the shore road, open chests of gold coins stacked on the dock, and a thin
+    stooped old tax clerk in a black coat grinning on the castle steps. Bright clear midday light, wide view. Cartoon
+    storybook painting with soft rounded shapes, loose brown ink lines and warm saturated colours.
+- key: forge-ending-fishers-peace
+  lane: krea2
+  entity: playbook-ending
+  title: The Ruler Who Never Ruled
+  playbook_node: ending:fishers-peace
+  asset: ruler-hooked/ending-fishers-peace
+  size: 1344x768
+  seed: 893028
+  prompt_prose: A quiet lakeside dock at dawn with a worn cushioned chair, a fishing rod propped against it and
+    a full basket of fish, a gold crown hanging on a mooring post, and beyond it the village and castle with chimney
+    smoke rising and two rowboats on the water. Soft pink and gold dawn light, wide view. Cartoon storybook painting
+    with soft rounded shapes, loose brown ink lines and warm saturated colours.
+- key: forge-fish-stairclimber-trout
+  lane: krea2
+  entity: playbook-thread
+  title: Stairclimber Trout
+  playbook_node: fish:stairclimber-trout
+  asset: ruler-hooked/fish/stairclimber-trout/bestiary
+  size: 1344x768
+  seed: 893029
+  prompt_prose: A lean silver-green trout with a row of small stair-step ridges down its back, leaping upward with
+    its tail bent. Shown whole in side view on plain cream paper, soft even daylight, hand-painted natural-history
+    watercolour with fine ink outlines.
+- key: forge-fish-mooring-mullet
+  lane: krea2
+  entity: playbook-thread
+  title: Mooring Mullet
+  playbook_node: fish:mooring-mullet
+  asset: ruler-hooked/fish/mooring-mullet/bestiary
+  size: 1344x768
+  seed: 893030
+  prompt_prose: A fat blunt grey mullet with a crust-brown belly, round sleepy eyes and a piece of bread in its
+    mouth. Shown whole in side view on plain cream paper, soft even daylight, hand-painted natural-history watercolour
+    with fine ink outlines.
+- key: forge-fish-barebone-roach
+  lane: krea2
+  entity: playbook-thread
+  title: Barebone Roach
+  playbook_node: fish:barebone-roach
+  asset: ruler-hooked/fish/barebone-roach/bestiary
+  size: 1344x768
+  seed: 893031
+  prompt_prose: A thin grey roach with ribs visible through translucent skin, an oversized open mouth and ragged
+    fins. Shown whole in side view on plain cream paper, soft even daylight, hand-painted natural-history watercolour
+    with fine ink outlines.
+- key: forge-character-warlock-vex
+  lane: krea2
+  entity: playbook-follower
+  title: Vex
+  playbook_node: character:warlock-vex
+  asset: ruler-hooked/character-warlock-vex-neutral
+  size: 832x1216
+  seed: 893032
+  prompt_prose: Vex, a broad well-fed warlock in his forties with olive skin, two short curled black horns, a purple
+    robe open over a mustard waistcoat, holds out a small paper business square between two fingers with a warm
+    easy smile, a rolled blue blueprint under the other arm. Head and torso in three-quarter view against a plain
+    warm ochre backdrop, soft light from the left. Cartoon storybook painting with soft rounded shapes, loose brown
+    ink lines and warm saturated colours.
+- key: forge-character-druid-sela
+  lane: krea2
+  entity: playbook-follower
+  title: Sela
+  playbook_node: character:druid-sela
+  asset: ruler-hooked/character-druid-sela-neutral
+  size: 832x1216
+  seed: 893033
+  prompt_prose: Sela, a slight elderly druid woman with dark brown skin, white hair full of twigs and moss, a cloak
+    of overlapping green leaves and bare feet, raises one finger mid-lecture with a serene smile, a tin watering
+    can in her other hand. Head and torso in three-quarter view against a plain warm ochre backdrop, soft light
+    from the left. Cartoon storybook painting with soft rounded shapes, loose brown ink lines and warm saturated
+    colours.
+- key: forge-character-heir-robin
+  lane: krea2
+  entity: playbook-follower
+  title: Robin
+  playbook_node: character:heir-robin
+  asset: ruler-hooked/character-heir-robin-neutral
+  size: 832x1216
+  seed: 893034
+  prompt_prose: Robin, a lanky freckled teenager with pale skin and short copper hair, a green travelling jacket
+    and laced brown boots, grins sideways with a thin gold circlet poking out of a jacket pocket and a travelling
+    bundle over one shoulder. Head and torso in three-quarter view against a plain warm ochre backdrop, soft light
+    from the left. Cartoon storybook painting with soft rounded shapes, loose brown ink lines and warm saturated
+    colours.
+- key: forge-character-sweetheart-ash
+  lane: krea2
+  entity: playbook-follower
+  title: Ash
+  playbook_node: character:sweetheart-ash
+  asset: ruler-hooked/character-sweetheart-ash-neutral
+  size: 832x1216
+  seed: 893035
+  prompt_prose: Ash, a soft broad-shouldered young angler with warm tan skin, shaggy dark hair, patched brown waders
+    and an oversized blue wool coat, cradles a wooden bucket with two fish in it and talks to them with a soft nervous
+    smile. Head and torso in three-quarter view against a plain warm ochre backdrop, soft light from the left. Cartoon
+    storybook painting with soft rounded shapes, loose brown ink lines and warm saturated colours.
+- key: forge-character-envoy-thistle
+  lane: krea2
+  entity: playbook-follower
+  title: Thistle
+  playbook_node: character:envoy-thistle
+  asset: ruler-hooked/character-envoy-thistle-neutral
+  size: 832x1216
+  seed: 893036
+  prompt_prose: Thistle, a tall envoy woman with deep brown skin, a high black braided bun, a high-collared plum
+    and silver travelling coat and white gloves, stands with gloved hands folded and chin lifted, lips pressed together,
+    a rolled scroll with a red seal tucked under one arm. Head and torso in three-quarter view against a plain warm
+    ochre backdrop, soft light from the left. Cartoon storybook painting with soft rounded shapes, loose brown ink
+    lines and warm saturated colours.
+- key: forge-character-taxman-gristle
+  lane: krea2
+  entity: playbook-follower
+  title: Gristle
+  playbook_node: character:taxman-gristle
+  asset: ruler-hooked/character-taxman-gristle-neutral
+  size: 832x1216
+  seed: 893037
+  prompt_prose: Gristle, a thin stooped old tax clerk with grey skin, half-moon spectacles low on his nose and a
+    long black coat, holds a huge open leather ledger across both forearms and sighs with heavy eyelids. Head and
+    torso in three-quarter view against a plain warm ochre backdrop, soft light from the left. Cartoon storybook
+    painting with soft rounded shapes, loose brown ink lines and warm saturated colours.
+- key: forge-character-captain-cordelia
+  lane: krea2
+  entity: playbook-follower
+  title: Cordelia
+  playbook_node: character:captain-cordelia
+  asset: ruler-hooked/character-captain-cordelia-neutral
+  size: 832x1216
+  seed: 893038
+  prompt_prose: Captain Cordelia, a powerfully built middle-aged woman with light brown skin, close-cropped grey
+    hair, dented steel half-armour and a blue tabard, stands at rigid attention and rubs one round steel pauldron
+    with her thumb. Head and torso in three-quarter view against a plain warm ochre backdrop, soft light from the
+    left. Cartoon storybook painting with soft rounded shapes, loose brown ink lines and warm saturated colours.
+- key: forge-character-bard-fen
+  lane: krea2
+  entity: playbook-follower
+  title: Fen
+  playbook_node: character:bard-fen
+  asset: ruler-hooked/character-bard-fen-neutral
+  size: 832x1216
+  seed: 893039
+  prompt_prose: Fen, a small round bard with freckled brown skin, a curly black topknot, mismatched striped and
+    checked layers and a battered lute with a red ribbon, strums the lute mid-song with mouth open and eyebrows
+    raised high. Head and torso in three-quarter view against a plain warm ochre backdrop, soft light from the left.
+    Cartoon storybook painting with soft rounded shapes, loose brown ink lines and warm saturated colours.
+- key: forge-character-smuggler-brack
+  lane: krea2
+  entity: playbook-follower
+  title: Brack
+  playbook_node: character:smuggler-brack
+  asset: ruler-hooked/character-smuggler-brack-neutral
+  size: 832x1216
+  seed: 893040
+  prompt_prose: Brack, a rangy frog-folk smuggler with mottled green skin, a scruffy grey beard, a long brown oilskin
+    coat and a battered tricorn hat, squints off to one side with one hand shading his eyes and a small wooden crate
+    under his other arm. Head and torso in three-quarter view against a plain warm ochre backdrop, soft light from
+    the left. Cartoon storybook painting with soft rounded shapes, loose brown ink lines and warm saturated colours.
+- key: forge-character-witch-mossy
+  lane: krea2
+  entity: playbook-follower
+  title: Mossy
+  playbook_node: character:witch-mossy
+  asset: ruler-hooked/character-witch-mossy-neutral
+  size: 832x1216
+  seed: 893041
+  prompt_prose: Mossy, an enormously round cheerful bog witch with silver-blue skin, long green hair of pond weed
+    and strings of clay beads and little glass bottles across her chest, holds out a glowing green glass jar with
+    a cheerful open-mouthed grin. Head and torso in three-quarter view against a plain warm ochre backdrop, soft
+    light from the left. Cartoon storybook painting with soft rounded shapes, loose brown ink lines and warm saturated
+    colours.
+- key: forge-character-lake-spirit-nix
+  lane: krea2
+  entity: playbook-follower
+  title: Nix
+  playbook_node: character:lake-spirit-nix
+  asset: ruler-hooked/character-lake-spirit-nix-neutral
+  size: 832x1216
+  seed: 893042
+  prompt_prose: Nix, a tall translucent figure of clear lake water with drifting silt, water grass and a few old
+    copper coins turning inside its body, a smooth face with two pale glowing eyes, stands waist-deep in dark still
+    water with its head tilted, small ripples circling it. Head and torso in three-quarter view against a plain
+    warm ochre backdrop, soft light from the left. Cartoon storybook painting with soft rounded shapes, loose brown
+    ink lines and warm saturated colours.
+- key: forge-reward-druid-charm
+  lane: krea2
+  entity: playbook-quest
+  title: Druid’s Charm
+  playbook_node: reward:druid-charm
+  asset: ruler-hooked/reward-druid-charm
+  size: 1344x768
+  seed: 893043
+  prompt_prose: A small woven charm of braided river reeds and green twine with a polished acorn and a single blue
+    feather bound into it. Centred on a plain warm ochre backdrop, soft light from the upper left, close-up still
+    life. Cartoon storybook painting with soft rounded shapes, loose brown ink lines and warm saturated colours.
+- key: forge-reward-gilded-lure
+  lane: krea2
+  entity: playbook-quest
+  title: Gilded Lure
+  playbook_node: reward:gilded-lure
+  asset: ruler-hooked/reward-gilded-lure
+  size: 1344x768
+  seed: 893044
+  prompt_prose: An ornate gold fishing lure shaped into a fat little fish with a jewelled red eye and three barbed
+    hooks. Centred on a plain warm ochre backdrop, soft light from the upper left, close-up still life. Cartoon
+    storybook painting with soft rounded shapes, loose brown ink lines and warm saturated colours.
+- key: forge-reward-buildpermit-scroll
+  lane: krea2
+  entity: playbook-quest
+  title: Building Permit
+  playbook_node: reward:buildpermit-scroll
+  asset: ruler-hooked/reward-buildpermit-scroll
+  size: 1344x768
+  seed: 893045
+  prompt_prose: A stiff cream scroll half unrolled, its face covered in ruled boxes and inked squiggle patterns,
+    with a heavy blob of purple wax seal at the bottom. Centred on a plain warm ochre backdrop, soft light from
+    the upper left, close-up still life. Cartoon storybook painting with soft rounded shapes, loose brown ink lines
+    and warm saturated colours.
+- key: forge-reward-treaty-seal
+  lane: krea2
+  entity: playbook-quest
+  title: Thistlewood Seal
+  playbook_node: reward:treaty-seal
+  asset: ruler-hooked/reward-treaty-seal
+  size: 1344x768
+  seed: 893046
+  prompt_prose: A heavy plum-red wax seal disc on a trailing silver ribbon, two clasped hands pressed into the wax.
+    Centred on a plain warm ochre backdrop, soft light from the upper left, close-up still life. Cartoon storybook
+    painting with soft rounded shapes, loose brown ink lines and warm saturated colours.
+- key: forge-reward-smugglers-map
+  lane: krea2
+  entity: playbook-quest
+  title: Smuggler’s Chart
+  playbook_node: reward:smugglers-map
+  asset: ruler-hooked/reward-smugglers-map
+  size: 1344x768
+  seed: 893047
+  prompt_prose: A creased weathered chart covered in wandering ink coastlines, dotted route lines, tiny drawn coves
+    and small red crosses. Centred on a plain warm ochre backdrop, soft light from the upper left, close-up still
+    life. Cartoon storybook painting with soft rounded shapes, loose brown ink lines and warm saturated colours.
+- key: forge-reward-mossy-hex
+  lane: krea2
+  entity: playbook-quest
+  title: Mossy’s Hex
+  playbook_node: reward:mossy-hex
+  asset: ruler-hooked/reward-mossy-hex
+  size: 1344x768
+  seed: 893048
+  prompt_prose: A knobbly brown clay bottle stoppered with cork and moss, wrapped in clay beads and dried herbs,
+    a faint green glow inside it. Centred on a plain warm ochre backdrop, soft light from the upper left, close-up
+    still life. Cartoon storybook painting with soft rounded shapes, loose brown ink lines and warm saturated colours.
+- key: forge-reward-captains-pin
+  lane: krea2
+  entity: playbook-quest
+  title: Captain’s Pin
+  playbook_node: reward:captains-pin
+  asset: ruler-hooked/reward-captains-pin
+  size: 1344x768
+  seed: 893049
+  prompt_prose: A dented brass pin in the form of a lake perch crossed with a spear, its blue enamel chipped and
+    the brass polished bright. Centred on a plain warm ochre backdrop, soft light from the upper left, close-up
+    still life. Cartoon storybook painting with soft rounded shapes, loose brown ink lines and warm saturated colours.
+- key: forge-reward-bards-ballad
+  lane: krea2
+  entity: playbook-quest
+  title: A Ballad in Your Name
+  playbook_node: reward:bards-ballad
+  asset: ruler-hooked/reward-bards-ballad
+  size: 1344x768
+  seed: 893050
+  prompt_prose: A rolled sheet of song parchment tied with red string, its face covered in inked staves, dots and
+    swirling flourishes. Centred on a plain warm ochre backdrop, soft light from the upper left, close-up still
+    life. Cartoon storybook painting with soft rounded shapes, loose brown ink lines and warm saturated colours.
+- key: forge-reward-nix-pearl
+  lane: krea2
+  entity: playbook-quest
+  title: Nix’s Pearl
+  playbook_node: reward:nix-pearl
+  asset: ruler-hooked/reward-nix-pearl
+  size: 1344x768
+  seed: 893051
+  prompt_prose: A single enormous rainbow-sheened freshwater pearl resting in an open oyster shell, with fine silt
+    and two tiny old copper coins beside it. Centred on a plain warm ochre backdrop, soft light from the upper left,
+    close-up still life. Cartoon storybook painting with soft rounded shapes, loose brown ink lines and warm saturated
+    colours.
+- key: forge-shop-reinforced-rod
+  lane: krea2
+  entity: playbook-fork
+  title: Reinforced Rod
+  playbook_node: shop:reinforced-rod
+  asset: ruler-hooked/shop-reinforced-rod
+  size: 1344x768
+  seed: 893052
+  prompt_prose: A sturdy fishing rod of dark ash wood wrapped with bands of brass wire and fitted with a heavy brass
+    reel, lying across a wooden shop counter beside coils of line and a box of hooks. Warm lamplight from the left,
+    close-up still life. Cartoon storybook painting with soft rounded shapes, loose brown ink lines and warm saturated
+    colours.
+- key: forge-shop-silk-line
+  lane: krea2
+  entity: playbook-fork
+  title: Silk Line
+  playbook_node: shop:silk-line
+  asset: ruler-hooked/shop-silk-line
+  size: 1344x768
+  seed: 893053
+  prompt_prose: A spool of fine pale gold silk fishing line wound on a carved wooden reel, one loose shining strand
+    trailing across a green felt counter. Centred on a plain warm ochre backdrop, soft light from the upper left,
+    close-up still life. Cartoon storybook painting with soft rounded shapes, loose brown ink lines and warm saturated
+    colours.
+- key: forge-shop-balanced-lure
+  lane: krea2
+  entity: playbook-fork
+  title: Balanced Lure
+  playbook_node: shop:balanced-lure
+  asset: ruler-hooked/shop-balanced-lure
+  size: 1344x768
+  seed: 893054
+  prompt_prose: A small hand-carved wooden fishing lure painted with red and white stripes, a tiny brass weight
+    under its belly and two hooks, resting on a little brass stand. Centred on a plain warm ochre backdrop, soft
+    light from the upper left, close-up still life. Cartoon storybook painting with soft rounded shapes, loose brown
+    ink lines and warm saturated colours.
+- key: forge-shop-riverbank-market
+  lane: krea2
+  entity: playbook-fork
+  title: Riverbank Market
+  playbook_node: shop:riverbank-market
+  asset: ruler-hooked/shop-riverbank-market
+  size: 1344x768
+  seed: 893055
+  prompt_prose: A row of striped canvas market stalls along a grassy riverbank beside a lake, baskets of fish, bread
+    and apples on the counters, villagers in aprons bargaining and rowboats tied up at the bank. Bright midday light,
+    wide view. Cartoon storybook painting with soft rounded shapes, loose brown ink lines and warm saturated colours.
+- key: forge-shop-lakeside-shrine
+  lane: krea2
+  entity: playbook-fork
+  title: Lakeside Shrine
+  playbook_node: shop:lakeside-shrine
+  asset: ruler-hooked/shop-lakeside-shrine
+  size: 1344x768
+  seed: 893056
+  prompt_prose: A small round stone shrine with a mossy domed roof on a grassy point by a lake, flowers, smooth
+    river stones and lit candles on its step, a carved stone fish on top of the dome. Soft early morning light and
+    mist on the water. Cartoon storybook painting with soft rounded shapes, loose brown ink lines and warm saturated
+    colours.
+- key: forge-shop-festival-fund
+  lane: krea2
+  entity: playbook-fork
+  title: Festival Fund
+  playbook_node: shop:festival-fund
+  asset: ruler-hooked/shop-festival-fund
+  size: 1344x768
+  seed: 893057
+  prompt_prose: A village green beside a lake strung with paper lanterns and coloured bunting, a wooden bandstand
+    with two fiddlers, and a heavy leather coin purse spilling gold coins on a trestle table in the foreground.
+    Warm dusk light. Cartoon storybook painting with soft rounded shapes, loose brown ink lines and warm saturated
+    colours.
+- key: forge-shop-watch-patrol
+  lane: krea2
+  entity: playbook-fork
+  title: Watch Patrol
+  playbook_node: shop:watch-patrol
+  asset: ruler-hooked/shop-watch-patrol
+  size: 1344x768
+  seed: 893058
+  prompt_prose: Two castle guards in blue tabards and steel caps walk a gravel road along a lake carrying lanterns
+    and spears, a shaggy guard dog trotting ahead of them. Blue dusk light with warm lantern glow. Cartoon storybook
+    painting with soft rounded shapes, loose brown ink lines and warm saturated colours.

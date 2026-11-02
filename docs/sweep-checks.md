@@ -154,7 +154,19 @@ flags something and you need to know why it exists or how to fix it.
      FAILED Kind Robots ArtJobs with no known repair count at once, because none of them heals by
      waiting. A timeout or other error counts after it persists 2 days (`--persist-days`). A flag
      is `art-medic` work (`docs/agents/roles/art-medic.md`): fix the rows and the producer that
-     wrote them. Exit 1 when flagged.
+     wrote them. Exit 1 when flagged. Since 2026-11-02 it also records contract-rejected cells in
+     `auto_submit` ledgers (source `ledgers`), which the sweep skips without submitting.
+   - `python scripts/scan_written_art.py` (sweep name `scan_written_art`) — art that is written
+     but neither queued nor delivered. Silas, 2026-11-02 PT: *"we spent about 12 hours today not
+     making art, if it's written, it should be in the queue."* It reads the authored prompts in a
+     kind_robots checkout (every Playbook Studio beat, plus Crystal Street's `allArtPrompts()`),
+     then drops anything with a conductor ledger subject (same asset or prompt), a shipped file, or
+     a live or finished ArtJob. Exit 1 lists the count per project. Fix: `python
+     scripts/scan_written_art.py --write` writes `projects/<project>/art/WRITTEN-BACKLOG-<date>.yaml`
+     (auto_submit, priority 1, private); dry-run each with `enqueue_art_requests.py` and PR them. Exit
+     2 without a kind_robots checkout or `KR_API_TOKEN`. A game whose prompts live elsewhere
+     (its own `artPrompts.ts`) is invisible here until it gets a Forge adapter or an `extras` entry
+     in the script's dumper.
    - `python scripts/check_relay_version_drift.py` — is every kr-relay Kind Robots has seen in the
      last 30 minutes running main's relay code? On 2026-10-23 Coat Dance ArtJob 42356 failed in
      ComfyUI's PyAV loader with the defect conductor#6444 had fixed two days earlier, because
