@@ -374,28 +374,18 @@ tasks:
   - id: t-019
     milestone: m2
     title: "Implement Blackout banked 3-mana turns and strategic five-card cycling"
-    status: claimed
+    status: review
     depends_on: t-004
     owner: worker
     passes: 0
     stakes: reversible
-    note: >-
-      Silas 2026-11-01 PT: In primary Blackout each ten-card deck deals five
-      cards initially. Unplayed cards stay in hand across rounds by default.
-      The player can select any surviving hand cards to discard on END ROUND;
-      refill to five, never drawing cards actually played on the immediately
-      preceding turn even after a seeded reshuffle. The CPU receives the same
-      cycle and must choose its discards by a deterministic visible-board
-      policy. Start with three mana; each new round adds up to three mana,
-      banking unspent mana up to ten. Mana debt reduces the new allowance,
-      not the existing bank; any debt beyond one allowance rolls forward.
-      Rebalance 4-6 mana cards against banking, update tutorial/hand labels,
-      in-hand discard affordance, server-verified command replay, tests for
-      exhaustion and invalid discard commands. Preserve legacy classicFog,
-      Gridiron, BLOODRUSH and their tests. Internal preview only.
+    note: |-
+      Silas 2026-11-01 PT: In primary Blackout each ten-card deck deals five cards initially. Unplayed cards stay in hand across rounds by default. The player can select any surviving hand cards to discard on END ROUND; refill to five, never drawing cards actually played on the immediately preceding turn even after a seeded reshuffle. The CPU receives the same cycle and must choose its discards by a deterministic visible-board policy. Start with three mana; each new round adds up to three mana, banking unspent mana up to ten. Mana debt reduces the new allowance, not the existing bank; any debt beyond one allowance rolls forward. Rebalance 4-6 mana cards against banking, update tutorial/hand labels, in-hand discard affordance, server-verified command replay, tests for exhaustion and invalid discard commands. Preserve legacy classicFog, Gridiron, BLOODRUSH and their tests. Internal preview only.
+
+      Implemented banked Blackout 3-mana turns, five-card retained hands, manual end-round discard selection, one-turn played-card exclusion, deterministic CPU cycling, secure replayed discard commands and regression tests on Kind Robots worker branch. Awaiting latest-head CI validation and QA before merge.
     claimed_by: 2026-11-02T080030Z-slime-city-t019-k7f5
     claimed_at: '2026-11-02T08:00:30Z'
-    updated: '2026-11-02T08:00:30Z'
+    updated: '2026-11-02T08:09:00Z'
   - id: t-020
     milestone: m2
     title: "Finish 132 faction cards at 40 per crew with diverse counterplay"
