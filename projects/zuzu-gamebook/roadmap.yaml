@@ -260,7 +260,7 @@ tasks:
       2026-10-22 PT: Merged Kind Robots PR #4037, squash commit 4121d73ef0126a751cdf95d1d13b3c66a8173b8f, after all 13 current-head workflows passed (including four contract shards, TypeScript, changed-file formatting). Frozen 15 genuine complete end-to-end ending journeys comprising 1217 reducer actions in utils/scripts/fixtures/zuzuGamebookGolden.json, with deterministic replay and route/flag/item/resource/RNG fingerprints. Tested all six authored fights at 3/6/9/12 HP and 0/2/4 Resolve, four strategies and 90 seeded fights per configuration, correctly allowing recovery scene effects after losing. No gameplay rule changes, ArtJobs, or external publication. Triage: 3 HP produced zero wins in 90 seeds for each of four tactics versus the Croc, Abbess, and Hollis; inspect retreat routes, player risk signals and wounded pacing, while retaining meaningful defeat continuations. Recurring task rearmed; full visual QA and pending illustration work remain with the other roadmap tasks.
   - id: t-012
     milestone: m5
-    title: Redraw the two-character plates once the character LoRAs exist
+    title: "Two-character Zuzu plates: the LoRAs exist but don't stack (Zuzu fuses with a second LoRA; abbess LoRA paints human faces)"
     status: ready
     owner: null
     passes: 0
@@ -301,6 +301,8 @@ tasks:
       coyote's v1 LoRA still draws his right hand (t-023); stump plates keep the masked bandage edit. Following ROUND-12
       above, Zuzu and the abbess are `stacks: false` there: a subject naming either beside another character gets no
       default LoRAs, so the explicit per-subject `loras:` in ROUND-12..15 stay authoritative.
+
+      2026-11-02 PT retitle (Silas asked why it still says the LoRAs don't exist): they do, since 2026-10-11 (comic-creator/t-016). The old title was stale. What is left is the stacking problem above: Zuzu plus any second character LoRA fuses the two figures, and the abbess LoRA gives human faces even alone, so paired Zuzu moments ship as on-model single-figure plates. Real fix candidates: render each figure alone with its own LoRA and composite (Kontext reference-stitch, as enqueue_art_requests.py `reference_image_id` already supports), regional LoRA masks in ComfyUI, or a retrained abbess LoRA.
 
   - id: t-013
     milestone: m5
