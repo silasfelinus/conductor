@@ -213,24 +213,18 @@ tasks:
   - id: t-009
     milestone: m3
     title: "Write and implement six genuinely different crew campaigns"
-    status: claimed
+    status: review
     depends_on: [t-004, t-007]
     owner: worker
     passes: 0
     stakes: reversible
-    note: >-
-      Gene Riot Catgirls escaping their creators, Punk Bloodfairies
-      organizing wild city uprising, cyber-ogres revolting against
-      foundry owners, Riot Saints' explosive comedy, Undertow's
-      information war, and Meat Exchange's rotten oligarchy.
-      Different rivals, branching dialogue, authored rewards,
-      earned endings and provenance-linked character/location art.
-      A faction color is NOT a story and a paragraph is NOT an
-      implemented playable campaign. Build one full vertical slice
-      and test it before adding other chapters.
+    note: |-
+      Gene Riot Catgirls escaping their creators, Punk Bloodfairies organizing wild city uprising, cyber-ogres revolting against foundry owners, Riot Saints' explosive comedy, Undertow's information war, and Meat Exchange's rotten oligarchy. Different rivals, branching dialogue, authored rewards, earned endings and provenance-linked character/location art. A faction color is NOT a story and a paragraph is NOT an implemented playable campaign. Build one full vertical slice and test it before adding other chapters.
+
+      First campaign-depth increment: each of six crews has two distinct earned tactical echoes from prior chapter decisions. Previous victories visibly affect next-chapter Blackout opening conditions in both Story and city routes; losses do not unlock echoes or erase earned history. Added a six-crew deterministic test matrix. Source PR pending CI; further campaign depth, sourced illustration placement and human playtesting remain open.
     claimed_by: 20261102T120308127Z-slime-city-t009-uyvvcvh
     claimed_at: '2026-11-02T12:03:08.127Z'
-    updated: '2026-11-02T12:03:08.127Z'
+    updated: '2026-11-02T12:07:18.421Z'
   - id: t-010
     milestone: m3
     title: "Create daily, weekly and evergreen missions with earned progression"
