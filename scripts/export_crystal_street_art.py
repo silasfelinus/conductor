@@ -59,7 +59,12 @@ def contact_sheet(subjects, out, thumb=(240, 300)):
 
 def export(subjects, kind_robots, max_edge):
     root = Path(kind_robots) / "public" / "crystal-street"
-    todo = [s for s in subjects if finished(s) and s.get("asset")]
+    # A reviewed subject ships only when its verdict keeps it (curation writes ``verdict:`` on every
+    # reviewed render; an unreviewed round still exports everything, as before).
+    todo = [
+        s for s in subjects
+        if finished(s) and s.get("asset") and str(s.get("verdict", "keep")).startswith("keep")
+    ]
 
     def write(subject):
         dest = root / f"{subject['asset']}.webp"

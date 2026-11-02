@@ -357,7 +357,17 @@ tasks:
       PARTIAL 2026-11-01 PT: Conductor PR #6911 merged at 7962f4de4a1458d29f512297ce5bbed4cb1da563 after Worker PR CI, security and handoff validation. Round-2 private auto_submit ledger defines 168 distinct Krea2 subjects: 24 remaining S0 cards, 6 openings, 30 chapter scenes, 60 choice outcomes, 30 defeat art, 12 endings, and 6 attack icons. Kind Robots companion PR #4591 merged at 21f357d673f6b959be49d55f1a4ebee48e209140 after 12/12 latest-head workflows passed; 120 unique written victory/loss passages now appear after the corresponding campaign battles. Auto Art Generate run #41306307982 was PENDING at verification, NOT confirmed submitted: zero new ArtJob IDs verified. Keep t-017 READY to reconcile accepted IDs after sweep, and check ArtImages/actual private delivery; do not re-enqueue duplicates. Existing 52 round-one DONE ArtImage IDs retained.
 
       Private art ledger PR #6951 merged at 48fd811 after all latest-head CI passed. 192 card illustrations from wave three, finale, and mercenaries are in three auto_submit ledgers; Auto Art Generate run #41429062635 is pending behind another active art sweep. Accepted Job IDs and rendered ArtImages have NOT yet been confirmed. Reopen t-017 once jobs have accepted receipts to verify private delivered bytes and attach the new card images. No duplicate requests or public publication.
-    updated: '2026-11-02T11:03:00Z'
+
+      2026-11-02 PT curation (Silas: curate the Slime City art): 215 finished renders not yet
+      in the game were reviewed. 118 keep, wired into kind_robots
+      utils/slimeCity/artManifest.ts in kind_robots#4661: 37 cards, 77 story plates in a new
+      story group, 4 attack icons. The campaign screen now shows the opening, each chapter
+      scene, the won-approach or defeat plate and the earned ending. 97 redo (chapter titles
+      painted as text, starter cards drawn as card frames, real-world logos, a few child-
+      looking characters), re-rendered in art/SLIME-CITY-CURATION-REDO-1.yaml with those
+      causes removed from the prompts. Next: curate the redo round and the wave-three, finale
+      and mercenary card ledgers as they render.
+    updated: '2026-11-02T12:38:00Z'
   - id: t-018
     milestone: m2
     title: "Build 60 playable neutral mercenaries with legal faction mixing"
