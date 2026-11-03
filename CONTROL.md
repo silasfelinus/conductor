@@ -458,12 +458,18 @@ of pretending every part should be printed.
 - No purchasing, publishing, or safety-critical electrical recommendations without human review.
 
 ### brainstorm  (software)
-**Direction (rewritten 2026-08-10 from Silas's session direction):** Restore Brainstorm as
-a first-class Kind Robots creative ideation tool at `/brainstorm`, with `/plan/brainstorm`
-resolving to the same product. The essential interaction is pitch → ask for X ideas → curate
-individual results → edit/keep/reject/regenerate/branch → save/reuse. Text quality comes first;
-object-aware variations and optional Krea2-backed art generation follow once the ideation loop
-is genuinely useful.
+**Direction (rewritten 2026-11-03 PT from Silas's session direction; supersedes 2026-08-10):**
+Brainstorm is the riff board at `/play/brainstorm`, a social improv party game based on the one
+Silas plays with his kids: someone puts a prompt on the table ("Terrible ice cream flavors",
+"Vanderbuilt Lacrosse…", "I like Obama, but…", crossovers) and people pile on, "show me what you
+got". Silas: *"my biggest problem with brainstorm until now is thinking that the goal was ai
+making up brainstorms. What ai needs to do is support humans coming up with new stuff,
+encouraging, helping brainstorm, and adjusting what is shown based on ratings."* Humans write
+every line; the AI coaches with sparks and never plays; Reactions rank what is shown; every
+human line is painted through the ArtJob pipeline; the front end lives in Play and looks like
+a AAA handheld game; the family's first ideas are seeded as starter decks. The 2026-08
+candidate workbench stays at `/brainstorm` as an admin tool. See DESIGN-BRIEF.md
+"2026-11-03 PT direction: the riff board".
 **Notes:**
 - Recover the historical interaction, persona, useful data flow, and product identity. Do NOT
   use the old LLM generations as a quality standard. Silas hated those outputs; they are the
@@ -479,6 +485,8 @@ is genuinely useful.
 - The internal Conductor pitch generator is no longer this project's definition. If retained,
   it becomes an explicit downstream consumer of the user-facing Brainstorm engine and never
   silently turns normal Brainstorm sessions into Conductor coordination data.
+- The quality notes above now govern the coach's sparks: a spark that is a finished joke, a
+  repeat of covered territory, or blind to the table's top-rated lines is a failure.
 
 ### cthulhuquarium  (software)
 **Direction:** A playable, darkly funny idle aquarium game live on Kind Robots at /play/aquarium,
