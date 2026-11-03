@@ -4,6 +4,9 @@
 # daily-console.vue decisionCards/resultPainting: for the casino deck derive the art key from the incident title
 # (keep the saved cardId as is). Post-delivery: same COUCH_EPISODE_ART_IDS map as EPISODE-CHOICE-OUTCOMES.
 # Priority 40.
+# Re-prompted by hand 2026-11-03 PT: the template-filled outcome text (story sentences pasted in as the
+# scene) was replaced with one visible moment per option. The first ArtJobs never rendered; they were
+# cancelled and are kept under superseded_jobs, and fresh jobs were submitted with the new prompts.
 round: space-couch-casino-choice-outcomes-1
 project_slug: game-of-captains
 designer: Space Couch casino-deck choice results
@@ -25,21 +28,16 @@ subjects:
   asset: game-of-captains/episode/casino-the-unauthorized-itch-ask-success
   size: 1344x768
   seed: 1830001
-  prompt_prose: 'Story resolution scene: On a roulette terrace of a grand casino built on one living planet-sized
-    cobalt-blue alien person with an enormous expressive face, giant arm and shoulder, small bright casino towers
-    and pedestrian galleries built onto and around the living body. A roulette terrace has been constructed over
-    a nerve the host cannot reach; the casino has refused a scratching permit. Specifically depict the tangible
-    outcome: The blue giant host is asked directly, and its enormous face answers while the workers listen. The
-    very long red couch in its transparent force bubble is nearby as the visiting crew''s vessel. Show the affected
-    locals acting with confident, responsible agency of their own. Hand-painted retro science-fiction gouache illustration,
-    warm muted color blocks, crisp brown ink outlines, tactile cloth and copper details, cinematic expressive staging,
-    every surface bare and unmarked.'
+  prompt_prose: A roulette terrace of bright casino towers rests on the shoulder of a planet-sized cobalt-blue living
+    giant. The adult captain stands on the armrest of a long scarlet velvet couch in its clear bubble, shouting
+    up through a brass megaphone. The enormous blue face leans down, one colossal eye squinting, lips parted to
+    answer, while croupiers in copper vests crowd the terrace rail cupping their ears. Hand-painted retro science-fiction
+    gouache illustration, warm muted color blocks, crisp brown ink outlines, tactile cloth and copper details, cinematic
+    expressive staging, every surface bare and unmarked.
   jobs:
+    krea2: 62267
+  superseded_jobs:
     krea2: 61024
-  art:
-    krea2:
-      status: PENDING
-      art_image_id: null
 - key: warp-casino-the-unauthorized-itch-document-success
   lane: krea2
   entity: episode-choice-result
@@ -47,21 +45,16 @@ subjects:
   asset: game-of-captains/episode/casino-the-unauthorized-itch-document-success
   size: 1344x768
   seed: 1830002
-  prompt_prose: 'Story resolution scene: On a roulette terrace of a grand casino built on one living planet-sized
-    cobalt-blue alien person with an enormous expressive face, giant arm and shoulder, small bright casino towers
-    and pedestrian galleries built onto and around the living body. A roulette terrace has been constructed over
-    a nerve the host cannot reach; the casino has refused a scratching permit. Specifically depict the tangible
-    outcome: The evidence is filed publicly so the blue hosts and local workers can challenge the terms. The very
-    long red couch in its transparent force bubble is nearby as the visiting crew''s vessel. Show the recovered
-    evidence held up openly among the people it protects. Hand-painted retro science-fiction gouache illustration,
-    warm muted color blocks, crisp brown ink outlines, tactile cloth and copper details, cinematic expressive staging,
-    every surface bare and unmarked.'
+  prompt_prose: Croupiers and small blue-skinned locals pin a long blank scroll to a tall corkboard at the edge
+    of a roulette terrace, jabbing fingers at it and arguing loudly. Behind them, the casino-covered shoulder of
+    a planet-sized cobalt-blue giant twitches with an itch, and its vast face peers down with raised eyebrows. The
+    scarlet velvet couch floats in its clear bubble beside the balustrade. Hand-painted retro science-fiction gouache
+    illustration, warm muted color blocks, crisp brown ink outlines, tactile cloth and copper details, cinematic
+    expressive staging, every surface bare and unmarked.
   jobs:
+    krea2: 62268
+  superseded_jobs:
     krea2: 61025
-  art:
-    krea2:
-      status: PENDING
-      art_image_id: null
 - key: warp-casino-the-unauthorized-itch-override-success
   lane: krea2
   entity: episode-choice-result
@@ -69,21 +62,16 @@ subjects:
   asset: game-of-captains/episode/casino-the-unauthorized-itch-override-success
   size: 1344x768
   seed: 1830003
-  prompt_prose: 'Story resolution scene: On a roulette terrace of a grand casino built on one living planet-sized
-    cobalt-blue alien person with an enormous expressive face, giant arm and shoulder, small bright casino towers
-    and pedestrian galleries built onto and around the living body. A roulette terrace has been constructed over
-    a nerve the host cannot reach; the casino has refused a scratching permit. Specifically depict the tangible
-    outcome: The captain intervenes without a full agreement. Some workers cheer while the giant host frowns. The
-    very long red couch in its transparent force bubble is nearby as the visiting crew''s vessel. Show the crew''s
-    direct intervention and the locals reacting to it. Hand-painted retro science-fiction gouache illustration,
+  prompt_prose: The captain hauls on a huge brass lever that swings a roulette terrace aside on rusty hinges, revealing
+    reddened blue skin. A colossal cobalt-blue fingernail rakes the spot in glorious relief while the giant's planet-sized
+    face scowls at the crew. Half the croupiers cheer and fling their hats; others cling to spinning roulette wheels.
+    The long red velvet couch hovers nearby in its glassy bubble. Hand-painted retro science-fiction gouache illustration,
     warm muted color blocks, crisp brown ink outlines, tactile cloth and copper details, cinematic expressive staging,
-    every surface bare and unmarked.'
+    every surface bare and unmarked.
   jobs:
+    krea2: 62269
+  superseded_jobs:
     krea2: 61026
-  art:
-    krea2:
-      status: PENDING
-      art_image_id: null
 - key: warp-casino-colonial-settlement-day-ask-success
   lane: krea2
   entity: episode-choice-result
@@ -91,21 +79,16 @@ subjects:
   asset: game-of-captains/episode/casino-colonial-settlement-day-ask-success
   size: 1344x768
   seed: 1830004
-  prompt_prose: 'Story resolution scene: On a roulette terrace of a grand casino built on one living planet-sized
-    cobalt-blue alien person with an enormous expressive face, giant arm and shoulder, small bright casino towers
-    and pedestrian galleries built onto and around the living body. The casino celebrates the seizure of the blue
-    giants’ homeworld as a holiday and bills the giant host for the fireworks. Specifically depict the tangible
-    outcome: The blue giant host is asked directly, and its enormous face answers while the workers listen. The
-    very long red couch in its transparent force bubble is nearby as the visiting crew''s vessel. Show the affected
-    locals acting with confident, responsible agency of their own. Hand-painted retro science-fiction gouache illustration,
+  prompt_prose: Fireworks burst over casino towers built across a planet-sized cobalt-blue giant. A crew member
+    leans from a long crimson velvet couch inside a clear bubble, holding a giant copper ear trumpet toward the
+    giant's soot-smudged face. The face answers with a slow, sorrowful frown, and workers on festive balconies lower
+    their bunting and paper lanterns to hear every word. Hand-painted retro science-fiction gouache illustration,
     warm muted color blocks, crisp brown ink outlines, tactile cloth and copper details, cinematic expressive staging,
-    every surface bare and unmarked.'
+    every surface bare and unmarked.
   jobs:
+    krea2: 62270
+  superseded_jobs:
     krea2: 61027
-  art:
-    krea2:
-      status: PENDING
-      art_image_id: null
 - key: warp-casino-colonial-settlement-day-document-success
   lane: krea2
   entity: episode-choice-result
@@ -113,21 +96,16 @@ subjects:
   asset: game-of-captains/episode/casino-colonial-settlement-day-document-success
   size: 1344x768
   seed: 1830005
-  prompt_prose: 'Story resolution scene: On a roulette terrace of a grand casino built on one living planet-sized
-    cobalt-blue alien person with an enormous expressive face, giant arm and shoulder, small bright casino towers
-    and pedestrian galleries built onto and around the living body. The casino celebrates the seizure of the blue
-    giants’ homeworld as a holiday and bills the giant host for the fireworks. Specifically depict the tangible
-    outcome: The evidence is filed publicly so the blue hosts and local workers can challenge the terms. The very
-    long red couch in its transparent force bubble is nearby as the visiting crew''s vessel. Show the recovered
-    evidence held up openly among the people it protects. Hand-painted retro science-fiction gouache illustration,
+  prompt_prose: Casino workers and small blue locals stretch an enormous blank invoice across the gaudy holiday
+    facade, holding lanterns beneath it while a crowd gathers with fists raised. Spent firework tubes litter the
+    plaza. Above, the cobalt-blue face of the living planet that carries the casino squints at the sheet. The scarlet
+    velvet couch drifts low in its transparent bubble. Hand-painted retro science-fiction gouache illustration,
     warm muted color blocks, crisp brown ink outlines, tactile cloth and copper details, cinematic expressive staging,
-    every surface bare and unmarked.'
+    every surface bare and unmarked.
   jobs:
+    krea2: 62271
+  superseded_jobs:
     krea2: 61028
-  art:
-    krea2:
-      status: PENDING
-      art_image_id: null
 - key: warp-casino-colonial-settlement-day-override-success
   lane: krea2
   entity: episode-choice-result
@@ -135,21 +113,16 @@ subjects:
   asset: game-of-captains/episode/casino-colonial-settlement-day-override-success
   size: 1344x768
   seed: 1830006
-  prompt_prose: 'Story resolution scene: On a roulette terrace of a grand casino built on one living planet-sized
-    cobalt-blue alien person with an enormous expressive face, giant arm and shoulder, small bright casino towers
-    and pedestrian galleries built onto and around the living body. The casino celebrates the seizure of the blue
-    giants’ homeworld as a holiday and bills the giant host for the fireworks. Specifically depict the tangible
-    outcome: The captain intervenes without a full agreement. Some workers cheer while the giant host frowns. The
-    very long red couch in its transparent force bubble is nearby as the visiting crew''s vessel. Show the crew''s
-    direct intervention and the locals reacting to it. Hand-painted retro science-fiction gouache illustration,
-    warm muted color blocks, crisp brown ink outlines, tactile cloth and copper details, cinematic expressive staging,
-    every surface bare and unmarked.'
+  prompt_prose: Standing on the cushions of a long red velvet couch in its clear force bubble, the captain blasts
+    a canvas fire hose at crates of fizzing fireworks. Clouds of steam roll over casino towers perched on a planet-sized
+    cobalt-blue giant, whose enormous face frowns through the smoke. Some workers cheer under dripping party hats;
+    a few shake wet streamers in protest. Hand-painted retro science-fiction gouache illustration, warm muted color
+    blocks, crisp brown ink outlines, tactile cloth and copper details, cinematic expressive staging, every surface
+    bare and unmarked.
   jobs:
+    krea2: 62272
+  superseded_jobs:
     krea2: 61029
-  art:
-    krea2:
-      status: PENDING
-      art_image_id: null
 - key: warp-casino-the-house-always-wins-ask-success
   lane: krea2
   entity: episode-choice-result
@@ -157,20 +130,16 @@ subjects:
   asset: game-of-captains/episode/casino-the-house-always-wins-ask-success
   size: 1344x768
   seed: 1830007
-  prompt_prose: 'Story resolution scene: On a roulette terrace of a grand casino built on one living planet-sized
-    cobalt-blue alien person with an enormous expressive face, giant arm and shoulder, small bright casino towers
-    and pedestrian galleries built onto and around the living body. A table dealer reveals that the giant host is
-    automatically billed for every winning hand. Specifically depict the tangible outcome: The blue giant host is
-    asked directly, and its enormous face answers while the workers listen. The very long red couch in its transparent
-    force bubble is nearby as the visiting crew''s vessel. Show the affected locals acting with confident, responsible
-    agency of their own. Hand-painted retro science-fiction gouache illustration, warm muted color blocks, crisp
-    brown ink outlines, tactile cloth and copper details, cinematic expressive staging, every surface bare and unmarked.'
+  prompt_prose: A dealer in a green visor lifts a tall stack of copper chips toward the enormous mouth of a planet-sized
+    cobalt-blue giant whose body carries the casino. The giant's face answers with a booming sigh, cheeks puffed,
+    while gamblers freeze at the dice tables mid-throw. The crew lean over the backrest of their long scarlet velvet
+    couch, floating in its clear bubble. Hand-painted retro science-fiction gouache illustration, warm muted color
+    blocks, crisp brown ink outlines, tactile cloth and copper details, cinematic expressive staging, every surface
+    bare and unmarked.
   jobs:
+    krea2: 62273
+  superseded_jobs:
     krea2: 61030
-  art:
-    krea2:
-      status: PENDING
-      art_image_id: null
 - key: warp-casino-the-house-always-wins-document-success
   lane: krea2
   entity: episode-choice-result
@@ -178,20 +147,16 @@ subjects:
   asset: game-of-captains/episode/casino-the-house-always-wins-document-success
   size: 1344x768
   seed: 1830008
-  prompt_prose: 'Story resolution scene: On a roulette terrace of a grand casino built on one living planet-sized
-    cobalt-blue alien person with an enormous expressive face, giant arm and shoulder, small bright casino towers
-    and pedestrian galleries built onto and around the living body. A table dealer reveals that the giant host is
-    automatically billed for every winning hand. Specifically depict the tangible outcome: The evidence is filed
-    publicly so the blue hosts and local workers can challenge the terms. The very long red couch in its transparent
-    force bubble is nearby as the visiting crew''s vessel. Show the recovered evidence held up openly among the
-    people it protects. Hand-painted retro science-fiction gouache illustration, warm muted color blocks, crisp
-    brown ink outlines, tactile cloth and copper details, cinematic expressive staging, every surface bare and unmarked.'
+  prompt_prose: A dealer and a blue-skinned cashier crank a brass cash machine that spills a blank paper ribbon
+    over the balcony, down the forearm of the living cobalt-blue giant beneath the casino. Small blue locals gather
+    the ribbon in armfuls, holding it high for the crowd. The giant's vast face watches, eyebrows lifting. The crimson
+    velvet couch hovers close in its glassy bubble. Hand-painted retro science-fiction gouache illustration, warm
+    muted color blocks, crisp brown ink outlines, tactile cloth and copper details, cinematic expressive staging,
+    every surface bare and unmarked.
   jobs:
+    krea2: 62274
+  superseded_jobs:
     krea2: 61031
-  art:
-    krea2:
-      status: PENDING
-      art_image_id: null
 - key: warp-casino-the-house-always-wins-override-success
   lane: krea2
   entity: episode-choice-result
@@ -199,20 +164,16 @@ subjects:
   asset: game-of-captains/episode/casino-the-house-always-wins-override-success
   size: 1344x768
   seed: 1830009
-  prompt_prose: 'Story resolution scene: On a roulette terrace of a grand casino built on one living planet-sized
-    cobalt-blue alien person with an enormous expressive face, giant arm and shoulder, small bright casino towers
-    and pedestrian galleries built onto and around the living body. A table dealer reveals that the giant host is
-    automatically billed for every winning hand. Specifically depict the tangible outcome: The captain intervenes
-    without a full agreement. Some workers cheer while the giant host frowns. The very long red couch in its transparent
-    force bubble is nearby as the visiting crew''s vessel. Show the crew''s direct intervention and the locals reacting
-    to it. Hand-painted retro science-fiction gouache illustration, warm muted color blocks, crisp brown ink outlines,
-    tactile cloth and copper details, cinematic expressive staging, every surface bare and unmarked.'
+  prompt_prose: The captain flips an entire dice table, and a waterfall of copper chips cascades down the giant
+    blue forearm that holds up the casino. Several dealers whoop and toss their visors; the pit boss clutches his
+    chest. Overhead, the planet-sized cobalt-blue face knots its eyebrows in a deep frown. The long red velvet couch
+    waits in its clear bubble, door cushion open. Hand-painted retro science-fiction gouache illustration, warm
+    muted color blocks, crisp brown ink outlines, tactile cloth and copper details, cinematic expressive staging,
+    every surface bare and unmarked.
   jobs:
+    krea2: 62275
+  superseded_jobs:
     krea2: 61032
-  art:
-    krea2:
-      status: PENDING
-      art_image_id: null
 - key: warp-casino-a-question-of-consent-ask-success
   lane: krea2
   entity: episode-choice-result
@@ -220,21 +181,16 @@ subjects:
   asset: game-of-captains/episode/casino-a-question-of-consent-ask-success
   size: 1344x768
   seed: 1830010
-  prompt_prose: 'Story resolution scene: On a roulette terrace of a grand casino built on one living planet-sized
-    cobalt-blue alien person with an enormous expressive face, giant arm and shoulder, small bright casino towers
-    and pedestrian galleries built onto and around the living body. A property inspector insists the giant host
-    consented to carrying the casino, although no translator was present. Specifically depict the tangible outcome:
-    The blue giant host is asked directly, and its enormous face answers while the workers listen. The very long
-    red couch in its transparent force bubble is nearby as the visiting crew''s vessel. Show the affected locals
-    acting with confident, responsible agency of their own. Hand-painted retro science-fiction gouache illustration,
-    warm muted color blocks, crisp brown ink outlines, tactile cloth and copper details, cinematic expressive staging,
-    every surface bare and unmarked.'
+  prompt_prose: A lanky lilac alien interpreter with four trumpet-shaped ears stands on the armrest of a long scarlet
+    velvet couch in its clear bubble, translating between a tiny property inspector holding a clipboard and the
+    colossal lips of a cobalt-blue living giant that carries the casino. The giant's face speaks slowly, eyes narrowed,
+    while casino workers lean in from balconies, cupping their ears. Hand-painted retro science-fiction gouache
+    illustration, warm muted color blocks, crisp brown ink outlines, tactile cloth and copper details, cinematic
+    expressive staging, every surface bare and unmarked.
   jobs:
+    krea2: 62276
+  superseded_jobs:
     krea2: 61033
-  art:
-    krea2:
-      status: PENDING
-      art_image_id: null
 - key: warp-casino-a-question-of-consent-document-success
   lane: krea2
   entity: episode-choice-result
@@ -242,21 +198,16 @@ subjects:
   asset: game-of-captains/episode/casino-a-question-of-consent-document-success
   size: 1344x768
   seed: 1830011
-  prompt_prose: 'Story resolution scene: On a roulette terrace of a grand casino built on one living planet-sized
-    cobalt-blue alien person with an enormous expressive face, giant arm and shoulder, small bright casino towers
-    and pedestrian galleries built onto and around the living body. A property inspector insists the giant host
-    consented to carrying the casino, although no translator was present. Specifically depict the tangible outcome:
-    The evidence is filed publicly so the blue hosts and local workers can challenge the terms. The very long red
-    couch in its transparent force bubble is nearby as the visiting crew''s vessel. Show the recovered evidence
-    held up openly among the people it protects. Hand-painted retro science-fiction gouache illustration, warm muted
-    color blocks, crisp brown ink outlines, tactile cloth and copper details, cinematic expressive staging, every
-    surface bare and unmarked.'
+  prompt_prose: In a gilded casino lobby, workers and small blue locals mount the inspector's blank clipboard pages
+    on a tall brass display stand, examining them with round magnifying lenses. The sweating property inspector
+    edges toward the exit. Through tall windows looms the curious face of the planet-sized cobalt-blue giant beneath
+    the casino. The red velvet couch floats outside in its transparent bubble. Hand-painted retro science-fiction
+    gouache illustration, warm muted color blocks, crisp brown ink outlines, tactile cloth and copper details, cinematic
+    expressive staging, every surface bare and unmarked.
   jobs:
+    krea2: 62277
+  superseded_jobs:
     krea2: 61034
-  art:
-    krea2:
-      status: PENDING
-      art_image_id: null
 - key: warp-casino-a-question-of-consent-override-success
   lane: krea2
   entity: episode-choice-result
@@ -264,21 +215,16 @@ subjects:
   asset: game-of-captains/episode/casino-a-question-of-consent-override-success
   size: 1344x768
   seed: 1830012
-  prompt_prose: 'Story resolution scene: On a roulette terrace of a grand casino built on one living planet-sized
-    cobalt-blue alien person with an enormous expressive face, giant arm and shoulder, small bright casino towers
-    and pedestrian galleries built onto and around the living body. A property inspector insists the giant host
-    consented to carrying the casino, although no translator was present. Specifically depict the tangible outcome:
-    The captain intervenes without a full agreement. Some workers cheer while the giant host frowns. The very long
-    red couch in its transparent force bubble is nearby as the visiting crew''s vessel. Show the crew''s direct
-    intervention and the locals reacting to it. Hand-painted retro science-fiction gouache illustration, warm muted
-    color blocks, crisp brown ink outlines, tactile cloth and copper details, cinematic expressive staging, every
-    surface bare and unmarked.'
+  prompt_prose: The captain plucks the clipboard from a startled property inspector and lobs it into the open bubble
+    of a long crimson velvet couch. The inspector sputters, arms flailing. A group of casino workers applauds from
+    a balcony while others gasp. Above the bright casino towers, the cobalt-blue face of the living planet frowns
+    with heavy, doubtful eyelids. Hand-painted retro science-fiction gouache illustration, warm muted color blocks,
+    crisp brown ink outlines, tactile cloth and copper details, cinematic expressive staging, every surface bare
+    and unmarked.
   jobs:
+    krea2: 62278
+  superseded_jobs:
     krea2: 61035
-  art:
-    krea2:
-      status: PENDING
-      art_image_id: null
 - key: warp-casino-night-shift-ask-success
   lane: krea2
   entity: episode-choice-result
@@ -286,20 +232,16 @@ subjects:
   asset: game-of-captains/episode/casino-night-shift-ask-success
   size: 1344x768
   seed: 1830013
-  prompt_prose: 'Story resolution scene: On a roulette terrace of a grand casino built on one living planet-sized
-    cobalt-blue alien person with an enormous expressive face, giant arm and shoulder, small bright casino towers
-    and pedestrian galleries built onto and around the living body. The host wants six hours of sleep, but every
-    casino schedule requires them to remain awake. Specifically depict the tangible outcome: The blue giant host
-    is asked directly, and its enormous face answers while the workers listen. The very long red couch in its transparent
-    force bubble is nearby as the visiting crew''s vessel. Show the affected locals acting with confident, responsible
-    agency of their own. Hand-painted retro science-fiction gouache illustration, warm muted color blocks, crisp
-    brown ink outlines, tactile cloth and copper details, cinematic expressive staging, every surface bare and unmarked.'
+  prompt_prose: Under a starry sky, the captain whispers into a long brass speaking tube that snakes up to the drooping
+    eyelid of a planet-sized cobalt-blue giant carrying a glittering casino. The giant's face yawns hugely and murmurs
+    back. Night-shift workers in rumpled uniforms hold lanterns and listen. A very long scarlet velvet couch hovers
+    beside them in its clear bubble. Hand-painted retro science-fiction gouache illustration, warm muted color blocks,
+    crisp brown ink outlines, tactile cloth and copper details, cinematic expressive staging, every surface bare
+    and unmarked.
   jobs:
+    krea2: 62279
+  superseded_jobs:
     krea2: 61036
-  art:
-    krea2:
-      status: PENDING
-      art_image_id: null
 - key: warp-casino-night-shift-document-success
   lane: krea2
   entity: episode-choice-result
@@ -307,20 +249,16 @@ subjects:
   asset: game-of-captains/episode/casino-night-shift-document-success
   size: 1344x768
   seed: 1830014
-  prompt_prose: 'Story resolution scene: On a roulette terrace of a grand casino built on one living planet-sized
-    cobalt-blue alien person with an enormous expressive face, giant arm and shoulder, small bright casino towers
-    and pedestrian galleries built onto and around the living body. The host wants six hours of sleep, but every
-    casino schedule requires them to remain awake. Specifically depict the tangible outcome: The evidence is filed
-    publicly so the blue hosts and local workers can challenge the terms. The very long red couch in its transparent
-    force bubble is nearby as the visiting crew''s vessel. Show the recovered evidence held up openly among the
-    people it protects. Hand-painted retro science-fiction gouache illustration, warm muted color blocks, crisp
-    brown ink outlines, tactile cloth and copper details, cinematic expressive staging, every surface bare and unmarked.'
+  prompt_prose: Night-shift workers in nightcaps paste a huge blank schedule sheet across the face of a casino clock
+    tower, its hands stopped at midnight. A crowd of small blue locals and croupiers point up at it, nodding. Behind
+    the tower, the heavy-lidded cobalt-blue face of the living planet blinks sleepily. The red velvet couch drifts
+    by in its transparent bubble. Hand-painted retro science-fiction gouache illustration, warm muted color blocks,
+    crisp brown ink outlines, tactile cloth and copper details, cinematic expressive staging, every surface bare
+    and unmarked.
   jobs:
+    krea2: 62280
+  superseded_jobs:
     krea2: 61037
-  art:
-    krea2:
-      status: PENDING
-      art_image_id: null
 - key: warp-casino-night-shift-override-success
   lane: krea2
   entity: episode-choice-result
@@ -328,20 +266,15 @@ subjects:
   asset: game-of-captains/episode/casino-night-shift-override-success
   size: 1344x768
   seed: 1830015
-  prompt_prose: 'Story resolution scene: On a roulette terrace of a grand casino built on one living planet-sized
-    cobalt-blue alien person with an enormous expressive face, giant arm and shoulder, small bright casino towers
-    and pedestrian galleries built onto and around the living body. The host wants six hours of sleep, but every
-    casino schedule requires them to remain awake. Specifically depict the tangible outcome: The captain intervenes
-    without a full agreement. Some workers cheer while the giant host frowns. The very long red couch in its transparent
-    force bubble is nearby as the visiting crew''s vessel. Show the crew''s direct intervention and the locals reacting
-    to it. Hand-painted retro science-fiction gouache illustration, warm muted color blocks, crisp brown ink outlines,
-    tactile cloth and copper details, cinematic expressive staging, every surface bare and unmarked.'
+  prompt_prose: From a long scarlet velvet couch inside its clear bubble, the crew drag an enormous patchwork quilt
+    over the glowing casino towers and the shoulder of a planet-sized cobalt-blue giant. Workers cheer as they switch
+    off neon lamps one by one. The giant's half-closed face frowns sleepily, caught between gratitude and grumpiness,
+    one eye drifting shut. Hand-painted retro science-fiction gouache illustration, warm muted color blocks, crisp
+    brown ink outlines, tactile cloth and copper details, cinematic expressive staging, every surface bare and unmarked.
   jobs:
+    krea2: 62281
+  superseded_jobs:
     krea2: 61038
-  art:
-    krea2:
-      status: PENDING
-      art_image_id: null
 - key: warp-casino-a-fair-agreement-ask-success
   lane: krea2
   entity: episode-choice-result
@@ -349,20 +282,15 @@ subjects:
   asset: game-of-captains/episode/casino-a-fair-agreement-ask-success
   size: 1344x768
   seed: 1830016
-  prompt_prose: 'Story resolution scene: On a roulette terrace of a grand casino built on one living planet-sized
-    cobalt-blue alien person with an enormous expressive face, giant arm and shoulder, small bright casino towers
-    and pedestrian galleries built onto and around the living body. Colonists offer the giant one percent of profits
-    if they surrender the right to move. Specifically depict the tangible outcome: The blue giant host is asked
-    directly, and its enormous face answers while the workers listen. The very long red couch in its transparent
-    force bubble is nearby as the visiting crew''s vessel. Show the affected locals acting with confident, responsible
-    agency of their own. Hand-painted retro science-fiction gouache illustration, warm muted color blocks, crisp
-    brown ink outlines, tactile cloth and copper details, cinematic expressive staging, every surface bare and unmarked.'
+  prompt_prose: Colonists in top hats hold out a single tiny gold coin on a silver tray toward the immense face
+    of a cobalt-blue living giant carrying their casino. The captain raises a lantern from the arm of a long crimson
+    velvet couch in its clear bubble. The giant answers with a wry, unimpressed pout, and workers on the terraces
+    lean forward to listen. Hand-painted retro science-fiction gouache illustration, warm muted color blocks, crisp
+    brown ink outlines, tactile cloth and copper details, cinematic expressive staging, every surface bare and unmarked.
   jobs:
+    krea2: 62282
+  superseded_jobs:
     krea2: 61039
-  art:
-    krea2:
-      status: PENDING
-      art_image_id: null
 - key: warp-casino-a-fair-agreement-document-success
   lane: krea2
   entity: episode-choice-result
@@ -370,20 +298,16 @@ subjects:
   asset: game-of-captains/episode/casino-a-fair-agreement-document-success
   size: 1344x768
   seed: 1830017
-  prompt_prose: 'Story resolution scene: On a roulette terrace of a grand casino built on one living planet-sized
-    cobalt-blue alien person with an enormous expressive face, giant arm and shoulder, small bright casino towers
-    and pedestrian galleries built onto and around the living body. Colonists offer the giant one percent of profits
-    if they surrender the right to move. Specifically depict the tangible outcome: The evidence is filed publicly
-    so the blue hosts and local workers can challenge the terms. The very long red couch in its transparent force
-    bubble is nearby as the visiting crew''s vessel. Show the recovered evidence held up openly among the people
-    it protects. Hand-painted retro science-fiction gouache illustration, warm muted color blocks, crisp brown ink
-    outlines, tactile cloth and copper details, cinematic expressive staging, every surface bare and unmarked.'
+  prompt_prose: Casino workers and small blue locals unroll a blank agreement scroll down the arm of a planet-sized
+    cobalt-blue giant like a vast banner, a minuscule gold coin pinned at its bottom edge. Onlookers crowd around
+    with magnifying glasses, laughing. The colonists in top hats shrink back. The scarlet velvet couch floats beside
+    the giant's elbow in its clear bubble. Hand-painted retro science-fiction gouache illustration, warm muted color
+    blocks, crisp brown ink outlines, tactile cloth and copper details, cinematic expressive staging, every surface
+    bare and unmarked.
   jobs:
+    krea2: 62283
+  superseded_jobs:
     krea2: 61040
-  art:
-    krea2:
-      status: PENDING
-      art_image_id: null
 - key: warp-casino-a-fair-agreement-override-success
   lane: krea2
   entity: episode-choice-result
@@ -391,20 +315,16 @@ subjects:
   asset: game-of-captains/episode/casino-a-fair-agreement-override-success
   size: 1344x768
   seed: 1830018
-  prompt_prose: 'Story resolution scene: On a roulette terrace of a grand casino built on one living planet-sized
-    cobalt-blue alien person with an enormous expressive face, giant arm and shoulder, small bright casino towers
-    and pedestrian galleries built onto and around the living body. Colonists offer the giant one percent of profits
-    if they surrender the right to move. Specifically depict the tangible outcome: The captain intervenes without
-    a full agreement. Some workers cheer while the giant host frowns. The very long red couch in its transparent
-    force bubble is nearby as the visiting crew''s vessel. Show the crew''s direct intervention and the locals reacting
-    to it. Hand-painted retro science-fiction gouache illustration, warm muted color blocks, crisp brown ink outlines,
-    tactile cloth and copper details, cinematic expressive staging, every surface bare and unmarked.'
+  prompt_prose: The captain leans from a long red velvet couch in its clear bubble with giant bolt cutters, snapping
+    iron chains that anchor a cobalt-blue giant's ankle to the casino foundations. The enormous toe wriggles free.
+    Colonists in top hats gape in horror; several workers cheer and wave aprons. The giant's planet-sized face frowns,
+    unsure about this sudden freedom. Hand-painted retro science-fiction gouache illustration, warm muted color
+    blocks, crisp brown ink outlines, tactile cloth and copper details, cinematic expressive staging, every surface
+    bare and unmarked.
   jobs:
+    krea2: 62284
+  superseded_jobs:
     krea2: 61041
-  art:
-    krea2:
-      status: PENDING
-      art_image_id: null
 - key: warp-casino-jackpot-evacuation-ask-success
   lane: krea2
   entity: episode-choice-result
@@ -412,21 +332,15 @@ subjects:
   asset: game-of-captains/episode/casino-jackpot-evacuation-ask-success
   size: 1344x768
   seed: 1830019
-  prompt_prose: 'Story resolution scene: On a roulette terrace of a grand casino built on one living planet-sized
-    cobalt-blue alien person with an enormous expressive face, giant arm and shoulder, small bright casino towers
-    and pedestrian galleries built onto and around the living body. A casino fire alarm goes off inside the host’s
-    outer ear, and every emergency exit leads farther onto their body. Specifically depict the tangible outcome:
-    The blue giant host is asked directly, and its enormous face answers while the workers listen. The very long
-    red couch in its transparent force bubble is nearby as the visiting crew''s vessel. Show the affected locals
-    acting with confident, responsible agency of their own. Hand-painted retro science-fiction gouache illustration,
-    warm muted color blocks, crisp brown ink outlines, tactile cloth and copper details, cinematic expressive staging,
-    every surface bare and unmarked.'
+  prompt_prose: A brass alarm bell clangs inside the outer ear of a planet-sized cobalt-blue giant covered in casino
+    towers. The captain shouts into the ear canal from a long scarlet velvet couch in its clear bubble. The giant's
+    face winces and answers by cupping a colossal open palm beside its ear, and workers clutching jackpot buckets
+    file out onto it. Hand-painted retro science-fiction gouache illustration, warm muted color blocks, crisp brown
+    ink outlines, tactile cloth and copper details, cinematic expressive staging, every surface bare and unmarked.
   jobs:
+    krea2: 62285
+  superseded_jobs:
     krea2: 61042
-  art:
-    krea2:
-      status: PENDING
-      art_image_id: null
 - key: warp-casino-jackpot-evacuation-document-success
   lane: krea2
   entity: episode-choice-result
@@ -434,21 +348,15 @@ subjects:
   asset: game-of-captains/episode/casino-jackpot-evacuation-document-success
   size: 1344x768
   seed: 1830020
-  prompt_prose: 'Story resolution scene: On a roulette terrace of a grand casino built on one living planet-sized
-    cobalt-blue alien person with an enormous expressive face, giant arm and shoulder, small bright casino towers
-    and pedestrian galleries built onto and around the living body. A casino fire alarm goes off inside the host’s
-    outer ear, and every emergency exit leads farther onto their body. Specifically depict the tangible outcome:
-    The evidence is filed publicly so the blue hosts and local workers can challenge the terms. The very long red
-    couch in its transparent force bubble is nearby as the visiting crew''s vessel. Show the recovered evidence
-    held up openly among the people it protects. Hand-painted retro science-fiction gouache illustration, warm muted
-    color blocks, crisp brown ink outlines, tactile cloth and copper details, cinematic expressive staging, every
-    surface bare and unmarked.'
+  prompt_prose: Smoke-smudged croupiers and small blue locals pin blank evacuation maps to an easel, tracing looping
+    arrows that all curl back onto the giant body beneath them. A crowd argues and points. Overhead, the cobalt-blue
+    earlobe of the living planet glows with flashing alarm lights. The red velvet couch hovers nearby in its transparent
+    bubble. Hand-painted retro science-fiction gouache illustration, warm muted color blocks, crisp brown ink outlines,
+    tactile cloth and copper details, cinematic expressive staging, every surface bare and unmarked.
   jobs:
+    krea2: 62286
+  superseded_jobs:
     krea2: 61043
-  art:
-    krea2:
-      status: PENDING
-      art_image_id: null
 - key: warp-casino-jackpot-evacuation-override-success
   lane: krea2
   entity: episode-choice-result
@@ -456,21 +364,15 @@ subjects:
   asset: game-of-captains/episode/casino-jackpot-evacuation-override-success
   size: 1344x768
   seed: 1830021
-  prompt_prose: 'Story resolution scene: On a roulette terrace of a grand casino built on one living planet-sized
-    cobalt-blue alien person with an enormous expressive face, giant arm and shoulder, small bright casino towers
-    and pedestrian galleries built onto and around the living body. A casino fire alarm goes off inside the host’s
-    outer ear, and every emergency exit leads farther onto their body. Specifically depict the tangible outcome:
-    The captain intervenes without a full agreement. Some workers cheer while the giant host frowns. The very long
-    red couch in its transparent force bubble is nearby as the visiting crew''s vessel. Show the crew''s direct
-    intervention and the locals reacting to it. Hand-painted retro science-fiction gouache illustration, warm muted
-    color blocks, crisp brown ink outlines, tactile cloth and copper details, cinematic expressive staging, every
-    surface bare and unmarked.'
+  prompt_prose: The crew unroll a canvas escape chute from the earlobe of a planet-sized cobalt-blue giant straight
+    into the open bubble of their long crimson velvet couch. Gamblers and workers slide down clutching chips, some
+    whooping with joy. The giant's vast face frowns and rubs its ringing ear with one enormous finger as smoke curls
+    from the casino. Hand-painted retro science-fiction gouache illustration, warm muted color blocks, crisp brown
+    ink outlines, tactile cloth and copper details, cinematic expressive staging, every surface bare and unmarked.
   jobs:
+    krea2: 62287
+  superseded_jobs:
     krea2: 61044
-  art:
-    krea2:
-      status: PENDING
-      art_image_id: null
 - key: warp-casino-the-other-owners-ask-success
   lane: krea2
   entity: episode-choice-result
@@ -478,21 +380,16 @@ subjects:
   asset: game-of-captains/episode/casino-the-other-owners-ask-success
   size: 1344x768
   seed: 1830022
-  prompt_prose: 'Story resolution scene: On a roulette terrace of a grand casino built on one living planet-sized
-    cobalt-blue alien person with an enormous expressive face, giant arm and shoulder, small bright casino towers
-    and pedestrian galleries built onto and around the living body. Another blue giant broadcasts a warning that
-    the casino franchise plans to expand into their sleeping sister. Specifically depict the tangible outcome: The
-    blue giant host is asked directly, and its enormous face answers while the workers listen. The very long red
-    couch in its transparent force bubble is nearby as the visiting crew''s vessel. Show the affected locals acting
-    with confident, responsible agency of their own. Hand-painted retro science-fiction gouache illustration, warm
-    muted color blocks, crisp brown ink outlines, tactile cloth and copper details, cinematic expressive staging,
-    every surface bare and unmarked.'
+  prompt_prose: Two planet-sized cobalt-blue giants face each other across a starry gulf; a third sleeps curled
+    beneath cloud blankets. The captain flashes a signal lantern from a long scarlet velvet couch inside its clear
+    bubble. The casino-covered host turns its enormous face toward its sibling and answers, while workers line the
+    balconies to listen, hands on their hearts. Hand-painted retro science-fiction gouache illustration, warm muted
+    color blocks, crisp brown ink outlines, tactile cloth and copper details, cinematic expressive staging, every
+    surface bare and unmarked.
   jobs:
+    krea2: 62288
+  superseded_jobs:
     krea2: 61045
-  art:
-    krea2:
-      status: PENDING
-      art_image_id: null
 - key: warp-casino-the-other-owners-document-success
   lane: krea2
   entity: episode-choice-result
@@ -500,21 +397,16 @@ subjects:
   asset: game-of-captains/episode/casino-the-other-owners-document-success
   size: 1344x768
   seed: 1830023
-  prompt_prose: 'Story resolution scene: On a roulette terrace of a grand casino built on one living planet-sized
-    cobalt-blue alien person with an enormous expressive face, giant arm and shoulder, small bright casino towers
-    and pedestrian galleries built onto and around the living body. Another blue giant broadcasts a warning that
-    the casino franchise plans to expand into their sleeping sister. Specifically depict the tangible outcome: The
-    evidence is filed publicly so the blue hosts and local workers can challenge the terms. The very long red couch
-    in its transparent force bubble is nearby as the visiting crew''s vessel. Show the recovered evidence held up
-    openly among the people it protects. Hand-painted retro science-fiction gouache illustration, warm muted color
-    blocks, crisp brown ink outlines, tactile cloth and copper details, cinematic expressive staging, every surface
-    bare and unmarked.'
+  prompt_prose: Casino workers unfurl giant blank blueprints from a balcony toward a sleeping cobalt-blue giant
+    curled among clouds. A second living blue giant leans close, peering at the sheets through an enormous monocle.
+    Small blue locals hold the corners steady in the wind. The red velvet couch floats between the giants in its
+    transparent force bubble. Hand-painted retro science-fiction gouache illustration, warm muted color blocks,
+    crisp brown ink outlines, tactile cloth and copper details, cinematic expressive staging, every surface bare
+    and unmarked.
   jobs:
+    krea2: 62289
+  superseded_jobs:
     krea2: 61046
-  art:
-    krea2:
-      status: PENDING
-      art_image_id: null
 - key: warp-casino-the-other-owners-override-success
   lane: krea2
   entity: episode-choice-result
@@ -522,18 +414,12 @@ subjects:
   asset: game-of-captains/episode/casino-the-other-owners-override-success
   size: 1344x768
   seed: 1830024
-  prompt_prose: 'Story resolution scene: On a roulette terrace of a grand casino built on one living planet-sized
-    cobalt-blue alien person with an enormous expressive face, giant arm and shoulder, small bright casino towers
-    and pedestrian galleries built onto and around the living body. Another blue giant broadcasts a warning that
-    the casino franchise plans to expand into their sleeping sister. Specifically depict the tangible outcome: The
-    captain intervenes without a full agreement. Some workers cheer while the giant host frowns. The very long red
-    couch in its transparent force bubble is nearby as the visiting crew''s vessel. Show the crew''s direct intervention
-    and the locals reacting to it. Hand-painted retro science-fiction gouache illustration, warm muted color blocks,
-    crisp brown ink outlines, tactile cloth and copper details, cinematic expressive staging, every surface bare
-    and unmarked.'
+  prompt_prose: The captain plants a striped barrier pole and a velvet rope on the shoulder of a sleeping cobalt-blue
+    giant, while casino construction cranes grind to a halt. Some workers cheer from scaffolding. On the horizon,
+    the casino-carrying host's planet-sized face frowns at the crew. The long crimson velvet couch idles in its
+    clear bubble. Hand-painted retro science-fiction gouache illustration, warm muted color blocks, crisp brown
+    ink outlines, tactile cloth and copper details, cinematic expressive staging, every surface bare and unmarked.
   jobs:
+    krea2: 62290
+  superseded_jobs:
     krea2: 61047
-  art:
-    krea2:
-      status: PENDING
-      art_image_id: null
