@@ -159,7 +159,7 @@ class SnapshotTests(unittest.TestCase):
         # A row can retire only after a separately verified ArtImage and media.
         delivered = patched.replace("status: requested", "status: delivered")
         delivered = delivered.replace("  verdict: null",
-            "  art_image_id: 252101\\n  delivery_check: 'HEAD 200 fresh art'\\n  verdict: null")
+            "  art_image_id: 252101\n  delivery_check: 'HEAD 200 fresh art'\n  verdict: null")
         path.write_text(delivered, encoding="utf-8")
         self.assertEqual(preserve_completed_submissions([source], art_dir=self.root), set())
 
