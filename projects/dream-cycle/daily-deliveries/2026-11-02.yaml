@@ -1,0 +1,71 @@
+date: '2026-11-02'
+entries:
+- slug: space-couch-trolley-couchscope
+  title: 'Space Couch: a funnier three-question Couchscope with a trolley problem'
+  target: game-of-captains
+  kind: first-time player onboarding fix from playtest notes
+  summary: The captain personality quiz drops from four questions to three; the vague future-self and miracle-invoice questions are replaced by a cake-trolley trolley problem (brace for frosting, risk survey, multi-track drift) and a concrete DO NOT WEAR crown, while the painted sun-and-moon question stays first and old four-answer saves keep their sign.
+  status: shipped
+  pull_request: https://github.com/silasfelinus/kind_robots/pull/4686
+  checks_url: https://github.com/silasfelinus/kind_robots/actions/runs/41556697787
+  merge_sha: 0ad8f0d709f754b960f72de585df06767e9bd882
+  checks: passed
+  verification: All 14 check runs on the final head passed, including vue-tsc, layout contract, four contract shards and full adversarial voyages. Walked the quiz in a local dev build at 1280x720 and 390x844. Merged is not deployed.
+  art:
+    status: not-required
+    note: Trolley plates are commissioned under the opening-art entry; an authored SVG stands in until then.
+- slug: space-couch-slim-constellation-reveal
+  title: 'Space Couch: slimmer constellation reveal with a painted plate per sign'
+  target: game-of-captains
+  kind: first-time player onboarding fix from playtest notes
+  summary: The busy result page now shows only the constellation name, epithet, HR finding and forecast with two buttons, and each of the twelve signs reads its own painted plate key instead of one generic star-dot drawing.
+  status: shipped
+  pull_request: https://github.com/silasfelinus/kind_robots/pull/4686
+  checks_url: https://github.com/silasfelinus/kind_robots/actions/runs/41556697787
+  merge_sha: 0ad8f0d709f754b960f72de585df06767e9bd882
+  checks: passed
+  verification: All 14 check runs on the final head passed; the Stars contract asserts the per-sign plate key, and the reveal was screenshotted locally at desktop and phone widths. Merged is not deployed.
+  art:
+    status: not-required
+    note: The twelve sign paintings are commissioned under the opening-art entry; the glyph stands in until each is wired.
+- slug: space-couch-one-screen-crew-board
+  title: 'Space Couch: all twelve officers on one screen with three visible seats'
+  target: game-of-captains
+  kind: first-time player onboarding fix from playtest notes
+  summary: Crew selection drops its two-page roster for a single 4x3 portrait grid with three seats above it that fill as officers are tapped, show portrait and name, carry a release button, and number the chosen cards.
+  status: shipped
+  pull_request: https://github.com/silasfelinus/kind_robots/pull/4686
+  checks_url: https://github.com/silasfelinus/kind_robots/actions/runs/41556697787
+  merge_sha: 0ad8f0d709f754b960f72de585df06767e9bd882
+  checks: passed
+  verification: All 14 check runs on the final head passed; tapping three officers was exercised in Playwright at 1280x720 and 390x844 with screenshots of empty and filled seats. Merged is not deployed.
+  art:
+    status: not-required
+    note: Uses the existing crew portraits.
+- slug: space-couch-briefing-console-deck
+  title: 'Space Couch: the mission briefing becomes a four-step console deck'
+  target: game-of-captains
+  kind: first-time player onboarding fix from playtest notes
+  summary: The thirteen-section scrolling briefing form is now four full-panel steps (Course, Captain, Ship, Away team) with art-led route, room and officer cards, the captain's bad idea on the shared choice hand, a big odds readout and one console action row.
+  status: shipped
+  pull_request: https://github.com/silasfelinus/kind_robots/pull/4686
+  checks_url: https://github.com/silasfelinus/kind_robots/actions/runs/41556697787
+  merge_sha: 0ad8f0d709f754b960f72de585df06767e9bd882
+  checks: passed
+  verification: All 14 check runs on the final head passed, including the layout contract one-scroll rule and 184 seeded trace voyages; all four steps were screenshotted locally at desktop and phone widths. Merged is not deployed.
+  art:
+    status: not-required
+    note: Reads existing mission and pocket-room paintings.
+- slug: space-couch-opening-art-priority
+  title: 'Space Couch: priority paintings for the opening missions and Couchscope'
+  target: game-of-captains
+  kind: first-time player art gap
+  summary: A priority-950 auto-submit ledger commissions red-couch repaints of the three opening missions (whose only paintings predate the redesign, so the first stage shows filler), twelve constellation plates and the trolley question with its three answers.
+  status: in-progress
+  pull_request: https://github.com/silasfelinus/conductor/pull/6979
+  checks_url: https://github.com/silasfelinus/conductor/actions/runs/41551948571
+  verification: All conductor PR checks passed; art_ledger_authoring reported 0 problems and the kind_robots live prompt contract passed 19 of 19 prompts before merge.
+  next_step: Once the ArtJobs render, add each DONE ArtImage id to kind_robots onboardingArt.ts and voyagePaintings.ts and verify the final URLs in game.
+  art:
+    status: queued
+    job_ids: [63467, 63468, 63469, 63470, 63471, 63472, 63473, 63474, 63475, 63476, 63477, 63478, 63479, 63480, 63481, 63482, 63483, 63484, 63485]
