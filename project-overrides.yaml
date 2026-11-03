@@ -268,24 +268,19 @@ overrides:
     kind: brainstorm
 
   - slug: brainstorm
-    status: finished # flipped 2026-09-11 by Silas, in session: "I'm going to accept brainstorm
-    # as acceptable and cleared." 32/32 tasks and 7/7 milestones
-    # done. NOT a task-count flip: t-023 is a real playtest gate that FAILED once (2026-09-07,
-    # paragraph drift and recycled example content), was fixed by kind_robots#2507, retested by
-    # Silas on 2026-09-11, failed again on three new defects (lens selection treated as a floor
-    # rather than an allow-list; no new-pitch control; candidate cards not sharing a baseline),
-    # and only accepted after kind_robots#2615 fixed all three. See t-023's note for the full
-    # record, including one documented residual accepted as-is: the FOCUSED batch shape still
-    # badges a per-candidate lens identically to an ASSORTMENT quota, so a focused batch can look
-    # varied at a glance. If that becomes annoying in use, file a fresh task rather than reopening
-    # this project -- the interface-vision precedent is that reopening is for unmet goals, not for
-    # polish someone thought of later.
+    status: active # reopened 2026-11-03 PT by Silas, in session: "the current project is
+    # called brainstorm, but it's not active because it just doesn't work how i want it to"
+    # ... "I want a better front end. Something that is social and actually interactive and
+    # fun." It is now the riff board party game in Play (m7, DESIGN-BRIEF.md "2026-11-03 PT
+    # direction"). The 2026-09-11 finish (32/32 tasks, t-023 playtest accepted after
+    # kind_robots#2615) closed the candidate-workbench era, which stays at /brainstorm as an
+    # admin tool.
     priority: normal
     # Frontend placement — synced to the kind_robots Project row by
     # sync_projects.py. Values match the canonical PROJECT_PLACEMENTS entry
     # for 'brainstorm' in kind_robots utils/projectPlacements.ts (conductor/t-per-project polish tasks).
-    liveUrl: /brainstorm
-    channelKey: build
+    liveUrl: /play/brainstorm
+    channelKey: arcade
     tabKey: brainstorm
 
   - slug: sketchy

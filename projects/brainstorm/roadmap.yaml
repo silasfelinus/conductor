@@ -1,10 +1,11 @@
 project: brainstorm
 kind: software
 goal: >-
-  Restore Brainstorm as a first-class Kind Robots creative ideation tool at /brainstorm:
-  pitch -> generate diverse candidates -> keep/edit/reject/regenerate -> save and reuse,
-  with object-aware prompt variation and optional Krea2-backed art generation after the
-  text experience is excellent.
+  Brainstorm is the riff board at /play/brainstorm: a social improv party game where someone
+  puts a prompt on the table and people pile on with their own lines. Humans write every
+  line; the AI coaches (sparks, encouragement) and never plays; Reactions decide what rises;
+  every human line is painted through the ArtJob pipeline; the whole thing looks and plays like
+  a AAA handheld. The 2026-08 candidate workbench stays at /brainstorm as an admin tool.
 notes_from_silas: >-
   Brainstorm is one of the earliest and most personally meaningful LLM services on Kind
   Robots. It predates most of the current site and should recover its playful, useful soul:
@@ -17,6 +18,18 @@ notes_from_silas: >-
   /plan/brainstorm should resolve to the same product. Do not turn this back into a Dream
   gallery. Do not let the internal Conductor proposal generator redefine the public product.
 
+
+  2026-11-03 PT, reopening the project: "the current project is called brainstorm, but it's
+  not active because it just doesn't work how i want it to. The inspiration is a brainstorming
+  game i play with my kids. It's cards against humanities, mad libs, improv. always based on a
+  prompt, and a back and forth dozens style: show me what you got." ... "I want a better front
+  end. Something that is social and actually interactive and fun." ... "my biggest problem with
+  brainstorm until now is thinking that the goal was ai making up brainstorms. What ai needs to
+  do is support humans coming up with new stuff, encouraging, helping brainstorm, and adjusting
+  what is shown based on ratings." ... "all front end pieces (this should be added to play).
+  should look like a aaa handheld game. all human created ideas should be given art generated
+  by the art modeler. We should have suggestion spots for all our first ideas, plus more." See
+  DESIGN-BRIEF.md "2026-11-03 PT direction: the riff board".
 references:
   design_brief: projects/brainstorm/DESIGN-BRIEF.md
   historical_kind_robots_commits:
@@ -60,6 +73,10 @@ milestones:
     title: Preview verification and release readiness
     weight: 5
     status: done
+  - id: m7
+    title: The riff board — social party game in Play
+    weight: 30
+    status: in-progress
 
 tasks:
   - id: t-001
@@ -611,3 +628,100 @@ tasks:
     owner: worker
     claimed_by: 20260830T162851Z-brainstorm-t032-cds1
     claimed_at: '2026-08-30T16:28:51Z'
+
+  - id: t-033
+    milestone: m7
+    title: 'Riff board first slice: /play/brainstorm handheld game, human lines, coach sparks, Reactions, art per line'
+    status: review
+    owner: reviewer
+    passes: 0
+    stakes: reversible
+    gate_human: false
+    note: >-
+      2026-11-03 PT (Silas-directed session): first playable slice of the reopened product.
+      kind_robots adds BrainstormRiff/BrainstormLine, a BRAINSTORM_LINE Reaction target
+      (additive migration 20261103180000_brainstorm_riff_board), /api/brainstorm/riffs* and
+      /api/brainstorm/lines/* routes, twelve seeded starter decks (Vanderbuilt Lacrosse,
+      Trashcan Jones, Robert Smith, the brothers' crossover, terrible ice cream, I like Obama
+      but, plus six more), heat ranking from Reactions, a Krea2 ArtJob per posted line, coach
+      sparks through /api/brainstorm/generate (angles, never finished lines), table mode for
+      pass-and-play, and the handheld console page at /play/brainstorm with its own console
+      theme and Play tab.
+    implementation_pr: 'silasfelinus/kind_robots#4691'
+    updated: '2026-11-03T20:00:00Z'
+
+  - id: t-034
+    milestone: m7
+    title: 'Family playtest: play a real round at the table and accept or redirect the riff board'
+    status: waiting
+    depends_on: [t-033]
+    owner: null
+    passes: 0
+    stakes: reversible
+    gate_human: true
+    gate_reason: subjective-acceptance
+    note: >-
+      FOR SILAS: once t-033 is deployed, play one round of Vanderbuilt Lacrosse (or any
+      table) with the kids at /play/brainstorm, on a phone in table mode and on a big screen.
+      Tell us what felt slow, what made you laugh, whether the coach's sparks helped without
+      stealing the punchline, and whether the art lands. Recommendation if unanswered: keep the
+      four flavors and the A/B console; tune pacing from what you report.
+
+  - id: t-035
+    milestone: m7
+    title: 'Coach v2: yes-and nudges on a posted line, and spark quality fixtures against the human-first rule'
+    status: waiting
+    depends_on: [t-033]
+    owner: null
+    passes: 0
+    stakes: reversible
+    gate_human: false
+    note: >-
+      The coach currently deals angles on request. Add an optional "yes, and" nudge after a
+      line lands (one short escalation question, never a rewrite), and a small fixture suite
+      (the starter decks) that fails a spark batch when sparks are finished jokes, repeat
+      covered territory, or ignore the table's top-rated lines.
+
+  - id: t-036
+    milestone: m7
+    title: 'Riff board art pass: painted title and hero art for /play/brainstorm and covers for the starter decks'
+    status: waiting
+    depends_on: [t-033]
+    owner: null
+    passes: 0
+    stakes: reversible
+    gate_human: false
+    note: >-
+      The front page ships with a code-drawn brain-and-lightning title mark and line art
+      painted per line. Queue painted art for the console title, page backdrop variants
+      (brainstorm-mobile/tablet/desktop) and a portrait for each starter persona (Vanderbuilt
+      Lacrosse, Trashcan Jones, Robert Smith, Captain Overreaction, Grandma Thunderbolt), with
+      prompt/model metadata kept.
+
+  - id: t-037
+    milestone: m7
+    title: 'Public-play safety: admin flag review queue, per-user line rate limit, and art-quota messaging'
+    status: waiting
+    depends_on: [t-033]
+    owner: null
+    passes: 0
+    stakes: reversible
+    gate_human: false
+    note: >-
+      Lines hide at three flags and riff hosts/admins can remove them. Add an admin view of
+      flagged lines, a per-user posting rate limit, and a friendly message when the Krea2
+      daily free quota defers a line's painting.
+
+  - id: t-038
+    milestone: m7
+    title: 'Live table: push new lines and reactions without polling (SSE), with presence ("3 at this table")'
+    status: waiting
+    depends_on: [t-033]
+    owner: null
+    passes: 0
+    stakes: reversible
+    gate_human: false
+    note: >-
+      The first slice polls every 4-6s while a table is open. Replace with a server-sent event
+      stream per riff and show who is at the table, so a remote round feels live.
+

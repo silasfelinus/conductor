@@ -332,3 +332,53 @@ are true:
 - phone, tablet, and desktop layouts are visually verified on a PR preview;
 - relevant typecheck/tests/CI pass and Silas has had a chance to play with the restored loop
   before the finite project is marked finished.
+
+## 2026-11-03 PT direction: the riff board (supersedes "AI generates the ideas")
+
+Silas reopened Brainstorm in session on 2026-11-03 PT: *"it's not active because it just
+doesn't work how i want it to."* The inspiration is a game he plays with his kids: *"It's cards
+against humanities, mad libs, improv. always based on a prompt, and a back and forth dozens
+style: show me what you got."*
+
+And the correction that resets the product:
+
+> my biggest problem with brainstorm until now is thinking that the goal was ai making up
+> brainstorms. What ai needs to do is support humans coming up with new stuff, encouraging,
+> helping brainstorm, and adjusting what is shown based on ratings.
+
+### The game
+
+Someone puts a **prompt on the table** and everyone piles on with lines. The flavors from the
+family table:
+
+- **Top of the List**: "Terrible ice cream flavors" → "Uncooked bacon swirl", "Broken glass".
+- **Who Is This Person**: a recurring fictional character. *Vanderbuilt Lacrosse* (absurdly
+  wealthy: "owns a time share on Venus"), his brother *Trashcan Jones* ("has a cardboard box he
+  sleeps in when he's feeling fancy"), *Robert Smith* (the most normal person in the world: "has
+  2.3 children").
+- **Crossover** (rare): one line true of several characters: "Neither Trashcan Jones nor
+  Vanderbuilt Lacrosse has ever paid income tax."
+- **Yes, But**: "I like Obama, but… I don't like how he created global warming." Silas, of this
+  one: *"the I like obama, but line is great. keep it."*
+
+### Product rules
+
+1. **Humans write every line.** The AI never posts a line and never offers a finished joke to
+   paste. It is the table coach: on request it deals a hand of *sparks* (an angle plus a
+   provoking question) and leaves the punchline to the human. A line records which spark, if
+   any, prompted it.
+2. **Ratings steer what's shown.** Lines take Kind Robots Reactions (Love it / LOL / Groan, plus
+   a flag). The board ranks tables, and lines inside a table, by heat (points decayed by age);
+   Top and New are one tap away. The coach is told what the table rated highest and steers
+   toward it, into territory nobody has covered.
+3. **Every human idea gets art.** Posting a line queues an ArtJob through the normal
+   `/api/art/enqueue` pipeline (Krea2), and the card shows the painting when it lands.
+4. **Social and in Play.** Silas: *"all front end pieces (this should be added to play). should
+   look like a aaa handheld game."* The game lives at `/play/brainstorm` in a handheld-console
+   shell (A = send, B = spark me). Riffs are shareable by link. Table mode passes one device
+   around and attributes each line to whoever's turn it is.
+5. **The first ideas are starter decks.** Silas: *"We should have suggestion spots for all our
+   first ideas, plus more."* Every example above is seeded as a shared table with the original
+   lines, plus extra starter prompts.
+
+The 2026-08 candidate workbench stays at `/brainstorm` as an admin tool. It is not the product.
