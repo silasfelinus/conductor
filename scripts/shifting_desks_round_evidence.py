@@ -17,6 +17,19 @@ import yaml
 
 ART_DIR = Path(__file__).resolve().parents[1] / "projects" / "shifting-desks" / "art"
 ROUND_ID = re.compile(r"^shifting-desks-r([1-9][0-9]*)-")
+# The 196 subject-first style rerenders use a stable non-r18 ID family.
+STYLE_ROUND_18 = "shifting-desks-style-v2-western-cartoon-subject-first-"
+
+
+def round_for_request(request_id):
+    match = ROUND_ID.match(request_id)
+    if match:
+        return int(match.group(1))
+    if request_id.startswith(STYLE_ROUND_18):
+        return 18
+    return None
+
+
 SUBJECT = re.compile(r"(?ms)^- key:.*?(?=^- key:|\Z)")
 
 
@@ -40,7 +53,7 @@ def _target(value):
 def is_round_request(request):
     return (
         isinstance(request, dict)
-        and ROUND_ID.match(str(request.get("id") or "")) is not None
+        and round_for_request(str(request.get("id") or "")) is not None
         and str(request.get("target_repo") or request.get("repo") or "") == "silasfelinus/kind_robots"
     )
 
@@ -61,7 +74,7 @@ def preserve_completed_submissions(requests, *, art_dir=ART_DIR, before_write=No
         request_id = str(request["id"])
         if str(request.get("status") or "pending").lower() != "done":
             continue
-        round_number = int(ROUND_ID.match(request_id).group(1))
+        round_number = round_for_request(request_id)
         candidates.setdefault(round_number, []).append(request)
 
     for round_number, entries in candidates.items():
@@ -120,8 +133,20 @@ def preserve_completed_submissions(requests, *, art_dir=ART_DIR, before_write=No
                 return block
             matched.add(request_id)
             field = re.compile(r"(?m)^(  art_job_id: ).*$")
-            if len(field.findall(block)) != 1:
-                raise ValueError(f"{path.name}: missing/duplicate art_job_id for {request_id}")
+            count = len(field.findall(block))
+            if count == 0:
+                # Round 18's original 196 subjects have no provenance columns.
+                # Preserve their prompt and verdict while recording the exact
+                # job that fulfilled this request before the queue row retires.
+                anchor = re.compile(r"(?m)^(  status: .*)$")
+                if len(anchor.findall(block)) != 1:
+                    raise ValueError(f"{path.name}: missing/duplicate status for {request_id}")
+                return anchor.sub(
+                    lambda m: m.group(1) + "\n  art_job_id: " + str(replacements[request_id]),
+                    block,
+                )
+            if count != 1:
+                raise ValueError(f"{path.name}: duplicate art_job_id for {request_id}")
             return field.sub(lambda m: m.group(1) + str(replacements[request_id]), block)
 
         changed = SUBJECT.sub(patch, original)
