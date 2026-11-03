@@ -208,3 +208,21 @@ def test_signatures_reject_missing_id_and_cedar_without_parents():
 def test_ten_county_motifs():
     assert wh.validate_county_motifs(wh.load_endings()) == []
     assert any("need" in p for p in wh.validate_county_motifs([]))
+
+
+def test_signatures_are_genuinely_distinct_not_adjective_swaps():
+    """t-020: 56 signatures need unique titles, art subjects, alt text and low prose overlap."""
+    import itertools
+    import re
+
+    sigs = wh.load_signatures()["signatures"]
+    for key in ("title", "alt_text"):
+        assert len({s[key] for s in sigs}) == len(sigs), key
+    assert len({s["art"]["subject"] for s in sigs}) == len(sigs)
+
+    def toks(text):
+        return set(re.findall(r"[a-z']+", text.lower()))
+
+    for a, b in itertools.combinations(sigs, 2):
+        ta, tb = toks(a["paragraph"]), toks(b["paragraph"])
+        assert len(ta & tb) / len(ta | tb) < 0.5, (a["id"], b["id"])
