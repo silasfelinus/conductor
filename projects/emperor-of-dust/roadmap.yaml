@@ -1044,10 +1044,10 @@ tasks:
   - id: t-062
     milestone: m4
     title: "Five-act dialogue and long-range consequence continuity pass"
-    status: claimed
+    status: review
     stakes: reversible
     passes: 0
-    updated: '2026-11-03T20:35:06Z'
+    updated: '2026-11-03T20:42:31Z'
     source_issue: 'silasfelinus/kind_robots#4142'
     note: |-
       Silas 2026-11-02: comprehensively polish dialogue across all five acts and make consequential decisions echo in later scenes, quests, follower conversations and endings. Audit the current five-act playable dialogue and flag graph; implement distinct cross-act callbacks with honest costs, no dominant options, canon-consistent voices and clear choice labels. Preserve save/quest/flag identifiers, arrival chronology, true ambiguity about the Abbey and Komodo, and the established ending eligibility gates. Verify reachable conditional dialogue, save/load, quest aid, flag age, balance and adversarial campaigns. Track both the Tobin/Hollow Bell public-record thread and the bonded-runner thread across acts, and score every affected scene against the existing five-axis rubric. This is a dedicated cross-act story lane to coordinate work without claiming unrelated ongoing art tasks t-046 through t-052. Keep #4142 open until full game completion.
@@ -1071,6 +1071,8 @@ tasks:
       2026-11-03 PT: fixed impossible Tarn Day 43 dialogue gate after Komodo betrayal; adjusted the scene to the exile road with its original effects and choices, and corrected post-conversation barracks availability. The editorial campaign runner now prioritizes naturally offered unseen follower talks without bypassing the one-talk/day limit. Added regressions for chronology, two Tarn outcomes and daily barracks lockout. Worker branch worker/emperor-of-dust-t-062-20261103-c54e8a; CI and PR verification required. Full literary acceptance/art remain open under #4142.
 
       2026-11-03 PT: merged Kind Robots PR #4703 as bb2799218aa2cfe8895ed58850733aa7b693c134, all eight exact-head workflows and four contract shards/aggregate verifier successful. Tarn's once-impossible Day 43 talk now occurs in exile with preserved mechanical outcomes, the barracks no longer advertises a second talk on a spent day, and the editorial bot selects naturally offered unseen conversations. Artifact 13224891643 confirms 42 completed campaigns and follower talk reach increased from 91/125 to 95/125 (30 remain unvisited); 16 conditional audiences remain unvisited in those policy runs, though prior gate fixtures tested them. Full human-style editorial review, organic secret recruit routes and art delivery still outstanding under #4142. No new ArtJobs or production deployment.
+
+      2026-11-03 PT: investigated the 30 unvisited follower talks. Confirmed authored dialogues are mostly gated by Day 1 Flint recruitment, secret follower optional chance visitors, or distinct romance/Act V choices. Simulator previously skipped all chance encounters, invalidating secret follower organic reachability data. Worker branch adds opt-in actual chance decisions, 12 focused 50-day route runs and explicit 30-talk prerequisite/choice fixtures; no production scene identifiers or flags changed. Actual coverage counts pending exact-head CI. Master #4142 and subjective writing/art acceptance stay open.
     owner: worker
     claimed_by: 20261103T203506Z-eod-t062-fix30-6b91c7
     claimed_at: '2026-11-03T20:35:06Z'
