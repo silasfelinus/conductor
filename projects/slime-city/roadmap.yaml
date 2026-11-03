@@ -213,10 +213,7 @@ tasks:
   - id: t-009
     milestone: m3
     title: "Write and implement six genuinely different crew campaigns"
-    status: review
-    owner: worker
-    claimed_by: 20261102T224901670Z-slime-city-t009-3oznk542
-    claimed_at: '2026-11-02T22:49:01.670Z'
+    status: ready
     depends_on: [t-004, t-007]
     passes: 0
     stakes: reversible
@@ -246,7 +243,9 @@ tasks:
       PARTIAL MERGED 2026-11-02 PT: Kind Robots PR #4674 merged at 9bbfb3378b27f290ad10d3d665dd5c231d87b1f1. Fixed the earned-support dossier's duplicated perks by authoring sixty distinct, chapter-and-approach-specific tactical favors across six crews. Each faction now has ten truly different bounded battle modifier combinations. Only one already-earned support applies per battle; no new currencies, card purchases, save fields or schema changes. Exhaustive six-crew progression, uniqueness, balance-bound and choice-gating tests added. All six source GitHub Actions workflows completed successfully on the latest PR head, including four contract shards. Deeper campaign gameplay, illustration and human fun testing still remain; no publishing or production deploy triggered.
 
       Built a source-backed adverse campaign-favor playtest audit on a Kind Robots worker branch. Runs real CPU-versus-CPU Blackout engine bouts with paired identical-seed baseline controls: six crews, four usable previous chapters, two saved approaches, two next-story choices and two deterministic seeds. 192 favor-versus-baseline comparisons, 96 distinct baseline bouts, 48 repeated replays. Logs win/draw scores, command divergence, initial contact, rounds, faction differences and each of 48 earned usable favors. Identified a structural risk: all six fifth-chapter favor rewards are unlocked only when the campaign has no following battle, leaving them unusable. CI and measured results pending. This is a playtest increment, not subjective human fun acceptance or completion of t-009.
-    updated: '2026-11-02T22:52:18.253Z'
+
+      PARTIAL MERGED 2026-11-02 PT: Kind Robots PR #4678 merged bf86af3cd27020c9a7d8a0db2ed126e669e11705 after eight successful latest-head workflows and all contract shards. Real Blackout CPU headless tests compare 192 paired support trials against 96 controls with 48 deterministic replays. Original sample improved score 103 to 112 across 192; 35 changed outcomes, 135 different command histories, no stalls. Five round-only supports received small immediate bonuses and regression coverage. Remaining scope includes earned finale rewards with no post-campaign use and human fun acceptance.
+    updated: '2026-11-03T01:32:17.532Z'
   - id: t-010
     milestone: m3
     title: "Create daily, weekly and evergreen missions with earned progression"
