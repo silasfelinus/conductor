@@ -1,0 +1,220 @@
+# Space Couch onboarding priority art (Silas, 2026-11-02 playtest notes).
+# 1. The three opening missions (refugees, archive, bar) are the first stage every player sees, and their only
+#    paintings predate the red-couch redesign, so the play page shows the drawn bridge filler. These are the
+#    red-couch repaints for the same runtime keys.
+# 2. The Couchscope reveal needs a painted plate per constellation (couchscope/sign-<id>, read by
+#    components/gameOfCaptains/constellation-test.vue) instead of the generic star-dot drawing.
+# 3. The new trolley-problem question (couchscope/trolley) needs its hero and three answer plates.
+# Auto Art Generate submits on Conductor main and writes job ids back. Queued != rendered != wired: each DONE
+# art_image_id still has to be added to kind_robots utils/gameOfCaptains/onboardingArt.ts (couchscope keys)
+# or voyagePaintings.ts (mission keys) before the game shows it.
+round: space-couch-couchscope-and-opening-1
+project_slug: game-of-captains
+designer: Space Couch onboarding priority campaign
+is_public: false
+is_mature: false
+cast_loras: false
+priority: 950
+auto_submit: true
+lanes:
+- key: krea2
+  label: Painterly space-couch comedy concept art
+  engine: krea2
+  prompt: prose
+  suffix: Richly painted comic space opera, detailed velvet cloth and brass fittings, precise ink contours, violet
+    starlight and golden theatrical rim light. The spacecraft is one long scarlet velvet couch traveling through
+    vacuum within a faint translucent spherical protective bubble.
+subjects:
+- key: sc-opening-mission-refugees-couch
+  lane: krea2
+  entity: mission-plate
+  title: 'The Last Lifeboat: the red couch beside two refugee transports'
+  asset: game-of-captains/missions/refugees
+  size: 1344x768
+  seed: 1036101
+  prompt_prose: Two battered civilian transports drift side by side near a dim violet nebula, joined by a sagging
+    cable that carries one glowing green life-support canister between them. Families wrapped in thermal blankets
+    press against a round porthole on the darker ship. In the foreground the long scarlet couch hovers close, its
+    four small adult crew leaning over the backrest toward the cable, while a grey patrol cruiser watches from
+    far away with a cold searchlight.
+- key: sc-opening-mission-archive-couch
+  lane: krea2
+  entity: mission-plate
+  title: 'The Library Planet: the red couch at a sentient archive world'
+  asset: game-of-captains/missions/archive
+  size: 1344x768
+  seed: 1036102
+  prompt_prose: A small planet whose whole surface is terraced stone bookshelves glows amber from within like a
+    lantern, spiral bridges of shelving wrapping its equator. Behind it a swollen orange star curls a bright flare
+    toward the stacks. The long scarlet couch has parked beside an open reading-room courtyard, and robed adult
+    librarians hand armfuls of glowing books down to the crew seated on the cushions.
+- key: sc-opening-mission-bar-couch
+  lane: krea2
+  entity: mission-plate
+  title: 'The Patron Who Was Never Here: the red couch docked at the Serendipity bar'
+  asset: game-of-captains/missions/bar
+  size: 1344x768
+  seed: 1036103
+  prompt_prose: Interior of a cozy ring-station bar with warm amber lamps over a curved brass counter and stars
+    turning past a long window. The long scarlet couch has been wheeled straight up to the counter as a barstool
+    for its four adult crew. In one corner gravity bends upward, lifting drinks, coasters and an empty cloak above
+    a vacant booth, while a calm four-armed bartender polishes a glass and stares at the captain.
+- key: sc-couchscope-trolley-hero
+  lane: krea2
+  entity: couchscope-question-scene
+  title: Space Couch Couchscope trolley problem hero
+  asset: game-of-captains/couchscope/trolley
+  size: 1536x1152
+  seed: 1036201
+  prompt_prose: A runaway brass mining trolley piled high with a towering pink frosted layer cake hurtles down a
+    rail that loops through open space. The rail forks at a big red-handled lever. On one branch five startled
+    adult interns in matching teal jumpsuits clutch clipboards; on the other branch the long scarlet couch sits
+    on the track with a worried captain gripping the armrest and staring at the lever.
+- key: sc-couchscope-trolley-answer-a
+  lane: krea2
+  entity: couchscope-answer-choice
+  title: Space Couch Couchscope trolley choice a
+  asset: game-of-captains/couchscope/trolley-answer-a
+  size: 1024x768
+  seed: 1036202
+  prompt_prose: A heroic adult captain throws a red-handled lever and braces on the scarlet couch as a giant pink
+    layer cake explodes across them in a glorious burst of frosting and sprinkles, while five relieved interns
+    cheer from a safe side track.
+- key: sc-couchscope-trolley-answer-b
+  lane: krea2
+  entity: couchscope-answer-choice
+  title: Space Couch Couchscope trolley choice b
+  asset: game-of-captains/couchscope/trolley-answer-b
+  size: 1024x768
+  seed: 1036203
+  prompt_prose: Five adult interns stand on a space railway filling out long paper questionnaires with tiny pencils
+    while a captain on the red couch holds up a stopwatch, and a cake trolley creeps closer down the rail behind
+    them, frosting already dripping.
+- key: sc-couchscope-trolley-answer-c
+  lane: krea2
+  entity: couchscope-answer-choice
+  title: Space Couch Couchscope trolley choice c
+  asset: game-of-captains/couchscope/trolley-answer-c
+  size: 1024x768
+  seed: 1036204
+  prompt_prose: A brass cake trolley straddles both branches of a forked space railway, sparks flying from its
+    wheels in a dramatic sideways drift, as the grinning captain on the scarlet couch yanks the lever halfway and
+    the interns duck under a streak of flying frosting.
+- key: sc-couchscope-sign-northern-sloth
+  lane: krea2
+  entity: couchscope-constellation
+  title: 'Couchscope constellation: The Northern Sloth'
+  asset: game-of-captains/couchscope/sign-northern-sloth
+  size: 1024x1024
+  seed: 1036301
+  prompt_prose: A colossal sleepy sloth drawn in pale gold starlight hangs from a celestial tree branch across
+    the night sky, its long claws traced by bright stars and connecting threads, while the tiny red couch drifts
+    beneath it and the tree leans gently closer.
+- key: sc-couchscope-sign-princess-mantic-shrimp
+  lane: krea2
+  entity: couchscope-constellation
+  title: 'Couchscope constellation: The Princess Mantic Shrimp'
+  asset: game-of-captains/couchscope/sign-princess-mantic-shrimp
+  size: 1024x1024
+  seed: 1036302
+  prompt_prose: A jewel-bright mantis shrimp princess formed from rainbow stars wears a tiny crown and throws a
+    punch that cracks a glowing hole through the dark sky, lost little ships streaming through the opening toward
+    home past the small red couch.
+- key: sc-couchscope-sign-velvet-comet
+  lane: krea2
+  entity: couchscope-constellation
+  title: 'Couchscope constellation: The Velvet Comet'
+  asset: game-of-captains/couchscope/sign-velvet-comet
+  size: 1024x1024
+  seed: 1036303
+  prompt_prose: A theatrical comet wearing a sweeping plum velvet cape streaks across the stars like a stage diva
+    making an entrance, its tail unfurling into a red curtain, while the little scarlet couch watches from the front
+    row of the sky.
+- key: sc-couchscope-sign-clockwork-minnow
+  lane: krea2
+  entity: couchscope-constellation
+  title: 'Couchscope constellation: The Clockwork Minnow'
+  asset: game-of-captains/couchscope/sign-clockwork-minnow
+  size: 1024x1024
+  seed: 1036304
+  prompt_prose: A small silver clockwork fish built from gears and starlight swims upstream through a river of
+    floating clock faces, each clock it passes softening to a gentle glow, the tiny red couch bobbing in its wake.
+- key: sc-couchscope-sign-royal-dust-bunny
+  lane: krea2
+  entity: couchscope-constellation
+  title: 'Couchscope constellation: The Royal Dust Bunny'
+  asset: game-of-captains/couchscope/sign-royal-dust-bunny
+  size: 1024x1024
+  seed: 1036305
+  prompt_prose: A fluffy grey dust bunny made of soft starlight wears a lopsided crown and holds court beneath a
+    gigantic couch-shaped constellation, surrounded by a parade of lost buttons, coins, keys and single socks that
+    glow like loyal subjects.
+- key: sc-couchscope-sign-laughing-leviathan
+  lane: krea2
+  entity: couchscope-constellation
+  title: 'Couchscope constellation: The Laughing Leviathan'
+  asset: game-of-captains/couchscope/sign-laughing-leviathan
+  size: 1024x1024
+  seed: 1036306
+  prompt_prose: An enormous star-whale traced in teal constellation lines throws back its head in a huge laugh,
+    and a wave of glittering cosmic surf washes a tumbling pile of toy swords and cannons out of the sky past the
+    small red couch.
+- key: sc-couchscope-sign-nebular-teapot
+  lane: krea2
+  entity: couchscope-constellation
+  title: 'Couchscope constellation: The Nebular Teapot'
+  asset: game-of-captains/couchscope/sign-nebular-teapot
+  size: 1024x1024
+  seed: 1036307
+  prompt_prose: A plump porcelain teapot made of swirling pink and gold nebula pours a stream of starlight tea into
+    a cup held politely by a small shy black hole, the two seated at a cosmic tablecloth beside the long red couch.
+- key: sc-couchscope-sign-three-headed-librarian
+  lane: krea2
+  entity: couchscope-constellation
+  title: 'Couchscope constellation: The Three-Headed Librarian'
+  asset: game-of-captains/couchscope/sign-three-headed-librarian
+  size: 1024x1024
+  seed: 1036308
+  prompt_prose: A tall robed librarian with three bespectacled heads, drawn in pale blue stars, holds three open
+    books at once while each head argues with the others, loose glowing pages swirling around the tiny scarlet
+    couch below.
+- key: sc-couchscope-sign-feral-umbrella
+  lane: krea2
+  entity: couchscope-constellation
+  title: 'Couchscope constellation: The Feral Umbrella'
+  asset: game-of-captains/couchscope/sign-feral-umbrella
+  size: 1024x1024
+  seed: 1036309
+  prompt_prose: A wild golden umbrella with a crooked rebellious handle flies through a meteor shower like a hawk,
+    canopy spread wide, sheltering a crowd of startled little travelers and the long red couch as burning meteors
+    bounce harmlessly off its fabric.
+- key: sc-couchscope-sign-last-lantern
+  lane: krea2
+  entity: couchscope-constellation
+  title: 'Couchscope constellation: The Last Lantern'
+  asset: game-of-captains/couchscope/sign-last-lantern
+  size: 1024x1024
+  seed: 1036310
+  prompt_prose: A single old brass lantern glows warm amber in an otherwise empty patch of sky, its beam reaching
+    out like an arm toward a few faint lost figures drifting in the dark, the small red couch parked beside it as
+    a waiting room.
+- key: sc-couchscope-sign-moonlit-upholsterer
+  lane: krea2
+  entity: couchscope-constellation
+  title: 'Couchscope constellation: The Moonlit Upholsterer'
+  asset: game-of-captains/couchscope/sign-moonlit-upholsterer
+  size: 1024x1024
+  seed: 1036311
+  prompt_prose: A graceful tailor drawn in silver moonlight stitches a long glowing tear in the starfield closed
+    with a needle and a thread of moonbeams, a pincushion moon on one wrist, the scarlet couch's torn cushion half
+    mended in the corner.
+- key: sc-couchscope-sign-cosmic-turnip
+  lane: krea2
+  entity: couchscope-constellation
+  title: 'Couchscope constellation: The Cosmic Turnip'
+  asset: game-of-captains/couchscope/sign-cosmic-turnip
+  size: 1024x1024
+  seed: 1036312
+  prompt_prose: A giant purple and white turnip with leafy green star sprouts floats in space, its long roots
+    spreading out like a map and gently wrapping around a dozen tiny wandering planets and the little red couch,
+    holding them all in place.
