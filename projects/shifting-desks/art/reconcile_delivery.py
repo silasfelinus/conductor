@@ -23,7 +23,9 @@ import yaml
 
 ROOT = Path(__file__).resolve().parents[3]
 ART_DIR = Path(__file__).resolve().parent
-ROUNDS = (13, 14, 15, 17)
+# Round 18 is the 196-subject Western Cartoon forced rerender. Its rows
+# intentionally start without job/image fields; insert them only with evidence.
+ROUNDS = (13, 14, 15, 17, 18)
 MEDIA_HOST = "media.acrocatranch.com"
 
 
@@ -156,9 +158,22 @@ def patch_rows(text, changes_by_request):
         seen.add(request_id)
         for field, value in changes_by_request[request_id].items():
             field_pattern = re.compile(rf"(?m)^(  {re.escape(field)}: ).*$")
-            if len(field_pattern.findall(block)) != 1:
+            count = len(field_pattern.findall(block))
+            if count == 0 and field in {"art_job_id", "art_image_id", "delivery_check"}:
+                # Subject-first Round 18 was queued without provenance columns.
+                # Add only fields backed by a matching ArtJob/media observation;
+                # never mutate its prompt, verdict, or request ID.
+                anchor = re.compile(r"(?m)^(  status: .*)$")
+                if len(anchor.findall(block)) != 1:
+                    raise ValueError(f"{request_id}: expected one status anchor")
+                block = anchor.sub(
+                    lambda m: m.group(1) + f"\n  {field}: " + yaml_value(value),
+                    block,
+                )
+            elif count != 1:
                 raise ValueError(f"{request_id}: expected one {field} field")
-            block = field_pattern.sub(lambda m: m.group(1) + yaml_value(value), block)
+            else:
+                block = field_pattern.sub(lambda m: m.group(1) + yaml_value(value), block)
         return block
 
     result = pattern.sub(update, text)
