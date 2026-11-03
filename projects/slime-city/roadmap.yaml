@@ -293,21 +293,28 @@ tasks:
   - id: t-013
     milestone: m1
     title: "Optional scope/course correction, final rules chosen after prototype comparison"
-    status: needs-human
-    gate_rechecked: '2026-10-30'
+    status: done
+    approved_by_human: true
     gate_reason: creative-approval
     soft_gate: true
     owner: null
     passes: 0
     stakes: reversible
-    note: >-
-      FOR SILAS: Play /admin/slime-city after the next self-hosted
-      rollout and compare BLACKOUT (hidden turn-based army), MEATBALL
-      (football lane turns), and BLOODRUSH (timed real-time).
-      Tell us which cadence/board you prefer or request a hybrid.
-      The Slime City name, colors and mana are still adjustable.
-      This is an optional design conversation, not a blocker:
-      continue building and testing while awaiting your verdict.
+    note: |-
+      FOR SILAS: Play /admin/slime-city after the next self-hosted rollout and compare BLACKOUT (hidden turn-based army), MEATBALL (football lane turns), and BLOODRUSH (timed real-time). Tell us which cadence/board you prefer or request a hybrid. The Slime City name, colors and mana are still adjustable. This is an optional design conversation, not a blocker: continue building and testing while awaiting your verdict.
+
+      DECIDED by Silas 2026-11-02 PT (first-impressions playtest, verbatim excerpts): "Combat and movement on the blackout board should be automatic. … creatures can be set for attack, defense. I'm not sold on the flag part of the game, I think having a base that gets attacked makes more sense." Then: "base and capture the flag should be different elements. but we need clear notice of where the flags are, and there should be two, each on opposite ends inside their base. bases should be in far back row as well. same improvements made to bloodrush, who should be able to be feature parity with blackout. Since bloodrush should act like it but with timer released mana real time play." Final rules: BLACKOUT and BLOODRUSH share one auto-battle arena (cards + ATTACK/DEFEND stance orders; creatures march and fight on their own), each side has a base along its far-back column with its own flag planted inside; win by smashing the base or carrying the enemy flag home. BLOODRUSH is the same arena on a live clock with dripped mana. MEATBALL stays retired. Implemented in Kind Robots silasfelinus/kind_robots#4685.
+    completed_at: '2026-11-02'
+  - id: t-022
+    milestone: m2
+    title: "Paint reaction-face board tokens for every creature and wire them in"
+    status: ready
+    depends_on: t-013
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: |-
+      Silas 2026-11-02 PT: "we need custom tokens for all cards on the board. Images with reaction faces would probably work." Kind Robots silasfelinus/kind_robots#4685 ships the token system: round art tokens on the arena board that read SLIME_CITY_ART.tokens['<cardId>/<mood>'] (moods fierce, guard, hurt) and fall back to the card art plus a reaction-face badge. projects/slime-city/art/BOARD-TOKENS-ROUND-6.yaml queues the first 72 portraits (24 starter-deck creatures x 3 moods, auto-submit Krea 2, square 1024). Next: once round 6 is DONE, review the renders and wire each ArtImage id into utils/slimeCity/artManifest.ts tokens; then author round 7 for the remaining 86 creatures (110 total) the same way. Not done until verified token images show on the board at 390/768/1440.
   - id: t-014
     milestone: m4
     title: "Subjective acceptance of the finished internal game"
