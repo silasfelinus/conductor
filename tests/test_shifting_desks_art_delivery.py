@@ -164,7 +164,7 @@ def test_round18_subject_first_rerender_gets_durable_artjob_and_media_evidence()
         "  prompt: 'A polite upholstered monster'\n"
         "  verdict: null\n"
     )
-    amended = reconcile.patch_rows(ledger, edits and {request_id: edits})
+    amended = reconcile.patch_rows(ledger, {request_id: edits})
     updated = yaml.safe_load(amended)["subjects"][0]
     assert updated["art_job_id"] == 505
     assert updated["art_image_id"] == 900
