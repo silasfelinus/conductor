@@ -632,7 +632,7 @@ tasks:
   - id: t-033
     milestone: m7
     title: 'Riff board first slice: /play/brainstorm handheld game, human lines, coach sparks, Reactions, art per line'
-    status: review
+    status: done
     owner: reviewer
     passes: 0
     stakes: reversible
@@ -648,7 +648,13 @@ tasks:
       pass-and-play, and the handheld console page at /play/brainstorm with its own console
       theme and Play tab.
     implementation_pr: 'silasfelinus/kind_robots#4691'
-    updated: '2026-11-03T20:00:00Z'
+    updated: '2026-11-03T02:17:30Z'
+    completion_note: >-
+      Merged silasfelinus/kind_robots#4691 (merge commit f21340e) after green CI, including
+      TypeScript, MariaDB migration replay, the production image build, the layout contract
+      and the new verifyBrainstormRiffs test. Merged is not deployed: the additive migration
+      20261103180000_brainstorm_riff_board applies on the next Unraid deploy, and the first run
+      of the riff API against the real database happens there. Silas's playtest is t-034.
 
   - id: t-034
     milestone: m7
