@@ -300,17 +300,16 @@ tasks:
   - id: t-015
     milestone: m2
     title: "Prove the movement lab replay and real shared-cabinet controls"
-    status: review
+    status: ready
     passes: 0
     stakes: reversible
-    owner: worker
-    claimed_by: 20261103T012830Z-save-the-plumber-t015-input-guide-84c7
-    claimed_at: '2026-11-03T01:28:30Z'
-    updated: '2026-11-03T01:31:25Z'
+    updated: '2026-11-03T01:55:40Z'
     note: |-
       Reviewer kaizen after kind_robots#3564: add deterministic input replays asserting coyote time, buffered jumps, landing/camera bounds and respawn; exercise real shared ArcadeCabinet keyboard/gamepad/touch controls and visible Admin help at phone/tablet/desktop widths. Use browser fixtures with actual consumers rather than source-field matches. Keep public registry and score exclusions. Initial isolated engine pixels are not shared-cabinet/auth integration or full campaign acceptance.
 
       2026-11-02 PT: Input-guide slice on worker/save-the-plumber-t-015-input-guide-84c7: dedicated keyboard shortcuts, controller/keyboard help, menu labeling and regression assertions. Movement replay and cross-width browser fixtures remain on this task after the PR lands; do not close as done yet.
+
+      2026-11-02 PT: Merged user-reported controller and keyboard control guide fixes in kind_robots#4689 (merge 42b3e2ba68cf8063021c6820f18b3a74cec94467). All nine GitHub CI workflows passed, including TypeScript, Arcade viewport, Chromium cabinet browser contract, lint/format and contract test shards. Remaining t-015 scope is deterministic coyote-time, buffered-jump, landing/camera, and respawn replay plus real shared-cabinet keyboard/gamepad/ touch cross-width fixture coverage; do not mark this larger task done.
 
   - id: t-016
     milestone: m4
