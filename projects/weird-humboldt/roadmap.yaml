@@ -474,7 +474,7 @@ tasks:
   - id: t-005
     milestone: m3
     title: "Prototype deterministic reducer and isolated saveable text-only journey"
-    status: ready
+    status: done
     depends_on: [t-002, t-019]
     owner: null
     passes: 0
@@ -486,6 +486,13 @@ tasks:
       meeting_order, flags, fair failures, evidence ledger and save
       versioning in tests without publishing a Play page. Reuse shared stateless
       card primitives but do not inherit Shifting Lands/Desks stores.
+
+      2026-11-03 PT reconciliation: delivered by later work, not by a dedicated t-005 PR.
+      kind_robots utils/ecotone/engine.ts (deterministic seeded reducer, ECOTONE_SAVE_VERSION
+      4, follow/meeting history, flags, saves) with ~1900-line verifyEcotone.test.ts plus
+      Ensemble/Hangouts/Continuity/Editorial/JuniperAgency suites cover the t-005 scope
+      (t-029, t-048, t-050). Closed as stale-ready; no new code.
+    updated: '2026-11-03T04:48:10Z'
   - id: t-006
     milestone: m4
     title: "Develop art direction and queue project icon, card, hero and encounter art"
