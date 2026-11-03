@@ -962,3 +962,20 @@ tasks:
   claimed_by: 2026-10-27T00:00:00Z-rulerhooked
   claimed_at: '2026-10-27T18:59:13Z'
   implementation_pr: 'silasfelinus/kind_robots#4324'
+- id: t-053
+  milestone: m6
+  title: 'Reconcile the fishing timing bar: utils/rulerHooked/timingBar.ts has no UI consumer'
+  status: ready
+  gate_human: false
+  owner: null
+  stakes: reversible
+  passes: 0
+  note: >-
+    Filed by the 2026-11-03 weekly site audit (global-ui). t-026/t-033 describe
+    components/ruler-hooked/ruler-hooked-timing-bar.vue as the sliding-marker fishing
+    control, but that file is absent from kind_robots main (a842b25) and nothing under
+    components/ or pages/ imports utils/rulerHooked/timingBar.ts (only its selftests do);
+    ruler-hooked-fishing-encounter.vue uses a plain tap button. Decide which is true: either
+    wire the timing bar into the encounter (and honour per-species theming from t-033), or
+    remove the dead util and correct the roadmap notes. Reversible; verify at phone width.
+  updated: '2026-11-03T12:00:00Z'
