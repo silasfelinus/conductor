@@ -329,6 +329,15 @@ tasks:
 
       Open follow-ups: art/TURF-BOARD-ROUND-7.yaml queues TURF's own square board (until then it plays on each district's Blackout floor); human fun-testing; CPU strength (games usually run to the 45-round clock rather than ending on passes).
     completed_at: '2026-11-03'
+  - id: t-024
+    milestone: m2
+    title: "TURF CPU: make the Go-reader end games on passes instead of the 45-round clock"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: |-
+      Reviewer kaizen from PR #6986 (2026-11-03 PT). t-023's note says TURF games usually run to the round-45 clock rather than ending on two passes. Teach the CPU to pass when no placement improves area score (or when all its groups are alive), cover it in verifySlimeCityTurf in kind_robots test:slime-city-lab, and report the average game length over a seed sweep.
   - id: t-014
     milestone: m4
     title: "Subjective acceptance of the finished internal game"
