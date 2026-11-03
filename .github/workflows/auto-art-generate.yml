@@ -249,6 +249,27 @@ jobs:
             --queue-file projects/memory-dungeon/art/EARTH-PHOTO-REQUESTS.yaml \
             --id-prefix memory-dungeon-saturate-earth-photo-
 
+      # Choice-card outcome plates (Silas, 2026-11-02/03 PT: "Yes, commission",
+      # "wire memory art"): every Memory Dungeon choice card shows its own outcome
+      # painting, else a drawn face. The event catalog's visitor-facing plates
+      # (Earth, Sea, collisions, crossroad) and the House/Dark House gaps had no
+      # ledger. Priority 1 (background). Checkpointed with the other ledgers below.
+      - name: Submit Memory Dungeon choice-card outcome ArtJobs
+        id: memory_dungeon_choice_outcome_submit
+        if: ${{ steps.krhealth.outputs.up == 'true' && steps.memory_dungeon_reconcile.outcome == 'success' }}
+        continue-on-error: true
+        working-directory: conductor
+        env:
+          KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+          KR_MEDIA_ORIGIN: https://media.acrocatranch.com
+        run: |
+          for queue in projects/memory-dungeon/art/EVENT-OUTCOME-REQUESTS-PART-*.yaml \
+            projects/memory-dungeon/art/CARD-GAP-REQUESTS.yaml; do
+            python scripts/consume_art_requests_to_media.py --live --submit-only --limit 0 \
+              --queue-file "$queue" --id-prefix memory-dungeon-saturate- \
+              2>&1 | tee -a "$RUNNER_TEMP/art-memory-dungeon-choice-outcomes.log"
+          done
+
       # Hoshimori e07's ten private concept/style proofs are new art,
       # separate from the 752 Briar/House baseline and the Earth photographs.
       # Submit before the long renderer and checkpoint all accepted IDs.
@@ -290,6 +311,7 @@ jobs:
           git config user.name "conductor-bot"
           git config user.email "conductor-bot@users.noreply.github.com"
           git add projects/art-prompts.yaml projects/memory-dungeon/art/KNOWN-ART-REQUESTS.yaml projects/memory-dungeon/art/HOUSE-ATLAS-REQUESTS.yaml projects/memory-dungeon/art/EARTH-PHOTO-REQUESTS.yaml projects/memory-dungeon/art/HOSHIMORI-WARM-STYLE-PROOFS.yaml projects/memory-dungeon/art/HOSHIMORI-HORROR-STYLE-PROOFS.yaml
+          git add projects/memory-dungeon/art/EVENT-OUTCOME-REQUESTS-PART-*.yaml projects/memory-dungeon/art/CARD-GAP-REQUESTS.yaml
           if git diff --staged --quiet; then
             echo "Memory Dungeon ledgers already match submitted ArtJobs."
           else

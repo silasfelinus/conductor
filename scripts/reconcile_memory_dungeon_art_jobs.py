@@ -25,6 +25,10 @@ LEDGERS = (
     ROOT / "projects/art-prompts.yaml",
     ROOT / "projects/memory-dungeon/art/KNOWN-ART-REQUESTS.yaml",
     ROOT / "projects/memory-dungeon/art/HOUSE-ATLAS-REQUESTS.yaml",
+    ROOT / "projects/memory-dungeon/art/EVENT-OUTCOME-REQUESTS-PART-1-EARTH.yaml",
+    ROOT / "projects/memory-dungeon/art/EVENT-OUTCOME-REQUESTS-PART-2-SEA.yaml",
+    ROOT / "projects/memory-dungeon/art/EVENT-OUTCOME-REQUESTS-PART-3-COLLISIONS.yaml",
+    ROOT / "projects/memory-dungeon/art/CARD-GAP-REQUESTS.yaml",
 )
 PREFIX = "memory-dungeon-saturate-"
 PROJECT = "memory-dungeon"
