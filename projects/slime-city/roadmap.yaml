@@ -447,7 +447,7 @@ tasks:
   - id: t-021
     milestone: m4
     title: "Adversarial constructed-deck matchup audit for all six 300-card crews"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 20261103T014338895Z-slime-city-t021-l6gpijq
     claimed_at: '2026-11-03T01:43:38.895Z'
@@ -460,4 +460,6 @@ tasks:
       Implemented 180 deterministic constructed-deck headless games: three legal ten-card archetypes for each crew versus all five rivals across two seeds. Captures win paths, first contact, dead rounds, banking, unit/card-use statistics, and validates 18 exact replays. Each round checks cards are neither duplicated nor lost. Awaiting latest-head GitHub CI before merge and concrete balance report.
 
       PARTIAL MERGED 2026-11-02 PT: Kind Robots PR #4645 merged cc6fb3cbb18db2d2c2e61985a51ab0ca7c03bdff. Reconciled parallel campaign and constructed test harness changes with a true non-force merge commit, preserving both. 180 constructed matches across 18 decks, 60 distinct founder same-seed controls, 18 replay verifications, and mana/deck conservation coverage executed. Current engine: constructed 70 player wins and 110 enemy wins; founder controls 23 first-side and 37 second-side wins, 45 changed constructed-versus-founder outcomes, 109 of 180 games observed six banked mana. Distinct founder control matchups show larger faction disparity than deck-customization delta. All eight latest-head workflows passed. Further multi-seed seating symmetry and constructed-opponent comparisons remain.
-    updated: '2026-11-03T01:43:38.895Z'
+
+      Follow-up after merged PR #4645: added a ten-seed constructed-independent Blackout founder tournament for the six playable factions, exercising all thirty ordered rival pairs (300 actual CPU-versus-CPU bouts). Explicitly compares fifteen unordered matchups in both seating orders across all ten seeds, counts opening contact, stalls, faction win paths, first and second side wins, comebacks and round lengths, and replays six complete matches from command logs. Diagnostic warnings report significant skew without hardcoding balance targets or changing user card/wallet state. GitHub Actions full latest-head verification required before merge; multi-seed constructed-vs-constructed and subjective fun playtesting remain future scope.
+    updated: '2026-11-03T01:45:55.173Z'
