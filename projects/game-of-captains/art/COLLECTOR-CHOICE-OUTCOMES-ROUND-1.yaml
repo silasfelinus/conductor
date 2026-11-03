@@ -4,6 +4,9 @@
 # image: props.artwork?.[`${incident.illustrationKey}-${option.id}`]. Delivery: add each key -> ArtJob id to
 # utils/gameOfCaptains/alienArtJobs.ts (the alien-art route already resolves ArtJob ids). Priority 45 as
 # ALIEN-COLLECTOR-INCIDENTS-ROUND-1.
+# Re-prompted by hand 2026-11-03 PT: the template-filled outcome text (story sentences pasted in as the
+# scene) was replaced with one visible moment per option. The first ArtJobs never rendered; they were
+# cancelled and are kept under superseded_jobs, and fresh jobs were submitted with the new prompts.
 round: space-couch-collector-choices-1
 project_slug: game-of-captains
 designer: Space Couch absurd natural history
@@ -25,20 +28,16 @@ subjects:
   asset: game-of-captains/aliens/milestone-5-a
   size: 1344x768
   seed: 1850001
-  prompt_prose: 'A very long scarlet velvet couch with rolled armrests, deep button-tufted cushions and four short
-    brass feet, floating inside a thin clear bubble with a faint pale-blue rim, surrounded by original alien lifeforms.
-    Five unrelated species have followed the long red couch into a lopsided parade. The force bubble has become
-    a mobile birdbath, and someone has ordered matching hats. Outcome: The captain waves from a cushion. The marchers
-    invent an anthem in six incompatible time signatures. Local news reports that the couch has annexed a puddle.
-    Hand-painted original science-fiction comedy adventure painting, expressive dramatic acting, highly legible
-    wide 16:9 scene, coherent organic creature forms, tactile gouache pigment and warm ink contours, intricate imaginative
-    environment, naturally bare and unmarked surfaces.'
+  prompt_prose: A very long scarlet velvet couch floats in a clear bubble whose top brims with water, small winged
+    creatures splashing in it. The adult human captain stands on a cushion in a paper crown, waving grandly. Behind,
+    five unrelated alien species march in matching tall hats, playing mismatched horns and drums, mouths wide in
+    song, past a muddy puddle crowned with a tiny blank flag. Hand-painted original science-fiction comedy adventure
+    painting, expressive dramatic acting, highly legible wide 16:9 scene, coherent organic creature forms, tactile
+    gouache pigment and warm ink contours, intricate imaginative environment, naturally bare and unmarked surfaces.
   jobs:
+    krea2: 62291
+  superseded_jobs:
     krea2: 61048
-  art:
-    krea2:
-      status: PENDING
-      art_image_id: null
 - key: alien-milestone-5-b
   lane: krea2
   entity: alien-collector-choice
@@ -46,20 +45,16 @@ subjects:
   asset: game-of-captains/aliens/milestone-5-b
   size: 1344x768
   seed: 1850002
-  prompt_prose: 'A very long scarlet velvet couch with rolled armrests, deep button-tufted cushions and four short
-    brass feet, floating inside a thin clear bubble with a faint pale-blue rim, surrounded by original alien lifeforms.
-    Five unrelated species have followed the long red couch into a lopsided parade. The force bubble has become
-    a mobile birdbath, and someone has ordered matching hats. Outcome: It belongs to the little creature’s grandmother,
-    who has searched for it for three generations. Their reunion turns the parade into a mobile family picnic. Hand-painted
-    original science-fiction comedy adventure painting, expressive dramatic acting, highly legible wide 16:9 scene,
-    coherent organic creature forms, tactile gouache pigment and warm ink contours, intricate imaginative environment,
-    naturally bare and unmarked surfaces.'
+  prompt_prose: A small round fuzzy alien with antennae clutches a ragged blank cloth banner, sobbing with joy into
+    the arms of its towering moss-covered grandmother. Around the long red velvet couch in its clear bubble, parade
+    marchers in matching hats spread picnic blankets, baskets and steaming pies. The crew on the cushions applaud,
+    one wiping a tear. Hand-painted original science-fiction comedy adventure painting, expressive dramatic acting,
+    highly legible wide 16:9 scene, coherent organic creature forms, tactile gouache pigment and warm ink contours,
+    intricate imaginative environment, naturally bare and unmarked surfaces.
   jobs:
+    krea2: 62292
+  superseded_jobs:
     krea2: 61049
-  art:
-    krea2:
-      status: PENDING
-      art_image_id: null
 - key: alien-milestone-5-c
   lane: krea2
   entity: alien-collector-choice
@@ -67,20 +62,16 @@ subjects:
   asset: game-of-captains/aliens/milestone-5-c
   size: 1344x768
   seed: 1850003
-  prompt_prose: 'A very long scarlet velvet couch with rolled armrests, deep button-tufted cushions and four short
-    brass feet, floating inside a thin clear bubble with a faint pale-blue rim, surrounded by original alien lifeforms.
-    Five unrelated species have followed the long red couch into a lopsided parade. The force bubble has become
-    a mobile birdbath, and someone has ordered matching hats. Outcome: The procession boards an imaginary bus, realizes
-    its mistake and wanders off in six directions. The captain inherits a very authoritative timetable. Hand-painted
-    original science-fiction comedy adventure painting, expressive dramatic acting, highly legible wide 16:9 scene,
-    coherent organic creature forms, tactile gouache pigment and warm ink contours, intricate imaginative environment,
-    naturally bare and unmarked surfaces.'
+  prompt_prose: A tall striped pole and a lopsided canvas shelter roof are lashed to a long crimson velvet couch
+    inside its clear bubble. A crowd of hatted aliens shuffle aboard, look around in confusion, then wander off
+    in six directions. The captain sits stiffly, clutching an enormous blank timetable with gold tassels and an
+    air of total authority. Hand-painted original science-fiction comedy adventure painting, expressive dramatic
+    acting, highly legible wide 16:9 scene, coherent organic creature forms, tactile gouache pigment and warm ink
+    contours, intricate imaginative environment, naturally bare and unmarked surfaces.
   jobs:
+    krea2: 62293
+  superseded_jobs:
     krea2: 61050
-  art:
-    krea2:
-      status: PENDING
-      art_image_id: null
 - key: alien-milestone-12-a
   lane: krea2
   entity: alien-collector-choice
@@ -88,20 +79,16 @@ subjects:
   asset: game-of-captains/aliens/milestone-12-a
   size: 1344x768
   seed: 1850004
-  prompt_prose: 'A very long scarlet velvet couch with rolled armrests, deep button-tufted cushions and four short
-    brass feet, floating inside a thin clear bubble with a faint pale-blue rim, surrounded by original alien lifeforms.
-    A census official in a novelty squid hat boards the couch with a stack of forms taller than its backrest. Twelve
-    species have named the same red sofa as their next of kin. Outcome: The family tree blocks three customs lanes.
-    The clerk stamps APPROVED on every page, including the space between the pages. Hand-painted original science-fiction
-    comedy adventure painting, expressive dramatic acting, highly legible wide 16:9 scene, coherent organic creature
-    forms, tactile gouache pigment and warm ink contours, intricate imaginative environment, naturally bare and
-    unmarked surfaces.'
+  prompt_prose: A gigantic blank family-tree scroll snakes across three jammed customs lanes, twelve alien species
+    holding hands along its branches. A census clerk in a novelty squid hat thumps a heavy rubber stamp onto every
+    page, leaving round empty ink rings. Stranded travelers peer over their luggage. The long scarlet velvet couch
+    sits at the root in its clear bubble. Hand-painted original science-fiction comedy adventure painting, expressive
+    dramatic acting, highly legible wide 16:9 scene, coherent organic creature forms, tactile gouache pigment and
+    warm ink contours, intricate imaginative environment, naturally bare and unmarked surfaces.
   jobs:
+    krea2: 62294
+  superseded_jobs:
     krea2: 61051
-  art:
-    krea2:
-      status: PENDING
-      art_image_id: null
 - key: alien-milestone-12-b
   lane: krea2
   entity: alien-collector-choice
@@ -109,20 +96,16 @@ subjects:
   asset: game-of-captains/aliens/milestone-12-b
   size: 1344x768
   seed: 1850005
-  prompt_prose: 'A very long scarlet velvet couch with rolled armrests, deep button-tufted cushions and four short
-    brass feet, floating inside a thin clear bubble with a faint pale-blue rim, surrounded by original alien lifeforms.
-    A census official in a novelty squid hat boards the couch with a stack of forms taller than its backrest. Twelve
-    species have named the same red sofa as their next of kin. Outcome: A chef arrives to taste the shield. Three
-    inspectors argue about garnish until the captain becomes the subject of an emergency cookbook recall. Hand-painted
+  prompt_prose: A portly alien chef with three arms dips a silver ladle against the clear bubble around a long red
+    velvet couch, lips pursed in concentration. Three inspectors in squid hats argue nose to nose, waving sprigs
+    of parsley. The captain sits on the cushions, startled, as a peppermill grinds pepper over their head. Hand-painted
     original science-fiction comedy adventure painting, expressive dramatic acting, highly legible wide 16:9 scene,
     coherent organic creature forms, tactile gouache pigment and warm ink contours, intricate imaginative environment,
-    naturally bare and unmarked surfaces.'
+    naturally bare and unmarked surfaces.
   jobs:
+    krea2: 62295
+  superseded_jobs:
     krea2: 61052
-  art:
-    krea2:
-      status: PENDING
-      art_image_id: null
 - key: alien-milestone-12-c
   lane: krea2
   entity: alien-collector-choice
@@ -130,20 +113,16 @@ subjects:
   asset: game-of-captains/aliens/milestone-12-c
   size: 1344x768
   seed: 1850006
-  prompt_prose: 'A very long scarlet velvet couch with rolled armrests, deep button-tufted cushions and four short
-    brass feet, floating inside a thin clear bubble with a faint pale-blue rim, surrounded by original alien lifeforms.
-    A census official in a novelty squid hat boards the couch with a stack of forms taller than its backrest. Twelve
-    species have named the same red sofa as their next of kin. Outcome: The clerk consults seven calendars and discovers
-    none contain Tuesday. Administration withdraws to investigate; the forms vanish into a diplomatic briefcase.
-    Hand-painted original science-fiction comedy adventure painting, expressive dramatic acting, highly legible
-    wide 16:9 scene, coherent organic creature forms, tactile gouache pigment and warm ink contours, intricate imaginative
-    environment, naturally bare and unmarked surfaces.'
+  prompt_prose: A frazzled census clerk in a novelty squid hat flips frantically through seven hanging wall calendars,
+    mouth agape. Behind the clerk, a towering stack of forms flutters into an open diplomatic briefcase that is
+    snapping shut. The crew lounge on a long crimson velvet couch inside its clear bubble, sipping drinks in smug
+    relief. Hand-painted original science-fiction comedy adventure painting, expressive dramatic acting, highly
+    legible wide 16:9 scene, coherent organic creature forms, tactile gouache pigment and warm ink contours, intricate
+    imaginative environment, naturally bare and unmarked surfaces.
   jobs:
+    krea2: 62296
+  superseded_jobs:
     krea2: 61053
-  art:
-    krea2:
-      status: PENDING
-      art_image_id: null
 - key: alien-milestone-25-a
   lane: krea2
   entity: alien-collector-choice
@@ -151,20 +130,16 @@ subjects:
   asset: game-of-captains/aliens/milestone-25-a
   size: 1344x768
   seed: 1850007
-  prompt_prose: 'A very long scarlet velvet couch with rolled armrests, deep button-tufted cushions and four short
-    brass feet, floating inside a thin clear bubble with a faint pale-blue rim, surrounded by original alien lifeforms.
-    Twenty-five documented alien species have formed a club in the folded room behind the couch. The first motion:
-    Determine whether the captain is a domesticated animal. Outcome: The elder asks members to stop describing each
-    other as collectibles. The club renames itself Friends of the Red Couch and elects its smallest member president.
-    Hand-painted original science-fiction comedy adventure painting, expressive dramatic acting, highly legible
-    wide 16:9 scene, coherent organic creature forms, tactile gouache pigment and warm ink contours, intricate imaginative
-    environment, naturally bare and unmarked surfaces.'
+  prompt_prose: In a folded clubroom behind the long scarlet velvet couch, an ancient tortoise-like alien elder
+    with a beard of pale tendrils stands on a stump podium, gently lifting glass display domes off fellow members.
+    Twenty-five species applaud. A thumb-sized glowing beetle in a tiny sash is hoisted high on shoulders as the
+    new president, beaming. Hand-painted original science-fiction comedy adventure painting, expressive dramatic
+    acting, highly legible wide 16:9 scene, coherent organic creature forms, tactile gouache pigment and warm ink
+    contours, intricate imaginative environment, naturally bare and unmarked surfaces.
   jobs:
+    krea2: 62297
+  superseded_jobs:
     krea2: 61054
-  art:
-    krea2:
-      status: PENDING
-      art_image_id: null
 - key: alien-milestone-25-b
   lane: krea2
   entity: alien-collector-choice
@@ -172,20 +147,16 @@ subjects:
   asset: game-of-captains/aliens/milestone-25-b
   size: 1344x768
   seed: 1850008
-  prompt_prose: 'A very long scarlet velvet couch with rolled armrests, deep button-tufted cushions and four short
-    brass feet, floating inside a thin clear bubble with a faint pale-blue rim, surrounded by original alien lifeforms.
-    Twenty-five documented alien species have formed a club in the folded room behind the couch. The first motion:
-    Determine whether the captain is a domesticated animal. Outcome: The captain wins by a vote cast by the upholstery.
-    The new constitution requires a ceremonial nap every seventeen minutes, including during combat. Hand-painted
-    original science-fiction comedy adventure painting, expressive dramatic acting, highly legible wide 16:9 scene,
-    coherent organic creature forms, tactile gouache pigment and warm ink contours, intricate imaginative environment,
-    naturally bare and unmarked surfaces.'
+  prompt_prose: The captain stands on a wobbly soapbox atop a long red velvet couch, arms raised in victory, while
+    the couch lifts one tasseled armrest like a raised hand. Club members of many species slump into a ceremonial
+    nap in nightcaps, snoring on piles of cushions, one still holding a toy sword. The clear bubble glows softly
+    around the couch. Hand-painted original science-fiction comedy adventure painting, expressive dramatic acting,
+    highly legible wide 16:9 scene, coherent organic creature forms, tactile gouache pigment and warm ink contours,
+    intricate imaginative environment, naturally bare and unmarked surfaces.
   jobs:
+    krea2: 62298
+  superseded_jobs:
     krea2: 61055
-  art:
-    krea2:
-      status: PENDING
-      art_image_id: null
 - key: alien-milestone-25-c
   lane: krea2
   entity: alien-collector-choice
@@ -193,20 +164,16 @@ subjects:
   asset: game-of-captains/aliens/milestone-25-c
   size: 1344x768
   seed: 1850009
-  prompt_prose: 'A very long scarlet velvet couch with rolled armrests, deep button-tufted cushions and four short
-    brass feet, floating inside a thin clear bubble with a faint pale-blue rim, surrounded by original alien lifeforms.
-    Twenty-five documented alien species have formed a club in the folded room behind the couch. The first motion:
-    Determine whether the captain is a domesticated animal. Outcome: The members accept the resignation, discover
-    the captain was never nominated, and dissolve into six disagreeing book groups. Hand-painted original science-fiction
-    comedy adventure painting, expressive dramatic acting, highly legible wide 16:9 scene, coherent organic creature
-    forms, tactile gouache pigment and warm ink contours, intricate imaginative environment, naturally bare and
-    unmarked surfaces.'
+  prompt_prose: The captain holds out a blank folded letter with a sheepish grin. Club members of twenty-five species
+    blink, scratch their heads and split into six bickering circles, each waving a blank-covered book at the others.
+    A long crimson velvet couch inside its clear bubble waits by the door of the folded clubroom. Hand-painted original
+    science-fiction comedy adventure painting, expressive dramatic acting, highly legible wide 16:9 scene, coherent
+    organic creature forms, tactile gouache pigment and warm ink contours, intricate imaginative environment, naturally
+    bare and unmarked surfaces.
   jobs:
+    krea2: 62299
+  superseded_jobs:
     krea2: 61056
-  art:
-    krea2:
-      status: PENDING
-      art_image_id: null
 - key: alien-milestone-50-a
   lane: krea2
   entity: alien-collector-choice
@@ -214,19 +181,16 @@ subjects:
   asset: game-of-captains/aliens/milestone-50-a
   size: 1344x768
   seed: 1850010
-  prompt_prose: 'A very long scarlet velvet couch with rolled armrests, deep button-tufted cushions and four short
-    brass feet, floating inside a thin clear bubble with a faint pale-blue rim, surrounded by original alien lifeforms.
-    A second long red couch drifts into view, woven entirely from sleeping aliens with miniature force bubbles.
-    Outcome: Both couches compete to become more comfortable. The resulting softness transforms a nearby asteroid
-    belt into a mattress showroom. The judges call it a draw. Hand-painted original science-fiction comedy adventure
-    painting, expressive dramatic acting, highly legible wide 16:9 scene, coherent organic creature forms, tactile
-    gouache pigment and warm ink contours, intricate imaginative environment, naturally bare and unmarked surfaces.'
+  prompt_prose: 'Two long red couches face off in space: the crew''s scarlet velvet sofa in its clear bubble and
+    a rival woven from sleeping aliens in tiny bubbles, both puffing up their cushions. A nearby asteroid belt has
+    softened into rows of plump mattresses. Three alien judges with eyestalks hold up matching blank scoring paddles,
+    shrugging. Hand-painted original science-fiction comedy adventure painting, expressive dramatic acting, highly
+    legible wide 16:9 scene, coherent organic creature forms, tactile gouache pigment and warm ink contours, intricate
+    imaginative environment, naturally bare and unmarked surfaces.'
   jobs:
+    krea2: 62300
+  superseded_jobs:
     krea2: 61057
-  art:
-    krea2:
-      status: PENDING
-      art_image_id: null
 - key: alien-milestone-50-b
   lane: krea2
   entity: alien-collector-choice
@@ -234,19 +198,16 @@ subjects:
   asset: game-of-captains/aliens/milestone-50-b
   size: 1344x768
   seed: 1850011
-  prompt_prose: 'A very long scarlet velvet couch with rolled armrests, deep button-tufted cushions and four short
-    brass feet, floating inside a thin clear bubble with a faint pale-blue rim, surrounded by original alien lifeforms.
-    A second long red couch drifts into view, woven entirely from sleeping aliens with miniature force bubbles.
-    Outcome: The imitation admits it has been carrying passengers without a break for millennia. Two couches spend
-    a whole afternoon doing absolutely nothing. Hand-painted original science-fiction comedy adventure painting,
-    expressive dramatic acting, highly legible wide 16:9 scene, coherent organic creature forms, tactile gouache
-    pigment and warm ink contours, intricate imaginative environment, naturally bare and unmarked surfaces.'
+  prompt_prose: 'Two long couches rest side by side in a lazy golden afternoon: the crew''s scarlet velvet sofa
+    in its clear bubble and a sagging rival woven from yawning aliens with miniature bubbles. The crew sprawl with
+    feet up, eyes half closed. The sleeping aliens stretch and sigh, deeply content, as space dust drifts slowly
+    past. Hand-painted original science-fiction comedy adventure painting, expressive dramatic acting, highly legible
+    wide 16:9 scene, coherent organic creature forms, tactile gouache pigment and warm ink contours, intricate imaginative
+    environment, naturally bare and unmarked surfaces.'
   jobs:
+    krea2: 62301
+  superseded_jobs:
     krea2: 61058
-  art:
-    krea2:
-      status: PENDING
-      art_image_id: null
 - key: alien-milestone-50-c
   lane: krea2
   entity: alien-collector-choice
@@ -254,19 +215,16 @@ subjects:
   asset: game-of-captains/aliens/milestone-50-c
   size: 1344x768
   seed: 1850012
-  prompt_prose: 'A very long scarlet velvet couch with rolled armrests, deep button-tufted cushions and four short
-    brass feet, floating inside a thin clear bubble with a faint pale-blue rim, surrounded by original alien lifeforms.
-    A second long red couch drifts into view, woven entirely from sleeping aliens with miniature force bubbles.
-    Outcome: The living couch loses interest and wanders away to challenge a remarkably smug ottoman. Hand-painted
+  prompt_prose: The crew sit bolt upright in a stiff row along their long crimson velvet couch, hands on knees,
+    pretending to be a park bench, while a pigeon-like alien perches on the captain's head. In the distance, a living
+    couch woven from sleeping aliens strolls away toward a smug round ottoman raising one button-tuft eyebrow. Hand-painted
     original science-fiction comedy adventure painting, expressive dramatic acting, highly legible wide 16:9 scene,
     coherent organic creature forms, tactile gouache pigment and warm ink contours, intricate imaginative environment,
-    naturally bare and unmarked surfaces.'
+    naturally bare and unmarked surfaces.
   jobs:
+    krea2: 62302
+  superseded_jobs:
     krea2: 61059
-  art:
-    krea2:
-      status: PENDING
-      art_image_id: null
 - key: alien-milestone-75-a
   lane: krea2
   entity: alien-collector-choice
@@ -274,20 +232,16 @@ subjects:
   asset: game-of-captains/aliens/milestone-75-a
   size: 1344x768
   seed: 1850013
-  prompt_prose: 'A very long scarlet velvet couch with rolled armrests, deep button-tufted cushions and four short
-    brass feet, floating inside a thin clear bubble with a faint pale-blue rim, surrounded by original alien lifeforms.
-    Delegates with zero to seventeen feet assemble behind the couch for a diplomatic summit. Each delegation has
-    brought exactly the wrong number of chairs. Outcome: The delegates invent a room that folds to any shape, including
-    a respectful absence of floors. Universal access passes by unanimous applause. Hand-painted original science-fiction
-    comedy adventure painting, expressive dramatic acting, highly legible wide 16:9 scene, coherent organic creature
-    forms, tactile gouache pigment and warm ink contours, intricate imaginative environment, naturally bare and
-    unmarked surfaces.'
+  prompt_prose: Behind a long scarlet velvet couch in its clear bubble, delegates with anywhere from zero to seventeen
+    feet fold the walls and floor of a room like giant origami into ramps, perches, hammocks and a floating open
+    pocket for the footless. Everyone bursts into unanimous applause, tentacles, claws and paws clapping together.
+    Hand-painted original science-fiction comedy adventure painting, expressive dramatic acting, highly legible
+    wide 16:9 scene, coherent organic creature forms, tactile gouache pigment and warm ink contours, intricate imaginative
+    environment, naturally bare and unmarked surfaces.
   jobs:
+    krea2: 62303
+  superseded_jobs:
     krea2: 61060
-  art:
-    krea2:
-      status: PENDING
-      art_image_id: null
 - key: alien-milestone-75-b
   lane: krea2
   entity: alien-collector-choice
@@ -295,20 +249,16 @@ subjects:
   asset: game-of-captains/aliens/milestone-75-b
   size: 1344x768
   seed: 1850014
-  prompt_prose: 'A very long scarlet velvet couch with rolled armrests, deep button-tufted cushions and four short
-    brass feet, floating inside a thin clear bubble with a faint pale-blue rim, surrounded by original alien lifeforms.
-    Delegates with zero to seventeen feet assemble behind the couch for a diplomatic summit. Each delegation has
-    brought exactly the wrong number of chairs. Outcome: The seventeen-footed bloc attempts a coup. The footless
-    caucus counters with interpretive floating, forcing a constitutional recount. Hand-painted original science-fiction
-    comedy adventure painting, expressive dramatic acting, highly legible wide 16:9 scene, coherent organic creature
-    forms, tactile gouache pigment and warm ink contours, intricate imaginative environment, naturally bare and
-    unmarked surfaces.'
+  prompt_prose: A seventeen-footed centipede delegation stamps all its feet in a thunderous attempted coup, while
+    footless jellyfish delegates counter by drifting in a swirling interpretive dance overhead. A bewildered clerk
+    clicks beads on a huge abacus. The crew watch wide-eyed from their long red velvet couch in its clear bubble.
+    Hand-painted original science-fiction comedy adventure painting, expressive dramatic acting, highly legible
+    wide 16:9 scene, coherent organic creature forms, tactile gouache pigment and warm ink contours, intricate imaginative
+    environment, naturally bare and unmarked surfaces.
   jobs:
+    krea2: 62304
+  superseded_jobs:
     krea2: 61061
-  art:
-    krea2:
-      status: PENDING
-      art_image_id: null
 - key: alien-milestone-75-c
   lane: krea2
   entity: alien-collector-choice
@@ -316,19 +266,16 @@ subjects:
   asset: game-of-captains/aliens/milestone-75-c
   size: 1344x768
   seed: 1850015
-  prompt_prose: 'A very long scarlet velvet couch with rolled armrests, deep button-tufted cushions and four short
-    brass feet, floating inside a thin clear bubble with a faint pale-blue rim, surrounded by original alien lifeforms.
-    Delegates with zero to seventeen feet assemble behind the couch for a diplomatic summit. Each delegation has
-    brought exactly the wrong number of chairs. Outcome: Delegates scatter to find suitable cups. The summit never
-    officially adjourns, but everyone gets home satisfied. Hand-painted original science-fiction comedy adventure
-    painting, expressive dramatic acting, highly legible wide 16:9 scene, coherent organic creature forms, tactile
-    gouache pigment and warm ink contours, intricate imaginative environment, naturally bare and unmarked surfaces.'
+  prompt_prose: 'Delegates of every shape scatter from the summit holding teapots, each sipping from a found vessel:
+    a thimble, a bucket, a seashell, a hollowed melon. Some wave cheerfully as they leave. The crew raise teacups
+    from their long crimson velvet couch in its clear bubble, steam curling into the starry sky. Hand-painted original
+    science-fiction comedy adventure painting, expressive dramatic acting, highly legible wide 16:9 scene, coherent
+    organic creature forms, tactile gouache pigment and warm ink contours, intricate imaginative environment, naturally
+    bare and unmarked surfaces.'
   jobs:
+    krea2: 62305
+  superseded_jobs:
     krea2: 61062
-  art:
-    krea2:
-      status: PENDING
-      art_image_id: null
 - key: alien-milestone-100-a
   lane: krea2
   entity: alien-collector-choice
@@ -336,20 +283,16 @@ subjects:
   asset: game-of-captains/aliens/milestone-100-a
   size: 1344x768
   seed: 1850016
-  prompt_prose: 'A very long scarlet velvet couch with rolled armrests, deep button-tufted cushions and four short
-    brass feet, floating inside a thin clear bubble with a faint pale-blue rim, surrounded by original alien lifeforms.
-    A hundred species have left their marks in the scrapbook. The last page is blank, yet a shadow keeps turning
-    it from the other side. Outcome: The voice is relieved. It has waited for someone who can accept a question
-    without answering it. Outside the bubble, a previously impossible trail of stars appears. Hand-painted original
-    science-fiction comedy adventure painting, expressive dramatic acting, highly legible wide 16:9 scene, coherent
-    organic creature forms, tactile gouache pigment and warm ink contours, intricate imaginative environment, naturally
-    bare and unmarked surfaces.'
+  prompt_prose: The crew sit on their long scarlet velvet couch in its clear bubble with a fat scrapbook open across
+    their laps, the blank last page glowing softly. From behind the page, a gentle shadow leans back, shoulders
+    relaxed. Outside the bubble, a sparkling new trail of stars spirals away into deep space, and the crew gaze
+    after it in wonder. Hand-painted original science-fiction comedy adventure painting, expressive dramatic acting,
+    highly legible wide 16:9 scene, coherent organic creature forms, tactile gouache pigment and warm ink contours,
+    intricate imaginative environment, naturally bare and unmarked surfaces.
   jobs:
+    krea2: 62306
+  superseded_jobs:
     krea2: 61063
-  art:
-    krea2:
-      status: PENDING
-      art_image_id: null
 - key: alien-milestone-100-b
   lane: krea2
   entity: alien-collector-choice
@@ -357,20 +300,16 @@ subjects:
   asset: game-of-captains/aliens/milestone-100-b
   size: 1344x768
   seed: 1850017
-  prompt_prose: 'A very long scarlet velvet couch with rolled armrests, deep button-tufted cushions and four short
-    brass feet, floating inside a thin clear bubble with a faint pale-blue rim, surrounded by original alien lifeforms.
-    A hundred species have left their marks in the scrapbook. The last page is blank, yet a shadow keeps turning
-    it from the other side. Outcome: The shadow hires an attorney, who hires another attorney, who turns out to
-    be the shadow. A temporary black hole opens in the stationery aisle. Hand-painted original science-fiction comedy
-    adventure painting, expressive dramatic acting, highly legible wide 16:9 scene, coherent organic creature forms,
-    tactile gouache pigment and warm ink contours, intricate imaginative environment, naturally bare and unmarked
-    surfaces.'
+  prompt_prose: A long inky shadow in a bowler hat sits across a tiny desk from an identical inky shadow, both shaking
+    hands with grave formality. The crew stare from their long red velvet couch in its clear bubble. Behind them,
+    a small black whirlpool swirls in a stationery shop aisle, sucking in envelopes and pencils. Hand-painted original
+    science-fiction comedy adventure painting, expressive dramatic acting, highly legible wide 16:9 scene, coherent
+    organic creature forms, tactile gouache pigment and warm ink contours, intricate imaginative environment, naturally
+    bare and unmarked surfaces.
   jobs:
+    krea2: 62307
+  superseded_jobs:
     krea2: 61064
-  art:
-    krea2:
-      status: PENDING
-      art_image_id: null
 - key: alien-milestone-100-c
   lane: krea2
   entity: alien-collector-choice
@@ -378,16 +317,13 @@ subjects:
   asset: game-of-captains/aliens/milestone-100-c
   size: 1344x768
   seed: 1850018
-  prompt_prose: 'A very long scarlet velvet couch with rolled armrests, deep button-tufted cushions and four short
-    brass feet, floating inside a thin clear bubble with a faint pale-blue rim, surrounded by original alien lifeforms.
-    A hundred species have left their marks in the scrapbook. The last page is blank, yet a shadow keeps turning
-    it from the other side. Outcome: The rustling stops. A gentle tapping resumes after the nap, and the empty page
-    remains intact for whenever the crew feels ready. Hand-painted original science-fiction comedy adventure painting,
-    expressive dramatic acting, highly legible wide 16:9 scene, coherent organic creature forms, tactile gouache
-    pigment and warm ink contours, intricate imaginative environment, naturally bare and unmarked surfaces.'
+  prompt_prose: The crew doze in a tangled heap on their long crimson velvet couch inside its clear bubble, the
+    closed scrapbook resting on the captain's chest. A faint shadowy fingertip taps softly from inside the cover.
+    Starlight drifts across their peaceful faces, and a blanket slips toward the floor. Hand-painted original science-fiction
+    comedy adventure painting, expressive dramatic acting, highly legible wide 16:9 scene, coherent organic creature
+    forms, tactile gouache pigment and warm ink contours, intricate imaginative environment, naturally bare and
+    unmarked surfaces.
   jobs:
+    krea2: 62308
+  superseded_jobs:
     krea2: 61065
-  art:
-    krea2:
-      status: PENDING
-      art_image_id: null
