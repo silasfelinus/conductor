@@ -314,6 +314,21 @@ tasks:
     stakes: reversible
     note: |-
       Silas 2026-11-02 PT: "we need custom tokens for all cards on the board. Images with reaction faces would probably work." Kind Robots silasfelinus/kind_robots#4685 ships the token system: round art tokens on the arena board that read SLIME_CITY_ART.tokens['<cardId>/<mood>'] (moods fierce, guard, hurt) and fall back to the card art plus a reaction-face badge. projects/slime-city/art/BOARD-TOKENS-ROUND-6.yaml queues the first 72 portraits (24 starter-deck creatures x 3 moods, auto-submit Krea 2, square 1024). Next: once round 6 is DONE, review the renders and wire each ArtImage id into utils/slimeCity/artManifest.ts tokens; then author round 7 for the remaining 86 creatures (110 total) the same way. Not done until verified token images show on the board at 390/768/1440.
+  - id: t-023
+    milestone: m2
+    title: "TURF: a Go-style mode where every card is one token"
+    status: done
+    approved_by_human: true
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: |-
+      Silas 2026-11-03 PT, verbatim: "give me a new version of this game, modeled after go. each turn you play a single token, but go rules apply. this needs a modified effect...which theoretically already exists due to the different games."
+
+      DONE in Kind Robots silasfelinus/kind_robots#4696. TURF is a third player mode on a 9 x 9 board. Each turn a side places exactly one card from its hand on an empty point, or passes. Go rules: zero-liberty groups are captured, suicide is illegal unless it captures, a small superko forbids recreating any of the last eight positions, and two passes (or round 45) end on area score with 2.5 komi to the CPU. Every card is a token with a Go-native TURF effect (turfText): creature keywords become stone traits (VOLATILE explodes on capture, REGEN survives once, AMBUSH retakes ko, PIERCE/SNARE beat wards, BULLDOZE shoves, LEECH/COLLECT pay on captures, SWARM counts double); attack spells slime an enemy liberty with a puddle that can capture; heal, armor and equipment ward their group; traps capture a stone played on them; boost scrubs slime; scan disarms traps. The CPU is a beginner Go reader. Covered by verifySlimeCityTurf in test:slime-city-lab.
+
+      Open follow-ups: art/TURF-BOARD-ROUND-7.yaml queues TURF's own square board (until then it plays on each district's Blackout floor); human fun-testing; CPU strength (games usually run to the 45-round clock rather than ending on passes).
+    completed_at: '2026-11-03'
   - id: t-014
     milestone: m4
     title: "Subjective acceptance of the finished internal game"

@@ -1,0 +1,35 @@
+# Slime City art round 7: the TURF board (Silas, 2026-11-03: "a new version of this game, modeled after go").
+# TURF is a 9 x 9 Go board where every card is one token, so its floor is square and has no home edges.
+# Kind Robots draws the grid, star points, territory tint and slime over the art (sc-board-floor), so the
+# painting carries no lines of its own. Until it renders, TURF plays on each district's Blackout floor.
+# Wiring: kind_robots utils/slimeCity/artManifest.ts boards['turf'] (district floors can follow later).
+# Queued != rendered != wired. Job ids and ArtImage ids are written back by the Auto Art Generate sweep.
+round: slime-city-turf-board-7
+project_slug: slime-city
+designer: Slime City TURF board
+is_public: false
+is_mature: false
+cast_loras: false
+priority: 640
+auto_submit: true
+lanes:
+- key: krea2
+  label: Krea 2 Slime City board floors
+  engine: krea2
+  prompt: prose
+  suffix: Colorful grungy comic gouache, thick ink texture, rust, slime green and neon magenta accents, top-down
+    tabletop game mat.
+subjects:
+- key: slime-board-turf
+  lane: krea2
+  entity: board-floor
+  title: Slime City TURF board
+  asset: slime-city/boards/turf
+  size: 1024x1024
+  seed: 1097001
+  prompt_prose: 'Top-down painted game board floor for a square street-gang territory game played on an
+    abandoned rooftop basketball court in a slime-drenched megacity: weathered teal and rust court paint, faded
+    chalk tags in the corners, a few bottle caps and a rolled-up sleeping bag along the outer border, puddles of
+    glowing green slime pooled in the cracks near the corners, warm sodium streetlight from all four sides. Seen
+    straight down from directly overhead, a flat square tabletop game mat of open ground reaching every edge:
+    even lighting, richer detail gathered along the borders and a calm, plain, readable middle.'
