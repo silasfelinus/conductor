@@ -1044,10 +1044,10 @@ tasks:
   - id: t-062
     milestone: m4
     title: "Five-act dialogue and long-range consequence continuity pass"
-    status: review
+    status: ready
     stakes: reversible
     passes: 0
-    updated: '2026-11-03T20:42:31Z'
+    updated: '2026-11-03T22:05:56Z'
     source_issue: 'silasfelinus/kind_robots#4142'
     note: |-
       Silas 2026-11-02: comprehensively polish dialogue across all five acts and make consequential decisions echo in later scenes, quests, follower conversations and endings. Audit the current five-act playable dialogue and flag graph; implement distinct cross-act callbacks with honest costs, no dominant options, canon-consistent voices and clear choice labels. Preserve save/quest/flag identifiers, arrival chronology, true ambiguity about the Abbey and Komodo, and the established ending eligibility gates. Verify reachable conditional dialogue, save/load, quest aid, flag age, balance and adversarial campaigns. Track both the Tobin/Hollow Bell public-record thread and the bonded-runner thread across acts, and score every affected scene against the existing five-axis rubric. This is a dedicated cross-act story lane to coordinate work without claiming unrelated ongoing art tasks t-046 through t-052. Keep #4142 open until full game completion.
@@ -1073,6 +1073,5 @@ tasks:
       2026-11-03 PT: merged Kind Robots PR #4703 as bb2799218aa2cfe8895ed58850733aa7b693c134, all eight exact-head workflows and four contract shards/aggregate verifier successful. Tarn's once-impossible Day 43 talk now occurs in exile with preserved mechanical outcomes, the barracks no longer advertises a second talk on a spent day, and the editorial bot selects naturally offered unseen conversations. Artifact 13224891643 confirms 42 completed campaigns and follower talk reach increased from 91/125 to 95/125 (30 remain unvisited); 16 conditional audiences remain unvisited in those policy runs, though prior gate fixtures tested them. Full human-style editorial review, organic secret recruit routes and art delivery still outstanding under #4142. No new ArtJobs or production deployment.
 
       2026-11-03 PT: investigated the 30 unvisited follower talks. Confirmed authored dialogues are mostly gated by Day 1 Flint recruitment, secret follower optional chance visitors, or distinct romance/Act V choices. Simulator previously skipped all chance encounters, invalidating secret follower organic reachability data. Worker branch adds opt-in actual chance decisions, 12 focused 50-day route runs and explicit 30-talk prerequisite/choice fixtures; no production scene identifiers or flags changed. Actual coverage counts pending exact-head CI. Master #4142 and subjective writing/art acceptance stay open.
-    owner: worker
-    claimed_by: 20261103T203506Z-eod-t062-fix30-6b91c7
-    claimed_at: '2026-11-03T20:35:06Z'
+
+      2026-11-03 PT: merged Kind Robots PR #4713 (57660877cf30907b89bf68eae784f5f9f33476d9) and PR #4717 (162346ea81b93f5069eb3718c2bf35e787ecd9ae), each after all eight exact-head workflows and contract shards passed. #4713 adds legitimate chance recruit routes and closes all 30 previously unvisited follower talks through full campaigns (125/125); #4717 organically plays the Day 19 bandaged informant, Day 27 Mirefen count, and Day 41 midnight gate callbacks via earlier decisions, reaching 108/120 audiences. Latest Emperor editorial artifact 13275296727: 12 rare conditional audiences remain unvisited in bots (Day 5 toll grudge, Day 34 crow debt, three Day 42 host callbacks, seven Day 46 unpaid-host callbacks). Authored gate fixtures already passed, but organic playthroughs and independent writing/art acceptance remain open. Master #4142 stays open; no ArtJobs, schema changes, deployment or publication.
