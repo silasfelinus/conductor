@@ -117,6 +117,52 @@ class SnapshotTests(unittest.TestCase):
         self.assertEqual([row["id"] for row in normalized], [REQUEST_ID, rerender["id"]])
         self.assertEqual([row["status"] for row in normalized], ["done", "done"])
 
+    def test_round18_style_job_is_preserved_before_queue_pruning(self):
+        request_id = "shifting-desks-style-v2-western-cartoon-subject-first-department-wellness"
+        target = "public/images/shifting-desks/styles/western-cartoon/departments/wellness.webp"
+        ledger = (
+            "# The unique Western Cartoon rerender must keep its source prompt.\n"
+            "round: shifting-desks-18\n"
+            "subjects:\n"
+            "- key: department-wellness\n"
+            f"  request_id: {request_id}\n"
+            f"  target_path: kind_robots {target}\n"
+            "  prompt: 'Subject first, no boilerplate'\n"
+            "  status: requested\n"
+            "  verdict: null\n"
+        )
+        path = self.root / "ROUND-18.yaml"
+        path.write_text(ledger, encoding="utf-8")
+        source = {
+            "id": request_id,
+            "target_repo": "silasfelinus/kind_robots",
+            "image_path": target,
+            "status": "done",
+            "last_art_job_id": 57231,
+        }
+        self.assertTrue(preserve_completed_submissions([source], art_dir=self.root))
+        patched = path.read_text(encoding="utf-8")
+        row = yaml.safe_load(patched)["subjects"][0]
+        self.assertEqual(row["art_job_id"], 57231)
+        self.assertEqual(row["status"], "requested")
+        self.assertIsNone(row["verdict"])
+        self.assertNotIn("art_image_id", row)
+        self.assertIn("# The unique Western Cartoon", patched)
+        self.assertIn("Subject first, no boilerplate", patched)
+        self.assertEqual(preserve_completed_submissions([source], art_dir=self.root), {request_id})
+        self.assertEqual(path.read_text(encoding="utf-8"), patched)
+
+        # A completed job alone never proves fresh media or visual approval.
+        self.assertEqual(preserve_completed_submissions([{**source, "image_path": "public/wrong.webp"}], art_dir=self.root), {request_id})
+        self.assertEqual(path.read_text(encoding="utf-8"), patched)
+
+        # A row can retire only after a separately verified ArtImage and media.
+        delivered = patched.replace("status: requested", "status: delivered")
+        delivered = delivered.replace("  verdict: null",
+            "  art_image_id: 252101\\n  delivery_check: 'HEAD 200 fresh art'\\n  verdict: null")
+        path.write_text(delivered, encoding="utf-8")
+        self.assertEqual(preserve_completed_submissions([source], art_dir=self.root), set())
+
     def test_unverified_done_request_stays_done_not_requeued(self):
         with mock.patch("shifting_desks_round_evidence.preserve_completed_submissions", return_value={REQUEST_ID}):
             normalized = build_workspace.normalize_art_requests({"requests": [request(job_id=None)]})
