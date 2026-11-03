@@ -3,6 +3,8 @@ import importlib.util
 from datetime import datetime, timezone
 from pathlib import Path
 
+import yaml
+
 ROOT = Path(__file__).resolve().parents[1]
 ART = ROOT / "projects/shifting-desks/art/reconcile_delivery.py"
 _spec = importlib.util.spec_from_file_location("sd_reconcile_delivery", ART)
@@ -131,3 +133,59 @@ def test_targeted_yaml_update_preserves_comments_prompts_seeds_and_unrelated_row
 def test_public_url_probe_rejects_other_hosts_without_network():
     stamp, message = reconcile.probe_media("https://example.com/images/shifting-desks/fake.webp", opener=None)
     assert stamp is None and "invalid media" in message
+
+
+def test_round18_subject_first_rerender_gets_durable_artjob_and_media_evidence():
+    assert 18 in reconcile.ROUNDS
+    request_id = "shifting-desks-style-v2-western-cartoon-subject-first-department-wellness"
+    entry = {**row(), "request_id": request_id}
+    entry["target_path"] = "kind_robots public/images/shifting-desks/styles/western-cartoon/departments/wellness.webp"
+    entry["media_url"] = "https://media.acrocatranch.com/images/shifting-desks/styles/western-cartoon/departments/wellness.webp"
+    artwork_job = job(
+        request_id=request_id,
+        path="public/images/shifting-desks/styles/western-cartoon/departments/wellness.webp",
+        when="2026-11-03T20:00:00Z",
+    )
+    before = reconcile.timestamp("2026-11-02")
+    after = datetime(2026, 11, 3, 20, 5, tzinfo=timezone.utc)
+    edits = reconcile.reconcile_row(entry, [artwork_job], before, probe=lambda _url: (after, "fresh webp"))
+    assert edits["status"] == "delivered"
+    assert edits["art_job_id"] == 505
+    assert edits["art_image_id"] == 900
+    assert "verdict" not in edits
+    # Original Round 18 had no art_job_id, art_image_id, or delivery_check.
+    ledger = (
+        "# Preserve artist notes and curation discretion.\n"
+        "round: shifting-desks-18\n"
+        "subjects:\n"
+        "- key: department-wellness\n"
+        f"  request_id: {request_id}\n"
+        "  status: requested\n"
+        "  prompt: 'A polite upholstered monster'\n"
+        "  verdict: null\n"
+    )
+    amended = reconcile.patch_rows(ledger, edits and {request_id: edits})
+    updated = yaml.safe_load(amended)["subjects"][0]
+    assert updated["art_job_id"] == 505
+    assert updated["art_image_id"] == 900
+    assert updated["status"] == "delivered"
+    assert "fresh webp" in updated["delivery_check"]
+    assert updated["verdict"] is None
+    assert updated["prompt"] == "A polite upholstered monster"
+    assert reconcile.patch_rows(amended, {request_id: edits}) == amended
+    assert "# Preserve artist notes" in amended
+
+
+def test_round18_stale_media_is_rendered_not_accepted():
+    request_id = "shifting-desks-style-v2-western-cartoon-subject-first-department-wellness"
+    entry = {**row(), "request_id": request_id}
+    entry["target_path"] = "kind_robots public/images/shifting-desks/styles/western-cartoon/departments/wellness.webp"
+    entry["media_url"] = "https://media.acrocatranch.com/images/shifting-desks/styles/western-cartoon/departments/wellness.webp"
+    artwork_job = job(request_id=request_id,
+                      path="public/images/shifting-desks/styles/western-cartoon/departments/wellness.webp",
+                      when="2026-11-03T20:00:00Z")
+    edits = reconcile.reconcile_row(entry, [artwork_job], reconcile.timestamp("2026-11-02"),
+                                    probe=lambda _url: (BEFORE, "old webp"))
+    assert edits["status"] == "rendered"
+    assert "not independently verified" in edits["delivery_check"]
+    assert "verdict" not in edits
