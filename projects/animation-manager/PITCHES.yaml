@@ -2639,3 +2639,19 @@ pitches:
         released_at: '2026-11-02T14:00:00Z'
         verification:
           - registered in stores/animationCatalog.ts
+
+  - id: teacup-steam-curls
+    title: Teacup Steam Curls
+    status: shipped
+    priority: 99
+    surprise: Three quiet teacups send slow curls of steam into the evening; hover parts the steam, click blows a puff that settles.
+    builds:
+      - version: 1
+        status: shipped
+        component: components/screenfx/teacup-steam-curls.vue
+        pull_request: silasfelinus/kind_robots#4701
+        commit: 941be12
+        released_at: '2026-11-03T14:00:00Z'
+        verification:
+          - 11/11 CI checks green
+          - registered in stores/animationCatalog.ts
