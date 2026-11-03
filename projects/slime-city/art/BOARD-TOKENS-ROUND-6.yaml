@@ -1,7 +1,8 @@
 # Board tokens (Silas, 2026-11-02): "we need custom tokens for all cards on the board.
 # Images with reaction faces would probably work." One square head-and-shoulders portrait
 # per creature and mood, keyed slime-city/tokens/<cardId>/<mood>. First round: the 24
-# starter-deck creatures x 3 moods. Kind Robots reads them from
+# starter-deck creatures x 3 moods, each look hand-written from that creature's card art so
+# the token reads as the same character. Kind Robots reads them from
 # utils/slimeCity/artManifest.ts SLIME_CITY_ART.tokens['<cardId>/<mood>'] and falls back
 # to the card art with a reaction badge until they land. Remaining 86 creatures: t-022.
 round: slime-city-board-tokens-6
@@ -18,9 +19,9 @@ lanes:
   engine: krea2
   prompt: prose
   suffix: Western adult-animation gouache painting, crisp thick black ink contours, vibrant high-contrast
-    shading, a single character head-and-shoulders portrait centred in a square frame for a round game token,
-    face large and readable at small sizes, simple dark vignette background, saturated colored rim-lighting,
-    every surface bare and unmarked.
+    shading, a single character head-and-shoulders portrait centred in a square frame, face large and
+    readable at small sizes, simple dark vignette background, saturated colored rim-lighting, every
+    surface bare and unmarked.
 subjects:
 - key: slime-r6-token-lynx-fierce
   lane: krea2
@@ -29,7 +30,7 @@ subjects:
   asset: slime-city/tokens/lynx/fierce
   size: 1024x1024
   seed: 1096001
-  prompt_prose: 'An original game-token portrait of Neon Lynx, one of the GENE RIOT CATGIRLS (Escaped genetic experiments who turned their old laboratory into a neighborhood sanctuary. Ambushes and tactical regeneration.) Character note: Fast prototype scout. Opens with a lightning claw swipe. Expression: a fierce battle-cry expression, eyes blazing, teeth bared in a cocky grin, leaning toward the viewer. Same character design as its collectible card, adults only, humorous attitude.'
+  prompt_prose: 'Head-and-shoulders portrait of Neon Lynx, a lean adult catgirl scout with tufted lynx ears, a glowing blue visor pushed up on her forehead and a ring of stolen lab keys clenched in her teeth. Expression: a fierce battle cry, eyes blazing, teeth bared in a cocky grin, leaning toward the viewer.'
 - key: slime-r6-token-lynx-guard
   lane: krea2
   entity: token-art
@@ -37,7 +38,7 @@ subjects:
   asset: slime-city/tokens/lynx/guard
   size: 1024x1024
   seed: 1096002
-  prompt_prose: 'An original game-token portrait of Neon Lynx, one of the GENE RIOT CATGIRLS (Escaped genetic experiments who turned their old laboratory into a neighborhood sanctuary. Ambushes and tactical regeneration.) Character note: Fast prototype scout. Opens with a lightning claw swipe. Expression: a stubborn guarded expression, brow furrowed, chin tucked behind a raised forearm or shield, planted and immovable. Same character design as its collectible card, adults only, humorous attitude.'
+  prompt_prose: 'Head-and-shoulders portrait of Neon Lynx, a lean adult catgirl scout with tufted lynx ears, a glowing blue visor pushed up on her forehead and a ring of stolen lab keys clenched in her teeth. Expression: stubborn and guarded, brow furrowed, chin tucked behind a raised forearm, planted and immovable.'
 - key: slime-r6-token-lynx-hurt
   lane: krea2
   entity: token-art
@@ -45,7 +46,7 @@ subjects:
   asset: slime-city/tokens/lynx/hurt
   size: 1024x1024
   seed: 1096003
-  prompt_prose: 'An original game-token portrait of Neon Lynx, one of the GENE RIOT CATGIRLS (Escaped genetic experiments who turned their old laboratory into a neighborhood sanctuary. Ambushes and tactical regeneration.) Character note: Fast prototype scout. Opens with a lightning claw swipe. Expression: a comically pained wince, one eye squeezed shut, bruised and dishevelled but still standing, slapstick not gory. Same character design as its collectible card, adults only, humorous attitude.'
+  prompt_prose: 'Head-and-shoulders portrait of Neon Lynx, a lean adult catgirl scout with tufted lynx ears, a glowing blue visor pushed up on her forehead and a ring of stolen lab keys clenched in her teeth. Expression: a comically pained wince with one eye squeezed shut, bruised and dishevelled but still standing.'
 - key: slime-r6-token-mau-fierce
   lane: krea2
   entity: token-art
@@ -53,7 +54,7 @@ subjects:
   asset: slime-city/tokens/mau/fierce
   size: 1024x1024
   seed: 1096004
-  prompt_prose: 'An original game-token portrait of Mau-77, one of the GENE RIOT CATGIRLS (Escaped genetic experiments who turned their old laboratory into a neighborhood sanctuary. Ambushes and tactical regeneration.) Character note: Designer-claw enforcer. The first scratch is the one you remember. Expression: a fierce battle-cry expression, eyes blazing, teeth bared in a cocky grin, leaning toward the viewer. Same character design as its collectible card, adults only, humorous attitude.'
+  prompt_prose: 'Head-and-shoulders portrait of Mau-77, a muscular adult catgirl enforcer with a shaved undercut, spotted Egyptian Mau ears and oversized chrome designer claws raised beside her cheek. Expression: a fierce battle cry, eyes blazing, teeth bared in a cocky grin, leaning toward the viewer.'
 - key: slime-r6-token-mau-guard
   lane: krea2
   entity: token-art
@@ -61,7 +62,7 @@ subjects:
   asset: slime-city/tokens/mau/guard
   size: 1024x1024
   seed: 1096005
-  prompt_prose: 'An original game-token portrait of Mau-77, one of the GENE RIOT CATGIRLS (Escaped genetic experiments who turned their old laboratory into a neighborhood sanctuary. Ambushes and tactical regeneration.) Character note: Designer-claw enforcer. The first scratch is the one you remember. Expression: a stubborn guarded expression, brow furrowed, chin tucked behind a raised forearm or shield, planted and immovable. Same character design as its collectible card, adults only, humorous attitude.'
+  prompt_prose: 'Head-and-shoulders portrait of Mau-77, a muscular adult catgirl enforcer with a shaved undercut, spotted Egyptian Mau ears and oversized chrome designer claws raised beside her cheek. Expression: stubborn and guarded, brow furrowed, chin tucked behind a raised forearm, planted and immovable.'
 - key: slime-r6-token-mau-hurt
   lane: krea2
   entity: token-art
@@ -69,7 +70,7 @@ subjects:
   asset: slime-city/tokens/mau/hurt
   size: 1024x1024
   seed: 1096006
-  prompt_prose: 'An original game-token portrait of Mau-77, one of the GENE RIOT CATGIRLS (Escaped genetic experiments who turned their old laboratory into a neighborhood sanctuary. Ambushes and tactical regeneration.) Character note: Designer-claw enforcer. The first scratch is the one you remember. Expression: a comically pained wince, one eye squeezed shut, bruised and dishevelled but still standing, slapstick not gory. Same character design as its collectible card, adults only, humorous attitude.'
+  prompt_prose: 'Head-and-shoulders portrait of Mau-77, a muscular adult catgirl enforcer with a shaved undercut, spotted Egyptian Mau ears and oversized chrome designer claws raised beside her cheek. Expression: a comically pained wince with one eye squeezed shut, bruised and dishevelled but still standing.'
 - key: slime-r6-token-calico-fierce
   lane: krea2
   entity: token-art
@@ -77,7 +78,7 @@ subjects:
   asset: slime-city/tokens/calico/fierce
   size: 1024x1024
   seed: 1096007
-  prompt_prose: 'An original game-token portrait of Clinic Calico, one of the GENE RIOT CATGIRLS (Escaped genetic experiments who turned their old laboratory into a neighborhood sanctuary. Ambushes and tactical regeneration.) Character note: Stole the lab’s healing vats and now runs a free clinic out of them. Expression: a fierce battle-cry expression, eyes blazing, teeth bared in a cocky grin, leaning toward the viewer. Same character design as its collectible card, adults only, humorous attitude.'
+  prompt_prose: 'Head-and-shoulders portrait of Clinic Calico, an adult calico-furred street medic with patchwork orange and black fur, blue bandage wraps on both forearms and a stethoscope looped around her neck. Expression: a fierce battle cry, eyes blazing, teeth bared in a cocky grin, leaning toward the viewer.'
 - key: slime-r6-token-calico-guard
   lane: krea2
   entity: token-art
@@ -85,7 +86,7 @@ subjects:
   asset: slime-city/tokens/calico/guard
   size: 1024x1024
   seed: 1096008
-  prompt_prose: 'An original game-token portrait of Clinic Calico, one of the GENE RIOT CATGIRLS (Escaped genetic experiments who turned their old laboratory into a neighborhood sanctuary. Ambushes and tactical regeneration.) Character note: Stole the lab’s healing vats and now runs a free clinic out of them. Expression: a stubborn guarded expression, brow furrowed, chin tucked behind a raised forearm or shield, planted and immovable. Same character design as its collectible card, adults only, humorous attitude.'
+  prompt_prose: 'Head-and-shoulders portrait of Clinic Calico, an adult calico-furred street medic with patchwork orange and black fur, blue bandage wraps on both forearms and a stethoscope looped around her neck. Expression: stubborn and guarded, brow furrowed, chin tucked behind a raised forearm, planted and immovable.'
 - key: slime-r6-token-calico-hurt
   lane: krea2
   entity: token-art
@@ -93,7 +94,7 @@ subjects:
   asset: slime-city/tokens/calico/hurt
   size: 1024x1024
   seed: 1096009
-  prompt_prose: 'An original game-token portrait of Clinic Calico, one of the GENE RIOT CATGIRLS (Escaped genetic experiments who turned their old laboratory into a neighborhood sanctuary. Ambushes and tactical regeneration.) Character note: Stole the lab’s healing vats and now runs a free clinic out of them. Expression: a comically pained wince, one eye squeezed shut, bruised and dishevelled but still standing, slapstick not gory. Same character design as its collectible card, adults only, humorous attitude.'
+  prompt_prose: 'Head-and-shoulders portrait of Clinic Calico, an adult calico-furred street medic with patchwork orange and black fur, blue bandage wraps on both forearms and a stethoscope looped around her neck. Expression: a comically pained wince with one eye squeezed shut, bruised and dishevelled but still standing.'
 - key: slime-r6-token-chimera-fierce
   lane: krea2
   entity: token-art
@@ -101,7 +102,7 @@ subjects:
   asset: slime-city/tokens/chimera/fierce
   size: 1024x1024
   seed: 1096010
-  prompt_prose: 'An original game-token portrait of Madame Chimera, one of the GENE RIOT CATGIRLS (Escaped genetic experiments who turned their old laboratory into a neighborhood sanctuary. Ambushes and tactical regeneration.) Character note: Nine life signatures. She pounces first and stitches herself up after. Expression: a fierce battle-cry expression, eyes blazing, teeth bared in a cocky grin, leaning toward the viewer. Same character design as its collectible card, adults only, humorous attitude.'
+  prompt_prose: 'Head-and-shoulders portrait of Madame Chimera, a regal adult catgirl matriarch with a lion''s mane of golden hair, a goat-horned helmet and a coat collar of coiled serpent scales. Expression: a fierce battle cry, eyes blazing, teeth bared in a cocky grin, leaning toward the viewer.'
 - key: slime-r6-token-chimera-guard
   lane: krea2
   entity: token-art
@@ -109,7 +110,7 @@ subjects:
   asset: slime-city/tokens/chimera/guard
   size: 1024x1024
   seed: 1096011
-  prompt_prose: 'An original game-token portrait of Madame Chimera, one of the GENE RIOT CATGIRLS (Escaped genetic experiments who turned their old laboratory into a neighborhood sanctuary. Ambushes and tactical regeneration.) Character note: Nine life signatures. She pounces first and stitches herself up after. Expression: a stubborn guarded expression, brow furrowed, chin tucked behind a raised forearm or shield, planted and immovable. Same character design as its collectible card, adults only, humorous attitude.'
+  prompt_prose: 'Head-and-shoulders portrait of Madame Chimera, a regal adult catgirl matriarch with a lion''s mane of golden hair, a goat-horned helmet and a coat collar of coiled serpent scales. Expression: stubborn and guarded, brow furrowed, chin tucked behind a raised forearm, planted and immovable.'
 - key: slime-r6-token-chimera-hurt
   lane: krea2
   entity: token-art
@@ -117,7 +118,7 @@ subjects:
   asset: slime-city/tokens/chimera/hurt
   size: 1024x1024
   seed: 1096012
-  prompt_prose: 'An original game-token portrait of Madame Chimera, one of the GENE RIOT CATGIRLS (Escaped genetic experiments who turned their old laboratory into a neighborhood sanctuary. Ambushes and tactical regeneration.) Character note: Nine life signatures. She pounces first and stitches herself up after. Expression: a comically pained wince, one eye squeezed shut, bruised and dishevelled but still standing, slapstick not gory. Same character design as its collectible card, adults only, humorous attitude.'
+  prompt_prose: 'Head-and-shoulders portrait of Madame Chimera, a regal adult catgirl matriarch with a lion''s mane of golden hair, a goat-horned helmet and a coat collar of coiled serpent scales. Expression: a comically pained wince with one eye squeezed shut, bruised and dishevelled but still standing.'
 - key: slime-r6-token-sprite-fierce
   lane: krea2
   entity: token-art
@@ -125,7 +126,7 @@ subjects:
   asset: slime-city/tokens/sprite/fierce
   size: 1024x1024
   seed: 1096013
-  prompt_prose: 'An original game-token portrait of Bloodsprite, one of the PUNK BLOODFAIRIES (A riotous crew of tiny blood-magic punks who treat the megacity as one very loud mosh pit. Cheap swarms and surprise strikes.) Character note: Small, mean and loud. Louder with friends. Expression: a fierce battle-cry expression, eyes blazing, teeth bared in a cocky grin, leaning toward the viewer. Same character design as its collectible card, adults only, humorous attitude.'
+  prompt_prose: 'Head-and-shoulders portrait of Bloodsprite, a tiny adult bloodfairy with a magenta mohawk, torn violet wings and a bottle-cap megaphone pressed to her shouting mouth. Expression: a fierce battle cry, eyes blazing, teeth bared in a cocky grin, leaning toward the viewer.'
 - key: slime-r6-token-sprite-guard
   lane: krea2
   entity: token-art
@@ -133,7 +134,7 @@ subjects:
   asset: slime-city/tokens/sprite/guard
   size: 1024x1024
   seed: 1096014
-  prompt_prose: 'An original game-token portrait of Bloodsprite, one of the PUNK BLOODFAIRIES (A riotous crew of tiny blood-magic punks who treat the megacity as one very loud mosh pit. Cheap swarms and surprise strikes.) Character note: Small, mean and loud. Louder with friends. Expression: a stubborn guarded expression, brow furrowed, chin tucked behind a raised forearm or shield, planted and immovable. Same character design as its collectible card, adults only, humorous attitude.'
+  prompt_prose: 'Head-and-shoulders portrait of Bloodsprite, a tiny adult bloodfairy with a magenta mohawk, torn violet wings and a bottle-cap megaphone pressed to her shouting mouth. Expression: stubborn and guarded, brow furrowed, chin tucked behind a raised forearm, planted and immovable.'
 - key: slime-r6-token-sprite-hurt
   lane: krea2
   entity: token-art
@@ -141,7 +142,7 @@ subjects:
   asset: slime-city/tokens/sprite/hurt
   size: 1024x1024
   seed: 1096015
-  prompt_prose: 'An original game-token portrait of Bloodsprite, one of the PUNK BLOODFAIRIES (A riotous crew of tiny blood-magic punks who treat the megacity as one very loud mosh pit. Cheap swarms and surprise strikes.) Character note: Small, mean and loud. Louder with friends. Expression: a comically pained wince, one eye squeezed shut, bruised and dishevelled but still standing, slapstick not gory. Same character design as its collectible card, adults only, humorous attitude.'
+  prompt_prose: 'Head-and-shoulders portrait of Bloodsprite, a tiny adult bloodfairy with a magenta mohawk, torn violet wings and a bottle-cap megaphone pressed to her shouting mouth. Expression: a comically pained wince with one eye squeezed shut, bruised and dishevelled but still standing.'
 - key: slime-r6-token-pogo-fierce
   lane: krea2
   entity: token-art
@@ -149,7 +150,7 @@ subjects:
   asset: slime-city/tokens/pogo/fierce
   size: 1024x1024
   seed: 1096016
-  prompt_prose: 'An original game-token portrait of Pogo Brat, one of the PUNK BLOODFAIRIES (A riotous crew of tiny blood-magic punks who treat the megacity as one very loud mosh pit. Cheap swarms and surprise strikes.) Character note: Bounces off heads. Yours, then everyone else’s. Expression: a fierce battle-cry expression, eyes blazing, teeth bared in a cocky grin, leaning toward the viewer. Same character design as its collectible card, adults only, humorous attitude.'
+  prompt_prose: 'Head-and-shoulders portrait of Pogo Brat, a tiny adult punk fairy with spiky purple hair, scuffed knee pads, a studded collar and springy violet wings flared behind her. Expression: a fierce battle cry, eyes blazing, teeth bared in a cocky grin, leaning toward the viewer.'
 - key: slime-r6-token-pogo-guard
   lane: krea2
   entity: token-art
@@ -157,7 +158,7 @@ subjects:
   asset: slime-city/tokens/pogo/guard
   size: 1024x1024
   seed: 1096017
-  prompt_prose: 'An original game-token portrait of Pogo Brat, one of the PUNK BLOODFAIRIES (A riotous crew of tiny blood-magic punks who treat the megacity as one very loud mosh pit. Cheap swarms and surprise strikes.) Character note: Bounces off heads. Yours, then everyone else’s. Expression: a stubborn guarded expression, brow furrowed, chin tucked behind a raised forearm or shield, planted and immovable. Same character design as its collectible card, adults only, humorous attitude.'
+  prompt_prose: 'Head-and-shoulders portrait of Pogo Brat, a tiny adult punk fairy with spiky purple hair, scuffed knee pads, a studded collar and springy violet wings flared behind her. Expression: stubborn and guarded, brow furrowed, chin tucked behind a raised forearm, planted and immovable.'
 - key: slime-r6-token-pogo-hurt
   lane: krea2
   entity: token-art
@@ -165,7 +166,7 @@ subjects:
   asset: slime-city/tokens/pogo/hurt
   size: 1024x1024
   seed: 1096018
-  prompt_prose: 'An original game-token portrait of Pogo Brat, one of the PUNK BLOODFAIRIES (A riotous crew of tiny blood-magic punks who treat the megacity as one very loud mosh pit. Cheap swarms and surprise strikes.) Character note: Bounces off heads. Yours, then everyone else’s. Expression: a comically pained wince, one eye squeezed shut, bruised and dishevelled but still standing, slapstick not gory. Same character design as its collectible card, adults only, humorous attitude.'
+  prompt_prose: 'Head-and-shoulders portrait of Pogo Brat, a tiny adult punk fairy with spiky purple hair, scuffed knee pads, a studded collar and springy violet wings flared behind her. Expression: a comically pained wince with one eye squeezed shut, bruised and dishevelled but still standing.'
 - key: slime-r6-token-razor-fierce
   lane: krea2
   entity: token-art
@@ -173,7 +174,7 @@ subjects:
   asset: slime-city/tokens/razor/fierce
   size: 1024x1024
   seed: 1096019
-  prompt_prose: 'An original game-token portrait of Razorwing, one of the PUNK BLOODFAIRIES (A riotous crew of tiny blood-magic punks who treat the megacity as one very loud mosh pit. Cheap swarms and surprise strikes.) Character note: Moves in a blur and drinks the applause. Expression: a fierce battle-cry expression, eyes blazing, teeth bared in a cocky grin, leaning toward the viewer. Same character design as its collectible card, adults only, humorous attitude.'
+  prompt_prose: 'Head-and-shoulders portrait of Razorwing, an adult bloodfairy with razor-edged steel wings folded like knives, crimson eyeliner and sparks catching on a silver lip ring. Expression: a fierce battle cry, eyes blazing, teeth bared in a cocky grin, leaning toward the viewer.'
 - key: slime-r6-token-razor-guard
   lane: krea2
   entity: token-art
@@ -181,7 +182,7 @@ subjects:
   asset: slime-city/tokens/razor/guard
   size: 1024x1024
   seed: 1096020
-  prompt_prose: 'An original game-token portrait of Razorwing, one of the PUNK BLOODFAIRIES (A riotous crew of tiny blood-magic punks who treat the megacity as one very loud mosh pit. Cheap swarms and surprise strikes.) Character note: Moves in a blur and drinks the applause. Expression: a stubborn guarded expression, brow furrowed, chin tucked behind a raised forearm or shield, planted and immovable. Same character design as its collectible card, adults only, humorous attitude.'
+  prompt_prose: 'Head-and-shoulders portrait of Razorwing, an adult bloodfairy with razor-edged steel wings folded like knives, crimson eyeliner and sparks catching on a silver lip ring. Expression: stubborn and guarded, brow furrowed, chin tucked behind a raised forearm, planted and immovable.'
 - key: slime-r6-token-razor-hurt
   lane: krea2
   entity: token-art
@@ -189,7 +190,7 @@ subjects:
   asset: slime-city/tokens/razor/hurt
   size: 1024x1024
   seed: 1096021
-  prompt_prose: 'An original game-token portrait of Razorwing, one of the PUNK BLOODFAIRIES (A riotous crew of tiny blood-magic punks who treat the megacity as one very loud mosh pit. Cheap swarms and surprise strikes.) Character note: Moves in a blur and drinks the applause. Expression: a comically pained wince, one eye squeezed shut, bruised and dishevelled but still standing, slapstick not gory. Same character design as its collectible card, adults only, humorous attitude.'
+  prompt_prose: 'Head-and-shoulders portrait of Razorwing, an adult bloodfairy with razor-edged steel wings folded like knives, crimson eyeliner and sparks catching on a silver lip ring. Expression: a comically pained wince with one eye squeezed shut, bruised and dishevelled but still standing.'
 - key: slime-r6-token-queen-fierce
   lane: krea2
   entity: token-art
@@ -197,7 +198,7 @@ subjects:
   asset: slime-city/tokens/queen/fierce
   size: 1024x1024
   seed: 1096022
-  prompt_prose: 'An original game-token portrait of Queen Safety Pin, one of the PUNK BLOODFAIRIES (A riotous crew of tiny blood-magic punks who treat the megacity as one very loud mosh pit. Cheap swarms and surprise strikes.) Character note: Union leader of the damned. Never crowd-surfs alone. Expression: a fierce battle-cry expression, eyes blazing, teeth bared in a cocky grin, leaning toward the viewer. Same character design as its collectible card, adults only, humorous attitude.'
+  prompt_prose: 'Head-and-shoulders portrait of Queen Safety Pin, an adult bloodfairy union boss wearing a crown of bent safety pins and a black leather jacket smothered in hand-stitched patches. Expression: a fierce battle cry, eyes blazing, teeth bared in a cocky grin, leaning toward the viewer.'
 - key: slime-r6-token-queen-guard
   lane: krea2
   entity: token-art
@@ -205,7 +206,7 @@ subjects:
   asset: slime-city/tokens/queen/guard
   size: 1024x1024
   seed: 1096023
-  prompt_prose: 'An original game-token portrait of Queen Safety Pin, one of the PUNK BLOODFAIRIES (A riotous crew of tiny blood-magic punks who treat the megacity as one very loud mosh pit. Cheap swarms and surprise strikes.) Character note: Union leader of the damned. Never crowd-surfs alone. Expression: a stubborn guarded expression, brow furrowed, chin tucked behind a raised forearm or shield, planted and immovable. Same character design as its collectible card, adults only, humorous attitude.'
+  prompt_prose: 'Head-and-shoulders portrait of Queen Safety Pin, an adult bloodfairy union boss wearing a crown of bent safety pins and a black leather jacket smothered in hand-stitched patches. Expression: stubborn and guarded, brow furrowed, chin tucked behind a raised forearm, planted and immovable.'
 - key: slime-r6-token-queen-hurt
   lane: krea2
   entity: token-art
@@ -213,7 +214,7 @@ subjects:
   asset: slime-city/tokens/queen/hurt
   size: 1024x1024
   seed: 1096024
-  prompt_prose: 'An original game-token portrait of Queen Safety Pin, one of the PUNK BLOODFAIRIES (A riotous crew of tiny blood-magic punks who treat the megacity as one very loud mosh pit. Cheap swarms and surprise strikes.) Character note: Union leader of the damned. Never crowd-surfs alone. Expression: a comically pained wince, one eye squeezed shut, bruised and dishevelled but still standing, slapstick not gory. Same character design as its collectible card, adults only, humorous attitude.'
+  prompt_prose: 'Head-and-shoulders portrait of Queen Safety Pin, an adult bloodfairy union boss wearing a crown of bent safety pins and a black leather jacket smothered in hand-stitched patches. Expression: a comically pained wince with one eye squeezed shut, bruised and dishevelled but still standing.'
 - key: slime-r6-token-scrapper-fierce
   lane: krea2
   entity: token-art
@@ -221,7 +222,7 @@ subjects:
   asset: slime-city/tokens/scrapper/fierce
   size: 1024x1024
   seed: 1096025
-  prompt_prose: 'An original game-token portrait of Chrome Scrapper, one of the IRONJAW CHROME OGRES (Industrial-size cybernetic ogres fighting for freedom from the factories that built their bodies. Armor, hardware and bulldozing.) Character note: Scrap-metal fist fighter. Dents are a personality. Expression: a fierce battle-cry expression, eyes blazing, teeth bared in a cocky grin, leaning toward the viewer. Same character design as its collectible card, adults only, humorous attitude.'
+  prompt_prose: 'Head-and-shoulders portrait of Chrome Scrapper, a stocky adult ogre with mossy green skin, a bolted chrome jaw plate and both fists wrapped in dented scrap-metal knuckles. Expression: a fierce battle cry, eyes blazing, teeth bared in a cocky grin, leaning toward the viewer.'
 - key: slime-r6-token-scrapper-guard
   lane: krea2
   entity: token-art
@@ -229,7 +230,7 @@ subjects:
   asset: slime-city/tokens/scrapper/guard
   size: 1024x1024
   seed: 1096026
-  prompt_prose: 'An original game-token portrait of Chrome Scrapper, one of the IRONJAW CHROME OGRES (Industrial-size cybernetic ogres fighting for freedom from the factories that built their bodies. Armor, hardware and bulldozing.) Character note: Scrap-metal fist fighter. Dents are a personality. Expression: a stubborn guarded expression, brow furrowed, chin tucked behind a raised forearm or shield, planted and immovable. Same character design as its collectible card, adults only, humorous attitude.'
+  prompt_prose: 'Head-and-shoulders portrait of Chrome Scrapper, a stocky adult ogre with mossy green skin, a bolted chrome jaw plate and both fists wrapped in dented scrap-metal knuckles. Expression: stubborn and guarded, brow furrowed, chin tucked behind a raised forearm, planted and immovable.'
 - key: slime-r6-token-scrapper-hurt
   lane: krea2
   entity: token-art
@@ -237,7 +238,7 @@ subjects:
   asset: slime-city/tokens/scrapper/hurt
   size: 1024x1024
   seed: 1096027
-  prompt_prose: 'An original game-token portrait of Chrome Scrapper, one of the IRONJAW CHROME OGRES (Industrial-size cybernetic ogres fighting for freedom from the factories that built their bodies. Armor, hardware and bulldozing.) Character note: Scrap-metal fist fighter. Dents are a personality. Expression: a comically pained wince, one eye squeezed shut, bruised and dishevelled but still standing, slapstick not gory. Same character design as its collectible card, adults only, humorous attitude.'
+  prompt_prose: 'Head-and-shoulders portrait of Chrome Scrapper, a stocky adult ogre with mossy green skin, a bolted chrome jaw plate and both fists wrapped in dented scrap-metal knuckles. Expression: a comically pained wince with one eye squeezed shut, bruised and dishevelled but still standing.'
 - key: slime-r6-token-welder-fierce
   lane: krea2
   entity: token-art
@@ -245,7 +246,7 @@ subjects:
   asset: slime-city/tokens/welder/fierce
   size: 1024x1024
   seed: 1096028
-  prompt_prose: 'An original game-token portrait of Spark Welder, one of the IRONJAW CHROME OGRES (Industrial-size cybernetic ogres fighting for freedom from the factories that built their bodies. Armor, hardware and bulldozing.) Character note: Fixes the line and sets the opposition on fire, a little. Expression: a fierce battle-cry expression, eyes blazing, teeth bared in a cocky grin, leaning toward the viewer. Same character design as its collectible card, adults only, humorous attitude.'
+  prompt_prose: 'Head-and-shoulders portrait of Spark Welder, an adult green ogre mechanic in oil-stained overalls with a welding visor flipped up and a glowing torch nozzle resting on one shoulder. Expression: a fierce battle cry, eyes blazing, teeth bared in a cocky grin, leaning toward the viewer.'
 - key: slime-r6-token-welder-guard
   lane: krea2
   entity: token-art
@@ -253,7 +254,7 @@ subjects:
   asset: slime-city/tokens/welder/guard
   size: 1024x1024
   seed: 1096029
-  prompt_prose: 'An original game-token portrait of Spark Welder, one of the IRONJAW CHROME OGRES (Industrial-size cybernetic ogres fighting for freedom from the factories that built their bodies. Armor, hardware and bulldozing.) Character note: Fixes the line and sets the opposition on fire, a little. Expression: a stubborn guarded expression, brow furrowed, chin tucked behind a raised forearm or shield, planted and immovable. Same character design as its collectible card, adults only, humorous attitude.'
+  prompt_prose: 'Head-and-shoulders portrait of Spark Welder, an adult green ogre mechanic in oil-stained overalls with a welding visor flipped up and a glowing torch nozzle resting on one shoulder. Expression: stubborn and guarded, brow furrowed, chin tucked behind a raised forearm, planted and immovable.'
 - key: slime-r6-token-welder-hurt
   lane: krea2
   entity: token-art
@@ -261,7 +262,7 @@ subjects:
   asset: slime-city/tokens/welder/hurt
   size: 1024x1024
   seed: 1096030
-  prompt_prose: 'An original game-token portrait of Spark Welder, one of the IRONJAW CHROME OGRES (Industrial-size cybernetic ogres fighting for freedom from the factories that built their bodies. Armor, hardware and bulldozing.) Character note: Fixes the line and sets the opposition on fire, a little. Expression: a comically pained wince, one eye squeezed shut, bruised and dishevelled but still standing, slapstick not gory. Same character design as its collectible card, adults only, humorous attitude.'
+  prompt_prose: 'Head-and-shoulders portrait of Spark Welder, an adult green ogre mechanic in oil-stained overalls with a welding visor flipped up and a glowing torch nozzle resting on one shoulder. Expression: a comically pained wince with one eye squeezed shut, bruised and dishevelled but still standing.'
 - key: slime-r6-token-bulldozer-fierce
   lane: krea2
   entity: token-art
@@ -269,7 +270,7 @@ subjects:
   asset: slime-city/tokens/bulldozer/fierce
   size: 1024x1024
   seed: 1096031
-  prompt_prose: 'An original game-token portrait of Bulld-Ogre, one of the IRONJAW CHROME OGRES (Industrial-size cybernetic ogres fighting for freedom from the factories that built their bodies. Armor, hardware and bulldozing.) Character note: Armored wallbreaker. Does not wait for you to move. Expression: a fierce battle-cry expression, eyes blazing, teeth bared in a cocky grin, leaning toward the viewer. Same character design as its collectible card, adults only, humorous attitude.'
+  prompt_prose: 'Head-and-shoulders portrait of Bulld-Ogre, a massive adult ogre with a yellow bulldozer blade bolted across his chest, brick dust in his beard and riveted chrome cheekbones. Expression: a fierce battle cry, eyes blazing, teeth bared in a cocky grin, leaning toward the viewer.'
 - key: slime-r6-token-bulldozer-guard
   lane: krea2
   entity: token-art
@@ -277,7 +278,7 @@ subjects:
   asset: slime-city/tokens/bulldozer/guard
   size: 1024x1024
   seed: 1096032
-  prompt_prose: 'An original game-token portrait of Bulld-Ogre, one of the IRONJAW CHROME OGRES (Industrial-size cybernetic ogres fighting for freedom from the factories that built their bodies. Armor, hardware and bulldozing.) Character note: Armored wallbreaker. Does not wait for you to move. Expression: a stubborn guarded expression, brow furrowed, chin tucked behind a raised forearm or shield, planted and immovable. Same character design as its collectible card, adults only, humorous attitude.'
+  prompt_prose: 'Head-and-shoulders portrait of Bulld-Ogre, a massive adult ogre with a yellow bulldozer blade bolted across his chest, brick dust in his beard and riveted chrome cheekbones. Expression: stubborn and guarded, brow furrowed, chin tucked behind a raised forearm, planted and immovable.'
 - key: slime-r6-token-bulldozer-hurt
   lane: krea2
   entity: token-art
@@ -285,7 +286,7 @@ subjects:
   asset: slime-city/tokens/bulldozer/hurt
   size: 1024x1024
   seed: 1096033
-  prompt_prose: 'An original game-token portrait of Bulld-Ogre, one of the IRONJAW CHROME OGRES (Industrial-size cybernetic ogres fighting for freedom from the factories that built their bodies. Armor, hardware and bulldozing.) Character note: Armored wallbreaker. Does not wait for you to move. Expression: a comically pained wince, one eye squeezed shut, bruised and dishevelled but still standing, slapstick not gory. Same character design as its collectible card, adults only, humorous attitude.'
+  prompt_prose: 'Head-and-shoulders portrait of Bulld-Ogre, a massive adult ogre with a yellow bulldozer blade bolted across his chest, brick dust in his beard and riveted chrome cheekbones. Expression: a comically pained wince with one eye squeezed shut, bruised and dishevelled but still standing.'
 - key: slime-r6-token-juggernaut-fierce
   lane: krea2
   entity: token-art
@@ -293,7 +294,7 @@ subjects:
   asset: slime-city/tokens/juggernaut/fierce
   size: 1024x1024
   seed: 1096034
-  prompt_prose: 'An original game-token portrait of Maw-9000, one of the IRONJAW CHROME OGRES (Industrial-size cybernetic ogres fighting for freedom from the factories that built their bodies. Armor, hardware and bulldozing.) Character note: A tank with opinions, and the opinion is: move. Expression: a fierce battle-cry expression, eyes blazing, teeth bared in a cocky grin, leaning toward the viewer. Same character design as its collectible card, adults only, humorous attitude.'
+  prompt_prose: 'Head-and-shoulders portrait of Maw-9000, a towering adult cyborg ogre with a huge hinged chrome jaw, smokestack exhaust pipes rising behind his shoulders and red furnace eyes. Expression: a fierce battle cry, eyes blazing, teeth bared in a cocky grin, leaning toward the viewer.'
 - key: slime-r6-token-juggernaut-guard
   lane: krea2
   entity: token-art
@@ -301,7 +302,7 @@ subjects:
   asset: slime-city/tokens/juggernaut/guard
   size: 1024x1024
   seed: 1096035
-  prompt_prose: 'An original game-token portrait of Maw-9000, one of the IRONJAW CHROME OGRES (Industrial-size cybernetic ogres fighting for freedom from the factories that built their bodies. Armor, hardware and bulldozing.) Character note: A tank with opinions, and the opinion is: move. Expression: a stubborn guarded expression, brow furrowed, chin tucked behind a raised forearm or shield, planted and immovable. Same character design as its collectible card, adults only, humorous attitude.'
+  prompt_prose: 'Head-and-shoulders portrait of Maw-9000, a towering adult cyborg ogre with a huge hinged chrome jaw, smokestack exhaust pipes rising behind his shoulders and red furnace eyes. Expression: stubborn and guarded, brow furrowed, chin tucked behind a raised forearm, planted and immovable.'
 - key: slime-r6-token-juggernaut-hurt
   lane: krea2
   entity: token-art
@@ -309,7 +310,7 @@ subjects:
   asset: slime-city/tokens/juggernaut/hurt
   size: 1024x1024
   seed: 1096036
-  prompt_prose: 'An original game-token portrait of Maw-9000, one of the IRONJAW CHROME OGRES (Industrial-size cybernetic ogres fighting for freedom from the factories that built their bodies. Armor, hardware and bulldozing.) Character note: A tank with opinions, and the opinion is: move. Expression: a comically pained wince, one eye squeezed shut, bruised and dishevelled but still standing, slapstick not gory. Same character design as its collectible card, adults only, humorous attitude.'
+  prompt_prose: 'Head-and-shoulders portrait of Maw-9000, a towering adult cyborg ogre with a huge hinged chrome jaw, smokestack exhaust pipes rising behind his shoulders and red furnace eyes. Expression: a comically pained wince with one eye squeezed shut, bruised and dishevelled but still standing.'
 - key: slime-r6-token-rat-fierce
   lane: krea2
   entity: token-art
@@ -317,7 +318,7 @@ subjects:
   asset: slime-city/tokens/rat/fierce
   size: 1024x1024
   seed: 1096037
-  prompt_prose: 'An original game-token portrait of Riot Rat, one of the RIOT SAINTS (Joyfully irresponsible demolition gladiators in a city where nobody has read the fire code. High-risk chaos cards.) Character note: All teeth, no planning, one firecracker in each cheek. Expression: a fierce battle-cry expression, eyes blazing, teeth bared in a cocky grin, leaning toward the viewer. Same character design as its collectible card, adults only, humorous attitude.'
+  prompt_prose: 'Head-and-shoulders portrait of Riot Rat, a scrappy adult rat-faced gladiator in a dented red crash helmet with a huge buck-toothed grin and a lit cartoon bomb by each ear. Expression: a fierce battle cry, eyes blazing, teeth bared in a cocky grin, leaning toward the viewer.'
 - key: slime-r6-token-rat-guard
   lane: krea2
   entity: token-art
@@ -325,7 +326,7 @@ subjects:
   asset: slime-city/tokens/rat/guard
   size: 1024x1024
   seed: 1096038
-  prompt_prose: 'An original game-token portrait of Riot Rat, one of the RIOT SAINTS (Joyfully irresponsible demolition gladiators in a city where nobody has read the fire code. High-risk chaos cards.) Character note: All teeth, no planning, one firecracker in each cheek. Expression: a stubborn guarded expression, brow furrowed, chin tucked behind a raised forearm or shield, planted and immovable. Same character design as its collectible card, adults only, humorous attitude.'
+  prompt_prose: 'Head-and-shoulders portrait of Riot Rat, a scrappy adult rat-faced gladiator in a dented red crash helmet with a huge buck-toothed grin and a lit cartoon bomb by each ear. Expression: stubborn and guarded, brow furrowed, chin tucked behind a raised forearm, planted and immovable.'
 - key: slime-r6-token-rat-hurt
   lane: krea2
   entity: token-art
@@ -333,7 +334,7 @@ subjects:
   asset: slime-city/tokens/rat/hurt
   size: 1024x1024
   seed: 1096039
-  prompt_prose: 'An original game-token portrait of Riot Rat, one of the RIOT SAINTS (Joyfully irresponsible demolition gladiators in a city where nobody has read the fire code. High-risk chaos cards.) Character note: All teeth, no planning, one firecracker in each cheek. Expression: a comically pained wince, one eye squeezed shut, bruised and dishevelled but still standing, slapstick not gory. Same character design as its collectible card, adults only, humorous attitude.'
+  prompt_prose: 'Head-and-shoulders portrait of Riot Rat, a scrappy adult rat-faced gladiator in a dented red crash helmet with a huge buck-toothed grin and a lit cartoon bomb by each ear. Expression: a comically pained wince with one eye squeezed shut, bruised and dishevelled but still standing.'
 - key: slime-r6-token-firebrand-fierce
   lane: krea2
   entity: token-art
@@ -341,7 +342,7 @@ subjects:
   asset: slime-city/tokens/firebrand/fierce
   size: 1024x1024
   seed: 1096040
-  prompt_prose: 'An original game-token portrait of Firebrand, one of the RIOT SAINTS (Joyfully irresponsible demolition gladiators in a city where nobody has read the fire code. High-risk chaos cards.) Character note: Carries six lit fuses and no water. Expression: a fierce battle-cry expression, eyes blazing, teeth bared in a cocky grin, leaning toward the viewer. Same character design as its collectible card, adults only, humorous attitude.'
+  prompt_prose: 'Head-and-shoulders portrait of Firebrand, an adult demolition gladiator with flame-red dreadlocks, soot-smudged cheeks and a bandolier of lit fuses sputtering across her chest. Expression: a fierce battle cry, eyes blazing, teeth bared in a cocky grin, leaning toward the viewer.'
 - key: slime-r6-token-firebrand-guard
   lane: krea2
   entity: token-art
@@ -349,7 +350,7 @@ subjects:
   asset: slime-city/tokens/firebrand/guard
   size: 1024x1024
   seed: 1096041
-  prompt_prose: 'An original game-token portrait of Firebrand, one of the RIOT SAINTS (Joyfully irresponsible demolition gladiators in a city where nobody has read the fire code. High-risk chaos cards.) Character note: Carries six lit fuses and no water. Expression: a stubborn guarded expression, brow furrowed, chin tucked behind a raised forearm or shield, planted and immovable. Same character design as its collectible card, adults only, humorous attitude.'
+  prompt_prose: 'Head-and-shoulders portrait of Firebrand, an adult demolition gladiator with flame-red dreadlocks, soot-smudged cheeks and a bandolier of lit fuses sputtering across her chest. Expression: stubborn and guarded, brow furrowed, chin tucked behind a raised forearm, planted and immovable.'
 - key: slime-r6-token-firebrand-hurt
   lane: krea2
   entity: token-art
@@ -357,7 +358,7 @@ subjects:
   asset: slime-city/tokens/firebrand/hurt
   size: 1024x1024
   seed: 1096042
-  prompt_prose: 'An original game-token portrait of Firebrand, one of the RIOT SAINTS (Joyfully irresponsible demolition gladiators in a city where nobody has read the fire code. High-risk chaos cards.) Character note: Carries six lit fuses and no water. Expression: a comically pained wince, one eye squeezed shut, bruised and dishevelled but still standing, slapstick not gory. Same character design as its collectible card, adults only, humorous attitude.'
+  prompt_prose: 'Head-and-shoulders portrait of Firebrand, an adult demolition gladiator with flame-red dreadlocks, soot-smudged cheeks and a bandolier of lit fuses sputtering across her chest. Expression: a comically pained wince with one eye squeezed shut, bruised and dishevelled but still standing.'
 - key: slime-r6-token-kaboom-fierce
   lane: krea2
   entity: token-art
@@ -365,7 +366,7 @@ subjects:
   asset: slime-city/tokens/kaboom/fierce
   size: 1024x1024
   seed: 1096043
-  prompt_prose: 'An original game-token portrait of Sister Kaboom, one of the RIOT SAINTS (Joyfully irresponsible demolition gladiators in a city where nobody has read the fire code. High-risk chaos cards.) Character note: Blesses every wall she knocks down. Her drill bit goes through plating. Expression: a fierce battle-cry expression, eyes blazing, teeth bared in a cocky grin, leaning toward the viewer. Same character design as its collectible card, adults only, humorous attitude.'
+  prompt_prose: 'Head-and-shoulders portrait of Sister Kaboom, an adult festival demolition queen in red parade armor with tinted safety goggles, confetti in her braids and firecrackers tucked in her helmet band. Expression: a fierce battle cry, eyes blazing, teeth bared in a cocky grin, leaning toward the viewer.'
 - key: slime-r6-token-kaboom-guard
   lane: krea2
   entity: token-art
@@ -373,7 +374,7 @@ subjects:
   asset: slime-city/tokens/kaboom/guard
   size: 1024x1024
   seed: 1096044
-  prompt_prose: 'An original game-token portrait of Sister Kaboom, one of the RIOT SAINTS (Joyfully irresponsible demolition gladiators in a city where nobody has read the fire code. High-risk chaos cards.) Character note: Blesses every wall she knocks down. Her drill bit goes through plating. Expression: a stubborn guarded expression, brow furrowed, chin tucked behind a raised forearm or shield, planted and immovable. Same character design as its collectible card, adults only, humorous attitude.'
+  prompt_prose: 'Head-and-shoulders portrait of Sister Kaboom, an adult festival demolition queen in red parade armor with tinted safety goggles, confetti in her braids and firecrackers tucked in her helmet band. Expression: stubborn and guarded, brow furrowed, chin tucked behind a raised forearm, planted and immovable.'
 - key: slime-r6-token-kaboom-hurt
   lane: krea2
   entity: token-art
@@ -381,7 +382,7 @@ subjects:
   asset: slime-city/tokens/kaboom/hurt
   size: 1024x1024
   seed: 1096045
-  prompt_prose: 'An original game-token portrait of Sister Kaboom, one of the RIOT SAINTS (Joyfully irresponsible demolition gladiators in a city where nobody has read the fire code. High-risk chaos cards.) Character note: Blesses every wall she knocks down. Her drill bit goes through plating. Expression: a comically pained wince, one eye squeezed shut, bruised and dishevelled but still standing, slapstick not gory. Same character design as its collectible card, adults only, humorous attitude.'
+  prompt_prose: 'Head-and-shoulders portrait of Sister Kaboom, an adult festival demolition queen in red parade armor with tinted safety goggles, confetti in her braids and firecrackers tucked in her helmet band. Expression: a comically pained wince with one eye squeezed shut, bruised and dishevelled but still standing.'
 - key: slime-r6-token-bomber-fierce
   lane: krea2
   entity: token-art
@@ -389,7 +390,7 @@ subjects:
   asset: slime-city/tokens/bomber/fierce
   size: 1024x1024
   seed: 1096046
-  prompt_prose: 'An original game-token portrait of Grand Detonator, one of the RIOT SAINTS (Joyfully irresponsible demolition gladiators in a city where nobody has read the fire code. High-risk chaos cards.) Character note: Makes the stadium shake. Goes out with a 2-damage bang. Expression: a fierce battle-cry expression, eyes blazing, teeth bared in a cocky grin, leaning toward the viewer. Same character design as its collectible card, adults only, humorous attitude.'
+  prompt_prose: 'Head-and-shoulders portrait of Grand Detonator, a barrel-chested adult gladiator in red football pads and a wing-tipped helmet, gripping a brass detonator plunger box against his chest. Expression: a fierce battle cry, eyes blazing, teeth bared in a cocky grin, leaning toward the viewer.'
 - key: slime-r6-token-bomber-guard
   lane: krea2
   entity: token-art
@@ -397,7 +398,7 @@ subjects:
   asset: slime-city/tokens/bomber/guard
   size: 1024x1024
   seed: 1096047
-  prompt_prose: 'An original game-token portrait of Grand Detonator, one of the RIOT SAINTS (Joyfully irresponsible demolition gladiators in a city where nobody has read the fire code. High-risk chaos cards.) Character note: Makes the stadium shake. Goes out with a 2-damage bang. Expression: a stubborn guarded expression, brow furrowed, chin tucked behind a raised forearm or shield, planted and immovable. Same character design as its collectible card, adults only, humorous attitude.'
+  prompt_prose: 'Head-and-shoulders portrait of Grand Detonator, a barrel-chested adult gladiator in red football pads and a wing-tipped helmet, gripping a brass detonator plunger box against his chest. Expression: stubborn and guarded, brow furrowed, chin tucked behind a raised forearm, planted and immovable.'
 - key: slime-r6-token-bomber-hurt
   lane: krea2
   entity: token-art
@@ -405,7 +406,7 @@ subjects:
   asset: slime-city/tokens/bomber/hurt
   size: 1024x1024
   seed: 1096048
-  prompt_prose: 'An original game-token portrait of Grand Detonator, one of the RIOT SAINTS (Joyfully irresponsible demolition gladiators in a city where nobody has read the fire code. High-risk chaos cards.) Character note: Makes the stadium shake. Goes out with a 2-damage bang. Expression: a comically pained wince, one eye squeezed shut, bruised and dishevelled but still standing, slapstick not gory. Same character design as its collectible card, adults only, humorous attitude.'
+  prompt_prose: 'Head-and-shoulders portrait of Grand Detonator, a barrel-chested adult gladiator in red football pads and a wing-tipped helmet, gripping a brass detonator plunger box against his chest. Expression: a comically pained wince with one eye squeezed shut, bruised and dishevelled but still standing.'
 - key: slime-r6-token-watcher-fierce
   lane: krea2
   entity: token-art
@@ -413,7 +414,7 @@ subjects:
   asset: slime-city/tokens/watcher/fierce
   size: 1024x1024
   seed: 1096049
-  prompt_prose: 'An original game-token portrait of Sewer Watcher, one of the UNDERTOW INTELLIGENCE (Sewer spies, surveillance witches and amphibious informants who rig every intersection before a fight begins.) Character note: Knows every drain and every weak rivet. Expression: a fierce battle-cry expression, eyes blazing, teeth bared in a cocky grin, leaning toward the viewer. Same character design as its collectible card, adults only, humorous attitude.'
+  prompt_prose: 'Head-and-shoulders portrait of Sewer Watcher, a hooded adult spy in a dripping teal rain slicker with three brass periscope lenses swiveling out from her goggles. Expression: a fierce battle cry, eyes blazing, teeth bared in a cocky grin, leaning toward the viewer.'
 - key: slime-r6-token-watcher-guard
   lane: krea2
   entity: token-art
@@ -421,7 +422,7 @@ subjects:
   asset: slime-city/tokens/watcher/guard
   size: 1024x1024
   seed: 1096050
-  prompt_prose: 'An original game-token portrait of Sewer Watcher, one of the UNDERTOW INTELLIGENCE (Sewer spies, surveillance witches and amphibious informants who rig every intersection before a fight begins.) Character note: Knows every drain and every weak rivet. Expression: a stubborn guarded expression, brow furrowed, chin tucked behind a raised forearm or shield, planted and immovable. Same character design as its collectible card, adults only, humorous attitude.'
+  prompt_prose: 'Head-and-shoulders portrait of Sewer Watcher, a hooded adult spy in a dripping teal rain slicker with three brass periscope lenses swiveling out from her goggles. Expression: stubborn and guarded, brow furrowed, chin tucked behind a raised forearm, planted and immovable.'
 - key: slime-r6-token-watcher-hurt
   lane: krea2
   entity: token-art
@@ -429,7 +430,7 @@ subjects:
   asset: slime-city/tokens/watcher/hurt
   size: 1024x1024
   seed: 1096051
-  prompt_prose: 'An original game-token portrait of Sewer Watcher, one of the UNDERTOW INTELLIGENCE (Sewer spies, surveillance witches and amphibious informants who rig every intersection before a fight begins.) Character note: Knows every drain and every weak rivet. Expression: a comically pained wince, one eye squeezed shut, bruised and dishevelled but still standing, slapstick not gory. Same character design as its collectible card, adults only, humorous attitude.'
+  prompt_prose: 'Head-and-shoulders portrait of Sewer Watcher, a hooded adult spy in a dripping teal rain slicker with three brass periscope lenses swiveling out from her goggles. Expression: a comically pained wince with one eye squeezed shut, bruised and dishevelled but still standing.'
 - key: slime-r6-token-frogtrooper-fierce
   lane: krea2
   entity: token-art
@@ -437,7 +438,7 @@ subjects:
   asset: slime-city/tokens/frogtrooper/fierce
   size: 1024x1024
   seed: 1096052
-  prompt_prose: 'An original game-token portrait of Frog Trooper, one of the UNDERTOW INTELLIGENCE (Sewer spies, surveillance witches and amphibious informants who rig every intersection before a fight begins.) Character note: Silent wet boots and a very sticky tongue. Expression: a fierce battle-cry expression, eyes blazing, teeth bared in a cocky grin, leaning toward the viewer. Same character design as its collectible card, adults only, humorous attitude.'
+  prompt_prose: 'Head-and-shoulders portrait of Frog Trooper, a broad adult amphibious soldier with a wide frog face, bulging gold eyes and green rubber armor buckled over his throat sac. Expression: a fierce battle cry, eyes blazing, teeth bared in a cocky grin, leaning toward the viewer.'
 - key: slime-r6-token-frogtrooper-guard
   lane: krea2
   entity: token-art
@@ -445,7 +446,7 @@ subjects:
   asset: slime-city/tokens/frogtrooper/guard
   size: 1024x1024
   seed: 1096053
-  prompt_prose: 'An original game-token portrait of Frog Trooper, one of the UNDERTOW INTELLIGENCE (Sewer spies, surveillance witches and amphibious informants who rig every intersection before a fight begins.) Character note: Silent wet boots and a very sticky tongue. Expression: a stubborn guarded expression, brow furrowed, chin tucked behind a raised forearm or shield, planted and immovable. Same character design as its collectible card, adults only, humorous attitude.'
+  prompt_prose: 'Head-and-shoulders portrait of Frog Trooper, a broad adult amphibious soldier with a wide frog face, bulging gold eyes and green rubber armor buckled over his throat sac. Expression: stubborn and guarded, brow furrowed, chin tucked behind a raised forearm, planted and immovable.'
 - key: slime-r6-token-frogtrooper-hurt
   lane: krea2
   entity: token-art
@@ -453,7 +454,7 @@ subjects:
   asset: slime-city/tokens/frogtrooper/hurt
   size: 1024x1024
   seed: 1096054
-  prompt_prose: 'An original game-token portrait of Frog Trooper, one of the UNDERTOW INTELLIGENCE (Sewer spies, surveillance witches and amphibious informants who rig every intersection before a fight begins.) Character note: Silent wet boots and a very sticky tongue. Expression: a comically pained wince, one eye squeezed shut, bruised and dishevelled but still standing, slapstick not gory. Same character design as its collectible card, adults only, humorous attitude.'
+  prompt_prose: 'Head-and-shoulders portrait of Frog Trooper, a broad adult amphibious soldier with a wide frog face, bulging gold eyes and green rubber armor buckled over his throat sac. Expression: a comically pained wince with one eye squeezed shut, bruised and dishevelled but still standing.'
 - key: slime-r6-token-eel-fierce
   lane: krea2
   entity: token-art
@@ -461,7 +462,7 @@ subjects:
   asset: slime-city/tokens/eel/fierce
   size: 1024x1024
   seed: 1096055
-  prompt_prose: 'An original game-token portrait of Eel Courier, one of the UNDERTOW INTELLIGENCE (Sewer spies, surveillance witches and amphibious informants who rig every intersection before a fight begins.) Character note: Delivers secrets through the storm drains, and a shock through your armor. Expression: a fierce battle-cry expression, eyes blazing, teeth bared in a cocky grin, leaning toward the viewer. Same character design as its collectible card, adults only, humorous attitude.'
+  prompt_prose: 'Head-and-shoulders portrait of Eel Courier, an adult eel-like courier with slick teal skin, a pillbox messenger cap and a sealed brass message capsule strapped across his chest. Expression: a fierce battle cry, eyes blazing, teeth bared in a cocky grin, leaning toward the viewer.'
 - key: slime-r6-token-eel-guard
   lane: krea2
   entity: token-art
@@ -469,7 +470,7 @@ subjects:
   asset: slime-city/tokens/eel/guard
   size: 1024x1024
   seed: 1096056
-  prompt_prose: 'An original game-token portrait of Eel Courier, one of the UNDERTOW INTELLIGENCE (Sewer spies, surveillance witches and amphibious informants who rig every intersection before a fight begins.) Character note: Delivers secrets through the storm drains, and a shock through your armor. Expression: a stubborn guarded expression, brow furrowed, chin tucked behind a raised forearm or shield, planted and immovable. Same character design as its collectible card, adults only, humorous attitude.'
+  prompt_prose: 'Head-and-shoulders portrait of Eel Courier, an adult eel-like courier with slick teal skin, a pillbox messenger cap and a sealed brass message capsule strapped across his chest. Expression: stubborn and guarded, brow furrowed, chin tucked behind a raised forearm, planted and immovable.'
 - key: slime-r6-token-eel-hurt
   lane: krea2
   entity: token-art
@@ -477,7 +478,7 @@ subjects:
   asset: slime-city/tokens/eel/hurt
   size: 1024x1024
   seed: 1096057
-  prompt_prose: 'An original game-token portrait of Eel Courier, one of the UNDERTOW INTELLIGENCE (Sewer spies, surveillance witches and amphibious informants who rig every intersection before a fight begins.) Character note: Delivers secrets through the storm drains, and a shock through your armor. Expression: a comically pained wince, one eye squeezed shut, bruised and dishevelled but still standing, slapstick not gory. Same character design as its collectible card, adults only, humorous attitude.'
+  prompt_prose: 'Head-and-shoulders portrait of Eel Courier, an adult eel-like courier with slick teal skin, a pillbox messenger cap and a sealed brass message capsule strapped across his chest. Expression: a comically pained wince with one eye squeezed shut, bruised and dishevelled but still standing.'
 - key: slime-r6-token-oracle-fierce
   lane: krea2
   entity: token-art
@@ -485,7 +486,7 @@ subjects:
   asset: slime-city/tokens/oracle/fierce
   size: 1024x1024
   seed: 1096058
-  prompt_prose: 'An original game-token portrait of Drowned Oracle, one of the UNDERTOW INTELLIGENCE (Sewer spies, surveillance witches and amphibious informants who rig every intersection before a fight begins.) Character note: Sees tomorrow’s ambush and is already standing in it. Expression: a fierce battle-cry expression, eyes blazing, teeth bared in a cocky grin, leaning toward the viewer. Same character design as its collectible card, adults only, humorous attitude.'
+  prompt_prose: 'Head-and-shoulders portrait of Drowned Oracle, a serene adult sewer witch with long dripping seaweed hair, pale glowing pupils and a floating crystal sphere of swirling teal water. Expression: a fierce battle cry, eyes blazing, teeth bared in a cocky grin, leaning toward the viewer.'
 - key: slime-r6-token-oracle-guard
   lane: krea2
   entity: token-art
@@ -493,7 +494,7 @@ subjects:
   asset: slime-city/tokens/oracle/guard
   size: 1024x1024
   seed: 1096059
-  prompt_prose: 'An original game-token portrait of Drowned Oracle, one of the UNDERTOW INTELLIGENCE (Sewer spies, surveillance witches and amphibious informants who rig every intersection before a fight begins.) Character note: Sees tomorrow’s ambush and is already standing in it. Expression: a stubborn guarded expression, brow furrowed, chin tucked behind a raised forearm or shield, planted and immovable. Same character design as its collectible card, adults only, humorous attitude.'
+  prompt_prose: 'Head-and-shoulders portrait of Drowned Oracle, a serene adult sewer witch with long dripping seaweed hair, pale glowing pupils and a floating crystal sphere of swirling teal water. Expression: stubborn and guarded, brow furrowed, chin tucked behind a raised forearm, planted and immovable.'
 - key: slime-r6-token-oracle-hurt
   lane: krea2
   entity: token-art
@@ -501,7 +502,7 @@ subjects:
   asset: slime-city/tokens/oracle/hurt
   size: 1024x1024
   seed: 1096060
-  prompt_prose: 'An original game-token portrait of Drowned Oracle, one of the UNDERTOW INTELLIGENCE (Sewer spies, surveillance witches and amphibious informants who rig every intersection before a fight begins.) Character note: Sees tomorrow’s ambush and is already standing in it. Expression: a comically pained wince, one eye squeezed shut, bruised and dishevelled but still standing, slapstick not gory. Same character design as its collectible card, adults only, humorous attitude.'
+  prompt_prose: 'Head-and-shoulders portrait of Drowned Oracle, a serene adult sewer witch with long dripping seaweed hair, pale glowing pupils and a floating crystal sphere of swirling teal water. Expression: a comically pained wince with one eye squeezed shut, bruised and dishevelled but still standing.'
 - key: slime-r6-token-repo-fierce
   lane: krea2
   entity: token-art
@@ -509,7 +510,7 @@ subjects:
   asset: slime-city/tokens/repo/fierce
   size: 1024x1024
   seed: 1096061
-  prompt_prose: 'An original game-token portrait of Repo Goblin, one of the MEAT EXCHANGE (Gold-toothed arena monopolists who buy muscle, sell favors and collect battlefield debts.) Character note: Repossesses anything not bolted down, then the bolts. Expression: a fierce battle-cry expression, eyes blazing, teeth bared in a cocky grin, leaning toward the viewer. Same character design as its collectible card, adults only, humorous attitude.'
+  prompt_prose: 'Head-and-shoulders portrait of Repo Goblin, an adult goblin in a comically oversized gold pinstripe jacket with a pencil behind one pointed ear and a crumpled receipt between his teeth. Expression: a fierce battle cry, eyes blazing, teeth bared in a cocky grin, leaning toward the viewer.'
 - key: slime-r6-token-repo-guard
   lane: krea2
   entity: token-art
@@ -517,7 +518,7 @@ subjects:
   asset: slime-city/tokens/repo/guard
   size: 1024x1024
   seed: 1096062
-  prompt_prose: 'An original game-token portrait of Repo Goblin, one of the MEAT EXCHANGE (Gold-toothed arena monopolists who buy muscle, sell favors and collect battlefield debts.) Character note: Repossesses anything not bolted down, then the bolts. Expression: a stubborn guarded expression, brow furrowed, chin tucked behind a raised forearm or shield, planted and immovable. Same character design as its collectible card, adults only, humorous attitude.'
+  prompt_prose: 'Head-and-shoulders portrait of Repo Goblin, an adult goblin in a comically oversized gold pinstripe jacket with a pencil behind one pointed ear and a crumpled receipt between his teeth. Expression: stubborn and guarded, brow furrowed, chin tucked behind a raised forearm, planted and immovable.'
 - key: slime-r6-token-repo-hurt
   lane: krea2
   entity: token-art
@@ -525,7 +526,7 @@ subjects:
   asset: slime-city/tokens/repo/hurt
   size: 1024x1024
   seed: 1096063
-  prompt_prose: 'An original game-token portrait of Repo Goblin, one of the MEAT EXCHANGE (Gold-toothed arena monopolists who buy muscle, sell favors and collect battlefield debts.) Character note: Repossesses anything not bolted down, then the bolts. Expression: a comically pained wince, one eye squeezed shut, bruised and dishevelled but still standing, slapstick not gory. Same character design as its collectible card, adults only, humorous attitude.'
+  prompt_prose: 'Head-and-shoulders portrait of Repo Goblin, an adult goblin in a comically oversized gold pinstripe jacket with a pencil behind one pointed ear and a crumpled receipt between his teeth. Expression: a comically pained wince with one eye squeezed shut, bruised and dishevelled but still standing.'
 - key: slime-r6-token-collector-fierce
   lane: krea2
   entity: token-art
@@ -533,7 +534,7 @@ subjects:
   asset: slime-city/tokens/collector/fierce
   size: 1024x1024
   seed: 1096064
-  prompt_prose: 'An original game-token portrait of Debt Collector, one of the MEAT EXCHANGE (Gold-toothed arena monopolists who buy muscle, sell favors and collect battlefield debts.) Character note: Interest compounds daily. Every punch goes on your tab. Expression: a fierce battle-cry expression, eyes blazing, teeth bared in a cocky grin, leaning toward the viewer. Same character design as its collectible card, adults only, humorous attitude.'
+  prompt_prose: 'Head-and-shoulders portrait of Debt Collector, a heavyset adult broker in a mustard pinstripe suit and bowler hat, a gold pocket watch chain stretched across his round vest. Expression: a fierce battle cry, eyes blazing, teeth bared in a cocky grin, leaning toward the viewer.'
 - key: slime-r6-token-collector-guard
   lane: krea2
   entity: token-art
@@ -541,7 +542,7 @@ subjects:
   asset: slime-city/tokens/collector/guard
   size: 1024x1024
   seed: 1096065
-  prompt_prose: 'An original game-token portrait of Debt Collector, one of the MEAT EXCHANGE (Gold-toothed arena monopolists who buy muscle, sell favors and collect battlefield debts.) Character note: Interest compounds daily. Every punch goes on your tab. Expression: a stubborn guarded expression, brow furrowed, chin tucked behind a raised forearm or shield, planted and immovable. Same character design as its collectible card, adults only, humorous attitude.'
+  prompt_prose: 'Head-and-shoulders portrait of Debt Collector, a heavyset adult broker in a mustard pinstripe suit and bowler hat, a gold pocket watch chain stretched across his round vest. Expression: stubborn and guarded, brow furrowed, chin tucked behind a raised forearm, planted and immovable.'
 - key: slime-r6-token-collector-hurt
   lane: krea2
   entity: token-art
@@ -549,7 +550,7 @@ subjects:
   asset: slime-city/tokens/collector/hurt
   size: 1024x1024
   seed: 1096066
-  prompt_prose: 'An original game-token portrait of Debt Collector, one of the MEAT EXCHANGE (Gold-toothed arena monopolists who buy muscle, sell favors and collect battlefield debts.) Character note: Interest compounds daily. Every punch goes on your tab. Expression: a comically pained wince, one eye squeezed shut, bruised and dishevelled but still standing, slapstick not gory. Same character design as its collectible card, adults only, humorous attitude.'
+  prompt_prose: 'Head-and-shoulders portrait of Debt Collector, a heavyset adult broker in a mustard pinstripe suit and bowler hat, a gold pocket watch chain stretched across his round vest. Expression: a comically pained wince with one eye squeezed shut, bruised and dishevelled but still standing.'
 - key: slime-r6-token-broker-fierce
   lane: krea2
   entity: token-art
@@ -557,7 +558,7 @@ subjects:
   asset: slime-city/tokens/broker/fierce
   size: 1024x1024
   seed: 1096067
-  prompt_prose: 'An original game-token portrait of Flesh Broker, one of the MEAT EXCHANGE (Gold-toothed arena monopolists who buy muscle, sell favors and collect battlefield debts.) Character note: Premium collections agent. Accepts payment in mana or teeth. Expression: a fierce battle-cry expression, eyes blazing, teeth bared in a cocky grin, leaning toward the viewer. Same character design as its collectible card, adults only, humorous attitude.'
+  prompt_prose: 'Head-and-shoulders portrait of Flesh Broker, a slick adult arena agent with slicked-back silver hair, a mink fur stole and a gleaming gold front tooth. Expression: a fierce battle cry, eyes blazing, teeth bared in a cocky grin, leaning toward the viewer.'
 - key: slime-r6-token-broker-guard
   lane: krea2
   entity: token-art
@@ -565,7 +566,7 @@ subjects:
   asset: slime-city/tokens/broker/guard
   size: 1024x1024
   seed: 1096068
-  prompt_prose: 'An original game-token portrait of Flesh Broker, one of the MEAT EXCHANGE (Gold-toothed arena monopolists who buy muscle, sell favors and collect battlefield debts.) Character note: Premium collections agent. Accepts payment in mana or teeth. Expression: a stubborn guarded expression, brow furrowed, chin tucked behind a raised forearm or shield, planted and immovable. Same character design as its collectible card, adults only, humorous attitude.'
+  prompt_prose: 'Head-and-shoulders portrait of Flesh Broker, a slick adult arena agent with slicked-back silver hair, a mink fur stole and a gleaming gold front tooth. Expression: stubborn and guarded, brow furrowed, chin tucked behind a raised forearm, planted and immovable.'
 - key: slime-r6-token-broker-hurt
   lane: krea2
   entity: token-art
@@ -573,7 +574,7 @@ subjects:
   asset: slime-city/tokens/broker/hurt
   size: 1024x1024
   seed: 1096069
-  prompt_prose: 'An original game-token portrait of Flesh Broker, one of the MEAT EXCHANGE (Gold-toothed arena monopolists who buy muscle, sell favors and collect battlefield debts.) Character note: Premium collections agent. Accepts payment in mana or teeth. Expression: a comically pained wince, one eye squeezed shut, bruised and dishevelled but still standing, slapstick not gory. Same character design as its collectible card, adults only, humorous attitude.'
+  prompt_prose: 'Head-and-shoulders portrait of Flesh Broker, a slick adult arena agent with slicked-back silver hair, a mink fur stole and a gleaming gold front tooth. Expression: a comically pained wince with one eye squeezed shut, bruised and dishevelled but still standing.'
 - key: slime-r6-token-mogul-fierce
   lane: krea2
   entity: token-art
@@ -581,7 +582,7 @@ subjects:
   asset: slime-city/tokens/mogul/fierce
   size: 1024x1024
   seed: 1096070
-  prompt_prose: 'An original game-token portrait of The Meat Mogul, one of the MEAT EXCHANGE (Gold-toothed arena monopolists who buy muscle, sell favors and collect battlefield debts.) Character note: Owns the arena, the hot dogs and, contractually, you. Expression: a fierce battle-cry expression, eyes blazing, teeth bared in a cocky grin, leaning toward the viewer. Same character design as its collectible card, adults only, humorous attitude.'
+  prompt_prose: 'Head-and-shoulders portrait of The Meat Mogul, an enormous adult tycoon in a gold brocade suit with jeweled rings on every finger and a sausage-shaped cigar jutting from his jowls. Expression: a fierce battle cry, eyes blazing, teeth bared in a cocky grin, leaning toward the viewer.'
 - key: slime-r6-token-mogul-guard
   lane: krea2
   entity: token-art
@@ -589,7 +590,7 @@ subjects:
   asset: slime-city/tokens/mogul/guard
   size: 1024x1024
   seed: 1096071
-  prompt_prose: 'An original game-token portrait of The Meat Mogul, one of the MEAT EXCHANGE (Gold-toothed arena monopolists who buy muscle, sell favors and collect battlefield debts.) Character note: Owns the arena, the hot dogs and, contractually, you. Expression: a stubborn guarded expression, brow furrowed, chin tucked behind a raised forearm or shield, planted and immovable. Same character design as its collectible card, adults only, humorous attitude.'
+  prompt_prose: 'Head-and-shoulders portrait of The Meat Mogul, an enormous adult tycoon in a gold brocade suit with jeweled rings on every finger and a sausage-shaped cigar jutting from his jowls. Expression: stubborn and guarded, brow furrowed, chin tucked behind a raised forearm, planted and immovable.'
 - key: slime-r6-token-mogul-hurt
   lane: krea2
   entity: token-art
@@ -597,4 +598,4 @@ subjects:
   asset: slime-city/tokens/mogul/hurt
   size: 1024x1024
   seed: 1096072
-  prompt_prose: 'An original game-token portrait of The Meat Mogul, one of the MEAT EXCHANGE (Gold-toothed arena monopolists who buy muscle, sell favors and collect battlefield debts.) Character note: Owns the arena, the hot dogs and, contractually, you. Expression: a comically pained wince, one eye squeezed shut, bruised and dishevelled but still standing, slapstick not gory. Same character design as its collectible card, adults only, humorous attitude.'
+  prompt_prose: 'Head-and-shoulders portrait of The Meat Mogul, an enormous adult tycoon in a gold brocade suit with jeweled rings on every finger and a sausage-shaped cigar jutting from his jowls. Expression: a comically pained wince with one eye squeezed shut, bruised and dishevelled but still standing.'
