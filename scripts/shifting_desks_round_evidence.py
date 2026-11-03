@@ -28,6 +28,8 @@ def round_for_request(request_id):
     if request_id.startswith(STYLE_ROUND_18):
         return 18
     return None
+
+
 SUBJECT = re.compile(r"(?ms)^- key:.*?(?=^- key:|\Z)")
 
 
