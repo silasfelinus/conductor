@@ -782,7 +782,7 @@ tasks:
   - id: t-046
     milestone: m5
     title: 'Reward-layer adversarial QA across all eleven endings and screen shapes'
-    status: review
+    status: ready
     depends_on:
       - t-040
       - t-042
@@ -791,7 +791,7 @@ tasks:
       - t-045
     passes: 0
     stakes: reversible
-    updated: '2026-11-03T21:23:12.388Z'
+    updated: '2026-11-03T21:41:43.054Z'
     note: |-
       P2, independent of art delivery per Silas 2026-11-01 PT. Simulate at least 2000 seeded diverse styles; every reachable ending shows distinct payoff and a saved evidence card. Check replay rewards, correct lock/unlock progress, saved migrations, no duplicate accounts or achievements, true raw grade values, no four-Exceptional result, keyboard/screenreader, no forced page scroll at phone/tablet/desktop, and image fallback. Run mock reviews asking whether the ending and archive feel earned, funny and replayable. Do not override t-020 owner's subjective fun and promotion gate.
 
@@ -800,9 +800,8 @@ tasks:
       2026-11-01 PT: Finished this review slice. Kind Robots PR #4610 merged after 14 green checks (earned chronological policy secret, Dale scenes, natural seeded tests); Conductor PR #6931 merged after full green CI (canonical clue and flag-map parity, quality/fun audit). Historical 2000-seed and 600-reward QA passes, but live Cypress showed repeated failures before timeout; browser validation and final reward/visual review remain agent-owned work independent of art. Released review claim for follow-up; t-020 human approval remains untouched.
 
       2026-11-03 PT: Completed a scoped adversarial persistence repair candidate for Shifting Desks reward archives: distinct authored ending IDs, resilient corrupt companion keys, valid deduplicated receipts and targeted regression assertions. Kind Robots worker branch has three changed files; implementation PR and CI remain to be verified. Full browser/visual acceptance is still open.
-    owner: worker
-    claimed_by: 20261103T211733984Z-shifting-desks-t046-gpt6-7b4f
-    claimed_at: '2026-11-03T21:17:33.984Z'
+
+      2026-11-03 PT: Merged Kind Robots PR #4716 at 59066f604b5268904ecc76d023f11bb7913350e0 with all eight GitHub Actions workflows completed green, including gameplay QA, TypeScript, formatting, layout and contract tests. Reward/archive recovery and duplicate gallery integrity repaired with regression coverage. Remaining t-046 browser screen-width/accessibility and independent creative acceptance still require agent work; release claim for the next session, not done.
   - id: t-047
     milestone: m5
     title: 'Playbook Forge upgrade: write the missing 135th encounter'
