@@ -447,7 +447,10 @@ tasks:
   - id: t-021
     milestone: m4
     title: "Adversarial constructed-deck matchup audit for all six 300-card crews"
-    status: ready
+    status: claimed
+    owner: worker
+    claimed_by: 20261103T014338895Z-slime-city-t021-l6gpijq
+    claimed_at: '2026-11-03T01:43:38.895Z'
     depends_on: t-004
     passes: 0
     stakes: reversible
@@ -457,4 +460,4 @@ tasks:
       Implemented 180 deterministic constructed-deck headless games: three legal ten-card archetypes for each crew versus all five rivals across two seeds. Captures win paths, first contact, dead rounds, banking, unit/card-use statistics, and validates 18 exact replays. Each round checks cards are neither duplicated nor lost. Awaiting latest-head GitHub CI before merge and concrete balance report.
 
       PARTIAL MERGED 2026-11-02 PT: Kind Robots PR #4645 merged cc6fb3cbb18db2d2c2e61985a51ab0ca7c03bdff. Reconciled parallel campaign and constructed test harness changes with a true non-force merge commit, preserving both. 180 constructed matches across 18 decks, 60 distinct founder same-seed controls, 18 replay verifications, and mana/deck conservation coverage executed. Current engine: constructed 70 player wins and 110 enemy wins; founder controls 23 first-side and 37 second-side wins, 45 changed constructed-versus-founder outcomes, 109 of 180 games observed six banked mana. Distinct founder control matchups show larger faction disparity than deck-customization delta. All eight latest-head workflows passed. Further multi-seed seating symmetry and constructed-opponent comparisons remain.
-    updated: '2026-11-03T01:42:57.257Z'
+    updated: '2026-11-03T01:43:38.895Z'
