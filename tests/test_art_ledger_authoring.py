@@ -10,11 +10,11 @@ ROOT = Path(__file__).resolve().parent.parent
 
 # Ledgers that already failed when the check landed (2026-11-02). Their unsubmitted cells are
 # refused at enqueue until rewritten; remove an entry once its ledger passes. Never add one.
+# CAMPUS-CHOICE, CASINO-CHOICE and COLLECTOR-CHOICE were re-prompted by hand on 2026-11-03.
 HELD = {
-    "projects/comet-city-academy/art/CAMPUS-CHOICE-OUTCOMES-ROUND-1.yaml",
+    # Superseded by IDENTITY-SYSTEM.md (2026-10-26): its powers must not render, so it stays
+    # unrewritten and refused rather than being re-prompted.
     "projects/comet-city-academy/art/COMPOSITE-POWERS-ROUND-1.yaml",
-    "projects/game-of-captains/art/CASINO-CHOICE-OUTCOMES-ROUND-1.yaml",
-    "projects/game-of-captains/art/COLLECTOR-CHOICE-OUTCOMES-ROUND-1.yaml",
 }
 
 FACTIONS = [
