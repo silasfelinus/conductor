@@ -1070,13 +1070,15 @@ tasks:
       2026-11-02 11:50 AM PT: Reviewer merged Kind Robots PR #4642 (squash 73f7f8004e69e24c66f863730c81a175d718a836) after seven completed exact-head green workflows on 37c06b07890e1ca90c5973617a0bd73c01b01ee7. Fog is a cohesive coordinate-aligned SVG fallback, action beacons are larger and centered, story diamonds removed, reduced motion retained; 390/768/1440px post-deploy pixel QA and production-painted map art remain in t-046/t-045. No ArtJobs or deployment.
   - id: t-049
     title: "Memory Dungeon character match deck erroneously reports zero images"
-    status: ready
+    status: claimed
     stakes: reversible
-    owner: null
+    owner: worker
     passes: 0
     source_issue: "silasfelinus/kind_robots#4682"
-    updated: '2026-11-03'
+    updated: '2026-11-03T06:51:30Z'
     note: |-
       FROM GITHUB ISSUE silasfelinus/kind_robots#4682 (https://github.com/silasfelinus/kind_robots/issues/4682), opened by @silasfelinus on 2026-11-02. Imported by scripts/sync_github_issues.py. Reference the issue in the implementing PR (`Closes silasfelinus/kind_robots#4682`) so it closes on merge; the bridge closes it otherwise once this task is done.
 
       User reproduced in `/play/memory` with Kind Robots > Characters and Non-mature: round 3 needs eight art faces but says zero despite populated Character artwork. Root source: `resolveMemoryDungeonDeck()` consumes `characterStore.characters` (small by-ID detail cache) instead of `browseCharacters` (full list). Its ArtImage verification also assumes every linked image is present in the artStore's partial/local image cache, silently excluding otherwise usable records. Fix both, preserve mature/private restrictions, validate browser loading, add regression tests. User screenshots from 2026-11-02 PT. Scope: reversible internal bug fix, not publication.
+    claimed_by: 2026-11-03T065130Z-memory-dungeon-t-049-f7c2
+    claimed_at: '2026-11-03T06:51:30Z'
