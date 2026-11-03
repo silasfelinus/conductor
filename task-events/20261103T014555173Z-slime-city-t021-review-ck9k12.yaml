@@ -1,0 +1,20 @@
+version: 1
+project: slime-city
+task: t-021
+operation: review
+session: 20261103T014338895Z-slime-city-t021-l6gpijq
+updated: '2026-11-03T01:45:55.173Z'
+note: >-
+  Follow-up after merged PR #4645: added a ten-seed
+  constructed-independent Blackout founder tournament for the
+  six playable factions, exercising all thirty ordered rival
+  pairs (300 actual CPU-versus-CPU bouts). Explicitly compares
+  fifteen unordered matchups in both seating orders across
+  all ten seeds, counts opening contact, stalls, faction win paths,
+  first and second side wins, comebacks and round lengths, and
+  replays six complete matches from command logs.
+  Diagnostic warnings report significant skew without hardcoding
+  balance targets or changing user card/wallet state.
+  GitHub Actions full latest-head verification required before
+  merge; multi-seed constructed-vs-constructed and subjective
+  fun playtesting remain future scope.
