@@ -68,7 +68,8 @@ def test_style_catalog_and_unpruned_live_queue_requests_are_consistent():
     # 2026-11-02 subject-first re-render: the subject leads, Classic-only
     # style words are gone, and Roach Union cards name the insect up front.
     for e in cartoon:
-        assert e.get("force") is True
+        if e["status"] == "pending":  # force is cleared once the job is done
+            assert e.get("force") is True
         assert not e["prompt"].startswith(("masterpiece", "western comics"))
         assert "warm approachable Gus" not in e["prompt"]
         if "the-union-walkthrough" in e["image_path"]:
