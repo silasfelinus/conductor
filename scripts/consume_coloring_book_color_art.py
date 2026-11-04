@@ -241,7 +241,7 @@ def build_entries(book_filter: str | None = None) -> tuple[dict[str, Any], list[
             if explicit_steps is not None:
                 entry["steps"] = int(explicit_steps)
             # Per-concept overrides so a batch can mix engines / styles freely.
-            for opt in ("lora", "lora_strength", "json_prompt", "sampler", "cfg", "negative_prompt"):
+            for opt in ("checkpoint", "lora", "lora_strength", "json_prompt", "sampler", "cfg", "negative_prompt"):
                 if source.get(opt) is not None:
                     entry[opt] = source[opt]
             # Content-safety floor: a source entry that named its own

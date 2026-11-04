@@ -314,3 +314,114 @@ def make_checkpoint_job(entry: dict[str, Any], core) -> dict[str, Any]:
     if project == "shifting-desks" and entry.get("priority") is not None:
         job["priority"] = int(entry["priority"])
     return job
+
+
+# ---------------------------------------------------------------------------
+# Named-checkpoint lane (Coloring Book Studio, Silas 2026-11-04 PT: "I'm still
+# not sure what checkpoint best mirrors that style ... we haven't tried ... any
+# of the illustrious lines"). The lanes above pin one audited checkpoint per
+# project family; this one renders whatever SDXL/Illustrious checkpoint an admin
+# picked from the Kind Robots Resource catalog, plus an optional LoRA, so the
+# studio can A/B checkpoints on one page without a code change per model.
+# ---------------------------------------------------------------------------
+NAMED_CHECKPOINT_DEFAULTS = {
+    "steps": 28, "cfg": 5.5, "sampler": "euler_ancestral", "scheduler": "normal",
+}
+NAMED_CHECKPOINT_NEGATIVE = (
+    "lowres, worst quality, low quality, bad anatomy, bad hands, extra digits, "
+    "text, watermark, signature, logo, collage, multiple panels, border"
+)
+
+
+def resolve_named_resource(name: str, kind: str, resource_index: dict) -> str:
+    """Catalog path for an admin-chosen model file; warn (not fail) when unseen.
+
+    /api/resources is visibility-filtered (see resolve_registered_checkpoint),
+    so a private row can be real yet invisible to the worker; the render box
+    still refuses a file that does not exist.
+    """
+    clean = str(name or "").strip().replace("\\", "/")
+    bucket = resource_index.get(kind, {})
+    registered = bucket.get(clean.lower()) or bucket.get(clean.rsplit("/", 1)[-1].lower())
+    if registered:
+        return registered
+    print(f"  WARNING: {kind} {clean!r} is not visible in the Resource registry; "
+          "submitting the studio-chosen path as-is", flush=True)
+    return clean
+
+
+def make_named_checkpoint_job(entry: dict[str, Any], core) -> dict[str, Any]:
+    checkpoint_name = str(entry.get("checkpoint") or "").strip()
+    if not checkpoint_name:
+        raise ValueError("named checkpoint ArtJob requires a checkpoint")
+    prompt_body = " ".join(str(entry.get("prompt") or "").split())
+    if not prompt_body:
+        raise ValueError("checkpoint ArtJob requires a non-empty prompt")
+    index = core._load_resource_index()
+    checkpoint = resolve_named_resource(checkpoint_name, "CHECKPOINT", index)
+    lora_name = str(entry.get("lora") or "").strip()
+    lora = resolve_named_resource(lora_name, "LORA", index) if lora_name else ""
+    try:
+        lora_strength = float(entry.get("lora_strength", 1.0))
+    except (TypeError, ValueError):
+        lora_strength = 1.0
+
+    width, height = core.parse_size(entry.get("size"))
+    aspect = width / height
+    width, height = min(SDXL_BUCKETS, key=lambda wh: abs(math.log((wh[0] / wh[1]) / aspect)))
+    prompt = f"{ILLUSTRIOUS_PREFIX}, {prompt_body}"
+    negative = " ".join(
+        f"{NAMED_CHECKPOINT_NEGATIVE}, {entry.get('negative_prompt') or ''}".split()
+    ).rstrip(", ")
+    steps = int(entry.get("steps") or NAMED_CHECKPOINT_DEFAULTS["steps"])
+    cfg = float(entry.get("cfg") or NAMED_CHECKPOINT_DEFAULTS["cfg"])
+    if not (1 <= steps <= 100 and 1 <= cfg <= 30):
+        raise ValueError("invalid steps/cfg for checkpoint ArtJob")
+    seed = core.resolve_seed(entry.get("seed"))
+    model, clip_source = ["1", 0], ["1", 1]
+    graph: dict[str, Any] = {
+        "1": {"class_type": "CheckpointLoaderSimple", "inputs": {"ckpt_name": checkpoint}},
+    }
+    if lora:
+        graph["9"] = {"class_type": "LoraLoader", "inputs": {
+            "model": ["1", 0], "clip": ["1", 1], "lora_name": lora,
+            "strength_model": lora_strength, "strength_clip": lora_strength,
+        }}
+        model, clip_source = ["9", 0], ["9", 1]
+    graph.update({
+        "8": {"class_type": "CLIPSetLastLayer", "inputs": {
+            "clip": clip_source, "stop_at_clip_layer": -2,
+        }},
+        "2": {"class_type": "CLIPTextEncode", "inputs": {"text": prompt, "clip": ["8", 0]}},
+        "3": {"class_type": "CLIPTextEncode", "inputs": {"text": negative, "clip": ["8", 0]}},
+        "4": {"class_type": "EmptyLatentImage", "inputs": {
+            "width": width, "height": height, "batch_size": 1,
+        }},
+        "5": {"class_type": "KSampler", "inputs": {
+            "seed": seed, "steps": steps, "cfg": cfg,
+            "sampler_name": str(entry.get("sampler") or NAMED_CHECKPOINT_DEFAULTS["sampler"]),
+            "scheduler": NAMED_CHECKPOINT_DEFAULTS["scheduler"],
+            "denoise": 1, "model": model, "positive": ["2", 0],
+            "negative": ["3", 0], "latent_image": ["4", 0],
+        }},
+        "6": {"class_type": "VAEDecode", "inputs": {"samples": ["5", 0], "vae": ["1", 2]}},
+        "7": {"class_type": "SaveImage", "inputs": {
+            "filename_prefix": "kindrobots_sdxl_checkpoint", "images": ["6", 0],
+        }},
+    })
+    resources: dict[str, Any] = {"checkpointName": checkpoint}
+    if lora:
+        resources["loras"] = [{"name": lora, "strength": lora_strength}]
+    return {
+        "engine": "COMFY",
+        "resolvedSeed": seed,
+        "payload": {
+            "promptString": prompt,
+            "negativePrompt": negative,
+            "width": width, "height": height,
+            "steps": steps, "cfg": cfg,
+            "workflow": graph,
+            "collection": entry.get("project") or "sdxl-checkpoint",
+            "resources": resources,
+        },
+    }

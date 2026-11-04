@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import json
 import os
 import re
 import subprocess
@@ -13,6 +14,9 @@ from pathlib import Path
 from typing import Any
 
 import yaml
+
+sys.path.insert(0, str(Path(__file__).parent))
+import coloring_render_settings  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 EVENT_DIR = ROOT / "color-art-events"
@@ -48,6 +52,7 @@ ALLOWED_KEYS = {
     "book",
     "proposal_ids",
     "source_path",
+    "render_settings",
     "timeout",
     "force",
     "requested_by",
@@ -69,6 +74,7 @@ class ColorArtEvent:
     source_path: str | None
     timeout: int
     force: bool
+    render_settings: dict[str, Any] | None = None
 
     @property
     def is_cover(self) -> bool:
@@ -99,6 +105,10 @@ class ColorArtEvent:
             ]
             for proposal_id in self.proposal_ids:
                 command.extend(("--proposal-id", proposal_id))
+            if self.render_settings is not None:
+                command.extend(
+                    ("--render-settings", json.dumps(self.render_settings, sort_keys=True))
+                )
         elif self.source_path:
             command = [
                 sys.executable,
@@ -240,6 +250,12 @@ def load_event(path: Path) -> ColorArtEvent:
     if source_path and force:
         raise ValueError("source_path adoption cannot be combined with force")
 
+    render_settings = None
+    if data.get("render_settings") is not None:
+        if operation_text != "generate-color-proposals":
+            raise ValueError("render_settings is supported only for generate-color-proposals")
+        render_settings = coloring_render_settings.normalize(data["render_settings"])
+
     return ColorArtEvent(
         path=path,
         operation=operation_text,
@@ -248,6 +264,7 @@ def load_event(path: Path) -> ColorArtEvent:
         source_path=source_path,
         timeout=timeout,
         force=force,
+        render_settings=render_settings,
     )
 
 
