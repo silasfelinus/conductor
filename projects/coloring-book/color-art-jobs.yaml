@@ -805,15 +805,15 @@ books:
     image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-020-fly-girl-summer.webp
     source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-020
     last_render_seed: 421918277
-    rendered_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-020-fly-girl-summer.webp
+    rendered_path: projects/coloring-book/sets/monster-recast/approved/fly-beach-color.webp
     art_image_id: 13168
     render_seed: 421918277
     render_engine: krea2
     completed_at: '2026-08-01T04:19:01Z'
     prompt_fingerprint: 132db7a87f0fa1dc00031e01bdaaec19898c709dc7571ac3d5ddf94be212dd60
-    approved_at: '2026-09-09T06:33:37Z'
-    lock_seed: true
-    bw_status: approved
+    approved_at: '2026-11-04T23:16:42Z'
+    lock_seed: false
+    bw_status: pending
     bw_requested_at: '2026-09-27T11:39:53Z'
     bw_render_reasons: []
     bw_revision_history:
@@ -825,7 +825,6 @@ books:
       archived_path: projects/coloring-book/sets/monster-recast/generated/bw/revisions/studio/mr-020-bw-20260927T113952Z.webp
     bw_job_id: 31676
     bw_art_image_id: 240195
-    bw_rendered_path: generated/bw/mr-020-bw.webp
     bw_mechanical_info:
       pixels: 16960
       mean_saturation: 0.001
@@ -836,10 +835,15 @@ books:
       hf_ratio: 0.4258
       tint_concentration: null
     bw_completed_at: '2026-09-27T11:43:04Z'
-    bw_approved_at: '2026-09-27T11:56:35Z'
-    pair_status: final
-    pair_semantic_score: null
-    pair_finalized_at: '2026-09-27T11:56:45Z'
+    adopted_color_path: approved/fly-beach-color.webp
+    adopted_color_at: '2026-11-04T23:16:42Z'
+    accepted_history:
+    - variant: color
+      path: generated/color-proposals-v1/mr-020-fly-girl-summer.webp
+      replaced_at: '2026-11-04T23:16:42Z'
+    - variant: bw
+      path: generated/bw/mr-020-bw.webp
+      replaced_at: '2026-11-04T23:16:42Z'
   - slot: 21
     id: mr-021
     slug: invisible-flasher
