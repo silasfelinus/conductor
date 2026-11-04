@@ -1,0 +1,277 @@
+set: hollywood-recast
+version: 1
+status: draft-for-silas-review
+drafted: '2026-11-04'
+# Per-page riff brief for Hollywood Recast, read by the Kind Robots coloring
+# studio ("Riffing on" / "Recast" on each card) and editable there.
+#
+# Why this file exists (Silas, 2026-11-04 PT): the book was written as 36
+# original scenes with no named source scene, so most pages lost the concept
+# intent -- a famous movie moment whose star role goes to someone the original
+# would never have cast, above all across gender ("hairy scottish dude in the
+# seven year itch"). The intent comes from ../hollywood-recast-2/README.md; its
+# one seed, Highland Heatwave, is proposed here for slot 30.
+#
+# DRAFT. Nothing here changes a prompt or queues a render. Each entry says how
+# it relates to the art already on the page:
+#   draft_fit: matches-current-art  -- names the scene the existing art already riffs on
+#   draft_fit: needs-new-render     -- proposes a stronger gender recast; the
+#                                      prompt must be rewritten before re-rendering
+#   draft_fit: replaces-page        -- proposes a different page for the slot
+#
+# Guardrails (hollywood-recast-2/README.md): source_lineage is an internal
+# reference for the scene grammar. Final art keeps original faces, costumes,
+# sets and framing -- no actor likeness, copied still, logo or quoted line.
+
+concepts:
+  - id: hwr-001
+    working_title: "Starlight Mechanic"
+    draft_fit: matches-current-art
+    source_lineage: "The test pilot squinting up at the rocket on the launch pad in The Right Stuff and 1950s space-race serials"
+    recast: "The square-jawed astronaut-hero becomes a silver-haired Black woman mechanic, the one who actually built the ship, evening glove tucked in her belt for the premiere"
+    visual_hook: "She holds the welding torch the way the hero holds his helmet."
+
+  - id: hwr-002
+    working_title: "The Grand Staircase"
+    draft_fit: needs-new-render
+    source_lineage: "The Ziegfeld Follies showgirl descent down a towering feathered staircase"
+    recast: "A huge, hairy, bearded bear of a man takes the showgirl's place, in a towering feather headdress and a beaded gown, descending with total serene glamour while chorus boys in tuxedos fan him"
+    visual_hook: "His chest hair and the feathers make one continuous plume."
+
+  - id: hwr-003
+    working_title: "Desert Wheel Queen"
+    draft_fit: matches-current-art
+    source_lineage: "The war-rig chase across the salt flats in Mad Max: Fury Road"
+    recast: "The lone road-warrior role goes to a muscular woman wheelchair user whose chair locks into the cockpit as a racing throne"
+    visual_hook: "Her chair's wheels match the vehicle's six wheels."
+
+  - id: hwr-004
+    working_title: "Rain on the Backlot"
+    draft_fit: needs-new-render
+    source_lineage: "Swinging round the lamppost in the downpour in Singin' in the Rain"
+    recast: "The lovestruck leading man becomes an elderly East Asian grandmother in a sharp three-piece suit and fedora, kicking up puddles with complete joy while the maintenance robots run the rain"
+    visual_hook: "One foot up on the lamppost, umbrella flung wide, rain bouncing off her hat brim."
+
+  - id: hwr-005
+    working_title: "Midnight Detective"
+    draft_fit: matches-current-art
+    source_lineage: "The trench-coated private eye under the streetlamp in The Maltese Falcon and 1940s noir"
+    recast: "The hardboiled gumshoe is a nonbinary detective with a cane and a patient service dog, in the broad-shouldered trench coat the genre saved for tough guys"
+    visual_hook: "The dog notices the clue first."
+
+  - id: hwr-006
+    working_title: "Temple of the Sun Engine"
+    draft_fit: matches-current-art
+    source_lineage: "The Map Room sunbeam in Raiders of the Lost Ark"
+    recast: "The whip-and-fedora adventurer is a broad-shouldered, dusty, unstoppable Latina archaeologist working the sun machine alone"
+    visual_hook: "The sunbeam lands exactly on her."
+
+  - id: hwr-007
+    working_title: "The Silver Swashbuckler"
+    draft_fit: matches-current-art
+    source_lineage: "Errol Flynn-style rigging duels in Captain Blood and The Sea Hawk"
+    recast: "The dashing pirate hero is a weathered older woman captain with a silver braid and a prosthetic leg, outfencing three men at once"
+    visual_hook: "She slices down the sail on a dagger, Flynn-style."
+
+  - id: hwr-008
+    working_title: "Laboratory Tenor"
+    draft_fit: matches-current-art
+    source_lineage: "The cape-sweeping laboratory entrance in The Rocky Horror Picture Show, crossed with the Phantom of the Opera"
+    recast: "The cape and the spotlight go to a middle-aged trans man tenor, top-surgery scars proud, holding one impossible note"
+    visual_hook: "The cape opens like a curtain on his chest."
+
+  - id: hwr-009
+    working_title: "Ballroom Double Take"
+    draft_fit: matches-current-art
+    source_lineage: "Fred Astaire's white tie and tails in Top Hat, crossed with Victor/Victoria"
+    recast: "Two women arrive in identical immaculate white tuxedos, each with a glamorous woman on her arm, and the whole ballroom does the same double take"
+    visual_hook: "The champagne arcs freeze mid-pour."
+
+  - id: hwr-010
+    working_title: "Rooftop Sign Song"
+    draft_fit: needs-new-render
+    source_lineage: "The fire-escape balcony duet in West Side Story"
+    recast: "Roles reversed -- she is the one climbing the fire escape, a Deaf dancer signing the love song up to a shy lighting technician waiting on the balcony"
+    visual_hook: "His portable lights answer each sign like fireflies."
+
+  - id: hwr-011
+    working_title: "The Gentle Giant Visitor"
+    draft_fit: needs-new-render
+    source_lineage: "King Kong on top of the Empire State Building"
+    recast: "The giant is a colossal, gentle grandmother robot, and the tiny figure she cradles is a small man in a satin slip dress doing the classic scream"
+    visual_hook: "Biplanes circle her, carrying a banner-shaped kite instead of guns."
+
+  - id: hwr-012
+    working_title: "Last Train, First Kiss"
+    draft_fit: matches-current-art
+    source_lineage: "The station farewell in Brief Encounter, with Casablanca's last-goodbye fog"
+    recast: "The doomed lovers are two older women, a train conductor and a botanist, who decide this time not to say goodbye"
+    visual_hook: "The specimen case drops open, and seeds and petals scatter in the steam."
+
+  - id: hwr-013
+    working_title: "High Noon Marshal"
+    draft_fit: matches-current-art
+    source_lineage: "The lone marshal facing the empty street in High Noon"
+    recast: "The marshal is an Indigenous woman in her fifties; the only danger coming down the street is a runaway clockwork bull"
+    visual_hook: "The clock on the false-front building reads noon."
+
+  - id: hwr-014
+    working_title: "Chrome Thunder"
+    draft_fit: matches-current-art
+    source_lineage: "The leather-jacket biker entrance in The Wild One and Terminator 2's motorcycle chase"
+    recast: "The brooding rebel without a cause is a fat, glamorous woman biker, completely at ease on a low chrome bike"
+    visual_hook: "Lightning shows her reflection in the chrome."
+
+  - id: hwr-015
+    working_title: "Prince of the Deep"
+    draft_fit: matches-current-art
+    source_lineage: "The \"Under the Sea\" grotto number and the rock-top yearning pose in The Little Mermaid"
+    recast: "The longing mermaid princess becomes a broad, scarred adult merman prince who leads the grotto number himself, conducting a choir of strange sea creatures"
+    visual_hook: "The sea creatures in his choir wear their own fin crowns."
+
+  - id: hwr-016
+    working_title: "The Verdict"
+    draft_fit: matches-current-art
+    source_lineage: "The closing argument of To Kill a Mockingbird and the courtroom showdown in A Few Good Men"
+    recast: "The righteous lawyer-hero is a woman attorney in a wheelchair, in a vivid suit, rolling forward to the bench as she delivers the speech"
+    visual_hook: "The whole gallery is leaning in."
+
+  - id: hwr-017
+    working_title: "Casino Grandmother"
+    draft_fit: matches-current-art
+    source_lineage: "The baccarat-table introduction of the tuxedoed spy in Dr. No and Casino Royale"
+    recast: "The suave double agent is an elegant East Asian grandmother in a sculptural silver suit; the three agents who underestimated her are her Bond girls"
+    visual_hook: "She lights no cigarette; her walking stick is the gadget."
+
+  - id: hwr-018
+    working_title: "Nebula Crooner"
+    draft_fit: needs-new-render
+    source_lineage: "The smoky-club torch song in Who Framed Roger Rabbit and Gilda's glove peel"
+    recast: "The sultry torch singer is a big, hairy, gloriously bearded alien crooner in a red sequined gown and opera gloves, peeling one glove with four slow hands"
+    visual_hook: "The whole room's tentacles and antennae lean in at once."
+
+  - id: hwr-019
+    working_title: "The House on Marigold Hill"
+    draft_fit: needs-new-render
+    source_lineage: "The nervous new bride arriving at Manderley in Rebecca"
+    recast: "The timid gothic ingenue is a shy young man in a cardigan arriving as the new husband; the terrifying housekeeper on the stairs is a silver-afroed Black woman who owns the house"
+    visual_hook: "The marigolds turn to watch him; the windows look away."
+
+  - id: hwr-020
+    working_title: "Director of Monsters"
+    draft_fit: matches-current-art
+    source_lineage: "Carl Denham's showman director in King Kong (1933) and the rubber-suit Godzilla sets"
+    recast: "The cigar-chomping director is a tiny, furious older woman with a megaphone, bossing a city-sized monster that looks embarrassed"
+    visual_hook: "The monster is covering its face with one claw."
+
+  - id: hwr-021
+    working_title: "The Silent Mechanic"
+    draft_fit: matches-current-art
+    source_lineage: "Buster Keaton's locomotive gags in The General and the gears of Chaplin's Modern Times"
+    recast: "The deadpan clown is a stocky, broad-shouldered woman mechanic, legs sticking out from under an absurd machine that is coming apart around her"
+    visual_hook: "A single gear rolls away toward the viewer."
+
+  - id: hwr-022
+    working_title: "Disco Exorcist"
+    draft_fit: matches-current-art
+    source_lineage: "The pointing pose on the lit dance floor in Saturday Night Fever, crossed with The Exorcist's arrival under the streetlamp"
+    recast: "The white-suited disco king is a broad, middle-aged Black woman in a white jumpsuit, exorcising the chandelier with a mirrored staff"
+    visual_hook: "Her pointed finger and the possessed chandelier line up on one diagonal."
+
+  - id: hwr-023
+    working_title: "Whiteout Expedition"
+    draft_fit: matches-current-art
+    source_lineage: "The Antarctic research station in The Thing and the ice-cave rescue of countless polar serials"
+    recast: "The grizzled bearded expedition lead is a bearded woman climber anchoring the rope; the creature in the ice needs rescuing, not fighting"
+    visual_hook: "The creature's eye, seen through the ice, is grateful."
+
+  - id: hwr-024
+    working_title: "The Stunt Swordmaster"
+    draft_fit: matches-current-art
+    source_lineage: "The rooftop sword chase in Crouching Tiger, Hidden Dragon and the ronin stance of Seven Samurai"
+    recast: "The legendary wandering swordsman is an elderly Japanese woman stunt coordinator, perfectly calm while the young stunt performers fly off on wires"
+    visual_hook: "The sunrise catches one perfect line of the blade."
+
+  - id: hwr-025
+    working_title: "Escape from Center Ring"
+    draft_fit: matches-current-art
+    source_lineage: "The flying-trapeze rivalry in Trapeze (1956) and the big-top fire in The Greatest Show on Earth"
+    recast: "The two macho trapeze rivals become glamorous conjoined-twin aerialist sisters who share one winged harness and one escape plan"
+    visual_hook: "Their two styles split the costume down the middle."
+
+  - id: hwr-026
+    working_title: "Champion in the Mirror"
+    draft_fit: matches-current-art
+    source_lineage: "Rocky's pre-fight mirror and the dressing-room monologue of Raging Bull"
+    recast: "The working-class heavyweight underdog is a muscular older woman with cauliflower ears and stretch marks"
+    visual_hook: "Her reflection is already standing in the ring."
+
+  - id: hwr-027
+    working_title: "The Peacock Prince"
+    draft_fit: matches-current-art
+    source_lineage: "Cleopatra's grand entrance and throne-room seduction in Cleopatra (1963)"
+    recast: "The most famous seductress in film becomes a soft, round, jewel-bearded South Asian prince lounging as Cleopatra, while the disguised palace gardener plays his Mark Antony"
+    visual_hook: "The courtiers fan out into a peacock's tail."
+
+  - id: hwr-028
+    working_title: "End-of-the-World Road Trip"
+    draft_fit: matches-current-art
+    source_lineage: "The convertible flight in Thelma & Louise"
+    recast: "The outlaw best friends are an older lesbian couple in a tiny convertible, outrunning the apocalypse with their anxious robot in the back seat"
+    visual_hook: "One scarf streams back toward the floating houses."
+
+  - id: hwr-029
+    working_title: "Matinee Time Machine"
+    draft_fit: matches-current-art
+    source_lineage: "The time-machine launch of Back to the Future and the projection booth of Cinema Paradiso"
+    recast: "The teenage time traveler is a girl projectionist; her grandfather is the frazzled sidekick hanging on to her coat"
+    visual_hook: "Flaming tire tracks run down the cinema aisle."
+
+  - id: hwr-030
+    working_title: "Highland Heatwave"
+    draft_fit: replaces-page
+    source_lineage: "The subway-grate breeze reveal in The Seven Year Itch"
+    recast: "The glamour icon is a big, jolly, magnificently bearded Scotsman whose formal kilt billows up over a city grate; he beams, delighted, and the sporran, the kilt folds and the camera angle keep everything covered"
+    visual_hook: "Passersby react with admiration, not disgust; one drops her ice cream."
+
+  - id: hwr-031
+    working_title: "Alien at the Premiere"
+    draft_fit: matches-current-art
+    source_lineage: "Norma Desmond's \"ready for my close-up\" descent in Sunset Boulevard and the 1950s premiere red carpet"
+    recast: "The faded diva demanding her close-up is a towering, elegant alien guest, six hands posed and translucent antlers lit by flashbulbs"
+    visual_hook: "Every photographer's flash catches a different hand."
+
+  - id: hwr-032
+    working_title: "Comedy Troupe Catastrophe"
+    draft_fit: matches-current-art
+    source_lineage: "The backstage band-car scramble in Some Like It Hot and the costume chaos of Tootsie"
+    recast: "The two men hiding in drag become six drag performers, half-dressed for six different genres and trying to repair the quick-change machine"
+    visual_hook: "One wig is caught mid-air between two heads."
+
+  - id: hwr-033
+    working_title: "The Last Projectionist"
+    draft_fit: matches-current-art
+    source_lineage: "The Sorcerer's Apprentice in Fantasia and the final reel of Cinema Paradiso"
+    recast: "The apprentice conjuring a flood of living things is an elderly Black projectionist conducting with a wrench, the last of his trade"
+    visual_hook: "The luminous film creatures march in step like the brooms."
+
+  - id: hwr-034
+    working_title: "Creature Feature Sweethearts"
+    draft_fit: matches-current-art
+    source_lineage: "The Creature from the Black Lagoon carrying off the swooning heroine"
+    recast: "The lagoon monster is a huge, moss-covered amphibious woman, and the date who swoons for her is an ordinary middle-aged man sharing her popcorn"
+    visual_hook: "The fireflies over the drive-in screen make a heart."
+
+  - id: hwr-035
+    working_title: "Awards Night Stampede"
+    draft_fit: needs-new-render
+    source_lineage: "The Gremlins taking over the movie theater and the Jumanji stampede"
+    recast: "The nominees running for the stage in gowns are mostly men in spectacular gowns and women in sharp tails, while tiny monsters escape with the trophies"
+    visual_hook: "A monster in a stolen tiara takes a bow."
+
+  - id: hwr-036
+    working_title: "The Recast Marquee"
+    draft_fit: matches-current-art
+    source_lineage: "The heroic ensemble poster lineup of classic studio epics and The Wizard of Oz's road to the Emerald City"
+    recast: "The whole studio system is recast overnight -- twelve archetypes from this book stand under a blank marquee, each in the role nobody would have cast them in"
+    visual_hook: "The marquee's bulbs spell nothing; the cast is the headline."
