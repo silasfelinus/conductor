@@ -1,0 +1,153 @@
+# Emperor of Dust t-046: distinct wide scene plates for the Day 5 -> 7 -> 10 ration thread.
+# Internal, private art requests only. Do not mark queued jobs as rendered assets.
+round: emperor-act1-grain-council-1
+project_slug: emperor-of-dust
+designer: Comic Studio
+auto_submit: true
+is_public: false
+is_mature: false
+cast_loras: false
+lanes:
+- key: arthemy-house
+  label: Arthemy Western Art v3.0
+  engine: comfy
+  checkpoint: Illustrious/arthemyWesternArt_v30.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, absurdres, very aesthetic, toon (style), western comics (style), weathered, dramatic lighting, painterly, wide story frame
+  suffix: kiln ochre, deep crimson, tarnished brass palette, dusty wasteland, tactile salvage, original fantasy frontier
+  steps: 30
+  cfg: 5
+  sampler: euler_ancestral
+subjects:
+- key: eod46-d05-kitchen-rations
+  lane: arthemy-house
+  title: One loaf divided six ways
+  audience: d05-flour
+  variant: ration
+  asset: audiences/eod46-d05-kitchen-rations
+  size: 1344x768
+  seed: 80971
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters, words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: >-
+    Original illustrated fortress kitchen interior, anthropomorphic stocky wild boar
+    foreman Dunmore Ash in a flour-covered brown apron using a blunt kitchen knife
+    to divide a small coarse round loaf into six tiny pieces on a worn wooden breadboard,
+    anthropomorphic adult badger kitchen porter holding a dented empty flour scoop,
+    six plain ceramic bowls placed in a straight line on a stone counter,
+    orange furnace light against cold daylight through a high window, solemn accounting
+- key: eod46-d07-grain-petition
+  lane: arthemy-house
+  title: A covered basket and a council cushion
+  audience: d07-old-houses
+  variant: ask-bread
+  asset: audiences/eod46-d07-grain-petition
+  size: 1344x768
+  seed: 80982
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters, words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: >-
+    Original fortress throne audience, elegant upright anthropomorphic black swan
+    aristocrat Lady Ottoline Vask in a high collared ink-black coat, heirloom rings
+    at the tips of her wings, lifting a linen cover from a wicker bread basket
+    containing one crust of bread and an old iron warehouse key, fine burgundy velvet
+    council cushion carried in her other wing, stout anthropomorphic wild boar foreman
+    Dunmore Ash watching from a flour-streaked kitchen doorway, tense distance between them
+- key: eod46-d07-ration-purchase
+  lane: arthemy-house
+  title: The first sack comes down
+  audience: d07-old-houses
+  variant: buy-rations
+  asset: audiences/eod46-d07-ration-purchase
+  size: 1344x768
+  seed: 80993
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters, words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: >-
+    Outside a fortress warehouse in sharp morning light, powerful anthropomorphic
+    wild boar foreman Dunmore Ash in his brown rolled-sleeve work apron carrying
+    a single heavy flour sack on his shoulder down chipped stone stairs,
+    elegantly dressed anthropomorphic black swan Lady Ottoline Vask beside
+    a locked iron gate holding fifteen punched brass salvage discs in a small purse,
+    a hand-sized iron key freshly passed across the gap, watchful adult cooks
+    in simple aprons waiting with wooden handcarts at the bottom of the steps
+- key: eod46-d07-seat-for-grain
+  lane: arthemy-house
+  title: The chair arrived before the flour
+  audience: d07-old-houses
+  variant: seat-for-grain
+  asset: audiences/eod46-d07-seat-for-grain
+  size: 1344x768
+  seed: 81004
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters, words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: >-
+    Fortress council chamber seen from the threshold, regal anthropomorphic black
+    swan Lady Ottoline Vask seated in a newly placed tall oak chair upon a plush
+    crimson cushion with an old family wax seal hanging beneath the armrest,
+    young upright anthropomorphic Komodo dragon advisor in a patched practical
+    brown brass-buttoned coat writing in a plain closed ledger beside the table,
+    through a distant open doorway a stocky anthropomorphic boar foreman supervises
+    flour sacks entering the kitchen, the price of relief written in the room itself
+- key: eod46-d07-rations-continued
+  lane: arthemy-house
+  title: Broth and an unused breadboard
+  audience: d07-old-houses
+  variant: keep-ration
+  asset: audiences/eod46-d07-rations-continued
+  size: 1344x768
+  seed: 81015
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters, words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: >-
+    Worn fortress kitchen at dusk, anthropomorphic wild boar foreman Dunmore Ash
+    with folded sleeves and soot dusted apron staring at six shallow bowls
+    of thin root vegetable broth on a rough table, an upright anthropomorphic
+    mole cook holding a heavy iron ladle over a steaming pot, unused wooden
+    breadboard clean and dry beside a little flour dust, closed stone pantry doors,
+    low oven coals and tired domestic stillness
+- key: eod46-d10-bread-carts
+  lane: arthemy-house
+  title: The Yard carts ride east
+  audience: d10-thistledown
+  variant: bread-carts
+  asset: audiences/eod46-d10-bread-carts
+  size: 1344x768
+  seed: 81026
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters, words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: >-
+    High panoramic view of the dusty eastern fortress road at late afternoon,
+    two small wooden flour wagons with canvas tops and visible round loaves
+    leaving the fortified gate, adult anthropomorphic freehold farmers in patched
+    work clothes guiding tired families toward the safer western road, an
+    anthropomorphic elk porter in a flour-streaked apron passing a bread parcel
+    to a weary rabbit traveler, far horizon marked by distant smoke over
+    Thistledown, wagon wheels stirring ochre dust
+- key: eod46-d10-house-wagons
+  lane: arthemy-house
+  title: The Old Houses pay in wagons
+  audience: d10-thistledown
+  variant: house-wagons
+  asset: audiences/eod46-d10-house-wagons
+  size: 1344x768
+  seed: 81037
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters, words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: >-
+    Stone courtyard outside the fortress below a long bannerless balcony,
+    finely built grain wagons drawn into a convoy by two upright anthropomorphic
+    adult stag carters in dark plum house coats, a middle-aged anthropomorphic
+    black swan noblewoman Lady Ottoline Vask at the bottom of the steps watching
+    sealed wooden flour barrels loaded by anthropomorphic badger dock workers,
+    an austere anthropomorphic wolf Gate Watch guard standing beside the departure,
+    proud house owners surrendering control of their provisions
+- key: eod46-d10-watch-rations
+  lane: arthemy-house
+  title: The gate goes without supper
+  audience: d10-thistledown
+  variant: watch-rations
+  asset: audiences/eod46-d10-watch-rations
+  size: 1344x768
+  seed: 81048
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters, words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: >-
+    Fortress Gate Watch mess room before sunset, broad anthropomorphic grey
+    wolf captain Ferro Dunmark in a dented steel gorget and patched Watch tabard
+    supervising two adult anthropomorphic guard sentries as they move coarse
+    field bread from deep wooden ration chests into stitched traveling saddle bags,
+    empty tin mess plates still in rows on the bench, outside the open archway
+    an urgent relief wagon stands ready to depart, a soldier holding one last small crust
