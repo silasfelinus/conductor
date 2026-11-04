@@ -271,3 +271,34 @@ class ColoringBookAssetAdoptionTests(unittest.TestCase):
         self.assertEqual(proposal["accepted"], {"color": "approved/c.webp", "bw": "approved/old-bw.webp"})
         self.assertEqual(proposal["final"], {"color": None, "bw": None})
         self.assertEqual(queue_entry["accepted_history"][0]["path"], "generated/bw/new.webp")
+
+    def test_bw_revert_does_not_re_gate_the_accepted_color(self) -> None:
+        """mr-007, 2026-11-04 PT: the accepted color fails a tint rule added after
+        it was approved; that must not veto adopting a passing B&W."""
+        queue_entry = {"bw_status": "approved"}
+        proposal = {
+            "accepted": {"color": "generated/c.webp", "bw": "generated/bw/b.webp"},
+            "final": {"color": None, "bw": None},
+        }
+        color = self.root / "generated" / "c.webp"
+        color.parent.mkdir(parents=True, exist_ok=True)
+        color.write_bytes(b"image")
+
+        def gate(_path, _variant):
+            raise RuntimeError("single-hue tint/wash")
+
+        with (
+            patch.object(MODULE, "safe_source", return_value=("approved/old-bw.webp", color)),
+            patch.object(MODULE, "assess_existing", return_value=(True, [], {})),
+            patch.object(MODULE.production, "mechanical_check", side_effect=gate),
+            patch.object(MODULE.production, "load_yaml", side_effect=[{}, {}]),
+            patch.object(MODULE.production, "find_queue_entry", return_value=queue_entry),
+            patch.object(MODULE.production, "find_proposal", return_value=proposal),
+            patch.object(MODULE.production, "absolute_set_path", return_value=color),
+            patch.object(MODULE.production, "replace_ledger_pair_value"),
+            patch.object(MODULE.production, "write_queue_entry"),
+        ):
+            adopted = MODULE.adopt_bw("monster-recast", "mr-007", "approved/old-bw.webp")
+
+        self.assertTrue(adopted)
+        self.assertEqual(proposal["accepted"]["bw"], "approved/old-bw.webp")
