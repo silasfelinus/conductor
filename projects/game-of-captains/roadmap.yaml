@@ -672,7 +672,7 @@ tasks:
   - id: t-034
     milestone: m4
     title: "Space Couch editorial readability pass: rotating transit prose, 30 success returns, sectioned final log"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -680,6 +680,8 @@ tasks:
     implementation_pr: 'silasfelinus/kind_robots#4755'
     note: |-
       Silas, 2026-11-04 PT, in-session: finish up Space Couch and assess text quality, mission uniqueness, fun, clarity, diversity of playthroughs and stickiness. Assessment: projects/game-of-captains/EDITORIAL-ASSESSMENT-2026-11-04.md (240-voyage scratch harness plus the 2,116-voyage matrix). kind_robots#4755 adds seeded no-repeat connective prose pools (within-voyage repeated sentences 34.4% -> 16.2%), a plain-success return for each of the 30 calls, rotating casino/bar reactions and plural fixes, plus optional endingSections rendered as labelled ending parts with the raw log collapsed. v1 saves remain compatible. Local game suite, vue-tsc, eslint and prettier pass; ending block checked as a CSS mock at 390/1280 px only. Merge when exact-head CI is green, then set done. Seeded default route split to t-035.
+
+      2026-11-04 PT: Merged kind_robots#4755 as fdbab276d158b5bfc0484ef42073ad3461c1b39a after all 16 exact-head checks passed, including the full captains/antagonists/crews/endings matrix, TypeScript, four contract shards and production image build. Hydrated ending screen still unverified until the next Force Update; next is t-035.
   - id: t-035
     milestone: m4
     title: "Seeded pre-charted route for chapters 2-9 and reachable destination ending families"
