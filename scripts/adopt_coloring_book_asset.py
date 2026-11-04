@@ -173,7 +173,11 @@ def adopt_bw(book_slug: str, proposal_id: str, source_path: str) -> bool:
     color = production.absolute_set_path(book_slug, color_relative)
     if not color.is_file():
         raise RuntimeError(f"Accepted color master does not exist: {color}")
-    production.mechanical_check(color, "color")
+    # No quality re-gate of the color here. It was accepted already, often
+    # before a newer gate rule existed, and re-judging it vetoed Silas's
+    # 2026-11-04 PT B&W revert on mr-007 (tint rule added after its approval)
+    # three times, quarantining the request. The B&W being adopted is still
+    # gated below.
 
     queue_entry["bw_rendered_path"] = relative
     queue_entry["bw_completed_at"] = production.now_iso()

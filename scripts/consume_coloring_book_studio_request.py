@@ -20,6 +20,7 @@ sys.path.insert(0, str(Path(__file__).parent))
 import consume_art_queue as queue_consumer  # noqa: E402
 import consume_coloring_book_color_art as coloring  # noqa: E402
 import coloring_render_settings  # noqa: E402
+import manage_coloring_book_production as production  # noqa: E402
 
 ALLOWED_BOOKS = ("monster-recast", "hollywood-recast", "kind-robots")
 BOOK_PREFIXES = {
@@ -71,6 +72,32 @@ def archive_existing_candidate(source: dict[str, Any]) -> str | None:
         counter += 1
     current.replace(archived)
     return str(archived.relative_to(coloring.ROOT))
+
+
+def keep_masters_on_archived_file(
+    book_slug: str, proposal_id: str, old_path: str, archived_path: str
+) -> list[str]:
+    """Repoint accepted/final color at the archived file when it was the master.
+
+    A forced revision moves the current image into revisions/ and the new
+    render then lands at the same image_path. Without this, a page whose
+    accepted or final color *was* that file silently swaps its master for an
+    unreviewed render while its B&W still traces the old one (Silas's
+    2026-11-04 PT Hollywood Recast rewrites hit exactly this on final pairs).
+    """
+    old_rel = production.relative_to_set(book_slug, old_path)
+    new_rel = production.relative_to_set(book_slug, archived_path)
+    ledger = production.load_yaml(production.ledger_path(book_slug))
+    proposal = production.find_proposal(ledger, proposal_id)
+    moved: list[str] = []
+    for section in ("accepted", "final"):
+        pair = proposal.get(section)
+        if not isinstance(pair, dict):
+            continue
+        if production.relative_to_set(book_slug, str(pair.get("color") or "")) == old_rel:
+            production.replace_ledger_pair_value(book_slug, proposal_id, section, "color", new_rel)
+            moved.append(section)
+    return moved
 
 
 def queue_sources(queue: dict[str, Any], book_slug: str) -> dict[str, dict[str, Any]]:
@@ -148,9 +175,15 @@ def prepare_requested_entries(
             "semantic_score": source.get("semantic_score"),
             "prompt_fingerprint": source.get("prompt_fingerprint"),
         }
+        old_image = str(source.get("image_path") or "")
         archived_path = archive_existing_candidate(source)
         if archived_path:
             record["archived_path"] = archived_path
+            kept = keep_masters_on_archived_file(
+                book_slug, proposal_id, old_image, archived_path
+            )
+            if kept:
+                record["masters_repointed"] = kept
         history.append(record)
         source["studio_revision_history"] = history
         source["status"] = "pending"

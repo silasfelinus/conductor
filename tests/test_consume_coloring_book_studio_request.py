@@ -361,3 +361,51 @@ def test_run_entries_live_gate_rejection_records_render_rejection(monkeypatch, t
     assert "SEMANTIC-REJECT monster-recast/mr-025" in stderr
     assert "single-hue tint wash" in stderr
     assert "(pending)" in stderr
+
+
+def test_force_live_keeps_final_pair_on_the_archived_master(tmp_path, monkeypatch):
+    """Silas, 2026-11-04 PT: re-rendering a finished page must not silently swap
+    its final color for the unreviewed new render (which lands at the same
+    image_path). The ledger's accepted/final color follows the archived file."""
+    set_dir = tmp_path / "sets" / "monster-recast"
+    image = set_dir / "generated" / "color-proposals-v1" / "mr-009-x.webp"
+    image.parent.mkdir(parents=True)
+    image.write_bytes(b"old master")
+    ledger_file = set_dir / "proposals.yaml"
+    ledger_file.write_text(
+        "proposals:\n"
+        "- slot: 9\n"
+        "  id: mr-009\n"
+        "  accepted: {color: generated/color-proposals-v1/mr-009-x.webp, bw: generated/bw/mr-009-bw.webp}\n"
+        "  final: {color: \"generated/color-proposals-v1/mr-009-x.webp\", bw: \"generated/bw/mr-009-bw.webp\"}\n"
+        "  notes: []\n",
+        encoding="utf-8",
+    )
+    monkeypatch.setattr(mod.coloring, "ROOT", tmp_path)
+    monkeypatch.setattr(mod.production, "ledger_path", lambda _book: ledger_file)
+    image_path = "sets/monster-recast/generated/color-proposals-v1/mr-009-x.webp"
+    write_queue_file(
+        tmp_path,
+        [{"id": "mr-009", "status": "approved", "image_path": image_path, "rendered_path": image_path}],
+        monkeypatch,
+    )
+    # relative_to_set strips the projects/coloring-book/sets/<book>/ prefix;
+    # this temp layout uses a shorter root, so map it the same way.
+    real_relative = mod.production.relative_to_set
+    monkeypatch.setattr(
+        mod.production,
+        "relative_to_set",
+        lambda book, value: real_relative(book, str(value).replace("sets/monster-recast/", "projects/coloring-book/sets/monster-recast/", 1)),
+    )
+
+    mod.prepare_requested_entries("monster-recast", ["mr-009"], force=True, live=True)
+
+    ledger = yaml.safe_load(ledger_file.read_text(encoding="utf-8"))["proposals"][0]
+    assert ledger["accepted"]["color"].startswith("generated/color-proposals-v1/revisions/mr-009-x-")
+    assert ledger["final"]["color"] == ledger["accepted"]["color"]
+    assert ledger["final"]["bw"] == "generated/bw/mr-009-bw.webp"
+    assert (set_dir / ledger["final"]["color"]).read_bytes() == b"old master"
+    assert not image.exists()
+    queue = yaml.safe_load(mod.coloring.QUEUE_FILE.read_text(encoding="utf-8"))
+    record = queue["books"][0]["entries"][0]["studio_revision_history"][-1]
+    assert record["masters_repointed"] == ["accepted", "final"]
