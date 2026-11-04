@@ -12649,3 +12649,6 @@ Worker pattern: good test depth and honest "procedural shapes, not painted art" 
 - Reversible roadmap note + art-queue YAML; all 29 checks green; merged (squash). Kind Robots code (kind_robots#4696) landed separately.
 - Observation: the Silas-directed `claude/*` session set `approved_by_human: true` on t-023 (non-gated, records Silas's own request, matching t-022). Acceptable here; for gated tasks only Silas sets it.
 - Kaizen: slime-city/t-024 (TURF CPU should pass and end on passes, not the round-45 clock).
+
+## 2026-11-04 — Agent (reviewer): weird-humboldt/t-068 stale-ready close
+- Reconciliation-only roadmap change (status ready -> done, dated note); art already DONE in ART-STANDARD.yaml and exported. Reversible, scoped; merged via PR.
