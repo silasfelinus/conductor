@@ -1099,16 +1099,14 @@ tasks:
   - id: t-050
     milestone: m3
     title: "Make Oren's House rest shortcut traversable and save-safe"
-    status: claimed
+    status: review
     passes: 0
     stakes: reversible
-    note: >-
-      Silas-directed World One pacing work (Kind Robots #4721). Choosing
-      Oren's route in HD-06 should unlock a two-way passage to HD-18
-      Quiet Bedchamber, with the alternative decision still blocking it.
-      Preserve 36 stable room IDs and restoreHouseProgress reachability.
-      Add automated locked/open/save-resume regression coverage.
+    note: |-
+      Silas-directed World One pacing work (Kind Robots #4721). Choosing Oren's route in HD-06 should unlock a two-way passage to HD-18 Quiet Bedchamber, with the alternative decision still blocking it. Preserve 36 stable room IDs and restoreHouseProgress reachability. Add automated locked/open/save-resume regression coverage.
+
+      Implemented HD-06 to HD-18 two-way route, stock-choice lock and save restoration support in kind_robots commit 2c8ad007. Added regression assertions for locked, unlocked and restored House navigation. Awaiting implementation PR CI and safe merge.
     owner: worker
     claimed_by: 2026-11-04T014200Z-memory-dungeon-t-050-6b41
     claimed_at: '2026-11-04T01:42:00Z'
-    updated: '2026-11-04T01:42:00Z'
+    updated: '2026-11-04T01:43:11.669Z'
