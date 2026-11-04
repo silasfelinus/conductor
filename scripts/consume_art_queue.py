@@ -37,9 +37,13 @@ except ImportError:
 
 _core_entry_to_job = _core.entry_to_job
 try:
-    from scripts.dream_sdxl_checkpoint_art import ENGINE as ZUZU_CHECKPOINT_ENGINE, make_checkpoint_job
+    from scripts.dream_sdxl_checkpoint_art import (
+        ENGINE as ZUZU_CHECKPOINT_ENGINE, make_checkpoint_job, make_named_checkpoint_job,
+    )
 except ImportError:
-    from dream_sdxl_checkpoint_art import ENGINE as ZUZU_CHECKPOINT_ENGINE, make_checkpoint_job
+    from dream_sdxl_checkpoint_art import (
+        ENGINE as ZUZU_CHECKPOINT_ENGINE, make_checkpoint_job, make_named_checkpoint_job,
+    )
 DAILY_DREAM_PRIORITY = 200
 DAILY_DREAM_ENTITY_TYPES = {"dream", "character", "reward", "scenario", "bot"}
 
@@ -183,9 +187,14 @@ def entry_to_job(entry: dict[str, Any]):
     # not gets a fresh random seed from _core.resolve_seed, which is what every
     # lane now wants (see the module docstring).
     normalized = dict(entry)
-    job = (make_checkpoint_job(normalized, _core)
-           if normalized.get("engine") == ZUZU_CHECKPOINT_ENGINE
-           else _core_entry_to_job(normalized))
+    if normalized.get("engine") == ZUZU_CHECKPOINT_ENGINE:
+        # An explicit `checkpoint` filename (Coloring Book Studio) takes the
+        # named lane; family-pinned project lanes keep their audited models.
+        job = (make_named_checkpoint_job(normalized, _core)
+               if normalized.get("checkpoint") and not normalized.get("checkpoint_family")
+               else make_checkpoint_job(normalized, _core))
+    else:
+        job = _core_entry_to_job(normalized)
     if _is_daily_dream(normalized):
         _enrich_daily_dream_job(normalized, job)
     else:

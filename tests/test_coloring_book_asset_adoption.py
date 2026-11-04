@@ -80,7 +80,7 @@ class ColoringBookAssetAdoptionTests(unittest.TestCase):
                 return_value=proposal,
             ),
             patch.object(MODULE.production, "replace_ledger_pair_value") as replace,
-            patch.object(MODULE.production, "write_yaml") as write,
+            patch.object(MODULE.production, "write_queue_entry") as write,
         ):
             adopted = MODULE.adopt_color(
                 "monster-recast",
@@ -133,7 +133,7 @@ class ColoringBookAssetAdoptionTests(unittest.TestCase):
                 "find_proposal",
                 return_value=proposal,
             ),
-            patch.object(MODULE.production, "write_yaml") as write,
+            patch.object(MODULE.production, "write_queue_entry") as write,
             patch.object(MODULE.production, "replace_ledger_pair_value") as replace,
         ):
             adopted = MODULE.adopt_color(
@@ -180,7 +180,7 @@ class ColoringBookAssetAdoptionTests(unittest.TestCase):
             patch.object(MODULE.production, "ensure_pair", return_value=proposal["accepted"]),
             patch.object(MODULE.production, "absolute_set_path", return_value=self.root / "approved" / "color.webp"),
             patch.object(MODULE.production, "replace_ledger_pair_value") as replace,
-            patch.object(MODULE.production, "write_yaml"),
+            patch.object(MODULE.production, "write_queue_entry"),
         ):
             adopted = MODULE.adopt_bw("monster-recast", "mr-001", "approved/bw.webp")
 
@@ -189,3 +189,85 @@ class ColoringBookAssetAdoptionTests(unittest.TestCase):
         self.assertEqual(queue_entry["bw_render_verdict"], "mechanical-reject")
         self.assertIsNone(proposal["accepted"]["bw"])
         replace.assert_not_called()
+
+    def test_reverting_color_on_a_final_pair_reopens_it_and_keeps_history(self) -> None:
+        """Silas, 2026-11-04 PT: revert a finished page to the original swap."""
+        queue_entry = {
+            "status": "done",
+            "rendered_path": "projects/coloring-book/sets/monster-recast/generated/new.webp",
+            "render_seed": 99,
+            "bw_status": "approved",
+            "bw_rendered_path": "generated/bw/mr-001-bw.webp",
+            "pair_status": "final",
+            "pair_finalized_at": "2026-09-27T03:12:25Z",
+        }
+        proposal = {
+            "accepted": {"color": "generated/new.webp", "bw": "generated/bw/mr-001-bw.webp"},
+            "final": {"color": "generated/new.webp", "bw": "generated/bw/mr-001-bw.webp"},
+        }
+        source = self.root / "approved" / "perfect-woman-color.webp"
+
+        with (
+            patch.object(
+                MODULE,
+                "safe_source",
+                return_value=("approved/perfect-woman-color.webp", source),
+            ),
+            patch.object(MODULE, "assess_existing", return_value=(True, [], {})),
+            patch.object(MODULE.production, "load_yaml", side_effect=[{}, {}]),
+            patch.object(MODULE.production, "find_queue_entry", return_value=queue_entry),
+            patch.object(MODULE.production, "find_proposal", return_value=proposal),
+            patch.object(MODULE.production, "replace_ledger_pair_value") as replace,
+            patch.object(MODULE.production, "write_queue_entry") as write,
+        ):
+            adopted = MODULE.adopt_color(
+                "monster-recast", "mr-001", "approved/perfect-woman-color.webp"
+            )
+
+        self.assertTrue(adopted)
+        self.assertEqual(proposal["accepted"]["color"], "approved/perfect-woman-color.webp")
+        self.assertIsNone(proposal["accepted"]["bw"])
+        self.assertEqual(proposal["final"], {"color": None, "bw": None})
+        self.assertNotIn("pair_status", queue_entry)
+        self.assertNotIn("bw_rendered_path", queue_entry)
+        self.assertEqual(queue_entry["bw_status"], "pending")
+        # The render seed belongs to generated/new.webp, not the adopted file.
+        self.assertFalse(queue_entry["lock_seed"])
+        self.assertEqual(
+            [(item["variant"], item["path"]) for item in queue_entry["accepted_history"]],
+            [("color", "generated/new.webp"), ("bw", "generated/bw/mr-001-bw.webp")],
+        )
+        written = {(call.args[2], call.args[3], call.args[4]) for call in replace.call_args_list}
+        self.assertIn(("final", "color", None), written)
+        self.assertIn(("final", "bw", None), written)
+        self.assertIn(("accepted", "bw", None), written)
+        write.assert_called_once()
+
+    def test_reverting_bw_keeps_color_and_reopens_final(self) -> None:
+        queue_entry = {"bw_status": "approved", "pair_status": "final"}
+        proposal = {
+            "accepted": {"color": "approved/c.webp", "bw": "generated/bw/new.webp"},
+            "final": {"color": "approved/c.webp", "bw": "generated/bw/new.webp"},
+        }
+        source = self.root / "approved" / "old-bw.webp"
+        color = self.root / "approved" / "c.webp"
+        color.parent.mkdir(parents=True, exist_ok=True)
+        color.write_bytes(b"image")
+
+        with (
+            patch.object(MODULE, "safe_source", return_value=("approved/old-bw.webp", source)),
+            patch.object(MODULE, "assess_existing", return_value=(True, [], {})),
+            patch.object(MODULE.production, "mechanical_check"),
+            patch.object(MODULE.production, "load_yaml", side_effect=[{}, {}]),
+            patch.object(MODULE.production, "find_queue_entry", return_value=queue_entry),
+            patch.object(MODULE.production, "find_proposal", return_value=proposal),
+            patch.object(MODULE.production, "absolute_set_path", return_value=color),
+            patch.object(MODULE.production, "replace_ledger_pair_value"),
+            patch.object(MODULE.production, "write_queue_entry"),
+        ):
+            adopted = MODULE.adopt_bw("monster-recast", "mr-001", "approved/old-bw.webp")
+
+        self.assertTrue(adopted)
+        self.assertEqual(proposal["accepted"], {"color": "approved/c.webp", "bw": "approved/old-bw.webp"})
+        self.assertEqual(proposal["final"], {"color": None, "bw": None})
+        self.assertEqual(queue_entry["accepted_history"][0]["path"], "generated/bw/new.webp")

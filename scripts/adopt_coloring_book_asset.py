@@ -53,6 +53,39 @@ def assess_existing(path: Path, variant: str) -> tuple[bool, list[str], dict[str
     return bool(ok), [str(reason) for reason in reasons], info
 
 
+def record_replaced(
+    queue_entry: dict[str, Any], variant: str, previous: str | None, replacement: str
+) -> None:
+    """Keep the version being replaced selectable from the studio's version strip.
+
+    Reverting is the point of adoption, so the master it displaces must stay
+    one click away rather than vanishing from every list the studio reads.
+    """
+    if not previous or previous == replacement:
+        return
+    history = queue_entry.get("accepted_history")
+    if not isinstance(history, list):
+        history = []
+    history.append(
+        {"variant": variant, "path": previous, "replaced_at": production.now_iso()}
+    )
+    queue_entry["accepted_history"] = history[-24:]
+
+
+def clear_final(book_slug: str, proposal_id: str, proposal: dict[str, Any], queue_entry: dict[str, Any]) -> None:
+    """A swapped half means the confirmed pair no longer exists; re-finalize it."""
+    final = production.ensure_pair(proposal, "final")
+    if not final.get("color") and not final.get("bw"):
+        return
+    for variant in ("color", "bw"):
+        final[variant] = None
+        production.replace_ledger_pair_value(book_slug, proposal_id, "final", variant, None)
+    queue_entry.pop("pair_status", None)
+    queue_entry.pop("pair_finalized_at", None)
+    queue_entry.pop("pair_semantic_score", None)
+    queue_entry.pop("pair_render_reasons", None)
+
+
 def adopt_color(book_slug: str, proposal_id: str, source_path: str) -> bool:
     relative, absolute = safe_source(book_slug, source_path)
     queue = production.load_yaml(production.QUEUE_FILE)
@@ -60,6 +93,9 @@ def adopt_color(book_slug: str, proposal_id: str, source_path: str) -> bool:
     queue_entry = production.find_queue_entry(queue, book_slug, proposal_id)
     proposal = production.find_proposal(ledger, proposal_id)
     accepted = production.ensure_pair(proposal, "accepted")
+    previous_rendered = production.relative_to_set(
+        book_slug, str(queue_entry.get("rendered_path") or "")
+    )
 
     queue_entry["rendered_path"] = (
         f"projects/coloring-book/sets/{book_slug}/{relative}"
@@ -71,19 +107,25 @@ def adopt_color(book_slug: str, proposal_id: str, source_path: str) -> bool:
         queue_entry["status"] = "needs_review"
         queue_entry["color_adoption_reasons"] = reasons
         queue_entry["color_adoption_info"] = info
-        production.write_yaml(production.QUEUE_FILE, queue)
+        production.write_queue_entry(book_slug, proposal_id, queue_entry)
         print(
             f"  ADOPTION-REVIEW {book_slug}/{proposal_id} color: "
             + "; ".join(reasons)
         )
         return False
 
+    previous = str(accepted.get("color") or "") or None
+    changed = previous != relative
+    record_replaced(queue_entry, "color", previous, relative)
     accepted["color"] = relative
     queue_entry["status"] = "approved"
     queue_entry["approved_at"] = production.now_iso()
     queue_entry.pop("color_adoption_reasons", None)
     queue_entry.pop("color_adoption_info", None)
-    if queue_entry.get("render_seed") is not None:
+    # The stored render seed only reproduces the file it rendered. Locking it
+    # onto a different (older, uploaded, legacy) image would derive the B&W
+    # page from a composition nobody picked.
+    if queue_entry.get("render_seed") is not None and previous_rendered == relative:
         queue_entry["lock_seed"] = True
         queue_entry["seed"] = queue_entry["render_seed"]
     else:
@@ -96,7 +138,22 @@ def adopt_color(book_slug: str, proposal_id: str, source_path: str) -> bool:
         "color",
         relative,
     )
-    production.write_yaml(production.QUEUE_FILE, queue)
+    if changed:
+        clear_final(book_slug, proposal_id, proposal, queue_entry)
+        # The accepted B&W was traced from the color being replaced. Keep it
+        # in accepted_history (selectable again) but stop calling it current.
+        previous_bw = str(accepted.get("bw") or "") or None
+        if previous_bw:
+            record_replaced(queue_entry, "bw", previous_bw, "")
+            accepted["bw"] = None
+            production.replace_ledger_pair_value(book_slug, proposal_id, "accepted", "bw", None)
+            queue_entry["bw_status"] = "pending"
+            queue_entry.pop("bw_approved_at", None)
+            if production.relative_to_set(
+                book_slug, str(queue_entry.get("bw_rendered_path") or "")
+            ) == previous_bw:
+                queue_entry.pop("bw_rendered_path", None)
+    production.write_queue_entry(book_slug, proposal_id, queue_entry)
     return True
 
 
@@ -128,7 +185,7 @@ def adopt_bw(book_slug: str, proposal_id: str, source_path: str) -> bool:
         queue_entry["bw_render_verdict"] = "mechanical-reject"
         queue_entry["bw_render_reasons"] = reasons
         queue_entry["bw_mechanical_info"] = info
-        production.write_yaml(production.QUEUE_FILE, queue)
+        production.write_queue_entry(book_slug, proposal_id, queue_entry)
         print(
             f"  ADOPTION-REVIEW {book_slug}/{proposal_id} B&W: "
             + "; ".join(reasons)
@@ -142,6 +199,10 @@ def adopt_bw(book_slug: str, proposal_id: str, source_path: str) -> bool:
     queue_entry["bw_render_reasons"] = []
     queue_entry.pop("bw_mechanical_info", None)
 
+    previous = str(accepted.get("bw") or "") or None
+    record_replaced(queue_entry, "bw", previous, relative)
+    if previous != relative:
+        clear_final(book_slug, proposal_id, proposal, queue_entry)
     accepted["bw"] = relative
     queue_entry["bw_status"] = "approved"
     queue_entry["bw_approved_at"] = production.now_iso()
@@ -154,7 +215,7 @@ def adopt_bw(book_slug: str, proposal_id: str, source_path: str) -> bool:
         "bw",
         relative,
     )
-    production.write_yaml(production.QUEUE_FILE, queue)
+    production.write_queue_entry(book_slug, proposal_id, queue_entry)
     return True
 
 

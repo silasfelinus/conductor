@@ -19,6 +19,7 @@ from typing import Any
 sys.path.insert(0, str(Path(__file__).parent))
 import consume_art_queue as queue_consumer  # noqa: E402
 import consume_coloring_book_color_art as coloring  # noqa: E402
+import coloring_render_settings  # noqa: E402
 
 ALLOWED_BOOKS = ("monster-recast", "hollywood-recast", "kind-robots")
 BOOK_PREFIXES = {
@@ -161,6 +162,29 @@ def prepare_requested_entries(
     if changed:
         coloring.write_queue(queue)
     return already_resolved, would_force
+
+
+def apply_render_settings(
+    book_slug: str, proposal_ids: list[str], settings: dict[str, Any], live: bool
+) -> list[str]:
+    """Persist studio-chosen engine/checkpoint/LoRA on each requested page.
+
+    They stay on the queue entry so later revisions of the page keep the same
+    look until the studio changes them again. A dry run only reports.
+    """
+    queue = coloring.load_yaml(coloring.QUEUE_FILE)
+    sources = queue_sources(queue, book_slug)
+    changed: list[str] = []
+    for proposal_id in proposal_ids:
+        source = sources.get(proposal_id)
+        if source is None:
+            raise RuntimeError(f"Unknown proposal id for {book_slug}: {proposal_id}")
+        preview = dict(source)
+        if coloring_render_settings.apply(preview if not live else source, settings):
+            changed.append(proposal_id)
+    if live and changed:
+        coloring.write_queue(queue)
+    return changed
 
 
 def selected_entries(book_slug: str, proposal_ids: list[str]) -> list[dict[str, Any]]:
@@ -315,6 +339,10 @@ def main() -> int:
     parser.add_argument("--proposal-id", action="append", dest="proposal_ids", required=True)
     parser.add_argument("--timeout", type=int, default=600)
     parser.add_argument("--force", action="store_true")
+    parser.add_argument(
+        "--render-settings",
+        help="JSON engine/checkpoint/lora/lora_strength to persist on the requested pages",
+    )
     args = parser.parse_args()
 
     proposal_ids = list(dict.fromkeys(str(value).strip() for value in args.proposal_ids if str(value).strip()))
@@ -330,6 +358,12 @@ def main() -> int:
         parser.error("--timeout must be between 30 and 900")
 
     try:
+        if args.render_settings:
+            settings = coloring_render_settings.normalize(args.render_settings)
+            changed = apply_render_settings(args.book, proposal_ids, settings, args.live)
+            if changed:
+                verb = "Applied" if args.live else "DRY RUN: would apply"
+                print(f"{verb} render settings {settings} to {', '.join(changed)}")
         already_resolved, would_force = prepare_requested_entries(
             args.book, proposal_ids, args.force, args.live
         )
