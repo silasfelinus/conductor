@@ -1096,3 +1096,15 @@ tasks:
       User reproduced in `/play/memory` with Kind Robots > Characters and Non-mature: round 3 needs eight art faces but says zero despite populated Character artwork. Root source: `resolveMemoryDungeonDeck()` consumes `characterStore.characters` (small by-ID detail cache) instead of `browseCharacters` (full list). Its ArtImage verification also assumes every linked image is present in the artStore's partial/local image cache, silently excluding otherwise usable records. Fix both, preserve mature/private restrictions, validate browser loading, add regression tests. User screenshots from 2026-11-02 PT. Scope: reversible internal bug fix, not publication.
     claimed_by: 2026-11-03T065130Z-memory-dungeon-t-049-f7c2
     claimed_at: '2026-11-03T06:51:30Z'
+  - id: t-050
+    milestone: m3
+    title: "Make Oren's House rest shortcut traversable and save-safe"
+    status: ready
+    passes: 0
+    stakes: reversible
+    note: >-
+      Silas-directed World One pacing work (Kind Robots #4721). Choosing
+      Oren's route in HD-06 should unlock a two-way passage to HD-18
+      Quiet Bedchamber, with the alternative decision still blocking it.
+      Preserve 36 stable room IDs and restoreHouseProgress reachability.
+      Add automated locked/open/save-resume regression coverage.
