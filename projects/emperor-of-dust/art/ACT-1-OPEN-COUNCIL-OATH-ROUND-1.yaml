@@ -1,0 +1,111 @@
+# Emperor of Dust t-046: Day 7 open council -> Day 10 Watch oath.
+# Private scene/outcome illustrations, not accepted or wired assets.
+round: emperor-act1-open-council-oath-1
+project_slug: emperor-of-dust
+designer: Comic Studio
+auto_submit: true
+is_public: false
+is_mature: false
+cast_loras: false
+lanes:
+- key: arthemy-house
+  label: Arthemy Western Art v3.0
+  engine: comfy
+  checkpoint: Illustrious/arthemyWesternArt_v30.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, absurdres, very aesthetic, toon (style), western comics (style), dramatic lighting, painterly, wide story frame
+  suffix: kiln ochre, deep crimson, tarnished brass palette, dusty wasteland, tactile salvage, original fantasy frontier
+  steps: 30
+  cfg: 5
+  sampler: euler_ancestral
+subjects:
+- key: eod46-d10-open-council-enter
+  lane: arthemy-house
+  title: Two chairs look down on sixty guards
+  audience: d10-oath
+  variant: open-council
+  asset: audiences/eod46-d10-open-council-enter
+  size: 1344x768
+  seed: 84011
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters, words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: >-
+    Wide fortress balcony overlooking the dusty parade yard, two separate new
+    oak council chairs facing outward over sixty distant adult upright
+    anthropomorphic Gate Watch guards in patched tabards and dented gorgets,
+    elegant adult anthropomorphic black swan aristocrat Lady Ottoline Vask
+    in a high-collared black coat seated on a crimson velvet cushion in one chair,
+    heavy adult anthropomorphic wild boar foreman Dunmore Ash in a rough brown
+    flour-streaked apron occupying the other, low gray smoke rising over a
+    distant farming village beyond the walls, deep political distance between chairs
+- key: eod46-d10-council-oath-probe
+  lane: arthemy-house
+  title: Ash lays down the kitchen list
+  audience: d10-oath
+  variant: council-oath
+  asset: audiences/eod46-d10-council-oath-probe
+  size: 1344x768
+  seed: 84022
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters, words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: >-
+    Original illustrated fortress council table in slanting noon daylight,
+    stout anthropomorphic wild boar foreman Dunmore Ash holding a folded
+    blank vellum kitchen roster across a scratched wooden parapet,
+    dented brass uniform clasps collected in a wooden tray,
+    tall scarred anthropomorphic gray wolf Gate Watch captain Ferro Dunmark
+    wearing a battered gorget pointing through the stone arch toward distant smoke,
+    adult anthropomorphic black swan noble Lady Ottoline Vask resting her
+    ringed wing on the opposite end of the table, severe negotiation
+- key: eod46-d10-shared-relief
+  lane: arthemy-house
+  title: The smaller patrol rides toward smoke
+  audience: d10-oath
+  variant: shared-relief
+  asset: audiences/eod46-d10-shared-relief
+  size: 1344x768
+  seed: 84033
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters, words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: >-
+    Fortress east gate at noon under a dense ash gray sky,
+    a small mounted patrol of adult anthropomorphic wolf and badger
+    sentries setting off toward smoke over remote Thistledown,
+    one scarred adult anthropomorphic gray wolf captain in a battered
+    gorget leading a modest supply wagon loaded with canvas bags of bread
+    and rolled medical cloths, beside the gate a sturdy anthropomorphic
+    wild boar foreman in a flour-streaked brown apron hands over a final sack,
+    dark-clad anthropomorphic stag House guards remain behind to defend the doorway
+- key: eod46-d10-shared-account
+  lane: arthemy-house
+  title: The captain draws up his chair
+  audience: d10-oath
+  variant: shared-account
+  asset: audiences/eod46-d10-shared-account
+  size: 1344x768
+  seed: 84044
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters, words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: >-
+    Fortress council chamber in late afternoon, broad anthropomorphic
+    gray wolf Watch captain Ferro Dunmark in a scratched brass gorget
+    placing a short wooden chair at the foot of a long scarred council table,
+    tall leather-bound casualty register opened in front of him with
+    blank unmarked pages, anthropomorphic wild boar foreman Dunmore Ash in
+    flour-dusted working clothes moving his own seat aside to make room,
+    elegant black swan Lady Ottoline Vask in dark house finery watching
+    in cold silence from the opposite end, long shadows through narrow windows
+- key: eod46-d10-house-veto
+  lane: arthemy-house
+  title: The seal remains on the roster
+  audience: d10-oath
+  variant: house-veto
+  asset: audiences/eod46-d10-house-veto
+  size: 1344x768
+  seed: 84055
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters, words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: >-
+    At the fortress gate muster table, upright anthropomorphic black swan
+    noble Lady Ottoline Vask pressing a red wax house seal onto an unmarked
+    plain wooden duty board, five armored adult anthropomorphic wolf
+    sentries trapped on the inner side of the heavy gate,
+    stout anthropomorphic wild boar foreman Dunmore Ash retreating into
+    the stone kitchen corridor with a rolled blank list tucked under his arm,
+    a young anthropomorphic badger sentry staring through iron bars
+    toward a narrow column of distant village smoke, cold restrained anger
