@@ -672,3 +672,26 @@ tasks:
       keepers ship to public/game-of-captains/redshirts/{portraits,secret-powers}/rs-NNN.webp, listed in WARP_ART, and the
       Forge redshirt page falls back to them. Next: curate ROUND-2 the same way, export keepers, then wire the portraits
       into the dispatch board (t-026 family) when it lands. Done when every rs-001..rs-100 has a shipped portrait and plate.
+  - id: t-034
+    milestone: m4
+    title: "Space Couch editorial readability pass: rotating transit prose, 30 success returns, sectioned final log"
+    status: done
+    owner: worker
+    passes: 0
+    stakes: reversible
+    source: silas-2026-11-04
+    implementation_pr: 'silasfelinus/kind_robots#4755'
+    note: |-
+      Silas, 2026-11-04 PT, in-session: finish up Space Couch and assess text quality, mission uniqueness, fun, clarity, diversity of playthroughs and stickiness. Assessment: projects/game-of-captains/EDITORIAL-ASSESSMENT-2026-11-04.md (240-voyage scratch harness plus the 2,116-voyage matrix). kind_robots#4755 adds seeded no-repeat connective prose pools (within-voyage repeated sentences 34.4% -> 16.2%), a plain-success return for each of the 30 calls, rotating casino/bar reactions and plural fixes, plus optional endingSections rendered as labelled ending parts with the raw log collapsed. v1 saves remain compatible. Local game suite, vue-tsc, eslint and prettier pass; ending block checked as a CSS mock at 390/1280 px only. Merge when exact-head CI is green, then set done. Seeded default route split to t-035.
+
+      2026-11-04 PT: Merged kind_robots#4755 as fdbab276d158b5bfc0484ef42073ad3461c1b39a after all 16 exact-head checks passed, including the full captains/antagonists/crews/endings matrix, TypeScript, four contract shards and production image build. Hydrated ending screen still unverified until the next Force Update; next is t-035.
+  - id: t-035
+    milestone: m4
+    title: "Seeded pre-charted route for chapters 2-9 and reachable destination ending families"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    source: silas-2026-11-04
+    note: |-
+      From EDITORIAL-ASSESSMENT-2026-11-04.md. The route board always pre-charts VOYAGE_BOARDS[ch][0], so a captain who accepts the default flies refugees -> archive -> bar ... on every seed (22 distinct nine-chapter sequences in 228 voyages), and the six destination ending families (Sanctuary Without a Map, Names on the Hull, Unlicensed Cure, Right to Refuse, A Table for Every Guest, Courtesy Accord) were reached 0 times in 240 mixed voyages. Keep chapter 1 on The Last Lifeboat; pre-chart a seeded call from missionBoard(run) for chapters 2-9 (prototype: rules.ts chartedCall used from nextDestination). The 2026-11-04 prototype broke pinned assumptions in verifyGameOfCaptains (report missionId == board[0]; synergies), AuthoredExpansion/AuthoredRemainder (concord-intake expected), ActThreeOpening, Scarcity (57 vs 60 authored scenes) and Traces (pinned ending per captain); re-pin those deliberately via the harness `chart` driver rather than weakening them. Then audit each destination family's earned() gate against real reachable flags and add a pinned trace per family.
