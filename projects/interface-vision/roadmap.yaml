@@ -2483,6 +2483,12 @@ tasks:
   note: |-
     Audience-first follow-up from Silas's 2026-10-26 PT audit. Start once /admin/site-stats (kind_robots site-stats PR) has a week of production data, i.e. on or after 2026-11-02 PT; before then re-arm as a no-op. Read top pages, referrers and support:* events, find the two public pages where first-time visitors most often stop (a game they open and leave within a minute, a dead end such as the empty-mana art studio or the API-key storybook gate), and ship one scoped fix per page. Include any hesitation points Silas reports from the Crystal Street launch-week playtests. Report the before/after numbers in the PR body.
 
+    2026-11-04 PT daily-creative cycle: /api/admin/site-stats (7d, 2026-10-28..11-03) holds
+    only 9 views / 6 visits / 0 events (8 on /, 1 on /play/arcade), too thin to name two
+    drop-off pages; every public page already has a link preview except redirect stubs
+    (play/zuzu, music-video), so no fix was shipped. Re-check once a week of events exists.
+  updated: '2026-11-04T06:53:04Z'
+
 - id: t-152
   milestone: m6
   title: "Weekly CI build-time essentialization for kind_robots workflows"
