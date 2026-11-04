@@ -1110,3 +1110,15 @@ tasks:
     claimed_by: 2026-11-04T014200Z-memory-dungeon-t-050-6b41
     claimed_at: '2026-11-04T01:42:00Z'
     updated: '2026-11-04T01:43:11.669Z'
+  - id: t-051
+    title: "Memory Dungeon: rebalance Briar's 64-tile pacing and House room variety"
+    status: ready
+    stakes: reversible
+    owner: null
+    passes: 0
+    source_issue: "silasfelinus/kind_robots#4721"
+    updated: '2026-11-04'
+    note: |-
+      FROM GITHUB ISSUE silasfelinus/kind_robots#4721 (https://github.com/silasfelinus/kind_robots/issues/4721), opened by @silasfelinus on 2026-11-03. Imported by scripts/sync_github_issues.py. Reference the issue in the implementing PR (`Closes silasfelinus/kind_robots#4721`) so it closes on merge; the bridge closes it otherwise once this task is done.
+
+      Silas-directed (2026-11-03 PT). Rewrite first overworld to reduce choice fatigue: preserve 64 authored coordinates and stable IDs, but mix instant flavor/consequence, real treasure, one-shot riddles, combat, and substantial story choices. First House dungeon should add meaningful shortcuts, treasure, rest/hazard/puzzle variety and route testing. Maintain save compatibility and once-only rewards. This is active implementation work, not a human gate. See master #4136 comments 6618231965 and 6618257813. Initial slice: rewrite low-stakes Briar scenes and validate state/choice compatibility, then tackle House separately.
