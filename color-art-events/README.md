@@ -68,8 +68,9 @@ Rules:
 - Cover operations reject `proposal_ids`; the book slug identifies the single cover.
 - `timeout` must be 30–900 seconds per ArtJob.
 - `force` is valid only for `generate-color-proposals`, `generate-bw`, and `generate-cover`.
-- `source_path` is valid only for `accept-color`, `accept-bw`, `accept-cover`, or `generate-bw` with `bw_source: version`, and must name an existing image inside the selected Conductor set.
+- `source_path` is valid only for `accept-color`, `accept-bw`, `accept-cover`, `generate-bw` with `bw_source: version`, or `generate-color-proposals` with `color_source: version`, and must name an existing image inside the selected Conductor set.
 - `bw_source` (`color` | `version` | `prompt`) is valid only for `generate-bw`; `version` requires `source_path`.
+- `color_source` (`prompt` | `version`) is valid only for `generate-color-proposals`. `prompt` (default) renders from the page prompt; `version` makes the color with a Kontext edit of the file named by `source_path`, coloring a B&W file or re-coloring a color one, then runs the same mechanical gate and lands as the page's color candidate. It requires exactly one proposal id.
 - Existing-asset adoption preserves the original file in place and does not invent an ArtImage ID, render seed, engine, or other missing provenance.
 - Forced color, B&W, and cover revisions archive the current candidate and preserve revision metadata.
 - B&W generation requires an explicitly accepted color master. It never chooses an inspiration or merely existing file on its own.
