@@ -209,7 +209,7 @@ books:
     id: mr-006
     slug: screwhead
     title: Screwhead
-    status: approved
+    status: pending
     seed: 1952323706
     image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-006-screwhead.webp
     source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-006
@@ -221,13 +221,16 @@ books:
       semantic_score: null
       prompt_fingerprint: 97cb40fd2d2ef9ad96ac2e7b4349814fc25399b221bfb722352cc07962e37c0c
       archived_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/revisions/mr-006-screwhead-20260914T143150Z.webp
-    studio_revision_requested_at: '2026-09-14T14:31:50Z'
-    rendered_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-006-screwhead.webp
-    art_image_id: 24031
-    render_seed: 1952323706
-    render_engine: krea2
-    completed_at: '2026-09-14T14:36:51Z'
-    prompt_fingerprint: 97cb40fd2d2ef9ad96ac2e7b4349814fc25399b221bfb722352cc07962e37c0c
+    - requested_at: '2026-11-05T03:29:59Z'
+      previous_status: approved
+      art_image_id: 24031
+      rendered_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-006-screwhead.webp
+      semantic_score: null
+      prompt_fingerprint: 97cb40fd2d2ef9ad96ac2e7b4349814fc25399b221bfb722352cc07962e37c0c
+      archived_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/revisions/mr-006-screwhead-20261105T032959Z.webp
+      masters_repointed:
+      - accepted
+    studio_revision_requested_at: '2026-11-05T03:29:59Z'
     approved_at: '2026-09-27T12:57:05Z'
     lock_seed: true
     bw_job_id: 31678
@@ -245,6 +248,8 @@ books:
     - variant: bw
       path: generated/bw/mr-006-bw.webp
       replaced_at: '2026-11-04T07:49:55Z'
+    render_gate_error: job 63831 timed out after 600s (still queued/running)
+    render_gate_error_at: '2026-11-05T03:40:07Z'
   - slot: 7
     id: mr-007
     slug: pound-foolish
@@ -343,13 +348,15 @@ books:
       art_image_id: 24036
       prompt_fingerprint: 926b4243c995d5a53c8bd07f8f4115a560a8e5a441d6b5070e1777e53a1fde34
       gate: mechanical
-      reasons: &id001
+      reasons:
       - rendered essentially monochrome/desaturated for a color-stage master (mean_saturation=0.020, colorful_fraction=0.012)
         — intermittent color-engine defect, coloring-book/t-044
       rejected_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/rejected/render/rejected/mr-008-game-mistress-attempt-3-seed-328435024.webp
       checked_at: '2026-09-14T15:35:51Z'
     render_attempts: 3
-    last_render_reasons: *id001
+    last_render_reasons:
+    - rendered essentially monochrome/desaturated for a color-stage master (mean_saturation=0.020, colorful_fraction=0.012)
+      — intermittent color-engine defect, coloring-book/t-044
     rendered_path: projects/coloring-book/sets/monster-recast/approved/tricycle-doll-color.webp
     art_image_id: 29633
     render_seed: 281757359
@@ -358,21 +365,9 @@ books:
     prompt_fingerprint: 4b7beb71e5e1ea420e0ca78887dcea855065217df24b0b6e24b8097ebd76781c
     approved_at: '2026-11-04T15:35:47Z'
     lock_seed: false
-    bw_job_id: 31679
-    bw_status: pending
-    bw_requested_at: '2026-09-27T13:10:03Z'
-    bw_art_image_id: 240198
-    bw_mechanical_info:
-      pixels: 16960
-      mean_saturation: 0.0006
-      colorful_fraction: 0.0
-      white_fraction: 0.8925
-      luma_std: 0.0606
-      size: 1024x1536
-      hf_ratio: 0.3579
-      tint_concentration: null
+    bw_status: running
+    bw_requested_at: '2026-11-05T03:40:08Z'
     bw_render_reasons: []
-    bw_completed_at: '2026-09-27T13:13:21Z'
     adopted_color_path: approved/tricycle-doll-color.webp
     adopted_color_at: '2026-11-04T15:35:47Z'
     accepted_history:
@@ -382,20 +377,26 @@ books:
     - variant: bw
       path: generated/bw/mr-008-bw.webp
       replaced_at: '2026-11-04T15:35:47Z'
+    bw_revision_history:
+    - requested_at: '2026-11-05T03:40:07Z'
+      previous_status: pending
+      art_image_id: 240198
+      rendered_path: null
+      semantic_score: null
+      archived_path: projects/coloring-book/sets/monster-recast/generated/bw/revisions/studio/mr-008-bw-20261105T034007Z.webp
+      bw_source: null
+      bw_source_path: null
+    bw_source: color
+    bw_source_path: approved/tricycle-doll-color.webp
+    bw_job_id: 63832
   - slot: 9
     id: mr-009
     slug: draculina-husbands
     title: Draculina and Her Three Husbands
-    status: approved
+    status: pending
     seed: 1730222737
     image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-009-draculina-husbands.webp
     source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-009
-    rendered_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-009-draculina-husbands.webp
-    art_image_id: 13144
-    render_seed: 1730222737
-    render_engine: krea2
-    completed_at: '2026-08-01T00:50:48Z'
-    prompt_fingerprint: e2cb31eba945d6a905c22c68e686cf68a41beef907aef22be3483edbc045e3aa
     approved_at: '2026-09-07T23:33:40Z'
     lock_seed: true
     bw_status: approved
@@ -420,6 +421,19 @@ books:
     - variant: bw
       path: generated/bw/mr-009-bw.webp
       replaced_at: '2026-11-04T21:46:24Z'
+    studio_revision_history:
+    - requested_at: '2026-11-05T03:50:12Z'
+      previous_status: approved
+      art_image_id: 13144
+      rendered_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-009-draculina-husbands.webp
+      semantic_score: null
+      prompt_fingerprint: e2cb31eba945d6a905c22c68e686cf68a41beef907aef22be3483edbc045e3aa
+      archived_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/revisions/mr-009-draculina-husbands-20261105T035012Z.webp
+      masters_repointed:
+      - accepted
+    studio_revision_requested_at: '2026-11-05T03:50:12Z'
+    render_gate_error: job 63833 timed out after 600s (still queued/running)
+    render_gate_error_at: '2026-11-05T04:00:15Z'
   - slot: 10
     id: mr-010
     slug: madam-hat
@@ -476,17 +490,10 @@ books:
     id: mr-011
     slug: alien-king
     title: The Alien King
-    status: approved
+    status: pending
     seed: 1492723920
     image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-011-alien-king.webp
     source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-011
-    last_render_seed: 1080138732
-    rendered_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-011-alien-king.webp
-    art_image_id: 17037
-    render_seed: 1492723920
-    render_engine: krea2
-    completed_at: '2026-08-09T08:32:42Z'
-    prompt_fingerprint: 3e7d512149b84d3a387384218f0fd8d2e78b323732ee12e8db80b2ba3a22f792
     approved_at: '2026-09-07T23:33:41Z'
     lock_seed: true
     bw_status: approved
@@ -511,21 +518,31 @@ books:
     - variant: bw
       path: generated/bw/mr-011-bw.webp
       replaced_at: '2026-11-04T22:00:09Z'
+    studio_revision_history:
+    - requested_at: '2026-11-05T04:00:19Z'
+      previous_status: approved
+      art_image_id: 17037
+      rendered_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-011-alien-king.webp
+      semantic_score: null
+      prompt_fingerprint: 3e7d512149b84d3a387384218f0fd8d2e78b323732ee12e8db80b2ba3a22f792
+      archived_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/revisions/mr-011-alien-king-20261105T040019Z.webp
+      masters_repointed:
+      - accepted
+    studio_revision_requested_at: '2026-11-05T04:00:19Z'
+    render_gate_error: "enqueue failed: HTTP 422 Art prompt rejected by the prompt contract (1 violation):\n  [people-negation]\
+      \ no human anatomy names the people you do not want on an engine whose negative prompt is inert, so the noun\
+      \ lands in POSITIVE conditioning and the picture fills with them. Say what the picture IS: \"a deserted scene\"\
+      , \"a deserted street\", \"the subject alone on a plain ground\". Not \"frame\" -- see the frame-noun rule;\
+      \ this remedy used to say it and Krea drew the frame."
+    render_gate_error_at: '2026-11-05T04:00:21Z'
   - slot: 12
     id: mr-012
     slug: hush-dummy
     title: Hush, Darling
-    status: approved
+    status: pending
     seed: 1820455747
     image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-012-hush-dummy.webp
     source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-012
-    last_render_seed: 1596228836
-    rendered_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-012-hush-dummy.webp
-    art_image_id: 17042
-    render_seed: 1820455747
-    render_engine: krea2
-    completed_at: '2026-08-09T08:32:42Z'
-    prompt_fingerprint: 67077411beaaf6fdd7d8307d23db63aa62306023379dae7794cbe66894134d51
     approved_at: '2026-09-07T23:33:41Z'
     lock_seed: true
     bw_status: approved
@@ -550,6 +567,23 @@ books:
     - variant: bw
       path: generated/bw/mr-012-bw.webp
       replaced_at: '2026-11-04T23:15:28Z'
+    studio_revision_history:
+    - requested_at: '2026-11-05T04:00:16Z'
+      previous_status: approved
+      art_image_id: 17042
+      rendered_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-012-hush-dummy.webp
+      semantic_score: null
+      prompt_fingerprint: 67077411beaaf6fdd7d8307d23db63aa62306023379dae7794cbe66894134d51
+      archived_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/revisions/mr-012-hush-dummy-20261105T040016Z.webp
+      masters_repointed:
+      - accepted
+    studio_revision_requested_at: '2026-11-05T04:00:16Z'
+    render_gate_error: "enqueue failed: HTTP 422 Art prompt rejected by the prompt contract (1 violation):\n  [people-negation]\
+      \ not human eyes names the people you do not want on an engine whose negative prompt is inert, so the noun\
+      \ lands in POSITIVE conditioning and the picture fills with them. Say what the picture IS: \"a deserted scene\"\
+      , \"a deserted street\", \"the subject alone on a plain ground\". Not \"frame\" -- see the frame-noun rule;\
+      \ this remedy used to say it and Krea drew the frame."
+    render_gate_error_at: '2026-11-05T04:00:18Z'
   - slot: 13
     id: mr-013
     slug: ansel-bell
@@ -601,17 +635,21 @@ books:
     id: mr-014
     slug: bathtub-shave
     title: Ghostface Gets Ready
-    status: done
+    status: pending
     seed: 840014
     image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-014-bathtub-shave.webp
     source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-014
-    last_render_seed: 1591230950
-    rendered_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-014-bathtub-shave.webp
-    art_image_id: 17039
-    render_seed: 1060801091
-    render_engine: krea2
-    completed_at: '2026-08-09T08:32:42Z'
-    prompt_fingerprint: 4805cfaef228f4c2c726516c9246f1487bf4ccc1106b91641e14fda2b61010df
+    studio_revision_history:
+    - requested_at: '2026-11-05T04:00:22Z'
+      previous_status: done
+      art_image_id: 17039
+      rendered_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-014-bathtub-shave.webp
+      semantic_score: null
+      prompt_fingerprint: 4805cfaef228f4c2c726516c9246f1487bf4ccc1106b91641e14fda2b61010df
+      archived_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/revisions/mr-014-bathtub-shave-20261105T040022Z.webp
+    studio_revision_requested_at: '2026-11-05T04:00:22Z'
+    render_gate_error: job 63834 timed out after 600s (still queued/running)
+    render_gate_error_at: '2026-11-05T04:10:25Z'
   - slot: 15
     id: mr-015
     slug: red-carpet-mummy
@@ -1012,7 +1050,7 @@ books:
       art_image_id: 24054
       prompt_fingerprint: fa4853aa5fc4494e4c431249338742d70e3dd534a4f4b0806dd35e4ca6c92d08
       gate: mechanical
-      reasons: &id002
+      reasons: &id001
       - single-hue tint/wash — near-neutral pixels share a consistent hue (concentration=0.97, reject at >= 0.9),
         the signature of a duotone/sepia filter rather than the house style's flat cel-shaded multi-color palette
         (coloring-book/t-045)
@@ -1021,7 +1059,7 @@ books:
     render_attempts: 1
     last_rejected_art_image_id: 24054
     last_render_seed: 1794629632
-    last_render_reasons: *id002
+    last_render_reasons: *id001
     rendered_path: projects/coloring-book/sets/monster-recast/approved/gothic-schoolgirl-color.webp
     art_image_id: 24055
     render_seed: 434342201
@@ -1164,7 +1202,7 @@ books:
       art_image_id: 240237
       prompt_fingerprint: d74b77c571d3cc965c1d8bb8dc4e167e70a615ad5e91b253332b4bc077c0be8c
       gate: mechanical
-      reasons: &id003
+      reasons: &id002
       - single-hue tint/wash — near-neutral pixels share a consistent hue (concentration=1.00, reject at >= 0.9),
         the signature of a duotone/sepia filter rather than the house style's flat cel-shaded multi-color palette
         (coloring-book/t-045)
@@ -1173,7 +1211,7 @@ books:
     render_attempts: 2
     last_rejected_art_image_id: 240237
     last_render_seed: 695481638
-    last_render_reasons: *id003
+    last_render_reasons: *id002
   - slot: 29
     id: mr-029
     slug: madame-close-shave
@@ -2299,14 +2337,14 @@ books:
       art_image_id: null
       prompt_fingerprint: 10548edccb5a24a45f6bf3f869fbb10b7a4cd6e55e1103121f54ff0af8ea1f1f
       gate: mechanical
-      reasons: &id004
+      reasons: &id003
       - single-hue tint/wash — near-neutral pixels share a consistent hue (concentration=0.95, reject at >= 0.9),
         the signature of a duotone/sepia filter rather than the house style's flat cel-shaded multi-color palette
         (coloring-book/t-045)
       rejected_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/rejected/render/rejected/hwr-021-the-silent-mechanic-attempt-1-seed-0.webp
       checked_at: '2026-09-27T11:57:23Z'
     render_attempts: 1
-    last_render_reasons: *id004
+    last_render_reasons: *id003
     studio_revision_history:
     - requested_at: '2026-09-27T14:00:07Z'
       previous_status: done
