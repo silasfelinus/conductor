@@ -307,13 +307,16 @@ tasks:
   - id: t-022
     milestone: m2
     title: "Paint reaction-face board tokens for every creature and wire them in"
-    status: ready
+    status: claimed
     depends_on: t-013
-    owner: null
+    owner: worker
     passes: 0
     stakes: reversible
     note: |-
       Silas 2026-11-02 PT: "we need custom tokens for all cards on the board. Images with reaction faces would probably work." Kind Robots silasfelinus/kind_robots#4685 ships the token system: round art tokens on the arena board that read SLIME_CITY_ART.tokens['<cardId>/<mood>'] (moods fierce, guard, hurt) and fall back to the card art plus a reaction-face badge. projects/slime-city/art/BOARD-TOKENS-ROUND-6.yaml queues the first 72 portraits (24 starter-deck creatures x 3 moods, auto-submit Krea 2, square 1024). Next: once round 6 is DONE, review the renders and wire each ArtImage id into utils/slimeCity/artManifest.ts tokens; then author round 7 for the remaining 86 creatures (110 total) the same way. Not done until verified token images show on the board at 390/768/1440.
+    claimed_by: 2026-11-05T074720Z-slime-city-t022-claude
+    claimed_at: '2026-11-05T07:47:21Z'
+    updated: '2026-11-05T07:47:21Z'
   - id: t-023
     milestone: m2
     title: "TURF: a Go-style mode where every card is one token"
