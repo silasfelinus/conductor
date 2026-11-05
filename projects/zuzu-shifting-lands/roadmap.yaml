@@ -954,9 +954,13 @@ tasks:
   - id: t-049
     milestone: m3
     title: "Spent deeds: consume medicine/favor flags once spent (deck schemaVersion 2 + save migration)"
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
     source: game-sprint-2026-11-05
     note: |-
       Found by the t-036 final voice audit (kind_robots #4813, 2026-11-05 PT). Deed flags such as deed-carries-medicine and deed-owed-favor are never cleared when spent, so the choices they gate stay open: one medicine can be "spent" once per land, up to five times a run. Proposed design (PR #4813 body): add a `consumes` field to choice outcomes with deck `schemaVersion: 2`; because saves are rejected when the deck version changes, ship a save migration that replays v1 runs under v2 rules or grandfathers them. Pin with a seeded battery showing each deed is spent at most once per acquisition, and keep the V6 replay/forgery guarantees. Prose already avoids promising consumption (t-036).
+    owner: worker
+    claimed_by: 2026-11-05T211047Z-zuzu-shifting-lands-t-049-r5
+    claimed_at: '2026-11-05T21:10:48Z'
+    updated: '2026-11-05T21:10:48Z'
