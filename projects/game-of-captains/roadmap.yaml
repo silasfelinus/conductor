@@ -247,7 +247,7 @@ tasks:
   - id: t-011
     milestone: m4
     title: "Independently red-team Space Couch humor, ethics and couch/force bubble visuals"
-    status: review
+    status: ready
     depends_on: t-010
     passes: 0
     stakes: reversible
@@ -259,7 +259,10 @@ tasks:
       Closed a substantive red-team slice via merged kind_robots #4583 (ee786cc): fallen redshirt logs now use skill-specific coherent consequences instead of survival gags, with death, save and seeded playthrough regression; 14/14 exact-head CI workflows passed. Withdrew broader no-repeat planet rotation after it broke pinned ending paths. Remaining independent t-011 audit: signed-in responsive art/force-bubble QA, Act II-III quest repetition, trust/captain agency balance and ethics/pacing review. Returned to ready, not human-accepted.
 
       Scoped narrative variety implementation: authored 42 world-specific Act II/III expedition story presentations (one major and one minor for each of 21 destinations), preserving existing encounter IDs, skills, casualty and success roll salts, v1 saves and pinned endings. App PR awaits gameplay and exact-head CI. Full narrative/ethics/trust-balance and visual review remain open; do not set the human acceptance gate.
-    updated: '2026-11-01T12:13:00Z'
+
+      2026-11-04 PT reconciliation: last slice kind_robots #4590 merged 11-01;
+      ethics/pacing/trust audit and viewport/force-bubble QA remain. Back to ready.
+    updated: '2026-11-05T02:42:19Z'
     owner: worker
     claimed_by: 2026-11-01T120020Z-spacecouch-repeats-b92e
     claimed_at: '2026-11-01T12:00:20Z'
@@ -521,24 +524,27 @@ tasks:
       Full history: projects/game-of-captains/HISTORY.md#t-030
   - id: t-020
     title: "Space Couch: captain-first illustrated onboarding"
-    status: review
+    status: done
     stakes: reversible
     owner: worker
     passes: 0
     source_issue: "silasfelinus/kind_robots#4533"
-    updated: '2026-10-31T20:51:00Z'
+    updated: '2026-11-05T02:42:25Z'
     note: |-
       FROM GITHUB ISSUE silasfelinus/kind_robots#4533 (https://github.com/silasfelinus/kind_robots/issues/4533), opened by @silasfelinus on 2026-10-30. Imported by scripts/sync_github_issues.py. Reference the issue in the implementing PR (`Closes silasfelinus/kind_robots#4533`) so it closes on merge; the bridge closes it otherwise once this task is done.
 
       Track the user-requested Space Couch mobile onboarding changes: captain selection first, background second, illustrated options, and a revised corporate Couchscope.
 
       Kind Robots PR #4534 implements captain-first onboarding, compact phone dossier, rewritten corporate Couchscope, and secure store-owned ArtImage lookup. Conductor PR #6866 merged with 22 DONE ArtJobs 52152-52173 and ArtImages 258444-258465. App final-head CI underway; merge only after all checks pass. Authenticated device screenshots and production deploy remain separately unverified, so do not mark accepted or publicly released.
+
+      2026-11-04 PT reconciliation: captain-first illustrated onboarding merged as kind_robots
+      #4534 (10-31). Device QA belongs to t-011/t-012, so this task is complete.
     claimed_by: 2026-10-31T203900Z-space-couch-t020-f7e2c6
     claimed_at: '2026-10-31T20:39:00Z'
   - id: t-031
     title: "Space Couch: 101 absurd alien species, three-choice sightings, and escalating scrapbook oddities"
-    status: review
-    updated: '2026-11-05T02:18:19Z'
+    status: ready
+    updated: '2026-11-05T02:41:44Z'
     stakes: reversible
     passes: 0
     source_issue: "silasfelinus/kind_robots#4592"
@@ -588,17 +594,31 @@ tasks:
       Completed all 95 remaining alien story records across zodiac (11), hybrid (23), cosmic (19), social (19), ecology (14) and legendary (9). Each records three original things the captain can actually do, three original mood interpretations and three outcome-specific consequences; the canonical Latin-square yields 855 unique action-by-mood narratives. The six full-form pilot encounters remain unchanged, bringing coverage to 909 unique alien paths across 101 species. Automated source audit confirmed no missing species, duplicate IDs, duplicate authored beats, undersized lines or missing player-action verbs. Added exact nine-way coverage regression. App PR and exact-head gameplay/format/type/contract CI remain to verify; retained save schema, rarity, choices and six collector milestones. Art, responsive live QA and human acceptance remain separate unfinished work.
 
       2026-11-04 PT: Merged kind_robots#4760 at de69fbc5f79697be56a6276f31b005b279973a73 after all nine exact-head workflow groups completed SUCCESS. Completed action-specific stories for the remaining 95 species, with three original captain actions, three mood interpretations and three species outcomes per creature, combined into 855 unique branches. Along with the prior six full-form entries, all 101 alien species now have 909 unique mood-by-action outcomes. Source audit: zero missing IDs, duplicate entries, duplicate text or undersized beats. CI verified 101/101 species, 909/909 unique outcomes, saved scrapbook contract, hidden rock-paper-scissors balance, six milestones, full 2116-voyage matrix and collector/persona playthroughs. Original art queue and delivery, authenticated responsive art checks, human acceptance and collector grind/balance polish remain open; return task to ready, do not close kind_robots#4592. No ArtJobs submitted or production deployment performed.
+
+      2026-11-04 PT: Near-miss mercy slice opened as silasfelinus/kind_robots#4771 (head
+      266c2df on main 050b23e, unmerged). Escaped aliens now really do return. An unrecorded
+      runaway comes back on an even-numbered sighting after a different creature; odd
+      sightings keep the rare/legendary cadence. It returns with a short callback naming what
+      the crew tried. A second getaway still files a blurry near-miss record, and the
+      scrapbook names escaped species with a near-miss hint. Collector marathons: greet 19 ->
+      18 voyages, cycle 21 -> 18, oracle 13; every first escape returned once, longest wait 8
+      sightings; average scene words 52 -> 57. Save schema, 909 branches, rarity and
+      milestones unchanged. npm run test:game-of-captains passes all 20 files; strict tsc and
+      prettier clean. Open: art delivery, authenticated viewport QA, human acceptance, and
+      Silas's balance call on the blurry-record rule. Do not close #4592. Merged as
+      kind_robots #4771 (squash 0af1dad); back to ready for polish, species plates, device QA
+      and acceptance.
     implementation_pr: 'silasfelinus/kind_robots#4771'
     owner: worker
     claimed_by: 2026-11-05T015400Z-game-of-captains-gs
     claimed_at: '2026-11-05T01:55:36Z'
   - id: t-032
     title: "Space Couch | Master Red Sofa Starship Playbook Roadmap"
-    status: review
+    status: ready
     stakes: reversible
     passes: 0
     source_issue: "silasfelinus/kind_robots#4182"
-    updated: '2026-11-02T20:57:00Z'
+    updated: '2026-11-05T02:42:22Z'
     note: |-
       FROM GITHUB ISSUE silasfelinus/kind_robots#4182 (https://github.com/silasfelinus/kind_robots/issues/4182), opened by @silasfelinus on 2026-10-25. Imported by scripts/sync_github_issues.py. Reference the issue in the implementing PR (`Closes silasfelinus/kind_robots#4182`) so it closes on merge; the bridge closes it otherwise once this task is done.
 
@@ -653,6 +673,9 @@ tasks:
       2026-11-02 PT: Kind Robots PR #4653 merged, squash e0df15ead1115dfc344c2ee68ae7ff5bfd9dd74f. Fully authored Refugee Convoy, Concord Intake, Sesh Foundry: nine distinct ethical decisions, eighteen original endings, branching callbacks and valid version-one four-story saves. All 11 exact-head workflows passed, including 2,116 complete voyages, 12 authored four-scene playthroughs and TypeScript. No ArtJobs, migrations or live deployment. Task remains ready for Act III authored scenes and remaining Act II locations; master #4182 open.
 
       2026-11-02 PT: Chapter-seven authored follow-up slice in worker/game-of-captains-t-032-act-three-20261102-c7e9. Three returning cases, nine real choices, eighteen result scenes, four conditional earlier-world callbacks, v1-compatible outcomes, seeded full-voyage regression. Art keys remain unfulfilled until delivered. Master issue #4182 stays open for remainder and human gate.
+
+      2026-11-04 PT reconciliation: master umbrella; kind_robots #4671 merged 11-02. Back to
+      ready for the rest of Act III.
     owner: worker
     claimed_by: 20261102T205000Z-space-couch-t032-c7e9
     claimed_at: '2026-11-02T20:50:00Z'
