@@ -66,4 +66,4 @@ court petition in three directions, so the pick is made from real images:
 - **oil**: the mockups' painterly approach, minus the dusk cliché: chartreuse/slate/umber and flat
   overcast light.
 
-Sheet: `style-test-2026-11-05/` (added when the renders land).
+Sheet: `style-test-2026-11-05/chronicle-broadside-oil.jpg` (Krea 2, ArtJobs 64339–64344; rows: chronicle, broadside, oil; columns: lake, court). Read: **chronicle** is the most individual. The fish-marginalia border and flat tempera are unlike any other game, and "the chronicle rots" carries the decay directly. **Broadside** is the most graphic and readable at game scale and composites cleanly. **Oil** is closest to the mockups and the least individual.
