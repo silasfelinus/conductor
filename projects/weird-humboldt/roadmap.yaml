@@ -1218,8 +1218,8 @@ tasks:
   - id: t-045
     milestone: m4
     title: "Ecotone: optional time with every companion, and a chosen-family (polycule) utopia ending"
-    status: claimed
-    updated: '2026-11-05T12:43:25Z'
+    status: ready
+    updated: '2026-11-05T21:03:44Z'
     approved_by_human: true
     passes: 0
     stakes: reversible
@@ -1272,10 +1272,28 @@ tasks:
       2026-11-04 PT: no slice shipped. Remaining gameplay item (bring-along beyond crossroads)
       contradicts verifyEcotoneHangouts.test.ts, which deliberately asserts 'follow' does not
       invent a group scene; needs a design call before more code. Art is t-042.
+
+      2026-11-04 PT: Prepared t-045 slice "free hours + The Long Table" (patch vs 153abdeb, PR
+      pending). Every guide the player has met now offers one optional, dice-free free-hour
+      scene per run (Mara grapefruit line / Kit streetlight juggling / Juniper redwood vigil /
+      Cedar tailgate supper with his still-married folks' leftovers): two warm options each
+      (one +1 nerve) plus a no-cost "not tonight". The scenes come one per evening, with any
+      remaining ones just before the finale, through the mystery/#4774 digression slot, so
+      ROUTES indices and v4 saves are unchanged. A derived chosen-family ending, "The Long
+      Table" (found family, consensual and non-explicit, no ranking), appears above the normal
+      ending when the player spent free hours with 3+ guides and the county is hopeful. Free
+      hours now count toward bonds, so the #4750 coda is reachable in play. The new
+      verifyEcotoneCompanionTime covers 1,512 seeded runs: each free hour is reachable, mid-
+      scene restore works, decline is a no-op, the ending is reached on all routes by warm
+      play and never by careless play, dark stays reachable, meters are finite. All Ecotone
+      tests, KrChoiceHand and playbook pass (84/84 audit slots). Still pending: deciding
+      whether The Long Table gets a ledger/gallery slot, its four-style art (t-042), and
+      bring-along beyond crossroads (still blocked on the design call).  Merged as kind_robots
+      #4814; back to ready for the remaining scope.
     owner: worker
     claimed_by: 2026-11-05T124312Z-weird-humboldt-t-045-r4
     claimed_at: '2026-11-05T12:43:25Z'
-    implementation_pr: 'silasfelinus/kind_robots#4744'
+    implementation_pr: 'silasfelinus/kind_robots#4814'
   - id: t-046
     milestone: m2
     title: "Second draft I: make high-leverage regional decisions genuinely distinct"
