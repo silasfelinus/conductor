@@ -2671,3 +2671,19 @@ pitches:
         verification:
           - 11/11 CI checks green
           - registered in stores/animationCatalog.ts
+
+  - id: spinning-top-wobble
+    title: Spinning Top Wobble
+    status: shipped
+    priority: 99
+    surprise: Painted wooden tops spin steady, wobble as they slow, then get flicked again; hover lights the nearest top, click flicks them all into a faster spin.
+    builds:
+      - version: 1
+        status: shipped
+        component: components/screenfx/spinning-top-wobble.vue
+        pull_request: silasfelinus/kind_robots#4822
+        commit: ca13e8d
+        released_at: '2026-11-05T14:00:00Z'
+        verification:
+          - 11/11 CI checks green
+          - registered in stores/animationCatalog.ts
