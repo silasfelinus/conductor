@@ -300,16 +300,33 @@ tasks:
   - id: t-015
     milestone: m2
     title: "Prove the movement lab replay and real shared-cabinet controls"
-    status: claimed
+    status: review
     passes: 0
     stakes: reversible
-    updated: '2026-11-05T01:55:21Z'
+    updated: '2026-11-05T02:22:34Z'
     note: |-
       Reviewer kaizen after kind_robots#3564: add deterministic input replays asserting coyote time, buffered jumps, landing/camera bounds and respawn; exercise real shared ArcadeCabinet keyboard/gamepad/touch controls and visible Admin help at phone/tablet/desktop widths. Use browser fixtures with actual consumers rather than source-field matches. Keep public registry and score exclusions. Initial isolated engine pixels are not shared-cabinet/auth integration or full campaign acceptance.
 
       2026-11-02 PT: Input-guide slice on worker/save-the-plumber-t-015-input-guide-84c7: dedicated keyboard shortcuts, controller/keyboard help, menu labeling and regression assertions. Movement replay and cross-width browser fixtures remain on this task after the PR lands; do not close as done yet.
 
       2026-11-02 PT: Merged user-reported controller and keyboard control guide fixes in kind_robots#4689 (merge 42b3e2ba68cf8063021c6820f18b3a74cec94467). All nine GitHub CI workflows passed, including TypeScript, Arcade viewport, Chromium cabinet browser contract, lint/format and contract test shards. Remaining t-015 scope is deterministic coyote-time, buffered-jump, landing/camera, and respawn replay plus real shared-cabinet keyboard/gamepad/ touch cross-width fixture coverage; do not mark this larger task done.
+
+      2026-11-05 PT, game-sprint adversarial slice: Added kind_robots
+      utils/scripts/verifySavePlumberMovementReplay.test.ts, wired into test:arcade-engine.
+      Deterministic lab-stage replays pin coyote time (7 frames), the jump buffer (5 frames
+      before touchdown), variable jump height, landing snap, edge and camera bounds, and
+      checkpoint respawn through game over. Across all 32 stages it checks that every start
+      and checkpoint respawn is open and solidly floored, and a vault battery shows no heroine
+      with Springstep can cross a closed valve gate or leave a locked boss arena. A seeded
+      581k-frame fuzz (8 heroines x 4 power states) asserts finite physics, in-bounds hero and
+      camera, no wall clipping, sane hearts and lives, and that deaths always resolve. The
+      fuzz found and fixed a real clip in 12 stages: jumping or being hit while crouched under
+      a one-tile gap (e.g. the 1-1 slide-under pillar) stood her up inside the block. She now
+      stays crouched in the air under a solid tile. Patch base kind_robots 02a1a83; the
+      coordinator applies it and opens the kind_robots PR. The Levels, Gears, Endless, Maker
+      and Overworld suites pass. verifySavePlumberPreview.test.ts was already red on main
+      (stale Screen regex). Remaining on t-015, do not mark done: real shared-ArcadeCabinet
+      keyboard/gamepad/touch browser fixtures and visible Admin help at 390/768/1440.
     owner: worker
     claimed_by: 2026-11-05T015400Z-save-the-plumber-gs
     claimed_at: '2026-11-05T01:55:21Z'
