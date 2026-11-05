@@ -732,12 +732,12 @@ tasks:
   - id: t-036
     milestone: m4
     title: "Doodle restyle of the cast, ships, co-pilot cut-ins and the nine DOG commanders"
-    status: claimed
+    status: done
     depends_on: [t-035]
     owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-11-05T00:59:52Z'
+    updated: '2026-11-05T01:20:57Z'
     note: >-
       DOODLE-DIRECTION.md step 2. Kontext-restyle every approved princess asset from its identity lock (CAST-QA
       identity still binding); cat ships keeping each silhouette and P1-P4 glyph; super cut-ins with each pilot's
@@ -758,6 +758,20 @@ tasks:
       Kontext's frame size); redraw those separately if the doodle stages need them. Next:
       curate against DOODLE-DIRECTION.md and CAST-QA, export keepers with alpha, then t-037
       wires a style toggle (default stays the current art).
+
+      2026-11-05 PT: reviewed all 93 set-1 cells (art/DOODLE-SET-1-REVIEW.yaml).
+      kind_robots#4764 ships 98 Fever Dream pictures (57 doodle keepers, the rest as a neon
+      sticker treatment of the classic sprite) and a Classic / Fever Dream switch (t-037's
+      toggle; Classic stays default). Held: Solenne portrait and comms (CAST-QA skin and
+      hair). art/DOODLE-SET-2.yaml queues 35 re-renders with source_margin; review them, flip
+      the matching review entries to keep, re-run scripts/export_rainbow_doodle_art.py.
+
+      Merged kind_robots#4764 (1c6b163): the Classic / Fever Dream switch is on main. The
+      DOODLE-SET-2 re-review continues as t-043.
+
+      Silas decided 2026-11-05 PT (verbatim): "Yes, fever dream should be default." kind_robots#4765
+      makes Fever Dream the default look; a visitor who picks Classic keeps it.
+    implementation_pr: 'silasfelinus/kind_robots#4764'
     claimed_by: 2026-11-05T084500Z-rainbow-t036-fever-k7q2
     claimed_at: '2026-11-05T00:59:52Z'
   - id: t-037
@@ -778,7 +792,7 @@ tasks:
   - id: t-038
     milestone: m4
     title: "Recut the thrash-metal opening from the doodle art"
-    status: waiting
+    status: ready
     depends_on: [t-036]
     owner: null
     passes: 0
@@ -860,3 +874,22 @@ tasks:
       - [ ] **DOGS, dog commanders, King Rufus, bone/tennis-ball attack
 
       [... truncated; read the full issue at https://github.com/silasfelinus/kind_robots/issues/4146]
+  - id: t-043
+    milestone: m4
+    title: "Fever Dream look: review the doodle re-renders (DOODLE-SET-2) and ship the keepers"
+    status: ready
+    depends_on: [t-036]
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-11-05T01:25:00Z'
+    note: >-
+      Follow-up to t-036 (kind_robots#4764). art/DOODLE-SET-2.yaml (35 cells, auto_submit) re-renders what
+      art/DOODLE-SET-1-REVIEW.yaml held: Solenne's portrait and comms (skin and hair lock), three ships (colour and
+      silhouette lock), 12 boss phases (B02/B04/B07/B09), 17 enemies and guardians, and 2 pickups, each sprite on a
+      source_margin green border so it stays whole. When the cells are DONE: contact-sheet them (portraits beside
+      their CAST-MANIFEST identity locks; sprites keyed on dark, with the frame-edge check), flip the passing
+      entries in DOODLE-SET-1-REVIEW.yaml to keep (a boss only with all three phases), re-run
+      scripts/export_rainbow_doodle_art.py --kind-robots ../kind_robots, run
+      utils/scripts/verifyRainbowFeverDream.test.ts, and PR the files. Once all four ships pass, also flip
+      ships/petal-wing to keep.

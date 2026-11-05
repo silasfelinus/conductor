@@ -706,3 +706,30 @@ def test_source_matte_flattens_a_transparent_sprite_and_upscales_it():
     assert image.size == (400, 200)
     assert image.getpixel((5, 5)) == (0, 255, 0)
     assert image.getpixel((200, 100))[0] > 200
+
+
+def test_source_margin_frames_a_sprite_in_the_matte_colour():
+    import base64
+    import io
+
+    import pytest
+
+    Image = pytest.importorskip("PIL.Image")
+
+    sprite = Image.new("RGBA", (40, 20), (255, 0, 0, 255))
+    buffer = io.BytesIO()
+    sprite.save(buffer, "PNG")
+    data_url = "data:image/png;base64," + base64.b64encode(buffer.getvalue()).decode()
+    subject = {
+        "source_url": "/sprite.webp",
+        "source_matte": "#00ff00",
+        "source_min_edge": 200,
+        "source_margin": 0.25,
+    }
+    out = enq.compose_source(subject, lambda _source: data_url)
+    image = Image.open(io.BytesIO(base64.b64decode(out.split(",", 1)[1]))).convert("RGB")
+    # Upscaled to 400x200 first, then a 100 px green border (a quarter of the longer edge) on every side.
+    assert image.size == (600, 400)
+    assert image.getpixel((50, 200)) == (0, 255, 0)
+    assert image.getpixel((300, 50)) == (0, 255, 0)
+    assert image.getpixel((300, 200))[0] > 200
