@@ -1202,12 +1202,21 @@ tasks:
       Silas 2026-11-05 PT: the first eight overworlds keep one protagonist per pair, so e08 is Vesper's, not Scylla's (kind_robots#4778 already moved the viewpoint contract). hoshimoriNight.ts's 16 playable sites and store still describe "a separate Scylla-viewpoint expedition". Rewrite them from Vesper's POV without changing coordinates or choice ids, keep the Junji-Ito-tonal psychological/architectural horror register, then continue toward 64 sites and the dark Oven per t-044. Char's fate branches still apply through campaign flags, not through POV.
   - id: t-056
     milestone: m2
-    title: "e01/e02: reconcile the World One camera with Pip as the pair lead"
-    status: needs-human
-    gate_reason: creative-approval
-    soft_gate: true
+    title: "Name the researcher (Rowan) as the e01/e02 and e09 lead; Pip stays a supporting NPC"
+    status: ready
     stakes: reversible
     passes: 0
-    updated: '2026-11-05T06:30:00Z'
+    updated: '2026-11-05T07:00:00Z'
     note: |-
       FOR SILAS: You said each of the first eight overworlds keeps one protagonist for both rounds, and the finale replays "the same four" (Pip, Morrow, Char-for-Scylla, Vesper), so e01/e02's lead is Pip. But shipped World One is told through the displaced Earth researcher who traded lives with Morrow (prologue, Chronicle photos, House endings), and Pip is a secondary character there. Kind Robots now records Pip as the e01/e02 viewpoint in the campaign contract only; no Briar text or save was changed. Decide one: (A, recommended) keep the researcher as the World One player character and make Pip the in-story lead/companion whose choices the researcher shares, so no shipped scene is rewritten; (B) rewrite World One's camera to Pip, a large rewrite touching the prologue and House endings; (C) the researcher is the true fourth protagonist and e09's finale lead becomes the researcher. Reversible; under the 2026-09-30 rule, A is adopted after 7 days unanswered.
+
+      DECIDED by Silas 2026-11-05 PT (CONTROL.md "RESEARCHER IS THE e01/e02 AND e09 LEAD"): the main character is the researcher, he/him, with an androgynous name (agent-chosen: Rowan). Not option A/B/C as written. Implement: a single name constant, the campaign viewpoint contract (e01/e02/e09 = researcher, drop the pip perspective), name him in the prologue and in e03 where Earth people address Morrow, he/his for the researcher. Pip stays the goblin courier NPC. e09 scene rewrite is t-057.
+  - id: t-057
+    milestone: m4
+    title: "e09 Briar collision: Rowan leads, goblin Pip becomes a companion"
+    status: ready
+    stakes: reversible
+    passes: 0
+    updated: '2026-11-05T07:00:00Z'
+    note: |-
+      Silas 2026-11-05 PT: the researcher (Rowan) leads e09, not Pip. briarCollision.ts, briarCollisionRoute.ts, briarCollisionWitness.ts and the e09 stage (components/pages/memory-dungeon-briar-collision.vue) are written with Pip as the acting lead ("Pip spots...", "Pip exposes..."). Rewrite them so Rowan acts and Pip, the goblin courier, is a companion who still contributes courier knowledge. Keep coordinates, choice ids, fragment ids and save keys. Also update conductor story/BRIAR-COLLISION-PIP-QUESTS.json framing.
