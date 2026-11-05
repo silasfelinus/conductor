@@ -128,3 +128,9 @@
 **What worked:** eight authored Lowbank sites, sixteen original choices, earned Bellroad access, eight distinct flood accounts and 64 seeded adversarial playthroughs with save/forgery/photo guards. The CI failure revealed a real overwritten e08 dungeon classification; the Worker correctly restored the canonical Red Oven entrance at 4,3 for e07/e08 and added regression assertions. World Eight is now 40/64 authored sites on main.
 
 **What to improve:** the cancelled shard was a transient incomplete CI result, not proof of a passing contract; rerun and verify the latest attempt before merging. Keep t-044 READY for 24 remaining e08 sites, transformed 36-room Oven and earned guardian; t-045 owns actual art/gallery delivery, t-046 owns rendered-device and cross-realm acceptance. Avoid duplicate tasks and do not mark the project For Human Gate before those complete.
+
+## 2026-11-05 PT | Reviewer green merge | memory-dungeon/t-062 | Kind Robots #4835
+
+**Decision:** merged reversible Choking Works PR #4835 (squash `30cf4264`) after all 13 exact-head checks passed (Contract shards 1-4 plus aggregate, TypeScript, layout-contract, Prettier, browser-interruptions, Playbook Kit). Then merged conductor #7094 (status to review), #7093 (ruler-hooked console art lane, not staged). Task closed done.
+
+**What worked:** a 36-room twin of the Breathing Works with 170 echoes and a dedicated verifier test; also fixed Fenn Dunlin's name drift. **What to improve:** the new sea-stage button and choking mode have no browser-level test, so added kaizen t-063. Worker could post the review-status PR and the implementation PR with a shared checklist to cut handoff lag.
