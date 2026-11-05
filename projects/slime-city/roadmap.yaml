@@ -307,16 +307,29 @@ tasks:
   - id: t-022
     milestone: m2
     title: "Paint reaction-face board tokens for every creature and wire them in"
-    status: claimed
+    status: ready
     depends_on: t-013
     owner: worker
     passes: 0
     stakes: reversible
     note: |-
       Silas 2026-11-02 PT: "we need custom tokens for all cards on the board. Images with reaction faces would probably work." Kind Robots silasfelinus/kind_robots#4685 ships the token system: round art tokens on the arena board that read SLIME_CITY_ART.tokens['<cardId>/<mood>'] (moods fierce, guard, hurt) and fall back to the card art plus a reaction-face badge. projects/slime-city/art/BOARD-TOKENS-ROUND-6.yaml queues the first 72 portraits (24 starter-deck creatures x 3 moods, auto-submit Krea 2, square 1024). Next: once round 6 is DONE, review the renders and wire each ArtImage id into utils/slimeCity/artManifest.ts tokens; then author round 7 for the remaining 86 creatures (110 total) the same way. Not done until verified token images show on the board at 390/768/1440.
+
+      PARTIAL 2026-11-05 PT: Round 6 (72 portraits, ArtImages 261605-261677) fetched and
+      curated: 48 kept and wired in kind_robots#4786 (merged 816009a, 11/11 checks):
+      SLIME_CITY_ART.tokens, art count 233, token-key test in verifySlimeCityOverworld;
+      tokenArt now falls back to the creature's other painted portrait before card art. 24
+      rejected (8 painted white frames from the old 'square frame' suffix, child-looking
+      Bloodsprite, 13 moods that did not read) and re-queued in art/BOARD-TOKENS-REDO-1.yaml.
+      art/BOARD-TOKENS-ROUND-8.yaml queues the other 86 creatures x 3 moods (258), so all 110
+      creatures now have tokens queued; conductor#7058 merged 91ff04e (25 checks). Both
+      ledgers: 0 art_ledger_authoring problems, 282/282 live prompt contract. Next: once the
+      redo and round 8 are DONE, fetch and curate them, wire keepers into artManifest tokens,
+      then screenshot the board at 390/768/1440 (not yet done).
     claimed_by: 2026-11-05T074720Z-slime-city-t022-claude
     claimed_at: '2026-11-05T07:47:21Z'
-    updated: '2026-11-05T07:47:21Z'
+    updated: '2026-11-05T08:07:21Z'
+    implementation_pr: 'silasfelinus/kind_robots#4786'
   - id: t-023
     milestone: m2
     title: "TURF: a Go-style mode where every card is one token"
