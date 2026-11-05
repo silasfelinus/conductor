@@ -474,11 +474,15 @@ def consecutive_failing_runs(runs: list[dict]) -> int:
     `status: completed` runs carry a real `conclusion` -- a run still queued
     or in_progress hasn't reported a result yet, so it's skipped rather than
     breaking or extending the streak. Stops at the first completed run whose
-    conclusion is 'success' (a scheduled workflow that's recovered stops
+    conclusion is 'success'; `cancelled` runs (concurrency supersession) are skipped (a scheduled workflow that's recovered stops
     counting as failing, even if an older run in the same page failed)."""
     count = 0
     for run in runs:
         if run.get('status') != 'completed':
+            continue
+        if run.get('conclusion') == 'cancelled':
+            # Superseded by a newer push/schedule via the concurrency group:
+            # no result, so neither breaks nor extends the streak.
             continue
         if run.get('conclusion') == 'success':
             break
