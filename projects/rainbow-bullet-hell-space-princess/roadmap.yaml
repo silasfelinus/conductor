@@ -732,12 +732,12 @@ tasks:
   - id: t-036
     milestone: m4
     title: "Doodle restyle of the cast, ships, co-pilot cut-ins and the nine DOG commanders"
-    status: review
+    status: done
     depends_on: [t-035]
     owner: null
     passes: 0
     stakes: reversible
-    updated: '2026-11-05T01:01:13Z'
+    updated: '2026-11-05T01:20:57Z'
     note: >-
       DOODLE-DIRECTION.md step 2. Kontext-restyle every approved princess asset from its identity lock (CAST-QA
       identity still binding); cat ships keeping each silhouette and P1-P4 glyph; super cut-ins with each pilot's
@@ -765,6 +765,9 @@ tasks:
       toggle; Classic stays default). Held: Solenne portrait and comms (CAST-QA skin and
       hair). art/DOODLE-SET-2.yaml queues 35 re-renders with source_margin; review them, flip
       the matching review entries to keep, re-run scripts/export_rainbow_doodle_art.py.
+
+      Merged kind_robots#4764 (1c6b163): the Classic / Fever Dream switch is on main. The
+      DOODLE-SET-2 re-review continues as t-043.
     implementation_pr: 'silasfelinus/kind_robots#4764'
   - id: t-037
     milestone: m4
