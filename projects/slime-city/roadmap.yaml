@@ -332,7 +332,7 @@ tasks:
   - id: t-024
     milestone: m2
     title: "TURF CPU: make the Go-reader end games on passes instead of the 45-round clock"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -349,9 +349,15 @@ tasks:
       57. verifySlimeCityTurf covers settled-board pass, dame fill and whole games ending
       before the clock; full test:slime-city-lab passed locally. Next: merge when CI green,
       then done. Follow-up idea: ladder/atari-escape read to cut ~50 captures/game.
+
+      DONE 2026-11-04 PT: Kind Robots PR #4784 merged be8b7efe8d5a0b37817e0fb0d7fde48d6749c058
+      after all 11 latest-head checks passed (TypeScript, four contract shards, contract
+      verifiers, Prettier, layout, verify x2, GitGuardian). Review close-out conductor #7056
+      merged 98f11c1. TURF games now end on two passes in 104/108 sweep games (avg 56.7
+      rounds); safety clock 70.
     claimed_by: 2026-11-05T053021Z-slime-city-t024-claude
     claimed_at: '2026-11-05T05:30:22Z'
-    updated: '2026-11-05T06:06:15Z'
+    updated: '2026-11-05T06:16:09Z'
     implementation_pr: 'silasfelinus/kind_robots#4784'
   - id: t-014
     milestone: m4
