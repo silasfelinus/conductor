@@ -700,7 +700,7 @@ tasks:
     milestone: m2
     title: "Polish World One as a complete one-screen console with save slots"
     status: review
-    updated: '2026-10-29T02:04:00Z'
+    updated: '2026-11-05T02:25:46Z'
     depends_on: t-022
     passes: 0
     stakes: reversible
@@ -732,6 +732,21 @@ tasks:
       2026-10-28 PT: Merged Kind Robots PR #4419 (82bd84f8457d98f1e15b4c79ad43175c574f3b8b) after all 14 exact-head workflows passed on 4ccdde8d011d657cd349de0cead7d3f6f9c01a1b. Both House save restorers and room lookup now reject inherited prototype-key fake room IDs; adversarial tests cover constructor, toString and __proto__, fake decisions and mirrored challenges. Master issue #4136 comment 6484865403 has evidence. Branch deleted. No new ArtJobs or deployment. Return READY for graph-aware traversal, House atlas delivery and rendered console QA; not For Human Gate.
 
       Focused graph-aware House save-restoration increment prepared in Kind Robots: original and mirrored chambers must connect through authored passages from HD-01; Scylla's earned service shortcut is preserved. Forged distant Hearth and mirrored verdicts are stripped, while adjacent legacy current rooms survive. Focused PR and exact-head CI verification follow. Full rendered device QA, painted House atlas delivery, and campaign acceptance remain open.
+
+      2026-11-05 PT game-sprint: an adversarial World One store playtest found and fixed a
+      save-loss bug. Players answer the four cross-world seal scenes (1,1 / 5,2 / 8,1 / 8,8)
+      from the round-four sigil inspector, but restoreBriarSave dropped those answers on every
+      reload or checkpoint load, because those squares are never revealed or visited. New
+      utils/scripts/verifyMemoryWorldOnePlaytest.test.mjs drives the real Pinia store through
+      every UI-reachable World One action with five seeded personas (20 runs, about 37k
+      actions, about 2.4k reloads and checkpoint swaps). It found no softlocks and no negative
+      or NaN resources; Briar and House saves restore unchanged; every speedrunner opens the
+      gate; all three Hearth endings are reached. The Kind Robots patch (base 00cdc524) has
+      gone to the coordinator, who will push it as branch worker/memory-dungeon-t-034-world-
+      one-playtest-gs and open the PR. Still open for t-034: rendered phone/tablet/desktop
+      console QA and acceptance of the painted House atlas. Next: run the t-036 personas on
+      this harness once the t-035 art lands, or extend the harness to Dark Briar and the Dark
+      House now.
     owner: worker
     claimed_by: 2026-10-29T014900Z-memory-dungeon-t-034-c8a9
     claimed_at: '2026-10-29T01:49:00Z'
