@@ -732,12 +732,12 @@ tasks:
   - id: t-036
     milestone: m4
     title: "Doodle restyle of the cast, ships, co-pilot cut-ins and the nine DOG commanders"
-    status: ready
+    status: review
     depends_on: [t-035]
     owner: null
     passes: 0
     stakes: reversible
-    updated: '2026-11-02T11:23:43Z'
+    updated: '2026-11-05T01:01:13Z'
     note: >-
       DOODLE-DIRECTION.md step 2. Kontext-restyle every approved princess asset from its identity lock (CAST-QA
       identity still binding); cat ships keeping each silhouette and P1-P4 glyph; super cut-ins with each pilot's
@@ -758,6 +758,14 @@ tasks:
       Kontext's frame size); redraw those separately if the doodle stages need them. Next:
       curate against DOODLE-DIRECTION.md and CAST-QA, export keepers with alpha, then t-037
       wires a style toggle (default stays the current art).
+
+      2026-11-05 PT: reviewed all 93 set-1 cells (art/DOODLE-SET-1-REVIEW.yaml).
+      kind_robots#4764 ships 98 Fever Dream pictures (57 doodle keepers, the rest as a neon
+      sticker treatment of the classic sprite) and a Classic / Fever Dream switch (t-037's
+      toggle; Classic stays default). Held: Solenne portrait and comms (CAST-QA skin and
+      hair). art/DOODLE-SET-2.yaml queues 35 re-renders with source_margin; review them, flip
+      the matching review entries to keep, re-run scripts/export_rainbow_doodle_art.py.
+    implementation_pr: 'silasfelinus/kind_robots#4764'
   - id: t-037
     milestone: m4
     title: "C.A.T.S. vs DOGS in game: names, DOG commanders on boss bars and cut-ins, bones and hearts, doodle UI"
