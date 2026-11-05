@@ -1202,14 +1202,14 @@ tasks:
     implementation_pr: 'silasfelinus/kind_robots#4729'
   - id: t-051
     title: "Memory Dungeon: rebalance Briar's 64-tile pacing and House room variety"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 2026-11-05T074900Z-memory-dungeon-t-051-q8m4
     claimed_at: '2026-11-05T07:49:00Z'
     stakes: reversible
     passes: 0
     source_issue: "silasfelinus/kind_robots#4721"
-    updated: '2026-11-05T07:49:00Z'
+    updated: '2026-11-05T07:54:00Z'
     note: |-
       FROM GITHUB ISSUE silasfelinus/kind_robots#4721 (https://github.com/silasfelinus/kind_robots/issues/4721), opened by @silasfelinus on 2026-11-03. Imported by scripts/sync_github_issues.py. Reference the issue in the implementing PR (`Closes silasfelinus/kind_robots#4721`) so it closes on merge; the bridge closes it otherwise once this task is done.
 
@@ -1222,6 +1222,8 @@ tasks:
       Two low-stakes Briar sites now auto-resolve with their existing choice IDs, preserving old saves and reducing repeated dialogue prompts. Kind Robots PR #4783; CI pending. The full 64-tile pacing and House variety task remains open.
 
       Partial Briar pacing slice merged as kind_robots PR #4783, squash a13933a79d51aa06257f32e70356eb65d7df181c; eight CI checks green on head 7b69f15fc7d5b3ca2ccb33739a137778a13aaab3. Keep task ready for remaining 64-tile encounter mix and House room variety.
+
+      House validator now accepts one-choice lore discoveries with a valid automatic choice ID, rejects missing automatic IDs, and has mutation-based regression coverage. Existing authored choices and save identifiers preserved. Remaining House room pacing and 64-tile variety remain open.
   - id: t-052
     milestone: m3
     title: "e03 Morrow's Shift: replace template recipe sites with 64 authored sites in the live Earth stage"
