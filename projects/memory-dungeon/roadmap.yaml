@@ -1361,13 +1361,13 @@ tasks:
   - id: t-057
     milestone: m4
     title: "e09 Briar collision: Rowan leads, goblin Pip becomes a companion"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 2026-11-05T174342Z-memory-dungeon-t057-k8p4
     claimed_at: '2026-11-05T17:43:42Z'
     stakes: reversible
     passes: 0
-    updated: '2026-11-05T17:43:42Z'
+    updated: '2026-11-05T17:51:00Z'
     note: |-
       Silas 2026-11-05 PT: the researcher (Rowan) leads e09, not Pip. briarCollision.ts, briarCollisionRoute.ts, briarCollisionWitness.ts and the e09 stage (components/pages/memory-dungeon-briar-collision.vue) are written with Pip as the acting lead ("Pip spots...", "Pip exposes..."). Rewrite them so Rowan acts and Pip, the goblin courier, is a companion who still contributes courier knowledge. Keep coordinates, choice ids, fragment ids and save keys. Also update conductor story/BRIAR-COLLISION-PIP-QUESTS.json framing.
 
@@ -1378,6 +1378,8 @@ tasks:
       Focused e09 office scene rewrite in kind_robots: Rowan coordinates evacuation and breaks the clock, while Pip retains courier oath expertise. Remaining route, stage and story JSON need separate passes; keep task active.
 
       2026-11-05 PT: Merged Kind Robots PR #4820 (26ae0ec01cb759370f6230b1c2e1661cdd9dc5bc), exact head 52b5c5d passed all eight workflows. Rowan now directs Briar Office evacuation, witness privacy and clock break; IDs and effects unchanged. Remaining: connecting e09 scenes, stage presentation, Conductor story documentation and adversarial branch tests. No ArtJobs or deployment; keep active.
+
+      Focused e09 Rowan-led reception and wolf turnstile rewrite on worker branch; remaining route and stage still need follow-up. No choice IDs or effects changed.
   - id: t-058
     milestone: m3
     title: "e05 Scylla's Shore: replace template recipe sites with 64 authored sites"
