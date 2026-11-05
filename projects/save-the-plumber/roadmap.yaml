@@ -131,7 +131,7 @@ tasks:
   - id: t-005
     milestone: m2
     title: "Implement enemy interaction, held objects and powerup systems"
-    status: claimed
+    status: ready
     depends_on: [t-003]
     owner: worker
     passes: 0
@@ -158,9 +158,30 @@ tasks:
       destructible crates; knockback, i-frames, lives and checkpoints; and an autopilot that
       finishes all 32 stages. Still to build: slopes and ladders, carrying enemies and keys,
       and dedicated softlock tests.
-    updated: '2026-11-05T10:06:29Z'
+
+      2026-11-04 PT adversarial interaction slice: added verifySavePlumberInteractions.test.ts
+      (in test:arcade-engine). It has scripted regressions plus a seeded fuzz of about 674k
+      frames that drops the heroine beside foes, crates, valves, lifts and pickups with random
+      powers across all 32 stages, and a guard that nothing adds height at a closed valve
+      gate. The hunt found and fixed eight interaction defects in savePlumberPreview.ts. A
+      flat moss lantern knocked out by a thrown crate or kicked shell, or cleared when a boss
+      arena locked, left an invisible floor. Glass gulls and gull gliders that stole tokens
+      flew off the stage for good, breaking "catch it and it drops them all". Fleeing gulls
+      are now cornered at the edge, thief gliders patrol edge to edge, and all 10 campaign
+      gliders are proven catchable with no power. An arena lock dropped a stray thief's
+      tokens. Tokens from crates, gusts and thieves could pass 99 without giving a life. A
+      jump pressed while falling into a pit fired as a phantom hop on respawn. A Bottled Storm
+      gust turned valves on other floors through the ground. No closed-gate crossing turned
+      up, so row 0 was left open. An offline powered-reachability probe found no trap pockets
+      in any stage. Remaining: slopes, ladders/climbing and carrying keys or enemies are still
+      unbuilt, so they have no adversarial coverage yet. The Gen-2 powers, reserve item and
+      ride creature are also still to build. The Gears suite (about 6.5 minutes) could
+      snapshot tiles so trap analysis could run in CI.  Merged as kind_robots #4804; back to
+      ready for the remaining scope.
+    updated: '2026-11-05T11:22:44Z'
     claimed_by: 2026-11-05T100620Z-save-the-plumber-t-005-r3
     claimed_at: '2026-11-05T10:06:29Z'
+    implementation_pr: 'silasfelinus/kind_robots#4804'
   - id: t-006
     milestone: m3
     title: "Build World 1: four complete garden/pipeworks levels and boss"
