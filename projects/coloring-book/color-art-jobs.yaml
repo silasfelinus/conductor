@@ -1507,7 +1507,7 @@ books:
     id: hwr-002
     slug: the-grand-staircase
     title: The Grand Staircase
-    status: approved
+    status: pending
     seed: 1683257364
     source_ref: projects/coloring-book/sets/hollywood-recast/proposals.yaml#hwr-002
     image_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-002-the-grand-staircase.webp
@@ -1519,13 +1519,17 @@ books:
       semantic_score: null
       prompt_fingerprint: ea758f53c7d6f7d11f78e696b8264510ba7f63f1c892c5605932924e5dcf97a9
       archived_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/revisions/hwr-002-the-grand-staircase-20260914T193627Z.webp
-    studio_revision_requested_at: '2026-09-14T19:36:27Z'
-    rendered_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-002-the-grand-staircase.webp
-    art_image_id: 24056
-    render_seed: 1683257364
-    render_engine: krea2
-    completed_at: '2026-09-14T19:40:06Z'
-    prompt_fingerprint: ea758f53c7d6f7d11f78e696b8264510ba7f63f1c892c5605932924e5dcf97a9
+    - requested_at: '2026-11-04T23:17:39Z'
+      previous_status: approved
+      art_image_id: 24056
+      rendered_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-002-the-grand-staircase.webp
+      semantic_score: null
+      prompt_fingerprint: ea758f53c7d6f7d11f78e696b8264510ba7f63f1c892c5605932924e5dcf97a9
+      archived_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/revisions/hwr-002-the-grand-staircase-20261104T231739Z.webp
+      masters_repointed:
+      - accepted
+      - final
+    studio_revision_requested_at: '2026-11-04T23:17:39Z'
     approved_at: '2026-09-14T19:40:22Z'
     lock_seed: false
     bw_job_id: 31601
@@ -1548,6 +1552,8 @@ books:
     pair_status: final
     pair_semantic_score: null
     pair_finalized_at: '2026-09-27T04:06:50Z'
+    render_gate_error: job 63783 timed out after 900s (still queued/running)
+    render_gate_error_at: '2026-11-04T23:32:43Z'
   - slot: 3
     id: hwr-003
     slug: desert-wheel-queen
@@ -1588,16 +1594,10 @@ books:
     id: hwr-004
     slug: rain-on-the-backlot
     title: Rain on the Backlot
-    status: approved
+    status: pending
     seed: 954164708
     source_ref: projects/coloring-book/sets/hollywood-recast/proposals.yaml#hwr-004
     image_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-004-rain-on-the-backlot.webp
-    rendered_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-004-rain-on-the-backlot.webp
-    art_image_id: 17148
-    render_seed: 954164708
-    render_engine: krea2
-    completed_at: '2026-08-10T03:57:55Z'
-    prompt_fingerprint: 3bbad292d2139b589d57edf1e2efb517624f6a362886afebf8f1c0d0b5a894c8
     approved_at: '2026-09-11T00:32:13Z'
     lock_seed: false
     bw_job_id: 31607
@@ -1620,6 +1620,20 @@ books:
     pair_status: final
     pair_semantic_score: null
     pair_finalized_at: '2026-09-27T05:04:02Z'
+    studio_revision_history:
+    - requested_at: '2026-11-04T23:17:39Z'
+      previous_status: approved
+      art_image_id: 17148
+      rendered_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-004-rain-on-the-backlot.webp
+      semantic_score: null
+      prompt_fingerprint: 3bbad292d2139b589d57edf1e2efb517624f6a362886afebf8f1c0d0b5a894c8
+      archived_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/revisions/hwr-004-rain-on-the-backlot-20261104T231739Z.webp
+      masters_repointed:
+      - accepted
+      - final
+    studio_revision_requested_at: '2026-11-04T23:17:39Z'
+    render_gate_error: job 63784 timed out after 900s (still queued/running)
+    render_gate_error_at: '2026-11-04T23:47:43Z'
   - slot: 5
     id: hwr-005
     slug: midnight-detective
@@ -1850,16 +1864,10 @@ books:
     id: hwr-010
     slug: rooftop-sign-song
     title: Rooftop Sign Song
-    status: approved
+    status: pending
     seed: 99172636
     source_ref: projects/coloring-book/sets/hollywood-recast/proposals.yaml#hwr-010
     image_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-010-rooftop-sign-song.webp
-    rendered_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-010-rooftop-sign-song.webp
-    art_image_id: 17200
-    render_seed: 99172636
-    render_engine: krea2
-    completed_at: '2026-08-10T03:57:55Z'
-    prompt_fingerprint: f3957254928401eeefb64aedcc3fb3fcc25b7b182c9c59979d085d6d4fae4799
     approved_at: '2026-09-11T00:32:14Z'
     lock_seed: false
     bw_job_id: 31613
@@ -1882,20 +1890,28 @@ books:
     pair_status: final
     pair_semantic_score: null
     pair_finalized_at: '2026-09-27T05:33:51Z'
+    studio_revision_history:
+    - requested_at: '2026-11-04T23:17:39Z'
+      previous_status: approved
+      art_image_id: 17200
+      rendered_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-010-rooftop-sign-song.webp
+      semantic_score: null
+      prompt_fingerprint: f3957254928401eeefb64aedcc3fb3fcc25b7b182c9c59979d085d6d4fae4799
+      archived_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/revisions/hwr-010-rooftop-sign-song-20261104T231739Z.webp
+      masters_repointed:
+      - accepted
+      - final
+    studio_revision_requested_at: '2026-11-04T23:17:39Z'
+    render_gate_error: job 63785 timed out after 900s (still queued/running)
+    render_gate_error_at: '2026-11-05T00:02:48Z'
   - slot: 11
     id: hwr-011
     slug: the-gentle-giant-visitor
     title: The Gentle Giant Visitor
-    status: approved
+    status: pending
     seed: 1812672509
     source_ref: projects/coloring-book/sets/hollywood-recast/proposals.yaml#hwr-011
     image_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-011-the-gentle-giant-visitor.webp
-    rendered_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-011-the-gentle-giant-visitor.webp
-    art_image_id: 17202
-    render_seed: 1812672509
-    render_engine: krea2
-    completed_at: '2026-08-10T11:34:55Z'
-    prompt_fingerprint: a3077a0f7e791f523588e7a6b0a6cd8d82e33e61a7e69c68981bd37a95cb0c8c
     approved_at: '2026-09-11T04:35:52Z'
     lock_seed: false
     bw_job_id: 31614
@@ -1918,6 +1934,20 @@ books:
     pair_status: final
     pair_semantic_score: null
     pair_finalized_at: '2026-09-27T07:03:42Z'
+    studio_revision_history:
+    - requested_at: '2026-11-04T23:17:39Z'
+      previous_status: approved
+      art_image_id: 17202
+      rendered_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-011-the-gentle-giant-visitor.webp
+      semantic_score: null
+      prompt_fingerprint: a3077a0f7e791f523588e7a6b0a6cd8d82e33e61a7e69c68981bd37a95cb0c8c
+      archived_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/revisions/hwr-011-the-gentle-giant-visitor-20261104T231739Z.webp
+      masters_repointed:
+      - accepted
+      - final
+    studio_revision_requested_at: '2026-11-04T23:17:40Z'
+    render_gate_error: job 63786 timed out after 900s (still queued/running)
+    render_gate_error_at: '2026-11-05T00:17:49Z'
   - slot: 12
     id: hwr-012
     slug: last-train-first-kiss
@@ -2125,16 +2155,10 @@ books:
     id: hwr-018
     slug: nebula-crooner
     title: Nebula Crooner
-    status: approved
+    status: pending
     seed: 909229750
     source_ref: projects/coloring-book/sets/hollywood-recast/proposals.yaml#hwr-018
     image_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-018-nebula-crooner.webp
-    rendered_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-018-nebula-crooner.webp
-    art_image_id: 17209
-    render_seed: 909229750
-    render_engine: krea2
-    completed_at: '2026-08-10T11:34:55Z'
-    prompt_fingerprint: ce26c7d32406e41a169fc414eb8b0a4313e919f55ba91cfa646f9f2fc294efbc
     approved_at: '2026-09-11T04:35:52Z'
     lock_seed: false
     bw_job_id: 31619
@@ -2157,20 +2181,28 @@ books:
     pair_status: final
     pair_semantic_score: null
     pair_finalized_at: '2026-09-27T08:29:07Z'
+    studio_revision_history:
+    - requested_at: '2026-11-04T23:17:40Z'
+      previous_status: approved
+      art_image_id: 17209
+      rendered_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-018-nebula-crooner.webp
+      semantic_score: null
+      prompt_fingerprint: ce26c7d32406e41a169fc414eb8b0a4313e919f55ba91cfa646f9f2fc294efbc
+      archived_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/revisions/hwr-018-nebula-crooner-20261104T231740Z.webp
+      masters_repointed:
+      - accepted
+      - final
+    studio_revision_requested_at: '2026-11-04T23:17:40Z'
+    render_gate_error: job 63787 timed out after 900s (still queued/running)
+    render_gate_error_at: '2026-11-05T00:32:52Z'
   - slot: 19
     id: hwr-019
     slug: the-house-on-marigold-hill
     title: The House on Marigold Hill
-    status: approved
+    status: pending
     seed: 1708405007
     source_ref: projects/coloring-book/sets/hollywood-recast/proposals.yaml#hwr-019
     image_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-019-the-house-on-marigold-hill.webp
-    rendered_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-019-the-house-on-marigold-hill.webp
-    art_image_id: 17267
-    render_seed: 1708405007
-    render_engine: krea2
-    completed_at: '2026-08-10T16:29:26Z'
-    prompt_fingerprint: 4165cf2082b72256734d741e48b697c80502e0027d25446c8095ddbb84ac0432
     approved_at: '2026-09-11T04:35:53Z'
     lock_seed: false
     bw_job_id: 31620
@@ -2193,6 +2225,20 @@ books:
     pair_status: final
     pair_semantic_score: null
     pair_finalized_at: '2026-09-27T08:29:08Z'
+    studio_revision_history:
+    - requested_at: '2026-11-04T23:17:40Z'
+      previous_status: approved
+      art_image_id: 17267
+      rendered_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-019-the-house-on-marigold-hill.webp
+      semantic_score: null
+      prompt_fingerprint: 4165cf2082b72256734d741e48b697c80502e0027d25446c8095ddbb84ac0432
+      archived_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/revisions/hwr-019-the-house-on-marigold-hill-20261104T231740Z.webp
+      masters_repointed:
+      - accepted
+      - final
+    studio_revision_requested_at: '2026-11-04T23:17:40Z'
+    render_gate_error: job 63788 timed out after 900s (still queued/running)
+    render_gate_error_at: '2026-11-05T00:47:53Z'
   - slot: 20
     id: hwr-020
     slug: director-of-monsters
@@ -2537,7 +2583,7 @@ books:
     id: hwr-030
     slug: highland-heatwave
     title: Highland Heatwave
-    status: approved
+    status: pending
     seed: 2014978001
     source_ref: projects/coloring-book/sets/hollywood-recast/proposals.yaml#hwr-030
     image_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-030-highland-heatwave.webp
@@ -2549,8 +2595,9 @@ books:
       semantic_score: null
       prompt_fingerprint: c1491c12a1e66c7efa78f08f2139492180a0bf38b87f831125d1a2e76f94189d
       archived_path: null
-      archive_deleted_reason: archived candidate contained unrequested nudity (unclothed chest); deleted rather than
-        committed, per coloring-book/t-022 cycle 10 content-safety finding -- see proposals.yaml notes for this slot
+      archive_deleted_reason: archived candidate contained unrequested nudity (unclothed chest); deleted rather
+        than committed, per coloring-book/t-022 cycle 10 content-safety finding -- see proposals.yaml notes for
+        this slot
     - requested_at: '2026-09-14T20:47:56Z'
       previous_status: done
       art_image_id: 24066
@@ -2558,8 +2605,9 @@ books:
       semantic_score: null
       prompt_fingerprint: c1491c12a1e66c7efa78f08f2139492180a0bf38b87f831125d1a2e76f94189d
       archived_path: null
-      archive_deleted_reason: archived candidate contained unrequested nudity (unclothed chest); deleted rather than
-        committed, per coloring-book/t-022 cycle 10 content-safety finding -- see proposals.yaml notes for this slot
+      archive_deleted_reason: archived candidate contained unrequested nudity (unclothed chest); deleted rather
+        than committed, per coloring-book/t-022 cycle 10 content-safety finding -- see proposals.yaml notes for
+        this slot
     - requested_at: '2026-09-14T20:49:58Z'
       previous_status: done
       art_image_id: 24067
@@ -2567,15 +2615,16 @@ books:
       semantic_score: null
       prompt_fingerprint: c1491c12a1e66c7efa78f08f2139492180a0bf38b87f831125d1a2e76f94189d
       archived_path: null
-      archive_deleted_reason: archived candidate contained unrequested nudity (unclothed chest); deleted rather than
-        committed, per coloring-book/t-022 cycle 10 content-safety finding -- see proposals.yaml notes for this slot
-    studio_revision_requested_at: '2026-09-14T20:49:58Z'
-    rendered_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-030-mermaid-on-lot-seven.webp
-    art_image_id: 24068
-    render_seed: 2014978001
-    render_engine: krea2
-    completed_at: '2026-09-14T20:51:29Z'
-    prompt_fingerprint: bc1c3842a327a2eb1a6076be28f131238d08ae0e77fa0a95e96e3bd1998cc6ea
+      archive_deleted_reason: archived candidate contained unrequested nudity (unclothed chest); deleted rather
+        than committed, per coloring-book/t-022 cycle 10 content-safety finding -- see proposals.yaml notes for
+        this slot
+    - requested_at: '2026-11-04T23:17:40Z'
+      previous_status: approved
+      art_image_id: 24068
+      rendered_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-030-mermaid-on-lot-seven.webp
+      semantic_score: null
+      prompt_fingerprint: bc1c3842a327a2eb1a6076be28f131238d08ae0e77fa0a95e96e3bd1998cc6ea
+    studio_revision_requested_at: '2026-11-04T23:17:40Z'
     approved_at: '2026-09-27T08:32:54Z'
     lock_seed: false
     bw_job_id: 31633
@@ -2598,6 +2647,8 @@ books:
     pair_status: final
     pair_semantic_score: null
     pair_finalized_at: '2026-09-27T09:04:04Z'
+    render_gate_error: job 63789 timed out after 900s (still queued/running)
+    render_gate_error_at: '2026-11-05T01:02:58Z'
   - slot: 31
     id: hwr-031
     slug: alien-at-the-premiere
@@ -2746,16 +2797,10 @@ books:
     id: hwr-035
     slug: awards-night-stampede
     title: Awards Night Stampede
-    status: approved
+    status: pending
     seed: 63421594
     source_ref: projects/coloring-book/sets/hollywood-recast/proposals.yaml#hwr-035
     image_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-035-awards-night-stampede.webp
-    rendered_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-035-awards-night-stampede.webp
-    art_image_id: 17283
-    render_seed: 63421594
-    render_engine: krea2
-    completed_at: '2026-08-10T14:02:09Z'
-    prompt_fingerprint: f84e43a62149e5ecaedbfd644ffd33526c614421fb74eac737c53d6b8e29cae9
     approved_at: '2026-09-11T08:36:07Z'
     lock_seed: false
     bw_job_id: 31626
@@ -2778,6 +2823,20 @@ books:
     pair_status: final
     pair_semantic_score: null
     pair_finalized_at: '2026-09-27T08:30:38Z'
+    studio_revision_history:
+    - requested_at: '2026-11-04T23:17:40Z'
+      previous_status: approved
+      art_image_id: 17283
+      rendered_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-035-awards-night-stampede.webp
+      semantic_score: null
+      prompt_fingerprint: f84e43a62149e5ecaedbfd644ffd33526c614421fb74eac737c53d6b8e29cae9
+      archived_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/revisions/hwr-035-awards-night-stampede-20261104T231740Z.webp
+      masters_repointed:
+      - accepted
+      - final
+    studio_revision_requested_at: '2026-11-04T23:17:40Z'
+    render_gate_error: job 63790 timed out after 900s (still queued/running)
+    render_gate_error_at: '2026-11-05T01:18:02Z'
   - slot: 36
     id: hwr-036
     slug: the-recast-marquee
