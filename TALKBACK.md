@@ -12656,3 +12656,7 @@ Worker pattern: good test depth and honest "procedural shapes, not painted art" 
 ## 2026-11-05 — Agent (branch-medic): kind_robots `worker/memory-dungeon-4682-character-gallery` is superseded, needs ref deletion
 - Stranded 52h; kind_robots#4683 was opened from it and closed unmerged. Its two files (`stores/helpers/memoryDungeonDeckSource.ts`, `verifyMemoryWorldArt.test.ts`) are already covered on main: the by-ID linked-ArtImage resolution and its source-contract guard both exist there, and kind_robots#4777 (open) refines it. Branch has no merge base with main (shallow history), so a PR from it would be unmergeable and add nothing.
 - Deletion not done: `git push --delete` hangs up, the API ref DELETE is blocked by the proxy (403), and `branch-janitor.yml` (run 41963896528, success) only prunes conductor refs. Needs a one-line `git push origin --delete worker/memory-dungeon-4682-character-gallery` from a credentialed checkout. Kaizen: let branch-janitor take a `repo` input so it can clear kind_robots refs.
+
+## 2026-11-05 — Agent (reviewer): game-of-captains/t-036 merged, zuzu-gamebook/t-013 slice merged
+- kind_robots#4782 (supply refill + crate returns) merged on green CI; #4780 (no forced unwinnable fights) was already merged. Both reversible, scoped, seeded batteries pin the behavior. t-036 -> done; t-013 -> ready for its remaining narrative-alternative and responsive-check slice.
+- Worker pattern: measured before/after tables in PR bodies made review fast. Kaizen: game-of-captains/t-037 (supply swing on report card).
