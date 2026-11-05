@@ -872,6 +872,17 @@ def test_consecutive_failing_runs_skips_in_progress_runs_without_breaking_streak
     assert select_role.consecutive_failing_runs(runs) == 2
 
 
+def test_consecutive_failing_runs_skips_cancelled_runs():
+    runs = [
+        {'status': 'completed', 'conclusion': 'cancelled'},
+        {'status': 'completed', 'conclusion': 'failure'},
+        {'status': 'completed', 'conclusion': 'cancelled'},
+        {'status': 'completed', 'conclusion': 'success'},
+    ]
+    assert select_role.consecutive_failing_runs(runs) == 1
+    assert select_role.consecutive_failing_runs(runs[:1] * 10) == 0
+
+
 def test_consecutive_failing_runs_zero_when_latest_completed_run_succeeded():
     runs = [{"status": "completed", "conclusion": "success"}]
     assert select_role.consecutive_failing_runs(runs) == 0
