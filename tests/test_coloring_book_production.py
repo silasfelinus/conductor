@@ -4,6 +4,8 @@ import tempfile
 import unittest
 from pathlib import Path
 
+import yaml
+
 
 SCRIPT = Path(__file__).resolve().parents[1] / "scripts" / "manage_coloring_book_production.py"
 SPEC = importlib.util.spec_from_file_location("manage_coloring_book_production", SCRIPT)
@@ -208,6 +210,54 @@ class ColoringBookProductionTests(unittest.TestCase):
         # must still succeed rather than staying held forever.
         with MODULE.queue_lock():
             pass
+
+    def test_write_queue_entry_never_emits_a_colliding_anchor(self) -> None:
+        # 2026-11-05: a spliced entry whose two fields shared one list was
+        # dumped as `&id001`, colliding with another entry's anchor and
+        # making color-art-jobs.yaml unparseable.
+        queue_file = self.root / "color-art-jobs.yaml"
+        queue_file.write_text(
+            """schema_version: 1
+books:
+- order: 1
+  slug: monster-recast
+  title: Monster Recast
+  entries:
+  - slot: 1
+    id: mr-001
+    render_gate:
+      reasons: &id001
+      - too dark
+    last_render_reasons: *id001
+  - slot: 2
+    id: mr-002
+    status: pending
+""",
+            encoding="utf-8",
+        )
+        reasons = ["blurry"]
+        original_queue_file = MODULE.QUEUE_FILE
+        MODULE.QUEUE_FILE = queue_file
+        try:
+            MODULE.write_queue_entry(
+                "monster-recast",
+                "mr-002",
+                {
+                    "slot": 2,
+                    "id": "mr-002",
+                    "render_gate": {"reasons": reasons},
+                    "last_render_reasons": reasons,
+                },
+            )
+            after = queue_file.read_text(encoding="utf-8")
+        finally:
+            MODULE.QUEUE_FILE = original_queue_file
+
+        data = yaml.safe_load(after)
+        entry = data["books"][0]["entries"][1]
+        self.assertEqual(entry["last_render_reasons"], ["blurry"])
+        self.assertEqual(entry["render_gate"]["reasons"], ["blurry"])
+        self.assertEqual(after.count("&id001"), 1)
 
     def test_write_queue_entry_preserves_other_entries_byte_for_byte(self) -> None:
         # Regression test for coloring-book/t-052: write_queue_entry must
