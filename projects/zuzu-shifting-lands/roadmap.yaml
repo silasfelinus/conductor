@@ -954,13 +954,35 @@ tasks:
   - id: t-049
     milestone: m3
     title: "Spent deeds: consume medicine/favor flags once spent (deck schemaVersion 2 + save migration)"
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
     source: game-sprint-2026-11-05
     note: |-
       Found by the t-036 final voice audit (kind_robots #4813, 2026-11-05 PT). Deed flags such as deed-carries-medicine and deed-owed-favor are never cleared when spent, so the choices they gate stay open: one medicine can be "spent" once per land, up to five times a run. Proposed design (PR #4813 body): add a `consumes` field to choice outcomes with deck `schemaVersion: 2`; because saves are rejected when the deck version changes, ship a save migration that replays v1 runs under v2 rules or grandfathers them. Pin with a seeded battery showing each deed is spent at most once per acquisition, and keep the V6 replay/forgery guarantees. Prose already avoids promising consumption (t-036).
+
+      2026-11-05 PT: Spent deeds shipped as a patch (round r5) on base b26f0cc9. A route gated
+      on deed-carries-medicine or deed-owed-favor now spends it, win or lose. Eleven routes
+      spend; comparing herbs is exempt because it is a trade. Every route gated on that deed
+      then closes ("Already spent. Opens again only if ...") until a later outcome grants
+      another, so each deed is spent at most once per acquisition. The board chip says "spends
+      your medicine" or "spends a favor", and the journal records the loss. I took option (b)
+      instead of the proposed consumes field with schemaVersion 2: the rule lives in
+      deckV6.ts, so the V6 deck fingerprint and version are unchanged. Run state gains
+      JourneyStateV6.spentDeedsFrom (new runs 0). Pre-change V6-V9 saves replay and verify
+      under their own rules, then adopt the rule from their next outcome on; deeds they
+      already used stay used, and out-of-range values or hidden double spends are refused.
+      Three prose lines that promised medicine left over now match the rule. The new
+      verifyShiftingSpentDeeds battery (in the gameplay workflow) plays 3,000 seeded V9 runs:
+      0 double spends against 18 under the old rule, 27 closed and refused, re-acquisition
+      reopens, replay and forgery guarantees hold, old V6-V9 double-spend saves load, and all
+      38 endings stay reachable. 12 saves made with the unmodified base code also restore. All
+      19 workflow verifiers and full vue-tsc pass. Remaining: the coordinator applies, opens
+      and merges the PR. Optional follow-up: show the deeds you carry on the character rail.
+      Limit: a hand-edited save can drop the field and get the old rule for history it already
+      recorded, but only that.  Merged as kind_robots #4830.
     owner: worker
     claimed_by: 2026-11-05T211047Z-zuzu-shifting-lands-t-049-r5
     claimed_at: '2026-11-05T21:10:48Z'
-    updated: '2026-11-05T21:10:48Z'
+    updated: '2026-11-05T21:52:23Z'
+    implementation_pr: 'silasfelinus/kind_robots#4830'
