@@ -234,11 +234,11 @@ tasks:
   - id: t-001
     milestone: m1
     title: "Seeded expedition reducer, room schema and Classic adapter"
-    status: claimed
+    status: ready
     owner: worker
     claimed_by: 2026-11-05T100620Z-memory-dungeon-t-001-r3
     claimed_at: '2026-11-05T10:06:31Z'
-    updated: '2026-11-05T10:06:31Z'
+    updated: '2026-11-05T11:22:41Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -253,6 +253,29 @@ tasks:
       2026-11-04 PT cleanup pass: stale review with an expired claim; the recorded slice
       landed (or was superseded) and the note itself lists remaining scope, so back to ready
       for the next slice rather than done.
+
+      2026-11-04 PT: Added a seeded Dark Briar (e02) and mirrored-House playtest to the
+      simulator harness (base 16e1a4d5a9783209dd741d8827de13eeb7950466).
+      utils/scripts/verifyMemoryDarkRealmPlaytest.test.mjs bundles the real Pinia
+      memoryWorldStore and runs six personas through every action the Dark Briar and House
+      stages offer: card rounds, roads, 60 encounters, 4 seals, 3 bouts, 36 chambers with
+      trials, recalls, puzzles and clues, both Hearth verdicts and the HD-36 exit. The
+      personas interrupt timers, reload and swap checkpoints. After every step it checks for
+      softlocks, resource bounds and save round-trips, and a goal-directed rescuer must still
+      be able to finish every run's last save. Totals: 36 runs, about 18.9k actions, 1.7k
+      reloads, 0 findings, about 70 s. It is wired into the memory-world-browser workflow and
+      `npm run test:memory-dark-realm-playtest`. The esbuild and fake-tab helpers moved into
+      the shared memoryWorldPlaytestKit.mjs; the World One playtest still passes. Defect fixed
+      with a pinned regression: a Dark Briar bout lost while the Briar traveller was in the
+      original House, then reloaded before the retreat timer, put the traveller on the Briar
+      map and left a stale duelReturn. hydrate() and loadCheckpoint() now return them to the
+      House. Still open: the seeded expedition reducer and Classic adapter, a pure
+      deterministic three-floor simulator independent of the store, extending the harness to
+      e03+ (Morrow's Earth, Sublevel B) and minefield or Classic-room interplay with Dark
+      bouts, and rendered device acceptance. The Chromium browser interruption test was not
+      run locally and is left to CI.  Merged as kind_robots #4801; back to ready for the
+      remaining scope.
+    implementation_pr: 'silasfelinus/kind_robots#4801'
   - id: t-002
     milestone: m1
     title: "Optional scope feedback on story and complexity"

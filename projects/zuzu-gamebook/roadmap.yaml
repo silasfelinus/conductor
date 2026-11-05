@@ -188,7 +188,7 @@ tasks:
   - id: t-007
     milestone: m3
     title: Integrate authored story bundle, chapter pacing and illustration manifest
-    status: claimed
+    status: ready
     owner: worker
     passes: 0
     stakes: reversible
@@ -199,9 +199,27 @@ tasks:
       reachable from the start, and no no-win progression trap. Render real
       hero/environment/aftermath images with meaningful alt text and fallbacks.
       Add a test that explores reachable state as well as node graph shape.
+
+      2026-11-04 PT (round 3, pacing): Measured chapter pacing over 4,000 seeded walks (per-
+      act section counts, single-way page chains, act transitions). Shipped: - Two Act VIII
+      bridge sections (a8-under-the-wall, a8-behind-the-altar) for the three Act V outcomes
+      that cut straight to the altar set piece. These were mission/investigate#success, crypt-
+      glimpse/confront and a5-crypt-wren/hide, and they skipped Dustwater and the night road
+      with no time passing. - Arrival lines for the Hollow Bell, Dustwater and mission-at-
+      night act openings. - An "Act N · NAME" banner above the title on the first section of
+      each act (actOpening). Phones never showed the chapter before. - A graceful missing-
+      plate fallback: sectionPlate no longer throws, and stage and trail images fall back once
+      on a load error. - A pacing contract in verifyZuzuGamebook: no backward act edges; act-
+      skipping jumps must land on bridges; per-act section bands; at most 5 single-way pages
+      in a row. Goldens are unchanged, saves are intact and no art was added. Remaining: Act
+      IV is the longest act (16–25 sections, decisions every 1–2 pages). Act V's gate
+      "deliver" choice makes the central act 2 pages on about 40% of random walks; that needs
+      an editorial call. The Night Road long way (5 single-way pages) is kept as a deliberate
+      slog.  Merged as kind_robots #4799; back to ready for the remaining scope.
     claimed_by: 2026-11-05T100620Z-zuzu-gamebook-t-007-r3
     claimed_at: '2026-11-05T10:06:27Z'
-    updated: '2026-11-05T10:06:27Z'
+    updated: '2026-11-05T11:22:38Z'
+    implementation_pr: 'silasfelinus/kind_robots#4799'
   - id: t-008
     milestone: m4
     title: Combat, powers, dice, inventory and save/resume UI polish
