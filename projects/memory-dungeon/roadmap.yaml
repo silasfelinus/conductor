@@ -1344,10 +1344,10 @@ tasks:
   - id: t-058
     milestone: m3
     title: "e05 Scylla's Shore: replace template recipe sites with 64 authored sites"
-    status: review
+    status: done
     stakes: reversible
     passes: 0
-    updated: '2026-11-05T10:15:47Z'
+    updated: '2026-11-05T10:25:45Z'
     note: |-
       Silas 2026-11-05 PT (CONTROL.md "TWELVE-OVERWORLD STRUCTURE RESTATED"): develop the remaining worlds in play order at the World One bar. e05 is Scylla's lead: real time travel into her younger self in the sea palace, days before she and Char first ran away, with the e04 tide-gate outcome remembered (memoryCharFate: lost / alive). Follow the e03/e04 pattern: utils/memoryDungeon/<world>/ row modules wired through AUTHORED_WORLDS in overworldEventCatalog.ts, pacing mix, echoes of e04 8,8 and e03/e04 anchors, legacy care/risk saves, and fixed sites that keep their choices: Chronicle photos and 8,8 run-again / stay / tell-char (the departure choice). One 8x8 underwater palace geography (childhood/court, craft and servants, waterways, exit and shore) that e06 will revisit.
 
@@ -1357,13 +1357,16 @@ tasks:
       8,8 departure choices are unchanged. Sea openings now combine the campaign line with the
       authored opening and its echoes. All verifyMemory* tests, vue-tsc and layout-contract
       pass. Follow-ups: e05 dungeon, t-059 e06.
+
+      2026-11-05 PT: kind_robots#4796 merged (13/13 checks green); review close-out
+      conductor#7066 merged. Done. resolve_deps unblocks t-059 (e06).
     owner: worker
     claimed_by: 2026-11-05T095200Z-memory-dungeon-t058-e05
     claimed_at: '2026-11-05T09:51:47Z'
   - id: t-059
     milestone: m3
     title: "e06 Undertide Crown: authored horror revisit of e05's palace"
-    status: waiting
+    status: ready
     depends_on: t-058
     stakes: reversible
     passes: 0
