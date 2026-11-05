@@ -424,6 +424,27 @@ tasks:
     claimed_at: '2026-11-05T10:38:35Z'
     updated: '2026-11-05T11:28:19Z'
     implementation_pr: 'silasfelinus/kind_robots#4806'
+  - id: t-027
+    milestone: m2
+    title: "FIVE ALLEYS: a slow, turn-by-turn lane mode with Hearthstone-style chosen attacks"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: |-
+      Silas, 2026-11-05 PT, verbatim: "This game is still missing an actual fun play by play experience. The art is amazing, the style is great, the cards are interesting, but we still lack the GAME. Decks should be 20 cards, not 10. We need a new version that is slow position rules. (Solforge style, you have five rows and you can only attack or defend in the row you placed, without a modifier), and non-grid, you chose to attach someone or the opponent, hearthstone style."
+
+      Working assumptions (reversible; written down so Silas can correct them): a new mode alongside BLACKOUT/BLOODRUSH/TURF, not a replacement. Five lanes, one creature slot per side per lane, no grid movement. Alternating turns. Hearthstone mana crystals (1 on turn one, +1 a turn, cap 10), start with four cards, draw one a turn, each crew boss has 20 HP. A creature cannot attack the turn it lands unless a keyword says so. On your turn each ready creature attacks once, in its own lane only: if an enemy creature holds that lane it must fight it (both deal attack minus armor at once), and if the lane is empty it hits the enemy boss. Modifiers break the lane rule: ranged creatures (range 2+) can reach an adjacent lane, BULLDOZE tramples excess damage to the boss. Existing keywords keep their meaning where they can (AMBUSH +2 first blow, REGEN, LEECH heals your boss, SWARM +1 per ally in a neighbouring lane, VOLATILE bursts on the creature across, PIERCE ignores armor, SNARE stops the target's next attack, COLLECT gains mana on damage). Spells, traps and equipment reuse their effects aimed at a creature or a lane. 20-card crew decks: the ten founders plus ten more from the crew's own pool. Ship engine plus CPU plus a designed board (lanes, bosses, hand, attack arrows, a play-by-play log) in /admin/slime-city, with replayable seeded tests, a CPU round-robin, and screenshots at 390/768/1440. Internal preview only.
+  - id: t-028
+    milestone: m3
+    title: "20-card decks across the deck builder, starters and every format"
+    status: ready
+    depends_on: t-027
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: |-
+      Silas, 2026-11-05 PT: "Decks should be 20 cards, not 10." t-027 gives FIVE ALLEYS 20-card crew decks first. This task moves the rest of the game: deck workbench legality (signature, creature/special minimums, mercenary cap scaled from 3 of 10), starter decks, campaign and story bouts, BLACKOUT's five-card hand and cycling, and the balance and constructed-deck tests, then re-measures crew balance (the t-021 and t-025 guards) on the new decks.
   - id: t-014
     milestone: m4
     title: "Subjective acceptance of the finished internal game"
