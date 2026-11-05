@@ -1341,3 +1341,31 @@ tasks:
     updated: '2026-11-05T07:00:00Z'
     note: |-
       Silas 2026-11-05 PT: the researcher (Rowan) leads e09, not Pip. briarCollision.ts, briarCollisionRoute.ts, briarCollisionWitness.ts and the e09 stage (components/pages/memory-dungeon-briar-collision.vue) are written with Pip as the acting lead ("Pip spots...", "Pip exposes..."). Rewrite them so Rowan acts and Pip, the goblin courier, is a companion who still contributes courier knowledge. Keep coordinates, choice ids, fragment ids and save keys. Also update conductor story/BRIAR-COLLISION-PIP-QUESTS.json framing.
+  - id: t-058
+    milestone: m3
+    title: "e05 Scylla's Shore: replace template recipe sites with 64 authored sites"
+    status: ready
+    stakes: reversible
+    passes: 0
+    updated: '2026-11-05T10:00:00Z'
+    note: |-
+      Silas 2026-11-05 PT (CONTROL.md "TWELVE-OVERWORLD STRUCTURE RESTATED"): develop the remaining worlds in play order at the World One bar. e05 is Scylla's lead: real time travel into her younger self in the sea palace, days before she and Char first ran away, with the e04 tide-gate outcome remembered (memoryCharFate: lost / alive). Follow the e03/e04 pattern: utils/memoryDungeon/<world>/ row modules wired through AUTHORED_WORLDS in overworldEventCatalog.ts, pacing mix, echoes of e04 8,8 and e03/e04 anchors, legacy care/risk saves, and fixed sites that keep their choices: Chronicle photos and 8,8 run-again / stay / tell-char (the departure choice). One 8x8 underwater palace geography (childhood/court, craft and servants, waterways, exit and shore) that e06 will revisit.
+  - id: t-059
+    milestone: m3
+    title: "e06 Undertide Crown: authored horror revisit of e05's palace"
+    status: waiting
+    depends_on: t-058
+    stakes: reversible
+    passes: 0
+    updated: '2026-11-05T10:00:00Z'
+    note: |-
+      Even world, horror register: the same e05 places, warped (rewritten testimony, coercive repetition, looping corridors that still admit a fair route). Keep 7,7 Char-agency choices (MEMORY_CHAR_AGENCY_CHOICES) and 8,8 publish-twin-testimony / protect-private-memory exactly; Chronicle photos fixed. Never silently undo a witnessed e04 death. Pattern: e04 (unbelievingCity) on e03.
+  - id: t-060
+    milestone: m3
+    title: "e04 dungeon: the flooding archive behind 6,2"
+    status: ready
+    stakes: reversible
+    passes: 0
+    updated: '2026-11-05T10:00:00Z'
+    note: |-
+      Every overworld has its own dungeon (Silas 2026-11-05). e04's 6,2 threshold is Sublevel B flooding with seawater. Build it on the Sublevel B engine (utils/memoryDungeon/sublevelB/): ideally extract a shared authored-dungeon reducer (graph, shortcuts, gates, replay restore) first, then author 36 horror-register rooms that remember the e03 Sublevel B ending (SB-35 return/finish/confess) and the e03 6,2 entry. Wire like memory-dungeon-sublevel.vue from the e04 stage.
