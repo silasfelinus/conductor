@@ -734,13 +734,20 @@ tasks:
   - id: t-036
     milestone: m4
     title: "Endgame supply balance: the hold should not run dry on ordinary voyages"
-    status: claimed
+    status: review
     passes: 0
     stakes: reversible
     source: silas-2026-11-04
     note: |-
       Silas, 2026-11-04 PT: "Space couch has a supplies issue, tweak it." Found by the 2026-11-04 game sprint (t-031 assessment): in the persona playtests the hold runs out of supplies by the end of 5/5 voyages for 3 of the 4 persona styles that run alien contacts; only the chaos captain avoids it. Tune the supply economy (income, costs, alien-contact drains, or a fair recovery path) so ordinary careful and kind play finishes with a thin but non-zero hold, scarcity still bites for reckless play, and pin the curve with a seeded persona battery. Do not break saves.
+
+      2026-11-04 PT: supply tweak in kind_robots #4782. Alien contacts never touched the hold;
+      the base voyage cost ~15/voyage in upkeep against 12 income. Now one supply refills the
+      whole force bubble and good returns bring crates home (flawless +2, success +1). Voyages
+      ending stocked: cautious 0/24 -> 18/24, completionist 0/24 -> 13/24, reckless 0/24 ->
+      5/24, skipper 0/24 -> 3/24, chaos unchanged 24/24. Seeded battery pins the shape.
     owner: worker
     claimed_by: 2026-11-05T054000Z-game-followups
     claimed_at: '2026-11-05T05:39:41Z'
-    updated: '2026-11-05T05:39:41Z'
+    updated: '2026-11-05T05:39:43Z'
+    implementation_pr: 'silasfelinus/kind_robots#4782'
