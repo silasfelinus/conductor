@@ -524,7 +524,7 @@ tasks:
   - id: t-021
     milestone: m4
     title: "Adversarial constructed-deck matchup audit for all six 300-card crews"
-    status: ready
+    status: claimed
     depends_on: t-004
     passes: 0
     stakes: reversible
@@ -542,4 +542,7 @@ tasks:
       Narrow engine issue isolated after 300-bout mirrored faction audit: all Catgirls AMBUSH attackers were allowed to deal an immediate first-strike during summoning while other crews obeyed summon sickness, despite the published keyword promising only +2 on the first eligible blow. Changed Blackout/Bloodrush automatic arena clash to make all fresh fighters wait the same turn, retaining AMBUSH first-hit bonus after the wait. Added an explicit both-sides, two-round HP and keyword-replay regression in Slime City crew contract. The ten-seed 300-bout CI report will provide reproducible A/B evidence versus 95 Catgirl wins and 20 Bloodfairy wins from the old rules. No card ownership, game economy, schemas or outward-facing publish changes. This remains partial until CI is green and human fun QA later.
 
       PARTIAL MERGED 2026-11-02 PT: Kind Robots PR #4692 merged ddc08c07e87277d699d82e2133fa7226d165ed4e. Root cause of runaway Catgirls faction advantage: AMBUSH bypassed automatic Blackout summon sickness despite only promising +2 on its first eligible blow. Fixed the exemption while retaining the first-strike bonus; added mirrored same-turn and next-turn regression. All six current-head GitHub Actions workflows and four contract shards passed. Repeated identical 300-bout ten-seed matchup matrix: Catgirls 95 to 65 wins, Bloodfairies 20 to 30, Ironjaw 36 to 38, Riot 39 to 44, Undertow 46 to 53, Exchange 64 to 70. Catgirls versus Bloodfairies shifted from 20-0 to 10-10; still 18-2 versus Ironjaw. Constructed-on-constructed mirror balance, Ironjaw matchup counters, and human fun approval remain open; no public launch or self-hosted deployment triggered.
-    updated: '2026-11-03T02:13:16.469Z'
+    updated: '2026-11-05T10:04:55Z'
+    owner: worker
+    claimed_by: 2026-11-05T100454Z-slime-city-t021-claude
+    claimed_at: '2026-11-05T10:04:55Z'
