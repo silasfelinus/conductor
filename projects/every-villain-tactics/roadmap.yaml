@@ -318,7 +318,7 @@ tasks:
   - id: t-018
     milestone: m3
     title: "One-hit henchmen and Picnic Panic one-shot encounter"
-    status: claimed
+    status: ready
     depends_on: [t-004, t-017]
     owner: worker
     passes: 0
@@ -343,9 +343,26 @@ tasks:
       state) and authored opening, triggered and final scenes, all seeded-tested and save-
       validated. Still open: SPECIES Facet/DB records and ArtJobs for the new crews, dirt-ring
       emergence art, encounter timing waves, and a human playtest of Picnic Panic.
-    updated: '2026-11-05T21:04:41Z'
+
+      2026-11-05 PT: Shipped the open encounter-timing slice (r5). Picnic Panic now has two
+      telegraphed Warren Wrecker shifts (round 3, round 5): each molehill is marked a round
+      early and seals under a boot, and the whistles bring two new authored, state-aware
+      scenes ("Second Shift Reports to the Lawn", "Time and a Half") with scrapbook pages.
+      Burrowers now aim their rings at waiting families first, still with a full-turn warning.
+      The one-hit tier is readable at a glance: each type has its own crest, cards carry a "1
+      HIT" tag, and screen readers get a counter line. Defeat prose now matches the outcome
+      (timeout, squad wipe or families lost), and the First Bell fire alarm no longer fires on
+      the picnic lawn. The tempo medal allows one round after the last wave. Before this, bots
+      that never evacuated anyone won every seeded run. New verifyEveryVillainHenchmen.test.ts
+      (in the workflow) plays 240 seeded runs across all 48 leads with a save/load check every
+      round: standing still always loses, the balanced bot wins 48/48, every seed is winnable,
+      and both finales and all scenes are reachable. A local sweep of 2400 runs was clean.
+      Still open: SPECIES Facet/DB records and ArtJobs for the crews, dirt-ring/molehill art,
+      and a human playtest of the new difficulty curve.  Merged as kind_robots #4831.
+    updated: '2026-11-05T21:52:19Z'
     claimed_by: 2026-11-05T210436Z-every-villain-tactics-t-018-r5
     claimed_at: '2026-11-05T21:04:41Z'
+    implementation_pr: 'silasfelinus/kind_robots#4831'
   - id: t-019
     milestone: m3
     title: "Deterministic post-battle points and earned scrapbook achievements"

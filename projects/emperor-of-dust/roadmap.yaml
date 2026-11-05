@@ -798,8 +798,8 @@ tasks:
   - id: t-046
     milestone: m5
     title: "Act I continuation: polish Days 4–10 quest and audience paths, then submit scene art"
-    status: claimed
-    updated: '2026-11-05T21:04:36Z'
+    status: ready
+    updated: '2026-11-05T21:52:10Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -836,9 +836,27 @@ tasks:
       2026-11-04 PT: Wrote a conditional Day 10 Gate Watch oath branch for players who gave both the Yard and Old Houses seats on Day 7. New shared council opening, investigative beat and three costly outcomes (12-brass relief patrol with real quest aid, public Watch accounting, or Old Houses veto) have distinct political/faction effects and durable flags. Added live engine route/affordability/save regressions on branch worker/emperor-of-dust-t-046-shared-oath-2d91. CI and code review pending; broader Act I editorial and art completion remain.
 
       2026-11-04 PT: Merged Kind Robots PR #4756 at 75cc2382bbbf3a33b07bbcdc1ffd2f66f6b52f70. Day 7 open-council (Houses and Yard) earns a gated Day 10 Watch-oath scene and three distinct outcomes: 12-brass relief with actual +2 Wits dispatch aid, public accounting, or House veto. Engine regressions cover flag gates, both earned Day 7 paths, affordability, effects and JSON save validity. Eight exact-head Actions workflows and 13 checks green. Merged Conductor private five-plate Arthemy art ledger in PR #7024 at 8d3e0bac76fe9cf01d3c262229ced2cc377bc0b8 with 24 green checks. New plate ArtJob receipts, renders, acceptance, export and wiring remain to verify. Prior grain/council ArtJobs 63774-63782 were last verified PENDING. No production deploy or visual acceptance claimed. Keep task ready for broader Act I QA and delivery; master kind_robots issue #4142 stays open.
+
+      2026-11-04 PT: Days 4–10 writing/state slice ready as a patch, not yet a PR (base
+      4815d312). All 36 Days 4–10 flags that were set but never read now pay off, additively:
+      25 hidden dawn dues, 9 scene opening variants (Vane on Day 5, Tallow on Day 8, Oriel on
+      Day 9, Dunmark on Day 10, the mapmaker on Day 16), 3 Day 10 Komodo morning variants, 1
+      quest aid (stable mounts on the Day 8 escort) and a convoy outcome pair. Prose now
+      matches state: the Day 4 informant is a girl as everywhere else, the surety loan says
+      thirty (what it pays) and the Day 9 Ledger cart argues the search term, the convoy
+      success counts nine wagons, and three "later" promises (ration card, bog myrtle, blank
+      tally) arrive as dawns. Line-level voice pass on the Days 4–10 audiences. A new t-046
+      block in verifyEmperorFortress fails on any forgotten Days 4–10 flag (posted quests
+      included) or any Act I due nothing schedules. Fortress, Adversarial, Balance,
+      SecretTalks, EditorialAcceptance, GuidedCampaigns and RoleFirstProse are green; full
+      vue-tsc has 0 errors; editorial flagged rows went from 475 to 469. Remaining for t-046:
+      the art half (plates, ArtJob receipts, render review, wiring) and a Days 4–10 path
+      playtest; Day 16's turn-away line still says the card comes down "a week later" for
+      players who already saw it burned.  Merged as kind_robots #4829.
     owner: worker
     claimed_by: 2026-11-05T210436Z-emperor-of-dust-t-046-r5
     claimed_at: '2026-11-05T21:04:36Z'
+    implementation_pr: 'silasfelinus/kind_robots#4829'
   - id: t-047
     milestone: m5
     title: "Act II story and art pass: Days 11–20 quests and court audiences"

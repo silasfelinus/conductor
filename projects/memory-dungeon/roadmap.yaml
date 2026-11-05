@@ -1361,13 +1361,10 @@ tasks:
   - id: t-057
     milestone: m4
     title: "e09 Briar collision: Rowan leads, goblin Pip becomes a companion"
-    status: review
+    status: ready
     stakes: reversible
     passes: 0
-    updated: '2026-11-05T20:44:00Z'
-    owner: worker
-    claimed_by: 2026-11-05T204311Z-memory-dungeon-t057-r8n4
-    claimed_at: '2026-11-05T20:43:11Z'
+    updated: '2026-11-05T22:50:13Z'
     note: |-
       Silas 2026-11-05 PT: the researcher (Rowan) leads e09, not Pip. briarCollision.ts, briarCollisionRoute.ts, briarCollisionWitness.ts and the e09 stage (components/pages/memory-dungeon-briar-collision.vue) are written with Pip as the acting lead ("Pip spots...", "Pip exposes..."). Rewrite them so Rowan acts and Pip, the goblin courier, is a companion who still contributes courier knowledge. Keep coordinates, choice ids, fragment ids and save keys. Also update conductor story/BRIAR-COLLISION-PIP-QUESTS.json framing.
 
@@ -1384,6 +1381,8 @@ tasks:
       Merged kind_robots PR #4821 (merge 2c46276a) after all eight exact-head checks passed on c9190e87. Rowan now leads reception and wolf turnstile; Pip supports. Remaining e09 stage, rootbound server, Conductor quest JSON and adversarial verdict tests; task is not complete.
 
       Rootbound server e09 scene rewritten for Rowan agency while preserving IDs, flags, effects and Pip's courier expertise. PR and CI verification pending; broader t-057 remains incomplete.
+
+      Merged kind_robots PR #4823 (68e5ec06d949366147f3cad81c357b5e5deb6ea5); all eight workflows passed on exact head 2407f7aa. Rootbound server Rowan viewpoint fixed; remaining stage, quest JSON and adversarial verdict coverage require further work. No ArtJobs or deployment.
   - id: t-058
     milestone: m3
     title: "e05 Scylla's Shore: replace template recipe sites with 64 authored sites"
@@ -1457,22 +1456,30 @@ tasks:
   - id: t-061
     milestone: m3
     title: "e05 dungeon: the Glass Throat service tunnels under the sea palace"
-    status: claimed
+    status: done
     stakes: reversible
     passes: 0
-    updated: '2026-11-05T21:52:35Z'
+    updated: '2026-11-05T22:29:09Z'
     note: |-
       Silas 2026-11-05 PT: every overworld has its own dungeon. e05's 4,6 Glass Throat (an intake shaft at the Tide Observatory) drops into the palace's old service tunnels, where the whole sea-works breathes. Build 36 hand-written rooms on the shared authored-dungeon engine (utils/memoryDungeon/authoredDungeon/ + stores/helpers/authoredDungeonStore.ts), like Sublevel B: warm-register, Scylla's lead, younger Char and Oren, the third-night escape timeline. Entry variants from the e05 4,6 choice; a conversation guardian; three endings that later worlds can read; echoes of e04 tide-gate flags and e05 anchors. Mount from the e05 stage at 4,6.
+
+      Breathing Works (e05 dungeon) on the shared engine; PR kind_robots#4833.
+
+      Merged kind_robots#4833 (66fb270).
     owner: worker
     claimed_by: 2026-11-05T215500Z-memory-dungeon-t061-works
     claimed_at: '2026-11-05T21:52:35Z'
+    implementation_pr: 'silasfelinus/kind_robots#4833'
   - id: t-062
     milestone: m3
     title: "e06 dungeon: the warped service tunnels under the Undertide Crown"
-    status: waiting
+    status: claimed
     depends_on: t-061
     stakes: reversible
     passes: 0
-    updated: '2026-11-05T21:50:00Z'
+    updated: '2026-11-05T22:36:32Z'
     note: |-
       e06's 4,6 is the same Glass Throat, warped. Build the horror twin of t-061's tunnels on the same plan (as the Drowned Archive is to Sublevel B): every room remembers its e05 twin and the t-061 ending, plus e05 departure flags and e04 tide-gate flags. Coercion, repetition and erasure as dread; Char's agency first.
+    owner: worker
+    claimed_by: 2026-11-05T224000Z-memory-dungeon-t062-choking
+    claimed_at: '2026-11-05T22:36:32Z'

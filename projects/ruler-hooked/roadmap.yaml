@@ -62,11 +62,6 @@ milestones:
   weight: 120
   status: in-progress
 
-- id: m7
-  title: "ILLUSTRATED CONSOLE — the art-led redesign (Silas, 2026-11-05: the game looked like a janky webapp)"
-  weight: 80
-  status: in-progress
-
 tasks:
 - id: t-001
   milestone: m1
@@ -985,88 +980,123 @@ tasks:
     remove the dead util and correct the roadmap notes. Reversible; verify at phone width.
   updated: '2026-11-03T12:00:00Z'
 - id: t-054
-  milestone: m7
-  title: 'Illustrated console overhaul: painted full-bleed screens, tutorial, daily proclamations, art wired in'
-  status: review
+  milestone: m6
+  title: 'Kingdom-decay console redesign: full-screen Lake/Map/Court/Gear/Fishopedia shell, meters, petitions, and lake/bank/sky decay ramps'
+  status: ready
+  owner: null
+  stakes: reversible
+  passes: 0
+  source_reference: projects/ruler-hooked/docs/t-054-kingdom-decay-console.md
+  note: >-
+    Silas, 2026-11-05 PT, with three mockups (lake, map, court) of the kingdom gone bad: "The designs have
+    been too cutesy, so I had some demos done for when the kingdom goes bad due to poor management. This is
+    still a work in progress, it needs more individuality, it looks like every other ai slop project. But
+    it's a clear visual design and much closer than the webapp look we've had." Build the mockups'
+    structure on the existing compositor and axes. Add decay ramps for the lake, near bank and sky, which
+    today have one state each. Chrome tarnishes with the reign. Pick the individualizing art direction from
+    the 2026-11-05 style test before mass-rendering layers. Details in source_reference.
+    2026-11-05 PT reconciliation (session 01L5NKxYbNo54acwERnr8y86, working in parallel from
+    Silas's earlier "janky webapp" ask): kind_robots#4834 (merged) already ships much of the
+    "Keep (structure)" list as a console shell, in the PRE-decision storybook palette. Covered:
+    full-screen first-person lake with rod (1); title cartouche plus coin/day/time capsules (2);
+    left Kingdom Health meters for all five axes (3); bottom five-tab deck (6); court with the
+    petitioner on the left, the petition on parchment and up to three choice cards with signed
+    deltas (8). Not covered: the petition pennant (4) (court tab badge only); button-prompt
+    footer and t-053's timing bar (5); the painted map with its region card and objective (7)
+    (today a postcard "Kingdom Atlas"). Also not covered: all the decay ramps, tarnishing
+    chrome, and the Chronicle/Broadside restyle. Build on it: the `.rh-` chrome in
+    ruler-hooked-game.vue becomes the Chronicle frame. Also landed in #4834 (from Silas's same
+    ask): Quill's situational tutorial (tutorial.ts) and the Town Crier's daily proclamations
+    (dailyEvents.ts, in-game days only). KEY FINDING for the ramp plan: all 36 rendered region
+    layers are OPAQUE RGB paintings, so the full-frame z-stack only ever shows its top layer.
+    #4834 uses layers as whole-scene vistas instead. See t-059 before rendering ramp layers.
+  updated: '2026-11-05T22:20:00Z'
+
+- id: t-055
+  milestone: m6
+  title: 'Quiz-to-catch fishing: classic/learning settings, flags, capitals, and Mandarin Tutor spaced recall'
+  status: claimed
+  gate_human: false
+  stakes: reversible
+  passes: 0
+  note: >-
+    Silas, 2026-11-05 PT: preserve classic stop-in-the-green fishing as a selectable mode;
+    offer modular quizzes for countries and their flags, US states and capitals, and
+    Mandarin Tutor learning that introduces increasingly new words with available
+    pictures and pronunciation. Correct answers catch a random fish through the normal
+    reward/kingdom-turn path. Module selection, pacing, and progression belong in the
+    game settings and should not conflict with concurrent console/art redesigns.
+    Reuse Mandarin Tutor catalog, lesson completion and authenticated SRS review;
+    do not make a separate pretend Mandarin progress database. Add regressions for
+    module choices, question quality, catch rewards, and progression.
+  owner: worker
+  claimed_by: 2026-11-05T23:40:01Z-ruler-hooked-t055-q8e72
+  claimed_at: '2026-11-05T23:40:01.720Z'
+  updated: '2026-11-05T23:40:01.720Z'
+- id: t-056
+  milestone: m6
+  title: 'Illustrated console shell, situational tutorial and daily Town Crier (kind_robots#4834)'
+  status: done
   gate_human: false
   owner: claude
   stakes: reversible
   passes: 0
-  note: >-
-    2026-11-05 PT, Silas in session, with four ChatGPT concept screens (Lake, Map,
-    Court, Fishopedia): "We need a massive overhaul of the ruler is hooked. The current
-    version looks like a janky webapp. This concept art ... is a little too shiny
-    freeware style, but it's a lot closer to what we want in terms of an illustrated,
-    art heavy design that doesn't look like a webapp. We need a significant redesign,
-    fish, backgrounds, plus tutorial, daily kingdom events, illustrated characters, etc."
-    ROOT CAUSE FOUND FIRST: 126 of the 150 planned renders (all 15 fish, 11 cast, 12
-    rulers, 36 region layers, 25 cards, rewards, endings, concepts) already exist on
-    media.acrocatranch.com, but kindrobots.org's /images route only remote-falls-back for
-    academy/ paths, so every game image 404'd and the UI drew placeholders (kind_robots
-    #4828). Also found: the rendered region layers are OPAQUE full paintings, so the
-    t-017 full-frame z-stack can only ever show its top layer (see t-058). The console
-    rebuild (kind_robots, linked below) uses each layer as a whole-scene vista instead:
-    the lake backdrop follows the far shore's state, and the Map is an atlas of painted
-    postcards that repaint with your decrees. Also ships Quill's situational tutorial
-    and the Town Crier's daily proclamation (in-game days only, never expires; the
-    zero-time-lock pillar holds). The new screen paintings are queued as t-055; until
-    they render, each screen borrows a rendered piece through artLibrary.ts fallbacks.
-  updated: '2026-11-05T22:00:00Z'
   implementation_pr: 'silasfelinus/kind_robots#4834'
-- id: t-055
-  milestone: m7
-  title: 'Render the console art lane: screen backdrops, nav-tab vignettes, proclamation scenes, gear still lifes'
-  status: ready
-  gate_human: false
-  owner: null
-  stakes: reversible
-  passes: 0
   note: >-
-    The illustrated console (t-054) asks artLibrary.ts for backdrops/{title-lakeside,
-    court-throne-room,royal-map,gear-tackle-room,fishopedia-study}, ui/tab-{lake,map,court,
-    gear,fishopedia}, events/<10 proclamation keys> and gear/<7 shop ids>, each with a
-    rendered fallback until it lands. Stage them as the `console` lane of
-    build_ruler_hooked_art_queue.py (staged 2026-11-05 in the t-054 conductor PR, 28
-    entries including a real Quill the Steward portrait), render
-    them through the normal art queue, then spot-check them in place at phone and desktop
-    widths. Style per art-direction.md 2026-11-05: hand-painted storybook gouache, not
-    glossy mobile-game sheen.
-  updated: '2026-11-05T22:00:00Z'
-- id: t-056
-  milestone: m7
-  title: 'A painted kingdom map with real fishing spots beyond Castle Lake'
-  status: ready
-  gate_human: false
-  owner: null
-  stakes: reversible
-  passes: 0
-  note: >-
-    The concept Map screen Silas shared (2026-11-05) shows a painted kingdom with
-    named waters (falls, a frost lake, a river, lily flats, a wood pool) and a side
-    panel per location (key fish, a quest, travel). Today only Castle Lake fishes and
-    the atlas tile "The Outer Waterways" is a tease. Add 2-4 fishing spots as data
-    (habitat-tagged species from the roster, unlocks driven by kingdom state, never by
-    time), place them on the painted royal-map backdrop (t-055) with clickable pins,
-    and give each spot its own lake backdrop. Keep content as data for the Unreal path.
-  updated: '2026-11-05T22:00:00Z'
+    2026-11-05 PT, Silas in session with four ChatGPT concept screens (Lake, Map, Court,
+    Fishopedia): "We need a massive overhaul of the ruler is hooked. The current version looks
+    like a janky webapp. This concept art ... is a little too shiny freeware style, but it's a
+    lot closer to what we want in terms of an illustrated, art heavy design that doesn't look
+    like a webapp. We need a significant redesign, fish, backgrounds, plus tutorial, daily
+    kingdom events, illustrated characters, etc." ROOT CAUSE FIRST: 126 of 150 planned renders
+    existed on media.acrocatranch.com but every /images/ruler-hooked/* request 404'd on
+    kindrobots.org, because the image route only remote-fell-back for academy/ (fixed by
+    kind_robots#4828, merged). SHIPPED (kind_robots#4834, merged, CI green): a full-bleed console
+    with HUD meters, painted tabs, a first-person lake, court petitions with presenter portraits
+    and effect-chip choice cards, a postcard Kingdom Atlas, gear, a Fishopedia plate and
+    carousel, Quill's situational tutorial (utils/rulerHooked/tutorial.ts), and the Town Crier's
+    daily proclamations (utils/rulerHooked/dailyEvents.ts: per in-game day, never expire, nudges
+    not gates). Verified with vue-tsc, lint, the layout contract, 13 selftests and a local
+    Chromium playthrough at 1440 and 390 widths. Built in the storybook palette BEFORE the same
+    day's Chronicle + Broadside decision (t-054). That decision supersedes the look; t-054 owns
+    the restyle and builds on this structure. Needs a Force Update to reach kindrobots.org.
+  updated: '2026-11-05T23:50:00Z'
 - id: t-057
-  milestone: m7
-  title: 'Presenter expression sets for the cast and Quill (neutral, pleased, concerned, alarmed)'
+  milestone: m6
+  title: 'Restyle the console art lane to Chronicle + Broadside, then stage and render it'
   status: ready
   gate_human: false
   owner: null
   stakes: reversible
   passes: 0
   note: >-
-    The Court screen now stands the presenting character's portrait beside each
-    petition, and Quill coaches from a portrait in the tutorial. Only one neutral
-    portrait per character exists, so nobody reacts. characterArt.ts already defines
-    character-<slug>-<expression>.webp keys and advisor.ts already computes moods.
-    Render the expression sets and have the court portrait follow choice outcomes and
-    the coach follow advisor mood.
-  updated: '2026-11-05T22:00:00Z'
+    build_ruler_hooked_art_queue.py has a `console` lane: 28 entries whose image_path keys
+    match what kind_robots utils/rulerHooked/artLibrary.ts loads. They are 5 screen backdrops,
+    5 nav-tab vignettes, 10 daily-proclamation scenes, 7 gear/kingdom still lifes, and a real
+    Quill the Steward portrait (character-steward-quill.webp rendered as a literal feather pen;
+    the console skips it). The lane was written in the storybook register and DELIBERATELY NOT
+    STAGED, because Silas picked Chronicle (world) + Broadside (documents) the same day (t-054).
+    Re-voice CONSOLE_FINISH and the prompts: backdrops, tabs and the map in Chronicle;
+    proclamations and gear notices in Broadside. Then stage with `--write --lane console` and
+    spot-check in place. Coordinate with t-054 so the frame and backdrops agree.
+  updated: '2026-11-05T23:50:00Z'
 - id: t-058
-  milestone: m7
+  milestone: m6
+  title: 'Presenter expression sets for the cast and Quill'
+  status: ready
+  gate_human: false
+  owner: null
+  stakes: reversible
+  passes: 0
+  note: >-
+    The court now stands the presenting character's portrait beside each petition, and Quill
+    coaches the tutorial from a portrait, but each character has one neutral render.
+    characterArt.ts already defines character-<slug>-<expression>.webp keys and advisor.ts
+    computes moods. Render neutral/pleased/concerned/alarmed in the t-054 Chronicle style, have
+    the court portrait react to the chosen decree and the coach follow advisor mood.
+  updated: '2026-11-05T23:50:00Z'
+- id: t-059
+  milestone: m6
   title: 'Reconcile the compositing contract with the opaque region layers that actually rendered'
   status: ready
   gate_human: false
@@ -1074,41 +1104,41 @@ tasks:
   stakes: reversible
   passes: 0
   note: >-
-    Found 2026-11-05 (t-054): all 36 rendered region layers are opaque RGB 1344x768
-    paintings, not alpha-cut depth bands, so ruler-hooked-stage.vue's full-frame
-    z-stack (still used by the Chronicle's kingdom view) only ever shows its topmost
-    layer (near_bank-grassy). The console sidesteps this by treating layers as
-    whole-scene vistas. Decide: re-render the layers with real transparency (or mask
-    them in a build step), or retire the stack model in compositing.md and the stage
-    component in favour of the vista model. Either way, fix the Chronicle view.
-  updated: '2026-11-05T22:00:00Z'
-- id: t-059
-  milestone: m7
-  title: 'Grow the Town Crier: more daily proclamations, a few tied to fish runs'
-  status: ready
-  gate_human: false
-  owner: null
-  stakes: reversible
-  passes: 0
-  note: >-
-    dailyEvents.ts ships 10 proclamations, so a long reign starts repeating within a
-    couple of weeks of in-game days. Add 15-20 more in the cast's voices, let a few
-    nudge species odds for that day (a "carp run"), and react to arcs in progress.
-    Hold the pillar: nothing expires, nothing gates a fish, card or ending, so the
-    selftest's "nudges, not gates" check must keep passing.
-  updated: '2026-11-05T22:00:00Z'
+    Found 2026-11-05 (t-056): all 36 rendered region layers are opaque RGB 1344x768 paintings,
+    not alpha-cut depth bands, so ruler-hooked-stage.vue's full-frame z-stack (still used by the
+    Chronicle-of-the-reign kingdom view) only ever shows its top layer, near_bank-grassy. The
+    console sidesteps this by treating layers as whole-scene vistas. This blocks t-054's
+    lake/near_bank/sky decay ramps as specified. Before rendering ramp layers, decide: render
+    with real transparency (or mask in a build step), or retire the stack model in
+    compositing.md for whole-scene vistas per state combination.
+  updated: '2026-11-05T23:50:00Z'
 - id: t-060
-  milestone: m7
-  title: 'Post-deploy visual QA of the illustrated console at phone, tablet and desktop widths'
+  milestone: m6
+  title: 'Grow the Town Crier: more daily proclamations, a few tied to fish runs and the reign'
   status: ready
   gate_human: false
   owner: null
   stakes: reversible
   passes: 0
   note: >-
-    After the t-054 merge reaches kindrobots.org (Force Update), screenshot every
-    screen (title, coronation, crier, lake idle/fight/reveal, court petition/ending,
-    map, gear, fishopedia, chronicle) at 390, 820 and 1440 widths, confirm the art
-    loads through the /images media fallback, and fix spills or crushed panels. Attach
-    the screenshots for Silas's t-032 visual acceptance.
-  updated: '2026-11-05T22:00:00Z'
+    dailyEvents.ts ships 10 proclamations, so a long reign repeats within a couple of weeks of
+    in-game days. Add 15-20 more in the cast's voices, let a few nudge species odds for that day,
+    and sour their tone with a failing reign (t-054's Broadside: blunter edicts). Hold the
+    pillar: nothing expires, nothing gates a fish, card or ending, so console.selftest.ts's
+    "nudges, not gates" check keeps passing.
+  updated: '2026-11-05T23:50:00Z'
+- id: t-061
+  milestone: m6
+  title: 'Post-deploy visual QA of the console at phone, tablet and desktop widths'
+  status: ready
+  gate_human: false
+  owner: null
+  stakes: reversible
+  passes: 0
+  note: >-
+    After kind_robots#4828 and #4834 reach kindrobots.org (Force Update), screenshot every screen
+    at 390, 820 and 1440 widths: title, coronation, crier, lake idle/fight/reveal, court
+    petition/ending, map, gear, fishopedia and chronicle. Confirm the art loads through the
+    /images media fallback, and fix spills or crushed panels. Repeat after t-054's restyle, and
+    attach the shots for Silas's t-032 acceptance.
+  updated: '2026-11-05T23:50:00Z'

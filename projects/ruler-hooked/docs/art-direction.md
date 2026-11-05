@@ -305,32 +305,29 @@ worth preserving over the convenience of hand-editing a queue entry.
 
 ---
 
-## 9. Illustrated console redesign: storybook, not shiny (Silas, 2026-11-05 PT)
+## 9. Console art lane (2026-11-05 PT). Style superseded the same day: see t-054
 
-Appended, not edited. Silas asked in session for a large illustrated redesign of
-the game's UI. His direction for its art, in his words: the target is **"an
-illustrated, art-heavy design that doesn't look like a webapp"**, but **not "too
-shiny freeware style"**.
+Appended, not edited. Silas asked in session for a large illustrated redesign of the
+game's UI: **"an illustrated, art-heavy design that doesn't look like a webapp"**, but
+**not "too shiny freeware style"**. The console shell shipped in kind_robots#4834
+(ruler-hooked/t-056), and its art lane was first written in this file's storybook gouache
+register.
 
-What that means for every new painting:
+**Later the same day Silas called that register "too cutesy" and picked Chronicle + Broadside**
+(`docs/t-054-kingdom-decay-console.md`). Chronicle, an illuminated manuscript that rots
+with misrule, is for the world, the map and the UI frame. Broadside, a hand-coloured woodcut
+pamphlet, is for edicts, petitions, notices and Fishopedia entries. **That decision wins.** The
+console lane below is therefore NOT staged until its prompts are re-voiced (t-057).
 
-- **Hand-painted storybook gouache**, the same register as the library already
-  rendered under §1 and §8. The rendered library hits this; new pieces match it
-  rather than chase a new look.
-- **Matte and handmade:** visible brush strokes, a faint paper grain, soft diffuse
-  natural light, flat matte colour.
-- **Avoid** glossy bevels, chrome or metallic gold, lens flare, sparkle overload,
-  and mobile-game UI sheen (glassy buttons, glowing rims, candy highlights). Those
-  are what "shiny freeware" looks like.
-- These avoid-words are for people only. On Krea 2 the negative prompt is inert
-  (§8.2), so naming "lens flare" or "chrome" in a prompt paints them. Prompts
-  state the matte finish positively instead (`CONSOLE_FINISH` in
-  `scripts/build_ruler_hooked_art_queue.py`).
-- Small UI vignettes are described as painted vignettes, never as "icons": an
-  icon request comes back as a glossy app button.
-- The POV rule at the top of this file still holds: no painting in the console
-  shows the player's ruler. Empty rooms are described as empty and still, never
-  as lacking people (the people-negation contract rule).
+What still holds from the first ask, whatever the style:
+
+- **Not shiny.** No glossy bevels, chrome, lens flare, sparkle or mobile-game UI sheen.
+  These avoid-words are for people only. On Krea 2 the negative prompt is inert (§8.2), so
+  prompts must state the matte, handmade finish positively (`CONSOLE_FINISH`).
+- **Small UI vignettes are painted vignettes, never "icons".** An icon request comes back
+  as a glossy app button.
+- **The POV rule holds:** no console painting shows the player's ruler. Empty rooms are
+  described as empty and still, never as lacking people.
 
 The paintings the redesigned UI loads are the `console` lane of
 `scripts/build_ruler_hooked_art_queue.py` (stage with `--write --lane console`).

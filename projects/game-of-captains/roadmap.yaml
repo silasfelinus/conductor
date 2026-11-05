@@ -227,7 +227,12 @@ tasks:
       hand, a doubled Mox, a flag patch). Also 85 of 107 aliens kept (already live via
       alienArtJobs ArtJob ids); 22 redo (plain real animals, humans instead of aliens). Redos
       are in art/GAME-OF-CAPTAINS-CURATION-REDO-1.yaml.
-    updated: '2026-11-02T12:38:04Z'
+
+      Art-delivery audit found all 27 missing trio adventure plates (220 parties x 5 scenes = 1100) in the completed private GAME-OF-CAPTAINS-CURATION-REDO-1 ledger, with DONE ArtJobs and actual ArtImage IDs. Wired only these 27 previously absent keys, preserving all 1073 prior mappings and server-side viewer-specific permission filtering. Added full five-image coverage regression for every trio and pinned provenance of three replacements. Scope: image references and tests, no new images, DB writes or permissions. Source diff verified only 29 additive lines plus focused test. The image paint quality and actual authenticated device delivery still require separate visual confirmation; this increment makes all slots addressable, not human approved. PR and CI pending; remaining mission outcomes, art curation and live visual QA remain separate.
+
+      2026-11-05 PT: Merged Kind Robots PR #4836 at dab8ee48cd33c44eecd70bb7dcdc9ade6b07dd5e after all nine exact-head workflow groups completed SUCCESS, including 2,116-voyage adversarial matrix, TypeScript, formatting, 220 trio-art test and access/privacy regressions. Wired 27 DONE replacement ArtImage IDs from Conductor GAME-OF-CAPTAINS-CURATION-REDO-1 into the 27 previously empty trio slots, completing 1100 of 1100 illustration keys across all 220 three-crew adventures. Existing authorization-filtered image route and prior 1073 mappings remain. Also cleared private trio/onboarding caches on account changes and guarded in-flight stale art responses. No deployment, DB migrations, ArtJobs or production writes. Remaining t-009 work: visually curate other redo images, finish choice/outcome art coverage, authenticated 390/768/1440 device verification and human art acceptance. Return task to ready; do not mark full game ready or close umbrella issue.
+    updated: '2026-11-05T23:18:10.759Z'
+    implementation_pr: 'silasfelinus/kind_robots#4836'
   - id: t-010
     milestone: m4
     title: "Run antagonist-by-captain-by-crew adversarial and every-ending seeded traces"
@@ -742,7 +747,7 @@ tasks:
   - id: t-035
     milestone: m4
     title: "Seeded pre-charted route for chapters 2-9 and reachable destination ending families"
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
     source: silas-2026-11-04
@@ -752,8 +757,11 @@ tasks:
       Seeded route diversity increment: after chapter one, nextDestination now chooses a reproducible mission among the actual eligible missionBoard offers, including prior world choices, crew and captain, without mutating saved missionId. The player may always override before travel. Added 42 complete seeded real-voyage tests for route variety, saves, chapter-by-chapter reachability and manual override. Existing trace and authored-case tests now explicitly chart their fixed legacy story routes rather than assuming an always-first default. Implementation branch worker/game-of-captains-t035-seeded-routes-9c72, PR and exact-head CI pending. Destination ending family organic reachability and verified browser/art QA remain separate independent acceptance.
 
       2026-11-05 PT: The seeded eligible-route fix landed in Kind Robots PR #4767 (squash 0eca96cd577a0762004d1b85d136206c56c94870), with all exact-head check groups passing, including the 42 full-voyage default-route tests, canonical gameplay suite, and full adversarial voyage matrix. Our implementation branch was deleted after merge. The original t-035 claim remained in review; releasing it to ready because destination-specific earned-ending organic reachability and balance are not yet independently measured or proved. Do not mark the destination-ending milestone done or infer human acceptance from the route fix. No production DB changes or new ArtJobs.
-    updated: '2026-11-05T21:16:43.221Z'
+    updated: '2026-11-05T22:42:14Z'
     implementation_pr: 'silasfelinus/kind_robots#4767'
+    owner: worker
+    claimed_by: 2026-11-05T224212Z-game-of-captains-t-035-r6
+    claimed_at: '2026-11-05T22:42:14Z'
   - id: t-036
     milestone: m4
     title: "Endgame supply balance: the hold should not run dry on ordinary voyages"
