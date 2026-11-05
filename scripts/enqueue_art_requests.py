@@ -21,7 +21,9 @@ re-posed (the 8-angle renders, comic-creator t-015). Kontext lanes may set ``ste
 and ``guidance``. Any lane or subject may set ``seed`` (the subject's wins).
 ``source_crop: [l, t, r, b]`` (fractions) cuts one figure out of a
 turnaround sheet, ``source_flip: true`` mirrors it (a back view with the sword on the wrong
-shoulder), ``source_pad: "16:9"`` pads it with white, centred, to that aspect (a portrait
+shoulder), ``source_margin: 0.2`` frames it with an even border (that fraction of the longer edge) in the
+``source_matte`` colour or white, so Kontext keeps a tight-cropped sprite whole,
+``source_pad: "16:9"`` pads it with white, centred, to that aspect (a portrait
 cast pick placed into a widescreen scene; Kontext fills the margins), and
 ``reference_image_id`` (with optional ``reference_crop``) is
 stitched to the LEFT of the source at the same height, so Kontext can dress the right
@@ -450,7 +452,11 @@ def compose_source(subject, fetch):
     # (a chroma key the exporter removes again) and ``source_min_edge`` upscales it so Kontext has
     # enough pixels to redraw (Rainbow doodle set, 2026-11-02).
     matte, min_edge = subject.get("source_matte"), subject.get("source_min_edge")
-    if not crop and not reference_id and not flip and not pad and not matte and not min_edge:
+    # ``source_margin`` (a fraction of the longer edge) surrounds a tight-cropped sprite with an even
+    # border of the matte colour (white without one). Without it Kontext fills the frame and crops the
+    # creature: about two dozen of the 93 Rainbow doodle cells came back zoomed in (DOODLE-SET-1-REVIEW.yaml).
+    margin = float(subject.get("source_margin") or 0)
+    if not crop and not reference_id and not flip and not pad and not matte and not min_edge and not margin:
         return source
     import base64
     import io
@@ -470,6 +476,13 @@ def compose_source(subject, fetch):
 
         scale = int(min_edge) / min(image.size)
         image = image.resize((round(image.width * scale), round(image.height * scale)), Image.LANCZOS)
+    if margin:
+        from PIL import Image
+
+        border = round(max(image.size) * margin)
+        framed = Image.new("RGB", (image.width + 2 * border, image.height + 2 * border), matte or "white")
+        framed.paste(image.convert("RGB"), (border, border))
+        image = framed
     if flip:
         from PIL import ImageOps
 

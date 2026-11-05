@@ -1,0 +1,89 @@
+# Curation of art/DOODLE-SET-1.yaml (t-036), reviewed 2026-11-05 PT against DOODLE-DIRECTION.md and CAST-QA.md.
+# All 93 cells rendered. Each shipped asset is decided here, and scripts/export_rainbow_doodle_art.py reads this file.
+#
+#   keep   the doodle render ships under public/rainbow-princess-art/doodle/<same path>
+#   fever  the doodle render is held back. The CLASSIC sprite ships in its place, given a neon "fever" treatment
+#          (saturation lift, white sticker outline, hot-pink rim). The treatment never changes hue, so each pilot keeps
+#          her colour (CAST-QA line 3).
+#   hold   nothing ships, and Fever Dream shows the classic picture (people art that fails CAST-QA, or unused).
+#
+# A boss keeps all three phases or none, so a phase change never swaps art styles mid-fight.
+# Re-render cells for every held asset are in art/DOODLE-SET-2.yaml.
+reviewed: '2026-11-05'
+decisions:
+  portraits/p1-maribel: keep
+  portraits/p2-azure: keep
+  portraits/p3-solenne: {hold: "navy-blue hair and orange-shifted skin; the lock has black hair and deep-brown skin (CAST-QA 2, 5)"}
+  portraits/p4-vivi: keep  # the shirt scrawl copies the shipped classic lock 246033, so it is no regression
+  comms/maribel: keep
+  comms/azure: keep
+  comms/solenne: {hold: "skin repainted hot magenta (CAST-QA 5)"}
+  comms/vivi: keep
+  comms/lilt: keep
+  comms/nemi: keep
+  comms/opal: keep
+  comms/purl: keep
+  cutins/maribel: keep
+  cutins/azure: keep
+  cutins/solenne: keep
+  cutins/vivi: keep
+  ships/petal-wing: {fever: "on-model, but held so all four player ships share one treatment in co-op"}
+  ships/prism-lance: {fever: "purple and yellow, not Azure's cyan; a cat now rides the needle (CAST-QA 3)"}
+  ships/halo-fin: {fever: "redrawn as a pink plane; Solenne flies a gold double-ring saucer (CAST-QA 3)"}
+  ships/comet-crown: {fever: "hot pink, which reads as P1 in co-op; Vivi's ship is lilac (CAST-QA 3)"}
+  bosses/b01: keep
+  bosses/b02: {fever: "phase 2 paints a yellow block under the bell; phase 3 is cropped"}
+  bosses/b03: keep
+  bosses/b04: {fever: "walker legs cropped by the frame in all three phases"}
+  bosses/b05: keep
+  bosses/b06: keep
+  bosses/b07: {fever: "phases 1 and 3 cropped mid-body"}
+  bosses/b08: keep
+  bosses/b09: {fever: "phase 1 is a different, cropped creature; phase 3 cropped"}
+  enemies/anchor: keep
+  enemies/angler: keep
+  enemies/bulwark: keep
+  enemies/captive: keep
+  enemies/clawstrike: keep
+  enemies/courier: keep
+  enemies/cutter: keep
+  enemies/dolphin: keep
+  enemies/hammerhead: keep
+  enemies/pistol: keep
+  enemies/relay: keep
+  enemies/skimmer: keep
+  enemies/spiral: keep
+  enemies/urchin: keep
+  enemies/guardian-courier: keep
+  enemies/guardian-herald: keep
+  enemies/guardian-mirror: keep
+  enemies/brood: {fever: "zoomed in; only a fin shows"}
+  enemies/coral: {fever: "cropped"}
+  enemies/eel: {fever: "tail cropped"}
+  enemies/harbinger: {fever: "zoomed in on the face"}
+  enemies/lantern: {fever: "zoomed in on the face"}
+  enemies/mirror: {fever: "cropped, and paints lettering (CAST-QA 6 applies to all art)"}
+  enemies/picket: {fever: "tail cropped"}
+  enemies/salvager: {fever: "zoomed in; only an eye shows"}
+  enemies/skate: {fever: "cropped"}
+  enemies/squid: {fever: "face cropped at the right edge"}
+  enemies/turret: {fever: "zoomed in on one petal"}
+  enemies/guardian-bulwark: {fever: "cropped at the bottom right"}
+  enemies/guardian-clawstrike: {fever: "zoomed in on the cannon"}
+  enemies/guardian-lantern: {fever: "zoomed in"}
+  enemies/guardian-salvager: {fever: "zoomed in"}
+  enemies/guardian-urchin: {fever: "zoomed in"}
+  pickups/power: keep
+  pickups/charge: {fever: "star points cropped"}
+  pickups/shield: {fever: "cropped"}
+  stages/s01-card: keep
+  stages/s02-card: keep
+  stages/s03-card: keep
+  stages/s04-card: {keep: "gibberish lettering in the top-right corner is painted out on export (CAST-QA 6)"}
+  stages/s05-card: {keep: "a white frame is trimmed on export"}
+  stages/s06-card: keep
+  stages/s07-card: keep
+  stages/s08-card: keep
+  stages/fore: {fever: "the eight foreground strips were never rendered (8:1 is beyond Kontext's frame)"}
+  hero-pearl-palace: {hold: "not shipped: Fever Dream's Pilots tab shows the key art instead, so the file would be unused weight"}
+  key-art: keep  # exactly four cat ships in the four pilot colours; Fever Dream's Pilots-tab backdrop
