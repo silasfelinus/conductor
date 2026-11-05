@@ -313,6 +313,128 @@ class ColorArtEventRetryQuarantineTests(unittest.TestCase):
         self.assertEqual(state, {})
         self.assertTrue(event.path.exists())
 
+    def test_in_flight_renders_wait_without_counting_an_attempt(self) -> None:
+        event = MODULE.load_event(self.write_event())
+        state = {event.path.name: MODULE.MAX_EVENT_ATTEMPTS - 1}
+        with patch.dict(MODULE.os.environ, {"KR_API_TOKEN": "test-token"}), patch.object(
+            MODULE.subprocess, "run"
+        ) as run:
+            run.return_value.returncode = MODULE.EXIT_WAITING
+            status = MODULE.process_event(event, live=True, attempt_state=state)
+
+        self.assertEqual(status, MODULE.EXIT_WAITING)
+        self.assertTrue(event.path.exists())
+        self.assertEqual(state[event.path.name], MODULE.MAX_EVENT_ATTEMPTS - 1)
+        self.assertFalse(MODULE.QUARANTINE_DIR.exists())
+
+    def run_main(self, returncodes: dict[str, int], *argv: str) -> tuple[int, list[str]]:
+        """Run main() --live with subprocess.run faked per event; return order run."""
+
+        order: list[str] = []
+
+        def fake_run(command: list[str], **_kwargs: object) -> object:
+            # The event file is identified by its unique proposal/book args.
+            key = " ".join(command)
+            for name in sorted(returncodes, key=lambda n: -len(self.markers[n])):
+                code = returncodes[name]
+                if self.markers[name] in key:
+                    order.append(name)
+                    result = type("Result", (), {})()
+                    result.returncode = code
+                    return result
+            raise AssertionError(f"unexpected command {key}")
+
+        with patch.dict(MODULE.os.environ, {"KR_API_TOKEN": "test-token"}), patch.object(
+            MODULE.subprocess, "run", side_effect=fake_run
+        ), patch.object(sys, "argv", ["process", "--live", *argv]):
+            status = MODULE.main()
+        return status, order
+
+    def queue(self, *events: tuple[str, str, str]) -> None:
+        self.markers: dict[str, str] = {}
+        for name, operation, proposal in events:
+            self.write_event(name, operation=operation, proposal_ids=[proposal])
+            prefix = "" if operation == "generate-color-proposals" else f"--operation {operation} "
+            self.markers[name] = f"{prefix}--book monster-recast --timeout 600 --proposal-id {proposal}"
+
+    def test_waiting_event_does_not_block_other_pages(self) -> None:
+        self.queue(
+            ("1-gen.yaml", "generate-color-proposals", "mr-001"),
+            ("2-accept.yaml", "accept-color", "mr-002"),
+            ("3-gen.yaml", "generate-color-proposals", "mr-003"),
+        )
+        status, order = self.run_main(
+            {"1-gen.yaml": MODULE.EXIT_WAITING, "2-accept.yaml": 0, "3-gen.yaml": 0},
+            "--max-events",
+            "10",
+        )
+
+        self.assertEqual(status, 0)
+        # Fast curation first, then generation in queue order.
+        self.assertEqual(order, ["2-accept.yaml", "1-gen.yaml", "3-gen.yaml"])
+        self.assertTrue((self.event_dir / "1-gen.yaml").exists())
+        self.assertFalse((self.event_dir / "3-gen.yaml").exists())
+        self.assertEqual(MODULE.load_attempt_state(), {})
+
+    def test_same_page_actions_keep_request_order(self) -> None:
+        self.queue(
+            ("1-gen.yaml", "generate-color-proposals", "mr-001"),
+            ("2-accept.yaml", "accept-color", "mr-001"),
+        )
+        status, order = self.run_main(
+            {"1-gen.yaml": MODULE.EXIT_WAITING, "2-accept.yaml": 0},
+            "--max-events",
+            "10",
+        )
+
+        self.assertEqual(status, 0)
+        self.assertEqual(order, ["1-gen.yaml"])
+        self.assertTrue((self.event_dir / "2-accept.yaml").exists())
+
+    def test_same_page_action_lands_after_its_generation_succeeds(self) -> None:
+        self.queue(
+            ("1-gen.yaml", "generate-color-proposals", "mr-001"),
+            ("2-accept.yaml", "accept-color", "mr-001"),
+        )
+        status, order = self.run_main(
+            {"1-gen.yaml": 0, "2-accept.yaml": 0}, "--max-events", "10"
+        )
+
+        self.assertEqual(status, 0)
+        self.assertEqual(order, ["1-gen.yaml", "2-accept.yaml"])
+
+    def test_failure_does_not_stop_unrelated_events(self) -> None:
+        self.queue(
+            ("1-gen.yaml", "generate-color-proposals", "mr-001"),
+            ("2-gen.yaml", "generate-color-proposals", "mr-002"),
+        )
+        status, order = self.run_main(
+            {"1-gen.yaml": 1, "2-gen.yaml": 0}, "--max-events", "10"
+        )
+
+        self.assertEqual(status, 1)
+        self.assertEqual(order, ["1-gen.yaml", "2-gen.yaml"])
+        self.assertEqual(MODULE.load_attempt_state(), {"1-gen.yaml": 1})
+
+    def test_max_events_caps_attempts(self) -> None:
+        self.queue(
+            ("1-gen.yaml", "generate-color-proposals", "mr-001"),
+            ("2-gen.yaml", "generate-color-proposals", "mr-002"),
+        )
+        status, order = self.run_main({"1-gen.yaml": 0, "2-gen.yaml": 0})
+
+        self.assertEqual(status, 0)
+        self.assertEqual(order, ["1-gen.yaml"])
+        self.assertTrue((self.event_dir / "2-gen.yaml").exists())
+
+    def test_invalid_event_does_not_stall_valid_ones(self) -> None:
+        self.queue(("2-gen.yaml", "generate-color-proposals", "mr-002"))
+        (self.event_dir / "1-bad.yaml").write_text("version: 1\noperation: nope\n", encoding="utf-8")
+        status, order = self.run_main({"2-gen.yaml": 0}, "--max-events", "10")
+
+        self.assertEqual(status, 1)
+        self.assertEqual(order, ["2-gen.yaml"])
+
 
 if __name__ == "__main__":
     unittest.main()

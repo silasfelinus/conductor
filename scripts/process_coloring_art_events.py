@@ -9,6 +9,7 @@ import os
 import re
 import subprocess
 import sys
+import time
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
@@ -27,6 +28,14 @@ ATTEMPT_STATE_PATH = EVENT_DIR / "attempt-state.yaml"
 # render_retry.py's COLOR_ART_MAX_RENDER_ATTEMPTS pattern, but counts across
 # separate scheduled runs of this script rather than within one.
 MAX_EVENT_ATTEMPTS = int(os.environ.get("COLOR_ART_EVENT_MAX_ATTEMPTS", "3"))
+# Consumer exit status for "nothing failed; renders are still in flight on the
+# art server" (consume_coloring_book_studio_request.EXIT_WAITING). The event is
+# preserved for the next run without counting an attempt toward quarantine.
+EXIT_WAITING = 75
+# Operations that submit ArtJobs and may block for minutes. Everything else
+# (accept/finalize/adopt) is a fast local ledger update and runs first, so a
+# studio curation click is never stuck behind somebody else's slow render.
+GENERATION_OPERATIONS = ("generate-color-proposals", "generate-bw", "generate-cover")
 COLOR_CONSUMER = ROOT / "scripts" / "consume_coloring_book_studio_request.py"
 PRODUCTION_CONSUMER = ROOT / "scripts" / "manage_coloring_book_production.py"
 ADOPTION_CONSUMER = ROOT / "scripts" / "adopt_coloring_book_asset.py"
@@ -92,6 +101,17 @@ class ColorArtEvent:
     @property
     def is_cover(self) -> bool:
         return self.operation in COVER_OPERATIONS
+
+    @property
+    def is_generation(self) -> bool:
+        return self.operation in GENERATION_OPERATIONS
+
+    @property
+    def targets(self) -> frozenset[str]:
+        """Pages (or the cover) this event changes; same-target events stay ordered."""
+        if self.is_cover:
+            return frozenset({f"{self.book}/cover"})
+        return frozenset(f"{self.book}/{pid}" for pid in self.proposal_ids)
 
     def command(self, *, live: bool) -> list[str]:
         if self.is_cover:
@@ -406,6 +426,14 @@ def process_event(
         event.path.unlink()
         print(f"Consumed {event.path.relative_to(ROOT)}")
         return 0
+    if result.returncode == EXIT_WAITING:
+        # Renders are still in flight -- not a failure, so no attempt is
+        # counted and the event is never quarantined for merely waiting.
+        print(
+            f"Renders still in flight; preserving {event.path.relative_to(ROOT)} "
+            "for the next run (no attempt counted)."
+        )
+        return EXIT_WAITING
 
     attempts = attempt_state.get(event.path.name, 0) + 1
     if attempts >= MAX_EVENT_ATTEMPTS:
@@ -426,21 +454,62 @@ def process_event(
     return result.returncode
 
 
+def blocking_events(
+    event: ColorArtEvent, events: list[ColorArtEvent]
+) -> list[ColorArtEvent]:
+    """Earlier, still-queued events that change the same page or cover.
+
+    A page's actions apply in the order they were requested; unrelated pages
+    never wait on each other.
+    """
+
+    blockers: list[ColorArtEvent] = []
+    for other in events:
+        if other.path == event.path:
+            break
+        if other.path.exists() and other.targets & event.targets:
+            blockers.append(other)
+    return blockers
+
+
+def schedule(events: list[ColorArtEvent]) -> list[ColorArtEvent]:
+    """Fast curation actions first, then generation, each in queue order."""
+
+    return sorted(events, key=lambda event: event.is_generation)
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--live", action="store_true")
-    parser.add_argument("--max-events", type=int, default=1)
+    parser.add_argument(
+        "--max-events",
+        type=int,
+        default=1,
+        help="most events to attempt this run",
+    )
+    parser.add_argument(
+        "--time-budget",
+        type=int,
+        default=0,
+        help="seconds after which no further event is started (0 = no limit)",
+    )
     args = parser.parse_args()
 
     if args.max_events < 1:
         parser.error("--max-events must be at least 1")
+    if args.time_budget < 0:
+        parser.error("--time-budget must not be negative")
 
-    paths = queued_events()[: args.max_events]
+    paths = queued_events()
     if not paths:
         print("No queued coloring-art events.")
         return 0
 
+    # Load every queued event, not only the first --max-events: ordering is
+    # decided per page across the whole queue. A malformed event is reported
+    # and skipped; it must not stall every valid request behind it.
     events: list[ColorArtEvent] = []
+    exit_status = 0
     for path in paths:
         try:
             events.append(load_event(path))
@@ -449,18 +518,56 @@ def main() -> int:
                 f"Invalid event {path.relative_to(ROOT)}: {error}",
                 file=sys.stderr,
             )
-            return 1
+            exit_status = 1
 
     attempt_state = load_attempt_state()
-    exit_status = 0
+    started = time.monotonic()
+    attempted = 0
+    tried: set[Path] = set()
     try:
-        for event in events:
-            status = process_event(event, live=args.live, attempt_state=attempt_state)
-            if status != 0:
-                exit_status = status
-                break
+        # Repeat until a pass makes no progress, so an acceptance queued behind
+        # a generation for the same page still lands this run once that
+        # generation is consumed.
+        progress = True
+        while progress:
+            progress = False
+            for event in schedule(events):
+                if event.path in tried or not event.path.exists():
+                    continue
+                blockers = blocking_events(event, events)
+                if blockers:
+                    continue
+                if attempted >= args.max_events:
+                    break
+                if args.time_budget and time.monotonic() - started >= args.time_budget:
+                    print(
+                        f"Time budget of {args.time_budget}s spent; leaving the "
+                        "rest for the next run."
+                    )
+                    progress = False
+                    break
+                tried.add(event.path)
+                attempted += 1
+                status = process_event(event, live=args.live, attempt_state=attempt_state)
+                if not event.path.exists():
+                    progress = True
+                if status not in (0, EXIT_WAITING):
+                    exit_status = status
     finally:
         save_attempt_state(attempt_state)
+    for event in events:
+        if event.path.exists() and event.path not in tried:
+            blockers = blocking_events(event, events)
+            if blockers:
+                print(
+                    f"Deferred {event.path.name}: waits behind "
+                    + ", ".join(other.path.name for other in blockers)
+                )
+    remaining = [event for event in events if event.path.exists()]
+    print(
+        f"Attempted {attempted} event(s); {len(events) - len(remaining)} consumed, "
+        f"{len(remaining)} still queued."
+    )
     return exit_status
 
 
