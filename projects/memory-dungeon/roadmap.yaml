@@ -428,7 +428,7 @@ tasks:
   - id: t-013
     milestone: m3
     title: "Deliver character, room, weapon and ending art pipeline"
-    status: review
+    status: ready
     passes: 0
     stakes: reversible
     note: |-
@@ -439,7 +439,11 @@ tasks:
       Merged scoped Kind Robots PR #4379 at 9c970fb325fba84752144e771bb51bc8cc3d5257 after all 14 exact-head workflows passed, including four contract shards, TypeScript, changed-file formatting, layout and art safety. Replaced unconditional Briar and Dark Briar SVG underlays with verified delivered painted-map media paths and safe SVG fallback; enlarged quest and choice typography; added reduced-motion-aware 3D action markers to both overworld and both 36-room House maps. Conductor audit run #40429786760 documented 752/752 first-two-reality media deliveries (Briar ArtJob 46117 and Dark Briar 45570 included). Master issue kind_robots#4136 updated, separate unpainted 6x6 House floorplan gap tracked in kind_robots#4380. This is partial t-013 art pipeline work, not complete game-art/visual acceptance. No new ArtJobs, production deployment or rendered device screenshots verified.
 
       Scoped first-four Earth Chronicle production art handoff: durable direct-media Krea2 requests for the four playable photographs, separate from the 752 historical receipts and House atlases; workflow submits and checkpoints IDs, strict identity audit and regressions added. PR exact-head checks and actual ArtJob receipts pending. Wider character/room/weapon/ending art, media HEAD and rendered acceptance remain open.
-    updated: '2026-10-30T05:55:00Z'
+
+      2026-11-04 PT cleanup pass: stale review with an expired claim; the recorded slice
+      landed (or was superseded) and the note itself lists remaining scope, so back to ready
+      for the next slice rather than done.
+    updated: '2026-11-05T05:16:03Z'
     owner: worker
     claimed_by: 2026-10-30T055215Z-memory-dungeon-t-013-photos-7e4b
     claimed_at: '2026-10-30T05:52:15Z'
