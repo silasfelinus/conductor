@@ -140,3 +140,9 @@ Data/docs-only: round 23 results recorded against CAST-QA (Vivi cut-in 247844 an
 #6257 (t-022 art round 24 record, round 25 queued as ArtJobs 39729–39748) — CI green, data-only YAML/QA docs, reversible, no gates. Squash-merged (62c8f42). Worker pattern: switching to a fresh turnaround after three failed Kontext repaints of the back view was the right call instead of a fourth reroll.
 
 **Kaizen:** deferred; t-008 (stages 3–5) remains ready.
+
+## 2026-11-05 — Reviewer: PR #7028 (t-036 doodle review, exporter, DOODLE-SET-2) merged
+
+Companion kind_robots#4764 was already on main, so merge order held. CI green on the PR head (26 checks), reversible, scoped to art manifests, exporter script and one tested enqueue option; no gates touched. Squash-merged (97167f1). Worker pattern: a per-asset keep/fever/hold review with reasons, and an exporter that reproduces the shipped files byte for byte, made this easy to audit.
+
+**Kaizen:** already tracked as t-043 (re-review DOODLE-SET-2, including the frame-edge check on finished renders).
