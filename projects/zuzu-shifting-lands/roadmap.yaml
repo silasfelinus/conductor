@@ -632,14 +632,14 @@ tasks:
     updated: '2026-10-20T23:41:51Z'
   - id: t-036
     title: "Shifting Lands V6: comprehensive encounter line edit for voice, stakes and readable choices"
-    status: claimed
+    status: done
     owner: worker
     claimed_by: 2026-11-05T124312Z-zuzu-shifting-lands-t-036-r4
     claimed_at: '2026-11-05T12:43:13Z'
     stakes: reversible
     passes: 0
     source: silas-2026-10-20-editorial-scope-of-master-3917
-    updated: '2026-11-05T12:43:13Z'
+    updated: '2026-11-05T21:03:23Z'
     note: |-
       [HISTORICAL EDITORIAL SUBTASK; GITHUB MASTER ISSUE NOW MAPS TO t-018]\n      FROM GITHUB ISSUE silasfelinus/kind_robots#3917 (https://github.com/silasfelinus/kind_robots/issues/3917), opened by @silasfelinus on 2026-10-20. Imported by scripts/sync_github_issues.py. Reference the issue in the implementing PR (`Closes silasfelinus/kind_robots#3917`) so it closes on merge; the bridge closes it otherwise once this task is done.
 
@@ -702,7 +702,27 @@ tasks:
       listed in the PR body; the main one is whether spent deed flags should be consumed,
       which would need a new rules and save version.  Merged as kind_robots #4797; back to
       ready for the remaining scope.
-    implementation_pr: 'silasfelinus/kind_robots#4797'
+
+      2026-11-05 PT: Final journal and voice audit, prepared as a patch against kind_robots
+      0d132816. It is prose and tests only; the mechanics projection of all four content JSON
+      files is unchanged, the V6 deck and V5 trial fingerprints pass, and all 19 shifting-
+      lands-gameplay steps exit 0. It makes 37 stock-phrase edits on 34 cards: "road ahead"
+      drops from 40 to 20 and stays the map-shift refrain, "without a word" drops from 18 to
+      11, and pressed-into-your-hand gifts from 25 to 13. verifyShiftingV6 now caps each
+      phrase per land. The V7/V8 shared trial intents now read as second-person story prose,
+      and the board's odds, check and lock text is pinned beside them. This also fixes the V8
+      scout intent, which asked the player to pay an HP they had already paid. The Verge
+      evidence success is now neutral about which clue opened the route. On the journal:
+      failed trial checks were already written to it. The coarse bosses[].approach `parley` is
+      kept for save replay, because trialResults[].choiceId holds the real route; a V7 guard
+      test pins all of this. Remaining: spent deed flags (deed-carries-medicine, deed-owed-
+      favor) never clear. The rail never shows them, but the gated choices stay open, so one
+      medicine can be spent once per land. Clearing them needs `consumes` plus deck
+      schemaVersion 2 and a new ledger version; the design note is in the PR body. With this
+      patch, t-036's editorial scope is done; the deed-consumption fix should be its own task.
+      Merged as kind_robots #4813. Editorial scope complete (120 cards, 5 trials, voice
+      audit); spent-deed consumption split out as t-049.
+    implementation_pr: 'silasfelinus/kind_robots#4813'
   - id: t-037
     milestone: m5
     title: "V7 kindness, preparedness and evidence-gate balance upgrade"
