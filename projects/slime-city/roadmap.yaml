@@ -394,12 +394,15 @@ tasks:
   - id: t-025
     milestone: m4
     title: "BLOODRUSH crew balance: bring the six founder crews within the Blackout band"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     note: |-
       Found during slime-city/t-021 (kind_robots#4800, 2026-11-05 PT). After the four founder stat changes that evened Blackout (held-out spread 0.149 -> 0.05), the secondary BLOODRUSH arcade mode stays skewed: on 30 held-out seeds its spread went 0.206 -> 0.191, with Catgirls 75%, Ironjaw 63%, Bloodfairies 56%, Undertow 52%, Exchange 28%, Riot 27%. BLOODRUSH cannot reuse Blackout card stats as its lever without undoing that pass, so look for a mode-level lever (for example per-crew BLOODRUSH tuning the way PARITY_CREW_EDGE does it, or a keyword that behaves differently on the timed lane). Measure on held-out seeds, then add a fixed-seed guard like verifySlimeCityFactionBalance. Internal preview only.
+    claimed_by: 2026-11-05T125427Z-slime-city-t025-claude
+    claimed_at: '2026-11-05T12:54:29Z'
+    updated: '2026-11-05T12:54:29Z'
   - id: t-026
     milestone: m2
     title: "TURF CPU: read simple ladders and atari escapes to cut capture churn"
