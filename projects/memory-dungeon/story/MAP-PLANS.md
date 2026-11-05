@@ -2,20 +2,22 @@
 
 [Writer's Room](../WRITERS-ROOM.md) · [Act pitches](ACT-PITCHES.md) · [Scene handoff](SCENE-ROOM.md)
 
+**Lead per pair (Silas, 2026-11-05 PT):** e01/e02 Pip, e03/e04 Morrow, e05/e06 Scylla, e07/e08 Vesper; finale e09 Pip, e10 Morrow, e11 Char (Scylla if the storyline lost Char), e12 Vesper. Even worlds are the horror register. One major storyline/ending choice per two overworlds.
+
 **How to read:** all existing overworlds use **8×8 fixed locations (64 sites)**, not 64 successive memory-match boards. A completed square is a persistent place with choices and consequences. Nested dungeons generally use a separate **6×6, 36-room** atlas. The playable state is checked against Kind Robots code; this is not a rendered-gallery claim.
 
 ## World atlas, one line per reality
 
 | ID | Who leads / geography | Recognizable anchors | What changes | Source status |
 |---|---|---|---|---|
-| e01 | Researcher · Briar | Camp, wolf road, House, rookery | Trust/witness puzzles and cross-realm sigils | 64 authored; gameplay present |
-| e02 | Researcher · Dark Briar | SAME 8×8 camp/roads and mirror House | Old witnesses invert predator/protector claims | 64 authored; gameplay present |
-| e03 | Morrow · Earth | Research desk, office, commute, hospital, neighborhood | Technology and human custom as unfamiliar mechanics | Outline; full 64-site stage missing |
+| e01 | Pip (runtime camera still the researcher) · Briar | Camp, wolf road, House, rookery | Trust/witness puzzles and cross-realm sigils | 64 authored; gameplay present |
+| e02 | Pip (runtime camera still the researcher) · Dark Briar | SAME 8×8 camp/roads and mirror House | Old witnesses invert predator/protector claims | 64 authored; gameplay present |
+| e03 | Morrow · Earth | Research desk, office, commute, hospital, neighborhood | Technology and human custom as unfamiliar mechanics | Template sites live; 64-site authored rewrite in t-052; dungeon missing |
 | e04 | Morrow · Enchanted Earth | SAME Earth streets, office and station | Supernatural hazards, sea-side tide gate and three costs | Outline/branch state; map missing |
 | e05 | Scylla · Childhood sea palace | Sisters' room, departure chart, tide court, shore route | Player remembers e04; younger Char does not | Outline/branch state; map missing |
 | e06 | Scylla · Twisted palace | SAME palace and planned escape | Rewritten testimony, coercive repetition and altered routes | Outline/branch state; map missing |
 | e07 | Vesper · Warm Hoshimori | Cedar bridge, orchard atlas, Red Oven, paper theatre, South Watch | Betrayal/redemption and communal refuge choices | 64 authored; 21/36 Oven rooms |
-| e08 | Scylla POV / Vesper arc · Dark Hoshimori | SAME bridge, oven, map and shrine | Recursive domestic architecture, night procession, living addresses | 16 site briefs; playable map missing |
+| e08 | Vesper (one lead per pair, Silas 2026-11-05) · Dark Hoshimori | SAME bridge, oven, map and shrine | Recursive domestic architecture, night procession, living addresses | 16 site briefs; playable map missing |
 | **e09** | **Pip · Briar collision** | SAME Briar geography, office and sea-root overlaps | Forest monsters in office, submerged House paths | Crossover pitch only |
 | **e10** | **Morrow · Earth collision** | SAME Earth geography, Hoshimori shelter and Briar canopy | Yōkai at work, impossible commuter timetables | Crossover pitch only |
 | **e11** | **Playable Char · Sea collision** | SAME sea palace, subway station and Vesper route | Alternative Char memories, flooded transit, stolen maps | Crossover pitch only |
