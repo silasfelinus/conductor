@@ -391,6 +391,24 @@ tasks:
     claimed_at: '2026-11-05T05:30:22Z'
     updated: '2026-11-05T06:16:09Z'
     implementation_pr: 'silasfelinus/kind_robots#4784'
+  - id: t-025
+    milestone: m4
+    title: "BLOODRUSH crew balance: bring the six founder crews within the Blackout band"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: |-
+      Found during slime-city/t-021 (kind_robots#4800, 2026-11-05 PT). After the four founder stat changes that evened Blackout (held-out spread 0.149 -> 0.05), the secondary BLOODRUSH arcade mode stays skewed: on 30 held-out seeds its spread went 0.206 -> 0.191, with Catgirls 75%, Ironjaw 63%, Bloodfairies 56%, Undertow 52%, Exchange 28%, Riot 27%. BLOODRUSH cannot reuse Blackout card stats as its lever without undoing that pass, so look for a mode-level lever (for example per-crew BLOODRUSH tuning the way PARITY_CREW_EDGE does it, or a keyword that behaves differently on the timed lane). Measure on held-out seeds, then add a fixed-seed guard like verifySlimeCityFactionBalance. Internal preview only.
+  - id: t-026
+    milestone: m2
+    title: "TURF CPU: read simple ladders and atari escapes to cut capture churn"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: |-
+      Kaizen from slime-city/t-024 (kind_robots#4784, 2026-11-04 PT). The endgame pass logic now ends 104/108 sweep games on two passes, but games still average ~57 rounds because about 50 stones a game are captured: the one-move CPU loses groups it could save. Teach the TURF CPU a short read: extend or connect a group in atari when it can escape, and avoid playing into a working ladder. Report captures per game and average length over the same 108-game sweep before and after, keep the TURF crew-balance guard (verifySlimeCityTurfCrews) green, and keep every game ending on passes.
   - id: t-014
     milestone: m4
     title: "Subjective acceptance of the finished internal game"
