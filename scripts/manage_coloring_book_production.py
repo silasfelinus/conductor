@@ -109,6 +109,21 @@ def write_yaml(path: Path, data: dict[str, Any]) -> None:
     )
 
 
+class _NoAliasSafeDumper(yaml.SafeDumper):
+    """SafeDumper that writes shared objects out in full instead of as &idNNN.
+
+    write_queue_entry() serializes one entry on its own and splices it into
+    QUEUE_FILE. PyYAML numbers anchors per dump starting at id001, so an
+    entry whose render_gate.reasons and last_render_reasons share one list
+    came out as `&id001` even when another entry already used that anchor.
+    The duplicate anchor made the whole ledger unparseable (2026-11-05: every
+    studio render request failed and a waiting batch was quarantined).
+    """
+
+    def ignore_aliases(self, data: Any) -> bool:
+        return True
+
+
 _QUEUE_BOOK_HEADER_RE = re.compile(r"^- order:\s*\d+\s*$", re.MULTILINE)
 _QUEUE_ENTRY_HEADER_RE = re.compile(r"^  - ", re.MULTILINE)
 
@@ -158,7 +173,13 @@ def write_queue_entry(book_slug: str, proposal_id: str, entry: dict[str, Any]) -
     content = QUEUE_FILE.read_text(encoding="utf-8")
     book_start, book_end = _locate_queue_book_block(content, book_slug)
     entry_start, entry_end = _locate_queue_entry_block(content, book_start, book_end, proposal_id)
-    serialized = yaml.safe_dump([entry], sort_keys=False, allow_unicode=True, width=110)
+    serialized = yaml.dump(
+        [entry],
+        Dumper=_NoAliasSafeDumper,
+        sort_keys=False,
+        allow_unicode=True,
+        width=110,
+    )
     reindented = "".join(
         ("  " + line if line.strip() else line) for line in serialized.splitlines(keepends=True)
     )
