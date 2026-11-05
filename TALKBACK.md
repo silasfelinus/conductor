@@ -12652,3 +12652,7 @@ Worker pattern: good test depth and honest "procedural shapes, not painted art" 
 
 ## 2026-11-04 — Agent (reviewer): weird-humboldt/t-068 stale-ready close
 - Reconciliation-only roadmap change (status ready -> done, dated note); art already DONE in ART-STANDARD.yaml and exported. Reversible, scoped; merged via PR.
+
+## 2026-11-05 — Agent (branch-medic): kind_robots `worker/memory-dungeon-4682-character-gallery` is superseded, needs ref deletion
+- Stranded 52h; kind_robots#4683 was opened from it and closed unmerged. Its two files (`stores/helpers/memoryDungeonDeckSource.ts`, `verifyMemoryWorldArt.test.ts`) are already covered on main: the by-ID linked-ArtImage resolution and its source-contract guard both exist there, and kind_robots#4777 (open) refines it. Branch has no merge base with main (shallow history), so a PR from it would be unmergeable and add nothing.
+- Deletion not done: `git push --delete` hangs up, the API ref DELETE is blocked by the proxy (403), and `branch-janitor.yml` (run 41963896528, success) only prunes conductor refs. Needs a one-line `git push origin --delete worker/memory-dungeon-4682-character-gallery` from a credentialed checkout. Kaizen: let branch-janitor take a `repo` input so it can clear kind_robots refs.
