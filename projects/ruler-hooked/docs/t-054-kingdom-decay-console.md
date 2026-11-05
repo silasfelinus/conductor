@@ -47,7 +47,7 @@ floating bones, the smoke-choked sky. Add ramps:
 | sky | joy (Hearts) | smoke-choked → overcast → open |
 
 Order very high while joy is low is tyranny. That drives gallows, pikes and guard towers on the
-far-shore and village layers as **event overrides** (the compositor already supports pinned
+far_shore and village layers as **event overrides** (the compositor already supports pinned
 overrides), not a separate ramp. The UI chrome should also take the reign's state: clean when
 healthy, then tarnished, soot-stained and frayed as the meters fall.
 
