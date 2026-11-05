@@ -632,14 +632,14 @@ tasks:
     updated: '2026-10-20T23:41:51Z'
   - id: t-036
     title: "Shifting Lands V6: comprehensive encounter line edit for voice, stakes and readable choices"
-    status: claimed
+    status: ready
     owner: worker
     claimed_by: 2026-11-05T100620Z-zuzu-shifting-lands-t-036-r3
     claimed_at: '2026-11-05T10:06:21Z'
     stakes: reversible
     passes: 0
     source: silas-2026-10-20-editorial-scope-of-master-3917
-    updated: '2026-11-05T10:06:21Z'
+    updated: '2026-11-05T11:22:35Z'
     note: |-
       [HISTORICAL EDITORIAL SUBTASK; GITHUB MASTER ISSUE NOW MAPS TO t-018]\n      FROM GITHUB ISSUE silasfelinus/kind_robots#3917 (https://github.com/silasfelinus/kind_robots/issues/3917), opened by @silasfelinus on 2026-10-20. Imported by scripts/sync_github_issues.py. Reference the issue in the implementing PR (`Closes silasfelinus/kind_robots#3917`) so it closes on merge; the bridge closes it otherwise once this task is done.
 
@@ -687,7 +687,22 @@ tasks:
       96/120 cards edited. Remaining: the Verge batch (24 cards), the Homestead, Dustwater and
       Verge trials, and the final journal/voice audit. Task returns to ready.  Merged as
       kind_robots #4787. Back to ready for the remaining scope.
-    implementation_pr: 'silasfelinus/kind_robots#4787'
+
+      2026-11-05 PT: Verge batch and the last three trials (29 prose-only edits: 18 on 15 of
+      the 24 Verge cards, nine across the Homestead, Dustwater and Verge trials, two V7 scene
+      strings; mechanics byte-identical in projection, V6 deck and V5 trial fingerprints
+      unchanged; all 19 shifting-lands-gameplay workflow steps pass) prepared as a patch
+      against kind_robots 7957faab. It sets up the Abbess's guards and the children's
+      dormitory, the Crossing Gate's jam and its one "safe" channel, and the Verge seal. It
+      stops promising an empty medicine pouch and a spent favor while deed-carries-medicine
+      and deed-owed-favor stay set, and it no longer assumes the player kept every promise.
+      verifyShiftingV6 now checks length floors and the map-shift regex in one loop over every
+      land, keeps every land's pins and adds 18 new ones. With this, 120/120 cards and all
+      five trials are edited. Remaining: the final journal and voice audit. Candidates are
+      listed in the PR body; the main one is whether spent deed flags should be consumed,
+      which would need a new rules and save version.  Merged as kind_robots #4797; back to
+      ready for the remaining scope.
+    implementation_pr: 'silasfelinus/kind_robots#4797'
   - id: t-037
     milestone: m5
     title: "V7 kindness, preparedness and evidence-gate balance upgrade"
