@@ -1,31 +1,31 @@
 {
-  "generated_at": "2026-11-04T19:52:14.195411+00:00",
+  "generated_at": "2026-11-05T06:59:06.824545+00:00",
   "summary": {
-    "status": "clean",
+    "status": "semantic-review-upcoming",
     "roadmap_errors": 0,
-    "roadmap_warnings": 64,
+    "roadmap_warnings": 78,
     "project_forward_drift": 0,
     "project_reverse_orphans": 0,
     "project_unresolved": null,
     "openai_scheduled_agent_overdue": true,
     "openai_scheduled_agent_authoritative": false,
     "intent_review_due": false,
-    "intent_review_upcoming": false
+    "intent_review_upcoming": true
   },
   "openai_scheduled_agent": {
     "overdue": true,
     "last_activity": "2026-10-25T01:09:44+00:00",
-    "hours_since": 258.71,
+    "hours_since": 269.82,
     "stale_hours": 6.0,
     "marker": "openai-scheduled-",
     "note": "Legacy git diagnostic only: OPENAI-SCHEDULED-HEARTBEAT.json and coordination markers do not determine ChatGPT scheduler health. Native ChatGPT task metadata is authoritative for scheduler liveness."
   },
   "intent_review": {
     "due": false,
-    "upcoming": false,
+    "upcoming": true,
     "last_report": "INTENT-AUDIT-2026-11-03.md",
-    "days_since": 1,
-    "days_until_due": 2.0,
+    "days_since": 2,
+    "days_until_due": 1.0,
     "stale_days": 3.0,
     "failed_attempt": null
   },
@@ -35,19 +35,19 @@
     "unresolved": null
   },
   "roadmap_audit": {
-    "generated_at": "2026-11-04T19:52:14.195419+00:00",
+    "generated_at": "2026-11-05T06:59:06.824552+00:00",
     "summary": {
       "roadmaps": 93,
       "active_projects": 20,
       "continuous_projects": 14,
-      "tasks": 2836,
-      "ready": 224,
-      "waiting": 216,
+      "tasks": 2847,
+      "ready": 255,
+      "waiting": 215,
       "needs_human": 32,
-      "in_progress": 45,
-      "done": 2250,
+      "in_progress": 16,
+      "done": 2260,
       "errors": 0,
-      "warnings": 64,
+      "warnings": 78,
       "info": 125
     },
     "errors": [],
@@ -98,6 +98,13 @@
         "severity": "warning",
         "code": "STALE_CLAIM_FIELDS",
         "project": "comet-city-academy",
+        "task": "t-004",
+        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
+      },
+      {
+        "severity": "warning",
+        "code": "STALE_CLAIM_FIELDS",
+        "project": "comet-city-academy",
         "task": "t-007",
         "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
       },
@@ -124,10 +131,10 @@
       },
       {
         "severity": "warning",
-        "code": "STALE_IN_PROGRESS",
+        "code": "STALE_CLAIM_FIELDS",
         "project": "cthulhuquarium",
         "task": "t-089",
-        "message": "Task has remained review for 12 days."
+        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
       },
       {
         "severity": "warning",
@@ -138,24 +145,31 @@
       },
       {
         "severity": "warning",
-        "code": "STALE_IN_PROGRESS",
+        "code": "STALE_CLAIM_FIELDS",
         "project": "emperor-of-dust",
         "task": "t-044",
-        "message": "Task has remained review for 13 days."
+        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
+      },
+      {
+        "severity": "warning",
+        "code": "STALE_CLAIM_FIELDS",
+        "project": "emperor-of-dust",
+        "task": "t-047",
+        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
       },
       {
         "severity": "warning",
         "code": "STALE_IN_PROGRESS",
         "project": "emperor-of-dust",
         "task": "t-049",
-        "message": "Task has remained review for 10 days."
+        "message": "Task has remained review for 11 days."
       },
       {
         "severity": "warning",
         "code": "STALE_IN_PROGRESS",
         "project": "emperor-of-dust",
         "task": "t-050",
-        "message": "Task has remained review for 10 days."
+        "message": "Task has remained review for 11 days."
       },
       {
         "severity": "warning",
@@ -173,17 +187,24 @@
       },
       {
         "severity": "warning",
-        "code": "STALE_IN_PROGRESS",
+        "code": "STALE_CLAIM_FIELDS",
         "project": "game-of-captains",
         "task": "t-011",
-        "message": "Task has remained review for 3 days."
+        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
       },
       {
         "severity": "warning",
-        "code": "STALE_IN_PROGRESS",
+        "code": "STALE_CLAIM_FIELDS",
         "project": "game-of-captains",
-        "task": "t-020",
-        "message": "Task has remained review for 3 days."
+        "task": "t-031",
+        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
+      },
+      {
+        "severity": "warning",
+        "code": "STALE_CLAIM_FIELDS",
+        "project": "game-of-captains",
+        "task": "t-032",
+        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
       },
       {
         "severity": "warning",
@@ -292,94 +313,122 @@
       },
       {
         "severity": "warning",
-        "code": "STALE_IN_PROGRESS",
+        "code": "STALE_CLAIM_FIELDS",
         "project": "memory-dungeon",
         "task": "t-001",
-        "message": "Task has remained review for 6 days."
+        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
       },
       {
         "severity": "warning",
-        "code": "STALE_IN_PROGRESS",
+        "code": "STALE_CLAIM_FIELDS",
         "project": "memory-dungeon",
         "task": "t-007",
-        "message": "Task has remained review for 8 days."
+        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
       },
       {
         "severity": "warning",
-        "code": "STALE_IN_PROGRESS",
+        "code": "STALE_CLAIM_FIELDS",
         "project": "memory-dungeon",
         "task": "t-009",
-        "message": "Task has remained review for 4 days."
+        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
       },
       {
         "severity": "warning",
-        "code": "STALE_IN_PROGRESS",
+        "code": "STALE_CLAIM_FIELDS",
         "project": "memory-dungeon",
         "task": "t-013",
-        "message": "Task has remained review for 5 days."
+        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
       },
       {
         "severity": "warning",
-        "code": "STALE_IN_PROGRESS",
+        "code": "STALE_CLAIM_FIELDS",
+        "project": "memory-dungeon",
+        "task": "t-019",
+        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
+      },
+      {
+        "severity": "warning",
+        "code": "STALE_CLAIM_FIELDS",
+        "project": "memory-dungeon",
+        "task": "t-020",
+        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
+      },
+      {
+        "severity": "warning",
+        "code": "STALE_CLAIM_FIELDS",
         "project": "memory-dungeon",
         "task": "t-023",
-        "message": "Task has remained review for 4 days."
+        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
       },
       {
         "severity": "warning",
-        "code": "STALE_IN_PROGRESS",
+        "code": "STALE_CLAIM_FIELDS",
         "project": "memory-dungeon",
         "task": "t-025",
-        "message": "Task has remained review for 4 days."
+        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
       },
       {
         "severity": "warning",
-        "code": "STALE_IN_PROGRESS",
+        "code": "STALE_CLAIM_FIELDS",
         "project": "memory-dungeon",
         "task": "t-029",
-        "message": "Task has remained review for 4 days."
+        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
       },
       {
         "severity": "warning",
-        "code": "STALE_IN_PROGRESS",
+        "code": "STALE_CLAIM_FIELDS",
         "project": "memory-dungeon",
         "task": "t-030",
-        "message": "Task has remained review for 8 days."
+        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
       },
       {
         "severity": "warning",
-        "code": "STALE_IN_PROGRESS",
-        "project": "memory-dungeon",
-        "task": "t-034",
-        "message": "Task has remained review for 6 days."
-      },
-      {
-        "severity": "warning",
-        "code": "STALE_IN_PROGRESS",
+        "code": "STALE_CLAIM_FIELDS",
         "project": "memory-dungeon",
         "task": "t-037",
-        "message": "Task has remained review for 8 days."
+        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
       },
       {
         "severity": "warning",
-        "code": "STALE_IN_PROGRESS",
+        "code": "STALE_CLAIM_FIELDS",
+        "project": "memory-dungeon",
+        "task": "t-038",
+        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
+      },
+      {
+        "severity": "warning",
+        "code": "STALE_CLAIM_FIELDS",
+        "project": "memory-dungeon",
+        "task": "t-039",
+        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
+      },
+      {
+        "severity": "warning",
+        "code": "STALE_CLAIM_FIELDS",
         "project": "memory-dungeon",
         "task": "t-040",
-        "message": "Task has remained review for 6 days."
+        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
       },
       {
         "severity": "warning",
-        "code": "STALE_IN_PROGRESS",
+        "code": "STALE_CLAIM_FIELDS",
+        "project": "memory-dungeon",
+        "task": "t-044",
+        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
+      },
+      {
+        "severity": "warning",
+        "code": "STALE_CLAIM_FIELDS",
         "project": "memory-dungeon",
         "task": "t-045",
-        "message": "Task has remained review for 3 days."
+        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
       },
       {
         "severity": "warning",
-        "code": "STALE_IN_PROGRESS",
+        "code": "STALE_CLAIM_FIELDS",
         "project": "memory-dungeon",
         "task": "t-047",
-        "message": "Task has remained review for 4 days."
+        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
       },
       {
         "severity": "warning",
@@ -414,7 +463,49 @@
         "code": "STALE_IN_PROGRESS",
         "project": "rainbow-bullet-hell-space-princess",
         "task": "t-034",
-        "message": "Task has remained review for 10 days."
+        "message": "Task has remained review for 11 days."
+      },
+      {
+        "severity": "warning",
+        "code": "STALE_CLAIM_FIELDS",
+        "project": "save-the-plumber",
+        "task": "t-015",
+        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
+      },
+      {
+        "severity": "warning",
+        "code": "STALE_CLAIM_FIELDS",
+        "project": "shifting-desks",
+        "task": "t-032",
+        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
+      },
+      {
+        "severity": "warning",
+        "code": "STALE_CLAIM_FIELDS",
+        "project": "shifting-desks",
+        "task": "t-046",
+        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
+      },
+      {
+        "severity": "warning",
+        "code": "STALE_CLAIM_FIELDS",
+        "project": "shifting-desks",
+        "task": "t-048",
+        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
+      },
+      {
+        "severity": "warning",
+        "code": "STALE_IN_PROGRESS",
+        "project": "slime-city",
+        "task": "t-005",
+        "message": "Task has remained review for 3 days."
+      },
+      {
+        "severity": "warning",
+        "code": "STALE_IN_PROGRESS",
+        "project": "slime-city",
+        "task": "t-006",
+        "message": "Task has remained review for 3 days."
       },
       {
         "severity": "warning",
@@ -435,7 +526,14 @@
         "code": "STALE_IN_PROGRESS",
         "project": "weird-humboldt",
         "task": "t-014",
-        "message": "Task has remained review for 13 days."
+        "message": "Task has remained review for 14 days."
+      },
+      {
+        "severity": "warning",
+        "code": "STALE_CLAIM_FIELDS",
+        "project": "weird-humboldt",
+        "task": "t-022",
+        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
       },
       {
         "severity": "warning",
@@ -449,7 +547,7 @@
         "code": "STALE_IN_PROGRESS",
         "project": "weird-humboldt",
         "task": "t-060",
-        "message": "Task has remained review for 12 days."
+        "message": "Task has remained review for 13 days."
       },
       {
         "severity": "warning",
@@ -477,7 +575,7 @@
         "code": "STALE_IN_PROGRESS",
         "project": "zuzu-shifting-lands",
         "task": "t-004",
-        "message": "Task has remained review for 25 days."
+        "message": "Task has remained review for 26 days."
       },
       {
         "severity": "warning",
@@ -488,10 +586,10 @@
       },
       {
         "severity": "warning",
-        "code": "STALE_IN_PROGRESS",
+        "code": "STALE_CLAIM_FIELDS",
         "project": "zuzu-shifting-lands",
         "task": "t-043",
-        "message": "Task has remained review for 9 days."
+        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
       },
       {
         "severity": "warning",
