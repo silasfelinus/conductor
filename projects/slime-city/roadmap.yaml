@@ -524,7 +524,7 @@ tasks:
   - id: t-021
     milestone: m4
     title: "Adversarial constructed-deck matchup audit for all six 300-card crews"
-    status: claimed
+    status: ready
     depends_on: t-004
     passes: 0
     stakes: reversible
@@ -542,7 +542,19 @@ tasks:
       Narrow engine issue isolated after 300-bout mirrored faction audit: all Catgirls AMBUSH attackers were allowed to deal an immediate first-strike during summoning while other crews obeyed summon sickness, despite the published keyword promising only +2 on the first eligible blow. Changed Blackout/Bloodrush automatic arena clash to make all fresh fighters wait the same turn, retaining AMBUSH first-hit bonus after the wait. Added an explicit both-sides, two-round HP and keyword-replay regression in Slime City crew contract. The ten-seed 300-bout CI report will provide reproducible A/B evidence versus 95 Catgirl wins and 20 Bloodfairy wins from the old rules. No card ownership, game economy, schemas or outward-facing publish changes. This remains partial until CI is green and human fun QA later.
 
       PARTIAL MERGED 2026-11-02 PT: Kind Robots PR #4692 merged ddc08c07e87277d699d82e2133fa7226d165ed4e. Root cause of runaway Catgirls faction advantage: AMBUSH bypassed automatic Blackout summon sickness despite only promising +2 on its first eligible blow. Fixed the exemption while retaining the first-strike bonus; added mirrored same-turn and next-turn regression. All six current-head GitHub Actions workflows and four contract shards passed. Repeated identical 300-bout ten-seed matchup matrix: Catgirls 95 to 65 wins, Bloodfairies 20 to 30, Ironjaw 36 to 38, Riot 39 to 44, Undertow 46 to 53, Exchange 64 to 70. Catgirls versus Bloodfairies shifted from 20-0 to 10-10; still 18-2 versus Ironjaw. Constructed-on-constructed mirror balance, Ironjaw matchup counters, and human fun approval remain open; no public launch or self-hosted deployment triggered.
-    updated: '2026-11-05T10:04:55Z'
+
+      PARTIAL MERGED 2026-11-05 PT: Kind Robots PR #4800 merged
+      ddcddce26d4e370d30d7e911e641ab6431414288 (11/11 latest-head checks). Re-measured on 60
+      held-out seeds: Exchange 71%, Catgirls 63%, Undertow 47%, Riot 43%, Ironjaw 41%,
+      Bloodfairies 34% (spread 0.142). Tuned with a scratch held-out tuner; four founder stat
+      changes: Broker armor 1->0, Chimera armor 2->1, Pogo HP 2->3, Welder armor 0->1. Two
+      independent 1,800-game held-out sets: spread 0.149 -> 0.048 / 0.058, every crew 44-58%.
+      verifySlimeCityFactionBalance now guards spread <= 0.11 and crews 35-70% (old stats fail
+      at 0.156). Full test:slime-city-lab passed. BLOODRUSH stays skewed (0.206 -> 0.191) and
+      is queued as slime-city/t-025. Remaining here: constructed-vs-constructed matchups
+      beyond founders and human fun QA.
+    updated: '2026-11-05T10:32:32Z'
     owner: worker
     claimed_by: 2026-11-05T100454Z-slime-city-t021-claude
     claimed_at: '2026-11-05T10:04:55Z'
+    implementation_pr: 'silasfelinus/kind_robots#4800'
