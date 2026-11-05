@@ -403,15 +403,24 @@ tasks:
   - id: t-026
     milestone: m2
     title: "TURF CPU: read simple ladders and atari escapes to cut capture churn"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
     note: |-
       Kaizen from slime-city/t-024 (kind_robots#4784, 2026-11-04 PT). The endgame pass logic now ends 104/108 sweep games on two passes, but games still average ~57 rounds because about 50 stones a game are captured: the one-move CPU loses groups it could save. Teach the TURF CPU a short read: extend or connect a group in atari when it can escape, and avoid playing into a working ladder. Report captures per game and average length over the same 108-game sweep before and after, keep the TURF crew-balance guard (verifySlimeCityTurfCrews) green, and keep every game ending on passes.
+
+      DONE 2026-11-05 PT: Kind Robots PR #4806 merged 1707445b05e0b3f45cd293fda8a063bac82e70e9
+      (11/11 latest-head checks). Audit: 163 of 183 lost stones sat in atari at the start of
+      the CPU's turn. Added an atari-escape bonus (3+ liberties: 2.2/stone +0.8; 2 liberties:
+      0.6/stone) and a one-step ladder read (turfChased: 1.6/stone cost). 108-game sweep:
+      captures 49.5 -> 37.0 a game, length 56.7 -> 50.6 rounds, two-pass endings 104 -> 108.
+      verifySlimeCityTurfCrews (normal and PARITY) and full test:slime-city-lab passed.
+      Follow-up idea: head-to-head new-vs-old CPU strength harness.
     claimed_by: 2026-11-05T103834Z-slime-city-t026-claude
     claimed_at: '2026-11-05T10:38:35Z'
-    updated: '2026-11-05T10:38:35Z'
+    updated: '2026-11-05T11:28:19Z'
+    implementation_pr: 'silasfelinus/kind_robots#4806'
   - id: t-014
     milestone: m4
     title: "Subjective acceptance of the finished internal game"
