@@ -316,69 +316,29 @@ tasks:
   - id: t-013
     milestone: m5
     title: Wounded-route risk signals and meaningful retreat paths
-    status: done
-    updated: '2026-11-05T05:48:12Z'
+    status: ready
+    updated: '2026-11-05T05:54:49+00:00'
     passes: 0
     stakes: reversible
     depends_on: [t-002]
-    note: >-
+    note: |-
       PR #4037 documented a 6-encounter, 4-health, 3-Resolve, 4-strategy adversarial matrix. At 3 HP, none of the four benchmarked tactics won the crocodile, Abbess or Hollis's band battles in 90 deterministic seeds per setup. Not all losses are dead ends: some authored scenes restore HP and continue, which must be preserved. Audit actual player routes for avoidable and forced encounters; identify when a wounded player is funnelled into near-certain defeat without fair foreshadowing or a meaningful alternative. Add concise one-screen risk cues or narrative retreat options where earned, not blanket stat buffs or free escapes. Preserve Honor/Taint, replay the 15 frozen ending fixtures, and extend adversarial route tests across injured-entry cases. Require current-head TypeScript, contract tests, and any relevant responsive preview checks.
-
       First wounded-route slice: sister-free flag unlocks a costly alternative to the Abbess battle after the wound. New scene and low-HP/Resolve route regression assertions; awaiting PR CI. Other encounters remain for the wider t-013 audit.
-
       2026-10-25 PT: Merged silasfelinus/kind_robots#4200 (squash 3cfe24528406f7eb77b34c10e1b1a2109fe07b31) after all 13 exact-head workflows passed, including all four contract shards, TypeScript, formatting and 15 golden replay witnesses. Added sister-free-gated retreat after wounded Abbess bargain: rescue both children and leave the breach unresolved, or turn back to fight. Tests cover 1/3/6/12 HP, 0/4 Resolve, locked sister condition, moral flags and preserved positional choice indices. No ArtJobs or production deploy. Remaining t-013: Croc/Hollis low-HP route fairness, real seeded wounded-entry witnesses and broader player risk-cue audit; new scene currently shares sister-dagger art pending its own keeper.
-
       Hollis wounded-route slice: earned sister-trust and bandage retreat after failed parley; adds explicit failure risk cues, preserves existing choice indices, and tests low-health and exhausted routes. Kind Robots implementation PR to follow; t-013 remains open for Croc and complete seeded-route audit.
-
       2026-10-26 PT: Merged kind_robots PR #4205 (squash 899887e371b6e4257edaf0a8c0576fba56f494a4). Hollis failed-parley now offers an earned sister-trust + bandage escape through a new scene, at a cost of 1 Resolve and the 2-HP dry detour. Shadow/Mercy checks warn of failure. 1/3/6/12 HP x 0/4 Resolve, lock, no-heal, Honor/Taint and positional-choice regressions added. [...]
-
       [Earlier history (2,607 chars) archived verbatim to projects/zuzu-gamebook/T013-HISTORY.md -- read it there only when you need a specific past cycle. Append new cycles below, one short paragraph each.]
-
       Scoped Abbess trust/risk-cue regression ready for PR: retired the nod rescue after later sister estrangement, warned of the exact three-HP wound on two risky choices, and added seed-48 precondition plus reducer guard tests. Full from-new-game Abbess wounded journeys and dedicated art remain open.
-
       2026-10-26 PT: Merged Kind Robots PR #4234 (squash dbf5d25ca91ef73433d8b922efc8886ec8bafac8) after 13/13 exact-head workflows passed, including TypeScript, formatting, four contract shards and 15 golden endings. Abbess knifepoint sister rescue now retires after sister-wary despite prior sister-trust; two failed rolls explicitly warn of three-HP wound. Seed 48's legitimate trusted/estranged preconditions plus isolated Abbess reducer tests verify locks and positional choices. No ArtJobs or deployment. Remaining: full from-start wounded Abbess traces, other encounter fairness, stale sister-trust bonus audit and dedicated art. Evidence kind_robots#4139 comment 6419414000. Keep active, not For Human Gate.
-
       Scoped fix prepared: remove stale sister-trust dice bonuses after sister-wary at Abbess standoff and sister's knife, with deterministic seeded regression. Implementation branch worker/zuzu-gamebook-t-013-trust-bonus-x7r4; PR and CI pending.
-
       2026-10-26 PT: Merged kind_robots PR #4239 (squash 1ead308f4ec25d8220b2b2891ab83afd394ef0e6). Removed stale +2 sister-trust dice bonuses after sister-wary at Abbess standoff and sister's knife, preserving choice IDs and saves. Seed 28 regression verifies both outcomes at 3 HP/zero Resolve. All 13 exact-head workflows passed on a947285bc, including TypeScript, Prettier and four contract shards (run 40382492082). No ArtJobs or deployment. Remaining: full seeded wounded Abbess witnesses, wider fairness/risk cues, dedicated art, complete game QA. Evidence kind_robots#4139 comment 6424867166. Keep t-013 ready and game active; no human gate.
-
       Testing a legitimate fresh-game wounded Abbess route through the freed-sister rescue, retreat, and return-to-fight branches. Kind Robots worker/zuzu-gamebook-t-013-wounded-witness-k4n9; PR and exact-head CI pending.
-
       2026-10-26 PT: Merged Kind Robots PR #4244 (squash d81e2e899a7e4e8cfc75ef0a9e30624a9a639fd6). Real startRun seed 1, 43 legal moves, 7 HP reaches the freed-sister wounded Abbess route; escape and return-to-fight branches, replay and save validated. All 12 exact-head workflows passed at 9e8b74a87, including four contract shards, TypeScript and formatting. Evidence: kind_robots#4139 comment 6427595903. No ArtJobs or deploy. Remains: naturally lower-HP combat witnesses, forced-fight risk audit and dedicated scene illustration. Keep active, not For Human Gate.
+      2026-11-04 PT: Forced-fight audit slice. All 36 choices that lead into the 6 battles were audited, and none warned of a fight or said whether a loss is final. In 20k seeded walks, 1498 ended with an Abbess loss at ending-altar, often entered at 1 HP. Added pure fightAhead/fightCue in adventure.ts. They follow single-exit scenes, project sister-free and other flags, and flag deadly vs survivable losses and wounded entries within two blows. Choice cards in zuzu-gamebook.vue now show a Fight chip, a "Wounded, N HP: losing ends the journey" line and the foe/stakes caption, so cellar cut vs charge now visibly differs. Tests pin every fight-entering choice, the cellar/Hask/croc/Abbess cues, the real wounded-Abbess witness, and a 1500-walk seeded battery: 1548 fights announced, 174 wounded entries flagged, 224 final and 231 survivable losses matched their cue. Goldens unchanged. Kind Robots PR #4770 from a patch on base 050b23eb. Full vue-tsc was OOM locally, so CI decides. No art or deploy. Remaining: whether the no-sister wounded Abbess refusal (a8-voice-wound, Taint<2) needs an earned narrative alternative, and a responsive check of the cue at 390/768/1440.
+      2026-11-04 PT: forced-fight cue slice merged as kind_robots #4770 (squash 1107d7d). Back to ready for the rest of t-013: an earned narrative alternative at a8-voice-wound for a wounded no-sister journal, and a responsive check of the cue at 390/768/1440.
+      2026-11-04 PT: Silas: 'zuzu, who is male, should probably not have an unwinnable fight.' kind_robots #4780 gives each of ten scenes that could force a 0%-win fight (a8-voice- wound, stabbed, a8-word-broken, abbess-strikes, a8-word-kept, a8-standoff, a8-standoff- break, cellar, a4-well-toll, a4-well-grab) a costly non-fight way on (give ground and bind with the bandage, run with the freed children, carry word, or drop goods and run). 12,000-walk battery: no forced hopeless fight; fixtures and fingerprints unchanged.
 
-      2026-11-04 PT: Forced-fight audit slice. All 36 choices that lead into the 6 battles
-      were audited, and none warned of a fight or said whether a loss is final. In 20k seeded
-      walks, 1498 ended with an Abbess loss at ending-altar, often entered at 1 HP. Added pure
-      fightAhead/fightCue in adventure.ts. They follow single-exit scenes, project sister-free
-      and other flags, and flag deadly vs survivable losses and wounded entries within two
-      blows. Choice cards in zuzu-gamebook.vue now show a Fight chip, a "Wounded, N HP: losing
-      ends the journey" line and the foe/stakes caption, so cellar cut vs charge now visibly
-      differs. Tests pin every fight-entering choice, the cellar/Hask/croc/Abbess cues, the
-      real wounded-Abbess witness, and a 1500-walk seeded battery: 1548 fights announced, 174
-      wounded entries flagged, 224 final and 231 survivable losses matched their cue. Goldens
-      unchanged. Kind Robots PR #4770 from a patch on base 050b23eb. Full vue-tsc was OOM
-      locally, so CI decides. No art or deploy. Remaining: whether the no-sister wounded
-      Abbess refusal (a8-voice-wound, Taint<2) needs an earned narrative alternative, and a
-      responsive check of the cue at 390/768/1440.
-
-      2026-11-04 PT: forced-fight cue slice merged as kind_robots #4770 (squash 1107d7d). Back
-      to ready for the rest of t-013: an earned narrative alternative at a8-voice-wound for a
-      wounded no-sister journal, and a responsive check of the cue at 390/768/1440.
-
-      2026-11-04 PT: Silas: 'zuzu, who is male, should probably not have an unwinnable fight.'
-      kind_robots #4780 gives each of ten scenes that could force a 0%-win fight (a8-voice-
-      wound, stabbed, a8-word-broken, abbess-strikes, a8-word-kept, a8-standoff, a8-standoff-
-      break, cellar, a4-well-toll, a4-well-grab) a costly non-fight way on (give ground and
-      bind with the bandage, run with the freed children, carry word, or drop goods and run).
-      12,000-walk battery: no forced hopeless fight; fixtures and fingerprints unchanged.
-
-      2026-11-04 PT: kind_robots #4780 merged (95aef94). Both halves of the task have shipped:
-      risk signals (#4770) and meaningful retreat paths (#4780). No reachable state forces an
-      unwinnable fight.
-    owner: worker
-    claimed_by: 2026-11-05T030600Z-zuzu-gamebook-t013-retreat
-    claimed_at: '2026-11-05T05:13:43Z'
-    implementation_pr: 'silasfelinus/kind_robots#4780'
+      kind_robots #4780 merged (no forced unwinnable fights). Remaining: earned narrative alternative at a8-voice-wound for wounded no-sister journal; responsive check of fight cue at 390/768/1440.
   - id: t-014
     title: "Zuzu Gamebook | Master completion roadmap"
     status: ready

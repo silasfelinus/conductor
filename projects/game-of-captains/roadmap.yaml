@@ -747,11 +747,16 @@ tasks:
       ending stocked: cautious 0/24 -> 18/24, completionist 0/24 -> 13/24, reckless 0/24 ->
       5/24, skipper 0/24 -> 3/24, chaos unchanged 24/24. Seeded battery pins the shape.
 
-      2026-11-04 PT: kind_robots #4782 merged. Supply curve pinned by a seeded persona
-      battery. Follow-up idea, not a task: chaos captain's Override looting (~+20/voyage)
-      predates this and could be capped if wanted.
-    owner: worker
+      kind_robots #4782 merged (squash f074838); CI green, seeded persona battery pins supply curve. Reviewer merge.
     claimed_by: 2026-11-05T054000Z-game-followups
     claimed_at: '2026-11-05T05:39:41Z'
-    updated: '2026-11-05T05:48:15Z'
+    updated: '2026-11-05T05:54:49+00:00'
     implementation_pr: 'silasfelinus/kind_robots#4782'
+  - id: t-037
+    milestone: m4
+    title: "Show the supply swing on the mission report card (e.g. SUCCESS - +1 SUPPLY)"
+    status: ready
+    passes: 0
+    stakes: reversible
+    source: reviewer-kaizen-t-036
+    owner: worker

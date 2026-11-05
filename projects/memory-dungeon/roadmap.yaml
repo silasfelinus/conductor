@@ -1202,14 +1202,14 @@ tasks:
     implementation_pr: 'silasfelinus/kind_robots#4729'
   - id: t-051
     title: "Memory Dungeon: rebalance Briar's 64-tile pacing and House room variety"
-    status: ready
+    status: review
     stakes: reversible
     owner: worker
-    claimed_by: 20261104T155055Z-memory-dungeon-t051-c7e4
-    claimed_at: '2026-11-04T15:51:10.616Z'
+    claimed_by: 2026-11-05T055200Z-memory-dungeon-t051-c82d
+    claimed_at: '2026-11-05T05:52:00Z'
     passes: 0
     source_issue: "silasfelinus/kind_robots#4721"
-    updated: '2026-11-05T05:15:52Z'
+    updated: '2026-11-05T05:55:00Z'
     note: |-
       FROM GITHUB ISSUE silasfelinus/kind_robots#4721 (https://github.com/silasfelinus/kind_robots/issues/4721), opened by @silasfelinus on 2026-11-03. Imported by scripts/sync_github_issues.py. Reference the issue in the implementing PR (`Closes silasfelinus/kind_robots#4721`) so it closes on merge; the bridge closes it otherwise once this task is done.
 
@@ -1218,6 +1218,8 @@ tasks:
       2026-11-04 PT cleanup pass: stale review with an expired claim; the recorded slice
       landed (or was superseded) and the note itself lists remaining scope, so back to ready
       for the next slice rather than done.
+
+      Two low-stakes Briar sites now auto-resolve with their existing choice IDs, preserving old saves and reducing repeated dialogue prompts. Kind Robots PR #4783; CI pending. The full 64-tile pacing and House variety task remains open.
   - id: t-052
     milestone: m3
     title: "e03 Morrow's Shift: replace template recipe sites with 64 authored sites in the live Earth stage"
