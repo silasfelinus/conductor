@@ -1361,13 +1361,13 @@ tasks:
   - id: t-057
     milestone: m4
     title: "e09 Briar collision: Rowan leads, goblin Pip becomes a companion"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 2026-11-05T235100Z-memory-dungeon-t057-8f2c91
     claimed_at: '2026-11-05T23:51:00Z'
     stakes: reversible
     passes: 0
-    updated: '2026-11-05T23:51:00Z'
+    updated: '2026-11-05T23:54:00Z'
     note: |-
       Silas 2026-11-05 PT: the researcher (Rowan) leads e09, not Pip. briarCollision.ts, briarCollisionRoute.ts, briarCollisionWitness.ts and the e09 stage (components/pages/memory-dungeon-briar-collision.vue) are written with Pip as the acting lead ("Pip spots...", "Pip exposes..."). Rewrite them so Rowan acts and Pip, the goblin courier, is a companion who still contributes courier knowledge. Keep coordinates, choice ids, fragment ids and save keys. Also update conductor story/BRIAR-COLLISION-PIP-QUESTS.json framing.
 
@@ -1386,6 +1386,8 @@ tasks:
       Rootbound server e09 scene rewritten for Rowan agency while preserving IDs, flags, effects and Pip's courier expertise. PR and CI verification pending; broader t-057 remains incomplete.
 
       Merged kind_robots PR #4823 (68e5ec06d949366147f3cad81c357b5e5deb6ea5); all eight workflows passed on exact head 2407f7aa. Rootbound server Rowan viewpoint fixed; remaining stage, quest JSON and adversarial verdict coverage require further work. No ArtJobs or deployment.
+
+      Writer-only e09 quest packet corrected to Rowan viewpoint across six historical openings and two scene choice sets. Preserve all fragment, choice, flag and route identifiers. Conductor PR pending; stage and executable branch tests remain.
   - id: t-058
     milestone: m3
     title: "e05 Scylla's Shore: replace template recipe sites with 64 authored sites"
