@@ -1433,12 +1433,20 @@ tasks:
   - id: t-060
     milestone: m3
     title: "e04 dungeon: the flooding archive behind 6,2"
-    status: claimed
+    status: review
     stakes: reversible
     passes: 0
-    updated: '2026-11-05T21:01:22Z'
+    updated: '2026-11-05T21:22:32Z'
     note: |-
       Every overworld has its own dungeon (Silas 2026-11-05). e04's 6,2 threshold is Sublevel B flooding with seawater. Build it on the Sublevel B engine (utils/memoryDungeon/sublevelB/): ideally extract a shared authored-dungeon reducer (graph, shortcuts, gates, replay restore) first, then author 36 horror-register rooms that remember the e03 Sublevel B ending (SB-35 return/finish/confess) and the e03 6,2 entry. Wire like memory-dungeon-sublevel.vue from the e04 stage.
+
+      2026-11-05 PT: kind_robots PR (claude/memory-t060-dungeon-engine) extracts the shared
+      authored-dungeon engine (utils/memoryDungeon/authoredDungeon/) and store helper
+      (stores/helpers/authoredDungeonStore.ts), with Sublevel B rebound and behavior
+      unchanged. It adds the Drowned Archive: 36 flooded rooms on Sublevel B's plan, 141
+      echoes (34 rooms remember their dry twin), the sea's-ledger guardian, and
+      salvage/rescue/testify endings, entered from e04 6,2. All verifyMemory* tests, vue-tsc
+      and layout-contract pass.
     owner: worker
     claimed_by: 2026-11-05T111500Z-memory-dungeon-t060-e04-dungeon
     claimed_at: '2026-11-05T21:01:22Z'
