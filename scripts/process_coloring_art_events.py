@@ -52,6 +52,7 @@ ALLOWED_KEYS = {
     "book",
     "proposal_ids",
     "source_path",
+    "bw_source",
     "render_settings",
     "timeout",
     "force",
@@ -60,6 +61,12 @@ ALLOWED_KEYS = {
     "note",
 }
 IMAGE_SUFFIXES = {".webp", ".png", ".jpg", ".jpeg"}
+ACCEPT_OPERATIONS = ("accept-color", "accept-bw", "accept-cover")
+# Where a generate-bw request draws its line art from. "color" (the default and
+# the only behavior before 2026-11-04) converts the accepted color master;
+# "version" converts one named color or B&W file from the page's history
+# (source_path); "prompt" renders fresh line art from the page's text prompt.
+BW_SOURCES = ("color", "version", "prompt")
 MIN_TIMEOUT = 30
 MAX_TIMEOUT = 900
 MAX_PROPOSALS = 18
@@ -75,6 +82,7 @@ class ColorArtEvent:
     timeout: int
     force: bool
     render_settings: dict[str, Any] | None = None
+    bw_source: str | None = None
 
     @property
     def is_cover(self) -> bool:
@@ -109,7 +117,7 @@ class ColorArtEvent:
                 command.extend(
                     ("--render-settings", json.dumps(self.render_settings, sort_keys=True))
                 )
-        elif self.source_path:
+        elif self.source_path and self.operation in ACCEPT_OPERATIONS:
             command = [
                 sys.executable,
                 str(ADOPTION_CONSUMER),
@@ -135,6 +143,10 @@ class ColorArtEvent:
             ]
             for proposal_id in self.proposal_ids:
                 command.extend(("--proposal-id", proposal_id))
+            if self.bw_source:
+                command.extend(("--bw-source", self.bw_source))
+            if self.source_path:
+                command.extend(("--source-path", self.source_path))
         if self.force:
             command.append("--force")
         if live:
@@ -148,14 +160,19 @@ def _integer(value: Any, field: str) -> int:
     return value
 
 
-def _source_path(value: Any, *, book: str, operation: str) -> str | None:
+def _source_path(
+    value: Any, *, book: str, operation: str, bw_source: str | None = None
+) -> str | None:
     if value is None or value == "":
         return None
     if not isinstance(value, str):
         raise ValueError("source_path must be a string")
-    if operation not in ("accept-color", "accept-bw", "accept-cover"):
+    if operation not in ACCEPT_OPERATIONS and not (
+        operation == "generate-bw" and bw_source == "version"
+    ):
         raise ValueError(
-            "source_path is supported only for accept-color, accept-bw, and accept-cover"
+            "source_path is supported only for accept-color, accept-bw, accept-cover, "
+            "and generate-bw with bw_source: version"
         )
 
     clean = value.strip().replace("\\", "/")
@@ -224,11 +241,20 @@ def load_event(path: Path) -> ColorArtEvent:
     operation_text = str(operation)
     book_text = str(book)
     proposal_ids = _proposal_ids(data, book_text, operation_text)
+    bw_source = data.get("bw_source")
+    if bw_source is not None:
+        if operation_text != "generate-bw":
+            raise ValueError("bw_source is supported only for generate-bw")
+        if bw_source not in BW_SOURCES:
+            raise ValueError(f"bw_source must be one of: {', '.join(BW_SOURCES)}")
     source_path = _source_path(
         data.get("source_path"),
         book=book_text,
         operation=operation_text,
+        bw_source=bw_source,
     )
+    if bw_source == "version" and not source_path:
+        raise ValueError("bw_source: version requires a source_path")
     if source_path and operation_text in INTERIOR_OPERATIONS and len(proposal_ids) != 1:
         raise ValueError("source_path requires exactly one proposal id")
 
@@ -247,7 +273,7 @@ def load_event(path: Path) -> ColorArtEvent:
         raise ValueError(
             "force is supported only for generate-color-proposals, generate-bw, and generate-cover"
         )
-    if source_path and force:
+    if source_path and force and operation_text in ACCEPT_OPERATIONS:
         raise ValueError("source_path adoption cannot be combined with force")
 
     render_settings = None
@@ -265,6 +291,7 @@ def load_event(path: Path) -> ColorArtEvent:
         timeout=timeout,
         force=force,
         render_settings=render_settings,
+        bw_source=bw_source,
     )
 
 
