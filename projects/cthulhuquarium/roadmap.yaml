@@ -1794,3 +1794,41 @@ tasks:
     Full history: projects/cthulhuquarium/HISTORY.md#t-097
   updated: '2026-10-27T18:55:39Z'
   implementation_pr: 'silasfelinus/kind_robots#4314'
+- id: t-098
+  milestone: m5
+  title: 'Console UI redesign: ornate bezel shell, HUD, five-tab command deck, Creatures and Market screens with generated UI art'
+  status: ready
+  owner: null
+  stakes: reversible
+  passes: 0
+  source_reference: projects/cthulhuquarium/docs/t-098-t-099-console-redesign.md
+  note: >-
+    Silas, 2026-11-05 PT, with four ChatGPT reference mockups (Tank, Feed, Creatures, Market): "It still
+    looks more like a webapp than a console game ... This version is a little more freeware slop than I
+    want, the design is a little too childish, but it's still better than what we have. I need a front end
+    redesign, actual art assets generated, and much better fish designs for a lot of our fish." Take the
+    reference's structure (bezelled tank as the stage, top HUD capsules, left care meters, bottom
+    illustrated tab deck with L/R shoulder hints and button-prompt footer, featured-creature panel plus
+    card strip, pedestal shop cards) and drop its childishness (chibi faces, blush, sparkle overload).
+    Design rules in the source_reference doc. Real generated UI art (tab icons, title cartouche, frame
+    ornaments), not CSS-only placeholders, once rendered.
+  updated: '2026-11-05T21:40:00Z'
+- id: t-099
+  milestone: m5
+  title: 'Fish roster redesign: one in-tank sprite style for all 151 species, new designs for the stock-fish, object and sheet-shaped ones'
+  status: ready
+  owner: null
+  stakes: reversible
+  passes: 0
+  source_reference: projects/cthulhuquarium/docs/t-098-t-099-console-redesign.md
+  note: >-
+    Silas, 2026-11-05 PT: "a lot of the fish designs are boring" (same session as t-098). Audit of the 151
+    in-tank sprites: the sprite prompts inherited the eight book-plate lineages, so the tank mixes
+    photoreal stock fish (lithograph commons), flat black scraperboard and gyotaku silhouettes, and
+    literal objects (a cheese-like sediment block, a parcel, a ruled grid, a bowl). The book plates keep
+    their lineages; the swimming sprite gets one house style chosen by a rendered style test, and every
+    species whose concept is an object, a sheet layout or an unremarkable stock fish gets a new creature
+    design that keeps its name, joke and field note. Work happens in the canon repo
+    (fish/*.yaml sprite.prompt, scripts/render_art.py, build_sprites.py, deliver.sh) and syncs to
+    kind_robots.
+  updated: '2026-11-05T21:40:00Z'
