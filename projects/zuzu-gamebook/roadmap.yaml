@@ -223,7 +223,7 @@ tasks:
   - id: t-008
     milestone: m4
     title: Combat, powers, dice, inventory and save/resume UI polish
-    status: claimed
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: [t-002, t-003]
@@ -233,10 +233,30 @@ tasks:
       Adversarial recovery and full-pack loot changes implemented on worker/zuzu-gamebook-t-008-loot-recovery-g6e8f4. Pending CI and scoped PR review.
 
       2026-10-22 PT: Merged reversible fix PR silasfelinus/kind_robots#4029 (squash bb7e04953eff9a7a08ab0931d573739835b0333a) after all 16 current-head GitHub workflows passed. Inventory overflow now pauses for explicit replace-or-leave, with V1 save compatibility and regression tests; a recoverable previous journey survives restart, retaining the existing confirmation. No ArtJobs or external publishing in this scope. Re-arm t-008 for its uncompleted combat log/feedback, portable saves and responsive acceptance work. Priority triage: (1) full start-to-ending witness transcripts for all 15 endings including Wren's Lamp via t-011/t-009; (2) combat strategy win-rate calibration for Guard/Feint versus Quiet Draw; (3) eight shared-art fallbacks via t-006/t-012; (4) remaining UI polish and device testing. t-009 remains waiting on t-006, t-007, and t-008.
-    updated: '2026-11-05T21:04:39Z'
+
+      2026-11-04 PT: Round-5 slice of t-008 is ready to land as a reversible PR. It adds a
+      per-round combat log: each round shows the move, both dice and the modifier against the
+      target, damage both ways and HP on both sides. The battle panel lists the newest three
+      rounds, a "Fight won/lost" report with the full log stays on the next page until Zuzu
+      moves on, and the newest round goes to a screen-reader live region. Story and move cards
+      now quote the engine's real odds: "Sense 8+ · 58%" with knowledge bonuses counted, and
+      target -2 when the foe is open. Cards also show Resolve and item costs (uses vs needs),
+      healing and finds. The character sheet explains each pack item and when it is used up,
+      and the special arts list now matches what the book actually offers. A toolbar "Saved"
+      mark appears after each save, or "Not saved" when storage is blocked. The Ledger can
+      copy a portable ZUZU1 save code and load one back with no server; codes are validated,
+      and the replaced journey goes to the recovery slot. Old saves load, including mid-fight
+      ones, and all 15 golden fingerprints are unchanged. Remaining: device testing on real
+      phones and tablets, chip-wrap check on the narrowest cards, a mobile character-sheet
+      drawer (the sheet still swaps out the reading pane below lg), animated hit feedback and
+      combat outcome illustrations, combat win-rate calibration (Guard/Feint vs Quiet Draw),
+      and shorter save codes (compact the visited trail) if QR sharing is wanted.  Merged as
+      kind_robots #4826.
+    updated: '2026-11-05T21:52:14Z'
     owner: worker
     claimed_by: 2026-11-05T210436Z-zuzu-gamebook-t-008-r5
     claimed_at: '2026-11-05T21:04:39Z'
+    implementation_pr: 'silasfelinus/kind_robots#4826'
   - id: t-009
     milestone: m5
     title: QA and editorial playtest of every route, ending and device
