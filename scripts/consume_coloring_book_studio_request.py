@@ -4,6 +4,8 @@
 The regular coloring-book consumer deliberately works in book-order batches. The
 studio needs a narrower contract: edit a canonical proposal, then request that
 specific proposal without allowing an earlier pending slot to steal the run.
+With --color-source version it colors one named B&W (or re-colors one named
+color) file with a Kontext edit instead of rendering from the text prompt.
 This wrapper reuses the existing enqueue, recovery, quality-gate, rejection, and
 queue-writeback functions rather than creating a second rendering pipeline.
 """
@@ -28,8 +30,26 @@ BOOK_PREFIXES = {
     "hollywood-recast": ("hwr-",),
     "kind-robots": ("kr-",),
 }
+COLOR_SOURCES = ("prompt", "version")
+COLORIZE_PROMPT = (
+    "Color the supplied black-and-white coloring-book line art as a finished inked-comic "
+    f"coloring-book design master: {coloring.INKED_STYLE}. Preserve the exact composition, "
+    "subject identities, body types, pose, framing, perspective, contact points, expressions, "
+    "props, background details, and every existing black outline. Fill each closed region with "
+    "crisp flat cel-shaded comic color. Keep the image full-bleed and unmarked."
+)
+RECOLOR_PROMPT = (
+    "Repaint the supplied image as a finished inked-comic coloring-book design master: "
+    f"{coloring.INKED_STYLE}. Preserve the exact composition, subject identities, body types, "
+    "pose, framing, perspective, contact points, expressions, props, and background details. "
+    "Keep the image full-bleed and unmarked."
+)
+SCENE_HINT_CHARS = 600
+
 REVISION_CLEAR_FIELDS = (
     "art_image_id",
+    "color_source",
+    "color_source_path",
     "completed_at",
     "last_rejected_art_image_id",
     "last_render_seed",
@@ -231,12 +251,72 @@ def selected_entries(book_slug: str, proposal_ids: list[str]) -> list[dict[str, 
     return [by_id[proposal_id] for proposal_id in proposal_ids]
 
 
+def image_source(book_slug: str, source_path: str) -> tuple[str, str]:
+    """Set-relative path and data URL of the file a color is made from.
+
+    Read before prepare_requested_entries() archives the current candidate, so
+    re-coloring the very file being replaced still works.
+    """
+    source_rel = production.relative_to_set(book_slug, source_path)
+    source = production.absolute_set_path(book_slug, source_rel)
+    if not source.exists():
+        raise RuntimeError(f"Selected source does not exist: {book_slug}/{source_rel}")
+    return source_rel, production.image_data_url(source)
+
+
+def image_color_prompt(source_rel: str, scene_prompt: str) -> str:
+    base = RECOLOR_PROMPT if not production.is_bw_path(source_rel) else COLORIZE_PROMPT
+    scene = coloring.clean(scene_prompt)[:SCENE_HINT_CHARS].strip()
+    return f"{base} The scene: {scene}" if scene else base
+
+
+def attach_image_source(
+    entry: dict[str, Any], source_rel: str, data_url: str
+) -> None:
+    entry["color_source"] = "version"
+    entry["color_source_path"] = source_rel
+    entry["source_image_data_url"] = data_url
+    entry["image_prompt"] = image_color_prompt(
+        source_rel, str(entry.get("scene_prompt") or "")
+    )
+
+
+def enqueue_from_image(entry: dict[str, Any]) -> int:
+    body = {
+        "engine": "kontext",
+        "promptString": entry["image_prompt"],
+        "sourceImageBase64": entry["source_image_data_url"],
+        "width": 1024,
+        "height": 1536,
+        "steps": 20,
+        "guidance": 2.5,
+        "denoise": 1,
+        "projectSlug": "coloring-book",
+        "priority": 1,
+        "isPublic": False,
+        "designer": "Coloring Book Studio",
+    }
+    status, response = queue_consumer.http_json(
+        "POST", f"{queue_consumer.KR_BASE_URL}/api/art/enqueue", body
+    )
+    if status not in (200, 201) or not response or not response.get("success"):
+        message = response.get("message") if isinstance(response, dict) else response
+        raise RuntimeError(f"color-from-image enqueue failed: HTTP {status} {message}")
+    return int((response.get("data") or {}).get("jobId"))
+
+
 def run_entries(entries: list[dict[str, Any]], *, live: bool, timeout: int) -> int:
     mode = "LIVE" if live else "DRY RUN"
     print(f"{mode}: {len(entries)} proposal-targeted Coloring Book Studio request(s)")
 
     if not live:
         for entry in entries:
+            if entry.get("source_image_data_url"):
+                print(
+                    f"  {entry['set']}/{entry['concept_id']} -> {entry['image_path']} "
+                    f"engine=kontext from {entry['color_source_path']}"
+                )
+                continue
             job = coloring.stable_job_body(entry)
             print(
                 f"  {entry['set']}/{entry['concept_id']} -> {entry['image_path']} "
@@ -277,7 +357,11 @@ def run_entries(entries: list[dict[str, Any]], *, live: bool, timeout: int) -> i
                     f"{entry['set']}/{entry['concept_id']}"
                 )
             else:
-                submitted_job_id, deduplicated = coloring.enqueue(entry)
+                if entry.get("source_image_data_url"):
+                    submitted_job_id, deduplicated = enqueue_from_image(entry), False
+                    entry["engine"] = "kontext"
+                else:
+                    submitted_job_id, deduplicated = coloring.enqueue(entry)
                 suffix = " (existing matching attempt)" if deduplicated else ""
                 print(
                     f"  queued ArtJob {submitted_job_id}{suffix} for "
@@ -376,6 +460,16 @@ def main() -> int:
         "--render-settings",
         help="JSON engine/checkpoint/lora/lora_strength to persist on the requested pages",
     )
+    parser.add_argument(
+        "--color-source",
+        choices=COLOR_SOURCES,
+        default="prompt",
+        help="prompt (default): render from the page prompt; version: color --source-path",
+    )
+    parser.add_argument(
+        "--source-path",
+        help="--color-source version: set-relative B&W or color file to make the color from",
+    )
     args = parser.parse_args()
 
     proposal_ids = list(dict.fromkeys(str(value).strip() for value in args.proposal_ids if str(value).strip()))
@@ -389,8 +483,15 @@ def main() -> int:
         parser.error(f"proposal id(s) do not belong to {args.book}: {', '.join(invalid)}")
     if not 30 <= args.timeout <= 900:
         parser.error("--timeout must be between 30 and 900")
+    if args.color_source == "version" and not args.source_path:
+        parser.error("--color-source version requires --source-path")
+    if args.color_source != "version" and args.source_path:
+        parser.error("--source-path requires --color-source version")
+    if args.source_path and len(proposal_ids) != 1:
+        parser.error("--source-path names one page's file; request exactly one --proposal-id")
 
     try:
+        source = image_source(args.book, args.source_path) if args.source_path else None
         if args.render_settings:
             settings = coloring_render_settings.normalize(args.render_settings)
             changed = apply_render_settings(args.book, proposal_ids, settings, args.live)
@@ -420,6 +521,9 @@ def main() -> int:
             print("All requested proposal(s) are already resolved; nothing to do.")
             return 0
         entries = selected_entries(args.book, remaining_ids)
+        if source:
+            for entry in entries:
+                attach_image_source(entry, *source)
         return run_entries(entries, live=args.live, timeout=args.timeout)
     except Exception as error:  # noqa: BLE001
         print(f"Studio request failed: {error}", file=sys.stderr)

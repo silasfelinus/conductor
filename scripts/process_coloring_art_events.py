@@ -53,6 +53,7 @@ ALLOWED_KEYS = {
     "proposal_ids",
     "source_path",
     "bw_source",
+    "color_source",
     "render_settings",
     "timeout",
     "force",
@@ -67,6 +68,9 @@ ACCEPT_OPERATIONS = ("accept-color", "accept-bw", "accept-cover")
 # "version" converts one named color or B&W file from the page's history
 # (source_path); "prompt" renders fresh line art from the page's text prompt.
 BW_SOURCES = ("color", "version", "prompt")
+# generate-color-proposals: "prompt" (default) renders from the page prompt;
+# "version" colors the B&W (or re-colors the color) file named by source_path.
+COLOR_SOURCES = ("prompt", "version")
 MIN_TIMEOUT = 30
 MAX_TIMEOUT = 900
 MAX_PROPOSALS = 18
@@ -83,6 +87,7 @@ class ColorArtEvent:
     force: bool
     render_settings: dict[str, Any] | None = None
     bw_source: str | None = None
+    color_source: str | None = None
 
     @property
     def is_cover(self) -> bool:
@@ -117,6 +122,10 @@ class ColorArtEvent:
                 command.extend(
                     ("--render-settings", json.dumps(self.render_settings, sort_keys=True))
                 )
+            if self.color_source:
+                command.extend(("--color-source", self.color_source))
+            if self.source_path:
+                command.extend(("--source-path", self.source_path))
         elif self.source_path and self.operation in ACCEPT_OPERATIONS:
             command = [
                 sys.executable,
@@ -161,18 +170,25 @@ def _integer(value: Any, field: str) -> int:
 
 
 def _source_path(
-    value: Any, *, book: str, operation: str, bw_source: str | None = None
+    value: Any,
+    *,
+    book: str,
+    operation: str,
+    bw_source: str | None = None,
+    color_source: str | None = None,
 ) -> str | None:
     if value is None or value == "":
         return None
     if not isinstance(value, str):
         raise ValueError("source_path must be a string")
     if operation not in ACCEPT_OPERATIONS and not (
-        operation == "generate-bw" and bw_source == "version"
+        (operation == "generate-bw" and bw_source == "version")
+        or (operation == "generate-color-proposals" and color_source == "version")
     ):
         raise ValueError(
             "source_path is supported only for accept-color, accept-bw, accept-cover, "
-            "and generate-bw with bw_source: version"
+            "generate-bw with bw_source: version, and generate-color-proposals with "
+            "color_source: version"
         )
 
     clean = value.strip().replace("\\", "/")
@@ -247,14 +263,23 @@ def load_event(path: Path) -> ColorArtEvent:
             raise ValueError("bw_source is supported only for generate-bw")
         if bw_source not in BW_SOURCES:
             raise ValueError(f"bw_source must be one of: {', '.join(BW_SOURCES)}")
+    color_source = data.get("color_source")
+    if color_source is not None:
+        if operation_text != "generate-color-proposals":
+            raise ValueError("color_source is supported only for generate-color-proposals")
+        if color_source not in COLOR_SOURCES:
+            raise ValueError(f"color_source must be one of: {', '.join(COLOR_SOURCES)}")
     source_path = _source_path(
         data.get("source_path"),
         book=book_text,
         operation=operation_text,
         bw_source=bw_source,
+        color_source=color_source,
     )
     if bw_source == "version" and not source_path:
         raise ValueError("bw_source: version requires a source_path")
+    if color_source == "version" and not source_path:
+        raise ValueError("color_source: version requires a source_path")
     if source_path and operation_text in INTERIOR_OPERATIONS and len(proposal_ids) != 1:
         raise ValueError("source_path requires exactly one proposal id")
 
@@ -292,6 +317,7 @@ def load_event(path: Path) -> ColorArtEvent:
         force=force,
         render_settings=render_settings,
         bw_source=bw_source,
+        color_source=color_source,
     )
 
 

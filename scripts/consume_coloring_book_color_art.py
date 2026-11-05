@@ -347,6 +347,12 @@ def mark_done(completed: list[dict[str, Any]]) -> int:
         source["render_engine"] = done.get("engine")
         source["completed_at"] = now_iso()
         source["prompt_fingerprint"] = str(done["prompt_fingerprint"])
+        if done.get("color_source_path"):
+            source["color_source"] = "version"
+            source["color_source_path"] = str(done["color_source_path"])
+        else:
+            source.pop("color_source", None)
+            source.pop("color_source_path", None)
         source.pop("render_gate_error", None)
         source.pop("render_gate_error_at", None)
         changed += 1
