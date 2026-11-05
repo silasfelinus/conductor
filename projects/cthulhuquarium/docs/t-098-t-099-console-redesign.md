@@ -76,4 +76,28 @@ the pipeline).
 
 ## In-tank sprite house style (t-099)
 
-*(filled in from the 2026-11-05 style test, below)*
+**Decided 2026-11-05 PT: one painted Krea 2 register for every swimming sprite.** The book
+plates (Ichthyonomicon cards) keep their eight lineages; the tank no longer inherits them. Canon
+source of truth: `silasfelinus/cthulhuquarium` `ART-DIRECTION.md` "The tank register" and
+`art/sprite-style.yaml` (merged in cthulhuquarium#79).
+
+Style test, same four creatures (lamplight angler, a redesigned ledger-shaped auditor, drifting
+bell, sardine). Sheets are in `style-test-2026-11-05/`:
+
+| Engine / style | Result |
+|---|---|
+| flux, gouache naturalist (`flux-gouache.jpg`) | Handsome but harsh and natural-history. It lost the designed traits (the auditor came back a plain fish) and the glow. Silas: *"too harsh and naturalistic. Illustrious or Krea would probably give us a much more dynamic style and palette."* The other three flux styles were cancelled. |
+| **Krea 2**, painted dark-comedy game illustration (`krea2-vs-illustrious.jpg`, row 1) | **Chosen.** Dynamic jewel-tone palette with inked outlines, strict profile on a clean pale backdrop (cuts out cleanly), and keeps the prose details. |
+| Illustrious: Arthemy Western Art v3 (row 2), Illustrij v2.1 (row 3) | The most personality (Arthemy's monocled auditor), but the tags gave the angler and sardine legs, they render on dark floors with cast shadows, and tag prompts drop the bespoke concepts. A candidate for hero/plate art later. |
+
+**Roster.** All 151 sprite prompts were rewritten as a bespoke subject, then the house clause,
+then the cut-out framing. **44 species got new designs** because their concept was an object
+or sheet layout that can't swim, or a stock fish with nothing to look at. Name, joke, field
+note and voices are unchanged. Their card `art_prompt` subject changed too, with the plate
+clause kept. 151 sprites and 13 UI art pieces were submitted to Krea 2 on 2026-11-05 (ArtJobs
+64175–64338). Swim clips follow their new stills automatically (`render_art.py`).
+
+**Delivery loop** (canon repo): `bash scripts/deliver.sh` harvests, cuts out, re-submits clips
+whose new still landed, and syncs to kind_robots. Then review `scripts/contact_sheet.py`,
+re-prompt misses (set `sprite.faces: left` for left-facing renders), and open the kind_robots
+sync PR.
