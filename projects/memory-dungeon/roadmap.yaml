@@ -195,7 +195,7 @@ tasks:
   - id: t-030
     milestone: m3
     title: "Build scene-art production manifest and sixteen-realm coverage checks"
-    status: review
+    status: ready
     depends_on: t-018
     passes: 0
     stakes: reversible
@@ -223,7 +223,11 @@ tasks:
       2026-10-26 PT: Kind Robots PR #4276 merged at db480603262765635567c7771ff4df2e72090a11; 64 original Briar scene paintings and 128 authored outcome paths now selected in the encounter pane with SVG fallback and invalid-choice protection. All 14 exact-head checks green at df3393b6ea2c0a677ef65f1528748f2f4a8e1a39. No new ArtJobs; prior audit #40429786760 verified 752 media deliveries. Still need original and mirrored House consequence art, maps, portraits, galleries, visual QA, later worlds. Keep active, not human gate.
 
       Scoped original House art integration: 36 authored room paintings and 73 distinct choice-outcome destinations, with invalid-choice protection, saved-ending selection, and two-stage fallback. Focused Kind Robots PR and exact-head CI pending. Full art visual acceptance, mirrored House, map backgrounds, portraits, gallery and future realities remain unfinished.
-    updated: '2026-10-27T03:47:02.638Z'
+
+      2026-11-04 PT cleanup pass: stale review with an expired claim; the recorded slice
+      landed (or was superseded) and the note itself lists remaining scope, so back to ready
+      for the next slice rather than done.
+    updated: '2026-11-05T05:15:55Z'
     owner: worker
     claimed_by: 20261027T034543Z-memory-dungeon-t-030-9d4c
     claimed_at: '2026-10-27T03:45:43.556Z'
