@@ -67,3 +67,19 @@ court petition in three directions, so the pick is made from real images:
   overcast light.
 
 Sheet: `style-test-2026-11-05/chronicle-broadside-oil.jpg` (Krea 2, ArtJobs 64339–64344; rows: chronicle, broadside, oil; columns: lake, court). Read: **chronicle** is the most individual. The fish-marginalia border and flat tempera are unlike any other game, and "the chronicle rots" carries the decay directly. **Broadside** is the most graphic and readable at game scale and composites cleanly. **Oil** is closest to the mockups and the least individual.
+
+## Decided 2026-11-05 PT: Chronicle for the world, Broadside for its documents
+
+Silas picked **Chronicle + Broadside** from the style test.
+
+- **Chronicle (the world):** scene layers, map and UI chrome. The kingdom is painted as its own
+  illuminated chronicle: flat tilted perspective, tempera, gold leaf, lapis and vermilion, and
+  fish-bodied marginalia in the borders. **A healthy reign is pristine:** bright lapis, burnished
+  gold, playful marginalia. **Misrule rots the book:** the gold tarnishes and flakes, soot and
+  spilled ink spread, the vellum foxes and tears, and the marginalia fish turn grotesque. Scene
+  layers render *without* the border (they composite), and the border becomes the UI frame, with a
+  rotted variant per reign tier.
+- **Broadside (documents in the world):** edicts, petitions, choice cards, notices and the
+  Fishopedia entries. They are hand-coloured woodcut pamphlets on rag paper, in madder, ochre and
+  verdigris. These are what the court *prints*, so their look stays the same and their tone sours
+  (blunter edicts, cruder cuts) with the reign.
