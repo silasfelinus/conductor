@@ -247,7 +247,7 @@ tasks:
   - id: t-011
     milestone: m4
     title: "Independently red-team Space Couch humor, ethics and couch/force bubble visuals"
-    status: claimed
+    status: ready
     depends_on: t-010
     passes: 0
     stakes: reversible
@@ -262,10 +262,33 @@ tasks:
 
       2026-11-04 PT reconciliation: last slice kind_robots #4590 merged 11-01;
       ethics/pacing/trust audit and viewport/force-bubble QA remain. Back to ready.
-    updated: '2026-11-05T12:43:23Z'
+
+      2026-11-05 PT: Non-art half of the t-011 red-team, done as an adversarial transcript
+      audit. I read 25 seeded persona voyages plus random walks, and audited all 90 authored
+      consequence outcomes. Patch: game-of-captains-t-011-r4.patch.  Fixed: - Act I prose that
+      still used starship, bridge and warp-coil language (now couch canon). - 28 of 90
+      consequence outcomes credited a fixed officer, usually absent. An absent officer is now
+      played by the best-suited officer aboard. Two hard-coded captain names removed. - Quest
+      logs that narrated success above a failed roll, and officer leads written as "The
+      captain". - Plot-report grammar. - Ten consent-first audits that were free on success,
+      and two forceful rescues with no gain. Every outcome now has a cost and every success a
+      gain. - Write-only nemesisPressure. Grievances now lower the nemesis card odds by 2 per
+      grievance, capped at 16. - Within-voyage repeats: casino incidents rotate through all 8,
+      nemesis cards use four wordings, venue reactions have 8 lines per order, and transit
+      waits have 18 lines. - One "illegal immigrant" line.  Pinned by the new
+      verifySpaceCouchRedTeam.test.ts, which joins test:game-of-captains. The full suite
+      passes with the pinned traces unchanged, and repeated sentences fell from 16.9% to
+      13.9%.  Remaining for t-011: - Painted-art, viewport, force-bubble, gamepad/touch and
+      save/load visual QA. - Design calls I flagged without changing: the chaos persona hoards
+      supplies (mean 24), and intervene successes are uniformly scolded. - Minor repeats:
+      venue reactions after 8 visits, and constellation suffixes. - Not human-accepted.
+      Merged as kind_robots #4825; back to ready for the art/viewport/force-bubble visual QA
+      half.
+    updated: '2026-11-05T21:16:40Z'
     owner: worker
     claimed_by: 2026-11-05T124312Z-game-of-captains-t-011-r4
     claimed_at: '2026-11-05T12:43:23Z'
+    implementation_pr: 'silasfelinus/kind_robots#4825'
   - id: t-012
     milestone: m4
     title: "Final human design acceptance after completion; separate publish gate"
