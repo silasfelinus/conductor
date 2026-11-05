@@ -5,6 +5,7 @@ import pytest
 
 import scripts.build_ruler_hooked_art_queue as bruq
 
+REAL_CONSOLE_ENTRIES = bruq.console_entries
 
 FAKE = {
     "concept": ["c1", "c2"],
@@ -35,6 +36,7 @@ def hermetic(monkeypatch, tmp_path):
     monkeypatch.setattr(bruq, "reward_entries", lambda ts: [])
     monkeypatch.setattr(bruq, "ending_entries", lambda ts: _entries("ending", FAKE["ending"]))
     monkeypatch.setattr(bruq, "card_entries", lambda ts: _entries("card", FAKE["card"]))
+    monkeypatch.setattr(bruq, "console_entries", lambda cast: _entries("console", ["u1"]))
     monkeypatch.setattr(bruq, "layer_entries", lambda regions: _entries("layer", ["l1", "l2"]))
     monkeypatch.setattr(bruq, "assert_contract", lambda entries: None)
     monkeypatch.setattr(bruq, "staged_ids", lambda text: set(STAGED))
@@ -101,3 +103,62 @@ def test_list_lanes_rejects_lane(monkeypatch, capsys):
 def test_list_lanes_layer_row_reflects_include_layers(monkeypatch, capsys):
     _, out = _run(monkeypatch, capsys, "--include-layers", "--list-lanes")
     assert _rows(out)["layer"] == (2, 0, 2)
+    assert _rows(out)["console"] == (1, 0, 1)
+
+
+# The console lane's image_path keys are a contract with the kind_robots UI
+# (2026-11-05 illustrated redesign); a renamed key renders art nothing loads.
+CONSOLE_PATHS = (
+    [f"backdrops/{k}" for k in (
+        "title-lakeside", "court-throne-room", "royal-map",
+        "gear-tackle-room", "fishopedia-study",
+    )]
+    + [f"ui/tab-{k}" for k in ("lake", "map", "court", "gear", "fishopedia")]
+    + [f"events/{k}" for k in (
+        "market-day", "heron-festival", "druid-procession", "tax-audit",
+        "guard-parade", "soft-rain", "bards-contest", "duck-census",
+        "lost-boot", "quiet-day",
+    )]
+    + [f"gear/{k}" for k in (
+        "reinforced-rod", "silk-line", "balanced-lure", "riverbank-market",
+        "lakeside-shrine", "festival-fund", "watch-patrol",
+    )]
+    + ["characters/steward-quill"]
+)
+
+FAKE_CAST = [
+    {"slug": "taxman-gristle", "name": "Gristle", "honorific": "the Assessor"},
+    {"slug": "captain-cordelia", "name": "Cordelia", "honorific": "the Captain"},
+    {"slug": "bard-fen", "name": "Fen", "honorific": "the Bard"},
+]
+
+
+def _real_console(cast):
+    # The autouse fixture stubs console_entries; call the one captured at import.
+    return REAL_CONSOLE_ENTRIES(cast)
+
+
+def test_console_lane_paths_size_and_contract():
+    entries = _real_console(FAKE_CAST)
+    paths = [e["image_path"] for e in entries]
+    assert paths == [f"public/images/ruler-hooked/{p}.webp" for p in CONSOLE_PATHS]
+    assert len({e["id"] for e in entries}) == len(entries)
+    for e in entries:
+        assert e["lane"] == "console"
+        portrait = e["image_path"].endswith("characters/steward-quill.webp")
+        assert e["size"] == ("768x1024" if portrait else "1344x768")
+        assert e["engine"] == bruq.ENGINE
+        assert bruq.contract_violations(e["prompt"]) == [], e["id"]
+        assert "{" not in e["prompt"], e["id"]
+
+
+def test_console_events_stage_named_cast_from_bundle():
+    by_id = {e["id"]: e["prompt"] for e in _real_console(FAKE_CAST)}
+    assert "Gristle the Assessor" in by_id["ruler-hooked-console-events-tax-audit"]
+    assert "Cordelia the Captain" in by_id["ruler-hooked-console-events-guard-parade"]
+    assert "Fen the Bard" in by_id["ruler-hooked-console-events-bards-contest"]
+
+
+def test_console_event_with_unknown_cast_fails_loudly():
+    with pytest.raises(SystemExit):
+        _real_console([c for c in FAKE_CAST if c["slug"] != "bard-fen"])

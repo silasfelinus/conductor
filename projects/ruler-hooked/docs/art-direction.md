@@ -302,3 +302,49 @@ this document's §4–§5 in executable form.
 A style correction is therefore one edit in one place plus a re-run, at any batch
 size. That is the property that makes "hundreds of art pieces" tractable; it is
 worth preserving over the convenience of hand-editing a queue entry.
+
+---
+
+## 9. Illustrated console redesign: storybook, not shiny (Silas, 2026-11-05 PT)
+
+Appended, not edited. Silas asked in session for a large illustrated redesign of
+the game's UI. His direction for its art, in his words: the target is **"an
+illustrated, art-heavy design that doesn't look like a webapp"**, but **not "too
+shiny freeware style"**.
+
+What that means for every new painting:
+
+- **Hand-painted storybook gouache**, the same register as the library already
+  rendered under §1 and §8. The rendered library hits this; new pieces match it
+  rather than chase a new look.
+- **Matte and handmade:** visible brush strokes, a faint paper grain, soft diffuse
+  natural light, flat matte colour.
+- **Avoid** glossy bevels, chrome or metallic gold, lens flare, sparkle overload,
+  and mobile-game UI sheen (glassy buttons, glowing rims, candy highlights). Those
+  are what "shiny freeware" looks like.
+- These avoid-words are for people only. On Krea 2 the negative prompt is inert
+  (§8.2), so naming "lens flare" or "chrome" in a prompt paints them. Prompts
+  state the matte finish positively instead (`CONSOLE_FINISH` in
+  `scripts/build_ruler_hooked_art_queue.py`).
+- Small UI vignettes are described as painted vignettes, never as "icons": an
+  icon request comes back as a glossy app button.
+- The POV rule at the top of this file still holds: no painting in the console
+  shows the player's ruler. Empty rooms are described as empty and still, never
+  as lacking people (the people-negation contract rule).
+
+The paintings the redesigned UI loads are the `console` lane of
+`scripts/build_ruler_hooked_art_queue.py` (stage with `--write --lane console`).
+All are 1344x768 under `public/images/ruler-hooked/`:
+
+| kind | image_path keys |
+|------|-----------------|
+| screen backdrops | `backdrops/title-lakeside`, `court-throne-room`, `royal-map`, `gear-tackle-room`, `fishopedia-study` |
+| tab vignettes | `ui/tab-lake`, `tab-map`, `tab-court`, `tab-gear`, `tab-fishopedia` |
+| daily proclamations | `events/<key>` for the ten `dailyEvents.ts` keys |
+| shop and kingdom works | `gear/<id>` for the three `GEAR_CATALOG` items and four `KINGDOM_CATALOG` works |
+
+Event scenes that stage a named character (Gristle, Cordelia, Fen) draw them from
+the same `CAST_LOOK` description as their portrait and cards, with the name read
+from the kind_robots content bundle. Layout-bearing backdrops keep their overlay
+zones calm: the title backdrop leaves the upper-middle sky open for the title, and
+the throne room keeps its left third uncluttered for a character portrait.
