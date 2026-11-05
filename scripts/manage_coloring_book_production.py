@@ -5,7 +5,10 @@ Color generation remains in consume_coloring_book_studio_request.py. This module
 handles the human-gated production decisions around those renders:
 
 - accept-color: promote the reviewed color candidate into the proposal ledger
-- generate-bw: derive and validate a faithful line-art candidate from accepted color
+- generate-bw: derive and validate a line-art candidate. By default it converts the
+  accepted color master; --bw-source version converts one named color or B&W file
+  from the page's history, and --bw-source prompt renders fresh line art from the
+  page's text prompt
 - accept-bw: promote the reviewed line-art candidate into the proposal ledger
 - finalize-pair: confirm the accepted color/BW files as the print-ready pair
 """
@@ -51,6 +54,33 @@ BW_PROMPT = (
     "color, gray tone, gradient, shadow fill, halftone, and painterly texture. Do not "
     "redesign, simplify away important details, add text, add a border, or change the scene."
 )
+
+# --bw-source version with a B&W file: the source is already line art, so the
+# edit is a clean-up pass rather than a color-to-line conversion.
+BW_REFINE_PROMPT = (
+    "Refine the supplied black-and-white line art into a finished coloring-book page. "
+    "Preserve the exact composition, subject identities, body types, pose, framing, "
+    "perspective, contact points, expressions, props, and major background details. "
+    "Keep clean confident black outlines on a pure white background, with smooth closed "
+    "contours and empty white regions ready to color. Remove every stray gray tone, "
+    "gradient, shadow fill, halftone, and sketchy texture. Do not redesign, simplify away "
+    "important details, add text, add a border, or change the scene."
+)
+
+# --bw-source prompt: a fresh text-to-image render. Positive form only, for the
+# same reason COLOR_SUFFIX in consume_coloring_book_color_art.py is: krea2 runs
+# at cfg 1, where the negative prompt is inert and every "no X" is conditioning.
+BW_PROMPT_SUFFIX = (
+    " Render this as a finished black-and-white coloring-book page, portrait 2:3: clean "
+    "confident black ink outlines on a pure white background, smooth closed contours around "
+    "every form, open white regions ready to color, high organized detail, and a strong "
+    "readable silhouette. Pure line art, every surface left white, one continuous full-bleed "
+    "drawing, drawn and printed rather than photographed."
+)
+BW_PROMPT_NEGATIVE = (
+    "color, colored fills, gray shading, gradients, halftone, painterly texture, photograph"
+)
+BW_SOURCES = ("color", "version", "prompt")
 
 def now_iso() -> str:
     return (
@@ -380,7 +410,7 @@ def queue_job_status(job_id: int) -> dict[str, Any] | None:
 
 
 def enqueue_bw_job(
-    source: Path,
+    body: dict[str, Any],
     timeout: int,
     queue_entry: dict[str, Any],
     book_slug: str,
@@ -401,20 +431,6 @@ def enqueue_bw_job(
                 f"BW ArtJob {existing_job_id} {job.get('status')}: {job.get('error')}"
             )
 
-    body = {
-        "engine": "kontext",
-        "promptString": BW_PROMPT,
-        "sourceImageBase64": image_data_url(source),
-        "width": 1024,
-        "height": 1536,
-        "steps": 20,
-        "guidance": 2.5,
-        "denoise": 1,
-        "projectSlug": "coloring-book",
-        "priority": 1,
-        "isPublic": False,
-        "designer": "Coloring Book Studio",
-    }
     status, response = queue_consumer.http_json(
         "POST", f"{queue_consumer.KR_BASE_URL}/api/art/enqueue", body
     )
@@ -456,6 +472,94 @@ def accept_color(
     write_queue_entry(book_slug, proposal_id, queue_entry)
 
 
+def kontext_bw_body(source: Path, prompt: str) -> dict[str, Any]:
+    return {
+        "engine": "kontext",
+        "promptString": prompt,
+        "sourceImageBase64": image_data_url(source),
+        "width": 1024,
+        "height": 1536,
+        "steps": 20,
+        "guidance": 2.5,
+        "denoise": 1,
+        "projectSlug": "coloring-book",
+        "priority": 1,
+        "isPublic": False,
+        "designer": "Coloring Book Studio",
+    }
+
+
+def page_prompt(queue_entry: dict[str, Any], proposal_id: str) -> str:
+    """The page's scene prompt, resolved the way the color consumer resolves it."""
+    import consume_coloring_book_color_art as coloring  # noqa: PLC0415 - avoid import cost for other ops
+
+    prompt = coloring.clean(queue_entry.get("prompt"))
+    if not prompt and queue_entry.get("source_ref"):
+        _title, prompt = coloring.find_source_prompt(str(queue_entry["source_ref"]))
+    if not prompt:
+        raise RuntimeError(f"{proposal_id} has no prompt to render fresh line art from")
+    return prompt
+
+
+def prompt_bw_body(queue_entry: dict[str, Any], proposal_id: str) -> dict[str, Any]:
+    import consume_coloring_book_color_art as coloring  # noqa: PLC0415
+
+    prompt = coloring.clean(page_prompt(queue_entry, proposal_id) + BW_PROMPT_SUFFIX)
+    return {
+        "engine": "krea2",
+        "promptString": prompt,
+        "negativePrompt": coloring.clean(
+            f"{BW_PROMPT_NEGATIVE}, {coloring.CONTENT_SAFETY_NEGATIVE}"
+        ),
+        "width": 1024,
+        "height": 1536,
+        "projectSlug": "coloring-book",
+        "priority": 1,
+        "isPublic": False,
+        "designer": "Coloring Book Studio",
+    }
+
+
+def bw_job_body(
+    book_slug: str,
+    proposal_id: str,
+    queue_entry: dict[str, Any],
+    accepted: dict[str, Any],
+    *,
+    bw_source: str,
+    source_path: str | None,
+) -> tuple[dict[str, Any], str | None]:
+    """The ArtJob body for a B&W request and the set-relative file it reads, if any.
+
+    Built before a forced revision archives the current candidate, so a request
+    to refine the very B&W file being replaced still reads it.
+    """
+    if bw_source == "prompt":
+        return prompt_bw_body(queue_entry, proposal_id), None
+
+    if bw_source == "version":
+        source_rel = relative_to_set(book_slug, str(source_path or ""))
+        if not source_rel:
+            raise RuntimeError(f"{proposal_id}: --bw-source version needs --source-path")
+        source = absolute_set_path(book_slug, source_rel)
+        if not source.exists():
+            raise RuntimeError(f"Selected source does not exist: {book_slug}/{source_rel}")
+        prompt = BW_REFINE_PROMPT if is_bw_path(source_rel) else BW_PROMPT
+        return kontext_bw_body(source, prompt), source_rel
+
+    source_rel = str(accepted.get("color") or "")
+    if not source_rel:
+        raise RuntimeError(f"{proposal_id} needs an accepted color master first")
+    source = absolute_set_path(book_slug, source_rel)
+    if not source.exists():
+        raise RuntimeError(f"Accepted color master does not exist: {source.relative_to(ROOT)}")
+    return kontext_bw_body(source, BW_PROMPT), relative_to_set(book_slug, source_rel)
+
+
+def is_bw_path(path: str) -> bool:
+    return bool(re.search(r"(?:^|[/_-])(?:bw|b-w|lineart|line-art)(?:[/_.-]|$)", path.lower()))
+
+
 def generate_bw(
     book_slug: str,
     proposal_id: str,
@@ -464,16 +568,22 @@ def generate_bw(
     *,
     timeout: int,
     force: bool,
+    bw_source: str = "color",
+    source_path: str | None = None,
 ) -> None:
+    if bw_source not in BW_SOURCES:
+        raise RuntimeError(f"Unknown B&W source {bw_source!r}")
     queue_entry = find_queue_entry(queue, book_slug, proposal_id)
     proposal = find_proposal(ledger, proposal_id)
     accepted = ensure_pair(proposal, "accepted")
-    source_rel = str(accepted.get("color") or "")
-    if not source_rel:
-        raise RuntimeError(f"{proposal_id} needs an accepted color master first")
-    source = absolute_set_path(book_slug, source_rel)
-    if not source.exists():
-        raise RuntimeError(f"Accepted color master does not exist: {source.relative_to(ROOT)}")
+    body, body_source_rel = bw_job_body(
+        book_slug,
+        proposal_id,
+        queue_entry,
+        accepted,
+        bw_source=bw_source,
+        source_path=source_path,
+    )
 
     candidate_rel = f"generated/bw/{proposal_id}-bw.webp"
     candidate = absolute_set_path(book_slug, candidate_rel)
@@ -496,6 +606,8 @@ def generate_bw(
                 "rendered_path": existing_rel if existing.exists() else None,
                 "semantic_score": queue_entry.get("bw_semantic_score"),
                 "archived_path": archived,
+                "bw_source": queue_entry.get("bw_source"),
+                "bw_source_path": queue_entry.get("bw_source_path"),
             }
         )
         queue_entry["bw_revision_history"] = history
@@ -511,6 +623,8 @@ def generate_bw(
             "bw_semantic_reasons",
             "bw_semantic_score",
             "bw_semantic_verdict",
+            "bw_source",
+            "bw_source_path",
         ):
             queue_entry.pop(field, None)
         queue_entry["bw_status"] = "pending"
@@ -532,7 +646,12 @@ def generate_bw(
                 f"{proposal_id} has a landed BW candidate but no recoverable ArtImage id"
             )
     else:
-        job = enqueue_bw_job(source, timeout, queue_entry, book_slug, proposal_id)
+        queue_entry["bw_source"] = bw_source
+        if body_source_rel:
+            queue_entry["bw_source_path"] = body_source_rel
+        else:
+            queue_entry.pop("bw_source_path", None)
+        job = enqueue_bw_job(body, timeout, queue_entry, book_slug, proposal_id)
         art_image_id = job.get("artImageId")
         if not art_image_id:
             raise RuntimeError(f"BW ArtJob {job.get('id')} completed without artImageId")
@@ -639,9 +758,14 @@ def run_operation(
     timeout: int,
     force: bool,
     live: bool,
+    bw_source: str = "color",
+    source_path: str | None = None,
 ) -> int:
     mode = "LIVE" if live else "DRY RUN"
-    print(f"{mode}: {operation} for {book_slug}: {', '.join(proposal_ids)}")
+    source_note = ""
+    if operation == "generate-bw":
+        source_note = f" (B&W from {bw_source}{': ' + source_path if source_path else ''})"
+    print(f"{mode}: {operation} for {book_slug}: {', '.join(proposal_ids)}{source_note}")
     if not live:
         return 0
 
@@ -661,6 +785,8 @@ def run_operation(
                         ledger,
                         timeout=timeout,
                         force=force,
+                        bw_source=bw_source,
+                        source_path=source_path,
                     )
                 elif operation == "accept-bw":
                     accept_bw(book_slug, proposal_id, queue, ledger)
@@ -681,6 +807,17 @@ def main() -> int:
     parser.add_argument("--proposal-id", action="append", dest="proposal_ids", required=True)
     parser.add_argument("--timeout", type=int, default=600)
     parser.add_argument("--force", action="store_true")
+    parser.add_argument(
+        "--bw-source",
+        choices=BW_SOURCES,
+        default="color",
+        help="generate-bw only: accepted color master (default), one named --source-path "
+        "version, or a fresh render from the page prompt",
+    )
+    parser.add_argument(
+        "--source-path",
+        help="generate-bw --bw-source version: set-relative color or B&W file to convert",
+    )
     args = parser.parse_args()
 
     proposal_ids = list(
@@ -692,6 +829,14 @@ def main() -> int:
         parser.error("at most 18 proposal ids may be requested")
     if not 30 <= args.timeout <= 900:
         parser.error("--timeout must be between 30 and 900")
+    if args.operation != "generate-bw" and (args.bw_source != "color" or args.source_path):
+        parser.error("--bw-source and --source-path apply only to generate-bw")
+    if args.bw_source == "version" and not args.source_path:
+        parser.error("--bw-source version requires --source-path")
+    if args.bw_source != "version" and args.source_path:
+        parser.error("--source-path requires --bw-source version")
+    if args.operation == "generate-bw" and len(proposal_ids) != 1 and args.source_path:
+        parser.error("--source-path names one page's file; request exactly one --proposal-id")
     if args.operation == "generate-bw" and args.live and not queue_consumer.KR_API_TOKEN:
         parser.error("KR_API_TOKEN is required for live BW generation")
 
@@ -702,6 +847,8 @@ def main() -> int:
         timeout=args.timeout,
         force=args.force,
         live=args.live,
+        bw_source=args.bw_source,
+        source_path=args.source_path,
     )
 
 

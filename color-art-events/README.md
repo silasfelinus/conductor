@@ -49,7 +49,7 @@ Supported interior operations:
 
 - `generate-color-proposals` — render or revise exact color proposals through the existing semantic-gated color pipeline.
 - `accept-color` — write the reviewed color candidate into `accepted.color`, mark the queue entry approved, and lock the exact render seed when one exists. With `source_path`, adopt that exact existing set asset instead.
-- `generate-bw` — derive a faithful Kontext line-art candidate from `accepted.color`, then run the mechanical line-art gate and color/BW pair-fidelity gate.
+- `generate-bw` — derive a line-art candidate, then run the mechanical line-art gate. `bw_source` picks the input: `color` (default) converts `accepted.color` with Kontext; `version` converts the color or B&W file named by `source_path` (a B&W file gets a clean-up prompt instead of a conversion prompt), and does not need an accepted color; `prompt` renders fresh line art from the page's text prompt on krea2.
 - `accept-bw` — write the reviewed line-art candidate into `accepted.bw`. With `source_path`, mechanically inspect that existing set asset and run pair-fidelity review against the accepted color master before promotion.
 - `finalize-pair` — revalidate the accepted pair and write both paths into `final`.
 
@@ -68,7 +68,8 @@ Rules:
 - Cover operations reject `proposal_ids`; the book slug identifies the single cover.
 - `timeout` must be 30–900 seconds per ArtJob.
 - `force` is valid only for `generate-color-proposals`, `generate-bw`, and `generate-cover`.
-- `source_path` is valid only for `accept-color`, `accept-bw`, or `accept-cover` and must name an existing image inside the selected Conductor set.
+- `source_path` is valid only for `accept-color`, `accept-bw`, `accept-cover`, or `generate-bw` with `bw_source: version`, and must name an existing image inside the selected Conductor set.
+- `bw_source` (`color` | `version` | `prompt`) is valid only for `generate-bw`; `version` requires `source_path`.
 - Existing-asset adoption preserves the original file in place and does not invent an ArtImage ID, render seed, engine, or other missing provenance.
 - Forced color, B&W, and cover revisions archive the current candidate and preserve revision metadata.
 - B&W generation requires an explicitly accepted color master. It never chooses an inspiration or merely existing file on its own.
