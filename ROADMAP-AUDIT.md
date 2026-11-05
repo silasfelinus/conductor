@@ -1,13 +1,13 @@
 # Roadmap Audit
 
-Generated: `2026-11-05T13:17:31.391914+00:00`
+Generated: `2026-11-05T14:21:21.823776+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
-- **93** roadmaps, **20** active + **14** continuous projects, **2854** tasks
-- **247 ready**, **216 waiting**, **32 needs-human**, **25 claimed/review**, **2265 done**
+- **93** roadmaps, **20** active + **14** continuous projects, **2855** tasks
+- **249 ready**, **215 waiting**, **32 needs-human**, **23 claimed/review**, **2267 done**
 - Findings: **0 errors**, **82 warnings**, **125 informational**
 
 ## Project inventory
@@ -25,7 +25,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 9 | `zuzu-lair` | paused | software | 1 | 4 | 2 | 0 | 8 / 15 |
 | 10 | `kr-arcade` | active | software | 33 | 54 | 0 | 0 | 77 / 164 |
 | 11 | `zuzu-showdown` | paused | software | 3 | 0 | 0 | 0 | 29 / 32 |
-| 12 | `memory-dungeon` | active | software | 19 | 17 | 1 | 4 | 19 / 60 |
+| 12 | `memory-dungeon` | active | software | 20 | 17 | 1 | 3 | 19 / 60 |
 | 13 | `cthulhuquarium` | active | software | 6 | 5 | 0 | 0 | 86 / 97 |
 | 14 | `kind-economy` | paused | software | 1 | 4 | 1 | 0 | 22 / 28 |
 | 15 | `comet-city-academy` | active | software | 10 | 11 | 0 | 1 | 11 / 33 |
@@ -35,7 +35,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 19 | `crystal-street` | active | software | 2 | 2 | 0 | 0 | 19 / 23 |
 | 20 | `hybridizer` | active | software | 2 | 0 | 2 | 1 | 6 / 11 |
 | 21 | `every-villain-tactics` | active | software | 5 | 11 | 0 | 0 | 8 / 24 |
-| 22 | `slime-city` | active | software | 5 | 7 | 0 | 3 | 13 / 28 |
+| 22 | `slime-city` | active | software | 6 | 6 | 0 | 2 | 15 / 29 |
 | 23 | `mandarin-tutor` | paused | software | 1 | 0 | 0 | 0 | 30 / 31 |
 | 24 | `interface-vision` | continuous | software | 11 | 2 | 0 | 1 | 139 / 153 |
 | 25 | `humboldt-scoop-cms` | paused | software | 1 | 1 | 4 | 0 | 40 / 46 |

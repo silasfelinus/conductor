@@ -435,7 +435,7 @@ tasks:
   - id: t-027
     milestone: m2
     title: "FIVE ALLEYS: a slow, turn-by-turn lane mode with Hearthstone-style chosen attacks"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -443,13 +443,30 @@ tasks:
       Silas, 2026-11-05 PT, verbatim: "This game is still missing an actual fun play by play experience. The art is amazing, the style is great, the cards are interesting, but we still lack the GAME. Decks should be 20 cards, not 10. We need a new version that is slow position rules. (Solforge style, you have five rows and you can only attack or defend in the row you placed, without a modifier), and non-grid, you chose to attach someone or the opponent, hearthstone style."
 
       Working assumptions (reversible; written down so Silas can correct them): a new mode alongside BLACKOUT/BLOODRUSH/TURF, not a replacement. Five lanes, one creature slot per side per lane, no grid movement. Alternating turns. Hearthstone mana crystals (1 on turn one, +1 a turn, cap 10), start with four cards, draw one a turn, each crew boss has 20 HP. A creature cannot attack the turn it lands unless a keyword says so. On your turn each ready creature attacks once, in its own lane only: if an enemy creature holds that lane it must fight it (both deal attack minus armor at once), and if the lane is empty it hits the enemy boss. Modifiers break the lane rule: ranged creatures (range 2+) can reach an adjacent lane, BULLDOZE tramples excess damage to the boss. Existing keywords keep their meaning where they can (AMBUSH +2 first blow, REGEN, LEECH heals your boss, SWARM +1 per ally in a neighbouring lane, VOLATILE bursts on the creature across, PIERCE ignores armor, SNARE stops the target's next attack, COLLECT gains mana on damage). Spells, traps and equipment reuse their effects aimed at a creature or a lane. 20-card crew decks: the ten founders plus ten more from the crew's own pool. Ship engine plus CPU plus a designed board (lanes, bosses, hand, attack arrows, a play-by-play log) in /admin/slime-city, with replayable seeded tests, a CPU round-robin, and screenshots at 390/768/1440. Internal preview only.
+
+      DONE 2026-11-05 PT: FIVE ALLEYS shipped as a new ALLEYS tab in /admin/slime-city. Kind
+      Robots PR #4818 merged 861e024 (13/13 checks incl. TypeScript and production image):
+      pure seeded engine utils/slimeCity/alleys.ts (five alleys, alternating turns, mana ramp
+      to 10, card a turn, 20 HP bosses, alley rule with range/BULLDOZE modifiers, keywords,
+      spells, traps, equipment, 20-card crew decks, exact replays), greedy step-by-step CPU
+      alleysCpu.ts, board components/slime-city-alleys.vue (bosses, lanes, hand, PLAY HERE and
+      target highlights, held card, play-by-play log, rival plays one step every 0.75 s),
+      verifySlimeCityAlleys in test:slime-city-lab. Checked by playing turns through the real
+      UI at 1440/768/390. Kind Robots PR #4819 merged 104b345 (11/11 checks): ALLEY_CREW_HP
+      dithered crew HP offsets and a one-time 2-mana coin for the second seat (the first
+      version's coin wrongly raised max mana); two 30-seed held-out sets: spread 0.238 ->
+      0.038 and 0.237 -> 0.032, first seat 49-50%, crews 45-57%; ten-seed guard in the test.
+      Open for Silas: every rule number (20 HP, ramp to 10, start hand 4, 30-turn cap, coin 2)
+      is a documented assumption to correct after playing; t-028 moves the rest of the game to
+      20-card decks.
     claimed_by: 2026-11-05T132603Z-slime-city-t027-claude
     claimed_at: '2026-11-05T13:26:03Z'
-    updated: '2026-11-05T13:26:03Z'
+    updated: '2026-11-05T14:19:47Z'
+    implementation_pr: 'silasfelinus/kind_robots#4818'
   - id: t-028
     milestone: m3
     title: "20-card decks across the deck builder, starters and every format"
-    status: waiting
+    status: ready
     depends_on: t-027
     owner: null
     passes: 0
