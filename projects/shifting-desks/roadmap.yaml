@@ -791,7 +791,7 @@ tasks:
   - id: t-046
     milestone: m5
     title: 'Reward-layer adversarial QA across all eleven endings and screen shapes'
-    status: claimed
+    status: ready
     depends_on:
       - t-040
       - t-042
@@ -800,7 +800,7 @@ tasks:
       - t-045
     passes: 0
     stakes: reversible
-    updated: '2026-11-05T07:48:02Z'
+    updated: '2026-11-05T08:20:38Z'
     note: |-
       P2, independent of art delivery per Silas 2026-11-01 PT. Simulate at least 2000 seeded diverse styles; every reachable ending shows distinct payoff and a saved evidence card. Check replay rewards, correct lock/unlock progress, saved migrations, no duplicate accounts or achievements, true raw grade values, no four-Exceptional result, keyboard/screenreader, no forced page scroll at phone/tablet/desktop, and image fallback. Run mock reviews asking whether the ending and archive feel earned, funny and replayable. Do not override t-020 owner's subjective fun and promotion gate.
 
@@ -832,10 +832,29 @@ tasks:
       announced. Back to ready for the browser half: endings contract at 390/768/1440,
       keyboard/screen reader, the h-52 reward panel clipping suspicion at 390px, and an
       ending-specific repeat ceremony award.
+
+      2026-11-04 PT: Repeat-ceremony and reward-panel slice (patch against kind_robots
+      816009ae). After the first run, the Personnel File ceremony always showed "A Permanent
+      Position · Previously filed distinction". Now each of the eleven endings files its own
+      authored commendation via rewards.ts ENDING_COMMENDATIONS/ceremonyAwardFor: a first-
+      filing line, then a counted repeat line ("Refiled · 3rd time"). A newly earned milestone
+      still takes precedence, and the count comes from the receipt's archive position so a
+      reload never escalates it. The ending reward panel moved from a fixed h-52/sm:h-56 to
+      min-h-*. A headless render at 390px showed the fixed height had squeezed the "Next:"
+      milestone line to zero height; with the new line it grows to about 312px with nothing
+      clipped at 390/768/1440. ReleaseQA pins the ceremony for all 600 reward runs, all 11
+      natural ending saves filed three times, the fallbacks, icons and ordinals, plus a markup
+      guard against fixed panel heights. The dispatch-only Cypress endings contract gained an
+      archive-button-inside-panel check at all three widths and 11 repeat-commendation tests.
+      All six Shifting Desks tsx suites pass. vue-tsc on the Personnel File shows no Shifting
+      Desks errors. Still open for t-046: running that Cypress contract against a deploy,
+      real-device keyboard/screen-reader acceptance, and an independent funny/earned review of
+      the commendation copy. t-020 untouched.  Merged as kind_robots #4791. Back to ready for
+      the remaining scope.
     owner: worker
     claimed_by: 2026-11-05T074750Z-shifting-desks-t-046-r2
     claimed_at: '2026-11-05T07:48:02Z'
-    implementation_pr: 'silasfelinus/kind_robots#4769'
+    implementation_pr: 'silasfelinus/kind_robots#4791'
   - id: t-047
     milestone: m5
     title: 'Playbook Forge upgrade: write the missing 135th encounter'

@@ -1570,8 +1570,8 @@ tasks:
   - id: t-066
     milestone: m5
     title: "Polish Ecotone opening, route previews, customizable player portraits, and tablet layout"
-    status: claimed
-    updated: '2026-11-05T07:48:00Z'
+    status: ready
+    updated: '2026-11-05T08:20:33Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -1580,9 +1580,27 @@ tasks:
       Silas-directed Ecotone stage repair: encounter prose and immediate choices occupy a scrollable left column, portraits/scene art their own right panel; earned endings render a collectible image card. Responsive mobile stage retains bounded art above content, and existing onboarding test asserts layout, direct-choice and ending behaviors. Kind Robots worker PR follows; no art jobs or deploy.
 
       2026-10-26 PT: Silas-directed encounter/ending layout slice MERGED to Kind Robots main as PR #4252 (squash 059d1035007c76e8d435a5d8c110b737b0d6eb3b). All 15 latest-head workflows on a8ea7ee4aa3c49327dcaa60bfab736cc33d16e63 completed successfully: TypeScript, layout, formatting, Ecotone gameplay and full contract tests included. Art is now isolated on right at wide screens, narration and immediate choices on left, responsive art above text at phone widths, unlocked ending card shown in art panel. No new ArtJobs or deploy. Keep this broader t-066 ready for outstanding actual rendered phone/tablet/desktop verification after self-hosted deployment and remaining portrait media delivery.
+
+      2026-11-04 PT: Text/clarity half of t-066 prepared as patch weird-
+      humboldt-t-066-r2.patch against kind_robots origin/main
+      a13933a79d51aa06257f32e70356eb65d7df181c. Changes: the opening story panel now says what
+      the player is choosing and shows a tablet-readable preview for each route (real day
+      range, "feels like", "at stake"), with no companion or substance spoilers; route cards
+      show a short kind line and an accurate Fri–Sun / Fri–Wed / Sat–Mon chip; the title pitch
+      names all three routes and says that identity choices are flavor only; the "explore the
+      whole cast" copy is fixed; the header restart now confirms before abandoning a run in
+      progress; the tablet title wordmark is reduced. verifyEcotoneOnboarding pins these
+      invariants: each preview hook is reachable in its own route's beats, difficulty and Wild
+      Way claims match futureTarget/wildTarget, random play reaches hope on every route, and
+      identity never changes the run. All 21 verifyEcotone*.test.ts, KrChoiceHand and Playbook
+      tests pass, and prettier and eslint are clean; full vue-tsc was OOM-killed locally.
+      Still open: rendered phone/tablet/desktop verification after deploy, the Guides tab
+      revealing companions before a run, portrait media delivery, and PR/CI/merge by the
+      coordinator.  Merged as kind_robots #4789. Back to ready for the remaining scope.
     owner: worker
     claimed_by: 2026-11-05T074750Z-weird-humboldt-t-066-r2
     claimed_at: '2026-11-05T07:48:00Z'
+    implementation_pr: 'silasfelinus/kind_robots#4789'
 
   - id: t-067
     milestone: m1
