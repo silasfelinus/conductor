@@ -300,10 +300,10 @@ tasks:
   - id: t-015
     milestone: m2
     title: "Prove the movement lab replay and real shared-cabinet controls"
-    status: review
+    status: ready
     passes: 0
     stakes: reversible
-    updated: '2026-11-05T02:22:34Z'
+    updated: '2026-11-05T02:49:51Z'
     note: |-
       Reviewer kaizen after kind_robots#3564: add deterministic input replays asserting coyote time, buffered jumps, landing/camera bounds and respawn; exercise real shared ArcadeCabinet keyboard/gamepad/touch controls and visible Admin help at phone/tablet/desktop widths. Use browser fixtures with actual consumers rather than source-field matches. Keep public registry and score exclusions. Initial isolated engine pixels are not shared-cabinet/auth integration or full campaign acceptance.
 
@@ -327,9 +327,16 @@ tasks:
       and Overworld suites pass. verifySavePlumberPreview.test.ts was already red on main
       (stale Screen regex). Remaining on t-015, do not mark done: real shared-ArcadeCabinet
       keyboard/gamepad/touch browser fixtures and visible Admin help at 390/768/1440.
+
+      2026-11-04 PT: movement replay battery and crouch-jump ceiling-clip fix merged as
+      kind_robots #4775 (squash 89bba84); also repaired the stale verifySavePlumberPreview
+      Screen regex and an unused-var lint regression. Back to ready for the browser half:
+      shared-cabinet keyboard/gamepad/touch fixtures and Admin help at 390/768/1440. Pre-
+      existing: verifyArcadeEngine zuzu-pinball 2D-draw assertion still fails on main.
     owner: worker
     claimed_by: 2026-11-05T015400Z-save-the-plumber-gs
     claimed_at: '2026-11-05T01:55:21Z'
+    implementation_pr: 'silasfelinus/kind_robots#4775'
 
   - id: t-016
     milestone: m4
