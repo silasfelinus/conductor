@@ -269,9 +269,9 @@ tasks:
   - id: t-004
     milestone: m3
     title: "Author at least 36 good/evil/rogue patrol cases with meaningful results"
-    status: claimed
+    status: ready
     depends_on: t-003
-    updated: '2026-11-05T07:47:55Z'
+    updated: '2026-11-05T08:20:30Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -303,10 +303,26 @@ tasks:
       2026-11-04 PT: five-way morning callbacks for all 36 night cases plus district memory
       merged as kind_robots #4772 (squash c5e8e55). Back to ready for injury-driven roster
       conflicts and unique-power callbacks in the 24 expanded cases.
+
+      2026-11-04 PT round 2: Injury now shapes the night roster. A follower rushed back
+      through the infirmary that morning won't work a call without a healthy partner. A
+      healthy teammate or the player leading the call covers them at no cost. Sent alone, they
+      go anyway at -1 to the roll, shown on the dispatch card (RECOVERING line, hand-card
+      state, odds) and in the night report. Rested followers and the existing next-
+      day/infirmary rules are unchanged, and visual-novel nights send healthy contacts to solo
+      calls first. Each of the 24 expanded cases gained two authored power callbacks (the
+      needed field plus one other relevant field, 8 per field, 48 lines). They show when the
+      player leads, with the exact +2/+1 the roll already applies, and are flavor only: odds
+      are unchanged. New verifyCometNightCallbacks.test.ts covers it and is wired into
+      test:comet-city-academy and CI. A 60-seed greedy 30-day comparison against base gives
+      identical endings. Patch built against kind_robots f074838 and verified on a13933a
+      (scratchpad comet-city-academy-t-004-r2.patch). Remaining for t-004: delayed faction
+      effects, injury conflicts for neighborhood patrol-story teammates, and art-verified
+      encounter choices.  Merged as kind_robots #4788. Back to ready for the remaining scope.
     owner: worker
     claimed_by: 2026-11-05T074750Z-comet-city-academy-t-004-r2
     claimed_at: '2026-11-05T07:47:55Z'
-    implementation_pr: 'silasfelinus/kind_robots#4772'
+    implementation_pr: 'silasfelinus/kind_robots#4788'
   - id: t-005
     milestone: m3
     title: "Author 30 daily anchors, 60 location cards and relationship scenes"
