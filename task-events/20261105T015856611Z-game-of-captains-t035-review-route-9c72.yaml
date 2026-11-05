@@ -1,0 +1,8 @@
+version: 1
+project: game-of-captains
+task: t-035
+operation: review
+session: 20261104T1741PT-space-couch-t035-route-9c72
+updated: '2026-11-05T01:58:56.611Z'
+note: >-
+  Seeded route diversity increment: after chapter one, nextDestination now chooses a reproducible mission among the actual eligible missionBoard offers, including prior world choices, crew and captain, without mutating saved missionId. The player may always override before travel. Added 42 complete seeded real-voyage tests for route variety, saves, chapter-by-chapter reachability and manual override. Existing trace and authored-case tests now explicitly chart their fixed legacy story routes rather than assuming an always-first default. Implementation branch worker/game-of-captains-t035-seeded-routes-9c72, PR and exact-head CI pending. Destination ending family organic reachability and verified browser/art QA remain separate independent acceptance.
