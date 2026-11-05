@@ -24,6 +24,13 @@ Two lanes, deliberately separated:
               live regions manifest in kind_robots utils/rulerHooked/content.ts.
               Emitted with --include-layers. Unblocked 2026-08-26 once the
               format contract was settled -- see LAYER FORMAT, below.
+  console  -- the paintings the 2026-11-05 illustrated console redesign
+              expects: screen backdrops, tab vignettes, daily-proclamation
+              scenes and shop still lifes, at the exact image_path keys the
+              kind_robots UI resolves. Silas's direction for it (an art-heavy
+              design that does not look like a webapp, but not shiny freeware
+              either) is docs/art-direction.md Section 9; CONSOLE_FINISH is
+              that section in executable form.
 
 LAYER FORMAT (settled 2026-08-26, ruler-hooked/t-017, kind_robots PR #2139).
 A layer is a FULL-PLAY-SCREEN image, transparent everywhere outside its own depth
@@ -46,6 +53,7 @@ Usage:
     python scripts/build_ruler_hooked_art_queue.py --check    # exit 1 if staging is stale
     python scripts/build_ruler_hooked_art_queue.py --include-layers --write
     python scripts/build_ruler_hooked_art_queue.py --write --lane ruler   # stage one lane only
+    python scripts/build_ruler_hooked_art_queue.py --write --lane console # the console redesign art
     python scripts/build_ruler_hooked_art_queue.py --list-lanes           # staged/unstaged per lane
     python scripts/build_ruler_hooked_art_queue.py --include-layers --list-lanes
 
@@ -96,7 +104,7 @@ PAGE_URL = "https://kindrobots.org/plan/projects/ruler-hooked"
 # Every lane value an *_entries() function can hand to make_entry() -- kept as one
 # set so --lane's choices and this being out of sync fail loudly instead of
 # silently accepting a lane that never matches anything.
-LANES = {"concept", "fish", "ruler", "reward", "ending", "card", "layer"}
+LANES = {"concept", "fish", "ruler", "reward", "ending", "card", "layer", "console"}
 MEDIA_ORIGIN = "https://media.acrocatranch.com"
 
 # Concept art goes ahead of the mandarin-tutor curriculum backlog (priority 80)
@@ -543,6 +551,16 @@ CAST_LOOK = {
         "old coins turning slowly inside the body, patient and unreadable"
     ),
 }
+
+# The advisor is a person, not a pen: Quill is the steward's name.
+STEWARD_LOOK = (
+    "Quill the Steward, the castle's wry, devoted steward and royal advisor, a "
+    "lanky older person with silver-streaked dark hair tied back, a long beaked "
+    "nose, half-moon spectacles, an ink-stained plum-and-gold household livery "
+    "coat with a ring of castle keys, cradling an enormous ledger under one arm "
+    "and holding a feather quill pen like a conductor's baton, one eyebrow raised "
+    "in fond exasperation"
+)
 
 PORTRAIT_FRAME = (
     "three-quarter character concept portrait against a simple soft painted "
@@ -1078,6 +1096,351 @@ def card_entries(content_ts: Path) -> list[dict]:
     return entries
 
 
+# ---------------------------------------------------------------------------
+# Console lane -- the illustrated console redesign (2026-11-05)
+# ---------------------------------------------------------------------------
+#
+# Silas, 2026-11-05: the target is "an illustrated, art-heavy design that doesn't
+# look like a webapp", but NOT "too shiny freeware style". The rendered library
+# already hits that -- hand-painted storybook gouache -- so this lane keeps
+# matching it, and the image_path keys below are exactly the ones the redesigned
+# kind_robots UI resolves under public/images/ruler-hooked/.
+#
+# CONSOLE_FINISH states the wanted matte, hand-made finish POSITIVELY. The things
+# to avoid (glossy bevels, chrome gold, lens flare, sparkle, mobile-game sheen)
+# are deliberately never named in a prompt: on krea2 the negative prompt is inert,
+# so naming them would paint them. They live in docs/art-direction.md Section 9
+# for people instead. The same rule keeps "people" out of the empty rooms below
+# (kind_robots' people-negation contract rule): an empty room is described as
+# empty and still, never as lacking anyone.
+#
+# Every entry is WIDE (1344x768), tab vignettes included, because the UI crops
+# them itself. None depicts the player's ruler (Current POV rule above).
+CONSOLE_PRIORITY = CONCEPT_PRIORITY
+
+CONSOLE_FINISH = (
+    "matte opaque gouache with visible brush strokes and a faint paper grain, "
+    "soft diffuse natural light, flat matte colour, handmade and quiet"
+)
+
+CONSOLE_BACKDROPS = [
+    (
+        "title-lakeside",
+        "title backdrop: lakeside at golden hour",
+        "A wide calm lake at golden hour, a storybook castle with round towers on a "
+        "far green hill across the water, and on the near grassy bank an empty "
+        "carved wooden royal fishing chair with a red cushion, a fishing rod "
+        "leaning against its arm and a little wicker tackle basket beside it. The "
+        "upper-middle third of the picture is broad open soft golden sky, calm and "
+        "uncluttered. Deserted and peaceful. "
+        f"{TIME_MOD['golden']}",
+    ),
+    (
+        "court-throne-room",
+        "court backdrop: sunlit throne room",
+        "A sunlit royal throne room: tall arched windows along the back wall "
+        "looking out over a bright lake, long cloth banners each embroidered with "
+        "one big plain fish shape, a long red carpet runner leading up to a low "
+        "dais, and an empty carved throne on that dais at the right. The left "
+        "third of the room is calm and simple, plain warm stone wall and soft "
+        "floor light with open space. The hall is empty and still. "
+        f"{TIME_MOD['day']}",
+    ),
+    (
+        "royal-map",
+        "map backdrop: hand-painted kingdom map",
+        "A hand-painted kingdom map on aged parchment seen from directly above: a "
+        "round blue castle lake at the centre, dense green wildwood across the "
+        "top, a small thatched village on one bank, a tiny castle on a hill, a far "
+        "shore of patchwork fields on the opposite bank, a white waterfall "
+        "tumbling into the lake, and flat green lily pads spread across one "
+        "shallow corner. Painted pictures only, tiny trees, rooftops, wavy ripple "
+        "lines and dotted paths, with every margin and open area left as bare "
+        "clean parchment",
+    ),
+    (
+        "gear-tackle-room",
+        "gear backdrop: royal tackle room",
+        "A cosy royal tackle room inside a castle tower: fishing rods standing in "
+        "wooden racks along the wall, glass jars full of colourful lures on "
+        "shelves, nets and wicker creels hanging from the beams, a sturdy "
+        "workbench with a reel half taken apart and small tools beside it, a warm "
+        "lantern, and a small round window onto the lake. The room is empty and "
+        "quiet",
+    ),
+    (
+        "fishopedia-study",
+        "Fishopedia backdrop: naturalist's study at night",
+        "A naturalist's study at night: a big open specimen book on a wooden desk, "
+        "its pages showing one painted fish and a pressed reed on bare cream "
+        "paper, glass specimen jars holding tiny curious fish, a brass magnifying "
+        "glass, a lit lantern glowing warm, and a tall window looking out over a "
+        "moonlit lake. The study is empty and quiet. "
+        f"{TIME_MOD['night']}",
+    ),
+]
+
+# Tab vignettes are shown tiny, so each is one big centred subject with few
+# details. Described as a painted vignette, never as an "icon" -- an icon request
+# renders as a glossy app button, which is exactly the sheen Silas ruled out.
+TAB_VIGNETTE = (
+    "a single bold simple painted vignette, one large subject centred on a soft "
+    "plain painted gouache ground, broad shapes and few details so it reads at a "
+    "glance even very small"
+)
+
+CONSOLE_TABS = [
+    ("lake", "a small round blue lake with one fish leaping out of it in a bright arc of water"),
+    ("map", "a rolled parchment map tied with string beside a round brass compass with a plain needle"),
+    ("court", "a red velvet throne with carved gold-painted wooden arms"),
+    ("gear", "a fishing rod leaning against a little wooden tackle box with its lid open"),
+    ("fishopedia", "an open book showing one painted fish across both pages"),
+]
+
+# Daily proclamations (kind_robots utils/rulerHooked/dailyEvents.ts). The fourth
+# field names the cast slugs a scene stages; their look comes from CAST_LOOK and
+# their name from the content bundle, so Gristle on the audit day is the same
+# Gristle as on his portrait and his cards.
+EVENT_VIEW = (
+    "a lively painted storybook moment seen at eye level, the townsfolk facing "
+    "the viewer"
+)
+
+CONSOLE_EVENTS = [
+    (
+        "market-day",
+        "Market Day at the Wharf",
+        "A bustling lakeside fish market along a wooden wharf: striped awnings "
+        "over stalls heaped with silver fish and baskets of eels, fishmongers in "
+        "aprons haggling cheerfully with villagers, rowboats tied along the wharf, "
+        f"gulls wheeling overhead. {TIME_MOD['day']}",
+        [],
+    ),
+    (
+        "heron-festival",
+        "The Heron Festival",
+        "The lakeside village at dusk for the Heron Festival: folded paper herons "
+        "perched on every thatched roof, strings of glowing paper lanterns between "
+        "the houses, and villagers mid-dance in a ring on the green with a fiddler "
+        f"stamping along. {TIME_MOD['dusk']}",
+        [],
+    ),
+    (
+        "druid-procession",
+        "The Druids Walk the Shore",
+        "A quiet procession of leaf-cloaked druids walking single file along a "
+        "worn lakeshore at dawn, each one kneeling to press green reed shoots into "
+        "the soft mud where the bank has worn thin, baskets of young reeds on their "
+        f"backs. {TIME_MOD['dawn']}",
+        [],
+    ),
+    (
+        "tax-audit",
+        "Gristle Audits the Ledgers",
+        "{taxman-gristle} sits at a small desk in a lamplit counting room, dwarfed "
+        "by a teetering mountain of closed leather-bound ledgers with plain brown "
+        "spines, a single stray coin gleaming on the desk in front of him, "
+        "grumbling villagers peering in at the doorway",
+        ["taxman-gristle"],
+    ),
+    (
+        "guard-parade",
+        "The Watch Parades",
+        "{captain-cordelia} drills the town watch in a cobbled village square: a "
+        "slightly disorderly line of guards in blue tabards with spears held at "
+        "many different angles, one guard a full step out of time, children "
+        f"watching from the edge of a fountain. {TIME_MOD['day']}",
+        ["captain-cordelia"],
+    ),
+    (
+        "soft-rain",
+        "A Soft Rain",
+        "Gentle soft rain falling over the calm castle lake, rings spreading "
+        "across the grey-green water, reeds bowing under the drops, the far shore "
+        "soft and misty, a single duck sheltering under a lily pad. Cool silvery "
+        "light, peaceful and deserted",
+        [],
+    ),
+    (
+        "bards-contest",
+        "The Bards Contest",
+        "A crowded wooden stage on the village green packed with seventeen rival "
+        "bards all performing at once, lutes and horns and a drum and a bagpipe, "
+        "and in the very middle {bard-fen}, one hand raised to judge while singing "
+        "loudest of all, an audience of villagers laughing with their hands over "
+        f"their ears. {TIME_MOD['golden']}",
+        ["bard-fen"],
+    ),
+    (
+        "duck-census",
+        "The Annual Duck Census",
+        "Earnest royal officials in tall hats and round spectacles standing in "
+        "the reedy shallows of the lake, one clicking a brass hand counter and one "
+        "sliding beads on a wooden abacus, as a long orderly queue of ducks "
+        "waddles past a little wooden counting gate, one duck staring back "
+        f"unimpressed. {TIME_MOD['day']}",
+        [],
+    ),
+    (
+        "lost-boot",
+        "A Boot in the Shallows",
+        "A battered old leather boot just hauled up out of the lake shallows on a "
+        "taut fishing line rising from the near water, lake water and gold coins "
+        "pouring out of it in a bright stream, ripples and reeds all around, "
+        f"a startled frog sitting on the boot's toe. {TIME_MOD['day']}",
+        [],
+    ),
+    (
+        "quiet-day",
+        "Nothing Whatsoever",
+        "A perfectly calm empty lake in the early morning, the water a flawless "
+        "mirror of pale sky and the far wooded shore, a single wooden rowboat "
+        "moored and still at a little jetty, thin mist resting on the surface. "
+        f"Utter peace, deserted and quiet. {TIME_MOD['dawn']}",
+        [],
+    ),
+]
+
+STILL_LIFE = (
+    "a close still life on a worn wooden counter, warm lamplight from the left, "
+    "the object large and centred"
+)
+
+# Shop goods (economy.ts GEAR_CATALOG) are still lifes; kingdom works
+# (KINGDOM_CATALOG) are the place or thing the coins pay for.
+CONSOLE_GEAR = [
+    (
+        "reinforced-rod",
+        "Reinforced Rod",
+        "A sturdy fishing rod of dark ash wood bound with bands of brass wire and "
+        "fitted with a heavy brass reel, lying across the counter beside coils of "
+        f"line and a small tin of hooks, {STILL_LIFE}",
+    ),
+    (
+        "silk-line",
+        "Silk Line",
+        "A spool of fine pale-gold silk fishing line wound on a carved wooden "
+        "reel, one loose shining strand trailing across a green felt cloth, "
+        f"{STILL_LIFE}",
+    ),
+    (
+        "balanced-lure",
+        "Balanced Lure",
+        "A small hand-carved wooden fishing lure painted in red and white "
+        "stripes, a tiny brass weight under its belly and two hooks, resting on a "
+        f"little brass stand, {STILL_LIFE}",
+    ),
+    (
+        "riverbank-market",
+        "Riverbank Market",
+        "A row of striped canvas market stalls along a grassy riverbank beside "
+        "the castle lake, baskets of fish, bread and apples on the counters, "
+        "villagers in aprons bargaining and rowboats tied up at the bank, wide "
+        f"view. {TIME_MOD['day']}",
+    ),
+    (
+        "lakeside-shrine",
+        "Lakeside Shrine",
+        "A small round stone shrine with a mossy domed roof on a grassy point by "
+        "the lake, wildflowers, smooth river stones and lit candles on its step, "
+        "a carved stone fish on top of the dome, mist on the water, deserted and "
+        f"peaceful. {TIME_MOD['dawn']}",
+    ),
+    (
+        "festival-fund",
+        "Festival Fund",
+        "A village green beside the lake strung with paper lanterns and coloured "
+        "bunting, a wooden bandstand with two fiddlers, and in the foreground a "
+        "heavy leather coin purse spilling gold coins across a trestle table. "
+        f"{TIME_MOD['dusk']}",
+    ),
+    (
+        "watch-patrol",
+        "Watch Patrol",
+        "Two castle guards in blue tabards and steel caps walking a gravel road "
+        "along the lake carrying lanterns and spears, a shaggy guard dog trotting "
+        f"ahead of them. {TIME_MOD['dusk']}",
+    ),
+]
+
+
+def console_entries(cast: list[dict[str, str]]) -> list[dict]:
+    """Backdrops, tab vignettes, proclamation scenes and shop art for the console UI."""
+    names = {c["slug"]: f"{c['name']} {c['honorific']}" for c in cast}
+
+    def tail(body: str) -> str:
+        return f"{body}. {CONSOLE_FINISH}. {STYLE_TAIL}. {NO_TEXT}"
+
+    def entry(kind: str, key: str, label: str, body: str) -> dict:
+        return make_entry(
+            request_id=f"ruler-hooked-console-{kind}-{key}",
+            image_path=f"public/images/ruler-hooked/{kind}/{key}.webp",
+            label=f"Ruler Hooked console: {label}",
+            size=WIDE,
+            prompt=tail(body),
+            priority=CONSOLE_PRIORITY,
+            lane="console",
+        )
+
+    entries: list[dict] = []
+    for key, label, body in CONSOLE_BACKDROPS:
+        entries.append(entry("backdrops", key, label, body))
+
+    for name, subject in CONSOLE_TABS:
+        entries.append(
+            make_entry(
+                request_id=f"ruler-hooked-console-ui-tab-{name}",
+                image_path=f"public/images/ruler-hooked/ui/tab-{name}.webp",
+                label=f"Ruler Hooked console: {name} tab vignette",
+                size=WIDE,
+                prompt=tail(f"{subject}, {TAB_VIGNETTE}"),
+                priority=CONSOLE_PRIORITY,
+                lane="console",
+            )
+        )
+
+    for key, title, body, slugs in CONSOLE_EVENTS:
+        for slug in slugs:
+            if slug not in names:
+                raise SystemExit(
+                    f"console event {key!r} stages {slug!r}, which is not in the "
+                    "content bundle's cast; fix the slug or the bundle"
+                )
+            if slug not in CAST_LOOK:
+                raise SystemExit(
+                    f"console event {key!r} stages {slug!r}, which has no CAST_LOOK "
+                    "entry; add its visual direction to this script"
+                )
+            body = body.replace("{" + slug + "}", f"{names[slug]}, {CAST_LOOK[slug]},")
+        if "{" in body:
+            raise SystemExit(f"console event {key!r} has an unfilled cast slot: {body}")
+        entries.append(
+            entry("events", key, f"daily proclamation: {title}", f"{body}. {EVENT_VIEW}")
+        )
+
+    for key, name, body in CONSOLE_GEAR:
+        entries.append(entry("gear", key, f"shop: {name}", body))
+
+    # Quill the Steward coaches the tutorial and presents court petitions, but
+    # the only render of the advisor (character-steward-quill.webp, 256px) came
+    # back as a literal feather pen. The console skips it; this replaces it.
+    entries.append(
+        make_entry(
+            request_id="ruler-hooked-console-character-steward-quill",
+            image_path="public/images/ruler-hooked/characters/steward-quill.webp",
+            label="Ruler Hooked console: Quill the Steward portrait",
+            size=PORTRAIT,
+            prompt=(
+                f"{STEWARD_LOOK}, {PORTRAIT_FRAME}. {CONSOLE_FINISH}. {STYLE_TAIL}. {NO_TEXT}"
+            ),
+            priority=CONSOLE_PRIORITY,
+            lane="console",
+        )
+    )
+
+    return entries
+
+
 def layer_entries(regions: dict[str, dict[str, list[str]]]) -> list[dict]:
     """The (region, state, time) matrix, named exactly as assetCandidates() resolves."""
     entries: list[dict] = []
@@ -1312,14 +1675,16 @@ def main() -> int:
         parser.error("--list-lanes summarizes every lane; do not combine it with --lane")
 
     content_ts = find_content_bundle()
+    cast = read_cast(content_ts)
     entries = (
-        concept_entries(read_cast(content_ts))
+        concept_entries(cast)
         + alt_vista_entries()
         + ruler_entries()
         + fish_entries()
         + reward_entries(content_ts)
         + ending_entries(content_ts)
         + card_entries(content_ts)
+        + console_entries(cast)
     )
     if args.include_layers:
         entries += layer_entries(read_regions(content_ts))
