@@ -1,31 +1,31 @@
 {
-  "generated_at": "2026-11-05T06:59:06.824545+00:00",
+  "generated_at": "2026-11-05T20:04:42.350450+00:00",
   "summary": {
-    "status": "semantic-review-upcoming",
+    "status": "clean",
     "roadmap_errors": 0,
-    "roadmap_warnings": 78,
+    "roadmap_warnings": 82,
     "project_forward_drift": 0,
     "project_reverse_orphans": 0,
     "project_unresolved": null,
     "openai_scheduled_agent_overdue": true,
     "openai_scheduled_agent_authoritative": false,
     "intent_review_due": false,
-    "intent_review_upcoming": true
+    "intent_review_upcoming": false
   },
   "openai_scheduled_agent": {
     "overdue": true,
     "last_activity": "2026-10-25T01:09:44+00:00",
-    "hours_since": 269.82,
+    "hours_since": 282.92,
     "stale_hours": 6.0,
     "marker": "openai-scheduled-",
     "note": "Legacy git diagnostic only: OPENAI-SCHEDULED-HEARTBEAT.json and coordination markers do not determine ChatGPT scheduler health. Native ChatGPT task metadata is authoritative for scheduler liveness."
   },
   "intent_review": {
     "due": false,
-    "upcoming": true,
-    "last_report": "INTENT-AUDIT-2026-11-03.md",
-    "days_since": 2,
-    "days_until_due": 1.0,
+    "upcoming": false,
+    "last_report": "INTENT-AUDIT-2026-11-05.md",
+    "days_since": 0,
+    "days_until_due": 3.0,
     "stale_days": 3.0,
     "failed_attempt": null
   },
@@ -35,19 +35,19 @@
     "unresolved": null
   },
   "roadmap_audit": {
-    "generated_at": "2026-11-05T06:59:06.824552+00:00",
+    "generated_at": "2026-11-05T20:04:42.350456+00:00",
     "summary": {
       "roadmaps": 93,
       "active_projects": 20,
       "continuous_projects": 14,
-      "tasks": 2847,
-      "ready": 255,
+      "tasks": 2855,
+      "ready": 249,
       "waiting": 215,
       "needs_human": 32,
-      "in_progress": 16,
-      "done": 2260,
+      "in_progress": 23,
+      "done": 2267,
       "errors": 0,
-      "warnings": 78,
+      "warnings": 82,
       "info": 125
     },
     "errors": [],
@@ -132,13 +132,6 @@
       {
         "severity": "warning",
         "code": "STALE_CLAIM_FIELDS",
-        "project": "cthulhuquarium",
-        "task": "t-089",
-        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
-      },
-      {
-        "severity": "warning",
-        "code": "STALE_CLAIM_FIELDS",
         "project": "emperor-of-dust",
         "task": "t-033",
         "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
@@ -155,6 +148,13 @@
         "code": "STALE_CLAIM_FIELDS",
         "project": "emperor-of-dust",
         "task": "t-047",
+        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
+      },
+      {
+        "severity": "warning",
+        "code": "STALE_CLAIM_FIELDS",
+        "project": "emperor-of-dust",
+        "task": "t-048",
         "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
       },
       {
@@ -176,7 +176,7 @@
         "code": "STALE_IN_PROGRESS",
         "project": "emperor-of-dust",
         "task": "t-060",
-        "message": "Task has remained review for 9 days."
+        "message": "Task has remained review for 10 days."
       },
       {
         "severity": "warning",
@@ -184,13 +184,6 @@
         "project": "every-villain-tactics",
         "task": "t-014",
         "message": "Reversible software task is human-gated without an obvious hard-gate reason in its note."
-      },
-      {
-        "severity": "warning",
-        "code": "STALE_CLAIM_FIELDS",
-        "project": "game-of-captains",
-        "task": "t-011",
-        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
       },
       {
         "severity": "warning",
@@ -216,9 +209,16 @@
       {
         "severity": "warning",
         "code": "STALE_IN_PROGRESS",
+        "project": "hybridizer",
+        "task": "t-009",
+        "message": "Task has remained review for 3 days."
+      },
+      {
+        "severity": "warning",
+        "code": "STALE_IN_PROGRESS",
         "project": "interface-vision",
         "task": "t-149",
-        "message": "Task has remained review for 15 days."
+        "message": "Task has remained review for 16 days."
       },
       {
         "severity": "warning",
@@ -469,6 +469,13 @@
         "severity": "warning",
         "code": "STALE_CLAIM_FIELDS",
         "project": "save-the-plumber",
+        "task": "t-005",
+        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
+      },
+      {
+        "severity": "warning",
+        "code": "STALE_CLAIM_FIELDS",
+        "project": "save-the-plumber",
         "task": "t-015",
         "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
       },
@@ -509,10 +516,31 @@
       },
       {
         "severity": "warning",
+        "code": "STALE_CLAIM_FIELDS",
+        "project": "slime-city",
+        "task": "t-009",
+        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
+      },
+      {
+        "severity": "warning",
         "code": "POSSIBLY_UNNECESSARY_GATE",
         "project": "slime-city",
         "task": "t-014",
         "message": "Reversible software task is human-gated without an obvious hard-gate reason in its note."
+      },
+      {
+        "severity": "warning",
+        "code": "STALE_CLAIM_FIELDS",
+        "project": "slime-city",
+        "task": "t-021",
+        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
+      },
+      {
+        "severity": "warning",
+        "code": "STALE_CLAIM_FIELDS",
+        "project": "slime-city",
+        "task": "t-022",
+        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
       },
       {
         "severity": "warning",
@@ -537,17 +565,24 @@
       },
       {
         "severity": "warning",
-        "code": "STALE_CLAIM_FIELDS",
-        "project": "weird-humboldt",
-        "task": "t-045",
-        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
-      },
-      {
-        "severity": "warning",
         "code": "STALE_IN_PROGRESS",
         "project": "weird-humboldt",
         "task": "t-060",
         "message": "Task has remained review for 13 days."
+      },
+      {
+        "severity": "warning",
+        "code": "STALE_CLAIM_FIELDS",
+        "project": "weird-humboldt",
+        "task": "t-066",
+        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
+      },
+      {
+        "severity": "warning",
+        "code": "STALE_CLAIM_FIELDS",
+        "project": "zuzu-gamebook",
+        "task": "t-007",
+        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
       },
       {
         "severity": "warning",
@@ -576,13 +611,6 @@
         "project": "zuzu-shifting-lands",
         "task": "t-004",
         "message": "Task has remained review for 26 days."
-      },
-      {
-        "severity": "warning",
-        "code": "STALE_CLAIM_FIELDS",
-        "project": "zuzu-shifting-lands",
-        "task": "t-036",
-        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
       },
       {
         "severity": "warning",
