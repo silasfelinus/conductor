@@ -316,8 +316,8 @@ tasks:
   - id: t-013
     milestone: m5
     title: Wounded-route risk signals and meaningful retreat paths
-    status: claimed
-    updated: '2026-11-05T01:56:02Z'
+    status: review
+    updated: '2026-11-05T02:22:15Z'
     passes: 0
     stakes: reversible
     depends_on: [t-002]
@@ -345,9 +345,25 @@ tasks:
       Testing a legitimate fresh-game wounded Abbess route through the freed-sister rescue, retreat, and return-to-fight branches. Kind Robots worker/zuzu-gamebook-t-013-wounded-witness-k4n9; PR and exact-head CI pending.
 
       2026-10-26 PT: Merged Kind Robots PR #4244 (squash d81e2e899a7e4e8cfc75ef0a9e30624a9a639fd6). Real startRun seed 1, 43 legal moves, 7 HP reaches the freed-sister wounded Abbess route; escape and return-to-fight branches, replay and save validated. All 12 exact-head workflows passed at 9e8b74a87, including four contract shards, TypeScript and formatting. Evidence: kind_robots#4139 comment 6427595903. No ArtJobs or deploy. Remains: naturally lower-HP combat witnesses, forced-fight risk audit and dedicated scene illustration. Keep active, not For Human Gate.
+
+      2026-11-04 PT: Forced-fight audit slice. All 36 choices that lead into the 6 battles
+      were audited, and none warned of a fight or said whether a loss is final. In 20k seeded
+      walks, 1498 ended with an Abbess loss at ending-altar, often entered at 1 HP. Added pure
+      fightAhead/fightCue in adventure.ts. They follow single-exit scenes, project sister-free
+      and other flags, and flag deadly vs survivable losses and wounded entries within two
+      blows. Choice cards in zuzu-gamebook.vue now show a Fight chip, a "Wounded, N HP: losing
+      ends the journey" line and the foe/stakes caption, so cellar cut vs charge now visibly
+      differs. Tests pin every fight-entering choice, the cellar/Hask/croc/Abbess cues, the
+      real wounded-Abbess witness, and a 1500-walk seeded battery: 1548 fights announced, 174
+      wounded entries flagged, 224 final and 231 survivable losses matched their cue. Goldens
+      unchanged. Kind Robots PR #4770 from a patch on base 050b23eb. Full vue-tsc was OOM
+      locally, so CI decides. No art or deploy. Remaining: whether the no-sister wounded
+      Abbess refusal (a8-voice-wound, Taint<2) needs an earned narrative alternative, and a
+      responsive check of the cue at 390/768/1440.
     owner: worker
     claimed_by: 2026-11-05T015400Z-zuzu-gamebook-gs
     claimed_at: '2026-11-05T01:56:02Z'
+    implementation_pr: 'silasfelinus/kind_robots#4770'
   - id: t-014
     title: "Zuzu Gamebook | Master completion roadmap"
     status: ready
