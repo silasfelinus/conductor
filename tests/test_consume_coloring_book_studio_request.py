@@ -409,3 +409,53 @@ def test_force_live_keeps_final_pair_on_the_archived_master(tmp_path, monkeypatc
     queue = yaml.safe_load(mod.coloring.QUEUE_FILE.read_text(encoding="utf-8"))
     record = queue["books"][0]["entries"][0]["studio_revision_history"][-1]
     assert record["masters_repointed"] == ["accepted", "final"]
+
+
+def test_run_entries_timeout_is_waiting_and_keeps_the_job_reference(monkeypatch, tmp_path):
+    """2026-11-05: the render box stopped finishing jobs. Each fresh studio
+    request queued an ArtJob, timed out after 600s and exited 1, so the event
+    processor counted it toward quarantine although the job was still in the
+    art server's queue. A timeout with a recorded job id is a wait (exit 75):
+    the next pass recovers that job instead of resubmitting.
+    """
+    entry = {
+        "id": "mr-006",
+        "set": "monster-recast",
+        "concept_id": "mr-006",
+        "queue_id": "mr-006",
+        "image_path": "does/not/exist.webp",
+    }
+
+    monkeypatch.setattr(mod.queue_consumer, "KR_API_TOKEN", "fake-token")
+    monkeypatch.setattr(mod.coloring, "target_path", lambda e: tmp_path / "missing.webp")
+    monkeypatch.setattr(mod.coloring, "referenced_job_id", lambda e: None)
+    monkeypatch.setattr(mod.coloring, "enqueue", lambda e: (63831, False))
+
+    def timed_out(job_id, timeout):
+        raise mod.queue_consumer.ArtJobTimeout(
+            f"job {job_id} timed out after {timeout}s (still queued/running)"
+        )
+
+    monkeypatch.setattr(mod.queue_consumer, "wait_for_job", timed_out)
+    calls = []
+    monkeypatch.setattr(
+        mod.coloring,
+        "record_render_gate_error",
+        lambda entry, error, job_id=None: calls.append((entry["id"], job_id)),
+    )
+
+    exit_code = mod.run_entries([entry], live=True, timeout=30)
+
+    assert exit_code == mod.EXIT_WAITING
+    assert calls == [("mr-006", 63831)]
+
+
+def test_art_job_timeout_is_still_a_runtime_error():
+    # Callers that catch RuntimeError for any wait failure keep working.
+    assert issubclass(mod.queue_consumer.ArtJobTimeout, RuntimeError)
+    try:
+        mod.queue_consumer.wait_for_job(1, 0)
+    except mod.queue_consumer.ArtJobTimeout as error:
+        assert "job 1 timed out after 0s (still queued/running)" == str(error)
+    else:
+        raise AssertionError("wait_for_job(timeout=0) must raise ArtJobTimeout")

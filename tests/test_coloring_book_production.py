@@ -357,5 +357,86 @@ books:
         self.assertIn("provision_kind_robots_deps.sh", message)
 
 
+class ColoringBookBwWaitTests(unittest.TestCase):
+    """2026-11-05: B&W renders timing out on a stalled render box."""
+
+    def setUp(self) -> None:
+        self.temp = tempfile.TemporaryDirectory()
+        self.root = Path(self.temp.name)
+        self.saved = {}
+
+    def tearDown(self) -> None:
+        for name, value in self.saved.items():
+            setattr(MODULE, name, value)
+        self.temp.cleanup()
+
+    def patch(self, name: str, value: object) -> None:
+        self.saved.setdefault(name, getattr(MODULE, name))
+        setattr(MODULE, name, value)
+
+    def test_forced_retry_waits_on_the_in_flight_job_instead_of_resubmitting(self) -> None:
+        queue_entry = {"id": "mr-008", "bw_status": "running", "bw_job_id": 63832}
+        archived: list[Path] = []
+        posts: list[str] = []
+        self.patch("find_queue_entry", lambda _q, _b, _p: queue_entry)
+        self.patch("find_proposal", lambda _l, _p: {"id": "mr-008"})
+        self.patch("ensure_pair", lambda _proposal, _key: {"color": "color.webp", "bw": None})
+        self.patch("bw_job_body", lambda *_a, **_k: ({"payload": {}}, None))
+        self.patch("absolute_set_path", lambda _book, value: self.root / value)
+        self.patch("archive_file", lambda path, _category: archived.append(path) or "archived")
+        self.patch("write_queue_entry", lambda _b, _p, _e: None)
+        self.patch("queue_job_status", lambda job_id: {"id": job_id, "status": "PENDING"})
+        consumer = MODULE.queue_consumer
+        original_http_json = consumer.http_json
+        original_wait = consumer.wait_for_job
+
+        def timed_out(job_id: int, timeout: int) -> None:
+            raise consumer.ArtJobTimeout(f"job {job_id} timed out after {timeout}s")
+
+        consumer.http_json = lambda method, url, body=None: posts.append(url) or (500, None)
+        consumer.wait_for_job = timed_out
+        try:
+            with self.assertRaises(consumer.ArtJobTimeout):
+                MODULE.generate_bw(
+                    "monster-recast", "mr-008", {}, {}, timeout=30, force=True
+                )
+        finally:
+            consumer.http_json = original_http_json
+            consumer.wait_for_job = original_wait
+
+        self.assertEqual(queue_entry["bw_job_id"], 63832)
+        self.assertEqual(queue_entry["bw_status"], "running")
+        self.assertNotIn("bw_revision_history", queue_entry)
+        self.assertEqual(archived, [])
+        self.assertEqual(posts, [])
+
+    def test_run_operation_reports_a_timeout_as_waiting(self) -> None:
+        queue_file = self.root / "color-art-jobs.yaml"
+        queue_file.write_text("books: []\n", encoding="utf-8")
+        ledger = self.root / "ledger.yaml"
+        ledger.write_text("proposals: []\n", encoding="utf-8")
+        self.patch("QUEUE_FILE", queue_file)
+        self.patch("QUEUE_LOCK_FILE", self.root / "color-art-jobs.yaml.lock")
+        self.patch("ledger_path", lambda _book: ledger)
+
+        def timed_out(*_args: object, **_kwargs: object) -> None:
+            raise MODULE.queue_consumer.ArtJobTimeout("job 63832 timed out after 600s")
+
+        self.patch("generate_bw", timed_out)
+        status = MODULE.run_operation(
+            "generate-bw", "monster-recast", ["mr-008"], timeout=600, force=True, live=True
+        )
+        self.assertEqual(status, MODULE.EXIT_WAITING)
+
+        def failed(*_args: object, **_kwargs: object) -> None:
+            raise RuntimeError("BW enqueue failed: HTTP 500")
+
+        self.patch("generate_bw", failed)
+        status = MODULE.run_operation(
+            "generate-bw", "monster-recast", ["mr-008"], timeout=600, force=True, live=True
+        )
+        self.assertEqual(status, 1)
+
+
 if __name__ == "__main__":
     unittest.main()

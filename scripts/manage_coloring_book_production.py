@@ -109,6 +109,11 @@ def write_yaml(path: Path, data: dict[str, Any]) -> None:
     )
 
 
+# Exit status meaning "nothing failed; renders are still in flight" (EX_TEMPFAIL).
+# process_coloring_art_events.py treats it as a wait, not an attempt.
+EXIT_WAITING = 75
+
+
 class _NoAliasSafeDumper(yaml.SafeDumper):
     """SafeDumper that writes shared objects out in full instead of as &idNNN.
 
@@ -613,8 +618,18 @@ def generate_bw(
     )
     existing = absolute_set_path(book_slug, existing_rel)
     bw_status = str(queue_entry.get("bw_status") or "pending").lower()
+    # A forced revision whose ArtJob is already in flight was requested by an
+    # earlier pass of this same event (it timed out waiting). Re-forcing would
+    # drop bw_job_id and submit a duplicate render on every retry; wait on the
+    # recorded job instead.
+    revision_in_flight = (
+        not candidate.exists()
+        and bw_status == "running"
+        and isinstance(queue_entry.get("bw_job_id"), int)
+        and queue_entry["bw_job_id"] > 0
+    )
 
-    if force:
+    if force and not revision_in_flight:
         archived = archive_file(existing, "studio") if existing.exists() else None
         history = queue_entry.get("bw_revision_history")
         if not isinstance(history, list):
@@ -794,6 +809,7 @@ def run_operation(
         queue = load_yaml(QUEUE_FILE)
         ledger = load_yaml(ledger_path(book_slug))
         failures = 0
+        waiting = 0
         for proposal_id in proposal_ids:
             try:
                 if operation == "accept-color":
@@ -814,10 +830,17 @@ def run_operation(
                 else:
                     finalize_pair(book_slug, proposal_id, queue, ledger)
                 print(f"  DONE {operation} {book_slug}/{proposal_id}")
+            except queue_consumer.ArtJobTimeout as error:
+                # bw_job_id is already recorded, so the next pass waits on the
+                # same ArtJob instead of resubmitting. Not a failure.
+                waiting += 1
+                print(f"  WAITING {operation} {book_slug}/{proposal_id}: {error}", file=sys.stderr)
             except Exception as error:  # noqa: BLE001
                 failures += 1
                 print(f"  FAILED {operation} {book_slug}/{proposal_id}: {error}", file=sys.stderr)
-        return 1 if failures else 0
+        if failures:
+            return 1
+        return EXIT_WAITING if waiting else 0
 
 
 def main() -> int:

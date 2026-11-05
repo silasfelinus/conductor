@@ -424,6 +424,18 @@ def run_entries(entries: list[dict[str, Any]], *, live: bool, timeout: int) -> i
             coloring.record_render_gate_error(entry, error, drop_reference=True)
             print(f"  FAILED {entry['set']}/{entry['concept_id']}: {error}", file=sys.stderr)
         except Exception as error:  # noqa: BLE001
+            if submitted_job_id is not None and isinstance(error, queue_consumer.ArtJobTimeout):
+                # The ArtJob is still in the art server's queue. Record its id
+                # so the next pass recovers it instead of resubmitting, and do
+                # not count it as a failure: a slow or offline render box must
+                # not use up the request's quarantine attempts.
+                coloring.record_render_gate_error(entry, error, job_id=submitted_job_id)
+                waiting += 1
+                print(
+                    f"  WAITING {entry['set']}/{entry['concept_id']}: {error}",
+                    file=sys.stderr,
+                )
+                continue
             retryable_failures += 1
             if stuck_job_id is not None:
                 # Anything other than RecoveryAbandoned during a recovery

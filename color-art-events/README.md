@@ -80,5 +80,5 @@ Rules:
 - `finalize-pair` and `finalize-cover` revalidate accepted assets before writing final ledger paths.
 - Event values never become shell commands; the processor constructs a fixed argument list.
 - Each run processes many events (`--max-events`, `--time-budget`). Fast curation actions (`accept-*`, `finalize-*`, adoption) run before generation. Actions on the same page or cover apply in the order requested; unrelated pages never wait on each other.
-- An event whose earlier ArtJobs are still queued/running on the art server is preserved without counting an attempt (consumer exit 75), so it is never quarantined merely for waiting, and later actions on that same page wait behind it.
+- An event whose ArtJobs are still queued/running on the art server — found from an earlier pass, or submitted this pass and timed out while waiting — is preserved without counting an attempt (consumer exit 75), so a slow or offline render box never quarantines it, and later actions on that same page wait behind it. The next pass re-checks the recorded job id instead of resubmitting; a forced B&W revision already in flight is not re-forced.
 - Keep one event file per intentional action. Do not duplicate a preserved event after a timeout.
