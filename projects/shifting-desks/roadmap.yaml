@@ -564,8 +564,8 @@ tasks:
   - id: t-032
     milestone: m3
     title: 'Land, review and link the art round 13 re-renders and round 14 tone-ladder renders'
-    status: review
-    updated: '2026-11-03T21:51:26.912Z'
+    status: ready
+    updated: '2026-11-05T02:42:14Z'
     depends_on: t-015
     passes: 0
     stakes: reversible
@@ -587,6 +587,10 @@ tasks:
       2026-11-01 PT: PR #6928 merged green as bda311db5, adding conditional Permanent Adjournment recovery and tests. Live image acceptance/linking remains undone and should continue in the art lane; Silas explicitly directed immediate seeded gameplay/reward QA in parallel, not dependent on the art queue. Released art claim for that work.
 
       2026-11-03 PT: Candidate source fix now tracks all 196 Round-18 subject-first Western Cartoon rerenders through queue retirement and reconciles exact ArtJob/ArtImage/media evidence even though the original ledger lacked provenance columns. Added regression tests for delivered/stale media, idempotent YAML edits and queue retirement. No editorial KEEP is automated. PR/CI pending; actual queue/media delivery and curator acceptance remain to be verified.
+
+      2026-11-04 PT reconciliation: render-provenance fix merged (conductor #6999, reviewed
+      #7000) and the claim expired, but the art delivery and keep/redo decisions remain. Back
+      to ready in the art lane.
     owner: worker
     claimed_by: 20261103T214421389Z-shifting-desks-t032-gpt6-a91c
     claimed_at: '2026-11-03T21:44:21.389Z'
