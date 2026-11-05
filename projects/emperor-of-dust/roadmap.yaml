@@ -936,7 +936,7 @@ tasks:
   - id: t-051
     milestone: m5
     title: "Twenty-follower barracks dialogue: rewrite branches and submit conversation art"
-    status: claimed
+    status: ready
     passes: 0
     stakes: reversible
     note: |-
@@ -945,10 +945,30 @@ tasks:
       Focused Kiyo continuity/ethics slice prepared in kind_robots worker/emperor-of-dust-t-051-20261102-6d8a. Correct six canonical romances; preserve Kiyo legacy conversation and choice IDs; add an independent infirmary ethics chain and distinct epilogue consequences with assertions. This is partial t-051 progress only: other follower dialogue audits and real conversation ArtJob submissions/delivery remain open.
 
       2026-11-01 PT: Merged Kiyo canon/friendship and consequence slice in kind_robots#4625 (c812c71fd5dac71b09d8d4c8691de8b47796858d), with all 8 exact-head Actions workflows completed successfully (including Emperor fortress/adversarial, TypeScript, formatting and four contract shards). Merged four new private Kiyo art requests in conductor#6943 (8f0b5e2f8aa24c85d442fd8a0d586b60faebdf30) with all 4 checks green. Existing talk/option IDs preserved and legacy romance-state route made reachable as friendship. Art request manifest is not ArtJob submission, render, review, export or in-game wiring; no ArtJob IDs claimed. Remaining t-051: review the other followers and deliver accepted conversation art. Do not mark done or final human gate.
-    updated: '2026-11-05T12:43:18Z'
+
+      2026-11-04 PT: Writing/state slice for the non-Kiyo followers, prepared as a patch
+      against kind_robots 0d1328163a9b (it also applies cleanly to 153abdeb4698). Until this
+      slice, 214 barracks-answer flags had no reader. The new
+      utils/emperorOfDust/fortress/talkEchoes.ts adds 233 voiced echoes, one per decision for
+      all 25 followers. The barracks profile shows the newest one, alternating with chatter by
+      day for Kiyo and the hidden wanderers. 19 answers that only reworded a sibling (or a
+      differently named close of the same talk) each gained one additive flag and its own
+      echo; no ids, requires or existing effects changed. The shared "a long time" beat was
+      replaced in 17 lines across 9 followers. verifyEmperorFortress now pins: every follower
+      has dialogue; distinct consequences per branch and across beats; no barracks flag is set
+      but never read. Fortress, Adversarial, Balance, SecretTalks, RoleFirstProse,
+      GuidedCampaigns and EditorialAcceptance all pass. In the editorial screen, unread-flag
+      talk rows fell from 161 to 3 (all talk-sable-flight, which the engine reads as a
+      revealFlag) and total flagged rows from 589 to 475. Still open for t-051: conversation
+      art (request, ArtJob, render, review, wiring), a fuller line-level voice pass on talk
+      openings, and a decision on Kiyo's romanceable:true data flag, which conflicts with the
+      cast bible. Do not mark done.  Merged as kind_robots #4817; back to ready for the
+      remaining scope.
+    updated: '2026-11-05T21:03:49Z'
     owner: worker
     claimed_by: 2026-11-05T124312Z-emperor-of-dust-t-051-r4
     claimed_at: '2026-11-05T12:43:18Z'
+    implementation_pr: 'silasfelinus/kind_robots#4817'
   - id: t-052
     milestone: m5
     title: "Illustrated scene delivery and full 50-day choice-and-art coverage audit"
