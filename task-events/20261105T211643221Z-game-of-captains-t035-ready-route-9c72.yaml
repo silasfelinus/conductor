@@ -1,0 +1,9 @@
+version: 1
+project: game-of-captains
+task: t-035
+operation: ready
+session: 20261104T1741PT-space-couch-t035-route-9c72
+updated: '2026-11-05T21:16:43.221Z'
+implementation_pr: silasfelinus/kind_robots#4767
+note: >-
+  2026-11-05 PT: The seeded eligible-route fix landed in Kind Robots PR #4767 (squash 0eca96cd577a0762004d1b85d136206c56c94870), with all exact-head check groups passing, including the 42 full-voyage default-route tests, canonical gameplay suite, and full adversarial voyage matrix. Our implementation branch was deleted after merge. The original t-035 claim remained in review; releasing it to ready because destination-specific earned-ending organic reachability and balance are not yet independently measured or proved. Do not mark the destination-ending milestone done or infer human acceptance from the route fix. No production DB changes or new ArtJobs.
