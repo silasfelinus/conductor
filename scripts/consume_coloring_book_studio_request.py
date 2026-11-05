@@ -25,6 +25,10 @@ import coloring_render_settings  # noqa: E402
 import manage_coloring_book_production as production  # noqa: E402
 
 ALLOWED_BOOKS = ("monster-recast", "hollywood-recast", "kind-robots")
+# Exit status meaning "nothing failed; renders are still in flight" (EX_TEMPFAIL).
+# process_coloring_art_events.py treats it as a wait, not an attempt.
+EXIT_WAITING = 75
+
 BOOK_PREFIXES = {
     "monster-recast": ("mr-", "mr-group-"),
     "hollywood-recast": ("hwr-",),
@@ -330,6 +334,12 @@ def run_entries(entries: list[dict[str, Any]], *, live: bool, timeout: int) -> i
 
     completed: list[dict[str, Any]] = []
     retryable_failures = 0
+    # Entries whose earlier ArtJob is still queued/running on the art server.
+    # They are not failures: the render is in flight and a later pass will
+    # recover it. When they are the only reason this pass is incomplete, exit
+    # EXIT_WAITING so the event processor preserves the event without counting
+    # an attempt toward quarantine.
+    waiting = 0
 
     for entry in entries:
         destination = coloring.target_path(entry)
@@ -349,7 +359,7 @@ def run_entries(entries: list[dict[str, Any]], *, live: bool, timeout: int) -> i
                         f"  job {stuck_job_id} for {entry['set']}/{entry['concept_id']} is still "
                         "queued/running; preserving the event without submitting a duplicate"
                     )
-                    retryable_failures += 1
+                    waiting += 1
                     continue
                 destination = coloring.target_path(entry)
                 print(
@@ -446,7 +456,9 @@ def run_entries(entries: list[dict[str, Any]], *, live: bool, timeout: int) -> i
 
     marked = coloring.mark_done(completed)
     print(f"Marked {marked} targeted color proposal(s) done.")
-    return 1 if retryable_failures else 0
+    if retryable_failures:
+        return 1
+    return EXIT_WAITING if waiting else 0
 
 
 def main() -> int:

@@ -79,4 +79,6 @@ Rules:
 - Terminal mechanical or semantic review failures are recorded as `needs_review` and consumed; retryable network, queue, credential, or unavailable-gate failures preserve the event.
 - `finalize-pair` and `finalize-cover` revalidate accepted assets before writing final ledger paths.
 - Event values never become shell commands; the processor constructs a fixed argument list.
+- Each run processes many events (`--max-events`, `--time-budget`). Fast curation actions (`accept-*`, `finalize-*`, adoption) run before generation. Actions on the same page or cover apply in the order requested; unrelated pages never wait on each other.
+- An event whose earlier ArtJobs are still queued/running on the art server is preserved without counting an attempt (consumer exit 75), so it is never quarantined merely for waiting, and later actions on that same page wait behind it.
 - Keep one event file per intentional action. Do not duplicate a preserved event after a timeout.

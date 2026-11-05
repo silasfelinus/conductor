@@ -83,14 +83,18 @@ jobs:
 
           echo "process=true" >> "$GITHUB_OUTPUT"
 
-      - name: Process one targeted event
+      - name: Process queued events
         id: consume
         if: ${{ steps.queue_preflight.outputs.process == 'true' }}
         continue-on-error: true
         env:
           KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
           COLOR_ART_MAX_RENDER_ATTEMPTS: "3"
-        run: python scripts/process_coloring_art_events.py --live --max-events 1
+        # Fast curation actions (accept/finalize/adopt) run first; a page whose
+        # renders are still in flight waits without blocking any other page.
+        # The budget stops new events from starting so the run commits well
+        # before the next hourly tick.
+        run: python scripts/process_coloring_art_events.py --live --max-events 40 --time-budget 2400
 
       - name: Refresh print-package readiness
         run: python scripts/coloring_book_package_status.py --check
@@ -126,5 +130,5 @@ jobs:
       - name: Report unsuccessful event
         if: ${{ steps.queue_preflight.outputs.process == 'true' && steps.consume.outcome != 'success' }}
         run: |
-          echo "::warning::The targeted coloring event was preserved for retry."
+          echo "::warning::One or more coloring events failed and were preserved for retry."
           exit 1

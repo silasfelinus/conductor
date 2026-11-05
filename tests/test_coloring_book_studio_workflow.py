@@ -35,6 +35,12 @@ class ColoringBookStudioWorkflowTests(unittest.TestCase):
             WORKFLOW,
         )
 
+    def test_one_slow_event_cannot_hold_up_the_whole_queue(self) -> None:
+        """2026-11-05: --max-events 1 left 23 studio actions behind one waiting render."""
+        self.assertNotIn("--max-events 1\n", WORKFLOW)
+        self.assertIn("--max-events 40", WORKFLOW)
+        self.assertIn("--time-budget", WORKFLOW)
+
 
 if __name__ == "__main__":
     unittest.main()
