@@ -833,8 +833,8 @@ tasks:
   - id: t-047
     milestone: m5
     title: "Act II story and art pass: Days 11–20 quests and court audiences"
-    status: claimed
-    updated: '2026-11-05T01:57:27Z'
+    status: review
+    updated: '2026-11-05T02:22:20Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -843,9 +843,27 @@ tasks:
       Act II first work slice: 31 distinct quest result and aftermath text improvements across days 11-20, unchanged IDs, flags and mechanical effects; plus nine positive species-locked private scene-specific Arthemy art prompts in a durable opted-in ledger. ArtJob receipts, approved render delivery, exported artwork and full choice/beat audit remain unfinished. CI and merges pending.
 
       First Act II pass landed: kind_robots#4107 at eb2760999cd114aefbdbe3237d8d978df217cbf8, all 13 final PR checks successful; conductor#6582 at f667484d649814a6f6dee722836d884972822cae with green CI. 31 Days 11-20 quest outcome texts now distinct; nine private Act II Arthemy plates staged in opt-in ledger. Full throne audience/beat rewrite and actual ArtJob receipt, review, export, gameplay wiring remain to be done. Release claim to ready for remaining task scope.
+
+      2026-11-05 PT: Act II memory slice (kind_robots PR #4773). A static sweep found 21 flags
+      set by Day 11-20 choices or quest results that nothing ever read and that had no due:
+      Day 12 cistern x6, Day 16 grain x3, Day 14 Hollin dictation, Day 15 feathers sold to the
+      Ledger, Day 18 fair water and refugees sheltered, Day 19 miller's son, Abbey questioned
+      and Coldbrooks asked, the Day 19 spy callback x3, the Day 20 Ledger levy, and the Day 12
+      cellars left unsearched. Every one now pays off: Day 16 hoarders opening variants, Day
+      20 Verge-rider beat variants, a Day 19 Bell vote variant, Hollin aid (+1 Wits) with its
+      own outcome line on q-d16-hidden-grain, and 11 hidden dawn dues in ACT_TWO_DUES. The
+      changes are additive only; no id, flag, requires or existing effect changed. A new
+      verifyEmperorFortress block pins that every Act II flag is read or comes with a due.
+      Fortress, Balance, Adversarial, EditorialAcceptance, GuidedCampaigns, RoleFirstProse,
+      QuestBriefs, ChanceEvents, SecretTalks, Store and OnboardingLayout tests all pass
+      locally, and prettier is clean. Remaining t-047: line edits of the Act II throne
+      audiences for voice, then the scene-art half (render requests for the new aftermaths,
+      then ArtJob, render, review, export and wiring), which is deliberately left for later.
+      Not done.
     owner: worker
     claimed_by: 2026-11-05T015400Z-emperor-of-dust-gs
     claimed_at: '2026-11-05T01:57:27Z'
+    implementation_pr: 'silasfelinus/kind_robots#4773'
   - id: t-048
     milestone: m5
     title: "Act III story and art pass: Days 21–30 Abbey ambiguity and aftermaths"
