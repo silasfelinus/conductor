@@ -866,3 +866,22 @@ tasks:
       - [ ] **DOGS, dog commanders, King Rufus, bone/tennis-ball attack
 
       [... truncated; read the full issue at https://github.com/silasfelinus/kind_robots/issues/4146]
+  - id: t-043
+    milestone: m4
+    title: "Fever Dream look: review the doodle re-renders (DOODLE-SET-2) and ship the keepers"
+    status: waiting
+    depends_on: [t-036]
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-11-05T01:25:00Z'
+    note: >-
+      Follow-up to t-036 (kind_robots#4764). art/DOODLE-SET-2.yaml (35 cells, auto_submit) re-renders what
+      art/DOODLE-SET-1-REVIEW.yaml held: Solenne's portrait and comms (skin and hair lock), three ships (colour and
+      silhouette lock), 12 boss phases (B02/B04/B07/B09), 17 enemies and guardians, and 2 pickups, each sprite on a
+      source_margin green border so it stays whole. When the cells are DONE: contact-sheet them (portraits beside
+      their CAST-MANIFEST identity locks; sprites keyed on dark, with the frame-edge check), flip the passing
+      entries in DOODLE-SET-1-REVIEW.yaml to keep (a boss only with all three phases), re-run
+      scripts/export_rainbow_doodle_art.py --kind-robots ../kind_robots, run
+      utils/scripts/verifyRainbowFeverDream.test.ts, and PR the files. Once all four ships pass, also flip
+      ships/petal-wing to keep.
