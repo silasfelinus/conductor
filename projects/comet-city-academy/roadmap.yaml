@@ -269,9 +269,9 @@ tasks:
   - id: t-004
     milestone: m3
     title: "Author at least 36 good/evil/rogue patrol cases with meaningful results"
-    status: claimed
+    status: review
     depends_on: t-003
-    updated: '2026-11-05T01:58:04Z'
+    updated: '2026-11-05T02:15:04Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -284,6 +284,21 @@ tasks:
       Added saved case history and five-night district trust effects to deterministic dispatch odds, separating unanswered emergencies from failed rescues. Earlier runs preserve compatibility; 36-case and corrupted-save verification added. CI pending.
 
       Merged Kind Robots PR #4569 as c412e3ae3da41bdd4ae5e72e1ff9039f1ec400f2 after all 19 check runs completed successfully. Thirty-day runs now retain unique case outcomes and unanswered calls in a validated campaign history, with bounded five-night district trust effects on the player-chosen investigation path. Seeded 30-day rescue endings remain stable, old saves load, and new case-memory tests passed. Remaining t-004 scope includes character-specific social and injury callbacks, richer faction branches, and art-verified encounter choices.
+
+      2026-11-05 PT game sprint: Fixed a contradiction a playtester would see. The 12 late
+      expanded night cases each had one morning callback used for every grade, so refusals and
+      failed rescues were followed by success prose; the 12 first-wave expanded cases had none
+      at all. All 24 now have distinct honors/pass/partial/failed/refused mornings (120
+      lines), so all 36 case families answer every result. Dispatch cards gained a DISTRICT
+      MEMORY line driven by the saved caseHistory. It names the last call in the same district
+      within five nights, voiced through 4x5 authored witness lines. It also states the exact
+      district-trust odds a personal investigation receives, shown only on cases that can be
+      investigated. The morning after an unanswered call now says "unanswered" instead of
+      "failed". Odds, seeds, saves and endings are unchanged; verifyCometMorningCallbacks
+      covers the change. The kind_robots patch against origin/main 050b23e went to the
+      coordinator to push and PR (scratchpad comet-city-academy-t-004.patch), because the
+      sandbox blocked kind_robots pushes from this agent. Remaining for t-004: injury-driven
+      roster conflicts and wider unique-power callbacks in the 24 expanded cases.
     owner: worker
     claimed_by: 2026-11-05T015400Z-comet-city-academy-gs
     claimed_at: '2026-11-05T01:58:04Z'
