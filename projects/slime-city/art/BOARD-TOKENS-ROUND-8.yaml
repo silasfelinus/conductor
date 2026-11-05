@@ -1,0 +1,689 @@
+# Board tokens round 8, batch 1 (2026-11-04 PT, slime-city/t-022): the 22 remaining Gene Riot
+# Catgirls and Punk Bloodfairies creatures x 3 moods (fierce, guard, hurt). Round 6 covered the 24
+# starter creatures; 64 creatures (four crews' 44 plus 20 mercenaries) remain for later batches.
+# Looks are hand-written from each card's art prompt; every mood names visible props, because
+# round 6 showed Krea ignores "a pained wince" without them. Fairies are described with grown-woman
+# faces (round 6's "tiny adult" Bloodsprite read as a child), and the suffix paints edge to edge
+# (round 6's "square frame" came back as a white mat). Kind Robots reads the renders from
+# utils/slimeCity/artManifest.ts SLIME_CITY_ART.tokens['<cardId>/<mood>']. Private, auto_submit.
+round: slime-city-board-tokens-8
+project_slug: slime-city
+designer: Slime City board token portraits
+is_public: false
+is_mature: false
+cast_loras: false
+priority: 610
+auto_submit: true
+lanes:
+- key: krea2
+  label: Krea 2 Slime City reaction-face board tokens
+  engine: krea2
+  prompt: prose
+  suffix: Western adult-animation gouache painting, crisp thick black ink contours, vibrant high-contrast shading,
+    a single character head-and-shoulders portrait filling the whole square canvas edge to edge, face large and
+    readable at small sizes, dark vignette background bleeding off every side, saturated colored rim-lighting, every
+    surface bare and unmarked.
+subjects:
+- key: slime-r8-token-splice-runner-fierce
+  lane: krea2
+  entity: token-art
+  title: Splice Runner (fierce)
+  asset: slime-city/tokens/splice-runner/fierce
+  size: 1024x1024
+  seed: 1098001
+  prompt_prose: 'Head-and-shoulders portrait of Splice Runner, a wiry adult tawny-furred catgirl courier in a scarred
+    blue leather jacket, rain-soaked hair plastered to her cheeks and a stolen red-cross medkit strapped over one
+    shoulder. Expression: mid-sprint battle snarl, ears flat, fangs bared and one fist punching toward the viewer.'
+- key: slime-r8-token-splice-runner-guard
+  lane: krea2
+  entity: token-art
+  title: Splice Runner (guard)
+  asset: slime-city/tokens/splice-runner/guard
+  size: 1024x1024
+  seed: 1098002
+  prompt_prose: 'Head-and-shoulders portrait of Splice Runner, a wiry adult tawny-furred catgirl courier in a scarred
+    blue leather jacket, rain-soaked hair plastered to her cheeks and a stolen red-cross medkit strapped over one
+    shoulder. Expression: crouched low, clutching the medkit to her chest, eyes darting sideways in suspicion.'
+- key: slime-r8-token-splice-runner-hurt
+  lane: krea2
+  entity: token-art
+  title: Splice Runner (hurt)
+  asset: slime-city/tokens/splice-runner/hurt
+  size: 1024x1024
+  seed: 1098003
+  prompt_prose: 'Head-and-shoulders portrait of Splice Runner, a wiry adult tawny-furred catgirl courier in a scarred
+    blue leather jacket, rain-soaked hair plastered to her cheeks and a stolen red-cross medkit strapped over one
+    shoulder. Expression: a skinned elbow and a split lip, tail fur frazzled, gasping with one eye squeezed shut.'
+- key: slime-r8-token-s1-roof-phantom-fierce
+  lane: krea2
+  entity: token-art
+  title: Rooftop Phantom (fierce)
+  asset: slime-city/tokens/s1-roof-phantom/fierce
+  size: 1024x1024
+  seed: 1098004
+  prompt_prose: 'Head-and-shoulders portrait of Rooftop Phantom, a lithe adult silver tabby catgirl acrobat in a
+    torn white lab jacket, neon cable looped across her chest and her long claws glowing faint blue. Expression:
+    a gleeful yowl, claws flared wide on both hands and a cable whipping like a lasso.'
+- key: slime-r8-token-s1-roof-phantom-guard
+  lane: krea2
+  entity: token-art
+  title: Rooftop Phantom (guard)
+  asset: slime-city/tokens/s1-roof-phantom/guard
+  size: 1024x1024
+  seed: 1098005
+  prompt_prose: 'Head-and-shoulders portrait of Rooftop Phantom, a lithe adult silver tabby catgirl acrobat in a
+    torn white lab jacket, neon cable looped across her chest and her long claws glowing faint blue. Expression:
+    balanced on her toes with arms crossed, a cool half-lidded stare under dripping hair.'
+- key: slime-r8-token-s1-roof-phantom-hurt
+  lane: krea2
+  entity: token-art
+  title: Rooftop Phantom (hurt)
+  asset: slime-city/tokens/s1-roof-phantom/hurt
+  size: 1024x1024
+  seed: 1098006
+  prompt_prose: 'Head-and-shoulders portrait of Rooftop Phantom, a lithe adult silver tabby catgirl acrobat in a
+    torn white lab jacket, neon cable looped across her chest and her long claws glowing faint blue. Expression:
+    singed fur and a smoking burn on her cable, ears drooping and teeth gritted.'
+- key: slime-r8-token-s1-alley-vet-fierce
+  lane: krea2
+  entity: token-art
+  title: Alley Veterinarian (fierce)
+  asset: slime-city/tokens/s1-alley-vet/fierce
+  size: 1024x1024
+  seed: 1098007
+  prompt_prose: 'Head-and-shoulders portrait of Alley Veterinarian, an elderly hairless catwoman medic with wrinkled
+    grey skin, battered wire spectacles on the end of her nose and a stitched surgical coat with a stethoscope.
+    Expression: a furious hiss, spectacles flashing white, brandishing a giant hypodermic syringe.'
+- key: slime-r8-token-s1-alley-vet-guard
+  lane: krea2
+  entity: token-art
+  title: Alley Veterinarian (guard)
+  asset: slime-city/tokens/s1-alley-vet/guard
+  size: 1024x1024
+  seed: 1098008
+  prompt_prose: 'Head-and-shoulders portrait of Alley Veterinarian, an elderly hairless catwoman medic with wrinkled
+    grey skin, battered wire spectacles on the end of her nose and a stitched surgical coat with a stethoscope.
+    Expression: peering over the spectacles with lips pursed in deep disapproval, stethoscope held up like a warning.'
+- key: slime-r8-token-s1-alley-vet-hurt
+  lane: krea2
+  entity: token-art
+  title: Alley Veterinarian (hurt)
+  asset: slime-city/tokens/s1-alley-vet/hurt
+  size: 1024x1024
+  seed: 1098009
+  prompt_prose: 'Head-and-shoulders portrait of Alley Veterinarian, an elderly hairless catwoman medic with wrinkled
+    grey skin, battered wire spectacles on the end of her nose and a stitched surgical coat with a stethoscope.
+    Expression: spectacles snapped and hanging crooked, a bandage on her bald head and a pained wince.'
+- key: slime-r8-token-s2-catgirls-backstreet-organ-donor-fierce
+  lane: krea2
+  entity: token-art
+  title: Backstreet Organ Donor (fierce)
+  asset: slime-city/tokens/s2-catgirls-backstreet-organ-donor/fierce
+  size: 1024x1024
+  seed: 1098010
+  prompt_prose: 'Head-and-shoulders portrait of Backstreet Organ Donor, an adult calico catgirl street medic in
+    a torn lab coat over a patched cobalt jacket, hugging a frosted organ cooler, glowing blue stitches on her forearm.
+    Expression: a wild cackle, waving a scalpel over the cooler, eyes rolling with mad glee.'
+- key: slime-r8-token-s2-catgirls-backstreet-organ-donor-guard
+  lane: krea2
+  entity: token-art
+  title: Backstreet Organ Donor (guard)
+  asset: slime-city/tokens/s2-catgirls-backstreet-organ-donor/guard
+  size: 1024x1024
+  seed: 1098011
+  prompt_prose: 'Head-and-shoulders portrait of Backstreet Organ Donor, an adult calico catgirl street medic in
+    a torn lab coat over a patched cobalt jacket, hugging a frosted organ cooler, glowing blue stitches on her forearm.
+    Expression: hunched protectively over the cooler, tail wrapped around it, glaring at the viewer.'
+- key: slime-r8-token-s2-catgirls-backstreet-organ-donor-hurt
+  lane: krea2
+  entity: token-art
+  title: Backstreet Organ Donor (hurt)
+  asset: slime-city/tokens/s2-catgirls-backstreet-organ-donor/hurt
+  size: 1024x1024
+  seed: 1098012
+  prompt_prose: 'Head-and-shoulders portrait of Backstreet Organ Donor, an adult calico catgirl street medic in
+    a torn lab coat over a patched cobalt jacket, hugging a frosted organ cooler, glowing blue stitches on her forearm.
+    Expression: the cooler lid cracked open and leaking frost, glowing stitches unravelling, wincing.'
+- key: slime-r8-token-s2-catgirls-parapet-ghost-kitten-fierce
+  lane: krea2
+  entity: token-art
+  title: Parapet Ghost-Kitten (fierce)
+  asset: slime-city/tokens/s2-catgirls-parapet-ghost-kitten/fierce
+  size: 1024x1024
+  seed: 1098013
+  prompt_prose: 'Head-and-shoulders portrait of Parapet Ghost-Kitten, a grown catgirl woman with sharp adult features,
+    ghost-pale translucent fur, huge glowing saucer eyes and a wispy smoke tail curling past her shoulder. Expression:
+    a silent eerie pounce, glowing eyes flaring, needle-thin claws spread beside her face.'
+- key: slime-r8-token-s2-catgirls-parapet-ghost-kitten-guard
+  lane: krea2
+  entity: token-art
+  title: Parapet Ghost-Kitten (guard)
+  asset: slime-city/tokens/s2-catgirls-parapet-ghost-kitten/guard
+  size: 1024x1024
+  seed: 1098014
+  prompt_prose: 'Head-and-shoulders portrait of Parapet Ghost-Kitten, a grown catgirl woman with sharp adult features,
+    ghost-pale translucent fur, huge glowing saucer eyes and a wispy smoke tail curling past her shoulder. Expression:
+    fading half-transparent into smoke, a narrow sidelong glare.'
+- key: slime-r8-token-s2-catgirls-parapet-ghost-kitten-hurt
+  lane: krea2
+  entity: token-art
+  title: Parapet Ghost-Kitten (hurt)
+  asset: slime-city/tokens/s2-catgirls-parapet-ghost-kitten/hurt
+  size: 1024x1024
+  seed: 1098015
+  prompt_prose: 'Head-and-shoulders portrait of Parapet Ghost-Kitten, a grown catgirl woman with sharp adult features,
+    ghost-pale translucent fur, huge glowing saucer eyes and a wispy smoke tail curling past her shoulder. Expression:
+    flickering like a broken bulb, one glowing eye dimmed and a tear of smoke on her cheek.'
+- key: slime-r8-token-s3-catgirls-glasswalker-fierce
+  lane: krea2
+  entity: token-art
+  title: Gutterglass Scout (fierce)
+  asset: slime-city/tokens/s3-catgirls-glasswalker/fierce
+  size: 1024x1024
+  seed: 1098016
+  prompt_prose: 'Head-and-shoulders portrait of Gutterglass Scout, an adult black-furred catgirl scout in a stolen
+    window-washer harness, suction-cup gloves raised by her face and a squeegee clipped to her belt. Expression:
+    hanging upside down with a fierce grin, a suction glove slapping toward the viewer.'
+- key: slime-r8-token-s3-catgirls-glasswalker-guard
+  lane: krea2
+  entity: token-art
+  title: Gutterglass Scout (guard)
+  asset: slime-city/tokens/s3-catgirls-glasswalker/guard
+  size: 1024x1024
+  seed: 1098017
+  prompt_prose: 'Head-and-shoulders portrait of Gutterglass Scout, an adult black-furred catgirl scout in a stolen
+    window-washer harness, suction-cup gloves raised by her face and a squeegee clipped to her belt. Expression:
+    flattened against glass with ears pinned, gloves raised as a shield.'
+- key: slime-r8-token-s3-catgirls-glasswalker-hurt
+  lane: krea2
+  entity: token-art
+  title: Gutterglass Scout (hurt)
+  asset: slime-city/tokens/s3-catgirls-glasswalker/hurt
+  size: 1024x1024
+  seed: 1098018
+  prompt_prose: 'Head-and-shoulders portrait of Gutterglass Scout, an adult black-furred catgirl scout in a stolen
+    window-washer harness, suction-cup gloves raised by her face and a squeegee clipped to her belt. Expression:
+    a cracked suction cup dangling, bump on her forehead, harness straps tangled around her neck.'
+- key: slime-r8-token-s3-catgirls-patent-saboteur-fierce
+  lane: krea2
+  entity: token-art
+  title: Patent Saboteur (fierce)
+  asset: slime-city/tokens/s3-catgirls-patent-saboteur/fierce
+  size: 1024x1024
+  seed: 1098019
+  prompt_prose: 'Head-and-shoulders portrait of Patent Saboteur, an adult lynx-eared catgirl in blue surgical scrubs
+    and a face mask pulled down under her chin, oversized surgical scissors propped on her shoulder. Expression:
+    snipping the scissors open with a manic grin, sparks flying off the blades.'
+- key: slime-r8-token-s3-catgirls-patent-saboteur-guard
+  lane: krea2
+  entity: token-art
+  title: Patent Saboteur (guard)
+  asset: slime-city/tokens/s3-catgirls-patent-saboteur/guard
+  size: 1024x1024
+  seed: 1098020
+  prompt_prose: 'Head-and-shoulders portrait of Patent Saboteur, an adult lynx-eared catgirl in blue surgical scrubs
+    and a face mask pulled down under her chin, oversized surgical scissors propped on her shoulder. Expression:
+    scissors crossed in front of her face like a barricade, eyes narrowed over the mask.'
+- key: slime-r8-token-s3-catgirls-patent-saboteur-hurt
+  lane: krea2
+  entity: token-art
+  title: Patent Saboteur (hurt)
+  asset: slime-city/tokens/s3-catgirls-patent-saboteur/hurt
+  size: 1024x1024
+  seed: 1098021
+  prompt_prose: 'Head-and-shoulders portrait of Patent Saboteur, an adult lynx-eared catgirl in blue surgical scrubs
+    and a face mask pulled down under her chin, oversized surgical scissors propped on her shoulder. Expression:
+    scissor blades bent, scrubs torn at the shoulder and a black eye, yowling.'
+- key: slime-r8-token-s3-catgirls-alley-vet-fierce
+  lane: krea2
+  entity: token-art
+  title: Noodle Cart Veterinarian (fierce)
+  asset: slime-city/tokens/s3-catgirls-alley-vet/fierce
+  size: 1024x1024
+  seed: 1098022
+  prompt_prose: 'Head-and-shoulders portrait of Noodle Cart Veterinarian, a broad-faced adult ginger catgirl in
+    a stained apron over a torn lab coat, steam rising from a ladle of glowing blue broth in one hand. Expression:
+    a battle cry with the ladle raised high and boiling broth splashing in an arc.'
+- key: slime-r8-token-s3-catgirls-alley-vet-guard
+  lane: krea2
+  entity: token-art
+  title: Noodle Cart Veterinarian (guard)
+  asset: slime-city/tokens/s3-catgirls-alley-vet/guard
+  size: 1024x1024
+  seed: 1098023
+  prompt_prose: 'Head-and-shoulders portrait of Noodle Cart Veterinarian, a broad-faced adult ginger catgirl in
+    a stained apron over a torn lab coat, steam rising from a ladle of glowing blue broth in one hand. Expression:
+    holding a dented pot lid up as a shield, one wary eye peeking around it.'
+- key: slime-r8-token-s3-catgirls-alley-vet-hurt
+  lane: krea2
+  entity: token-art
+  title: Noodle Cart Veterinarian (hurt)
+  asset: slime-city/tokens/s3-catgirls-alley-vet/hurt
+  size: 1024x1024
+  seed: 1098024
+  prompt_prose: 'Head-and-shoulders portrait of Noodle Cart Veterinarian, a broad-faced adult ginger catgirl in
+    a stained apron over a torn lab coat, steam rising from a ladle of glowing blue broth in one hand. Expression:
+    scalded red paws, apron splattered, steam rising from her singed whiskers, eyes watering.'
+- key: slime-r8-token-s3-catgirls-scalpel-captain-fierce
+  lane: krea2
+  entity: token-art
+  title: Velvet Scalpel Captain (fierce)
+  asset: slime-city/tokens/s3-catgirls-scalpel-captain/fierce
+  size: 1024x1024
+  seed: 1098025
+  prompt_prose: 'Head-and-shoulders portrait of Velvet Scalpel Captain, an adult black panther catgirl captain in
+    a long crushed-velvet coat with a high collar, a gleaming scalpel held in each gloved hand. Expression: a dashing
+    lunge, both scalpels flashing forward and a pirate grin.'
+- key: slime-r8-token-s3-catgirls-scalpel-captain-guard
+  lane: krea2
+  entity: token-art
+  title: Velvet Scalpel Captain (guard)
+  asset: slime-city/tokens/s3-catgirls-scalpel-captain/guard
+  size: 1024x1024
+  seed: 1098026
+  prompt_prose: 'Head-and-shoulders portrait of Velvet Scalpel Captain, an adult black panther catgirl captain in
+    a long crushed-velvet coat with a high collar, a gleaming scalpel held in each gloved hand. Expression: scalpels
+    crossed before her chest in a duelist guard, chin raised haughtily.'
+- key: slime-r8-token-s3-catgirls-scalpel-captain-hurt
+  lane: krea2
+  entity: token-art
+  title: Velvet Scalpel Captain (hurt)
+  asset: slime-city/tokens/s3-catgirls-scalpel-captain/hurt
+  size: 1024x1024
+  seed: 1098027
+  prompt_prose: 'Head-and-shoulders portrait of Velvet Scalpel Captain, an adult black panther catgirl captain in
+    a long crushed-velvet coat with a high collar, a gleaming scalpel held in each gloved hand. Expression: velvet
+    coat slashed open at the collar, a thin cut on her cheek, grimacing.'
+- key: slime-r8-token-s3-catgirls-bicycle-clinic-fierce
+  lane: krea2
+  entity: token-art
+  title: Sutures on Wheels (fierce)
+  asset: slime-city/tokens/s3-catgirls-bicycle-clinic/fierce
+  size: 1024x1024
+  seed: 1098028
+  prompt_prose: 'Head-and-shoulders portrait of Sutures on Wheels, an adult tortoiseshell catgirl paramedic in a
+    reflective vest and cycling helmet, a stolen blood bag tube taped to her wrist. Expression: an ambulance-siren
+    shriek with mouth wide, ringing a big bicycle bell beside her face.'
+- key: slime-r8-token-s3-catgirls-bicycle-clinic-guard
+  lane: krea2
+  entity: token-art
+  title: Sutures on Wheels (guard)
+  asset: slime-city/tokens/s3-catgirls-bicycle-clinic/guard
+  size: 1024x1024
+  seed: 1098029
+  prompt_prose: 'Head-and-shoulders portrait of Sutures on Wheels, an adult tortoiseshell catgirl paramedic in a
+    reflective vest and cycling helmet, a stolen blood bag tube taped to her wrist. Expression: braced behind the
+    bicycle handlebars like a shield, eyes wide and alert.'
+- key: slime-r8-token-s3-catgirls-bicycle-clinic-hurt
+  lane: krea2
+  entity: token-art
+  title: Sutures on Wheels (hurt)
+  asset: slime-city/tokens/s3-catgirls-bicycle-clinic/hurt
+  size: 1024x1024
+  seed: 1098030
+  prompt_prose: 'Head-and-shoulders portrait of Sutures on Wheels, an adult tortoiseshell catgirl paramedic in a
+    reflective vest and cycling helmet, a stolen blood bag tube taped to her wrist. Expression: helmet cracked,
+    tyre tread marks across her vest and a dizzy, teary-eyed grimace.'
+- key: slime-r8-token-s3-catgirls-escaped-tiger-fierce
+  lane: krea2
+  entity: token-art
+  title: Gene-Spliced Tiger (fierce)
+  asset: slime-city/tokens/s3-catgirls-escaped-tiger/fierce
+  size: 1024x1024
+  seed: 1098031
+  prompt_prose: 'Head-and-shoulders portrait of Gene-Spliced Tiger, a massive escaped tiger with neon-blue stripes,
+    surgical seam scars across its muzzle, glowing gene-splice ports along its neck and a snapped jeweled collar.
+    Expression: a deafening roar, jaws wide open showing huge fangs, splice ports blazing blue.'
+- key: slime-r8-token-s3-catgirls-escaped-tiger-guard
+  lane: krea2
+  entity: token-art
+  title: Gene-Spliced Tiger (guard)
+  asset: slime-city/tokens/s3-catgirls-escaped-tiger/guard
+  size: 1024x1024
+  seed: 1098032
+  prompt_prose: 'Head-and-shoulders portrait of Gene-Spliced Tiger, a massive escaped tiger with neon-blue stripes,
+    surgical seam scars across its muzzle, glowing gene-splice ports along its neck and a snapped jeweled collar.
+    Expression: head low, ears back, a rumbling growl with eyes locked on the viewer.'
+- key: slime-r8-token-s3-catgirls-escaped-tiger-hurt
+  lane: krea2
+  entity: token-art
+  title: Gene-Spliced Tiger (hurt)
+  asset: slime-city/tokens/s3-catgirls-escaped-tiger/hurt
+  size: 1024x1024
+  seed: 1098033
+  prompt_prose: 'Head-and-shoulders portrait of Gene-Spliced Tiger, a massive escaped tiger with neon-blue stripes,
+    surgical seam scars across its muzzle, glowing gene-splice ports along its neck and a snapped jeweled collar.
+    Expression: a bloody scratch over one eye, ports sparking and flickering, ears pinned in pain.'
+- key: slime-r8-token-pogo-punk-fierce
+  lane: krea2
+  entity: token-art
+  title: Pogo Punk (fierce)
+  asset: slime-city/tokens/pogo-punk/fierce
+  size: 1024x1024
+  seed: 1098034
+  prompt_prose: 'Head-and-shoulders portrait of Pogo Punk, an adult bloodfairy punk woman with a shaved head, a
+    chunky nose ring, buzzing violet wings and the laces of battered platform boots slung around her neck. Expression:
+    mid-leap shout with a raised fist, wings a buzzing blur, nose ring glinting.'
+- key: slime-r8-token-pogo-punk-guard
+  lane: krea2
+  entity: token-art
+  title: Pogo Punk (guard)
+  asset: slime-city/tokens/pogo-punk/guard
+  size: 1024x1024
+  seed: 1098035
+  prompt_prose: 'Head-and-shoulders portrait of Pogo Punk, an adult bloodfairy punk woman with a shaved head, a
+    chunky nose ring, buzzing violet wings and the laces of battered platform boots slung around her neck. Expression:
+    arms crossed and chin tucked, a sullen glare from under heavy brows.'
+- key: slime-r8-token-pogo-punk-hurt
+  lane: krea2
+  entity: token-art
+  title: Pogo Punk (hurt)
+  asset: slime-city/tokens/pogo-punk/hurt
+  size: 1024x1024
+  seed: 1098036
+  prompt_prose: 'Head-and-shoulders portrait of Pogo Punk, an adult bloodfairy punk woman with a shaved head, a
+    chunky nose ring, buzzing violet wings and the laces of battered platform boots slung around her neck. Expression:
+    a bruised cheek, one wing bent and twitching, teeth gritted against the pain.'
+- key: slime-r8-token-s1-riot-choir-fierce
+  lane: krea2
+  entity: token-art
+  title: Glitter Riot Choir (fierce)
+  asset: slime-city/tokens/s1-riot-choir/fierce
+  size: 1024x1024
+  seed: 1098037
+  prompt_prose: 'Head-and-shoulders portrait of Glitter Riot Choir, the lead singer of a fairy punk choir, an adult
+    woman with glitter-caked cheeks, neon-pink wings and a stolen amplifier cable coiled over her shoulder, two
+    more fairy faces crowding in behind her. Expression: the whole choir screaming one note at once, mouths wide,
+    glitter blasting out.'
+- key: slime-r8-token-s1-riot-choir-guard
+  lane: krea2
+  entity: token-art
+  title: Glitter Riot Choir (guard)
+  asset: slime-city/tokens/s1-riot-choir/guard
+  size: 1024x1024
+  seed: 1098038
+  prompt_prose: 'Head-and-shoulders portrait of Glitter Riot Choir, the lead singer of a fairy punk choir, an adult
+    woman with glitter-caked cheeks, neon-pink wings and a stolen amplifier cable coiled over her shoulder, two
+    more fairy faces crowding in behind her. Expression: the lead singer shushing the others with a finger to her
+    lips, eyes narrowed.'
+- key: slime-r8-token-s1-riot-choir-hurt
+  lane: krea2
+  entity: token-art
+  title: Glitter Riot Choir (hurt)
+  asset: slime-city/tokens/s1-riot-choir/hurt
+  size: 1024x1024
+  seed: 1098039
+  prompt_prose: 'Head-and-shoulders portrait of Glitter Riot Choir, the lead singer of a fairy punk choir, an adult
+    woman with glitter-caked cheeks, neon-pink wings and a stolen amplifier cable coiled over her shoulder, two
+    more fairy faces crowding in behind her. Expression: glitter smeared, a black eye on the lead singer and the
+    fairies behind her clutching their ears.'
+- key: slime-r8-token-s1-pocket-punk-fierce
+  lane: krea2
+  entity: token-art
+  title: Pocket-Sized Problem (fierce)
+  asset: slime-city/tokens/s1-pocket-punk/fierce
+  size: 1024x1024
+  seed: 1098040
+  prompt_prose: 'Head-and-shoulders portrait of Pocket-Sized Problem, an adult bloodfairy woman with a lined, scrappy
+    face, half-shaved green hair and an oversized safety pin carried over her shoulder like a spear. Expression:
+    charging with the safety-pin spear thrust forward, screaming through gritted teeth.'
+- key: slime-r8-token-s1-pocket-punk-guard
+  lane: krea2
+  entity: token-art
+  title: Pocket-Sized Problem (guard)
+  asset: slime-city/tokens/s1-pocket-punk/guard
+  size: 1024x1024
+  seed: 1098041
+  prompt_prose: 'Head-and-shoulders portrait of Pocket-Sized Problem, an adult bloodfairy woman with a lined, scrappy
+    face, half-shaved green hair and an oversized safety pin carried over her shoulder like a spear. Expression:
+    planting the safety pin like a shield, scowling over its loop.'
+- key: slime-r8-token-s1-pocket-punk-hurt
+  lane: krea2
+  entity: token-art
+  title: Pocket-Sized Problem (hurt)
+  asset: slime-city/tokens/s1-pocket-punk/hurt
+  size: 1024x1024
+  seed: 1098042
+  prompt_prose: 'Head-and-shoulders portrait of Pocket-Sized Problem, an adult bloodfairy woman with a lined, scrappy
+    face, half-shaved green hair and an oversized safety pin carried over her shoulder like a spear. Expression:
+    squashed flat on one side like a stepped-on can, wings crumpled, cross-eyed and groaning.'
+- key: slime-r8-token-s2-bloodfairies-mosquito-disc-jockey-fierce
+  lane: krea2
+  entity: token-art
+  title: Mosquito Disc Jockey (fierce)
+  asset: slime-city/tokens/s2-bloodfairies-mosquito-disc-jockey/fierce
+  size: 1024x1024
+  seed: 1098043
+  prompt_prose: 'Head-and-shoulders portrait of Mosquito Disc Jockey, an adult punk fairy woman with mosquito wings,
+    a needle-thin proboscis, oversized studded headphones and a crimson glow in her throat. Expression: a whining
+    battle buzz, proboscis jabbing forward, headphones blasting visible sound rings.'
+- key: slime-r8-token-s2-bloodfairies-mosquito-disc-jockey-guard
+  lane: krea2
+  entity: token-art
+  title: Mosquito Disc Jockey (guard)
+  asset: slime-city/tokens/s2-bloodfairies-mosquito-disc-jockey/guard
+  size: 1024x1024
+  seed: 1098044
+  prompt_prose: 'Head-and-shoulders portrait of Mosquito Disc Jockey, an adult punk fairy woman with mosquito wings,
+    a needle-thin proboscis, oversized studded headphones and a crimson glow in her throat. Expression: headphones
+    pulled down tight over her ears, wings folded, a suspicious frown.'
+- key: slime-r8-token-s2-bloodfairies-mosquito-disc-jockey-hurt
+  lane: krea2
+  entity: token-art
+  title: Mosquito Disc Jockey (hurt)
+  asset: slime-city/tokens/s2-bloodfairies-mosquito-disc-jockey/hurt
+  size: 1024x1024
+  seed: 1098045
+  prompt_prose: 'Head-and-shoulders portrait of Mosquito Disc Jockey, an adult punk fairy woman with mosquito wings,
+    a needle-thin proboscis, oversized studded headphones and a crimson glow in her throat. Expression: proboscis
+    bent sideways, headphones cracked and dangling, eyes watering.'
+- key: slime-r8-token-s2-bloodfairies-bassquake-colossus-fierce
+  lane: krea2
+  entity: token-art
+  title: Bassquake Colossus (fierce)
+  asset: slime-city/tokens/s2-bloodfairies-bassquake-colossus/fierce
+  size: 1024x1024
+  seed: 1098046
+  prompt_prose: 'Head-and-shoulders portrait of Bassquake Colossus, a towering walking stack of battered speaker
+    cabinets with a single huge glowing magenta woofer for a face, tiny fairies clinging to its volume knobs. Expression:
+    the woofer face bulging outward in a booming violet shockwave, fairies cheering on top.'
+- key: slime-r8-token-s2-bloodfairies-bassquake-colossus-guard
+  lane: krea2
+  entity: token-art
+  title: Bassquake Colossus (guard)
+  asset: slime-city/tokens/s2-bloodfairies-bassquake-colossus/guard
+  size: 1024x1024
+  seed: 1098047
+  prompt_prose: 'Head-and-shoulders portrait of Bassquake Colossus, a towering walking stack of battered speaker
+    cabinets with a single huge glowing magenta woofer for a face, tiny fairies clinging to its volume knobs. Expression:
+    the cabinets hunched together, the woofer dimmed to a wary glow, fairies ducking behind the knobs.'
+- key: slime-r8-token-s2-bloodfairies-bassquake-colossus-hurt
+  lane: krea2
+  entity: token-art
+  title: Bassquake Colossus (hurt)
+  asset: slime-city/tokens/s2-bloodfairies-bassquake-colossus/hurt
+  size: 1024x1024
+  seed: 1098048
+  prompt_prose: 'Head-and-shoulders portrait of Bassquake Colossus, a towering walking stack of battered speaker
+    cabinets with a single huge glowing magenta woofer for a face, tiny fairies clinging to its volume knobs. Expression:
+    the woofer cone torn and flapping, smoke pouring from a blown cabinet, fairies clinging in panic.'
+- key: slime-r8-token-s3-bloodfairies-mosh-firefly-fierce
+  lane: krea2
+  entity: token-art
+  title: Moshpit Firefly (fierce)
+  asset: slime-city/tokens/s3-bloodfairies-mosh-firefly/fierce
+  size: 1024x1024
+  seed: 1098049
+  prompt_prose: 'Head-and-shoulders portrait of Moshpit Firefly, an adult punk fairy woman with bug antennae, a
+    spiked mohawk and a glowing hot-pink firefly tail-light curling up past her shoulder. Expression: a headbanging
+    scream, tail-light blazing hot pink, fists up.'
+- key: slime-r8-token-s3-bloodfairies-mosh-firefly-guard
+  lane: krea2
+  entity: token-art
+  title: Moshpit Firefly (guard)
+  asset: slime-city/tokens/s3-bloodfairies-mosh-firefly/guard
+  size: 1024x1024
+  seed: 1098050
+  prompt_prose: 'Head-and-shoulders portrait of Moshpit Firefly, an adult punk fairy woman with bug antennae, a
+    spiked mohawk and a glowing hot-pink firefly tail-light curling up past her shoulder. Expression: tail-light
+    dimmed, arms crossed over her chest and a sulky glare.'
+- key: slime-r8-token-s3-bloodfairies-mosh-firefly-hurt
+  lane: krea2
+  entity: token-art
+  title: Moshpit Firefly (hurt)
+  asset: slime-city/tokens/s3-bloodfairies-mosh-firefly/hurt
+  size: 1024x1024
+  seed: 1098051
+  prompt_prose: 'Head-and-shoulders portrait of Moshpit Firefly, an adult punk fairy woman with bug antennae, a
+    spiked mohawk and a glowing hot-pink firefly tail-light curling up past her shoulder. Expression: tail-light
+    flickering out, antennae bent and a bump on her head, wincing.'
+- key: slime-r8-token-s3-bloodfairies-pollen-queen-fierce
+  lane: krea2
+  entity: token-art
+  title: Punk Pollen Queen (fierce)
+  asset: slime-city/tokens/s3-bloodfairies-pollen-queen/fierce
+  size: 1024x1024
+  seed: 1098052
+  prompt_prose: 'Head-and-shoulders portrait of Punk Pollen Queen, an adult fairy queen with fuzzy bumblebee wings,
+    a crown of bent safety pins and a mohawk of real magenta poppy petals dusted with glowing pollen. Expression:
+    a regal war cry, blowing a glowing pollen cloud straight at the viewer.'
+- key: slime-r8-token-s3-bloodfairies-pollen-queen-guard
+  lane: krea2
+  entity: token-art
+  title: Punk Pollen Queen (guard)
+  asset: slime-city/tokens/s3-bloodfairies-pollen-queen/guard
+  size: 1024x1024
+  seed: 1098053
+  prompt_prose: 'Head-and-shoulders portrait of Punk Pollen Queen, an adult fairy queen with fuzzy bumblebee wings,
+    a crown of bent safety pins and a mohawk of real magenta poppy petals dusted with glowing pollen. Expression:
+    petal mohawk raised like a crest, palm held up in a haughty stop gesture.'
+- key: slime-r8-token-s3-bloodfairies-pollen-queen-hurt
+  lane: krea2
+  entity: token-art
+  title: Punk Pollen Queen (hurt)
+  asset: slime-city/tokens/s3-bloodfairies-pollen-queen/hurt
+  size: 1024x1024
+  seed: 1098054
+  prompt_prose: 'Head-and-shoulders portrait of Punk Pollen Queen, an adult fairy queen with fuzzy bumblebee wings,
+    a crown of bent safety pins and a mohawk of real magenta poppy petals dusted with glowing pollen. Expression:
+    sneezing violently, poppy petals falling off her crown, eyes streaming.'
+- key: slime-r8-token-s3-bloodfairies-backstage-vamp-fierce
+  lane: krea2
+  entity: token-art
+  title: Backstage Vamp (fierce)
+  asset: slime-city/tokens/s3-bloodfairies-backstage-vamp/fierce
+  size: 1024x1024
+  seed: 1098055
+  prompt_prose: 'Head-and-shoulders portrait of Backstage Vamp, an adult vampire fairy woman with bat-membrane wings,
+    black lace gloves, smudged dark lipstick and two long needle fangs. Expression: a hungry hiss, fangs bared and
+    wings flared, lace gloves reaching forward.'
+- key: slime-r8-token-s3-bloodfairies-backstage-vamp-guard
+  lane: krea2
+  entity: token-art
+  title: Backstage Vamp (guard)
+  asset: slime-city/tokens/s3-bloodfairies-backstage-vamp/guard
+  size: 1024x1024
+  seed: 1098056
+  prompt_prose: 'Head-and-shoulders portrait of Backstage Vamp, an adult vampire fairy woman with bat-membrane wings,
+    black lace gloves, smudged dark lipstick and two long needle fangs. Expression: wrapped in her bat wings like
+    a cloak, only narrowed red eyes visible.'
+- key: slime-r8-token-s3-bloodfairies-backstage-vamp-hurt
+  lane: krea2
+  entity: token-art
+  title: Backstage Vamp (hurt)
+  asset: slime-city/tokens/s3-bloodfairies-backstage-vamp/hurt
+  size: 1024x1024
+  seed: 1098057
+  prompt_prose: 'Head-and-shoulders portrait of Backstage Vamp, an adult vampire fairy woman with bat-membrane wings,
+    black lace gloves, smudged dark lipstick and two long needle fangs. Expression: one fang chipped, lipstick smeared,
+    clutching a bruised wing and wincing.'
+- key: slime-r8-token-s3-bloodfairies-karaoke-oracle-fierce
+  lane: krea2
+  entity: token-art
+  title: Riot Karaoke Oracle (fierce)
+  asset: slime-city/tokens/s3-bloodfairies-karaoke-oracle/fierce
+  size: 1024x1024
+  seed: 1098058
+  prompt_prose: 'Head-and-shoulders portrait of Riot Karaoke Oracle, an adult fairy oracle woman in a studded black
+    veil and third-eye makeup, gripping a microphone whose head is a glowing crystal ball. Expression: belting a
+    high note, crystal-ball mic blazing, veil blown back by the sound.'
+- key: slime-r8-token-s3-bloodfairies-karaoke-oracle-guard
+  lane: krea2
+  entity: token-art
+  title: Riot Karaoke Oracle (guard)
+  asset: slime-city/tokens/s3-bloodfairies-karaoke-oracle/guard
+  size: 1024x1024
+  seed: 1098059
+  prompt_prose: 'Head-and-shoulders portrait of Riot Karaoke Oracle, an adult fairy oracle woman in a studded black
+    veil and third-eye makeup, gripping a microphone whose head is a glowing crystal ball. Expression: holding the
+    crystal ball close, third eye wide open and staring knowingly.'
+- key: slime-r8-token-s3-bloodfairies-karaoke-oracle-hurt
+  lane: krea2
+  entity: token-art
+  title: Riot Karaoke Oracle (hurt)
+  asset: slime-city/tokens/s3-bloodfairies-karaoke-oracle/hurt
+  size: 1024x1024
+  seed: 1098060
+  prompt_prose: 'Head-and-shoulders portrait of Riot Karaoke Oracle, an adult fairy oracle woman in a studded black
+    veil and third-eye makeup, gripping a microphone whose head is a glowing crystal ball. Expression: the crystal
+    ball cracked down the middle, veil torn, hoarse and clutching her throat.'
+- key: slime-r8-token-s3-bloodfairies-tour-bus-fierce
+  lane: krea2
+  entity: token-art
+  title: Tour Bus Swarm (fierce)
+  asset: slime-city/tokens/s3-bloodfairies-tour-bus/fierce
+  size: 1024x1024
+  seed: 1098061
+  prompt_prose: 'Head-and-shoulders portrait of Tour Bus Swarm, the front of a battered purple tour bus seen head-on,
+    its cracked windshield crammed with the scowling faces and raised fists of adult punk fairies. Expression: headlights
+    blazing, fairies on the dashboard screaming and pounding the glass.'
+- key: slime-r8-token-s3-bloodfairies-tour-bus-guard
+  lane: krea2
+  entity: token-art
+  title: Tour Bus Swarm (guard)
+  asset: slime-city/tokens/s3-bloodfairies-tour-bus/guard
+  size: 1024x1024
+  seed: 1098062
+  prompt_prose: 'Head-and-shoulders portrait of Tour Bus Swarm, the front of a battered purple tour bus seen head-on,
+    its cracked windshield crammed with the scowling faces and raised fists of adult punk fairies. Expression: headlights
+    narrowed, fairies hunkered down behind the dashboard, peering out.'
+- key: slime-r8-token-s3-bloodfairies-tour-bus-hurt
+  lane: krea2
+  entity: token-art
+  title: Tour Bus Swarm (hurt)
+  asset: slime-city/tokens/s3-bloodfairies-tour-bus/hurt
+  size: 1024x1024
+  seed: 1098063
+  prompt_prose: 'Head-and-shoulders portrait of Tour Bus Swarm, the front of a battered purple tour bus seen head-on,
+    its cracked windshield crammed with the scowling faces and raised fists of adult punk fairies. Expression: windshield
+    shattered into a spiderweb, one headlight out and fairies dazed and bandaged.'
+- key: slime-r8-token-s3-bloodfairies-headliner-fierce
+  lane: krea2
+  entity: token-art
+  title: Blood Moon Headliner (fierce)
+  asset: slime-city/tokens/s3-bloodfairies-headliner/fierce
+  size: 1024x1024
+  seed: 1098064
+  prompt_prose: 'Head-and-shoulders portrait of Blood Moon Headliner, an adult fairy diva in a blood-red studded
+    leather gown with a towering crimson beehive, glowing fangs and a huge red moon rising behind her. Expression:
+    a stadium-shaking scream, arms thrown wide, fangs glowing red.'
+- key: slime-r8-token-s3-bloodfairies-headliner-guard
+  lane: krea2
+  entity: token-art
+  title: Blood Moon Headliner (guard)
+  asset: slime-city/tokens/s3-bloodfairies-headliner/guard
+  size: 1024x1024
+  seed: 1098065
+  prompt_prose: 'Head-and-shoulders portrait of Blood Moon Headliner, an adult fairy diva in a blood-red studded
+    leather gown with a towering crimson beehive, glowing fangs and a huge red moon rising behind her. Expression:
+    a cool diva stare over heart-shaped sunglasses, one gloved hand raised.'
+- key: slime-r8-token-s3-bloodfairies-headliner-hurt
+  lane: krea2
+  entity: token-art
+  title: Blood Moon Headliner (hurt)
+  asset: slime-city/tokens/s3-bloodfairies-headliner/hurt
+  size: 1024x1024
+  seed: 1098066
+  prompt_prose: 'Head-and-shoulders portrait of Blood Moon Headliner, an adult fairy diva in a blood-red studded
+    leather gown with a towering crimson beehive, glowing fangs and a huge red moon rising behind her. Expression:
+    beehive collapsed and smoking, mascara running, one fang cracked, sobbing dramatically.'
