@@ -787,7 +787,7 @@ tasks:
   - id: t-046
     milestone: m5
     title: 'Reward-layer adversarial QA across all eleven endings and screen shapes'
-    status: review
+    status: ready
     depends_on:
       - t-040
       - t-042
@@ -796,7 +796,7 @@ tasks:
       - t-045
     passes: 0
     stakes: reversible
-    updated: '2026-11-05T02:22:24Z'
+    updated: '2026-11-05T02:41:39Z'
     note: |-
       P2, independent of art delivery per Silas 2026-11-01 PT. Simulate at least 2000 seeded diverse styles; every reachable ending shows distinct payoff and a saved evidence card. Check replay rewards, correct lock/unlock progress, saved migrations, no duplicate accounts or achievements, true raw grade values, no four-Exceptional result, keyboard/screenreader, no forced page scroll at phone/tablet/desktop, and image fallback. Run mock reviews asking whether the ending and archive feel earned, funny and replayable. Do not override t-020 owner's subjective fun and promotion gate.
 
@@ -822,6 +822,12 @@ tasks:
       tsx suites pass locally; vue-tsc/ESLint left to CI. Still open for t-046: browser
       390/768/1440 viewport, keyboard and screen-reader acceptance, and mock
       earned/funny/replayable reviews. t-020 untouched.
+
+      2026-11-04 PT: reward-layer slice merged as kind_robots #4769 (squash 9c14fef): Daily
+      Memo receipt collision fixed, locked endings no longer load art, archive progress bars
+      announced. Back to ready for the browser half: endings contract at 390/768/1440,
+      keyboard/screen reader, the h-52 reward panel clipping suspicion at 390px, and an
+      ending-specific repeat ceremony award.
     owner: worker
     claimed_by: 2026-11-05T015400Z-shifting-desks-gs
     claimed_at: '2026-11-05T02:01:06Z'
