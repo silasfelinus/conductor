@@ -12660,3 +12660,7 @@ Worker pattern: good test depth and honest "procedural shapes, not painted art" 
 ## 2026-11-05 — Agent (reviewer): game-of-captains/t-036 merged, zuzu-gamebook/t-013 slice merged
 - kind_robots#4782 (supply refill + crate returns) merged on green CI; #4780 (no forced unwinnable fights) was already merged. Both reversible, scoped, seeded batteries pin the behavior. t-036 -> done; t-013 -> ready for its remaining narrative-alternative and responsive-check slice.
 - Worker pattern: measured before/after tables in PR bodies made review fast. Kaizen: game-of-captains/t-037 (supply swing on report card).
+
+## 2026-11-05 — Agent (reviewer): slime-city/t-025 close-out merged
+- conductor#7075 (state-only close, 26 checks green) merged; implementation kind_robots#4816 was already merged green (11/11). Reversible, BLOODRUSH-only, guarded by a fixed-seed test.
+- Worker pattern: dithered fractional lever with before/after tables on two held-out sets was a strong method. Kaizen: slime-city/t-029 (shared balance tuner).
