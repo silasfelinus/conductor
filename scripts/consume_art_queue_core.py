@@ -1051,6 +1051,14 @@ def enqueue(job_body):
     return resp["data"]["job"]["id"]
 
 
+class ArtJobTimeout(RuntimeError):
+    """The ArtJob is still queued/running when the caller stopped waiting.
+
+    Not a failure of the job: it may still render. Callers that record the job
+    id can recover it on a later pass instead of resubmitting.
+    """
+
+
 def wait_for_job(job_id, timeout):
     deadline = time.time() + timeout
     while time.time() < deadline:
@@ -1062,7 +1070,7 @@ def wait_for_job(job_id, timeout):
             if job["status"] in ("FAILED", "CANCELLED"):
                 raise RuntimeError(f"job {job_id} {job['status']}: {job.get('error')}")
         time.sleep(POLL_SECONDS)
-    raise RuntimeError(f"job {job_id} timed out after {timeout}s (still queued/running)")
+    raise ArtJobTimeout(f"job {job_id} timed out after {timeout}s (still queued/running)")
 
 
 def fetch_image_b64(art_image_id):
