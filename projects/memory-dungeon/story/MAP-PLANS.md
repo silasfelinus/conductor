@@ -12,10 +12,10 @@
 |---|---|---|---|---|
 | e01 | Rowan, the researcher · Briar | Camp, wolf road, House, rookery | Trust/witness puzzles and cross-realm sigils | 64 authored; gameplay present |
 | e02 | Rowan, the researcher · Dark Briar | SAME 8×8 camp/roads and mirror House | Old witnesses invert predator/protector claims | 64 authored; gameplay present |
-| e03 | Morrow · Earth | Research desk, office, commute, hospital, neighborhood | Technology and human custom as unfamiliar mechanics | Template sites live; 64-site authored rewrite in t-052; dungeon missing |
-| e04 | Morrow · Enchanted Earth | SAME Earth streets, office and station | Supernatural hazards, sea-side tide gate and three costs | Outline/branch state; map missing |
-| e05 | Scylla · Childhood sea palace | Sisters' room, departure chart, tide court, shore route | Player remembers e04; younger Char does not | Outline/branch state; map missing |
-| e06 | Scylla · Twisted palace | SAME palace and planned escape | Rewritten testimony, coercive repetition and altered routes | Outline/branch state; map missing |
+| e03 | Morrow · Earth | Research desk, office, commute, hospital, neighborhood | Technology and human custom as unfamiliar mechanics | 64 authored (t-052); 36-room Sublevel B dungeon |
+| e04 | Morrow · Enchanted Earth | SAME Earth streets, office and station | Supernatural hazards, sea-side tide gate and three costs | 64 authored; 36-room Drowned Archive (Sublevel B flooded) |
+| e05 | Scylla · Childhood sea palace | Sisters' room, departure chart, tide court, shore route | Player remembers e04; younger Char does not | 64 authored; 36-room Breathing Works (t-061) |
+| e06 | Scylla · Twisted palace | SAME palace and planned escape | Rewritten testimony, coercive repetition and altered routes | 64 authored; 36-room Choking Works, the Breathing Works warped (t-062) |
 | e07 | Vesper · Warm Hoshimori | Cedar bridge, orchard atlas, Red Oven, paper theatre, South Watch | Betrayal/redemption and communal refuge choices | 64 authored; 21/36 Oven rooms |
 | e08 | Vesper (one lead per pair, Silas 2026-11-05) · Dark Hoshimori | SAME bridge, oven, map and shrine | Recursive domestic architecture, night procession, living addresses | 16 site briefs; playable map missing |
 | **e09** | **Rowan · Briar collision** (Pip as companion) | SAME Briar geography, office and sea-root overlaps | Forest monsters in office, submerged House paths | Crossover pitch only |
