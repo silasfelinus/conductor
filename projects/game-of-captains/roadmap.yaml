@@ -719,8 +719,7 @@ tasks:
   - id: t-035
     milestone: m4
     title: "Seeded pre-charted route for chapters 2-9 and reachable destination ending families"
-    status: review
-    owner: worker
+    status: ready
     passes: 0
     stakes: reversible
     source: silas-2026-11-04
@@ -728,9 +727,10 @@ tasks:
       From EDITORIAL-ASSESSMENT-2026-11-04.md. The route board always pre-charts VOYAGE_BOARDS[ch][0], so a captain who accepts the default flies refugees -> archive -> bar ... on every seed (22 distinct nine-chapter sequences in 228 voyages), and the six destination ending families (Sanctuary Without a Map, Names on the Hull, Unlicensed Cure, Right to Refuse, A Table for Every Guest, Courtesy Accord) were reached 0 times in 240 mixed voyages. Keep chapter 1 on The Last Lifeboat; pre-chart a seeded call from missionBoard(run) for chapters 2-9 (prototype: rules.ts chartedCall used from nextDestination). The 2026-11-04 prototype broke pinned assumptions in verifyGameOfCaptains (report missionId == board[0]; synergies), AuthoredExpansion/AuthoredRemainder (concord-intake expected), ActThreeOpening, Scarcity (57 vs 60 authored scenes) and Traces (pinned ending per captain); re-pin those deliberately via the harness `chart` driver rather than weakening them. Then audit each destination family's earned() gate against real reachable flags and add a pinned trace per family.
 
       Seeded route diversity increment: after chapter one, nextDestination now chooses a reproducible mission among the actual eligible missionBoard offers, including prior world choices, crew and captain, without mutating saved missionId. The player may always override before travel. Added 42 complete seeded real-voyage tests for route variety, saves, chapter-by-chapter reachability and manual override. Existing trace and authored-case tests now explicitly chart their fixed legacy story routes rather than assuming an always-first default. Implementation branch worker/game-of-captains-t035-seeded-routes-9c72, PR and exact-head CI pending. Destination ending family organic reachability and verified browser/art QA remain separate independent acceptance.
-    claimed_by: 20261104T1741PT-space-couch-t035-route-9c72
-    claimed_at: '2026-11-05T01:51:34.529Z'
-    updated: '2026-11-05T01:58:56.611Z'
+
+      2026-11-05 PT: The seeded eligible-route fix landed in Kind Robots PR #4767 (squash 0eca96cd577a0762004d1b85d136206c56c94870), with all exact-head check groups passing, including the 42 full-voyage default-route tests, canonical gameplay suite, and full adversarial voyage matrix. Our implementation branch was deleted after merge. The original t-035 claim remained in review; releasing it to ready because destination-specific earned-ending organic reachability and balance are not yet independently measured or proved. Do not mark the destination-ending milestone done or infer human acceptance from the route fix. No production DB changes or new ArtJobs.
+    updated: '2026-11-05T21:16:43.221Z'
+    implementation_pr: 'silasfelinus/kind_robots#4767'
   - id: t-036
     milestone: m4
     title: "Endgame supply balance: the hold should not run dry on ordinary voyages"
