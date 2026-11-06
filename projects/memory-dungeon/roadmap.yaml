@@ -1203,11 +1203,11 @@ tasks:
       2026-11-02 11:50 AM PT: Reviewer merged Kind Robots PR #4642 (squash 73f7f8004e69e24c66f863730c81a175d718a836) after seven completed exact-head green workflows on 37c06b07890e1ca90c5973617a0bd73c01b01ee7. Fog is a cohesive coordinate-aligned SVG fallback, action beacons are larger and centered, story diamonds removed, reduced motion retained; 390/768/1440px post-deploy pixel QA and production-painted map art remain in t-046/t-045. No ArtJobs or deployment.
   - id: t-049
     title: "Memory Dungeon character match deck erroneously reports zero images"
-    status: claimed
+    status: ready
     stakes: reversible
     passes: 0
     source_issue: "silasfelinus/kind_robots#4682"
-    updated: '2026-11-06T13:48:30Z'
+    updated: '2026-11-06T13:53:30Z'
     note: |-
       FROM GITHUB ISSUE silasfelinus/kind_robots#4682 (https://github.com/silasfelinus/kind_robots/issues/4682), opened by @silasfelinus on 2026-11-02. Imported by scripts/sync_github_issues.py. Reference the issue in the implementing PR (`Closes silasfelinus/kind_robots#4682`) so it closes on merge; the bridge closes it otherwise once this task is done.
 
@@ -1216,9 +1216,8 @@ tasks:
       Follow-up fixes a remaining zero-image path when an eligible Character has a linked ArtImage but no usable entity imagePath. Scoped Kind Robots branch changes resolver to prefer the eligible linked image URL and adds regression assertion; PR and exact-head CI to follow. No browser verification or ArtJobs.
 
       PR #4777 merged as 16dfea93909ef9fcc500e8df144792c462d2fbc8 after all six exact-head CI workflows passed on 388ba06ef6266cc680a64f52b1129ec7625734ff. The resolver now uses a visibility-checked linked ArtImage URL for Characters with missing primary image paths. Browser reproduction of round-three Character/Non-mature deck and later floors remains unverified; returning to ready for authenticated UI validation, not marking task done.
-    owner: worker
-    claimed_by: 2026-11-06T134830Z-memory-dungeon-t049-k8v2
-    claimed_at: '2026-11-06T13:48:30Z'
+
+      2026-11-06 PT: Rechecked #4682 and current deck resolver. Earlier #4777 fix remains in main. The existing Chromium memory-world test stubs resolveMemoryDungeonDeck entirely, so its passing browser runs cannot validate the actual Characters / Non-mature round-three art fetch. No authenticated UI reproduction or new code delivered this session; return ready for a genuine browser/API fixture, not done.
   - id: t-050
     milestone: m3
     title: "Make Oren's House rest shortcut traversable and save-safe"
