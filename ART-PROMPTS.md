@@ -670,3 +670,14 @@ Verify provenance of finished generated assets before claiming coverage; keep pr
 - `slime-city-gridiron.webp` (1280×720): Rectangular square-grid football-like battleground in a dystopian fantasy coliseum; cyan and magenta endzones, runners advancing horizontally in lanes, no pentagons or hexagons, no labels.
 - `slime-city-blackout.webp` (1280×720): Square 8x8 concealed-army tactical arena; blue and red face-down character cards in symmetrical starting ranks, ominous center flag, flashy arena crowds and comic lighting, no text.
 - `slime-city-bloodrush.webp` (1280×720): Cinematic wide 14x6 square-cell rectangular assault field with a tide of fast punk bloodfairies and chrome ogres moving in horizontal lanes, kinetic freeze-frame of an action-heavy real-time CCG, no text.
+
+## MONSTREXX — game art (2026-11-05 PT revision)
+
+- monstress-convention-icon.webp (legacy internal asset basename; visible brand MONSTREXX): motel key fob, hot pink autograph, a tiny ghostly ornamental blade shadow, original monster-celebrity noir adventure silhouette.
+- monstress-convention-card.webp (512x768): Iris, striking capable adult field journalist, foreground photographing evidence; behind her Norb, hunched unattractive theatrical germophobic genius with handkerchief, flinching from human contact; MONSTREXX monster stars in background, two adult ghosts in motel window, no collage.
+- monstress-convention-hero.webp (1280x720): two-story Last Call Motor Lodge in rain, ice machine and narrow corridors, crime-room window with two specters, distant MONSTREXX convention billboard, hand-painted point-and-click game mood, NOT a convention hotel.
+- monstrexx-double-ghost-scene.webp: two independent adult spectral women in a dim motel room with evidence-tagged ornate knife; tasteful, no explicit sex and no gore.
+- monstrexx-city-map.webp: distinct convention center, seedy motel, supernatural novelty shop, celebrity vampire mansion and underground sewer exit.
+- monstrexx-monster-idols.webp: iconic original MONSTREXX celebrity ensemble, featuring Dracula-inspired diva, stitched actress, werewolf, slime, lagoon, fly-headed supermodel and bandaged mummy actress; all adults.
+- monstrexx-alligator.webp: white alligator woman in a sewer dressing room rehearsing a very earnest but unconvincing celebrity audition; charming, original cartoon comedy.
+- monstrexx-scrapbook.webp: collectible magazine clippings, character biographies, concert cards, locked image silhouettes and tastefully suggestive non-explicit character portrait slots.
