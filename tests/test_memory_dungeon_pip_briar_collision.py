@@ -51,7 +51,7 @@ def choose(verdict, gate, scene_id, choice_id, state, *, earned=True):
 def test_all_six_earned_history_openings_preserve_causal_costs():
     assert PACKET["status"] == "WRITER_PACKET_ONLY_NOT_PLAYABLE"
     assert PACKET["world"] == "e09"
-    assert PACKET["viewpoint"] == "Pip"
+    assert PACKET["viewpoint"] == "Rowan"
     assert {(h["e02"], h["e04"]) for h in PACKET["histories"]} == set(
         itertools.product(VERDICTS, GATES)
     )
