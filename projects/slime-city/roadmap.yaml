@@ -676,11 +676,10 @@ tasks:
   - id: t-031
     milestone: m2
     title: "Expose Clash in the normal Slime City Play interface"
-    status: review
-    owner: worker
+    status: done
     claimed_by: 20261106T110147314Z-slime-city-normal-clash-t-031-v7q2
     claimed_at: '2026-11-06T11:01:47.314Z'
-    updated: '2026-11-06T11:03:33.270Z'
+    updated: '2026-11-06T11:13:07.294Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -693,3 +692,5 @@ tasks:
       purchases, account data, marketing launch, or subjective-fun approval.
 
       Removed mistaken admin-only checks from the shared game UI. Added a regression test requiring CLASH on the public normal Play route. Working branch worker/slime-city-t-031-normal-clash-play-20261106-v7q2. Explicitly requested normal game availability; no marketing launch or rewards.
+
+      Merged Kind Robots #4851 (f7f4eb858b20151e5ae48d9ec416d4385e4e0c6e) and Conductor #7106 (48bac78f37be355243b4aba56d4c9c97034ebf29); all latest-head checks green; normal Play route now shows ungated Clash tab.
