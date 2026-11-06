@@ -671,13 +671,23 @@ Verify provenance of finished generated assets before claiming coverage; keep pr
 - `slime-city-blackout.webp` (1280×720): Square 8x8 concealed-army tactical arena; blue and red face-down character cards in symmetrical starting ranks, ominous center flag, flashy arena crowds and comic lighting, no text.
 - `slime-city-bloodrush.webp` (1280×720): Cinematic wide 14x6 square-cell rectangular assault field with a tide of fast punk bloodfairies and chrome ogres moving in horizontal lanes, kinetic freeze-frame of an action-heavy real-time CCG, no text.
 
-## MONSTREXX — game art (2026-11-05 PT revision)
+## MONSTRIQUE — game art (2026-11-05 PT revision)
 
-- monstress-convention-icon.webp (legacy internal asset basename; visible brand MONSTREXX): motel key fob, hot pink autograph, a tiny ghostly ornamental blade shadow, original monster-celebrity noir adventure silhouette.
-- monstress-convention-card.webp (512x768): Iris, striking capable adult field journalist, foreground photographing evidence; behind her Norb, hunched unattractive theatrical germophobic genius with handkerchief, flinching from human contact; MONSTREXX monster stars in background, two adult ghosts in motel window, no collage.
-- monstress-convention-hero.webp (1280x720): two-story Last Call Motor Lodge in rain, ice machine and narrow corridors, crime-room window with two specters, distant MONSTREXX convention billboard, hand-painted point-and-click game mood, NOT a convention hotel.
-- monstrexx-double-ghost-scene.webp: two independent adult spectral women in a dim motel room with evidence-tagged ornate knife; tasteful, no explicit sex and no gore.
-- monstrexx-city-map.webp: distinct convention center, seedy motel, supernatural novelty shop, celebrity vampire mansion and underground sewer exit.
-- monstrexx-monster-idols.webp: iconic original MONSTREXX celebrity ensemble, featuring Dracula-inspired diva, stitched actress, werewolf, slime, lagoon, fly-headed supermodel and bandaged mummy actress; all adults.
-- monstrexx-alligator.webp: white alligator woman in a sewer dressing room rehearsing a very earnest but unconvincing celebrity audition; charming, original cartoon comedy.
-- monstrexx-scrapbook.webp: collectible magazine clippings, character biographies, concert cards, locked image silhouettes and tastefully suggestive non-explicit character portrait slots.
+- monstress-convention-icon.webp (legacy internal asset basename; visible brand MONSTRIQUE): motel key fob, hot pink autograph, a tiny ghostly ornamental blade shadow, original monster-celebrity noir adventure silhouette.
+- monstress-convention-card.webp (512x768): Iris, striking capable adult field journalist, foreground photographing evidence; behind her Norb, hunched unattractive theatrical germophobic genius with handkerchief, flinching from human contact; MONSTRIQUE monster stars in background, two adult ghosts in motel window, no collage.
+- monstress-convention-hero.webp (1280x720): two-story Last Call Motor Lodge in rain, ice machine and narrow corridors, crime-room window with two specters, distant MONSTRIQUE convention billboard, hand-painted point-and-click game mood, NOT a convention hotel.
+- monstrique-double-ghost-scene.webp: two independent adult spectral women in a dim motel room with evidence-tagged ornate knife; tasteful, no explicit sex and no gore.
+- monstrique-city-map.webp: distinct convention center, seedy motel, supernatural novelty shop, celebrity vampire mansion and underground sewer exit.
+- monstrique-monster-idols.webp: iconic original MONSTRIQUE celebrity ensemble, featuring Dracula-inspired diva, stitched actress, werewolf, slime, lagoon, fly-headed supermodel and bandaged mummy actress; all adults.
+- monstrique-alligator.webp: white alligator woman in a sewer dressing room rehearsing a very earnest but unconvincing celebrity audition; charming, original cartoon comedy.
+- monstrique-scrapbook.webp: collectible magazine clippings, character biographies, concert cards, locked image silhouettes and tastefully suggestive non-explicit character portrait slots.
+
+## MONSTRIQUE — Seven decade-specific album collectible concepts (2026-11-06 PT)
+- **1964 Beach Hex**: analog surf-pop drive-in beach concert sleeve. Draculina, original werewolf Roxie, frog/salamander Laguna, mummy Nefertari. Crossed-out Francesca origin inset. Aged 1960s printing, original logo family.
+- **1974 Velvet Crypt**: psychedelic prog / glam gatefold sleeve. Draculina, Roxie, stitched scientist Francesca and Nefertari; removed Laguna name on lyric credits. Truly 1970s photography and paper/ink.
+- **1986 Night Creatures**: chrome MTV arena-rock album sleeve. Draculina, Roxie, Francesca and newly hired fly-headed Vespa, Nefertari crossed off old lineup. 1980s lasers, synthesizer and printed metallic inks.
+- **1994 Silver Bite**: grungy motel parking lot band cover. Roxie, Francesca, Vespa and slime creature Blobzo; departed Draculina torn from background poster. Non-glossy film-grain realism.
+- **2006 Back From the Grave**: theatrical emo/goth reunion cover. Draculina back, Roxie, Blobzo and restored mummy Nefertari. Vespa scandal clipping. Dramatic era-specific editorial look.
+- **2017 Blood Moon**: immaculate idol photobook. Draculina, Roxie, distinctly frog/salamander Laguna and youthful tartan-collared Scottish werewolf Siobhan of The Pack; missing Blobzo collectible.
+- **2024 Six Decades of Screams**: glossy luxury legacy-anniversary release. Draculina, Laguna, Nefertari and polished younger Pack replacement, with the departed Siobhan fan pin. The new recruit is distinct from Siobhan; not an old wolf re-render.
+- Preserve source image/year/artists/prompt/source paths and exact delivery state. The seven generated chat images are *concepts*, not verified queued ArtJobs. Follow ALBUM-ART-REGISTER.md before publishing or attaching imagery.
