@@ -1,0 +1,176 @@
+# Every Villain Tactics: first private production batch of painted tactical arenas and outcome scenes.
+# Requested by Silas 2026-11-06 PT after First Bell's battle-flow/UI upgrade (kind_robots PR #4855).
+# Unique locations intentionally cover the six planned story chapters and four already playable one-shots.
+# First Bell, Fountain Standoff, Science Wing, Picnic Plaza, Quarry and Boiler are immediate art integration targets.
+# Later campaign chapters are concept art until their combat tile geometry is authored and validated.
+# UI grid, wall/cover/hazard/collision overlays remain CODE-owned. Art never replaces tactical truth.
+# Successful push/CI only means prompt ledger; numeric ArtJob IDs, DONE ArtImage IDs and game placement
+# must be recorded separately. The auto art sweep accepts each unsubmitted cell at most once.
+round: every-villain-tactics-tactical-arenas-v1
+series: prom-of-doom-and-every-villain-tactics
+project_slug: every-villain-tactics
+designer: Every Villain Tactics private tactical battlefield production
+is_public: false
+is_mature: false
+cast_loras: false
+auto_submit: true
+status: awaiting-submission
+priority: 750
+lanes:
+  - key: unstable-production
+    label: Unstable Diffusers nihilmania / approved Western superhero style
+    engine: comfy
+    checkpoint: SDXL/sdxlUnstableDiffusers_nihilmania.safetensors
+    prompt: prose
+    suffix: >-
+      Original adult western animated superhero adventure art, clean ink shapes, layered
+      painterly cel shading, believable readable materials, precise architectural silhouettes,
+      high production value for a single-screen handheld tactical game.
+    steps: 28
+    cfg: 7
+    sampler: dpmpp_2m
+subjects:
+  - key: evt-first-bell-auditorium
+    lane: unstable-production
+    entity: battlefield-map
+    title: "First Bell: Academy Auditorium Approach"
+    asset: every-villain-tactics/maps/first-bell-auditorium
+    size: 1152x768
+    seed: 781201
+    priority: 940
+    prompt_prose: >-
+      Viewed straight down at the Comet City Academy auditorium entrance court: pale sandstone pavement between two projecting blue-gray stone wings, a locked pair of copper-and-glass theater doors along the eastern approach, purple auditorium awnings, slim rainwater gutters, and a narrow wheelchair-accessible ramp tracing the perimeter. A scuffed courtyard walkway runs west to east, broad enough for two squads to meet. Short granite partitions define the central choke, while low gold-striped safety rails sit near a maintenance landing. The ground material changes clearly between the blocked interior stonework and usable courtyard paving. Warm afternoon light casts shallow shadows from pillars toward the northwest. Preserve generous uncluttered floor space for hero and rival cards. Three solid obstacles should read as thick immovable masonry, visually unlike the separate low barriers which stop a shot but can be stepped around. A single overhead 2D painted tactical environment plate with fixed straight-down camera, clean graphic western-superhero animation linework, hand-inked contours, painterly cel shadows and unmistakable physical architecture. Full 3:2 rectangular board area from corner to corner. An uninterrupted rectangular ground plane, broad traversable aisles, fixed structural walls and waist-high furnishing create the entire physical space.
+    negative: >-
+      text, letters, signage, labels, legends, compass rose, map coordinate numbers, interface grid, HUD, character figurines, miniature toy buildings, isometric camera, horizon, perspective vanishing point, photorealism, 3d software render, giant decorative props blocking walking lanes, ambiguous extra obstacles, cropped map edges, watermark
+  - key: evt-science-wing-lockdown
+    lane: unstable-production
+    entity: battlefield-map
+    title: "Science Wing Lockdown: Sealed Laboratory"
+    asset: every-villain-tactics/maps/science-wing-lockdown
+    size: 1152x768
+    seed: 781202
+    priority: 850
+    prompt_prose: >-
+      A top-down view inside the western laboratory wing: rectangular glossy turquoise floor tiles, amber emergency lamps inside recesses, heavy sliding security doors with thick steel jambs, two orderly rows of stainless lab benches, a broad luminous experiment table, an isolation booth behind reinforced glass, and warning-colored strip lights washing across the wet floor. A small shattered glass partition spills fragments into an empty aisle. The north and south exits read as architectural openings, clearly terminating passageways. Narrow aisle corners and waist-high counter surfaces provide visible places to crouch. Differentiate the immovable thick concrete service cores from low counters and breakable light equipment. Keep a wide empty center lane readable at the scale of a nine-by-six board. A single overhead 2D painted tactical environment plate with fixed straight-down camera, clean graphic western-superhero animation linework, hand-inked contours, painterly cel shadows and unmistakable physical architecture. Full 3:2 rectangular board area from corner to corner. An uninterrupted rectangular ground plane, broad traversable aisles, fixed structural walls and waist-high furnishing create the entire physical space.
+    negative: >-
+      text, letters, signage, labels, legends, compass rose, map coordinate numbers, interface grid, HUD, character figurines, miniature toy buildings, isometric camera, horizon, perspective vanishing point, photorealism, 3d software render, giant decorative props blocking walking lanes, ambiguous extra obstacles, cropped map edges, watermark
+  - key: evt-crosswalk-crisis
+    lane: unstable-production
+    entity: battlefield-map
+    title: "Crosswalk Crisis: Harborline Intersection"
+    asset: every-villain-tactics/maps/crosswalk-crisis
+    size: 1152x768
+    seed: 781203
+    priority: 720
+    prompt_prose: >-
+      Straight overhead on a dense but orderly Comet City downtown street crossing beside the Academy tram stop: one broad striped pedestrian crossing runs from a raised sidewalk into a four-lane street; tactile curb ramps, a blue tram shelter, a compact delivery van, two concrete planters, a fallen bicycle and an angled kiosk mark the edges. Small pools of reflected amber streetlight on wet pavement, turquoise transit accents and red pedestrian lights establish twilight. Two visible clear pedestrian rescue pockets lie at opposite corners, connected by readable paths around vehicles and planters. Thick building facade at the outer edge is solid boundary, while van and benches offer partial shelter. Pavement, street, kerb, raised sidewalk and immovable exterior wall are separate physical materials. A single overhead 2D painted tactical environment plate with fixed straight-down camera, clean graphic western-superhero animation linework, hand-inked contours, painterly cel shadows and unmistakable physical architecture. Full 3:2 rectangular board area from corner to corner. An uninterrupted rectangular ground plane, broad traversable aisles, fixed structural walls and waist-high furnishing create the entire physical space.
+    negative: >-
+      text, letters, signage, labels, legends, compass rose, map coordinate numbers, interface grid, HUD, character figurines, miniature toy buildings, isometric camera, horizon, perspective vanishing point, photorealism, 3d software render, giant decorative props blocking walking lanes, ambiguous extra obstacles, cropped map edges, watermark
+  - key: evt-rooftop-broadcast
+    lane: unstable-production
+    entity: battlefield-map
+    title: "Rooftop Broadcast: Antenna Terrace"
+    asset: every-villain-tactics/maps/rooftop-broadcast
+    size: 1152x768
+    seed: 781204
+    priority: 710
+    prompt_prose: >-
+      Bird's-eye rooftop battle platform above Comet City's harbor: tar-black roofing membrane patterned with silver seams, a large copper broadcast dish, two rectangular air-handling housings, steel maintenance catwalks connecting slightly higher concrete roof terraces, rain puddles reflecting neon violet cloud light, a yellow safety ladder cage and a tiny skybridge. Sheer perimeter parapets enclose the roof; beyond them clouds and city lights are visible far below, making dangerous drops unmistakable. The antenna plinth sits on a clearly raised foundation with its own step line, while vents and crates are knee-high obstacles rather than solid walls. Keep routes between equipment unobstructed and the central transmitter objective visually compelling. A single overhead 2D painted tactical environment plate with fixed straight-down camera, clean graphic western-superhero animation linework, hand-inked contours, painterly cel shadows and unmistakable physical architecture. Full 3:2 rectangular board area from corner to corner. An uninterrupted rectangular ground plane, broad traversable aisles, fixed structural walls and waist-high furnishing create the entire physical space.
+    negative: >-
+      text, letters, signage, labels, legends, compass rose, map coordinate numbers, interface grid, HUD, character figurines, miniature toy buildings, isometric camera, horizon, perspective vanishing point, photorealism, 3d software render, giant decorative props blocking walking lanes, ambiguous extra obstacles, cropped map edges, watermark
+  - key: evt-under-comet-breach
+    lane: unstable-production
+    entity: battlefield-map
+    title: "Under-Comet Breach: Containment Tunnels"
+    asset: every-villain-tactics/maps/under-comet-breach
+    size: 1152x768
+    seed: 781205
+    priority: 700
+    prompt_prose: >-
+      Directly overhead in a hidden academy utility chamber dug into pale volcanic rock: heavy concrete retaining walls, two crisscrossing metal-grate service paths, a circular containment aperture exposing a submerged pale-blue energy engine, heavy red fire doors, vertical ventilation housings, broken fluorescent fixtures and yellow warning paint around a cracked cooling pool. Steam spills from a pipe into one corner and copper power cables run along floor channels. One passage loops around a reinforced core to create two distinct routes, with obvious solid rock pillars and waist-high utility cases. Pools of glowing coolant form intentional danger patches; their bright edges contrast the safe dry grated walkway. Make this a spatially coherent underground place rather than an abstract neon maze. A single overhead 2D painted tactical environment plate with fixed straight-down camera, clean graphic western-superhero animation linework, hand-inked contours, painterly cel shadows and unmistakable physical architecture. Full 3:2 rectangular board area from corner to corner. An uninterrupted rectangular ground plane, broad traversable aisles, fixed structural walls and waist-high furnishing create the entire physical space.
+    negative: >-
+      text, letters, signage, labels, legends, compass rose, map coordinate numbers, interface grid, HUD, character figurines, miniature toy buildings, isometric camera, horizon, perspective vanishing point, photorealism, 3d software render, giant decorative props blocking walking lanes, ambiguous extra obstacles, cropped map edges, watermark
+  - key: evt-prom-night-finale
+    lane: unstable-production
+    entity: battlefield-map
+    title: "Prom Night: Shattered Starlight Ballroom"
+    asset: every-villain-tactics/maps/prom-night-finale
+    size: 1152x768
+    seed: 781206
+    priority: 690
+    prompt_prose: >-
+      Straight-down view of the school's grand gala ballroom at the climax of a superhero conflict: an octagonal inlaid dance floor surrounded by deep plum carpet, a low performance platform with burgundy curtains at the north, twin buffet alcoves and long fabric-draped tables, an overturned silver punch bowl, scattered glass ornaments and a circular chandelier's reflection across the polished floor. Purple and copper light floods through tall arched windows, with a fresh crack splitting the stage floor beside the central microphone stand. Clear clockwise and counterclockwise side paths offer flanking routes around the central floor. Substantial columns read as fixed solid masonry; toppled banquettes and lightweight tables read as low cover. The composition feels like an elegant prom interrupted, an elegant gala space in the middle of a spectacular confrontation. A single overhead 2D painted tactical environment plate with fixed straight-down camera, clean graphic western-superhero animation linework, hand-inked contours, painterly cel shadows and unmistakable physical architecture. Full 3:2 rectangular board area from corner to corner. An uninterrupted rectangular ground plane, broad traversable aisles, fixed structural walls and waist-high furnishing create the entire physical space.
+    negative: >-
+      text, letters, signage, labels, legends, compass rose, map coordinate numbers, interface grid, HUD, character figurines, miniature toy buildings, isometric camera, horizon, perspective vanishing point, photorealism, 3d software render, giant decorative props blocking walking lanes, ambiguous extra obstacles, cropped map edges, watermark
+  - key: evt-fountain-standoff
+    lane: unstable-production
+    entity: one-shot-battlefield
+    title: "Fountain Standoff: Quad Plaza"
+    asset: every-villain-tactics/maps/fountain-standoff
+    size: 1152x768
+    seed: 781207
+    priority: 905
+    prompt_prose: >-
+      Orthographic overhead view of Comet City Academy's college quad in crisp afternoon sun: a broad round three-tier stone fountain dominates the center, its shallow azure water spilling into a polygonal basin, with brick paths around its rim and four pathways entering the lawn from the corners. The adjacent redbrick dormitory throws a long shadow over a bench, a blue library arcade faces the opposite side, and two low stone planter walls divide the open lawn. One iron maintenance gate, fallen lecture flyers and a toppled scooter give the place a real campus history. Fountain pedestal and building corners are thick impassable mass, while low benches and raised edging function as readable cover. Make the walking route around the water instantly obvious. A single overhead 2D painted tactical environment plate with fixed straight-down camera, clean graphic western-superhero animation linework, hand-inked contours, painterly cel shadows and unmistakable physical architecture. Full 3:2 rectangular board area from corner to corner. An uninterrupted rectangular ground plane, broad traversable aisles, fixed structural walls and waist-high furnishing create the entire physical space.
+    negative: >-
+      text, letters, signage, labels, legends, compass rose, map coordinate numbers, interface grid, HUD, character figurines, miniature toy buildings, isometric camera, horizon, perspective vanishing point, photorealism, 3d software render, giant decorative props blocking walking lanes, ambiguous extra obstacles, cropped map edges, watermark
+  - key: evt-picnic-plaza
+    lane: unstable-production
+    entity: one-shot-battlefield
+    title: "Picnic Panic: City Plaza"
+    asset: every-villain-tactics/maps/picnic-plaza
+    size: 1152x768
+    seed: 781208
+    priority: 900
+    prompt_prose: >-
+      A charming overhead painting of a lived-in family picnic plaza just outside Comet City Academy: sandy-yellow pavers, vivid teal picnic quilts, a striped lemonade trolley, an unattended brass-band music stand and open tuba case, flowering cherry trees in massive square raised planters, low bench seating and a fountain drain. A pair of small freshly disturbed dirt rings and cracked ground patches appear at distinct spots beside the picnic tables as the first warning of burrowed attackers. Three clear empty refuge zones around a bus-stop awning, a statue plinth and a side exit are connected by broad safe paths. Benches and planters are unmistakably waist-high shelter; boundary masonry remains visibly thick and structural. The sunlit playground mood is cheerful but unsettled. A single overhead 2D painted tactical environment plate with fixed straight-down camera, clean graphic western-superhero animation linework, hand-inked contours, painterly cel shadows and unmistakable physical architecture. Full 3:2 rectangular board area from corner to corner. An uninterrupted rectangular ground plane, broad traversable aisles, fixed structural walls and waist-high furnishing create the entire physical space.
+    negative: >-
+      text, letters, signage, labels, legends, compass rose, map coordinate numbers, interface grid, HUD, character figurines, miniature toy buildings, isometric camera, horizon, perspective vanishing point, photorealism, 3d software render, giant decorative props blocking walking lanes, ambiguous extra obstacles, cropped map edges, watermark
+  - key: evt-quarry-sub-basement
+    lane: unstable-production
+    entity: one-shot-battlefield
+    title: "Deed Below: Quarry Tunnel Court"
+    asset: every-villain-tactics/maps/quarry-sub-basement
+    size: 1152x768
+    seed: 781209
+    priority: 845
+    prompt_prose: >-
+      Overhead look into an abandoned quarry auction chamber beneath the academy: gray slate floor scored by cart rails, angular supporting pillars cut from rock, two broad ramps down to a square stone auction dais, battered crates of mining deeds, a toppled survey tripod, mining lanterns and copper reinforcement bands against rough exposed tunnel walls. A huge seismic drum on a raised central plinth casts an oval shadow. One narrow side tunnel winds past a locked machinery bay, allowing a second approach. Pillars and solid rock faces have clearly blocked footprints; wooden crate stacks and low broken rails are cover objects. The lighting shifts from warm lantern gold near the auction platform to cold cyan at the tunnel mouth. A single overhead 2D painted tactical environment plate with fixed straight-down camera, clean graphic western-superhero animation linework, hand-inked contours, painterly cel shadows and unmistakable physical architecture. Full 3:2 rectangular board area from corner to corner. An uninterrupted rectangular ground plane, broad traversable aisles, fixed structural walls and waist-high furnishing create the entire physical space.
+    negative: >-
+      text, letters, signage, labels, legends, compass rose, map coordinate numbers, interface grid, HUD, character figurines, miniature toy buildings, isometric camera, horizon, perspective vanishing point, photorealism, 3d software render, giant decorative props blocking walking lanes, ambiguous extra obstacles, cropped map edges, watermark
+  - key: evt-boiler-room-breach
+    lane: unstable-production
+    entity: one-shot-battlefield
+    title: "Boiler Room Breach: Furnace Below"
+    asset: every-villain-tactics/maps/boiler-room-breach
+    size: 1152x768
+    seed: 781210
+    priority: 850
+    prompt_prose: >-
+      Perfect overhead layout of a heavy industrial boiler chamber beneath the academy: a broad iron furnace and thick circular pressure vessel, rust-red pipe manifolds against masonry walls, a shallow service channel with a visible slick of water, iron catwalk grates, a wide emergency valve pedestal, two rolling tool chests and three wooden crates stacked below waist height. Small bright orange embers leak beside a cracked furnace door and a clearly recognizable weakened floor panel shows bent support bars. The safe walking aisles are broad and continuous around mechanical equipment; concrete column bases read as solid blockages while the crates are lesser cover. Copper, blackened steel and electric-blue leak reflections make the hazard geography readable. A single overhead 2D painted tactical environment plate with fixed straight-down camera, clean graphic western-superhero animation linework, hand-inked contours, painterly cel shadows and unmistakable physical architecture. Full 3:2 rectangular board area from corner to corner. An uninterrupted rectangular ground plane, broad traversable aisles, fixed structural walls and waist-high furnishing create the entire physical space.
+    negative: >-
+      text, letters, signage, labels, legends, compass rose, map coordinate numbers, interface grid, HUD, character figurines, miniature toy buildings, isometric camera, horizon, perspective vanishing point, photorealism, 3d software render, giant decorative props blocking walking lanes, ambiguous extra obstacles, cropped map edges, watermark
+  - key: evt-first-bell-cleared
+    lane: unstable-production
+    entity: battle-result
+    title: "First Bell Cleared: Aftermath Tableau"
+    asset: every-villain-tactics/results/first-bell-cleared
+    size: 1344x768
+    seed: 781211
+    priority: 790
+    prompt_prose: >-
+      Wide cinematic image at the Comet City Academy auditorium threshold after the action: a diverse adult superhero squad in distinct practical colored uniforms lowers their weapons among overturned safety barriers. The shattered glass doors remain intact enough to frame an interior hall lit warm amber. One masked rival sits safely restrained against the low stone wall; a crew member kneels to help a frightened student near an open rescue passage. One person looks toward the still-sealed inner door instead of celebrating, hinting at a difficult moral choice. Heroic yet ambiguous outcome, expressive faces and strong character silhouettes. The upper two-thirds carries the moment; the lower part grades into dark navy pavement for clear score and action controls. A cinematic original two-dimensional western superhero comic illustration with expressive adult figures, clean ink contours, painterly cel shadows, controlled saturated colors and an atmospheric location recognizable from Comet City Academy. Composed for a wide result-screen illustration with a darker lower third reserved for interface buttons.
+    negative: >-
+      text, lettering, numbers, speech balloons, interface widgets, scoreboard, logo, trademark characters, graphic violence, photograph, plastic 3d models, cropped hands, random costumes, watermark
+  - key: evt-first-bell-failed
+    lane: unstable-production
+    entity: battle-result
+    title: "First Bell Lost: Empty Approach"
+    asset: every-villain-tactics/results/first-bell-failed
+    size: 1344x768
+    seed: 781212
+    priority: 770
+    prompt_prose: >-
+      Wide dramatic aftermath at the same copper-framed auditorium doors: rain has started pooling across the bluish courtyard stones; an exhausted masked defender sits against a cracked stone planter, one disarmed hero kneels in stunned silence, a discarded radio crackles beside the safety rail, and a faraway white rescue beacon illuminates the sealed building. The confrontation is over but the fate of the trapped students remains uncertain. Respectful non-graphic defeat with distinct readable adult figures, grounded emotion and bold shapes. Warm door light against deep blue storm light makes the scene theatrical with a dark unobstructed lower third for result controls, with a dark unobstructed lower third left for result controls. A cinematic original two-dimensional western superhero comic illustration with expressive adult figures, clean ink contours, painterly cel shadows, controlled saturated colors and an atmospheric location recognizable from Comet City Academy. Composed for a wide result-screen illustration with a darker lower third reserved for interface buttons.
+    negative: >-
+      text, lettering, numbers, speech balloons, interface widgets, scoreboard, logo, trademark characters, graphic violence, photograph, plastic 3d models, cropped hands, random costumes, watermark
