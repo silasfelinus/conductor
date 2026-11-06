@@ -31,7 +31,7 @@ tasks:
   - id: t-001
     milestone: m1
     title: "MONSTRIQUE private opening screen and Playbook Kit scaffold with mature access"
-    status: ready
+    status: done
     owner: null
     passes: 0
     stakes: reversible
@@ -41,6 +41,14 @@ tasks:
       viewerShowsMature on server; no guest/CHILD/mature-off rendering or leaking assets.
       Do not expose Play/nav/highlights until the separate release gate. Art briefs now,
       ArtJobs when available; painted images are not a code blocker. Test phone/tablet/desktop.
+
+      2026-11-06 PT: Done. Private title screen (New Game, Continue, Settings, Scrapbook) and
+      Vignette kit spec shipped in kind_robots #4845/#4848; renamed MONSTRIQUE at
+      /admin/monstrique with Chapter 1 rewrite, flirt/gratitude and favour puzzle in #4867.
+      Server-checked admin + mature opt-in, no CHILD; public Play/nav still behind t-013.
+      Visual check on main pending (gated route, no pre-deploy screenshots).
+    updated: '2026-11-06T23:47:24Z'
+    implementation_pr: 'silasfelinus/kind_robots#4867'
   - id: t-002
     milestone: m1
     title: "Soft creative scope review, continue development"
