@@ -1509,13 +1509,16 @@ tasks:
   - id: t-063
     milestone: m3
     title: "Browser-test the Enter the Choking Works button at e06 4,6 at 390, 820 and 1440 widths, including save/restore mid-dungeon"
-    status: ready
+    status: claimed
     stakes: reversible
     passes: 0
-    updated: '2026-11-06T04:50:44Z'
+    updated: '2026-11-06T05:49:00Z'
     note: |-
       Kaizen from t-062 review: CI covers the store and verifier, but nothing exercises the new sea-stage button, the choking mode in memory-dungeon.vue, or the shared stage's dungeon="choking" prop in a real browser. Add a Playwright interruption/layout check mirroring the Breathing Works one, and confirm a reload mid-dungeon restores room and flags.
 
       Partial t-063: added real Chromium Pinia Choking Works entry and mid-dungeon reload regression at 390, 820 and 1440px, wired to memory-world-browser CI. Rendered Vue button/layout coverage still outstanding; PR and CI pending.
 
       2026-11-05 PT: kind_robots PR #4843 merged at 95805208 (exact head f82faf5b: all 7 workflows green). Chromium Pinia e06 Choking Works 4,6 entry and save/reload regression at 390/820/1440 widths shipped. Remaining t-063: rendered Vue entrance button and actual layout geometry coverage. No ArtJobs or deployment.
+    owner: worker
+    claimed_by: 2026-11-06T054900Z-memory-dungeon-t-063-b7e4
+    claimed_at: '2026-11-06T05:49:00Z'
