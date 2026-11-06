@@ -195,7 +195,7 @@ tasks:
   - id: t-030
     milestone: m3
     title: "Build scene-art production manifest and sixteen-realm coverage checks"
-    status: review
+    status: ready
     depends_on: t-018
     passes: 0
     stakes: reversible
@@ -229,10 +229,9 @@ tasks:
       for the next slice rather than done.
 
       Added World One manifest coverage assertions for every authored overworld and dungeon choice, all 32 collectible cards and Chronicle photos. Kind Robots PR and CI verification pending; broader 16-realm ArtJob delivery remains open.
-    updated: '2026-11-06T16:56:00Z'
-    owner: worker
-    claimed_by: 2026-11-06T165200Z-memory-dungeon-t030-x9q7
-    claimed_at: '2026-11-06T16:52:00Z'
+
+      2026-11-06 PT: kind_robots PR #4860 merged at e95dea9915b5c7a0075c5a2bb9d0a80b78601b42 after eight exact-head Actions workflows passed on 81fb8a94669d9e4afe815ccad636cb149bdc5a89. World One manifest now checks authored Briar/House choice art, 32 collectible card briefs and Chronicle photos. Remaining t-030: all sixteen realms, durable ArtJobs, delivered image coverage. No ArtJobs or deployment.
+    updated: '2026-11-06T17:55:00Z'
   - id: t-001
     milestone: m1
     title: "Seeded expedition reducer, room schema and Classic adapter"
