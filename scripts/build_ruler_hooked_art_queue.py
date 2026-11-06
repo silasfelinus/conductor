@@ -72,11 +72,11 @@ cartoony storybook tail that Silas called "too cutesy" and "every other ai slop
 project". A Krea 2 style test (projects/ruler-hooked/docs/t-054-kingdom-decay-console.md)
 settled on two styles, picked by Silas as Chronicle + Broadside:
 
-  CHRONICLE -- the world: layers, scene concepts, map, endings, cast and ruler
+  RAINBOW -- the world: layers, scene concepts, map, endings, cast and ruler
                portraits, reward plates, fish specimens. An illuminated-manuscript
-               miniature that ROTS with the reign (chronicle_style(tier, variant)).
+               miniature that ROTS with the reign (rainbow_style(tier, variant)).
                Layers composite, so their variant is borderless.
-  BROADSIDE -- documents in the world: interrupt/arc cards, edicts, petitions,
+  SPECTRUM_PRINT -- documents in the world: interrupt/arc cards, edicts, petitions,
                the event-card and Fishopedia UI concepts. A hand-coloured woodcut.
 
 RESTYLING ALREADY-RENDERED ART (--restage). The consumer treats a pending row whose
@@ -178,118 +178,80 @@ LAYER_PRIORITY = 100
 # above still bind them: no named artists or shows, no craft words the model will
 # paint as a subject, no negations, no similes, no format words.
 
-# The reign-health tiers a CHRONICLE prompt can take. The book itself shows the
-# reign: a healthy kingdom is a fresh page, misrule rots it.
+# RAINBOW DREAM, Silas 2026-11-06 PT. The world is a psychedelic rainbow
+# fantasy with a *hint* of older printmaking in the marks, not in its
+# palette, framing, subject treatment, or visual identity. These positive
+# descriptors lead the prompt because Krea 2 pays extra attention to its start.
+# The existing tier names are gameplay states; they are not art-period labels.
 TIERS = ("pristine", "strained", "rotten")
 
-# The clause is assembled as: what it is, the condition of the page (the tier),
-# then the medium details, then the layout. The tier sits second on purpose: in
-# the first pilot (ArtJobs 64345-64352) it trailed the medium and the rotten pieces
-# came back on clean bright vellum -- Krea weighs the opening of a prompt hardest.
-CHRONICLE_HEAD = "medieval illuminated manuscript miniature"
-CHRONICLE_MEDIUM = (
-    "flat tilted perspective, tempera and gold leaf on vellum, lapis blue and "
-    "vermilion, fine dark brush outlines, flat patterned grounds"
+RAINBOW_HEAD = (
+    "psychedelic rainbow fantasy illustration, vivid liquid color fields, "
+    "surreal jewel-bright landscape, animated hand-inked contour lines"
 )
-# Only bordered pieces get this: in the third pilot (ArtJobs 64361, 64363) the
-# figure clause put a procession of courtiers across the poisoned-lake and
-# choked-sky layers, which are meant to be scenery.
-CHRONICLE_FIGURES = "small precise figures with grave faces"
-CHRONICLE_TIER = {
+RAINBOW_MEDIUM = (
+    "electric magenta, hot coral, cyan, turquoise, violet, chartreuse and "
+    "sunflower yellow, bold readable shapes, flowing chromatic patterns, "
+    "subtle screenprint grain and a slight offset ink registration echo"
+)
+RAINBOW_FIGURES = "playful expressive fantasy figures with distinct faces and lively silhouettes"
+RAINBOW_TIER = {
     "pristine": (
-        "a fresh pristine page, burnished bright gold leaf, deep bright lapis and "
-        "clean vermilion, crisp cream vellum"
+        "radiant welcoming rainbow colors, clean turquoise water, saturated "
+        "emerald foliage, glowing pink and yellow reflections, playful flowing shapes"
     ),
     "strained": (
-        "an aging worn page, dulled rubbed gold leaf, faded lapis and vermilion, "
-        "brown foxing spots across the vellum, scuffed paint"
+        "electrically clashing rainbow colors, acid lime against bruised "
+        "ultraviolet, hard candy-orange reflections, bent shapes and restless patterns"
     ),
     "rotten": (
-        "a ruined soot-blackened page, tarnished flaking gold leaf, smeared soot "
-        "stains and spilled black ink blots across the painting, torn "
-        "water-stained vellum, faded lapis and vermilion"
+        "toxic rainbow corruption, fluorescent chartreuse slime, oily spectral "
+        "sheen, electric purple smoke and magenta fractures, deep indigo shadows"
     ),
 }
-# Layers composite into one stacked scene, so their decay lives in the paint, not
-# in the vellum: a torn page edge would cut a hole through every layer below it.
-CHRONICLE_LAYER_TIER = {
-    "pristine": (
-        "fresh pristine paint, burnished bright gold leaf highlights, deep bright "
-        "lapis and clean vermilion"
-    ),
-    "strained": (
-        "aging worn paint, dulled rubbed gold leaf, faded lapis and vermilion, "
-        "brown foxing spots"
-    ),
+RAINBOW_LAYER_TIER = {
+    "pristine": "bright saturated rainbow light, clean water and flourishing multicolor terrain",
+    "strained": "chromatic dissonance, acid-lime haze, uneasy violet shadows and warped vegetation",
     "rotten": (
-        "ruined soot-blackened paint, tarnished flaking gold leaf, smeared soot "
-        "stains and spilled black ink blots across the scenery, faded lapis and "
-        "vermilion"
+        "fluorescent toxic green pools, oily iridescent black water, electric "
+        "violet smoke, hot-pink cracks and dying vegetation"
     ),
 }
-# Full illustrations carry the manuscript border; its marginalia sour with the
-# reign. "All four sides" and "every margin" are there because the first pilot's
-# portrait grew a rubric caption of pseudo-writing in its open lower margin.
-CHRONICLE_BORDER = {
-    "pristine": (
-        "a full-page painting set inside a painted manuscript border on all four "
-        "sides, gilded vine scrollwork filling every margin, small fish-headed "
-        "marginalia creatures among the vines"
-    ),
-    "strained": (
-        "a full-page painting set inside a painted manuscript border on all four "
-        "sides, dulled vine scrollwork filling every margin, sly fish-headed "
-        "marginalia creatures among the vines"
-    ),
-    "rotten": (
-        "a full-page painting set inside a painted manuscript border on all four "
-        "sides, blackened withered vine scrollwork filling every margin, grotesque "
-        "fish-headed marginalia creatures among the vines"
-    ),
+# Full illustrations may have a THIN custom fish-and-river edge treatment.
+# The scenery layers have NONE: the actual renders are opaque full vistas,
+# and the compositor's alpha contract is handled separately by t-059.
+RAINBOW_BORDER = {
+    "pristine": "a slim outer edge of lively curving river-ribbon and tiny colorful fish motifs",
+    "strained": "a slim outer edge of wavering river-ribbon and nervous fish motifs",
+    "rotten": "a slim outer edge of twisting toxic river-ribbon and strange fish motifs",
 }
-# Layers composite into one stacked scene, so a border on each would stack into
-# seven borders. Said positively: the painting alone, reaching every edge.
-#
-# This renders a whole opaque vista per layer, not an alpha-cut band -- which is
-# what every earlier layer render was too (ruler-hooked/t-059), and what the
-# console (kind_robots#4834) actually consumes. The second pilot tried to force a
-# true band ("a single narrow band ... open space above and below", ArtJob 64353)
-# and Krea painted the lake as a 3D ribbon floating in a photographic sky. Real
-# transparency is t-059's decision (alpha renders or a masking step), not a prompt.
-CHRONICLE_BORDERLESS = (
-    "the miniature painting alone, edge to edge, the painted scene reaching all "
-    "four edges"
-)
-# Fish specimens are the design every later fish variant derives from, so they
-# get a clean ground instead of a border.
-CHRONICLE_SPECIMEN = (
-    "the specimen painted alone on a plain open vellum ground"
-)
+RAINBOW_BORDERLESS = "one immersive landscape reaching all four edges"
+RAINBOW_SPECIMEN = "one vividly colored creature on a clean deep-ultramarine ground"
 
-BROADSIDE = (
-    "hand-coloured sixteenth century woodcut broadside, bold black cut lines and "
-    "cross-hatching, rough hand-laid colour in madder red, ochre and verdigris "
-    "only, ink pressed unevenly into coarse rag paper, stark carved faces"
+SPECTRUM_PRINT = (
+    "psychedelic rainbow screenprinted fantasy illustration, punchy magenta "
+    "cyan acid yellow and emerald inks, confident hand-carved linework, expressive "
+    "characters, slight imperfect ink alignment and fine halftone texture on "
+    "smooth saturated paper"
 )
 
 
-def chronicle_style(tier: str = "pristine", variant: str = "bordered") -> str:
-    """The CHRONICLE clause for one reign tier and one layout variant.
-
-    variant: "bordered" (full illustrations), "layer" (composited bands,
-    borderless, decay in the paint), or "specimen" (fish on a plain ground).
-    """
+def rainbow_style(tier: str = "pristine", variant: str = "bordered") -> str:
+    """One shared psychedelic art contract for portraits, landscapes and specimens."""
     assert tier in TIERS, f"unknown reign tier {tier!r}"
     if variant == "layer":
         return (
-            f"{CHRONICLE_HEAD}, {CHRONICLE_LAYER_TIER[tier]}, {CHRONICLE_MEDIUM}, "
-            f"{CHRONICLE_BORDERLESS}"
+            f"{RAINBOW_HEAD}, {RAINBOW_LAYER_TIER[tier]}, {RAINBOW_MEDIUM}, "
+            f"{RAINBOW_BORDERLESS}"
         )
     if variant == "specimen":
-        return f"{CHRONICLE_HEAD}, {CHRONICLE_TIER[tier]}, {CHRONICLE_MEDIUM}, {CHRONICLE_SPECIMEN}"
+        return (
+            f"{RAINBOW_HEAD}, {RAINBOW_TIER[tier]}, {RAINBOW_MEDIUM}, "
+            f"{RAINBOW_SPECIMEN}"
+        )
     return (
-        f"{CHRONICLE_HEAD}, {CHRONICLE_TIER[tier]}, {CHRONICLE_MEDIUM}, "
-        f"{CHRONICLE_FIGURES}, {CHRONICLE_BORDER[tier]}"
+        f"{RAINBOW_HEAD}, {RAINBOW_TIER[tier]}, {RAINBOW_MEDIUM}, "
+        f"{RAINBOW_FIGURES}, {RAINBOW_BORDER[tier]}"
     )
 
 
@@ -320,11 +282,11 @@ NO_TEXT = (
 # engines this queue may later target. The real steering against krea2's failure
 # mode on this brief (competent nature/portrait photography, which sank the first
 # Cthulhuquarium batch on 2026-08-25) lives POSITIVELY in the house-style clauses
-# (CHRONICLE_* / BROADSIDE) instead.
+# (RAINBOW_* / SPECTRUM_PRINT) instead.
 # t-054: "grimdark" left the list -- a bad reign is meant to look grim now -- and
 # the cartoon look the house style replaced joined it.
 NEGATIVE = (
-    "photorealistic, photograph, 3d render, cgi, cartoon, chibi, anime, "
+    "photorealistic, photograph, 3d render, cgi, chibi, anime, "
     "glossy digital painting, blurry, low quality, deformed, extra limbs, "
     "bad hands, cropped"
 )
@@ -332,18 +294,18 @@ NEGATIVE = (
 # docs/art-direction.md Section 4.1 TIME_MOD, verbatim in substance.
 TIME_MOD = {
     "day": (
-        "warm high-key daylight from screen-left, clear midday color, "
-        "gentle ambient shadows"
+        "brilliant daylight from screen-left, clean turquoise and lime light, "
+        "gentle violet ambient shadows"
     ),
     "night": (
-        "cool low-key moonlight from screen-right, deep blue shadows, "
-        "small warm window and lantern glows"
+        "electric blue moonlight from screen-right, deep ultraviolet shadows, "
+        "tiny magenta and orange window glows"
     ),
     "dawn": (
         "soft cool-to-warm sunrise, low mist, glistening morning dew highlights"
     ),
     "golden": (
-        "long warm golden-hour rake light, amber rim-lighting, drifting dust motes"
+        "prismatic sunset light, coral and violet rim-lighting, drifting iridescent motes"
     ),
     "dusk": (
         "fading violet-orange sky, elongated cool shadows, first lanterns lit"
@@ -480,9 +442,9 @@ LAKESIDE = (
 # ---------------------------------------------------------------------------
 
 # Each concept names its house style: ("chronicle", tier) for the world, or
-# BROADSIDE_STYLE for a document the court prints. The tier is the reign the
+# SPECTRUM_PRINT_STYLE for a document the court prints. The tier is the reign the
 # piece depicts -- key art shows a healthy reign, the developed pole a rotten one.
-BROADSIDE_STYLE = ("broadside", None)
+SPECTRUM_PRINT_STYLE = ("broadside", None)
 
 SCENE_CONCEPTS = [
     (
@@ -615,7 +577,7 @@ UI_CONCEPTS = [
         "A mud-spattered petitioner presenting a grievance at an open-air lakeside "
         "court, cut as one tall printed scene on a sheet of rag paper, with two wide "
         "empty paper panels below it, each panel bare blank paper",
-        BROADSIDE_STYLE,
+        SPECTRUM_PRINT_STYLE,
     ),
     (
         "ui-fishopedia-plate",
@@ -624,7 +586,7 @@ UI_CONCEPTS = [
         "A single strange freshwater fish cut as a naturalist's study, centered "
         "on a sheet of rag paper, a measuring rule laid beside it "
         "and clean empty paper below it, every writing area left as bare paper",
-        BROADSIDE_STYLE,
+        SPECTRUM_PRINT_STYLE,
     ),
     (
         "ui-title-screen",
@@ -659,8 +621,8 @@ def concept_style(style: tuple[str, str | None], variant: str = "bordered") -> s
     """Resolve a (house, tier) tuple to its style clause."""
     house, tier = style
     if house == "broadside":
-        return BROADSIDE
-    return chronicle_style(tier or "pristine", variant)
+        return SPECTRUM_PRINT
+    return rainbow_style(tier or "pristine", variant)
 
 # ---------------------------------------------------------------------------
 # Concept lane -- cast portraits (read from the kind_robots content bundle)
@@ -1066,7 +1028,7 @@ def concept_entries(cast: list[dict[str, str]]) -> list[dict]:
                 image_path=f"public/images/ruler-hooked/characters/{slug}.webp",
                 label=f"Ruler Hooked cast: {character['name']} {character['honorific']}",
                 size=PORTRAIT,
-                prompt=f"{body}. {chronicle_style('pristine')}. {NO_TEXT}",
+                prompt=f"{body}. {rainbow_style('pristine')}. {NO_TEXT}",
                 priority=CONCEPT_PRIORITY,
                 lane="concept",
             )
@@ -1088,7 +1050,7 @@ def concept_entries(cast: list[dict[str, str]]) -> list[dict]:
 # was. Set a species-level `frame_override` in vertical-slice.yaml rather than editing this
 # shared constant.
 #
-# t-054: fish moved from the cartoon tail to CHRONICLE (specimen variant). Nothing in
+# t-054: fish moved from the cartoon tail to RAINBOW (specimen variant). Nothing in
 # the fish lane's contract pins a rendering style -- docs/fish-ecology.md shares the
 # recognizable DESIGN (the roster's own silhouette/distinction text, unchanged),
 # while each game renders its own presentation assets -- so one house style for the
@@ -1128,7 +1090,7 @@ def fish_entries() -> list[dict]:
                 image_path=f"public/images/ruler-hooked/fish/{slug}/bestiary.webp",
                 label=f"Ruler Hooked fish: {species['name']} ({species['affinity']}, {species['rarity']})",
                 size=WIDE,
-                prompt=f"{body}. {chronicle_style('pristine', 'specimen')}. {NO_TEXT}",
+                prompt=f"{body}. {rainbow_style('pristine', 'specimen')}. {NO_TEXT}",
                 priority=CONCEPT_PRIORITY,
                 lane="fish",
             )
@@ -1152,7 +1114,7 @@ def ruler_entries() -> list[dict]:
                 image_path=f"public/images/ruler-hooked/ruler-{preset['id']}.webp",
                 label=f"Ruler Hooked opening portrait: {preset['title']} ({preset['id']})",
                 size=PORTRAIT,
-                prompt=f"{body}. {chronicle_style('pristine')}. {NO_TEXT}",
+                prompt=f"{body}. {rainbow_style('pristine')}. {NO_TEXT}",
                 priority=CONCEPT_PRIORITY,
                 lane="ruler",
             )
@@ -1247,7 +1209,7 @@ def reward_entries(content_ts: Path) -> list[dict]:
                 image_path=f"public/images/ruler-hooked/rewards/{reward['slug']}.webp",
                 label=f"Ruler Hooked reward: {name} ({reward['kind']}, {reward['rarity']})",
                 size=SQUARE,
-                prompt=f"{body}. {chronicle_style('pristine')}. {NO_TEXT}",
+                prompt=f"{body}. {rainbow_style('pristine')}. {NO_TEXT}",
                 priority=CONCEPT_PRIORITY,
                 lane="reward",
             )
@@ -1302,7 +1264,7 @@ def ending_entries(content_ts: Path) -> list[dict]:
                 image_path=f"public/images/ruler-hooked/endings/{ending['key']}.webp",
                 label=f"Ruler Hooked ending: {title} ({ending['victory']})",
                 size=WIDE,
-                prompt=f"{body}. {chronicle_style(tier)}. {NO_TEXT}",
+                prompt=f"{body}. {rainbow_style(tier)}. {NO_TEXT}",
                 priority=CONCEPT_PRIORITY,
                 lane="ending",
             )
@@ -1310,7 +1272,7 @@ def ending_entries(content_ts: Path) -> list[dict]:
     return entries
 
 
-# t-054: cards are BROADSIDE -- the court's petitions and edicts are printed
+# t-054: cards are SPECTRUM_PRINT -- the court's petitions and edicts are printed
 # things, so their scenes are cut in wood rather than painted on vellum.
 #
 # The first pilot's frame said "the visiting petitioners and courtiers", and both
@@ -1429,7 +1391,7 @@ def card_entries(content_ts: Path) -> list[dict]:
                 image_path=f"public/images/ruler-hooked/card-{card['id']}.webp",
                 label=f"Ruler Hooked card: {title}",
                 size=WIDE,
-                prompt=f"{prompt_body}. {BROADSIDE}. {NO_TEXT}",
+                prompt=f"{prompt_body}. {SPECTRUM_PRINT}. {NO_TEXT}",
                 priority=CONCEPT_PRIORITY,
                 lane="card",
             )
@@ -1461,16 +1423,16 @@ def card_entries(content_ts: Path) -> list[dict]:
 # t-054 (later the same day): Silas picked Chronicle + Broadside from the style
 # test, so the storybook-gouache finish this lane first matched is retired with
 # STYLE_TAIL. The console's own pieces now follow the house split:
-#   backdrops and the map -> CHRONICLE, borderless (the UI chrome is the
+#   backdrops and the map -> RAINBOW, borderless (the UI chrome is the
 #       manuscript border, per the t-054 doc, so the art carries none)
-#   tab vignettes -> CHRONICLE on a plain vellum ground (the specimen variant)
-#   daily proclamations, gear and kingdom-works notices -> BROADSIDE (printed
+#   tab vignettes -> RAINBOW on a plain vellum ground (the specimen variant)
+#   daily proclamations, gear and kingdom-works notices -> SPECTRUM_PRINT (printed
 #       notices, per ruler-hooked/t-057)
-#   Quill's portrait -> CHRONICLE bordered, matching the rest of the cast
-# The matte, unglossy finish CONSOLE_FINISH asked for is native to both styles.
+#   Quill's portrait -> RAINBOW bordered, matching the rest of the cast
+# The matte screenprinted finish comes from the shared rainbow style itself.
 CONSOLE_PRIORITY = CONCEPT_PRIORITY
-CONSOLE_CHRONICLE = chronicle_style("pristine", "layer")
-CONSOLE_VIGNETTE = chronicle_style("pristine", "specimen")
+CONSOLE_RAINBOW = rainbow_style("pristine", "layer")
+CONSOLE_VIGNETTE = rainbow_style("pristine", "specimen")
 
 CONSOLE_BACKDROPS = [
     (
@@ -1498,14 +1460,14 @@ CONSOLE_BACKDROPS = [
     (
         "royal-map",
         "map backdrop: hand-painted kingdom map",
-        "A hand-painted kingdom map on aged parchment seen from directly above: a "
+        "A playful prismatic kingdom map seen from directly above on a saturated " "ultramarine ground: a "
         "round blue castle lake at the centre, dense green wildwood across the "
         "top, a small thatched village on one bank, a tiny castle on a hill, a far "
         "shore of patchwork fields on the opposite bank, a white waterfall "
         "tumbling into the lake, and flat green lily pads spread across one "
         "shallow corner. Painted pictures only, tiny trees, rooftops, wavy ripple "
         "lines and dotted paths, with every margin and open area left as bare "
-        "clean parchment",
+        "deep indigo background",
     ),
     (
         "gear-tackle-room",
@@ -1539,10 +1501,10 @@ TAB_VIGNETTE = (
 
 CONSOLE_TABS = [
     ("lake", "a small round blue lake with one fish leaping out of it in a bright arc of water"),
-    ("map", "a rolled parchment map tied with string beside a round brass compass with a plain needle"),
-    ("court", "a red velvet throne with carved gold-painted wooden arms"),
+    ("map", "a luminous rainbow kingdom map beside a vivid turquoise compass rose"),
+    ("court", "a violet throne with magenta and turquoise carved flowing arms"),
     ("gear", "a fishing rod leaning against a little wooden tackle box with its lid open"),
-    ("fishopedia", "an open book showing one painted fish across both pages"),
+    ("fishopedia", "a luminous open field journal showing one wildly colored fish across both pages"),
 ]
 
 # Daily proclamations (kind_robots utils/rulerHooked/dailyEvents.ts). The fourth
@@ -1716,10 +1678,10 @@ def console_entries(cast: list[dict[str, str]]) -> list[dict]:
     """Backdrops, tab vignettes, proclamation scenes and shop art for the console UI."""
     names = {c["slug"]: f"{c['name']} {c['honorific']}" for c in cast}
 
-    def tail(body: str, style: str = CONSOLE_CHRONICLE) -> str:
-        return f"{body}. {style}. {NO_TEXT}"
+    def tail(body: str, style: str = CONSOLE_RAINBOW) -> str:
+        return f"{style}. {body}. {NO_TEXT}"
 
-    def entry(kind: str, key: str, label: str, body: str, style: str = CONSOLE_CHRONICLE) -> dict:
+    def entry(kind: str, key: str, label: str, body: str, style: str = CONSOLE_RAINBOW) -> dict:
         return make_entry(
             request_id=f"ruler-hooked-console-{kind}-{key}",
             image_path=f"public/images/ruler-hooked/{kind}/{key}.webp",
@@ -1765,12 +1727,12 @@ def console_entries(cast: list[dict[str, str]]) -> list[dict]:
         entries.append(
             entry(
                 "events", key, f"daily proclamation: {title}", f"{body}. {EVENT_VIEW}",
-                BROADSIDE,
+                SPECTRUM_PRINT,
             )
         )
 
     for key, name, body in CONSOLE_GEAR:
-        entries.append(entry("gear", key, f"shop: {name}", body, BROADSIDE))
+        entries.append(entry("gear", key, f"shop: {name}", body, SPECTRUM_PRINT))
 
     # Quill the Steward coaches the tutorial and presents court petitions, but
     # the only render of the advisor (character-steward-quill.webp, 256px) came
@@ -1782,7 +1744,7 @@ def console_entries(cast: list[dict[str, str]]) -> list[dict]:
             label="Ruler Hooked console: Quill the Steward portrait",
             size=PORTRAIT,
             prompt=(
-                f"{STEWARD_LOOK}, {PORTRAIT_FRAME}. {chronicle_style('pristine')}. {NO_TEXT}"
+                f"{STEWARD_LOOK}, {PORTRAIT_FRAME}. {rainbow_style('pristine')}. {NO_TEXT}"
             ),
             priority=CONSOLE_PRIORITY,
             lane="console",
@@ -1813,7 +1775,7 @@ def layer_entries(regions: dict[str, dict[str, list[str]]]) -> list[dict]:
                     f"region state {region}/{state} has no REGION_TIER entry; place "
                     "it on the pristine/strained/rotten scale in this script"
                 )
-            style = chronicle_style(tier, "layer")
+            style = rainbow_style(tier, "layer")
             for time in spec["times"] or [None]:
                 stem = f"{region}-{state}" + (f"-{time}" if time else "")
                 lighting = f". {TIME_MOD[time]}" if time else ""
