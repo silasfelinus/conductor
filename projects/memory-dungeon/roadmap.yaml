@@ -158,11 +158,11 @@ tasks:
   - id: t-023
     milestone: m2
     title: "Deliver photograph Chronicle, Earth timeline and ending spoiler gates"
-    status: claimed
+    status: review
     depends_on: t-018
     passes: 0
     stakes: reversible
-    updated: '2026-11-06T20:45:00Z'
+    updated: '2026-11-06T20:51:00Z'
     owner: worker
     claimed_by: 2026-11-06T204500Z-memory-dungeon-t023-k7q2
     claimed_at: '2026-11-06T20:45:00Z'
@@ -181,6 +181,8 @@ tasks:
       2026-11-04 PT cleanup pass: stale review with an expired claim; the recorded slice landed (or was superseded) and the note itself lists remaining scope, so back to ready for the next slice rather than done.
 
       2026-11-06 PT: Confirmed e08 earth-15 at 1,4 has replay-validated choice and chronology coverage; earth-16 at 6,7 remains intentionally spoiler-locked because its authored scene is not present. No implementation shipped this pass; retain READY for a playable 6,7 route and actual image delivery verification.
+
+      Added e08 5,7 to 6,7 authored route, replay-gated earth-16 pickup and seeded southern-route forgery tests; Kind Robots PR/CI pending. Further photos and art delivery remain.
   - id: t-030
     milestone: m3
     title: "Build scene-art production manifest and sixteen-realm coverage checks"
