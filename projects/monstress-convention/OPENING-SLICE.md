@@ -1,26 +1,32 @@
-# Opening Vertical Slice: The Case of the Locked Dressing Room
+# MONSTREXX — The Two Ghosts of Last Call
+_Opening-case author guide, 2026-11-05 PT. **Monstrexx Convention is a location in the city, not the game's title.**_
 
-**Scope:** One playable 25–45 minute complete mystery tutorial in the Grand Gloaming. This document names author-visible beats, not public hints.
+## Cold open
+Odette, a morally slippery female agent for MONSTREXX, is on a private, consensual adult date with a female sex worker, Violet. They get flirtatious, the scene fades suggestively to the buzzing ice machine and peeling motel wallpaper. A hallway knock, a distinctive mechanical double clang, a shadow and a sudden silence. **An unseen murderer kills both women with the same decorative/stage knife.** No sexualized violence or graphic injury. The player does not learn the killer.
 
-## Graph
-`parking -> lobby -> registration -> convention hall -> hot tub courtyard`, with `lobby -> stair -> upstairs corridor -> Celestine suite`. Reception unlocks the lift; staff access lets the player bypass a locked corridor after meeting Pip. Keep the number of transitions low and icon travel immediate.
+## Start as Iris
+Iris arrives with Nico, her sharp but extremely touch-averse, unattractive investigative boss. She does the hands-on tasks; he detects timeline contradictions and rebuffs her playful overtures. They share a changing topics notebook and a press case file. Nico cannot pick objects up even when temporarily directing his analysis.
 
-## Sequence and proof
-1. Start with Iris and Nico in parking lot. Initial Look/Talk/Use prompts teach contextual verbs, a sign advertises convention timing, and both have unique observations.
-2. Get a press credential. Nico can recover a forged-but-harmless fan-pass from autographs plus a clerical mistake. Iris can document a legitimate photograph commission and get official access through Marta. Both lead to the same panel but generate different witness trust flags.
-3. Witness Celestine disagreeing with Odette about a contract before the panel. Celestine's line about 'afterlife residuals' works as a joke and as later evidence.
-4. At the brand panel, a rolling blackout lets Odette depart along the staff hall, but the fan is seen outside the suite and looks immediately guilty. Celestine is discovered dead in her locked room. The player is not asked to solve the whole conspiracy in a tutorial.
-5. Ghost appears first in a fogged bathroom mirror. She remembers bitter developer-smell, a short mechanical bell, and that she never saw who touched her. Her memory is **not** a magical lie detector.
-6. Both characters may interrogate the ghost. Nico learns tabloid gossip; Iris documents that the 'bell' is the laundry lift call and finds an impossible schedule discrepancy.
-7. Reconstruct the mini-timeline: photograph a service bell scratch + consult night porter call log + compare fanboy room photographs. Fan has stalked someone and should be accountable for it, but his photos prove he was elsewhere at murder time.
-8. Close prototype with choice: publish an unverified allegation, keep working, or issue a cautious bulletin. All conclude a self-contained episode and unlock an ending/scene in the Playbook Kit. Subsequent full game follows the stronger evidence.
+## Scene graph
+motel-exterior -> front-office -> ice-alcove -> balcony-corridor -> investigators-room -> odette-room
+balcony-corridor -> neighbor-room; ice-alcove -> sewer-hatch (later unlocked).
+motel-exterior -> city-map -> MONSTREXX CONVENTION / supernatural-joke-shop / draculina-mansion (earned later).
 
-## Fail-forward cases
-- Miss badge path: lobby/manager offers alternate task.
-- Burn a clue during an item-combination experiment: evidence copy in notebook survives.
-- Exhaust all Nico questions: switch to Iris; both have independent ways to unlock the service route.
-- Accuse the fan prematurely: he flees to the parking lot and the photo timestamp can still be recovered via his camera found with consent/manager inventory. His behavior is not forgiven.
-- Turn off optional adult flirtation: no puzzle progression changes.
+## Eight playable beats
+1. Iris looks at the neon motel sign; Nico identifies a subtle sign of recent activity. Get their key from the manager, with photo ID or legitimate check-in alternative.
+2. Investigate ice machine and its distinctive double clang. An alternate route is through the maintenance log or the neighbor's testimony.
+3. Ask a nearby guest about two women's voices and a third visitor. Their account is confused, but not dishonest.
+4. Open the crime room by staff assistance or a legitimate emergency access puzzle. Nico stays back; Iris touches the door and photographs evidence.
+5. Find Odette and Violet dead, together, near one recognizable ornamental knife. Examine the weapon, the ice bucket, the key ledger, scene geometry. Do not identify killer yet.
+6. Meet and separately interview **two ghosts**. Odette knows MONSTREXX deals and has enemies; Violet knows mundane observational details. **Neither can name the killer**. Topics from one open branches with the other.
+7. Solve a small fair mini-case: determine the double clang time, identify the knife as a suspicious collectible/stage prop, exonerate fanboy Gavin for these murders *while preserving consequences for his stalking*.
+8. Open a new city lead to the separate MONSTREXX Convention Center. The prototype ends with the question 'Which MONSTREXX star wanted her agent dead?' instead of pretending the whole mystery is solved.
 
-## Data contracts to implement
-`Room`, `Hotspot`, `Verb`, `Item`, `Topic`, `InterviewBranch`, `Clue`, `Puzzle`, `CaseFlag`, `CharacterPresence`, `Ending`. Each clue records two source paths. Topic key includes `actorId`, `targetId`, `topicId` and `caseStage`. Saves preserve room, selected protagonist, inventory owners, unlocked topics, exhausted branches, case flags, scene unlocks and art IDs.
+## Fail-forward requirements
+- Two paths to scene entry, ice timing and weapon-origin leads.
+- Conversation exhaustion tracked per witness; ghost testimonies independent.
+- Nico does not touch anything and cannot be forced to by switching actors.
+- Mature scenes optional; skip/fade option cannot disable evidence.
+- No item loss softlocks, no forced accusation to progress.
+- Save captures scene, phase, clues, topics, inventories, witness questions and scrapbook unlocks.
+- Old Celestine-victim / Odette-culprit / ballroom-blackout opening is **retired**, not still secretly playable.
