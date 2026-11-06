@@ -213,7 +213,7 @@ tasks:
   - id: t-009
     milestone: m3
     title: "Write and implement six genuinely different crew campaigns"
-    status: claimed
+    status: ready
     depends_on: [t-004, t-007]
     passes: 0
     stakes: reversible
@@ -257,11 +257,32 @@ tasks:
       city-lab passed. No save, wallet or schema change. Remaining: human fun acceptance;
       finale-panel screenshot not yet taken; consider adding legacy bouts to the campaign
       playtest audit.
-    updated: '2026-11-06T01:39:43Z'
+
+      2026-11-06 PT: Built (patch slime-city-t-009-r6, base e18fcb20) an authored BLACKOUT
+      battlefield and objective for all 30 campaign chapters, so the six crew campaigns no
+      longer fight the same pit with different numbers. There are four objectives: SMASH on a
+      rebuilt field, HEIST (the rival vault cannot be damaged and only a flag run wins), HOLD
+      OUT (survive to the bell with your base standing and your flag home) and BEAST (a named
+      giant such as the Paper Catgirl or the Patent Press, where the killing blow wins). Each
+      crew mixes at least three of them, and each chapter has a briefing tied to its scene;
+      the rules text is generated from the applied data. The engine hooks only activate on
+      campaign battlefields: holdout/heist, placeFighter veterans, set-piece traps outside the
+      trap cap, and a fix so nothing deploys onto the monster's square. The chapter panel
+      shows THE BATTLEFIELD and the arena names the objective. The new
+      verifySlimeCityCampaignBattlefields test proves: every chapter × approach is winnable by
+      seeded play and an idle player never wins (16 seeds); all six campaigns reach their
+      endings with real bouts; saves stay valid. All Slime City suites pass. Remaining: (1) a
+      pre-existing BLACKOUT softlock where a flag carrier and its own escort block each other
+      forever; a fix needs a balance re-baseline, and the battlefields are designed so it
+      cannot hand an idle player a win; (2) human fun acceptance, especially for the low-end
+      cunning finales (Moonlight Deed, The Boardroom); (3) Clash is now canonical, so a
+      decision is needed on whether campaigns move to Clash; (4) add the battlefields to the
+      favor playtest audit. Merged as kind_robots#4865 (2026-11-06).
+    updated: '2026-11-06T22:29:31Z'
     owner: worker
-    claimed_by: 2026-11-06T013942Z-slime-city-t-009-r6b
-    claimed_at: '2026-11-06T01:39:43Z'
-    implementation_pr: 'silasfelinus/kind_robots#4792'
+    claimed_by: 2026-11-06T215718Z-slime-city-t-009-r6c
+    claimed_at: '2026-11-06T21:57:19Z'
+    implementation_pr: 'silasfelinus/kind_robots#4865'
   - id: t-010
     milestone: m3
     title: "Create daily, weekly and evergreen missions with earned progression"
@@ -649,3 +670,102 @@ tasks:
     claimed_by: 2026-11-05T100454Z-slime-city-t021-claude
     claimed_at: '2026-11-05T10:04:55Z'
     implementation_pr: 'silasfelinus/kind_robots#4800'
+
+  - id: t-030
+    milestone: m2
+    title: "CLASH: fun-first automatic five-lane prototype"
+    status: done
+    claimed_by: 20261106T100143250Z-slime-city-clash-t-030-k4n8
+    claimed_at: '2026-11-06T10:01:43.250Z'
+    updated: '2026-11-06T10:41:42.317Z'
+    passes: 0
+    stakes: reversible
+    note: |-
+      Silas, 2026-11-06 PT: Build Slime City's new core around automatic five-lane
+      combat, as a small fun-first playable prototype. Two static rows of five,
+      opponents alternate two card plays each, simultaneous automatic clashes,
+      banked mana, 20-card curated decks, replacement of occupied friendly slots,
+      readable damage forecasts and short CPU duels. Preserve all existing
+      BLACKOUT/BLOODRUSH/TURF/ALLEYS modes and economy; no public launch or live
+      rewards. Add deterministic replay and focused tactical tests. Human playtest
+      approval is a separate gate.
+
+      Playable standalone Clash engine, illustrated five-lane screen and focused deterministic rules tests committed on worker/slime-city-t-030-clash-20261106T1001-k4n8. Awaiting CI and merge; no account economy or public publication.
+
+      Kind Robots #4850 merged as c4bd12d0f35cdc9bb31a910df127dc7f221747b2 after 8/8 latest-head GitHub workflows completed successfully: formatting, TypeScript, four contract shards (including Clash replay/CPU), layout, architecture, schema parity, facet smoke and container image. New standalone automatic five-lane Clash practice mode with illustrated UI, seeded 20-card decks, simultaneous combat, two alternating card plays, creature replacement, equipment/traps, banked mana and CPU. Admin-only; no rewards or database mutation. Conductor direction PR #7105 also merged e136bab7fb9bb8a094b488480d9c3f81e1613bec. Human fun acceptance and live deployment remain unverified, separate gates.
+
+  - id: t-031
+    milestone: m2
+    title: "Expose Clash in the normal Slime City Play interface"
+    status: done
+    claimed_by: 20261106T110147314Z-slime-city-normal-clash-t-031-v7q2
+    claimed_at: '2026-11-06T11:01:47.314Z'
+    updated: '2026-11-06T11:13:07.294Z'
+    passes: 0
+    stakes: reversible
+    note: |-
+      Silas, 2026-11-06 PT: "huh, this should be accessible in the normal version,
+      not a special admin lin". Undo t-030's admin-only Clash restriction in the
+      shared game interface so players can access Clash via /play/slime-city.
+      Make the regular Play tab work for guests and signed-in non-admins, and
+      update the route/access regression test. The user explicitly authorized
+      normal-game access in this session. Do not change progression, rewards,
+      purchases, account data, marketing launch, or subjective-fun approval.
+
+      Removed mistaken admin-only checks from the shared game UI. Added a regression test requiring CLASH on the public normal Play route. Working branch worker/slime-city-t-031-normal-clash-play-20261106-v7q2. Explicitly requested normal game availability; no marketing launch or rewards.
+
+      Merged Kind Robots #4851 (f7f4eb858b20151e5ae48d9ec416d4385e4e0c6e) and Conductor #7106 (48bac78f37be355243b4aba56d4c9c97034ebf29); all latest-head checks green; normal Play route now shows ungated Clash tab.
+
+  - id: t-032
+    milestone: m2
+    title: "CLASH canonical rules: two plays, tactical attacks, fresh draws, healing and exclusive balance"
+    status: done
+    claimed_by: 20261106T111652123Z-slime-city-clash-core-t-032-9r4z
+    claimed_at: '2026-11-06T11:16:52.123Z'
+    updated: '2026-11-06T11:50:22.003Z'
+    passes: 0
+    stakes: reversible
+    note: |-
+      Silas, 2026-11-06 PT: CLASH is now the MAIN Slime City combat mode;
+      ARENA, ALLEYS, BLACKOUT, BLOODRUSH, TURF and other modes become Legacy.
+      All development, gameplay playtests and card rebalance target CLASH
+      exclusively. A turn gives two card plays; marked powerful/special cards
+      cost both plays. Each round draw from a shuffled 20-card deck; discard
+      every unplayed hand card at end of turn, never hold them over. After
+      placement choose attacks: followers trade their power damage on attack,
+      any enemy follower is targetable, boss only when no enemies remain.
+      Heal every surviving follower for one at end of full round. Rebalance
+      Clash-specific stats and actions without changing legacy modes. Update
+      normal Play UI/navigation and deterministic CPU, replay, deck tests.
+      No account rewards, DB migration or unrelated publication changes.
+
+      Canonical CLASH engine in worker/slime-city-t-032-canonical-clash-20261106-9r4z: deterministic two-play placement, selectable follower trades/face locks, full-hand discard and redraw, follower healing, all-card Clash-only balance, smarter CPU, portrait hand and readable primary Play navigation. Tests cover all crews and seeded complete matches. Awaiting Kind Robots and Conductor CI.
+
+      Kind Robots PR #4852 merged as f5e164e1b27d909b9153c7a7288126592b4d4d8a. Eight latest-head CI workflows all completed successfully: Contract Tests, TypeScript, Prettier formatting, Layout Contract, Project Architecture, Schema Migration Parity, Facet Alias Smoke Test and Publish Production Container. Canonical two-play CLASH with manual power-for-power attacks, 20-card decks, fresh five-card draws and discards, end-round follower healing, all-roster Clash-only stat/action profiles and deterministic cross-crew CPU replays. Default Play route launches Clash; other formats are behind Legacy. Conductor direction PR #7108 merged as c8b4577e4b05e40e982ec146282932c9ff5dbf4e. No new art jobs, account rewards, database writes or production deployment. Self-hosted Force Update and human fun/art acceptance remain distinct steps.
+
+  - id: t-033
+    milestone: m4
+    title: "Clash art-first presentation: board focus, compact hand, one collection, verified artwork/Comfy queue"
+    status: done
+    claimed_by: 20261106T122227751Z-slime-city-art-ui-t-033-s5q8
+    claimed_at: '2026-11-06T12:22:27.751Z'
+    updated: '2026-11-06T13:05:34.795Z'
+    passes: 0
+    stakes: reversible
+    note: |-
+      Silas, 2026-11-06 PT: On normal Play Slime City Clash, remove all redundant
+      scene titles, stage subtitle, round/turn header, duplicate rules button
+      and playmat-to-hand empty space. Make the playboard the primary full-width
+      art stage and scale the hand down to supplementary playable 2:3 cards.
+      Unify Cards and Rewards behind an art-first Collection destination and
+      replace the in-row Legacy expansion with a proper popover dropdown.
+      Apply SLIME CITY wordmark styling to the real workspace navigation title,
+      not a second duplicate title block. Diagnose missing card art (current
+      manifest maps only 73 of 300, and private image auth further filters),
+      prioritize existing and new Comfy art jobs at maximum priority, preserve
+      secure image access, and distinguish queued from delivered art. Keep
+      Clash canonical. No undocumented public art permission escalation.
+
+      UI fix under worker/slime-city-t-033-art-first-clash-20261106-s5q8: compact card rail, dominant illustrated board, no duplicate game wordmark, native Legacy dropdown, unified Collection and Bounties subnav, honest card coverage display and authorized art fallback. Art ledger worker/slime-city-t-033-comfy-art-20261106-s5q8 contains 70 missing default-deck card requests + one Clash mat followed by 157 remaining cards; max priority 1000, local Comfy engine, private until approved, distinct scene prompts with mechanical-jargon checks. Awaiting CI.
+
+      Kind Robots #4856 merged into main as cd1c8f7f60b46d401d92d3a08aebcedc17f0ed06 after eight of eight completed latest-head green CI checks: navigation, tablet navigation, TypeScript, formatting, architecture, schema parity, layout and all project contract tests. Clash now leads with a larger overhead-art board and compact hand; a single workspace SLIME CITY wordmark removes duplicate stage header; game help is not duplicated; compact action rail holds Rematch; Collection consolidates cards and legacy rewards; Legacy is a true dropdown. ArtImage fetch now tries already-public media without requiring login and provides authorized crew-art fallback for missing card art without widening any image permissions. Conductor art #7110 merged as 9b8eed736444045ba2d3301cca80389053c5817d, with 228 max-priority auto_submit Comfy requests (70 default-deck cards plus one board in first wave; 157 remaining cards in second). These are authored requests, not yet confirmed ArtJobs or delivered image bytes. Self-hosted Force Update and public-art permission review remain separate human gates.

@@ -1,41 +1,41 @@
 # Roadmap Audit
 
-Generated: `2026-11-05T18:05:01.348779+00:00`
+Generated: `2026-11-06T17:32:19.532461+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
-- **93** roadmaps, **20** active + **14** continuous projects, **2855** tasks
-- **248 ready**, **215 waiting**, **32 needs-human**, **24 claimed/review**, **2267 done**
+- **93** roadmaps, **20** active + **14** continuous projects, **2877** tasks
+- **251 ready**, **215 waiting**, **32 needs-human**, **27 claimed/review**, **2283 done**
 - Findings: **0 errors**, **82 warnings**, **125 informational**
 
 ## Project inventory
 
 | # | Project | State | Kind | Ready | Waiting | Human | In progress | Done / Total |
 |---:|---|---|---|---:|---:|---:|---:|---:|
-| 1 | `weird-humboldt` | active | software | 3 | 8 | 1 | 4 | 54 / 70 |
-| 2 | `zuzu-gamebook` | active | software | 7 | 1 | 0 | 0 | 6 / 14 |
-| 3 | `zuzu-shifting-lands` | active | software | 6 | 8 | 0 | 2 | 32 / 48 |
-| 4 | `emperor-of-dust` | active | software | 6 | 0 | 1 | 5 | 50 / 62 |
-| 5 | `rainbow-bullet-hell-space-princess` | active | software | 10 | 2 | 0 | 1 | 30 / 43 |
+| 1 | `weird-humboldt` | active | software | 4 | 8 | 1 | 3 | 54 / 70 |
+| 2 | `zuzu-gamebook` | active | software | 6 | 1 | 0 | 1 | 6 / 14 |
+| 3 | `zuzu-shifting-lands` | active | software | 6 | 8 | 0 | 1 | 34 / 49 |
+| 4 | `emperor-of-dust` | active | software | 7 | 0 | 1 | 4 | 50 / 62 |
+| 5 | `rainbow-bullet-hell-space-princess` | active | software | 9 | 2 | 0 | 2 | 30 / 43 |
 | 6 | `save-the-plumber` | active | software | 8 | 5 | 0 | 0 | 14 / 27 |
 | 7 | `shifting-desks` | active | software | 5 | 1 | 0 | 0 | 42 / 48 |
 | 8 | `kind-pinball` | finished | software | 0 | 0 | 0 | 0 | 35 / 35 |
 | 9 | `zuzu-lair` | paused | software | 1 | 4 | 2 | 0 | 8 / 15 |
 | 10 | `kr-arcade` | active | software | 33 | 54 | 0 | 0 | 77 / 164 |
 | 11 | `zuzu-showdown` | paused | software | 3 | 0 | 0 | 0 | 29 / 32 |
-| 12 | `memory-dungeon` | active | software | 19 | 17 | 1 | 4 | 19 / 60 |
-| 13 | `cthulhuquarium` | active | software | 6 | 5 | 0 | 0 | 86 / 97 |
+| 12 | `memory-dungeon` | active | software | 16 | 17 | 1 | 7 | 22 / 63 |
+| 13 | `cthulhuquarium` | active | software | 7 | 5 | 0 | 1 | 86 / 99 |
 | 14 | `kind-economy` | paused | software | 1 | 4 | 1 | 0 | 22 / 28 |
 | 15 | `comet-city-academy` | active | software | 10 | 11 | 0 | 1 | 11 / 33 |
-| 16 | `game-of-captains` | active | software | 6 | 1 | 0 | 2 | 28 / 37 |
+| 16 | `game-of-captains` | active | software | 7 | 1 | 0 | 0 | 29 / 37 |
 | 17 | `butterfly-gallery` | finished | software | 1 | 0 | 0 | 0 | 34 / 35 |
 | 18 | `art-archive` | finished | software | 2 | 2 | 0 | 0 | 40 / 44 |
 | 19 | `crystal-street` | active | software | 2 | 2 | 0 | 0 | 19 / 23 |
 | 20 | `hybridizer` | active | software | 2 | 0 | 2 | 1 | 6 / 11 |
 | 21 | `every-villain-tactics` | active | software | 5 | 11 | 0 | 0 | 8 / 24 |
-| 22 | `slime-city` | active | software | 6 | 6 | 0 | 2 | 15 / 29 |
+| 22 | `slime-city` | active | software | 5 | 6 | 0 | 3 | 19 / 33 |
 | 23 | `mandarin-tutor` | paused | software | 1 | 0 | 0 | 0 | 30 / 31 |
 | 24 | `interface-vision` | continuous | software | 11 | 2 | 0 | 1 | 139 / 153 |
 | 25 | `humboldt-scoop-cms` | paused | software | 1 | 1 | 4 | 0 | 40 / 46 |
@@ -55,7 +55,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 39 | `coat-dance` | paused | content | 1 | 4 | 0 | 0 | 7 / 17 |
 | 40 | `conductor-app` | retired | software | 0 | 0 | 0 | 0 | 14 / 15 |
 | 41 | `media-watchlist` | finished | software | 0 | 0 | 0 | 0 | 20 / 20 |
-| 42 | `ruler-hooked` | active | software | 5 | 5 | 0 | 0 | 43 / 53 |
+| 42 | `ruler-hooked` | active | software | 10 | 5 | 0 | 1 | 49 / 65 |
 | 43 | `brainstorm` | active | software | 4 | 0 | 1 | 0 | 33 / 38 |
 | 44 | `animation-manager` | continuous | software | 3 | 0 | 0 | 0 | 22 / 26 |
 | 45 | `comic-creator` | retired | software | 0 | 0 | 0 | 0 | 11 / 23 |
@@ -124,22 +124,26 @@ _None._
 - **STALE_CLAIM_FIELDS** — `comet-city-academy` / `t-002`: status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed.
 - **STALE_CLAIM_FIELDS** — `comet-city-academy` / `t-004`: status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed.
 - **STALE_CLAIM_FIELDS** — `comet-city-academy` / `t-007`: status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed.
+- **STALE_CLAIM_FIELDS** — `comet-city-academy` / `t-022`: status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed.
 - **STALE_CLAIM_FIELDS** — `comet-city-academy` / `t-023`: status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed.
 - **STALE_CLAIM_FIELDS** — `comet-city-academy` / `t-031`: status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed.
 - **POSSIBLY_UNNECESSARY_GATE** — `comic-film` / `t-009`: Reversible software task is human-gated without an obvious hard-gate reason in its note.
 - **STALE_CLAIM_FIELDS** — `emperor-of-dust` / `t-033`: status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed.
 - **STALE_CLAIM_FIELDS** — `emperor-of-dust` / `t-044`: status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed.
+- **STALE_CLAIM_FIELDS** — `emperor-of-dust` / `t-046`: status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed.
 - **STALE_CLAIM_FIELDS** — `emperor-of-dust` / `t-047`: status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed.
-- **STALE_CLAIM_FIELDS** — `emperor-of-dust` / `t-048`: status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed.
-- **STALE_IN_PROGRESS** — `emperor-of-dust` / `t-049`: Task has remained review for 11 days.
-- **STALE_IN_PROGRESS** — `emperor-of-dust` / `t-050`: Task has remained review for 11 days.
-- **STALE_IN_PROGRESS** — `emperor-of-dust` / `t-060`: Task has remained review for 10 days.
+- **STALE_IN_PROGRESS** — `emperor-of-dust` / `t-049`: Task has remained review for 12 days.
+- **STALE_IN_PROGRESS** — `emperor-of-dust` / `t-050`: Task has remained review for 12 days.
+- **STALE_CLAIM_FIELDS** — `emperor-of-dust` / `t-051`: status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed.
+- **STALE_IN_PROGRESS** — `emperor-of-dust` / `t-060`: Task has remained review for 11 days.
 - **POSSIBLY_UNNECESSARY_GATE** — `every-villain-tactics` / `t-014`: Reversible software task is human-gated without an obvious hard-gate reason in its note.
+- **STALE_CLAIM_FIELDS** — `every-villain-tactics` / `t-018`: status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed.
+- **STALE_CLAIM_FIELDS** — `game-of-captains` / `t-011`: status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed.
 - **STALE_CLAIM_FIELDS** — `game-of-captains` / `t-031`: status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed.
 - **STALE_CLAIM_FIELDS** — `game-of-captains` / `t-032`: status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed.
 - **STALE_CLAIM_FIELDS** — `hybridizer` / `t-007`: status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed.
-- **STALE_IN_PROGRESS** — `hybridizer` / `t-009`: Task has remained review for 3 days.
-- **STALE_IN_PROGRESS** — `interface-vision` / `t-149`: Task has remained review for 16 days.
+- **STALE_IN_PROGRESS** — `hybridizer` / `t-009`: Task has remained review for 4 days.
+- **STALE_IN_PROGRESS** — `interface-vision` / `t-149`: Task has remained review for 17 days.
 - **STALE_CLAIM_FIELDS** — `kind-economy` / `t-011`: status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed.
 - **GATED_DONE_WITHOUT_APPROVAL** — `kind-economy` / `t-017`: Human-gated task is done without approved_by_human: true. This may be intentional when objective incident-recovery/reconciliation criteria closed the task without a human policy decision; review the task note/provenance rather than treating this bookkeeping state as a framework defect.
 - **GATED_DONE_WITHOUT_APPROVAL** — `kind-robots` / `t-139`: Human-gated task is done without approved_by_human: true. This may be intentional when objective incident-recovery/reconciliation criteria closed the task without a human policy decision; review the task note/provenance rather than treating this bookkeeping state as a framework defect.
@@ -162,7 +166,6 @@ _None._
 - **STALE_CLAIM_FIELDS** — `memory-dungeon` / `t-023`: status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed.
 - **STALE_CLAIM_FIELDS** — `memory-dungeon` / `t-025`: status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed.
 - **STALE_CLAIM_FIELDS** — `memory-dungeon` / `t-029`: status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed.
-- **STALE_CLAIM_FIELDS** — `memory-dungeon` / `t-030`: status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed.
 - **STALE_CLAIM_FIELDS** — `memory-dungeon` / `t-037`: status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed.
 - **STALE_CLAIM_FIELDS** — `memory-dungeon` / `t-038`: status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed.
 - **STALE_CLAIM_FIELDS** — `memory-dungeon` / `t-039`: status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed.
@@ -172,30 +175,27 @@ _None._
 - **STALE_CLAIM_FIELDS** — `memory-dungeon` / `t-047`: status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed.
 - **IN_PROGRESS_WITHOUT_TIMESTAMP** — `playbook-kit` / `t-026`: Claimed/review task has no parseable updated timestamp.
 - **STALE_CLAIM_FIELDS** — `rainbow-bullet-hell-space-princess` / `t-011`: status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed.
-- **STALE_CLAIM_FIELDS** — `rainbow-bullet-hell-space-princess` / `t-012`: status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed.
 - **STALE_CLAIM_FIELDS** — `rainbow-bullet-hell-space-princess` / `t-022`: status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed.
-- **STALE_IN_PROGRESS** — `rainbow-bullet-hell-space-princess` / `t-034`: Task has remained review for 11 days.
+- **STALE_IN_PROGRESS** — `rainbow-bullet-hell-space-princess` / `t-034`: Task has remained review for 12 days.
 - **STALE_CLAIM_FIELDS** — `save-the-plumber` / `t-005`: status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed.
 - **STALE_CLAIM_FIELDS** — `save-the-plumber` / `t-015`: status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed.
 - **STALE_CLAIM_FIELDS** — `shifting-desks` / `t-032`: status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed.
 - **STALE_CLAIM_FIELDS** — `shifting-desks` / `t-046`: status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed.
-- **STALE_CLAIM_FIELDS** — `shifting-desks` / `t-048`: status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed.
-- **STALE_IN_PROGRESS** — `slime-city` / `t-005`: Task has remained review for 3 days.
-- **STALE_IN_PROGRESS** — `slime-city` / `t-006`: Task has remained review for 3 days.
-- **STALE_CLAIM_FIELDS** — `slime-city` / `t-009`: status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed.
+- **STALE_IN_PROGRESS** — `slime-city` / `t-005`: Task has remained review for 4 days.
+- **STALE_IN_PROGRESS** — `slime-city` / `t-006`: Task has remained review for 4 days.
 - **POSSIBLY_UNNECESSARY_GATE** — `slime-city` / `t-014`: Reversible software task is human-gated without an obvious hard-gate reason in its note.
 - **STALE_CLAIM_FIELDS** — `slime-city` / `t-021`: status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed.
 - **STALE_CLAIM_FIELDS** — `slime-city` / `t-022`: status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed.
 - **POSSIBLY_UNNECESSARY_GATE** — `tzaddik-gallery` / `t-013`: Reversible software task is human-gated without an obvious hard-gate reason in its note.
-- **STALE_IN_PROGRESS** — `weird-humboldt` / `t-014`: Task has remained review for 14 days.
+- **STALE_IN_PROGRESS** — `weird-humboldt` / `t-014`: Task has remained review for 15 days.
 - **STALE_CLAIM_FIELDS** — `weird-humboldt` / `t-022`: status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed.
-- **STALE_IN_PROGRESS** — `weird-humboldt` / `t-060`: Task has remained review for 13 days.
-- **STALE_CLAIM_FIELDS** — `weird-humboldt` / `t-066`: status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed.
+- **STALE_CLAIM_FIELDS** — `weird-humboldt` / `t-045`: status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed.
+- **STALE_IN_PROGRESS** — `weird-humboldt` / `t-060`: Task has remained review for 14 days.
 - **STALE_CLAIM_FIELDS** — `zuzu-gamebook` / `t-007`: status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed.
 - **SOFT_NEEDS_HUMAN** — `zuzu-lair` / `t-006`: needs-human has no obvious hard-gate marker; consider returning it to ready, setting soft_gate: true, or documenting the actual gate.
 - **POSSIBLY_UNNECESSARY_GATE** — `zuzu-lair` / `t-008`: Reversible software task is human-gated without an obvious hard-gate reason in its note.
 - **POSSIBLY_UNNECESSARY_GATE** — `zuzu-lair` / `t-010`: Reversible software task is human-gated without an obvious hard-gate reason in its note.
-- **STALE_IN_PROGRESS** — `zuzu-shifting-lands` / `t-004`: Task has remained review for 26 days.
+- **STALE_IN_PROGRESS** — `zuzu-shifting-lands` / `t-004`: Task has remained review for 27 days.
 - **STALE_CLAIM_FIELDS** — `zuzu-shifting-lands` / `t-043`: status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed.
 - **POSSIBLY_UNNECESSARY_GATE** — `zuzu-showdown` / `t-025`: Reversible software task is human-gated without an obvious hard-gate reason in its note.
 

@@ -10,40 +10,39 @@ import scripts.build_ruler_hooked_art_queue as bruq
 # --- house styles ----------------------------------------------------------
 
 
-def test_chronicle_tiers_differ_and_name_the_decay():
-    pristine = bruq.chronicle_style("pristine")
-    rotten = bruq.chronicle_style("rotten")
-    assert "burnished" in pristine and "tarnished" not in pristine
-    assert "tarnished flaking gold" in rotten and "soot" in rotten
-    assert "foxing" in bruq.chronicle_style("strained")
+def test_rainbow_tiers_differ_and_name_the_decay():
+    pristine = bruq.rainbow_style("pristine")
+    rotten = bruq.rainbow_style("rotten")
+    assert "radiant" in pristine and "toxic" not in pristine
+    assert "toxic rainbow corruption" in rotten
+    assert "acid lime" in bruq.rainbow_style("strained")
 
 
 def test_layer_variant_is_borderless():
     for tier in bruq.TIERS:
-        layer = bruq.chronicle_style(tier, "layer")
-        assert "border" not in layer and "marginalia" not in layer
-        assert "edge to edge" in layer
-        assert "torn" not in layer  # a torn page edge would hole every layer below
-        assert "marginalia" in bruq.chronicle_style(tier, "bordered")
+        layer = bruq.rainbow_style(tier, "layer")
+        assert "border" not in layer and "river-ribbon" not in layer
+        assert "all four edges" in layer
+        assert "river-ribbon" in bruq.rainbow_style(tier, "bordered")
 
 
 def test_scenery_variants_carry_no_figure_clause():
     # Pilot ArtJobs 64361/64363: the figure clause paraded courtiers across layers.
     for tier in bruq.TIERS:
-        assert bruq.CHRONICLE_FIGURES not in bruq.chronicle_style(tier, "layer")
-        assert bruq.CHRONICLE_FIGURES not in bruq.chronicle_style(tier, "specimen")
-        assert bruq.CHRONICLE_FIGURES in bruq.chronicle_style(tier, "bordered")
+        assert bruq.RAINBOW_FIGURES not in bruq.rainbow_style(tier, "layer")
+        assert bruq.RAINBOW_FIGURES not in bruq.rainbow_style(tier, "specimen")
+        assert bruq.RAINBOW_FIGURES in bruq.rainbow_style(tier, "bordered")
 
 
 def test_unknown_tier_is_an_error():
     with pytest.raises(AssertionError):
-        bruq.chronicle_style("cheerful")
+        bruq.rainbow_style("cheerful")
 
 
-def test_cartoon_tail_is_gone():
+def test_antique_and_cartoon_tails_are_gone():
     assert not hasattr(bruq, "STYLE_TAIL")
-    for clause in (bruq.BROADSIDE, *(bruq.chronicle_style(t) for t in bruq.TIERS)):
-        for word in ("cartoon", "goofy", "charming", "storybook"):
+    for clause in (bruq.SPECTRUM_PRINT, *(bruq.rainbow_style(t) for t in bruq.TIERS)):
+        for word in ("cartoon", "goofy", "charming", "storybook", "medieval", "woodcut", "manuscript", "sepia"):
             assert word not in clause
 
 
@@ -86,7 +85,7 @@ def test_every_state_has_a_base_and_a_tier():
     assert "ruler-hooked-layer-far_shore-gallows-night" in ids
     poisoned = next(e for e in entries if e["id"] == "ruler-hooked-layer-lake-poisoned-day")
     assert "rainbow oil sheen" in poisoned["prompt"]
-    assert "tarnished flaking gold" in poisoned["prompt"]
+    assert "fluorescent toxic green pools" in poisoned["prompt"]
     assert "marginalia" not in poisoned["prompt"]
     assert set(bruq.REGION_BASE) == set(bruq.REGION_TIER)
 

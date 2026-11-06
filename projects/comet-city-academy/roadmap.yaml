@@ -159,7 +159,7 @@ tasks:
   - id: t-016
     milestone: m2
     title: "Build playable student-hero-villain evolution, betrayal and accomplice state"
-    status: claimed
+    status: ready
     depends_on: t-003
     passes: 0
     stakes: reversible
@@ -174,10 +174,32 @@ tasks:
       a guaranteed real NPC heel turn per run, redemption/prevention logic
       that doesn't counterfeit player choice, and at least two independent
       evil accomplices per early mastermind. See IDENTITY-SYSTEM.md.
+
+      2026-11-04 PT (round 6, patch on origin/main 239b6022): Built a playable slice. A
+      hero/villain/rogue alignment track for the player and every roster classmate now moves
+      only with night choices (led calls, district walks, the contracts you hand your crew)
+      and shows on the Hero screen, the crew cards and a debrief strip; it is saved as
+      optional alignmentLog. Two state-driven classmate arcs play as authored debrief beats.
+      "The Other Side of the Radio" is a three-beat heel turn for a classmate pushed three
+      steps against your side: reach/tail/leave, then promise/expose/release, then a turn that
+      a kept promise or changed work prevents. It has a mirror notebook/testimony version for
+      villain players. "Partners in Crime" is a three-beat accomplice job against the seeded
+      mastermind's warehouse; the deal you offered and what you did with the haul decide
+      loyalty, sellout or double agent. Payoffs: roster loss, accomplice +1 on villain/rogue
+      calls, recruiter evidence, morning lines and finale lines with a small support modifier.
+      The seeded day-20 betrayal, the 48 identities and the romance/triad rules are untouched.
+      Hero-only play fires neither arc, and saves are validated and backward-compatible.
+      Pinned by the new verifyCometAlignmentArcs.test.ts (wired into test:comet-city-academy).
+      Remaining for t-016: the 4+ seeded betrayal-candidate pool with a guaranteed per-run NPC
+      turn reconciled with day 20, redemption beats after a turn, six full character arcs and
+      partner/romance evolution, 390/768/1440 screenshots of the new debrief card, and art for
+      the beats. Merged as kind_robots#4842 (2026-11-06); task stays ready for the remaining
+      slices.
     owner: worker
     claimed_by: 2026-11-06T013942Z-comet-city-academy-t-016-r6b
     claimed_at: '2026-11-06T01:39:49Z'
-    updated: '2026-11-06T01:39:49Z'
+    updated: '2026-11-06T21:58:45Z'
+    implementation_pr: 'silasfelinus/kind_robots#4842'
   - id: t-017
     milestone: m3
     title: "Deliver 48 stable-name characters, three contextual splashes and meaningful branching arcs"

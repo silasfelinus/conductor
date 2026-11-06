@@ -223,7 +223,7 @@ tasks:
   - id: t-008
     milestone: m4
     title: Combat, powers, dice, inventory and save/resume UI polish
-    status: claimed
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: [t-002, t-003]
@@ -252,11 +252,29 @@ tasks:
       combat outcome illustrations, combat win-rate calibration (Guard/Feint vs Quiet Draw),
       and shorter save codes (compact the visited trail) if QR sharing is wanted.  Merged as
       kind_robots #4826.
-    updated: '2026-11-06T01:39:54Z'
+
+      2026-11-06 PT: Round-6 slice of t-008 is ready as a reversible PR. Below lg the
+      character sheet no longer replaces the story. It is a modal drawer over a dimmed reading
+      pane: a bottom sheet on phones and a right drawer on tablets. It has dialog/aria-modal,
+      a "Back to the story" button, backdrop and Escape close, a Tab trap, focus moved in and
+      restored, and an inert pane. Desktop keeps the same side column. Check-card chips no
+      longer state the roll twice: noteBeyondRoll drops "(Sense · 9)" and a failure cost moves
+      to the card's bottom line. At 390px the worst chip went from 6 lines covering the hint
+      to 2–3. The shared hand wraps chips between their parts and moves the shortcut key
+      inline when a hint exists, which also fixes the key covering hints in all 11 games.
+      Combat rounds now flash and shake on a wound and pop and float on a landed blow; reduced
+      motion keeps only the colour flashes, and loading a mid-fight save replays nothing.
+      Saves and fingerprints are unchanged. Verified with Playwright at 390/768/1440 on a
+      local dev server. Remaining: tests on real phones and tablets, combat outcome
+      illustrations, combat win-rate calibration (Guard/Feint vs Quiet Draw), shorter save
+      codes if QR sharing is wanted, and the Ledger dialog may need the same under-header
+      placement on tablets. Merged as kind_robots#4864 (2026-11-06, with a capture-group guard
+      fix in terms.ts).
+    updated: '2026-11-06T22:29:16Z'
     owner: worker
-    claimed_by: 2026-11-06T013942Z-zuzu-gamebook-t-008-r6b
-    claimed_at: '2026-11-06T01:39:54Z'
-    implementation_pr: 'silasfelinus/kind_robots#4826'
+    claimed_by: 2026-11-06T215718Z-zuzu-gamebook-t-008-r6c
+    claimed_at: '2026-11-06T21:57:25Z'
+    implementation_pr: 'silasfelinus/kind_robots#4864'
   - id: t-009
     milestone: m5
     title: QA and editorial playtest of every route, ending and device
@@ -292,7 +310,7 @@ tasks:
     milestone: m5
     title: Continuing autonomous chapter, art and balance evolution
     status: ready
-    updated: '2026-10-22T21:46:25.899Z'
+    updated: '2026-11-06T12:59:13.017Z'
     passes: 0
     recurring: true
     stakes: reversible
@@ -311,6 +329,8 @@ tasks:
       Scoped follow-up: compact immutable end-to-end golden replay encoding, scene-and-flag fingerprints, and six-encounter wounded/low-Resolve combat stress matrix. Working branch worker/zuzu-gamebook-t011-golden-wounded-b7e42. CI and frozen fixture snapshots pending.
 
       2026-10-22 PT: Merged Kind Robots PR #4037, squash commit 4121d73ef0126a751cdf95d1d13b3c66a8173b8f, after all 13 current-head workflows passed (including four contract shards, TypeScript, changed-file formatting). Frozen 15 genuine complete end-to-end ending journeys comprising 1217 reducer actions in utils/scripts/fixtures/zuzuGamebookGolden.json, with deterministic replay and route/flag/item/resource/RNG fingerprints. Tested all six authored fights at 3/6/9/12 HP and 0/2/4 Resolve, four strategies and 90 seeded fights per configuration, correctly allowing recovery scene effects after losing. No gameplay rule changes, ArtJobs, or external publication. Triage: 3 HP produced zero wins in 90 seeds for each of four tactics versus the Croc, Abbess, and Hollis; inspect retreat routes, player risk signals and wounded pacing, while retaining meaningful defeat continuations. Recurring task rearmed; full visual QA and pending illustration work remain with the other roadmap tasks.
+
+      2026-11-06 PT: Scoped screenshot-reported system-header greeting overlap. No Kind Robots code change or PR was created because GitHub connector safety checks blocked create_branch. Releasing the claim for another authorized worker; fix is to remove the redundant greeting from components/navigation/workspace-header.vue and add a navigation contract assertion.
   - id: t-012
     milestone: m5
     title: "Two-character Zuzu plates: the LoRAs exist but don't stack (Zuzu fuses with a second LoRA; abbess LoRA paints human faces)"

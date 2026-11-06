@@ -182,8 +182,8 @@ books:
     prompt_fingerprint: f5031ee17543338505b06e5c96e5a1f7730d1eba9c5a1812e945f5f5835902d1
     approved_at: '2026-09-07T22:41:39Z'
     lock_seed: true
-    bw_status: done
-    bw_requested_at: '2026-09-27T04:54:42Z'
+    bw_status: running
+    bw_requested_at: '2026-11-06T12:26:58Z'
     bw_render_reasons: []
     bw_revision_history:
     - requested_at: '2026-09-27T04:54:41Z'
@@ -192,19 +192,17 @@ books:
       rendered_path: null
       semantic_score: null
       archived_path: null
-    bw_job_id: 31606
-    bw_art_image_id: 240125
-    bw_rendered_path: generated/bw/mr-005-bw.webp
-    bw_mechanical_info:
-      pixels: 16960
-      mean_saturation: 0.0008
-      colorful_fraction: 0.0004
-      white_fraction: 0.7255
-      luma_std: 0.2888
-      size: 1024x1536
-      hf_ratio: 0.2138
-      tint_concentration: null
-    bw_completed_at: '2026-09-27T04:58:29Z'
+    - requested_at: '2026-11-06T12:26:57Z'
+      previous_status: done
+      art_image_id: 240125
+      rendered_path: null
+      semantic_score: null
+      archived_path: projects/coloring-book/sets/monster-recast/generated/bw/revisions/studio/mr-005-bw-20261106T122657Z.webp
+      bw_source: null
+      bw_source_path: null
+    bw_source: color
+    bw_source_path: generated/color-proposals-v1/mr-005-moon-torn.webp
+    bw_job_id: 64559
   - slot: 6
     id: mr-006
     slug: screwhead
@@ -534,7 +532,7 @@ books:
       \ lands in POSITIVE conditioning and the picture fills with them. Say what the picture IS: \"a deserted scene\"\
       , \"a deserted street\", \"the subject alone on a plain ground\". Not \"frame\" -- see the frame-noun rule;\
       \ this remedy used to say it and Krea drew the frame."
-    render_gate_error_at: '2026-11-05T18:36:26Z'
+    render_gate_error_at: '2026-11-06T17:52:22Z'
   - slot: 12
     id: mr-012
     slug: hush-dummy
@@ -583,7 +581,7 @@ books:
       \ lands in POSITIVE conditioning and the picture fills with them. Say what the picture IS: \"a deserted scene\"\
       , \"a deserted street\", \"the subject alone on a plain ground\". Not \"frame\" -- see the frame-noun rule;\
       \ this remedy used to say it and Krea drew the frame."
-    render_gate_error_at: '2026-11-05T18:36:27Z'
+    render_gate_error_at: '2026-11-06T17:52:23Z'
   - slot: 13
     id: mr-013
     slug: ansel-bell
@@ -919,7 +917,7 @@ books:
       \ lands in POSITIVE conditioning and the picture fills with them. Say what the picture IS: \"a deserted scene\"\
       , \"a deserted street\", \"the subject alone on a plain ground\". Not \"frame\" -- see the frame-noun rule;\
       \ this remedy used to say it and Krea drew the frame."
-    render_gate_error_at: '2026-11-05T18:36:28Z'
+    render_gate_error_at: '2026-11-06T17:52:24Z'
   - slot: 22
     id: mr-022
     slug: prom-king
@@ -1365,16 +1363,10 @@ books:
     id: mr-032
     slug: shape-at-home
     title: The Shape at Home
-    status: approved
+    status: pending
     seed: 726476313
     image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-032-shape-at-home.webp
     source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-032
-    rendered_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-032-shape-at-home.webp
-    art_image_id: 17139
-    render_seed: 726476313
-    render_engine: krea2
-    completed_at: '2026-08-10T02:30:46Z'
-    prompt_fingerprint: d12e023143292d7bac0add71654fccf88a184d9a19b5e25d20048a5af4dd6df7
     approved_at: '2026-09-27T15:59:38Z'
     lock_seed: true
     bw_job_id: 31702
@@ -1397,20 +1389,28 @@ books:
     pair_status: final
     pair_semantic_score: null
     pair_finalized_at: '2026-09-27T16:31:18Z'
+    studio_revision_history:
+    - requested_at: '2026-11-06T07:40:22Z'
+      previous_status: approved
+      art_image_id: 17139
+      rendered_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-032-shape-at-home.webp
+      semantic_score: null
+      prompt_fingerprint: d12e023143292d7bac0add71654fccf88a184d9a19b5e25d20048a5af4dd6df7
+      archived_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/revisions/mr-032-shape-at-home-20261106T074022Z.webp
+      masters_repointed:
+      - accepted
+      - final
+    studio_revision_requested_at: '2026-11-06T07:40:22Z'
+    render_gate_error: job 64522 timed out after 600s (still queued/running)
+    render_gate_error_at: '2026-11-06T07:50:29Z'
   - slot: 33
     id: mr-033
     slug: hallway-boys
     title: The Hallway Boys
-    status: approved
+    status: pending
     seed: 1465065632
     image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-033-hallway-boys.webp
     source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-033
-    rendered_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-033-hallway-boys.webp
-    art_image_id: 17140
-    render_seed: 1465065632
-    render_engine: krea2
-    completed_at: '2026-08-10T02:30:46Z'
-    prompt_fingerprint: 516afd387e43638d8728c7cd94411e1c4b1415fcdb14603fb10aaace99377b24
     approved_at: '2026-09-09T06:40:40Z'
     lock_seed: true
     bw_job_id: 31667
@@ -1433,6 +1433,20 @@ books:
     pair_status: final
     pair_semantic_score: null
     pair_finalized_at: '2026-09-27T11:56:46Z'
+    studio_revision_history:
+    - requested_at: '2026-11-06T11:45:47Z'
+      previous_status: approved
+      art_image_id: 17140
+      rendered_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-033-hallway-boys.webp
+      semantic_score: null
+      prompt_fingerprint: 516afd387e43638d8728c7cd94411e1c4b1415fcdb14603fb10aaace99377b24
+      archived_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/revisions/mr-033-hallway-boys-20261106T114547Z.webp
+      masters_repointed:
+      - accepted
+      - final
+    studio_revision_requested_at: '2026-11-06T11:45:47Z'
+    render_gate_error: job 64542 timed out after 600s (still queued/running)
+    render_gate_error_at: '2026-11-06T11:55:51Z'
   - slot: 34
     id: mr-034
     slug: mother-patch
@@ -1473,7 +1487,7 @@ books:
     id: mr-035
     slug: ticking-captain
     title: The Ticking Captain
-    status: approved
+    status: pending
     seed: 1901253322
     image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-035-ticking-captain.webp
     prompt: 'Low storm-deck angle: a formidable older woman pirate captain with a weathered, broad, sea-hardened
@@ -1482,12 +1496,6 @@ books:
       like a ship chronometer. Serious theatrical camp, original ship and costume system, thick clean black contours,
       bounded flat color, dense organized detail, no text, no collage, no Disney likeness, familiar red-coat design,
       feathered hat, crocodile design, or exact scene recreation.'
-    rendered_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-035-ticking-captain.webp
-    art_image_id: 17143
-    render_seed: 1901253322
-    render_engine: krea2
-    completed_at: '2026-08-10T02:30:46Z'
-    prompt_fingerprint: ee647cf7eaf7baedfa249eff944a287fb6ae7df13fc927f5eff22bb3f2a9b627
     approved_at: '2026-09-09T06:40:41Z'
     lock_seed: true
     bw_job_id: 31669
@@ -1510,6 +1518,23 @@ books:
     pair_status: final
     pair_semantic_score: null
     pair_finalized_at: '2026-09-27T11:56:47Z'
+    studio_revision_history:
+    - requested_at: '2026-11-06T12:26:54Z'
+      previous_status: approved
+      art_image_id: 17143
+      rendered_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-035-ticking-captain.webp
+      semantic_score: null
+      prompt_fingerprint: ee647cf7eaf7baedfa249eff944a287fb6ae7df13fc927f5eff22bb3f2a9b627
+      archived_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/revisions/mr-035-ticking-captain-20261106T122654Z.webp
+      masters_repointed:
+      - accepted
+      - final
+    studio_revision_requested_at: '2026-11-06T12:26:54Z'
+    render_gate_error: "enqueue failed: HTTP 422 Art prompt rejected by the prompt contract (1 violation):\n  [text-exclusion-pile]\
+      \ no text names text on an engine whose negative prompt is inert, so the word lands in POSITIVE conditioning\
+      \ on a model from the strongest open text-rendering lineage there is. State the wanted result instead: \"\
+      every surface bare and unmarked\"."
+    render_gate_error_at: '2026-11-06T17:52:26Z'
   - slot: 36
     id: mr-group-001
     slug: monster-matinee

@@ -1059,22 +1059,18 @@ tasks:
 - id: t-057
   milestone: m6
   title: 'Restyle the console art lane to Chronicle + Broadside, then stage and render it'
-  status: ready
+  status: review
   gate_human: false
-  owner: null
+  owner: worker
   stakes: reversible
   passes: 0
-  note: >-
-    build_ruler_hooked_art_queue.py has a `console` lane: 28 entries whose image_path keys
-    match what kind_robots utils/rulerHooked/artLibrary.ts loads. They are 5 screen backdrops,
-    5 nav-tab vignettes, 10 daily-proclamation scenes, 7 gear/kingdom still lifes, and a real
-    Quill the Steward portrait (character-steward-quill.webp rendered as a literal feather pen;
-    the console skips it). The lane was written in the storybook register and DELIBERATELY NOT
-    STAGED, because Silas picked Chronicle (world) + Broadside (documents) the same day (t-054).
-    Re-voice CONSOLE_FINISH and the prompts: backdrops, tabs and the map in Chronicle;
-    proclamations and gear notices in Broadside. Then stage with `--write --lane console` and
-    spot-check in place. Coordinate with t-054 so the frame and backdrops agree.
-  updated: '2026-11-05T23:50:00Z'
+  note: |-
+    build_ruler_hooked_art_queue.py has a `console` lane: 28 entries whose image_path keys match what kind_robots utils/rulerHooked/artLibrary.ts loads. They are 5 screen backdrops, 5 nav-tab vignettes, 10 daily-proclamation scenes, 7 gear/kingdom still lifes, and a real Quill the Steward portrait (character-steward-quill.webp rendered as a literal feather pen; the console skips it). The lane was written in the storybook register and DELIBERATELY NOT STAGED, because Silas picked Chronicle (world) + Broadside (documents) the same day (t-054). Re-voice CONSOLE_FINISH and the prompts: backdrops, tabs and the map in Chronicle; proclamations and gear notices in Broadside. Then stage with `--write --lane console` and spot-check in place. Coordinate with t-054 so the frame and backdrops agree.
+
+    Silas rejected the Chronicle/Broadside medieval treatment on 2026-11-06 PT. Worker restyled the generator to psychedelic rainbow fantasy with restrained screenprint grain, updated 28 console ArtJob queue rows in place (pending, force true), restyled the Kind Robots console chrome, and made the newer direction authoritative in art-direction and t-054 notes. Conductor and Kind Robots implementation PRs under review; renders and deployed visuals are not yet verified. Opaque layer compositing remains t-059.
+  updated: '2026-11-06T12:57:00Z'
+  claimed_by: 2026-11-06T124650Z-ruler-hooked-t057-rainbow-7e92f
+  claimed_at: '2026-11-06T12:46:50Z'
 - id: t-058
   milestone: m6
   title: 'Presenter expression sets for the cast and Quill'
@@ -1154,3 +1150,54 @@ tasks:
   claimed_by: 2026-11-06T01:12:52Z-ruler-hooked-t062-a8c92
   claimed_at: '2026-11-06T01:12:52.692Z'
   updated: '2026-11-06T01:32:14.006Z'
+
+- id: t-063
+  milestone: m6
+  title: 'Develop the configurable fishing learning handbook: multi-topic lessons, pacing, study cards and feedback'
+  status: done
+  gate_human: false
+  stakes: reversible
+  passes: 0
+  note: |-
+    Silas, 2026-11-06 PT: expand the quiz-to-catch tutorial into a developed, configurable learning experience with different topics. Add selectable Mandarin Tutor-backed topic lessons (animals, colors, numbers, family, food, travel, weather, etc.), study-first and quiz-first pacing, varied difficulty and answer direction, and a consistent illustrated reference for both Mandarin and geography. Preserve SRS, prior settings, selected fish rewards and kingdom changes, avoid misleading unsourced etymologies, and keep the growing game art/console work scoped to other tasks. Add gameplay regression tests and verify PR CI; self-hosted deployment is separate.
+
+    Implemented multi-topic Mandarin curriculum, configurable guided/always/quiz-first instruction, challenge levels, question directions, per-topic pacing and illustrated reference sheets for Mandarin and geography on worker/ruler-hooked-t-063-learning-handbook-20261106. Added gameplay regressions; awaiting PR CI and merge.
+
+    Delivered in silasfelinus/kind_robots#4849, merged into main commit 859a6aee94f334dc9f4b246368e3deb0c9cef684 on 2026-11-06 PT. Configurable guided/always/quiz-first tutoring, 22 Mandarin subject topics from Tutor, separate topic progress, easy/standard/expert challenges, recognize/reverse/shuffle questions, guided and post-answer geography/Mandarin reference sheets, and flag answer leak fix. All eight PR workflow checks completed successfully, including typecheck, formatting, game tests, layout and all contract shards. Self-hosted production deployment not verified.
+  claimed_by: 2026-11-06T09:17:06Z-ruler-hooked-t063-cc9b2
+  claimed_at: '2026-11-06T09:17:06.302Z'
+  updated: '2026-11-06T09:35:37.487Z'
+
+- id: t-064
+  milestone: m6
+  title: 'Put Kingdom Health inline in the Ruler Hooked HUD; consolidate custom page titles inside the global navigation picker'
+  status: done
+  gate_human: false
+  stakes: reversible
+  passes: 0
+  note: |-
+    Silas, 2026-11-06 PT, screenshot: Ruler Hooked currently stacks Kingdom Health below the title crest, obscuring the presenter art on Court. Place the five kingdom axes compactly INLINE between the title crest and royal purse/day/time plaques, responsive and keyboard-accessible without overlapping the art. Separately, sitewide rather than ruler-only: the workspace header repeats a room/title/tagline beside a nav picker that already shows the active page. Use authored custom tab/page titles and optional descriptive subtitles in the navigation dropdown/trigger; remove the redundant room/tagline strip without disrupting the page-bar teleport, welcome/user controls, tutorials, or routes. Regression tests, CSS formatting, layout/typecheck and green CI required before merging.
+
+    Inline five-axis Kingdom Health HUD; custom page titles and subtitles moved to shared dropdown; no extra duplicate header row; fixes premature/repeating optional finale offers. Implementation PR kind_robots#4853 under CI review.
+
+    Merged kind_robots PR #4853 as 65109678d792ae0222ab93f1d54f9a1785888141. Five kingdom meters now inline between title crest and purse/day/time; the sitewide shared navigation picker displays custom page titles/subtitles as first dropdown section without redundant room/tagline row, preserving page-bar dock, welcome and far-right tutorial icon. Healthy early sliders no longer force premature game-over offers; a later optional finale explains the end-of-save choice and remembers deferral. Ten workflows completed green: Ruler Hooked tests, TypeScript, navigation consolidation/tablet audit, formatting, layout, schema, architecture, playbook and contract suite. Self-hosted deployment not independently verified.
+  claimed_by: 2026-11-06T11:29:19Z-ruler-hooked-t064-hud-nav-76b42
+  claimed_at: '2026-11-06T11:29:19.692Z'
+  updated: '2026-11-06T12:05:14.445Z'
+
+- id: t-065
+  milestone: m6
+  title: 'Replace classic fishing web-app reel/slack buttons with a one-input painted timing minigame'
+  status: done
+  gate_human: false
+  stakes: reversible
+  passes: 0
+  note: |-
+    Silas, 2026-11-06 PT: Classic fishing currently is two timing stops followed by endless TAP TO REEL / GIVE SLACK webapp buttons, unacceptable as a AAA game interaction. Make the classic fishing encounter a visual multi-beat timing game where space, mouse click, or tap is the only input. Challenge the player to stop a sweeping bobber in action zones that change position and difficulty over the fish's struggle, with occasional sudden surges/target jumps. Reuse the existing deterministic timing-profile, rarity, gear, fish family and replay systems, retain progression and catch rewards, keep Mandarin quiz gameplay separate, include accessible keyboard/pointer controls and regression tests. Reversible code work.
+
+    Replaced classic reel/slack webapp buttons with one-input mouse/touch/Space stop timing game, shifting target zones and fish-specific deterministic encounter engine. Implementation PR kind_robots#4853 under CI review.
+
+    Merged kind_robots PR #4853 as 65109678d792ae0222ab93f1d54f9a1785888141. Classic fishing now uses a single animated water-and-bobber stop interface (Space/Enter/click/tap), drifting bands and sudden fish surges; underlying deterministic encounter/timing system preserves fish rarity, profiles, gear, catch rewards and replay behavior. Quiz mode remains independent and pinned per cast. All ten PR workflows completed successfully. Self-hosted deployment separate and unverified.
+  claimed_by: 2026-11-06T11:45:10Z-ruler-hooked-t065-visual-4a92e
+  claimed_at: '2026-11-06T11:45:10.983Z'
+  updated: '2026-11-06T12:05:17.697Z'

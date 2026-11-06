@@ -297,7 +297,7 @@ tasks:
       slots. Preserve persistent ship/party state across seamless boss
       transitions, with rare optional tableau checkpoints after Acts III
       and V. See ACT-STRUCTURE.md. Do not mark done for a document alone.
-    status: claimed
+    status: ready
     depends_on: [t-002, t-009]
     owner: worker
     passes: 0
@@ -321,9 +321,27 @@ tasks:
       but-unrecorded than abandoned): partial work merged (#3803, #3806); open items per the
       10-17 progress note: 15 banter tracks, Acts II-VIII between-stage dialogue, subtitles,
       ending boards. Claim released.
-    claimed_by: 2026-11-06T013942Z-rainbow-bullet-hell-space-princess-t-012-r6b
-    claimed_at: '2026-11-06T01:39:51Z'
-    updated: '2026-11-06T01:39:51Z'
+
+      2026-11-06 PT (writing half, round 6): the finale now pays off the Act V allegiance
+      choice. Each road (turn on the empire or stay the course) times each final choice is a
+      named ending: ASK FIRST, OPEN WATER, NO MORE LEASHES, PEACE BY ORDER, AN EMPTY OCEAN and
+      ORDERS BROKEN, plus the three shipped endings for flights saved before the memorial. The
+      road sets the world consequence, Lilt's resolution, the epilogue for each crew size and
+      the send-off, and the rescue verdict has four tiers. The credits and THE END name the
+      ending. Acts VII and VIII close on a bridge line for each road, and the finale's opening
+      and turn answer the road. Act I's opening is three punchy lines. A skips the ending line
+      by line, and ending lines hold for 180 frames. verifyRainbowStoryScript pins: - intro,
+      turn and outro dialogue for every Act; - 4,101 lines that fit the comms box at arcade
+      pace, with no absent speakers; - every ending reachable by flying it; - the skip,
+      through the engine.  Remains: the 15 partyMask composition tracks, with pilot-specific
+      solo lines (dialogue is still written in seat terms and renamed by the pilot select);
+      ROUTE-MAP route stingers once the t-028 alt flags exist; subtitle and comms settings
+      (full, essential or off; replay); cinematic ending boards; and the sound and score half.
+      Merged as kind_robots#4866 (2026-11-06).
+    claimed_by: 2026-11-06T215718Z-rainbow-bullet-hell-space-princess-t-012-r6c
+    claimed_at: '2026-11-06T21:57:23Z'
+    updated: '2026-11-06T22:41:43Z'
+    implementation_pr: 'silasfelinus/kind_robots#4866'
   - id: t-013
     milestone: m5
     title: "Deterministic combat fairness, multiplayer soak and campaign QA"

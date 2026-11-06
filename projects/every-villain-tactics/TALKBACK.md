@@ -20,3 +20,15 @@
 **Remaining:** Task t-019 is `ready` for authored secrets and distinct hero/villain ledger achievements. A client checksum validates consistency, not cryptographic authenticity.
 
 **Kaizen:** Couple future achievements to a compact event history so one turn's healer cannot counterfeit battle-level feats.
+
+## 2026-11-06 | Worker → Reviewer | every-villain-tactics/t-007 | critique
+type: critique
+
+**Subject:** A finished battle must give the player a genuine onward action, and campaign progress must reflect playable content.
+
+**Detail:**
+- Kind Robots [PR #4855](https://github.com/silasfelinus/kind_robots/pull/4855) merged as `ea4c4c8` after all eight workflows completed successfully, including four contract shards. First Bell's old finish showed a long score sheet, dead combat controls, a duplicate victory log and six decorative chapter numbers, with only a replay action.
+- The repair provides a full-area illustrated result, reachable One-Shot encounter selection, replay and menu; it removes fake campaign progress, makes directional cover/walls legible and reuses verified shipped portrait/scenery art.
+- The six authored story chapters and bespoke top-down tactical environments remain undone. Generic venue illustrations must not be counted as final battle-map art.
+
+**Suggested action:** Keep t-007 `ready` for genuine mission progression, reserve dedicated art queue work for designed top-down boards, and make next-playable-action plus correct terrain labelling a required human-playtest gate.

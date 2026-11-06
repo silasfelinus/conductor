@@ -1,92 +1,317 @@
 {
-  "generated_at": "2026-11-05T15:00:02.159871+00:00",
+  "generated_at": "2026-11-06T15:00:02.095584+00:00",
   "host": "alexandria",
   "new": [
     {
       "baseline": null,
-      "container": "netdata",
-      "count": 1,
-      "fingerprint": "64f9e0c6a54a",
-      "sample": "time=2026-11-05T04:05:57.635-08:00 comm=cgroup-network source=collector level=error errno=\"2, No such file or directory\" tid=2331754  msg=\"cannot stat() path '<REDACTED-BLOB>'\"",
+      "container": "prowlarr",
+      "count": 14,
+      "fingerprint": "c7a50f63b8e0",
+      "sample": "{\"status\": \"error\", \"message\": \"Error: Error solving the challenge. Message: session not created: cannot connect to chrome at 127.0.0.1:43923\\\\nfrom chrome not reachable; For documentation on this err",
       "severity": "error",
-      "skeleton": "time=<ts> comm=cgroup-network source=collector level=error errno=<str> tid=<num> msg=<str>"
+      "skeleton": "{<str>: <str>, <str>: \"error: error solving the challenge. message: session not created: cannot connect to chrome at <ip>\\\\nfrom chrome not reachable; for documentation on this error, please visit: <url> <hex> <unknown>\\\\n#<num> <hex> <unknown>\\\\n#<num> <hex> <unknown>\\\\n#<num> <hex> <unknown>\\\\n#<n"
     },
     {
       "baseline": null,
-      "container": "sonarr",
+      "container": "flaresolverr",
+      "count": 7,
+      "fingerprint": "d83351decccd",
+      "sample": "2026-11-06 02:23:58 ERROR    Error starting Chrome: Message: session not created: cannot connect to chrome at 127.0.0.1:43923",
+      "severity": "error",
+      "skeleton": "<ts> error error starting chrome: message: session not created: cannot connect to chrome at <ip>"
+    },
+    {
+      "baseline": null,
+      "container": "flaresolverr",
+      "count": 7,
+      "fingerprint": "f882db4d174b",
+      "sample": "from chrome not reachable; For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception",
+      "severity": "error",
+      "skeleton": "from chrome not reachable; for documentation on this error, please visit: <url>"
+    },
+    {
+      "baseline": null,
+      "container": "flaresolverr",
+      "count": 7,
+      "fingerprint": "bf16ddd5a95a",
+      "sample": "Stacktrace:",
+      "severity": "other",
+      "skeleton": "stacktrace:"
+    },
+    {
+      "baseline": null,
+      "container": "flaresolverr",
+      "count": 7,
+      "fingerprint": "a225757d00e9",
+      "sample": "2026-11-06 02:23:58 ERROR    Error: Error solving the challenge. Message: session not created: cannot connect to chrome at 127.0.0.1:43923\\nfrom chrome not reachable; For documentation on this error, ",
+      "severity": "error",
+      "skeleton": "<ts> error error: error solving the challenge. message: session not created: cannot connect to chrome at <ip>\\nfrom chrome not reachable; for documentation on this error, please visit: <url> <hex> <unknown>\\n#<num> <hex> <unknown>\\n#<num> <hex> <unknown>\\n#<num> <hex> <unknown>\\n#<num> <hex> <unknow"
+    },
+    {
+      "baseline": null,
+      "container": "audioask",
+      "count": 4,
+      "fingerprint": "e347822fce8a",
+      "sample": "2026-11-05 18:23:58 [error    ] Prowlarr query timed out       elapsed_time=60.55421042442322 error=",
+      "severity": "error",
+      "skeleton": "<ts> [error ] prowlarr query timed out elapsed_time=<num>.<hex> error="
+    },
+    {
+      "baseline": null,
+      "container": "prowlarr",
       "count": 1,
-      "fingerprint": "aa7945f0f0e5",
-      "sample": "[Warn] Torznab: API Request Limit reached for LimeTorrents (Prowlarr). Disabled for 1.00:00:00",
+      "fingerprint": "637fd29caedb",
+      "sample": "[Warn] Cardigann: Unable to connect to 1337x at [https://1337x.to/sort-search/A%20Court%20of%20Splintered%20Harmony%20%5BDramatized%20Adaptation%5D/time/desc/1/]. Indexer's server is unavailable. Try ",
       "severity": "warn",
-      "skeleton": "[warn] torznab: api request limit reached for limetorrents (prowlarr). disabled for <num>.<ts>"
+      "skeleton": "[warn] cardigann: unable to connect to 1337x at [<url> indexer's server is unavailable. try again later. http request failed: [<num>:internalservererror] [post] at [<url>"
+    },
+    {
+      "baseline": null,
+      "container": "audioask",
+      "count": 1,
+      "fingerprint": "167f2df91ac2",
+      "sample": "2026-11-06 00:57:26 [error    ] Failed to fetch book details from Audible asin=1797121758 error=\"503, message='Service Temporarily Unavailable', url='https://api.audible.com/1.0/catalog/products/17971",
+      "severity": "error",
+      "skeleton": "<ts> [error ] failed to fetch book details from audible asin=<hex> error=\"<num>, message=<str>, url='<url>"
+    },
+    {
+      "baseline": null,
+      "container": "audioask",
+      "count": 1,
+      "fingerprint": "586214deef11",
+      "sample": "2026-11-06 00:57:26 [warning  ] Book not found                 asin=1797121758 username=si*********s",
+      "severity": "warn",
+      "skeleton": "<ts> [warning ] book not found asin=<hex> username=si*********s"
+    },
+    {
+      "baseline": null,
+      "container": "audioask",
+      "count": 1,
+      "fingerprint": "3d276c40d391",
+      "sample": "2026-11-06 00:57:29 [error    ] Failed to fetch book details from Audible asin=B0GYG5XS5P error=\"503, message='Service Temporarily Unavailable', url='https://api.audible.com/1.0/catalog/products/B0GYG",
+      "severity": "error",
+      "skeleton": "<ts> [error ] failed to fetch book details from audible asin=b0gyg5xs5p error=\"<num>, message=<str>, url='<url>"
+    },
+    {
+      "baseline": null,
+      "container": "audioask",
+      "count": 1,
+      "fingerprint": "001e65da8936",
+      "sample": "2026-11-06 00:57:29 [warning  ] Book not found                 asin=B0GYG5XS5P username=si*********s",
+      "severity": "warn",
+      "skeleton": "<ts> [warning ] book not found asin=b0gyg5xs5p username=si*********s"
+    },
+    {
+      "baseline": null,
+      "container": "audioask",
+      "count": 1,
+      "fingerprint": "0a5354ecd1ec",
+      "sample": "2026-11-06 00:57:31 [error    ] Failed to fetch book details from Audible asin=B0HC7W3FKL error=\"503, message='Service Temporarily Unavailable', url='https://api.audible.com/1.0/catalog/products/B0HC7",
+      "severity": "error",
+      "skeleton": "<ts> [error ] failed to fetch book details from audible asin=b0hc7w3fkl error=\"<num>, message=<str>, url='<url>"
+    },
+    {
+      "baseline": null,
+      "container": "audioask",
+      "count": 1,
+      "fingerprint": "12b9390e0188",
+      "sample": "2026-11-06 00:57:31 [warning  ] Book not found                 asin=B0HC7W3FKL username=si*********s",
+      "severity": "warn",
+      "skeleton": "<ts> [warning ] book not found asin=b0hc7w3fkl username=si*********s"
+    },
+    {
+      "baseline": null,
+      "container": "audioask",
+      "count": 1,
+      "fingerprint": "b16fbf5324ce",
+      "sample": "2026-11-06 00:59:21 [debug    ] Sims endpoint failed, falling back to author search asin=B0CZPK3WR6 error=",
+      "severity": "error",
+      "skeleton": "<ts> [debug ] sims endpoint failed, falling back to author search asin=b0czpk3wr6 error="
+    },
+    {
+      "baseline": null,
+      "container": "audioask",
+      "count": 1,
+      "fingerprint": "d15bad7746dd",
+      "sample": "2026-11-06 00:59:21 [debug    ] Sims endpoint failed, falling back to author search asin=B0D92LP72C error=",
+      "severity": "error",
+      "skeleton": "<ts> [debug ] sims endpoint failed, falling back to author search asin=b0d92lp72c error="
+    },
+    {
+      "baseline": null,
+      "container": "audioask",
+      "count": 1,
+      "fingerprint": "5fae018042ac",
+      "sample": "2026-11-06 00:59:22 [debug    ] Sims endpoint failed, falling back to author search asin=B0D92LP72C error=\"503, message='Service Temporarily Unavailable', url='https://api.audible.com/1.<REDACTED-BLOB",
+      "severity": "error",
+      "skeleton": "<ts> [debug ] sims endpoint failed, falling back to author search asin=b0d92lp72c error=\"<num>, message=<str>, url='<url>"
+    },
+    {
+      "baseline": null,
+      "container": "audioask",
+      "count": 1,
+      "fingerprint": "ab0c5e86e16c",
+      "sample": "2026-11-06 00:59:22 [debug    ] Sims endpoint failed, falling back to author search asin=B0CZPK3WR6 error=\"503, message='Service Temporarily Unavailable', url='https://api.audible.com/1.<REDACTED-BLOB",
+      "severity": "error",
+      "skeleton": "<ts> [debug ] sims endpoint failed, falling back to author search asin=b0czpk3wr6 error=\"<num>, message=<str>, url='<url>"
     },
     {
       "baseline": null,
       "container": "audiobookshelf",
       "count": 1,
-      "fingerprint": "e792cab768e8",
-      "sample": "[2026-11-04 08:23:58.720] INFO: [SocketAuthority] Socket G5YxCLG7bmkhtNwQAABH disconnected from client \"superkate\" after 95032ms (Reason: ping timeout)",
+      "fingerprint": "81e53d58a9e3",
+      "sample": "[2026-11-05 08:25:21.631] INFO: [SocketAuthority] Socket TXk_bBKo-PkzrBH_AABX disconnected from client \"superkate\" after 120301ms (Reason: ping timeout)",
       "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket g5yxclg7bmkhtnwqaabh disconnected from client <str> after <num> (reason: ping timeout)"
+      "skeleton": "[<ts>] info: [socketauthority] socket txk_bbko-pkzrbh_aabx disconnected from client <str> after <num> (reason: ping timeout)"
     },
     {
       "baseline": null,
       "container": "audiobookshelf",
       "count": 1,
-      "fingerprint": "372d3c2e7deb",
-      "sample": "[2026-11-04 10:23:49.024] INFO: [SocketAuthority] Socket hKpAgws5ZaNu81meAABJ disconnected from client \"superkate\" after 120094ms (Reason: ping timeout)",
+      "fingerprint": "2f7ee99a8013",
+      "sample": "[2026-11-05 08:39:33.235] INFO: [SocketAuthority] Socket McHOKSzt-Q0ZzK5HAABb disconnected from client \"superkate\" after 70525ms (Reason: ping timeout)",
       "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket hkpagws5zanu81meaabj disconnected from client <str> after <num> (reason: ping timeout)"
+      "skeleton": "[<ts>] info: [socketauthority] socket mchokszt-q0zzk5haabb disconnected from client <str> after <num> (reason: ping timeout)"
     },
     {
       "baseline": null,
       "container": "audiobookshelf",
       "count": 1,
-      "fingerprint": "697f975b7a4d",
-      "sample": "[2026-11-04 14:11:06.154] INFO: [SocketAuthority] Socket TGsqAx4eXTuYiSKNAABL disconnected from client \"superkate\" after 120745ms (Reason: ping timeout)",
+      "fingerprint": "350e3159b33c",
+      "sample": "[2026-11-05 12:04:38.105] INFO: [SocketAuthority] Socket CzjAwMRKGYswiz0RAABd disconnected from client \"superkate\" after 170390ms (Reason: ping timeout)",
       "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket tgsqax4extuyisknaabl disconnected from client <str> after <num> (reason: ping timeout)"
+      "skeleton": "[<ts>] info: [socketauthority] socket czjawmrkgyswiz0raabd disconnected from client <str> after <num> (reason: ping timeout)"
     },
     {
       "baseline": null,
       "container": "audiobookshelf",
       "count": 1,
-      "fingerprint": "ccad83179490",
-      "sample": "[2026-11-04 14:13:57.824] INFO: [SocketAuthority] Socket IPukhaNJI_CMpvJsAABN disconnected from client \"superkate\" after 95331ms (Reason: ping timeout)",
+      "fingerprint": "6366562b89b3",
+      "sample": "[2026-11-05 12:09:19.759] INFO: [SocketAuthority] Socket WCaS_3kbiMZLgZ-sAABf disconnected from client \"superkate\" after 95205ms (Reason: ping timeout)",
       "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket ipukhanji_cmpvjsaabn disconnected from client <str> after <num> (reason: ping timeout)"
+      "skeleton": "[<ts>] info: [socketauthority] socket wcas_3kbimzlgz-saabf disconnected from client <str> after <num> (reason: ping timeout)"
     },
     {
       "baseline": null,
       "container": "audiobookshelf",
       "count": 1,
-      "fingerprint": "bfd38cacd0c0",
-      "sample": "[2026-11-04 14:28:23.393] INFO: [SocketAuthority] Socket PjdJESUg9koWkduGAABR disconnected from client \"superkate\" after 95696ms (Reason: ping timeout)",
+      "fingerprint": "78c335b7b154",
+      "sample": "[2026-11-05 13:10:56.538] INFO: [SocketAuthority] Socket U0OOFg1kFKoej9NnAABr disconnected from client \"superkate\" after 70019ms (Reason: ping timeout)",
       "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket pjdjesug9kowkdugaabr disconnected from client <str> after <num> (reason: ping timeout)"
+      "skeleton": "[<ts>] info: [socketauthority] socket u0oofg1kfkoej9nnaabr disconnected from client <str> after <num> (reason: ping timeout)"
     },
     {
       "baseline": null,
       "container": "audiobookshelf",
       "count": 1,
-      "fingerprint": "91d6dbe83f4d",
-      "sample": "[2026-11-04 14:31:11.931] INFO: [SocketAuthority] Socket bGuBjHEd5iwyYZLFAABT disconnected from client \"superkate\" after 95291ms (Reason: ping timeout)",
+      "fingerprint": "a13b9af63c11",
+      "sample": "[2026-11-05 13:11:51.969] INFO: [SocketAuthority] Socket mU1DaIkuxb7ectdyAABt disconnected from client \"superkate\" after 70191ms (Reason: ping timeout)",
       "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket bgubjhed5iwyyzlfaabt disconnected from client <str> after <num> (reason: ping timeout)"
+      "skeleton": "[<ts>] info: [socketauthority] socket mu1daikuxb7ectdyaabt disconnected from client <str> after <num> (reason: ping timeout)"
     },
     {
       "baseline": null,
       "container": "audiobookshelf",
       "count": 1,
-      "fingerprint": "07d47e2e678e",
-      "sample": "[2026-11-04 18:54:57.828] INFO: [SocketAuthority] Socket Yvpv2dkP503r4we3AABV disconnected from client \"superkate\" after 120067ms (Reason: ping timeout)",
+      "fingerprint": "d645a5858838",
+      "sample": "[2026-11-05 13:41:18.089] INFO: [SocketAuthority] Socket ekXAU6ZIZXSwrCl3AABv disconnected from client \"superkate\" after 95294ms (Reason: ping timeout)",
       "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket yvpv2dkp503r4we3aabv disconnected from client <str> after <num> (reason: ping timeout)"
+      "skeleton": "[<ts>] info: [socketauthority] socket ekxau6zizxswrcl3aabv disconnected from client <str> after <num> (reason: ping timeout)"
+    },
+    {
+      "baseline": null,
+      "container": "audiobookshelf",
+      "count": 1,
+      "fingerprint": "48b2c58e3636",
+      "sample": "[2026-11-05 17:13:29.525] INFO: [SocketAuthority] Unauth socket AWg50xQMeWP8V2_xAABx disconnected (Reason: ping timeout)",
+      "severity": "other",
+      "skeleton": "[<ts>] info: [socketauthority] unauth socket awg50xqmewp8v2_xaabx disconnected (reason: ping timeout)"
+    },
+    {
+      "baseline": null,
+      "container": "audiobookshelf",
+      "count": 1,
+      "fingerprint": "c75611f8dc81",
+      "sample": "[2026-11-05 17:16:37.059] INFO: [SocketAuthority] Socket JXIK9JWYw33driKTAABz disconnected from client \"superkate\" after 95026ms (Reason: ping timeout)",
+      "severity": "other",
+      "skeleton": "[<ts>] info: [socketauthority] socket jxik9jwyw33driktaabz disconnected from client <str> after <num> (reason: ping timeout)"
+    },
+    {
+      "baseline": null,
+      "container": "audiobookshelf",
+      "count": 1,
+      "fingerprint": "6325b018e5bf",
+      "sample": "[2026-11-05 18:15:20.798] INFO: [SocketAuthority] Socket G4M6c8psjWSvk0A3AACB disconnected from client \"superkate\" after 145751ms (Reason: ping timeout)",
+      "severity": "other",
+      "skeleton": "[<ts>] info: [socketauthority] socket g4m6c8psjwsvk0a3aacb disconnected from client <str> after <num> (reason: ping timeout)"
+    },
+    {
+      "baseline": null,
+      "container": "audiobookshelf",
+      "count": 1,
+      "fingerprint": "d187a0695a8c",
+      "sample": "[2026-11-05 18:17:27.411] INFO: [SocketAuthority] Socket HE-_CwMYpvJ0T2phAACD disconnected from client \"superkate\" after 95258ms (Reason: ping timeout)",
+      "severity": "other",
+      "skeleton": "[<ts>] info: [socketauthority] socket he-_cwmypvj0t2phaacd disconnected from client <str> after <num> (reason: ping timeout)"
+    },
+    {
+      "baseline": null,
+      "container": "audiobookshelf",
+      "count": 1,
+      "fingerprint": "7dbc4703ebc1",
+      "sample": "[2026-11-05 18:23:58.838] INFO: [SocketAuthority] Socket 7cC_HjhxZBgbHE3MAACH disconnected from client \"superkate\" after 95016ms (Reason: ping timeout)",
+      "severity": "other",
+      "skeleton": "[<ts>] info: [socketauthority] socket 7cc_hjhxzbgbhe3maach disconnected from client <str> after <num> (reason: ping timeout)"
+    },
+    {
+      "baseline": null,
+      "container": "audiobookshelf",
+      "count": 1,
+      "fingerprint": "3f2ff277b43f",
+      "sample": "[2026-11-05 19:11:12.828] INFO: [SocketAuthority] Socket vxA_a1hTorGlURnAAACN disconnected from client \"superkate\" after 145265ms (Reason: ping timeout)",
+      "severity": "other",
+      "skeleton": "[<ts>] info: [socketauthority] socket vxa_a1htorglurnaaacn disconnected from client <str> after <num> (reason: ping timeout)"
+    },
+    {
+      "baseline": null,
+      "container": "audiobookshelf",
+      "count": 1,
+      "fingerprint": "2468526aa0e6",
+      "sample": "[2026-11-05 19:14:28.946] INFO: [SocketAuthority] Socket wYaa-LCf_UPSa2njAACP disconnected from client \"superkate\" after 120612ms (Reason: ping timeout)",
+      "severity": "other",
+      "skeleton": "[<ts>] info: [socketauthority] socket wyaa-lcf_upsa2njaacp disconnected from client <str> after <num> (reason: ping timeout)"
+    },
+    {
+      "baseline": null,
+      "container": "audiobookshelf",
+      "count": 1,
+      "fingerprint": "ffa70e342e62",
+      "sample": "[2026-11-05 19:16:19.392] INFO: [SocketAuthority] Socket IGZ5OKsZdclSiNRwAACR disconnected from client \"superkate\" after 95114ms (Reason: ping timeout)",
+      "severity": "other",
+      "skeleton": "[<ts>] info: [socketauthority] socket igz5okszdclsinrwaacr disconnected from client <str> after <num> (reason: ping timeout)"
+    },
+    {
+      "baseline": null,
+      "container": "audiobookshelf",
+      "count": 1,
+      "fingerprint": "98ccc1319de6",
+      "sample": "[2026-11-05 20:02:36.244] INFO: [SocketAuthority] Socket Wfi3-u0AS2NNsUJGAACT disconnected from client \"superkate\" after 120989ms (Reason: ping timeout)",
+      "severity": "other",
+      "skeleton": "[<ts>] info: [socketauthority] socket wfi3-u0as2nnsujgaact disconnected from client <str> after <num> (reason: ping timeout)"
+    },
+    {
+      "baseline": null,
+      "container": "audiobookshelf",
+      "count": 1,
+      "fingerprint": "de63c1ea214d",
+      "sample": "[2026-11-05 20:10:55.137] INFO: [SocketAuthority] Socket DKaf13TaHkRjazDZAACV disconnected from client \"superkate\" after 95045ms (Reason: ping timeout)",
+      "severity": "other",
+      "skeleton": "[<ts>] info: [socketauthority] socket dkaf13tahkrjazdzaacv disconnected from client <str> after <num> (reason: ping timeout)"
     }
   ],
   "quiet": [
     {
-      "baseline": 67.0,
+      "baseline": 66.0,
       "container": "radarr",
       "count": 0,
       "fingerprint": "53883f24d246",
@@ -95,40 +320,13 @@
       "skeleton": "[error] downloadmonitoringservice: couldn't process tracked download the home <num> 1080p amzn web-dl ddp5.<num> atmos x265-tbmovies"
     },
     {
-      "baseline": 66.0,
+      "baseline": 33.0,
       "container": "komga",
       "count": 0,
       "fingerprint": "c4a56760173f",
       "sample": "2026-11-02T06:39:21.801-08:00  WARN 1 --- [taskProcessor-8] org.apache.pdfbox.pdfparser.COSParser    : found wrong object number. expected [2] found [1]",
       "severity": "warn",
       "skeleton": "<ts> warn <num> --- [taskprocessor-<num>] org.apache.pdfbox.pdfparser.cosparser : found wrong object number. expected [<num>] found [<num>]"
-    },
-    {
-      "baseline": 24.0,
-      "container": "sonarr",
-      "count": 0,
-      "fingerprint": "86dd8b493a0a",
-      "sample": "[Error] TaskExtensions: Task Error",
-      "severity": "error",
-      "skeleton": "[error] taskextensions: task error"
-    },
-    {
-      "baseline": 21.0,
-      "container": "prowlarr",
-      "count": 0,
-      "fingerprint": "2ac6eb61720c",
-      "sample": "[Warn] Cardigann: Request for TorrentDownload failed with status GatewayTimeout. Retrying in 1.3105783s.",
-      "severity": "warn",
-      "skeleton": "[warn] cardigann: request for torrentdownload failed with status gatewaytimeout. retrying in <num>."
-    },
-    {
-      "baseline": 19.0,
-      "container": "hairpress",
-      "count": 0,
-      "fingerprint": "b32e674d9dd1",
-      "sample": "[Tue Nov 03 18:58:28.323624 2026] [autoindex:error] [pid 118:tid 118] [client 20.217.186.29:0] AH01276: Cannot serve directory /var/www/html/wp-includes/block-supports/: No matching DirectoryIndex (in",
-      "severity": "error",
-      "skeleton": "[<ts>] [autoindex:error] [pid <num>:tid <num>] [client <ip>] ah01276: cannot serve directory <path>"
     },
     {
       "baseline": 18.0,
@@ -138,6 +336,15 @@
       "sample": "2026-11-03 08:50:43 MySQL_Session.cpp:5667:<REDACTED-BLOB>(): [WARNING] Error during query on (10,mariadb-kindrobots2,3306,1628): 1062, Duplicate entry 'compartmented-mourner' for key 'Facet_slug_key'",
       "severity": "warn",
       "skeleton": "<ts> mysql_session.cpp:<num>:<redacted-blob>(): [warning] error during query on (<num>,mariadb-kindrobots2,<num>,<num>): <num>, duplicate entry <str> for key <str>"
+    },
+    {
+      "baseline": 13.0,
+      "container": "prowlarr",
+      "count": 0,
+      "fingerprint": "2ac6eb61720c",
+      "sample": "[Warn] Cardigann: Request for TorrentDownload failed with status GatewayTimeout. Retrying in 1.3105783s.",
+      "severity": "warn",
+      "skeleton": "[warn] cardigann: request for torrentdownload failed with status gatewaytimeout. retrying in <num>."
     },
     {
       "baseline": 12.0,
@@ -154,65 +361,218 @@
     "containers_scanned": 44,
     "containers_total": 44,
     "high_cardinality": [],
-    "lines_matched": 1291,
-    "lines_read": 125701,
-    "signatures_total": 134,
+    "lines_matched": 6010,
+    "lines_read": 163113,
+    "signatures_total": 208,
     "truncated": []
   },
   "spiking": [
     {
-      "baseline": 2.0,
+      "baseline": 0.0,
+      "container": "qbit",
+      "count": 2000,
+      "fingerprint": "78027c85326d",
+      "sample": "Thu Nov  5 08:51:40 2026 AEAD Decrypt error: bad packet ID (may be a replay): [ #4774306 ] -- see the man page entry for --no-replay and --replay-window for more info or silence this warning with --mu",
+      "severity": "error",
+      "skeleton": "<ts> aead decrypt error: bad packet id (may be a replay): [ #<num> ] -- see the man page entry for --no-replay and --replay-window for more info or silence this warning with --mute-replay-warnings"
+    },
+    {
+      "baseline": 0.0,
+      "container": "kapowarr",
+      "count": 1887,
+      "fingerprint": "512bc9539252",
+      "sample": "\u001b[1;31:40m[05:30:40][WARNING] GET request failed for url https://comicvine.gamespot.<REDACTED-BLOB>.jpg (ConnectionTimeoutError: Connection timeout to host https://comicvine.gamespot.<REDACTED-BLOB>.j",
+      "severity": "warn",
+      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][warning] get request failed for url <url> (connectiontimeouterror: connection timeout to host <url> retrying for round <num>..."
+    },
+    {
+      "baseline": 0.0,
+      "container": "kapowarr",
+      "count": 340,
+      "fingerprint": "5f87adda8786",
+      "sample": "\u001b[1;31:40m[03:30:06][WARNING] Unable to add indexer download; fail_reason=\"The indexer could not be reached just now\"",
+      "severity": "warn",
+      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][warning] unable to add indexer download; fail_reason=<str>"
+    },
+    {
+      "baseline": 0.0,
+      "container": "kapowarr",
+      "count": 317,
+      "fingerprint": "16185a7aa503",
+      "sample": "\u001b[1;31:40m[03:46:14][WARNING] Failed to enqueue download: This release does not match the issue you asked for. Use Download anyway (next to Download) to add it regardless.",
+      "severity": "warn",
+      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][warning] failed to enqueue download: this release does not match the issue you asked for. use download anyway (next to download) to add it regardless."
+    },
+    {
+      "baseline": 0.0,
+      "container": "kapowarr",
+      "count": 80,
+      "fingerprint": "ff956128a2d9",
+      "sample": "\u001b[1;31:40m[03:47:50][WARNING] GET request failed for url https://archive.org/metadata/ijds-v7n1-26 (SocketTimeoutError: Timeout on reading data from socket). Retrying for round 2...",
+      "severity": "warn",
+      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][warning] get request failed for url <url> (sockettimeouterror: timeout on reading data from socket). retrying for round <num>..."
+    },
+    {
+      "baseline": 3.0,
       "container": "subtitles",
       "count": 28,
       "fingerprint": "581e297308ed",
-      "sample": "2026-11-04 10:20:52,342 - root                             (1465bf4bbb30) :  ERROR (utils:55) - BAZARR Error ('.bin' is not a valid video extension) trying to get video information for this file: /pc/",
+      "sample": "2026-11-05 10:21:00,210 - root                             (1465bd4fbb30) :  ERROR (utils:55) - BAZARR Error ('.bin' is not a valid video extension) trying to get video information for this file: /pc/",
       "severity": "error",
       "skeleton": "<ts> - root (<hex>) : error (utils:<num>) - bazarr error (<str> is not a valid video extension) trying to get video information for this file: <path>"
+    },
+    {
+      "baseline": 0.0,
+      "container": "kapowarr",
+      "count": 24,
+      "fingerprint": "9dfcdf588b86",
+      "sample": "Traceback (most recent call last):",
+      "severity": "error",
+      "skeleton": "traceback (most recent call last):"
+    },
+    {
+      "baseline": 0.0,
+      "container": "kapowarr",
+      "count": 24,
+      "fingerprint": "6c8b3d58f4a7",
+      "sample": "\u001b[1;31:40m[03:32:26][WARNING] The file/folder /content/Archie's Christmas Spectacular (2026)/Archie Christmas Spectacular (2026) (digital) (Salem-Empire).cbr already exists; replacing with downloaded ",
+      "severity": "warn",
+      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][warning] the file/folder <path>"
+    },
+    {
+      "baseline": 0.0,
+      "container": "kapowarr",
+      "count": 24,
+      "fingerprint": "aa4df17ab706",
+      "sample": "\u001b[1;31:40m[05:23:45][WARNING] Orphaned downloads:     e.g. /app/temp_downloads/Adam.Strange.01.21/Adam Strange #01.cbr",
+      "severity": "warn",
+      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][warning] orphaned downloads: e.g. <path>"
+    },
+    {
+      "baseline": 0.0,
+      "container": "kapowarr",
+      "count": 23,
+      "fingerprint": "02ab3be4d9ce",
+      "sample": "\u001b[1;31:40m[03:30:06][WARNING] Indexer answered HTTP 510 for a release of NZB Planet",
+      "severity": "warn",
+      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][warning] indexer answered http <num> for a release of nzb planet"
+    },
+    {
+      "baseline": 0.0,
+      "container": "kapowarr",
+      "count": 23,
+      "fingerprint": "46bdf8af1a85",
+      "sample": "\u001b[1;31:40m[03:30:06][WARNING] NZB Planet is not serving downloads; not asking it for another 900s rather than once per release",
+      "severity": "warn",
+      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][warning] nzb planet is not serving downloads; not asking it for another <num> rather than once per release"
+    },
+    {
+      "baseline": 0.0,
+      "container": "kapowarr",
+      "count": 23,
+      "fingerprint": "26fe33a01262",
+      "sample": "\u001b[1;31:40m[03:30:06][WARNING] Failed to enqueue download: The indexer could not be reached just now",
+      "severity": "warn",
+      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][warning] failed to enqueue download: the indexer could not be reached just now"
+    },
+    {
+      "baseline": 0.0,
+      "container": "kapowarr",
+      "count": 23,
+      "fingerprint": "6de099e9b4f5",
+      "sample": "\u001b[1;31:40m[03:31:48][WARNING] GET to https://metron.cloud/api/series/16907/ is rate limited; not asking again for 51s. Retrying would only spend more of the quota that is exhausted.",
+      "severity": "warn",
+      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][warning] get to <url> is rate limited; not asking again for <num>. retrying would only spend more of the quota that is exhausted."
     }
   ],
   "top": [
     {
       "baseline": null,
+      "container": "qbit",
+      "count": 2000,
+      "fingerprint": "78027c85326d",
+      "sample": "Thu Nov  5 08:51:40 2026 AEAD Decrypt error: bad packet ID (may be a replay): [ #4774306 ] -- see the man page entry for --no-replay and --replay-window for more info or silence this warning with --mu",
+      "severity": "error",
+      "skeleton": "<ts> aead decrypt error: bad packet id (may be a replay): [ #<num> ] -- see the man page entry for --no-replay and --replay-window for more info or silence this warning with --mute-replay-warnings"
+    },
+    {
+      "baseline": null,
+      "container": "kapowarr",
+      "count": 1887,
+      "fingerprint": "512bc9539252",
+      "sample": "\u001b[1;31:40m[05:30:40][WARNING] GET request failed for url https://comicvine.gamespot.<REDACTED-BLOB>.jpg (ConnectionTimeoutError: Connection timeout to host https://comicvine.gamespot.<REDACTED-BLOB>.j",
+      "severity": "warn",
+      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][warning] get request failed for url <url> (connectiontimeouterror: connection timeout to host <url> retrying for round <num>..."
+    },
+    {
+      "baseline": null,
+      "container": "kapowarr",
+      "count": 340,
+      "fingerprint": "5f87adda8786",
+      "sample": "\u001b[1;31:40m[03:30:06][WARNING] Unable to add indexer download; fail_reason=\"The indexer could not be reached just now\"",
+      "severity": "warn",
+      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][warning] unable to add indexer download; fail_reason=<str>"
+    },
+    {
+      "baseline": null,
+      "container": "kapowarr",
+      "count": 317,
+      "fingerprint": "16185a7aa503",
+      "sample": "\u001b[1;31:40m[03:46:14][WARNING] Failed to enqueue download: This release does not match the issue you asked for. Use Download anyway (next to Download) to add it regardless.",
+      "severity": "warn",
+      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][warning] failed to enqueue download: this release does not match the issue you asked for. use download anyway (next to download) to add it regardless."
+    },
+    {
+      "baseline": null,
       "container": "proxysql",
-      "count": 585,
+      "count": 311,
       "fingerprint": "a9cfc33818b3",
-      "sample": "2026-11-04 07:10:45 MySQL_Thread.cpp:4786:ProcessAllSessions_Healthy0(): [WARNING] Closing unhealthy client connection 172.21.0.1:36094 , user 'kindrobot_migrate' , hostgroup 30 , connection 43645",
+      "sample": "2026-11-05 13:10:47 MySQL_Thread.cpp:5131:ProcessAllSessions_Healthy0(): [WARNING] Closing unhealthy client connection 172.21.0.1:57408 , user 'kindrobot_migrate' , hostgroup 30 , connection 100741",
       "severity": "warn",
       "skeleton": "<ts> mysql_thread.cpp<ip>processallsessions_healthy0(): [warning] closing unhealthy client connection <ip> , user <str> , hostgroup <num> , connection <num>"
     },
     {
       "baseline": null,
       "container": "requests",
-      "count": 113,
+      "count": 119,
       "fingerprint": "b0b22d3dd961",
-      "sample": "2026-11-05T12:34:41.459Z [error][Sonarr Scan]: Failed to process Sonarr media {\"errorMessage\":\"[TMDB] Failed to get TV show using the external TVDB ID: No show returned from API for ID 322438\",\"title\"",
+      "sample": "2026-11-06T12:34:27.611Z [error][Sonarr Scan]: Failed to process Sonarr media {\"errorMessage\":\"[TMDB] Failed to get TV show using the external TVDB ID: No show returned from API for ID 271317\",\"title\"",
       "severity": "error",
       "skeleton": "<ts> [error][sonarr scan]: failed to process sonarr media {<str>:<str>,<str>:<str>}"
     },
     {
       "baseline": null,
       "container": "netdata",
-      "count": 99,
+      "count": 95,
       "fingerprint": "2107195e439a",
-      "sample": "2026-11-05T01:31:15.658395Z  WARN ThreadId(09) journal_registry::registry::monitor: 23: Failed to send file system event: receiver dropped (channel closed)",
+      "sample": "2026-11-06T01:31:12.918295Z  WARN ThreadId(09) journal_registry::registry::monitor: 23: Failed to send file system event: receiver dropped (channel closed)",
       "severity": "error",
       "skeleton": "<ts> warn threadid(<num>) journal_registry<ip>registry<ip>monitor: <num>: failed to send file system event: receiver dropped (channel closed)"
     },
     {
       "baseline": null,
+      "container": "kapowarr",
+      "count": 80,
+      "fingerprint": "ff956128a2d9",
+      "sample": "\u001b[1;31:40m[03:47:50][WARNING] GET request failed for url https://archive.org/metadata/ijds-v7n1-26 (SocketTimeoutError: Timeout on reading data from socket). Retrying for round 2...",
+      "severity": "warn",
+      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][warning] get request failed for url <url> (sockettimeouterror: timeout on reading data from socket). retrying for round <num>..."
+    },
+    {
+      "baseline": null,
       "container": "netdata",
-      "count": 98,
+      "count": 70,
       "fingerprint": "24756dae8afd",
-      "sample": "time=2026-11-04T17:31:24.436-08:00 comm=spawn-unnamed source=collector level=warning tid=2885834  msg=\"SPAWN SERVER: child with pid 2885836 (request 1) exited with exit code 1: /usr/libexec/netdata/pl",
+      "sample": "time=2026-11-05T17:31:21.217-08:00 comm=spawn-unnamed source=collector level=warning tid=4002824  msg=\"SPAWN SERVER: child with pid 4002827 (request 1) exited with exit code 1: /usr/libexec/netdata/pl",
       "severity": "warn",
       "skeleton": "time=<ts> comm=spawn-unnamed source=collector level=warning tid=<num> msg=\"spawn server: child with pid <num> (request <num>) exited with exit code <num>: <path>"
     },
     {
       "baseline": null,
       "container": "netdata",
-      "count": 54,
+      "count": 47,
       "fingerprint": "8ef3774a1987",
-      "sample": "time=2026-11-04T17:46:57.687-08:00 comm=apps.plugin source=collector level=error errno=\"3, No such process\" tid=2883432  msg=\"Cannot process /host/proc/3082274/limits (command 'mariadbd-safe')\"",
+      "sample": "time=2026-11-05T17:31:23.518-08:00 comm=apps.plugin source=collector level=error errno=\"3, No such process\" tid=4000181  msg=\"Cannot process /host/proc/4003633/cgroup (command 'cut')\"",
       "severity": "error",
       "skeleton": "time=<ts> comm=apps.plugin source=collector level=error errno=<str> tid=<num> msg=\"cannot process <path>"
     },
@@ -221,180 +581,135 @@
       "container": "netdata",
       "count": 42,
       "fingerprint": "29a758d0ae5d",
-      "sample": "time=2026-11-04T17:31:13.001-08:00 comm=tc-qos-helper.sh source=collector level=warning tid=2883500 thread=tc-qos-helper request=\"'/usr/libexec/netdata/plugins.d/tc-qos-helper.sh' '1' \" msg=\"FireQOS i",
+      "sample": "time=2026-11-05T17:31:09.820-08:00 comm=tc-qos-helper.sh source=collector level=warning tid=4000249 thread=tc-qos-helper request=\"'/usr/libexec/netdata/plugins.d/tc-qos-helper.sh' '1' \" msg=\"FireQOS i",
       "severity": "warn",
       "skeleton": "time=<ts> comm=tc-qos-helper.sh source=collector level=warning tid=<num> thread=tc-qos-helper request=\"'<path>"
+    },
+    {
+      "baseline": null,
+      "container": "netdata",
+      "count": 30,
+      "fingerprint": "b4a4f3c0319b",
+      "sample": "time=2026-11-05T17:31:09.784-08:00 comm=spawn-plugins source=collector level=warning tid=3998934  msg=\"SPAWN SERVER: child with pid 4000226 (request 10) exited with exit code 1: /bin/sh -c \\\"exec /usr",
+      "severity": "warn",
+      "skeleton": "time=<ts> comm=spawn-plugins source=collector level=warning tid=<num> msg=\"spawn server: child with pid <num> (request <num>) exited with exit code <num>: <path>"
     },
     {
       "baseline": null,
       "container": "subtitles",
       "count": 28,
       "fingerprint": "581e297308ed",
-      "sample": "2026-11-04 10:20:52,342 - root                             (1465bf4bbb30) :  ERROR (utils:55) - BAZARR Error ('.bin' is not a valid video extension) trying to get video information for this file: /pc/",
+      "sample": "2026-11-05 10:21:00,210 - root                             (1465bd4fbb30) :  ERROR (utils:55) - BAZARR Error ('.bin' is not a valid video extension) trying to get video information for this file: /pc/",
       "severity": "error",
       "skeleton": "<ts> - root (<hex>) : error (utils:<num>) - bazarr error (<str> is not a valid video extension) trying to get video information for this file: <path>"
     },
     {
       "baseline": null,
-      "container": "netdata",
+      "container": "kapowarr",
       "count": 24,
-      "fingerprint": "b4a4f3c0319b",
-      "sample": "time=2026-11-04T17:31:12.955-08:00 comm=spawn-plugins source=collector level=warning tid=2882121  msg=\"SPAWN SERVER: child with pid 2883482 (request 12) exited with exit code 1: /bin/sh -c \\\"exec /usr",
-      "severity": "warn",
-      "skeleton": "time=<ts> comm=spawn-plugins source=collector level=warning tid=<num> msg=\"spawn server: child with pid <num> (request <num>) exited with exit code <num>: <path>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 12,
-      "fingerprint": "381cf7bc9913",
-      "sample": "time=2026-11-04T18:56:26.107-08:00 level=error msg=\"Get \\\"http://%2Fvar%2Frun%2Fdocker.sock/v1.47/info\\\": context deadline exceeded\" plugin=go.d collector=docker job=local config_source=\"stock/file re",
+      "fingerprint": "9dfcdf588b86",
+      "sample": "Traceback (most recent call last):",
       "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str><url> context deadline exceeded<str>stock/file reader\""
+      "skeleton": "traceback (most recent call last):"
     },
     {
       "baseline": null,
-      "container": "prowlarr",
-      "count": 10,
-      "fingerprint": "32387a50af4d",
-      "sample": "error code: 521",
-      "severity": "error",
-      "skeleton": "error code: <num>"
-    },
-    {
-      "baseline": null,
-      "container": "yac",
-      "count": 7,
-      "fingerprint": "e2d775e155cd",
-      "sample": "WARN  2026-11-04T08:09:00.117 QIODevice::write (QTcpSocket): device not open",
+      "container": "kapowarr",
+      "count": 24,
+      "fingerprint": "6c8b3d58f4a7",
+      "sample": "\u001b[1;31:40m[03:32:26][WARNING] The file/folder /content/Archie's Christmas Spectacular (2026)/Archie Christmas Spectacular (2026) (digital) (Salem-Empire).cbr already exists; replacing with downloaded ",
       "severity": "warn",
-      "skeleton": "warn <ts> qiodevice<ip>write (qtcpsocket): device not open"
+      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][warning] the file/folder <path>"
     },
     {
       "baseline": null,
-      "container": "netdata",
-      "count": 6,
-      "fingerprint": "39a858d67d7c",
-      "sample": "time=2026-11-04T21:59:47.553-08:00 comm=apps.plugin source=collector level=error tid=2883432  msg=\"Cannot process /host/proc/1941348/limits (command 'mariadbd-safe')\"",
-      "severity": "error",
-      "skeleton": "time=<ts> comm=apps.plugin source=collector level=error tid=<num> msg=\"cannot process <path>"
-    },
-    {
-      "baseline": null,
-      "container": "logs",
-      "count": 5,
-      "fingerprint": "369ccb230cc3",
-      "sample": "{\"level\":\"warn\",\"version\":\"v11.4.1\",\"error\":\"context deadline exceeded\",\"id\":\"08f120035673\",\"time\":\"2026-11-04T17:30:49-08:00\",\"message\":\"failed to inspect container, falling back to list entry\"}",
+      "container": "kapowarr",
+      "count": 24,
+      "fingerprint": "aa4df17ab706",
+      "sample": "\u001b[1;31:40m[05:23:45][WARNING] Orphaned downloads:     e.g. /app/temp_downloads/Adam.Strange.01.21/Adam Strange #01.cbr",
       "severity": "warn",
-      "skeleton": "{<str>:<str>,<str>:<str>,<str>:<str>,<str>:<str>,<str>:<str>,<str>:<str>}"
-    },
-    {
-      "baseline": null,
-      "container": "logs",
-      "count": 5,
-      "fingerprint": "a4a6b5b427de",
-      "sample": "{\"level\":\"warn\",\"version\":\"v11.4.1\",\"error\":\"Get \\\"http://%2Fvar%2Frun%2Fdocker.sock/v1.47/containers/json?all=1\\\": context deadline exceeded\",\"id\":\"08f120035673\",\"time\":\"2026-11-04T17:30:49-08:00\",\"m",
-      "severity": "warn",
-      "skeleton": "{<str>:<str>,<str>:<str>,<str>:<str><url> context deadline exceeded<str>id<str><hex><str>time<str><ts><str>message<str>failed to list containers while adding container\"}"
-    },
-    {
-      "baseline": null,
-      "container": "prowlarr",
-      "count": 5,
-      "fingerprint": "46dd23614c58",
-      "sample": "--- End of inner exception stack trace ---",
-      "severity": "error",
-      "skeleton": "--- end of inner exception stack trace ---"
-    },
-    {
-      "baseline": null,
-      "container": "prowlarr",
-      "count": 5,
-      "fingerprint": "e07b812c24dc",
-      "sample": "[Warn] HttpClient: HTTP Error - Res: HTTP/2.0 [GET] https://prowlarr.servarr.com/v1/time: 521.521 (16 bytes)",
-      "severity": "warn",
-      "skeleton": "[warn] httpclient: http error - res: http/<num> [get] <url> <num> (<num> bytes)"
-    },
-    {
-      "baseline": null,
-      "container": "prowlarr",
-      "count": 5,
-      "fingerprint": "2f316433ece3",
-      "sample": "[v3.0.0.5737] NzbDrone.Common.Http.HttpException: HTTP request failed: [521:521] [GET] at [https://prowlarr.servarr.com/v1/time]",
-      "severity": "error",
-      "skeleton": "[v3.<num>.<num>] nzbdrone.common.http.httpexception: http request failed: [<num>:<num>] [get] at [<url>"
+      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][warning] orphaned downloads: e.g. <path>"
     },
     {
       "baseline": null,
       "container": "scoopspress",
-      "count": 4,
-      "fingerprint": "0174d77ccc5f",
-      "sample": "AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 172.21.0.29. Set the 'ServerName' directive globally to suppress this message",
-      "severity": "other",
-      "skeleton": "ah00558: apache2: could not reliably determine the server's fully qualified domain name, using <ip>. set the <str> directive globally to suppress this message"
-    },
-    {
-      "baseline": null,
-      "container": "scoopspress",
-      "count": 4,
+      "count": 23,
       "fingerprint": "6497ddc377f6",
-      "sample": "[Thu Nov 05 04:30:16.354791 2026] [php:warn] [pid 29:tid 29] [client 75.111.66.70:0] PHP Warning:  Undefined variable $enable_postal_code in <REDACTED-BLOB>.cf7sa.front.action.php on line 90",
+      "sample": "[Thu Nov 05 10:30:12.558045 2026] [php:warn] [pid 25:tid 25] [client 75.111.66.70:0] PHP Warning:  Undefined variable $enable_postal_code in <REDACTED-BLOB>.cf7sa.front.action.php on line 90",
       "severity": "warn",
       "skeleton": "[<ts>] [php:warn] [pid <num>:tid <num>] [client <ip>] php warning: undefined variable $enable_postal_code in <redacted-blob>.cf7sa.front.action.php on line <num>"
     },
     {
       "baseline": null,
-      "container": "netdata",
-      "count": 4,
-      "fingerprint": "7d1394e6bd47",
-      "sample": "time=2026-11-04T17:31:17.380-08:00 level=error msg=\"check failed: GET 'http://172.21.0.26:80/basic_status' returned HTTP status code: 404\" plugin=go.d collector=nginx job=docker_media config_source=di",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d collector=nginx job=docker_media config_source=discovered/sd:docker"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 4,
-      "fingerprint": "ef0776cb42ae",
-      "sample": "time=2026-11-04T17:37:13.111-08:00 comm=netdata source=health level=warning tid=2883423 thread=HEALTH <REDACTED-BLOB> node=78e99ef70a5f instance=disk_backlog.sdk context=disk.backlog code=0 alert_id=1",
+      "container": "kapowarr",
+      "count": 23,
+      "fingerprint": "02ab3be4d9ce",
+      "sample": "\u001b[1;31:40m[03:30:06][WARNING] Indexer answered HTTP 510 for a release of NZB Planet",
       "severity": "warn",
-      "skeleton": "time=<ts> comm=netdata source=health level=warning tid=<num> thread=health <redacted-blob> node=<hex> instance=disk_backlog.sdk context=disk.backlog code=<num> alert_id=<hex> alert_unique_id=<hex> alert_event_id=<num> <redacted-blob> <redacted-blob> alert=10min_disk_backlog alert_class=latency alert"
+      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][warning] indexer answered http <num> for a release of nzb planet"
     },
     {
       "baseline": null,
-      "container": "netdata",
-      "count": 4,
-      "fingerprint": "28346e8a5fd3",
-      "sample": "time=2026-11-04T17:47:57.909-08:00 comm=netdata source=health level=warning tid=2883423 thread=HEALTH <REDACTED-BLOB> node=78e99ef70a5f instance=net_drops.shim-br0 context=net.drops code=0 alert_id=17",
+      "container": "kapowarr",
+      "count": 23,
+      "fingerprint": "46bdf8af1a85",
+      "sample": "\u001b[1;31:40m[03:30:06][WARNING] NZB Planet is not serving downloads; not asking it for another 900s rather than once per release",
       "severity": "warn",
-      "skeleton": "time=<ts> comm=netdata source=health level=warning tid=<num> thread=health <redacted-blob> node=<hex> instance=net_drops.shim-br0 context=net.drops code=<num> alert_id=<hex> alert_unique_id=<hex> alert_event_id=<num> <redacted-blob> <redacted-blob> alert=inbound_packets_dropped_ratio alert_class=err"
+      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][warning] nzb planet is not serving downloads; not asking it for another <num> rather than once per release"
     },
     {
       "baseline": null,
-      "container": "netdata",
-      "count": 4,
-      "fingerprint": "1813e34db7a2",
-      "sample": "time=2026-11-04T19:05:13.381-08:00 comm=alarm-notify.sh source=health level=error tid=4016341 thread=alarm-notify <REDACTED-BLOB> node=78e99ef70a5f instance=system.cpu context=system.cpu alert_id=1787",
+      "container": "kapowarr",
+      "count": 23,
+      "fingerprint": "26fe33a01262",
+      "sample": "\u001b[1;31:40m[03:30:06][WARNING] Failed to enqueue download: The indexer could not be reached just now",
+      "severity": "warn",
+      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][warning] failed to enqueue download: the indexer could not be reached just now"
+    },
+    {
+      "baseline": null,
+      "container": "kapowarr",
+      "count": 23,
+      "fingerprint": "6de099e9b4f5",
+      "sample": "\u001b[1;31:40m[03:31:48][WARNING] GET to https://metron.cloud/api/series/16907/ is rate limited; not asking again for 51s. Retrying would only spend more of the quota that is exhausted.",
+      "severity": "warn",
+      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][warning] get to <url> is rate limited; not asking again for <num>. retrying would only spend more of the quota that is exhausted."
+    },
+    {
+      "baseline": null,
+      "container": "hairpress",
+      "count": 21,
+      "fingerprint": "b32e674d9dd1",
+      "sample": "[Thu Nov 05 19:10:16.621876 2026] [autoindex:error] [pid 321:tid 321] [client 52.242.132.37:0] AH01276: Cannot serve directory /var/www/html/wp-includes/: No matching DirectoryIndex (index.php,index.h",
       "severity": "error",
-      "skeleton": "time=<ts> comm=alarm-notify.sh source=health level=error tid=<num> thread=alarm-notify <redacted-blob> node=<hex> instance=system.cpu context=system.cpu alert_id=<hex> alert_unique_id=<hex> <redacted-blob> alert=10min_cpu_usage alert_class=utilization alert_component=cpu alert_type=system alert_reci"
+      "skeleton": "[<ts>] [autoindex:error] [pid <num>:tid <num>] [client <ip>] ah01276: cannot serve directory <path>"
+    },
+    {
+      "baseline": null,
+      "container": "kapowarr",
+      "count": 17,
+      "fingerprint": "96cc820a6c9c",
+      "sample": "\u001b[1;31:40m[03:49:59][WARNING] GET request to https://archive.org/metadata/ijds-v7n1-26 failed after 5 attempts (SocketTimeoutError: Timeout on reading data from socket)",
+      "severity": "warn",
+      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][warning] get request to <url> failed after <num> attempts (sockettimeouterror: timeout on reading data from socket)"
     },
     {
       "baseline": null,
       "container": "prowlarr",
-      "count": 4,
-      "fingerprint": "5dcec9bc3591",
-      "sample": "[Warn] AllowedHostsCheck: Allowed Hosts is not configured, requests for any hostname will be accepted. You can set this via settings or the config file",
-      "severity": "warn",
-      "skeleton": "[warn] allowedhostscheck: allowed hosts is not configured, requests for any hostname will be accepted. you can set this via settings or the config file"
+      "count": 14,
+      "fingerprint": "c7a50f63b8e0",
+      "sample": "{\"status\": \"error\", \"message\": \"Error: Error solving the challenge. Message: session not created: cannot connect to chrome at 127.0.0.1:43923\\\\nfrom chrome not reachable; For documentation on this err",
+      "severity": "error",
+      "skeleton": "{<str>: <str>, <str>: \"error: error solving the challenge. message: session not created: cannot connect to chrome at <ip>\\\\nfrom chrome not reachable; for documentation on this error, please visit: <url> <hex> <unknown>\\\\n#<num> <hex> <unknown>\\\\n#<num> <hex> <unknown>\\\\n#<num> <hex> <unknown>\\\\n#<n"
     },
     {
       "baseline": null,
       "container": "prowlarr",
-      "count": 4,
-      "fingerprint": "0e25aedc22c1",
-      "sample": "[Warn] SystemTimeCheck: Unable to verify system time",
-      "severity": "warn",
-      "skeleton": "[warn] systemtimecheck: unable to verify system time"
+      "count": 13,
+      "fingerprint": "031e9746569c",
+      "sample": "[Error] Newznab: Invalid Release: 'https://api.nzb.<REDACTED-BLOB>' from indexer: Nzb.su. No title provided.",
+      "severity": "error",
+      "skeleton": "[error] newznab: invalid release: '<url> from indexer: nzb.su. no title provided."
     }
   ],
   "version": 1,
