@@ -747,7 +747,7 @@ tasks:
   - id: t-035
     milestone: m4
     title: "Seeded pre-charted route for chapters 2-9 and reachable destination ending families"
-    status: review
+    status: done
     passes: 0
     stakes: reversible
     source: silas-2026-11-04
@@ -761,9 +761,10 @@ tasks:
       2026-11-05 PT: The seeded eligible-route fix landed in Kind Robots PR #4767 (squash 0eca96cd577a0762004d1b85d136206c56c94870), with all exact-head check groups passing, including the 42 full-voyage default-route tests, canonical gameplay suite, and full adversarial voyage matrix. Our implementation branch was deleted after merge. The original t-035 claim remained in review; releasing it to ready because destination-specific earned-ending organic reachability and balance are not yet independently measured or proved. Do not mark the destination-ending milestone done or infer human acceptance from the route fix. No production DB changes or new ArtJobs.
 
       2026-11-05 PT: Silas expressly asked us to resume this stalled claim. Scoped follow-through implementation: the route planner now favors eligible world-specific sequel calls from actually earned flags, while retaining a seeded chance to choose other missions and always allowing manual charting. Five destination threads have authored reminders in the briefing and visible return-call labels on mission cards. The Archive's consent and Hollow Lantern rescue now unlock the corresponding foundry and Windglass follow-ups even without specific crew, without weakening any other eligibility or save requirements. Expanded 42-voyage seeded regression for continuation weighting and chart override; preexisting six-family full-voyage trace suite remains the earned-ending acceptance gate. App branch worker/game-of-captains-t035-earned-threads-79f2; CI and PR pending. No deployment or human acceptance claimed.
-    updated: '2026-11-06T00:02:43.065Z'
+
+      2026-11-05 PT: Human-authorized takeover complete. Merged Kind Robots #4838 at 6c7ef368c3113e01958f8744727f529dcda24746 after all 9 exact-head workflow groups succeeded. The existing six destination-ending families retain real player-driven pinned full-voyage traces for all captains, and 2,116 adversarial voyages passed. Seeded chart now favors earned sequel calls without forcing them; the Archive consent and Hollow Lantern rescue properly unlock their follow-up stories, and the image-led mission cards identify earned RETURN CALLs. Dedicated 42-voyage default chart regression passed with 40 distinct routes and 27 missions, preserving manual override and save replay. All scope of t-035 is complete; route-specific ending families still require deliberate choices rather than blind default policy, by design. Art/viewport review and final human acceptance belong to their own tasks. No deployment, database migration, or new ArtJobs.
+    updated: '2026-11-06T00:22:20.643Z'
     implementation_pr: 'silasfelinus/kind_robots#4767'
-    owner: worker
     claimed_by: 20261105T235000Z-game-of-captains-t035-human-handoff-79f2
     claimed_at: '2026-11-05T23:50:39.782Z'
   - id: t-036
