@@ -694,3 +694,27 @@ tasks:
       Removed mistaken admin-only checks from the shared game UI. Added a regression test requiring CLASH on the public normal Play route. Working branch worker/slime-city-t-031-normal-clash-play-20261106-v7q2. Explicitly requested normal game availability; no marketing launch or rewards.
 
       Merged Kind Robots #4851 (f7f4eb858b20151e5ae48d9ec416d4385e4e0c6e) and Conductor #7106 (48bac78f37be355243b4aba56d4c9c97034ebf29); all latest-head checks green; normal Play route now shows ungated Clash tab.
+
+  - id: t-032
+    milestone: m2
+    title: "CLASH canonical rules: two plays, tactical attacks, fresh draws, healing and exclusive balance"
+    status: claimed
+    owner: worker
+    claimed_by: 20261106T111652123Z-slime-city-clash-core-t-032-9r4z
+    claimed_at: '2026-11-06T11:16:52.123Z'
+    updated: '2026-11-06T11:16:52.123Z'
+    passes: 0
+    stakes: reversible
+    note: |-
+      Silas, 2026-11-06 PT: CLASH is now the MAIN Slime City combat mode;
+      ARENA, ALLEYS, BLACKOUT, BLOODRUSH, TURF and other modes become Legacy.
+      All development, gameplay playtests and card rebalance target CLASH
+      exclusively. A turn gives two card plays; marked powerful/special cards
+      cost both plays. Each round draw from a shuffled 20-card deck; discard
+      every unplayed hand card at end of turn, never hold them over. After
+      placement choose attacks: followers trade their power damage on attack,
+      any enemy follower is targetable, boss only when no enemies remain.
+      Heal every surviving follower for one at end of full round. Rebalance
+      Clash-specific stats and actions without changing legacy modes. Update
+      normal Play UI/navigation and deterministic CPU, replay, deck tests.
+      No account rewards, DB migration or unrelated publication changes.
