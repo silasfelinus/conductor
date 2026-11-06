@@ -1195,3 +1195,22 @@ tasks:
   claimed_by: 2026-11-06T11:29:19Z-ruler-hooked-t064-hud-nav-76b42
   claimed_at: '2026-11-06T11:29:19.692Z'
   updated: '2026-11-06T11:29:19.692Z'
+
+- id: t-065
+  milestone: m6
+  title: 'Replace classic fishing web-app reel/slack buttons with a one-input painted timing minigame'
+  status: ready
+  gate_human: false
+  stakes: reversible
+  passes: 0
+  note: >-
+    Silas, 2026-11-06 PT: Classic fishing currently is two timing stops
+    followed by endless TAP TO REEL / GIVE SLACK webapp buttons, unacceptable
+    as a AAA game interaction. Make the classic fishing encounter a visual
+    multi-beat timing game where space, mouse click, or tap is the only input.
+    Challenge the player to stop a sweeping bobber in action zones that change
+    position and difficulty over the fish's struggle, with occasional sudden
+    surges/target jumps. Reuse the existing deterministic timing-profile,
+    rarity, gear, fish family and replay systems, retain progression and catch
+    rewards, keep Mandarin quiz gameplay separate, include accessible
+    keyboard/pointer controls and regression tests. Reversible code work.
