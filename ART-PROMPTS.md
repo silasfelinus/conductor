@@ -674,7 +674,7 @@ Verify provenance of finished generated assets before claiming coverage; keep pr
 ## MONSTREXX — game art (2026-11-05 PT revision)
 
 - monstress-convention-icon.webp (legacy internal asset basename; visible brand MONSTREXX): motel key fob, hot pink autograph, a tiny ghostly ornamental blade shadow, original monster-celebrity noir adventure silhouette.
-- monstress-convention-card.webp (512x768): Iris, striking capable adult field journalist, foreground photographing evidence; behind her Nico, hunched unattractive theatrical germophobic genius with handkerchief, flinching from human contact; MONSTREXX monster stars in background, two adult ghosts in motel window, no collage.
+- monstress-convention-card.webp (512x768): Iris, striking capable adult field journalist, foreground photographing evidence; behind her Norb, hunched unattractive theatrical germophobic genius with handkerchief, flinching from human contact; MONSTREXX monster stars in background, two adult ghosts in motel window, no collage.
 - monstress-convention-hero.webp (1280x720): two-story Last Call Motor Lodge in rain, ice machine and narrow corridors, crime-room window with two specters, distant MONSTREXX convention billboard, hand-painted point-and-click game mood, NOT a convention hotel.
 - monstrexx-double-ghost-scene.webp: two independent adult spectral women in a dim motel room with evidence-tagged ornate knife; tasteful, no explicit sex and no gore.
 - monstrexx-city-map.webp: distinct convention center, seedy motel, supernatural novelty shop, celebrity vampire mansion and underground sewer exit.
