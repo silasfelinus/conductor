@@ -291,11 +291,8 @@ tasks:
   - id: t-011
     milestone: m5
     title: Continuing autonomous chapter, art and balance evolution
-    status: claimed
-    owner: worker
-    claimed_by: 2026-11-06T125740718Z-zuzu-t011-header-23bnbf
-    claimed_at: '2026-11-06T12:57:40.718Z'
-    updated: '2026-11-06T12:57:40.718Z'
+    status: ready
+    updated: '2026-11-06T12:59:13.017Z'
     passes: 0
     recurring: true
     stakes: reversible
@@ -314,6 +311,8 @@ tasks:
       Scoped follow-up: compact immutable end-to-end golden replay encoding, scene-and-flag fingerprints, and six-encounter wounded/low-Resolve combat stress matrix. Working branch worker/zuzu-gamebook-t011-golden-wounded-b7e42. CI and frozen fixture snapshots pending.
 
       2026-10-22 PT: Merged Kind Robots PR #4037, squash commit 4121d73ef0126a751cdf95d1d13b3c66a8173b8f, after all 13 current-head workflows passed (including four contract shards, TypeScript, changed-file formatting). Frozen 15 genuine complete end-to-end ending journeys comprising 1217 reducer actions in utils/scripts/fixtures/zuzuGamebookGolden.json, with deterministic replay and route/flag/item/resource/RNG fingerprints. Tested all six authored fights at 3/6/9/12 HP and 0/2/4 Resolve, four strategies and 90 seeded fights per configuration, correctly allowing recovery scene effects after losing. No gameplay rule changes, ArtJobs, or external publication. Triage: 3 HP produced zero wins in 90 seeds for each of four tactics versus the Croc, Abbess, and Hollis; inspect retreat routes, player risk signals and wounded pacing, while retaining meaningful defeat continuations. Recurring task rearmed; full visual QA and pending illustration work remain with the other roadmap tasks.
+
+      2026-11-06 PT: Scoped screenshot-reported system-header greeting overlap. No Kind Robots code change or PR was created because GitHub connector safety checks blocked create_branch. Releasing the claim for another authorized worker; fix is to remove the redundant greeting from components/navigation/workspace-header.vue and add a navigation contract assertion.
   - id: t-012
     milestone: m5
     title: "Two-character Zuzu plates: the LoRAs exist but don't stack (Zuzu fuses with a second LoRA; abbess LoRA paints human faces)"
