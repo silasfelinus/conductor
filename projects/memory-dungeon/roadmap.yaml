@@ -158,40 +158,26 @@ tasks:
   - id: t-023
     milestone: m2
     title: "Deliver photograph Chronicle, Earth timeline and ending spoiler gates"
-    status: claimed
+    status: ready
     depends_on: t-018
     passes: 0
     stakes: reversible
-    updated: '2026-11-06T19:43:00Z'
-    note: >-
+    updated: '2026-11-06T19:52:00Z'
+    note: |-
       Author 32 fixed collectible photo beats, two per world, with out-of-order journal reconciliation, once-only claims, proper Earth chronology, and meaningful hero reactions. World 1 photos occur at 2,5 (dismissal) and 8,6 (friend's humiliation). Morrow later builds authentic work, friendship and romance; do not unmistakably reveal their children before World 16.
-
       Prepared the independent Earth Chronicle source and playable recovery slice: 32 authored Earth-side photo beats, two for each of 16 internal experiences; four are collectible now across original and Dark Briar by scene decisions, later photos cannot appear before their experiences are implemented. Unique response choices persist across runs, legacy saves backfill earned entries, chronological ordering is independent of discovery order, and no future world/photo totals are exposed in the UI. Added responsive photo-led Chronicle console with missing-art fallback, plus automated contract tests. Kind Robots review PR follows; do not claim later 28 photos playable.
-
       PR kind_robots#4199 merged at ff450bff51bcbc74cd4b2c8e8af81279bdd90cbb with all 14 CI workflows green. The independent Earth Chronicle now has 32 authored photo beats and persistent player interpretations, with only the 4 original/mirrored Briar photos collectible. Earlier saves backfill their discoveries, ordering stays chronological across repeated expeditions, future photos remain hidden without playable scene hooks, and the game does not expose its internal realm count. Return to READY for implementing the remaining 28 photo pickups in future realities, completing rendered-image QA and the final cross-reality ethical endings. No human gate or final art acceptance.
-
       Earth Chronicle photo-continuity increment: original and mirrored Briar photo backfills now require real authored scene decisions, rejecting forged choices. Dark Briar's Knight at the Wrong Bridge now physically reveals the previously disconnected Unsent Reply photograph through both outcomes. Four-photo narrative/choice and 24-order save/replay regression cases added; Kind Robots focused PR and exact-head CI verification follow. Future 28 photos, delivered artwork and final ethical ending acceptance remain unfinished.
-
       2026-10-27 PT: Merged Kind Robots PR #4334 at 78dfb30756768aacb0f3a842df6052c5855431d5 after all 18 exact-head checks and 13 workflows passed on 7703c413143b3d0008244cc1e04bbb50797bdc94. [...]
-
       [Earlier history (6,350 chars) archived verbatim to projects/memory-dungeon/T023-HISTORY.md -- read it there only when you need a specific past cycle. Append new cycles below, one short paragraph each.]
-
       Scoped e07 Earth Chronicle pickup: Hoshimori site 2,3 earns the first authored photo after a replay-validated decision and the e06 campaign gate; the second e07 photo and all unbuilt realities remain hidden. Shared Chronicle opens from the Hoshimori console. Five-file Kind Robots PR and exact-head CI follow.
-
       2026-10-30 4:00 AM PT: Merged Kind Robots PR #4482 (squash 6388cf362e43e5e45623ed9ca1928ffa5dab737b) after 21/21 exact-head checks and all 16 Actions workflows passed on b6edf50a30169d54fb0297da72b295d4de42790c. Hoshimori e07 site 2,3 now earns earth-13 once through replay-validated choice and e06 campaign gate, preserving chronology and immutable responses. The shared Chronicle is reachable from the Hoshimori console. New tests cover both legal choices, forged choices, restoration, once-only claims, ordering and future photo exclusion. Master issue #4136 comment 6521059791. No new ArtJobs, deployment or rendered acceptance. Return READY for e07 7,5 second photo, remaining 27 future pickups, delivered art, full endings and device QA. Not For Human Gate.
-
       Prepared a four-site Hoshimori mountain road to the fixed e07 7,5 photograph, two authored choices at each new site, and replay-validated earth-14 Chronicle pickup. Kind Robots focused PR and exact-head CI follow. No ArtJobs or deployment.
-
       2026-10-30 5:00 AM PT: Merged Kind Robots PR #4486 (squash 3a08044dcfd7b7d1a472b05b79e2ae513f99750d) after all 16 exact-head workflows passed on 0acc702cf5601bdb8d37ff0d36812acb54938518. Added four connected e07 mountain sites (20/64 total, 40 choice outcomes) and earned earth-14 at fixed 7,5 through replay-validated choices, once-only chronological Chronicle recovery and e06 gate. Contract Tests #41051280666 (four shards), TypeScript #41051280608, formatting #41051280827, layout #41051280611 and Memory browser #41051280760 succeeded. Master issue #4136 comment 6522185097. No new ArtJobs or deployment. Return READY: remaining 26 future Earth pickups, delivered image verification, campaign endings and rendered device QA are unfinished; Hoshimori still needs 44 sites, 33 Oven rooms and 30+2 gallery. Not For Human Gate.
-
       Scoped e08 Earth Chronicle increment: first night-procession photo at fixed 1,4 now follows either replay-validated authored decision after the e07 campaign gate. Existing e07 photos, Earth chronology, immutable reactions and old saves remain. e08 6,7 photo and all later unbuilt scenes remain spoiler-locked. Focused Kind Robots PR and exact-head CI pending; no ArtJobs or deployment.
+      2026-11-04 PT cleanup pass: stale review with an expired claim; the recorded slice landed (or was superseded) and the note itself lists remaining scope, so back to ready for the next slice rather than done.
 
-      2026-11-04 PT cleanup pass: stale review with an expired claim; the recorded slice
-      landed (or was superseded) and the note itself lists remaining scope, so back to ready
-      for the next slice rather than done.
-    owner: worker
-    claimed_by: 2026-11-06T194300Z-memory-dungeon-t-023-n7c9
-    claimed_at: '2026-11-06T19:43:00Z'
+      2026-11-06 PT: Confirmed e08 earth-15 at 1,4 has replay-validated choice and chronology coverage; earth-16 at 6,7 remains intentionally spoiler-locked because its authored scene is not present. No implementation shipped this pass; retain READY for a playable 6,7 route and actual image delivery verification.
   - id: t-030
     milestone: m3
     title: "Build scene-art production manifest and sixteen-realm coverage checks"
