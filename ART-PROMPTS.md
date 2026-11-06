@@ -671,8 +671,13 @@ Verify provenance of finished generated assets before claiming coverage; keep pr
 - `slime-city-blackout.webp` (1280×720): Square 8x8 concealed-army tactical arena; blue and red face-down character cards in symmetrical starting ranks, ominous center flag, flashy arena crowds and comic lighting, no text.
 - `slime-city-bloodrush.webp` (1280×720): Cinematic wide 14x6 square-cell rectangular assault field with a tide of fast punk bloodfairies and chrome ogres moving in horizontal lanes, kinetic freeze-frame of an action-heavy real-time CCG, no text.
 
-## Monstress Convention — new project (2026-11-05 PT)
+## MONSTREXX — game art (2026-11-05 PT revision)
 
-- `monstress-convention-icon.webp` (256×256): A chipped crimson hotel key fob shaped like a bat wing, brass room tag and wet neon reflection, midnight blue motel-carpet backdrop, expressive hand-painted adult comedy adventure game icon, bold readable silhouette, unlabeled surfaces.
-- `monstress-convention-card.webp` (512×768): A raincoat-wearing scrappy adult reporter holding a camera in the foreground and a sharp-eyed adult woman photojournalist with a notebook beside him, behind them a grand vampire actress and fly-headed glamour star silhouetted in a cheap hotel's amber-lit lobby, crooked neon, cinematic 1990s animation-adventure poster, clear faces and varied body shapes, blank title space.
-- `monstress-convention-hero.webp` (1280×720): Exterior of an old two-storey roadside convention hotel in night rain, zigzag balconies, sputtering pink-and-teal marquee, misted lobby windows, luggage cart with giant monster costume trunk, hot-tub steam rising from a courtyard, a sinister fly-headed silhouette behind one illuminated upper-floor curtain, richly painted point-and-click adventure background, cheeky atmospheric mystery, empty signage surfaces.
+- monstress-convention-icon.webp (legacy internal asset basename; visible brand MONSTREXX): motel key fob, hot pink autograph, a tiny ghostly ornamental blade shadow, original monster-celebrity noir adventure silhouette.
+- monstress-convention-card.webp (512x768): Iris, striking capable adult field journalist, foreground photographing evidence; behind her Nico, hunched unattractive theatrical germophobic genius with handkerchief, flinching from human contact; MONSTREXX monster stars in background, two adult ghosts in motel window, no collage.
+- monstress-convention-hero.webp (1280x720): two-story Last Call Motor Lodge in rain, ice machine and narrow corridors, crime-room window with two specters, distant MONSTREXX convention billboard, hand-painted point-and-click game mood, NOT a convention hotel.
+- monstrexx-double-ghost-scene.webp: two independent adult spectral women in a dim motel room with evidence-tagged ornate knife; tasteful, no explicit sex and no gore.
+- monstrexx-city-map.webp: distinct convention center, seedy motel, supernatural novelty shop, celebrity vampire mansion and underground sewer exit.
+- monstrexx-monster-idols.webp: iconic original MONSTREXX celebrity ensemble, featuring Dracula-inspired diva, stitched actress, werewolf, slime, lagoon, fly-headed supermodel and bandaged mummy actress; all adults.
+- monstrexx-alligator.webp: white alligator woman in a sewer dressing room rehearsing a very earnest but unconvincing celebrity audition; charming, original cartoon comedy.
+- monstrexx-scrapbook.webp: collectible magazine clippings, character biographies, concert cards, locked image silhouettes and tastefully suggestive non-explicit character portrait slots.

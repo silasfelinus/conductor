@@ -1,23 +1,24 @@
-# Monstress Convention: mature point-and-click detective comedy, authorized 2026-11-05 PT.
+# MONSTREXX: mature point-and-click detective comedy, authorized 2026-11-05 PT.
 # Full design: DESIGN-BRIEF.md. First playable dependency graph: OPENING-SLICE.md.
 project: monstress-convention
 kind: software
 autonomous: true
 goal: >-
-  Develop Monstress Convention as an original adults-only, two-protagonist point-and-click comedy murder mystery in a sprawling two-storey convention hotel. Deliver a fully playable, fair-clue investigation with hotspot-and-verb puzzles, shared evidence/topic notebooks, differential dialogue, an interactive ghost witness, optional consensual flirtation, lavish hand-painted single-screen art, seeded playtests, and secure logged-in mature-opt-in non-CHILD visibility and access. Preview is internal until separate visual acceptance and publication approval.
+  Develop MONSTREXX as an adult point-and-click murder mystery: Iris is the field protagonist; her astute germophobic boss Nico supports her; at the seedy motel smarmy franchise agent Odette and adult companion Violet are both murdered, both become ghost witnesses, and the separate Monstrexx Convention Center plus joke shop, mansion and sewers unlock through city leads. Deliver a fully playable, fair-clue investigation with hotspot-and-verb puzzles, shared evidence/topic notebooks, differential dialogue, an interactive ghost witness, optional consensual flirtation, lavish hand-painted single-screen art, seeded playtests, and secure logged-in mature-opt-in non-CHILD visibility and access. Preview is internal until separate visual acceptance and publication approval.
 notes_from_silas: |
+  2026-11-05 PT REVISION (supersedes prior notes): Game/franchise display title MONSTREXX, not Monstrexx Convention; the convention is one separate city destination, NOT the murder motel. Iris Quill is the primary field protagonist; Nico Vale is her astute ugly germophobic boss who avoids contact and rebuffs her playful flirting. Odette Harker, smarmy MONSTREXX agent, and adult sex worker Violet Wisp share a consensual date in a suggestive cold open; unseen killer murders BOTH with an unusual knife; BOTH return as separately interrogable ghosts. Mummy monster actress, alligator woman celebrity wannabe beneath motel, vampire mansion, occult novelty store, neighbors, ice machine, office, MONSTREXX acting/modeling/idol brand. Mature opt-in, no CHILD, optional consensual romance/scrapbook with non-explicit steamy art. Old Celestine-victim/Odette-killer logic is void; Gavin is never killer. Keep stable technical slug monstress-convention for continuity; user-facing title MONSTREXX.
   2026-11-05 PT: New Conductor project, "Monstress Convention": mature point-and-click adventure inspired by Leisure Suit Larry, Monkey Island, Thimbleweed Park and monster-girl ensembles. The setting is a seedy two-storey hotel hosting a convention of stars from a famous female-monster film/TV/franchise. Cast includes female Dracula, Francesca Stein, werewolf, slime woman, lagoon woman and giant fly-headed woman. Protagonist: scrappy, hungry journalist for a failing blog, with a smarter, attractive female assistant. Both are playable; conversations react to which asks. A cast member is murdered, then returns as a ghost who does not know the culprit. A creepy fanboy stalker is explicitly NOT the killer. Hot tub, hotel rooms and convention floor support campy adult cheesecake and puzzle scenes. Shared dynamic conversation topics, complex inventory/hotspot puzzles and a single-screen AAA console-quality interface. Only show in nav/highlights to logged-in mature-opted-in accounts without CHILD role.
 milestones:
   - id: m1
-    title: "CASE OPEN — playable intro, investigation grammar, age-safe discovery"
+    title: "MOTEL CASE OPEN — two ghosts, Iris-first investigation and private intro"
     weight: 20
     status: not-started
   - id: m2
-    title: "HOTEL — two playable sleuths and full puzzle-driven case"
+    title: "MOTEL AND CITY — dual ghost evidence and a fair branching investigation"
     weight: 45
     status: not-started
   - id: m3
-    title: "THE REVEAL — cast, outcomes, optional romance, delivered art"
+    title: "MONSTREXX STARS — idol group, romance scrapbook, delivered art"
     weight: 20
     status: not-started
   - id: m4
@@ -27,13 +28,13 @@ milestones:
 tasks:
   - id: t-001
     milestone: m1
-    title: "Art-led internal game screen and Playbook Kit scaffold with fail-closed mature access"
+    title: "MONSTREXX private opening screen and Playbook Kit scaffold with mature access"
     status: ready
     owner: null
     passes: 0
     stakes: reversible
     note: >-
-      Build the Vignette spec and original title screen at /admin/monstress-convention
+      Build the MONSTREXX Vignette spec and private title screen at /admin/monstress-convention
       within the existing shell, plus an initial navigable hotel lobby scene. Verify admin AND
       viewerShowsMature on server; no guest/CHILD/mature-off rendering or leaking assets.
       Do not expose Play/nav/highlights until the separate release gate. Art briefs now,
@@ -52,98 +53,98 @@ tasks:
       Silas without halting reversible implementation or treating silence as publication approval.
   - id: t-003
     milestone: m1
-    title: "Room graph, walkable hotspots, icon verb menu, inventory and persistent save"
+    title: "Motel and city room graph, Iris-first hotspots, verbs, inventory and persistent save"
     status: waiting
     depends_on: t-001
     owner: null
     passes: 0
     stakes: reversible
     note: >-
-      Build deterministic 2D point-and-click scene engine (not a card-choice engine).
-      Walk/Look/Talk/Take/Use/Combine/Photograph; touch, mouse and keyboard parity;
+      Build deterministic 2D Iris-led point-and-click scene engine (not a card-choice engine).
+      Walk/Look/Talk/Take/Use/Combine/Photograph/Consult Nico; touch, mouse and keyboard parity;
       bounded notebook/map sheets and versioned save. First five rooms and shortcut.
   - id: t-004
     milestone: m2
-    title: "Nico/Iris swap, differentiated interviews and shared reactive topic notebook"
+    title: "Iris field agency, Nico deductions and shared dual-ghost reactive topics"
     status: waiting
     depends_on: t-003
     owner: null
     passes: 0
     stakes: reversible
     note: >-
-      Actor-specific branches, shared topic discovery but independent exhaustion,
+      Iris physical agency and Nico contact aversion, dual ghost branches and shared discovery,
       clue/evidence comparisons, replay transcript, protagonist inventory and agency.
       Validate every critical topic reachable by either actor through secondary routes.
   - id: t-005
     milestone: m2
-    title: "Playable press-pass to murder to ghost opening vignette"
+    title: "Agent and companion double murder, two ghost witnesses and knife opening"
     status: waiting
     depends_on: t-004
     owner: null
     passes: 0
     stakes: reversible
     note: >-
-      Implement OPENING-SLICE.md with original writing and character illustration slots.
-      At least two credential paths, believable murder timeline, ghost questions, red herring
+      Replace old Celestine-murder prologue with OPENING-SLICE.md, two bodies and two ghosts.
+      At least two crime-room access paths, double-murder timeline, two ghost witnesses, red herring
       exoneration and a self-contained prototype ending. All paths graph-tested.
   - id: t-006
     milestone: m2
-    title: "Extend two-storey hotel into a meaningful 18–24 location investigation"
+    title: "Expand motel then unlock the separate convention, joke shop, mansion and sewers"
     status: waiting
     depends_on: t-005
     owner: null
     passes: 0
     stakes: reversible
     note: >-
-      Distinct ground/upper-floor rooms, changing day/night occupations, staff routes,
+      Distinct motel exterior/office/ice/rooms/neighbors and unlocked city districts,
       item puzzle webs, reactivity, map shortcuts and fully authored object look lines.
       No empty filler room or arbitrary inventory combinations.
   - id: t-007
     milestone: m2
-    title: "Full fair-play clue graph, suspects, stalker exoneration, ghost and culprit logic"
+    title: "Two-ghost testimony, agent-deals clue graph and exoneration of the stalker"
     status: waiting
     depends_on: t-006
     owner: null
     passes: 0
     stakes: reversible
     note: >-
-      Three-act murder/contract mystery with Odette as fixed culprit, two routes to
-      every required clue, distinct Nico/Iris interrogations, consequences for Gavin's
+      Three-act mystery with Odette as murdered agent and Violet as second victim, two routes to
+      every required clue, Iris physical interviews/Nico deductions, consequences for Gavin's
       stalking, believable time and motive proof, and accusation failures that fail forward.
   - id: t-008
     milestone: m3
-    title: "Opt-in adult comedy scenes and nuanced cast relationship arcs"
+    title: "Consensual opt-in romances, dual ghosts, MONSTREXX idol arcs and scrapbook"
     status: waiting
     depends_on: t-005
     owner: null
     passes: 0
     stakes: reversible
     note: >-
-      Hotel hot tub, suites and convention banter with optional consensual adult
+      Motel and convention banter, consensual romances including both ghosts, optional
       flirtation, settings-based exclusion and alternate nonsexual dialogue. Never lock
       clue or completion behind romance. Independent mature account gate remains mandatory.
   - id: t-009
     milestone: m3
-    title: "Illustrated backgrounds, cast sprites, expressions, cinematics and audio"
+    title: "Illustrated motel, ghosts, monster ensemble, city scenes, animation and audio"
     status: waiting
     depends_on: t-005
     owner: null
     passes: 0
     stakes: reversible
     note: >-
-      Produce traceable art briefs and ArtJobs for intro/hotel/rooms/items/expressions;
+      Produce ArtJobs for motel/date/knife/dual ghosts, mummy, alligator, star group, city scenes;
       create animation/audio affordances. Verify delivered URLs rather than treating
       queue status as art completion. Keep code development independent.
   - id: t-010
     milestone: m3
-    title: "Multiple earned conclusions, secrets, scrapbook and tier review"
+    title: "Evidence-driven conclusions and Monstrexx character/art scrapbook"
     status: waiting
     depends_on: [t-007, t-008]
     owner: null
     passes: 0
     stakes: reversible
     note: >-
-      4–6 ethically distinct endings, earned evidence and clue-based epilogues,
+      4–6 earned, ethically distinct endings, agent-deals clue epilogues and scrapbooks,
       playable cast/secrets/scrapbook, spoiler-free title trailer, and playtest-backed
       proposal for Standard/Saga beyond Vignette with written budget allowances.
   - id: t-011
