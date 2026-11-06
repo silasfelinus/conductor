@@ -1141,22 +1141,15 @@ tasks:
 - id: t-062
   milestone: m6
   title: 'Mandarin animal-only fishing quiz and post-answer illustrated word reference'
-  status: claimed
+  status: review
   gate_human: false
   stakes: reversible
   passes: 0
-  note: >-
-    Silas, 2026-11-05 PT: Mandarin fishing needs an animals-and-their-names-only
-    mode. Clicking any Mandarin answer must open an inspectable illustrated
-    fact sheet with the animal name, Hanzi, pinyin, playable pronunciation,
-    sourced word origin/character parts and additional available learning
-    data before the player proceeds. Reuse the existing Mandarin Tutor animal
-    catalog, lesson derivation, artwork and SRS progress; do not invent
-    etymologies. Correct answers still land the selected fish and advance the
-    original kingdom loop, but only after the sheet is acknowledged; wrong
-    answers also reveal the correct entry and then offer another question.
-    Keep other learning modules and the larger console/art refresh intact.
+  note: |-
+    Silas, 2026-11-05 PT: Mandarin fishing needs an animals-and-their-names-only mode. Clicking any Mandarin answer must open an inspectable illustrated fact sheet with the animal name, Hanzi, pinyin, playable pronunciation, sourced word origin/character parts and additional available learning data before the player proceeds. Reuse the existing Mandarin Tutor animal catalog, lesson derivation, artwork and SRS progress; do not invent etymologies. Correct answers still land the selected fish and advance the original kingdom loop, but only after the sheet is acknowledged; wrong answers also reveal the correct entry and then offer another question. Keep other learning modules and the larger console/art refresh intact.
+
+    Implemented animals-only Mandarin vocab filter and on-answer word sheet with art, sourced formation, pronunciation and learning facts on worker/ruler-hooked-t-062-mandarin-animals-20261106a. Correct catches deferred until sheet acknowledgment. CI and implementation PR verification in progress.
   owner: worker
   claimed_by: 2026-11-06T01:12:52Z-ruler-hooked-t062-a8c92
   claimed_at: '2026-11-06T01:12:52.692Z'
-  updated: '2026-11-06T01:12:52.692Z'
+  updated: '2026-11-06T01:17:28.473Z'
