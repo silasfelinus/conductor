@@ -14,3 +14,8 @@
 ## 2026-11-06 PT — Monstrexx title-front implementation
 - Kind Robots PR #4848 adds `/admin/monstrexx` cinematic console front with New Game, Continue, Settings and Scrapbook, plus internal account-scoped progress.
 - Boss art direction changed to short, ugly, geeky comic caricature; provisional display name Norb Vale (runtime key `nico` retained).
+
+## 2026-11-06 PT — Renamed MONSTRIQUE; story bible; Chapter 1 rewrite
+- Silas renamed the game and franchise **MONSTRIQUE**, set it in **Midnight City**, made Odette's ghost the client and Violet a companion hired to play a vampire. Tone is ribald Larry-style comedy with "low morals".
+- New `STORY-BIBLE.md`: verbatim brief, tone rules, Midnight City districts, sixty-year franchise timeline (has-beens and still-has-its), the five-Hexblade case with a **proposed** culprit (creative-approval), gratitude system, six-chapter plan and puzzle principles.
+- Kind Robots (branch `claude/monsterique-game-dev-4wwv1i`, built on PR #4848): route `/admin/monstrique` (old routes redirect), Monstrique branding, new cold open, Odette hires Norb, Flirt verb with Norb's escalating rebuffs, Violet's fangs and fee favours with use-item inventory, gratitude-gated non-explicit kiss, versioned save upgrade (v2 → v3).

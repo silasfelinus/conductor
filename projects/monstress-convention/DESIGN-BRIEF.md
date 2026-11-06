@@ -1,4 +1,6 @@
-# MONSTREXX — Canonical Game Bible
+# MONSTRIQUE — Canonical Game Bible
+_2026-11-06 PT: **renamed MONSTRIQUE** (game and in-world franchise) by Silas; set in **Midnight City**; Odette's ghost is the client who hires Norb, and Violet was hired to dress as a vampire. World, cast, franchise eras, proposed culprit and chapter plan: [STORY-BIBLE.md](STORY-BIBLE.md). Where this file says MONSTREXX, read MONSTRIQUE. Rules below still apply._
+
 _2026-11-05 PT revision. Internal project slug remains monstress-convention for continuity; the official game and celebrity-franchise title is MONSTREXX. The Monstrexx Convention is only one explorable location._
 
 ## Premise and brand
