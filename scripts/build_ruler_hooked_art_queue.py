@@ -1432,7 +1432,10 @@ def card_entries(content_ts: Path) -> list[dict]:
 # The matte screenprinted finish comes from the shared rainbow style itself.
 CONSOLE_PRIORITY = CONCEPT_PRIORITY
 CONSOLE_RAINBOW = rainbow_style("pristine", "layer")
-CONSOLE_VIGNETTE = rainbow_style("pristine", "specimen")
+CONSOLE_VIGNETTE = (
+    f"{RAINBOW_HEAD}, {RAINBOW_TIER['pristine']}, {RAINBOW_MEDIUM}, "
+    "one crisp colorful object or landscape vignette on a clean deep-ultramarine ground"
+)
 
 CONSOLE_BACKDROPS = [
     (
