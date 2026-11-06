@@ -213,7 +213,7 @@ tasks:
   - id: t-009
     milestone: m3
     title: "Write and implement six genuinely different crew campaigns"
-    status: claimed
+    status: ready
     depends_on: [t-004, t-007]
     passes: 0
     stakes: reversible
@@ -257,11 +257,32 @@ tasks:
       city-lab passed. No save, wallet or schema change. Remaining: human fun acceptance;
       finale-panel screenshot not yet taken; consider adding legacy bouts to the campaign
       playtest audit.
-    updated: '2026-11-06T21:57:19Z'
+
+      2026-11-06 PT: Built (patch slime-city-t-009-r6, base e18fcb20) an authored BLACKOUT
+      battlefield and objective for all 30 campaign chapters, so the six crew campaigns no
+      longer fight the same pit with different numbers. There are four objectives: SMASH on a
+      rebuilt field, HEIST (the rival vault cannot be damaged and only a flag run wins), HOLD
+      OUT (survive to the bell with your base standing and your flag home) and BEAST (a named
+      giant such as the Paper Catgirl or the Patent Press, where the killing blow wins). Each
+      crew mixes at least three of them, and each chapter has a briefing tied to its scene;
+      the rules text is generated from the applied data. The engine hooks only activate on
+      campaign battlefields: holdout/heist, placeFighter veterans, set-piece traps outside the
+      trap cap, and a fix so nothing deploys onto the monster's square. The chapter panel
+      shows THE BATTLEFIELD and the arena names the objective. The new
+      verifySlimeCityCampaignBattlefields test proves: every chapter × approach is winnable by
+      seeded play and an idle player never wins (16 seeds); all six campaigns reach their
+      endings with real bouts; saves stay valid. All Slime City suites pass. Remaining: (1) a
+      pre-existing BLACKOUT softlock where a flag carrier and its own escort block each other
+      forever; a fix needs a balance re-baseline, and the battlefields are designed so it
+      cannot hand an idle player a win; (2) human fun acceptance, especially for the low-end
+      cunning finales (Moonlight Deed, The Boardroom); (3) Clash is now canonical, so a
+      decision is needed on whether campaigns move to Clash; (4) add the battlefields to the
+      favor playtest audit. Merged as kind_robots#4865 (2026-11-06).
+    updated: '2026-11-06T22:29:31Z'
     owner: worker
     claimed_by: 2026-11-06T215718Z-slime-city-t-009-r6c
     claimed_at: '2026-11-06T21:57:19Z'
-    implementation_pr: 'silasfelinus/kind_robots#4792'
+    implementation_pr: 'silasfelinus/kind_robots#4865'
   - id: t-010
     milestone: m3
     title: "Create daily, weekly and evergreen missions with earned progression"
