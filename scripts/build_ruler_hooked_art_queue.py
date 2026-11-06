@@ -29,8 +29,8 @@ Two lanes, deliberately separated:
               scenes and shop still lifes, at the exact image_path keys the
               kind_robots UI resolves. Silas's direction for it (an art-heavy
               design that does not look like a webapp, but not shiny freeware
-              either) is docs/art-direction.md Section 9; CONSOLE_FINISH is
-              that section in executable form.
+              either) is docs/art-direction.md Section 9. Rendered in the
+              t-054 house styles (see HOUSE STYLES, below).
 
 LAYER FORMAT (settled 2026-08-26, ruler-hooked/t-017, kind_robots PR #2139).
 A layer is a FULL-PLAY-SCREEN image, transparent everywhere outside its own depth
@@ -66,6 +66,28 @@ exactly this: restaging 12 corrected `ruler` entries also staged 81 unrelated
 concept/fish/reward/ending/card entries, caught only by eyeballing `git diff
 --stat` before it shipped). Pass `--lane <name>` to scope `--write`/`--check` to
 one lane at a time; omit it for the old stage-everything behavior.
+
+HOUSE STYLES (ruler-hooked/t-054, Silas 2026-11-05 PT). The first look was a
+cartoony storybook tail that Silas called "too cutesy" and "every other ai slop
+project". A Krea 2 style test (projects/ruler-hooked/docs/t-054-kingdom-decay-console.md)
+settled on two styles, picked by Silas as Chronicle + Broadside:
+
+  CHRONICLE -- the world: layers, scene concepts, map, endings, cast and ruler
+               portraits, reward plates, fish specimens. An illuminated-manuscript
+               miniature that ROTS with the reign (chronicle_style(tier, variant)).
+               Layers composite, so their variant is borderless.
+  BROADSIDE -- documents in the world: interrupt/arc cards, edicts, petitions,
+               the event-card and Fishopedia UI concepts. A hand-coloured woodcut.
+
+RESTYLING ALREADY-RENDERED ART (--restage). The consumer treats a pending row whose
+media already exists as fulfilled and marks it done with zero ArtJobs, unless the row
+carries `force: true` (consume_art_requests.regeneration_forced(), conductor/t-192).
+`--write --restage` therefore (a) rewrites, in place, every staged row whose prompt
+no longer matches what this script builds -- status back to pending, `force: true`,
+`last_art_job_id` moved to `superseded_art_job_id` so the old job stays on record --
+and (b) appends every not-yet-staged entry with `force: true`, because most of their
+image paths already hold an earlier-style render on the media host. Rows are never
+deleted; the replaced prompt text lives in git history and on its ArtJob.
 """
 
 from __future__ import annotations
@@ -149,16 +171,127 @@ LAYER_PRIORITY = 100
 # (Treasure Planet), soft rounded shapes and emotionally legible faces (Steven
 # Universe), bold clean colour blocking and heroic-goofy fantasy (She-Ra). The
 # doc keeps the names, because the doc is read by people. The prompt does not.
-STYLE_TAIL = (
-    "cartoony goofy storybook illustration, soft confident hand-drawn linework, "
-    "loose characterful line quality, rounded generous shape language, "
-    "emotionally legible faces, bold clean colour blocking, "
-    "warm saturated slightly-faded storybook palette, "
-    "painterly depth and warm cinematic light, exaggerated expressive acting, "
-    "clearly staged so the shapes read instantly at a glance, "
-    "heroic and goofy and wry, charming, "
-    "hand-drawn animation cel and gouache painting, visibly illustrated by a person"
+#
+# 2026-11-05 (ruler-hooked/t-054): that translated tail is RETIRED. It produced
+# exactly the soft pastel storybook look Silas called "too cutesy" and "every other
+# ai slop project". It is replaced by two period house styles, below. The lessons
+# above still bind them: no named artists or shows, no craft words the model will
+# paint as a subject, no negations, no similes, no format words.
+
+# The reign-health tiers a CHRONICLE prompt can take. The book itself shows the
+# reign: a healthy kingdom is a fresh page, misrule rots it.
+TIERS = ("pristine", "strained", "rotten")
+
+# The clause is assembled as: what it is, the condition of the page (the tier),
+# then the medium details, then the layout. The tier sits second on purpose: in
+# the first pilot (ArtJobs 64345-64352) it trailed the medium and the rotten pieces
+# came back on clean bright vellum -- Krea weighs the opening of a prompt hardest.
+CHRONICLE_HEAD = "medieval illuminated manuscript miniature"
+CHRONICLE_MEDIUM = (
+    "flat tilted perspective, tempera and gold leaf on vellum, lapis blue and "
+    "vermilion, fine dark brush outlines, flat patterned grounds"
 )
+# Only bordered pieces get this: in the third pilot (ArtJobs 64361, 64363) the
+# figure clause put a procession of courtiers across the poisoned-lake and
+# choked-sky layers, which are meant to be scenery.
+CHRONICLE_FIGURES = "small precise figures with grave faces"
+CHRONICLE_TIER = {
+    "pristine": (
+        "a fresh pristine page, burnished bright gold leaf, deep bright lapis and "
+        "clean vermilion, crisp cream vellum"
+    ),
+    "strained": (
+        "an aging worn page, dulled rubbed gold leaf, faded lapis and vermilion, "
+        "brown foxing spots across the vellum, scuffed paint"
+    ),
+    "rotten": (
+        "a ruined soot-blackened page, tarnished flaking gold leaf, smeared soot "
+        "stains and spilled black ink blots across the painting, torn "
+        "water-stained vellum, faded lapis and vermilion"
+    ),
+}
+# Layers composite into one stacked scene, so their decay lives in the paint, not
+# in the vellum: a torn page edge would cut a hole through every layer below it.
+CHRONICLE_LAYER_TIER = {
+    "pristine": (
+        "fresh pristine paint, burnished bright gold leaf highlights, deep bright "
+        "lapis and clean vermilion"
+    ),
+    "strained": (
+        "aging worn paint, dulled rubbed gold leaf, faded lapis and vermilion, "
+        "brown foxing spots"
+    ),
+    "rotten": (
+        "ruined soot-blackened paint, tarnished flaking gold leaf, smeared soot "
+        "stains and spilled black ink blots across the scenery, faded lapis and "
+        "vermilion"
+    ),
+}
+# Full illustrations carry the manuscript border; its marginalia sour with the
+# reign. "All four sides" and "every margin" are there because the first pilot's
+# portrait grew a rubric caption of pseudo-writing in its open lower margin.
+CHRONICLE_BORDER = {
+    "pristine": (
+        "a full-page painting set inside a painted manuscript border on all four "
+        "sides, gilded vine scrollwork filling every margin, small fish-headed "
+        "marginalia creatures among the vines"
+    ),
+    "strained": (
+        "a full-page painting set inside a painted manuscript border on all four "
+        "sides, dulled vine scrollwork filling every margin, sly fish-headed "
+        "marginalia creatures among the vines"
+    ),
+    "rotten": (
+        "a full-page painting set inside a painted manuscript border on all four "
+        "sides, blackened withered vine scrollwork filling every margin, grotesque "
+        "fish-headed marginalia creatures among the vines"
+    ),
+}
+# Layers composite into one stacked scene, so a border on each would stack into
+# seven borders. Said positively: the painting alone, reaching every edge.
+#
+# This renders a whole opaque vista per layer, not an alpha-cut band -- which is
+# what every earlier layer render was too (ruler-hooked/t-059), and what the
+# console (kind_robots#4834) actually consumes. The second pilot tried to force a
+# true band ("a single narrow band ... open space above and below", ArtJob 64353)
+# and Krea painted the lake as a 3D ribbon floating in a photographic sky. Real
+# transparency is t-059's decision (alpha renders or a masking step), not a prompt.
+CHRONICLE_BORDERLESS = (
+    "the miniature painting alone, edge to edge, the painted scene reaching all "
+    "four edges"
+)
+# Fish specimens are the design every later fish variant derives from, so they
+# get a clean ground instead of a border.
+CHRONICLE_SPECIMEN = (
+    "the specimen painted alone on a plain open vellum ground"
+)
+
+BROADSIDE = (
+    "hand-coloured sixteenth century woodcut broadside, bold black cut lines and "
+    "cross-hatching, rough hand-laid colour in madder red, ochre and verdigris "
+    "only, ink pressed unevenly into coarse rag paper, stark carved faces"
+)
+
+
+def chronicle_style(tier: str = "pristine", variant: str = "bordered") -> str:
+    """The CHRONICLE clause for one reign tier and one layout variant.
+
+    variant: "bordered" (full illustrations), "layer" (composited bands,
+    borderless, decay in the paint), or "specimen" (fish on a plain ground).
+    """
+    assert tier in TIERS, f"unknown reign tier {tier!r}"
+    if variant == "layer":
+        return (
+            f"{CHRONICLE_HEAD}, {CHRONICLE_LAYER_TIER[tier]}, {CHRONICLE_MEDIUM}, "
+            f"{CHRONICLE_BORDERLESS}"
+        )
+    if variant == "specimen":
+        return f"{CHRONICLE_HEAD}, {CHRONICLE_TIER[tier]}, {CHRONICLE_MEDIUM}, {CHRONICLE_SPECIMEN}"
+    return (
+        f"{CHRONICLE_HEAD}, {CHRONICLE_TIER[tier]}, {CHRONICLE_MEDIUM}, "
+        f"{CHRONICLE_FIGURES}, {CHRONICLE_BORDER[tier]}"
+    )
+
 
 # Stated as the wanted RESULT, not as a pile of exclusions. kind_robots'
 # server/utils/artPromptContract.ts rejects more than four text-nouns-after-"no"
@@ -173,19 +306,27 @@ STYLE_TAIL = (
 # model -- and the reward batch proved it: `smugglers-map` came back as a scroll
 # covered in garbled pseudo-writing that was visibly trying to spell out the
 # prompt's own sentences. State the wanted result and nothing else.
+# t-054: "one single uncropped image filling the frame" became "one single
+# uncropped scene reaching every edge". kind_robots' contract rejects "frame"
+# ([frame-noun]) and "the whole picture" ([picture-noun]) on krea2: Krea paints a
+# picture frame, or a framed painting hanging on a wall (ArtJob 30589).
 NO_TEXT = (
     "every surface left bare and unmarked, blank clean untouched surfaces, "
-    "one single uncropped image filling the frame"
+    "one single uncropped scene reaching every edge"
 )
 
 # krea2 is distilled for cfg 1, so the ComfyUI negative prompt never runs and this
 # field is inert at render time -- kept short and conventional for the non-distilled
 # engines this queue may later target. The real steering against krea2's failure
 # mode on this brief (competent nature/portrait photography, which sank the first
-# Cthulhuquarium batch on 2026-08-25) lives POSITIVELY in STYLE_TAIL instead.
+# Cthulhuquarium batch on 2026-08-25) lives POSITIVELY in the house-style clauses
+# (CHRONICLE_* / BROADSIDE) instead.
+# t-054: "grimdark" left the list -- a bad reign is meant to look grim now -- and
+# the cartoon look the house style replaced joined it.
 NEGATIVE = (
-    "photorealistic, photograph, 3d render, cgi, grimdark, "
-    "blurry, low quality, deformed, extra limbs, bad hands, cropped"
+    "photorealistic, photograph, 3d render, cgi, cartoon, chibi, anime, "
+    "glossy digital painting, blurry, low quality, deformed, extra limbs, "
+    "bad hands, cropped"
 )
 
 # docs/art-direction.md Section 4.1 TIME_MOD, verbatim in substance.
@@ -268,8 +409,8 @@ RULER_PRESETS = [
         "id": "chieftain-brakka",
         "title": "Chieftain",
         "look": "a powerfully built orcish monarch, moss-green skin, small proud "
-        "tusks, a crown of shed antlers, forearms like tree roots, a rod that looks "
-        "like a toothpick in one huge hand",
+        "tusks, a crown of shed antlers, thick knotted forearms, a slender fishing "
+        "rod dwarfed in one huge hand",
     },
     {
         "id": "heron-queen-sedge",
@@ -329,7 +470,7 @@ RULER_BY_ID = {preset["id"]: preset for preset in RULER_PRESETS}
 # in lake, kingdom, scene, catch or card artwork. Preset portraits are the only
 # art lane allowed to show the player's ruler.
 LAKESIDE = (
-    "a wide storybook lake behind a small castle, reeds and a worn wooden fishing "
+    "a wide lake behind a small castle, reeds and a worn wooden fishing "
     "perch in the foreground, forested far bank, a village edge and castle grounds "
     "stepping back in clear horizontal depth bands"
 )
@@ -338,6 +479,11 @@ LAKESIDE = (
 # Concept lane -- scenes and UI (no upstream source; edit here)
 # ---------------------------------------------------------------------------
 
+# Each concept names its house style: ("chronicle", tier) for the world, or
+# BROADSIDE_STYLE for a document the court prints. The tier is the reign the
+# piece depicts -- key art shows a healthy reign, the developed pole a rotten one.
+BROADSIDE_STYLE = ("broadside", None)
+
 SCENE_CONCEPTS = [
     (
         "key-art-day",
@@ -345,17 +491,19 @@ SCENE_CONCEPTS = [
         "Ruler Hooked key art (day)",
         f"A first-person viewpoint at the lakeside fishing station: {LAKESIDE}, an empty weathered "
         "fishing perch at the near bank, an idle fishing rod leaning against "
-        "its rail, busy distant subjects visible across the lake. "
-        f"Warm storybook exploration, wide visual game scene. {TIME_MOD['day']}",
+        "its rail, small busy figures at work across the lake. "
+        f"A wide game scene of a well-ruled kingdom. {TIME_MOD['day']}",
+        ("chronicle", "pristine"),
     ),
     (
         "key-art-golden",
         WIDE,
         "Ruler Hooked key art (golden hour)",
-        f"The same tranquil lakeside kingdom viewed from its fishing perch: {LAKESIDE}, "
-        "the water like hammered gold, the near fishing basket and rod "
+        f"The same quiet lakeside kingdom viewed from its fishing perch: {LAKESIDE}, "
+        "the water laid in beaten gold leaf, the near fishing basket and rod "
         "awaiting their unseen owner. "
         f"{TIME_MOD['golden']}",
+        ("chronicle", "pristine"),
     ),
     (
         "key-art-night",
@@ -365,86 +513,94 @@ SCENE_CONCEPTS = [
         "hooked on an unoccupied fishing perch and distant village windows "
         "glowing over the water. "
         f"{TIME_MOD['night']}",
+        ("chronicle", "pristine"),
     ),
     (
         "key-art-dawn",
         WIDE,
         "Ruler Hooked key art (dawn)",
-        f"The peaceful lakeside kingdom from a fisher's eye level, {LAKESIDE}, "
-        "mist over the lake, empty fishing perch, every reed jeweled with dew. "
+        f"The lakeside kingdom from a fisher's eye level, {LAKESIDE}, "
+        "mist over the lake, empty fishing perch, every reed beaded with dew. "
         f"{TIME_MOD['dawn']}",
+        ("chronicle", "pristine"),
     ),
     (
         "kingdom-preserved",
         WIDE,
         "Kingdom pole: preserved",
         "The nature end of the kingdom's hue axis: the same lakeside kingdom grown "
-        "lush and wild. Tangled thriving forest crowding the far bank, an untouched "
-        "reedy shoreline with a heron, a small tidy castle with a vegetable garden "
-        "and a laundry line, a handful of thatched roofs. Lush greens and golden "
-        f"warmth throughout. {TIME_MOD['day']}",
+        "dense and wild. Old-growth forest crowding the far bank, an untouched "
+        "reedy shoreline with a grey heron, a small square castle with a kitchen garden "
+        "and a laundry line, a handful of thatched roofs. Deep greens and clear "
+        f"water throughout. {TIME_MOD['day']}",
+        ("chronicle", "pristine"),
     ),
     (
         "kingdom-developed",
         WIDE,
         "Kingdom pole: developed",
         "The development end of the kingdom's hue axis: the same lakeside kingdom "
-        "comically over-built by a warlock land developer. Crooked smokestacks and "
-        "tin roofs crowding the far bank, purple-tinged smog puffs, tree stumps and "
+        "stripped and over-built by a warlock land developer. Crooked brick smokestacks and "
+        "tin roofs crowding the far bank, violet smoke, raw tree stumps and "
         "stacked timber where the forest was, scaffolding and cranes over a cramped "
-        "boomtown, one lonely ornamental tree. Cool greys, tin-roof browns, and "
-        f"warlock-purple accents. Absurd rather than menacing. {TIME_MOD['day']}",
+        "mill town, one fenced ornamental tree, a fouled outflow staining the lake. "
+        f"Ash greys, rust browns and warlock violet. {TIME_MOD['day']}",
+        ("chronicle", "rotten"),
     ),
     (
         "kingdom-prosperous",
         WIDE,
         "Kingdom pole: prosperous",
-        "The comfortable middle of the kingdom's hue axis: the same lakeside kingdom "
-        "doing genuinely well. Tidy patchwork farmland rolling to the far waterline, "
-        "a groomed woodland with a spaced healthy treeline and a druid cairn, a busy "
-        "village edge with market awnings and a cart, blooming castle gardens and "
-        f"banners and a fountain. Warm, content, and thriving. {TIME_MOD['day']}",
+        "The middle of the kingdom's hue axis: the same lakeside kingdom "
+        "doing well. Strip fields and hedgerows rolling to the far waterline, "
+        "a managed woodland with a druid's standing-stone cairn, a busy "
+        "village edge with market awnings and a laden cart, formal castle gardens with "
+        f"banners and a stone fountain. {TIME_MOD['day']}",
+        ("chronicle", "pristine"),
     ),
     (
         "beat-the-interruption",
         WIDE,
         "Story beat: the interruption",
         "First-person eye-level view from a lakeside fishing perch: "
-        "a breathless courier splashes through the reeds brandishing an "
-        "enormous urgent scroll, boot deep in mud. The scroll and the "
-        "petitioner's expressive face dominate the frame, with open "
-        "water beyond. Cinematic illustrated NPC interruption.",
+        "a mud-spattered courier wades through the reeds holding up an "
+        "enormous sealed scroll, boots sunk in mud. The scroll and the "
+        "courier's urgent face dominate the scene, with open "
+        "water beyond",
+        ("chronicle", "strained"),
     ),
     (
         "beat-the-standoff",
         WIDE,
         "Story beat: warlock versus druid",
         "The kingdom's signature choice, staged as a standoff at the edge of the "
-        "north woods: on one side a horned purple-robed warlock land developer with "
-        "a rolled blueprint and a genuinely reasonable expression, on the other a "
-        "leaf-cloaked druid preservationist radiating serene absolute certainty. "
-        "Between them, the disputed treeline. Both are charming, both are a little "
-        "bit wrong, and neither is a villain",
+        "north woods: on one side a horned violet-robed warlock land developer with "
+        "a rolled blueprint and a calm persuasive expression, on the other a "
+        "leaf-cloaked druid preservationist with an unyielding stare. "
+        "Between them, the disputed treeline, half felled",
+        ("chronicle", "strained"),
     ),
     (
         "beat-the-catch",
         WIDE,
         "Story beat: the catch",
-        "An enormous absurd storybook fish bursting from the lake at "
-        "the end of a taut line coming from below the frame, water "
-        "arcing spectacularly across a sunny lakeside kingdom. "
-        "First-person catch reveal, the fish fills the picture with "
-        "a brilliantly comic surprised expression.",
+        "An enormous strange armoured fish bursting from the lake at "
+        "the end of a taut line rising from the bottom edge, water "
+        "arcing high over a lakeside kingdom. "
+        "First-person catch reveal, the fish fills the scene, its "
+        "wide eye and gaping jaw turned on the viewer",
+        ("chronicle", "pristine"),
     ),
     (
         "beat-the-escape",
         WIDE,
         "Story beat: the escape",
-        "A castle corridor hung with heavy tapestries: a bewildered knot "
+        "A castle corridor hung with heavy tapestries: a tense knot "
         "of courtiers, petitioners and royal clerks argue over ledgers "
-        "while a side door stands ajar, sunlight and lake reeds showing "
+        "while a side door stands ajar, daylight and lake reeds showing "
         "the secret route outdoors. Scene staged from the "
-        "departing fisher's eye level, populated by NPCs only.",
+        "departing fisher's eye level, populated by courtiers only",
+        ("chronicle", "strained"),
     ),
 ]
 
@@ -456,33 +612,55 @@ UI_CONCEPTS = [
         "ui-event-card",
         SQUARE,
         "UI concept: event card",
-        "A painted storybook moment of a mud-spattered petitioner presenting a "
-        "grievance at an open-air lakeside court, held inside a tall soft-cornered "
-        "panel of warm parchment, with two wide carved-wood plaques below it whose "
-        "faces are smooth blank polished wood. Warm parchment and painted wood "
-        "materials, playful and inviting",
+        "A mud-spattered petitioner presenting a grievance at an open-air lakeside "
+        "court, cut as one tall printed scene on a sheet of rag paper, with two wide "
+        "empty paper panels below it, each panel bare blank paper",
+        BROADSIDE_STYLE,
     ),
     (
         "ui-fishopedia-plate",
         SQUARE,
         "UI concept: Fishopedia specimen plate",
-        "A single strange storybook fish painted as a naturalist's study, centered "
-        "on warm aged paper with a soft vignette, a measuring rule laid beside it "
-        "and clean empty paper below it. Warm hand-painted natural-history feel, "
-        "every writing area left as bare paper",
+        "A single strange freshwater fish cut as a naturalist's study, centered "
+        "on a sheet of rag paper, a measuring rule laid beside it "
+        "and clean empty paper below it, every writing area left as bare paper",
+        BROADSIDE_STYLE,
     ),
     (
         "ui-title-screen",
         WIDE,
         "UI concept: title screen",
-        "A large illustrated cinematic title screen for a comedic fishing and "
-        "kingdom-management game: unoccupied royal fishing perch in the foreground "
-        "of a grand warm lakeside vista, an unattended fishing rod, the kingdom "
-        "rising behind in clear painted depth bands. The upper third is broad "
-        "empty golden sky for UI lettering. First-person staging: the viewer remains outside the picture, never "
-        "pictured as a character",
+        "A large title screen for a fishing and kingdom-management game: an "
+        "unoccupied royal fishing perch in the foreground of a grand lakeside "
+        "vista, an unattended fishing rod, the kingdom rising behind in clear "
+        "painted depth bands. The upper third is a broad empty flat gold-leaf sky "
+        "left open and empty. First-person staging: the viewer stays "
+        "unseen, never shown as a character",
+        ("chronicle", "pristine"),
+    ),
+    # t-054 doc: the Map tab is a painted kingdom map with named regions. The names
+    # are UI overlays, so the map itself carries painted landmarks and abstract
+    # marks only -- the smugglers-map reward showed what asking for a chart does.
+    (
+        "ui-kingdom-map",
+        WIDE,
+        "UI concept: kingdom map",
+        "A bird's-eye painted map of a small lakeside kingdom: a large central lake, "
+        "a castle on its near shore, a village, a forest, farm fields, a mill town "
+        "and marshes around the water, each place a small painted landmark, rivers "
+        "and roads as fine lines, a painted compass rose of interlaced knotwork, "
+        "abstract cartographic marks and open vellum where names would go",
+        ("chronicle", "pristine"),
     ),
 ]
+
+
+def concept_style(style: tuple[str, str | None], variant: str = "bordered") -> str:
+    """Resolve a (house, tier) tuple to its style clause."""
+    house, tier = style
+    if house == "broadside":
+        return BROADSIDE
+    return chronicle_style(tier or "pristine", variant)
 
 # ---------------------------------------------------------------------------
 # Concept lane -- cast portraits (read from the kind_robots content bundle)
@@ -493,64 +671,62 @@ UI_CONCEPTS = [
 # species. The character's own name/role/drive/quirks come from content.ts.
 CAST_LOOK = {
     "warlock-vex": (
-        "a horned purple-robed warlock land developer, mid-forties, broad and "
-        "well-fed, olive skin, an immaculate waistcoat under the robes, a rolled "
-        "blueprint tucked under one arm and a business card held out with the warm "
-        "unforced smile of someone whose offer is genuinely quite good"
+        "a horned violet-robed warlock land developer, mid-forties, broad and "
+        "well-fed, olive skin, an immaculate brocade waistcoat under the robes, a rolled "
+        "blueprint tucked under one arm and a sealed contract held out with the steady "
+        "smile of someone whose offer is hard to refuse"
     ),
     "druid-sela": (
         "a leaf-cloaked druid preservationist, elderly, slight and wiry, dark brown "
-        "skin, white hair full of twigs and moss, bare feet rooted into the ground, "
-        "one finger raised mid-lecture with the serene absolute certainty of someone "
-        "who has never once considered being wrong"
+        "skin, white hair matted with twigs and moss, bare feet sunk into the earth, "
+        "one finger raised mid-lecture, an unyielding stare of absolute certainty"
     ),
     "heir-robin": (
         "a teenaged royal heir, lanky and freckled, pale skin and copper hair, a "
-        "circlet shoved into a pocket rather than worn, travelling boots already "
-        "laced, halfway through climbing out of a window with an expression of "
-        "pure delighted guilt"
+        "circlet shoved into a belt pouch rather than worn, travelling boots already "
+        "laced, halfway out of a castle window with a guilty backward glance"
     ),
     "sweetheart-ash": (
         "a young commoner angler, soft-bodied and broad-shouldered, warm tan skin, "
-        "patched fishing waders and a too-big coat, cradling a bucket of fish and "
-        "talking to it, nervous and kind and hopelessly earnest"
+        "patched fishing waders and a too-big coat, cradling a wooden bucket of fish, "
+        "nervous and earnest"
     ),
     "envoy-thistle": (
         "a foreign trade envoy, tall and imperious, deep brown skin, an elaborate "
-        "high-collared travelling coat in a rival kingdom's colors, gloved hands "
-        "folded, chin lifted, visibly counting under her breath while she waits"
+        "high-collared travelling coat in a rival kingdom's colours, gloved hands "
+        "folded, chin lifted, cold and impatient"
     ),
     "taxman-gristle": (
         "a royal tax assessor, thin and stooped, grey pallor, spectacles down the "
-        "nose, an enormous ledger open across both forearms, sighing audibly at "
-        "something joyful happening just out of frame"
+        "nose, an enormous ledger open across both forearms, a sour pinched mouth"
     ),
     "captain-cordelia": (
         "a castle guard captain, powerfully built and middle-aged, light brown skin, "
-        "close-cropped grey hair, dented practical armor, absent-mindedly polishing "
-        "one pauldron with her thumb while standing at rigid attention"
+        "close-cropped grey hair, dented practical armour, standing at rigid attention "
+        "with one gauntlet on her sword hilt"
     ),
     "bard-fen": (
-        "a travelling bard, small and round and gleeful, freckled brown skin, a "
-        "riot of mismatched patterned layers, a battered lute swung mid-strum, "
-        "clearly narrating someone else's private moment in rhyme without permission"
+        "a travelling bard, small and round, freckled brown skin, a riot of "
+        "mismatched patterned layers, a battered lute swung mid-strum, a knowing "
+        "sidelong smirk"
     ),
     "smuggler-brack": (
         "a lakeside smuggler, rangy and weathered, a bearded amphibian-folk fisher "
         "with mottled green skin and a long oilskin coat, one crate half-hidden "
-        "behind a boot, squinting at a horizon that is not in this picture"
+        "behind a boot, squinting at a distant shore"
     ),
     "witch-mossy": (
-        "a bog witch, enormously round and cheerful, silver-blue skin and hair like "
-        "pond weed, layered in trade-beads and bottles and dried herbs, holding out "
-        "a jar of something wonderful with the air of answering a question nobody asked"
+        "a bog witch, large and heavy-set, silver-blue skin and long hair of trailing "
+        "pond weed, hung with trade-beads, stoppered bottles and dried herbs, holding "
+        "out a clay jar with a faint green glow"
     ),
     "lake-spirit-nix": (
-        "an ancient lake spirit, a tall serene translucent figure of standing water "
-        "and drifting silt, a face suggested rather than drawn, water grasses and "
+        "an ancient lake spirit, a tall still figure of standing water "
+        "and drifting silt, a face only half formed in the water, water grasses and "
         "old coins turning slowly inside the body, patient and unreadable"
     ),
 }
+
 
 # The advisor is a person, not a pen: Quill is the steward's name.
 STEWARD_LOOK = (
@@ -558,14 +734,14 @@ STEWARD_LOOK = (
     "lanky older person with silver-streaked dark hair tied back, a long beaked "
     "nose, half-moon spectacles, an ink-stained plum-and-gold household livery "
     "coat with a ring of castle keys, cradling an enormous ledger under one arm "
-    "and holding a feather quill pen like a conductor's baton, one eyebrow raised "
+    "and holding a feather quill pen raised in one hand, one eyebrow raised "
     "in fond exasperation"
 )
 
 PORTRAIT_FRAME = (
-    "three-quarter character concept portrait against a simple soft painted "
-    "backdrop, full head and torso, one clear pose that reads the character "
-    "instantly, character sheet framing"
+    "a single figure in three-quarter view, head and torso filling the miniature, "
+    "a flat patterned gold-leaf ground behind them, one clear pose that reads "
+    "the character at a glance"
 )
 
 
@@ -637,9 +813,43 @@ REGION_RE = re.compile(
     re.S | re.M,
 )
 
+# FALLBACK DECAY STATES (ruler-hooked/t-054, 2026-11-05). The decay ramps for the
+# lake, near bank and sky, and the two tyranny event overrides, are being added to
+# kind_robots utils/rulerHooked/content.ts by a parallel agent under these exact
+# names. Until that lands, read_regions() unions these in so the art can be staged
+# now; once content.ts declares them, the union is a no-op and this table can be
+# deleted. Listed bad -> good to match the manifest's ramp convention.
+#   gallows    -- far_shore event override: tyranny (order high, joy low)
+#   garrisoned -- village_edge event override: tyranny
+EXTRA_REGION_STATES: dict[str, list[str]] = {
+    "lake": ["poisoned", "murky", "clear"],
+    "near_bank": ["dead", "trampled", "grassy"],
+    "sky": ["choked", "overcast", "open"],
+    "far_shore": ["gallows"],
+    "village_edge": ["garrisoned"],
+}
+
+
+def merge_extra_states(
+    regions: dict[str, dict[str, list[str]]],
+    extra: dict[str, list[str]] = EXTRA_REGION_STATES,
+) -> dict[str, dict[str, list[str]]]:
+    """Union the fallback decay states into a parsed manifest, keeping its order."""
+    for region, states in extra.items():
+        spec = regions.get(region)
+        if spec is None:
+            # A region the manifest does not declare has no times to render at;
+            # inventing some would stage art the compositor can never resolve.
+            continue
+        for state in states:
+            if state not in spec["states"]:
+                spec["states"].append(state)
+    return regions
+
 
 def read_regions(content_ts: Path) -> dict[str, dict[str, list[str]]]:
-    """The (region -> states, times) manifest the compositor actually resolves."""
+    """The (region -> states, times) manifest the compositor actually resolves,
+    plus the fallback decay states (EXTRA_REGION_STATES) until content.ts has them."""
     text = content_ts.read_text(encoding="utf-8")
     block = re.search(r"\n  regions: \{\n    regions: \{\n(.*?)\n    \},\n  \},\n", text, re.S)
     if not block:
@@ -667,101 +877,169 @@ def read_regions(content_ts: Path) -> dict[str, dict[str, list[str]]]:
         }
     if not regions:
         raise SystemExit(f"regions manifest in {content_ts} parsed to zero regions")
-    return regions
+    return merge_extra_states(regions)
 
 
-# BASE strings per (region, state), from docs/art-direction.md Section 5.
+# BASE strings per (region, state), first from docs/art-direction.md Section 5.
+# t-054 rewrote them: the goofy / cheerful / endearing / comically tone words are
+# gone. A bad state reads as grim misrule, not as a joke about misrule.
 REGION_BASE = {
     ("sky", "open"): (
-        "wide empty storybook sky over a lakeside kingdom, soft clouds, distant birds, "
-        "nothing but atmosphere"
+        "a wide open sky over a lakeside kingdom, high clear air, a few long flat "
+        "clouds, small birds in flight, nothing but atmosphere"
+    ),
+    ("sky", "overcast"): (
+        "a low grey overcast sky over a lakeside kingdom, heavy unbroken cloud, "
+        "flat sullen light, nothing but atmosphere"
+    ),
+    ("sky", "choked"): (
+        "a sky choked with black and brown mill smoke over a lakeside kingdom, "
+        "thick soot clouds rolling in from distant chimneys, a dim smothered sun, "
+        "ash drifting down"
     ),
     ("far_shore", "pristine"): (
-        "the far bank of a calm lake seen across the water, untouched wild shoreline, "
-        "reeds, a heron, soft forest edge"
+        "the far bank of a calm lake seen across the water, an untouched wild "
+        "shoreline of reeds and alder, a grey heron, the edge of an old forest"
     ),
     ("far_shore", "farmed"): (
-        "the far bank of a calm lake as tidy patchwork farmland rolling to the "
-        "waterline, little fences and haystacks, friendly and cultivated"
+        "the far bank of a calm lake as strip fields and hedgerows running down to "
+        "the waterline, haystacks, a plough team of oxen, a small water mill"
     ),
     ("far_shore", "industrial"): (
-        "the far bank of a calm lake crowded with goofy warlock-financed development, "
-        "crooked smokestacks, tin roofs, purple-tinged smog puffs, comically over-built"
+        "the far bank of a lake crowded with a warlock-financed mill district, "
+        "crooked brick smokestacks, tin roofs, violet smoke, slag heaps, a fouled "
+        "outflow pouring into the water"
+    ),
+    ("far_shore", "gallows"): (
+        "the far bank of a lake made a place of execution, a row of gibbets with "
+        "hanging iron cages, severed heads on tall pikes along the shore, crows "
+        "circling, a guarded stockade gate"
     ),
     ("treeline", "wild"): (
-        "a lush overgrown forest band, tall tangled trees, dappled canopy, hidden "
-        "critter eyes, thriving"
+        "a dense old-growth forest band, tall tangled oaks and alders, a dark "
+        "layered canopy, deer half hidden among the trunks"
     ),
     ("treeline", "tended"): (
-        "a groomed woodland band, spaced healthy trees, a tidy path, a druid cairn, "
-        "cared-for and calm"
+        "a managed woodland band, evenly spaced healthy trees, a clean path, a "
+        "druid's standing-stone cairn"
     ),
     ("treeline", "logged"): (
-        "a thinned forest band with fresh stumps and stacked timber, a few survivor "
-        "trees, wistful, mid-transformation"
+        "a stripped forest band of raw fresh stumps and stacked timber, a few "
+        "surviving trees, saw-pits and ox sledges"
     ),
     ("treeline", "overbuilt"): (
-        "a former forest band replaced by cheerful cramped cottages and scaffolding, "
-        "one lonely ornamental tree, goofy sprawl"
+        "a former forest band buried under cramped timber tenements and scaffolding, "
+        "one fenced ornamental tree left standing, mud lanes"
     ),
     ("village_edge", "hamlet"): (
-        "a tiny cluster of thatched rooftops at a settlement fringe, smoke curls, "
-        "a well, sleepy and small"
+        "a small cluster of thatched cottages at a settlement fringe, chimney smoke, "
+        "a stone well, a few geese"
     ),
     ("village_edge", "township"): (
-        "a growing village edge, more rooftops, a market awning, a cart, busier "
-        "and prosperous"
+        "a growing village edge, many-gabled houses, a market awning, a laden cart, "
+        "a busy lane"
     ),
     ("village_edge", "boomtown"): (
-        "a bustling overgrown town edge crammed with mismatched buildings, cranes, "
-        "banners, comically booming"
+        "an overcrowded town edge of mismatched leaning buildings stacked on one "
+        "another, cranes and scaffolds, hung banners, packed narrow streets"
+    ),
+    ("village_edge", "garrisoned"): (
+        "a village edge held under guard, tall timber watchtowers, a palisade with a "
+        "barred gate, armoured guards with halberds patrolling empty streets, "
+        "shuttered houses"
     ),
     ("castle_grounds", "humble"): (
-        "modest royal grounds beside a lake, a small tidy castle, a vegetable garden, "
-        "a laundry line, cozy and unpretentious"
+        "modest royal grounds beside a lake, a small square keep, a kitchen garden, "
+        "a laundry line"
     ),
     ("castle_grounds", "flourishing"): (
-        "well-kept royal grounds, blooming gardens, banners, a fountain, content "
-        "and thriving"
+        "well-kept royal grounds, formal gardens in bloom, banners on the towers, "
+        "a stone fountain"
     ),
     ("castle_grounds", "gaudy"): (
-        "wildly over-decorated royal grounds, gold statues of a monarch fishing, "
-        "too many fountains, endearingly tacky"
+        "grossly over-decorated royal grounds, gilded statues of a monarch fishing, "
+        "a crowd of fountains, gold paint on every wall"
     ),
     ("lake", "clear"): (
-        "the sparkling near surface of a lake, gentle ripples, reflections, "
-        "jumping fish"
+        "the near surface of a clear lake, slow ripples, clean reflections, a "
+        "leaping fish"
+    ),
+    ("lake", "murky"): (
+        "the near surface of a murky lake, green-brown silted water, floating scum "
+        "and drifting rotten weed"
+    ),
+    ("lake", "poisoned"): (
+        "the near surface of a poisoned lake, black water with a rainbow oil sheen "
+        "in long swirling streaks, floating fish bones and dead fish"
     ),
     ("near_bank", "grassy"): (
-        "a worn grassy near bank with reeds, a wooden fishing perch, a tackle basket, "
-        "trodden footpath"
+        "a grassy near bank with reeds, a sound wooden fishing perch, a wicker "
+        "tackle basket, a trodden footpath"
+    ),
+    ("near_bank", "trampled"): (
+        "a trampled muddy near bank, flattened reeds, deep boot and hoof prints, a "
+        "sagging wooden fishing perch"
+    ),
+    ("near_bank", "dead"): (
+        "a dead near bank of grey dead reeds and cracked mud, scattered bones, a "
+        "rotting broken wooden pier"
     ),
 }
 
+# Which reign tier each layer state paints the chronicle at. A state missing here
+# is a build error rather than a silent default, so a new state has to be placed
+# on the decay scale on purpose.
+REGION_TIER = {
+    ("sky", "open"): "pristine",
+    ("sky", "overcast"): "strained",
+    ("sky", "choked"): "rotten",
+    ("far_shore", "pristine"): "pristine",
+    ("far_shore", "farmed"): "strained",
+    ("far_shore", "industrial"): "rotten",
+    ("far_shore", "gallows"): "rotten",
+    ("treeline", "wild"): "pristine",
+    ("treeline", "tended"): "pristine",
+    ("treeline", "logged"): "strained",
+    ("treeline", "overbuilt"): "rotten",
+    ("village_edge", "hamlet"): "pristine",
+    ("village_edge", "township"): "pristine",
+    ("village_edge", "boomtown"): "strained",
+    ("village_edge", "garrisoned"): "rotten",
+    ("castle_grounds", "humble"): "pristine",
+    ("castle_grounds", "flourishing"): "pristine",
+    ("castle_grounds", "gaudy"): "strained",
+    ("lake", "clear"): "pristine",
+    ("lake", "murky"): "strained",
+    ("lake", "poisoned"): "rotten",
+    ("near_bank", "grassy"): "pristine",
+    ("near_bank", "trampled"): "strained",
+    ("near_bank", "dead"): "rotten",
+}
+
 # Per art-direction.md Section 2 and the contract t-017 settled: the layer occupies
-# its own horizontal depth band and the rest of the frame is empty, so the layers
-# register against one another on one canvas. Stated as the wanted result ("the
-# rest of the frame empty") rather than as an exclusion pile, per the prompt
+# its own horizontal depth band and the rest of the canvas is empty, so the layers
+# register against one another on one canvas. Stated as the wanted result
+# ("everything outside the band empty") rather than as an exclusion pile, per the prompt
 # contract -- and "transparent" is deliberately avoided as a prompt word, since a
 # diffusion model renders a checkerboard when asked for transparency.
 LAYER_TAIL = (
-    "a single horizontal depth band of scenery running edge to edge across the "
-    "frame, the rest of the frame empty flat open sky, flat-ish banded depth, "
-    "scenery only, at most a few tiny ambient background figures"
+    "a single horizontal depth band of scenery running edge to edge, everything "
+    "outside the band a flat plain painted sky, flat banded depth, scenery only, "
+    "at most a few tiny ambient background figures"
 )
 
 
 def concept_entries(cast: list[dict[str, str]]) -> list[dict]:
     entries: list[dict] = []
 
-    for key, size, label, body in SCENE_CONCEPTS + UI_CONCEPTS:
+    for key, size, label, body, style in SCENE_CONCEPTS + UI_CONCEPTS:
         entries.append(
             make_entry(
                 request_id=f"ruler-hooked-concept-{key}",
                 image_path=f"public/images/ruler-hooked/concept/{key}.webp",
                 label=f"Ruler Hooked concept: {label}",
                 size=size,
-                prompt=f"{body}. {STYLE_TAIL}. {NO_TEXT}",
+                prompt=f"{body}. {concept_style(style)}. {NO_TEXT}",
                 priority=CONCEPT_PRIORITY,
                 lane="concept",
             )
@@ -776,8 +1054,8 @@ def concept_entries(cast: list[dict[str, str]]) -> list[dict]:
                 "add its visual direction to this script"
             )
         body = (
-            f"Character concept art for {character['name']} {character['honorific']}, "
-            f"{character['role']} in a comedic fantasy kingdom: {look}. "
+            f"Portrait of {character['name']} {character['honorific']}, "
+            f"{character['role']} of a lakeside fantasy kingdom: {look}. "
             f"The character reads instantly as their archetype and then undercuts it: "
             f"they want {character['drive']}, and {character['quirks']}. "
             f"{PORTRAIT_FRAME}"
@@ -788,7 +1066,7 @@ def concept_entries(cast: list[dict[str, str]]) -> list[dict]:
                 image_path=f"public/images/ruler-hooked/characters/{slug}.webp",
                 label=f"Ruler Hooked cast: {character['name']} {character['honorific']}",
                 size=PORTRAIT,
-                prompt=f"{body}. {STYLE_TAIL}. {NO_TEXT}",
+                prompt=f"{body}. {chronicle_style('pristine')}. {NO_TEXT}",
                 priority=CONCEPT_PRIORITY,
                 lane="concept",
             )
@@ -809,9 +1087,16 @@ def concept_entries(cast: list[dict[str, str]]) -> list[dict]:
 # multi-body silhouette on every render regardless of how explicit the silhouette wording
 # was. Set a species-level `frame_override` in vertical-slice.yaml rather than editing this
 # shared constant.
+#
+# t-054: fish moved from the cartoon tail to CHRONICLE (specimen variant). Nothing in
+# the fish lane's contract pins a rendering style -- docs/fish-ecology.md shares the
+# recognizable DESIGN (the roster's own silhouette/distinction text, unchanged),
+# while each game renders its own presentation assets -- so one house style for the
+# world, fish included, is consistent with it. The specimen variant is borderless so
+# catch-card and lake-context variants can still be derived from the design.
 FISH_FRAME = (
     "a clean specimen study, the whole creature clearly visible in profile "
-    "against soft open water, nothing else competing for attention in the frame"
+    "against soft open water, nothing else competing for attention"
 )
 
 
@@ -832,7 +1117,7 @@ def fish_entries() -> list[dict]:
         # source and an edit there reaches the art without passing through a person.
         frame = species.get("frame_override") or FISH_FRAME
         body = (
-            f"{species['name']}, a fantastical freshwater fish in a comedic fantasy "
+            f"{species['name']}, a fantastical freshwater fish of a lakeside fantasy "
             f"kingdom: {species['silhouette']}. "
             f"{' '.join(str(species['distinction']).split())} "
             f"{frame}"
@@ -843,7 +1128,7 @@ def fish_entries() -> list[dict]:
                 image_path=f"public/images/ruler-hooked/fish/{slug}/bestiary.webp",
                 label=f"Ruler Hooked fish: {species['name']} ({species['affinity']}, {species['rarity']})",
                 size=WIDE,
-                prompt=f"{body}. {STYLE_TAIL}. {NO_TEXT}",
+                prompt=f"{body}. {chronicle_style('pristine', 'specimen')}. {NO_TEXT}",
                 priority=CONCEPT_PRIORITY,
                 lane="fish",
             )
@@ -857,9 +1142,9 @@ def ruler_entries() -> list[dict]:
     for preset in RULER_PRESETS:
         body = (
             f"Coronation portrait for the in-game character creator: "
-            f"{preset['look']}. Full-length illustrated character study, "
-            f"crowned subject alone with an expressive face, formal "
-            f"portrait staging and rich ceremonial fabric. {PORTRAIT_FRAME}"
+            f"{preset['look']}. A full-length coronation miniature, "
+            f"the crowned subject alone with a grave composed face, formal "
+            f"enthroned staging and rich ceremonial fabric. {PORTRAIT_FRAME}"
         )
         entries.append(
             make_entry(
@@ -867,7 +1152,7 @@ def ruler_entries() -> list[dict]:
                 image_path=f"public/images/ruler-hooked/ruler-{preset['id']}.webp",
                 label=f"Ruler Hooked opening portrait: {preset['title']} ({preset['id']})",
                 size=PORTRAIT,
-                prompt=f"{body}. {STYLE_TAIL}. {NO_TEXT}",
+                prompt=f"{body}. {chronicle_style('pristine')}. {NO_TEXT}",
                 priority=CONCEPT_PRIORITY,
                 lane="ruler",
             )
@@ -881,8 +1166,8 @@ def alt_vista_entries() -> list[dict]:
 
 
 REWARD_FRAME = (
-    "a single object presented alone and centered against a simple soft painted "
-    "backdrop, lit so its shape reads instantly, nothing else in the frame"
+    "a single object presented alone and centered against a flat patterned "
+    "ground, painted in fine detail so its shape reads at a glance"
 )
 
 # Per-slug visual direction, because a reward's name and its mechanical effect
@@ -894,19 +1179,19 @@ REWARD_FRAME = (
 REWARD_LOOK = {
     "druid-charm": "a small woven charm of braided river reeds and green twine, "
     "a polished acorn and a single blue feather bound into it",
-    "gilded-lure": "an ornate gold fishing lure shaped like a fat little fish, "
+    "gilded-lure": "an ornate gold fishing lure in the shape of a fat little fish, "
     "jewelled eye, three barbed hooks, far too fancy for its job",
     "buildpermit-scroll": "a stiff official scroll half unrolled, its face "
     "covered in neat abstract ruled boxes, inked squiggles and a heavy blob of "
     "purple wax seal, patterned marks instead of writing",
     "treaty-seal": "a heavy wax seal disc on a trailing ribbon, an abstract "
-    "crest of two clasped hands pressed into the wax, no lettering in the stamp",
+    "crest of two clasped hands pressed into the wax, that crest the stamp's only mark",
     "smugglers-map": "a creased weathered chart, its face covered in wandering "
     "ink coastlines, dotted route lines, tiny drawn coves and small crosses, "
     "abstract cartographic marks instead of writing",
     "mossy-hex": "a knobbly clay bottle stoppered with cork and moss, wrapped in "
     "trade beads and dried herbs, something faintly glowing inside",
-    "captains-pin": "a dented brass military pin shaped like a lake perch "
+    "captains-pin": "a dented brass military pin in the shape of a lake perch "
     "crossed with a spear, its enamel chipped and lovingly polished",
     "bards-ballad": "a rolled sheet of song parchment tied with red string, its "
     "face covered in abstract inked staves and dots and swirling flourishes, "
@@ -952,7 +1237,7 @@ def reward_entries(content_ts: Path) -> list[dict]:
         rarity = reward["rarity"].lower()
         article = "an" if rarity[0] in "aeiou" else "a"
         body = (
-            f"{name}, {article} {rarity} keepsake from a comedic fantasy fishing "
+            f"{name}, {article} {rarity} keepsake from a lakeside fantasy fishing "
             f"kingdom: {look}. One tangible hand-made object a person could pick "
             f"up. {REWARD_FRAME}"
         )
@@ -962,12 +1247,23 @@ def reward_entries(content_ts: Path) -> list[dict]:
                 image_path=f"public/images/ruler-hooked/rewards/{reward['slug']}.webp",
                 label=f"Ruler Hooked reward: {name} ({reward['kind']}, {reward['rarity']})",
                 size=SQUARE,
-                prompt=f"{body}. {STYLE_TAIL}. {NO_TEXT}",
+                prompt=f"{body}. {chronicle_style('pristine')}. {NO_TEXT}",
                 priority=CONCEPT_PRIORITY,
                 lane="reward",
             )
         )
     return entries
+
+
+# The reign tier each authored ending leaves the chronicle in. An ending missing
+# here falls back to "strained" -- the honest default for a kingdom that ended
+# somewhere between its poles.
+ENDING_TIER = {
+    "druid-utopia": "pristine",
+    "warlock-metropolis": "rotten",
+    "thistlewood-empire": "strained",
+    "fishers-peace": "pristine",
+}
 
 
 def ending_entries(content_ts: Path) -> list[dict]:
@@ -995,17 +1291,18 @@ def ending_entries(content_ts: Path) -> list[dict]:
         title = ending["title"].replace("\u2019", "'")
         line = ending["body"].replace("\u2019", "'").replace("\u2026", "...")
         body = (
-            f"The closing image of a comedic fantasy fishing kingdom, titled "
+            f"The closing image of a lakeside fantasy fishing kingdom, titled "
             f"{title}: {line} Show the kingdom and its lake as that sentence leaves "
-            f"them, wide and final and a little wistful"
+            f"them, wide and final"
         )
+        tier = ENDING_TIER.get(ending["key"], "strained")
         entries.append(
             make_entry(
                 request_id=f"ruler-hooked-ending-{ending['key']}",
                 image_path=f"public/images/ruler-hooked/endings/{ending['key']}.webp",
                 label=f"Ruler Hooked ending: {title} ({ending['victory']})",
                 size=WIDE,
-                prompt=f"{body}. {STYLE_TAIL}. {NO_TEXT}",
+                prompt=f"{body}. {chronicle_style(tier)}. {NO_TEXT}",
                 priority=CONCEPT_PRIORITY,
                 lane="ending",
             )
@@ -1013,10 +1310,19 @@ def ending_entries(content_ts: Path) -> list[dict]:
     return entries
 
 
+# t-054: cards are BROADSIDE -- the court's petitions and edicts are printed
+# things, so their scenes are cut in wood rather than painted on vellum.
+#
+# The first pilot's frame said "the visiting petitioners and courtiers", and both
+# cards came back crowded with a generic row of bearded courtiers who are in no
+# card. The scene's own characters are named above it; the frame just puts them
+# forward. Pages and papers are named blank because a ledger and a blueprint both
+# grew lines of pseudo-writing.
 CARD_FRAME = (
-    "a painted storybook moment staged from the player's first-person point of "
-    "view, highlighting the visiting petitioners and NPCs, lively faces "
-    "and the kingdom behind them, warm illustrated console-game lighting"
+    "a printed scene staged from the player's first-person point of "
+    "view, the characters of this scene alone and large in the foreground with "
+    "clearly carved expressions, the lakeside kingdom open behind them, every "
+    "page, scroll and paper in the scene bare blank paper"
 )
 
 CARD_RE = re.compile(
@@ -1062,15 +1368,50 @@ def read_cards(content_ts: Path) -> list[dict[str, str]]:
     return cards
 
 
+# Card copy written for the player that cannot go to Krea as-is, keyed by card id.
+# The replacement says what is visible, positively. nix-riddle's "not quite a fish,
+# not quite a person" is a people-negation kind_robots' contract 422s on krea2.
+CARD_BODY_OVERRIDE = {
+    "nix-riddle": "The water goes still, then a tall shape of standing water rises "
+    "from the lake, half fish and half person.",
+}
+
+QUOTED = re.compile(r"\u201c[^\u201d]*\u201d|\"[^\"]*\"")
+SENTENCE_SPLIT = re.compile(r"(?<=[.!?])\s+")
+
+
+def card_scene(body: str) -> str:
+    """The visible part of a card body: every sentence that carries no dialogue.
+
+    Card bodies quote their speakers ("The treasury," he says, "is a feeling").
+    Krea is a text-specialist model and paints quoted speech as lettering, which
+    on a woodcut broadside reads as a printed banner across the scene. The action
+    sentences are the art direction; the lines belong to the card's own UI copy.
+
+    Each quotation is masked to a token first, so the full stops inside it do not
+    split the body: a sentence holding a quotation, its "he says" included, then
+    drops as one unit instead of leaving "he says." behind as a sentence.
+    """
+    # A quotation that ends its own sentence ("...at a reasonable rate.") keeps
+    # that full stop outside the mask, so the sentence after it still splits off.
+    masked = QUOTED.sub(
+        lambda m: "\x00." if re.search(r"[.!?]\W*$", m.group(0)) else "\x00",
+        body.strip(),
+    )
+    kept = [s for s in SENTENCE_SPLIT.split(masked) if "\x00" not in s]
+    return " ".join(kept).strip()
+
+
 def card_entries(content_ts: Path) -> list[dict]:
     """One scene per authored card, keyed to the id the deck already references."""
     entries: list[dict] = []
     for card in read_cards(content_ts):
         title = card["title"].replace("\u2019", "'").replace("\\'", "'")
-        body = card["body"].replace("\u2019", "'").replace("\\'", "'")
+        body = CARD_BODY_OVERRIDE.get(card["id"]) or card_scene(card["body"])
+        body = body.replace("\u2019", "'").replace("\\'", "'")
         who = [CAST_LOOK[s] for s in card.get("cast", []) if s in CAST_LOOK]
         cast_clause = (
-            " In frame: " + "; ".join(who) + "."
+            " In the scene: " + "; ".join(who) + "."
             if who
             else ""
         )
@@ -1088,7 +1429,7 @@ def card_entries(content_ts: Path) -> list[dict]:
                 image_path=f"public/images/ruler-hooked/card-{card['id']}.webp",
                 label=f"Ruler Hooked card: {title}",
                 size=WIDE,
-                prompt=f"{prompt_body}. {STYLE_TAIL}. {NO_TEXT}",
+                prompt=f"{prompt_body}. {BROADSIDE}. {NO_TEXT}",
                 priority=CONCEPT_PRIORITY,
                 lane="card",
             )
@@ -1116,22 +1457,30 @@ def card_entries(content_ts: Path) -> list[dict]:
 #
 # Every entry is WIDE (1344x768), tab vignettes included, because the UI crops
 # them itself. None depicts the player's ruler (Current POV rule above).
+#
+# t-054 (later the same day): Silas picked Chronicle + Broadside from the style
+# test, so the storybook-gouache finish this lane first matched is retired with
+# STYLE_TAIL. The console's own pieces now follow the house split:
+#   backdrops and the map -> CHRONICLE, borderless (the UI chrome is the
+#       manuscript border, per the t-054 doc, so the art carries none)
+#   tab vignettes -> CHRONICLE on a plain vellum ground (the specimen variant)
+#   daily proclamations, gear and kingdom-works notices -> BROADSIDE (printed
+#       notices, per ruler-hooked/t-057)
+#   Quill's portrait -> CHRONICLE bordered, matching the rest of the cast
+# The matte, unglossy finish CONSOLE_FINISH asked for is native to both styles.
 CONSOLE_PRIORITY = CONCEPT_PRIORITY
-
-CONSOLE_FINISH = (
-    "matte opaque gouache with visible brush strokes and a faint paper grain, "
-    "soft diffuse natural light, flat matte colour, handmade and quiet"
-)
+CONSOLE_CHRONICLE = chronicle_style("pristine", "layer")
+CONSOLE_VIGNETTE = chronicle_style("pristine", "specimen")
 
 CONSOLE_BACKDROPS = [
     (
         "title-lakeside",
         "title backdrop: lakeside at golden hour",
-        "A wide calm lake at golden hour, a storybook castle with round towers on a "
+        "A wide calm lake at golden hour, a castle with round towers on a "
         "far green hill across the water, and on the near grassy bank an empty "
         "carved wooden royal fishing chair with a red cushion, a fishing rod "
         "leaning against its arm and a little wicker tackle basket beside it. The "
-        "upper-middle third of the picture is broad open soft golden sky, calm and "
+        "upper-middle third of the scene is broad open soft golden sky, calm and "
         "uncluttered. Deserted and peaceful. "
         f"{TIME_MOD['golden']}",
     ),
@@ -1184,9 +1533,8 @@ CONSOLE_BACKDROPS = [
 # details. Described as a painted vignette, never as an "icon" -- an icon request
 # renders as a glossy app button, which is exactly the sheen Silas ruled out.
 TAB_VIGNETTE = (
-    "a single bold simple painted vignette, one large subject centred on a soft "
-    "plain painted gouache ground, broad shapes and few details so it reads at a "
-    "glance even very small"
+    "a single bold simple painted vignette, one large subject centred, broad "
+    "shapes and few details so it reads at a glance even very small"
 )
 
 CONSOLE_TABS = [
@@ -1202,8 +1550,8 @@ CONSOLE_TABS = [
 # their name from the content bundle, so Gristle on the audit day is the same
 # Gristle as on his portrait and his cards.
 EVENT_VIEW = (
-    "a lively painted storybook moment seen at eye level, the townsfolk facing "
-    "the viewer"
+    "a printed scene seen at eye level, the townsfolk facing the viewer, every "
+    "page, scroll and paper in the scene bare blank paper"
 )
 
 CONSOLE_EVENTS = [
@@ -1212,7 +1560,7 @@ CONSOLE_EVENTS = [
         "Market Day at the Wharf",
         "A bustling lakeside fish market along a wooden wharf: striped awnings "
         "over stalls heaped with silver fish and baskets of eels, fishmongers in "
-        "aprons haggling cheerfully with villagers, rowboats tied along the wharf, "
+        "aprons haggling hard with villagers, rowboats tied along the wharf, "
         f"gulls wheeling overhead. {TIME_MOD['day']}",
         [],
     ),
@@ -1368,16 +1716,16 @@ def console_entries(cast: list[dict[str, str]]) -> list[dict]:
     """Backdrops, tab vignettes, proclamation scenes and shop art for the console UI."""
     names = {c["slug"]: f"{c['name']} {c['honorific']}" for c in cast}
 
-    def tail(body: str) -> str:
-        return f"{body}. {CONSOLE_FINISH}. {STYLE_TAIL}. {NO_TEXT}"
+    def tail(body: str, style: str = CONSOLE_CHRONICLE) -> str:
+        return f"{body}. {style}. {NO_TEXT}"
 
-    def entry(kind: str, key: str, label: str, body: str) -> dict:
+    def entry(kind: str, key: str, label: str, body: str, style: str = CONSOLE_CHRONICLE) -> dict:
         return make_entry(
             request_id=f"ruler-hooked-console-{kind}-{key}",
             image_path=f"public/images/ruler-hooked/{kind}/{key}.webp",
             label=f"Ruler Hooked console: {label}",
             size=WIDE,
-            prompt=tail(body),
+            prompt=tail(body, style),
             priority=CONSOLE_PRIORITY,
             lane="console",
         )
@@ -1393,7 +1741,7 @@ def console_entries(cast: list[dict[str, str]]) -> list[dict]:
                 image_path=f"public/images/ruler-hooked/ui/tab-{name}.webp",
                 label=f"Ruler Hooked console: {name} tab vignette",
                 size=WIDE,
-                prompt=tail(f"{subject}, {TAB_VIGNETTE}"),
+                prompt=tail(f"{subject}, {TAB_VIGNETTE}", CONSOLE_VIGNETTE),
                 priority=CONSOLE_PRIORITY,
                 lane="console",
             )
@@ -1415,11 +1763,14 @@ def console_entries(cast: list[dict[str, str]]) -> list[dict]:
         if "{" in body:
             raise SystemExit(f"console event {key!r} has an unfilled cast slot: {body}")
         entries.append(
-            entry("events", key, f"daily proclamation: {title}", f"{body}. {EVENT_VIEW}")
+            entry(
+                "events", key, f"daily proclamation: {title}", f"{body}. {EVENT_VIEW}",
+                BROADSIDE,
+            )
         )
 
     for key, name, body in CONSOLE_GEAR:
-        entries.append(entry("gear", key, f"shop: {name}", body))
+        entries.append(entry("gear", key, f"shop: {name}", body, BROADSIDE))
 
     # Quill the Steward coaches the tutorial and presents court petitions, but
     # the only render of the advisor (character-steward-quill.webp, 256px) came
@@ -1431,7 +1782,7 @@ def console_entries(cast: list[dict[str, str]]) -> list[dict]:
             label="Ruler Hooked console: Quill the Steward portrait",
             size=PORTRAIT,
             prompt=(
-                f"{STEWARD_LOOK}, {PORTRAIT_FRAME}. {CONSOLE_FINISH}. {STYLE_TAIL}. {NO_TEXT}"
+                f"{STEWARD_LOOK}, {PORTRAIT_FRAME}. {chronicle_style('pristine')}. {NO_TEXT}"
             ),
             priority=CONSOLE_PRIORITY,
             lane="console",
@@ -1456,6 +1807,13 @@ def layer_entries(regions: dict[str, dict[str, list[str]]]) -> list[dict]:
                     f"region state {region}/{state} is in the manifest but has no "
                     "REGION_BASE prompt; add it to this script"
                 )
+            tier = REGION_TIER.get((region, state))
+            if not tier:
+                raise SystemExit(
+                    f"region state {region}/{state} has no REGION_TIER entry; place "
+                    "it on the pristine/strained/rotten scale in this script"
+                )
+            style = chronicle_style(tier, "layer")
             for time in spec["times"] or [None]:
                 stem = f"{region}-{state}" + (f"-{time}" if time else "")
                 lighting = f". {TIME_MOD[time]}" if time else ""
@@ -1465,7 +1823,7 @@ def layer_entries(regions: dict[str, dict[str, list[str]]]) -> list[dict]:
                         image_path=f"public/images/ruler-hooked/{stem}.webp",
                         label=f"Ruler Hooked layer: {stem}",
                         size=WIDE,
-                        prompt=f"{base}{lighting}. {LAYER_TAIL}. {STYLE_TAIL}. {NO_TEXT}",
+                        prompt=f"{base}{lighting}. {LAYER_TAIL}. {style}. {NO_TEXT}",
                         priority=LAYER_PRIORITY,
                         lane="layer",
                     )
@@ -1617,6 +1975,98 @@ def staged_ids(text: str) -> set[str]:
     }
 
 
+def staged_rows(text: str) -> dict[str, dict]:
+    """Staged request rows by id (the last one wins, as the YAML loader would)."""
+    data = yaml.safe_load(text) or {}
+    if not isinstance(data, dict):
+        return {}
+    return {
+        str(r.get("id")): r
+        for r in (data.get("requests") or [])
+        if isinstance(r, dict) and r.get("id")
+    }
+
+
+def stale_rows(entries: list[dict], rows: dict[str, dict]) -> list[dict]:
+    """Built entries already staged under their id but with a different prompt."""
+    return [
+        e
+        for e in entries
+        if e["id"] in rows
+        and " ".join(str(rows[e["id"]].get("prompt") or "").split()) != e["prompt"]
+    ]
+
+
+def forced(entry: dict, superseded_job=None) -> dict:
+    """The entry as a regeneration row: pending, `force: true`, and no live job id.
+
+    `force` sits right after `status` so a reader sees both together. A superseded
+    job id is kept under its own key rather than dropped, so the earlier render
+    stays traceable from the row (consume_art_requests.has_unresolved_submission()
+    only ever reads `last_art_job_id`).
+    """
+    row: dict = {}
+    for key, value in entry.items():
+        row[key] = value
+        if key == "status":
+            row["force"] = True
+    if superseded_job:
+        row["superseded_art_job_id"] = superseded_job
+    return row
+
+
+def find_request_block(lines: list[str], req_id: str):
+    """(start, end) line span of the requests: item whose id is req_id, or None.
+
+    Same block boundaries as consume_art_requests.find_request_block(), which the
+    consumer's own surgical edits use, so a replaced block can never swallow or
+    split a neighbour.
+    """
+    id_pat = re.compile(r"^(\s*)-\s+id:\s*[\"']?" + re.escape(req_id) + r"[\"']?\s*$")
+    for start, line in enumerate(lines):
+        match = id_pat.match(line)
+        if not match:
+            continue
+        indent = match.group(1)
+        end = start + 1
+        while end < len(lines):
+            current = lines[end]
+            if current.strip():
+                if re.match(r"^" + re.escape(indent) + r"-\s", current):
+                    break
+                if len(current) - len(current.lstrip()) <= len(indent):
+                    break
+            end += 1
+        return start, end, indent
+    return None
+
+
+def replace_rows(text: str, rows: list[dict]) -> str:
+    """Replace each row's existing block in place, keeping its position in the file.
+
+    Surgical and comment-preserving (a full YAML round-trip would drop the file's
+    curated header). The replacement is a whole block, never inserted lines, so no
+    key can end up duplicated -- the #5008 choirfish failure, where corrected fields
+    were added beside the stale ones and safe_load silently kept the wrong copy.
+    """
+    lines = text.splitlines(keepends=True)
+    for row in rows:
+        span = find_request_block(lines, row["id"])
+        if span is None:
+            raise SystemExit(f"restage: {row['id']} vanished from {ART_PROMPTS.name}")
+        start, end, indent = span
+        # Keep trailing blank lines/comments that belong between blocks.
+        while end > start + 1 and not lines[end - 1].strip():
+            end -= 1
+        block = render_block([row])
+        if indent:
+            block = "".join(
+                (indent + ln) if ln.strip() else ln for ln in block.splitlines(keepends=True)
+            )
+        lines[start:end] = [block]
+    return "".join(lines)
+
+
 def render_block(entries: list[dict]) -> str:
     """YAML for the new entries only, appended so the curated header survives."""
     return yaml.safe_dump(
@@ -1670,6 +2120,13 @@ def main() -> int:
         help="print staged vs not-yet-staged counts for every produced lane and exit "
         "(read-only, even with --write)",
     )
+    parser.add_argument(
+        "--restage",
+        action="store_true",
+        help="regenerate art whose prompt changed: rewrite stale staged rows in place "
+        "as pending + force: true, and append new rows with force: true (see "
+        "RESTYLING in this script's docstring). Only acts together with --write.",
+    )
     args = parser.parse_args()
     if args.list_lanes and args.lane:
         parser.error("--list-lanes summarizes every lane; do not combine it with --lane")
@@ -1700,25 +2157,36 @@ def main() -> int:
     if args.lane:
         entries = [e for e in entries if e["lane"] == args.lane]
     fresh = [e for e in entries if e["id"] not in existing]
+    rows = staged_rows(text)
+    stale = stale_rows(entries, rows)
 
     lane_suffix = f" (lane={args.lane})" if args.lane else ""
     print(f"source bundle: {content_ts}")
-    print(f"built {len(entries)} entr(ies){lane_suffix}; {len(fresh)} not yet staged")
+    print(
+        f"built {len(entries)} entr(ies){lane_suffix}; {len(fresh)} not yet staged, "
+        f"{len(stale)} staged with a stale prompt"
+    )
     for entry in fresh:
         print(f"  + {entry['id']}  [{entry['lane']}, {entry['size']}]")
+    for entry in stale:
+        print(f"  ~ {entry['id']}  [{entry['lane']}, {entry['size']}] prompt changed")
 
     if args.check:
-        if fresh:
+        # A stale prompt fails too: a style or wording fix that never reaches the
+        # staged row never renders, which is the drift this script exists to stop.
+        if fresh or stale:
             print(
-                f"CHECK FAILED: {len(fresh)} entr(ies) missing from "
-                f"{ART_PROMPTS.relative_to(REPO)}",
+                f"CHECK FAILED: {len(fresh)} entr(ies) missing from and {len(stale)} "
+                f"stale in {ART_PROMPTS.relative_to(REPO)} (stage with --write"
+                f"{' --restage' if stale else ''})",
                 file=sys.stderr,
             )
             return 1
-        print("CHECK OK: every entry is staged.")
+        print("CHECK OK: every entry is staged with its current prompt.")
         return 0
 
-    if not fresh:
+    todo_stale = stale if args.restage else []
+    if not fresh and not todo_stale:
         print("nothing to stage.")
         return 0
 
@@ -1726,10 +2194,29 @@ def main() -> int:
         print("dry run; pass --write to stage these into art-prompts.yaml")
         return 0
 
+    if todo_stale:
+        text = replace_rows(
+            text,
+            [
+                forced(
+                    e,
+                    rows[e["id"]].get("last_art_job_id")
+                    or rows[e["id"]].get("superseded_art_job_id"),
+                )
+                for e in todo_stale
+            ],
+        )
     if not text.endswith("\n"):
         text += "\n"
-    ART_PROMPTS.write_text(text + render_block(fresh), encoding="utf-8")
-    print(f"staged {len(fresh)} entr(ies) into {ART_PROMPTS.relative_to(REPO)}")
+    appended = [forced(e) for e in fresh] if args.restage else fresh
+    if appended:
+        text += render_block(appended)
+    ART_PROMPTS.write_text(text, encoding="utf-8")
+    print(
+        f"staged {len(appended)} new and restaged {len(todo_stale)} stale entr(ies) "
+        f"into {ART_PROMPTS.relative_to(REPO)}"
+        + (" (all with force: true)" if args.restage else "")
+    )
     return 0
 
 
