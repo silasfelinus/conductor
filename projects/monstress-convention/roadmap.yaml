@@ -4,9 +4,10 @@ project: monstress-convention
 kind: software
 autonomous: true
 goal: >-
-  Develop MONSTREXX as an adult point-and-click murder mystery: Iris is the field protagonist; her astute germophobic boss Nico supports her; at the seedy motel smarmy franchise agent Odette and adult companion Violet are both murdered, both become ghost witnesses, and the separate Monstrexx Convention Center plus joke shop, mansion and sewers unlock through city leads. Deliver a fully playable, fair-clue investigation with hotspot-and-verb puzzles, shared evidence/topic notebooks, differential dialogue, an interactive ghost witness, optional consensual flirtation, lavish hand-painted single-screen art, seeded playtests, and secure logged-in mature-opt-in non-CHILD visibility and access. Preview is internal until separate visual acceptance and publication approval.
+  Develop MONSTREXX as an adult point-and-click murder mystery: Iris is the field protagonist; her astute germophobic boss Norb supports her; at the seedy motel smarmy franchise agent Odette and adult companion Violet are both murdered, both become ghost witnesses, and the separate Monstrexx Convention Center plus joke shop, mansion and sewers unlock through city leads. Deliver a fully playable, fair-clue investigation with hotspot-and-verb puzzles, shared evidence/topic notebooks, differential dialogue, an interactive ghost witness, optional consensual flirtation, lavish hand-painted single-screen art, seeded playtests, and secure logged-in mature-opt-in non-CHILD visibility and access. Preview is internal until separate visual acceptance and publication approval.
 notes_from_silas: |
-  2026-11-05 PT REVISION (supersedes prior notes): Game/franchise display title MONSTREXX, not Monstrexx Convention; the convention is one separate city destination, NOT the murder motel. Iris Quill is the primary field protagonist; Nico Vale is her astute ugly germophobic boss who avoids contact and rebuffs her playful flirting. Odette Harker, smarmy MONSTREXX agent, and adult sex worker Violet Wisp share a consensual date in a suggestive cold open; unseen killer murders BOTH with an unusual knife; BOTH return as separately interrogable ghosts. Mummy monster actress, alligator woman celebrity wannabe beneath motel, vampire mansion, occult novelty store, neighbors, ice machine, office, MONSTREXX acting/modeling/idol brand. Mature opt-in, no CHILD, optional consensual romance/scrapbook with non-explicit steamy art. Old Celestine-victim/Odette-killer logic is void; Gavin is never killer. Keep stable technical slug monstress-convention for continuity; user-facing title MONSTREXX.
+  2026-11-06 PT: User requested actual /admin/monstrexx game front page: Settings, New Game, Continue, Scrapbook. Germophobic boss should be a short, ugly, geeky COMIC character, never suave. Working displayed name Norbert 'Norb' Vale; internal character key nico left unchanged. App PR #4848. Public release remains gated.
+  2026-11-05 PT REVISION (supersedes prior notes): Game/franchise display title MONSTREXX, not Monstrexx Convention; the convention is one separate city destination, NOT the murder motel. Iris Quill is the primary field protagonist; Norb Vale is her astute ugly germophobic boss who avoids contact and rebuffs her playful flirting. Odette Harker, smarmy MONSTREXX agent, and adult sex worker Violet Wisp share a consensual date in a suggestive cold open; unseen killer murders BOTH with an unusual knife; BOTH return as separately interrogable ghosts. Mummy monster actress, alligator woman celebrity wannabe beneath motel, vampire mansion, occult novelty store, neighbors, ice machine, office, MONSTREXX acting/modeling/idol brand. Mature opt-in, no CHILD, optional consensual romance/scrapbook with non-explicit steamy art. Old Celestine-victim/Odette-killer logic is void; Gavin is never killer. Keep stable technical slug monstress-convention for continuity; user-facing title MONSTREXX.
   2026-11-05 PT: New Conductor project, "Monstress Convention": mature point-and-click adventure inspired by Leisure Suit Larry, Monkey Island, Thimbleweed Park and monster-girl ensembles. The setting is a seedy two-storey hotel hosting a convention of stars from a famous female-monster film/TV/franchise. Cast includes female Dracula, Francesca Stein, werewolf, slime woman, lagoon woman and giant fly-headed woman. Protagonist: scrappy, hungry journalist for a failing blog, with a smarter, attractive female assistant. Both are playable; conversations react to which asks. A cast member is murdered, then returns as a ghost who does not know the culprit. A creepy fanboy stalker is explicitly NOT the killer. Hot tub, hotel rooms and convention floor support campy adult cheesecake and puzzle scenes. Shared dynamic conversation topics, complex inventory/hotspot puzzles and a single-screen AAA console-quality interface. Only show in nav/highlights to logged-in mature-opted-in accounts without CHILD role.
 milestones:
   - id: m1
@@ -34,7 +35,7 @@ tasks:
     passes: 0
     stakes: reversible
     note: >-
-      Build the MONSTREXX Vignette spec and private title screen at /admin/monstress-convention
+      Build the MONSTREXX Vignette spec and private title screen at /admin/monstrexx
       within the existing shell, plus an initial navigable hotel lobby scene. Verify admin AND
       viewerShowsMature on server; no guest/CHILD/mature-off rendering or leaking assets.
       Do not expose Play/nav/highlights until the separate release gate. Art briefs now,
@@ -61,18 +62,18 @@ tasks:
     stakes: reversible
     note: >-
       Build deterministic 2D Iris-led point-and-click scene engine (not a card-choice engine).
-      Walk/Look/Talk/Take/Use/Combine/Photograph/Consult Nico; touch, mouse and keyboard parity;
+      Walk/Look/Talk/Take/Use/Combine/Photograph/Consult Norb; touch, mouse and keyboard parity;
       bounded notebook/map sheets and versioned save. First five rooms and shortcut.
   - id: t-004
     milestone: m2
-    title: "Iris field agency, Nico deductions and shared dual-ghost reactive topics"
+    title: "Iris field agency, Norb deductions and shared dual-ghost reactive topics"
     status: waiting
     depends_on: t-003
     owner: null
     passes: 0
     stakes: reversible
     note: >-
-      Iris physical agency and Nico contact aversion, dual ghost branches and shared discovery,
+      Iris physical agency and Norb contact aversion, dual ghost branches and shared discovery,
       clue/evidence comparisons, replay transcript, protagonist inventory and agency.
       Validate every critical topic reachable by either actor through secondary routes.
   - id: t-005
@@ -109,7 +110,7 @@ tasks:
     stakes: reversible
     note: >-
       Three-act mystery with Odette as murdered agent and Violet as second victim, two routes to
-      every required clue, Iris physical interviews/Nico deductions, consequences for Gavin's
+      every required clue, Iris physical interviews/Norb deductions, consequences for Gavin's
       stalking, believable time and motive proof, and accusation failures that fail forward.
   - id: t-008
     milestone: m3
