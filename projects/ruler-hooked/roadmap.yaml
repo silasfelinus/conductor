@@ -1015,7 +1015,7 @@ tasks:
 - id: t-055
   milestone: m6
   title: 'Quiz-to-catch fishing: classic/learning settings, flags, capitals, and Mandarin Tutor spaced recall'
-  status: review
+  status: done
   gate_human: false
   stakes: reversible
   passes: 0
@@ -1023,10 +1023,11 @@ tasks:
     Silas, 2026-11-05 PT: preserve classic stop-in-the-green fishing as a selectable mode; offer modular quizzes for countries and their flags, US states and capitals, and Mandarin Tutor learning that introduces increasingly new words with available pictures and pronunciation. Correct answers catch a random fish through the normal reward/kingdom-turn path. Module selection, pacing, and progression belong in the game settings and should not conflict with concurrent console/art redesigns. Reuse Mandarin Tutor catalog, lesson completion and authenticated SRS review; do not make a separate pretend Mandarin progress database. Add regressions for module choices, question quality, catch rewards, and progression.
 
     Quiz engine, painted settings, question hand, Mandarin lesson and shared SRS integration committed on worker/ruler-hooked-t-055-quiz-fishing-20261105T2340Z. Implementation PR and CI verification follow.
-  owner: worker
+
+    Delivered via silasfelinus/kind_robots#4837, merged squash SHA 2f2bae82c5868bbe7068088a80e30799dce2c160. Classic versus modular quiz fishing; 50 flags and all 50 state capitals; progressive Mandarin Tutor lessons, audio, art and shared account-backed SRS; matching catch and kingdom-turn rewards. All 10 PR workflows completed successfully, including typecheck, formatting, Ruler Hooked suite with new quiz selftest, architecture, layout, contract shards, and container publish workflow. Self-hosted production rollout separately verified after merge.
   claimed_by: 2026-11-05T23:40:01Z-ruler-hooked-t055-q8e72
   claimed_at: '2026-11-05T23:40:01.720Z'
-  updated: '2026-11-05T23:46:50.939Z'
+  updated: '2026-11-06T00:00:41.866Z'
 - id: t-056
   milestone: m6
   title: 'Illustrated console shell, situational tutorial and daily Town Crier (kind_robots#4834)'
