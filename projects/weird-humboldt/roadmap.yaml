@@ -1588,8 +1588,8 @@ tasks:
   - id: t-066
     milestone: m5
     title: "Polish Ecotone opening, route previews, customizable player portraits, and tablet layout"
-    status: review
-    updated: '2026-11-06T12:04:00Z'
+    status: ready
+    updated: '2026-11-06T12:14:35Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -1617,10 +1617,8 @@ tasks:
       coordinator.  Merged as kind_robots #4789. Back to ready for the remaining scope.
 
       2026-11-06 PT, Silas-directed Ecotone screenshot pass: complete visible choice cards with art fallbacks and full hover/focus text, tighter prose/typography and outcomes, companion portrait dialogue, no player-facing rewind controls, plus Midnight Mane editorial rewrite and a regression contract. Implementation on kind_robots worker/weird-humboldt-t-066-ecotone-screen-7c9f, awaiting PR CI; no publish/deploy or art-job writes.
-    owner: worker
-    claimed_by: 2026-11-06T115600Z-weird-humboldt-t066-ux-7c9f
-    claimed_at: '2026-11-06T11:56:00Z'
-    implementation_pr: 'silasfelinus/kind_robots#4789'
+
+      2026-11-06 PT: Ecotone screenshot-led UX pass merged to kind_robots main in PR #4854, squash aa540d9a1cf614957837ef55ecf1112120af9b4a. Nine of nine completed latest-head CI suites passed: Ecotone Gameplay, layout, TypeScript, formatting, narrative accessibility, architecture, Playbook Kit, migration parity, and contract shards. Visible full-height choice cards and art/scene fallback, full hover/focus copy, smaller narrator text, companion portrait dialogue, compact outcomes with optional illustrated second view, no visible undo/rewind, and Midnight Mane wording improved. Remaining t-066 scope includes rendered phone/tablet/desktop verification post-deploy, portrait asset delivery and guide spoilers; broader prose rewrite and art export remain open. Specific new art finding: all three Bellwether case-card scenes MY-05-G1/G2/G3 have DONE entries in art/ART-STANDARD-ROUND-2.yaml in each of four styles (ArtJobs 47600-47611), but cards/my-05-g1/g2/g3 are absent from kind_robots utils/ecotone/artManifest.ts and public/ecotone/styles cards. The export script supports ledger input but needs API token and a checkout; do not claim these private finished ArtImages shipped or render to clients before export. No production deploy or art export performed.
 
   - id: t-067
     milestone: m1
