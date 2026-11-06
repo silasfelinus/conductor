@@ -83,3 +83,12 @@ Silas picked **Chronicle + Broadside** from the style test.
   Fishopedia entries. They are hand-coloured woodcut pamphlets on rag paper, in madder, ochre and
   verdigris. These are what the court *prints*, so their look stays the same and their tone sours
   (blunter edicts, cruder cuts) with the reign.
+
+## Superseded art treatment (Silas, 2026-11-06 PT)
+
+The Chronicle + Broadside **style** chosen on November 5 is withdrawn after
+viewing the results. The **gameplay composition and decay requirements** above
+remain. The replacement direction is psychedelic rainbow fantasy with only a
+subtle vintage printing texture, documented in docs/art-direction.md section 10
+and enforced by the art-queue generator.
+Do not commission further manuscript/woodcut output from this brief.

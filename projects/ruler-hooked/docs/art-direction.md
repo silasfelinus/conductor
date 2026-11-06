@@ -345,3 +345,60 @@ the same `CAST_LOOK` description as their portrait and cards, with the name read
 from the kind_robots content bundle. Layout-bearing backdrops keep their overlay
 zones calm: the title backdrop leaves the upper-middle sky open for the title, and
 the throne room keeps its left third uncluttered for a character portrait.
+
+## 10. Psychedelic rainbow visual lock (Silas, 2026-11-06 PT) — CURRENT AUTHORITY
+
+Silas rejected the rendered old-fashioned look: **psychedelic rainbow fantasy is the
+identity; vintage techniques are a faint secondary effect**. This explicitly
+supersedes the dated Chronicle + Broadside decision in section 9 and the
+2026-11-05 t-054 style test. Keep the good parts of those mockups (first-person
+fishing stage, console arrangement, real kingdom consequences) but not their
+medieval art identity. Neither manuscript miniatures nor woodcut broadsides
+are a default anymore.
+
+### The actual look
+
+- **Color is the protagonist.** Immersive, richly saturated magenta, cyan,
+  turquoise, electric violet, coral, acid yellow, emerald and chartreuse.
+  Make unusual combinations feel designed, with strong large-value shapes and
+  breathing room. A scene should read as psychedelic even at thumbnail scale.
+- **Surreal, playful fantasy.** Rivers and cloud banks can coil into rhythmic
+  forms; fungal castles, strange trees, absurd fish and confident hand-inked
+  contours are welcome. The world is recognizable enough to navigate, yet not
+  ordinary naturalistic medieval fantasy with rainbow grading applied.
+- **Old-time effects are only a seasoning.** Fine screenprint/halftone grain,
+  a slight off-register color echo, economical crosshatching and occasional
+  imperfect ink edges add a lived-in tactile surface. They do **not** dictate
+  the medium, shapes, world, typography, framing or main color scheme.
+- **No antique visual identity.** Don't build the UI around parchment pages,
+  sepia, faux illuminated manuscripts, gold-leaf borders, antique scrollwork,
+  heraldic plaques, brown rag paper or faux woodcuts. Don't replace them with
+  shiny metallic gradients or generic candy-gloss/mobile-game buttons.
+- **Light and dark reigns share a world.** In a healthy reign the same rainbow
+  looks exuberant and living. In a troubled reign colors clash and shapes warp.
+  In a ruined reign, poisonous chartreuse, spectral oil-slick rainbows, violet
+  fumes, hot pink fractures and deep indigo shadow make the rot frighteningly
+  vivid. Evil is not a sepia/desaturated filter.
+- **Legibility wins.** Let the stage painting occupy most of the console. UI
+  rails and cards should use flat dark-ink or pale high-contrast grounds for
+  readable text, with vibrant chromatic accents; short labels, bold outlines,
+  and restrained print texture. A vivid background cannot swallow choices.
+
+### Production and acceptance contract
+
+The scripts/build_ruler_hooked_art_queue.py house style is now the current
+prompt authority. The five console backdrops, five tab vignettes, ten daily
+proclamations, seven gear/work still lifes and Quill's portrait must all
+follow that identity. **Lead each Krea 2 prompt with the style** so antique
+subject nouns like throne or map cannot win over the desired palette.
+
+Stage console separately from old queued lanes. To replace old-style renders,
+use the generator's --restage mechanism with --lane console and review the
+resulting force: true records and ArtJob provenance; pending is not delivered.
+Do not blindly replace the entire project library or destroy historical assets.
+The compositing issue (opaque vistas) remains under t-059 and must be resolved
+before claiming a fully reactive kingdom map.
+
+Review at least one coherent rainbow title/lake/court/map/fish specimen set,
+with the same scene in healthy and ruined states. Reject any set that reads
+primarily as an antique manuscript or medieval painting, however saturated.
