@@ -55,12 +55,18 @@ def test_tactical_scenes_cover_campaign_and_existing_one_shots_without_duplicate
     assert all(asset.startswith("every-villain-tactics/") for asset in assets)
     assert all(subject["lane"] == "unstable-production" for subject in subjects)
     assert all(0 <= subject["priority"] <= 1000 for subject in subjects)
-    assert all("jobs" not in subject for subject in subjects)  # first submission records real IDs
+    # The production sweep persists accepted ArtJob IDs into this same ledger.
+    # The contract must continue to pass after submission, not only before it.
+    for subject in subjects:
+        jobs = subject.get("jobs") or {}
+        assert set(jobs) <= {"unstable-production"}
+        if "unstable-production" in jobs:
+            assert isinstance(jobs["unstable-production"], int)
+            assert jobs["unstable-production"] > 0
+        assert subject["size"] == ("1344x768" if subject["key"] in RESULTS else "1152x768")
     assert all(len(subject["prompt_prose"]) > 250 for subject in subjects)
     assert all(subject["negative"] for subject in subjects)
-    for subject in subjects:
-        assert subject["size"] == ("1344x768" if subject["key"] in RESULTS else "1152x768")
-    assert open_cells(data) == 12
+    assert open_cells(data) == sum(not (subject.get("jobs") or {}).get("unstable-production") for subject in subjects)
 
 
 def test_subject_specific_prompts_satisfy_quality_check():
