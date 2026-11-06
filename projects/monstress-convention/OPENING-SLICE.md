@@ -1,8 +1,8 @@
-# MONSTREXX — The Two Ghosts of Last Call
-_Opening-case author guide, 2026-11-05 PT. **Monstrexx Convention is a location in the city, not the game's title.**_
+# MONSTRIQUE — The Two Ghosts of Last Call
+_Opening-case author guide, 2026-11-05 PT. **Monstrique Convention is a location in the city, not the game's title.**_
 
 ## Cold open
-Odette, a morally slippery female agent for MONSTREXX, is on a private, consensual adult date with a female sex worker, Violet. They get flirtatious, the scene fades suggestively to the buzzing ice machine and peeling motel wallpaper. A hallway knock, a distinctive mechanical double clang, a shadow and a sudden silence. **An unseen murderer kills both women with the same decorative/stage knife.** No sexualized violence or graphic injury. The player does not learn the killer.
+Odette, a morally slippery female agent for MONSTRIQUE, is on a private, consensual adult date with a female sex worker, Violet. They get flirtatious, the scene fades suggestively to the buzzing ice machine and peeling motel wallpaper. A hallway knock, a distinctive mechanical double clang, a shadow and a sudden silence. **An unseen murderer kills both women with the same decorative/stage knife.** No sexualized violence or graphic injury. The player does not learn the killer.
 
 ## Start as Iris
 Iris arrives with Norb, her sharp but extremely touch-averse, unattractive investigative boss. She does the hands-on tasks; he detects timeline contradictions and rebuffs her playful overtures. They share a changing topics notebook and a press case file. Norb cannot pick objects up even when temporarily directing his analysis.
@@ -10,7 +10,7 @@ Iris arrives with Norb, her sharp but extremely touch-averse, unattractive inves
 ## Scene graph
 motel-exterior -> front-office -> ice-alcove -> balcony-corridor -> investigators-room -> odette-room
 balcony-corridor -> neighbor-room; ice-alcove -> sewer-hatch (later unlocked).
-motel-exterior -> city-map -> MONSTREXX CONVENTION / supernatural-joke-shop / draculina-mansion (earned later).
+motel-exterior -> city-map -> MONSTRIQUE CONVENTION / supernatural-joke-shop / draculina-mansion (earned later).
 
 ## Eight playable beats
 1. Iris looks at the neon motel sign; Norb identifies a subtle sign of recent activity. Get their key from the manager, with photo ID or legitimate check-in alternative.
@@ -18,9 +18,9 @@ motel-exterior -> city-map -> MONSTREXX CONVENTION / supernatural-joke-shop / dr
 3. Ask a nearby guest about two women's voices and a third visitor. Their account is confused, but not dishonest.
 4. Open the crime room by staff assistance or a legitimate emergency access puzzle. Norb stays back; Iris touches the door and photographs evidence.
 5. Find Odette and Violet dead, together, near one recognizable ornamental knife. Examine the weapon, the ice bucket, the key ledger, scene geometry. Do not identify killer yet.
-6. Meet and separately interview **two ghosts**. Odette knows MONSTREXX deals and has enemies; Violet knows mundane observational details. **Neither can name the killer**. Topics from one open branches with the other.
+6. Meet and separately interview **two ghosts**. Odette knows MONSTRIQUE deals and has enemies; Violet knows mundane observational details. **Neither can name the killer**. Topics from one open branches with the other.
 7. Solve a small fair mini-case: determine the double clang time, identify the knife as a suspicious collectible/stage prop, exonerate fanboy Gavin for these murders *while preserving consequences for his stalking*.
-8. Open a new city lead to the separate MONSTREXX Convention Center. The prototype ends with the question 'Which MONSTREXX star wanted her agent dead?' instead of pretending the whole mystery is solved.
+8. Open a new city lead to the separate MONSTRIQUE Convention Center. The prototype ends with the question 'Which MONSTRIQUE star wanted her agent dead?' instead of pretending the whole mystery is solved.
 
 ## Fail-forward requirements
 - Two paths to scene entry, ice timing and weapon-origin leads.
@@ -30,3 +30,6 @@ motel-exterior -> city-map -> MONSTREXX CONVENTION / supernatural-joke-shop / dr
 - No item loss softlocks, no forced accusation to progress.
 - Save captures scene, phase, clues, topics, inventories, witness questions and scrapbook unlocks.
 - Old Celestine-victim / Odette-culprit / ballroom-blackout opening is **retired**, not still secretly playable.
+
+## Franchise-history lead (2026-11-06 PT)
+Odette's modern licensing binder contains a torn Monstrique reissue sleeve and an older recording-credit correction. Iris may photograph and compare it against a surviving original at the convention; Norb notices the forgery pattern. The pair of ghost accounts open *leads*, not a magically solved murder. The seven-decade original/reissue album history and performer list live in FRANCHISE-HISTORY.md. The scene must never require collecting an optional romance image to reach the convention.\n

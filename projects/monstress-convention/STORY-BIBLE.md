@@ -3,7 +3,10 @@
 _2026-11-06 PT, written from Silas's brief of the same day. **The game and the in-world franchise
 are now called MONSTRIQUE** (replacing MONSTREXX). The internal slug `monstress-convention` and the
 character key `nico` stay put for save and sync continuity. DESIGN-BRIEF.md holds the rules (access,
-consent, mechanics). This file holds the world, the cast, the case and the chapter plan._
+consent, mechanics). **FRANCHISE-HISTORY.md is authoritative for the franchise's seven album eras,
+line-ups, erasures and performer names; where this file disagrees, it wins.** This file holds the
+city, the tone, the investigators and ghosts, the gratitude system, the case proposal and the
+chapter plan._
 
 ## Silas's brief (2026-11-06 PT, verbatim)
 
@@ -63,18 +66,20 @@ that keep it funny and not sour:
 ## Midnight City
 
 The clocks on City Hall stopped at midnight in 1931, and the city council voted to keep it that
-way. It's always last call somewhere. Districts unlock on the city map as leads earn them:
+way. It's always last call somewhere. Districts unlock on the city map as leads earn them. Each
+era location is where an erased star landed after Monstrique dropped her (FRANCHISE-HISTORY.md):
 
-| District | Landmark(s) | Era it remembers |
+| District | Landmark(s) | Who you find there |
 | --- | --- | --- |
-| Motel Row | **Last Call Motor Lodge** (hub), its sewers | the crime, 1964 |
-| Hexwater Beach | **Starlite Drive-In & Swap Meet**, Brine Pier Aquarium | 1964 *Beach Hex* |
-| Bolt Street | **Stein's 24-Hour Body Shop** (cosmetic *and* auto) | 1973 *The Stitch Is Back* |
-| The Low End | **The Ooze Lounge**, roller disco turned gay bar | 1979 *Disco Necropolis* |
-| Factory Flats | **Glamour Ghoul Toy Works**, half-demolished | 1987 dolls and VHS |
-| Fang Heights | **Draculina's Mansion** | 1999 *Monstrique Manor* |
-| Downtown | **Monstrique Convention Center**, idol stage | 2012 idols and today's reboot |
-| Novelty Row | **Hex & Giggles Supernatural Joke Shop** | runs through every era |
+| Motel Row | **Last Call Motor Lodge** (hub), its hot-tub "losers' lounge", the sewers | Marta, Pip, Gavin, the hopefuls, Allie Gator |
+| Hexwater Beach | **Starlite Drive-In**, where the 1964 *Beach Hex* films still play | the 1964 reels and prop invoices |
+| Bolt Street | **Francesca Stein's midnight science-cinema** | Francesca, cut in 1964, rehired in 1974 |
+| The Low End | **The Velvet Crypt**, a 1974 glam club turned gay bar | Laguna's film-score studio upstairs |
+| Fang Heights | **Draculina's Mansion** | Draculina, dropped in 1994, back in 2006 |
+| The Mile | **Nefertari's couture house** | Nefertari, dropped in 1986, perfume empire |
+| Downtown | **Monstrique Convention Center**, NEXT idol stage | the 2024 *Six Decades of Screams* line-up |
+| Novelty Row | **Hex & Giggles Supernatural Joke Shop** | rumours about the knife, puzzle props |
+| The Underground | **The Pack's** dive-bar stage | Siobhan and the were-animal Pack |
 
 ## The investigators
 
@@ -90,12 +95,14 @@ way. It's always last call somewhere. Districts unlock on the city map as leads 
 
 ## The client and her roommate
 
-- **Odette Harker**, ghost and client. MONSTRIQUE's agent since 1964: *"ten percent of everything,
-  darling, including your soul."* She was 81 when she died, but her ghost looks 35 because ghosts
-  appear as they see themselves. Violet notices this out loud. Odette insists on the investigation
+- **Odette Harker**, ghost and client. She ran modern Monstrique licensing and inherited the
+  archives of every older recording, likeness and appearance contract. She didn't sign the 1960s
+  paperwork; she just kept profiting from it. *"Ten percent of everything, darling, including your
+  soul."* She was fifty-eight when she died, but her ghost looks thirty-five because ghosts appear
+  as they see themselves. Violet notices this out loud. Odette insists on the investigation
   and pays in **the Harker Files**, her blackmail archive. Each file she releases opens a star's
-  secret, which is how the motive web grows. Her secret is a sixty-year unrequited crush on
-  Draculina, which is why she hired a woman to dress as a vampire.
+  secret, which is how the motive web grows. Her secret is a lifelong unrequited crush on Draculina,
+  which is why she hired a woman to dress as a vampire.
 - **Violet Wisp**, ghost, professional companion. She was hired for one night in a cape and plastic
   fangs, and now she's stuck haunting Room 205 with her client for eternity. *"Worst. Overnight.
   Ever."* Odette died before paying her, and that unpaid fee is Violet's running favor quest. She
@@ -114,66 +121,64 @@ way. It's always last call somewhere. Districts unlock on the city map as leads 
 
 ## Monstrique through the years: the has-beens and the still-has-its
 
-Following the franchise's history is the spine of the adventure. Each era is a present-day location
-where a star either peaked or still reigns. Each star has a motive (via a Harker File), a favor
-(the gratitude system) and a piece of the knife's history.
+FRANCHISE-HISTORY.md is the ledger: seven albums from 1964 to 2024, each with one star erased and a
+replacement hired, a public story and a private one, and an original sleeve versus a doctored
+reissue. Silas's brief asks the player to follow that path. The game turns each erasure into:
 
-| Era | Product | Star (now) | Has-been / still-has-it | Odette's sin (motive) | Knife thread |
-| --- | --- | --- | --- | --- | --- |
-| 1964 | *Beach Hex* surf LP and drive-in films; the band **The Monstriquettes** | **Countess Draculina**, lead vocals | still has it (ageless, mansion) | sold her face to the doll line without consent | five prop **Hexblades** made for the band |
-| 1964 | same | **Roxie Lupin**, rhythm guitar, werewolf | has-been, runs the swap-meet stall | kept her 1987 band The Pack's masters | Roxie pawned her Hexblade (Gavin bought it: red herring) |
-| 1964 | same | **Marina Brine**, surf guitar, lagoon woman | has-been, twice-daily aquarium show on the pier | sold the pier show "lifetime" contract | hers lies at the bottom of the tank |
-| 1964 | same | **Celestine Veil**, backing vocals, mummy | still has it, old-Hollywood legend, convention headliner | billed her "3,000 years young" and took 15% of her afterlife | hers is in her sarcophagus vanity |
-| 1973 | *The Stitch Is Back* B-movies | **Francesca Stein**, stitched scientist-actress | has-been, runs a body shop for faces and fenders | patented Francesca's own stitch pattern | Francesca identifies the makeup on the knife |
-| 1979 | *Disco Necropolis* roller special | **Moxie Mire**, slime | still has it, queen of the Ooze Lounge | billed the club for Moxie's "spill damage" for 40 years | Moxie saw who bought cold cream by the case |
-| 1987 | Glamour Ghoul dolls and aerobics VHS | Draculina and Roxie dolls | — | the dolls of a fifth band member were made and then pulped | the factory still has the **five-knife** prop mold |
-| 1999 | *Monstrique Manor* reality show | Draculina | — | edited Draculina into a villain | the mansion holds the show's prop inventory |
-| 2012 | **M0NSTARRS** idol group | **Dr. Vespa Vane**, fly-headed model | still has it, center of the idol line | stole the group's songwriting credits | compound eyes: she saw the motel from the bus that night |
-| Now | *Monstrique: Reawakened* streaming reboot | **Allie Gator**, albino alligator in the sewers | wants in. She has no "it" but endless grit | Odette refused her audition eleven times | knows the sewer hatch below the ice machine |
+- **A place:** where the erased star landed (see Midnight City above).
+- **A motive:** Odette inherited the archive and kept erasing her on every reissue. Each **Harker
+  File** confirms one doctored credit.
+- **A favour:** each star's personal problem, which feeds the gratitude system below.
+- **A piece of the knife:** see the case.
 
-And the member nobody remembers: **The Monstriquettes had five members.** The *Beach Hex* sleeve
-shows four. The drummer, **"Little Miss Nobody,"** was invisible, so Odette left her off the cover,
-off the credits and off the royalties: *"You can't sell what nobody can see, darling."*
+The has-beens and the still-has-its, in ledger terms: Draculina, Roxie Lupin, Laguna and Nefertari
+were all dropped and came back stronger, so they still have it. Francesca, Vespa, Blobzo and
+Siobhan were dropped and built cult careers elsewhere, so they're has-beens only to the franchise.
+Allie Gator never got in, and the hot-tub hopefuls are still auditioning.
 
 ## The case: proposed solution (creative-approval gate; reversible until Chapter 6 is built)
 
-**Recommended culprit: Marta, the motel manager, secretly Little Miss Nobody.** She bought the Last
-Call with her only session fee in 1965, the band's old crash pad, and has worn foundation for
-sixty years so the world would see her. The *Reawakened* reboot re-signed the 1964 masters as a
-four-piece. Odette booked Room 205, the room where the band signed in 1964, to celebrate. Marta
-wiped off her makeup, carried the ice in, and never left. Invisible, she waited, and used her own
-Hexblade.
+**Recommended culprit: Marta, the motel night manager, secretly the franchise's first erasure.**
+Before Francesca was cut in 1964, the *Beach Hex* sessions had a drummer, **"Little Miss Nobody,"**
+who was invisible. She was left off the sleeve, the credits and the royalties: *"You can't sell what
+nobody can see."* She bought the Last Call, where the band crashed during the drive-in shoots, and
+has worn thick foundation ever since so the world would see her. When she finally filed a claim,
+Odette, now holding the archive, buried it, and the 2024 *Six Decades of Screams* reissue erased
+her once more. Odette booked Room 205 for her date. Marta wiped off her makeup, carried the ice in,
+and never left. Invisible, she waited, and used her own prop knife.
 
 Fair-play clues, each with at least two routes:
 
 1. **"The door never opened."** Violet: after the ice came, nobody came in. Odette: *"The knife
-   floated, darling. I assumed it was the gin."* (Both are true. Two partial accounts make one fact.)
-2. **Pancake makeup on the hilt.** Photographed in Chapter 1, identified in Chapter 3 by Francesca
-   (*"Covermark No. 0: the shade for people with no shade"*) or by the Ooze Lounge's cold-cream
-   gossip.
-3. **Five Hexblades.** The 1964 prop invoice (drive-in archive) and the toy-factory mold both show
-   five. Four are accounted for across the eras. The fifth is missing from the motel lobby
-   memorabilia case: an empty velvet slot Iris walks past in Chapter 1.
-4. **The drums play themselves** in the drive-in's 1964 reel. Roxie: *"We had a drummer. Sweet kid.
-   Never saw her."*
+   floated, darling. I assumed it was the gin."* Two partial accounts make one fact.
+2. **Makeup on the hilt** (Chapter 1 photo) and **on the missing ice bucket** (Chapter 1, the fangs
+   favour). It's a skin-tone foundation, not Violet's white vampire base. Identified later by
+   Nefertari's couture house or the Velvet Crypt's dressing-room gossip: *"the shade for people
+   with no shade."*
+3. **Five Hexblades.** Francesca wrote the 1964 science-themed stage props (FRANCHISE-HISTORY) and
+   made five prop knives, not four. Her invoices and the drive-in archive agree. Four are
+   accounted for; the fifth slot in the motel lobby shrine is empty (Chapter 1 shows five dents in
+   the velvet).
+4. **The drums play themselves** in the drive-in's *Beach Hex* reel. Roxie: *"We had a drummer.
+   Sweet kid. Never saw her."*
 5. **The ice alibi breaks.** Marta says she was at the ice machine when it double-clanked. Pip's log
    says the dispenser was jammed at that minute. The double clank was Allie opening the sewer hatch
    below, and Allie saw nobody come down: the killer stayed upstairs.
-6. **The ledger.** Marta checked the pair in herself and steered them to 205, "the room with the
-   history".
+6. **The ledger and the claim.** Marta checked the pair in herself and steered them to 205. A
+   rejected royalty claim signed "L.M. Nobody" sits in the Harker Files.
 
 Red herrings, all exonerated by fair evidence: **Draculina** (the obvious vampire, and the woman
-Odette's costume kink pointed at; no reflection in Violet's mirror account, but she was on camera
-at the mansion), **Gavin** (owns Roxie's pawned blade; his own creepy timestamps clear him),
-**Allie** (motive and sewer access, but she's the witness to the clank).
+Odette's costume kink pointed at; on camera at the mansion all night), **Gavin** (owns a stolen prop;
+his own creepy timestamps clear him), **Allie** (motive and sewer access, but she's the witness to
+the clank), and **Siobhan** (fired in 2024 and furious, but on stage with the Pack).
 
 **Endings (target 5):** *Last Call* (full proof: Marta confesses and the ghosts are freed together),
-*Little Miss Somebody* (full proof plus every Monstriquette favor done: the band reunites with five
-on the cover and Marta credited, bittersweet), *Fang Frame* (accuse Draculina: published, sued,
-haunted), *Headline Too Early* (thin proof: Marta walks, Norb's blog dies), *Ten Percent Forever*
-(take Odette's bribe to bury it: rich, damned, Violet never forgives you). The alternate culprit, if
-Silas prefers, is Draculina: a spurned sixty-year crush. That reuses most of the clue graph but
-loses the five-Hexblade twist.
+*Little Miss Somebody* (full proof plus every erased star's favour done: a corrected reissue credits
+everyone, Marta included; bittersweet), *Fang Frame* (accuse Draculina: published, sued, haunted),
+*Headline Too Early* (thin proof: Marta walks, Norb's blog dies), *Ten Percent Forever* (take
+Odette's bribe to bury it: rich, damned, Violet never forgives you). If Silas prefers, the alternate
+culprit is Draculina, spurned by a lifelong crush. That reuses most of the clue graph but loses the
+invisible-drummer twist.
 
 ## The gratitude system ("a monster woman can be very grateful")
 
@@ -187,22 +192,23 @@ loses the five-Hexblade twist.
 - **Norb is never a route.** He keeps a rebuff counter that escalates, and the elbow bump is his
   finale.
 - **Favor seeds:** Draculina wants a photo, since she hasn't seen her face since 1890 and Iris's
-  camera is silver-free. Roxie wants her Hexblade back from Gavin. Marina's pier tank needs salt (the
-  motel's ice-melt bucket). Celestine lost a bandage to an eBay scalper. Francesca needs a donor heart
-  (a candy heart from the joke shop). Moxie wants one night solid (motel ice!). Vespa wants a date who
-  can hold eye contact (Norb's spare glasses). Allie wants an audition tape (Iris's camera). Violet
-  wants her fee (Odette's wallet, negotiated between two ghosts). Odette wants a kinder obituary on
-  Norb's blog.
+  camera is silver-free. Roxie wants her stolen prop knife back from Gavin. Laguna's skin dries out
+  in the studio, and the motel ice machine helps. Nefertari wants her 1986 billing restored on a
+  reissue. Francesca wants credit for her props, so bring her the 1964 invoice. Blobzo wants one
+  night solid (motel ice!). Vespa wants a date who can hold eye contact (Norb's spare glasses).
+  Siobhan wants the Pack's masters. Allie wants an audition tape (Iris's camera). Violet wants her
+  fee (Odette's purse, negotiated between two ghosts). Odette wants a kinder obituary on Norb's
+  blog.
 
 ## Chapter plan
 
 | # | Chapter | Locations | Core puzzle | Ends with |
 | --- | --- | --- | --- | --- |
-| 1 | **The Last Call** (playable vignette) | motel exterior, office, ice alcove, balcony, rooms, Room 205 | get into 205; document the scene; hear both ghosts; Odette hires you; recover Violet's fangs | the knife is a 1964 Hexblade; the city map opens |
-| 2 | **Beach Hex** | drive-in swap meet, pier aquarium | find the 1964 reel and the prop invoice; Roxie's blade from Gavin | "there were five knives" |
-| 3 | **The Stitch and the Ooze** | body shop, Ooze Lounge | identify the makeup; Moxie's night solid | the shade for people with no shade |
-| 4 | **Glamour Ghouls** | toy factory, Draculina's mansion | the five-knife mold; clear Draculina on tape | the fifth member existed |
-| 5 | **Reawakened** | convention, idol stage, sewers | Vespa's view from the bus; Allie and the hatch | Marta's ice alibi breaks |
+| 1 | **The Last Call** (playable vignette) | motel exterior, office, ice alcove, balcony, rooms, Room 205 | get into 205; document the scene; hear both ghosts; Odette hires you; Violet's fangs and fee | the knife is a 1964 *Beach Hex* prop; the city map opens |
+| 2 | **Beach Hex** | drive-in, Francesca's science-cinema | the 1964 reel and Francesca's prop invoice; the scratched-out sleeve | "I made five knives" |
+| 3 | **Velvet and Chrome** | Velvet Crypt, Nefertari's couture house | the 1974 and 1986 credit erasures; identify the makeup | the shade for people with no shade |
+| 4 | **Silver Bite** | Draculina's mansion, the losers' lounge hot tub | clear Draculina on tape; Vespa and Blobzo's grievances | the vampire didn't do it |
+| 5 | **Six Decades of Screams** | convention, NEXT stage, the Pack's dive bar, sewers | Siobhan's alibi; Allie and the hatch | Marta's ice alibi breaks |
 | 6 | **Last Call Again** | motel, Room 205 | the accusation: present the proof to both ghosts | endings |
 
 Every chapter returns to Room 205. The ghosts react to new evidence, contradict each other, and
@@ -217,6 +223,13 @@ release the next Harker File.
   lecture clears any room.
 - Combinations are absurd but fair, and every wrong combination gets a joke.
 - The camera is the master key: photographs are evidence, favors, blackmail and alibis.
+
+## Open questions for Silas
+
+- **Mummy star's name.** DESIGN-BRIEF lists *Celestine Veil*; FRANCHISE-HISTORY's ledger names the
+  band's mummy *Nefertari*. Chapter 1 still has Celestine signing at the convention. Are they one
+  character (and which name), or two mummies?
+- **Culprit.** Marta (recommended) or Draculina. Nothing locks until Chapter 6.
 
 ## Kit growth
 
