@@ -194,7 +194,7 @@ RAINBOW_MEDIUM = (
     "sunflower yellow, bold readable shapes, flowing chromatic patterns, "
     "subtle screenprint grain and a slight offset ink registration echo"
 )
-RAINBOW_FIGURES = "playful expressive fantasy figures with distinct faces and lively silhouettes"
+RAINBOW_FIGURES = "playful expressive fantasy figures with distinct faces and lively poses"
 RAINBOW_TIER = {
     "pristine": (
         "radiant welcoming rainbow colors, clean turquoise water, saturated "
