@@ -14,3 +14,9 @@
 ## 2026-11-06 PT — Monstrexx title-front implementation
 - Kind Robots PR #4848 adds `/admin/monstrexx` cinematic console front with New Game, Continue, Settings and Scrapbook, plus internal account-scoped progress.
 - Boss art direction changed to short, ugly, geeky comic caricature; provisional display name Norb Vale (runtime key `nico` retained).
+
+## 2026-11-06 PT — Canonical MONSTRIQUE identity and historical album run
+- Silas selected **MONSTRIQUE** as game/franchise name, superseding the earlier MONSTREXX display brand without changing internal coordination/save identifiers.
+- Added FRANCHISE-HISTORY.md with seven expulsions/replacements, music eras, public-versus-real stories, Pack and NEXT acts, aspirant hot-tub lounge and Odette's archive contracts.
+- Added ALBUM-ART-REGISTER.md recording the seven generated concept covers and the distinction between draft images and art actually delivered to the game.
+- Restated mature-only internal-preview and separate human-publication gate.\n
