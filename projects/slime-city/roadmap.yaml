@@ -676,11 +676,11 @@ tasks:
   - id: t-031
     milestone: m2
     title: "Expose Clash in the normal Slime City Play interface"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 20261106T110147314Z-slime-city-normal-clash-t-031-v7q2
     claimed_at: '2026-11-06T11:01:47.314Z'
-    updated: '2026-11-06T11:01:47.314Z'
+    updated: '2026-11-06T11:03:33.270Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -691,3 +691,5 @@ tasks:
       update the route/access regression test. The user explicitly authorized
       normal-game access in this session. Do not change progression, rewards,
       purchases, account data, marketing launch, or subjective-fun approval.
+
+      Removed mistaken admin-only checks from the shared game UI. Added a regression test requiring CLASH on the public normal Play route. Working branch worker/slime-city-t-031-normal-clash-play-20261106-v7q2. Explicitly requested normal game availability; no marketing launch or rewards.
