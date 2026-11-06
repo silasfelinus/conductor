@@ -1059,22 +1059,16 @@ tasks:
 - id: t-057
   milestone: m6
   title: 'Restyle the console art lane to Chronicle + Broadside, then stage and render it'
-  status: claimed
+  status: review
   gate_human: false
   owner: worker
   stakes: reversible
   passes: 0
-  note: >-
-    build_ruler_hooked_art_queue.py has a `console` lane: 28 entries whose image_path keys
-    match what kind_robots utils/rulerHooked/artLibrary.ts loads. They are 5 screen backdrops,
-    5 nav-tab vignettes, 10 daily-proclamation scenes, 7 gear/kingdom still lifes, and a real
-    Quill the Steward portrait (character-steward-quill.webp rendered as a literal feather pen;
-    the console skips it). The lane was written in the storybook register and DELIBERATELY NOT
-    STAGED, because Silas picked Chronicle (world) + Broadside (documents) the same day (t-054).
-    Re-voice CONSOLE_FINISH and the prompts: backdrops, tabs and the map in Chronicle;
-    proclamations and gear notices in Broadside. Then stage with `--write --lane console` and
-    spot-check in place. Coordinate with t-054 so the frame and backdrops agree.
-  updated: '2026-11-06T12:46:50Z'
+  note: |-
+    build_ruler_hooked_art_queue.py has a `console` lane: 28 entries whose image_path keys match what kind_robots utils/rulerHooked/artLibrary.ts loads. They are 5 screen backdrops, 5 nav-tab vignettes, 10 daily-proclamation scenes, 7 gear/kingdom still lifes, and a real Quill the Steward portrait (character-steward-quill.webp rendered as a literal feather pen; the console skips it). The lane was written in the storybook register and DELIBERATELY NOT STAGED, because Silas picked Chronicle (world) + Broadside (documents) the same day (t-054). Re-voice CONSOLE_FINISH and the prompts: backdrops, tabs and the map in Chronicle; proclamations and gear notices in Broadside. Then stage with `--write --lane console` and spot-check in place. Coordinate with t-054 so the frame and backdrops agree.
+
+    Silas rejected the Chronicle/Broadside medieval treatment on 2026-11-06 PT. Worker restyled the generator to psychedelic rainbow fantasy with restrained screenprint grain, updated 28 console ArtJob queue rows in place (pending, force true), restyled the Kind Robots console chrome, and made the newer direction authoritative in art-direction and t-054 notes. Conductor and Kind Robots implementation PRs under review; renders and deployed visuals are not yet verified. Opaque layer compositing remains t-059.
+  updated: '2026-11-06T12:57:00Z'
   claimed_by: 2026-11-06T124650Z-ruler-hooked-t057-rainbow-7e92f
   claimed_at: '2026-11-06T12:46:50Z'
 - id: t-058
