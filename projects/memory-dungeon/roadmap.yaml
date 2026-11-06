@@ -1509,10 +1509,10 @@ tasks:
   - id: t-063
     milestone: m3
     title: "Browser-test the Enter the Choking Works button at e06 4,6 at 390, 820 and 1440 widths, including save/restore mid-dungeon"
-    status: claimed
+    status: review
     stakes: reversible
     passes: 0
-    updated: '2026-11-06T08:44:39Z'
+    updated: '2026-11-06T08:53:00Z'
     note: |-
       Kaizen from t-062 review: CI covers the store and verifier, but nothing exercises the new sea-stage button, the choking mode in memory-dungeon.vue, or the shared stage's dungeon="choking" prop in a real browser. Add a Playwright interruption/layout check mirroring the Breathing Works one, and confirm a reload mid-dungeon restores room and flags.
 
@@ -1523,6 +1523,8 @@ tasks:
       Added Vue source-contract checks to the existing Choking Works Chromium interruption regression: e06 choice-gated entrance, parent event transition, choking dungeon prop/store and bounded mobile grid. Browser store persistence at 390/820/1440 remains covered. Rendered Vue geometry remains outstanding; scoped PR and CI pending.
 
       2026-11-05 PT: kind_robots PR #4846 merged (4a012749); all seven exact-head CI workflows passed on 3b225e4c628741df22eb8ba318570dc8d5d9b942. Vue source-contract coverage for e06 Choking Works button, parent transition, dungeon binding and mobile grid shipped. Actual rendered button click and DOM geometry Playwright checks still required; return to ready. No ArtJobs or deployment.
+
+      Added an adversarial Choking Works browser regression proving arrival at e06 4,6 alone does not unlock the dungeon: the choice must be resolved first at all three viewports. Rendered Vue component and geometry coverage remain outstanding.
     owner: worker
     claimed_by: 2026-11-06T084439Z-memory-dungeon-t063-c8f2
     claimed_at: '2026-11-06T08:44:39Z'
