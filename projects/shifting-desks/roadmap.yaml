@@ -872,14 +872,11 @@ tasks:
     implementation_pr: 'silasfelinus/kind_robots#4326'
   - id: t-048
     title: "Shifting Desks Roadmap — Complete Content, Art, Rewards, Adversarial QA and Final Polish"
-    status: review
+    status: ready
     stakes: reversible
-    owner: worker
     passes: 0
     source_issue: "silasfelinus/kind_robots#4150"
-    updated: '2026-11-06T13:21:00Z'
-    claimed_by: 2026-11-06T130400Z-shifting-desks-t-048-ui-7kq9
-    claimed_at: '2026-11-06T13:04:00Z'
+    updated: '2026-11-06T13:34:20Z'
     note: |-
       FROM GITHUB ISSUE silasfelinus/kind_robots#4150 (https://github.com/silasfelinus/kind_robots/issues/4150), opened by @silasfelinus on 2026-10-25. Imported by scripts/sync_github_issues.py. Reference the issue in the implementing PR (`Closes silasfelinus/kind_robots#4150`) so it closes on merge; the bridge closes it otherwise once this task is done.
 
@@ -909,3 +906,5 @@ tasks:
       incomplete, so back to ready.
 
       Scoped UI choice-hand improvement is ready for PR/CI: more portrait artwork and legible in-card information, larger three-card layout, compact fallback for tablet and dense hands. The art/QA umbrella remains open beyond this slice.
+
+      2026-11-06 PT: Silas-directed choice-hand visual pass merged in kind_robots PR #4859 (92c68b9); all seven CI suites passed on e1faf7b. Cards now expand on desktop, display more legible intent, and use contextual encounter art when unique outcome art is absent. Tablet/dense-hand geometry stays bounded. Umbrella completion issue #4150 remains open for unique choice art, game QA and human verdict.
