@@ -1171,3 +1171,23 @@ tasks:
   claimed_by: 2026-11-06T09:17:06Z-ruler-hooked-t063-cc9b2
   claimed_at: '2026-11-06T09:17:06.302Z'
   updated: '2026-11-06T09:35:37.487Z'
+
+- id: t-064
+  milestone: m6
+  title: 'Put Kingdom Health inline in the Ruler Hooked HUD; consolidate custom page titles inside the global navigation picker'
+  status: ready
+  gate_human: false
+  stakes: reversible
+  passes: 0
+  note: >-
+    Silas, 2026-11-06 PT, screenshot: Ruler Hooked currently stacks Kingdom
+    Health below the title crest, obscuring the presenter art on Court. Place
+    the five kingdom axes compactly INLINE between the title crest and royal
+    purse/day/time plaques, responsive and keyboard-accessible without
+    overlapping the art. Separately, sitewide rather than ruler-only:
+    the workspace header repeats a room/title/tagline beside a nav picker that
+    already shows the active page. Use authored custom tab/page titles and
+    optional descriptive subtitles in the navigation dropdown/trigger; remove
+    the redundant room/tagline strip without disrupting the page-bar teleport,
+    welcome/user controls, tutorials, or routes. Regression tests, CSS
+    formatting, layout/typecheck and green CI required before merging.
