@@ -747,7 +747,7 @@ tasks:
   - id: t-035
     milestone: m4
     title: "Seeded pre-charted route for chapters 2-9 and reachable destination ending families"
-    status: claimed
+    status: review
     passes: 0
     stakes: reversible
     source: silas-2026-11-04
@@ -759,7 +759,9 @@ tasks:
       Seeded route diversity increment: after chapter one, nextDestination now chooses a reproducible mission among the actual eligible missionBoard offers, including prior world choices, crew and captain, without mutating saved missionId. The player may always override before travel. Added 42 complete seeded real-voyage tests for route variety, saves, chapter-by-chapter reachability and manual override. Existing trace and authored-case tests now explicitly chart their fixed legacy story routes rather than assuming an always-first default. Implementation branch worker/game-of-captains-t035-seeded-routes-9c72, PR and exact-head CI pending. Destination ending family organic reachability and verified browser/art QA remain separate independent acceptance.
 
       2026-11-05 PT: The seeded eligible-route fix landed in Kind Robots PR #4767 (squash 0eca96cd577a0762004d1b85d136206c56c94870), with all exact-head check groups passing, including the 42 full-voyage default-route tests, canonical gameplay suite, and full adversarial voyage matrix. Our implementation branch was deleted after merge. The original t-035 claim remained in review; releasing it to ready because destination-specific earned-ending organic reachability and balance are not yet independently measured or proved. Do not mark the destination-ending milestone done or infer human acceptance from the route fix. No production DB changes or new ArtJobs.
-    updated: '2026-11-05T23:50:39.782Z'
+
+      2026-11-05 PT: Silas expressly asked us to resume this stalled claim. Scoped follow-through implementation: the route planner now favors eligible world-specific sequel calls from actually earned flags, while retaining a seeded chance to choose other missions and always allowing manual charting. Five destination threads have authored reminders in the briefing and visible return-call labels on mission cards. The Archive's consent and Hollow Lantern rescue now unlock the corresponding foundry and Windglass follow-ups even without specific crew, without weakening any other eligibility or save requirements. Expanded 42-voyage seeded regression for continuation weighting and chart override; preexisting six-family full-voyage trace suite remains the earned-ending acceptance gate. App branch worker/game-of-captains-t035-earned-threads-79f2; CI and PR pending. No deployment or human acceptance claimed.
+    updated: '2026-11-06T00:02:43.065Z'
     implementation_pr: 'silasfelinus/kind_robots#4767'
     owner: worker
     claimed_by: 20261105T235000Z-game-of-captains-t035-human-handoff-79f2
