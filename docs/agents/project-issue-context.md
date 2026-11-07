@@ -9,7 +9,12 @@ into the handoff, Conductor roadmap note, or another agent's context.
 
 1. Read `CONTROL.md` and the **assigned Conductor task** first. Check
    `docs/agents/master-issues.yaml` for the project's slug. Follow **only
-   that one** GitHub issue URL. A `conductor:skip` label prevents the bridge
+   that one** GitHub issue URL. Indexed hubs have `conductor:skip` to avoid
+   duplicating master issues as separate tasks. Incremental implementation
+   PRs must use `Refs owner/repo#N`, not `Closes owner/repo#N` for a master
+   issue. Closure is reserved for genuinely finished projects after their
+   required human verdict. A closed narrow issue may still have an open
+   Conductor source-issue task: issue-surface consolidation is not task completion. A `conductor:skip` label prevents the bridge
    importing an umbrella as a single task; it does **not** mean ignore the issue.
 2. Read the issue title/status, heading outline, and the section(s) relevant to
    your task, plus recent **material** updates/comments. Follow direct links to
