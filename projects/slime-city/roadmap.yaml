@@ -781,3 +781,34 @@ tasks:
       UI fix under worker/slime-city-t-033-art-first-clash-20261106-s5q8: compact card rail, dominant illustrated board, no duplicate game wordmark, native Legacy dropdown, unified Collection and Bounties subnav, honest card coverage display and authorized art fallback. Art ledger worker/slime-city-t-033-comfy-art-20261106-s5q8 contains 70 missing default-deck card requests + one Clash mat followed by 157 remaining cards; max priority 1000, local Comfy engine, private until approved, distinct scene prompts with mechanical-jargon checks. Awaiting CI.
 
       Kind Robots #4856 merged into main as cd1c8f7f60b46d401d92d3a08aebcedc17f0ed06 after eight of eight completed latest-head green CI checks: navigation, tablet navigation, TypeScript, formatting, architecture, schema parity, layout and all project contract tests. Clash now leads with a larger overhead-art board and compact hand; a single workspace SLIME CITY wordmark removes duplicate stage header; game help is not duplicated; compact action rail holds Rematch; Collection consolidates cards and legacy rewards; Legacy is a true dropdown. ArtImage fetch now tries already-public media without requiring login and provides authorized crew-art fallback for missing card art without widening any image permissions. Conductor art #7110 merged as 9b8eed736444045ba2d3301cca80389053c5817d, with 228 max-priority auto_submit Comfy requests (70 default-deck cards plus one board in first wave; 157 remaining cards in second). These are authored requests, not yet confirmed ArtJobs or delivered image bytes. Self-hosted Force Update and public-art permission review remain separate human gates.
+
+  - id: t-034
+    milestone: m2
+    title: "Clash automatic animated alley strikes, readable card text and Clash-format balance run"
+    status: review
+    claimed_by: 20261107T0215Z-slime-city-clash-auto-strikes-t-034-kh7p
+    claimed_at: '2026-11-07T02:15:00.000Z'
+    updated: '2026-11-07T02:25:00.000Z'
+    passes: 0
+    stakes: reversible
+    implementation_pr: silasfelinus/kind_robots#4883
+    note: |-
+      Silas, 2026-11-06 PT (iPad playtest of normal Play Clash): "The new clash
+      version of slime city is actually fun. Attacks should have animation and
+      happen lane to lane automatically after the second play. We can't see what
+      cards do! And the card balance needs a new run now that this is the format,
+      we built the cards originally after a turn based grid combat game, this is
+      different. It feels like characters are important, but we're moving in the
+      right direction."
+
+      Kind Robots PR #4883 (branch claude/keen-hopper-enpgbu): after the second
+      play (or FIGHT) each fighter strikes straight across its own alley, left to
+      right, one replayable strike command per alley; blockers trade, open alleys
+      hit the boss; fresh fighters brawl but reach the boss next turn; unblocked
+      strikes spring traps. Board animates lunge, shake and damage floaters per
+      alley. Hand cards show effect badges and a rules panel explains the held
+      card or tapped fighter with trait text. Clash budgets (power 2, armor 2,
+      priced traits, remainder life), traps +2, boss 20 with +5 second-seat coin.
+      CPU sweep 4500 held-out games: first seat 72% -> 51.3%, crews 34.5-66% ->
+      45.6-52.9%, avg rounds 3.6 -> 6.3. Not browser-verified in the agent
+      container (no DB); Silas's tablet playtest is the fun acceptance.
