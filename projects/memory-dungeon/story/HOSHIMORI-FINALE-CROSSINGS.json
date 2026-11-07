@@ -1,0 +1,96 @@
+{
+  "schema_version": 1,
+  "status": "WRITER_PACKET_NOT_RUNTIME",
+  "world": "e12",
+  "lead": "Vesper",
+  "canonical_world_count": 12,
+  "prerequisites": [
+    "earned e08 refuge decision",
+    "e12 route entry"
+  ],
+  "scenes": [
+    {
+      "id": "village-wolf-door",
+      "landmark": "Hoshimori childhood footbridge",
+      "collision": "A Briar wolf wears an Earth security badge and demands the names of every refugee.",
+      "opening": "The wolf's badge bears tomorrow's date. Behind him, a child holds a paper boat over the river and refuses to say where her family sleeps. Vesper recognizes the handwriting on the patrol map: their own, from before the betrayal.",
+      "choices": [
+        {
+          "id": "anonymous-witness",
+          "label": "Ask two neighbors to witness a nameless crossing.",
+          "cost": "The crossing slows while witnesses assemble; the patrol learns the route exists.",
+          "outcome": "The wolf counts the witnesses instead of the children. Vesper tears the address column from the register and gives it to the families to burn.",
+          "effect": "e12_bridge_anonymous_witness",
+          "callback": "A negotiated-world ending can preserve anonymous passage under community oversight."
+        },
+        {
+          "id": "decoy-map",
+          "label": "Give the patrol a decoy route and escort the families yourself.",
+          "cost": "Vesper risks repeating the copied-map betrayal; the bridge remains unprotected.",
+          "outcome": "The wolf runs toward a street that no longer exists. Vesper guides the families across, then leaves the decoy map with a neighbor who can expose the trick.",
+          "effect": "e12_bridge_decoy_disclosed",
+          "callback": "A separated-world ending records the rescued families and the danger of an ungoverned route."
+        },
+        {
+          "id": "refuse-register",
+          "label": "Refuse the register and wait for a public ferry.",
+          "cost": "The families spend the night in the cold; the patrol keeps its post.",
+          "outcome": "At dawn, the ferryman accepts names spoken only to the river. Vesper pays for the delay with their own safe passage.",
+          "effect": "e12_bridge_ferry_wait",
+          "callback": "The final crossing remembers that refusal can protect privacy without making travel easy."
+        }
+      ],
+      "fallback": "If no earlier Hoshimori witness was earned, the child and ferryman can still corroborate the crossing. No mandatory fragment depends on the prior witness."
+    },
+    {
+      "id": "village-tidal-oven",
+      "landmark": "Red Oven, now opening onto the royal tide gate",
+      "collision": "A mermaid tide gate has made childhood memories the Oven's fuel.",
+      "opening": "Bread comes out of the Oven stamped with names no one consented to share. Pip has counted the hungry twice; Char can hear the tide behind the firebrick. Vesper sees the same impossible bargain as the map they once sold: safety bought with someone else's address.",
+      "choices": [
+        {
+          "id": "ration-bread",
+          "label": "Ration ordinary bread and open the crossing in shifts.",
+          "cost": "Some travelers wait through another tide; the Oven cannot feed everyone at once.",
+          "outcome": "Pip chalks a queue on the floor. No one is asked for a memory, and the hungry choose their own place in line.",
+          "effect": "e12_oven_rationed_passage",
+          "callback": "Finale shelter records a slow, consent-preserving evacuation."
+        },
+        {
+          "id": "consent-pact",
+          "label": "Rebuild the Oven's pact with revocable, volunteered memories.",
+          "cost": "The Oven loses half its capacity; volunteers can withdraw at any time.",
+          "outcome": "Char strikes the old names from the brass grate. Each volunteer speaks a memory and keeps the right to take it back. The first loaf is small, but nobody disappears from the record.",
+          "effect": "e12_oven_revocable_pact",
+          "callback": "Shared-world endings inherit a revocable consent charter, not compulsory sacrifice."
+        },
+        {
+          "id": "extinguish",
+          "label": "Put out the Oven and carry the hungry through the side passage.",
+          "cost": "The village loses its warm refuge until repairs are made.",
+          "outcome": "Vesper closes the flue. Pip shoulders the flour sacks and leads the first group into the cold, where the ferryman waits with a lantern.",
+          "effect": "e12_oven_extinguished",
+          "callback": "Separated-world endings acknowledge the lost refuge and a community repair obligation."
+        }
+      ],
+      "fallback": "The side passage is always reachable. Neither Char's survival in the original timeline nor any optional e07/e08 success is required to finish."
+    }
+  ],
+  "state_contract": {
+    "choice_policy": "Exactly one choice per scene, irreversible on replay.",
+    "fragment_policy": "Each scene grants one unique e12 memory fragment only after a valid choice; never on visit.",
+    "save_policy": "Persist chosen IDs and earned fragments atomically; reloading may display the selected outcome but must not grant again.",
+    "forgery_policy": "Unknown choice IDs, unvisited scenes and missing earned e12 entry reject without mutation.",
+    "ending_policy": "Callbacks use earned effects only; never infer a hinge decision from an absent flag."
+  },
+  "art": {
+    "status": "NOT_SUBMITTED",
+    "targets": [
+      "e12 wolf badge footbridge with refugee paper boat",
+      "three bridge choice consequence paintings",
+      "e12 Red Oven tide gate with memory-stamped bread",
+      "three Oven choice consequence paintings"
+    ],
+    "job_ids": []
+  }
+}
