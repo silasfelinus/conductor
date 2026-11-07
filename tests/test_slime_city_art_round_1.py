@@ -13,7 +13,8 @@ COUNTS = {"crews": 6, "districts": 7, "cards": 36, "boards": 3}
 
 def test_ledger_covers_every_prototype_slot_once():
     data = yaml.safe_load(LEDGER.read_text())
-    assert data["auto_submit"] is True and data["is_public"] is False and data["is_mature"] is False
+    # Silas, 2026-11-07 PT: "The art should be public." (slime-city/t-036)
+    assert data["auto_submit"] is True and data["is_public"] is True and data["is_mature"] is False
     assert data["project_slug"] == "slime-city"
     (lane,) = data["lanes"]
     assert (lane["engine"], lane["prompt"]) == ("krea2", "prose")
@@ -25,4 +26,4 @@ def test_ledger_covers_every_prototype_slot_once():
     for subject, render_lane in iter_cells(data):
         assert violations(subject["prompt_prose"]) == [], subject["key"]
         request = build_request(data, render_lane, subject)
-        assert request["priority"] == 650 and request["isPublic"] is False
+        assert request["priority"] == 650 and request["isPublic"] is True

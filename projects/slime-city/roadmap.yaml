@@ -876,3 +876,26 @@ tasks:
       verifiers, TypeScript, changed-file Prettier, layout, verify x2,
       GitGuardian). Merged is not deployed; Silas's tablet playtest remains the
       fun acceptance.
+
+  - id: t-036
+    milestone: m4
+    title: "Publish Slime City art"
+    status: done
+    claimed_by: 20261107T0440Z-slime-city-publish-art-t-036-kh7p
+    claimed_at: '2026-11-07T04:40:00.000Z'
+    updated: '2026-11-07T04:50:00.000Z'
+    passes: 0
+    stakes: outward-facing
+    approved_by_human: true
+    note: |-
+      Silas, 2026-11-07 PT: "The art should be public." This closes the
+      public-art permission gate left open by t-033.
+
+      Set isPublic=true on all 775 ArtImages referenced by kind_robots
+      utils/slimeCity/artManifest.ts (main after #4886) via the admin
+      PATCH /api/art/image/{id}; a re-read shows all 775 public, none mature,
+      and a logged-out fetch of an image file returns 200. Renders left out
+      of the manifest (curation redo verdicts and the 30 excluded in the
+      2026-11-07 art pass) stay private. Every Slime City art ledger now says
+      is_public: true, so curation redo 2 (31 cells at priority 1000) and any
+      future re-run renders public.

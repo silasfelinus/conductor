@@ -16,7 +16,8 @@ class GutterCrownArtContract(unittest.TestCase):
         data = yaml.safe_load(LEDGER.read_text(encoding="utf-8"))
         self.assertEqual(data["project_slug"], "slime-city")
         self.assertTrue(data["auto_submit"])
-        self.assertFalse(data["is_public"])
+        # Silas, 2026-11-07 PT: "The art should be public." (slime-city/t-036)
+        self.assertTrue(data["is_public"])
         subjects = data["subjects"]
         self.assertEqual(len(subjects), 12)
         self.assertEqual({row["asset"].split("/")[-1] for row in subjects}, RESERVES)
