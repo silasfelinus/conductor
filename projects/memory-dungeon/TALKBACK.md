@@ -134,3 +134,9 @@
 **Decision:** merged reversible Choking Works PR #4835 (squash `30cf4264`) after all 13 exact-head checks passed (Contract shards 1-4 plus aggregate, TypeScript, layout-contract, Prettier, browser-interruptions, Playbook Kit). Then merged conductor #7094 (status to review), #7093 (ruler-hooked console art lane, not staged). Task closed done.
 
 **What worked:** a 36-room twin of the Breathing Works with 170 echoes and a dedicated verifier test; also fixed Fenn Dunlin's name drift. **What to improve:** the new sea-stage button and choking mode have no browser-level test, so added kaizen t-063. Worker could post the review-status PR and the implementation PR with a shared checklist to cut handoff lag.
+
+## 2026-11-07 PT | Reviewer green merge | memory-dungeon/t-038 | Conductor #7145
+
+**Decision:** squash-merged reversible e12 Vesper writer packet (`8c5487a4`) after 24 of 25 checks passed on head `3db0b31e`; the one red "Validate Worker PR handoff" run was superseded by a later green run of the same check once the PR template headings were restored. Packet is writer-only: not integrated into the runtime, no ArtJobs.
+
+**What worked:** nine-route, replay and forged-choice contract tests. **What to improve:** fill the handoff template headings on first PR open to avoid a red-then-green check. t-038 stays an umbrella (runtime integration of e12, later sites, endings and device QA remain).
