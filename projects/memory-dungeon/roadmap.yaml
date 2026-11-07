@@ -676,8 +676,8 @@ tasks:
   - id: t-029
     milestone: m3
     title: "Establish full enemy, item, achievements and unlock economy"
-    status: ready
-    updated: '2026-11-07T07:54:00Z'
+    status: claimed
+    updated: '2026-11-07T08:49:00Z'
     depends_on: t-021
     passes: 0
     stakes: reversible
@@ -697,6 +697,9 @@ tasks:
       Scoped once-only reward integrity: reject blank keys, negative/fractional/nonfinite grants and safe-integer overflow without consuming claim keys; add adversarial regression cases. Broader enemy/item/unlock catalog remains open. PR and exact-head CI pending.
 
       2026-11-06 PT: Merged kind_robots PR #4888 (dc3e98c8) after eight exact-head workflows passed on d0588657. Reward-ledger input validation and adversarial regression shipped. Remaining enemy/item/unlock catalog and art/QA work; task remains incomplete.
+    owner: worker
+    claimed_by: 2026-11-07T084900Z-memory-dungeon-t029-q8n4
+    claimed_at: '2026-11-07T08:49:00Z'
   - id: t-031
     milestone: m4
     title: "Adversarial balance, continuity and cross-world reachability suite"
