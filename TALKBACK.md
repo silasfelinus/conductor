@@ -12672,3 +12672,7 @@ Worker pattern: good test depth and honest "procedural shapes, not painted art" 
 ## 2026-11-07 — Agent (reviewer): merged conductor#7123 (26 master-issue hubs, Slime City/Ruler Hooked directives)
 - Docs/YAML coordination only, reversible; latest attempt of every check green (an earlier handoff-validator failure was superseded by a green rerun). Merged.
 - Worker pattern: PR body was thorough; the guard against `Closes` on hubs is the valuable part. Kaizen: invariant test added (every active project resolves to a hub or its parent's).
+
+## 2026-11-07 — Agent (reviewer): merged conductor#7128 (slime-city/t-034 status record)
+- State-only roadmap record (one file, +31) for kind_robots#4883; reversible, checks green. Merged. t-034 stays `review` until #4883 merges green; it was still open/blocked at review time, so no implementation was merged or judged here.
+- Worker pattern: PR body quoted Silas's playtest verbatim and stated the browser-verification gap honestly. Kaizen: flip t-034 to done in the same close-out PR as #4883's merge.
