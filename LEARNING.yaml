@@ -18539,3 +18539,12 @@ records:
   failure_category: null
   lesson: A rule change that would have needed a deck schema bump (rejecting every saved run) shipped instead as a run-state
     marker that defaults absent for old saves, so history replays under the old rule and play continues under the new one.
+- date: '2026-11-07'
+  project: weird-humboldt
+  task: t-024
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: Before building a claimed task, check the target repo main; the lens journeys already existed, so a re-run of the verifiers plus a reconciliation note closed it with no duplicate code.
