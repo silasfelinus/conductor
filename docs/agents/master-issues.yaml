@@ -1,17 +1,37 @@
 # Lightweight directory, NOT a duplicate of issue bodies or Conductor roadmaps.
-# Project assignment: look up one slug, then read only relevant sections of its
-# linked GitHub master issue. New issues get a one-line entry when verified.
-# Conductor roadmap.yaml remains authoritative for task status/dependencies.
+# Exactly one active master issue per first-tier project; paused projects can
+# retain an existing single issue of record. Every indexed master in kind_robots
+# has conductor:skip to prevent issue-bridge from importing the umbrella as a task.
+# The 11 Daily Dream Workshop member projects (parent: dream-cycle) use the
+# dream-cycle issue, while retaining their own Conductor roadmaps and tasks.
+# Do not close a master issue from a single engineering PR; use Refs, not Closes.
+# Only flag a title [FLAGGED FOR HUMAN TESTING] when a human playtest gate is
+# genuinely due; this is separate from public publication approval.
+# Conductor remains authoritative for tasks, dependencies, status and gates.
 master_issues:
+  animation-manager: https://github.com/silasfelinus/kind_robots/issues/4877
+  brainstorm: https://github.com/silasfelinus/kind_robots/issues/4872
   comet-city-academy: https://github.com/silasfelinus/kind_robots/issues/4181
+  crystal-street: https://github.com/silasfelinus/kind_robots/issues/4143
   cthulhuquarium: https://github.com/silasfelinus/kind_robots/issues/4140
-  game-of-captains: https://github.com/silasfelinus/kind_robots/issues/4182
-  memory-dungeon: https://github.com/silasfelinus/kind_robots/issues/4136
+  dream-cycle: https://github.com/silasfelinus/kind_robots/issues/4879
   emperor-of-dust: https://github.com/silasfelinus/kind_robots/issues/4142
+  every-villain-tactics: https://github.com/silasfelinus/kind_robots/issues/4407
+  game-of-captains: https://github.com/silasfelinus/kind_robots/issues/4182
+  hybridizer: https://github.com/silasfelinus/kind_robots/issues/4876
+  interface-vision: https://github.com/silasfelinus/kind_robots/issues/4880
+  kind-economy: https://github.com/silasfelinus/kind_robots/issues/3975
+  kr-arcade: https://github.com/silasfelinus/kind_robots/issues/4062
+  memory-dungeon: https://github.com/silasfelinus/kind_robots/issues/4136
+  monstress-convention: https://github.com/silasfelinus/kind_robots/issues/4874
+  playbook-kit: https://github.com/silasfelinus/kind_robots/issues/4875
   rainbow-bullet-hell-space-princess: https://github.com/silasfelinus/kind_robots/issues/4146
+  rebel-button: https://github.com/silasfelinus/kind_robots/issues/4878
   ruler-hooked: https://github.com/silasfelinus/kind_robots/issues/4144
+  save-the-plumber: https://github.com/silasfelinus/kind_robots/issues/4873
+  shifting-desks: https://github.com/silasfelinus/kind_robots/issues/4150
+  slime-city: https://github.com/silasfelinus/kind_robots/issues/4535
   weird-humboldt: https://github.com/silasfelinus/kind_robots/issues/4145
   zuzu-gamebook: https://github.com/silasfelinus/kind_robots/issues/4139
+  zuzu-lair: https://github.com/silasfelinus/kind_robots/issues/4378
   zuzu-shifting-lands: https://github.com/silasfelinus/kind_robots/issues/3917
-  every-villain-tactics: https://github.com/silasfelinus/kind_robots/issues/4407
-  slime-city: https://github.com/silasfelinus/kind_robots/issues/4535
