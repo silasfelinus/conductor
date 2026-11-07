@@ -20,23 +20,23 @@ MONSTRIQUE is a fictional celebrity franchise featuring adult female monsters as
 2. **Monstrique Convention Center**: a **separate city destination**, with registration, booths, star autographs, merch, idol rehearsal stage, fan encounters and backstage dressing areas.
 3. **Supernatural gag/novelty shop**: genuinely creepy and funny occult joke merchandise, clever inventory combinations, rumors about the murder weapon.
 4. **Draculina's mansion**: the celebrity vampire's gothic residence (final star name TBD), secrets unlocked through earned access.
-5. **Sewers beneath the motel**: branching passage to maintenance infrastructure and an albino alligator woman desperate to become a MONSTRIQUE celebrity despite lacking the ineffable 'it'. She gets authentic aspirations and competence beyond the recurring joke.
+5. **Sewers beneath the motel**: branching maintenance passages and the hidden former dressing room of Albina, an enormous upright albino alligator and **erased original 1963 Monstrique member**, clinging to her lost celebrity in tragicomic old-Hollywood style. Her early billing, forgotten recordings and signed contracts are material evidence, not a joke that she was never talented.
 
 Cities unlock on earned clues and puzzle outcomes. No padding with empty rooms.
 
 ## Monster stars
-- **Draculina / Countess Vespera**, adult female vampire celebrity and mansion resident; stage name TBD.
+- **Draculina**, founding vampire celebrity and mansion resident. Appears about **20**, visually youngest despite her age and charter status; a calculating, cliquish, deceptively sweet high-school mean-girl *persona* in an explicitly adult character. Her final-act villain role remains an author-only secret.
 - **Francesca Stein**, stitched scientist-actress.
-- **Roxie Lupin**, werewolf action star.
+- **Roxie Lupin**, original adult werewolf action star, separate from the much younger Scottish were-pop performer **Siobhan MacRae** of The Pack (the franchise's second-youngest **apparent** adult). Siobhan's sleek were-panther former bandmate **Nyx Sable** is her longstanding competitive frenemy.
 - **Moxie Mire**, blob/slime fashion celebrity.
 - **Marina Brine**, lagoon woman and aquatic brand ambassador.
 - **Dr. Vespa Vane**, giant-fly-headed woman with keen senses and a model career.
-- **Cleo Pappatra**, **mummy woman** and old-Hollywood MONSTRIQUE star, alive.
-- **Allie Gator** (working name), albino alligator celebrity aspirant living in the sewers.
+- **Cleo Pappatra**, living mummy and one of the **oldest-looking** Monstrique icons; mature presence, formidable fashion authority, never an eternally youthful pin-up by default.
+- **Albina / Allie Gator**, former **billed 1963 founding member**, a gigantic bipedal albino alligator living in the sewers beneath the motel among her own aging posters, mirrors and failed comeback plans. Unmistakably crocodilian anatomy with lipstick, not a human-faced model.
 - Odette and Violet, adult human **ghosts**, one dealmaker and one hired companion, both murdered, both witnesses.
 - Gavin the stalker, motel manager Marta and maintenance worker Pip as supporting characters.
 
-All stars must have nonsexual career motives and distinctive personal histories. The MONSTRIQUE idol group matters to schedules, alibis, contracts, rehearsals and collectibles.
+All stars must have nonsexual career motives and distinctive personal histories. The MONSTRIQUE idol group matters to schedules, alibis, contracts, rehearsals and collectibles. **CHARACTER-LOOKBOOK.md** is the visual/writing continuity contract for Draculina, Siobhan, Nyx, Cleo and Albina; chronological seniority and apparent age are separate. No character is underage.
 
 ## Mechanics and visuals
 A **real** icon-based 2D point-and-click game: Walk, Look, Talk, Take, Use, Combine, Photograph, Ask Topic, Consult Norb. Inventory/puzzle objects can be acted on in multiple sensible ways. Iris owns tactile interactions; Norb's physical contact is restricted by characterization. Dialogue topics are shared and update as evidence emerges, but response branches differ between investigators. The two ghosts can be interrogated separately, with truthful but incomplete perspectives. Every required clue has at least two discoverable routes, non-dead-end recovery and context-sensitive hints. Save state is versioned, account scoped and reloadable.

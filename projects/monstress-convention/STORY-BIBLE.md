@@ -71,7 +71,7 @@ era location is where an erased star landed after Monstrique dropped her (FRANCH
 
 | District | Landmark(s) | Who you find there |
 | --- | --- | --- |
-| Motel Row | **Last Call Motor Lodge** (hub), its hot-tub "losers' lounge", the sewers | Marta, Pip, Gavin, the hopefuls, Allie Gator |
+| Motel Row | **Last Call Motor Lodge** (hub), its hot-tub "losers' lounge", the sewers | Marta, Pip, Gavin, the hopefuls, **Albina / Allie Gator, erased 1963 founding Monstrique star** |
 | Hexwater Beach | **Starlite Drive-In**, where the 1964 *Beach Hex* films still play | the 1964 reels and prop invoices |
 | Bolt Street | **Francesca Stein's midnight science-cinema** | Francesca, cut in 1964, rehired in 1974 |
 | The Low End | **The Velvet Crypt**, a 1974 glam club turned gay bar | Laguna's film-score studio upstairs |
@@ -79,7 +79,7 @@ era location is where an erased star landed after Monstrique dropped her (FRANCH
 | The Mile | **Cleo's couture house** | Cleo Pappatra, dropped in 1986, perfume empire |
 | Downtown | **Monstrique Convention Center**, NEXT idol stage | the 2024 *Six Decades of Screams* line-up |
 | Novelty Row | **Hex & Giggles Supernatural Joke Shop** | rumours about the knife, puzzle props |
-| The Underground | **The Pack's** dive-bar stage | Siobhan and the were-animal Pack |
+| The Underground | **The Pack's** dive-bar stage | **Siobhan MacRae** and were-panther **Nyx Sable**, estranged Pack pop bandmates |
 
 ## The investigators
 
@@ -134,7 +134,36 @@ reissue. Silas's brief asks the player to follow that path. The game turns each 
 The has-beens and the still-has-its, in ledger terms: Draculina, Roxie Lupin, Laguna and Cleo Pappatra
 were all dropped and came back stronger, so they still have it. Francesca, Vespa, Blobzo and
 Siobhan were dropped and built cult careers elsewhere, so they're has-beens only to the franchise.
-Allie Gator never got in, and the hot-tub hopefuls are still auditioning.
+**Albina / Allie Gator absolutely got in**: she was a billed founding act in the 1963 Monstrique
+roadshow, quietly removed before the first iconic 1964 *Beach Hex* album. The seven public album-era
+excisions stay intact; her erased roadshow contract is a secret **eighth/pre-album erasure**.
+The hot-tub hopefuls are still auditioning; Albina is a genuine, devastated veteran, not one of them.
+
+## Performer identities and the sewer star (2026-11-07 PT)
+
+The franchise's apparent-age hierarchy is a deliberate visual inversion. **Draculina** looks about
+20, the youngest-looking member, yet has been an adult for centuries and is a charter member. She
+operates like a ruthless school-clique queen: compliments as weapons, reputation management,
+favor-trading and social humiliations. Do not render her as a child or make her demeanor cartoonishly
+incompetent. Her presentational innocence protects the **Chapter 6** revelation, not an early spoiler.
+
+**Siobhan MacRae** is second-youngest *in appearance*, an adult Scottish werewolf performer with
+wild hair/fur, big collar and a bubbly pop past in multi-species girl group **The Pack**. Her former
+co-lead **Nyx Sable**, a sleek were-panther, is a competitive frenemy: Siobhan says Nyx stole her
+solo, Nyx says Siobhan leaked their demo, and both benefited from an Odette-negotiated feud. Each
+knows the other's contribution to the missing master-tape puzzle; reconciliation, a professional
+truce and rivalry are all valid earned outcomes, not a forced romance.
+
+**Cleo Pappatra** visibly reads as one of the oldest performers, dresses with historical authority,
+and treats everyone else's trends as something she survived twice. **Albina / Allie Gator**, over
+six feet of albino alligator in lipstick and an extravagant, aging starlet robe, was a **billed
+founder** in Monstrique's pre-album 1963 roadshow. A sponsor demanded a more photogenic lead, so
+management erased her and claimed she was never a member. Her sewer dressing room is a faded
+Hollywood-star shrine: cracked spotlights, moth-eaten posters, silent-film reel, and recorded
+applause. She performs to an empty chair. The joke is her operatic self-mythology, never her body.
+A signed first-run roadshow program and edited 1964 reissue prove her exclusion, contributing to
+Iris's historical rights case; no gratuitous puzzle asks the player to mock her or promise fame.
+Detailed portrait/scene/scrapbook briefs are in **CHARACTER-LOOKBOOK.md**.
 
 ## The case: Draculina, revealed in the last act (Silas, 2026-11-07 PT)
 
@@ -239,6 +268,7 @@ release the next Harker File.
 ## Decided by Silas
 
 - 2026-11-07 PT: **Draculina** is the killer, revealed in the last act. Marta is the misdirect.
+- 2026-11-07 PT: Visual casting correction: seemingly 20-year-old charter Draculina, adult Scottish Pack pop alum Siobhan MacRae with were-panther frenemy Nyx Sable, visibly veteran Cleo Pappatra, and giant sewer-dwelling Albina as a genuinely erased 1963 founder.
 - 2026-11-07 PT: the mummy star is **Cleo Pappatra** (replacing both *Celestine Veil* and
   *Nefertari*).
 
