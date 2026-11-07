@@ -785,10 +785,10 @@ tasks:
   - id: t-034
     milestone: m2
     title: "Clash automatic animated alley strikes, readable card text and Clash-format balance run"
-    status: review
+    status: done
     claimed_by: 20261107T0215Z-slime-city-clash-auto-strikes-t-034-kh7p
     claimed_at: '2026-11-07T02:15:00.000Z'
-    updated: '2026-11-07T02:25:00.000Z'
+    updated: '2026-11-07T02:56:00.000Z'
     passes: 0
     stakes: reversible
     implementation_pr: silasfelinus/kind_robots#4883
@@ -837,3 +837,10 @@ tasks:
       prompts (0 rejected by the Kind Robots contract) and added a ledger
       checkpoint commit right after the sweep in auto-art-generate.yml.
       Cancelling the duplicate PENDING jobs needs a Kind Robots admin token.
+
+      Kind Robots #4883 merged as ddb26fe7a261e49314800ae0d8b904998894b0bb after
+      13/13 latest-head checks passed (four contract shards, contract verifiers,
+      TypeScript, changed-file Prettier, layout, facet smoke, production image,
+      verify x2, GitGuardian). Merged is not deployed: the Unraid schedule picks
+      up the published image. Fun acceptance remains Silas's tablet playtest;
+      duplicate ArtJob cancellation remains a human token step.
