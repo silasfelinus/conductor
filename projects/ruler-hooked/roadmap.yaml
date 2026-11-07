@@ -975,7 +975,7 @@ tasks:
 - id: t-053
   milestone: m6
   title: 'Reconcile the fishing timing bar: utils/rulerHooked/timingBar.ts has no UI consumer'
-  status: claimed
+  status: done
   gate_human: false
   owner: worker
   stakes: reversible
@@ -988,7 +988,16 @@ tasks:
     ruler-hooked-fishing-encounter.vue uses a plain tap button. Decide which is true: either
     wire the timing bar into the encounter (and honour per-species theming from t-033), or
     remove the dead util and correct the roadmap notes. Reversible; verify at phone width.
-  updated: '2026-11-07T08:48:31Z'
+
+    2026-11-07 PT daily-creative cycle: verified on kind_robots main dc3e98c — the audit
+    finding was a false positive. The sliding-marker fishing control is inline in
+    components/ruler-hooked/ruler-hooked-fishing-encounter.vue (needle, band, per-species
+    profile via timingProfileFor from utils/rulerHooked/timingBar.ts) and ruler-hooked-
+    game.vue imports fightAim/FIGHT_PROMPT from the same util, so the util has live
+    consumers. Only the separate component file ruler-hooked-timing-bar.vue named in
+    t-026/t-033 notes never existed as its own file. No code change; nothing deleted. Audit
+    heuristic (path-existence) should also check imports of named utils.
+  updated: '2026-11-07T08:48:39Z'
   claimed_by: 2026-11-07T15:00:00Z-dc
   claimed_at: '2026-11-07T08:48:31Z'
 - id: t-054
