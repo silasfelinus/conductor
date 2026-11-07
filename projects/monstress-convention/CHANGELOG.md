@@ -25,3 +25,7 @@
 - Silas renamed the game and franchise **MONSTRIQUE**, set it in **Midnight City**, made Odette's ghost the client and Violet a companion hired to play a vampire. Tone is ribald Larry-style comedy with "low morals".
 - New `STORY-BIBLE.md`: verbatim brief, tone rules, Midnight City districts (reconciled to defer to FRANCHISE-HISTORY.md's seven-era ledger), the five-Hexblade case with a **proposed** culprit (creative-approval), gratitude system, six-chapter plan and puzzle principles.
 - Kind Robots (branch `claude/monsterique-game-dev-4wwv1i`, built on PR #4848): route `/admin/monstrique` (old routes redirect), Monstrique branding, new cold open, Odette hires Norb, Flirt verb with Norb's escalating rebuffs, Violet's fangs and fee favours with use-item inventory, gratitude-gated non-explicit kiss, versioned save upgrade (v2 → v3).
+
+## 2026-11-07 PT — Silas's decisions: Draculina in the last act; Cleo Pappatra
+- Culprit locked: **Draculina**, revealed only in Chapter 6. Marta ("Little Miss Nobody") becomes the Chapters 2–5 misdirect and a Chapter 6 witness. STORY-BIBLE's case, endings and chapter plan were rewritten; mist, the mirror and a borrowed alibi tape carry the fair-play reveal.
+- Mummy star renamed **Cleo Pappatra** across DESIGN-BRIEF, FRANCHISE-HISTORY, ALBUM-ART-REGISTER, ART-PROMPTS and STORY-BIBLE. Kind Robots game code was renamed to match.

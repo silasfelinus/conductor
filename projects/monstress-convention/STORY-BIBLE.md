@@ -76,7 +76,7 @@ era location is where an erased star landed after Monstrique dropped her (FRANCH
 | Bolt Street | **Francesca Stein's midnight science-cinema** | Francesca, cut in 1964, rehired in 1974 |
 | The Low End | **The Velvet Crypt**, a 1974 glam club turned gay bar | Laguna's film-score studio upstairs |
 | Fang Heights | **Draculina's Mansion** | Draculina, dropped in 1994, back in 2006 |
-| The Mile | **Nefertari's couture house** | Nefertari, dropped in 1986, perfume empire |
+| The Mile | **Cleo's couture house** | Cleo Pappatra, dropped in 1986, perfume empire |
 | Downtown | **Monstrique Convention Center**, NEXT idol stage | the 2024 *Six Decades of Screams* line-up |
 | Novelty Row | **Hex & Giggles Supernatural Joke Shop** | rumours about the knife, puzzle props |
 | The Underground | **The Pack's** dive-bar stage | Siobhan and the were-animal Pack |
@@ -131,54 +131,66 @@ reissue. Silas's brief asks the player to follow that path. The game turns each 
 - **A favour:** each star's personal problem, which feeds the gratitude system below.
 - **A piece of the knife:** see the case.
 
-The has-beens and the still-has-its, in ledger terms: Draculina, Roxie Lupin, Laguna and Nefertari
+The has-beens and the still-has-its, in ledger terms: Draculina, Roxie Lupin, Laguna and Cleo Pappatra
 were all dropped and came back stronger, so they still have it. Francesca, Vespa, Blobzo and
 Siobhan were dropped and built cult careers elsewhere, so they're has-beens only to the franchise.
 Allie Gator never got in, and the hot-tub hopefuls are still auditioning.
 
-## The case: proposed solution (creative-approval gate; reversible until Chapter 6 is built)
+## The case: Draculina, revealed in the last act (Silas, 2026-11-07 PT)
 
-**Recommended culprit: Marta, the motel night manager, secretly the franchise's first erasure.**
-Before Francesca was cut in 1964, the *Beach Hex* sessions had a drummer, **"Little Miss Nobody,"**
-who was invisible. She was left off the sleeve, the credits and the royalties: *"You can't sell what
-nobody can see."* She bought the Last Call, where the band crashed during the drive-in shoots, and
-has worn thick foundation ever since so the world would see her. When she finally filed a claim,
-Odette, now holding the archive, buried it, and the 2024 *Six Decades of Screams* reissue erased
-her once more. Odette booked Room 205 for her date. Marta wiped off her makeup, carried the ice in,
-and never left. Invisible, she waited, and used her own prop knife.
+Silas, 2026-11-07 PT: *"I like draculina for the villain. But in the last act."*
 
-Fair-play clues, each with at least two routes:
+**The killer is Countess Draculina.** No player should be able to name her with confidence before
+Chapter 6. Chapters 1–5 build a convincing wrong answer (Marta) and leave Draculina looking cleared.
+Then the last act turns it over.
 
-1. **"The door never opened."** Violet: after the ice came, nobody came in. Odette: *"The knife
-   floated, darling. I assumed it was the gin."* Two partial accounts make one fact.
-2. **Makeup on the hilt** (Chapter 1 photo) and **on the missing ice bucket** (Chapter 1, the fangs
-   favour). It's a skin-tone foundation, not Violet's white vampire base. Identified later by
-   Nefertari's couture house or the Velvet Crypt's dressing-room gossip: *"the shade for people
-   with no shade."*
-3. **Five Hexblades.** Francesca wrote the 1964 science-themed stage props (FRANCHISE-HISTORY) and
-   made five prop knives, not four. Her invoices and the drive-in archive agree. Four are
-   accounted for; the fifth slot in the motel lobby shrine is empty (Chapter 1 shows five dents in
-   the velvet).
-4. **The drums play themselves** in the drive-in's *Beach Hex* reel. Roxie: *"We had a drummer.
-   Sweet kid. Never saw her."*
-5. **The ice alibi breaks.** Marta says she was at the ice machine when it double-clanked. Pip's log
-   says the dispenser was jammed at that minute. The double clank was Allie opening the sewer hatch
-   below, and Allie saw nobody come down: the killer stayed upstairs.
-6. **The ledger and the claim.** Marta checked the pair in herself and steered them to 205. A
-   rejected royalty claim signed "L.M. Nobody" sits in the Harker Files.
+**Motive.** Odette loved Draculina all her life and managed her like a possession. She erased her
+from the 1994 *Silver Bite* line-up, brought her back in 2006 on worse terms, and owned her
+likeness. For the reboot she was quietly test-casting a younger, human "Draculina". On the night,
+she hired Violet in a licensed Draculina costume (wig, cape, the accent) to play the woman she
+could never have. Draculina found out through the costume shop, Hex & Giggles, which gossips.
 
-Red herrings, all exonerated by fair evidence: **Draculina** (the obvious vampire, and the woman
-Odette's costume kink pointed at; on camera at the mansion all night), **Gavin** (owns a stolen prop;
-his own creepy timestamps clear him), **Allie** (motive and sewer access, but she's the witness to
-the clank), and **Siobhan** (fired in 2024 and furious, but on stage with the Pack).
+**Method.** A vampire comes in as mist, under the door: *"the door never opened."* A vampire has no
+reflection, and both women were facing the mirrored wall, so Odette saw only the knife move: *"the
+knife floated, darling."* She needed no invitation, because Odette gave her a standing one in 1964:
+*"Come up to my room anytime."* The weapon was on the nightstand: the long-lost fifth Hexblade, which
+Odette had bought at auction as a "stake" for the role-play. Draculina killed Odette, and killed
+Violet for wearing her face.
 
-**Endings (target 5):** *Last Call* (full proof: Marta confesses and the ghosts are freed together),
-*Little Miss Somebody* (full proof plus every erased star's favour done: a corrected reissue credits
-everyone, Marta included; bittersweet), *Fang Frame* (accuse Draculina: published, sued, haunted),
-*Headline Too Early* (thin proof: Marta walks, Norb's blog dies), *Ten Percent Forever* (take
-Odette's bribe to bury it: rich, damned, Violet never forgives you). If Silas prefers, the alternate
-culprit is Draculina, spurned by a lifelong crush. That reuses most of the clue graph but loses the
-invisible-drummer twist.
+**The misdirect: Marta, "Little Miss Nobody".** The invisible 1964 drummer was erased before anyone
+else (FRANCHISE-HISTORY's first, hidden erasure). The weapon was her own Hexblade, her foundation is
+on the ice bucket, and she *was* in the room. She carried the ice up, spotted her stolen knife in
+Odette's luggage, wiped off her makeup and stayed invisible to take it back. Then she watched the
+murder from the corner, panicked and fled with the bucket she had touched. Invisible, she also
+explains "the door never opened" and "the knife floated". By the end of Chapter 5 every clue points
+at her. Accusing her is a real, playable ending (*Little Miss Scapegoat*).
+
+**Chapter 6 turns it** with evidence the player has carried since earlier chapters:
+
+1. **The mist on the stairs.** Gavin's time-stamped courtyard photos (Chapter 1) show a curl of fog
+   climbing to 205 at the double clank. Iris dismissed it as a cheap lens.
+2. **The alibi tape.** Draculina was "on camera at the mansion all night", which shows an empty chair
+   and her voice; nobody questions that for a vampire. The audio is lifted from 1999's *Monstrique
+   Manor*: a co-star who died in 2003 laughs in the background.
+3. **Marta's testimony.** Once Iris can prove Marta couldn't have struck (her knife was taken from
+   her hand; the ice log puts her on the stairs), Marta finally talks. She saw no one, smelled grave
+   soil, and heard the accent.
+4. **The costume order.** Hex & Giggles' order book shows the Draculina costume and a phone call
+   asking who it was for, from the mansion's line.
+5. **Violet, re-asked.** In costume, Violet was the only person in the room facing the *door*, not the
+   mirror. With the right evidence she remembers the cold and the voice: *"She said, 'Nice wig.'"*
+
+Fair-play rules: every one of these has a second route, and none needs a romance or favour.
+Gratitude may only open a shortcut. Iris can flirt with Draculina all game, and the reveal lands
+harder if the player liked her.
+
+**Endings (target 5):**
+- *Last Call*: full proof. Draculina is unmasked, and the ghosts are freed together.
+- *Little Miss Somebody*: full proof plus every erased star's favour done. A corrected reissue credits
+  everyone, Marta included. Bittersweet.
+- *Little Miss Scapegoat*: accuse Marta. She's arrested, the Countess walks, and the ghosts stay stuck.
+- *Headline Too Early*: thin proof. Norb's blog is sued into dust.
+- *Ten Percent Forever*: take Odette's bribe to bury it. Rich, damned, and Violet never forgives you.
 
 ## The gratitude system ("a monster woman can be very grateful")
 
@@ -193,7 +205,7 @@ invisible-drummer twist.
   finale.
 - **Favor seeds:** Draculina wants a photo, since she hasn't seen her face since 1890 and Iris's
   camera is silver-free. Roxie wants her stolen prop knife back from Gavin. Laguna's skin dries out
-  in the studio, and the motel ice machine helps. Nefertari wants her 1986 billing restored on a
+  in the studio, and the motel ice machine helps. Cleo Pappatra wants her 1986 billing restored on a
   reissue. Francesca wants credit for her props, so bring her the 1964 invoice. Blobzo wants one
   night solid (motel ice!). Vespa wants a date who can hold eye contact (Norb's spare glasses).
   Siobhan wants the Pack's masters. Allie wants an audition tape (Iris's camera). Violet wants her
@@ -206,10 +218,10 @@ invisible-drummer twist.
 | --- | --- | --- | --- | --- |
 | 1 | **The Last Call** (playable vignette) | motel exterior, office, ice alcove, balcony, rooms, Room 205 | get into 205; document the scene; hear both ghosts; Odette hires you; Violet's fangs and fee | the knife is a 1964 *Beach Hex* prop; the city map opens |
 | 2 | **Beach Hex** | drive-in, Francesca's science-cinema | the 1964 reel and Francesca's prop invoice; the scratched-out sleeve | "I made five knives" |
-| 3 | **Velvet and Chrome** | Velvet Crypt, Nefertari's couture house | the 1974 and 1986 credit erasures; identify the makeup | the shade for people with no shade |
-| 4 | **Silver Bite** | Draculina's mansion, the losers' lounge hot tub | clear Draculina on tape; Vespa and Blobzo's grievances | the vampire didn't do it |
-| 5 | **Six Decades of Screams** | convention, NEXT stage, the Pack's dive bar, sewers | Siobhan's alibi; Allie and the hatch | Marta's ice alibi breaks |
-| 6 | **Last Call Again** | motel, Room 205 | the accusation: present the proof to both ghosts | endings |
+| 3 | **Velvet and Chrome** | Velvet Crypt, Cleo's couture house | the 1974 and 1986 credit erasures; identify the makeup | the shade for people with no shade |
+| 4 | **Silver Bite** | Draculina's mansion, the losers' lounge hot tub | Draculina's "on camera all night" alibi; Vespa and Blobzo's grievances; flirt with the Countess | the vampire seems cleared |
+| 5 | **Six Decades of Screams** | convention, NEXT stage, the Pack's dive bar, sewers | Siobhan's alibi; Allie and the hatch; the five Hexblades | everything points at Marta |
+| 6 | **Last Call Again** | motel, Hex & Giggles, Draculina's mansion, Room 205 | clear Marta, break the alibi tape, find the mist photo; confront the Countess | Draculina revealed; endings |
 
 Every chapter returns to Room 205. The ghosts react to new evidence, contradict each other, and
 release the next Harker File.
@@ -224,12 +236,11 @@ release the next Harker File.
 - Combinations are absurd but fair, and every wrong combination gets a joke.
 - The camera is the master key: photographs are evidence, favors, blackmail and alibis.
 
-## Open questions for Silas
+## Decided by Silas
 
-- **Mummy star's name.** DESIGN-BRIEF lists *Celestine Veil*; FRANCHISE-HISTORY's ledger names the
-  band's mummy *Nefertari*. Chapter 1 still has Celestine signing at the convention. Are they one
-  character (and which name), or two mummies?
-- **Culprit.** Marta (recommended) or Draculina. Nothing locks until Chapter 6.
+- 2026-11-07 PT: **Draculina** is the killer, revealed in the last act. Marta is the misdirect.
+- 2026-11-07 PT: the mummy star is **Cleo Pappatra** (replacing both *Celestine Veil* and
+  *Nefertari*).
 
 ## Kit growth
 

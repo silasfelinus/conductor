@@ -1,5 +1,5 @@
 # MONSTRIQUE — Canonical Game Bible
-_2026-11-06 PT: **renamed MONSTRIQUE** (game and in-world franchise) by Silas; set in **Midnight City**; Odette's ghost is the client who hires Norb, and Violet was hired to dress as a vampire. Franchise eras and performers: [FRANCHISE-HISTORY.md](FRANCHISE-HISTORY.md) (authoritative). City, tone, ghosts, gratitude, proposed culprit and chapter plan: [STORY-BIBLE.md](STORY-BIBLE.md). Where this file says MONSTREXX, read MONSTRIQUE. Rules below still apply._
+_2026-11-06 PT: **renamed MONSTRIQUE** (game and in-world franchise) by Silas; set in **Midnight City**; Odette's ghost is the client who hires Norb, and Violet was hired to dress as a vampire. Franchise eras and performers: [FRANCHISE-HISTORY.md](FRANCHISE-HISTORY.md) (authoritative). City, tone, ghosts, gratitude, the case (Draculina, revealed in the last act; Silas 2026-11-07 PT) and chapter plan: [STORY-BIBLE.md](STORY-BIBLE.md). Where this file says MONSTREXX, read MONSTRIQUE. Rules below still apply._
 
 _2026-11-05 PT revision. Internal project slug remains monstress-convention for continuity; the official game and celebrity-franchise title is MONSTRIQUE. The Monstrique Convention is only one explorable location._
 
@@ -31,7 +31,7 @@ Cities unlock on earned clues and puzzle outcomes. No padding with empty rooms.
 - **Moxie Mire**, blob/slime fashion celebrity.
 - **Marina Brine**, lagoon woman and aquatic brand ambassador.
 - **Dr. Vespa Vane**, giant-fly-headed woman with keen senses and a model career.
-- **Celestine Veil**, **mummy woman** and old-Hollywood MONSTRIQUE star, alive.
+- **Cleo Pappatra**, **mummy woman** and old-Hollywood MONSTRIQUE star, alive.
 - **Allie Gator** (working name), albino alligator celebrity aspirant living in the sewers.
 - Odette and Violet, adult human **ghosts**, one dealmaker and one hired companion, both murdered, both witnesses.
 - Gavin the stalker, motel manager Marta and maintenance worker Pip as supporting characters.
