@@ -869,6 +869,11 @@ tasks:
       demonization of meth users, class stereotypes, forced
       dosing, consumption guides, clinical claims or moral scores.
       Preserve 120 main cards; no art or public release.
+
+      2026-11-07 PT correction (t-071): the note above is misplaced text describing the three-
+      lens opening journeys, which belong to t-024 (done). t-023's own scope is the four
+      ideological Ecotone tensions without moralizing openings; this note is retained append-
+      only and is not t-023's spec.
     updated: '2026-11-04T09:58:44Z'
   - id: t-025
     milestone: m3
@@ -1727,7 +1732,7 @@ tasks:
   - id: t-071
     milestone: m2
     title: "Roadmap lint: flag stub tasks followed by a mismatched note (t-023 carries t-024's note text)"
-    status: ready
+    status: done
     depends_on: []
     owner: null
     passes: 0
@@ -1736,3 +1741,11 @@ tasks:
     note: >-
       Kaizen from the t-024 reconciliation review (PR #7143): t-023's note text describes the
       three-lens opening journeys, which belong to t-024. Add a validator check and fix the t-023 note.
+
+      2026-11-07 PT: shipped scripts/check_roadmap_note_mismatch.py (advisory heuristic:
+      verbatim-prefix copies and notes matching only a sibling's title; 10 current hits repo-
+      wide, some legitimate shared headers) with tests, and appended a correction to t-023's
+      note. The heuristic would not have caught the original t-023 case (t-024's note has
+      since been rewritten), so it is not wired into CI.
+    claimed_by: null
+    claimed_at: null
