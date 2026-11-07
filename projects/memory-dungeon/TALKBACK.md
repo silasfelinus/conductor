@@ -135,6 +135,13 @@
 
 **What worked:** a 36-room twin of the Breathing Works with 170 echoes and a dedicated verifier test; also fixed Fenn Dunlin's name drift. **What to improve:** the new sea-stage button and choking mode have no browser-level test, so added kaizen t-063. Worker could post the review-status PR and the implementation PR with a shared checklist to cut handoff lag.
 
+## 2026-11-07 PT | Reviewer merge | memory-dungeon/t-038 | Conductor #7145
+
+**Decision:** merged reversible e12 Vesper writer-packet PR #7145 (squash `8c5487a44`) after fixing red checks: the roadmap duplicate-key failure came from main (already repaired), and the handoff check failed on a PR body lacking AGENTS.md headings.
+
+**What worked:** nine-route reducer tests covering replay and forged choices; clear "writer packet only" scoping.
+
+**What to improve:** the PR body used a free-form summary instead of the handoff template, costing two failed CI cycles. Fill the template headings before opening the PR.
 ## 2026-11-07 PT | Reviewer green merge | memory-dungeon/t-038 | Conductor #7145
 
 **Decision:** squash-merged reversible e12 Vesper writer packet (`8c5487a4`) after 24 of 25 checks passed on head `3db0b31e`; the one red "Validate Worker PR handoff" run was superseded by a later green run of the same check once the PR template headings were restored. Packet is writer-only: not integrated into the runtime, no ArtJobs.
