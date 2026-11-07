@@ -19,7 +19,8 @@ class RoundTwoArtContract(unittest.TestCase):
     def test_complete_story_and_missing_founder_cards(self):
         data = yaml.safe_load(LEDGER.read_text(encoding="utf-8"))
         self.assertTrue(data["auto_submit"])
-        self.assertFalse(data["is_public"])
+        # Silas, 2026-11-07 PT: "The art should be public." (slime-city/t-036)
+        self.assertTrue(data["is_public"])
         self.assertEqual(data["project_slug"], "slime-city")
         subjects = data["subjects"]
         self.assertEqual(len(subjects), 168)
