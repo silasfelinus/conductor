@@ -13,103 +13,99 @@ is_mature: false
 auto_submit: true
 cast_loras: false
 lanes:
-  - key: arthemy-house
-    label: Arthemy Western Art v3.0
-    engine: comfy
-    checkpoint: Illustrious/arthemyWesternArt_v30.safetensors
-    prompt: tags
-    prefix: >-
-      masterpiece, best quality, amazing quality, absurdres, very aesthetic,
-      toon (style), western comics (style), illustrated narrative scene,
-      painterly texture, cinematic composition, vertical story card
-    suffix: >-
-      weathered frontier fantasy, warm ochre, dusty crimson and tarnished brass,
-      dramatic practical lighting, character-driven visual storytelling
-    steps: 30
-    cfg: 5
-    sampler: euler_ancestral
+- key: arthemy-house
+  label: Arthemy Western Art v3.0
+  engine: comfy
+  checkpoint: Illustrious/arthemyWesternArt_v30.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, absurdres, very aesthetic, toon (style), western comics (style),
+    illustrated narrative scene, painterly texture, cinematic composition, vertical story card
+  suffix: weathered frontier fantasy, warm ochre, dusty crimson and tarnished brass, dramatic practical lighting,
+    character-driven visual storytelling
+  steps: 30
+  cfg: 5
+  sampler: euler_ancestral
 subjects:
-  - key: eod22-ford-arrest
-    lane: arthemy-house
-    title: The raid the emperor ordered
-    audience: d22-blame
-    option: blame
-    asset: audiences/d22-blame/blame
-    size: 768x1152
-    seed: 762201
-    negative: >-
-      nude, nsfw, human, photorealistic, lowres, worst quality, watermark,
-      signature, caption, words, writing, lettering, logo, ui, icon, emblem,
-      graphic symbol, split panel, gore, blood, extra limbs, duplicate people
-    prompt_tags: >-
-      At the flooded Eastern Ford beneath a cracked stone bridge, two adult
-      anthropomorphic mole revolutionary laborers in patched work coats stand
-      with empty open hands while two armored animal-folk watch guards take
-      them into custody, wary villagers at the distant doorway of a burrow,
-      a folded warrant in the watch captain's hand, evening river mud,
-      tense unjust certainty, full illustrated environment and figures
-
-  - key: eod22-ford-identify
-    lane: arthemy-house
-    title: Find the names before the culprit
-    audience: d22-blame
-    option: evidence
-    asset: audiences/d22-blame/evidence
-    size: 768x1152
-    seed: 762202
-    negative: >-
-      nude, nsfw, human, photorealistic, lowres, worst quality, watermark,
-      signature, caption, words, writing, lettering, logo, ui, icon, emblem,
-      graphic symbol, split panel, gore, blood, open wounds, extra limbs
-    prompt_tags: >-
-      A rain-soaked ruined ferry station at the Eastern Ford at dawn,
-      adult anthropomorphic animal-folk watch investigators consulting a
-      blank open ledger and carefully sorted personal effects on a wooden
-      table, three covered adult forms at a respectful distance under
-      woolen funeral shrouds, a weary ferryman watching from the doorway,
-      river fog through broken shutters, search for identities before arrests,
-      intimate ensemble composition with clear faces and physical setting
-
-  - key: eod22-ford-knife
-    lane: arthemy-house
-    title: The missing mark on the knife
-    audience: d22-blame
-    option: ask-knife
-    asset: audiences/d22-blame/ask-knife
-    size: 768x1152
-    seed: 762203
-    negative: >-
-      nude, nsfw, human, photorealistic, lowres, worst quality, watermark,
-      signature, caption, words, writing, lettering, logo, ui, icon, emblem,
-      graphic symbol, split panel, gore, blood, extra limbs, duplicate heads
-    prompt_tags: >-
-      Inside the stone throne room, a steward in dark court livery holds
-      out a clean short hooked root-knife in an open gloved palm beneath
-      a tall golden stained-glass window, the blade hinge oiled and a
-      visibly filed blank patch on its wooden maker-stamp grip, Lady Ottoline
-      Vask an upright female anthropomorphic black swan noble with glossy
-      black feathers, expressive eyes and a tailored faded crimson coat stands
-      behind the steward watching carefully, close foreground evidence and
-      full dramatic painted scene in perspective
-
-  - key: eod22-ford-tokens
-    lane: arthemy-house
-    title: The ferryman's three tokens
-    audience: d22-blame
-    option: ask-tokens
-    asset: audiences/d22-blame/ask-tokens
-    size: 768x1152
-    seed: 762204
-    negative: >-
-      nude, nsfw, human, photorealistic, lowres, worst quality, watermark,
-      signature, caption, words, writing, lettering, logo, ui, icon, emblem,
-      graphic symbol, split panel, gore, blood, extra limbs, extra fingers
-    prompt_tags: >-
-      In a towering fortress audience chamber, a young anthropomorphic
-      brown muskrat ferry apprentice in soaked patched river clothes stands
-      on wet stone tiles holding up a string with three plain round
-      carved wooden tokens bearing the same hand-burned clapperless bell
-      carving, the objects easy to see in the foreground, Lady Ottoline
-      Vask an upright female anthropomorphic black swan noble in a tailored
-      crimson coat watches from beside a low stone railing, quiet testimony,
-      warm window light, expressive worried faces, complete story environment
+- key: eod22-ford-arrest
+  lane: arthemy-house
+  title: The raid the emperor ordered
+  audience: d22-blame
+  option: blame
+  asset: audiences/d22-blame/blame
+  size: 768x1152
+  seed: 762201
+  negative: nude, nsfw, human, photorealistic, lowres, worst quality, watermark, signature, caption, words, writing,
+    lettering, logo, ui, icon, emblem, graphic symbol, split panel, gore, blood, extra limbs, duplicate people
+  prompt_tags: At the flooded Eastern Ford beneath a cracked stone bridge, two adult anthropomorphic mole revolutionary
+    laborers in patched work coats stand with empty open hands while two armored animal-folk watch guards take them
+    into custody, wary villagers at the distant doorway of a burrow, a folded warrant in the watch captain's hand,
+    evening river mud, tense unjust certainty, full illustrated environment and figures
+  jobs:
+    arthemy-house: 64970
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eod22-ford-identify
+  lane: arthemy-house
+  title: Find the names before the culprit
+  audience: d22-blame
+  option: evidence
+  asset: audiences/d22-blame/evidence
+  size: 768x1152
+  seed: 762202
+  negative: nude, nsfw, human, photorealistic, lowres, worst quality, watermark, signature, caption, words, writing,
+    lettering, logo, ui, icon, emblem, graphic symbol, split panel, gore, blood, open wounds, extra limbs
+  prompt_tags: A rain-soaked ruined ferry station at the Eastern Ford at dawn, adult anthropomorphic animal-folk
+    watch investigators consulting a blank open ledger and carefully sorted personal effects on a wooden table,
+    three covered adult forms at a respectful distance under woolen funeral shrouds, a weary ferryman watching from
+    the doorway, river fog through broken shutters, search for identities before arrests, intimate ensemble composition
+    with clear faces and physical setting
+  jobs:
+    arthemy-house: 64971
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eod22-ford-knife
+  lane: arthemy-house
+  title: The missing mark on the knife
+  audience: d22-blame
+  option: ask-knife
+  asset: audiences/d22-blame/ask-knife
+  size: 768x1152
+  seed: 762203
+  negative: nude, nsfw, human, photorealistic, lowres, worst quality, watermark, signature, caption, words, writing,
+    lettering, logo, ui, icon, emblem, graphic symbol, split panel, gore, blood, extra limbs, duplicate heads
+  prompt_tags: Inside the stone throne room, a steward in dark court livery holds out a clean short hooked root-knife
+    in an open gloved palm beneath a tall golden stained-glass window, the blade hinge oiled and a visibly filed
+    blank patch on its wooden maker-stamp grip, Lady Ottoline Vask an upright female anthropomorphic black swan
+    noble with glossy black feathers, expressive eyes and a tailored faded crimson coat stands behind the steward
+    watching carefully, close foreground evidence and full dramatic painted scene in perspective
+  jobs:
+    arthemy-house: 64972
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eod22-ford-tokens
+  lane: arthemy-house
+  title: The ferryman's three tokens
+  audience: d22-blame
+  option: ask-tokens
+  asset: audiences/d22-blame/ask-tokens
+  size: 768x1152
+  seed: 762204
+  negative: nude, nsfw, human, photorealistic, lowres, worst quality, watermark, signature, caption, words, writing,
+    lettering, logo, ui, icon, emblem, graphic symbol, split panel, gore, blood, extra limbs, extra fingers
+  prompt_tags: In a towering fortress audience chamber, a young anthropomorphic brown muskrat ferry apprentice in
+    soaked patched river clothes stands on wet stone tiles holding up a string with three plain round carved wooden
+    tokens bearing the same hand-burned clapperless bell carving, the objects easy to see in the foreground, Lady
+    Ottoline Vask an upright female anthropomorphic black swan noble in a tailored crimson coat watches from beside
+    a low stone railing, quiet testimony, warm window light, expressive worried faces, complete story environment
+  jobs:
+    arthemy-house: 64973
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
