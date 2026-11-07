@@ -676,38 +676,28 @@ tasks:
   - id: t-029
     milestone: m3
     title: "Establish full enemy, item, achievements and unlock economy"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 2026-11-07T054646Z-memory-dungeon-t029-k8q4
     claimed_at: '2026-11-07T05:46:46Z'
-    updated: '2026-11-07T05:46:46Z'
+    updated: '2026-11-07T05:51:00Z'
     depends_on: t-021
     passes: 0
     stakes: reversible
-    note: >-
+    note: |-
       Across 16 realms target 96 distinct enemy identities, 128 item definitions (16 relics, 32 charms, 48 tools/consumables, 32 keys/mementos), 64 achievements and 64 non-stat-inflation permanent unlocks. Four ordinary enemies plus elite/guardian per realm. Verify drop boundedness, meaningful tradeoffs and playstyle parity with multi-seed sims; author gallery art prompts.
-
       Scoped adversarial economy repair: make Dark Briar duels, original-Briar challengers and minefield vault rewards idempotent across repeated completion and save restoration. Focused Kind Robots PR and exact-head checks follow. Broader 96-enemy/128-item/64-achievement/64-unlock economy remains open.
-
       2026-10-29 PT: Merged kind_robots PR #4429 at fbce49c61c04b687b0b58c7166e8c0ef9853936c after all 15 exact-head workflows passed on eb8f155f815b0e0dc38de70a6347fb0fab8d3f0b. Fixed duplicate loot from restored/repeated Dark Briar duels, original-Briar sprite/patrol bouts and 8x8/10x10 minefield completions using a common one-time reward ledger. 64 seeded 80-attempt reward simulations, save roundtrips and independent reality ledgers are regression tested in verifyMemoryWorld. Initial changed-file Prettier failure corrected; final formatting, TypeScript, four contract shards, layout and Memory browser workflows passed. No new ArtJobs or deployment. Return READY for the remaining enemy/item/achievement/unlock economy and art; not For Human Gate.
-
       Scoped combat checkpoint integrity increment: reject impossible pair inventories, half-matched cards, obstacle forgeries and contradictory fight outcomes. Kind Robots branch worker/memory-dungeon-t-029-combat-restore-5a81; focused PR and exact-head CI to follow. This does not complete the 96-enemy/128-item/64-achievement/64-unlock catalog or art acceptance.
-
       2026-10-29 PT: Merged Kind Robots PR #4436 (squash 0b844f19779f32c8d21b58b752f928e5fce2479c), head 50b996ef7f587607e1bf4f5c264ce493e7aaa1e6, after all 14 exact-head Actions workflows completed successfully: Contract Tests #40894828803 (four shards), TypeScript #40894828900, formatting #40894828948 and Memory Dungeon browser interruption #40894830117. Combat checkpoint restoration now rejects missing/renumbered pairs, half-matched pairs, forged obstacle inventories and health/outcome contradictions, with legitimate 5x5 obstacle and terminal-state regressions. Two Memory Dungeon files only; no ArtJobs, deploy or schema changes. [...]
-
       [Earlier history (15,062 chars) archived verbatim to projects/memory-dungeon/T029-HISTORY.md -- read it there only when you need a specific past cycle. Append new cycles below, one short paragraph each.]
-
       2026-10-31 12:53 AM PT: Merged Kind Robots PR #4550 (squash 06c215ed61f2096f842192aac07b89ac84f5ca70) after all 15 exact-head workflows passed on 843b81a138666b5876625f6e043652200cba6b37, including Contract Tests #41182067789 (4/4 shards), TypeScript #41182067786, formatting #41182067832 and Memory browser #41182067645. New Earth e03/e04 saves journal and replay legal adjacent travel and once-only decisions before restoring photos, supplies or Char tide-gate outcome; old v1 saves migrate to legal v2 routes. Forged teleport, unvisited/duplicate/invalid choices, incomplete routes, oversize journal and migration regressions added. Initial Prettier failure corrected and exact-head CI rerun. No ArtJobs, deploy, schema change or final visual acceptance. Return READY for 12 remaining medals, 96 enemies, 128 items, 64 independent unlocks, production art, e05/e06 and device QA; not For Human Gate.
-
       Scoped Earth Chronicle achievement increment: twelve original cosmetic medals tied to replay-validated e03/e04 travel and photograph choices, with Char's three tide-gate outcomes preserved. Awards only after campaign completion; seeded route combinations, forgery, idempotence, spoiler concealment and save restore checks added. Focused Kind Robots PR and exact-head CI follow. This does not finish 96 enemies, 128 items, 64 permanent unlocks, production art or full campaign/device acceptance.
-
       2026-10-31 2:03 AM PT: Merged Kind Robots PR #4552 (squash 247f9c6042715b95ea95159bb085191c642d769a) after all 15 exact-head workflows passed on 094effb100a9ce63fc64ae5686a676a28988e8d3, including Contract Tests #41186613279 (4/4 shards), TypeScript #41186613433, formatting #41186613329 and Memory browser #41186613617. Twelve original e03/e04 cosmetic medals complete the 64/64 Chronicle catalog: eight photo-interpretation variants, Morrow's ordinary-world milestone and Char's three tide-gate outcomes. Replay-validated travel/choice journals and completed campaign gates prevent partial or forged awards; all 16 route combinations, idempotence, concealed echoes and catalog uniqueness tested. Initial formatting and an incorrect incomplete-route test assumption were corrected before exact-head green. No ArtJobs, schema change or deployment. Return READY for 96 enemies, 128 items, 64 non-stat unlocks, delivered artwork and full campaign/device acceptance. Not For Human Gate.
-
       Scoped House economy increment: the Thornbound Housekeeper at HD-16 now offers an optional nonlethal 4x4 memory duel alongside both original peaceful choices, with its own telegraphed five-beat combat identity, image brief, stable room ID, replay-safe save restoration, and forged-origin regression coverage. Kind Robots focused PR and exact-head CI follow. 64/64 medals remain complete; remaining enemy/item/unlock catalog, real artwork delivery, full campaign, and rendered acceptance remain active. No ArtJobs or deployment.
+      2026-11-04 PT cleanup pass: stale review with an expired claim; the recorded slice landed (or was superseded) and the note itself lists remaining scope, so back to ready for the next slice rather than done.
 
-      2026-11-04 PT cleanup pass: stale review with an expired claim; the recorded slice
-      landed (or was superseded) and the note itself lists remaining scope, so back to ready
-      for the next slice rather than done.
+      Scoped once-only reward integrity: reject blank keys, negative/fractional/nonfinite grants and safe-integer overflow without consuming claim keys; add adversarial regression cases. Broader enemy/item/unlock catalog remains open. PR and exact-head CI pending.
   - id: t-031
     milestone: m4
     title: "Adversarial balance, continuity and cross-world reachability suite"
