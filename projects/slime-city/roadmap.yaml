@@ -785,10 +785,10 @@ tasks:
   - id: t-034
     milestone: m2
     title: "Clash automatic animated alley strikes, readable card text and Clash-format balance run"
-    status: review
+    status: done
     claimed_by: 20261107T0215Z-slime-city-clash-auto-strikes-t-034-kh7p
     claimed_at: '2026-11-07T02:15:00.000Z'
-    updated: '2026-11-07T02:25:00.000Z'
+    updated: '2026-11-07T02:56:00.000Z'
     passes: 0
     stakes: reversible
     implementation_pr: silasfelinus/kind_robots#4883
@@ -812,3 +812,35 @@ tasks:
       CPU sweep 4500 held-out games: first seat 72% -> 51.3%, crews 34.5-66% ->
       45.6-52.9%, avg rounds 3.6 -> 6.3. Not browser-verified in the agent
       container (no DB); Silas's tablet playtest is the fun acceptance.
+
+      Silas, 2026-11-07 PT follow-up: "The cards shift the layout in and out
+      during turns and it's awkward ... a floating icon when closed, and a hand
+      of fanned out cards that grow large and show the text when selected. This
+      needs great and fluid animation. We can consider upping the hit points of
+      the main character, we want creatures to feel fun and beefy. Slime city
+      can get top priority for any art in the art queue. These missing cards are
+      distracting."
+
+      Same PR: SlimeCityClashHand floats over a fixed zone (no layout shift),
+      closes to a bobbing deck icon, deals cards out of it into an arc, grows a
+      selected card to full size with rules, supports drag-to-alley, and shows
+      tapped fighters as the same big card. Beefier balance: boss 28 (+8 second
+      seat), fighter budgets 14/25, armor/leech 3, round limit 18; sweep of 4500
+      held-out games: crews 46.9-56.5%, first seat 57.4%, 8.6 rounds. Verified
+      in a standalone Vite harness at 834px and 390px with Playwright.
+
+      Art: Slime City already held the queue maximum (1000; next highest 940),
+      but 188 of 228 round-6/7 cells were contract-rejected for doubled full
+      stops (and two for "only when" rules text), and every Auto Art run timed
+      out before committing job ids, so the same 40 cells were resubmitted as
+      duplicate ArtJobs (64607-64646, 64705-64744, 64779-64818). Fixed all 228
+      prompts (0 rejected by the Kind Robots contract) and added a ledger
+      checkpoint commit right after the sweep in auto-art-generate.yml.
+      Cancelling the duplicate PENDING jobs needs a Kind Robots admin token.
+
+      Kind Robots #4883 merged as ddb26fe7a261e49314800ae0d8b904998894b0bb after
+      13/13 latest-head checks passed (four contract shards, contract verifiers,
+      TypeScript, changed-file Prettier, layout, facet smoke, production image,
+      verify x2, GitGuardian). Merged is not deployed: the Unraid schedule picks
+      up the published image. Fun acceptance remains Silas's tablet playtest;
+      duplicate ArtJob cancellation remains a human token step.

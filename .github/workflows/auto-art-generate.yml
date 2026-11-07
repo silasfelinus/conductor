@@ -650,6 +650,33 @@ jobs:
           set -o pipefail
           python scripts/sweep_art_ledgers.py --live 2>&1 | tee "$RUNNER_TEMP/art-ledgers.log"
 
+      # The render steps below routinely hit the 150-minute timeout, which
+      # cancels the run before "Commit conductor results". Without this
+      # checkpoint every run resubmitted the same ledger cells as new ArtJobs
+      # (2026-11-06/07: Slime City cells queued three times at priority 1000).
+      - name: Checkpoint ledger ArtJob IDs before rendering
+        if: ${{ steps.boxhealth.outputs.up == 'true' && steps.krhealth.outputs.up == 'true' }}
+        working-directory: conductor
+        run: |
+          git config user.name "conductor-bot"
+          git config user.email "conductor-bot@users.noreply.github.com"
+          git add projects/*/art/*.yaml
+          if git diff --staged --quiet; then
+            echo "Art ledgers already match submitted ArtJobs."
+          else
+            git commit -m "chore: checkpoint art ledger ArtJob IDs [skip ci]"
+            pushed=false
+            for attempt in 1 2 3 4 5; do
+              if git push origin HEAD:main; then pushed=true; break; fi
+              echo "Checkpoint push race (attempt $attempt), integrating newer main."
+              git pull --rebase --autostash origin main || exit 1
+            done
+            if [ "$pushed" != true ]; then
+              echo "::error::Could not persist ledger ArtJob IDs; stopping before more work."
+              exit 1
+            fi
+          fi
+
       # Shifting Desks has 220 approved style requests. Hand all of them to
       # the durable ArtJob scheduler first, instead of blocking on each render
       # (up to 300s each) inside a 150-minute workflow. Stable request IDs and
