@@ -345,11 +345,11 @@ tasks:
   - id: t-007
     milestone: m2
     title: "Integrate RPG combat masks and telegraphed enemies into match board"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 2026-11-07T234630Z-memory-dungeon-t-007-q8n2
     claimed_at: '2026-11-07T23:46:30Z'
-    updated: '2026-11-07T23:46:30Z'
+    updated: '2026-11-07T23:50:00Z'
     depends_on: t-006
     passes: 0
     stakes: reversible
@@ -365,6 +365,8 @@ tasks:
       2026-11-04 PT cleanup pass: stale review with an expired claim; the recorded slice
       landed (or was superseded) and the note itself lists remaining scope, so back to ready
       for the next slice rather than done.
+
+      Added 640 deterministic perfect-memory combat playthroughs across ten authored rooms, restoring checkpoints after every action. Kind Robots commit a05badda; exact-head CI pending. Remaining t-007 rescue objective, enemy board mutation and larger set-piece.
   - id: t-008
     milestone: m2
     title: "Recruit companions and unlock skills, relic synergies and levels"
