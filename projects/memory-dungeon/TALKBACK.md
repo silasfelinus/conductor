@@ -142,3 +142,8 @@
 **What worked:** nine-route reducer tests covering replay and forged choices; clear "writer packet only" scoping.
 
 **What to improve:** the PR body used a free-form summary instead of the handoff template, costing two failed CI cycles. Fill the template headings before opening the PR.
+## 2026-11-07 PT | Reviewer green merge | memory-dungeon/t-038 | Conductor #7145
+
+**Decision:** squash-merged reversible e12 Vesper writer packet (`8c5487a4`) after 24 of 25 checks passed on head `3db0b31e`; the one red "Validate Worker PR handoff" run was superseded by a later green run of the same check once the PR template headings were restored. Packet is writer-only: not integrated into the runtime, no ArtJobs.
+
+**What worked:** nine-route, replay and forged-choice contract tests. **What to improve:** fill the handoff template headings on first PR open to avoid a red-then-green check. t-038 stays an umbrella (runtime integration of e12, later sites, endings and device QA remain).
