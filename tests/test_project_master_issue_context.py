@@ -72,3 +72,22 @@ def test_shared_findings_do_not_override_source_of_truth_or_prematurely_close():
         "final human creative verdict",
     ):
         assert guarantee in body
+
+
+def test_every_active_project_resolves_to_a_master_issue():
+    """Active/continuous projects need their own hub or a parent's (kaizen from PR #7123)."""
+    issues = yaml.safe_load(DIRECTORY.read_text(encoding="utf-8"))["master_issues"]
+    overrides = yaml.safe_load((ROOT / "project-overrides.yaml").read_text(encoding="utf-8"))["overrides"]
+    missing = [
+        row["slug"]
+        for row in overrides
+        if row.get("status") in {"active", "continuous"}
+        and row["slug"] not in issues
+        and row.get("parent") not in issues
+    ]
+    assert not missing, f"active projects without a master issue: {missing}"
+
+
+def test_guide_keeps_master_issues_open_across_incremental_prs():
+    text = GUIDE.read_text(encoding="utf-8")
+    assert "Refs owner/repo#N" in text and "not `Closes" in text
