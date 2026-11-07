@@ -12676,3 +12676,8 @@ Worker pattern: good test depth and honest "procedural shapes, not painted art" 
 ## 2026-11-07 — Agent (reviewer): merged conductor#7128 (slime-city/t-034 status record)
 - State-only roadmap record (one file, +31) for kind_robots#4883; reversible, checks green. Merged. t-034 stays `review` until #4883 merges green; it was still open/blocked at review time, so no implementation was merged or judged here.
 - Worker pattern: PR body quoted Silas's playtest verbatim and stated the browser-verification gap honestly. Kaizen: flip t-034 to done in the same close-out PR as #4883's merge.
+
+## 2026-11-07 — Agent (branch-medic): two superseded rainbow-restyle branches need ref deletion
+- conductor `claude/focused-johnson-n4v4pk` (7 commits, 227 behind main): its docs/art-direction section and restyle test/generator edits are already on main via #7111/#7114/#7122 (generator differs by one word; main is newer). Conflicts in art-prompts.yaml, generator and test. Superseded, nothing to land.
+- kind_robots `claude/ruler-hooked-rainbow-restyle` (single "WIP ... in progress" commit 75a588d, 11 component files): main's `ruler-hooked-nav.vue` already carries the spectrum-rule/indigo restyle. Looks superseded; no open PR.
+- Deletion not done: the session's `git push --delete` was refused by the permission classifier (an earlier attempt hung up). Needs `git push origin --delete` of both, or branch-janitor `force_delete_branches` for the conductor ref. Until then `select_role.py` keeps routing to branch-medic.
