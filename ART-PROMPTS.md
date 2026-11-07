@@ -683,11 +683,11 @@ Verify provenance of finished generated assets before claiming coverage; keep pr
 - monstrique-scrapbook.webp: collectible magazine clippings, character biographies, concert cards, locked image silhouettes and tastefully suggestive non-explicit character portrait slots.
 
 ## MONSTRIQUE — Seven decade-specific album collectible concepts (2026-11-06 PT)
-- **1964 Beach Hex**: analog surf-pop drive-in beach concert sleeve. Draculina, original werewolf Roxie, frog/salamander Laguna, mummy Nefertari. Crossed-out Francesca origin inset. Aged 1960s printing, original logo family.
-- **1974 Velvet Crypt**: psychedelic prog / glam gatefold sleeve. Draculina, Roxie, stitched scientist Francesca and Nefertari; removed Laguna name on lyric credits. Truly 1970s photography and paper/ink.
-- **1986 Night Creatures**: chrome MTV arena-rock album sleeve. Draculina, Roxie, Francesca and newly hired fly-headed Vespa, Nefertari crossed off old lineup. 1980s lasers, synthesizer and printed metallic inks.
+- **1964 Beach Hex**: analog surf-pop drive-in beach concert sleeve. Draculina, original werewolf Roxie, frog/salamander Laguna, mummy Cleo Pappatra. Crossed-out Francesca origin inset. Aged 1960s printing, original logo family.
+- **1974 Velvet Crypt**: psychedelic prog / glam gatefold sleeve. Draculina, Roxie, stitched scientist Francesca and Cleo Pappatra; removed Laguna name on lyric credits. Truly 1970s photography and paper/ink.
+- **1986 Night Creatures**: chrome MTV arena-rock album sleeve. Draculina, Roxie, Francesca and newly hired fly-headed Vespa, Cleo Pappatra crossed off old lineup. 1980s lasers, synthesizer and printed metallic inks.
 - **1994 Silver Bite**: grungy motel parking lot band cover. Roxie, Francesca, Vespa and slime creature Blobzo; departed Draculina torn from background poster. Non-glossy film-grain realism.
-- **2006 Back From the Grave**: theatrical emo/goth reunion cover. Draculina back, Roxie, Blobzo and restored mummy Nefertari. Vespa scandal clipping. Dramatic era-specific editorial look.
+- **2006 Back From the Grave**: theatrical emo/goth reunion cover. Draculina back, Roxie, Blobzo and restored mummy Cleo Pappatra. Vespa scandal clipping. Dramatic era-specific editorial look.
 - **2017 Blood Moon**: immaculate idol photobook. Draculina, Roxie, distinctly frog/salamander Laguna and youthful tartan-collared Scottish werewolf Siobhan of The Pack; missing Blobzo collectible.
-- **2024 Six Decades of Screams**: glossy luxury legacy-anniversary release. Draculina, Laguna, Nefertari and polished younger Pack replacement, with the departed Siobhan fan pin. The new recruit is distinct from Siobhan; not an old wolf re-render.
+- **2024 Six Decades of Screams**: glossy luxury legacy-anniversary release. Draculina, Laguna, Cleo Pappatra and polished younger Pack replacement, with the departed Siobhan fan pin. The new recruit is distinct from Siobhan; not an old wolf re-render.
 - Preserve source image/year/artists/prompt/source paths and exact delivery state. The seven generated chat images are *concepts*, not verified queued ArtJobs. Follow ALBUM-ART-REGISTER.md before publishing or attaching imagery.
