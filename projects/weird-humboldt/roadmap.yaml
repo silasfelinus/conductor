@@ -794,7 +794,7 @@ tasks:
   - id: t-022
     milestone: m3
     title: "Build seeded random side-stories between stay/follow companion crossroads"
-    status: claimed
+    status: done
     depends_on: [t-005, t-009, t-019]
     owner: worker
     passes: 0
@@ -818,13 +818,22 @@ tasks:
 
       2026-11-04 PT cleanup pass: released an expired claim (no activity since the claim, no
       open PR found for it); back to ready.
+
+      2026-11-07 PT reconciliation: already implemented on kind_robots main before this cycle.
+      utils/ecotone/engine.ts RunState carries openingState, meetingOrder, followHistory,
+      newcomerOrder and restoreRun; seeded side encounters, stay/follow crossroads and
+      guaranteed meeting order are exercised by verifyEcotoneCompanionContinuity (441
+      campaigns) and verifyEcotoneOptimalPaths (14336 board-faithful runs, 28 companion/lens
+      pairs earn hope on all lenses). All 22 verifyEcotone*.test.ts scripts re-run on
+      kind_robots main d9b2efa: exit 0. No new code needed; art/publish gate (t-004/t-007)
+      unchanged.
     claimed_by: 2026-11-07T054945Z-t022-recon
     claimed_at: '2026-11-07T05:49:45Z'
-    updated: '2026-11-07T05:49:45Z'
+    updated: '2026-11-07T05:50:00Z'
   - id: t-024
     milestone: m2
     title: "Author full cocaine, meth and MDMA opening-lens journeys"
-    status: waiting
+    status: ready
     depends_on: [t-005, t-019, t-022]
   - id: t-023
     milestone: m2
@@ -892,7 +901,7 @@ tasks:
   - id: t-027
     milestone: m2
     title: "Generate and curate high-value middle encounters and art briefs"
-    status: waiting
+    status: ready
     depends_on: [t-026, t-022]
     owner: null
     passes: 0
