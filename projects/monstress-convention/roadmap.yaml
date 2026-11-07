@@ -180,19 +180,18 @@ tasks:
   - id: t-011
     milestone: m4
     title: "Security regression suite for mature opt-in and CHILD restrictions across all discovery and direct access"
-    status: claimed
+    status: review
     depends_on: t-001
     owner: worker
     claimed_by: 20261107120524Z-monstrique-nav-t011-b7m4
     claimed_at: '2026-11-07T12:05:24.337Z'
-    updated: '2026-11-07T12:05:24.337Z'
+    updated: '2026-11-07T12:10:00.201Z'
     passes: 0
     stakes: reversible
-    note: >-
-      Require authenticated opt-in and no CHILD role (including CHILD+ADMIN);
-      verify nav, highlight, project list, search/discovery, SSR hydration, direct
-      game route, game JSON/API, ArtImage access. ?showMature=true must never grant access.
-      Do not publish externally as part of this task.
+    note: |-
+      Require authenticated opt-in and no CHILD role (including CHILD+ADMIN); verify nav, highlight, project list, search/discovery, SSR hydration, direct game route, game JSON/API, ArtImage access. ?showMature=true must never grant access. Do not publish externally as part of this task.
+
+      Scoped admin-navigation check in kind_robots: moved Monstrique to the first Admin destinations and added role/maturity/CHILD launch-visibility regression tests. Remaining t-011 security matrix remains outstanding, so return this task to ready after the nav fix merges.
   - id: t-012
     milestone: m4
     title: "Adversarial end-to-end playthroughs and visual/performance acceptance preparation"
