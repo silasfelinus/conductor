@@ -1797,22 +1797,15 @@ tasks:
 - id: t-098
   milestone: m5
   title: 'Console UI redesign: ornate bezel shell, HUD, five-tab command deck, Creatures and Market screens with generated UI art'
-  status: ready
-  owner: null
+  status: done
   stakes: reversible
   passes: 0
   source_reference: projects/cthulhuquarium/docs/t-098-t-099-console-redesign.md
-  note: >-
-    Silas, 2026-11-05 PT, with four ChatGPT reference mockups (Tank, Feed, Creatures, Market): "It still
-    looks more like a webapp than a console game ... This version is a little more freeware slop than I
-    want, the design is a little too childish, but it's still better than what we have. I need a front end
-    redesign, actual art assets generated, and much better fish designs for a lot of our fish." Take the
-    reference's structure (bezelled tank as the stage, top HUD capsules, left care meters, bottom
-    illustrated tab deck with L/R shoulder hints and button-prompt footer, featured-creature panel plus
-    card strip, pedestal shop cards) and drop its childishness (chibi faces, blush, sparkle overload).
-    Design rules in the source_reference doc. Real generated UI art (tab icons, title cartouche, frame
-    ornaments), not CSS-only placeholders, once rendered.
-  updated: '2026-11-05T21:40:00Z'
+  note: |-
+    Silas, 2026-11-05 PT, with four ChatGPT reference mockups (Tank, Feed, Creatures, Market): "It still looks more like a webapp than a console game ... This version is a little more freeware slop than I want, the design is a little too childish, but it's still better than what we have. I need a front end redesign, actual art assets generated, and much better fish designs for a lot of our fish." Take the reference's structure (bezelled tank as the stage, top HUD capsules, left care meters, bottom illustrated tab deck with L/R shoulder hints and button-prompt footer, featured-creature panel plus card strip, pedestal shop cards) and drop its childishness (chibi faces, blush, sparkle overload). Design rules in the source_reference doc. Real generated UI art (tab icons, title cartouche, frame ornaments), not CSS-only placeholders, once rendered.
+
+    Console UI shipped on kind_robots main: bezel shell, top HUD capsules, care meters, five-tab command deck with L/R and button-prompt footer, Creatures and Market screens (kind_robots#4840). The 13 painted Krea 2 UI pieces (tab icons, coin, plinth, corner ornament, meter and HUD icons) replaced the SVG fallbacks via canon cthulhuquarium#80 and kind_robots#4862. Live after the next production Force Update. Follow-ups not in scope: portrait-phone tank crop and the logged-out shop-window intro restyle.
+  updated: '2026-11-07T02:14:00+00:00'
 - id: t-099
   milestone: m5
   title: 'Fish roster redesign: one in-tank sprite style for all 151 species, new designs for the stock-fish, object and sheet-shaped ones'

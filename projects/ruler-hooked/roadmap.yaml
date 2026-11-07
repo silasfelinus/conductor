@@ -992,35 +992,15 @@ tasks:
 - id: t-054
   milestone: m6
   title: 'Kingdom-decay console redesign: full-screen Lake/Map/Court/Gear/Fishopedia shell, meters, petitions, and lake/bank/sky decay ramps'
-  status: ready
-  owner: null
+  status: done
   stakes: reversible
   passes: 0
   source_reference: projects/ruler-hooked/docs/t-054-kingdom-decay-console.md
-  note: >-
-    Silas, 2026-11-05 PT, with three mockups (lake, map, court) of the kingdom gone bad: "The designs have
-    been too cutesy, so I had some demos done for when the kingdom goes bad due to poor management. This is
-    still a work in progress, it needs more individuality, it looks like every other ai slop project. But
-    it's a clear visual design and much closer than the webapp look we've had." Build the mockups'
-    structure on the existing compositor and axes. Add decay ramps for the lake, near bank and sky, which
-    today have one state each. Chrome tarnishes with the reign. Pick the individualizing art direction from
-    the 2026-11-05 style test before mass-rendering layers. Details in source_reference.
-    2026-11-05 PT reconciliation (session 01L5NKxYbNo54acwERnr8y86, working in parallel from
-    Silas's earlier "janky webapp" ask): kind_robots#4834 (merged) already ships much of the
-    "Keep (structure)" list as a console shell, in the PRE-decision storybook palette. Covered:
-    full-screen first-person lake with rod (1); title cartouche plus coin/day/time capsules (2);
-    left Kingdom Health meters for all five axes (3); bottom five-tab deck (6); court with the
-    petitioner on the left, the petition on parchment and up to three choice cards with signed
-    deltas (8). Not covered: the petition pennant (4) (court tab badge only); button-prompt
-    footer and t-053's timing bar (5); the painted map with its region card and objective (7)
-    (today a postcard "Kingdom Atlas"). Also not covered: all the decay ramps, tarnishing
-    chrome, and the Chronicle/Broadside restyle. Build on it: the `.rh-` chrome in
-    ruler-hooked-game.vue becomes the Chronicle frame. Also landed in #4834 (from Silas's same
-    ask): Quill's situational tutorial (tutorial.ts) and the Town Crier's daily proclamations
-    (dailyEvents.ts, in-game days only). KEY FINDING for the ramp plan: all 36 rendered region
-    layers are OPAQUE RGB paintings, so the full-frame z-stack only ever shows its top layer.
-    #4834 uses layers as whole-scene vistas instead. See t-059 before rendering ramp layers.
-  updated: '2026-11-05T22:20:00Z'
+  note: |-
+    Silas, 2026-11-05 PT, with three mockups (lake, map, court) of the kingdom gone bad: "The designs have been too cutesy, so I had some demos done for when the kingdom goes bad due to poor management. This is still a work in progress, it needs more individuality, it looks like every other ai slop project. But it's a clear visual design and much closer than the webapp look we've had." Build the mockups' structure on the existing compositor and axes. Add decay ramps for the lake, near bank and sky, which today have one state each. Chrome tarnishes with the reign. Pick the individualizing art direction from the 2026-11-05 style test before mass-rendering layers. Details in source_reference. 2026-11-05 PT reconciliation (session 01L5NKxYbNo54acwERnr8y86, working in parallel from Silas's earlier "janky webapp" ask): kind_robots#4834 (merged) already ships much of the "Keep (structure)" list as a console shell, in the PRE-decision storybook palette. Covered: full-screen first-person lake with rod (1); title cartouche plus coin/day/time capsules (2); left Kingdom Health meters for all five axes (3); bottom five-tab deck (6); court with the petitioner on the left, the petition on parchment and up to three choice cards with signed deltas (8). Not covered: the petition pennant (4) (court tab badge only); button-prompt footer and t-053's timing bar (5); the painted map with its region card and objective (7) (today a postcard "Kingdom Atlas"). Also not covered: all the decay ramps, tarnishing chrome, and the Chronicle/Broadside restyle. Build on it: the `.rh-` chrome in ruler-hooked-game.vue becomes the Chronicle frame. Also landed in #4834 (from Silas's same ask): Quill's situational tutorial (tutorial.ts) and the Town Crier's daily proclamations (dailyEvents.ts, in-game days only). KEY FINDING for the ramp plan: all 36 rendered region layers are OPAQUE RGB paintings, so the full-frame z-stack only ever shows its top layer. #4834 uses layers as whole-scene vistas instead. See t-059 before rendering ramp layers.
+
+    Kingdom-decay console on kind_robots main: decay ramps (lake poisoned/murky/clear, near_bank dead/trampled/grassy, sky choked/overcast/open) with art fallbacks, the tyranny pins, previewChoiceDeltas, four-meter HUD, petition pennant, court choice hand with signed deltas, named-region map, tension meter, bumpers/keyboard/gamepad and A/X footer, and the stricter rotten tier (kind_robots#4868 via #4870). Silas's 2026-11-06 PT rainbow lock (art-direction.md section 10) superseded the Chronicle + Broadside chrome, so kind_robots#4882 restyled the console in the rainbow language (rotten clashes into chartreuse/hot pink/violet over indigo rather than darkening). The decay-state paintings are not rendered: the 165 Chronicle-style art requests are held (conductor#7122) until the rainbow specimen set is reviewed, then restaged with build_ruler_hooked_art_queue.py --restage; until then new states fall back to existing paintings.
+  updated: '2026-11-07T02:14:01+00:00'
 
 - id: t-055
   milestone: m6
