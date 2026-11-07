@@ -844,3 +844,29 @@ tasks:
       verify x2, GitGuardian). Merged is not deployed: the Unraid schedule picks
       up the published image. Fun acceptance remains Silas's tablet playtest;
       duplicate ArtJob cancellation remains a human token step.
+
+  - id: t-035
+    milestone: m2
+    title: "Clash Solforge-style card leveling and 40-life bosses"
+    status: review
+    claimed_by: 20261107T0310Z-slime-city-clash-leveling-t-035-kh7p
+    claimed_at: '2026-11-07T03:10:00.000Z'
+    updated: '2026-11-07T03:40:00.000Z'
+    passes: 0
+    stakes: reversible
+    implementation_pr: silasfelinus/kind_robots#4884
+    note: |-
+      Silas, 2026-11-07 PT: "Hit points should be higher I'm thinking 40.
+      Something we should borrow from solforge: cards that evolve as you play
+      them. So something might be weak first round, but have a great round
+      three."
+
+      Kind Robots PR #4884: every card starts a match at level 1 and returns one
+      level stronger each time its crew plays it, up to 3 (per-level fighter
+      budgets 11/14/18 and 21/25/30, +1 power at L3, spells/traps +power per
+      level, bigger gear at L3; levels in match state so replay stays exact).
+      Boss 40 (+8 second seat), round limit 24. Cards show level pips and
+      next-level stats, L3 glows gold, fighters wear stars, plays pop a LEVEL UP
+      toast. Rebalanced (armor 2.5, leech 2, swarm 2, volatile 0); CPU sweep of
+      4500 held-out games: crews 45.4-55.4%, first seat 53.5%, 9.5 rounds, about
+      10.6 cards to L2 and 4.8 to L3 per crew per game.
