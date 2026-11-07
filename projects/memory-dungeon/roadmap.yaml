@@ -233,11 +233,11 @@ tasks:
   - id: t-001
     milestone: m1
     title: "Seeded expedition reducer, room schema and Classic adapter"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 2026-11-07T164739Z-memory-dungeon-t-001-v9q6
     claimed_at: '2026-11-07T16:47:39Z'
-    updated: '2026-11-07T16:47:39Z'
+    updated: '2026-11-07T16:52:00Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -274,6 +274,8 @@ tasks:
       bouts, and rendered device acceptance. The Chromium browser interruption test was not
       run locally and is left to CI.  Merged as kind_robots #4801; back to ready for the
       remaining scope.
+
+      Added a pure seeded three-floor six-room-per-floor simulator with versioned saves, deterministic unique room identities, immutable idempotent outcomes and adversarial Node regression tests. Partial t-001 only; Classic adapter and real gameplay integration remain. Kind Robots PR pending CI.
     implementation_pr: 'silasfelinus/kind_robots#4801'
   - id: t-002
     milestone: m1
