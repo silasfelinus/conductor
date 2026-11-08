@@ -40,7 +40,17 @@ Kind Robots [#4908](https://github.com/silasfelinus/kind_robots/pull/4908) intro
 - **Mechanical-fingerprint diagnostics:** report completely duplicated second/third-level action+static profiles (a smell, not an automatic flaw) and cards whose second and third levels have exactly the same action/static signature.
 - **Balance diagnostics:** deck-plan-specific faction win rates, first-seat skew, match length and draws. No arbitrary hard win-rate threshold is asserted.
 
-**CI status at report authoring:** the new suite was submitted to GitHub Actions and had not yet produced an independently verified complete-match report. Keep this distinct from the earlier #4907 author's default-deck sweeps. Update this report with the final #4908 result after GitHub checks finish.
+## Verified results from GitHub Actions
+
+Kind Robots #4908 **merged** as `f2a7a6ecd712979683f686bc9529e4a8c0a45c99` after all eight final-head workflow runs completed successfully, including the four Contract Tests shards, TypeScript, changed-file Prettier, layout, architecture, schema, facet smoke and image-build checks. In Contract Tests shard 1 the new CLASH suite completed:
+
+- **Solo:** 1,080 matches, 135 deterministic replays, **49.6% first-seat win rate** excluding draws, **0.0% draws**, average **9.9 rounds**.
+- **Reachability:** 279/300 cards were actually selected in at least one CPU match, **160 distinct cards were played at L3**. The 21 not selected were: Backwater IOU, Stolen Bone Saw, Spare Nine Lives, Second Pounce Rig, Encore or Die, Union Reallocation, Furnace Overdrive, Foreman Crowbar, Wrong Side of the Blast, Posthumous Saint Medal, Tunnel Harpoon, Acquisition Clause, Collection Badge, Secondhand Halo, Ghoul-Et-Lot, Bag of Very Angry Bees, Emergency Wings, Theftproof Toolkit, Rooftop Map, Broken Halo and Union Suit. These are audit priorities, not necessarily broken cards.
+- **Duplicates:** Two groups share the exact L2+L3 mechanics: Banana Bouncer / Overtime Toll and Backwater IOU / Compound Notice. No crafted card has identical L2 and L3 ability profiles internally.
+- **Alliance:** 150 matches, **40.0% first-seat wins**, no draws. General win rates: Catgirls 54%, Bloodfairies 50%, Ironjaw 56%, Riot 60%, Undertow 42%, Exchange 38%. The factions' one-time powers were used in 90–100% of their games.
+- **Constructed Solo deck spread (small samples):** the faction-half-0 sample showed Undertow 25% versus Ironjaw 65% and Bloodfairies 62.5%; the faction-half-1 sample showed Exchange 70%; neutral-bank-4 sample showed Riot 72.5% and Undertow 25%. These are not proof of intrinsic faction imbalance: deck composition is intentionally artificial and each crew has only 40 results per plan. Follow up with strategic deck selection and more seeds.
+
+**Interpretation:** the replay/termination machinery works across varied decks. This demonstrates the previous starter-only sweep was insufficient: it missed 21 cards never chosen, reduced L3 reachability, two mechanically repeated journeys, and a possible Alliance seat bias. The CPU uses simple placement/value heuristics and does not yet fully price stage-level synergies; no human fun acceptance is claimed.
 
 ## Artwork and acceptance
 
