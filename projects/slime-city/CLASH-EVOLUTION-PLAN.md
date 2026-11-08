@@ -1,0 +1,152 @@
+# Slime City CLASH: plan for crafted evolutions and evolution art (230 cards + art for all 300)
+
+**Written:** 2026-11-08 PT, after Silas's review of the first data-driven attempt:
+*"We should have fresh art on the evolutions, not just frame effects. Each card should be custom created.
+... doing it programmatically has a big risk of just giving stat boosts to later game cards, instead of
+making substantive design changes. Do some research on good ccg design before moving forward and creating
+a plan."*
+
+**Status:** plan for Silas's approval. Governs `t-041` (230 remaining cards) and a new art track. Builds on
+`CLASH-EVOLUTION-DESIGN.md` (the first 70) and `CARD-REDESIGN-300.md` (the per-card ledger and its
+definition of done).
+
+---
+
+## 1. What the research says
+
+**Solforge (the leveling model we copy).**
+- Power is spread across a card's three levels, not stacked onto the last one. Justin Gary: *"the better a
+  card is at level 1, the worse it will be at later levels."* A reviewer put it as cards that have *"a killer
+  level 1 but don't progress well"* versus cards that *"start out mediocre but arrive somewhere insane."*
+  ([Justin's Design Diary](https://justingarydesign.substack.com/p/justins-design-diary),
+  [PHD Games review](https://www.phdgames.com/2022/03/28/playing-perusing-solforge-fusion/))
+- Leveling exists *"to tell more interesting stories and give players more interesting play decisions than
+  with a single static card."* The core tension is *play it now* versus *invest in its future*.
+- The cautionary half: many real Solforge cards only scale a number (Grimgaunt Predator's bonus is +2, then
+  +4, then +6; Ashurian Mystic +1/+2/+4) ([SolForge wiki](https://solforge.fandom.com/wiki/Card_List_Nekrium)).
+  Those are the forgettable cards. Our bar is higher than Solforge's average card.
+- Levels must stay recognizably the same card, and progression should be guessable once a player has seen
+  the card's arc.
+
+**Magic (Mark Rosewater).**
+- *Top-down design*: start from the flavor (who this character is and what their story does), then find
+  mechanics that make you feel it ([Top-Down and Goal](https://magic.wizards.com/en/news/making-magic/top-down-and-goal-2003-06-09)).
+- *Lenticular design*: every card has an obvious surface use for a new player and a hidden strategic layer
+  for a veteran. Complexity hides best in *timing* (when to play, when to hold), which is exactly what
+  leveling creates ([Lenticular Design](https://magic.wizards.com/en/news/making-magic/lenticular-design-2014-03-31)).
+
+**Hearthstone.**
+- *Sideways design*: *"Instead of making cards better, cards are made situationally better"* (Ben Brode).
+  A level-up that is strictly bigger is the least interesting option.
+- Spellstones and Corrupt are earned upgrades. Spellstones are *"mini quests that level up in your hand
+  ... and wouldn't force you to build around them"* (Peter Whalen,
+  [GamesRadar](https://www.gamesradar.com/blizzard-talks-spellstones-epic-loot-and-christmas-gifts-in-hearthstones-kobolds-catacombs)).
+  Upgrades feel great when you did something to earn them.
+- Big moments: legendaries go *"a little bit more epic"*. Whalen: *"we want some of those moments that are
+  super exciting"* but *"you're not going to win every time."* Design rule: *little victories*, moments
+  where a player feels they turned the game ([Hearthstone 10 rules](https://80.lv/articles/hearthstone-10-rules-of-great-design)).
+
+**Shadowverse.**
+- Evolving is a scarce, timed decision (limited evolve points, once per turn), and the evolve effect is the
+  moment ([Shadowverse](https://en.wikipedia.org/wiki/Shadowverse)). The worry players raise when evolving
+  becomes abundant: the decision disappears. Leveling only matters if *when* you level is a choice.
+
+## 2. What went wrong in the first data-driven pass (parked, not merged)
+
+The Kind Robots branch `claude/pensive-albattani-ibljzj` (commits `b5a4093`, `5e7659b`) gave 230 cards
+level 2/3 stages from a small effect language. It runs, and it is tested, but it fails the bar:
+
+- **Mostly "more":** most level 2s add a rider (heal 1, deal 1, +1 power), and most level 3s are the same
+  rider plus an area effect. Later is strictly better. That is the stat-boost trap in effect clothing.
+- **The stat ramp is universal:** every card's attack and life roughly double from L1 to L3 regardless of its
+  design. No early bloomers and no tradeoffs, which is the opposite of the Solforge principle.
+- **Factions blurred:** with one shared vocabulary, Catgirls, Ironjaw and Exchange all ended up healing,
+  shielding and draining in similar ways.
+- **No story arcs, no new art, no named counterplay, no CPU understanding** of the new abilities.
+
+Keep: the engine hooks (enter, hit, knockout, death, round end, turn start, spring) and the cinematic
+"evolution moment" are reusable infrastructure. Drop: the authored content and the one-size stat ramp.
+The branch stays unmerged until this plan is approved; then only the infrastructure is salvaged.
+
+## 3. Design rules for every card
+
+1. **Story first (top-down).** Each card gets a three-beat arc in one line each (who they are, what happens
+   to them, what they become). Mechanics come second and must make the arc felt.
+2. **Pick a trajectory, then a stat curve that matches it.** No universal ramp. Each card declares one:
+   - **Early bloomer:** best at L1; L2/L3 trade raw power for utility or a new role.
+   - **Late bloomer:** weak or awkward at L1; L3 transforms into something worth planning around.
+   - **Role shift:** each level does a *different job* (brawler → bodyguard → field medic).
+   - **Price to pay:** the level-up costs something (life, a sacrifice, a weaker body) for a bigger payoff.
+   - **Earned:** L3 wants a condition met during the match (a Spellstone-style mini quest).
+   - **Steady:** simple scaling, allowed only for a minority of cards, mostly cheap commons.
+3. **L2 adds a decision, not a number.** A new timing, targeting or positioning choice (sideways).
+4. **L3 is a moment, not a bigger L2.** A named transformation, a rules change, fresh art, the cinematic, and
+   a visible counterplay. "Something cool happens no matter what" means *something different happens*.
+5. **One clean sentence per level** (fits the 160-character card face). Depth lives in timing and
+   combinations, never in hidden rules (lenticular).
+6. **Named counterplay per card**, written down: how the opponent beats the L3 when they see it coming.
+7. **Faction identity is protected.** Each faction owns its tools and borrows sparingly:
+
+   | Faction | Owns | Never or rarely |
+   |---|---|---|
+   | Gene Riot Catgirls | rescue (revive, heal), ambush timing, lives that cheat death | wide area damage |
+   | Punk Bloodfairies | crowd (tokens, swarm), life-steal, encores (replays) | armor, slow defense |
+   | Ironjaw Chrome Ogres | solidarity (shields, armor), heavy bodies, boss breakthrough | randomness, drains |
+   | Riot Saints | seeded gambles, martyrdom (death blasts), friendly fire | healing, armor |
+   | Undertow Intelligence | stuns, information (draw, scout), patience payoffs, precision | big bodies, swarm |
+   | Meat Exchange | boss drains, bounties, debt that compounds, buyouts | healing allies, stuns |
+   | Mercenaries | one singular weird joke each, gentler numbers | copying a faction's signature |
+
+8. **Mix targets per faction (30 cards):** at least 8 role shifts, 5 late bloomers, 5 early bloomers, 4 price
+   cards, 3 earned, at most 5 steady. Reviewed per wave so no faction drifts into "everything gets bigger".
+9. **Engine honesty:** card text is the rule. Bespoke code is fine when a card needs it; nothing is forced
+   into a shared template.
+
+## 4. Fresh evolution art (all 300 cards)
+
+Today one painting serves all three levels and only the frame changes. Plan:
+
+- **New card art for L2 and L3 of every card: 600 paintings** (the first 70 included). Each evolved painting is
+  the *same character, transformed* by its story beat: the clinic cat now wears a stolen surgeon's coat,
+  the Bassquake Colossus has grown a wall of speakers, and so on.
+- **Method:** Flux Kontext rounds from each card's existing L1 ArtImage, so face, palette and identity
+  carry over. The pipeline already supports this (`engine: kontext` in `enqueue_art_requests.py`, used by
+  the kr-arcade Ghost Trail rounds). Each prompt is written by hand from the card's arc: no template
+  prompts (the `art_ledger_authoring.py` check enforces this).
+- **Board tokens:** creatures get a new L3 token set (fierce/guard/hurt) once their L3 card art is accepted,
+  roughly 110 creatures × 3 moods. These go in a later round, re-posed from the accepted L3 art.
+- **Curation:** two seeds per stage; reject anything that loses the character's identity or reads as a
+  different creature (and keep the ogres un-Shrek: chrome jaws, non-green skin).
+- **Wiring:** `SLIME_CITY_ART.cards` gains per-level keys; the card face, hand, board and collection show the
+  art for the card's current level.
+
+## 5. Process per card
+
+1. **Design sheet row** in `CARD-REDESIGN-300.md` (or per-faction sheets): arc (3 beats), trajectory, L1/L2/L3
+   one-line rules, stat curve, counterplay, and the two art prompts.
+2. **Silas review per batch** (a gate on subjective design acceptance, before code).
+3. **Implementation:** per-card code where needed, a level-specific stat curve per trajectory, a battle
+   fixture showing the payoff and the counterplay, and a CPU heuristic so the computer plays the card on
+   purpose.
+4. **Art round** queued from the approved arc; wired after curation.
+5. **Balance sweep** per wave, and a reachability check (how often L3 actually happens).
+
+## 6. Phasing
+
+| Phase | Scope | Gate |
+|---|---|---|
+| **0. Pilot** | 10 Catgirls cards, end to end: design sheet, code, fixtures, L2+L3 Kontext art, board tokens | Silas plays it and approves the feel |
+| 1 | Remaining 20 Catgirls cards + their art | design batch review |
+| 2–6 | Bloodfairies, Ironjaw, Riot, Undertow, Exchange (30 each), one faction per wave | batch review per faction |
+| 7 | 50 mercenaries | batch review |
+| Art backfill | L2/L3 art for the first 70 hand-built cards | curation |
+| Re-tune | crew balance across the finished roster | sweep report |
+
+## 7. Questions for Silas
+
+1. **Trade-offs:** is it OK that some cards get *weaker* at L3 in raw stats (early bloomers), as in Solforge?
+2. **Choice:** should some level-ups offer a choice between two L3s, or keep every path fixed?
+3. **Earned L3s:** should a few L3s require a match condition (Spellstone-style), or always unlock by
+   replaying the card?
+4. **Art scope:** new paintings at both L2 and L3, or L3 only for the first pass (300 instead of 600)?
+5. **Pilot pick:** start with the Catgirls as proposed, or another faction?
