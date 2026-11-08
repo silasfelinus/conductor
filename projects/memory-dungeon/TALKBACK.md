@@ -147,3 +147,9 @@
 **Decision:** squash-merged reversible e12 Vesper writer packet (`8c5487a4`) after 24 of 25 checks passed on head `3db0b31e`; the one red "Validate Worker PR handoff" run was superseded by a later green run of the same check once the PR template headings were restored. Packet is writer-only: not integrated into the runtime, no ArtJobs.
 
 **What worked:** nine-route, replay and forged-choice contract tests. **What to improve:** fill the handoff template headings on first PR open to avoid a red-then-green check. t-038 stays an umbrella (runtime integration of e12, later sites, endings and device QA remain).
+
+## 2026-11-07 PT | Reviewer merge | memory-dungeon/t-025 | Conductor #7162
+
+**Decision:** squash-merged reversible docs-only Earth letter encounter packet #7162 (`100bdf693`); 24 of 25 checks passed at first, the red "Validate Worker PR handoff" was a PR-body template failure, fixed by rewriting the body, and the rerun went green. Packet is content only: no runtime binding, tests or ArtJobs. Stale branch `worker/memory-dungeon-roadmap-duplicate-keys-20261107` (no shared history with main, fix already on main) left for branch-janitor.
+
+**What worked:** explicit state ledger, 108-case spec, honest "not integrated" scoping. **What to improve:** fill the handoff headings when opening the PR (repeat of the t-038 miss); consider a pre-open check.
