@@ -914,3 +914,16 @@ tasks:
 
       First implementation increment merged in kind_robots PR #4895 (squash 1207cca9de759e95c6ee616ee102b0e1e43b9e76) after all 11 latest-head checks passed. Fifteen existing cards across six factions and mercenaries have mechanically distinct level variants: weak-to-apex, pacifist healers and spies, adjacency anthems, deterministic randomized attacks, knockout memory, ally replacement as sacrifice, multi-lane tokens, and L3 snares. All 70 existing-card concepts are documented in merged conductor PR #7153 and projects/slime-city/CLASH-EVOLUTION-DESIGN.md. KEEP task ready for implementing the remaining 55 concepts, improving CPU tactical utilization, L3 reachability and fun-focused adversarial balance. No new collectible IDs, faction hate, economy, artwork changes or publication.
     updated: '2026-11-07T23:15:57Z'
+  - id: t-038
+    milestone: m2
+    title: "CLASH ALLIANCE: two-faction 30-card decks with one-time general faction powers"
+    status: done
+    claimed_by: 20261107T2330Z-slime-city-alliance-t-038-pa1b
+    claimed_at: '2026-11-07T23:30:00.000Z'
+    updated: '2026-11-08T00:05:00.000Z'
+    passes: 0
+    stakes: reversible
+    note: |-
+      Silas, 2026-11-07 PT: "I want a new mode where the factions can be combined. 30 card decks. Needs to be supported in clash and in deck builder modes. Also want the idea of a faction power. So if you have two factions, one is the general and the deck uses their power. Power should be one time use during a match." Clarified: "Factions combined means you pick two factions, one of them is general, and you can make a 30 card deck using either faction or mercs."
+
+      Shipped in kind_robots PR #4897 (squash 0829df42d7e20a289024f76ee127d4e1450a2071) after all 13 latest-head checks passed. utils/slimeCity/alliance.ts: two different factions, any 30 unique cards from either or mercenaries (only guard: 12+ creatures), starters for every pairing, swap-general. Six one-time faction powers (Nine Lives, Mosh Pit, Union Wall, Fuse Box, Sewer Snipe, Call in the Debt) as a replayable Clash `power` command that costs no card play; CPU timing from public facts. Collection CLASSIC 10 / ALLIANCE 30 builder with second-faction picker, swap button, server-validated story save; Clash STANDARD / ALLIANCE switch, power button and rival power chip. CPU sweep 1,800 games: every general 46-54%, first seat 48-51%. Not visually verified pre-merge (local dev needs a DB); look at Collection > ALLIANCE 30 and Clash > ALLIANCE on main. Fun of the power numbers is Silas's call.
