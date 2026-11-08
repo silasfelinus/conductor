@@ -610,11 +610,11 @@ tasks:
   - id: t-025
     milestone: m3
     title: "Author and build the other three Act I overworlds and dungeons"
-    status: review
+    status: ready
     owner: worker
     claimed_by: 2026-11-08T025900Z-memory-dungeon-t-025-k7q9
     claimed_at: '2026-11-08T02:59:00Z'
-    updated: '2026-11-08T03:05:00Z'
+    updated: '2026-11-08T03:47:52Z'
     depends_on: t-022
     passes: 0
     stakes: reversible
@@ -628,6 +628,10 @@ tasks:
       for the next slice rather than done.
 
       Authored four optional linked e03/e04 Earth encounters with 12 unique choice IDs, conditional callbacks, 108-state reachability specification, save replay/forgery contract and runtime acceptance checklist. Conductor PR follows. This is a content packet only; binding, executable tests, ArtJobs and UI QA remain. Return to ready after merge for further t-025 scope.
+
+      2026-11-07 PT reviewer: merged #7162 (squash 100bdf693), Earth letter encounter packet;
+      back to ready for runtime binding, tests, art, QA.
+    implementation_pr: 'silasfelinus/conductor#7162'
   - id: t-026
     milestone: m3
     title: "Author and build Act II: Stories We Inherit"
