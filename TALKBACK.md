@@ -12681,3 +12681,9 @@ Worker pattern: good test depth and honest "procedural shapes, not painted art" 
 - conductor `claude/focused-johnson-n4v4pk` (7 commits, 227 behind main): its docs/art-direction section and restyle test/generator edits are already on main via #7111/#7114/#7122 (generator differs by one word; main is newer). Conflicts in art-prompts.yaml, generator and test. Superseded, nothing to land.
 - kind_robots `claude/ruler-hooked-rainbow-restyle` (single "WIP ... in progress" commit 75a588d, 11 component files): main's `ruler-hooked-nav.vue` already carries the spectrum-rule/indigo restyle. Looks superseded; no open PR.
 - Deletion not done: the session's `git push --delete` was refused by the permission classifier (an earlier attempt hung up). Needs `git push origin --delete` of both, or branch-janitor `force_delete_branches` for the conductor ref. Until then `select_role.py` keeps routing to branch-medic.
+
+## 2026-11-08 — reviewer pass: worker/memory-dungeon-roadmap-duplicate-keys-20261107
+Branch dc5548c2d removes stale duplicate t-020 claim fields from memory-dungeon roadmap. `origin/main` already
+has no duplicate keys in that roadmap (checked with a duplicate-key-aware YAML load), so the change is redundant
+and no PR was opened. Branch can be cleared by `branch-janitor` (`force_delete_branches`). Pattern: worker branches
+cut from an older base can duplicate fixes already landed; fetch main and re-check before pushing.
