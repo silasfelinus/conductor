@@ -903,7 +903,7 @@ tasks:
   - id: t-037
     milestone: m2
     title: "CLASH: 70 meaningful evolution designs and gameplay implementation for six crews plus mercenaries"
-    status: ready
+    status: claimed
     depends_on: t-035
     passes: 0
     stakes: reversible
@@ -913,7 +913,10 @@ tasks:
       Review checkpoint for the first live Clash evolution slice. Seventy named redesign concepts merged in Conductor #7153. Kind Robots implementation branch adds stage-specific rules for 15 existing cards across six factions and mercenaries: death marks, weak-to-apex, pacifists, aura support, adjacent token summons, seeded variance, sacrifice by replacement and healing. Contract fixtures and CI review next. Remaining planned redesigns stay open under t-037.
 
       First implementation increment merged in kind_robots PR #4895 (squash 1207cca9de759e95c6ee616ee102b0e1e43b9e76) after all 11 latest-head checks passed. Fifteen existing cards across six factions and mercenaries have mechanically distinct level variants: weak-to-apex, pacifist healers and spies, adjacency anthems, deterministic randomized attacks, knockout memory, ally replacement as sacrifice, multi-lane tokens, and L3 snares. All 70 existing-card concepts are documented in merged conductor PR #7153 and projects/slime-city/CLASH-EVOLUTION-DESIGN.md. KEEP task ready for implementing the remaining 55 concepts, improving CPU tactical utilization, L3 reachability and fun-focused adversarial balance. No new collectible IDs, faction hate, economy, artwork changes or publication.
-    updated: '2026-11-07T23:15:57Z'
+    updated: '2026-11-08T00:25:40Z'
+    owner: worker
+    claimed_by: 20261108T002540Z-slime-city-t037-spectacle-v6n4
+    claimed_at: '2026-11-08T00:25:40Z'
   - id: t-038
     milestone: m2
     title: "CLASH ALLIANCE: two-faction 30-card decks with one-time general faction powers"
