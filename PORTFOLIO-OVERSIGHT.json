@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-11-08T13:40:10.983451+00:00",
+  "generated_at": "2026-11-08T22:15:06.234833+00:00",
   "summary": {
     "status": "clean",
     "roadmap_errors": 0,
-    "roadmap_warnings": 76,
+    "roadmap_warnings": 75,
     "project_forward_drift": 0,
     "project_reverse_orphans": 0,
     "project_unresolved": null,
@@ -15,7 +15,7 @@
   "openai_scheduled_agent": {
     "overdue": true,
     "last_activity": "2026-10-25T01:09:44+00:00",
-    "hours_since": 348.51,
+    "hours_since": 357.09,
     "stale_hours": 6.0,
     "marker": "openai-scheduled-",
     "note": "Legacy git diagnostic only: OPENAI-SCHEDULED-HEARTBEAT.json and coordination markers do not determine ChatGPT scheduler health. Native ChatGPT task metadata is authoritative for scheduler liveness."
@@ -35,19 +35,19 @@
     "unresolved": null
   },
   "roadmap_audit": {
-    "generated_at": "2026-11-08T13:40:10.983482+00:00",
+    "generated_at": "2026-11-08T22:15:06.234839+00:00",
     "summary": {
       "roadmaps": 94,
       "active_projects": 21,
       "continuous_projects": 14,
       "tasks": 2901,
-      "ready": 242,
+      "ready": 240,
       "waiting": 222,
       "needs_human": 32,
-      "in_progress": 39,
+      "in_progress": 41,
       "done": 2297,
       "errors": 0,
-      "warnings": 76,
+      "warnings": 75,
       "info": 125
     },
     "errors": [],
@@ -145,6 +145,13 @@
       },
       {
         "severity": "warning",
+        "code": "STALE_IN_PROGRESS",
+        "project": "cthulhuquarium",
+        "task": "t-099",
+        "message": "Task has remained claimed for 3 days."
+      },
+      {
+        "severity": "warning",
         "code": "STALE_CLAIM_FIELDS",
         "project": "emperor-of-dust",
         "task": "t-033",
@@ -176,14 +183,14 @@
         "code": "STALE_IN_PROGRESS",
         "project": "emperor-of-dust",
         "task": "t-049",
-        "message": "Task has remained review for 14 days."
+        "message": "Task has remained review for 15 days."
       },
       {
         "severity": "warning",
         "code": "STALE_IN_PROGRESS",
         "project": "emperor-of-dust",
         "task": "t-050",
-        "message": "Task has remained review for 14 days."
+        "message": "Task has remained review for 15 days."
       },
       {
         "severity": "warning",
@@ -362,20 +369,6 @@
       },
       {
         "severity": "warning",
-        "code": "STALE_CLAIM_FIELDS",
-        "project": "memory-dungeon",
-        "task": "t-039",
-        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
-      },
-      {
-        "severity": "warning",
-        "code": "STALE_CLAIM_FIELDS",
-        "project": "memory-dungeon",
-        "task": "t-045",
-        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
-      },
-      {
-        "severity": "warning",
         "code": "STALE_IN_PROGRESS",
         "project": "memory-dungeon",
         "task": "t-051",
@@ -512,7 +505,7 @@
         "code": "STALE_IN_PROGRESS",
         "project": "weird-humboldt",
         "task": "t-020",
-        "message": "Task has remained review for 4 days."
+        "message": "Task has remained review for 5 days."
       },
       {
         "severity": "warning",
