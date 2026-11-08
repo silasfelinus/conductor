@@ -971,7 +971,7 @@ tasks:
   - id: t-041
     milestone: m2
     title: "CLASH 300: individually crafted L1/L2/L3 effects for every existing card"
-    status: review
+    status: ready
     depends_on: t-037
     passes: 0
     stakes: reversible
@@ -981,7 +981,6 @@ tasks:
       2026-11-08 PT: Silas reviewed a first data-driven pass (kind_robots branch claude/pensive-albattani-ibljzj, commits b5a4093/5e7659b, never PR'd) and rejected the approach: "doing it programmatically has a big risk of just giving stat boosts to later game cards ... Do some research on good ccg design before moving forward and creating a plan." Also: "We should have fresh art on the evolutions, not just frame effects." Plan with research, design rules (trajectories instead of a universal stat ramp, L2 = new decision, L3 = named transformation with counterplay, faction tool ownership), per-level Flux Kontext art for all 300, and a 10-card Catgirls pilot gate: projects/slime-city/CLASH-EVOLUTION-PLAN.md. Awaiting Silas's answers to the plan's open questions before the pilot starts; the parked branch keeps only its engine hooks for reuse.
 
       Audit checkpoint: kind_robots #4907 has 300 merged custom evolutions. The default CPU sweep only uses fixed 20-card decks, so this session adds 300-card constructed-deck matchup coverage, mirrored seeds, reachability, duplicate-mechanic reporting and deterministic replays on a worker PR. Continue per-card balance and fun QA before accepting the full catalog.
-    owner: worker
-    claimed_by: 2026-11-08T101400Z-slime-city-t-041-r8k4
-    claimed_at: '2026-11-08T10:14:00Z'
-    updated: '2026-11-08T10:25:00Z'
+
+      2026-11-08 PT: Audited the merged 300 custom evolution arcs and shipped reproducible 1,230-match constructed Solo/Alliance QA in Kind Robots #4908 (squash f2a7a6e, all eight final-head workflow runs green). Solo first seat 49.6%, Alliance first seat 40%; 279/300 cards used, 160 at L3, 21 never selected, two exact mechanical arc duplicates. Conductor #7176 (squash 2e88f66) updates the 300-row ledger to 70 MERGED and 230 LIVE_QA and records findings in CLASH-EVOLUTION-QA-2026-11-08.md. Remain ready: resolve unplayed cards and duplicate paths, assess CPU evolution valuation, run larger constructed matchups and bespoke 230-card payoff fixtures. Human fun acceptance, art delivery and production deployment not claimed.
+    updated: '2026-11-08T10:40:00Z'
