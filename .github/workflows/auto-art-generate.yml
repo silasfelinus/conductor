@@ -249,6 +249,21 @@ jobs:
             --queue-file projects/memory-dungeon/art/EARTH-PHOTO-REQUESTS.yaml \
             --id-prefix memory-dungeon-saturate-earth-photo-
 
+      # Hoshimori gallery round five: eight source-backed e07/e08 faces.
+      # Preserve destination binding and checkpoint accepted ArtJob IDs before rendering.
+      - name: Submit Memory Dungeon Hoshimori gallery round-five ArtJobs
+        id: memory_dungeon_hoshimori_gallery_round5_submit
+        if: ${{ steps.krhealth.outputs.up == 'true' && steps.memory_dungeon_reconcile.outcome == 'success' }}
+        continue-on-error: true
+        working-directory: conductor
+        env:
+          KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+          KR_MEDIA_ORIGIN: https://media.acrocatranch.com
+        run: |
+          python scripts/consume_art_requests_to_media.py --live --submit-only --limit 0 \\
+            --queue-file projects/memory-dungeon/art/HOSHIMORI-GALLERY-BOUND-ROUND-5.yaml \\
+            --id-prefix memory-dungeon-hoshimori-gallery-r5-
+
       # Choice-card outcome plates (Silas, 2026-11-02/03 PT: "Yes, commission",
       # "wire memory art"): every Memory Dungeon choice card shows its own outcome
       # painting, else a drawn face. The event catalog's visitor-facing plates
@@ -312,6 +327,7 @@ jobs:
           git config user.email "conductor-bot@users.noreply.github.com"
           git add projects/art-prompts.yaml projects/memory-dungeon/art/KNOWN-ART-REQUESTS.yaml projects/memory-dungeon/art/HOUSE-ATLAS-REQUESTS.yaml projects/memory-dungeon/art/EARTH-PHOTO-REQUESTS.yaml projects/memory-dungeon/art/HOSHIMORI-WARM-STYLE-PROOFS.yaml projects/memory-dungeon/art/HOSHIMORI-HORROR-STYLE-PROOFS.yaml
           git add projects/memory-dungeon/art/EVENT-OUTCOME-REQUESTS-PART-*.yaml projects/memory-dungeon/art/CARD-GAP-REQUESTS.yaml
+          git add projects/memory-dungeon/art/HOSHIMORI-GALLERY-BOUND-ROUND-5.yaml
           if git diff --staged --quiet; then
             echo "Memory Dungeon ledgers already match submitted ArtJobs."
           else
