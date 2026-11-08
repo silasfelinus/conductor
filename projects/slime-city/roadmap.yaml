@@ -961,3 +961,12 @@ tasks:
     stakes: reversible
     note: |-
       Silas, 2026-11-08 PT: "we've still got a lot of orcs that look like shrek in their character token in game." projects/slime-city/art/BOARD-TOKENS-OGRE-REDO-2.yaml queues 45 Krea re-renders (auto_submit): 14 Ironjaw ogre creatures and the Picket Line Troll mercenary x fierce/guard/hurt, each with a distinct non-green skin, angular industrial face, riveted chrome lower jaw and small bolted ears. Once the sweep writes art_image_ids back, curate them (reject any that still read as a green round-faced movie ogre and re-queue with a stronger look) and replace the matching SLIME_CITY_ART.tokens['<cardId>/<mood>'] ids in kind_robots utils/slimeCity/artManifest.ts. Foundry Lion keeps its token.
+  - id: t-041
+    milestone: m2
+    title: "CLASH 300: individually crafted L1/L2/L3 effects for every existing card"
+    status: waiting
+    depends_on: t-037
+    passes: 0
+    stakes: reversible
+    note: |-
+      Silas, 2026-11-07 PT: "The ultimate goal will be crafted redesigns of all 300 cards." The authoritative full inventory is projects/slime-city/CARD-REDESIGN-300.md. Each existing catalog identity must have an individually authored journey, not generic L2/L3 stats or duplicated effects. One interesting payoff per card, strategic counterplay, deterministic battle fixture and replay, and CPU reachability audits. Keep all 300 IDs and six distinct crew identities; do not add cards, faction-hate, economy mutations, art or a publication without authorization. Finish original t-037's 70 designs first, then this umbrella governs the remaining 230 redesigns, tracking progress against the full roster.
