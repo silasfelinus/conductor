@@ -903,7 +903,7 @@ tasks:
   - id: t-037
     milestone: m2
     title: "CLASH: 70 meaningful evolution designs and gameplay implementation for six crews plus mercenaries"
-    status: review
+    status: ready
     depends_on: t-035
     passes: 0
     stakes: reversible
@@ -919,10 +919,9 @@ tasks:
       User-requested cinematic Clash presentation shipped: kind_robots PR #4899, squash 1c72ad2ec7a0caf2dc08a93c624fd607deada3ab, merged after all 11 final-head GitHub checks completed successfully. Command-derived, card-art-led Level 2/3 reveals, distinct summon/heal/explosion/trap/gear/lockdown bursts, impact/knockout/boss-finish and alliance-power VFX, keyed remounts, moment-aware pacing and reduced-motion support. Four scoped files, deterministic cue/replay tests. No game-rule, card roster, collection/economy, artwork rights or production deploy changes. KEEP t-037 ready for the remaining 55 card evolution designs and broader fun/balance/human visual testing; no subjective acceptance implied.
 
       Review checkpoint: second wave of Clash-only stage-specific evolution mechanics, 24 existing catalog IDs across all six crews and three mercenaries, with deterministic recorded ability cut-ins; casualty, entry, spell, trap, attack and turn-start effects. Existing 15 designs preserved. Reconciled concurrently merged Clash-only / selectable decks / custom boss caps PR #4900 using a real two-parent git merge (no force push). Contract fixtures for each upgraded card, replay, and cinematic cues are committed to the implementation branch; final CI pending. Total 39 authored evolving cards implemented after this wave, leaving 31 of the original 70 concepts. No new cards, economy changes or production publication.
-    updated: '2026-11-08T01:28:40Z'
-    owner: worker
-    claimed_by: 2026-11-08T011650Z-slime-city-t-037-g6k9
-    claimed_at: '2026-11-08T01:16:50Z'
+
+      Merged kind_robots PR #4901 (squash 8440a642c4f4719c42b7fcb5ab2a96c1d2dfc755) after all 11 latest-head checks completed green: TypeScript, format, layout, schema, architecture, security and four contract shards including seeded replay/CPU balance. Added 24 existing cards with genuine, different L1/L2/L3 mechanics across all six crews and three mercenaries; 39 of the 70 authored evolutions are now implemented, 31 remain. New effects include real sacrifices, trap-safe one-lane echoes, true fallen-only once-per-entry revival, global healing/protection, surprise double strikes, seeded chaos, trap chains, death-growing allies and boss dividends. Named combat procs get replay-safe artwork cut-ins. Properly merged concurrent PR #4900 (Clash-only decks and variable boss caps), no force-push. Exactly four Clash files changed, no cards added, no economy or publication writes. KEEP t-037 ready to finish the 31 remaining authored cards and broader 300-card quality review; user visual/fun acceptance and self-hosted deployment are not verified.
+    updated: '2026-11-08T01:48:56Z'
   - id: t-038
     milestone: m2
     title: "CLASH ALLIANCE: two-faction 30-card decks with one-time general faction powers"
