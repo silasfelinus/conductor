@@ -117,10 +117,20 @@ Today one painting serves all three levels and only the frame changes. Plan:
   it could deliver, at 20 Flux-dev steps × 2 seeds per stage. Identity now carries over through a per-card
   look anchor (species, adult build, signature colours, outfit, key prop) that opens both of the card's
   prompts. Each prompt is still written by hand from the card's arc (`art_ledger_authoring.py` enforces it).
+- **Standing direction (Silas, 2026-11-08):** *"In general, these gens evolutions are supposed to look bigger
+  and more impressive. They might tell a story."* Every evolution round follows two rules, whatever engine it uses:
+  - **Bigger in the picture at every step (L1 < L2 < L3).** The hero gets physically larger in the frame and
+    more powerful-looking: a growing aura, bigger gear, a costume that keeps upgrading. L2 is a low-angle hero
+    shot with the character filling most of the frame and looming over rivals. L2 never uses a wide shot, an aerial view, a view from behind or an
+    over-the-shoulder shot, because each of those shrinks the hero. At L3 the character is the biggest, most impressive thing in the scene.
+    An epic wide view is allowed only when the character is colossal in it.
+  - **One story across three paintings.** Each card carries one story thread from its L1 painting (a prop, a
+    sidekick, a rival, a place) that has grown at L2 because of what the hero did, and pays off at L3.
+    Both prompts name it.
 - **The escalation ladder** (every step obvious at thumbnail size):
   - **L1:** the existing painting.
   - **L2, powered up:** one new signature upgrade worn or wielded, the signature thing at least twice as
-    big, a bigger venue than L1, mid-story-beat with rivals or a crowd reacting, a different camera.
+    big, a bigger venue than L1, mid-story-beat with rivals or a crowd reacting, a low-angle hero shot.
   - **L3 / L3b, legendary:** an over-the-top, funny payoff pushing at least two of: scale (towering over
     rooftops), multiplication (a parade, an army), material change (molten gold, living neon, glowing
     slime), mythic form (crown, halo, wings, throne), a city-sized signature thing, the whole district
