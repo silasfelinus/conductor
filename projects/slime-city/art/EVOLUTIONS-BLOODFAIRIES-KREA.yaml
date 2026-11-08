@@ -1,0 +1,868 @@
+# Slime City evolution art, Blood Fairies, Krea 2 escalation redo (2026-11-08 PT).
+# Replaces the Flux Kontext dev round EVOLUTIONS-BLOODFAIRIES.yaml. Silas, 2026-11-08: "Flux dev is a slow generator,
+# and we're getting a lot of the same looking images three times over. We shouldn't use it for the main gen,
+# but we also need a much larger and fun escalation between evolution 1 and evolution 3."
+# Kontext edited each card's level-1 painting and kept its composition, so L1/L2/L3 read as one picture.
+# This round is Krea 2 text-to-image (the house Slime City engine, 8 steps), one render per stage instead of
+# two seeds, and each prompt is written per card on the ladder in CLASH-EVOLUTION-PLAN.md section 4:
+# Silas, 2026-11-08: "these gens evolutions are supposed to look bigger and more impressive. They might tell
+# a story." So the hero grows in the frame at every step (L2 a low-angle hero shot filling the frame; L3 the
+# biggest thing in the scene), and one story thread from the L1 painting grows at L2 and pays off at L3.
+# L2 = powered up (new signature gear, bigger venue); L3/L3b = legendary, over the top (scale, swarms,
+# material change, mythic form, a city-sized signature, the district reacting, a finale palette).
+# Identity carries over through a per-card look anchor that opens both prompts. Same runtime assets
+# ('<cardId>@2' | '@3' | '@3b'), so a keeper is wired as SLIME_CITY_ART.evolutions[...]. auto_submit: true.
+round: slime-city-evolutions-bloodfairies-krea
+project_slug: slime-city
+designer: Slime City evolution art, Blood Fairies (Krea 2)
+is_public: true
+is_mature: false
+cast_loras: false
+priority: 640
+auto_submit: true
+lanes:
+- key: krea-evolution
+  label: Krea 2, escalated evolution stages written per card
+  engine: krea2
+  prompt: prose
+subjects:
+- key: slime-krea-evo-pogo-punk-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Pogo Punk L2: Pit Pickpocket'
+  asset: slime-city/evolutions/pogo-punk@2
+  size: 832x1216
+  seed: 1109001
+  prompt_prose: >-
+    A tiny adult punk fairy woman with grown-woman proportions, buzzing violet wings, a ripped plaid skirt, spiked choker
+    and battered platform boots. Her boots now stand twice as tall on glowing chrome pogo springs. Low-angle hero shot from
+    the pit floor: she looms huge overhead, springing off the bald head of the same slate-grey, chrome-jawed ogre bouncer
+    she vaulted at Needle Alley, plucking his glowing coin purse mid-bounce. A packed warehouse mosh pit swirls small beneath
+    her boots, pockets turned out, violet strobes and flying sweat. Hand-painted vivid inked western adult cartoon for a
+    grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette,
+    high contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up.
+    Every surface is bare and unmarked.
+- key: slime-krea-evo-pogo-punk-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Pogo Punk L3: Crowd-Surf Exit'
+  asset: slime-city/evolutions/pogo-punk@3
+  size: 832x1216
+  seed: 1109002
+  prompt_prose: >-
+    A tiny adult punk fairy woman with grown-woman proportions, violet wings, a ripped plaid skirt, spiked choker and platform
+    boots, now as giant as a parade balloon, wings blazing molten gold. She crowd-surfs limp but grinning down the whole
+    avenue on ten thousand raised hands. Riding on her belly is the slate-grey, chrome-jawed ogre bouncer she robbed, now
+    her happiest fan, tipping a foamy pint to her. Every rooftop raises glasses and the moon toasts too. Heroic low-angle
+    view, sunrise gold and rose palette. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting
+    fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait
+    framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and
+    unmarked.
+- key: slime-krea-evo-amp-tripwire-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Amp Tripwire L2: Cue the Band'
+  asset: slime-city/evolutions/amp-tripwire@2
+  size: 832x1216
+  seed: 1109003
+  prompt_prose: >-
+    A miniature adult fairy engineer woman in grease-stained overalls, welding goggles, magenta pigtails and iridescent
+    dragonfly wings, wielding an iridescent guitar cable. Low-angle hero shot: she looms over a crowded festival street,
+    boots planted, stretching her cable, now a braided teal rope twice as thick, between the same two amplifier stacks from
+    her dark alley, grown twice as tall. She plucks it like a bass string and a teal shockwave ripples out, rival mercenaries
+    tripping face-first at her feet while punk fairy guitarists leap from fire escapes on cue. Hand-painted vivid inked
+    western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon
+    colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character
+    is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-amp-tripwire-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Amp Tripwire L3: Power Chord Avalanche'
+  asset: slime-city/evolutions/amp-tripwire@3
+  size: 832x1216
+  seed: 1109004
+  prompt_prose: >-
+    A miniature adult fairy engineer woman in grease-stained overalls, welding goggles, magenta pigtails and iridescent
+    dragonfly wings, now towering taller than the skyline and glowing like living neon. The two amplifier stacks from her
+    old alley have become skyscraper towers, her cable strung between them like a giant harp string. She strums one power
+    chord and both towers avalanche down the hill street, purple sound rings flattening rivals like dominoes while rooftop
+    crowds clutch their hair. Heroic low-angle view, electric lime and ultraviolet glow. Hand-painted vivid inked western
+    adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors,
+    bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character is
+    a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s1-riot-choir-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Glitter Riot Choir L2: Three-Part Harmony'
+  asset: slime-city/evolutions/s1-riot-choir@2
+  size: 832x1216
+  seed: 1109005
+  prompt_prose: >-
+    A tight choir of wildly dressed tiny adult punk fairy women with neon-pink wings, torn sequined jackets, ripped fishnets
+    and glowing crystal headset mics. Low-angle hero shot from the plaza cobbles: the choir looms on the stolen chrome amplifiers
+    from their rooftop, now stacked twice as tall atop the opera house steps. Three ribbons of shimmering sound in pink,
+    gold and teal pour from their mouths and wrap two fairy brawlers beside them, who glow brighter mid-punch. A cheering
+    crowd fills the plaza small below. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting
+    fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait
+    framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and
+    unmarked.
+- key: slime-krea-evo-s1-riot-choir-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Glitter Riot Choir L3: Wall of Sound'
+  asset: slime-city/evolutions/s1-riot-choir@3
+  size: 832x1216
+  seed: 1109006
+  prompt_prose: >-
+    A tight choir of wildly dressed adult punk fairy women with neon-pink wings, torn sequined jackets and ripped fishnets,
+    now colossal figures of living stained glass glowing from within, taller than the cathedral spires. They stand arms
+    spread atop the stolen chrome amplifiers, now stacked into a skyscraper tower, and a glittering dome of sound arches
+    from their mouths over the whole district. Rival bottles bounce harmlessly off it as their tiny crew brawls below. Heroic
+    low-angle view, gold and aqua cathedral glow. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting
+    fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait
+    framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and
+    unmarked.
+- key: slime-krea-evo-s1-riot-choir-l3b
+  entity: card-art
+  lane: krea-evolution
+  title: 'Glitter Riot Choir L3b: Backup Singers'
+  asset: slime-city/evolutions/s1-riot-choir@3b
+  size: 832x1216
+  seed: 1109007
+  prompt_prose: >-
+    A tight choir of wildly dressed adult punk fairy women with neon-pink wings, torn sequined jackets and ripped fishnets,
+    now giant and crowned in glittering tiaras. The stolen chrome amplifiers have grown into a mountain of glowing risers,
+    and up its slopes march a hundred rows of tiny backup singers in matching gold sequined jackets, swaying in unison and
+    screaming the chorus into shared microphones. The towering choir leads them all, spotlights sweep the clouds and the
+    moon sways along. Low-angle view, champagne gold and sky blue. Hand-painted vivid inked western adult cartoon for a
+    grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette,
+    high contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up.
+    Every surface is bare and unmarked.
+- key: slime-krea-evo-s1-confetti-cannon-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Confetti Shrapnel Cannon L2: Second Barrel'
+  asset: slime-city/evolutions/s1-confetti-cannon@2
+  size: 832x1216
+  seed: 1109008
+  prompt_prose: >-
+    A rickety improvised confetti cannon welded from a drainpipe and stolen amp parts, crewed by two adult punk fairy women
+    with magenta wings and safety-pin jackets. A second barrel twice the size of the first is now bolted on top, smoking
+    and swiveling wildly. Low-angle hero shot: the cannon looms huge over a sprawling rooftop festival, spraying a stray
+    burst of glitter shrapnel, and the same terrified armored mercenaries from the first concert dive small behind chimneys
+    while the crowd ducks and cheers. Gritty neon pink haze. Hand-painted vivid inked western adult cartoon for a grungy
+    colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high
+    contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every
+    surface is bare and unmarked.
+- key: slime-krea-evo-s1-confetti-cannon-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Confetti Shrapnel Cannon L3: Ticker-Tape Parade'
+  asset: slime-city/evolutions/s1-confetti-cannon@3
+  size: 832x1216
+  seed: 1109009
+  prompt_prose: >-
+    A rickety improvised confetti cannon welded from drainpipes, crewed by two adult punk fairy women with magenta wings
+    and safety-pin jackets, now a gilded parade float as tall as a skyscraper bristling with a hundred barrels. It blasts
+    a blizzard of ticker tape and streamers that fills the sky. Marching in front are the armored mercenaries it once terrified,
+    now in party hats, arm in arm with thousands of punk fairies down the main avenue. The moon wears a party hat too. Towering
+    low-angle view, confetti rainbow over daytime blue. Hand-painted vivid inked western adult cartoon for a grungy colorful
+    street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast,
+    tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface
+    is bare and unmarked.
+- key: slime-krea-evo-s1-stage-dive-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Unlicensed Stage Dive L2: Front Row'
+  asset: slime-city/evolutions/s1-stage-dive@2
+  size: 832x1216
+  seed: 1109010
+  prompt_prose: >-
+    A daredevil adult punk fairy woman with magenta wings, a bleached mohawk, studded leather jacket and torn jeans, now
+    in a spiked chrome crash helmet, her wings twice as broad. Low-angle hero shot from the front row: she looms mid-launch,
+    catapulted from the cupped palms of the same slate-grey, chrome-jawed ogre bouncer she once crash-landed on, now her
+    launch ramp. Arms outstretched, she soars over thousands of roaring fans toward a glittering throne at the far end of
+    the alley. Magenta floodlights. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting
+    fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait
+    framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and
+    unmarked.
+- key: slime-krea-evo-s1-stage-dive-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Unlicensed Stage Dive L3: Dives on Royalty'
+  asset: slime-city/evolutions/s1-stage-dive@3
+  size: 832x1216
+  seed: 1109011
+  prompt_prose: >-
+    A daredevil adult punk fairy woman with magenta wings, a bleached mohawk, studded leather jacket and torn jeans, now
+    a colossal blazing pink comet bigger than the cathedral. She crashes headfirst onto a golden throne in the city square,
+    toppling it like a felled tree in a burst of sparkles, a pompous fairy monarch flung out. The slate-grey, chrome-jawed
+    ogre bouncer from her first dive catches the spinning crown and puts it on, beaming. Rooftop crowds erupt. Heroic low-angle
+    view, white-hot gold and comet blue. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting
+    fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait
+    framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and
+    unmarked.
+- key: slime-krea-evo-s1-feedback-wire-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Feedback Wire L2: Siphon Lead'
+  asset: slime-city/evolutions/s1-feedback-wire@2
+  size: 832x1216
+  seed: 1109012
+  prompt_prose: >-
+    A sly adult punk fairy woman electrician with purple braids, rubber gloves, a tool belt and dusty moth wings, tending
+    a hidden guitar amplifier cable. She now wears a glowing coil backpack, and the cable is a braided red hose twice as
+    thick, coiled over her shoulders like a python. Low-angle hero shot: she looms over a crowded night market street, feeding
+    the pulsing crimson cable through puddles past startled rivals whose boots smoke, toward a fairy boss on a distant ornate
+    throne who glows brighter. Magenta and red neon. Hand-painted vivid inked western adult cartoon for a grungy colorful
+    street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast,
+    tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface
+    is bare and unmarked.
+- key: slime-krea-evo-s1-feedback-wire-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Feedback Wire L3: Blood Amplifier'
+  asset: slime-city/evolutions/s1-feedback-wire@3
+  size: 832x1216
+  seed: 1109013
+  prompt_prose: >-
+    A sly adult punk fairy woman electrician with purple braids, rubber gloves, a tool belt and moth wings, now towering
+    taller than the plaza buildings, her wings glowing ruby. She cradles a thumping amplifier shaped like a cartoon heart
+    against her chest, and the hidden cable has grown into a web of ruby veins running to every rooftop, where the whole
+    fairy band stands twice as tall in its glow. The skyline pulses in rhythm and the moon blushes. Heroic low-angle view,
+    ruby and rose gold. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick
+    expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with
+    one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s1-blood-mic-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Blood Karaoke Microphone L2: Pass the Mic'
+  asset: slime-city/evolutions/s1-blood-mic@2
+  size: 832x1216
+  seed: 1109014
+  prompt_prose: >-
+    A punk fairy frontwoman with grown-woman proportions, a crimson bob, tiny fangs, a ripped tee and fishnets, gripping
+    a worn chrome microphone studded with fairy fangs. The fang-studded microphone is now twice as big with a glowing crimson
+    crystal head. Low-angle hero shot from the bar floor: she looms atop a long karaoke bar counter, passing the mic down
+    the line, a ribbon of red light flowing into a bandaged fairy singer who perks up, while patrons cheer and spill drinks.
+    Smoky red and violet lights. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy,
+    thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing
+    with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s1-blood-mic-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Blood Karaoke Microphone L3: Blood Karaoke Finale'
+  asset: slime-city/evolutions/s1-blood-mic@3
+  size: 832x1216
+  seed: 1109015
+  prompt_prose: >-
+    A punk fairy frontwoman with grown-woman proportions, a crimson bob, tiny fangs, a ripped tee and fishnets, now giant
+    with a ruby halo, towering over the city square. She sings into the fang-studded microphone, now as tall as a lighthouse,
+    its crystal head beaming red across the skyline, the bandaged singer from the bar perched on her shoulder for the duet.
+    Every bar has emptied into the streets, thousands singing along with glowing red punch raised, a rival flat with cartoon
+    stars. Low-angle view, ruby and silver. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting
+    fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait
+    framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and
+    unmarked.
+- key: slime-krea-evo-s2-bloodfairies-mosquito-disc-jockey-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Mosquito Disc Jockey L2: Request Line'
+  asset: slime-city/evolutions/s2-bloodfairies-mosquito-disc-jockey@2
+  size: 832x1216
+  seed: 1109016
+  prompt_prose: >-
+    A hand-sized adult punk fairy woman with mosquito wings, a needle-thin proboscis, a violet bob and oversized headphones,
+    spinning a vinyl record. Her headphones now glow crimson with twin antennae, and the vinyl record she spins is twice
+    as big, glowing red. Low-angle hero shot from the dance floor: she looms over the decks in a packed warehouse club,
+    leaning out to hand blank red request slips to dancers who grin with fresh tiny fangs. Violet and magenta strobes cut
+    the sweaty haze. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick
+    expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with
+    one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s2-bloodfairies-mosquito-disc-jockey-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Mosquito Disc Jockey L3: Behind the Decks'
+  asset: slime-city/evolutions/s2-bloodfairies-mosquito-disc-jockey@3
+  size: 832x1216
+  seed: 1109017
+  prompt_prose: >-
+    A punk fairy woman with mosquito wings, a needle-thin proboscis, a violet bob and huge glowing headphones, now a giant
+    towering behind a turntable rig that spans a skyscraper roof. Her vinyl record has risen into the sky as a crimson moon,
+    spinning under her needle while she scratches it with arms raised. Every street below has become a dance floor glowing
+    red, rooftop crowds sipping through glowing straws. Heroic low-angle view, deep crimson and electric gold. Hand-painted
+    vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated
+    gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene.
+    Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s2-bloodfairies-bassquake-colossus-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Bassquake Colossus L2: Sub-Bass Rumble'
+  asset: slime-city/evolutions/s2-bloodfairies-bassquake-colossus@2
+  size: 832x1216
+  seed: 1109018
+  prompt_prose: >-
+    A walking stack of battered speaker cabinets on stomping amp-crate legs, a single glowing magenta woofer for a face,
+    tiny adult fairy women clinging to its knobs. A subwoofer chest plate twice its old size now throbs in its torso. Low-angle
+    hero shot from the pavement: it looms over a freight boulevard, the same knob-cranking fairy crew now riding in crash
+    helmets and cranking twice as many dials, as sub-bass rings crack the asphalt and rattle two rival brawlers' teeth.
+    Rain spray, violet neon. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy,
+    thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing
+    with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s2-bloodfairies-bassquake-colossus-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Bassquake Colossus L3: The Bass Drop'
+  asset: slime-city/evolutions/s2-bloodfairies-bassquake-colossus@3
+  size: 832x1216
+  seed: 1109019
+  prompt_prose: >-
+    A walking stack of speaker cabinets on amp-crate legs with a glowing magenta woofer face, now colossal, taller than
+    the skyline and plated in molten gold. It slams both speaker fists into the street and a purple shockwave rolls across
+    three alleys, buildings wobbling like jelly and the moon jiggling. The knob-cranking fairy crew that rode it from the
+    first alley is flung skyward laughing, tumbling like confetti around its golden head. Heroic low-angle view, gold and
+    ultraviolet. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive
+    outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous
+    full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-bloodfairies-mosh-firefly-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Moshpit Firefly L2: Dazzling Glow'
+  asset: slime-city/evolutions/s3-bloodfairies-mosh-firefly@2
+  size: 832x1216
+  seed: 1109020
+  prompt_prose: >-
+    A hand-sized adult punk fairy woman with a glowing firefly abdomen, bug antennae, a spiked mohawk and a cropped leather
+    jacket. Low-angle hero shot from the garage floor: she looms astride the same scruffy stray cat from her pitch-dark
+    alley, now her saddled steed, her abdomen glowing twice as big as a lantern. She blazes a blinding golden beam at a
+    hulking rival who stumbles back shielding his eyes, her fairy crew cheering small around the cat's paws in a packed
+    underground parking garage brawl. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting
+    fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait
+    framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and
+    unmarked.
+- key: slime-krea-evo-s3-bloodfairies-mosh-firefly-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Moshpit Firefly L3: Firefly Cloud'
+  asset: slime-city/evolutions/s3-bloodfairies-mosh-firefly@3
+  size: 832x1216
+  seed: 1109021
+  prompt_prose: >-
+    A hand-sized adult punk fairy woman with a glowing firefly abdomen, bug antennae, a spiked mohawk and a cropped leather
+    jacket, multiplied into a hundred thousand glowing copies. The swarm floods every alley and rises above the rooftops,
+    swirling into one colossal glowing image of her riding the stray cat across the night sky, its eyes two golden moons.
+    City lights look dim beside it and residents gape from windows. Towering low-angle view from the street, lime and gold
+    against deep indigo. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick
+    expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with
+    one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-bloodfairies-pollen-queen-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Punk Pollen Queen L2: Pollen Drift'
+  asset: slime-city/evolutions/s3-bloodfairies-pollen-queen@2
+  size: 832x1216
+  seed: 1109022
+  prompt_prose: >-
+    A hand-sized adult fairy queen woman with bumblebee wings, a crown of bent safety pins, a magenta poppy-petal mohawk
+    and a striped corset, wielding a glowing dandelion scepter. Low-angle hero shot: she looms atop the same guitar amp
+    from her alley, now twice as tall and wrapped in blooming vines, in a crowded rooftop greenhouse party. She sweeps the
+    scepter and golden pollen drifts over bruised fairy brawlers, their bandages glowing as scrapes close, dancers drifting
+    toward her like moths. Warm amber and violet light. Hand-painted vivid inked western adult cartoon for a grungy colorful
+    street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast,
+    tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface
+    is bare and unmarked.
+- key: slime-krea-evo-s3-bloodfairies-pollen-queen-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Punk Pollen Queen L3: Royal Bloom'
+  asset: slime-city/evolutions/s3-bloodfairies-pollen-queen@3
+  size: 832x1216
+  seed: 1109023
+  prompt_prose: >-
+    A fairy queen woman with bumblebee wings, a crown of bent safety pins, a magenta poppy-petal mohawk and a striped corset,
+    now giant and enthroned under a halo of pollen. Her old guitar amp has burst through the asphalt as a punk flower taller
+    than a skyscraper, its petals spiked with safety pins, and she sits on its bloom like a throne, new adult fairies budding
+    from every petal. Vines climb every building and the whole district blooms. Heroic low-angle view, sunflower gold and
+    spring green. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive
+    outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous
+    full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-bloodfairies-backstage-vamp-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Backstage Vamp L2: Acquired Taste'
+  asset: slime-city/evolutions/s3-bloodfairies-backstage-vamp@2
+  size: 832x1216
+  seed: 1109024
+  prompt_prose: >-
+    An adult vampire fairy woman with bat-membrane wings, black lace gloves, needle fangs and a velvet corset dress, grown
+    to full human height in a high-collared crimson velvet cape. Low-angle hero shot: she looms over a lavish green room
+    sofa, wiping a glowing red smear from her lips with a smug smirk, while the same enormous security guard she bit backstage
+    dozes small at her feet, a bandage on his thumb and his steel gauntlet slipping off. Roadies gawk from the doorway.
+    Magenta and ruby lamps. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy,
+    thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing
+    with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-bloodfairies-backstage-vamp-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Backstage Vamp L3: Turned'
+  asset: slime-city/evolutions/s3-bloodfairies-backstage-vamp@3
+  size: 832x1216
+  seed: 1109025
+  prompt_prose: >-
+    An adult vampire fairy woman with bat-membrane wings, black lace gloves, needle fangs and a velvet corset dress, now
+    a giant gargoyle queen perched atop the arena roof under a blood moon. Leading the crowd below is the enormous security
+    guard she first bit, now a grinning fan with tiny fangs and glowing red eyes, steel gauntlet raised. Thousands of newly
+    turned fans pour from every arena door flapping new bat wings. Towering low-angle view, violet and ruby glow. Hand-painted
+    vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated
+    gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene.
+    Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-bloodfairies-karaoke-oracle-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Riot Karaoke Oracle L2: Off-Key Omen'
+  asset: slime-city/evolutions/s3-bloodfairies-karaoke-oracle@2
+  size: 832x1216
+  seed: 1109026
+  prompt_prose: >-
+    A hand-sized adult fairy oracle woman in a studded veil, third-eye makeup and a fringed shawl, belting into a microphone
+    whose head is a glowing crystal ball. Her third eye now blazes, and the crystal-ball microphone has grown twice as big,
+    swirling with storm clouds. Low-angle hero shot: she looms over a packed neon concert hall, hitting a jagged off-key
+    note that freezes a rival mid-step in a glossy violet candy glaze while the crowd gasps. Purple smoke. Hand-painted
+    vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated
+    gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene.
+    Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-bloodfairies-karaoke-oracle-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Riot Karaoke Oracle L3: Stadium Singalong'
+  asset: slime-city/evolutions/s3-bloodfairies-karaoke-oracle@3
+  size: 832x1216
+  seed: 1109027
+  prompt_prose: >-
+    A fairy oracle woman in a studded veil, third-eye makeup and a fringed shawl, now grown giant over a stadium, her third
+    eye shining like a lighthouse. Her crystal-ball microphone hangs in the sky as a glittering disco moon, scattering light
+    across a hundred thousand adult fairies singing arm in arm, glowing ribbons of melody rising from every mouth and weaving
+    into a new constellation shaped like her. Heroic low-angle view, aurora teal and gold. Hand-painted vivid inked western
+    adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors,
+    bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character is
+    a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-bloodfairies-karaoke-oracle-l3b
+  entity: card-art
+  lane: krea-evolution
+  title: 'Riot Karaoke Oracle L3b: Solo Prophecy'
+  asset: slime-city/evolutions/s3-bloodfairies-karaoke-oracle@3b
+  size: 832x1216
+  seed: 1109028
+  prompt_prose: >-
+    A fairy oracle woman in a studded veil, third-eye makeup and a fringed shawl, her body now translucent starlight, colossal
+    and seated cross-legged over the city's highest spire. Her crystal-ball microphone has split into twin orbs the size
+    of moons, one showing a punk crowd going wild, the other a rival tumbling down a stairwell. The whole skyline sits silent
+    and dwarfed beneath her gaze. Low-angle view, indigo and silver. Hand-painted vivid inked western adult cartoon for
+    a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette,
+    high contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up.
+    Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-bloodfairies-tour-bus-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Tour Bus Swarm L2: Next Stop'
+  asset: slime-city/evolutions/s3-bloodfairies-tour-bus@2
+  size: 832x1216
+  seed: 1109029
+  prompt_prose: >-
+    A battered purple tour bus, every window crammed with hand-sized adult punk fairy women pressing faces, fists and guitars
+    against the glass. Its old flat tire is now swapped for a glowing monster-truck tire twice as tall, and a magenta loudspeaker
+    horn crowns its roof. Low-angle hero shot from the curb: the bus looms over a busy downtown bus stop, door open, one
+    pixie hopping off with a guitar case while earlier drop-offs brawl with locals up the block. Hand-painted vivid inked
+    western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon
+    colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character
+    is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-bloodfairies-tour-bus-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Tour Bus Swarm L3: Everybody Off the Bus'
+  asset: slime-city/evolutions/s3-bloodfairies-tour-bus@3
+  size: 832x1216
+  seed: 1109030
+  prompt_prose: >-
+    A battered purple tour bus crammed with hand-sized adult punk fairy women, now wrecked and colossal, lying on its side
+    across the boulevard like a beached whale, spewing steam. Its monster-truck tire has torn loose and bounces down the
+    avenue as tall as a building, pixies riding its tread. Thousands more pour out of every window and door like a fire
+    hose, swinging guitars and riding mic stands like broomsticks. Heroic low-angle view, sunset orange and hot pink. Hand-painted
+    vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated
+    gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene.
+    Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-bloodfairies-headliner-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Blood Moon Headliner L2: Blood Moon Rising'
+  asset: slime-city/evolutions/s3-bloodfairies-headliner@2
+  size: 832x1216
+  seed: 1109031
+  prompt_prose: >-
+    A hand-sized adult fairy diva in a blood-red studded leather gown with glowing fangs, a ring of tiny tambourine fairies
+    orbiting her like a halo. Her gown now trails a glowing train twice as long. Low-angle hero shot from the crowd's raised
+    hands: she looms atop her mic stand in an open-air amphitheater as the crimson moon from her first show rises twice
+    as big behind her, red light spilling over cheering fans whose scrapes glow and fade. Deep red and magenta spotlights.
+    Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines,
+    saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed
+    scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-bloodfairies-headliner-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Blood Moon Headliner L3: One More Song'
+  asset: slime-city/evolutions/s3-bloodfairies-headliner@3
+  size: 832x1216
+  seed: 1109032
+  prompt_prose: >-
+    A fairy diva in a blood-red studded leather gown with glowing fangs and a halo of tambourine fairies, returning as a
+    glowing translucent ghost as tall as the sky. She steps back into the amphitheater for an encore, wearing the crimson
+    moon on her head like a crown, its beam her spotlight, while a million lighters flicker across every rooftop like a
+    sea of stars. Heroic low-angle view of the towering ghost, spectral silver-blue with warm lighter gold. Hand-painted
+    vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated
+    gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene.
+    Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s2-bloodfairies-roadie-megaphone-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Roadie Megaphone L2: Bullhorn'
+  asset: slime-city/evolutions/s2-bloodfairies-roadie-megaphone@2
+  size: 832x1216
+  seed: 1109033
+  prompt_prose: >-
+    A stocky adult roadie fairy woman in a studded leather vest and cargo shorts, hoisting a dented chrome megaphone, now
+    twice as big and wrapped in glowing magenta tubes. Low-angle hero shot: she looms over a crowded arena loading dock,
+    bellowing a visible cone of sound that blasts open the roll-up doors. The once-startled singer from her alley now rides
+    on her shoulder grinning, as two punk fairies charge and rival crew scatter. Sodium orange and magenta light. Hand-painted
+    vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated
+    gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene.
+    Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s2-bloodfairies-roadie-megaphone-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Roadie Megaphone L3: Riot Call'
+  asset: slime-city/evolutions/s2-bloodfairies-roadie-megaphone@3
+  size: 832x1216
+  seed: 1109034
+  prompt_prose: >-
+    A stocky adult roadie fairy woman in a studded leather vest and cargo shorts, now a giant towering over a street barricade,
+    her megaphone as big as a water tower. The singer she first rallied stands on the megaphone's rim with fist raised,
+    leading the chant. The whole city answers: punk fairies pour from every window, drainpipe and manhole in a rising tide
+    of raised fists and plain colored flags while the skyline rattles. Heroic low-angle view, storm teal with orange flare.
+    Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines,
+    saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed
+    scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-bloodfairies-van-radio-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Tour Van Radio L2: Solo Star FM'
+  asset: slime-city/evolutions/s3-bloodfairies-van-radio@2
+  size: 832x1216
+  seed: 1109035
+  prompt_prose: >-
+    A battered chrome car radio ripped from a tour van, wires dangling, and a hand-sized adult fairy star woman with a pink
+    shag haircut and a sequined jumpsuit, now in a glowing sequined cape. The radio is twice as big, bolted to the van roof.
+    Low-angle hero shot: she looms atop it in a packed drive-in lot as the magenta sound rings from its grille stack twice
+    as big into a spotlight cone around her pose, while cars flash their headlights. Hand-painted vivid inked western adult
+    cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold
+    clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly
+    adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-bloodfairies-van-radio-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Tour Van Radio L3: Pirate Broadcast'
+  asset: slime-city/evolutions/s3-bloodfairies-van-radio@3
+  size: 832x1216
+  seed: 1109036
+  prompt_prose: >-
+    A battered chrome car radio with dangling wires and a fairy star woman with a pink shag haircut and a sequined jumpsuit,
+    both now colossal: the radio a skyscraper-tall boombox, the star giant astride it. A jury-rigged antenna pierces the
+    clouds, and the magenta sound rings from its grille ripple across the whole city, every fairy on every rooftop dancing
+    the same move in unison while the moon bobs along. Heroic low-angle view, neon green and electric blue. Hand-painted
+    vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated
+    gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene.
+    Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-bloodfairies-encore-boots-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Last Encore Boots L2: Blister Sprint'
+  asset: slime-city/evolutions/s3-bloodfairies-encore-boots@2
+  size: 832x1216
+  seed: 1109037
+  prompt_prose: >-
+    A pair of towering enchanted platform boots studded with spikes, tiny bat wings at the heels trailing magenta sparks,
+    worn by a hand-sized adult fairy vocalist woman clutching a microphone. The heel bat wings are now twice as big, flapping
+    like rocket fins. Low-angle hero shot from the street: the boots loom huge, sprinting her down a block-long street festival
+    at a rival, the awkward dancer flailing, bandaged blisters showing, crowd diving aside. Hand-painted vivid inked western
+    adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors,
+    bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character is
+    a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-bloodfairies-encore-boots-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Last Encore Boots L3: The Last Encore'
+  asset: slime-city/evolutions/s3-bloodfairies-encore-boots@3
+  size: 832x1216
+  seed: 1109038
+  prompt_prose: >-
+    A pair of enchanted platform boots studded with spikes, now skyscraper-sized and made of glowing rose-gold chrome, the
+    bat wings at their heels grown as broad as a dragon's. They take a deep bow in a spotlight in the city square, wings
+    sweeping like a cape, the tiny fairy vocalist waving from a toe, while giant glowing footprints cross every rooftop
+    and thousands of fans shower them with roses. Towering low-angle view, rose gold and moonlight. Hand-painted vivid inked
+    western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon
+    colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character
+    is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s2-bloodfairies-glitterglass-flood-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Glitterglass Flood L2: Shard Frenzy'
+  asset: slime-city/evolutions/s2-bloodfairies-glitterglass-flood@2
+  size: 832x1216
+  seed: 1109039
+  prompt_prose: >-
+    A hand-sized adult fairy singer woman with a shaved head, safety-pin earrings and a ripped leather vest, now crowned
+    in a jagged crown of pink glass. Low-angle hero shot from the pit floor: she looms mid-scream as a cyclone of shattered
+    window glass orbits her in a packed club. Her bandmates hold the bass guitar they once ducked under, now twice as big,
+    overhead like an umbrella while fairies thrash harder around them, glittering nicks and bandages catching the light.
+    Violet and pink strobes. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy,
+    thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing
+    with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s2-bloodfairies-glitterglass-flood-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Glitterglass Flood L3: Glitter Flood'
+  asset: slime-city/evolutions/s2-bloodfairies-glitterglass-flood@3
+  size: 832x1216
+  seed: 1109040
+  prompt_prose: >-
+    A fairy singer woman with a shaved head, safety-pin earrings and a ripped leather vest, crowned in pink glass, now giant
+    and towering over the rooftops. She belts one note and a tidal wave of glittering glass pours down the avenue from every
+    window, while she surfs its crest on the band's old bass guitar, now as long as a ferry, rivals swept away like rubber
+    ducks. Every window in the district sparkles. Heroic low-angle view, diamond white and sky blue. Hand-painted vivid
+    inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty
+    neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every
+    character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-bloodfairies-feedback-burst-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Feedback Burst L2: Mic Squeal'
+  asset: slime-city/evolutions/s3-bloodfairies-feedback-burst@2
+  size: 832x1216
+  seed: 1109041
+  prompt_prose: >-
+    A hand-sized adult fairy guitarist woman with a teal undercut, a ripped denim jacket and a jagged magenta guitar, a
+    shrieking microphone on a stand twice her size beside her. Low-angle hero shot: she looms over a crowded club as jagged
+    sound waves light up two fairy fighters beside her, wings flaring. Behind them the same lone bouncer from her first
+    chord now clutches a sandwich twice as big, eyebrows smoking. Violet strobes. Hand-painted vivid inked western adult
+    cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold
+    clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly
+    adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-bloodfairies-feedback-burst-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Feedback Burst L3: Howlround'
+  asset: slime-city/evolutions/s3-bloodfairies-feedback-burst@3
+  size: 832x1216
+  seed: 1109042
+  prompt_prose: >-
+    A fairy guitarist woman with a teal undercut, a ripped denim jacket and a jagged magenta guitar, now a giant standing
+    in the eye of a hurricane of feedback. A ring of skyscraper speakers loops a screaming vortex of magenta lightning over
+    the whole district, rivals spinning through it like leaves. At last the sandwich bouncer from her first chord sails
+    past her nose, his sandwich now big as a blimp. Crowds roar. Towering low-angle view, storm green and electric white.
+    Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines,
+    saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed
+    scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-bloodfairies-encore-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Encore or Die L2: Sing for Supper'
+  asset: slime-city/evolutions/s3-bloodfairies-encore@2
+  size: 832x1216
+  seed: 1109043
+  prompt_prose: >-
+    A bruised hand-sized adult fairy punk woman with a black spiked collar and a syringe-shaped microphone, now twice as
+    big and glowing red. Her torn wing is stitched with glowing red thread, twice its old size. Low-angle hero shot: she
+    looms atop a banquet table in a packed beer hall, singing for her supper as coins and glowing red fruit rain from the
+    crowd into a huge bowl that fairies carry toward a distant throne. Warm lantern and magenta light. Hand-painted vivid
+    inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty
+    neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every
+    character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-bloodfairies-encore-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Encore or Die L3: Encore!'
+  asset: slime-city/evolutions/s3-bloodfairies-encore@3
+  size: 832x1216
+  seed: 1109044
+  prompt_prose: >-
+    A bruised adult fairy punk woman with a black spiked collar and a syringe-shaped microphone, now giant, her once-torn
+    wing healed into golden wings ten times broader. She lifts a fallen fairy friend by the hand, who rises radiant with
+    a golden halo on a column of light through the roof. The moon swings round as a spotlight and the whole city screams
+    from rooftops for the encore. Towering low-angle view, white gold. Hand-painted vivid inked western adult cartoon for
+    a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette,
+    high contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up.
+    Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-bloodfairies-encore-l3b
+  entity: card-art
+  lane: krea-evolution
+  title: 'Encore or Die L3b: Die Trying'
+  asset: slime-city/evolutions/s3-bloodfairies-encore@3b
+  size: 832x1216
+  seed: 1109045
+  prompt_prose: >-
+    A bruised adult fairy punk woman with a black spiked collar and a syringe-shaped microphone, now a colossal living firework.
+    Her once-torn wing has become a fountain of crackling orange fire pouring from her shoulders as she screams, and she
+    bursts into a firework blossom higher than the skyscrapers that fills the sky over the district, thousands of upturned
+    faces lit and grinning. Heroic low-angle view, blazing orange and violet. Hand-painted vivid inked western adult cartoon
+    for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette,
+    high contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up.
+    Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-bloodfairies-rafter-dive-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Dive from the Rafters L2: Rejoin the Pit'
+  asset: slime-city/evolutions/s3-bloodfairies-rafter-dive@2
+  size: 832x1216
+  seed: 1109046
+  prompt_prose: >-
+    A hand-sized adult fairy singer woman in leopard-print tights with falcon-folded wings, trailing a microphone cable,
+    now in a glowing gold crash helmet. Low-angle hero shot from the pit floor: she looms as she lands in a vast arena pit,
+    her microphone cable, twice as long, lassoed around a tight spiral swarm of adult dancers who lock arms around her.
+    Magenta lights burn through the smoke. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting
+    fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait
+    framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and
+    unmarked.
+- key: slime-krea-evo-s3-bloodfairies-rafter-dive-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Dive from the Rafters L3: The Rig Comes Down'
+  asset: slime-city/evolutions/s3-bloodfairies-rafter-dive@3
+  size: 832x1216
+  seed: 1109047
+  prompt_prose: >-
+    A bruised fairy singer woman in leopard-print tights and a gold crash helmet, now colossal, her falcon wings spread
+    wider than the avenue. With her microphone cable as a lasso she drags the whole lighting rig, big as a bridge, down
+    across three alleys like a falling comet, spotlights spinning and a shower of sparks pouring, buildings flinching as
+    rivals scatter. Heroic low-angle view, white sparks and ember orange. Hand-painted vivid inked western adult cartoon
+    for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette,
+    high contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up.
+    Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-bloodfairies-cathedral-noise-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Cathedral of Noise L2: Hymn for Giants'
+  asset: slime-city/evolutions/s3-bloodfairies-cathedral-noise@2
+  size: 832x1216
+  seed: 1109048
+  prompt_prose: >-
+    A hand-sized adult fairy organist woman in a studded cassock with silver nose rings and a spiky black bob, playing an
+    organ built from stacked amplifiers whose pipes are now twice as tall, aimed like cannons. Low-angle hero shot: she
+    looms over the keys in a vast basilica nave as a beam of thundering violet sound knocks a hulking brute to his knees,
+    the magenta stained-glass windows from her first hymn blazing twice as bright and rattling in their leads. Hand-painted
+    vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated
+    gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene.
+    Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-bloodfairies-cathedral-noise-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Cathedral of Noise L3: Glorious Encore'
+  asset: slime-city/evolutions/s3-bloodfairies-cathedral-noise@3
+  size: 832x1216
+  seed: 1109049
+  prompt_prose: >-
+    A fairy organist woman in a studded cassock with silver nose rings and a spiky black bob, now giant and haloed, floating
+    above an amplifier organ whose pipes rise taller than the skyline. Every magenta stained-glass window of her cathedral
+    bursts outward into a rainbow beam that streaks across the city, while fans in the front pews are blown back cheering,
+    hair flying. Heroic low-angle view, rainbow stained-glass glow. Hand-painted vivid inked western adult cartoon for a
+    grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette,
+    high contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up.
+    Every surface is bare and unmarked.
+- key: slime-krea-evo-s2-bloodfairies-earworm-feedback-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Earworm Feedback L2: Catchy Hook'
+  asset: slime-city/evolutions/s2-bloodfairies-earworm-feedback@2
+  size: 832x1216
+  seed: 1109050
+  prompt_prose: >-
+    A hand-sized adult fairy guitarist woman with green pigtails, a fringe jacket and a sour sparking guitar, now twice
+    as big with glowing fishhook tuning pegs. Low-angle hero shot: she looms atop a fire hydrant in a crowded street market,
+    strumming as glowing musical hooks sprout from the sidewalk. They snag the ankles of the same coffee-spilling trespasser
+    from her first chord and a second rival, both tumbling into fruit stalls. Violet neon and rain. Hand-painted vivid inked
+    western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon
+    colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character
+    is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s2-bloodfairies-earworm-feedback-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Earworm Feedback L3: Earworm Epidemic'
+  asset: slime-city/evolutions/s2-bloodfairies-earworm-feedback@3
+  size: 832x1216
+  seed: 1109051
+  prompt_prose: >-
+    A fairy guitarist woman with green pigtails, a fringe jacket and a sour sparking guitar, now a giant conducting from
+    atop a water tower, her guitar humming like a power line. Translucent rainbow worms of melody as long as subway trains
+    loop across three alleys, wriggling into every rival's ears. The old coffee-spilling trespasser floats frozen mid-step
+    with swirly dazed eyes, his coffee hanging in the air. Heroic low-angle view, candy rainbow. Hand-painted vivid inked
+    western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon
+    colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character
+    is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-bloodfairies-amp-socket-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Broken Amp Socket L2: Arc Flash'
+  asset: slime-city/evolutions/s3-bloodfairies-amp-socket@2
+  size: 832x1216
+  seed: 1109052
+  prompt_prose: >-
+    A busted amp with a frayed crackling cord, tended by a sly hand-sized adult fairy technician woman with frizzy static
+    hair, rubber boots and moth wings. The socket now sprouts a glowing coil crown twice its size. Low-angle hero shot from
+    the gutter: the amp looms huge on a neon street, spitting a forked arc of blue lightning that leaps the road to strike
+    the same striped-sweater burglar again, his cartoon skeleton flashing. Hand-painted vivid inked western adult cartoon
+    for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette,
+    high contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up.
+    Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-bloodfairies-amp-socket-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Broken Amp Socket L3: Still Live'
+  asset: slime-city/evolutions/s3-bloodfairies-amp-socket@3
+  size: 832x1216
+  seed: 1109053
+  prompt_prose: >-
+    A busted amp with a frayed cord, tended by a sly fairy technician woman with frizzy static hair, rubber boots and moth
+    wings, now colossal, taller than the district, crowned with a living storm cloud. Cables slither like glowing serpents
+    into every doorway, fairies riding the sparks, and the striped-sweater burglar tiptoes past in rubber boots, hair already
+    standing on end. Towering low-angle view, electric cyan and white. Hand-painted vivid inked western adult cartoon for
+    a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette,
+    high contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up.
+    Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-bloodfairies-banana-bouncer-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Bouncer Banana Peel L2: Cover Charge'
+  asset: slime-city/evolutions/s3-bloodfairies-banana-bouncer@2
+  size: 832x1216
+  seed: 1109054
+  prompt_prose: >-
+    An enormous adult nightclub bouncer in a tight black tee and sunglasses, slipping on a banana peel at a neon club door.
+    The banana peel is now twice as big and glows gold. Low-angle hero shot: he looms overhead mid-flip at a grand casino-style
+    club entrance, legs higher than his head, a fat wallet spilling coins that bounce down the alley toward a distant throne,
+    punk fairies chasing them. Gold and pink neon. Hand-painted vivid inked western adult cartoon for a grungy colorful
+    street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast,
+    tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface
+    is bare and unmarked.
+- key: slime-krea-evo-s3-bloodfairies-banana-bouncer-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Bouncer Banana Peel L3: Laughing Stock'
+  asset: slime-city/evolutions/s3-bloodfairies-banana-bouncer@3
+  size: 832x1216
+  seed: 1109055
+  prompt_prose: >-
+    An enormous adult nightclub bouncer in a tight black tee and sunglasses, now colossal, sprawled across the whole avenue
+    like a fallen giant. The banana peel has become a golden circus tent draped over his face. Thousands of punk fairies
+    line every rooftop laughing and rolling up their sleeves, the moon doubles over laughing, and a new fairy dancer climbs
+    onto his belly under a spotlight. Low-angle view, banana yellow and hot pink. Hand-painted vivid inked western adult
+    cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold
+    clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly
+    adult grown-up. Every surface is bare and unmarked.
