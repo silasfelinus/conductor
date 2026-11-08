@@ -1,0 +1,820 @@
+# Slime City evolution art, Mercenaries A, Krea 2 escalation redo (2026-11-08 PT).
+# Replaces the Flux Kontext dev round EVOLUTIONS-MERCENARIES-A.yaml. Silas, 2026-11-08: "Flux dev is a slow generator,
+# and we're getting a lot of the same looking images three times over. We shouldn't use it for the main gen,
+# but we also need a much larger and fun escalation between evolution 1 and evolution 3."
+# Kontext edited each card's level-1 painting and kept its composition, so L1/L2/L3 read as one picture.
+# This round is Krea 2 text-to-image (the house Slime City engine, 8 steps), one render per stage instead of
+# two seeds, and each prompt is written per card on the ladder in CLASH-EVOLUTION-PLAN.md section 4:
+# L2 = powered up (new signature gear, bigger venue, new camera); L3/L3b = legendary, over the top (scale,
+# swarms, material change, mythic form, a city-sized signature, the district reacting, a finale palette).
+# Identity carries over through a per-card look anchor that opens both prompts. Same runtime assets
+# ('<cardId>@2' | '@3' | '@3b'), so a keeper is wired as SLIME_CITY_ART.evolutions[...]. auto_submit: true.
+round: slime-city-evolutions-mercenaries-a-krea
+project_slug: slime-city
+designer: Slime City evolution art, Mercenaries A (Krea 2)
+is_public: true
+is_mature: false
+cast_loras: false
+priority: 640
+auto_submit: true
+lanes:
+- key: krea-evolution
+  label: Krea 2, escalated evolution stages written per card
+  engine: krea2
+  prompt: prose
+subjects:
+- key: slime-krea-evo-merc-sewer-sommelier-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Sewer Sommelier L2: Tasting Flight'
+  asset: slime-city/evolutions/merc-sewer-sommelier@2
+  size: 832x1216
+  seed: 1114001
+  prompt_prose: >-
+    An elegant adult amphibian sommelier in patched dinner tails, warty olive skin and a silver tasting cup on a chain,
+    now wearing a glowing jade sommelier sash. He sweeps through a vast candlelit sewer cistern hall, tipping a decanter
+    twice his old size, pouring glowing green drainwater into a tray of mismatched glasses for two grinning adult brawlers
+    leaning in from either side, while a rowdy crowd of fighters on stone steps raises cups. Dynamic diagonal view, dripping
+    arches, teal and orange glow. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy,
+    thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing
+    with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-merc-sewer-sommelier-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Sewer Sommelier L3: Grand Cru of the Gutter'
+  asset: slime-city/evolutions/merc-sewer-sommelier@3
+  size: 832x1216
+  seed: 1114002
+  prompt_prose: >-
+    An elegant adult amphibian sommelier in patched dinner tails, warty olive skin and silver tasting cup, now crowned with
+    a ring of golden corks and towering above the rooftops. He hoists a barnacle-crusted bottle as big as a water tower,
+    pouring an emerald waterfall onto a banquet table of manhole covers stretching the whole avenue, where hundreds of adult
+    fighters toast him from tables, fire escapes and rooftops. Emerald vapor curls around the moon. Heroic low angle, molten
+    gold and emerald finale glow. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy,
+    thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing
+    with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-merc-skate-taxidermist-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Skating Taxidermist L2: Trophy Wall'
+  asset: slime-city/evolutions/merc-skate-taxidermist@2
+  size: 832x1216
+  seed: 1114003
+  prompt_prose: >-
+    An adult taxidermist on glittering roller skates, wiry and fierce, with a stuffed moose head on her helmet, mounted
+    owls on her shoulders and a beetle case on her back, now rolling on blazing golden rocket skates. She carves past a
+    towering trophy wall in a packed roller derby arena, hanging a stuffed slime trophy twice the size of the moose, while
+    rival skaters tumble and the bleachers roar. Over-the-shoulder chase view, magenta spotlights and turquoise rink glow.
+    Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines,
+    saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed
+    scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-merc-skate-taxidermist-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Skating Taxidermist L3: Diorama on Wheels'
+  asset: slime-city/evolutions/merc-skate-taxidermist@3
+  size: 832x1216
+  seed: 1114004
+  prompt_prose: >-
+    An adult taxidermist on glittering roller skates, wiry and fierce, moose head on her helmet and mounted owls on her
+    shoulders, rides atop a giant stuffed grizzly bear on roller skates, leading an entire parade of skating museum exhibits
+    down the boulevard: a moose, a giraffe, a whale skeleton and a hundred mounted owls on wheels, glass eyes gleaming.
+    Crowds cheer from balconies as a mirror ball the size of the moon spins overhead. Epic wide view, silver glitter and
+    violet glow. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive
+    outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous
+    full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-merc-auction-golem-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Auction Golem L2: Priced Out'
+  asset: slime-city/evolutions/merc-auction-golem@2
+  size: 832x1216
+  seed: 1114005
+  prompt_prose: >-
+    A hulking adult golem built from stacked bricks, antique dressers and brass gavels, gold coins rattling in its chest
+    slots, now wearing a velvet auctioneer's sash and a brass top hat. In a packed opera-house auction hall, it raises a
+    glowing stone gavel twice its old size mid-bid while a slimy rival across the aisle shrinks back, pockets turned out
+    and empty, and a crowd of adult bidders gasps behind raised blank paddles. Wide action diagonal, crimson velvet and
+    chandelier light. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick
+    expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with
+    one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-merc-auction-golem-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Auction Golem L3: Sold Out From Under You'
+  asset: slime-city/evolutions/merc-auction-golem@3
+  size: 832x1216
+  seed: 1114006
+  prompt_prose: >-
+    A hulking adult golem of stacked bricks, antique dressers and brass gavels, now turned to molten gold and towering above
+    the skyline, auctions off the entire district. Its gavel, as big as a clock tower, slams down and the whole street flips
+    upward like a catapult, flinging a slimy rival in a spray of goo and rubble toward the moon, while confetti and gold
+    coins rain on cheering rooftop crowds. Heroic low angle, royal purple sky and blazing gold. Hand-painted vivid inked
+    western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon
+    colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character
+    is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-merc-spark-midwife-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Midwife of Sparks L2: Ideas Are Catching'
+  asset: slime-city/evolutions/merc-spark-midwife@2
+  size: 832x1216
+  seed: 1114007
+  prompt_prose: >-
+    An adult midwife in a rubber apron and welding goggles, sturdy and calm, gloves crackling with blue-white electricity,
+    now wearing a humming copper coil backpack crowned with lightning rods. Inside a vast power-plant turbine hall, sparks
+    twice as big as before leap from her hands onto the shoulders of two adult allies, who fizz and glow with startled grins
+    while a crowd of workers ducks behind sparking railings. Over-the-shoulder view, electric blue and amber. Hand-painted
+    vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated
+    gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene.
+    Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-merc-spark-midwife-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Midwife of Sparks L3: Brainstorm'
+  asset: slime-city/evolutions/merc-spark-midwife@3
+  size: 832x1216
+  seed: 1114008
+  prompt_prose: >-
+    An adult midwife in a rubber apron and welding goggles, sturdy and calm, transforms into a living thunderstorm the size
+    of the sky, her apron a swirling cloud and her goggles two blazing moons. From her open arms hundreds of tiny round
+    spark creatures with bright eyes tumble down over the city like fireworks, landing on rooftops and lamp posts, while
+    every window in the district flickers and residents cheer. Epic wide view, violet and white-hot pink glow. Hand-painted
+    vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated
+    gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene.
+    Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-merc-traffic-witch-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Traffic Witch L2: Green Wave'
+  asset: slime-city/evolutions/merc-traffic-witch@2
+  size: 832x1216
+  seed: 1114009
+  prompt_prose: >-
+    An adult witch in a pointed hat striped like a traffic cone and a reflective orange cloak, sharp-eyed and grinning,
+    now riding a broom made from a striped barrier arm with flashing lamps. She holds high a stoplight wand twice its old
+    size, its tip blazing green, and a charging line of adult allies surges behind her across a rainy six-lane intersection
+    while stalled rivals gape. Low dynamic diagonal from the asphalt, emerald green light on wet streets. Hand-painted vivid
+    inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty
+    neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every
+    character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-merc-traffic-witch-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Traffic Witch L3: Gridlock'
+  asset: slime-city/evolutions/merc-traffic-witch@3
+  size: 832x1216
+  seed: 1114010
+  prompt_prose: >-
+    An adult witch in a pointed hat striped like a traffic cone and a reflective orange cloak, now a colossal storm-queen
+    floating above a gridlocked cloverleaf interchange, crowned with a halo of glowing cones. The full moon has turned into
+    a giant red stoplight behind her, and every rival in the city freezes mid-step as crimson light floods the streets,
+    cars stacked like toy blocks, rooftop crowds staring. Heroic low angle, crimson and chrome finale glow. Hand-painted
+    vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated
+    gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene.
+    Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-merc-picket-troll-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Picket Line Troll L2: Permanent Overtime'
+  asset: slime-city/evolutions/merc-picket-troll@2
+  size: 832x1216
+  seed: 1114011
+  prompt_prose: >-
+    An enormous mossy adult troll with tusks and a dented hard hat, a blank plywood sandwich board and a thermos on a chain,
+    now wearing a glowing gold union armband and a flashing beacon on his hat. He leads a picket line a hundred workers
+    long at a towering factory gate at dawn, his thermos twice its old size, a blanket over his shoulders, as nervous foremen
+    peer from guard towers. Wide diagonal action view, emerald fog and sunrise gold. Hand-painted vivid inked western adult
+    cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold
+    clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly
+    adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-merc-picket-troll-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Picket Line Troll L3: General Strike'
+  asset: slime-city/evolutions/merc-picket-troll@3
+  size: 832x1216
+  seed: 1114012
+  prompt_prose: >-
+    An enormous mossy adult troll with tusks and a dented hard hat, now grown into a living mountain, sits cross-legged
+    across the whole factory district with arms folded, trees and waterfalls on his shoulders and his giant thermos a steaming
+    water tower. Smokestacks go cold, and hundreds of slimy rivals lounge on overturned crates around his feet, eating sandwiches
+    with their weapons stacked aside, as the whole city takes the day off. Epic wide view, rose and lavender sunset. Hand-painted
+    vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated
+    gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene.
+    Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-merc-escape-crab-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Escape Artist Crab L2: Dine and Dash'
+  asset: slime-city/evolutions/merc-escape-crab@2
+  size: 832x1216
+  seed: 1114013
+  prompt_prose: >-
+    A scarred adult orange crab with tiny locksmith spectacles and a battered shell, now wearing a bandolier of glowing
+    golden lockpicks. It scuttles across the chandelier-lit dining floor of a grand seafood palace, a napkin tucked into
+    its shell and a whole roast chicken clutched in a claw twice its old size, while a dozen adult chefs and waiters dive
+    after it and diners leap from their chairs. Wide action shot, warm candlelight and spilled lemon-yellow sauce. Hand-painted
+    vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated
+    gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene.
+    Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-merc-escape-crab-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Escape Artist Crab L3: The Seventeenth Escape'
+  asset: slime-city/evolutions/merc-escape-crab@3
+  size: 832x1216
+  seed: 1114014
+  prompt_prose: >-
+    A scarred adult orange crab with tiny locksmith spectacles, now wearing a flowing golden escape-artist cape, makes its
+    seventeenth escape in one giant leap across the harbor skyline, silhouetted against an enormous full moon. Shattered
+    chains burst into fireworks behind it, sixteen broken cages tumble off the rooftops, and a hundred furious chefs wave
+    ladles from every roof as fishermen cheer from the docks. Heroic low angle, deep sapphire night and molten gold sparks.
+    Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines,
+    saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed
+    scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-merc-escape-crab-l3b
+  entity: card-art
+  lane: krea-evolution
+  title: 'Escape Artist Crab L3b: Free the Tank'
+  asset: slime-city/evolutions/merc-escape-crab@3b
+  size: 832x1216
+  seed: 1114015
+  prompt_prose: >-
+    A scarred adult orange crab with tiny locksmith spectacles, now wearing a bottle-cap crown, rides a roaring tidal wave
+    of thousands of freed lobsters and crabs pouring out of a shattered aquarium restaurant and down the main boulevard.
+    Claws raised in salute, the crustacean army sweeps past stunned diners, splashing seawater over parked cars, while residents
+    cheer from balconies under a sky of shimmering spray. Epic wide view, aqua and coral finale glow. Hand-painted vivid
+    inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty
+    neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every
+    character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-merc-living-scaffold-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Living Scaffolding L2: Load-Bearing'
+  asset: slime-city/evolutions/merc-living-scaffold@2
+  size: 832x1216
+  seed: 1114016
+  prompt_prose: >-
+    A towering adult creature of rusty scaffolding poles, plank walkways and dangling buckets, its apartment-block face
+    grinning through lit windows, now topped with a glowing yellow crane arm like a giant hard hat. In a busy downtown building
+    site, it stretches steel arms twice their old length over two adult allies, holding planks and beams above them like
+    a sheltering roof as rival bricks bounce off. Over-the-shoulder view from a tiny builder, rain and magenta dusk. Hand-painted
+    vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated
+    gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene.
+    Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-merc-living-scaffold-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Living Scaffolding L3: New Wings'
+  asset: slime-city/evolutions/merc-living-scaffold@3
+  size: 832x1216
+  seed: 1114017
+  prompt_prose: >-
+    A towering adult creature of rusty scaffolding poles and plank walkways, its apartment-block face grinning through lit
+    windows, has become an entire living skyline. Scaffold wings sprout across every neighboring alley, growing into a cathedral
+    of beams with stained-glass windows, spiral walkways and a crown of cranes piercing the clouds, while hundreds of adult
+    builders cheer from new balconies in a burst of sawdust. Epic wide view, jewel-toned stained glass glowing in dawn gold.
+    Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines,
+    saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed
+    scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-merc-invisible-mime-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Invisible Mime L2: Against the Wind'
+  asset: slime-city/evolutions/merc-invisible-mime@2
+  size: 832x1216
+  seed: 1114018
+  prompt_prose: >-
+    A lanky adult street mime with a pale painted face, striped sleeves, white gloves, suspenders and a black beret, now
+    trailing a crimson silk scarf twice his height. Alone on a vast storm-lashed suspension bridge, he leans hard into an
+    invisible hurricane, coat flapping and beret clamped down, while umbrellas, trash cans and tumbling rivals blow past
+    and a distant crowd clings to lamp posts in awe. Dynamic diagonal view, violet rain and copper lamplight. Hand-painted
+    vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated
+    gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene.
+    Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-merc-invisible-mime-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Invisible Mime L3: Trapped in a Box'
+  asset: slime-city/evolutions/merc-invisible-mime@3
+  size: 832x1216
+  seed: 1114019
+  prompt_prose: >-
+    A lanky adult street mime with a pale painted face, striped sleeves, white gloves and a black beret, now as tall as
+    a tower and glowing silver, presses gloved palms around an invisible box the size of a city block. Trapped inside, a
+    hulking slimy brute and its whole monster truck pound at walls traced by shimmering raindrops, while rooftop crowds
+    applaud in silence and the moon shines down like a spotlight. Heroic low angle, silver and lilac glow. Hand-painted
+    vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated
+    gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene.
+    Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-merc-midnight-janitor-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Midnight Janitor L2: Mops Up'
+  asset: slime-city/evolutions/merc-midnight-janitor@2
+  size: 832x1216
+  seed: 1114020
+  prompt_prose: >-
+    A weary adult night janitor with a grey ponytail and coveralls, wiry and unimpressed, now pushing a gleaming chrome
+    mop bucket on rocket wheels. On the floodlit center of a giant stadium, she wrings a dazed rival champion out of a mop
+    twice its old size into the bucket of glowing goo, wiping her brow and looking refreshed, while stunned fans pack the
+    stands. Low dynamic diagonal across the shining marble floor, green slime and white floodlights. Hand-painted vivid
+    inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty
+    neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every
+    character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-merc-midnight-janitor-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Midnight Janitor L3: Closing Time'
+  asset: slime-city/evolutions/merc-midnight-janitor@3
+  size: 832x1216
+  seed: 1114021
+  prompt_prose: >-
+    A weary adult night janitor with a grey ponytail and coveralls, now a legendary knight of closing time in a polished
+    bucket helmet and a cape of yellow tarp, charges astride a roaring floor-polishing machine. Her giant mop lowered like
+    a lance, she sweeps a whole line of startled rivals off their feet across a shining sea of goo, as a moon-sized clock
+    face strikes midnight behind her and every arena light clicks off. Heroic low angle, moonlit blue and silver. Hand-painted
+    vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated
+    gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene.
+    Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-merc-misaddressed-parcel-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Misaddressed Parcel L2: Forwarded Next Door'
+  asset: slime-city/evolutions/merc-misaddressed-parcel@2
+  size: 832x1216
+  seed: 1114022
+  prompt_prose: >-
+    A soggy plain brown parcel with a torn corner, now sprouting a pair of flapping cardboard wings, and its puzzled adult
+    courier in a damp cap. In a crowded tenement courtyard, the parcel hovers open, firing rolls of gauze twice as long
+    as before toward two neighboring doorways, where adult residents peek out to catch them and wrap a bruised fighter,
+    as the courier gapes. Over-the-shoulder view from the courier, rainy gold porch lights. Hand-painted vivid inked western
+    adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors,
+    bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character is
+    a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-merc-misaddressed-parcel-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Misaddressed Parcel L3: Every Door on the Block'
+  asset: slime-city/evolutions/merc-misaddressed-parcel@3
+  size: 832x1216
+  seed: 1114023
+  prompt_prose: >-
+    A soggy plain brown parcel with a torn corner and flapping cardboard wings leads a flock of a thousand identical glowing
+    parcels soaring over the row houses like migrating birds, its puzzled adult courier riding on top. Ribbons of bandage
+    stream from every box onto bruised fighters along the whole street, wrapping them in cheerful gauze as residents wave
+    from every doorstep and the sky fills with fluttering white streamers. Epic wide view, soft sunrise pink and lantern
+    gold. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive
+    outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous
+    full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-merc-crowd-lightning-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Crowd-Sourced Lightning L2: Signature Drive'
+  asset: slime-city/evolutions/merc-crowd-lightning@2
+  size: 832x1216
+  seed: 1114024
+  prompt_prose: >-
+    A crowd of adult residents in raincoats and slippers, raising sparking forks, umbrellas and curtain rods, now led by
+    a grandmother in rubber boots holding a glowing copper megaphone. They pack a wide market square shoulder to shoulder,
+    waving blank clipboards and pens, and the magenta thunderbolt above them crackles twice as thick and bright, striking
+    a cowering rival as laundry lines snap. Low street-height view looking up into the storm, magenta and rain-silver light.
+    Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines,
+    saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed
+    scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-merc-crowd-lightning-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Crowd-Sourced Lightning L3: Lightning Rod Petition'
+  asset: slime-city/evolutions/merc-crowd-lightning@3
+  size: 832x1216
+  seed: 1114025
+  prompt_prose: >-
+    A crowd of adult residents in raincoats and slippers, led by a grandmother in rubber boots with a glowing copper megaphone,
+    hoists a homemade lightning rod of umbrellas and coat hangers taller than every skyscraper. A storm the size of the
+    whole sky pours a colossal bolt through it, arcing across the city onto the rival boss's distant tower, which glows
+    like a light bulb, while thousands cheer from rooftops. Epic wide view, ice white and electric turquoise finale glow.
+    Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines,
+    saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed
+    scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-merc-unofficial-detour-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Unofficial Detour L2: Dead End'
+  asset: slime-city/evolutions/merc-unofficial-detour@2
+  size: 832x1216
+  seed: 1114026
+  prompt_prose: >-
+    A smug adult street painter in paint-spattered overalls and a backwards cap, leaning on her paint roller, now wearing
+    a glowing gold paint-tank backpack with a spray hose. Her golden arrow, painted twice as large, curves down a whole
+    boulevard into a narrow dead end, where a huge lumbering slime truck is wedged between brick walls, wheels spinning
+    in goo, as honking drivers and rivals gawk. High diagonal view from a rooftop, wet asphalt and green slime. Hand-painted
+    vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated
+    gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene.
+    Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-merc-unofficial-detour-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Unofficial Detour L3: Road Closed for Repairs'
+  asset: slime-city/evolutions/merc-unofficial-detour@3
+  size: 832x1216
+  seed: 1114027
+  prompt_prose: >-
+    A smug adult street painter in paint-spattered overalls and a backwards cap, now riding a steamroller-sized paint roller
+    like a chariot, has painted the entire district into a giant spiral maze of golden arrows. Orange cones as tall as houses
+    and striped barriers block every street from wall to wall, and three slimy rivals stand stuck and baffled at the very
+    center, while neighbors watch from rooftops. Overhead epic wide view, hazard orange and electric blue. Hand-painted
+    vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated
+    gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene.
+    Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-merc-reputation-laundry-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Reputation Laundering L2: Glowing Reference'
+  asset: slime-city/evolutions/merc-reputation-laundry@2
+  size: 832x1216
+  seed: 1114028
+  prompt_prose: >-
+    An adult laundromat attendant in hair curlers and rolled sleeves, broad-armed and beaming, now wielding a glowing golden
+    scrub brush. In a grand marble laundromat palace lined with towering turquoise washers, she presents a freshly laundered
+    thug who struts out of the steam in spotless clothes, chin raised, his gleaming white jacket stiff as armor, while a
+    crowd of admiring adults applauds amid rainbow bubbles twice their old size. Low wide diagonal, pearly steam. Hand-painted
+    vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated
+    gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene.
+    Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-merc-reputation-laundry-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Reputation Laundering L3: Comes Out Spotless'
+  asset: slime-city/evolutions/merc-reputation-laundry@3
+  size: 832x1216
+  seed: 1114029
+  prompt_prose: >-
+    An adult laundromat attendant in hair curlers and rolled sleeves, now crowned with glowing curlers and hovering on a
+    cloud of foam, flings open a washing machine drum the size of a skyscraper. Out steps a beaming boss figure in a pristine
+    white suit with wings of soap foam, while every laundry line across the district turns sparkling white and bubbles fill
+    the sky around the moon. Heroic low angle, pearl white and pastel rainbow glow. Hand-painted vivid inked western adult
+    cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold
+    clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly
+    adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-merc-flashmob-diversion-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Flashmob Diversion L2: Rehearsal'
+  asset: slime-city/evolutions/merc-flashmob-diversion@2
+  size: 832x1216
+  seed: 1114030
+  prompt_prose: >-
+    A lanky adult street dancer in a sequined violet hoodie and gold sneakers, mid-move, now wearing glowing light-up gloves.
+    In a vast underground parking garage turned dance hall, she strikes a pose beside a fellow fighter, a boombox twice
+    their height pulsing at their feet, while a ring of adult dancers rehearses behind them and a disguised smuggler sneaks
+    a brass case past a dazzled guard. Wide action diagonal, copper light and violet shadows. Hand-painted vivid inked western
+    adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors,
+    bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character is
+    a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-merc-flashmob-diversion-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Flashmob Diversion L3: The Whole Street Dances'
+  asset: slime-city/evolutions/merc-flashmob-diversion@3
+  size: 832x1216
+  seed: 1114031
+  prompt_prose: >-
+    A lanky adult street dancer in a sequined violet hoodie and gold sneakers, glowing light-up gloves raised, leads the
+    whole district in one synchronized dance. A thousand adult dancers fill every alley, fire escape and rooftop in matching
+    poses, the elevated highway sways to the beat, buildings bob and colored searchlights sweep the clouds, while a smuggler
+    waltzes off with a brass case. Epic wide view from above the crossroads, hot pink and lime spotlights. Hand-painted
+    vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated
+    gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene.
+    Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-merc-jury-rigged-radar-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Jury-Rigged Radar L2: Feedback Whine'
+  asset: slime-city/evolutions/merc-jury-rigged-radar@2
+  size: 832x1216
+  seed: 1114032
+  prompt_prose: >-
+    An adult scout in a bike helmet with a rusty satellite dish bolted to her backpack, wired to a colander and blinking
+    fairy lights, now wearing a glowing foil antenna headset. In a canyon of towering junk heaps, her dish, twice its old
+    size, blasts visible sound rings down the scrapyard that rattle a slimy rival covering its ears, knock hats off three
+    goons and shake hubcaps loose. Low wide diagonal, turquoise fog and pulsing green rings. Hand-painted vivid inked western
+    adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors,
+    bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character is
+    a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-merc-jury-rigged-radar-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Jury-Rigged Radar L3: Locked On'
+  asset: slime-city/evolutions/merc-jury-rigged-radar@3
+  size: 832x1216
+  seed: 1114033
+  prompt_prose: >-
+    An adult scout in a bike helmet with a rusty satellite dish backpack, wired to a colander and blinking fairy lights,
+    stands atop a city-sized dish built from the whole junkyard, cars, fridges and bedsprings welded together. Hundreds
+    of rooftop satellite dishes swivel in unison with hers, and a crimson targeting beam lances down from the clouds to
+    pin the biggest brute on the block in a blazing bullseye. Heroic low angle, crimson and deep violet glow. Hand-painted
+    vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated
+    gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene.
+    Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-merc-allergy-season-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Allergy Season L2: Pollen Drift'
+  asset: slime-city/evolutions/merc-allergy-season@2
+  size: 832x1216
+  seed: 1114034
+  prompt_prose: >-
+    A rolling golden storm of pollen, swollen gutter weeds and flying tissues, now carried by a giant dandelion clock that
+    bursts above the boulevard. Thick golden clouds twice their old size drift sideways into the neighboring alleys and
+    a packed open-air market, where slimy rivals squint with watering eyes, flower stalls topple and adult shoppers bury
+    their faces in handkerchiefs. Dynamic diagonal across the market awnings, gold haze and magenta streetlamps. Hand-painted
+    vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated
+    gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene.
+    Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-merc-allergy-season-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Allergy Season L3: Peak Pollen Count'
+  asset: slime-city/evolutions/merc-allergy-season@3
+  size: 832x1216
+  seed: 1114035
+  prompt_prose: >-
+    A rolling golden storm of pollen, swollen gutter weeds and flying tissues, crowned by a sunflower taller than every
+    skyscraper blooming over the skyline. Pollen blankets the whole city, and every rival crew member in sight doubles over
+    in one simultaneous sneeze, the shockwave bending lamp posts and blowing tissues up toward the moon, while adult residents
+    in goggles watch from rooftops. Epic wide view, lime green and sunset violet finale glow. Hand-painted vivid inked western
+    adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors,
+    bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character is
+    a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-merc-supervised-demo-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Supervised Demolition L2: Hard Hats On'
+  asset: slime-city/evolutions/merc-supervised-demo@2
+  size: 832x1216
+  seed: 1114036
+  prompt_prose: >-
+    An adult demolition foreman in a spotless white hard hat and safety vest, precise and serene, now wearing a glowing
+    gold vest and a blinking beacon on her hat. At a vast floodlit demolition yard, she presses a plunger detonator twice
+    its old size with exaggerated care, as a row of adult fighters watches from behind a neat safety line, each in a bright
+    yellow hard hat with a protective shimmer, while rubble puffs pop under the rivals. Low frontal view, gold work lights.
+    Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines,
+    saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed
+    scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-merc-supervised-demo-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Supervised Demolition L3: Controlled Implosion'
+  asset: slime-city/evolutions/merc-supervised-demo@3
+  size: 832x1216
+  seed: 1114037
+  prompt_prose: >-
+    An adult demolition foreman in a spotless white hard hat and safety vest sits on a towering throne of stacked orange
+    cones, conducting with a golden baton. Across the skyline, rival skyscrapers fold neatly in on themselves like accordions
+    into tidy columns of dust, one after another, while her crew in glowing yellow hard hats applauds politely from a picnic
+    blanket and rooftop crowds sip tea. Heroic low angle, cool mint dust and pearl twilight glow. Hand-painted vivid inked
+    western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon
+    colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character
+    is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-merc-unsupervised-demo-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Unsupervised Demolition L2: Flying Debris'
+  asset: slime-city/evolutions/merc-unsupervised-demo@2
+  size: 832x1216
+  seed: 1114038
+  prompt_prose: >-
+    A cackling adult demolition worker in a cracked hard hat, ankle-deep in shredded blank paper, now wearing a bandolier
+    of dynamite twice as fat as before. On a towering rooftop above the city, she lights the whole bundle and chunks of
+    brick and goo sail high over a chain-link fence toward a distant rival tower, trailing smoke, while horrified partygoers
+    duck behind an overturned grill. Over-the-shoulder view, magenta smoke and orange sparks. Hand-painted vivid inked western
+    adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors,
+    bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character is
+    a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-merc-unsupervised-demo-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Unsupervised Demolition L3: Nobody Read the Manual'
+  asset: slime-city/evolutions/merc-unsupervised-demo@3
+  size: 832x1216
+  seed: 1114039
+  prompt_prose: >-
+    A cackling adult demolition worker in a cracked hard hat and soot-blackened vest rides a dynamite stick the size of
+    a rocket as the whole city block blasts into the sky. Rivals, allies, hot dog vendors, bathtubs and entire brownstones
+    tumble around the moon in a giant cartoon explosion, while a crumpled, unopened blueprint roll bounces away untouched
+    and the neighbors across town watch from lawn chairs. Epic wide view, tangerine and teal fireworks glow. Hand-painted
+    vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated
+    gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene.
+    Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-merc-mortgage-holiday-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Mortgage Holiday L2: Grace Period'
+  asset: slime-city/evolutions/merc-mortgage-holiday@2
+  size: 832x1216
+  seed: 1114040
+  prompt_prose: >-
+    A sunburned adult broker in a loud floral shirt and sunglasses, lounging under a paper umbrella, now sporting enormous
+    golden sunglasses. She floats on an inflatable pool lounger down a flooded avenue, her umbrella of blank bills twice
+    its old size, a stack of unpaid bills pinned by a seashell, while neighbors in swimsuits splash on the steps and a clockwork
+    debt collector clanks slowly closer behind her. Wide diagonal view, acid green and coral. Hand-painted vivid inked western
+    adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors,
+    bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character is
+    a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-merc-mortgage-holiday-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Mortgage Holiday L3: Foreclosure'
+  asset: slime-city/evolutions/merc-mortgage-holiday@3
+  size: 832x1216
+  seed: 1114041
+  prompt_prose: >-
+    A sunburned adult broker in a loud floral shirt and sunglasses rides the shoulder of a clockwork debt collector grown
+    taller than the skyline. The colossus wraps the rival boss's gaudy mansion in iron chains and a padlock the size of
+    a house, lifting it off the ground like a lunchbox, while the boss dangles from the front door in a bathrobe and the
+    whole district gawks. Heroic low angle, iron grey and furnace orange glow. Hand-painted vivid inked western adult cartoon
+    for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette,
+    high contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up.
+    Every surface is bare and unmarked.
+- key: slime-krea-evo-merc-mortgage-holiday-l3b
+  entity: card-art
+  lane: krea-evolution
+  title: 'Mortgage Holiday L3b: Refinance'
+  asset: slime-city/evolutions/merc-mortgage-holiday@3b
+  size: 832x1216
+  seed: 1114042
+  prompt_prose: >-
+    A sunburned adult broker in a loud floral shirt and sunglasses surfs a towering tidal wave of gold coins bursting out
+    of a marble bank vault and flooding the boulevard. Hugging a bulging canvas sack, she grins smugly from a throne of
+    piggy banks riding the crest, while residents scoop coins from windows and the moon gleams overhead like a giant gold
+    coin. Epic wide view, molten gold and mint green glow. Hand-painted vivid inked western adult cartoon for a grungy colorful
+    street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast,
+    tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface
+    is bare and unmarked.
+- key: slime-krea-evo-merc-secondhand-halo-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Secondhand Halo L2: Still Warm'
+  asset: slime-city/evolutions/merc-secondhand-halo@2
+  size: 832x1216
+  seed: 1114043
+  prompt_prose: >-
+    An adult pawnshop clerk with half-moon glasses and a cardigan, thin and kindly, now peering through a glowing brass
+    jeweler's loupe. In a roaring underground boxing gym, she lowers a dented golden halo twice its old size, glowing warm
+    amber, over a battered fighter's head, soft light knitting their scrapes closed with golden stitches, while the crowd
+    and rival boxers stare open-mouthed. Overhead diagonal view, turquoise neon and amber glow. Hand-painted vivid inked
+    western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon
+    colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character
+    is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-merc-secondhand-halo-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Secondhand Halo L3: Previous Owner'
+  asset: slime-city/evolutions/merc-secondhand-halo@3
+  size: 832x1216
+  seed: 1114044
+  prompt_prose: >-
+    An adult pawnshop clerk with half-moon glasses and a cardigan stands on her shop roof as every secondhand halo in the
+    city rises into the sky, a hundred rings orbiting a giant halo that encircles the moon. From its blazing light the previous
+    owner returns as a towering translucent adult fighter with wings, lunchbox in hand, ready for one more shift, while
+    the whole street kneels and cheers. Heroic low angle, white gold and rose glow. Hand-painted vivid inked western adult
+    cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold
+    clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly
+    adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-merc-take-stairs-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Take the Stairs L2: Leg Day'
+  asset: slime-city/evolutions/merc-take-stairs@2
+  size: 832x1216
+  seed: 1114045
+  prompt_prose: >-
+    A determined adult messenger in patched leather armor, a red sweatband and a brass satchel, now wearing glowing winged
+    sneakers. She sprints up a dizzying spiral stair inside a derelict skyscraper, calves twice their old size, a towel
+    around her neck, while syndicate goons stuck in a dangling glass elevator gape at her and cheering tenants line every
+    landing. Top-down spiral view down the stairwell, copper light and violet shadows. Hand-painted vivid inked western
+    adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors,
+    bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character is
+    a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-merc-take-stairs-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Take the Stairs L3: Stairwell Sprint'
+  asset: slime-city/evolutions/merc-take-stairs@3
+  size: 832x1216
+  seed: 1114046
+  prompt_prose: >-
+    A determined adult messenger in patched leather armor, a red sweatband and a brass satchel, now a muscle-bound blazing
+    comet, bursts through the rooftop door so hard she rockets into the sky. A startled rival flies off ahead of her, the
+    door spins past the moon, and the stairwell keeps climbing behind her into the clouds as rooftop crowds across the city
+    cheer. Heroic low angle, blazing dawn orange and sky blue glow. Hand-painted vivid inked western adult cartoon for a
+    grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette,
+    high contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up.
+    Every surface is bare and unmarked.
+- key: slime-krea-evo-merc-streetlight-confession-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Streetlight Confession L2: Overheard'
+  asset: slime-city/evolutions/merc-streetlight-confession@2
+  size: 832x1216
+  seed: 1114047
+  prompt_prose: >-
+    A wiry adult informant in a rumpled trench coat and flat cap, nervous eyes darting, now spilling a confession that pours
+    from his mouth as glowing golden light. In a towering tenement courtyard, a streetlamp twice its old height blazes amber
+    over him while dozens of neighbors lean out of windows, listening wide-eyed and standing taller, as giant conspirator
+    shadows flinch on the brick. Low dynamic diagonal from the cobbles, lemon-yellow dusk. Hand-painted vivid inked western
+    adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors,
+    bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character is
+    a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-merc-streetlight-confession-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Streetlight Confession L3: The Truth Hurts'
+  asset: slime-city/evolutions/merc-streetlight-confession@3
+  size: 832x1216
+  seed: 1114048
+  prompt_prose: >-
+    A wiry adult informant in a rumpled trench coat and flat cap stands atop a streetlamp grown taller than the skyline,
+    its lamp head blazing like a lighthouse. Its searing white beam spears across the district onto a flinching slimy rival,
+    while giant conspirator shadows across every building shrivel and flee, and neighbors on every rooftop stand tall in
+    the glare. Epic wide view, blinding white and deep indigo glow. Hand-painted vivid inked western adult cartoon for a
+    grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette,
+    high contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up.
+    Every surface is bare and unmarked.
+- key: slime-krea-evo-merc-homebrew-antidote-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Homebrew Antidote L2: Side Effects May Include'
+  asset: slime-city/evolutions/merc-homebrew-antidote@2
+  size: 832x1216
+  seed: 1114049
+  prompt_prose: >-
+    An exhausted adult alchemist with singed eyebrows, round goggles and a stained lab coat, now carrying a bubbling glass
+    still on her back like a backpack. At a crowded street-market clinic, she hands a flask twice its old size fizzing with
+    sparks to an adult fighter, whose hair stands on end and muscles balloon and twitch, while onlookers dive behind crates
+    and three blank warning tags flap. Wide action diagonal, violet shadows and green glow. Hand-painted vivid inked western
+    adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors,
+    bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character is
+    a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-merc-homebrew-antidote-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Homebrew Antidote L3: Good Batch'
+  asset: slime-city/evolutions/merc-homebrew-antidote@3
+  size: 832x1216
+  seed: 1114050
+  prompt_prose: >-
+    An exhausted adult alchemist with singed eyebrows, round goggles and a stained lab coat, now crowned with a halo of
+    bubbling flasks, stands before a cathedral of glass pipes and copper tanks rising over the whole block. A perfect batch
+    glows calm clear green, flowing from a public fountain where hundreds of bruised fighters drink, as the lead fighter
+    floats wrapped in a swirling green aurora and wounds close. Heroic low angle, mint and pearl glow. Hand-painted vivid
+    inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty
+    neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every
+    character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-merc-homebrew-antidote-l3b
+  entity: card-art
+  lane: krea-evolution
+  title: 'Homebrew Antidote L3b: Bad Batch'
+  asset: slime-city/evolutions/merc-homebrew-antidote@3b
+  size: 832x1216
+  seed: 1114051
+  prompt_prose: >-
+    An exhausted adult alchemist with singed eyebrows, round goggles and a stained lab coat, cackling atop a rooftop catapult,
+    hurls a murky bubbling flask the size of a bus across the city. It bursts over the rival crew in a towering purple smoke
+    cloud shaped like a grinning octopus, dyeing every startled slimy rival polka-dot purple, as neighbors hold their noses
+    from balconies. Epic wide view, violet and toxic orange glow. Hand-painted vivid inked western adult cartoon for a grungy
+    colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high
+    contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every
+    surface is bare and unmarked.
+- key: slime-krea-evo-merc-whisper-network-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Whisper Network L2: Grapevine'
+  asset: slime-city/evolutions/merc-whisper-network@2
+  size: 832x1216
+  seed: 1114052
+  prompt_prose: >-
+    A chain of adult gossips in curlers and cardigans, leaning out of neighbouring windows with cupped hands, now each holding
+    a glowing brass ear trumpet. Along a towering tenement canyon, a literal grapevine of curling purple whisper trails,
+    twice as thick as before, spills from the first rival's ear into the ears of the slimy rivals beside it, who glance
+    at each other suspiciously. Long low diagonal view up the windows, laundry lines and magenta glow. Hand-painted vivid
+    inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty
+    neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every
+    character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-merc-whisper-network-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Whisper Network L3: Front Page'
+  asset: slime-city/evolutions/merc-whisper-network@3
+  size: 832x1216
+  seed: 1114053
+  prompt_prose: >-
+    A chain of adult gossips in curlers and cardigans with glowing brass ear trumpets now fills every window of the district.
+    Their whispers merge into a city-sized purple dragon of blank paper slips that coils through the whole rival crew and
+    up around the rival boss's tower, where the boss drops a teacup in shock as a storm of paper rains over the rooftops.
+    Epic wide view, violet and tangerine glow. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting
+    fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait
+    framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and
+    unmarked.

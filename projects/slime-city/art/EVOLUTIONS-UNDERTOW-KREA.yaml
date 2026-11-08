@@ -1,0 +1,913 @@
+# Slime City evolution art, Undertow, Krea 2 escalation redo (2026-11-08 PT).
+# Replaces the Flux Kontext dev round EVOLUTIONS-UNDERTOW.yaml. Silas, 2026-11-08: "Flux dev is a slow generator,
+# and we're getting a lot of the same looking images three times over. We shouldn't use it for the main gen,
+# but we also need a much larger and fun escalation between evolution 1 and evolution 3."
+# Kontext edited each card's level-1 painting and kept its composition, so L1/L2/L3 read as one picture.
+# This round is Krea 2 text-to-image (the house Slime City engine, 8 steps), one render per stage instead of
+# two seeds, and each prompt is written per card on the ladder in CLASH-EVOLUTION-PLAN.md section 4:
+# L2 = powered up (new signature gear, bigger venue, new camera); L3/L3b = legendary, over the top (scale,
+# swarms, material change, mythic form, a city-sized signature, the district reacting, a finale palette).
+# Identity carries over through a per-card look anchor that opens both prompts. Same runtime assets
+# ('<cardId>@2' | '@3' | '@3b'), so a keeper is wired as SLIME_CITY_ART.evolutions[...]. auto_submit: true.
+round: slime-city-evolutions-undertow-krea
+project_slug: slime-city
+designer: Slime City evolution art, Undertow (Krea 2)
+is_public: true
+is_mature: false
+cast_loras: false
+priority: 640
+auto_submit: true
+lanes:
+- key: krea-evolution
+  label: Krea 2, escalated evolution stages written per card
+  engine: krea2
+  prompt: prose
+subjects:
+- key: slime-krea-evo-pipe-seer-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Pipe Seer L2: Reading the Flow'
+  asset: slime-city/evolutions/pipe-seer@2
+  size: 832x1216
+  seed: 1117001
+  prompt_prose: >-
+    An adult teal-coated amphibian oracle with glass diving goggles and brass antennae, now crowned with a towering brass
+    ear-trumpet hood twice the size of its head. In a cavernous cathedral-sized sewer junction, the seer kneels with one
+    ear pressed to a gushing iron drainpipe, eyes closed, while glowing teal ripples spill out and swirl into ghostly previews
+    of rival brawlers' next punches. Three startled rivals freeze mid-swing, watching their own futures. Dynamic diagonal
+    view from above, foam and lamplight. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting
+    fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait
+    framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and
+    unmarked.
+- key: slime-krea-evo-pipe-seer-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Pipe Seer L3: Oracle of the Drains'
+  asset: slime-city/evolutions/pipe-seer@3
+  size: 832x1216
+  seed: 1117002
+  prompt_prose: >-
+    An adult teal-coated amphibian oracle with glass diving goggles and brass antennae, ascended into a serene drain god
+    with a halo of glowing pipe-maps. The seer sits cross-legged atop a skyscraper-tall throne of rusted pipes rising from
+    a flooded cistern that has burst open to the night sky, hands open, weapon set aside. A hundred floating bubbles around
+    the throne each show a tiny glowing street fight from tomorrow, and the whole district leans out of windows to watch.
+    Heroic low angle, violet and molten-gold dawn glow. Hand-painted vivid inked western adult cartoon for a grungy colorful
+    street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast,
+    tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface
+    is bare and unmarked.
+- key: slime-krea-evo-pipe-seer-l3b
+  entity: card-art
+  lane: krea-evolution
+  title: 'Pipe Seer L3b: Pressure Point'
+  asset: slime-city/evolutions/pipe-seer@3b
+  size: 832x1216
+  seed: 1117003
+  prompt_prose: >-
+    An adult teal-coated amphibian oracle with glass diving goggles and brass antennae, its body transformed into living
+    crackling white-blue water. The seer lunges in a single perfect strike, driving a gleaming pipe-spike as long as a subway
+    train into one glowing crack on a colossal armored iron golem the size of a parking garage. The golem bursts apart into
+    a fountain of rivets and confetti sparks while rooftop crowds across the skyline cheer. Epic wide shot, hot magenta
+    and electric white palette. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy,
+    thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing
+    with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-snitch-grate-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Snitch Grate L2: Tip-Off'
+  asset: slime-city/evolutions/snitch-grate@2
+  size: 832x1216
+  seed: 1117004
+  prompt_prose: >-
+    A suspiciously polished chrome sewer grate with a flickering cyan eye between its bars and teal cables trailing away,
+    now grown twice as wide and sporting a shiny brass periscope monocle. Set into the cobbles of a bustling night market
+    crossing, two bright eyes peer up while a gloved hand pokes out between the slats, passing a folded blank note to a
+    waiting trench-coated boot. Rival brawlers stroll overhead, oblivious, as a noodle vendor gasps. Worm's-eye view up
+    through the bars, lantern glow and steam. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting
+    fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait
+    framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and
+    unmarked.
+- key: slime-krea-evo-snitch-grate-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Snitch Grate L3: Snitch Network'
+  asset: slime-city/evolutions/snitch-grate@3
+  size: 832x1216
+  seed: 1117005
+  prompt_prose: >-
+    A suspiciously polished chrome sewer grate with a flickering cyan eye between its bars, multiplied into hundreds of
+    gleaming grates covering every street, wall, chimney and rooftop of the district. Every grate snaps open a glowing eye
+    at once, and a hundred beams of golden light converge like stadium spotlights on one huge armored brute stranded in
+    the central plaza, who drops his club in dismay. Even the moon wears a polished grate pattern. Epic aerial wide view,
+    molten gold and hot pink glow. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting
+    fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait
+    framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and
+    unmarked.
+- key: slime-krea-evo-s1-basement-ghost-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Basement Ghost L2: Vent Shot'
+  asset: slime-city/evolutions/s1-basement-ghost@2
+  size: 832x1216
+  seed: 1117006
+  prompt_prose: >-
+    An adult hooded deep-sewer scout in a frost-dusted midnight-blue cloak with a spiked crossbow, now upgraded to a frost-glowing
+    crossbow rifle twice as long with an icy crystal scope. The ghostly sniper leans half out of a frosted vent high in
+    a vast pumping station, breath fogging, as a thin icy needle of light streaks across the hall toward a tiny distant
+    rival. A crowd of rival thugs on the catwalks below spin around, shivering. Over-the-shoulder view down the barrel,
+    turquoise steam. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick
+    expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with
+    one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s1-basement-ghost-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Basement Ghost L3: The Haunting'
+  asset: slime-city/evolutions/s1-basement-ghost@3
+  size: 832x1216
+  seed: 1117007
+  prompt_prose: >-
+    An adult hooded deep-sewer scout in a midnight-blue cloak with a spiked crossbow, dissolving into a colossal howling
+    pale specter that bursts out of every manhole on the block and towers over the rooftops. Below, the entire alley is
+    frozen solid: rival fighters stand as glossy ice sculptures mid-stride, icicles hang from the neon tubes, and summer
+    snow swirls over steaming food carts. Shocked neighbors stare from frosted windows. Heroic low angle, icy white and
+    violet aurora palette. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy,
+    thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing
+    with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s1-static-listener-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Static Listener L2: Quiet Alley'
+  asset: slime-city/evolutions/s1-static-listener@2
+  size: 832x1216
+  seed: 1117008
+  prompt_prose: >-
+    An adult lanky underground sound engineer in a patched teal jumpsuit with oversized headphones and long antenna wires,
+    now wearing a huge satellite-dish backpack twice his height. He perches alone atop a towering streetlight over a rain-slick
+    boulevard, a coil of wire running down the pole, while faint green sound waves drift in from every window of the city
+    and gather around his ears. Rival gangsters whisper secrets in the alley far below, unaware. High dynamic diagonal view,
+    drizzle and lamplight. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy,
+    thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing
+    with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s1-static-listener-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Static Listener L3: Static Storm'
+  asset: slime-city/evolutions/s1-static-listener@3
+  size: 832x1216
+  seed: 1117009
+  prompt_prose: >-
+    An adult lanky underground sound engineer in a patched teal jumpsuit with oversized headphones, now risen into the sky
+    as a living thundercloud of crackling static with his arms flung wide. Every streetlamp on the block erupts with green
+    and purple static lightning, television screens in every window fizz with snow, and the rival fighters below clutch
+    their ears with their hair standing straight up. The moon itself blurs into fuzzy static. Epic low-angle view, electric
+    purple and lime palette. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy,
+    thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing
+    with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s1-floodlight-sweep-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Floodlight Sweep L2: Blinding Glare'
+  asset: slime-city/evolutions/s1-floodlight-sweep@2
+  size: 832x1216
+  seed: 1117010
+  prompt_prose: >-
+    A battered turquoise sewer searchlight on a rusted swivel mount with a dented brass hood, now twice as large and ringed
+    with a crown of extra glowing lenses, cranked by a grinning adult Undertow operator in goggles. On a wide canal plaza,
+    the beam swings straight into the face of a rival slime brawler, who throws an arm over his eyes and staggers backward,
+    while a crowd of rivals behind him shield their faces. Low dynamic diagonal view into the blaze of white glare. Hand-painted
+    vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated
+    gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene.
+    Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s1-floodlight-sweep-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Floodlight Sweep L3: Spotlight the Crew'
+  asset: slime-city/evolutions/s1-floodlight-sweep@3
+  size: 832x1216
+  seed: 1117011
+  prompt_prose: >-
+    A battered turquoise sewer searchlight with a dented brass hood, multiplied into a hundred blazing searchlights mounted
+    on every rooftop of the district like a grand movie premiere. Crisscrossing golden beams fill the sky, the moon turns
+    into one giant spotlight, and rival targets below are pinned in harsh glowing circles while silhouettes of the trench-coated
+    Undertow crew charge through the beams. Cheering neighbors hang from fire escapes. Epic wide view, molten gold and rose
+    palette. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive
+    outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous
+    full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s1-wiretap-order-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Wiretap Restraining Order L2: Transcript'
+  asset: slime-city/evolutions/s1-wiretap-order@2
+  size: 832x1216
+  seed: 1117012
+  prompt_prose: >-
+    A conspiratorial spool of intercepted copper communications wire beside a blank counterfeit restraining notice, now
+    upgraded to a giant reel-to-reel tape recorder twice as tall as a person. Inside a cavernous surveillance warehouse,
+    the spools spin furiously and a long glowing ribbon of tape spills into the hands of a hooded adult agent, while rival
+    goons press their faces against the grimy skylights above, horrified. Wide over-the-shoulder view, cyan monitors and
+    dripping pipes. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick
+    expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with
+    one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s1-wiretap-order-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Wiretap Restraining Order L3: Big-Fish Warrant'
+  asset: slime-city/evolutions/s1-wiretap-order@3
+  size: 832x1216
+  seed: 1117013
+  prompt_prose: >-
+    A conspiratorial spool of intercepted copper wire beside a blank official notice, now grown into a blank warrant sheet
+    the size of a city block, falling from the clouds like a giant fishing net. It drops over a huge two-headed sewer brute
+    in the middle of the avenue, glowing golden chains of ink wrapping around its bulk while a building-sized wax seal stamps
+    down beside it. Crowds on every rooftop cheer and toss hats. Epic wide view, gold and crimson palette. Hand-painted
+    vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated
+    gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene.
+    Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s1-blue-ink-deadfall-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Blue-Ink Deadfall L2: Ink Cloud'
+  asset: slime-city/evolutions/s1-blue-ink-deadfall@2
+  size: 832x1216
+  seed: 1117014
+  prompt_prose: >-
+    A concealed cyan ink-trap hidden in a flooded sewer corridor, now rigged with a huge brass bellows pump twice its old
+    size. The sprung deadfall bursts into a billowing cloud of deep blue ink that fills a vast flooded hall, the grinning
+    eyes of allied Undertow fighters peeking safely from the haze while a suspicious adult private investigator in a soaked
+    fedora gropes around blindly. Wide action view across the water, ink swirling in turquoise floodlight. Hand-painted
+    vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated
+    gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene.
+    Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s1-blue-ink-deadfall-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Blue-Ink Deadfall L3: Blackwater Bloom'
+  asset: slime-city/evolutions/s1-blue-ink-deadfall@3
+  size: 832x1216
+  seed: 1117015
+  prompt_prose: >-
+    A cyan ink-trap of the deep sewers, its ink now blooming into a colossal glowing indigo flower that fills the entire
+    flooded sewer and pushes giant petals up through every manhole into the streets above. Glittering stinging threads curl
+    from the petals to every rival fighter wading in the channels, who hop and yelp comically, while astonished neighbors
+    watch the street glow from below. Epic wide underwater view, ultraviolet and gold-glitter palette. Hand-painted vivid
+    inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty
+    neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every
+    character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s1-needle-wire-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Needle-Wire Antenna L2: Relay Spike'
+  asset: slime-city/evolutions/s1-needle-wire@2
+  size: 832x1216
+  seed: 1117016
+  prompt_prose: >-
+    An adult wiry spy in a slate-grey trench coat with a razor-thin copper needle antenna mounted on her sleeve, the antenna
+    now twice as long and glowing green at its tip. On a crowded tar rooftop, she jams the antenna into a sparking junction
+    box, and a jagged bolt of green signal leaps across the alley to lock a rival fighter rigid mid-jump while his crew
+    gapes. Dynamic diagonal view across the rooftops, rain and green glow. Hand-painted vivid inked western adult cartoon
+    for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette,
+    high contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up.
+    Every surface is bare and unmarked.
+- key: slime-krea-evo-s1-needle-wire-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Needle-Wire Antenna L3: Threaded Needle'
+  asset: slime-city/evolutions/s1-needle-wire@3
+  size: 832x1216
+  seed: 1117017
+  prompt_prose: >-
+    An adult wiry spy in a slate-grey trench coat with a copper needle antenna on her sleeve, now swinging it like a lasso
+    as a glowing copper thread miles long. The thread stitches through an entire parade of armored rivals standing shoulder
+    to shoulder and then through the skyscrapers themselves, sewing the whole skyline together like a quilt, sparks bursting
+    at every seam. Rooftop crowds cheer. Heroic low angle, molten copper and hot magenta palette. Hand-painted vivid inked
+    western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon
+    colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character
+    is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s2-undertow-drainpipe-interrogator-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Drainpipe Interrogator L2: Good Cop'
+  asset: slime-city/evolutions/s2-undertow-drainpipe-interrogator@2
+  size: 832x1216
+  seed: 1117018
+  prompt_prose: >-
+    An adult squid-faced sewer detective with a tentacle beard, a dripping olive trench coat, an acid-green fedora and a
+    coral bow tie, now carrying a glowing interrogation lantern on a pole twice his height. In a huge flooded pump hall,
+    he leans casually against a dripping drainpipe, offering a steaming paper cup to a sullen rival suspect slumped on a
+    folding chair, while a whole row of other suspects nod off drowsily. Over-the-shoulder view, coral highlights on acid-green
+    water. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive
+    outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous
+    full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s2-undertow-drainpipe-interrogator-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Drainpipe Interrogator L3: The Confession'
+  asset: slime-city/evolutions/s2-undertow-drainpipe-interrogator@3
+  size: 832x1216
+  seed: 1117019
+  prompt_prose: >-
+    An adult squid-faced sewer detective with a tentacle beard, an olive trench coat, an acid-green fedora and a coral bow
+    tie, now as tall as the clock tower and dangling the full moon from a chain like an interrogation bulb. He slams a tentacle
+    on a rooftop as a sweating suspect points a trembling finger, and the moonlight throws a gigantic shadow of the rival
+    crew's biggest enforcer across the clouds. The whole district peers out its windows. Heroic low angle, harsh gold and
+    crimson noir glow. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick
+    expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with
+    one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s2-undertow-subsurface-warden-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Subsurface Warden L2: Night Shift'
+  asset: slime-city/evolutions/s2-undertow-subsurface-warden@2
+  size: 832x1216
+  seed: 1117020
+  prompt_prose: >-
+    An adult hulking slow watchman in a barnacled brass diving suit with glowing teal stitches on his cheek, now hauling
+    a giant brass lantern twice the size of his helmet. He trudges down a grand vaulted tunnel lined with alcoves, and soft
+    domes of teal light glow over sleeping Undertow allies on either side, while two sneaking rivals bounce comically off
+    the shields. Wide tracking view along the tunnel, emerald brick and swinging lamplight. Hand-painted vivid inked western
+    adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors,
+    bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character is
+    a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s2-undertow-subsurface-warden-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Subsurface Warden L3: Jailer of the Deep'
+  asset: slime-city/evolutions/s2-undertow-subsurface-warden@3
+  size: 832x1216
+  seed: 1117021
+  prompt_prose: >-
+    An adult hulking watchman in a barnacled brass diving suit with teal-stitched cheek, now colossal, his barnacles turned
+    to gleaming gold and a crown of rusted anchors on his helmet. He sits enthroned in a giant bathysphere at the bottom
+    of a deep sea of floodwater, unarmed, turning a key ring as large as a ferris wheel to lock a floodgate as tall as a
+    dam, a tiny furious rival rattling the bars. Schools of glowing fish circle his crown. Heroic low angle, abyss violet
+    and gold palette. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick
+    expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with
+    one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s2-undertow-floodlight-leak-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Floodlight Leak L2: Wrong Desk'
+  asset: slime-city/evolutions/s2-undertow-floodlight-leak@2
+  size: 832x1216
+  seed: 1117022
+  prompt_prose: >-
+    A cracked brass floodlamp bursting through a sewer wall with a hard teal beam, now twice as big with a second swiveling
+    lens. Its beam spills through the window of a gaudy rival boss's gilded penthouse office, lighting up the blank surveillance
+    ledger lying open on the golden desk, while the boss's goons crowd around it with greedy grins. Outside, the junior
+    clerk in a trench coat dangles from the ledge, horrified. Over-the-shoulder view from the window, teal beam on gold.
+    Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines,
+    saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed
+    scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s2-undertow-floodlight-leak-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Floodlight Leak L3: Whistleblower'
+  asset: slime-city/evolutions/s2-undertow-floodlight-leak@3
+  size: 832x1216
+  seed: 1117023
+  prompt_prose: >-
+    A cracked brass floodlamp and its blank surveillance ledger, now exploded into millions of glowing blank pages raining
+    over the entire city like a ticker-tape blizzard. On the tallest rooftop, a lone adult figure in a trench coat stands
+    with arms raised in triumph, a single wilted flower on the ledge beside them, while floodlights from every building
+    swing across the storm and crowds on balconies reach for falling pages. Epic wide view, sunset orange and molten gold
+    palette. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive
+    outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous
+    full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s2-undertow-backwater-iou-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Backwater IOU L2: Paper Trail'
+  asset: slime-city/evolutions/s2-undertow-backwater-iou@2
+  size: 832x1216
+  seed: 1117024
+  prompt_prose: >-
+    A waterlogged blank paper slip the size of a door that swims like a shark, now twice as big with a glowing red wax-seal
+    fin on its back. Across a broad smugglers' canal harbor, it trails a long glowing chain of blank paper slips through
+    the murky water toward a hooded agent's waiting hand on the dock, while startled smugglers drop their crates. Dynamic
+    diagonal view from the dock edge, lantern glow on rippling teal water. Hand-painted vivid inked western adult cartoon
+    for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette,
+    high contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up.
+    Every surface is bare and unmarked.
+- key: slime-krea-evo-s2-undertow-backwater-iou-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Backwater IOU L3: Co-Signers'
+  asset: slime-city/evolutions/s2-undertow-backwater-iou@3
+  size: 832x1216
+  seed: 1117025
+  prompt_prose: >-
+    A waterlogged blank paper slip that swims like a shark, now as big as a cargo ship and breaching out of the river like
+    a whale over the moonlit waterfront. Glowing paper chains lasso three rival fighters off the docks and yank them together
+    into a swirling whirlpool, coins raining from their pockets like hail, while the whole waterfront crowd gapes from the
+    piers. Epic wide view, moonlit silver and gold palette. Hand-painted vivid inked western adult cartoon for a grungy
+    colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high
+    contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every
+    surface is bare and unmarked.
+- key: slime-krea-evo-s2-undertow-culvert-tollwire-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Culvert Tollwire L2: Toll Collected'
+  asset: slime-city/evolutions/s2-undertow-culvert-tollwire@2
+  size: 832x1216
+  seed: 1117026
+  prompt_prose: >-
+    A thin brass tollwire with a tiny mechanical coin-plucking claw riding along it, now twice as thick and the claw upgraded
+    with a polished brass top hat. Across a busy sewer highway junction, the wire snaps tight around a caught rival courier's
+    ankles, and a glittering stream of coins tumbles from his pockets into a rusty bucket bolted to the wall, while a queue
+    of rivals behind him groans. Wide dynamic diagonal view, teal lantern light on wet emerald brick. Hand-painted vivid
+    inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty
+    neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every
+    character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s2-undertow-culvert-tollwire-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Culvert Tollwire L3: Toll Plaza'
+  asset: slime-city/evolutions/s2-undertow-culvert-tollwire@3
+  size: 832x1216
+  seed: 1117027
+  prompt_prose: >-
+    A brass tollwire with a tiny mechanical coin-plucking claw, now the ruler of a gigantic gleaming toll plaza spanning
+    an entire sewer river, with a hundred striped barrier arms and a second gleaming wire re-strung behind every one. Rival
+    fighters sit stuck in a mile-long traffic jam of rafts, and the tiny claw lounges on a mountain of gold coins wearing
+    a jeweled crown. Epic wide aerial view, molten gold and sunset pink palette. Hand-painted vivid inked western adult
+    cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold
+    clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly
+    adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s2-undertow-wiretap-spikes-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Wiretap Spikes L2: Live Feed'
+  asset: slime-city/evolutions/s2-undertow-wiretap-spikes@2
+  size: 832x1216
+  seed: 1117028
+  prompt_prose: >-
+    Oversized brass wiretap spike claws with tiny microphone grilles and exposed copper fasteners, worn by an adult hooded
+    agent in a violet-shadowed trench coat, now twice as big and humming with violet light. In a sprawling damp hideout
+    under a bridge, thick cables run from the claws to a giant crackling radio set, and the agent leans in with headphones
+    as the whole crew crowds behind, listening hard. Over-the-shoulder view, copper edges and green phosphor glow. Hand-painted
+    vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated
+    gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene.
+    Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s2-undertow-wiretap-spikes-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Wiretap Spikes L3: Party Line'
+  asset: slime-city/evolutions/s2-undertow-wiretap-spikes@3
+  size: 832x1216
+  seed: 1117029
+  prompt_prose: >-
+    Oversized brass wiretap spike claws with microphone grilles, worn by an adult hooded agent in a violet trench coat,
+    now pouring out glowing neon cables that branch to every fighter in a long rooftop conga line of allied brawlers. Every
+    pair of knuckles bristles with tiny listening spikes, and the city's phone lines light up overhead like a giant neon
+    spiderweb stretched across the night sky. Heroic low angle from the rooftop, hot neon pink and lime palette. Hand-painted
+    vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated
+    gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene.
+    Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-undertow-drain-sniper-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Drainpipe Sniper L2: Lone Perch'
+  asset: slime-city/evolutions/s3-undertow-drain-sniper@2
+  size: 832x1216
+  seed: 1117030
+  prompt_prose: >-
+    An adult wiry otter-woman sniper in a waterproof slate hood and magenta goggles, carrying a long brass-barreled rifle,
+    now fitted with a crude brass telescope sight twice the length of the barrel. She lies alone on a high rusted catwalk
+    above a vast flooded drain basin, cheek pressed to the stock as rain beads on the scope, while far below rival scouts
+    search the wrong rooftops. Dramatic downward diagonal view, hot magenta sparks and desaturated steel. Hand-painted vivid
+    inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty
+    neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every
+    character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-undertow-drain-sniper-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Drainpipe Sniper L3: Overwatch'
+  asset: slime-city/evolutions/s3-undertow-drain-sniper@3
+  size: 832x1216
+  seed: 1117031
+  prompt_prose: >-
+    An adult wiry otter-woman sniper in a waterproof slate hood and magenta goggles, now perched in a sandbagged nest atop
+    a pipe-stack tower so tall it pierces the clouds. Her rifle, as long as a bridge, is braced on the sandbags, and the
+    rising sun behind her forms a giant golden halo as a blazing tracer streaks down toward the largest rival brute far
+    below. Pigeons line the pipes in salute. Heroic low angle, dawn gold and rose palette. Hand-painted vivid inked western
+    adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors,
+    bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character is
+    a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-undertow-interrogation-eel-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Interrogation Eel L2: Live Wire'
+  asset: slime-city/evolutions/s3-undertow-interrogation-eel@2
+  size: 832x1216
+  seed: 1117032
+  prompt_prose: >-
+    An adult muscular eel-man with slick steel-grey skin, glowing blue electric stripes and a magenta-lined trench coat,
+    now wearing giant copper coil shoulder pads twice his width. In a broad flooded plaza beside a broken bus, he coils
+    around his sputtering prey as crackling blue lightning arcs from his body into two rival fighters on either side, their
+    hair standing on end, while onlookers duck behind a barricade. Dynamic diagonal chase view, hot magenta sparks on teal
+    water. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive
+    outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous
+    full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-undertow-interrogation-eel-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Interrogation Eel L3: Shock Net'
+  asset: slime-city/evolutions/s3-undertow-interrogation-eel@3
+  size: 832x1216
+  seed: 1117033
+  prompt_prose: >-
+    An adult eel-man with steel-grey skin, glowing blue stripes and a magenta-lined trench coat, now shrunk to a scrawny
+    little eel with a sooty grin. From the center of the flooded street he releases one enormous blinding web of lightning
+    that spreads across the entire submerged city, lighting up every rival fighter in the water with comic jolts, smoking
+    shoes and frizzled hair. Lightning climbs the skyscrapers to the moon. Epic wide view, blinding white and violet palette.
+    Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines,
+    saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed
+    scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-undertow-needle-rain-agent-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Needle Rain Agent L2: Cloudburst'
+  asset: slime-city/evolutions/s3-undertow-needle-rain-agent@2
+  size: 832x1216
+  seed: 1117034
+  prompt_prose: >-
+    An adult operative in a sleek black trench coat with a perfectly bored expression, now raising a brass umbrella-launcher
+    twice the size of an ordinary umbrella. In a wide rain-soaked city square, a sudden cloudburst of glinting silver needles
+    pours down from its underside on three rival fighters in the street ahead, pinning their hats and coat-tails to the
+    cobbles while bystanders dive under awnings. Wide action view from the side, needles streaking through teal light. Hand-painted
+    vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated
+    gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene.
+    Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-undertow-needle-rain-agent-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Needle Rain Agent L3: Needle Monsoon'
+  asset: slime-city/evolutions/s3-undertow-needle-rain-agent@3
+  size: 832x1216
+  seed: 1117035
+  prompt_prose: >-
+    An adult operative in a sleek black trench coat with a perfectly bored expression, floating calmly in the eye of a city-sized
+    hurricane of silver needles, holding an umbrella as wide as a circus tent and sipping a cup of tea. All around the district,
+    rival fighters are pinned to the walls by their sleeves, dangling like laundry, as the storm swirls between the skyscrapers.
+    Heroic low angle, storm silver and electric indigo palette with gold lightning. Hand-painted vivid inked western adult
+    cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold
+    clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly
+    adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-undertow-basement-watchdog-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Basement Watchdog L2: Alarm Bark'
+  asset: slime-city/evolutions/s3-undertow-basement-watchdog@2
+  size: 832x1216
+  seed: 1117036
+  prompt_prose: >-
+    An adult barrel-chested bulldog the size of a pony with goggles on its wrinkled brow and a brass lantern collar, now
+    upgraded to a giant brass megaphone collar twice as wide. At the foot of a grand warehouse stairwell, it plants its
+    paws and barks, a visible blast of sound rings rattling the crates, and the rival intruder at the top freezes as his
+    two partners tumble down the steps. Low dynamic diagonal view up the stairs, teal light. Hand-painted vivid inked western
+    adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors,
+    bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character is
+    a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-undertow-basement-watchdog-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Basement Watchdog L3: Off the Leash'
+  asset: slime-city/evolutions/s3-undertow-basement-watchdog@3
+  size: 832x1216
+  seed: 1117037
+  prompt_prose: >-
+    An adult barrel-chested bulldog with goggles on its wrinkled brow and a brass lantern collar, now as big as an apartment
+    building, bursting up through the street with a snapped chain trailing like a bridge cable. Its collar lantern blazes
+    like a lighthouse as it leaps over the rooftops straight at the smallest, scrawniest rival trespasser, who clutches
+    his hat in panic, while neighbors cheer from fire escapes. Heroic low angle, golden sunset and orange palette. Hand-painted
+    vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated
+    gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene.
+    Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-undertow-sewer-leviathan-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Sewer Leviathan L2: Undertow Pull'
+  asset: slime-city/evolutions/s3-undertow-sewer-leviathan@2
+  size: 832x1216
+  seed: 1117038
+  prompt_prose: >-
+    A colossal eel-dragon with brass plating, periscope eyestalks and ridiculously tiny stubby legs, now wrapped in a giant
+    brass anchor chain twice its old length. In a vast underground reservoir, it drags a struggling rival fighter down by
+    the ankle into a swirling whirlpool, only the rival's flailing arms showing above the foam, while trench-coated spies
+    on the high catwalk cheer. Over-the-shoulder view from the leviathan's eyestalks, teal foam and lantern glow. Hand-painted
+    vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated
+    gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene.
+    Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-undertow-sewer-leviathan-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Sewer Leviathan L3: Tidal Surge'
+  asset: slime-city/evolutions/s3-undertow-sewer-leviathan@3
+  size: 832x1216
+  seed: 1117039
+  prompt_prose: >-
+    A colossal eel-dragon with brass plating, periscope eyestalks and ridiculously tiny stubby legs, now erupting up through
+    the middle of the city on a tidal wave taller than the skyscrapers. It surfs the crest on its stubby legs as the green
+    wave crashes down main street, tumbling a whole row of rival fighters off the walkways, while crowds on rooftops shriek
+    with delight. Epic wide view, sunrise orange and glowing green foam palette. Hand-painted vivid inked western adult
+    cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold
+    clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly
+    adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-undertow-sewer-leviathan-l3b
+  entity: card-art
+  lane: krea-evolution
+  title: 'Sewer Leviathan L3b: Deep Dweller'
+  asset: slime-city/evolutions/s3-undertow-sewer-leviathan@3b
+  size: 832x1216
+  seed: 1117040
+  prompt_prose: >-
+    A colossal eel-dragon with brass plating, periscope eyestalks and ridiculously tiny stubby legs, now resting coiled
+    at the bottom of a bottomless flooded cistern like a sleeping god. Its armored plates have turned to glowing stained
+    glass, a crown of sunken streetlamps rings its head, and a tiny sunken town built by fish sits on its back. Calm eyes
+    gaze toward the far bright surface. Epic wide underwater view, deep indigo and gold bioluminescent palette. Hand-painted
+    vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated
+    gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene.
+    Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-undertow-weep-holes-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Weep Holes in the Wall L2: Seepage'
+  asset: slime-city/evolutions/s3-undertow-weep-holes@2
+  size: 832x1216
+  seed: 1117041
+  prompt_prose: >-
+    An emerald brick wall riddled with small drainage holes that open into wet blinking eyes, now twice as tall with bigger,
+    more dramatic eyes and droopy brick eyebrows. Across a broad alley, thin jets of luminous murky water spray from the
+    holes and splash three rival fighters, who flinch and shield their faces from the stinging spray, while a nosy crowd
+    watches from a fire escape. Dynamic low diagonal view, eerie lantern glow on teal puddles. Hand-painted vivid inked
+    western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon
+    colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character
+    is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-undertow-weep-holes-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Weep Holes in the Wall L3: The Wall Weeps Open'
+  asset: slime-city/evolutions/s3-undertow-weep-holes@3
+  size: 832x1216
+  seed: 1117042
+  prompt_prose: >-
+    An emerald brick wall riddled with weeping eyes, now as long as the whole district, sobbing melodramatically as its
+    eyes turn to glowing stained-glass windows pouring waterfalls of floodwater. The wall bursts outward in a torrent, sweeping
+    rival fighters off their feet and leaving them dazed and stuck in swirling mud, while a giant lace handkerchief dangles
+    from a crane and the moon dabs its eyes. Epic wide view, glowing rose and gold palette. Hand-painted vivid inked western
+    adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors,
+    bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character is
+    a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-undertow-reveal-the-ledger-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Reveal the Ledger L2: Convoy Cleared'
+  asset: slime-city/evolutions/s3-undertow-reveal-the-ledger@2
+  size: 832x1216
+  seed: 1117043
+  prompt_prose: >-
+    An adult spy in brass goggles and a teal canal coat cranking a periscope-mounted radar dish, the dish now twice as big
+    and crowned with a glowing sonar halo. From a high canal lock above a wide waterway highway, she sweeps rings of teal
+    sonar light over a long convoy of battered Undertow vans and lantern-lit barges rolling safely down the cleared route,
+    headlights blazing, while popped mines bob harmlessly aside. Wide high diagonal view along the canal. Hand-painted vivid
+    inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty
+    neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every
+    character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-undertow-reveal-the-ledger-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Reveal the Ledger L3: Hit List'
+  asset: slime-city/evolutions/s3-undertow-reveal-the-ledger@3
+  size: 832x1216
+  seed: 1117044
+  prompt_prose: >-
+    An adult spy in brass goggles and a teal canal coat, now standing atop a giant ledger as big as an office tower, lying
+    open across the skyline. A single red pin the size of a spire stabs through one photograph on the open page, and from
+    a hundred dark windows across the city sniper scopes gleam back at it like stars. Rival bosses gape from their penthouses.
+    Heroic low angle, crimson and black-gold palette. Hand-painted vivid inked western adult cartoon for a grungy colorful
+    street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast,
+    tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface
+    is bare and unmarked.
+- key: slime-krea-evo-s3-undertow-reveal-the-ledger-l3b
+  entity: card-art
+  lane: krea-evolution
+  title: 'Reveal the Ledger L3b: Cook the Books'
+  asset: slime-city/evolutions/s3-undertow-reveal-the-ledger@3b
+  size: 832x1216
+  seed: 1117045
+  prompt_prose: >-
+    An adult spy in brass goggles, now a serene bookkeeper in sleeve garters with a soft golden halo, floating cross-legged
+    on a velvet cushion in a back office grown into a cozy cathedral of ledgers. Pages flutter and swap themselves in midair
+    around her, rivers of coins pour into neat stacks, and a teapot as big as a boiler steams at her elbow while her crew
+    snoozes contentedly. Epic wide view, warm amber and honey-gold palette. Hand-painted vivid inked western adult cartoon
+    for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette,
+    high contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up.
+    Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-undertow-quiet-interdiction-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Quiet Interdiction L2: Piercing Warrant'
+  asset: slime-city/evolutions/s3-undertow-quiet-interdiction@2
+  size: 832x1216
+  seed: 1117046
+  prompt_prose: >-
+    An adult spymaster in a long teal-lined trench coat holding one finger to her lips, now carrying a glowing teal stiletto-quill
+    twice the length of her forearm. In a crowded underground fight arena, she leans close to whisper into an allied brawler's
+    ear, and his gauntlet sprouts a long, sharpened teal spike, while the rival fighters across the ring exchange uneasy
+    glances and the crowd hushes. Dynamic diagonal view over her shoulder, smoky teal light. Hand-painted vivid inked western
+    adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors,
+    bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character is
+    a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-undertow-quiet-interdiction-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Quiet Interdiction L3: Interdiction'
+  asset: slime-city/evolutions/s3-undertow-quiet-interdiction@3
+  size: 832x1216
+  seed: 1117047
+  prompt_prose: >-
+    An adult spymaster in a long teal-lined trench coat, now towering over the skyline with one giant finger to her lips
+    as the whole city falls silent. Her shushing breath rolls between the skyscrapers as enormous ghostly smoke shackles
+    that snap around a rival fighter on a rooftop, freezing him mid-step, while birds hang motionless in the air and a ring
+    of glowing blank barrier tape circles the block. Epic wide view, silver moonlight and violet palette. Hand-painted vivid
+    inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty
+    neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every
+    character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-undertow-citywide-blackmail-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Citywide Blackmail L2: Hush Money'
+  asset: slime-city/evolutions/s3-undertow-citywide-blackmail@2
+  size: 832x1216
+  seed: 1117048
+  prompt_prose: >-
+    A sweating adult alderman in a bathrobe and slippers, haunted by sealed blank envelopes, now sliding an envelope twice
+    the size of his briefcase, stuffed with coins, across a wet table in a grand casino barge. A grinning toad-faced Undertow
+    boss in a teal pinstripe suit reaches for it as gamblers around the table stop and stare, and periscopes peek through
+    the portholes. Over-the-shoulder view from the boss, green felt and lamplight. Hand-painted vivid inked western adult
+    cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold
+    clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly
+    adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-undertow-citywide-blackmail-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Citywide Blackmail L3: Everyone Has a File'
+  asset: slime-city/evolutions/s3-undertow-citywide-blackmail@3
+  size: 832x1216
+  seed: 1117049
+  prompt_prose: >-
+    Sealed blank envelopes as big as buses drift down like snow over every rooftop and street of the night city, the blizzard
+    of blackmail grown to the size of the sky. Fighters on both sides, the sweating alderman in his bathrobe, the grinning
+    toad-faced boss, even the pigeons and the moon stand frozen, each clutching an envelope of their own with wide guilty
+    eyes. Epic wide aerial view, lavender and gold palette. Hand-painted vivid inked western adult cartoon for a grungy
+    colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high
+    contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every
+    surface is bare and unmarked.
+- key: slime-krea-evo-s3-undertow-red-tape-sensor-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Red-Tape Sensor L2: Sensor Relay'
+  asset: slime-city/evolutions/s3-undertow-red-tape-sensor@2
+  size: 832x1216
+  seed: 1117050
+  prompt_prose: >-
+    A glossy bright-red strip of sensor tape with a clanging brass alarm bell, now spooling from a reel twice as big and
+    topped with a bell the size of a barrel. In a long marble museum gallery, the sprung sensor flashes red, and crackling
+    relay wires carry jolts of red light into the rival thieves on either side of a trapped adult cat burglar, all of them
+    leaping comically. Dynamic diagonal view along the gallery, spinning teal siren light. Hand-painted vivid inked western
+    adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors,
+    bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character is
+    a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-undertow-red-tape-sensor-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Red-Tape Sensor L3: Pending Review'
+  asset: slime-city/evolutions/s3-undertow-red-tape-sensor@3
+  size: 832x1216
+  seed: 1117051
+  prompt_prose: >-
+    A glossy bright-red strip of sensor tape, now spooling out endlessly into a towering maze of red tape that fills a whole
+    office district. The trespasser and every neighbor are wrapped in red ribbon cocoons tied with neat bows, waiting on
+    benches in an infinite hallway lined with closed doors, while a giant brass bell tolls overhead and ticket dispensers
+    tower like monuments. Heroic low angle, crimson and glossy gold palette. Hand-painted vivid inked western adult cartoon
+    for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette,
+    high contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up.
+    Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-undertow-floodgate-clamp-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Floodgate Clamp L2: Clamp Down'
+  asset: slime-city/evolutions/s3-undertow-floodgate-clamp@2
+  size: 832x1216
+  seed: 1117052
+  prompt_prose: >-
+    A huge rusted iron clamp hidden in a sewer canal that snaps like a bear trap, now twice as big and fitted with hissing
+    steam pistons. On a wide canal crossing beneath stone bridges, the clamp bites down on the leg of a hulking heavy rival,
+    its giant steel jaws straining, steam blasting from the hinge, while rival smugglers flee across the bridges above.
+    High dynamic diagonal view, teal spray on emerald brick. Hand-painted vivid inked western adult cartoon for a grungy
+    colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high
+    contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every
+    surface is bare and unmarked.
+- key: slime-krea-evo-s3-undertow-floodgate-clamp-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Floodgate Clamp L3: Floodgates Open'
+  asset: slime-city/evolutions/s3-undertow-floodgate-clamp@3
+  size: 832x1216
+  seed: 1117053
+  prompt_prose: >-
+    A huge rusted iron clamp, now polished to gleaming gold and as big as a ferry, riding the crest as a floodgate taller
+    than a dam bursts wide open. A roaring wall of white water crashes across the whole crossing, knocking a row of rival
+    fighters into the current where they spin in tangles of bobbing crates, while crowds on the bridges cheer. Epic wide
+    view, hot sunrise orange and gold palette over foaming water. Hand-painted vivid inked western adult cartoon for a grungy
+    colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high
+    contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every
+    surface is bare and unmarked.
+- key: slime-krea-evo-s3-undertow-anonymous-invoice-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Anonymous Invoice L2: Late Fee'
+  asset: slime-city/evolutions/s3-undertow-anonymous-invoice@2
+  size: 832x1216
+  seed: 1117054
+  prompt_prose: >-
+    A sheet of paper so thin it is almost invisible, stretched like glass across a tunnel, now twice as big and pinned with
+    a glowing teal paperclip. On a busy rain-slick avenue, the shimmering blank sheet wraps around a rival runner's legs,
+    stopping him cold mid-stride with a paper cut bandage on his nose, while a crowd of commuters with umbrellas stares.
+    Wide action view from the curb, teal glow on wet pavement. Hand-painted vivid inked western adult cartoon for a grungy
+    colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high
+    contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every
+    surface is bare and unmarked.
+- key: slime-krea-evo-s3-undertow-anonymous-invoice-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Anonymous Invoice L3: Billed to the Boss'
+  asset: slime-city/evolutions/s3-undertow-anonymous-invoice@3
+  size: 832x1216
+  seed: 1117055
+  prompt_prose: >-
+    A nearly invisible sheet of blank paper, now folded into a shimmering paper airplane as big as a jumbo jet, roaring
+    through a thunderstorm over the skyline. It crashes straight through a gaudy rival boss's gilded penthouse window and
+    lands on his desk, his toupee flying off as he recoils in shock, while crowds on every rooftop point and cheer. Epic
+    wide view, sunset coral and gold lightning palette. Hand-painted vivid inked western adult cartoon for a grungy colorful
+    street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast,
+    tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface
+    is bare and unmarked.
+- key: slime-krea-evo-s3-undertow-periscope-lens-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Periscope Lens L2: Spotter'
+  asset: slime-city/evolutions/s3-undertow-periscope-lens@2
+  size: 832x1216
+  seed: 1117056
+  prompt_prose: >-
+    An adult squinting spy with a telescoping brass periscope lens strapped over her right eye, the lens now upgraded to
+    a periscope twice as tall that rises from a manhole beneath her. In the middle of a busy street brawl, she stands between
+    two allied fighters as the lens casts bright teal aiming beams that guide both their fists toward glowing seams on the
+    rivals ahead. Low dynamic diagonal view, rain and neon. Hand-painted vivid inked western adult cartoon for a grungy
+    colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high
+    contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every
+    surface is bare and unmarked.
+- key: slime-krea-evo-s3-undertow-periscope-lens-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Periscope Lens L3: Firing Solution'
+  asset: slime-city/evolutions/s3-undertow-periscope-lens@3
+  size: 832x1216
+  seed: 1117057
+  prompt_prose: >-
+    An adult squinting spy with a brass periscope lens over her right eye, now riding the top of a periscope as tall as
+    a radio tower rising out of the city. Its giant lens glows like a second moon, projecting concentric golden targeting
+    rings across the clouds onto the largest rival brute in the distance, while a fallen rival lies dazed with cartoon stars
+    in the foreground. Heroic low angle, amber and crimson palette. Hand-painted vivid inked western adult cartoon for a
+    grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette,
+    high contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up.
+    Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-undertow-tunnel-harpoon-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Tunnel Harpoon L2: Barbed Line'
+  asset: slime-city/evolutions/s3-undertow-tunnel-harpoon@2
+  size: 832x1216
+  seed: 1117058
+  prompt_prose: >-
+    An adult agent in a soaked trench coat with a brass harpoon gun braced at her hip, now upgraded with a giant brass reel
+    twice the size of the gun. In a wide tunnel junction, a barbed steel line runs to a dazed rival pinned against the wall,
+    and she braces to reel him in while the smug stone gargoyle on the corner raises an impressed eyebrow. Over-the-shoulder
+    view, lantern light on wet brick. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting
+    fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait
+    framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and
+    unmarked.
+- key: slime-krea-evo-s3-undertow-tunnel-harpoon-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Tunnel Harpoon L3: Whaler''s Gamble'
+  asset: slime-city/evolutions/s3-undertow-tunnel-harpoon@3
+  size: 832x1216
+  seed: 1117059
+  prompt_prose: >-
+    An adult agent in a soaked trench coat and a whaling captain's hat, firing a brass harpoon gun as big as a cannon down
+    a cavernous tunnel at a rival brute as enormous as a whale. She slides on the wet stones as the line goes taut, while
+    a hundred cheering gargoyles lean from the arches and the tunnel opens into a storm-lit sky. Epic wide view, storm grey
+    and gold lightning palette. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy,
+    thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing
+    with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.

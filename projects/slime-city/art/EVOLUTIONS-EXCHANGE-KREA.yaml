@@ -1,0 +1,981 @@
+# Slime City evolution art, Exchange, Krea 2 escalation redo (2026-11-08 PT).
+# Replaces the Flux Kontext dev round EVOLUTIONS-EXCHANGE.yaml. Silas, 2026-11-08: "Flux dev is a slow generator,
+# and we're getting a lot of the same looking images three times over. We shouldn't use it for the main gen,
+# but we also need a much larger and fun escalation between evolution 1 and evolution 3."
+# Kontext edited each card's level-1 painting and kept its composition, so L1/L2/L3 read as one picture.
+# This round is Krea 2 text-to-image (the house Slime City engine, 8 steps), one render per stage instead of
+# two seeds, and each prompt is written per card on the ladder in CLASH-EVOLUTION-PLAN.md section 4:
+# L2 = powered up (new signature gear, bigger venue, new camera); L3/L3b = legendary, over the top (scale,
+# swarms, material change, mythic form, a city-sized signature, the district reacting, a finale palette).
+# Identity carries over through a per-card look anchor that opens both prompts. Same runtime assets
+# ('<cardId>@2' | '@3' | '@3b'), so a keeper is wired as SLIME_CITY_ART.evolutions[...]. auto_submit: true.
+round: slime-city-evolutions-exchange-krea
+project_slug: slime-city
+designer: Slime City evolution art, Exchange (Krea 2)
+is_public: true
+is_mature: false
+cast_loras: false
+priority: 640
+auto_submit: true
+lanes:
+- key: krea-evolution
+  label: Krea 2, escalated evolution stages written per card
+  engine: krea2
+  prompt: prose
+subjects:
+- key: slime-krea-evo-audit-fiend-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Audit Fiend L2: Interest on Every Swing'
+  asset: slime-city/evolutions/audit-fiend@2
+  size: 832x1216
+  seed: 1112001
+  prompt_prose: >-
+    An adult mustard-suited humanoid bookkeeper fiend with hooked claws, a gold monocle and a massive brass ledger, now
+    with a hulking gauntlet of glowing gold coins welded over one clawed arm and the ledger grown twice as wide, chained
+    across its back. It lunges diagonally across a packed grand exchange trading pit, swinging at a fleeing adult debtor
+    while fresh coins snap onto the gauntlet with every blow. Rival brokers dive behind desks, a crowd on the balcony gasps.
+    Dynamic diagonal action shot, smoky amber lamps and flying sparks. Hand-painted vivid inked western adult cartoon for
+    a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette,
+    high contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up.
+    Every surface is bare and unmarked.
+- key: slime-krea-evo-audit-fiend-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Audit Fiend L3: Full Audit'
+  asset: slime-city/evolutions/audit-fiend@3
+  size: 832x1216
+  seed: 1112002
+  prompt_prose: >-
+    An adult mustard-suited humanoid bookkeeper fiend with hooked claws, a gold monocle and a massive brass ledger, now
+    towering over the rooftops, its ledger opened as wide as a city block like a pair of wings. A blizzard of a million
+    glowing blank paper slips pours from the pages across the whole district, slapping onto every startled adult brawler
+    in the streets below. One slip sticks to the moon. Crowds on fire escapes shield their faces. Heroic low-angle view,
+    electric violet sky and white-hot paper glow. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting
+    fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait
+    framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and
+    unmarked.
+- key: slime-krea-evo-debt-holiday-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Debt Holiday L2: Payment Holiday'
+  asset: slime-city/evolutions/debt-holiday@2
+  size: 832x1216
+  seed: 1112003
+  prompt_prose: >-
+    A smug adult loan-shark bank clerk with slicked-back hair, a gilded visor, a mustard vest and a golden pocket clock,
+    now wearing giant gold sunglasses and lounging on a striped deck chair in a loading-dock plaza buried in dumped beach
+    sand. A coin stack twice his height glitters beside his umbrella while a relieved adult debtor stretches and cracks
+    his knuckles under a second umbrella. Dock workers in hard hats stare and sip from coconuts. Wide over-the-shoulder
+    shot, warm sunset lamps, sand blowing across the cobbles. Hand-painted vivid inked western adult cartoon for a grungy
+    colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high
+    contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every
+    surface is bare and unmarked.
+- key: slime-krea-evo-debt-holiday-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Debt Holiday L3: The Offer Expires'
+  asset: slime-city/evolutions/debt-holiday@3
+  size: 832x1216
+  seed: 1112004
+  prompt_prose: >-
+    A smug adult loan-shark bank clerk with slicked-back hair, a gilded visor, a mustard vest and a golden pocket clock,
+    now standing atop a colossal brass hourglass as tall as a clock tower that hangs over the district, its last grains
+    pouring out. A hurricane of swirling blank invoices rips every beach umbrella into the sky, and hundreds of grinning
+    adult collectors surf in on a towering wave of paper. Rooftop crowds clutch their hats. Epic wide view, storm teal clouds
+    split by magenta lightning. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy,
+    thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing
+    with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s1-executive-repo-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Executive Repossessor L2: Furniture Sale'
+  asset: slime-city/evolutions/s1-executive-repo@2
+  size: 832x1216
+  seed: 1112005
+  prompt_prose: >-
+    An adult gold-suited humanoid repossession executive with slick silver hair and a mechanical cash-register arm, the
+    arm now upgraded into a giant chrome crane claw. He hoists a gilded grand piano twice his size out of a toppled heavyweight
+    brawler's mansion, the dazed owner hanging off one leg. On the sidewalk below, a crowd of adult bargain hunters waves
+    blank bidding paddles and shoves for position. Dynamic diagonal shot from the lawn, chandelier light spilling out the
+    doorway. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive
+    outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous
+    full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s1-executive-repo-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Executive Repossessor L3: Repossession Spree'
+  asset: slime-city/evolutions/s1-executive-repo@3
+  size: 832x1216
+  seed: 1112006
+  prompt_prose: >-
+    An adult gold-suited humanoid repossession executive with slick silver hair and a mechanical cash-register arm, now
+    riding atop a parade float tow truck piled with repossessed sofas, pianos and bathtubs stacked as tall as the skyscrapers.
+    His register arm has grown into a building-sized register, its drawer chomping a whole sofa. Chain hooks drag a line
+    of defeated adult debtors while he points at one scrawny straggler down the block. Neighbors gape from every window.
+    Epic low-angle view, crimson tail-light glow and chrome blue night. Hand-painted vivid inked western adult cartoon for
+    a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette,
+    high contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up.
+    Every surface is bare and unmarked.
+- key: slime-krea-evo-s1-guild-clerk-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Guild Clerk (Temporary) L2: Paper Cut'
+  asset: slime-city/evolutions/s1-guild-clerk@2
+  size: 832x1216
+  seed: 1112007
+  prompt_prose: >-
+    A small, wiry adult goblin clerk with green skin, droopy ears, fraying brown business attire and a rubber stamp, now
+    wearing a bandolier of razor-sharp blank paper sheets across his chest. On a crowded night-shift trading floor he flicks
+    one sheet like a throwing star, a glowing gold streak trailing behind it toward a hulking adult thug who yelps at a
+    tiny cartoon nick on his cheek. Coworkers duck behind towers of receipts. Over-the-shoulder shot, flickering fluorescent
+    green light. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive
+    outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous
+    full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s1-guild-clerk-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Guild Clerk (Temporary) L3: Made Permanent'
+  asset: slime-city/evolutions/s1-guild-clerk@3
+  size: 832x1216
+  seed: 1112008
+  prompt_prose: >-
+    A small, wiry adult goblin clerk with green skin, droopy ears, fraying brown business attire and a rubber stamp, now
+    enthroned behind a mahogany desk as tall as a cathedral, built into the graveyard wall and crowned with a brass desk-lamp
+    halo. He wears a gilded lampshade crown and stamps blank forms with a seal the size of a boulder, while a glittering
+    river of coins flows past through the sky toward the vault. Friendly ghosts salute from the tombstones. Heroic low-angle
+    view, cozy emerald lamplight against moonlit blue. Hand-painted vivid inked western adult cartoon for a grungy colorful
+    street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast,
+    tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface
+    is bare and unmarked.
+- key: slime-krea-evo-s1-margin-call-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Emergency Margin Call L2: Tightened Margin'
+  asset: slime-city/evolutions/s1-margin-call@2
+  size: 832x1216
+  seed: 1112009
+  prompt_prose: >-
+    A massive suspended golden interest-rate gauge with a twitching red needle, brass rivets and rotary phone receivers
+    dangling from its rim, now twice as big and grown a giant brass vise beneath it like a jaw. Hanging over a packed market
+    boulevard, it clamps down on a glowing heap of coins, sparks spraying as the jaws squeeze tighter. Frightened adult
+    shopkeepers dive under stalls, and a rival adult boss clutches his chest. Dynamic diagonal view from the gutter, hot
+    amber sparks and cold blue shadows. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting
+    fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait
+    framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and
+    unmarked.
+- key: slime-krea-evo-s1-margin-call-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Emergency Margin Call L3: Margin Cascade'
+  asset: slime-city/evolutions/s1-margin-call@3
+  size: 832x1216
+  seed: 1112010
+  prompt_prose: >-
+    A massive suspended golden interest-rate gauge with a twitching red needle, brass rivets and rotary phone receivers
+    dangling from its rim, now as wide as the sky, hanging over the city like a second moon with its needle slammed into
+    the red. Below it, a tidal wave of hundreds of ringing rotary phones cascades down the whole street like dominoes, each
+    one popping in a puff of sparks that bowls over the adult fighters beside it. Rooftop crowds clutch their ears. Epic
+    wide view, alarm red and electric cyan palette. Hand-painted vivid inked western adult cartoon for a grungy colorful
+    street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast,
+    tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface
+    is bare and unmarked.
+- key: slime-krea-evo-s1-buy-silence-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Buy Their Silence L2: Nondisclosure Fee'
+  asset: slime-city/evolutions/s1-buy-silence@2
+  size: 832x1216
+  seed: 1112011
+  prompt_prose: >-
+    A wealthy adult syndicate negotiator in a plum velvet suit with gold rings, a waxed moustache, a slick grin and a glowing
+    gold seal, now wearing glowing gold gloves stitched shut with tiny zippers. In a long, packed smoky speakeasy, he slides
+    a velvet bag of coins twice the size of a pillow down the bar into a waiting gloved hand, while a gagged adult rival
+    slumps against the jukebox behind him. Patrons pointedly look away into their drinks. Over-the-shoulder shot, dim crimson
+    bar light. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive
+    outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous
+    full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s1-buy-silence-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Buy Their Silence L3: Hush Network'
+  asset: slime-city/evolutions/s1-buy-silence@3
+  size: 832x1216
+  seed: 1112012
+  prompt_prose: >-
+    A wealthy adult syndicate negotiator in a plum velvet suit with gold rings, a waxed moustache, a slick grin and a glowing
+    gold seal, now a colossal smoky silhouette looming over the skyline, one finger pressed to his grinning lips. Hundreds
+    of whispering copper tubes snake from his sleeves into every window in the district, and every adult citizen on the
+    rooftops wears a glowing gold seal across their mouth. Even the moon has one. He fans a deck of sealed envelopes like
+    a riverboat gambler. Epic wide view, midnight indigo with copper glow. Hand-painted vivid inked western adult cartoon
+    for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette,
+    high contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up.
+    Every surface is bare and unmarked.
+- key: slime-krea-evo-s1-debt-garnish-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Garnishment Floor Tile L2: Garnished Wages'
+  asset: slime-city/evolutions/s1-debt-garnish@2
+  size: 832x1216
+  seed: 1112013
+  prompt_prose: >-
+    A gilded market floor tile trap with brass hinges, snapping chains, splattered ink and overdue paper slips, now twice
+    as big and fitted with a glowing brass suction funnel. In the middle of a crowded train concourse it flips open like
+    a giant coin slot, a whirlpool of light sucking a stream of coins out of the pockets of an adult trespasser dangling
+    upside down by one boot. Commuters freeze and gawk over their newspapers. Wide action shot from above, cold station
+    light and gold glare. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy,
+    thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing
+    with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s1-debt-garnish-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Garnishment Floor Tile L3: Standing Garnishment'
+  asset: slime-city/evolutions/s1-debt-garnish@3
+  size: 832x1216
+  seed: 1112014
+  prompt_prose: >-
+    A gilded market floor tile trap with brass hinges, snapping chains, splattered ink and overdue paper slips, now multiplied
+    into a whole plaza floor of thousands of glowing tiles flipping open in a rolling wave. Adult trespassers bounce from
+    tile to tile like popcorn as coins geyser into the air and gather into a towering golden fountain. Pigeons scatter,
+    and crowds on the surrounding rooftops cheer and throw hats. Epic wide view, neon magenta and lime palette. Hand-painted
+    vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated
+    gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene.
+    Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s1-golden-handshake-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Golden Handshake, Iron Grip L2: Iron Grip'
+  asset: slime-city/evolutions/s1-golden-handshake@2
+  size: 832x1216
+  seed: 1112015
+  prompt_prose: >-
+    Two enormous gilded mechanical hands with riveted brass knuckles and diamond cufflinks, one now plated in a dented iron
+    gauntlet with glowing seams. In the center of a packed boxing ring, the iron-plated hand crushes a rival hand in a grip
+    so tight that coins squirt out between the fingers like juice from a lemon, splashing the front-row adult spectators
+    in pinstripes. A referee gapes. Dynamic diagonal shot from ringside, spotlights and spraying gold sparks. Hand-painted
+    vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated
+    gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene.
+    Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s1-golden-handshake-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Golden Handshake, Iron Grip L3: Golden Exit'
+  asset: slime-city/evolutions/s1-golden-handshake@3
+  size: 832x1216
+  seed: 1112016
+  prompt_prose: >-
+    Two enormous gilded mechanical hands with riveted brass knuckles and diamond cufflinks, one now as tall as a skyscraper,
+    waving goodbye from the sunroof of an armored getaway car a whole block long. A glittering river of coins pours from
+    its open trunk and floods the wet street, and every adult on the rooftops waves back. Fireworks burst overhead, and
+    the moon gives a little wave too. Epic wide view, sunset pink and violet palette. Hand-painted vivid inked western adult
+    cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold
+    clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly
+    adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s2-exchange-bargain-rate-collector-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Bargain-Rate Collector L2: Polite Reminder'
+  asset: slime-city/evolutions/s2-exchange-bargain-rate-collector@2
+  size: 832x1216
+  seed: 1112017
+  prompt_prose: >-
+    A neatly groomed adult debt collector in a cream pinstripe suit with a toothy smile, a blank paper bill stapled across
+    his knuckles, his hip stapler now upgraded into a gleaming chrome staple gun with a glowing gold drum. In a crowded
+    night market he politely tips his battered bowler hat while a blank receipt twice as long as the alley unrolls from
+    his fist like a red carpet, tripping three adult debtors. Vendors peek out from steaming food stalls. Over-the-shoulder
+    shot, warm lantern light. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy,
+    thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing
+    with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s2-exchange-bargain-rate-collector-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Bargain-Rate Collector L3: Clearance Sale'
+  asset: slime-city/evolutions/s2-exchange-bargain-rate-collector@3
+  size: 832x1216
+  seed: 1112018
+  prompt_prose: >-
+    A neatly groomed adult debt collector in a cream pinstripe suit with a toothy smile, a blank paper bill stapled across
+    his knuckles, now shrunk to a tiny, shabby figure with a frayed collar, standing triumphantly on a crate atop a mountain
+    of everything he owns. The entire district has become one frantic clearance sale, and thousands of adult shoppers stampede
+    through the streets as he flings a geyser of glowing coins over them. Price tags dangle from his own suit. Epic wide
+    view from above, hot pink and lime neon. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting
+    fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait
+    framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and
+    unmarked.
+- key: slime-krea-evo-s2-exchange-golden-bailiff-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Golden Bailiff L2: Served Papers'
+  asset: slime-city/evolutions/s2-exchange-golden-bailiff@2
+  size: 832x1216
+  seed: 1112019
+  prompt_prose: >-
+    A six-ton polished brass automaton bailiff in a powdered judge's wig, holding a giant pair of brass coin scales, now
+    with a piston-driven gavel arm. It slams a wax-sealed scroll twice its own height against the reinforced iron door of
+    a towering tenement so hard the hinges burst in a shower of sparks. Adult tenants peer down from every balcony while
+    a rival brawler ducks under the flying door. Dynamic diagonal view up the stairwell, hot sparks and dusty lamplight.
+    Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines,
+    saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed
+    scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s2-exchange-golden-bailiff-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Golden Bailiff L3: Writ of Eviction'
+  asset: slime-city/evolutions/s2-exchange-golden-bailiff@3
+  size: 832x1216
+  seed: 1112020
+  prompt_prose: >-
+    A six-ton polished brass automaton bailiff in a powdered judge's wig, holding a giant pair of brass coin scales, now
+    towering over the rooftops, its wig billowing into a storm cloud and its scales each holding a whole apartment building.
+    It plows down an entire street of doors at once like a snowplow, furniture and startled adult tenants tumbling out in
+    a rolling wave of brass dust. The whole district leans out of windows to watch. Heroic low-angle view, slate grey storm
+    and electric blue lightning. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy,
+    thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing
+    with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s2-exchange-compound-interest-notice-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Compound Interest Notice L2: Accrued Interest'
+  asset: slime-city/evolutions/s2-exchange-compound-interest-notice@2
+  size: 832x1216
+  seed: 1112021
+  prompt_prose: >-
+    A gilded brass abacus on spindly brass legs, with a smug carved face and rows of glowing gold beads, now twice as big
+    and wearing a ticking brass counter-wheel crown. On a crowded auction floor its beads sprout glowing daydream vines
+    that snake across the hall, siphoning coins from the pockets of rival adult brokers into a huge brass piggy bank. The
+    brokers pat their empty vests in dread. Over-the-shoulder shot, velvet drapes and lamplit haze. Hand-painted vivid inked
+    western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon
+    colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character
+    is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s2-exchange-compound-interest-notice-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Compound Interest Notice L3: Interest on Interest'
+  asset: slime-city/evolutions/s2-exchange-compound-interest-notice@3
+  size: 832x1216
+  seed: 1112022
+  prompt_prose: >-
+    A gilded brass abacus on spindly brass legs, with a smug carved face and rows of glowing gold beads, now riding the
+    peak of a spiraling tornado of millions of doubling beads, taller than any tower in the district. The bead storm crashes
+    down onto a huge armored adult brute who staggers beneath the weight, while beads bounce across rooftops and pelt cheering
+    crowds. Every bead glows brighter than the last. Heroic low-angle view, emerald and electric turquoise palette. Hand-painted
+    vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated
+    gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene.
+    Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s2-exchange-contract-amendment-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Contract Amendment L2: Page 37'
+  asset: slime-city/evolutions/s2-exchange-contract-amendment@2
+  size: 832x1216
+  seed: 1112023
+  prompt_prose: >-
+    An absurdly thick living contract scroll with curling parchment arms, beside its sidekick, an animated golden stamp
+    on stubby legs, the stamp now hefting a magnifying lens twice its size. In a grand packed auction hall, the scroll fans
+    open to one page blazing red, a tiny hidden clause glowing like a hot coal. A shocked adult hustler peers through the
+    lens, sweating, as the crowd leans in from tiered seats. Over-the-shoulder shot, red glow against shadowy wood. Hand-painted
+    vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated
+    gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene.
+    Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s2-exchange-contract-amendment-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Contract Amendment L3: Crew Rider'
+  asset: slime-city/evolutions/s2-exchange-contract-amendment@3
+  size: 832x1216
+  seed: 1112024
+  prompt_prose: >-
+    An absurdly thick living contract scroll with curling parchment arms, beside its sidekick, an animated golden stamp
+    on stubby legs, now unfurling into miles of golden ribbons that loop across the whole skyline like a festival parade.
+    The ribbons wrap a crew of adult fighters and lift them into the sky in heroic poses, fists crackling with power, while
+    the stamp rides on top wearing a tiny crown. Crowds on every roof throw confetti. Epic wide view, sunrise coral and
+    aqua palette. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive
+    outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous
+    full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s2-exchange-contract-amendment-l3b
+  entity: card-art
+  lane: krea-evolution
+  title: 'Contract Amendment L3b: Fine Print'
+  asset: slime-city/evolutions/s2-exchange-contract-amendment@3b
+  size: 832x1216
+  seed: 1112025
+  prompt_prose: >-
+    An absurdly thick living contract scroll with curling parchment arms, beside its sidekick, an animated golden stamp
+    on stubby legs, now peeling a swarm of microscopic ink specks off its pages that fuse into one razor-thin beam of living
+    neon. The beam slices a rival fortress wall and a skyscraper-sized steel shield cleanly in half, the top halves sliding
+    apart as dumbfounded adult guards look up. The stamp poses like a samurai. Heroic low-angle view, ultraviolet and acid
+    green palette. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive
+    outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous
+    full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s2-exchange-invisible-lien-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Invisible Lien L2: Attached Lien'
+  asset: slime-city/evolutions/s2-exchange-invisible-lien@2
+  size: 832x1216
+  seed: 1112026
+  prompt_prose: >-
+    A ghostly translucent gold parking clamp the size of a house, with shimmering jaws, hovering over a cheerful adult broker
+    pushing a tiny meat cart, the clamp now twice as big and wearing a glowing phantom padlock like a crown. Over a wide
+    grand boulevard, translucent chains spring from the parking spot and lock onto a gilded vault door across the street,
+    tugging it off its hinges while the broker strolls on, oblivious. Bystanders drop their shopping bags. Dynamic diagonal
+    view, pale gold shimmer on wet stone. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting
+    fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait
+    framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and
+    unmarked.
+- key: slime-krea-evo-s2-exchange-invisible-lien-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Invisible Lien L3: Lien on the Block'
+  asset: slime-city/evolutions/s2-exchange-invisible-lien@3
+  size: 832x1216
+  seed: 1112027
+  prompt_prose: >-
+    A ghostly translucent gold parking clamp the size of a house, with shimmering jaws, hovering over a cheerful adult broker
+    pushing a tiny meat cart, the clamp now grown into a ghostly dome covering the entire district. Shimmering chains wrap
+    every parked car, lamp post and three surprised adult fighters, and one long chain tethers the moon itself. The broker
+    keeps whistling, unbothered, as the whole block hovers a few feet off the ground. Epic wide view, aurora pink and spectral
+    white palette. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive
+    outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous
+    full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s2-exchange-executive-health-coverage-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Executive Health Coverage L2: Claims Paid'
+  asset: slime-city/evolutions/s2-exchange-executive-health-coverage@2
+  size: 832x1216
+  seed: 1112028
+  prompt_prose: >-
+    A scarred adult butcher brute with a cleaver, plugged into a gilded IV drip stand on velvet wheels full of glittering
+    gold fluid, the brute now sporting a gold chest plate stitched into place with shining thread. In a lavish private clinic
+    hall, the drip stand towers twice as tall and fires a sealed golden capsule through a pneumatic tube into a smiling
+    armored vault. Pinstriped actuaries faint in a row like dominoes. Dynamic diagonal view, sterile teal tiles and gold
+    glow. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive
+    outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous
+    full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s2-exchange-executive-health-coverage-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Executive Health Coverage L3: Payout to Someone Dangerous'
+  asset: slime-city/evolutions/s2-exchange-executive-health-coverage@3
+  size: 832x1216
+  seed: 1112029
+  prompt_prose: >-
+    A scarred adult butcher brute with a cleaver, plugged into a gilded IV drip stand on velvet wheels full of glittering
+    gold fluid, now transformed into a towering titan of living molten gold, a halo of IV bags orbiting his head. Beside
+    him a gilded insurance vault bursts open and erupts a geyser of coins over the rooftops, raining sealed envelopes into
+    the hands of a whole crowd of grinning scarred adult enforcers. Heroic low-angle view, ruby red and electric violet
+    palette. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive
+    outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous
+    full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-exchange-wage-garnisher-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Wage Garnisher L2: Garnished Paycheck'
+  asset: slime-city/evolutions/s3-exchange-wage-garnisher@2
+  size: 832x1216
+  seed: 1112030
+  prompt_prose: >-
+    An eager adult intern in a pinstripe suit three sizes too big, with floppy hair and a kitchen cheese grater, the grater
+    now a two-handed monster twice his size, and a gold-trimmed hard hat with a headlamp on his head. On a crowded factory
+    floor he snatches a glowing pay envelope out of an adult worker's fist mid-punch, coins arcing toward a brass collection
+    box. Coworkers gasp from the conveyor belts. Dynamic diagonal shot, industrial orange sparks. Hand-painted vivid inked
+    western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon
+    colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character
+    is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-exchange-wage-garnisher-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Wage Garnisher L3: Garnish at the Source'
+  asset: slime-city/evolutions/s3-exchange-wage-garnisher@3
+  size: 832x1216
+  seed: 1112031
+  prompt_prose: >-
+    An eager adult intern in a pinstripe suit three sizes too big, with floppy hair and a kitchen cheese grater, now perched
+    like a king atop a cheese grater the size of a factory gate, which spins as a giant turnstile. Hundreds of adult rivals
+    shuffle through it and come out slumping and dim, their glow shaved into a snowfall of gold flakes onto a silver platter
+    as wide as a plaza, garnished with a parsley tree. Epic wide view, teal smog and blazing orange. Hand-painted vivid
+    inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty
+    neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every
+    character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-exchange-mortgage-minotaur-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Mortgage Minotaur L2: Down Payment'
+  asset: slime-city/evolutions/s3-exchange-mortgage-minotaur@2
+  size: 832x1216
+  seed: 1112032
+  prompt_prose: >-
+    A massive bull-headed adult minotaur in a straining pinstripe waistcoat, with a gold nose ring and horns jangling with
+    stolen house keys, now wearing gold-plated football armor. In a packed tenement courtyard he kneels to drop a treasure
+    chest of coins twice his size at a cramped front door, a brass key glowing in his nose ring. Neighbors lean from every
+    balcony, pointing and clapping, while a rival brute sulks by the trash cans. Over-the-shoulder shot, laundry lines and
+    warm windows. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive
+    outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous
+    full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-exchange-mortgage-minotaur-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Mortgage Minotaur L3: Balloon Payment'
+  asset: slime-city/evolutions/s3-exchange-mortgage-minotaur@3
+  size: 832x1216
+  seed: 1112033
+  prompt_prose: >-
+    A massive bull-headed adult minotaur in a straining pinstripe waistcoat, with a gold nose ring and horns jangling with
+    stolen house keys, now charging beneath a golden balloon as big as a stadium that bursts directly overhead. An avalanche
+    of coins crashes onto a rival fortress gate and buries it, a gold tidal wave rolling down the avenue as adult guards
+    flee on rooftops. His horns blaze like twin comets. Heroic low-angle view, sunset orange and royal purple palette. Hand-painted
+    vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated
+    gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene.
+    Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-exchange-mortgage-minotaur-l3b
+  entity: card-art
+  lane: krea-evolution
+  title: 'Mortgage Minotaur L3b: Long Term'
+  asset: slime-city/evolutions/s3-exchange-mortgage-minotaur@3b
+  size: 832x1216
+  seed: 1112034
+  prompt_prose: >-
+    A massive bull-headed adult minotaur in a straining pinstripe waistcoat, with a gold nose ring and horns jangling with
+    stolen house keys, now an ancient serene sage with a long white beard and ivy creeping up his horns, seated on a stone
+    bench beneath a brass clock tower that pierces the clouds. Seasons swirl around him in one sky, snow and blossom together,
+    as a thin endless river of coins flows into a vault the size of a mountain. Epic wide view, twilight blue and silver
+    palette. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive
+    outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous
+    full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-exchange-retainer-clerk-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Retainer Clerk L2: Billable Hours'
+  asset: slime-city/evolutions/s3-exchange-retainer-clerk@2
+  size: 832x1216
+  seed: 1112035
+  prompt_prose: >-
+    A bespectacled adult accountant in sleeve garters and a rumpled white shirt, with a forehead bandage and a coffee mug,
+    now wearing a green visor beside a giant brass adding machine. His brawling gloves hang on a coat hook as he sits behind
+    a bureau twice as big, built like a fort with crenellations, in a grand office hall. A brass hourglass ticks while rival
+    adult thugs hurl cleavers that bounce off harmlessly. Dynamic diagonal view, green desk-lamp glow. Hand-painted vivid
+    inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty
+    neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every
+    character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-exchange-retainer-clerk-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Retainer Clerk L3: Termination Clause'
+  asset: slime-city/evolutions/s3-exchange-retainer-clerk@3
+  size: 832x1216
+  seed: 1112036
+  prompt_prose: >-
+    A bespectacled adult accountant in sleeve garters and a rumpled white shirt, with a forehead bandage and a coffee mug,
+    now seated calmly with folded hands atop a citadel desk perched on a mountain of paperwork above the city. A sealed
+    severance envelope on the blotter unleashes a storm of gold lightning across the sky, every bolt aimed at a shocked
+    adult rival boss on a distant rooftop. Streetlights flicker across the district. Heroic low-angle view, electric blue
+    storm and white glare. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy,
+    thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing
+    with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-exchange-seizure-executive-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Seizure Executive L2: Asset Freeze'
+  asset: slime-city/evolutions/s3-exchange-seizure-executive@2
+  size: 832x1216
+  seed: 1112037
+  prompt_prose: >-
+    A smug adult executive in a striped yellow suit with slick black hair, a pencil moustache, a gold-capped pen and a chrome
+    briefcase, now wearing a frost-blue crystal gauntlet. Across a long negotiating table in a packed glass boardroom, he
+    points the pen like a wand and a glittering sheet of frost blasts over a rival adult fighter's gauntlets and boots,
+    freezing her mid-lunge. Onlookers press against the windows. Dynamic diagonal shot, icy sparkle against deep teal shadows.
+    Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines,
+    saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed
+    scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-exchange-seizure-executive-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Seizure Executive L3: Total Seizure'
+  asset: slime-city/evolutions/s3-exchange-seizure-executive@3
+  size: 832x1216
+  seed: 1112038
+  prompt_prose: >-
+    A smug adult executive in a striped yellow suit with slick black hair, a pencil moustache, a gold-capped pen and a chrome
+    briefcase, now enthroned on a heap of seized motorbikes, arcade machines and mechanical arms inside a warehouse as vast
+    as a district. From behind towering crates, a hundred identical adult junior associates in matching yellow striped suits
+    march out in formation and salute. Searchlights sweep the rafters. Epic wide view, icy cyan and hot magenta neon. Hand-painted
+    vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated
+    gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene.
+    Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-exchange-hostile-takeover-goon-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Hostile Takeover Goon L2: Protection Money'
+  asset: slime-city/evolutions/s3-exchange-hostile-takeover-goon@2
+  size: 832x1216
+  seed: 1112039
+  prompt_prose: >-
+    A hulking adult goon in a too-tight pinstripe suit, with a broken nose, slate grey stubble and coin-stack brass knuckles,
+    the knuckles now grown into a full gauntlet of stacked coins twice as big. In a roaring underground fight club he stands
+    over a flattened adult brawler, palm out, while the dazed brawler's nervous adult boss slides over a tall coin stack.
+    The ringside crowd howls and waves fists. Wide action shot, sweaty neon green light. Hand-painted vivid inked western
+    adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors,
+    bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character is
+    a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-exchange-hostile-takeover-goon-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Hostile Takeover Goon L3: Hostile Takeover'
+  asset: slime-city/evolutions/s3-exchange-hostile-takeover-goon@3
+  size: 832x1216
+  seed: 1112040
+  prompt_prose: >-
+    A hulking adult goon in a too-tight pinstripe suit, with a broken nose, slate grey stubble and coin-stack brass knuckles,
+    now so huge he bursts through the top floor of a rival skyscraper, his suit splitting at every seam. He kicks open the
+    gilded boardroom doors and plants his boots on the polished table, cracking it in two, as a tiny adult executive slides
+    over a heavy gold deed. Coins spill from the vault while the whole skyline flips its lights on behind him. Heroic low-angle
+    view, crimson and emerald neon. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting
+    fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait
+    framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and
+    unmarked.
+- key: slime-krea-evo-s3-exchange-golden-foreclosure-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Golden Foreclosure Engine L2: Interest-Bearing'
+  asset: slime-city/evolutions/s3-exchange-golden-foreclosure@2
+  size: 832x1216
+  seed: 1112041
+  prompt_prose: >-
+    A walking gold bank vault on clanking hydraulic legs, with a round vault door for a jaw, blinking coin-slot eyes and
+    little brass repair arms, now twice as big with a spinning brass interest dial on its back. It strides through a crowded
+    grand plaza humming with gold light, a glittering trickle of coins spilling from its seams into a growing hill at its
+    feet. Adult brokers scramble with buckets while rivals point in alarm. Dynamic diagonal view, warm haze and long shadows.
+    Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines,
+    saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed
+    scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-exchange-golden-foreclosure-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Golden Foreclosure Engine L3: The Vault Opens'
+  asset: slime-city/evolutions/s3-exchange-golden-foreclosure@3
+  size: 832x1216
+  seed: 1112042
+  prompt_prose: >-
+    A walking gold bank vault on clanking hydraulic legs, with a round vault door for a jaw, blinking coin-slot eyes and
+    little brass repair arms, now as tall as a cathedral with a ring of light hovering above it like a halo. Its great round
+    door swings wide like a sunrise, beams of radiance pouring across the whole city onto two adult crew members who raise
+    glowing fists on either side. Crowds dance on every rooftop under the rays. Epic wide view, dawn pink and turquoise
+    palette. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive
+    outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous
+    full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-exchange-payment-reminder-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Payment Reminder L2: Second Notice'
+  asset: slime-city/evolutions/s3-exchange-payment-reminder@2
+  size: 832x1216
+  seed: 1112043
+  prompt_prose: >-
+    A cream envelope with a gold wax seal, tiny white gloves and a butler's posture, now twice as big and wearing a sharp
+    black bow tie. In a bustling auction hall, a second, angrier red envelope slaps onto its face, a burst of sparks streaking
+    off toward a distant vault. A wincing adult debtor clutches his earlobe as bidders turn in their seats. Dynamic diagonal
+    shot, velvet red and warm lamp glow. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting
+    fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait
+    framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and
+    unmarked.
+- key: slime-krea-evo-s3-exchange-payment-reminder-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Payment Reminder L3: Sent to Collections'
+  asset: slime-city/evolutions/s3-exchange-payment-reminder@3
+  size: 832x1216
+  seed: 1112044
+  prompt_prose: >-
+    A cream envelope with a gold wax seal, tiny white gloves and a butler's posture, now riding at the head of a charging
+    army of hundreds of adult collectors in matching grey suits, its flap streaming behind it like a heroic cape. The army
+    thunders down the main avenue, brass knuckles glowing, while terrified debtors scatter and the streetlights bow like
+    servants. Epic wide view from the gutter, storm slate blue with scarlet flashes. Hand-painted vivid inked western adult
+    cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold
+    clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly
+    adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-exchange-compound-notice-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Compound Notice L2: Overdue Refund'
+  asset: slime-city/evolutions/s3-exchange-compound-notice@2
+  size: 832x1216
+  seed: 1112045
+  prompt_prose: >-
+    A brass rubber stamp the size of a piano, with a polished wooden handle and two hooked chains, now twice as big, its
+    chains upgraded to glowing golden whips. In a crowded post office hall it spits a fresh glowing envelope from a torn
+    corner, which flutters back toward a waiting hand, while an adult shopkeeper ducks with his necktie flying. Clerks dive
+    behind counters. Over-the-shoulder shot past the handle, dusty sunbeams and gold sparks. Hand-painted vivid inked western
+    adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors,
+    bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character is
+    a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-exchange-compound-notice-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Compound Notice L3: Cross-Default'
+  asset: slime-city/evolutions/s3-exchange-compound-notice@3
+  size: 832x1216
+  seed: 1112046
+  prompt_prose: >-
+    A brass rubber stamp the size of a piano, with a polished wooden handle and two hooked chains, now cracked open like
+    a seed pod the size of a building, firing a firework burst of red envelopes in every direction. The envelopes flock
+    over the district like birds and slam into the adult fighters on both sides of a frozen target, who topple like bowling
+    pins. Rooftop crowds duck and cheer. Epic wide view, scarlet and jade palette. Hand-painted vivid inked western adult
+    cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold
+    clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly
+    adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-exchange-executive-incentive-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Executive Incentive L2: Performance Clause'
+  asset: slime-city/evolutions/s3-exchange-executive-incentive@2
+  size: 832x1216
+  seed: 1112047
+  prompt_prose: >-
+    A smirking adult broker with slicked hair, a mustard suit and a fishing rod dangling a gilded carrot, now riding a gold-trimmed
+    motor scooter with a carrot twice as big. In a packed street-fight arena, a golden bonus ribbon ties itself around a
+    charging butcher brawler's fist, a brass collection box dangling from the knot as he punches through a wall. The crowd
+    surges to its feet. Wide action shot, hot spotlights and flying rubble. Hand-painted vivid inked western adult cartoon
+    for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette,
+    high contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up.
+    Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-exchange-executive-incentive-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Executive Incentive L3: Posthumous Bonus'
+  asset: slime-city/evolutions/s3-exchange-executive-incentive@3
+  size: 832x1216
+  seed: 1112048
+  prompt_prose: >-
+    A smirking adult broker with slicked hair, a mustard suit and a fishing rod dangling a gilded carrot, now casting a
+    carrot the size of a rocket from atop a clock tower. Below, a translucent adult fighter rises from a gold-lit doorway
+    into the sky as a giant glowing spirit with feathered wings and a halo, clutching a sealed bonus envelope. The crew
+    below cheer and reach up. Heroic low-angle view, spectral aqua and lilac palette. Hand-painted vivid inked western adult
+    cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold
+    clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly
+    adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-exchange-golden-parachute-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Golden Parachute L2: Severance Terms'
+  asset: slime-city/evolutions/s3-exchange-golden-parachute@2
+  size: 832x1216
+  seed: 1112049
+  prompt_prose: >-
+    A billowing golden silk parachute carrying a wounded adult butcher in torn pinstripes, champagne glass in hand, the
+    canopy now twice as large and lined with thick padded quilting that wraps his shoulders like a cozy robe. He drifts
+    down over a crowded plaza as cheering adult onlookers hold up their arms to catch him, his bandages tightening as he
+    goes. Wide action shot from a rooftop, soft peach sky. Hand-painted vivid inked western adult cartoon for a grungy colorful
+    street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast,
+    tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface
+    is bare and unmarked.
+- key: slime-krea-evo-s3-exchange-golden-parachute-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Golden Parachute L3: Platinum Parachute'
+  asset: slime-city/evolutions/s3-exchange-golden-parachute@3
+  size: 832x1216
+  seed: 1112050
+  prompt_prose: >-
+    A billowing golden silk parachute carrying a wounded adult butcher in torn pinstripes, champagne glass in hand, now
+    a platinum canopy the size of a city block, catching the butcher as he tumbles from a skyscraper. Debris bounces harmlessly
+    off the shining silk, a platinum crown sits on his head, and a champagne fountain sprays from his glass. Crowds line
+    every rooftop to applaud. Heroic low-angle view, moonlit silver and ice-blue palette. Hand-painted vivid inked western
+    adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors,
+    bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character is
+    a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-exchange-golden-parachute-l3b
+  entity: card-art
+  lane: krea-evolution
+  title: 'Golden Parachute L3b: Cash the Package'
+  asset: slime-city/evolutions/s3-exchange-golden-parachute@3b
+  size: 832x1216
+  seed: 1112051
+  prompt_prose: >-
+    A billowing golden silk parachute carrying a wounded adult butcher in torn pinstripes, champagne glass in hand, now
+    cut loose and stuffed into a towering vault, which bursts and floods the whole street with a tsunami of coins. A grinning
+    adult banker surfs the wave on the folded silk, counting coins as he goes, while the butcher lands on his backside in
+    the gutter. Neighbors scoop coins from windows. Epic wide view, money green and hot pink palette. Hand-painted vivid
+    inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty
+    neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every
+    character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-exchange-acquisition-clause-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Acquisition Clause L2: Hostile Bid'
+  asset: slime-city/evolutions/s3-exchange-acquisition-clause@2
+  size: 832x1216
+  seed: 1112052
+  prompt_prose: >-
+    A giant gold-plated office stamp with a chrome handle and a glowing brass base, hovering above a miniature city block,
+    now ringed by a spinning gold gear and reshaped into a gilded auction gavel twice as big. It slams down across a wide
+    alley onto a rival adult fighter, sending a ring of sparks rolling outward that knocks over trash cans and bystanders.
+    Gawking adult brokers duck behind briefcases. Dynamic diagonal view, turquoise haze and dirty amber light. Hand-painted
+    vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated
+    gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene.
+    Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-exchange-acquisition-clause-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Acquisition Clause L3: Corporate Raid'
+  asset: slime-city/evolutions/s3-exchange-acquisition-clause@3
+  size: 832x1216
+  seed: 1112053
+  prompt_prose: >-
+    A giant gold-plated office stamp with a chrome handle and a glowing brass base, hovering above a miniature city block,
+    now a battering ram of stacked gold bars as long as a train, carried at full sprint by a roaring adult fighter. It smashes
+    through a line of rival shields toward a distant tower, leaving gold stamp prints on every flattened block it crosses.
+    Whole buildings tip like dominoes as rooftop crowds gasp. Heroic low-angle view, hot red and deep turquoise. Hand-painted
+    vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated
+    gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene.
+    Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-exchange-late-fee-sticker-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Late-Fee Sticker L2: Late Fee'
+  asset: slime-city/evolutions/s3-exchange-late-fee-sticker@2
+  size: 832x1216
+  seed: 1112054
+  prompt_prose: >-
+    A round gold-foil sticker the size of a dinner plate, with a pinching crab grip, now twice as big, glowing bright orange
+    and sprouting little crab legs. At a busy intersection it clings to an adult trespasser's back while a chute beside
+    it drops collected coins into a brass box bolted to the curb. Taxi drivers lean out to laugh. Dynamic diagonal tracking
+    shot, headlights and orange glow. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting
+    fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait
+    framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and
+    unmarked.
+- key: slime-krea-evo-s3-exchange-late-fee-sticker-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Late-Fee Sticker L3: Fees on Fees'
+  asset: slime-city/evolutions/s3-exchange-late-fee-sticker@3
+  size: 832x1216
+  seed: 1112055
+  prompt_prose: >-
+    A round gold-foil sticker the size of a dinner plate, with a pinching crab grip, now a scuttling swarm of thousands,
+    covering a building-sized armored adult brute like orange scales as a giant yellow wheel boot clamps his leg. The swarm
+    spreads over a whole traffic jam, booting buses and trucks while their drivers stare. Stickers march up the skyscrapers
+    like crabs on a beach. Epic wide view, tangerine and electric purple palette. Hand-painted vivid inked western adult
+    cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold
+    clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly
+    adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-exchange-escrow-snare-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Escrow Snare L2: Funds Held'
+  asset: slime-city/evolutions/s3-exchange-escrow-snare@2
+  size: 832x1216
+  seed: 1112056
+  prompt_prose: >-
+    A red velvet auction rope with a brass cobra-head tip, springing off its brass stanchions like a striking snake, now
+    twice as long. In a packed auction hall it binds an adult debtor upright between two posts and runs taut into a locked
+    brass strongbox that glows warmly as coins tumble inside. A pinstriped auctioneer bangs his gavel while bidders rise
+    from their chairs. Over-the-shoulder shot, velvet drapes and lamp glow. Hand-painted vivid inked western adult cartoon
+    for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette,
+    high contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up.
+    Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-exchange-escrow-snare-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Escrow Snare L3: Escrow Agent'
+  asset: slime-city/evolutions/s3-exchange-escrow-snare@3
+  size: 832x1216
+  seed: 1112057
+  prompt_prose: >-
+    A red velvet auction rope with a brass cobra-head tip, springing off its brass stanchions like a striking snake, now
+    a colossal velvet serpent coiled around the whole auction house, its brass head rearing over the rooftops. The strongbox
+    has grown into a vault the size of a building, and a small adult escrow agent in a grey suit steps out with his briefcase,
+    riding the serpent's head toward the snared debtor. Crowds stare from balconies. Heroic low-angle view, deep crimson
+    and teal. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive
+    outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous
+    full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-exchange-repossession-notice-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Repossession Notice L2: Flank Clause'
+  asset: slime-city/evolutions/s3-exchange-repossession-notice@2
+  size: 832x1216
+  seed: 1112058
+  prompt_prose: >-
+    Two pairs of ghostly white-gloved hands bursting up through gold-veined butcher tiles, now joined by a third pair and
+    trailing glowing legal ribbons. In a wide market crossroads, the ribbons lash sideways into the neighboring alleys and
+    trip two adult fighters who tried to sneak around, sending them tumbling into fruit stalls. Vendors shriek and point.
+    Wide action shot from above, eerie gold light from the cracked floor. Hand-painted vivid inked western adult cartoon
+    for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette,
+    high contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up.
+    Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-exchange-repossession-notice-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Repossession Notice L3: Repo Truck'
+  asset: slime-city/evolutions/s3-exchange-repossession-notice@3
+  size: 832x1216
+  seed: 1112059
+  prompt_prose: >-
+    Two pairs of ghostly white-gloved hands bursting up through gold-veined butcher tiles, now multiplied into a forest
+    of thousands of ghost hands rising from every street, all waving. A massive gold-plated tow truck the size of a building
+    roars in, steered by one giant spectral glove, its crane hauling a rival's gilded throne into the sky. The rival boss
+    chases it in his socks. Epic wide view, ghostly green and midnight purple palette. Hand-painted vivid inked western
+    adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors,
+    bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character is
+    a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-exchange-ledger-greaves-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Ledger Greaves L2: Express Paperwork'
+  asset: slime-city/evolutions/s3-exchange-ledger-greaves@2
+  size: 832x1216
+  seed: 1112060
+  prompt_prose: >-
+    An adult ledger courier in a cap and vest wearing gilded shin greaves with spinning clockwork ankle wheels, carrying
+    an armful of blank ledgers, the greaves now sprouting brass wings twice their old size. He leaps across the rooftops
+    of the market district, a blur of motion lines and fluttering blank pages streaming behind him, scattering pigeons and
+    startling adult laundry hangers. Rival couriers trail far behind. Dynamic diagonal shot from below, brass lamps smearing
+    into streaks. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive
+    outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous
+    full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-exchange-ledger-greaves-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Ledger Greaves L3: Hand-Delivered Debt'
+  asset: slime-city/evolutions/s3-exchange-ledger-greaves@3
+  size: 832x1216
+  seed: 1112061
+  prompt_prose: >-
+    An adult ledger courier in a cap and vest wearing gilded shin greaves with spinning clockwork ankle wheels, carrying
+    an armful of blank ledgers, now a blazing comet with wings of burning pages, streaking a rainbow trail across the night
+    sky. He rockets up the marble steps of a rival boss's hilltop mansion and holds out a sealed red envelope at the open
+    front door, while the whole district watches from rooftops and the boss drops his cigar. Heroic low-angle view, comet
+    blue and candy pink. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick
+    expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with
+    one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-exchange-collection-badge-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Collection Badge L2: Deputized'
+  asset: slime-city/evolutions/s3-exchange-collection-badge@2
+  size: 832x1216
+  seed: 1112062
+  prompt_prose: >-
+    A burly adult butcher in a stained apron with a thick moustache, a cleaver and an oversized gold star badge with a coin
+    slot, the badge now twice as big on a sash across his chest, and a wide-brimmed deputy hat on his head. In a crowded
+    market square he strikes a staggering debtor, and coins stream magnetically from the debtor's pockets into the badge.
+    A bounty pouch clinks at his hip as shoppers applaud. Dynamic diagonal view, dusty sunbeams. Hand-painted vivid inked
+    western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon
+    colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character
+    is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-exchange-collection-badge-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Collection Badge L3: Collections Marshal'
+  asset: slime-city/evolutions/s3-exchange-collection-badge@3
+  size: 832x1216
+  seed: 1112063
+  prompt_prose: >-
+    A burly adult butcher in a stained apron with a thick moustache, a cleaver and an oversized gold star badge with a coin
+    slot, now a legendary marshal in a long coat, standing before a gleaming star badge as big as the moon rising over the
+    skyline behind him. A posse of a hundred adult deputies on rooftops lift smaller matching badges, and every fighter
+    in the street stands taller in its glow. Heroic low-angle view, sunset copper and deep blue palette. Hand-painted vivid
+    inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty
+    neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every
+    character is a clearly adult grown-up. Every surface is bare and unmarked.

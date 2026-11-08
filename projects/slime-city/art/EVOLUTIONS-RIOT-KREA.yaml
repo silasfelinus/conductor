@@ -1,0 +1,959 @@
+# Slime City evolution art, Riot, Krea 2 escalation redo (2026-11-08 PT).
+# Replaces the Flux Kontext dev round EVOLUTIONS-RIOT.yaml. Silas, 2026-11-08: "Flux dev is a slow generator,
+# and we're getting a lot of the same looking images three times over. We shouldn't use it for the main gen,
+# but we also need a much larger and fun escalation between evolution 1 and evolution 3."
+# Kontext edited each card's level-1 painting and kept its composition, so L1/L2/L3 read as one picture.
+# This round is Krea 2 text-to-image (the house Slime City engine, 8 steps), one render per stage instead of
+# two seeds, and each prompt is written per card on the ladder in CLASH-EVOLUTION-PLAN.md section 4:
+# L2 = powered up (new signature gear, bigger venue, new camera); L3/L3b = legendary, over the top (scale,
+# swarms, material change, mythic form, a city-sized signature, the district reacting, a finale palette).
+# Identity carries over through a per-card look anchor that opens both prompts. Same runtime assets
+# ('<cardId>@2' | '@3' | '@3b'), so a keeper is wired as SLIME_CITY_ART.evolutions[...]. auto_submit: true.
+round: slime-city-evolutions-riot-krea
+project_slug: slime-city
+designer: Slime City evolution art, Riot (Krea 2)
+is_public: true
+is_mature: false
+cast_loras: false
+priority: 640
+auto_submit: true
+lanes:
+- key: krea-evolution
+  label: Krea 2, escalated evolution stages written per card
+  engine: krea2
+  prompt: prose
+subjects:
+- key: slime-krea-evo-spark-diver-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Spark Diver L2: Countdown Briefing'
+  asset: slime-city/evolutions/spark-diver@2
+  size: 832x1216
+  seed: 1116001
+  prompt_prose: >-
+    A daring adult stunt diver woman in a red flame-striped jumpsuit and chrome safety harness, goggles pushed up, fireworks
+    clipped to her belt, now wears an upgraded harness bristling with a ring of rocket tubes twice her size. Dynamic diagonal
+    view up a wobbling high-dive tower above a packed stadium brawl, a long sparking fuse racing down her harness as she
+    salutes. Singed teammates on the ladder flinch, rivals below point and gasp, and a giant ring of bulbs blinks out one
+    by one behind her under sweeping magenta spotlights. Hand-painted vivid inked western adult cartoon for a grungy colorful
+    street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast,
+    tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface
+    is bare and unmarked.
+- key: slime-krea-evo-spark-diver-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Spark Diver L3: Human Firework'
+  asset: slime-city/evolutions/spark-diver@3
+  size: 832x1216
+  seed: 1116002
+  prompt_prose: >-
+    A daring adult stunt diver woman in a red flame-striped jumpsuit and chrome safety harness, goggles pushed up, has become
+    a living firework, her whole body crackling magenta and gold sparks with a comet tail a mile long. Epic wide view of
+    her diving across the full moon over Redline Ward as a firework bloom the size of the skyline opens behind her, a hundred
+    smaller sparkling copies of her raining outward, rooftops packed with cheering crowds, the moon covering its eyes. Electric
+    violet and gold finale glow. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy,
+    thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing
+    with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s1-mime-fuse-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Matchstick Mime L2: Silent Fuse'
+  asset: slime-city/evolutions/s1-mime-fuse@2
+  size: 832x1216
+  seed: 1116003
+  prompt_prose: >-
+    An adult male street mime with red greasepaint, white gloves, a black beret and a striped red-and-white suit with fuses
+    stitched into the seams now carries a matchstick as tall as a lamppost over his shoulder. Over-the-shoulder view from
+    behind rival brawlers as he kneels in a circus-tent spotlight, miming an invisible box, a lit fuse curling from his
+    gloves across the sawdust toward rivals and his own crew alike. The crowd in the bleachers holds its breath, hands over
+    mouths. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive
+    outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous
+    full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s1-mime-fuse-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Matchstick Mime L3: Lights Every Fuse'
+  asset: slime-city/evolutions/s1-mime-fuse@3
+  size: 832x1216
+  seed: 1116004
+  prompt_prose: >-
+    An adult male street mime with red greasepaint, white gloves, a black beret and a striped red-and-white suit now towers
+    like a parade balloon, a giant flaming matchstick held high like a torch, his greasepaint glowing like embers. Heroic
+    low-angle view as he strides down an endless line of a hundred grinning riot comrades in striped suits, touching each
+    lit fuse, sparks leaping shoulder to shoulder into a giant glowing silhouette of a bowing mime across the clouds. Rooftop
+    crowds clap silently in white gloves. Amber and electric blue finale glow. Hand-painted vivid inked western adult cartoon
+    for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette,
+    high contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up.
+    Every surface is bare and unmarked.
+- key: slime-krea-evo-s1-blast-radius-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Doctor Blast Radius L2: Field Test'
+  asset: slime-city/evolutions/s1-blast-radius@2
+  size: 832x1216
+  seed: 1116005
+  prompt_prose: >-
+    An eccentric heavyset adult inventor in a patched red hazard suit, wild white hair and soot-black goggles now wears
+    a towering backpack rig of brass rocket tubes twice his height and a scorched lab coat with smoking cuffs. Wide action
+    view of a roped-off demolition derby arena as he scribbles sketches on a clipboard while a knocked-out rival rockets
+    sparks sideways into both alleys. Fellow rebels in welding masks duck behind wrecked cars, peeking out with notebooks.
+    Hot orange and scarlet haze. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy,
+    thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing
+    with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s1-blast-radius-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Doctor Blast Radius L3: Grand Unified Blast'
+  asset: slime-city/evolutions/s1-blast-radius@3
+  size: 832x1216
+  seed: 1116006
+  prompt_prose: >-
+    An eccentric heavyset adult inventor in a patched red hazard suit, wild white hair and soot-black goggles now floats
+    cross-legged above the street on a throne of welded rockets, ringed by a glowing atom-shaped halo of shockwaves wider
+    than the district. Epic wide view: a towering plume of smoke shaped like his grinning face rises over the skyline, both
+    crews blown off their feet in tumbling comic heaps, skyscrapers bending away like reeds, the moon ducking behind a cloud.
+    Ultraviolet and acid-white finale glow. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting
+    fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait
+    framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and
+    unmarked.
+- key: slime-krea-evo-s2-riot-fuse-lit-bicycle-courier-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Fuse-Lit Bicycle Courier L2: Signature Required'
+  asset: slime-city/evolutions/s2-riot-fuse-lit-bicycle-courier@2
+  size: 832x1216
+  seed: 1116007
+  prompt_prose: >-
+    A wiry adult woman courier in hockey shin pads, a scuffed crash helmet and a messenger bag, hauling a brown parcel with
+    a hissing pink fuse, now pedals a souped-up cargo bike with a rocket booster and a parcel twice as big as she is. Dynamic
+    diagonal view as she skids sideways on the marble steps of the rival boss's armored fortress, holding out a clipboard
+    with a cheeky grin. Guards on the battlements gape and neighbors crowd the balconies. Teal dusk light. Hand-painted
+    vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated
+    gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene.
+    Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s2-riot-fuse-lit-bicycle-courier-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Fuse-Lit Bicycle Courier L3: Final Delivery'
+  asset: slime-city/evolutions/s2-riot-fuse-lit-bicycle-courier@3
+  size: 832x1216
+  seed: 1116008
+  prompt_prose: >-
+    A wiry adult woman courier in hockey shin pads and a scuffed crash helmet lies grinning in a sooty heap beside her tipped
+    bicycle, giving a thumbs-up. Heroic low-angle view of the parcel she left behind, now a ticking brown box the size of
+    a skyscraper on the rival boss's doorstep, tied with string like a gift, its fuse as thick as a bridge cable and blazing
+    gold. Rivals stampede down every street while rooftop crowds peek through their fingers. Sizzling gold and midnight
+    blue finale glow. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick
+    expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with
+    one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s2-riot-radioactive-parade-float-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Radioactive Parade Float L2: Glowing Procession'
+  asset: slime-city/evolutions/s2-riot-radioactive-parade-float@2
+  size: 832x1216
+  seed: 1116009
+  prompt_prose: >-
+    A papier-mache parade float shaped like a grinning balloon monster, radioactive green with hot-pink polka dots and paper
+    teeth, ridden by adult rebels in welding masks, now twice as tall and crowned with a glowing tiara of neon tubes. Wide
+    action view from a fire escape as it rolls down a grand boulevard of shuttered shops, pulsing sickly green light, fighters
+    on both sidewalks hopping back with singed eyebrows. Marchers with toxic-green tubas stomp behind while a city official
+    waves his arms in protest. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy,
+    thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing
+    with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s2-riot-radioactive-parade-float-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Radioactive Parade Float L3: The Parade Ate the City'
+  asset: slime-city/evolutions/s2-riot-radioactive-parade-float@3
+  size: 832x1216
+  seed: 1116010
+  prompt_prose: >-
+    A papier-mache parade float shaped like a grinning balloon monster, radioactive green with hot-pink polka dots and paper
+    teeth, has swelled to the size of a stadium, leading a parade of a hundred smaller glowing floats, balloon dragons,
+    neon ducks and grinning donuts, through three alleys at once while munching a water tower like a candy apple. Epic wide
+    view from a skyscraper roof, confetti snowing, marchers ducking falling debris, the moon tinted green. Toxic lime and
+    ultraviolet finale glow. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy,
+    thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing
+    with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-riot-bottle-rocket-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Bottle-Rocket Nun L2: Blessed Kindling'
+  asset: slime-city/evolutions/s3-riot-bottle-rocket@2
+  size: 832x1216
+  seed: 1116011
+  prompt_prose: >-
+    A serene adult nun in a scorched black-and-scarlet habit and hockey shin guards, a huge bottle rocket strapped along
+    her spine, now bears a rocket twice her height with gilded fins and a glowing stained-glass nose cone. Over-the-shoulder
+    view inside a vast ruined cathedral nave as she lights it with a tall candle, eyes closed in prayer, a single blessed
+    spark streaking down the aisle at a startled rival. Rebels in the pews cover their heads. Candle gold and scarlet. Hand-painted
+    vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated
+    gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene.
+    Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-riot-bottle-rocket-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Bottle-Rocket Nun L3: Ascension'
+  asset: slime-city/evolutions/s3-riot-bottle-rocket@3
+  size: 832x1216
+  seed: 1116012
+  prompt_prose: >-
+    A serene adult nun in a scorched black-and-scarlet habit and hockey shin guards now rides her giant bottle rocket straight
+    up through a parted golden sky like a saint on a chariot, habit streaming, crowned by a huge halo of white fireworks.
+    Heroic low-angle view from the street as her holy trail draws a blazing arc toward the rival boss's tower, rebel choirs
+    sing from every rooftop, pigeons swirl as her escort, and the moon sprouts its own halo. Pearl white, rose gold and
+    sky blue finale glow. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy,
+    thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing
+    with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-riot-detonation-deacon-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Detonation Deacon L2: Tolls the Hour'
+  asset: slime-city/evolutions/s3-riot-detonation-deacon@2
+  size: 832x1216
+  seed: 1116013
+  prompt_prose: >-
+    A stocky adult deacon wearing a battered bronze church bell over his torso like a barrel, firework tails poking from
+    under the rim and his robe flapping, now hefts a giant brass clapper like a club, his bell polished and twice as large.
+    Dynamic diagonal view inside a crowded scaffold bell tower as he swings and tolls, a ring of firework sparks bursting
+    from the bell's mouth to rattle a rival across the beam while his own congregation clutches their ears, hats flying.
+    Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines,
+    saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed
+    scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-riot-detonation-deacon-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Detonation Deacon L3: Deafening Toll'
+  asset: slime-city/evolutions/s3-riot-detonation-deacon@3
+  size: 832x1216
+  seed: 1116014
+  prompt_prose: >-
+    A stocky adult deacon wearing a bronze church bell over his torso like a barrel, robe flapping, has become a colossal
+    bell tower of glowing molten bronze, his bell as large as a chapel, roaring at the center. Epic wide view as he rings
+    so loud the sound becomes visible golden shockwaves rolling across the district, rivals on both sides spinning dizzy
+    with cartoon stars, every window in the skyline bursting into sparkles, and the moon vibrating like a gong. Molten bronze
+    and electric teal finale glow. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting
+    fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait
+    framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and
+    unmarked.
+- key: slime-krea-evo-s3-riot-alley-prophet-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Alley Prophet of Sparks L2: Street Sermon'
+  asset: slime-city/evolutions/s3-riot-alley-prophet@2
+  size: 832x1216
+  seed: 1116015
+  prompt_prose: >-
+    A wild-eyed bearded adult street prophet in a robe stitched from hockey pads, his beard singed, now holds a candelabra
+    as tall as he is, its seven flames flickering. Wide action view of a packed street plaza as he preaches from a tower
+    of overturned firework crates, arms spread, stray sparks drifting from his fingertips toward a rival across the square.
+    Onlookers lean far too close, some toasting marshmallows on sticks. Candle amber and smoky rose light. Hand-painted
+    vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated
+    gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene.
+    Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-riot-alley-prophet-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Alley Prophet of Sparks L3: Fire Foretold'
+  asset: slime-city/evolutions/s3-riot-alley-prophet@3
+  size: 832x1216
+  seed: 1116016
+  prompt_prose: >-
+    A wild-eyed bearded adult street prophet in a robe stitched from hockey pads now floats above the rooftops, eyes glowing
+    white, beard turned to living flame, robe smoldering into a burning cape. Epic wide view as his vision fills the whole
+    night sky: a colossal swirling firestorm shaped like a pointing hand aims down at every rival, who stare upward with
+    jaws dropped. Followers on every rooftop raise candles in a sea of tiny lights. Infernal orange and prophetic violet
+    finale glow. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive
+    outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous
+    full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-riot-firework-bishop-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Firework Bishop L2: Procession'
+  asset: slime-city/evolutions/s3-riot-firework-bishop@2
+  size: 832x1216
+  seed: 1116017
+  prompt_prose: >-
+    A broad adult bishop in vestments patched with welding plates, wearing a tall mitre that is a multi-tube fireworks launcher,
+    now carries a long brass rocket-launcher crosier, his mitre twice as tall. Over-the-shoulder view from behind him as
+    he leads a candlelit procession of hooded adult riot faithful down a grand avenue, marchers pressed tight at his sides,
+    censers swinging. Rivals on balconies gape as rockets from his mitre stitch hot-pink trails overhead. Hand-painted vivid
+    inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty
+    neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every
+    character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-riot-firework-bishop-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Firework Bishop L3: The Finale'
+  asset: slime-city/evolutions/s3-riot-firework-bishop@3
+  size: 832x1216
+  seed: 1116018
+  prompt_prose: >-
+    A broad adult bishop in vestments patched with welding plates, two fingers raised in blessing, now sits enthroned atop
+    a mitre-launcher as big as a cathedral, its whole spire roaring with rockets. Heroic low-angle view as the finale blooms
+    into a sky-filling stained-glass rose window of light raining sparks over every rival, while the faithful crowded at
+    his elbows tumble backward in a comic heap, robes smoking. Rooftop crowds shield their eyes. Jewel-tone stained glass
+    and white-gold finale glow. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy,
+    thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing
+    with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-riot-riot-bike-messenger-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Riot Bike Messenger L2: Open Lane'
+  asset: slime-city/evolutions/s3-riot-riot-bike-messenger@2
+  size: 832x1216
+  seed: 1116019
+  prompt_prose: >-
+    An adult messenger in a crash helmet and spiked hockey pads, a smoking package in one fist, now rides a bigger scrap
+    chopper with twin chrome exhausts spitting flame and a jet engine bolted on the back. Low dynamic diagonal view as the
+    bike tears alone down a wide deserted elevated highway at full speed, speed streaks behind, the rival gate glowing far
+    ahead. Spectators on overpasses lean over railings cheering. Sodium orange and cool blue. Hand-painted vivid inked western
+    adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors,
+    bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character is
+    a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-riot-riot-bike-messenger-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Riot Bike Messenger L3: Hit and Run'
+  asset: slime-city/evolutions/s3-riot-riot-bike-messenger@3
+  size: 832x1216
+  seed: 1116020
+  prompt_prose: >-
+    An adult messenger in a crash helmet and spiked hockey pads on a scrap dirt bike has become a blur of living neon speed,
+    a hundred afterimage copies of the rider looping around the district at once, each swinging a package at a different
+    rival while already swerving away. Epic wide view above a tangle of rooftop ramps, glowing tire tracks drawing a giant
+    loop over the skyline, rivals spinning like tops, rooftop crowds whipping their heads around. Electric lime and hot
+    magenta finale glow. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick
+    expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with
+    one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-riot-thermite-archangel-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Thermite Archangel L2: Burns Through'
+  asset: slime-city/evolutions/s3-riot-thermite-archangel@2
+  size: 832x1216
+  seed: 1116021
+  prompt_prose: >-
+    A fierce adult woman rebel with enormous welded-steel wings whose feathers are glowing thermite rods, gripping a white-hot
+    lance, now wears a crested steel helmet and wings twice as wide, blazing white. Steep diagonal view as she melts straight
+    through a rival's riot shield in the middle of a crowded stadium battle, molten sparks splashing onto fighters of both
+    crews, who hop and slap at their smoking sleeves. Fans in the stands shield their eyes. White-hot and scarlet. Hand-painted
+    vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated
+    gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene.
+    Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-riot-thermite-archangel-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Thermite Archangel L3: Fallen Star'
+  asset: slime-city/evolutions/s3-riot-thermite-archangel@3
+  size: 832x1216
+  seed: 1116022
+  prompt_prose: >-
+    A fierce adult woman rebel whose welded-steel wings have burned to smoking bare struts crouches small, grinning and
+    fierce at the bottom of a glowing meteor crater spanning three alleys. Epic overhead wide view: the crater glows like
+    a molten sun, a fiery comet tail still streaking down from the stars to her, rivals blown outward in a perfect ring,
+    skyscrapers leaning away, and rooftop crowds pointing at the trail across the sky. Molten gold and deep indigo finale
+    glow. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive
+    outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous
+    full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-firebreak-parade-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Firebreak Parade L2: Paint the Line Red'
+  asset: slime-city/evolutions/firebreak-parade@2
+  size: 832x1216
+  seed: 1116023
+  prompt_prose: >-
+    A crew of adult riot carnival gunners in red bandannas and hockey pads, manning an improvised flame-painted carnival
+    cannon beside an armored parade float, now fire a triple-barreled cannon twice the size. Wide action view from a rooftop
+    as its arc of red firecrackers paints a blazing red line across the rival half of a broad avenue, a cheering crowd of
+    riot comrades surging right behind it with fists raised while rivals scramble back. Scarlet and orange smoke billows.
+    Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines,
+    saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed
+    scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-firebreak-parade-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Firebreak Parade L3: Grand Parade'
+  asset: slime-city/evolutions/firebreak-parade@3
+  size: 832x1216
+  seed: 1116024
+  prompt_prose: >-
+    A crew of adult riot carnival gunners in red bandannas and hockey pads now leads an endless grand parade of a hundred
+    floats, drum lines and stilt-walkers down the main avenue, every float a rocket launcher. Epic wide view as all the
+    rockets arc together into one sky-spanning rainbow canopy of bursts above the entire rival line, the skyline lit bright
+    as noon, rooftop crowds dancing, the clouds glowing like stained glass. Carnival gold, teal and ultraviolet finale glow.
+    Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines,
+    saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed
+    scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s1-no-witnesses-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'No Witnesses, Especially Us L2: Including Us'
+  asset: slime-city/evolutions/s1-no-witnesses@2
+  size: 832x1216
+  seed: 1116025
+  prompt_prose: >-
+    An ill-advised scarlet carnival fireball bursting between adult riot fighters and their rivals at an abandoned amusement
+    park of rusty rides, now twice as bright, blooming over the bumper car arena with a ring of flame licking back at the
+    riot fighters nearest. Dynamic diagonal view as the rival target flies off in a cartoon arc while riot fighters stumble
+    backward with scorched sleeves and smoking eyebrows, the Ferris wheel lit orange. Spectators on a roller coaster track
+    wince. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive
+    outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous
+    full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s1-no-witnesses-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'No Witnesses, Especially Us L3: Especially Us'
+  asset: slime-city/evolutions/s1-no-witnesses@3
+  size: 832x1216
+  seed: 1116026
+  prompt_prose: >-
+    An ill-advised carnival explosion at an abandoned amusement park has become a blinding white flash the size of the whole
+    park, the Ferris wheel rolling loose down the street like a giant runaway wheel. Epic wide view: every fighter on the
+    corner, rivals and riot crew alike, lies flat in cartoon heaps with stars and tiny birds circling their heads, carousel
+    horses galloping away, and a startled moon peeking out from behind a cloud. Bleached white, violet and gold finale glow.
+    Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines,
+    saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed
+    scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s1-chaos-firecracker-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Mystery-Flavor Firecracker L2: Sour Apple'
+  asset: slime-city/evolutions/s1-chaos-firecracker@2
+  size: 832x1216
+  seed: 1116027
+  prompt_prose: >-
+    A ridiculous candy-striped multi-colored firecracker with three fizzing fuses, gripped in a grinning adult riot fighter's
+    red-gloved hands, now as big as a fire hydrant and wrapped in shiny green candy foil. Over-the-shoulder view down a
+    crowded candy-shop street as it bursts in a sour green fizz of sparks, freezing a rival mid-step with a hugely puckered
+    face, lips curled and eyes watering. Shoppers in the doorways pucker too. Sour apple green and bubblegum pink. Hand-painted
+    vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated
+    gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene.
+    Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s1-chaos-firecracker-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Mystery-Flavor Firecracker L3: Variety Pack'
+  asset: slime-city/evolutions/s1-chaos-firecracker@3
+  size: 832x1216
+  seed: 1116028
+  prompt_prose: >-
+    A ridiculous candy-striped multi-colored firecracker with three fizzing fuses, held by a grinning adult riot fighter
+    in red gloves, has become a variety-pack candy box the size of a city block, tipping open over the rival side of the
+    street and spilling a thousand firecrackers. Heroic low-angle view as grape, lemon, cherry and blue-raspberry bursts
+    pop across the sky, rivals dyed rainbow colors and dripping candy goo, rooftop crowds catching sweets in buckets. Rainbow
+    sugar finale glow. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick
+    expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with
+    one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s2-riot-friendly-fire-rehearsal-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Friendly-Fire Rehearsal L2: Live-Fire Drill'
+  asset: slime-city/evolutions/s2-riot-friendly-fire-rehearsal@2
+  size: 832x1216
+  seed: 1116029
+  prompt_prose: >-
+    A cheerful adult woman drill instructor in a goalie mask, whistle and tracksuit, drilling adult trainees in hockey helmets,
+    now hefts a bullhorn as big as a tuba beside a crate of real charges. Wide action view of a huge stadium training field
+    as sparks pepper a squad of adult riot recruits who grit their teeth, muscles bulging, fired up and ready to charge,
+    while straw dummies burst behind them. Bleacher fans cheer. Dusk orange and hot pink. Hand-painted vivid inked western
+    adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors,
+    bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character is
+    a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s2-riot-friendly-fire-rehearsal-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Friendly-Fire Rehearsal L3: No Safety Officer'
+  asset: slime-city/evolutions/s2-riot-friendly-fire-rehearsal@3
+  size: 832x1216
+  seed: 1116030
+  prompt_prose: >-
+    A cheerful adult woman drill instructor in a goalie mask and tracksuit, whistle blazing, stands on a toppled safety
+    officer's chair atop a mountain of smoking hockey helmets. Heroic low-angle view of an army of a thousand scorched but
+    grinning riot fighters stretching to the horizon, every one wrapped in a crackling scarlet power aura, fists raised
+    beneath a stormy sky of fireworks while scaffold towers bow toward them. Molten scarlet and storm-violet finale glow.
+    Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines,
+    saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed
+    scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s2-riot-homemade-bottle-rocket-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Homemade Bottle Rocket L2: Friend of a Friend'
+  asset: slime-city/evolutions/s2-riot-homemade-bottle-rocket@2
+  size: 832x1216
+  seed: 1116031
+  prompt_prose: >-
+    A dangerously crooked homemade firework made from a recycled soda bottle, tape and little paper fins, leaking red powder,
+    launched from a rusty shopping cart by a sheepish adult rebel, now has a second booster bottle duct-taped on, twice
+    as long. Dynamic diagonal view across a huge demolition derby stadium as the booster corkscrews off on its own crooked
+    path, spraying sparks at a random rival who dives over a car hood, the crowd in the stands ducking in a wave. Copper
+    sparks and violet shadows. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy,
+    thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing
+    with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s2-riot-homemade-bottle-rocket-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Homemade Bottle Rocket L3: Probably Safe'
+  asset: slime-city/evolutions/s2-riot-homemade-bottle-rocket@3
+  size: 832x1216
+  seed: 1116032
+  prompt_prose: >-
+    A dangerously crooked homemade firework of recycled soda bottles, tape and paper fins has grown into a rocket of a hundred
+    taped-together bottles as tall as a skyscraper, roaring toward the rival boss's tower with a sheepish adult rebel clinging
+    to a fin. Epic wide view as the shopping-cart launch pad bursts into a puff that singes nearby riot fighters, the rocket
+    overshoots in a wild loop around the moon, and crowds on every rooftop gasp. Soda-pop orange and neon cyan finale glow.
+    Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines,
+    saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed
+    scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-riot-low-budget-grenade-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Low-Budget Grenade L2: Shrapnel Upgrade'
+  asset: slime-city/evolutions/s3-riot-low-budget-grenade@2
+  size: 832x1216
+  seed: 1116033
+  prompt_prose: >-
+    A wobbling improvised grenade made from a painted soup tin, string and bent screws, held by a nervous clownish adult
+    saboteur in scorched stunt gear, now twice as big and bristling with bolts and washers. Wide action view in a crowded
+    demolition derby pit as a bored inspector in a hard hat looks the other way, sipping coffee, while the grenade bursts
+    and bolts clatter onto fighters on both sides of the target. Vending machines spark behind. Hot magenta and steel. Hand-painted
+    vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated
+    gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene.
+    Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-riot-low-budget-grenade-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Low-Budget Grenade L3: Inspector''s Special'
+  asset: slime-city/evolutions/s3-riot-low-budget-grenade@3
+  size: 832x1216
+  seed: 1116034
+  prompt_prose: >-
+    A once-wobbly soup-tin grenade, carried by a nervous clownish adult saboteur in scorched stunt gear, is now a gleaming
+    gold-plated grenade the size of a car, borne on a velvet pillow by a parade of proud inspectors in hard hats. Heroic
+    low-angle view as it pops cleanly against a hulking rival brute as tall as a building, who sways dizzy beneath a crown
+    of circling stars, while the saboteur bows and rooftop crowds applaud. Polished gold and royal purple finale glow. Hand-painted
+    vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated
+    gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene.
+    Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-riot-wrong-side-of-blast-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Wrong Side of the Blast L2: Blast Shadow'
+  asset: slime-city/evolutions/s3-riot-wrong-side-of-blast@2
+  size: 832x1216
+  seed: 1116035
+  prompt_prose: >-
+    A huge scarlet explosion blooming on the far side of a ruined stadium, catching rival brutes while adult rebels watch
+    safely from a high scaffold sharing popcorn, now casts a long glowing blast shadow that curves like a pointing finger
+    down a wide boulevard to find the smallest, most bandaged rival limping away on a crutch. Over-the-shoulder view from
+    the rebels, their popcorn bucket now as big as a barrel. Pink smoke rolls as onlookers on balconies wince. Hand-painted
+    vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated
+    gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene.
+    Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-riot-wrong-side-of-blast-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Wrong Side of the Blast L3: Already Fled'
+  asset: slime-city/evolutions/s3-riot-wrong-side-of-blast@3
+  size: 832x1216
+  seed: 1116036
+  prompt_prose: >-
+    A huge scarlet explosion, watched by adult rebels sharing popcorn, has become a tidal wave of flame a mile high rolling
+    across every rival at once. Epic wide view: the riot side of the street stands deserted except for fallen hats and a
+    memorial candle, while the rebels float high above in a hot air balloon, sharing a popcorn tub the size of a hot tub.
+    Rivals surf the wave on cartoon debris as rooftop crowds cheer. Sunset gold and deep crimson finale glow. Hand-painted
+    vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated
+    gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene.
+    Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-riot-horrible-idea-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'This Is a Horrible Idea L2: Double Down'
+  asset: slime-city/evolutions/s3-riot-horrible-idea@2
+  size: 832x1216
+  seed: 1116037
+  prompt_prose: >-
+    A grinning adult rebel woman in a cracked crash helmet, eyes squeezed shut and fingers crossed, tossing a huge smoking
+    die wrapped in fuse wire, now juggles two dice as big as armchairs. Dynamic diagonal view across a crowded casino-lit
+    stadium concourse as the spark splits into two crackling bolts, the second looping back around for another shot at the
+    same bewildered rival. Gamblers in the stands fling chips into the air. Neon pink and lucky green. Hand-painted vivid
+    inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty
+    neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every
+    character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-riot-horrible-idea-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'This Is a Horrible Idea L3: It Actually Worked'
+  asset: slime-city/evolutions/s3-riot-horrible-idea@3
+  size: 832x1216
+  seed: 1116038
+  prompt_prose: >-
+    A grinning adult rebel woman in a cracked crash helmet, eyes squeezed shut and fingers crossed, now surfs a smoking
+    die the size of a house through the sky. Epic wide view as a wild spark rockets into the rival boss's tower and bursts
+    it into confetti, while the backfire rains sparks over her riot crew below, who duck with half-proud, half-horrified
+    faces. Giant glowing dice tumble from the clouds like hail as rooftop crowds gasp. Jackpot gold and ultraviolet finale
+    glow. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive
+    outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous
+    full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-riot-stolen-detonator-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Stolen Detonator L2: Hot-Wired'
+  asset: slime-city/evolutions/s3-riot-stolen-detonator@2
+  size: 832x1216
+  seed: 1116039
+  prompt_prose: >-
+    A sneaky adult rebel in a welding mask with a bundle of red dynamite and a blinking stolen detonator box now has it
+    strapped to his own chest, hot-wired with a jungle of crackling exposed cables twice his size, power surging through
+    him so his hair stands on end and his mask lenses glow. Wide action view of a packed stadium tunnel, teammates tiptoeing
+    away and rivals backing off in horror. Scarlet emergency light and electric blue arcs. Hand-painted vivid inked western
+    adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors,
+    bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character is
+    a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-riot-stolen-detonator-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Stolen Detonator L3: Strap One On Everyone'
+  asset: slime-city/evolutions/s3-riot-stolen-detonator@3
+  size: 832x1216
+  seed: 1116040
+  prompt_prose: >-
+    A sneaky adult rebel in a welding mask, clutching a blinking stolen detonator box, now stands at the head of a mile-long
+    conga line of a hundred cheerful riot fighters, each with a blinking charge of red dynamite strapped on, wires linking
+    them down the street, over rooftops and up a radio tower. Epic wide view as every window in the district blinks red
+    in rhythm, the skyline wrapped in cables like a gift, rivals frozen mid-step. Blinking ruby and emerald finale glow.
+    Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines,
+    saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed
+    scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-riot-stolen-detonator-l3b
+  entity: card-art
+  lane: krea-evolution
+  title: 'Stolen Detonator L3b: Push the Button'
+  asset: slime-city/evolutions/s3-riot-stolen-detonator@3b
+  size: 832x1216
+  seed: 1116041
+  prompt_prose: >-
+    A sneaky adult rebel in a welding mask with a stolen detonator box now slams a gloved thumb down on a detonator button
+    the size of a car. Heroic low-angle view as a fireball as tall as a skyscraper erupts from his alley and curls into
+    a giant flaming fist that engulfs the three rivals facing it, flinging them comically into the clouds with smoking boots.
+    Rooftop crowds shield their eyes and the moon blushes orange. Blazing tangerine and smoke-black finale glow. Hand-painted
+    vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated
+    gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene.
+    Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-riot-final-benediction-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Final Benediction of Fire L2: Ember Sermon'
+  asset: slime-city/evolutions/s3-riot-final-benediction@2
+  size: 832x1216
+  seed: 1116042
+  prompt_prose: >-
+    An adult rebel priest in scorched scarlet vestments with welding goggles on his brow, swinging a sparking iron censer,
+    now swings a censer as big as a wrecking ball on a long chain. Wide high view of a vast bombed-out stadium chapel as
+    the fiery blessing sweeps outward in a broad arc of embers, sending rivals tumbling over the pews while the riot congregation
+    hops back with smoldering robes. Shafts of stained-glass light pour in. Ember orange and scarlet. Hand-painted vivid
+    inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty
+    neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every
+    character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-riot-final-benediction-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Final Benediction of Fire L3: Benediction'
+  asset: slime-city/evolutions/s3-riot-final-benediction@3
+  size: 832x1216
+  seed: 1116043
+  prompt_prose: >-
+    An adult rebel priest in scorched scarlet vestments, goggles on his brow, now hovers above the street on a cloud of
+    incense, arms spread, his iron censer glowing like a small sun. Heroic low-angle view as a colossal golden halo of fire
+    hangs over the whole riot crew, an army of fighters each crowned with a little flaming halo and glowing armor of warm
+    light, weapons raised for the charge, while sunbeams split the sky. Honey gold and pearl white finale glow. Hand-painted
+    vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated
+    gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene.
+    Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-riot-final-benediction-l3b
+  entity: card-art
+  lane: krea-evolution
+  title: 'Final Benediction of Fire L3b: Fire and Brimstone'
+  asset: slime-city/evolutions/s3-riot-final-benediction@3b
+  size: 832x1216
+  seed: 1116044
+  prompt_prose: >-
+    An adult rebel priest in scorched scarlet vestments, goggles on his brow, now stands atop a cracked bell tower swinging
+    his iron censer overhead into a churning storm. Epic wide view as the sky turns deep red and flaming brimstone boulders
+    the size of buses hail down on every rival, while smaller embers pelt the riot fighters, who hold frying pans over their
+    heads. Lava runs in the gutters and the moon glowers. Sulfur yellow and volcanic crimson finale glow. Hand-painted vivid
+    inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty
+    neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every
+    character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s1-fuse-alley-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Bottled Thunder L2: Shaken Bottle'
+  asset: slime-city/evolutions/s1-fuse-alley@2
+  size: 832x1216
+  seed: 1116045
+  prompt_prose: >-
+    A glass soda bottle with a crackling lightning storm trapped inside, sealed with a rusty cap, now twice as big, trembling
+    and bulging, foaming storm clouds hissing from under its cap. Over-the-shoulder view from behind a grinning adult riot
+    trickster in a red hoodie shaking it hard on a crowded rain-slick market street, while rivals in the crowd back away
+    with their hair standing on end. Lightning flickers inside the glass. Electric blue and alley scarlet. Hand-painted
+    vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated
+    gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene.
+    Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s1-fuse-alley-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Bottled Thunder L3: Thunderclap'
+  asset: slime-city/evolutions/s1-fuse-alley@3
+  size: 832x1216
+  seed: 1116046
+  prompt_prose: >-
+    A glass soda bottle with a lightning storm trapped inside has burst into a towering thunderhead shaped like a bottle,
+    filling the sky over the whole block, its rusty cap launched toward the moon. Epic wide view as lightning forks down
+    every alley, rivals hurled into the air with frizzy hair, riot fighters rattled with chattering teeth, every streetlight
+    popping in sparks, and rooftop crowds pinned flat by the wind. Storm violet and white-electric finale glow. Hand-painted
+    vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated
+    gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene.
+    Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s2-riot-fusebox-fireworks-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Fusebox Fireworks L2: Chain Fuse'
+  asset: slime-city/evolutions/s2-riot-fusebox-fireworks@2
+  size: 832x1216
+  seed: 1116047
+  prompt_prose: >-
+    An abandoned party under a rusted bridge, deflated balloons and a half-eaten cake beside a fusebox wired to a heap of
+    fireworks, now with a fusebox twice as big, sparking under a crown of cables. Dynamic diagonal view along a long sparking
+    fuse racing from the bridge into the neighboring alleys, little fireworks popping at the feet of hopping rivals, party
+    streamers whipping and a stray balloon bursting. Passers-by on the bridge railing point and laugh. Pink and scarlet
+    against rusted steel. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy,
+    thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing
+    with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s2-riot-fusebox-fireworks-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Fusebox Fireworks L3: Grand Bridge Show'
+  asset: slime-city/evolutions/s2-riot-fusebox-fireworks@3
+  size: 832x1216
+  seed: 1116048
+  prompt_prose: >-
+    An abandoned party under a rusted bridge, with deflated balloons and a half-eaten cake beside a fusebox, has turned
+    the whole bridge into a colossal birthday cake of fireworks, every strut a candle rocket. Epic wide view from the riverbank
+    as a spectacular show erupts across the sky, sparks raining on every fighter below from both crews, who dance and dodge
+    in party hats, a giant balloon drifting overhead and tugboats tooting. Birthday-candle gold and electric turquoise finale
+    glow. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive
+    outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous
+    full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-riot-fusewire-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Fusewire Rosary L2: Bound in Beads'
+  asset: slime-city/evolutions/s3-riot-fusewire@2
+  size: 832x1216
+  seed: 1116049
+  prompt_prose: >-
+    A rosary of glowing firecracker beads strung on fuse wire, a tiny pink fuse sputtering at its knot, now with beads as
+    big as bowling balls, whips sideways across three narrow alleys at once, wrapping the ankles of trench-coated adult
+    rivals and pinning them mid-stride in comic tangles. Wide action view from a fire escape as the beads pop with pink
+    sparks and rivals topple like dominoes while onlookers lean from windows. Scaffold shadows and candle-pink glow. Hand-painted
+    vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated
+    gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene.
+    Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-riot-fusewire-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Fusewire Rosary L3: Hail Mary'
+  asset: slime-city/evolutions/s3-riot-fusewire@3
+  size: 832x1216
+  seed: 1116050
+  prompt_prose: >-
+    A rosary of glowing firecracker beads strung on fuse wire now floats upright above the district, grown as wide as a
+    cathedral dome and blazing like a burning halo of stained glass, every bead a small sun. Heroic low-angle view as a
+    prayer of fire streaks down from each flaring bead toward every rival in the street, while rooftop crowds kneel with
+    hands clasped and the clouds part in a perfect ring. Rose gold and holy sapphire finale glow. Hand-painted vivid inked
+    western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon
+    colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character
+    is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-riot-night-market-rocket-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Night Market Rocket L2: Smoke Trail'
+  asset: slime-city/evolutions/s3-riot-night-market-rocket@2
+  size: 832x1216
+  seed: 1116051
+  prompt_prose: >-
+    A hidden firework rocket bursting from a basket of melons in a night market of paper lanterns, chasing an adult trespasser
+    in a smoking coat, now twice as large with a lantern-red dragon-head nose. Over-the-shoulder view from a noodle stall
+    as it leaves a long curling pink smoke trail that streaks past the trespasser and down a vast crowded market avenue
+    toward the rival boss's tower, vendors ducking and diners frozen mid-bite. Lantern red and smoky pink. Hand-painted
+    vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated
+    gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene.
+    Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-riot-night-market-rocket-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Night Market Rocket L3: Market Barrage'
+  asset: slime-city/evolutions/s3-riot-night-market-rocket@3
+  size: 832x1216
+  seed: 1116052
+  prompt_prose: >-
+    A hidden firework rocket from a melon basket in a night market of paper lanterns has awakened the whole market: every
+    lantern stall, melon basket and noodle pot launches its own rocket at once, thousands of colorful streaks raining down
+    on scattered rivals. Epic wide view from above as the lanterns rise into a sky-filling dragon of light coiling around
+    the skyline, vendors cheering on rooftops beneath a huge melon-green moon. Lantern gold, jade and magenta finale glow.
+    Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines,
+    saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed
+    scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-riot-confession-booth-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Booby-Trapped Confessional L2: Name Your Sins'
+  asset: slime-city/evolutions/s3-riot-confession-booth@2
+  size: 832x1216
+  seed: 1116053
+  prompt_prose: >-
+    A booby-trapped wooden confessional booth with a latticed grille, iron shackles and a spring arm holding a collection
+    box, tended by an adult rebel priest in a welding mask, now towers twice as tall. Wide action view in a crowded bombed-out
+    cathedral nave as its curtain flies open and fiery chains drag the biggest, most hulking rival to his knees, fireworks
+    popping from the grille, while a line of nervous rivals watches from the pews. Scarlet sparks and candle gold. Hand-painted
+    vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated
+    gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene.
+    Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-riot-confession-booth-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Booby-Trapped Confessional L3: Next Sinner'
+  asset: slime-city/evolutions/s3-riot-confession-booth@3
+  size: 832x1216
+  seed: 1116054
+  prompt_prose: >-
+    A booby-trapped wooden confessional booth with a latticed grille and a spring-arm collection box has multiplied into
+    a hundred smoking booths lined up down the avenue like a carnival midway, each fresh fuse rewinding itself and each
+    little door swinging open. Epic wide view as an endless queue of nervous rival sinners snakes around the district, the
+    masked adult rebel priest waving the next one forward with a giant gilded collection plate. Gilded gold and sanctuary
+    violet finale glow. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick
+    expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with
+    one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s1-volunteer-vest-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Volunteer Safety Vest L2: Crossing Guard'
+  asset: slime-city/evolutions/s1-volunteer-vest@2
+  size: 832x1216
+  seed: 1116055
+  prompt_prose: >-
+    A bright orange volunteer safety vest covered in reflective stripes, hazard-stripe patches and ticking fireworks, now
+    worn by a beaming adult riot fighter in a hi-vis hard hat and glowing twice as bright. Dynamic diagonal view of a jammed
+    downtown intersection as the wearer waves a giant glowing orange lollipop paddle and a lantern like a crossing guard,
+    leading a pumped-up crowd of riot comrades across while rival traffic screeches to a halt. Hi-vis orange and siren blue.
+    Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines,
+    saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed
+    scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s1-volunteer-vest-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Volunteer Safety Vest L3: Volunteer Brigade'
+  asset: slime-city/evolutions/s1-volunteer-vest@3
+  size: 832x1216
+  seed: 1116056
+  prompt_prose: >-
+    A bright orange volunteer safety vest with reflective stripes and ticking fireworks now rests on a tiny glowing shrine
+    where its wearer fell, and a hundred adult volunteers in matching sparking hi-vis vests march out of every alley, fuses
+    lit on their backs, saluting. Heroic low-angle view as their vests blaze like living neon, traffic cones perched on
+    their heads, rooftop crowds waving orange flags and the skyline lit orange. Neon orange and electric lime finale glow.
+    Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines,
+    saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed
+    scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s2-riot-last-stand-matchbook-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Last-Stand Matchbook L2: Strike Anywhere'
+  asset: slime-city/evolutions/s2-riot-last-stand-matchbook@2
+  size: 832x1216
+  seed: 1116057
+  prompt_prose: >-
+    A grinning adult woman demolition rebel with an oversized scarlet matchbook strapped across her chest like a bandolier,
+    giant fuse-matches sputtering pink sparks, now wears twin matchbook bandoliers twice as big. Wide action view of a packed
+    stadium brawl as she lands punch after punch, every hit flicking a match alight in a burst of sparks onto the rivals
+    beside her target, the rookie in a borrowed hockey helmet scrambling behind her. Fans in the stands roar. Hot pink and
+    scarlet. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive
+    outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous
+    full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s2-riot-last-stand-matchbook-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Last-Stand Matchbook L3: Last Stand'
+  asset: slime-city/evolutions/s2-riot-last-stand-matchbook@3
+  size: 832x1216
+  seed: 1116058
+  prompt_prose: >-
+    A grinning adult woman demolition rebel with an oversized scarlet matchbook bandolier stands atop a scaffold as the
+    entire matchbook ignites at once into a towering flare a hundred stories high, her silhouette crowned with a blazing
+    sunburst. Epic wide view as a ring of fire sweeps outward over every rival on the street, the skyline glowing like a
+    field of birthday candles, the rookie hugging a lamppost and rooftop crowds lit gold. White-hot magnesium and sunrise
+    orange finale glow. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick
+    expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with
+    one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-riot-charred-sneakers-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Charred Sneakers L2: Hot Feet'
+  asset: slime-city/evolutions/s3-riot-charred-sneakers@2
+  size: 832x1216
+  seed: 1116059
+  prompt_prose: >-
+    A pair of scorched black high-top sneakers with smoking soles and fire-scarred laces, worn by a grinning adult rebel
+    woman, now sport flaming heel jets and glowing orange soles twice as thick. Low dynamic diagonal view as she sprints
+    into a packed street fight before anyone can react, burning footprints trailing behind her across the pavement, rivals
+    still mid-yawn. Crowds on the sidewalks spin around to look. Ember orange and asphalt grey. Hand-painted vivid inked
+    western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon
+    colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character
+    is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-riot-charred-sneakers-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Charred Sneakers L3: Extra Lap'
+  asset: slime-city/evolutions/s3-riot-charred-sneakers@3
+  size: 832x1216
+  seed: 1116060
+  prompt_prose: >-
+    A pair of scorched black high-top sneakers worn by a grinning adult rebel woman has become comet sneakers of living
+    fire with flaming wings sprouting from the heels. Epic wide overhead view as she races a full blazing lap around the
+    whole district in a single loop of fire circling the skyline like a racetrack, glowing footprints stamped across rooftops,
+    then crashes into the rival across in a cartoon starburst. Crowds on every roof wave checkered flags. Plasma blue and
+    molten orange finale glow. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy,
+    thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing
+    with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-riot-posthumous-saint-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Posthumous Saint Medal L2: Martyr''s Ribbon'
+  asset: slime-city/evolutions/s3-riot-posthumous-saint@2
+  size: 832x1216
+  seed: 1116061
+  prompt_prose: >-
+    A heavy gold saint medallion with a tiny lit fuse sprouting from its rim, worn by a proud adult rebel woman, now as
+    big as a dinner plate, its ribbon burning down like a fuse and spitting sparks onto the rivals beside her and the comrades
+    hugging her too close. Over-the-shoulder view of a grand stadium awards ceremony, a solemn chaplain stepping back, confetti
+    cannons primed, the whole crowd in the stands on its feet. Hot pink and gold. Hand-painted vivid inked western adult
+    cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold
+    clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly
+    adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-riot-posthumous-saint-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Posthumous Saint Medal L3: Canonized'
+  asset: slime-city/evolutions/s3-riot-posthumous-saint@3
+  size: 832x1216
+  seed: 1116062
+  prompt_prose: >-
+    A heavy gold saint medallion that once hung on a proud adult rebel woman now floats as a giant glowing relic above a
+    towering shrine of a thousand candles, while a radiant golden statue of her rises taller than the rooftops. Heroic low-angle
+    view as the riot crew stands tall beneath her, each with a radiant halo, an army of haloed rebels filling the avenue
+    and stained-glass light pouring across the district. Cathedral gold and rose-glass finale glow. Hand-painted vivid inked
+    western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon
+    colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character
+    is a clearly adult grown-up. Every surface is bare and unmarked.

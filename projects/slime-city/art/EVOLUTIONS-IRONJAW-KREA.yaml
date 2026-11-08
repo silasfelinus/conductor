@@ -1,0 +1,859 @@
+# Slime City evolution art, Ironjaw, Krea 2 escalation redo (2026-11-08 PT).
+# Replaces the Flux Kontext dev round EVOLUTIONS-IRONJAW.yaml. Silas, 2026-11-08: "Flux dev is a slow generator,
+# and we're getting a lot of the same looking images three times over. We shouldn't use it for the main gen,
+# but we also need a much larger and fun escalation between evolution 1 and evolution 3."
+# Kontext edited each card's level-1 painting and kept its composition, so L1/L2/L3 read as one picture.
+# This round is Krea 2 text-to-image (the house Slime City engine, 8 steps), one render per stage instead of
+# two seeds, and each prompt is written per card on the ladder in CLASH-EVOLUTION-PLAN.md section 4:
+# L2 = powered up (new signature gear, bigger venue, new camera); L3/L3b = legendary, over the top (scale,
+# swarms, material change, mythic form, a city-sized signature, the district reacting, a finale palette).
+# Identity carries over through a per-card look anchor that opens both prompts. Same runtime assets
+# ('<cardId>@2' | '@3' | '@3b'), so a keeper is wired as SLIME_CITY_ART.evolutions[...]. auto_submit: true.
+round: slime-city-evolutions-ironjaw-krea
+project_slug: slime-city
+designer: Slime City evolution art, Ironjaw (Krea 2)
+is_public: true
+is_mature: false
+cast_loras: false
+priority: 640
+auto_submit: true
+lanes:
+- key: krea-evolution
+  label: Krea 2, escalated evolution stages written per card
+  engine: krea2
+  prompt: prose
+subjects:
+- key: slime-krea-evo-union-millwright-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Union Millwright L2: Keeps the Line Running'
+  asset: slime-city/evolutions/union-millwright@2
+  size: 832x1216
+  seed: 1113001
+  prompt_prose: >-
+    A broad adult slate-grey ogre millwright with small rounded ears, a scratched chrome jaw, amber welding goggles and
+    a red union sash over oil-stained overalls, now wears a glowing hydraulic tool harness with six mechanical arms spinning
+    wrenches. Inside a vast roaring assembly hall, he kneels mid-brawl between conveyor belts, bolting a dented adult comrade's
+    shoulder armor back on while rival brawlers charge through the sparks. His giant wrench is twice his height. Dynamic
+    diagonal over-the-shoulder view, orange sparks and teal steam, coworkers cheering from the catwalks. Hand-painted vivid
+    inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty
+    neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every
+    character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-union-millwright-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Union Millwright L3: Gates Thrown Open'
+  asset: slime-city/evolutions/union-millwright@3
+  size: 832x1216
+  seed: 1113002
+  prompt_prose: >-
+    A broad adult slate-grey ogre millwright with small rounded ears, a scratched chrome jaw, amber welding goggles and
+    a red union sash over oil-stained overalls, towers as tall as the smokestacks and rips two factory gates the size of
+    skyscrapers wide open. A parade of a thousand ogre workers floods through into a glowing golden street, brass bolts
+    raining like confetti, crowds cheering from every rooftop and the moon peeking through the gap. Heroic low camera looking
+    up at him, sunrise gold and rose light pouring through the gates. Hand-painted vivid inked western adult cartoon for
+    a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette,
+    high contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up.
+    Every surface is bare and unmarked.
+- key: slime-krea-evo-s1-walking-foundry-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Walking Foundry L2: Pours Fresh Plate'
+  asset: slime-city/evolutions/s1-walking-foundry@2
+  size: 832x1216
+  seed: 1113003
+  prompt_prose: >-
+    A vast adult rust-red walking forge-ogre with small rounded ears, a chrome jaw, furnace-grate ribs glowing in his chest,
+    steel shoulder gantries and a soot-streaked face, now carries a huge swiveling pour-spout crown on his head. Striding
+    through a packed rail-yard brawl, he tips the spout and pours ribbons of molten orange metal onto two armored adult
+    ogre allies, the metal cooling into gleaming chest plates as rival thugs scramble back. Wide action shot on a low diagonal,
+    sparks arcing, welders cheering from stacked shipping containers. Hand-painted vivid inked western adult cartoon for
+    a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette,
+    high contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up.
+    Every surface is bare and unmarked.
+- key: slime-krea-evo-s1-walking-foundry-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Walking Foundry L3: Casting Day'
+  asset: slime-city/evolutions/s1-walking-foundry@3
+  size: 832x1216
+  seed: 1113004
+  prompt_prose: >-
+    A vast adult rust-red walking forge-ogre with small rounded ears, a chrome jaw, furnace-grate ribs glowing in his chest,
+    steel shoulder gantries and a soot-streaked face, now stands as tall as an apartment tower, crowned with a ring of white-hot
+    smokestacks, pouring rivers of glowing metal into a hundred casting molds lined across the district. From every mold
+    a fresh chrome-jawed iron worker climbs out steaming and raising a hammer, a whole army marching off in rows. Epic wide
+    aerial view, the night sky lit electric blue and white gold, neighbors waving from balconies. Hand-painted vivid inked
+    western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon
+    colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character
+    is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s1-scrap-welder-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Scrap Welder L2: Mid-Charge Barricade'
+  asset: slime-city/evolutions/s1-scrap-welder@2
+  size: 832x1216
+  seed: 1113005
+  prompt_prose: >-
+    A short, broad-shouldered adult copper-skinned ogre welder woman with small rounded ears, a chrome jaw, asymmetrical
+    scrap-metal limbs and cracked old welding goggles, now wields a giant curved riot shield she welds onto her forearm
+    as she runs, seams still glowing hot. She charges down a wide freight boulevard at a line of security mechs, her torch
+    spraying a comet tail of sparks, the shield twice her size. Dynamic tracking diagonal, rivals bracing, dockworkers whooping
+    from the cranes, steel-blue dusk with orange sparks. Hand-painted vivid inked western adult cartoon for a grungy colorful
+    street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast,
+    tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface
+    is bare and unmarked.
+- key: slime-krea-evo-s1-scrap-welder-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Scrap Welder L3: Narrow Corridor'
+  asset: slime-city/evolutions/s1-scrap-welder@3
+  size: 832x1216
+  seed: 1113006
+  prompt_prose: >-
+    A short, broad-shouldered adult copper-skinned ogre welder woman with small rounded ears, a chrome jaw, asymmetrical
+    scrap-metal limbs and cracked old welding goggles, is now a legendary steel knight, her armor glowing with seams of
+    molten gold like stained glass, a cape of sparks streaming behind her. She stands alone at the mouth of a narrow canyon
+    of welded walls stacked higher than the rooftops, her torch blazing into a giant sword of blue fire, a heap of toppled
+    security mechs piled against her shield. Low heroic camera, violet night and white-gold glow. Hand-painted vivid inked
+    western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon
+    colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character
+    is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s2-ironjaw-union-bridgebearer-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Union Bridgebearer L2: Load-Bearing'
+  asset: slime-city/evolutions/s2-ironjaw-union-bridgebearer@2
+  size: 832x1216
+  seed: 1113007
+  prompt_prose: >-
+    An enormous adult blue-grey ogre with small rounded ears, a chrome jaw, riveted steel girders bolted along his broad
+    back and a sandwich clamped in his teeth, now wears a glowing hard hat with twin searchlight beams and giant hydraulic
+    knee braces. He spans a rushing industrial canal belly-down while two smaller armored adult ogres sprint across his
+    back pumping their fists, and rival brawlers on the far bank stagger back. Dynamic diagonal view along his spine, foam
+    spraying, workers cheering from a loading dock, cool teal water against orange light. Hand-painted vivid inked western
+    adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors,
+    bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character is
+    a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s2-ironjaw-union-bridgebearer-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Union Bridgebearer L3: The Bridge Holds'
+  asset: slime-city/evolutions/s2-ironjaw-union-bridgebearer@3
+  size: 832x1216
+  seed: 1113008
+  prompt_prose: >-
+    An enormous adult blue-grey ogre with small rounded ears, a chrome jaw, riveted steel girders bolted along his broad
+    back and a sandwich clamped in his teeth, now stretches as long as a highway across a vast river between two skyscraper
+    districts, hands gripping one skyline and boots planted on the other. A whole parade of trucks, marching bands and workers
+    crosses his back beneath a shimmering dome of rainbow light, ships glide under his belly and the moon rests on his shoulder.
+    Epic wide aerial shot, aurora purple and gold. Hand-painted vivid inked western adult cartoon for a grungy colorful
+    street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast,
+    tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface
+    is bare and unmarked.
+- key: slime-krea-evo-s2-ironjaw-foundry-lion-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Foundry Lion L2: Crane Arm Swipe'
+  asset: slime-city/evolutions/s2-ironjaw-foundry-lion@2
+  size: 832x1216
+  seed: 1113009
+  prompt_prose: >-
+    A colossal mechanical lion built from a yellow construction crane, its mane a fan of hooked steel cables and pulley
+    wheels, roaring through a chrome jaw, a small adult grey ogre bookkeeper riding its back, now sprouts two huge jointed
+    crane arms from its shoulders, ending in giant hook claws. In the middle of a sprawling container-port brawl, it swings
+    both arms in a wide arc, sending rival brutes and shipping crates flying on both flanks while the bookkeeper hangs on
+    screaming. Wide action shot on a dynamic diagonal, dockworkers ducking, sodium-yellow floodlights and sea spray. Hand-painted
+    vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated
+    gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene.
+    Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s2-ironjaw-foundry-lion-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Foundry Lion L3: Leap of the Last Crane'
+  asset: slime-city/evolutions/s2-ironjaw-foundry-lion@3
+  size: 832x1216
+  seed: 1113010
+  prompt_prose: >-
+    A colossal mechanical lion built from a yellow construction crane, its mane a fan of hooked steel cables and pulley
+    wheels, roaring through a chrome jaw, a small adult grey ogre bookkeeper riding its back, now glows like living molten
+    gold and leaps in a colossal arc across the full moon over the city skyline, crane-arm claws outstretched. Its silhouette
+    fills the sky as it dives toward a distant steel tower, the bookkeeper clinging on with a grin, while crowds on every
+    rooftop point upward. Heroic upward view from the street, deep indigo night against blazing gold. Hand-painted vivid
+    inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty
+    neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every
+    character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s2-ironjaw-foundry-lion-l3b
+  entity: card-art
+  lane: krea-evolution
+  title: 'Foundry Lion L3b: Crane Jaws'
+  asset: slime-city/evolutions/s2-ironjaw-foundry-lion@3b
+  size: 832x1216
+  seed: 1113011
+  prompt_prose: >-
+    A colossal mechanical lion built from a yellow construction crane, its mane a fan of hooked steel cables and pulley
+    wheels, roaring through a chrome jaw, a small adult grey ogre bookkeeper riding its back, now looms taller than the
+    harbor cranes, its cable mane crackling with electric blue light. It clamps giant crane-hook jaws around an armored
+    adult rival brawler and hoists them high into the clouds like a cargo crate, the rival dangling with cartoon dizzy stars,
+    while the whole district cheers from the rooftops. Epic wide view, stormy violet sky and electric cyan sparks. Hand-painted
+    vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated
+    gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene.
+    Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-ironjaw-night-welder-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Night Shift Welder L2: Finds the Seams'
+  asset: slime-city/evolutions/s3-ironjaw-night-welder@2
+  size: 832x1216
+  seed: 1113012
+  prompt_prose: >-
+    A wiry adult rust-orange ogre woman welder with small rounded ears, a chrome jaw, a burned leather apron, cobalt-lensed
+    goggles and a battered blue-flame torch, now wears a glowing cobalt arc-visor helmet and swings a torch flame twice
+    as long as her arm, narrowed to a needle. On a moonlit factory rooftop amid a midnight brawl, she slices a thin blue-white
+    line straight through a rival's thick steel shield wall as the rivals gape. Dramatic over-the-shoulder view in the rain,
+    violet shadows and copper edges. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting
+    fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait
+    framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and
+    unmarked.
+- key: slime-krea-evo-s3-ironjaw-night-welder-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Night Shift Welder L3: Dawn Shift Handoff'
+  asset: slime-city/evolutions/s3-ironjaw-night-welder@3
+  size: 832x1216
+  seed: 1113013
+  prompt_prose: >-
+    A wiry adult rust-orange ogre woman welder with small rounded ears, a chrome jaw, a burned leather apron, cobalt-lensed
+    goggles and a battered blue-flame torch, now wears a halo of blue flame and stands atop the tallest smokestack at sunrise,
+    handing a lit torch down the line. A relay of a thousand ogre workers passes torches hand to hand across every rooftop
+    of the district, a glowing blue river spiraling through the skyline as dawn breaks. Sweeping wide view of the city,
+    pink dawn, peach and electric cobalt. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting
+    fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait
+    framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and
+    unmarked.
+- key: slime-krea-evo-s3-ironjaw-dreadnought-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Scrapyard Dreadnought L2: Scrap Magnet'
+  asset: slime-city/evolutions/s3-ironjaw-dreadnought@2
+  size: 832x1216
+  seed: 1113014
+  prompt_prose: >-
+    An enormous adult rust-skinned ogre with small rounded ears and a chrome jaw, fused into a rusted bulldozer body with
+    grinding tank treads for legs and a dented dozer blade on his chest, now carries a giant glowing horseshoe magnet core
+    humming in his chest. Rolling through a vast junkyard brawl, he pulls hubcaps, pipes, fridges and whole cars flying
+    through the air to clang onto his hull, doubling his bulk, while rival brawlers grab the fences to stay grounded. Wide
+    action shot on a dynamic diagonal, magnetic blue glow against bronze dust. Hand-painted vivid inked western adult cartoon
+    for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette,
+    high contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up.
+    Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-ironjaw-dreadnought-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Scrapyard Dreadnought L3: Scrapyard Avalanche'
+  asset: slime-city/evolutions/s3-ironjaw-dreadnought@3
+  size: 832x1216
+  seed: 1113015
+  prompt_prose: >-
+    An enormous adult rust-skinned ogre with small rounded ears and a chrome jaw, fused into a rusted bulldozer body with
+    grinding tank treads for legs and a dented dozer blade on his chest, swells into a mountain of scrap taller than the
+    scrapyard towers, rears up and sheds the whole pile as a tidal wave of tumbling cars, bathtubs and girders crashing
+    down an entire avenue. Rival fighters surf away on car doors, the skyline shakes, and crowds on rooftops duck in comic
+    shock. Epic wide view under a stormy teal and hot magenta sky, rust clouds glittering. Hand-painted vivid inked western
+    adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors,
+    bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character is
+    a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-ironjaw-bridgebreaker-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Bridgebreaker Ogre L2: Route Punched Through'
+  asset: slime-city/evolutions/s3-ironjaw-bridgebreaker@2
+  size: 832x1216
+  seed: 1113016
+  prompt_prose: >-
+    An adult steel-grey ogre crew captain with small rounded ears, a chrome jaw, a riveted hard hat and union work gloves,
+    gripping a whole steel I-beam, now swings a doubled, glowing twin-beam battering ram with two crewmates riding the back
+    end. He punches clean through a towering concrete wall, the hole blasting open onto a straight road toward a distant
+    boss tower, rival guards tumbling with the debris. Wide action shot from behind the crew, dust clouds, orange furnace
+    sky, workers cheering from scaffolds. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting
+    fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait
+    framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and
+    unmarked.
+- key: slime-krea-evo-s3-ironjaw-bridgebreaker-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Bridgebreaker Ogre L3: Bridge of Its Own Back'
+  asset: slime-city/evolutions/s3-ironjaw-bridgebreaker@3
+  size: 832x1216
+  seed: 1113017
+  prompt_prose: >-
+    An adult steel-grey ogre crew captain with small rounded ears, a chrome jaw, a riveted hard hat and union work gloves,
+    gripping a whole steel I-beam, has become a living bridge of shining polished gold, stretched across a canyon so deep
+    that clouds drift beneath. A marching army of hundreds of armored ogre workers strides over his back, their armor turning
+    gleaming gold as they cross, a halo of light around his tired, proud grin. Epic wide view at sunset, lavender and gold,
+    plain red cloth flags fluttering. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting
+    fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait
+    framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and
+    unmarked.
+- key: slime-krea-evo-s3-ironjaw-coal-racer-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Coal Cart Racer L2: Full Steam'
+  asset: slime-city/evolutions/s3-ironjaw-coal-racer@2
+  size: 832x1216
+  seed: 1113018
+  prompt_prose: >-
+    A lanky adult blue-skinned ogre with small rounded ears, a clenched chrome jaw and a manic grin, crouched in a soot-black
+    coal cart, now has twin roaring rocket boosters bolted onto the cart. Blasting out of a sprawling rail yard on stolen
+    wheels, he races past rival guards diving aside, trailing a plume of black smoke and orange embers twice as tall as
+    the warehouses. Dynamic low tracking diagonal, coal chunks spraying, rail workers waving their hats in bronze haze.
+    Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines,
+    saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed
+    scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-ironjaw-coal-racer-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Coal Cart Racer L3: Runaway Freight'
+  asset: slime-city/evolutions/s3-ironjaw-coal-racer@3
+  size: 832x1216
+  seed: 1113019
+  prompt_prose: >-
+    A lanky adult blue-skinned ogre with small rounded ears, a clenched chrome jaw and a manic grin, crouched in a soot-black
+    coal cart, now rides a runaway freight train made of living neon, roaring around a gigantic loop-the-loop track that
+    spirals through the skyscrapers, smashes through the boss's office tower and curves back to the yard. Hundreds of commuters
+    cheer from windows as the glowing train corkscrews over the rooftops. Epic wide night view, hot pink and electric cyan,
+    sparks bursting like fireworks. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting
+    fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait
+    framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and
+    unmarked.
+- key: slime-krea-evo-s3-ironjaw-matriarch-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Iron Matriarch L2: Shop Steward'
+  asset: slime-city/evolutions/s3-ironjaw-matriarch@2
+  size: 832x1216
+  seed: 1113020
+  prompt_prose: >-
+    An elderly adult slate-blue ogre union matriarch with small rounded ears, a chrome jaw, silver braids, old protective
+    goggles and heavy riveted steel armor, now wears a towering steward's mantle of welded chrome plates studded with glowing
+    teal rivets. On a vast factory floor during a standoff with rival guards, she stands between two armored adult workers,
+    a hand on each shoulder, both swelling taller with clenched fists as the crew rallies behind. Over-the-shoulder view
+    from behind her, deep teal and red-orange light, sparks raining. Hand-painted vivid inked western adult cartoon for
+    a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette,
+    high contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up.
+    Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-ironjaw-matriarch-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Iron Matriarch L3: General Strike'
+  asset: slime-city/evolutions/s3-ironjaw-matriarch@3
+  size: 832x1216
+  seed: 1113021
+  prompt_prose: >-
+    An elderly adult slate-blue ogre union matriarch with small rounded ears, a chrome jaw, silver braids, old protective
+    goggles and heavy riveted steel armor, now sits enthroned on a giant steel throne carried by a sea of thousands of ogre
+    workers walking off the job together. She raises a building-sized steel fist toward the sky as the whole district pours
+    out of the factories, plain red cloth flags snapping and crowds packing every rooftop. Triumphant low upward camera,
+    crimson and gold sunset. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy,
+    thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing
+    with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-ironjaw-matriarch-l3b
+  entity: card-art
+  lane: krea-evolution
+  title: 'Iron Matriarch L3b: Iron Bulwark'
+  asset: slime-city/evolutions/s3-ironjaw-matriarch@3b
+  size: 832x1216
+  seed: 1113022
+  prompt_prose: >-
+    An elderly adult slate-blue ogre union matriarch with small rounded ears, a chrome jaw, silver braids, old protective
+    goggles and heavy riveted steel armor, has grown into a towering iron fortress taller than the foundry, her armor stacked
+    into ramparts, rivets and battlements, a lone stronghold filling the alley. A thunderstorm crashes against her shoulders
+    and rival brutes bounce off her shins like hail, while tiny warm lights glow in windows across her armor. Looking up
+    from her boots, storm-blue sky lit by silver lightning. Hand-painted vivid inked western adult cartoon for a grungy
+    colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high
+    contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every
+    surface is bare and unmarked.
+- key: slime-krea-evo-s1-hydraulic-shift-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Emergency Overtime L2: Time and a Half'
+  asset: slime-city/evolutions/s1-hydraulic-shift@2
+  size: 832x1216
+  seed: 1113023
+  prompt_prose: >-
+    A burly adult copper-skinned ogre night-shift worker with small rounded ears, a chrome jaw, a hard hat and grease-streaked
+    coveralls, gripping a comically oversized hydraulic wrench, now has a glowing band of hydraulic tubing wrapped around
+    one bicep, venting steam. Mid-brawl on a vast foundry floor, he swings a wrench twice his size, sending rival brutes
+    spinning, while the giant time clock behind him whirls its hands in a blur. Dynamic diagonal view, coworkers cheering
+    on catwalks, orange sparks against teal steam. Hand-painted vivid inked western adult cartoon for a grungy colorful
+    street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast,
+    tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface
+    is bare and unmarked.
+- key: slime-krea-evo-s1-hydraulic-shift-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Emergency Overtime L3: Everybody Clocks In'
+  asset: slime-city/evolutions/s1-hydraulic-shift@3
+  size: 832x1216
+  seed: 1113024
+  prompt_prose: >-
+    A burly adult copper-skinned ogre night-shift worker with small rounded ears, a chrome jaw, a hard hat and grease-streaked
+    coveralls, gripping a comically oversized hydraulic wrench, leads a stampede of hundreds of identical ogre workers slamming
+    through every factory door in the district at once, every arm glowing with surging orange hydraulics. A time clock the
+    size of the moon hangs in the sky striking midnight, and the whole skyline shakes with their footsteps. Epic wide view,
+    electric violet and blazing tangerine. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting
+    fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait
+    framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and
+    unmarked.
+- key: slime-krea-evo-s1-forge-spark-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Forge Lightning L2: Arcs Along the Chrome'
+  asset: slime-city/evolutions/s1-forge-spark@2
+  size: 832x1216
+  seed: 1113025
+  prompt_prose: >-
+    A lean adult slate-grey ogre lineman with small rounded ears, a chrome jaw, rubber union gauntlets and an enormous crackling
+    welding rod, now wears a glowing copper coil backpack humming with power. In a crowded steel-mill brawl, the bolt from
+    his rod forks sideways, arcing along the chrome armor of three rival fighters standing in a row, each jolting with frizzed
+    hair. Dynamic diagonal wide shot, blue-white lightning twice as bright, coworkers ducking behind girders in glowing
+    smoke. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive
+    outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous
+    full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s1-forge-spark-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Forge Lightning L3: Grounded Through the Boss'
+  asset: slime-city/evolutions/s1-forge-spark@3
+  size: 832x1216
+  seed: 1113026
+  prompt_prose: >-
+    A lean adult slate-grey ogre lineman with small rounded ears, a chrome jaw, rubber union gauntlets and an enormous crackling
+    welding rod, floats in midair with eyes blazing white, summoning a city-sized thunderstorm. A colossal lightning bolt
+    cracks down from swirling clouds, punches through the rival line and grounds straight into a looming boss tower that
+    glows with zigzag cracks. Every streetlamp in the district bursts into sparks while crowds on rooftops shield their
+    eyes. Low heroic upward view, electric purple storm and ice-white light. Hand-painted vivid inked western adult cartoon
+    for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette,
+    high contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up.
+    Every surface is bare and unmarked.
+- key: slime-krea-evo-s2-ironjaw-shift-change-shove-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Shift-Change Shove L2: Linked Arms'
+  asset: slime-city/evolutions/s2-ironjaw-shift-change-shove@2
+  size: 832x1216
+  seed: 1113027
+  prompt_prose: >-
+    A burly adult rust-skinned ogre shift steward woman with small rounded ears, a chrome jaw, a dented hard hat and a hazard-orange
+    work vest, now wears glowing linked arm guards chained to the workers beside her. During a midnight downpour on a wide
+    factory avenue, a whole line of armored ogre protesters links arms behind her in a tight wedge, a shimmering dome of
+    light spreading over their shoulders as rival sentries' batons bounce off. Wide action shot on a low diagonal, hot magenta
+    sparks and rain. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick
+    expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with
+    one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s2-ironjaw-shift-change-shove-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Shift-Change Shove L3: A Very Violent Wedge'
+  asset: slime-city/evolutions/s2-ironjaw-shift-change-shove@3
+  size: 832x1216
+  seed: 1113028
+  prompt_prose: >-
+    A burly adult rust-skinned ogre shift steward woman with small rounded ears, a chrome jaw, a dented hard hat and a hazard-orange
+    work vest, now stands at the tip of a wedge of hundreds of marching ogre workers as wide as the whole avenue, plowing
+    forward like a giant ship's prow. A rival brute goes flying over the rooftops with cartoon stars circling, food-stall
+    awnings flapping, the district cheering from fire escapes. Epic wide view, electric magenta and sunrise gold. Hand-painted
+    vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated
+    gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene.
+    Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-ironjaw-reallocation-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Union Reallocation L2: Show of Hands'
+  asset: slime-city/evolutions/s3-ironjaw-reallocation@2
+  size: 832x1216
+  seed: 1113029
+  prompt_prose: >-
+    A burly adult blue-grey ogre worker with small rounded ears, a chrome jaw and a lowered hard hat, boots dug in to charge,
+    now glows with fresh strength, a bright bronze aura around him and a new oversized steel shoulder plow. On a huge factory
+    floor packed with workers, hundreds of steel hands rise in a vote around him as rival guards back away nervously. Over-the-shoulder
+    view from behind the raised hands, warm bronze light, girders overhead. Hand-painted vivid inked western adult cartoon
+    for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette,
+    high contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up.
+    Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-ironjaw-reallocation-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Union Reallocation L3: Every Hand Raised'
+  asset: slime-city/evolutions/s3-ironjaw-reallocation@3
+  size: 832x1216
+  seed: 1113030
+  prompt_prose: >-
+    A burly adult blue-grey ogre worker with small rounded ears, a chrome jaw and a lowered hard hat, boots dug in to charge,
+    charges at the front as every worker in the district raises a fist at once, ten thousand arms fusing into a colossal
+    glowing bulldozer blade made of hands. The blade plows down the boulevard through stacks of rival crates and a toppling
+    guard tower, crowds roaring from the rooftops. Epic wide view, neon turquoise and molten gold. Hand-painted vivid inked
+    western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon
+    colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character
+    is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-ironjaw-hammer-register-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Sledgehammer Inventory L2: Signed Out'
+  asset: slime-city/evolutions/s3-ironjaw-hammer-register@2
+  size: 832x1216
+  seed: 1113031
+  prompt_prose: >-
+    A fussy adult grey-skinned ogre quartermaster with small rounded ears, a chrome jaw, tiny reading glasses and a pencil
+    tucked behind one ear, now wears a glowing quartermaster's tool belt bristling with keys. In a busy foundry armory,
+    he signs out a sledgehammer twice as big as the young adult ogre receiving it, whose rusty ankle chains snap apart as
+    he grips the handle while rival overseers flinch. Dynamic diagonal view through the wire-mesh tool crib window, bronze
+    light and sparks. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick
+    expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with
+    one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-ironjaw-hammer-register-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Sledgehammer Inventory L3: Every Hammer Accounted For'
+  asset: slime-city/evolutions/s3-ironjaw-hammer-register@3
+  size: 832x1216
+  seed: 1113032
+  prompt_prose: >-
+    A fussy adult grey-skinned ogre quartermaster with small rounded ears, a chrome jaw, tiny reading glasses and a pencil
+    tucked behind one ear, now sits on a towering throne of stacked sledgehammers, waving his pencil as a hundred hammers
+    fly off the racks like a flock of birds, each landing in the hands of a cheering armored ogre. A whole army of hammer-bearers
+    fills the street to the horizon. Grand low upward camera, royal purple and polished silver. Hand-painted vivid inked
+    western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon
+    colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character
+    is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-ironjaw-furnace-overdrive-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Furnace Overdrive L2: Stoked Furnace'
+  asset: slime-city/evolutions/s3-ironjaw-furnace-overdrive@2
+  size: 832x1216
+  seed: 1113033
+  prompt_prose: >-
+    A heavy adult copper-skinned ogre brawler with small rounded ears, a chrome jaw and twin exhaust stacks on his back
+    fed by a roaring furnace pack, now hauls a bigger furnace pack topped with a roaring bellows crown. In the middle of
+    a packed foundry-yard showdown, the furnace blasts a curtain of shimmering heat in front of him like a giant shield,
+    bending rival crowbars into droops while coworkers pump giant bellows. Wide action shot on a diagonal, orange flame
+    doubled in size. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick
+    expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with
+    one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-ironjaw-furnace-overdrive-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Furnace Overdrive L3: Meltdown Charge'
+  asset: slime-city/evolutions/s3-ironjaw-furnace-overdrive@3
+  size: 832x1216
+  seed: 1113034
+  prompt_prose: >-
+    A heavy adult copper-skinned ogre brawler with small rounded ears, a chrome jaw and twin exhaust stacks on his back
+    fed by a roaring furnace pack, now glows white-hot like a living comet and streaks down a whole avenue, his exhaust
+    stacks spewing a tail of fire across the sky. Comic scorch smudges cover his armor as he plows through a mountain of
+    rival crates that burst into confetti sparks, crowds on rooftops shading their eyes. Low heroic view, blinding white,
+    electric blue and violet. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy,
+    thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing
+    with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s1-bolt-clamp-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Union Bolt Clamp L2: Braced Line'
+  asset: slime-city/evolutions/s1-bolt-clamp@2
+  size: 832x1216
+  seed: 1113035
+  prompt_prose: >-
+    A sly adult slate-grey ogre trapper woman with small rounded ears, a chrome jaw and grease-stained union coveralls,
+    working a giant jointed iron clamp, now works the clamp with a glowing lever gauntlet. As the clamp, twice as big, snaps
+    shut on a rival boot in a crowded factory courtyard, two armored ogres beside her brace behind shimmering shields of
+    light while the rival flails. Dynamic diagonal action view, sparks flying, orange and teal glow. Hand-painted vivid
+    inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty
+    neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every
+    character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s1-bolt-clamp-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Union Bolt Clamp L3: Union Lockout'
+  asset: slime-city/evolutions/s1-bolt-clamp@3
+  size: 832x1216
+  seed: 1113036
+  prompt_prose: >-
+    A sly adult slate-grey ogre trapper woman with small rounded ears, a chrome jaw and grease-stained union coveralls,
+    working a giant jointed iron clamp, now stands atop a clamp the size of a city block, pulling a lever that sends hundreds
+    of glowing chains whipping across the district to snap around the ankles of every rival in sight. A whole rival gang
+    freezes mid-stride in comic poses, pigeons frozen mid-flap, the moon tangled in a chain. Epic wide aerial view, icy
+    blue and silver. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick
+    expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with
+    one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s2-ironjaw-hydraulic-lockjaw-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Hydraulic Lockjaw L2: Another Shift Bought'
+  asset: slime-city/evolutions/s2-ironjaw-hydraulic-lockjaw@2
+  size: 832x1216
+  seed: 1113037
+  prompt_prose: >-
+    A giant hydraulic steel jaw with chrome teeth and hissing pistons, run by an adult blue-grey ogre engineer with small
+    rounded ears, a chrome jaw and a hard hat, now sports a glowing red crown of extra pistons. The jaw, twice as big, clamps
+    a hockey-padded adult demolition rebel fast in a bustling machine hall, while behind it the engineer calmly pulls a
+    rolled blueprint from a toolbox as coworkers cheer. Over-the-shoulder view, white steam and orange furnace glare. Hand-painted
+    vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated
+    gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene.
+    Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s2-ironjaw-hydraulic-lockjaw-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Hydraulic Lockjaw L3: The Jaw Remembers'
+  asset: slime-city/evolutions/s2-ironjaw-hydraulic-lockjaw@3
+  size: 832x1216
+  seed: 1113038
+  prompt_prose: >-
+    A giant hydraulic steel jaw with chrome teeth and hissing pistons, run by an adult blue-grey ogre engineer with small
+    rounded ears, a chrome jaw and a hard hat, now rears up through the street like a chrome sea serpent the size of a skyscraper,
+    glowing with ghostly red hydraulics and a halo of dented memorial helmets. It bites down on a rival armored tank in
+    cartoon puffs of smoke while hundreds of workers raise their hard hats in salute from the rooftops. Heroic low-angle
+    moonlit view, crimson and silver. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting
+    fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait
+    framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and
+    unmarked.
+- key: slime-krea-evo-s3-ironjaw-forklift-chock-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Forklift Chock L2: Pallet Cover'
+  asset: slime-city/evolutions/s3-ironjaw-forklift-chock@2
+  size: 832x1216
+  seed: 1113039
+  prompt_prose: >-
+    A cheerful adult rust-skinned ogre forklift driver with small rounded ears, a chrome jaw, a safety vest and a rusty
+    wedge-shaped wheel chock, now drives a souped-up forklift with glowing hazard lights. In a huge warehouse brawl, he
+    stacks wooden pallets into a sturdy wall in front of two armored ogre crewmates, while a trench-coated adult spy stays
+    stuck with one boot jammed under a chock twice its old size. Wide action shot on a dynamic diagonal, bronze light, rivals
+    ducking. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive
+    outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous
+    full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-ironjaw-forklift-chock-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Forklift Chock L3: Back on the Forks'
+  asset: slime-city/evolutions/s3-ironjaw-forklift-chock@3
+  size: 832x1216
+  seed: 1113040
+  prompt_prose: >-
+    A cheerful adult rust-skinned ogre forklift driver with small rounded ears, a chrome jaw, a safety vest and a rusty
+    wedge-shaped wheel chock, now steers a forklift as tall as a skyscraper, setting a building-sized wheel chock down in
+    the middle of the avenue and pinning a whole rival convoy in place. A parade of fifty smaller forklifts circles below
+    with flashing lights, crowds on rooftops applauding. Low upward camera, hazard yellow, neon violet and midnight blue.
+    Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines,
+    saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed
+    scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-ironjaw-slag-spill-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Slag Spill L2: Slag Spreads'
+  asset: slime-city/evolutions/s3-ironjaw-slag-spill@2
+  size: 832x1216
+  seed: 1113041
+  prompt_prose: >-
+    A grinning adult copper-skinned ogre ladle tender with small rounded ears, a chrome jaw, a heat-proof apron and a tipped
+    steel bucket of molten slag, now hauls a giant glowing ladle twice the size of the old bucket. In a crowded cobblestone
+    market brawl, he sloshes a river of orange slag across three alleys, hissing around the boots of rival thugs hopping
+    on one foot. Dynamic diagonal view through heat shimmer, coworkers laughing from the catwalks. Hand-painted vivid inked
+    western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon
+    colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character
+    is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-ironjaw-slag-spill-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Slag Spill L3: Slag Flood'
+  asset: slime-city/evolutions/s3-ironjaw-slag-spill@3
+  size: 832x1216
+  seed: 1113042
+  prompt_prose: >-
+    A grinning adult copper-skinned ogre ladle tender with small rounded ears, a chrome jaw, a heat-proof apron and a tipped
+    steel bucket of molten slag, now rides a colossal tipped foundry ladle across the sky like a chariot, pouring a glowing
+    tidal river of slag that floods the entire district. Rival fighters bob down the molten streets on crates and rubber
+    ducks, the moon reflected in the lava, rooftops crowded with cheering ogres. Epic wide aerial view, hot magenta, gold
+    and deep violet. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick
+    expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with
+    one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-ironjaw-overtime-toll-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Overtime Paywall L2: Toll Billed Upstairs'
+  asset: slime-city/evolutions/s3-ironjaw-overtime-toll@2
+  size: 832x1216
+  seed: 1113043
+  prompt_prose: >-
+    A crafty adult slate-blue ogre toll keeper woman with small rounded ears, a chrome jaw, a yellow visor, sleeve garters
+    and a tollgate of calculators and caution tape, now wears a glowing brass coin-launcher gauntlet. On a huge factory
+    exit plaza, she yanks a lever and a pneumatic tube shoots a stream of glowing coins up into a rival boss's office tower,
+    which rattles and puffs smoke as workers cheer below. Dynamic diagonal view, lemon-yellow rims in cloudy dusk. Hand-painted
+    vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated
+    gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene.
+    Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-ironjaw-overtime-toll-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Overtime Paywall L3: Union Payday'
+  asset: slime-city/evolutions/s3-ironjaw-overtime-toll@3
+  size: 832x1216
+  seed: 1113044
+  prompt_prose: >-
+    A crafty adult slate-blue ogre toll keeper woman with small rounded ears, a chrome jaw, a yellow visor, sleeve garters
+    and a tollgate of calculators and caution tape, stands atop her tollgate as it bursts open and a geyser of glowing gold
+    coins erupts higher than the skyscrapers. Coins rain over the entire district, gilding a cheering crowd of armored ogre
+    workers whose fists blaze gold, while people catch coins in hard hats on every rooftop. Heroic upward view, molten gold
+    and turquoise. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive
+    outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous
+    full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-spare-pistons-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Spare Pistons L2: Shock Absorbers'
+  asset: slime-city/evolutions/spare-pistons@2
+  size: 832x1216
+  seed: 1113045
+  prompt_prose: >-
+    A stocky adult grey-skinned ogre mechanic woman with small rounded ears, a chrome jaw, a sweat-stained bandana and two
+    patched hydraulic forearm pistons, now has spare pistons fitted along both legs as springy shock absorbers twice as
+    big as before. In a crowded rail-yard rumble, she bounces a rival's huge sledgehammer blow off her shins with a flare
+    of light, rivals gaping and coworkers cheering. Dynamic diagonal wide shot, orange sparks and steam. Hand-painted vivid
+    inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty
+    neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every
+    character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-spare-pistons-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Spare Pistons L3: Piston Stomp'
+  asset: slime-city/evolutions/spare-pistons@3
+  size: 832x1216
+  seed: 1113046
+  prompt_prose: >-
+    A stocky adult grey-skinned ogre mechanic woman with small rounded ears, a chrome jaw, a sweat-stained bandana and two
+    patched hydraulic forearm pistons, is now strapped into a towering stomping exo-mech built from hundreds of pistons,
+    taller than the rooftops. Each step cracks the avenue and sends rippling shockwaves that bounce rival brawlers into
+    the air like popcorn, crowds cheering from fire escapes. Heroic low-angle view, chrome silver and electric teal. Hand-painted
+    vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated
+    gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene.
+    Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s1-union-plate-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Collective Bargaining Plate L2: Seat at the Table'
+  asset: slime-city/evolutions/s1-union-plate@2
+  size: 832x1216
+  seed: 1113047
+  prompt_prose: >-
+    A proud adult rust-skinned ogre shop steward with small rounded ears, a chrome jaw and a polished shield cut from a
+    dented executive office door, now carries the shield twice as big, studded with brass rivets. At a long bargaining table
+    in a grand marble boardroom, he slams the shield down as two comrades lean in with clenched fists, while nervous suited
+    executives across the table cower. Over-the-shoulder view, warm chandelier light. Hand-painted vivid inked western adult
+    cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold
+    clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly
+    adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s1-union-plate-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Collective Bargaining Plate L3: Ironclad Contract'
+  asset: slime-city/evolutions/s1-union-plate@3
+  size: 832x1216
+  seed: 1113048
+  prompt_prose: >-
+    A proud adult rust-skinned ogre shop steward with small rounded ears, a chrome jaw and a polished shield cut from a
+    dented executive office door, raises the door shield as it grows into a city-sized glowing golden wall, a halo of golden
+    rivets circling his head. A falling steel skyscraper beam shatters harmlessly into glitter across it while the whole
+    neighborhood shelters behind him, cheering. Heroic low-angle view, gold and royal blue. Hand-painted vivid inked western
+    adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors,
+    bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character is
+    a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s2-ironjaw-overtime-pistons-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Overtime Pistons L2: Mandatory Overtime'
+  asset: slime-city/evolutions/s2-ironjaw-overtime-pistons@2
+  size: 832x1216
+  seed: 1113049
+  prompt_prose: >-
+    A tough adult blue-grey ogre engineer with small rounded ears, a chrome jaw and two hulking hydraulic leg braces with
+    oily steel rods, now has leg braces upgraded with glowing turbo vents. The instant his boots touch a wide neon-lit street,
+    the pistons kick him into a lunge, steam jetting from his heels, as rival brawlers scatter. Dynamic diagonal action
+    view, turquoise haze and dirty amber light, a crowd watching from a food stall. Hand-painted vivid inked western adult
+    cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold
+    clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly
+    adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s2-ironjaw-overtime-pistons-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Overtime Pistons L3: Double Shift'
+  asset: slime-city/evolutions/s2-ironjaw-overtime-pistons@3
+  size: 832x1216
+  seed: 1113050
+  prompt_prose: >-
+    A tough adult blue-grey ogre engineer with small rounded ears, a chrome jaw and two hulking hydraulic leg braces with
+    oily steel rods, moves so fast he splits into a dozen glowing afterimages, a many-armed whirlwind of fists all punching
+    the same dazed rival. A tornado of steam rises above the rooftops while crowds cling to lampposts. Epic wide low-angle
+    view, hot pink and electric turquoise. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting
+    fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait
+    framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and
+    unmarked.
+- key: slime-krea-evo-s3-ironjaw-toe-pistons-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Steel-Toed Pistons L2: Two-Tile Patrol'
+  asset: slime-city/evolutions/s3-ironjaw-toe-pistons@2
+  size: 832x1216
+  seed: 1113051
+  prompt_prose: >-
+    A burly adult steel-grey ogre night guard with small rounded ears, a chrome jaw and huge steel-toed work boots with
+    chrome pistons in the heels, now wears a glowing searchlight helmet. In a sprawling floodlit freight yard, his piston
+    boots launch him into a long sliding stride, a sweeping kick knocking a rival sneak off his feet. Wide action shot on
+    a dynamic diagonal, grit flying, orange floodlight, coworkers whooping from the fence. Hand-painted vivid inked western
+    adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors,
+    bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character is
+    a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-ironjaw-toe-pistons-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Steel-Toed Pistons L3: Night Patrol'
+  asset: slime-city/evolutions/s3-ironjaw-toe-pistons@3
+  size: 832x1216
+  seed: 1113052
+  prompt_prose: >-
+    A burly adult steel-grey ogre night guard with small rounded ears, a chrome jaw and huge steel-toed work boots with
+    chrome pistons in the heels, bounds rooftop to rooftop in giant arcs across the whole district, silhouetted against
+    an enormous moon, his lantern grown into a sweeping beam that lights the streets. The smallest sneaking adult rival
+    freezes in the spotlight while hundreds of others scatter. Heroic low-angle view, silver moonlight and cool indigo.
+    Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines,
+    saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed
+    scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-ironjaw-foreman-crowbar-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Foreman Crowbar L2: Leverage'
+  asset: slime-city/evolutions/s3-ironjaw-foreman-crowbar@2
+  size: 832x1216
+  seed: 1113053
+  prompt_prose: >-
+    An adult rust-skinned ogre foreman with small rounded ears, a chrome jaw, a hard hat and a massive forged crowbar glowing
+    bronze at its curved tip, now wields a crowbar twice as long, wrapped in glowing hydraulic grips. In a sprawling alley
+    brawl, he pries a dazed rival out like a nail from a plank, the rival's feet lifting off the cobblestones while the
+    crew cheers. Dynamic diagonal wide shot, chains swinging, bronze light. Hand-painted vivid inked western adult cartoon
+    for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette,
+    high contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up.
+    Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-ironjaw-foreman-crowbar-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Foreman Crowbar L3: Pry the Office Door'
+  asset: slime-city/evolutions/s3-ironjaw-foreman-crowbar@3
+  size: 832x1216
+  seed: 1113054
+  prompt_prose: >-
+    An adult rust-skinned ogre foreman with small rounded ears, a chrome jaw, a hard hat and a massive forged crowbar glowing
+    bronze at its curved tip, now stands as tall as the skyline, levering a crowbar the size of a construction crane under
+    the rival boss's skyscraper and popping the office door open like a tin can. Warm golden light floods the district while
+    a toppled rival tumbles out across the rooftops. Heroic low-angle view, sunrise rose and gold. Hand-painted vivid inked
+    western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon
+    colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character
+    is a clearly adult grown-up. Every surface is bare and unmarked.

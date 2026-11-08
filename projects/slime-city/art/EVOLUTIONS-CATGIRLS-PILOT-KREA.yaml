@@ -1,0 +1,694 @@
+# Slime City evolution art, Catgirls (pilot), Krea 2 escalation redo (2026-11-08 PT).
+# Replaces the Flux Kontext dev round EVOLUTIONS-CATGIRLS-PILOT.yaml. Silas, 2026-11-08: "Flux dev is a slow generator,
+# and we're getting a lot of the same looking images three times over. We shouldn't use it for the main gen,
+# but we also need a much larger and fun escalation between evolution 1 and evolution 3."
+# Kontext edited each card's level-1 painting and kept its composition, so L1/L2/L3 read as one picture.
+# This round is Krea 2 text-to-image (the house Slime City engine, 8 steps), one render per stage instead of
+# two seeds, and each prompt is written per card on the ladder in CLASH-EVOLUTION-PLAN.md section 4:
+# L2 = powered up (new signature gear, bigger venue, new camera); L3/L3b = legendary, over the top (scale,
+# swarms, material change, mythic form, a city-sized signature, the district reacting, a finale palette).
+# Identity carries over through a per-card look anchor that opens both prompts. Same runtime assets
+# ('<cardId>@2' | '@3' | '@3b'), so a keeper is wired as SLIME_CITY_ART.evolutions[...]. auto_submit: true.
+round: slime-city-evolutions-catgirls-pilot-krea
+project_slug: slime-city
+designer: Slime City evolution art, Catgirls (pilot) (Krea 2)
+is_public: true
+is_mature: false
+cast_loras: false
+priority: 640
+auto_submit: true
+lanes:
+- key: krea-evolution
+  label: Krea 2, escalated evolution stages written per card
+  engine: krea2
+  prompt: prose
+subjects:
+- key: slime-krea-evo-splice-runner-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Splice Runner L2: Contraband Courier'
+  asset: slime-city/evolutions/splice-runner@2
+  size: 832x1216
+  seed: 1111001
+  prompt_prose: >-
+    An adult tawny-furred catgirl courier in a scarred blue leather jacket, now wearing a glowing bandolier of blue serum
+    vials and hauling a bulging contraband duffel twice her size. Over-the-shoulder shot as she vaults between rain-slick
+    tenement roofs above a packed night market, tossing medkits down to wounded allies who catch them and cheer, while two
+    scowling adult bounty hunters scramble across the gutters behind her. Rain, steam and blue neon light. Hand-painted
+    vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated
+    gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene.
+    Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-splice-runner-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Splice Runner L3: Midnight Ambulance'
+  asset: slime-city/evolutions/splice-runner@3
+  size: 832x1216
+  seed: 1111002
+  prompt_prose: >-
+    An adult tawny-furred catgirl courier in a scarred blue leather jacket, now a legend pedaling a colossal neon-blue bicycle
+    ambulance across the night sky along a road of moonbeams. Its red siren lamp glows like a second moon, and a long stretcher
+    train behind her carries a hundred grinning bandaged adult comrades waving casts. Crowds on every rooftop below cheer
+    and flash lanterns. Epic low-angle wide shot, palette of deep indigo, siren red and silver moonlight. Hand-painted vivid
+    inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty
+    neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every
+    character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-splice-runner-l3b
+  entity: card-art
+  lane: krea-evolution
+  title: 'Splice Runner L3 option B: Black Market Run'
+  asset: slime-city/evolutions/splice-runner@3b
+  size: 832x1216
+  seed: 1111003
+  prompt_prose: >-
+    An adult tawny-furred catgirl courier in a scarred blue leather jacket, crowned with a towering golden crown of bandage
+    rolls, lounging atop a black-market tower of contraband crates as tall as a skyscraper. Glowing serum vials spill from
+    every crate like treasure, and a winding queue of a hundred hooded adult buyers snakes across the rooftops toward her.
+    Searchlights sweep uselessly overhead. Heroic low angle, palette of smuggler gold, lantern amber and plum shadow. Hand-painted
+    vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated
+    gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene.
+    Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s1-roof-phantom-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Rooftop Phantom L2: Chimney Leap'
+  asset: slime-city/evolutions/s1-roof-phantom@2
+  size: 832x1216
+  seed: 1111004
+  prompt_prose: >-
+    An adult silver tabby catgirl acrobat in a torn white lab jacket, now wearing glowing silver claw gauntlets twice the
+    size of her old claws, her jacket stretched into a long streaming cape. Dynamic diagonal shot as she leaps across a
+    vast factory skyline of a hundred smoking chimney stacks, smoke curling around her, while adult guards on the roofs
+    below swing searchlights and gape. Rain, violet neon and orange chimney glow. Hand-painted vivid inked western adult
+    cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold
+    clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly
+    adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s1-roof-phantom-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Rooftop Phantom L3: Skyline Specter'
+  asset: slime-city/evolutions/s1-roof-phantom@3
+  size: 832x1216
+  seed: 1111005
+  prompt_prose: >-
+    An adult silver tabby catgirl acrobat in a torn white lab jacket, transformed into a translucent silver ghost as long
+    as the whole skyline, her glowing afterimage coiling around skyscrapers like a ribbon. A dozen armored adult guards
+    tumble off the rooftops behind her like bowling pins, helmets flying, as she grins and slips into the moon itself. City
+    residents lean from windows pointing up. Epic wide shot, palette of icy silver and green aurora. Hand-painted vivid
+    inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty
+    neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every
+    character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s1-alley-vet-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Alley Veterinarian L2: Stray Stitches'
+  asset: slime-city/evolutions/s1-alley-vet@2
+  size: 832x1216
+  seed: 1111006
+  prompt_prose: >-
+    An elderly hairless adult catwoman medic with battered spectacles and a stitched surgical coat, now wearing enormous
+    glowing magnifying goggles and wielding a surgical needle as long as a sword, trailing glowing blue thread. Over-the-shoulder
+    shot inside a huge parking-garage clinic where a hundred patched stray cats wait in a winding line, purring, while her
+    adult assistants juggle bandages. Swinging lamps, blue thread light and warm rust shadows. Hand-painted vivid inked
+    western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon
+    colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character
+    is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s1-alley-vet-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Alley Veterinarian L3: Passes the Needle'
+  asset: slime-city/evolutions/s1-alley-vet@3
+  size: 832x1216
+  seed: 1111007
+  prompt_prose: >-
+    An elderly hairless adult catwoman medic with battered spectacles and a stitched surgical coat, now a stained-glass
+    saint with a halo of glowing blue thread, handing a needle tall as a lamppost to a young adult apprentice catgirl. The
+    whole alley has become a glowing cathedral of colored glass, and a thousand healed patients, cats and adult catgirls
+    kneel and cheer from fire escapes and rooftops. Heroic low angle, palette of rose, gold and sapphire glass. Hand-painted
+    vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated
+    gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene.
+    Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s2-catgirls-parapet-ghost-kitten-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Parapet Ghost-Kitten L2: Gargoyle Stillness'
+  asset: slime-city/evolutions/s2-catgirls-parapet-ghost-kitten@2
+  size: 832x1216
+  seed: 1111008
+  prompt_prose: >-
+    A pale translucent spotted ghost-kitten with glowing blue eyes and a wispy smoke tail, its body now turned to cracked
+    grey stone with a stone gargoyle crest twice its size. It crouches perfectly still among a hundred stone gargoyles along
+    a soaring gothic lab cathedral roofline. Over-the-shoulder shot from behind a nervous adult guard whose flashlight sweeps
+    right past it. Rain, turquoise haze and dirty amber lamplight. Hand-painted vivid inked western adult cartoon for a
+    grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette,
+    high contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up.
+    Every surface is bare and unmarked.
+- key: slime-krea-evo-s2-catgirls-parapet-ghost-kitten-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Parapet Ghost-Kitten L3: Nightmare of the Parapets'
+  asset: slime-city/evolutions/s2-catgirls-parapet-ghost-kitten@3
+  size: 832x1216
+  seed: 1111009
+  prompt_prose: >-
+    A pale translucent spotted ghost-kitten with glowing blue eyes and a wispy smoke tail, still tiny and adorable as it
+    yawns on a parapet, while its shadow becomes a storm-cloud tiger filling the entire sky, lightning for stripes, its
+    jaws swallowing the moon. The whole district freezes below: adult guards, pedestrians and street vendors locked mid-step,
+    staring up with comic terror. Epic wide shot, palette of bruised violet and electric green. Hand-painted vivid inked
+    western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon
+    colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character
+    is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-catgirls-escaped-tiger-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Gene-Spliced Tiger L2: Loose in the Lab'
+  asset: slime-city/evolutions/s3-catgirls-escaped-tiger@2
+  size: 832x1216
+  seed: 1111010
+  prompt_prose: >-
+    A massive escaped tiger with neon-blue stripes, surgical seam scars and glowing gene-splice ports along its spine, now
+    wearing a cracked security mech helmet as a trophy, its ports blazing twice as bright. Wide action diagonal shot as
+    it bounds through a vast multi-story lab atrium of shattered cages and swinging lights, adult scientists in lab coats
+    fleeing up spiral stairs and hiding behind clipboards. Smoke, sparks and blue lab neon. Hand-painted vivid inked western
+    adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors,
+    bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character is
+    a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-catgirls-escaped-tiger-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Gene-Spliced Tiger L3: Apex Escapee'
+  asset: slime-city/evolutions/s3-catgirls-escaped-tiger@3
+  size: 832x1216
+  seed: 1111011
+  prompt_prose: >-
+    A massive escaped tiger with neon-blue stripes, surgical seam scars and glowing gene-splice ports along its spine, now
+    as tall as the corporate tower it sits on, lounging on a throne of crushed security mechs, its stripes turned to molten
+    neon. The moon hangs behind its head like a halo, and residents on every rooftop cheer while executives flee by helicopter.
+    Heroic low-angle shot, palette of molten gold and hot magenta. Hand-painted vivid inked western adult cartoon for a
+    grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette,
+    high contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up.
+    Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-catgirls-escaped-tiger-l3b
+  entity: card-art
+  lane: krea-evolution
+  title: 'Gene-Spliced Tiger L3 option B: Back to the Wild'
+  asset: slime-city/evolutions/s3-catgirls-escaped-tiger@3b
+  size: 832x1216
+  seed: 1111012
+  prompt_prose: >-
+    A massive escaped tiger with neon-blue stripes, surgical seam scars and glowing gene-splice ports along its spine, wearing
+    a crown of jungle vines, leading a parade of escaped lab animals out of the city. Wherever it steps, a wild jungle erupts,
+    swallowing skyscrapers in giant ferns and blooming flowers while monkeys swing from traffic lights. Epic wide moonlit
+    shot, the whole skyline turning green, palette of emerald, firefly gold and moon silver. Hand-painted vivid inked western
+    adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors,
+    bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character is
+    a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-catgirls-glasswalker-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Gutterglass Scout L2: Barefoot on Shards'
+  asset: slime-city/evolutions/s3-catgirls-glasswalker@2
+  size: 832x1216
+  seed: 1111013
+  prompt_prose: >-
+    A wiry adult tortoiseshell catgirl scout with cat ears, bare feet, a patchwork cobalt gene-tech jacket and climbing
+    harness, now wearing glittering glass-studded shin guards and carrying a rescue lantern twice its old size. Dynamic
+    diagonal shot as she kicks through a corporate tower's giant window on her harness line, a storm of glittering shards
+    bursting outward while adult office workers gape and duck behind desks. Lemon-yellow dusk and blue neon. Hand-painted
+    vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated
+    gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene.
+    Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-catgirls-glasswalker-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Gutterglass Scout L3: The Glasswalk'
+  asset: slime-city/evolutions/s3-catgirls-glasswalker@3
+  size: 832x1216
+  seed: 1111014
+  prompt_prose: >-
+    A wiry adult tortoiseshell catgirl scout with cat ears, bare feet, a patchwork cobalt gene-tech jacket and climbing
+    harness, now turned to living crystal, strolling serenely across a bridge of broken bottles strung between two skyscrapers.
+    Her rescue lantern has grown to the size of a hot air balloon, and the whole district crowds rooftops below, holding
+    up a sea of lanterns and roaring. Heroic low angle, prismatic rainbow palette with shards catching moonlight. Hand-painted
+    vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated
+    gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene.
+    Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-mutual-aid-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Mutual Aid Serum L2: Free Clinic Night'
+  asset: slime-city/evolutions/mutual-aid@2
+  size: 832x1216
+  seed: 1111015
+  prompt_prose: >-
+    A broad-shouldered adult calico catgirl medic in a patched cobalt coat, now wearing a giant glowing serum backpack tank
+    with a hose nozzle, spraying luminous blue mist over grateful patients. Wide action shot across a whole rooftop block
+    strung with paper lanterns, where a line of adult escaped lab patients winds down fire escapes across three buildings,
+    sharing noodles and waving. Warm lantern orange, blue serum glow and steam. Hand-painted vivid inked western adult cartoon
+    for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette,
+    high contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up.
+    Every surface is bare and unmarked.
+- key: slime-krea-evo-mutual-aid-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Mutual Aid Serum L3: People''s Pharmacy'
+  asset: slime-city/evolutions/mutual-aid@3
+  size: 832x1216
+  seed: 1111016
+  prompt_prose: >-
+    A broad-shouldered adult calico catgirl medic in a patched cobalt coat, carried on the shoulders of a joyful crowd beside
+    a glowing serum fountain as tall as a water tower, gushing luminous blue over the street. A parade of hundreds of recovered
+    adult patients flexes healed arms, dances and juggles crates of free serum while fireworks burst overhead and neighbors
+    cheer from every window. Epic wide shot, festival palette of gold, coral and fireworks. Hand-painted vivid inked western
+    adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors,
+    bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character is
+    a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-mutual-aid-l3b
+  entity: card-art
+  lane: krea-evolution
+  title: 'Mutual Aid Serum L3 option B: Emergency Ward'
+  asset: slime-city/evolutions/mutual-aid@3b
+  size: 832x1216
+  seed: 1111017
+  prompt_prose: >-
+    A broad-shouldered adult calico catgirl medic in a patched cobalt coat, wearing a halo of glowing drip lines, conducting
+    an emergency ward that has grown into a skyscraper of open floors stacked with cots. An army of adult catgirl medics
+    zips between the floors on cables, patching every patient at once, while ambulances queue around the block. Heroic low-angle
+    shot up the tower, palette of clean pearl white, mint glow and siren red. Hand-painted vivid inked western adult cartoon
+    for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette,
+    high contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up.
+    Every surface is bare and unmarked.
+- key: slime-krea-evo-s1-nine-lives-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Nine Lives, No Refunds L2: Eighth Life'
+  asset: slime-city/evolutions/s1-nine-lives@2
+  size: 832x1216
+  seed: 1111018
+  prompt_prose: >-
+    A dramatic long-tailed adult catwoman in a nine-lives holographic cloak, now twice as long and strung with eight glowing
+    orbs, one orb fizzling out above her. Dramatic overhead shot looking straight down the side of a skyscraper as she lands
+    on her feet in a crowded neon plaza, cracking the pavement, while adult passersby drop their shopping bags and gasp.
+    Blue-violet neon, sparks and holographic shimmer. Hand-painted vivid inked western adult cartoon for a grungy colorful
+    street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast,
+    tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface
+    is bare and unmarked.
+- key: slime-krea-evo-s1-nine-lives-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Nine Lives, No Refunds L3: No Refunds'
+  asset: slime-city/evolutions/s1-nine-lives@3
+  size: 832x1216
+  seed: 1111019
+  prompt_prose: >-
+    A dramatic long-tailed adult catwoman in a nine-lives holographic cloak, standing in the street with a golden halo,
+    while nine giant holographic copies of her, each as tall as a building, spread their cloaks into a dome over the whole
+    district. A meteor shower of falling debris bounces harmlessly off the glowing dome as her adult catgirl crew cheers
+    below. Epic wide low-angle shot, palette of holographic gold, rose and pearl. Hand-painted vivid inked western adult
+    cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold
+    clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly
+    adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-catgirls-garrote-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Catwalk Garrote L2: Heavy Drop'
+  asset: slime-city/evolutions/s3-catgirls-garrote@2
+  size: 832x1216
+  seed: 1111020
+  prompt_prose: >-
+    A sly adult catgirl in a patchwork cobalt jacket and wide-brimmed hat, and her taut steel wire trap, now twice as thick
+    and glowing electric blue. Wide action shot as the wire snares a huge armored adult brute mid-leap across a gap between
+    two towers, rooftop vents buckling and bending under his weight, while a crowd on the busy street far below points up.
+    The catgirl sips tea on the next roof. Blue lab neon and hazy moon. Hand-painted vivid inked western adult cartoon for
+    a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette,
+    high contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up.
+    Every surface is bare and unmarked.
+- key: slime-krea-evo-s3-catgirls-garrote-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Catwalk Garrote L3: Hangman''s Line'
+  asset: slime-city/evolutions/s3-catgirls-garrote@3
+  size: 832x1216
+  seed: 1111021
+  prompt_prose: >-
+    A sly adult catgirl in a patchwork cobalt jacket and wide-brimmed hat, strolling along her taut glowing wire, which
+    now stretches from a rooftop all the way to the crescent moon. A hundred adult bounty hunters dangle along it like laundry,
+    boots kicking, socks flapping, while the whole district leans out of windows laughing. She tips her hat at the camera.
+    Epic wide shot, palette of tangerine dawn, rose and gold. Hand-painted vivid inked western adult cartoon for a grungy
+    colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high
+    contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every
+    surface is bare and unmarked.
+- key: slime-krea-evo-s3-catgirls-pounce-rig-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Second Pounce Rig L2: Spring-Loaded'
+  asset: slime-city/evolutions/s3-catgirls-pounce-rig@2
+  size: 832x1216
+  seed: 1111022
+  prompt_prose: >-
+    An adult rookie catgirl in an oversized lab coat, strapped into a spring-loaded pounce rig of brass pistons and coiled
+    springs, now tuned with twice as many gleaming coils and a pair of glowing pressure gauges. Over-the-shoulder shot from
+    her veteran trainer on a wide rooftop training yard, where the rookie crouches confidently beside her packmates, a row
+    of dented guard dummies waiting. Blue neon vents and steam. Hand-painted vivid inked western adult cartoon for a grungy
+    colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high
+    contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every
+    surface is bare and unmarked.
+- key: slime-krea-evo-s3-catgirls-pounce-rig-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Second Pounce Rig L3: Second Pounce'
+  asset: slime-city/evolutions/s3-catgirls-pounce-rig@3
+  size: 832x1216
+  seed: 1111023
+  prompt_prose: >-
+    An adult rookie catgirl in an oversized lab coat, her brass piston pounce rig blazing like a rocket, launching claws-first
+    straight up through the entire corporate tower and out the roof into the sky as a golden comet. Startled adult executives,
+    desks and coffee cups fly out of every shattered window, the skyscraper bends, and her pack cheers from neighboring
+    rooftops. Heroic low-angle shot, palette of sunrise gold and flaming orange. Hand-painted vivid inked western adult
+    cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold
+    clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly
+    adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-s2-catgirls-backstreet-organ-donor-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Backstreet Organ Donor L2: Blood Drive'
+  asset: slime-city/evolutions/s2-catgirls-backstreet-organ-donor@2
+  size: 832x1216
+  seed: 1111024
+  prompt_prose: >-
+    A lanky adult grey-and-white catgirl medic with stitched scars, patchwork cobalt jacket and fingerless gloves, now wearing
+    a huge glowing heart-shaped transfusion backpack with ruby tubes. Wide action shot in a crowded alley brawl as she punches
+    a rival with one fist while the tubes snake out to three wounded adult catgirl allies, glowing ruby light filling them
+    up. Cobalt highlights, dusty red accents and slime drains. Hand-painted vivid inked western adult cartoon for a grungy
+    colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high
+    contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every
+    surface is bare and unmarked.
+- key: slime-krea-evo-s2-catgirls-backstreet-organ-donor-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Backstreet Organ Donor L3: Last Donation'
+  asset: slime-city/evolutions/s2-catgirls-backstreet-organ-donor@3
+  size: 832x1216
+  seed: 1111025
+  prompt_prose: >-
+    A lanky adult grey-and-white catgirl medic with stitched scars and a patchwork cobalt jacket, rising above the alley
+    as a giant smiling spirit of ruby light, her glowing heart lighting the whole district like a sunrise. Below, the wounded
+    adult ally she saved stands three times taller, flexing in borrowed glowing strength, while crowds cheer from fire escapes.
+    The spirit winks. Epic low-angle shot, palette of warm ruby, rose and dawn gold. Hand-painted vivid inked western adult
+    cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold
+    clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly
+    adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-lynx-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Neon Lynx L2: Open Alley'
+  asset: slime-city/evolutions/lynx@2
+  size: 832x1216
+  seed: 1111026
+  prompt_prose: >-
+    A lean adult catgirl scout with lynx ear tufts and a glowing blue visor, now wearing lightning-charged sprint boots,
+    crackling bolts twice as bright as before. Wide low tracking shot as she streaks on all fours down a vast neon boulevard,
+    stolen lab keys in her teeth, lightning arcing off her claws, while crowds on balconies cheer and adult guards spin
+    in her dust. Blue neon, puddle reflections and electric sparks. Hand-painted vivid inked western adult cartoon for a
+    grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette,
+    high contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up.
+    Every surface is bare and unmarked.
+- key: slime-krea-evo-lynx-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Neon Lynx L3: Decoy Leap'
+  asset: slime-city/evolutions/lynx@3
+  size: 832x1216
+  seed: 1111027
+  prompt_prose: >-
+    A lean adult catgirl scout with lynx ear tufts and a glowing blue visor, leaping high over the moon itself while a hundred
+    flickering holographic decoys of her fill every alley, rooftop and window of the district. An entire battalion of confused
+    adult guards chases decoys in circles, colliding and tangling. Lab keys glint in her teeth. Epic wide shot, palette
+    shifting to holographic magenta, lime and bright ultraviolet. Hand-painted vivid inked western adult cartoon for a grungy
+    colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high
+    contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every
+    surface is bare and unmarked.
+- key: slime-krea-evo-mau-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Mau-77 L2: First Scratch'
+  asset: slime-city/evolutions/mau@2
+  size: 832x1216
+  seed: 1111028
+  prompt_prose: >-
+    A muscular adult catgirl enforcer with a shaved undercut, spotted Egyptian Mau ears and chrome designer claws, now gold-plated
+    and twice their old length. Dynamic diagonal shot inside a packed underground fight arena, as she circles a limping
+    adult rival clutching a scratched sleeve, while the crowd behind the cage roars and waves glowsticks. Hot pink spotlights,
+    chrome glint and sweat. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy,
+    thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing
+    with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-mau-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Mau-77 L3: Second Strike'
+  asset: slime-city/evolutions/mau@3
+  size: 832x1216
+  seed: 1111029
+  prompt_prose: >-
+    A muscular adult catgirl enforcer with a shaved undercut, spotted Egyptian Mau ears and chrome designer claws, now claws
+    the size of construction cranes. One blurring swipe slices a giant glowing pink claw mark across the clouds, bowling
+    a dozen adult rivals down the boulevard like pins as skyscrapers lean away. She wears a giant championship belt. Heroic
+    low-angle shot, palette of hot pink, chrome and electric violet. Hand-painted vivid inked western adult cartoon for
+    a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette,
+    high contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up.
+    Every surface is bare and unmarked.
+- key: slime-krea-evo-calico-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Clinic Calico L2: Ward Rounds'
+  asset: slime-city/evolutions/calico@2
+  size: 832x1216
+  seed: 1111030
+  prompt_prose: >-
+    An adult calico-furred clinic medic in blue bandages and patched cobalt streetwear, now wearing four mechanical surgical
+    arms on her backpack. Wide action shot inside a converted subway station ward, where she tends a slate-grey adult ogre
+    with a chrome jaw, small rounded ears and union overalls, plus a dozen other patients on cots, between bubbling healing
+    vats twice her height. Glowing green drip lines and cobalt light. Hand-painted vivid inked western adult cartoon for
+    a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette,
+    high contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up.
+    Every surface is bare and unmarked.
+- key: slime-krea-evo-calico-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Clinic Calico L3: Field Surgeon'
+  asset: slime-city/evolutions/calico@3
+  size: 832x1216
+  seed: 1111031
+  prompt_prose: >-
+    An adult calico-furred clinic medic in blue bandages and patched cobalt streetwear, now a towering field surgeon in
+    a billowing white coat, standing atop a healing vat as big as a water tower. A waterfall of glowing green goo pours
+    down the building, and a parade of patched patients, including grinning grey-skinned chrome-jawed ogres, marches out,
+    a frail recruit flexing at the front. Epic wide low angle, palette of emerald and pearl. Hand-painted vivid inked western
+    adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors,
+    bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character is
+    a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-chimera-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Madame Chimera L2: Rebuilt'
+  asset: slime-city/evolutions/chimera@2
+  size: 832x1216
+  seed: 1111032
+  prompt_prose: >-
+    Madame Chimera, a tall regal adult catgirl matriarch with lion mane hair, a goat-horned helmet and a serpent-tailed
+    coat, now wearing armored gauntlets stitched with glowing seams, eighteen blue vials fanned in her fingers. Dynamic
+    diagonal shot in a vast lab sanctuary arena, crouched and ready as three wary adult rival hunters circle her, fresh
+    glowing stitches across her arms. Blue lab light, smoke and violet glow. Hand-painted vivid inked western adult cartoon
+    for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette,
+    high contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up.
+    Every surface is bare and unmarked.
+- key: slime-krea-evo-chimera-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Madame Chimera L3: Apex Chimera'
+  asset: slime-city/evolutions/chimera@3
+  size: 832x1216
+  seed: 1111033
+  prompt_prose: >-
+    Madame Chimera, a tall regal adult catgirl matriarch with lion mane hair, a goat-horned helmet and a serpent-tailed
+    coat, now towering over the district on a throne of lab tanks, griffon wings spread across the sky. Her serpent tail
+    coils around a skyscraper, and behind her stands a row of a hundred glowing clone tubes, each holding a smirking copy
+    of her. Crowds bow from rooftops. Heroic low angle, palette of royal purple and molten gold. Hand-painted vivid inked
+    western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon
+    colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character
+    is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-pounce-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Catnip Overdrive L2: Double Dose'
+  asset: slime-city/evolutions/pounce@2
+  size: 832x1216
+  seed: 1111034
+  prompt_prose: >-
+    An adult orange tabby catgirl in a patchwork cobalt hoodie, pupils huge, now wearing glowing catnip goggles, crouched
+    beside her packmate, both blazing in a green catnip aura twice as big as before. Wide action shot inside a packed warehouse
+    rave, the dancing adult crowd parting in awe as the two fighters prepare to spring. Glittering green smoke, ultraviolet
+    strobes and laser haze. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy,
+    thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing
+    with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-pounce-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Catnip Overdrive L3: Pack Pounce'
+  asset: slime-city/evolutions/pounce@3
+  size: 832x1216
+  seed: 1111035
+  prompt_prose: >-
+    An adult orange tabby catgirl in a patchwork cobalt hoodie, pupils huge, leading a hundred catgirls in one synchronized
+    pounce across the entire district, a tidal wave of fighters leaping from every rooftop at once. Above them, the glittering
+    green catnip smoke forms a giant grinning cat face across the sky. Adult rivals below scatter in comic panic. Epic wide
+    shot, palette of acid green and ultraviolet. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting
+    fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait
+    framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and
+    unmarked.
+- key: slime-krea-evo-scentmine-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Scent Mine L2: Wider Cloud'
+  asset: slime-city/evolutions/scentmine@2
+  size: 832x1216
+  seed: 1111036
+  prompt_prose: >-
+    A battered pressure-plate scent mine hidden under alley trash, its glowing pink scent cloud now bursting twice as wide.
+    Wide action shot across a busy street market, where the cloud lifts a slate-grey adult ogre with a chrome jaw and an
+    armored bounty hunter off their feet, both floating and sniffing dreamily, while vendors duck behind fruit carts. Pink
+    haze, glowing shop awnings and dust puffs. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting
+    fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait
+    framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and
+    unmarked.
+- key: slime-krea-evo-scentmine-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Scent Mine L3: Mine Field'
+  asset: slime-city/evolutions/scentmine@3
+  size: 832x1216
+  seed: 1111037
+  prompt_prose: >-
+    A battered pressure-plate scent mine hidden under alley trash, now erupting into a pink scent hurricane swirling over
+    the whole district. Dozens of adult ogres and bounty hunters float dreamily in the spinning clouds, and fresh mines
+    sprout across rooftops like mushrooms, popping more pink puffs. The moon glows bubblegum pink. Epic wide shot, palette
+    of bubblegum, lavender and candy floss. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting
+    fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait
+    framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and
+    unmarked.
+- key: slime-krea-evo-reknit-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Reknit Serum L2: Spreading Stitches'
+  asset: slime-city/evolutions/reknit@2
+  size: 832x1216
+  seed: 1111038
+  prompt_prose: >-
+    A glowing cobalt-blue serum syringe, now twice as big and wielded by an adult catgirl medic in a patched cobalt coat.
+    Over-the-shoulder shot in a crowded lab infirmary ward, as bright threads of light arc from the syringe to six wounded
+    adult catgirl fighters on cots, stitching their torn sleeves and bandages closed while they sit up grinning. Cozy lamplight
+    and glowing cobalt threads. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy,
+    thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing
+    with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-reknit-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Reknit Serum L3: Rebuilt From Thread'
+  asset: slime-city/evolutions/reknit@3
+  size: 832x1216
+  seed: 1111039
+  prompt_prose: >-
+    A glowing cobalt-blue serum syringe as tall as a radio mast towers over the alley, spinning golden thread across the
+    whole sky like a giant loom. From the thread, a giant adult catgirl fighter is rewoven strand by strand, rising over
+    the rooftops, flexing and grinning. Neighbors gape from balconies. Epic low-angle shot, palette of golden thread on
+    midnight blue with shimmering sparks. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting
+    fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait
+    framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and
+    unmarked.
+- key: slime-krea-evo-shredders-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Patent Shredders L2: Armor Piercing'
+  asset: slime-city/evolutions/shredders@2
+  size: 832x1216
+  seed: 1111040
+  prompt_prose: >-
+    A pair of serrated cobalt biotech claws worn by an adult striped catgirl in patched cobalt streetwear, the claws now
+    twice as big and glowing white-hot. Dynamic diagonal shot as she punches straight through a giant steel corporate vault
+    door, molten sparks fountaining, while adult security guards behind it drop their coffee in shock. Blue lab light, white-hot
+    glow and smoke. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick
+    expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with
+    one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-shredders-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Patent Shredders L3: Shrapnel Arc'
+  asset: slime-city/evolutions/shredders@3
+  size: 832x1216
+  seed: 1111041
+  prompt_prose: >-
+    A pair of serrated cobalt biotech claws worn by an adult striped catgirl in patched cobalt streetwear, whose single
+    slash slices a corporate skyscraper cleanly in half. A blizzard of blank shredded paper confetti and neon shrapnel rains
+    over the whole district like a ticker-tape parade, and crowds dance in the streets. Heroic low-angle shot, palette of
+    white confetti and gold against violet sky. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting
+    fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait
+    framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and
+    unmarked.
+- key: slime-krea-evo-ninthlife-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Ninth Life Collar L2: Still Standing'
+  asset: slime-city/evolutions/ninthlife@2
+  size: 832x1216
+  seed: 1111042
+  prompt_prose: >-
+    A battle-scarred adult catgirl medic in patched cobalt streetwear and a chrome bell collar glowing with nine turquoise
+    orbs, the bell now twice as big. Dynamic diagonal shot in a packed rooftop arena as she stands back up after a long
+    fall, the bell ringing loudly in visible rings of turquoise light, rivals stepping back and the crowd on surrounding
+    roofs roaring. Cracked concrete and blue neon. Hand-painted vivid inked western adult cartoon for a grungy colorful
+    street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast,
+    tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface
+    is bare and unmarked.
+- key: slime-krea-evo-ninthlife-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Ninth Life Collar L3: Second Life'
+  asset: slime-city/evolutions/ninthlife@3
+  size: 832x1216
+  seed: 1111043
+  prompt_prose: >-
+    A battle-scarred adult catgirl medic in patched cobalt streetwear and a chrome bell collar, the bell now grown as large
+    as a cathedral bell and ringing over the district, its turquoise light rippling across the skyline. She rises with turquoise
+    wings beside a giant spectral copy of herself as tall as the clock tower, claws bared. Crowds on rooftops cover their
+    ears and cheer. Heroic low angle, palette of turquoise and gold. Hand-painted vivid inked western adult cartoon for
+    a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette,
+    high contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up.
+    Every surface is bare and unmarked.
+- key: slime-krea-evo-laser-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Laser Pointer L2: Split Beam'
+  asset: slime-city/evolutions/laser@2
+  size: 832x1216
+  seed: 1111044
+  prompt_prose: >-
+    An enormous red laser dot from a sly adult catgirl ambusher's pointer, now split into two dots. Wide action shot on
+    a busy elevated overpass, two fierce armored adult rivals frozen mid-charge, eyes locked on the dancing dots across
+    a concrete wall, while the catgirl ambusher lounges on a lamppost above with a grin. Traffic headlights, red glow and
+    blue neon. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive
+    outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous
+    full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-laser-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Laser Pointer L3: Three-Alley Dance'
+  asset: slime-city/evolutions/laser@3
+  size: 832x1216
+  seed: 1111045
+  prompt_prose: >-
+    An enormous red laser dot from a sly adult catgirl ambusher's pointer, now beamed onto the moon itself, turning it into
+    a giant crimson dot. The whole district of armored adult enemies stands frozen on rooftops and streets, staring up hypnotized,
+    while a parade of catgirl ambushers tiptoes past them in the shadows. Epic wide shot, palette of crimson moonlight and
+    deep midnight blue. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick
+    expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with
+    one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.

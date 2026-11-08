@@ -109,14 +109,28 @@ Today one painting serves all three levels and only the frame changes. Plan:
 - **New card art for L2 and L3 of every card: 600 paintings** (the first 70 included). Each evolved painting is
   the *same character, transformed* by its story beat: the clinic cat now wears a stolen surgeon's coat,
   the Bassquake Colossus has grown a wall of speakers, and so on.
-- **Method:** Flux Kontext rounds from each card's existing L1 ArtImage, so face, palette and identity
-  carry over. The pipeline already supports this (`engine: kontext` in `enqueue_art_requests.py`, used by
-  the kr-arcade Ghost Trail rounds). Each prompt is written by hand from the card's arc: no template
-  prompts (the `art_ledger_authoring.py` check enforces this).
+- **Method (revised 2026-11-08 PT):** Krea 2 text-to-image rounds (`EVOLUTIONS-<crew>-KREA.yaml`), one
+  render per stage. The first method, Flux Kontext edits of each card's L1 ArtImage, is retired for the main
+  gen. Silas, 2026-11-08: *"Flux dev is a slow generator, and we're getting a lot of the same looking images
+  three times over. We shouldn't use it for the main gen, but we also need a much larger and fun escalation
+  between evolution 1 and evolution 3."* Kontext preserves the source composition, so a prop swap was all
+  it could deliver, at 20 Flux-dev steps × 2 seeds per stage. Identity now carries over through a per-card
+  look anchor (species, adult build, signature colours, outfit, key prop) that opens both of the card's
+  prompts. Each prompt is still written by hand from the card's arc (`art_ledger_authoring.py` enforces it).
+- **The escalation ladder** (every step obvious at thumbnail size):
+  - **L1:** the existing painting.
+  - **L2, powered up:** one new signature upgrade worn or wielded, the signature thing at least twice as
+    big, a bigger venue than L1, mid-story-beat with rivals or a crowd reacting, a different camera.
+  - **L3 / L3b, legendary:** an over-the-top, funny payoff pushing at least two of: scale (towering over
+    rooftops), multiplication (a parade, an army), material change (molten gold, living neon, glowing
+    slime), mythic form (crown, halo, wings, throne), a city-sized signature thing, the whole district
+    reacting. Heroic low angle or epic wide, and a finale palette unlike L1. The gimmick varies across a
+    crew. L3b goes just as big in the option-B direction.
 - **Board tokens:** creatures get a new L3 token set (fierce/guard/hurt) once their L3 card art is accepted,
   roughly 110 creatures × 3 moods. These go in a later round, re-posed from the accepted L3 art.
-- **Curation:** two seeds per stage; reject anything that loses the character's identity or reads as a
-  different creature (and keep the ogres un-Shrek: chrome jaws, non-green skin).
+- **Curation:** one seed per stage. Krea 2 is cheap enough to redo a miss rather than pre-buying a second
+  seed. Reject anything that loses the character's identity, reads as a different creature, or doesn't
+  read as a clear step up from the level below. Keep the ogres un-Shrek: chrome jaws, non-green skin.
 - **Wiring:** `SLIME_CITY_ART.cards` gains per-level keys; the card face, hand, board and collection show the
   art for the card's current level.
 
