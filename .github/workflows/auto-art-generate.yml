@@ -260,8 +260,8 @@ jobs:
           KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
           KR_MEDIA_ORIGIN: https://media.acrocatranch.com
         run: |
-          python scripts/consume_art_requests_to_media.py --live --submit-only --limit 0 \\
-            --queue-file projects/memory-dungeon/art/HOSHIMORI-GALLERY-BOUND-ROUND-5.yaml \\
+          python scripts/consume_art_requests_to_media.py --live --submit-only --limit 0 \
+            --queue-file projects/memory-dungeon/art/HOSHIMORI-GALLERY-BOUND-ROUND-5.yaml \
             --id-prefix memory-dungeon-hoshimori-gallery-r5-
 
       # Choice-card outcome plates (Silas, 2026-11-02/03 PT: "Yes, commission",
