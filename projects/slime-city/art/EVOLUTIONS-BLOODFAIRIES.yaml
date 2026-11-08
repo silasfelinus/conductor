@@ -1,0 +1,1338 @@
+# Slime City evolution art, Blood Fairies (2026-11-08 PT; CLASH-EVOLUTION-PLAN.md section 4).
+# Silas: "We should have fresh art on the evolutions, not just frame effects" and "300 cards, all need custom
+# better evolutions." Each crafted card (utils/slimeCity/evolutions/*.ts in kind_robots) gets a level-2 and a
+# level-3 painting, and a choose-one card a painting for its option B ('@3b'): the same character or scene
+# transformed by its story arc. Flux Kontext edits the card's wired level-1 ArtImage (SLIME_CITY_ART.cards) so
+# face, outfit and style carry over; each prompt names only that stage's story change, written per card. Two
+# seeds per stage for curation. Keepers are wired as SLIME_CITY_ART.evolutions['<cardId>@2' | '@3' | '@3b'].
+# auto_submit: true.
+round: slime-city-evolutions-bloodfairies
+project_slug: slime-city
+designer: Slime City evolution art, Blood Fairies
+is_public: true
+is_mature: false
+cast_loras: false
+priority: 640
+auto_submit: true
+lanes:
+- key: kontext-evolution
+  label: Flux Kontext dev (fp8), evolved stages from each card's level-1 painting
+  engine: kontext
+  prompt: prose
+  steps: 20
+  guidance: 2.5
+subjects:
+- key: slime-evo-pogo-punk-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Pogo Punk L2: Pit Pickpocket (seed 1)'
+  asset: slime-city/evolutions/pogo-punk@2
+  size: 832x1216
+  seed: 1106001
+  source_image_id: 260643
+  prompt_prose: The tiny adult fairy now pogoes high above a packed mosh pit in her outrageous platform boots, flicking
+    a stolen glowing coin purse back over her shoulder toward a distant throne. Keep the same character, the same
+    face, fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style with
+    bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-pogo-punk-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Pogo Punk L2: Pit Pickpocket (seed 2)'
+  asset: slime-city/evolutions/pogo-punk@2
+  size: 832x1216
+  seed: 1106002
+  source_image_id: 260643
+  prompt_prose: The tiny adult fairy now pogoes high above a packed mosh pit in her outrageous platform boots, flicking
+    a stolen glowing coin purse back over her shoulder toward a distant throne. Keep the same character, the same
+    face, fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style with
+    bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-pogo-punk-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Pogo Punk L3: Crowd-Surf Exit (seed 1)'
+  asset: slime-city/evolutions/pogo-punk@3
+  size: 832x1216
+  seed: 1106003
+  source_image_id: 260643
+  prompt_prose: She now lies limp but grinning on a sea of raised hands as the adult crowd carries her away, a warm
+    crimson glow spilling from her wings over every dancer around her. Keep the same character, the same face, fur,
+    skin and markings, the same outfit details, the same saturated neon comic gouache art style with bold black
+    contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-pogo-punk-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Pogo Punk L3: Crowd-Surf Exit (seed 2)'
+  asset: slime-city/evolutions/pogo-punk@3
+  size: 832x1216
+  seed: 1106004
+  source_image_id: 260643
+  prompt_prose: She now lies limp but grinning on a sea of raised hands as the adult crowd carries her away, a warm
+    crimson glow spilling from her wings over every dancer around her. Keep the same character, the same face, fur,
+    skin and markings, the same outfit details, the same saturated neon comic gouache art style with bold black
+    contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-amp-tripwire-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Amp Tripwire L2: Cue the Band (seed 1)'
+  asset: slime-city/evolutions/amp-tripwire@2
+  size: 832x1216
+  seed: 1106005
+  source_image_id: 262294
+  prompt_prose: The tripwire now twangs a visible shockwave of sound across the alley while three adult punk fairies
+    on either side leap forward with guitars raised, taking it as their cue. Keep the same objects, characters and
+    setting details, the same saturated neon comic gouache art style with bold black contours, and the same tall
+    portrait framing with the scene painted edge to edge.
+- key: slime-evo-amp-tripwire-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Amp Tripwire L2: Cue the Band (seed 2)'
+  asset: slime-city/evolutions/amp-tripwire@2
+  size: 832x1216
+  seed: 1106006
+  source_image_id: 262294
+  prompt_prose: The tripwire now twangs a visible shockwave of sound across the alley while three adult punk fairies
+    on either side leap forward with guitars raised, taking it as their cue. Keep the same objects, characters and
+    setting details, the same saturated neon comic gouache art style with bold black contours, and the same tall
+    portrait framing with the scene painted edge to edge.
+- key: slime-evo-amp-tripwire-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Amp Tripwire L3: Power Chord Avalanche (seed 1)'
+  asset: slime-city/evolutions/amp-tripwire@3
+  size: 832x1216
+  seed: 1106007
+  source_image_id: 262294
+  prompt_prose: A towering wall of stacked amplifiers now topples down the whole street behind the wire, a rolling
+    wave of purple sound rings knocking every rival off their feet. Keep the same objects, characters and setting
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-amp-tripwire-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Amp Tripwire L3: Power Chord Avalanche (seed 2)'
+  asset: slime-city/evolutions/amp-tripwire@3
+  size: 832x1216
+  seed: 1106008
+  source_image_id: 262294
+  prompt_prose: A towering wall of stacked amplifiers now topples down the whole street behind the wire, a rolling
+    wave of purple sound rings knocking every rival off their feet. Keep the same objects, characters and setting
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-s1-riot-choir-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Glitter Riot Choir L2: Three-Part Harmony (seed 1)'
+  asset: slime-city/evolutions/s1-riot-choir@2
+  size: 832x1216
+  seed: 1106009
+  source_image_id: 260659
+  prompt_prose: The glitter choir now sings in three-part harmony, ribbons of shimmering sound flowing from their
+    mouths and wrapping around two adult fairy fighters on either side who glow brighter. Keep the same character,
+    the same face, fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style
+    with bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s1-riot-choir-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Glitter Riot Choir L2: Three-Part Harmony (seed 2)'
+  asset: slime-city/evolutions/s1-riot-choir@2
+  size: 832x1216
+  seed: 1106010
+  source_image_id: 260659
+  prompt_prose: The glitter choir now sings in three-part harmony, ribbons of shimmering sound flowing from their
+    mouths and wrapping around two adult fairy fighters on either side who glow brighter. Keep the same character,
+    the same face, fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style
+    with bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s1-riot-choir-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Glitter Riot Choir L3: Wall of Sound (seed 1)'
+  asset: slime-city/evolutions/s1-riot-choir@3
+  size: 832x1216
+  seed: 1106011
+  source_image_id: 260659
+  prompt_prose: The choir now stands motionless atop a giant stack of speakers with arms spread, a vast glittering
+    dome of sound rising over the whole adult crew fighting below. Keep the same character, the same face, fur,
+    skin and markings, the same outfit details, the same saturated neon comic gouache art style with bold black
+    contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s1-riot-choir-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Glitter Riot Choir L3: Wall of Sound (seed 2)'
+  asset: slime-city/evolutions/s1-riot-choir@3
+  size: 832x1216
+  seed: 1106012
+  source_image_id: 260659
+  prompt_prose: The choir now stands motionless atop a giant stack of speakers with arms spread, a vast glittering
+    dome of sound rising over the whole adult crew fighting below. Keep the same character, the same face, fur,
+    skin and markings, the same outfit details, the same saturated neon comic gouache art style with bold black
+    contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s1-riot-choir-l3b-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Glitter Riot Choir L3b: Backup Singers (seed 1)'
+  asset: slime-city/evolutions/s1-riot-choir@3b
+  size: 832x1216
+  seed: 1106013
+  source_image_id: 260659
+  prompt_prose: Two rows of small glowing adult backup singers now flank the choir on risers, swaying in matching
+    sequined jackets and screaming the chorus into shared microphones. Keep the same character, the same face, fur,
+    skin and markings, the same outfit details, the same saturated neon comic gouache art style with bold black
+    contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s1-riot-choir-l3b-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Glitter Riot Choir L3b: Backup Singers (seed 2)'
+  asset: slime-city/evolutions/s1-riot-choir@3b
+  size: 832x1216
+  seed: 1106014
+  source_image_id: 260659
+  prompt_prose: Two rows of small glowing adult backup singers now flank the choir on risers, swaying in matching
+    sequined jackets and screaming the chorus into shared microphones. Keep the same character, the same face, fur,
+    skin and markings, the same outfit details, the same saturated neon comic gouache art style with bold black
+    contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s1-confetti-cannon-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Confetti Shrapnel Cannon L2: Second Barrel (seed 1)'
+  asset: slime-city/evolutions/s1-confetti-cannon@2
+  size: 832x1216
+  seed: 1106015
+  source_image_id: 260661
+  prompt_prose: The confetti cannon now has a second smoking barrel bolted on top, firing a stray burst of sharp
+    glitter shrapnel off into a far corner of the alley. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-s1-confetti-cannon-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Confetti Shrapnel Cannon L2: Second Barrel (seed 2)'
+  asset: slime-city/evolutions/s1-confetti-cannon@2
+  size: 832x1216
+  seed: 1106016
+  source_image_id: 260661
+  prompt_prose: The confetti cannon now has a second smoking barrel bolted on top, firing a stray burst of sharp
+    glitter shrapnel off into a far corner of the alley. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-s1-confetti-cannon-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Confetti Shrapnel Cannon L3: Ticker-Tape Parade (seed 1)'
+  asset: slime-city/evolutions/s1-confetti-cannon@3
+  size: 832x1216
+  seed: 1106017
+  source_image_id: 260661
+  prompt_prose: The cannon now rains ticker tape and streamers over a cheering parade of adult punk fairies marching
+    down the street, arms linked and fists in the air. Keep the same objects, characters and setting details, the
+    same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with
+    the scene painted edge to edge.
+- key: slime-evo-s1-confetti-cannon-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Confetti Shrapnel Cannon L3: Ticker-Tape Parade (seed 2)'
+  asset: slime-city/evolutions/s1-confetti-cannon@3
+  size: 832x1216
+  seed: 1106018
+  source_image_id: 260661
+  prompt_prose: The cannon now rains ticker tape and streamers over a cheering parade of adult punk fairies marching
+    down the street, arms linked and fists in the air. Keep the same objects, characters and setting details, the
+    same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with
+    the scene painted edge to edge.
+- key: slime-evo-s1-stage-dive-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Unlicensed Stage Dive L2: Front Row (seed 1)'
+  asset: slime-city/evolutions/s1-stage-dive@2
+  size: 832x1216
+  seed: 1106019
+  source_image_id: 260662
+  prompt_prose: An adult fairy now launches off the stage edge over a roaring front row, arms outstretched toward
+    a glittering throne at the far end of an empty alley. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-s1-stage-dive-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Unlicensed Stage Dive L2: Front Row (seed 2)'
+  asset: slime-city/evolutions/s1-stage-dive@2
+  size: 832x1216
+  seed: 1106020
+  source_image_id: 260662
+  prompt_prose: An adult fairy now launches off the stage edge over a roaring front row, arms outstretched toward
+    a glittering throne at the far end of an empty alley. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-s1-stage-dive-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Unlicensed Stage Dive L3: Dives on Royalty (seed 1)'
+  asset: slime-city/evolutions/s1-stage-dive@3
+  size: 832x1216
+  seed: 1106021
+  source_image_id: 260662
+  prompt_prose: The diving adult fairy now crashes headfirst onto a toppling golden throne, splinters and sparkles
+    flying as the crowd behind her erupts. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s1-stage-dive-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Unlicensed Stage Dive L3: Dives on Royalty (seed 2)'
+  asset: slime-city/evolutions/s1-stage-dive@3
+  size: 832x1216
+  seed: 1106022
+  source_image_id: 260662
+  prompt_prose: The diving adult fairy now crashes headfirst onto a toppling golden throne, splinters and sparkles
+    flying as the crowd behind her erupts. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s1-feedback-wire-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Feedback Wire L2: Siphon Lead (seed 1)'
+  asset: slime-city/evolutions/s1-feedback-wire@2
+  size: 832x1216
+  seed: 1106023
+  source_image_id: 262300
+  prompt_prose: The hidden amplifier lead now glows bright red and snakes away down the alley, carrying a pulsing
+    current of crimson light into a distant ornate throne. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-s1-feedback-wire-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Feedback Wire L2: Siphon Lead (seed 2)'
+  asset: slime-city/evolutions/s1-feedback-wire@2
+  size: 832x1216
+  seed: 1106024
+  source_image_id: 262300
+  prompt_prose: The hidden amplifier lead now glows bright red and snakes away down the alley, carrying a pulsing
+    current of crimson light into a distant ornate throne. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-s1-feedback-wire-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Feedback Wire L3: Blood Amplifier (seed 1)'
+  asset: slime-city/evolutions/s1-feedback-wire@3
+  size: 832x1216
+  seed: 1106025
+  source_image_id: 262300
+  prompt_prose: The lead now plugs into a huge humming amplifier shaped like a beating heart, pulsing warm crimson
+    light over a whole adult band who stand taller in its glow. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-s1-feedback-wire-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Feedback Wire L3: Blood Amplifier (seed 2)'
+  asset: slime-city/evolutions/s1-feedback-wire@3
+  size: 832x1216
+  seed: 1106026
+  source_image_id: 262300
+  prompt_prose: The lead now plugs into a huge humming amplifier shaped like a beating heart, pulsing warm crimson
+    light over a whole adult band who stand taller in its glow. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-s1-blood-mic-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Blood Karaoke Microphone L2: Pass the Mic (seed 1)'
+  asset: slime-city/evolutions/s1-blood-mic@2
+  size: 832x1216
+  seed: 1106027
+  source_image_id: 262301
+  prompt_prose: The karaoke microphone is now passed between two adult fairy singers, a thin ribbon of crimson light
+    flowing from the mic into the bandaged singer reaching for it. Keep the same objects, characters and setting
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-s1-blood-mic-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Blood Karaoke Microphone L2: Pass the Mic (seed 2)'
+  asset: slime-city/evolutions/s1-blood-mic@2
+  size: 832x1216
+  seed: 1106028
+  source_image_id: 262301
+  prompt_prose: The karaoke microphone is now passed between two adult fairy singers, a thin ribbon of crimson light
+    flowing from the mic into the bandaged singer reaching for it. Keep the same objects, characters and setting
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-s1-blood-mic-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Blood Karaoke Microphone L3: Blood Karaoke Finale (seed 1)'
+  asset: slime-city/evolutions/s1-blood-mic@3
+  size: 832x1216
+  seed: 1106029
+  source_image_id: 262301
+  prompt_prose: The microphone now stands on a spotlit stage before a packed karaoke bar of adult fairies all singing
+    along, crimson light washing over every raised glass. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-s1-blood-mic-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Blood Karaoke Microphone L3: Blood Karaoke Finale (seed 2)'
+  asset: slime-city/evolutions/s1-blood-mic@3
+  size: 832x1216
+  seed: 1106030
+  source_image_id: 262301
+  prompt_prose: The microphone now stands on a spotlit stage before a packed karaoke bar of adult fairies all singing
+    along, crimson light washing over every raised glass. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-s2-bloodfairies-mosquito-disc-jockey-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Mosquito Disc Jockey L2: Request Line (seed 1)'
+  asset: slime-city/evolutions/s2-bloodfairies-mosquito-disc-jockey@2
+  size: 832x1216
+  seed: 1106031
+  source_image_id: 261419
+  prompt_prose: The adult mosquito DJ now leans out of the booth handing glowing red request slips to two dancers
+    beside the decks, tiny fangs showing in their grins. Keep the same character, the same face, fur, skin and markings,
+    the same outfit details, the same saturated neon comic gouache art style with bold black contours, and the same
+    tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s2-bloodfairies-mosquito-disc-jockey-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Mosquito Disc Jockey L2: Request Line (seed 2)'
+  asset: slime-city/evolutions/s2-bloodfairies-mosquito-disc-jockey@2
+  size: 832x1216
+  seed: 1106032
+  source_image_id: 261419
+  prompt_prose: The adult mosquito DJ now leans out of the booth handing glowing red request slips to two dancers
+    beside the decks, tiny fangs showing in their grins. Keep the same character, the same face, fur, skin and markings,
+    the same outfit details, the same saturated neon comic gouache art style with bold black contours, and the same
+    tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s2-bloodfairies-mosquito-disc-jockey-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Mosquito Disc Jockey L3: Behind the Decks (seed 1)'
+  asset: slime-city/evolutions/s2-bloodfairies-mosquito-disc-jockey@3
+  size: 832x1216
+  seed: 1106033
+  source_image_id: 261419
+  prompt_prose: The DJ now stands high behind a towering neon turntable rig under a crimson moon, arms raised, while
+    the entire dance floor below glows with pulsing red light. Keep the same character, the same face, fur, skin
+    and markings, the same outfit details, the same saturated neon comic gouache art style with bold black contours,
+    and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s2-bloodfairies-mosquito-disc-jockey-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Mosquito Disc Jockey L3: Behind the Decks (seed 2)'
+  asset: slime-city/evolutions/s2-bloodfairies-mosquito-disc-jockey@3
+  size: 832x1216
+  seed: 1106034
+  source_image_id: 261419
+  prompt_prose: The DJ now stands high behind a towering neon turntable rig under a crimson moon, arms raised, while
+    the entire dance floor below glows with pulsing red light. Keep the same character, the same face, fur, skin
+    and markings, the same outfit details, the same saturated neon comic gouache art style with bold black contours,
+    and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s2-bloodfairies-bassquake-colossus-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Bassquake Colossus L2: Sub-Bass Rumble (seed 1)'
+  asset: slime-city/evolutions/s2-bloodfairies-bassquake-colossus@2
+  size: 832x1216
+  seed: 1106035
+  source_image_id: 261420
+  prompt_prose: The walking speaker stack now throbs with visible sub-bass rings that crack the pavement and rattle
+    two rival fighters standing nearby. Keep the same character, the same face, fur, skin and markings, the same
+    outfit details, the same saturated neon comic gouache art style with bold black contours, and the same tall
+    portrait framing with the scene painted edge to edge.
+- key: slime-evo-s2-bloodfairies-bassquake-colossus-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Bassquake Colossus L2: Sub-Bass Rumble (seed 2)'
+  asset: slime-city/evolutions/s2-bloodfairies-bassquake-colossus@2
+  size: 832x1216
+  seed: 1106036
+  source_image_id: 261420
+  prompt_prose: The walking speaker stack now throbs with visible sub-bass rings that crack the pavement and rattle
+    two rival fighters standing nearby. Keep the same character, the same face, fur, skin and markings, the same
+    outfit details, the same saturated neon comic gouache art style with bold black contours, and the same tall
+    portrait framing with the scene painted edge to edge.
+- key: slime-evo-s2-bloodfairies-bassquake-colossus-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Bassquake Colossus L3: The Bass Drop (seed 1)'
+  asset: slime-city/evolutions/s2-bloodfairies-bassquake-colossus@3
+  size: 832x1216
+  seed: 1106037
+  source_image_id: 261420
+  prompt_prose: The colossus now slams both speaker fists into the street, a huge purple shockwave blasting outward
+    across three alleys and knocking even its own adult bandmates off balance. Keep the same character, the same
+    face, fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style with
+    bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s2-bloodfairies-bassquake-colossus-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Bassquake Colossus L3: The Bass Drop (seed 2)'
+  asset: slime-city/evolutions/s2-bloodfairies-bassquake-colossus@3
+  size: 832x1216
+  seed: 1106038
+  source_image_id: 261420
+  prompt_prose: The colossus now slams both speaker fists into the street, a huge purple shockwave blasting outward
+    across three alleys and knocking even its own adult bandmates off balance. Keep the same character, the same
+    face, fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style with
+    bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-bloodfairies-mosh-firefly-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Moshpit Firefly L2: Dazzling Glow (seed 1)'
+  asset: slime-city/evolutions/s3-bloodfairies-mosh-firefly@2
+  size: 832x1216
+  seed: 1106039
+  source_image_id: 261465
+  prompt_prose: The tiny adult firefly scout now blazes with a blinding golden glow, a rival fighter across from
+    her shielding his eyes and stumbling back. Keep the same character, the same face, fur, skin and markings, the
+    same outfit details, the same saturated neon comic gouache art style with bold black contours, and the same
+    tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-bloodfairies-mosh-firefly-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Moshpit Firefly L2: Dazzling Glow (seed 2)'
+  asset: slime-city/evolutions/s3-bloodfairies-mosh-firefly@2
+  size: 832x1216
+  seed: 1106040
+  source_image_id: 261465
+  prompt_prose: The tiny adult firefly scout now blazes with a blinding golden glow, a rival fighter across from
+    her shielding his eyes and stumbling back. Keep the same character, the same face, fur, skin and markings, the
+    same outfit details, the same saturated neon comic gouache art style with bold black contours, and the same
+    tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-bloodfairies-mosh-firefly-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Moshpit Firefly L3: Firefly Cloud (seed 1)'
+  asset: slime-city/evolutions/s3-bloodfairies-mosh-firefly@3
+  size: 832x1216
+  seed: 1106041
+  source_image_id: 261465
+  prompt_prose: The firefly has burst into a vast swirling cloud of tiny glowing adult fireflies that fills every
+    empty alley of the street with flickering gold light. Keep the same character, the same face, fur, skin and
+    markings, the same outfit details, the same saturated neon comic gouache art style with bold black contours,
+    and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-bloodfairies-mosh-firefly-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Moshpit Firefly L3: Firefly Cloud (seed 2)'
+  asset: slime-city/evolutions/s3-bloodfairies-mosh-firefly@3
+  size: 832x1216
+  seed: 1106042
+  source_image_id: 261465
+  prompt_prose: The firefly has burst into a vast swirling cloud of tiny glowing adult fireflies that fills every
+    empty alley of the street with flickering gold light. Keep the same character, the same face, fur, skin and
+    markings, the same outfit details, the same saturated neon comic gouache art style with bold black contours,
+    and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-bloodfairies-pollen-queen-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Punk Pollen Queen L2: Pollen Drift (seed 1)'
+  asset: slime-city/evolutions/s3-bloodfairies-pollen-queen@2
+  size: 832x1216
+  seed: 1106043
+  source_image_id: 261466
+  prompt_prose: The punk pollen queen now releases a drifting golden pollen haze that settles over two bruised adult
+    fairies beside her, their scrapes glowing as they mend. Keep the same character, the same face, fur, skin and
+    markings, the same outfit details, the same saturated neon comic gouache art style with bold black contours,
+    and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-bloodfairies-pollen-queen-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Punk Pollen Queen L2: Pollen Drift (seed 2)'
+  asset: slime-city/evolutions/s3-bloodfairies-pollen-queen@2
+  size: 832x1216
+  seed: 1106044
+  source_image_id: 261466
+  prompt_prose: The punk pollen queen now releases a drifting golden pollen haze that settles over two bruised adult
+    fairies beside her, their scrapes glowing as they mend. Keep the same character, the same face, fur, skin and
+    markings, the same outfit details, the same saturated neon comic gouache art style with bold black contours,
+    and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-bloodfairies-pollen-queen-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Punk Pollen Queen L3: Royal Bloom (seed 1)'
+  asset: slime-city/evolutions/s3-bloodfairies-pollen-queen@3
+  size: 832x1216
+  seed: 1106045
+  source_image_id: 261466
+  prompt_prose: The queen now sits enthroned on a giant blooming punk flower that has sprouted through the asphalt,
+    new small adult fairies budding out of its petals on either side. Keep the same character, the same face, fur,
+    skin and markings, the same outfit details, the same saturated neon comic gouache art style with bold black
+    contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-bloodfairies-pollen-queen-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Punk Pollen Queen L3: Royal Bloom (seed 2)'
+  asset: slime-city/evolutions/s3-bloodfairies-pollen-queen@3
+  size: 832x1216
+  seed: 1106046
+  source_image_id: 261466
+  prompt_prose: The queen now sits enthroned on a giant blooming punk flower that has sprouted through the asphalt,
+    new small adult fairies budding out of its petals on either side. Keep the same character, the same face, fur,
+    skin and markings, the same outfit details, the same saturated neon comic gouache art style with bold black
+    contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-bloodfairies-backstage-vamp-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Backstage Vamp L2: Acquired Taste (seed 1)'
+  asset: slime-city/evolutions/s3-bloodfairies-backstage-vamp@2
+  size: 832x1216
+  seed: 1106047
+  source_image_id: 261467
+  prompt_prose: The adult backstage vamp now lounges in the green room looking taller and stronger, wiping a glowing
+    crimson smear from her lips with a satisfied smirk. Keep the same character, the same face, fur, skin and markings,
+    the same outfit details, the same saturated neon comic gouache art style with bold black contours, and the same
+    tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-bloodfairies-backstage-vamp-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Backstage Vamp L2: Acquired Taste (seed 2)'
+  asset: slime-city/evolutions/s3-bloodfairies-backstage-vamp@2
+  size: 832x1216
+  seed: 1106048
+  source_image_id: 261467
+  prompt_prose: The adult backstage vamp now lounges in the green room looking taller and stronger, wiping a glowing
+    crimson smear from her lips with a satisfied smirk. Keep the same character, the same face, fur, skin and markings,
+    the same outfit details, the same saturated neon comic gouache art style with bold black contours, and the same
+    tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-bloodfairies-backstage-vamp-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Backstage Vamp L3: Turned (seed 1)'
+  asset: slime-city/evolutions/s3-bloodfairies-backstage-vamp@3
+  size: 832x1216
+  seed: 1106049
+  source_image_id: 261467
+  prompt_prose: The vamp now stands in the backstage doorway beside a newly turned adult fan with fresh tiny fangs
+    and glowing red eyes, both grinning at the stage. Keep the same character, the same face, fur, skin and markings,
+    the same outfit details, the same saturated neon comic gouache art style with bold black contours, and the same
+    tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-bloodfairies-backstage-vamp-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Backstage Vamp L3: Turned (seed 2)'
+  asset: slime-city/evolutions/s3-bloodfairies-backstage-vamp@3
+  size: 832x1216
+  seed: 1106050
+  source_image_id: 261467
+  prompt_prose: The vamp now stands in the backstage doorway beside a newly turned adult fan with fresh tiny fangs
+    and glowing red eyes, both grinning at the stage. Keep the same character, the same face, fur, skin and markings,
+    the same outfit details, the same saturated neon comic gouache art style with bold black contours, and the same
+    tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-bloodfairies-karaoke-oracle-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Riot Karaoke Oracle L2: Off-Key Omen (seed 1)'
+  asset: slime-city/evolutions/s3-bloodfairies-karaoke-oracle@2
+  size: 832x1216
+  seed: 1106051
+  source_image_id: 261468
+  prompt_prose: The adult oracle now hits a jagged off-key note that freezes a rival across the stage mid-step in
+    a shimmering violet glaze. Keep the same character, the same face, fur, skin and markings, the same outfit details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-s3-bloodfairies-karaoke-oracle-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Riot Karaoke Oracle L2: Off-Key Omen (seed 2)'
+  asset: slime-city/evolutions/s3-bloodfairies-karaoke-oracle@2
+  size: 832x1216
+  seed: 1106052
+  source_image_id: 261468
+  prompt_prose: The adult oracle now hits a jagged off-key note that freezes a rival across the stage mid-step in
+    a shimmering violet glaze. Keep the same character, the same face, fur, skin and markings, the same outfit details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-s3-bloodfairies-karaoke-oracle-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Riot Karaoke Oracle L3: Stadium Singalong (seed 1)'
+  asset: slime-city/evolutions/s3-bloodfairies-karaoke-oracle@3
+  size: 832x1216
+  seed: 1106053
+  source_image_id: 261468
+  prompt_prose: The oracle now stands on a stadium stage with arms spread as a huge adult crowd of fairies sings
+    along, glowing lyrics of light rising from every mouth. Keep the same character, the same face, fur, skin and
+    markings, the same outfit details, the same saturated neon comic gouache art style with bold black contours,
+    and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-bloodfairies-karaoke-oracle-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Riot Karaoke Oracle L3: Stadium Singalong (seed 2)'
+  asset: slime-city/evolutions/s3-bloodfairies-karaoke-oracle@3
+  size: 832x1216
+  seed: 1106054
+  source_image_id: 261468
+  prompt_prose: The oracle now stands on a stadium stage with arms spread as a huge adult crowd of fairies sings
+    along, glowing lyrics of light rising from every mouth. Keep the same character, the same face, fur, skin and
+    markings, the same outfit details, the same saturated neon comic gouache art style with bold black contours,
+    and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-bloodfairies-karaoke-oracle-l3b-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Riot Karaoke Oracle L3b: Solo Prophecy (seed 1)'
+  asset: slime-city/evolutions/s3-bloodfairies-karaoke-oracle@3b
+  size: 832x1216
+  seed: 1106055
+  source_image_id: 261468
+  prompt_prose: The oracle now sits alone on an empty karaoke stage gazing into a glowing crystal microphone, two
+    shimmering visions of the future floating above it. Keep the same character, the same face, fur, skin and markings,
+    the same outfit details, the same saturated neon comic gouache art style with bold black contours, and the same
+    tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-bloodfairies-karaoke-oracle-l3b-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Riot Karaoke Oracle L3b: Solo Prophecy (seed 2)'
+  asset: slime-city/evolutions/s3-bloodfairies-karaoke-oracle@3b
+  size: 832x1216
+  seed: 1106056
+  source_image_id: 261468
+  prompt_prose: The oracle now sits alone on an empty karaoke stage gazing into a glowing crystal microphone, two
+    shimmering visions of the future floating above it. Keep the same character, the same face, fur, skin and markings,
+    the same outfit details, the same saturated neon comic gouache art style with bold black contours, and the same
+    tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-bloodfairies-tour-bus-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Tour Bus Swarm L2: Next Stop (seed 1)'
+  asset: slime-city/evolutions/s3-bloodfairies-tour-bus@2
+  size: 832x1216
+  seed: 1106057
+  source_image_id: 261469
+  prompt_prose: The tour bus now idles at a neon bus stop with its door open, one noisy adult pixie hopping off
+    with a guitar case. Keep the same character, the same face, fur, skin and markings, the same outfit details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-s3-bloodfairies-tour-bus-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Tour Bus Swarm L2: Next Stop (seed 2)'
+  asset: slime-city/evolutions/s3-bloodfairies-tour-bus@2
+  size: 832x1216
+  seed: 1106058
+  source_image_id: 261469
+  prompt_prose: The tour bus now idles at a neon bus stop with its door open, one noisy adult pixie hopping off
+    with a guitar case. Keep the same character, the same face, fur, skin and markings, the same outfit details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-s3-bloodfairies-tour-bus-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Tour Bus Swarm L3: Everybody Off the Bus (seed 1)'
+  asset: slime-city/evolutions/s3-bloodfairies-tour-bus@3
+  size: 832x1216
+  seed: 1106059
+  source_image_id: 261469
+  prompt_prose: The wrecked tour bus now lies on its side spewing steam while a horde of adult pixies pours out
+    of every window and door, swinging guitars and mic stands. Keep the same character, the same face, fur, skin
+    and markings, the same outfit details, the same saturated neon comic gouache art style with bold black contours,
+    and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-bloodfairies-tour-bus-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Tour Bus Swarm L3: Everybody Off the Bus (seed 2)'
+  asset: slime-city/evolutions/s3-bloodfairies-tour-bus@3
+  size: 832x1216
+  seed: 1106060
+  source_image_id: 261469
+  prompt_prose: The wrecked tour bus now lies on its side spewing steam while a horde of adult pixies pours out
+    of every window and door, swinging guitars and mic stands. Keep the same character, the same face, fur, skin
+    and markings, the same outfit details, the same saturated neon comic gouache art style with bold black contours,
+    and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-bloodfairies-headliner-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Blood Moon Headliner L2: Blood Moon Rising (seed 1)'
+  asset: slime-city/evolutions/s3-bloodfairies-headliner@2
+  size: 832x1216
+  seed: 1106061
+  source_image_id: 261470
+  prompt_prose: The adult headliner now performs under a huge rising crimson moon, its red light spilling over the
+    cheering crowd and making their scrapes glow and fade. Keep the same character, the same face, fur, skin and
+    markings, the same outfit details, the same saturated neon comic gouache art style with bold black contours,
+    and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-bloodfairies-headliner-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Blood Moon Headliner L2: Blood Moon Rising (seed 2)'
+  asset: slime-city/evolutions/s3-bloodfairies-headliner@2
+  size: 832x1216
+  seed: 1106062
+  source_image_id: 261470
+  prompt_prose: The adult headliner now performs under a huge rising crimson moon, its red light spilling over the
+    cheering crowd and making their scrapes glow and fade. Keep the same character, the same face, fur, skin and
+    markings, the same outfit details, the same saturated neon comic gouache art style with bold black contours,
+    and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-bloodfairies-headliner-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Blood Moon Headliner L3: One More Song (seed 1)'
+  asset: slime-city/evolutions/s3-bloodfairies-headliner@3
+  size: 832x1216
+  seed: 1106063
+  source_image_id: 261470
+  prompt_prose: A glowing translucent ghost of the headliner now steps back onto the empty stage for an encore,
+    mic in hand, as the crowd roars and holds up lighters. Keep the same character, the same face, fur, skin and
+    markings, the same outfit details, the same saturated neon comic gouache art style with bold black contours,
+    and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-bloodfairies-headliner-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Blood Moon Headliner L3: One More Song (seed 2)'
+  asset: slime-city/evolutions/s3-bloodfairies-headliner@3
+  size: 832x1216
+  seed: 1106064
+  source_image_id: 261470
+  prompt_prose: A glowing translucent ghost of the headliner now steps back onto the empty stage for an encore,
+    mic in hand, as the crowd roars and holds up lighters. Keep the same character, the same face, fur, skin and
+    markings, the same outfit details, the same saturated neon comic gouache art style with bold black contours,
+    and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s2-bloodfairies-roadie-megaphone-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Roadie Megaphone L2: Bullhorn (seed 1)'
+  asset: slime-city/evolutions/s2-bloodfairies-roadie-megaphone@2
+  size: 832x1216
+  seed: 1106065
+  source_image_id: 261424
+  prompt_prose: The battered megaphone is now raised by an adult roadie in a road-crew vest, a cone of sound rousing
+    two punk fairies beside her into a charge. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s2-bloodfairies-roadie-megaphone-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Roadie Megaphone L2: Bullhorn (seed 2)'
+  asset: slime-city/evolutions/s2-bloodfairies-roadie-megaphone@2
+  size: 832x1216
+  seed: 1106066
+  source_image_id: 261424
+  prompt_prose: The battered megaphone is now raised by an adult roadie in a road-crew vest, a cone of sound rousing
+    two punk fairies beside her into a charge. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s2-bloodfairies-roadie-megaphone-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Roadie Megaphone L3: Riot Call (seed 1)'
+  asset: slime-city/evolutions/s2-bloodfairies-roadie-megaphone@3
+  size: 832x1216
+  seed: 1106067
+  source_image_id: 261424
+  prompt_prose: The megaphone now blares from atop a barricade as a whole street of adult punk fairies answers the
+    call, fists and flags raised in a rising crowd. Keep the same objects, characters and setting details, the same
+    saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with the
+    scene painted edge to edge.
+- key: slime-evo-s2-bloodfairies-roadie-megaphone-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Roadie Megaphone L3: Riot Call (seed 2)'
+  asset: slime-city/evolutions/s2-bloodfairies-roadie-megaphone@3
+  size: 832x1216
+  seed: 1106068
+  source_image_id: 261424
+  prompt_prose: The megaphone now blares from atop a barricade as a whole street of adult punk fairies answers the
+    call, fists and flags raised in a rising crowd. Keep the same objects, characters and setting details, the same
+    saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with the
+    scene painted edge to edge.
+- key: slime-evo-s3-bloodfairies-van-radio-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Tour Van Radio L2: Solo Star FM (seed 1)'
+  asset: slime-city/evolutions/s3-bloodfairies-van-radio@2
+  size: 832x1216
+  seed: 1106069
+  source_image_id: 261479
+  prompt_prose: The tour van radio now glows with a single spotlight beam that lands on one lone adult fairy singer
+    striking a pose on the van roof. Keep the same objects, characters and setting details, the same saturated neon
+    comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s3-bloodfairies-van-radio-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Tour Van Radio L2: Solo Star FM (seed 2)'
+  asset: slime-city/evolutions/s3-bloodfairies-van-radio@2
+  size: 832x1216
+  seed: 1106070
+  source_image_id: 261479
+  prompt_prose: The tour van radio now glows with a single spotlight beam that lands on one lone adult fairy singer
+    striking a pose on the van roof. Keep the same objects, characters and setting details, the same saturated neon
+    comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s3-bloodfairies-van-radio-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Tour Van Radio L3: Pirate Broadcast (seed 1)'
+  asset: slime-city/evolutions/s3-bloodfairies-van-radio@3
+  size: 832x1216
+  seed: 1106071
+  source_image_id: 261479
+  prompt_prose: A jury-rigged pirate antenna now towers above the van, glowing radio waves rippling out over the
+    whole adult crew who dance in perfect rhythm together. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-s3-bloodfairies-van-radio-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Tour Van Radio L3: Pirate Broadcast (seed 2)'
+  asset: slime-city/evolutions/s3-bloodfairies-van-radio@3
+  size: 832x1216
+  seed: 1106072
+  source_image_id: 261479
+  prompt_prose: A jury-rigged pirate antenna now towers above the van, glowing radio waves rippling out over the
+    whole adult crew who dance in perfect rhythm together. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-s3-bloodfairies-encore-boots-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Last Encore Boots L2: Blister Sprint (seed 1)'
+  asset: slime-city/evolutions/s3-bloodfairies-encore-boots@2
+  size: 832x1216
+  seed: 1106073
+  source_image_id: 261480
+  prompt_prose: The enchanted boots now blur with speed lines as an awkward adult dancer wearing them sprints straight
+    at a rival across the alley, sparks flying from the heels. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-s3-bloodfairies-encore-boots-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Last Encore Boots L2: Blister Sprint (seed 2)'
+  asset: slime-city/evolutions/s3-bloodfairies-encore-boots@2
+  size: 832x1216
+  seed: 1106074
+  source_image_id: 261480
+  prompt_prose: The enchanted boots now blur with speed lines as an awkward adult dancer wearing them sprints straight
+    at a rival across the alley, sparks flying from the heels. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-s3-bloodfairies-encore-boots-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Last Encore Boots L3: The Last Encore (seed 1)'
+  asset: slime-city/evolutions/s3-bloodfairies-encore-boots@3
+  size: 832x1216
+  seed: 1106075
+  source_image_id: 261480
+  prompt_prose: The boots now stand alone in a spotlight at center stage, a deep bow of glowing footprints leading
+    offstage while roses land around them. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s3-bloodfairies-encore-boots-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Last Encore Boots L3: The Last Encore (seed 2)'
+  asset: slime-city/evolutions/s3-bloodfairies-encore-boots@3
+  size: 832x1216
+  seed: 1106076
+  source_image_id: 261480
+  prompt_prose: The boots now stand alone in a spotlight at center stage, a deep bow of glowing footprints leading
+    offstage while roses land around them. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s2-bloodfairies-glitterglass-flood-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Glitterglass Flood L2: Shard Frenzy (seed 1)'
+  asset: slime-city/evolutions/s2-bloodfairies-glitterglass-flood@2
+  size: 832x1216
+  seed: 1106077
+  source_image_id: 261421
+  prompt_prose: Shattered window glass now swirls around a mosh pit of adult fairies who thrash harder, tiny glittering
+    nicks on their arms catching the light. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s2-bloodfairies-glitterglass-flood-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Glitterglass Flood L2: Shard Frenzy (seed 2)'
+  asset: slime-city/evolutions/s2-bloodfairies-glitterglass-flood@2
+  size: 832x1216
+  seed: 1106078
+  source_image_id: 261421
+  prompt_prose: Shattered window glass now swirls around a mosh pit of adult fairies who thrash harder, tiny glittering
+    nicks on their arms catching the light. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s2-bloodfairies-glitterglass-flood-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Glitterglass Flood L3: Glitter Flood (seed 1)'
+  asset: slime-city/evolutions/s2-bloodfairies-glitterglass-flood@3
+  size: 832x1216
+  seed: 1106079
+  source_image_id: 261421
+  prompt_prose: A tidal wave of glittering glass shards now floods the entire street, sweeping every rival off their
+    feet while the band ducks behind the stage. Keep the same objects, characters and setting details, the same
+    saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with the
+    scene painted edge to edge.
+- key: slime-evo-s2-bloodfairies-glitterglass-flood-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Glitterglass Flood L3: Glitter Flood (seed 2)'
+  asset: slime-city/evolutions/s2-bloodfairies-glitterglass-flood@3
+  size: 832x1216
+  seed: 1106080
+  source_image_id: 261421
+  prompt_prose: A tidal wave of glittering glass shards now floods the entire street, sweeping every rival off their
+    feet while the band ducks behind the stage. Keep the same objects, characters and setting details, the same
+    saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with the
+    scene painted edge to edge.
+- key: slime-evo-s3-bloodfairies-feedback-burst-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Feedback Burst L2: Mic Squeal (seed 1)'
+  asset: slime-city/evolutions/s3-bloodfairies-feedback-burst@2
+  size: 832x1216
+  seed: 1106081
+  source_image_id: 261471
+  prompt_prose: A shrieking microphone now spits jagged sound waves that light up two adult fairy fighters beside
+    it, their wings flaring with energy. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s3-bloodfairies-feedback-burst-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Feedback Burst L2: Mic Squeal (seed 2)'
+  asset: slime-city/evolutions/s3-bloodfairies-feedback-burst@2
+  size: 832x1216
+  seed: 1106082
+  source_image_id: 261471
+  prompt_prose: A shrieking microphone now spits jagged sound waves that light up two adult fairy fighters beside
+    it, their wings flaring with energy. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s3-bloodfairies-feedback-burst-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Feedback Burst L3: Howlround (seed 1)'
+  asset: slime-city/evolutions/s3-bloodfairies-feedback-burst@3
+  size: 832x1216
+  seed: 1106083
+  source_image_id: 261471
+  prompt_prose: A spiraling howlround of feedback now loops between a ring of speakers and an adult crowd, its screaming
+    vortex rattling every rival down the street. Keep the same objects, characters and setting details, the same
+    saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with the
+    scene painted edge to edge.
+- key: slime-evo-s3-bloodfairies-feedback-burst-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Feedback Burst L3: Howlround (seed 2)'
+  asset: slime-city/evolutions/s3-bloodfairies-feedback-burst@3
+  size: 832x1216
+  seed: 1106084
+  source_image_id: 261471
+  prompt_prose: A spiraling howlround of feedback now loops between a ring of speakers and an adult crowd, its screaming
+    vortex rattling every rival down the street. Keep the same objects, characters and setting details, the same
+    saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with the
+    scene painted edge to edge.
+- key: slime-evo-s3-bloodfairies-encore-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Encore or Die L2: Sing for Supper (seed 1)'
+  asset: slime-city/evolutions/s3-bloodfairies-encore@2
+  size: 832x1216
+  seed: 1106085
+  source_image_id: 261472
+  prompt_prose: The lucky adult fairy now sings on a tabletop while coins and glowing red fruit rain from the crowd
+    into a bowl carried toward a distant throne. Keep the same objects, characters and setting details, the same
+    saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with the
+    scene painted edge to edge.
+- key: slime-evo-s3-bloodfairies-encore-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Encore or Die L2: Sing for Supper (seed 2)'
+  asset: slime-city/evolutions/s3-bloodfairies-encore@2
+  size: 832x1216
+  seed: 1106086
+  source_image_id: 261472
+  prompt_prose: The lucky adult fairy now sings on a tabletop while coins and glowing red fruit rain from the crowd
+    into a bowl carried toward a distant throne. Keep the same objects, characters and setting details, the same
+    saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with the
+    scene painted edge to edge.
+- key: slime-evo-s3-bloodfairies-encore-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Encore or Die L3: Encore! (seed 1)'
+  asset: slime-city/evolutions/s3-bloodfairies-encore@3
+  size: 832x1216
+  seed: 1106087
+  source_image_id: 261472
+  prompt_prose: A fallen adult fairy now rises glowing from the stage floor under a single spotlight, the crowd
+    on its feet screaming for the encore. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s3-bloodfairies-encore-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Encore or Die L3: Encore! (seed 2)'
+  asset: slime-city/evolutions/s3-bloodfairies-encore@3
+  size: 832x1216
+  seed: 1106088
+  source_image_id: 261472
+  prompt_prose: A fallen adult fairy now rises glowing from the stage floor under a single spotlight, the crowd
+    on its feet screaming for the encore. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s3-bloodfairies-encore-l3b-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Encore or Die L3b: Die Trying (seed 1)'
+  asset: slime-city/evolutions/s3-bloodfairies-encore@3b
+  size: 832x1216
+  seed: 1106089
+  source_image_id: 261472
+  prompt_prose: The singer now blazes with crackling orange fire and sparks pouring from her wings, mid-scream at
+    the edge of the stage, ready to burn out bright. Keep the same objects, characters and setting details, the
+    same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with
+    the scene painted edge to edge.
+- key: slime-evo-s3-bloodfairies-encore-l3b-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Encore or Die L3b: Die Trying (seed 2)'
+  asset: slime-city/evolutions/s3-bloodfairies-encore@3b
+  size: 832x1216
+  seed: 1106090
+  source_image_id: 261472
+  prompt_prose: The singer now blazes with crackling orange fire and sparks pouring from her wings, mid-scream at
+    the edge of the stage, ready to burn out bright. Keep the same objects, characters and setting details, the
+    same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with
+    the scene painted edge to edge.
+- key: slime-evo-s3-bloodfairies-rafter-dive-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Dive from the Rafters L2: Rejoin the Pit (seed 1)'
+  asset: slime-city/evolutions/s3-bloodfairies-rafter-dive@2
+  size: 832x1216
+  seed: 1106091
+  source_image_id: 261473
+  prompt_prose: The diving adult singer now lands in the pit and is swallowed into a tight swarm of dancers who
+    lock arms around her. Keep the same objects, characters and setting details, the same saturated neon comic gouache
+    art style with bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-bloodfairies-rafter-dive-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Dive from the Rafters L2: Rejoin the Pit (seed 2)'
+  asset: slime-city/evolutions/s3-bloodfairies-rafter-dive@2
+  size: 832x1216
+  seed: 1106092
+  source_image_id: 261473
+  prompt_prose: The diving adult singer now lands in the pit and is swallowed into a tight swarm of dancers who
+    lock arms around her. Keep the same objects, characters and setting details, the same saturated neon comic gouache
+    art style with bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-bloodfairies-rafter-dive-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Dive from the Rafters L3: The Rig Comes Down (seed 1)'
+  asset: slime-city/evolutions/s3-bloodfairies-rafter-dive@3
+  size: 832x1216
+  seed: 1106093
+  source_image_id: 261473
+  prompt_prose: The whole lighting rig now comes crashing down from the rafters across three alleys in a shower
+    of sparks, the bruised diver riding it down. Keep the same objects, characters and setting details, the same
+    saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with the
+    scene painted edge to edge.
+- key: slime-evo-s3-bloodfairies-rafter-dive-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Dive from the Rafters L3: The Rig Comes Down (seed 2)'
+  asset: slime-city/evolutions/s3-bloodfairies-rafter-dive@3
+  size: 832x1216
+  seed: 1106094
+  source_image_id: 261473
+  prompt_prose: The whole lighting rig now comes crashing down from the rafters across three alleys in a shower
+    of sparks, the bruised diver riding it down. Keep the same objects, characters and setting details, the same
+    saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with the
+    scene painted edge to edge.
+- key: slime-evo-s3-bloodfairies-cathedral-noise-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Cathedral of Noise L2: Hymn for Giants (seed 1)'
+  asset: slime-city/evolutions/s3-bloodfairies-cathedral-noise@2
+  size: 832x1216
+  seed: 1106095
+  source_image_id: 261475
+  prompt_prose: The cathedral organ pipes now aim like cannons at a hulking adult brute, a beam of thundering violet
+    sound knocking it to its knees. Keep the same objects, characters and setting details, the same saturated neon
+    comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s3-bloodfairies-cathedral-noise-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Cathedral of Noise L2: Hymn for Giants (seed 2)'
+  asset: slime-city/evolutions/s3-bloodfairies-cathedral-noise@2
+  size: 832x1216
+  seed: 1106096
+  source_image_id: 261475
+  prompt_prose: The cathedral organ pipes now aim like cannons at a hulking adult brute, a beam of thundering violet
+    sound knocking it to its knees. Keep the same objects, characters and setting details, the same saturated neon
+    comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s3-bloodfairies-cathedral-noise-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Cathedral of Noise L3: Glorious Encore (seed 1)'
+  asset: slime-city/evolutions/s3-bloodfairies-cathedral-noise@3
+  size: 832x1216
+  seed: 1106097
+  source_image_id: 261475
+  prompt_prose: The cathedral's stained glass now explodes outward in a second blast of sound that streaks across
+    the city, adult fans in the front pews thrown back but cheering. Keep the same objects, characters and setting
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-s3-bloodfairies-cathedral-noise-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Cathedral of Noise L3: Glorious Encore (seed 2)'
+  asset: slime-city/evolutions/s3-bloodfairies-cathedral-noise@3
+  size: 832x1216
+  seed: 1106098
+  source_image_id: 261475
+  prompt_prose: The cathedral's stained glass now explodes outward in a second blast of sound that streaks across
+    the city, adult fans in the front pews thrown back but cheering. Keep the same objects, characters and setting
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-s2-bloodfairies-earworm-feedback-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Earworm Feedback L2: Catchy Hook (seed 1)'
+  asset: slime-city/evolutions/s2-bloodfairies-earworm-feedback@2
+  size: 832x1216
+  seed: 1106099
+  source_image_id: 261423
+  prompt_prose: Glowing musical hooks now sprout from the sidewalk and snag the ankles of two rivals stepping nearby.
+    Keep the same objects, characters and setting details, the same saturated neon comic gouache art style with
+    bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s2-bloodfairies-earworm-feedback-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Earworm Feedback L2: Catchy Hook (seed 2)'
+  asset: slime-city/evolutions/s2-bloodfairies-earworm-feedback@2
+  size: 832x1216
+  seed: 1106100
+  source_image_id: 261423
+  prompt_prose: Glowing musical hooks now sprout from the sidewalk and snag the ankles of two rivals stepping nearby.
+    Keep the same objects, characters and setting details, the same saturated neon comic gouache art style with
+    bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s2-bloodfairies-earworm-feedback-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Earworm Feedback L3: Earworm Epidemic (seed 1)'
+  asset: slime-city/evolutions/s2-bloodfairies-earworm-feedback@3
+  size: 832x1216
+  seed: 1106101
+  source_image_id: 261423
+  prompt_prose: Translucent glowing worms of melody now wriggle into the ears of three rival adults across three
+    alleys, each frozen mid-step with a dazed look. Keep the same objects, characters and setting details, the same
+    saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with the
+    scene painted edge to edge.
+- key: slime-evo-s2-bloodfairies-earworm-feedback-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Earworm Feedback L3: Earworm Epidemic (seed 2)'
+  asset: slime-city/evolutions/s2-bloodfairies-earworm-feedback@3
+  size: 832x1216
+  seed: 1106102
+  source_image_id: 261423
+  prompt_prose: Translucent glowing worms of melody now wriggle into the ears of three rival adults across three
+    alleys, each frozen mid-step with a dazed look. Keep the same objects, characters and setting details, the same
+    saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with the
+    scene painted edge to edge.
+- key: slime-evo-s3-bloodfairies-amp-socket-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Broken Amp Socket L2: Arc Flash (seed 1)'
+  asset: slime-city/evolutions/s3-bloodfairies-amp-socket@2
+  size: 832x1216
+  seed: 1106103
+  source_image_id: 261477
+  prompt_prose: The broken amp socket now spits a forked arc of blue lightning that jumps across the street to strike
+    a far rival. Keep the same objects, characters and setting details, the same saturated neon comic gouache art
+    style with bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-bloodfairies-amp-socket-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Broken Amp Socket L2: Arc Flash (seed 2)'
+  asset: slime-city/evolutions/s3-bloodfairies-amp-socket@2
+  size: 832x1216
+  seed: 1106104
+  source_image_id: 261477
+  prompt_prose: The broken amp socket now spits a forked arc of blue lightning that jumps across the street to strike
+    a far rival. Keep the same objects, characters and setting details, the same saturated neon comic gouache art
+    style with bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-bloodfairies-amp-socket-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Broken Amp Socket L3: Still Live (seed 1)'
+  asset: slime-city/evolutions/s3-bloodfairies-amp-socket@3
+  size: 832x1216
+  seed: 1106105
+  source_image_id: 261477
+  prompt_prose: The socket now crackles brighter than ever with its cables snaking toward the next doorway, sparks
+    dancing as it waits for another victim. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s3-bloodfairies-amp-socket-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Broken Amp Socket L3: Still Live (seed 2)'
+  asset: slime-city/evolutions/s3-bloodfairies-amp-socket@3
+  size: 832x1216
+  seed: 1106106
+  source_image_id: 261477
+  prompt_prose: The socket now crackles brighter than ever with its cables snaking toward the next doorway, sparks
+    dancing as it waits for another victim. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s3-bloodfairies-banana-bouncer-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Bouncer Banana Peel L2: Cover Charge (seed 1)'
+  asset: slime-city/evolutions/s3-bloodfairies-banana-bouncer@2
+  size: 832x1216
+  seed: 1106107
+  source_image_id: 261478
+  prompt_prose: The slipping adult bouncer now spills a fat wallet of coins mid-fall, the coins bouncing down the
+    alley toward a distant throne. Keep the same objects, characters and setting details, the same saturated neon
+    comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s3-bloodfairies-banana-bouncer-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Bouncer Banana Peel L2: Cover Charge (seed 2)'
+  asset: slime-city/evolutions/s3-bloodfairies-banana-bouncer@2
+  size: 832x1216
+  seed: 1106108
+  source_image_id: 261478
+  prompt_prose: The slipping adult bouncer now spills a fat wallet of coins mid-fall, the coins bouncing down the
+    alley toward a distant throne. Keep the same objects, characters and setting details, the same saturated neon
+    comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s3-bloodfairies-banana-bouncer-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Bouncer Banana Peel L3: Laughing Stock (seed 1)'
+  asset: slime-city/evolutions/s3-bloodfairies-banana-bouncer@3
+  size: 832x1216
+  seed: 1106109
+  source_image_id: 261478
+  prompt_prose: A crowd of adult punk fairies now doubles over laughing and pointing at the sprawled bouncer, flushed
+    and fired up as they roll up their sleeves. Keep the same objects, characters and setting details, the same
+    saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with the
+    scene painted edge to edge.
+- key: slime-evo-s3-bloodfairies-banana-bouncer-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Bouncer Banana Peel L3: Laughing Stock (seed 2)'
+  asset: slime-city/evolutions/s3-bloodfairies-banana-bouncer@3
+  size: 832x1216
+  seed: 1106110
+  source_image_id: 261478
+  prompt_prose: A crowd of adult punk fairies now doubles over laughing and pointing at the sprawled bouncer, flushed
+    and fired up as they roll up their sleeves. Keep the same objects, characters and setting details, the same
+    saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with the
+    scene painted edge to edge.

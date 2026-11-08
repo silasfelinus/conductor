@@ -1,0 +1,1512 @@
+# Slime City evolution art, Riot (2026-11-08 PT; CLASH-EVOLUTION-PLAN.md section 4).
+# Silas: "We should have fresh art on the evolutions, not just frame effects" and "300 cards, all need custom
+# better evolutions." Each crafted card (utils/slimeCity/evolutions/*.ts in kind_robots) gets a level-2 and a
+# level-3 painting, and a choose-one card a painting for its option B ('@3b'): the same character or scene
+# transformed by its story arc. Flux Kontext edits the card's wired level-1 ArtImage (SLIME_CITY_ART.cards) so
+# face, outfit and style carry over; each prompt names only that stage's story change, written per card. Two
+# seeds per stage for curation. Keepers are wired as SLIME_CITY_ART.evolutions['<cardId>@2' | '@3' | '@3b'].
+# auto_submit: true.
+round: slime-city-evolutions-riot
+project_slug: slime-city
+designer: Slime City evolution art, Riot
+is_public: true
+is_mature: false
+cast_loras: false
+priority: 640
+auto_submit: true
+lanes:
+- key: kontext-evolution
+  label: Flux Kontext dev (fp8), evolved stages from each card's level-1 painting
+  engine: kontext
+  prompt: prose
+  steps: 20
+  guidance: 2.5
+subjects:
+- key: slime-evo-spark-diver-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Spark Diver L2: Countdown Briefing (seed 1)'
+  asset: slime-city/evolutions/spark-diver@2
+  size: 832x1216
+  seed: 1108001
+  source_image_id: 262296
+  prompt_prose: She now stands on a rickety high-dive board above a crowded street brawl, a long sparking fuse burning
+    down her harness while her singed teammates flinch away beside the ladder. Keep the same character, the same
+    face, fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style with
+    bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-spark-diver-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Spark Diver L2: Countdown Briefing (seed 2)'
+  asset: slime-city/evolutions/spark-diver@2
+  size: 832x1216
+  seed: 1108002
+  source_image_id: 262296
+  prompt_prose: She now stands on a rickety high-dive board above a crowded street brawl, a long sparking fuse burning
+    down her harness while her singed teammates flinch away beside the ladder. Keep the same character, the same
+    face, fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style with
+    bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-spark-diver-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Spark Diver L3: Human Firework (seed 1)'
+  asset: slime-city/evolutions/spark-diver@3
+  size: 832x1216
+  seed: 1108003
+  source_image_id: 262296
+  prompt_prose: She is mid-dive in the night sky, her whole body trailing a comet of crackling magenta and gold
+    sparks, a huge firework bloom opening behind her over the rooftops. Keep the same character, the same face,
+    fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style with bold black
+    contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-spark-diver-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Spark Diver L3: Human Firework (seed 2)'
+  asset: slime-city/evolutions/spark-diver@3
+  size: 832x1216
+  seed: 1108004
+  source_image_id: 262296
+  prompt_prose: She is mid-dive in the night sky, her whole body trailing a comet of crackling magenta and gold
+    sparks, a huge firework bloom opening behind her over the rooftops. Keep the same character, the same face,
+    fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style with bold black
+    contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s1-mime-fuse-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Matchstick Mime L2: Silent Fuse (seed 1)'
+  asset: slime-city/evolutions/s1-mime-fuse@2
+  size: 832x1216
+  seed: 1108005
+  source_image_id: 260671
+  prompt_prose: The mime now kneels in a spotlight pretending to be trapped in an invisible box, a lit fuse curling
+    from his white gloves toward the rival fighters and his own friends alike. Keep the same character, the same
+    face, fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style with
+    bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s1-mime-fuse-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Matchstick Mime L2: Silent Fuse (seed 2)'
+  asset: slime-city/evolutions/s1-mime-fuse@2
+  size: 832x1216
+  seed: 1108006
+  source_image_id: 260671
+  prompt_prose: The mime now kneels in a spotlight pretending to be trapped in an invisible box, a lit fuse curling
+    from his white gloves toward the rival fighters and his own friends alike. Keep the same character, the same
+    face, fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style with
+    bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s1-mime-fuse-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Matchstick Mime L3: Lights Every Fuse (seed 1)'
+  asset: slime-city/evolutions/s1-mime-fuse@3
+  size: 832x1216
+  seed: 1108007
+  source_image_id: 260671
+  prompt_prose: The mime now strides down a line of grinning riot comrades, silently touching a single burning match
+    to the fuse each of them wears, sparks jumping from shoulder to shoulder. Keep the same character, the same
+    face, fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style with
+    bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s1-mime-fuse-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Matchstick Mime L3: Lights Every Fuse (seed 2)'
+  asset: slime-city/evolutions/s1-mime-fuse@3
+  size: 832x1216
+  seed: 1108008
+  source_image_id: 260671
+  prompt_prose: The mime now strides down a line of grinning riot comrades, silently touching a single burning match
+    to the fuse each of them wears, sparks jumping from shoulder to shoulder. Keep the same character, the same
+    face, fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style with
+    bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s1-blast-radius-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Doctor Blast Radius L2: Field Test (seed 1)'
+  asset: slime-city/evolutions/s1-blast-radius@2
+  size: 832x1216
+  seed: 1108009
+  source_image_id: 260672
+  prompt_prose: The doctor now wears scorched goggles and a lab coat with smoking cuffs, scribbling calculations
+    on a clipboard while a toppled rival sends sparks into the alleys on either side. Keep the same character, the
+    same face, fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style
+    with bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s1-blast-radius-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Doctor Blast Radius L2: Field Test (seed 2)'
+  asset: slime-city/evolutions/s1-blast-radius@2
+  size: 832x1216
+  seed: 1108010
+  source_image_id: 260672
+  prompt_prose: The doctor now wears scorched goggles and a lab coat with smoking cuffs, scribbling calculations
+    on a clipboard while a toppled rival sends sparks into the alleys on either side. Keep the same character, the
+    same face, fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style
+    with bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s1-blast-radius-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Doctor Blast Radius L3: Grand Unified Blast (seed 1)'
+  asset: slime-city/evolutions/s1-blast-radius@3
+  size: 832x1216
+  seed: 1108011
+  source_image_id: 260672
+  prompt_prose: The doctor stands at the center of a giant glowing ring of shockwave spreading across the whole
+    street, arms raised in triumph as fighters from both crews are blown off their feet. Keep the same character,
+    the same face, fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style
+    with bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s1-blast-radius-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Doctor Blast Radius L3: Grand Unified Blast (seed 2)'
+  asset: slime-city/evolutions/s1-blast-radius@3
+  size: 832x1216
+  seed: 1108012
+  source_image_id: 260672
+  prompt_prose: The doctor stands at the center of a giant glowing ring of shockwave spreading across the whole
+    street, arms raised in triumph as fighters from both crews are blown off their feet. Keep the same character,
+    the same face, fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style
+    with bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s2-riot-fuse-lit-bicycle-courier-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Fuse-Lit Bicycle Courier L2: Signature Required (seed 1)'
+  asset: slime-city/evolutions/s2-riot-fuse-lit-bicycle-courier@2
+  size: 832x1216
+  seed: 1108013
+  source_image_id: 261431
+  prompt_prose: The courier now skids her bicycle to a stop at the rival boss's armored door on an empty street,
+    holding out the ticking parcel with a cheeky grin while its fuse fizzes. Keep the same character, the same face,
+    fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style with bold black
+    contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s2-riot-fuse-lit-bicycle-courier-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Fuse-Lit Bicycle Courier L2: Signature Required (seed 2)'
+  asset: slime-city/evolutions/s2-riot-fuse-lit-bicycle-courier@2
+  size: 832x1216
+  seed: 1108014
+  source_image_id: 261431
+  prompt_prose: The courier now skids her bicycle to a stop at the rival boss's armored door on an empty street,
+    holding out the ticking parcel with a cheeky grin while its fuse fizzes. Keep the same character, the same face,
+    fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style with bold black
+    contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s2-riot-fuse-lit-bicycle-courier-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Fuse-Lit Bicycle Courier L3: Final Delivery (seed 1)'
+  asset: slime-city/evolutions/s2-riot-fuse-lit-bicycle-courier@3
+  size: 832x1216
+  seed: 1108015
+  source_image_id: 261431
+  prompt_prose: Her bicycle now lies tipped over in a cloud of smoke and sparks, and the ticking parcel sits alone
+    on the doorstep, its fuse glowing brighter as rivals back away. Keep the same character, the same face, fur,
+    skin and markings, the same outfit details, the same saturated neon comic gouache art style with bold black
+    contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s2-riot-fuse-lit-bicycle-courier-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Fuse-Lit Bicycle Courier L3: Final Delivery (seed 2)'
+  asset: slime-city/evolutions/s2-riot-fuse-lit-bicycle-courier@3
+  size: 832x1216
+  seed: 1108016
+  source_image_id: 261431
+  prompt_prose: Her bicycle now lies tipped over in a cloud of smoke and sparks, and the ticking parcel sits alone
+    on the doorstep, its fuse glowing brighter as rivals back away. Keep the same character, the same face, fur,
+    skin and markings, the same outfit details, the same saturated neon comic gouache art style with bold black
+    contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s2-riot-radioactive-parade-float-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Radioactive Parade Float L2: Glowing Procession (seed 1)'
+  asset: slime-city/evolutions/s2-riot-radioactive-parade-float@2
+  size: 832x1216
+  seed: 1108017
+  source_image_id: 261432
+  prompt_prose: The float now rolls down a deserted avenue anyway, pulsing with sickly green radioactive light that
+    singes the fighters walking too close on both sides. Keep the same character, the same face, fur, skin and markings,
+    the same outfit details, the same saturated neon comic gouache art style with bold black contours, and the same
+    tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s2-riot-radioactive-parade-float-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Radioactive Parade Float L2: Glowing Procession (seed 2)'
+  asset: slime-city/evolutions/s2-riot-radioactive-parade-float@2
+  size: 832x1216
+  seed: 1108018
+  source_image_id: 261432
+  prompt_prose: The float now rolls down a deserted avenue anyway, pulsing with sickly green radioactive light that
+    singes the fighters walking too close on both sides. Keep the same character, the same face, fur, skin and markings,
+    the same outfit details, the same saturated neon comic gouache art style with bold black contours, and the same
+    tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s2-riot-radioactive-parade-float-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Radioactive Parade Float L3: The Parade Ate the City (seed 1)'
+  asset: slime-city/evolutions/s2-riot-radioactive-parade-float@3
+  size: 832x1216
+  seed: 1108019
+  source_image_id: 261432
+  prompt_prose: The float has grown into a towering glowing monster of papier-mache and neon, crashing through three
+    alleys at once while its own marchers duck under falling confetti and debris. Keep the same character, the same
+    face, fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style with
+    bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s2-riot-radioactive-parade-float-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Radioactive Parade Float L3: The Parade Ate the City (seed 2)'
+  asset: slime-city/evolutions/s2-riot-radioactive-parade-float@3
+  size: 832x1216
+  seed: 1108020
+  source_image_id: 261432
+  prompt_prose: The float has grown into a towering glowing monster of papier-mache and neon, crashing through three
+    alleys at once while its own marchers duck under falling confetti and debris. Keep the same character, the same
+    face, fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style with
+    bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-riot-bottle-rocket-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Bottle-Rocket Nun L2: Blessed Kindling (seed 1)'
+  asset: slime-city/evolutions/s3-riot-bottle-rocket@2
+  size: 832x1216
+  seed: 1108021
+  source_image_id: 261497
+  prompt_prose: The nun now holds a candle to the rocket on her habit with her eyes closed in prayer, a single blessed
+    spark streaking off toward a startled rival. Keep the same character, the same face, fur, skin and markings,
+    the same outfit details, the same saturated neon comic gouache art style with bold black contours, and the same
+    tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-riot-bottle-rocket-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Bottle-Rocket Nun L2: Blessed Kindling (seed 2)'
+  asset: slime-city/evolutions/s3-riot-bottle-rocket@2
+  size: 832x1216
+  seed: 1108022
+  source_image_id: 261497
+  prompt_prose: The nun now holds a candle to the rocket on her habit with her eyes closed in prayer, a single blessed
+    spark streaking off toward a startled rival. Keep the same character, the same face, fur, skin and markings,
+    the same outfit details, the same saturated neon comic gouache art style with bold black contours, and the same
+    tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-riot-bottle-rocket-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Bottle-Rocket Nun L3: Ascension (seed 1)'
+  asset: slime-city/evolutions/s3-riot-bottle-rocket@3
+  size: 832x1216
+  seed: 1108023
+  source_image_id: 261497
+  prompt_prose: The nun now rides her bottle rocket straight up into a golden sky, habit streaming, trailing holy
+    white and orange sparks toward the distant rival boss's tower. Keep the same character, the same face, fur,
+    skin and markings, the same outfit details, the same saturated neon comic gouache art style with bold black
+    contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-riot-bottle-rocket-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Bottle-Rocket Nun L3: Ascension (seed 2)'
+  asset: slime-city/evolutions/s3-riot-bottle-rocket@3
+  size: 832x1216
+  seed: 1108024
+  source_image_id: 261497
+  prompt_prose: The nun now rides her bottle rocket straight up into a golden sky, habit streaming, trailing holy
+    white and orange sparks toward the distant rival boss's tower. Keep the same character, the same face, fur,
+    skin and markings, the same outfit details, the same saturated neon comic gouache art style with bold black
+    contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-riot-detonation-deacon-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Detonation Deacon L2: Tolls the Hour (seed 1)'
+  asset: slime-city/evolutions/s3-riot-detonation-deacon@2
+  size: 832x1216
+  seed: 1108025
+  source_image_id: 261498
+  prompt_prose: The deacon's bell now swings wildly as it tolls, a ring of firework sparks bursting from its mouth
+    that rattles the rival across and makes his own congregation cover their ears. Keep the same character, the
+    same face, fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style
+    with bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-riot-detonation-deacon-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Detonation Deacon L2: Tolls the Hour (seed 2)'
+  asset: slime-city/evolutions/s3-riot-detonation-deacon@2
+  size: 832x1216
+  seed: 1108026
+  source_image_id: 261498
+  prompt_prose: The deacon's bell now swings wildly as it tolls, a ring of firework sparks bursting from its mouth
+    that rattles the rival across and makes his own congregation cover their ears. Keep the same character, the
+    same face, fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style
+    with bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-riot-detonation-deacon-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Detonation Deacon L3: Deafening Toll (seed 1)'
+  asset: slime-city/evolutions/s3-riot-detonation-deacon@3
+  size: 832x1216
+  seed: 1108027
+  source_image_id: 261498
+  prompt_prose: The bell has cracked open into a blazing shockwave of sound rings, rivals on both sides frozen dizzy
+    and wide-eyed while the deacon roars at the center. Keep the same character, the same face, fur, skin and markings,
+    the same outfit details, the same saturated neon comic gouache art style with bold black contours, and the same
+    tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-riot-detonation-deacon-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Detonation Deacon L3: Deafening Toll (seed 2)'
+  asset: slime-city/evolutions/s3-riot-detonation-deacon@3
+  size: 832x1216
+  seed: 1108028
+  source_image_id: 261498
+  prompt_prose: The bell has cracked open into a blazing shockwave of sound rings, rivals on both sides frozen dizzy
+    and wide-eyed while the deacon roars at the center. Keep the same character, the same face, fur, skin and markings,
+    the same outfit details, the same saturated neon comic gouache art style with bold black contours, and the same
+    tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-riot-alley-prophet-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Alley Prophet of Sparks L2: Street Sermon (seed 1)'
+  asset: slime-city/evolutions/s3-riot-alley-prophet@2
+  size: 832x1216
+  seed: 1108029
+  source_image_id: 261499
+  prompt_prose: The prophet now preaches from an overturned crate, arms spread, as a few stray sparks drift from
+    his fingertips toward the rival across the alley. Keep the same character, the same face, fur, skin and markings,
+    the same outfit details, the same saturated neon comic gouache art style with bold black contours, and the same
+    tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-riot-alley-prophet-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Alley Prophet of Sparks L2: Street Sermon (seed 2)'
+  asset: slime-city/evolutions/s3-riot-alley-prophet@2
+  size: 832x1216
+  seed: 1108030
+  source_image_id: 261499
+  prompt_prose: The prophet now preaches from an overturned crate, arms spread, as a few stray sparks drift from
+    his fingertips toward the rival across the alley. Keep the same character, the same face, fur, skin and markings,
+    the same outfit details, the same saturated neon comic gouache art style with bold black contours, and the same
+    tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-riot-alley-prophet-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Alley Prophet of Sparks L3: Fire Foretold (seed 1)'
+  asset: slime-city/evolutions/s3-riot-alley-prophet@3
+  size: 832x1216
+  seed: 1108031
+  source_image_id: 261499
+  prompt_prose: The prophet's eyes now glow white as a vision of firestorm swirls in the clouds above every rival,
+    his own robe smoldering at the hem as he volunteers to fulfill it. Keep the same character, the same face, fur,
+    skin and markings, the same outfit details, the same saturated neon comic gouache art style with bold black
+    contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-riot-alley-prophet-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Alley Prophet of Sparks L3: Fire Foretold (seed 2)'
+  asset: slime-city/evolutions/s3-riot-alley-prophet@3
+  size: 832x1216
+  seed: 1108032
+  source_image_id: 261499
+  prompt_prose: The prophet's eyes now glow white as a vision of firestorm swirls in the clouds above every rival,
+    his own robe smoldering at the hem as he volunteers to fulfill it. Keep the same character, the same face, fur,
+    skin and markings, the same outfit details, the same saturated neon comic gouache art style with bold black
+    contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-riot-firework-bishop-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Firework Bishop L2: Procession (seed 1)'
+  asset: slime-city/evolutions/s3-riot-firework-bishop@2
+  size: 832x1216
+  seed: 1108033
+  source_image_id: 261500
+  prompt_prose: The bishop now leads a candlelit procession of adult riot faithful in hooded robes, his launcher
+    held high like a crosier as they march close at his sides. Keep the same character, the same face, fur, skin
+    and markings, the same outfit details, the same saturated neon comic gouache art style with bold black contours,
+    and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-riot-firework-bishop-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Firework Bishop L2: Procession (seed 2)'
+  asset: slime-city/evolutions/s3-riot-firework-bishop@2
+  size: 832x1216
+  seed: 1108034
+  source_image_id: 261500
+  prompt_prose: The bishop now leads a candlelit procession of adult riot faithful in hooded robes, his launcher
+    held high like a crosier as they march close at his sides. Keep the same character, the same face, fur, skin
+    and markings, the same outfit details, the same saturated neon comic gouache art style with bold black contours,
+    and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-riot-firework-bishop-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Firework Bishop L3: The Finale (seed 1)'
+  asset: slime-city/evolutions/s3-riot-firework-bishop@3
+  size: 832x1216
+  seed: 1108035
+  source_image_id: 261500
+  prompt_prose: The bishop's launcher now erupts in a cathedral-sized fireworks finale raining over every rival,
+    while the faithful crowded at his elbows tumble back from the blast. Keep the same character, the same face,
+    fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style with bold black
+    contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-riot-firework-bishop-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Firework Bishop L3: The Finale (seed 2)'
+  asset: slime-city/evolutions/s3-riot-firework-bishop@3
+  size: 832x1216
+  seed: 1108036
+  source_image_id: 261500
+  prompt_prose: The bishop's launcher now erupts in a cathedral-sized fireworks finale raining over every rival,
+    while the faithful crowded at his elbows tumble back from the blast. Keep the same character, the same face,
+    fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style with bold black
+    contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-riot-riot-bike-messenger-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Riot Bike Messenger L2: Open Lane (seed 1)'
+  asset: slime-city/evolutions/s3-riot-riot-bike-messenger@2
+  size: 832x1216
+  seed: 1108037
+  source_image_id: 261501
+  prompt_prose: The messenger now hurtles alone down a completely empty lane at full speed, motion streaks behind
+    the bike and a clear road straight to the rival gate. Keep the same character, the same face, fur, skin and
+    markings, the same outfit details, the same saturated neon comic gouache art style with bold black contours,
+    and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-riot-riot-bike-messenger-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Riot Bike Messenger L2: Open Lane (seed 2)'
+  asset: slime-city/evolutions/s3-riot-riot-bike-messenger@2
+  size: 832x1216
+  seed: 1108038
+  source_image_id: 261501
+  prompt_prose: The messenger now hurtles alone down a completely empty lane at full speed, motion streaks behind
+    the bike and a clear road straight to the rival gate. Keep the same character, the same face, fur, skin and
+    markings, the same outfit details, the same saturated neon comic gouache art style with bold black contours,
+    and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-riot-riot-bike-messenger-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Riot Bike Messenger L3: Hit and Run (seed 1)'
+  asset: slime-city/evolutions/s3-riot-riot-bike-messenger@3
+  size: 832x1216
+  seed: 1108039
+  source_image_id: 261501
+  prompt_prose: The messenger now swings a bag strike at a rival while already swerving away, the bike banking hard
+    back toward a rooftop ramp in a blur of speed lines. Keep the same character, the same face, fur, skin and markings,
+    the same outfit details, the same saturated neon comic gouache art style with bold black contours, and the same
+    tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-riot-riot-bike-messenger-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Riot Bike Messenger L3: Hit and Run (seed 2)'
+  asset: slime-city/evolutions/s3-riot-riot-bike-messenger@3
+  size: 832x1216
+  seed: 1108040
+  source_image_id: 261501
+  prompt_prose: The messenger now swings a bag strike at a rival while already swerving away, the bike banking hard
+    back toward a rooftop ramp in a blur of speed lines. Keep the same character, the same face, fur, skin and markings,
+    the same outfit details, the same saturated neon comic gouache art style with bold black contours, and the same
+    tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-riot-thermite-archangel-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Thermite Archangel L2: Burns Through (seed 1)'
+  asset: slime-city/evolutions/s3-riot-thermite-archangel@2
+  size: 832x1216
+  seed: 1108041
+  source_image_id: 261502
+  prompt_prose: Her thermite wings now blaze white-hot, melting through a rival's shield in a shower of molten sparks
+    that splashes onto fighters of both crews beside her. Keep the same character, the same face, fur, skin and
+    markings, the same outfit details, the same saturated neon comic gouache art style with bold black contours,
+    and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-riot-thermite-archangel-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Thermite Archangel L2: Burns Through (seed 2)'
+  asset: slime-city/evolutions/s3-riot-thermite-archangel@2
+  size: 832x1216
+  seed: 1108042
+  source_image_id: 261502
+  prompt_prose: Her thermite wings now blaze white-hot, melting through a rival's shield in a shower of molten sparks
+    that splashes onto fighters of both crews beside her. Keep the same character, the same face, fur, skin and
+    markings, the same outfit details, the same saturated neon comic gouache art style with bold black contours,
+    and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-riot-thermite-archangel-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Thermite Archangel L3: Fallen Star (seed 1)'
+  asset: slime-city/evolutions/s3-riot-thermite-archangel@3
+  size: 832x1216
+  seed: 1108043
+  source_image_id: 261502
+  prompt_prose: She has crashed down like a meteor into a glowing crater spanning three alleys, wings burned to
+    bare smoking struts, smaller and fierce as the rivals around her are thrown back. Keep the same character, the
+    same face, fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style
+    with bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-riot-thermite-archangel-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Thermite Archangel L3: Fallen Star (seed 2)'
+  asset: slime-city/evolutions/s3-riot-thermite-archangel@3
+  size: 832x1216
+  seed: 1108044
+  source_image_id: 261502
+  prompt_prose: She has crashed down like a meteor into a glowing crater spanning three alleys, wings burned to
+    bare smoking struts, smaller and fierce as the rivals around her are thrown back. Keep the same character, the
+    same face, fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style
+    with bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-firebreak-parade-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Firebreak Parade L2: Paint the Line Red (seed 1)'
+  asset: slime-city/evolutions/firebreak-parade@2
+  size: 832x1216
+  seed: 1108045
+  source_image_id: 260648
+  prompt_prose: The redirected fireworks now paint a blazing red line across the enemy side of the street while
+    a cheering crowd of riot comrades surges forward right behind it. Keep the same objects, characters and setting
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-firebreak-parade-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Firebreak Parade L2: Paint the Line Red (seed 2)'
+  asset: slime-city/evolutions/firebreak-parade@2
+  size: 832x1216
+  seed: 1108046
+  source_image_id: 260648
+  prompt_prose: The redirected fireworks now paint a blazing red line across the enemy side of the street while
+    a cheering crowd of riot comrades surges forward right behind it. Keep the same objects, characters and setting
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-firebreak-parade-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Firebreak Parade L3: Grand Parade (seed 1)'
+  asset: slime-city/evolutions/firebreak-parade@3
+  size: 832x1216
+  seed: 1108047
+  source_image_id: 260648
+  prompt_prose: A full riot parade with drums and banners now marches down the avenue, and every rocket from the
+    floats arcs over to burst above the whole enemy line at once. Keep the same objects, characters and setting
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-firebreak-parade-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Firebreak Parade L3: Grand Parade (seed 2)'
+  asset: slime-city/evolutions/firebreak-parade@3
+  size: 832x1216
+  seed: 1108048
+  source_image_id: 260648
+  prompt_prose: A full riot parade with drums and banners now marches down the avenue, and every rocket from the
+    floats arcs over to burst above the whole enemy line at once. Keep the same objects, characters and setting
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-s1-no-witnesses-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'No Witnesses, Especially Us L2: Including Us (seed 1)'
+  asset: slime-city/evolutions/s1-no-witnesses@2
+  size: 832x1216
+  seed: 1108049
+  source_image_id: 260673
+  prompt_prose: The blast now flares twice as bright on the target, and a ring of flame licks back toward the riot
+    fighters standing nearest, who stumble with scorched sleeves. Keep the same objects, characters and setting
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-s1-no-witnesses-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'No Witnesses, Especially Us L2: Including Us (seed 2)'
+  asset: slime-city/evolutions/s1-no-witnesses@2
+  size: 832x1216
+  seed: 1108050
+  source_image_id: 260673
+  prompt_prose: The blast now flares twice as bright on the target, and a ring of flame licks back toward the riot
+    fighters standing nearest, who stumble with scorched sleeves. Keep the same objects, characters and setting
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-s1-no-witnesses-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'No Witnesses, Especially Us L3: Especially Us (seed 1)'
+  asset: slime-city/evolutions/s1-no-witnesses@3
+  size: 832x1216
+  seed: 1108051
+  source_image_id: 260673
+  prompt_prose: A blinding white flash now fills the corner, leaving three rival fighters staggering dazed and seeing
+    stars while the riot fighters beside them are knocked flat too. Keep the same objects, characters and setting
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-s1-no-witnesses-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'No Witnesses, Especially Us L3: Especially Us (seed 2)'
+  asset: slime-city/evolutions/s1-no-witnesses@3
+  size: 832x1216
+  seed: 1108052
+  source_image_id: 260673
+  prompt_prose: A blinding white flash now fills the corner, leaving three rival fighters staggering dazed and seeing
+    stars while the riot fighters beside them are knocked flat too. Keep the same objects, characters and setting
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-s1-chaos-firecracker-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Mystery-Flavor Firecracker L2: Sour Apple (seed 1)'
+  asset: slime-city/evolutions/s1-chaos-firecracker@2
+  size: 832x1216
+  seed: 1108053
+  source_image_id: 260674
+  prompt_prose: The firecracker now bursts in a sour green fizz of sparks that leaves the rival frozen mid-step
+    with a puckered, stunned face. Keep the same objects, characters and setting details, the same saturated neon
+    comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s1-chaos-firecracker-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Mystery-Flavor Firecracker L2: Sour Apple (seed 2)'
+  asset: slime-city/evolutions/s1-chaos-firecracker@2
+  size: 832x1216
+  seed: 1108054
+  source_image_id: 260674
+  prompt_prose: The firecracker now bursts in a sour green fizz of sparks that leaves the rival frozen mid-step
+    with a puckered, stunned face. Keep the same objects, characters and setting details, the same saturated neon
+    comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s1-chaos-firecracker-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Mystery-Flavor Firecracker L3: Variety Pack (seed 1)'
+  asset: slime-city/evolutions/s1-chaos-firecracker@3
+  size: 832x1216
+  seed: 1108055
+  source_image_id: 260674
+  prompt_prose: A whole box of mismatched firecrackers now spills open in every color at once, rainbow bursts popping
+    unpredictably over the entire enemy side of the street. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-s1-chaos-firecracker-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Mystery-Flavor Firecracker L3: Variety Pack (seed 2)'
+  asset: slime-city/evolutions/s1-chaos-firecracker@3
+  size: 832x1216
+  seed: 1108056
+  source_image_id: 260674
+  prompt_prose: A whole box of mismatched firecrackers now spills open in every color at once, rainbow bursts popping
+    unpredictably over the entire enemy side of the street. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-s2-riot-friendly-fire-rehearsal-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Friendly-Fire Rehearsal L2: Live-Fire Drill (seed 1)'
+  asset: slime-city/evolutions/s2-riot-friendly-fire-rehearsal@2
+  size: 832x1216
+  seed: 1108057
+  source_image_id: 261433
+  prompt_prose: The drill now uses real charges, sparks peppering a squad of adult riot recruits who grit their
+    teeth and clench their fists, fired up and ready to charge. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-s2-riot-friendly-fire-rehearsal-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Friendly-Fire Rehearsal L2: Live-Fire Drill (seed 2)'
+  asset: slime-city/evolutions/s2-riot-friendly-fire-rehearsal@2
+  size: 832x1216
+  seed: 1108058
+  source_image_id: 261433
+  prompt_prose: The drill now uses real charges, sparks peppering a squad of adult riot recruits who grit their
+    teeth and clench their fists, fired up and ready to charge. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-s2-riot-friendly-fire-rehearsal-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Friendly-Fire Rehearsal L3: No Safety Officer (seed 1)'
+  asset: slime-city/evolutions/s2-riot-friendly-fire-rehearsal@3
+  size: 832x1216
+  seed: 1108059
+  source_image_id: 261433
+  prompt_prose: An empty safety officer's chair now sits toppled in the smoke as the entire riot crew stands scorched
+    but grinning, fists raised and glowing with new strength. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-s2-riot-friendly-fire-rehearsal-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Friendly-Fire Rehearsal L3: No Safety Officer (seed 2)'
+  asset: slime-city/evolutions/s2-riot-friendly-fire-rehearsal@3
+  size: 832x1216
+  seed: 1108060
+  source_image_id: 261433
+  prompt_prose: An empty safety officer's chair now sits toppled in the smoke as the entire riot crew stands scorched
+    but grinning, fists raised and glowing with new strength. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-s2-riot-homemade-bottle-rocket-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Homemade Bottle Rocket L2: Friend of a Friend (seed 1)'
+  asset: slime-city/evolutions/s2-riot-homemade-bottle-rocket@2
+  size: 832x1216
+  seed: 1108061
+  source_image_id: 264932
+  prompt_prose: The bottle rocket now has a second taped-on stage that wobbles off on its own crooked path, spraying
+    sparks toward a random rival. Keep the same objects, characters and setting details, the same saturated neon
+    comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s2-riot-homemade-bottle-rocket-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Homemade Bottle Rocket L2: Friend of a Friend (seed 2)'
+  asset: slime-city/evolutions/s2-riot-homemade-bottle-rocket@2
+  size: 832x1216
+  seed: 1108062
+  source_image_id: 264932
+  prompt_prose: The bottle rocket now has a second taped-on stage that wobbles off on its own crooked path, spraying
+    sparks toward a random rival. Keep the same objects, characters and setting details, the same saturated neon
+    comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s2-riot-homemade-bottle-rocket-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Homemade Bottle Rocket L3: Probably Safe (seed 1)'
+  asset: slime-city/evolutions/s2-riot-homemade-bottle-rocket@3
+  size: 832x1216
+  seed: 1108063
+  source_image_id: 264932
+  prompt_prose: The rocket now overshoots its target and streaks high toward the rival boss's tower, while the launch
+    pad below erupts in a puff that singes the riot fighters beside it. Keep the same objects, characters and setting
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-s2-riot-homemade-bottle-rocket-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Homemade Bottle Rocket L3: Probably Safe (seed 2)'
+  asset: slime-city/evolutions/s2-riot-homemade-bottle-rocket@3
+  size: 832x1216
+  seed: 1108064
+  source_image_id: 264932
+  prompt_prose: The rocket now overshoots its target and streaks high toward the rival boss's tower, while the launch
+    pad below erupts in a puff that singes the riot fighters beside it. Keep the same objects, characters and setting
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-s3-riot-low-budget-grenade-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Low-Budget Grenade L2: Shrapnel Upgrade (seed 1)'
+  asset: slime-city/evolutions/s3-riot-low-budget-grenade@2
+  size: 832x1216
+  seed: 1108065
+  source_image_id: 264937
+  prompt_prose: A bored inspector now looks the other way as the cheap grenade bursts into scattering bolts and
+    washers that clatter into fighters on both sides of the target. Keep the same objects, characters and setting
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-s3-riot-low-budget-grenade-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Low-Budget Grenade L2: Shrapnel Upgrade (seed 2)'
+  asset: slime-city/evolutions/s3-riot-low-budget-grenade@2
+  size: 832x1216
+  seed: 1108066
+  source_image_id: 264937
+  prompt_prose: A bored inspector now looks the other way as the cheap grenade bursts into scattering bolts and
+    washers that clatter into fighters on both sides of the target. Keep the same objects, characters and setting
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-s3-riot-low-budget-grenade-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Low-Budget Grenade L3: Inspector''s Special (seed 1)'
+  asset: slime-city/evolutions/s3-riot-low-budget-grenade@3
+  size: 832x1216
+  seed: 1108067
+  source_image_id: 264937
+  prompt_prose: A gleaming inspector-approved grenade with a neat seal now pops cleanly against a hulking heavy
+    rival, who sways dizzy with stars circling overhead. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-s3-riot-low-budget-grenade-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Low-Budget Grenade L3: Inspector''s Special (seed 2)'
+  asset: slime-city/evolutions/s3-riot-low-budget-grenade@3
+  size: 832x1216
+  seed: 1108068
+  source_image_id: 264937
+  prompt_prose: A gleaming inspector-approved grenade with a neat seal now pops cleanly against a hulking heavy
+    rival, who sways dizzy with stars circling overhead. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-s3-riot-wrong-side-of-blast-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Wrong Side of the Blast L2: Blast Shadow (seed 1)'
+  asset: slime-city/evolutions/s3-riot-wrong-side-of-blast@2
+  size: 832x1216
+  seed: 1108069
+  source_image_id: 261504
+  prompt_prose: The blast now throws a long glowing shadow that curves down the street to find the smallest, most
+    battered rival limping away. Keep the same objects, characters and setting details, the same saturated neon
+    comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s3-riot-wrong-side-of-blast-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Wrong Side of the Blast L2: Blast Shadow (seed 2)'
+  asset: slime-city/evolutions/s3-riot-wrong-side-of-blast@2
+  size: 832x1216
+  seed: 1108070
+  source_image_id: 261504
+  prompt_prose: The blast now throws a long glowing shadow that curves down the street to find the smallest, most
+    battered rival limping away. Keep the same objects, characters and setting details, the same saturated neon
+    comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s3-riot-wrong-side-of-blast-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Wrong Side of the Blast L3: Already Fled (seed 1)'
+  asset: slime-city/evolutions/s3-riot-wrong-side-of-blast@3
+  size: 832x1216
+  seed: 1108071
+  source_image_id: 261504
+  prompt_prose: The riot side of the street now stands empty except for fallen hats and a memorial candle, while
+    a wall of flame rolls across every rival fighter at once. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-s3-riot-wrong-side-of-blast-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Wrong Side of the Blast L3: Already Fled (seed 2)'
+  asset: slime-city/evolutions/s3-riot-wrong-side-of-blast@3
+  size: 832x1216
+  seed: 1108072
+  source_image_id: 261504
+  prompt_prose: The riot side of the street now stands empty except for fallen hats and a memorial candle, while
+    a wall of flame rolls across every rival fighter at once. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-s3-riot-horrible-idea-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'This Is a Horrible Idea L2: Double Down (seed 1)'
+  asset: slime-city/evolutions/s3-riot-horrible-idea@2
+  size: 832x1216
+  seed: 1108073
+  source_image_id: 261505
+  prompt_prose: The reckless spark now splits into two crackling bolts, the second one arcing back around for another
+    shot at the same rival. Keep the same objects, characters and setting details, the same saturated neon comic
+    gouache art style with bold black contours, and the same tall portrait framing with the scene painted edge to
+    edge.
+- key: slime-evo-s3-riot-horrible-idea-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'This Is a Horrible Idea L2: Double Down (seed 2)'
+  asset: slime-city/evolutions/s3-riot-horrible-idea@2
+  size: 832x1216
+  seed: 1108074
+  source_image_id: 261505
+  prompt_prose: The reckless spark now splits into two crackling bolts, the second one arcing back around for another
+    shot at the same rival. Keep the same objects, characters and setting details, the same saturated neon comic
+    gouache art style with bold black contours, and the same tall portrait framing with the scene painted edge to
+    edge.
+- key: slime-evo-s3-riot-horrible-idea-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'This Is a Horrible Idea L3: It Actually Worked (seed 1)'
+  asset: slime-city/evolutions/s3-riot-horrible-idea@3
+  size: 832x1216
+  seed: 1108075
+  source_image_id: 261505
+  prompt_prose: A wild spark now rockets toward the rival boss's tower while its backfire sends sparks raining over
+    the riot crew, who duck with half-proud, half-horrified faces. Keep the same objects, characters and setting
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-s3-riot-horrible-idea-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'This Is a Horrible Idea L3: It Actually Worked (seed 2)'
+  asset: slime-city/evolutions/s3-riot-horrible-idea@3
+  size: 832x1216
+  seed: 1108076
+  source_image_id: 261505
+  prompt_prose: A wild spark now rockets toward the rival boss's tower while its backfire sends sparks raining over
+    the riot crew, who duck with half-proud, half-horrified faces. Keep the same objects, characters and setting
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-s3-riot-stolen-detonator-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Stolen Detonator L2: Hot-Wired (seed 1)'
+  asset: slime-city/evolutions/s3-riot-stolen-detonator@2
+  size: 832x1216
+  seed: 1108077
+  source_image_id: 261506
+  prompt_prose: The stolen detonator is now hot-wired with exposed crackling cables, its strapped charge glowing
+    and sparking against the fighter's chest as power surges through them. Keep the same objects, characters and
+    setting details, the same saturated neon comic gouache art style with bold black contours, and the same tall
+    portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-riot-stolen-detonator-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Stolen Detonator L2: Hot-Wired (seed 2)'
+  asset: slime-city/evolutions/s3-riot-stolen-detonator@2
+  size: 832x1216
+  seed: 1108078
+  source_image_id: 261506
+  prompt_prose: The stolen detonator is now hot-wired with exposed crackling cables, its strapped charge glowing
+    and sparking against the fighter's chest as power surges through them. Keep the same objects, characters and
+    setting details, the same saturated neon comic gouache art style with bold black contours, and the same tall
+    portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-riot-stolen-detonator-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Stolen Detonator L3: Strap One On Everyone (seed 1)'
+  asset: slime-city/evolutions/s3-riot-stolen-detonator@3
+  size: 832x1216
+  seed: 1108079
+  source_image_id: 261506
+  prompt_prose: A row of riot fighters now stands shoulder to shoulder, each with a blinking detonator charge strapped
+    on, wires linking them together down the line. Keep the same objects, characters and setting details, the same
+    saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with the
+    scene painted edge to edge.
+- key: slime-evo-s3-riot-stolen-detonator-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Stolen Detonator L3: Strap One On Everyone (seed 2)'
+  asset: slime-city/evolutions/s3-riot-stolen-detonator@3
+  size: 832x1216
+  seed: 1108080
+  source_image_id: 261506
+  prompt_prose: A row of riot fighters now stands shoulder to shoulder, each with a blinking detonator charge strapped
+    on, wires linking them together down the line. Keep the same objects, characters and setting details, the same
+    saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with the
+    scene painted edge to edge.
+- key: slime-evo-s3-riot-stolen-detonator-l3b-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Stolen Detonator L3b: Push the Button (seed 1)'
+  asset: slime-city/evolutions/s3-riot-stolen-detonator@3b
+  size: 832x1216
+  seed: 1108081
+  source_image_id: 261506
+  prompt_prose: A gloved thumb now slams down on the big detonator button, and a towering fireball erupts from the
+    riot fighter's alley, engulfing the three rivals facing it. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-s3-riot-stolen-detonator-l3b-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Stolen Detonator L3b: Push the Button (seed 2)'
+  asset: slime-city/evolutions/s3-riot-stolen-detonator@3b
+  size: 832x1216
+  seed: 1108082
+  source_image_id: 261506
+  prompt_prose: A gloved thumb now slams down on the big detonator button, and a towering fireball erupts from the
+    riot fighter's alley, engulfing the three rivals facing it. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-s3-riot-final-benediction-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Final Benediction of Fire L2: Ember Sermon (seed 1)'
+  asset: slime-city/evolutions/s3-riot-final-benediction@2
+  size: 832x1216
+  seed: 1108083
+  source_image_id: 261507
+  prompt_prose: The fiery blessing now sweeps outward in a wide arc of embers, scattering rivals and sending the
+    nearby riot congregation hopping back with smoldering robes. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-s3-riot-final-benediction-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Final Benediction of Fire L2: Ember Sermon (seed 2)'
+  asset: slime-city/evolutions/s3-riot-final-benediction@2
+  size: 832x1216
+  seed: 1108084
+  source_image_id: 261507
+  prompt_prose: The fiery blessing now sweeps outward in a wide arc of embers, scattering rivals and sending the
+    nearby riot congregation hopping back with smoldering robes. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-s3-riot-final-benediction-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Final Benediction of Fire L3: Benediction (seed 1)'
+  asset: slime-city/evolutions/s3-riot-final-benediction@3
+  size: 832x1216
+  seed: 1108085
+  source_image_id: 261507
+  prompt_prose: A golden halo of fire now hovers over the entire riot crew, each fighter bathed in warm light and
+    raising their weapons for the charge. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s3-riot-final-benediction-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Final Benediction of Fire L3: Benediction (seed 2)'
+  asset: slime-city/evolutions/s3-riot-final-benediction@3
+  size: 832x1216
+  seed: 1108086
+  source_image_id: 261507
+  prompt_prose: A golden halo of fire now hovers over the entire riot crew, each fighter bathed in warm light and
+    raising their weapons for the charge. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s3-riot-final-benediction-l3b-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Final Benediction of Fire L3b: Fire and Brimstone (seed 1)'
+  asset: slime-city/evolutions/s3-riot-final-benediction@3b
+  size: 832x1216
+  seed: 1108087
+  source_image_id: 261507
+  prompt_prose: Burning brimstone now rains from a red sky over the whole street, striking every rival hard and
+    pelting the riot fighters with smaller embers too. Keep the same objects, characters and setting details, the
+    same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with
+    the scene painted edge to edge.
+- key: slime-evo-s3-riot-final-benediction-l3b-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Final Benediction of Fire L3b: Fire and Brimstone (seed 2)'
+  asset: slime-city/evolutions/s3-riot-final-benediction@3b
+  size: 832x1216
+  seed: 1108088
+  source_image_id: 261507
+  prompt_prose: Burning brimstone now rains from a red sky over the whole street, striking every rival hard and
+    pelting the riot fighters with smaller embers too. Keep the same objects, characters and setting details, the
+    same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with
+    the scene painted edge to edge.
+- key: slime-evo-s1-fuse-alley-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Bottled Thunder L2: Shaken Bottle (seed 1)'
+  asset: slime-city/evolutions/s1-fuse-alley@2
+  size: 832x1216
+  seed: 1108089
+  source_image_id: 260675
+  prompt_prose: The soda bottle of thunder now trembles and bulges, foaming storm clouds hissing from under its
+    cap as it threatens to blow. Keep the same objects, characters and setting details, the same saturated neon
+    comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s1-fuse-alley-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Bottled Thunder L2: Shaken Bottle (seed 2)'
+  asset: slime-city/evolutions/s1-fuse-alley@2
+  size: 832x1216
+  seed: 1108090
+  source_image_id: 260675
+  prompt_prose: The soda bottle of thunder now trembles and bulges, foaming storm clouds hissing from under its
+    cap as it threatens to blow. Keep the same objects, characters and setting details, the same saturated neon
+    comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s1-fuse-alley-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Bottled Thunder L3: Thunderclap (seed 1)'
+  asset: slime-city/evolutions/s1-fuse-alley@3
+  size: 832x1216
+  seed: 1108091
+  source_image_id: 260675
+  prompt_prose: The bottle has burst into a massive thunderclap with lightning forking down the block, hurling rivals
+    in the neighboring alleys and rattling the riot fighters nearby. Keep the same objects, characters and setting
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-s1-fuse-alley-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Bottled Thunder L3: Thunderclap (seed 2)'
+  asset: slime-city/evolutions/s1-fuse-alley@3
+  size: 832x1216
+  seed: 1108092
+  source_image_id: 260675
+  prompt_prose: The bottle has burst into a massive thunderclap with lightning forking down the block, hurling rivals
+    in the neighboring alleys and rattling the riot fighters nearby. Keep the same objects, characters and setting
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-s2-riot-fusebox-fireworks-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Fusebox Fireworks L2: Chain Fuse (seed 1)'
+  asset: slime-city/evolutions/s2-riot-fusebox-fireworks@2
+  size: 832x1216
+  seed: 1108093
+  source_image_id: 261435
+  prompt_prose: A sparking fuse now races from the fusebox under the bridge into the next alleys, little fireworks
+    popping at the feet of the rivals there. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s2-riot-fusebox-fireworks-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Fusebox Fireworks L2: Chain Fuse (seed 2)'
+  asset: slime-city/evolutions/s2-riot-fusebox-fireworks@2
+  size: 832x1216
+  seed: 1108094
+  source_image_id: 261435
+  prompt_prose: A sparking fuse now races from the fusebox under the bridge into the next alleys, little fireworks
+    popping at the feet of the rivals there. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s2-riot-fusebox-fireworks-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Fusebox Fireworks L3: Grand Bridge Show (seed 1)'
+  asset: slime-city/evolutions/s2-riot-fusebox-fireworks@3
+  size: 832x1216
+  seed: 1108095
+  source_image_id: 261435
+  prompt_prose: The whole bridge now erupts in a spectacular fireworks show, sparks raining down on every fighter
+    in the street below from both crews. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s2-riot-fusebox-fireworks-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Fusebox Fireworks L3: Grand Bridge Show (seed 2)'
+  asset: slime-city/evolutions/s2-riot-fusebox-fireworks@3
+  size: 832x1216
+  seed: 1108096
+  source_image_id: 261435
+  prompt_prose: The whole bridge now erupts in a spectacular fireworks show, sparks raining down on every fighter
+    in the street below from both crews. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s3-riot-fusewire-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Fusewire Rosary L2: Bound in Beads (seed 1)'
+  asset: slime-city/evolutions/s3-riot-fusewire@2
+  size: 832x1216
+  seed: 1108097
+  source_image_id: 261508
+  prompt_prose: The rosary wire now whips out sideways, its glowing beads wrapping around the ankles of the rivals
+    in the neighboring alleys and pinning them in place. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-s3-riot-fusewire-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Fusewire Rosary L2: Bound in Beads (seed 2)'
+  asset: slime-city/evolutions/s3-riot-fusewire@2
+  size: 832x1216
+  seed: 1108098
+  source_image_id: 261508
+  prompt_prose: The rosary wire now whips out sideways, its glowing beads wrapping around the ankles of the rivals
+    in the neighboring alleys and pinning them in place. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-s3-riot-fusewire-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Fusewire Rosary L3: Hail Mary (seed 1)'
+  asset: slime-city/evolutions/s3-riot-fusewire@3
+  size: 832x1216
+  seed: 1108099
+  source_image_id: 261508
+  prompt_prose: The rosary now floats upright and blazing like a burning halo, every bead flaring as a prayer of
+    fire streaks out toward all the rivals. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s3-riot-fusewire-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Fusewire Rosary L3: Hail Mary (seed 2)'
+  asset: slime-city/evolutions/s3-riot-fusewire@3
+  size: 832x1216
+  seed: 1108100
+  source_image_id: 261508
+  prompt_prose: The rosary now floats upright and blazing like a burning halo, every bead flaring as a prayer of
+    fire streaks out toward all the rivals. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s3-riot-night-market-rocket-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Night Market Rocket L2: Smoke Trail (seed 1)'
+  asset: slime-city/evolutions/s3-riot-night-market-rocket@2
+  size: 832x1216
+  seed: 1108101
+  source_image_id: 261509
+  prompt_prose: The rocket now leaves a long curling smoke trail that streaks past the trespasser and down the lane
+    toward the rival boss's tower. Keep the same objects, characters and setting details, the same saturated neon
+    comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s3-riot-night-market-rocket-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Night Market Rocket L2: Smoke Trail (seed 2)'
+  asset: slime-city/evolutions/s3-riot-night-market-rocket@2
+  size: 832x1216
+  seed: 1108102
+  source_image_id: 261509
+  prompt_prose: The rocket now leaves a long curling smoke trail that streaks past the trespasser and down the lane
+    toward the rival boss's tower. Keep the same objects, characters and setting details, the same saturated neon
+    comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s3-riot-night-market-rocket-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Night Market Rocket L3: Market Barrage (seed 1)'
+  asset: slime-city/evolutions/s3-riot-night-market-rocket@3
+  size: 832x1216
+  seed: 1108103
+  source_image_id: 261509
+  prompt_prose: Every lantern stall of the night market now launches its own rocket, a chaotic barrage of colorful
+    streaks raining down on scattered rivals. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s3-riot-night-market-rocket-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Night Market Rocket L3: Market Barrage (seed 2)'
+  asset: slime-city/evolutions/s3-riot-night-market-rocket@3
+  size: 832x1216
+  seed: 1108104
+  source_image_id: 261509
+  prompt_prose: Every lantern stall of the night market now launches its own rocket, a chaotic barrage of colorful
+    streaks raining down on scattered rivals. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s3-riot-confession-booth-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Booby-Trapped Confessional L2: Name Your Sins (seed 1)'
+  asset: slime-city/evolutions/s3-riot-confession-booth@2
+  size: 832x1216
+  seed: 1108105
+  source_image_id: 261510
+  prompt_prose: The confessional curtain now flies open and fiery chains drag the biggest, most hulking rival to
+    their knees before the booth. Keep the same objects, characters and setting details, the same saturated neon
+    comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s3-riot-confession-booth-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Booby-Trapped Confessional L2: Name Your Sins (seed 2)'
+  asset: slime-city/evolutions/s3-riot-confession-booth@2
+  size: 832x1216
+  seed: 1108106
+  source_image_id: 261510
+  prompt_prose: The confessional curtain now flies open and fiery chains drag the biggest, most hulking rival to
+    their knees before the booth. Keep the same objects, characters and setting details, the same saturated neon
+    comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s3-riot-confession-booth-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Booby-Trapped Confessional L3: Next Sinner (seed 1)'
+  asset: slime-city/evolutions/s3-riot-confession-booth@3
+  size: 832x1216
+  seed: 1108107
+  source_image_id: 261510
+  prompt_prose: The booth now stands smoking but intact, a fresh glowing fuse rewinding itself as the little door
+    swings open again for the next sinner in line. Keep the same objects, characters and setting details, the same
+    saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with the
+    scene painted edge to edge.
+- key: slime-evo-s3-riot-confession-booth-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Booby-Trapped Confessional L3: Next Sinner (seed 2)'
+  asset: slime-city/evolutions/s3-riot-confession-booth@3
+  size: 832x1216
+  seed: 1108108
+  source_image_id: 261510
+  prompt_prose: The booth now stands smoking but intact, a fresh glowing fuse rewinding itself as the little door
+    swings open again for the next sinner in line. Keep the same objects, characters and setting details, the same
+    saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with the
+    scene painted edge to edge.
+- key: slime-evo-s1-volunteer-vest-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Volunteer Safety Vest L2: Crossing Guard (seed 1)'
+  asset: slime-city/evolutions/s1-volunteer-vest@2
+  size: 832x1216
+  seed: 1108109
+  source_image_id: 262304
+  prompt_prose: The bright safety vest is now worn by a fighter waving a glowing orange hand lantern like a crossing
+    guard, leading a pumped-up group of riot comrades close at their sides. Keep the same objects, characters and
+    setting details, the same saturated neon comic gouache art style with bold black contours, and the same tall
+    portrait framing with the scene painted edge to edge.
+- key: slime-evo-s1-volunteer-vest-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Volunteer Safety Vest L2: Crossing Guard (seed 2)'
+  asset: slime-city/evolutions/s1-volunteer-vest@2
+  size: 832x1216
+  seed: 1108110
+  source_image_id: 262304
+  prompt_prose: The bright safety vest is now worn by a fighter waving a glowing orange hand lantern like a crossing
+    guard, leading a pumped-up group of riot comrades close at their sides. Keep the same objects, characters and
+    setting details, the same saturated neon comic gouache art style with bold black contours, and the same tall
+    portrait framing with the scene painted edge to edge.
+- key: slime-evo-s1-volunteer-vest-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Volunteer Safety Vest L3: Volunteer Brigade (seed 1)'
+  asset: slime-city/evolutions/s1-volunteer-vest@3
+  size: 832x1216
+  seed: 1108111
+  source_image_id: 262304
+  prompt_prose: Where the wearer fell, two adult volunteers in matching sparking safety vests now step forward into
+    the neighboring alleys, fuses lit on their backs. Keep the same objects, characters and setting details, the
+    same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with
+    the scene painted edge to edge.
+- key: slime-evo-s1-volunteer-vest-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Volunteer Safety Vest L3: Volunteer Brigade (seed 2)'
+  asset: slime-city/evolutions/s1-volunteer-vest@3
+  size: 832x1216
+  seed: 1108112
+  source_image_id: 262304
+  prompt_prose: Where the wearer fell, two adult volunteers in matching sparking safety vests now step forward into
+    the neighboring alleys, fuses lit on their backs. Keep the same objects, characters and setting details, the
+    same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with
+    the scene painted edge to edge.
+- key: slime-evo-s2-riot-last-stand-matchbook-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Last-Stand Matchbook L2: Strike Anywhere (seed 1)'
+  asset: slime-city/evolutions/s2-riot-last-stand-matchbook@2
+  size: 832x1216
+  seed: 1108113
+  source_image_id: 261436
+  prompt_prose: The matchbook now flicks a match alight with every punch the wearer lands, sparks scattering onto
+    the rivals beside the target. Keep the same objects, characters and setting details, the same saturated neon
+    comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s2-riot-last-stand-matchbook-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Last-Stand Matchbook L2: Strike Anywhere (seed 2)'
+  asset: slime-city/evolutions/s2-riot-last-stand-matchbook@2
+  size: 832x1216
+  seed: 1108114
+  source_image_id: 261436
+  prompt_prose: The matchbook now flicks a match alight with every punch the wearer lands, sparks scattering onto
+    the rivals beside the target. Keep the same objects, characters and setting details, the same saturated neon
+    comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s2-riot-last-stand-matchbook-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Last-Stand Matchbook L3: Last Stand (seed 1)'
+  asset: slime-city/evolutions/s2-riot-last-stand-matchbook@3
+  size: 832x1216
+  seed: 1108115
+  source_image_id: 261436
+  prompt_prose: The entire matchbook has gone up at once in a towering flare, a ring of fire sweeping outward over
+    every rival on the street. Keep the same objects, characters and setting details, the same saturated neon comic
+    gouache art style with bold black contours, and the same tall portrait framing with the scene painted edge to
+    edge.
+- key: slime-evo-s2-riot-last-stand-matchbook-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Last-Stand Matchbook L3: Last Stand (seed 2)'
+  asset: slime-city/evolutions/s2-riot-last-stand-matchbook@3
+  size: 832x1216
+  seed: 1108116
+  source_image_id: 261436
+  prompt_prose: The entire matchbook has gone up at once in a towering flare, a ring of fire sweeping outward over
+    every rival on the street. Keep the same objects, characters and setting details, the same saturated neon comic
+    gouache art style with bold black contours, and the same tall portrait framing with the scene painted edge to
+    edge.
+- key: slime-evo-s3-riot-charred-sneakers-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Charred Sneakers L2: Hot Feet (seed 1)'
+  asset: slime-city/evolutions/s3-riot-charred-sneakers@2
+  size: 832x1216
+  seed: 1108117
+  source_image_id: 261511
+  prompt_prose: The charred sneakers now glow with little flames at the heels, leaving burning footprints as the
+    wearer sprints into the fight before anyone can react. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-s3-riot-charred-sneakers-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Charred Sneakers L2: Hot Feet (seed 2)'
+  asset: slime-city/evolutions/s3-riot-charred-sneakers@2
+  size: 832x1216
+  seed: 1108118
+  source_image_id: 261511
+  prompt_prose: The charred sneakers now glow with little flames at the heels, leaving burning footprints as the
+    wearer sprints into the fight before anyone can react. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-s3-riot-charred-sneakers-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Charred Sneakers L3: Extra Lap (seed 1)'
+  asset: slime-city/evolutions/s3-riot-charred-sneakers@3
+  size: 832x1216
+  seed: 1108119
+  source_image_id: 261511
+  prompt_prose: The sneakers now trail a looping ring of fire as the wearer races a full extra lap around the alley
+    and crashes straight into the rival across. Keep the same objects, characters and setting details, the same
+    saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with the
+    scene painted edge to edge.
+- key: slime-evo-s3-riot-charred-sneakers-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Charred Sneakers L3: Extra Lap (seed 2)'
+  asset: slime-city/evolutions/s3-riot-charred-sneakers@3
+  size: 832x1216
+  seed: 1108120
+  source_image_id: 261511
+  prompt_prose: The sneakers now trail a looping ring of fire as the wearer races a full extra lap around the alley
+    and crashes straight into the rival across. Keep the same objects, characters and setting details, the same
+    saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with the
+    scene painted edge to edge.
+- key: slime-evo-s3-riot-posthumous-saint-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Posthumous Saint Medal L2: Martyr''s Ribbon (seed 1)'
+  asset: slime-city/evolutions/s3-riot-posthumous-saint@2
+  size: 832x1216
+  seed: 1108121
+  source_image_id: 261512
+  prompt_prose: The medal's ribbon now burns down like a fuse, sparks spitting from its edge onto the rivals beside
+    the wearer and the comrades standing too close. Keep the same objects, characters and setting details, the same
+    saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with the
+    scene painted edge to edge.
+- key: slime-evo-s3-riot-posthumous-saint-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Posthumous Saint Medal L2: Martyr''s Ribbon (seed 2)'
+  asset: slime-city/evolutions/s3-riot-posthumous-saint@2
+  size: 832x1216
+  seed: 1108122
+  source_image_id: 261512
+  prompt_prose: The medal's ribbon now burns down like a fuse, sparks spitting from its edge onto the rivals beside
+    the wearer and the comrades standing too close. Keep the same objects, characters and setting details, the same
+    saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with the
+    scene painted edge to edge.
+- key: slime-evo-s3-riot-posthumous-saint-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Posthumous Saint Medal L3: Canonized (seed 1)'
+  asset: slime-city/evolutions/s3-riot-posthumous-saint@3
+  size: 832x1216
+  seed: 1108123
+  source_image_id: 261512
+  prompt_prose: The medal now hangs glowing on an empty shrine of candles, and the riot crew around it stands tall
+    with radiant halos, inspired by their fallen saint. Keep the same objects, characters and setting details, the
+    same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with
+    the scene painted edge to edge.
+- key: slime-evo-s3-riot-posthumous-saint-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Posthumous Saint Medal L3: Canonized (seed 2)'
+  asset: slime-city/evolutions/s3-riot-posthumous-saint@3
+  size: 832x1216
+  seed: 1108124
+  source_image_id: 261512
+  prompt_prose: The medal now hangs glowing on an empty shrine of candles, and the riot crew around it stands tall
+    with radiant halos, inspired by their fallen saint. Keep the same objects, characters and setting details, the
+    same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with
+    the scene painted edge to edge.
