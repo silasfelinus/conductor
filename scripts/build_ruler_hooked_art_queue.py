@@ -813,7 +813,9 @@ def read_regions(content_ts: Path) -> dict[str, dict[str, list[str]]]:
     """The (region -> states, times) manifest the compositor actually resolves,
     plus the fallback decay states (EXTRA_REGION_STATES) until content.ts has them."""
     text = content_ts.read_text(encoding="utf-8")
-    block = re.search(r"\n  regions: \{\n    regions: \{\n(.*?)\n    \},\n  \},\n", text, re.S)
+    # The manifest's inner `regions` map ends at the first four-space `},`; t-054
+    # added a `pins` list after it, so do not require the outer block to close there.
+    block = re.search(r"\n  regions: \{\n    regions: \{\n(.*?)\n    \},\n", text, re.S)
     if not block:
         raise SystemExit(f"no regions manifest found in {content_ts}")
     body = block.group(1)
@@ -831,7 +833,10 @@ def read_regions(content_ts: Path) -> dict[str, dict[str, list[str]]]:
                 depth -= 1
             index += 1
         chunk = body[start : index - 1]
-        states = re.search(r"states: \[(.*?)\]", chunk, re.S)
+        # A t-054 decay ramp (driver: { ramp: [...] }) lists the states a slider walks.
+        states = re.search(r"states: \[(.*?)\]", chunk, re.S) or re.search(
+            r"ramp: \[(.*?)\]", chunk, re.S
+        )
         times = re.search(r"times: \[(.*?)\]", chunk, re.S)
         regions[key] = {
             "states": re.findall(r"'([^']+)'", states.group(1)) if states else [],
