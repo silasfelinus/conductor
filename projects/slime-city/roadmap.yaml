@@ -934,3 +934,24 @@ tasks:
       Silas, 2026-11-07 PT: "I want a new mode where the factions can be combined. 30 card decks. Needs to be supported in clash and in deck builder modes. Also want the idea of a faction power. So if you have two factions, one is the general and the deck uses their power. Power should be one time use during a match." Clarified: "Factions combined means you pick two factions, one of them is general, and you can make a 30 card deck using either faction or mercs."
 
       Shipped in kind_robots PR #4897 (squash 0829df42d7e20a289024f76ee127d4e1450a2071) after all 13 latest-head checks passed. utils/slimeCity/alliance.ts: two different factions, any 30 unique cards from either or mercenaries (only guard: 12+ creatures), starters for every pairing, swap-general. Six one-time faction powers (Nine Lives, Mosh Pit, Union Wall, Fuse Box, Sewer Snipe, Call in the Debt) as a replayable Clash `power` command that costs no card play; CPU timing from public facts. Collection CLASSIC 10 / ALLIANCE 30 builder with second-faction picker, swap button, server-validated story save; Clash STANDARD / ALLIANCE switch, power button and rival power chip. CPU sweep 1,800 games: every general 46-54%, first seat 48-51%. Not visually verified pre-merge (local dev needs a DB); look at Collection > ALLIANCE 30 and Clash > ALLIANCE on main. Fun of the power numbers is Silas's call.
+  - id: t-039
+    milestone: m2
+    title: "Everything is Clash: Solo and Alliance decks, City/Story bouts as Solo Clash, verified CPU reward matches, legacy modes retired"
+    status: review
+    claimed_by: 20261108T0020Z-slime-city-everything-clash-t-039-pa1b
+    claimed_at: '2026-11-08T00:20:00.000Z'
+    updated: '2026-11-08T01:10:00.000Z'
+    passes: 0
+    stakes: reversible
+    note: |-
+      Silas, 2026-11-08 PT: "drop the 12 creature minimum. solo should not have been gone, it should have been an independent mode with the solo gamemode. speaking of though, when i select city, it launches the old game system. we don't need the legacy modes, period, everything should be clash, either in city mode which is Solo Clash, or the deckbuilder mode when a user can make a solo or alliance clash deck and play against cpu or human opponents, earning rewards and opening packs." Then: "deck display still doesn't have support for evolutions."
+
+      Kind Robots PR #4900 (branch claude/pensive-albattani-ibljzj): SOLO CLASH format (one faction 20 cards + mercs, any mix, story.soloDecks); Alliance drops the creature minimum; armory SOLO 20 / ALLIANCE 30 (classic 10 retired); City rival/contract and Story bouts launch Solo Clash with terms moved onto boss life (20-60) and settle the ledgers once; CLASH tab SOLO/ALLIANCE vs CPU as server-issued reward matches (deck kept with the match, TRICKLE ownership, transcript replay with CPU moves checked against the server CPU, usual XP/Meat, "Win a Clash battle" bounty); LEGACY menu, Arena, Five Alleys, arena hand and legacy card face deleted; Collection and pack cards show the Clash face with an EVOLUTION LV 1/2/3 switch; fixes #4897's server story save dropping alliances. Not built: human opponents (t-011). Legacy engine code (BLACKOUT/BLOODRUSH/TURF/FIVE ALLEYS in utils/slimeCity) remains unreachable and is a cleanup follow-up.
+  - id: t-040
+    milestone: m2
+    title: "Wire the ogre redo-2 board tokens (no more Shrek look) into the Clash board"
+    status: ready
+    passes: 0
+    stakes: reversible
+    note: |-
+      Silas, 2026-11-08 PT: "we've still got a lot of orcs that look like shrek in their character token in game." projects/slime-city/art/BOARD-TOKENS-OGRE-REDO-2.yaml queues 45 Krea re-renders (auto_submit): 14 Ironjaw ogre creatures and the Picket Line Troll mercenary x fierce/guard/hurt, each with a distinct non-green skin, angular industrial face, riveted chrome lower jaw and small bolted ears. Once the sweep writes art_image_ids back, curate them (reject any that still read as a green round-faced movie ogre and re-queue with a stronger look) and replace the matching SLIME_CITY_ART.tokens['<cardId>/<mood>'] ids in kind_robots utils/slimeCity/artManifest.ts. Foundry Lion keeps its token.
