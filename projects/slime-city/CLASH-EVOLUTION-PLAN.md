@@ -162,10 +162,35 @@ bad idea for an occasional one shot gimmick though. New art for both, high prior
 - Weaker level threes: allowed, rare (one in the pilot).
 - Situational level threes: preferred (board-dependent payoffs, sideways design).
 - Earned level threes: only an occasional one-shot gimmick, not a system.
-- New art for both L2 and L3: high priority. Pilot round: `art/EVOLUTIONS-CATGIRLS-PILOT.yaml` (40 Kontext
-  renders, two seeds per stage).
+- New art for both L2 and L3: high priority. Pilot round: `art/EVOLUTIONS-CATGIRLS-PILOT.yaml` (90 Kontext
+  renders, two seeds per stage: L2 and L3 for all 21 pilot cards, plus each choose-one option B as `@3b`).
 
-### Pilot design sheet (10 cards)
+Follow-up, same day: *"I approved both situational and choose from two. I'm not sure what a 'ten card catgirl
+pilot' is: our solo games are 20 cards and our alliance are 30. You need a sample of at least 20 from one
+faction or 15 from 2 to make one side of a match."*
+
+- **Choose one of two** at level three is approved. Three pilot cards offer it (table below). Whoever plays
+  the card at L3 picks; the pick is a transcript field (`choice: 1`), so server-verified reward replays
+  stay exact, and the fighter keeps its chosen stage for ongoing effects. The CPU picks by board state.
+- **The pilot is a full Solo Clash side.** The Catgirls Solo/CPU deck is now 20 Catgirls, every one with
+  its own L2/L3 story: the 10 hand-built twists from the first 70 (Neon Lynx, Mau-77, Clinic Calico,
+  Madame Chimera, Catnip Overdrive, Scent Mine, Reknit Serum, Patent Shredders, Ninth Life Collar, Laser
+  Pointer) plus 10 crafted cards. 11 fighters, 9 specials.
+- **Balance.** CPU sweeps put the first 20-card list at 33.5% vs 44.5% for Catgirls on main. Two causes,
+  both fixed: each fighter swapped for a special costs about 4 points (the dead 2-play Second Pounce Rig
+  became a deck-builder pick, and Backstreet Organ Donor was crafted to take the slot), and the Tiger's
+  weaker level one cost about 6.5 points alone (cut; its level three still hunts). Three paired seed sets
+  after the fix: pilot 45.8 / 46.0 / 39.7% vs main 43.3 / 43.5 / 41.8%, parity inside the ±4 noise.
+
+### Choose-one level threes
+
+| Card | Option A (CPU takes it when…) | Option B |
+|---|---|---|
+| Splice Runner | *Midnight Ambulance*: never strikes; last fallen fighter returns as a 2/3 echo (someone has fallen) | *Black Market Run*: draw 2, and keep a fighting body |
+| Gene-Spliced Tiger | *Apex Escapee*: fights the strongest foe on arrival (a foe is on the field) | *Back to the Wild*: +3 life, +2 power with no ally beside it |
+| Mutual Aid Serum | *People's Pharmacy*: every unhurt ally +1 power for good (fewer than 2 allies hurt) | *Emergency Ward*: heal every ally 2 |
+
+### Pilot design sheet (11 crafted cards)
 
 | Card | Arc (3 beats) | Trajectory | L2 | L3 | Counterplay |
 |---|---|---|---|---|---|
@@ -173,9 +198,13 @@ bad idea for an occasional one shot gimmick though. New art for both, high prior
 | Rooftop Phantom | lab-roof sneak → chimney leaps → skyline specter | late bloomer (tempo) | *Chimney Leap*: arriving in an empty alley, 2 to the rival boss | *Skyline Specter*: the leap, and a knockout sends it back to the top of your deck | blockers it cannot kill; keep the alley filled |
 | Alley Veterinarian | back-alley vet → night shift for strays → passes her needle on | situational | *Stray Stitches*: round end, heal adjacent allies 1 | *Passes the Needle*: hurt allies gain REGEN; last breath heals neighbors 3 | burst the hurt allies; regen is slow |
 | Parapet Ghost-Kitten | cutest nightmare → gargoyle still → nightmare shadow (still a kitten) | early bloomer, the pilot's one weaker L3 | *Gargoyle Stillness*: +2 shield each turn | *Nightmare of the Parapets*: smaller body (5/10), stuns the 3 facing foes on arrival | the stun lasts one strike; the kitten dies to anything |
-| Gene-Spliced Tiger | escapee → loose in the lab → apex predator | late bloomer (weaker L1) | *Loose in the Lab*: +1 power for good per knockout | *Apex Escapee*: on arrival it fights the strongest foe | a stronger foe wins the hunt; stunned prey cannot hit back, so stun yours first |
+| Gene-Spliced Tiger | escapee → loose in the lab → apex predator | late bloomer (plain heavy until L3; the weaker L1 was cut for balance) | *Loose in the Lab*: +1 power for good per knockout | *Apex Escapee*: on arrival it fights the strongest foe | a stronger foe wins the hunt; stunned prey cannot hit back, so stun yours first |
 | Gutterglass Scout | glass-tower scout → shatters a window → the Glasswalk | role shift | *Barefoot on Shards*: hits splash 1 to adjacent foes | *The Glasswalk*: +3 shield; with 2+ allies watching, all allies +1 power now | the shield ends on her turn; no crowd, no roar |
 | Mutual Aid Serum | free treatment → clinic night → people's pharmacy | situational | *Free Clinic Night*: unstun the target, +1 shield | *People's Pharmacy*: every unhurt ally +1 power for good | keep the crew chipped |
 | Nine Lives, No Refunds | nine lives → the eighth is spent → the crew borrows the last | earned one-shot | *Eighth Life*: the target survives its next lethal hit at 1 | *No Refunds*: every ally survives its next lethal hit at 1 | chip twice; stun and wait |
 | Catwalk Garrote | catwalk wire → the heavy drop → hangman's line | situational, then a second spring | *Heavy Drop*: +2 to a 2-play victim | *Hangman's Line*: re-arms once in the same alley | scan it; send cheap runners first |
 | Second Pounce Rig | stolen rig → tuned for the pack → the second pounce | earned one-shot payoff | *Spring-Loaded*: +1 power beside an ally | *Second Pounce*: a knockout also sends its power into the rival boss | armored blockers; stun the wearer |
+| Backstreet Organ Donor | a medic whose donor list is herself → every hit buys a stitch → the last donation | price (the payoff needs her to fall) | *Blood Drive*: a hit heals your most hurt ally 1 | *Last Donation*: when she falls, your most hurt ally gets +4 life and +1 power for good | stun her instead of killing her; finish the hurt ally first |
+
+Second Pounce Rig stays crafted but leaves the starter deck (a 2-play +2 gear the CPU never chose); it is a
+deck-builder pick.
