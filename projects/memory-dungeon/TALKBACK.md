@@ -153,3 +153,11 @@
 **Decision:** squash-merged reversible docs-only Earth letter encounter packet #7162 (`100bdf693`); 24 of 25 checks passed at first, the red "Validate Worker PR handoff" was a PR-body template failure, fixed by rewriting the body, and the rerun went green. Packet is content only: no runtime binding, tests or ArtJobs. Stale branch `worker/memory-dungeon-roadmap-duplicate-keys-20261107` (no shared history with main, fix already on main) left for branch-janitor.
 
 **What worked:** explicit state ledger, 108-case spec, honest "not integrated" scoping. **What to improve:** fill the handoff headings when opening the PR (repeat of the t-038 miss); consider a pre-open check.
+
+## 2026-11-08 PT | Reviewer merge | memory-dungeon/t-025 | Conductor #7168
+
+**Decision:** squash-merged reversible docs-only Last Train e03/e04 writer packet (`b5f927554`) after all 24 checks passed on head `936098a9`, including the handoff check. Content only: no runtime binding, tests or ArtJobs. Task returned to ready; kaizen t-064 added.
+
+**What worked:** 12 stable choice IDs, derived-state rules, first-choice-final and unique-reward safeguards, honest "partial increment" scoping; handoff headings correct on first open this time.
+
+**What to improve:** two prose packets are now unbound. Stop authoring packets until the registry binding and executable acceptance tests exist (t-064).
