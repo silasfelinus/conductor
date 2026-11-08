@@ -903,7 +903,7 @@ tasks:
   - id: t-037
     milestone: m2
     title: "CLASH: 70 meaningful evolution designs and gameplay implementation for six crews plus mercenaries"
-    status: review
+    status: done
     depends_on: t-035
     passes: 0
     stakes: reversible
@@ -927,8 +927,9 @@ tasks:
       2026-11-07 PT: User expanded the ultimate goal to individually crafted evolution arcs for all 300 existing Slime City cards, no new collectible IDs. Merged Kind Robots PR #4904 (squash 571115711b121b3860662544346bfaca72380535) with all 11 latest-head checks completed green, implementing 20 distinct new mechanical L1/L2/L3 arcs across the six factions and mercenary roster; 59 of original 70 are now playable with scripted battle fixtures, deterministic replay and six-crew CPU coverage. Merged Conductor PR #7158 (squash 34db3c72afa72bc3c91930334e6f1d98c8720408) for verified 300-row inventory and waiting follow-on t-041, and PR #7160 (squash d3a4768b8d322cce6dc0ae66891bcc128543fb37) for accurate 59 MERGED, 11 DESIGNED, 230 TODO statuses. Keep t-037 ready for 11 remaining original concepts; t-041 governs the other 230. No schema, economy, art queue, production deploy or outward publication. Subjective human fun and visuals not yet reviewed.
 
       Final 11 curated evolution arcs implemented in Clash-only branch, with per-level text and focused fixtures; total authored arcs now 70. Awaiting Kind Robots PR CI, seeded balance and review. Follow-on t-041 remains pending.
-    updated: '2026-11-08T03:32:00Z'
-    owner: worker
+
+      Finished 70/70 originally requested handcrafted Clash evolutions. Kind Robots PR #4905 merged as 0e3cc3149644fe457333eae560a1c7a681c1adc4 after 11/11 final-head green checks; Conductor inventory PR #7163 merged as 6a4267b89b1b65ffd8bb2c85b99f4d4df76b830e (70 MERGED, 230 TODO). Includes deterministic battle fixtures, no new card IDs, no economy/art/legacy rules changes. Future 230 cards belong to t-041; human fun acceptance and deployment not claimed.
+    updated: '2026-11-08T03:40:00Z'
     claimed_by: 20261108T032000Z-slime-city-t037-evo-6h9q
     claimed_at: '2026-11-08T03:20:00Z'
   - id: t-038
@@ -970,7 +971,7 @@ tasks:
   - id: t-041
     milestone: m2
     title: "CLASH 300: individually crafted L1/L2/L3 effects for every existing card"
-    status: waiting
+    status: ready
     depends_on: t-037
     passes: 0
     stakes: reversible
