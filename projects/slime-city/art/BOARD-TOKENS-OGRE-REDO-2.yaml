@@ -1,0 +1,565 @@
+# Board tokens ogre redo 2 (2026-11-08 PT). Silas, 2026-11-08 PT: "we've still got a lot of orcs
+# that look like shrek in their character token in game." The Ironjaw Chrome Ogre and Picket Line Troll
+# tokens were prompted as green, round-faced ogres, which Krea paints as a familiar movie ogre. These 45
+# re-render every Ironjaw ogre creature (14; Foundry Lion is a crane-built lion and keeps its token)
+# and the troll mercenary in all three moods. Each keeps the card's props and mood text, drops "green"
+# and "mossy", and names a distinct non-green skin, an angular heavy-browed industrial face, a riveted
+# chrome lower jaw and small bolted ears close to the skull, in positive terms only (Krea paints what
+# a negation names). Same runtime assets as rounds 6/8/redo 1, so each keeper replaces its token key in
+# kind_robots utils/slimeCity/artManifest.ts SLIME_CITY_ART.tokens when wired. auto_submit.
+round: slime-city-board-tokens-ogre-redo-2
+project_slug: slime-city
+designer: Slime City board token portraits, ogre redo 2
+is_public: true
+is_mature: false
+cast_loras: false
+priority: 615
+auto_submit: true
+lanes:
+- key: krea2
+  label: Krea 2 Slime City ogre token redo
+  engine: krea2
+  prompt: prose
+  suffix: Western adult-animation gouache painting, crisp thick black ink contours, vibrant high-contrast shading,
+    a single character head-and-shoulders portrait filling the whole square canvas edge to edge, face large and
+    readable at small sizes, dark vignette background bleeding off every side, saturated colored rim-lighting, every
+    surface bare and unmarked.
+subjects:
+- key: slime-r9-token-scrapper-fierce-ogre-redo
+  lane: krea2
+  entity: token-art
+  title: Chrome Scrapper (fierce)
+  asset: slime-city/tokens/scrapper/fierce
+  size: 1024x1024
+  seed: 1102001
+  prompt_prose: 'Head-and-shoulders portrait of Chrome Scrapper, a stocky adult ogre with gunmetal-grey skin, a
+    bolted chrome jaw plate and both fists wrapped in dented scrap-metal knuckles. An Ironjaw Chrome Ogre: gunmetal-grey
+    skin, an angular heavy-browed industrial face with sharp cheekbones, a riveted chrome lower jaw with steel teeth,
+    small swept-back ears bolted close to the skull, cybernetic seams and soot along the jawline. Expression: a
+    fierce battle cry, eyes blazing, teeth bared in a cocky grin, leaning toward the viewer.'
+- key: slime-r9-token-scrapper-guard-ogre-redo
+  lane: krea2
+  entity: token-art
+  title: Chrome Scrapper (guard)
+  asset: slime-city/tokens/scrapper/guard
+  size: 1024x1024
+  seed: 1102002
+  prompt_prose: 'Head-and-shoulders portrait of Chrome Scrapper, a stocky adult ogre with gunmetal-grey skin, a
+    bolted chrome jaw plate and both fists wrapped in dented scrap-metal knuckles. An Ironjaw Chrome Ogre: gunmetal-grey
+    skin, an angular heavy-browed industrial face with sharp cheekbones, a riveted chrome lower jaw with steel teeth,
+    small swept-back ears bolted close to the skull, cybernetic seams and soot along the jawline. Expression: stubborn
+    and guarded, brow furrowed, chin tucked behind a raised forearm, planted and immovable.'
+- key: slime-r9-token-scrapper-hurt-ogre-redo
+  lane: krea2
+  entity: token-art
+  title: Chrome Scrapper (hurt)
+  asset: slime-city/tokens/scrapper/hurt
+  size: 1024x1024
+  seed: 1102003
+  prompt_prose: 'Head-and-shoulders portrait of Chrome Scrapper, a stocky adult ogre with gunmetal-grey skin, a
+    bolted chrome jaw plate and both fists wrapped in dented scrap-metal knuckles. An Ironjaw Chrome Ogre: gunmetal-grey
+    skin, an angular heavy-browed industrial face with sharp cheekbones, a riveted chrome lower jaw with steel teeth,
+    small swept-back ears bolted close to the skull, cybernetic seams and soot along the jawline. Expression: a
+    comically pained wince with one eye squeezed shut, bruised and dishevelled but still standing.'
+- key: slime-r9-token-welder-fierce-ogre-redo
+  lane: krea2
+  entity: token-art
+  title: Spark Welder (fierce)
+  asset: slime-city/tokens/welder/fierce
+  size: 1024x1024
+  seed: 1102004
+  prompt_prose: 'Head-and-shoulders portrait of Spark Welder, an adult ogre mechanic in oil-stained overalls with
+    a welding visor flipped up and a glowing torch nozzle resting on one shoulder. An Ironjaw Chrome Ogre: rust-bronze
+    skin, an angular heavy-browed industrial face with sharp cheekbones, a riveted chrome lower jaw with steel teeth,
+    small swept-back ears bolted close to the skull, cybernetic seams and soot along the jawline. Expression: a
+    roaring battle shout with tusks bared and brows slammed down, the torch flaring a hot orange tongue of flame.'
+- key: slime-r9-token-welder-guard-ogre-redo
+  lane: krea2
+  entity: token-art
+  title: Spark Welder (guard)
+  asset: slime-city/tokens/welder/guard
+  size: 1024x1024
+  seed: 1102005
+  prompt_prose: 'Head-and-shoulders portrait of Spark Welder, an adult ogre mechanic in oil-stained overalls with
+    a welding visor flipped up and a glowing torch nozzle resting on one shoulder. An Ironjaw Chrome Ogre: rust-bronze
+    skin, an angular heavy-browed industrial face with sharp cheekbones, a riveted chrome lower jaw with steel teeth,
+    small swept-back ears bolted close to the skull, cybernetic seams and soot along the jawline. Expression: stubborn
+    and guarded, brow furrowed, chin tucked behind a raised forearm, planted and immovable.'
+- key: slime-r9-token-welder-hurt-ogre-redo
+  lane: krea2
+  entity: token-art
+  title: Spark Welder (hurt)
+  asset: slime-city/tokens/welder/hurt
+  size: 1024x1024
+  seed: 1102006
+  prompt_prose: 'Head-and-shoulders portrait of Spark Welder, an adult ogre mechanic in oil-stained overalls with
+    a welding visor flipped up and a glowing torch nozzle resting on one shoulder. An Ironjaw Chrome Ogre: rust-bronze
+    skin, an angular heavy-browed industrial face with sharp cheekbones, a riveted chrome lower jaw with steel teeth,
+    small swept-back ears bolted close to the skull, cybernetic seams and soot along the jawline. Expression: groaning
+    with eyes squeezed shut, a black soot burn across his face and the welding visor cracked down the middle.'
+- key: slime-r9-token-bulldozer-fierce-ogre-redo
+  lane: krea2
+  entity: token-art
+  title: Bulld-Ogre (fierce)
+  asset: slime-city/tokens/bulldozer/fierce
+  size: 1024x1024
+  seed: 1102007
+  prompt_prose: 'Head-and-shoulders portrait of Bulld-Ogre, a massive adult ogre with a yellow bulldozer blade bolted
+    across his chest, brick dust in his beard and riveted chrome cheekbones. An Ironjaw Chrome Ogre: slate-blue
+    skin, an angular heavy-browed industrial face with sharp cheekbones, a riveted chrome lower jaw with steel teeth,
+    small swept-back ears bolted close to the skull, cybernetic seams and soot along the jawline. Expression: a
+    bellowing charge, nostrils flared and spit flying, head lowered behind the bolted blade like a bull.'
+- key: slime-r9-token-bulldozer-guard-ogre-redo
+  lane: krea2
+  entity: token-art
+  title: Bulld-Ogre (guard)
+  asset: slime-city/tokens/bulldozer/guard
+  size: 1024x1024
+  seed: 1102008
+  prompt_prose: 'Head-and-shoulders portrait of Bulld-Ogre, a massive adult ogre with a yellow bulldozer blade bolted
+    across his chest, brick dust in his beard and riveted chrome cheekbones. An Ironjaw Chrome Ogre: slate-blue
+    skin, an angular heavy-browed industrial face with sharp cheekbones, a riveted chrome lower jaw with steel teeth,
+    small swept-back ears bolted close to the skull, cybernetic seams and soot along the jawline. Expression: stubborn
+    and guarded, brow furrowed, chin tucked behind a raised forearm, planted and immovable.'
+- key: slime-r9-token-bulldozer-hurt-ogre-redo
+  lane: krea2
+  entity: token-art
+  title: Bulld-Ogre (hurt)
+  asset: slime-city/tokens/bulldozer/hurt
+  size: 1024x1024
+  seed: 1102009
+  prompt_prose: 'Head-and-shoulders portrait of Bulld-Ogre, a massive adult ogre with a yellow bulldozer blade bolted
+    across his chest, brick dust in his beard and riveted chrome cheekbones. An Ironjaw Chrome Ogre: slate-blue
+    skin, an angular heavy-browed industrial face with sharp cheekbones, a riveted chrome lower jaw with steel teeth,
+    small swept-back ears bolted close to the skull, cybernetic seams and soot along the jawline. Expression: a
+    comically pained wince with one eye squeezed shut, bruised and dishevelled but still standing.'
+- key: slime-r9-token-juggernaut-fierce-ogre-redo
+  lane: krea2
+  entity: token-art
+  title: Maw-9000 (fierce)
+  asset: slime-city/tokens/juggernaut/fierce
+  size: 1024x1024
+  seed: 1102010
+  prompt_prose: 'Head-and-shoulders portrait of Maw-9000, a towering adult cyborg ogre with a huge hinged chrome
+    jaw, smokestack exhaust pipes rising behind his shoulders and red furnace eyes. An Ironjaw Chrome Ogre: soot-black
+    skin, an angular heavy-browed industrial face with sharp cheekbones, a riveted chrome lower jaw with steel teeth,
+    small swept-back ears bolted close to the skull, cybernetic seams and soot along the jawline. Expression: a
+    fierce battle cry, eyes blazing, teeth bared in a cocky grin, leaning toward the viewer.'
+- key: slime-r9-token-juggernaut-guard-ogre-redo
+  lane: krea2
+  entity: token-art
+  title: Maw-9000 (guard)
+  asset: slime-city/tokens/juggernaut/guard
+  size: 1024x1024
+  seed: 1102011
+  prompt_prose: 'Head-and-shoulders portrait of Maw-9000, a towering adult cyborg ogre with a huge hinged chrome
+    jaw, smokestack exhaust pipes rising behind his shoulders and red furnace eyes. An Ironjaw Chrome Ogre: soot-black
+    skin, an angular heavy-browed industrial face with sharp cheekbones, a riveted chrome lower jaw with steel teeth,
+    small swept-back ears bolted close to the skull, cybernetic seams and soot along the jawline. Expression: stubborn
+    and guarded, brow furrowed, chin tucked behind a raised forearm, planted and immovable.'
+- key: slime-r9-token-juggernaut-hurt-ogre-redo
+  lane: krea2
+  entity: token-art
+  title: Maw-9000 (hurt)
+  asset: slime-city/tokens/juggernaut/hurt
+  size: 1024x1024
+  seed: 1102012
+  prompt_prose: 'Head-and-shoulders portrait of Maw-9000, a towering adult cyborg ogre with a huge hinged chrome
+    jaw, smokestack exhaust pipes rising behind his shoulders and red furnace eyes. An Ironjaw Chrome Ogre: soot-black
+    skin, an angular heavy-browed industrial face with sharp cheekbones, a riveted chrome lower jaw with steel teeth,
+    small swept-back ears bolted close to the skull, cybernetic seams and soot along the jawline. Expression: a
+    comically pained wince with one eye squeezed shut, bruised and dishevelled but still standing.'
+- key: slime-r9-token-union-millwright-fierce-ogre-redo
+  lane: krea2
+  entity: token-art
+  title: Union Millwright (fierce)
+  asset: slime-city/tokens/union-millwright/fierce
+  size: 1024x1024
+  seed: 1102013
+  prompt_prose: 'Head-and-shoulders portrait of Union Millwright, a broad adult ogre engineer with a scratched chrome
+    jaw, amber welding goggles on his brow and a red union sash across his barrel chest. An Ironjaw Chrome Ogre:
+    copper-orange skin, an angular heavy-browed industrial face with sharp cheekbones, a riveted chrome lower jaw
+    with steel teeth, small swept-back ears bolted close to the skull, cybernetic seams and soot along the jawline.
+    Expression: a bellowing strike chant, chrome jaw wide open and a big wrench shaken overhead.'
+- key: slime-r9-token-union-millwright-guard-ogre-redo
+  lane: krea2
+  entity: token-art
+  title: Union Millwright (guard)
+  asset: slime-city/tokens/union-millwright/guard
+  size: 1024x1024
+  seed: 1102014
+  prompt_prose: 'Head-and-shoulders portrait of Union Millwright, a broad adult ogre engineer with a scratched chrome
+    jaw, amber welding goggles on his brow and a red union sash across his barrel chest. An Ironjaw Chrome Ogre:
+    copper-orange skin, an angular heavy-browed industrial face with sharp cheekbones, a riveted chrome lower jaw
+    with steel teeth, small swept-back ears bolted close to the skull, cybernetic seams and soot along the jawline.
+    Expression: arms folded over the union sash, goggles down, a stubborn immovable scowl.'
+- key: slime-r9-token-union-millwright-hurt-ogre-redo
+  lane: krea2
+  entity: token-art
+  title: Union Millwright (hurt)
+  asset: slime-city/tokens/union-millwright/hurt
+  size: 1024x1024
+  seed: 1102015
+  prompt_prose: 'Head-and-shoulders portrait of Union Millwright, a broad adult ogre engineer with a scratched chrome
+    jaw, amber welding goggles on his brow and a red union sash across his barrel chest. An Ironjaw Chrome Ogre:
+    copper-orange skin, an angular heavy-browed industrial face with sharp cheekbones, a riveted chrome lower jaw
+    with steel teeth, small swept-back ears bolted close to the skull, cybernetic seams and soot along the jawline.
+    Expression: goggles cracked, chrome jaw dented and hanging loose, a groan through gritted teeth.'
+- key: slime-r9-token-s1-walking-foundry-fierce-ogre-redo
+  lane: krea2
+  entity: token-art
+  title: Walking Foundry (fierce)
+  asset: slime-city/tokens/s1-walking-foundry/fierce
+  size: 1024x1024
+  seed: 1102016
+  prompt_prose: 'Head-and-shoulders portrait of Walking Foundry, a vast adult forge-ogre whose ribcage is a glowing
+    furnace grate, steel gantries on his shoulders and a soot-streaked face under a tiny union flag. An Ironjaw
+    Chrome Ogre: ember-red skin, an angular heavy-browed industrial face with sharp cheekbones, a riveted chrome
+    lower jaw with steel teeth, small swept-back ears bolted close to the skull, cybernetic seams and soot along
+    the jawline. Expression: furnace ribs blazing white-hot, roaring with sparks pouring from his mouth.'
+- key: slime-r9-token-s1-walking-foundry-guard-ogre-redo
+  lane: krea2
+  entity: token-art
+  title: Walking Foundry (guard)
+  asset: slime-city/tokens/s1-walking-foundry/guard
+  size: 1024x1024
+  seed: 1102017
+  prompt_prose: 'Head-and-shoulders portrait of Walking Foundry, a vast adult forge-ogre whose ribcage is a glowing
+    furnace grate, steel gantries on his shoulders and a soot-streaked face under a tiny union flag. An Ironjaw
+    Chrome Ogre: ember-red skin, an angular heavy-browed industrial face with sharp cheekbones, a riveted chrome
+    lower jaw with steel teeth, small swept-back ears bolted close to the skull, cybernetic seams and soot along
+    the jawline. Expression: shoulders hunched behind the gantries, furnace dimmed to a low wary glow.'
+- key: slime-r9-token-s1-walking-foundry-hurt-ogre-redo
+  lane: krea2
+  entity: token-art
+  title: Walking Foundry (hurt)
+  asset: slime-city/tokens/s1-walking-foundry/hurt
+  size: 1024x1024
+  seed: 1102018
+  prompt_prose: 'Head-and-shoulders portrait of Walking Foundry, a vast adult forge-ogre whose ribcage is a glowing
+    furnace grate, steel gantries on his shoulders and a soot-streaked face under a tiny union flag. An Ironjaw
+    Chrome Ogre: ember-red skin, an angular heavy-browed industrial face with sharp cheekbones, a riveted chrome
+    lower jaw with steel teeth, small swept-back ears bolted close to the skull, cybernetic seams and soot along
+    the jawline. Expression: the furnace grate sputtering out in black smoke, the flag torn, one eye swollen.'
+- key: slime-r9-token-s1-scrap-welder-fierce-ogre-redo
+  lane: krea2
+  entity: token-art
+  title: Scrap Welder (fierce)
+  asset: slime-city/tokens/s1-scrap-welder/fierce
+  size: 1024x1024
+  seed: 1102019
+  prompt_prose: 'Head-and-shoulders portrait of Scrap Welder, a short broad-shouldered adult ogre with one mismatched
+    scrap-metal arm, cracked old welding goggles and a riveted chrome chin. An Ironjaw Chrome Ogre: ash-white skin,
+    an angular heavy-browed industrial face with sharp cheekbones, a riveted chrome lower jaw with steel teeth,
+    small swept-back ears bolted close to the skull, cybernetic seams and soot along the jawline. Expression: shoving
+    forward with the scrap arm raised, sparks flying, a gap-toothed snarl.'
+- key: slime-r9-token-s1-scrap-welder-guard-ogre-redo
+  lane: krea2
+  entity: token-art
+  title: Scrap Welder (guard)
+  asset: slime-city/tokens/s1-scrap-welder/guard
+  size: 1024x1024
+  seed: 1102020
+  prompt_prose: 'Head-and-shoulders portrait of Scrap Welder, a short broad-shouldered adult ogre with one mismatched
+    scrap-metal arm, cracked old welding goggles and a riveted chrome chin. An Ironjaw Chrome Ogre: ash-white skin,
+    an angular heavy-browed industrial face with sharp cheekbones, a riveted chrome lower jaw with steel teeth,
+    small swept-back ears bolted close to the skull, cybernetic seams and soot along the jawline. Expression: scrap
+    arm braced across his face like a shield, eyes narrowed over it.'
+- key: slime-r9-token-s1-scrap-welder-hurt-ogre-redo
+  lane: krea2
+  entity: token-art
+  title: Scrap Welder (hurt)
+  asset: slime-city/tokens/s1-scrap-welder/hurt
+  size: 1024x1024
+  seed: 1102021
+  prompt_prose: 'Head-and-shoulders portrait of Scrap Welder, a short broad-shouldered adult ogre with one mismatched
+    scrap-metal arm, cracked old welding goggles and a riveted chrome chin. An Ironjaw Chrome Ogre: ash-white skin,
+    an angular heavy-browed industrial face with sharp cheekbones, a riveted chrome lower jaw with steel teeth,
+    small swept-back ears bolted close to the skull, cybernetic seams and soot along the jawline. Expression: scrap
+    arm hanging off by one bolt, sparks fizzing from the joint, wincing.'
+- key: slime-r9-token-s2-ironjaw-union-bridgebearer-fierce-ogre-redo
+  lane: krea2
+  entity: token-art
+  title: Union Bridgebearer (fierce)
+  asset: slime-city/tokens/s2-ironjaw-union-bridgebearer/fierce
+  size: 1024x1024
+  seed: 1102022
+  prompt_prose: 'Head-and-shoulders portrait of Union Bridgebearer, an enormous adult ogre with a chrome jaw and
+    steel girders bolted along his shoulders, a half-eaten sandwich in one huge fist. An Ironjaw Chrome Ogre: steel-blue
+    skin, an angular heavy-browed industrial face with sharp cheekbones, a riveted chrome lower jaw with steel teeth,
+    small swept-back ears bolted close to the skull, cybernetic seams and soot along the jawline. Expression: a
+    thunderous roar spraying sandwich crumbs, girders rattling on his shoulders.'
+- key: slime-r9-token-s2-ironjaw-union-bridgebearer-guard-ogre-redo
+  lane: krea2
+  entity: token-art
+  title: Union Bridgebearer (guard)
+  asset: slime-city/tokens/s2-ironjaw-union-bridgebearer/guard
+  size: 1024x1024
+  seed: 1102023
+  prompt_prose: 'Head-and-shoulders portrait of Union Bridgebearer, an enormous adult ogre with a chrome jaw and
+    steel girders bolted along his shoulders, a half-eaten sandwich in one huge fist. An Ironjaw Chrome Ogre: steel-blue
+    skin, an angular heavy-browed industrial face with sharp cheekbones, a riveted chrome lower jaw with steel teeth,
+    small swept-back ears bolted close to the skull, cybernetic seams and soot along the jawline. Expression: calmly
+    chewing with half-closed eyes, girders braced, utterly unmovable.'
+- key: slime-r9-token-s2-ironjaw-union-bridgebearer-hurt-ogre-redo
+  lane: krea2
+  entity: token-art
+  title: Union Bridgebearer (hurt)
+  asset: slime-city/tokens/s2-ironjaw-union-bridgebearer/hurt
+  size: 1024x1024
+  seed: 1102024
+  prompt_prose: 'Head-and-shoulders portrait of Union Bridgebearer, an enormous adult ogre with a chrome jaw and
+    steel girders bolted along his shoulders, a half-eaten sandwich in one huge fist. An Ironjaw Chrome Ogre: steel-blue
+    skin, an angular heavy-browed industrial face with sharp cheekbones, a riveted chrome lower jaw with steel teeth,
+    small swept-back ears bolted close to the skull, cybernetic seams and soot along the jawline. Expression: a
+    girder buckled and bent, sandwich dropped, a big bruise across his forehead.'
+- key: slime-r9-token-s3-ironjaw-night-welder-fierce-ogre-redo
+  lane: krea2
+  entity: token-art
+  title: Night Shift Welder (fierce)
+  asset: slime-city/tokens/s3-ironjaw-night-welder/fierce
+  size: 1024x1024
+  seed: 1102025
+  prompt_prose: 'Head-and-shoulders portrait of Night Shift Welder, a scrawny adult ogre, the smallest on his crew,
+    with a welding mask flipped up over big tired eyes and a white-hot cutting torch. An Ironjaw Chrome Ogre: pale
+    lilac-grey skin, an angular heavy-browed industrial face with sharp cheekbones, a riveted chrome lower jaw with
+    steel teeth, small swept-back ears bolted close to the skull, cybernetic seams and soot along the jawline. Expression:
+    a surprisingly fierce yell, torch flame roaring long and blue-white.'
+- key: slime-r9-token-s3-ironjaw-night-welder-guard-ogre-redo
+  lane: krea2
+  entity: token-art
+  title: Night Shift Welder (guard)
+  asset: slime-city/tokens/s3-ironjaw-night-welder/guard
+  size: 1024x1024
+  seed: 1102026
+  prompt_prose: 'Head-and-shoulders portrait of Night Shift Welder, a scrawny adult ogre, the smallest on his crew,
+    with a welding mask flipped up over big tired eyes and a white-hot cutting torch. An Ironjaw Chrome Ogre: pale
+    lilac-grey skin, an angular heavy-browed industrial face with sharp cheekbones, a riveted chrome lower jaw with
+    steel teeth, small swept-back ears bolted close to the skull, cybernetic seams and soot along the jawline. Expression:
+    mask snapped down, peering through the dark lens, torch held low and ready.'
+- key: slime-r9-token-s3-ironjaw-night-welder-hurt-ogre-redo
+  lane: krea2
+  entity: token-art
+  title: Night Shift Welder (hurt)
+  asset: slime-city/tokens/s3-ironjaw-night-welder/hurt
+  size: 1024x1024
+  seed: 1102027
+  prompt_prose: 'Head-and-shoulders portrait of Night Shift Welder, a scrawny adult ogre, the smallest on his crew,
+    with a welding mask flipped up over big tired eyes and a white-hot cutting torch. An Ironjaw Chrome Ogre: pale
+    lilac-grey skin, an angular heavy-browed industrial face with sharp cheekbones, a riveted chrome lower jaw with
+    steel teeth, small swept-back ears bolted close to the skull, cybernetic seams and soot along the jawline. Expression:
+    mask cracked, eyebrows singed off, blinking through tears and soot.'
+- key: slime-r9-token-s3-ironjaw-dreadnought-fierce-ogre-redo
+  lane: krea2
+  entity: token-art
+  title: Scrapyard Dreadnought (fierce)
+  asset: slime-city/tokens/s3-ironjaw-dreadnought/fierce
+  size: 1024x1024
+  seed: 1102028
+  prompt_prose: 'Head-and-shoulders portrait of Scrapyard Dreadnought, an enormous adult ogre fused into a rusted
+    scrapyard bulldozer, a dented dozer blade bolted to his chest and exhaust stacks jutting from his back. An Ironjaw
+    Chrome Ogre: oxidised iron-brown skin, an angular heavy-browed industrial face with sharp cheekbones, a riveted
+    chrome lower jaw with steel teeth, small swept-back ears bolted close to the skull, cybernetic seams and soot
+    along the jawline. Expression: engine roaring, exhaust stacks belching black smoke, teeth bared above the blade.'
+- key: slime-r9-token-s3-ironjaw-dreadnought-guard-ogre-redo
+  lane: krea2
+  entity: token-art
+  title: Scrapyard Dreadnought (guard)
+  asset: slime-city/tokens/s3-ironjaw-dreadnought/guard
+  size: 1024x1024
+  seed: 1102029
+  prompt_prose: 'Head-and-shoulders portrait of Scrapyard Dreadnought, an enormous adult ogre fused into a rusted
+    scrapyard bulldozer, a dented dozer blade bolted to his chest and exhaust stacks jutting from his back. An Ironjaw
+    Chrome Ogre: oxidised iron-brown skin, an angular heavy-browed industrial face with sharp cheekbones, a riveted
+    chrome lower jaw with steel teeth, small swept-back ears bolted close to the skull, cybernetic seams and soot
+    along the jawline. Expression: dozer blade raised in front of his face, only angry eyes peeking over the top.'
+- key: slime-r9-token-s3-ironjaw-dreadnought-hurt-ogre-redo
+  lane: krea2
+  entity: token-art
+  title: Scrapyard Dreadnought (hurt)
+  asset: slime-city/tokens/s3-ironjaw-dreadnought/hurt
+  size: 1024x1024
+  seed: 1102030
+  prompt_prose: 'Head-and-shoulders portrait of Scrapyard Dreadnought, an enormous adult ogre fused into a rusted
+    scrapyard bulldozer, a dented dozer blade bolted to his chest and exhaust stacks jutting from his back. An Ironjaw
+    Chrome Ogre: oxidised iron-brown skin, an angular heavy-browed industrial face with sharp cheekbones, a riveted
+    chrome lower jaw with steel teeth, small swept-back ears bolted close to the skull, cybernetic seams and soot
+    along the jawline. Expression: blade crumpled, an exhaust stack bent, smoke pouring out and his face pained.'
+- key: slime-r9-token-s3-ironjaw-union-cook-fierce-ogre-redo
+  lane: krea2
+  entity: token-art
+  title: Union Lunch Lady (fierce)
+  asset: slime-city/tokens/s3-ironjaw-union-cook/fierce
+  size: 1024x1024
+  seed: 1102031
+  prompt_prose: 'Head-and-shoulders portrait of Union Lunch Lady, a broad adult ogre lunch lady in a hairnet, riveted
+    oven mitts and a cracked steel apron, a giant soup ladle on her shoulder. An Ironjaw Chrome Ogre: warm terracotta
+    skin, an angular heavy-browed industrial face with sharp cheekbones, a riveted chrome lower jaw with steel teeth,
+    small swept-back ears bolted close to the skull, cybernetic seams and soot along the jawline. Expression: swinging
+    the ladle overhead with a war cry, hot soup flying in an arc.'
+- key: slime-r9-token-s3-ironjaw-union-cook-guard-ogre-redo
+  lane: krea2
+  entity: token-art
+  title: Union Lunch Lady (guard)
+  asset: slime-city/tokens/s3-ironjaw-union-cook/guard
+  size: 1024x1024
+  seed: 1102032
+  prompt_prose: 'Head-and-shoulders portrait of Union Lunch Lady, a broad adult ogre lunch lady in a hairnet, riveted
+    oven mitts and a cracked steel apron, a giant soup ladle on her shoulder. An Ironjaw Chrome Ogre: warm terracotta
+    skin, an angular heavy-browed industrial face with sharp cheekbones, a riveted chrome lower jaw with steel teeth,
+    small swept-back ears bolted close to the skull, cybernetic seams and soot along the jawline. Expression: oven
+    mitts raised and crossed, a tight-lipped hairnet glare.'
+- key: slime-r9-token-s3-ironjaw-union-cook-hurt-ogre-redo
+  lane: krea2
+  entity: token-art
+  title: Union Lunch Lady (hurt)
+  asset: slime-city/tokens/s3-ironjaw-union-cook/hurt
+  size: 1024x1024
+  seed: 1102033
+  prompt_prose: 'Head-and-shoulders portrait of Union Lunch Lady, a broad adult ogre lunch lady in a hairnet, riveted
+    oven mitts and a cracked steel apron, a giant soup ladle on her shoulder. An Ironjaw Chrome Ogre: warm terracotta
+    skin, an angular heavy-browed industrial face with sharp cheekbones, a riveted chrome lower jaw with steel teeth,
+    small swept-back ears bolted close to the skull, cybernetic seams and soot along the jawline. Expression: soup
+    splattered on her face, apron crack glowing, eyes squeezed shut.'
+- key: slime-r9-token-s3-ironjaw-bridgebreaker-fierce-ogre-redo
+  lane: krea2
+  entity: token-art
+  title: Bridgebreaker Ogre (fierce)
+  asset: slime-city/tokens/s3-ironjaw-bridgebreaker/fierce
+  size: 1024x1024
+  seed: 1102034
+  prompt_prose: 'Head-and-shoulders portrait of Bridgebreaker Ogre, an adult ogre crew captain in a riveted orange
+    hard hat, a whole steel I-beam hoisted over one shoulder and a chrome jaw. An Ironjaw Chrome Ogre: charcoal-violet
+    skin, an angular heavy-browed industrial face with sharp cheekbones, a riveted chrome lower jaw with steel teeth,
+    small swept-back ears bolted close to the skull, cybernetic seams and soot along the jawline. Expression: a
+    charging war bellow, the I-beam swinging forward toward the viewer.'
+- key: slime-r9-token-s3-ironjaw-bridgebreaker-guard-ogre-redo
+  lane: krea2
+  entity: token-art
+  title: Bridgebreaker Ogre (guard)
+  asset: slime-city/tokens/s3-ironjaw-bridgebreaker/guard
+  size: 1024x1024
+  seed: 1102035
+  prompt_prose: 'Head-and-shoulders portrait of Bridgebreaker Ogre, an adult ogre crew captain in a riveted orange
+    hard hat, a whole steel I-beam hoisted over one shoulder and a chrome jaw. An Ironjaw Chrome Ogre: charcoal-violet
+    skin, an angular heavy-browed industrial face with sharp cheekbones, a riveted chrome lower jaw with steel teeth,
+    small swept-back ears bolted close to the skull, cybernetic seams and soot along the jawline. Expression: the
+    I-beam planted upright like a barrier, jaw set and eyes steady.'
+- key: slime-r9-token-s3-ironjaw-bridgebreaker-hurt-ogre-redo
+  lane: krea2
+  entity: token-art
+  title: Bridgebreaker Ogre (hurt)
+  asset: slime-city/tokens/s3-ironjaw-bridgebreaker/hurt
+  size: 1024x1024
+  seed: 1102036
+  prompt_prose: 'Head-and-shoulders portrait of Bridgebreaker Ogre, an adult ogre crew captain in a riveted orange
+    hard hat, a whole steel I-beam hoisted over one shoulder and a chrome jaw. An Ironjaw Chrome Ogre: charcoal-violet
+    skin, an angular heavy-browed industrial face with sharp cheekbones, a riveted chrome lower jaw with steel teeth,
+    small swept-back ears bolted close to the skull, cybernetic seams and soot along the jawline. Expression: hard
+    hat dented in, the I-beam bent across his shoulder, dazed with stars circling.'
+- key: slime-r9-token-s3-ironjaw-coal-racer-fierce-ogre-redo
+  lane: krea2
+  entity: token-art
+  title: Coal Cart Racer (fierce)
+  asset: slime-city/tokens/s3-ironjaw-coal-racer/fierce
+  size: 1024x1024
+  seed: 1102037
+  prompt_prose: 'Head-and-shoulders portrait of Coal Cart Racer, a lanky adult ogre with a clenched chrome jaw,
+    soot-black cheeks, racing goggles and chunks of coal caught in his hair. An Ironjaw Chrome Ogre: coal-dust grey
+    skin, an angular heavy-browed industrial face with sharp cheekbones, a riveted chrome lower jaw with steel teeth,
+    small swept-back ears bolted close to the skull, cybernetic seams and soot along the jawline. Expression: a
+    manic grin with chrome jaw clenched, goggles glinting, coal sparks streaming.'
+- key: slime-r9-token-s3-ironjaw-coal-racer-guard-ogre-redo
+  lane: krea2
+  entity: token-art
+  title: Coal Cart Racer (guard)
+  asset: slime-city/tokens/s3-ironjaw-coal-racer/guard
+  size: 1024x1024
+  seed: 1102038
+  prompt_prose: 'Head-and-shoulders portrait of Coal Cart Racer, a lanky adult ogre with a clenched chrome jaw,
+    soot-black cheeks, racing goggles and chunks of coal caught in his hair. An Ironjaw Chrome Ogre: coal-dust grey
+    skin, an angular heavy-browed industrial face with sharp cheekbones, a riveted chrome lower jaw with steel teeth,
+    small swept-back ears bolted close to the skull, cybernetic seams and soot along the jawline. Expression: hunched
+    low, gripping an imagined brake lever, eyes darting nervously.'
+- key: slime-r9-token-s3-ironjaw-coal-racer-hurt-ogre-redo
+  lane: krea2
+  entity: token-art
+  title: Coal Cart Racer (hurt)
+  asset: slime-city/tokens/s3-ironjaw-coal-racer/hurt
+  size: 1024x1024
+  seed: 1102039
+  prompt_prose: 'Head-and-shoulders portrait of Coal Cart Racer, a lanky adult ogre with a clenched chrome jaw,
+    soot-black cheeks, racing goggles and chunks of coal caught in his hair. An Ironjaw Chrome Ogre: coal-dust grey
+    skin, an angular heavy-browed industrial face with sharp cheekbones, a riveted chrome lower jaw with steel teeth,
+    small swept-back ears bolted close to the skull, cybernetic seams and soot along the jawline. Expression: goggles
+    askew, face blackened by a coal explosion, coughing smoke.'
+- key: slime-r9-token-s3-ironjaw-matriarch-fierce-ogre-redo
+  lane: krea2
+  entity: token-art
+  title: Iron Matriarch (fierce)
+  asset: slime-city/tokens/s3-ironjaw-matriarch/fierce
+  size: 1024x1024
+  seed: 1102040
+  prompt_prose: 'Head-and-shoulders portrait of Iron Matriarch, a towering grey-haired adult ogre matriarch in a
+    riveted steel shawl, her hard hat crowned with welded wrenches and a broad shield rim in view. An Ironjaw Chrome
+    Ogre: polished pewter skin, an angular heavy-browed industrial face with sharp cheekbones, a riveted chrome
+    lower jaw with steel teeth, small swept-back ears bolted close to the skull, cybernetic seams and soot along
+    the jawline. Expression: a matriarch''s commanding battle shout, wrench crown gleaming, shield shoved forward.'
+- key: slime-r9-token-s3-ironjaw-matriarch-guard-ogre-redo
+  lane: krea2
+  entity: token-art
+  title: Iron Matriarch (guard)
+  asset: slime-city/tokens/s3-ironjaw-matriarch/guard
+  size: 1024x1024
+  seed: 1102041
+  prompt_prose: 'Head-and-shoulders portrait of Iron Matriarch, a towering grey-haired adult ogre matriarch in a
+    riveted steel shawl, her hard hat crowned with welded wrenches and a broad shield rim in view. An Ironjaw Chrome
+    Ogre: polished pewter skin, an angular heavy-browed industrial face with sharp cheekbones, a riveted chrome
+    lower jaw with steel teeth, small swept-back ears bolted close to the skull, cybernetic seams and soot along
+    the jawline. Expression: shield raised to her nose, steady grey eyes over the rim, utterly calm.'
+- key: slime-r9-token-s3-ironjaw-matriarch-hurt-ogre-redo
+  lane: krea2
+  entity: token-art
+  title: Iron Matriarch (hurt)
+  asset: slime-city/tokens/s3-ironjaw-matriarch/hurt
+  size: 1024x1024
+  seed: 1102042
+  prompt_prose: 'Head-and-shoulders portrait of Iron Matriarch, a towering grey-haired adult ogre matriarch in a
+    riveted steel shawl, her hard hat crowned with welded wrenches and a broad shield rim in view. An Ironjaw Chrome
+    Ogre: polished pewter skin, an angular heavy-browed industrial face with sharp cheekbones, a riveted chrome
+    lower jaw with steel teeth, small swept-back ears bolted close to the skull, cybernetic seams and soot along
+    the jawline. Expression: plating dented and popping, hard hat knocked crooked, grimacing but still upright.'
+- key: slime-r9-token-merc-picket-troll-fierce-ogre-redo
+  lane: krea2
+  entity: token-art
+  title: Picket Line Troll (fierce)
+  asset: slime-city/tokens/merc-picket-troll/fierce
+  size: 1024x1024
+  seed: 1102043
+  prompt_prose: 'Head-and-shoulders portrait of Picket Line Troll, an enormous adult troll with tusks, a dented
+    hard hat and a blank plywood sandwich board, a thermos on a chain. Craggy lichen-grey granite skin like weathered
+    stone, a long jutting underbite with chipped tusks, deep-set eyes under a heavy brow ridge, ears small and flat
+    against the skull. Expression: a booming strike chant, tusks bared, the sandwich board raised overhead.'
+- key: slime-r9-token-merc-picket-troll-guard-ogre-redo
+  lane: krea2
+  entity: token-art
+  title: Picket Line Troll (guard)
+  asset: slime-city/tokens/merc-picket-troll/guard
+  size: 1024x1024
+  seed: 1102044
+  prompt_prose: 'Head-and-shoulders portrait of Picket Line Troll, an enormous adult troll with tusks, a dented
+    hard hat and a blank plywood sandwich board, a thermos on a chain. Craggy lichen-grey granite skin like weathered
+    stone, a long jutting underbite with chipped tusks, deep-set eyes under a heavy brow ridge, ears small and flat
+    against the skull. Expression: feet planted, arms folded over the board, a stubborn sleepy scowl.'
+- key: slime-r9-token-merc-picket-troll-hurt-ogre-redo
+  lane: krea2
+  entity: token-art
+  title: Picket Line Troll (hurt)
+  asset: slime-city/tokens/merc-picket-troll/hurt
+  size: 1024x1024
+  seed: 1102045
+  prompt_prose: 'Head-and-shoulders portrait of Picket Line Troll, an enormous adult troll with tusks, a dented
+    hard hat and a blank plywood sandwich board, a thermos on a chain. Craggy lichen-grey granite skin like weathered
+    stone, a long jutting underbite with chipped tusks, deep-set eyes under a heavy brow ridge, ears small and flat
+    against the skull. Expression: hard hat dented in, a chip knocked off one stony cheek, the thermos cracked and
+    leaking.'
