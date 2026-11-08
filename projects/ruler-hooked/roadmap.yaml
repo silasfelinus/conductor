@@ -1202,3 +1202,17 @@ tasks:
   claimed_by: 2026-11-06T11:45:10Z-ruler-hooked-t065-visual-4a92e
   claimed_at: '2026-11-06T11:45:10.983Z'
   updated: '2026-11-06T12:05:17.697Z'
+- id: t-066
+  milestone: m6
+  title: 'Playtest fixes: readable rainbow court, findable quiz mode, quiz/flag fixes, and rainbow restage of the held regal-style art'
+  status: review
+  gate_human: false
+  stakes: reversible
+  passes: 0
+  note: |-
+    Silas, 2026-11-07/08 PT playtest: decree descriptions buried in a barely-visible inner scroll box; court styling should match the rainbow fishing screens; "where is the advancement where we can change the fishing minigame to mandarin or other quizes?"; Mandarin tutor info should take more space and its bottom button was barely clickable; no repeated info sheet after a correct answer (only after a wrong one); do not give answers before testing on flags or capitals; real flags, not initials; "resubmit / rewrite any art in the regal motif".
+
+    kind_robots#4898: edict panel (painting, full petition text, petitioner) beside the decree hand with stage-height card sizing and no inner scroll; court panels, ledgers, ribbons and presenter frame in the indigo/spectrum/neon fishing look; Classic/Learning switch and subjects link under Cast a line; quiz dock bounded between HUD and nav, near-full-width study sheet, two-column Mandarin field guide; correct answers land the fish immediately; only Mandarin keeps a study-first preview; flags are bundled SVGs (flag-icons, MIT) in public/flags. Verified in headless Chromium at five viewports; vue-tsc, Prettier, ESLint and Ruler Hooked selftests pass locally.
+
+    Conductor: Silas's 2026-11-08 instruction releases the #7122 hold. build_ruler_hooked_art_queue.py --include-layers --write --restage rewrote all 169 stale rows (165 held + 4 done whose prompts changed) to pending, force: true, with the rainbow prompts; --check is clean. read_regions now parses t-054 ramp states and the trailing pins block (it exited on the layer lane before), with a regression test. Renders and in-game visual verification still to follow.
+  updated: '2026-11-08T00:30:00Z'
