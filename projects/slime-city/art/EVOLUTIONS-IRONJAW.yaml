@@ -1,0 +1,1324 @@
+# Slime City evolution art, Ironjaw Chrome Ogres (2026-11-08 PT; CLASH-EVOLUTION-PLAN.md section 4).
+# Silas: "We should have fresh art on the evolutions, not just frame effects" and "300 cards, all need custom
+# better evolutions." Each crafted card (utils/slimeCity/evolutions/*.ts in kind_robots) gets a level-2 and a
+# level-3 painting, and a choose-one card a painting for its option B ('@3b'): the same character or scene
+# transformed by its story arc. Flux Kontext edits the card's wired level-1 ArtImage (SLIME_CITY_ART.cards) so
+# face, outfit and style carry over; each prompt names only that stage's story change, written per card. Two
+# seeds per stage for curation. Keepers are wired as SLIME_CITY_ART.evolutions['<cardId>@2' | '@3' | '@3b'].
+# auto_submit: true.
+round: slime-city-evolutions-ironjaw
+project_slug: slime-city
+designer: Slime City evolution art, Ironjaw Chrome Ogres
+is_public: true
+is_mature: false
+cast_loras: false
+priority: 640
+auto_submit: true
+lanes:
+- key: kontext-evolution
+  label: Flux Kontext dev (fp8), evolved stages from each card's level-1 painting
+  engine: kontext
+  prompt: prose
+  steps: 20
+  guidance: 2.5
+subjects:
+- key: slime-evo-union-millwright-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Union Millwright L2: Keeps the Line Running (seed 1)'
+  asset: slime-city/evolutions/union-millwright@2
+  size: 832x1216
+  seed: 1107001
+  source_image_id: 262295
+  prompt_prose: The chrome-jawed millwright ogre now kneels at a hissing conveyor line, wrench in hand, tightening
+    the bolts on a dented adult comrade's armored shoulder while sparks fly around them. Keep the same character,
+    the same face, fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style
+    with bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-union-millwright-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Union Millwright L2: Keeps the Line Running (seed 2)'
+  asset: slime-city/evolutions/union-millwright@2
+  size: 832x1216
+  seed: 1107002
+  source_image_id: 262295
+  prompt_prose: The chrome-jawed millwright ogre now kneels at a hissing conveyor line, wrench in hand, tightening
+    the bolts on a dented adult comrade's armored shoulder while sparks fly around them. Keep the same character,
+    the same face, fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style
+    with bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-union-millwright-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Union Millwright L3: Gates Thrown Open (seed 1)'
+  asset: slime-city/evolutions/union-millwright@3
+  size: 832x1216
+  seed: 1107003
+  source_image_id: 262295
+  prompt_prose: The millwright now heaves two enormous rusted factory gates wide open with both arms, a crowd of
+    armored adult ogre workers surging past him toward a glowing street beyond. Keep the same character, the same
+    face, fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style with
+    bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-union-millwright-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Union Millwright L3: Gates Thrown Open (seed 2)'
+  asset: slime-city/evolutions/union-millwright@3
+  size: 832x1216
+  seed: 1107004
+  source_image_id: 262295
+  prompt_prose: The millwright now heaves two enormous rusted factory gates wide open with both arms, a crowd of
+    armored adult ogre workers surging past him toward a glowing street beyond. Keep the same character, the same
+    face, fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style with
+    bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s1-walking-foundry-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Walking Foundry L2: Pours Fresh Plate (seed 1)'
+  asset: slime-city/evolutions/s1-walking-foundry@2
+  size: 832x1216
+  seed: 1107005
+  source_image_id: 262302
+  prompt_prose: Molten orange metal now pours from the walking furnace's chest spout onto the shoulders of two armored
+    adult ogres beside it, cooling into bright new steel plates. Keep the same character, the same face, fur, skin
+    and markings, the same outfit details, the same saturated neon comic gouache art style with bold black contours,
+    and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s1-walking-foundry-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Walking Foundry L2: Pours Fresh Plate (seed 2)'
+  asset: slime-city/evolutions/s1-walking-foundry@2
+  size: 832x1216
+  seed: 1107006
+  source_image_id: 262302
+  prompt_prose: Molten orange metal now pours from the walking furnace's chest spout onto the shoulders of two armored
+    adult ogres beside it, cooling into bright new steel plates. Keep the same character, the same face, fur, skin
+    and markings, the same outfit details, the same saturated neon comic gouache art style with bold black contours,
+    and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s1-walking-foundry-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Walking Foundry L3: Casting Day (seed 1)'
+  asset: slime-city/evolutions/s1-walking-foundry@3
+  size: 832x1216
+  seed: 1107007
+  source_image_id: 262302
+  prompt_prose: The walking foundry now stands over two glowing casting molds, from which two small adult iron workers
+    climb out still steaming, chrome jaws gleaming as they raise their hammers. Keep the same character, the same
+    face, fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style with
+    bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s1-walking-foundry-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Walking Foundry L3: Casting Day (seed 2)'
+  asset: slime-city/evolutions/s1-walking-foundry@3
+  size: 832x1216
+  seed: 1107008
+  source_image_id: 262302
+  prompt_prose: The walking foundry now stands over two glowing casting molds, from which two small adult iron workers
+    climb out still steaming, chrome jaws gleaming as they raise their hammers. Keep the same character, the same
+    face, fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style with
+    bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s1-scrap-welder-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Scrap Welder L2: Mid-Charge Barricade (seed 1)'
+  asset: slime-city/evolutions/s1-scrap-welder@2
+  size: 832x1216
+  seed: 1107009
+  source_image_id: 260666
+  prompt_prose: The welder ogre now charges forward behind a curved barricade of scrap sheet metal she welds onto
+    her own forearm as she runs, sparks streaming behind her. Keep the same character, the same face, fur, skin
+    and markings, the same outfit details, the same saturated neon comic gouache art style with bold black contours,
+    and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s1-scrap-welder-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Scrap Welder L2: Mid-Charge Barricade (seed 2)'
+  asset: slime-city/evolutions/s1-scrap-welder@2
+  size: 832x1216
+  seed: 1107010
+  source_image_id: 260666
+  prompt_prose: The welder ogre now charges forward behind a curved barricade of scrap sheet metal she welds onto
+    her own forearm as she runs, sparks streaming behind her. Keep the same character, the same face, fur, skin
+    and markings, the same outfit details, the same saturated neon comic gouache art style with bold black contours,
+    and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s1-scrap-welder-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Scrap Welder L3: Narrow Corridor (seed 1)'
+  asset: slime-city/evolutions/s1-scrap-welder@3
+  size: 832x1216
+  seed: 1107011
+  source_image_id: 260666
+  prompt_prose: The welder now stands alone in a narrow alley sealed by welded steel walls on both sides, her armor
+    thick with fresh seams and her torch blazing like a sword. Keep the same character, the same face, fur, skin
+    and markings, the same outfit details, the same saturated neon comic gouache art style with bold black contours,
+    and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s1-scrap-welder-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Scrap Welder L3: Narrow Corridor (seed 2)'
+  asset: slime-city/evolutions/s1-scrap-welder@3
+  size: 832x1216
+  seed: 1107012
+  source_image_id: 260666
+  prompt_prose: The welder now stands alone in a narrow alley sealed by welded steel walls on both sides, her armor
+    thick with fresh seams and her torch blazing like a sword. Keep the same character, the same face, fur, skin
+    and markings, the same outfit details, the same saturated neon comic gouache art style with bold black contours,
+    and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s2-ironjaw-union-bridgebearer-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Union Bridgebearer L2: Load-Bearing (seed 1)'
+  asset: slime-city/evolutions/s2-ironjaw-union-bridgebearer@2
+  size: 832x1216
+  seed: 1107013
+  source_image_id: 261425
+  prompt_prose: Two smaller armored adult ogres now run across the bridgebearer's broad girder back, pumping their
+    fists, as he braces his chrome jaw and steel-grey legs against the current below. Keep the same character, the
+    same face, fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style
+    with bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s2-ironjaw-union-bridgebearer-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Union Bridgebearer L2: Load-Bearing (seed 2)'
+  asset: slime-city/evolutions/s2-ironjaw-union-bridgebearer@2
+  size: 832x1216
+  seed: 1107014
+  source_image_id: 261425
+  prompt_prose: Two smaller armored adult ogres now run across the bridgebearer's broad girder back, pumping their
+    fists, as he braces his chrome jaw and steel-grey legs against the current below. Keep the same character, the
+    same face, fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style
+    with bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s2-ironjaw-union-bridgebearer-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Union Bridgebearer L3: The Bridge Holds (seed 1)'
+  asset: slime-city/evolutions/s2-ironjaw-union-bridgebearer@3
+  size: 832x1216
+  seed: 1107015
+  source_image_id: 261425
+  prompt_prose: The bridgebearer now lies spanned across a roaring canal like a living steel bridge, hands planted
+    on one bank and boots on the other, a glowing shield of light covering the comrades crossing over him. Keep
+    the same character, the same face, fur, skin and markings, the same outfit details, the same saturated neon
+    comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s2-ironjaw-union-bridgebearer-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Union Bridgebearer L3: The Bridge Holds (seed 2)'
+  asset: slime-city/evolutions/s2-ironjaw-union-bridgebearer@3
+  size: 832x1216
+  seed: 1107016
+  source_image_id: 261425
+  prompt_prose: The bridgebearer now lies spanned across a roaring canal like a living steel bridge, hands planted
+    on one bank and boots on the other, a glowing shield of light covering the comrades crossing over him. Keep
+    the same character, the same face, fur, skin and markings, the same outfit details, the same saturated neon
+    comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s2-ironjaw-foundry-lion-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Foundry Lion L2: Crane Arm Swipe (seed 1)'
+  asset: slime-city/evolutions/s2-ironjaw-foundry-lion@2
+  size: 832x1216
+  seed: 1107017
+  source_image_id: 261426
+  prompt_prose: The foundry lion now swings two jointed crane arms from its shoulders in a wide arc, knocking crates
+    and sparks aside on both flanks. Keep the same character, the same face, fur, skin and markings, the same outfit
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-s2-ironjaw-foundry-lion-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Foundry Lion L2: Crane Arm Swipe (seed 2)'
+  asset: slime-city/evolutions/s2-ironjaw-foundry-lion@2
+  size: 832x1216
+  seed: 1107018
+  source_image_id: 261426
+  prompt_prose: The foundry lion now swings two jointed crane arms from its shoulders in a wide arc, knocking crates
+    and sparks aside on both flanks. Keep the same character, the same face, fur, skin and markings, the same outfit
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-s2-ironjaw-foundry-lion-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Foundry Lion L3: Leap of the Last Crane (seed 1)'
+  asset: slime-city/evolutions/s2-ironjaw-foundry-lion@3
+  size: 832x1216
+  seed: 1107019
+  source_image_id: 261426
+  prompt_prose: The foundry lion now leaps high over an empty alley in mid-air, crane arms extended like claws,
+    diving straight toward a glowing steel boss tower in the distance. Keep the same character, the same face, fur,
+    skin and markings, the same outfit details, the same saturated neon comic gouache art style with bold black
+    contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s2-ironjaw-foundry-lion-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Foundry Lion L3: Leap of the Last Crane (seed 2)'
+  asset: slime-city/evolutions/s2-ironjaw-foundry-lion@3
+  size: 832x1216
+  seed: 1107020
+  source_image_id: 261426
+  prompt_prose: The foundry lion now leaps high over an empty alley in mid-air, crane arms extended like claws,
+    diving straight toward a glowing steel boss tower in the distance. Keep the same character, the same face, fur,
+    skin and markings, the same outfit details, the same saturated neon comic gouache art style with bold black
+    contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s2-ironjaw-foundry-lion-l3b-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Foundry Lion L3b: Crane Jaws (seed 1)'
+  asset: slime-city/evolutions/s2-ironjaw-foundry-lion@3b
+  size: 832x1216
+  seed: 1107021
+  source_image_id: 261426
+  prompt_prose: The foundry lion now clamps its huge crane-hook jaws around an armored adult rival brawler and lifts
+    them off the ground, cables straining and sparks bursting. Keep the same character, the same face, fur, skin
+    and markings, the same outfit details, the same saturated neon comic gouache art style with bold black contours,
+    and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s2-ironjaw-foundry-lion-l3b-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Foundry Lion L3b: Crane Jaws (seed 2)'
+  asset: slime-city/evolutions/s2-ironjaw-foundry-lion@3b
+  size: 832x1216
+  seed: 1107022
+  source_image_id: 261426
+  prompt_prose: The foundry lion now clamps its huge crane-hook jaws around an armored adult rival brawler and lifts
+    them off the ground, cables straining and sparks bursting. Keep the same character, the same face, fur, skin
+    and markings, the same outfit details, the same saturated neon comic gouache art style with bold black contours,
+    and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-ironjaw-night-welder-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Night Shift Welder L2: Finds the Seams (seed 1)'
+  asset: slime-city/evolutions/s3-ironjaw-night-welder@2
+  size: 832x1216
+  seed: 1107023
+  source_image_id: 264935
+  prompt_prose: Under a moonlit factory sky, the night-shift welder now cuts a thin blue-white line straight through
+    a thick rival steel plate, the torch flame narrowed to a needle. Keep the same character, the same face, fur,
+    skin and markings, the same outfit details, the same saturated neon comic gouache art style with bold black
+    contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-ironjaw-night-welder-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Night Shift Welder L2: Finds the Seams (seed 2)'
+  asset: slime-city/evolutions/s3-ironjaw-night-welder@2
+  size: 832x1216
+  seed: 1107024
+  source_image_id: 264935
+  prompt_prose: Under a moonlit factory sky, the night-shift welder now cuts a thin blue-white line straight through
+    a thick rival steel plate, the torch flame narrowed to a needle. Keep the same character, the same face, fur,
+    skin and markings, the same outfit details, the same saturated neon comic gouache art style with bold black
+    contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-ironjaw-night-welder-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Night Shift Welder L3: Dawn Shift Handoff (seed 1)'
+  asset: slime-city/evolutions/s3-ironjaw-night-welder@3
+  size: 832x1216
+  seed: 1107025
+  source_image_id: 264935
+  prompt_prose: At sunrise the welder now hands lit torches to two adult ogre comrades on either side of her, all
+    three blue flames glowing in the pink dawn light. Keep the same character, the same face, fur, skin and markings,
+    the same outfit details, the same saturated neon comic gouache art style with bold black contours, and the same
+    tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-ironjaw-night-welder-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Night Shift Welder L3: Dawn Shift Handoff (seed 2)'
+  asset: slime-city/evolutions/s3-ironjaw-night-welder@3
+  size: 832x1216
+  seed: 1107026
+  source_image_id: 264935
+  prompt_prose: At sunrise the welder now hands lit torches to two adult ogre comrades on either side of her, all
+    three blue flames glowing in the pink dawn light. Keep the same character, the same face, fur, skin and markings,
+    the same outfit details, the same saturated neon comic gouache art style with bold black contours, and the same
+    tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-ironjaw-dreadnought-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Scrapyard Dreadnought L2: Scrap Magnet (seed 1)'
+  asset: slime-city/evolutions/s3-ironjaw-dreadnought@2
+  size: 832x1216
+  seed: 1107027
+  source_image_id: 261482
+  prompt_prose: Loose scrap, hubcaps and pipes now fly through the air and clang onto the dreadnought's hull as
+    a glowing magnet core hums in its chest, making it bulkier. Keep the same character, the same face, fur, skin
+    and markings, the same outfit details, the same saturated neon comic gouache art style with bold black contours,
+    and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-ironjaw-dreadnought-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Scrapyard Dreadnought L2: Scrap Magnet (seed 2)'
+  asset: slime-city/evolutions/s3-ironjaw-dreadnought@2
+  size: 832x1216
+  seed: 1107028
+  source_image_id: 261482
+  prompt_prose: Loose scrap, hubcaps and pipes now fly through the air and clang onto the dreadnought's hull as
+    a glowing magnet core hums in its chest, making it bulkier. Keep the same character, the same face, fur, skin
+    and markings, the same outfit details, the same saturated neon comic gouache art style with bold black contours,
+    and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-ironjaw-dreadnought-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Scrapyard Dreadnought L3: Scrapyard Avalanche (seed 1)'
+  asset: slime-city/evolutions/s3-ironjaw-dreadnought@3
+  size: 832x1216
+  seed: 1107029
+  source_image_id: 261482
+  prompt_prose: The dreadnought now rears up and sheds a roaring avalanche of scrap metal that tumbles down over
+    three rival lanes in a cloud of rust and sparks. Keep the same character, the same face, fur, skin and markings,
+    the same outfit details, the same saturated neon comic gouache art style with bold black contours, and the same
+    tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-ironjaw-dreadnought-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Scrapyard Dreadnought L3: Scrapyard Avalanche (seed 2)'
+  asset: slime-city/evolutions/s3-ironjaw-dreadnought@3
+  size: 832x1216
+  seed: 1107030
+  source_image_id: 261482
+  prompt_prose: The dreadnought now rears up and sheds a roaring avalanche of scrap metal that tumbles down over
+    three rival lanes in a cloud of rust and sparks. Keep the same character, the same face, fur, skin and markings,
+    the same outfit details, the same saturated neon comic gouache art style with bold black contours, and the same
+    tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-ironjaw-bridgebreaker-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Bridgebreaker Ogre L2: Route Punched Through (seed 1)'
+  asset: slime-city/evolutions/s3-ironjaw-bridgebreaker@2
+  size: 832x1216
+  seed: 1107031
+  source_image_id: 261484
+  prompt_prose: The bridgebreaker ogre now punches clean through a concrete wall, the hole opening onto a distant
+    glowing boss tower with a straight road leading to it. Keep the same character, the same face, fur, skin and
+    markings, the same outfit details, the same saturated neon comic gouache art style with bold black contours,
+    and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-ironjaw-bridgebreaker-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Bridgebreaker Ogre L2: Route Punched Through (seed 2)'
+  asset: slime-city/evolutions/s3-ironjaw-bridgebreaker@2
+  size: 832x1216
+  seed: 1107032
+  source_image_id: 261484
+  prompt_prose: The bridgebreaker ogre now punches clean through a concrete wall, the hole opening onto a distant
+    glowing boss tower with a straight road leading to it. Keep the same character, the same face, fur, skin and
+    markings, the same outfit details, the same saturated neon comic gouache art style with bold black contours,
+    and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-ironjaw-bridgebreaker-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Bridgebreaker Ogre L3: Bridge of Its Own Back (seed 1)'
+  asset: slime-city/evolutions/s3-ironjaw-bridgebreaker@3
+  size: 832x1216
+  seed: 1107033
+  source_image_id: 261484
+  prompt_prose: The bridgebreaker now lies face down across a chasm as a bridge, visibly smaller and worn, while
+    a column of armored adult ogres marches over its back, their armor glinting brighter as they cross. Keep the
+    same character, the same face, fur, skin and markings, the same outfit details, the same saturated neon comic
+    gouache art style with bold black contours, and the same tall portrait framing with the scene painted edge to
+    edge.
+- key: slime-evo-s3-ironjaw-bridgebreaker-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Bridgebreaker Ogre L3: Bridge of Its Own Back (seed 2)'
+  asset: slime-city/evolutions/s3-ironjaw-bridgebreaker@3
+  size: 832x1216
+  seed: 1107034
+  source_image_id: 261484
+  prompt_prose: The bridgebreaker now lies face down across a chasm as a bridge, visibly smaller and worn, while
+    a column of armored adult ogres marches over its back, their armor glinting brighter as they cross. Keep the
+    same character, the same face, fur, skin and markings, the same outfit details, the same saturated neon comic
+    gouache art style with bold black contours, and the same tall portrait framing with the scene painted edge to
+    edge.
+- key: slime-evo-s3-ironjaw-coal-racer-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Coal Cart Racer L2: Full Steam (seed 1)'
+  asset: slime-city/evolutions/s3-ironjaw-coal-racer@2
+  size: 832x1216
+  seed: 1107035
+  source_image_id: 261485
+  prompt_prose: The coal cart racer now blasts out of a rail yard on stolen wheels, a plume of black smoke and orange
+    embers trailing behind the speeding cart. Keep the same character, the same face, fur, skin and markings, the
+    same outfit details, the same saturated neon comic gouache art style with bold black contours, and the same
+    tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-ironjaw-coal-racer-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Coal Cart Racer L2: Full Steam (seed 2)'
+  asset: slime-city/evolutions/s3-ironjaw-coal-racer@2
+  size: 832x1216
+  seed: 1107036
+  source_image_id: 261485
+  prompt_prose: The coal cart racer now blasts out of a rail yard on stolen wheels, a plume of black smoke and orange
+    embers trailing behind the speeding cart. Keep the same character, the same face, fur, skin and markings, the
+    same outfit details, the same saturated neon comic gouache art style with bold black contours, and the same
+    tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-ironjaw-coal-racer-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Coal Cart Racer L3: Runaway Freight (seed 1)'
+  asset: slime-city/evolutions/s3-ironjaw-coal-racer@3
+  size: 832x1216
+  seed: 1107037
+  source_image_id: 261485
+  prompt_prose: The coal cart racer now rides a looping rail track that dives through a smashed boss office wall
+    and curves right back around to the rail yard, sparks spraying off the wheels. Keep the same character, the
+    same face, fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style
+    with bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-ironjaw-coal-racer-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Coal Cart Racer L3: Runaway Freight (seed 2)'
+  asset: slime-city/evolutions/s3-ironjaw-coal-racer@3
+  size: 832x1216
+  seed: 1107038
+  source_image_id: 261485
+  prompt_prose: The coal cart racer now rides a looping rail track that dives through a smashed boss office wall
+    and curves right back around to the rail yard, sparks spraying off the wheels. Keep the same character, the
+    same face, fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style
+    with bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-ironjaw-matriarch-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Iron Matriarch L2: Shop Steward (seed 1)'
+  asset: slime-city/evolutions/s3-ironjaw-matriarch@2
+  size: 832x1216
+  seed: 1107039
+  source_image_id: 264936
+  prompt_prose: The iron matriarch now stands between two armored adult workers with a hand on each of their shoulders,
+    both of them standing taller with fists clenched. Keep the same character, the same face, fur, skin and markings,
+    the same outfit details, the same saturated neon comic gouache art style with bold black contours, and the same
+    tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-ironjaw-matriarch-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Iron Matriarch L2: Shop Steward (seed 2)'
+  asset: slime-city/evolutions/s3-ironjaw-matriarch@2
+  size: 832x1216
+  seed: 1107040
+  source_image_id: 264936
+  prompt_prose: The iron matriarch now stands between two armored adult workers with a hand on each of their shoulders,
+    both of them standing taller with fists clenched. Keep the same character, the same face, fur, skin and markings,
+    the same outfit details, the same saturated neon comic gouache art style with bold black contours, and the same
+    tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-ironjaw-matriarch-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Iron Matriarch L3: General Strike (seed 1)'
+  asset: slime-city/evolutions/s3-ironjaw-matriarch@3
+  size: 832x1216
+  seed: 1107041
+  source_image_id: 264936
+  prompt_prose: The matriarch now raises a giant steel fist above a sea of armored adult ogre workers walking off
+    the factory floor together, banners of plain red cloth snapping overhead. Keep the same character, the same
+    face, fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style with
+    bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-ironjaw-matriarch-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Iron Matriarch L3: General Strike (seed 2)'
+  asset: slime-city/evolutions/s3-ironjaw-matriarch@3
+  size: 832x1216
+  seed: 1107042
+  source_image_id: 264936
+  prompt_prose: The matriarch now raises a giant steel fist above a sea of armored adult ogre workers walking off
+    the factory floor together, banners of plain red cloth snapping overhead. Keep the same character, the same
+    face, fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style with
+    bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-ironjaw-matriarch-l3b-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Iron Matriarch L3b: Iron Bulwark (seed 1)'
+  asset: slime-city/evolutions/s3-ironjaw-matriarch@3b
+  size: 832x1216
+  seed: 1107043
+  source_image_id: 264936
+  prompt_prose: The matriarch now plants her feet alone in the alley, her chrome armor thickened into a towering
+    fortress of plates and rivets, rain bouncing off her shoulders. Keep the same character, the same face, fur,
+    skin and markings, the same outfit details, the same saturated neon comic gouache art style with bold black
+    contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-ironjaw-matriarch-l3b-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Iron Matriarch L3b: Iron Bulwark (seed 2)'
+  asset: slime-city/evolutions/s3-ironjaw-matriarch@3b
+  size: 832x1216
+  seed: 1107044
+  source_image_id: 264936
+  prompt_prose: The matriarch now plants her feet alone in the alley, her chrome armor thickened into a towering
+    fortress of plates and rivets, rain bouncing off her shoulders. Keep the same character, the same face, fur,
+    skin and markings, the same outfit details, the same saturated neon comic gouache art style with bold black
+    contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s1-hydraulic-shift-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Emergency Overtime L2: Time and a Half (seed 1)'
+  asset: slime-city/evolutions/s1-hydraulic-shift@2
+  size: 832x1216
+  seed: 1107045
+  source_image_id: 260667
+  prompt_prose: The overtime glow now soaks into the ogre worker's arm as a permanent band of glowing hydraulic
+    tubing wraps around the bicep, steam venting from the joints. Keep the same objects, characters and setting
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-s1-hydraulic-shift-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Emergency Overtime L2: Time and a Half (seed 2)'
+  asset: slime-city/evolutions/s1-hydraulic-shift@2
+  size: 832x1216
+  seed: 1107046
+  source_image_id: 260667
+  prompt_prose: The overtime glow now soaks into the ogre worker's arm as a permanent band of glowing hydraulic
+    tubing wraps around the bicep, steam venting from the joints. Keep the same objects, characters and setting
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-s1-hydraulic-shift-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Emergency Overtime L3: Everybody Clocks In (seed 1)'
+  asset: slime-city/evolutions/s1-hydraulic-shift@3
+  size: 832x1216
+  seed: 1107047
+  source_image_id: 260667
+  prompt_prose: A whole row of armored adult ogre workers now slams through the factory doors at once, every one
+    of their hydraulic arms glowing with surging orange power. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-s1-hydraulic-shift-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Emergency Overtime L3: Everybody Clocks In (seed 2)'
+  asset: slime-city/evolutions/s1-hydraulic-shift@3
+  size: 832x1216
+  seed: 1107048
+  source_image_id: 260667
+  prompt_prose: A whole row of armored adult ogre workers now slams through the factory doors at once, every one
+    of their hydraulic arms glowing with surging orange power. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-s1-forge-spark-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Forge Lightning L2: Arcs Along the Chrome (seed 1)'
+  asset: slime-city/evolutions/s1-forge-spark@2
+  size: 832x1216
+  seed: 1107049
+  source_image_id: 262303
+  prompt_prose: The forge lightning now forks sideways, arcing along the chrome armor of two more rival fighters
+    standing beside the first in a crackle of blue-white light. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-s1-forge-spark-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Forge Lightning L2: Arcs Along the Chrome (seed 2)'
+  asset: slime-city/evolutions/s1-forge-spark@2
+  size: 832x1216
+  seed: 1107050
+  source_image_id: 262303
+  prompt_prose: The forge lightning now forks sideways, arcing along the chrome armor of two more rival fighters
+    standing beside the first in a crackle of blue-white light. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-s1-forge-spark-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Forge Lightning L3: Grounded Through the Boss (seed 1)'
+  asset: slime-city/evolutions/s1-forge-spark@3
+  size: 832x1216
+  seed: 1107051
+  source_image_id: 262303
+  prompt_prose: The forge lightning now strikes clean through the rival line and grounds into a looming boss tower
+    behind them, which shudders with glowing cracks. Keep the same objects, characters and setting details, the
+    same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with
+    the scene painted edge to edge.
+- key: slime-evo-s1-forge-spark-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Forge Lightning L3: Grounded Through the Boss (seed 2)'
+  asset: slime-city/evolutions/s1-forge-spark@3
+  size: 832x1216
+  seed: 1107052
+  source_image_id: 262303
+  prompt_prose: The forge lightning now strikes clean through the rival line and grounds into a looming boss tower
+    behind them, which shudders with glowing cracks. Keep the same objects, characters and setting details, the
+    same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with
+    the scene painted edge to edge.
+- key: slime-evo-s2-ironjaw-shift-change-shove-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Shift-Change Shove L2: Linked Arms (seed 1)'
+  asset: slime-city/evolutions/s2-ironjaw-shift-change-shove@2
+  size: 832x1216
+  seed: 1107053
+  source_image_id: 264942
+  prompt_prose: A line of armored adult ogre protesters now links arms in a tight wedge, a soft shimmering shield
+    of light spreading over the shoulders of the line. Keep the same objects, characters and setting details, the
+    same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with
+    the scene painted edge to edge.
+- key: slime-evo-s2-ironjaw-shift-change-shove-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Shift-Change Shove L2: Linked Arms (seed 2)'
+  asset: slime-city/evolutions/s2-ironjaw-shift-change-shove@2
+  size: 832x1216
+  seed: 1107054
+  source_image_id: 264942
+  prompt_prose: A line of armored adult ogre protesters now links arms in a tight wedge, a soft shimmering shield
+    of light spreading over the shoulders of the line. Keep the same objects, characters and setting details, the
+    same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with
+    the scene painted edge to edge.
+- key: slime-evo-s2-ironjaw-shift-change-shove-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Shift-Change Shove L3: A Very Violent Wedge (seed 1)'
+  asset: slime-city/evolutions/s2-ironjaw-shift-change-shove@3
+  size: 832x1216
+  seed: 1107055
+  source_image_id: 264942
+  prompt_prose: The protest wedge now crashes forward and sends a rival brute tumbling off its feet, dazed stars
+    circling its head as the line marches through. Keep the same objects, characters and setting details, the same
+    saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with the
+    scene painted edge to edge.
+- key: slime-evo-s2-ironjaw-shift-change-shove-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Shift-Change Shove L3: A Very Violent Wedge (seed 2)'
+  asset: slime-city/evolutions/s2-ironjaw-shift-change-shove@3
+  size: 832x1216
+  seed: 1107056
+  source_image_id: 264942
+  prompt_prose: The protest wedge now crashes forward and sends a rival brute tumbling off its feet, dazed stars
+    circling its head as the line marches through. Keep the same objects, characters and setting details, the same
+    saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with the
+    scene painted edge to edge.
+- key: slime-evo-s3-ironjaw-reallocation-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Union Reallocation L2: Show of Hands (seed 1)'
+  asset: slime-city/evolutions/s3-ironjaw-reallocation@2
+  size: 832x1216
+  seed: 1107057
+  source_image_id: 261488
+  prompt_prose: A crowd of armored adult ogre workers on the shop floor now raises their steel hands in a vote,
+    one chosen worker at the front glowing with fresh strength. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-s3-ironjaw-reallocation-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Union Reallocation L2: Show of Hands (seed 2)'
+  asset: slime-city/evolutions/s3-ironjaw-reallocation@2
+  size: 832x1216
+  seed: 1107058
+  source_image_id: 261488
+  prompt_prose: A crowd of armored adult ogre workers on the shop floor now raises their steel hands in a vote,
+    one chosen worker at the front glowing with fresh strength. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-s3-ironjaw-reallocation-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Union Reallocation L3: Every Hand Raised (seed 1)'
+  asset: slime-city/evolutions/s3-ironjaw-reallocation@3
+  size: 832x1216
+  seed: 1107059
+  source_image_id: 261488
+  prompt_prose: Every worker on the shop floor now raises a fist at once and the whole crowd surges forward like
+    a single bulldozer blade, plowing through a stack of rival crates. Keep the same objects, characters and setting
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-s3-ironjaw-reallocation-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Union Reallocation L3: Every Hand Raised (seed 2)'
+  asset: slime-city/evolutions/s3-ironjaw-reallocation@3
+  size: 832x1216
+  seed: 1107060
+  source_image_id: 261488
+  prompt_prose: Every worker on the shop floor now raises a fist at once and the whole crowd surges forward like
+    a single bulldozer blade, plowing through a stack of rival crates. Keep the same objects, characters and setting
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-s3-ironjaw-hammer-register-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Sledgehammer Inventory L2: Signed Out (seed 1)'
+  asset: slime-city/evolutions/s3-ironjaw-hammer-register@2
+  size: 832x1216
+  seed: 1107061
+  source_image_id: 261489
+  prompt_prose: A sledgehammer now lifts off the tool wall into the hands of a worker whose rusted ankle chains
+    snap free as he grips it. Keep the same objects, characters and setting details, the same saturated neon comic
+    gouache art style with bold black contours, and the same tall portrait framing with the scene painted edge to
+    edge.
+- key: slime-evo-s3-ironjaw-hammer-register-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Sledgehammer Inventory L2: Signed Out (seed 2)'
+  asset: slime-city/evolutions/s3-ironjaw-hammer-register@2
+  size: 832x1216
+  seed: 1107062
+  source_image_id: 261489
+  prompt_prose: A sledgehammer now lifts off the tool wall into the hands of a worker whose rusted ankle chains
+    snap free as he grips it. Keep the same objects, characters and setting details, the same saturated neon comic
+    gouache art style with bold black contours, and the same tall portrait framing with the scene painted edge to
+    edge.
+- key: slime-evo-s3-ironjaw-hammer-register-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Sledgehammer Inventory L3: Every Hammer Accounted For (seed 1)'
+  asset: slime-city/evolutions/s3-ironjaw-hammer-register@3
+  size: 832x1216
+  seed: 1107063
+  source_image_id: 261489
+  prompt_prose: The tool wall now stands empty as three armored adult ogres side by side each shoulder a gleaming
+    sledgehammer, ready to swing. Keep the same objects, characters and setting details, the same saturated neon
+    comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s3-ironjaw-hammer-register-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Sledgehammer Inventory L3: Every Hammer Accounted For (seed 2)'
+  asset: slime-city/evolutions/s3-ironjaw-hammer-register@3
+  size: 832x1216
+  seed: 1107064
+  source_image_id: 261489
+  prompt_prose: The tool wall now stands empty as three armored adult ogres side by side each shoulder a gleaming
+    sledgehammer, ready to swing. Keep the same objects, characters and setting details, the same saturated neon
+    comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s3-ironjaw-furnace-overdrive-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Furnace Overdrive L2: Stoked Furnace (seed 1)'
+  asset: slime-city/evolutions/s3-ironjaw-furnace-overdrive@2
+  size: 832x1216
+  seed: 1107065
+  source_image_id: 261491
+  prompt_prose: The furnace on the heavy ogre's back now roars brighter, throwing a curtain of shimmering heat in
+    front of it like a shield. Keep the same objects, characters and setting details, the same saturated neon comic
+    gouache art style with bold black contours, and the same tall portrait framing with the scene painted edge to
+    edge.
+- key: slime-evo-s3-ironjaw-furnace-overdrive-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Furnace Overdrive L2: Stoked Furnace (seed 2)'
+  asset: slime-city/evolutions/s3-ironjaw-furnace-overdrive@2
+  size: 832x1216
+  seed: 1107066
+  source_image_id: 261491
+  prompt_prose: The furnace on the heavy ogre's back now roars brighter, throwing a curtain of shimmering heat in
+    front of it like a shield. Keep the same objects, characters and setting details, the same saturated neon comic
+    gouache art style with bold black contours, and the same tall portrait framing with the scene painted edge to
+    edge.
+- key: slime-evo-s3-ironjaw-furnace-overdrive-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Furnace Overdrive L3: Meltdown Charge (seed 1)'
+  asset: slime-city/evolutions/s3-ironjaw-furnace-overdrive@3
+  size: 832x1216
+  seed: 1107067
+  source_image_id: 261491
+  prompt_prose: The overdriven furnace now glows white-hot and cracks the heavy ogre's own armor with scorch marks
+    as it charges forward, plowing a rival crate pile apart. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-s3-ironjaw-furnace-overdrive-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Furnace Overdrive L3: Meltdown Charge (seed 2)'
+  asset: slime-city/evolutions/s3-ironjaw-furnace-overdrive@3
+  size: 832x1216
+  seed: 1107068
+  source_image_id: 261491
+  prompt_prose: The overdriven furnace now glows white-hot and cracks the heavy ogre's own armor with scorch marks
+    as it charges forward, plowing a rival crate pile apart. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-s1-bolt-clamp-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Union Bolt Clamp L2: Braced Line (seed 1)'
+  asset: slime-city/evolutions/s1-bolt-clamp@2
+  size: 832x1216
+  seed: 1107069
+  source_image_id: 260669
+  prompt_prose: As the steel clamp snaps shut on a rival boot, two armored adult ogres in the neighboring alleys
+    now brace behind shimmering shields of light. Keep the same objects, characters and setting details, the same
+    saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with the
+    scene painted edge to edge.
+- key: slime-evo-s1-bolt-clamp-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Union Bolt Clamp L2: Braced Line (seed 2)'
+  asset: slime-city/evolutions/s1-bolt-clamp@2
+  size: 832x1216
+  seed: 1107070
+  source_image_id: 260669
+  prompt_prose: As the steel clamp snaps shut on a rival boot, two armored adult ogres in the neighboring alleys
+    now brace behind shimmering shields of light. Keep the same objects, characters and setting details, the same
+    saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with the
+    scene painted edge to edge.
+- key: slime-evo-s1-bolt-clamp-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Union Bolt Clamp L3: Union Lockout (seed 1)'
+  asset: slime-city/evolutions/s1-bolt-clamp@3
+  size: 832x1216
+  seed: 1107071
+  source_image_id: 260669
+  prompt_prose: The clamp now fires chains from both sides that snap around the ankles of rivals in the neighboring
+    alleys, the whole block locked still. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s1-bolt-clamp-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Union Bolt Clamp L3: Union Lockout (seed 2)'
+  asset: slime-city/evolutions/s1-bolt-clamp@3
+  size: 832x1216
+  seed: 1107072
+  source_image_id: 260669
+  prompt_prose: The clamp now fires chains from both sides that snap around the ankles of rivals in the neighboring
+    alleys, the whole block locked still. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s2-ironjaw-hydraulic-lockjaw-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Hydraulic Lockjaw L2: Another Shift Bought (seed 1)'
+  asset: slime-city/evolutions/s2-ironjaw-hydraulic-lockjaw@2
+  size: 832x1216
+  seed: 1107073
+  source_image_id: 261429
+  prompt_prose: The hydraulic jaw now holds a rival fast while, behind it, a foundry worker gets a quiet moment
+    to pull a fresh blueprint scroll from a toolbox. Keep the same objects, characters and setting details, the
+    same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with
+    the scene painted edge to edge.
+- key: slime-evo-s2-ironjaw-hydraulic-lockjaw-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Hydraulic Lockjaw L2: Another Shift Bought (seed 2)'
+  asset: slime-city/evolutions/s2-ironjaw-hydraulic-lockjaw@2
+  size: 832x1216
+  seed: 1107074
+  source_image_id: 261429
+  prompt_prose: The hydraulic jaw now holds a rival fast while, behind it, a foundry worker gets a quiet moment
+    to pull a fresh blueprint scroll from a toolbox. Keep the same objects, characters and setting details, the
+    same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with
+    the scene painted edge to edge.
+- key: slime-evo-s2-ironjaw-hydraulic-lockjaw-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Hydraulic Lockjaw L3: The Jaw Remembers (seed 1)'
+  asset: slime-city/evolutions/s2-ironjaw-hydraulic-lockjaw@3
+  size: 832x1216
+  seed: 1107075
+  source_image_id: 261429
+  prompt_prose: The lockjaw now bites down with glowing red hydraulics beside a dented memorial helmet of a fallen
+    comrade, the steel teeth sinking deep through rival plating. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-s2-ironjaw-hydraulic-lockjaw-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Hydraulic Lockjaw L3: The Jaw Remembers (seed 2)'
+  asset: slime-city/evolutions/s2-ironjaw-hydraulic-lockjaw@3
+  size: 832x1216
+  seed: 1107076
+  source_image_id: 261429
+  prompt_prose: The lockjaw now bites down with glowing red hydraulics beside a dented memorial helmet of a fallen
+    comrade, the steel teeth sinking deep through rival plating. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-s3-ironjaw-forklift-chock-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Forklift Chock L2: Pallet Cover (seed 1)'
+  asset: slime-city/evolutions/s3-ironjaw-forklift-chock@2
+  size: 832x1216
+  seed: 1107077
+  source_image_id: 261492
+  prompt_prose: Stacked wooden pallets now form a sturdy low wall in front of the armored adult ogres in the neighboring
+    alleys, the wheel chock still caught under a rival foot. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-s3-ironjaw-forklift-chock-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Forklift Chock L2: Pallet Cover (seed 2)'
+  asset: slime-city/evolutions/s3-ironjaw-forklift-chock@2
+  size: 832x1216
+  seed: 1107078
+  source_image_id: 261492
+  prompt_prose: Stacked wooden pallets now form a sturdy low wall in front of the armored adult ogres in the neighboring
+    alleys, the wheel chock still caught under a rival foot. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-s3-ironjaw-forklift-chock-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Forklift Chock L3: Back on the Forks (seed 1)'
+  asset: slime-city/evolutions/s3-ironjaw-forklift-chock@3
+  size: 832x1216
+  seed: 1107079
+  source_image_id: 261492
+  prompt_prose: A rusty forklift now rolls in with a fresh wheel chock balanced on its forks, setting it down again
+    in the same alley behind the stuck rival. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s3-ironjaw-forklift-chock-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Forklift Chock L3: Back on the Forks (seed 2)'
+  asset: slime-city/evolutions/s3-ironjaw-forklift-chock@3
+  size: 832x1216
+  seed: 1107080
+  source_image_id: 261492
+  prompt_prose: A rusty forklift now rolls in with a fresh wheel chock balanced on its forks, setting it down again
+    in the same alley behind the stuck rival. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s3-ironjaw-slag-spill-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Slag Spill L2: Slag Spreads (seed 1)'
+  asset: slime-city/evolutions/s3-ironjaw-slag-spill@2
+  size: 832x1216
+  seed: 1107081
+  source_image_id: 261493
+  prompt_prose: The glowing orange slag now spreads across the cobblestones into the neighboring alleys, hissing
+    around the boots of two more rivals. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s3-ironjaw-slag-spill-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Slag Spill L2: Slag Spreads (seed 2)'
+  asset: slime-city/evolutions/s3-ironjaw-slag-spill@2
+  size: 832x1216
+  seed: 1107082
+  source_image_id: 261493
+  prompt_prose: The glowing orange slag now spreads across the cobblestones into the neighboring alleys, hissing
+    around the boots of two more rivals. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s3-ironjaw-slag-spill-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Slag Spill L3: Slag Flood (seed 1)'
+  asset: slime-city/evolutions/s3-ironjaw-slag-spill@3
+  size: 832x1216
+  seed: 1107083
+  source_image_id: 261493
+  prompt_prose: A tipped foundry ladle now floods the whole block with a river of molten slag, three rival fighters
+    hopping onto crates as it rushes past. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s3-ironjaw-slag-spill-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Slag Spill L3: Slag Flood (seed 2)'
+  asset: slime-city/evolutions/s3-ironjaw-slag-spill@3
+  size: 832x1216
+  seed: 1107084
+  source_image_id: 261493
+  prompt_prose: A tipped foundry ladle now floods the whole block with a river of molten slag, three rival fighters
+    hopping onto crates as it rushes past. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s3-ironjaw-overtime-toll-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Overtime Paywall L2: Toll Billed Upstairs (seed 1)'
+  asset: slime-city/evolutions/s3-ironjaw-overtime-toll@2
+  size: 832x1216
+  seed: 1107085
+  source_image_id: 264947
+  prompt_prose: The toll gate now sends a pneumatic tube of glowing coins zipping upward into the rival boss's office
+    tower, which rattles and smokes. Keep the same objects, characters and setting details, the same saturated neon
+    comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s3-ironjaw-overtime-toll-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Overtime Paywall L2: Toll Billed Upstairs (seed 2)'
+  asset: slime-city/evolutions/s3-ironjaw-overtime-toll@2
+  size: 832x1216
+  seed: 1107086
+  source_image_id: 264947
+  prompt_prose: The toll gate now sends a pneumatic tube of glowing coins zipping upward into the rival boss's office
+    tower, which rattles and smokes. Keep the same objects, characters and setting details, the same saturated neon
+    comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s3-ironjaw-overtime-toll-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Overtime Paywall L3: Union Payday (seed 1)'
+  asset: slime-city/evolutions/s3-ironjaw-overtime-toll@3
+  size: 832x1216
+  seed: 1107087
+  source_image_id: 264947
+  prompt_prose: The toll gate now bursts open showering glowing coins over a line of cheering armored adult ogre
+    workers, their fists glowing brighter as they catch them. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-s3-ironjaw-overtime-toll-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Overtime Paywall L3: Union Payday (seed 2)'
+  asset: slime-city/evolutions/s3-ironjaw-overtime-toll@3
+  size: 832x1216
+  seed: 1107088
+  source_image_id: 264947
+  prompt_prose: The toll gate now bursts open showering glowing coins over a line of cheering armored adult ogre
+    workers, their fists glowing brighter as they catch them. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-spare-pistons-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Spare Pistons L2: Shock Absorbers (seed 1)'
+  asset: slime-city/evolutions/spare-pistons@2
+  size: 832x1216
+  seed: 1107089
+  source_image_id: 260646
+  prompt_prose: The spare pistons now sit fitted along a worker's legs as springy shock absorbers, a faint shield
+    of light flaring as a blow bounces off. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-spare-pistons-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Spare Pistons L2: Shock Absorbers (seed 2)'
+  asset: slime-city/evolutions/spare-pistons@2
+  size: 832x1216
+  seed: 1107090
+  source_image_id: 260646
+  prompt_prose: The spare pistons now sit fitted along a worker's legs as springy shock absorbers, a faint shield
+    of light flaring as a blow bounces off. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-spare-pistons-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Spare Pistons L3: Piston Stomp (seed 1)'
+  asset: slime-city/evolutions/spare-pistons@3
+  size: 832x1216
+  seed: 1107091
+  source_image_id: 260646
+  prompt_prose: The pistons now form a full stomping exoskeleton around the worker, whose heavy step cracks the
+    street and sends shockwaves into the rivals on both sides. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-spare-pistons-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Spare Pistons L3: Piston Stomp (seed 2)'
+  asset: slime-city/evolutions/spare-pistons@3
+  size: 832x1216
+  seed: 1107092
+  source_image_id: 260646
+  prompt_prose: The pistons now form a full stomping exoskeleton around the worker, whose heavy step cracks the
+    street and sends shockwaves into the rivals on both sides. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-s1-union-plate-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Collective Bargaining Plate L2: Seat at the Table (seed 1)'
+  asset: slime-city/evolutions/s1-union-plate@2
+  size: 832x1216
+  seed: 1107093
+  source_image_id: 260670
+  prompt_prose: The plate cut from the old office door now hangs as a shield on a worker sitting at a long bargaining
+    table, flanked by two comrades leaning in with clenched fists. Keep the same objects, characters and setting
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-s1-union-plate-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Collective Bargaining Plate L2: Seat at the Table (seed 2)'
+  asset: slime-city/evolutions/s1-union-plate@2
+  size: 832x1216
+  seed: 1107094
+  source_image_id: 260670
+  prompt_prose: The plate cut from the old office door now hangs as a shield on a worker sitting at a long bargaining
+    table, flanked by two comrades leaning in with clenched fists. Keep the same objects, characters and setting
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-s1-union-plate-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Collective Bargaining Plate L3: Ironclad Contract (seed 1)'
+  asset: slime-city/evolutions/s1-union-plate@3
+  size: 832x1216
+  seed: 1107095
+  source_image_id: 260670
+  prompt_prose: The office-door plate now glows with a protective golden light around a worker who stands unbroken
+    as a falling steel beam shatters harmlessly across it. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-s1-union-plate-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Collective Bargaining Plate L3: Ironclad Contract (seed 2)'
+  asset: slime-city/evolutions/s1-union-plate@3
+  size: 832x1216
+  seed: 1107096
+  source_image_id: 260670
+  prompt_prose: The office-door plate now glows with a protective golden light around a worker who stands unbroken
+    as a falling steel beam shatters harmlessly across it. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-s2-ironjaw-overtime-pistons-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Overtime Pistons L2: Mandatory Overtime (seed 1)'
+  asset: slime-city/evolutions/s2-ironjaw-overtime-pistons@2
+  size: 832x1216
+  seed: 1107097
+  source_image_id: 264943
+  prompt_prose: The overtime pistons now kick the worker forward the instant his boots touch the street, steam jetting
+    from the heels as he lunges into the fight. Keep the same objects, characters and setting details, the same
+    saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with the
+    scene painted edge to edge.
+- key: slime-evo-s2-ironjaw-overtime-pistons-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Overtime Pistons L2: Mandatory Overtime (seed 2)'
+  asset: slime-city/evolutions/s2-ironjaw-overtime-pistons@2
+  size: 832x1216
+  seed: 1107098
+  source_image_id: 264943
+  prompt_prose: The overtime pistons now kick the worker forward the instant his boots touch the street, steam jetting
+    from the heels as he lunges into the fight. Keep the same objects, characters and setting details, the same
+    saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with the
+    scene painted edge to edge.
+- key: slime-evo-s2-ironjaw-overtime-pistons-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Overtime Pistons L3: Double Shift (seed 1)'
+  asset: slime-city/evolutions/s2-ironjaw-overtime-pistons@3
+  size: 832x1216
+  seed: 1107099
+  source_image_id: 264943
+  prompt_prose: The worker wearing the pistons now throws two punches at once in a blur of steam and motion, two
+    afterimages of his fists hitting the same rival. Keep the same objects, characters and setting details, the
+    same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with
+    the scene painted edge to edge.
+- key: slime-evo-s2-ironjaw-overtime-pistons-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Overtime Pistons L3: Double Shift (seed 2)'
+  asset: slime-city/evolutions/s2-ironjaw-overtime-pistons@3
+  size: 832x1216
+  seed: 1107100
+  source_image_id: 264943
+  prompt_prose: The worker wearing the pistons now throws two punches at once in a blur of steam and motion, two
+    afterimages of his fists hitting the same rival. Keep the same objects, characters and setting details, the
+    same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with
+    the scene painted edge to edge.
+- key: slime-evo-s3-ironjaw-toe-pistons-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Steel-Toed Pistons L2: Two-Tile Patrol (seed 1)'
+  asset: slime-city/evolutions/s3-ironjaw-toe-pistons@2
+  size: 832x1216
+  seed: 1107101
+  source_image_id: 261495
+  prompt_prose: The steel-toed pistons now carry the foundry guard in a long sliding stride across two floor tiles,
+    a kick sweeping a rival beside him. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s3-ironjaw-toe-pistons-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Steel-Toed Pistons L2: Two-Tile Patrol (seed 2)'
+  asset: slime-city/evolutions/s3-ironjaw-toe-pistons@2
+  size: 832x1216
+  seed: 1107102
+  source_image_id: 261495
+  prompt_prose: The steel-toed pistons now carry the foundry guard in a long sliding stride across two floor tiles,
+    a kick sweeping a rival beside him. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s3-ironjaw-toe-pistons-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Steel-Toed Pistons L3: Night Patrol (seed 1)'
+  asset: slime-city/evolutions/s3-ironjaw-toe-pistons@3
+  size: 832x1216
+  seed: 1107103
+  source_image_id: 261495
+  prompt_prose: Under dim night lamps, the guard now strides the whole foundry floor with a lantern, piston boots
+    hissing, as he corners the smallest sneaking adult rival. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-s3-ironjaw-toe-pistons-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Steel-Toed Pistons L3: Night Patrol (seed 2)'
+  asset: slime-city/evolutions/s3-ironjaw-toe-pistons@3
+  size: 832x1216
+  seed: 1107104
+  source_image_id: 261495
+  prompt_prose: Under dim night lamps, the guard now strides the whole foundry floor with a lantern, piston boots
+    hissing, as he corners the smallest sneaking adult rival. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-s3-ironjaw-foreman-crowbar-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Foreman Crowbar L2: Leverage (seed 1)'
+  asset: slime-city/evolutions/s3-ironjaw-foreman-crowbar@2
+  size: 832x1216
+  seed: 1107105
+  source_image_id: 261496
+  prompt_prose: The foreman crowbar now pries a dazed rival out of the alley like a nail out of a board, the rival's
+    feet lifting off the cobblestones. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s3-ironjaw-foreman-crowbar-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Foreman Crowbar L2: Leverage (seed 2)'
+  asset: slime-city/evolutions/s3-ironjaw-foreman-crowbar@2
+  size: 832x1216
+  seed: 1107106
+  source_image_id: 261496
+  prompt_prose: The foreman crowbar now pries a dazed rival out of the alley like a nail out of a board, the rival's
+    feet lifting off the cobblestones. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s3-ironjaw-foreman-crowbar-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Foreman Crowbar L3: Pry the Office Door (seed 1)'
+  asset: slime-city/evolutions/s3-ironjaw-foreman-crowbar@3
+  size: 832x1216
+  seed: 1107107
+  source_image_id: 261496
+  prompt_prose: The crowbar now wrenches open the heavy steel door of the rival boss's office, warm light spilling
+    out over a toppled rival on the threshold. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s3-ironjaw-foreman-crowbar-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Foreman Crowbar L3: Pry the Office Door (seed 2)'
+  asset: slime-city/evolutions/s3-ironjaw-foreman-crowbar@3
+  size: 832x1216
+  seed: 1107108
+  source_image_id: 261496
+  prompt_prose: The crowbar now wrenches open the heavy steel door of the rival boss's office, warm light spilling
+    out over a toppled rival on the threshold. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.

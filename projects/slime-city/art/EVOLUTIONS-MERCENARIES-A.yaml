@@ -1,0 +1,1294 @@
+# Slime City evolution art, Mercenaries (first half) (2026-11-08 PT; CLASH-EVOLUTION-PLAN.md section 4).
+# Silas: "We should have fresh art on the evolutions, not just frame effects" and "300 cards, all need custom
+# better evolutions." Each crafted card (utils/slimeCity/evolutions/*.ts in kind_robots) gets a level-2 and a
+# level-3 painting, and a choose-one card a painting for its option B ('@3b'): the same character or scene
+# transformed by its story arc. Flux Kontext edits the card's wired level-1 ArtImage (SLIME_CITY_ART.cards) so
+# face, outfit and style carry over; each prompt names only that stage's story change, written per card. Two
+# seeds per stage for curation. Keepers are wired as SLIME_CITY_ART.evolutions['<cardId>@2' | '@3' | '@3b'].
+# auto_submit: true.
+round: slime-city-evolutions-mercenaries-a
+project_slug: slime-city
+designer: Slime City evolution art, Mercenaries (first half)
+is_public: true
+is_mature: false
+cast_loras: false
+priority: 640
+auto_submit: true
+lanes:
+- key: kontext-evolution
+  label: Flux Kontext dev (fp8), evolved stages from each card's level-1 painting
+  engine: kontext
+  prompt: prose
+  steps: 20
+  guidance: 2.5
+subjects:
+- key: slime-evo-merc-sewer-sommelier-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Sewer Sommelier L2: Tasting Flight (seed 1)'
+  asset: slime-city/evolutions/merc-sewer-sommelier@2
+  size: 832x1216
+  seed: 1111001
+  source_image_id: 264950
+  prompt_prose: He now carries a tray of mismatched glasses filled with glowing green drainwater, pouring a careful
+    taste for two grinning adult brawlers who lean in from either side under a dripping sewer arch. Keep the same
+    character, the same face, fur, skin and markings, the same outfit details, the same saturated neon comic gouache
+    art style with bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-merc-sewer-sommelier-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Sewer Sommelier L2: Tasting Flight (seed 2)'
+  asset: slime-city/evolutions/merc-sewer-sommelier@2
+  size: 832x1216
+  seed: 1111002
+  source_image_id: 264950
+  prompt_prose: He now carries a tray of mismatched glasses filled with glowing green drainwater, pouring a careful
+    taste for two grinning adult brawlers who lean in from either side under a dripping sewer arch. Keep the same
+    character, the same face, fur, skin and markings, the same outfit details, the same saturated neon comic gouache
+    art style with bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-merc-sewer-sommelier-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Sewer Sommelier L3: Grand Cru of the Gutter (seed 1)'
+  asset: slime-city/evolutions/merc-sewer-sommelier@3
+  size: 832x1216
+  seed: 1111003
+  source_image_id: 264950
+  prompt_prose: He raises a huge dusty bottle crusted with barnacles over a candlelit table built from a manhole
+    cover, and a ring of adult fighters toast him with brimming glasses as emerald vapor curls up from every cup.
+    Keep the same character, the same face, fur, skin and markings, the same outfit details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-merc-sewer-sommelier-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Sewer Sommelier L3: Grand Cru of the Gutter (seed 2)'
+  asset: slime-city/evolutions/merc-sewer-sommelier@3
+  size: 832x1216
+  seed: 1111004
+  source_image_id: 264950
+  prompt_prose: He raises a huge dusty bottle crusted with barnacles over a candlelit table built from a manhole
+    cover, and a ring of adult fighters toast him with brimming glasses as emerald vapor curls up from every cup.
+    Keep the same character, the same face, fur, skin and markings, the same outfit details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-merc-skate-taxidermist-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Skating Taxidermist L2: Trophy Wall (seed 1)'
+  asset: slime-city/evolutions/merc-skate-taxidermist@2
+  size: 832x1216
+  seed: 1111005
+  source_image_id: 261556
+  prompt_prose: She now glides past a roller rink wall hung with stuffed and mounted slime trophies, and two adult
+    skaters behind her cheer and pump their fists as she adds another. Keep the same character, the same face, fur,
+    skin and markings, the same outfit details, the same saturated neon comic gouache art style with bold black
+    contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-merc-skate-taxidermist-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Skating Taxidermist L2: Trophy Wall (seed 2)'
+  asset: slime-city/evolutions/merc-skate-taxidermist@2
+  size: 832x1216
+  seed: 1111006
+  source_image_id: 261556
+  prompt_prose: She now glides past a roller rink wall hung with stuffed and mounted slime trophies, and two adult
+    skaters behind her cheer and pump their fists as she adds another. Keep the same character, the same face, fur,
+    skin and markings, the same outfit details, the same saturated neon comic gouache art style with bold black
+    contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-merc-skate-taxidermist-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Skating Taxidermist L3: Diorama on Wheels (seed 1)'
+  asset: slime-city/evolutions/merc-skate-taxidermist@3
+  size: 832x1216
+  seed: 1111007
+  source_image_id: 261556
+  prompt_prose: She skates hand in hand with a huge stuffed bear wearing roller skates of its own, glass eyes gleaming,
+    as both race across a disco-lit rink under a spinning mirror ball. Keep the same character, the same face, fur,
+    skin and markings, the same outfit details, the same saturated neon comic gouache art style with bold black
+    contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-merc-skate-taxidermist-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Skating Taxidermist L3: Diorama on Wheels (seed 2)'
+  asset: slime-city/evolutions/merc-skate-taxidermist@3
+  size: 832x1216
+  seed: 1111008
+  source_image_id: 261556
+  prompt_prose: She skates hand in hand with a huge stuffed bear wearing roller skates of its own, glass eyes gleaming,
+    as both race across a disco-lit rink under a spinning mirror ball. Keep the same character, the same face, fur,
+    skin and markings, the same outfit details, the same saturated neon comic gouache art style with bold black
+    contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-merc-auction-golem-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Auction Golem L2: Priced Out (seed 1)'
+  asset: slime-city/evolutions/merc-auction-golem@2
+  size: 832x1216
+  seed: 1111009
+  source_image_id: 261557
+  prompt_prose: The golem now raises a giant stone gavel mid-bid while the slimy rival across from it shrinks back
+    in dismay, pockets turned out and empty. Keep the same character, the same face, fur, skin and markings, the
+    same outfit details, the same saturated neon comic gouache art style with bold black contours, and the same
+    tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-merc-auction-golem-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Auction Golem L2: Priced Out (seed 2)'
+  asset: slime-city/evolutions/merc-auction-golem@2
+  size: 832x1216
+  seed: 1111010
+  source_image_id: 261557
+  prompt_prose: The golem now raises a giant stone gavel mid-bid while the slimy rival across from it shrinks back
+    in dismay, pockets turned out and empty. Keep the same character, the same face, fur, skin and markings, the
+    same outfit details, the same saturated neon comic gouache art style with bold black contours, and the same
+    tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-merc-auction-golem-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Auction Golem L3: Sold Out From Under You (seed 1)'
+  asset: slime-city/evolutions/merc-auction-golem@3
+  size: 832x1216
+  seed: 1111011
+  source_image_id: 261557
+  prompt_prose: The golem slams its gavel down and the paving stones beneath the rival burst upward and fling it
+    out of the alley in a spray of rubble and goo, as confetti rains over the empty lot. Keep the same character,
+    the same face, fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style
+    with bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-merc-auction-golem-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Auction Golem L3: Sold Out From Under You (seed 2)'
+  asset: slime-city/evolutions/merc-auction-golem@3
+  size: 832x1216
+  seed: 1111012
+  source_image_id: 261557
+  prompt_prose: The golem slams its gavel down and the paving stones beneath the rival burst upward and fling it
+    out of the alley in a spray of rubble and goo, as confetti rains over the empty lot. Keep the same character,
+    the same face, fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style
+    with bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-merc-spark-midwife-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Midwife of Sparks L2: Ideas Are Catching (seed 1)'
+  asset: slime-city/evolutions/merc-spark-midwife@2
+  size: 832x1216
+  seed: 1111013
+  source_image_id: 261558
+  prompt_prose: Crackling sparks now leap from her gloved hands onto the shoulders of two adult allies beside her,
+    who fizz and glow with startled grins. Keep the same character, the same face, fur, skin and markings, the same
+    outfit details, the same saturated neon comic gouache art style with bold black contours, and the same tall
+    portrait framing with the scene painted edge to edge.
+- key: slime-evo-merc-spark-midwife-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Midwife of Sparks L2: Ideas Are Catching (seed 2)'
+  asset: slime-city/evolutions/merc-spark-midwife@2
+  size: 832x1216
+  seed: 1111014
+  source_image_id: 261558
+  prompt_prose: Crackling sparks now leap from her gloved hands onto the shoulders of two adult allies beside her,
+    who fizz and glow with startled grins. Keep the same character, the same face, fur, skin and markings, the same
+    outfit details, the same saturated neon comic gouache art style with bold black contours, and the same tall
+    portrait framing with the scene painted edge to edge.
+- key: slime-evo-merc-spark-midwife-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Midwife of Sparks L3: Brainstorm (seed 1)'
+  asset: slime-city/evolutions/merc-spark-midwife@3
+  size: 832x1216
+  seed: 1111015
+  source_image_id: 261558
+  prompt_prose: She bursts into a brilliant white flash in the middle of the street, and two tiny round spark creatures
+    with bright eyes tumble out of the light on either side of her, blinking and crackling. Keep the same character,
+    the same face, fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style
+    with bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-merc-spark-midwife-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Midwife of Sparks L3: Brainstorm (seed 2)'
+  asset: slime-city/evolutions/merc-spark-midwife@3
+  size: 832x1216
+  seed: 1111016
+  source_image_id: 261558
+  prompt_prose: She bursts into a brilliant white flash in the middle of the street, and two tiny round spark creatures
+    with bright eyes tumble out of the light on either side of her, blinking and crackling. Keep the same character,
+    the same face, fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style
+    with bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-merc-traffic-witch-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Traffic Witch L2: Green Wave (seed 1)'
+  asset: slime-city/evolutions/merc-traffic-witch@2
+  size: 832x1216
+  seed: 1111017
+  source_image_id: 261559
+  prompt_prose: She now holds her wand high, its tip blazing green, and a line of adult allies behind her surge
+    forward through a rainy crosswalk bathed in green light. Keep the same character, the same face, fur, skin and
+    markings, the same outfit details, the same saturated neon comic gouache art style with bold black contours,
+    and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-merc-traffic-witch-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Traffic Witch L2: Green Wave (seed 2)'
+  asset: slime-city/evolutions/merc-traffic-witch@2
+  size: 832x1216
+  seed: 1111018
+  source_image_id: 261559
+  prompt_prose: She now holds her wand high, its tip blazing green, and a line of adult allies behind her surge
+    forward through a rainy crosswalk bathed in green light. Keep the same character, the same face, fur, skin and
+    markings, the same outfit details, the same saturated neon comic gouache art style with bold black contours,
+    and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-merc-traffic-witch-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Traffic Witch L3: Gridlock (seed 1)'
+  asset: slime-city/evolutions/merc-traffic-witch@3
+  size: 832x1216
+  seed: 1111019
+  source_image_id: 261559
+  prompt_prose: She stands atop a stalled car in a jammed intersection, her wand burning red, as every rival on
+    the block freezes mid-step in a wash of crimson traffic light. Keep the same character, the same face, fur,
+    skin and markings, the same outfit details, the same saturated neon comic gouache art style with bold black
+    contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-merc-traffic-witch-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Traffic Witch L3: Gridlock (seed 2)'
+  asset: slime-city/evolutions/merc-traffic-witch@3
+  size: 832x1216
+  seed: 1111020
+  source_image_id: 261559
+  prompt_prose: She stands atop a stalled car in a jammed intersection, her wand burning red, as every rival on
+    the block freezes mid-step in a wash of crimson traffic light. Keep the same character, the same face, fur,
+    skin and markings, the same outfit details, the same saturated neon comic gouache art style with bold black
+    contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-merc-picket-troll-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Picket Line Troll L2: Permanent Overtime (seed 1)'
+  asset: slime-city/evolutions/merc-picket-troll@2
+  size: 832x1216
+  seed: 1111021
+  source_image_id: 261560
+  prompt_prose: The troll now marches the picket line at dawn with a thermos and a blanket over its shoulders, bulkier
+    than before, its blank wooden picket sign battered from long nights. Keep the same character, the same face,
+    fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style with bold black
+    contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-merc-picket-troll-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Picket Line Troll L2: Permanent Overtime (seed 2)'
+  asset: slime-city/evolutions/merc-picket-troll@2
+  size: 832x1216
+  seed: 1111022
+  source_image_id: 261560
+  prompt_prose: The troll now marches the picket line at dawn with a thermos and a blanket over its shoulders, bulkier
+    than before, its blank wooden picket sign battered from long nights. Keep the same character, the same face,
+    fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style with bold black
+    contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-merc-picket-troll-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Picket Line Troll L3: General Strike (seed 1)'
+  asset: slime-city/evolutions/merc-picket-troll@3
+  size: 832x1216
+  seed: 1111023
+  source_image_id: 261560
+  prompt_prose: The troll sits cross-legged and immovable across the whole alley with arms folded, and the slimy
+    rivals facing it have set down their weapons and slumped onto overturned crates, refusing to work. Keep the
+    same character, the same face, fur, skin and markings, the same outfit details, the same saturated neon comic
+    gouache art style with bold black contours, and the same tall portrait framing with the scene painted edge to
+    edge.
+- key: slime-evo-merc-picket-troll-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Picket Line Troll L3: General Strike (seed 2)'
+  asset: slime-city/evolutions/merc-picket-troll@3
+  size: 832x1216
+  seed: 1111024
+  source_image_id: 261560
+  prompt_prose: The troll sits cross-legged and immovable across the whole alley with arms folded, and the slimy
+    rivals facing it have set down their weapons and slumped onto overturned crates, refusing to work. Keep the
+    same character, the same face, fur, skin and markings, the same outfit details, the same saturated neon comic
+    gouache art style with bold black contours, and the same tall portrait framing with the scene painted edge to
+    edge.
+- key: slime-evo-merc-escape-crab-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Escape Artist Crab L2: Dine and Dash (seed 1)'
+  asset: slime-city/evolutions/merc-escape-crab@2
+  size: 832x1216
+  seed: 1111025
+  source_image_id: 264951
+  prompt_prose: The crab now scuttles out a restaurant's swinging kitchen door with a napkin tucked into its shell
+    and a stolen bread roll in one claw, an adult chef chasing far behind. Keep the same character, the same face,
+    fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style with bold black
+    contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-merc-escape-crab-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Escape Artist Crab L2: Dine and Dash (seed 2)'
+  asset: slime-city/evolutions/merc-escape-crab@2
+  size: 832x1216
+  seed: 1111026
+  source_image_id: 264951
+  prompt_prose: The crab now scuttles out a restaurant's swinging kitchen door with a napkin tucked into its shell
+    and a stolen bread roll in one claw, an adult chef chasing far behind. Keep the same character, the same face,
+    fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style with bold black
+    contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-merc-escape-crab-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Escape Artist Crab L3: The Seventeenth Escape (seed 1)'
+  asset: slime-city/evolutions/merc-escape-crab@3
+  size: 832x1216
+  seed: 1111027
+  source_image_id: 264951
+  prompt_prose: The crab vaults over a rooftop ledge in mid-leap, claws snapping a final pinch at a rival as it
+    disappears toward the harbor lights in a streak of motion. Keep the same character, the same face, fur, skin
+    and markings, the same outfit details, the same saturated neon comic gouache art style with bold black contours,
+    and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-merc-escape-crab-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Escape Artist Crab L3: The Seventeenth Escape (seed 2)'
+  asset: slime-city/evolutions/merc-escape-crab@3
+  size: 832x1216
+  seed: 1111028
+  source_image_id: 264951
+  prompt_prose: The crab vaults over a rooftop ledge in mid-leap, claws snapping a final pinch at a rival as it
+    disappears toward the harbor lights in a streak of motion. Keep the same character, the same face, fur, skin
+    and markings, the same outfit details, the same saturated neon comic gouache art style with bold black contours,
+    and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-merc-escape-crab-l3b-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Escape Artist Crab L3b: Free the Tank (seed 1)'
+  asset: slime-city/evolutions/merc-escape-crab@3b
+  size: 832x1216
+  seed: 1111029
+  source_image_id: 264951
+  prompt_prose: The crab stands triumphant on a shattered lobster tank in a restaurant dining room, water splashing
+    everywhere, as two freed crabs clamber out beside it with raised claws. Keep the same character, the same face,
+    fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style with bold black
+    contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-merc-escape-crab-l3b-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Escape Artist Crab L3b: Free the Tank (seed 2)'
+  asset: slime-city/evolutions/merc-escape-crab@3b
+  size: 832x1216
+  seed: 1111030
+  source_image_id: 264951
+  prompt_prose: The crab stands triumphant on a shattered lobster tank in a restaurant dining room, water splashing
+    everywhere, as two freed crabs clamber out beside it with raised claws. Keep the same character, the same face,
+    fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style with bold black
+    contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-merc-living-scaffold-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Living Scaffolding L2: Load-Bearing (seed 1)'
+  asset: slime-city/evolutions/merc-living-scaffold@2
+  size: 832x1216
+  seed: 1111031
+  source_image_id: 261562
+  prompt_prose: The scaffolding now stretches its steel arms over two adult allies beside it, holding planks and
+    beams above their heads like a sheltering roof. Keep the same character, the same face, fur, skin and markings,
+    the same outfit details, the same saturated neon comic gouache art style with bold black contours, and the same
+    tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-merc-living-scaffold-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Living Scaffolding L2: Load-Bearing (seed 2)'
+  asset: slime-city/evolutions/merc-living-scaffold@2
+  size: 832x1216
+  seed: 1111032
+  source_image_id: 261562
+  prompt_prose: The scaffolding now stretches its steel arms over two adult allies beside it, holding planks and
+    beams above their heads like a sheltering roof. Keep the same character, the same face, fur, skin and markings,
+    the same outfit details, the same saturated neon comic gouache art style with bold black contours, and the same
+    tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-merc-living-scaffold-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Living Scaffolding L3: New Wings (seed 1)'
+  asset: slime-city/evolutions/merc-living-scaffold@3
+  size: 832x1216
+  seed: 1111033
+  source_image_id: 261562
+  prompt_prose: Fresh scaffold towers sprout from both of its sides and spread across the neighboring alleys, building
+    whole new floors of beams and boards in a burst of sawdust. Keep the same character, the same face, fur, skin
+    and markings, the same outfit details, the same saturated neon comic gouache art style with bold black contours,
+    and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-merc-living-scaffold-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Living Scaffolding L3: New Wings (seed 2)'
+  asset: slime-city/evolutions/merc-living-scaffold@3
+  size: 832x1216
+  seed: 1111034
+  source_image_id: 261562
+  prompt_prose: Fresh scaffold towers sprout from both of its sides and spread across the neighboring alleys, building
+    whole new floors of beams and boards in a burst of sawdust. Keep the same character, the same face, fur, skin
+    and markings, the same outfit details, the same saturated neon comic gouache art style with bold black contours,
+    and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-merc-invisible-mime-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Invisible Mime L2: Against the Wind (seed 1)'
+  asset: slime-city/evolutions/merc-invisible-mime@2
+  size: 832x1216
+  seed: 1111035
+  source_image_id: 264952
+  prompt_prose: The mime now leans hard into an invisible gale on an empty street, coat flapping and hat clamped
+    down, utterly alone under a single streetlamp. Keep the same character, the same face, fur, skin and markings,
+    the same outfit details, the same saturated neon comic gouache art style with bold black contours, and the same
+    tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-merc-invisible-mime-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Invisible Mime L2: Against the Wind (seed 2)'
+  asset: slime-city/evolutions/merc-invisible-mime@2
+  size: 832x1216
+  seed: 1111036
+  source_image_id: 264952
+  prompt_prose: The mime now leans hard into an invisible gale on an empty street, coat flapping and hat clamped
+    down, utterly alone under a single streetlamp. Keep the same character, the same face, fur, skin and markings,
+    the same outfit details, the same saturated neon comic gouache art style with bold black contours, and the same
+    tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-merc-invisible-mime-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Invisible Mime L3: Trapped in a Box (seed 1)'
+  asset: slime-city/evolutions/merc-invisible-mime@3
+  size: 832x1216
+  seed: 1111037
+  source_image_id: 264952
+  prompt_prose: The mime presses gloved palms against the air as a hulking slimy brute beside it is sealed inside
+    a shimmering, faintly visible glass box, pounding at walls that should not exist. Keep the same character, the
+    same face, fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style
+    with bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-merc-invisible-mime-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Invisible Mime L3: Trapped in a Box (seed 2)'
+  asset: slime-city/evolutions/merc-invisible-mime@3
+  size: 832x1216
+  seed: 1111038
+  source_image_id: 264952
+  prompt_prose: The mime presses gloved palms against the air as a hulking slimy brute beside it is sealed inside
+    a shimmering, faintly visible glass box, pounding at walls that should not exist. Keep the same character, the
+    same face, fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style
+    with bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-merc-midnight-janitor-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Midnight Janitor L2: Mops Up (seed 1)'
+  asset: slime-city/evolutions/merc-midnight-janitor@2
+  size: 832x1216
+  seed: 1111039
+  source_image_id: 261564
+  prompt_prose: The janitor now wrings out a mop over a bucket of glowing goo beside a defeated, dazed rival, wiping
+    his brow and looking refreshed. Keep the same character, the same face, fur, skin and markings, the same outfit
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-merc-midnight-janitor-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Midnight Janitor L2: Mops Up (seed 2)'
+  asset: slime-city/evolutions/merc-midnight-janitor@2
+  size: 832x1216
+  seed: 1111040
+  source_image_id: 261564
+  prompt_prose: The janitor now wrings out a mop over a bucket of glowing goo beside a defeated, dazed rival, wiping
+    his brow and looking refreshed. Keep the same character, the same face, fur, skin and markings, the same outfit
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-merc-midnight-janitor-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Midnight Janitor L3: Closing Time (seed 1)'
+  asset: slime-city/evolutions/merc-midnight-janitor@3
+  size: 832x1216
+  seed: 1111041
+  source_image_id: 261564
+  prompt_prose: Under a flickering green emergency lamp at midnight, the janitor swings his mop like a lance through
+    a line of startled rivals, a wet floor of shining goo spreading behind him. Keep the same character, the same
+    face, fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style with
+    bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-merc-midnight-janitor-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Midnight Janitor L3: Closing Time (seed 2)'
+  asset: slime-city/evolutions/merc-midnight-janitor@3
+  size: 832x1216
+  seed: 1111042
+  source_image_id: 261564
+  prompt_prose: Under a flickering green emergency lamp at midnight, the janitor swings his mop like a lance through
+    a line of startled rivals, a wet floor of shining goo spreading behind him. Keep the same character, the same
+    face, fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style with
+    bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-merc-misaddressed-parcel-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Misaddressed Parcel L2: Forwarded Next Door (seed 1)'
+  asset: slime-city/evolutions/merc-misaddressed-parcel@2
+  size: 832x1216
+  seed: 1111043
+  source_image_id: 261565
+  prompt_prose: The parcel now sits split open on a doorstep, rolls of gauze unspooling out toward two neighboring
+    doorways where adult residents peek out to catch them. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-merc-misaddressed-parcel-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Misaddressed Parcel L2: Forwarded Next Door (seed 2)'
+  asset: slime-city/evolutions/merc-misaddressed-parcel@2
+  size: 832x1216
+  seed: 1111044
+  source_image_id: 261565
+  prompt_prose: The parcel now sits split open on a doorstep, rolls of gauze unspooling out toward two neighboring
+    doorways where adult residents peek out to catch them. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-merc-misaddressed-parcel-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Misaddressed Parcel L3: Every Door on the Block (seed 1)'
+  asset: slime-city/evolutions/merc-misaddressed-parcel@3
+  size: 832x1216
+  seed: 1111045
+  source_image_id: 261565
+  prompt_prose: A whole street of row-house doorsteps each holds the same small brown parcel, glowing softly, as
+    bandages float out of them toward the bruised fighters walking by. Keep the same objects, characters and setting
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-merc-misaddressed-parcel-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Misaddressed Parcel L3: Every Door on the Block (seed 2)'
+  asset: slime-city/evolutions/merc-misaddressed-parcel@3
+  size: 832x1216
+  seed: 1111046
+  source_image_id: 261565
+  prompt_prose: A whole street of row-house doorsteps each holds the same small brown parcel, glowing softly, as
+    bandages float out of them toward the bruised fighters walking by. Keep the same objects, characters and setting
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-merc-crowd-lightning-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Crowd-Sourced Lightning L2: Signature Drive (seed 1)'
+  asset: slime-city/evolutions/merc-crowd-lightning@2
+  size: 832x1216
+  seed: 1111047
+  source_image_id: 261566
+  prompt_prose: A bigger crowd of adult residents now packs the street with raised pens and clipboards, and the
+    lightning bolt above them doubles in brightness and thickness. Keep the same objects, characters and setting
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-merc-crowd-lightning-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Crowd-Sourced Lightning L2: Signature Drive (seed 2)'
+  asset: slime-city/evolutions/merc-crowd-lightning@2
+  size: 832x1216
+  seed: 1111048
+  source_image_id: 261566
+  prompt_prose: A bigger crowd of adult residents now packs the street with raised pens and clipboards, and the
+    lightning bolt above them doubles in brightness and thickness. Keep the same objects, characters and setting
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-merc-crowd-lightning-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Crowd-Sourced Lightning L3: Lightning Rod Petition (seed 1)'
+  asset: slime-city/evolutions/merc-crowd-lightning@3
+  size: 832x1216
+  seed: 1111049
+  source_image_id: 261566
+  prompt_prose: The crowd hoists a towering homemade lightning rod made of umbrellas and coat hangers, and a colossal
+    bolt arcs from the storm through it toward a distant rival tower. Keep the same objects, characters and setting
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-merc-crowd-lightning-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Crowd-Sourced Lightning L3: Lightning Rod Petition (seed 2)'
+  asset: slime-city/evolutions/merc-crowd-lightning@3
+  size: 832x1216
+  seed: 1111050
+  source_image_id: 261566
+  prompt_prose: The crowd hoists a towering homemade lightning rod made of umbrellas and coat hangers, and a colossal
+    bolt arcs from the storm through it toward a distant rival tower. Keep the same objects, characters and setting
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-merc-unofficial-detour-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Unofficial Detour L2: Dead End (seed 1)'
+  asset: slime-city/evolutions/merc-unofficial-detour@2
+  size: 832x1216
+  seed: 1111051
+  source_image_id: 261567
+  prompt_prose: A huge lumbering slime truck is now wedged between two narrow brick walls at the end of the painted
+    arrow, wheels spinning uselessly in the goo. Keep the same objects, characters and setting details, the same
+    saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with the
+    scene painted edge to edge.
+- key: slime-evo-merc-unofficial-detour-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Unofficial Detour L2: Dead End (seed 2)'
+  asset: slime-city/evolutions/merc-unofficial-detour@2
+  size: 832x1216
+  seed: 1111052
+  source_image_id: 261567
+  prompt_prose: A huge lumbering slime truck is now wedged between two narrow brick walls at the end of the painted
+    arrow, wheels spinning uselessly in the goo. Keep the same objects, characters and setting details, the same
+    saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with the
+    scene painted edge to edge.
+- key: slime-evo-merc-unofficial-detour-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Unofficial Detour L3: Road Closed for Repairs (seed 1)'
+  asset: slime-city/evolutions/merc-unofficial-detour@3
+  size: 832x1216
+  seed: 1111053
+  source_image_id: 261567
+  prompt_prose: Orange cones, striped barriers and blinking hazard lamps now block the whole street from wall to
+    wall, and three slimy rivals stand stuck and baffled behind them. Keep the same objects, characters and setting
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-merc-unofficial-detour-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Unofficial Detour L3: Road Closed for Repairs (seed 2)'
+  asset: slime-city/evolutions/merc-unofficial-detour@3
+  size: 832x1216
+  seed: 1111054
+  source_image_id: 261567
+  prompt_prose: Orange cones, striped barriers and blinking hazard lamps now block the whole street from wall to
+    wall, and three slimy rivals stand stuck and baffled behind them. Keep the same objects, characters and setting
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-merc-reputation-laundry-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Reputation Laundering L2: Glowing Reference (seed 1)'
+  asset: slime-city/evolutions/merc-reputation-laundry@2
+  size: 832x1216
+  seed: 1111055
+  source_image_id: 261568
+  prompt_prose: A freshly washed fighter now steps out of the laundromat steam in spotless clothes, chin raised,
+    bubbles still drifting off a gleaming armored shoulder. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-merc-reputation-laundry-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Reputation Laundering L2: Glowing Reference (seed 2)'
+  asset: slime-city/evolutions/merc-reputation-laundry@2
+  size: 832x1216
+  seed: 1111056
+  source_image_id: 261568
+  prompt_prose: A freshly washed fighter now steps out of the laundromat steam in spotless clothes, chin raised,
+    bubbles still drifting off a gleaming armored shoulder. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-merc-reputation-laundry-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Reputation Laundering L3: Comes Out Spotless (seed 1)'
+  asset: slime-city/evolutions/merc-reputation-laundry@3
+  size: 832x1216
+  seed: 1111057
+  source_image_id: 261568
+  prompt_prose: A giant washing machine drum spins open to reveal a sparkling, beaming boss figure in a pristine
+    suit, bathed in clean white light and floating soap bubbles. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-merc-reputation-laundry-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Reputation Laundering L3: Comes Out Spotless (seed 2)'
+  asset: slime-city/evolutions/merc-reputation-laundry@3
+  size: 832x1216
+  seed: 1111058
+  source_image_id: 261568
+  prompt_prose: A giant washing machine drum spins open to reveal a sparkling, beaming boss figure in a pristine
+    suit, bathed in clean white light and floating soap bubbles. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-merc-flashmob-diversion-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Flashmob Diversion L2: Rehearsal (seed 1)'
+  asset: slime-city/evolutions/merc-flashmob-diversion@2
+  size: 832x1216
+  seed: 1111059
+  source_image_id: 264953
+  prompt_prose: One adult dancer in a hoodie now strikes a pose beside the fighter on the street corner, mid-routine,
+    as a boombox glows at their feet. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-merc-flashmob-diversion-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Flashmob Diversion L2: Rehearsal (seed 2)'
+  asset: slime-city/evolutions/merc-flashmob-diversion@2
+  size: 832x1216
+  seed: 1111060
+  source_image_id: 264953
+  prompt_prose: One adult dancer in a hoodie now strikes a pose beside the fighter on the street corner, mid-routine,
+    as a boombox glows at their feet. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-merc-flashmob-diversion-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Flashmob Diversion L3: The Whole Street Dances (seed 1)'
+  asset: slime-city/evolutions/merc-flashmob-diversion@3
+  size: 832x1216
+  seed: 1111061
+  source_image_id: 264953
+  prompt_prose: The entire street erupts into a synchronized dance, adult dancers filling every alley and fire escape
+    in matching poses under colored spotlights. Keep the same objects, characters and setting details, the same
+    saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with the
+    scene painted edge to edge.
+- key: slime-evo-merc-flashmob-diversion-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Flashmob Diversion L3: The Whole Street Dances (seed 2)'
+  asset: slime-city/evolutions/merc-flashmob-diversion@3
+  size: 832x1216
+  seed: 1111062
+  source_image_id: 264953
+  prompt_prose: The entire street erupts into a synchronized dance, adult dancers filling every alley and fire escape
+    in matching poses under colored spotlights. Keep the same objects, characters and setting details, the same
+    saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with the
+    scene painted edge to edge.
+- key: slime-evo-merc-jury-rigged-radar-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Jury-Rigged Radar L2: Feedback Whine (seed 1)'
+  asset: slime-city/evolutions/merc-jury-rigged-radar@2
+  size: 832x1216
+  seed: 1111063
+  source_image_id: 261570
+  prompt_prose: The coat-hanger radar now crackles with visible sound rings that ripple down the alley and rattle
+    a slimy rival, who covers its ears. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-merc-jury-rigged-radar-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Jury-Rigged Radar L2: Feedback Whine (seed 2)'
+  asset: slime-city/evolutions/merc-jury-rigged-radar@2
+  size: 832x1216
+  seed: 1111064
+  source_image_id: 261570
+  prompt_prose: The coat-hanger radar now crackles with visible sound rings that ripple down the alley and rattle
+    a slimy rival, who covers its ears. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-merc-jury-rigged-radar-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Jury-Rigged Radar L3: Locked On (seed 1)'
+  asset: slime-city/evolutions/merc-jury-rigged-radar@3
+  size: 832x1216
+  seed: 1111065
+  source_image_id: 261570
+  prompt_prose: The rickety dish swivels toward the largest rival on the block, a bright red targeting beam lancing
+    out from its taped-together antenna and pinning the brute in place. Keep the same objects, characters and setting
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-merc-jury-rigged-radar-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Jury-Rigged Radar L3: Locked On (seed 2)'
+  asset: slime-city/evolutions/merc-jury-rigged-radar@3
+  size: 832x1216
+  seed: 1111066
+  source_image_id: 261570
+  prompt_prose: The rickety dish swivels toward the largest rival on the block, a bright red targeting beam lancing
+    out from its taped-together antenna and pinning the brute in place. Keep the same objects, characters and setting
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-merc-allergy-season-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Allergy Season L2: Pollen Drift (seed 1)'
+  asset: slime-city/evolutions/merc-allergy-season@2
+  size: 832x1216
+  seed: 1111067
+  source_image_id: 261571
+  prompt_prose: Golden pollen clouds now drift sideways from the main sneeze into the next alleys, where slimy rivals
+    squint with watering eyes. Keep the same objects, characters and setting details, the same saturated neon comic
+    gouache art style with bold black contours, and the same tall portrait framing with the scene painted edge to
+    edge.
+- key: slime-evo-merc-allergy-season-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Allergy Season L2: Pollen Drift (seed 2)'
+  asset: slime-city/evolutions/merc-allergy-season@2
+  size: 832x1216
+  seed: 1111068
+  source_image_id: 261571
+  prompt_prose: Golden pollen clouds now drift sideways from the main sneeze into the next alleys, where slimy rivals
+    squint with watering eyes. Keep the same objects, characters and setting details, the same saturated neon comic
+    gouache art style with bold black contours, and the same tall portrait framing with the scene painted edge to
+    edge.
+- key: slime-evo-merc-allergy-season-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Allergy Season L3: Peak Pollen Count (seed 1)'
+  asset: slime-city/evolutions/merc-allergy-season@3
+  size: 832x1216
+  seed: 1111069
+  source_image_id: 261571
+  prompt_prose: A golden pollen storm blankets the whole city skyline, and every rival in sight is doubled over
+    mid-sneeze at the same moment. Keep the same objects, characters and setting details, the same saturated neon
+    comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-merc-allergy-season-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Allergy Season L3: Peak Pollen Count (seed 2)'
+  asset: slime-city/evolutions/merc-allergy-season@3
+  size: 832x1216
+  seed: 1111070
+  source_image_id: 261571
+  prompt_prose: A golden pollen storm blankets the whole city skyline, and every rival in sight is doubled over
+    mid-sneeze at the same moment. Keep the same objects, characters and setting details, the same saturated neon
+    comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-merc-supervised-demo-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Supervised Demolition L2: Hard Hats On (seed 1)'
+  asset: slime-city/evolutions/merc-supervised-demo@2
+  size: 832x1216
+  seed: 1111071
+  source_image_id: 261572
+  prompt_prose: A row of adult fighters now watch the blast from behind a safety line, each wearing a bright yellow
+    hard hat with a faint protective shimmer. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-merc-supervised-demo-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Supervised Demolition L2: Hard Hats On (seed 2)'
+  asset: slime-city/evolutions/merc-supervised-demo@2
+  size: 832x1216
+  seed: 1111072
+  source_image_id: 261572
+  prompt_prose: A row of adult fighters now watch the blast from behind a safety line, each wearing a bright yellow
+    hard hat with a faint protective shimmer. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-merc-supervised-demo-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Supervised Demolition L3: Controlled Implosion (seed 1)'
+  asset: slime-city/evolutions/merc-supervised-demo@3
+  size: 832x1216
+  seed: 1111073
+  source_image_id: 261572
+  prompt_prose: A huge slimy rival fortress folds neatly in on itself in a tidy column of dust, while a calm adult
+    foreman in a hard hat presses the plunger from a safe distance. Keep the same objects, characters and setting
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-merc-supervised-demo-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Supervised Demolition L3: Controlled Implosion (seed 2)'
+  asset: slime-city/evolutions/merc-supervised-demo@3
+  size: 832x1216
+  seed: 1111074
+  source_image_id: 261572
+  prompt_prose: A huge slimy rival fortress folds neatly in on itself in a tidy column of dust, while a calm adult
+    foreman in a hard hat presses the plunger from a safe distance. Keep the same objects, characters and setting
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-merc-unsupervised-demo-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Unsupervised Demolition L2: Flying Debris (seed 1)'
+  asset: slime-city/evolutions/merc-unsupervised-demo@2
+  size: 832x1216
+  seed: 1111075
+  source_image_id: 261573
+  prompt_prose: Chunks of brick and goo now sail high over a chain-link fence toward a distant rival tower, trailing
+    smoke. Keep the same objects, characters and setting details, the same saturated neon comic gouache art style
+    with bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-merc-unsupervised-demo-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Unsupervised Demolition L2: Flying Debris (seed 2)'
+  asset: slime-city/evolutions/merc-unsupervised-demo@2
+  size: 832x1216
+  seed: 1111076
+  source_image_id: 261573
+  prompt_prose: Chunks of brick and goo now sail high over a chain-link fence toward a distant rival tower, trailing
+    smoke. Keep the same objects, characters and setting details, the same saturated neon comic gouache art style
+    with bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-merc-unsupervised-demo-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Unsupervised Demolition L3: Nobody Read the Manual (seed 1)'
+  asset: slime-city/evolutions/merc-unsupervised-demo@3
+  size: 832x1216
+  seed: 1111077
+  source_image_id: 261573
+  prompt_prose: The whole city block erupts in a chaotic cartoon blast, rivals and allies alike tumbling through
+    the air amid flying bricks, while a crumpled, unopened blueprint roll bounces away untouched. Keep the same
+    objects, characters and setting details, the same saturated neon comic gouache art style with bold black contours,
+    and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-merc-unsupervised-demo-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Unsupervised Demolition L3: Nobody Read the Manual (seed 2)'
+  asset: slime-city/evolutions/merc-unsupervised-demo@3
+  size: 832x1216
+  seed: 1111078
+  source_image_id: 261573
+  prompt_prose: The whole city block erupts in a chaotic cartoon blast, rivals and allies alike tumbling through
+    the air amid flying bricks, while a crumpled, unopened blueprint roll bounces away untouched. Keep the same
+    objects, characters and setting details, the same saturated neon comic gouache art style with bold black contours,
+    and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-merc-mortgage-holiday-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Mortgage Holiday L2: Grace Period (seed 1)'
+  asset: slime-city/evolutions/merc-mortgage-holiday@2
+  size: 832x1216
+  seed: 1111079
+  source_image_id: 264954
+  prompt_prose: A relieved adult homeowner now lounges in a beach chair on the front steps under a paper sun umbrella,
+    the stack of unpaid bills held down by a seashell. Keep the same objects, characters and setting details, the
+    same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with
+    the scene painted edge to edge.
+- key: slime-evo-merc-mortgage-holiday-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Mortgage Holiday L2: Grace Period (seed 2)'
+  asset: slime-city/evolutions/merc-mortgage-holiday@2
+  size: 832x1216
+  seed: 1111080
+  source_image_id: 264954
+  prompt_prose: A relieved adult homeowner now lounges in a beach chair on the front steps under a paper sun umbrella,
+    the stack of unpaid bills held down by a seashell. Keep the same objects, characters and setting details, the
+    same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with
+    the scene painted edge to edge.
+- key: slime-evo-merc-mortgage-holiday-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Mortgage Holiday L3: Foreclosure (seed 1)'
+  asset: slime-city/evolutions/merc-mortgage-holiday@3
+  size: 832x1216
+  seed: 1111081
+  source_image_id: 264954
+  prompt_prose: A giant iron padlock and heavy chains now wrap the rival boss's gaudy mansion, and the boss storms
+    out the front door in its bathrobe. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-merc-mortgage-holiday-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Mortgage Holiday L3: Foreclosure (seed 2)'
+  asset: slime-city/evolutions/merc-mortgage-holiday@3
+  size: 832x1216
+  seed: 1111082
+  source_image_id: 264954
+  prompt_prose: A giant iron padlock and heavy chains now wrap the rival boss's gaudy mansion, and the boss storms
+    out the front door in its bathrobe. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-merc-mortgage-holiday-l3b-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Mortgage Holiday L3b: Refinance (seed 1)'
+  asset: slime-city/evolutions/merc-mortgage-holiday@3b
+  size: 832x1216
+  seed: 1111083
+  source_image_id: 264954
+  prompt_prose: The homeowner now strolls out of a marble bank lobby hugging a bulging canvas sack of gold coins
+    and wearing a smug grin, the vault door swinging open behind. Keep the same objects, characters and setting
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-merc-mortgage-holiday-l3b-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Mortgage Holiday L3b: Refinance (seed 2)'
+  asset: slime-city/evolutions/merc-mortgage-holiday@3b
+  size: 832x1216
+  seed: 1111084
+  source_image_id: 264954
+  prompt_prose: The homeowner now strolls out of a marble bank lobby hugging a bulging canvas sack of gold coins
+    and wearing a smug grin, the vault door swinging open behind. Keep the same objects, characters and setting
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-merc-secondhand-halo-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Secondhand Halo L2: Still Warm (seed 1)'
+  asset: slime-city/evolutions/merc-secondhand-halo@2
+  size: 832x1216
+  seed: 1111085
+  source_image_id: 261575
+  prompt_prose: The worn halo now glows a warm amber as it settles over a fighter's head, soft light knitting their
+    scrapes closed. Keep the same objects, characters and setting details, the same saturated neon comic gouache
+    art style with bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-merc-secondhand-halo-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Secondhand Halo L2: Still Warm (seed 2)'
+  asset: slime-city/evolutions/merc-secondhand-halo@2
+  size: 832x1216
+  seed: 1111086
+  source_image_id: 261575
+  prompt_prose: The worn halo now glows a warm amber as it settles over a fighter's head, soft light knitting their
+    scrapes closed. Keep the same objects, characters and setting details, the same saturated neon comic gouache
+    art style with bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-merc-secondhand-halo-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Secondhand Halo L3: Previous Owner (seed 1)'
+  asset: slime-city/evolutions/merc-secondhand-halo@3
+  size: 832x1216
+  seed: 1111087
+  source_image_id: 261575
+  prompt_prose: The halo blazes white and a translucent, smiling adult fighter steps out of its light beside the
+    wearer, returning for one more shift. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-merc-secondhand-halo-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Secondhand Halo L3: Previous Owner (seed 2)'
+  asset: slime-city/evolutions/merc-secondhand-halo@3
+  size: 832x1216
+  seed: 1111088
+  source_image_id: 261575
+  prompt_prose: The halo blazes white and a translucent, smiling adult fighter steps out of its light beside the
+    wearer, returning for one more shift. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-merc-take-stairs-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Take the Stairs L2: Leg Day (seed 1)'
+  asset: slime-city/evolutions/merc-take-stairs@2
+  size: 832x1216
+  seed: 1111089
+  source_image_id: 264955
+  prompt_prose: A sweaty but beaming adult fighter now jogs up a long concrete stairwell with a towel around their
+    neck, visibly broader and steadier. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-merc-take-stairs-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Take the Stairs L2: Leg Day (seed 2)'
+  asset: slime-city/evolutions/merc-take-stairs@2
+  size: 832x1216
+  seed: 1111090
+  source_image_id: 264955
+  prompt_prose: A sweaty but beaming adult fighter now jogs up a long concrete stairwell with a towel around their
+    neck, visibly broader and steadier. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-merc-take-stairs-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Take the Stairs L3: Stairwell Sprint (seed 1)'
+  asset: slime-city/evolutions/merc-take-stairs@3
+  size: 832x1216
+  seed: 1111091
+  source_image_id: 264955
+  prompt_prose: The fighter bursts through the rooftop door at full speed, the door flying off its hinges as they
+    charge straight through a startled rival. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-merc-take-stairs-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Take the Stairs L3: Stairwell Sprint (seed 2)'
+  asset: slime-city/evolutions/merc-take-stairs@3
+  size: 832x1216
+  seed: 1111092
+  source_image_id: 264955
+  prompt_prose: The fighter bursts through the rooftop door at full speed, the door flying off its hinges as they
+    charge straight through a startled rival. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-merc-streetlight-confession-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Streetlight Confession L2: Overheard (seed 1)'
+  asset: slime-city/evolutions/merc-streetlight-confession@2
+  size: 832x1216
+  seed: 1111093
+  source_image_id: 264956
+  prompt_prose: Two adult neighbors now lean out of windows beside the streetlight, listening wide-eyed and standing
+    a little taller. Keep the same objects, characters and setting details, the same saturated neon comic gouache
+    art style with bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-merc-streetlight-confession-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Streetlight Confession L2: Overheard (seed 2)'
+  asset: slime-city/evolutions/merc-streetlight-confession@2
+  size: 832x1216
+  seed: 1111094
+  source_image_id: 264956
+  prompt_prose: Two adult neighbors now lean out of windows beside the streetlight, listening wide-eyed and standing
+    a little taller. Keep the same objects, characters and setting details, the same saturated neon comic gouache
+    art style with bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-merc-streetlight-confession-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Streetlight Confession L3: The Truth Hurts (seed 1)'
+  asset: slime-city/evolutions/merc-streetlight-confession@3
+  size: 832x1216
+  seed: 1111095
+  source_image_id: 264956
+  prompt_prose: The streetlight's beam sharpens into a harsh white spotlight that sears across the alley onto a
+    flinching slimy rival, who staggers back from the glare. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-merc-streetlight-confession-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Streetlight Confession L3: The Truth Hurts (seed 2)'
+  asset: slime-city/evolutions/merc-streetlight-confession@3
+  size: 832x1216
+  seed: 1111096
+  source_image_id: 264956
+  prompt_prose: The streetlight's beam sharpens into a harsh white spotlight that sears across the alley onto a
+    flinching slimy rival, who staggers back from the glare. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-merc-homebrew-antidote-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Homebrew Antidote L2: Side Effects May Include (seed 1)'
+  asset: slime-city/evolutions/merc-homebrew-antidote@2
+  size: 832x1216
+  seed: 1111097
+  source_image_id: 264957
+  prompt_prose: The bottle now fizzes over with sparks, and the adult fighter who sips it has hair standing on end
+    and twitching, oversized muscles. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-merc-homebrew-antidote-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Homebrew Antidote L2: Side Effects May Include (seed 2)'
+  asset: slime-city/evolutions/merc-homebrew-antidote@2
+  size: 832x1216
+  seed: 1111098
+  source_image_id: 264957
+  prompt_prose: The bottle now fizzes over with sparks, and the adult fighter who sips it has hair standing on end
+    and twitching, oversized muscles. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-merc-homebrew-antidote-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Homebrew Antidote L3: Good Batch (seed 1)'
+  asset: slime-city/evolutions/merc-homebrew-antidote@3
+  size: 832x1216
+  seed: 1111099
+  source_image_id: 264957
+  prompt_prose: A perfect batch glows a calm clear green on a crowded kitchen bench, and the fighter drinking it
+    is wrapped in gentle swirling green light as their wounds close. Keep the same objects, characters and setting
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-merc-homebrew-antidote-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Homebrew Antidote L3: Good Batch (seed 2)'
+  asset: slime-city/evolutions/merc-homebrew-antidote@3
+  size: 832x1216
+  seed: 1111100
+  source_image_id: 264957
+  prompt_prose: A perfect batch glows a calm clear green on a crowded kitchen bench, and the fighter drinking it
+    is wrapped in gentle swirling green light as their wounds close. Keep the same objects, characters and setting
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-merc-homebrew-antidote-l3b-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Homebrew Antidote L3b: Bad Batch (seed 1)'
+  asset: slime-city/evolutions/merc-homebrew-antidote@3b
+  size: 832x1216
+  seed: 1111101
+  source_image_id: 264957
+  prompt_prose: A murky bubbling bottle arcs through the air across the alley, trailing purple smoke, about to burst
+    on a startled slimy rival. Keep the same objects, characters and setting details, the same saturated neon comic
+    gouache art style with bold black contours, and the same tall portrait framing with the scene painted edge to
+    edge.
+- key: slime-evo-merc-homebrew-antidote-l3b-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Homebrew Antidote L3b: Bad Batch (seed 2)'
+  asset: slime-city/evolutions/merc-homebrew-antidote@3b
+  size: 832x1216
+  seed: 1111102
+  source_image_id: 264957
+  prompt_prose: A murky bubbling bottle arcs through the air across the alley, trailing purple smoke, about to burst
+    on a startled slimy rival. Keep the same objects, characters and setting details, the same saturated neon comic
+    gouache art style with bold black contours, and the same tall portrait framing with the scene painted edge to
+    edge.
+- key: slime-evo-merc-whisper-network-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Whisper Network L2: Grapevine (seed 1)'
+  asset: slime-city/evolutions/merc-whisper-network@2
+  size: 832x1216
+  seed: 1111103
+  source_image_id: 261579
+  prompt_prose: Curling purple whisper trails now spill from the first rival's ear into the ears of the slimy rivals
+    beside it, who glance at each other suspiciously. Keep the same objects, characters and setting details, the
+    same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with
+    the scene painted edge to edge.
+- key: slime-evo-merc-whisper-network-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Whisper Network L2: Grapevine (seed 2)'
+  asset: slime-city/evolutions/merc-whisper-network@2
+  size: 832x1216
+  seed: 1111104
+  source_image_id: 261579
+  prompt_prose: Curling purple whisper trails now spill from the first rival's ear into the ears of the slimy rivals
+    beside it, who glance at each other suspiciously. Keep the same objects, characters and setting details, the
+    same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with
+    the scene painted edge to edge.
+- key: slime-evo-merc-whisper-network-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Whisper Network L3: Front Page (seed 1)'
+  asset: slime-city/evolutions/merc-whisper-network@3
+  size: 832x1216
+  seed: 1111105
+  source_image_id: 261579
+  prompt_prose: Purple whisper trails now loop through the whole rival crew and up into the rival boss's tower window,
+    where the boss drops a teacup in shock. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-merc-whisper-network-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Whisper Network L3: Front Page (seed 2)'
+  asset: slime-city/evolutions/merc-whisper-network@3
+  size: 832x1216
+  seed: 1111106
+  source_image_id: 261579
+  prompt_prose: Purple whisper trails now loop through the whole rival crew and up into the rival boss's tower window,
+    where the boss drops a teacup in shock. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.

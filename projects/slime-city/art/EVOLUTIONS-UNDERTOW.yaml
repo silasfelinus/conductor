@@ -1,0 +1,1440 @@
+# Slime City evolution art, Undertow (2026-11-08 PT; CLASH-EVOLUTION-PLAN.md section 4).
+# Silas: "We should have fresh art on the evolutions, not just frame effects" and "300 cards, all need custom
+# better evolutions." Each crafted card (utils/slimeCity/evolutions/*.ts in kind_robots) gets a level-2 and a
+# level-3 painting, and a choose-one card a painting for its option B ('@3b'): the same character or scene
+# transformed by its story arc. Flux Kontext edits the card's wired level-1 ArtImage (SLIME_CITY_ART.cards) so
+# face, outfit and style carry over; each prompt names only that stage's story change, written per card. Two
+# seeds per stage for curation. Keepers are wired as SLIME_CITY_ART.evolutions['<cardId>@2' | '@3' | '@3b'].
+# auto_submit: true.
+round: slime-city-evolutions-undertow
+project_slug: slime-city
+designer: Slime City evolution art, Undertow
+is_public: true
+is_mature: false
+cast_loras: false
+priority: 640
+auto_submit: true
+lanes:
+- key: kontext-evolution
+  label: Flux Kontext dev (fp8), evolved stages from each card's level-1 painting
+  engine: kontext
+  prompt: prose
+  steps: 20
+  guidance: 2.5
+subjects:
+- key: slime-evo-pipe-seer-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Pipe Seer L2: Reading the Flow (seed 1)'
+  asset: slime-city/evolutions/pipe-seer@2
+  size: 832x1216
+  seed: 1109001
+  source_image_id: 260649
+  prompt_prose: The seer now kneels with one ear pressed to a dripping drainpipe, eyes closed, and glowing ripples
+    of teal light spill out of the pipe mouth and curl around their head like whispered secrets. Keep the same character,
+    the same face, fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style
+    with bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-pipe-seer-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Pipe Seer L2: Reading the Flow (seed 2)'
+  asset: slime-city/evolutions/pipe-seer@2
+  size: 832x1216
+  seed: 1109002
+  source_image_id: 260649
+  prompt_prose: The seer now kneels with one ear pressed to a dripping drainpipe, eyes closed, and glowing ripples
+    of teal light spill out of the pipe mouth and curl around their head like whispered secrets. Keep the same character,
+    the same face, fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style
+    with bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-pipe-seer-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Pipe Seer L3: Oracle of the Drains (seed 1)'
+  asset: slime-city/evolutions/pipe-seer@3
+  size: 832x1216
+  seed: 1109003
+  source_image_id: 260649
+  prompt_prose: The seer now sits cross-legged on a throne of rusted pipes in a flooded cistern, hands open and
+    weapon set aside, while the dark water around them glows with drifting visions of tomorrow's street fights.
+    Keep the same character, the same face, fur, skin and markings, the same outfit details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-pipe-seer-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Pipe Seer L3: Oracle of the Drains (seed 2)'
+  asset: slime-city/evolutions/pipe-seer@3
+  size: 832x1216
+  seed: 1109004
+  source_image_id: 260649
+  prompt_prose: The seer now sits cross-legged on a throne of rusted pipes in a flooded cistern, hands open and
+    weapon set aside, while the dark water around them glows with drifting visions of tomorrow's street fights.
+    Keep the same character, the same face, fur, skin and markings, the same outfit details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-pipe-seer-l3b-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Pipe Seer L3b: Pressure Point (seed 1)'
+  asset: slime-city/evolutions/pipe-seer@3b
+  size: 832x1216
+  seed: 1109005
+  source_image_id: 260649
+  prompt_prose: The seer now lunges forward and drives a long thin pipe-spike into a single glowing crack in a hulking
+    armored shape, a burst of teal sparks spraying from the exact point of impact. Keep the same character, the
+    same face, fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style
+    with bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-pipe-seer-l3b-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Pipe Seer L3b: Pressure Point (seed 2)'
+  asset: slime-city/evolutions/pipe-seer@3b
+  size: 832x1216
+  seed: 1109006
+  source_image_id: 260649
+  prompt_prose: The seer now lunges forward and drives a long thin pipe-spike into a single glowing crack in a hulking
+    armored shape, a burst of teal sparks spraying from the exact point of impact. Keep the same character, the
+    same face, fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style
+    with bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-snitch-grate-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Snitch Grate L2: Tip-Off (seed 1)'
+  asset: slime-city/evolutions/snitch-grate@2
+  size: 832x1216
+  seed: 1109007
+  source_image_id: 260650
+  prompt_prose: The polished drain cover now has a pair of bright eyes peering up through its slats, and a gloved
+    hand pokes out of the grate passing a folded note to a waiting boot. Keep the same objects, characters and setting
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-snitch-grate-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Snitch Grate L2: Tip-Off (seed 2)'
+  asset: slime-city/evolutions/snitch-grate@2
+  size: 832x1216
+  seed: 1109008
+  source_image_id: 260650
+  prompt_prose: The polished drain cover now has a pair of bright eyes peering up through its slats, and a gloved
+    hand pokes out of the grate passing a folded note to a waiting boot. Keep the same objects, characters and setting
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-snitch-grate-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Snitch Grate L3: Snitch Network (seed 1)'
+  asset: slime-city/evolutions/snitch-grate@3
+  size: 832x1216
+  seed: 1109009
+  source_image_id: 260650
+  prompt_prose: Dozens of polished grates now shine down the whole wet street, eyes gleaming in each one, and a
+    long beam of teal light shoots from them to pin a huge armored brute at the far end of the alley. Keep the same
+    objects, characters and setting details, the same saturated neon comic gouache art style with bold black contours,
+    and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-snitch-grate-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Snitch Grate L3: Snitch Network (seed 2)'
+  asset: slime-city/evolutions/snitch-grate@3
+  size: 832x1216
+  seed: 1109010
+  source_image_id: 260650
+  prompt_prose: Dozens of polished grates now shine down the whole wet street, eyes gleaming in each one, and a
+    long beam of teal light shoots from them to pin a huge armored brute at the far end of the alley. Keep the same
+    objects, characters and setting details, the same saturated neon comic gouache art style with bold black contours,
+    and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s1-basement-ghost-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Basement Ghost L2: Vent Shot (seed 1)'
+  asset: slime-city/evolutions/s1-basement-ghost@2
+  size: 832x1216
+  seed: 1109011
+  source_image_id: 260677
+  prompt_prose: The ghostly sniper now leans half out of a frosted sewer vent, breath fogging in a cold spot, a
+    thin icy needle of light streaking from their rifle toward a small distant figure. Keep the same character,
+    the same face, fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style
+    with bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s1-basement-ghost-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Basement Ghost L2: Vent Shot (seed 2)'
+  asset: slime-city/evolutions/s1-basement-ghost@2
+  size: 832x1216
+  seed: 1109012
+  source_image_id: 260677
+  prompt_prose: The ghostly sniper now leans half out of a frosted sewer vent, breath fogging in a cold spot, a
+    thin icy needle of light streaking from their rifle toward a small distant figure. Keep the same character,
+    the same face, fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style
+    with bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s1-basement-ghost-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Basement Ghost L3: The Haunting (seed 1)'
+  asset: slime-city/evolutions/s1-basement-ghost@3
+  size: 832x1216
+  seed: 1109013
+  source_image_id: 260677
+  prompt_prose: The sniper's body now dissolves into a howling pale specter that fills the whole basement corridor,
+    and three rival silhouettes before it stand frozen mid-stride, coated in frost. Keep the same character, the
+    same face, fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style
+    with bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s1-basement-ghost-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Basement Ghost L3: The Haunting (seed 2)'
+  asset: slime-city/evolutions/s1-basement-ghost@3
+  size: 832x1216
+  seed: 1109014
+  source_image_id: 260677
+  prompt_prose: The sniper's body now dissolves into a howling pale specter that fills the whole basement corridor,
+    and three rival silhouettes before it stand frozen mid-stride, coated in frost. Keep the same character, the
+    same face, fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style
+    with bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s1-static-listener-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Static Listener L2: Quiet Alley (seed 1)'
+  asset: slime-city/evolutions/s1-static-listener@2
+  size: 832x1216
+  seed: 1109015
+  source_image_id: 260678
+  prompt_prose: The listener now perches alone atop a streetlight over an empty, rain-slick alley, headphones on
+    and a coil of wire running down the pole, faint green sound-waves drifting in from the city. Keep the same character,
+    the same face, fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style
+    with bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s1-static-listener-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Static Listener L2: Quiet Alley (seed 2)'
+  asset: slime-city/evolutions/s1-static-listener@2
+  size: 832x1216
+  seed: 1109016
+  source_image_id: 260678
+  prompt_prose: The listener now perches alone atop a streetlight over an empty, rain-slick alley, headphones on
+    and a coil of wire running down the pole, faint green sound-waves drifting in from the city. Keep the same character,
+    the same face, fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style
+    with bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s1-static-listener-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Static Listener L3: Static Storm (seed 1)'
+  asset: slime-city/evolutions/s1-static-listener@3
+  size: 832x1216
+  seed: 1109017
+  source_image_id: 260678
+  prompt_prose: The listener now stands on the streetlight with arms flung wide as crackling green static pours
+    out of every lamp on the block, the rival fighters below flinching and clutching their ears. Keep the same character,
+    the same face, fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style
+    with bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s1-static-listener-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Static Listener L3: Static Storm (seed 2)'
+  asset: slime-city/evolutions/s1-static-listener@3
+  size: 832x1216
+  seed: 1109018
+  source_image_id: 260678
+  prompt_prose: The listener now stands on the streetlight with arms flung wide as crackling green static pours
+    out of every lamp on the block, the rival fighters below flinching and clutching their ears. Keep the same character,
+    the same face, fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style
+    with bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s1-floodlight-sweep-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Floodlight Sweep L2: Blinding Glare (seed 1)'
+  asset: slime-city/evolutions/s1-floodlight-sweep@2
+  size: 832x1216
+  seed: 1109019
+  source_image_id: 262305
+  prompt_prose: The floodlight beam now swings straight into the face of a rival slime brawler, who throws an arm
+    over their eyes and staggers back in a blaze of white glare. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-s1-floodlight-sweep-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Floodlight Sweep L2: Blinding Glare (seed 2)'
+  asset: slime-city/evolutions/s1-floodlight-sweep@2
+  size: 832x1216
+  seed: 1109020
+  source_image_id: 262305
+  prompt_prose: The floodlight beam now swings straight into the face of a rival slime brawler, who throws an arm
+    over their eyes and staggers back in a blaze of white glare. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-s1-floodlight-sweep-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Floodlight Sweep L3: Spotlight the Crew (seed 1)'
+  asset: slime-city/evolutions/s1-floodlight-sweep@3
+  size: 832x1216
+  seed: 1109021
+  source_image_id: 262305
+  prompt_prose: A whole bank of floodlights now blazes across the alley, lighting rival targets in harsh white circles
+    while silhouettes of the Undertow crew charge forward through the beams. Keep the same objects, characters and
+    setting details, the same saturated neon comic gouache art style with bold black contours, and the same tall
+    portrait framing with the scene painted edge to edge.
+- key: slime-evo-s1-floodlight-sweep-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Floodlight Sweep L3: Spotlight the Crew (seed 2)'
+  asset: slime-city/evolutions/s1-floodlight-sweep@3
+  size: 832x1216
+  seed: 1109022
+  source_image_id: 262305
+  prompt_prose: A whole bank of floodlights now blazes across the alley, lighting rival targets in harsh white circles
+    while silhouettes of the Undertow crew charge forward through the beams. Keep the same objects, characters and
+    setting details, the same saturated neon comic gouache art style with bold black contours, and the same tall
+    portrait framing with the scene painted edge to edge.
+- key: slime-evo-s1-wiretap-order-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Wiretap Restraining Order L2: Transcript (seed 1)'
+  asset: slime-city/evolutions/s1-wiretap-order@2
+  size: 832x1216
+  seed: 1109023
+  source_image_id: 262306
+  prompt_prose: A reel-to-reel tape recorder now sits beside the restraining order on a damp desk, spools turning,
+    a long ribbon of tape spilling into the hands of a hooded adult agent. Keep the same objects, characters and
+    setting details, the same saturated neon comic gouache art style with bold black contours, and the same tall
+    portrait framing with the scene painted edge to edge.
+- key: slime-evo-s1-wiretap-order-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Wiretap Restraining Order L2: Transcript (seed 2)'
+  asset: slime-city/evolutions/s1-wiretap-order@2
+  size: 832x1216
+  seed: 1109024
+  source_image_id: 262306
+  prompt_prose: A reel-to-reel tape recorder now sits beside the restraining order on a damp desk, spools turning,
+    a long ribbon of tape spilling into the hands of a hooded adult agent. Keep the same objects, characters and
+    setting details, the same saturated neon comic gouache art style with bold black contours, and the same tall
+    portrait framing with the scene painted edge to edge.
+- key: slime-evo-s1-wiretap-order-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Wiretap Restraining Order L3: Big-Fish Warrant (seed 1)'
+  asset: slime-city/evolutions/s1-wiretap-order@3
+  size: 832x1216
+  seed: 1109025
+  source_image_id: 262306
+  prompt_prose: A giant blank warrant sheet now drops from above like a net over a huge two-headed sewer brute,
+    glowing chains of blue ink wrapping around its bulk and pinning it in place. Keep the same objects, characters
+    and setting details, the same saturated neon comic gouache art style with bold black contours, and the same
+    tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s1-wiretap-order-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Wiretap Restraining Order L3: Big-Fish Warrant (seed 2)'
+  asset: slime-city/evolutions/s1-wiretap-order@3
+  size: 832x1216
+  seed: 1109026
+  source_image_id: 262306
+  prompt_prose: A giant blank warrant sheet now drops from above like a net over a huge two-headed sewer brute,
+    glowing chains of blue ink wrapping around its bulk and pinning it in place. Keep the same objects, characters
+    and setting details, the same saturated neon comic gouache art style with bold black contours, and the same
+    tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s1-blue-ink-deadfall-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Blue-Ink Deadfall L2: Ink Cloud (seed 1)'
+  asset: slime-city/evolutions/s1-blue-ink-deadfall@2
+  size: 832x1216
+  seed: 1109027
+  source_image_id: 260681
+  prompt_prose: The sprung deadfall now bursts into a billowing cloud of deep blue ink that hangs in the air, and
+    the shapes of allied fighters crouch safely hidden inside the haze. Keep the same objects, characters and setting
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-s1-blue-ink-deadfall-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Blue-Ink Deadfall L2: Ink Cloud (seed 2)'
+  asset: slime-city/evolutions/s1-blue-ink-deadfall@2
+  size: 832x1216
+  seed: 1109028
+  source_image_id: 260681
+  prompt_prose: The sprung deadfall now bursts into a billowing cloud of deep blue ink that hangs in the air, and
+    the shapes of allied fighters crouch safely hidden inside the haze. Keep the same objects, characters and setting
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-s1-blue-ink-deadfall-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Blue-Ink Deadfall L3: Blackwater Bloom (seed 1)'
+  asset: slime-city/evolutions/s1-blue-ink-deadfall@3
+  size: 832x1216
+  seed: 1109029
+  source_image_id: 260681
+  prompt_prose: The blue ink now blooms through the entire flooded sewer like a vast underwater flower, glittering
+    stinging threads of it reaching every rival fighter wading through the channel. Keep the same objects, characters
+    and setting details, the same saturated neon comic gouache art style with bold black contours, and the same
+    tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s1-blue-ink-deadfall-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Blue-Ink Deadfall L3: Blackwater Bloom (seed 2)'
+  asset: slime-city/evolutions/s1-blue-ink-deadfall@3
+  size: 832x1216
+  seed: 1109030
+  source_image_id: 260681
+  prompt_prose: The blue ink now blooms through the entire flooded sewer like a vast underwater flower, glittering
+    stinging threads of it reaching every rival fighter wading through the channel. Keep the same objects, characters
+    and setting details, the same saturated neon comic gouache art style with bold black contours, and the same
+    tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s1-needle-wire-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Needle-Wire Antenna L2: Relay Spike (seed 1)'
+  asset: slime-city/evolutions/s1-needle-wire@2
+  size: 832x1216
+  seed: 1109031
+  source_image_id: 260682
+  prompt_prose: The needle-wire antenna is now jammed into a rooftop junction box, and a jagged bolt of green signal
+    leaps from its tip to lock a rival fighter rigid across the alley. Keep the same objects, characters and setting
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-s1-needle-wire-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Needle-Wire Antenna L2: Relay Spike (seed 2)'
+  asset: slime-city/evolutions/s1-needle-wire@2
+  size: 832x1216
+  seed: 1109032
+  source_image_id: 260682
+  prompt_prose: The needle-wire antenna is now jammed into a rooftop junction box, and a jagged bolt of green signal
+    leaps from its tip to lock a rival fighter rigid across the alley. Keep the same objects, characters and setting
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-s1-needle-wire-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Needle-Wire Antenna L3: Threaded Needle (seed 1)'
+  asset: slime-city/evolutions/s1-needle-wire@3
+  size: 832x1216
+  seed: 1109033
+  source_image_id: 260682
+  prompt_prose: A single glowing wire now threads straight through a row of armored rivals standing shoulder to
+    shoulder, sparks bursting at every seam it passes through. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-s1-needle-wire-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Needle-Wire Antenna L3: Threaded Needle (seed 2)'
+  asset: slime-city/evolutions/s1-needle-wire@3
+  size: 832x1216
+  seed: 1109034
+  source_image_id: 260682
+  prompt_prose: A single glowing wire now threads straight through a row of armored rivals standing shoulder to
+    shoulder, sparks bursting at every seam it passes through. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-s2-undertow-drainpipe-interrogator-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Drainpipe Interrogator L2: Good Cop (seed 1)'
+  asset: slime-city/evolutions/s2-undertow-drainpipe-interrogator@2
+  size: 832x1216
+  seed: 1109035
+  source_image_id: 264933
+  prompt_prose: The detective now leans casually against a dripping drainpipe offering a steaming paper cup to a
+    sullen rival suspect, who slumps tired and drowsy under the endless questions. Keep the same character, the
+    same face, fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style
+    with bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s2-undertow-drainpipe-interrogator-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Drainpipe Interrogator L2: Good Cop (seed 2)'
+  asset: slime-city/evolutions/s2-undertow-drainpipe-interrogator@2
+  size: 832x1216
+  seed: 1109036
+  source_image_id: 264933
+  prompt_prose: The detective now leans casually against a dripping drainpipe offering a steaming paper cup to a
+    sullen rival suspect, who slumps tired and drowsy under the endless questions. Keep the same character, the
+    same face, fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style
+    with bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s2-undertow-drainpipe-interrogator-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Drainpipe Interrogator L3: The Confession (seed 1)'
+  asset: slime-city/evolutions/s2-undertow-drainpipe-interrogator@3
+  size: 832x1216
+  seed: 1109037
+  source_image_id: 264933
+  prompt_prose: The detective now slams a fist on an interrogation table under a single swinging bulb, while a sweating
+    suspect points a trembling finger at a looming silhouette of the rival crew's biggest enforcer. Keep the same
+    character, the same face, fur, skin and markings, the same outfit details, the same saturated neon comic gouache
+    art style with bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s2-undertow-drainpipe-interrogator-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Drainpipe Interrogator L3: The Confession (seed 2)'
+  asset: slime-city/evolutions/s2-undertow-drainpipe-interrogator@3
+  size: 832x1216
+  seed: 1109038
+  source_image_id: 264933
+  prompt_prose: The detective now slams a fist on an interrogation table under a single swinging bulb, while a sweating
+    suspect points a trembling finger at a looming silhouette of the rival crew's biggest enforcer. Keep the same
+    character, the same face, fur, skin and markings, the same outfit details, the same saturated neon comic gouache
+    art style with bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s2-undertow-subsurface-warden-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Subsurface Warden L2: Night Shift (seed 1)'
+  asset: slime-city/evolutions/s2-undertow-subsurface-warden@2
+  size: 832x1216
+  seed: 1109039
+  source_image_id: 261438
+  prompt_prose: The warden now walks a dim tunnel with a swinging lantern, and soft translucent shields of teal
+    light glow over the sleeping allies in the alcoves on either side of him. Keep the same character, the same
+    face, fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style with
+    bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s2-undertow-subsurface-warden-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Subsurface Warden L2: Night Shift (seed 2)'
+  asset: slime-city/evolutions/s2-undertow-subsurface-warden@2
+  size: 832x1216
+  seed: 1109040
+  source_image_id: 261438
+  prompt_prose: The warden now walks a dim tunnel with a swinging lantern, and soft translucent shields of teal
+    light glow over the sleeping allies in the alcoves on either side of him. Keep the same character, the same
+    face, fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style with
+    bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s2-undertow-subsurface-warden-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Subsurface Warden L3: Jailer of the Deep (seed 1)'
+  asset: slime-city/evolutions/s2-undertow-subsurface-warden@3
+  size: 832x1216
+  seed: 1109041
+  source_image_id: 261438
+  prompt_prose: The warden now stands unarmed before a massive barred floodgate, turning a giant key ring, with
+    a furious rival fighter locked behind the bars across from him. Keep the same character, the same face, fur,
+    skin and markings, the same outfit details, the same saturated neon comic gouache art style with bold black
+    contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s2-undertow-subsurface-warden-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Subsurface Warden L3: Jailer of the Deep (seed 2)'
+  asset: slime-city/evolutions/s2-undertow-subsurface-warden@3
+  size: 832x1216
+  seed: 1109042
+  source_image_id: 261438
+  prompt_prose: The warden now stands unarmed before a massive barred floodgate, turning a giant key ring, with
+    a furious rival fighter locked behind the bars across from him. Keep the same character, the same face, fur,
+    skin and markings, the same outfit details, the same saturated neon comic gouache art style with bold black
+    contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s2-undertow-floodlight-leak-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Floodlight Leak L2: Wrong Desk (seed 1)'
+  asset: slime-city/evolutions/s2-undertow-floodlight-leak@2
+  size: 832x1216
+  seed: 1109043
+  source_image_id: 261439
+  prompt_prose: The surveillance ledger now lies open on a gaudy rival boss's gilded desk in an empty office, a
+    floodlight beam spilling through the window across its blank pages. Keep the same objects, characters and setting
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-s2-undertow-floodlight-leak-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Floodlight Leak L2: Wrong Desk (seed 2)'
+  asset: slime-city/evolutions/s2-undertow-floodlight-leak@2
+  size: 832x1216
+  seed: 1109044
+  source_image_id: 261439
+  prompt_prose: The surveillance ledger now lies open on a gaudy rival boss's gilded desk in an empty office, a
+    floodlight beam spilling through the window across its blank pages. Keep the same objects, characters and setting
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-s2-undertow-floodlight-leak-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Floodlight Leak L3: Whistleblower (seed 1)'
+  asset: slime-city/evolutions/s2-undertow-floodlight-leak@3
+  size: 832x1216
+  seed: 1109045
+  source_image_id: 261439
+  prompt_prose: Thousands of blank ledger pages now rain down over the city from a rooftop where a lone adult figure
+    in a trench coat stands with arms raised, a single wilted flower left on the ledge beside them. Keep the same
+    objects, characters and setting details, the same saturated neon comic gouache art style with bold black contours,
+    and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s2-undertow-floodlight-leak-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Floodlight Leak L3: Whistleblower (seed 2)'
+  asset: slime-city/evolutions/s2-undertow-floodlight-leak@3
+  size: 832x1216
+  seed: 1109046
+  source_image_id: 261439
+  prompt_prose: Thousands of blank ledger pages now rain down over the city from a rooftop where a lone adult figure
+    in a trench coat stands with arms raised, a single wilted flower left on the ledge beside them. Keep the same
+    objects, characters and setting details, the same saturated neon comic gouache art style with bold black contours,
+    and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s2-undertow-backwater-iou-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Backwater IOU L2: Paper Trail (seed 1)'
+  asset: slime-city/evolutions/s2-undertow-backwater-iou@2
+  size: 832x1216
+  seed: 1109047
+  source_image_id: 261440
+  prompt_prose: The underwater receipt now trails a long glowing chain of blank paper slips that drifts through
+    the murky canal toward a hooded agent's waiting hand. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-s2-undertow-backwater-iou-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Backwater IOU L2: Paper Trail (seed 2)'
+  asset: slime-city/evolutions/s2-undertow-backwater-iou@2
+  size: 832x1216
+  seed: 1109048
+  source_image_id: 261440
+  prompt_prose: The underwater receipt now trails a long glowing chain of blank paper slips that drifts through
+    the murky canal toward a hooded agent's waiting hand. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-s2-undertow-backwater-iou-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Backwater IOU L3: Co-Signers (seed 1)'
+  asset: slime-city/evolutions/s2-undertow-backwater-iou@3
+  size: 832x1216
+  seed: 1109049
+  source_image_id: 261440
+  prompt_prose: Glowing paper chains now stretch from the soaked receipt to two more rival fighters on either side,
+    all three yanked together into the green backwater by the same tide. Keep the same objects, characters and setting
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-s2-undertow-backwater-iou-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Backwater IOU L3: Co-Signers (seed 2)'
+  asset: slime-city/evolutions/s2-undertow-backwater-iou@3
+  size: 832x1216
+  seed: 1109050
+  source_image_id: 261440
+  prompt_prose: Glowing paper chains now stretch from the soaked receipt to two more rival fighters on either side,
+    all three yanked together into the green backwater by the same tide. Keep the same objects, characters and setting
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-s2-undertow-culvert-tollwire-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Culvert Tollwire L2: Toll Collected (seed 1)'
+  asset: slime-city/evolutions/s2-undertow-culvert-tollwire@2
+  size: 832x1216
+  seed: 1109051
+  source_image_id: 261441
+  prompt_prose: The tollwire now snaps tight across the culvert, and a small stream of glinting coins tumbles from
+    a caught rival's pockets into a rusty bucket bolted to the wall. Keep the same objects, characters and setting
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-s2-undertow-culvert-tollwire-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Culvert Tollwire L2: Toll Collected (seed 2)'
+  asset: slime-city/evolutions/s2-undertow-culvert-tollwire@2
+  size: 832x1216
+  seed: 1109052
+  source_image_id: 261441
+  prompt_prose: The tollwire now snaps tight across the culvert, and a small stream of glinting coins tumbles from
+    a caught rival's pockets into a rusty bucket bolted to the wall. Keep the same objects, characters and setting
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-s2-undertow-culvert-tollwire-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Culvert Tollwire L3: Toll Plaza (seed 1)'
+  asset: slime-city/evolutions/s2-undertow-culvert-tollwire@3
+  size: 832x1216
+  seed: 1109053
+  source_image_id: 261441
+  prompt_prose: The culvert now houses a ramshackle toll booth with a striped barrier arm and a second gleaming
+    wire already re-strung behind the first, a bucket overflowing with coins. Keep the same objects, characters
+    and setting details, the same saturated neon comic gouache art style with bold black contours, and the same
+    tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s2-undertow-culvert-tollwire-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Culvert Tollwire L3: Toll Plaza (seed 2)'
+  asset: slime-city/evolutions/s2-undertow-culvert-tollwire@3
+  size: 832x1216
+  seed: 1109054
+  source_image_id: 261441
+  prompt_prose: The culvert now houses a ramshackle toll booth with a striped barrier arm and a second gleaming
+    wire already re-strung behind the first, a bucket overflowing with coins. Keep the same objects, characters
+    and setting details, the same saturated neon comic gouache art style with bold black contours, and the same
+    tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s2-undertow-wiretap-spikes-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Wiretap Spikes L2: Live Feed (seed 1)'
+  asset: slime-city/evolutions/s2-undertow-wiretap-spikes@2
+  size: 832x1216
+  seed: 1109055
+  source_image_id: 264944
+  prompt_prose: The wiretap spikes now trail thin cables to a crackling radio set in a damp hideout, where a hooded
+    adult agent leans in with headphones, listening hard. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-s2-undertow-wiretap-spikes-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Wiretap Spikes L2: Live Feed (seed 2)'
+  asset: slime-city/evolutions/s2-undertow-wiretap-spikes@2
+  size: 832x1216
+  seed: 1109056
+  source_image_id: 264944
+  prompt_prose: The wiretap spikes now trail thin cables to a crackling radio set in a damp hideout, where a hooded
+    adult agent leans in with headphones, listening hard. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-s2-undertow-wiretap-spikes-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Wiretap Spikes L3: Party Line (seed 1)'
+  asset: slime-city/evolutions/s2-undertow-wiretap-spikes@3
+  size: 832x1216
+  seed: 1109057
+  source_image_id: 264944
+  prompt_prose: Glowing cables now branch out from the spiked claws to the gauntlets of every fighter standing beside
+    the wearer, each set of knuckles bristling with tiny listening spikes. Keep the same objects, characters and
+    setting details, the same saturated neon comic gouache art style with bold black contours, and the same tall
+    portrait framing with the scene painted edge to edge.
+- key: slime-evo-s2-undertow-wiretap-spikes-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Wiretap Spikes L3: Party Line (seed 2)'
+  asset: slime-city/evolutions/s2-undertow-wiretap-spikes@3
+  size: 832x1216
+  seed: 1109058
+  source_image_id: 264944
+  prompt_prose: Glowing cables now branch out from the spiked claws to the gauntlets of every fighter standing beside
+    the wearer, each set of knuckles bristling with tiny listening spikes. Keep the same objects, characters and
+    setting details, the same saturated neon comic gouache art style with bold black contours, and the same tall
+    portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-undertow-drain-sniper-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Drainpipe Sniper L2: Lone Perch (seed 1)'
+  asset: slime-city/evolutions/s3-undertow-drain-sniper@2
+  size: 832x1216
+  seed: 1109059
+  source_image_id: 264938
+  prompt_prose: The sniper now lies alone on a high rusted catwalk above the drain, no allies in sight, cheek pressed
+    to the rifle stock as rain beads on the scope. Keep the same character, the same face, fur, skin and markings,
+    the same outfit details, the same saturated neon comic gouache art style with bold black contours, and the same
+    tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-undertow-drain-sniper-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Drainpipe Sniper L2: Lone Perch (seed 2)'
+  asset: slime-city/evolutions/s3-undertow-drain-sniper@2
+  size: 832x1216
+  seed: 1109060
+  source_image_id: 264938
+  prompt_prose: The sniper now lies alone on a high rusted catwalk above the drain, no allies in sight, cheek pressed
+    to the rifle stock as rain beads on the scope. Keep the same character, the same face, fur, skin and markings,
+    the same outfit details, the same saturated neon comic gouache art style with bold black contours, and the same
+    tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-undertow-drain-sniper-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Drainpipe Sniper L3: Overwatch (seed 1)'
+  asset: slime-city/evolutions/s3-undertow-drain-sniper@3
+  size: 832x1216
+  seed: 1109061
+  source_image_id: 264938
+  prompt_prose: The sniper now sits in a fortified nest at the top of a towering pipe stack at dawn, rifle braced
+    on sandbags, a bright tracer streaking down toward the largest rival brute far below. Keep the same character,
+    the same face, fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style
+    with bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-undertow-drain-sniper-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Drainpipe Sniper L3: Overwatch (seed 2)'
+  asset: slime-city/evolutions/s3-undertow-drain-sniper@3
+  size: 832x1216
+  seed: 1109062
+  source_image_id: 264938
+  prompt_prose: The sniper now sits in a fortified nest at the top of a towering pipe stack at dawn, rifle braced
+    on sandbags, a bright tracer streaking down toward the largest rival brute far below. Keep the same character,
+    the same face, fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style
+    with bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-undertow-interrogation-eel-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Interrogation Eel L2: Live Wire (seed 1)'
+  asset: slime-city/evolutions/s3-undertow-interrogation-eel@2
+  size: 832x1216
+  seed: 1109063
+  source_image_id: 264948
+  prompt_prose: The eel now coils with crackling blue electricity arcing from its body to two rival fighters standing
+    on either side of its prey in the shallow water. Keep the same character, the same face, fur, skin and markings,
+    the same outfit details, the same saturated neon comic gouache art style with bold black contours, and the same
+    tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-undertow-interrogation-eel-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Interrogation Eel L2: Live Wire (seed 2)'
+  asset: slime-city/evolutions/s3-undertow-interrogation-eel@2
+  size: 832x1216
+  seed: 1109064
+  source_image_id: 264948
+  prompt_prose: The eel now coils with crackling blue electricity arcing from its body to two rival fighters standing
+    on either side of its prey in the shallow water. Keep the same character, the same face, fur, skin and markings,
+    the same outfit details, the same saturated neon comic gouache art style with bold black contours, and the same
+    tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-undertow-interrogation-eel-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Interrogation Eel L3: Shock Net (seed 1)'
+  asset: slime-city/evolutions/s3-undertow-interrogation-eel@3
+  size: 832x1216
+  seed: 1109065
+  source_image_id: 264948
+  prompt_prose: The eel, now noticeably smaller and thinner, releases one enormous blinding web of lightning across
+    the entire flooded street, every rival fighter in the water lit up and jolted. Keep the same character, the
+    same face, fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style
+    with bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-undertow-interrogation-eel-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Interrogation Eel L3: Shock Net (seed 2)'
+  asset: slime-city/evolutions/s3-undertow-interrogation-eel@3
+  size: 832x1216
+  seed: 1109066
+  source_image_id: 264948
+  prompt_prose: The eel, now noticeably smaller and thinner, releases one enormous blinding web of lightning across
+    the entire flooded street, every rival fighter in the water lit up and jolted. Keep the same character, the
+    same face, fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style
+    with bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-undertow-needle-rain-agent-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Needle Rain Agent L2: Cloudburst (seed 1)'
+  asset: slime-city/evolutions/s3-undertow-needle-rain-agent@2
+  size: 832x1216
+  seed: 1109067
+  source_image_id: 261516
+  prompt_prose: The agent now raises an umbrella-like launcher overhead as a sudden cloudburst of glinting silver
+    needles pours down on three rival fighters in the street ahead. Keep the same character, the same face, fur,
+    skin and markings, the same outfit details, the same saturated neon comic gouache art style with bold black
+    contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-undertow-needle-rain-agent-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Needle Rain Agent L2: Cloudburst (seed 2)'
+  asset: slime-city/evolutions/s3-undertow-needle-rain-agent@2
+  size: 832x1216
+  seed: 1109068
+  source_image_id: 261516
+  prompt_prose: The agent now raises an umbrella-like launcher overhead as a sudden cloudburst of glinting silver
+    needles pours down on three rival fighters in the street ahead. Keep the same character, the same face, fur,
+    skin and markings, the same outfit details, the same saturated neon comic gouache art style with bold black
+    contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-undertow-needle-rain-agent-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Needle Rain Agent L3: Needle Monsoon (seed 1)'
+  asset: slime-city/evolutions/s3-undertow-needle-rain-agent@3
+  size: 832x1216
+  seed: 1109069
+  source_image_id: 261516
+  prompt_prose: A roaring monsoon of silver needles now swirls around the agent like a storm, pinning the rival
+    fighters on either side of their target to the wet walls by their sleeves. Keep the same character, the same
+    face, fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style with
+    bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-undertow-needle-rain-agent-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Needle Rain Agent L3: Needle Monsoon (seed 2)'
+  asset: slime-city/evolutions/s3-undertow-needle-rain-agent@3
+  size: 832x1216
+  seed: 1109070
+  source_image_id: 261516
+  prompt_prose: A roaring monsoon of silver needles now swirls around the agent like a storm, pinning the rival
+    fighters on either side of their target to the wet walls by their sleeves. Keep the same character, the same
+    face, fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style with
+    bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-undertow-basement-watchdog-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Basement Watchdog L2: Alarm Bark (seed 1)'
+  asset: slime-city/evolutions/s3-undertow-basement-watchdog@2
+  size: 832x1216
+  seed: 1109071
+  source_image_id: 261517
+  prompt_prose: The watchdog now plants its paws at the basement stairs, mid-bark with a visible blast of sound
+    rings, and the rival intruder at the top freezes in place. Keep the same character, the same face, fur, skin
+    and markings, the same outfit details, the same saturated neon comic gouache art style with bold black contours,
+    and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-undertow-basement-watchdog-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Basement Watchdog L2: Alarm Bark (seed 2)'
+  asset: slime-city/evolutions/s3-undertow-basement-watchdog@2
+  size: 832x1216
+  seed: 1109072
+  source_image_id: 261517
+  prompt_prose: The watchdog now plants its paws at the basement stairs, mid-bark with a visible blast of sound
+    rings, and the rival intruder at the top freezes in place. Keep the same character, the same face, fur, skin
+    and markings, the same outfit details, the same saturated neon comic gouache art style with bold black contours,
+    and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-undertow-basement-watchdog-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Basement Watchdog L3: Off the Leash (seed 1)'
+  asset: slime-city/evolutions/s3-undertow-basement-watchdog@3
+  size: 832x1216
+  seed: 1109073
+  source_image_id: 261517
+  prompt_prose: The watchdog now bursts free with a snapped chain trailing behind it, leaping across the basement
+    straight at the smallest, scrawniest rival trespasser. Keep the same character, the same face, fur, skin and
+    markings, the same outfit details, the same saturated neon comic gouache art style with bold black contours,
+    and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-undertow-basement-watchdog-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Basement Watchdog L3: Off the Leash (seed 2)'
+  asset: slime-city/evolutions/s3-undertow-basement-watchdog@3
+  size: 832x1216
+  seed: 1109074
+  source_image_id: 261517
+  prompt_prose: The watchdog now bursts free with a snapped chain trailing behind it, leaping across the basement
+    straight at the smallest, scrawniest rival trespasser. Keep the same character, the same face, fur, skin and
+    markings, the same outfit details, the same saturated neon comic gouache art style with bold black contours,
+    and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-undertow-sewer-leviathan-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Sewer Leviathan L2: Undertow Pull (seed 1)'
+  asset: slime-city/evolutions/s3-undertow-sewer-leviathan@2
+  size: 832x1216
+  seed: 1109075
+  source_image_id: 261518
+  prompt_prose: The leviathan now drags a struggling rival fighter down by the ankle into a swirling whirlpool in
+    the sewer channel, only the rival's flailing arms above the foam. Keep the same character, the same face, fur,
+    skin and markings, the same outfit details, the same saturated neon comic gouache art style with bold black
+    contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-undertow-sewer-leviathan-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Sewer Leviathan L2: Undertow Pull (seed 2)'
+  asset: slime-city/evolutions/s3-undertow-sewer-leviathan@2
+  size: 832x1216
+  seed: 1109076
+  source_image_id: 261518
+  prompt_prose: The leviathan now drags a struggling rival fighter down by the ankle into a swirling whirlpool in
+    the sewer channel, only the rival's flailing arms above the foam. Keep the same character, the same face, fur,
+    skin and markings, the same outfit details, the same saturated neon comic gouache art style with bold black
+    contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-undertow-sewer-leviathan-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Sewer Leviathan L3: Tidal Surge (seed 1)'
+  asset: slime-city/evolutions/s3-undertow-sewer-leviathan@3
+  size: 832x1216
+  seed: 1109077
+  source_image_id: 261518
+  prompt_prose: The leviathan now erupts upward out of the sewer in a towering wave of green water that crashes
+    over a whole row of rival fighters on the walkway. Keep the same character, the same face, fur, skin and markings,
+    the same outfit details, the same saturated neon comic gouache art style with bold black contours, and the same
+    tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-undertow-sewer-leviathan-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Sewer Leviathan L3: Tidal Surge (seed 2)'
+  asset: slime-city/evolutions/s3-undertow-sewer-leviathan@3
+  size: 832x1216
+  seed: 1109078
+  source_image_id: 261518
+  prompt_prose: The leviathan now erupts upward out of the sewer in a towering wave of green water that crashes
+    over a whole row of rival fighters on the walkway. Keep the same character, the same face, fur, skin and markings,
+    the same outfit details, the same saturated neon comic gouache art style with bold black contours, and the same
+    tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-undertow-sewer-leviathan-l3b-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Sewer Leviathan L3b: Deep Dweller (seed 1)'
+  asset: slime-city/evolutions/s3-undertow-sewer-leviathan@3b
+  size: 832x1216
+  seed: 1109079
+  source_image_id: 261518
+  prompt_prose: The leviathan now rests coiled at the bottom of a deep flooded cistern, its armored hide glowing
+    with layered plates of teal light, calm eyes watching the surface far above. Keep the same character, the same
+    face, fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style with
+    bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-undertow-sewer-leviathan-l3b-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Sewer Leviathan L3b: Deep Dweller (seed 2)'
+  asset: slime-city/evolutions/s3-undertow-sewer-leviathan@3b
+  size: 832x1216
+  seed: 1109080
+  source_image_id: 261518
+  prompt_prose: The leviathan now rests coiled at the bottom of a deep flooded cistern, its armored hide glowing
+    with layered plates of teal light, calm eyes watching the surface far above. Keep the same character, the same
+    face, fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style with
+    bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-undertow-weep-holes-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Weep Holes in the Wall L2: Seepage (seed 1)'
+  asset: slime-city/evolutions/s3-undertow-weep-holes@2
+  size: 832x1216
+  seed: 1109081
+  source_image_id: 261519
+  prompt_prose: Thin jets of murky water now spray out of the weep holes across the alley, splashing three rival
+    fighters who flinch from the stinging spray. Keep the same objects, characters and setting details, the same
+    saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with the
+    scene painted edge to edge.
+- key: slime-evo-s3-undertow-weep-holes-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Weep Holes in the Wall L2: Seepage (seed 2)'
+  asset: slime-city/evolutions/s3-undertow-weep-holes@2
+  size: 832x1216
+  seed: 1109082
+  source_image_id: 261519
+  prompt_prose: Thin jets of murky water now spray out of the weep holes across the alley, splashing three rival
+    fighters who flinch from the stinging spray. Keep the same objects, characters and setting details, the same
+    saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with the
+    scene painted edge to edge.
+- key: slime-evo-s3-undertow-weep-holes-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Weep Holes in the Wall L3: The Wall Weeps Open (seed 1)'
+  asset: slime-city/evolutions/s3-undertow-weep-holes@3
+  size: 832x1216
+  seed: 1109083
+  source_image_id: 261519
+  prompt_prose: The whole brick wall now bursts outward in a torrent of floodwater, sweeping the rival fighters
+    off their feet and leaving them dazed and stuck in the swirling mud. Keep the same objects, characters and setting
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-s3-undertow-weep-holes-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Weep Holes in the Wall L3: The Wall Weeps Open (seed 2)'
+  asset: slime-city/evolutions/s3-undertow-weep-holes@3
+  size: 832x1216
+  seed: 1109084
+  source_image_id: 261519
+  prompt_prose: The whole brick wall now bursts outward in a torrent of floodwater, sweeping the rival fighters
+    off their feet and leaving them dazed and stuck in the swirling mud. Keep the same objects, characters and setting
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-s3-undertow-reveal-the-ledger-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Reveal the Ledger L2: Convoy Cleared (seed 1)'
+  asset: slime-city/evolutions/s3-undertow-reveal-the-ledger@2
+  size: 832x1216
+  seed: 1109085
+  source_image_id: 261521
+  prompt_prose: A convoy of battered Undertow vans now rolls safely down the swept route, headlights on, while the
+    listening post's dish turns to watch over them. Keep the same objects, characters and setting details, the same
+    saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with the
+    scene painted edge to edge.
+- key: slime-evo-s3-undertow-reveal-the-ledger-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Reveal the Ledger L2: Convoy Cleared (seed 2)'
+  asset: slime-city/evolutions/s3-undertow-reveal-the-ledger@2
+  size: 832x1216
+  seed: 1109086
+  source_image_id: 261521
+  prompt_prose: A convoy of battered Undertow vans now rolls safely down the swept route, headlights on, while the
+    listening post's dish turns to watch over them. Keep the same objects, characters and setting details, the same
+    saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with the
+    scene painted edge to edge.
+- key: slime-evo-s3-undertow-reveal-the-ledger-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Reveal the Ledger L3: Hit List (seed 1)'
+  asset: slime-city/evolutions/s3-undertow-reveal-the-ledger@3
+  size: 832x1216
+  seed: 1109087
+  source_image_id: 261521
+  prompt_prose: The ledger now lies open on a crate under a hanging bulb, a single red pin stuck through one photograph
+    on the open page, and a sniper's scope gleams in the window behind it. Keep the same objects, characters and
+    setting details, the same saturated neon comic gouache art style with bold black contours, and the same tall
+    portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-undertow-reveal-the-ledger-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Reveal the Ledger L3: Hit List (seed 2)'
+  asset: slime-city/evolutions/s3-undertow-reveal-the-ledger@3
+  size: 832x1216
+  seed: 1109088
+  source_image_id: 261521
+  prompt_prose: The ledger now lies open on a crate under a hanging bulb, a single red pin stuck through one photograph
+    on the open page, and a sniper's scope gleams in the window behind it. Keep the same objects, characters and
+    setting details, the same saturated neon comic gouache art style with bold black contours, and the same tall
+    portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-undertow-reveal-the-ledger-l3b-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Reveal the Ledger L3b: Cook the Books (seed 1)'
+  asset: slime-city/evolutions/s3-undertow-reveal-the-ledger@3b
+  size: 832x1216
+  seed: 1109089
+  source_image_id: 261521
+  prompt_prose: The ledger now sits in a cozy back office where a calm adult bookkeeper in sleeve garters quietly
+    swaps its pages, a neat stack of coins and a steaming kettle at their elbow. Keep the same objects, characters
+    and setting details, the same saturated neon comic gouache art style with bold black contours, and the same
+    tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-undertow-reveal-the-ledger-l3b-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Reveal the Ledger L3b: Cook the Books (seed 2)'
+  asset: slime-city/evolutions/s3-undertow-reveal-the-ledger@3b
+  size: 832x1216
+  seed: 1109090
+  source_image_id: 261521
+  prompt_prose: The ledger now sits in a cozy back office where a calm adult bookkeeper in sleeve garters quietly
+    swaps its pages, a neat stack of coins and a steaming kettle at their elbow. Keep the same objects, characters
+    and setting details, the same saturated neon comic gouache art style with bold black contours, and the same
+    tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-undertow-quiet-interdiction-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Quiet Interdiction L2: Piercing Warrant (seed 1)'
+  asset: slime-city/evolutions/s3-undertow-quiet-interdiction@2
+  size: 832x1216
+  seed: 1109091
+  source_image_id: 261522
+  prompt_prose: A hooded agent now leans close to whisper to an allied fighter, whose gauntlet glows with a sharpened
+    teal spike. Keep the same objects, characters and setting details, the same saturated neon comic gouache art
+    style with bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-undertow-quiet-interdiction-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Quiet Interdiction L2: Piercing Warrant (seed 2)'
+  asset: slime-city/evolutions/s3-undertow-quiet-interdiction@2
+  size: 832x1216
+  seed: 1109092
+  source_image_id: 261522
+  prompt_prose: A hooded agent now leans close to whisper to an allied fighter, whose gauntlet glows with a sharpened
+    teal spike. Keep the same objects, characters and setting details, the same saturated neon comic gouache art
+    style with bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-undertow-quiet-interdiction-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Quiet Interdiction L3: Interdiction (seed 1)'
+  asset: slime-city/evolutions/s3-undertow-quiet-interdiction@3
+  size: 832x1216
+  seed: 1109093
+  source_image_id: 261522
+  prompt_prose: A ring of glowing teal barrier tape now snaps around the rival fighter across the alley, holding
+    them rigid mid-step while the allied fighter stands ready. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-s3-undertow-quiet-interdiction-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Quiet Interdiction L3: Interdiction (seed 2)'
+  asset: slime-city/evolutions/s3-undertow-quiet-interdiction@3
+  size: 832x1216
+  seed: 1109094
+  source_image_id: 261522
+  prompt_prose: A ring of glowing teal barrier tape now snaps around the rival fighter across the alley, holding
+    them rigid mid-step while the allied fighter stands ready. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-s3-undertow-citywide-blackmail-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Citywide Blackmail L2: Hush Money (seed 1)'
+  asset: slime-city/evolutions/s3-undertow-citywide-blackmail@2
+  size: 832x1216
+  seed: 1109095
+  source_image_id: 261523
+  prompt_prose: A fat envelope stuffed with coins now slides across a wet table toward a grinning Undertow boss,
+    while a nervous rival hand lets go of it. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s3-undertow-citywide-blackmail-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Citywide Blackmail L2: Hush Money (seed 2)'
+  asset: slime-city/evolutions/s3-undertow-citywide-blackmail@2
+  size: 832x1216
+  seed: 1109096
+  source_image_id: 261523
+  prompt_prose: A fat envelope stuffed with coins now slides across a wet table toward a grinning Undertow boss,
+    while a nervous rival hand lets go of it. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s3-undertow-citywide-blackmail-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Citywide Blackmail L3: Everyone Has a File (seed 1)'
+  asset: slime-city/evolutions/s3-undertow-citywide-blackmail@3
+  size: 832x1216
+  seed: 1109097
+  source_image_id: 261523
+  prompt_prose: Sealed envelopes now flutter down onto every rooftop and street of the night city, and fighters
+    on both sides stand frozen in place, each clutching an envelope of their own. Keep the same objects, characters
+    and setting details, the same saturated neon comic gouache art style with bold black contours, and the same
+    tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-undertow-citywide-blackmail-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Citywide Blackmail L3: Everyone Has a File (seed 2)'
+  asset: slime-city/evolutions/s3-undertow-citywide-blackmail@3
+  size: 832x1216
+  seed: 1109098
+  source_image_id: 261523
+  prompt_prose: Sealed envelopes now flutter down onto every rooftop and street of the night city, and fighters
+    on both sides stand frozen in place, each clutching an envelope of their own. Keep the same objects, characters
+    and setting details, the same saturated neon comic gouache art style with bold black contours, and the same
+    tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-undertow-red-tape-sensor-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Red-Tape Sensor L2: Sensor Relay (seed 1)'
+  asset: slime-city/evolutions/s3-undertow-red-tape-sensor@2
+  size: 832x1216
+  seed: 1109099
+  source_image_id: 261524
+  prompt_prose: The sprung sensor now flashes red, and crackling relay wires carry jolts of red light into the rival
+    fighters standing on either side of the trespasser. Keep the same objects, characters and setting details, the
+    same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with
+    the scene painted edge to edge.
+- key: slime-evo-s3-undertow-red-tape-sensor-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Red-Tape Sensor L2: Sensor Relay (seed 2)'
+  asset: slime-city/evolutions/s3-undertow-red-tape-sensor@2
+  size: 832x1216
+  seed: 1109100
+  source_image_id: 261524
+  prompt_prose: The sprung sensor now flashes red, and crackling relay wires carry jolts of red light into the rival
+    fighters standing on either side of the trespasser. Keep the same objects, characters and setting details, the
+    same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with
+    the scene painted edge to edge.
+- key: slime-evo-s3-undertow-red-tape-sensor-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Red-Tape Sensor L3: Pending Review (seed 1)'
+  asset: slime-city/evolutions/s3-undertow-red-tape-sensor@3
+  size: 832x1216
+  seed: 1109101
+  source_image_id: 261524
+  prompt_prose: Endless coils of red tape now spool out from the sensor and bind the trespasser's neighbors in place,
+    all of them stuck waiting in a dim hallway lined with closed doors. Keep the same objects, characters and setting
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-s3-undertow-red-tape-sensor-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Red-Tape Sensor L3: Pending Review (seed 2)'
+  asset: slime-city/evolutions/s3-undertow-red-tape-sensor@3
+  size: 832x1216
+  seed: 1109102
+  source_image_id: 261524
+  prompt_prose: Endless coils of red tape now spool out from the sensor and bind the trespasser's neighbors in place,
+    all of them stuck waiting in a dim hallway lined with closed doors. Keep the same objects, characters and setting
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-s3-undertow-floodgate-clamp-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Floodgate Clamp L2: Clamp Down (seed 1)'
+  asset: slime-city/evolutions/s3-undertow-floodgate-clamp@2
+  size: 832x1216
+  seed: 1109103
+  source_image_id: 261525
+  prompt_prose: The clamp now bites down hard on the leg of a hulking heavy rival, its giant steel jaws straining
+    and steam hissing from the hinge. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s3-undertow-floodgate-clamp-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Floodgate Clamp L2: Clamp Down (seed 2)'
+  asset: slime-city/evolutions/s3-undertow-floodgate-clamp@2
+  size: 832x1216
+  seed: 1109104
+  source_image_id: 261525
+  prompt_prose: The clamp now bites down hard on the leg of a hulking heavy rival, its giant steel jaws straining
+    and steam hissing from the hinge. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s3-undertow-floodgate-clamp-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Floodgate Clamp L3: Floodgates Open (seed 1)'
+  asset: slime-city/evolutions/s3-undertow-floodgate-clamp@3
+  size: 832x1216
+  seed: 1109105
+  source_image_id: 261525
+  prompt_prose: The floodgate above the clamp now bursts wide open, and a roaring wall of water crashes across the
+    whole crossing, knocking a row of rival fighters into the current. Keep the same objects, characters and setting
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-s3-undertow-floodgate-clamp-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Floodgate Clamp L3: Floodgates Open (seed 2)'
+  asset: slime-city/evolutions/s3-undertow-floodgate-clamp@3
+  size: 832x1216
+  seed: 1109106
+  source_image_id: 261525
+  prompt_prose: The floodgate above the clamp now bursts wide open, and a roaring wall of water crashes across the
+    whole crossing, knocking a row of rival fighters into the current. Keep the same objects, characters and setting
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-s3-undertow-anonymous-invoice-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Anonymous Invoice L2: Late Fee (seed 1)'
+  asset: slime-city/evolutions/s3-undertow-anonymous-invoice@2
+  size: 832x1216
+  seed: 1109107
+  source_image_id: 261526
+  prompt_prose: The invisible invoice now shimmers into view as a giant blank sheet wrapped around a rival runner's
+    legs, stopping them cold mid-stride on the wet pavement. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-s3-undertow-anonymous-invoice-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Anonymous Invoice L2: Late Fee (seed 2)'
+  asset: slime-city/evolutions/s3-undertow-anonymous-invoice@2
+  size: 832x1216
+  seed: 1109108
+  source_image_id: 261526
+  prompt_prose: The invisible invoice now shimmers into view as a giant blank sheet wrapped around a rival runner's
+    legs, stopping them cold mid-stride on the wet pavement. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-s3-undertow-anonymous-invoice-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Anonymous Invoice L3: Billed to the Boss (seed 1)'
+  asset: slime-city/evolutions/s3-undertow-anonymous-invoice@3
+  size: 832x1216
+  seed: 1109109
+  source_image_id: 261526
+  prompt_prose: The invoice now flies through the rain like a paper airplane straight into a gaudy rival boss's
+    penthouse window, landing on their desk as they recoil in shock. Keep the same objects, characters and setting
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-s3-undertow-anonymous-invoice-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Anonymous Invoice L3: Billed to the Boss (seed 2)'
+  asset: slime-city/evolutions/s3-undertow-anonymous-invoice@3
+  size: 832x1216
+  seed: 1109110
+  source_image_id: 261526
+  prompt_prose: The invoice now flies through the rain like a paper airplane straight into a gaudy rival boss's
+    penthouse window, landing on their desk as they recoil in shock. Keep the same objects, characters and setting
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-s3-undertow-periscope-lens-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Periscope Lens L2: Spotter (seed 1)'
+  asset: slime-city/evolutions/s3-undertow-periscope-lens@2
+  size: 832x1216
+  seed: 1109111
+  source_image_id: 261527
+  prompt_prose: The periscope now rises from a manhole between two allied fighters, its lens casting bright aiming
+    beams that guide both of their fists toward the seams of the rivals ahead. Keep the same objects, characters
+    and setting details, the same saturated neon comic gouache art style with bold black contours, and the same
+    tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-undertow-periscope-lens-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Periscope Lens L2: Spotter (seed 2)'
+  asset: slime-city/evolutions/s3-undertow-periscope-lens@2
+  size: 832x1216
+  seed: 1109112
+  source_image_id: 261527
+  prompt_prose: The periscope now rises from a manhole between two allied fighters, its lens casting bright aiming
+    beams that guide both of their fists toward the seams of the rivals ahead. Keep the same objects, characters
+    and setting details, the same saturated neon comic gouache art style with bold black contours, and the same
+    tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-undertow-periscope-lens-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Periscope Lens L3: Firing Solution (seed 1)'
+  asset: slime-city/evolutions/s3-undertow-periscope-lens@3
+  size: 832x1216
+  seed: 1109113
+  source_image_id: 261527
+  prompt_prose: The periscope lens now glows with concentric targeting rings locked onto the largest rival brute
+    in the distance, while a fallen rival lies dazed in the foreground. Keep the same objects, characters and setting
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-s3-undertow-periscope-lens-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Periscope Lens L3: Firing Solution (seed 2)'
+  asset: slime-city/evolutions/s3-undertow-periscope-lens@3
+  size: 832x1216
+  seed: 1109114
+  source_image_id: 261527
+  prompt_prose: The periscope lens now glows with concentric targeting rings locked onto the largest rival brute
+    in the distance, while a fallen rival lies dazed in the foreground. Keep the same objects, characters and setting
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-s3-undertow-tunnel-harpoon-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Tunnel Harpoon L2: Barbed Line (seed 1)'
+  asset: slime-city/evolutions/s3-undertow-tunnel-harpoon@2
+  size: 832x1216
+  seed: 1109115
+  source_image_id: 261528
+  prompt_prose: The tunnel harpoon now trails a barbed steel line hooked into a dazed rival pinned against the tunnel
+    wall, the wielder bracing to reel them in. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s3-undertow-tunnel-harpoon-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Tunnel Harpoon L2: Barbed Line (seed 2)'
+  asset: slime-city/evolutions/s3-undertow-tunnel-harpoon@2
+  size: 832x1216
+  seed: 1109116
+  source_image_id: 261528
+  prompt_prose: The tunnel harpoon now trails a barbed steel line hooked into a dazed rival pinned against the tunnel
+    wall, the wielder bracing to reel them in. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s3-undertow-tunnel-harpoon-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Tunnel Harpoon L3: Whaler''s Gamble (seed 1)'
+  asset: slime-city/evolutions/s3-undertow-tunnel-harpoon@3
+  size: 832x1216
+  seed: 1109117
+  source_image_id: 261528
+  prompt_prose: The harpoon now fires down a cavernous tunnel at an enormous rival brute, the wielder braced and
+    sliding on the wet stones as the line goes taut between them. Keep the same objects, characters and setting
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-s3-undertow-tunnel-harpoon-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Tunnel Harpoon L3: Whaler''s Gamble (seed 2)'
+  asset: slime-city/evolutions/s3-undertow-tunnel-harpoon@3
+  size: 832x1216
+  seed: 1109118
+  source_image_id: 261528
+  prompt_prose: The harpoon now fires down a cavernous tunnel at an enormous rival brute, the wielder braced and
+    sliding on the wet stones as the line goes taut between them. Keep the same objects, characters and setting
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
