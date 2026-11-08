@@ -971,7 +971,7 @@ tasks:
   - id: t-041
     milestone: m2
     title: "CLASH 300: individually crafted L1/L2/L3 effects for every existing card"
-    status: claimed
+    status: review
     depends_on: t-037
     passes: 0
     stakes: reversible
@@ -979,7 +979,9 @@ tasks:
       Silas, 2026-11-07 PT: "The ultimate goal will be crafted redesigns of all 300 cards." The authoritative full inventory is projects/slime-city/CARD-REDESIGN-300.md. Each existing catalog identity must have an individually authored journey, not generic L2/L3 stats or duplicated effects. One interesting payoff per card, strategic counterplay, deterministic battle fixture and replay, and CPU reachability audits. Keep all 300 IDs and six distinct crew identities; do not add cards, faction-hate, economy mutations, art or a publication without authorization. Finish original t-037's 70 designs first, then this umbrella governs the remaining 230 redesigns, tracking progress against the full roster.
 
       2026-11-08 PT: Silas reviewed a first data-driven pass (kind_robots branch claude/pensive-albattani-ibljzj, commits b5a4093/5e7659b, never PR'd) and rejected the approach: "doing it programmatically has a big risk of just giving stat boosts to later game cards ... Do some research on good ccg design before moving forward and creating a plan." Also: "We should have fresh art on the evolutions, not just frame effects." Plan with research, design rules (trajectories instead of a universal stat ramp, L2 = new decision, L3 = named transformation with counterplay, faction tool ownership), per-level Flux Kontext art for all 300, and a 10-card Catgirls pilot gate: projects/slime-city/CLASH-EVOLUTION-PLAN.md. Awaiting Silas's answers to the plan's open questions before the pilot starts; the parked branch keeps only its engine hooks for reuse.
+
+      Audit checkpoint: kind_robots #4907 has 300 merged custom evolutions. The default CPU sweep only uses fixed 20-card decks, so this session adds 300-card constructed-deck matchup coverage, mirrored seeds, reachability, duplicate-mechanic reporting and deterministic replays on a worker PR. Continue per-card balance and fun QA before accepting the full catalog.
     owner: worker
     claimed_by: 2026-11-08T101400Z-slime-city-t-041-r8k4
     claimed_at: '2026-11-08T10:14:00Z'
-    updated: '2026-11-08T10:14:00Z'
+    updated: '2026-11-08T10:25:00Z'
