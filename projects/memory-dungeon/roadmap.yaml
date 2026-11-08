@@ -914,7 +914,7 @@ tasks:
   - id: t-039
     milestone: m2
     title: 'Playbook Forge upgrade (last, per Silas): fix 195 failing prompts, write 6 missing, then grow quests and encounters toward plan'
-    status: claimed
+    status: review
     stakes: reversible
     passes: 0
     note: |-
@@ -925,7 +925,9 @@ tasks:
       Scoped Forge integrity repair: replace hard-coded artPromptsComplete=true with per-node prompt validation. Kind Robots implementation PR pending; remaining 195 lint failures, six missing prompts and content expansion remain open.
 
       2026-11-08 PT: Kind Robots PR #4911 merged as 350e2881971650d4069735b7ed8eb076c3c7938d; all eight exact-head workflows green. Forge prompt completeness now checks real art-required nodes. Remaining prompt lint, missing prompts and quest expansion still open; return READY.
-    updated: '2026-11-08T17:46:00Z'
+
+      Focused Forge readiness correction: require minimum-length, literal Krea2 medium prompts and reject common negative/abstract wording. The 195 historical lint failures and six missing beats remain outstanding; do not mark complete.
+    updated: '2026-11-08T17:48:00Z'
     owner: worker
     claimed_by: 2026-11-08T174600Z-memory-dungeon-t039-r9x3
     claimed_at: '2026-11-08T17:46:00Z'
