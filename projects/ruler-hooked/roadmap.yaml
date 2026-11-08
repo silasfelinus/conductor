@@ -1214,5 +1214,7 @@ tasks:
 
     kind_robots#4898: edict panel (painting, full petition text, petitioner) beside the decree hand with stage-height card sizing and no inner scroll; court panels, ledgers, ribbons and presenter frame in the indigo/spectrum/neon fishing look; Classic/Learning switch and subjects link under Cast a line; quiz dock bounded between HUD and nav, near-full-width study sheet, two-column Mandarin field guide; correct answers land the fish immediately; only Mandarin keeps a study-first preview; flags are bundled SVGs (flag-icons, MIT) in public/flags. Verified in headless Chromium at five viewports; vue-tsc, Prettier, ESLint and Ruler Hooked selftests pass locally.
 
+    Merged kind_robots#4898 as ee6c253656f2dfea57f09c230f4bf2cee215dea9 after all PR checks passed on c8d954d (the one red Contract verifiers run belonged to the superseded head, whose shard 1 was cancelled by the follow-up push). Self-hosted deployment not verified.
+
     Conductor: Silas's 2026-11-08 instruction releases the #7122 hold. build_ruler_hooked_art_queue.py --include-layers --write --restage rewrote all 169 stale rows (165 held + 4 done whose prompts changed) to pending, force: true, with the rainbow prompts; --check is clean. read_regions now parses t-054 ramp states and the trailing pins block (it exited on the layer lane before), with a regression test. Renders and in-game visual verification still to follow.
   updated: '2026-11-08T00:30:00Z'
