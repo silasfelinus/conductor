@@ -971,7 +971,7 @@ tasks:
   - id: t-041
     milestone: m2
     title: "CLASH 300: individually crafted L1/L2/L3 effects for every existing card"
-    status: claimed
+    status: review
     depends_on: t-037
     passes: 0
     stakes: reversible
@@ -989,7 +989,9 @@ tasks:
       2026-11-08 PT: Merged Kind Robots PR #4910 (squash 3e053c17b339704a12083b37c92a4932fd84800f) after all eight final-head checks completed green. Solo CPU now estimates actual L2/L3 board payoffs, lasting gear and card investment while preserving Alliance baseline AI; fixes RNG mutation during random-target evaluation, with a replay/immutability regression. Bloodfairy Banana Bouncer L3 summons a SWARM encore; Undertow Backwater IOU L3 stuns adjacent foes, removing both prior exact mechanical duplicates. Verified 1,080 Solo seeded matches (48.7% first-seat, 9.5 average rounds, 135 exact replays), 150 Alliance matches (40% first-seat), all solo and alliance general acceptance thresholds, and named ability fixtures. Still 25/300 cards never selected in constructed CPU games (previous 21), 144 reached L3 (previous 160); keep task ready for creative individual payoff QA, CPU utility/card-reach improvement, deeper deckbuilding matchups and pending art curation. No deployment or human fun acceptance claimed.
 
       2026-11-08 PT evolution art redo. Silas: "Flux dev is a slow generator, and we're getting a lot of the same looking images three times over. We shouldn't use it for the main gen, but we also need a much larger and fun escalation between evolution 1 and evolution 3." The Kontext dev evolution ledgers are superseded by nine Krea 2 ledgers (projects/slime-city/art/EVOLUTIONS-*-KREA.yaml, 481 stages, one render each, auto_submit) on the escalation ladder in CLASH-EVOLUTION-PLAN.md section 4. Silas's standing direction, also in section 4: "these gens evolutions are supposed to look bigger and more impressive. They might tell a story." The hero grows in the frame at every step, and one L1 story thread pays off at L3. With Silas's OK, 700 PENDING Kontext jobs were cancelled in the Kind Robots queue (reversible via re-enqueue); 88 had already rendered and 4 were running. Mechanics scope of t-041 is unchanged; return READY.
-    updated: '2026-11-08T23:39:00Z'
+
+      2026-11-08 PT: Constructed Clash Alliance adversarial suite in kind_robots worker/slime-city-t-041-alliance-qa-20261108-x7q4. Tests all 30 ordered faction pairings across nine legal 30-card strategies with matched-seat seed swaps, separate same-deck general-power swaps, L2/L3 use and full 300-card legal deck coverage. Source PR and CI validation pending; t-041 remains a partial QA umbrella with human fun acceptance outstanding.
+    updated: '2026-11-08T23:44:00Z'
     owner: worker
     claimed_by: 2026-11-08T233900Z-slime-city-t041-alliance-x7q4
     claimed_at: '2026-11-08T23:39:00Z'
