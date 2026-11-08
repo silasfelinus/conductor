@@ -6,6 +6,8 @@
 
 **Checkpoint (2026-11-07 PT):** 39 mechanically implemented and merged in PRs #4895/#4901; 20 authored and implemented in the current wave-3 branch but awaiting checks; 11 concepts from the original 70 remain unimplemented; 230 other existing cards still require original, individual ability design. This ledger does not count a generic level/stat upgrade as crafted.
 
+**Source cross-check:** `prototypes.ts` 60 founders; `reserveCards.ts` 12; `gutterCrownWaveTwo.ts` 36; `gutterCrownWaveThree.ts` 36; `gutterCrownFinaleA.ts` 48; `gutterCrownFinaleB.ts` 48; `mercenaryCards.ts` 60. All paths are under Kind Robots `utils/slimeCity/`. IDs were deduplicated across the seven sources, not counted from generated card faces or art jobs.
+
 **Definition of done for each row:** three authored rules texts; three matching mechanics with a genuine L3 inflection; identity/archetype synergies and counterplay; deterministic seeded command replay; target/occupancy/copy-safe rules; battle fixture showing the payoff, not just strings. Review CPU strategic use and how often L3 is reachable. No faction-hate rules.
 
 Legend: `MERGED` tested + on main · `WAVE-3` new code, CI pending · `DESIGNED` one of original 70 concepts still needing implementation · `TODO` no authored arc yet. Later update these rows as cards ship.
