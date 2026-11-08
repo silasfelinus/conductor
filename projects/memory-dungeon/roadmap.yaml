@@ -914,8 +914,7 @@ tasks:
   - id: t-039
     milestone: m2
     title: 'Playbook Forge upgrade (last, per Silas): fix 195 failing prompts, write 6 missing, then grow quests and encounters toward plan'
-    status: review
-    owner: worker
+    status: ready
     stakes: reversible
     passes: 0
     note: |-
@@ -924,9 +923,9 @@ tasks:
       2026-11-04 PT cleanup pass: released an expired claim (no activity since the claim, no open PR found for it); back to ready. Still to be done LAST, per Silas.
 
       Scoped Forge integrity repair: replace hard-coded artPromptsComplete=true with per-node prompt validation. Kind Robots implementation PR pending; remaining 195 lint failures, six missing prompts and content expansion remain open.
-    updated: '2026-11-08T15:52:00Z'
-    claimed_by: 2026-11-08T154600Z-memory-dungeon-t039-r7k2
-    claimed_at: '2026-11-08T15:46:00Z'
+
+      2026-11-08 PT: Kind Robots PR #4911 merged as 350e2881971650d4069735b7ed8eb076c3c7938d; all eight exact-head workflows green. Forge prompt completeness now checks real art-required nodes. Remaining prompt lint, missing prompts and quest expansion still open; return READY.
+    updated: '2026-11-08T16:51:00Z'
   - id: t-040
     title: "Memory Dungeon: deliver painted 6×6 House dungeon floorplans, not just the 8×8 overworld maps"
     status: review
