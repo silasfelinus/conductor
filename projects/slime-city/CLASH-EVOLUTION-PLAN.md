@@ -150,3 +150,32 @@ Today one painting serves all three levels and only the frame changes. Plan:
    replaying the card?
 4. **Art scope:** new paintings at both L2 and L3, or L3 only for the first pass (300 instead of 600)?
 5. **Pilot pick:** start with the Catgirls as proposed, or another faction?
+
+---
+
+## 8. Silas's answers (2026-11-08 PT) and the Catgirls pilot
+
+*"Sure some cards can be weaker in level 3, but that should be rare for a mechanic. I like the idea of
+situational level 3s. Not sure how a level 3 might require something, it sounds like a niche mechanic. Not a
+bad idea for an occasional one shot gimmick though. New art for both, high priority. Catgirls pilot is fine."*
+
+- Weaker level threes: allowed, rare (one in the pilot).
+- Situational level threes: preferred (board-dependent payoffs, sideways design).
+- Earned level threes: only an occasional one-shot gimmick, not a system.
+- New art for both L2 and L3: high priority. Pilot round: `art/EVOLUTIONS-CATGIRLS-PILOT.yaml` (40 Kontext
+  renders, two seeds per stage).
+
+### Pilot design sheet (10 cards)
+
+| Card | Arc (3 beats) | Trajectory | L2 | L3 | Counterplay |
+|---|---|---|---|---|---|
+| Splice Runner | courier → contraband dealer → midnight ambulance | role shift | *Contraband Courier*: heal your most hurt ally 3 | *Midnight Ambulance*: never strikes; your last fallen fighter returns as a 2/3 echo | it never fights; the echo is fragile; no fallen ally = no rescue |
+| Rooftop Phantom | lab-roof sneak → chimney leaps → skyline specter | late bloomer (tempo) | *Chimney Leap*: arriving in an empty alley, 2 to the rival boss | *Skyline Specter*: the leap, and a knockout sends it back to the top of your deck | blockers it cannot kill; keep the alley filled |
+| Alley Veterinarian | back-alley vet → night shift for strays → passes her needle on | situational | *Stray Stitches*: round end, heal adjacent allies 1 | *Passes the Needle*: hurt allies gain REGEN; last breath heals neighbors 3 | burst the hurt allies; regen is slow |
+| Parapet Ghost-Kitten | cutest nightmare → gargoyle still → nightmare shadow (still a kitten) | early bloomer, the pilot's one weaker L3 | *Gargoyle Stillness*: +2 shield each turn | *Nightmare of the Parapets*: smaller body (5/10), stuns the 3 facing foes on arrival | the stun lasts one strike; the kitten dies to anything |
+| Gene-Spliced Tiger | escapee → loose in the lab → apex predator | late bloomer (weaker L1) | *Loose in the Lab*: +1 power for good per knockout | *Apex Escapee*: on arrival it fights the strongest foe | a stronger foe wins the hunt; stunned prey cannot hit back, so stun yours first |
+| Gutterglass Scout | glass-tower scout → shatters a window → the Glasswalk | role shift | *Barefoot on Shards*: hits splash 1 to adjacent foes | *The Glasswalk*: +3 shield; with 2+ allies watching, all allies +1 power now | the shield ends on her turn; no crowd, no roar |
+| Mutual Aid Serum | free treatment → clinic night → people's pharmacy | situational | *Free Clinic Night*: unstun the target, +1 shield | *People's Pharmacy*: every unhurt ally +1 power for good | keep the crew chipped |
+| Nine Lives, No Refunds | nine lives → the eighth is spent → the crew borrows the last | earned one-shot | *Eighth Life*: the target survives its next lethal hit at 1 | *No Refunds*: every ally survives its next lethal hit at 1 | chip twice; stun and wait |
+| Catwalk Garrote | catwalk wire → the heavy drop → hangman's line | situational, then a second spring | *Heavy Drop*: +2 to a 2-play victim | *Hangman's Line*: re-arms once in the same alley | scan it; send cheap runners first |
+| Second Pounce Rig | stolen rig → tuned for the pack → the second pounce | earned one-shot payoff | *Spring-Loaded*: +1 power beside an ally | *Second Pounce*: a knockout also sends its power into the rival boss | armored blockers; stun the wearer |
