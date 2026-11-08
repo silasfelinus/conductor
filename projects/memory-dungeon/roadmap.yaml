@@ -933,11 +933,11 @@ tasks:
     claimed_at: '2026-11-03T17:43:00Z'
   - id: t-040
     title: "Memory Dungeon: deliver painted 6×6 House dungeon floorplans, not just the 8×8 overworld maps"
-    status: claimed
+    status: review
     stakes: reversible
     passes: 0
     source_issue: "silasfelinus/kind_robots#4380"
-    updated: '2026-11-08T08:42:29Z'
+    updated: '2026-11-08T08:47:00Z'
     note: |-
       FROM GITHUB ISSUE silasfelinus/kind_robots#4380 (https://github.com/silasfelinus/kind_robots/issues/4380), opened by @silasfelinus on 2026-10-28. Imported by scripts/sync_github_issues.py. Reference the issue in the implementing PR (`Closes silasfelinus/kind_robots#4380`) so it closes on merge; the bridge closes it otherwise once this task is done.
 
@@ -975,6 +975,8 @@ tasks:
       2026-11-04 PT cleanup pass: stale review with an expired claim; the recorded slice
       landed (or was superseded) and the note itself lists remaining scope, so back to ready
       for the next slice rather than done.
+
+      Added six regression checks for committed House atlas delivery receipts, image IDs, destinations and aggregate counts. Both Krea2 jobs 50365/50366 now have delivered checkpoint entries with ArtImages 257966/257967. Live independent HEAD and rendered six-by-six topology/device QA remain outstanding; do not close issue #4380.
     owner: worker
     claimed_by: 2026-11-08T084229Z-memory-dungeon-t040-n7q4
     claimed_at: '2026-11-08T08:42:29Z'
