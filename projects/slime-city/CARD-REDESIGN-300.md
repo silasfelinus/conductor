@@ -4,27 +4,27 @@
 
 **Inventory verified against seven Kind Robots catalog source files:** six factions × 40 + 60 independent mercenary cards = **300 unique IDs**.
 
-**Checkpoint (2026-11-07 PT):** 39 mechanically implemented and merged in PRs #4895/#4901; 20 authored and implemented in the current wave-3 branch but awaiting checks; 11 concepts from the original 70 remain unimplemented; 230 other existing cards still require original, individual ability design. This ledger does not count a generic level/stat upgrade as crafted.
+**Checkpoint (2026-11-07 PT):** 59 mechanically implemented and merged in Kind Robots PRs #4895, #4901 and #4904 (wave three squash `571115711b121b3860662544346bfaca72380535`, all 11 final-head checks successful); 11 concepts from the original 70 remain unimplemented; 230 other existing cards still require original, individual ability design. This ledger does not count a generic level/stat upgrade as crafted.
 
 **Source cross-check:** `prototypes.ts` 60 founders; `reserveCards.ts` 12; `gutterCrownWaveTwo.ts` 36; `gutterCrownWaveThree.ts` 36; `gutterCrownFinaleA.ts` 48; `gutterCrownFinaleB.ts` 48; `mercenaryCards.ts` 60. All paths are under Kind Robots `utils/slimeCity/`. IDs were deduplicated across the seven sources, not counted from generated card faces or art jobs.
 
 **Definition of done for each row:** three authored rules texts; three matching mechanics with a genuine L3 inflection; identity/archetype synergies and counterplay; deterministic seeded command replay; target/occupancy/copy-safe rules; battle fixture showing the payoff, not just strings. Review CPU strategic use and how often L3 is reachable. No faction-hate rules.
 
-Legend: `MERGED` tested + on main · `WAVE-3` new code, CI pending · `DESIGNED` one of original 70 concepts still needing implementation · `TODO` no authored arc yet. Later update these rows as cards ship.
+Legend: `MERGED` mechanically implemented, tested and merged on main · `DESIGNED` one of original 70 concepts still needing implementation · `TODO` no authored arc yet. Later update these rows as cards ship.
 
 ## Gene Riot Catgirls (40)
 
 | Card ID | Card name | Type | Evolution status |
 |---|---|---|---|
 | `lynx` | Neon Lynx | creature | MERGED |
-| `mau` | Mau-77 | creature | WAVE-3 |
+| `mau` | Mau-77 | creature | MERGED |
 | `calico` | Clinic Calico | creature | MERGED |
 | `chimera` | Madame Chimera | creature | MERGED |
 | `pounce` | Catnip Overdrive | spell | MERGED |
-| `scentmine` | Scent Mine | trap | WAVE-3 |
+| `scentmine` | Scent Mine | trap | MERGED |
 | `reknit` | Reknit Serum | spell | MERGED |
 | `shredders` | Patent Shredders | equipment | DESIGNED |
-| `ninthlife` | Ninth Life Collar | equipment | WAVE-3 |
+| `ninthlife` | Ninth Life Collar | equipment | MERGED |
 | `laser` | Laser Pointer | spell | MERGED |
 | `splice-runner` | Splice Runner | creature | TODO |
 | `mutual-aid` | Mutual Aid Serum | spell | TODO |
@@ -66,11 +66,11 @@ Legend: `MERGED` tested + on main · `WAVE-3` new code, CI pending · `DESIGNED`
 | `razor` | Razorwing | creature | MERGED |
 | `queen` | Queen Safety Pin | creature | MERGED |
 | `mosh` | Moshpit Massacre | spell | MERGED |
-| `bloodwire` | Bloodwire | trap | WAVE-3 |
+| `bloodwire` | Bloodwire | trap | MERGED |
 | `spurs` | Razor Spurs | equipment | DESIGNED |
-| `pinprick` | Safety-Pin Stab | spell | WAVE-3 |
+| `pinprick` | Safety-Pin Stab | spell | MERGED |
 | `choker` | Spiked Choker | equipment | DESIGNED |
-| `feedback` | Amp-Stack Feedback | spell | WAVE-3 |
+| `feedback` | Amp-Stack Feedback | spell | MERGED |
 | `pogo-punk` | Pogo Punk | creature | TODO |
 | `amp-tripwire` | Amp Tripwire | trap | TODO |
 | `s1-riot-choir` | Glitter Riot Choir | creature | TODO |
@@ -110,11 +110,11 @@ Legend: `MERGED` tested + on main · `WAVE-3` new code, CI pending · `DESIGNED`
 | `welder` | Spark Welder | creature | MERGED |
 | `bulldozer` | Bulld-Ogre | creature | MERGED |
 | `juggernaut` | Maw-9000 | creature | MERGED |
-| `overclock` | Overclock Core | spell | WAVE-3 |
-| `shocktrap` | Shock Plate | trap | WAVE-3 |
+| `overclock` | Overclock Core | spell | MERGED |
+| `shocktrap` | Shock Plate | trap | MERGED |
 | `plating` | Foundry Plating | equipment | MERGED |
 | `wreckingfist` | Wrecking Fist | equipment | DESIGNED |
-| `ducttape` | Duct-Tape Weld | spell | WAVE-3 |
+| `ducttape` | Duct-Tape Weld | spell | MERGED |
 | `slap` | Hydraulic Slap | spell | DESIGNED |
 | `union-millwright` | Union Millwright | creature | TODO |
 | `spare-pistons` | Spare Pistons | equipment | TODO |
@@ -155,12 +155,12 @@ Legend: `MERGED` tested + on main · `WAVE-3` new code, CI pending · `DESIGNED`
 | `firebrand` | Firebrand | creature | MERGED |
 | `kaboom` | Sister Kaboom | creature | MERGED |
 | `bomber` | Grand Detonator | creature | MERGED |
-| `firestorm` | Accidental Firestorm | spell | WAVE-3 |
+| `firestorm` | Accidental Firestorm | spell | MERGED |
 | `badluck` | Whoops Grenade | trap | DESIGNED |
 | `fuse` | Illegal Booster | equipment | DESIGNED |
 | `confetti` | Confetti Cannon | spell | MERGED |
-| `fusevest` | Lit-Fuse Vest | equipment | WAVE-3 |
-| `drink` | Hold My Drink | spell | WAVE-3 |
+| `fusevest` | Lit-Fuse Vest | equipment | MERGED |
+| `drink` | Hold My Drink | spell | MERGED |
 | `spark-diver` | Spark Diver | creature | TODO |
 | `firebreak-parade` | Firebreak Parade | spell | TODO |
 | `s1-mime-fuse` | Matchstick Mime | creature | TODO |
@@ -200,12 +200,12 @@ Legend: `MERGED` tested + on main · `WAVE-3` new code, CI pending · `DESIGNED`
 | `frogtrooper` | Frog Trooper | creature | MERGED |
 | `eel` | Eel Courier | creature | MERGED |
 | `oracle` | Drowned Oracle | creature | MERGED |
-| `blackout` | Signal Blackout | spell | WAVE-3 |
+| `blackout` | Signal Blackout | spell | MERGED |
 | `tripwire` | Tripwire | trap | MERGED |
 | `visor` | Spyglass Visor | equipment | DESIGNED |
-| `grate` | Leech Grate | trap | WAVE-3 |
+| `grate` | Leech Grate | trap | MERGED |
 | `sonar` | Drain Sonar | spell | MERGED |
-| `drysuit` | Rubber Drysuit | equipment | WAVE-3 |
+| `drysuit` | Rubber Drysuit | equipment | MERGED |
 | `pipe-seer` | Pipe Seer | creature | TODO |
 | `snitch-grate` | Snitch Grate | trap | TODO |
 | `s1-basement-ghost` | Basement Ghost | creature | TODO |
@@ -245,12 +245,12 @@ Legend: `MERGED` tested + on main · `WAVE-3` new code, CI pending · `DESIGNED`
 | `collector` | Debt Collector | creature | MERGED |
 | `broker` | Flesh Broker | creature | MERGED |
 | `mogul` | The Meat Mogul | creature | MERGED |
-| `collection` | Hostile Collection | spell | WAVE-3 |
-| `debttrap` | Hidden Fees | trap | WAVE-3 |
+| `collection` | Hostile Collection | spell | MERGED |
+| `debttrap` | Hidden Fees | trap | MERGED |
 | `contract` | Iron Contract | equipment | DESIGNED |
 | `foreclosure` | Foreclosure | spell | MERGED |
 | `handshake` | Golden Handshake | equipment | MERGED |
-| `hushmoney` | Hush Money | spell | WAVE-3 |
+| `hushmoney` | Hush Money | spell | MERGED |
 | `audit-fiend` | Audit Fiend | creature | TODO |
 | `debt-holiday` | Debt Holiday | spell | TODO |
 | `s1-executive-repo` | Executive Repossessor | creature | TODO |
@@ -286,11 +286,11 @@ Legend: `MERGED` tested + on main · `WAVE-3` new code, CI pending · `DESIGNED`
 
 | Card ID | Card name | Type | Evolution status |
 |---|---|---|---|
-| `merc-bus-driver` | Gutterbus Driver | creature | WAVE-3 |
+| `merc-bus-driver` | Gutterbus Driver | creature | MERGED |
 | `merc-bribe-rat` | Bribe-Licked Rat | creature | DESIGNED |
 | `merc-roof-dentist` | Rooftop Dentist | creature | MERGED |
 | `merc-debt-slug` | Debt-Eating Slug | creature | MERGED |
-| `merc-clock-grandma` | Clockwork Grandmother | creature | WAVE-3 |
+| `merc-clock-grandma` | Clockwork Grandmother | creature | MERGED |
 | `merc-smog-moth` | Smog Moth Courier | creature | MERGED |
 | `merc-grease-oracle` | Grease Oracle | creature | DESIGNED |
 | `merc-fungal-bouncer` | Fungal Bouncer | creature | MERGED |
