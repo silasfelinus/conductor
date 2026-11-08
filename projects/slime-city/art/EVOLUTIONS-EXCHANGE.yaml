@@ -1,0 +1,1536 @@
+# Slime City evolution art, the Exchange (2026-11-08 PT; CLASH-EVOLUTION-PLAN.md section 4).
+# Silas: "We should have fresh art on the evolutions, not just frame effects" and "300 cards, all need custom
+# better evolutions." Each crafted card (utils/slimeCity/evolutions/*.ts in kind_robots) gets a level-2 and a
+# level-3 painting, and a choose-one card a painting for its option B ('@3b'): the same character or scene
+# transformed by its story arc. Flux Kontext edits the card's wired level-1 ArtImage (SLIME_CITY_ART.cards) so
+# face, outfit and style carry over; each prompt names only that stage's story change, written per card. Two
+# seeds per stage for curation. Keepers are wired as SLIME_CITY_ART.evolutions['<cardId>@2' | '@3' | '@3b'].
+# auto_submit: true.
+round: slime-city-evolutions-exchange
+project_slug: slime-city
+designer: Slime City evolution art, the Exchange
+is_public: true
+is_mature: false
+cast_loras: false
+priority: 640
+auto_submit: true
+lanes:
+- key: kontext-evolution
+  label: Flux Kontext dev (fp8), evolved stages from each card's level-1 painting
+  engine: kontext
+  prompt: prose
+  steps: 20
+  guidance: 2.5
+subjects:
+- key: slime-evo-audit-fiend-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Audit Fiend L2: Interest on Every Swing (seed 1)'
+  asset: slime-city/evolutions/audit-fiend@2
+  size: 832x1216
+  seed: 1110001
+  source_image_id: 260651
+  prompt_prose: The ledger fiend's claws now drip with glowing gold coins that stick to its arms and pile into a
+    heavier armored gauntlet each time it swings at a fleeing adult debtor. Keep the same character, the same face,
+    fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style with bold black
+    contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-audit-fiend-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Audit Fiend L2: Interest on Every Swing (seed 2)'
+  asset: slime-city/evolutions/audit-fiend@2
+  size: 832x1216
+  seed: 1110002
+  source_image_id: 260651
+  prompt_prose: The ledger fiend's claws now drip with glowing gold coins that stick to its arms and pile into a
+    heavier armored gauntlet each time it swings at a fleeing adult debtor. Keep the same character, the same face,
+    fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style with bold black
+    contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-audit-fiend-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Audit Fiend L3: Full Audit (seed 1)'
+  asset: slime-city/evolutions/audit-fiend@3
+  size: 832x1216
+  seed: 1110003
+  source_image_id: 260651
+  prompt_prose: The fiend now stands on a rooftop flinging a storm of glowing blank paper slips over the whole street
+    below, each slip slapping onto a different startled adult brawler. Keep the same character, the same face, fur,
+    skin and markings, the same outfit details, the same saturated neon comic gouache art style with bold black
+    contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-audit-fiend-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Audit Fiend L3: Full Audit (seed 2)'
+  asset: slime-city/evolutions/audit-fiend@3
+  size: 832x1216
+  seed: 1110004
+  source_image_id: 260651
+  prompt_prose: The fiend now stands on a rooftop flinging a storm of glowing blank paper slips over the whole street
+    below, each slip slapping onto a different startled adult brawler. Keep the same character, the same face, fur,
+    skin and markings, the same outfit details, the same saturated neon comic gouache art style with bold black
+    contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-debt-holiday-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Debt Holiday L2: Payment Holiday (seed 1)'
+  asset: slime-city/evolutions/debt-holiday@2
+  size: 832x1216
+  seed: 1110005
+  source_image_id: 262297
+  prompt_prose: Two beach umbrellas now stand in the grimy alley, a smug adult banker lounging under one with a
+    stack of gold coins while the relieved adult debtor stretches and cracks their knuckles under the other. Keep
+    the same objects, characters and setting details, the same saturated neon comic gouache art style with bold
+    black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-debt-holiday-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Debt Holiday L2: Payment Holiday (seed 2)'
+  asset: slime-city/evolutions/debt-holiday@2
+  size: 832x1216
+  seed: 1110006
+  source_image_id: 262297
+  prompt_prose: Two beach umbrellas now stand in the grimy alley, a smug adult banker lounging under one with a
+    stack of gold coins while the relieved adult debtor stretches and cracks their knuckles under the other. Keep
+    the same objects, characters and setting details, the same saturated neon comic gouache art style with bold
+    black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-debt-holiday-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Debt Holiday L3: The Offer Expires (seed 1)'
+  asset: slime-city/evolutions/debt-holiday@3
+  size: 832x1216
+  seed: 1110007
+  source_image_id: 262297
+  prompt_prose: The beach umbrella is now torn away by a sudden storm of swirling invoices, a giant brass hourglass
+    running empty above the alley as a crowd of grinning adult collectors closes in. Keep the same objects, characters
+    and setting details, the same saturated neon comic gouache art style with bold black contours, and the same
+    tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-debt-holiday-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Debt Holiday L3: The Offer Expires (seed 2)'
+  asset: slime-city/evolutions/debt-holiday@3
+  size: 832x1216
+  seed: 1110008
+  source_image_id: 262297
+  prompt_prose: The beach umbrella is now torn away by a sudden storm of swirling invoices, a giant brass hourglass
+    running empty above the alley as a crowd of grinning adult collectors closes in. Keep the same objects, characters
+    and setting details, the same saturated neon comic gouache art style with bold black contours, and the same
+    tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s1-executive-repo-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Executive Repossessor L2: Furniture Sale (seed 1)'
+  asset: slime-city/evolutions/s1-executive-repo@2
+  size: 832x1216
+  seed: 1110009
+  source_image_id: 260683
+  prompt_prose: The repossessor now hauls a huge gilded grand piano out of a toppled heavyweight's mansion, adult
+    bargain hunters already bidding on the sidewalk below. Keep the same character, the same face, fur, skin and
+    markings, the same outfit details, the same saturated neon comic gouache art style with bold black contours,
+    and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s1-executive-repo-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Executive Repossessor L2: Furniture Sale (seed 2)'
+  asset: slime-city/evolutions/s1-executive-repo@2
+  size: 832x1216
+  seed: 1110010
+  source_image_id: 260683
+  prompt_prose: The repossessor now hauls a huge gilded grand piano out of a toppled heavyweight's mansion, adult
+    bargain hunters already bidding on the sidewalk below. Keep the same character, the same face, fur, skin and
+    markings, the same outfit details, the same saturated neon comic gouache art style with bold black contours,
+    and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s1-executive-repo-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Executive Repossessor L3: Repossession Spree (seed 1)'
+  asset: slime-city/evolutions/s1-executive-repo@3
+  size: 832x1216
+  seed: 1110011
+  source_image_id: 260683
+  prompt_prose: The repossessor now strides down a street of tipped-over furniture in a tow truck's glare, one gloved
+    hand dragging a defeated adult debtor while it points a chain hook at a scrawny adult straggler cowering further
+    down the block. Keep the same character, the same face, fur, skin and markings, the same outfit details, the
+    same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with
+    the scene painted edge to edge.
+- key: slime-evo-s1-executive-repo-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Executive Repossessor L3: Repossession Spree (seed 2)'
+  asset: slime-city/evolutions/s1-executive-repo@3
+  size: 832x1216
+  seed: 1110012
+  source_image_id: 260683
+  prompt_prose: The repossessor now strides down a street of tipped-over furniture in a tow truck's glare, one gloved
+    hand dragging a defeated adult debtor while it points a chain hook at a scrawny adult straggler cowering further
+    down the block. Keep the same character, the same face, fur, skin and markings, the same outfit details, the
+    same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with
+    the scene painted edge to edge.
+- key: slime-evo-s1-guild-clerk-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Guild Clerk (Temporary) L2: Paper Cut (seed 1)'
+  asset: slime-city/evolutions/s1-guild-clerk@2
+  size: 832x1216
+  seed: 1110013
+  source_image_id: 262307
+  prompt_prose: The temp clerk now flicks a razor-sharp sheet of paper like a throwing blade, a thin glowing gold
+    line of light trailing behind it toward a rival adult thug. Keep the same character, the same face, fur, skin
+    and markings, the same outfit details, the same saturated neon comic gouache art style with bold black contours,
+    and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s1-guild-clerk-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Guild Clerk (Temporary) L2: Paper Cut (seed 2)'
+  asset: slime-city/evolutions/s1-guild-clerk@2
+  size: 832x1216
+  seed: 1110014
+  source_image_id: 262307
+  prompt_prose: The temp clerk now flicks a razor-sharp sheet of paper like a throwing blade, a thin glowing gold
+    line of light trailing behind it toward a rival adult thug. Keep the same character, the same face, fur, skin
+    and markings, the same outfit details, the same saturated neon comic gouache art style with bold black contours,
+    and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s1-guild-clerk-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Guild Clerk (Temporary) L3: Made Permanent (seed 1)'
+  asset: slime-city/evolutions/s1-guild-clerk@3
+  size: 832x1216
+  seed: 1110015
+  source_image_id: 262307
+  prompt_prose: The clerk now sits behind a towering mahogany desk in a cozy lamp-lit office built into the graveyard
+    wall, stamping blank forms with a heavy brass seal while gold coins drift past toward the vault. Keep the same
+    character, the same face, fur, skin and markings, the same outfit details, the same saturated neon comic gouache
+    art style with bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s1-guild-clerk-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Guild Clerk (Temporary) L3: Made Permanent (seed 2)'
+  asset: slime-city/evolutions/s1-guild-clerk@3
+  size: 832x1216
+  seed: 1110016
+  source_image_id: 262307
+  prompt_prose: The clerk now sits behind a towering mahogany desk in a cozy lamp-lit office built into the graveyard
+    wall, stamping blank forms with a heavy brass seal while gold coins drift past toward the vault. Keep the same
+    character, the same face, fur, skin and markings, the same outfit details, the same saturated neon comic gouache
+    art style with bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s1-margin-call-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Emergency Margin Call L2: Tightened Margin (seed 1)'
+  asset: slime-city/evolutions/s1-margin-call@2
+  size: 832x1216
+  seed: 1110017
+  source_image_id: 260685
+  prompt_prose: A giant brass vise now clamps down on a glowing pile of coins in the middle of the street, sparks
+    flying as the jaws squeeze tighter. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s1-margin-call-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Emergency Margin Call L2: Tightened Margin (seed 2)'
+  asset: slime-city/evolutions/s1-margin-call@2
+  size: 832x1216
+  seed: 1110018
+  source_image_id: 260685
+  prompt_prose: A giant brass vise now clamps down on a glowing pile of coins in the middle of the street, sparks
+    flying as the jaws squeeze tighter. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s1-margin-call-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Emergency Margin Call L3: Margin Cascade (seed 1)'
+  asset: slime-city/evolutions/s1-margin-call@3
+  size: 832x1216
+  seed: 1110019
+  source_image_id: 260685
+  prompt_prose: A chain reaction of ringing rotary phones now spills down the whole street, each phone bursting
+    into a puff of gold sparks that knocks over the adult fighters beside it. Keep the same objects, characters
+    and setting details, the same saturated neon comic gouache art style with bold black contours, and the same
+    tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s1-margin-call-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Emergency Margin Call L3: Margin Cascade (seed 2)'
+  asset: slime-city/evolutions/s1-margin-call@3
+  size: 832x1216
+  seed: 1110020
+  source_image_id: 260685
+  prompt_prose: A chain reaction of ringing rotary phones now spills down the whole street, each phone bursting
+    into a puff of gold sparks that knocks over the adult fighters beside it. Keep the same objects, characters
+    and setting details, the same saturated neon comic gouache art style with bold black contours, and the same
+    tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s1-buy-silence-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Buy Their Silence L2: Nondisclosure Fee (seed 1)'
+  asset: slime-city/evolutions/s1-buy-silence@2
+  size: 832x1216
+  seed: 1110021
+  source_image_id: 262308
+  prompt_prose: A velvet bag of gold coins now slides across a dim bar counter into a waiting gloved hand while
+    the gagged adult rival slumps in the background. Keep the same objects, characters and setting details, the
+    same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with
+    the scene painted edge to edge.
+- key: slime-evo-s1-buy-silence-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Buy Their Silence L2: Nondisclosure Fee (seed 2)'
+  asset: slime-city/evolutions/s1-buy-silence@2
+  size: 832x1216
+  seed: 1110022
+  source_image_id: 262308
+  prompt_prose: A velvet bag of gold coins now slides across a dim bar counter into a waiting gloved hand while
+    the gagged adult rival slumps in the background. Keep the same objects, characters and setting details, the
+    same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with
+    the scene painted edge to edge.
+- key: slime-evo-s1-buy-silence-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Buy Their Silence L3: Hush Network (seed 1)'
+  asset: slime-city/evolutions/s1-buy-silence@3
+  size: 832x1216
+  seed: 1110023
+  source_image_id: 262308
+  prompt_prose: A dark switchboard room now glows behind the scene, dozens of whispering copper tubes snaking up
+    to a smiling adult broker who holds a fan of sealed envelopes. Keep the same objects, characters and setting
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-s1-buy-silence-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Buy Their Silence L3: Hush Network (seed 2)'
+  asset: slime-city/evolutions/s1-buy-silence@3
+  size: 832x1216
+  seed: 1110024
+  source_image_id: 262308
+  prompt_prose: A dark switchboard room now glows behind the scene, dozens of whispering copper tubes snaking up
+    to a smiling adult broker who holds a fan of sealed envelopes. Keep the same objects, characters and setting
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-s1-debt-garnish-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Garnishment Floor Tile L2: Garnished Wages (seed 1)'
+  asset: slime-city/evolutions/s1-debt-garnish@2
+  size: 832x1216
+  seed: 1110025
+  source_image_id: 262309
+  prompt_prose: The floor tile now flips open like a coin slot, sucking a stream of glowing coins out of the pockets
+    of the trapped adult trespasser. Keep the same objects, characters and setting details, the same saturated neon
+    comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s1-debt-garnish-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Garnishment Floor Tile L2: Garnished Wages (seed 2)'
+  asset: slime-city/evolutions/s1-debt-garnish@2
+  size: 832x1216
+  seed: 1110026
+  source_image_id: 262309
+  prompt_prose: The floor tile now flips open like a coin slot, sucking a stream of glowing coins out of the pockets
+    of the trapped adult trespasser. Keep the same objects, characters and setting details, the same saturated neon
+    comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s1-debt-garnish-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Garnishment Floor Tile L3: Standing Garnishment (seed 1)'
+  asset: slime-city/evolutions/s1-debt-garnish@3
+  size: 832x1216
+  seed: 1110027
+  source_image_id: 262309
+  prompt_prose: A second floor tile now clicks back into place behind the first, both glowing gold, while a fresh
+    adult trespasser freezes mid-step with one boot hovering over it. Keep the same objects, characters and setting
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-s1-debt-garnish-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Garnishment Floor Tile L3: Standing Garnishment (seed 2)'
+  asset: slime-city/evolutions/s1-debt-garnish@3
+  size: 832x1216
+  seed: 1110028
+  source_image_id: 262309
+  prompt_prose: A second floor tile now clicks back into place behind the first, both glowing gold, while a fresh
+    adult trespasser freezes mid-step with one boot hovering over it. Keep the same objects, characters and setting
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-s1-golden-handshake-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Golden Handshake, Iron Grip L2: Iron Grip (seed 1)'
+  asset: slime-city/evolutions/s1-golden-handshake@2
+  size: 832x1216
+  seed: 1110029
+  source_image_id: 260692
+  prompt_prose: The golden handshake now crushes the other hand in an iron grip, coins squeezing out between the
+    clenched fingers like juice from a lemon. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s1-golden-handshake-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Golden Handshake, Iron Grip L2: Iron Grip (seed 2)'
+  asset: slime-city/evolutions/s1-golden-handshake@2
+  size: 832x1216
+  seed: 1110030
+  source_image_id: 260692
+  prompt_prose: The golden handshake now crushes the other hand in an iron grip, coins squeezing out between the
+    clenched fingers like juice from a lemon. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s1-golden-handshake-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Golden Handshake, Iron Grip L3: Golden Exit (seed 1)'
+  asset: slime-city/evolutions/s1-golden-handshake@3
+  size: 832x1216
+  seed: 1110031
+  source_image_id: 260692
+  prompt_prose: The golden hand now waves goodbye from the open door of a departing armored getaway car, a trail
+    of coins spilling from the trunk onto the wet street. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-s1-golden-handshake-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Golden Handshake, Iron Grip L3: Golden Exit (seed 2)'
+  asset: slime-city/evolutions/s1-golden-handshake@3
+  size: 832x1216
+  seed: 1110032
+  source_image_id: 260692
+  prompt_prose: The golden hand now waves goodbye from the open door of a departing armored getaway car, a trail
+    of coins spilling from the trunk onto the wet street. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-s2-exchange-bargain-rate-collector-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Bargain-Rate Collector L2: Polite Reminder (seed 1)'
+  asset: slime-city/evolutions/s2-exchange-bargain-rate-collector@2
+  size: 832x1216
+  seed: 1110033
+  source_image_id: 261443
+  prompt_prose: The collector now tips a battered bowler hat with a polite smile while a long curling receipt unrolls
+    from its stapled fist across the alley. Keep the same character, the same face, fur, skin and markings, the
+    same outfit details, the same saturated neon comic gouache art style with bold black contours, and the same
+    tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s2-exchange-bargain-rate-collector-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Bargain-Rate Collector L2: Polite Reminder (seed 2)'
+  asset: slime-city/evolutions/s2-exchange-bargain-rate-collector@2
+  size: 832x1216
+  seed: 1110034
+  source_image_id: 261443
+  prompt_prose: The collector now tips a battered bowler hat with a polite smile while a long curling receipt unrolls
+    from its stapled fist across the alley. Keep the same character, the same face, fur, skin and markings, the
+    same outfit details, the same saturated neon comic gouache art style with bold black contours, and the same
+    tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s2-exchange-bargain-rate-collector-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Bargain-Rate Collector L3: Clearance Sale (seed 1)'
+  asset: slime-city/evolutions/s2-exchange-bargain-rate-collector@3
+  size: 832x1216
+  seed: 1110035
+  source_image_id: 261443
+  prompt_prose: The collector is now a smaller, shabbier figure standing on an overturned crate amid a frantic street
+    sale, throwing glowing gold coins over a crowd of eager adult shoppers. Keep the same character, the same face,
+    fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style with bold black
+    contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s2-exchange-bargain-rate-collector-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Bargain-Rate Collector L3: Clearance Sale (seed 2)'
+  asset: slime-city/evolutions/s2-exchange-bargain-rate-collector@3
+  size: 832x1216
+  seed: 1110036
+  source_image_id: 261443
+  prompt_prose: The collector is now a smaller, shabbier figure standing on an overturned crate amid a frantic street
+    sale, throwing glowing gold coins over a crowd of eager adult shoppers. Keep the same character, the same face,
+    fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style with bold black
+    contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s2-exchange-golden-bailiff-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Golden Bailiff L2: Served Papers (seed 1)'
+  asset: slime-city/evolutions/s2-exchange-golden-bailiff@2
+  size: 832x1216
+  seed: 1110037
+  source_image_id: 261444
+  prompt_prose: The brass bailiff now slams a thick wax-sealed scroll against a battered metal door so hard the
+    hinges burst off in a shower of sparks. Keep the same character, the same face, fur, skin and markings, the
+    same outfit details, the same saturated neon comic gouache art style with bold black contours, and the same
+    tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s2-exchange-golden-bailiff-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Golden Bailiff L2: Served Papers (seed 2)'
+  asset: slime-city/evolutions/s2-exchange-golden-bailiff@2
+  size: 832x1216
+  seed: 1110038
+  source_image_id: 261444
+  prompt_prose: The brass bailiff now slams a thick wax-sealed scroll against a battered metal door so hard the
+    hinges burst off in a shower of sparks. Keep the same character, the same face, fur, skin and markings, the
+    same outfit details, the same saturated neon comic gouache art style with bold black contours, and the same
+    tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s2-exchange-golden-bailiff-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Golden Bailiff L3: Writ of Eviction (seed 1)'
+  asset: slime-city/evolutions/s2-exchange-golden-bailiff@3
+  size: 832x1216
+  seed: 1110039
+  source_image_id: 261444
+  prompt_prose: The bailiff now plows down an entire street of doors at once, furniture and startled adult tenants
+    tumbling out onto the sidewalk in a wave of brass dust. Keep the same character, the same face, fur, skin and
+    markings, the same outfit details, the same saturated neon comic gouache art style with bold black contours,
+    and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s2-exchange-golden-bailiff-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Golden Bailiff L3: Writ of Eviction (seed 2)'
+  asset: slime-city/evolutions/s2-exchange-golden-bailiff@3
+  size: 832x1216
+  seed: 1110040
+  source_image_id: 261444
+  prompt_prose: The bailiff now plows down an entire street of doors at once, furniture and startled adult tenants
+    tumbling out onto the sidewalk in a wave of brass dust. Keep the same character, the same face, fur, skin and
+    markings, the same outfit details, the same saturated neon comic gouache art style with bold black contours,
+    and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s2-exchange-compound-interest-notice-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Compound Interest Notice L2: Accrued Interest (seed 1)'
+  asset: slime-city/evolutions/s2-exchange-compound-interest-notice@2
+  size: 832x1216
+  seed: 1110041
+  source_image_id: 261445
+  prompt_prose: The notice envelope now leaks a slow stream of glowing coins that flows from the rival's side of
+    the alley into a waiting brass piggy bank. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s2-exchange-compound-interest-notice-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Compound Interest Notice L2: Accrued Interest (seed 2)'
+  asset: slime-city/evolutions/s2-exchange-compound-interest-notice@2
+  size: 832x1216
+  seed: 1110042
+  source_image_id: 261445
+  prompt_prose: The notice envelope now leaks a slow stream of glowing coins that flows from the rival's side of
+    the alley into a waiting brass piggy bank. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s2-exchange-compound-interest-notice-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Compound Interest Notice L3: Interest on Interest (seed 1)'
+  asset: slime-city/evolutions/s2-exchange-compound-interest-notice@3
+  size: 832x1216
+  seed: 1110043
+  source_image_id: 261445
+  prompt_prose: The envelope has split into a towering spiral of copies stacked like a tornado, crashing down onto
+    a huge armored adult brute who staggers beneath the weight. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-s2-exchange-compound-interest-notice-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Compound Interest Notice L3: Interest on Interest (seed 2)'
+  asset: slime-city/evolutions/s2-exchange-compound-interest-notice@3
+  size: 832x1216
+  seed: 1110044
+  source_image_id: 261445
+  prompt_prose: The envelope has split into a towering spiral of copies stacked like a tornado, crashing down onto
+    a huge armored adult brute who staggers beneath the weight. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-s2-exchange-contract-amendment-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Contract Amendment L2: Page 37 (seed 1)'
+  asset: slime-city/evolutions/s2-exchange-contract-amendment@2
+  size: 832x1216
+  seed: 1110045
+  source_image_id: 264945
+  prompt_prose: A thick contract now lies open to a page glowing red where a tiny hidden clause shines, a shocked
+    adult rival peering at it through a magnifying glass. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-s2-exchange-contract-amendment-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Contract Amendment L2: Page 37 (seed 2)'
+  asset: slime-city/evolutions/s2-exchange-contract-amendment@2
+  size: 832x1216
+  seed: 1110046
+  source_image_id: 264945
+  prompt_prose: A thick contract now lies open to a page glowing red where a tiny hidden clause shines, a shocked
+    adult rival peering at it through a magnifying glass. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-s2-exchange-contract-amendment-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Contract Amendment L3: Crew Rider (seed 1)'
+  asset: slime-city/evolutions/s2-exchange-contract-amendment@3
+  size: 832x1216
+  seed: 1110047
+  source_image_id: 264945
+  prompt_prose: The contract now unfurls into long glowing golden ribbons that wrap around three adult crew members
+    standing shoulder to shoulder, their fists sparking with new power. Keep the same objects, characters and setting
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-s2-exchange-contract-amendment-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Contract Amendment L3: Crew Rider (seed 2)'
+  asset: slime-city/evolutions/s2-exchange-contract-amendment@3
+  size: 832x1216
+  seed: 1110048
+  source_image_id: 264945
+  prompt_prose: The contract now unfurls into long glowing golden ribbons that wrap around three adult crew members
+    standing shoulder to shoulder, their fists sparking with new power. Keep the same objects, characters and setting
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-s2-exchange-contract-amendment-l3b-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Contract Amendment L3b: Fine Print (seed 1)'
+  asset: slime-city/evolutions/s2-exchange-contract-amendment@3b
+  size: 832x1216
+  seed: 1110049
+  source_image_id: 264945
+  prompt_prose: The contract's microscopic fine print now peels off the page as a single razor-thin glowing line
+    that slices clean through a dented steel shield. Keep the same objects, characters and setting details, the
+    same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with
+    the scene painted edge to edge.
+- key: slime-evo-s2-exchange-contract-amendment-l3b-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Contract Amendment L3b: Fine Print (seed 2)'
+  asset: slime-city/evolutions/s2-exchange-contract-amendment@3b
+  size: 832x1216
+  seed: 1110050
+  source_image_id: 264945
+  prompt_prose: The contract's microscopic fine print now peels off the page as a single razor-thin glowing line
+    that slices clean through a dented steel shield. Keep the same objects, characters and setting details, the
+    same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with
+    the scene painted edge to edge.
+- key: slime-evo-s2-exchange-invisible-lien-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Invisible Lien L2: Attached Lien (seed 1)'
+  asset: slime-city/evolutions/s2-exchange-invisible-lien@2
+  size: 832x1216
+  seed: 1110051
+  source_image_id: 261447
+  prompt_prose: Translucent glowing chains now spring from the parking spot and lock onto a distant gilded vault
+    door across the street. Keep the same objects, characters and setting details, the same saturated neon comic
+    gouache art style with bold black contours, and the same tall portrait framing with the scene painted edge to
+    edge.
+- key: slime-evo-s2-exchange-invisible-lien-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Invisible Lien L2: Attached Lien (seed 2)'
+  asset: slime-city/evolutions/s2-exchange-invisible-lien@2
+  size: 832x1216
+  seed: 1110052
+  source_image_id: 261447
+  prompt_prose: Translucent glowing chains now spring from the parking spot and lock onto a distant gilded vault
+    door across the street. Keep the same objects, characters and setting details, the same saturated neon comic
+    gouache art style with bold black contours, and the same tall portrait framing with the scene painted edge to
+    edge.
+- key: slime-evo-s2-exchange-invisible-lien-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Invisible Lien L3: Lien on the Block (seed 1)'
+  asset: slime-city/evolutions/s2-exchange-invisible-lien@3
+  size: 832x1216
+  seed: 1110053
+  source_image_id: 261447
+  prompt_prose: The glowing chains now spread across the entire block, wrapping every parked car, lamp post and
+    three surprised adult fighters in shimmering links. Keep the same objects, characters and setting details, the
+    same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with
+    the scene painted edge to edge.
+- key: slime-evo-s2-exchange-invisible-lien-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Invisible Lien L3: Lien on the Block (seed 2)'
+  asset: slime-city/evolutions/s2-exchange-invisible-lien@3
+  size: 832x1216
+  seed: 1110054
+  source_image_id: 261447
+  prompt_prose: The glowing chains now spread across the entire block, wrapping every parked car, lamp post and
+    three surprised adult fighters in shimmering links. Keep the same objects, characters and setting details, the
+    same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with
+    the scene painted edge to edge.
+- key: slime-evo-s2-exchange-executive-health-coverage-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Executive Health Coverage L2: Claims Paid (seed 1)'
+  asset: slime-city/evolutions/s2-exchange-executive-health-coverage@2
+  size: 832x1216
+  seed: 1110055
+  source_image_id: 261448
+  prompt_prose: A pneumatic tube now shoots a sealed golden capsule out of the clinic wall straight into a smiling
+    armored vault nearby. Keep the same objects, characters and setting details, the same saturated neon comic gouache
+    art style with bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s2-exchange-executive-health-coverage-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Executive Health Coverage L2: Claims Paid (seed 2)'
+  asset: slime-city/evolutions/s2-exchange-executive-health-coverage@2
+  size: 832x1216
+  seed: 1110056
+  source_image_id: 261448
+  prompt_prose: A pneumatic tube now shoots a sealed golden capsule out of the clinic wall straight into a smiling
+    armored vault nearby. Keep the same objects, characters and setting details, the same saturated neon comic gouache
+    art style with bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s2-exchange-executive-health-coverage-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Executive Health Coverage L3: Payout to Someone Dangerous (seed 1)'
+  asset: slime-city/evolutions/s2-exchange-executive-health-coverage@3
+  size: 832x1216
+  seed: 1110057
+  source_image_id: 261448
+  prompt_prose: A gilded insurance vault now bursts open in the alley, pouring out coins and a fan of fresh sealed
+    envelopes into the hands of a grinning scarred adult enforcer. Keep the same objects, characters and setting
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-s2-exchange-executive-health-coverage-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Executive Health Coverage L3: Payout to Someone Dangerous (seed 2)'
+  asset: slime-city/evolutions/s2-exchange-executive-health-coverage@3
+  size: 832x1216
+  seed: 1110058
+  source_image_id: 261448
+  prompt_prose: A gilded insurance vault now bursts open in the alley, pouring out coins and a fan of fresh sealed
+    envelopes into the hands of a grinning scarred adult enforcer. Keep the same objects, characters and setting
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-s3-exchange-wage-garnisher-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Wage Garnisher L2: Garnished Paycheck (seed 1)'
+  asset: slime-city/evolutions/s3-exchange-wage-garnisher@2
+  size: 832x1216
+  seed: 1110059
+  source_image_id: 261529
+  prompt_prose: The junior agent now snatches a glowing pay envelope out of a rival adult worker's grip mid-punch,
+    coins arcing through the air toward a brass collection box. Keep the same character, the same face, fur, skin
+    and markings, the same outfit details, the same saturated neon comic gouache art style with bold black contours,
+    and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-exchange-wage-garnisher-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Wage Garnisher L2: Garnished Paycheck (seed 2)'
+  asset: slime-city/evolutions/s3-exchange-wage-garnisher@2
+  size: 832x1216
+  seed: 1110060
+  source_image_id: 261529
+  prompt_prose: The junior agent now snatches a glowing pay envelope out of a rival adult worker's grip mid-punch,
+    coins arcing through the air toward a brass collection box. Keep the same character, the same face, fur, skin
+    and markings, the same outfit details, the same saturated neon comic gouache art style with bold black contours,
+    and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-exchange-wage-garnisher-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Wage Garnisher L3: Garnish at the Source (seed 1)'
+  asset: slime-city/evolutions/s3-exchange-wage-garnisher@3
+  size: 832x1216
+  seed: 1110061
+  source_image_id: 261529
+  prompt_prose: The agent now stands in a factory gateway with a heavy brass turnstile, every adult rival passing
+    through it slumping and dimmer as their glow drains into the agent's ledger bag. Keep the same character, the
+    same face, fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style
+    with bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-exchange-wage-garnisher-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Wage Garnisher L3: Garnish at the Source (seed 2)'
+  asset: slime-city/evolutions/s3-exchange-wage-garnisher@3
+  size: 832x1216
+  seed: 1110062
+  source_image_id: 261529
+  prompt_prose: The agent now stands in a factory gateway with a heavy brass turnstile, every adult rival passing
+    through it slumping and dimmer as their glow drains into the agent's ledger bag. Keep the same character, the
+    same face, fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style
+    with bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-exchange-mortgage-minotaur-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Mortgage Minotaur L2: Down Payment (seed 1)'
+  asset: slime-city/evolutions/s3-exchange-mortgage-minotaur@2
+  size: 832x1216
+  seed: 1110063
+  source_image_id: 261530
+  prompt_prose: The armored minotaur now kneels to drop a heavy chest of gold coins at the door of a cramped tenement,
+    a brass key glowing in its horn ring. Keep the same character, the same face, fur, skin and markings, the same
+    outfit details, the same saturated neon comic gouache art style with bold black contours, and the same tall
+    portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-exchange-mortgage-minotaur-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Mortgage Minotaur L2: Down Payment (seed 2)'
+  asset: slime-city/evolutions/s3-exchange-mortgage-minotaur@2
+  size: 832x1216
+  seed: 1110064
+  source_image_id: 261530
+  prompt_prose: The armored minotaur now kneels to drop a heavy chest of gold coins at the door of a cramped tenement,
+    a brass key glowing in its horn ring. Keep the same character, the same face, fur, skin and markings, the same
+    outfit details, the same saturated neon comic gouache art style with bold black contours, and the same tall
+    portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-exchange-mortgage-minotaur-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Mortgage Minotaur L3: Balloon Payment (seed 1)'
+  asset: slime-city/evolutions/s3-exchange-mortgage-minotaur@3
+  size: 832x1216
+  seed: 1110065
+  source_image_id: 261530
+  prompt_prose: The minotaur now charges beneath a giant gold balloon that bursts overhead, raining a crushing avalanche
+    of coins down onto a rival fortress gate. Keep the same character, the same face, fur, skin and markings, the
+    same outfit details, the same saturated neon comic gouache art style with bold black contours, and the same
+    tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-exchange-mortgage-minotaur-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Mortgage Minotaur L3: Balloon Payment (seed 2)'
+  asset: slime-city/evolutions/s3-exchange-mortgage-minotaur@3
+  size: 832x1216
+  seed: 1110066
+  source_image_id: 261530
+  prompt_prose: The minotaur now charges beneath a giant gold balloon that bursts overhead, raining a crushing avalanche
+    of coins down onto a rival fortress gate. Keep the same character, the same face, fur, skin and markings, the
+    same outfit details, the same saturated neon comic gouache art style with bold black contours, and the same
+    tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-exchange-mortgage-minotaur-l3b-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Mortgage Minotaur L3b: Long Term (seed 1)'
+  asset: slime-city/evolutions/s3-exchange-mortgage-minotaur@3b
+  size: 832x1216
+  seed: 1110067
+  source_image_id: 261530
+  prompt_prose: The minotaur now sits patiently on a stone bench beneath a great brass clock, slowly feeding a thin
+    endless stream of coins into a gilded vault beside it. Keep the same character, the same face, fur, skin and
+    markings, the same outfit details, the same saturated neon comic gouache art style with bold black contours,
+    and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-exchange-mortgage-minotaur-l3b-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Mortgage Minotaur L3b: Long Term (seed 2)'
+  asset: slime-city/evolutions/s3-exchange-mortgage-minotaur@3b
+  size: 832x1216
+  seed: 1110068
+  source_image_id: 261530
+  prompt_prose: The minotaur now sits patiently on a stone bench beneath a great brass clock, slowly feeding a thin
+    endless stream of coins into a gilded vault beside it. Keep the same character, the same face, fur, skin and
+    markings, the same outfit details, the same saturated neon comic gouache art style with bold black contours,
+    and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-exchange-retainer-clerk-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Retainer Clerk L2: Billable Hours (seed 1)'
+  asset: slime-city/evolutions/s3-exchange-retainer-clerk@2
+  size: 832x1216
+  seed: 1110069
+  source_image_id: 261531
+  prompt_prose: The accountant has hung up their brawling gloves on a coat hook and now sits behind a heavy bureau
+    under a green desk lamp, a brass hourglass ticking beside a neat stack of gold coins. Keep the same character,
+    the same face, fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style
+    with bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-exchange-retainer-clerk-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Retainer Clerk L2: Billable Hours (seed 2)'
+  asset: slime-city/evolutions/s3-exchange-retainer-clerk@2
+  size: 832x1216
+  seed: 1110070
+  source_image_id: 261531
+  prompt_prose: The accountant has hung up their brawling gloves on a coat hook and now sits behind a heavy bureau
+    under a green desk lamp, a brass hourglass ticking beside a neat stack of gold coins. Keep the same character,
+    the same face, fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style
+    with bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-exchange-retainer-clerk-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Retainer Clerk L3: Termination Clause (seed 1)'
+  asset: slime-city/evolutions/s3-exchange-retainer-clerk@3
+  size: 832x1216
+  seed: 1110071
+  source_image_id: 261531
+  prompt_prose: The accountant now sits calmly behind a fortified bureau with folded hands, refusing to fight, a
+    sealed severance envelope on the desk crackling with gold lightning aimed across the room at a shocked adult
+    rival boss. Keep the same character, the same face, fur, skin and markings, the same outfit details, the same
+    saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with the
+    scene painted edge to edge.
+- key: slime-evo-s3-exchange-retainer-clerk-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Retainer Clerk L3: Termination Clause (seed 2)'
+  asset: slime-city/evolutions/s3-exchange-retainer-clerk@3
+  size: 832x1216
+  seed: 1110072
+  source_image_id: 261531
+  prompt_prose: The accountant now sits calmly behind a fortified bureau with folded hands, refusing to fight, a
+    sealed severance envelope on the desk crackling with gold lightning aimed across the room at a shocked adult
+    rival boss. Keep the same character, the same face, fur, skin and markings, the same outfit details, the same
+    saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with the
+    scene painted edge to edge.
+- key: slime-evo-s3-exchange-seizure-executive-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Seizure Executive L2: Asset Freeze (seed 1)'
+  asset: slime-city/evolutions/s3-exchange-seizure-executive@2
+  size: 832x1216
+  seed: 1110073
+  source_image_id: 264940
+  prompt_prose: The executive now points a gold-capped pen across the table, and a sheet of glittering frost spreads
+    over a rival adult fighter's gauntlets and boots. Keep the same character, the same face, fur, skin and markings,
+    the same outfit details, the same saturated neon comic gouache art style with bold black contours, and the same
+    tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-exchange-seizure-executive-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Seizure Executive L2: Asset Freeze (seed 2)'
+  asset: slime-city/evolutions/s3-exchange-seizure-executive@2
+  size: 832x1216
+  seed: 1110074
+  source_image_id: 264940
+  prompt_prose: The executive now points a gold-capped pen across the table, and a sheet of glittering frost spreads
+    over a rival adult fighter's gauntlets and boots. Keep the same character, the same face, fur, skin and markings,
+    the same outfit details, the same saturated neon comic gouache art style with bold black contours, and the same
+    tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-exchange-seizure-executive-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Seizure Executive L3: Total Seizure (seed 1)'
+  asset: slime-city/evolutions/s3-exchange-seizure-executive@3
+  size: 832x1216
+  seed: 1110075
+  source_image_id: 264940
+  prompt_prose: The executive now stands in a hauled-away warehouse full of seized goods, a small adult junior associate
+    in a matching suit stepping out from behind the crates to join them. Keep the same character, the same face,
+    fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style with bold black
+    contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-exchange-seizure-executive-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Seizure Executive L3: Total Seizure (seed 2)'
+  asset: slime-city/evolutions/s3-exchange-seizure-executive@3
+  size: 832x1216
+  seed: 1110076
+  source_image_id: 264940
+  prompt_prose: The executive now stands in a hauled-away warehouse full of seized goods, a small adult junior associate
+    in a matching suit stepping out from behind the crates to join them. Keep the same character, the same face,
+    fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style with bold black
+    contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-exchange-hostile-takeover-goon-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Hostile Takeover Goon L2: Protection Money (seed 1)'
+  asset: slime-city/evolutions/s3-exchange-hostile-takeover-goon@2
+  size: 832x1216
+  seed: 1110077
+  source_image_id: 261533
+  prompt_prose: The street enforcer now stands over a flattened adult rival brawler, holding out an open palm while
+    the dazed brawler's nervous adult boss slides over a stack of gold coins. Keep the same character, the same
+    face, fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style with
+    bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-exchange-hostile-takeover-goon-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Hostile Takeover Goon L2: Protection Money (seed 2)'
+  asset: slime-city/evolutions/s3-exchange-hostile-takeover-goon@2
+  size: 832x1216
+  seed: 1110078
+  source_image_id: 261533
+  prompt_prose: The street enforcer now stands over a flattened adult rival brawler, holding out an open palm while
+    the dazed brawler's nervous adult boss slides over a stack of gold coins. Keep the same character, the same
+    face, fur, skin and markings, the same outfit details, the same saturated neon comic gouache art style with
+    bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-exchange-hostile-takeover-goon-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Hostile Takeover Goon L3: Hostile Takeover (seed 1)'
+  asset: slime-city/evolutions/s3-exchange-hostile-takeover-goon@3
+  size: 832x1216
+  seed: 1110079
+  source_image_id: 261533
+  prompt_prose: The enforcer now kicks open the gilded double doors of a rival boardroom and plants its boots on
+    the polished table, a rival adult executive sliding over a heavy gold deed while coins spill from the open vault
+    behind them. Keep the same character, the same face, fur, skin and markings, the same outfit details, the same
+    saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with the
+    scene painted edge to edge.
+- key: slime-evo-s3-exchange-hostile-takeover-goon-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Hostile Takeover Goon L3: Hostile Takeover (seed 2)'
+  asset: slime-city/evolutions/s3-exchange-hostile-takeover-goon@3
+  size: 832x1216
+  seed: 1110080
+  source_image_id: 261533
+  prompt_prose: The enforcer now kicks open the gilded double doors of a rival boardroom and plants its boots on
+    the polished table, a rival adult executive sliding over a heavy gold deed while coins spill from the open vault
+    behind them. Keep the same character, the same face, fur, skin and markings, the same outfit details, the same
+    saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with the
+    scene painted edge to edge.
+- key: slime-evo-s3-exchange-golden-foreclosure-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Golden Foreclosure Engine L2: Interest-Bearing (seed 1)'
+  asset: slime-city/evolutions/s3-exchange-golden-foreclosure@2
+  size: 832x1216
+  seed: 1110081
+  source_image_id: 261534
+  prompt_prose: The walking vault now hums with gold light, a slow glittering trickle of coins spilling from its
+    seams into a growing pile at its feet. Keep the same character, the same face, fur, skin and markings, the same
+    outfit details, the same saturated neon comic gouache art style with bold black contours, and the same tall
+    portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-exchange-golden-foreclosure-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Golden Foreclosure Engine L2: Interest-Bearing (seed 2)'
+  asset: slime-city/evolutions/s3-exchange-golden-foreclosure@2
+  size: 832x1216
+  seed: 1110082
+  source_image_id: 261534
+  prompt_prose: The walking vault now hums with gold light, a slow glittering trickle of coins spilling from its
+    seams into a growing pile at its feet. Keep the same character, the same face, fur, skin and markings, the same
+    outfit details, the same saturated neon comic gouache art style with bold black contours, and the same tall
+    portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-exchange-golden-foreclosure-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Golden Foreclosure Engine L3: The Vault Opens (seed 1)'
+  asset: slime-city/evolutions/s3-exchange-golden-foreclosure@3
+  size: 832x1216
+  seed: 1110083
+  source_image_id: 261534
+  prompt_prose: The vault's great round door now swings wide, beams of golden light pouring out onto two adult crew
+    members on either side who raise glowing fists. Keep the same character, the same face, fur, skin and markings,
+    the same outfit details, the same saturated neon comic gouache art style with bold black contours, and the same
+    tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-exchange-golden-foreclosure-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Golden Foreclosure Engine L3: The Vault Opens (seed 2)'
+  asset: slime-city/evolutions/s3-exchange-golden-foreclosure@3
+  size: 832x1216
+  seed: 1110084
+  source_image_id: 261534
+  prompt_prose: The vault's great round door now swings wide, beams of golden light pouring out onto two adult crew
+    members on either side who raise glowing fists. Keep the same character, the same face, fur, skin and markings,
+    the same outfit details, the same saturated neon comic gouache art style with bold black contours, and the same
+    tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-exchange-payment-reminder-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Payment Reminder L2: Second Notice (seed 1)'
+  asset: slime-city/evolutions/s3-exchange-payment-reminder@2
+  size: 832x1216
+  seed: 1110085
+  source_image_id: 261535
+  prompt_prose: A second, angrier red envelope now slaps onto the first, a small burst of gold sparks flying off
+    toward a distant vault. Keep the same objects, characters and setting details, the same saturated neon comic
+    gouache art style with bold black contours, and the same tall portrait framing with the scene painted edge to
+    edge.
+- key: slime-evo-s3-exchange-payment-reminder-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Payment Reminder L2: Second Notice (seed 2)'
+  asset: slime-city/evolutions/s3-exchange-payment-reminder@2
+  size: 832x1216
+  seed: 1110086
+  source_image_id: 261535
+  prompt_prose: A second, angrier red envelope now slaps onto the first, a small burst of gold sparks flying off
+    toward a distant vault. Keep the same objects, characters and setting details, the same saturated neon comic
+    gouache art style with bold black contours, and the same tall portrait framing with the scene painted edge to
+    edge.
+- key: slime-evo-s3-exchange-payment-reminder-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Payment Reminder L3: Sent to Collections (seed 1)'
+  asset: slime-city/evolutions/s3-exchange-payment-reminder@3
+  size: 832x1216
+  seed: 1110087
+  source_image_id: 261535
+  prompt_prose: A crowd of adult collectors in matching grey suits now charges down the alley past the envelope,
+    brass knuckles glowing gold in the streetlight. Keep the same objects, characters and setting details, the same
+    saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with the
+    scene painted edge to edge.
+- key: slime-evo-s3-exchange-payment-reminder-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Payment Reminder L3: Sent to Collections (seed 2)'
+  asset: slime-city/evolutions/s3-exchange-payment-reminder@3
+  size: 832x1216
+  seed: 1110088
+  source_image_id: 261535
+  prompt_prose: A crowd of adult collectors in matching grey suits now charges down the alley past the envelope,
+    brass knuckles glowing gold in the streetlight. Keep the same objects, characters and setting details, the same
+    saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with the
+    scene painted edge to edge.
+- key: slime-evo-s3-exchange-compound-notice-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Compound Notice L2: Overdue Refund (seed 1)'
+  asset: slime-city/evolutions/s3-exchange-compound-notice@2
+  size: 832x1216
+  seed: 1110089
+  source_image_id: 261536
+  prompt_prose: The notice now spits out a fresh glowing envelope from its torn corner, which flutters back toward
+    the sender's waiting hand. Keep the same objects, characters and setting details, the same saturated neon comic
+    gouache art style with bold black contours, and the same tall portrait framing with the scene painted edge to
+    edge.
+- key: slime-evo-s3-exchange-compound-notice-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Compound Notice L2: Overdue Refund (seed 2)'
+  asset: slime-city/evolutions/s3-exchange-compound-notice@2
+  size: 832x1216
+  seed: 1110090
+  source_image_id: 261536
+  prompt_prose: The notice now spits out a fresh glowing envelope from its torn corner, which flutters back toward
+    the sender's waiting hand. Keep the same objects, characters and setting details, the same saturated neon comic
+    gouache art style with bold black contours, and the same tall portrait framing with the scene painted edge to
+    edge.
+- key: slime-evo-s3-exchange-compound-notice-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Compound Notice L3: Cross-Default (seed 1)'
+  asset: slime-city/evolutions/s3-exchange-compound-notice@3
+  size: 832x1216
+  seed: 1110091
+  source_image_id: 261536
+  prompt_prose: The notice now cracks open like a seed pod, red envelopes shooting sideways into the adult fighters
+    standing on both sides of the frozen target. Keep the same objects, characters and setting details, the same
+    saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with the
+    scene painted edge to edge.
+- key: slime-evo-s3-exchange-compound-notice-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Compound Notice L3: Cross-Default (seed 2)'
+  asset: slime-city/evolutions/s3-exchange-compound-notice@3
+  size: 832x1216
+  seed: 1110092
+  source_image_id: 261536
+  prompt_prose: The notice now cracks open like a seed pod, red envelopes shooting sideways into the adult fighters
+    standing on both sides of the frozen target. Keep the same objects, characters and setting details, the same
+    saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with the
+    scene painted edge to edge.
+- key: slime-evo-s3-exchange-executive-incentive-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Executive Incentive L2: Performance Clause (seed 1)'
+  asset: slime-city/evolutions/s3-exchange-executive-incentive@2
+  size: 832x1216
+  seed: 1110093
+  source_image_id: 261537
+  prompt_prose: A golden bonus ribbon now ties itself around a fighter's fist, a tiny brass collection box dangling
+    from the knot. Keep the same objects, characters and setting details, the same saturated neon comic gouache
+    art style with bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-exchange-executive-incentive-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Executive Incentive L2: Performance Clause (seed 2)'
+  asset: slime-city/evolutions/s3-exchange-executive-incentive@2
+  size: 832x1216
+  seed: 1110094
+  source_image_id: 261537
+  prompt_prose: A golden bonus ribbon now ties itself around a fighter's fist, a tiny brass collection box dangling
+    from the knot. Keep the same objects, characters and setting details, the same saturated neon comic gouache
+    art style with bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-exchange-executive-incentive-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Executive Incentive L3: Posthumous Bonus (seed 1)'
+  asset: slime-city/evolutions/s3-exchange-executive-incentive@3
+  size: 832x1216
+  seed: 1110095
+  source_image_id: 261537
+  prompt_prose: A shimmering translucent adult fighter now rises from a gold-lit doorway in the alley, holding a
+    sealed bonus envelope and ready to rejoin the crew. Keep the same objects, characters and setting details, the
+    same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with
+    the scene painted edge to edge.
+- key: slime-evo-s3-exchange-executive-incentive-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Executive Incentive L3: Posthumous Bonus (seed 2)'
+  asset: slime-city/evolutions/s3-exchange-executive-incentive@3
+  size: 832x1216
+  seed: 1110096
+  source_image_id: 261537
+  prompt_prose: A shimmering translucent adult fighter now rises from a gold-lit doorway in the alley, holding a
+    sealed bonus envelope and ready to rejoin the crew. Keep the same objects, characters and setting details, the
+    same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with
+    the scene painted edge to edge.
+- key: slime-evo-s3-exchange-golden-parachute-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Golden Parachute L2: Severance Terms (seed 1)'
+  asset: slime-city/evolutions/s3-exchange-golden-parachute@2
+  size: 832x1216
+  seed: 1110097
+  source_image_id: 261538
+  prompt_prose: The golden parachute now billows larger over the wounded adult friend, its silk lined with thick
+    padded quilting that wraps around their shoulders. Keep the same objects, characters and setting details, the
+    same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with
+    the scene painted edge to edge.
+- key: slime-evo-s3-exchange-golden-parachute-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Golden Parachute L2: Severance Terms (seed 2)'
+  asset: slime-city/evolutions/s3-exchange-golden-parachute@2
+  size: 832x1216
+  seed: 1110098
+  source_image_id: 261538
+  prompt_prose: The golden parachute now billows larger over the wounded adult friend, its silk lined with thick
+    padded quilting that wraps around their shoulders. Keep the same objects, characters and setting details, the
+    same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with
+    the scene painted edge to edge.
+- key: slime-evo-s3-exchange-golden-parachute-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Golden Parachute L3: Platinum Parachute (seed 1)'
+  asset: slime-city/evolutions/s3-exchange-golden-parachute@3
+  size: 832x1216
+  seed: 1110099
+  source_image_id: 261538
+  prompt_prose: A gleaming platinum parachute now catches the adult fighter mid-fall from a rooftop, lowering them
+    gently onto the street as debris bounces off the shining canopy. Keep the same objects, characters and setting
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-s3-exchange-golden-parachute-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Golden Parachute L3: Platinum Parachute (seed 2)'
+  asset: slime-city/evolutions/s3-exchange-golden-parachute@3
+  size: 832x1216
+  seed: 1110100
+  source_image_id: 261538
+  prompt_prose: A gleaming platinum parachute now catches the adult fighter mid-fall from a rooftop, lowering them
+    gently onto the street as debris bounces off the shining canopy. Keep the same objects, characters and setting
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-s3-exchange-golden-parachute-l3b-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Golden Parachute L3b: Cash the Package (seed 1)'
+  asset: slime-city/evolutions/s3-exchange-golden-parachute@3b
+  size: 832x1216
+  seed: 1110101
+  source_image_id: 261538
+  prompt_prose: The parachute is now cut loose and stuffed into an open vault, coins pouring out of its golden folds
+    while an adult banker counts them with a grin. Keep the same objects, characters and setting details, the same
+    saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with the
+    scene painted edge to edge.
+- key: slime-evo-s3-exchange-golden-parachute-l3b-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Golden Parachute L3b: Cash the Package (seed 2)'
+  asset: slime-city/evolutions/s3-exchange-golden-parachute@3b
+  size: 832x1216
+  seed: 1110102
+  source_image_id: 261538
+  prompt_prose: The parachute is now cut loose and stuffed into an open vault, coins pouring out of its golden folds
+    while an adult banker counts them with a grin. Keep the same objects, characters and setting details, the same
+    saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with the
+    scene painted edge to edge.
+- key: slime-evo-s3-exchange-acquisition-clause-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Acquisition Clause L2: Hostile Bid (seed 1)'
+  asset: slime-city/evolutions/s3-exchange-acquisition-clause@2
+  size: 832x1216
+  seed: 1110103
+  source_image_id: 264949
+  prompt_prose: A gilded auction gavel now slams down from above onto the rival adult fighter across the alley,
+    sending a ring of gold sparks outward. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s3-exchange-acquisition-clause-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Acquisition Clause L2: Hostile Bid (seed 2)'
+  asset: slime-city/evolutions/s3-exchange-acquisition-clause@2
+  size: 832x1216
+  seed: 1110104
+  source_image_id: 264949
+  prompt_prose: A gilded auction gavel now slams down from above onto the rival adult fighter across the alley,
+    sending a ring of gold sparks outward. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s3-exchange-acquisition-clause-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Acquisition Clause L3: Corporate Raid (seed 1)'
+  asset: slime-city/evolutions/s3-exchange-acquisition-clause@3
+  size: 832x1216
+  seed: 1110105
+  source_image_id: 264949
+  prompt_prose: The contract has become a battering ram of stacked gold bars carried by an adult fighter smashing
+    through a line of rival shields toward a distant tower. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-s3-exchange-acquisition-clause-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Acquisition Clause L3: Corporate Raid (seed 2)'
+  asset: slime-city/evolutions/s3-exchange-acquisition-clause@3
+  size: 832x1216
+  seed: 1110106
+  source_image_id: 264949
+  prompt_prose: The contract has become a battering ram of stacked gold bars carried by an adult fighter smashing
+    through a line of rival shields toward a distant tower. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-s3-exchange-late-fee-sticker-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Late-Fee Sticker L2: Late Fee (seed 1)'
+  asset: slime-city/evolutions/s3-exchange-late-fee-sticker@2
+  size: 832x1216
+  seed: 1110107
+  source_image_id: 261540
+  prompt_prose: The sticker now glows bright orange and a small chute beside it drops collected coins into a brass
+    box bolted to the curb. Keep the same objects, characters and setting details, the same saturated neon comic
+    gouache art style with bold black contours, and the same tall portrait framing with the scene painted edge to
+    edge.
+- key: slime-evo-s3-exchange-late-fee-sticker-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Late-Fee Sticker L2: Late Fee (seed 2)'
+  asset: slime-city/evolutions/s3-exchange-late-fee-sticker@2
+  size: 832x1216
+  seed: 1110108
+  source_image_id: 261540
+  prompt_prose: The sticker now glows bright orange and a small chute beside it drops collected coins into a brass
+    box bolted to the curb. Keep the same objects, characters and setting details, the same saturated neon comic
+    gouache art style with bold black contours, and the same tall portrait framing with the scene painted edge to
+    edge.
+- key: slime-evo-s3-exchange-late-fee-sticker-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Late-Fee Sticker L3: Fees on Fees (seed 1)'
+  asset: slime-city/evolutions/s3-exchange-late-fee-sticker@3
+  size: 832x1216
+  seed: 1110109
+  source_image_id: 261540
+  prompt_prose: A huge yellow wheel boot now clamps onto the leg of a towering armored adult brute, stickers multiplying
+    across its plating like orange scales. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s3-exchange-late-fee-sticker-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Late-Fee Sticker L3: Fees on Fees (seed 2)'
+  asset: slime-city/evolutions/s3-exchange-late-fee-sticker@3
+  size: 832x1216
+  seed: 1110110
+  source_image_id: 261540
+  prompt_prose: A huge yellow wheel boot now clamps onto the leg of a towering armored adult brute, stickers multiplying
+    across its plating like orange scales. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s3-exchange-escrow-snare-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Escrow Snare L2: Funds Held (seed 1)'
+  asset: slime-city/evolutions/s3-exchange-escrow-snare@2
+  size: 832x1216
+  seed: 1110111
+  source_image_id: 261541
+  prompt_prose: The escrow cord now runs taut into a locked brass strongbox, which glows warmly as coins collect
+    inside it. Keep the same objects, characters and setting details, the same saturated neon comic gouache art
+    style with bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-exchange-escrow-snare-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Escrow Snare L2: Funds Held (seed 2)'
+  asset: slime-city/evolutions/s3-exchange-escrow-snare@2
+  size: 832x1216
+  seed: 1110112
+  source_image_id: 261541
+  prompt_prose: The escrow cord now runs taut into a locked brass strongbox, which glows warmly as coins collect
+    inside it. Keep the same objects, characters and setting details, the same saturated neon comic gouache art
+    style with bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-exchange-escrow-snare-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Escrow Snare L3: Escrow Agent (seed 1)'
+  asset: slime-city/evolutions/s3-exchange-escrow-snare@3
+  size: 832x1216
+  seed: 1110113
+  source_image_id: 261541
+  prompt_prose: A small adult escrow agent in a grey suit now steps out of the strongbox, briefcase in hand, standing
+    over the snared adult debtor. Keep the same objects, characters and setting details, the same saturated neon
+    comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s3-exchange-escrow-snare-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Escrow Snare L3: Escrow Agent (seed 2)'
+  asset: slime-city/evolutions/s3-exchange-escrow-snare@3
+  size: 832x1216
+  seed: 1110114
+  source_image_id: 261541
+  prompt_prose: A small adult escrow agent in a grey suit now steps out of the strongbox, briefcase in hand, standing
+    over the snared adult debtor. Keep the same objects, characters and setting details, the same saturated neon
+    comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s3-exchange-repossession-notice-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Repossession Notice L2: Flank Clause (seed 1)'
+  asset: slime-city/evolutions/s3-exchange-repossession-notice@2
+  size: 832x1216
+  seed: 1110115
+  source_image_id: 261542
+  prompt_prose: Glowing legal ribbons now lash sideways from the trap into the neighboring alleys, tripping two
+    adult fighters who tried to slip around it. Keep the same objects, characters and setting details, the same
+    saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with the
+    scene painted edge to edge.
+- key: slime-evo-s3-exchange-repossession-notice-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Repossession Notice L2: Flank Clause (seed 2)'
+  asset: slime-city/evolutions/s3-exchange-repossession-notice@2
+  size: 832x1216
+  seed: 1110116
+  source_image_id: 261542
+  prompt_prose: Glowing legal ribbons now lash sideways from the trap into the neighboring alleys, tripping two
+    adult fighters who tried to slip around it. Keep the same objects, characters and setting details, the same
+    saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with the
+    scene painted edge to edge.
+- key: slime-evo-s3-exchange-repossession-notice-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Repossession Notice L3: Repo Truck (seed 1)'
+  asset: slime-city/evolutions/s3-exchange-repossession-notice@3
+  size: 832x1216
+  seed: 1110117
+  source_image_id: 261542
+  prompt_prose: A massive gold-plated tow truck now roars into the scene, its crane hauling away a rival's gilded
+    throne while legal ribbons whip the flanks. Keep the same objects, characters and setting details, the same
+    saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with the
+    scene painted edge to edge.
+- key: slime-evo-s3-exchange-repossession-notice-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Repossession Notice L3: Repo Truck (seed 2)'
+  asset: slime-city/evolutions/s3-exchange-repossession-notice@3
+  size: 832x1216
+  seed: 1110118
+  source_image_id: 261542
+  prompt_prose: A massive gold-plated tow truck now roars into the scene, its crane hauling away a rival's gilded
+    throne while legal ribbons whip the flanks. Keep the same objects, characters and setting details, the same
+    saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with the
+    scene painted edge to edge.
+- key: slime-evo-s3-exchange-ledger-greaves-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Ledger Greaves L2: Express Paperwork (seed 1)'
+  asset: slime-city/evolutions/s3-exchange-ledger-greaves@2
+  size: 832x1216
+  seed: 1110119
+  source_image_id: 261543
+  prompt_prose: The ledger greaves now sprout small brass wings at the ankles, a blur of motion lines and fluttering
+    blank pages streaming behind them. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s3-exchange-ledger-greaves-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Ledger Greaves L2: Express Paperwork (seed 2)'
+  asset: slime-city/evolutions/s3-exchange-ledger-greaves@2
+  size: 832x1216
+  seed: 1110120
+  source_image_id: 261543
+  prompt_prose: The ledger greaves now sprout small brass wings at the ankles, a blur of motion lines and fluttering
+    blank pages streaming behind them. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s3-exchange-ledger-greaves-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Ledger Greaves L3: Hand-Delivered Debt (seed 1)'
+  asset: slime-city/evolutions/s3-exchange-ledger-greaves@3
+  size: 832x1216
+  seed: 1110121
+  source_image_id: 261543
+  prompt_prose: The winged greaves now sprint up the steps of a rival boss's marble mansion, a sealed red envelope
+    held out at the open front door. Keep the same objects, characters and setting details, the same saturated neon
+    comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s3-exchange-ledger-greaves-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Ledger Greaves L3: Hand-Delivered Debt (seed 2)'
+  asset: slime-city/evolutions/s3-exchange-ledger-greaves@3
+  size: 832x1216
+  seed: 1110122
+  source_image_id: 261543
+  prompt_prose: The winged greaves now sprint up the steps of a rival boss's marble mansion, a sealed red envelope
+    held out at the open front door. Keep the same objects, characters and setting details, the same saturated neon
+    comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s3-exchange-collection-badge-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Collection Badge L2: Deputized (seed 1)'
+  asset: slime-city/evolutions/s3-exchange-collection-badge@2
+  size: 832x1216
+  seed: 1110123
+  source_image_id: 261544
+  prompt_prose: The collection badge now shines on a sash across an adult fighter's chest, a small pouch of bounty
+    coins clinking at their hip. Keep the same objects, characters and setting details, the same saturated neon
+    comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s3-exchange-collection-badge-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Collection Badge L2: Deputized (seed 2)'
+  asset: slime-city/evolutions/s3-exchange-collection-badge@2
+  size: 832x1216
+  seed: 1110124
+  source_image_id: 261544
+  prompt_prose: The collection badge now shines on a sash across an adult fighter's chest, a small pouch of bounty
+    coins clinking at their hip. Keep the same objects, characters and setting details, the same saturated neon
+    comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s3-exchange-collection-badge-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Collection Badge L3: Collections Marshal (seed 1)'
+  asset: slime-city/evolutions/s3-exchange-collection-badge@3
+  size: 832x1216
+  seed: 1110125
+  source_image_id: 261544
+  prompt_prose: The badge has grown into a gleaming star pinned to a long marshal's coat, with two adult deputies
+    on either side lifting smaller matching badges. Keep the same objects, characters and setting details, the same
+    saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with the
+    scene painted edge to edge.
+- key: slime-evo-s3-exchange-collection-badge-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Collection Badge L3: Collections Marshal (seed 2)'
+  asset: slime-city/evolutions/s3-exchange-collection-badge@3
+  size: 832x1216
+  seed: 1110126
+  source_image_id: 261544
+  prompt_prose: The badge has grown into a gleaming star pinned to a long marshal's coat, with two adult deputies
+    on either side lifting smaller matching badges. Keep the same objects, characters and setting details, the same
+    saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with the
+    scene painted edge to edge.
