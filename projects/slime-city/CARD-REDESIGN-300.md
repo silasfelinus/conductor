@@ -4,7 +4,7 @@
 
 **Inventory verified against seven Kind Robots catalog source files:** six factions × 40 + 60 independent mercenary cards = **300 unique IDs**.
 
-**Checkpoint (2026-11-07 PT):** 59 mechanically implemented and merged in Kind Robots PRs #4895, #4901 and #4904 (wave three squash `571115711b121b3860662544346bfaca72380535`, all 11 final-head checks successful); 11 concepts from the original 70 remain unimplemented; 230 other existing cards still require original, individual ability design. This ledger does not count a generic level/stat upgrade as crafted.
+**Checkpoint (2026-11-07 PT):** 70 mechanically implemented in Kind Robots PRs #4895, #4901, #4904 and #4905 (final eleven: Patent Shredders, Razor Spurs, Spiked Choker, Wrecking Fist, Hydraulic Slap, Whoops Grenade, Illegal Booster, Spyglass Visor, Iron Contract, Bribe-Licked Rat and Grease Oracle). All 70 received per-level rules text, real combat triggers and deterministic fixtures; PR #4905 must complete latest-head CI and merge **before this ledger update merges**. The remaining **230 existing cards** still need individually crafted evolutions under t-041. A generic stat upgrade alone is not counted as crafted.
 
 **Source cross-check:** `prototypes.ts` 60 founders; `reserveCards.ts` 12; `gutterCrownWaveTwo.ts` 36; `gutterCrownWaveThree.ts` 36; `gutterCrownFinaleA.ts` 48; `gutterCrownFinaleB.ts` 48; `mercenaryCards.ts` 60. All paths are under Kind Robots `utils/slimeCity/`. IDs were deduplicated across the seven sources, not counted from generated card faces or art jobs.
 
@@ -23,7 +23,7 @@ Legend: `MERGED` mechanically implemented, tested and merged on main · `DESIGNE
 | `pounce` | Catnip Overdrive | spell | MERGED |
 | `scentmine` | Scent Mine | trap | MERGED |
 | `reknit` | Reknit Serum | spell | MERGED |
-| `shredders` | Patent Shredders | equipment | DESIGNED |
+| `shredders` | Patent Shredders | equipment | MERGED |
 | `ninthlife` | Ninth Life Collar | equipment | MERGED |
 | `laser` | Laser Pointer | spell | MERGED |
 | `splice-runner` | Splice Runner | creature | TODO |
@@ -67,9 +67,9 @@ Legend: `MERGED` mechanically implemented, tested and merged on main · `DESIGNE
 | `queen` | Queen Safety Pin | creature | MERGED |
 | `mosh` | Moshpit Massacre | spell | MERGED |
 | `bloodwire` | Bloodwire | trap | MERGED |
-| `spurs` | Razor Spurs | equipment | DESIGNED |
+| `spurs` | Razor Spurs | equipment | MERGED |
 | `pinprick` | Safety-Pin Stab | spell | MERGED |
-| `choker` | Spiked Choker | equipment | DESIGNED |
+| `choker` | Spiked Choker | equipment | MERGED |
 | `feedback` | Amp-Stack Feedback | spell | MERGED |
 | `pogo-punk` | Pogo Punk | creature | TODO |
 | `amp-tripwire` | Amp Tripwire | trap | TODO |
@@ -113,9 +113,9 @@ Legend: `MERGED` mechanically implemented, tested and merged on main · `DESIGNE
 | `overclock` | Overclock Core | spell | MERGED |
 | `shocktrap` | Shock Plate | trap | MERGED |
 | `plating` | Foundry Plating | equipment | MERGED |
-| `wreckingfist` | Wrecking Fist | equipment | DESIGNED |
+| `wreckingfist` | Wrecking Fist | equipment | MERGED |
 | `ducttape` | Duct-Tape Weld | spell | MERGED |
-| `slap` | Hydraulic Slap | spell | DESIGNED |
+| `slap` | Hydraulic Slap | spell | MERGED |
 | `union-millwright` | Union Millwright | creature | TODO |
 | `spare-pistons` | Spare Pistons | equipment | TODO |
 | `s1-walking-foundry` | Walking Foundry | creature | TODO |
@@ -156,8 +156,8 @@ Legend: `MERGED` mechanically implemented, tested and merged on main · `DESIGNE
 | `kaboom` | Sister Kaboom | creature | MERGED |
 | `bomber` | Grand Detonator | creature | MERGED |
 | `firestorm` | Accidental Firestorm | spell | MERGED |
-| `badluck` | Whoops Grenade | trap | DESIGNED |
-| `fuse` | Illegal Booster | equipment | DESIGNED |
+| `badluck` | Whoops Grenade | trap | MERGED |
+| `fuse` | Illegal Booster | equipment | MERGED |
 | `confetti` | Confetti Cannon | spell | MERGED |
 | `fusevest` | Lit-Fuse Vest | equipment | MERGED |
 | `drink` | Hold My Drink | spell | MERGED |
@@ -202,7 +202,7 @@ Legend: `MERGED` mechanically implemented, tested and merged on main · `DESIGNE
 | `oracle` | Drowned Oracle | creature | MERGED |
 | `blackout` | Signal Blackout | spell | MERGED |
 | `tripwire` | Tripwire | trap | MERGED |
-| `visor` | Spyglass Visor | equipment | DESIGNED |
+| `visor` | Spyglass Visor | equipment | MERGED |
 | `grate` | Leech Grate | trap | MERGED |
 | `sonar` | Drain Sonar | spell | MERGED |
 | `drysuit` | Rubber Drysuit | equipment | MERGED |
@@ -247,7 +247,7 @@ Legend: `MERGED` mechanically implemented, tested and merged on main · `DESIGNE
 | `mogul` | The Meat Mogul | creature | MERGED |
 | `collection` | Hostile Collection | spell | MERGED |
 | `debttrap` | Hidden Fees | trap | MERGED |
-| `contract` | Iron Contract | equipment | DESIGNED |
+| `contract` | Iron Contract | equipment | MERGED |
 | `foreclosure` | Foreclosure | spell | MERGED |
 | `handshake` | Golden Handshake | equipment | MERGED |
 | `hushmoney` | Hush Money | spell | MERGED |
@@ -287,12 +287,12 @@ Legend: `MERGED` mechanically implemented, tested and merged on main · `DESIGNE
 | Card ID | Card name | Type | Evolution status |
 |---|---|---|---|
 | `merc-bus-driver` | Gutterbus Driver | creature | MERGED |
-| `merc-bribe-rat` | Bribe-Licked Rat | creature | DESIGNED |
+| `merc-bribe-rat` | Bribe-Licked Rat | creature | MERGED |
 | `merc-roof-dentist` | Rooftop Dentist | creature | MERGED |
 | `merc-debt-slug` | Debt-Eating Slug | creature | MERGED |
 | `merc-clock-grandma` | Clockwork Grandmother | creature | MERGED |
 | `merc-smog-moth` | Smog Moth Courier | creature | MERGED |
-| `merc-grease-oracle` | Grease Oracle | creature | DESIGNED |
+| `merc-grease-oracle` | Grease Oracle | creature | MERGED |
 | `merc-fungal-bouncer` | Fungal Bouncer | creature | MERGED |
 | `merc-discount-angel` | Discount Archangel | creature | MERGED |
 | `merc-union-owl` | Owl of All Trades | creature | MERGED |
