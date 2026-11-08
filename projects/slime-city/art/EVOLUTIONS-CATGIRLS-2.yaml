@@ -1,0 +1,926 @@
+# Slime City evolution art, Catgirls, the rest of the crew (2026-11-08 PT; CLASH-EVOLUTION-PLAN.md section 4).
+# Silas: "We should have fresh art on the evolutions, not just frame effects" and "300 cards, all need custom
+# better evolutions." Each crafted card (utils/slimeCity/evolutions/*.ts in kind_robots) gets a level-2 and a
+# level-3 painting, and a choose-one card a painting for its option B ('@3b'): the same character or scene
+# transformed by its story arc. Flux Kontext edits the card's wired level-1 ArtImage (SLIME_CITY_ART.cards) so
+# face, outfit and style carry over; each prompt names only that stage's story change, written per card. Two
+# seeds per stage for curation. Keepers are wired as SLIME_CITY_ART.evolutions['<cardId>@2' | '@3' | '@3b'].
+# auto_submit: true.
+round: slime-city-evolutions-catgirls-2
+project_slug: slime-city
+designer: Slime City evolution art, Catgirls, the rest of the crew
+is_public: true
+is_mature: false
+cast_loras: false
+priority: 640
+auto_submit: true
+lanes:
+- key: kontext-evolution
+  label: Flux Kontext dev (fp8), evolved stages from each card's level-1 painting
+  engine: kontext
+  prompt: prose
+  steps: 20
+  guidance: 2.5
+subjects:
+- key: slime-evo-s1-clone-salvage-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Secondhand Life L2: Spare Parts Bin (seed 1)'
+  asset: slime-city/evolutions/s1-clone-salvage@2
+  size: 832x1216
+  seed: 1105001
+  source_image_id: 260655
+  prompt_prose: The medical dumpster now overflows with salvaged spare parts sorted into glowing labeled bins, a
+    catgirl medic fitting a bright new prosthetic arm onto an adult patient beside it. Keep the same objects, characters
+    and setting details, the same saturated neon comic gouache art style with bold black contours, and the same
+    tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s1-clone-salvage-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Secondhand Life L2: Spare Parts Bin (seed 2)'
+  asset: slime-city/evolutions/s1-clone-salvage@2
+  size: 832x1216
+  seed: 1105002
+  source_image_id: 260655
+  prompt_prose: The medical dumpster now overflows with salvaged spare parts sorted into glowing labeled bins, a
+    catgirl medic fitting a bright new prosthetic arm onto an adult patient beside it. Keep the same objects, characters
+    and setting details, the same saturated neon comic gouache art style with bold black contours, and the same
+    tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s1-clone-salvage-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Secondhand Life L3: Clone Vat (seed 1)'
+  asset: slime-city/evolutions/s1-clone-salvage@3
+  size: 832x1216
+  seed: 1105003
+  source_image_id: 260655
+  prompt_prose: A bubbling green clone vat now stands in the alley behind the dumpster, a fresh adult catgirl recruit
+    stepping out of the glowing liquid wrapped in a hospital blanket. Keep the same objects, characters and setting
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-s1-clone-salvage-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Secondhand Life L3: Clone Vat (seed 2)'
+  asset: slime-city/evolutions/s1-clone-salvage@3
+  size: 832x1216
+  seed: 1105004
+  source_image_id: 260655
+  prompt_prose: A bubbling green clone vat now stands in the alley behind the dumpster, a fresh adult catgirl recruit
+    stepping out of the glowing liquid wrapped in a hospital blanket. Keep the same objects, characters and setting
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-s1-catnip-tripwire-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Catnip Tripwire L2: Long Lure (seed 1)'
+  asset: slime-city/evolutions/s1-catnip-tripwire@2
+  size: 832x1216
+  seed: 1105005
+  source_image_id: 260657
+  prompt_prose: The tripwire now snaps across the whole block in a long glowing green line, a puff of catnip dust
+    bursting at both ends where two adult thugs stumble. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-s1-catnip-tripwire-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Catnip Tripwire L2: Long Lure (seed 2)'
+  asset: slime-city/evolutions/s1-catnip-tripwire@2
+  size: 832x1216
+  seed: 1105006
+  source_image_id: 260657
+  prompt_prose: The tripwire now snaps across the whole block in a long glowing green line, a puff of catnip dust
+    bursting at both ends where two adult thugs stumble. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-s1-catnip-tripwire-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Catnip Tripwire L3: Catnip Stampede (seed 1)'
+  asset: slime-city/evolutions/s1-catnip-tripwire@3
+  size: 832x1216
+  seed: 1105007
+  source_image_id: 260657
+  prompt_prose: A stampede of neon-eyed alley cats pours out of every doorway toward the sprung catnip lure, swarming
+    the street in a joyful furry wave. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s1-catnip-tripwire-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Catnip Tripwire L3: Catnip Stampede (seed 2)'
+  asset: slime-city/evolutions/s1-catnip-tripwire@3
+  size: 832x1216
+  seed: 1105008
+  source_image_id: 260657
+  prompt_prose: A stampede of neon-eyed alley cats pours out of every doorway toward the sprung catnip lure, swarming
+    the street in a joyful furry wave. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s1-surgical-piercers-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Surgical Piercers L2: Clean Incision (seed 1)'
+  asset: slime-city/evolutions/s1-surgical-piercers@2
+  size: 832x1216
+  seed: 1105009
+  source_image_id: 264941
+  prompt_prose: The surgical piercers now slice a clean glowing line straight through a dented steel armor plate
+    that falls apart in two halves. Keep the same objects, characters and setting details, the same saturated neon
+    comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s1-surgical-piercers-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Surgical Piercers L2: Clean Incision (seed 2)'
+  asset: slime-city/evolutions/s1-surgical-piercers@2
+  size: 832x1216
+  seed: 1105010
+  source_image_id: 264941
+  prompt_prose: The surgical piercers now slice a clean glowing line straight through a dented steel armor plate
+    that falls apart in two halves. Keep the same objects, characters and setting details, the same saturated neon
+    comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s1-surgical-piercers-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Surgical Piercers L3: Open-Heart Theft (seed 1)'
+  asset: slime-city/evolutions/s1-surgical-piercers@3
+  size: 832x1216
+  seed: 1105011
+  source_image_id: 264941
+  prompt_prose: The piercers now hold up a glowing crystal heart-shaped power core stolen from a toppled armored
+    adult guard, its blue light flowing into the catgirl wielding them. Keep the same objects, characters and setting
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-s1-surgical-piercers-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Surgical Piercers L3: Open-Heart Theft (seed 2)'
+  asset: slime-city/evolutions/s1-surgical-piercers@3
+  size: 832x1216
+  seed: 1105012
+  source_image_id: 264941
+  prompt_prose: The piercers now hold up a glowing crystal heart-shaped power core stolen from a toppled armored
+    adult guard, its blue light flowing into the catgirl wielding them. Keep the same objects, characters and setting
+    details, the same saturated neon comic gouache art style with bold black contours, and the same tall portrait
+    framing with the scene painted edge to edge.
+- key: slime-evo-s2-catgirls-emergency-molt-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Emergency Molt L2: Tougher Hide (seed 1)'
+  asset: slime-city/evolutions/s2-catgirls-emergency-molt@2
+  size: 832x1216
+  seed: 1105013
+  source_image_id: 261415
+  prompt_prose: The healed catgirl now shrugs off her old skin like a translucent shell, revealing tougher patterned
+    fur that gleams like woven armor. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s2-catgirls-emergency-molt-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Emergency Molt L2: Tougher Hide (seed 2)'
+  asset: slime-city/evolutions/s2-catgirls-emergency-molt@2
+  size: 832x1216
+  seed: 1105014
+  source_image_id: 261415
+  prompt_prose: The healed catgirl now shrugs off her old skin like a translucent shell, revealing tougher patterned
+    fur that gleams like woven armor. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s2-catgirls-emergency-molt-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Emergency Molt L3: Husk Burst (seed 1)'
+  asset: slime-city/evolutions/s2-catgirls-emergency-molt@3
+  size: 832x1216
+  seed: 1105015
+  source_image_id: 261415
+  prompt_prose: The shed translucent husk bursts outward in a shower of glowing shards that slam into an adult rival
+    across the alley while the catgirl stands renewed. Keep the same objects, characters and setting details, the
+    same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with
+    the scene painted edge to edge.
+- key: slime-evo-s2-catgirls-emergency-molt-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Emergency Molt L3: Husk Burst (seed 2)'
+  asset: slime-city/evolutions/s2-catgirls-emergency-molt@3
+  size: 832x1216
+  seed: 1105016
+  source_image_id: 261415
+  prompt_prose: The shed translucent husk bursts outward in a shower of glowing shards that slam into an adult rival
+    across the alley while the catgirl stands renewed. Keep the same objects, characters and setting details, the
+    same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with
+    the scene painted edge to edge.
+- key: slime-evo-s2-catgirls-needle-thread-ambush-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Needle-Thread Ambush L2: Threaded Team (seed 1)'
+  asset: slime-city/evolutions/s2-catgirls-needle-thread-ambush@2
+  size: 832x1216
+  seed: 1105017
+  source_image_id: 261416
+  prompt_prose: A single glowing thread now links three catgirls crouched along a rooftop ledge, each one ready
+    to drop in perfect unison. Keep the same objects, characters and setting details, the same saturated neon comic
+    gouache art style with bold black contours, and the same tall portrait framing with the scene painted edge to
+    edge.
+- key: slime-evo-s2-catgirls-needle-thread-ambush-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Needle-Thread Ambush L2: Threaded Team (seed 2)'
+  asset: slime-city/evolutions/s2-catgirls-needle-thread-ambush@2
+  size: 832x1216
+  seed: 1105018
+  source_image_id: 261416
+  prompt_prose: A single glowing thread now links three catgirls crouched along a rooftop ledge, each one ready
+    to drop in perfect unison. Keep the same objects, characters and setting details, the same saturated neon comic
+    gouache art style with bold black contours, and the same tall portrait framing with the scene painted edge to
+    edge.
+- key: slime-evo-s2-catgirls-needle-thread-ambush-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Needle-Thread Ambush L3: Needle Strike Team (seed 1)'
+  asset: slime-city/evolutions/s2-catgirls-needle-thread-ambush@3
+  size: 832x1216
+  seed: 1105019
+  source_image_id: 261416
+  prompt_prose: The whole catgirl strike team drops from the rooftops at once along glowing threads like needles,
+    landing in a ring around startled adult guards. Keep the same objects, characters and setting details, the same
+    saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with the
+    scene painted edge to edge.
+- key: slime-evo-s2-catgirls-needle-thread-ambush-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Needle-Thread Ambush L3: Needle Strike Team (seed 2)'
+  asset: slime-city/evolutions/s2-catgirls-needle-thread-ambush@3
+  size: 832x1216
+  seed: 1105020
+  source_image_id: 261416
+  prompt_prose: The whole catgirl strike team drops from the rooftops at once along glowing threads like needles,
+    landing in a ring around startled adult guards. Keep the same objects, characters and setting details, the same
+    saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with the
+    scene painted edge to edge.
+- key: slime-evo-s2-catgirls-sterile-alley-wire-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Sterile Alley Wire L2: Sterile Field (seed 1)'
+  asset: slime-city/evolutions/s2-catgirls-sterile-alley-wire@2
+  size: 832x1216
+  seed: 1105021
+  source_image_id: 261417
+  prompt_prose: The suture wire now glows with a soft blue sterile light that spreads along the alley walls, dressing
+    the wounds of two resting catgirls nearby. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s2-catgirls-sterile-alley-wire-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Sterile Alley Wire L2: Sterile Field (seed 2)'
+  asset: slime-city/evolutions/s2-catgirls-sterile-alley-wire@2
+  size: 832x1216
+  seed: 1105022
+  source_image_id: 261417
+  prompt_prose: The suture wire now glows with a soft blue sterile light that spreads along the alley walls, dressing
+    the wounds of two resting catgirls nearby. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s2-catgirls-sterile-alley-wire-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Sterile Alley Wire L3: Quarantine Line (seed 1)'
+  asset: slime-city/evolutions/s2-catgirls-sterile-alley-wire@3
+  size: 832x1216
+  seed: 1105023
+  source_image_id: 261417
+  prompt_prose: A glowing blue quarantine line now spans three alleys at once, three adult intruders frozen mid-step
+    inside shimmering sterile bubbles. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s2-catgirls-sterile-alley-wire-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Sterile Alley Wire L3: Quarantine Line (seed 2)'
+  asset: slime-city/evolutions/s2-catgirls-sterile-alley-wire@3
+  size: 832x1216
+  seed: 1105024
+  source_image_id: 261417
+  prompt_prose: A glowing blue quarantine line now spans three alleys at once, three adult intruders frozen mid-step
+    inside shimmering sterile bubbles. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s2-catgirls-lab-escape-atlas-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Lab Escape Atlas L2: Red Ink (seed 1)'
+  asset: slime-city/evolutions/s2-catgirls-lab-escape-atlas@2
+  size: 832x1216
+  seed: 1105025
+  source_image_id: 261418
+  prompt_prose: The atlas now lies open on a crate, every weak point of a stunned armored adult guard circled in
+    glowing red ink while a catgirl takes aim. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s2-catgirls-lab-escape-atlas-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Lab Escape Atlas L2: Red Ink (seed 2)'
+  asset: slime-city/evolutions/s2-catgirls-lab-escape-atlas@2
+  size: 832x1216
+  seed: 1105026
+  source_image_id: 261418
+  prompt_prose: The atlas now lies open on a crate, every weak point of a stunned armored adult guard circled in
+    glowing red ink while a catgirl takes aim. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s2-catgirls-lab-escape-atlas-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Lab Escape Atlas L3: Every Exit Marked (seed 1)'
+  asset: slime-city/evolutions/s2-catgirls-lab-escape-atlas@3
+  size: 832x1216
+  seed: 1105027
+  source_image_id: 261418
+  prompt_prose: The atlas is passed hand to hand along a line of running catgirls through a maze of glowing red
+    escape routes painted across the city map. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s2-catgirls-lab-escape-atlas-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Lab Escape Atlas L3: Every Exit Marked (seed 2)'
+  asset: slime-city/evolutions/s2-catgirls-lab-escape-atlas@3
+  size: 832x1216
+  seed: 1105028
+  source_image_id: 261418
+  prompt_prose: The atlas is passed hand to hand along a line of running catgirls through a maze of glowing red
+    escape routes painted across the city map. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s3-catgirls-patent-saboteur-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Patent Saboteur L2: Wrench in the Works (seed 1)'
+  asset: slime-city/evolutions/s3-catgirls-patent-saboteur@2
+  size: 832x1216
+  seed: 1105029
+  source_image_id: 261450
+  prompt_prose: She now jams a glowing wrench into a sparking corporate machine, gears and springs bursting out
+    around her as it grinds to a halt. Keep the same character, the same face, fur, skin and markings, the same
+    outfit details, the same saturated neon comic gouache art style with bold black contours, and the same tall
+    portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-catgirls-patent-saboteur-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Patent Saboteur L2: Wrench in the Works (seed 2)'
+  asset: slime-city/evolutions/s3-catgirls-patent-saboteur@2
+  size: 832x1216
+  seed: 1105030
+  source_image_id: 261450
+  prompt_prose: She now jams a glowing wrench into a sparking corporate machine, gears and springs bursting out
+    around her as it grinds to a halt. Keep the same character, the same face, fur, skin and markings, the same
+    outfit details, the same saturated neon comic gouache art style with bold black contours, and the same tall
+    portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-catgirls-patent-saboteur-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Patent Saboteur L3: Burn the Patent Office (seed 1)'
+  asset: slime-city/evolutions/s3-catgirls-patent-saboteur@3
+  size: 832x1216
+  seed: 1105031
+  source_image_id: 261450
+  prompt_prose: She walks away from a corporate patent office as its filing cabinets erupt in a towering blaze of
+    burning paper and neon embers behind her. Keep the same character, the same face, fur, skin and markings, the
+    same outfit details, the same saturated neon comic gouache art style with bold black contours, and the same
+    tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-catgirls-patent-saboteur-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Patent Saboteur L3: Burn the Patent Office (seed 2)'
+  asset: slime-city/evolutions/s3-catgirls-patent-saboteur@3
+  size: 832x1216
+  seed: 1105032
+  source_image_id: 261450
+  prompt_prose: She walks away from a corporate patent office as its filing cabinets erupt in a towering blaze of
+    burning paper and neon embers behind her. Keep the same character, the same face, fur, skin and markings, the
+    same outfit details, the same saturated neon comic gouache art style with bold black contours, and the same
+    tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-catgirls-alley-vet-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Noodle Cart Veterinarian L2: Bone Broth (seed 1)'
+  asset: slime-city/evolutions/s3-catgirls-alley-vet@2
+  size: 832x1216
+  seed: 1105033
+  source_image_id: 261451
+  prompt_prose: She now ladles steaming glowing bone broth from her noodle cart into bowls held by a line of bandaged
+    adult patients. Keep the same character, the same face, fur, skin and markings, the same outfit details, the
+    same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with
+    the scene painted edge to edge.
+- key: slime-evo-s3-catgirls-alley-vet-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Noodle Cart Veterinarian L2: Bone Broth (seed 2)'
+  asset: slime-city/evolutions/s3-catgirls-alley-vet@2
+  size: 832x1216
+  seed: 1105034
+  source_image_id: 261451
+  prompt_prose: She now ladles steaming glowing bone broth from her noodle cart into bowls held by a line of bandaged
+    adult patients. Keep the same character, the same face, fur, skin and markings, the same outfit details, the
+    same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with
+    the scene painted edge to edge.
+- key: slime-evo-s3-catgirls-alley-vet-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Noodle Cart Veterinarian L3: Midnight Noodle Kitchen (seed 1)'
+  asset: slime-city/evolutions/s3-catgirls-alley-vet@3
+  size: 832x1216
+  seed: 1105035
+  source_image_id: 261451
+  prompt_prose: Her noodle cart has grown into a bustling midnight street kitchen strung with lanterns, feeding
+    a long table of cheering adult catgirls and their crew boss. Keep the same character, the same face, fur, skin
+    and markings, the same outfit details, the same saturated neon comic gouache art style with bold black contours,
+    and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-catgirls-alley-vet-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Noodle Cart Veterinarian L3: Midnight Noodle Kitchen (seed 2)'
+  asset: slime-city/evolutions/s3-catgirls-alley-vet@3
+  size: 832x1216
+  seed: 1105036
+  source_image_id: 261451
+  prompt_prose: Her noodle cart has grown into a bustling midnight street kitchen strung with lanterns, feeding
+    a long table of cheering adult catgirls and their crew boss. Keep the same character, the same face, fur, skin
+    and markings, the same outfit details, the same saturated neon comic gouache art style with bold black contours,
+    and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-catgirls-scalpel-captain-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Velvet Scalpel Captain L2: Hit and Fade (seed 1)'
+  asset: slime-city/evolutions/s3-catgirls-scalpel-captain@2
+  size: 832x1216
+  seed: 1105037
+  source_image_id: 264946
+  prompt_prose: She now melts into a curtain of purple shadow right after a strike, only her glinting scalpel and
+    eyes visible in the dark. Keep the same character, the same face, fur, skin and markings, the same outfit details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-s3-catgirls-scalpel-captain-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Velvet Scalpel Captain L2: Hit and Fade (seed 2)'
+  asset: slime-city/evolutions/s3-catgirls-scalpel-captain@2
+  size: 832x1216
+  seed: 1105038
+  source_image_id: 264946
+  prompt_prose: She now melts into a curtain of purple shadow right after a strike, only her glinting scalpel and
+    eyes visible in the dark. Keep the same character, the same face, fur, skin and markings, the same outfit details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-s3-catgirls-scalpel-captain-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Velvet Scalpel Captain L3: Velvet Coup (seed 1)'
+  asset: slime-city/evolutions/s3-catgirls-scalpel-captain@3
+  size: 832x1216
+  seed: 1105039
+  source_image_id: 264946
+  prompt_prose: She stands in a velvet-draped boardroom over a toppled lone adult guard, the rest of the corporate
+    security staring in shock as she tips her cap. Keep the same character, the same face, fur, skin and markings,
+    the same outfit details, the same saturated neon comic gouache art style with bold black contours, and the same
+    tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-catgirls-scalpel-captain-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Velvet Scalpel Captain L3: Velvet Coup (seed 2)'
+  asset: slime-city/evolutions/s3-catgirls-scalpel-captain@3
+  size: 832x1216
+  seed: 1105040
+  source_image_id: 264946
+  prompt_prose: She stands in a velvet-draped boardroom over a toppled lone adult guard, the rest of the corporate
+    security staring in shock as she tips her cap. Keep the same character, the same face, fur, skin and markings,
+    the same outfit details, the same saturated neon comic gouache art style with bold black contours, and the same
+    tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-catgirls-bicycle-clinic-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Sutures on Wheels L2: House Calls (seed 1)'
+  asset: slime-city/evolutions/s3-catgirls-bicycle-clinic@2
+  size: 832x1216
+  seed: 1105041
+  source_image_id: 261453
+  prompt_prose: She now pedals between rooftops on her ambulance bicycle making house calls, handing a blood bag
+    through a window to a wounded adult ally. Keep the same character, the same face, fur, skin and markings, the
+    same outfit details, the same saturated neon comic gouache art style with bold black contours, and the same
+    tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-catgirls-bicycle-clinic-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Sutures on Wheels L2: House Calls (seed 2)'
+  asset: slime-city/evolutions/s3-catgirls-bicycle-clinic@2
+  size: 832x1216
+  seed: 1105042
+  source_image_id: 261453
+  prompt_prose: She now pedals between rooftops on her ambulance bicycle making house calls, handing a blood bag
+    through a window to a wounded adult ally. Keep the same character, the same face, fur, skin and markings, the
+    same outfit details, the same saturated neon comic gouache art style with bold black contours, and the same
+    tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-catgirls-bicycle-clinic-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Sutures on Wheels L3: Convoy (seed 1)'
+  asset: slime-city/evolutions/s3-catgirls-bicycle-clinic@3
+  size: 832x1216
+  seed: 1105043
+  source_image_id: 261453
+  prompt_prose: A whole convoy of neon medic bicycles now rides in formation behind her through the rainy street,
+    sirens flashing, each ridden by an adult catgirl medic. Keep the same character, the same face, fur, skin and
+    markings, the same outfit details, the same saturated neon comic gouache art style with bold black contours,
+    and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-catgirls-bicycle-clinic-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Sutures on Wheels L3: Convoy (seed 2)'
+  asset: slime-city/evolutions/s3-catgirls-bicycle-clinic@3
+  size: 832x1216
+  seed: 1105044
+  source_image_id: 261453
+  prompt_prose: A whole convoy of neon medic bicycles now rides in formation behind her through the rainy street,
+    sirens flashing, each ridden by an adult catgirl medic. Keep the same character, the same face, fur, skin and
+    markings, the same outfit details, the same saturated neon comic gouache art style with bold black contours,
+    and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-catgirls-sidewalk-stitches-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Sidewalk Stitches L2: Running Stitch (seed 1)'
+  asset: slime-city/evolutions/s3-catgirls-sidewalk-stitches@2
+  size: 832x1216
+  seed: 1105045
+  source_image_id: 261455
+  prompt_prose: One long glowing running stitch now threads from patient to patient down the sidewalk, closing the
+    wounds of several adult catgirls in a row. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s3-catgirls-sidewalk-stitches-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Sidewalk Stitches L2: Running Stitch (seed 2)'
+  asset: slime-city/evolutions/s3-catgirls-sidewalk-stitches@2
+  size: 832x1216
+  seed: 1105046
+  source_image_id: 261455
+  prompt_prose: One long glowing running stitch now threads from patient to patient down the sidewalk, closing the
+    wounds of several adult catgirls in a row. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s3-catgirls-sidewalk-stitches-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Sidewalk Stitches L3: Field Hospital (seed 1)'
+  asset: slime-city/evolutions/s3-catgirls-sidewalk-stitches@3
+  size: 832x1216
+  seed: 1105047
+  source_image_id: 261455
+  prompt_prose: The sidewalk has become a field hospital under glowing blue shield domes, patched-up adult catgirls
+    resting safely inside each one. Keep the same objects, characters and setting details, the same saturated neon
+    comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s3-catgirls-sidewalk-stitches-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Sidewalk Stitches L3: Field Hospital (seed 2)'
+  asset: slime-city/evolutions/s3-catgirls-sidewalk-stitches@3
+  size: 832x1216
+  seed: 1105048
+  source_image_id: 261455
+  prompt_prose: The sidewalk has become a field hospital under glowing blue shield domes, patched-up adult catgirls
+    resting safely inside each one. Keep the same objects, characters and setting details, the same saturated neon
+    comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s3-catgirls-stolen-saw-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Stolen Bone Saw L2: Cut the Bars (seed 1)'
+  asset: slime-city/evolutions/s3-catgirls-stolen-saw@2
+  size: 832x1216
+  seed: 1105049
+  source_image_id: 261456
+  prompt_prose: The stolen bone saw now cuts clean through glowing cage bars, a freed adult catgirl slipping out
+    through the gap. Keep the same objects, characters and setting details, the same saturated neon comic gouache
+    art style with bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-catgirls-stolen-saw-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Stolen Bone Saw L2: Cut the Bars (seed 2)'
+  asset: slime-city/evolutions/s3-catgirls-stolen-saw@2
+  size: 832x1216
+  seed: 1105050
+  source_image_id: 261456
+  prompt_prose: The stolen bone saw now cuts clean through glowing cage bars, a freed adult catgirl slipping out
+    through the gap. Keep the same objects, characters and setting details, the same saturated neon comic gouache
+    art style with bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-catgirls-stolen-saw-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Stolen Bone Saw L3: Strip the Plating (seed 1)'
+  asset: slime-city/evolutions/s3-catgirls-stolen-saw@3
+  size: 832x1216
+  seed: 1105051
+  source_image_id: 261456
+  prompt_prose: The saw now strips every plate of armor off a towering corporate guard, the steel pieces clattering
+    to the street around him. Keep the same objects, characters and setting details, the same saturated neon comic
+    gouache art style with bold black contours, and the same tall portrait framing with the scene painted edge to
+    edge.
+- key: slime-evo-s3-catgirls-stolen-saw-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Stolen Bone Saw L3: Strip the Plating (seed 2)'
+  asset: slime-city/evolutions/s3-catgirls-stolen-saw@3
+  size: 832x1216
+  seed: 1105052
+  source_image_id: 261456
+  prompt_prose: The saw now strips every plate of armor off a towering corporate guard, the steel pieces clattering
+    to the street around him. Keep the same objects, characters and setting details, the same saturated neon comic
+    gouache art style with bold black contours, and the same tall portrait framing with the scene painted edge to
+    edge.
+- key: slime-evo-s3-catgirls-fire-escape-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Climb the Fire Escape L2: Drop From Above (seed 1)'
+  asset: slime-city/evolutions/s3-catgirls-fire-escape@2
+  size: 832x1216
+  seed: 1105053
+  source_image_id: 261457
+  prompt_prose: A catgirl now drops from the fire escape claws-first onto a startled adult thug in the alley below,
+    sparks flying. Keep the same objects, characters and setting details, the same saturated neon comic gouache
+    art style with bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-catgirls-fire-escape-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Climb the Fire Escape L2: Drop From Above (seed 2)'
+  asset: slime-city/evolutions/s3-catgirls-fire-escape@2
+  size: 832x1216
+  seed: 1105054
+  source_image_id: 261457
+  prompt_prose: A catgirl now drops from the fire escape claws-first onto a startled adult thug in the alley below,
+    sparks flying. Keep the same objects, characters and setting details, the same saturated neon comic gouache
+    art style with bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-catgirls-fire-escape-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Climb the Fire Escape L3: King of the Fire Escape (seed 1)'
+  asset: slime-city/evolutions/s3-catgirls-fire-escape@3
+  size: 832x1216
+  seed: 1105055
+  source_image_id: 261457
+  prompt_prose: A catgirl stands atop the highest fire escape under the moon, looking down over the whole lit city
+    like its rightful ruler. Keep the same objects, characters and setting details, the same saturated neon comic
+    gouache art style with bold black contours, and the same tall portrait framing with the scene painted edge to
+    edge.
+- key: slime-evo-s3-catgirls-fire-escape-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Climb the Fire Escape L3: King of the Fire Escape (seed 2)'
+  asset: slime-city/evolutions/s3-catgirls-fire-escape@3
+  size: 832x1216
+  seed: 1105056
+  source_image_id: 261457
+  prompt_prose: A catgirl stands atop the highest fire escape under the moon, looking down over the whole lit city
+    like its rightful ruler. Keep the same objects, characters and setting details, the same saturated neon comic
+    gouache art style with bold black contours, and the same tall portrait framing with the scene painted edge to
+    edge.
+- key: slime-evo-s3-catgirls-counterfeit-heart-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Counterfeit Heart L2: Black-Market Pump (seed 1)'
+  asset: slime-city/evolutions/s3-catgirls-counterfeit-heart@2
+  size: 832x1216
+  seed: 1105057
+  source_image_id: 261458
+  prompt_prose: The counterfeit heart now pumps inside a brass-and-glass casing with pistons and glowing tubes,
+    beating faster and brighter. Keep the same objects, characters and setting details, the same saturated neon
+    comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s3-catgirls-counterfeit-heart-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Counterfeit Heart L2: Black-Market Pump (seed 2)'
+  asset: slime-city/evolutions/s3-catgirls-counterfeit-heart@2
+  size: 832x1216
+  seed: 1105058
+  source_image_id: 261458
+  prompt_prose: The counterfeit heart now pumps inside a brass-and-glass casing with pistons and glowing tubes,
+    beating faster and brighter. Keep the same objects, characters and setting details, the same saturated neon
+    comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s3-catgirls-counterfeit-heart-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Counterfeit Heart L3: Beats On (seed 1)'
+  asset: slime-city/evolutions/s3-catgirls-counterfeit-heart@3
+  size: 832x1216
+  seed: 1105059
+  source_image_id: 261458
+  prompt_prose: The counterfeit heart glows fiercely inside an adult catgirl's chest as she rises from the rubble
+    after a terrible fall, refusing to stop. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s3-catgirls-counterfeit-heart-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Counterfeit Heart L3: Beats On (seed 2)'
+  asset: slime-city/evolutions/s3-catgirls-counterfeit-heart@3
+  size: 832x1216
+  seed: 1105060
+  source_image_id: 261458
+  prompt_prose: The counterfeit heart glows fiercely inside an adult catgirl's chest as she rises from the rubble
+    after a terrible fall, refusing to stop. Keep the same objects, characters and setting details, the same saturated
+    neon comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s3-catgirls-spare-lives-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Spare Nine Lives L2: Shared Graft (seed 1)'
+  asset: slime-city/evolutions/s3-catgirls-spare-lives@2
+  size: 832x1216
+  seed: 1105061
+  source_image_id: 261459
+  prompt_prose: Glowing graft threads now branch from one patient to her neighbors on side-by-side cots, sharing
+    the spare life between them. Keep the same objects, characters and setting details, the same saturated neon
+    comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s3-catgirls-spare-lives-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Spare Nine Lives L2: Shared Graft (seed 2)'
+  asset: slime-city/evolutions/s3-catgirls-spare-lives@2
+  size: 832x1216
+  seed: 1105062
+  source_image_id: 261459
+  prompt_prose: Glowing graft threads now branch from one patient to her neighbors on side-by-side cots, sharing
+    the spare life between them. Keep the same objects, characters and setting details, the same saturated neon
+    comic gouache art style with bold black contours, and the same tall portrait framing with the scene painted
+    edge to edge.
+- key: slime-evo-s3-catgirls-spare-lives-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Spare Nine Lives L3: Lives for Everyone (seed 1)'
+  asset: slime-city/evolutions/s3-catgirls-spare-lives@3
+  size: 832x1216
+  seed: 1105063
+  source_image_id: 261459
+  prompt_prose: A shower of glowing spare-life orbs now rains down over the whole crew of adult catgirls in the
+    street, each one catching a light of her own. Keep the same objects, characters and setting details, the same
+    saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with the
+    scene painted edge to edge.
+- key: slime-evo-s3-catgirls-spare-lives-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Spare Nine Lives L3: Lives for Everyone (seed 2)'
+  asset: slime-city/evolutions/s3-catgirls-spare-lives@3
+  size: 832x1216
+  seed: 1105064
+  source_image_id: 261459
+  prompt_prose: A shower of glowing spare-life orbs now rains down over the whole crew of adult catgirls in the
+    street, each one catching a light of her own. Keep the same objects, characters and setting details, the same
+    saturated neon comic gouache art style with bold black contours, and the same tall portrait framing with the
+    scene painted edge to edge.
+- key: slime-evo-s3-catgirls-suture-line-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Suture Line L2: Stitched to the Street (seed 1)'
+  asset: slime-city/evolutions/s3-catgirls-suture-line@2
+  size: 832x1216
+  seed: 1105065
+  source_image_id: 261460
+  prompt_prose: The surgical thread now stitches an adult intruder's boots right to the pavement, glowing stitches
+    holding him in place. Keep the same objects, characters and setting details, the same saturated neon comic gouache
+    art style with bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-catgirls-suture-line-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Suture Line L2: Stitched to the Street (seed 2)'
+  asset: slime-city/evolutions/s3-catgirls-suture-line@2
+  size: 832x1216
+  seed: 1105066
+  source_image_id: 261460
+  prompt_prose: The surgical thread now stitches an adult intruder's boots right to the pavement, glowing stitches
+    holding him in place. Keep the same objects, characters and setting details, the same saturated neon comic gouache
+    art style with bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-catgirls-suture-line-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Suture Line L3: Sew the Alley Shut (seed 1)'
+  asset: slime-city/evolutions/s3-catgirls-suture-line@3
+  size: 832x1216
+  seed: 1105067
+  source_image_id: 261460
+  prompt_prose: The alley is now sewn shut by a towering barricade of glowing surgical sutures woven between the
+    walls. Keep the same objects, characters and setting details, the same saturated neon comic gouache art style
+    with bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-catgirls-suture-line-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Suture Line L3: Sew the Alley Shut (seed 2)'
+  asset: slime-city/evolutions/s3-catgirls-suture-line@3
+  size: 832x1216
+  seed: 1105068
+  source_image_id: 261460
+  prompt_prose: The alley is now sewn shut by a towering barricade of glowing surgical sutures woven between the
+    walls. Keep the same objects, characters and setting details, the same saturated neon comic gouache art style
+    with bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-catgirls-false-clinic-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'False Clinic Sign L2: Copay (seed 1)'
+  asset: slime-city/evolutions/s3-catgirls-false-clinic@2
+  size: 832x1216
+  seed: 1105069
+  source_image_id: 261462
+  prompt_prose: A slot under the glowing fake clinic sign now spits out a long paper receipt as an adult thug grudgingly
+    pays the toll. Keep the same objects, characters and setting details, the same saturated neon comic gouache
+    art style with bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-catgirls-false-clinic-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'False Clinic Sign L2: Copay (seed 2)'
+  asset: slime-city/evolutions/s3-catgirls-false-clinic@2
+  size: 832x1216
+  seed: 1105070
+  source_image_id: 261462
+  prompt_prose: A slot under the glowing fake clinic sign now spits out a long paper receipt as an adult thug grudgingly
+    pays the toll. Keep the same objects, characters and setting details, the same saturated neon comic gouache
+    art style with bold black contours, and the same tall portrait framing with the scene painted edge to edge.
+- key: slime-evo-s3-catgirls-false-clinic-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'False Clinic Sign L3: Collections Department (seed 1)'
+  asset: slime-city/evolutions/s3-catgirls-false-clinic@3
+  size: 832x1216
+  seed: 1105071
+  source_image_id: 261462
+  prompt_prose: A whole collections office has opened behind the fake clinic sign, catgirl clerks in visors stamping
+    overdue notices that fly toward a distant corporate tower. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-s3-catgirls-false-clinic-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'False Clinic Sign L3: Collections Department (seed 2)'
+  asset: slime-city/evolutions/s3-catgirls-false-clinic@3
+  size: 832x1216
+  seed: 1105072
+  source_image_id: 261462
+  prompt_prose: A whole collections office has opened behind the fake clinic sign, catgirl clerks in visors stamping
+    overdue notices that fly toward a distant corporate tower. Keep the same objects, characters and setting details,
+    the same saturated neon comic gouache art style with bold black contours, and the same tall portrait framing
+    with the scene painted edge to edge.
+- key: slime-evo-s3-catgirls-hollow-scalpel-l2-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Hollow Scalpel L2: Serum Reservoir (seed 1)'
+  asset: slime-city/evolutions/s3-catgirls-hollow-scalpel@2
+  size: 832x1216
+  seed: 1105073
+  source_image_id: 261463
+  prompt_prose: The hollow scalpel now glows with a reservoir of blue serum in its handle, feeding light back into
+    the hand that holds it. Keep the same objects, characters and setting details, the same saturated neon comic
+    gouache art style with bold black contours, and the same tall portrait framing with the scene painted edge to
+    edge.
+- key: slime-evo-s3-catgirls-hollow-scalpel-l2-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Hollow Scalpel L2: Serum Reservoir (seed 2)'
+  asset: slime-city/evolutions/s3-catgirls-hollow-scalpel@2
+  size: 832x1216
+  seed: 1105074
+  source_image_id: 261463
+  prompt_prose: The hollow scalpel now glows with a reservoir of blue serum in its handle, feeding light back into
+    the hand that holds it. Keep the same objects, characters and setting details, the same saturated neon comic
+    gouache art style with bold black contours, and the same tall portrait framing with the scene painted edge to
+    edge.
+- key: slime-evo-s3-catgirls-hollow-scalpel-l3-1
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Hollow Scalpel L3: Blade That Mends (seed 1)'
+  asset: slime-city/evolutions/s3-catgirls-hollow-scalpel@3
+  size: 832x1216
+  seed: 1105075
+  source_image_id: 261463
+  prompt_prose: The hollow scalpel now sprays a fine arc of glowing healing mist over a crew of wounded adult catgirls
+    after a decisive strike. Keep the same objects, characters and setting details, the same saturated neon comic
+    gouache art style with bold black contours, and the same tall portrait framing with the scene painted edge to
+    edge.
+- key: slime-evo-s3-catgirls-hollow-scalpel-l3-2
+  entity: card-art
+  lane: kontext-evolution
+  title: 'Hollow Scalpel L3: Blade That Mends (seed 2)'
+  asset: slime-city/evolutions/s3-catgirls-hollow-scalpel@3
+  size: 832x1216
+  seed: 1105076
+  source_image_id: 261463
+  prompt_prose: The hollow scalpel now sprays a fine arc of glowing healing mist over a crew of wounded adult catgirls
+    after a decisive strike. Keep the same objects, characters and setting details, the same saturated neon comic
+    gouache art style with bold black contours, and the same tall portrait framing with the scene painted edge to
+    edge.
