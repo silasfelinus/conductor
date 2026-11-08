@@ -1,6 +1,6 @@
 # Slime City CLASH: Evolution with actual plot twists
 
-**Design pass:** 2026-11-07 PT. **Scope:** existing 300 distinct cards, no new IDs, no faction-hate cards; Clash-only, all Legacy cards/behaviors retained. **Status:** proposals for 70 named cards. A listed proposal is not playable until its matching engine/test path is merged.
+**Design pass:** 2026-11-07 PT. **Scope:** existing 300 distinct cards, no new IDs, no faction-hate cards; Clash-only, all Legacy cards/behaviors retained. **Implementation:** the first 70 distinct level arcs now have corresponding Clash-only mechanics and battle fixtures in Kind Robots #4895, #4901, #4904 and #4905. The final eleven in #4905 and this documentation update must not be considered shipped until both PRs merge green. Follow-on t-041 tackles the other 230 catalog cards.
 
 ## Research anchors
 
