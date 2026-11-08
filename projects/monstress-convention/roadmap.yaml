@@ -180,12 +180,12 @@ tasks:
   - id: t-011
     milestone: m4
     title: "Security regression suite for mature opt-in and CHILD restrictions across all discovery and direct access"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 20261108021605Z-monstrique-two-audiences-c8p2
     claimed_at: '2026-11-08T02:16:05.269Z'
     depends_on: t-001
-    updated: '2026-11-08T02:16:05.269Z'
+    updated: '2026-11-08T02:21:43.395Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -198,6 +198,8 @@ tasks:
       2026-11-07 PT: Added Admin launcher opt-in affordance for mature-off non-CHILD administrators on desktop and mobile without revealing Monstrique itself; persisted consent uses existing MaturityToggle/AccountStore. New contract asserts both surfaces, no spoiler leaks and existing nav authorization. This is a scoped t-011 slice; remaining security matrix returns to ready after merging.
 
       2026-11-07 PT: Verified all eight GitHub workflows, including the full contract shard and tablet audit; merged kind_robots #4902 (06267009b68a908c11e88a399d95d95fb8c3e266). Mature-off, non-CHILD Admin users now see a generic persisted opt-in control in both launcher layouts, then the gated Monstrique nav entry on consent. No name leak before opt-in, and no Play release. Full t-011 security audit still remains (SSR, discovery, ArtImages, production runtime), so return to ready. Live deployment unverified.
+
+      2026-11-07 PT: Implemented opt-in general versus mature Monstrique editions in kind_robots worker branch. General-audience game preserves the Chapter One detective path, removes flirting/romance scrapbook content, rewrites suggestive dialogue and uses a separate save. The mature audience decision comes from a no-store JWT-only server endpoint and existing role/consent predicate. Public Play route and nav are outward-facing: implementation PR requires security and visual human gate before merge/deployment. Existing private Admin studio remains separate.
   - id: t-012
     milestone: m4
     title: "Adversarial end-to-end playthroughs and visual/performance acceptance preparation"
