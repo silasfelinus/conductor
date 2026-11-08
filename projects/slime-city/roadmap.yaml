@@ -937,7 +937,7 @@ tasks:
   - id: t-039
     milestone: m2
     title: "Everything is Clash: Solo and Alliance decks, City/Story bouts as Solo Clash, verified CPU reward matches, legacy modes retired"
-    status: review
+    status: done
     claimed_by: 20261108T0020Z-slime-city-everything-clash-t-039-pa1b
     claimed_at: '2026-11-08T00:20:00.000Z'
     updated: '2026-11-08T01:10:00.000Z'
@@ -947,6 +947,8 @@ tasks:
       Silas, 2026-11-08 PT: "drop the 12 creature minimum. solo should not have been gone, it should have been an independent mode with the solo gamemode. speaking of though, when i select city, it launches the old game system. we don't need the legacy modes, period, everything should be clash, either in city mode which is Solo Clash, or the deckbuilder mode when a user can make a solo or alliance clash deck and play against cpu or human opponents, earning rewards and opening packs." Then: "deck display still doesn't have support for evolutions."
 
       Kind Robots PR #4900 (branch claude/pensive-albattani-ibljzj): SOLO CLASH format (one faction 20 cards + mercs, any mix, story.soloDecks); Alliance drops the creature minimum; armory SOLO 20 / ALLIANCE 30 (classic 10 retired); City rival/contract and Story bouts launch Solo Clash with terms moved onto boss life (20-60) and settle the ledgers once; CLASH tab SOLO/ALLIANCE vs CPU as server-issued reward matches (deck kept with the match, TRICKLE ownership, transcript replay with CPU moves checked against the server CPU, usual XP/Meat, "Win a Clash battle" bounty); LEGACY menu, Arena, Five Alleys, arena hand and legacy card face deleted; Collection and pack cards show the Clash face with an EVOLUTION LV 1/2/3 switch; fixes #4897's server story save dropping alliances. Not built: human opponents (t-011). Legacy engine code (BLACKOUT/BLOODRUSH/TURF/FIVE ALLEYS in utils/slimeCity) remains unreachable and is a cleanup follow-up.
+
+      2026-11-08 PT: merged as kind_robots PR #4900 (squash 5379f9f2703494ab51f09c8f1c82229875bf0892) after all 16 latest-head checks passed; includes the Collection/pack Clash card faces with the EVOLUTION LV 1/2/3 switch and deletion of the arena, alleys, arena-hand and legacy card-face components (component-reachability guard). Visual check on main still owed (local dev needs a DB).
   - id: t-040
     milestone: m2
     title: "Wire the ogre redo-2 board tokens (no more Shrek look) into the Clash board"
