@@ -971,7 +971,7 @@ tasks:
   - id: t-041
     milestone: m2
     title: "CLASH 300: individually crafted L1/L2/L3 effects for every existing card"
-    status: review
+    status: ready
     depends_on: t-037
     passes: 0
     stakes: reversible
@@ -985,7 +985,6 @@ tasks:
       2026-11-08 PT: Audited the merged 300 custom evolution arcs and shipped reproducible 1,230-match constructed Solo/Alliance QA in Kind Robots #4908 (squash f2a7a6e, all eight final-head workflow runs green). Solo first seat 49.6%, Alliance first seat 40%; 279/300 cards used, 160 at L3, 21 never selected, two exact mechanical arc duplicates. Conductor #7176 (squash 2e88f66) updates the 300-row ledger to 70 MERGED and 230 LIVE_QA and records findings in CLASH-EVOLUTION-QA-2026-11-08.md. Remain ready: resolve unplayed cards and duplicate paths, assess CPU evolution valuation, run larger constructed matchups and bespoke 230-card payoff fixtures. Human fun acceptance, art delivery and production deployment not claimed.
 
       Tactical evolution increment in review: CPU now values actual board-relevant staged effects and lasting gear instead of a generic arrival bonus; Bloodfairy Banana Bouncer becomes a swarm encore rather than an Ironjaw boss/heal clone, and Undertow Backwater IOU becomes three-lane stun rather than an Exchange splash clone. Adds focused CPU decision and real battle fixtures plus existing 1,230-match regression. Verify CI and quantitative changes before merge.
-    updated: '2026-11-08T14:04:00Z'
-    owner: worker
-    claimed_by: 2026-11-08T13:48:00Z-slime-city-t-041-cpu-evo-q9v2
-    claimed_at: '2026-11-08T13:48:00Z'
+
+      2026-11-08 PT: Merged Kind Robots PR #4910 (squash 3e053c17b339704a12083b37c92a4932fd84800f) after all eight final-head checks completed green. Solo CPU now estimates actual L2/L3 board payoffs, lasting gear and card investment while preserving Alliance baseline AI; fixes RNG mutation during random-target evaluation, with a replay/immutability regression. Bloodfairy Banana Bouncer L3 summons a SWARM encore; Undertow Backwater IOU L3 stuns adjacent foes, removing both prior exact mechanical duplicates. Verified 1,080 Solo seeded matches (48.7% first-seat, 9.5 average rounds, 135 exact replays), 150 Alliance matches (40% first-seat), all solo and alliance general acceptance thresholds, and named ability fixtures. Still 25/300 cards never selected in constructed CPU games (previous 21), 144 reached L3 (previous 160); keep task ready for creative individual payoff QA, CPU utility/card-reach improvement, deeper deckbuilding matchups and pending art curation. No deployment or human fun acceptance claimed.
+    updated: '2026-11-08T14:57:00Z'
