@@ -980,11 +980,15 @@ tasks:
   - id: t-040
     milestone: m2
     title: "Wire the ogre redo-2 board tokens (no more Shrek look) into the Clash board"
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
     note: |-
       Silas, 2026-11-08 PT: "we've still got a lot of orcs that look like shrek in their character token in game." projects/slime-city/art/BOARD-TOKENS-OGRE-REDO-2.yaml queues 45 Krea re-renders (auto_submit): 14 Ironjaw ogre creatures and the Picket Line Troll mercenary x fierce/guard/hurt, each with a distinct non-green skin, angular industrial face, riveted chrome lower jaw and small bolted ears. Once the sweep writes art_image_ids back, curate them (reject any that still read as a green round-faced movie ogre and re-queue with a stronger look) and replace the matching SLIME_CITY_ART.tokens['<cardId>/<mood>'] ids in kind_robots utils/slimeCity/artManifest.ts. Foundry Lion keeps its token.
+    owner: worker
+    claimed_by: 2026-11-09T125000Z-slime-city-t040-ogre-tokens-p5rr
+    claimed_at: '2026-11-09T12:50:45Z'
+    updated: '2026-11-09T12:50:45Z'
   - id: t-041
     milestone: m2
     title: "CLASH 300: individually crafted L1/L2/L3 effects for every existing card"
