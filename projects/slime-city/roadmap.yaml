@@ -980,7 +980,7 @@ tasks:
   - id: t-040
     milestone: m2
     title: "Wire the ogre redo-2 board tokens (no more Shrek look) into the Clash board"
-    status: review
+    status: done
     passes: 0
     stakes: reversible
     note: |-
@@ -993,10 +993,16 @@ tasks:
       green/mossy/round), Coal Cart Racer (grey-green round), Union Lunch Lady (painted as a
       human woman). They re-render in projects/slime-city/art/BOARD-TOKENS-OGRE-REDO-3.yaml
       (auto_submit); wiring those is slime-city/t-042. Done after #4926 merges.
+
+      DONE 2026-11-09 PT: kind_robots#4926 squash-merged
+      dbd5d70151ce9cacd7d2114c57ba3bdaedd082d5 after all 11 checks passed (TypeScript, 4
+      contract shards + verifiers, layout-contract, Prettier, verify x2, GitGuardian). Live on
+      kindrobots.org after the next Unraid Force Update. Redo-3 for the 9 rejected tokens is
+      t-042.
     owner: worker
     claimed_by: 2026-11-09T125000Z-slime-city-t040-ogre-tokens-p5rr
     claimed_at: '2026-11-09T12:50:45Z'
-    updated: '2026-11-09T13:00:18Z'
+    updated: '2026-11-09T13:07:59Z'
     implementation_pr: 'silasfelinus/kind_robots#4926'
   - id: t-041
     milestone: m2
