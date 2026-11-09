@@ -70,11 +70,24 @@ The branch stays unmerged until this plan is approved; then only the infrastruct
 
 ## 3. Design rules for every card
 
+**Silas's clarified 2026-11-09 PT default: L1 is useful but fragile.**
+A late-game investment must still make a valuable play *now*: a defender can
+hold the lane or create a follow-up, a small engine can give one immediate
+heal/mark/token, and a pressure creature can force a response. Fragility is
+about **answerable investment**, not mandatory low HP (even a high-life
+defender can rely on a vulnerable setup). L2 compounds the same signature
+verb through concrete combos; L3 provides a named, earned transformation,
+without becoming an automatic win. The full mechanically inspectable
+worksheet, faction synergies and acceptance tests are in
+[PLAYABLE-EVOLUTION-CONTRACT.md](PLAYABLE-EVOLUTION-CONTRACT.md).
+This supersedes any text below implying a blank or intentionally unusable L1.
+
+
 1. **Story first (top-down).** Each card gets a three-beat arc in one line each (who they are, what happens
    to them, what they become). Mechanics come second and must make the arc felt.
 2. **Pick a trajectory, then a stat curve that matches it.** No universal ramp. Each card declares one:
    - **Early bloomer:** best at L1; L2/L3 trade raw power for utility or a new role.
-   - **Late bloomer:** weak or awkward at L1; L3 transforms into something worth planning around.
+   - **Late bloomer:** useful but fragile / answerable at L1, with a clear purpose; L3 transforms the *same investment* into something worth planning around.
    - **Role shift:** each level does a *different job* (brawler → bodyguard → field medic).
    - **Price to pay:** the level-up costs something (life, a sacrifice, a weaker body) for a bigger payoff.
    - **Earned:** L3 wants a condition met during the match (a Spellstone-style mini quest).
@@ -146,12 +159,16 @@ Today one painting serves all three levels and only the frame changes. Plan:
 
 ## 5. Process per card
 
-1. **Design sheet row** in `CARD-REDESIGN-300.md` (or per-faction sheets): arc (3 beats), trajectory, L1/L2/L3
-   one-line rules, stat curve, counterplay, and the two art prompts.
+1. **Design sheet row** in `CARD-REDESIGN-300.md` (or per-faction sheets) using the
+   [playable arc worksheet](PLAYABLE-EVOLUTION-CONTRACT.md): signature verb, immediately
+   useful/answerable L1, concrete real-card combo, L2 interaction, earned named L3,
+   faction-specific counterplay, stat curve, and the two art prompts.
 2. **Silas review per batch** (a gate on subjective design acceptance, before code).
-3. **Implementation:** per-card code where needed, a level-specific stat curve per trajectory, a battle
-   fixture showing the payoff and the counterplay, and a CPU heuristic so the computer plays the card on
-   purpose.
+3. **Implementation:** per-card code where needed, a level-specific stat curve per trajectory,
+   fixtures showing *L1 impact even before removal*, the actual L2 cross-card synergy,
+   the L3 payoff and answer, and a CPU heuristic that can intentionally use each stage.
+   Compare 20-card Solo and 30-card Alliance deck reachability rather than assuming that
+   registering a card proves it sees play.
 4. **Art round** queued from the approved arc; wired after curation.
 5. **Balance sweep** per wave, and a reachability check (how often L3 actually happens).
 
