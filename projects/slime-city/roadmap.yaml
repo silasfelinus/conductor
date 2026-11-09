@@ -394,9 +394,8 @@ tasks:
   - id: t-022
     milestone: m2
     title: "Paint reaction-face board tokens for every creature and wire them in"
-    status: review
+    status: ready
     depends_on: t-013
-    owner: worker
     passes: 0
     stakes: reversible
     note: |-
@@ -415,10 +414,9 @@ tasks:
       then screenshot the board at 390/768/1440 (not yet done).
 
       Partial board-art increment: Clash fighters now show their card painting and chosen evolution artwork instead of generic mood tokens. Added a source contract to the Clash test suite. Review PR and CI before merge; generated evolution paintings remain an independent art queue.
-    claimed_by: 2026-11-09T142051Z-slime-city-t022-evo-board-a82f
-    claimed_at: '2026-11-09T14:20:51Z'
-    updated: '2026-11-09T14:24:51Z'
-    implementation_pr: 'silasfelinus/kind_robots#4786'
+
+      PARTIAL MERGED 2026-11-09 PT: kind_robots PR #4931 squash-merged at 5d3ca5417937313ee14d7ec1878298be1a23db9a after six latest-head workflows all completed successfully (architecture, formatting, schema, layout, TypeScript, contract tests). Clash fighters now prefer their original card illustration and selected L2/L3 art rather than cropped reaction-face tokens. Added a Clash source regression assertion. Remaining scope: curate and wire generated evolution art; verify 390/768/1440 screenshots; finish outstanding art rounds. No new ArtJobs or deployment claimed.
+    updated: '2026-11-09T15:20:00Z'
   - id: t-023
     milestone: m2
     title: "TURF: a Go-style mode where every card is one token"
