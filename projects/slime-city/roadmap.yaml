@@ -1106,7 +1106,7 @@ tasks:
   - id: t-045
     milestone: m2
     title: "The Punk Bloodfairies become Slime City's band crew"
-    status: review
+    status: done
     passes: 0
     stakes: reversible
     note: |-
@@ -1120,10 +1120,16 @@ tasks:
       projects/slime-city/art/BLOODFAIRY-BAND-ROUND-1.yaml queues a new band-on-stage crew
       poster (auto_submit) to replace crews.bloodfairies once curated. Done after #4929
       merges.
+
+      DONE 2026-11-09 PT: kind_robots#4929 squash-merged after all 11 checks passed
+      (TypeScript, 4 contract shards + verifiers, layout-contract, Prettier, verify x2,
+      GitGuardian); full test:slime-city-lab passed locally. Band crew poster queued in
+      BLOODFAIRY-BAND-ROUND-1.yaml; wire crews.bloodfairies when curated (t-044's curation
+      pass can take it).
     owner: worker
     claimed_by: 2026-11-09T134200Z-slime-city-t045-band-p5rr
     claimed_at: '2026-11-09T13:41:16Z'
-    updated: '2026-11-09T13:43:38Z'
+    updated: '2026-11-09T13:51:35Z'
     implementation_pr: 'silasfelinus/kind_robots#4929'
   - id: t-046
     milestone: m2
