@@ -8,6 +8,16 @@
 
 **Source cross-check:** `prototypes.ts` 60 founders; `reserveCards.ts` 12; `gutterCrownWaveTwo.ts` 36; `gutterCrownWaveThree.ts` 36; `gutterCrownFinaleA.ts` 48; `gutterCrownFinaleB.ts` 48; `mercenaryCards.ts` 60. All paths are under Kind Robots `utils/slimeCity/`. IDs were deduplicated across the seven sources, not counted from generated card faces or art jobs.
 
+**Latest interaction contract (Silas, 2026-11-09 PT):**
+[PLAYABLE-EVOLUTION-CONTRACT.md](PLAYABLE-EVOLUTION-CONTRACT.md) is the
+design/QA acceptance bar for every row, including the original 70 and the 230
+`LIVE_QA` evolutions. Default: a **useful, answerable L1** with one recognizable
+job, a **synergistic L2**, and a **named, compounding L3**. Track a real
+faction-relevant combo, early vulnerability, actual Solo/Alliance reachability,
+CPU play rationale, and opponent counterplay. The presence of three coded
+stages is not acceptance. Do not promote `LIVE_QA` to `MERGED` on the
+basis of code-generation or automatic stat growth alone.
+
 **Definition of done for each row:** three authored rules texts; three matching mechanics with a genuine L3 inflection; identity/archetype synergies and counterplay; deterministic seeded command replay; target/occupancy/copy-safe rules; battle fixture showing the payoff, not just strings. Review CPU strategic use and how often L3 is reachable. No faction-hate rules.
 
 Legend: `MERGED` original 70 hand-built arcs with focused fixtures and merged CI · `LIVE_QA` authored and playable on main, but awaiting full matchup/CPU-reachability and individual-payoff acceptance. `DESIGNED` and `TODO` remain available for future work; no rows currently use them.
