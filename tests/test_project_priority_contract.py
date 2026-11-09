@@ -88,11 +88,13 @@ def test_lead_projects_are_the_ones_silas_named():
         "save-the-plumber",
         "shifting-desks",
     ]
+    # 2026-11-09 PT: Silas elevated slime-city (Clash battlefield redesign) to the top.
     assert len(order) >= 15
-    assert order[:7] == focus
-    assert order[7:11] == ["kind-pinball", "zuzu-lair", "kr-arcade", "zuzu-showdown"]
-    assert order[11] == "memory-dungeon"
-    assert order[12:14] == ["cthulhuquarium", "kind-economy"]
+    assert order[0] == "slime-city"
+    assert order[1:8] == focus
+    assert order[8:12] == ["kind-pinball", "zuzu-lair", "kr-arcade", "zuzu-showdown"]
+    assert order[12] == "memory-dungeon"
+    assert order[13:15] == ["cthulhuquarium", "kind-economy"]
     for finished in ("kapowarr", "ai-art-academy"):
         assert finished not in order
 
@@ -106,7 +108,7 @@ def test_ecotone_high_priority_is_registered_and_pickable():
     priority = yaml.safe_load(PRIORITY.read_text(encoding="utf-8")) or {}
     order = priority.get("order") or []
     assert order.count("weird-humboldt") == 1
-    assert order.index("weird-humboldt") == 0
+    assert order.index("weird-humboldt") <= 1  # slime-city elevated to 0 on 2026-11-09 PT
 
     raw = yaml.safe_load(OVERRIDES.read_text(encoding="utf-8")) or {}
     overrides = {item["slug"]: item for item in raw.get("overrides", [])}
@@ -126,7 +128,8 @@ def test_seven_creative_focus_projects_are_active_and_high_priority():
         "save-the-plumber",
     }
     data = yaml.safe_load(PRIORITY.read_text(encoding="utf-8")) or {}
-    assert set(data["order"][:7]) == focus
+    assert data["order"][0] == "slime-city"  # 2026-11-09 PT elevation
+    assert set(data["order"][1:8]) == focus
     raw = yaml.safe_load(OVERRIDES.read_text(encoding="utf-8")) or {}
     overrides = {row["slug"]: row for row in raw.get("overrides", [])}
     for slug in focus:
