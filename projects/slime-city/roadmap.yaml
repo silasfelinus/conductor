@@ -980,15 +980,30 @@ tasks:
   - id: t-040
     milestone: m2
     title: "Wire the ogre redo-2 board tokens (no more Shrek look) into the Clash board"
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
     note: |-
       Silas, 2026-11-08 PT: "we've still got a lot of orcs that look like shrek in their character token in game." projects/slime-city/art/BOARD-TOKENS-OGRE-REDO-2.yaml queues 45 Krea re-renders (auto_submit): 14 Ironjaw ogre creatures and the Picket Line Troll mercenary x fierce/guard/hurt, each with a distinct non-green skin, angular industrial face, riveted chrome lower jaw and small bolted ears. Once the sweep writes art_image_ids back, curate them (reject any that still read as a green round-faced movie ogre and re-queue with a stronger look) and replace the matching SLIME_CITY_ART.tokens['<cardId>/<mood>'] ids in kind_robots utils/slimeCity/artManifest.ts. Foundry Lion keeps its token.
+
+      2026-11-09 PT: curated all 45 redo-2 renders (ArtImage 265992-266036) on a contact
+      sheet. Kept 36 non-green angular chrome-jawed faces and wired them in kind_robots PR
+      #4926: 25 replace Shrek-era token ids, 11 fill missing moods (SLIME_CITY_ART_COUNT
+      775->786); verifySlimeCityOverworld PASS. Rejected 9: Picket Line Troll (still
+      green/mossy/round), Coal Cart Racer (grey-green round), Union Lunch Lady (painted as a
+      human woman). They re-render in projects/slime-city/art/BOARD-TOKENS-OGRE-REDO-3.yaml
+      (auto_submit); wiring those is slime-city/t-042. Done after #4926 merges.
+
+      DONE 2026-11-09 PT: kind_robots#4926 squash-merged
+      dbd5d70151ce9cacd7d2114c57ba3bdaedd082d5 after all 11 checks passed (TypeScript, 4
+      contract shards + verifiers, layout-contract, Prettier, verify x2, GitGuardian). Live on
+      kindrobots.org after the next Unraid Force Update. Redo-3 for the 9 rejected tokens is
+      t-042.
     owner: worker
     claimed_by: 2026-11-09T125000Z-slime-city-t040-ogre-tokens-p5rr
     claimed_at: '2026-11-09T12:50:45Z'
-    updated: '2026-11-09T12:50:45Z'
+    updated: '2026-11-09T13:07:59Z'
+    implementation_pr: 'silasfelinus/kind_robots#4926'
   - id: t-041
     milestone: m2
     title: "CLASH 300: individually crafted L1/L2/L3 effects for every existing card"
@@ -1032,3 +1047,46 @@ tasks:
     owner: worker
     claimed_by: 2026-11-09T131000Z-slime-city-t041-playable-v9p3
     claimed_at: '2026-11-09T13:10:00Z'
+  - id: t-042
+    milestone: m2
+    title: "Curate and wire the ogre redo-3 tokens: Picket Line Troll, Coal Cart Racer, Union Lunch Lady"
+    status: cancelled
+    cancelled_reason: superseded-by-silas-2026-11-09-lizard-people
+    depends_on: t-040
+    passes: 0
+    stakes: reversible
+    note: |-
+      Follow-up to t-040 (2026-11-09 PT). Curation of BOARD-TOKENS-OGRE-REDO-2.yaml rejected 9 of 45: Picket Line Troll still read as a green mossy round troll, Coal Cart Racer as grey-green and round-faced, and Union Lunch Lady was painted as an ordinary human woman. projects/slime-city/art/BOARD-TOKENS-OGRE-REDO-3.yaml (auto_submit) re-renders the 9 with rust-red brick troll skin, charcoal-and-ember racer skin, steel-blue ogre matron skin, a dominant chrome lower jaw and hurt moods that show pain. Once the sweep writes art_image_ids back, curate them on a contact sheet (reject any that still read green/round or human), then set SLIME_CITY_ART.tokens['<cardId>/<mood>'] in kind_robots utils/slimeCity/artManifest.ts. Union Lunch Lady (s3-ironjaw-union-cook) has no token yet, so its keepers are additions and SLIME_CITY_ART_COUNT plus verifySlimeCityOverworld.test.ts move with them. CANCELLED 2026-11-09 PT: Silas, in-session, "we should have lizard people instead of orcs." No more ogre tokens; BOARD-TOKENS-OGRE-REDO-3.yaml was removed before it rendered. Lizard token art is t-044.
+  - id: t-043
+    milestone: m2
+    title: "Lizard people replace the ogres: reskin the Ironjaw crew's names, flavor and rules text"
+    status: ready
+    passes: 0
+    stakes: reversible
+    note: |-
+      Silas, 2026-11-09 PT: "we should have lizard people instead of orcs." Rewrite the Ironjaw Chrome Ogres as cold-blooded chrome-jawed lizard people in kind_robots utils/slimeCity (crew name, hook, pattern, counters, card names and text, campaign/story copy, CPU and UI strings), plus ogre/troll-looking mercenaries such as the Picket Line Troll. Keep the crew id `ironjaw`, every card id, stats and mechanics, so saves, decks and balance are unchanged. Tests guard that no player-visible ogre/orc/troll wording remains for the crew.
+  - id: t-044
+    milestone: m2
+    title: "Lizard art: Ironjaw crew poster, card art, evolutions and board tokens"
+    status: waiting
+    depends_on: t-043
+    passes: 0
+    stakes: reversible
+    note: |-
+      Follow-up to t-043. Queue Krea art ledgers (auto_submit) for the lizard Ironjaw crew poster, every Ironjaw card and lizard mercenary, their evolutions and fierce/guard/hurt board tokens, using the new names and descriptions. Prompts in positive terms only. Curate on contact sheets and replace the ogre ids in artManifest.ts. Until lizard art lands, ogre art stays as a fallback.
+  - id: t-045
+    milestone: m2
+    title: "The Punk Bloodfairies become Slime City's band crew"
+    status: ready
+    passes: 0
+    stakes: reversible
+    note: |-
+      Silas, 2026-11-09 PT: "There needs to be a band centered group"; he chose the Punk Bloodfairies over a 7th crew or a mercenary band. Rework them into a touring punk band (frontwoman boss, rhythm section, roadies, merch, setlist and encore play) through names, flavor, story and the existing choir/encore/mosh mechanics, keeping card ids, the 40-card count and balance. Queue band-styled art in t-044's pattern once names settle.
+  - id: t-046
+    milestone: m2
+    title: "Lean into the meat world: make the meat economy and city weirdness central"
+    status: ready
+    passes: 0
+    stakes: reversible
+    note: |-
+      Silas, 2026-11-09 PT: "we need to lean into the world. We exchange meat, for chrissakes." Pass over Slime City's player-visible copy (title screen, HUD, rewards, shop, collection, story and card flavor) so meat as currency and the megacity's absurdity are front and center. Copy and presentation only; no economy, wallet or DB change.
