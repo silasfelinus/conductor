@@ -557,12 +557,19 @@ tasks:
   - id: t-029
     milestone: m4
     title: "Commit one shared balance tuner covering founders, PARITY and BLOODRUSH"
-    status: ready
+    status: review
     owner: null
     passes: 0
     stakes: reversible
     note: |-
       Kaizen from t-025 (kind_robots#4816). Tuning passes used scratch held-out scripts; commit one reusable tuner so t-028's 20-card re-measure reuses the same method. Internal preview only.
+
+      MERGED 2026-11-09 PT: kind_robots#4934 (1378be20, 13/13 checks) adds
+      utils/scripts/slimeCityFactionTuner.ts and npm run balance:slime-city-factions: held-out
+      Blackout + BLOODRUSH founder measurement (60 seeds from 1000, spread metric matches the
+      guards). PARITY lane not covered yet; t-028 can reuse it.
+    updated: '2026-11-09T16:55:24Z'
+    implementation_pr: 'silasfelinus/kind_robots#4934'
   - id: t-014
     milestone: m4
     title: "Subjective acceptance of the finished internal game"
