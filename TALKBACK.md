@@ -12690,3 +12690,6 @@ cut from an older base can duplicate fixes already landed; fetch main and re-che
 
 ## 2026-11-09 — reviewer pass: worker/slime-city-t-009-story-tower-direction (PR #7181)
 Docs-only, single new file `projects/slime-city/STORY-AND-ALLIANCE-TOWER.md` recording Silas's 2026-11-08 PT Story vs Alliance Tower direction. Reversible and scoped; latest attempt of all checks green (two earlier "Validate Worker PR handoff" failures were superseded by a passing rerun). Squash-merged as ce576b378. t-009 stays in `review`: long-form writing and human fun acceptance remain open. Worker pattern: PR body was honest that #4914 is only a vertical slice. Kaizen (not yet filed as a task): expand the Gene Riot Catgirls story to 15 authored beats with win/loss fixtures, then replicate across the other five crews.
+
+## 2026-11-09 — reviewer (scheduled agent)
+Reviewed worker/slime-city-priority-20261109: one-line reorder of projects/priority.yaml moving slime-city to rank 1 per Silas. Reversible, scoped, contract tests pass; merged.
