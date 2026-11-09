@@ -1106,15 +1106,31 @@ tasks:
   - id: t-045
     milestone: m2
     title: "The Punk Bloodfairies become Slime City's band crew"
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
     note: |-
       Silas, 2026-11-09 PT: "There needs to be a band centered group"; he chose the Punk Bloodfairies over a 7th crew or a mercenary band. Rework them into a touring punk band (frontwoman boss, rhythm section, roadies, merch, setlist and encore play) through names, flavor, story and the existing choir/encore/mosh mechanics, keeping card ids, the 40-card count and balance. Queue band-styled art in t-044's pattern once names settle.
+
+      2026-11-09 PT: kind_robots#4929 makes the Punk Bloodfairies QUEEN PIN & THE
+      BLOODFAIRIES, Needle Alley's loudest punk band plus its fans, roadies and backup singers
+      ('Small wings. Big amps.'). Founders play parts: Queen Safety Pin frontwoman, Razorwing
+      lead guitar, Bloodsprite backup screamer, Pogo Brat stage diver; campaign/tower/crew
+      copy follow; ids, stats and balance unchanged; verifySlimeCityLab pins name and roles.
+      projects/slime-city/art/BLOODFAIRY-BAND-ROUND-1.yaml queues a new band-on-stage crew
+      poster (auto_submit) to replace crews.bloodfairies once curated. Done after #4929
+      merges.
+
+      DONE 2026-11-09 PT: kind_robots#4929 squash-merged after all 11 checks passed
+      (TypeScript, 4 contract shards + verifiers, layout-contract, Prettier, verify x2,
+      GitGuardian); full test:slime-city-lab passed locally. Band crew poster queued in
+      BLOODFAIRY-BAND-ROUND-1.yaml; wire crews.bloodfairies when curated (t-044's curation
+      pass can take it).
     owner: worker
     claimed_by: 2026-11-09T134200Z-slime-city-t045-band-p5rr
     claimed_at: '2026-11-09T13:41:16Z'
-    updated: '2026-11-09T13:41:16Z'
+    updated: '2026-11-09T13:51:35Z'
+    implementation_pr: 'silasfelinus/kind_robots#4929'
   - id: t-046
     milestone: m2
     title: "Lean into the meat world: make the meat economy and city weirdness central"
