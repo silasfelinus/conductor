@@ -1205,7 +1205,7 @@ tasks:
   - id: t-047
     milestone: m2
     title: "CLASH crew balance: lift the Ironjaw lizards, trim Riot volatile spikes"
-    status: review
+    status: done
     passes: 0
     stakes: reversible
     note: |-
@@ -1244,8 +1244,31 @@ tasks:
       42-58% and spread <=12 points. test:slime-city-lab and vue-tsc green locally. Next:
       merge when CI is green, then done. Possible follow-up: 1-play snare traps now fill the
       bottom of the card table (Moshpit Tripcord 29%, Bloodwire 35%).
+
+      DONE 2026-11-09 PT: kind_robots#4936 squash-merged as c719ac339b9d after all 10 checks
+      passed (TypeScript, 4 contract shards, layout-contract, Prettier, verify x2,
+      GitGuardian). Live on main after the next Unraid Force Update. Follow-up: slime-
+      city/t-048 (weak 1-play snare traps).
     owner: worker
-    updated: '2026-11-09T23:16:39Z'
+    updated: '2026-11-09T23:26:57Z'
     claimed_by: 2026-11-09T233000Z-slime-city-t047-clash-balance-hk7w
     claimed_at: '2026-11-09T22:33:50Z'
     implementation_pr: 'silasfelinus/kind_robots#4936'
+  - id: t-048
+    milestone: m2
+    title: "CLASH card tuning: give the weak 1-play snare traps a real payoff"
+    status: ready
+    passes: 0
+    stakes: reversible
+    note: |-
+      Follow-up from t-047 (kind_robots#4936, 2026-11-09 PT). After armor was re-priced to one
+      life per point, crews sit at 45-54% in CLASH, but the bottom of the per-card table is now
+      mostly 1-play snare traps that armor blunts: Moshpit Tripcord 29%, Bloodwire 35%, Leech
+      Grate 38%, Escrow Snare 40%, Culvert Tollwire 40%, Floodgate Clamp 43% (win rate when
+      played, `npx tsx utils/scripts/slimeCityClashBalanceReport.ts 40 9000`). Give them a real
+      decision or payoff per PLAYABLE-EVOLUTION-CONTRACT.md (e.g. what springing on an armored
+      or volatile fighter does) rather than flat power bumps. Keep the t-047 crew guard in
+      verifySlimeCityClash green (each crew 42-58%, spread <= 12 points) and confirm on a
+      held-out seed set. Keep all card ids. No art, economy, wallet or release change.
+    owner: worker
+    updated: '2026-11-09T23:30:00Z'
