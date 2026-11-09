@@ -1205,7 +1205,7 @@ tasks:
   - id: t-047
     milestone: m2
     title: "CLASH crew balance: lift the Ironjaw lizards, trim Riot volatile spikes"
-    status: claimed
+    status: review
     passes: 0
     stakes: reversible
     note: |-
@@ -1232,7 +1232,20 @@ tasks:
       held-out seed set (not the tuning seeds), the existing test:slime-city-lab suite, and add
       a CLASH spread guard alongside verifySlimeCityFactionBalance once the spread is fixed.
       No art, economy, wallet or release change.
+
+      REVIEW 2026-11-09 PT: kind_robots#4936. Root cause: CLASH armor cost 2.5 budget, which
+      life rounding made 2 life per point, while one point of block is worth ~1 life in fixed
+      alleys. Re-priced armor to 1.5 (CLASH_ARMOR_COST, one life per point), priced a 2-damage
+      volatile burst at one budget point (CLASH_BURST_COST; Grand Detonator 80->66%), and
+      clamped crafted L3 life bonuses to the tier cap. Held-out 3,000-game sweeps: seeds
+      120000 spread 7.3 points (crews 45.8-53.1%), seeds 200000 spread 6.2 (47.5-53.7%);
+      before: ~30. Snare-fizzle and armor-scaled Ironjaw zaps measured as no-ops and were
+      dropped; flat Ironjaw +1 overshot to ~60%. verifySlimeCityClash now guards each crew at
+      42-58% and spread <=12 points. test:slime-city-lab and vue-tsc green locally. Next:
+      merge when CI is green, then done. Possible follow-up: 1-play snare traps now fill the
+      bottom of the card table (Moshpit Tripcord 29%, Bloodwire 35%).
     owner: worker
-    updated: '2026-11-09T22:33:50Z'
+    updated: '2026-11-09T23:16:39Z'
     claimed_by: 2026-11-09T233000Z-slime-city-t047-clash-balance-hk7w
     claimed_at: '2026-11-09T22:33:50Z'
+    implementation_pr: 'silasfelinus/kind_robots#4936'
