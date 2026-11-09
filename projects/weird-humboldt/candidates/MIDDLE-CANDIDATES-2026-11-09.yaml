@@ -1,0 +1,123 @@
+# Weird Humboldt (Ecotone) t-027: offline middle-encounter candidates and art briefs.
+# OFFLINE ONLY. Nothing here is runtime prose, nothing is enqueued for image generation, nothing is
+# published. Every record starts curation.decision: pending; only Silas sets keep/modify/reject.
+# Validate: python scripts/validate_weird_humboldt_candidates.py
+# Axes: autonomy_solidarity, continuity_reinvention, ecology_engineering, agency_fate (IDEOLOGICAL-ECOTONES.md).
+# Counterexample design: each candidate makes a *different* stock position pay a real cost and a real dividend.
+# No candidate hands out a moral score, an ideology, or a guaranteed good/bad fate.
+batch: 2026-11-09-a
+publish: false
+art_enqueue: false
+candidates:
+- id: MC-001
+  title: "The Hearing Where Both Experts Were Right"
+  axis: ecology_engineering
+  premise: "A watershed hearing hears a fish biologist and a county engineer; each has the single correct number for a different year."
+  counterexample: "The restoration purist is wrong that more wild means safer culverts; the pragmatist is wrong that a safe culvert is a finished river."
+  prerequisites: {chapter_min: 3, requires_flags: [], excludes_flags: []}
+  consequences:
+    - "Back the biologist: salmon passage improves, a rural road closes for a season; Cedar's sensor idea gains a use."
+    - "Back the engineer: the road holds, a spawning reach stays blocked; Juniper remembers."
+    - "Fund both with an ugly compromise: slower, costs time (time-1), and neither side thanks you."
+  choice_provenance: {cards: [WH-006], axis_source: IDEOLOGICAL-ECOTONES.md, verified: "uses existing time and goodwill effects only"}
+  leverage: "Closes the Ecology<->Engineering editorial gap with a non-binary resolution; reuses Cedar's techno-utopia thread."
+  art_brief: {status: not_enqueued, prompt: "Redwood-country community hall at dusk, two adults at a shared whiteboard of river diagrams, a map of a stream between them, painterly coastal light, no readable text."}
+  curation: {decision: pending, reviewer: null}
+- id: MC-002
+  title: "The Shop That Would Not Franchise"
+  axis: continuity_reinvention
+  premise: "A beloved local diner is offered a rescue buyout that would keep every job and erase everything the regulars love."
+  counterexample: "Preserving the place as-is may mean it closes; saving it may mean it stops being itself. Neither tradition nor change is automatically the loyal choice."
+  prerequisites: {chapter_min: 2, requires_flags: [], excludes_flags: []}
+  consequences:
+    - "Protect the original menu: the counter stays, hours shrink, a cook leaves for the coast."
+    - "Take the buyout: staff are kept, the pie recipe is simplified, an old regular stops coming."
+    - "Co-op the place with the staff: slow, fragile, and the only path with a named owner for the failure."
+  choice_provenance: {cards: [WH-003], axis_source: IDEOLOGICAL-ECOTONES.md, verified: "plaza vendor scenes exist; no new mechanics"}
+  leverage: "Gives Kit's heritage-vs-reinvention arc a low-stakes, human-scale test."
+  art_brief: {status: not_enqueued, prompt: "Small-town diner interior in morning fog light, a counter with mismatched stools, one cook at the pass, warm amber, painterly, no readable signage."}
+  curation: {decision: pending, reviewer: null}
+- id: MC-003
+  title: "The Forecast That Asked to Be Wrong"
+  axis: agency_fate
+  premise: "Cedar's fictional radio forecast predicts a bad outcome in a tone that begs somebody to disprove it."
+  counterexample: "Fatalism says the forecast is destiny; naive agency says it was never information. The forecast is evidence the player may act on, and acting is not guaranteed to change it."
+  prerequisites: {chapter_min: 4, requires_flags: [], excludes_flags: []}
+  consequences:
+    - "Act on the forecast early: it is partly averted, and Cedar asks whether he caused or merely described it."
+    - "Ignore it: it largely comes true; a repair scene opens afterward rather than punishment."
+    - "Share it publicly: coalition support grows, so does the pressure on Cedar."
+  choice_provenance: {cards: [], axis_source: IDEOLOGICAL-ECOTONES.md, verified: "forecast motif from Cedar companion docs; flags to be defined at curation"}
+  leverage: "Directly interrogates the fourth axis, previously the least dramatized."
+  art_brief: {status: not_enqueued, prompt: "A young man at an old radio desk in a lit window at night, a paper map under his hands, fog outside, painterly, no readable text."}
+  curation: {decision: pending, reviewer: null}
+- id: MC-004
+  title: "Mutual Aid Has a Waiting List"
+  axis: autonomy_solidarity
+  premise: "A neighborhood food share is generous and exhausted; a newcomer wants in without joining the shifts."
+  counterexample: "Pure solidarity burns out volunteers; pure self-reliance abandons the person at the door. A rule is needed and every rule excludes someone."
+  prerequisites: {chapter_min: 2, requires_flags: [], excludes_flags: []}
+  consequences:
+    - "Waive the shift rule once: goodwill rises, resentment among the regulars follows."
+    - "Enforce the rule: the share survives, the newcomer leaves hurt."
+    - "Offer a lighter, honest way to contribute: costs time, builds a precedent."
+  choice_provenance: {cards: [], axis_source: IDEOLOGICAL-ECOTONES.md, verified: "no new mechanics"}
+  leverage: "Tests Autonomy<->Solidarity without a partisan frame."
+  art_brief: {status: not_enqueued, prompt: "Church-basement style community food table, volunteers sorting produce into crates, a newcomer at the door with a bag, warm window light, painterly, no readable text."}
+  curation: {decision: pending, reviewer: null}
+- id: MC-005
+  title: "The Quiet Person at the Festival Gate"
+  axis: autonomy_solidarity
+  premise: "An adult at the festival wants to be left alone; a well-meaning crowd keeps checking on them."
+  counterexample: "Care that ignores consent is intrusion; respect that ignores distress is neglect. Telling them apart means asking, not assuming."
+  prerequisites: {chapter_min: 5, requires_flags: [], excludes_flags: []}
+  consequences:
+    - "Ask once and accept the answer: the person is fine, and thanks you in a way that earns trust."
+    - "Keep hovering: they leave early, and the evening is worse for it."
+    - "Check back later without pressure: a short honest conversation, no guaranteed resolution."
+  choice_provenance: {cards: [], axis_source: PRELUDE-STATE-CONTRACT.md, verified: "no substance guidance; no one shown using anything"}
+  leverage: "Humane consent beat that matches the chemical-lens guardrails."
+  art_brief: {status: not_enqueued, prompt: "Lantern-lit festival path at night, one adult sitting alone on a log, a friendly small crowd at a respectful distance, painterly, no readable text."}
+  curation: {decision: pending, reviewer: null}
+- id: MC-006
+  title: "Old Growth, Old Grudge, New Lease"
+  axis: ecology_engineering
+  premise: "A timber family and a grower family share a parcel; a drone-surveyed fire break could save both and exposes both."
+  counterexample: "Neither the timber ethic nor the conservation ethic owns the forest's future; the survey data belongs to nobody in particular."
+  prerequisites: {chapter_min: 4, requires_flags: [], excludes_flags: []}
+  consequences:
+    - "Open the survey to everyone: the break is built, both families lose some privacy."
+    - "Keep it with the county: faster, and trust in the county drops."
+    - "Let the families co-own it: slow, and the only version Cedar's parents recognise."
+  choice_provenance: {cards: [], axis_source: COMPANION-OPTIMAL-PATHS.md, verified: "parents stay together in all branches; not a mechanic"}
+  leverage: "Moves Cedar's techno-utopia from slogan to dilemma."
+  art_brief: {status: not_enqueued, prompt: "Two adults of different generations on a hillside at golden hour looking at a tablet of a map, redwoods behind, painterly, no readable text."}
+  curation: {decision: pending, reviewer: null}
+- id: MC-007
+  title: "The Mural That Outlived Its Argument"
+  axis: continuity_reinvention
+  premise: "A faded mural is beloved by some and resented by others; a muralist offers to repaint it."
+  counterexample: "Repainting is not erasure and preserving is not respect; the wall belongs to whoever is still talking to it."
+  prerequisites: {chapter_min: 2, requires_flags: [], excludes_flags: []}
+  consequences:
+    - "Restore it exactly: the neighborhood relaxes, the muralist walks away."
+    - "Repaint with new voices: it divides the street and revives the conversation."
+    - "Add a new panel beside the old: slow to fund, and Mara's craft ethics sing."
+  choice_provenance: {cards: [WH-006], axis_source: IDEOLOGICAL-ECOTONES.md, verified: "Mara is a fictional independent tattoo artist; no culturally coded imagery"}
+  leverage: "Gives Mara a craft-vs-mentorship scene not in the current deck."
+  art_brief: {status: not_enqueued, prompt: "Brick wall mural half faded with a painter on a ladder, a small crowd watching, dusk, painterly, abstract shapes only, no readable text."}
+  curation: {decision: pending, reviewer: null}
+- id: MC-008
+  title: "A Dam Nobody Wanted to Name"
+  axis: ecology_engineering
+  premise: "An abandoned small dam is a hazard, a habitat, and a swimming hole."
+  counterexample: "Removal looks like the pure ecological choice but strands the families who built their summers around it."
+  prerequisites: {chapter_min: 3, requires_flags: [], excludes_flags: []}
+  consequences:
+    - "Remove it: fish return, the swimming hole is lost for a generation."
+    - "Repair it: safe and beloved, the reach stays blocked."
+    - "Stage a partial breach with a public ritual: costs time, and Juniper will remember it."
+  choice_provenance: {cards: [], axis_source: IDEOLOGICAL-ECOTONES.md, verified: "no new mechanics"}
+  leverage: "Second Ecology<->Engineering test with a different cost profile than MC-001."
+  art_brief: {status: not_enqueued, prompt: "A weathered small dam on a forest creek at morning, children's towels on rocks, a surveyor in the distance, painterly, no readable text."}
+  curation: {decision: pending, reviewer: null}
