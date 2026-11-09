@@ -973,7 +973,7 @@ tasks:
   - id: t-041
     milestone: m2
     title: "CLASH 300: individually crafted L1/L2/L3 effects for every existing card"
-    status: ready
+    status: claimed
     depends_on: t-037
     passes: 0
     stakes: reversible
@@ -995,4 +995,7 @@ tasks:
       2026-11-08 PT: Constructed Clash Alliance adversarial suite in kind_robots worker/slime-city-t-041-alliance-qa-20261108-x7q4. Tests all 30 ordered faction pairings across nine legal 30-card strategies with matched-seat seed swaps, separate same-deck general-power swaps, L2/L3 use and full 300-card legal deck coverage. Source PR and CI validation pending; t-041 remains a partial QA umbrella with human fun acceptance outstanding.
 
       PARTIAL MERGED 2026-11-08 PT: Kind Robots #4913 merged to main as a72a25c374c568ef49405de44f80c0d8e4b66b86 after all eight final-head workflows completed green (four contract shards, TypeScript, formatting, layout, architecture, schema, facet and container build). 1,140 real-CPU constructed ALLIANCE matches across all 30 ordered general/ally pairs, nine legal 30-card deck strategies, both-seat matched seeds and 60 general-swap controls; 54 full deterministic replays. All 300 cards appear in simulated legal decks, 285 were played, 104 reached L3, 15 never played. First seat 51.4% across all games (includes unpaired general-swap controls), 6.2% draws overall. Important design risk: specials-only decks hit 24 rounds in every one of 120 matches, drawing 59.2%, despite being intentionally legal with no creature minimum. No rule change or deck restriction made. Next work: targeted payoff/counterplay fixtures for the 15 unplayed cards, improve L3 availability in 30-card Alliance without generic stat inflation, analyze specials-only nonterminating offense without restoring the rejected creature minimum, and report controlled general-power deltas separately. Human fun approval, art and production deployment remain unverified. Keep t-041 READY for continued QA.
-    updated: '2026-11-08T23:56:00Z'
+    updated: '2026-11-09T02:43:00Z'
+    owner: worker
+    claimed_by: 2026-11-09T024300Z-slime-city-t-041-positional-r6w8
+    claimed_at: '2026-11-09T02:43:00Z'
