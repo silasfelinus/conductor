@@ -1140,7 +1140,7 @@ tasks:
   - id: t-046
     milestone: m2
     title: "Lean into the meat world: make the meat economy and city weirdness central"
-    status: review
+    status: done
     passes: 0
     stakes: reversible
     note: |-
@@ -1154,8 +1154,13 @@ tasks:
       Market). Copy only; wallet, payouts, rules and ids unchanged; verifySlimeCityProgression
       pins it. Avoided every file the open #4924 touches. Further meat passes (title
       screen/HUD/shop copy) should follow once #4924 lands.
+
+      DONE 2026-11-09 PT: kind_robots#4930 squash-merged after all 11 checks passed
+      (TypeScript, 4 contract shards + verifiers, layout-contract, Prettier, verify x2,
+      GitGuardian); full test:slime-city-lab passed locally. Live after the next Unraid Force
+      Update.
     owner: worker
     claimed_by: 2026-11-09T135900Z-slime-city-t046-meat-p5rr
     claimed_at: '2026-11-09T13:58:14Z'
-    updated: '2026-11-09T14:05:15Z'
+    updated: '2026-11-09T14:12:39Z'
     implementation_pr: 'silasfelinus/kind_robots#4930'
