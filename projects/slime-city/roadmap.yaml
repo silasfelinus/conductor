@@ -225,7 +225,7 @@ tasks:
   - id: t-009
     milestone: m3
     title: "Write and implement six genuinely different crew campaigns"
-    status: review
+    status: ready
     depends_on: [t-004, t-007]
     passes: 0
     stakes: reversible
@@ -318,7 +318,17 @@ tasks:
       grants. Full test:slime-city-lab (44 PASS) and npm run test (vue-tsc) green locally.
       Remaining t-009 scope: Riot Saints, Undertow and Meat Exchange campaigns, plus
       adversarial fun playtesting. Leave t-009 ready after #4932 merges (umbrella), not done.
-    updated: '2026-11-09T14:31:33Z'
+
+      PARTIAL MERGED 2026-11-09 PT: kind_robots#4932 squash-merged after all 13 checks passed
+      (TypeScript, 4 contract shards + verifiers, layout-contract, facet-alias-smoke,
+      production image build, Prettier, verify x2, GitGuardian). Ironjaw THE LAST SHIFT is
+      live on main (after the next Unraid Force Update): 15 lizard-strike scenes, 30
+      decisions, SOLIDARITY/HEAT meter. Three of six crew campaigns are now authored (Gene
+      Riot, Bloodfairy Moshpit Republic, Ironjaw). t-009 stays READY for Riot Saints, Undertow
+      and Meat Exchange campaigns plus adversarial fun playtesting; follow the
+      campaignIronjaw.ts pattern (also update the overworld store test if a crew used there
+      gains a journey).
+    updated: '2026-11-09T14:40:49Z'
     owner: worker
     claimed_by: 2026-11-09T142000Z-slime-city-t009-last-shift-p5rr
     claimed_at: '2026-11-09T14:22:06Z'
