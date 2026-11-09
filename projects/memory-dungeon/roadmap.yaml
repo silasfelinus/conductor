@@ -1409,12 +1409,14 @@ tasks:
   - id: t-064
     milestone: m3
     title: "Bind the Earth letter and Last Train e03/e04 packets into the encounter registry with executable reducer tests"
-    status: claimed
+    status: review
     stakes: reversible
     passes: 0
-    updated: '2026-11-09T22:46:58Z'
+    updated: '2026-11-09T22:51:00Z'
     note: |-
       Kaizen from t-025 Last Train review (conductor#7168): two writer packets (Earth letters, Last Train) now specify 24 choices and state rules but neither is wired in. Audit occupied e03/e04 cells, bind scene IDs into the registry and Pinia persistence, and implement each packet's acceptance matrix as executable tests (replay, forged-choice, missing-state fallbacks) before any more prose packets.
+
+      Partial t-064: isolated Unsent Letters choice ledger, strict restore validation, idempotent replay and 108 combination assertions. Runtime registry binding, Last Train, art and browser QA remain. Kind Robots PR pending.
     owner: worker
     claimed_by: 2026-11-09T224658Z-memory-dungeon-t064-n11f
     claimed_at: '2026-11-09T22:46:58Z'
