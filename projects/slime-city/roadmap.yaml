@@ -1099,6 +1099,12 @@ tasks:
       human or a plain green dinosaur) and replace the ogre ids in kind_robots
       utils/slimeCity/artManifest.ts (cards, tokens, crews.ironjaw). Spells/traps/equipment
       art gets checked for ogres after.
+
+      2026-11-09 PT scope addition: EVOLUTIONS-IRONJAW-KREA.yaml already rendered all 54 Ironjaw
+      L2/L3 evolution stages as ogres (2026-11-08, before the lizard direction). Evolution art
+      is not wired yet (artManifest evolutions is empty), so players see none of it. Before
+      wiring evolutions, queue a lizard Ironjaw evolution round from the same per-card story
+      ladders with the IRONJAW-LIZARDS-ROUND-1 species/colour anchors, and skip the ogre renders.
     owner: worker
     claimed_by: 2026-11-09T133500Z-slime-city-t044-lizard-art-p5rr
     claimed_at: '2026-11-09T13:34:58Z'
@@ -1134,12 +1140,27 @@ tasks:
   - id: t-046
     milestone: m2
     title: "Lean into the meat world: make the meat economy and city weirdness central"
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
     note: |-
       Silas, 2026-11-09 PT: "we need to lean into the world. We exchange meat, for chrissakes." Pass over Slime City's player-visible copy (title screen, HUD, rewards, shop, collection, story and card flavor) so meat as currency and the megacity's absurdity are front and center. Copy and presentation only; no economy, wallet or DB change.
+
+      2026-11-09 PT: kind_robots#4930 makes Meat the city's money out loud. Quests: Punch the
+      Meat Clock, Fresh Cut, Stock the Freezer, Prime Cut Champion, Mixed Grill, Butcher-Paper
+      Riot (same metrics/payouts). Rewards: 'your cut: +45 Meat', butcher-paper packs, 'In
+      Slime City, Meat is money.' The Meat Exchange are butchers-turned-bankers who mint the
+      city's Meat (hook, Mogul, Collector, Repo, Collection, Foreclosure, Hush Money, Crown
+      Market). Copy only; wallet, payouts, rules and ids unchanged; verifySlimeCityProgression
+      pins it. Avoided every file the open #4924 touches. Further meat passes (title
+      screen/HUD/shop copy) should follow once #4924 lands.
+
+      DONE 2026-11-09 PT: kind_robots#4930 squash-merged after all 11 checks passed
+      (TypeScript, 4 contract shards + verifiers, layout-contract, Prettier, verify x2,
+      GitGuardian); full test:slime-city-lab passed locally. Live after the next Unraid Force
+      Update.
     owner: worker
     claimed_by: 2026-11-09T135900Z-slime-city-t046-meat-p5rr
     claimed_at: '2026-11-09T13:58:14Z'
-    updated: '2026-11-09T13:58:14Z'
+    updated: '2026-11-09T14:12:39Z'
+    implementation_pr: 'silasfelinus/kind_robots#4930'
