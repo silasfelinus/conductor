@@ -79,6 +79,9 @@ def test_lead_projects_are_the_ones_silas_named():
     data = yaml.safe_load(PRIORITY.read_text(encoding="utf-8")) or {}
     order = data.get("order") or []
 
+    # 2026-11-09 PT: Silas elevated slime-city to the top; the seven-project focus follows it.
+    assert order[0] == "slime-city"
+    order = order[1:]
     focus = [
         "weird-humboldt",
         "zuzu-gamebook",
@@ -106,7 +109,7 @@ def test_ecotone_high_priority_is_registered_and_pickable():
     priority = yaml.safe_load(PRIORITY.read_text(encoding="utf-8")) or {}
     order = priority.get("order") or []
     assert order.count("weird-humboldt") == 1
-    assert order.index("weird-humboldt") == 0
+    assert order.index("weird-humboldt") == 1  # slime-city leads since 2026-11-09 PT
 
     raw = yaml.safe_load(OVERRIDES.read_text(encoding="utf-8")) or {}
     overrides = {item["slug"]: item for item in raw.get("overrides", [])}
@@ -126,7 +129,7 @@ def test_seven_creative_focus_projects_are_active_and_high_priority():
         "save-the-plumber",
     }
     data = yaml.safe_load(PRIORITY.read_text(encoding="utf-8")) or {}
-    assert set(data["order"][:7]) == focus
+    assert set(data["order"][1:8]) == focus  # [0] is slime-city (Silas 2026-11-09 PT)
     raw = yaml.safe_load(OVERRIDES.read_text(encoding="utf-8")) or {}
     overrides = {row["slug"]: row for row in raw.get("overrides", [])}
     for slug in focus:
