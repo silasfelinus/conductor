@@ -975,7 +975,7 @@ tasks:
   - id: t-041
     milestone: m2
     title: "CLASH 300: individually crafted L1/L2/L3 effects for every existing card"
-    status: claimed
+    status: review
     depends_on: t-037
     passes: 0
     stakes: reversible
@@ -1001,7 +1001,9 @@ tasks:
       Thundersaur-inspired targeted evolution increment: existing Ironjaw Dreadnought keeps its L2 hit-driven hull growth; L3 trades four starting life for an arrival avalanche and permanent attack/life growth for each complete round survived. Added real round-end engine, level contrast, counterplay and immutability regression tests. No new card IDs, deck restrictions, art publishing or economy changes. Gameplay test checks required before merge.
 
       Reconciled stale review after Kind Robots #4916 merged at 2026-11-09T07:24:55Z and branch was removed. User explicitly authorizes redesigning the existing 300 cards and introducing new gameplay abilities. Reopen t-041 for a focused, tested rules increment, preserving the 300 card IDs and separate art/release gates.
-    updated: '2026-11-09T09:45:30Z'
+
+      Scoped three new CLASH effect families onto existing card IDs: deterministic cross-card L1-L3 promotions from hand/deck; at most one conditional zero-slot play per turn with UI eligibility; and a wounded-heavy-only execute capped at four remaining HP. Added focused rules and CPU valuation regression fixtures. Review source PR and latest-head CI before merging; all 300 IDs remain intact, artwork, economy and public release untouched. Full catalog fun QA and larger Alliance matchup sweeps still remain.
+    updated: '2026-11-09T09:58:00Z'
     owner: worker
     claimed_by: 2026-11-09T094530Z-slime-city-t-041-gpt6-d8af
     claimed_at: '2026-11-09T09:45:30Z'
