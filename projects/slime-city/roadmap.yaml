@@ -1041,3 +1041,12 @@ tasks:
     owner: worker
     claimed_by: 2026-11-09T131000Z-slime-city-t041-playable-v9p3
     claimed_at: '2026-11-09T13:10:00Z'
+  - id: t-042
+    milestone: m2
+    title: "Curate and wire the ogre redo-3 tokens: Picket Line Troll, Coal Cart Racer, Union Lunch Lady"
+    status: waiting
+    depends_on: t-040
+    passes: 0
+    stakes: reversible
+    note: |-
+      Follow-up to t-040 (2026-11-09 PT). Curation of BOARD-TOKENS-OGRE-REDO-2.yaml rejected 9 of 45: Picket Line Troll still read as a green mossy round troll, Coal Cart Racer as grey-green and round-faced, and Union Lunch Lady was painted as an ordinary human woman. projects/slime-city/art/BOARD-TOKENS-OGRE-REDO-3.yaml (auto_submit) re-renders the 9 with rust-red brick troll skin, charcoal-and-ember racer skin, steel-blue ogre matron skin, a dominant chrome lower jaw and hurt moods that show pain. Once the sweep writes art_image_ids back, curate them on a contact sheet (reject any that still read green/round or human), then set SLIME_CITY_ART.tokens['<cardId>/<mood>'] in kind_robots utils/slimeCity/artManifest.ts. Union Lunch Lady (s3-ironjaw-union-cook) has no token yet, so its keepers are additions and SLIME_CITY_ART_COUNT plus verifySlimeCityOverworld.test.ts move with them.
