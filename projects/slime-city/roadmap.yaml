@@ -394,7 +394,7 @@ tasks:
   - id: t-022
     milestone: m2
     title: "Paint reaction-face board tokens for every creature and wire them in"
-    status: claimed
+    status: review
     depends_on: t-013
     passes: 0
     stakes: reversible
@@ -416,7 +416,9 @@ tasks:
       Partial board-art increment: Clash fighters now show their card painting and chosen evolution artwork instead of generic mood tokens. Added a source contract to the Clash test suite. Review PR and CI before merge; generated evolution paintings remain an independent art queue.
 
       PARTIAL MERGED 2026-11-09 PT: kind_robots PR #4931 squash-merged at 5d3ca5417937313ee14d7ec1878298be1a23db9a after six latest-head workflows all completed successfully (architecture, formatting, schema, layout, TypeScript, contract tests). Clash fighters now prefer their original card illustration and selected L2/L3 art rather than cropped reaction-face tokens. Added a Clash source regression assertion. Remaining scope: curate and wire generated evolution art; verify 390/768/1440 screenshots; finish outstanding art rounds. No new ArtJobs or deployment claimed.
-    updated: '2026-11-09T16:20:35Z'
+
+      Full-card battlefield art increment: stop cropping portrait card paintings into square tokens; preserve entire selected evolution illustration with contain framing, improve filled-slot contrast, and add a contract guard. Kind Robots implementation PR pending checks; remaining t-022 generated evolution artwork and screenshot acceptance still open.
+    updated: '2026-11-09T16:24:00Z'
     owner: worker
     claimed_by: 2026-11-09T162035Z-slime-city-t022-artframe-b7e4
     claimed_at: '2026-11-09T16:20:35Z'
