@@ -1082,16 +1082,27 @@ tasks:
   - id: t-044
     milestone: m2
     title: "Lizard art: Ironjaw crew poster, card art, evolutions and board tokens"
-    status: claimed
+    status: ready
     depends_on: t-043
     passes: 0
     stakes: reversible
     note: |-
       Follow-up to t-043. Queue Krea art ledgers (auto_submit) for the lizard Ironjaw crew poster, every Ironjaw card and lizard mercenary, their evolutions and fierce/guard/hurt board tokens, using the new names and descriptions. Prompts in positive terms only. Curate on contact sheets and replace the ogre ids in artManifest.ts. Until lizard art lands, ogre art stays as a fallback.
+
+      2026-11-09 PT: queued projects/slime-city/art/IRONJAW-LIZARDS-ROUND-1.yaml (auto_submit,
+      61 Krea renders, seeds 1194000-1194253): the lizard Ironjaw crew poster, 15 creature
+      cards (Foundry Lion stays a lion) and their fierce/guard/hurt tokens. Each creature has
+      a hand-written species and scale colour (slate-grey gecko Scrapper, gila-monster Spark
+      Welder, horned-lizard Bulldozard, black monitor Maw-9000, teal frilled-neck Lunch Lady,
+      komodo Picket Line Komodo, etc.), positive terms only. NEXT: once the sweep writes
+      art_image_ids back, curate on a contact sheet (reject anything that reads as an ogre, a
+      human or a plain green dinosaur) and replace the ogre ids in kind_robots
+      utils/slimeCity/artManifest.ts (cards, tokens, crews.ironjaw). Spells/traps/equipment
+      art gets checked for ogres after.
     owner: worker
     claimed_by: 2026-11-09T133500Z-slime-city-t044-lizard-art-p5rr
     claimed_at: '2026-11-09T13:34:58Z'
-    updated: '2026-11-09T13:34:58Z'
+    updated: '2026-11-09T13:35:16Z'
   - id: t-045
     milestone: m2
     title: "The Punk Bloodfairies become Slime City's band crew"

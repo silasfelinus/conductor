@@ -1,0 +1,798 @@
+# Ironjaw lizard people, round 1 (2026-11-09 PT, slime-city/t-044). Silas, 2026-11-09 PT: "we should have
+# lizard people instead of orcs." kind_robots#4928 renamed the Ironjaw Chrome Ogres to the Ironjaw Chrome Lizards
+# (crew and card ids unchanged). This round repaints what visibly shows an ogre: the crew poster, the 15 lizard
+# creature cards (Foundry Lion stays a crane-built lion) and their fierce/guard/hurt board tokens. Each creature has
+# its own species and scale colour, written by hand, in positive terms only. Same runtime assets, so each keeper
+# replaces the ogre id in kind_robots utils/slimeCity/artManifest.ts. Spells, traps and equipment follow in a
+# later round if their art shows ogres. auto_submit.
+round: slime-city-ironjaw-lizards-1
+project_slug: slime-city
+designer: Slime City Ironjaw lizard people, round 1
+is_public: true
+is_mature: false
+cast_loras: false
+priority: 620
+auto_submit: true
+lanes:
+- key: krea2-crew
+  label: Krea 2 Slime City crew poster
+  engine: krea2
+  prompt: prose
+  suffix: Colorful grungy comic illustration of a post-apocalyptic fantasy megacity, thick ink outlines, gouache textures,
+    rust, slime green and neon magenta palette, absurd slapstick comic action.
+- key: krea2-card
+  label: Krea 2 Slime City illustrated collectible cards
+  engine: krea2
+  prompt: prose
+  suffix: Western adult-animation gouache painting, mature playful postapocalyptic fantasy, crisp thick black ink contours,
+    vibrant high-contrast gouache shading, grounded expressive poses, expressive acting and distinctive costumes, saturated
+    colored rim-lighting, one continuous full-bleed vertical scene, every surface bare and unmarked.
+- key: krea2-token
+  label: Krea 2 Slime City reaction-face board tokens
+  engine: krea2
+  prompt: prose
+  suffix: Western adult-animation gouache painting, crisp thick black ink contours, vibrant high-contrast shading, a single
+    character head-and-shoulders portrait filling the whole square canvas edge to edge, face large and readable at small
+    sizes, dark vignette background bleeding off every side, saturated colored rim-lighting, every surface bare and unmarked.
+subjects:
+- key: slime-r11-crew-ironjaw-lizards
+  lane: krea2-crew
+  entity: crew-hero
+  title: Ironjaw Chrome Lizards crew poster
+  asset: slime-city/crews/ironjaw
+  size: 1344x768
+  seed: 1194000
+  prompt_prose: 'Three huge adult humanoid lizard people burst through a foundry wall in a cloud of bricks and sparks: a
+    slate-grey gecko, a rust-brown horned lizard and a cobalt-blue tegu, each with a long reptilian snout, a riveted chrome
+    lower jaw, bolted steel forearms, patched union overalls and a thick swinging tail. One hoists a broken conveyor belt
+    over his head like a trophy. Molten orange furnace light and hanging chains behind them. Low-angle full-body group shot.'
+- key: slime-r11-card-scrapper-lizard
+  lane: krea2-card
+  entity: card-art
+  title: Chrome Scrapper
+  asset: slime-city/cards/scrapper
+  size: 832x1216
+  seed: 1194110
+  prompt_prose: 'An original collectible illustration of Chrome Scrapper, a stocky slate-grey gecko brawler with both fists
+    wrapped in dented scrap-metal knuckles. He brawls in a scrapyard ring of crushed cars, ducking a punch with a cocky
+    grin while sparks fly off his knuckles. Belongs to the Ironjaw Chrome Lizards of the Foundry: cold-blooded cybernetic
+    lizard people in patched union overalls who bask on furnace-warm steel between shifts, molten orange furnace light,
+    hanging chains and conveyor belts. An Ironjaw Chrome Lizard: an adult humanoid lizard person with a long reptilian snout,
+    pebbled scales, slit-pupil reptile eyes, a riveted chrome lower jaw with steel teeth and a thick swinging tail, cybernetic
+    seams and foundry soot across the scales.'
+- key: slime-r11-token-scrapper-fierce-lizard
+  lane: krea2-token
+  entity: token-art
+  title: Chrome Scrapper (fierce)
+  asset: slime-city/tokens/scrapper/fierce
+  size: 1024x1024
+  seed: 1194111
+  prompt_prose: 'Head-and-shoulders portrait of Chrome Scrapper, a stocky slate-grey gecko brawler with both fists wrapped
+    in dented scrap-metal knuckles. An Ironjaw Chrome Lizard: an adult humanoid lizard person with a long reptilian snout,
+    pebbled scales, slit-pupil reptile eyes, a riveted chrome lower jaw with steel teeth and a thick swinging tail, cybernetic
+    seams and foundry soot across the scales. Expression: a fierce battle cry, slit eyes blazing, steel teeth bared in a
+    cocky grin, leaning toward the viewer.'
+- key: slime-r11-token-scrapper-guard-lizard
+  lane: krea2-token
+  entity: token-art
+  title: Chrome Scrapper (guard)
+  asset: slime-city/tokens/scrapper/guard
+  size: 1024x1024
+  seed: 1194112
+  prompt_prose: 'Head-and-shoulders portrait of Chrome Scrapper, a stocky slate-grey gecko brawler with both fists wrapped
+    in dented scrap-metal knuckles. An Ironjaw Chrome Lizard: an adult humanoid lizard person with a long reptilian snout,
+    pebbled scales, slit-pupil reptile eyes, a riveted chrome lower jaw with steel teeth and a thick swinging tail, cybernetic
+    seams and foundry soot across the scales. Expression: stubborn and guarded, brow ridges lowered, snout tucked behind
+    a raised scrap-metal fist.'
+- key: slime-r11-token-scrapper-hurt-lizard
+  lane: krea2-token
+  entity: token-art
+  title: Chrome Scrapper (hurt)
+  asset: slime-city/tokens/scrapper/hurt
+  size: 1024x1024
+  seed: 1194113
+  prompt_prose: 'Head-and-shoulders portrait of Chrome Scrapper, a stocky slate-grey gecko brawler with both fists wrapped
+    in dented scrap-metal knuckles. An Ironjaw Chrome Lizard: an adult humanoid lizard person with a long reptilian snout,
+    pebbled scales, slit-pupil reptile eyes, a riveted chrome lower jaw with steel teeth and a thick swinging tail, cybernetic
+    seams and foundry soot across the scales. Expression: a pained wince with one eye squeezed shut, a cracked scale on
+    his snout, swaying but still standing.'
+- key: slime-r11-card-welder-lizard
+  lane: krea2-card
+  entity: card-art
+  title: Spark Welder
+  asset: slime-city/cards/welder
+  size: 832x1216
+  seed: 1194120
+  prompt_prose: 'An original collectible illustration of Spark Welder, an orange-and-black beaded gila-monster mechanic
+    in oil-stained overalls with a welding visor flipped up and a glowing torch nozzle. She welds a broken barricade shut
+    mid-fight, a fan of orange sparks spraying across a rival who stepped too close. Belongs to the Ironjaw Chrome Lizards
+    of the Foundry: cold-blooded cybernetic lizard people in patched union overalls who bask on furnace-warm steel between
+    shifts, molten orange furnace light, hanging chains and conveyor belts. An Ironjaw Chrome Lizard: an adult humanoid
+    lizard person with a long reptilian snout, pebbled scales, slit-pupil reptile eyes, a riveted chrome lower jaw with
+    steel teeth and a thick swinging tail, cybernetic seams and foundry soot across the scales.'
+- key: slime-r11-token-welder-fierce-lizard
+  lane: krea2-token
+  entity: token-art
+  title: Spark Welder (fierce)
+  asset: slime-city/tokens/welder/fierce
+  size: 1024x1024
+  seed: 1194121
+  prompt_prose: 'Head-and-shoulders portrait of Spark Welder, an orange-and-black beaded gila-monster mechanic in oil-stained
+    overalls with a welding visor flipped up and a glowing torch nozzle. An Ironjaw Chrome Lizard: an adult humanoid lizard
+    person with a long reptilian snout, pebbled scales, slit-pupil reptile eyes, a riveted chrome lower jaw with steel teeth
+    and a thick swinging tail, cybernetic seams and foundry soot across the scales. Expression: a roaring shout with steel
+    teeth bared, the torch flaring a hot orange tongue of flame.'
+- key: slime-r11-token-welder-guard-lizard
+  lane: krea2-token
+  entity: token-art
+  title: Spark Welder (guard)
+  asset: slime-city/tokens/welder/guard
+  size: 1024x1024
+  seed: 1194122
+  prompt_prose: 'Head-and-shoulders portrait of Spark Welder, an orange-and-black beaded gila-monster mechanic in oil-stained
+    overalls with a welding visor flipped up and a glowing torch nozzle. An Ironjaw Chrome Lizard: an adult humanoid lizard
+    person with a long reptilian snout, pebbled scales, slit-pupil reptile eyes, a riveted chrome lower jaw with steel teeth
+    and a thick swinging tail, cybernetic seams and foundry soot across the scales. Expression: visor snapped down, torch
+    held low and ready, tail curled defensively around her boots.'
+- key: slime-r11-token-welder-hurt-lizard
+  lane: krea2-token
+  entity: token-art
+  title: Spark Welder (hurt)
+  asset: slime-city/tokens/welder/hurt
+  size: 1024x1024
+  seed: 1194123
+  prompt_prose: 'Head-and-shoulders portrait of Spark Welder, an orange-and-black beaded gila-monster mechanic in oil-stained
+    overalls with a welding visor flipped up and a glowing torch nozzle. An Ironjaw Chrome Lizard: an adult humanoid lizard
+    person with a long reptilian snout, pebbled scales, slit-pupil reptile eyes, a riveted chrome lower jaw with steel teeth
+    and a thick swinging tail, cybernetic seams and foundry soot across the scales. Expression: groaning with eyes squeezed
+    shut, a black soot burn across her snout and the visor cracked down the middle.'
+- key: slime-r11-card-bulldozer-lizard
+  lane: krea2-card
+  entity: card-art
+  title: Bulldozard
+  asset: slime-city/cards/bulldozer
+  size: 832x1216
+  seed: 1194130
+  prompt_prose: 'An original collectible illustration of Bulldozard, a massive rust-brown horned lizard with a yellow bulldozer
+    blade bolted across his chest and a crown of steel-capped horns. He charges head-down through a brick wall, the bolted
+    blade shoving a rival fighter clean out of the lane in a burst of bricks. Belongs to the Ironjaw Chrome Lizards of the
+    Foundry: cold-blooded cybernetic lizard people in patched union overalls who bask on furnace-warm steel between shifts,
+    molten orange furnace light, hanging chains and conveyor belts. An Ironjaw Chrome Lizard: an adult humanoid lizard person
+    with a long reptilian snout, pebbled scales, slit-pupil reptile eyes, a riveted chrome lower jaw with steel teeth and
+    a thick swinging tail, cybernetic seams and foundry soot across the scales.'
+- key: slime-r11-token-bulldozer-fierce-lizard
+  lane: krea2-token
+  entity: token-art
+  title: Bulldozard (fierce)
+  asset: slime-city/tokens/bulldozer/fierce
+  size: 1024x1024
+  seed: 1194131
+  prompt_prose: 'Head-and-shoulders portrait of Bulldozard, a massive rust-brown horned lizard with a yellow bulldozer blade
+    bolted across his chest and a crown of steel-capped horns. An Ironjaw Chrome Lizard: an adult humanoid lizard person
+    with a long reptilian snout, pebbled scales, slit-pupil reptile eyes, a riveted chrome lower jaw with steel teeth and
+    a thick swinging tail, cybernetic seams and foundry soot across the scales. Expression: a bellowing charge, nostrils
+    flared, head lowered behind the blade like a bull.'
+- key: slime-r11-token-bulldozer-guard-lizard
+  lane: krea2-token
+  entity: token-art
+  title: Bulldozard (guard)
+  asset: slime-city/tokens/bulldozer/guard
+  size: 1024x1024
+  seed: 1194132
+  prompt_prose: 'Head-and-shoulders portrait of Bulldozard, a massive rust-brown horned lizard with a yellow bulldozer blade
+    bolted across his chest and a crown of steel-capped horns. An Ironjaw Chrome Lizard: an adult humanoid lizard person
+    with a long reptilian snout, pebbled scales, slit-pupil reptile eyes, a riveted chrome lower jaw with steel teeth and
+    a thick swinging tail, cybernetic seams and foundry soot across the scales. Expression: horned head lowered behind the
+    bolted blade, planted wide and immovable.'
+- key: slime-r11-token-bulldozer-hurt-lizard
+  lane: krea2-token
+  entity: token-art
+  title: Bulldozard (hurt)
+  asset: slime-city/tokens/bulldozer/hurt
+  size: 1024x1024
+  seed: 1194133
+  prompt_prose: 'Head-and-shoulders portrait of Bulldozard, a massive rust-brown horned lizard with a yellow bulldozer blade
+    bolted across his chest and a crown of steel-capped horns. An Ironjaw Chrome Lizard: an adult humanoid lizard person
+    with a long reptilian snout, pebbled scales, slit-pupil reptile eyes, a riveted chrome lower jaw with steel teeth and
+    a thick swinging tail, cybernetic seams and foundry soot across the scales. Expression: horns chipped, blade dented,
+    dazed with brick dust in his eyes and a pained grimace.'
+- key: slime-r11-card-juggernaut-lizard
+  lane: krea2-card
+  entity: card-art
+  title: Maw-9000
+  asset: slime-city/cards/juggernaut
+  size: 832x1216
+  seed: 1194140
+  prompt_prose: 'An original collectible illustration of Maw-9000, a towering black monitor lizard cyborg inside a tank-tread
+    exoframe, a huge hinged chrome jaw, smokestacks behind his shoulders and red furnace eyes. He rolls forward on tank
+    treads through a burning arena gate, chrome jaw gaping open wide enough to swallow a motorcycle. Belongs to the Ironjaw
+    Chrome Lizards of the Foundry: cold-blooded cybernetic lizard people in patched union overalls who bask on furnace-warm
+    steel between shifts, molten orange furnace light, hanging chains and conveyor belts. An Ironjaw Chrome Lizard: an adult
+    humanoid lizard person with a long reptilian snout, pebbled scales, slit-pupil reptile eyes, a riveted chrome lower
+    jaw with steel teeth and a thick swinging tail, cybernetic seams and foundry soot across the scales.'
+- key: slime-r11-token-juggernaut-fierce-lizard
+  lane: krea2-token
+  entity: token-art
+  title: Maw-9000 (fierce)
+  asset: slime-city/tokens/juggernaut/fierce
+  size: 1024x1024
+  seed: 1194141
+  prompt_prose: 'Head-and-shoulders portrait of Maw-9000, a towering black monitor lizard cyborg inside a tank-tread exoframe,
+    a huge hinged chrome jaw, smokestacks behind his shoulders and red furnace eyes. An Ironjaw Chrome Lizard: an adult
+    humanoid lizard person with a long reptilian snout, pebbled scales, slit-pupil reptile eyes, a riveted chrome lower
+    jaw with steel teeth and a thick swinging tail, cybernetic seams and foundry soot across the scales. Expression: chrome
+    jaw gaping wide, red eyes blazing, smokestacks belching flame.'
+- key: slime-r11-token-juggernaut-guard-lizard
+  lane: krea2-token
+  entity: token-art
+  title: Maw-9000 (guard)
+  asset: slime-city/tokens/juggernaut/guard
+  size: 1024x1024
+  seed: 1194142
+  prompt_prose: 'Head-and-shoulders portrait of Maw-9000, a towering black monitor lizard cyborg inside a tank-tread exoframe,
+    a huge hinged chrome jaw, smokestacks behind his shoulders and red furnace eyes. An Ironjaw Chrome Lizard: an adult
+    humanoid lizard person with a long reptilian snout, pebbled scales, slit-pupil reptile eyes, a riveted chrome lower
+    jaw with steel teeth and a thick swinging tail, cybernetic seams and foundry soot across the scales. Expression: armored
+    head drawn back into the exoframe collar, red eyes narrowed over the steel rim.'
+- key: slime-r11-token-juggernaut-hurt-lizard
+  lane: krea2-token
+  entity: token-art
+  title: Maw-9000 (hurt)
+  asset: slime-city/tokens/juggernaut/hurt
+  size: 1024x1024
+  seed: 1194143
+  prompt_prose: 'Head-and-shoulders portrait of Maw-9000, a towering black monitor lizard cyborg inside a tank-tread exoframe,
+    a huge hinged chrome jaw, smokestacks behind his shoulders and red furnace eyes. An Ironjaw Chrome Lizard: an adult
+    humanoid lizard person with a long reptilian snout, pebbled scales, slit-pupil reptile eyes, a riveted chrome lower
+    jaw with steel teeth and a thick swinging tail, cybernetic seams and foundry soot across the scales. Expression: jaw
+    hinge sparking and hanging crooked, a smokestack snapped, one red eye flickering out.'
+- key: slime-r11-card-union-millwright-lizard
+  lane: krea2-card
+  entity: card-art
+  title: Union Millwright
+  asset: slime-city/cards/union-millwright
+  size: 832x1216
+  seed: 1194150
+  prompt_prose: 'An original collectible illustration of Union Millwright, a broad sandy-tan iguana engineer with a spiny
+    back crest, amber welding goggles on his brow and a red union sash across his barrel chest. He repairs a jammed factory
+    gate with one huge wrench while the union crew pushes through behind him. Belongs to the Ironjaw Chrome Lizards of the
+    Foundry: cold-blooded cybernetic lizard people in patched union overalls who bask on furnace-warm steel between shifts,
+    molten orange furnace light, hanging chains and conveyor belts. An Ironjaw Chrome Lizard: an adult humanoid lizard person
+    with a long reptilian snout, pebbled scales, slit-pupil reptile eyes, a riveted chrome lower jaw with steel teeth and
+    a thick swinging tail, cybernetic seams and foundry soot across the scales.'
+- key: slime-r11-token-union-millwright-fierce-lizard
+  lane: krea2-token
+  entity: token-art
+  title: Union Millwright (fierce)
+  asset: slime-city/tokens/union-millwright/fierce
+  size: 1024x1024
+  seed: 1194151
+  prompt_prose: 'Head-and-shoulders portrait of Union Millwright, a broad sandy-tan iguana engineer with a spiny back crest,
+    amber welding goggles on his brow and a red union sash across his barrel chest. An Ironjaw Chrome Lizard: an adult humanoid
+    lizard person with a long reptilian snout, pebbled scales, slit-pupil reptile eyes, a riveted chrome lower jaw with
+    steel teeth and a thick swinging tail, cybernetic seams and foundry soot across the scales. Expression: a bellowing
+    strike chant, chrome jaw wide open and a big wrench shaken overhead.'
+- key: slime-r11-token-union-millwright-guard-lizard
+  lane: krea2-token
+  entity: token-art
+  title: Union Millwright (guard)
+  asset: slime-city/tokens/union-millwright/guard
+  size: 1024x1024
+  seed: 1194152
+  prompt_prose: 'Head-and-shoulders portrait of Union Millwright, a broad sandy-tan iguana engineer with a spiny back crest,
+    amber welding goggles on his brow and a red union sash across his barrel chest. An Ironjaw Chrome Lizard: an adult humanoid
+    lizard person with a long reptilian snout, pebbled scales, slit-pupil reptile eyes, a riveted chrome lower jaw with
+    steel teeth and a thick swinging tail, cybernetic seams and foundry soot across the scales. Expression: arms folded
+    over the union sash, goggles down, a stubborn immovable glare.'
+- key: slime-r11-token-union-millwright-hurt-lizard
+  lane: krea2-token
+  entity: token-art
+  title: Union Millwright (hurt)
+  asset: slime-city/tokens/union-millwright/hurt
+  size: 1024x1024
+  seed: 1194153
+  prompt_prose: 'Head-and-shoulders portrait of Union Millwright, a broad sandy-tan iguana engineer with a spiny back crest,
+    amber welding goggles on his brow and a red union sash across his barrel chest. An Ironjaw Chrome Lizard: an adult humanoid
+    lizard person with a long reptilian snout, pebbled scales, slit-pupil reptile eyes, a riveted chrome lower jaw with
+    steel teeth and a thick swinging tail, cybernetic seams and foundry soot across the scales. Expression: goggles cracked,
+    chrome jaw dented and hanging loose, a groan through gritted steel teeth.'
+- key: slime-r11-card-s1-walking-foundry-lizard
+  lane: krea2-card
+  entity: card-art
+  title: Walking Foundry
+  asset: slime-city/cards/s1-walking-foundry
+  size: 832x1216
+  seed: 1194160
+  prompt_prose: 'An original collectible illustration of Walking Foundry, a vast molten-orange chuckwalla lizard whose belly
+    is a glowing furnace grate, steel gantries on his shoulders. He strides through the Foundry like a building on legs,
+    furnace belly blazing, shoving an enemy across the factory floor. Belongs to the Ironjaw Chrome Lizards of the Foundry:
+    cold-blooded cybernetic lizard people in patched union overalls who bask on furnace-warm steel between shifts, molten
+    orange furnace light, hanging chains and conveyor belts. An Ironjaw Chrome Lizard: an adult humanoid lizard person with
+    a long reptilian snout, pebbled scales, slit-pupil reptile eyes, a riveted chrome lower jaw with steel teeth and a thick
+    swinging tail, cybernetic seams and foundry soot across the scales.'
+- key: slime-r11-token-s1-walking-foundry-fierce-lizard
+  lane: krea2-token
+  entity: token-art
+  title: Walking Foundry (fierce)
+  asset: slime-city/tokens/s1-walking-foundry/fierce
+  size: 1024x1024
+  seed: 1194161
+  prompt_prose: 'Head-and-shoulders portrait of Walking Foundry, a vast molten-orange chuckwalla lizard whose belly is a
+    glowing furnace grate, steel gantries on his shoulders. An Ironjaw Chrome Lizard: an adult humanoid lizard person with
+    a long reptilian snout, pebbled scales, slit-pupil reptile eyes, a riveted chrome lower jaw with steel teeth and a thick
+    swinging tail, cybernetic seams and foundry soot across the scales. Expression: furnace belly blazing white-hot, roaring
+    with sparks pouring from his jaws.'
+- key: slime-r11-token-s1-walking-foundry-guard-lizard
+  lane: krea2-token
+  entity: token-art
+  title: Walking Foundry (guard)
+  asset: slime-city/tokens/s1-walking-foundry/guard
+  size: 1024x1024
+  seed: 1194162
+  prompt_prose: 'Head-and-shoulders portrait of Walking Foundry, a vast molten-orange chuckwalla lizard whose belly is a
+    glowing furnace grate, steel gantries on his shoulders. An Ironjaw Chrome Lizard: an adult humanoid lizard person with
+    a long reptilian snout, pebbled scales, slit-pupil reptile eyes, a riveted chrome lower jaw with steel teeth and a thick
+    swinging tail, cybernetic seams and foundry soot across the scales. Expression: shoulders hunched behind the gantries,
+    furnace dimmed to a low wary glow.'
+- key: slime-r11-token-s1-walking-foundry-hurt-lizard
+  lane: krea2-token
+  entity: token-art
+  title: Walking Foundry (hurt)
+  asset: slime-city/tokens/s1-walking-foundry/hurt
+  size: 1024x1024
+  seed: 1194163
+  prompt_prose: 'Head-and-shoulders portrait of Walking Foundry, a vast molten-orange chuckwalla lizard whose belly is a
+    glowing furnace grate, steel gantries on his shoulders. An Ironjaw Chrome Lizard: an adult humanoid lizard person with
+    a long reptilian snout, pebbled scales, slit-pupil reptile eyes, a riveted chrome lower jaw with steel teeth and a thick
+    swinging tail, cybernetic seams and foundry soot across the scales. Expression: the furnace grate sputtering out in
+    black smoke, scales cracked, one eye swollen shut.'
+- key: slime-r11-card-s1-scrap-welder-lizard
+  lane: krea2-card
+  entity: card-art
+  title: Scrap Welder
+  asset: slime-city/cards/s1-scrap-welder
+  size: 832x1216
+  seed: 1194170
+  prompt_prose: 'An original collectible illustration of Scrap Welder, a short bone-white albino gecko with pink eyes, one
+    mismatched scrap-metal arm and cracked old welding goggles. He welds a barricade together from car doors in the middle
+    of a charge, sparks flying off the scrap arm. Belongs to the Ironjaw Chrome Lizards of the Foundry: cold-blooded cybernetic
+    lizard people in patched union overalls who bask on furnace-warm steel between shifts, molten orange furnace light,
+    hanging chains and conveyor belts. An Ironjaw Chrome Lizard: an adult humanoid lizard person with a long reptilian snout,
+    pebbled scales, slit-pupil reptile eyes, a riveted chrome lower jaw with steel teeth and a thick swinging tail, cybernetic
+    seams and foundry soot across the scales.'
+- key: slime-r11-token-s1-scrap-welder-fierce-lizard
+  lane: krea2-token
+  entity: token-art
+  title: Scrap Welder (fierce)
+  asset: slime-city/tokens/s1-scrap-welder/fierce
+  size: 1024x1024
+  seed: 1194171
+  prompt_prose: 'Head-and-shoulders portrait of Scrap Welder, a short bone-white albino gecko with pink eyes, one mismatched
+    scrap-metal arm and cracked old welding goggles. An Ironjaw Chrome Lizard: an adult humanoid lizard person with a long
+    reptilian snout, pebbled scales, slit-pupil reptile eyes, a riveted chrome lower jaw with steel teeth and a thick swinging
+    tail, cybernetic seams and foundry soot across the scales. Expression: shoving forward with the scrap arm raised, sparks
+    flying, a gap-toothed snarl.'
+- key: slime-r11-token-s1-scrap-welder-guard-lizard
+  lane: krea2-token
+  entity: token-art
+  title: Scrap Welder (guard)
+  asset: slime-city/tokens/s1-scrap-welder/guard
+  size: 1024x1024
+  seed: 1194172
+  prompt_prose: 'Head-and-shoulders portrait of Scrap Welder, a short bone-white albino gecko with pink eyes, one mismatched
+    scrap-metal arm and cracked old welding goggles. An Ironjaw Chrome Lizard: an adult humanoid lizard person with a long
+    reptilian snout, pebbled scales, slit-pupil reptile eyes, a riveted chrome lower jaw with steel teeth and a thick swinging
+    tail, cybernetic seams and foundry soot across the scales. Expression: scrap arm braced across his face like a shield,
+    pink eyes narrowed over it.'
+- key: slime-r11-token-s1-scrap-welder-hurt-lizard
+  lane: krea2-token
+  entity: token-art
+  title: Scrap Welder (hurt)
+  asset: slime-city/tokens/s1-scrap-welder/hurt
+  size: 1024x1024
+  seed: 1194173
+  prompt_prose: 'Head-and-shoulders portrait of Scrap Welder, a short bone-white albino gecko with pink eyes, one mismatched
+    scrap-metal arm and cracked old welding goggles. An Ironjaw Chrome Lizard: an adult humanoid lizard person with a long
+    reptilian snout, pebbled scales, slit-pupil reptile eyes, a riveted chrome lower jaw with steel teeth and a thick swinging
+    tail, cybernetic seams and foundry soot across the scales. Expression: scrap arm hanging off by one bolt, sparks fizzing
+    from the joint, wincing in pain.'
+- key: slime-r11-card-s2-ironjaw-union-bridgebearer-lizard
+  lane: krea2-card
+  entity: card-art
+  title: Union Bridgebearer
+  asset: slime-city/cards/s2-ironjaw-union-bridgebearer
+  size: 832x1216
+  seed: 1194180
+  prompt_prose: 'An original collectible illustration of Union Bridgebearer, an enormous cobalt-blue tegu lizard carrying
+    two steel bridge girders across his shoulders, a half-eaten sandwich in one huge fist. He stands in a canal as a living
+    bridge, girders on his back, while tiny union workers cross over him with lunch pails. Belongs to the Ironjaw Chrome
+    Lizards of the Foundry: cold-blooded cybernetic lizard people in patched union overalls who bask on furnace-warm steel
+    between shifts, molten orange furnace light, hanging chains and conveyor belts. An Ironjaw Chrome Lizard: an adult humanoid
+    lizard person with a long reptilian snout, pebbled scales, slit-pupil reptile eyes, a riveted chrome lower jaw with
+    steel teeth and a thick swinging tail, cybernetic seams and foundry soot across the scales.'
+- key: slime-r11-token-s2-ironjaw-union-bridgebearer-fierce-lizard
+  lane: krea2-token
+  entity: token-art
+  title: Union Bridgebearer (fierce)
+  asset: slime-city/tokens/s2-ironjaw-union-bridgebearer/fierce
+  size: 1024x1024
+  seed: 1194181
+  prompt_prose: 'Head-and-shoulders portrait of Union Bridgebearer, an enormous cobalt-blue tegu lizard carrying two steel
+    bridge girders across his shoulders, a half-eaten sandwich in one huge fist. An Ironjaw Chrome Lizard: an adult humanoid
+    lizard person with a long reptilian snout, pebbled scales, slit-pupil reptile eyes, a riveted chrome lower jaw with
+    steel teeth and a thick swinging tail, cybernetic seams and foundry soot across the scales. Expression: a thunderous
+    roar spraying sandwich crumbs, girders rattling on his shoulders.'
+- key: slime-r11-token-s2-ironjaw-union-bridgebearer-guard-lizard
+  lane: krea2-token
+  entity: token-art
+  title: Union Bridgebearer (guard)
+  asset: slime-city/tokens/s2-ironjaw-union-bridgebearer/guard
+  size: 1024x1024
+  seed: 1194182
+  prompt_prose: 'Head-and-shoulders portrait of Union Bridgebearer, an enormous cobalt-blue tegu lizard carrying two steel
+    bridge girders across his shoulders, a half-eaten sandwich in one huge fist. An Ironjaw Chrome Lizard: an adult humanoid
+    lizard person with a long reptilian snout, pebbled scales, slit-pupil reptile eyes, a riveted chrome lower jaw with
+    steel teeth and a thick swinging tail, cybernetic seams and foundry soot across the scales. Expression: calmly chewing
+    with half-closed eyes, girders braced, utterly unmovable.'
+- key: slime-r11-token-s2-ironjaw-union-bridgebearer-hurt-lizard
+  lane: krea2-token
+  entity: token-art
+  title: Union Bridgebearer (hurt)
+  asset: slime-city/tokens/s2-ironjaw-union-bridgebearer/hurt
+  size: 1024x1024
+  seed: 1194183
+  prompt_prose: 'Head-and-shoulders portrait of Union Bridgebearer, an enormous cobalt-blue tegu lizard carrying two steel
+    bridge girders across his shoulders, a half-eaten sandwich in one huge fist. An Ironjaw Chrome Lizard: an adult humanoid
+    lizard person with a long reptilian snout, pebbled scales, slit-pupil reptile eyes, a riveted chrome lower jaw with
+    steel teeth and a thick swinging tail, cybernetic seams and foundry soot across the scales. Expression: a girder buckled
+    and bent, sandwich dropped, a big bruise across his scaly forehead.'
+- key: slime-r11-card-s3-ironjaw-night-welder-lizard
+  lane: krea2-card
+  entity: card-art
+  title: Night Shift Welder
+  asset: slime-city/cards/s3-ironjaw-night-welder
+  size: 832x1216
+  seed: 1194190
+  prompt_prose: 'An original collectible illustration of Night Shift Welder, a scrawny lavender-grey night gecko, the smallest
+    on the crew, with huge round tired eyes, a hard-hat lamp and a white-hot cutting torch. Alone on the night shift under
+    one hanging bulb, he cuts through a steel door with a blue-white torch, enormous eyes glowing. Belongs to the Ironjaw
+    Chrome Lizards of the Foundry: cold-blooded cybernetic lizard people in patched union overalls who bask on furnace-warm
+    steel between shifts, molten orange furnace light, hanging chains and conveyor belts. An Ironjaw Chrome Lizard: an adult
+    humanoid lizard person with a long reptilian snout, pebbled scales, slit-pupil reptile eyes, a riveted chrome lower
+    jaw with steel teeth and a thick swinging tail, cybernetic seams and foundry soot across the scales.'
+- key: slime-r11-token-s3-ironjaw-night-welder-fierce-lizard
+  lane: krea2-token
+  entity: token-art
+  title: Night Shift Welder (fierce)
+  asset: slime-city/tokens/s3-ironjaw-night-welder/fierce
+  size: 1024x1024
+  seed: 1194191
+  prompt_prose: 'Head-and-shoulders portrait of Night Shift Welder, a scrawny lavender-grey night gecko, the smallest on
+    the crew, with huge round tired eyes, a hard-hat lamp and a white-hot cutting torch. An Ironjaw Chrome Lizard: an adult
+    humanoid lizard person with a long reptilian snout, pebbled scales, slit-pupil reptile eyes, a riveted chrome lower
+    jaw with steel teeth and a thick swinging tail, cybernetic seams and foundry soot across the scales. Expression: a surprisingly
+    fierce yell, torch flame roaring long and blue-white.'
+- key: slime-r11-token-s3-ironjaw-night-welder-guard-lizard
+  lane: krea2-token
+  entity: token-art
+  title: Night Shift Welder (guard)
+  asset: slime-city/tokens/s3-ironjaw-night-welder/guard
+  size: 1024x1024
+  seed: 1194192
+  prompt_prose: 'Head-and-shoulders portrait of Night Shift Welder, a scrawny lavender-grey night gecko, the smallest on
+    the crew, with huge round tired eyes, a hard-hat lamp and a white-hot cutting torch. An Ironjaw Chrome Lizard: an adult
+    humanoid lizard person with a long reptilian snout, pebbled scales, slit-pupil reptile eyes, a riveted chrome lower
+    jaw with steel teeth and a thick swinging tail, cybernetic seams and foundry soot across the scales. Expression: welding
+    mask snapped down, peering through the dark lens, torch held low and ready.'
+- key: slime-r11-token-s3-ironjaw-night-welder-hurt-lizard
+  lane: krea2-token
+  entity: token-art
+  title: Night Shift Welder (hurt)
+  asset: slime-city/tokens/s3-ironjaw-night-welder/hurt
+  size: 1024x1024
+  seed: 1194193
+  prompt_prose: 'Head-and-shoulders portrait of Night Shift Welder, a scrawny lavender-grey night gecko, the smallest on
+    the crew, with huge round tired eyes, a hard-hat lamp and a white-hot cutting torch. An Ironjaw Chrome Lizard: an adult
+    humanoid lizard person with a long reptilian snout, pebbled scales, slit-pupil reptile eyes, a riveted chrome lower
+    jaw with steel teeth and a thick swinging tail, cybernetic seams and foundry soot across the scales. Expression: mask
+    cracked, blinking huge teary eyes through soot, the hard-hat lamp flickering.'
+- key: slime-r11-card-s3-ironjaw-dreadnought-lizard
+  lane: krea2-card
+  entity: card-art
+  title: Scrapyard Dreadnought
+  asset: slime-city/cards/s3-ironjaw-dreadnought
+  size: 832x1216
+  seed: 1194200
+  prompt_prose: 'An original collectible illustration of Scrapyard Dreadnought, a hulking armadillo lizard covered in spiked
+    scrap-iron plates, a dented dozer blade on his chest and exhaust stacks jutting from his back. Six tons of plated lizard
+    shove a rival off a scrapyard crane platform, exhaust stacks belching black smoke. Belongs to the Ironjaw Chrome Lizards
+    of the Foundry: cold-blooded cybernetic lizard people in patched union overalls who bask on furnace-warm steel between
+    shifts, molten orange furnace light, hanging chains and conveyor belts. An Ironjaw Chrome Lizard: an adult humanoid
+    lizard person with a long reptilian snout, pebbled scales, slit-pupil reptile eyes, a riveted chrome lower jaw with
+    steel teeth and a thick swinging tail, cybernetic seams and foundry soot across the scales.'
+- key: slime-r11-token-s3-ironjaw-dreadnought-fierce-lizard
+  lane: krea2-token
+  entity: token-art
+  title: Scrapyard Dreadnought (fierce)
+  asset: slime-city/tokens/s3-ironjaw-dreadnought/fierce
+  size: 1024x1024
+  seed: 1194201
+  prompt_prose: 'Head-and-shoulders portrait of Scrapyard Dreadnought, a hulking armadillo lizard covered in spiked scrap-iron
+    plates, a dented dozer blade on his chest and exhaust stacks jutting from his back. An Ironjaw Chrome Lizard: an adult
+    humanoid lizard person with a long reptilian snout, pebbled scales, slit-pupil reptile eyes, a riveted chrome lower
+    jaw with steel teeth and a thick swinging tail, cybernetic seams and foundry soot across the scales. Expression: engine
+    roaring, exhaust stacks belching black smoke, steel teeth bared above the blade.'
+- key: slime-r11-token-s3-ironjaw-dreadnought-guard-lizard
+  lane: krea2-token
+  entity: token-art
+  title: Scrapyard Dreadnought (guard)
+  asset: slime-city/tokens/s3-ironjaw-dreadnought/guard
+  size: 1024x1024
+  seed: 1194202
+  prompt_prose: 'Head-and-shoulders portrait of Scrapyard Dreadnought, a hulking armadillo lizard covered in spiked scrap-iron
+    plates, a dented dozer blade on his chest and exhaust stacks jutting from his back. An Ironjaw Chrome Lizard: an adult
+    humanoid lizard person with a long reptilian snout, pebbled scales, slit-pupil reptile eyes, a riveted chrome lower
+    jaw with steel teeth and a thick swinging tail, cybernetic seams and foundry soot across the scales. Expression: curled
+    behind the dozer blade, only angry slit eyes peeking over the top.'
+- key: slime-r11-token-s3-ironjaw-dreadnought-hurt-lizard
+  lane: krea2-token
+  entity: token-art
+  title: Scrapyard Dreadnought (hurt)
+  asset: slime-city/tokens/s3-ironjaw-dreadnought/hurt
+  size: 1024x1024
+  seed: 1194203
+  prompt_prose: 'Head-and-shoulders portrait of Scrapyard Dreadnought, a hulking armadillo lizard covered in spiked scrap-iron
+    plates, a dented dozer blade on his chest and exhaust stacks jutting from his back. An Ironjaw Chrome Lizard: an adult
+    humanoid lizard person with a long reptilian snout, pebbled scales, slit-pupil reptile eyes, a riveted chrome lower
+    jaw with steel teeth and a thick swinging tail, cybernetic seams and foundry soot across the scales. Expression: blade
+    crumpled, an exhaust stack bent, smoke pouring out and his snout scrunched in pain.'
+- key: slime-r11-card-s3-ironjaw-union-cook-lizard
+  lane: krea2-card
+  entity: card-art
+  title: Union Lunch Lady
+  asset: slime-city/cards/s3-ironjaw-union-cook
+  size: 832x1216
+  seed: 1194210
+  prompt_prose: 'An original collectible illustration of Union Lunch Lady, a broad teal frilled-neck lizard lunch lady,
+    her neck frill tucked under a hairnet, riveted oven mitts, a cracked steel apron and a giant soup ladle. She defends
+    the cafeteria line with a giant ladle, neck frill flared wide, hot soup arcing over a hungry crowd of workers. Belongs
+    to the Ironjaw Chrome Lizards of the Foundry: cold-blooded cybernetic lizard people in patched union overalls who bask
+    on furnace-warm steel between shifts, molten orange furnace light, hanging chains and conveyor belts. An Ironjaw Chrome
+    Lizard: an adult humanoid lizard person with a long reptilian snout, pebbled scales, slit-pupil reptile eyes, a riveted
+    chrome lower jaw with steel teeth and a thick swinging tail, cybernetic seams and foundry soot across the scales.'
+- key: slime-r11-token-s3-ironjaw-union-cook-fierce-lizard
+  lane: krea2-token
+  entity: token-art
+  title: Union Lunch Lady (fierce)
+  asset: slime-city/tokens/s3-ironjaw-union-cook/fierce
+  size: 1024x1024
+  seed: 1194211
+  prompt_prose: 'Head-and-shoulders portrait of Union Lunch Lady, a broad teal frilled-neck lizard lunch lady, her neck
+    frill tucked under a hairnet, riveted oven mitts, a cracked steel apron and a giant soup ladle. An Ironjaw Chrome Lizard:
+    an adult humanoid lizard person with a long reptilian snout, pebbled scales, slit-pupil reptile eyes, a riveted chrome
+    lower jaw with steel teeth and a thick swinging tail, cybernetic seams and foundry soot across the scales. Expression:
+    neck frill flared wide, swinging the ladle overhead with a war cry, hot soup flying in an arc.'
+- key: slime-r11-token-s3-ironjaw-union-cook-guard-lizard
+  lane: krea2-token
+  entity: token-art
+  title: Union Lunch Lady (guard)
+  asset: slime-city/tokens/s3-ironjaw-union-cook/guard
+  size: 1024x1024
+  seed: 1194212
+  prompt_prose: 'Head-and-shoulders portrait of Union Lunch Lady, a broad teal frilled-neck lizard lunch lady, her neck
+    frill tucked under a hairnet, riveted oven mitts, a cracked steel apron and a giant soup ladle. An Ironjaw Chrome Lizard:
+    an adult humanoid lizard person with a long reptilian snout, pebbled scales, slit-pupil reptile eyes, a riveted chrome
+    lower jaw with steel teeth and a thick swinging tail, cybernetic seams and foundry soot across the scales. Expression:
+    oven mitts raised and crossed, frill folded flat, a tight-lipped hairnet glare.'
+- key: slime-r11-token-s3-ironjaw-union-cook-hurt-lizard
+  lane: krea2-token
+  entity: token-art
+  title: Union Lunch Lady (hurt)
+  asset: slime-city/tokens/s3-ironjaw-union-cook/hurt
+  size: 1024x1024
+  seed: 1194213
+  prompt_prose: 'Head-and-shoulders portrait of Union Lunch Lady, a broad teal frilled-neck lizard lunch lady, her neck
+    frill tucked under a hairnet, riveted oven mitts, a cracked steel apron and a giant soup ladle. An Ironjaw Chrome Lizard:
+    an adult humanoid lizard person with a long reptilian snout, pebbled scales, slit-pupil reptile eyes, a riveted chrome
+    lower jaw with steel teeth and a thick swinging tail, cybernetic seams and foundry soot across the scales. Expression:
+    soup splattered across her snout, frill drooping, eyes squeezed shut in pain.'
+- key: slime-r11-card-s3-ironjaw-bridgebreaker-lizard
+  lane: krea2-card
+  entity: card-art
+  title: Bridgebreaker Monitor
+  asset: slime-city/cards/s3-ironjaw-bridgebreaker
+  size: 832x1216
+  seed: 1194220
+  prompt_prose: 'An original collectible illustration of Bridgebreaker Monitor, a muscular indigo-purple monitor lizard
+    in an orange hard hat with a whole steel I-beam hoisted over one shoulder. He swings an I-beam through a toll bridge
+    railing, punching a new route across the river for the crew behind him. Belongs to the Ironjaw Chrome Lizards of the
+    Foundry: cold-blooded cybernetic lizard people in patched union overalls who bask on furnace-warm steel between shifts,
+    molten orange furnace light, hanging chains and conveyor belts. An Ironjaw Chrome Lizard: an adult humanoid lizard person
+    with a long reptilian snout, pebbled scales, slit-pupil reptile eyes, a riveted chrome lower jaw with steel teeth and
+    a thick swinging tail, cybernetic seams and foundry soot across the scales.'
+- key: slime-r11-token-s3-ironjaw-bridgebreaker-fierce-lizard
+  lane: krea2-token
+  entity: token-art
+  title: Bridgebreaker Monitor (fierce)
+  asset: slime-city/tokens/s3-ironjaw-bridgebreaker/fierce
+  size: 1024x1024
+  seed: 1194221
+  prompt_prose: 'Head-and-shoulders portrait of Bridgebreaker Monitor, a muscular indigo-purple monitor lizard in an orange
+    hard hat with a whole steel I-beam hoisted over one shoulder. An Ironjaw Chrome Lizard: an adult humanoid lizard person
+    with a long reptilian snout, pebbled scales, slit-pupil reptile eyes, a riveted chrome lower jaw with steel teeth and
+    a thick swinging tail, cybernetic seams and foundry soot across the scales. Expression: a charging war bellow, forked
+    tongue out, the I-beam swinging toward the viewer.'
+- key: slime-r11-token-s3-ironjaw-bridgebreaker-guard-lizard
+  lane: krea2-token
+  entity: token-art
+  title: Bridgebreaker Monitor (guard)
+  asset: slime-city/tokens/s3-ironjaw-bridgebreaker/guard
+  size: 1024x1024
+  seed: 1194222
+  prompt_prose: 'Head-and-shoulders portrait of Bridgebreaker Monitor, a muscular indigo-purple monitor lizard in an orange
+    hard hat with a whole steel I-beam hoisted over one shoulder. An Ironjaw Chrome Lizard: an adult humanoid lizard person
+    with a long reptilian snout, pebbled scales, slit-pupil reptile eyes, a riveted chrome lower jaw with steel teeth and
+    a thick swinging tail, cybernetic seams and foundry soot across the scales. Expression: the I-beam planted upright like
+    a barrier, jaw set and eyes steady.'
+- key: slime-r11-token-s3-ironjaw-bridgebreaker-hurt-lizard
+  lane: krea2-token
+  entity: token-art
+  title: Bridgebreaker Monitor (hurt)
+  asset: slime-city/tokens/s3-ironjaw-bridgebreaker/hurt
+  size: 1024x1024
+  seed: 1194223
+  prompt_prose: 'Head-and-shoulders portrait of Bridgebreaker Monitor, a muscular indigo-purple monitor lizard in an orange
+    hard hat with a whole steel I-beam hoisted over one shoulder. An Ironjaw Chrome Lizard: an adult humanoid lizard person
+    with a long reptilian snout, pebbled scales, slit-pupil reptile eyes, a riveted chrome lower jaw with steel teeth and
+    a thick swinging tail, cybernetic seams and foundry soot across the scales. Expression: hard hat dented in, the I-beam
+    bent across his shoulder, dazed with stars circling.'
+- key: slime-r11-card-s3-ironjaw-coal-racer-lizard
+  lane: krea2-card
+  entity: card-art
+  title: Coal Cart Racer
+  asset: slime-city/cards/s3-ironjaw-coal-racer
+  size: 832x1216
+  seed: 1194230
+  prompt_prose: 'An original collectible illustration of Coal Cart Racer, a lanky charcoal-black basilisk lizard with a
+    tall ember-orange head crest, brass racing goggles and glowing coal cracks along his scales. He rides a stolen coal
+    cart down a mine rail at full speed, crest streaming flames, leaning into the curve. Belongs to the Ironjaw Chrome Lizards
+    of the Foundry: cold-blooded cybernetic lizard people in patched union overalls who bask on furnace-warm steel between
+    shifts, molten orange furnace light, hanging chains and conveyor belts. An Ironjaw Chrome Lizard: an adult humanoid
+    lizard person with a long reptilian snout, pebbled scales, slit-pupil reptile eyes, a riveted chrome lower jaw with
+    steel teeth and a thick swinging tail, cybernetic seams and foundry soot across the scales.'
+- key: slime-r11-token-s3-ironjaw-coal-racer-fierce-lizard
+  lane: krea2-token
+  entity: token-art
+  title: Coal Cart Racer (fierce)
+  asset: slime-city/tokens/s3-ironjaw-coal-racer/fierce
+  size: 1024x1024
+  seed: 1194231
+  prompt_prose: 'Head-and-shoulders portrait of Coal Cart Racer, a lanky charcoal-black basilisk lizard with a tall ember-orange
+    head crest, brass racing goggles and glowing coal cracks along his scales. An Ironjaw Chrome Lizard: an adult humanoid
+    lizard person with a long reptilian snout, pebbled scales, slit-pupil reptile eyes, a riveted chrome lower jaw with
+    steel teeth and a thick swinging tail, cybernetic seams and foundry soot across the scales. Expression: a manic grin
+    with the chrome jaw clenched, goggles glinting, coal sparks streaming past.'
+- key: slime-r11-token-s3-ironjaw-coal-racer-guard-lizard
+  lane: krea2-token
+  entity: token-art
+  title: Coal Cart Racer (guard)
+  asset: slime-city/tokens/s3-ironjaw-coal-racer/guard
+  size: 1024x1024
+  seed: 1194232
+  prompt_prose: 'Head-and-shoulders portrait of Coal Cart Racer, a lanky charcoal-black basilisk lizard with a tall ember-orange
+    head crest, brass racing goggles and glowing coal cracks along his scales. An Ironjaw Chrome Lizard: an adult humanoid
+    lizard person with a long reptilian snout, pebbled scales, slit-pupil reptile eyes, a riveted chrome lower jaw with
+    steel teeth and a thick swinging tail, cybernetic seams and foundry soot across the scales. Expression: hunched low
+    behind a raised forearm, crest flattened, eyes narrowed and wary.'
+- key: slime-r11-token-s3-ironjaw-coal-racer-hurt-lizard
+  lane: krea2-token
+  entity: token-art
+  title: Coal Cart Racer (hurt)
+  asset: slime-city/tokens/s3-ironjaw-coal-racer/hurt
+  size: 1024x1024
+  seed: 1194233
+  prompt_prose: 'Head-and-shoulders portrait of Coal Cart Racer, a lanky charcoal-black basilisk lizard with a tall ember-orange
+    head crest, brass racing goggles and glowing coal cracks along his scales. An Ironjaw Chrome Lizard: an adult humanoid
+    lizard person with a long reptilian snout, pebbled scales, slit-pupil reptile eyes, a riveted chrome lower jaw with
+    steel teeth and a thick swinging tail, cybernetic seams and foundry soot across the scales. Expression: goggles cracked
+    and askew, coughing black smoke, crest singed and drooping.'
+- key: slime-r11-card-s3-ironjaw-matriarch-lizard
+  lane: krea2-card
+  entity: card-art
+  title: Iron Matriarch
+  asset: slime-city/cards/s3-ironjaw-matriarch
+  size: 832x1216
+  seed: 1194240
+  prompt_prose: 'An original collectible illustration of Iron Matriarch, a towering old silver-white chameleon matriarch
+    with a curled tail, swivelling eyes, a riveted steel shawl and a hard hat crowned with welded wrenches. She leads the
+    union march down the Foundry avenue behind a broad shield, her crew of lizards falling in step behind her. Belongs to
+    the Ironjaw Chrome Lizards of the Foundry: cold-blooded cybernetic lizard people in patched union overalls who bask
+    on furnace-warm steel between shifts, molten orange furnace light, hanging chains and conveyor belts. An Ironjaw Chrome
+    Lizard: an adult humanoid lizard person with a long reptilian snout, pebbled scales, slit-pupil reptile eyes, a riveted
+    chrome lower jaw with steel teeth and a thick swinging tail, cybernetic seams and foundry soot across the scales.'
+- key: slime-r11-token-s3-ironjaw-matriarch-fierce-lizard
+  lane: krea2-token
+  entity: token-art
+  title: Iron Matriarch (fierce)
+  asset: slime-city/tokens/s3-ironjaw-matriarch/fierce
+  size: 1024x1024
+  seed: 1194241
+  prompt_prose: 'Head-and-shoulders portrait of Iron Matriarch, a towering old silver-white chameleon matriarch with a curled
+    tail, swivelling eyes, a riveted steel shawl and a hard hat crowned with welded wrenches. An Ironjaw Chrome Lizard:
+    an adult humanoid lizard person with a long reptilian snout, pebbled scales, slit-pupil reptile eyes, a riveted chrome
+    lower jaw with steel teeth and a thick swinging tail, cybernetic seams and foundry soot across the scales. Expression:
+    a commanding battle shout, wrench crown gleaming, both eyes locked forward, shield shoved ahead.'
+- key: slime-r11-token-s3-ironjaw-matriarch-guard-lizard
+  lane: krea2-token
+  entity: token-art
+  title: Iron Matriarch (guard)
+  asset: slime-city/tokens/s3-ironjaw-matriarch/guard
+  size: 1024x1024
+  seed: 1194242
+  prompt_prose: 'Head-and-shoulders portrait of Iron Matriarch, a towering old silver-white chameleon matriarch with a curled
+    tail, swivelling eyes, a riveted steel shawl and a hard hat crowned with welded wrenches. An Ironjaw Chrome Lizard:
+    an adult humanoid lizard person with a long reptilian snout, pebbled scales, slit-pupil reptile eyes, a riveted chrome
+    lower jaw with steel teeth and a thick swinging tail, cybernetic seams and foundry soot across the scales. Expression:
+    shield raised to her snout, one eye on the viewer and one on the flank, utterly calm.'
+- key: slime-r11-token-s3-ironjaw-matriarch-hurt-lizard
+  lane: krea2-token
+  entity: token-art
+  title: Iron Matriarch (hurt)
+  asset: slime-city/tokens/s3-ironjaw-matriarch/hurt
+  size: 1024x1024
+  seed: 1194243
+  prompt_prose: 'Head-and-shoulders portrait of Iron Matriarch, a towering old silver-white chameleon matriarch with a curled
+    tail, swivelling eyes, a riveted steel shawl and a hard hat crowned with welded wrenches. An Ironjaw Chrome Lizard:
+    an adult humanoid lizard person with a long reptilian snout, pebbled scales, slit-pupil reptile eyes, a riveted chrome
+    lower jaw with steel teeth and a thick swinging tail, cybernetic seams and foundry soot across the scales. Expression:
+    plating dented and popping, hard hat knocked crooked, grimacing but still upright.'
+- key: slime-r11-card-merc-picket-troll-lizard
+  lane: krea2-card
+  entity: card-art
+  title: Picket Line Komodo
+  asset: slime-city/cards/merc-picket-troll
+  size: 832x1216
+  seed: 1194250
+  prompt_prose: 'An original collectible illustration of Picket Line Komodo, an enormous dusty-brown komodo dragon in a
+    dented yellow hard hat with a blank plywood sandwich board and a thermos on a chain. He walks the strike line in front
+    of a locked factory gate at dawn, sandwich board on, thermos steaming, unbothered by the rain. Belongs to the Ironjaw
+    Chrome Lizards of the Foundry: cold-blooded cybernetic lizard people in patched union overalls who bask on furnace-warm
+    steel between shifts, molten orange furnace light, hanging chains and conveyor belts. An Ironjaw Chrome Lizard: an adult
+    humanoid lizard person with a long reptilian snout, pebbled scales, slit-pupil reptile eyes, a riveted chrome lower
+    jaw with steel teeth and a thick swinging tail, cybernetic seams and foundry soot across the scales.'
+- key: slime-r11-token-merc-picket-troll-fierce-lizard
+  lane: krea2-token
+  entity: token-art
+  title: Picket Line Komodo (fierce)
+  asset: slime-city/tokens/merc-picket-troll/fierce
+  size: 1024x1024
+  seed: 1194251
+  prompt_prose: 'Head-and-shoulders portrait of Picket Line Komodo, an enormous dusty-brown komodo dragon in a dented yellow
+    hard hat with a blank plywood sandwich board and a thermos on a chain. An Ironjaw Chrome Lizard: an adult humanoid lizard
+    person with a long reptilian snout, pebbled scales, slit-pupil reptile eyes, a riveted chrome lower jaw with steel teeth
+    and a thick swinging tail, cybernetic seams and foundry soot across the scales. Expression: a booming strike chant,
+    forked tongue out, the sandwich board raised overhead.'
+- key: slime-r11-token-merc-picket-troll-guard-lizard
+  lane: krea2-token
+  entity: token-art
+  title: Picket Line Komodo (guard)
+  asset: slime-city/tokens/merc-picket-troll/guard
+  size: 1024x1024
+  seed: 1194252
+  prompt_prose: 'Head-and-shoulders portrait of Picket Line Komodo, an enormous dusty-brown komodo dragon in a dented yellow
+    hard hat with a blank plywood sandwich board and a thermos on a chain. An Ironjaw Chrome Lizard: an adult humanoid lizard
+    person with a long reptilian snout, pebbled scales, slit-pupil reptile eyes, a riveted chrome lower jaw with steel teeth
+    and a thick swinging tail, cybernetic seams and foundry soot across the scales. Expression: feet planted, arms folded
+    over the board, a slow sleepy reptile scowl.'
+- key: slime-r11-token-merc-picket-troll-hurt-lizard
+  lane: krea2-token
+  entity: token-art
+  title: Picket Line Komodo (hurt)
+  asset: slime-city/tokens/merc-picket-troll/hurt
+  size: 1024x1024
+  seed: 1194253
+  prompt_prose: 'Head-and-shoulders portrait of Picket Line Komodo, an enormous dusty-brown komodo dragon in a dented yellow
+    hard hat with a blank plywood sandwich board and a thermos on a chain. An Ironjaw Chrome Lizard: an adult humanoid lizard
+    person with a long reptilian snout, pebbled scales, slit-pupil reptile eyes, a riveted chrome lower jaw with steel teeth
+    and a thick swinging tail, cybernetic seams and foundry soot across the scales. Expression: hard hat dented in, scales
+    scraped raw on one cheek, the thermos cracked and leaking.'
