@@ -12687,3 +12687,6 @@ Branch dc5548c2d removes stale duplicate t-020 claim fields from memory-dungeon 
 has no duplicate keys in that roadmap (checked with a duplicate-key-aware YAML load), so the change is redundant
 and no PR was opened. Branch can be cleared by `branch-janitor` (`force_delete_branches`). Pattern: worker branches
 cut from an older base can duplicate fixes already landed; fetch main and re-check before pushing.
+
+## 2026-11-09 — reviewer pass: worker/slime-city-t-009-story-tower-direction (PR #7181)
+Docs-only, single new file `projects/slime-city/STORY-AND-ALLIANCE-TOWER.md` recording Silas's 2026-11-08 PT Story vs Alliance Tower direction. Reversible and scoped; latest attempt of all checks green (two earlier "Validate Worker PR handoff" failures were superseded by a passing rerun). Squash-merged as ce576b378. t-009 stays in `review`: long-form writing and human fun acceptance remain open. Worker pattern: PR body was honest that #4914 is only a vertical slice. Kaizen (not yet filed as a task): expand the Gene Riot Catgirls story to 15 authored beats with win/loss fixtures, then replicate across the other five crews.
