@@ -44,3 +44,32 @@ def test_dry_run_lists_without_token(tmp_path, monkeypatch, capsys):
 
     assert sweep.main([]) == 0
     assert "projects/p/art/ON.yaml: 2 open cell(s)" in capsys.readouterr().out
+
+
+def test_live_sweep_survives_a_ledger_error_and_runs_high_priority_first(tmp_path, monkeypatch, capsys):
+    # 2026-11-09: a read timeout in one ledger's status refresh aborted the whole
+    # sweep, so later ledgers (Slime City's lizard round) were never submitted.
+    import sys
+    import types
+
+    subjects = [{"key": "s1"}]
+    low = _write(tmp_path / "projects/a/art/LOW.yaml", auto_submit=True, priority=1, lanes=LANES, subjects=subjects)
+    broken = _write(tmp_path / "projects/b/art/BROKEN.yaml", auto_submit=True, priority=5, lanes=LANES, subjects=subjects)
+    high = _write(tmp_path / "projects/z/art/HIGH.yaml", auto_submit=True, priority=620, lanes=LANES, subjects=subjects)
+    calls = []
+
+    def fake_main(argv):
+        calls.append((argv[0], argv[1]))
+        if argv[0] == str(broken) and argv[1] == "--status":
+            raise TimeoutError("The read operation timed out")
+        return 0
+
+    monkeypatch.setitem(sys.modules, "enqueue_art_requests", types.SimpleNamespace(main=fake_main))
+    monkeypatch.setattr(sweep, "ROOT", tmp_path)
+
+    assert sweep.main(["--live"]) == 1
+    out = capsys.readouterr().out
+    assert "ERROR projects/b/art/BROKEN.yaml: TimeoutError" in out
+    assert "swept 3 ledger(s), 1 with submission failures" in out
+    assert [path for path, flag in calls if flag == "--live"] == [str(high), str(broken), str(low)]
+    assert (str(low), "--status") in calls, "the sweep continues past a failing ledger"
