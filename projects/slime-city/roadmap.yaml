@@ -1202,3 +1202,33 @@ tasks:
     claimed_at: '2026-11-09T13:58:14Z'
     updated: '2026-11-09T14:12:39Z'
     implementation_pr: 'silasfelinus/kind_robots#4930'
+  - id: t-047
+    milestone: m2
+    title: "CLASH crew balance: lift the Ironjaw lizards, trim Riot volatile spikes"
+    status: ready
+    depends_on: t-041
+    passes: 0
+    stakes: reversible
+    note: |-
+      2026-11-09 PT, from the Slime City hourly playtest run (1:00 PM PT, read-only, could not
+      push) and re-run on kind_robots main 1378be2 this session: `npx tsx
+      utils/scripts/slimeCityClashBalanceReport.ts 40 9000` (1,200 CPU-vs-CPU CLASH games,
+      deterministic) gives Riot 64.0%, Bloodfairies 60.5%, Undertow 49.3%, Catgirls 47.8%,
+      Exchange 43.5%, Ironjaw 35.0% (29-point spread; first seat 53.2%, 0% draws, 8.5 avg
+      rounds; L3 is reachable, 4.3 cards per crew per game). Ten of the bottom twelve cards are
+      Ironjaw: Hydraulic Slap 28%, Forge Lightning 31%, Shock Plate 32%, Night Shift Welder and
+      Foundry Plating 34%, Bulldozard, Coal Cart Racer and Chrome Scrapper 35%, Spark Welder and
+      Spare Pistons 36%. The top is Riot volatile: Grand Detonator 80%, Thermite Archangel 72%,
+      Detonation Deacon 67%, Matchstick Mime 65%; Bloodfairy swarm+leech (Queen Safety Pin 74%,
+      Blood Moon Headliner 72%) is next.
+
+      Scope: bring every crew into roughly 42-58% in CLASH without generic stat inflation.
+      Prefer giving Ironjaw's armor/zap/snare cards a real decision or payoff (per
+      PLAYABLE-EVOLUTION-CONTRACT.md) over raw HP/attack bumps, and trim Riot volatile's
+      ceiling with counterplay rather than flat nerfs. Check whether the lizard reskin (t-044,
+      kind_robots#4928) changed anything mechanical first. Keep all 300 card ids. Verify with a
+      held-out seed set (not the tuning seeds), the existing test:slime-city-lab suite, and add
+      a CLASH spread guard alongside verifySlimeCityFactionBalance once the spread is fixed.
+      No art, economy, wallet or release change.
+    owner: worker
+    updated: '2026-11-09T21:19:00Z'
