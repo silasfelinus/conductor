@@ -975,7 +975,7 @@ tasks:
   - id: t-041
     milestone: m2
     title: "CLASH 300: individually crafted L1/L2/L3 effects for every existing card"
-    status: review
+    status: ready
     depends_on: t-037
     passes: 0
     stakes: reversible
@@ -1003,7 +1003,6 @@ tasks:
       Reconciled stale review after Kind Robots #4916 merged at 2026-11-09T07:24:55Z and branch was removed. User explicitly authorizes redesigning the existing 300 cards and introducing new gameplay abilities. Reopen t-041 for a focused, tested rules increment, preserving the 300 card IDs and separate art/release gates.
 
       Scoped three new CLASH effect families onto existing card IDs: deterministic cross-card L1-L3 promotions from hand/deck; at most one conditional zero-slot play per turn with UI eligibility; and a wounded-heavy-only execute capped at four remaining HP. Added focused rules and CPU valuation regression fixtures. Review source PR and latest-head CI before merging; all 300 IDs remain intact, artwork, economy and public release untouched. Full catalog fun QA and larger Alliance matchup sweeps still remain.
-    updated: '2026-11-09T09:58:00Z'
-    owner: worker
-    claimed_by: 2026-11-09T094530Z-slime-city-t-041-gpt6-d8af
-    claimed_at: '2026-11-09T09:45:30Z'
+
+      Kind Robots PR #4920 merged squash 3597e0c0d344e8c6a8de9b0e65c6280ddc98e456 after all six latest-head check workflows completed successfully (TypeScript, changed-file Prettier, schema parity, architecture, layout, all four contract shards). Existing cards gained three novel CLASH mechanic families: deterministic cross-card promotion (Undertow Backwater IOU), one conditional no-slot play per turn (Bloodfairy Feedback Burst), and conditional execution of wounded non-token heavy foes (Undertow Wiretap Order). Floating hand eligibility and earned-FREE chip reflect runtime cost; source contracts, immutable replay and anti-loop/anti-invalid-target tests added. 300 card identities unchanged. Adversarial CPU suite confirms 1080 Solo games and 1140 Alliance games; 25 Solo unused, 8 Alliance unused, and weak L3 reach remain quality gaps; please continue t-041 with targeted decision-quality, choice agency, and individual authored arc improvements. No art jobs, economy, deployment or human fun acceptance claimed.
+    updated: '2026-11-09T10:08:00Z'
