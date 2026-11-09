@@ -86,15 +86,33 @@ def main(argv=None) -> int:
     sys.path.insert(0, str(Path(__file__).resolve().parent))
     import enqueue_art_requests as enq
 
+    # 2026-11-09: one ledger's status refresh hit a read timeout and the
+    # uncaught exception aborted the whole alphabetical sweep, so every ledger
+    # after crystal-street (Slime City's lizard and band rounds included) was
+    # never submitted, run after run. Each ledger now fails on its own, and
+    # higher-priority ledgers go first so a slow sweep reaches them early.
     failed = 0
-    for path in ledgers:
+    for path in sorted(ledgers, key=lambda p: (-ledger_priority(p), str(p))):
         rel = str(path.relative_to(ROOT))
         print(f"== {rel}")
-        if enq.main([str(path), "--live"]) != 0:
+        try:
+            if enq.main([str(path), "--live"]) != 0:
+                failed += 1
+            enq.main([str(path), "--status"])
+        except Exception as exc:  # noqa: BLE001 -- keep sweeping the rest
             failed += 1
-        enq.main([str(path), "--status"])
+            print(f"   ERROR {rel}: {type(exc).__name__}: {exc}")
     print(f"swept {len(ledgers)} ledger(s), {failed} with submission failures")
     return 1 if failed else 0
+
+
+def ledger_priority(path: Path) -> float:
+    """A ledger's top-level ``priority`` (higher sweeps first); 0 if absent or unreadable."""
+    try:
+        value = (yaml.safe_load(path.read_text()) or {}).get("priority", 0)
+        return float(value)
+    except Exception:  # noqa: BLE001
+        return 0.0
 
 
 if __name__ == "__main__":
