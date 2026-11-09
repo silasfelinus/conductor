@@ -1060,15 +1060,24 @@ tasks:
   - id: t-043
     milestone: m2
     title: "Lizard people replace the ogres: reskin the Ironjaw crew's names, flavor and rules text"
-    status: review
+    status: done
     passes: 0
     stakes: reversible
     note: |-
       Silas, 2026-11-09 PT: "we should have lizard people instead of orcs." Rewrite the Ironjaw Chrome Ogres as cold-blooded chrome-jawed lizard people in kind_robots utils/slimeCity (crew name, hook, pattern, counters, card names and text, campaign/story copy, CPU and UI strings), plus ogre/troll-looking mercenaries such as the Picket Line Troll. Keep the crew id `ironjaw`, every card id, stats and mechanics, so saves, decks and balance are unchanged. Tests guard that no player-visible ogre/orc/troll wording remains for the crew.
+
+      DONE 2026-11-09 PT: kind_robots#4928 squash-merged
+      f0ec7ccd81343a20791a4ad6dc866073ba4ffdea after all 11 checks passed (TypeScript, 4
+      contract shards + verifiers, layout-contract, Prettier, verify x2, GitGuardian); full
+      test:slime-city-lab passed locally. IRONJAW CHROME OGRES -> IRONJAW CHROME LIZARDS;
+      Bulld-Ogre -> Bulldozard, Bridgebreaker Ogre -> Bridgebreaker Monitor, Picket Line Troll
+      -> Picket Line Komodo; all story/city/campaign copy rewritten; ids, stats and balance
+      unchanged; a verifySlimeCityLab guard blocks ogre/orc/troll wording. Art still shows
+      ogres until t-044.
     owner: worker
     claimed_by: 2026-11-09T131900Z-slime-city-t043-lizards-p5rr
     claimed_at: '2026-11-09T13:18:26Z'
-    updated: '2026-11-09T13:27:43Z'
+    updated: '2026-11-09T13:27:45Z'
     implementation_pr: 'silasfelinus/kind_robots#4928'
   - id: t-044
     milestone: m2
