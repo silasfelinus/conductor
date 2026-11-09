@@ -225,7 +225,7 @@ tasks:
   - id: t-009
     milestone: m3
     title: "Write and implement six genuinely different crew campaigns"
-    status: claimed
+    status: review
     depends_on: [t-004, t-007]
     passes: 0
     stakes: reversible
@@ -306,10 +306,23 @@ tasks:
       Bloodfairy Moshpit Republic implementation in review: fifteen original authored scenes and thirty choices across five canonical rivals, cumulative Call & Response Voices/Volume, real Story-only deck additions (Riot Choir and Bassquake), battle boss-life pressure and conditional coalition endings, actual Level 3 Wall of Sound/Backup Singers card reveal in chapter three, shared stage UI and city shortcut gating, save validation and two complete seeded-choice route tests. Source PR final CI required. t-009 remains a six-faction campaign umbrella; no account pack currency, art delivery or publication.
 
       PARTIAL MERGED 2026-11-09 PT: Kind Robots PR #4923 squash d2f39aa675d97e41149c6b89ce36a8028e4b3bd6 after all eight latest-head workflows completed green (four contract shards, TypeScript, changed-file Prettier, layout, schema, architecture, facet, container). Bloodfairy Moshpit Republic adds fifteen original scenes, thirty coalition decisions, cumulative Voices/Volume affecting real Solo Clash boss life, coalition-selected Story-only Riot Choir and Bassquake cards, true authored Level 3 Wall of Sound/Backup Singers illustrated previews with normal earned evolution rules intact, distinct chapter callbacks, route epilogues, save/anti-forgery, city route gating and two complete divergent state-machine playthroughs. Gene Riot compatibility preserved; no wallet/inventory minting, new card IDs, migrations, art delivery, human fun approval or deployment claimed. t-009 remains READY for Ironjaw, Riot Saints, Undertow, Exchange and further art/adversarial QA.
-    updated: '2026-11-09T14:22:06Z'
+
+      2026-11-09 PT: THIRD CREW CAMPAIGN in review, kind_robots#4932: Ironjaw THE LAST SHIFT,
+      the lizard strike. 15 authored scenes over the 5 canonical chapters, 30 decisions,
+      SOLIDARITY/HEAT meter (COLD->BASKING->MOLTEN). Leans into the world per Silas
+      2026-11-09: wages in Meat coupons only good at the company store; shed skins filed as
+      worker IDs; a blast-heated floor that makes cold-blooded workers fast and cooks them;
+      cybernetics grown from harvested tails; Queen Pin's band holds the rafters. Choices
+      change callbacks, real Solo Clash boss terms (solidarity -> player life, heat -> rival
+      armor) and Story-only deck adds (Union Bridgebearer / Walking Foundry); no Meat/card
+      grants. Full test:slime-city-lab (44 PASS) and npm run test (vue-tsc) green locally.
+      Remaining t-009 scope: Riot Saints, Undertow and Meat Exchange campaigns, plus
+      adversarial fun playtesting. Leave t-009 ready after #4932 merges (umbrella), not done.
+    updated: '2026-11-09T14:31:33Z'
     owner: worker
     claimed_by: 2026-11-09T142000Z-slime-city-t009-last-shift-p5rr
     claimed_at: '2026-11-09T14:22:06Z'
+    implementation_pr: 'silasfelinus/kind_robots#4932'
   - id: t-010
     milestone: m3
     title: "Create daily, weekly and evergreen missions with earned progression"
