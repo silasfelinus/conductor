@@ -1272,3 +1272,35 @@ tasks:
       held-out seed set. Keep all card ids. No art, economy, wallet or release change.
     owner: worker
     updated: '2026-11-09T23:30:00Z'
+  - id: t-049
+    milestone: m2
+    title: "Title screen and CLASH versus console: generated splash art, big fighter stats, boss reactions, battle log, hover cards"
+    status: review
+    passes: 0
+    stakes: reversible
+    note: |-
+      Silas, 2026-11-10 PT, after hands-on play (screenshots in session): "that front end splash
+      image needs to be a generated image, not svg. also, we should not be scrolling that display,
+      single page design, always ... the city story and the faction mode distinction is not clear.
+      ... the attack and heart values need to be at the top, not bottom of the token, and much
+      bigger, with stylish display. we should be able to see a log of an active game ... assign
+      some more space for the matchup pictures, so there are reactions ... When we hover over cards,
+      we should see them bigger and have the full info of the card ... The floating hand icon is
+      blocking another button, that lower section should be combined with the versus image, hp
+      counters, play counters, and floating hand button to one interface and versus section."
+
+      Scope (kind_robots): title screen paints generated art (title key art once rendered, the
+      chosen crew's home district until then), fits one screen with no scroll, big crew poster,
+      art-led QUICK BATTLE / CAMPAIGN / CITY MAP cards with one-line explanations; "STORY" renamed
+      CAMPAIGN in tabs and city. CLASH: one versus console (rail on wide screens, top/bottom strips
+      on narrow) holding both boss portraits with mood reactions and quips, life, play pips, the
+      general power, the hand button (no longer floating over FIGHT), FIGHT/REMATCH and a battle
+      log; fighter attack and life as large badges at the top of each token; mouse hover shows the
+      full card docked beside the board. Faction one-shot powers already exist but only in
+      ALLIANCE format (Silas's 2026-11-07 spec: the general's power) — whether SOLO should get them
+      too is Silas's call. Art: projects/slime-city/art/TITLE-AND-BOSS-REACTIONS-ROUND-1.yaml
+      (1 title key art + 24 boss mood portraits, auto_submit); wiring keepers into
+      SLIME_CITY_ART.ui / .bosses is a follow-up after curation. No rules, economy or release change.
+    owner: worker
+    updated: '2026-11-10T20:00:00Z'
+    implementation_pr: 'silasfelinus/kind_robots#4939'
