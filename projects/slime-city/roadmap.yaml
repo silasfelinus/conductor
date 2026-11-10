@@ -541,18 +541,17 @@ tasks:
   - id: t-028
     milestone: m3
     title: "20-card decks across the deck builder, starters and every format"
-    status: review
+    status: ready
     depends_on: t-027
-    owner: worker
     passes: 0
     stakes: reversible
     note: |-
       Silas, 2026-11-05 PT: "Decks should be 20 cards, not 10." t-027 gives FIVE ALLEYS 20-card crew decks first. This task moves the rest of the game: deck workbench legality (signature, creature/special minimums, mercenary cap scaled from 3 of 10), starter decks, campaign and story bouts, BLACKOUT's five-card hand and cycling, and the balance and constructed-deck tests, then re-measures crew balance (the t-021 and t-025 guards) on the new decks.
 
       Implemented a unified 20-card Solo/Alliance Clash surface, saved Alliance and Tower deck normalization, guaranteed legal turn-one draws when possible, explicit no-play pass, a new illustrated entrance and settings, and mercenary filtering plus tap-to-inspect card rules. Open implementation PR and verify all latest-head checks before merge. Historic legacy engines remain archived for replay compatibility.
-    claimed_by: 20261109T115100Z-slime-city-t028-e9c3
-    claimed_at: '2026-11-09T11:51:00Z'
-    updated: '2026-11-09T12:04:00Z'
+
+      PARTIAL MERGED 2026-11-09 PT: Kind Robots #4924 squash-merged at 8bfafce, all six latest-head workflows successful. Illustrated title/front door, settings, mercenary filter, tap-to-inspect card rules/L1-L3, explicit PASS, targeted hand legality and deterministic preservation of valid retired 30-card Alliance and Tower decks as 20-card saves are on main. Current main already had 20-card Solo/Alliance rules and improved faction balance; the old PR's Ironjaw 34.8% regression was NOT transplanted. Keep task ready for an adversarial opening-hand guarantee that preserves balance, 390/768/1440 layout acceptance and verifying remaining active-deck surfaces. No production deploy or human fun approval claimed.
+    updated: '2026-11-10T02:53:56.105Z'
   - id: t-029
     milestone: m4
     title: "Commit one shared balance tuner covering founders, PARITY and BLOODRUSH"

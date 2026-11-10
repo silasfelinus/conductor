@@ -1412,11 +1412,13 @@ tasks:
     status: review
     stakes: reversible
     passes: 0
-    updated: '2026-11-10T02:51:41Z'
+    updated: '2026-11-10T02:58:00Z'
     note: |-
       Kaizen from t-025 Last Train review (conductor#7168): two writer packets (Earth letters, Last Train) now specify 24 choices and state rules but neither is wired in. Audit occupied e03/e04 cells, bind scene IDs into the registry and Pinia persistence, and implement each packet's acceptance matrix as executable tests (replay, forged-choice, missing-state fallbacks) before any more prose packets.
 
       Partial t-064: isolated Unsent Letters choice ledger, strict restore validation, idempotent replay and 108 combination assertions. Runtime registry binding, Last Train, art and browser QA remain. Kind Robots PR pending.
+
+      Scoped Unsent Letters save-validation hardening rejects extra top-level fields, non-JSON objects, and explicit undefined decisions; added adversarial partial-save and cross-scene tests. Implementation PR pending CI. Registry and Last Train remain incomplete.
     owner: worker
     claimed_by: 2026-11-10T025141Z-memory-dungeon-t064-q7v3
     claimed_at: '2026-11-10T02:51:41Z'
