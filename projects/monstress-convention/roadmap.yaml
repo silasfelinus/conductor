@@ -182,7 +182,7 @@ tasks:
     title: "Security regression suite for mature opt-in and CHILD restrictions across all discovery and direct access"
     status: ready
     depends_on: t-001
-    updated: '2026-11-08T02:42:30.667Z'
+    updated: '2026-11-10T03:30:08.125Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -199,6 +199,8 @@ tasks:
       2026-11-07 PT: Implemented opt-in general versus mature Monstrique editions in kind_robots worker branch. General-audience game preserves the Chapter One detective path, removes flirting/romance scrapbook content, rewrites suggestive dialogue and uses a separate save. The mature audience decision comes from a no-store JWT-only server endpoint and existing role/consent predicate. Public Play route and nav are outward-facing: implementation PR requires security and visual human gate before merge/deployment. Existing private Admin studio remains separate.
 
       2026-11-07 PT: Added a general-safe, guest-playable Chapter One alongside a server-JWT-authorized mature edition in kind_robots DRAFT PR #4903 (head 42e1b0037729bd19b22e71cdc5671e99d2dd801e; CI pending). Includes explicit public-scene/topics/scrapbook allowlists, separate saves, covered murder scene, no general-edition flirting, and regression replay. This is an outward-facing route: keep draft UNMERGED until human visual/publication review and complete server asset/SSR security audit. Canonical dual-edition design notes merged in conductor PR #7159. Additional t-011 security work is still required, so return this task to ready rather than marking the audit finished.
+
+      PARTIAL MERGED 2026-11-09 PT: Silas explicitly replied "Human approved" in the current ChatGPT session to the pending human gate on Kind Robots PR #4903. The formerly draft public-safe general plus server-authorized mature edition PR was reconciled with current main, 10/10 latest-head GitHub workflows completed successfully, and PR #4903 squash-merged at dee2774007c79bda5b162940b68745269683f77a. This approval is for this specific Play route and two-edition release; it is not blanket approval of future mature assets, home Highlights, community promotion, or the full-game t-013 visual acceptance. Remaining t-011 work: independently verify direct ArtImage URL protections, SSR/hydration, search/project discovery, cross-account save isolation, authenticated live behavior, and production deployment before marking the security matrix complete. No manual deployment performed.
   - id: t-012
     milestone: m4
     title: "Adversarial end-to-end playthroughs and visual/performance acceptance preparation"
