@@ -24,6 +24,9 @@ Updated: 2026-11-10 PT. Source of truth: CONTROL.md's October 30 twelve-world ca
 ## Task coordination reset
 All stale unfinished `claimed` and `review` entries from before this session are released to `ready`, except those whose declared prerequisite is not `done` which become `waiting`. Completed tasks stay `done`; human gates stay gated. This is Silas-authorized queue recovery, not evidence old work is complete. Historical notes and claim audit trails in HISTORY remain unchanged. New workers must claim freshly, obey 90-minute expiry, and avoid duplicate open PRs.
 
+## Verification ledger
+Record per-world counts for authored reachable tiles, dungeon rooms, branch/ending paths, 30+2 art attachments, delivered ArtJob IDs, seeded test runs, and phone/tablet/desktop screenshots in the master issue. A blank or unverified cell is unfinished work, not a passed gate.
+
 ## Immediate work order
 1. Audit merged PRs for every reset task and close only proven-complete scope; do not reimplement finished code.
 2. Complete t-064 Last Train registry/Pinia integration and adversarial reachability tests; t-044/t-055 e08 content; t-047 e09–e12 authored map/dungeon coverage. Keep tasks small enough for focused PRs.
