@@ -1370,7 +1370,7 @@ tasks:
   - id: t-051
     milestone: m2
     title: 'Fighters-first redesign: fewer gear/tech/non-fighters, fewer and fewer kinds of random effects'
-    status: review
+    status: ready
     owner: worker
     claimed_by: 2026-11-10T111800Z-slime-city-t051-starter-audit-6e72
     claimed_at: '2026-11-10T11:18:00Z'
@@ -1389,7 +1389,18 @@ tasks:
       spread <= 12) green on held-out seeds. Present the plan to Silas before cutting cards wholesale.
 
       Opened kind_robots PR #4958 (aad8fc0), an executable six-crew starter composition report with 20-card, uniqueness, crew legality and 300-card invariants. CI pending; fighter-first redesign and held-out balance remain.
-    updated: '2026-11-10T11:19:40Z'
+
+      2026-11-10 PT: silasfelinus/kind_robots#4965 merged. (1) Every crew's starter now fields
+      13 fighters of 20: CLASH_FIGHTERS_FIRST swaps two extra specials per crew for two
+      fighters, pairs chosen by CPU sweep; crew spread 9.3/9.5/10.3/12.5 on seeds
+      700/5000/12000/20000 (main 9.3/16.5/10.0/4.8), guard green. (2) Fewer kinds of random:
+      no random targets anywhere (randomFoe -> weakest/strongest foe), non-ANARKISS coin flips
+      became rules (Safety-Pin, Pogo Brat, Grease Oracle, Allergy Season L3, Homebrew Antidote
+      L2); seeded gambles live only with ANARKISS and its Bribe Rat; a test guards both.
+      Remaining scope: fold the best gear/tech effects into fighters' own abilities — present
+      the candidate list to Silas before changing cards.
+    updated: '2026-11-10T23:48:16Z'
+    implementation_pr: 'silasfelinus/kind_robots#4965'
   - id: t-052
     milestone: m2
     title: 'ANARKISS reskin (was Riot Saints): anarchy circus midnight-musical crew (names, flavor, art)'
