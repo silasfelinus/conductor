@@ -18,15 +18,15 @@ lanes:
   label: Krea 2 Slime City crew poster
   engine: krea2
   prompt: prose
-  suffix: Colorful grungy comic illustration of a post-apocalyptic fantasy megacity, thick ink outlines, gouache textures,
-    saturated palette, absurd slapstick comic action, every surface bare and unmarked.
+  suffix: Colorful grungy comic illustration of a post-apocalyptic fantasy megacity, thick ink outlines, gouache
+    textures, saturated palette, absurd slapstick comic action, every surface bare and unmarked.
 - key: krea2-boss
   label: Krea 2 Slime City boss reaction portraits
   engine: krea2
   prompt: prose
-  suffix: Western adult-animation gouache painting, crisp thick black ink contours, vibrant high-contrast shading, one character
-    from the chest up filling the square canvas, big readable facial expression, saturated colored rim-lighting, dark vignette
-    background bleeding off every side, every surface bare and unmarked.
+  suffix: Western adult-animation gouache painting, crisp thick black ink contours, vibrant high-contrast shading,
+    one character from the chest up filling the square canvas, big readable facial expression, saturated colored
+    rim-lighting, dark vignette background bleeding off every side, every surface bare and unmarked.
 subjects:
 - key: slime-r14-crew-riot-circus
   lane: krea2-crew
@@ -36,10 +36,16 @@ subjects:
   size: 1344x768
   seed: 1210000
   prompt_prose: 'A demolition circus erupts in the middle of a ruined megacity street: a human cannonball in a scorched
-    silver jumpsuit rockets out of a giant cannon through a billboard, a stunt rider on a smoking motorbike loops a wall-of-death
-    cage made of scrap girders, a fire-eater breathes a jet of flame across a tightrope, and a grinning ringmaster in a
-    red-and-gold tailcoat slams down a detonator plunger as the big top behind them blows apart into rainbow fireworks.
-    Crowds cheer from the rubble. Low-angle wide action shot.'
+    silver jumpsuit rockets out of a giant cannon through a billboard, a stunt rider on a smoking motorbike loops
+    a wall-of-death cage made of scrap girders, a fire-eater breathes a jet of flame across a tightrope, and a grinning
+    ringmaster in a red-and-gold tailcoat slams down a detonator plunger as the big top behind them blows apart
+    into rainbow fireworks. Crowds cheer from the rubble. Low-angle wide action shot.'
+  jobs:
+    krea2-crew: 67325
+  art:
+    krea2-crew:
+      status: PENDING
+      art_image_id: null
 - key: slime-r14-crew-exchange-eldritch
   lane: krea2-crew
   entity: crew-hero
@@ -47,10 +53,17 @@ subjects:
   asset: slime-city/crews/exchange
   size: 1344x768
   seed: 1210100
-  prompt_prose: 'A drowned butcher cathedral beneath a megacity market: hooded butcher-priests in wet black robes with gold
-    hooks and tentacle beards hang strange glowing cuts of meat from iron chains, candles burn green on an altar of piled
-    ledgers, and a colossal many-eyed shape stirs in the black flooded nave behind them, its pale tentacles curling around
-    the pillars. Coins and teeth glint in the water. Wide low-angle shot full of dread and grotesque humor.'
+  prompt_prose: 'A drowned butcher cathedral beneath a megacity market: hooded butcher-priests in wet black robes
+    with gold hooks and tentacle beards hang strange glowing cuts of meat from iron chains, candles burn green on
+    an altar of piled ledgers, and a colossal many-eyed shape stirs in the black flooded nave behind them, its pale
+    tentacles curling around the pillars. Coins and teeth glint in the water. Wide low-angle shot full of dread
+    and grotesque humor.'
+  jobs:
+    krea2-crew: 67326
+  art:
+    krea2-crew:
+      status: PENDING
+      art_image_id: null
 - key: slime-r14-boss-riot-ready
   lane: krea2-boss
   entity: boss-reaction
@@ -58,10 +71,16 @@ subjects:
   asset: slime-city/bosses/riot/ready
   size: 1024x1024
   seed: 1210300
-  prompt_prose: Saint Kaboom, a wiry grinning adult ringmaster of a demolition circus, in a scorched red-and-gold ringmaster
-    tailcoat, a dented top hat with a lit fuse for a feather, soot on his face and a brass detonator plunger on his belt.
-    He spreads his arms beneath a striped big top full of smoke, one hand raised to present the act, a human cannonball
-    loading into a cannon behind him and spotlights crossing the canvas.
+  prompt_prose: Saint Kaboom, a wiry grinning adult ringmaster of a demolition circus, in a scorched red-and-gold
+    ringmaster tailcoat, a dented top hat with a lit fuse for a feather, soot on his face and a brass detonator
+    plunger on his belt. He spreads his arms beneath a striped big top full of smoke, one hand raised to present
+    the act, a human cannonball loading into a cannon behind him and spotlights crossing the canvas.
+  jobs:
+    krea2-boss: 67327
+  art:
+    krea2-boss:
+      status: PENDING
+      art_image_id: null
 - key: slime-r14-boss-riot-hit
   lane: krea2-boss
   entity: boss-reaction
@@ -69,10 +88,16 @@ subjects:
   asset: slime-city/bosses/riot/hit
   size: 1024x1024
   seed: 1210300
-  prompt_prose: Saint Kaboom, a wiry grinning adult ringmaster of a demolition circus, in a scorched red-and-gold ringmaster
-    tailcoat, a dented top hat with a lit fuse for a feather, soot on his face and a brass detonator plunger on his belt.
-    A flaming hoop bounces off his head, his top hat flies off trailing sparks and he windmills backwards off a stunt ramp
-    with his mouth open in a shocked howl.
+  prompt_prose: Saint Kaboom, a wiry grinning adult ringmaster of a demolition circus, in a scorched red-and-gold
+    ringmaster tailcoat, a dented top hat with a lit fuse for a feather, soot on his face and a brass detonator
+    plunger on his belt. A flaming hoop bounces off his head, his top hat flies off trailing sparks and he windmills
+    backwards off a stunt ramp with his mouth open in a shocked howl.
+  jobs:
+    krea2-boss: 67328
+  art:
+    krea2-boss:
+      status: PENDING
+      art_image_id: null
 - key: slime-r14-boss-riot-gloat
   lane: krea2-boss
   entity: boss-reaction
@@ -80,10 +105,16 @@ subjects:
   asset: slime-city/bosses/riot/gloat
   size: 1024x1024
   seed: 1210300
-  prompt_prose: Saint Kaboom, a wiry grinning adult ringmaster of a demolition circus, in a scorched red-and-gold ringmaster
-    tailcoat, a dented top hat with a lit fuse for a feather, soot on his face and a brass detonator plunger on his belt.
-    He takes a deep theatrical bow on a motorbike in a wall-of-death cage while confetti and rainbow fireworks burst behind
-    him and the crowd roars.
+  prompt_prose: Saint Kaboom, a wiry grinning adult ringmaster of a demolition circus, in a scorched red-and-gold
+    ringmaster tailcoat, a dented top hat with a lit fuse for a feather, soot on his face and a brass detonator
+    plunger on his belt. He takes a deep theatrical bow on a motorbike in a wall-of-death cage while confetti and
+    rainbow fireworks burst behind him and the crowd roars.
+  jobs:
+    krea2-boss: 67329
+  art:
+    krea2-boss:
+      status: PENDING
+      art_image_id: null
 - key: slime-r14-boss-riot-beaten
   lane: krea2-boss
   entity: boss-reaction
@@ -91,10 +122,16 @@ subjects:
   asset: slime-city/bosses/riot/beaten
   size: 1024x1024
   seed: 1210300
-  prompt_prose: Saint Kaboom, a wiry grinning adult ringmaster of a demolition circus, in a scorched red-and-gold ringmaster
-    tailcoat, a dented top hat with a lit fuse for a feather, soot on his face and a brass detonator plunger on his belt.
-    He sits in the sawdust of a collapsed big top with a crushed top hat, a fizzled fuse in his hand, as a tired circus
-    elephant made of scrap metal nudges him gently.
+  prompt_prose: Saint Kaboom, a wiry grinning adult ringmaster of a demolition circus, in a scorched red-and-gold
+    ringmaster tailcoat, a dented top hat with a lit fuse for a feather, soot on his face and a brass detonator
+    plunger on his belt. He sits in the sawdust of a collapsed big top with a crushed top hat, a fizzled fuse in
+    his hand, as a tired circus elephant made of scrap metal nudges him gently.
+  jobs:
+    krea2-boss: 67330
+  art:
+    krea2-boss:
+      status: PENDING
+      art_image_id: null
 - key: slime-r14-boss-exchange-ready
   lane: krea2-boss
   entity: boss-reaction
@@ -102,10 +139,17 @@ subjects:
   asset: slime-city/bosses/exchange/ready
   size: 1024x1024
   seed: 1210500
-  prompt_prose: Auditor Prime Gilt, an impossibly tall adult high priest of a drowned butcher cult, gaunt grey skin, a crown
-    of curling ram horns, a hooded robe of wet black velvet stitched with tiny gold hooks, a writhing beard of pale tentacles
-    and a ceremonial golden cleaver. He stands in a candlelit flooded vault lined with hanging cuts of strange meat, raising
-    a ledger bound in scaled hide while a vast green eye opens in the dark water behind him.
+  prompt_prose: Auditor Prime Gilt, an impossibly tall adult high priest of a drowned butcher cult, gaunt grey skin,
+    a crown of curling ram horns, a hooded robe of wet black velvet stitched with tiny gold hooks, a writhing beard
+    of pale tentacles and a ceremonial golden cleaver. He stands in a candlelit flooded vault lined with hanging
+    cuts of strange meat, raising a ledger bound in scaled hide while a vast green eye opens in the dark water behind
+    him.
+  jobs:
+    krea2-boss: 67331
+  art:
+    krea2-boss:
+      status: PENDING
+      art_image_id: null
 - key: slime-r14-boss-exchange-hit
   lane: krea2-boss
   entity: boss-reaction
@@ -113,10 +157,16 @@ subjects:
   asset: slime-city/bosses/exchange/hit
   size: 1024x1024
   seed: 1210500
-  prompt_prose: Auditor Prime Gilt, an impossibly tall adult high priest of a drowned butcher cult, gaunt grey skin, a crown
-    of curling ram horns, a hooded robe of wet black velvet stitched with tiny gold hooks, a writhing beard of pale tentacles
-    and a ceremonial golden cleaver. A blast shatters the altar candles around him, his tentacle beard flares in pain and
-    black brine sprays from the cracked vault floor as he reels back.
+  prompt_prose: Auditor Prime Gilt, an impossibly tall adult high priest of a drowned butcher cult, gaunt grey skin,
+    a crown of curling ram horns, a hooded robe of wet black velvet stitched with tiny gold hooks, a writhing beard
+    of pale tentacles and a ceremonial golden cleaver. A blast shatters the altar candles around him, his tentacle
+    beard flares in pain and black brine sprays from the cracked vault floor as he reels back.
+  jobs:
+    krea2-boss: 67332
+  art:
+    krea2-boss:
+      status: PENDING
+      art_image_id: null
 - key: slime-r14-boss-exchange-gloat
   lane: krea2-boss
   entity: boss-reaction
@@ -124,10 +174,16 @@ subjects:
   asset: slime-city/bosses/exchange/gloat
   size: 1024x1024
   seed: 1210500
-  prompt_prose: Auditor Prime Gilt, an impossibly tall adult high priest of a drowned butcher cult, gaunt grey skin, a crown
-    of curling ram horns, a hooded robe of wet black velvet stitched with tiny gold hooks, a writhing beard of pale tentacles
-    and a ceremonial golden cleaver. He presses a bleeding thumb onto a glowing contract as countless pale tentacles rise
-    from the water behind him and the candles burn green.
+  prompt_prose: Auditor Prime Gilt, an impossibly tall adult high priest of a drowned butcher cult, gaunt grey skin,
+    a crown of curling ram horns, a hooded robe of wet black velvet stitched with tiny gold hooks, a writhing beard
+    of pale tentacles and a ceremonial golden cleaver. He presses a bleeding thumb onto a glowing contract as countless
+    pale tentacles rise from the water behind him and the candles burn green.
+  jobs:
+    krea2-boss: 67333
+  art:
+    krea2-boss:
+      status: PENDING
+      art_image_id: null
 - key: slime-r14-boss-exchange-beaten
   lane: krea2-boss
   entity: boss-reaction
@@ -135,10 +191,16 @@ subjects:
   asset: slime-city/bosses/exchange/beaten
   size: 1024x1024
   seed: 1210500
-  prompt_prose: Auditor Prime Gilt, an impossibly tall adult high priest of a drowned butcher cult, gaunt grey skin, a crown
-    of curling ram horns, a hooded robe of wet black velvet stitched with tiny gold hooks, a writhing beard of pale tentacles
-    and a ceremonial golden cleaver. He kneels in rising black water with his horns chipped and his ledger dissolving into
-    ink, the vast eye behind him slowly closing.
+  prompt_prose: Auditor Prime Gilt, an impossibly tall adult high priest of a drowned butcher cult, gaunt grey skin,
+    a crown of curling ram horns, a hooded robe of wet black velvet stitched with tiny gold hooks, a writhing beard
+    of pale tentacles and a ceremonial golden cleaver. He kneels in rising black water with his horns chipped and
+    his ledger dissolving into ink, the vast eye behind him slowly closing.
+  jobs:
+    krea2-boss: 67334
+  art:
+    krea2-boss:
+      status: PENDING
+      art_image_id: null
 - key: slime-r14-boss-ironjaw-ready
   lane: krea2-boss
   entity: boss-reaction
@@ -146,10 +208,16 @@ subjects:
   asset: slime-city/bosses/ironjaw/ready
   size: 1024x1024
   seed: 1210200
-  prompt_prose: Forewoman Rivet, a huge adult mutant tegu lizard woman with cobalt scales, a riveted chrome lower jaw, a
-    shaved strip of old lab-stitch scars across her skull, a cracked specimen tag still clipped to one ear and patched union
-    overalls. She stands in a sewer junction lit by a broken laboratory sign, arms folded, tail coiled, with smashed glass
-    specimen tanks and dripping pipes behind her.
+  prompt_prose: Forewoman Rivet, a huge adult mutant tegu lizard woman with cobalt scales, a riveted chrome lower
+    jaw, a shaved strip of old lab-stitch scars across her skull, a cracked specimen tag still clipped to one ear
+    and patched union overalls. She stands in a sewer junction lit by a broken laboratory sign, arms folded, tail
+    coiled, with smashed glass specimen tanks and dripping pipes behind her.
+  jobs:
+    krea2-boss: 67335
+  art:
+    krea2-boss:
+      status: PENDING
+      art_image_id: null
 - key: slime-r14-boss-ironjaw-hit
   lane: krea2-boss
   entity: boss-reaction
@@ -157,10 +225,16 @@ subjects:
   asset: slime-city/bosses/ironjaw/hit
   size: 1024x1024
   seed: 1210200
-  prompt_prose: Forewoman Rivet, a huge adult mutant tegu lizard woman with cobalt scales, a riveted chrome lower jaw, a
-    shaved strip of old lab-stitch scars across her skull, a cracked specimen tag still clipped to one ear and patched union
-    overalls. A spray of green chemical foam bursts against her chrome jaw, she staggers into a shelf of glass beakers and
-    hisses through clenched steel teeth.
+  prompt_prose: Forewoman Rivet, a huge adult mutant tegu lizard woman with cobalt scales, a riveted chrome lower
+    jaw, a shaved strip of old lab-stitch scars across her skull, a cracked specimen tag still clipped to one ear
+    and patched union overalls. A spray of green chemical foam bursts against her chrome jaw, she staggers into
+    a shelf of glass beakers and hisses through clenched steel teeth.
+  jobs:
+    krea2-boss: 67336
+  art:
+    krea2-boss:
+      status: PENDING
+      art_image_id: null
 - key: slime-r14-boss-ironjaw-gloat
   lane: krea2-boss
   entity: boss-reaction
@@ -168,10 +242,16 @@ subjects:
   asset: slime-city/bosses/ironjaw/gloat
   size: 1024x1024
   seed: 1210200
-  prompt_prose: Forewoman Rivet, a huge adult mutant tegu lizard woman with cobalt scales, a riveted chrome lower jaw, a
-    shaved strip of old lab-stitch scars across her skull, a cracked specimen tag still clipped to one ear and patched union
-    overalls. She raises a dented lab cage over her head like a trophy, grinning with steel teeth while mutant lizard workers
-    cheer from the catwalks.
+  prompt_prose: Forewoman Rivet, a huge adult mutant tegu lizard woman with cobalt scales, a riveted chrome lower
+    jaw, a shaved strip of old lab-stitch scars across her skull, a cracked specimen tag still clipped to one ear
+    and patched union overalls. She raises a dented lab cage over her head like a trophy, grinning with steel teeth
+    while mutant lizard workers cheer from the catwalks.
+  jobs:
+    krea2-boss: 67337
+  art:
+    krea2-boss:
+      status: PENDING
+      art_image_id: null
 - key: slime-r14-boss-ironjaw-beaten
   lane: krea2-boss
   entity: boss-reaction
@@ -179,7 +259,13 @@ subjects:
   asset: slime-city/bosses/ironjaw/beaten
   size: 1024x1024
   seed: 1210200
-  prompt_prose: Forewoman Rivet, a huge adult mutant tegu lizard woman with cobalt scales, a riveted chrome lower jaw, a
-    shaved strip of old lab-stitch scars across her skull, a cracked specimen tag still clipped to one ear and patched union
-    overalls. She slumps against a rusted lab door with her chrome jaw hanging loose on one bolt, tail limp, her specimen
-    tag spinning on its clip.
+  prompt_prose: Forewoman Rivet, a huge adult mutant tegu lizard woman with cobalt scales, a riveted chrome lower
+    jaw, a shaved strip of old lab-stitch scars across her skull, a cracked specimen tag still clipped to one ear
+    and patched union overalls. She slumps against a rusted lab door with her chrome jaw hanging loose on one bolt,
+    tail limp, her specimen tag spinning on its clip.
+  jobs:
+    krea2-boss: 67338
+  art:
+    krea2-boss:
+      status: PENDING
+      art_image_id: null
