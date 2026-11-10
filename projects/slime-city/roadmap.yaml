@@ -1418,3 +1418,15 @@ tasks:
       art/FACTION-IDENTITY-ROUND-1.yaml).
     owner: worker
     updated: '2026-11-10T07:00:00Z'
+  - id: t-055
+    title: "Slime City: first reconnectable, private human-vs-human CLASH matches"
+    status: ready
+    stakes: reversible
+    owner: null
+    passes: 0
+    source_issue: "silasfelinus/kind_robots#4951"
+    updated: '2026-11-10'
+    note: |-
+      FROM GITHUB ISSUE silasfelinus/kind_robots#4951 (https://github.com/silasfelinus/kind_robots/issues/4951), opened by @silasfelinus on 2026-11-10. Imported by scripts/sync_github_issues.py. Reference the issue in the implementing PR (`Closes silasfelinus/kind_robots#4951`) so it closes on merge; the bridge closes it otherwise once this task is done.
+
+      Silas 2026-11-09 PT: “build slime city multiplayer”. Deliver a scoped **admin-preview** PvP vertical slice without public launch: two authenticated human accounts, invite-code lobby, 20-card starter decks, existing three-stage CLASH evolution, server-owned turn transcript, hidden-hand redaction, strict seat authorization, atomic command serialization, reconnect via saved id, responsive art-led duel console, adversarial contract tests. Reuse existing SlimeCityMatch storage with separate `clash-pvp` mode, **no currency/rewards**, no schema migration or public matchmaking. Preserve older CPU modes. This is a technical slice of Conductor slime-city/t-011; unblock its economy dependency separately rather than silently completing it. Public Play exposure, real-user discovery and publishing remain a separate human gate.
