@@ -1275,7 +1275,7 @@ tasks:
   - id: t-049
     milestone: m2
     title: "Title screen and CLASH versus console: generated splash art, big fighter stats, boss reactions, battle log, hover cards"
-    status: review
+    status: done
     passes: 0
     stakes: reversible
     note: |-
@@ -1301,6 +1301,14 @@ tasks:
       too is Silas's call. Art: projects/slime-city/art/TITLE-AND-BOSS-REACTIONS-ROUND-1.yaml
       (1 title key art + 24 boss mood portraits, auto_submit); wiring keepers into
       SLIME_CITY_ART.ui / .bosses is a follow-up after curation. No rules, economy or release change.
+
+      DONE 2026-11-10 PT: kind_robots#4939 squash-merged as 9be0cdf424e3 after all 11 checks
+      passed (TypeScript, 4 contract shards + verifiers, layout-contract, Prettier, verify x2,
+      GitGuardian). Art ledger merged in conductor#7208 (cd7602bf). Live on main after the
+      next Unraid deploy. Follow-ups: curate and wire the title key art into
+      SLIME_CITY_ART.ui['title-splash'] and the 24 boss mood portraits into
+      SLIME_CITY_ART.bosses once rendered; Silas to decide whether SOLO Clash gets the one-
+      shot faction powers.
     owner: worker
-    updated: '2026-11-10T20:00:00Z'
+    updated: '2026-11-10T02:00:10Z'
     implementation_pr: 'silasfelinus/kind_robots#4939'
