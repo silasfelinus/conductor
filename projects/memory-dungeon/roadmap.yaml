@@ -1409,10 +1409,10 @@ tasks:
   - id: t-064
     milestone: m3
     title: "Bind the Earth letter and Last Train e03/e04 packets into the encounter registry with executable reducer tests"
-    status: claimed
+    status: review
     stakes: reversible
     passes: 0
-    updated: '2026-11-10T08:47:42Z'
+    updated: '2026-11-10T08:56:00Z'
     note: |-
       Kaizen from t-025 Last Train review (conductor#7168): two writer packets (Earth letters, Last Train) now specify 24 choices and state rules but neither is wired in. Audit occupied e03/e04 cells, bind scene IDs into the registry and Pinia persistence, and implement each packet's acceptance matrix as executable tests (replay, forged-choice, missing-state fallbacks) before any more prose packets.
 
@@ -1425,6 +1425,8 @@ tasks:
       Adversarial reducer-boundary regression: reject new letter choices when caller supplies forged prior history; focused Kind Robots PR and exact-head CI pending. Registry and Last Train remain unfinished.
 
       2026-11-09 PT: Merged focused forged-history reducer guard in kind_robots PR #4947 (merge 3aeb03bdb8ba88d772c5e68a8f5d0a84706b48dd), after all eight exact-head workflows passed at 0322e2b11f2d310f5957ddb4cb1bdeab0637718e. No art jobs. Remaining t-064: e03/e04 registry, Pinia persistence, Last Train scenes and acceptance tests; continue as ready, not done.
+
+      Partial runtime integration: project existing e03/e04 library choices into the Unsent Letters ledger from replay-validated Earth Pinia records, with 16 adversarial mapping combinations. Unauthored packet branches and Last Train remain open; Kind Robots PR pending CI.
     owner: worker
     claimed_by: 2026-11-10T084742Z-memory-dungeon-t-064-f6c2
     claimed_at: '2026-11-10T08:47:42Z'
