@@ -225,7 +225,7 @@ tasks:
   - id: t-009
     milestone: m3
     title: "Write and implement six genuinely different crew campaigns"
-    status: review
+    status: ready
     depends_on: [t-004, t-007]
     passes: 0
     stakes: reversible
@@ -338,7 +338,14 @@ tasks:
       test:slime-city-lab (45 PASS) and npm run test (vue-tsc) green locally. Remaining after
       merge: Undertow and Meat Exchange campaigns plus adversarial fun playtesting; return
       t-009 to ready (umbrella), not done.
-    updated: '2026-11-10T23:07:20Z'
+
+      PARTIAL MERGED 2026-11-10 PT: kind_robots#4964 squash-merged at 7b877d2 after all 13
+      checks passed. Anarkiss THE BEAUTIFUL CATASTROPHE is live on main (after the next Unraid
+      Force Update). Four of six crew campaigns authored (Gene Riot, Bloodfairy, Ironjaw,
+      Anarkiss). t-009 stays READY for Undertow and Meat Exchange campaigns plus adversarial
+      fun playtesting; follow campaignRiot.ts, and move the other journey tests' cross-crew
+      checks from undertow to exchange when Undertow gains a journey.
+    updated: '2026-11-10T23:14:43Z'
     owner: worker
     claimed_by: 2026-11-10T224918Z-slime-city-t009-riot-saints-6elc
     claimed_at: '2026-11-10T22:49:19Z'
