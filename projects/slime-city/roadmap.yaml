@@ -225,7 +225,7 @@ tasks:
   - id: t-009
     milestone: m3
     title: "Write and implement six genuinely different crew campaigns"
-    status: claimed
+    status: review
     depends_on: [t-004, t-007]
     passes: 0
     stakes: reversible
@@ -328,11 +328,21 @@ tasks:
       and Meat Exchange campaigns plus adversarial fun playtesting; follow the
       campaignIronjaw.ts pattern (also update the overworld store test if a crew used there
       gains a journey).
-    updated: '2026-11-10T22:49:19Z'
+
+      2026-11-10 PT: FOURTH CREW CAMPAIGN in review, kind_robots#4964: Anarkiss THE BEAUTIFUL
+      CATASTROPHE, the illegal midnight festival. 15 scenes over the 5 canonical chapters, 30
+      decisions, SAFETY/SPECTACLE meter (REHEARSAL->OPENING NIGHT->GRAND FINALE). Choices
+      change callbacks, real Solo Clash boss terms (safety -> player life + a round, spectacle
+      -> mana, eventually 1 life) and Story-only deck adds (Volunteer Safety Vest / Doctor
+      Blast Radius); no Meat/card grants. Cross-crew journal tests now use Undertow.
+      test:slime-city-lab (45 PASS) and npm run test (vue-tsc) green locally. Remaining after
+      merge: Undertow and Meat Exchange campaigns plus adversarial fun playtesting; return
+      t-009 to ready (umbrella), not done.
+    updated: '2026-11-10T23:07:20Z'
     owner: worker
     claimed_by: 2026-11-10T224918Z-slime-city-t009-riot-saints-6elc
     claimed_at: '2026-11-10T22:49:19Z'
-    implementation_pr: 'silasfelinus/kind_robots#4932'
+    implementation_pr: 'silasfelinus/kind_robots#4964'
   - id: t-010
     milestone: m3
     title: "Create daily, weekly and evergreen missions with earned progression"
