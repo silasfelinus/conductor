@@ -1312,3 +1312,88 @@ tasks:
     owner: worker
     updated: '2026-11-10T02:00:10Z'
     implementation_pr: 'silasfelinus/kind_robots#4939'
+  - id: t-050
+    milestone: m2
+    title: Alliance deck library on COLLECTION; SOLO story deckbuilding from encountered cards
+    status: ready
+    passes: 0
+    stakes: reversible
+    note: |-
+      Silas, 2026-11-10 PT: "we should have a deck focused build for the collection page. the user adds,
+      copies, deletes, edits decks, new ones are solo or alliance, no other building rules, can be loading
+      into the various game modes as appropriate" and then "this solo alliance divide really shouldn't be
+      there ... the collection deckbuilder ... should be treated as alliance default. the single faction
+      story should allow deckbuilding based on encountered cards, but should not be treated like the
+      default experience. a LOT of the pictured stuff can be trimmed away or essentialized."
+      
+      Scope (kind_robots): COLLECTION becomes a named Alliance deck library (add, copy, rename, delete,
+      edit; 20 cards from two crews + mercenaries; the only rules are the format's crews, size and no
+      repeats) stored in the story save, with legacy per-crew decks migrated in. Loading a deck makes it
+      the deck PRACTICE, CAMPAIGN and TOWER deal. Solo deck editing moves into the SOLO story and draws
+      only on that crew's base cards plus the cards the story has awarded. Trim the collection header
+      to essentials: drop the crew dossier, art-mapping counters and the SOLO/ALLIANCE format switch;
+      keep the card grid as the one scroll region. Default Clash format becomes Alliance.
+    owner: worker
+    updated: '2026-11-10T07:00:00Z'
+  - id: t-051
+    milestone: m2
+    title: 'Fighters-first redesign: fewer gear/tech/non-fighters, fewer and fewer kinds of random effects'
+    status: ready
+    passes: 0
+    stakes: reversible
+    note: |-
+      Silas, 2026-11-10 PT, playtest feedback from the Catgirls: "there are too many gear, tech,
+      non-fighters. the game should be built around fighters that do cool stuff. we need less random
+      things, and less different random things."
+      
+      Scope: audit each crew's 40 cards and starters by kind (fighter / spell / trap / gear) and by
+      random effects. Raise starter and base decks to a clear fighter majority (target 13-15 fighters of
+      20), fold the best gear/tech effects into fighters' own abilities where possible, and cut the number
+      of distinct random mechanics (chance rolls, random targets, random blasts) to a small, legible set.
+      Keep card ids where possible so saves survive; keep the CLASH crew balance guard (each crew 42-58%,
+      spread <= 12) green on held-out seeds. Present the plan to Silas before cutting cards wholesale.
+    owner: worker
+    updated: '2026-11-10T07:00:00Z'
+  - id: t-052
+    milestone: m2
+    title: 'Riot Saints reskin: demolition circus daredevils (names, flavor, art)'
+    status: ready
+    passes: 0
+    stakes: reversible
+    note: |-
+      Silas, 2026-11-10 PT: "the riot squad has a demolition focus and really needs to lean into circus
+      daredevils." Crew text landed in kind_robots#4949 (travelling demolition circus: human cannonballs,
+      wall-of-death riders, fire-eaters, a ringmaster with a detonator). Remaining: card names and flavor
+      for the 40 Riot cards in that voice (keep ids and mechanics), and art: crew poster + boss portraits
+      queued in art/FACTION-IDENTITY-ROUND-1.yaml; creature card renders in a follow-up round.
+    owner: worker
+    updated: '2026-11-10T07:00:00Z'
+  - id: t-053
+    milestone: m2
+    title: 'Meat Exchange reskin: Lovecraftian, dark, occult and weird (names, flavor, art)'
+    status: ready
+    passes: 0
+    stakes: reversible
+    note: |-
+      Silas, 2026-11-10 PT: "the meat merchants need a real lovecraftian vibe, a lot dark, with also
+      satanic and weirdnesses. they look too much like gta vi bros". Crew text landed in kind_robots#4949
+      (a drowned butcher-priesthood kneeling to the Thing That Hungers beneath Crown Market). Remaining:
+      card names and flavor for the 40 Exchange cards (keep ids, mechanics and the meat economy), and art:
+      crew poster + boss portraits queued in art/FACTION-IDENTITY-ROUND-1.yaml; creature cards next.
+    owner: worker
+    updated: '2026-11-10T07:00:00Z'
+  - id: t-054
+    milestone: m2
+    title: 'Ironjaw follow-through: lab-mutant identity in story, evolutions and remaining art'
+    status: ready
+    passes: 0
+    stakes: reversible
+    note: |-
+      Silas, 2026-11-10 PT: Ironjaw "should have already been rebranded lizards, but also needs art to
+      represent, is supposed to be the overall bioexperiment lab rat tmntrpg feel." kind_robots#4949 wired
+      the lizard crew poster and 15 creature cards and recast the crew as escaped bio-lab mutant lizards.
+      Remaining: Ironjaw story and campaign prose that still describes ogres or cybernetic workers,
+      non-creature card art that shows ogres, and boss portraits (queued in
+      art/FACTION-IDENTITY-ROUND-1.yaml).
+    owner: worker
+    updated: '2026-11-10T07:00:00Z'
