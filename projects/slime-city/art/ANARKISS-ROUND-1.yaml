@@ -1,0 +1,86 @@
+# Slime City ANARKISS, round 1 (2026-11-10 PT; slime-city/t-052). Silas, 2026-11-10 PT: "Rebrand for riot squad,
+# become Anarkiss: anarchy circus performing rocky horror crew. Anarkissed". kind_robots#4949 renamed the crew
+# (id stays `riot`). An original glam midnight-musical anarchy circus: no borrowed characters, songs or names.
+# Supersedes the Riot circus poster and boss subjects in FACTION-IDENTITY-ROUND-1.yaml. Keepers replace
+# SLIME_CITY_ART.crews.riot and fill SLIME_CITY_ART.bosses['riot/<mood>']. Adults only; positive terms only.
+# auto_submit.
+round: slime-city-anarkiss-1
+project_slug: slime-city
+designer: Slime City ANARKISS, round 1
+is_public: true
+is_mature: false
+cast_loras: false
+priority: 624
+auto_submit: true
+lanes:
+- key: krea2-crew
+  label: Krea 2 Slime City crew poster
+  engine: krea2
+  prompt: prose
+  suffix: Colorful grungy comic illustration of a post-apocalyptic fantasy megacity, thick ink outlines, gouache textures,
+    saturated palette, absurd slapstick comic action, every surface bare and unmarked.
+- key: krea2-boss
+  label: Krea 2 Slime City boss reaction portraits
+  engine: krea2
+  prompt: prose
+  suffix: Western adult-animation gouache painting, crisp thick black ink contours, vibrant high-contrast shading, one character
+    from the chest up filling the square canvas, big readable facial expression, saturated colored rim-lighting, dark vignette
+    background bleeding off every side, every surface bare and unmarked.
+subjects:
+- key: slime-r15-crew-anarkiss
+  lane: krea2-crew
+  entity: crew-hero
+  title: ANARKISS anarchy circus crew poster
+  asset: slime-city/crews/riot
+  size: 1344x768
+  seed: 1215000
+  prompt_prose: 'An anarchy circus stages a glam midnight musical on a stage built from wrecked cars in the ruins of a megacity:
+    grown-up performers in corsets, fishnets, feather boas, platform boots and glitter lipstick strike a chorus-line pose
+    while a human cannonball in a sequined jumpsuit rockets overhead, a fire-eater breathes a pink jet of flame and a grinning
+    emcee in a ripped glitter tailcoat presses a detonator that bursts the scorched velvet curtain into fireworks. A wild
+    costumed midnight crowd dances in the rubble below. Low-angle wide shot, neon pink and blood red light.'
+- key: slime-r15-boss-riot-ready
+  lane: krea2-boss
+  entity: boss-reaction
+  title: Saint Kaboom (ready)
+  asset: slime-city/bosses/riot/ready
+  size: 1024x1024
+  seed: 1215100
+  prompt_prose: Saint Kaboom, the wiry grinning adult emcee of the Anarkiss anarchy circus, in a ripped glitter tailcoat
+    over a black corset, fishnet sleeves, smeared crimson lipstick, heavy glam eye makeup, a crooked sequined top hat with
+    a lit fuse for a plume and a brass detonator plunger on a garter. He poses in a single pink spotlight on a junkyard
+    stage built from wrecked cars, one gloved hand raised to the crowd, a velvet curtain riddled with scorch marks behind
+    him and glitter drifting through the smoke.
+- key: slime-r15-boss-riot-hit
+  lane: krea2-boss
+  entity: boss-reaction
+  title: Saint Kaboom (hit)
+  asset: slime-city/bosses/riot/hit
+  size: 1024x1024
+  seed: 1215100
+  prompt_prose: Saint Kaboom, the wiry grinning adult emcee of the Anarkiss anarchy circus, in a ripped glitter tailcoat
+    over a black corset, fishnet sleeves, smeared crimson lipstick, heavy glam eye makeup, a crooked sequined top hat with
+    a lit fuse for a plume and a brass detonator plunger on a garter. A burst of stage pyro blows his top hat off in a shower
+    of sequins, his lipstick-smeared mouth wide in an outraged shriek as he tumbles backwards over the footlights.
+- key: slime-r15-boss-riot-gloat
+  lane: krea2-boss
+  entity: boss-reaction
+  title: Saint Kaboom (gloat)
+  asset: slime-city/bosses/riot/gloat
+  size: 1024x1024
+  seed: 1215100
+  prompt_prose: Saint Kaboom, the wiry grinning adult emcee of the Anarkiss anarchy circus, in a ripped glitter tailcoat
+    over a black corset, fishnet sleeves, smeared crimson lipstick, heavy glam eye makeup, a crooked sequined top hat with
+    a lit fuse for a plume and a brass detonator plunger on a garter. He blows a huge theatrical kiss to the audience while
+    a wall of pink fireworks and confetti erupts behind him and a crowd in fishnets and feather boas roars in the dark.
+- key: slime-r15-boss-riot-beaten
+  lane: krea2-boss
+  entity: boss-reaction
+  title: Saint Kaboom (beaten)
+  asset: slime-city/bosses/riot/beaten
+  size: 1024x1024
+  seed: 1215100
+  prompt_prose: Saint Kaboom, the wiry grinning adult emcee of the Anarkiss anarchy circus, in a ripped glitter tailcoat
+    over a black corset, fishnet sleeves, smeared crimson lipstick, heavy glam eye makeup, a crooked sequined top hat with
+    a lit fuse for a plume and a brass detonator plunger on a garter. He sits slumped on the edge of a burned-out stage
+    in a torn tailcoat with his makeup running, a broken sequined hat in his lap and one last candle guttering beside him.
