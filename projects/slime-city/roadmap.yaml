@@ -1320,7 +1320,7 @@ tasks:
   - id: t-050
     milestone: m2
     title: Alliance deck library on COLLECTION; SOLO story deckbuilding from encountered cards
-    status: ready
+    status: done
     passes: 0
     stakes: reversible
     note: |-
@@ -1330,7 +1330,7 @@ tasks:
       there ... the collection deckbuilder ... should be treated as alliance default. the single faction
       story should allow deckbuilding based on encountered cards, but should not be treated like the
       default experience. a LOT of the pictured stuff can be trimmed away or essentialized."
-      
+
       Scope (kind_robots): COLLECTION becomes a named Alliance deck library (add, copy, rename, delete,
       edit; 20 cards from two crews + mercenaries; the only rules are the format's crews, size and no
       repeats) stored in the story save, with legacy per-crew decks migrated in. Loading a deck makes it
@@ -1338,8 +1338,18 @@ tasks:
       only on that crew's base cards plus the cards the story has awarded. Trim the collection header
       to essentials: drop the crew dossier, art-mapping counters and the SOLO/ALLIANCE format switch;
       keep the card grid as the one scroll region. Default Clash format becomes Alliance.
+
+      2026-11-10 PT: shipped in silasfelinus/kind_robots#4955. COLLECTION opens on a named
+      Alliance deck library (new/copy/rename/two-tap delete, up to 12, unfinished decks
+      saved); picking one makes it the deck Practice, Campaign and Tower deal. The
+      SOLO/ALLIANCE switch is gone; SOLO story's CREW DECK opens its single-crew deck. Story
+      bouts already fold story-earned cards into the crew deck (campaignSoloDeck); a deck pool
+      limited to only cards encountered in the story is not built — open a follow-up if Silas
+      wants that stricter rule. Follow-on: silasfelinus/kind_robots#4956 makes
+      story/campaign/tower fights pay rewards.
     owner: worker
-    updated: '2026-11-10T07:00:00Z'
+    updated: '2026-11-10T08:41:40Z'
+    implementation_pr: 'silasfelinus/kind_robots#4955'
   - id: t-051
     milestone: m2
     title: 'Fighters-first redesign: fewer gear/tech/non-fighters, fewer and fewer kinds of random effects'
