@@ -1353,7 +1353,7 @@ tasks:
   - id: t-051
     milestone: m2
     title: 'Fighters-first redesign: fewer gear/tech/non-fighters, fewer and fewer kinds of random effects'
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 2026-11-10T111800Z-slime-city-t051-starter-audit-6e72
     claimed_at: '2026-11-10T11:18:00Z'
@@ -1363,15 +1363,16 @@ tasks:
       Silas, 2026-11-10 PT, playtest feedback from the Catgirls: "there are too many gear, tech,
       non-fighters. the game should be built around fighters that do cool stuff. we need less random
       things, and less different random things."
-      
+
       Scope: audit each crew's 40 cards and starters by kind (fighter / spell / trap / gear) and by
       random effects. Raise starter and base decks to a clear fighter majority (target 13-15 fighters of
       20), fold the best gear/tech effects into fighters' own abilities where possible, and cut the number
       of distinct random mechanics (chance rolls, random targets, random blasts) to a small, legible set.
       Keep card ids where possible so saves survive; keep the CLASH crew balance guard (each crew 42-58%,
       spread <= 12) green on held-out seeds. Present the plan to Silas before cutting cards wholesale.
-    owner: worker
-    updated: '2026-11-10T11:18:00Z'
+
+      Opened kind_robots PR #4958 (aad8fc0), an executable six-crew starter composition report with 20-card, uniqueness, crew legality and 300-card invariants. CI pending; fighter-first redesign and held-out balance remain.
+    updated: '2026-11-10T11:19:40Z'
   - id: t-052
     milestone: m2
     title: 'ANARKISS reskin (was Riot Saints): anarchy circus midnight-musical crew (names, flavor, art)'

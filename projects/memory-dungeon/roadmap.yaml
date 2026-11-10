@@ -1409,13 +1409,13 @@ tasks:
   - id: t-064
     milestone: m3
     title: "Bind the Earth letter and Last Train e03/e04 packets into the encounter registry with executable reducer tests"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 2026-11-10T124326Z-memory-dungeon-t-064-b7e3
     claimed_at: '2026-11-10T12:43:26Z'
     stakes: reversible
     passes: 0
-    updated: '2026-11-10T12:43:26Z'
+    updated: '2026-11-10T12:48:00Z'
     note: |-
       Kaizen from t-025 Last Train review (conductor#7168): two writer packets (Earth letters, Last Train) now specify 24 choices and state rules but neither is wired in. Audit occupied e03/e04 cells, bind scene IDs into the registry and Pinia persistence, and implement each packet's acceptance matrix as executable tests (replay, forged-choice, missing-state fallbacks) before any more prose packets.
 
@@ -1432,3 +1432,5 @@ tasks:
       Partial runtime integration: project existing e03/e04 library choices into the Unsent Letters ledger from replay-validated Earth Pinia records, with 16 adversarial mapping combinations. Unauthored packet branches and Last Train remain open; Kind Robots PR pending CI.
 
       2026-11-10 PT: Merged kind_robots PR #4957 (49bb51edea30a698f4e0b341c8ac44ed3cefed79), replay-backed Earth letter Pinia integration, after eight completed successful workflows on e6c2281f9c232bd0ca73124d139d3d77549a1404. Remaining: Last Train binding, remaining letter branches, art and device QA. No ArtJobs this increment.
+
+      Implemented Last Train versioned reducer with 12 stable packet choices, independent scene completion, strict save restoration, immutable replay, derived one-time rewards, and 256 combination regression matrix plus forged-save tests. Focused Kind Robots PR and CI verification pending. Encounter registry, Pinia binding, four production ArtJobs and rendered QA remain.
