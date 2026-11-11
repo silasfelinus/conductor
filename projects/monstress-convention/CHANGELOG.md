@@ -35,3 +35,8 @@
 - Kind Robots: 13 character model sheets, six art styles (2D point-and-click, retro pixel, 3D cutscene, storyboard, model sheet, mature-only pin-up), a prompt composer with universal adult/no-explicit negatives, and per-character LoRA dataset plans. No ArtJobs enqueued.
 - Cutscenes are shot lists playable as 2D letterboxed panels and directable as 3D key frames: Cold Open (from the existing edition intro cards), Your New Client, Elbow Deep, A Cold Kiss (mature only) and Get the Car.
 - Playable scene: Iris walks to selections, Norb trails inside a germ ring, NPCs and ghosts stand on stage as caricature vector stand-ins, speaker portraits, Sierra score out of 205, a sardonic narrator, wrong-item jokes, and mature-only vending-machine and bed gags.
+
+## 2026-11-10 PT — Painted title splash and Play-card hero
+- Silas: "A really artistically generated front end, with a racier splash if the maturity is on, not this svg stuff. And we need a hero on the highlight page."
+- Rendered on Krea 2 via `art/FRONT-SPLASH-GENERAL-R1.yaml` and `art/FRONT-SPLASH-MATURE-R1.yaml` (priority 100; 18 jobs, all delivered). Re-rendered once to keep painted lettering out of the logo area and keep Norb homely.
+- Picks: general landscape ArtImage 268790, portrait 268796, hero 268789 (shipped as static files in Kind Robots `public/monstrique/front/`). Mature landscape 268798 and portrait 268801 stay private `isMature` ArtImages, served only through the gated `/api/monstrique/splash` route, and await Silas's visual approval before their ids are switched on.
