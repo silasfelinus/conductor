@@ -1448,14 +1448,19 @@ tasks:
   - id: t-066
     milestone: m4
     title: "Copy each reset task's remaining-acceptance line from RESET-TASK-EVIDENCE-AUDIT-2026-11-10.md into its task note"
-    status: review
+    status: done
     owner: worker
     claimed_by: 2026-11-11T205114Z-memory-dungeon-t-066-7c91
     claimed_at: '2026-11-11T20:51:14Z'
-    updated: '2026-11-11T20:57:15Z'
+    updated: '2026-11-11T21:47:20Z'
     stakes: reversible
     passes: 0
     note: |-
       Kaizen from the t-065 review (conductor PR #7221). The audit ledger lists remaining acceptance for 24 ready tasks but none of their notes point at it, so claimers re-derive the gap. Append one dated "remaining:" line per task (via close_task.py --append-note or task-events, no status change) that links the ledger row and names the next executable check. Documentation only; do not close any task.
 
       Added dated remaining-acceptance evidence pointers and next executable checks to all 24 reset task notes. Conductor PR forthcoming; do not close unfinished gameplay tasks.
+
+      2026-11-11 PT Reviewer: squash-merged conductor #7257 (a752515d) after all checks green
+      on d6db6ab3. All 24 reset tasks now carry a dated remaining-acceptance line linking the
+      ledger row; no status changed. Kaizen t-067.
+    implementation_pr: 'silasfelinus/conductor#7257'
