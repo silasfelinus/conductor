@@ -390,13 +390,20 @@ tasks:
       glance at an evolved fighter in Clash at phone/tablet/desktop. Recommendation: accept
       and close t-022; reply if you want reaction tokens back anywhere (e.g. hover or hurt
       state).
-    updated: '2026-11-11T06:15:37Z'
+
+      2026-11-11 PT gate re-check: production /api/version serves kind_robots 636b334, which
+      contains #4986 (a08ab12) -- the deploy step is done, no Force Update needed. Sampled 12
+      of the 425 wired evolution ArtImages on kindrobots.org: all 200 with image data. Only
+      remaining step is Silas's visual acceptance of an evolved fighter in Clash at
+      phone/tablet/desktop (signed-in view); recommendation unchanged: accept and close.
+    updated: '2026-11-11T16:52:43Z'
     owner: worker
     claimed_by: 2026-11-11T150000Z-slime-city-t022-evo-wire-q7m2
     claimed_at: '2026-11-11T05:50:08Z'
     implementation_pr: 'silasfelinus/kind_robots#4986'
     gate_reason: subjective-acceptance
     soft_gate: true
+    gate_rechecked: '2026-11-11'
   - id: t-023
     milestone: m2
     title: "TURF: a Go-style mode where every card is one token"
@@ -554,7 +561,7 @@ tasks:
   - id: t-029
     milestone: m4
     title: "Commit one shared balance tuner covering founders, PARITY and BLOODRUSH"
-    status: review
+    status: done
     owner: null
     passes: 0
     stakes: reversible
@@ -565,7 +572,10 @@ tasks:
       utils/scripts/slimeCityFactionTuner.ts and npm run balance:slime-city-factions: held-out
       Blackout + BLOODRUSH founder measurement (60 seeds from 1000, spread metric matches the
       guards). PARITY lane not covered yet; t-028 can reuse it.
-    updated: '2026-11-09T16:55:24Z'
+
+      2026-11-11 PT: reconciled to done -- kind_robots#4934 merged 2026-11-09 (13/13 checks);
+      tuner shipped. PARITY-lane coverage, if wanted, is a new task.
+    updated: '2026-11-11T16:50:53Z'
     implementation_pr: 'silasfelinus/kind_robots#4934'
   - id: t-014
     milestone: m4
