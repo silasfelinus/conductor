@@ -40,3 +40,12 @@
 - Silas: "A really artistically generated front end, with a racier splash if the maturity is on, not this svg stuff. And we need a hero on the highlight page."
 - Rendered on Krea 2 via `art/FRONT-SPLASH-GENERAL-R1.yaml` and `art/FRONT-SPLASH-MATURE-R1.yaml` (priority 100; 18 jobs, all delivered). Re-rendered once to keep painted lettering out of the logo area and keep Norb homely.
 - Picks: general landscape ArtImage 268790, portrait 268796, hero 268789 (shipped as static files in Kind Robots `public/monstrique/front/`). Mature landscape 268798 and portrait 268801 stay private `isMature` ArtImages, served only through the gated `/api/monstrique/splash` route, and await Silas's visual approval before their ids are switched on.
+
+## 2026-11-10 PT — Series bible, Norb and Iris redesign, monster-women pin-ups
+- Silas's direction: Bakshi-meets-monster-squad look, an uglier Quasimodo/Igor Norb in a hand-me-down
+  MONSTRIQUE shirt, a 100% professional Norb whose harassment complaint becomes a power-structures debate,
+  and Iris as a baddie with a white streak, a necker boyfriend's neck plaster and a high-school tramp stamp.
+- Kind Robots: `/admin/monstrique-bible` series bible (new additive `MonstriqueBibleEntry` table), five new
+  monster-star model sheets, sprite rig hump/shirt/streak/plaster, new dialogue topics.
+- Queued `art/MONSTER-WOMEN-PINUPS-R1.yaml`: 160 mature, private pin-ups across seven Illustrious
+  checkpoints and Krea 2.

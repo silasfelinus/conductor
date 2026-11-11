@@ -82,3 +82,17 @@ when their flag first appears and never replay on load.
 No ArtJobs were enqueued by this work. Public Play/nav/highlights, any adult art, and LoRA
 datasets still need Silas's explicit visual review (t-013). Spoilers never go into model sheets
 or prompts: Draculina's sheet and the cutscene scripts are tested to contain no culprit language.
+
+## The series bible (2026-11-10 PT)
+
+`/admin/monstrique-bible` (ADMIN + mature, like the preview) is the working copy of this document: every
+character's model sheet, a display-name override, writers' notes, LoRA status and trained resource name, a
+one-click LoRA dataset request (the ten model-sheet renders), and art requests on any of the seven
+Illustrious checkpoints (Arthemy first) or Krea 2. Monster stars also get cheesecake swimsuit and steamy
+shower pin-ups. Those are always `isMature`, private and never explicit (swimsuit or towel, steam), and their
+prompt recipes live server-side only. Edits are stored in Kind Robots' `MonstriqueBibleEntry` table, layered
+over the canonical sheets. Renames show in the bible and in art prompts; game dialogue still uses the
+canonical names until a deliberate text migration.
+
+First batch: `art/MONSTER-WOMEN-PINUPS-R1.yaml`, ten stars × two pin-ups × eight lanes (160 renders,
+priority 60).
