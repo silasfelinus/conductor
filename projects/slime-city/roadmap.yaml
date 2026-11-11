@@ -1097,7 +1097,7 @@ tasks:
   - id: t-052
     milestone: m2
     title: 'ANARKISS reskin (was Riot Saints): anarchy circus midnight-musical crew (names, flavor, art)'
-    status: claimed
+    status: ready
     passes: 0
     stakes: reversible
     note: |-
@@ -1112,10 +1112,19 @@ tasks:
       Remaining: card names and flavor in the glam midnight-musical anarchy-circus voice (original:
       no borrowed characters, songs or names), and art from art/ANARKISS-ROUND-1.yaml, which
       supersedes the Riot circus subjects in art/FACTION-IDENTITY-ROUND-1.yaml.
+
+      2026-11-11 PT: kind_robots#5025 merged (squash e882add, all checks green): all 40 Riot
+      cards carry Anarkiss names and flavor (Glitter Rat, Firebrand Dolly, Jackhammer Kaboom,
+      Big Top Detonator...), 29 evolution titles, leftover Saints copy fixed, Clash log and
+      FEATURED reward names follow; ids/mechanics byte-identical; crews guard added.
+      conductor#7265 merged ANARKISS-CARDS-ROUND-2.yaml: 102 Krea subjects at priority 1000
+      (40 cards + 62 evolution stages). Remaining: curate the renders and wire them into
+      artManifest.ts.
     owner: worker
-    updated: '2026-11-11T22:54:03Z'
+    updated: '2026-11-11T23:45:15Z'
     claimed_by: 2026-11-11T225402Z-slime-city-t-052-anarkiss
     claimed_at: '2026-11-11T22:54:03Z'
+    implementation_pr: 'silasfelinus/kind_robots#5025'
   - id: t-053
     milestone: m2
     title: 'Meat Exchange reskin: Lovecraftian, dark, occult and weird (names, flavor, art)'
