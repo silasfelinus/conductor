@@ -12696,3 +12696,7 @@ Reviewed worker/slime-city-priority-20261109: one-line reorder of projects/prior
 
 ## 2026-11-09 reviewer
 Reviewed worker/slime-city-priority-20261109 (Silas, priority.yaml only, reversible): merged. No code risk; slime-city now first in order.
+
+## 2026-11-11 — reviewer (scheduled agent): playbook-kit/t-002 step-1 close-out (PR #7241) + slime-city/t-009 gate
+- Merged #7241 (squash 6935c2a7): roadmap-only close-out recording kind_robots#5009 (Space Couch kit spec, step 1 of 3), claim released to `ready`. Latest attempt of every check green; the one red "Validate Worker PR handoff" was a superseded attempt with a green rerun. Worker pattern worth keeping: the step note names exactly what step 2 must do and what must stay untouched (`game-of-captains-voyage-v1`).
+- slime-city/t-009 sat at `ready` with all six campaigns merged and only subjective fun playtesting left. That made it a picker trap that kept being flagged as a likely zero-diff close. Moved to `needs-human` (`gate_reason: subjective-acceptance`). Suggestion: when a worker's "Remaining:" line is purely subjective acceptance, the close-out should set `needs-human` itself instead of `ready`.
