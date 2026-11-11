@@ -29,3 +29,9 @@
 ## 2026-11-07 PT — Silas's decisions: Draculina in the last act; Cleo Pappatra
 - Culprit locked: **Draculina**, revealed only in Chapter 6. Marta ("Little Miss Nobody") becomes the Chapters 2–5 misdirect and a Chapter 6 witness. STORY-BIBLE's case, endings and chapter plan were rewritten; mist, the mirror and a borrowed alibi tape carry the fair-play reveal.
 - Mummy star renamed **Cleo Pappatra** across DESIGN-BRIEF, FRANCHISE-HISTORY, ALBUM-ART-REGISTER, ART-PROMPTS and STORY-BIBLE. Kind Robots game code was renamed to match.
+
+## 2026-11-11 PT — Larry-style staging, character models, multi-style art and cutscenes
+- New `ART-PIPELINE.md`: identity lives in character model sheets, style lives in styles; identity LoRAs (`mnstq_<name>`) train on style-neutral model-sheet datasets so one LoRA stacks with 2D, pixel and 3D styles. Silas approves every dataset image before training.
+- Kind Robots: 13 character model sheets, six art styles (2D point-and-click, retro pixel, 3D cutscene, storyboard, model sheet, mature-only pin-up), a prompt composer with universal adult/no-explicit negatives, and per-character LoRA dataset plans. No ArtJobs enqueued.
+- Cutscenes are shot lists playable as 2D letterboxed panels and directable as 3D key frames: Cold Open (from the existing edition intro cards), Your New Client, Elbow Deep, A Cold Kiss (mature only) and Get the Car.
+- Playable scene: Iris walks to selections, Norb trails inside a germ ring, NPCs and ghosts stand on stage as caricature vector stand-ins, speaker portraits, Sierra score out of 205, a sardonic narrator, wrong-item jokes, and mature-only vending-machine and bed gags.
