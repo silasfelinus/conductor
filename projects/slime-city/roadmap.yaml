@@ -1131,13 +1131,38 @@ tasks:
 
   - id: t-056
     title: "Re-measure Riot's weak constructed-field win rate (0.41-0.44) and tighten verifySlimeCityClashConstructed's crew band once the measurement holds up"
-    status: claimed
+    status: done
     stakes: reversible
     passes: 0
     depends_on: t-021
-    updated: '2026-11-11T19:48:46Z'
+    updated: '2026-11-11T20:17:20Z'
     note: |-
       Kaizen from t-021 (kind_robots#5021). The constructed-vs-constructed CLASH audit found Riot at 0.41-0.44 and Exchange around 0.60 across the constructed field, with the crew band deliberately loose (35-65%, spread <= 24 pts) because each ordered pairing gets only one bout. Add held-out seeds, or more bouts per pairing, so the crew rates are stable. Then decide whether Riot needs a lever (coordinate with t-051 fighters-first and t-052 ANARKISS reskin) and tighten the guard toward the starter guard. Internal preview only.
+
+      2026-11-11 PT: in review, kind_robots#5022. 4 bouts per ordered constructed pairing;
+      across five seed families Riot 0.430-0.473, Catgirls 0.435-0.457, Exchange 0.593-0.612,
+      spread 0.138-0.177. Riot needs no lever; Exchange running hot is the stable signal.
+      Guard tightened to 40-64% / 20-point spread.
+
+      2026-11-11 PT: MERGED kind_robots#5022 at fecfb71, all 11 checks green. Riot needs no
+      lever (0.430-0.473 over five seed families); Exchange ~0.60 is the stable outlier ->
+      kaizen t-057.
     owner: worker
     claimed_by: 2026-11-11T200500Z-slime-city-t056-riot-q8m3
     claimed_at: '2026-11-11T19:48:46Z'
+    implementation_pr: 'silasfelinus/kind_robots#5022'
+  - id: t-057
+    milestone: m3
+    title: "Bring Meat Exchange's constructed-field score (~0.60 across five seed families) back inside the starter band, coordinated with the t-053 reskin and t-051 fighters-first"
+    status: ready
+    stakes: reversible
+    passes: 0
+    depends_on: t-056
+    updated: '2026-11-11T20:20:00Z'
+    note: |-
+      Kaizen from t-056 (kind_robots#5022). At four bouts per ordered pairing, Exchange scored
+      0.593-0.612 across the constructed field in five disjoint seed families, the only crew
+      clearly outside the 40-seed starter band (42-58%). Find which Exchange decks or cards
+      carry it (the fighters build was 0.78), tune with an A/B on held-out seeds, keep the
+      starter guard green, then tighten verifySlimeCityClashConstructed toward 42-58% / 16 pts.
+      Internal preview only.
