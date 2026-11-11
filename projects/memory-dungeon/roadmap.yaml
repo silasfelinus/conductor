@@ -1385,12 +1385,14 @@ tasks:
   - id: t-065
     milestone: m4
     title: "Audit merged PRs for each task released in the 2026-11-10 twelve-world reset and close only proven-complete scope"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 2026-11-11T014633Z-memory-dungeon-t-065-b92f
     claimed_at: '2026-11-11T01:46:33Z'
     stakes: reversible
     passes: 0
-    updated: '2026-11-11T01:46:33Z'
+    updated: '2026-11-11T01:54:00Z'
     note: |-
       Kaizen from the twelve-world roadmap reset review (worker/memory-dungeon-twelve-world-roadmap-20261110): 21 claimed/review tasks went back to ready in one commit. For each, list its merged implementation PRs against the TWELVE-WORLD-DELIVERY-ROADMAP.md acceptance cells, record the evidence in the per-world verification ledger, and either close the proven slice (split remaining scope into a new task) or leave it ready with a one-line "remaining:" summary. Do not reimplement shipped code.
+
+      Audited all 24 stale reset tasks against merged PR evidence; published RESET-TASK-EVIDENCE-AUDIT-2026-11-10.md on worker branch. No task falsely marked done; per-task remaining acceptance and twelve-world matrix documented. PR pending CI.
