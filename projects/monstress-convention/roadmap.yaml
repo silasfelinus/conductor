@@ -4,7 +4,7 @@ project: monstress-convention
 kind: software
 autonomous: true
 goal: >-
-  Develop MONSTRIQUE as an adult point-and-click murder mystery: Iris is the field protagonist; her astute germophobic boss Norb supports her; at the seedy motel smarmy franchise agent Odette and adult companion Violet are both murdered, both become ghost witnesses, and the separate Monstrique Convention Center plus joke shop, mansion and sewers unlock through city leads. Deliver a fully playable, fair-clue investigation with hotspot-and-verb puzzles, shared evidence/topic notebooks, differential dialogue, an interactive ghost witness, optional consensual flirtation, lavish hand-painted single-screen art, seeded playtests, and secure logged-in mature-opt-in non-CHILD visibility and access. Preview is internal until separate visual acceptance and publication approval.
+  Develop MONSTRIQUE as an adult point-and-click murder mystery: Iris is the field protagonist; her astute germophobic boss Norb supports her; at the seedy motel smarmy franchise agent Odette and adult companion Violet are both murdered, both become ghost witnesses, and the separate Monstrique Convention Center plus joke shop, mansion and sewers unlock through city leads. Deliver a fully playable, fair-clue investigation with hotspot-and-verb puzzles, shared evidence/topic notebooks, differential dialogue, an interactive ghost witness, optional consensual flirtation, lavish hand-painted single-screen art, seeded playtests, and a guest/CHILD/mature-off-safe general edition alongside server-authorized mature extras for signed-in non-CHILD opt-in adults. The initial public Play route and dual editions were approved in kind_robots#4903; full-story visual acceptance, new public promotion and any further publication remain separately gated.
 notes_from_silas: |
   2026-11-07 PT LATEST ACCESS DIRECTIVE: MONSTRIQUE is one point-and-click game with two editions. General edition is playable by guests, mature-off adults and CHILD accounts with covered, non-graphic murder aftermath, public-safe dialogue/locations/art, no sexual/romance interactions or adult scrapbook; retain all required clues, witnesses and endings. Mature extras unlock only for signed-in non-CHILD adults with persisted `showMature: true`, server-enforced on APIs and ArtImage delivery. Separate save and progress namespaces; new content defaults hidden from general until explicitly safe-listed. Keep /admin/monstrique a restricted creator studio. Public Play route and external publication await actual visual/security human approval. See DESIGN-BRIEF.md "Access and release" and kind_robots PR #4903.\n  2026-11-07 PT LATEST CAST DIRECTIVE: Draculina is an original charter member but appears about 20, younger-looking than every other star; her clique-leader/high-school mean-girl demeanor hides centuries of calculation. Siobhan MacRae (The Pack) is the second-youngest in apparent age, a Scottish former were-pop singer with an unresolved frenemy rivalry against were-panther Nyx Sable. Cleo Pappatra appears and behaves among the oldest, with real mature mummy-star gravitas. Albina / Allie Gator is NOT a never-hired wannabe: she was a billed 1963 founding Monstrique performer removed before Beach Hex, now a huge fully reptilian albino alligator hiding in the motel sewers, staging tragic old-star comebacks amid rotting memorabilia. Preserve the seven official album-era expulsions in addition to this secret pre-album erasure. See FRANCHISE-HISTORY.md and CHARACTER-LOOKBOOK.md; art prompts, dialogue, scrapbook clues must reflect this.
   2026-11-07 PT: "I like draculina for the villain. But in the last act. The mummy should be named Cleo Pappatra" — Draculina is the killer, revealed in Chapter 6 (Marta the invisible drummer is the misdirect); the mummy star is Cleo Pappatra, replacing Celestine Veil / Nefertari everywhere. See STORY-BIBLE.md "The case".
@@ -14,7 +14,7 @@ notes_from_silas: |
   2026-11-05 PT: New Conductor project, "Monstress Convention": mature point-and-click adventure inspired by Leisure Suit Larry, Monkey Island, Thimbleweed Park and monster-girl ensembles. The setting is a seedy two-storey hotel hosting a convention of stars from a famous female-monster film/TV/franchise. Cast includes female Dracula, Francesca Stein, werewolf, slime woman, lagoon woman and giant fly-headed woman. Protagonist: scrappy, hungry journalist for a failing blog, with a smarter, attractive female assistant. Both are playable; conversations react to which asks. A cast member is murdered, then returns as a ghost who does not know the culprit. A creepy fanboy stalker is explicitly NOT the killer. Hot tub, hotel rooms and convention floor support campy adult cheesecake and puzzle scenes. Shared dynamic conversation topics, complex inventory/hotspot puzzles and a single-screen AAA console-quality interface. Only show in nav/highlights to logged-in mature-opted-in accounts without CHILD role.
 milestones:
   - id: m1
-    title: "MOTEL CASE OPEN — two ghosts, Iris-first investigation and private intro"
+    title: "MOTEL CASE OPEN — shipped Chapter 1, strengthen Iris-first interaction"
     weight: 20
     status: in-progress
   - id: m2
@@ -22,7 +22,7 @@ milestones:
     weight: 45
     status: not-started
   - id: m3
-    title: "MONSTRIQUE STARS — idol group, romance scrapbook, delivered art"
+    title: "MONSTRIQUE STARS — franchise, Studio assets, optional adult extras and delivered art"
     weight: 20
     status: not-started
   - id: m4
@@ -92,7 +92,7 @@ tasks:
     note: >-
       Build deterministic 2D Iris-led point-and-click scene engine (not a card-choice engine).
       Walk/Look/Talk/Take/Use/Combine/Photograph/Consult Norb; touch, mouse and keyboard parity;
-      bounded notebook/map sheets and versioned save. First five rooms and shortcut.
+      bounded notebook/map sheets and versioned save. Baseline hotel rooms, verb actions and a versioned save already exist in the merged Chapter 1 (kind_robots#4867/#4979): audit and extend, do not reimplement them. Remaining acceptance: real spatial click-to-walk, keyboard/touch parity, inventory combine, reachable map shortcuts, reload and edge-case regressions.
   - id: t-004
     milestone: m2
     title: "Iris field agency, Norb deductions and shared dual-ghost reactive topics"
@@ -104,19 +104,19 @@ tasks:
     note: >-
       Iris physical agency and Norb contact aversion, dual ghost branches and shared discovery,
       clue/evidence comparisons, replay transcript, protagonist inventory and agency.
-      Validate every critical topic reachable by either actor through secondary routes.
+      Current Chapter 1 already has Iris/Norb switching and two independently interrogable ghosts. Extend the shared notebook, clue comparisons and dialogue exhaustion for later chapters; validate every required topic has a secondary route and that Norb cannot physically manipulate objects.
   - id: t-005
     milestone: m2
     title: "Agent and companion double murder, two ghost witnesses and knife opening"
     status: waiting
-    depends_on: t-004
+    depends_on: t-003
     owner: null
     passes: 0
     stakes: reversible
     note: >-
       Replace old Celestine-murder prologue with OPENING-SLICE.md, two bodies and two ghosts.
       At least two crime-room access paths, double-murder timeline, two ghost witnesses, red herring
-      exoneration and a self-contained prototype ending. All paths graph-tested.
+      exoneration and a self-contained prototype ending. The shipped opening already has two victims, two ghosts and a Gavin exoneration route (kind_robots#4867/#4903). Finish the alternative ice/knife paths and fail-forward mini-case in OPENING-SLICE.md, test both audience editions, and avoid replacing working content wholesale. All paths graph-tested.
   - id: t-006
     milestone: m2
     title: "Expand motel then unlock the separate convention, joke shop, mansion and sewers"
@@ -133,7 +133,7 @@ tasks:
     milestone: m2
     title: "Two-ghost testimony, agent-deals clue graph and exoneration of the stalker"
     status: waiting
-    depends_on: t-006
+    depends_on: [t-004, t-006]
     owner: null
     passes: 0
     stakes: reversible
@@ -156,15 +156,15 @@ tasks:
   - id: t-009
     milestone: m3
     title: "Illustrated motel, ghosts, monster ensemble, city scenes, animation and audio"
-    status: waiting
-    depends_on: t-005
+    status: ready
+    depends_on: t-001
     owner: null
     passes: 0
     stakes: reversible
     note: >-
       Produce ArtJobs for motel/date/knife/dual ghosts, mummy, alligator, star group, city scenes;
       create animation/audio affordances. Verify delivered URLs rather than treating
-      queue status as art completion. Keep code development independent.
+      queue status as art completion. Keep code development independent: prompt/model-sheet work and ArtJobs can proceed before chapter engineering, while scene attachment waits for stable hotspots and narrative. The painted title/Play hero (kind_robots#4992), unified series-bible Studio (kind_robots#5010), and approved mature splash (kind_robots#5012) have landed. Do not requeue those; track scene/model-sheet/cutscene assets by request -> ArtJob -> ArtImage -> attached URL -> verified. Mature-only unlock art remains private/entitlement-gated, never general-edition content.
   - id: t-010
     milestone: m3
     title: "Evidence-driven conclusions and Monstrique character/art scrapbook"
@@ -201,6 +201,8 @@ tasks:
       2026-11-07 PT: Added a general-safe, guest-playable Chapter One alongside a server-JWT-authorized mature edition in kind_robots DRAFT PR #4903 (head 42e1b0037729bd19b22e71cdc5671e99d2dd801e; CI pending). Includes explicit public-scene/topics/scrapbook allowlists, separate saves, covered murder scene, no general-edition flirting, and regression replay. This is an outward-facing route: keep draft UNMERGED until human visual/publication review and complete server asset/SSR security audit. Canonical dual-edition design notes merged in conductor PR #7159. Additional t-011 security work is still required, so return this task to ready rather than marking the audit finished.
 
       PARTIAL MERGED 2026-11-09 PT: Silas explicitly replied "Human approved" in the current ChatGPT session to the pending human gate on Kind Robots PR #4903. The formerly draft public-safe general plus server-authorized mature edition PR was reconciled with current main, 10/10 latest-head GitHub workflows completed successfully, and PR #4903 squash-merged at dee2774007c79bda5b162940b68745269683f77a. This approval is for this specific Play route and two-edition release; it is not blanket approval of future mature assets, home Highlights, community promotion, or the full-game t-013 visual acceptance. Remaining t-011 work: independently verify direct ArtImage URL protections, SSR/hydration, search/project discovery, cross-account save isolation, authenticated live behavior, and production deployment before marking the security matrix complete. No manual deployment performed.
+
+      2026-11-11 PT coordination audit: the general Play route is approved and merged, not awaiting a first release gate. Keep this task ready for the unfinished two-edition security matrix: direct ArtImage and splash URLs, SSR/hydration, public discovery, cross-account and cross-edition saves, CHILD+ADMIN and invalid JWT, and verified production behavior. The `/admin/monstrique` Studio (Preview + Series bible, kind_robots#5010) is a separate ADMIN + mature-only surface.
   - id: t-012
     milestone: m4
     title: "Adversarial end-to-end playthroughs and visual/performance acceptance preparation"
@@ -216,7 +218,7 @@ tasks:
       All known production art actually verified before reporting fully done.
   - id: t-013
     milestone: m4
-    title: "Silas visual acceptance, then authorize mature-only public Play/nav/highlights release"
+    title: "Silas final-game visual acceptance and distinct approval for additional public promotion"
     status: waiting
     depends_on: t-012
     gate_human: true
@@ -225,7 +227,10 @@ tasks:
     passes: 0
     stakes: outward-facing
     note: >-
-      FOR SILAS: First review the complete internal experience and art. Then
-      separately authorize any public Play route, home highlights and navigation
-      placement, which must stay completely invisible to guests, mature-off and
-      CHILD users. Do not merge production-facing publication without explicit approval.
+      FOR SILAS: The general Play route and dual editions were explicitly approved and merged
+      in kind_robots#4903; do not re-gate or hide that already authorized general
+      experience. Review the COMPLETE chapter arc, delivered art and both audience
+      modes at phone/tablet/desktop. Separately approve any new public marketing,
+      home promotion, launch claim or broader mature-content publishing; the
+      Studio and mature-only assets stay ADMIN/opt-in restricted as appropriate.
+      Never infer full-game creative acceptance from approval of a prior PR.
