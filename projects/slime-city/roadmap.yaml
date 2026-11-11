@@ -225,7 +225,7 @@ tasks:
   - id: t-009
     milestone: m3
     title: "Write and implement six genuinely different crew campaigns"
-    status: review
+    status: ready
     depends_on: [t-004, t-007]
     passes: 0
     stakes: reversible
@@ -371,10 +371,9 @@ tasks:
       PARTIAL MERGED 2026-11-10 PT: Kind Robots PR #4980 merged to main at a90c62317fb39bb9c7b10facf2fd6b595e6d8108 after all eight latest-head GitHub workflows completed successfully. Root cause: Alliance CPU used generic +1.2/+2.5 enter-stage boosts while ignoring the already-implemented board-aware evolution payoff. New default uses bounded [-2,+3] read-only evolution value plus <=0.7 future L2 value; original exact baseline remains selectable for paired tests. Added legal optional fighter-forward (12 creatures) and ally-forward 20-card starter recipes drawn entirely from free base cards without modifying existing decks. Controlled 600 seed/opponent/seat-matched setups / 2400 actual CPU Clashes and six deterministic replays: classic+old CPU 53.8%, classic+board-aware CPU 54.0% (L3 plays 239->259; 37/600 results changed), fighter-forward+board-aware 65.3% versus classic opponent (219/600 results changed), ally-forward 44.0% (263/600 changed). Fighter-forward is advantageous against classic decks, not a forecast when both sides choose it; don't automatically migrate player decks or globally buff factions. Detailed evidence is in docs/slime-city-ally-evolution-cpu-balance.md. Next t-009 focus: symmetric fighter-forward-vs-fighter-forward seat-balanced matchup and actual human satisfaction with evolved card choices, plus optional starter preset UI if desired. No DB migration, new ArtJobs, billing, direct production deployment, or irreversible changes.
 
       Mercenary-first balance experiment ready for PR: add neutral control and synergy packages using four identically available free mercenary cards for any general/ally pair. Preserve existing fighter-forward composition, exactly seven ally cards, 12 fighters and 20 total cards; saved decks, card stats and defaults untouched. 300 matched general/ally/rival/seat scenarios, five comparison variants including symmetric mercenary mirrors (1500 real CPU Clashes). Documents equal availability versus unequal benefit and prioritizes shared tools over faction-specific buffs. CI pending.
-    updated: '2026-11-11T05:20:14.405Z'
-    owner: worker
-    claimed_by: 2026-11-11T053500Z-slime-city-t009-mercenary-bridge-c4e2
-    claimed_at: '2026-11-11T05:17:53.777Z'
+
+      PARTIAL MERGED 2026-11-10 PT: Kind Robots PR #4984 merged on main at a02412ee524ff6294ccc5c66af361226184412c5 after all eight latest-head GitHub Actions workflows completed successfully. Adopt Silas's direction that shared mercenaries are the preferred first balance lever for weak strategies, rather than faction-specific buffs. Added two optional legal crew-neutral bridge recipes from the 20 free starter mercenaries: control (Traffic Witch, Escape Artist Crab, Homebrew Antidote, Misaddressed Parcel), synergy (Sewer Sommelier, Escape Artist Crab, Counterfeit License, Cursed Sign). Each package adds four identically accessible cards to fighter-forward alliance decks, preserving seven ally slots, 12 fighters and 20-card legality; excludes existing neutral guest cards to avoid duplications. No human saved decks, card stats, default recipes, collection schema or live matches changed. CI ran 300 matched general/ally/rival/seat scenarios, five variant arms (1500 actual CPU Clashes): fighter-forward symmetric baseline 52.0%; control vs fighter-forward 60.0%; synergy vs fighter-forward 49.0%; control mirrors 43.7%; synergy mirrors 49.7%. Bloodfairies as ally baseline 28% -> control 46%, Catgirls as ally 40% -> 54%; equal card access did not translate into identical benefit. Control is a promising neutral counter-strategy, NOT a universal forced default; preserve faction identity and test symmetric adoptions before targeted mercenary evolution or stat tuning. Details/results in PR #4984 and docs/slime-city-mercenary-strategy-balance.md. Broader t-009 still needs subjective fun review and further cross-faction playtesting. No live deploy or ArtJobs executed.
+    updated: '2026-11-11T05:44:47.355Z'
   - id: t-010
     milestone: m3
     title: "Create daily, weekly and evergreen missions with earned progression"
