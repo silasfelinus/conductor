@@ -18611,3 +18611,12 @@ records:
   outcome: done
   failure_category: null
   lesson: A task can ship and still sit at review when its PR names the task only in the body; the drift check matches titles, so put "<project>/<task-id>" in the implementation PR title.
+- date: '2026-11-11'
+  project: conductor
+  task: t-209
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: Match task-declaration lines in PR bodies, not any mention; the anchored match found four real stale review tasks on its first live run, all from handoff-template "### Task" lines.

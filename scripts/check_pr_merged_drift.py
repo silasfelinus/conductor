@@ -656,6 +656,7 @@ def gh_search_task_prs(
         return []
     cache = repo_pr_cache if repo_pr_cache is not None else {}
     needle = f"{project}/{task_id}"
+    body_declaration = task_declaration_pattern(project, task_id)
     results: list[dict[str, Any]] = []
     for repo in repos:
         if repo not in cache:
@@ -668,11 +669,31 @@ def gh_search_task_prs(
             )
             return None
         for pr in prs:
-            if needle in (pr.get("title") or "") and pr.get("merged_at"):
-                number = pr.get("number")
-                if number:
-                    results.append({"repo": repo, "number": number})
+            if not pr.get("merged_at") or not pr.get("number"):
+                continue
+            if needle in (pr.get("title") or ""):
+                results.append({"repo": repo, "number": pr["number"], "match": "title"})
+            elif body_declaration.search(pr.get("body") or ""):
+                results.append({"repo": repo, "number": pr["number"], "match": "body"})
     return results
+
+
+def task_declaration_pattern(project: str, task_id: str) -> re.Pattern[str]:
+    """Match a PR-body line that declares this exact task as the PR's own.
+
+    conductor/t-209: kind_robots#4924 implemented slime-city/t-028 but named it
+    only in its body (``Conductor: `slime-city/t-028`.``), so the title-only
+    search missed it and the task sat at `review` for two days. A body line
+    counts only when it *starts* with the reference (the handoff template's
+    ``### Task`` line) or with a ``Conductor:`` label, so a passing mention
+    such as "unblocks slime-city/t-028" or a bullet list of related tasks is
+    not mistaken for the implementing PR. The trailing guard keeps ``t-028``
+    from matching ``t-0281``.
+    """
+    ref = re.escape(f"{project}/{task_id}")
+    return re.compile(
+        r"(?im)^[ \t]*(?:\*{0,2}conductor(?:[ \t]+task)?:\*{0,2}[ \t]*)?[`*]*" + ref + r"(?![\w-])"
+    )
 
 
 def check(
@@ -885,12 +906,15 @@ def check_drift(
                 **task,
                 "repo": result["repo"],
                 "pr_number": result["number"],
+                "match": result.get("match", "title"),
             })
 
     search_findings, search_unresolved = check(search_candidates, token)
     for finding in search_findings:
         finding["confidence"] = "high"
-        finding["source"] = "task-id-search"
+        finding["source"] = (
+            "task-id-body-declaration" if finding.get("match") == "body" else "task-id-search"
+        )
 
     high_findings = field_findings + search_findings
     confirmed_keys |= {(f["project"], f["task_id"]) for f in search_findings}
@@ -1017,7 +1041,7 @@ def render(
     if findings:
         lines.append(
             f"Found {len(findings)} task(s) at claimed/review whose implementing PR already merged "
-            "(high confidence — PR title names this task):\n"
+            "(high confidence — PR title, or a Conductor:/task line in its body, names this task):\n"
         )
         for finding in findings:
             lines.append(
