@@ -1131,13 +1131,19 @@ tasks:
 
   - id: t-056
     title: "Re-measure Riot's weak constructed-field win rate (0.41-0.44) and tighten verifySlimeCityClashConstructed's crew band once the measurement holds up"
-    status: claimed
+    status: review
     stakes: reversible
     passes: 0
     depends_on: t-021
-    updated: '2026-11-11T19:48:46Z'
+    updated: '2026-11-11T20:06:57Z'
     note: |-
       Kaizen from t-021 (kind_robots#5021). The constructed-vs-constructed CLASH audit found Riot at 0.41-0.44 and Exchange around 0.60 across the constructed field, with the crew band deliberately loose (35-65%, spread <= 24 pts) because each ordered pairing gets only one bout. Add held-out seeds, or more bouts per pairing, so the crew rates are stable. Then decide whether Riot needs a lever (coordinate with t-051 fighters-first and t-052 ANARKISS reskin) and tighten the guard toward the starter guard. Internal preview only.
+
+      2026-11-11 PT: in review, kind_robots#5022. 4 bouts per ordered constructed pairing;
+      across five seed families Riot 0.430-0.473, Catgirls 0.435-0.457, Exchange 0.593-0.612,
+      spread 0.138-0.177. Riot needs no lever; Exchange running hot is the stable signal.
+      Guard tightened to 40-64% / 20-point spread.
     owner: worker
     claimed_by: 2026-11-11T200500Z-slime-city-t056-riot-q8m3
     claimed_at: '2026-11-11T19:48:46Z'
+    implementation_pr: 'silasfelinus/kind_robots#5022'
