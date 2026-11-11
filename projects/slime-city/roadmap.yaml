@@ -554,7 +554,7 @@ tasks:
   - id: t-029
     milestone: m4
     title: "Commit one shared balance tuner covering founders, PARITY and BLOODRUSH"
-    status: review
+    status: done
     owner: null
     passes: 0
     stakes: reversible
@@ -565,7 +565,10 @@ tasks:
       utils/scripts/slimeCityFactionTuner.ts and npm run balance:slime-city-factions: held-out
       Blackout + BLOODRUSH founder measurement (60 seeds from 1000, spread metric matches the
       guards). PARITY lane not covered yet; t-028 can reuse it.
-    updated: '2026-11-09T16:55:24Z'
+
+      2026-11-11 PT: reconciled to done -- kind_robots#4934 merged 2026-11-09 (13/13 checks);
+      tuner shipped. PARITY-lane coverage, if wanted, is a new task.
+    updated: '2026-11-11T16:50:53Z'
     implementation_pr: 'silasfelinus/kind_robots#4934'
   - id: t-014
     milestone: m4
