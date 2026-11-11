@@ -3159,16 +3159,18 @@ tasks:
   implementation_pr: 'silasfelinus/conductor#6635'
 - id: t-209
   title: "check_pr_merged_drift.py should also match a merged PR whose body names the task (e.g. 'Conductor: slime-city/t-028'), not only its title"
-  status: ready
+  status: claimed
   stakes: reversible
-  owner: null
+  owner: reviewer
   passes: 0
-  updated: '2026-11-11T23:05:00Z'
+  updated: '2026-11-11T23:01:28Z'
   note: >-
     Reviewer kaizen 2026-11-11 PT from slime-city/t-028: the implementation, silasfelinus/kind_robots#4924,
     merged 2026-11-10 PT, but the task sat at review for two days because gh_search_task_prs only matches
     "<project>/<task-id>" in PR titles and #4924 named the task only in its body ("Conductor: `slime-city/t-028`").
     Extend the repo-scoped list-and-filter to accept an exact body match as a lower-confidence candidate
     (confirmed via gh_pr like title hits), with tests in tests/test_check_pr_merged_drift*.py.
+  claimed_by: 2026-11-11T2305Z-conductor-t209-bodymatch-p3n8
+  claimed_at: '2026-11-11T23:01:28Z'
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
