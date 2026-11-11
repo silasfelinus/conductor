@@ -205,7 +205,7 @@ tasks:
   - id: t-008
     milestone: m3
     title: "Ship earned Meat economy, safe card shop and random PvE encounters"
-    status: waiting
+    status: done
     depends_on: [t-005, t-006, t-007]
     owner: null
     passes: 0
@@ -216,6 +216,15 @@ tasks:
       explicit pool/minimum returns, rate control and no real-money
       monetization or cash-out. Test farming, replay double-grants,
       concurrency, exploit paths and collection persistence.
+
+      RECONCILED 2026-11-11 PT: earned Meat economy is live. server/api/slime-
+      city/finish.post.ts re-simulates the submitted CPU match commands server-side
+      (finishSlimeCityCpuMatch) before paying; progression.ts pays verified battles with a
+      10/day paid-battle cap, daily/weekly bounties with Pacific resets and receipts;
+      pack.post.ts sells Meat packs with duplicates; the city has one-time authored street
+      encounters per road; #5007 adds the after-match Meat breakdown. No real money or cash-
+      out anywhere.
+    updated: '2026-11-11T22:56:52Z'
   - id: t-009
     milestone: m3
     title: "Write and implement six genuinely different crew campaigns"
