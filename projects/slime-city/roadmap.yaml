@@ -225,7 +225,7 @@ tasks:
   - id: t-009
     milestone: m3
     title: "Write and implement six genuinely different crew campaigns"
-    status: ready
+    status: claimed
     depends_on: [t-004, t-007]
     passes: 0
     stakes: reversible
@@ -365,7 +365,10 @@ tasks:
       Paired Alliance Journey balance investigation open for PR review. The alarming 9/36 statistic came from a fixed-opponent targeted smoke that mainly ran Riot versus Ironjaw, not a balanced faction survey. Existing CI evidence includes 1140 constructed Alliance games (48.7% first-seat wins excluding draws) and 1080 evolution-deck matchups (50.5% first-seat wins). Added 600 seed/deck/seat-matched triplets (1800 actual CPU Clashes) to isolate baseline/protect/gamble story bonus effects across all six generals, allies and opponent generals; retained explicit CPU-only caveats and avoided arbitrary tuning before results. Authored an inspectable report and labeled the old smoke as nonrepresentative. Pending PR CI, not complete acceptance.
 
       PARTIAL MERGED 2026-11-10 PT: Kind Robots PR #4975 merged on main at 57fde19bf7bee9fe0123614a3bcbaf17879305f6 with all eight latest-head GitHub workflows completed successfully. Investigation overturned the scary 9/36 smoke-test interpretation: tests were mainly Riot vs Ironjaw, and per-"catgirls"/"bloodfairies" output keys represented allies, NOT generals. Earlier CI's 1140 constructed Alliance games produced 48.7% first-seat wins, while 1080 other deck games produced 50.5%, indicating no sweeping seat bias. Added 600 Latin-square-matched setups / 1800 real CPU Clashes with identical decks/seeds in baseline/protect/gamble and both seat orders, 4 deterministic replays. FINAL corrected results (rates exclude draws): baseline story-owner 52.3%, protect 55.3%, gamble 58.5%; story-owner first seat 53.3% baseline vs second seat 51.3%. Protect changed 82/600 compared outcomes vs baseline, gamble 95/600, and protect vs gamble differed 119/600. Baseline ally breakdown varied (Bloodfairies 41%, Undertow 70%) despite rival/chapter rotation, but starter decks and simplified Alliance CPU evaluation limit causal claims. Do not apply blanket faction buffs or nerfs from these CPU-only samples. Suggested next t-009 slice: test constructed partner decks and evolved-card/CPU heuristic scoring on paired seeds, then human fun/balance approval. No game rules, cards, economy, database, ArtJobs, public release or self-hosted deployment modified.
-    updated: '2026-11-11T04:10:44.627Z'
+    updated: '2026-11-11T04:38:33.133Z'
+    owner: worker
+    claimed_by: 2026-11-11T045600Z-slime-city-t009-alliance-ai-7c94
+    claimed_at: '2026-11-11T04:38:33.133Z'
   - id: t-010
     milestone: m3
     title: "Create daily, weekly and evergreen missions with earned progression"
