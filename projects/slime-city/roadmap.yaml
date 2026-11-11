@@ -139,7 +139,7 @@ tasks:
   - id: t-005
     milestone: m2
     title: "Implement competitive square-grid AI and comparative match replays"
-    status: review
+    status: done
     depends_on: [t-003, t-004]
     passes: 0
     stakes: reversible
@@ -151,7 +151,13 @@ tasks:
       Kind Robots PR #4612 merged as 86ff0e98451aa7d26fc77878f69eadaf85485925. Blackout CPU now prioritizes visible flag-carrier interception, tactical trap placement along escape/flag approach, and deterministic threat-based target selection. TypeScript, 4 gameplay contract shards, source and layout checks passed; container build remained in-progress at merge and needs eventual result verification. New mandatory seeded tactics and six-faction match replay contract. Reopen t-005 for full all-pairs balance and opponent personas, offensive/defensive variants, readable paced actions and adversarial telemetry. Art t-017 remains independent. Public release and subjective acceptance not requested.
 
       Non-art Blackout matchup telemetry and all-pairs CPU audit slice: fixes stalled-round board fingerprint to include traps, flag and monster; counts new combat per round rather than cumulative knockouts; adds six-crew ordered matchup summaries with per-side scoring, contact/dead-round/trap metrics, incomplete/duplicate matrix rejection, sample-size warnings, and seeded replay regression. Code PR pending checks; no art wait. Further balance changes, AI personas and competitive PvP remain open.
-    updated: '2026-11-02T00:17:35.351Z'
+
+      RECONCILED 2026-11-11 PT: the delivered slices (#4612 Blackout CPU tactics, all-pairs
+      telemetry) stand; the remaining Blackout persona/balance scope was superseded by Silas's
+      2026-11-06 PT CLASH canonical rules (Blackout and the other arena formats are LEGACY, no
+      further balancing). CLASH CPU and matchup work continues in t-021 (done), t-056 (done),
+      t-057 (done) and t-058 (ready).
+    updated: '2026-11-11T22:56:46Z'
     owner: worker
     claimed_by: 2026-11-02T000000Z-slime-city-t005-m4b8
     claimed_at: '2026-11-02T00:00:00Z'
