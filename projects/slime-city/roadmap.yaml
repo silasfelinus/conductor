@@ -225,7 +225,7 @@ tasks:
   - id: t-009
     milestone: m3
     title: "Write and implement six genuinely different crew campaigns"
-    status: claimed
+    status: review
     depends_on: [t-004, t-007]
     passes: 0
     stakes: reversible
@@ -357,7 +357,9 @@ tasks:
       Directed Alliance act-and-finale follow-up is implemented for all 30 pairings: four authored chapter escalations each (120 unique dilemmas and 240 unique choice outcomes), 60 partner-specific finale alternatives, history-dependent ending callbacks, and a test suite covering 90 five-chapter narrative paths, 30 partner switches, and 30 loss/retry scenarios. PR/CI pending; full tactical balance and human fun acceptance remain open.
 
       PARTIAL MERGED 2026-11-10 PT: Kind Robots PR #4970 merged on main at 9db89a095949af5fd8425cfd89329e19760b866f after all eight latest-head GitHub Actions workflows passed. Authored four additional escalation scenes per directed two-crew pairing (120 unique late crises, 240 unique later choice outcomes), with 30 ally-specific ending titles and 60 final-choice outcomes; the original solo/crew ending is retained. Callback text now cites the actual last decision, partner-switch history persists, and finale tone considers partner tenure and protect/risk choices. New scripted editorial tests passed 90 full five-chapter same-partner narrative runs, 30 switch runs, and 30 loss/retry paths; source-audit found 300 distinct total outcome paragraphs. Added an inspectable editorial/fun-risk report. This is narrative-only simulation, not human-controlled Clash combat or subjective fun approval. No schema migration, ArtJobs, or production deployment was triggered. Remaining t-009 scope includes actual human playtesting, combat balance and further crew-specific editorial acceptance; leave ready.
-    updated: '2026-11-11T03:01:00Z'
+
+      Alliance tactical choice pass ready for PR review: six ally signatures and five evolving chapter pulses replace the same repeated protect/gamble boss-life trade. Use explicit boss-life terms (rather than mislabeling them as legacy mana/armor), show the actual numerical risk on narrative choice cards, and retain server-issued/verifiable Clash boss values. New tests cover 300 pairing/chapter/choice combinations and 36 seeded real Alliance CPU matches. The work remains a reversible t-009 slice; broader human fun and balance acceptance is open.
+    updated: '2026-11-11T03:03:31.444Z'
     owner: worker
     claimed_by: 2026-11-11T030100Z-slime-city-t009-balance-6c29
     claimed_at: '2026-11-11T03:01:00Z'
