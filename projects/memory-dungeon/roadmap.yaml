@@ -1215,15 +1215,17 @@ tasks:
   - id: t-055
     milestone: m3
     title: "e08 Hearth of Perfect Safety: rewrite the 16 night sites to Vesper's POV and finish the map"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 2026-11-11T034100Z-memory-dungeon-t-055-b7e9
     claimed_at: '2026-11-11T03:41:00Z'
     stakes: reversible
     passes: 0
-    updated: '2026-11-11T03:41:00Z'
+    updated: '2026-11-11T03:43:00Z'
     note: |-
       Silas 2026-11-05 PT: the first eight overworlds keep one protagonist per pair, so e08 is Vesper's, not Scylla's (kind_robots#4778 already moved the viewpoint contract). hoshimoriNight.ts's 16 playable sites and store still describe "a separate Scylla-viewpoint expedition". Rewrite them from Vesper's POV without changing coordinates or choice ids, keep the Junji-Ito-tonal psychological/architectural horror register, then continue toward 64 sites and the dark Oven per t-044. Char's fate branches still apply through campaign flags, not through POV.
+
+      Reframed all 48 currently authored e08 Hoshimori night sites from incorrect Scylla protagonist to Vesper, preserving stable choice IDs and Char agency. Remaining: expand to 64, validate runtime and browser, polish Vesper-specific outcomes; PR pending CI.
   - id: t-056
     milestone: m2
     title: "Name the researcher (Rowan) as the e01/e02 and e09 lead; Pip stays a supporting NPC"
