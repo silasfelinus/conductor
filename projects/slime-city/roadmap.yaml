@@ -726,7 +726,7 @@ tasks:
   - id: t-021
     milestone: m4
     title: "Adversarial constructed-deck matchup audit for all six 300-card crews"
-    status: claimed
+    status: done
     depends_on: t-004
     passes: 0
     stakes: reversible
@@ -755,11 +755,23 @@ tasks:
       at 0.156). Full test:slime-city-lab passed. BLOODRUSH stays skewed (0.206 -> 0.191) and
       is queued as slime-city/t-025. Remaining here: constructed-vs-constructed matchups
       beyond founders and human fun QA.
-    updated: '2026-11-11T17:51:21Z'
+
+      DONE 2026-11-11 PT: kind_robots#5021 squash 1943261 (13/13 checks). New
+      verifySlimeCityClashConstructed (in test:slime-city-lab): five legal 20-card Solo decks
+      per crew (starter, fighters, specials, mercs, heavy), 870 CPU bouts covering every
+      cross-crew ordered pair (both seats) plus same-crew mirrors, six exact replays,
+      conservation. Results: first seat 51%, no draws or round-limit games; archetypes
+      fighters 0.62-0.64, starter 0.61, mercs 0.56, heavy 0.45-0.47, specials 0.22-0.25;
+      Exchange ~0.60 and Riot 0.41-0.44 across the constructed field. Finding for t-051: 17
+      two-slot cards (crew heavy spells/gear plus merc Grease Oracle) are never played. A/B
+      shows card weakness, not a CPU blind spot (forcing them 0.55 -> 0.19; repricing to one
+      slot still 0.43 -> 0.34). Guard pins the dead set to two-slot cards. Human fun QA is
+      Silas's to do; no deploy claimed.
+    updated: '2026-11-11T18:10:53Z'
     owner: worker
     claimed_by: 2026-11-11T1750Z-slime-city-t021-cvc-k7q2
     claimed_at: '2026-11-11T17:51:21Z'
-    implementation_pr: 'silasfelinus/kind_robots#4800'
+    implementation_pr: 'silasfelinus/kind_robots#5021'
 
   - id: t-030
     milestone: m2
