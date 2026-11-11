@@ -517,7 +517,7 @@ tasks:
   - id: t-028
     milestone: m3
     title: "20-card decks across the deck builder, starters and every format"
-    status: claimed
+    status: ready
     depends_on: t-027
     passes: 0
     stakes: reversible
@@ -538,7 +538,15 @@ tasks:
       contract shards 1-4, layout-contract, Prettier). Opening-hand guarantee is on main. Re-
       armed ready for the one remaining slice: 390/768/1440 layout acceptance of the active
       20-card surfaces (no active surface still uses the legacy 10-card prototypes deck).
-    updated: '2026-11-11T13:33:59Z'
+
+      2026-11-11 PT: layout-acceptance attempt released, no diff. /play/slime-city needs a
+      signed-in user: the local nuxi dev server (no DB) shows only the login wall, and this
+      session's permission policy refused registering a disposable cypress-* user on
+      production for a Playwright pass. Next session with test-user access: sign in, then
+      capture 390/768/1440 of home, VS -> Fight CPU clash (20-card hand) and Collection; check
+      zero doc overflow and no spilling elements (script pattern: frontend-verification.md).
+      Production already serves a57e98c, so #4982 is live.
+    updated: '2026-11-11T14:00:09Z'
     owner: worker
     claimed_by: 2026-11-11T133600Z-slime-city-t028-layout-p3x9
     claimed_at: '2026-11-11T13:33:59Z'
