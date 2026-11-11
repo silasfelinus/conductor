@@ -139,7 +139,7 @@ tasks:
   - id: t-005
     milestone: m2
     title: "Implement competitive square-grid AI and comparative match replays"
-    status: review
+    status: done
     depends_on: [t-003, t-004]
     passes: 0
     stakes: reversible
@@ -151,14 +151,20 @@ tasks:
       Kind Robots PR #4612 merged as 86ff0e98451aa7d26fc77878f69eadaf85485925. Blackout CPU now prioritizes visible flag-carrier interception, tactical trap placement along escape/flag approach, and deterministic threat-based target selection. TypeScript, 4 gameplay contract shards, source and layout checks passed; container build remained in-progress at merge and needs eventual result verification. New mandatory seeded tactics and six-faction match replay contract. Reopen t-005 for full all-pairs balance and opponent personas, offensive/defensive variants, readable paced actions and adversarial telemetry. Art t-017 remains independent. Public release and subjective acceptance not requested.
 
       Non-art Blackout matchup telemetry and all-pairs CPU audit slice: fixes stalled-round board fingerprint to include traps, flag and monster; counts new combat per round rather than cumulative knockouts; adds six-crew ordered matchup summaries with per-side scoring, contact/dead-round/trap metrics, incomplete/duplicate matrix rejection, sample-size warnings, and seeded replay regression. Code PR pending checks; no art wait. Further balance changes, AI personas and competitive PvP remain open.
-    updated: '2026-11-02T00:17:35.351Z'
+
+      RECONCILED 2026-11-11 PT: the delivered slices (#4612 Blackout CPU tactics, all-pairs
+      telemetry) stand; the remaining Blackout persona/balance scope was superseded by Silas's
+      2026-11-06 PT CLASH canonical rules (Blackout and the other arena formats are LEGACY, no
+      further balancing). CLASH CPU and matchup work continues in t-021 (done), t-056 (done),
+      t-057 (done) and t-058 (ready).
+    updated: '2026-11-11T22:56:46Z'
     owner: worker
     claimed_by: 2026-11-02T000000Z-slime-city-t005-m4b8
     claimed_at: '2026-11-02T00:00:00Z'
   - id: t-006
     milestone: m2
     title: "Build premium illustrated collection, teams and deck editor"
-    status: review
+    status: done
     depends_on: t-004
     passes: 0
     stakes: reversible
@@ -172,7 +178,13 @@ tasks:
       Gutter Crown wave-two non-art expansion slice: 36 fully authored playable cards, six per crew with two rare and four normal each; explicit Ironjaw Blackout BULLDOZE action and blocked-lane counterplay; 108 collectible catalog with exactly 36 rare/72 nonrare for 36 duplicate-free 3-card packs; account-backed deck compatibility and all-cards gameplay contract. Implementation CI pending, art separately queued and not a blocker. Still 252 expansion cards outstanding plus UX, balance and art delivery.
 
       Silas revised the card-pool floor: 40-50 total cards per crew including its ten founder loaners, or 240 total core/300 stretch, superseding old 300 additional / 360 total. PR #4620 brings the source to 108 total (18 per crew) on green merge; then 132 cards (22 per crew) remain to the core, not 252. Companion Conductor PR #6938 sets three thematic viable deck variants per faction and rare-safe pack math; both PRs await latest-head green verification.
-    updated: '2026-11-02T03:07:00Z'
+
+      RECONCILED 2026-11-11 PT: the collection and deck editor shipped and were superseded by
+      the CLASH-era work: 300 authored cards (t-018, t-020), owned-only collection with a
+      135-card base (#4996), art-forward deck builder with prebuilt starters (#4998), deck-as-
+      hand builder (#5005), Alliance deck library + Solo story deckbuilding (t-050). Remaining
+      card-art delivery lives in t-017/t-044/t-052/t-053; final visual QA in t-012.
+    updated: '2026-11-11T22:56:49Z'
     owner: worker
     claimed_by: 2026-11-02T020221Z-slime-city-t006-b7c9
     claimed_at: '2026-11-02T02:02:21Z'
@@ -193,7 +205,7 @@ tasks:
   - id: t-008
     milestone: m3
     title: "Ship earned Meat economy, safe card shop and random PvE encounters"
-    status: waiting
+    status: done
     depends_on: [t-005, t-006, t-007]
     owner: null
     passes: 0
@@ -204,6 +216,15 @@ tasks:
       explicit pool/minimum returns, rate control and no real-money
       monetization or cash-out. Test farming, replay double-grants,
       concurrency, exploit paths and collection persistence.
+
+      RECONCILED 2026-11-11 PT: earned Meat economy is live. server/api/slime-
+      city/finish.post.ts re-simulates the submitted CPU match commands server-side
+      (finishSlimeCityCpuMatch) before paying; progression.ts pays verified battles with a
+      10/day paid-battle cap, daily/weekly bounties with Pacific resets and receipts;
+      pack.post.ts sells Meat packs with duplicates; the city has one-time authored street
+      encounters per road; #5007 adds the after-match Meat breakdown. No real money or cash-
+      out anywhere.
+    updated: '2026-11-11T22:56:52Z'
   - id: t-009
     milestone: m3
     title: "Write and implement six genuinely different crew campaigns"
@@ -271,7 +292,7 @@ tasks:
   - id: t-010
     milestone: m3
     title: "Create daily, weekly and evergreen missions with earned progression"
-    status: waiting
+    status: ready
     depends_on: t-008
     owner: null
     passes: 0
@@ -284,7 +305,7 @@ tasks:
   - id: t-011
     milestone: m4
     title: "Build secure player challenges, saves and reconnectable matches"
-    status: waiting
+    status: done
     depends_on: [t-005, t-008]
     owner: null
     passes: 0
@@ -295,6 +316,16 @@ tasks:
       deterministic shuffle/RNG, disconnection resume, permissions,
       accessible turn log, anti-cheat adversarial tests. No public
       matchmaking or externally announced multiplayer until approved.
+
+      RECONCILED 2026-11-11 PT: delivered by slime-city/t-055 (see its note for the seven
+      merged kind_robots PRs): direct friend invitations, turn ownership, hidden-information
+      redaction, server-validated atomic commands, 7-day invite / 30-day inactivity expiry,
+      reconnect via saved duel id, participant-only forfeit, adversarial contract tests (npm
+      run test:slime-city-pvp). Its t-008 dependency is reconciled in the same PR. Note for
+      t-015: VS PLAYERS (friends, open challenges) is reachable by any signed-in player from
+      /play/slime-city since #4985/#5003; there is still no external promotion or
+      announcement.
+    updated: '2026-11-11T22:56:43Z'
   - id: t-012
     milestone: m4
     title: "Full card and campaign coverage, prototype evaluation and visual QA"
@@ -1119,11 +1150,11 @@ tasks:
     implementation_pr: 'silasfelinus/kind_robots#5020'
   - id: t-055
     title: "Slime City: first reconnectable, private human-vs-human CLASH matches"
-    status: review
+    status: done
     stakes: reversible
     passes: 0
     source_issue: "silasfelinus/kind_robots#4951"
-    updated: '2026-11-11T07:50:00Z'
+    updated: '2026-11-11T22:56:25Z'
     note: |-
       FROM GITHUB ISSUE silasfelinus/kind_robots#4951 (https://github.com/silasfelinus/kind_robots/issues/4951), opened by @silasfelinus on 2026-11-10. Imported by scripts/sync_github_issues.py. Reference the issue in the implementing PR (`Closes silasfelinus/kind_robots#4951`) so it closes on merge; the bridge closes it otherwise once this task is done.
 
@@ -1136,6 +1167,16 @@ tasks:
       Adversarial PvP reconnect and stale-command recovery regression.
 
       Adversarial review found rejected PvP moves and forfeits silently skipped server resync because sending=true; scoped fix and regression assertion prepared in kind_robots.
+
+      RECONCILED 2026-11-11 PT (Silas in-session: "clear roadmaps and finalize multiplayer and
+      single player routes"): the human-vs-human slice is merged and live. kind_robots #4952
+      (invite lobby, server transcript, hidden-hand redaction, seat auth, expiry, forfeit),
+      #4995 (stale-command/rejected-forfeit resync), #4983 (header shortcut + turn badge),
+      #4985/a4c4fd8 (/play/slime-city-pvp system route), #4993 (phone battle layout), #5001
+      (challenge friends, username/email invites, notifications), #5003 (open/private duels,
+      cancel/decline). Production /api/version serves e62577c, which contains all of them;
+      /play/slime-city-pvp returns 200. Finished-duel screen, rematch and W-L-D record follow
+      in the t-010 routes PR. Issue kind_robots#4951 is closed.
     owner: worker
     claimed_by: 2026-11-11T074350Z-slime-city-pvp-reconnect-6e8c2
     claimed_at: '2026-11-11T07:43:50Z'
