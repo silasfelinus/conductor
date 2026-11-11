@@ -1269,7 +1269,7 @@ tasks:
   - id: t-048
     milestone: m2
     title: "CLASH card tuning: give the weak 1-play snare traps a real payoff"
-    status: claimed
+    status: done
     owner: worker
     claimed_by: 2026-11-11T144758Z-slime-city-t048-snare-payoff
     claimed_at: '2026-11-11T14:47:59Z'
@@ -1303,7 +1303,18 @@ tasks:
       on kind_robots main via #4954 (923a6a2) with the same mercenary type guard. Branch
       cleared via branch-janitor force_delete. Do not reuse it; remaining t-048 scope is six-
       snare payoff tuning plus held-out balance sweeps.
-    updated: '2026-11-11T14:47:59Z'
+
+      DONE 2026-11-11 PT: kind_robots #5018 squash-merged at 3031d09, all 11 checks green.
+      One-play snares now defuse as well as cut armor: a VOLATILE fighter caught by one loses
+      its death burst (log line, card text 'Cuts armor, defuses VOLATILE.', also on twist-text
+      snares). CPU scores snare payoffs (+1.5 armored, +1.5 volatile, 0.4x foe power for
+      rooting). Held-out 3,600 games (seeds 31000+): crews 45.1-54.6%, spread 9.5 (guard
+      <=12), unchanged vs main; snares played more (Scent Mine 54->189, Bloodwire 82->110),
+      Bloodwire win-when-played 33->38%. The six named snares had left the default starters
+      under t-051, so the payoff mostly reaches constructed decks. Deterministic defuse, two-
+      play contrast and CPU-target tests added to verifySlimeCityClash.
+    updated: '2026-11-11T15:17:42Z'
+    implementation_pr: 'silasfelinus/kind_robots#5018'
   - id: t-049
     milestone: m2
     title: "Title screen and CLASH versus console: generated splash art, big fighter stats, boss reactions, battle log, hover cards"
