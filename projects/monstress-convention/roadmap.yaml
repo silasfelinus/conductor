@@ -155,16 +155,20 @@ tasks:
       clue or completion behind romance. Independent mature account gate remains mandatory.
   - id: t-009
     milestone: m3
-    title: "Illustrated motel, ghosts, monster ensemble, city scenes, animation and audio"
-    status: ready
-    depends_on: t-001
+    title: "Attach delivered character/scene art, cutscenes and audio to playable environments"
+    status: waiting
+    depends_on: [t-005, t-014]
     owner: null
     passes: 0
     stakes: reversible
     note: >-
-      Produce ArtJobs for motel/date/knife/dual ghosts, mummy, alligator, star group, city scenes;
-      create animation/audio affordances. Verify delivered URLs rather than treating
-      queue status as art completion. Keep code development independent: prompt/model-sheet work and ArtJobs can proceed before chapter engineering, while scene attachment waits for stable hotspots and narrative. The painted title/Play hero (kind_robots#4992), unified series-bible Studio (kind_robots#5010), and approved mature splash (kind_robots#5012) have landed. Do not requeue those; track scene/model-sheet/cutscene assets by request -> ArtJob -> ArtImage -> attached URL -> verified. Mature-only unlock art remains private/entitlement-gated, never general-edition content.
+      Integrate the ArtImage URLs and model sheets from t-014 with the stable t-005
+      crime-room hotspots, and expand art scene by scene as chapters grow. Stage
+      character expressions, 2D sprites and cutscenes, and add sound with accessible
+      fallback. Test phone/tablet/desktop, final URLs, general-safe asset allowlists,
+      mature-only entitlements and missing-art fallbacks. Do not requeue approved
+      title/Play hero or mature splash: kind_robots#4992/#5012 already shipped.
+      This is GAME INTEGRATION; t-014 owns the independent initial render batch.
   - id: t-010
     milestone: m3
     title: "Evidence-driven conclusions and Monstrique character/art scrapbook"
@@ -234,3 +238,22 @@ tasks:
       home promotion, launch claim or broader mature-content publishing; the
       Studio and mature-only assets stay ADMIN/opt-in restricted as appropriate.
       Never infer full-game creative acceptance from approval of a prior PR.
+  - id: t-014
+    milestone: m3
+    title: "Produce first motel/cast art batch with verified ArtJob and ArtImage ledger"
+    status: ready
+    depends_on: t-001
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Art production may start before story-engine completion. Use ART-PIPELINE.md,
+      CHARACTER-LOOKBOOK.md and shipped Series Bible prompt lanes to queue a scoped
+      first batch of character model sheets, ghost/victim expressions and essential
+      Chapter 1 motel scene paintings, with 2D/3D cutscene plans. Record request,
+      model, checkpoint, edition, ArtJob, ArtImage and verified final URL in the art
+      ledger; queued is not delivered. Reuse the painted title/Play hero, approved
+      mature splash and Studio art already shipped in kind_robots#4992/#5010/#5012;
+      no duplicate generation. Separate mature private images from general-safe
+      assets in every request. A completed first batch unblocks t-009 for scene
+      integration, not a claim that all later chapter art is finished.
