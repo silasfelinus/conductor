@@ -272,6 +272,11 @@ release the next Harker File.
 - 2026-11-07 PT: the mummy star is **Cleo Pappatra** (replacing both *Celestine Veil* and
   *Nefertari*).
 
+## Art and cutscenes
+
+How the cast becomes model sheets, identity LoRAs, 2D sprites and 3D animated cutscenes, and
+how the Larry-style staging works between cutscenes: **ART-PIPELINE.md** (2026-11-11 PT).
+
 ## Kit growth
 
 Chapter 1 ships at **Vignette** tier. The full six-chapter game is a **Saga** and grows tier by tier
