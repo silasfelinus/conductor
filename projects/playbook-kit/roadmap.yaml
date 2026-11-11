@@ -93,10 +93,18 @@ tasks:
       read run.ending directly). New verifySpaceCouchKit.test.ts in test:playbook-kit pins
       spec<->game. Next: step 2, pure run-state -> kit unlock mapper plus kit.open/kit.unlock
       store wiring, game-of-captains-voyage-v1 untouched. Todo #1325 stays open until step 3.
+
+      PARTIAL MERGED 2026-11-11 PT: step 2 of 3 landed. kind_robots#5014 squash e75dc7f after
+      all 16 checks green: pure mapper utils/gameOfCaptains/kitUnlocks.ts (VoyageRun -> kit
+      moments/reveals/endings, 24/6/18 all reachable) and gameOfCaptainsStore persist() now
+      opens the game-of-captains kit and calls kit.unlock (try/catch, voyage-v1 save key
+      untouched); verifySpaceCouchKitUnlocks in test:playbook-kit. Next: step 3, mount
+      PlaybookKitShell around pages/play/game-of-captains.vue with 390/768/1440 screenshots.
+      Todo #1325 stays open until step 3.
     claimed_by: 2026-11-11T094556Z-playbook-kit-t002-spec-r4m8
     claimed_at: '2026-11-11T09:45:57Z'
-    updated: '2026-11-11T10:06:13Z'
-    implementation_pr: 'silasfelinus/kind_robots#5009'
+    updated: '2026-11-11T11:58:34Z'
+    implementation_pr: 'silasfelinus/kind_robots#5014'
   - id: t-003
     milestone: m2
     title: "Adopt the kit in Prom of Doom (comet-city-academy): spec, shell, settings, scrapbook, endings"
