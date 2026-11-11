@@ -60,3 +60,12 @@
 - Silas wants softcore nudity as possible mature-edition unlocks. Realism Illustrious By returns as the
   series bible's nudity lane with a "Softcore unlock" art kind (adults only; explicit sex acts excluded).
   Miaomiao 3D stays retired. First ten softcore renders queued: `art/MONSTER-WOMEN-SOFTCORE-R1.yaml`.
+
+## 2026-11-11 PT — Batch review, Monstrique Studio card
+- Pin-up batch complete (136 renders on 7 lanes). Verdict: Krea 2 and Arthemy hold monster anatomy and the
+  Bakshi look best; Furrytoon is strong on anthro but exaggerated (one uncovered Albina shower render);
+  Illustrij and Illustrious Realism humanize most stars.
+- Softcore batch complete (10 renders): all adult, no sex acts. Roxie shows genital detail and Draculina has a
+  blood smear; Realism-By humanized Albina, Roxie, Siobhan and Vespa.
+- The admin preview and series bible became one "Monstrique Studio" tile with art-server card art
+  (`art/STUDIO-CARD-R1.yaml`, ArtImage 269001).
