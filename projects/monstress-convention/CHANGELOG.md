@@ -74,3 +74,10 @@
 - Silas approved the mature title splash (ArtImages 268798 and 268801), now served through the gated splash route.
 - Softcore round 2 queued on Arthemy and Furrytoon (`art/MONSTER-WOMEN-SOFTCORE-R2.yaml`, 20 renders) with extra
   negatives against genital detail and gore; both lanes may take softcore requests in the series bible.
+
+## 2026-11-11 PT — Softcore round 2 review (Arthemy vs Furrytoon)
+- All 20 renders stay inside the limits: adult, topless upper body, no sex acts, no genital detail, no gore.
+- Arthemy wins: it keeps monster anatomy (Laguna's frills, Vespa's fly head, wolf/panther/gator heads), restrained
+  proportions and the comix ink. Furrytoon exaggerates busts toward body-as-joke (worst on Albina) and humanizes
+  Siobhan and Albina. Both rendered Cleo young-looking, against the lookbook. Realism-By (round 1) humanized four
+  stars and crossed the genital-detail and gore lines.
