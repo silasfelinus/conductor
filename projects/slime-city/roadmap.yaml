@@ -225,7 +225,7 @@ tasks:
   - id: t-009
     milestone: m3
     title: "Write and implement six genuinely different crew campaigns"
-    status: claimed
+    status: review
     depends_on: [t-004, t-007]
     passes: 0
     stakes: reversible
@@ -369,7 +369,9 @@ tasks:
       Prepared focused Alliance support-role and CPU evolution-scoring follow-on: retain old policy comparator, enable bounded board-aware evolution payoff for Alliance CPU choices, and define legal fighter-forward / ally-forward 20-card mixes while preserving existing default starter. Added 600 identical-seed/deck/opponent/seat matched setups (2400 actual CPU Clashes) comparing legacy and new CPU with optional recipes; assert free-card legality, stage-two/three use, winners, draws, and replay. CI and PR review pending; human fun validation still separate.
 
       PARTIAL MERGED 2026-11-10 PT: Kind Robots PR #4980 merged to main at a90c62317fb39bb9c7b10facf2fd6b595e6d8108 after all eight latest-head GitHub workflows completed successfully. Root cause: Alliance CPU used generic +1.2/+2.5 enter-stage boosts while ignoring the already-implemented board-aware evolution payoff. New default uses bounded [-2,+3] read-only evolution value plus <=0.7 future L2 value; original exact baseline remains selectable for paired tests. Added legal optional fighter-forward (12 creatures) and ally-forward 20-card starter recipes drawn entirely from free base cards without modifying existing decks. Controlled 600 seed/opponent/seat-matched setups / 2400 actual CPU Clashes and six deterministic replays: classic+old CPU 53.8%, classic+board-aware CPU 54.0% (L3 plays 239->259; 37/600 results changed), fighter-forward+board-aware 65.3% versus classic opponent (219/600 results changed), ally-forward 44.0% (263/600 changed). Fighter-forward is advantageous against classic decks, not a forecast when both sides choose it; don't automatically migrate player decks or globally buff factions. Detailed evidence is in docs/slime-city-ally-evolution-cpu-balance.md. Next t-009 focus: symmetric fighter-forward-vs-fighter-forward seat-balanced matchup and actual human satisfaction with evolved card choices, plus optional starter preset UI if desired. No DB migration, new ArtJobs, billing, direct production deployment, or irreversible changes.
-    updated: '2026-11-11T05:17:53.777Z'
+
+      Mercenary-first balance experiment ready for PR: add neutral control and synergy packages using four identically available free mercenary cards for any general/ally pair. Preserve existing fighter-forward composition, exactly seven ally cards, 12 fighters and 20 total cards; saved decks, card stats and defaults untouched. 300 matched general/ally/rival/seat scenarios, five comparison variants including symmetric mercenary mirrors (1500 real CPU Clashes). Documents equal availability versus unequal benefit and prioritizes shared tools over faction-specific buffs. CI pending.
+    updated: '2026-11-11T05:20:14.405Z'
     owner: worker
     claimed_by: 2026-11-11T053500Z-slime-city-t009-mercenary-bridge-c4e2
     claimed_at: '2026-11-11T05:17:53.777Z'
