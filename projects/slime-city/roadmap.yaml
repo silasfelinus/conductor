@@ -225,7 +225,7 @@ tasks:
   - id: t-009
     milestone: m3
     title: "Write and implement six genuinely different crew campaigns"
-    status: ready
+    status: needs-human
     depends_on: [t-004, t-007]
     passes: 0
     stakes: reversible
@@ -271,11 +271,21 @@ tasks:
       GitGuardian). All six crew campaigns are now authored and wired. Remaining t-009 scope:
       adversarial/subjective fun playtesting across the six campaigns. No Meat/wallet/card
       grants, art or deploy.
-    updated: '2026-11-11T08:16:18Z'
+
+      RECONCILED 2026-11-11 PT (reviewer): all six crew campaigns are authored, wired and
+      merged (Anarkiss kind_robots#4964, Undertow #4991, Meat Exchange #4997, plus the earlier
+      three). The only remaining scope is adversarial/subjective fun playtesting across the
+      six campaigns, which no unattended worker can accept, so ready -> needs-human to stop
+      pickers claiming it. Silas: play each crew's campaign once, then mark done or file
+      specific fun/balance notes as new reversible tasks.
+    updated: '2026-11-11T10:48:36Z'
     owner: worker
     claimed_by: 2026-11-11T-slime-city-t009-exchange-k7q2
     claimed_at: '2026-11-11T07:48:39Z'
     implementation_pr: 'silasfelinus/kind_robots#4997'
+    gate_human: true
+    gate_reason: subjective-acceptance
+    gate_rechecked: '2026-11-11'
   - id: t-010
     milestone: m3
     title: "Create daily, weekly and evergreen missions with earned progression"
