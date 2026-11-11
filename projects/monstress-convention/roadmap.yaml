@@ -4,7 +4,7 @@ project: monstress-convention
 kind: software
 autonomous: true
 goal: >-
-  Develop MONSTRIQUE as an adult point-and-click murder mystery: Iris is the field protagonist; her astute germophobic boss Norb supports her; at the seedy motel smarmy franchise agent Odette and adult companion Violet are both murdered, both become ghost witnesses, and the separate Monstrique Convention Center plus joke shop, mansion and sewers unlock through city leads. Deliver a fully playable, fair-clue investigation with hotspot-and-verb puzzles, shared evidence/topic notebooks, differential dialogue, an interactive ghost witness, optional consensual flirtation, lavish hand-painted single-screen art, seeded playtests, and secure logged-in mature-opt-in non-CHILD visibility and access. Preview is internal until separate visual acceptance and publication approval.
+  Develop MONSTRIQUE as an adult point-and-click murder mystery: Iris is the field protagonist; her astute germophobic boss Norb supports her; at the seedy motel smarmy franchise agent Odette and adult companion Violet are both murdered, both become ghost witnesses, and the separate Monstrique Convention Center plus joke shop, mansion and sewers unlock through city leads. Deliver a fully playable, fair-clue investigation with hotspot-and-verb puzzles, shared evidence/topic notebooks, differential dialogue, an interactive ghost witness, optional consensual flirtation, lavish hand-painted single-screen art, seeded playtests, and a guest/CHILD/mature-off-safe general edition alongside server-authorized mature extras for signed-in non-CHILD opt-in adults. The initial public Play route and dual editions were approved in kind_robots#4903; full-story visual acceptance, new public promotion and any further publication remain separately gated.
 notes_from_silas: |
   2026-11-07 PT LATEST ACCESS DIRECTIVE: MONSTRIQUE is one point-and-click game with two editions. General edition is playable by guests, mature-off adults and CHILD accounts with covered, non-graphic murder aftermath, public-safe dialogue/locations/art, no sexual/romance interactions or adult scrapbook; retain all required clues, witnesses and endings. Mature extras unlock only for signed-in non-CHILD adults with persisted `showMature: true`, server-enforced on APIs and ArtImage delivery. Separate save and progress namespaces; new content defaults hidden from general until explicitly safe-listed. Keep /admin/monstrique a restricted creator studio. Public Play route and external publication await actual visual/security human approval. See DESIGN-BRIEF.md "Access and release" and kind_robots PR #4903.\n  2026-11-07 PT LATEST CAST DIRECTIVE: Draculina is an original charter member but appears about 20, younger-looking than every other star; her clique-leader/high-school mean-girl demeanor hides centuries of calculation. Siobhan MacRae (The Pack) is the second-youngest in apparent age, a Scottish former were-pop singer with an unresolved frenemy rivalry against were-panther Nyx Sable. Cleo Pappatra appears and behaves among the oldest, with real mature mummy-star gravitas. Albina / Allie Gator is NOT a never-hired wannabe: she was a billed 1963 founding Monstrique performer removed before Beach Hex, now a huge fully reptilian albino alligator hiding in the motel sewers, staging tragic old-star comebacks amid rotting memorabilia. Preserve the seven official album-era expulsions in addition to this secret pre-album erasure. See FRANCHISE-HISTORY.md and CHARACTER-LOOKBOOK.md; art prompts, dialogue, scrapbook clues must reflect this.
   2026-11-07 PT: "I like draculina for the villain. But in the last act. The mummy should be named Cleo Pappatra" — Draculina is the killer, revealed in Chapter 6 (Marta the invisible drummer is the misdirect); the mummy star is Cleo Pappatra, replacing Celestine Veil / Nefertari everywhere. See STORY-BIBLE.md "The case".
@@ -14,7 +14,7 @@ notes_from_silas: |
   2026-11-05 PT: New Conductor project, "Monstress Convention": mature point-and-click adventure inspired by Leisure Suit Larry, Monkey Island, Thimbleweed Park and monster-girl ensembles. The setting is a seedy two-storey hotel hosting a convention of stars from a famous female-monster film/TV/franchise. Cast includes female Dracula, Francesca Stein, werewolf, slime woman, lagoon woman and giant fly-headed woman. Protagonist: scrappy, hungry journalist for a failing blog, with a smarter, attractive female assistant. Both are playable; conversations react to which asks. A cast member is murdered, then returns as a ghost who does not know the culprit. A creepy fanboy stalker is explicitly NOT the killer. Hot tub, hotel rooms and convention floor support campy adult cheesecake and puzzle scenes. Shared dynamic conversation topics, complex inventory/hotspot puzzles and a single-screen AAA console-quality interface. Only show in nav/highlights to logged-in mature-opted-in accounts without CHILD role.
 milestones:
   - id: m1
-    title: "MOTEL CASE OPEN — two ghosts, Iris-first investigation and private intro"
+    title: "MOTEL CASE OPEN — shipped Chapter 1, strengthen Iris-first interaction"
     weight: 20
     status: in-progress
   - id: m2
@@ -22,7 +22,7 @@ milestones:
     weight: 45
     status: not-started
   - id: m3
-    title: "MONSTRIQUE STARS — idol group, romance scrapbook, delivered art"
+    title: "MONSTRIQUE STARS — franchise, Studio assets, optional adult extras and delivered art"
     weight: 20
     status: not-started
   - id: m4
@@ -92,7 +92,7 @@ tasks:
     note: >-
       Build deterministic 2D Iris-led point-and-click scene engine (not a card-choice engine).
       Walk/Look/Talk/Take/Use/Combine/Photograph/Consult Norb; touch, mouse and keyboard parity;
-      bounded notebook/map sheets and versioned save. First five rooms and shortcut.
+      bounded notebook/map sheets and versioned save. Baseline hotel rooms, verb actions and a versioned save already exist in the merged Chapter 1 (kind_robots#4867/#4979): audit and extend, do not reimplement them. Remaining acceptance: real spatial click-to-walk, keyboard/touch parity, inventory combine, reachable map shortcuts, reload and edge-case regressions.
   - id: t-004
     milestone: m2
     title: "Iris field agency, Norb deductions and shared dual-ghost reactive topics"
@@ -104,19 +104,19 @@ tasks:
     note: >-
       Iris physical agency and Norb contact aversion, dual ghost branches and shared discovery,
       clue/evidence comparisons, replay transcript, protagonist inventory and agency.
-      Validate every critical topic reachable by either actor through secondary routes.
+      Current Chapter 1 already has Iris/Norb switching and two independently interrogable ghosts. Extend the shared notebook, clue comparisons and dialogue exhaustion for later chapters; validate every required topic has a secondary route and that Norb cannot physically manipulate objects.
   - id: t-005
     milestone: m2
     title: "Agent and companion double murder, two ghost witnesses and knife opening"
     status: waiting
-    depends_on: t-004
+    depends_on: t-003
     owner: null
     passes: 0
     stakes: reversible
     note: >-
       Replace old Celestine-murder prologue with OPENING-SLICE.md, two bodies and two ghosts.
       At least two crime-room access paths, double-murder timeline, two ghost witnesses, red herring
-      exoneration and a self-contained prototype ending. All paths graph-tested.
+      exoneration and a self-contained prototype ending. The shipped opening already has two victims, two ghosts and a Gavin exoneration route (kind_robots#4867/#4903). Finish the alternative ice/knife paths and fail-forward mini-case in OPENING-SLICE.md, test both audience editions, and avoid replacing working content wholesale. All paths graph-tested.
   - id: t-006
     milestone: m2
     title: "Expand motel then unlock the separate convention, joke shop, mansion and sewers"
@@ -126,21 +126,28 @@ tasks:
     passes: 0
     stakes: reversible
     note: >-
-      Distinct motel exterior/office/ice/rooms/neighbors and unlocked city districts,
-      item puzzle webs, reactivity, map shortcuts and fully authored object look lines.
+      Complete the six-chapter location graph from STORY-BIBLE.md, not only the
+      motel and four destinations: drive-in, Francesca's cinema, Velvet Crypt,
+      Cleo's house, mansion, hot tub, convention, NEXT stage, Pack bar, sewers and
+      Hex & Giggles. Chapter hubs return to Room 205; unlocks follow clue progress.
+      Build item-puzzle webs, reactivity, map shortcuts and authored object look lines.
       No empty filler room or arbitrary inventory combinations.
   - id: t-007
     milestone: m2
     title: "Two-ghost testimony, agent-deals clue graph and exoneration of the stalker"
     status: waiting
-    depends_on: t-006
+    depends_on: [t-004, t-006]
     owner: null
     passes: 0
     stakes: reversible
     note: >-
-      Three-act mystery with Odette as murdered agent and Violet as second victim, two routes to
-      every required clue, Iris physical interviews/Norb deductions, consequences for Gavin's
-      stalking, believable time and motive proof, and accusation failures that fail forward.
+      Six-chapter fair-play mystery with Odette and Violet as separate ghost witnesses,
+      two routes to EVERY required clue, Iris/Norb deduction differences and
+      consequences for Gavin's stalking. Plant Marta as the convincing Chapter 5
+      misdirect, then disprove her guilt with the mist photo, alibi tape, costume
+      order and re-interview in Chapter 6. Never name Draculina as culprit in
+      player-facing material before the last-act reveal. Evidence and bad
+      accusations must fail forward; every route is graph-tested.
   - id: t-008
     milestone: m3
     title: "Consensual opt-in romances, dual ghosts, MONSTRIQUE idol arcs and scrapbook"
@@ -155,16 +162,20 @@ tasks:
       clue or completion behind romance. Independent mature account gate remains mandatory.
   - id: t-009
     milestone: m3
-    title: "Illustrated motel, ghosts, monster ensemble, city scenes, animation and audio"
+    title: "Attach delivered character/scene art, cutscenes and audio to playable environments"
     status: waiting
-    depends_on: t-005
+    depends_on: [t-005, t-014]
     owner: null
     passes: 0
     stakes: reversible
     note: >-
-      Produce ArtJobs for motel/date/knife/dual ghosts, mummy, alligator, star group, city scenes;
-      create animation/audio affordances. Verify delivered URLs rather than treating
-      queue status as art completion. Keep code development independent.
+      Integrate the ArtImage URLs and model sheets from t-014 with the stable t-005
+      crime-room hotspots, and expand art scene by scene as chapters grow. Stage
+      character expressions, 2D sprites and cutscenes, and add sound with accessible
+      fallback. Test phone/tablet/desktop, final URLs, general-safe asset allowlists,
+      mature-only entitlements and missing-art fallbacks. Do not requeue approved
+      title/Play hero or mature splash: kind_robots#4992/#5012 already shipped.
+      This is GAME INTEGRATION; t-014 owns the independent initial render batch.
   - id: t-010
     milestone: m3
     title: "Evidence-driven conclusions and Monstrique character/art scrapbook"
@@ -174,9 +185,14 @@ tasks:
     passes: 0
     stakes: reversible
     note: >-
-      4–6 earned, ethically distinct endings, agent-deals clue epilogues and scrapbooks,
-      playable cast/secrets/scrapbook, spoiler-free title trailer, and playtest-backed
-      proposal for Standard/Saga beyond Vignette with written budget allowances.
+      Deliver the five STORY-BIBLE.md endings (Last Call, Little Miss Somebody,
+      Little Miss Scapegoat, Headline Too Early, Ten Percent Forever) with earned,
+      ethically distinct consequences. Track the seven eras, cast, secrets,
+      agent-deals evidence and scrapbook. Keep Studio-selected names/art as
+      EDITORIAL data; a game-dialogue/canon migration requires a deliberate
+      reviewed change against STORY-BIBLE.md and FRANCHISE-HISTORY.md, never
+      an automatic silent sync. Include a spoiler-free title trailer and a
+      playtest-backed Saga growth budget.
   - id: t-011
     milestone: m4
     title: "Security regression suite for mature opt-in and CHILD restrictions across all discovery and direct access"
@@ -201,6 +217,8 @@ tasks:
       2026-11-07 PT: Added a general-safe, guest-playable Chapter One alongside a server-JWT-authorized mature edition in kind_robots DRAFT PR #4903 (head 42e1b0037729bd19b22e71cdc5671e99d2dd801e; CI pending). Includes explicit public-scene/topics/scrapbook allowlists, separate saves, covered murder scene, no general-edition flirting, and regression replay. This is an outward-facing route: keep draft UNMERGED until human visual/publication review and complete server asset/SSR security audit. Canonical dual-edition design notes merged in conductor PR #7159. Additional t-011 security work is still required, so return this task to ready rather than marking the audit finished.
 
       PARTIAL MERGED 2026-11-09 PT: Silas explicitly replied "Human approved" in the current ChatGPT session to the pending human gate on Kind Robots PR #4903. The formerly draft public-safe general plus server-authorized mature edition PR was reconciled with current main, 10/10 latest-head GitHub workflows completed successfully, and PR #4903 squash-merged at dee2774007c79bda5b162940b68745269683f77a. This approval is for this specific Play route and two-edition release; it is not blanket approval of future mature assets, home Highlights, community promotion, or the full-game t-013 visual acceptance. Remaining t-011 work: independently verify direct ArtImage URL protections, SSR/hydration, search/project discovery, cross-account save isolation, authenticated live behavior, and production deployment before marking the security matrix complete. No manual deployment performed.
+
+      2026-11-11 PT coordination audit: the general Play route is approved and merged, not awaiting a first release gate. Keep this task ready for the unfinished two-edition security matrix: direct ArtImage and splash URLs, SSR/hydration, public discovery, cross-account and cross-edition saves, CHILD+ADMIN and invalid JWT, and verified production behavior. The `/admin/monstrique` Studio (Preview + Series bible, kind_robots#5010) is a separate ADMIN + mature-only surface.
   - id: t-012
     milestone: m4
     title: "Adversarial end-to-end playthroughs and visual/performance acceptance preparation"
@@ -216,7 +234,7 @@ tasks:
       All known production art actually verified before reporting fully done.
   - id: t-013
     milestone: m4
-    title: "Silas visual acceptance, then authorize mature-only public Play/nav/highlights release"
+    title: "Silas final-game visual acceptance and distinct approval for additional public promotion"
     status: waiting
     depends_on: t-012
     gate_human: true
@@ -225,7 +243,29 @@ tasks:
     passes: 0
     stakes: outward-facing
     note: >-
-      FOR SILAS: First review the complete internal experience and art. Then
-      separately authorize any public Play route, home highlights and navigation
-      placement, which must stay completely invisible to guests, mature-off and
-      CHILD users. Do not merge production-facing publication without explicit approval.
+      FOR SILAS: The general Play route and dual editions were explicitly approved and merged
+      in kind_robots#4903; do not re-gate or hide that already authorized general
+      experience. Review the COMPLETE chapter arc, delivered art and both audience
+      modes at phone/tablet/desktop. Separately approve any new public marketing,
+      home promotion, launch claim or broader mature-content publishing; the
+      Studio and mature-only assets stay ADMIN/opt-in restricted as appropriate.
+      Never infer full-game creative acceptance from approval of a prior PR.
+  - id: t-014
+    milestone: m3
+    title: "Produce first motel/cast art batch with verified ArtJob and ArtImage ledger"
+    status: ready
+    depends_on: t-001
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Art production may start before story-engine completion. Use ART-PIPELINE.md,
+      CHARACTER-LOOKBOOK.md and shipped Series Bible prompt lanes to queue a scoped
+      first batch of character model sheets, ghost/victim expressions and essential
+      Chapter 1 motel scene paintings, with 2D/3D cutscene plans. Record request,
+      model, checkpoint, edition, ArtJob, ArtImage and verified final URL in the art
+      ledger; queued is not delivered. Reuse the painted title/Play hero, approved
+      mature splash and Studio art already shipped in kind_robots#4992/#5010/#5012;
+      no duplicate generation. Separate mature private images from general-safe
+      assets in every request. A completed first batch unblocks t-009 for scene
+      integration, not a claim that all later chapter art is finished.
