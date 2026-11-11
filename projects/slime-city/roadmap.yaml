@@ -1154,11 +1154,11 @@ tasks:
   - id: t-057
     milestone: m3
     title: "Bring Meat Exchange's constructed-field score (~0.60 across five seed families) back inside the starter band, coordinated with the t-053 reskin and t-051 fighters-first"
-    status: claimed
+    status: done
     stakes: reversible
     passes: 0
     depends_on: t-056
-    updated: '2026-11-11T20:48:37Z'
+    updated: '2026-11-11T21:22:22Z'
     note: |-
       Kaizen from t-056 (kind_robots#5022). At four bouts per ordered pairing, Exchange scored
       0.593-0.612 across the constructed field in five disjoint seed families, the only crew
@@ -1166,6 +1166,15 @@ tasks:
       carry it (the fighters build was 0.78), tune with an A/B on held-out seeds, keep the
       starter guard green, then tighten verifySlimeCityClashConstructed toward 42-58% / 16 pts.
       Internal preview only.
+
+      2026-11-11 PT: MERGED kind_robots#5023 at e62577c, all 11 checks green. Exchange's lead
+      was crew-wide (every constructed archetype ran hot, no single card carried it), so CALL
+      IN THE DEBT went from 5/8 to 4/7. Four seed families (0 tuned, 1-3 held out) now read
+      Exchange 0.552-0.569, Catgirls (the new low crew) 0.424-0.458, spread 0.113-0.141.
+      40-seed starters: Exchange 47.5% -> 45.8%, guard green. verifySlimeCityClashConstructed
+      tightened to 41-59% / 16 pts. 4/6 was rejected because it pushed the starter to 43.5%.
+      Internal preview only.
     owner: worker
     claimed_by: 2026-11-11T213000Z-slime-city-t057-exch-r7v2
     claimed_at: '2026-11-11T20:48:37Z'
+    implementation_pr: 'silasfelinus/kind_robots#5023'
