@@ -1464,3 +1464,13 @@ tasks:
       on d6db6ab3. All 24 reset tasks now carry a dated remaining-acceptance line linking the
       ledger row; no status changed. Kaizen t-067.
     implementation_pr: 'silasfelinus/conductor#7257'
+  - id: t-067
+    milestone: m4
+    title: "Add a sweep check that flags any memory-dungeon task closed done while its note's latest 'remaining:' line is not marked met"
+    status: ready
+    owner: worker
+    stakes: reversible
+    passes: 0
+    updated: '2026-11-11T21:50:00Z'
+    note: |-
+      Kaizen from the t-066 review (conductor PR #7257). The 24 reset tasks now carry dated "remaining:" acceptance lines, but nothing stops a later close-out from marking one done on a partial slice — the exact "done is not acceptance" failure the reset fixed. Add a small check (script + test) that fails when a done memory-dungeon task's note has a "remaining:" line without a later "remaining met:" / evidence line. Reversible, CI-tested; no task status changes.

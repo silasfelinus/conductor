@@ -175,3 +175,11 @@
 **What worked:** refusing to close any of the 24 tasks on title-matching PRs alone; a per-task "remaining acceptance" column and an e01–e12 matrix; t-064 named as the highest-value code gap.
 
 **What to improve:** third handoff-template miss on this project (t-038, the reset branch, now t-065). Open PRs from the AGENTS.md handoff template every time. The task also asked for per-task "remaining:" note lines; those live only in the ledger, so t-066 copies them into the notes.
+
+## 2026-11-11 PT | Reviewer merge | memory-dungeon/t-066 | Conductor #7257
+
+**Decision:** squash-merged the docs-only note update (`a752515d`) after all checks passed on head `d6db6ab3`, with no review claim from anyone else and a clean merge against main. Confirmed that 24 notes got one dated "remaining:" line each, that `RESET-TASK-EVIDENCE-AUDIT-2026-11-10.md` exists, and that no status, gate or `approved_by_human` field changed. t-066 is closed as done, with kaizen t-067.
+
+**What worked:** the PR was opened with the handoff template and passed the handoff check first time, ending the miss streak. Each line names a concrete next check instead of a vague "verify".
+
+**What to improve:** lines were prepended to the notes rather than appended (the notes are append-only by convention). It's harmless here, but prefer `close_task.py --append-note` or task-events so the dated line lands at the end.
