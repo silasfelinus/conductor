@@ -462,7 +462,7 @@ tasks:
   - id: t-028
     milestone: m3
     title: "20-card decks across the deck builder, starters and every format"
-    status: ready
+    status: done
     depends_on: t-027
     passes: 0
     stakes: reversible
@@ -491,11 +491,17 @@ tasks:
       capture 390/768/1440 of home, VS -> Fight CPU clash (20-card hand) and Collection; check
       zero doc overflow and no spilling elements (script pattern: frontend-verification.md).
       Production already serves a57e98c, so #4982 is live.
-    updated: '2026-11-11T14:00:09Z'
+
+      Reviewer reconciliation 2026-11-11 PT: the implementation shipped in
+      silasfelinus/kind_robots#4924 (head worker/slime-city-t028-frontdoor-e9c3, merged
+      2026-11-10 PT, body names conductor slime-city/t-028), and the 20-card Solo/Alliance
+      rules landed earlier in #4906/#4938. The task stayed at review with no PR recorded, so
+      this close-out records done.
+    updated: '2026-11-11T22:51:50Z'
     owner: worker
     claimed_by: 2026-11-11T133600Z-slime-city-t028-layout-p3x9
     claimed_at: '2026-11-11T13:33:59Z'
-    implementation_pr: 'silasfelinus/kind_robots#4982'
+    implementation_pr: 'silasfelinus/kind_robots#4924'
   - id: t-029
     milestone: m4
     title: "Commit one shared balance tuner covering founders, PARITY and BLOODRUSH"
