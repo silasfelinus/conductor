@@ -1113,11 +1113,11 @@ tasks:
     implementation_pr: 'silasfelinus/kind_robots#5020'
   - id: t-055
     title: "Slime City: first reconnectable, private human-vs-human CLASH matches"
-    status: review
+    status: done
     stakes: reversible
     passes: 0
     source_issue: "silasfelinus/kind_robots#4951"
-    updated: '2026-11-11T07:50:00Z'
+    updated: '2026-11-11T22:56:25Z'
     note: |-
       FROM GITHUB ISSUE silasfelinus/kind_robots#4951 (https://github.com/silasfelinus/kind_robots/issues/4951), opened by @silasfelinus on 2026-11-10. Imported by scripts/sync_github_issues.py. Reference the issue in the implementing PR (`Closes silasfelinus/kind_robots#4951`) so it closes on merge; the bridge closes it otherwise once this task is done.
 
@@ -1130,6 +1130,16 @@ tasks:
       Adversarial PvP reconnect and stale-command recovery regression.
 
       Adversarial review found rejected PvP moves and forfeits silently skipped server resync because sending=true; scoped fix and regression assertion prepared in kind_robots.
+
+      RECONCILED 2026-11-11 PT (Silas in-session: "clear roadmaps and finalize multiplayer and
+      single player routes"): the human-vs-human slice is merged and live. kind_robots #4952
+      (invite lobby, server transcript, hidden-hand redaction, seat auth, expiry, forfeit),
+      #4995 (stale-command/rejected-forfeit resync), #4983 (header shortcut + turn badge),
+      #4985/a4c4fd8 (/play/slime-city-pvp system route), #4993 (phone battle layout), #5001
+      (challenge friends, username/email invites, notifications), #5003 (open/private duels,
+      cancel/decline). Production /api/version serves e62577c, which contains all of them;
+      /play/slime-city-pvp returns 200. Finished-duel screen, rematch and W-L-D record follow
+      in the t-010 routes PR. Issue kind_robots#4951 is closed.
     owner: worker
     claimed_by: 2026-11-11T074350Z-slime-city-pvp-reconnect-6e8c2
     claimed_at: '2026-11-11T07:43:50Z'
