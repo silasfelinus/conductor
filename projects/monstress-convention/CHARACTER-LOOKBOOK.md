@@ -46,3 +46,16 @@ The characters are all adults. **Apparent age does not equal chronological age.*
 - **Art prompts:** use explicit name, species anatomy, apparent age, era, costume and emotion; Draculina adult apparent ~20, Siobhan adult early-mid 20s appearance, Cleo mature/elder, Albina giant alligator. No direct real-person likeness. No explicit imagery.
 - **Authoring/scrapbook:** separate portrait, past/current images, expression frames, original and doctored covers, evidence unlock, gratitude, and independent consent-gated romance. Critical clues are available when romance is disabled.
 - **Privacy:** admin preview only behind authenticated mature opt-in, excluding CHILD; no release, publishing or unguarded asset URLs absent explicit human approval.
+
+## Iris Quill and Norb Vale · 2026-11-10 PT redesign
+- **Iris:** an adult baddie about 30. Shoulder-length dark hair with a **single white streak**, a
+  **plaster on the side of her neck** (necker boyfriend), berry lipstick, belted rose-and-plum trench over a
+  crop top and pencil skirt, press camera. A small retro MONSTRIQUE logo tattoo on her lower back. Confident,
+  never mousy or a damsel.
+- **Norb:** four foot eleven of **Quasimodo and Igor** with **Peter Lorre** eyes: a hump on one shoulder,
+  forward stoop and shuffle, lopsided oversized head, one bulging eye bigger than the other, doorknob nose,
+  crooked buck teeth, coke-bottle glasses, greasy comb-over, yellow latex gloves. A hot-pink **MONSTRIQUE
+  convention T-shirt** tucked into high-waisted grey trousers under a too-small jacket and a crooked bow tie.
+  Never handsome, cute, tall or upright.
+- The monster stars now all have model sheets (Roxie, Laguna, Francesca, Vespa and Blobzo were added) in
+  Kind Robots `utils/monstrique/characterModels.ts`, editable from the `/admin/monstrique-bible` series bible.

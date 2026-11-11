@@ -267,6 +267,21 @@ release the next Harker File.
 
 ## Decided by Silas
 
+- 2026-11-10 PT: **Look and feel:** *"we're going for a if Ralph Bakshi directed the creature
+  commandos"* — gritty 1970s rotoscoped adult animation, underground-comix ink, a monster-misfit squad.
+  Art prompts describe that look in plain words and never name the director or the show.
+- 2026-11-10 PT: **Norb is ugly:** *"Quasimodo meets Peter Lorre ... more Quasimodo for our investigator.
+  Igor."* Hump, Igor shuffle, mismatched bulging eyes. He wears a **MONSTRIQUE T-shirt**: it was handed to
+  him and wearing it was the easiest way to carry it. Zero fashion sense.
+- 2026-11-10 PT: **Norb is 100% professional with Iris.** After enough advances he half-heartedly accuses
+  her of sexual harassment, which turns into a conversation about power structures: whether an employee
+  has power over her boss in a class-based society. (Engine topics `workplace-conduct` →
+  `power-structures`, mature edition only.)
+- 2026-11-10 PT: **Iris is a baddie.** A MONSTRIQUE **tramp stamp** from high school (*"a totally
+  reasonable thing for teens to get at her high school. And she rocked it."*), a **white streak** in her
+  hair, and a **neck plaster**: her new boyfriend is a real necker and can't get enough. A running joke
+  every character comments on (`iris-neck`, `iris-tattoo`, mature edition only). The boyfriend's identity
+  stays open.
 - 2026-11-07 PT: **Draculina** is the killer, revealed in the last act. Marta is the misdirect.
 - 2026-11-07 PT: Visual casting correction: seemingly 20-year-old charter Draculina, adult Scottish Pack pop alum Siobhan MacRae with were-panther frenemy Nyx Sable, visibly veteran Cleo Pappatra, and giant sewer-dwelling Albina as a genuinely erased 1963 founder.
 - 2026-11-07 PT: the mummy star is **Cleo Pappatra** (replacing both *Celestine Veil* and
