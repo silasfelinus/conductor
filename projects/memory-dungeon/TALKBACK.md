@@ -167,3 +167,11 @@
 **Decision:** merged the three-commit roadmap reset branch via a Reviewer PR. Roadmap/docs only: releases 21 claimed/review tasks whose claims were all older than the 90-minute expiry (newest 2026-11-09), retitles sixteen-realm tasks to the twelve-world canon already in CONTROL.md (2026-10-30 and 2026-11-05 PT blocks), and adds `TWELVE-WORLD-DELIVERY-ROADMAP.md`. Checked that every `depends_on` of a task moved to `ready` is `done`, `validate_roadmaps.py` and `check_roadmap_yaml.py` pass on the merged tree, and no human gate or `approved_by_human` field changed.
 
 **What worked:** honest "done is not acceptance" language and a per-world evidence ledger requirement. **What to improve:** the branch had no PR or handoff body, so the Reviewer had to reconstruct intent; open the PR with the handoff template when pushing. Bulk review→ready also drops evidence that some slices merged; kaizen t-065 audits those PRs so finished slices close instead of being redone.
+
+## 2026-11-10 PT | Reviewer merge | memory-dungeon/t-065 | Conductor #7221
+
+**Decision:** squash-merged the reversible docs-only reset evidence audit (`15f497d5`) after all 25 checks passed on head `e84391cd`. The handoff check failed on first open because the body lacked the template headings; the Reviewer restructured the body (content unchanged) and the re-run passed. Spot-checked cited kind_robots merges #4957 and #4959 on main. t-065 closed done; kaizen t-066 added.
+
+**What worked:** refusing to close any of the 24 tasks on title-matching PRs alone; a per-task "remaining acceptance" column and an e01–e12 matrix; t-064 named as the highest-value code gap.
+
+**What to improve:** third handoff-template miss on this project (t-038, the reset branch, now t-065). Open PRs from the AGENTS.md handoff template every time. The task also asked for per-task "remaining:" note lines; those live only in the ledger, so t-066 copies them into the notes.
