@@ -1545,11 +1545,11 @@ tasks:
     updated: '2026-11-10T07:00:00Z'
   - id: t-055
     title: "Slime City: first reconnectable, private human-vs-human CLASH matches"
-    status: claimed
+    status: review
     stakes: reversible
     passes: 0
     source_issue: "silasfelinus/kind_robots#4951"
-    updated: '2026-11-11T07:43:50Z'
+    updated: '2026-11-11T07:50:00Z'
     note: |-
       FROM GITHUB ISSUE silasfelinus/kind_robots#4951 (https://github.com/silasfelinus/kind_robots/issues/4951), opened by @silasfelinus on 2026-11-10. Imported by scripts/sync_github_issues.py. Reference the issue in the implementing PR (`Closes silasfelinus/kind_robots#4951`) so it closes on merge; the bridge closes it otherwise once this task is done.
 
@@ -1560,6 +1560,8 @@ tasks:
       Implemented atomic participant-only PvP forfeit, idempotent retry, winner settlement, terminal command guard, store method, two-tap UI and contract assertions on existing kind_robots PR #4952. Latest commit 906f03c. No CI runs at head, merge conflict unresolved; keep open and do not deploy. Silas requests VS leftmost unified human/AI Solo/Alliance hub, saved decks, history and server-verified rewards; documented in roadmap issue #4535.
 
       Adversarial PvP reconnect and stale-command recovery regression.
+
+      Adversarial review found rejected PvP moves and forfeits silently skipped server resync because sending=true; scoped fix and regression assertion prepared in kind_robots.
     owner: worker
     claimed_by: 2026-11-11T074350Z-slime-city-pvp-reconnect-6e8c2
     claimed_at: '2026-11-11T07:43:50Z'
