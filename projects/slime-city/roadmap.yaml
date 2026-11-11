@@ -225,7 +225,7 @@ tasks:
   - id: t-009
     milestone: m3
     title: "Write and implement six genuinely different crew campaigns"
-    status: claimed
+    status: review
     depends_on: [t-004, t-007]
     passes: 0
     stakes: reversible
@@ -353,7 +353,9 @@ tasks:
       Alliance-specific narrative implementation ready for review: 30 directed crew pairings, 5 chapter contexts each, player-picked protection or gamble outcomes with server-verified Clash boss effects, a bounded same-ally callback, account-save validation, and handoff from the city's shared Journey. Regression tests include all 150 paired chapter combinations and store battle gating. This is a substantive slice of the continuing six-crew story-depth task, not final acceptance. Implementation PR follows current-head CI.
 
       PARTIAL MERGED 2026-11-10 PT: Kind Robots PR #4969 merged to main at bd4d2c7b2570ee1d1404876fdfd1d72dbf56a4b1 after eight completed and passing latest-head GitHub workflows (four contract shards, TypeScript, formatting, layout, architecture, schema parity, Facet smoke, container build). Thirty directed Alliance relationship threads now add a saved player choice after each faction's authored chapter scenes. Five chapter contexts per partnership; protect/gamble alters verified Clash opening boss life, consecutive use of an ally creates one bounded callback, and city missions cannot bypass the interlude. The UI previews the actual battle terms, including format, and aftereffects persist in account story saves. New 150-case script and store launch tests included. No DB migration, new ArtJobs, manual deploy or public launch. Remaining scope under t-009: deepen chapter-specific ally writing, partner-specific endings and full-run human playtesting.
-    updated: '2026-11-11T01:40:20Z'
+
+      Directed Alliance act-and-finale follow-up is implemented for all 30 pairings: four authored chapter escalations each (120 unique dilemmas and 240 unique choice outcomes), 60 partner-specific finale alternatives, history-dependent ending callbacks, and a test suite covering 90 five-chapter narrative paths, 30 partner switches, and 30 loss/retry scenarios. PR/CI pending; full tactical balance and human fun acceptance remain open.
+    updated: '2026-11-11T01:55:16.382Z'
     owner: worker
     claimed_by: 2026-11-11T014020Z-slime-city-t-009-alliance-finale-a64e
     claimed_at: '2026-11-11T01:40:20Z'
