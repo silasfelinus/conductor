@@ -435,7 +435,7 @@ tasks:
   - id: t-022
     milestone: m2
     title: "Paint reaction-face board tokens for every creature and wire them in"
-    status: claimed
+    status: review
     depends_on: t-013
     passes: 0
     stakes: reversible
@@ -461,10 +461,19 @@ tasks:
       Full-card battlefield art increment: stop cropping portrait card paintings into square tokens; preserve entire selected evolution illustration with contain framing, improve filled-slot contrast, and add a contract guard. Kind Robots implementation PR pending checks; remaining t-022 generated evolution artwork and screenshot acceptance still open.
 
       PARTIAL MERGED 2026-11-09 PT: Kind Robots #4933 squash-merged at 26b8b5f after six latest-head CI workflows succeeded. Reconciled full-portrait battlefield CSS with current main and added a non-cropping contract. Return task to ready: generated evolution art curation and 390/768/1440 live screenshot acceptance remain unverified. No production deployment claimed.
-    updated: '2026-11-11T05:50:08Z'
+
+      2026-11-11 PT: Curated every finished EVOLUTIONS-*-KREA render on per-card L1/L2/L3
+      contact sheets (Bloodfairies, Catgirls, Exchange, Mercenaries, Riot, Undertow): 425 of
+      427 kept, Picket Line Troll L2/L3 rejected (green troll vs komodo card); Ironjaw waits
+      for the lizard evolution round (t-044). Wired into SLIME_CITY_ART.evolutions in
+      kind_robots#4986 with an Overworld count/card-id/uniqueness guard. Board tokens: 322 of
+      330 ledger keys wired, but #4931 (user-directed) switched Clash fighters to full
+      card/evolution paintings, so tokens are no longer the battlefield art.
+    updated: '2026-11-11T05:56:29Z'
     owner: worker
     claimed_by: 2026-11-11T150000Z-slime-city-t022-evo-wire-q7m2
     claimed_at: '2026-11-11T05:50:08Z'
+    implementation_pr: 'silasfelinus/kind_robots#4986'
   - id: t-023
     milestone: m2
     title: "TURF: a Go-style mode where every card is one token"
