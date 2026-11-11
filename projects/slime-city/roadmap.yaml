@@ -609,7 +609,7 @@ tasks:
   - id: t-017
     milestone: m2
     title: "Queue and verify distinct art for teams, districts and specials"
-    status: claimed
+    status: ready
     depends_on: t-001
     passes: 0
     stakes: reversible
@@ -636,10 +636,23 @@ tasks:
       looking characters), re-rendered in art/SLIME-CITY-CURATION-REDO-1.yaml with those
       causes removed from the prompts. Next: curate the redo round and the wave-three, finale
       and mercenary card ledgers as they render.
-    updated: '2026-11-11T13:49:34Z'
+
+      PARTIAL MERGED 2026-11-11 PT: kind_robots#5017 squash d4872ac (11/11 checks green).
+      Curated finished TITLE-AND-BOSS-REACTIONS / FACTION-IDENTITY / ANARKISS / CURATION-
+      REDO-2 renders on contact sheets after authenticated fetches: wired 23 boss mood
+      portraits (SLIME_CITY_ART.bosses; Anarkiss supersedes circus Riot, identity round
+      supersedes ogre Ironjaw and old Exchange; Ironjaw ready 267992 rejected for a misspelled
+      painted sign), title-splash 267791, crews riot 267977 and exchange 267983, cards
+      s1-pocket-punk and s3-undertow-long-drain-sting. Also closes the t-049 follow-up. Ten
+      DONE renders (ArtImages 265264-265273 minus the two wired, plus TURF 261338) have empty
+      imageData and imagePath 404, so they were re-queued in art/SLIME-CITY-CURATION-
+      REDO-3.yaml; the Ironjaw prompts were rewritten as lab lizards. Next: curate REDO-3 once
+      DONE, then screenshot the lab/Clash at 390/768/1440. No deploy claimed.
+    updated: '2026-11-11T14:02:38Z'
     owner: worker
     claimed_by: session_01L5NKxaiTVmHTRaKNqnVmj7
     claimed_at: '2026-11-11T13:49:34Z'
+    implementation_pr: 'silasfelinus/kind_robots#5017'
   - id: t-018
     milestone: m2
     title: "Build 60 playable neutral mercenaries with legal faction mixing"
