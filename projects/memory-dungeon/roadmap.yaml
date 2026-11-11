@@ -1,3 +1,13 @@
+# 2026-11-10 PT: Silas reconfirmed the TWELVE-overworld production cap and authorized
+# release of stale unfinished task claims. CONTROL.md (2026-10-30) is authoritative.
+# e01-e08 are four original/twisted pairs; e09-e12 are four collision finales.
+# e13-e16 are legacy save/archive compatibility ONLY, not playable roadmap scope.
+# All 12 overworlds require 64 authored sites (768 total), their linked dungeons,
+# transitions, collectible 30+2 galleries, production art and playable consequences.
+# "done" on an implementation task is not whole-world acceptance.
+# See TWELVE-REALITY-COLLISION-FINALE.md and TWELVE-WORLD-DELIVERY-ROADMAP.md.
+# 2026-11-10 PT: Old claimed/review states older than 90 minutes reset to ready
+# (or waiting where prerequisites are not done). Historical notes remain intact.
 # 2026-10-22 PT: Silas-directed evolution of the existing /play/memory game.
 project: memory-dungeon
 kind: software
@@ -15,6 +25,16 @@ goal: >-
   Finish only after adversarial seeded playtests, meaningful endings,
   balance/accessibility QA and Silas's subjective gameplay verdict.
 notes_from_silas: |
+  2026-11-10 PT (Silas's explicit correction): twelve overworlds e01-e12 are the
+  complete production target. Earlier references to sixteen realms, 32 photographs
+  across sixteen worlds, and e13-e16 as new playable locations are superseded.
+  Preserve legacy IDs and collected data through compatibility migration, but
+  design 24 main-arc photographs (two per playable overworld) unless existing
+  collectible IDs require archival retention. Do not claim 768 sites, twelve
+  dungeons, 384 unique gallery faces, complete branches or 32 endings are shipped
+  merely because their reducers, contracts or templates exist. Reset stale
+  unfinished claims; do not automatically promote review to done. Execute the
+  phased acceptance plan in TWELVE-WORLD-DELIVERY-ROADMAP.md.
   2026-10-22 PT: "New project: an evolution of memory dungeon. Add to conductor
   projects, high priority. Should not need a new front end: we need the
   current memory dungeon to exist as a link from the new front end.
@@ -158,7 +178,7 @@ tasks:
   - id: t-023
     milestone: m2
     title: "Deliver photograph Chronicle, Earth timeline and ending spoiler gates"
-    status: review
+    status: ready
     depends_on: t-018
     passes: 0
     stakes: reversible
@@ -184,13 +204,10 @@ tasks:
       2026-11-06 PT: PR kind_robots#4861 merged (23fbe3ed) after all eight exact-head checks passed on a63e8257. e08 Hoshimori 5,7 and 6,7 authored, earth-16 now recoverable with replay and forged-choice tests. Remaining Chronicle pickup routes, delivered art and ending validation. No ArtJobs or deployment.
 
       Added two authored e08 crossings at 5,5 and 6,5 with distinct choices and replay-safe flags; expanded site-count validator and regression assertions to 48. Kind Robots PR pending exact-head CI. Remaining Hoshimori sites, Chronicle photos and art not complete.
-    owner: worker
-    claimed_by: 2026-11-06T234239Z-memory-dungeon-t023-n7x4
-    claimed_at: '2026-11-06T23:42:39Z'
   - id: t-030
     milestone: m3
-    title: "Build scene-art production manifest and sixteen-realm coverage checks"
-    status: claimed
+    title: "Build scene-art production manifest and twelve-world coverage checks"
+    status: ready
     depends_on: t-018
     passes: 0
     stakes: reversible
@@ -227,16 +244,10 @@ tasks:
 
       2026-11-06 PT: kind_robots PR #4860 merged at e95dea9915b5c7a0075c5a2bb9d0a80b78601b42 after eight exact-head Actions workflows passed on 81fb8a94669d9e4afe815ccad636cb149bdc5a89. World One manifest now checks authored Briar/House choice art, 32 collectible card briefs and Chronicle photos. Remaining t-030: all sixteen realms, durable ArtJobs, delivered image coverage. No ArtJobs or deployment.
     updated: '2026-11-06T18:44:18Z'
-    owner: worker
-    claimed_by: 2026-11-06T184418Z-memory-dungeon-t-030-k8q2
-    claimed_at: '2026-11-06T18:44:18Z'
   - id: t-001
     milestone: m1
     title: "Seeded expedition reducer, room schema and Classic adapter"
-    status: review
-    owner: worker
-    claimed_by: 2026-11-07T164739Z-memory-dungeon-t-001-v9q6
-    claimed_at: '2026-11-07T16:47:39Z'
+    status: ready
     updated: '2026-11-07T16:52:00Z'
     passes: 0
     stakes: reversible
@@ -345,10 +356,7 @@ tasks:
   - id: t-007
     milestone: m2
     title: "Integrate RPG combat masks and telegraphed enemies into match board"
-    status: review
-    owner: worker
-    claimed_by: 2026-11-07T234630Z-memory-dungeon-t-007-q8n2
-    claimed_at: '2026-11-07T23:46:30Z'
+    status: ready
     updated: '2026-11-07T23:50:00Z'
     depends_on: t-006
     passes: 0
@@ -383,10 +391,7 @@ tasks:
   - id: t-009
     milestone: m3
     title: "Author floor story, recurring cast and consequential decisions"
-    status: claimed
-    owner: worker
-    claimed_by: 2026-11-07T134802Z-memory-dungeon-t-009-k7m4
-    claimed_at: '2026-11-07T13:48:02Z'
+    status: ready
     updated: '2026-11-07T13:48:02Z'
     passes: 0
     stakes: reversible
@@ -454,7 +459,7 @@ tasks:
   - id: t-013
     milestone: m3
     title: "Deliver character, room, weapon and ending art pipeline"
-    status: claimed
+    status: ready
     passes: 0
     stakes: reversible
     note: |-
@@ -470,9 +475,6 @@ tasks:
       landed (or was superseded) and the note itself lists remaining scope, so back to ready
       for the next slice rather than done.
     updated: '2026-11-08T06:47:23Z'
-    owner: worker
-    claimed_by: 2026-11-08T064723Z-memory-dungeon-t-013-r6c9
-    claimed_at: '2026-11-08T06:47:23Z'
   - id: t-016
     milestone: m2
     title: "Build bullseye sweet spots and solver-verified minefield challenge floors"
@@ -517,8 +519,7 @@ tasks:
   - id: t-019
     milestone: m3
     title: "Produce game-screen concept mockups for five scene families"
-    status: review
-    owner: worker
+    status: ready
     passes: 0
     stakes: reversible
     note: |-
@@ -526,8 +527,6 @@ tasks:
       2026-11-04 PT cleanup pass: released an expired claim (no activity since the claim, no open PR found for it); back to ready.
 
       Authored five responsive interactive console screen composition studies (overworld, shaped memory combat, treasure, logic vault, avatar). HTML design proof only, not production illustrations or runtime integration. Review 390/768/1440px geometry and replace concept symbols with commissioned art before closing.
-    claimed_by: 2026-11-08T094646Z-memory-dungeon-t019-k7m4
-    claimed_at: '2026-11-08T09:46:46Z'
     updated: '2026-11-08T09:54:00Z'
   - id: t-014
     milestone: m4
@@ -561,11 +560,8 @@ tasks:
 
   - id: t-020
     milestone: m3
-    title: "Adopt sixteen-realm canon, prototype prologue and compatibility inventory"
-    status: review
-    owner: worker
-    claimed_by: 2026-11-07T194744Z-memory-dungeon-t-020-n8v3
-    claimed_at: '2026-11-07T19:47:44Z'
+    title: "Reconcile twelve-world canon, prologue and legacy e13-e16 compatibility"
+    status: ready
     updated: '2026-11-07T19:53:00Z'
     passes: 0
     stakes: reversible
@@ -604,10 +600,7 @@ tasks:
   - id: t-025
     milestone: m3
     title: "Author and build the other three Act I overworlds and dungeons"
-    status: review
-    owner: worker
-    claimed_by: 2026-11-08T105008Z-memory-dungeon-t-025-n7p4
-    claimed_at: '2026-11-08T10:50:08Z'
+    status: ready
     updated: '2026-11-08T10:56:00Z'
     depends_on: t-022
     passes: 0
@@ -659,7 +652,7 @@ tasks:
       gallery art per narrative milestone.
   - id: t-028
     milestone: m3
-    title: "Author Act IV and twelve fully consequence-backed ending variants"
+    title: "Build e09-e12 collision finale and ~32 consequence-backed core endings"
     status: waiting
     depends_on: t-027
     passes: 0
@@ -674,7 +667,7 @@ tasks:
   - id: t-029
     milestone: m3
     title: "Establish full enemy, item, achievements and unlock economy"
-    status: review
+    status: ready
     updated: '2026-11-07T08:53:00Z'
     depends_on: t-021
     passes: 0
@@ -697,9 +690,6 @@ tasks:
       2026-11-06 PT: Merged kind_robots PR #4888 (dc3e98c8) after eight exact-head workflows passed on d0588657. Reward-ledger input validation and adversarial regression shipped. Remaining enemy/item/unlock catalog and art/QA work; task remains incomplete.
 
       Focused negative-purse save corruption guard with regression coverage; implementation PR pending exact-head CI. Broader economy catalogs remain unfinished.
-    owner: worker
-    claimed_by: 2026-11-07T084900Z-memory-dungeon-t029-q8n4
-    claimed_at: '2026-11-07T08:49:00Z'
   - id: t-031
     milestone: m4
     title: "Adversarial balance, continuity and cross-world reachability suite"
@@ -751,7 +741,7 @@ tasks:
   - id: t-034
     milestone: m2
     title: "Polish World One as a complete one-screen console with save slots"
-    status: review
+    status: ready
     updated: '2026-11-05T02:41:53Z'
     depends_on: t-022
     passes: 0
@@ -803,9 +793,6 @@ tasks:
       2026-11-04 PT: seal-answer save fix and World One adversarial store playtest merged as
       kind_robots #4776 (squash 8d1e8ed). Still in review pending rendered
       phone/tablet/desktop QA.
-    owner: worker
-    claimed_by: 2026-10-29T014900Z-memory-dungeon-t-034-c8a9
-    claimed_at: '2026-10-29T01:49:00Z'
     implementation_pr: 'silasfelinus/kind_robots#4776'
 
   - id: t-035
@@ -848,10 +835,7 @@ tasks:
   - id: t-037
     milestone: m2
     title: "Build bounded cross-realm consequence ledger"
-    status: claimed
-    owner: worker
-    claimed_by: 2026-11-07T024226Z-memory-dungeon-t037-k8q2
-    claimed_at: '2026-11-07T02:42:26Z'
+    status: ready
     updated: '2026-11-07T02:42:26Z'
     depends_on: t-022
     passes: 0
@@ -881,11 +865,8 @@ tasks:
       landed (or was superseded) and the note itself lists remaining scope, so back to ready
       for the next slice rather than done.
   - id: t-038
-    title: "Memory Dungeon master bible: Reimaginer, 8 world concepts / 16 realities, shifting-reality epic finale"
-    status: claimed
-    owner: worker
-    claimed_by: 2026-11-07T154348Z-memory-dungeon-t-038-r8n2
-    claimed_at: '2026-11-07T15:43:48Z'
+    title: "Memory Dungeon master bible: 8 original/twisted worlds, 4 collision finales, 12 total"
+    status: ready
     updated: '2026-11-07T15:43:48Z'
     stakes: reversible
     passes: 0
@@ -914,7 +895,7 @@ tasks:
   - id: t-039
     milestone: m2
     title: 'Playbook Forge upgrade (last, per Silas): fix 195 failing prompts, write 6 missing, then grow quests and encounters toward plan'
-    status: review
+    status: ready
     stakes: reversible
     passes: 0
     note: |-
@@ -928,12 +909,9 @@ tasks:
 
       Focused Forge readiness correction: require minimum-length, literal Krea2 medium prompts and reject common negative/abstract wording. The 195 historical lint failures and six missing beats remain outstanding; do not mark complete.
     updated: '2026-11-08T17:48:00Z'
-    owner: worker
-    claimed_by: 2026-11-08T174600Z-memory-dungeon-t039-r9x3
-    claimed_at: '2026-11-08T17:46:00Z'
   - id: t-040
     title: "Memory Dungeon: deliver painted 6×6 House dungeon floorplans, not just the 8×8 overworld maps"
-    status: review
+    status: ready
     stakes: reversible
     passes: 0
     source_issue: "silasfelinus/kind_robots#4380"
@@ -977,9 +955,6 @@ tasks:
       for the next slice rather than done.
 
       Added six regression checks for committed House atlas delivery receipts, image IDs, destinations and aggregate counts. Both Krea2 jobs 50365/50366 now have delivered checkpoint entries with ArtImages 257966/257967. Live independent HEAD and rendered six-by-six topology/device QA remain outstanding; do not close issue #4380.
-    owner: worker
-    claimed_by: 2026-11-08T084229Z-memory-dungeon-t040-n7q4
-    claimed_at: '2026-11-08T08:42:29Z'
   - id: t-041
     milestone: m3
     title: "Hoshimori e07 warm folklore: playable 16-site proof, Pip youth thread and first oven rooms"
@@ -1025,10 +1000,7 @@ tasks:
   - id: t-044
     milestone: m3
     title: "Hoshimori e08: complete 64-site yokai horror map, 36 rooms and cross-pair consequences"
-    status: claimed
-    owner: worker
-    claimed_by: 2026-11-07T034214Z-memory-dungeon-t044-q7m2
-    claimed_at: '2026-11-07T03:42:14Z'
+    status: ready
     depends_on:
       - t-042
       - t-043
@@ -1070,11 +1042,8 @@ tasks:
   - id: t-045
     milestone: m3
     title: "Hoshimori e07/e08 art: style proofs, map/oven atlases and two 30+2 collectible galleries"
-    status: review
+    status: ready
     updated: '2026-11-08T13:57:00Z'
-    owner: worker
-    claimed_by: 2026-11-08T135108Z-memory-dungeon-t045-k9r7
-    claimed_at: '2026-11-08T13:51:08Z'
     depends_on:
       - t-041
       - t-043
@@ -1117,11 +1086,8 @@ tasks:
       release and overall game verdict human-gated.
   - id: t-047
     milestone: m4
-    title: "Memory Dungeon twelve-world four-act finale: Char and four memory-collision overworlds"
-    status: claimed
-    owner: worker
-    claimed_by: 2026-11-08T044950Z-memory-dungeon-t-047-k8q4
-    claimed_at: '2026-11-08T04:49:50Z'
+    title: "Build e09-e12 four collision overworlds, 64 sites and dungeons each, with Pip/Morrow/Char/Vesper POV"
+    status: ready
     updated: '2026-11-08T04:49:50Z'
     stakes: reversible
     passes: 0
@@ -1150,7 +1116,7 @@ tasks:
       Full history: projects/memory-dungeon/HISTORY.md#t-048
   - id: t-049
     title: "Memory Dungeon character match deck erroneously reports zero images"
-    status: claimed
+    status: ready
     stakes: reversible
     passes: 0
     source_issue: "silasfelinus/kind_robots#4682"
@@ -1165,9 +1131,6 @@ tasks:
       PR #4777 merged as 16dfea93909ef9fcc500e8df144792c462d2fbc8 after all six exact-head CI workflows passed on 388ba06ef6266cc680a64f52b1129ec7625734ff. The resolver now uses a visibility-checked linked ArtImage URL for Characters with missing primary image paths. Browser reproduction of round-three Character/Non-mature deck and later floors remains unverified; returning to ready for authenticated UI validation, not marking task done.
 
       2026-11-06 PT: Rechecked #4682 and current deck resolver. Earlier #4777 fix remains in main. The existing Chromium memory-world test stubs resolveMemoryDungeonDeck entirely, so its passing browser runs cannot validate the actual Characters / Non-mature round-three art fetch. No authenticated UI reproduction or new code delivered this session; return ready for a genuine browser/API fixture, not done.
-    owner: worker
-    claimed_by: 2026-11-09T114304Z-memory-dungeon-t049-r11b7
-    claimed_at: '2026-11-09T11:43:04Z'
   - id: t-050
     milestone: m3
     title: "Make Oren's House rest shortcut traversable and save-safe"
@@ -1185,10 +1148,7 @@ tasks:
     implementation_pr: 'silasfelinus/kind_robots#4729'
   - id: t-051
     title: "Memory Dungeon: rebalance Briar's 64-tile pacing and House room variety"
-    status: review
-    owner: worker
-    claimed_by: 2026-11-05T074900Z-memory-dungeon-t-051-q8m4
-    claimed_at: '2026-11-05T07:49:00Z'
+    status: ready
     stakes: reversible
     passes: 0
     source_issue: "silasfelinus/kind_robots#4721"
@@ -1255,15 +1215,12 @@ tasks:
   - id: t-055
     milestone: m3
     title: "e08 Hearth of Perfect Safety: rewrite the 16 night sites to Vesper's POV and finish the map"
-    status: claimed
+    status: ready
     stakes: reversible
     passes: 0
     updated: '2026-11-05T10:48:50Z'
     note: |-
       Silas 2026-11-05 PT: the first eight overworlds keep one protagonist per pair, so e08 is Vesper's, not Scylla's (kind_robots#4778 already moved the viewpoint contract). hoshimoriNight.ts's 16 playable sites and store still describe "a separate Scylla-viewpoint expedition". Rewrite them from Vesper's POV without changing coordinates or choice ids, keep the Junji-Ito-tonal psychological/architectural horror register, then continue toward 64 sites and the dark Oven per t-044. Char's fate branches still apply through campaign flags, not through POV.
-    owner: worker
-    claimed_by: 2026-11-05T104850Z-memory-dungeon-t055-g6k2
-    claimed_at: '2026-11-05T10:48:50Z'
   - id: t-056
     milestone: m2
     title: "Name the researcher (Rowan) as the e01/e02 and e09 lead; Pip stays a supporting NPC"
@@ -1281,10 +1238,7 @@ tasks:
   - id: t-057
     milestone: m4
     title: "e09 Briar collision: Rowan leads, goblin Pip becomes a companion"
-    status: review
-    owner: worker
-    claimed_by: 2026-11-05T235100Z-memory-dungeon-t057-8f2c91
-    claimed_at: '2026-11-05T23:51:00Z'
+    status: ready
     stakes: reversible
     passes: 0
     updated: '2026-11-05T23:54:00Z'
@@ -1385,7 +1339,7 @@ tasks:
   - id: t-063
     milestone: m3
     title: "Browser-test the Enter the Choking Works button at e06 4,6 at 390, 820 and 1440 widths, including save/restore mid-dungeon"
-    status: claimed
+    status: ready
     stakes: reversible
     passes: 0
     updated: '2026-11-09T17:50:28Z'
@@ -1403,16 +1357,10 @@ tasks:
       Added an adversarial Choking Works browser regression proving arrival at e06 4,6 alone does not unlock the dungeon: the choice must be resolved first at all three viewports. Rendered Vue component and geometry coverage remain outstanding.
 
       2026-11-06 PT: Merged kind_robots#4847 (849cc7cb) after all seven workflows passed on exact head 9529b3db. Choking Works e06 4,6 cannot unlock by arrival alone; encounter decision is required at 390/820/1440. Remaining: rendered Vue button click and measured DOM geometry at those widths. No ArtJobs or deployment.
-    owner: worker
-    claimed_by: 2026-11-09T175028Z-memory-dungeon-t063-k8q2
-    claimed_at: '2026-11-09T17:50:28Z'
   - id: t-064
     milestone: m3
     title: "Bind the Earth letter and Last Train e03/e04 packets into the encounter registry with executable reducer tests"
-    status: review
-    owner: worker
-    claimed_by: 2026-11-10T124326Z-memory-dungeon-t-064-b7e3
-    claimed_at: '2026-11-10T12:43:26Z'
+    status: ready
     stakes: reversible
     passes: 0
     updated: '2026-11-10T12:48:00Z'
