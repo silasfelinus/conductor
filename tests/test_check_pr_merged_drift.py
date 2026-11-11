@@ -630,7 +630,7 @@ def test_gh_search_task_prs_parses_repo_scoped_list():
             ["silasfelinus/kind_robots"], "interface-vision", "t-081", token=None
         )
 
-    assert results == [{"repo": "silasfelinus/kind_robots", "number": 1464}]
+    assert results == [{"repo": "silasfelinus/kind_robots", "number": 1464, "match": "title"}]
 
 
 def test_gh_search_task_prs_filters_unmerged_and_nonmatching_titles():
@@ -645,7 +645,61 @@ def test_gh_search_task_prs_filters_unmerged_and_nonmatching_titles():
             ["silasfelinus/kind_robots"], "interface-vision", "t-081", token=None
         )
 
-    assert results == [{"repo": "silasfelinus/kind_robots", "number": 10}]
+    assert results == [{"repo": "silasfelinus/kind_robots", "number": 10, "match": "title"}]
+
+
+def test_gh_search_task_prs_matches_body_task_declaration():
+    # conductor/t-209: kind_robots#4924 implemented slime-city/t-028 but named
+    # the task only in its body, so the title-only search missed it.
+    list_body = json.dumps([
+        {
+            "number": 4924,
+            "title": "feat(slime-city): unified 20-card Clash, title screen, settings",
+            "body": "## Reconciled scope\n\nNo migrations.\n\nConductor: `slime-city/t-028`.",
+            "merged_at": "2026-11-10T02:53:12Z",
+        },
+        {
+            "number": 4925,
+            "title": "handoff template",
+            "body": "### Task\nslime-city/t-028: 20-card decks  (kind: software)",
+            "merged_at": "2026-11-10T03:00:00Z",
+        },
+    ]).encode()
+
+    with patch("urllib.request.urlopen", return_value=FakeResponse(list_body)):
+        results = dr.gh_search_task_prs(
+            ["silasfelinus/kind_robots"], "slime-city", "t-028", token=None
+        )
+
+    assert results == [
+        {"repo": "silasfelinus/kind_robots", "number": 4924, "match": "body"},
+        {"repo": "silasfelinus/kind_robots", "number": 4925, "match": "body"},
+    ]
+
+
+def test_gh_search_task_prs_ignores_passing_body_mentions():
+    list_body = json.dumps([
+        # A passing mention mid-sentence is not a declaration.
+        {"number": 1, "title": "t-027 work", "body": "This unblocks slime-city/t-028 next.",
+         "merged_at": "2026-11-10T00:00:00Z"},
+        # A bullet list of related tasks is not a declaration either.
+        {"number": 2, "title": "kaizen", "body": "- slime-city/t-028 follow-up",
+         "merged_at": "2026-11-10T00:00:00Z"},
+        # A longer task id sharing the prefix must not match.
+        {"number": 3, "title": "other", "body": "Conductor: slime-city/t-0281",
+         "merged_at": "2026-11-10T00:00:00Z"},
+        # A declaration on an unmerged PR is still ignored.
+        {"number": 4, "title": "open", "body": "Conductor: slime-city/t-028", "merged_at": None},
+        # A null body is tolerated.
+        {"number": 5, "title": "no body", "body": None, "merged_at": "2026-11-10T00:00:00Z"},
+    ]).encode()
+
+    with patch("urllib.request.urlopen", return_value=FakeResponse(list_body)):
+        results = dr.gh_search_task_prs(
+            ["silasfelinus/kind_robots"], "slime-city", "t-028", token=None
+        )
+
+    assert results == []
 
 
 def test_gh_search_task_prs_reuses_shared_cache_across_calls():
