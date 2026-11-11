@@ -1454,17 +1454,16 @@ tasks:
     updated: '2026-11-10T07:00:00Z'
   - id: t-055
     title: "Slime City: first reconnectable, private human-vs-human CLASH matches"
-    status: claimed
+    status: ready
     stakes: reversible
-    owner: worker
-    claimed_by: 2026-11-11T010200Z-slime-city-t055-forfeit-a7e4
-    claimed_at: '2026-11-11T01:02:00Z'
     passes: 0
     source_issue: "silasfelinus/kind_robots#4951"
-    updated: '2026-11-11T00:55:00Z'
+    updated: '2026-11-11T01:12:00Z'
     note: |-
       FROM GITHUB ISSUE silasfelinus/kind_robots#4951 (https://github.com/silasfelinus/kind_robots/issues/4951), opened by @silasfelinus on 2026-11-10. Imported by scripts/sync_github_issues.py. Reference the issue in the implementing PR (`Closes silasfelinus/kind_robots#4951`) so it closes on merge; the bridge closes it otherwise once this task is done.
 
       Silas 2026-11-09 PT: “build slime city multiplayer”. Deliver a scoped **admin-preview** PvP vertical slice without public launch: two authenticated human accounts, invite-code lobby, 20-card starter decks, existing three-stage CLASH evolution, server-owned turn transcript, hidden-hand redaction, strict seat authorization, atomic command serialization, reconnect via saved id, responsive art-led duel console, adversarial contract tests. Reuse existing SlimeCityMatch storage with separate `clash-pvp` mode, **no currency/rewards**, no schema migration or public matchmaking. Preserve older CPU modes. This is a technical slice of Conductor slime-city/t-011; unblock its economy dependency separately rather than silently completing it. Public Play exposure, real-user discovery and publishing remain a separate human gate.
 
       2026-11-10 PT: Patched existing kind_robots PR #4952 branch to expire active PvP after 30 days of inactivity, waiting invites after 7 days, and retain settled match history. Added deterministic expiry and legacy JSON regression assertions. Commits 41845f9, aca9368, c77da8d. CI not yet reported; PR still merge-conflicted with main and unmerged. Next: reconcile, run checks, merge.
+
+      Implemented atomic participant-only PvP forfeit, idempotent retry, winner settlement, terminal command guard, store method, two-tap UI and contract assertions on existing kind_robots PR #4952. Latest commit 906f03c. No CI runs at head, merge conflict unresolved; keep open and do not deploy. Silas requests VS leftmost unified human/AI Solo/Alliance hub, saved decks, history and server-verified rewards; documented in roadmap issue #4535.
