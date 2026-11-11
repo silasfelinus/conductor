@@ -53,7 +53,7 @@ tasks:
   - id: t-002
     milestone: m2
     title: "Adopt the kit in This Means Warp (game-of-captains): spec, shell, settings, scrapbook, endings"
-    status: claimed
+    status: ready
     owner: worker
     passes: 0
     stakes: reversible
@@ -84,9 +84,19 @@ tasks:
       (3) only then mount PlaybookKitShell around the page, with phone/desktop screenshots per
       docs/agents/frontend-verification.md. Not started this session: a single unattended pass
       wrapping the 5,000-line page was judged too risky for an active high-priority game.
+
+      PARTIAL MERGED 2026-11-11 PT: step 1 of 3 landed. kind_robots#5009 squash 01e38906 after
+      all 14 checks green: utils/playbookKit/games/spaceCouch.ts rebuilt from the shipped game
+      ids (tier saga; acts First Voyage / Unwelcome Responsibility / The Last Command; 4
+      VoyageRun meters; 6 captains as figures, 12 crew followers, 8 nemeses; 18 endings = 4
+      base + 12 galactic + 2 counter, ids = artSlots slugify(run.ending) so kit.unlock can
+      read run.ending directly). New verifySpaceCouchKit.test.ts in test:playbook-kit pins
+      spec<->game. Next: step 2, pure run-state -> kit unlock mapper plus kit.open/kit.unlock
+      store wiring, game-of-captains-voyage-v1 untouched. Todo #1325 stays open until step 3.
     claimed_by: 2026-11-11T094556Z-playbook-kit-t002-spec-r4m8
     claimed_at: '2026-11-11T09:45:57Z'
-    updated: '2026-11-11T09:45:57Z'
+    updated: '2026-11-11T10:06:13Z'
+    implementation_pr: 'silasfelinus/kind_robots#5009'
   - id: t-003
     milestone: m2
     title: "Adopt the kit in Prom of Doom (comet-city-academy): spec, shell, settings, scrapbook, endings"
