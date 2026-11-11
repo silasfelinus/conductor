@@ -809,7 +809,7 @@ tasks:
   - id: t-038
     milestone: m3
     title: "Space Couch comedy and freshness pass: rotate the stock lines every voyage repeats"
-    status: review
+    status: done
     passes: 0
     stakes: reversible
     owner: worker
@@ -836,7 +836,28 @@ tasks:
       mostly structural: system names, mission titles, status lines). In-voyage repeats 13.9%
       -> 10.5%. Full test:game-of-captains green locally. Kaizen: planet-deck success beats
       are flat one-liners; give the 10 planet cards specific funny success beats next.
+
+      2026-11-11 PT: merged kind_robots#5026 as a7ae88443971efe186fed71bf668fd8438d39405 after
+      all 16 exact-head checks passed (TypeScript, Prettier, 4 contract shards, seeded
+      playthroughs, all-captains/antagonists/endings matrix, playbook kit/forge, layout
+      contract, production image build). No deploy, migrations or ArtJobs. Follow-up worth a
+      task: specific comic success beats for the 10 planet cards.
     claimed_by: 20261111T233500Z-space-couch-t038-fresh
     claimed_at: '2026-11-11T23:33:30Z'
-    updated: '2026-11-11T23:40:56Z'
+    updated: '2026-11-11T23:49:32Z'
     implementation_pr: 'silasfelinus/kind_robots#5026'
+  - id: t-039
+    milestone: m3
+    title: "Space Couch planet deck: give each of the 10 planet cards specific comic success beats"
+    status: ready
+    passes: 0
+    stakes: reversible
+    owner: worker
+    source: kaizen-t-038
+    note: >-
+      From t-038 (2026-11-11 PT, kind_robots#5026). The planet card is drawn every chapter, and its success text is a
+      short civic summary ("Tenants negotiate a public gravity guarantee.") that reads the same in every voyage
+      (~20 of 36 seeded voyages per line). Write a specific, funny success beat for each card x order (10 cards x 3
+      orders), in the deadpan procedural couch voice, keeping the ethics of each order (ask = locals decide, document =
+      the record stands, override = it works and costs consent). Keep the existing line as the first clause so saves
+      and pinned traces stay valid; extend verifySpaceCouchFreshness.test.ts.
