@@ -292,7 +292,7 @@ tasks:
   - id: t-010
     milestone: m3
     title: "Create daily, weekly and evergreen missions with earned progression"
-    status: claimed
+    status: done
     depends_on: t-008
     owner: worker
     passes: 0
@@ -302,9 +302,20 @@ tasks:
       no reclaims/double grants, persistent achievements, independent
       challenges for different faction/flag/boss/rout/deck playstyles.
       No pressure mechanics or premium currencies.
+
+      MERGED 2026-11-11 PT: kind_robots#5024 squash 8e60bf5 (all 12 checks green). Eight
+      evergreen missions (first win, 3 and 6 crews, story rival bout, Tower win, a card at L3,
+      12 unlocked, 25 fights) in an optional evergreen ledger inside the account JSON, moved
+      only by server-replayed outcomes, claimed once ever through the existing claimChallenge
+      compare-and-swap; older saves restore empty; shown under COLLECTION / BOUNTIES.
+      Daily/weekly bounties were already live (t-008). Same PR finishes the t-055 multiplayer
+      route: finished-duel panel with REMATCH (private friend challenge, same crew), BACK TO
+      VS, SEE FINAL BOARD, forfeits included, and a W-L-D record on the VS PLAYERS card. Not
+      verified: 390/768/1440 screenshots (need a signed-in user; t-012/t-028).
     claimed_by: 2026-11-11T225402Z-slime-city-t-010-routes
     claimed_at: '2026-11-11T23:15:32Z'
-    updated: '2026-11-11T23:15:32Z'
+    updated: '2026-11-11T23:45:09Z'
+    implementation_pr: 'silasfelinus/kind_robots#5024'
   - id: t-011
     milestone: m4
     title: "Build secure player challenges, saves and reconnectable matches"
