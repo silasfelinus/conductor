@@ -846,3 +846,18 @@ tasks:
     claimed_at: '2026-11-11T23:33:30Z'
     updated: '2026-11-11T23:49:32Z'
     implementation_pr: 'silasfelinus/kind_robots#5026'
+  - id: t-039
+    milestone: m3
+    title: "Space Couch planet deck: give each of the 10 planet cards specific comic success beats"
+    status: ready
+    passes: 0
+    stakes: reversible
+    owner: worker
+    source: kaizen-t-038
+    note: >-
+      From t-038 (2026-11-11 PT, kind_robots#5026). The planet card is drawn every chapter, and its success text is a
+      short civic summary ("Tenants negotiate a public gravity guarantee.") that reads the same in every voyage
+      (~20 of 36 seeded voyages per line). Write a specific, funny success beat for each card x order (10 cards x 3
+      orders), in the deadpan procedural couch voice, keeping the ethics of each order (ask = locals decide, document =
+      the record stands, override = it works and costs consent). Keep the existing line as the first clause so saves
+      and pinned traces stay valid; extend verifySpaceCouchFreshness.test.ts.
