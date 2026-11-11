@@ -161,3 +161,9 @@
 **What worked:** 12 stable choice IDs, derived-state rules, first-choice-final and unique-reward safeguards, honest "partial increment" scoping; handoff headings correct on first open this time.
 
 **What to improve:** two prose packets are now unbound. Stop authoring packets until the registry binding and executable acceptance tests exist (t-064).
+
+## 2026-11-11 PT | Reviewer merge | memory-dungeon roadmap reset | worker/memory-dungeon-twelve-world-roadmap-20261110
+
+**Decision:** merged the three-commit roadmap reset branch via a Reviewer PR. Roadmap/docs only: releases 21 claimed/review tasks whose claims were all older than the 90-minute expiry (newest 2026-11-09), retitles sixteen-realm tasks to the twelve-world canon already in CONTROL.md (2026-10-30 and 2026-11-05 PT blocks), and adds `TWELVE-WORLD-DELIVERY-ROADMAP.md`. Checked that every `depends_on` of a task moved to `ready` is `done`, `validate_roadmaps.py` and `check_roadmap_yaml.py` pass on the merged tree, and no human gate or `approved_by_human` field changed.
+
+**What worked:** honest "done is not acceptance" language and a per-world evidence ledger requirement. **What to improve:** the branch had no PR or handoff body, so the Reviewer had to reconstruct intent; open the PR with the handoff template when pushing. Bulk review→ready also drops evidence that some slices merged; kaizen t-065 audits those PRs so finished slices close instead of being redone.
