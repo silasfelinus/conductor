@@ -69,3 +69,8 @@
   blood smear; Realism-By humanized Albina, Roxie, Siobhan and Vespa.
 - The admin preview and series bible became one "Monstrique Studio" tile with art-server card art
   (`art/STUDIO-CARD-R1.yaml`, ArtImage 269001).
+
+## 2026-11-11 PT — Mature splash approved; softcore test on Arthemy and Furrytoon
+- Silas approved the mature title splash (ArtImages 268798 and 268801), now served through the gated splash route.
+- Softcore round 2 queued on Arthemy and Furrytoon (`art/MONSTER-WOMEN-SOFTCORE-R2.yaml`, 20 renders) with extra
+  negatives against genital detail and gore; both lanes may take softcore requests in the series bible.
