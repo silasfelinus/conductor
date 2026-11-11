@@ -49,3 +49,9 @@
   monster-star model sheets, sprite rig hump/shirt/streak/plaster, new dialogue topics.
 - Queued `art/MONSTER-WOMEN-PINUPS-R1.yaml`: 160 mature, private pin-ups across seven Illustrious
   checkpoints and Krea 2.
+
+## 2026-11-11 PT — Pin-up batch: two checkpoints retired
+- Realism Illustrious By rendered explicit nudity in shower pin-ups and Miaomiao 3D rendered near-explicit,
+  hyper-exaggerated bodies, despite the no-nudity negatives. Their 24 pending jobs were cancelled; both lanes
+  are removed from the series bible (Kind Robots PR #4999), which also adds weighted no-nudity negatives.
+  The already-rendered images remain private `isMature` ArtImages pending Silas's call on deletion.
