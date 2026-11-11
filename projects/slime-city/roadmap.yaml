@@ -579,7 +579,7 @@ tasks:
   - id: t-028
     milestone: m3
     title: "20-card decks across the deck builder, starters and every format"
-    status: claimed
+    status: review
     depends_on: t-027
     passes: 0
     stakes: reversible
@@ -589,10 +589,17 @@ tasks:
       Implemented a unified 20-card Solo/Alliance Clash surface, saved Alliance and Tower deck normalization, guaranteed legal turn-one draws when possible, explicit no-play pass, a new illustrated entrance and settings, and mercenary filtering plus tap-to-inspect card rules. Open implementation PR and verify all latest-head checks before merge. Historic legacy engines remain archived for replay compatibility.
 
       PARTIAL MERGED 2026-11-09 PT: Kind Robots #4924 squash-merged at 8bfafce, all six latest-head workflows successful. Illustrated title/front door, settings, mercenary filter, tap-to-inspect card rules/L1-L3, explicit PASS, targeted hand legality and deterministic preservation of valid retired 30-card Alliance and Tower decks as 20-card saves are on main. Current main already had 20-card Solo/Alliance rules and improved faction balance; the old PR's Ironjaw 34.8% regression was NOT transplanted. Keep task ready for an adversarial opening-hand guarantee that preserves balance, 390/768/1440 layout acceptance and verifying remaining active-deck surfaces. No production deploy or human fun approval claimed.
-    updated: '2026-11-11T04:57:35Z'
+
+      2026-11-11 PT: opening-hand guarantee in review — kind_robots#4982. The round-1 opener's
+      single play may be a 2-slot power card when no 1-slot play is legal; dead starter
+      openings 1.5-8.4% (Ironjaw worst) -> <=0.03%. Replay-safe (legality only widens). 40/43
+      lab suites pass locally (3 need pinia). Remaining after merge: 390/768/1440 layout
+      acceptance.
+    updated: '2026-11-11T05:06:01Z'
     owner: worker
     claimed_by: 2026-11-11T05:00:00Z-sweep-t028
     claimed_at: '2026-11-11T04:57:35Z'
+    implementation_pr: 'silasfelinus/kind_robots#4982'
   - id: t-029
     milestone: m4
     title: "Commit one shared balance tuner covering founders, PARITY and BLOODRUSH"
