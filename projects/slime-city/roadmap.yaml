@@ -939,7 +939,7 @@ tasks:
   - id: t-044
     milestone: m2
     title: "Lizard art: Ironjaw crew poster, card art, evolutions and board tokens"
-    status: claimed
+    status: ready
     depends_on: t-043
     passes: 0
     stakes: reversible
@@ -962,10 +962,18 @@ tasks:
       is not wired yet (artManifest evolutions is empty), so players see none of it. Before
       wiring evolutions, queue a lizard Ironjaw evolution round from the same per-card story
       ladders with the IRONJAW-LIZARDS-ROUND-1 species/colour anchors, and skip the ogre renders.
+
+      2026-11-11 PT (Silas: all art at high priority): conductor#7263 merged IRONJAW-LIZARDS-
+      ROUND-2.yaml, 84 Krea subjects at priority 1000: all 65 Ironjaw L2/L3 evolution stages
+      as lab-mutant lizards (54 ogre stages re-authored + 11 never queued), 18 spell/trap/gear
+      cards repainted, Forewoman Rivet ready portrait. Remaining: once the sweep writes
+      art_image_ids, curate on contact sheets (reject ogre/human/plain-dinosaur reads and any
+      lettering) and wire into kind_robots artManifest.ts. Ironjaw campaign story art
+      (ironjaw/1..5) is still ogre-era: next round.
     owner: worker
     claimed_by: 2026-11-11T225402Z-slime-city-t-044-lizard-evo
     claimed_at: '2026-11-11T22:54:07Z'
-    updated: '2026-11-11T22:54:07Z'
+    updated: '2026-11-11T23:45:12Z'
   - id: t-045
     milestone: m2
     title: "The Punk Bloodfairies become Slime City's band crew"
