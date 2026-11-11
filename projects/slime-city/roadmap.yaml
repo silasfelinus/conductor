@@ -284,7 +284,7 @@ tasks:
   - id: t-011
     milestone: m4
     title: "Build secure player challenges, saves and reconnectable matches"
-    status: waiting
+    status: done
     depends_on: [t-005, t-008]
     owner: null
     passes: 0
@@ -295,6 +295,16 @@ tasks:
       deterministic shuffle/RNG, disconnection resume, permissions,
       accessible turn log, anti-cheat adversarial tests. No public
       matchmaking or externally announced multiplayer until approved.
+
+      RECONCILED 2026-11-11 PT: delivered by slime-city/t-055 (see its note for the seven
+      merged kind_robots PRs): direct friend invitations, turn ownership, hidden-information
+      redaction, server-validated atomic commands, 7-day invite / 30-day inactivity expiry,
+      reconnect via saved duel id, participant-only forfeit, adversarial contract tests (npm
+      run test:slime-city-pvp). Its t-008 dependency is reconciled in the same PR. Note for
+      t-015: VS PLAYERS (friends, open challenges) is reachable by any signed-in player from
+      /play/slime-city since #4985/#5003; there is still no external promotion or
+      announcement.
+    updated: '2026-11-11T22:56:43Z'
   - id: t-012
     milestone: m4
     title: "Full card and campaign coverage, prototype evaluation and visual QA"
