@@ -225,7 +225,7 @@ tasks:
   - id: t-009
     milestone: m3
     title: "Write and implement six genuinely different crew campaigns"
-    status: review
+    status: ready
     depends_on: [t-004, t-007]
     passes: 0
     stakes: reversible
@@ -351,10 +351,9 @@ tasks:
       Human-directed follow-up after Kind Robots #4967 merged: extend the unified Journey with genuine Alliance-specific branching scenes, saved consequences, and tests. The earlier reviewed vertical slice was merged; this broader story task remains open.
 
       Alliance-specific narrative implementation ready for review: 30 directed crew pairings, 5 chapter contexts each, player-picked protection or gamble outcomes with server-verified Clash boss effects, a bounded same-ally callback, account-save validation, and handoff from the city's shared Journey. Regression tests include all 150 paired chapter combinations and store battle gating. This is a substantive slice of the continuing six-crew story-depth task, not final acceptance. Implementation PR follows current-head CI.
-    updated: '2026-11-11T01:08:00Z'
-    owner: worker
-    claimed_by: 2026-11-11T005620Z-slime-city-t-009-alliance-93d8
-    claimed_at: '2026-11-11T00:57:00Z'
+
+      PARTIAL MERGED 2026-11-10 PT: Kind Robots PR #4969 merged to main at bd4d2c7b2570ee1d1404876fdfd1d72dbf56a4b1 after eight completed and passing latest-head GitHub workflows (four contract shards, TypeScript, formatting, layout, architecture, schema parity, Facet smoke, container build). Thirty directed Alliance relationship threads now add a saved player choice after each faction's authored chapter scenes. Five chapter contexts per partnership; protect/gamble alters verified Clash opening boss life, consecutive use of an ally creates one bounded callback, and city missions cannot bypass the interlude. The UI previews the actual battle terms, including format, and aftereffects persist in account story saves. New 150-case script and store launch tests included. No DB migration, new ArtJobs, manual deploy or public launch. Remaining scope under t-009: deepen chapter-specific ally writing, partner-specific endings and full-run human playtesting.
+    updated: '2026-11-11T01:34:00Z'
   - id: t-010
     milestone: m3
     title: "Create daily, weekly and evergreen missions with earned progression"
