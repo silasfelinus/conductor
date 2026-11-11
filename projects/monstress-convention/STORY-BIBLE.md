@@ -267,6 +267,11 @@ release the next Harker File.
 
 ## Decided by Silas
 
+- 2026-11-11 PT: **Softcore unlocks in the mature edition.** *"I'm an adult. I want a lane for soft core
+  nudity as possible unlocks."* Above the non-explicit pin-ups, the mature edition may offer optional,
+  opt-in softcore nudity as gratitude and scrapbook unlocks. Adults only; nudity allowed; explicit sex acts
+  and genital focus are not. Never gates a clue, never in the general edition, and anything public still
+  goes through the visual-approval gate. Realism Illustrious By is the series bible's nudity lane.
 - 2026-11-10 PT: **Look and feel:** *"we're going for a if Ralph Bakshi directed the creature
   commandos"* — gritty 1970s rotoscoped adult animation, underground-comix ink, a monster-misfit squad.
   Art prompts describe that look in plain words and never name the director or the show.

@@ -55,3 +55,8 @@
   hyper-exaggerated bodies, despite the no-nudity negatives. Their 24 pending jobs were cancelled; both lanes
   are removed from the series bible (Kind Robots PR #4999), which also adds weighted no-nudity negatives.
   The already-rendered images remain private `isMature` ArtImages pending Silas's call on deletion.
+
+## 2026-11-11 PT — Softcore unlock tier and nudity lane
+- Silas wants softcore nudity as possible mature-edition unlocks. Realism Illustrious By returns as the
+  series bible's nudity lane with a "Softcore unlock" art kind (adults only; explicit sex acts excluded).
+  Miaomiao 3D stays retired. First ten softcore renders queued: `art/MONSTER-WOMEN-SOFTCORE-R1.yaml`.
