@@ -168,3 +168,27 @@ def test_camera_motion_comes_from_storyboard_not_round_robin():
     scenes = scenes_for(original)
     assert all(sc["motion"]["preset"] == sh["camera_preset"]
                for sc, sh in zip(scenes, original["shots"]))
+
+
+def test_new_pacific_date_allows_recovery_without_new_episode_id():
+    from datetime import datetime, timedelta
+    from zoneinfo import ZoneInfo
+    from dead_air_produce import production_budget
+    first = datetime(2026, 11, 12, 1, 0, tzinfo=ZoneInfo("America/Los_Angeles"))
+    row = {
+        "music_video_id": 18, "art_jobs": {"stills": {"s1": 68688}},
+        "started_pt": first.isoformat(),
+        "budget_day": first.date().isoformat(),
+        "budget_started_pt": first.isoformat(),
+    }
+    _, expired = production_budget(row, first + timedelta(hours=2))
+    assert expired
+    # A later date can continue this exact MusicVideo with a new daily window.
+    next_day = first + timedelta(days=1)
+    elapsed, expired = production_budget(row, next_day)
+    assert (elapsed, expired) == (0, False)
+    row.update(budget_day=next_day.date().isoformat(), budget_started_pt=next_day.isoformat())
+    elapsed, expired = production_budget(row, next_day + timedelta(minutes=45))
+    assert (elapsed, expired) == (2700, False)
+    assert row["music_video_id"] == 18
+    assert row["art_jobs"]["stills"]["s1"] == 68688
