@@ -17,6 +17,7 @@ def playtest_readiness_errors(tasks: list[dict]) -> list[str]:
         for task in tasks
         if isinstance(task, dict)
         and not task.get("recurring")
+        and not task.get("playtest_iteration")
         and not task.get("gate_human")
         and task.get("status") not in ("done", "cancelled")
     ]
