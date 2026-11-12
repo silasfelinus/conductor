@@ -23,10 +23,6 @@ permissions:
   contents: write
   actions: write
 
-concurrency:
-  group: conductor-task-events
-  cancel-in-progress: false
-
 jobs:
   validate-pr:
     if: github.event_name == 'pull_request'
@@ -43,6 +39,11 @@ jobs:
       github.event_name != 'pull_request' &&
       (github.event_name != 'pull_request_target' || github.event.pull_request.merged == true)
     runs-on: ubuntu-latest
+    # Only the writer is serialized. PR validation must not evict queued
+    # main/merge task-event processing during high-volume agent activity.
+    concurrency:
+      group: conductor-task-events
+      cancel-in-progress: false
     steps:
       - name: Check out current main
         env:
