@@ -1547,13 +1547,15 @@ tasks:
   - id: t-070
     milestone: m4
     title: "Run the memory-dungeon acceptance guard in the roadmap-validation CI job so a done-without-evidence close-out fails before merge"
-    status: claimed
+    status: review
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-12T15:50:52Z'
+    updated: '2026-11-12T16:42:38Z'
     note: |-
       Kaizen from the t-067 review (conductor PR #7294). scripts/check_memory_dungeon_acceptance.py currently runs only in session_sweep.py, so a close-out PR that marks a task done while its latest "remaining:" line is unmet still merges and is caught only by a later sweep. Add the check to the CI job that validates roadmap YAML (path-filtered to projects/memory-dungeon/roadmap.yaml is fine), with a test or smoke step proving it fails on a seeded bad roadmap. Reversible, CI-only; no task status changes.
+
+      CI validation now invokes scripts/check_memory_dungeon_acceptance.py and runs a seeded negative/positive smoke against a temporary roadmap; PR pending checks.
     owner: worker
     claimed_by: 2026-11-12T155052Z-memory-dungeon-t-070-7c91
     claimed_at: '2026-11-12T15:50:52Z'
