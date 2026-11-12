@@ -1507,10 +1507,13 @@ tasks:
   - id: t-071
     milestone: m4
     title: "Parse every .github/workflows/*.yml from a workflow other than ci.yml so an unparseable CI file shows as a red check"
-    status: ready
+    status: claimed
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-12T18:05:00Z'
+    updated: '2026-11-12T18:51:28Z'
     note: |-
       Kaizen from the t-070 review (conductor#7326). Head 0bff092 made .github/workflows/ci.yml unparseable; GitHub then ran none of its jobs and the PR showed 16 green checks instead of 26, so nothing was red. Add a step to the Static checks workflow (or any workflow that is not ci.yml) that yaml.safe_loads every file under .github/workflows/ and fails on the first parse error, with a pytest that seeds one bad file. Reversible, CI-only; lives in this roadmap because the conductor project is finished and takes no new tasks.
+    owner: worker
+    claimed_by: 2026-11-12T185128Z-memory-dungeon-t-071-b83e
+    claimed_at: '2026-11-12T18:51:28Z'
