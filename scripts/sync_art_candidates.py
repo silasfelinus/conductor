@@ -208,20 +208,37 @@ def register(candidates: list[dict], send=post) -> tuple[str, int]:
     return "ok", created
 
 
+def _removals(resp) -> set[int]:
+    return {i for slot in resp["data"]["slots"] for g in slot["groups"] for i in g["removeArtImageIds"]}
+
+
 def dedupe(projects: list[str], refs: set[int], apply: bool, send=post) -> tuple[int, int]:
-    """(planned, removed) across ``projects``; referenced ids are protected."""
+    """(planned, removed) across ``projects``; referenced ids are protected.
+
+    Two dry runs: the first lists every image in a same-picture group so the referenced ones can
+    be protected; the second asks Kind Robots for the plan *with* that protection, because
+    protecting a copy changes which one is kept (a ledger usually records the newest re-render,
+    not the oldest), and only that plan says what apply will remove.
+    """
     planned = removed = 0
+
+    def ok(status, resp) -> bool:
+        return status == 200 and isinstance(resp, dict) and bool(resp.get("success"))
+
     for project in projects:
         status, resp = send("/api/art/slots/dedupe", {"projectSlug": project, "apply": False})
-        if status != 200 or not isinstance(resp, dict) or not resp.get("success"):
+        if not ok(status, resp):
             continue
         ids = {i for slot in resp["data"]["slots"] for g in slot["groups"] for i in [g["keepArtImageId"], *g["removeArtImageIds"]]}
         protect = sorted(ids & refs)
-        remove = {i for slot in resp["data"]["slots"] for g in slot["groups"] for i in g["removeArtImageIds"]} - set(protect)
+        status, resp = send("/api/art/slots/dedupe", {"projectSlug": project, "apply": False, "protectArtImageIds": protect})
+        if not ok(status, resp):
+            continue
+        remove = _removals(resp)
         planned += len(remove)
         if apply and remove:
             status, resp = send("/api/art/slots/dedupe", {"projectSlug": project, "apply": True, "protectArtImageIds": protect})
-            if status == 200 and isinstance(resp, dict) and resp.get("success"):
+            if ok(status, resp):
                 removed += int(resp["data"].get("removed") or 0)
                 print(f"  {project}: {resp['data'].get('removed')} duplicate render(s) to the Recycle Bin")
         elif remove:

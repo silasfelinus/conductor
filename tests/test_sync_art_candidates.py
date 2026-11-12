@@ -97,23 +97,32 @@ def test_register_batches_and_reports_an_undeployed_backend():
     assert outcome == "unavailable"
 
 
-def test_dedupe_protects_referenced_ids_and_only_applies_with_removals():
+def test_dedupe_plans_with_protection_before_applying():
+    # Protecting the recorded copy changes which copy is kept: a ledger usually records the
+    # newest re-render, so the older unrecorded one is the one removed (2026-11-12: the first
+    # Slime City pass planned 82 without protection and correctly removed 303 with it).
     calls = []
-    plan = {"success": True, "data": {"slots": [{"groups": [
+    unprotected = {"success": True, "data": {"slots": [{"groups": [
         {"keepArtImageId": 10, "removeArtImageIds": [11, 12]},
+        {"keepArtImageId": 20, "removeArtImageIds": [21]},
+    ]}]}}
+    protected = {"success": True, "data": {"slots": [{"groups": [
+        {"keepArtImageId": 12, "removeArtImageIds": [10, 11]},
         {"keepArtImageId": 20, "removeArtImageIds": [21]},
     ]}]}}
 
     def send(path, body):
         calls.append(body)
         if body.get("apply"):
-            return 200, {"success": True, "data": {"removed": 2}}
-        return 200, plan
+            return 200, {"success": True, "data": {"removed": 3}}
+        return 200, protected if "protectArtImageIds" in body else unprotected
 
     planned, removed = sync.dedupe(["slime-city"], refs={12, 99}, apply=True, send=send)
-    assert (planned, removed) == (2, 2)
-    assert calls[1] == {"projectSlug": "slime-city", "apply": True, "protectArtImageIds": [12]}
+    assert (planned, removed) == (3, 3)
+    assert calls[1] == {"projectSlug": "slime-city", "apply": False, "protectArtImageIds": [12]}
+    assert calls[2] == {"projectSlug": "slime-city", "apply": True, "protectArtImageIds": [12]}
 
     calls.clear()
-    sync.dedupe(["x"], refs=set(), apply=True, send=lambda p, b: (calls.append(b), (200, {"success": True, "data": {"slots": []}}))[1])
-    assert len(calls) == 1 and calls[0]["apply"] is False
+    empty = {"success": True, "data": {"slots": []}}
+    sync.dedupe(["x"], refs=set(), apply=True, send=lambda p, b: (calls.append(b), (200, empty))[1])
+    assert [c["apply"] for c in calls] == [False, False]
