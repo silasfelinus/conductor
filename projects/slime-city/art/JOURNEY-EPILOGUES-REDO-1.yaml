@@ -1,0 +1,34 @@
+# Slime City journey-epilogue plates, redo 1 (2026-11-12 PT, slime-city/t-062). Curation of
+# JOURNEY-EPILOGUES-ROUND-1 kept 17 of 18 plates (wired in kind_robots#5091). The Ironjaw "left" ending
+# (ArtImage 269920) painted a large misspelled shop sign, because its prompt named a "company store" and the
+# model lettered it. Same scene, new seed, with the hatch described by what is visible in it. Same runtime
+# asset, so the keeper replaces the fallback when wired. Positive terms only. auto_submit.
+round: slime-city-journey-epilogues-redo-1
+project_slug: slime-city
+designer: Slime City journey epilogue plates, redo 1
+is_public: true
+is_mature: false
+cast_loras: false
+priority: 1000
+auto_submit: true
+lanes:
+- key: krea2-epilogue
+  label: Krea 2 Slime City journey epilogue plates
+  engine: krea2
+  prompt: prose
+  suffix: Colorful grungy Western comic illustration, thick ink outlines, gouache textures, rust, slime green and
+    neon magenta palette, cinematic wide storybook ending scene, every character an adult, every surface bare and
+    unmarked, one continuous scene.
+subjects:
+- key: slime-epilogue-ironjaw-left-redo-1
+  lane: krea2-epilogue
+  entity: campaign-ending
+  title: The Foundry Runs Itself (ironjaw journey ending, redo)
+  asset: slime-city/story/ironjaw/journey-left
+  size: 1344x768
+  seed: 2291007
+  prompt_prose: 'Quitting time on the vast warm floor of a lizard foundry: a whole shift of adult chrome-jawed lizard
+    workers in patched union overalls sprawl together on the heated iron floor like basking reptiles, tails overlapping,
+    while a giant factory clock above them stands frozen with its hands tied by a red union ribbon. Behind them a
+    wide brick serving hatch glows with warm kitchen light, where a lizard cook in a greasy apron flips enormous
+    sizzling steaks on a long iron griddle and hands them out to waiting claws.'
