@@ -90,15 +90,12 @@ tasks:
       Full history: projects/every-villain-tactics/HISTORY.md#t-001
   - id: t-025
     title: 'Main-game standard: audit and close the gaps for Every Villain Tactics'
-    status: review
-    owner: worker
-    claimed_by: 2026-11-12T232550Z-evt-t025-visual-3f9c
-    claimed_at: '2026-11-12T23:25:50Z'
+    status: ready
     milestone: m4
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-12T23:36:00Z'
+    updated: '2026-11-12T23:55:57.814Z'
     note: |-
       Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -115,6 +112,8 @@ tasks:
       2026-11-12 PT: The flat top-down tactical map, compact circular squad/rival tokens, terrain legibility, and foldaway save controls merged to kind_robots main in PR #5087 (c7da0e0). All eight CI workflows passed, including tactics gameplay, layout, changed-file Prettier, TypeScript and contract tests. Companion Conductor review/queue repair PR #7325 (657ad6f) merged with all latest checks green. This is only one reversible UI quality increment: maintain the broader game-standard audit and remaining art/story/playtest tasks as ready; publication and human acceptance are separate gates.
 
       2026-11-12 PT scoped comic-visual pass: hero/villain-only new story choices, speaker portrait slots across all cinematics, existing 48-identity outcome-art fallback for comic reveals, and vivid comic-book color direction. Implementation branch worker/every-villain-tactics-t-025-comic-visual-3f9c. Broader main-game standard and dedicated reveal-art backlog remain open.
+
+      Earlier comic portrait and color fix was merged to kind_robots in PR #5097 (03a5ec2). User has now directed further combat/fire, map art, and 48-identity onboarding fixes; return the umbrella standard task to ready for another scoped increment.
   - id: t-026
     title: 'Every Villain Tactics achievement upgrade: 12 or more live achievements'
     status: done
