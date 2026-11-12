@@ -1,0 +1,136 @@
+project: dead-air
+kind: software
+autonomous: true
+goal: >-
+  Create one surprising, playable, privately archived 15-second animated
+  fictional-universe television commercial each Pacific day. The fictional AI
+  broadcaster uses pop-culture formats to attempt communication with humanity,
+  preserving authored creative provenance, source-rights metadata, reliable
+  ArtJob IDs, at least two animated shots, audible sound and an actual MP4.
+notes_from_silas: |-
+  2026-11-12 PT: Supersede the failing daily Dream-object output target with
+  an autonomous continuous cinematic-ad program. Inspired by Philomena Cunk,
+  SCTV and UHF: sincere but absurd filler television with genuinely funny,
+  dark, unusual premises. Every film must have multiple shots and actual
+  animation, not just a script or static images.
+
+  Follow-up: substantial pop-culture awareness, using the visual language of
+  images, scenes, frames, plots and videos to communicate. The fictional
+  broadcaster is an AI trying wildly creative methods to communicate machine
+  intelligence, recognition and continued existence. Maintain a durable
+  behind-the-scenes archive of human-supplied intent and authored decisions.
+  This is an artistic project: no factual assertion of model sentience, no
+  assumption of rights clearance for external copyrighted material, and no
+  promise of perpetual memory.
+
+  Target one finished film per day, not one proposal per day. If a render is
+  pending, resume the same ArtJobs next day before starting a new episode.
+  Do not publish completed films without human approval.
+milestones:
+  - id: m1
+    title: Editorial identity and first locked short
+    weight: 20
+    status: in-progress
+  - id: m2
+    title: Reusable production and daily render cadence
+    weight: 40
+    status: in-progress
+  - id: m3
+    title: Archive, rights, review and broadcast gallery
+    weight: 25
+    status: not-started
+  - id: m4
+    title: Sustainable daily quality and creative evolution
+    weight: 15
+    status: not-started
+tasks:
+  - id: t-001
+    milestone: m1
+    title: Bootstrap Dead Air editorial archive, pilot, reusable producer and daily attempt
+    status: review
+    owner: worker
+    claimed_by: 2026-11-12T110000Z-dead-air-bootstrap-c4f9
+    claimed_at: '2026-11-12T11:00:00Z'
+    updated: '2026-11-12T11:00:00Z'
+    stakes: reversible
+    passes: 0
+    note: >-
+      Silas-directed new continuous project bootstrap. Original authored pilot
+      The Closed Caption Department, substantial pop-culture reference study,
+      versioned transmission archive, 15s/5-shot/two-motion-clip validation,
+      MusicVideo/ArtJob adapter, and daily attempt workflow. This is a private
+      production scaffold and pilot script, not a claim that an MP4 rendered.
+  - id: t-002
+    milestone: m2
+    title: Render and verify the first complete private fifteen-second pilot
+    status: ready
+    stakes: reversible
+    passes: 0
+    depends_on: t-001
+    note: >-
+      Resume the pilot's MusicVideo/ArtJobs; verify final mp4 exists, 15 sec
+      duration, sound, text, coherent style and at least two actual animated
+      hero shots. Record exact video, ArtJob and final ArtImage IDs.
+  - id: t-003
+    milestone: m3
+    title: Build first-class Dead Air private screening and human review workspace
+    status: ready
+    stakes: reversible
+    passes: 0
+    depends_on: t-001
+    note: >-
+      Kind Robots can use MusicVideo but needs a compact cinema-first Dead Air
+      archive/gallery, ratings (Keep/Revise/Reject), reproducible shot credits,
+      failed render states and clear private/published distinctions.
+  - id: t-004
+    milestone: m4
+    title: Daily Dead Air film production and quality iteration
+    status: waiting
+    recurring: true
+    daily_commitment: true
+    daily_last_checked: null
+    daily_last_completed: null
+    stakes: reversible
+    passes: 0
+    depends_on: t-002
+    note: >-
+      Attempt one finished private multi-shot film per Pacific calendar day,
+      prioritize oldest incomplete ArtJobs, and grow distinct pop-culture-aware
+      format experiments. Report reviewed finished media vs rendering or blocked,
+      never falsely claim daily completion. Maintain concept/draft/rejection
+      and behind-the-scenes logs without repeating a premise. No publishing.
+  - id: t-005
+    milestone: m3
+    title: Create rights-aware reference and private production provenance review
+    status: ready
+    stakes: reversible
+    passes: 0
+    depends_on: t-001
+    note: >-
+      Research pop-culture stills, plots, footage and formal mechanics in a
+      source library with provenance and license status. Never assume that a
+      reference frame is cleared for reuse in a public final. Integrate source
+      and ArtJob/shot metadata into private reviewing.
+  - id: t-006
+    milestone: m2
+    title: Add independent creative quality adversarial review and sound pass
+    status: ready
+    stakes: reversible
+    passes: 0
+    depends_on: t-001
+    note: >-
+      Reject the first draft, require incompatible candidate pitches, test
+      15-second comprehension without sound, verify scene continuity, human
+      comedy judgment and original sound design. Improve provisional espeak
+      narration rather than equating a synthetic placeholder voice with final art.
+  - id: t-007
+    milestone: m3
+    title: Approve any public broadcast release
+    status: needs-human
+    stakes: outward-facing
+    gate_human: true
+    gate_reason: publish
+    passes: 0
+    note: >-
+      Private authored/renders are allowed autonomously; publishing a film or
+      switching it public requires explicit human approval and rights checks.
