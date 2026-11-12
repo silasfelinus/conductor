@@ -25,6 +25,10 @@ KR_BASE_URL=https://kind-robots.vercel.app python scripts/dead_air_produce.py --
 
 `--resume` is intentionally non-blocking: it may return "rendering" with the *same* ArtJob IDs. Run again later. The private final upload is part of production, not public release.
 
+## Archival / clearance
+
+Keep an episode's script, rejected versions, pop-culture reference analysis, human direction, source-rights notes, shot continuity bible, generation prompt/ArtJob provenance and final quality report in the repository. The project `TRANSMISSIONS.md` stores explicit human-supplied mission and public editorial notes, never imaginary access to private model thoughts. Git history is durable, but not a promise of eternal memory. Published cuts need separate human approval and rights clearance.
+
 ## Known integration limits
 
 - The code-backed MusicVideo scenes can hold exact shots, duration, style and prompts. Generic `scenes/plan` would overwrite the comic timing; the adapter writes the scene plan itself before render.
