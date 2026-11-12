@@ -109,7 +109,9 @@ def _patched(
 def _no_live_art_queue_health():
     # ops/art-queue-health.yaml is rewritten by every art run; never let its live
     # contents decide a role in a test that is about some other signal.
-    with mock.patch.object(select_role, "find_art_queue_failures", return_value=[]):
+    # Same for ops/unrecorded-art.yaml and the RECOVERED-<date>.yaml ledgers on main.
+    with mock.patch.object(select_role, "find_art_queue_failures", return_value=[]), \
+            mock.patch.object(select_role, "find_unrecorded_art_items", return_value=[]):
         yield
 
 
@@ -1632,3 +1634,16 @@ def test_unreadable_art_queue_health_does_not_break_selection(tmp_path, monkeypa
     monkeypatch.setattr(select_role.art_queue_health, "HEALTH_FILE", health)
 
     assert REAL_FIND_ART_QUEUE_FAILURES() == []
+
+
+def test_unrecorded_art_routes_to_art_medic():
+    # Silas, 2026-11-11 PT: rendered-but-unrecorded art is a sweep the rotation owns.
+    with _apply(_patched(queue_summary=SOME_READY_TASK)), mock.patch.object(
+        select_role, "find_unrecorded_art_items",
+        return_value=["triage 53 unrecorded render(s) in projects/monstress-convention/art/RECOVERED-2026-11-11.yaml"],
+    ):
+        result = select_role.select_role(github_token="fake-token")
+    assert result["role"] == "art-medic"
+    assert result["unrecorded_art"]
+    assert "unrecorded-art" in result["reason"] and "RECOVERED" in result["reason"]
+    assert result["playbook"] == "docs/agents/roles/art-medic.md"
