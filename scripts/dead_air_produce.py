@@ -375,7 +375,13 @@ def run_episode(e: dict, episode_path: Path, state: dict, state_file: Path, vide
     if "render_scenes" in actions:
         result = client.render_scenes(video_id)
         outcomes = result.get("outcomes") or []
-        submitted = verify_enqueue_outcomes(outcomes, len(outcomes) or len(e["shots"]))
+        expected_missing = sum(
+            not (scene.get("image") or {}).get("artImageId")
+            and not (state_now.scene_jobs.get(scene["id"])
+                     and state_now.scene_jobs[scene["id"]].art_image_id)
+            for scene in state_now.doc.get("scenes", [])
+        )
+        submitted = verify_enqueue_outcomes(outcomes, expected_missing)
         print(f"  verified {len(submitted)} still ArtJob IDs: " +
               ", ".join(f"{sid}={job_id}" for sid, job_id in sorted(submitted.items())))
         state_now = read_state(client, video_id)
