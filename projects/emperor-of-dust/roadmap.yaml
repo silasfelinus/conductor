@@ -174,7 +174,7 @@ tasks:
         Today only two Items of Power (Eye of the Elder Crow, Komodo's Brass Hourglass) and the follower Codex persist between runs. Design and implement a small legacy layer earned by endings: e.g. one heirloom per ending family, unlockable starting options (a chosen first follower, a faction favor, a harder "second reign" setting), each visible on the start screen with how it was earned. Keep runs from becoming trivial (balance report before/after), persist like the relic vault, and cover with store tests.
   - id: t-067
     title: 'Main-game standard: audit and close the gaps for Emperor of Dust'
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 2026-11-12T110347Z-eod-t067-7e2a
     claimed_at: '2026-11-12T11:03:47Z'
@@ -182,7 +182,7 @@ tasks:
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-11T23:42:29Z'
+    updated: '2026-11-12T11:10:00Z'
     note: |-
       Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -193,6 +193,8 @@ tasks:
       Item 7 (customizable characters) applies "in most cases": if this genre makes it a poor fit, say so in the audit with the reason and leave it for Silas rather than skipping silently.
 
       Achievements are tracked by their own task; this one covers everything else.
+
+      Title console first slice: explicit Continue/Day, guarded New Reign, and Settings access; further standard gaps remain for this task.
   - id: t-002
     milestone: m2
     title: "Build admin-only illustrative region map with tutorial and project placement"
