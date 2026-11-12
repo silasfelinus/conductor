@@ -1,6 +1,6 @@
 # Conductor Portfolio Oversight
 
-Generated: `2026-11-12T07:23:09.348365+00:00`
+Generated: `2026-11-12T20:05:15.140576+00:00`
 
 Overall status: **semantic-review-upcoming**
 
@@ -8,7 +8,7 @@ This is a deterministic sensor. For semantic roadmap/progress intent review, fol
 
 ## Legacy OpenAI scheduled-agent git diagnostic
 
-- Latest visible OpenAI scheduled-Agent activity: `2026-10-25T01:09:44+00:00` (438.22h ago; overdue at 6.0h).
+- Latest visible OpenAI scheduled-Agent activity: `2026-10-25T01:09:44+00:00` (450.93h ago; overdue at 6.0h).
 - Stale by legacy threshold: **true**
 - Authoritative for ChatGPT scheduler health: **false**
 - Note: Legacy git diagnostic only: OPENAI-SCHEDULED-HEARTBEAT.json and coordination markers do not determine ChatGPT scheduler health. Native ChatGPT task metadata is authoritative for scheduler liveness.
