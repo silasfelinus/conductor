@@ -90,6 +90,70 @@ tasks:
     claimed_by: 2026-10-30T081006Z-slime-city-t001-4d81
     claimed_at: '2026-10-30T08:10:06Z'
     updated: '2026-10-30T08:47:33Z'
+  - id: t-059
+    title: 'Slime City endings gallery and per-crew campaign scrapbook'
+    status: ready
+    milestone: m3
+    stakes: reversible
+    passes: 0
+    depends_on: []
+    updated: '2026-11-11T23:38:32Z'
+    note: |-
+        Silas 2026-11-11 PT, in session: asked whether finishing a crew campaign leaves an ending scrapbook.
+
+        Today the finale shows THE END text, one of two ending plates per crew (chosen by Conviction count), an optional alliance ending and the crew legacy favor. Nothing records endings already earned. Add a gallery: per crew, triumph/compromise and the journey final-choice endings plus alliance endings, X/N found, locked silhouettes, and a scrapbook page per finished run (chapters, choices, rivals beaten, favor taken, ending plates). Account-saved like campaign progress.
+  - id: t-060
+    title: 'Slime City achievements (none exist yet)'
+    status: ready
+    milestone: m3
+    stakes: reversible
+    passes: 0
+    depends_on: []
+    updated: '2026-11-11T23:38:32Z'
+    note: |-
+        Silas 2026-11-11 PT, in session: "Achievements?" Target 12+ live achievements per docs/agents/main-game-standard.md.
+
+        Slime City has no Achievement records. Add live rows through the existing achievements API and award them from the store: finish each crew's campaign (6), all six, each alliance ending, both endings for a crew, first Clash win, first private PvP win, evolve a fighter to level 3, district championships. Show with game-achievement-strip.vue on the finale and gallery; verify one award live after deploy.
+  - id: t-061
+    title: 'Permanent cosmetic reward for finishing each crew campaign'
+    status: ready
+    milestone: m3
+    stakes: reversible
+    passes: 0
+    depends_on: []
+    updated: '2026-11-11T23:38:32Z'
+    note: |-
+        Silas 2026-11-11 PT, in session: "does it unlock rewards?"
+
+        Story card rewards stay inside the run by design and no Meat/wallet/card grants are allowed from story. Add a lasting cosmetic per finished crew that does not touch the economy: a crew trophy on the profile/collection screen, an alternate card back or board frame, and a title. Account-saved, shown on the finale screen as "unlocked".
+  - id: t-062
+    title: 'Paint the journey final-choice endings and key journey scenes'
+    status: ready
+    milestone: m3
+    stakes: reversible
+    passes: 0
+    depends_on: []
+    updated: '2026-11-11T23:38:32Z'
+    note: |-
+        Silas 2026-11-11 PT, in session: "There is unmade art it should definitely be added to the pipeline."
+
+        Each crew's ending plate is picked by the older Conviction/Cunning count; the new journey final choice (e.g. Exchange: PAID IN FULL vs signing her own name) changes only the text, and the 15 journey scenes per crew have no art of their own. Author a ledger with one plate per final-choice outcome (6 crews x 2) plus the strongest 2-3 journey scenes per crew, pass art_ledger_authoring and the live prompt contract, queue it, then curate and wire into SLIME_CITY_ART.story so the finale shows the ending the player actually chose.
+  - id: t-063
+    title: 'Main-game standard: audit and close the gaps for Slime City'
+    status: ready
+    milestone: m4
+    stakes: reversible
+    passes: 0
+    depends_on: []
+    updated: '2026-11-11T23:42:29Z'
+    note: |-
+      Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
+
+      Start with the audit table from docs/agents/main-game-standard.md (title screen; settings menu; save/load and persistent progress; 12+ achievements; scrapbook; multiple endings with painted plates; customizable characters; 3+ replay hooks), marking each Met / Partial / Missing with evidence (file, route, live record). Put the table in this note and the first PR. Then close each gap in small CI-tested PRs; queue any needed ending, scrapbook or portrait art in an auto_submit ledger.
+
+      Item 7 (customizable characters) applies "in most cases": if this genre makes it a poor fit, say so in the audit with the reason and leave it for Silas rather than skipping silently.
+
+      Achievements are tracked by their own task; this one covers everything else.
   - id: t-002
     milestone: m1
     title: "Harden square movement, fog-of-war, action costs and three cadences"
