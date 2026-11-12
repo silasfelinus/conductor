@@ -44,6 +44,12 @@ def test_readiness_needs_real_human_gate_and_all_finite_agent_tasks_complete():
     assert playtest_readiness_errors(
         [{"id": "t-003", "status": "ready", "playtest_iteration": True}, gate]
     ) == []
+    assert playtest_readiness_errors(
+        [{"id": "art", "status": "waiting", "gate_human": True, "gate_reason": "creative-approval"}, gate]
+    )
+    assert playtest_readiness_errors(
+        [{"id": "legal", "status": "needs-human", "gate_human": True, "gate_reason": "legal"}, gate]
+    )
 
 
 def test_issue_handoff_is_scoped_to_valid_playtest_games(tmp_path: Path):
