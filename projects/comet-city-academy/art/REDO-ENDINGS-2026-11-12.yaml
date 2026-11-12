@@ -1,0 +1,36 @@
+# Prom of Doom ending plate that failed visual review, redone (2026-11-12 PT). Silas: every ending gets its own
+# painted plate. Lane copied from RUNTIME-REFILL-ROUND-1; same asset path as the original, so the keeper replaces it.
+# - 258258 prom-endings-the-transmitter-goes-dark: the shield towers were drawn as castle keeps and nobody was
+#   carrying the injured. The prompt now describes the towers as slender steel lattice pylons with glass dish emitters
+#   among glass office towers, and puts two students carrying an injured classmate on a door in the foreground.
+# Krea 2 renders at cfg 1 (negative inert), so the fix is all in the positive prompt.
+# Private. auto_submit: true. Queued is not rendered; review at full size before export.
+round: prom-redo-endings-2026-11-12
+project_slug: comet-city-academy
+is_public: false
+is_mature: false
+cast_loras: false
+designer: Prom of Doom runtime refill
+priority: 60
+auto_submit: true
+lanes:
+- key: krea2
+  label: Krea 2 Prom of Doom runtime plates (artPrompts.ts)
+  engine: krea2
+  prompt: prose
+subjects:
+- key: prom-redo-20261112-endings-the-transmitter-goes-dark
+  lane: krea2
+  entity: ending-plate
+  title: Prom of Doom endings the-transmitter-goes-dark (redo of 258258)
+  asset: comet-city-academy/endings/the-transmitter-goes-dark
+  size: 1344x768
+  seed: 1112661
+  prompt_prose: Wide interior view at dawn of a collapsed academy ballroom, a smoking transmitter of copper coils and
+    cracked glass lying in pieces in the middle of the dance floor beneath a fractured glass dome. In the foreground two
+    adult students in torn formalwear carry an injured classmate lying on a wooden door held between them, and a young
+    man in a ripped tuxedo helps a limping guest with her arm over his shoulder, all heading toward the open terrace where
+    neighbors from the city wait with blankets and stretchers. Through the broken roof the city's shield towers stand
+    dark on the skyline, slender modern steel lattice pylons topped with unlit glass dish emitters rising among glass
+    office towers. Pink sunrise light through drifting dust. Hand-painted comic illustration with bold ink outlines and
+    saturated gouache color.
