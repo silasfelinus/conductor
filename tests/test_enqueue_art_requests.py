@@ -771,3 +771,18 @@ def test_submit_sends_a_stable_request_key(tmp_path):
     subject, lane = cells[0]
     assert key.startswith("conductor:ledger:")
     assert f"#{subject['key']}@{lane['key']}=" in key
+
+
+def test_compose_prompt_trims_trailing_period_before_joining_suffix():
+    """Regression: '...fur., hand-painted' failed COMFY claim-time provenance (2026-11-12)."""
+    lane = {"prompt": "prose", "suffix": "hand-painted weird-west storybook painting"}
+    subject = {"prompt_prose": "A crow traveler with feathers or fur."}
+    out = enq.compose_prompt(lane, subject)
+    assert out == "A crow traveler with feathers or fur, hand-painted weird-west storybook painting"
+    assert ".," not in out
+
+
+def test_compose_prompt_keeps_final_period_and_prefix_seam():
+    lane = {"prompt": "prose", "prefix": "masterpiece, best quality.", "suffix": ""}
+    subject = {"prompt_prose": "A quiet canyon at dawn."}
+    assert enq.compose_prompt(lane, subject) == "masterpiece, best quality, A quiet canyon at dawn."
