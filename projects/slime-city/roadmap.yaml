@@ -162,12 +162,12 @@ tasks:
     claimed_at: '2026-11-12T02:50:24Z'
   - id: t-063
     title: 'Main-game standard: audit and close the gaps for Slime City'
-    status: claimed
+    status: review
     milestone: m4
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-12T02:52:00Z'
+    updated: '2026-11-12T02:58:00Z'
     note: |-
       Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -178,6 +178,8 @@ tasks:
       Item 7 (customizable characters) applies "in most cases": if this genre makes it a poor fit, say so in the audit with the reason and leave it for Silas rather than skipping silently.
 
       Achievements are tracked by their own task; this one covers everything else.
+
+      Guest story persistence implemented in kind_robots PR #5058 (validated device-local save and restore, corrupted/blocked storage tests). CI was queued at handoff, not merged. Continue title Continue control and settings after this PR is green; account import remains a separate design decision.
     owner: worker
     claimed_by: 2026-11-12T025200Z-slime-city-t063-8f29c
     claimed_at: '2026-11-12T02:52:00Z'
