@@ -90,8 +90,15 @@ def compose_prompt(lane, subject):
     style = str(lane.get("prompt") or "prose").strip().lower()
     base = subject.get("prompt_tags") if style == "tags" else subject.get("prompt_prose")
     base = base or subject.get("prompt_prose") or ""
-    parts = [lane.get("prefix"), base, lane.get("suffix")]
-    return ", ".join(" ".join(str(p).split()) for p in parts if p and str(p).strip())
+    parts = [" ".join(str(p).split()) for p in (lane.get("prefix"), base, lane.get("suffix")) if p]
+    parts = [p for p in parts if p]
+    # A part ending in "." joined with ", " reads "fur., hand-painted". Kind Robots'
+    # COMFY workflow builder writes that seam as "fur, hand-painted", so the job's
+    # promptString no longer matches its encoder text and the claim-time provenance
+    # check fails the job (13 Shifting Lands traveler jobs, 2026-11-12). Trim the
+    # trailing full stop or separator from every part but the last before joining.
+    trimmed = [p.rstrip(" .,;") or p for p in parts[:-1]] + parts[-1:]
+    return ", ".join(trimmed)
 
 
 CAST_LORA_DIR = Path(__file__).resolve().parent.parent / "projects" / "comic-creator" / "cast-loras"
