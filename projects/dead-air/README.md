@@ -24,4 +24,4 @@ An imaginary AI television station has airtime to sell. Its fictional broadcaste
 
 **One active production at a time.** On each daily cycle, finish or recover the oldest unfinished episode before queuing the next. Track `last_attempted` and `last_completed` as separate Pacific dates. Each daily result reports **finished / queued / rendering / blocked** truthfully. Keep missed days visible. Resumption uses the same MusicVideo ID and ArtJob IDs, never re-enqueues by default.
 
-The pilot is `episodes/2026-11-12-sorry-farm.yaml`. It is **an authored production brief, not a completed video** until an actual MP4 is verified. See `PRODUCTION.md` for step-by-step production and acceptance.
+The pilot is `episodes/2026-11-12-closed-caption-department.yaml`. It is **an authored production brief, not a completed video** until an actual MP4 is verified. See `PRODUCTION.md` for step-by-step production and acceptance.
