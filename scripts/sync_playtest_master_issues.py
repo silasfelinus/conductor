@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-"""Flag a game's master roadmap issue only after the actual playtest handoff.
+"""Close a game's master roadmap issue only after the actual playtest handoff.
 
-Conductor lifecycle and task gates are authoritative. This script changes only
-the title of a mapped GitHub master issue; it never closes one or grants approval.
+Conductor lifecycle and task gates are authoritative. The issue is flagged and
+closed as completed to clear the open roadmap backlog, but no human verdict or
+publication permission is implied.
 Run from the Conductor root, using ISSUE_BRIDGE_TOKEN for cross-repository writes.
 """
 from __future__ import annotations
@@ -88,16 +89,21 @@ def main() -> int:
 
     token = os.environ.get("ISSUE_BRIDGE_TOKEN", "").strip()
     if not token:
-        print("ISSUE_BRIDGE_TOKEN missing: master issue title sync skipped", file=sys.stderr)
+        print("ISSUE_BRIDGE_TOKEN missing: playtest issue handoff skipped", file=sys.stderr)
         return 1 if eligible else 0
     for slug, number in eligible:
         issue = github_issue("GET", number, token)
         title = str(issue["title"])
-        if title.startswith(PREFIX):
-            print(f"ALREADY FLAGGED {slug}: #{number}")
+        flagged_title = title if title.startswith(PREFIX) else PREFIX + title
+        if issue.get("state") == "closed" and flagged_title == title:
+            print(f"ALREADY CLOSED {slug}: #{number}")
             continue
-        updated = github_issue("PATCH", number, token, {"title": PREFIX + title})
-        print(f"FLAGGED {slug}: #{number} {updated['title']}")
+        updated = github_issue("PATCH", number, token, {
+            "title": flagged_title,
+            "state": "closed",
+            "state_reason": "completed",
+        })
+        print(f"CLOSED FOR PLAYTEST {slug}: #{number} {updated['title']}")
     return 0
 
 
