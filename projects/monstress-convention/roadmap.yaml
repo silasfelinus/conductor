@@ -112,18 +112,17 @@ tasks:
   - id: t-003
     milestone: m1
     title: "Motel and city room graph, Iris-first hotspots, verbs, inventory and persistent save"
-    status: review
+    status: ready
     depends_on: t-001
-    owner: worker
-    claimed_by: 2026-11-11T235200Z-monstress-convention-t-003-c72b
-    claimed_at: '2026-11-11T23:52:00Z'
-    updated: '2026-11-11T23:54:20Z'
+    updated: '2026-11-12T00:09:00Z'
     passes: 0
     stakes: reversible
     note: |-
       Build deterministic 2D Iris-led point-and-click scene engine (not a card-choice engine). Walk/Look/Talk/Take/Use/Combine/Photograph/Consult Norb; touch, mouse and keyboard parity; bounded notebook/map sheets and versioned save. Baseline hotel rooms, verb actions and a versioned save already exist in the merged Chapter 1 (kind_robots#4867/#4979): audit and extend, do not reimplement them. Remaining acceptance: real spatial click-to-walk, keyboard/touch parity, inventory combine, reachable map shortcuts, reload and edge-case regressions.
 
       2026-11-11 PT: Submitted a first t-003 movement and inventory increment in kind_robots: point-to-walk, keyboard hotspot cycling, and deterministic item-to-item combination with general/mature audience guards and regression coverage. Remaining t-003 acceptance (full pathfinding, shortcuts and exhaustive cross-width QA) stays open after this slice.
+
+      2026-11-11 PT: First t-003 slice shipped in kind_robots#5029 (squash 7ad1136). The scene now supports tap-to-walk and arrow-key hotspot cycling; the engine supports guarded item-to-item combining and a new optional saved fang-photo clue. General/mature access and Norb restrictions have regression coverage. All six latest-head GitHub workflows passed, including TypeScript and all contract shards. Remaining t-003: full 2D pathfinding, more substantive combination puzzles, convenient room shortcuts, explicit cross-width visual QA and reload edge cases. Return task to ready rather than falsely mark complete.
   - id: t-004
     milestone: m2
     title: "Iris field agency, Norb deductions and shared dual-ghost reactive topics"
