@@ -41,6 +41,9 @@ def test_readiness_needs_real_human_gate_and_all_finite_agent_tasks_complete():
     assert playtest_readiness_errors(
         [{"id": "t-001", "status": "ready", "recurring": True}, gate]
     ) == []
+    assert playtest_readiness_errors(
+        [{"id": "t-003", "status": "ready", "playtest_iteration": True}, gate]
+    ) == []
 
 
 def test_issue_handoff_is_scoped_to_valid_playtest_games(tmp_path: Path):
