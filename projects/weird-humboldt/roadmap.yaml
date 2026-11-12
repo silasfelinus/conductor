@@ -455,6 +455,24 @@ tasks:
       Achievement upgrade merged in kind_robots#5035 (d50b2eb), all checks green: 18 live achievements awarded only from ecotoneStore.update() diffs (never on load/import/restore), none for choosing a drug lens; ending-tied ones for each guide's hopeful ending, the Wild Way and the Long Table. Catalog seed run succeeded. Left: strip not mounted inside the Endings tab (sidebar strip shows on /play/ecotone).
     claimed_by: 20261112-ach-weird-humboldt-modest
     claimed_at: '2026-11-12T01:00:40Z'
+  - id: t-074
+    title: 'Ecotone: ending cards open a dossier with the full picture and epilogue'
+    status: done
+    milestone: m5
+    stakes: reversible
+    owner: null
+    passes: 0
+    depends_on: []
+    updated: '2026-11-12T16:55:00Z'
+    implementation_pr: silasfelinus/kind_robots#5088
+    note: |-
+      Silas 2026-11-12 PT, in session, with a screenshot of the Endings gallery: "clicking the ending card on ecotone should show me a dossier and paragraph + about the ending, with closer image". Directed work, built and recorded in the same session; no separate claim.
+
+      Merged in kind_robots#5088 (ba72fdd), all 13 checks green. Every card in the Endings gallery is a button. An earned ending opens a dossier: its art uncropped at dialog width, a fact sheet (guide and role, where you met, their anomaly, opening lens and question, the future and what decided it, number of 84, a link to the other future for that guide and lens), then the signature line, the one / ten / thirty year epilogue and the lens coda. A locked card opens a sealed view with the card back and the three things that earn it, never the title or epilogue. Content comes from utils/ecotone/endingDossier.ts with a contract test in test:ecotone. Checked in a local build at 390 / 768 / 1440 with localStorage-seeded endings; not yet seen on production (merged, not deployed).
+
+      Open for Silas: locked cards opening the "how to find it" view goes beyond the literal ask; it is one v-else block and can be removed.
+    claimed_by: null
+    claimed_at: null
   - id: t-002
     milestone: m1
     title: "Build v1 encounter contract, seeded deck schema and 18 complete text cards"
