@@ -1,0 +1,483 @@
+# Space Couch Wild Break (Silas, 2026-11-12): "there needs to be a wild break possible to avoid the
+# horoscope, with at least 32 endings" and "whatever horoscope i get, there is no original art."
+# The Couchscope now has a WILD BREAK exit: 13 branching scenes (4 x 2 x 4) reach 32 distinct endings, each
+# needing its own painted plate. Scene keys: couchscope/wild/<scene>; ending keys: couchscope/wild-end/<ending>,
+# read by kind_robots components/gameOfCaptains/wild-break.vue (story in utils/gameOfCaptains/wildBreak.ts).
+# No legible text in any plate (curation-redo lesson); the captain is small or seen from behind so the plate
+# fits all six captains. Queued != rendered != wired: each DONE art_image_id still has to be added to
+# kind_robots utils/gameOfCaptains/onboardingArt.ts before the game shows it.
+round: space-couch-wild-break-1
+project_slug: game-of-captains
+designer: Space Couch wild break campaign
+is_public: false
+is_mature: false
+cast_loras: false
+priority: 950
+auto_submit: true
+lanes:
+- key: krea2
+  label: Painterly space-couch comedy concept art
+  engine: krea2
+  prompt: prose
+  suffix: Richly painted comic space opera, detailed velvet cloth and brass fittings, precise ink contours, violet
+    starlight and golden theatrical rim light. Dry, deadpan storybook humor with clean, uncluttered surfaces.
+subjects:
+- key: sc-wild-scene-walkout
+  lane: krea2
+  entity: wild-break-scene
+  title: 'Space Couch wild break scene: walkout'
+  asset: game-of-captains/couchscope/wild/walkout
+  size: 1536x1152
+  seed: 1037101
+  prompt_prose: 'Interior of a tiny, tidy celestial office floating among stars: beige carpet, a potted fern, a
+    wall clock, and a wide round window full of glowing constellations. A tall grey metal filing cabinet with brass
+    handles hovers above the floor like a stern official, one drawer slowly sliding open. In the middle of the room
+    A lone captain in a long navy coat, seen from behind, has just stood up from a small chair, which is still rocking.
+    A small green lamp glows above the door.'
+- key: sc-wild-scene-window
+  lane: krea2
+  entity: wild-break-scene
+  title: 'Space Couch wild break scene: window'
+  asset: game-of-captains/couchscope/wild/window
+  size: 1536x1152
+  seed: 1037102
+  prompt_prose: 'Seen from an open office window high in space: twelve glowing constellation creatures (a sloth,
+    a jeweled mantis shrimp, a caped comet, a silver minnow, a crowned dust bunny, a whale, a teapot, a three-headed
+    librarian, an umbrella, a lantern, a seamstress, a turnip) wait in a neat row like taxis at a curb of starlight.
+    Between two of them is a strip of unclaimed velvet darkness. A bright comet pulls away with an open doorway
+    in its glowing head. A lone captain in a long navy coat, seen from behind, climbs out over the sill.'
+- key: sc-wild-scene-heist
+  lane: krea2
+  entity: wild-break-scene
+  title: 'Space Couch wild break scene: heist'
+  asset: game-of-captains/couchscope/wild/heist
+  size: 1536x1152
+  seed: 1037103
+  prompt_prose: A lone captain in a long navy coat, seen from behind, sprints down a quiet office corridor in space
+    clutching a large ornate brass telescope instrument with a red velvet eyepiece and a small cushion. A soft amber
+    alarm light turns lazily overhead. Behind, a hovering grey filing cabinet official watches through a doorway
+    with one drawer half open.
+- key: sc-wild-scene-audit
+  lane: krea2
+  entity: wild-break-scene
+  title: 'Space Couch wild break scene: audit'
+  asset: game-of-captains/couchscope/wild/audit
+  size: 1536x1152
+  seed: 1037104
+  prompt_prose: Inside a small celestial office a lone captain in a long navy coat, seen from behind, holds a clipboard
+    and pen, calmly interviewing a hovering grey filing cabinet with brass handles that sinks nervously toward the
+    floor. Stacks of paper tremble on the desk. Through the round window the constellations lean in to watch.
+- key: sc-wild-scene-stars
+  lane: krea2
+  entity: wild-break-scene
+  title: 'Space Couch wild break scene: stars'
+  asset: game-of-captains/couchscope/wild/stars
+  size: 1536x1152
+  seed: 1037105
+  prompt_prose: A lone captain in a long navy coat, seen from behind, leans far out of a small office window floating
+    in deep space, cupping hands to shout up at an enormous night sky of glowing constellation creatures. The whole
+    sky has a faint shimmer of sound waves like a song playing, and the constellations look politely busy.
+- key: sc-wild-scene-comet
+  lane: krea2
+  entity: wild-break-scene
+  title: 'Space Couch wild break scene: comet'
+  asset: game-of-captains/couchscope/wild/comet
+  size: 1536x1152
+  seed: 1037106
+  prompt_prose: 'A crowded commuter comet streaking through space: on its glowing icy tail sit two serene minor
+    deities with halos, a family of pale ice moths, and a quiet old man holding an unlit brass lamp. A lone captain
+    in a long navy coat, seen from behind, stands holding a hanging strap like on a tram. Far behind, the long scarlet
+    couch waits small and patient inside its bubble.'
+- key: sc-wild-scene-gap
+  lane: krea2
+  entity: wild-break-scene
+  title: 'Space Couch wild break scene: gap'
+  asset: game-of-captains/couchscope/wild/gap
+  size: 1536x1152
+  seed: 1037107
+  prompt_prose: A strip of soft velvet darkness between two glowing constellations, a sleepy sloth on one side and
+    a caped comet on the other. Inside the dark are a few folding chairs, a thermos and some shy figures half-hidden
+    in shadow. A lone captain in a long navy coat, seen from behind, peeks in from the edge, starlight on their
+    shoulders.
+- key: sc-wild-scene-chase
+  lane: krea2
+  entity: wild-break-scene
+  title: 'Space Couch wild break scene: chase'
+  asset: game-of-captains/couchscope/wild/chase
+  size: 1536x1152
+  seed: 1037108
+  prompt_prose: Two earnest office clerks in cardigans pedal a vintage tandem bicycle through open space in pursuit,
+    a little brass bell ringing. Ahead, a lone captain in a long navy coat, seen from behind, runs along a ribbon
+    of starlight carrying a big brass telescope with a velvet eyepiece toward the long scarlet couch parked in its
+    bubble at the curb.
+- key: sc-wild-scene-reverse
+  lane: krea2
+  entity: wild-break-scene
+  title: 'Space Couch wild break scene: reverse'
+  asset: game-of-captains/couchscope/wild/reverse
+  size: 1536x1152
+  seed: 1037109
+  prompt_prose: A lone captain in a long navy coat, seen from behind, holds a large ornate brass telescope backwards,
+    peering into the wide end. Above them the glowing constellation creatures crowd together looking worried, a
+    sloth biting its claws, a jeweled mantis shrimp wringing its arms, a whale frowning, all gazing down at the
+    captain.
+- key: sc-wild-scene-cabinet
+  lane: krea2
+  entity: wild-break-scene
+  title: 'Space Couch wild break scene: cabinet'
+  asset: game-of-captains/couchscope/wild/cabinet
+  size: 1536x1152
+  seed: 1037110
+  prompt_prose: A grey metal filing cabinet with brass handles hovering in a small celestial office, all its drawers
+    rattling open and shut in sequence, papers fluttering, looking flustered and shy. A captain's hand holds out
+    a pen toward it. Through the round window, stars.
+- key: sc-wild-scene-archive
+  lane: krea2
+  entity: wild-break-scene
+  title: 'Space Couch wild break scene: archive'
+  asset: game-of-captains/couchscope/wild/archive
+  size: 1536x1152
+  seed: 1037111
+  prompt_prose: Outside a small office window in space, an entire small moon made of compressed paper files and
+    folders floats in orbit, towed by two tiny tug ships. Two overloaded paper carts sit in the office. On the desk,
+    a single plain manila folder sits alone under a lamp. A lone captain in a long navy coat, seen from behind,
+    stares at it.
+- key: sc-wild-scene-hold
+  lane: krea2
+  entity: wild-break-scene
+  title: 'Space Couch wild break scene: hold'
+  asset: game-of-captains/couchscope/wild/hold
+  size: 1536x1152
+  seed: 1037112
+  prompt_prose: A lone captain in a long navy coat, seen from behind, sits on the edge of the long scarlet couch
+    in its bubble, holding an old-fashioned telephone receiver whose spiraling cord stretches all the way up into
+    the night sky. Soft glowing musical notes drift down from the constellations like snow. The captain looks patient
+    and slightly bored.
+- key: sc-wild-scene-climb
+  lane: krea2
+  entity: wild-break-scene
+  title: 'Space Couch wild break scene: climb'
+  asset: game-of-captains/couchscope/wild/climb
+  size: 1536x1152
+  seed: 1037113
+  prompt_prose: A lone captain in a long navy coat, seen from behind, climbs up a ladder made of the glowing dotted
+    lines between stars, high above the long scarlet couch below. At the top of the sky floats a plain wooden door
+    with a little brass handle and warm light leaking from beneath it.
+- key: sc-wild-ending-the-long-way-round
+  lane: krea2
+  entity: wild-break-ending
+  title: 'Space Couch wild break ending: the-long-way-round'
+  asset: game-of-captains/couchscope/wild-end/the-long-way-round
+  size: 1536x1152
+  seed: 1037114
+  prompt_prose: At the far dark end of a comet's tail, a cozy chrome all-night diner glows in the cold. Inside,
+    retired gods with dim halos drink coffee at the counter. A captain sits among them with a mug, older, bearded
+    and relaxed. Through the window, far away, the long scarlet couch is parked exactly where it was left.
+- key: sc-wild-ending-the-emergency-cord
+  lane: krea2
+  entity: wild-break-ending
+  title: 'Space Couch wild break ending: the-emergency-cord'
+  asset: game-of-captains/couchscope/wild-end/the-emergency-cord
+  size: 1536x1152
+  seed: 1037115
+  prompt_prose: A huge comet halted mid-flight in space, its tail bunched up like a stopped train, passengers lurching.
+    Three nearby planets are caught in a sudden eclipse while a fourth enjoys a dazzling meteor shower. A captain
+    still holds a dangling red emergency cord, looking at it.
+- key: sc-wild-ending-the-lamp-dealer
+  lane: krea2
+  entity: wild-break-ending
+  title: 'Space Couch wild break ending: the-lamp-dealer'
+  asset: game-of-captains/couchscope/wild-end/the-lamp-dealer
+  size: 1536x1152
+  seed: 1037116
+  prompt_prose: A captain walks back across a starlit bridge toward the long scarlet couch carrying an old brass
+    lamp that glows softly, its flame leaning toward the captain. Behind, on a departing comet's tail, a quiet old
+    man waves goodbye with visible relief.
+- key: sc-wild-ending-nothing-in-particular
+  lane: krea2
+  entity: wild-break-ending
+  title: 'Space Couch wild break ending: nothing-in-particular'
+  asset: game-of-captains/couchscope/wild-end/nothing-in-particular
+  size: 1536x1152
+  seed: 1037117
+  prompt_prose: A tiny cozy gift shop standing alone on an empty patch of pale grey nothingness in space, with racks
+    of postcards that all show the same pale grey emptiness. A small kindly shopkeeper hands a captain a fan of
+    six blank-looking postcards. Stars all around.
+- key: sc-wild-ending-the-thirteenth-sign
+  lane: krea2
+  entity: wild-break-ending
+  title: 'Space Couch wild break ending: the-thirteenth-sign'
+  asset: game-of-captains/couchscope/wild-end/the-thirteenth-sign
+  size: 1536x1152
+  seed: 1037118
+  prompt_prose: A new glowing constellation drawn among the stars in the shape of a captain lounging on a long couch,
+    lines connecting bright stars. Below, on several different planets, astronomers at telescopes point up at it
+    in quiet excitement.
+- key: sc-wild-ending-the-unsorted
+  lane: krea2
+  entity: wild-break-ending
+  title: 'Space Couch wild break ending: the-unsorted'
+  asset: game-of-captains/couchscope/wild-end/the-unsorted
+  size: 1536x1152
+  seed: 1037119
+  prompt_prose: 'In a soft strip of dark sky between constellations, a small gathering on folding chairs: a living
+    lighthouse with kind window eyes, two elderly retired admirals with medals, a large dignified moth, and a captain,
+    sharing a thermos of tea around a tiny lantern like a club meeting.'
+- key: sc-wild-ending-prime-dark-real-estate
+  lane: krea2
+  entity: wild-break-ending
+  title: 'Space Couch wild break ending: prime-dark-real-estate'
+  asset: game-of-captains/couchscope/wild-end/prime-dark-real-estate
+  size: 1536x1152
+  seed: 1037120
+  prompt_prose: A sleek luxury apartment tower floating in a patch of perfect black space, with huge windows that
+    look out on absolutely nothing. A smiling developer in a sharp suit shakes hands with a captain while a festive
+    ribbon is cut beside the front door.
+- key: sc-wild-ending-the-quiet-zone
+  lane: krea2
+  entity: wild-break-ending
+  title: 'Space Couch wild break ending: the-quiet-zone'
+  asset: game-of-captains/couchscope/wild-end/the-quiet-zone
+  size: 1536x1152
+  seed: 1037121
+  prompt_prose: A captain asleep, curled peacefully in a strip of soft velvet darkness between two glowing constellations,
+    a sleepy sloth and a caped comet watching over them. Tiny drifting stars like dust. Deep calm.
+- key: sc-wild-ending-the-tandem-pursuit
+  lane: krea2
+  entity: wild-break-ending
+  title: 'Space Couch wild break ending: the-tandem-pursuit'
+  asset: game-of-captains/couchscope/wild-end/the-tandem-pursuit
+  size: 1536x1152
+  seed: 1037122
+  prompt_prose: Two tired but determined office clerks on a vintage tandem bicycle pause in deep space beside a
+    small rocky planet, one writing on a very long ribbon of paper that trails behind them for miles. Far ahead,
+    the long scarlet couch in its bubble disappears toward a distant star system.
+- key: sc-wild-ending-returned-with-interest
+  lane: krea2
+  entity: wild-break-ending
+  title: 'Space Couch wild break ending: returned-with-interest'
+  asset: game-of-captains/couchscope/wild-end/returned-with-interest
+  size: 1536x1152
+  seed: 1037123
+  prompt_prose: A small market stall on a rainy alien street with a striped awning, and in it an ornate brass telescope
+    instrument with a velvet eyepiece sits on a cushion like a fortune teller. Every customer in line holds an umbrella.
+    Warm lamplight, gentle rain.
+- key: sc-wild-ending-down-the-cushions
+  lane: krea2
+  entity: wild-break-ending
+  title: 'Space Couch wild break ending: down-the-cushions'
+  asset: game-of-captains/couchscope/wild-end/down-the-cushions
+  size: 1536x1152
+  seed: 1037124
+  prompt_prose: 'A tiny hidden world between the cushions of a giant red velvet couch: piles of gleaming lost coins
+    from many civilizations like a dragon hoard, and a small orderly town of crumb-people with a crumb mayor in
+    a tiny sash greeting a miniature captain.'
+- key: sc-wild-ending-the-slowest-surrender
+  lane: krea2
+  entity: wild-break-ending
+  title: 'Space Couch wild break ending: the-slowest-surrender'
+  asset: game-of-captains/couchscope/wild-end/the-slowest-surrender
+  size: 1536x1152
+  seed: 1037125
+  prompt_prose: Two office clerks in cardigans and a captain sitting together on a curb beside the long scarlet
+    couch, sharing sandwiches from a lunchbox, a tall untidy stack of paper beside them, a vintage tandem bicycle
+    leaning nearby, all three laughing.
+- key: sc-wild-ending-the-captain-reads-the-sky
+  lane: krea2
+  entity: wild-break-ending
+  title: 'Space Couch wild break ending: the-captain-reads-the-sky'
+  asset: game-of-captains/couchscope/wild-end/the-captain-reads-the-sky
+  size: 1536x1152
+  seed: 1037126
+  prompt_prose: A captain sits on the back of the long scarlet couch with a brass telescope across their lap, speaking
+    gently up to the sky. Glowing constellation creatures lean down to listen; a jeweled mantis shrimp princess
+    is crying sparkling tears, a sloth holds out a paw.
+- key: sc-wild-ending-the-blank-chart
+  lane: krea2
+  entity: wild-break-ending
+  title: 'Space Couch wild break ending: the-blank-chart'
+  asset: game-of-captains/couchscope/wild-end/the-blank-chart
+  size: 1536x1152
+  seed: 1037127
+  prompt_prose: 'Close view through the eyepiece of an ornate brass telescope: inside the circle is perfect clean
+    emptiness, a soft, pale, perfectly empty void. Around it spreads a rich starfield and the curve of the brass
+    instrument held by a captain''s hands.'
+- key: sc-wild-ending-twelve-loose-signs
+  lane: krea2
+  entity: wild-break-ending
+  title: 'Space Couch wild break ending: twelve-loose-signs'
+  asset: game-of-captains/couchscope/wild-end/twelve-loose-signs
+  size: 1536x1152
+  seed: 1037128
+  prompt_prose: 'A cracked brass telescope on the floor of a celestial office, and twelve glowing marbles rolling
+    out of it across the floor and out an open door into space, each marble holding a tiny constellation creature:
+    a sloth, a shrimp, a whale, a teapot, a turnip, an umbrella.'
+- key: sc-wild-ending-the-couch-has-a-sign
+  lane: krea2
+  entity: wild-break-ending
+  title: 'Space Couch wild break ending: the-couch-has-a-sign'
+  asset: game-of-captains/couchscope/wild-end/the-couch-has-a-sign
+  size: 1536x1152
+  seed: 1037129
+  prompt_prose: A captain holds an ornate brass telescope eyepiece against the backrest of the long scarlet couch.
+    Above the couch glows a gentle turnip-shaped constellation with deep roots of starlight reaching down into the
+    cushions. The couch seems to sit a little prouder.
+- key: sc-wild-ending-the-assessor-assessed
+  lane: krea2
+  entity: wild-break-ending
+  title: 'Space Couch wild break ending: the-assessor-assessed'
+  asset: game-of-captains/couchscope/wild-end/the-assessor-assessed
+  size: 1536x1152
+  seed: 1037130
+  prompt_prose: A grey metal filing cabinet with brass handles, now used as a contented nightstand at the end of
+    the long scarlet couch, its top drawer open to show rows of neatly paired and labeled socks. A small reading
+    lamp on top. Stars outside the bubble.
+- key: sc-wild-ending-a-hug-for-the-cabinet
+  lane: krea2
+  entity: wild-break-ending
+  title: 'Space Couch wild break ending: a-hug-for-the-cabinet'
+  asset: game-of-captains/couchscope/wild-end/a-hug-for-the-cabinet
+  size: 1536x1152
+  seed: 1037131
+  prompt_prose: A captain hugging a grey metal filing cabinet with brass handles in a small celestial office. All
+    of its drawers have sprung open and soft glowing paper shapes like feelings drift out into the air, colored
+    like memories, filling the room with light.
+- key: sc-wild-ending-the-promotion
+  lane: krea2
+  entity: wild-break-ending
+  title: 'Space Couch wild break ending: the-promotion'
+  asset: game-of-captains/couchscope/wild-end/the-promotion
+  size: 1536x1152
+  seed: 1037132
+  prompt_prose: A grey metal filing cabinet with brass handles sits at the head of an empty boardroom table in a
+    calm, serene office in space, wearing a tiny silk necktie. Every chair is empty and pushed in neatly. Very peaceful.
+- key: sc-wild-ending-the-infinite-loop
+  lane: krea2
+  entity: wild-break-ending
+  title: 'Space Couch wild break ending: the-infinite-loop'
+  asset: game-of-captains/couchscope/wild-end/the-infinite-loop
+  size: 1536x1152
+  seed: 1037133
+  prompt_prose: A grey metal filing cabinet with brass handles holding up a magnifying glass to inspect itself in
+    a mirror, which reflects it inspecting itself, repeating endlessly into the distance. Behind, the celestial
+    office door is closed with a heavy chain across it.
+- key: sc-wild-ending-a-note-from-later
+  lane: krea2
+  entity: wild-break-ending
+  title: 'Space Couch wild break ending: a-note-from-later'
+  asset: game-of-captains/couchscope/wild-end/a-note-from-later
+  size: 1536x1152
+  seed: 1037134
+  prompt_prose: Close view of a plain manila folder open on a desk under a lamp, containing one single sheet with
+    a little ink doodle of a sandwich, the ink still glistening wet. A captain's hand holds a bag of snacks beside
+    it.
+- key: sc-wild-ending-the-great-leak
+  lane: krea2
+  entity: wild-break-ending
+  title: 'Space Couch wild break ending: the-great-leak'
+  asset: game-of-captains/couchscope/wild-end/the-great-leak
+  size: 1536x1152
+  seed: 1037135
+  prompt_prose: A warm community hall in space full of captains in many different uniforms sitting in a circle of
+    chairs, sharing coffee and nodding, a big coffee urn steaming. Through the window, a moon of paper files is
+    coming apart into a storm of papers.
+- key: sc-wild-ending-the-name-at-the-top
+  lane: krea2
+  entity: wild-break-ending
+  title: 'Space Couch wild break ending: the-name-at-the-top'
+  asset: game-of-captains/couchscope/wild-end/the-name-at-the-top
+  size: 1536x1152
+  seed: 1037136
+  prompt_prose: A child's crayon drawing of the zodiac, twelve animal and object shapes in a wobbly circle, pinned
+    to a cosmic corkboard as if ancient and precious. A captain's hand sticks a small yellow sticky note with a
+    hand-drawn smiley face beside it.
+- key: sc-wild-ending-paper-moon
+  lane: krea2
+  entity: wild-break-ending
+  title: 'Space Couch wild break ending: paper-moon'
+  asset: game-of-captains/couchscope/wild-end/paper-moon
+  size: 1536x1152
+  seed: 1037137
+  prompt_prose: Shredded white paper confetti falling like heavy snow over a festive alien village at night, villagers
+    dancing with lanterns and streamers, while on a neighboring planet in the sky a grumpy figure holds up a sheet
+    of paper in protest.
+- key: sc-wild-ending-still-holding
+  lane: krea2
+  entity: wild-break-ending
+  title: 'Space Couch wild break ending: still-holding'
+  asset: game-of-captains/couchscope/wild-end/still-holding
+  size: 1536x1152
+  seed: 1037138
+  prompt_prose: The long scarlet couch flying through space with a crew of four adults lounging on it, an old telephone
+    receiver tucked under a cushion with its coiled cord stretching up into the stars, faint glowing musical notes
+    trailing behind the couch like a wake.
+- key: sc-wild-ending-the-operator
+  lane: krea2
+  entity: wild-break-ending
+  title: 'Space Couch wild break ending: the-operator'
+  asset: game-of-captains/couchscope/wild-end/the-operator
+  size: 1536x1152
+  seed: 1037139
+  prompt_prose: An enormous elderly black hole with a swirling golden accretion disk shaped like a kindly old switchboard
+    operator wearing a headset, listening patiently. A tiny captain on the long scarlet couch holds a telephone
+    receiver toward her. Warm, gentle light.
+- key: sc-wild-ending-the-hold-music
+  lane: krea2
+  entity: wild-break-ending
+  title: 'Space Couch wild break ending: the-hold-music'
+  asset: game-of-captains/couchscope/wild-end/the-hold-music
+  size: 1536x1152
+  seed: 1037140
+  prompt_prose: A captain humming with eyes closed on the long scarlet couch while glowing musical notes spiral
+    out from them across the entire galaxy, reaching countless distant planets where tiny figures wait patiently
+    holding telephone receivers.
+- key: sc-wild-ending-call-your-mother
+  lane: krea2
+  entity: wild-break-ending
+  title: 'Space Couch wild break ending: call-your-mother'
+  asset: game-of-captains/couchscope/wild-end/call-your-mother
+  size: 1536x1152
+  seed: 1037141
+  prompt_prose: A captain sitting alone on the long scarlet couch in its bubble, smiling and holding an old telephone
+    to their ear, a plate of food balanced on their knee. Far below, a small warm lit window on a home planet glows
+    with the silhouette of a parent holding a phone.
+- key: sc-wild-ending-staff-only
+  lane: krea2
+  entity: wild-break-ending
+  title: 'Space Couch wild break ending: staff-only'
+  asset: game-of-captains/couchscope/wild-end/staff-only
+  size: 1536x1152
+  seed: 1037142
+  prompt_prose: 'A cozy break room behind a door in the sky: glowing constellation creatures sit around a card table,
+    a sleepy sloth, a whale, a teapot, a three-headed librarian and a jeweled mantis shrimp, holding cards of light.
+    A captain sits among them pulling a pile of snacks toward themselves after winning a hand.'
+- key: sc-wild-ending-the-new-hire
+  lane: krea2
+  entity: wild-break-ending
+  title: 'Space Couch wild break ending: the-new-hire'
+  asset: game-of-captains/couchscope/wild-end/the-new-hire
+  size: 1536x1152
+  seed: 1037143
+  prompt_prose: A captain standing in the night sky as a glowing constellation, outlined with bright stars, wearing
+    a little lanyard, while far below two small planets' sailors and navigators point up and steer their ships by
+    them.
+- key: sc-wild-ending-above-the-zodiac
+  lane: krea2
+  entity: wild-break-ending
+  title: 'Space Couch wild break ending: above-the-zodiac'
+  asset: game-of-captains/couchscope/wild-end/above-the-zodiac
+  size: 1536x1152
+  seed: 1037144
+  prompt_prose: A vast painted domed ceiling above the stars, showing an ancient fresco of twelve long scarlet couches
+    each in a faint bubble, arranged in a ring like a zodiac, with one empty space in the ring. A small captain
+    at the top of a ladder of starlight gazes up at it in silence.
+- key: sc-wild-ending-the-climb-down
+  lane: krea2
+  entity: wild-break-ending
+  title: 'Space Couch wild break ending: the-climb-down'
+  asset: game-of-captains/couchscope/wild-end/the-climb-down
+  size: 1536x1152
+  seed: 1037145
+  prompt_prose: A captain calmly climbing down a ladder of glowing dotted lines between stars, back toward the long
+    scarlet couch waiting below in its bubble. High above, a plain wooden door stays closed with warm light under
+    it. Peaceful wide view of the galaxy.
