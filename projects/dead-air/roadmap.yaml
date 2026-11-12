@@ -60,11 +60,11 @@ tasks:
   - id: t-002
     milestone: m2
     title: Render and verify the first complete private fifteen-second pilot
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 2026-11-12T114330Z-dead-air-t002-b8c7
     claimed_at: '2026-11-12T11:43:30Z'
-    updated: '2026-11-12T11:29:29.933Z'
+    updated: '2026-11-12T11:59:00Z'
     stakes: reversible
     passes: 0
     depends_on: t-001
@@ -74,6 +74,8 @@ tasks:
       First private production created MusicVideo 18 but all still-enqueue results were rejected by the Krea caption/lettering contract. Scoped implementation repair is ready for review; do not call the film finished until still and motion ArtJobs render and a probed private MP4 exists.
 
       Merged scoped Krea2 scene-prompt repair in Conductor PR #7315 at 75d30d44f7d68cfd6ca4c99de3b9be27f596dfcb after 24 final-head CI checks passed, skipped or neutral. GitHub Actions run 43209359458 verified five durable still ArtJobs for MusicVideo 18: s1 68688, s2 68689, s3 68690, s4 68691, s5 68692. They are rendering; no clip ArtJobs or final MP4 yet, so do not mark film delivery done. Resume this same MusicVideo 18 after stills render, request two actual motion clips, and verify 15-second final media.
+
+      Producer budget recovery and morning delivery patch under review. One optional clip maximum, 7200-second cutoff for new GPU requests, authored camera presets, overnight retries, private film digest linking, original episodic run and inclusive anime/metal/jaguar series bible. No claim of completed MP4.
   - id: t-003
     milestone: m3
     title: Build first-class Dead Air private screening and human review workspace
