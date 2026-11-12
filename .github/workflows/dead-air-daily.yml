@@ -5,6 +5,11 @@ name: Dead Air daily film production
 on:
   schedule:
     - cron: "0 18 * * *" # 10am PST / 11am PDT; PT date is computed in Python.
+  push:
+    branches: [main]
+    paths:
+      - "projects/dead-air/episodes/*.yaml"
+      - ".github/workflows/dead-air-daily.yml"
   workflow_dispatch:
 
 concurrency:
