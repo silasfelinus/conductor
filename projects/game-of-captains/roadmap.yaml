@@ -103,16 +103,19 @@ tasks:
       Achievements are tracked by their own task; this one covers everything else.
   - id: t-040
     title: 'Space Couch achievement upgrade: 12 or more live achievements'
-    status: ready
+    status: claimed
     milestone: m4
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-11T23:42:29Z'
+    updated: '2026-11-12T01:00:53Z'
     note: |-
       Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
       Live today: 0 Achievement record(s) with this game's triggerCode prefix (checked against /api/achievements 2026-11-11). Target 12+ (usually 12-30; tie some to endings but don't go overboard). Mix story, skill, discovery and completion. Create the live records through the existing achievements API (label, message, icon, karma, triggerCode prefixed with the game slug), award them from the game store, show them with components/achievements/game-achievement-strip.vue, and verify one award live after deploy.
+    owner: worker
+    claimed_by: 20261112-ach-game-of-captains-modest
+    claimed_at: '2026-11-12T01:00:53Z'
   - id: t-002
     milestone: m1
     title: "Write This Means Warp captain, crew, location, antagonist and ethics bibles"
