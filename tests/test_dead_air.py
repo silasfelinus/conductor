@@ -49,7 +49,7 @@ def test_movie_doc_has_correct_continuity_and_motion_contract():
     assert scenes[-1]["endSec"] == 15
     assert sum(s["motion"]["kind"] == "clip" for s in scenes) >= 2
     assert all(s["promptSource"] == "user" for s in scenes)
-    assert all(original["visual_style"] in s["prompt"] for s in scenes)
+    assert all(s["prompt"] == shot["image_prompt"] for s, shot in zip(scenes, original["shots"]))
 
 
 def test_daily_selection_resumes_oldest_not_newest(monkeypatch, tmp_path):
