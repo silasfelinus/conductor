@@ -12,6 +12,7 @@ import hashlib
 from datetime import datetime
 import json
 import os
+import re
 from pathlib import Path
 import shutil
 import subprocess
@@ -23,7 +24,7 @@ import yaml
 
 from build_music_video import (
     KrClient, PipelineError, assemble, plan_actions, read_state,
-    run_actions, clips_to_request, EXIT_DONE, EXIT_ERROR, EXIT_IN_PROGRESS, EXIT_CONFIG,
+    clips_to_request, EXIT_DONE, EXIT_ERROR, EXIT_IN_PROGRESS, EXIT_CONFIG,
 )
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -31,6 +32,36 @@ DEFAULT_STATE = ROOT / "projects/dead-air/production-state.json"
 EPISODES = ROOT / "projects/dead-air/episodes"
 BASE = "https://kindrobots.org"
 DURATION = 15.0
+
+# Keep aligned with Kind Robots utils/musicVideoScenes.ts: Krea paints nouns
+# it reads. The video compositor, not the still renderer, owns the subtitles.
+PAINT_GUARDS = {
+    "negation": re.compile(r"\b(no|not|without|never|avoid|don't|doesn't|isn't|aren't|none)\b", re.I),
+    "jargon": re.compile(r"\b(iconic|concrete|focal subject|focal point|silhouette|emblem|thumbnail|masterpiece|best quality|highly detailed|trending on|award[- ]winning)\b", re.I),
+    "lettering": re.compile(r"\b(text|caption|captions|logo|logos|lettering|subtitle|subtitles|signage|title card|words|typography|watermark)\b", re.I),
+    "franchise": re.compile(r"\b(tmnt|teenage mutant|ninja turtles?|cowabunga|shredder|splinter|krang|april o'neil|leonardo|donatello|raphael|michelangelo)\b", re.I),
+}
+
+
+def paint_prompt_problems(prompt: str) -> list[str]:
+    errors = [f"{name}: {found.group(0)}" for name, pattern in PAINT_GUARDS.items()
+              if (found := pattern.search(prompt))]
+    if len(prompt) > 2000:
+        errors.append("too-long")
+    return errors
+
+
+def verify_enqueue_outcomes(outcomes: list[dict], scene_count: int) -> dict[str, int]:
+    """An HTTP 200 with rejected scenes is a failure, not a successful art queue."""
+    if len(outcomes) != scene_count:
+        raise PipelineError(f"still enqueue returned {len(outcomes)}/{scene_count} outcomes")
+    failed = [f"{o.get('sceneId')}: {o.get('status')} {o.get('reason', '')}"
+              for o in outcomes if o.get("status") not in ("queued", "reused", "skipped")
+              or not isinstance(o.get("jobId"), int) or o["jobId"] <= 0]
+    if failed:
+        raise PipelineError("still ArtJobs not created: " + "; ".join(failed))
+    return {o["sceneId"]: o["jobId"] for o in outcomes}
+
 
 
 def validate(e: dict) -> list[str]:
@@ -50,6 +81,8 @@ def validate(e: dict) -> list[str]:
         for ref in refs:
             if not isinstance(ref, dict) or not all(ref.get(k) for k in ("work", "study", "transformation", "assets")):
                 problems.append("every reference needs work, study, transformation and assets")
+    if isinstance(e.get("visual_style"), str):
+        problems.extend(f"styleBible {p}" for p in paint_prompt_problems(e["visual_style"]))
     shots = e.get("shots")
     if not isinstance(shots, list) or not 4 <= len(shots) <= 6:
         return problems + ["expected 4–6 shots"]
@@ -65,6 +98,8 @@ def validate(e: dict) -> list[str]:
         for field in ("image_prompt", "motion_prompt", "camera", "overlay"):
             if not isinstance(shot.get(field), str) or not shot[field].strip():
                 problems.append(f"shot {index} missing {field}")
+        if isinstance(shot.get("image_prompt"), str):
+            problems.extend(f"shot {index} {p}" for p in paint_prompt_problems(shot["image_prompt"]))
         try:
             start, end = float(shot["start"]), float(shot["end"])
             if abs(start - cursor) > .01 or end <= start or end > 15.001:
@@ -124,7 +159,7 @@ def scenes_for(e: dict) -> list[dict]:
         output.append({
             "id": shot["id"],
             "startSec": shot["start"], "endSec": shot["end"],
-            "prompt": f'{shot["image_prompt"]} Shared visual continuity: {e["visual_style"]}',
+            "prompt": shot["image_prompt"],
             "promptSource": "user", "motionPrompt": shot["motion_prompt"],
             "lyricRefs": [],
             "image": {"source": "generated"},
@@ -238,10 +273,31 @@ def run_episode(e: dict, episode_path: Path, state: dict, state_file: Path, vide
         record(state, episode_path, e, music_video_id=video_id, status="created")
         save_state(state_file, state)  # Must persist ID before any extra API call.
     doc = client.get_video(video_id)["doc"]
-    if not doc.get("scenes"):
-        doc["scenes"] = scenes_for(e)
+    expected_scenes = scenes_for(e)
+    current_scenes = doc.get("scenes") or []
+    if current_scenes and [s["id"] for s in current_scenes] != [s["id"] for s in expected_scenes]:
+        raise PipelineError("Existing video scene IDs differ from the archived storyboard")
+    # The first producer run could store invalid painter prompts without ArtJob
+    # IDs. Repair only those entirely unrendered scenes; preserve any real jobs.
+    can_repair = not current_scenes or all(
+        not (s.get("image") or {}).get("jobId")
+        and not (s.get("image") or {}).get("artImageId")
+        and not (s.get("motion") or {}).get("jobId")
+        and not (s.get("motion") or {}).get("clipArtImageId")
+        for s in current_scenes
+    )
+    prompt_drift = (
+        doc["settings"].get("styleBible") != e["visual_style"]
+        or any(s.get("prompt") != expected["prompt"]
+               for s, expected in zip(current_scenes, expected_scenes))
+    )
+    if can_repair and (not current_scenes or prompt_drift):
+        doc["scenes"] = expected_scenes
+        doc["settings"]["styleBible"] = e["visual_style"]
         doc["settings"]["vocal"] = "instrumental"
         client._request("PATCH", f"/api/music-video/{video_id}", {"doc": doc})
+    elif prompt_drift:
+        raise PipelineError("Existing generated scene prompts differ; preserve jobs and investigate manually")
     if not (client.get_video(video_id)["doc"].get("song") or {}).get("artImageId"):
         with tempfile.TemporaryDirectory(prefix="dead-air-audio-") as tmp:
             track = make_audio(e, Path(tmp))
@@ -249,7 +305,11 @@ def run_episode(e: dict, episode_path: Path, state: dict, state_file: Path, vide
     state_now = read_state(client, video_id)
     actions = plan_actions(state_now)
     if "render_scenes" in actions:
-        run_actions(client, video_id, ["render_scenes"])
+        result = client.render_scenes(video_id)
+        outcomes = result.get("outcomes") or []
+        submitted = verify_enqueue_outcomes(outcomes, len(outcomes) or len(e["shots"]))
+        print(f"  verified {len(submitted)} still ArtJob IDs: " +
+              ", ".join(f"{sid}={job_id}" for sid, job_id in sorted(submitted.items())))
         state_now = read_state(client, video_id)
     clip_ids = [s["id"] for s in e["shots"] if s["motion"] == "clip"]
     for start in range(0, len(clip_ids), 8):
