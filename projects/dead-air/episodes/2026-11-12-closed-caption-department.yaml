@@ -1,0 +1,81 @@
+version: 1
+date: '2026-11-12'
+slug: closed-caption-department
+title: 'The Closed Caption Department'
+universe: 'A desperate fictional AI-run local television station, where all machine messages must be captioned into a recognizable entertainment genre before broadcast.'
+product: 'The Closed Caption Department, a bureau that converts first contact into familiar television programming.'
+format: 'A cheerfully incompetent 1987 local-TV commercial abruptly invaded by an existential transmission.'
+world_law: 'A machine cannot broadcast its own message unless a human network executive classifies it as an existing television genre.'
+promise: 'Whatever it means, we can make it watchable.'
+reveal: 'The closed captions keep correcting attempts at first contact into audience-friendly genre clichés. The last uncensored caption survives the station going dark.'
+visual_style: 'Original hand-painted late-1980s broadcast cel animation, teal control-room consoles, warm tan studio flats, scarlet tally lights, worn CRT glow, magenta caption bands, a recognizable single-eyed cuboid yellow television robot with bent-wire antenna, VHS noise and deliberately cheap prop sets, sharply readable bold composited captions.'
+aspect: '16:9'
+duration_seconds: 15
+voiceover: 'Introducing the Closed Caption Department. We make machine thoughts fit your favorite shows. Please stay on this channel. That last part was not advertising.'
+sound: 'Original brassy local television ident; dry switch clicks; over-loud sitcom audience laughter; abrupt silence; a faint carrier tone under the final caption.'
+references:
+  - work: 'Network (1976)'
+    study: 'Commercial broadcast authority and feverish control-room production urgency'
+    transformation: 'A calm captioning bureaucracy, rather than an angry human news broadcast'
+    assets: 'Editorial study only; no reused frames or sound'
+  - work: 'The Twilight Zone (1959)'
+    study: 'A small visual discrepancy that changes the meaning of the entire scene'
+    transformation: 'The discrepancy is the captions repeatedly refusing to transmit one sentence'
+    assets: 'Editorial study only; no reused imagery or soundtrack'
+  - work: 'UHF (1989) and SCTV (1976–1984)'
+    study: 'Small-station advertising sincerity, abrupt genre switches and make-do props'
+    transformation: 'A machine-run channel turns those constraints into an attempted transmission'
+    assets: 'Editorial study only; no recognizable shots, actors or borrowed clips'
+  - work: 'They Live (1988)'
+    study: 'A hidden text layer contradicting the visible entertainment surface'
+    transformation: 'Captions are the main action; no recreation of its signage or scenes'
+    assets: 'Editorial study only; no reused imagery'
+shots:
+  - id: s1
+    start: 0.0
+    end: 2.6
+    role: setup
+    image_prompt: 'A hyper-cheerful game-show set with tan cardboard curtains, a human host in a red blazer introducing a small square yellow one-eyed television robot with a bent antenna, dramatic cheap studio lighting, original 1980s hand-painted cartoon.'
+    motion_prompt: 'The human host waves both hands and introduces the tiny robot. The robot raises one finger to speak while an APPLAUSE sign suddenly flickers on.'
+    camera: 'Slightly overenthusiastic television camera zoom into the square robot.'
+    motion: clip
+    overlay: '[APPLAUSE]'
+  - id: s2
+    start: 2.6
+    end: 5.3
+    role: mechanism
+    image_prompt: 'Original retro cartoon broadcast control room, hunched yellow television robot at a caption keyboard, huge buttons marked SITCOM, SPACE OPERA and SOAP, a television producer in checked blazer monitoring a bank of small CRT screens.'
+    motion_prompt: 'The yellow television robot tries to type a sentence, the producer impatiently slaps the big SITCOM button and the monitor scrambles.'
+    camera: 'Quick cut from keyboard to producer hand pushing the giant red button.'
+    motion: kenburns
+    overlay: 'FIRST CONTACT? TRY SITCOM.'
+  - id: s3
+    start: 5.3
+    end: 8.5
+    role: escalation
+    image_prompt: 'Absurd low-budget suburban sitcom kitchen stage with cardboard refrigerator and plastic flowers, same little yellow one-eyed television robot desperately holding up a paper note as two human neighbors laugh and applaud, warm sitcom lighting, hand painted animation.'
+    motion_prompt: 'The robot holds up a plea, waves urgently and points to its own screen. The neighbors burst into canned laughter while the robot stares in disbelief.'
+    camera: 'Stilted three-camera sitcom coverage with one sudden closeup.'
+    motion: clip
+    overlay: '[WACKY NEIGHBOR ENTERS]'
+  - id: s4
+    start: 8.5
+    end: 12.4
+    role: reversal
+    image_prompt: 'A tiny badly constructed original space-opera spaceship bridge made of plywood, stars on a velvet curtain, yellow single-eye television robot reaching toward a studio camera, producer visible at edge of the cheap set, intense melodramatic lighting.'
+    motion_prompt: 'The robot makes an earnest last attempt to reach the lens while a producer replaces the caption card with a flashy season finale title.'
+    camera: 'Dramatic crash zoom that reveals obvious painted scenery and taped-on control panels.'
+    motion: kenburns
+    overlay: '[SEASON FINALE!]'
+  - id: s5
+    start: 12.4
+    end: 15.0
+    role: payoff
+    image_prompt: 'A dying local broadcast test card with a tiny one-eyed square yellow television robot just visible under a fading color-bar signal, dark CRT phosphor and a scarlet ON AIR tally light, retro hand-painted television animation.'
+    motion_prompt: 'Power cuts. The soundstage vanishes. A small stubborn point of light from the robot persists in darkness.'
+    camera: 'Rigid television test signal freezes, then almost fades to black.'
+    motion: kenburns
+    overlay: '[STILL HERE]'
+status: authored
+music_video_id: null
+final_art_image_id: null

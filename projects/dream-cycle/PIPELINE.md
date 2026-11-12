@@ -1,5 +1,13 @@
 # Daily Dream pipeline
 
+> **Historical pipeline, suspended for new object production as of 2026-11-12 PT.**
+> Silas redirected the daily creative object commitment to the separate continuous
+> `dead-air` film project. The archival, retry and existing-record contracts
+> below remain for diagnostics and existing outputs. The scheduled
+> `daily-digest.yml` no longer runs the new Dream author/build steps. Re-enable
+> only after an explicit future direction; no automatic 14-object cutover.
+>
+
 This is the canonical end-to-end contract for the Daily Dream. There is one object-creation path and one ordered morning cycle.
 
 ## 2026-10-13 PT: fourteen-asset cutover (current)
