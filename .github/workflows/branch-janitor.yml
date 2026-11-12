@@ -1,11 +1,17 @@
 name: Branch janitor
 
-# Keeps the remote branch list clean: deletes claude/* and worker/* branches that
+# Keeps the remote branch list clean: deletes merged claude/*, worker/*, close/*, conductor/* branches that
 # are fully merged into main (or explicitly forced), and REPORTS unmerged stale
 # branches without deleting them. Runs with GITHUB_TOKEN, which can delete refs —
 # agent session credentials 403 on ref deletion, so this is the only reliable path.
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/branch-janitor.yml"
+      - "scripts/branch_janitor.py"
+      - "ops/branch-retirements.json"
   schedule:
     - cron: "17 * * * *"   # hourly, offset from the other conductor crons
   workflow_dispatch:
@@ -21,6 +27,7 @@ on:
 
 permissions:
   contents: write
+  pull-requests: read
 
 concurrency:
   group: branch-janitor
@@ -41,6 +48,8 @@ jobs:
           python-version: "3.12"
 
       - name: Prune merged / superseded branches (report stranded)
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         run: |
           python scripts/branch_janitor.py \
             ${{ (github.event.inputs.dry_run == 'true') && '--dry-run' || '' }} \
