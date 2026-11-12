@@ -149,6 +149,7 @@ jobs:
       - run: pip install pyyaml Pillow
 
       - name: Author today's next Daily Dream proposal
+        if: ${{ false }} # 2026-11-12: Silas moved daily creation to dead-air films.
         id: daily_dream_author
         continue-on-error: true
         run: python scripts/author_dream_proposal.py
@@ -234,6 +235,7 @@ jobs:
       # evidence. Daily Dream sidecar failures are warnings; digest generation,
       # validation, configuration, and delivery still fail normally on their own.
       - name: Build today's Daily Dream proposal for tomorrow
+        if: ${{ false }} # historical writer parked; preserves all existing records.
         id: daily_dream_build
         continue-on-error: true
         # Consume the oldest valid unbuilt proposal if the buffer is full and
