@@ -143,19 +143,20 @@ tasks:
     claimed_at: '2026-11-12T02:28:57Z'
   - id: t-052
     title: 'Character creator: design a character, adjust stats, play as Zuzu or Jeffery Mittens'
-    status: claimed
+    status: done
     milestone: m5
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-12T00:35:14Z'
+    updated: '2026-11-12T02:29:10+00:00'
     note: |-
       Silas 2026-11-11 PT, in session: "Shifting lands should let us design a character and adjust stats. That means certain encounters change, you can't let the user play the siblings and have them encounter the siblings. But that will help differentiate it from the zuzu gamebook. Though obv zuzu should be one of the playable characters. As should Jeffery Mittens."
 
       Build a start-of-run character creator: choose a premade (Zuzu, Jeffery Mittens the young raccoon looter from zuzu-gamebook BOOK-ONE-OUTLINE.md, and any other canon cast you choose to offer) or design a custom character (species from the approved Facets, name, portrait, and a point-buy stat spread on the existing stats). Premades have fixed stats and signature traits.
 
       Encounters must respect identity: any encounter, follower or quest featuring the chosen character (e.g. the fennec siblings, Jeffery Mittens) is swapped, rewritten or excluded so the player never meets themselves; add a deterministic test sweep over every playable character. Stats should change check odds and some encounter options. Queue portraits for premades and custom species in an auto_submit ledger. Persist the character in saves and the scrapbook.
-    owner: worker
+
+      Character creator merged in kind_robots#5038 (bf8c03f) with all CI green: premade Zuzu (unchanged stats), Jeffery Mittens (knows the old roads; 8 existing routes) and the fennec siblings (sister with her brother), plus a 13-point custom traveler (name, species from the Book One cast, pronouns). Ledger v10 snapshots the character; V9 saves restore as Zuzu and replay byte-identically (pinned 300-seed digest). Identity-aware encounters: cast-tag sidecar, 7 cameo cards and 3 self-variants so a player never meets themselves (swept every character x seeds 1-500 x 15 locations). Portraits queued in conductor#7282 (ROUND-8-TRAVELERS, 13 portraits). Follow-ups: the 3 live achievement messages still name Zuzu (zuzu-shifting-lands achievement task), no scrapbook yet (standard task). Open for Silas: children as playable characters facing the Abbess trial and death routes (harm kept off-screen), naming the fennec sister, stat tuning.
     claimed_by: 20261112-zsl-t052-creator-modest
     claimed_at: '2026-11-12T00:35:14Z'
 
