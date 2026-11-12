@@ -262,16 +262,21 @@ def record(state: dict, path: Path, e: dict, **fields: object) -> None:
 
 
 def production_budget(row: dict, now: datetime | None = None) -> tuple[int, bool]:
-    """Elapsed production wall time, and whether new GPU work is forbidden.
+    """Elapsed wall time in this Pacific day's two-hour budget.
 
-    This caps new requests, not a previously enqueued ArtJob's unknown queue
-    runtime; the relay must own cancellation for a strict GPU runtime cutoff.
+    The next Pacific date may continue the SAME film and ArtJobs with a fresh
+    allowance; retries within the same date cannot reset the budget. Queued
+    remote work is not forcibly cancelled by this local request cutoff.
     """
     now = now or datetime.now(ZoneInfo("America/Los_Angeles"))
-    raw = row.get("started_pt") or row.get("updated_pt")
+    raw = row.get("budget_started_pt") or row.get("started_pt") or row.get("updated_pt")
     if not raw:
         return 0, False
     began = datetime.fromisoformat(raw)
+    # A new Pacific date gets a *new* two-hour allowance, but the same day's
+    # retries never restart it. The durable film and ArtJob IDs stay unchanged.
+    if (row.get("budget_day") or began.date().isoformat()) != now.date().isoformat():
+        return 0, False
     elapsed = max(0, int((now - began).total_seconds()))
     return elapsed, elapsed >= MAX_PRODUCTION_SECONDS
 
@@ -309,7 +314,20 @@ def run_episode(e: dict, episode_path: Path, state: dict, state_file: Path, vide
         return EXIT_CONFIG
     client = KrClient(os.environ.get("KR_BASE_URL", BASE), token)
     row = state["episodes"].get(e["slug"], {})
-    elapsed, deadline_hit = production_budget(row)
+    now_pt = datetime.now(ZoneInfo("America/Los_Angeles"))
+    today = now_pt.date().isoformat()
+    if row.get("budget_day") != today:
+        previous = row.get("started_pt") or row.get("updated_pt")
+        # The pre-budget pilot began earlier today. Honor that clock rather
+        # than granting an extra two hours when migrating the ledger.
+        began = (previous if previous and
+                 datetime.fromisoformat(previous).date().isoformat() == today
+                 else now_pt.isoformat())
+        record(state, episode_path, e, budget_day=today,
+               budget_started_pt=began)
+        save_state(state_file, state)
+        row = state["episodes"][e["slug"]]
+    elapsed, deadline_hit = production_budget(row, now_pt)
     existing = row.get("music_video_id")
     if deadline_hit and not existing:
         raise PipelineError("two-hour window exhausted before a MusicVideo was created")
