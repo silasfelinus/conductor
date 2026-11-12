@@ -18,8 +18,12 @@ def playtest_readiness_errors(tasks: list[dict]) -> list[str]:
         if isinstance(task, dict)
         and not task.get("recurring")
         and not task.get("playtest_iteration")
-        and not task.get("gate_human")
         and task.get("status") not in ("done", "cancelled")
+        and not (
+            task.get("gate_human") is True
+            and task.get("status") == "needs-human"
+            and task.get("gate_reason") in ("subjective-acceptance", "creative-approval", "publish")
+        )
     ]
     if outstanding:
         errors.append("agent-owned tasks still open: " + ", ".join(outstanding[:12]))
