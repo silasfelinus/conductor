@@ -155,6 +155,7 @@ def build_queue_summary() -> dict[str, Any]:
     return {
         'active_project_count': sum(1 for roadmap in roadmaps if roadmap.get('_lifecycle') == 'active'),
         'continuous_project_count': sum(1 for roadmap in roadmaps if roadmap.get('_lifecycle') == 'continuous'),
+        'playtest_project_count': sum(1 for roadmap in roadmaps if roadmap.get('_lifecycle') == 'playtest'),
         'ready_task': ready_task,
         # Ranked fallbacks: a session that cannot do ready_task (no shell, no credentials)
         # walks this list instead of reporting "nothing to do".

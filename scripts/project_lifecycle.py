@@ -5,8 +5,8 @@ from typing import Any
 
 import yaml
 
-PROJECT_LIFECYCLE_STATUSES = ("active", "continuous", "paused", "finished", "retired")
-WORKABLE_PROJECT_STATUSES = ("active", "continuous")
+PROJECT_LIFECYCLE_STATUSES = ("active", "playtest", "continuous", "paused", "finished", "retired")
+WORKABLE_PROJECT_STATUSES = ("active", "playtest", "continuous")
 
 
 def load_project_overrides(path: Path) -> dict[str, dict[str, Any]]:
@@ -45,5 +45,5 @@ def ordered_workable_slugs(order: list[str], overrides: dict[str, dict[str, Any]
     ordered = [slug for slug in order if slug in known]
     ordered += sorted(slug for slug in known if slug not in set(ordered))
     active = [slug for slug in ordered if lifecycle_status(overrides, slug) == "active"]
-    continuous = [slug for slug in ordered if lifecycle_status(overrides, slug) == "continuous"]
-    return [*active, *continuous]
+    ongoing = [slug for slug in ordered if lifecycle_status(overrides, slug) in ("playtest", "continuous")]
+    return [*active, *ongoing]

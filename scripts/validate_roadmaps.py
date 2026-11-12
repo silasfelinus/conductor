@@ -50,8 +50,10 @@ import yaml
 
 try:
     from project_lifecycle import PROJECT_LIFECYCLE_STATUSES, load_project_overrides
+    from playtest_readiness import playtest_readiness_errors
 except ModuleNotFoundError:  # imported as scripts.validate_roadmaps in pytest
     from scripts.project_lifecycle import PROJECT_LIFECYCLE_STATUSES, load_project_overrides
+    from scripts.playtest_readiness import playtest_readiness_errors
 
 ROOT = Path(__file__).resolve().parents[1]
 # The status lifecycle AGENTS.md defines ("Status lifecycle": ready -> claimed ->
@@ -124,7 +126,7 @@ def main() -> int:
             if parent_cfg is None:
                 print(f"project {slug} names unknown parent {parent!r}", file=sys.stderr)
                 ok = False
-            elif str(parent_cfg.get("status", "active")) not in ("active", "continuous"):
+            elif str(parent_cfg.get("status", "active")) not in ("active", "playtest", "continuous"):
                 print(f"project {slug}'s parent {parent} is not workable", file=sys.stderr)
                 ok = False
             if status == "active":
@@ -150,6 +152,11 @@ def main() -> int:
                     f"active project has no open tasks: {slug} -- reconcile its goal, add real work, or explicitly finish/pause it",
                     file=sys.stderr,
                 )
+                ok = False
+
+        if lifecycle == "playtest":
+            for problem in playtest_readiness_errors(data["tasks"]):
+                print(f"playtest readiness failed for {slug}: {problem}", file=sys.stderr)
                 ok = False
 
         raw_kind = override.get("kind") or data.get("kind")

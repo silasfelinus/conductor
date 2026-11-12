@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Completion triage for active projects: what kind of work is left?
 
-Sorts every open task in each active/continuous project into one lane and ranks
+Sorts every open task in each active/playtest/continuous project into one lane and ranks
 projects by how close they are to "only art and Silas remain":
 
   build   agent writing/code/design work still to do
@@ -79,7 +79,7 @@ def lane_of(task: dict) -> str | None:
 
 def active_projects() -> list[dict]:
     data = yaml.safe_load((ROOT / "project-overrides.yaml").read_text()) or {}
-    return [o for o in data.get("overrides", []) if o.get("status") in ("active", "continuous")]
+    return [o for o in data.get("overrides", []) if o.get("status") in ("active", "playtest", "continuous")]
 
 
 def triage() -> list[dict]:
@@ -121,7 +121,7 @@ def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("-v", "--verbose", action="store_true")
     ap.add_argument("--tier", choices=["A", "B", "C"])
-    ap.add_argument("--include-continuous", action="store_true", help="also list continuous programs")
+    ap.add_argument("--include-continuous", action="store_true", help="also list playtest and continuous programs")
     ap.add_argument("--json", action="store_true")
     args = ap.parse_args()
 

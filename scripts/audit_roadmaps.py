@@ -40,7 +40,7 @@ VALID_STATUS = {
 # legacy bad value stays visible in ROADMAP-AUDIT.md instead of going dark.
 VALID_STAKES = {"reversible", "outward-facing", "irreversible"}
 ACTIVE_STATES = {"active"}
-WORKABLE_STATES = {"active", "continuous"}
+WORKABLE_STATES = {"active", "playtest", "continuous"}
 IN_PROGRESS = {"claimed", "review"}
 TERMINAL = {"done", "cancelled"}
 OPEN_STATES = VALID_STATUS - TERMINAL
@@ -160,8 +160,9 @@ def audit() -> dict[str, Any]:
         if isinstance(entry, dict) and entry.get("slug")
     }
     active = {slug for slug, entry in overrides.items() if entry.get("status") in ACTIVE_STATES}
+    playtest = {slug for slug, entry in overrides.items() if entry.get("status") == "playtest"}
     continuous = {slug for slug, entry in overrides.items() if entry.get("status") == "continuous"}
-    workable = active | continuous
+    workable = active | playtest | continuous
 
     findings: list[dict[str, Any]] = []
     projects: list[dict[str, Any]] = []
@@ -420,6 +421,7 @@ def audit() -> dict[str, Any]:
             "roadmaps": len(projects),
             "active_projects": len(active),
             "continuous_projects": len(continuous),
+            "playtest_projects": len(playtest),
             "tasks": sum(item["task_count"] for item in projects),
             "ready": sum(item["ready"] for item in projects),
             "waiting": sum(item["waiting"] for item in projects),
@@ -446,7 +448,7 @@ def render_markdown(report: dict[str, Any]) -> str:
         "",
         "## Portfolio snapshot",
         "",
-        f"- **{summary['roadmaps']}** roadmaps, **{summary['active_projects']}** active + **{summary['continuous_projects']}** continuous projects, **{summary['tasks']}** tasks",
+        f"- **{summary['roadmaps']}** roadmaps, **{summary['active_projects']}** active + **{summary['playtest_projects']}** playtest + **{summary['continuous_projects']}** continuous projects, **{summary['tasks']}** tasks",
         f"- **{summary['ready']} ready**, **{summary['waiting']} waiting**, **{summary['needs_human']} needs-human**, **{summary['in_progress']} claimed/review**, **{summary['done']} done**",
         f"- Findings: **{summary['errors']} errors**, **{summary['warnings']} warnings**, **{summary['info']} informational**",
         "",
