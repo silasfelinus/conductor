@@ -1,0 +1,229 @@
+# Slime City journey-epilogue plates, round 1 (2026-11-12 PT, slime-city/t-062). Silas, 2026-11-11 PT: "There
+# is unmade art it should definitely be added to the pipeline." Each crew's finale shows the TRIUMPH/COMPROMISE plate
+# whichever journey ending the player earned; the three authored journey epilogues per crew (left / right / mixed,
+# kind_robots utils/slimeCity/endings.ts) had no art. One wide plate per epilogue, painted from its own text, for
+# SLIME_CITY_ART.story['<crew>/journey-<key>']. Until a keeper is wired the finale keeps the existing plate.
+# Positive terms only. auto_submit.
+round: slime-city-journey-epilogues-1
+project_slug: slime-city
+designer: Slime City journey epilogue plates, round 1
+is_public: true
+is_mature: false
+cast_loras: false
+priority: 622
+auto_submit: true
+lanes:
+- key: krea2-epilogue
+  label: Krea 2 Slime City journey epilogue plates
+  engine: krea2
+  prompt: prose
+  suffix: Colorful grungy Western comic illustration, thick ink outlines, gouache textures, rust, slime green and
+    neon magenta palette, cinematic wide storybook ending scene, every character an adult, every surface bare and
+    unmarked, one continuous scene.
+subjects:
+- key: slime-epilogue-catgirls-left
+  lane: krea2-epilogue
+  entity: campaign-ending
+  title: The Clinic Door (catgirls journey ending)
+  asset: slime-city/story/catgirls/journey-left
+  size: 1344x768
+  seed: 2290001
+  prompt_prose: Inside a gutted gilded auction house turned into a bright little street clinic, adult catgirls with
+    calico, tabby and tuxedo fur in patched cobalt-blue biotech streetwear bandage a line of grateful mutant patients
+    on mismatched folding cots. The old auctioneer's podium is now a medicine counter stacked with jars and clean
+    towels, the bidding paddles are nailed up as coat hooks, and Calico Nine, a scarred calico matriarch in a torn
+    lab coat, holds the front door open for a soaked family coming in from the green rain.
+- key: slime-epilogue-catgirls-right
+  lane: krea2-epilogue
+  entity: campaign-ending
+  title: The Kept Map (catgirls journey ending)
+  asset: slime-city/story/catgirls/journey-right
+  size: 1344x768
+  seed: 2290002
+  prompt_prose: 'A cramped warm kitchen at night above Chimera Heights: a single rolled-up blueprint map tied with
+    red string lies at the center of a battered table under a hanging bulb. Calico Nine, a scarred adult calico
+    catgirl in a torn lab coat, sits across from a wary young-adult tabby catgirl with a bandaged ear and a sly
+    silver-furred catgirl with folded arms, three tails twitching, three sets of eyes fixed on the map and on each
+    other, a kettle steaming forgotten on the stove.'
+- key: slime-epilogue-catgirls-mixed
+  lane: krea2-epilogue
+  entity: campaign-ending
+  title: Lark's Other Ledger (catgirls journey ending)
+  asset: slime-city/story/catgirls/journey-mixed
+  size: 1344x768
+  seed: 2290003
+  prompt_prose: 'A rain-soaked Chimera Heights alley at dusk where an adult tabby catgirl in a cobalt-blue biotech
+    raincoat pins up a hand-drawn chalk map of pictograms on a brick wall: a red cross, an open eye, a bed. Mutant
+    passers-by, an ogre, a lizard worker and a frog-skinned courier, stop to study it, and a rope of lanterns leads
+    down the alley to a small open door glowing with warm light and fresh bedding.'
+- key: slime-epilogue-bloodfairies-left
+  lane: krea2-epilogue
+  entity: campaign-ending
+  title: The Moshpit Republic (bloodfairies journey ending)
+  asset: slime-city/story/bloodfairies/journey-left
+  size: 1344x768
+  seed: 2290004
+  prompt_prose: 'Dawn on a Slime City rooftop after a three-night punk party: hundreds of tiny adult punk fairies
+    with torn dragonfly wings and safety-pin piercings raise glowing lighters in a show of hands over a sea of amplifiers,
+    confetti and spilled glitter. Queen Safety Pin, a fierce adult fairy frontwoman with a towering magenta mohawk,
+    raises her own lighter last from the edge of the crowd, laughing at herself as the vote sweeps past her, the
+    sun rising pink over the slime lake behind the speakers.'
+- key: slime-epilogue-bloodfairies-right
+  lane: krea2-epilogue
+  entity: campaign-ending
+  title: The Master Switch (bloodfairies journey ending)
+  asset: slime-city/story/bloodfairies/journey-right
+  size: 1344x768
+  seed: 2290005
+  prompt_prose: 'A dim punk bedroom-studio under a rooftop stage: one huge red industrial master switch, wired into
+    every speaker cable in the city, hangs on the wall beside a narrow bed. Queen Safety Pin, a fierce adult fairy
+    frontwoman with a magenta mohawk and torn violet dragonfly wings, sits on the bed with her hand resting near
+    the lever, uneasy, while a scruffy fairy bassist slides a battered wooden ballot box across the floor toward
+    her from the stage stairs.'
+- key: slime-epilogue-bloodfairies-mixed
+  lane: krea2-epilogue
+  entity: campaign-ending
+  title: The Songbook With Mistakes (bloodfairies journey ending)
+  asset: slime-city/story/bloodfairies/journey-mixed
+  size: 1344x768
+  seed: 2290006
+  prompt_prose: 'A cluttered punk print shop in a converted water tank where an adult fairy with ink-stained wings
+    and a shaved head cranks a hand press, pulling out a wild songbook covered in crossed-out lyrics, coffee rings
+    and doodles. Behind her through a round porthole window, the Slime City rooftops spread out: one roof crowded
+    with fairies in a noisy circle meeting, another guarded by a single bored fairy bouncer with a spiked bat, both
+    blasting music.'
+- key: slime-epilogue-ironjaw-left
+  lane: krea2-epilogue
+  entity: campaign-ending
+  title: The Foundry Runs Itself (ironjaw journey ending)
+  asset: slime-city/story/ironjaw/journey-left
+  size: 1344x768
+  seed: 2290007
+  prompt_prose: 'Quitting time on the vast warm floor of a lizard foundry: a whole shift of adult chrome-jawed lizard
+    workers in patched union overalls sprawl together on the heated iron floor like basking reptiles, tails overlapping,
+    while a giant factory clock above them stands frozen with its hands tied by a red union ribbon. The old company
+    store window has become a bright canteen hatch where a lizard cook flips enormous sizzling steaks.'
+- key: slime-epilogue-ironjaw-right
+  lane: krea2-epilogue
+  entity: campaign-ending
+  title: Rivet's Switch (ironjaw journey ending)
+  asset: slime-city/story/ironjaw/journey-right
+  size: 1344x768
+  seed: 2290008
+  prompt_prose: 'A roaring, overheated lizard foundry running at full blast: molten metal pours in white-hot rivers,
+    conveyor belts blur and sparks rain down. Forewoman Rivet, a huge adult cobalt-blue tegu lizard woman with a
+    riveted chrome jaw and a welding visor, stands on a catwalk with a heavy master switch clipped to her tool belt,
+    while below, an ancient grey lizard naps sprawled across a furnace hood, one golden eye cracked open, fixed
+    on the switch.'
+- key: slime-epilogue-ironjaw-mixed
+  lane: krea2-epilogue
+  entity: campaign-ending
+  title: Arguments Over Lunch (ironjaw journey ending)
+  asset: slime-city/story/ironjaw/journey-mixed
+  size: 1344x768
+  seed: 2290009
+  prompt_prose: 'A noisy foundry canteen at lunch: long steel tables of adult chrome-jawed lizard workers in union
+    overalls argue with their mouths full, some raising clawed hands in a vote, others pointing toward Forewoman
+    Rivet, a huge cobalt-blue tegu lizard woman eating calmly at the head of the table. In the foreground a big
+    brass meat scale sits perfectly level with a single steak on each pan.'
+- key: slime-epilogue-riot-left
+  lane: krea2-epilogue
+  entity: campaign-ending
+  title: The Free Festival (riot journey ending)
+  asset: slime-city/story/riot/journey-left
+  size: 1344x768
+  seed: 2290010
+  prompt_prose: 'A joyful free street festival after ten at night in Slime City: punk demolition saints and mutant
+    revelers dance under strings of bare bulbs and slow harmless fireworks, while volunteer marshals in safety-orange
+    fishnets and hi-vis vests count heads at an open gate with hand clickers. A pair of off-duty paramedics and
+    a firefighter in full gear dance wildly beside their parked ambulance, its lights spinning in rhythm.'
+- key: slime-epilogue-riot-right
+  lane: krea2-epilogue
+  entity: campaign-ending
+  title: The Licensed Stage (riot journey ending)
+  asset: slime-city/story/riot/journey-right
+  size: 1344x768
+  seed: 2290011
+  prompt_prose: 'A colossal licensed rock stage in Crown Market at night, louder and brighter than ever: pyrotechnic
+    columns, flame cannons and a wall of speakers. Saint Kaboom, a wiry grinning adult demolition gladiator with
+    a cracked manhole-ring halo and a sash of firecrackers, stands center stage gleefully setting fire to a thick
+    stack of blank insurance paperwork, the singed glowing city skyline curling with smoke behind the crowd.'
+- key: slime-epilogue-riot-mixed
+  lane: krea2-epilogue
+  entity: campaign-ending
+  title: Every Night an Argument (riot journey ending)
+  asset: slime-city/story/riot/journey-mixed
+  size: 1344x768
+  seed: 2290012
+  prompt_prose: 'A split Slime City street scene at night: on the left a small careful free festival with hay bales,
+    buckets of water and marshals in orange fishnets; on the right an enormous ticketed fire show with flame cannons
+    and a ticket booth. In the middle of the street, punk demolition saints in soot-blackened robes argue happily
+    and loudly, waving sparklers, standing on top of a toppled curfew billboard painted with a sad clock face.'
+- key: slime-epilogue-undertow-left
+  lane: krea2-epilogue
+  entity: campaign-ending
+  title: Every Kitchen Has a Switch (undertow journey ending)
+  asset: slime-city/story/undertow/journey-left
+  size: 1344x768
+  seed: 2290013
+  prompt_prose: A cozy Slime City tenement kitchen at night with a big brass off switch beside the sink, firmly
+    flipped down, the pipe below it closed. Through the window, a row of adult frog-skinned troopers in rain capes
+    stand on a drain grate singing in a choir with mouths wide, holding hymn sheets with blank pages, while a tall
+    three-eyed amphibious seer in a fishing-net raincoat listens peacefully from a manhole, eyes half closed.
+- key: slime-epilogue-undertow-right
+  lane: krea2-epilogue
+  entity: campaign-ending
+  title: The Oracle Hears Everything (undertow journey ending)
+  asset: slime-city/story/undertow/journey-right
+  size: 1344x768
+  seed: 2290014
+  prompt_prose: Deep in a dripping sewer junction, the Drain Oracle, a tall adult amphibious seer with glossy teal
+    frog skin, three glowing eyes and a fishing-net raincoat strung with tiny cameras, sits enthroned among hundreds
+    of brass listening pipes curling up toward the city. Every pipe glows faintly with a whisper, and the seer smiles
+    serenely, all three eyes open, one webbed hand cupped to the nearest pipe.
+- key: slime-epilogue-undertow-mixed
+  lane: krea2-epilogue
+  entity: campaign-ending
+  title: The Short List (undertow journey ending)
+  asset: slime-city/story/undertow/journey-mixed
+  size: 1344x768
+  seed: 2290015
+  prompt_prose: 'A rainy Slime City street seen half above and half below the gutter: above, neighbors chat on a
+    stoop, some apartments with brass off switches flipped down and some without; below, in the drain, the three-eyed
+    teal frog-skinned seer in a fishing-net raincoat carefully writes on a very short scroll by candlelight, while
+    paper boats loaded with tiny gossiping frogs drift lazily past on the current.'
+- key: slime-epilogue-exchange-left
+  lane: krea2-epilogue
+  entity: campaign-ending
+  title: The Book Is Shut (exchange journey ending)
+  asset: slime-city/story/exchange/journey-left
+  size: 1344x768
+  seed: 2290016
+  prompt_prose: Beneath Crown Market, a narrow stone stair descending into darkness has been bricked shut with gleaming
+    gold bricks, and an enormous fleshy leather-bound book lies closed on a pedestal, wrapped in chains and a padlock.
+    Up above at street level, laughing mutant kids of every species have a parade, throwing hams like confetti,
+    while Auditor Gilt, a heavyset adult butcher-banker with gold teeth and a monocle, keeps simple accounts at
+    a sidewalk table with a plain pen and a cup of tea.
+- key: slime-epilogue-exchange-right
+  lane: krea2-epilogue
+  entity: campaign-ending
+  title: The Hunger Sleeps Fed (exchange journey ending)
+  asset: slime-city/story/exchange/journey-right
+  size: 1344x768
+  seed: 2290017
+  prompt_prose: A pristine, prosperous Crown Market at dusk where every citizen bows politely to passing butchers
+    in spotless aprons, while below the polished floor, seen through a cutaway, a gigantic dozing tentacled shape
+    with a huge contented belly sleeps curled around a mountain of meat offerings. Auditor Gilt, a heavyset adult
+    butcher-banker with gold teeth, a jeweled monocle and a golden cleaver, stands on the stair between them in
+    ceremonial priestly robes over a pinstripe apron, smiling serenely.
+- key: slime-epilogue-exchange-mixed
+  lane: krea2-epilogue
+  entity: campaign-ending
+  title: Pages Torn and Binding (exchange journey ending)
+  asset: slime-city/story/exchange/journey-mixed
+  size: 1344x768
+  seed: 2290018
+  prompt_prose: At the foot of a candlelit stair under Crown Market, Auditor Gilt, a heavyset adult butcher-banker
+    with gold teeth and a jeweled monocle, sits at a small negotiating table across from a huge shadowy tentacle
+    reaching from the dark, a giant fleshy book open between them with half its pages torn out and scattered on
+    the steps. The tentacle holds a teacup daintily; Gilt holds a pocket watch, both mid-haggle.
