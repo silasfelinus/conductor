@@ -7,8 +7,9 @@ goal: >-
   correct line of sight and hit odds, cover, abilities, animated illustrated cards
   and tactical AI. First campaign has six authored Comet City missions, each with
   opening, triggered and closing conversation trees. Reuse all 48 permanent
-  Prom of Doom identities and artwork; write four distinct role perspectives
-  per hero and a bespoke fixed-cast six-mission personal path for each. Ship a
+  Prom of Doom identities and artwork; write distinct playable hero and
+  villain perspectives for each identity, with sidekick/henchman roles as
+  supporting cast, plus a bespoke six-mission personal path for each. Ship a
   shareable save/load level and cinematic editor, adversarial tests, verified art,
   and separate human design and public publishing gates.
 notes_from_silas: |
@@ -45,6 +46,17 @@ notes_from_silas: |
   Priority venues: college quad with a huge central fountain, cramped science
   lab, and a City Plaza picnic one-shot ambushed by bunny men.
   Do not present prototype map presets as finished authored scenarios/art.
+  2026-11-12 PT: Screenshot review supersedes four playable entry roles.
+  Offer only HERO or VILLAIN at new-story selection. Sidekicks/henchmen
+  may remain richly authored NPCs; preserve legacy saves. Render actual
+  art of speakers in First Bell and all cutscenes, with shaped fallback
+  art slots rather than anonymous text lists. Most 48-identity popups can
+  reuse existing outcome images: manifest has 48/48 hero outcomes and
+  47/48 villain outcomes but only 1 dedicated hero and 2 villain
+  direct-role images. Do not queue duplicate art; audit missing unique
+  reveals (especially minions and lieutenants) through durable ArtJobs.
+  Rewrite the dim front/splash as saturated, kinetic comic-book art.
+  Live feedback: https://github.com/silasfelinus/kind_robots/issues/4407#issuecomment-6838918339
 milestones:
   - id: m1
     title: "SHAPE - art-led front end, combat mathematics and role matrix"
@@ -214,17 +226,21 @@ tasks:
       Merged internal tactical art queue PR silasfelinus/conductor#7120 (8ea4ace24521d0f2e1fedec182b5ee3aadecdbda) with all PR checks completed successfully. Twelve private painted arena/result prompts now auto-submit through Auto Art Generate; accepted ArtJob IDs and rendered delivery still require receipts. The remaining authored six-mission story work remains ready and uncompleted.
   - id: t-008
     milestone: m3
-    title: "Author and verify 48 x 4 unique role-specific story arcs"
+    title: "Author 48 hero and villain playable arcs with distinct supporting cast"
     status: waiting
     depends_on: t-007
     owner: null
     passes: 0
     stakes: reversible
     note: >-
-      For every permanent Prom of Doom hero identity, independent hero,
-      villain, henchman and sidekick motivations/dialogue/secret interactions
-      and endings. Audit 192 genuinely written arcs with every scene reachable,
-      not string replacements or renamed identities.
+      For every permanent Prom of Doom identity, author two genuinely
+      different playable routes: protagonist HERO or VILLAIN. Maintain
+      independent characterization, dialogue and consequences for their
+      supporting sidekicks and henchmen as NPCs, not extra starting modes.
+      Audit 96 distinct playable arcs and meaningful supporting-actor
+      agency; reject string replacements and renamed identities.
+      Retain compatibility with saves made under the historical four-role
+      preview. This supersedes the original 192-player-arc target.
   - id: t-009
     milestone: m3
     title: "Author 48 bespoke six-level fixed-cast personal routes"
@@ -290,6 +306,13 @@ tasks:
       Track stable existing Prom art links, actual ArtJob/ArtImage IDs and
       verified URLs for each battleground, guest, role portrait and
       idle/turn/strike/hit/death state; queued or SVG fallback is incomplete.
+      2026-11-12 manifest inventory: 48/48 hero outcomes, 47/48 villain
+      outcomes, but just 1/48 direct hero and 2/48 direct villain posters.
+      First use the existing outcomes as scene/reveal art where suitable.
+      Missing dedicated hero/villain expressions, henchman and lieutenant
+      introductions still require unique assets; audit actual resolved URLs
+      and queue only true gaps in an auto-submit ledger, then verify attachment.
+      See kind_robots issue #4407 (Nov 12 screenshot feedback).
   - id: t-013
     milestone: m4
     title: "Adversarial full-campaign tests and rendered cross-device QA"
@@ -300,7 +323,8 @@ tasks:
     stakes: reversible
     note: >-
       Test corner/cover/elevation LOS, preview equals actual chance,
-      movement exploits, AI, triggers, all 48 personal paths and four roles,
+      movement exploits, AI, triggers, all 48 personal paths and both
+      playable lead roles, plus legacy four-role save compatibility,
       save/resume/RNG, editor graph failures, permissions, every ending. Verify
       full cinematic stage at 390/768/1440/XL, touch/gamepad/reduced motion.
   - id: t-014
