@@ -1,0 +1,66 @@
+version: 1
+date: '2026-11-12'
+slug: sorry-farm
+title: 'SORRY FARM: We Feel Bad So You Don\'t Have To'
+universe: 'A world where guilt is a transferable commodity, and contractors must shoulder it physically.'
+product: 'Sorry Farm, a monthly service that outsources remorse.'
+format: 'Local television direct-response ad, anachronistic 1987 corporate optimism, immaculate grins concealing fluorescent industrial hell.'
+world_law: 'Regret has weight. It can be shipped to employees. Canceling a subscription returns all outstanding regret to its owner.'
+promise: 'Go on living as if nothing happened.'
+reveal: 'The workers carrying other people\'s regrets are exhausted future versions of the customers.'
+visual_style: 'Hand-painted retro animation, jaundiced teal and tomato red, analog broadcast grain, coarse poster ink, hard-edged commercial lighting, consistent round-faced office customer in a mustard jacket and a matching future self in the warehouse, 1987 television.'
+aspect: '16:9'
+duration_seconds: 15
+voiceover: 'Too guilty to enjoy yourself? At Sorry Farm, someone else can feel it for you. Cancel anytime. It all comes back.'
+# 24 words at ~125 wpm is ~11.5 sec, leaving space for a reaction and the tag.
+sound: 'Overconfident local-TV xylophone jingle; rubber-stamp snap; conveyor clank; abrupt happy end chord.'
+shots:
+  - id: s1
+    start: 0.0
+    end: 2.8
+    role: hook
+    image_prompt: 'A mustard-jacketed office worker grinning beside an empty break room doughnut tray, one remaining powdered doughnut in their hand, 1987 local television ad, painted cel animation.'
+    motion_prompt: 'The worker bites the last doughnut, notices a tiny framed office photograph, shrugs, grins directly at camera.'
+    camera: 'Locked medium two-shot slowly pushes toward the unrepentant grin.'
+    motion: clip
+    overlay: 'A CONSCIENCE IS A TERRIBLE THING TO WASTE'
+  - id: s2
+    start: 2.8
+    end: 5.4
+    role: mechanism
+    image_prompt: 'A chunky ruby red countertop guilt-transfer appliance, a mustard-sleeved hand presses TRANSFER, an inky black suitcase slides into a pneumatic tube, retro animation.'
+    motion_prompt: 'A big rubber stamp swings down, the black suitcase compresses like soft rubber and shoots into a pneumatic tube.'
+    camera: 'Sudden snap zoom to the button; hard cut as the suitcase launches.'
+    motion: kenburns
+    overlay: 'SORRY FARM'
+  - id: s3
+    start: 5.4
+    end: 9.6
+    role: escalation
+    image_prompt: 'Infinite fluorescent warehouse with identical exhausted clerks and stacks of impossible heavy black suitcases, nearest clerk older version of mustard-jacketed customer, retro painted animation.'
+    motion_prompt: 'An enormous stack of shame-labeled suitcases drops onto an exhausted clerk; they buckle, stamp a form and mechanically flash a thumbs-up.'
+    camera: 'Tracking dolly along conveyor belt to reveal acres of quietly suffering clerks.'
+    motion: clip
+    overlay: 'YOUR REGRETS. OUR PEOPLE.'
+  - id: s4
+    start: 9.6
+    end: 12.8
+    role: payoff
+    image_prompt: 'Close-up of tired warehouse clerk in stained mustard jacket, unmistakably older version of cheerful office customer, smudged fluorescent light, a pile of suitcases behind.'
+    motion_prompt: 'The clerk looks up from the form and directly into the lens; a tiny spark of recognition, followed by resignation.'
+    camera: 'Uncomfortably still close-up; hold beyond the obvious reaction.'
+    motion: kenburns
+    overlay: 'CANCEL ANYTIME.'
+  - id: s5
+    start: 12.8
+    end: 15.0
+    role: end_card
+    image_prompt: 'A single glossy smiling red tomato mascot stamped on a cheap retro advertising card over teal stripes, little black suitcase shaped shadow, 1987 corporate television title card.'
+    motion_prompt: 'The smiling tomato mascot remains bright while its suitcase-shadow grows to engulf the card.'
+    camera: 'End card, rigid and cheerful.'
+    motion: kenburns
+    overlay: 'SORRY FARM / IT ALL COMES BACK.'
+status: authored
+music_video_id: null
+final_art_image_id: null
+# These IDs stay null until the actual MusicVideo API returns them.
