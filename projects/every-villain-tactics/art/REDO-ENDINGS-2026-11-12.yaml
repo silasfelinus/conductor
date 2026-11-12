@@ -1,0 +1,75 @@
+# Every Villain Tactics First Bell result plates that failed visual review, redone (2026-11-12 PT). Silas: every
+# ending gets its own painted plate. Lane copied from TACTICAL-ARENAS-ROUND-1; same asset paths as the originals, so
+# the keeper replaces the rejected plate.
+# - 265020 evt-first-bell-cleared: photoreal live action, and one figure is clearly Batman. The squad is now three
+#   described original heroes in practical streetwear with uncovered faces, the medium is stated first as flat 2D comic
+#   art, and the negative names photo/live-action looks and the bat cowl, cape and emblem (comfy: the negative acts).
+# - 265021 evt-first-bell-failed: a photoreal gothic cathedral instead of the comic Comet City Academy plate. The
+#   prompt now describes the academy court from evt-first-bell-auditorium (sandstone paving, blue-gray stone wings,
+#   copper-and-glass doors, purple awnings, gold-striped rails) and the negative names cathedral and gothic forms.
+# Neither prompt ends in a period: the lane suffix is joined with ", ", and a trailing "." made promptString differ
+# from the server-built COMFY workflow (claim-time failures, orchestrator note 2026-11-12).
+# Private. auto_submit: true. Queued is not rendered; review each at full size before placement.
+round: every-villain-tactics-redo-endings-2026-11-12
+series: prom-of-doom-and-every-villain-tactics
+project_slug: every-villain-tactics
+designer: Every Villain Tactics private tactical battlefield production
+is_public: false
+is_mature: false
+cast_loras: false
+auto_submit: true
+status: awaiting-submission
+priority: 60
+lanes:
+- key: unstable-production
+  label: Unstable Diffusers nihilmania / approved Western superhero style
+  engine: comfy
+  checkpoint: SDXL/sdxlUnstableDiffusers_nihilmania.safetensors
+  prompt: prose
+  suffix: Original adult western animated superhero adventure art, clean ink shapes, layered painterly cel shading,
+    believable readable materials, precise architectural silhouettes, high production value for a single-screen handheld
+    tactical game.
+  steps: 28
+  cfg: 7
+  sampler: dpmpp_2m
+subjects:
+- key: evt-redo-20261112-first-bell-cleared
+  lane: unstable-production
+  entity: battle-result
+  title: 'First Bell Cleared: Aftermath Tableau (redo of 265020)'
+  asset: every-villain-tactics/results/first-bell-cleared
+  size: 1344x768
+  seed: 1112641
+  prompt_prose: 'Flat-colored two-dimensional comic book illustration with bold black ink outlines and cel shading:
+    the Comet City Academy auditorium entrance court just after the fight, pale sandstone paving between two blue-gray
+    stone wings, tall copper-and-glass theater doors under purple awnings glowing warm amber from the hall inside, overturned
+    gold-striped safety rails. Three original adult heroes in practical streetwear with uncovered faces lower their guard:
+    a tall woman with a short silver ponytail in a teal bomber jacket and orange knee pads, a stocky bearded man in a
+    mustard work vest with a single copper gauntlet, and a lean young man in a red hooded track jacket with a white star
+    patch. A rival in a green trench coat and a small purple eye mask sits restrained against the low stone wall. The
+    woman kneels to help a frightened student out through an open side passage, while the bearded man looks back at
+    the still-sealed inner door, uneasy. Late afternoon sky. The lower third grades into dark navy pavement for result
+    controls'
+  negative: text, lettering, numbers, speech balloons, interface widgets, scoreboard, logo, trademark characters, graphic
+    violence, photograph, photorealistic, photo, live action, film still, realistic skin, realistic lighting, 3d render,
+    cgi, plastic 3d models, batman, bat emblem, bat ears, cowl, cape, black armored bodysuit, dc comics, marvel comics,
+    famous superhero, cropped hands, random costumes, watermark
+- key: evt-redo-20261112-first-bell-failed
+  lane: unstable-production
+  entity: battle-result
+  title: 'First Bell Lost: Empty Approach (redo of 265021)'
+  asset: every-villain-tactics/results/first-bell-failed
+  size: 1344x768
+  seed: 1112642
+  prompt_prose: 'Flat-colored two-dimensional comic book illustration with bold black ink outlines and cel shading:
+    the same Comet City Academy auditorium entrance court in a rainstorm, pale sandstone paving slick with puddles,
+    two blue-gray stone wings, low modern academy buildings, tall copper-and-glass theater doors shut tight under dripping
+    purple awnings. The tall woman with a short silver ponytail in a teal bomber jacket sits exhausted against a cracked
+    stone planter; the lean young man in a red hooded track jacket kneels in stunned silence with empty hands; a dropped
+    walkie-talkie lies beside the gold-striped safety rail. A white rescue beacon glows on a distant campus rooftop through
+    the rain. Deep blue storm light against warm amber light leaking under the sealed doors, somber and non-graphic.
+    The lower third grades into dark wet navy pavement for result controls'
+  negative: text, lettering, numbers, speech balloons, interface widgets, scoreboard, logo, trademark characters, graphic
+    violence, photograph, photorealistic, photo, live action, film still, realistic lighting, 3d render, cgi, plastic
+    3d models, cathedral, church, gothic architecture, gothic arches, spires, stained glass, castle, batman, cowl, cape,
+    cropped hands, random costumes, watermark

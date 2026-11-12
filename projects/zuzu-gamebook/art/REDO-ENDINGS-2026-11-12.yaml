@@ -1,0 +1,78 @@
+# Zuzu Gamebook ending plates that failed visual review, redone (2026-11-12 PT). Silas: every ending gets its own
+# painted plate. Lane, LoRAs and negatives copied from ROUND-17 (comfy: the negative prompt acts). Neither ending has
+# a shipped plate yet; keepers go to kind_robots public/zuzu-gamebook/scenes/sections/<section>.webp and SECTION_PLATES.
+# - 251963 gb17-ending-wren-lamp-3: an asphalt road with a yellow centre line, anachronistic for the Dustwater road.
+#   The road is now a rutted wagon track of packed earth; the negative adds paving, lane paint, poles and cars.
+# - 251967 gb17-ending-bell-keeper-1: missing the bell, the lit house and the open gate. Zuzu now sits inside an open
+#   belfry with the bell weighted directly above him, and the house and gate are weighted in the view below.
+# Private. auto_submit: true. Queued is not rendered; review each at full size before export.
+round: gamebook-redo-endings-2026-11-12
+series: zuzu-koala-assassin
+project_slug: zuzu-gamebook
+designer: Comic Studio
+is_public: false
+is_mature: false
+priority: 60
+auto_submit: true
+lanes:
+- key: arthemy-house
+  label: Arthemy Western Art v3.0 (house, author's settings)
+  engine: comfy
+  checkpoint: Illustrious/arthemyWesternArt_v30.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, absurdres, very aesthetic, toon (style), western comics (style),
+    gritty, dark atmosphere, grindhouse, high contrast, heavy shadows, weathered, grimy
+  suffix: western, dusty, dramatic lighting, gritty
+  steps: 30
+  cfg: 5
+  sampler: euler_ancestral
+subjects:
+- key: gb-redo-20261112-ending-wren-lamp
+  entity: empty
+  lane: arthemy-house
+  title: 'Ending: Wren''s lamp (redo of 251963)'
+  size: 1344x768
+  seed: 1112681
+  section: ending-wren-lamp
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark,
+    signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute, kawaii, glossy,
+    bright saturated colors, person, figure, character, crowd, animal, ghost, hooded figure, shrouded figure, silhouette,
+    face, (asphalt road:1.4), (paved road:1.3), (painted road lines:1.4), yellow center line, highway, road markings,
+    power lines, telephone poles, car, modern
+  prompt_prose: Looking back along a rutted wagon track of packed earth at dawn, a lone mission bell tower on a rise
+    keeps one small steady lantern burning high on its post against the grey.
+  prompt_tags: (empty scene:1.3), uninhabited, scenery, view from a rutted dusty wagon track of packed red earth with
+    deep wheel ruts and scrub brush on both sides, looking back at a lone adobe mission bell tower on a low rise, a single
+    small horn lantern glowing warm and steady high on a post of the tower, an empty bell hanging dark beneath its canopy,
+    a thin line of kitchen smoke from the mission buildings below, the dirt track winding away toward the viewer through
+    sagebrush, 19th century frontier, quiet hope, epic wide shot, grey overcast dawn, cold pale light, dusty haze, long
+    soft shadows
+  loras: []
+- key: gb-redo-20261112-ending-bell-keeper
+  entity: zuzu
+  lane: arthemy-house
+  title: 'Ending: the keeper of the empty bell (redo of 251967)'
+  size: 768x1344
+  seed: 1112682
+  section: ending-bell-keeper
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark,
+    signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute, kawaii, glossy,
+    bright saturated colors, tall, lanky, long legs, slender, (thin:1.3), (skinny:1.2), long torso, human proportions,
+    straw boater, cowboy hat, cloak, cape, two swords, sword on front, cigarette, smoking, mouse ears, mouse face, (two
+    koalas:1.3), second koala, bear, (tail:1.3), animal tail, high heels, asphalt road, painted road lines, second sword,
+    sword at hip
+  prompt_prose: Zuzu sits on the belfry boards directly beneath a huge green bronze bell with his back to the post,
+    keeping watch over a small lit adobe house and its open gate below.
+  prompt_tags: solo, (fully clothed:1.3), zuzukoala, anthro koala, male, grey fur, stern face, rust-brown poncho, orange
+    zigzag trim, orange sash, dark brown trousers, wide straw hat, katana on back, katana hilt over his right shoulder,
+    inside an open adobe mission belfry, (huge silent verdigris-green bronze bell hanging directly above his head:1.4),
+    heavy timber crossbeam, sitting on worn wooden floorboards with his back against a thick wooden post, legs crossed,
+    paws on his knees, calm watchful face, (view through the open belfry arch down to a small adobe house with warm
+    glowing windows:1.3), (wide open wooden gate in a low adobe wall:1.3), kitchen garden with a thin thread of chimney
+    smoke, dirt road winding into the desert, vertical composition, medium wide shot, orange and violet sundown sky, long
+    hard shadows, dusty haze
+  loras:
+  - resource_id: 4593
+    strength: 0.75
