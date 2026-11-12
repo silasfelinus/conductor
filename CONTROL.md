@@ -507,6 +507,8 @@ candidate workbench stays at `/brainstorm` as an admin tool. See DESIGN-BRIEF.md
   repeat of covered territory, or blind to the table's top-rated lines is a failure.
 
 ### cthulhuquarium  (software)
+**Ending shape (Silas, 2026-11-12 PT):** "I think chthuquarium should have a soft ending but it theoretically should be endlessly playable." Keep one or more soft endings (e.g. the Last Aquarium finale) that are earned and recorded in the scrapbook with a painted plate, but never end the run: the tank stays playable afterward.
+
 **Direction:** A playable, darkly funny idle aquarium game live on Kind Robots at /play/aquarium,
 with persistent aquariums, a collectible monster-fish bestiary, and browsable public tanks.
 **Notes:**
@@ -662,6 +664,8 @@ with persistent aquariums, a collectible monster-fish bestiary, and browsable pu
 - (your notes)
 
 ### zuzu-gamebook  (software, autonomous: true)
+**Ling and Bao; peril is allowed (Silas, 2026-11-12 PT):** the fennec sister is **Ling** and her toddler brother is **Bao** (SERIES-BIBLE.md working names). "I am ok with danger befalling children. It was a possibility in choose your own adventure books, it's not some verboten plot point." Child characters may face real peril and dark endings (no gratuitous gore).
+
 **Character decision (Silas, 2026-11-11 PT):** the gamebook keeps its unique fixed protagonist, Zuzu. No character customization here; every other item in [the main-game standard](docs/agents/main-game-standard.md) applies.
 
 **Direction (2026-10-07, new project):** Create an original branching Zuzu: Koala Assassin RPG gamebook at /play/zuzu-gamebook, distinct from kr-adventures, zuzu-lair and zuzu-showdown. Pattern narrative complexity and resourceful decisions after Sorcery!, Lone Wolf, Grey Star and Fighting Fantasy without copying prose, copyrighted settings or exact mechanics. Original dice, HP, inventory, powers, combat, skill checks, a character sheet, numerous meaningful good/bad endings and pre-generated setting/consequence illustrations.
@@ -672,6 +676,8 @@ with persistent aquariums, a collectible monster-fish bestiary, and browsable pu
 - Active and normal-priority while building, following comic-film in projects/priority.yaml; after the complete book is approved, switch to continuous for autonomous later chapters and polish.
 
 ### zuzu-shifting-lands  (software, autonomous: true)
+**Ling and Bao; peril is allowed (Silas, 2026-11-12 PT):** the fennec sister is **Ling** and her toddler brother is **Bao** (SERIES-BIBLE.md working names). "I am ok with danger befalling children. It was a possibility in choose your own adventure books, it's not some verboten plot point." Child characters may face real peril and dark endings (no gratuitous gore).
+
 **Character creator (Silas, 2026-11-11 PT):** Shifting Lands lets the player design a character and adjust stats, which is what differentiates it from the gamebook. Zuzu must be one of the playable characters, as must Jeffery Mittens (the young raccoon looter from Book One). Encounters change with the chosen character: you cannot play a fennec sibling and then meet the siblings as strangers. See [the main-game standard](docs/agents/main-game-standard.md).
 
 **Personalized travelers (Silas, 2026-11-12 PT):** "Shifting lands Characters can still have special character only events, cards, or options. If we keep it to >10 characters, there's zero reason they can't be personalized to them. I like this idea a lot, high priority for art generation." Keep the premade roster to 13 or fewer (Silas, same day: "That should be <10 characters, but whatevs. 13 is fine and reasonable") and give each premade its own cards, options, a personal thread and **its own custom endings** (Silas: "We might as well have custom endings for each character. Great thing for the scrapbook."), each with a painted plate and its own scrapbook page; queue that art at priority 1000.
@@ -825,6 +831,8 @@ with persistent aquariums, a collectible monster-fish bestiary, and browsable pu
 - Anchor rules, playtest hypotheses and acceptance details: `projects/memory-dungeon/DESIGN-BRIEF.md`, `COMBAT-PATTERNS.md`, `roadmap.yaml`.
 
 ### crystal-street (software)
+**Scrapbook silhouettes (Silas, 2026-11-12 PT):** "Yes on crystal street silhouettes." Overrides the 2026-10-24 show-only-met rule: the nightmares, friends and endings lists show locked silhouettes for unmet entries with an "X of N" count, per the main-game standard.
+
 **New creative project (Silas, 2026-10-24 PT):** Terrors on Crystal Street (title chosen by Silas, 2026-10-24 PT; it began as Nightmare on Crystal Street) is ACTIVE. An 80s horror-comedy, queer-positive day/night card adventure: one week on a suburban cul-de-sac against one of 20+ nightmares, days at the library, gym, traveling pawnshop, school and more, nights of signature scenes and tag-deck pulls with teleports, 20+ companions with 10 active, six emotions plus portrait and poster art, illustrated success and failure on every choice, four endings per nightmare with one Best each, and a scrapbook of every run. Complexity benchmarks: Emperor of Dust, Ecotone, Shifting Desks, Shifting Lands. Admin preview at `/admin/crystal-street`; public release stays a hard gate (roadmap t-011). Generated art is pre-approved. Sources: `projects/crystal-street/DESIGN-BRIEF.md`, `WRITING-GUIDE.md` (queer-positive rules are non-negotiable), `roadmap.yaml`.
 
 ### comet-city-academy (software)
