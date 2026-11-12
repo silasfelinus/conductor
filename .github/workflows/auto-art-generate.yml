@@ -157,6 +157,22 @@ jobs:
             echo "::warning::Kind Robots API unavailable (HTTP ${STATUS:-000}) — preserving queues and skipping API-dependent art work this run."
           fi
 
+      # Before anything submits: record the job ids an earlier run or a killed
+      # session submitted but never committed, so this run adopts those renders
+      # instead of submitting them again (Silas 2026-11-11 PT: "art that was
+      # requested and made but not linked"). Keyed lookup only -- seconds. The
+      # hourly Reconcile Unrecorded Art workflow does the slower prompt-match
+      # backfill and stray scan.
+      - name: Recover unrecorded ArtJob IDs
+        if: ${{ steps.krhealth.outputs.up == 'true' }}
+        continue-on-error: true
+        working-directory: conductor
+        env:
+          KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+        run: |
+          python scripts/reconcile_unrecorded_art.py --apply || true
+          bash scripts/checkpoint_art_state.sh "chore: record recovered ArtJob IDs [skip ci]"
+
       # Memory Dungeon: preserve every request id/path and reuse jobs already on
       # the server. An earlier submit step had TWO slashes after --submit-only,
       # exited 2, and the broad consumer rendered serially until cancellation.
@@ -652,8 +668,10 @@ jobs:
 
       # One step for every ledger that opts in with `auto_submit: true`, so a new ledger
       # reaches the render box without a hand-written step here (2026-10-22: Shifting
-      # Lands ROUND-4 sat unsubmitted while the box idled). Submits open cells, then
-      # refreshes status; job ids are written back, so re-runs never duplicate.
+      # Lands ROUND-4 sat unsubmitted while the box idled). Submits open cells only;
+      # the status refresh runs after the checkpoint below. 2026-11-11 PT: submit and
+      # refresh together kept new ids off main for over an hour (one GET per job of
+      # every ledger) and a timed-out run lost them.
       - name: Sweep opted-in art ledgers
         id: ledger_sweep
         if: ${{ steps.boxhealth.outputs.up == 'true' && steps.krhealth.outputs.up == 'true' }}
@@ -664,34 +682,7 @@ jobs:
         # Tee'd so art_queue_health.py records contract-rejected cells, which --live skips.
         run: |
           set -o pipefail
-          python scripts/sweep_art_ledgers.py --live 2>&1 | tee "$RUNNER_TEMP/art-ledgers.log"
-
-      # The render steps below routinely hit the 150-minute timeout, which
-      # cancels the run before "Commit conductor results". Without this
-      # checkpoint every run resubmitted the same ledger cells as new ArtJobs
-      # (2026-11-06/07: Slime City cells queued three times at priority 1000).
-      - name: Checkpoint ledger ArtJob IDs before rendering
-        if: ${{ steps.boxhealth.outputs.up == 'true' && steps.krhealth.outputs.up == 'true' }}
-        working-directory: conductor
-        run: |
-          git config user.name "conductor-bot"
-          git config user.email "conductor-bot@users.noreply.github.com"
-          git add projects/*/art/*.yaml
-          if git diff --staged --quiet; then
-            echo "Art ledgers already match submitted ArtJobs."
-          else
-            git commit -m "chore: checkpoint art ledger ArtJob IDs [skip ci]"
-            pushed=false
-            for attempt in 1 2 3 4 5; do
-              if git push origin HEAD:main; then pushed=true; break; fi
-              echo "Checkpoint push race (attempt $attempt), integrating newer main."
-              git pull --rebase --autostash origin main || exit 1
-            done
-            if [ "$pushed" != true ]; then
-              echo "::error::Could not persist ledger ArtJob IDs; stopping before more work."
-              exit 1
-            fi
-          fi
+          python scripts/sweep_art_ledgers.py --live --submit-only 2>&1 | tee "$RUNNER_TEMP/art-ledgers.log"
 
       # Shifting Desks has 220 approved style requests. Hand all of them to
       # the durable ArtJob scheduler first, instead of blocking on each render
@@ -710,11 +701,14 @@ jobs:
           python scripts/consume_art_requests_to_media.py --live --submit-only \
             --id-prefix shifting-desks-style-v2- 2>&1 | tee "$RUNNER_TEMP/art-shifting-desks-submit.log"
 
-      # Time-sensitive request lanes go first. Daily Dream requests are already
-      # priority 200 once they become ArtJobs; Mandarin curriculum art is staged
-      # at priority 80; ordinary repair/missing-image requests remain priority 0.
-      - name: Submit + wait + verify art requests
-        id: consume_requests
+      # Request lane, submit half: enqueue every pending request and record its
+      # ArtJob id (plus a request key, so a resubmit returns the same job), but do
+      # not wait. 2026-11-10/11 PT: this lane submitted and waited request by
+      # request, so ids sat on the runner until "Commit conductor results"; runs
+      # cancelled at the 150-minute timeout lost them and Ruler Hooked's 211
+      # requests rendered about 414 times with none recorded.
+      - name: Submit art requests without waiting
+        id: submit_requests
         if: ${{ steps.boxhealth.outputs.up == 'true' && steps.krhealth.outputs.up == 'true' }}
         continue-on-error: true
         working-directory: conductor
@@ -726,8 +720,31 @@ jobs:
           LIMIT_FLAG=""
           if [ -n "$LIMIT" ]; then LIMIT_FLAG="--limit $LIMIT"; fi
           set -o pipefail
-          python scripts/consume_art_requests_to_media.py --live $LIMIT_FLAG \
-            --timeout ${{ github.event.inputs.timeout || '300' }} 2>&1 | tee "$RUNNER_TEMP/art-requests.log"
+          python scripts/consume_art_requests_to_media.py --live --submit-only $LIMIT_FLAG \
+            2>&1 | tee "$RUNNER_TEMP/art-requests.log"
+
+      # Everything above only submits. Persist every recorded ArtJob id before
+      # any step below waits on renders: the waits routinely run into the
+      # 150-minute timeout, which cancels the run before "Commit conductor
+      # results" (2026-11-06/07: Slime City cells queued three times).
+      - name: Checkpoint submitted ArtJob IDs before rendering
+        if: ${{ steps.boxhealth.outputs.up == 'true' && steps.krhealth.outputs.up == 'true' }}
+        working-directory: conductor
+        run: |
+          bash scripts/checkpoint_art_state.sh "chore: checkpoint submitted ArtJob IDs [skip ci]"
+
+      # Settled cells (DONE with an ArtImage) are skipped, so this is one GET per
+      # in-flight job, not per job ever submitted.
+      - name: Refresh art ledger statuses
+        if: ${{ steps.krhealth.outputs.up == 'true' }}
+        continue-on-error: true
+        timeout-minutes: 25
+        working-directory: conductor
+        env:
+          KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+        run: |
+          python scripts/sweep_art_ledgers.py --live --status-only
+          bash scripts/checkpoint_art_state.sh "chore: checkpoint art ledger statuses [skip ci]"
 
       - name: Submit + wait + verify project-art results
         id: consume
@@ -744,6 +761,27 @@ jobs:
           set -o pipefail
           python scripts/consume_art_queue_to_media.py --live $LIMIT_FLAG \
             --timeout ${{ github.event.inputs.timeout || '300' }} 2>&1 | tee "$RUNNER_TEMP/art-project-art.log"
+
+      # Adopt request renders that finished while the project-art lane waited
+      # (every pending request was already submitted, and its id checkpointed,
+      # above), and submit anything still left. Daily Dream requests are
+      # priority 200 once they become ArtJobs; Mandarin curriculum art 80;
+      # ordinary repair/missing-image requests 0.
+      - name: Adopt + verify art request renders
+        id: consume_requests
+        if: ${{ steps.boxhealth.outputs.up == 'true' && steps.krhealth.outputs.up == 'true' }}
+        continue-on-error: true
+        working-directory: conductor
+        env:
+          KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+          KR_MEDIA_ORIGIN: https://media.acrocatranch.com
+        run: |
+          LIMIT="${{ github.event.inputs.limit }}"
+          LIMIT_FLAG=""
+          if [ -n "$LIMIT" ]; then LIMIT_FLAG="--limit $LIMIT"; fi
+          set -o pipefail
+          python scripts/consume_art_requests_to_media.py --live $LIMIT_FLAG \
+            --timeout ${{ github.event.inputs.timeout || '300' }} 2>&1 | tee -a "$RUNNER_TEMP/art-requests.log"
 
       # Reconcile retired Shifting Desks request rows against durable ArtJobs.
       # A media 200 alone is NOT proof of a forced re-render at that same path.

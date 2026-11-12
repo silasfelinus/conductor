@@ -91,7 +91,7 @@ def test_western_cartoon_is_arhemy_not_rejected_furrytoonmix():
 def test_shifting_desks_220_job_batch_is_submitted_before_serial_render_wait():
     workflow = (ROOT / ".github/workflows/auto-art-generate.yml").read_text()
     submit = workflow.index("name: Bulk-submit Shifting Desks style ArtJobs")
-    slow = workflow.index("name: Submit + wait + verify art requests")
+    slow = workflow.index("name: Submit art requests without waiting")
     assert submit < slow
     block = workflow[submit:slow]
     assert "--live --submit-only" in block

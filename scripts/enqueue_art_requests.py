@@ -56,15 +56,27 @@ import yaml
 try:
     from scripts import consume_art_queue_core as core
     from scripts.art_ledger_authoring import ledger_problems
+    from scripts.art_request_key import ledger_cell_key
     from scripts.check_art_prompts_live_contract import run_contract
     from scripts.repair_negation_art_prompts import violations
 except ImportError:  # pragma: no cover - direct script execution
     import consume_art_queue_core as core
     from art_ledger_authoring import ledger_problems
+    from art_request_key import ledger_cell_key
     from check_art_prompts_live_contract import run_contract
     from repair_negation_art_prompts import violations
 
 TERMINAL_STATUSES = {"DONE", "FAILED", "CANCELLED"}
+REPO_ROOT = Path(__file__).resolve().parent.parent
+
+
+def ledger_relpath(path):
+    """A ledger's path relative to the repo root (POSIX), the stable part of its request keys."""
+    resolved = Path(path).resolve()
+    try:
+        return resolved.relative_to(REPO_ROOT).as_posix()
+    except ValueError:
+        return Path(path).as_posix()
 VIDEO_ENGINES = ("wan", "ltx")
 # Engines that take the subject's source_image_id as an input image. sdxl-img2img
 # (zuzu-shifting-lands t-029) repaints an approved render on the house checkpoint, so
@@ -589,6 +601,9 @@ def submit(path, header, ledger, cells, post=None, fetch_source=None, live=None)
             body = build_masked_request(ledger, lane, subject, source, make_mask(source, subject["mask_box"]))
         else:
             body = build_request(ledger, lane, subject, source, last)
+        # Names this cell to Kind Robots so a resubmit after a lost write-back (killed session,
+        # cancelled run) returns the existing job instead of rendering again. See art_request_key.py.
+        body["requestKey"] = ledger_cell_key(ledger_relpath(path), lane, subject)
         status, resp = post(body)
         job_id = ((resp or {}).get("data") or {}).get("jobId") if isinstance(resp, dict) else None
         if status in (200, 201) and job_id:
@@ -612,13 +627,28 @@ def _is_rejected(subject, art, lane_key, job_id):
     return str(job_id) in {str(r) for r in rejected}
 
 
-def refresh_status(path, header, ledger, get=None):
-    """Record each job's status and ArtImage id under subjects[].art."""
+def is_settled(subject, lane_key):
+    """A cell whose job already finished with an ArtImage recorded: nothing left to learn from Kind Robots."""
+    art = (subject.get("art") or {}).get(lane_key) or {}
+    return str(art.get("status") or "").upper() == "DONE" and bool(art.get("art_image_id"))
+
+
+def refresh_status(path, header, ledger, get=None, full=False):
+    """Record each job's status and ArtImage id under subjects[].art.
+
+    Settled cells (DONE with an ArtImage id) are skipped unless ``full``. 2026-11-11 PT: the Auto
+    Art ledger sweep re-fetched every job of every opted-in ledger, one GET each, and spent over an
+    hour doing it while the ids it had just submitted waited for the checkpoint behind it. A run
+    cancelled at its 150-minute timeout then lost them, and the next run rendered them again.
+    """
     get = get or (lambda job_id: core.http_json("GET", f"{core.KR_BASE_URL}/api/art/queue/{job_id}"))
     counts = {}
     for subject in ledger.get("subjects") or []:
         for lane_key, job_id in (subject.get("jobs") or {}).items():
             if not job_id:
+                continue
+            if not full and is_settled(subject, lane_key):
+                counts["DONE"] = counts.get("DONE", 0) + 1
                 continue
             status, resp = get(job_id)
             job = (((resp or {}).get("data") or {}).get("job") or {}) if isinstance(resp, dict) else {}
@@ -643,6 +673,7 @@ def main(argv=None):
     parser.add_argument("ledger")
     parser.add_argument("--live", action="store_true", help="submit cells that have no job id")
     parser.add_argument("--status", action="store_true", help="refresh job status and ArtImage ids")
+    parser.add_argument("--full", action="store_true", help="with --status, re-check settled DONE cells too")
     parser.add_argument("--lane", action="append", help="limit to a lane key (repeatable)")
     parser.add_argument("--subject", action="append", help="limit to a subject key (repeatable)")
     args = parser.parse_args(argv)
@@ -655,7 +686,7 @@ def main(argv=None):
         return 1
 
     if args.status:
-        counts = refresh_status(args.ledger, header, ledger)
+        counts = refresh_status(args.ledger, header, ledger, full=args.full)
         print("status:", ", ".join(f"{k}={v}" for k, v in sorted(counts.items())) or "no jobs")
         return 0
 

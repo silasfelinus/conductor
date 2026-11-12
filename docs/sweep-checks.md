@@ -156,6 +156,19 @@ flags something and you need to know why it exists or how to fix it.
      is `art-medic` work (`docs/agents/roles/art-medic.md`): fix the rows and the producer that
      wrote them. Exit 1 when flagged. Since 2026-11-02 it also records contract-rejected cells in
      `auto_submit` ledgers (source `ledgers`), which the sweep skips without submitting.
+   - `python scripts/reconcile_unrecorded_art.py --check` (sweep name `unrecorded_art`) — art Kind
+     Robots rendered that main never recorded. Silas, 2026-11-11 PT: *"we keep finding art that
+     was requested and made but not linked ... so it doesn't get lost because a thread agent was
+     killed."* Submitters write ArtJob ids to disk and they only count once committed; a killed
+     session or an Auto Art run cancelled at its 150-minute timeout lost them, and the next run
+     rendered the same work again (Ruler Hooked: 211 requests, ~414 renders, none recorded). The
+     hourly **Reconcile Unrecorded Art** workflow writes lost ids back (keyed lookup through
+     kind_robots#5031's `POST /api/art/queue/lookup`, then prompt-match backfill) and, daily, records
+     DONE renders nothing references into `projects/<slug>/art/RECOVERED-<date>.yaml`. The check is
+     offline: it reads `ops/unrecorded-art.yaml` plus those ledgers. Exit 1 lists untriaged
+     RECOVERED renders, a report older than 6h (the workflow stopped), a lookup endpoint unavailable
+     for 48h, or cells sharing one prompt across lanes. All of it is `art-medic` work
+     (`docs/agents/roles/art-medic.md` "Unrecorded art"). Exit 2: no report yet.
    - `python scripts/scan_written_art.py` (sweep name `scan_written_art`) — art that is written
      but neither queued nor delivered. Silas, 2026-11-02 PT: *"we spent about 12 hours today not
      making art, if it's written, it should be in the queue."* It reads the authored prompts in a

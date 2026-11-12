@@ -72,6 +72,12 @@ def open_cells(data) -> int:
 def main(argv=None) -> int:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--live", action="store_true", help="submit open cells, then refresh status")
+    phase = parser.add_mutually_exclusive_group()
+    # 2026-11-11 PT: submit + refresh per ledger kept the new job ids off main for over an hour
+    # (the refresh is one GET per job), long enough for the run to time out and lose them.
+    # auto-art-generate.yml submits every ledger, checkpoints the ids, then refreshes.
+    phase.add_argument("--submit-only", action="store_true", help="with --live: submit open cells, skip the refresh")
+    phase.add_argument("--status-only", action="store_true", help="with --live: refresh status, submit nothing")
     args = parser.parse_args(argv)
 
     ledgers = find_ledgers()
@@ -96,9 +102,10 @@ def main(argv=None) -> int:
         rel = str(path.relative_to(ROOT))
         print(f"== {rel}")
         try:
-            if enq.main([str(path), "--live"]) != 0:
+            if not args.status_only and enq.main([str(path), "--live"]) != 0:
                 failed += 1
-            enq.main([str(path), "--status"])
+            if not args.submit_only:
+                enq.main([str(path), "--status"])
         except Exception as exc:  # noqa: BLE001 -- keep sweeping the rest
             failed += 1
             print(f"   ERROR {rel}: {type(exc).__name__}: {exc}")
