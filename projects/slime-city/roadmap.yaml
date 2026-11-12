@@ -152,11 +152,19 @@ tasks:
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-11T23:38:32Z'
+    updated: '2026-11-12T02:53:47Z'
     note: |-
-        Silas 2026-11-11 PT, in session: "There is unmade art it should definitely be added to the pipeline."
+      Silas 2026-11-11 PT, in session: "There is unmade art it should definitely be added to the pipeline."
 
-        Each crew's ending plate is picked by the older Conviction/Cunning count; the new journey final choice (e.g. Exchange: PAID IN FULL vs signing her own name) changes only the text, and the 15 journey scenes per crew have no art of their own. Author a ledger with one plate per final-choice outcome (6 crews x 2) plus the strongest 2-3 journey scenes per crew, pass art_ledger_authoring and the live prompt contract, queue it, then curate and wire into SLIME_CITY_ART.story so the finale shows the ending the player actually chose.
+      Each crew's ending plate is picked by the older Conviction/Cunning count; the new journey final choice (e.g. Exchange: PAID IN FULL vs signing her own name) changes only the text, and the 15 journey scenes per crew have no art of their own. Author a ledger with one plate per final-choice outcome (6 crews x 2) plus the strongest 2-3 journey scenes per crew, pass art_ledger_authoring and the live prompt contract, queue it, then curate and wire into SLIME_CITY_ART.story so the finale shows the ending the player actually chose.
+
+      2026-11-12 PT: queued JOURNEY-EPILOGUES-ROUND-1.yaml: 18 plates, one per journey
+      epilogue (6 crews x left/right/mixed; the epilogue, not the triumph/compromise count, is
+      what the final choice changes), assets slime-city/story/<crew>/journey-<key>. Next:
+      after the renders land, curate the keepers, add story['<crew>/journey-<key>'] to
+      kind_robots utils/slimeCity/artManifest.ts and have the finale/endings gallery prefer
+      the journey plate over the triumph/compromise plate. Still open: 2-3 key journey-scene
+      plates per crew.
   - id: t-063
     title: 'Main-game standard: audit and close the gaps for Slime City'
     status: ready
