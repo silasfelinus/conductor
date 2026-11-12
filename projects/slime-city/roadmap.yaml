@@ -168,12 +168,12 @@ tasks:
       plates per crew.
   - id: t-063
     title: 'Main-game standard: audit and close the gaps for Slime City'
-    status: review
+    status: ready
     milestone: m4
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-12T02:58:00Z'
+    updated: '2026-11-12T07:55:45Z'
     note: |-
       Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -186,6 +186,12 @@ tasks:
       Achievements are tracked by their own task; this one covers everything else.
 
       Guest story persistence implemented in kind_robots PR #5058 (validated device-local save and restore, corrupted/blocked storage tests). CI was queued at handoff, not merged. Continue title Continue control and settings after this PR is green; account import remains a separate design decision.
+
+      2026-11-12 PT reconcile: kind_robots#5058 (guest story persistence) merged
+      2026-11-12T04:43Z, one slice of this umbrella. Released the expired 02:52Z claim back to
+      ready, not done: still open per the audit are the title-screen Continue control and the
+      settings menu (plus any other Partial/Missing rows in STANDARD-AUDIT-2026-11-12.md).
+      Next claimer: start at the Continue control.
     owner: worker
     claimed_by: 2026-11-12T025200Z-slime-city-t063-8f29c
     claimed_at: '2026-11-12T02:52:00Z'

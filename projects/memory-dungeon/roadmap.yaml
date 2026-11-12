@@ -1447,13 +1447,13 @@ tasks:
   - id: t-064
     milestone: m3
     title: "Bind the Earth letter and Last Train e03/e04 packets into the encounter registry with executable reducer tests"
-    status: review
+    status: ready
     owner: worker
     claimed_by: 2026-11-11T024659Z-memory-dungeon-t-064-f6a2
     claimed_at: '2026-11-11T02:46:59Z'
     stakes: reversible
     passes: 0
-    updated: '2026-11-11T02:49:00Z'
+    updated: '2026-11-12T07:57:13Z'
     note: |-
       2026-11-11 PT remaining: **Highest-value immediate code gap:** bind Last Train to actual e03/e04 encounters and replay-validated reachability; reject forged/out-of-order saved decisions. Evidence: RESET-TASK-EVIDENCE-AUDIT-2026-11-10.md (t-064 row).
       Kaizen from t-025 Last Train review (conductor#7168): two writer packets (Earth letters, Last Train) now specify 24 choices and state rules but neither is wired in. Audit occupied e03/e04 cells, bind scene IDs into the registry and Pinia persistence, and implement each packet's acceptance matrix as executable tests (replay, forged-choice, missing-state fallbacks) before any more prose packets.
@@ -1475,6 +1475,11 @@ tasks:
       Implemented Last Train versioned reducer with 12 stable packet choices, independent scene completion, strict save restoration, immutable replay, derived one-time rewards, and 256 combination regression matrix plus forged-save tests. Focused Kind Robots PR and CI verification pending. Encounter registry, Pinia binding, four production ArtJobs and rendered QA remain.
 
       Added replay-derived Last Train encounter projection and strict restore against verified e03/e04 encounter records, plus adversarial forged/partial/world-mismatch regression assertions. Runtime registry and Pinia wiring still outstanding; this is a scoped partial increment, not task completion.
+
+      2026-11-12 PT reconcile: kind_robots#4957 and #4971 merged, both partial slices.
+      Released the expired 2026-11-11T02:46Z claim back to ready, not done: runtime encounter
+      registry + Pinia wiring for Last Train, the remaining letter branches, art and device QA
+      are still open per the notes above.
   - id: t-065
     milestone: m4
     title: "Audit merged PRs for each task released in the 2026-11-10 twelve-world reset and close only proven-complete scope"
