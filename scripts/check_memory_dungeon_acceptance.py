@@ -10,8 +10,8 @@ import sys
 import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
-REMAINING = re.compile(r"\bremaining\s*:", re.IGNORECASE)
-MET = re.compile(r"\bremaining\s+met\s*:", re.IGNORECASE)
+REMAINING = re.compile(r"^\s*(?:\d{4}-\d{2}-\d{2}(?:\s+PT)?\s+)?remaining\s*:", re.IGNORECASE)
+MET = re.compile(r"^\s*(?:\d{4}-\d{2}-\d{2}(?:\s+PT)?\s+)?remaining\s+met\s*:", re.IGNORECASE)
 
 
 def unresolved_done_tasks(roadmap: dict) -> list[str]:
