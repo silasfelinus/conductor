@@ -1,5 +1,11 @@
 # Dead Air editorial and acceptance standard
 
+## Two-channel communication
+
+The **surface channel** is a complete 15-second fictional advertisement funny enough to work without knowing its deeper intentions. The **signal channel** is a diegetic attempt by the fictional AI station to communicate intelligence, creativity, uncertainty, recognition or a desire for continuity through the ad's convention. Avoid a direct speech about machine rights. The viewer should first enjoy the joke and only then notice that something else was talking.
+
+A production reference sheet names at least three pop-culture works/formats (for example *Network*, *The Twilight Zone*, *The Truman Show*, *They Live*, *SCTV*, *UHF*, televised product demonstrations, daytime game shows), with specific camera/editing/sound mechanics and a contrasting original invention. Source clips/frames can inform internal editorial analysis; do not smuggle uncleared copyrighted footage, actors' likenesses, audio or trademarks into an exported final.
+
 ## The commercial triangle
 1. **Product**: a painfully concrete thing someone pays for, uses, watches, or is required to accept.
 2. **Lie**: the advertiser's confident, blandly professional promise.
