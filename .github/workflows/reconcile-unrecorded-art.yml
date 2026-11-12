@@ -24,6 +24,10 @@ on:
         description: "Scan DONE jobs this many days back for unreferenced renders (0 = skip)"
         default: "0"
         required: false
+      harvest_days:
+        description: "Match DONE jobs this many days back to art slots as candidates, then clear true duplicates (0 = ledger pass only)"
+        default: "0"
+        required: false
 
 concurrency:
   group: reconcile-unrecorded-art
@@ -75,6 +79,25 @@ jobs:
           set -e
           echo "reconcile exit $code (0 nothing to do, 1 recorded something, 2 could not check)"
           if [ "$code" = "2" ]; then echo "::warning::Could not check Kind Robots; nothing recorded this run."; fi
+
+      # Every render becomes a candidate for its art slot in Kind Robots (/admin/art-slots), so
+      # an admin can choose between them; daily, renders nobody recorded are matched by prompt
+      # and true same-seed copies go to the Recycle Bin (Silas 2026-11-11 PT: "support having
+      # multiple art sources for art ... If the art is actually duplicated (same seed), they can
+      # be deleted"). See scripts/sync_art_candidates.py.
+      - name: Sync art candidates
+        continue-on-error: true
+        working-directory: conductor
+        env:
+          KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+        run: |
+          HARVEST="${{ github.event.inputs.harvest_days || '0' }}"
+          if [ "${{ github.event.schedule }}" = "41 11 * * *" ]; then HARVEST=2; fi
+          if [ "$HARVEST" != "0" ]; then
+            python scripts/sync_art_candidates.py --apply --harvest-days "$HARVEST" --dedupe --kind-robots ../kind_robots
+          else
+            python scripts/sync_art_candidates.py --apply
+          fi
 
       - name: Commit recovered ids
         working-directory: conductor

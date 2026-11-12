@@ -167,7 +167,9 @@ flags something and you need to know why it exists or how to fix it.
      DONE renders nothing references into `projects/<slug>/art/RECOVERED-<date>.yaml`. The check is
      offline: it reads `ops/unrecorded-art.yaml` plus those ledgers. Exit 1 lists untriaged
      RECOVERED renders, a report older than 6h (the workflow stopped), a lookup endpoint unavailable
-     for 48h, or cells sharing one prompt across lanes. All of it is `art-medic` work
+     for 48h, or cells sharing one prompt across lanes. Extra renders of known prompts are not
+     strays: `scripts/sync_art_candidates.py` registers them as candidates for their slot in
+     Kind Robots (`/admin/art-slots`) and clears only true same-seed duplicates. All of it is `art-medic` work
      (`docs/agents/roles/art-medic.md` "Unrecorded art"). Exit 2: no report yet.
    - `python scripts/scan_written_art.py` (sweep name `scan_written_art`) — art that is written
      but neither queued nor delivered. Silas, 2026-11-02 PT: *"we spent about 12 hours today not
