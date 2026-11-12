@@ -1,0 +1,63 @@
+# MONSTRIQUE Chapter One ending plates, general edition, round 1 (2026-11-12 PT). Main-game standard item 6
+# (docs/agents/main-game-standard.md): every ending has its own painted plate. Silas, 2026-11-11 PT: "If there is
+# unmade art it should definitely be added to the pipeline."
+# The two case endings in kind_robots utils/monstressConvention/prologue.ts (CaseEnding, set at :1526 and :1547):
+#   lead-earned  "The Convention Lead": the evidence holds, the knife is a 1964 Beach Hex stage prop, Iris
+#                photographs the convention display, Norb: "Get the car. I'll sit in the back. On a towel."
+#   reckless     "A Headline Too Early": filed from the motel desk without the knife, the time or the alibi;
+#                "The comments section is already on fire. So is my reputation."
+# The Playbook Kit spec (utils/playbookKit/games/monstressConvention.ts endings) carries briefs and no src.
+# Cast looks follow utils/monstrique/characterModels.ts as in FRONT-SPLASH-GENERAL-R1 (Iris: dark shoulder-length
+# hair, rose-and-plum trench, press camera; Norb: 4'11", oversized head, huge round glasses, bulbous nose, buck
+# teeth, grey suit, yellow gloves). Spoiler rule: Draculina and any culprit stay off the art. General edition:
+# is_mature false, fully clothed, comedy. No LoRAs (identity LoRAs are not trained yet; ART-PIPELINE.md).
+# Proposed asset path: public/monstress-convention/endings/<ending id>.webp for the kit's art.src; the game PR
+# decides delivery (static file or ArtImage lookup). Silas reviews before anything ships (t-013 gate unchanged).
+# priority 60 (game art ahead of the priority-1 backlog). auto_submit: true. Private.
+round: monstrique-endings-1
+series: monstrique-endings
+project_slug: monstress-convention
+designer: Monstrique Studio
+is_public: false
+is_mature: false
+cast_loras: false
+priority: 60
+auto_submit: true
+lanes:
+- key: krea2
+  label: Krea 2, painted adventure-game key art
+  engine: krea2
+  prompt: prose
+subjects:
+- key: mc-ending-lead-earned
+  lane: krea2
+  entity: monstrique-ending
+  title: 'Ending: The Convention Lead (general)'
+  asset: monstress-convention/endings/lead-earned
+  size: 1344x768
+  seed: 1133001
+  prompt_prose: Hand-painted comedy mystery adventure game illustration, modern HD cartoon with bold ink outlines
+    and caricature proportions. Night in a glittering convention hall lobby decorated with rubber bats and cobwebs.
+    A tall confident adult woman photojournalist with shoulder-length dark hair, berry lipstick and a belted rose-and-plum
+    trench coat aims a vintage press camera with a popping flash bulb at a towering promotional display of seven
+    glamorous adult monster starlets in costumes from different decades, a werewolf woman, a lagoon woman, a mummy
+    woman and four more. Beside her a tiny four-foot-eleven adult man with an oversized head, huge round glasses,
+    a bulbous nose, buck teeth, a rumpled grey suit and bright yellow rubber gloves holds up a clear plastic evidence
+    bag containing a jewelled 1960s stage prop dagger at arm's length, triumphant and queasy. A neatly folded beach
+    towel is tucked under his arm. Magenta, teal and violet neon noir palette, cheeky, victorious mood.
+- key: mc-ending-reckless
+  lane: krea2
+  entity: monstrique-ending
+  title: 'Ending: A Headline Too Early (general)'
+  asset: monstress-convention/endings/reckless
+  size: 1344x768
+  seed: 1133002
+  prompt_prose: Hand-painted comedy mystery adventure game illustration, modern HD cartoon with bold ink outlines
+    and caricature proportions. Late night in a shabby roadside motel room with flamingo wallpaper. On the desk
+    a chunky beige 1990s computer monitor blasts the room with harsh red light, the desk telephone rattles off
+    its hook, and a wastepaper basket beside the desk smokes with a small flame. A tall adult woman photojournalist
+    with shoulder-length dark hair and a belted rose-and-plum trench coat stands with one hand over her mouth,
+    worried. A tiny four-foot-eleven adult man with an oversized head, huge round glasses, a bulbous nose, buck
+    teeth, a rumpled grey suit and bright yellow rubber gloves recoils from the keyboard in horror, knocking over
+    his chair. Through the rain-streaked window an angry crowd of monster fans in rubber masks waves flashlights
+    and foam pitchforks in the parking lot. Magenta, teal and violet neon noir palette, comic dismay.
