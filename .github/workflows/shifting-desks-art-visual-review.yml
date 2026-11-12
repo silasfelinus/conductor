@@ -1,0 +1,35 @@
+name: Shifting Desks art visual review
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/shifting-desks-art-visual-review.yml"
+      - "projects/shifting-desks/art/build_review_sheets.py"
+      - "projects/shifting-desks/art/ROUND-18.yaml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  visual-evidence:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install image review tooling
+        run: pip install "Pillow>=10,<13" "PyYAML>=6,<7"
+      - name: Download actual art and build contact sheets
+        run: |
+          python projects/shifting-desks/art/build_review_sheets.py \
+            --round 18 --out "$RUNNER_TEMP/shifting-desks-art-review"
+      - name: Upload image evidence and prompt manifest
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: shifting-desks-visual-art-review
+          path: ${{ runner.temp }}/shifting-desks-art-review/
+          if-no-files-found: error
+          retention-days: 7
