@@ -1282,10 +1282,10 @@ tasks:
   - id: t-055
     milestone: m3
     title: "e08 Hearth of Perfect Safety: rewrite the 16 night sites to Vesper's POV and finish the map"
-    status: review
+    status: ready
     stakes: reversible
     passes: 0
-    updated: '2026-11-12T03:47:07Z'
+    updated: '2026-11-12T05:51:00Z'
     note: |-
       2026-11-11 PT remaining: Audit every authored night site for Vesper's POV, original horror and earned consequences. Evidence: RESET-TASK-EVIDENCE-AUDIT-2026-11-10.md (t-055 row).
       Silas 2026-11-05 PT: the first eight overworlds keep one protagonist per pair, so e08 is Vesper's, not Scylla's (kind_robots#4778 already moved the viewpoint contract). hoshimoriNight.ts's 16 playable sites and store still describe "a separate Scylla-viewpoint expedition". Rewrite them from Vesper's POV without changing coordinates or choice ids, keep the Junji-Ito-tonal psychological/architectural horror register, then continue toward 64 sites and the dark Oven per t-044. Char's fate branches still apply through campaign flags, not through POV.
@@ -1303,9 +1303,8 @@ tasks:
       2026-11-11 PT: PR kind_robots#5019 merged (9de1c65) after six successful exact-head workflows. All 64 e08 sites now covered in seeded expedition regression with save/forgery assertions. Remaining earned-exit/dungeon integration, art verification and rendered QA; keep task active.
 
       Scoped e08 save-restoration hardening rejects injected top-level fields and malformed saves, with regression assertions. Kind Robots worker PR pending CI; earned-exit/dungeon, art and rendered UI remain open.
-    owner: worker
-    claimed_by: 2026-11-12T024357Z-memory-dungeon-t-055-7b91
-    claimed_at: '2026-11-12T02:43:57Z'
+
+      2026-11-11 PT: Strict e08 Chronicle save-field validation and adversarial regressions merged as kind_robots PR #5062, squash 7bbd10a4. All eight exact-head Actions workflows passed on 3de3c16e, including TypeScript, Contract Tests and Memory Dungeon browser interruption. Partial t-055: earned-exit and dungeon end-to-end seeded integration, rendered-device acceptance and art remain open. Return to ready for remaining scope.
   - id: t-056
     milestone: m2
     title: "Name the researcher (Rowan) as the e01/e02 and e09 lead; Pip stays a supporting NPC"
