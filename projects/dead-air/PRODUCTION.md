@@ -6,21 +6,21 @@ The existing `scripts/build_music_video.py` is the renderer/exporter; `scripts/d
 
 ```bash
 cd conductor
-python scripts/dead_air_produce.py --episode projects/dead-air/episodes/2026-11-12-sorry-farm.yaml --dry-run
+python scripts/dead_air_produce.py --episode projects/dead-air/episodes/2026-11-12-closed-caption-department.yaml --dry-run
 ```
 
 ## Start a private production (only when authenticated)
 
 ```bash
 cd conductor
-KR_BASE_URL=https://kind-robots.vercel.app python scripts/dead_air_produce.py --episode projects/dead-air/episodes/2026-11-12-sorry-farm.yaml --start
+KR_BASE_URL=https://kind-robots.vercel.app python scripts/dead_air_produce.py --episode projects/dead-air/episodes/2026-11-12-closed-caption-department.yaml --start
 ```
 
 The tool prints a MusicVideo ID. **Record it as production evidence in a PR or episode tracking note**; for retries, pass that ID instead of starting over:
 
 ```bash
 cd conductor
-KR_BASE_URL=https://kind-robots.vercel.app python scripts/dead_air_produce.py --episode projects/dead-air/episodes/2026-11-12-sorry-farm.yaml --video-id YOUR_EXISTING_ID --resume
+KR_BASE_URL=https://kind-robots.vercel.app python scripts/dead_air_produce.py --episode projects/dead-air/episodes/2026-11-12-closed-caption-department.yaml --video-id YOUR_EXISTING_ID --resume
 ```
 
 `--resume` is intentionally non-blocking: it may return "rendering" with the *same* ArtJob IDs. Run again later. The private final upload is part of production, not public release.
