@@ -122,19 +122,26 @@ tasks:
     claimed_at: '2026-11-12T01:00:31Z'
   - id: t-061
     title: 'Permanent cosmetic reward for finishing each crew campaign'
-    status: claimed
+    status: review
     milestone: m3
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-12T01:55:46Z'
+    updated: '2026-11-12T01:59:05Z'
     note: |-
         Silas 2026-11-11 PT, in session: "does it unlock rewards?"
 
         Story card rewards stay inside the run by design and no Meat/wallet/card grants are allowed from story. Add a lasting cosmetic per finished crew that does not touch the economy: a crew trophy on the profile/collection screen, an alternate card back or board frame, and a title. Account-saved, shown on the finale screen as "unlocked".
+
+        2026-11-11 PT: kind_robots#5041 adds crew trophies, titles and card-back frames. They
+        are derived from the account-saved endings gallery (TRIUMPH/COMPROMISE plate), so there
+        are no new save fields and no economy grants. They show as a trophy shelf in the endings
+        gallery and an UNLOCKED line on the finished-campaign panel. Next: an equip picker for
+        the card back and title (kaizen).
     owner: worker
     claimed_by: 2026-11-12T015546Z-slime-city-t-061-207tx9
     claimed_at: '2026-11-12T01:55:46Z'
+    implementation_pr: 'silasfelinus/kind_robots#5041'
   - id: t-062
     title: 'Paint the journey final-choice endings and key journey scenes'
     status: ready
