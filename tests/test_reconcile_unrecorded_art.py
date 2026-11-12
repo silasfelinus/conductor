@@ -217,3 +217,17 @@ def test_actionable_names_triage_staleness_and_missing_lookup(tmp_path):
     assert "unavailable for over 48h" in rec.actionable(no_lookup, tmp_path, now)[0]
     rec.write_strays([{"id": 1, "artImageId": 2, "projectSlug": "x", "prompt": "p", "createdAt": None}], "2026-11-11", tmp_path)
     assert rec.actionable(fresh, tmp_path, now)[0].startswith("triage 1 unrecorded render(s)")
+
+
+def test_studio_gallery_ids_count_as_recorded():
+    page = {"characters": [
+        {"key": "iris", "gallery": [{"jobId": 67679, "artImageId": 269007}, {"jobId": None}]},
+        {"key": "norb", "gallery": []},
+    ]}
+    assert rec.studio_gallery_numbers(get=lambda url: (200, page)) == {67679, 269007}
+    wrapped = {"success": True, "data": page}
+    assert rec.studio_gallery_numbers(get=lambda url: (200, wrapped)) == {67679, 269007}
+
+
+def test_unreachable_studio_gallery_contributes_nothing():
+    assert rec.studio_gallery_numbers(get=lambda url: (502, None)) == set()

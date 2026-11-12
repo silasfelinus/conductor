@@ -298,6 +298,32 @@ def reference_numbers(paths: list[Path]) -> set[int]:
     return numbers
 
 
+# Kind Robots admin pages that queue art and keep the job ids in their own database rows, where
+# neither repo's text can see them. A job listed by one of these is recorded, not a stray
+# (2026-11-12: all 53 "unrecorded" Monstress renders were Monstrique series-bible portraits).
+STUDIO_GALLERIES = ("/api/monstrique/bible",)
+
+
+def studio_gallery_numbers(get=None) -> set[int]:
+    """Job and ArtImage ids that Kind Robots studio pages already record. Best effort: an
+    unreachable page contributes nothing (its renders then surface as strays for triage)."""
+    get = get or (lambda url: http("GET", url))
+    numbers: set[int] = set()
+    for path in STUDIO_GALLERIES:
+        status, data = get(f"{core.KR_BASE_URL}{path}")
+        if status != 200 or not isinstance(data, dict):
+            print(f"  studio gallery {path}: unavailable ({status})", file=sys.stderr)
+            continue
+        payload = data.get("data") if isinstance(data.get("data"), dict) else data
+        for character in payload.get("characters") or []:
+            for item in (character or {}).get("gallery") or []:
+                for field in ("jobId", "artImageId"):
+                    value = positive_job_id(item.get(field))
+                    if value:
+                        numbers.add(value)
+    return numbers
+
+
 PREFIX_CHARS = 32
 
 
@@ -555,6 +581,7 @@ def run(args) -> int:
             print(f"  stray scan: {error}", file=sys.stderr)
             recent = []
         refs = reference_numbers([ROOT, *([args.kind_robots] if args.kind_robots else [])])
+        refs |= studio_gallery_numbers()
         projects = {p.name for p in (ROOT / "projects").iterdir() if p.is_dir()}
         min_age = now_utc() - timedelta(hours=args.stray_min_age_hours)
         strays, extra = find_strays(recent, refs, projects, claimed, min_age, known_prompts(ROOT))
