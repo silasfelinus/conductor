@@ -34,6 +34,7 @@ BASE = "https://kindrobots.org"
 DURATION = 15.0
 MAX_PRODUCTION_SECONDS = 2 * 60 * 60
 MAX_GPU_CLIPS = 1  # one optional hero clip; the other shots move in the compositor
+CAMERA_PRESETS = ("zoom-in", "zoom-out", "pan-right", "pan-left")
 
 # Keep aligned with Kind Robots utils/musicVideoScenes.ts: Krea paints nouns
 # it reads. The video compositor, not the still renderer, owns the subtitles.
@@ -109,6 +110,8 @@ def validate(e: dict) -> list[str]:
             cursor = end
         except (ValueError, TypeError, KeyError):
             problems.append(f"shot {index} missing numeric timing")
+        if shot.get("camera_preset") not in CAMERA_PRESETS:
+            problems.append(f"shot {index} needs an authored cinematic camera_preset")
         if shot.get("motion") == "clip":
             clips += 1
         elif shot.get("motion") != "kenburns":
@@ -170,7 +173,7 @@ def scenes_for(e: dict) -> list[dict]:
             "lyricRefs": [],
             "image": {"source": "generated"},
             "motion": {"kind": "clip" if shot["motion"] == "clip" else "kenburns",
-                       "preset": ("zoom-in", "pan-left", "zoom-out", "pan-right")[i % 4]},
+                       "preset": shot["camera_preset"]},
             "transition": "cut", "transitionSec": 0,
         })
     return output
