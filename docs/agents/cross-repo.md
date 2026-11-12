@@ -144,8 +144,8 @@ Branch hygiene:
   setting). Never open a fresh PR from, or re-push, a branch whose work already merged.
 - Branches with no open PR are cleaned by the `branch-janitor` workflow
   (`.github/workflows/branch-janitor.yml` → `scripts/branch_janitor.py`): it deletes any
-  `claude/*`/`worker/*` branch fully merged into `main`, and *reports* (never auto-deletes)
-  unmerged stale branches so a session can rescue-or-delete them with judgment. To clear a
+  `claude/*`/`worker/*`/`close/*`/`conductor/*` branch fully merged into `main`, and *reports* (never auto-deletes)
+  unmerged stale branches so a session can rescue-or-delete them with judgment. A reviewed one-time exact-SHA retirement manifest (`ops/branch-retirements.json`) clears verified superseded branches only if their tips have not moved and no open PR refers to them. To clear a
   branch you have verified is superseded, run that workflow via `workflow_dispatch` with
   `force_delete_branches` — session credentials 403 on ref deletion, so the workflow (with its
   Actions token) is the path, not `git push --delete`.
