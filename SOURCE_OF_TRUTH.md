@@ -37,7 +37,7 @@ Human actions in Kind Robots do not mutate the projection table directly. They c
 - pitches and pitch status;
 - coordination history and completion provenance.
 
-`playtest` means the game has complete authored art/text and agent-owned build and QA evidence, with its final subjective-acceptance task at `needs-human`; iterative polish may continue but no human approval is implied. `playtest` and `continuous` are the two fallback scheduling lifecycles after finite `active` work. Kind Robots displays first-class `PLAYTEST` and `CONTINUOUS` statuses, projected from Conductor without becoming a second source of truth.
+`playtest` means the game has complete authored art/text and agent-owned build and QA evidence, with its final subjective-acceptance task at `needs-human`; iterative polish may continue through new tasks explicitly marked `playtest_iteration: true` but no human approval is implied. The marker exempts only newly scoped iterations, never unfinished original production tasks. `playtest` and `continuous` are the two fallback scheduling lifecycles after finite `active` work. Kind Robots displays first-class `PLAYTEST` and `CONTINUOUS` statuses, projected from Conductor without becoming a second source of truth.
 
 ### Kind Robots owns
 
