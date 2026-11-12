@@ -117,13 +117,13 @@ def test_verified_playtest_handoff_flags_and_closes_once(tmp_path, monkeypatch):
         return issue.copy()
 
     monkeypatch.setattr(handoff, "github_issue", fake_github)
-    assert handoff.main() == 0
+    assert handoff.main([]) == 0
     assert writes == [{
         "title": "[FLAGGED FOR HUMAN TESTING] [ROADMAP] Game",
         "state": "closed",
         "state_reason": "completed",
     }]
-    assert handoff.main() == 0
+    assert handoff.main([]) == 0
     assert len(writes) == 1, "repeated sync must not write again"
 
 
@@ -131,7 +131,7 @@ def test_incomplete_playtest_does_not_close_issue(tmp_path, monkeypatch):
     _handoff_fixture(tmp_path, monkeypatch, task_status="ready")
     writes = []
     monkeypatch.setattr(handoff, "github_issue", lambda *args: writes.append(args))
-    assert handoff.main() == 1
+    assert handoff.main([]) == 1
     assert writes == [], "incomplete games must not change GitHub issues"
 
 
@@ -139,5 +139,5 @@ def test_active_project_does_not_close_master_issue(tmp_path, monkeypatch):
     _handoff_fixture(tmp_path, monkeypatch, status="active")
     writes = []
     monkeypatch.setattr(handoff, "github_issue", lambda *args: writes.append(args))
-    assert handoff.main() == 0
+    assert handoff.main([]) == 0
     assert writes == [], "active development must not alter the roadmap issue"
