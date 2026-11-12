@@ -975,3 +975,13 @@ tasks:
     owner: worker
     claimed_by: 20261112T141126Z-shifting-desks-t051-gpt6-r4
     claimed_at: '2026-11-12T14:11:26Z'
+  - id: t-052
+    title: 'Fail verifyShiftingDesksArtStyles when a style is available while most of its reviewed renders are REDO'
+    status: ready
+    milestone: m3
+    stakes: reversible
+    passes: 0
+    depends_on: []
+    updated: '2026-11-12T18:05:00Z'
+    note: |-
+      Kaizen from the t-032 review (kind_robots#5089). Western Cartoon stayed selectable until a hand edit set phase: suspended, after 170 of 196 renders were rejected. Export the per-style KEEP/REDO counts from the conductor verdict ledger into a small kind_robots data file and make verifyShiftingDesksArtStyles.test.ts fail when a style is phase: available with more than half its reviewed renders REDO, and when a style is suspended with none. That also tells the next session when Western Cartoon can come back. Reversible; no ArtJobs, no deploy.

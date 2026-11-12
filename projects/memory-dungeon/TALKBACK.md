@@ -209,3 +209,15 @@
 **What worked:** the idea is right and small (37 lines, one file), and the plain `python scripts/check_memory_dungeon_acceptance.py` step passes on main.
 
 **What to improve:** a missing check is not a passing check; count the check runs on a workflow edit and confirm the job you changed is in the list. Parse any edited workflow with `yaml.safe_load` before pushing. Prefer a pytest in `tests/` over inline Python in workflow YAML. And this is the fifth handoff-template miss on this project (`Validate Worker PR handoff` red again).
+
+## 2026-11-12 PT | Reviewer merge | memory-dungeon/t-070 | Conductor #7326 (second review)
+
+**Decision:** squash-merged head `d7008837` as `18438ab7` (pass 1 was spent on `0bff092`; no further pass). All 26 check runs present and green on the latest attempt, including `Validate roadmap YAML` and `Python test suite`. Both new steps were also run locally from the parsed workflow: the guard exits 0 on the real roadmap; the smoke rejects the seeded bad fixture, accepts the good one and leaves the roadmap unchanged. t-070 closes as done via task event.
+
+**What worked:** the retry was quick (46 minutes), fixed exactly the reported fault with a `"\n".join([...])` fixture, kept the diff to one file, and the body said plainly not to merge on partial green.
+
+**What to improve:** the body still lacked `### Kaizen suggestion` and `### Notes for reviewer`, so `Validate Worker PR handoff` was still red on the retry (the fifth-miss pattern noted above continues). The Reviewer added the two sections, marked as reviewer-added, and the re-run passed. The check's log names the missing headings; read it after opening the PR. The smoke would also be easier to run and harder to break as a pytest in `tests/`.
+
+**Kaizen task:** t-071, parse every workflow file from a workflow other than `ci.yml`, so an unparseable CI file is a red check and not ten missing ones.
+
+**Housekeeping in the same PR:** the roadmap was over the 150,000-byte advisory (156,389). Archived four done-task notes to `HISTORY.md` and the head of the t-034, t-038 and t-040 notes to their `T0xx-HISTORY.md` files with the verified archival scripts; the acceptance guard still reports OK.

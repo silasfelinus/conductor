@@ -1,0 +1,18 @@
+version: 1
+project: memory-dungeon
+task: t-070
+operation: done
+note: >-
+  2026-11-12 PT review: merged conductor#7326 at head d7008837 (squash 18438ab7) after the retry fixed the
+  workflow YAML. All 26 checks green including Validate roadmap YAML and Python test suite; guard and smoke
+  also run locally. The roadmap-validation job now runs check_memory_dungeon_acceptance.py and a seeded
+  bad/good smoke. Kaizen: t-071.
+verify_pr: silasfelinus/conductor#7326
+learning:
+  date: 2026-11-12
+  kind: software
+  stakes: reversible
+  passes: 1
+  outcome: done
+  failure_category: quality
+  lesson: A workflow file that stops parsing runs none of its jobs, so the PR shows fewer checks, all green; count the check runs after any workflow edit and yaml.safe_load it before pushing.
