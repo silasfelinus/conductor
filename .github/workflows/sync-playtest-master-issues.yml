@@ -1,0 +1,36 @@
+name: Flag playtest master issues
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - project-overrides.yaml
+      - projects/**/roadmap.yaml
+      - docs/agents/master-issues.yaml
+      - scripts/playtest_readiness.py
+      - scripts/sync_playtest_master_issues.py
+      - .github/workflows/sync-playtest-master-issues.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: playtest-master-issues
+  cancel-in-progress: true
+
+jobs:
+  update-issues:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install pyyaml
+      - name: Validate playtest handoffs
+        run: python scripts/sync_playtest_master_issues.py --check
+      - name: Flag verified master issues
+        env:
+          ISSUE_BRIDGE_TOKEN: ${{ secrets.ISSUE_BRIDGE_TOKEN }}
+        run: python scripts/sync_playtest_master_issues.py
