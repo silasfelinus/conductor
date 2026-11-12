@@ -183,3 +183,11 @@
 **What worked:** the PR was opened with the handoff template and passed the handoff check first time, ending the miss streak. Each line names a concrete next check instead of a vague "verify".
 
 **What to improve:** lines were prepended to the notes rather than appended (the notes are append-only by convention). It's harmless here, but prefer `close_task.py --append-note` or task-events so the dated line lands at the end.
+
+## 2026-11-11 PT | Reviewer close (superseded) | memory-dungeon/t-068 | worker/memory-dungeon-t-068-audit-c82e
+
+**Decision:** closed the branch unmerged as superseded. Its one file, `docs/t-068-main-game-standard-audit-2026-11-11.md`, was committed 10 seconds after conductor#7276 merged `STANDARD-AUDIT-2026-11-12.md` for the same task. That audit is more specific: line-level evidence, a live `/api/achievements` check, the 404 on the House epilogue plates, and a mapped list of 16 achievement codes. The two audits disagree on replay hooks (Met vs Partial) and on character customization (a Silas call vs "do not assume an exception"). Keeping both would mislead the next cycle. This was a race, not a quality failure, so no pass is spent. t-068 goes back to `ready` as an umbrella, with a note pointing to the merged audit.
+
+**What worked:** honest, conservative status wording, and a clear "not browser QA" disclaimer.
+
+**What to improve:** re-fetch `origin/main` and re-read the task note right before pushing a docs deliverable. Also open the PR with the handoff template when you push, not later: this branch had no PR.
