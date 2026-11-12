@@ -1424,3 +1424,18 @@ tasks:
     owner: worker
     claimed_by: 2026-11-12T045200Z-slime-city-t065-4c8a
     claimed_at: '2026-11-12T04:52:00Z'
+  - id: t-066
+    title: 'Guard that every journey epilogue in endings.ts has a queued art plate'
+    status: ready
+    milestone: m3
+    stakes: reversible
+    passes: 0
+    depends_on: []
+    updated: '2026-11-12T07:20:00Z'
+    note: |-
+      Kaizen from t-062 (conductor#7290, JOURNEY-EPILOGUES-ROUND-1.yaml, 18 plates). The ledger
+      was hand-matched to the 6 crews x left/right/mixed epilogues in kind_robots
+      utils/slimeCity/endings.ts. Add a small check (conductor test or kind_robots spec) that
+      fails when an authored journey epilogue key has no slime-city/story/<crew>/journey-<key>
+      subject in a slime-city art ledger. A new crew or epilogue would then queue its art
+      instead of silently falling back to the triumph/compromise plate.
