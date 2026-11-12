@@ -114,12 +114,12 @@ tasks:
       Full history: projects/shifting-desks/HISTORY.md#t-001
   - id: t-049
     title: 'Main-game standard: audit and close the gaps for Shifting Desks'
-    status: review
+    status: ready
     milestone: m5
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-12T22:46:00Z'
+    updated: '2026-11-12T23:07:57.377Z'
     note: |-
       Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -132,9 +132,8 @@ tasks:
       Achievements are tracked by their own task; this one covers everything else.
 
       Shifting Desks settings and employee customization implementation: front desk and in-play settings console; persistent text size, flip speed, contrast, reduced motion, audio-volume preferences, art style; explicit confirmed reset; per-run name, pronouns and badge-photo treatment; v5-to-v6 save migration, receipt/print/archive identity, and regression coverage. Opening a Kind Robots PR for full CI. No art, API, schema, deployment or human gate changes.
-    owner: worker
-    claimed_by: 20261112T223600Z-shifting-desks-t049-gpt6-h2n9
-    claimed_at: '2026-11-12T22:36:00Z'
+
+      2026-11-12 PT: Silas-requested settings and employee customization merged as Kind Robots #5095, squash b23e42613e3749c69fd27a9fed81cb5c036374a2. All eight PR CI workflows completed success (Shifting Desks gameplay including migration/receipt tests, TypeScript, layout, formatting, contract shards, schema parity, architecture, Ecotone). Public front desk + in-play settings: persistent text/transition speed, contrast, reduced motion, art style and future audio volumes, explicit confirmed local reset. Per-hire name/pronouns/four badge-photo variants with stat-based jobs, v1-v5 migration to save v6, named Board dossier, Archive and print receipts, historical fingerprint preservation, Cypress scenarios at 390/768/1440. Self-hosted deploy and real browser screenshots not claimed. Remaining t-049 standard gap: richer scrapbook character/art discovery collection and any follow-up account save design; do not close complete standard until evaluated. No playtest transition, art or human t-020 gate cleared.
   - id: t-050
     title: 'Shifting Desks achievement upgrade: 12 or more live achievements'
     status: done
