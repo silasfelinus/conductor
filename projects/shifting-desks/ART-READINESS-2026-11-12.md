@@ -12,16 +12,19 @@ Compared all available `art/ROUND-*.yaml` files; later round number wins
 when a destination is repainted. This prevents a previous KEEP from silently
 approving a newer requested or rendered image.
 
-| Accepted KEEP + delivered evidence | Delivered, verdict absent | New/latest delivery not verified | Distinct destinations |
-|---:|---:|---:|---:|
-| 175 | 196 | 20 | 391 |
+| Accepted KEEP + delivered evidence | Delivered, no verdict yet | Visually rejected, needs redo | New/latest delivery not verified | Distinct destinations |
+|---:|---:|---:|---:|---:|
+| 175 | 185 | 11 | 20 | 391 |
 
-The **196 delivered-but-unreviewed** are all round-18 subject-first Western
-Cartoon images. Every one already carries an ArtJob, ArtImage and HEAD 200
-provenance. Do **not** generate those 196 again: the missing work is visual
-curation, especially the roach illustrations that were previously withdrawn.
-Review the actual rendered subject and gag before recording keep/redo; some
-rendered media may need a new composition, but do not bulk-approve a style.
+All **196 round-18 subject-first Western Cartoon renders** were downloaded
+and assembled into contact sheets (Actions run 43194652224, artifact
+`shifting-desks-visual-art-review`). Each has a prior ArtJob/ArtImage and
+HEAD 200 provenance; **11 of their ending paintings were then individually
+rejected** because the defining authored ending payoff was not depicted.
+The remaining 185 still require prompt-to-image decisions. Do not generate
+all 196 again without considering the 185 individually, and do not bulk-approve
+an entire style. The 11 explicit rejection reasons live next to their rows in
+`art/ROUND-18.yaml`. The Kind Robots art-style fallback is handled in PR #5073.
 
 The **20 not-delivered-latest** entries are:
 
@@ -37,12 +40,18 @@ The **20 not-delivered-latest** entries are:
   `mutation-eyes-in-the-back-of-your-head`.
 - Round 17 (1): `ending-permanent-adjournment`.
 
-**Important:** Requested status means the *newest specified rerender* lacks
-recorded delivery evidence. It does not establish that the image path is empty.
-The main-game standard audit on this date reported all eleven base ending
-images returning 200. Do not queue duplicate jobs or erase working ending
-plates merely to satisfy this ledger. Reconcile production ArtJob IDs, request
-IDs, timestamps and media first via `art/reconcile_delivery.py --live --write`.
+**Verified remote-media finding (2026-11-12):** Every one of these 20
+paths returns HTTP 200 `image/webp`, but the `Last-Modified` timestamps
+precede its respective later round request. Rounds 13-15 were requested on
+2026-10-20 at 18:45, 19:30 and 20:10 UTC, whereas those existing images
+were last modified around 12:37-13:49 UTC on that date. The round-17
+Permanent Adjournment image was last modified 2026-10-23, before its
+2026-11-01 recovery request. This is **positive evidence of older images**,
+not newer delivery. Full per-image timestamps are in the GitHub Actions
+artifact manifest. The current Classic ending plates must be preserved.
+Before queuing any duplicate, check production ArtJobs by exact request ID,
+destination and creation time via `art/reconcile_delivery.py --live --write`.
+Only an independently proven newer completed render can be called delivered.
 
 ## Verification workflow
 
