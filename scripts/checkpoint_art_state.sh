@@ -15,7 +15,7 @@ message="${1:-chore: checkpoint ArtJob IDs [skip ci]}"
 git config user.name >/dev/null || git config user.name "conductor-bot"
 git config user.email >/dev/null || git config user.email "conductor-bot@users.noreply.github.com"
 
-paths=(projects/art-prompts.yaml projects/art-generate.yaml ops/unrecorded-art.yaml)
+paths=(projects/art-prompts.yaml projects/art-generate.yaml ops/unrecorded-art.yaml ops/art-candidates-sync.yaml)
 shopt -s nullglob globstar
 paths+=(projects/*/art/*.yaml projects/*/art/**/*.yaml)
 existing=()

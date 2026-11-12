@@ -340,7 +340,9 @@ Each project has `projects/images/{slug}-icon.webp` (256²), `-card.webp` (512×
 `ART-PROMPTS.md`. Intake routing and the generated-art approval rule: [`docs/agents/project-art.md`](docs/agents/project-art.md).
 Submitted art counts only once its ArtJob id is on main: push the ledger/request ids before you wait
 on renders. Lost ids are recovered hourly by Reconcile Unrecorded Art, and renders nothing records
-become `RECOVERED-<date>.yaml` triage work for `art-medic` (2026-11-11 PT).
+become `RECOVERED-<date>.yaml` triage work for `art-medic` (2026-11-11 PT). Several renders of one
+image are candidates an admin chooses between in Kind Robots `/admin/art-slots`; only true same-seed
+duplicates are deleted (to the Recycle Bin), never other renders.
 
 ## Hard safety rules (all agents, all kinds)
 

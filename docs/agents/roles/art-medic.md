@@ -27,7 +27,9 @@ lost job ids back on its own; what reaches you needs judgment:
     `art:` there (or `last_art_job_id` on the request) so that project's normal curation sees it.
   - `linked` — you wired it in yourself (manifest, entity image, shipped file). Put where in
     `linked_to:` (kind_robots PR or path).
-  - `duplicate` — a second render of something already recorded; `duplicate_of:` the kept job id.
+  - `duplicate` — the same picture as a recorded render (same prompt **and seed** and model);
+    `duplicate_of:` the kept job id. A different seed is a different picture: it is a candidate,
+    not a duplicate (below).
   - `rejected` — off-brief. Adult renders are marked mature, never deleted (rule above).
   One PR per project's batch; merge when green.
 - **Report older than 6h.** The workflow stopped: open its last run, fix it (workflow-medic rules).
@@ -35,6 +37,16 @@ lost job ids back on its own; what reaches you needs judgment:
   Check the deploy; until it is, run with `--backfill-days 3` by hand.
 - **Ambiguous cells.** Two lanes of one ledger share a prompt, so the backfill cannot tell their
   jobs apart. Match them by lane checkpoint in the job payload and write the ids by hand.
+
+**Several renders of one image are candidates, not mistakes.** Silas, 2026-11-11 PT: *"we should
+support having multiple art sources for art. They should be manageable from a back end, so that the
+admin interfaces can choose a better choice. If the art is actually duplicated (same seed), they can
+be deleted."* `scripts/sync_art_candidates.py` (hourly, in the same workflow) registers every DONE
+ledger render, and daily every unrecorded re-render matched by prompt, as a candidate for its slot
+in Kind Robots (`/admin/art-slots`; the slot is the subject's `asset:`). Choosing is an admin's
+call there. The daily run moves only true duplicates (same prompt, seed, checkpoint, sampler, steps,
+cfg) to the Recycle Bin, keeping the chosen copy and every id this repo or kind_robots references.
+Never delete other renders to tidy up.
 
 Recover by hand at any time (a session that knows it was cut off, or a report from Silas):
 `python scripts/reconcile_unrecorded_art.py --apply --report ops/unrecorded-art.yaml
