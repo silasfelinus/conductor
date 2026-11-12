@@ -163,12 +163,12 @@ tasks:
     claimed_at: '2026-10-24T20:57:00Z'
   - id: t-068
     title: 'Main-game standard: audit and close the gaps for Memory Dungeon'
-    status: review
+    status: ready
     milestone: m4
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-12T00:43:24Z'
+    updated: '2026-11-12T01:47:45Z'
     note: |-
       Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -181,6 +181,15 @@ tasks:
       Achievements are tracked by their own task; this one covers everything else.
 
       Completed evidence-based eight-category main-game standard audit in Conductor PR (worker/memory-dungeon-t-068-audit-c82e); gap closures, live achievements, art delivery, and browser QA remain. Return READY after merging audit because t-068 is a multi-increment umbrella.
+
+      REVIEW 2026-11-11 PT (reviewer): worker branch worker/memory-dungeon-t-068-audit-c82e
+      (docs/t-068-main-game-standard-audit-2026-11-11.md) closed unmerged as SUPERSEDED, not a
+      quality failure, no pass spent. It landed 10 seconds after conductor#7276 merged the
+      fuller STANDARD-AUDIT-2026-11-12.md, which has line-level evidence, live-record checks
+      and a 16-code achievement map; two conflicting audits would mislead the next cycle (they
+      disagree on replay hooks and on whether character customization is a Silas call). Next:
+      start from STANDARD-AUDIT-2026-11-12.md and ship the smallest gap PR (export the 12
+      House epilogue plates that 404 live, or the settings additions).
     owner: worker
     claimed_by: 2026-11-12T004324Z-memory-dungeon-t-068-c82e
     claimed_at: '2026-11-12T00:43:24Z'
