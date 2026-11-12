@@ -43,6 +43,7 @@ CHECKS: list[tuple[str, list[str], bool, bool]] = [
     ("check_milestone_status_drift", ["scripts/check_milestone_status_drift.py"], False, False),
     ("check_container_log_drift", ["scripts/check_container_log_drift.py"], False, False),
     ("check_roadmap_note_size", ["scripts/check_roadmap_note_size.py"], False, False),
+    ("memory_dungeon_acceptance", ["scripts/check_memory_dungeon_acceptance.py"], False, False),
     ("check_facet_prompt_subjects", ["scripts/check_facet_prompt_subjects.py"], True, False),
     ("check_priority_queue_starvation", ["scripts/check_priority_queue_starvation.py"], False, False),
     ("check_vendored_scanner_parity", ["scripts/check_vendored_scanner_parity.py"], True, False),
