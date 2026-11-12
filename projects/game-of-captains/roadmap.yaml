@@ -742,7 +742,7 @@ tasks:
   - id: t-033
     milestone: m3
     title: "Curate, re-render and ship the 100 redshirt portraits and secret-power plates"
-    status: claimed
+    status: ready
     owner: worker
     passes: 0
     stakes: reversible
@@ -766,9 +766,18 @@ tasks:
       has shipped (kind_robots PR follows #5026 on the session branch). REDSHIRTS-ROUND-3.yaml (auto_submit, 24 cells,
       24/24 pass the live contract) re-renders the misses with an explicit ivory sofa-silhouette chest badge and 11
       re-described creatures. Next: curate ROUND-3 and export keepers.
+
+      2026-11-11 PT: merged kind_robots#5028 as ef67f9da2826c334392b19aa21816ae12d217d04 after
+      all 14 exact-head checks passed: 117 round-2 keepers shipped (77/100 portraits, 99/100
+      plates) and redshirt portraits now show on the daily console personnel cards. REDSHIRTS-
+      ROUND-3.yaml (24 cells, auto_submit) is on main and awaits rendering. Back to ready:
+      next session curates ROUND-3 on contact sheets (reject gold arrowhead chest badges,
+      ordinary animals, human faces, trademarks), exports keepers with export_round_art.py
+      --only, and closes when rs-001..rs-100 all ship both images.
     claimed_by: 20261111T235500Z-space-couch-t033-rs3
     claimed_at: '2026-11-11T23:41:33Z'
-    updated: '2026-11-11T23:41:33Z'
+    updated: '2026-11-12T00:06:46Z'
+    implementation_pr: 'silasfelinus/kind_robots#5028'
   - id: t-034
     milestone: m4
     title: "Space Couch editorial readability pass: rotating transit prose, 30 success returns, sectioned final log"
