@@ -206,7 +206,7 @@ Full rules, examples and the gate-legitimacy checker: [`docs/agents/human-gates.
   `notes_from_silas` and standing directives.
 - **Generated art is pre-approved** (2026-07-06) when task-scoped, traceable and reversible. It
   never authorizes publishing, paid spend, deploys, billing, secrets or DNS.
-- `playtest` games and `continuous` programs own iterative fallback behavior; `playtest` requires complete art/text, finished agent-owned build/QA, and an actual `needs-human` subjective-acceptance gate. The master GitHub issue receives `[FLAGGED FOR HUMAN TESTING]` only at that verified stage. Human acceptance and publishing are separate approvals. `autonomous: true` on a finite `active` roadmap
+- `playtest` games and `continuous` programs own iterative fallback behavior; `playtest` requires complete art/text, finished finite agent-owned build/QA, and an actual `needs-human` subjective-acceptance gate. Once at playtest, scoped new polish/fix tasks may use `playtest_iteration: true` to remain claimable without invalidating the original handoff; never mark unfinished original roadmap tasks as iterations. The master GitHub issue receives `[FLAGGED FOR HUMAN TESTING]` only at that verified stage. Human acceptance and publishing are separate approvals. `autonomous: true` on a finite `active` roadmap
   widens initiative while real tasks exist but never invents endless work after the queue empties.
 
 ## Security model — who can do what
