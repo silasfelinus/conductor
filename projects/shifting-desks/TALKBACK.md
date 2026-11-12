@@ -81,3 +81,14 @@ Conductor#6110's unchanged reviewed head merged in another session at `2026-10-1
 **Improve:** the handoff check failed on the first push; fill the PR body fully before opening. Pending/submitted job IDs were correctly described as not proof of delivery.
 
 **Kaizen:** Worker's pending/delivered/kept dashboard keyed by request ID is accepted; not enqueued this run to avoid roadmap collisions.
+
+
+## 2026-11-12 PT | Reviewer merge | shifting-desks/t-032 | kind_robots #5089
+
+**Decision:** squash-merged head `140e51c8` as `be0ebdfe`. All 14 check runs green (one `browser-contract` skipped by design, it is dispatch-only). Three files: Western Cartoon is `phase: suspended`, the picker lists only selectable styles, and a saved Western preference normalizes to Classic. Ran `verifyShiftingDesksArtStyles.test.ts` locally on the head: passes. Reversible (one line re-enables the style); no media deleted, no ArtJobs, no deploy. t-032 stays open: art curation and re-renders are outstanding and the t-020 human gate is untouched.
+
+**What worked:** rescuing the conflicted #5080 by replaying its three files onto current main without a force-push, closing #5080 with a pointer, and tests that cover the saved-preference fallback and direct calls to `artStyleImageSrc`.
+
+**What to improve:** the body skipped the handoff template (kind_robots does not enforce it, Conductor does; use it in both), and three commits carry the same message. The 26 KEEP Western renders are hidden along with the 170 rejected ones; say so in the task note so the next session does not re-review them. Not verified here: the picker in a browser. Production only changes on Silas's next Force Update.
+
+**Kaizen task:** t-052, make the art-styles test fail when a style is available while most of its reviewed renders are REDO.

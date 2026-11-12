@@ -348,3 +348,52 @@ kind_robots#4835. Also restores Fenn Dunlin's canon name in the Breathing Works.
 
 Merged kind_robots#4835 (30cf426).
 <!-- note:end t-062 -->
+
+## t-065 — Audit merged PRs for each task released in the 2026-11-10 twelve-world reset and close only proven-complete scope
+
+<!-- note:begin t-065 -->
+Kaizen from the twelve-world roadmap reset review (worker/memory-dungeon-twelve-world-roadmap-20261110): 21 claimed/review tasks went back to ready in one commit. For each, list its merged implementation PRs against the TWELVE-WORLD-DELIVERY-ROADMAP.md acceptance cells, record the evidence in the per-world verification ledger, and either close the proven slice (split remaining scope into a new task) or leave it ready with a one-line "remaining:" summary. Do not reimplement shipped code.
+
+Audited all 24 stale reset tasks against merged PR evidence; published RESET-TASK-EVIDENCE-AUDIT-2026-11-10.md on worker branch. No task falsely marked done; per-task remaining acceptance and twelve-world matrix documented. PR pending CI.
+
+2026-11-10 PT Reviewer: merged conductor PR #7221 (squash 15f497d5) after all 25 checks
+passed; handoff check failed on first open (missing template headings) and passed after
+the Reviewer restructured the body. Audit ledger RESET-TASK-EVIDENCE-
+AUDIT-2026-11-10.md: 0 of 24 tasks proven complete, all left ready; spot-checked
+#4957/#4959 merges in kind_robots main. Kaizen t-066 copies each task's remaining-
+acceptance line into its note.
+<!-- note:end t-065 -->
+
+## t-066 — Copy each reset task's remaining-acceptance line from RESET-TASK-EVIDENCE-AUDIT-2026-11-10.md into its task note
+
+<!-- note:begin t-066 -->
+Kaizen from the t-065 review (conductor PR #7221). The audit ledger lists remaining acceptance for 24 ready tasks but none of their notes point at it, so claimers re-derive the gap. Append one dated "remaining:" line per task (via close_task.py --append-note or task-events, no status change) that links the ledger row and names the next executable check. Documentation only; do not close any task.
+
+Added dated remaining-acceptance evidence pointers and next executable checks to all 24 reset task notes. Conductor PR forthcoming; do not close unfinished gameplay tasks.
+
+2026-11-11 PT Reviewer: squash-merged conductor #7257 (a752515d) after all checks green
+on d6db6ab3. All 24 reset tasks now carry a dated remaining-acceptance line linking the
+ledger row; no status changed. Kaizen t-067.
+<!-- note:end t-066 -->
+
+## t-067 — Add a sweep check that flags any memory-dungeon task closed done while its note's latest 'remaining:' line is not marked met
+
+<!-- note:begin t-067 -->
+Kaizen from the t-066 review (conductor PR #7257). The 24 reset tasks now carry dated "remaining:" acceptance lines, but nothing stops a later close-out from marking one done on a partial slice — the exact "done is not acceptance" failure the reset fixed. Add a small check (script + test) that fails when a done memory-dungeon task's note has a "remaining:" line without a later "remaining met:" / evidence line. Reversible, CI-tested; no task status changes.
+
+Added a done-task latest-remaining acceptance guard, regression tests, and session-sweep integration; implementation PR pending exact-head CI.
+
+2026-11-12 PT Reviewer: squash-merged conductor#7294 (f6405e8a) after all checks passed
+on head ee807690; check reports OK on main and runs in session_sweep as
+memory_dungeon_acceptance. Kaizen: t-070.
+<!-- note:end t-067 -->
+
+## t-069 — Memory Dungeon achievement upgrade: 12 or more live achievements
+
+<!-- note:begin t-069 -->
+Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
+
+Live today: 0 Achievement record(s) with this game's triggerCode prefix (checked against /api/achievements 2026-11-11). Target 12+ (usually 12-30; tie some to endings but don't go overboard). Mix story, skill, discovery and completion. Create the live records through the existing achievements API (label, message, icon, karma, triggerCode prefixed with the game slug), award them from the game store, show them with components/achievements/game-achievement-strip.vue, and verify one award live after deploy.
+
+Achievement upgrade merged in kind_robots#5044 (0b547b4), all checks green: 20 live achievements from medal diffs in syncAchievements, reality completions e01-e06, minefield escape and the Warden win; hydrate/loadCheckpoint never award; site-level memory-master unchanged. Catalog seed run succeeded. Left: medals earned before this shipped are not back-filled; realities e07+ not mapped (Hoshimori covered by medals).
+<!-- note:end t-069 -->
