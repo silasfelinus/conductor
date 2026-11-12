@@ -386,12 +386,14 @@ def run_episode(e: dict, episode_path: Path, state: dict, state_file: Path, vide
               ", ".join(f"{sid}={job_id}" for sid, job_id in sorted(submitted.items())))
         state_now = read_state(client, video_id)
     clip_ids = [s["id"] for s in e["shots"] if s["motion"] == "clip"]
-    # One short generated hero clip at most. Other shots get their action from
-    # animated framing, fast hard cuts, and caption reveals in FFmpeg.
-    if deadline_hit:
-        clip_ids = []
-    for start in range(0, len(clip_ids), 8):
-        request = clips_to_request(state_now, clip_ids[start:start + 8])
+    # Refresh elapsed time after submitting stills. A slow API response must
+    # never reopen the clock or sneak in one extra GPU clip.
+    elapsed, deadline_hit = production_budget(state["episodes"][e["slug"]])
+    # One optional hero clip, with a strict cutoff on *new* GPU submissions.
+    # Keep all requested IDs for evidence even if the deadline has passed.
+    requestable_clip_ids = [] if deadline_hit else clip_ids
+    for start in range(0, len(requestable_clip_ids), 8):
+        request = clips_to_request(state_now, requestable_clip_ids[start:start + 8])
         if request:
             results = client.request_clips(video_id, request)
             outcomes = results.get("outcomes") or []
