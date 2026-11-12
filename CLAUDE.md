@@ -40,6 +40,11 @@ Before responding to any task, run a conductor sweep and report it to Silas:
      from idle; prior drafts, `MEMORY.yaml` and `SILAS-NOTES.yaml` are historical source material.
      Report it as stopped, not missing. The original direction is kept in the rituals doc.
 
+**Hourly playtest-advancement scheduled task:** when a scheduled session asks you to move
+high-priority games toward playtest, follow
+[docs/agents/hourly-playtest-advancement.md](docs/agents/hourly-playtest-advancement.md).
+This is a task-specific development lane, not the read-only hourly Conductor report.
+
 Then report, briefly: branch and tree state; open PRs; ready tasks in priority order; needs-human
 gates from active projects only, by project; state-reconciliation findings; projection headroom
 (the `check_roadmap_note_size` payload line — report it every session); art-queue health; container
