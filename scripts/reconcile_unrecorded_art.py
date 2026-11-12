@@ -256,9 +256,12 @@ def match_by_prompt(targets: list[Target], jobs: list[dict]) -> tuple[int, int]:
         if not text:
             continue
         hits = [t for prompt, group in by_prompt.items() if prompt in text for t in group]
+        if len(hits) > 1:
+            # A shorter prompt can sit inside a longer one; the exact match wins.
+            hits = [t for t in hits if norm(t.prompt) == text] or hits
         if not hits:
             continue
-        if len(hits) > 1:  # one prompt, several cells (A/B lanes): the prompt cannot say which
+        if len(hits) > 1:  # one prompt, several cells (A/B lanes): this job cannot say which
             for target in hits:
                 target.ambiguous = True
             continue
@@ -266,8 +269,9 @@ def match_by_prompt(targets: list[Target], jobs: list[dict]) -> tuple[int, int]:
     matched = duplicates = 0
     for target in targets:
         jobs_for = candidates.get(id(target))
-        if not jobs_for or target.ambiguous:
+        if not jobs_for:
             continue
+        target.ambiguous = False  # an unambiguous job of its own settles it
         jobs_for.sort(key=lambda j: (STATUS_RANK.get(str(j.get("status")), 0), j.get("id") or 0), reverse=True)
         best = jobs_for[0]
         target.job = {"jobId": best["id"], "status": best.get("status"), "artImageId": best.get("artImageId"), "via": "prompt"}

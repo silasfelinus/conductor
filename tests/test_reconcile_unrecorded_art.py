@@ -127,6 +127,19 @@ def test_prompt_shared_by_two_cells_is_ambiguous_not_guessed(tmp_path):
     assert matched == 0 and all(t.ambiguous for t in targets)
 
 
+def test_exact_prompt_beats_a_shorter_prompt_contained_in_it(tmp_path):
+    _write_ledger(tmp_path, subjects=[_subject("short", prose="A dock."), _subject("long", prose="A dock. At night.")])
+    targets, _ = rec.ledger_targets(tmp_path)
+    short, long_ = (rec.ledgers.compose_prompt(LANE, t.subject) for t in targets)
+    jobs = [{"id": 1, "status": "DONE", "prompt": long_}, {"id": 2, "status": "DONE", "prompt": short}]
+    # "A dock., Painted..." is not inside "A dock. At night., Painted..." here, so make it so:
+    jobs.append({"id": 3, "status": "DONE", "prompt": short + " " + long_})
+    matched, _ = rec.match_by_prompt(targets, jobs)
+    assert matched == 2
+    assert {t.subject["key"]: t.job["jobId"] for t in targets} == {"short": 2, "long": 1}
+    assert not any(t.ambiguous for t in targets)
+
+
 # ------------------------------------------------------------------ strays
 
 
