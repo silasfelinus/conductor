@@ -136,3 +136,35 @@ def test_assembly_accepts_motion_fallback_only_after_deadline():
     assert ready_for_export(state, episode, deadline_hit=True)
     state.doc["song"] = {}
     assert not ready_for_export(state, episode, deadline_hit=True)
+
+
+def test_future_episode_seeds_are_valid_and_context_free():
+    for slug in ("2026-11-13-plot-assist.yaml", "2026-11-14-clap-credit.yaml"):
+        e = load_episode(PILOT.parent / slug)
+        assert len(e["shots"]) == 5
+        assert sum(s["motion"] == "clip" for s in e["shots"]) <= 1
+        assert e["product"] and e["reveal"]
+        assert all(s["camera_preset"] in ("zoom-in", "zoom-out", "pan-left", "pan-right")
+                   for s in e["shots"])
+
+
+def test_no_second_daily_film_after_a_completed_screening(monkeypatch, tmp_path):
+    import dead_air_produce
+    from shutil import copyfile
+    episode_dir = tmp_path / "episodes"
+    episode_dir.mkdir()
+    for name in ("2026-11-12-closed-caption-department.yaml", "2026-11-13-plot-assist.yaml"):
+        copyfile(PILOT.parent / name, episode_dir / name)
+    monkeypatch.setattr(dead_air_produce, "EPISODES", episode_dir)
+    state = {"episodes": {
+        "closed-caption-department": {"status": "completed", "completed_pt": "2026-11-13"}
+    }}
+    assert choose_episode(state, "2026-11-13") is None
+    assert choose_episode(state, "2026-11-14") == episode_dir / "2026-11-13-plot-assist.yaml"
+
+
+def test_camera_motion_comes_from_storyboard_not_round_robin():
+    original = load_episode(PILOT)
+    scenes = scenes_for(original)
+    assert all(sc["motion"]["preset"] == sh["camera_preset"]
+               for sc, sh in zip(scenes, original["shots"]))
