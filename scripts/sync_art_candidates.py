@@ -269,11 +269,25 @@ def main(argv=None) -> int:
     touched = {c["projectSlug"] for c in candidates}
     print(f"ledger pass: {len(candidates)} candidate(s) from {sum(1 for k in hashes if synced.get(k) != hashes[k])} changed ledger(s)")
 
+    # Ledgers first and saved at once, then each harvested project as soon as it is matched:
+    # a long harvest cut off by the job timeout keeps everything already sent.
+    outcome, created = ("ok", 0)
+    if args.apply:
+        outcome, created = register(candidates)
+        print(f"register ledgers: {outcome}, {created} new candidate(s) of {len(candidates)}")
+        if outcome == "unavailable":
+            print("Kind Robots has no /api/art/slots yet (kind_robots#5048 not deployed); nothing recorded.", file=sys.stderr)
+            return 2
+        if outcome == "ok":
+            state["ledgers"] = {**(state.get("ledgers") or {}), **hashes}
+            state["last_sync"] = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+            save_state(state)
+
     if args.harvest_days:
         since = datetime.now(timezone.utc) - timedelta(days=args.harvest_days)
         targets = prompt_targets(ROOT)
         projects = sorted(p for p in targets if not args.project or p in args.project)
-        harvested = 0
+        harvested = harvest_created = 0
         for project in projects:
             try:
                 jobs = list(rec.page_jobs(f"projectSlug={project}&status=DONE", since, args.max_pages, time_field="updatedAt"))
@@ -281,25 +295,24 @@ def main(argv=None) -> int:
                 print(f"  harvest {project}: {error}", file=sys.stderr)
                 continue
             found = match_jobs(targets[project], jobs)
-            if found:
-                touched.add(project)
+            if not found:
+                continue
+            touched.add(project)
             harvested += len(found)
-            candidates += found
-        print(f"harvest: {harvested} render(s) matched to slots across {len(projects)} project(s)")
+            if args.apply:
+                result, new = register(found)
+                harvest_created += new
+                print(f"  {project}: {len(found)} render(s) matched, {new} new candidate(s) ({result})")
+                if result != "ok":
+                    outcome = result
+        print(f"harvest: {harvested} render(s) matched to slots across {len(projects)} project(s), {harvest_created} new")
+        candidates_total = len(candidates) + harvested
+    else:
+        candidates_total = len(candidates)
 
     if not args.apply:
-        print(f"dry run: {len(candidates)} candidate(s) would be sent (--apply sends)")
+        print(f"dry run: {candidates_total} candidate(s) would be sent (--apply sends)")
         return 0
-
-    outcome, created = register(candidates)
-    print(f"register: {outcome}, {created} new candidate(s) of {len(candidates)}")
-    if outcome == "unavailable":
-        print("Kind Robots has no /api/art/slots yet (kind_robots#5048 not deployed); nothing recorded.", file=sys.stderr)
-        return 2
-    if outcome == "ok":
-        state["ledgers"] = {**(state.get("ledgers") or {}), **hashes}
-        state["last_sync"] = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
-        save_state(state)
 
     if args.dedupe:
         projects = sorted(p for p in touched if p and (not args.project or p in args.project))
@@ -307,7 +320,6 @@ def main(argv=None) -> int:
         planned, removed = dedupe(projects, refs, apply=True)
         print(f"dedupe: {removed} duplicate render(s) moved to the Recycle Bin ({planned} planned)")
     return 0 if outcome == "ok" else 2
-
 
 if __name__ == "__main__":
     sys.exit(main())

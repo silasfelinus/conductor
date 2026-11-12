@@ -11,6 +11,11 @@ name: Reconcile Unrecorded Art
 # Daily:  the stray scan, which pages every DONE job of the last two days (slow, ~10 minutes).
 
 on:
+  # Right after every Auto Art Generate run, cancelled ones included: a run cut off at its
+  # timeout is exactly when submitted ids can miss main. Also hourly, in case that hook lags.
+  workflow_run:
+    workflows: ["Auto Art Generate"]
+    types: [completed]
   schedule:
     - cron: "23 * * * *"
     - cron: "41 11 * * *"
@@ -36,7 +41,7 @@ concurrency:
 jobs:
   reconcile:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 120
     permissions:
       contents: write
     env:
