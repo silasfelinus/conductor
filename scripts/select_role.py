@@ -955,6 +955,24 @@ def find_art_queue_failures(*, persist_days: int = art_queue_health.DEFAULT_PERS
     return art_queue_health.actionable(failures, datetime.now(timezone.utc).date(), persist_days)
 
 
+def find_unrecorded_art_items() -> list[str]:
+    """Unrecorded-art work only an agent can do, from ops/unrecorded-art.yaml and the
+    RECOVERED ledgers (scripts/reconcile_unrecorded_art.py).
+
+    Silas, 2026-11-11 PT: art "requested and made but not linked" must be a sweep the
+    rotation owns, "so it doesn't get lost because a thread agent was killed". The hourly
+    workflow records lost ids by itself; this surfaces what needs judgment: untriaged
+    RECOVERED renders, a stalled workflow, or a lookup endpoint that never came up.
+    Local files only, no API.
+    """
+    try:
+        import scripts.reconcile_unrecorded_art as unrecorded
+        return unrecorded.actionable(unrecorded.load_report())
+    except Exception as error:  # noqa: BLE001 - a bad file must not break role selection
+        print(f'[select-role] unrecorded art report unreadable: {error}', file=sys.stderr)
+        return []
+
+
 def find_gate_triage_findings() -> list[dict]:
     """needs-human gates that are really agent work (check_gate_legitimacy.py).
 
@@ -1036,6 +1054,7 @@ def select_role(
     stale_recurring = find_stale_recurring_tasks(roadmaps, stale_days=recurring_stale_days)
     gate_findings = find_gate_triage_findings()
     art_failures = find_art_queue_failures()
+    unrecorded_art = find_unrecorded_art_items()
 
     if review_branches or reviewable_prs:
         role = 'reviewer'
@@ -1072,6 +1091,14 @@ def select_role(
             kinds[failure.get('kind', '?')] = kinds.get(failure.get('kind', '?'), 0) + 1
         summary = ', '.join(f'{count} {kind}' for kind, count in sorted(kinds.items()))
         reason = f'{len(art_failures)} failed art queue item(s) need fixing ({summary}); see ops/art-queue-health.yaml'
+    elif unrecorded_art:
+        # Rendered-but-unrecorded art (2026-11-11 PT). Same tier as a failed queue: every
+        # day it waits, a render nobody linked drifts further from the task that wanted it.
+        role = 'art-medic'
+        reason = (
+            f'{len(unrecorded_art)} unrecorded-art item(s): {unrecorded_art[0]}; '
+            'see ops/unrecorded-art.yaml and docs/agents/roles/art-medic.md "Unrecorded art"'
+        )
     elif stranded:
         role = 'branch-medic'
         by_repo = ', '.join(sorted({b['repo'] for b in stranded}))
@@ -1187,6 +1214,7 @@ def select_role(
         'red_stale_prs': red_prs,
         'art_queue_failure_count': len(art_failures),
         'art_queue_failures': art_failures,
+        'unrecorded_art': unrecorded_art,
         'stranded_branch_count': len(stranded),
         'stranded_branches': stranded,
         'semantic_intent_review_due': bool(semantic_intent.get('due')),

@@ -203,7 +203,7 @@ def test_refresh_status_keeps_a_delivered_image_when_the_lookup_fails(tmp_path):
     header, ledger = enq.load_ledger(path)
     ledger["subjects"][0]["jobs"] = {"zimage-turbo": 7}
     ledger["subjects"][0]["art"] = {"zimage-turbo": {"status": "DONE", "art_image_id": 9}}
-    counts = enq.refresh_status(path, header, ledger, get=lambda job_id: (502, "Bad Gateway"))
+    counts = enq.refresh_status(path, header, ledger, get=lambda job_id: (502, "Bad Gateway"), full=True)
     assert counts == {"HTTP502": 1}
     saved = yaml.safe_load(path.read_text())
     assert saved["subjects"][0]["art"] == {"zimage-turbo": {"status": "DONE", "art_image_id": 9}}
@@ -733,3 +733,41 @@ def test_source_margin_frames_a_sprite_in_the_matte_colour():
     assert image.getpixel((50, 200)) == (0, 255, 0)
     assert image.getpixel((300, 50)) == (0, 255, 0)
     assert image.getpixel((300, 200))[0] > 200
+
+
+def test_refresh_status_skips_settled_cells_unless_full(tmp_path):
+    # 2026-11-11 PT: re-fetching every settled job kept freshly submitted ids off main for an hour.
+    path = _ledger(tmp_path)
+    header, ledger = enq.load_ledger(path)
+    ledger["subjects"][0]["jobs"] = {"zimage-turbo": 7, "il": 8}
+    ledger["subjects"][0]["art"] = {"zimage-turbo": {"status": "DONE", "art_image_id": 9}}
+    asked = []
+
+    def get(job_id):
+        asked.append(job_id)
+        return 200, {"data": {"job": {"status": "RUNNING", "artImageId": None}}}
+
+    counts = enq.refresh_status(path, header, ledger, get=get)
+    assert asked == [8]
+    assert counts == {"DONE": 1, "RUNNING": 1}
+    enq.refresh_status(path, header, ledger, get=get, full=True)
+    assert asked == [8, 7, 8]
+
+
+def test_submit_sends_a_stable_request_key(tmp_path):
+    # The key lets Kind Robots return the existing job when a lost write-back makes us resubmit.
+    path = _ledger(tmp_path)
+    header, ledger = enq.load_ledger(path)
+    cells = list(enq.iter_cells(ledger))[:1]
+    sent = []
+
+    def post(body):
+        sent.append(body)
+        return 201, {"data": {"jobId": 41}}
+
+    enq.submit(path, header, ledger, cells, post=post, live=lambda rows: None)
+    assert len(sent) == 1
+    key = sent[0]["requestKey"]
+    subject, lane = cells[0]
+    assert key.startswith("conductor:ledger:")
+    assert f"#{subject['key']}@{lane['key']}=" in key

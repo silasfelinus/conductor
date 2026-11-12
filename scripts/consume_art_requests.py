@@ -45,6 +45,7 @@ import yaml
 sys.path.insert(0, str(Path(__file__).parent))
 import consume_art_queue as consumer  # noqa: E402
 from art_request_staging_priority import positive_job_id  # noqa: E402
+from art_request_key import request_key  # noqa: E402
 
 ROOT = consumer.ROOT
 ART_PROMPTS_FILE = ROOT / "projects" / "art-prompts.yaml"
@@ -757,7 +758,14 @@ def main():
     for request in todo:
         name = request["image_path"]
         try:
-            job_id = consumer.enqueue(consumer.entry_to_job(request))
+            job = consumer.entry_to_job(request)
+            # Names this request to Kind Robots: a resubmit after a lost last_art_job_id (a run
+            # cancelled before "Commit conductor results") returns the existing job instead of a
+            # second render, and reconcile_unrecorded_art.py can look it up. See art_request_key.py.
+            key = request_key(request)
+            if key:
+                job["requestKey"] = key
+            job_id = consumer.enqueue(job)
             record_submitted_job(request.get("id"), job_id)
             if args.submit_only:
                 print(f"  queued job {job_id} for {name} - handed off to the relay")

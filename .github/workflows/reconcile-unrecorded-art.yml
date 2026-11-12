@@ -1,0 +1,87 @@
+name: Reconcile Unrecorded Art
+
+# Finds art Kind Robots rendered for Conductor that main never recorded -- a thread agent killed
+# before it committed, or an Auto Art run cancelled at its timeout -- writes the lost ArtJob ids
+# back, and records finished renders nobody references into projects/<slug>/art/RECOVERED-<date>.yaml
+# for the art-medic rotation to link. Silas, 2026-11-11 PT: "it should be both corrected and linked
+# and be a part of the normal conductor agent task rotation ... so it doesn't get lost because a
+# thread agent was killed." See scripts/reconcile_unrecorded_art.py.
+#
+# Hourly: keyed lookup (seconds) + a one-day prompt-match backfill for keyless jobs.
+# Daily:  the stray scan, which pages every DONE job of the last two days (slow, ~10 minutes).
+
+on:
+  schedule:
+    - cron: "23 * * * *"
+    - cron: "41 11 * * *"
+  workflow_dispatch:
+    inputs:
+      backfill_days:
+        description: "Prompt-match keyless jobs this many days back (0 = keyed lookup only)"
+        default: "1"
+        required: false
+      strays_days:
+        description: "Scan DONE jobs this many days back for unreferenced renders (0 = skip)"
+        default: "0"
+        required: false
+
+concurrency:
+  group: reconcile-unrecorded-art
+  cancel-in-progress: false
+
+jobs:
+  reconcile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    permissions:
+      contents: write
+    env:
+      KR_BASE_URL: https://kindrobots.org
+      PYTHONUNBUFFERED: "1"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: conductor
+          ref: main
+
+      # ArtImage ids wired straight into game manifests live in kind_robots; without this
+      # checkout those renders could read as unreferenced. The scan still runs if it fails.
+      - uses: actions/checkout@v4
+        continue-on-error: true
+        with:
+          repository: silasfelinus/kind_robots
+          path: kind_robots
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install pyyaml
+
+      - name: Reconcile
+        working-directory: conductor
+        env:
+          KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+        run: |
+          BACKFILL="${{ github.event.inputs.backfill_days || '1' }}"
+          STRAYS="${{ github.event.inputs.strays_days || '0' }}"
+          if [ "${{ github.event.schedule }}" = "41 11 * * *" ]; then STRAYS=2; fi
+          set +e
+          python scripts/reconcile_unrecorded_art.py --apply --report ops/unrecorded-art.yaml \
+            --backfill-days "$BACKFILL" --strays-days "$STRAYS" --kind-robots ../kind_robots
+          code=$?
+          set -e
+          echo "reconcile exit $code (0 nothing to do, 1 recorded something, 2 could not check)"
+          if [ "$code" = "2" ]; then echo "::warning::Could not check Kind Robots; nothing recorded this run."; fi
+
+      - name: Commit recovered ids
+        working-directory: conductor
+        run: |
+          bash scripts/checkpoint_art_state.sh "chore: record unrecorded ArtJob IDs [skip ci]"
+
+      - name: Summarize
+        if: always()
+        working-directory: conductor
+        run: python scripts/reconcile_unrecorded_art.py --check --report ops/unrecorded-art.yaml || true

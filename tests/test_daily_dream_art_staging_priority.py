@@ -72,9 +72,14 @@ def test_auto_art_runs_request_lane_before_project_art_lane():
     workflow = (ROOT / ".github" / "workflows" / "auto-art-generate.yml").read_text(
         encoding="utf-8"
     )
-    request_step = workflow.index("- name: Submit + wait + verify art requests")
+    # Requests are enqueued first (submit-only), their ids checkpointed to main, and only
+    # then does any step wait on renders (2026-11-11 PT: waits ran into the 150-minute
+    # timeout and lost every id the run had not committed).
+    request_step = workflow.index("- name: Submit art requests without waiting")
+    checkpoint = workflow.index("- name: Checkpoint submitted ArtJob IDs before rendering")
     project_step = workflow.index("- name: Submit + wait + verify project-art results")
-    assert request_step < project_step
+    adopt_step = workflow.index("- name: Adopt + verify art request renders")
+    assert request_step < checkpoint < project_step < adopt_step
 
 
 def test_auto_art_retriggers_when_request_staging_logic_changes():

@@ -10,6 +10,37 @@ otherwise adult but off-brief for its project, set the ArtImage's `isMature` (`P
 withdraw it from the ledger. Never delete it and never park it on Silas. Escalate only content that is illegal
 or plausibly involves a minor; a reviewer's "reads young" alone is not that bar.
 
+### Unrecorded art: record it, then link it
+
+Silas, 2026-11-11 PT: *"we keep finding art that was requested and made but not linked ... it should
+be both corrected and linked and be a part of the normal conductor agent task rotation to be
+responsible for that sweep so it doesn't get lost because a thread agent was killed."*
+`select_role.py` names this role when `python scripts/reconcile_unrecorded_art.py --check` (sweep
+line `unrecorded_art`) lists work. The hourly **Reconcile Unrecorded Art** workflow already writes
+lost job ids back on its own; what reaches you needs judgment:
+
+- **Untriaged `projects/<slug>/art/RECOVERED-<date>.yaml`.** Each subject is a DONE render whose
+  ArtJob and ArtImage ids appear nowhere in Conductor or kind_robots. Read the ArtImage
+  (`/api/art/image/<id>`), find what asked for it (`git log -S` on a phrase of `prompt_prose`, the
+  project's open art tasks, kind_robots content), and set `triage:` on the subject:
+  - `adopted` — it is the render an existing ledger cell or request wanted. Write its job id and
+    `art:` there (or `last_art_job_id` on the request) so that project's normal curation sees it.
+  - `linked` — you wired it in yourself (manifest, entity image, shipped file). Put where in
+    `linked_to:` (kind_robots PR or path).
+  - `duplicate` — a second render of something already recorded; `duplicate_of:` the kept job id.
+  - `rejected` — off-brief. Adult renders are marked mature, never deleted (rule above).
+  One PR per project's batch; merge when green.
+- **Report older than 6h.** The workflow stopped: open its last run, fix it (workflow-medic rules).
+- **Lookup unavailable for 48h.** kind_robots#5031 (`POST /api/art/queue/lookup`) is not live.
+  Check the deploy; until it is, run with `--backfill-days 3` by hand.
+- **Ambiguous cells.** Two lanes of one ledger share a prompt, so the backfill cannot tell their
+  jobs apart. Match them by lane checkpoint in the job payload and write the ids by hand.
+
+Recover by hand at any time (a session that knows it was cut off, or a report from Silas):
+`python scripts/reconcile_unrecorded_art.py --apply --report ops/unrecorded-art.yaml
+--backfill-days 3 --strays-days 2`, then commit the touched ledgers, `projects/art-prompts.yaml` and
+the report. Never re-submit a cell to "fix" a missing id: the render already exists.
+
 ### If you're fixing a failed art queue
 
 `select_role.py` recommended `art-medic`: `ops/art-queue-health.yaml` lists art

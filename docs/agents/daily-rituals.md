@@ -117,6 +117,8 @@ Then report:
   when it broke on 2026-09-11 nothing had warned that it was close
 - **Art queue health**: the `art_queue_health` sweep line — failed art the last Auto Art Generate run
   could not render (its green check hides them). Non-zero means `art-medic` work; name the counts by kind
+- **Unrecorded art**: the `unrecorded_art` sweep line — ids recovered by the last reconcile run,
+  duplicate renders seen, and any untriaged `RECOVERED-<date>.yaml` renders (`art-medic` work)
 - **Container log triage** (Alexandria): new/spiking/newly-quiet log signatures, or a stale
   digest meaning the daily User Script stopped running — omit entirely when not configured yet
 - **Any unresolved escalations** from TALKBACK

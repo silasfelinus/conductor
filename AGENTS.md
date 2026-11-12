@@ -338,6 +338,9 @@ lesson appends one record to `LEARNING.yaml` (append-only); `build_learning_summ
 Each project has `projects/images/{slug}-icon.webp` (256²), `-card.webp` (512×768) and `-hero.webp`
 (1280×720); missing files fall back to a placeholder. New projects append three entries to
 `ART-PROMPTS.md`. Intake routing and the generated-art approval rule: [`docs/agents/project-art.md`](docs/agents/project-art.md).
+Submitted art counts only once its ArtJob id is on main: push the ledger/request ids before you wait
+on renders. Lost ids are recovered hourly by Reconcile Unrecorded Art, and renders nothing records
+become `RECOVERED-<date>.yaml` triage work for `art-medic` (2026-11-11 PT).
 
 ## Hard safety rules (all agents, all kinds)
 
