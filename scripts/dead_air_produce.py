@@ -8,6 +8,7 @@ It never publishes or changes isPublic. No credentials are printed.
 from __future__ import annotations
 
 import argparse
+import hashlib
 from datetime import datetime
 import json
 import os
@@ -279,17 +280,32 @@ def run_episode(e: dict, episode_path: Path, state: dict, state_file: Path, vide
     if len(ready_clips) < 2 or plan_actions(state_now) != ["assemble"]:
         print(f"Rendering private MusicVideo {video_id}: {len(ready_clips)}/{len(clip_ids)} real motion clips ready")
         return EXIT_IN_PROGRESS
+    # A shot list is not distinct artwork if all scene IDs resolve to the same still.
+    scene_ids = []
+    for shot in e["shots"]:
+        match = next((s for s in state_now.doc.get("scenes", []) if s["id"] == shot["id"]), {})
+        image_id = (match.get("image") or {}).get("artImageId")
+        if not image_id and shot["id"] in state_now.scene_jobs:
+            image_id = state_now.scene_jobs[shot["id"]].art_image_id
+        if not image_id:
+            raise PipelineError(f"shot {shot['id']} has no delivered still ArtImage")
+        scene_ids.append(image_id)
+    if len(set(scene_ids)) != len(scene_ids):
+        raise PipelineError("multiple shots resolved to the same still ArtImage")
     with tempfile.TemporaryDirectory(prefix=f"dead-air-{video_id}-") as tmp:
         workspace = Path(tmp)
         raw, final = workspace / "raw.mp4", workspace / "captioned.mp4"
         assemble(client, state_now, raw, workspace, 30)
         probe = caption_export(raw, final, e, workspace)
+        film_hash = hashlib.sha256(final.read_bytes()).hexdigest()
+        film_bytes = final.stat().st_size
         result = client.upload_final(video_id, final)
     image_id = result.get("artImageId")
     if not image_id:
         raise PipelineError("final upload returned no ArtImage ID")
     record(state, episode_path, e, status="completed", final_art_image_id=image_id,
-           quality_probe=probe, completed_pt=datetime.now(ZoneInfo("America/Los_Angeles")).date().isoformat())
+           quality_probe=probe, sha256=film_hash, bytes=film_bytes,
+           completed_pt=datetime.now(ZoneInfo("America/Los_Angeles")).date().isoformat())
     save_state(state_file, state)
     print(f"Completed private film {video_id}: final ArtImage {image_id}; {probe['duration_seconds']} seconds")
     return EXIT_DONE
