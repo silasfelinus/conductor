@@ -1,4 +1,4 @@
-name: Flag playtest master issues
+name: Close verified playtest roadmap issues
 
 on:
   push:
@@ -30,7 +30,7 @@ jobs:
       - run: python -m pip install pyyaml
       - name: Validate playtest handoffs
         run: python scripts/sync_playtest_master_issues.py --check
-      - name: Flag verified master issues
+      - name: Close verified playtest master issues
         env:
           ISSUE_BRIDGE_TOKEN: ${{ secrets.ISSUE_BRIDGE_TOKEN }}
         run: python scripts/sync_playtest_master_issues.py
