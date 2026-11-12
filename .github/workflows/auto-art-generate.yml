@@ -796,6 +796,21 @@ jobs:
         run: |
           python projects/shifting-desks/art/reconcile_delivery.py --live --write
 
+      # This is a *read-only* summary, never a bulk visual KEEP. Make the
+      # remaining art-review work visible on every generation run.
+      - name: Report Shifting Desks art acceptance gaps
+        if: always()
+        working-directory: conductor
+        run: python scripts/shifting_desks_art_readiness.py --markdown | tee "$RUNNER_TEMP/shifting-desks-art-readiness.md"
+
+      - name: Upload Shifting Desks art readiness report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: shifting-desks-art-readiness
+          path: ${{ runner.temp }}/shifting-desks-art-readiness.md
+          if-no-files-found: ignore
+
       - name: Route downloaded conductor and fallback images
         continue-on-error: true
         working-directory: conductor
