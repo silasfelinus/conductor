@@ -69,11 +69,11 @@ tasks:
   - id: t-002
     milestone: m2
     title: Render and verify the first complete private fifteen-second pilot
-    status: review
+    status: ready
     owner: worker
     claimed_by: 2026-11-12T114330Z-dead-air-t002-b8c7
     claimed_at: '2026-11-12T11:43:30Z'
-    updated: '2026-11-12T11:59:00Z'
+    updated: '2026-11-12T16:49:37Z'
     stakes: reversible
     passes: 0
     depends_on: t-001
@@ -85,6 +85,15 @@ tasks:
       Merged scoped Krea2 scene-prompt repair in Conductor PR #7315 at 75d30d44f7d68cfd6ca4c99de3b9be27f596dfcb after 24 final-head CI checks passed, skipped or neutral. GitHub Actions run 43209359458 verified five durable still ArtJobs for MusicVideo 18: s1 68688, s2 68689, s3 68690, s4 68691, s5 68692. They are rendering; no clip ArtJobs or final MP4 yet, so do not mark film delivery done. Resume this same MusicVideo 18 after stills render, request two actual motion clips, and verify 15-second final media.
 
       Producer budget recovery and morning delivery patch under review. One optional clip maximum, 7200-second cutoff for new GPU requests, authored camera presets, overnight retries, private film digest linking, original episodic run and inclusive anime/metal/jaguar series bible. No claim of completed MP4.
+
+      2026-11-12 PT review: merged conductor#7322 (squash 24f09f4b, 27 checks green/skipped on
+      head c8025a0b; 18 dead-air tests re-run green on a merge with main). Landed the 7200s
+      per-PT-day cutoff on new GPU requests, one optional hero clip, authored camera presets,
+      four overnight passes (1:00-3:15am PST) and the private digest link gated on a probed
+      15s final. Back to ready, not done: MusicVideo 18 stills 68688-68692 still need to
+      render and a probed private MP4 must exist. Next: let the overnight passes resume
+      MusicVideo 18, then record the final ArtImage id here.
+    implementation_pr: 'silasfelinus/conductor#7322'
   - id: t-003
     milestone: m3
     title: Build first-class Dead Air private screening and human review workspace
