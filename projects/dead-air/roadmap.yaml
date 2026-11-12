@@ -47,23 +47,20 @@ tasks:
   - id: t-001
     milestone: m1
     title: Bootstrap Dead Air editorial archive, pilot, reusable producer and daily attempt
-    status: review
-    owner: worker
+    status: done
     claimed_by: 2026-11-12T110000Z-dead-air-bootstrap-c4f9
     claimed_at: '2026-11-12T11:00:00Z'
-    updated: '2026-11-12T11:00:00Z'
+    updated: '2026-11-12T11:12:02.310Z'
     stakes: reversible
     passes: 0
-    note: >-
-      Silas-directed new continuous project bootstrap. Original authored pilot
-      The Closed Caption Department, substantial pop-culture reference study,
-      versioned transmission archive, 15s/5-shot/two-motion-clip validation,
-      MusicVideo/ArtJob adapter, and daily attempt workflow. This is a private
-      production scaffold and pilot script, not a claim that an MP4 rendered.
+    note: |-
+      Silas-directed new continuous project bootstrap. Original authored pilot The Closed Caption Department, substantial pop-culture reference study, versioned transmission archive, 15s/5-shot/two-motion-clip validation, MusicVideo/ArtJob adapter, and daily attempt workflow. This is a private production scaffold and pilot script, not a claim that an MP4 rendered.
+
+      Bootstrap landed in conductor PR #7313, squash d8d5a39ecc2ade7bd811e611b01e93ce563aaa02. The exact PR head 0fdf6107c6852c54eb9080ca5c96dc9a8dbd4f5b had 28 completed successful, neutral or skipped checks, including 4600+ passing Python tests. The first pilot is a privately staged production, not a verified MP4.
   - id: t-002
     milestone: m2
     title: Render and verify the first complete private fifteen-second pilot
-    status: waiting
+    status: ready
     stakes: reversible
     passes: 0
     depends_on: t-001
@@ -74,7 +71,7 @@ tasks:
   - id: t-003
     milestone: m3
     title: Build first-class Dead Air private screening and human review workspace
-    status: waiting
+    status: ready
     stakes: reversible
     passes: 0
     depends_on: t-001
@@ -102,7 +99,7 @@ tasks:
   - id: t-005
     milestone: m3
     title: Create rights-aware reference and private production provenance review
-    status: waiting
+    status: ready
     stakes: reversible
     passes: 0
     depends_on: t-001
@@ -114,7 +111,7 @@ tasks:
   - id: t-006
     milestone: m2
     title: Add independent creative quality adversarial review and sound pass
-    status: waiting
+    status: ready
     stakes: reversible
     passes: 0
     depends_on: t-001
