@@ -12,8 +12,9 @@ into the handoff, Conductor roadmap note, or another agent's context.
    that one** GitHub issue URL. Indexed hubs have `conductor:skip` to avoid
    duplicating master issues as separate tasks. Incremental implementation
    PRs must use `Refs owner/repo#N`, not `Closes owner/repo#N` for a master
-   issue. Closure is reserved for genuinely finished projects after their
-   required human verdict. A closed narrow issue may still have an open
+   issue. Closure is reserved for a verified playtest handoff, after all finite
+   production and QA tasks are done and a genuine subjective gate is at
+   needs-human. Closing the coordination issue does not grant the human verdict. A closed narrow issue may still have an open
    Conductor source-issue task: issue-surface consolidation is not task completion. A `conductor:skip` label prevents the bridge
    importing an umbrella as a single task; it does **not** mean ignore the issue.
 2. Read the issue title/status, heading outline, and the section(s) relevant to
@@ -66,6 +67,8 @@ private data, secrets, or text already linked from the issue.
 
 Reviewers read relevant shared findings before adjudicating a PR and post
 corrections with evidence when they change the project's cross-task picture.
-One useful finding with an exact link beats 30 status updates. Keep the master
-issue open until its explicit final human creative verdict, independently of
-individual engineering tasks closing.
+One useful finding with an exact link beats 30 status updates. Keep the master issue open across all incremental engineering PRs. At the verified
+playtest transition, prefix its title with [FLAGGED FOR HUMAN TESTING] and close
+it as completed so it leaves the open backlog. Preserve its index entry as the
+historical record; the final human creative verdict and public release remain
+separate Conductor gates.
