@@ -1487,11 +1487,11 @@ tasks:
   - id: t-070
     milestone: m4
     title: "Run the memory-dungeon acceptance guard in the roadmap-validation CI job so a done-without-evidence close-out fails before merge"
-    status: ready
+    status: done
     stakes: reversible
     passes: 1
     depends_on: []
-    updated: '2026-11-12T16:59:36Z'
+    updated: '2026-11-12T17:57:06+00:00'
     note: |-
       Kaizen from the t-067 review (conductor PR #7294). scripts/check_memory_dungeon_acceptance.py currently runs only in session_sweep.py, so a close-out PR that marks a task done while its latest "remaining:" line is unmet still merges and is caught only by a later sweep. Add the check to the CI job that validates roadmap YAML (path-filtered to projects/memory-dungeon/roadmap.yaml is fine), with a test or smoke step proving it fails on a seeded bad roadmap. Reversible, CI-only; no task status changes.
 
@@ -1499,7 +1499,8 @@ tasks:
 
       2026-11-12 PT review: rejected conductor#7326 at head 0bff092 (pass 1, quality). Details
       in the PR comment and retry_context.
-    owner: worker
+
+      2026-11-12 PT review: merged conductor#7326 at head d7008837 (squash 18438ab7) after the retry fixed the workflow YAML. All 26 checks green including Validate roadmap YAML and Python test suite; guard and smoke also run locally. The roadmap-validation job now runs check_memory_dungeon_acceptance.py and a seeded bad/good smoke. Kaizen: t-071.
     claimed_by: 2026-11-12T155052Z-memory-dungeon-t-070-7c91
     claimed_at: '2026-11-12T15:50:52Z'
     retry_context: 'pass 1 failed (quality): conductor#7326 head 0bff092 made .github/workflows/ci.yml unparseable (fixture lines at column 0 inside a run block), so the CI workflow never ran and the smoke was never executed. Do differently: move the seeded bad/good smoke into tests/ as pytest or keep every run-block line indented, yaml.safe_load the workflow before pushing, confirm Validate roadmap YAML appears green on the head, and use the PR handoff template. Reuse branch worker/memory-dungeon-t-070-ci-guard-155052 and PR #7326.'

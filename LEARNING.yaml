@@ -18629,3 +18629,13 @@ records:
   outcome: done
   failure_category: null
   lesson: A sweep-only guard catches a bad close-out after it merges; anchoring the "remaining:" match at line start (optionally date-prefixed) is what keeps quoted historical prose from tripping it.
+- date: 2026-11-12
+  project: memory-dungeon
+  task: t-070
+  kind: software
+  stakes: reversible
+  passes: 1
+  outcome: done
+  failure_category: quality
+  lesson: A workflow file that stops parsing runs none of its jobs, so the PR shows fewer checks, all
+    green; count the check runs after any workflow edit and yaml.safe_load it before pushing.
