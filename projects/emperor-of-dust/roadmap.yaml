@@ -162,19 +162,21 @@ tasks:
     claimed_at: '2026-11-12T01:00:34Z'
   - id: t-066
     title: 'New-reign carry-overs: ending-earned unlocks that change the next run'
-    status: claimed
+    status: review
     milestone: m5
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-12T22:07:00Z'
+    updated: '2026-11-12T22:15:00Z'
     owner: worker
     claimed_by: 2026-11-12T220700Z-emperor-of-dust-t066-gpt6-f84a
     claimed_at: '2026-11-12T22:07:00Z'
     note: |-
-        Silas 2026-11-11 PT, in session: "Are there unlocks that carry over into future rounds?"
+      Silas 2026-11-11 PT, in session: "Are there unlocks that carry over into future rounds?"
 
-        Today only two Items of Power (Eye of the Elder Crow, Komodo's Brass Hourglass) and the follower Codex persist between runs. Design and implement a small legacy layer earned by endings: e.g. one heirloom per ending family, unlockable starting options (a chosen first follower, a faction favor, a harder "second reign" setting), each visible on the start screen with how it was earned. Keep runs from becoming trivial (balance report before/after), persist like the relic vault, and cover with store tests.
+      Today only two Items of Power (Eye of the Elder Crow, Komodo's Brass Hourglass) and the follower Codex persist between runs. Design and implement a small legacy layer earned by endings: e.g. one heirloom per ending family, unlockable starting options (a chosen first follower, a faction favor, a harder "second reign" setting), each visible on the start screen with how it was earned. Keep runs from becoming trivial (balance report before/after), persist like the relic vault, and cover with store tests.
+
+      First scoped legacy slice: persistent earned ending ids and optional five-brass veteran writ on a new reign, with malformed-save protection and focused tests. UI selector and complete ending-family unlock design remain open; implementation PR pending CI.
   - id: t-067
     title: 'Main-game standard: audit and close the gaps for Emperor of Dust'
     status: review
