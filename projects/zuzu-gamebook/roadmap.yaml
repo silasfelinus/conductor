@@ -448,15 +448,17 @@ tasks:
       bandage (+2 HP) and return, or climb out and carry word. Only the responsive check of
       the fight cue at 390/768/1440 remains.
   - id: t-014
-    title: "Zuzu Gamebook | Master completion roadmap"
-    status: ready
+    title: "Zuzu Gamebook | Master completion roadmap (coordination mirror only)"
+    status: cancelled
     stakes: reversible
     owner: null
     passes: 0
     source_issue: "silasfelinus/kind_robots#4139"
     updated: '2026-10-25'
     note: |-
-      FROM GITHUB ISSUE silasfelinus/kind_robots#4139 (https://github.com/silasfelinus/kind_robots/issues/4139), opened by @silasfelinus on 2026-10-25. Imported by scripts/sync_github_issues.py. Reference the issue in the implementing PR (`Closes silasfelinus/kind_robots#4139`) so it closes on merge; the bridge closes it otherwise once this task is done.
+      COORDINATION MIRROR ONLY, NOT ENGINEERING WORK. The canonical GitHub master issue #4139 stays OPEN through playtest and final human review. Reference it using Refs #4139; never use Closes #4139. This imported task is intentionally cancelled to prevent double assignment; all actionable work lives in t-006/t-007/t-008/t-009/t-012/t-013/t-015 plus the new final gate t-017. The source_issue link remains as the idempotency key so it is not re-imported.
+
+      FROM GITHUB ISSUE silasfelinus/kind_robots#4139 (https://github.com/silasfelinus/kind_robots/issues/4139), opened by @silasfelinus on 2026-10-25. Imported by scripts/sync_github_issues.py. Its ORIGINAL instruction to close this issue when the mirror task was done has been superseded above.
 
       # Zuzu: Koala Assassin Gamebook | Master completion roadmap
 
@@ -485,3 +487,25 @@ tasks:
       - [ ] Audit the entire canonical Book One graph, nine acts, all section entries/exits, side
 
       [... truncated; read the full issue at https://github.com/silasfelinus/kind_robots/issues/4139]
+  - id: t-017
+    milestone: m5
+    title: Final complete-game playtest and creative acceptance (not public release)
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    gate_human: true
+    gate_reason: subjective-acceptance
+    depends_on: [t-006, t-007, t-008, t-009, t-012, t-013, t-015]
+    note: >-
+      This is the ONLY current complete-game human acceptance gate. Historical
+      t-010 was marked done before the book was complete and does not constitute
+      acceptance of the current nine-act game. Keep this task waiting until
+      every nonrecurring agent-owned content, artwork, writing, accessibility,
+      15-ending replay, art provenance, seeded balance, and responsive QA task
+      is actually DONE, with actual delivered (not queued) images. Then set
+      this task to needs-human, switch the project to playtest, and flag the
+      OPEN master issue #4139 for Silas's subjective game verdict. His feedback
+      drives iterative playtest tasks. This is NOT approval for publication,
+      billing, or production-side effects. The existing recurring t-011
+      continues as bounded playtest_iteration work after handoff.
