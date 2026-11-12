@@ -32,6 +32,9 @@ lost job ids back on its own; what reaches you needs judgment:
     not a duplicate (below).
   - `rejected` — off-brief. Adult renders are marked mature, never deleted (rule above).
   One PR per project's batch; merge when green.
+  Check Kind Robots studio pages that keep job ids in the database first (Monstrique series bible:
+  `GET /api/monstrique/bible` galleries). The stray scan skips those (`STUDIO_GALLERIES` in
+  `reconcile_unrecorded_art.py`); add a new page there when one turns up.
 - **Report older than 6h.** The workflow stopped: open its last run, fix it (workflow-medic rules).
 - **Lookup unavailable for 48h.** kind_robots#5031 (`POST /api/art/queue/lookup`) is not live.
   Check the deploy; until it is, run with `--backfill-days 3` by hand.
