@@ -5,6 +5,7 @@ on:
       - ".github/workflows/shifting-desks-art-visual-review.yml"
       - "projects/shifting-desks/art/build_review_sheets.py"
       - "projects/shifting-desks/art/ROUND-18.yaml"
+      - "projects/shifting-desks/art/check_request_queue.py"
   workflow_dispatch:
 
 permissions:
@@ -21,6 +22,18 @@ jobs:
           python-version: "3.12"
       - name: Install image review tooling
         run: pip install "Pillow>=10,<13" "PyYAML>=6,<7"
+      - name: Audit pending Classic art requests in durable queue
+        run: |
+          python projects/shifting-desks/art/check_request_queue.py \
+            --out "$RUNNER_TEMP/shifting-desks-classic-queue.json"
+      - name: Upload Classic request diagnosis
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: shifting-desks-classic-request-queue
+          path: ${{ runner.temp }}/shifting-desks-classic-queue.json
+          if-no-files-found: error
+          retention-days: 7
       - name: Download actual art and build contact sheets
         run: |
           python projects/shifting-desks/art/build_review_sheets.py \

@@ -14,17 +14,24 @@ approving a newer requested or rendered image.
 
 | Accepted KEEP + delivered evidence | Delivered, no verdict yet | Visually rejected, needs redo | New/latest delivery not verified | Distinct destinations |
 |---:|---:|---:|---:|---:|
-| 175 | 185 | 11 | 20 | 391 |
+| 201 | 0 | 170 | 20 | 391 |
 
-All **196 round-18 subject-first Western Cartoon renders** were downloaded
-and assembled into contact sheets (Actions run 43194652224, artifact
-`shifting-desks-visual-art-review`). Each has a prior ArtJob/ArtImage and
-HEAD 200 provenance; **11 of their ending paintings were then individually
-rejected** because the defining authored ending payoff was not depicted.
-The remaining 185 still require prompt-to-image decisions. Do not generate
-all 196 again without considering the 185 individually, and do not bulk-approve
-an entire style. The 11 explicit rejection reasons live next to their rows in
-`art/ROUND-18.yaml`. The Kind Robots art-style fallback is handled in PR #5073.
+All **196 round-18 subject-first Western Cartoon renders** have now
+received individual, image-to-prompt visual verdicts. The earlier eleven
+incorrect ending paintings remain rejected, and reviewing the other 185
+produced **26 usable KEEP** and **159 REDO** verdicts. Thus 170/196
+Western Cartoon paintings fail key authored visual requirements; all
+verdicts are documented beside their source ArtJob and image IDs in
+`art/ROUND-18.yaml`. Contact sheets and the prompt manifest came from
+GitHub Actions artifacts 13930814494 and 13932222834.
+
+This is a systemic subject-fidelity failure of the current Western Cartoon
+rerender pipeline, **not 170 missing files**. Do not blindly resubmit 170
+identical prompts to the same checkpoint. The optional Western style is
+temporarily suspended in Kind Robots while a better scene-faithful pipeline is
+designed and reviewed. Existing Classic and Noir styles remain available,
+and no artwork was deleted. This does not certify Classic art complete:
+20 later Classic/recovery repaint requests still lack verified newer delivery.
 
 The **20 not-delivered-latest** entries are:
 
@@ -74,8 +81,9 @@ Next agent-owned actions:
 1. Reconcile the 20 requested rerenders against actual DONE ArtJobs and newer
    media. If an old painting is good enough, explicitly withdraw the *new*
    request with documented evidence, rather than inventing a delivery.
-2. Review the 196 verified round-18 images against subject-first prompts;
-   record actual KEEP/REDO, prioritize the roach cards and obvious gag misses.
+2. Design and test a small scene-faithful Western repaint pilot before
+   enqueueing any replacement batch; do not revive the optional skin merely
+   because images exist. Retain all 196 render records for comparison.
 3. Link accepted Classic imagery with
    `projects/shifting-desks/encounters/link_art.py --write --probe`.
 4. Re-run the readiness audit and the actual game/art/device tests, then hand
