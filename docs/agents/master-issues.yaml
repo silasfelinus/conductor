@@ -5,8 +5,9 @@
 # The 11 Daily Dream Workshop member projects (parent: dream-cycle) use the
 # dream-cycle issue, while retaining their own Conductor roadmaps and tasks.
 # Do not close a master issue from a single engineering PR; use Refs, not Closes.
-# Only flag a title [FLAGGED FOR HUMAN TESTING] when a human playtest gate is
-# genuinely due; this is separate from public publication approval.
+# At a verified playtest handoff, prefix [FLAGGED FOR HUMAN TESTING] and close
+# the issue as completed to remove it from the open roadmap backlog. Preserve
+# the indexed URL and the separate needs-human acceptance/release gates.
 # Conductor remains authoritative for tasks, dependencies, status and gates.
 master_issues:
   animation-manager: https://github.com/silasfelinus/kind_robots/issues/4877
