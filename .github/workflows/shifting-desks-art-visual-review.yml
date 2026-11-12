@@ -24,7 +24,7 @@ jobs:
       - name: Download actual art and build contact sheets
         run: |
           python projects/shifting-desks/art/build_review_sheets.py \
-            --round 18 --out "$RUNNER_TEMP/shifting-desks-art-review"
+            --out "$RUNNER_TEMP/shifting-desks-art-review"
       - name: Upload image evidence and prompt manifest
         if: always()
         uses: actions/upload-artifact@v4
