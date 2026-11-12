@@ -71,10 +71,10 @@ def github_issue(method: str, number: int, token: str, data: dict | None = None)
         return json.load(response)
 
 
-def main() -> int:
+def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--check", action="store_true", help="Validate handoffs without GitHub writes")
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
     overrides = load_project_overrides(ROOT / "project-overrides.yaml")
     masters = (yaml.safe_load((ROOT / "docs/agents/master-issues.yaml").read_text(encoding="utf-8")) or {}).get("master_issues", {})
     eligible, errors = eligible_issues(overrides, masters, ROOT / "projects")

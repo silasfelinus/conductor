@@ -960,3 +960,13 @@ tasks:
       Scoped UI choice-hand improvement is ready for PR/CI: more portrait artwork and legible in-card information, larger three-card layout, compact fallback for tablet and dense hands. The art/QA umbrella remains open beyond this slice.
 
       2026-11-06 PT: Silas-directed choice-hand visual pass merged in kind_robots PR #4859 (92c68b9); all seven CI suites passed on e1faf7b. Cards now expand on desktop, display more legible intent, and use contextual encounter art when unique outcome art is absent. Tablet/dense-hand geometry stays bounded. Umbrella completion issue #4150 remains open for unique choice art, game QA and human verdict.
+  - id: t-051
+    title: 'Fail the art visual-review workflow when check_request_queue.py finds missing or duplicate Classic rerender request IDs'
+    status: ready
+    milestone: m3
+    stakes: reversible
+    passes: 0
+    depends_on: []
+    updated: '2026-11-12T11:55:00Z'
+    note: |-
+      Kaizen from reviewer merge of conductor#7316 (2026-11-12 PT). The new read-only check_request_queue.py only reports missing_from_queue and duplicates in an uploaded JSON artifact, so a CI run that finds stale or duplicated Classic rerender requests still goes green and nobody reads the result. Add a --strict flag that exits non-zero on missing_from_queue > 0 or any duplicates, use it in shifting-desks-art-visual-review.yml once the current 20 stale requests are reconciled, and cover both cases in tests/test_shifting_desks_art_request_queue.py.
