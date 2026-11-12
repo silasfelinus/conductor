@@ -65,3 +65,39 @@ def test_daily_selection_resumes_oldest_not_newest(monkeypatch, tmp_path):
     assert choose_episode(state, "2026-11-13") == episode_dir / PILOT.name
     state["episodes"]["closed-caption-department"]["status"] = "completed"
     assert choose_episode(state, "2026-11-13") is None
+
+
+def test_krea_prompt_grammar_is_checked_before_live_writes():
+    from dead_air_produce import paint_prompt_problems
+    episode = load_episode(PILOT)
+    assert not paint_prompt_problems(episode["visual_style"])
+    assert all(not paint_prompt_problems(s["image_prompt"]) for s in episode["shots"])
+    assert paint_prompt_problems("close-up with caption and logo")
+    assert paint_prompt_problems("no captions")
+
+
+def test_renderer_http_success_without_artjob_ids_is_failure():
+    import pytest
+    from dead_air_produce import verify_enqueue_outcomes, PipelineError
+
+    rejected = [
+        {"sceneId": "s1", "status": "rejected", "reason": "lettering: caption"},
+        {"sceneId": "s2", "status": "failed", "reason": "checkpoint unavailable"},
+    ]
+    with pytest.raises(PipelineError, match="still ArtJobs not created"):
+        verify_enqueue_outcomes(rejected, 2)
+    with pytest.raises(PipelineError, match="outcomes"):
+        verify_enqueue_outcomes([], 2)
+
+    accepted = [
+        {"sceneId": "s1", "status": "queued", "jobId": 111},
+        {"sceneId": "s2", "status": "reused", "jobId": 112},
+    ]
+    assert verify_enqueue_outcomes(accepted, 2) == {"s1": 111, "s2": 112}
+
+
+def test_prompt_rendering_does_not_repeat_style_bible():
+    episode = load_episode(PILOT)
+    scenes = scenes_for(episode)
+    assert all(scene["prompt"] == shot["image_prompt"]
+               for scene, shot in zip(scenes, episode["shots"]))
