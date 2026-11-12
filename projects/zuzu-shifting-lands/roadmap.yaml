@@ -138,18 +138,21 @@ tasks:
       Live today: 3 Achievement record(s) with this game's triggerCode prefix (checked against /api/achievements 2026-11-11). Target 12+ (usually 12-30; tie some to endings but don't go overboard). Mix story, skill, discovery and completion. Create the live records through the existing achievements API (label, message, icon, karma, triggerCode prefixed with the game slug), award them from the game store, show them with components/achievements/game-achievement-strip.vue, and verify one award live after deploy.
   - id: t-052
     title: 'Character creator: design a character, adjust stats, play as Zuzu or Jeffery Mittens'
-    status: ready
+    status: claimed
     milestone: m5
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-11T23:42:29Z'
+    updated: '2026-11-12T00:35:14Z'
     note: |-
       Silas 2026-11-11 PT, in session: "Shifting lands should let us design a character and adjust stats. That means certain encounters change, you can't let the user play the siblings and have them encounter the siblings. But that will help differentiate it from the zuzu gamebook. Though obv zuzu should be one of the playable characters. As should Jeffery Mittens."
 
       Build a start-of-run character creator: choose a premade (Zuzu, Jeffery Mittens the young raccoon looter from zuzu-gamebook BOOK-ONE-OUTLINE.md, and any other canon cast you choose to offer) or design a custom character (species from the approved Facets, name, portrait, and a point-buy stat spread on the existing stats). Premades have fixed stats and signature traits.
 
       Encounters must respect identity: any encounter, follower or quest featuring the chosen character (e.g. the fennec siblings, Jeffery Mittens) is swapped, rewritten or excluded so the player never meets themselves; add a deterministic test sweep over every playable character. Stats should change check odds and some encounter options. Queue portraits for premades and custom species in an auto_submit ledger. Persist the character in saves and the scrapbook.
+    owner: worker
+    claimed_by: 20261112-zsl-t052-creator-modest
+    claimed_at: '2026-11-12T00:35:14Z'
 
   - id: t-002
     milestone: m1
