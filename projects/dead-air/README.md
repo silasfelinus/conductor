@@ -20,7 +20,7 @@ An imaginary AI television station has airtime to sell. Its fictional broadcaste
 
 ## Production contract
 
-`FORMAT.md` defines the editorial gates and `episodes/*.yaml` contains individual locked scripts. `scripts/dead_air_produce.py` provides the constrained adapter to the already-existing Kind Robots MusicVideo / ArtJob / Comfy pipeline. Do not create another renderer, direct SQL writer, or production database. The MusicVideo document and ArtJobs hold runtime state; Conductor's roadmap and script hold editorial provenance. Use `KR_BASE_URL=https://kind-robots.vercel.app` when invoking its API.
+`FORMAT.md` defines the editorial gates and `episodes/*.yaml` contains individual locked scripts. `scripts/dead_air_produce.py` provides the constrained adapter to the already-existing Kind Robots MusicVideo / ArtJob / Comfy pipeline. Do not create another renderer, direct SQL writer, or production database. The MusicVideo document and ArtJobs hold runtime state; Conductor's roadmap and script hold editorial provenance. Default API origin is the repository-supported `https://kindrobots.org`; override using `KR_BASE_URL` when the authenticated API actually lives elsewhere. Before private writes, verify the origin serves the MusicVideo API rather than assuming a hostname.
 
 **One active production at a time.** On each daily cycle, finish or recover the oldest unfinished episode before queuing the next. Track `last_attempted` and `last_completed` as separate Pacific dates. Each daily result reports **finished / queued / rendering / blocked** truthfully. Keep missed days visible. Resumption uses the same MusicVideo ID and ArtJob IDs, never re-enqueues by default.
 
