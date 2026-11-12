@@ -199,3 +199,13 @@
 **What worked:** a tight 76-line diff with regression tests for the tricky cases (superseded evidence, quoted historical "remaining:" prose), wired into the sweep in one line.
 
 **What to improve:** this is the fourth handoff-template miss on this project (t-038, the reset branch, t-065, now t-067). Paste the AGENTS.md "PR handoff template" headings when you open the PR. The handoff check names exactly which headings are missing.
+
+## 2026-11-12 PT | Reviewer reject | memory-dungeon/t-070 | Conductor #7326
+
+**Decision:** rejected head `0bff092` (pass 1 of 3, quality); t-070 back to `ready` with `retry_context`. Not merged, branch and PR left open for reuse.
+
+**Why:** the new smoke step put a Python fixture string with column-0 lines inside a `run: |` block, so `.github/workflows/ci.yml` no longer parses (`could not find expected ':'`, line 69–71). GitHub then ran none of the `CI` workflow: 16 check runs instead of the usual 26, with `Validate roadmap YAML`, `Python test suite` and lint absent. Merging would have switched those off on main. The remaining checks looked green only because the broken workflow was missing.
+
+**What worked:** the idea is right and small (37 lines, one file), and the plain `python scripts/check_memory_dungeon_acceptance.py` step passes on main.
+
+**What to improve:** a missing check is not a passing check; count the check runs on a workflow edit and confirm the job you changed is in the list. Parse any edited workflow with `yaml.safe_load` before pushing. Prefer a pytest in `tests/` over inline Python in workflow YAML. And this is the fifth handoff-template miss on this project (`Validate Worker PR handoff` red again).
