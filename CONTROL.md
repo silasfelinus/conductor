@@ -184,6 +184,16 @@ AGENTS.md "A gate must say why it needs a human".
   near-identical implementations the same hour here, caught only by the routine
   fetch-before-push step.
 
+- **Main-game quality standard (Silas, 2026-11-11 PT):** every main game (full-length story
+  or campaign game) must reach a shared floor before it is finished or shown for a final
+  verdict: title screen, a settings menu, save/load with persistent progress, **12+
+  achievements** (arcade cabinets stay at 3), a scrapbook of endings/characters/art/runs,
+  multiple endings with painted plates, customizable characters in most cases, and at least
+  three replay hooks (unlockables, persistent saves, branching paths, etc.). Exceptions:
+  Zuzu Gamebook keeps its fixed protagonist. Full text, game list and audit procedure:
+  [docs/agents/main-game-standard.md](docs/agents/main-game-standard.md). Every main game
+  carries a "Main-game standard" roadmap task and an achievements task.
+
 ---
 
 ## Per-project direction  ← agents read the block for the project they're working on
@@ -652,6 +662,8 @@ with persistent aquariums, a collectible monster-fish bestiary, and browsable pu
 - (your notes)
 
 ### zuzu-gamebook  (software, autonomous: true)
+**Character decision (Silas, 2026-11-11 PT):** the gamebook keeps its unique fixed protagonist, Zuzu. No character customization here; every other item in [the main-game standard](docs/agents/main-game-standard.md) applies.
+
 **Direction (2026-10-07, new project):** Create an original branching Zuzu: Koala Assassin RPG gamebook at /play/zuzu-gamebook, distinct from kr-adventures, zuzu-lair and zuzu-showdown. Pattern narrative complexity and resourceful decisions after Sorcery!, Lone Wolf, Grey Star and Fighting Fantasy without copying prose, copyrighted settings or exact mechanics. Original dice, HP, inventory, powers, combat, skill checks, a character sheet, numerous meaningful good/bad endings and pre-generated setting/consequence illustrations.
 **Notes:**
 - Adapt the atmosphere and narrative beats of the Zuzu comic, film and Lair projects without replacing BOOK-ONE.md canon. Use the locked cast and VIDEO-GUARDRAILS.md for every text and art prompt.
@@ -660,6 +672,8 @@ with persistent aquariums, a collectible monster-fish bestiary, and browsable pu
 - Active and normal-priority while building, following comic-film in projects/priority.yaml; after the complete book is approved, switch to continuous for autonomous later chapters and polish.
 
 ### zuzu-shifting-lands  (software, autonomous: true)
+**Character creator (Silas, 2026-11-11 PT):** Shifting Lands lets the player design a character and adjust stats, which is what differentiates it from the gamebook. Zuzu must be one of the playable characters, as must Jeffery Mittens (the young raccoon looter from Book One). Encounters change with the chosen character: you cannot play a fennec sibling and then meet the siblings as strangers. See [the main-game standard](docs/agents/main-game-standard.md).
+
 **LATEST COMPLETION ORDER (2026-10-24 PT, Silas; overrides previous early creative/visual checkpoints):** The reopened [Kind Robots #3917](https://github.com/silasfelinus/kind_robots/issues/3917) is the **whole-game completion roadmap**, not merely editorial t-036. Build and verify every encounter/trial/journal, follower quest, image for every quest, choice result and ending, and graph every ending with real reachable traces. Run the full adversarial playtest battery *after* content/art creation, fix failures, and complete actual image-first phone/tablet/desktop UI verification. **No scope, design or visual creative `needs-human` gate before all agent-owned creation, art and tests are DONE.** Convert old soft t-002 checkpoint into an autonomous self-review. Conductor `t-043..t-048` now own follower quests, art completeness, ending reachability graph, adversarial coverage, visual verification and final readiness evidence. Only final `t-018`, dependent on `t-048`, may ask Silas to approve/ask revisions. Silas's approval never substitutes for unfinished work; outward publication, money and irreversible production actions still require distinct authorization.
 
 **Latest placement decision (2026-10-13 PT, Silas):** Shifting Lands leaves the Admin-facing development surface and joins public `/play/zuzu-shifting-lands` in the Zuzu channel. Keep existing authored-encounter development and the separate unfinished polish/visual acceptance gate. The app repository owns the actual route, project placement and tutorial/tab metadata. This supersedes the older admin-preview-first direction below.

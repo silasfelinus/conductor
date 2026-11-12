@@ -114,6 +114,76 @@ tasks:
     note: >-
       Wrote GAME-BIBLE.md and DAY-PLAN.md on 2026-10-11 PT.
       These 100 anchors are outlines, not implemented daily script records.
+  - id: t-063
+    title: 'Export and wire the ~430 rendered Emperor images that never reached the game'
+    status: ready
+    milestone: m5
+    stakes: reversible
+    passes: 0
+    depends_on: []
+    updated: '2026-11-11T23:38:32Z'
+    note: |-
+        Silas 2026-11-11 PT, in session: "If there is unmade art it should definitely be added to the pipeline."
+
+        Audit 2026-11-11: every one of the 1,214 subjects in projects/emperor-of-dust/art/*.yaml has a DONE ArtImage, but only ~665 are exported under kind_robots public/emperor-of-dust/. Not in the game: 182 chance-event plates (CHANCE-ACT1 + CHANCE-ACTS2-5; the game has no chance-event art hook yet), ~72 quest plates (QUESTS-MISSING-ROUND-2 63, QUESTS-ROUND-1 9), ~102 audience/consequence/barracks/forge plates (utils/emperorOfDust/fortress/audienceChoiceArt.ts EXPORTED_AUDIENCE_CHOICES is still []), 43 SECRET-STORY-SCENES, 30 ITEMS (market icons, overlaps t-033) and 14 ROOMS rerolls to verify.
+
+        Curate each on contact sheets (reject off-model, re-queue rejects in a REDO ledger), export keepers to webp at their ledger asset paths, register them in the manifests, add chance-event art support, and verify a sample at 390/768/1440. This is the delivery lane for already-rendered art; t-046..t-052 keep their writing scope and any new art they author.
+  - id: t-064
+    title: 'Painted ending plates and a persistent Endings gallery / reign scrapbook'
+    status: ready
+    milestone: m5
+    stakes: reversible
+    passes: 0
+    depends_on: []
+    updated: '2026-11-11T23:38:32Z'
+    note: |-
+        Silas 2026-11-11 PT, in session: asked what happens at Day 50 and for "an ending scrapbook".
+
+        Today Day 50 shows the ending title and text, the memorial list, the follower/NPC epilogue slideshow (portraits) and the run review, then "rewind to any dawn or begin again". There is no ending art and no record of endings already earned.
+
+        Art: projects/emperor-of-dust/art/ENDINGS-ROUND-1.yaml queues one 1344x768 plate for each of the eight endings (priority 60, auto_submit). Curate, export to public/emperor-of-dust/endings/<id>.webp and show the plate on the ending screen.
+
+        Gallery: an Endings room or Chronicle tab showing X/8 endings found, locked silhouettes for unfound ones, and for each found ending a scrapbook page: date, day-50 brass, followers kept and lost (memorials), key choices (Day 49 peace, bell, crypt), the epilogue entries reached. Persist across new runs, rewinds and reloads the same way the relic vault does (localStorage now; account sync if a save API exists).
+  - id: t-065
+    title: 'Emperor of Dust achievements for endings and long-run play'
+    status: ready
+    milestone: m5
+    stakes: reversible
+    passes: 0
+    depends_on: []
+    updated: '2026-11-11T23:38:32Z'
+    note: |-
+        Silas 2026-11-11 PT, in session: "Achievements?" Target 12+ live achievements per docs/agents/main-game-standard.md.
+
+        Only three live Achievement records exist (emperor-of-dust-orders-carried-out, -day-well-ruled, -merciful-court) and all fire on Day 1-level play. Add live Achievement rows through the existing achievements API (label, message, icon, karma, triggerCode) and award them from stores/emperorFortressStore.ts: reach Day 50; one per ending (8); all eight endings; finish with no follower lost; earn both relics; recruit all secret followers; ring the Silent Bell. Show them with components/achievements/game-achievement-strip.vue on the ending screen and gallery. Verify one award live after deploy.
+  - id: t-066
+    title: 'New-reign carry-overs: ending-earned unlocks that change the next run'
+    status: ready
+    milestone: m5
+    stakes: reversible
+    passes: 0
+    depends_on: []
+    updated: '2026-11-11T23:38:32Z'
+    note: |-
+        Silas 2026-11-11 PT, in session: "Are there unlocks that carry over into future rounds?"
+
+        Today only two Items of Power (Eye of the Elder Crow, Komodo's Brass Hourglass) and the follower Codex persist between runs. Design and implement a small legacy layer earned by endings: e.g. one heirloom per ending family, unlockable starting options (a chosen first follower, a faction favor, a harder "second reign" setting), each visible on the start screen with how it was earned. Keep runs from becoming trivial (balance report before/after), persist like the relic vault, and cover with store tests.
+  - id: t-067
+    title: 'Main-game standard: audit and close the gaps for Emperor of Dust'
+    status: ready
+    milestone: m5
+    stakes: reversible
+    passes: 0
+    depends_on: []
+    updated: '2026-11-11T23:42:29Z'
+    note: |-
+      Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
+
+      Start with the audit table from docs/agents/main-game-standard.md (title screen; settings menu; save/load and persistent progress; 12+ achievements; scrapbook; multiple endings with painted plates; customizable characters; 3+ replay hooks), marking each Met / Partial / Missing with evidence (file, route, live record). Put the table in this note and the first PR. Then close each gap in small CI-tested PRs; queue any needed ending, scrapbook or portrait art in an auto_submit ledger.
+
+      Item 7 (customizable characters) applies "in most cases": if this genre makes it a poor fit, say so in the audit with the reason and leave it for Silas rather than skipping silently.
+
+      Achievements are tracked by their own task; this one covers everything else.
   - id: t-002
     milestone: m2
     title: "Build admin-only illustrative region map with tutorial and project placement"

@@ -83,6 +83,34 @@ tasks:
       Initial PR delivers original title art, six-style captain choice, crew selection, star-chart mission, 0-3 away assignments, ethical consequence, one seeded antagonist complication, debrief and saves with tests.
 
       Full history: projects/game-of-captains/HISTORY.md#t-001
+  - id: t-041
+    title: 'Main-game standard: audit and close the gaps for Space Couch'
+    status: ready
+    milestone: m4
+    stakes: reversible
+    passes: 0
+    depends_on: []
+    updated: '2026-11-11T23:42:29Z'
+    note: |-
+      Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
+
+      Start with the audit table from docs/agents/main-game-standard.md (title screen; settings menu; save/load and persistent progress; 12+ achievements; scrapbook; multiple endings with painted plates; customizable characters; 3+ replay hooks), marking each Met / Partial / Missing with evidence (file, route, live record). Put the table in this note and the first PR. Then close each gap in small CI-tested PRs; queue any needed ending, scrapbook or portrait art in an auto_submit ledger.
+
+      Item 7 (customizable characters) applies "in most cases": if this genre makes it a poor fit, say so in the audit with the reason and leave it for Silas rather than skipping silently.
+
+      Achievements are tracked by their own task; this one covers everything else.
+  - id: t-040
+    title: 'Space Couch achievement upgrade: 12 or more live achievements'
+    status: ready
+    milestone: m4
+    stakes: reversible
+    passes: 0
+    depends_on: []
+    updated: '2026-11-11T23:42:29Z'
+    note: |-
+      Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
+
+      Live today: 0 Achievement record(s) with this game's triggerCode prefix (checked against /api/achievements 2026-11-11). Target 12+ (usually 12-30; tie some to endings but don't go overboard). Mix story, skill, discovery and completion. Create the live records through the existing achievements API (label, message, icon, karma, triggerCode prefixed with the game slug), award them from the game store, show them with components/achievements/game-achievement-strip.vue, and verify one award live after deploy.
   - id: t-002
     milestone: m1
     title: "Write This Means Warp captain, crew, location, antagonist and ethics bibles"
