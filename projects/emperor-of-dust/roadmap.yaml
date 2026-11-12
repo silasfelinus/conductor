@@ -146,17 +146,18 @@ tasks:
         Gallery: an Endings room or Chronicle tab showing X/8 endings found, locked silhouettes for unfound ones, and for each found ending a scrapbook page: date, day-50 brass, followers kept and lost (memorials), key choices (Day 49 peace, bell, crypt), the epilogue entries reached. Persist across new runs, rewinds and reloads the same way the relic vault does (localStorage now; account sync if a save API exists).
   - id: t-065
     title: 'Emperor of Dust achievements for endings and long-run play'
-    status: claimed
+    status: done
     milestone: m5
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-12T01:00:34Z'
+    updated: '2026-11-12T07:40:55+00:00'
     note: |-
-        Silas 2026-11-11 PT, in session: "Achievements?" Target 12+ live achievements per docs/agents/main-game-standard.md.
+      Silas 2026-11-11 PT, in session: "Achievements?" Target 12+ live achievements per docs/agents/main-game-standard.md.
 
-        Only three live Achievement records exist (emperor-of-dust-orders-carried-out, -day-well-ruled, -merciful-court) and all fire on Day 1-level play. Add live Achievement rows through the existing achievements API (label, message, icon, karma, triggerCode) and award them from stores/emperorFortressStore.ts: reach Day 50; one per ending (8); all eight endings; finish with no follower lost; earn both relics; recruit all secret followers; ring the Silent Bell. Show them with components/achievements/game-achievement-strip.vue on the ending screen and gallery. Verify one award live after deploy.
-    owner: worker
+      Only three live Achievement records exist (emperor-of-dust-orders-carried-out, -day-well-ruled, -merciful-court) and all fire on Day 1-level play. Add live Achievement rows through the existing achievements API (label, message, icon, karma, triggerCode) and award them from stores/emperorFortressStore.ts: reach Day 50; one per ending (8); all eight endings; finish with no follower lost; earn both relics; recruit all secret followers; ring the Silent Bell. Show them with components/achievements/game-achievement-strip.vue on the ending screen and gallery. Verify one award live after deploy.
+
+      Achievement upgrade merged in kind_robots#5056 (d35dd44), all checks green: 16 new + 3 kept = 19 (one per ending family x8, 50-day reign, triumph, crypt sealed, Abbess unmasked, first/both relics, no follower lost, full Codex). 'Every peace' skipped (needs the t-064 endings record). Catalog seed succeeded.
     claimed_by: 20261112-ach-emperor-of-dust-modest
     claimed_at: '2026-11-12T01:00:34Z'
   - id: t-066

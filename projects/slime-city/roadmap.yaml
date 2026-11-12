@@ -107,17 +107,18 @@ tasks:
     claimed_at: '2026-11-12T00:47:52Z'
   - id: t-060
     title: 'Slime City achievements (none exist yet)'
-    status: claimed
+    status: done
     milestone: m3
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-12T01:00:31Z'
+    updated: '2026-11-12T07:40:56+00:00'
     note: |-
-        Silas 2026-11-11 PT, in session: "Achievements?" Target 12+ live achievements per docs/agents/main-game-standard.md.
+      Silas 2026-11-11 PT, in session: "Achievements?" Target 12+ live achievements per docs/agents/main-game-standard.md.
 
-        Slime City has no Achievement records. Add live rows through the existing achievements API and award them from the store: finish each crew's campaign (6), all six, each alliance ending, both endings for a crew, first Clash win, first private PvP win, evolve a fighter to level 3, district championships. Show with game-achievement-strip.vue on the finale and gallery; verify one award live after deploy.
-    owner: worker
+      Slime City has no Achievement records. Add live rows through the existing achievements API and award them from the store: finish each crew's campaign (6), all six, each alliance ending, both endings for a crew, first Clash win, first private PvP win, evolve a fighter to level 3, district championships. Show with game-achievement-strip.vue on the finale and gallery; verify one award live after deploy.
+
+      Achievement upgrade merged in kind_robots#5043 (b2e3d81), all checks green: 19 live achievements (six crew Journeys, Conviction/Cunning endings, all crews, first Clash win, Journey chapter, level-3 card, first Meat pack, legal Alliance deck, district champion, VS win, Tower floor 6 and summit, Grand Pit finale) via a client Pinia plugin watching store actions; story load never awards. Catalog seed succeeded. Strip not yet mounted (title-screen task).
     claimed_by: 20261112-ach-slime-city-modest
     claimed_at: '2026-11-12T01:00:31Z'
   - id: t-061

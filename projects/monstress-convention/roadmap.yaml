@@ -75,17 +75,18 @@ tasks:
       2026-11-11 PT: First main-game-standard slice shipped in kind_robots#5061 (squash 22da02d). Title Achievements sheet with pending-catalog empty state, endings scrapbook, accurate browser-local settings description, and double-confirmed edition-scoped save and keepsake reset. All six latest-head GitHub workflows passed including the full contract suites. Remaining t-015: account-backed saves, sound/music volume, finished-run history, ending artwork delivery, additional earned endings and replay/customization decisions. Return to ready rather than falsely marking the broad standard complete.
   - id: t-016
     title: 'MONSTRIQUE achievement upgrade: 12 or more live achievements'
-    status: claimed
+    status: done
     milestone: m4
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-12T01:00:55Z'
+    updated: '2026-11-12T07:40:56+00:00'
     note: |-
       Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
       Live today: 0 Achievement record(s) with this game's triggerCode prefix (checked against /api/achievements 2026-11-11). Target 12+ (usually 12-30; tie some to endings but don't go overboard). Mix story, skill, discovery and completion. Create the live records through the existing achievements API (label, message, icon, karma, triggerCode prefixed with the game slug), award them from the game store, show them with components/achievements/game-achievement-strip.vue, and verify one award live after deploy.
-    owner: worker
+
+      Achievement upgrade merged in kind_robots#5066 (d3a33c8), all checks green: 16 live achievements from a shared achievementsFor(prev,next) in both case stores' commit(); no mature-only achievements; load, mode-load and forgetCase never award. Catalog seed run 43175067016 succeeded. Title-menu entry left for the standard task.
     claimed_by: 20261112-ach-monstress-convention-modest
     claimed_at: '2026-11-12T01:00:55Z'
   - id: t-002

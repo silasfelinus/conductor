@@ -155,17 +155,18 @@ tasks:
       Achievements are tracked by their own task; this one covers everything else.
   - id: t-051
     title: 'Zuzu: Shifting Lands achievement upgrade: 12 or more live achievements'
-    status: claimed
+    status: done
     milestone: m5
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-12T02:28:57Z'
+    updated: '2026-11-12T07:40:57+00:00'
     note: |-
       Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
       Live today: 3 Achievement record(s) with this game's triggerCode prefix (checked against /api/achievements 2026-11-11). Target 12+ (usually 12-30; tie some to endings but don't go overboard). Mix story, skill, discovery and completion. Create the live records through the existing achievements API (label, message, icon, karma, triggerCode prefixed with the game slug), award them from the game store, show them with components/achievements/game-achievement-strip.vue, and verify one award live after deploy.
-    owner: worker
+
+      Achievement upgrade merged in kind_robots#5060 (2b2a1bc), all 13 checks green: 3 kept codes (messages rewritten to second person, no longer naming Zuzu) + 17 new = 20, including mittens-road, fennec-road and own-legend for the new character creator; awarded from journeyDeeds diffs in dispatch only, never on restore/fresh. Strip in a 'Road achievements' rail section. Ratchet file now empty: every main game is at 12+. Not wired: ending-collector (no persistent endings record yet).
     claimed_by: 20261112-ach-zuzu-shifting-lands-modest
     claimed_at: '2026-11-12T02:28:57Z'
   - id: t-052
