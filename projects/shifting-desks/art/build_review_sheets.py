@@ -16,7 +16,7 @@ import urllib.request
 from pathlib import Path
 
 import yaml
-from PIL import Image, ImageDraw, ImageFont, ImageOps
+from PIL import Image, ImageDraw, ImageOps
 
 ART = Path(__file__).resolve().parent
 HOST = "https://media.acrocatranch.com/images/shifting-desks/"
