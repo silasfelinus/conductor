@@ -119,7 +119,7 @@ def build_status():
         for k, v in counts.items():
             global_counts[k] += v
 
-        if lifecycle in {"active", "continuous"}:
+        if lifecycle in {"active", "playtest", "continuous"}:
             workable_needs_human += counts["needs-human"]
         else:
             archival_needs_human += counts["needs-human"]
@@ -144,6 +144,7 @@ def build_status():
         "| Metric | Value |",
         "|---|---|",
         f"| Active projects | {lifecycle_counts['active']} |",
+        f"| Playtest projects | {lifecycle_counts['playtest']} |",
         f"| Continuous projects | {lifecycle_counts['continuous']} |",
         f"| Paused projects | {lifecycle_counts['paused']} |",
         f"| Finished projects | {lifecycle_counts['finished']} |",
