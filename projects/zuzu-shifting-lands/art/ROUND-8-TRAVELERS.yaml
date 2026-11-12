@@ -1,0 +1,211 @@
+# Shifting Lands art round 8 (2026-11-12 PT): traveler portraits for the t-052 character creator. Silas, 2026-11-11
+# PT: "Shifting lands should let us design a character and adjust stats ... obv zuzu should be one of the playable
+# characters. As should Jeffery Mittens." The main-game standard (docs/agents/main-game-standard.md) queues character
+# portraits in an auto_submit conductor ledger.
+# kind_robots components/shifting-lands-character-creator.vue shows a portrait card per traveler, and the character
+# rail and ending plate reuse it (utils/shiftingLands/characters.ts characterPortrait). Zuzu keeps his shipped plate
+# (/zuzu-gamebook/scenes/zuzu-alone.webp). Jeffery Mittens and the fennec siblings use their gamebook scenes today
+# (looter.webp, siblings.webp); these give them a dedicated traveler card. Custom travelers show the shared road plate
+# (/zuzu-gamebook/scenes/shifting-road.webp) until their species portrait ships.
+# Same Krea 2 prose lane and all-animal tail as ROUND-6/7 (prose lanes send no negative prompt). Every figure is given
+# a species; nobody is described with the words the guardrails filter. Jeffery Mittens and the fennec siblings are
+# children: calm, dignified portraits, no peril, no weapons raised (WORLD-GUIDE "Guardrails"). Custom species
+# portraits are generic travelers, NOT canon characters: the koala wears no straw kasa and carries no sword, so it is
+# never read as Zuzu; the coyote has both hands and no eyepatch, so it is never read as the vagrant.
+# Curate: species right, one figure (two for the siblings), waist-up, no lettering, no extra limbs; mark keepers
+# verdict: 'keep: ...'.
+# Delivery (each step is required; a DONE render alone shows nothing in the game):
+#   1. export each keeper to kind_robots public/shifting-lands/portraits/<asset>.webp (about 4:3, 1152x896);
+#   2. kind_robots PR: for a species keeper, add its id to SHIPPED_SPECIES_PORTRAITS in
+#      utils/shiftingLands/characters.ts; for jeffery-mittens / fennec-siblings, point that premade's `portrait` at
+#      /shifting-lands/portraits/<asset>.webp. Portrait and blurb are presentation (characterFromSnapshot ignores
+#      them), so existing V10 saves keep loading and pick up the new plate.
+# priority: 1 (background). auto_submit: true. Private.
+round: shifting-lands-8-travelers
+project_slug: zuzu-shifting-lands
+designer: Comic Studio
+is_public: false
+is_mature: false
+cast_loras: false
+priority: 1
+auto_submit: true
+lanes:
+- key: krea2
+  label: Krea 2 (painted weird-west traveler card)
+  engine: krea2
+  prompt: prose
+  suffix: hand-painted weird-west storybook painting, bold ink outlines, warm dusty earth tones, dramatic practical
+    light, waist-up character portrait, the figure centered and filling the frame
+subjects:
+- key: sl8-traveler-jeffery-mittens
+  entity: character
+  title: Jeffery Mittens - traveler portrait
+  asset: jeffery-mittens
+  size: 1152x896
+  seed: 48001
+  task: t-052
+  prompt_prose: 'Dusk on a rocky frontier trail. A skinny young raccoon with grey fur, a black mask and bright wary
+    eyes stands half-turned toward the viewer, chin up, proud and a little defensive. He wears a long brown coat far
+    too big for him over a grey-green vest and a dirty off-white shirt with rolled sleeves, a faded jackal-hide rag
+    tied round one arm, and a string of four pairs of small boots hung round his neck by their laces. One paw is
+    raised, black to the wrist like a mitten. His black-and-grey ringed tail curls behind him. Calm, quietly hopeful
+    mood. Every figure in the scene is an anthropomorphic animal in worn frontier clothes, with animal heads, fur and
+    tails.'
+  jobs: {}
+  art: {}
+- key: sl8-traveler-fennec-siblings
+  entity: character
+  title: The fennec siblings - traveler portrait
+  asset: fennec-siblings
+  size: 1152x896
+  seed: 48002
+  task: t-052
+  prompt_prose: 'Morning light on a dry desert road. A gaunt young fennec fox girl with enormous ears, tall for her age,
+    stands facing the viewer with a fierce, steady gaze, her thin wrists wrapped in old cloth bandages. She wears a
+    ragged grey dress and carries her small fennec toddler brother on her hip; he clutches her collar and peers at
+    the viewer with round curious eyes. Protective, resilient, gentle mood. Every figure in the scene, young and old
+    alike, is an anthropomorphic animal in worn frontier clothes, with animal heads, fur and tails.'
+  jobs: {}
+  art: {}
+- key: sl8-traveler-koala
+  entity: character
+  title: Custom traveler - koala
+  asset: koala
+  size: 1152x896
+  seed: 48011
+  task: t-052
+  prompt_prose: 'Late afternoon on a frontier road. A sturdy grey koala traveler with tufted ears and a broad dark nose
+    stands at ease, a wide-brimmed brown felt hat pushed back and a patched canvas duster over a work shirt, a
+    bedroll strapped across the back and a walking staff in one paw. Steady, curious mood. Every figure in the scene
+    is an anthropomorphic animal in worn frontier clothes, with animal heads, fur and tails.'
+  jobs: {}
+  art: {}
+- key: sl8-traveler-raccoon
+  entity: character
+  title: Custom traveler - raccoon
+  asset: raccoon
+  size: 1152x896
+  seed: 48012
+  task: t-052
+  prompt_prose: 'Twilight at a frontier crossroads. A grown raccoon traveler with a sleek masked face and a ringed tail
+    stands with a satchel over one shoulder, wearing a dark wool vest, a neckerchief and a short travel cloak, a
+    lantern hanging from one paw. Watchful, wry mood. Every figure in the scene is an anthropomorphic animal in worn
+    frontier clothes, with animal heads, fur and tails.'
+  jobs: {}
+  art: {}
+- key: sl8-traveler-fennec
+  entity: character
+  title: Custom traveler - fennec fox
+  asset: fennec
+  size: 1152x896
+  seed: 48013
+  task: t-052
+  prompt_prose: 'Bright morning on a sandy desert trail. A grown fennec fox traveler with huge ears and cream fur stands
+    in a sun-faded linen coat and a wrapped headscarf pushed down round the neck, a water flask and a coil of rope at
+    the belt. Alert, resourceful mood. Every figure in the scene is an anthropomorphic animal in worn frontier
+    clothes, with animal heads, fur and tails.'
+  jobs: {}
+  art: {}
+- key: sl8-traveler-coyote
+  entity: character
+  title: Custom traveler - coyote
+  asset: coyote
+  size: 1152x896
+  seed: 48014
+  task: t-052
+  prompt_prose: 'Dusk over open scrubland. A lean coyote traveler with tawny fur, both eyes bright and both paws resting
+    on a travel pack strap, stands in a dust-brown duster and a flat-brimmed hat, a bedroll across the back. Weathered,
+    easygoing mood. Every figure in the scene is an anthropomorphic animal in worn frontier clothes, with animal
+    heads, fur and tails.'
+  jobs: {}
+  art: {}
+- key: sl8-traveler-otter
+  entity: character
+  title: Custom traveler - otter
+  asset: otter
+  size: 1152x896
+  seed: 48015
+  task: t-052
+  prompt_prose: 'Soft light beside a river ferry landing. A sleek brown otter traveler with whiskers and a thick tail
+    stands in an oilcloth jacket and rolled trousers, a fishing pole and a small pack over one shoulder. Friendly,
+    capable mood. Every figure in the scene is an anthropomorphic animal in worn frontier clothes, with animal heads,
+    fur and tails.'
+  jobs: {}
+  art: {}
+- key: sl8-traveler-rabbit
+  entity: character
+  title: Custom traveler - rabbit
+  asset: rabbit
+  size: 1152x896
+  seed: 48016
+  task: t-052
+  prompt_prose: 'Golden hour at the edge of an orchard. A grey-brown rabbit traveler with long upright ears stands in a
+    patched homespun coat and a wide straw sunhat with a frayed brim, a basket strap over one shoulder and a walking
+    stick in hand. Determined, hopeful mood. Every figure in the scene is an anthropomorphic animal in worn frontier
+    clothes, with animal heads, fur and tails.'
+  jobs: {}
+  art: {}
+- key: sl8-traveler-hare
+  entity: character
+  title: Custom traveler - hare
+  asset: hare
+  size: 1152x896
+  seed: 48017
+  task: t-052
+  prompt_prose: 'Windy afternoon on high plains. A rangy brown hare traveler with very long black-tipped ears stands in
+    a long split riding coat and a scarf caught by the wind, a map case slung across the chest. Restless, quick mood.
+    Every figure in the scene is an anthropomorphic animal in worn frontier clothes, with animal heads, fur and tails.'
+  jobs: {}
+  art: {}
+- key: sl8-traveler-jackal
+  entity: character
+  title: Custom traveler - jackal
+  asset: jackal
+  size: 1152x896
+  seed: 48018
+  task: t-052
+  prompt_prose: 'Red evening light among dry rocks. A slender golden jackal traveler with tall ears and a dark-saddled
+    back stands in a sleeveless leather jerkin and wrapped forearms, a water skin and a small drum at the hip. Proud,
+    wary mood. Every figure in the scene is an anthropomorphic animal in worn frontier clothes, with animal heads,
+    fur and tails.'
+  jobs: {}
+  art: {}
+- key: sl8-traveler-badger
+  entity: character
+  title: Custom traveler - badger
+  asset: badger
+  size: 1152x896
+  seed: 48019
+  task: t-052
+  prompt_prose: 'Overcast noon on a stony road. A broad badger traveler with a striped black-and-white face stands in a
+    heavy canvas work coat and a leather apron, a pick and a coil of rope strapped to a stout pack. Solid, patient
+    mood. Every figure in the scene is an anthropomorphic animal in worn frontier clothes, with animal heads, fur and
+    tails.'
+  jobs: {}
+  art: {}
+- key: sl8-traveler-pronghorn
+  entity: character
+  title: Custom traveler - pronghorn
+  asset: pronghorn
+  size: 1152x896
+  seed: 48020
+  task: t-052
+  prompt_prose: 'Clear morning on open grassland. A tall pronghorn traveler with short forked black horns, a white
+    throat band and a tan coat stands in a neat buttoned waistcoat and a long travelling cloak, a leather ledger bag at
+    the side. Composed, far-sighted mood. Every figure in the scene is an anthropomorphic animal in worn frontier
+    clothes, with animal heads, fur and tails.'
+  jobs: {}
+  art: {}
+- key: sl8-traveler-crow
+  entity: character
+  title: Custom traveler - crow
+  asset: crow
+  size: 1152x896
+  seed: 48021
+  task: t-052
+  prompt_prose: 'Grey storm light at a canyon edge. A glossy black crow traveler with a sharp beak and bright clever eyes
+    stands in a layered patchwork shawl and a travel satchel, wing-hands folded, a few feathers lifted by the wind.
+    Curious, enigmatic mood. Every figure in the scene is an anthropomorphic animal in worn frontier clothes, with
+    animal heads, feathers or fur.'
+  jobs: {}
+  art: {}
