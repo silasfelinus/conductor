@@ -1,4 +1,5 @@
 from pathlib import Path
+import sys
 
 from scripts.project_lifecycle import (
     PROJECT_LIFECYCLE_STATUSES,
@@ -99,6 +100,7 @@ def _handoff_fixture(tmp_path, monkeypatch, *, status="playtest", task_status="d
         encoding="utf-8",
     )
     monkeypatch.setattr(handoff, "ROOT", tmp_path)
+    monkeypatch.setattr(sys, "argv", ["sync_playtest_master_issues.py"])
     monkeypatch.setenv("ISSUE_BRIDGE_TOKEN", "test-not-a-real-token")
 
 
