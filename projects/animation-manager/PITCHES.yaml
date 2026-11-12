@@ -2751,3 +2751,18 @@ pitches:
         verification:
           - 11/11 CI checks green
           - registered in stores/animationCatalog.ts
+
+  - id: shishi-odoshi-garden
+    title: Shishi-odoshi Garden
+    status: shipped
+    priority: 99
+    surprise: Bamboo water rockers fill from trickling spouts, tip to spill into a moonlit pond and clack back against their stones; hover lights the nearest rocker, click opens the spouts.
+    builds:
+      - version: 1
+        status: shipped
+        component: components/screenfx/shishi-odoshi-garden.vue
+        pull_request: silasfelinus/kind_robots#5077
+        released_at: '2026-11-12T14:00:00Z'
+        verification:
+          - headless Chromium render at 1280x720 and 390x844, no page errors
+          - registered in stores/animationCatalog.ts
