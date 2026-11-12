@@ -154,6 +154,16 @@ tasks:
       Item 7 (customizable characters) applies "in most cases": if this genre makes it a poor fit, say so in the audit with the reason and leave it for Silas rather than skipping silently.
 
       Achievements are tracked by their own task; this one covers everything else.
+  - id: t-064
+    title: 'CPU values PIERCE gear only against armor, then rebalance Undertow and Bloodfairies starters'
+    status: ready
+    milestone: m3
+    stakes: reversible
+    passes: 0
+    depends_on: []
+    updated: '2026-11-12T00:16:24Z'
+    note: |-
+      Found by t-058 (kind_robots#5030). chooseClashCpu's own-target grant scoring (utils/slimeCity/clash.ts, `missing.length * 2.8`) prices a PIERCE grant at full value even when the fighter across has no armor, so the CPU spends plays on PIERCE gear instead of deploying fighters. A swap ablation of the Catgirls fighters deck vs the other crews' constructed decks (24 seeds, both seats) read 0.432 with s1-surgical-piercers and 0.597 without; ninthlife (REGEN gear) 0.524 without. Prototype: value a PIERCE keyword at 0.6 unless `across.armor > 0`. That took the Catgirls fighters deck to 0.495, but the 40-seed starter sweep moved Undertow 54.5% -> 59.3% and Bloodfairies 44.3% -> 41.8% (guard 42-58%). Land the CPU fix together with a starter rebalance that keeps verifySlimeCityClash and verifySlimeCityClashConstructed green, and check whether REGEN gear on a full-health fighter is over-valued too. Internal preview only.
   - id: t-002
     milestone: m1
     title: "Harden square movement, fog-of-war, action costs and three cadences"
@@ -1337,11 +1347,11 @@ tasks:
   - id: t-058
     milestone: m3
     title: "Lift Catgirls' constructed-field score (0.424-0.458 after t-057) toward the middle of the band without breaking the crafted starter"
-    status: claimed
+    status: done
     stakes: reversible
     passes: 0
     depends_on: t-057
-    updated: '2026-11-11T23:47:49Z'
+    updated: '2026-11-12T00:26:24Z'
     note: |-
       Kaizen from t-057 (kind_robots#5023). With Exchange's CALL IN THE DEBT at 4/7, Catgirls
       became the low crew in verifySlimeCityClashConstructed: 0.424-0.458 across seed families
@@ -1350,6 +1360,17 @@ tasks:
       non-starter pool or the crew power first. Tune with an A/B on held-out seed families, keep
       the starter guard green, then aim to tighten the constructed band to 42-58%. Internal
       preview only.
+
+      2026-11-11 PT: kind_robots#5030 lifts NINE LIVES +2/+3 -> +3/+4 and tightens
+      verifySlimeCityClashConstructed to 42-58% / 15 pts. Families 0-3: Catgirls 0.433-0.463
+      -> 0.452-0.478; 40-seed starters 46.5-54.3%. Ablation found the larger drag is the CPU
+      over-valuing PIERCE gear vs unarmored fighters (Catgirls fighters deck 0.43 with
+      Surgical Piercers, 0.60 without); fixing it lifts Undertow starter to 59%, so filed as
+      t-064.
+
+      MERGED 2026-11-11 PT: kind_robots#5030 squash 5d7cce6 (11/11 checks green). Follow-up:
+      t-064 (PIERCE CPU valuation + starter rebalance).
     owner: worker
     claimed_by: 2026-11-11T234749Z-slime-city-t058-claude
     claimed_at: '2026-11-11T23:47:49Z'
+    implementation_pr: 'silasfelinus/kind_robots#5030'
