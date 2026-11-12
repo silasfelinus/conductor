@@ -441,17 +441,18 @@ tasks:
       Achievements are tracked by their own task; this one covers everything else.
   - id: t-073
     title: 'Ecotone: Weird Humboldt achievement upgrade: 12 or more live achievements'
-    status: claimed
+    status: done
     milestone: m5
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-12T01:00:40Z'
+    updated: '2026-11-12T06:58:48+00:00'
     note: |-
       Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
       Live today: 0 Achievement record(s) with this game's triggerCode prefix (checked against /api/achievements 2026-11-11). Target 12+ (usually 12-30; tie some to endings but don't go overboard). Mix story, skill, discovery and completion. Create the live records through the existing achievements API (label, message, icon, karma, triggerCode prefixed with the game slug), award them from the game store, show them with components/achievements/game-achievement-strip.vue, and verify one award live after deploy.
-    owner: worker
+
+      Achievement upgrade merged in kind_robots#5035 (d50b2eb), all checks green: 18 live achievements awarded only from ecotoneStore.update() diffs (never on load/import/restore), none for choosing a drug lens; ending-tied ones for each guide's hopeful ending, the Wild Way and the Long Table. Catalog seed run succeeded. Left: strip not mounted inside the Endings tab (sidebar strip shows on /play/ecotone).
     claimed_by: 20261112-ach-weird-humboldt-modest
     claimed_at: '2026-11-12T01:00:40Z'
   - id: t-002

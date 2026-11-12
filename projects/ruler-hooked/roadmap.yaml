@@ -105,17 +105,18 @@ tasks:
     Achievements are tracked by their own task; this one covers everything else.
 - id: t-068
   title: 'The Ruler Is Hooked achievement upgrade: 12 or more live achievements'
-  status: claimed
+  status: done
   milestone: m6
   stakes: reversible
   passes: 0
   depends_on: []
-  updated: '2026-11-12T01:00:47Z'
+  updated: '2026-11-12T06:58:47+00:00'
   note: |-
     Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
     Live today: 0 Achievement record(s) with this game's triggerCode prefix (checked against /api/achievements 2026-11-11). Target 12+ (usually 12-30; tie some to endings but don't go overboard). Mix story, skill, discovery and completion. Create the live records through the existing achievements API (label, message, icon, karma, triggerCode prefixed with the game slug), award them from the game store, show them with components/achievements/game-achievement-strip.vue, and verify one award live after deploy.
-  owner: worker
+
+    Achievement upgrade merged in kind_robots#5051 (a68b5a6), all checks green: 18 live achievements awarded at the deed in rulerHookedStore and rulerHookedQuizStore (catches, story arcs, all 4 endings, gear, quiz totals); init/loadSlot never award; strip on the title's reign archive. Catalog seed run succeeded.
   claimed_by: 20261112-ach-ruler-hooked-modest
   claimed_at: '2026-11-12T01:00:47Z'
 
