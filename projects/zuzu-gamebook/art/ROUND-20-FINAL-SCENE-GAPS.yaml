@@ -1,0 +1,206 @@
+# Zuzu Gamebook ROUND-20: original section art for seven NEVER-QUEUED route/fairness scenes.
+# Evidence: kind_robots book.ts/acts/act1.ts/act4.ts/act8.ts (2026-11-12).
+# These seven lack exact SECTION_PLATES entries and had no entries in ROUND-1..19.
+# TWO candidates per section. Only generated PRIVATE internal ArtJobs; not approved or delivered.
+# After DONE: review rendered pixels for correct scene and on-model cast, then export
+# chosen WebP to public/zuzu-gamebook/scenes/sections/<section>.webp and register
+# SECTION_PLATES with real artImageId+source. Never count prompt/DONE as delivered.
+round: gamebook-20-fairness-scene-gaps
+series: zuzu-koala-assassin
+project_slug: zuzu-gamebook
+designer: Comic Studio
+is_public: false
+is_mature: false
+auto_submit: true
+lanes:
+- key: arthemy-house
+  label: Arthemy Western Art v3.0 (house style, private)
+  engine: comfy
+  checkpoint: Illustrious/arthemyWesternArt_v30.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, absurdres, very aesthetic, toon (style), western comics (style), gritty, dark atmosphere, grindhouse, high contrast, heavy shadows, weathered, grimy
+  suffix: western, dusty, dramatic lighting, detailed painted graphic novel
+  steps: 30
+  cfg: 5
+  sampler: euler_ancestral
+subjects:
+- key: gb20-a1-ridge-retreat-1
+  entity: zuzu
+  lane: arthemy-house
+  title: "A Debt in the Reeds (round 20 composition 1)"
+  section: a1-ridge-retreat
+  shape: wide
+  size: 1344x768
+  seed: 35201
+  negative: "worst quality, lowres, blurry, watermark, signature, logo, text, words, letters, modern asphalt, automobiles, paved roads, human face, human limbs, glossy plastic, chibi, disney, pixar, extra limbs, fused figures, multiple swords, extra weapon, exaggerated gore"
+  prompt_prose: "A low wide shot of Zuzu, a stocky stern anthro koala in a straw kasa and rust poncho with orange zigzag hem, his single katana hilt over his right shoulder, climbing a jagged red sandstone ridgeline with a fresh bandage tight around his ribs. Below him a broad black pool disappears into tall reeds. Far away one tiny revolver flash and a thin curl of smoke mark the one-eyed coyote still fighting near the water. The foreground is rocky and bleak, with a hard orange desert sunset and dust in the air."
+  prompt_tags: "solo, zuzukoala, anthro koala, grey fur, wide straw kasa, rust poncho orange zigzag trim, single katana back right shoulder, climbing jagged red sandstone ridge, bandaged ribs, distant black water reeds, tiny coyote gunshot smoke, gritty western comic, long shot"
+  loras: 
+  - resource_id: 4593
+    strength: 0.75
+- key: gb20-a1-ridge-retreat-2
+  entity: zuzu
+  lane: arthemy-house
+  title: "A Debt in the Reeds (round 20 composition 2)"
+  section: a1-ridge-retreat
+  shape: wide
+  size: 1344x768
+  seed: 35202
+  negative: "worst quality, lowres, blurry, watermark, signature, logo, text, words, letters, modern asphalt, automobiles, paved roads, human face, human limbs, glossy plastic, chibi, disney, pixar, extra limbs, fused figures, multiple swords, extra weapon, exaggerated gore"
+  prompt_prose: "Rear three-quarter view from the high stone trail. The lone wounded grey-furred koala crouches with one paw on the cliff, one clean cloth rib bandage visible under the poncho. A winding dark waterhole and reed bed far below contains two distant points of muzzle smoke. No other foreground characters, no extra swords. Harsh blood-orange evening light reveals an empty road stretching east."
+  prompt_tags: "solo, zuzukoala, anthro koala, grey fur, wide straw kasa, rust poncho orange zigzag trim, single katana back right shoulder, climbing jagged red sandstone ridge, bandaged ribs, distant black water reeds, tiny coyote gunshot smoke, gritty western comic, long shot"
+  loras: 
+  - resource_id: 4593
+    strength: 0.75
+- key: gb20-a4-well-scatter-1
+  entity: empty
+  lane: arthemy-house
+  title: "Into the Rocks (round 20 composition 1)"
+  section: a4-well-scatter
+  shape: wide
+  size: 1344x768
+  seed: 35211
+  negative: "worst quality, lowres, blurry, watermark, signature, logo, text, words, letters, modern asphalt, automobiles, paved roads, human face, human limbs, glossy plastic, chibi, disney, pixar, extra limbs, fused figures, multiple swords, extra weapon, exaggerated gore"
+  prompt_prose: "At a dry stone well under harsh afternoon sun, a torn provision bag has burst across the dust: dried meat, a dented iron cookpot, a single coin and a tangled bedroll. A group of dusty jackals scramble over the scattered food at the near edge of the frame. A tight steep cleft between red rocks rises in the background, showing three tiny fleeing animal silhouettes far away, one carrying a toddler. The ruined supplies and escape passage are the unmistakable focus. No modern objects, no human faces."
+  prompt_tags: "empty scenery foreground, burst provision sack, scattered dried meat, dented cookpot, loose coin, fallen bedroll, dry stone well, hungry jackals scavenging, rocky narrow escape cleft, three tiny distant silhouettes, desert dust, western comic"
+  loras:  []
+- key: gb20-a4-well-scatter-2
+  entity: empty
+  lane: arthemy-house
+  title: "Into the Rocks (round 20 composition 2)"
+  section: a4-well-scatter
+  shape: wide
+  size: 1344x768
+  seed: 35212
+  negative: "worst quality, lowres, blurry, watermark, signature, logo, text, words, letters, modern asphalt, automobiles, paved roads, human face, human limbs, glossy plastic, chibi, disney, pixar, extra limbs, fused figures, multiple swords, extra weapon, exaggerated gore"
+  prompt_prose: "Ground-level close composition on the burst food bag and rolling coin beside the old dry well. Jackal paws and shadows crowd in toward meat in the dust. Deep in the background, the narrow red-rock escape cut is visible, with three small distant fleeing shadows climbing into it. Bright cruel desert sun, dusty wind, weathered western comic rendering."
+  prompt_tags: "empty scenery foreground, burst provision sack, scattered dried meat, dented cookpot, loose coin, fallen bedroll, dry stone well, hungry jackals scavenging, rocky narrow escape cleft, three tiny distant silhouettes, desert dust, western comic"
+  loras:  []
+- key: gb20-a4-well-slip-1
+  entity: empty
+  lane: arthemy-house
+  title: "A Narrow Way Out (round 20 composition 1)"
+  section: a4-well-slip
+  shape: wide
+  size: 1344x768
+  seed: 35221
+  negative: "worst quality, lowres, blurry, watermark, signature, logo, text, words, letters, modern asphalt, automobiles, paved roads, human face, human limbs, glossy plastic, chibi, disney, pixar, extra limbs, fused figures, multiple swords, extra weapon, exaggerated gore"
+  prompt_prose: "At the base of a red rock cleft beside a dry desert well, a clean white bandage spins through the air toward an injured jackal raider whose hand is held out. Beyond the opening, the narrow fissure curves away into shade, barely wide enough for a small child to crawl. In deep background the shapes of two small animal children and a koala are retreating through the crack. A stern jackal leader watches from far across the well. The airborne bandage and tight escape route are the visual story, rendered without detailed faces."
+  prompt_tags: "dry well, red stone narrow crevice, white bandage tossed to wounded jackal hand, jackal bandit leader far back, tiny animal children fleeing into crack, no frontal faces, harsh western sun, gripping escape, western painted comic"
+  loras:  []
+- key: gb20-a4-well-slip-2
+  entity: empty
+  lane: arthemy-house
+  title: "A Narrow Way Out (round 20 composition 2)"
+  section: a4-well-slip
+  shape: wide
+  size: 1344x768
+  seed: 35222
+  negative: "worst quality, lowres, blurry, watermark, signature, logo, text, words, letters, modern asphalt, automobiles, paved roads, human face, human limbs, glossy plastic, chibi, disney, pixar, extra limbs, fused figures, multiple swords, extra weapon, exaggerated gore"
+  prompt_prose: "From inside a cramped red-stone fissure looking out toward an abandoned desert well: the lower halves of three fleeing animal travelers are already deep in the crevice while outside, a single bright rolled bandage lies at the feet of jackal bandits distracted in the sun. Dry ochre stone dominates the picture, the escape path visibly impossibly narrow for an adult bandit. Dramatic deep natural shadow, no human details."
+  prompt_tags: "dry well, red stone narrow crevice, white bandage tossed to wounded jackal hand, jackal bandit leader far back, tiny animal children fleeing into crack, no frontal faces, harsh western sun, gripping escape, western painted comic"
+  loras:  []
+- key: gb20-a8-under-the-wall-1
+  entity: zuzu
+  lane: arthemy-house
+  title: "Under the Wall (round 20 composition 1)"
+  section: a8-under-the-wall
+  shape: wide
+  size: 1344x768
+  seed: 35231
+  negative: "worst quality, lowres, blurry, watermark, signature, logo, text, words, letters, modern asphalt, automobiles, paved roads, human face, human limbs, glossy plastic, chibi, disney, pixar, extra limbs, fused figures, multiple swords, extra weapon, exaggerated gore"
+  prompt_prose: "Midnight outside an old adobe mission, Zuzu the grey-furred stocky koala assassin in a rust-brown poncho with orange zigzag trim and broad straw kasa lies on his belly among thorns at a shallow rain drain cut under the east wall. His single katana rests along his back with the hilt above the right shoulder. In the background the tall bell tower is black against a starry sky, and the last mission windows go dark one after another. Thin dust near the drain vibrates as chanting rises from beneath the ground. No second figure."
+  prompt_tags: "solo zuzukoala grey fur straw kasa rust poncho orange zigzag trim single katana back, crawling thorn bushes, adobe mission east wall drain, dark bell tower midnight stars, silent extinguished windows, underground ominous chant, dark gritty western comic"
+  loras: 
+  - resource_id: 4593
+    strength: 0.75
+- key: gb20-a8-under-the-wall-2
+  entity: zuzu
+  lane: arthemy-house
+  title: "Under the Wall (round 20 composition 2)"
+  section: a8-under-the-wall
+  shape: wide
+  size: 1344x768
+  seed: 35232
+  negative: "worst quality, lowres, blurry, watermark, signature, logo, text, words, letters, modern asphalt, automobiles, paved roads, human face, human limbs, glossy plastic, chibi, disney, pixar, extra limbs, fused figures, multiple swords, extra weapon, exaggerated gore"
+  prompt_prose: "Low worm's-eye camera facing the narrow dry drainage hole beneath an adobe wall. The lone cloaked koala crouches in thorn scrub just outside, hat brim hiding his eyes, a single katana over the right shoulder. Tower and dark windows loom across the mission courtyard above. Cold blue starlight on dusty stones, black night, tense quiet before the underground chanting. Accurate building architecture and scale."
+  prompt_tags: "solo zuzukoala grey fur straw kasa rust poncho orange zigzag trim single katana back, crawling thorn bushes, adobe mission east wall drain, dark bell tower midnight stars, silent extinguished windows, underground ominous chant, dark gritty western comic"
+  loras: 
+  - resource_id: 4593
+    strength: 0.75
+- key: gb20-a8-behind-the-altar-1
+  entity: empty
+  lane: arthemy-house
+  title: "Behind the Altar (round 20 composition 1)"
+  section: a8-behind-the-altar
+  shape: wide
+  size: 1344x768
+  seed: 35241
+  negative: "worst quality, lowres, blurry, watermark, signature, logo, text, words, letters, modern asphalt, automobiles, paved roads, human face, human limbs, glossy plastic, chibi, disney, pixar, extra limbs, fused figures, multiple swords, extra weapon, exaggerated gore"
+  prompt_prose: "Inside the dim underground chapel of an old adobe convent, the camera looks out from a hidden crawlspace behind a chipped stone altar. A short row of thick black candles is being lit, and a coil of hemp rope lies on the altar with two small pairs of sandals visible beside it. Three distant dark-robed nun silhouettes approach in the corridor, one holding a single taper. A vertical seam in the cold wall behind the altar opens into unnatural blackness. The scene must clearly depict the black candles, carried light, rope and hidden wall, with no recognizable faces."
+  prompt_tags: "uninhabited chapel foreground, secret gap behind altar, old stone altar, thick black candles, coil of hemp rope, small children's sandals, distant nun silhouettes, taper candle, hidden supernatural seam in cold adobe wall, weathered western horror"
+  loras:  []
+- key: gb20-a8-behind-the-altar-2
+  entity: empty
+  lane: arthemy-house
+  title: "Behind the Altar (round 20 composition 2)"
+  section: a8-behind-the-altar
+  shape: wide
+  size: 1344x768
+  seed: 35242
+  negative: "worst quality, lowres, blurry, watermark, signature, logo, text, words, letters, modern asphalt, automobiles, paved roads, human face, human limbs, glossy plastic, chibi, disney, pixar, extra limbs, fused figures, multiple swords, extra weapon, exaggerated gore"
+  prompt_prose: "Close perspective from inside the concealed gap immediately behind a cracked chapel altar. Several scorched black candles, a rolled hemp rope, and a small child's sleeve lie on its stone surface. Beyond, an indistinct nun with a thin taper lights the last wick, while two more figures disappear up the stairwell. The nearly invisible cold seam in the back wall seems to breathe, with air moving the candle flames toward it. Grim intimate western horror comic."
+  prompt_tags: "uninhabited chapel foreground, secret gap behind altar, old stone altar, thick black candles, coil of hemp rope, small children's sandals, distant nun silhouettes, taper candle, hidden supernatural seam in cold adobe wall, weathered western horror"
+  loras:  []
+- key: gb20-a8-wounded-flight-1
+  entity: empty
+  lane: arthemy-house
+  title: "The Door You Leave Open (round 20 composition 1)"
+  section: a8-wounded-flight
+  shape: wide
+  size: 1344x768
+  seed: 35251
+  negative: "worst quality, lowres, blurry, watermark, signature, logo, text, words, letters, modern asphalt, automobiles, paved roads, human face, human limbs, glossy plastic, chibi, disney, pixar, extra limbs, fused figures, multiple swords, extra weapon, exaggerated gore"
+  prompt_prose: "A dramatic view of the underground chapel stairwell just after a desperate rescue: a small knife has clattered onto the grey flagstones, severed rope falls from the altar, and a narrow blood trail leads up open stone stairs toward night air. Far in the stairwell three tiny animal silhouettes support one another while fleeing; the sister supports her wounded ally and carries a small brother. Behind them black candles surround a widening dark crease in the air near the altar. The knife, cut rope, and impossible choice between exit and breach are clear, with no detailed faces."
+  prompt_tags: "chapel stone stairway, thrown dagger, cut ropes on altar, thin blood trail, small distant fleeing animal silhouettes, altar black candles, open supernatural dark rift, torn between rescue and battle, painted western comic"
+  loras:  []
+- key: gb20-a8-wounded-flight-2
+  entity: empty
+  lane: arthemy-house
+  title: "The Door You Leave Open (round 20 composition 2)"
+  section: a8-wounded-flight
+  shape: wide
+  size: 1344x768
+  seed: 35252
+  negative: "worst quality, lowres, blurry, watermark, signature, logo, text, words, letters, modern asphalt, automobiles, paved roads, human face, human limbs, glossy plastic, chibi, disney, pixar, extra limbs, fused figures, multiple swords, extra weapon, exaggerated gore"
+  prompt_prose: "Low composition across broken binding ropes and one fallen short blade in a stone chapel, with a drop of blood and a narrow lighted stairwell rising steeply. Far beyond the stair opening, a trio of small animal silhouettes escapes toward moonlight while an unnatural black vertical tear behind the altar widens among black candles. No human faces or fused figures. Gritty inked western supernatural horror."
+  prompt_tags: "chapel stone stairway, thrown dagger, cut ropes on altar, thin blood trail, small distant fleeing animal silhouettes, altar black candles, open supernatural dark rift, torn between rescue and battle, painted western comic"
+  loras:  []
+- key: gb20-a8-give-ground-1
+  entity: zuzu
+  lane: arthemy-house
+  title: "The Bottom Stair (round 20 composition 1)"
+  section: a8-give-ground
+  shape: tall
+  size: 768x1344
+  seed: 35261
+  negative: "worst quality, lowres, blurry, watermark, signature, logo, text, words, letters, modern asphalt, automobiles, paved roads, human face, human limbs, glossy plastic, chibi, disney, pixar, extra limbs, fused figures, multiple swords, extra weapon, exaggerated gore"
+  prompt_prose: "Portrait composition of Zuzu the grey-furred stocky koala swordsman in his weathered rust poncho with orange zigzag trim and straw kasa, wounded and barely standing on the bottom step of a narrow mission stone stairway. One paw clutches his bloody ribs, while his single katana is held low in his other paw because he can barely raise it. The wall presses behind his back. In the shadows beyond him the underground altar glows with black candles and a fold of impossible darkness. A little blood runs down one worn step. He faces an impossible choice under stark candlelight, alone in the foreground."
+  prompt_tags: "solo zuzukoala grey koala male stocky straw kasa rust poncho orange zigzag hem, bloodied torso, one katana low in paw, back against bottom stone stair, black candles and dark altar behind, moonlight from above, dramatic portrait, western comic horror"
+  loras: 
+  - resource_id: 4593
+    strength: 0.75
+- key: gb20-a8-give-ground-2
+  entity: zuzu
+  lane: arthemy-house
+  title: "The Bottom Stair (round 20 composition 2)"
+  section: a8-give-ground
+  shape: tall
+  size: 768x1344
+  seed: 35262
+  negative: "worst quality, lowres, blurry, watermark, signature, logo, text, words, letters, modern asphalt, automobiles, paved roads, human face, human limbs, glossy plastic, chibi, disney, pixar, extra limbs, fused figures, multiple swords, extra weapon, exaggerated gore"
+  prompt_prose: "Tall dramatic low-angle view up the bottom stair of an adobe mission, Zuzu the lone grey koala with broad straw kasa and torn rust poncho braces his bleeding back against the wall, katana drooping in one paw, orange zigzag trim and a single right-shoulder sheath visible. Downstairs the chapel's black candles lean toward a supernatural rip in the dark. Cold midnight blue overhead, hot candle glow below, lonely exhausted posture. No other foreground people."
+  prompt_tags: "solo zuzukoala grey koala male stocky straw kasa rust poncho orange zigzag hem, bloodied torso, one katana low in paw, back against bottom stone stair, black candles and dark altar behind, moonlight from above, dramatic portrait, western comic horror"
+  loras: 
+  - resource_id: 4593
+    strength: 0.75
