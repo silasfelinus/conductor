@@ -29,7 +29,7 @@ Human actions in Kind Robots do not mutate the projection table directly. They c
 
 ### Conductor owns
 
-- project lifecycle: `active | continuous | paused | retired | finished`;
+- project lifecycle: `active | playtest | continuous | paused | retired | finished`;
 - project coordination priority;
 - roadmap milestones and tasks;
 - task status, dependencies, claims, ownership, notes, and passes;
@@ -37,7 +37,7 @@ Human actions in Kind Robots do not mutate the projection table directly. They c
 - pitches and pitch status;
 - coordination history and completion provenance.
 
-`continuous` is a Conductor scheduling lifecycle: it means intentionally ongoing fallback work and does not require a distinct Kind Robots database lifecycle enum. The materialized Kind Robots `Project` remains runtime `ACTIVE` while the projection preserves the exact Conductor lifecycle.
+`playtest` means the game has complete authored art/text and agent-owned build and QA evidence, with its final subjective-acceptance task at `needs-human`; iterative polish may continue but no human approval is implied. `playtest` and `continuous` are the two fallback scheduling lifecycles after finite `active` work. Kind Robots displays first-class `PLAYTEST` and `CONTINUOUS` statuses, projected from Conductor without becoming a second source of truth.
 
 ### Kind Robots owns
 
