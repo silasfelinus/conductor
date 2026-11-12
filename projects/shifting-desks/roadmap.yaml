@@ -601,8 +601,8 @@ tasks:
   - id: t-032
     milestone: m3
     title: 'Land, review and link the art round 13 re-renders and round 14 tone-ladder renders'
-    status: review
-    updated: '2026-11-12T09:59:10Z'
+    status: ready
+    updated: '2026-11-12T10:03:04.300Z'
     depends_on: t-015
     passes: 0
     stakes: reversible
@@ -634,6 +634,8 @@ tasks:
       Merged Conductor PR #7304 (822bbafeba79) with all latest GitHub CI workflows green, including full Python suite, security, and validation. Scripts/shifting_desks_art_readiness.py and Auto Art Generate report artifact now identify all latest art destinations deterministically: 175 accepted, 196 delivered Western Cartoon pending actual visual KEEP/REDO, 20 last repaint requests missing verified newest delivery (391 total). Snapshot projects/shifting-desks/ART-READINESS-2026-11-12.md. No queue mutation, false verdict or Playtest promotion. Agent-owned art task t-032 remains ready for actual render curation and 20 ArtJob/media reconciliations; t-041 remains waiting. Other browser and fun gates remain separate.
 
       Implemented a read-only GitHub Actions visual review runner for all 196 verified-but-unreviewed round-18 Western Cartoon art media: fetches actual media, creates 4x3 labeled contact sheets, per-render preview images, source prompts, and delivery manifest as a downloadable evidence artifact. No KEEP verdicts or queue operations are performed. Pending PR CI, artifact examination and genuine per-image decisions; final Playtest promotion remains blocked until verified.
+
+      Visual media evidence and safe fallback merged: Conductor PR #7309 (340eb37f6dd4) plus Kind Robots #5073 (3cf48ea6e2e5), all latest CI green, branches deleted. All 216 pending art targets served a valid image; 20 core repaint paths were older than their requested rerender (do NOT treat existing HTTP 200 as new art). 196 Western Cartoon round-18 renders were inspected via GitHub Action contact sheets; 11 ending plates failed their defining payoff and have explicit REDO reasons. Those 11 now fall back to existing Classic ending art in the game. Latest effective inventory: 175 accepted, 185 Western delivered pending individual visual review, 11 Western rejected, 20 latest core paints without verified delivery. There is substantial outstanding art curation/rendering: do not mark task done, do not promote playtest or approve the human t-020 gate. All art/media preserved and no paid generation initiated.
   - id: t-033
     milestone: m3
     title: 'Tone ladder: lower floors grow more Cronenbergian (rules and station art)'
