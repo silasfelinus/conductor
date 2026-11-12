@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
-from datetime import datetime
+from datetime import datetime, timedelta
 import json
 import os
 import re
@@ -32,6 +32,8 @@ DEFAULT_STATE = ROOT / "projects/dead-air/production-state.json"
 EPISODES = ROOT / "projects/dead-air/episodes"
 BASE = "https://kindrobots.org"
 DURATION = 15.0
+MAX_PRODUCTION_SECONDS = 2 * 60 * 60
+MAX_GPU_CLIPS = 1  # one optional hero clip; the other shots move in the compositor
 
 # Keep aligned with Kind Robots utils/musicVideoScenes.ts: Krea paints nouns
 # it reads. The video compositor, not the still renderer, owns the subtitles.
@@ -113,8 +115,10 @@ def validate(e: dict) -> list[str]:
             problems.append(f"shot {index} invalid motion type")
     if abs(cursor - 15) > .01:
         problems.append("film must end at 15.0s")
-    if clips < 2:
-        problems.append("at least two shots must have real clip animation")
+    if clips > MAX_GPU_CLIPS:
+        problems.append(f"at most {MAX_GPU_CLIPS} generated clip may be requested within the budget")
+    # Camera animation is intentional movement, not an image slideshow; every
+    # scene must use one of the compositor's known motion lanes.
     return problems
 
 
@@ -252,6 +256,47 @@ def record(state: dict, path: Path, e: dict, **fields: object) -> None:
     row["updated_pt"] = datetime.now(ZoneInfo("America/Los_Angeles")).isoformat()
 
 
+def production_budget(row: dict, now: datetime | None = None) -> tuple[int, bool]:
+    """Elapsed production wall time, and whether new GPU work is forbidden.
+
+    This caps new requests, not a previously enqueued ArtJob's unknown queue
+    runtime; the relay must own cancellation for a strict GPU runtime cutoff.
+    """
+    now = now or datetime.now(ZoneInfo("America/Los_Angeles"))
+    raw = row.get("started_pt") or row.get("updated_pt")
+    if not raw:
+        return 0, False
+    began = datetime.fromisoformat(raw)
+    elapsed = max(0, int((now - began).total_seconds()))
+    return elapsed, elapsed >= MAX_PRODUCTION_SECONDS
+
+
+def ready_for_export(state: object, episode: dict, *, deadline_hit: bool) -> bool:
+    """No clip may hold the morning film hostage past its production window."""
+    if not hasattr(state, "doc") or not (state.doc.get("song") or {}).get("artImageId"):
+        return False
+    for shot in episode["shots"]:
+        scene = next((s for s in state.doc.get("scenes", []) if s["id"] == shot["id"]), None)
+        if not scene:
+            return False
+        image = (scene.get("image") or {}).get("artImageId")
+        job = state.scene_jobs.get(shot["id"])
+        if not image and not (job and job.art_image_id):
+            return False
+    if deadline_hit:
+        return True
+    for shot in episode["shots"]:
+        if shot["motion"] != "clip":
+            continue
+        scene = next(s for s in state.doc["scenes"] if s["id"] == shot["id"])
+        job = state.clip_jobs.get(shot["id"])
+        if not (scene.get("motion") or {}).get("clipArtImageId") and not (
+            job and job.status == "DONE" and job.art_image_id
+        ):
+            return False
+    return True
+
+
 def run_episode(e: dict, episode_path: Path, state: dict, state_file: Path, video_id: int | None) -> int:
     token = os.environ.get("KR_API_TOKEN")
     if not token:
@@ -259,7 +304,10 @@ def run_episode(e: dict, episode_path: Path, state: dict, state_file: Path, vide
         return EXIT_CONFIG
     client = KrClient(os.environ.get("KR_BASE_URL", BASE), token)
     row = state["episodes"].get(e["slug"], {})
+    elapsed, deadline_hit = production_budget(row)
     existing = row.get("music_video_id")
+    if deadline_hit and not existing:
+        raise PipelineError("two-hour window exhausted before a MusicVideo was created")
     if existing and video_id and int(existing) != video_id:
         raise PipelineError("video-id differs from the durable episode ledger")
     if existing:
@@ -270,8 +318,16 @@ def run_episode(e: dict, episode_path: Path, state: dict, state_file: Path, vide
             "styleBible": e["visual_style"], "heroShots": 2,
         })
         video_id = int(created["id"])
-        record(state, episode_path, e, music_video_id=video_id, status="created")
+        record(state, episode_path, e, music_video_id=video_id, status="created",
+               started_pt=datetime.now(ZoneInfo("America/Los_Angeles")).isoformat())
         save_state(state_file, state)  # Must persist ID before any extra API call.
+    if not row.get("started_pt"):
+        # Recover the earlier pilot's original timestamp; never restart the
+        # two-hour clock whenever a scheduled retry wakes up.
+        started = row.get("updated_pt") or datetime.now(ZoneInfo("America/Los_Angeles")).isoformat()
+        record(state, episode_path, e, started_pt=started)
+        save_state(state_file, state)
+    elapsed, deadline_hit = production_budget(state["episodes"][e["slug"]])
     doc = client.get_video(video_id)["doc"]
     expected_scenes = scenes_for(e)
     current_scenes = doc.get("scenes") or []
@@ -304,6 +360,13 @@ def run_episode(e: dict, episode_path: Path, state: dict, state_file: Path, vide
             client.upload_song(video_id, track, 15.0, 110)
     state_now = read_state(client, video_id)
     actions = plan_actions(state_now)
+    if "render_scenes" in actions and deadline_hit:
+        record(state, episode_path, e, status="budget-exhausted",
+               budget_seconds=MAX_PRODUCTION_SECONDS, elapsed_seconds=elapsed,
+               reason="No more image or video requests after two hours")
+        save_state(state_file, state)
+        print("Two-hour budget exhausted while still images are pending")
+        return EXIT_IN_PROGRESS
     if "render_scenes" in actions:
         result = client.render_scenes(video_id)
         outcomes = result.get("outcomes") or []
@@ -312,16 +375,21 @@ def run_episode(e: dict, episode_path: Path, state: dict, state_file: Path, vide
               ", ".join(f"{sid}={job_id}" for sid, job_id in sorted(submitted.items())))
         state_now = read_state(client, video_id)
     clip_ids = [s["id"] for s in e["shots"] if s["motion"] == "clip"]
+    # One short generated hero clip at most. Other shots get their action from
+    # animated framing, fast hard cuts, and caption reveals in FFmpeg.
+    if deadline_hit:
+        clip_ids = []
     for start in range(0, len(clip_ids), 8):
         request = clips_to_request(state_now, clip_ids[start:start + 8])
         if request:
             client.request_clips(video_id, request)
     state_now = read_state(client, video_id)
     failures = [sid for sid, job in state_now.clip_jobs.items() if job.status in ("FAILED", "CANCELLED")]
+    # Failed optional GPU animation is not a reason to sacrifice the morning
+    # screening: keep the still and run the compositor's kinetic treatment.
     if failures:
-        record(state, episode_path, e, music_video_id=video_id, status="blocked", reason="failed motion clip: " + ",".join(failures))
-        save_state(state_file, state)
-        raise PipelineError("animation ArtJobs failed: " + ", ".join(failures))
+        print("Optional GPU animation failed; using animated camera fallback: " + ", ".join(failures))
+        deadline_hit = True
     ready_clips = [
         sid for sid in clip_ids
         if (state_now.clip_jobs.get(sid) and state_now.clip_jobs[sid].status == "DONE"
@@ -337,8 +405,11 @@ def run_episode(e: dict, episode_path: Path, state: dict, state_file: Path, vide
     record(state, episode_path, e, music_video_id=video_id, art_jobs=jobs,
            status="rendering", motion_clips_ready=len(ready_clips))
     save_state(state_file, state)
-    if len(ready_clips) < 2 or plan_actions(state_now) != ["assemble"]:
-        print(f"Rendering private MusicVideo {video_id}: {len(ready_clips)}/{len(clip_ids)} real motion clips ready")
+    # A finished clip is a bonus, not a required second GPU pass. The
+    # two-hour deadline allows the edit to finish from rendered stills.
+    can_export = ready_for_export(state_now, e, deadline_hit=deadline_hit)
+    if not can_export:
+        print(f"Rendering private MusicVideo {video_id}: {len(ready_clips)}/{len(clip_ids)} motion clips; {elapsed}s elapsed")
         return EXIT_IN_PROGRESS
     # A shot list is not distinct artwork if all scene IDs resolve to the same still.
     scene_ids = []
@@ -365,6 +436,9 @@ def run_episode(e: dict, episode_path: Path, state: dict, state_file: Path, vide
         raise PipelineError("final upload returned no ArtImage ID")
     record(state, episode_path, e, status="completed", final_art_image_id=image_id,
            quality_probe=probe, sha256=film_hash, bytes=film_bytes,
+           gpu_animated_shots=len(ready_clips),
+           kinetic_animated_shots=len(e["shots"]) - len(ready_clips),
+           budget_seconds=MAX_PRODUCTION_SECONDS,
            completed_pt=datetime.now(ZoneInfo("America/Los_Angeles")).date().isoformat())
     save_state(state_file, state)
     print(f"Completed private film {video_id}: final ArtImage {image_id}; {probe['duration_seconds']} seconds")
