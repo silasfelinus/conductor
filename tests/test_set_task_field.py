@@ -488,3 +488,24 @@ def test_real_conductor_roadmap_roundtrip():
     t001 = [t for t in data2["tasks"] if t["id"] == "t-001"][0]
     assert t001["approved_by_human"] is True
     assert "approved_by_human" not in t001["note"]
+
+
+DEEP_INDENT_NOTE_ROADMAP = """tasks:
+  - id: t-061
+    title: x
+    note: |-
+        Silas said one thing.
+
+        Story rewards stay in the run.
+    owner: worker
+"""
+
+
+def test_append_note_text_keeps_deeper_block_indent_parseable():
+    # slime-city/t-061: an 8-space |- note gained a 6-space paragraph and broke YAML.
+    out = stf.append_note_text(DEEP_INDENT_NOTE_ROADMAP, "t-061", "New cycle shipped.")
+    task = yaml.safe_load(out)["tasks"][0]
+    assert task["note"] == (
+        "Silas said one thing.\n\nStory rewards stay in the run.\n\nNew cycle shipped."
+    )
+    assert task["owner"] == "worker"

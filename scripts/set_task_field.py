@@ -267,7 +267,16 @@ def _field_raw_value(lines: list[str], key_idx: int, value_end: int, field_inden
     """
     style = existing_block_style(lines, key_idx)
     if style is not None:
+        # YAML takes a block scalar's indent from its first non-blank line, which
+        # may be deeper than field_indent + 2 (e.g. hand-written 8-space notes).
+        # Dedenting by a fixed +2 left the old lines over-indented, so appending a
+        # paragraph produced mixed indentation and an unparseable roadmap
+        # (slime-city/t-061, 2026-11-11 PT).
         content_indent = field_indent + 2
+        for line in lines[key_idx + 1 : value_end]:
+            if line.strip():
+                content_indent = max(content_indent, len(line) - len(line.lstrip(" ")))
+                break
         body: list[str] = []
         for line in lines[key_idx + 1 : value_end]:
             if line.strip() == "":
