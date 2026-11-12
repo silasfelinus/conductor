@@ -18620,3 +18620,12 @@ records:
   outcome: done
   failure_category: null
   lesson: Match task-declaration lines in PR bodies, not any mention; the anchored match found four real stale review tasks on its first live run, all from handoff-template "### Task" lines.
+- date: '2026-11-11'
+  project: memory-dungeon
+  task: t-067
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: A sweep-only guard catches a bad close-out after it merges; anchoring the "remaining:" match at line start (optionally date-prefixed) is what keeps quoted historical prose from tripping it.
