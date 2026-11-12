@@ -33,6 +33,12 @@ Keep an episode's script, rejected versions, pop-culture reference analysis, hum
 
 - The code-backed MusicVideo scenes can hold exact shots, duration, style and prompts. Generic `scenes/plan` would overwrite the comic timing; the adapter writes the scene plan itself before render.
 - The music-video pipeline can synthesize a song with ACE-Step, but a 15-second commercial needs authored dialogue. The adapter creates local espeak/FFmpeg provisional VO and a restrained tone bed; voice acting and sound design deserve a human/artistic pass before publication.
-- LTX/WAN hero animation is slow on a 12 GB GPU. The adapter requests clips on the nominated scenes; it does not fabricate clips or accept Ken Burns as verified animation.
+- LTX/WAN hero animation is slow on a 12 GB GPU. The adapter permits **one optional clip** per film. Its other shots move using deliberately authored Ken Burns/pans/zooms, title overlays and hard edits. Clip completion is never fabricated; the deadline cut can render without a clip.
 - Run in a Python environment with `pyyaml`, FFmpeg, FFprobe and espeak available. Never print KR_API_TOKEN.
 - `--start` is only for authorized private drafts. Never set `isPublic=true`, deploy, email or externally publish from this script.
+
+## The two-hour budget
+
+The first production attempt on each Pacific date begins a non-resetting **daily** 7,200-second deadline. After it expires, the adapter makes **no new still or video GPU requests that day**. An unfinished film may resume on a later date under a new daily allowance without discarding existing assets or IDs. If all five rendered stills and the audio are ready, it exports a final 15-second kinetic edit, even if an optional LTX clip is still queued. Remote existing ArtJobs are not cancelled by this local guard, so the system must not pretend GPU wall-clock usage is proven bounded. Check `production-state.json` for actual clip IDs and the finished ArtImage.
+
+The morning Actions workflow retries within the overnight window to complete before the normal morning digest. It does not publish, email a video or create another episode when the current one is unfinished. The future studio gallery should make the private final link discoverable; do not claim the ordinary public digest already includes it.

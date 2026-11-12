@@ -4,7 +4,13 @@ name: Dead Air daily film production
 # and leave an honest "rendering" ledger until a private 15s MP4 passes probes.
 on:
   schedule:
-    - cron: "0 18 * * *" # 10am PST / 11am PDT; PT date is computed in Python.
+    # Four budget-aware passes, roughly 1am–3:15am PST / 2am–4:15am PDT.
+    # First pass starts the production clock; the last can make a kinetic
+    # fallback cut rather than holding breakfast hostage for a GPU clip.
+    - cron: "0 9 * * *"
+    - cron: "45 9 * * *"
+    - cron: "30 10 * * *"
+    - cron: "15 11 * * *"
   push:
     branches: [main]
     paths:
@@ -19,6 +25,7 @@ concurrency:
 jobs:
   produce:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     permissions:
       contents: write
     steps:

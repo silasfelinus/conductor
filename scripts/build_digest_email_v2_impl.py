@@ -365,6 +365,36 @@ def _pitch_row(pitch: dict[str, Any], links_for, fallback_url: str) -> str:
     )
 
 
+def dead_air_section(film: dict[str, Any] | None) -> str:
+    """A private film can be linked to its owner's authenticated studio viewer."""
+    if not isinstance(film, dict):
+        return ""
+    status = str(film.get("status") or "missing")
+    if status != "ready":
+        return (
+            '<div style="margin:16px 0;padding:12px;border:1px solid #e5e7eb;'
+            'border-radius:10px;background:#fafafa">'
+            '<strong>📺 Dead Air: morning film</strong>'
+            f'<p style="margin:6px 0 0;font-size:12px;color:#64748b">'
+            f'Not finished ({esc(status)}). No placeholder is being called a video.</p></div>'
+        )
+    url = str(film.get("url") or "")
+    if not url.startswith("https://kindrobots.org/play/video-generator?"):
+        return ""
+    clips = film.get("gpu_animated_shots")
+    mix = f"{clips} generated clips" if isinstance(clips, int) else "motion edit"
+    return (
+        '<div style="margin:16px 0;padding:16px;border:1px solid #4338ca;'
+        'border-radius:12px;background:#f5f3ff">'
+        '<h2 style="margin:0 0 6px;font-size:19px">📺 Dead Air: private premiere</h2>'
+        f'<p style="margin:0 0 10px"><strong>{esc(film.get("title"))}</strong>'
+        f' · {esc(film.get("date"))} PT · 15 seconds · {esc(mix)}</p>'
+        f'<a style="display:inline-block;background:#312e81;color:white;'
+        f'padding:10px 16px;border-radius:7px;text-decoration:none" '
+        f'href="{esc(url)}">Watch the new commercial (sign in)</a></div>'
+    )
+
+
 def daily_deliveries_section(daily: dict[str, Any] | None) -> str:
     """Show implementation evidence FIRST; review decisions come afterward."""
     if not isinstance(daily, dict):
@@ -745,7 +775,7 @@ def build_payload(digest: dict[str, Any]) -> dict[str, Any]:
     animation_html = animation_release_section(digest)
     operational_html = engine_banner(digest) + container_log_banner(digest) + review_html
     pitch_html = next_pitch_section(digest.get("next_dream_proposal"))
-    middle = animation_html + operational_html + pitch_html + daily_deliveries_section(digest.get("daily_project_deliveries")) + playbook_challenge_section(digest.get("daily_playbook_challenge")) + daily_pitches_section(digest.get("daily_pitches"))
+    middle = dead_air_section(digest.get("dead_air_private_film")) + animation_html + operational_html + pitch_html + daily_deliveries_section(digest.get("daily_project_deliveries")) + playbook_challenge_section(digest.get("daily_playbook_challenge")) + daily_pitches_section(digest.get("daily_pitches"))
 
     # Place health and the next text pitch directly after the previous pitch's generated output.
     # If a build failed so there is no fresh output, put them immediately after

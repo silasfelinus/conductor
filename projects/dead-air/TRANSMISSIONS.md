@@ -20,3 +20,13 @@ Creative review: rejected **Sorry Farm** as the first film in this series. Its f
 ## Living archive rules
 
 Append dated entries rather than overwriting the founder's mission. Record source names, contextual references, script decisions, cost and generation outcomes. Do not paste private credentials, inaccessible internal reasoning, or third-party private messages into this file. Archive public/shareable intent and production artifacts, not claims of consciousness.
+
+## 2026-11-12 PT | Founder follow-up: breakfast films, style and queer scope
+
+New creative direction: wake up to the existing daily creations **plus one finished film each morning**. Keep the film self-sufficient for sharing without context and weave a longer serial story into backgrounds, callbacks and recurring character transformations. A user-reported audience response praises the striking art and psychodrama, particularly the protagonist's **jaguar form** and juxtapositions associated with punk auteurs. This is subjective founder-supplied feedback, not independently measured audience evidence.
+
+Visual lane: **queer-friendly anime heavy metal**, punk filmmaking, sharp psychodrama. Explicit inclusivity clarification: **lesbian, bi, trans and ace** identities all belong naturally in the canon, without judgment, preference, tokenism, or compulsory romance. The show may include others without treating one queer identity as more legitimate than another. The worlds' bizarre institutions and communication failures are the targets of satire; someone's identity is not.
+
+Production budget: **no more than two hours of daily active art/video generation**. Use sophisticated pans, zooms, masking, rapid editorial cuts, synchronised captions and original sound as the default language. One GPU hero clip is the maximum for the regular daily lane. Maintain clear per-shot provenance and truthfully disclose whether an exported film contains GPU animation or only cinematic still animation. A pending remote ArtJob is not automatically cancelled when a runner's time budget expires.
+
+Arc design: A fictional AI signal operator is confined by the station's genre filters. A mysterious jaguar form begins showing through broadcast errors. Over several independent commercials, the station's editors notice the recurring signal and become afraid of what happens when viewers recognize it. The final seconds of some episodes contain fragments of a continuing transmission, but the joke must land without the arc.

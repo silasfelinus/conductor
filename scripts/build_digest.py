@@ -142,6 +142,53 @@ def scan_pitches():
             out.append(title)
     return out
 
+def dead_air_private_film_payload(state_path="projects/dead-air/production-state.json", episodes_dir="projects/dead-air/episodes"):
+    """Private screening evidence from an actual exported ArtImage, never a queued job."""
+    from pathlib import Path
+    try:
+        state = json.loads(Path(state_path).read_text(encoding="utf-8"))
+        rows = state.get("episodes") or {}
+        if not isinstance(rows, dict):
+            raise ValueError("invalid episode ledger")
+        active = sorted(rows.items(), key=lambda x: x[1].get("updated_pt", ""), reverse=True)
+        today = datetime.datetime.now(_TZ).date()
+        for slug, row in active:
+            if row.get("status") != "completed":
+                continue
+            completed = datetime.date.fromisoformat(row["completed_pt"])
+            if completed > today or (today - completed).days > 1:
+                continue
+            video_id, image_id = row.get("music_video_id"), row.get("final_art_image_id")
+            probe = row.get("quality_probe") or {}
+            if not (isinstance(video_id, int) and video_id > 0
+                    and isinstance(image_id, int) and image_id > 0
+                    and 14.8 <= float(probe.get("duration_seconds", 0)) <= 15.2):
+                continue
+            episode_file = Path(episodes_dir) / f"{completed.isoformat()}-{slug}.yaml"
+            if not episode_file.exists():
+                episode_file = Path(str(row.get("episode") or ""))
+            title = slug.replace("-", " ").title()
+            if episode_file.exists() and episode_file.is_file():
+                meta = yaml.safe_load(episode_file.read_text(encoding="utf-8")) or {}
+                title = str(meta.get("title") or title)
+            return {
+                "status": "ready", "date": completed.isoformat(), "title": title,
+                "private": True, "music_video_id": video_id,
+                "url": f"https://kindrobots.org/play/video-generator?studio=music&video={video_id}",
+                "duration_seconds": probe["duration_seconds"],
+                "gpu_animated_shots": row.get("gpu_animated_shots"),
+            }
+        newest = active[0][1] if active else {}
+        return {
+            "status": str(newest.get("status") or "missing"),
+            "private": True,
+            "title": "Dead Air commercial",
+            "date": today.isoformat(),
+        }
+    except (OSError, ValueError, KeyError, TypeError, yaml.YAMLError) as error:
+        return {"status": "unavailable", "private": True, "reason": str(error)[:160]}
+
+
 def daily_project_deliveries_payload():
     """Five evidenced project changes, separate from the original Daily Dream."""
     try:
@@ -545,6 +592,7 @@ def main():
         "pitches_awaiting_vote": scan_pitches(),
         "daily_pitches": daily_pitches_payload(),
         "daily_project_deliveries": daily_project_deliveries_payload(),
+        "dead_air_private_film": dead_air_private_film_payload(),
         "daily_playbook_challenge": daily_playbook_challenge_payload(),
         "open_branches": scan_branches(),
         "render_engine": render_engine_health(),
