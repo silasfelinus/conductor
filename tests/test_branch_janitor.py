@@ -115,3 +115,49 @@ def test_force_delete_ignores_nonexistent_branch_name(monkeypatch, capsys):
     out = capsys.readouterr().out
     assert rc == 0
     assert "reviewer/does-not-exist" not in out
+
+
+def test_default_prefixes_cover_closeout_and_conductor_branches():
+    assert "close/" in bj.DEFAULT_PREFIXES
+    assert "conductor/" in bj.DEFAULT_PREFIXES
+
+
+def test_retirement_requires_exact_sha_and_no_open_pr():
+    entries = {"close/old": "a" * 40, "close/moved": "b" * 40, "close/review": "c" * 40}
+    heads = {"close/old": "a" * 40, "close/moved": "d" * 40, "close/review": "c" * 40}
+    allowed, skipped = bj.eligible_retirements(
+        entries, set(heads),
+        head_fn=lambda branch: heads[branch],
+        open_heads={"close/review"},
+    )
+    assert allowed == {"close/old"}
+    assert skipped == {"close/moved": "branch head changed", "close/review": "open PR"}
+
+
+def test_retirement_fails_closed_when_pr_api_unavailable():
+    allowed, skipped = bj.eligible_retirements(
+        {"close/old": "a" * 40}, {"close/old"},
+        head_fn=lambda _: "a" * 40, open_heads=None,
+    )
+    assert allowed == set()
+    assert skipped["close/old"] == "open PR lookup unavailable"
+
+
+def test_retirement_manifest_rejects_unsafe_entries(tmp_path):
+    import json
+    import pytest
+    f = tmp_path / "retirements.json"
+    f.write_text(json.dumps({"version": 1, "retirements": {"main": "a" * 40}}))
+    with pytest.raises(ValueError, match="Invalid branch retirement"):
+        bj.read_retirements(f)
+
+
+def test_delete_uses_exact_remote_head_lease(monkeypatch):
+    calls = []
+    monkeypatch.setattr(bj, "git", lambda *args: "a" * 40)
+    class Result:
+        returncode = 0
+    monkeypatch.setattr(bj.subprocess, "run", lambda *a, **k: (calls.append(a), Result())[1])
+    assert bj.delete_branch("close/old", False)
+    argv = calls[0][0]
+    assert "--force-with-lease=refs/heads/close/old:" + "a" * 40 in argv
