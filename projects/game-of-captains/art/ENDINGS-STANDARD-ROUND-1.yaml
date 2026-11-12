@@ -1,0 +1,58 @@
+# Space Couch ending plates, round 1 (2026-11-12 PT). Main-game standard item 6
+# (docs/agents/main-game-standard.md): every ending has its own painted plate. Silas, 2026-11-11 PT: "If there is
+# unmade art it should definitely be added to the pipeline."
+# Audit (kind_robots 7ad1136): the Playbook Kit lists 18 endings (utils/playbookKit/games/spaceCouch.ts). Four ship
+# as public/game-of-captains/endings/*.webp; twelve more were rendered in RUNTIME-SLOTS-ROUND-2 (ArtImages
+# 258291-258302) and already reach the play page through utils/gameOfCaptains/voyagePaintings.ts, so they need
+# export/wiring, not new art. The two counter-council logs finishVoyage writes (rules.ts) have never been painted:
+# THE UNION CANCELLATION (counter strategy against the Showrunner) and THE WITNESS COALITION (counter strategy
+# against any other nemesis). Prompts follow utils/gameOfCaptains/artPrompts.ts: COUCH_LOOK verbatim, the
+# Showrunner's RESIDENT_LOOKS line, the generic grey-cloaked nemesis of the-galactic-bargain (the coalition's
+# nemesis varies by run), and STYLE. Asset = game-of-captains/<endingArtKey(title)>, the key artSlots.ts reads,
+# so export_round_art.py ships them to public/game-of-captains/endings/<slug>.webp.
+# priority 60 (game art ahead of the priority-1 backlog). auto_submit: true. Private.
+round: space-couch-endings-1
+project_slug: game-of-captains
+designer: Space Couch runtime slots
+is_public: false
+is_mature: false
+cast_loras: false
+priority: 60
+auto_submit: true
+lanes:
+- key: krea2
+  label: Krea 2 painted runtime plates (artPrompts.ts house style)
+  engine: krea2
+  prompt: prose
+subjects:
+- key: warp-endings-the-union-cancellation
+  lane: krea2
+  entity: ending-plate
+  title: Space Couch ending the-union-cancellation
+  asset: game-of-captains/endings/the-union-cancellation
+  size: 1344x768
+  seed: 1132001
+  prompt_prose: Wide shot of a vast television studio arena with a polished black floor and twelve stacked stone
+    platforms. Above them hangs a floating ring of twelve rectangular black studio cameras around a red lamp, with
+    brass loudspeaker horns hanging below the ring, and its red lamp is fading to a dull ember. Banks of white
+    floodlights are clicking off one by one. Performers in sequinned contestant costumes and stagehands in black
+    coveralls walk off the platforms together in a long calm line down the aisle, one of them holding up a rolled
+    document tied with red ribbon. In the dark wings waits a very long scarlet velvet couch with rolled armrests,
+    deep button-tufted cushions and four short brass feet, floating inside a thin clear bubble with a faint pale-blue
+    rim. Gouache illustration with brown ink outlines, warm muted colors and solid shadows.
+- key: warp-endings-the-witness-coalition
+  lane: krea2
+  entity: ending-plate
+  title: Space Couch ending the-witness-coalition
+  asset: game-of-captains/endings/the-witness-coalition
+  size: 1344x768
+  seed: 1132002
+  prompt_prose: Wide shot of a ring-shaped stone jump gate in deep space. A long plain wooden table floats in front
+    of it. On one side sit rows of ordinary witnesses of many species on folding chairs, a dockworker in overalls,
+    a nurse in pale green scrubs, a farmer holding a straw hat, an old grandmother with a small grandchild, and
+    every one of them raises a hand in a vote. Alone on the other side of the table sits a tall figure in a grey
+    cloak with its hands flat on the wood, listening. Beside the table floats a very long scarlet velvet couch
+    with rolled armrests, deep button-tufted cushions and four short brass feet, floating inside a thin clear bubble
+    with a faint pale-blue rim, with two crew officers in navy coats standing by it holding stacks of folders.
+    Cold violet light from inside the gate ring, warm lamp light on the table. Gouache illustration with brown
+    ink outlines, warm muted colors and solid shadows.

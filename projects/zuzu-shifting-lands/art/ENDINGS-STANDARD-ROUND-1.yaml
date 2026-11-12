@@ -1,0 +1,295 @@
+# Shifting Lands ending plates, round 1 (2026-11-12 PT). Main-game standard item 6
+# (docs/agents/main-game-standard.md): every ending has its own painted plate. Silas, 2026-11-11 PT: "If there is
+# unmade art it should definitely be added to the pipeline." Today every finished journey shows the one shared
+# /zuzu-gamebook/scenes/zuzu-alone.webp (kind_robots components/shifting-lands-journey-board.vue, ending reader).
+# One subject per ending title the journey can close on (kind_robots 7ad1136):
+#   10 mark endings, utils/shiftingLands/endingsV6.ts ENDINGS (key = EndingKind);
+#    2 V7 retitles, utils/shiftingLands/endingsV7.ts: "The Debt Carried Open" (debt-carried-open) and
+#      "A Road Wide Enough for Everyone" (road-wide-enough);
+#    7 moral constellations, utils/shiftingLands/endingsConstellationsV7.ts (key = constellation id).
+# The displayed title decides the plate: constellation title first, then the V7 retitle, then the mark ending.
+# Shifting Lands is getting a character creator, so NO plate shows Zuzu or any protagonist: each paints the place
+# and the people the ending leaves behind. Every role is given a species (ROUND-6/7 lesson: un-speciesed roles
+# come back human), books and receipts are blank (pseudo-text lesson), Krea 2 prose lane as ROUND-6/7.
+# Delivery: keepers export to kind_robots public/shifting-lands/endings/<id>.webp (asset below, under the game's
+# existing public/shifting-lands/ root); the game PR maps ending title -> id and replaces the shared plate.
+# priority 60 (game art ahead of the priority-1 backlog). auto_submit: true. Private.
+round: shifting-lands-endings-1
+project_slug: zuzu-shifting-lands
+designer: Comic Studio
+is_public: false
+is_mature: false
+cast_loras: false
+priority: 60
+auto_submit: true
+lanes:
+- key: krea2
+  label: Krea 2 (painted weird-west card)
+  engine: krea2
+  prompt: prose
+  suffix: hand-painted weird-west storybook painting, bold ink outlines, warm dusty earth tones, dramatic practical
+    light, wide cinematic composition
+subjects:
+- key: sl-ending-shared-well
+  lane: krea2
+  entity: ending-plate
+  title: A Well With No Lock (mercy and truth)
+  asset: shifting-lands/endings/shared-well
+  ending: shared-well
+  size: 1344x768
+  seed: 1131001
+  prompt_prose: Early morning at a stone well in a dusty homestead yard. A heavy iron padlock hangs open and useless
+    from the chain on the wooden well lid. On the near rim sits one dented tin water cup scratched with two small
+    household marks, a carved wheel and a carved leaf. A badger family with wooden buckets waits on one side of
+    the well and a hare family with clay jugs waits on the other, eyeing each other warily, while an old tortoise
+    elder sits on a bench between them with his paws folded. Every figure in the scene, adults and young alike,
+    is an anthropomorphic animal in worn frontier clothes, with animal heads, fur and tails.
+- key: sl-ending-open-door
+  lane: krea2
+  entity: ending-plate
+  title: The Door Held Open (mercy and courage)
+  asset: shifting-lands/endings/open-door
+  ending: open-door
+  size: 1344x768
+  seed: 1131002
+  prompt_prose: A rainy night on the porch of a small frontier farmhouse. The plank door stands wide open and warm
+    yellow lamplight spills across the wet boards. A raccoon homesteader in a patched nightshirt holds the iron
+    latch up with one paw and a lantern high with the other, while a soaked opossum family with bundles on their
+    backs hurries up the steps out of the dark. Muddy footprints lead in across the threshold. Every figure in
+    the scene, adults and young alike, is an anthropomorphic animal in worn frontier clothes, with animal heads,
+    fur and tails.
+- key: sl-ending-masked-rule
+  lane: krea2
+  entity: ending-plate
+  title: The Toll Nobody Sees (cunning and ruthlessness)
+  asset: shifting-lands/endings/masked-rule
+  ending: masked-rule
+  size: 1344x768
+  seed: 1131003
+  prompt_prose: Hard noon light at a neat whitewashed toll booth beside a river bridge. A ring of heavy brass keys
+    hangs on a hook behind a polite weasel clerk in a pressed grey uniform coat, who holds out an open paw for a
+    coin. A quiet line of travelers, goats, mice and a tired mule, waits to pay with heads lowered. Inside the
+    booth a high-backed official chair stands empty with a folded dark coat across it, and a tidy ledger lies
+    open on the counter, its pages blank and pale. Orderly, calm and quietly menacing. Every figure in the scene
+    is an anthropomorphic animal in worn frontier clothes, with animal heads, fur and tails.
+- key: sl-ending-scarred-witness
+  lane: krea2
+  entity: ending-plate
+  title: The Truth With Teeth (honesty and force)
+  asset: shifting-lands/endings/scarred-witness
+  ending: scarred-witness
+  size: 1344x768
+  seed: 1131004
+  prompt_prose: A dim frontier records office lit by one oil lamp. A heavy oak desk is split down the middle by
+    a single blow, and a bundle of loose testimony sheets, blank and tied with red string, lies spilled across
+    the crack. Behind the desk a bruised fox official in a tight waistcoat presses himself back against a filing
+    cabinet. In the open doorway a young otter in a nightgown holds one fallen sheet and looks up at it with wide
+    questioning eyes. Tense and uneasy. Every figure in the scene, adults and young alike, is an anthropomorphic
+    animal in worn frontier clothes, with animal heads, fur and tails.
+- key: sl-ending-last-loaf
+  lane: krea2
+  entity: ending-plate
+  title: The Last Loaf (mercy)
+  asset: shifting-lands/endings/last-loaf
+  ending: last-loaf
+  size: 1344x768
+  seed: 1131005
+  prompt_prose: Dusk inside a bare one-room sod house. Around a rough plank table a field mouse family shares their
+    last round loaf of bread. The mother mouse tears it unevenly and hands the larger half to the smallest mouse
+    child, who holds it in both paws. At the near end of the table an extra wooden bowl and spoon are set at an
+    empty stool, waiting for a stranger. A single candle stub and a cracked water jug. Tender, poor and warm. Every
+    figure in the scene, adults and young alike, is an anthropomorphic animal in worn frontier clothes, with animal
+    heads, fur and tails.
+- key: sl-ending-unsealed-book
+  lane: krea2
+  entity: ending-plate
+  title: The Book Left Open (honesty)
+  asset: shifting-lands/endings/unsealed-book
+  ending: unsealed-book
+  size: 1344x768
+  seed: 1131006
+  prompt_prose: Sunrise at a small stone gatehouse on a dirt road. A huge leather-bound book lies open on a wooden
+    lectern under the gatehouse arch, its pale pages blank in the low gold light, an inkwell and a quill beside
+    it. A line of anxious families, beavers, quail and coyotes, waits along the road. At the front an elderly
+    hedgehog woman in a shawl lays a pressed wildflower and a small carved wooden toy on the open pages. Hopeful
+    and grave. Every figure in the scene, adults and young alike, is an anthropomorphic animal in worn frontier
+    clothes, with animal heads, fur and tails.
+- key: sl-ending-bell-again
+  lane: krea2
+  entity: ending-plate
+  title: The Bell That Answers (courage)
+  asset: shifting-lands/endings/bell-again
+  ending: bell-again
+  size: 1344x768
+  seed: 1131007
+  prompt_prose: Stormy dusk over a frontier town street. High in a weathered timber watchtower a rusted iron bell
+    swings hard, shaking loose years of dust and pigeon feathers into the wind. Below, the townsfolk come out of
+    their houses toward the danger instead of hiding, a pronghorn blacksmith with a hammer, an armadillo with a
+    water bucket, a young skunk carrying a lantern, all heading for an orange glow on the horizon. Every figure
+    in the scene, adults and young alike, is an anthropomorphic animal in worn frontier clothes, with animal heads,
+    fur and tails.
+- key: sl-ending-unmarked-ford
+  lane: krea2
+  entity: ending-plate
+  title: The Ford Without a Name (cunning)
+  asset: shifting-lands/endings/unmarked-ford
+  ending: unmarked-ford
+  size: 1344x768
+  seed: 1131008
+  prompt_prose: Blue twilight on a wide shallow river choked with tall reeds. A line of flat stepping stones runs
+    just under the water through a gap in the reeds, and on the mud bank a tiny stack of three pebbles marks
+    the way in. A muskrat fisherman in a straw hat poles a flat boat quietly past the hidden crossing. Far upstream,
+    an official covered bridge with a striped toll bar and burning lanterns stands lit and busy. Sly and peaceful.
+    Every figure in the scene is an anthropomorphic animal in worn frontier clothes, with animal heads, fur and
+    tails.
+- key: sl-ending-salt-crown
+  lane: krea2
+  entity: ending-plate
+  title: The Crown Made of Salt (ruthlessness)
+  asset: shifting-lands/endings/salt-crown
+  ending: salt-crown
+  size: 1344x768
+  seed: 1131009
+  prompt_prose: Blinding noon on a white salt flat. A tall timber gate stands open at the end of a road of cracked
+    salt. On the gatepost sits a jagged crust of white salt crystals grown into the shape of a crown. Behind the
+    gate a small village of adobe houses stands silent, its fences freshly mended, its doorways empty and dark.
+    From one shuttered window a jackrabbit mother and her two children peer out through the slats and hold very
+    still. Harsh, hollow and frightening. Every figure in the scene, adults and young alike, is an anthropomorphic
+    animal in worn frontier clothes, with animal heads, fur and tails.
+- key: sl-ending-unnamed-road
+  lane: krea2
+  entity: ending-plate
+  title: The Road No One Names (an unfinished account)
+  asset: shifting-lands/endings/unnamed-road
+  ending: unnamed-road
+  size: 1344x768
+  seed: 1131010
+  prompt_prose: A deserted dirt road at golden hour runs on past a leaning wooden signpost whose weathered arms
+    are bare grey boards. Fresh dusty boot prints lead forward along the road and fade into the haze. Ahead the
+    road splits around a lone juniper and keeps going toward red mesas that seem to drift and change shape under
+    an enormous sky streaked with long clouds. A single crow sits on the signpost. Quiet, open and unresolved.
+- key: sl-ending-debt-carried-open
+  lane: krea2
+  entity: ending-plate
+  title: The Debt Carried Open (reckoning and partial repair)
+  asset: shifting-lands/endings/debt-carried-open
+  ending: debt-carried-open
+  size: 1344x768
+  seed: 1131011
+  prompt_prose: Grey dawn at a river toll gate where poor families once waited in the cold. The gate bar is lifted
+    and a handcart of grain sacks and bread stands open in the road. A badger work crew hands sacks to a line
+    of sheep and goose families. A lamb accepts a loaf with both hands, while an old goose stands apart with her
+    wings folded and her back turned to the cart. Muddy ground, thin campfire smoke, a cold mixed mood of help
+    and grudge. Every figure in the scene, adults and young alike, is an anthropomorphic animal in worn frontier
+    clothes, with animal heads, fur and tails.
+- key: sl-ending-road-wide-enough
+  lane: krea2
+  entity: ending-plate
+  title: A Road Wide Enough for Everyone (hard-won solidarity)
+  asset: shifting-lands/endings/road-wide-enough
+  ending: road-wide-enough
+  size: 1344x768
+  seed: 1131012
+  prompt_prose: Bright summer afternoon at a frontier crossroads that has become a shared settlement. A small brass
+    warning bell hangs from a post at the center, beside a timber granary with its doors propped wide open and
+    sacks of grain stacked inside. Under a little shingle roof an open book rests on a stand with blank pages
+    for anyone to read. Otter, rabbit and porcupine neighbors walk together down a broad dirt road, carrying
+    tools and baskets side by side. Every figure in the scene, adults and young alike, is an anthropomorphic animal
+    in worn frontier clothes, with animal heads, fur and tails.
+- key: sl-ending-commons
+  lane: krea2
+  entity: ending-plate
+  title: The Lantern Commons (collective shelter, earned in hardship)
+  asset: shifting-lands/endings/commons
+  ending: commons
+  size: 1344x768
+  seed: 1131013
+  prompt_prose: First snowfall at night along a wide frontier road that runs down to a river. A row of tall lantern
+    posts glows warm gold all the way to the water. An old camel caravan elder on a wooden ladder lights the nearest
+    lantern, while otter river crews unload firewood from flat boats at the landing. Beside the road stands a long
+    log shelter with smoke rising from its chimney and its door open to the snow. Hungry winter, shared warmth.
+    Every figure in the scene, adults and young alike, is an anthropomorphic animal in worn frontier clothes, with
+    animal heads, fur and tails.
+- key: sl-ending-public-record
+  lane: krea2
+  entity: ending-plate
+  title: The Book Nobody Owns (truth defended by a community)
+  asset: shifting-lands/endings/public-record
+  ending: public-record
+  size: 1344x768
+  seed: 1131014
+  prompt_prose: Steady rain on the deep porch of a frontier meeting house. A tall heron in a long coat carefully
+    passes a fat book wrapped in oilcloth to a vole family who reach up to take it. Behind them two elderly beaver
+    sisters, reunited, hold each other tightly and weep. Rain pours off the porch roof in silver strings and lantern
+    light glows from the open hall door. Tender and solemn. Every figure in the scene, adults and young alike,
+    is an anthropomorphic animal in worn frontier clothes, with animal heads, fur and tails.
+- key: sl-ending-wayfinders
+  lane: krea2
+  entity: ending-plate
+  title: A Ford With No Toll (careful passage shared freely)
+  asset: shifting-lands/endings/wayfinders
+  ending: wayfinders
+  size: 1344x768
+  seed: 1131015
+  prompt_prose: Morning at a free river ford marked by small stone cairns and tall willow poles with strips of
+    red cloth tied to their tops. A ragged field mouse family wades across in single file, the father carrying
+    the youngest on his shoulders, following the poles through knee-deep water. On the near bank a mole courier
+    sits on an upturned crate and sketches the route in lines and dots on a scrap of brown paper for a waiting
+    lizard traveler. The crossing stands open and unguarded. Every figure in the scene, adults and young alike, is an anthropomorphic
+    animal in worn frontier clothes, with animal heads, fur and tails.
+- key: sl-ending-tribute
+  lane: krea2
+  entity: ending-plate
+  title: The Franchise of Hunger (prosperity purchased with other people's waiting)
+  asset: shifting-lands/endings/tribute
+  ending: tribute
+  size: 1344x768
+  seed: 1131016
+  prompt_prose: A cold river dusk split in two. Inside the warm lamplit window of a keeper's house a plump bullfrog
+    in a velvet waistcoat counts a stack of paper passes beside a breakfast table heaped with bread, eggs and
+    jam, a cushioned guest chair pulled out and waiting. Outside in the cold blue, a long queue of tiny rafts holds
+    shivering muskrat and duck families huddled under blankets, stopped at a closed gate across the river. Every
+    figure in the scene, adults and young alike, is an anthropomorphic animal in worn frontier clothes, with animal
+    heads, fur and tails.
+- key: sl-ending-coercion
+  lane: krea2
+  entity: ending-plate
+  title: The Province of Empty Hands (power held by fear)
+  asset: shifting-lands/endings/coercion
+  ending: coercion
+  size: 1344x768
+  seed: 1131017
+  prompt_prose: A frontier inn common room gone silent at evening. Every table but one is abandoned, chairs pushed
+    back and half-eaten meals left cooling. The best table by the fire is laid with a single plate, a full cup
+    and a heavy carved chair. A gaunt wolf innkeeper and two boar guards in dented breastplates stand pressed
+    against the far wall with their eyes on the floorboards. The front door hangs open on an empty night road.
+    Lonely, cold dread. Every figure in the scene is an anthropomorphic animal in worn frontier clothes, with animal
+    heads, fur and tails.
+- key: sl-ending-mixed-dominion
+  lane: krea2
+  entity: ending-plate
+  title: The Market of Silence (an efficient bargain with a human cost)
+  asset: shifting-lands/endings/mixed-dominion
+  ending: mixed-dominion
+  size: 1344x768
+  seed: 1131018
+  prompt_prose: An orderly crossing market under a stone toll arch on an overcast afternoon. A ferret clerk in
+    sleeve garters presses a heavy brass stamp onto small blank paper slips at a tidy desk. A porcupine guard
+    with a long stick stands over a perfectly silent queue. In the line, a quail family quietly edges a field
+    mouse family out of their place, and the mice step aside with their eyes down. Stalls of goods, muted grey
+    light, efficient and joyless. Every figure in the scene, adults and young alike, is an anthropomorphic animal
+    in worn frontier clothes, with animal heads, fur and tails.
+- key: sl-ending-restitution
+  lane: krea2
+  entity: ending-plate
+  title: A Bridge Without Forgiveness (repair without erasing the harm)
+  asset: shifting-lands/endings/restitution
+  ending: restitution
+  size: 1344x768
+  seed: 1131019
+  prompt_prose: A red rock canyon at late afternoon spanned by two bridges side by side. The nearer rope bridge
+    is freshly mended with new pale planks and bright new rope, a hammer and a coil of rope left on its first
+    boards, and a pronghorn family crosses it carefully. On the older sagging bridge a short way along, a band
+    of lynx travelers chooses the long way across, one of them glancing back over her shoulder. Long shadows,
+    warm dust. Every figure in the scene, adults and young alike, is an anthropomorphic animal in worn frontier
+    clothes, with animal heads, fur and tails.
