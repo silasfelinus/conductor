@@ -108,6 +108,30 @@ tasks:
       Created DESIGN-BRIEF.md, world setting guide and initial procedural
       composition contract from Silas's 2026-10-09 direction. No new runtime
       DB rows or gameplay deployment claimed; creative spoilers may be in source.
+  - id: t-053
+    title: 'Personalize every premade traveler: character-only cards, options and a personal thread (art high priority)'
+    status: ready
+    milestone: m3
+    stakes: reversible
+    passes: 0
+    depends_on: []
+    updated: '2026-11-12T02:49:34Z'
+    note: |-
+      Silas 2026-11-12 PT, in session: "Shifting lands Characters can still have special character only events, cards, or options. If we keep it to >10 characters, there's zero reason they can't be personalized to them. I like this idea a lot, high priority for art generation."
+
+      Roster cap: 13 or fewer premades (Silas, same day: "That should be <10 characters, but whatevs. 13 is fine and reasonable") so every premade can be personalized. Builds on the character creator (t-052, kind_robots#5038: Zuzu, Jeffery Mittens, the fennec siblings, plus a custom traveler; cast-tag sidecar, cameo cards and self-variants in utils/shiftingLands).
+
+      Deliver, per premade character:
+      - character-only encounter cards in their signature lands (drawn only when that character is playing), written in the deck's second-person style and canon voice;
+      - character-only choice options on existing cards (gated by the character's signature/identity deed flags, which the validator already supports);
+      - at least one personal quest thread or ending variant that pays off their backstory (e.g. Jeffery's old raider crew, the sister keeping her brother fed, Zuzu's road from Edo).
+      - CUSTOM ENDINGS PER CHARACTER (Silas 2026-11-12 PT: "We might as well have custom endings for each character. Great thing for the scrapbook."): every premade gets its own ending variants with their own painted plates (queued at priority 1000), and each character's endings are tracked as their own row/page in the Shifting Lands scrapbook (endings found per character, X of N).
+      Custom travelers keep the shared pool (species/stat-driven options are a stretch goal).
+      Keep replays deterministic (sidecar files, optional params, pinned digests as t-052 did) and extend verifyShiftingCharacterCreator so every premade reaches its personal cards and never meets itself.
+
+      ART IS HIGH PRIORITY: queue every new card's plate in an auto_submit ledger at priority 1000 (Silas's "high priority for art generation"), following the world guardrails and the ROUND-8-TRAVELERS lane. The 13 traveler portraits and 19 ending plates were raised to priority 1000 on 2026-11-12.
+
+      Open for Silas (from t-052): naming the fennec sister; whether children as playable characters may face the Abbess trial and death routes (harm currently off-screen).
   - id: t-050
     title: 'Main-game standard: audit and close the gaps for Zuzu: Shifting Lands'
     status: ready
