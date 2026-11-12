@@ -1141,11 +1141,11 @@ tasks:
       Full history: projects/memory-dungeon/HISTORY.md#t-048
   - id: t-049
     title: "Memory Dungeon character match deck erroneously reports zero images"
-    status: ready
+    status: claimed
     stakes: reversible
     passes: 0
     source_issue: "silasfelinus/kind_robots#4682"
-    updated: '2026-11-09T11:43:04Z'
+    updated: '2026-11-12T20:51:35Z'
     note: |-
       2026-11-11 PT remaining: Verify character with existing art displays actual matches in live UI, including no-art fallback and saved deck. Evidence: RESET-TASK-EVIDENCE-AUDIT-2026-11-10.md (t-049 row).
       FROM GITHUB ISSUE silasfelinus/kind_robots#4682 (https://github.com/silasfelinus/kind_robots/issues/4682), opened by @silasfelinus on 2026-11-02. Imported by scripts/sync_github_issues.py. Reference the issue in the implementing PR (`Closes silasfelinus/kind_robots#4682`) so it closes on merge; the bridge closes it otherwise once this task is done.
@@ -1157,6 +1157,9 @@ tasks:
       PR #4777 merged as 16dfea93909ef9fcc500e8df144792c462d2fbc8 after all six exact-head CI workflows passed on 388ba06ef6266cc680a64f52b1129ec7625734ff. The resolver now uses a visibility-checked linked ArtImage URL for Characters with missing primary image paths. Browser reproduction of round-three Character/Non-mature deck and later floors remains unverified; returning to ready for authenticated UI validation, not marking task done.
 
       2026-11-06 PT: Rechecked #4682 and current deck resolver. Earlier #4777 fix remains in main. The existing Chromium memory-world test stubs resolveMemoryDungeonDeck entirely, so its passing browser runs cannot validate the actual Characters / Non-mature round-three art fetch. No authenticated UI reproduction or new code delivered this session; return ready for a genuine browser/API fixture, not done.
+    owner: worker
+    claimed_by: 2026-11-12T205135Z-memory-dungeon-t-049-a7c4
+    claimed_at: '2026-11-12T20:51:35Z'
   - id: t-050
     milestone: m3
     title: "Make Oren's House rest shortcut traversable and save-safe"
