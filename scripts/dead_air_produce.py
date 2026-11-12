@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
-from datetime import datetime, timedelta
+from datetime import datetime
 import json
 import os
 import re
@@ -147,7 +147,9 @@ def save_state(path: Path, state: dict) -> None:
 
 
 def choose_episode(state: dict, today: str) -> Path | None:
-    """Strict backlog-first: do not start a new episode while an old one is unfinished."""
+    """Backlog-first, but never start a second daily film after one passed QA."""
+    if any(row.get("completed_pt") == today for row in state["episodes"].values()):
+        return None
     for path in sorted(EPISODES.glob("*.yaml")):
         episode = load_episode(path)
         if episode["date"] > today:
@@ -382,7 +384,13 @@ def run_episode(e: dict, episode_path: Path, state: dict, state_file: Path, vide
     for start in range(0, len(clip_ids), 8):
         request = clips_to_request(state_now, clip_ids[start:start + 8])
         if request:
-            client.request_clips(video_id, request)
+            results = client.request_clips(video_id, request)
+            outcomes = results.get("outcomes") or []
+            for outcome in outcomes:
+                if outcome.get("status") == "failed":
+                    print(f"Optional clip {outcome.get('sceneId')} enqueue failed: {outcome.get('reason')}")
+                elif outcome.get("jobId"):
+                    print(f"Optional clip {outcome.get('sceneId')} ArtJob {outcome['jobId']}")
     state_now = read_state(client, video_id)
     failures = [sid for sid, job in state_now.clip_jobs.items() if job.status in ("FAILED", "CANCELLED")]
     # Failed optional GPU animation is not a reason to sacrifice the morning
