@@ -838,7 +838,7 @@ tasks:
   - id: t-046
     milestone: m5
     title: 'Reward-layer adversarial QA across all eleven endings and screen shapes'
-    status: review
+    status: ready
     depends_on:
       - t-040
       - t-042
@@ -847,7 +847,7 @@ tasks:
       - t-045
     passes: 0
     stakes: reversible
-    updated: '2026-11-12T22:18:13Z'
+    updated: '2026-11-12T22:32:00Z'
     note: |-
       P2, independent of art delivery per Silas 2026-11-01 PT. Simulate at least 2000 seeded diverse styles; every reachable ending shows distinct payoff and a saved evidence card. Check replay rewards, correct lock/unlock progress, saved migrations, no duplicate accounts or achievements, true raw grade values, no four-Exceptional result, keyboard/screenreader, no forced page scroll at phone/tablet/desktop, and image fallback. Run mock reviews asking whether the ending and archive feel earned, funny and replayable. Do not override t-020 owner's subjective fun and promotion gate.
 
@@ -908,9 +908,8 @@ tasks:
       2026-11-12 PT: Non-achievement historical archive QA merged as Kind Robots PR #5067 (squash ff2467e03529). Completed run cards can Print / Save PDF using their own saved receipt; printable dossiers omit milestones earned after that run. Added regression contracts for historic chronology, print action and render synchronization. All 8/8 CI workflows completed green, including Shifting Desks gameplay, TypeScript, Prettier, ESLint and four-shard Contracts. The final 390/768/1440 browser review, screen-reader audit, and independent comedy/fun assessment remain agent-owned work; final t-020 human acceptance and publication stay gated. Return t-046 to ready for remaining QA.
 
       Accessibility QA slice: all four Personnel File tab panels and the Archive panel are keyboard-focusable. Added a Cypress browser contract at 390/768/1440 for roving arrow/Home/End keyboard focus, named panels, locked ending art and archive dialog dismissal, plus release-QA template assertions. Scoped Kind Robots PR and CI to follow. Actual browser/device and human humor acceptance remain open; do not close t-046 or promote playtest.
-    owner: worker
-    claimed_by: 20261112T221219Z-shifting-desks-t046-gpt6-qa-k7p2
-    claimed_at: '2026-11-12T22:12:19Z'
+
+      Shifting Desks keyboard accessibility QA slice merged as Kind Robots #5094 (16689e15addf7f19b64e6365006f97bce1c276de), with all seven PR workflows completed successfully including the 2000-seed gameplay/reward QA, TypeScript, layout and contracts. Four Personnel File tab panels plus the Archive panel are keyboard-focusable, with new Cypress assertions for arrow/Home/End, archive modal and locked endings at 390/768/1440. The dispatched browser Cypress suite was NOT run against a deployed build; screen-reader/device acceptance and editorial funny/earned/replayable evaluation remain open. This task returns to ready for remaining QA. Human t-020 gate untouched; not playtest-ready yet.
 
   - id: t-047
     milestone: m5
