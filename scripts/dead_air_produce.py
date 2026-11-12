@@ -29,7 +29,7 @@ from build_music_video import (
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_STATE = ROOT / "projects/dead-air/production-state.json"
 EPISODES = ROOT / "projects/dead-air/episodes"
-BASE = "https://kind-robots.vercel.app"
+BASE = "https://kindrobots.org"
 DURATION = 15.0
 
 
