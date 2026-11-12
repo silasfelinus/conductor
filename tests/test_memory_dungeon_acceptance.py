@@ -21,3 +21,8 @@ def test_ready_claimed_and_legacy_done_are_ignored() -> None:
         task("remaining: open", "claimed"),
         task("historical completion with no acceptance ledger"),
     ]}) == []
+
+
+def test_quoted_remaining_in_completed_audit_is_not_a_live_gap() -> None:
+    assert unresolved_done_tasks({"tasks": [task('Append a dated "remaining:" line to other tasks.')]}) == []
+    assert unresolved_done_tasks({"tasks": [task("2026-11-11 PT remaining: artwork\n2026-11-12 PT remaining met: URLs checked")]}) == []
