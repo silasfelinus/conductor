@@ -155,8 +155,26 @@ def test_find_strays_skips_referenced_young_and_foreign_jobs():
         {"id": 6, "status": "FAILED", "projectSlug": "slime-city", "artImageId": None, "createdAt": old},
     ]
     min_age = datetime.now(timezone.utc) - timedelta(hours=3)
-    strays = rec.find_strays(jobs, refs={22}, projects={"slime-city"}, claimed={5}, min_age=min_age)
-    assert [j["id"] for j in strays] == [1]
+    strays, extra = rec.find_strays(jobs, refs={22}, projects={"slime-city"}, claimed={5}, min_age=min_age)
+    assert [j["id"] for j in strays] == [1] and extra == 0
+
+
+def test_extra_renders_of_known_prompts_are_duplicates_not_strays(tmp_path):
+    _write_ledger(tmp_path, subjects=[_subject("done", prose="Choirfish sings under the dock at dawn.", jobs={"krea": 3})])
+    (tmp_path / "projects" / "art-prompts.yaml").write_text(yaml.safe_dump({"requests": [
+        {"id": "r", "status": "done", "prompt": "Portrait of Sela the Keeper, druid of the lake.", "image_path": "a"}]}))
+    known = rec.known_prompts(tmp_path, tmp_path / "projects" / "art-prompts.yaml")
+    old = (datetime.now(timezone.utc) - timedelta(hours=10)).isoformat()
+    full = rec.ledgers.compose_prompt(LANE, {"prompt_prose": "Choirfish sings under the dock at dawn."})
+    jobs = [
+        {"id": 1, "status": "DONE", "projectSlug": "x", "artImageId": 9, "createdAt": old, "prompt": full},
+        {"id": 2, "status": "DONE", "projectSlug": "x", "artImageId": 8, "createdAt": old,
+         "prompt": "Portrait of Sela the Keeper, druid of the lake. psychedelic style"},
+        {"id": 3, "status": "DONE", "projectSlug": "x", "artImageId": 7, "createdAt": old, "prompt": "A brand new idea nobody asked for in Conductor."},
+    ]
+    min_age = datetime.now(timezone.utc) - timedelta(hours=3)
+    strays, extra = rec.find_strays(jobs, set(), {"x"}, set(), min_age, known)
+    assert [j["id"] for j in strays] == [3] and extra == 2
 
 
 def test_write_strays_appends_without_duplicates_and_is_triage_work(tmp_path):

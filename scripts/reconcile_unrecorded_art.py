@@ -298,8 +298,45 @@ def reference_numbers(paths: list[Path]) -> set[int]:
     return numbers
 
 
-def find_strays(jobs: list[dict], refs: set[int], projects: set[str], claimed: set[int], min_age: datetime) -> list[dict]:
-    strays = []
+PREFIX_CHARS = 32
+
+
+def known_prompts(root: Path = ROOT, prompts_path: Path = ART_PROMPTS) -> dict[str, list[str]]:
+    """Every prompt Conductor has asked for -- each ledger cell and each request, any status --
+    indexed by its first PREFIX_CHARS normalized characters."""
+    index: dict[str, list[str]] = {}
+
+    def add(text):
+        text = norm(text)
+        if len(text) >= PREFIX_CHARS:
+            index.setdefault(text[:PREFIX_CHARS], []).append(text)
+
+    for path in ledger_paths(root):
+        _, data = load_ledger_file(path)
+        if data is None:
+            continue
+        for subject, lane in ledgers.iter_cells(data):
+            if isinstance(subject, dict) and isinstance(lane, dict) and lane.get("key") != RECOVERED_LANE["key"]:
+                add(ledgers.compose_prompt(lane, subject))
+    if prompts_path.exists():
+        data = yaml.safe_load(prompts_path.read_text()) or {}
+        for section in ("requests", "images"):
+            for entry in data.get(section) or []:
+                if isinstance(entry, dict):
+                    add(entry.get("prompt"))
+    return index
+
+
+def is_known(text: str, index: dict[str, list[str]]) -> bool:
+    text = norm(text)
+    return any(text.startswith(prompt) or prompt in text for prompt in index.get(text[:PREFIX_CHARS], ()))
+
+
+def find_strays(jobs: list[dict], refs: set[int], projects: set[str], claimed: set[int], min_age: datetime,
+                known: dict[str, list[str]] | None = None) -> tuple[list[dict], int]:
+    """(strays, extra renders of known work). A DONE render whose prompt is one Conductor asked for
+    is an extra copy of recorded work -- counted, not adopted -- and only the rest are strays."""
+    strays, extra = [], 0
     for job in jobs:
         if job.get("status") != "DONE" or job.get("projectSlug") not in projects:
             continue
@@ -308,8 +345,11 @@ def find_strays(jobs: list[dict], refs: set[int], projects: set[str], claimed: s
         created = parse_time(job.get("createdAt"))
         if created and created > min_age:
             continue  # a run that is still going may be about to commit it
+        if known and is_known(job.get("prompt"), known):
+            extra += 1
+            continue
         strays.append(job)
-    return strays
+    return strays, extra
 
 
 # --------------------------------------------------------------------------- writing
@@ -517,7 +557,9 @@ def run(args) -> int:
         refs = reference_numbers([ROOT, *([args.kind_robots] if args.kind_robots else [])])
         projects = {p.name for p in (ROOT / "projects").iterdir() if p.is_dir()}
         min_age = now_utc() - timedelta(hours=args.stray_min_age_hours)
-        strays = find_strays(recent, refs, projects, claimed, min_age)
+        strays, extra = find_strays(recent, refs, projects, claimed, min_age, known_prompts(ROOT))
+        duplicates += extra
+        report["duplicate_renders"] = duplicates
         report["stray_scan"] = {
             "days": args.strays_days,
             "scanned_jobs": len(recent),
