@@ -49,6 +49,48 @@ jobs:
           print(f"OK: {len(files)} roadmap YAML files valid")
           EOF
 
+      - name: Enforce Memory Dungeon done-task acceptance
+        run: python scripts/check_memory_dungeon_acceptance.py
+
+      - name: Prove incomplete Memory Dungeon close-outs fail validation
+        run: |
+          python - <<'PY'
+          import pathlib
+          import subprocess
+          import tempfile
+
+          original = pathlib.Path("projects/memory-dungeon/roadmap.yaml").read_text(encoding="utf-8")
+          fixture = "\n".join([
+              "project: memory-dungeon",
+              "tasks:",
+              "  - id: t-ci-fixture",
+              "    status: done",
+              "    note: |",
+              "      remaining: verify earned exit and delivered artwork",
+              "",
+          ])
+          with tempfile.TemporaryDirectory() as directory:
+              path = pathlib.Path(directory) / "roadmap.yaml"
+              path.write_text(fixture, encoding="utf-8")
+              bad = subprocess.run(
+                  ["python", "scripts/check_memory_dungeon_acceptance.py", "--roadmap", str(path)],
+                  capture_output=True, text=True, check=False,
+              )
+              assert bad.returncode != 0, "Unverified done-task must fail CI"
+              assert "t-ci-fixture" in bad.stdout, bad.stdout + bad.stderr
+              path.write_text(fixture.replace(
+                  "      remaining: verify earned exit and delivered artwork",
+                  "      remaining: verify earned exit and delivered artwork\n      remaining met: test evidence and ArtJob delivery verified",
+              ), encoding="utf-8")
+              good = subprocess.run(
+                  ["python", "scripts/check_memory_dungeon_acceptance.py", "--roadmap", str(path)],
+                  capture_output=True, text=True, check=False,
+              )
+              assert good.returncode == 0, good.stdout + good.stderr
+          assert pathlib.Path("projects/memory-dungeon/roadmap.yaml").read_text(encoding="utf-8") == original
+          print("OK: incomplete close-out rejected; verified completion accepted; roadmap unchanged")
+          PY
+
       - name: Validate project-overrides.yaml
         run: |
           python - <<'EOF'
