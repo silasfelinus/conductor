@@ -838,7 +838,7 @@ tasks:
   - id: t-046
     milestone: m5
     title: 'Reward-layer adversarial QA across all eleven endings and screen shapes'
-    status: ready
+    status: claimed
     depends_on:
       - t-040
       - t-042
@@ -847,7 +847,7 @@ tasks:
       - t-045
     passes: 0
     stakes: reversible
-    updated: '2026-11-12T08:16:30.078Z'
+    updated: '2026-11-12T22:12:19Z'
     note: |-
       P2, independent of art delivery per Silas 2026-11-01 PT. Simulate at least 2000 seeded diverse styles; every reachable ending shows distinct payoff and a saved evidence card. Check replay rewards, correct lock/unlock progress, saved migrations, no duplicate accounts or achievements, true raw grade values, no four-Exceptional result, keyboard/screenreader, no forced page scroll at phone/tablet/desktop, and image fallback. Run mock reviews asking whether the ending and archive feel earned, funny and replayable. Do not override t-020 owner's subjective fun and promotion gate.
 
@@ -906,6 +906,9 @@ tasks:
       Non-achievement QA slice: archive run cards gain a direct Print / Save PDF action using the exact filed receipt; the printable dossier lists only milestones recorded by that run's completion, not medals from future runs. Regression tests cover receipt chronology, repeated print affordance and print-render timing. Other browser/accessibility checks and final human fun verdict remain open.
 
       2026-11-12 PT: Non-achievement historical archive QA merged as Kind Robots PR #5067 (squash ff2467e03529). Completed run cards can Print / Save PDF using their own saved receipt; printable dossiers omit milestones earned after that run. Added regression contracts for historic chronology, print action and render synchronization. All 8/8 CI workflows completed green, including Shifting Desks gameplay, TypeScript, Prettier, ESLint and four-shard Contracts. The final 390/768/1440 browser review, screen-reader audit, and independent comedy/fun assessment remain agent-owned work; final t-020 human acceptance and publication stay gated. Return t-046 to ready for remaining QA.
+    owner: worker
+    claimed_by: 20261112T221219Z-shifting-desks-t046-gpt6-qa-k7p2
+    claimed_at: '2026-11-12T22:12:19Z'
 
   - id: t-047
     milestone: m5
