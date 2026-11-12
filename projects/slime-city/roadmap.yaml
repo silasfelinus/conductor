@@ -148,12 +148,12 @@ tasks:
     implementation_pr: 'silasfelinus/kind_robots#5041'
   - id: t-062
     title: 'Paint the journey final-choice endings and key journey scenes'
-    status: claimed
+    status: ready
     milestone: m3
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-12T18:49:44Z'
+    updated: '2026-11-12T18:58:27Z'
     note: |-
       Silas 2026-11-11 PT, in session: "There is unmade art it should definitely be added to the pipeline."
 
@@ -166,9 +166,19 @@ tasks:
       kind_robots utils/slimeCity/artManifest.ts and have the finale/endings gallery prefer
       the journey plate over the triumph/compromise plate. Still open: 2-3 key journey-scene
       plates per crew.
+
+      2026-11-12 PT (later cycle): all 18 JOURNEY-EPILOGUES-ROUND-1 plates rendered; fetched
+      and contact-sheet reviewed. 17 kept and wired in kind_robots#5091 as
+      story['<crew>/journey-<key>']: the finale now paints the earned journey ending ahead of
+      the triumph/compromise plate, and the endings gallery shows each found journey ending's
+      own plate. ironjaw/journey-left (ArtImage 269920) painted a misspelled shop sign and is
+      re-queued in JOURNEY-EPILOGUES-REDO-1.yaml (priority 1000). Next: wire the Ironjaw redo
+      once DONE; still open: 2-3 key journey-scene plates per crew (ledger plus a scene-art
+      slot in the journey UI).
     owner: worker
     claimed_by: 2026-11-12T182500Z-slime-city-t062-fj7q2
     claimed_at: '2026-11-12T18:49:44Z'
+    implementation_pr: 'silasfelinus/kind_robots#5091'
   - id: t-063
     title: 'Main-game standard: audit and close the gaps for Slime City'
     status: review
