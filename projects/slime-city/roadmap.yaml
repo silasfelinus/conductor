@@ -122,22 +122,25 @@ tasks:
     claimed_at: '2026-11-12T01:00:31Z'
   - id: t-061
     title: 'Permanent cosmetic reward for finishing each crew campaign'
-    status: review
+    status: done
     milestone: m3
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-12T01:59:05Z'
+    updated: '2026-11-12T02:16:21Z'
     note: |-
-        Silas 2026-11-11 PT, in session: "does it unlock rewards?"
+      Silas 2026-11-11 PT, in session: "does it unlock rewards?"
 
-        Story card rewards stay inside the run by design and no Meat/wallet/card grants are allowed from story. Add a lasting cosmetic per finished crew that does not touch the economy: a crew trophy on the profile/collection screen, an alternate card back or board frame, and a title. Account-saved, shown on the finale screen as "unlocked".
+      Story card rewards stay inside the run by design and no Meat/wallet/card grants are allowed from story. Add a lasting cosmetic per finished crew that does not touch the economy: a crew trophy on the profile/collection screen, an alternate card back or board frame, and a title. Account-saved, shown on the finale screen as "unlocked".
 
-        2026-11-11 PT: kind_robots#5041 adds crew trophies, titles and card-back frames. They
-        are derived from the account-saved endings gallery (TRIUMPH/COMPROMISE plate), so there
-        are no new save fields and no economy grants. They show as a trophy shelf in the endings
-        gallery and an UNLOCKED line on the finished-campaign panel. Next: an equip picker for
-        the card back and title (kaizen).
+      2026-11-11 PT: kind_robots#5041 adds crew trophies, titles and card-back frames. They
+      are derived from the account-saved endings gallery (TRIUMPH/COMPROMISE plate), so there
+      are no new save fields and no economy grants. They show as a trophy shelf in the endings
+      gallery and an UNLOCKED line on the finished-campaign panel. Next: an equip picker for
+      the card back and title (kaizen).
+
+      DONE 2026-11-11 PT: kind_robots#5041 merged (8678021). The change reaches kindrobots.org
+      on the next Unraid Force Update. Kaizen: t-065 (equip picker).
     owner: worker
     claimed_by: 2026-11-12T015546Z-slime-city-t-061-207tx9
     claimed_at: '2026-11-12T01:55:46Z'
@@ -1395,3 +1398,18 @@ tasks:
     claimed_by: 2026-11-11T234749Z-slime-city-t058-claude
     claimed_at: '2026-11-11T23:47:49Z'
     implementation_pr: 'silasfelinus/kind_robots#5030'
+  - id: t-065
+    title: 'Let players equip an unlocked crew card back and title'
+    status: ready
+    milestone: m3
+    stakes: reversible
+    passes: 0
+    depends_on: []
+    updated: '2026-11-12T02:20:00Z'
+    note: >-
+      Kaizen from t-061 (kind_robots#5041): crew trophies, titles and card-back frames
+      unlock from finished campaigns (utils/slimeCity/crewTrophies.ts) but are only
+      previewed. Add an equip picker saving optional `cardBack`/`title` fields on the
+      story save (validated against unlocked crews), apply the frame to the Clash card
+      back, and show the worn title on the campaign/profile header. Cosmetic only: no
+      cards, Meat or wallet.
