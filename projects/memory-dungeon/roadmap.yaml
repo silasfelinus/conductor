@@ -1519,14 +1519,19 @@ tasks:
   - id: t-067
     milestone: m4
     title: "Add a sweep check that flags any memory-dungeon task closed done while its note's latest 'remaining:' line is not marked met"
-    status: review
+    status: done
     owner: worker
     claimed_by: 2026-11-12T064746Z-memory-dungeon-t-067-c8e4
     claimed_at: '2026-11-12T06:47:46Z'
     stakes: reversible
     passes: 0
-    updated: '2026-11-12T06:53:00Z'
+    updated: '2026-11-12T07:50:38Z'
     note: |-
       Kaizen from the t-066 review (conductor PR #7257). The 24 reset tasks now carry dated "remaining:" acceptance lines, but nothing stops a later close-out from marking one done on a partial slice — the exact "done is not acceptance" failure the reset fixed. Add a small check (script + test) that fails when a done memory-dungeon task's note has a "remaining:" line without a later "remaining met:" / evidence line. Reversible, CI-tested; no task status changes.
 
       Added a done-task latest-remaining acceptance guard, regression tests, and session-sweep integration; implementation PR pending exact-head CI.
+
+      2026-11-12 PT Reviewer: squash-merged conductor#7294 (f6405e8a) after all checks passed
+      on head ee807690; check reports OK on main and runs in session_sweep as
+      memory_dungeon_acceptance. Kaizen: t-070.
+    implementation_pr: 'silasfelinus/conductor#7294'
