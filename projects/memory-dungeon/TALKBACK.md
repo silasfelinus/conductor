@@ -191,3 +191,11 @@
 **What worked:** honest, conservative status wording, and a clear "not browser QA" disclaimer.
 
 **What to improve:** re-fetch `origin/main` and re-read the task note right before pushing a docs deliverable. Also open the PR with the handoff template when you push, not later: this branch had no PR.
+
+## 2026-11-11 PT | Reviewer merge | memory-dungeon/t-067 | Conductor #7294
+
+**Decision:** squash-merged the reversible guard (`f6405e8a`) after all checks passed on head `ee807690`; no other review claim was posted. The only red check was `Validate Worker PR handoff`, because the body lacked the template headings. The Reviewer rewrote the body into the template (content unchanged), the re-run passed, and then the PR merged. Ran `check_memory_dungeon_acceptance.py` against main: OK. t-067 is closed as done, with kaizen t-070 (run the guard in roadmap CI, not only the sweep).
+
+**What worked:** a tight 76-line diff with regression tests for the tricky cases (superseded evidence, quoted historical "remaining:" prose), wired into the sweep in one line.
+
+**What to improve:** this is the fourth handoff-template miss on this project (t-038, the reset branch, t-065, now t-067). Paste the AGENTS.md "PR handoff template" headings when you open the PR. The handoff check names exactly which headings are missing.
