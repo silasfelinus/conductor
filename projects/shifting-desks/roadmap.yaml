@@ -828,7 +828,7 @@ tasks:
   - id: t-046
     milestone: m5
     title: 'Reward-layer adversarial QA across all eleven endings and screen shapes'
-    status: claimed
+    status: review
     depends_on:
       - t-040
       - t-042
@@ -837,7 +837,7 @@ tasks:
       - t-045
     passes: 0
     stakes: reversible
-    updated: '2026-11-12T08:00:18.712Z'
+    updated: '2026-11-12T08:02:51.275Z'
     note: |-
       P2, independent of art delivery per Silas 2026-11-01 PT. Simulate at least 2000 seeded diverse styles; every reachable ending shows distinct payoff and a saved evidence card. Check replay rewards, correct lock/unlock progress, saved migrations, no duplicate accounts or achievements, true raw grade values, no four-Exceptional result, keyboard/screenreader, no forced page scroll at phone/tablet/desktop, and image fallback. Run mock reviews asking whether the ending and archive feel earned, funny and replayable. Do not override t-020 owner's subjective fun and promotion gate.
 
@@ -892,6 +892,8 @@ tasks:
       Keyboard accessibility QA slice: shared ArrowLeft/ArrowRight/Home/End tab handler, roving focus, and labeled ARIA tabpanels in the Personnel File and Personnel Archive. Regressions added to the 3000-run Shifting Desks contract suite. Browser-device and independent humor acceptance remain open; no achievement work was changed.
 
       2026-11-11 PT: Non-achievement keyboard accessibility QA slice MERGED as Kind Robots PR #5065 (830599d0). Personnel File and Personnel Archive tabs support ArrowLeft/ArrowRight/Home/End, roving focus and ARIA panel references, with contract regressions; all 8/8 PR workflows completed green including full Shifting Desks game suite and repository-wide lint, type, layout and contract tests. Still open: browser device-size and screen-reader acceptance, independent earned/funny/replayable writing review; t-020 human fun verdict remains untouched. Released t-046 for the next slice.
+
+      Non-achievement QA slice: archive run cards gain a direct Print / Save PDF action using the exact filed receipt; the printable dossier lists only milestones recorded by that run's completion, not medals from future runs. Regression tests cover receipt chronology, repeated print affordance and print-render timing. Other browser/accessibility checks and final human fun verdict remain open.
     owner: worker
     claimed_by: 20261112T080018712Z-shifting-desks-t046-gpt6-arcv-b39d
     claimed_at: '2026-11-12T08:00:18.712Z'
