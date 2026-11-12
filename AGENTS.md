@@ -147,7 +147,7 @@ Full procedure, with the history behind each step: [`docs/agents/picking-work.md
    overrides any roadmap it conflicts with. Then `projects/priority.yaml` and the relevant roadmap
    (via `show_task.py`).
 3. **Lifecycle is authoritative** (`project-overrides.yaml`). Work `active` projects first;
-   `continuous` only when no active project has claimable work. `paused`, `retired` and `finished`
+   `playtest` and `continuous` only when no active project has claimable work. `paused`, `retired` and `finished`
    projects are off-limits — no claims, no reviews, no new tasks — until Silas changes the status.
    Paused projects keep their open tasks (back burner, progress preserved); retired projects keep
    none (cancelled). **Member projects** (`parent:` in `project-overrides.yaml`, e.g. the Daily
@@ -206,7 +206,7 @@ Full rules, examples and the gate-legitimacy checker: [`docs/agents/human-gates.
   `notes_from_silas` and standing directives.
 - **Generated art is pre-approved** (2026-07-06) when task-scoped, traceable and reversible. It
   never authorizes publishing, paid spend, deploys, billing, secrets or DNS.
-- `continuous` projects own never-idle behavior; `autonomous: true` on a finite `active` roadmap
+- `playtest` games and `continuous` programs own iterative fallback behavior; `playtest` requires complete art/text, finished agent-owned build/QA, and an actual `needs-human` subjective-acceptance gate. The master GitHub issue receives `[FLAGGED FOR HUMAN TESTING]` only at that verified stage. Human acceptance and publishing are separate approvals. `autonomous: true` on a finite `active` roadmap
   widens initiative while real tasks exist but never invents endless work after the queue empties.
 
 ## Security model — who can do what
@@ -300,7 +300,7 @@ with only a sweep report is a **failed run**. A predicted no-op is not a skip, a
 usually still has reversible work around its gate. When `select_role.py` says `idle`, take the first
 rung that yields real work (normal task/claim/PR flow; default home is dream-cycle):
 
-1. Continuous programs' `ready` tasks, in priority order.
+1. Playtest games and continuous programs' `ready` tasks, in priority order.
 2. Dream docket: author one proposal if below buffer, else improve the weakest.
 3. Art: drain a queue or generate missing/weak art (keep prompt/model metadata).
 4. Polish errors: turn a standing sweep finding into a fix.
