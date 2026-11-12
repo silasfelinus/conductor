@@ -1,0 +1,17 @@
+version: 1
+project: game-of-captains
+task: t-008
+operation: ready
+note: >-
+  2026-11-12 PT, Silas: "whatever horoscope i get, there is no original art" and "there needs to be a wild
+  break possible to avoid the horoscope, with at least 32 endings". Merged kind_robots#5082 (fc9ee12, 16/16
+  checks green): wired the 19 DONE COUCHSCOPE-AND-OPENING-ROUND-1 ArtImages 261262-261280 that had been
+  rendered but never connected (all 12 constellation reveal plates, trolley question + 3 answers, red-couch
+  mission cards for refugees/archive/bar, so The Last Lifeboat no longer shows the SVG title card). Added
+  the Couchscope WILD BREAK: refuse the screening at any time, 4x2x4 branching escape through 13 scenes to 32
+  distinct endings, each with its own text, +1 starting perk and finale coda; launch unsigned, per-browser
+  found-endings ledger; VoyageRun.wildBreak validated on restore. Queued 45 matching plates in
+  conductor#7318 (WILD-BREAK-ROUND-1, priority 950), not yet submitted at merge time. Next: once DONE,
+  curate a contact sheet and wire couchscope/wild/<scene> and couchscope/wild-end/<ending> ids into
+  kind_robots utils/gameOfCaptains/onboardingArt.ts. Art remains incomplete; no deploy or human gate.
+verify_pr: silasfelinus/kind_robots#5082

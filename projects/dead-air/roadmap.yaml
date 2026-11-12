@@ -157,3 +157,17 @@ tasks:
     note: >-
       Private authored/renders are allowed autonomously; publishing a film or
       switching it public requires explicit human approval and rights checks.
+  - id: t-008
+    milestone: m2
+    title: Record per-shot render times and skip the optional GPU clip when the queue is congested
+    status: ready
+    stakes: reversible
+    passes: 0
+    depends_on: []
+    note: >-
+      Kaizen from conductor#7322 review (2026-11-12 PT). Keep a small per-shot
+      render-time history in production-state.json and have dead_air_produce.py
+      request zero generated clips when recent still renders ran long, so the
+      compositor cut is never waiting on a clip that cannot finish inside the
+      two-hour window. Also add one late-morning catch-up pass, since removing the
+      10am PT cron left no retry after 3:15am PST. Cover both with tests.
