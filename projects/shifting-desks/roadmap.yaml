@@ -857,7 +857,7 @@ tasks:
   - id: t-046
     milestone: m5
     title: 'Reward-layer adversarial QA across all eleven endings and screen shapes'
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 2026-11-13T161600Z-shifting-desks-t-046-p7q4
     claimed_at: '2026-11-13T16:16:00Z'
@@ -869,7 +869,7 @@ tasks:
       - t-045
     passes: 0
     stakes: reversible
-    updated: '2026-11-13T16:16:00Z'
+    updated: '2026-11-13T16:18:00Z'
     note: |-
       P2, independent of art delivery per Silas 2026-11-01 PT. Simulate at least 2000 seeded diverse styles; every reachable ending shows distinct payoff and a saved evidence card. Check replay rewards, correct lock/unlock progress, saved migrations, no duplicate accounts or achievements, true raw grade values, no four-Exceptional result, keyboard/screenreader, no forced page scroll at phone/tablet/desktop, and image fallback. Run mock reviews asking whether the ending and archive feel earned, funny and replayable. Do not override t-020 owner's subjective fun and promotion gate.
 
@@ -932,6 +932,8 @@ tasks:
       Accessibility QA slice: all four Personnel File tab panels and the Archive panel are keyboard-focusable. Added a Cypress browser contract at 390/768/1440 for roving arrow/Home/End keyboard focus, named panels, locked ending art and archive dialog dismissal, plus release-QA template assertions. Scoped Kind Robots PR and CI to follow. Actual browser/device and human humor acceptance remain open; do not close t-046 or promote playtest.
 
       Shifting Desks keyboard accessibility QA slice merged as Kind Robots #5094 (16689e15addf7f19b64e6365006f97bce1c276de), with all seven PR workflows completed successfully including the 2000-seed gameplay/reward QA, TypeScript, layout and contracts. Four Personnel File tab panels plus the Archive panel are keyboard-focusable, with new Cypress assertions for arrow/Home/End, archive modal and locked endings at 390/768/1440. The dispatched browser Cypress suite was NOT run against a deployed build; screen-reader/device acceptance and editorial funny/earned/replayable evaluation remain open. This task returns to ready for remaining QA. Human t-020 gate untouched; not playtest-ready yet.
+
+      Scoped CI evidence repair: correct the Actions upload-artifact multiline path so the 2000-seed release QA report and adversarial report are both retained; missing files now fail the upload. Browser and creative acceptance remain unfinished.
 
   - id: t-047
     milestone: m5
