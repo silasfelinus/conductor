@@ -1247,13 +1247,13 @@ tasks:
   - id: t-055
     milestone: m3
     title: "e08 Hearth of Perfect Safety: rewrite the 16 night sites to Vesper's POV and finish the map"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 2026-11-13T053500Z-memory-dungeon-t-055-6d2f
     claimed_at: '2026-11-13T05:35:00Z'
     stakes: reversible
     passes: 0
-    updated: '2026-11-13T05:35:00Z'
+    updated: '2026-11-13T05:39:00Z'
     note: |-
       2026-11-11 PT remaining: Audit every authored night site for Vesper's POV, original horror and earned consequences. Evidence: RESET-TASK-EVIDENCE-AUDIT-2026-11-10.md (t-055 row).
       Silas 2026-11-05 PT: the first eight overworlds keep one protagonist per pair, so e08 is Vesper's, not Scylla's (kind_robots#4778 already moved the viewpoint contract). hoshimoriNight.ts's 16 playable sites and store still describe "a separate Scylla-viewpoint expedition". Rewrite them from Vesper's POV without changing coordinates or choice ids, keep the Junji-Ito-tonal psychological/architectural horror register, then continue toward 64 sites and the dark Oven per t-044. Char's fate branches still apply through campaign flags, not through POV.
@@ -1285,6 +1285,8 @@ tasks:
       Added four tamper-resistance assertions to each of sixteen complete e08 64-site seeded expeditions: forged flags, missing visited site, forged position, and forged door-open state must be rejected on restore. Kind Robots PR pending CI; earned-exit, art, and rendered QA remain.
 
       PR kind_robots#5105 merged as d7a24de after all six exact-head GitHub Actions passed on 5e26b1a. Added 16-seed adversarial e08 restoration assertions for forged consequence flags, visited locations, position and gate state. Remaining: earned exit/dungeon integration, delivered production art and device QA. Return ready; not human-gated.
+
+      Integrated e08 night overworld's 4,3 Furnace choice with the 36-room dungeon test, both entry states, three earned endings and save restoration. CI pending. Rendered UI, production art and full campaign exit integration remain.
   - id: t-056
     milestone: m2
     title: "Name the researcher (Rowan) as the e01/e02 and e09 lead; Pip stays a supporting NPC"
