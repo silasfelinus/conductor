@@ -18,7 +18,7 @@ from reconcile_delivery import fetch_jobs, job_request_id, matching_job, reconci
 
 ROOT = Path(__file__).resolve().parents[3]
 ART = Path(__file__).resolve().parent
-ROUNDS = (13, 14, 15, 17)
+ROUNDS = (13, 14, 15, 17, 19)
 
 
 def latest_unmet(art_dir: Path = ART):
