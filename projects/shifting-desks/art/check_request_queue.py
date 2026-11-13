@@ -17,7 +17,7 @@ import yaml
 ROOT = Path(__file__).resolve().parents[3]
 ART = ROOT / "projects" / "shifting-desks" / "art"
 QUEUE = ROOT / "projects" / "art-prompts.yaml"
-ROUNDS = (13, 14, 15, 17)
+ROUNDS = (13, 14, 15, 17, 19)
 PREFIX = "kind_robots public/images/shifting-desks/"
 
 
