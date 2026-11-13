@@ -285,6 +285,27 @@ Silas, 2026-10-23 PT (verbatim): "improve the dyamism: enemies should move and a
 DONE 2026-10-23 PT: kind_robots#4094 merged (a52ee28). Each Act I-III plain craft swims and fires its own WORLD-BIBLE way: picket sidestep lead, spiral loop-the-loop with turning spokes, anchor mines, urchin wall-roll with an 8-spine fan, lantern pulse-swim with a gapped ring, relay link, skimmer rails with bead columns, coral floor lobs, skate manta swoop. Courier pods past the left edge no longer take hits. Two scripted test bots tightened (assertions unchanged); verifyRainbowCraftVariety is new. Side fix: kind_robots#4095 repaired main's broken production image build (ecotone-board inline handler from #4087).
 <!-- note:end t-033 -->
 
+## t-035 — Doodle direction bake-off: C.A.T.S. emblem, cat-ship key art, co-pilots, DOG commanders, restyled Maribel
+
+<!-- note:begin t-035 -->
+DOODLE-DIRECTION.md step 1. Render the 1980s neon airbrush school-folder look on two or more engines before restyling anything: C.A.T.S. emblem, title key art of the four cat ships, the four cat co-pilots (Biscuit, Comet, Butter, Glitch), King Rufus and Corporal Chihuahua, and Maribel restyled by Kontext from identity lock 246030. Pick the engine that holds the look and record it. Never name the artist or brand in a prompt.
+PARKED 2026-10-23 PT while rendering: art/DOODLE-BAKEOFF-1.yaml jobs 44654-44665 (zimage + krea2) and art/DOODLE-BAKEOFF-KONTEXT-1.yaml jobs 44666-44673 (the four princesses restyled from identity locks with co-pilots). Next: --status both ledgers, review keepers against DOODLE-DIRECTION.md and CAST-QA identity, pick the engine, record it here, send Silas the contact sheet.
+2026-10-23 PT: Silas withdrew the DOGS. Skip dd-king-rufus, dd-corporal-chihuahua and dd-collared-seahorse (withdrawn in the ledger); review only the emblem, key art, co- pilots and princess restyles.
+2026-11-02 PT. FOR SILAS: the doodle-direction bake-off is reviewed, and the contact sheet was sent to you in session (keepers only; private art is not committed). Engine pick: Krea 2 for txt2img. It holds the 1980s neon airbrush school-folder look; Z-Image reads as flat modern kawaii. Kontext stays the engine for the princess restyles. Keepers: C.A.T.S. emblem 252575, cat co-pilots 252577, and restyles of Maribel 252851, Azure 252853 and Vivi 252856 (alternate 252857). Key art 252576 is shown as engine evidence only: it draws five cat ships, not four. Both Solenne restyles fail CAST-QA (lightened skin, navy hair) and are not shown. DECIDE: does this look go ahead for the t-036 full restyle? Reply yes, or say what to change. If yes, t-036 applies these fixes: name Solenne's deep-brown skin and black hair; give Azure jet-black hair and a new background; describe the co-pilots by color, including Biscuit's notched ear and a huge Butter; build exactly four cat ships by editing the existing ship sprites. Unblocks t-036 and t-038. Recommendation: approve. The emblem and co-pilots are on-direction.
+2026-11-02 PT: Silas decided in session: "I don't know what the doodle issue is, but if it involves making new art in a doodle style as an optional shift, do it." The doodle look goes ahead as an OPTIONAL alternate style, and the shipped art stays the default. Engine pick recorded above: Krea 2 for new art, Kontext for restyles. t-036 is unblocked.
+<!-- note:end t-035 -->
+
+## t-036 — Doodle restyle of the cast, ships, co-pilot cut-ins and the nine DOG commanders
+
+<!-- note:begin t-036 -->
+DOODLE-DIRECTION.md step 2. Kontext-restyle every approved princess asset from its identity lock (CAST-QA identity still binding); cat ships keeping each silhouette and P1-P4 glyph; super cut-ins with each pilot's co-pilot; the nine DOG commanders per the table. Uses the engine t-035 picks.
+2026-10-23 PT: no DOG commanders (Silas withdrew the DOGS). Restyle the space-animal fleet as the villains instead, plus Princess Kitty Power cut-ins with each co-pilot (PLOT-MOTHERLAND.md).
+2026-11-02 PT: Doodle set queued as an optional alternate look: art/DOODLE-SET-1.yaml (93 cells, auto_submit, all pass the live contract). It restyles every shipped asset into public/rainbow-princess-art/doodle/<same path>. The 12 princess assets come from their CAST-MANIFEST identity-lock originals, with the bake-off fixes in the prompts. Ships, 27 boss phases, 33 enemies and 3 pickups come from the shipped sprites on a #00ff00 matte (key it out to alpha on export). The 8 stage cards, the hero plate and the 4 crew comms portraits are included too. The key art is a fresh Krea 2 render with exactly four cat ships. Not included: the 8 wide stage foreground strips (8:1, beyond Kontext's frame size); redraw those separately if the doodle stages need them. Next: curate against DOODLE-DIRECTION.md and CAST-QA, export keepers with alpha, then t-037 wires a style toggle (default stays the current art).
+2026-11-05 PT: reviewed all 93 set-1 cells (art/DOODLE-SET-1-REVIEW.yaml). kind_robots#4764 ships 98 Fever Dream pictures (57 doodle keepers, the rest as a neon sticker treatment of the classic sprite) and a Classic / Fever Dream switch (t-037's toggle; Classic stays default). Held: Solenne portrait and comms (CAST-QA skin and hair). art/DOODLE-SET-2.yaml queues 35 re-renders with source_margin; review them, flip the matching review entries to keep, re-run scripts/export_rainbow_doodle_art.py.
+Merged kind_robots#4764 (1c6b163): the Classic / Fever Dream switch is on main. The DOODLE-SET-2 re-review continues as t-043.
+Silas decided 2026-11-05 PT (verbatim): "Yes, fever dream should be default." kind_robots#4765 makes Fever Dream the default look; a visitor who picks Classic keeps it.
+<!-- note:end t-036 -->
+
 ## t-037 — C.A.T.S. vs DOGS in game: names, DOG commanders on boss bars and cut-ins, bones and hearts, doodle UI
 
 <!-- note:begin t-037 -->
@@ -312,3 +333,13 @@ DONE 2026-10-23 PT (first slice): kind_robots#4100 merged. The Act V memorial pl
 Early lines speak the Motherland's "pacification" story; Acts III-V plant the evidence (Motherland hardware, colony ships behind the convoy, the creatures' carers at the depot). Keep three scenes per Act and Lilt's arc.
 Merged kind_robots#4105 (f1a1659): Acts I-V speak the Motherland pacification story and seed the evidence chain (beacons, lullaby, command codes and collar, colony ships, caretakers); verifyRainbowEvidence pins it.
 <!-- note:end t-041 -->
+
+## t-045 — Rainbow Bullet Hell Space Princess achievement upgrade: 12 or more live achievements
+
+<!-- note:begin t-045 -->
+Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
+
+Live today: 0 Achievement record(s) with this game's triggerCode prefix (checked against /api/achievements 2026-11-11). Target 12+ (usually 12-30; tie some to endings but don't go overboard). Mix story, skill, discovery and completion. Create the live records through the existing achievements API (label, message, icon, karma, triggerCode prefixed with the game slug), award them from the game store, show them with components/achievements/game-achievement-strip.vue, and verify one award live after deploy.
+
+Achievement upgrade merged in kind_robots#5042 (d870dd3), all checks green: 17 live arcade-prefixed achievements (7 mastery goals, 3 endings, 7 deeds) via a drainFeats() queue and mastery backfill at cabinet start; fixed Every Ending never being earnable. Catalog run 43140875677 succeeded. Not added: an all-pilots achievement (needs a new mastery-ladder entry).
+<!-- note:end t-045 -->

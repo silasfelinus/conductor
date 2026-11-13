@@ -556,6 +556,13 @@ CABINETS.md section 11, Brick Bloom (Breakout / Arkanoid riff), slice 1 of 5: Th
 Reconciled 2026-10-14: slice 1 PR kind_robots#3643 merged 2026-10-13T21:48:27Z; later slices tracked as t-079+.
 <!-- note:end t-078 -->
 
+## t-083 — Pixel Hop depth slice 1: The board and rule engine
+
+<!-- note:begin t-083 -->
+CABINETS.md section 12, Pixel Hop (Q*bert riff), slice 1 of 5: The board and rule engine. The upgrade is "The Painted Planets". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read the game's section first; this slice's scope is item 1 under its '#### Slices', and 'Rules for every slice' at the top applies. Code: kind_robots utils/arcade/games/ (registry slug pixel-hop). Silas, 2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality improvements, they should not just be thin veneers of the old games. But newer, better, even more awesome."
+2026-11-01 PT claim-staleness assessment (Silas: stale claims are more likely finished- but-unrecorded than abandoned): slice 1 (board and rule engine) merged in kind_robots#3644, with follow-on rule work in #3788/#3817/#3829/#3837. Claim never closed.
+<!-- note:end t-083 -->
+
 ## t-098 — Rover Ramble depth slice 1: Course engine and Moon 1
 
 <!-- note:begin t-098 -->

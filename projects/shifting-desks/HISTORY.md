@@ -185,6 +185,17 @@ Branch worker/shifting-desks-t024-queue-lifecycle-r9k2 fixes test assumptions ab
 Prompt source repair6116 and lifecycle/evidence recovery6119 merged, latter df7a4da1eeb25bf1cbf43311d19925dcbc55e86e after all23 exact-head checks completed success/intentional skip. Original Hungry Detector, Security Desk and Founder Desk ArtJobs38506/38507/38508 DONE as ArtImages246648/246649/246650 in successful Auto Art Generate38386864668; .media-direct output requires successful2xx media HEAD in the runner, generated failures[] verified on main. Local proxy403 limits independent repeat, not the confirmed runner delivery. ROUND2/3/6 preserve durable IDs and rendered status with no invented exact200/visual verdict. 63 focused tests and all pack/deck/endings validators passed; live drift/duplicate assertions preserved and retirement regression covered. Source cause and original incident repaired without duplicate jobs. t025 ready tracks automated durable ledger synchronization.
 <!-- note:end t-024 -->
 
+## t-025 — Persist round-ledger render evidence before completed queue rows retire
+
+<!-- note:begin t-025 -->
+Kaizen from conductor#6119. Successful Auto Art Generate38386864668 legitimately pruned fulfilled active requests but ROUND2/3/6 still said requested with null job/image IDs until manual recovery. Add a scoped comment-preserving synchronization utility that copies confirmed ArtJob/ArtImage and media-probe evidence into matching Shifting Desks round subjects before queue retirement, preserving prompts, seeds, pending jobs and curation verdicts. Distinguish submitted, rendered and independently delivered; no fake exact200 or automatic visual acceptance. Test successful fulfillment, pending job retention, idempotent repeat, unknown subject and concurrent edits without resubmitting completed art. Keep server prompt contract authoritative.
+
+2026-11-01 PT: Added comment-preserving round-ledger ArtJob snapshot before completed Shifting Desks queue rows retire. Missing/ambiguous provenance stays status done in the queue (never resubmitted) until resolved. Added focused unit tests including concurrent edits; PR/CI and independent source review pending.
+
+Merged 2026-11-01 as 50408aaf4; 24 checks green. Retains completed queue rows until
+ledger holds ArtImage + probed media; no visual verdicts granted.
+<!-- note:end t-025 -->
+
 ## t-026 — Exercise epilogue cards and real save reload in the browser contract
 
 <!-- note:begin t-026 -->
@@ -355,9 +366,39 @@ P1. The first human full run had Empathy 13, Ingenuity 8, Obedience 7, Spite 6, 
 First-clear archive and mixed test reports landed in merged silasfelinus/kind_robots#4066 on 2026-10-23 PT; its Shifting Desks gameplay contract, TypeScript typecheck, and other recorded CI workflows passed. This task's original implementation scope is complete. Ending hero/badge art, ceremony, print cabinet, full visual acceptance and real-device QA remain independent follow-ups (t-032, t-041, t-042, t-044 through t-046).
 <!-- note:end t-043 -->
 
+## t-044 — Collectible printable personnel dossier with ending art, awards and run receipt
+
+<!-- note:begin t-044 -->
+P2. Print/share layout includes verified ending splash and achievement imagery, ending text, unlocked milestone(s), file number, actual job, mutation, society, departments, tests, terminations, counts and dates. Print-only styles make a useful single-page or multipage personnel souvenir rather than a cropped tab. No third-party posting by default. Verify print CSS, imagery fallback, dark/light and long notes.
+
+Print/PDF dossier on Kind Robots branch worker/shifting-desks-t-044-20261027T182520Z-gpt6-c5f7. Genuine RunReceipt ID, completion date, stats, ending epilogue and rendered artwork fallback, real grades, local milestone dates, and detailed departments/termination incidents only where matching live run evidence exists. Print markup Teleports to body, isolates the game shell at print time and paginates long notes; mobile print control enabled. Contract assertions added. PR CI still required; self-hosted deployment and actual physical print not verified.
+
+2026-11-01 PT: Closed stale review after verifying Kind Robots PR #4315 merged 2026-10-27T19:20Z and all 17 associated GitHub Actions workflows completed successfully. Printable personnel dossier with real archive receipts and truthful grades is on main; physical print and post-deploy visual review remain separate validation.
+<!-- note:end t-044 -->
+
+## t-045 — Personnel Archive achievement cabinet: global progress, badges and replay targets
+
+<!-- note:begin t-045 -->
+P2. Build the illustrated archive achievements wall and unify it with existing Kind Robots codes (survived review, faced Board, Sub-Level Zero) without double awarding account achievements. Show meaningful title, flavor, image/icon, unlocked date, locked silhouettes and progress. New feat codes for endings and rare achievements only after checking canonical achievement registry; optional rare foil treatment and replay prompts. Avoid security-sensitive client-only claims of server rewards.
+
+Implemented achievement cabinet on Kind Robots branch worker/shifting-desks-t-045-20261027T183252Z-gpt6-4b8c. Distinct personnel stamp cards use saved milestone dates/progress with rare foil, earned Employee of the Month image or honest icon fallback. Account medals derive from the canonical three achievementsForGame('shifting-desks') codes, accountStore records and optional saved artwork, with explicit catalog-unavailable and queued states; no client-side award calls or fabricated achievement dates. Added replay targets and a new review action. PR CI must pass. The print-dossier t-044 PR is separately in review.
+
+2026-11-01 PT: Closed stale review after verifying Kind Robots PR #4317 merged 2026-10-27T19:09Z and all 16 associated GitHub Actions workflows completed successfully. Illustrated Personnel Archive cabinet with honest earned medal and replay status is on main; production deployment and pixel-level visual signoff remain independently unverified.
+<!-- note:end t-045 -->
+
 ## t-047 — Playbook Forge upgrade: write the missing 135th encounter
 
 <!-- note:begin t-047 -->
 Silas, 2026-10-27 PT: "Anything that is in playbook forge and has quests unwritten or art prompts unwritten should be upgraded. (Memory dungeon will take the longest and should be last). Space couch has a lot of fresh writing still in need and still looking to capture that right blend of space comedy and satire. All art prompts should be written for the appropriate engine, no metaphors for krea2." Shared bar: kind_robots PR #4308 (verifyPlaybookArtPrompts, artPromptsComplete). Forge 2026-10-27: encounters 134/135.
 DONE 2026-10-27 PT: kind_robots #4326 merged as 68c89a0 after 20/20 checks. Encounters 134->135: a fourth Consent Window applicant, Nadia the night nurse, who starts her signature awake and finishes it asleep. Seeded balance holds: rebel 47.5% eliminated, coward just over 2 Successors lost. No rendered window art yet.
 <!-- note:end t-047 -->
+
+## t-050 — Shifting Desks achievement upgrade: 12 or more live achievements
+
+<!-- note:begin t-050 -->
+Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
+
+Live today: 3 Achievement record(s) with this game's triggerCode prefix (checked against /api/achievements 2026-11-11). Target 12+ (usually 12-30; tie some to endings but don't go overboard). Mix story, skill, discovery and completion. Create the live records through the existing achievements API (label, message, icon, karma, triggerCode prefixed with the game slug), award them from the game store, show them with components/achievements/game-achievement-strip.vue, and verify one award live after deploy.
+
+Achievement upgrade merged in kind_robots#5055 (530b270), all checks green: 14 new + 3 kept = 17 (nine milestones, Kind Rewrite and Posthumous Affairs endings, every ending, Daily Memo run, all five jobs). verifyShiftingDesks now checks the three live codes remain rather than exactly three. Catalog seed succeeded.
+<!-- note:end t-050 -->

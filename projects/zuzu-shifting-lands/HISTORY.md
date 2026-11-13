@@ -262,6 +262,92 @@ Built deterministic V6 real-engine balance harness across kind, safe, greedy, ru
 Completed real V6 balance simulation in Kind Robots PR #3944, merged fc7bb4d490b620eaff719035947b1033e784fa91 after all 13 latest-head workflows green (including Shifting Lands gameplay, TypeScript, formatting, and full four-shard contracts). Authored script utils/scripts/shiftingLandsV6BalanceReport.ts, CI command runs 300 seeds each for five kind/safe/greedy/ruthless/random heuristics, and committed measured tables and editorial findings in docs/shifting-lands/V6-BALANCE-REPORT.md. Completion 42.3/59.3/36.0/41.7/39.3 percent by policy, respectively; 524 of 844 deaths in Verge, 44.4 percent of final-land arrivals falling there. Very low deed-gated and investigative trial route availability for several policies. Follow-up replay-safe, explicitly versioned V7 tuning in kind_robots issue #3946. No runtime mechanics, saved-game schema, art or production deploy touched. One-line unrelated Conductor validation repair PR #6423 unblocked review transition, preserving other worker claim. Leave t-036 prose and t-033 art independent.
 <!-- note:end t-035 -->
 
+## t-036 — Shifting Lands V6: comprehensive encounter line edit for voice, stakes and readable choices
+
+<!-- note:begin t-036 -->
+[HISTORICAL EDITORIAL SUBTASK; GITHUB MASTER ISSUE NOW MAPS TO t-018]\n      FROM GITHUB ISSUE silasfelinus/kind_robots#3917 (https://github.com/silasfelinus/kind_robots/issues/3917), opened by @silasfelinus on 2026-10-20. Imported by scripts/sync_github_issues.py. Reference the issue in the implementing PR (`Closes silasfelinus/kind_robots#3917`) so it closes on merge; the bridge closes it otherwise once this task is done.
+
+## Direction (Silas, 2026-10-20 PT)
+Accelerate Shifting Lands beyond quantity toward **finished creative content**, including polished second-person narrative text, engagement, and art fidelity. Art prompt production is under conductor PR #6401. This issue covers the separate **runtime/player-visible** writing pass, not a discussion-only style proposal.
+
+## Scope
+- Audit all **120 authored encounter cards / 444 choices** for repetitive formulations, stilted dialogue, flat outcomes and mismatch with art. Include five major trials and player-facing journal lines where necessary.
+- Keep the narrator **second person, present tense, hero-agnostic**. Zuzu's distinctive values can inform world reactions without tying every line to his name/pronouns; eventual alternate protagonists must fit.
+- For each encounter: a concrete opening image, a morally consequential dilemma, action-led concise choice labels, outcomes that pay off what was promised and reveal consequences. Prioritize sacrifice, kindness with costs, broken bargains, earned trust and consequences carried across lands. Avoid moral lectures and identical 'choose/decide' boilerplate.
+- Edit prose only unless explicitly versioning new mechanics. Preserve card IDs, choice IDs, roll targets, costs, deed flags, marks, eligibility, schema and save replay; verify V2–V6 restorations. Existing source-authored species/cast stay fixed.
+- Compare story descriptions to ROUND-4 art anchors and titles. The 'Three Cups on the Table' scene must explicitly show three cups both in the text and its rendered illustration. Leave art rendering and keeper exports to Conductor t-033.
+- Ship edits in **reviewable batches by land**, with focused playbook/contract tests and real examples of before/after writing quality. Merge each green batch, not a single giant unreviewed blob. No publication or deployment without its separate gate.
+
+## Creative acceptance
+Do not mark complete when only a style guide or new tasks exist. Gameplay text itself must be edited and replay-tested; player can tell what each choice does, whom it affects, and why the outcome feels different from another choice.
+
+Linked project: `zuzu-shifting-lands`, editorial counterpart of conductor t-034 (ledger-aware endings).
+
+First-land prose implementation: 24 Homestead cards edited (32 old-pack and 40 V6 text fields); original card identity, dice, costs, flags, reward effects and save fingerprint unchanged. Opening Kind Robots PR for scoped review, with 96 cards in other lands still pending.
+
+First-land editorial milestone merged as kind_robots PR #3928 at a937281, all 14 current-head workflows successfully completed (Shifting Lands Gameplay Contract, TypeScript, full Contract Tests, formatting and all other jobs). 24 Homestead encounter cards received 72 targeted prose edits across original and V6 decks; exact source-level comparison confirmed no mechanics changes. The ticket and task remain open for remaining 96 cards and five trials; next batch should take Dustwater, review its original 9 and V6 15 cards plus Crossings Gate trial separately. No deployment or new art was performed.
+
+Dustwater editorial batch 2 prepared in Kind Robots. All 24 Dustwater encounter cards (nine existing and 15 V6) have focused prose revisions plus nine older cards' extra V6 choices. Original choice ids, dice, costs, flags, and V6 save fingerprint are preserved. PR/checks pending. Tablelands, Deep Cave, Verge and five trials remain unedited by this batch.
+
+2026-10-24: #3917 is now the whole-game master roadmap, not an auto-close\n      trigger when prose alone completes. t-036 remains independently claimed\n      for 72 encounter cards, five trials and global prose review. Completion\n      of t-036 never bypasses t-043..t-048 or final signoff t-018.\n\n      Dustwater prose batch merged to kind_robots main in PR 3930 (2d35a70259cbe2ff1fe3076c0fdb4b98e7a287e7), all 14 current-head CI workflows completed successfully including dedicated Shifting Lands gameplay and 4-shard Contract Tests. Edited all 24 Dustwater encounter cards (nine older plus 15 V6), plus extra choice text on all nine older cards, 85 targeted prose changes. Exact mechanical projections from original and branch matched. First two lands now through editorial passes (48/120); remaining Tablelands, Deep Cave, Verge (72 cards), five trials and final journal/voice audit. Keep issue 3917 open and task ready for another land batch. No art generation or production deployment.
+
+2026-11-01 PT intent audit: claim released after 11 days idle; last note (2026-10-24)
+says the task is ready for another land batch (Tablelands, Deep Cave, Verge, five trials
+remain).
+
+2026-11-04 PT: Tablelands batch (24 cards + Canyon Warden trial and its V7 solidarity
+scene, 30 prose edits, mechanics byte-identical in projection) in kind_robots #4768.
+72/120 cards edited. Remaining: Deep Cave and Verge batches (48 cards), the four other
+trials, and the final journal/voice audit. Returned to ready because the line edit
+continues land by land.
+
+2026-11-04 PT: Deep Cave batch (24 cards + Deep-Cave Judgement trial and its V7
+witness/solidarity scenes, 32 prose edits on 15 cards, mechanics byte-identical in
+projection, V6 deck and trial fingerprints unchanged; all 19 shifting-lands-gameplay
+workflow steps pass) prepared as a patch against kind_robots a13933a7: sets up the
+storm-reader's question, the guide's brother's debt and the trial's chalk circle; fixes
+a herbs-spent failure that leaves deed-carries-medicine set, three unspoken deed-owed-
+favor grants, and count/pronoun tangles; verifyShiftingV6 gains a Deep Cave block.
+96/120 cards edited. Remaining: the Verge batch (24 cards), the Homestead, Dustwater and
+Verge trials, and the final journal/voice audit. Task returns to ready.  Merged as
+kind_robots #4787. Back to ready for the remaining scope.
+
+2026-11-05 PT: Verge batch and the last three trials (29 prose-only edits: 18 on 15 of
+the 24 Verge cards, nine across the Homestead, Dustwater and Verge trials, two V7 scene
+strings; mechanics byte-identical in projection, V6 deck and V5 trial fingerprints
+unchanged; all 19 shifting-lands-gameplay workflow steps pass) prepared as a patch
+against kind_robots 7957faab. It sets up the Abbess's guards and the children's
+dormitory, the Crossing Gate's jam and its one "safe" channel, and the Verge seal. It
+stops promising an empty medicine pouch and a spent favor while deed-carries-medicine
+and deed-owed-favor stay set, and it no longer assumes the player kept every promise.
+verifyShiftingV6 now checks length floors and the map-shift regex in one loop over every
+land, keeps every land's pins and adds 18 new ones. With this, 120/120 cards and all
+five trials are edited. Remaining: the final journal and voice audit. Candidates are
+listed in the PR body; the main one is whether spent deed flags should be consumed,
+which would need a new rules and save version.  Merged as kind_robots #4797; back to
+ready for the remaining scope.
+
+2026-11-05 PT: Final journal and voice audit, prepared as a patch against kind_robots
+0d132816. It is prose and tests only; the mechanics projection of all four content JSON
+files is unchanged, the V6 deck and V5 trial fingerprints pass, and all 19 shifting-
+lands-gameplay steps exit 0. It makes 37 stock-phrase edits on 34 cards: "road ahead"
+drops from 40 to 20 and stays the map-shift refrain, "without a word" drops from 18 to
+11, and pressed-into-your-hand gifts from 25 to 13. verifyShiftingV6 now caps each
+phrase per land. The V7/V8 shared trial intents now read as second-person story prose,
+and the board's odds, check and lock text is pinned beside them. This also fixes the V8
+scout intent, which asked the player to pay an HP they had already paid. The Verge
+evidence success is now neutral about which clue opened the route. On the journal:
+failed trial checks were already written to it. The coarse bosses[].approach `parley` is
+kept for save replay, because trialResults[].choiceId holds the real route; a V7 guard
+test pins all of this. Remaining: spent deed flags (deed-carries-medicine, deed-owed-
+favor) never clear. The rail never shows them, but the gated choices stay open, so one
+medicine can be spent once per land. Clearing them needs `consumes` plus deck
+schemaVersion 2 and a new ledger version; the design note is in the PR body. With this
+patch, t-036's editorial scope is done; the deed-consumption fix should be its own task.
+Merged as kind_robots #4813. Editorial scope complete (120 cards, 5 trials, voice
+audit); spent-deed consumption split out as t-049.
+<!-- note:end t-036 -->
+
 ## t-037 — V7 kindness, preparedness and evidence-gate balance upgrade
 
 <!-- note:begin t-037 -->
@@ -321,3 +407,52 @@ Created separate V8 ruleset with earned compassionate trial odds, meaningful sco
 
 Merged silasfelinus/kind_robots#4054 as 58359c64c713864d2e51e34318166cf11a38ddd0 after all sixteen latest-head CI workflows passed, including V7/V8 gameplay, TypeScript, formatting and full Contract Tests. New V8 journeys strengthen earned Witness, Solidarity, and 1-HP Scout routes, show exact 2d6 odds, preserve all V7 save ledgers, and simulate 300 matching seeds for each of five playstyles per version. Kind completion rose from 70.7 to 87.7 percent, cautious from 77.7 to 92.7 under the corrected probability-aware policy; dark-route outcomes were unchanged. No production deployment or human playtest claimed.
 <!-- note:end t-042 -->
+
+## t-049 — Spent deeds: consume medicine/favor flags once spent (deck schemaVersion 2 + save migration)
+
+<!-- note:begin t-049 -->
+Found by the t-036 final voice audit (kind_robots #4813, 2026-11-05 PT). Deed flags such as deed-carries-medicine and deed-owed-favor are never cleared when spent, so the choices they gate stay open: one medicine can be "spent" once per land, up to five times a run. Proposed design (PR #4813 body): add a `consumes` field to choice outcomes with deck `schemaVersion: 2`; because saves are rejected when the deck version changes, ship a save migration that replays v1 runs under v2 rules or grandfathers them. Pin with a seeded battery showing each deed is spent at most once per acquisition, and keep the V6 replay/forgery guarantees. Prose already avoids promising consumption (t-036).
+
+2026-11-05 PT: Spent deeds shipped as a patch (round r5) on base b26f0cc9. A route gated
+on deed-carries-medicine or deed-owed-favor now spends it, win or lose. Eleven routes
+spend; comparing herbs is exempt because it is a trade. Every route gated on that deed
+then closes ("Already spent. Opens again only if ...") until a later outcome grants
+another, so each deed is spent at most once per acquisition. The board chip says "spends
+your medicine" or "spends a favor", and the journal records the loss. I took option (b)
+instead of the proposed consumes field with schemaVersion 2: the rule lives in
+deckV6.ts, so the V6 deck fingerprint and version are unchanged. Run state gains
+JourneyStateV6.spentDeedsFrom (new runs 0). Pre-change V6-V9 saves replay and verify
+under their own rules, then adopt the rule from their next outcome on; deeds they
+already used stay used, and out-of-range values or hidden double spends are refused.
+Three prose lines that promised medicine left over now match the rule. The new
+verifyShiftingSpentDeeds battery (in the gameplay workflow) plays 3,000 seeded V9 runs:
+0 double spends against 18 under the old rule, 27 closed and refused, re-acquisition
+reopens, replay and forgery guarantees hold, old V6-V9 double-spend saves load, and all
+38 endings stay reachable. 12 saves made with the unmodified base code also restore. All
+19 workflow verifiers and full vue-tsc pass. Remaining: the coordinator applies, opens
+and merges the PR. Optional follow-up: show the deeds you carry on the character rail.
+Limit: a hand-edited save can drop the field and get the old rule for history it already
+recorded, but only that.  Merged as kind_robots #4830.
+<!-- note:end t-049 -->
+
+## t-051 — Zuzu: Shifting Lands achievement upgrade: 12 or more live achievements
+
+<!-- note:begin t-051 -->
+Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
+
+Live today: 3 Achievement record(s) with this game's triggerCode prefix (checked against /api/achievements 2026-11-11). Target 12+ (usually 12-30; tie some to endings but don't go overboard). Mix story, skill, discovery and completion. Create the live records through the existing achievements API (label, message, icon, karma, triggerCode prefixed with the game slug), award them from the game store, show them with components/achievements/game-achievement-strip.vue, and verify one award live after deploy.
+
+Achievement upgrade merged in kind_robots#5060 (2b2a1bc), all 13 checks green: 3 kept codes (messages rewritten to second person, no longer naming Zuzu) + 17 new = 20, including mittens-road, fennec-road and own-legend for the new character creator; awarded from journeyDeeds diffs in dispatch only, never on restore/fresh. Strip in a 'Road achievements' rail section. Ratchet file now empty: every main game is at 12+. Not wired: ending-collector (no persistent endings record yet).
+<!-- note:end t-051 -->
+
+## t-052 — Character creator: design a character, adjust stats, play as Zuzu or Jeffery Mittens
+
+<!-- note:begin t-052 -->
+Silas 2026-11-11 PT, in session: "Shifting lands should let us design a character and adjust stats. That means certain encounters change, you can't let the user play the siblings and have them encounter the siblings. But that will help differentiate it from the zuzu gamebook. Though obv zuzu should be one of the playable characters. As should Jeffery Mittens."
+
+Build a start-of-run character creator: choose a premade (Zuzu, Jeffery Mittens the young raccoon looter from zuzu-gamebook BOOK-ONE-OUTLINE.md, and any other canon cast you choose to offer) or design a custom character (species from the approved Facets, name, portrait, and a point-buy stat spread on the existing stats). Premades have fixed stats and signature traits.
+
+Encounters must respect identity: any encounter, follower or quest featuring the chosen character (e.g. the fennec siblings, Jeffery Mittens) is swapped, rewritten or excluded so the player never meets themselves; add a deterministic test sweep over every playable character. Stats should change check odds and some encounter options. Queue portraits for premades and custom species in an auto_submit ledger. Persist the character in saves and the scrapbook.
+
+Character creator merged in kind_robots#5038 (bf8c03f) with all CI green: premade Zuzu (unchanged stats), Jeffery Mittens (knows the old roads; 8 existing routes) and the fennec siblings (sister with her brother), plus a 13-point custom traveler (name, species from the Book One cast, pronouns). Ledger v10 snapshots the character; V9 saves restore as Zuzu and replay byte-identically (pinned 300-seed digest). Identity-aware encounters: cast-tag sidecar, 7 cameo cards and 3 self-variants so a player never meets themselves (swept every character x seeds 1-500 x 15 locations). Portraits queued in conductor#7282 (ROUND-8-TRAVELERS, 13 portraits). Follow-ups: the 3 live achievement messages still name Zuzu (zuzu-shifting-lands achievement task), no scrapbook yet (standard task). Open for Silas: children as playable characters facing the Abbess trial and death routes (harm kept off-screen), naming the fennec sister, stat tuning.
+<!-- note:end t-052 -->

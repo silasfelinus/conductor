@@ -206,4 +206,10 @@ def test_silas_october_high_priority_projects_have_high_registry_priority():
     finish_line = next(task for task in roadmap["tasks"] if task["id"] == "t-016")
     assert finish_line["gate_human"] is True
     assert finish_line["approved_by_human"] is True
-    assert "Yes, it’s great!" in finish_line["note"]
+    # The approval quote may live in the note or, once archive_done_task_notes.py
+    # has moved it verbatim (conductor/t-158 carve-out), in the project HISTORY.md.
+    history = (ROOT / "projects" / "kind-pinball" / "HISTORY.md")
+    archived = history.read_text(encoding="utf-8") if history.exists() else ""
+    assert "Yes, it’s great!" in finish_line["note"] or (
+        "HISTORY.md#t-016" in finish_line["note"] and "Yes, it’s great!" in archived
+    )

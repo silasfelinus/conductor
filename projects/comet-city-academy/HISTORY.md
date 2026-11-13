@@ -193,3 +193,13 @@ Submitted a high-priority Admin Capes Bible expansion against the existing t-028
 
 Merged Kind Robots #4458 at df0111fe0d6a1cbf2603a359229981b435003955 after all 21 head workflows passed. The Admin channel now links /admin/capes and the shared Capes Bible includes eight by six checkpoint proposals, searchable 48 permanent heroes, paired villain and hero artwork, independent one-hit species and powered lieutenants with truthful attached/planned art slots, and production card/story/standee plans. Child PR #4466 was integrated. No public release or false ArtImage claim. Original t-028 remains open for four not-submitted ArtJobs and human style choice.
 <!-- note:end t-030 -->
+
+## t-035 — Prom of Doom achievement upgrade: 12 or more live achievements
+
+<!-- note:begin t-035 -->
+Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
+
+Live today: 0 Achievement record(s) with this game's triggerCode prefix (checked against /api/achievements 2026-11-11). Target 12+ (usually 12-30; tie some to endings but don't go overboard). Mix story, skill, discovery and completion. Create the live records through the existing achievements API (label, message, icon, karma, triggerCode prefixed with the game slug), award them from the game store, show them with components/achievements/game-achievement-strip.vue, and verify one award live after deploy.
+
+Achievement upgrade merged in kind_robots#5039 (940bc59), all checks green: 18 live achievements, endings awarded in recordIdentity; load/import never award. Title-menu entry left for the standard task. Catalog seed succeeded.
+<!-- note:end t-035 -->

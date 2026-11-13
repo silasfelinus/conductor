@@ -3058,18 +3058,9 @@ tasks:
   passes: 0
   updated: '2026-11-01T11:46:19Z'
   note: >-
-    Kaizen follow-up to t-202: when check_roadmap_note_size flags a roadmap, run
-    scripts/archive_done_task_notes.py --project <slug>, verify with --verify-only, and confirm the flag clears.
-    Also keeps conductor with an open task (validate_roadmaps requires one for active projects).
+    Kaizen follow-up to t-202: when check_roadmap_note_size flags a roadmap, run scripts/archive_done_task_notes.py --project <slug>, verify with --verify-only, and confirm the flag clears.
 
-    2026-11-01 PT claim-staleness assessment (Silas: stale claims are more likely finished-
-    but-unrecorded than abandoned): no archive-notes pass recorded after the 10-01 claim;
-    run archive_done_task_notes.py for roadmaps over the advisory. Claim released.
-
-    2026-11-01 PT: done in the token-essentialization pass 2 PR — archive_done_task_notes.py
-    --all moved 235,961 bytes of done-task notes into per-project HISTORY.md (verify-only:
-    every archive resolves), and archive_recurring_task_note.py archived 23 oversized live
-    notes. memory-dungeon is now under the 150KB file threshold.
+    Full history: projects/conductor/HISTORY.md#t-203
   claimed_by: null
   claimed_at: null
 
@@ -3165,17 +3156,9 @@ tasks:
   passes: 0
   updated: '2026-11-11T23:08:00Z'
   note: >-
-    Reviewer kaizen 2026-11-11 PT from slime-city/t-028: the implementation, silasfelinus/kind_robots#4924,
-    merged 2026-11-10 PT, but the task sat at review for two days because gh_search_task_prs only matches
-    "<project>/<task-id>" in PR titles and #4924 named the task only in its body ("Conductor: `slime-city/t-028`").
-    Extend the repo-scoped list-and-filter to accept an exact body match as a lower-confidence candidate
-    (confirmed via gh_pr like title hits), with tests in tests/test_check_pr_merged_drift*.py.
+    Reviewer kaizen 2026-11-11 PT from slime-city/t-028: the implementation, silasfelinus/kind_robots#4924, merged 2026-11-10 PT, but the task sat at review for two days because gh_search_task_prs only matches "<project>/<task-id>" in PR titles and #4924 named the task only in its bo
 
-    2026-11-11 PT: implemented on claude/focused-johnson-vfy0ty. Body matching is anchored
-    to a declaration line (Conductor: label or a line starting with the ref). A live run
-    surfaced 4 real stale review tasks via body matches: emperor-of-dust/t-060
-    (kind_robots#4206), hybridizer/t-009 (#4643, #4565), memory-dungeon/t-064 (#4971, #4957,
-    both partial slices). Merged via silasfelinus/conductor#7262 once CI was green (review and done share that PR).
+    Full history: projects/conductor/HISTORY.md#t-209
   claimed_by: 2026-11-11T2305Z-conductor-t209-bodymatch-p3n8
   claimed_at: '2026-11-11T23:01:28Z'
   implementation_pr: 'silasfelinus/conductor#7262'

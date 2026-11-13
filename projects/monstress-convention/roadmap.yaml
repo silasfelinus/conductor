@@ -38,17 +38,9 @@ tasks:
     passes: 0
     stakes: reversible
     note: >-
-      Build the MONSTRIQUE Vignette spec and private title screen at /admin/monstrexx
-      within the existing shell, plus an initial navigable hotel lobby scene. Verify admin AND
-      viewerShowsMature on server; no guest/CHILD/mature-off rendering or leaking assets.
-      Do not expose Play/nav/highlights until the separate release gate. Art briefs now,
-      ArtJobs when available; painted images are not a code blocker. Test phone/tablet/desktop.
+      Build the MONSTRIQUE Vignette spec and private title screen at /admin/monstrexx within the existing shell, plus an initial navigable hotel lobby scene.
 
-      2026-11-06 PT: Done. Private title screen (New Game, Continue, Settings, Scrapbook) and
-      Vignette kit spec shipped in kind_robots #4845/#4848; renamed MONSTRIQUE at
-      /admin/monstrique with Chapter 1 rewrite, flirt/gratitude and favour puzzle in #4867.
-      Server-checked admin + mature opt-in, no CHILD; public Play/nav still behind t-013.
-      Visual check on main pending (gated route, no pre-deploy screenshots).
+      Full history: projects/monstress-convention/HISTORY.md#t-001
     updated: '2026-11-06T23:47:24Z'
     implementation_pr: 'silasfelinus/kind_robots#4867'
   - id: t-015
@@ -81,12 +73,10 @@ tasks:
     passes: 0
     depends_on: []
     updated: '2026-11-12T07:40:56+00:00'
-    note: |-
-      Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
+    note: >-
+      Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ...
 
-      Live today: 0 Achievement record(s) with this game's triggerCode prefix (checked against /api/achievements 2026-11-11). Target 12+ (usually 12-30; tie some to endings but don't go overboard). Mix story, skill, discovery and completion. Create the live records through the existing achievements API (label, message, icon, karma, triggerCode prefixed with the game slug), award them from the game store, show them with components/achievements/game-achievement-strip.vue, and verify one award live after deploy.
-
-      Achievement upgrade merged in kind_robots#5066 (d3a33c8), all checks green: 16 live achievements from a shared achievementsFor(prev,next) in both case stores' commit(); no mature-only achievements; load, mode-load and forgetCase never award. Catalog seed run 43175067016 succeeded. Title-menu entry left for the standard task.
+      Full history: projects/monstress-convention/HISTORY.md#t-016
     claimed_by: 20261112-ach-monstress-convention-modest
     claimed_at: '2026-11-12T01:00:55Z'
   - id: t-002
@@ -99,25 +89,9 @@ tasks:
     soft_gate: true
     gate_reason: creative-approval
     note: >-
-      Present the premise, cast, first playable slice and tier-growth recommendation to
-      Silas without halting reversible implementation or treating silence as publication approval.
-      2026-11-06 PT: STORY-BIBLE.md written from Silas's MONSTRIQUE brief. Recommendation awaiting
-      Silas: culprit = Marta the night manager, secretly the band's invisible fifth member "Little
-      Miss Nobody" (alternate: Draculina). Build Chapters 2-5 against it; lock it only in Chapter 6.
+      Present the premise, cast, first playable slice and tier-growth recommendation to Silas without halting reversible implementation or treating silence as publication approval. 2026-11-06 PT: STORY-BIBLE.md written from Silas's MONSTRIQUE brief.
 
-      FOR SILAS (2026-11-06 PT): Premise, cast, Chapter 1 and growth plan are written up in
-      STORY-BIBLE.md (with FRANCHISE-HISTORY.md as the authority) and playable at
-      /admin/monstrique. Two decisions: (1) Culprit. RECOMMENDATION: Marta the night manager,
-      secretly the band's invisible first erasure "Little Miss Nobody"; the alternate is
-      Draculina. Chapter 1 already plants Marta's clues, and nothing locks until Chapter 6.
-      (2) Mummy name: DESIGN-BRIEF says Celestine Veil, the ledger says Nefertari, and Chapter
-      1 shows Celestine at the convention. One character or two, and which name? Soft gate:
-      Chapters 2-5 can be built meanwhile. Reversible, so the 2026-09-30 default-
-      recommendation rule may adopt (1) after 7 days.
-
-      2026-11-07 PT: Done; Silas decided in session: "I like draculina for the villain. But in
-      the last act. The mummy should be named Cleo Pappatra". Canon updated in STORY-BIBLE.md
-      (case, endings, chapter plan) and across the project docs.
+      Full history: projects/monstress-convention/HISTORY.md#t-002
     updated: '2026-11-07T00:34:50Z'
   - id: t-003
     milestone: m1

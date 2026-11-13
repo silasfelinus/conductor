@@ -2151,18 +2151,10 @@ tasks:
   stakes: reversible
   passes: 0
   updated: '2026-11-01T11:33:59Z'
-  note: |-
-    Silas-directed 2026-10-06 navigation cleanup:
-    - Move Admin Users and Moderation out of the Admin navigation and expose them as admin-only buttons on Home > Account.
-    - Move Animation Manager to Home > Account as a button visible to everyone, and remove the never-working Coverage Zone section rather than debugging it.
-    - Remove LoRA Triage as an independent navigation route and expose it from Admin > Resources.
-    - Move Appmaker, Conductor App, Mermaids, and Scene Animator into the existing Retired submenu under Admin.
-    Preserve existing destination routes unless the implementation can safely remove a redundant navigation-only route without breaking direct links.
+  note: >-
+    Silas-directed 2026-10-06 navigation cleanup: - Move Admin Users and Moderation out of the Admin navigation and expose them as admin-only buttons on Home > Account.
 
-    Opened Kind Robots PR #3261 for the requested navigation cleanup. Navigation, layout, icon-safety, and Component Runtime Retirement checks are green; the full CI suite is still running before merge.
-
-    2026-11-01 PT: reconciled to done — kind_robots PR #3261 (Rehome navigation tools and
-    retire legacy surfaces) merged 2026-10-06 by Silas; the task had been left at review.
+    Full history: projects/kind-robots/HISTORY.md#t-131
   owner: worker
   claimed_by: 20261006T103400Z-kind-robots-t131-nav-a4d9
   claimed_at: '2026-10-06T10:34:00Z'
@@ -2443,17 +2435,10 @@ tasks:
   passes: 0
   source_issue: 'silasfelinus/kind_robots#4216'
   updated: '2026-11-01T12:11:23Z'
-  note: |-
-    Silas-directed cross-playbook improvement: https://github.com/silasfelinus/kind_robots/issues/4216. Build a reusable persisted review contract and integrate all eight ending flows. Additive schema only, with admin-only history inspection and replay/restore coverage.
+  note: >-
+    Silas-directed cross-playbook improvement: https://github.com/silasfelinus/kind_robots/issues/4216.
 
-    Implementation in PR #4218 passed 35 check runs with one expected skip; seven prior failures repaired (Prisma generated-client log corruption and Emperor Node test shim). Review is code complete and verified; do not merge pending outward-facing release approval.
-
-    All 35 runnable checks on implementation PR #4218 passed (one expected skip), including generated-client parity, TypeScript, seeded playthroughs and contract shards. Seven earlier failing checks were repaired; final outward-facing publication and production migration remain gated on Silas's explicit approval. Leave PR open.
-
-    2026-11-01 PT: reconciled to done — Silas merged kind_robots PR #4218 (Playbook ending
-    reviews with run histories) himself on 2026-10-26, which is the release decision this
-    note was waiting on. Schema-affecting: production is live only after the Alexandria
-    deploy runs its migration.
+    Full history: projects/kind-robots/HISTORY.md#t-148
   soft_gate: false
   implementation_pr: 'silasfelinus/kind_robots#4218'
 

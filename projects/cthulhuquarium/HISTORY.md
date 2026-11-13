@@ -675,3 +675,21 @@ Merged silasfelinus/kind_robots#4070 to main (afa131f5dd64fda81cd5eedea4784190ee
 Silas, 2026-10-27 PT: "Anything that is in playbook forge and has quests unwritten or art prompts unwritten should be upgraded. (Memory dungeon will take the longest and should be last). Space couch has a lot of fresh writing still in need and still looking to capture that right blend of space comedy and satire. All art prompts should be written for the appropriate engine, no metaphors for krea2." Shared bar: kind_robots PR #4308 (verifyPlaybookArtPrompts, artPromptsComplete). Forge 2026-10-27: 16 thread beats have no body text and 189 beats have no prompt. Art stays queued by the existing pipeline.
 DONE 2026-10-27 PT: cthulhuquarium canon #78 (a9495a1) and kind_robots #4314 (9060834, 24/24 checks). The 16 empty thread beats (tank backgrounds) now carry museum-placard field notes, shown in play under Behind the glass and on Charlotte's handover. 189/189 beats prompted, artPromptsComplete on; the canon's frame/negation wording was fixed at source and validate_fish.py enforces it. Unrendered scene plates are held back from play until built.
 <!-- note:end t-097 -->
+
+## t-098 — Console UI redesign: ornate bezel shell, HUD, five-tab command deck, Creatures and Market screens with generated UI art
+
+<!-- note:begin t-098 -->
+Silas, 2026-11-05 PT, with four ChatGPT reference mockups (Tank, Feed, Creatures, Market): "It still looks more like a webapp than a console game ... This version is a little more freeware slop than I want, the design is a little too childish, but it's still better than what we have. I need a front end redesign, actual art assets generated, and much better fish designs for a lot of our fish." Take the reference's structure (bezelled tank as the stage, top HUD capsules, left care meters, bottom illustrated tab deck with L/R shoulder hints and button-prompt footer, featured-creature panel plus card strip, pedestal shop cards) and drop its childishness (chibi faces, blush, sparkle overload). Design rules in the source_reference doc. Real generated UI art (tab icons, title cartouche, frame ornaments), not CSS-only placeholders, once rendered.
+
+Console UI shipped on kind_robots main: bezel shell, top HUD capsules, care meters, five-tab command deck with L/R and button-prompt footer, Creatures and Market screens (kind_robots#4840). The 13 painted Krea 2 UI pieces (tab icons, coin, plinth, corner ornament, meter and HUD icons) replaced the SVG fallbacks via canon cthulhuquarium#80 and kind_robots#4862. Live after the next production Force Update. Follow-ups not in scope: portrait-phone tank crop and the logged-out shop-window intro restyle.
+<!-- note:end t-098 -->
+
+## t-101 — Cthulhuquarium achievement upgrade: 12 or more live achievements
+
+<!-- note:begin t-101 -->
+Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
+
+Live today: 0 Achievement record(s) with this game's triggerCode prefix (checked against /api/achievements 2026-11-11). Target 12+ (usually 12-30; tie some to endings but don't go overboard). Mix story, skill, discovery and completion. Create the live records through the existing achievements API (label, message, icon, karma, triggerCode prefixed with the game slug), award them from the game store, show them with components/achievements/game-achievement-strip.vue, and verify one award live after deploy.
+
+Achievement upgrade merged in kind_robots#5036 (8e4cdb0), all checks green: 18 live achievements awarded from cthulhuquariumTankStore. Catalog seed succeeded.
+<!-- note:end t-101 -->
