@@ -36,7 +36,14 @@ def latest_classic():
         data = yaml.safe_load((ART / f"ROUND-{number}.yaml").read_text(encoding="utf-8"))
         for row in data["subjects"]:
             latest[row["target_path"]] = {**row, "_round": number, "_target": row["target_path"]}
-    return [row for row in latest.values() if not row.get("verdict")]
+    # This retrospective review captures the authenticated 20-job recovery wave,
+    # including rows whose verdicts are now recorded. Earlier accepted Round 13
+    # rows may be missing provenance and must not be counted as new 2026-11-12 art.
+    return [
+        row for row in latest.values()
+        if row.get("art_job_id") is not None
+        and 68749 <= int(row["art_job_id"]) <= 68768
+    ]
 
 
 def current_media_evidence(row, evidence):
