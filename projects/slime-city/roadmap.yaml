@@ -1304,10 +1304,7 @@ tasks:
   - id: t-054
     milestone: m2
     title: 'Ironjaw follow-through: lab-mutant identity in story, evolutions and remaining art'
-    status: review
-    owner: worker
-    claimed_by: 2026-11-13T201614Z-slime-city-t054-8c73f2
-    claimed_at: '2026-11-13T20:16:14Z'
+    status: ready
     passes: 0
     stakes: reversible
     note: |-
@@ -1345,7 +1342,9 @@ tasks:
       PR #5113 merged as 1301b07; six checks green; remaining 45 token images require curation.
 
       Scoped COG portrait fallback fix on worker/slime-city-t-054-evolution-art-fallback-8c73f2; preserves L3 painting for alternate evolution choices while separate art is pending. Tests added to Slime City suite; PR/CI verification follows. Ironjaw art curation remains open.
-    updated: '2026-11-13T20:23:00Z'
+
+      2026-11-13 PT: kind_robots#5118 merged as ddd053c after all eight PR workflows completed successfully. Alternate COG L3 art now falls back to curated L3, then L2, then base, with regression coverage. This is a partial t-054 increment, not the Ironjaw art-curation finish. Remaining: visually inspect pending Ironjaw renders and integrate approved three-tier evolution ladders and board portraits.
+    updated: '2026-11-13T21:20:00Z'
   - id: t-055
     title: "Slime City: first reconnectable, private human-vs-human CLASH matches"
     status: done
