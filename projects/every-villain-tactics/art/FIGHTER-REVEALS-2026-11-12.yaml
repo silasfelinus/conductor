@@ -5,8 +5,8 @@
 # for planning/geometry only, never shipped as final map artwork.
 # All 48 hero outcomes and 47 villain outcomes already exist in the Prom art manifest.
 # First Bell map ArtImages 265014 (job 64974) and related arena images were generated,
-# but the target repository has not exported their dedicated game map files. Do not
-# re-enqueue finished arena art here; app includes independent illustrated SVG bases.
+# and the game now loads them by ArtImage ID through its authenticated art store.
+# Do not re-enqueue finished arena art. Tactical collision and LOS remain code-owned.
 # Private ArtJobs only. An authored prompt is not a rendered or attached ArtImage.
 round: every-villain-tactics-fighter-reveals-2026-11-12
 series: prom-of-doom-and-every-villain-tactics
@@ -24,11 +24,15 @@ lanes:
   engine: comfy
   checkpoint: SDXL/sdxlUnstableDiffusers_nihilmania.safetensors
   prompt: prose
-  suffix: Vibrant original Western superhero animation, punchy Saturday morning comic-book dynamism for older teen
-    players, bold thick hand-inked contours, rich expressive human faces, high-contrast cel-painted costumes, fierce
-    saturated teal pink purple amber color blocking, dramatic kinetic diagonals, crisp halftone graphic shapes in
-    background only, readable silhouette, 2D comic-book cover illustration, full figure plus expressive face, space
-    for HTML title overlay, no text or logo in the painting.
+  suffix: >-
+    Vibrant original Western superhero animation. The actor stands in a
+    dramatic lived-in location, dynamic movement, bold dark hand-inked edges,
+    painterly cel shading on costume fabric and armor, saturated turquoise
+    against electric pink and gold, deep violet shadows, finely patterned
+    background surfaces, expressive eyes, individually distinct costume
+    details and physical props, broad upright composition, richly observed
+    surroundings with bare unmarked surfaces and a calm patch of atmospheric
+    space above the character.
   steps: 28
   cfg: 7
   sampler: dpmpp_2m
