@@ -258,7 +258,7 @@ tasks:
   - id: t-030
     milestone: m3
     title: "Build scene-art production manifest and twelve-world coverage checks"
-    status: claimed
+    status: review
     depends_on: t-018
     passes: 0
     stakes: reversible
@@ -295,7 +295,9 @@ tasks:
       Added World One manifest coverage assertions for every authored overworld and dungeon choice, all 32 collectible cards and Chronicle photos. Kind Robots PR and CI verification pending; broader 16-realm ArtJob delivery remains open.
 
       2026-11-06 PT: kind_robots PR #4860 merged at e95dea9915b5c7a0075c5a2bb9d0a80b78601b42 after eight exact-head Actions workflows passed on 81fb8a94669d9e4afe815ccad636cb149bdc5a89. World One manifest now checks authored Briar/House choice art, 32 collectible card briefs and Chronicle photos. Remaining t-030: all sixteen realms, durable ArtJobs, delivered image coverage. No ArtJobs or deployment.
-    updated: '2026-11-13T15:51:00Z'
+
+      Added twelve-playable-world production-art acceptance ledger distinguishing authored, submitted, rendered, delivered and viewport-accepted art; historical 752 ArtJob receipts remain separate from 384 gallery attachments. Conductor PR pending. Next: reconcile live ArtJob/ArtImage IDs and attachment URLs for e01/e02, resubmit only missing work.
+    updated: '2026-11-13T15:54:00Z'
     owner: worker
     claimed_by: 2026-11-13T155100Z-memory-dungeon-t-030-8c41
     claimed_at: '2026-11-13T15:51:00Z'
