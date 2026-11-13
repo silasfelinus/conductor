@@ -75,6 +75,28 @@ def test_every_new_round19_request_has_an_idempotent_authoring_and_queue_match()
             assert art.get("verdict") is None
 
 
+
+def test_five_original_keep_plates_have_independent_job_and_media_evidence():
+    original = read(1)["subjects"]
+    expected = {
+        "encounter-back": (38381, 246469),
+        "review-back": (38382, 246471),
+        "gus-shop-steward": (38383, 246473),
+        "something-ticking-in-the-toner": (38384, 246475),
+        "trust-fall-over-the-shredder": (38385, 246477),
+    }
+    for row in original:
+        if row["key"] not in expected:
+            continue
+        job, image = expected[row["key"]]
+        assert (row["art_job_id"], row["art_image_id"]) == (job, image)
+        assert row["status"] == "delivered"
+        assert row["verdict"].startswith("keep:")
+        assert f"ArtJob {job} DONE, ArtImage {image}" in row["delivery_check"]
+        assert "confirmed newer than ArtJob" in row["delivery_check"]
+
+
+
 def load_audit():
     file = ART / "audit_live_artjobs.py"
     spec = importlib.util.spec_from_file_location("sd_round19_audit", file)
