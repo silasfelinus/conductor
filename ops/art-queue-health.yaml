@@ -1,4 +1,13 @@
 # art-queue-health.yaml -- written by scripts/art_queue_health.py record at the
 # end of every Auto Art Generate run. Do not hand-edit: fix the cause (see
 # docs/agents/roles/art-medic.md) and the next run drops the entry.
-failures: []
+failures:
+- source: ledgers
+  target: projects/every-villain-tactics/art/FIGHTER-REVEALS-2026-11-12.yaml
+  kind: contract-rejected
+  rules:
+  - format-vocabulary
+  - text-exclusion
+  detail: 12 cell(s) skipped, e.g. evt-reveal-accident-fire-hero [unstable-production], evt-reveal-accident-fire-villain
+    [unstable-production], evt-reveal-tech-genius-hero [unstable-production]
+  first_seen: '2026-11-13'
