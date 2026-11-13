@@ -60,6 +60,19 @@ Before queuing any duplicate, check production ArtJobs by exact request ID,
 destination and creation time via `art/reconcile_delivery.py --live --write`.
 Only an independently proven newer completed render can be called delivered.
 
+**Recovery action, 2026-11-12 afternoon PT:** An authenticated production scan
+([Actions run 43335325581](https://github.com/silasfelinus/conductor/actions/runs/43335325581))
+examined 1,076 Shifting Desks ArtJobs and found **zero exact request
+matches and zero newer same-destination jobs under alternate IDs** for the
+20 latest unmet Classic targets. The 19 absent durable requests and the
+incorrectly `done` round-17 request have been reconstructed in
+`projects/art-prompts.yaml` with their original request IDs, prompts,
+seeds, paths and `force: true`. See `art/CLASSIC-RECOVERY-2026-11-12.md`.
+This changes queue coverage, **not** delivery totals, which remain blocked
+until new ArtJobs complete and the latest media is reviewed and kept.
+The optional Western pilot in `art/SUBJECT-FIDELITY-PILOT-V1.yaml` is private
+and cannot count as accepted production artwork.
+
 ## Verification workflow
 
 The script `scripts/shifting_desks_art_readiness.py` is the one-command
