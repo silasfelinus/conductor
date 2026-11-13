@@ -378,6 +378,16 @@ def compute_transition_ops(
                     f"ALREADY_CLAIMED: task claimed_by={task.get('claimed_by')!r} "
                     f"(owner={task.get('owner')!r}); losing claim session={session!r}"
                 )
+        elif current in ("done", "cancelled") and not task.get("recurring") and not force:
+            # A non-recurring task that is already terminal never returns to
+            # `ready`, so a claim on it can never become valid. Consume it like a
+            # lost race instead of leaving a poison event that fails every later
+            # run (memory-dungeon/t-048 claim, 2026-11-12: 7+ red runs). Recurring
+            # tasks rearm, so their claims stay queued as live-state failures.
+            raise TaskEventCollision(
+                f"TASK_CLOSED: claim on non-recurring task with status {current!r} "
+                f"can never apply; losing claim session={session!r}"
+            )
         elif current != "ready" and not force:
             raise ValueError(f"claim requires status ready, found {current!r}")
         ops.append(("set", "status", "claimed"))
