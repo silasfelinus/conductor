@@ -116,21 +116,20 @@ tasks:
       These 100 anchors are outlines, not implemented daily script records.
   - id: t-063
     title: 'Export and wire the ~430 rendered Emperor images that never reached the game'
-    status: claimed
-    owner: worker
-    claimed_by: 20261113T041200Z-emperor-t063-gpt6-a93f
-    claimed_at: '2026-11-13T04:12:00Z'
+    status: ready
     milestone: m5
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-11T23:38:32Z'
+    updated: '2026-11-13T04:20:00Z'
     note: |-
-        Silas 2026-11-11 PT, in session: "If there is unmade art it should definitely be added to the pipeline."
+      Silas 2026-11-11 PT, in session: "If there is unmade art it should definitely be added to the pipeline."
 
-        Audit 2026-11-11: every one of the 1,214 subjects in projects/emperor-of-dust/art/*.yaml has a DONE ArtImage, but only ~665 are exported under kind_robots public/emperor-of-dust/. Not in the game: 182 chance-event plates (CHANCE-ACT1 + CHANCE-ACTS2-5; the game has no chance-event art hook yet), ~72 quest plates (QUESTS-MISSING-ROUND-2 63, QUESTS-ROUND-1 9), ~102 audience/consequence/barracks/forge plates (utils/emperorOfDust/fortress/audienceChoiceArt.ts EXPORTED_AUDIENCE_CHOICES is still []), 43 SECRET-STORY-SCENES, 30 ITEMS (market icons, overlaps t-033) and 14 ROOMS rerolls to verify.
+      Audit 2026-11-11: every one of the 1,214 subjects in projects/emperor-of-dust/art/*.yaml has a DONE ArtImage, but only ~665 are exported under kind_robots public/emperor-of-dust/. Not in the game: 182 chance-event plates (CHANCE-ACT1 + CHANCE-ACTS2-5; the game has no chance-event art hook yet), ~72 quest plates (QUESTS-MISSING-ROUND-2 63, QUESTS-ROUND-1 9), ~102 audience/consequence/barracks/forge plates (utils/emperorOfDust/fortress/audienceChoiceArt.ts EXPORTED_AUDIENCE_CHOICES is still []), 43 SECRET-STORY-SCENES, 30 ITEMS (market icons, overlaps t-033) and 14 ROOMS rerolls to verify.
 
-        Curate each on contact sheets (reject off-model, re-queue rejects in a REDO ledger), export keepers to webp at their ledger asset paths, register them in the manifests, add chance-event art support, and verify a sample at 390/768/1440. This is the delivery lane for already-rendered art; t-046..t-052 keep their writing scope and any new art they author.
+      Curate each on contact sheets (reject off-model, re-queue rejects in a REDO ledger), export keepers to webp at their ledger asset paths, register them in the manifests, add chance-event art support, and verify a sample at 390/768/1440. This is the delivery lane for already-rendered art; t-046..t-052 keep their writing scope and any new art they author.
+
+      Merged kind_robots PR #5106 at affa509ac267be9c4b8de5d127612042259373bc after all eight exact-head CI workflows succeeded. Chance-event choice cards now use exported room artwork as fallback, with a verified-delivery-only manifest for dedicated plates. Remaining rendered ArtImage exports, curation, and delivery are NOT complete; keep t-063 ready.
   - id: t-064
     title: 'Painted ending plates and a persistent Endings gallery / reign scrapbook'
     status: review
