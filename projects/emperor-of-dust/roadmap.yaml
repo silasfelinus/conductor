@@ -130,15 +130,12 @@ tasks:
         Curate each on contact sheets (reject off-model, re-queue rejects in a REDO ledger), export keepers to webp at their ledger asset paths, register them in the manifests, add chance-event art support, and verify a sample at 390/768/1440. This is the delivery lane for already-rendered art; t-046..t-052 keep their writing scope and any new art they author.
   - id: t-064
     title: 'Painted ending plates and a persistent Endings gallery / reign scrapbook'
-    status: review
-    owner: worker
-    claimed_by: 20261113T012300Z-emperor-t064-gpt6-8c4d
-    claimed_at: '2026-11-13T01:23:00Z'
+    status: ready
     milestone: m5
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-13T01:25:00Z'
+    updated: '2026-11-13T02:57:00Z'
     note: |-
       Silas 2026-11-11 PT, in session: asked what happens at Day 50 and for "an ending scrapbook".
 
@@ -149,6 +146,8 @@ tasks:
       Gallery: an Endings room or Chronicle tab showing X/8 endings found, locked silhouettes for unfound ones, and for each found ending a scrapbook page: date, day-50 brass, followers kept and lost (memorials), key choices (Day 49 peace, bell, crypt), the epilogue entries reached. Persist across new runs, rewinds and reloads the same way the relic vault does (localStorage now; account sync if a save API exists).
 
       Added a discovered-versus-locked eight-ending chronicle using persistent legacy records. Painted plates and detailed per-reign scrapbook remain pending; this is a partial UI increment.
+
+      Merged kind_robots PR #5103 (3b0d455d): eight-ending discovered/locked chronicle with existing persistent legacy IDs, six exact-head CI workflows green. Remaining t-064 work is painted ending plate delivery and detailed per-reign scrapbook records. Return to ready, not done.
   - id: t-065
     title: 'Emperor of Dust achievements for endings and long-run play'
     status: done
