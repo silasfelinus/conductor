@@ -1,0 +1,978 @@
+# Shifting Lands art round 11 (2026-11-13 PT): the ten new premade travelers. Silas, 2026-11-13 PT, chose to "Expand to 13
+# premades" (t-053; Silas 2026-11-12 PT: "high priority for art generation", "custom endings for each character. Great
+# thing for the scrapbook."). Per traveler: one waist-up portrait, four own encounter cards and three personal ending
+# plates (The Coyote, Mags, Hollis, Sister Wren, Brother Peddler, Old Ash, Hester Kell, Gideon Vane, Tamsin, Augustin),
+# plus generic bighorn and gorilla species portraits for custom travelers. Prompts were written with the cards in
+# kind_robots utils/shiftingLands/personalCardsV10.json and the roads in personalEndings.ts. Children calm and unhurt.
+# Curate: species right, no humans, no lettering, no koala or straw kasa (Zuzu is never in another traveler's frame).
+# Delivery: portraits -> public/shifting-lands/portraits/<id>.webp and the premade's `portrait` (species ids go in
+# SHIPPED_SPECIES_PORTRAITS); cards -> public/shifting-lands/cards/<card>.webp and the card's `art`; endings ->
+# public/shifting-lands/endings/<id>.webp and SHIPPED_PERSONAL_ENDING_PLATES.
+# priority 1000. auto_submit: true. Private.
+round: shifting-lands-11-travelers
+project_slug: zuzu-shifting-lands
+designer: Comic Studio
+is_public: false
+is_mature: false
+cast_loras: false
+priority: 1000
+auto_submit: true
+lanes:
+- key: krea2
+  label: Krea 2 (painted weird-west storybook plate)
+  engine: krea2
+  prompt: prose
+  suffix: hand-painted weird-west storybook painting, bold ink outlines, warm dusty earth tones, dramatic practical light
+subjects:
+- key: shifting-lands-11-travelers-coyote
+  entity: character
+  title: The Coyote - traveler portrait
+  size: 1152x896
+  seed: 51001
+  task: t-053
+  prompt_prose: Waist-up portrait of a lean one-eyed coyote drifter in middle age, brown fur gone grey at the muzzle and shaggy
+    mane, a black patch over his left eye, a battered brown hat pulled low, a faded green coat over a dirty shirt, a worn
+    gun belt just showing. He stands in red evening light outside a weathered trading post, gaze steady and tired, braced
+    to be recognized. Dusty muted palette, long shadows. Every figure in the scene is an anthropomorphic animal in worn frontier
+    clothes, with animal heads, fur and tails.
+  asset: shifting-lands/portraits/coyote
+- key: shifting-lands-11-travelers-a-year-of-water-on-your-head
+  entity: scenery
+  title: A Year of Water on Your Head - own card (coyote)
+  size: 1344x768
+  seed: 51002
+  task: t-053
+  prompt_prose: Inside a dim frontier trading post, a wanted notice with a rough sketch of a one-eyed coyote nailed above
+    the counter. A thin opossum father in a patched coat studies it, three small opossum kits clustered calmly at his legs.
+    In the foreground, seen from behind, a coyote in a battered hat and green coat waits. Lamplight, dust in the air, shelves
+    of sacks and jars. Every figure in the scene is an anthropomorphic animal in worn frontier clothes, with animal heads,
+    fur and tails.
+  card: a-year-of-water-on-your-head
+- key: shifting-lands-11-travelers-the-gate-you-drove-up-to
+  entity: scenery
+  title: The Gate You Drove Up To - own card (coyote)
+  size: 1344x768
+  seed: 51003
+  task: t-053
+  prompt_prose: Dusk at a high wooden mission gate with an iron grille. A young otter sister in a grey habit holds up a lantern
+    and smiles too warmly. In the foreground, seen from behind and to one side, a lean one-eyed coyote in a battered hat stands
+    with his paws empty at his sides. Warm lantern glow against a cold blue sky, long shadow on the flagstones. Every figure
+    in the scene is an anthropomorphic animal in worn frontier clothes, with animal heads, fur and tails.
+  card: the-gate-you-drove-up-to
+- key: shifting-lands-11-travelers-runaways-at-the-canyon-fire
+  entity: scenery
+  title: Runaways at the Canyon Fire - own card (coyote)
+  size: 1344x768
+  seed: 51004
+  task: t-053
+  prompt_prose: Night in a canyon camp under a sky of stars, a single campfire ringed by tired travelers. A lynx girl sits
+    close to her small brother, both calm and watchful. Across the flames a tall rider in a long coat with brass buttons warms
+    his paws. At the edge of the light a one-eyed coyote sits with a gun across his knees, facing the rider. Firelight, deep
+    shadows, red canyon walls. Every figure in the scene is an anthropomorphic animal in worn frontier clothes, with animal
+    heads, fur and tails.
+  card: runaways-at-the-canyon-fire
+- key: shifting-lands-11-travelers-the-wagon-on-the-glass
+  entity: scenery
+  title: The Wagon on the Glass - own card (coyote)
+  size: 1344x768
+  seed: 51005
+  task: t-053
+  prompt_prose: A covered wagon with its canvas tied down tight rolls along a road of black volcanic glass under a pale hot
+    sky. A young ferret driver in a too-fine coat holds the reins, eyes fixed ahead. In the foreground, seen from behind,
+    a lean one-eyed coyote in a green coat stands in the road, one paw near his holster. Heat shimmer, ash plains, tense stillness.
+    Every figure in the scene is an anthropomorphic animal in worn frontier clothes, with animal heads, fur and tails.
+  card: the-wagon-on-the-glass
+- key: shifting-lands-11-travelers-coyote-one-fire
+  entity: scenery
+  title: One Fire - personal ending
+  size: 1344x768
+  seed: 51006
+  task: t-053
+  prompt_prose: A lone campfire at a desert crossroads at night, three wagon tracks meeting in the dust. A one-eyed coyote
+    in a battered hat sits beside it with no gun on his belt, feeding a stick into the flames, a second tin cup set out for
+    whoever comes. Far off, a covered wagon has stopped on the road. Warm firelight, a vast starry sky, quiet peace. Every
+    figure in the scene is an anthropomorphic animal in worn frontier clothes, with animal heads, fur and tails.
+  asset: shifting-lands/endings/coyote-one-fire
+- key: shifting-lands-11-travelers-coyote-paid-in-full
+  entity: scenery
+  title: Paid in Full - personal ending
+  size: 1344x768
+  seed: 51007
+  task: t-053
+  prompt_prose: Interior of a frontier water house, morning light through dusty windows. A one-eyed coyote stands at a long
+    counter holding out his paws calmly for iron cuffs, while a thin father beside him receives a tin water ticket from a
+    clerk. Two small kits peer over the counter's edge. Muted browns and greys, a mood of quiet acceptance. Every figure in
+    the scene is an anthropomorphic animal in worn frontier clothes, with animal heads, fur and tails.
+  asset: shifting-lands/endings/coyote-paid-in-full
+- key: shifting-lands-11-travelers-coyote-the-water-house-gun
+  entity: scenery
+  title: The Water House Gun - personal ending
+  size: 1344x768
+  seed: 51008
+  task: t-053
+  prompt_prose: A covered wagon with its canvas tied tight rolls along a night road toward a distant lit gate. On the driver's
+    seat a one-eyed coyote in a fine new coat holds the reins, whistling, eyes fixed ahead and empty. A full water jug sits
+    at his boot. Cold moonlight, long road, a mood of comfortable dread. Every figure in the scene is an anthropomorphic animal
+    in worn frontier clothes, with animal heads, fur and tails.
+  asset: shifting-lands/endings/coyote-the-water-house-gun
+- key: shifting-lands-11-travelers-mags
+  entity: character
+  title: Mags - traveler portrait
+  size: 1152x896
+  seed: 51009
+  task: t-053
+  prompt_prose: 'Waist-up portrait of a middle-aged rabbit barkeep with grey-brown fur, one ear notched, and hard tired eyes
+    like old nails. She wears a faded blue work shirt with rolled sleeves, a brown leather vest, a red neckerchief and a stained
+    canvas apron, a double-barreled scattergun on a strap over one shoulder. A folded paper notice is tucked in the band of
+    her dusty hat. Behind her, a dim frontier bar of warped boards and lamplight. Mood: grief held very still, unsentimental,
+    steady. Every figure in the scene is an anthropomorphic animal in worn frontier clothes, with animal heads, fur and tails.'
+  asset: shifting-lands/portraits/mags
+- key: shifting-lands-11-travelers-the-fever-wagon-at-the-post
+  entity: scenery
+  title: The Fever Wagon at the Post - own card (mags)
+  size: 1344x768
+  seed: 51010
+  task: t-053
+  prompt_prose: A dusty frontier trading post at noon. A covered wagon waits by the hitching rail, a small bell shape burned
+    into its tailboard. A young mouse mother holds a sleeping feverish kit wrapped in a blanket, calm and quiet. In the foreground,
+    seen from behind, a rabbit barkeep in a leather vest and red neckerchief stands in the road, one paw resting on the scattergun
+    at her shoulder. Hard white light, long hot shadows, tense stillness. Every figure in the scene is an anthropomorphic
+    animal in worn frontier clothes, with animal heads, fur and tails.
+  card: the-fever-wagon-at-the-post
+- key: shifting-lands-11-travelers-torches-at-the-refuge-wall
+  entity: scenery
+  title: Torches at the Refuge Wall - own card (mags)
+  size: 1344x768
+  seed: 51011
+  task: t-053
+  prompt_prose: 'Night in the yard of an adobe refuge. A group of tired travelers gathers by a woodpile, lamps and one lit
+    torch throwing orange light on the pale wall of a dark back wing. In the foreground a rabbit barkeep in a leather vest,
+    red neckerchief and apron, scattergun on her back, faces the crowd with one paw raised, deciding. Deep blue shadows against
+    firelight. Mood: grief on the edge of becoming a mob. Every figure in the scene is an anthropomorphic animal in worn frontier
+    clothes, with animal heads, fur and tails.'
+  card: torches-at-the-refuge-wall
+- key: shifting-lands-11-travelers-the-teamster-who-drove-the-wagon
+  entity: scenery
+  title: The Teamster Who Drove the Wagon - own card (mags)
+  size: 1344x768
+  seed: 51012
+  task: t-053
+  prompt_prose: A small campfire on a canyon floor at night under red rock walls. A young mule teamster with dusty grey fur
+    sits hunched, holding out a tin cup with both paws, his face full of shame. Across the fire, seen from beside, a rabbit
+    barkeep in a leather vest and red neckerchief holds a flask, a folded notice tucked in her hatband, a scattergun across
+    her knees. Warm firelight, cold stars, a long quiet reckoning. Every figure in the scene is an anthropomorphic animal
+    in worn frontier clothes, with animal heads, fur and tails.
+  card: the-teamster-who-drove-the-wagon
+- key: shifting-lands-11-travelers-a-bent-ear-in-the-gate-line
+  entity: scenery
+  title: A Bent Ear in the Gate Line - own card (mags)
+  size: 1344x768
+  seed: 51013
+  task: t-053
+  prompt_prose: A crowd waiting at a great dark gate of black stone at dawn, wardens in ash-grey coats at a table. In the
+    crowd stands a small rabbit boy with one ear bent over, calm and alone, holding a paper tag. Beside him, seen from behind,
+    an older rabbit woman in a leather vest and red neckerchief looks down at him, a scattergun on her back. Cold grey light,
+    ash in the air, a held breath. Every figure in the scene is an anthropomorphic animal in worn frontier clothes, with animal
+    heads, fur and tails.
+  card: a-bent-ear-in-the-gate-line
+- key: shifting-lands-11-travelers-mags-every-name-on-the-wall
+  entity: scenery
+  title: Every Name on the Wall - personal ending
+  size: 1344x768
+  seed: 51014
+  task: t-053
+  prompt_prose: Inside a warm new frontier bar, lamplit, with one long wall covered in hand-drawn notices and portraits of
+    young faces, no legible writing. Some notices have a single line drawn through them. A rabbit barkeep in a leather vest
+    and red neckerchief sets a bowl of stew before a small calm fox kit who sits alone at the bar. Her scattergun hangs on
+    a peg, unloaded. Golden light, quiet welcome, mended grief. Every figure in the scene is an anthropomorphic animal in
+    worn frontier clothes, with animal heads, fur and tails.
+  asset: shifting-lands/endings/mags-every-name-on-the-wall
+- key: shifting-lands-11-travelers-mags-the-notice-comes-down
+  entity: scenery
+  title: The Notice Comes Down - personal ending
+  size: 1344x768
+  seed: 51015
+  task: t-053
+  prompt_prose: 'Evening at the edge of a quiet unfamiliar town beyond a black ridge. A rabbit woman in a worn leather vest
+    and red neckerchief kneels by a young sapling, pressing down fresh earth over a folded paper she has just buried. Her
+    hat lies beside her in the grass. The sky is pale gold and lavender. Mood: grief finally set down, bittersweet calm, a
+    long breath out. Every figure in the scene is an anthropomorphic animal in worn frontier clothes, with animal heads, fur
+    and tails.'
+  asset: shifting-lands/endings/mags-the-notice-comes-down
+- key: shifting-lands-11-travelers-mags-thirty-lamps
+  entity: scenery
+  title: Thirty Lamps - personal ending
+  size: 1344x768
+  seed: 51016
+  task: t-053
+  prompt_prose: 'Night on a hill road. A long line of lamps and torches winds toward a distant dark building on the ridge.
+    At the head of the line stands a rabbit woman in a leather vest and red neckerchief, scattergun across her chest, her
+    face hard and hollow in the firelight, a scorched paper notice tucked in her hatband. Smoke drifts over a black sky. Mood:
+    righteous fury gone cold and endless. Every figure in the scene is an anthropomorphic animal in worn frontier clothes,
+    with animal heads, fur and tails.'
+  asset: shifting-lands/endings/mags-thirty-lamps
+- key: shifting-lands-11-travelers-hollis
+  entity: character
+  title: Hollis - traveler portrait
+  size: 1152x896
+  seed: 51017
+  task: t-053
+  prompt_prose: Waist-up portrait of Hollis, a lean female jackal raider with a notched left ear and grey creeping into her
+    muzzle, ribs showing under a sun-faded duster patched at the elbows, an empty bandolier across her chest and a rifle slung
+    on her back. Hard amber eyes, guarded and tired. Behind her, soft and distant, red rocks above a dry stone well, where
+    three small jackal kits sit calmly in a crevice. Late afternoon light, long shadows, dust hanging in the air. Every figure
+    in the scene is an anthropomorphic animal in worn frontier clothes, with animal heads, fur and tails.
+  asset: shifting-lands/portraits/hollis
+- key: shifting-lands-11-travelers-hollis-the-chalk-on-the-gatepost
+  entity: scenery
+  title: The Chalk on the Gatepost - own card (hollis)
+  size: 1344x768
+  seed: 51018
+  task: t-053
+  prompt_prose: A jackal raider mother in a faded duster stands at a weathered farm gate, seen from beside, looking at a pale
+    chalk sign scratched on the gatepost. Up the lane an old ewe leans on a wooden crutch in the doorway of a sod farmhouse.
+    A thin jackal band waits in the lane behind, and three small jackal kits sit quietly among boulders above the road. Flat
+    morning light, dry fields, a long uneasy pause. Every figure in the scene is an anthropomorphic animal in worn frontier
+    clothes, with animal heads, fur and tails.
+  card: hollis-the-chalk-on-the-gatepost
+- key: shifting-lands-11-travelers-hollis-the-rifle-on-the-counter
+  entity: scenery
+  title: The Rifle on the Counter - own card (hollis)
+  size: 1344x768
+  seed: 51019
+  task: t-053
+  prompt_prose: Interior of a plank frontier trading post, dim and dusty, flour sacks stacked along the wall. A lean jackal
+    raider mother lays a long rifle across the scarred wooden counter, her paws just leaving it. Behind the counter a stout
+    trader polishes a tin cup and watches the rifle. Window light falls in a slanting bar across the counter and the gun.
+    Quiet, heavy, a decision being made. Every figure in the scene is an anthropomorphic animal in worn frontier clothes,
+    with animal heads, fur and tails.
+  card: hollis-the-rifle-on-the-counter
+- key: shifting-lands-11-travelers-hollis-the-caravan-at-the-fire
+  entity: scenery
+  title: The Caravan at the Fire - own card (hollis)
+  size: 1344x768
+  seed: 51020
+  task: t-053
+  prompt_prose: Night at a canyon camp, a single campfire under red cliff walls and a sky full of stars. Across the fire a
+    mule driver, a weathered donkey in a battered hat, rests one paw on his small daughter's shoulder and stares. In the foreground,
+    seen from behind, a jackal raider mother with a notched ear has stopped halfway to sitting down. Warm firelight on faces,
+    cold blue dark beyond, a held breath. Every figure in the scene is an anthropomorphic animal in worn frontier clothes,
+    with animal heads, fur and tails.
+  card: hollis-the-caravan-at-the-fire
+- key: shifting-lands-11-travelers-hollis-the-captains-contract
+  entity: scenery
+  title: The Captain's Contract - own card (hollis)
+  size: 1344x768
+  seed: 51021
+  task: t-053
+  prompt_prose: Inside a log stockade office at dusk, a warden captain, a heavyset boar in a dark uniform coat, turns a paper
+    and a pen to face a lean jackal raider mother across a rough table. Through the open door, beyond the palisade, a road
+    crowded with refugee wagons and lanterns. Lamp light on the paper, cold dusk outside, tension in the stillness between
+    them. Every figure in the scene is an anthropomorphic animal in worn frontier clothes, with animal heads, fur and tails.
+  card: hollis-the-captains-contract
+- key: shifting-lands-11-travelers-hollis-kits-out-of-the-rocks
+  entity: scenery
+  title: Kits Out of the Rocks - personal ending
+  size: 1344x768
+  seed: 51022
+  task: t-053
+  prompt_prose: A green valley beyond a dark mountain pass, a clear creek, and beside it a new stone well with no lid. A lean
+    jackal mother with a notched ear pours a cup of water for a weary traveler, a tortoise with a pack. Three young jackal
+    kits play openly in the grass nearby. Golden evening light, open sky, a calm and earned peace. Every figure in the scene
+    is an anthropomorphic animal in worn frontier clothes, with animal heads, fur and tails.
+  asset: shifting-lands/endings/hollis-kits-out-of-the-rocks
+- key: shifting-lands-11-travelers-hollis-everyone-fed-nobody-together
+  entity: scenery
+  title: Everyone Fed, Nobody Together - personal ending
+  size: 1344x768
+  seed: 51023
+  task: t-053
+  prompt_prose: A lonely road at dusk beside a stone yard, where a lean jackal mother in a work apron has set down a heavy
+    block and turned her head toward the empty road, as if she heard a whistle. Three jackal kits sit on a low wall eating
+    bread. Long violet shadows, a single lantern, warmth and loneliness at once. Every figure in the scene is an anthropomorphic
+    animal in worn frontier clothes, with animal heads, fur and tails.
+  asset: shifting-lands/endings/hollis-everyone-fed-nobody-together
+- key: shifting-lands-11-travelers-hollis-holder-of-the-crossings
+  entity: scenery
+  title: Holder of the Crossings - personal ending
+  size: 1344x768
+  seed: 51024
+  task: t-053
+  prompt_prose: A fortified river crossing beyond black volcanic hills, with a timber gate and a guard platform. A jackal
+    mother in a fitted warden coat sits on the platform above a line of waiting refugee families, and beside her a young jackal
+    girl sits calmly with a rifle across her knees. Hard white noon light, deep shadows, order that feels cold. Every figure
+    in the scene is an anthropomorphic animal in worn frontier clothes, with animal heads, fur and tails.
+  asset: shifting-lands/endings/hollis-holder-of-the-crossings
+- key: shifting-lands-11-travelers-sister-wren
+  entity: character
+  title: Sister Wren - traveler portrait
+  size: 1152x896
+  seed: 51025
+  task: t-053
+  prompt_prose: 'Waist-up portrait of a young river otter novice with soft brown fur, a gentle round face and wide frightened
+    eyes. She wears a plain grey wool habit, frayed at the cuffs and dusty at the hem, with a white collar gone dingy and
+    a short veil pushed back. An old iron key hangs from a cord at her belt and her paws are clasped tight to stop them shaking.
+    Behind her, a dry frontier road at dusk. Mood: fear and resolve together, quiet courage. Every figure in the scene is
+    an anthropomorphic animal in worn frontier clothes, with animal heads, fur and tails.'
+  asset: shifting-lands/portraits/sister-wren
+- key: shifting-lands-11-travelers-two-sisters-at-the-windlass
+  entity: scenery
+  title: Two Sisters at the Windlass - own card (sister-wren)
+  size: 1344x768
+  seed: 51026
+  task: t-053
+  prompt_prose: A stone well with a wooden windlass on dry frontier ground in the afternoon. By the well, an older otter nun
+    in a grey habit lowers a bucket beside a mule and water cart, while a small novice in grey stands with her paws in her
+    sleeves. In the foreground, seen from behind, a young otter crouches behind a wooden trough, a rolled sack clutched to
+    her chest. Harsh sun, dust, held breath, quiet danger. Every figure in the scene is an anthropomorphic animal in worn
+    frontier clothes, with animal heads, fur and tails.
+  card: two-sisters-at-the-windlass
+- key: shifting-lands-11-travelers-the-sister-house-barge
+  entity: scenery
+  title: The Sister House Barge - own card (sister-wren)
+  size: 1344x768
+  seed: 51027
+  task: t-053
+  prompt_prose: A muddy river landing at dusk. A flat wooden barge with a small bell shape burned into its bow is moored at
+    the dock; two small calm children with paper tags on their coats sit on its deck. On the dock an elderly otter nun in
+    grey smiles and holds out her paws. Facing her, seen from behind, a young otter in a dusty grey habit stands rigid. Brown
+    water, lantern glow, dread. Every figure in the scene is an anthropomorphic animal in worn frontier clothes, with animal
+    heads, fur and tails.
+  card: the-sister-house-barge
+- key: shifting-lands-11-travelers-a-draft-that-smells-of-wax
+  entity: scenery
+  title: A Draft That Smells of Wax - own card (sister-wren)
+  size: 1344x768
+  seed: 51028
+  task: t-053
+  prompt_prose: Deep underground at a crossroads of stone passages, lit by one small lamp. A narrow cut stair descends into
+    warm darkness, with a faint glow and drifting candle smoke rising from below. A child's chalk arrow on the wall points
+    down. In the foreground, seen from beside, a young otter in a grey habit holds an old iron key toward a rusted gate across
+    the stair. Cold blues against warm amber, eerie stillness. Every figure in the scene is an anthropomorphic animal in worn
+    frontier clothes, with animal heads, fur and tails.
+  card: a-draft-that-smells-of-wax
+- key: shifting-lands-11-travelers-a-habit-still-worth-something
+  entity: scenery
+  title: A Habit Still Worth Something - own card (sister-wren)
+  size: 1344x768
+  seed: 51029
+  task: t-053
+  prompt_prose: Inside a long canvas field tent at a fortified frontier camp at night. Three cots in lantern light. A young
+    otter in a frayed grey habit kneels beside a wounded badger soldier, holding his paw, her head bowed. At the tent flap
+    a weathered coyote sergeant stands with his cap in his paws. Warm low lamplight, deep shadows, solemn tenderness without
+    blood or wounds shown. Every figure in the scene is an anthropomorphic animal in worn frontier clothes, with animal heads,
+    fur and tails.
+  card: a-habit-still-worth-something
+- key: shifting-lands-11-travelers-wren-counting-every-night
+  entity: scenery
+  title: Counting Every Night - personal ending
+  size: 1344x768
+  seed: 51030
+  task: t-053
+  prompt_prose: A farmhouse kitchen at night beyond a dark ridge, lamplit and warm. A young otter woman in a plain brown dress
+    stands at a doorway counting on her fingers as several small children of different species sleep safely in a row of cots.
+    Behind her, a cellar door is nailed shut with rough planks. Soft golden lamplight, deep calm, a hard-won peace. Every
+    figure in the scene is an anthropomorphic animal in worn frontier clothes, with animal heads, fur and tails.
+  asset: shifting-lands/endings/wren-counting-every-night
+- key: shifting-lands-11-travelers-wren-given-here-gone-now
+  entity: scenery
+  title: Given Here, Gone Now - personal ending
+  size: 1344x768
+  seed: 51031
+  task: t-053
+  prompt_prose: 'A small frontier town well at dawn. A young otter in a travel coat with a pack on her back drops a tiny folded
+    scrap of paper into a well bucket, glancing over her shoulder toward a distant chapel roof. The road behind her stretches
+    long and empty into pale morning light. Mood: lonely, free, restless, bittersweet. Every figure in the scene is an anthropomorphic
+    animal in worn frontier clothes, with animal heads, fur and tails.'
+  asset: shifting-lands/endings/wren-given-here-gone-now
+- key: shifting-lands-11-travelers-wren-back-by-vespers
+  entity: scenery
+  title: Back by Vespers - personal ending
+  size: 1344x768
+  seed: 51032
+  task: t-053
+  prompt_prose: 'The quiet courtyard of an adobe convent at sunset under a silent bell tower. A young otter in a crisp clean
+    grey habit and white collar walks with a heavy ring of iron keys at her belt, her face serene and empty, her paws folded
+    neatly. A frightened young novice watches her from a doorway. Warm gold light that feels wrong. Mood: gentle, polished,
+    chilling. Every figure in the scene is an anthropomorphic animal in worn frontier clothes, with animal heads, fur and
+    tails.'
+  asset: shifting-lands/endings/wren-back-by-vespers
+- key: shifting-lands-11-travelers-brother-peddler
+  entity: character
+  title: Brother Peddler - traveler portrait
+  size: 1152x896
+  seed: 51033
+  task: t-053
+  prompt_prose: 'Waist-up portrait of a lean jackrabbit hare with long ears, grey-tan fur and a gentle, tired, clever face.
+    He wears a clean but threadbare black frock coat, a white collar gone yellow, and a little tin bell on a cord around his
+    neck. He holds up a glass jar of water so it catches the sun. Behind him, a sunbaked frontier waystation of four walls
+    and half a roof. Mood: kindly, rueful, not quite trustworthy. Every figure in the scene is an anthropomorphic animal in
+    worn frontier clothes, with animal heads, fur and tails.'
+  asset: shifting-lands/portraits/brother-peddler
+- key: shifting-lands-11-travelers-the-seep-nobody-has-claimed
+  entity: scenery
+  title: The Seep Nobody Has Claimed - own card (brother-peddler)
+  size: 1344x768
+  seed: 51034
+  task: t-053
+  prompt_prose: A cracked dry river delta under a white noon sun, dead reeds standing in grey silt. In a hidden hollow a green
+    seep trickles into a row of glass jars. In the foreground, seen from behind, a hare in a black frock coat with a tin bell
+    at his neck kneels by the jars, looking toward a distant gopher family resting beside a broken wagon on the road. Heat
+    shimmer, dusty light, a quiet temptation. Every figure in the scene is an anthropomorphic animal in worn frontier clothes,
+    with animal heads, fur and tails.
+  card: the-seep-nobody-has-claimed
+- key: shifting-lands-11-travelers-a-sisters-purse-at-the-fence
+  entity: scenery
+  title: A Sister's Purse at the Fence - own card (brother-peddler)
+  size: 1344x768
+  seed: 51035
+  task: t-053
+  prompt_prose: A poor border farm at late afternoon, split-rail fence and a weathered farmhouse. An elderly ewe nun in a
+    grey habit sits on a grey mule by the fence, holding out a small leather purse with a serene smile. Facing her, seen from
+    beside, a hare in a black frock coat with a tin bell at his neck hesitates, one paw half raised. Long amber light, deep
+    shadows, a quiet bargain. Every figure in the scene is an anthropomorphic animal in worn frontier clothes, with animal
+    heads, fur and tails.
+  card: a-sisters-purse-at-the-fence
+- key: shifting-lands-11-travelers-blessed-by-the-brother-himself
+  entity: scenery
+  title: Blessed by the Brother Himself - own card (brother-peddler)
+  size: 1344x768
+  seed: 51036
+  task: t-053
+  prompt_prose: A candle-lit stone hollow deep in a cave, salt barrels and blankets along the walls. A young vole in an oversized
+    black coat holds up a jar of cloudy green water and rings a little tin bell before a line of tired cave folk. At the edge
+    of the crowd, seen from behind, a hare in a black frock coat watches him, recognizing his own act. Flickering amber light,
+    irony and unease. Every figure in the scene is an anthropomorphic animal in worn frontier clothes, with animal heads,
+    fur and tails.
+  card: blessed-by-the-brother-himself
+- key: shifting-lands-11-travelers-the-widow-on-the-black-glass
+  entity: scenery
+  title: The Widow on the Black Glass - own card (brother-peddler)
+  size: 1344x768
+  seed: 51037
+  task: t-053
+  prompt_prose: A road of cracked black volcanic glass under a pale ashen sky. A thin prairie dog mother in a patched dress
+    hauls a wooden handcart heaped with sacks, three calm young ones riding on top. She has stopped and turned round. In the
+    foreground, seen from behind, a hare in a black frock coat stands with one paw in his coat pocket, a tin bell at his neck.
+    Cold light, a reckoning. Every figure in the scene is an anthropomorphic animal in worn frontier clothes, with animal
+    heads, fur and tails.
+  card: the-widow-on-the-black-glass
+- key: shifting-lands-11-travelers-peddler-the-free-jar
+  entity: scenery
+  title: The Free Jar - personal ending
+  size: 1344x768
+  seed: 51038
+  task: t-053
+  prompt_prose: 'A freshly dug stone well in a dusty little frontier town at golden evening. A hare in a worn black frock
+    coat, sleeves rolled and fur muddy to the elbows, rings a small tin bell over the bucket as a young fox kit drinks from
+    a tin cup, calm and happy. Simple wooden houses behind. Warm sunset light. Mood: earned, humble joy. Every figure in the
+    scene is an anthropomorphic animal in worn frontier clothes, with animal heads, fur and tails.'
+  asset: shifting-lands/endings/peddler-the-free-jar
+- key: shifting-lands-11-travelers-peddler-both
+  entity: scenery
+  title: Both - personal ending
+  size: 1344x768
+  seed: 51039
+  task: t-053
+  prompt_prose: 'A frontier road at dusk with a small folding table of glass jars that catch the last light. A hare in a black
+    frock coat with a tin bell at his neck kneels to hand a jar to a small calm raccoon kit, his face caught between a salesman''s
+    smile and real tenderness. Purple and orange sky. Mood: bittersweet, ambiguous, warm. Every figure in the scene is an
+    anthropomorphic animal in worn frontier clothes, with animal heads, fur and tails.'
+  asset: shifting-lands/endings/peddler-both
+- key: shifting-lands-11-travelers-peddler-the-sisters-brother
+  entity: scenery
+  title: The Sisters' Brother - personal ending
+  size: 1344x768
+  seed: 51040
+  task: t-053
+  prompt_prose: 'A strange town square at twilight. A hare in an immaculate black frock coat rings a little tin bell, gesturing
+    toward a distant hill where a pale convent sits with lit windows. He holds a heavy leather purse. His jars are sealed
+    with black wax. A worried mother rabbit listens. Cold blue light, polished and wrong. Mood: quiet complicity, dread. Every
+    figure in the scene is an anthropomorphic animal in worn frontier clothes, with animal heads, fur and tails.'
+  asset: shifting-lands/endings/peddler-the-sisters-brother
+- key: shifting-lands-11-travelers-old-ash
+  entity: character
+  title: Old Ash - traveler portrait
+  size: 1152x896
+  seed: 51041
+  task: t-053
+  prompt_prose: Waist-up portrait of an elderly crow witch with ragged glossy black feathers dusted pale grey with old ash
+    at the wing tips, one sharp dark eye and one filmed silver. She wears a battered wide-brimmed black hat gone soft with
+    weather, a long patched black shawl over a faded grey dress, and a string of small cloudy glass beads wound round her
+    neck. She perches on a dead branch above a desert crossroads at dusk under a thin moon, cold violet light, the mood watchful,
+    tired and dryly amused. Every figure in the scene is an anthropomorphic animal in worn frontier clothes, with animal heads,
+    fur and tails.
+  asset: shifting-lands/portraits/old-ash
+- key: shifting-lands-11-travelers-a-feather-under-glass
+  entity: scenery
+  title: A Feather Under Glass - own card (old-ash)
+  size: 1344x768
+  seed: 51042
+  task: t-053
+  prompt_prose: Inside a dim frontier trading post with bare shelves and a long scarred counter, a single black feather lies
+    under a glass dome in a slant of dusty afternoon light. An old crow witch in a black shawl and a string of glass beads
+    stands at the counter, one wing half spread to show a gap among her flight feathers, beside a gaunt otter father in a
+    patched coat holding his hat. Muted browns and greys, the mood tense and quiet. Every figure in the scene is an anthropomorphic
+    animal in worn frontier clothes, with animal heads, fur and tails.
+  card: a-feather-under-glass
+- key: shifting-lands-11-travelers-a-reading-for-the-abbess
+  entity: scenery
+  title: A Reading for the Abbess - own card (old-ash)
+  size: 1344x768
+  seed: 51043
+  task: t-053
+  prompt_prose: A stone refuge gateway at evening, warm lamplight spilling from a long table set with bread and a cup of milk.
+    An elderly otter abbess in a black habit and white wimple smiles in the doorway with perfect manners. An old crow witch
+    in a battered black hat stands in the foreground seen from behind, her head tilted, studying the abbess. Behind them a
+    small chapel bell hangs with no clapper. Uneasy, gentle, candlelit. Every figure in the scene is an anthropomorphic animal
+    in worn frontier clothes, with animal heads, fur and tails.
+  card: a-reading-for-the-abbess
+- key: shifting-lands-11-travelers-someone-on-your-old-perch
+  entity: scenery
+  title: Someone on Your Old Perch - own card (old-ash)
+  size: 1344x768
+  seed: 51044
+  task: t-053
+  prompt_prose: A dead white tree at a fork in a red canyon trail at hard noon. On its high branch sits a young crow with
+    cave-grey flight feathers and a too-big black shawl, reaching toward a weary ox drover below. On the lowest branch, seen
+    from behind, an old crow witch with ash-grey wing tips and a battered hat watches her. Long blue shadows, heat shimmer,
+    dust, the mood of the old meeting the young. Every figure in the scene is an anthropomorphic animal in worn frontier clothes,
+    with animal heads, fur and tails.
+  card: someone-on-your-old-perch
+- key: shifting-lands-11-travelers-the-coven-keeps-a-stool
+  entity: scenery
+  title: The Coven Keeps a Stool - own card (old-ash)
+  size: 1344x768
+  seed: 51045
+  task: t-053
+  prompt_prose: The mouth of a deep limestone cave during a hailstorm, white hail bouncing on the rocks outside. Three crow
+    witches in black shawls sit on low stools in a row around a small lamp, and a fourth stool stands empty. The eldest holds
+    out a blank leather ledger. An old crow with ash-grey wing tips stands dripping at the threshold, seen from beside. Cold
+    blue storm light against warm lamp gold, solemn and still. Every figure in the scene is an anthropomorphic animal in worn
+    frontier clothes, with animal heads, fur and tails.
+  card: the-coven-keeps-a-stool
+- key: shifting-lands-11-travelers-ash-price-said-first
+  entity: scenery
+  title: The Price Said First - personal ending
+  size: 1344x768
+  seed: 51046
+  task: t-053
+  prompt_prose: A new crossroads beyond a dark volcanic ridge at spring dawn, where a small crooked thorn tree has just leafed
+    out. An old crow witch with ash-grey wing tips and no string of beads sits on a fence rail beside it, talking with a young
+    cave-grey crow who listens carefully. Soft pink and gold light, green shoots in black soil, the mood patient, hopeful
+    and plain. Every figure in the scene is an anthropomorphic animal in worn frontier clothes, with animal heads, fur and
+    tails.
+  asset: shifting-lands/endings/ash-price-said-first
+- key: shifting-lands-11-travelers-ash-paid-in-full
+  entity: scenery
+  title: Paid in Full - personal ending
+  size: 1344x768
+  seed: 51047
+  task: t-053
+  prompt_prose: A weathered barn loft on a frontier homestead at early morning. An old crow with ash-grey wing tips roosts
+    on a beam, looking out the open loft door at the sky as if trying to remember something. Below, a small calm rabbit child
+    holds up a heel of bread to her. Dusty gold light through the boards, hay, the mood gentle, quiet and a little lost. Every
+    figure in the scene is an anthropomorphic animal in worn frontier clothes, with animal heads, fur and tails.
+  asset: shifting-lands/endings/ash-paid-in-full
+- key: shifting-lands-11-travelers-ash-a-full-string
+  entity: scenery
+  title: A Full String - personal ending
+  size: 1344x768
+  seed: 51048
+  task: t-053
+  prompt_prose: A busy crossroads on black volcanic glass under a bruised green dusk sky. An old crow witch sits on a tall
+    iron stool, a long string of glowing glass beads wound three times round her neck, her face calm and well fed. A thin
+    young crow in a grey shawl stands before her with an empty, puzzled look. Lantern light, long shadows, the mood cold and
+    quietly wrong. Every figure in the scene is an anthropomorphic animal in worn frontier clothes, with animal heads, fur
+    and tails.
+  asset: shifting-lands/endings/ash-a-full-string
+- key: shifting-lands-11-travelers-hester-kell
+  entity: character
+  title: Hester Kell - traveler portrait
+  size: 1152x896
+  seed: 51049
+  task: t-053
+  prompt_prose: Waist-up portrait of a broad, steady badger bounty hunter in her fifties, grey and black striped face with
+    a white blaze, a wide-brimmed brown hat, a long belted brown duster, a coil of rope at her hip, leather gloves, a sealed
+    writ tucked in her coat and a small worn notebook in one paw. Grey dawn mist over a river ferry landing behind her. Patient,
+    unreadable expression. Every figure in the scene is an anthropomorphic animal in worn frontier clothes, with animal heads,
+    fur and tails.
+  asset: shifting-lands/portraits/hester-kell
+- key: shifting-lands-11-travelers-the-writ-read-at-the-landing
+  entity: scenery
+  title: The Writ Read at the Landing - own card (hester-kell)
+  size: 1344x768
+  seed: 51050
+  task: t-053
+  prompt_prose: Dawn at a plank river ferry landing, mist on brown water. A broad badger bounty hunter in a brown duster and
+    wide hat reads aloud from an unfolded sealed paper laid on a barrel head. A wiry ferry pilot listens with his arms crossed,
+    and behind him his wife has stopped coiling a rope, watching. Cool grey light, quiet tension, a flat ferry raft tied up.
+    Every figure in the scene is an anthropomorphic animal in worn frontier clothes, with animal heads, fur and tails.
+  card: the-writ-read-at-the-landing
+- key: shifting-lands-11-travelers-supper-before-the-writ
+  entity: scenery
+  title: Supper Before the Writ - own card (hester-kell)
+  size: 1344x768
+  seed: 51051
+  task: t-053
+  prompt_prose: A plain farmhouse kitchen at night, lamplight on a rough table set for supper. A broad badger in a brown duster
+    sits at one end with a satchel by her chair. Across from her a worried farmer and his wife, and three small kits calmly
+    eating their bread. A cast-iron stove glows. Warm light, long silences, a folded paper half out of the satchel. Every
+    figure in the scene is an anthropomorphic animal in worn frontier clothes, with animal heads, fur and tails.
+  card: supper-before-the-writ
+- key: shifting-lands-11-travelers-the-companys-runaway
+  entity: scenery
+  title: The Company's Runaway - own card (hester-kell)
+  size: 1344x768
+  seed: 51052
+  task: t-053
+  prompt_prose: The rim of a stone quarry at midday, terraced ledges dropping away into dust. A badger bounty hunter in a
+    brown duster stands beside a thin clerk holding out a sealed paper. Far below on a ledge a young boy splits stone with
+    a mallet, calm and absorbed, a family's washing line nearby. Harsh white light, deep shadows, a hard choice. Every figure
+    in the scene is an anthropomorphic animal in worn frontier clothes, with animal heads, fur and tails.
+  card: the-companys-runaway
+- key: shifting-lands-11-travelers-the-coyote-at-last
+  entity: scenery
+  title: The Coyote at Last - own card (hester-kell)
+  size: 1344x768
+  seed: 51053
+  task: t-053
+  prompt_prose: A fortified frontier camp at dusk, log palisade and a shuttered infirmary. A thin one-eyed coyote in a green
+    coat stands up from an upturned bucket, hat in his paws, paws open. Facing him, seen from behind, a broad badger in a
+    brown duster and wide hat, a sealed writ in her gloved paw. Smoke from watchfires, orange sky, stillness. Every figure
+    in the scene is an anthropomorphic animal in worn frontier clothes, with animal heads, fur and tails.
+  card: the-coyote-at-last
+- key: shifting-lands-11-travelers-hester-the-writ-turned-round
+  entity: scenery
+  title: The Writ Turned Round - personal ending
+  size: 1344x768
+  seed: 51054
+  task: t-053
+  prompt_prose: A frontier magistrate's office at night, a single lamp on a desk covered in papers. A broad badger in a brown
+    duster stands at the desk, setting a thick worn notebook beside a newly sealed writ, while a grey-furred magistrate presses
+    wax with her seal. Through the window, a town past a black stone wall. Warm lamplight, quiet resolve, the weight of paper.
+    Every figure in the scene is an anthropomorphic animal in worn frontier clothes, with animal heads, fur and tails.
+  asset: shifting-lands/endings/hester-the-writ-turned-round
+- key: shifting-lands-11-travelers-hester-the-last-line-in-the-book
+  entity: scenery
+  title: The Last Line in the Book - personal ending
+  size: 1344x768
+  seed: 51055
+  task: t-053
+  prompt_prose: A badger in shirtsleeves sits on a fence rail at sunset beside a mended fence, a worn notebook open on her
+    knee, a pencil in her paw, her old duster and coil of rope hung on a post nearby. Wide dry fields, a small farmhouse,
+    long gold light. A mood of rest that has not quite become peace. Every figure in the scene is an anthropomorphic animal
+    in worn frontier clothes, with animal heads, fur and tails.
+  asset: shifting-lands/endings/hester-the-last-line-in-the-book
+- key: shifting-lands-11-travelers-hester-a-good-writ
+  entity: scenery
+  title: A Good Writ - personal ending
+  size: 1344x768
+  seed: 51056
+  task: t-053
+  prompt_prose: A neat parlor in a company town, morning light through a window that looks out on a quarry road. On the mantel
+    a row of identical worn notebooks. A badger in a fine brown coat stands at the window with a pen in her paw, watching
+    a small figure walk calmly toward the quarry. Clean, orderly, cold. Every figure in the scene is an anthropomorphic animal
+    in worn frontier clothes, with animal heads, fur and tails.
+  asset: shifting-lands/endings/hester-a-good-writ
+- key: shifting-lands-11-travelers-gideon-vane
+  entity: character
+  title: Gideon Vane - traveler portrait
+  size: 1152x896
+  seed: 51057
+  task: t-053
+  prompt_prose: Waist-up portrait of a tall, gaunt pronghorn in his fifties, tan and white coat with dark face markings and
+    black horns, wearing a once-fine black frock coat gone dusty and frayed over a grey waistcoat and a loosened string tie,
+    a folded deed showing at his breast pocket. Behind him a river ferry landing at dusk and a dry water town across the water.
+    Shame and resolve in his face. Every figure in the scene is an anthropomorphic animal in worn frontier clothes, with animal
+    heads, fur and tails.
+  asset: shifting-lands/portraits/gideon-vane
+- key: shifting-lands-11-travelers-the-deed-in-your-coat
+  entity: scenery
+  title: The Deed in Your Coat - own card (gideon-vane)
+  size: 1344x768
+  seed: 51058
+  task: t-053
+  prompt_prose: A flat ferry raft halfway across a brown river at dusk. In the foreground, seen from behind, a gaunt pronghorn
+    in a dusty black frock coat grips a folded deed against his chest. On the landing behind, a lean weasel foreman with a
+    ring of keys on his belt shouts and points, a small crowd watching. Orange sky, long reflections, a town of water towers
+    beyond. Every figure in the scene is an anthropomorphic animal in worn frontier clothes, with animal heads, fur and tails.
+  card: the-deed-in-your-coat
+- key: shifting-lands-11-travelers-the-benefactors-plate
+  entity: scenery
+  title: The Benefactor's Plate - own card (gideon-vane)
+  size: 1344x768
+  seed: 51059
+  task: t-053
+  prompt_prose: Night outside a walled mission, iron gates open on a lantern-lit courtyard. A polished brass plate gleams
+    on the stone gatepost. An otter sister in a dark habit waits with folded paws and a gentle smile. In the foreground, seen
+    from behind, a gaunt pronghorn in a black frock coat stops short at the gate. Deep blue night, warm lanterns, uneasy calm.
+    Every figure in the scene is an anthropomorphic animal in worn frontier clothes, with animal heads, fur and tails.
+  card: the-benefactors-plate
+- key: shifting-lands-11-travelers-eleven-candles-and-one
+  entity: scenery
+  title: Eleven Candles and One - own card (gideon-vane)
+  size: 1344x768
+  seed: 51060
+  task: t-053
+  prompt_prose: A rock niche deep in a cave court lit only by candles. Eleven short candles stand in a row, behind them one
+    tall candle dripping black wax. A crow clerk in a shawl holds out a brass snuffer. Kneeling before the niche, seen from
+    the side, a gaunt pronghorn in a frayed black coat stares at the flames. Close darkness, small warm lights, hush. Every
+    figure in the scene is an anthropomorphic animal in worn frontier clothes, with animal heads, fur and tails.
+  card: eleven-candles-and-one
+- key: shifting-lands-11-travelers-a-cup-from-her-line
+  entity: scenery
+  title: A Cup From Her Line - own card (gideon-vane)
+  size: 1344x768
+  seed: 51061
+  task: t-053
+  prompt_prose: A stone gate at the edge of a black wasteland, a long line of tired travelers waiting in hard sunlight. A
+    teenage otter girl in a grey apron ladles water from a barrel into a tin cup, calm and steady. Before her stands a gaunt
+    pronghorn in a frayed black frock coat, a folded deed in his pocket, head lowered. Glare, dust, stillness. Every figure
+    in the scene is an anthropomorphic animal in worn frontier clothes, with animal heads, fur and tails.
+  card: a-cup-from-her-line
+- key: shifting-lands-11-travelers-gideon-the-water-goes-home
+  entity: scenery
+  title: The Water Goes Home - personal ending
+  size: 1344x768
+  seed: 51062
+  task: t-053
+  prompt_prose: A newly dug stone well in a poor dry town at evening, a bucket and a key hanging on a nail beside it. A gaunt
+    pronghorn in shirtsleeves, older and thinner, scratches a name into the first stone with a chisel while a few young children
+    wait calmly with cups. Gold low light, plain houses, a sense of debts being paid one by one. Every figure in the scene
+    is an anthropomorphic animal in worn frontier clothes, with animal heads, fur and tails.
+  asset: shifting-lands/endings/gideon-the-water-goes-home
+- key: shifting-lands-11-travelers-gideon-the-plate-in-the-ditch
+  entity: scenery
+  title: The Plate in the Ditch - personal ending
+  size: 1344x768
+  seed: 51063
+  task: t-053
+  prompt_prose: A tumbledown shed behind a town water trough at dawn. A gaunt elderly pronghorn in a worn black coat stands
+    in the doorway, waiting, a dented brass plate propped against the wall beside him. The street is empty. Pale cold light,
+    dust, a mood of patient penance with no answer coming. Every figure in the scene is an anthropomorphic animal in worn
+    frontier clothes, with animal heads, fur and tails.
+  asset: shifting-lands/endings/gideon-the-plate-in-the-ditch
+- key: shifting-lands-11-travelers-gideon-the-spring-flows
+  entity: scenery
+  title: The Spring Flows - personal ending
+  size: 1344x768
+  seed: 51064
+  task: t-053
+  prompt_prose: A comfortable office above a frontier water house, a gaunt pronghorn in a fine new black coat sits in a padded
+    chair by the window, a full glass of water beside him. Outside, far down the road, a covered wagon with its canvas tied
+    down rolls toward a distant mission. He is not looking at it. Rich lamplight, heavy curtains, quiet rot. Every figure
+    in the scene is an anthropomorphic animal in worn frontier clothes, with animal heads, fur and tails.
+  asset: shifting-lands/endings/gideon-the-spring-flows
+- key: shifting-lands-11-travelers-tamsin
+  entity: character
+  title: Tamsin - traveler portrait
+  size: 1152x896
+  seed: 51065
+  task: t-053
+  prompt_prose: Waist-up portrait of Tamsin, a lean female bighorn sheep guide with short curled horns and a weathered tan
+    coat of fur, wearing a ragged wool poncho over a patched work shirt, a frayed felt hat, and a canvas pack heavy with flat
+    stones. Steady, wary eyes that miss nothing. Behind her, a narrow canyon ledge with a single stacked cairn and two small
+    lambs resting in the shade of a rock. Clear high-desert morning light, dust on everything. Every figure in the scene is
+    an anthropomorphic animal in worn frontier clothes, with animal heads, fur and tails.
+  asset: shifting-lands/portraits/tamsin
+- key: shifting-lands-11-travelers-tamsin-the-foremans-offer
+  entity: scenery
+  title: The Foreman's Offer - own card (tamsin)
+  size: 1344x768
+  seed: 51066
+  task: t-053
+  prompt_prose: The rim of a stone quarry above deep canyon forks, a slate debt board nailed to a shed with names chalked
+    in rows. A bighorn ewe guide in a ragged poncho stands seen from beside, facing a burly foreman, a bull in shirtsleeves
+    and a company cap, who points down into the canyons. Two hard-faced catchers with coiled ropes wait nearby. Harsh noon
+    light, pale rock dust, heavy silence. Every figure in the scene is an anthropomorphic animal in worn frontier clothes,
+    with animal heads, fur and tails.
+  card: tamsin-the-foremans-offer
+- key: shifting-lands-11-travelers-tamsin-the-agents-list
+  entity: scenery
+  title: The Agent's List - own card (tamsin)
+  size: 1344x768
+  seed: 51067
+  task: t-053
+  prompt_prose: A muddy river ferry landing at dawn, a flat raft tied to pilings, and a prim clerk, a heron in a buttoned
+    coat, seated at a small folding table with a long paper list. A bighorn ewe in a ragged poncho stands before the table,
+    seen from behind, with a young lamb daughter reading the list at her side and a smaller lamb on her hip. Grey mist, cold
+    light, quiet dread. Every figure in the scene is an anthropomorphic animal in worn frontier clothes, with animal heads,
+    fur and tails.
+  card: tamsin-the-agents-list
+- key: shifting-lands-11-travelers-tamsin-small-cairns-in-the-dark
+  entity: scenery
+  title: Small Cairns in the Dark - own card (tamsin)
+  size: 1344x768
+  seed: 51068
+  task: t-053
+  prompt_prose: A cavern crossroads where several tunnels meet, lit by one small lamp held low by a bighorn ewe guide in a
+    ragged poncho, seen from behind as she crouches. At the mouth of each tunnel stands a tiny knee-high cairn of stacked
+    stones, and one stone set on its edge alone. The far tunnel fades into black. Deep shadow, warm lamplight on stone, a
+    held breath. Every figure in the scene is an anthropomorphic animal in worn frontier clothes, with animal heads, fur and
+    tails.
+  card: tamsin-small-cairns-in-the-dark
+- key: shifting-lands-11-travelers-tamsin-no-cairns-on-the-glass
+  entity: scenery
+  title: No Cairns on the Glass - own card (tamsin)
+  size: 1344x768
+  seed: 51069
+  task: t-053
+  prompt_prose: A wide field of fresh black volcanic glass crossing a road, faint heat shimmer rising, smoke on the horizon.
+    A bighorn ewe guide in a ragged poncho walks onto the glass with a long staff, testing the crust, while her young lamb
+    daughter carries a small stack of stones a careful distance behind. A line of refugee families waits at the edge. Dusky
+    orange light, grave and patient. Every figure in the scene is an anthropomorphic animal in worn frontier clothes, with
+    animal heads, fur and tails.
+  card: tamsin-no-cairns-on-the-glass
+- key: shifting-lands-11-travelers-tamsin-every-cairn-standing
+  entity: scenery
+  title: Every Cairn Standing - personal ending
+  size: 1344x768
+  seed: 51070
+  task: t-053
+  prompt_prose: A green mountain valley beyond a dark pass, a clear trail winding down it marked by neat stacked cairns. A
+    bighorn ewe guide in a mended poncho sets the top stone on a fresh cairn while her daughter, a young lamb, holds the next
+    stone ready and a small lamb brother sits nearby counting pebbles. Soft golden morning light, wide open sky, quiet satisfaction.
+    Every figure in the scene is an anthropomorphic animal in worn frontier clothes, with animal heads, fur and tails.
+  asset: shifting-lands/endings/tamsin-every-cairn-standing
+- key: shifting-lands-11-travelers-tamsin-paid-late
+  entity: scenery
+  title: Paid, Late - personal ending
+  size: 1344x768
+  seed: 51071
+  task: t-053
+  prompt_prose: A small timber house at the edge of high passes, evening light. A bighorn ewe in a work coat sits on the front
+    step holding an opened letter, head thrown back, laughing. In the doorway her daughter, a half-grown lamb, leans out to
+    see what is the matter. Wagons wind along a pass in the distance. Warm amber light, long shadows, relief and tiredness
+    together. Every figure in the scene is an anthropomorphic animal in worn frontier clothes, with animal heads, fur and
+    tails.
+  asset: shifting-lands/endings/tamsin-paid-late
+- key: shifting-lands-11-travelers-tamsin-the-companys-guide
+  entity: scenery
+  title: The Company's Guide - personal ending
+  size: 1344x768
+  seed: 51072
+  task: t-053
+  prompt_prose: A raw new quarry cut in black hills, company tents and a debt board. A bighorn ewe in a dark company coat
+    with brass buttons kneels beside a tiny cairn in a canyon fork, pointing out the way to two mounted catchers with coiled
+    ropes. Behind her, her daughter, a half-grown lamb in a matching small coat, watches calmly and carefully. Cold overcast
+    light, flat and grey. Every figure in the scene is an anthropomorphic animal in worn frontier clothes, with animal heads,
+    fur and tails.
+  asset: shifting-lands/endings/tamsin-the-companys-guide
+- key: shifting-lands-11-travelers-augustin
+  entity: character
+  title: Augustin - traveler portrait
+  size: 1152x896
+  seed: 51073
+  task: t-053
+  prompt_prose: Waist-up portrait of a huge silverback gorilla with a grey-streaked back, a broad scarred brow and gentle,
+    tired brown eyes. He wears a faded blue work shirt with the sleeves torn off at the shoulder, an old leather vest, and
+    pale rings of scar round both thick wrists where iron cuffs once sat. He holds a battered flat cap against his chest in
+    both enormous hands. Behind him a dusty frontier road runs into golden evening light. The mood is quiet, gentle and weary.
+    Every figure in the scene is an anthropomorphic animal in worn frontier clothes, with animal heads, fur and tails.
+  asset: shifting-lands/portraits/augustin
+- key: shifting-lands-11-travelers-a-big-back-for-hire
+  entity: scenery
+  title: A Big Back for Hire - own card (augustin)
+  size: 1344x768
+  seed: 51074
+  task: t-053
+  prompt_prose: A weathered homestead shack at dusk on a dry frontier farm. In the doorway stands a lean stoat widow in a
+    patched apron holding an iron skillet, with three small calm kits peeking from behind her skirts. Beside her, filling
+    the rest of the door from post to post, stands a huge silverback gorilla in a sleeveless work shirt, arms folded, seen
+    from the side. A clean-coated collector waits by a wagon. Long blue shadows. Every figure in the scene is an anthropomorphic
+    animal in worn frontier clothes, with animal heads, fur and tails.
+  card: a-big-back-for-hire
+- key: shifting-lands-11-travelers-your-face-on-the-old-bill
+  entity: scenery
+  title: Your Face on the Old Bill - own card (augustin)
+  size: 1344x768
+  seed: 51075
+  task: t-053
+  prompt_prose: The inside of a lamp-smoked frontier trading post, a yellowed fight bill with a woodcut of a giant gorilla
+    nailed behind the counter, shown without legible lettering. A young hare, lanky and barely grown, in a too-big shirt stands
+    looking up at a real silverback gorilla who has to stoop under the low beams. Dusty window light, worn floorboards, the
+    mood hopeful and uneasy. Every figure in the scene is an anthropomorphic animal in worn frontier clothes, with animal
+    heads, fur and tails.
+  card: your-face-on-the-old-bill
+- key: shifting-lands-11-travelers-the-lintel-over-adit-four
+  entity: scenery
+  title: The Lintel Over Adit Four - own card (augustin)
+  size: 1344x768
+  seed: 51076
+  task: t-053
+  prompt_prose: The mouth of a quarry adit cut into pale stone, dust billowing out of the dark. A huge silverback gorilla
+    braces a cracked timber lintel on his back and shoulders, knees bent, while a dusty miner crawls out beneath his arm.
+    Up the spoil heap behind a rope line, a few small calm children watch, safe at a distance. Harsh white noon light, grey
+    dust, the mood straining and brave. Every figure in the scene is an anthropomorphic animal in worn frontier clothes, with
+    animal heads, fur and tails.
+  card: the-lintel-over-adit-four
+- key: shifting-lands-11-travelers-madam-ferrules-iron-ring
+  entity: scenery
+  title: Madam Ferrule's Iron Ring - own card (augustin)
+  size: 1344x768
+  seed: 51077
+  task: t-053
+  prompt_prose: A ring of rusted iron stakes inside a fortified frontier camp at night, lit by torches on poles. A sleek mink
+    in a red brocade coat stands at its gate holding a purse and smiling. Inside the ring a thin, shaking deserter in a torn
+    coat waits. In the foreground, seen from behind, a huge silverback gorilla stands at the edge of the iron, deciding. Orange
+    torchlight, smoke, tense and loud. Every figure in the scene is an anthropomorphic animal in worn frontier clothes, with
+    animal heads, fur and tails.
+  card: madam-ferrules-iron-ring
+- key: shifting-lands-11-travelers-augustin-shoulders-for-the-small
+  entity: scenery
+  title: Shoulders for the Small - personal ending
+  size: 1344x768
+  seed: 51078
+  task: t-053
+  prompt_prose: A road crossing a dark volcanic ridge at sunrise into green country beyond. A huge silverback gorilla walks
+    toward the light with a young pangolin girl sitting calm and upright on his shoulders, her small hands resting on his
+    head. His flat cap is in his hand. Warm gold light, long shadows behind them, the mood quiet, relieved and hopeful. Every
+    figure in the scene is an anthropomorphic animal in worn frontier clothes, with animal heads, fur and tails.
+  asset: shifting-lands/endings/augustin-shoulders-for-the-small
+- key: shifting-lands-11-travelers-augustin-kept-the-vow
+  entity: scenery
+  title: Kept the Vow - personal ending
+  size: 1344x768
+  seed: 51079
+  task: t-053
+  prompt_prose: An empty frontier schoolroom in late afternoon, a slate on a desk with a name in careful chalk shown without
+    legible letters. A huge silverback gorilla stands on a low ladder mending a hole in the roof boards, sunlight falling
+    through the gap onto the rows of small empty benches. Dust motes, soft amber light, the mood tender and sad. Every figure
+    in the scene is an anthropomorphic animal in worn frontier clothes, with animal heads, fur and tails.
+  asset: shifting-lands/endings/augustin-kept-the-vow
+- key: shifting-lands-11-travelers-augustin-the-iron-saint-returns
+  entity: scenery
+  title: The Iron Saint Returns - personal ending
+  size: 1344x768
+  seed: 51080
+  task: t-053
+  prompt_prose: A tall new ring of black iron stakes under hard lantern light, a roaring blur of a crowd beyond it. A huge
+    silverback gorilla with grey in his fur stands alone in the middle, fists loose, looking toward the open iron gate, where
+    a sleek mink in red brocade counts coins. Smoke, harsh shadows, the mood heavy, hollow and wrong. Every figure in the
+    scene is an anthropomorphic animal in worn frontier clothes, with animal heads, fur and tails.
+  asset: shifting-lands/endings/augustin-the-iron-saint-returns
+- key: shifting-lands-11-travelers-bighorn
+  entity: character
+  title: Bighorn sheep traveler - custom species portrait
+  size: 1152x896
+  seed: 51081
+  task: t-052
+  prompt_prose: Late afternoon on a high red-rock ledge above a canyon. A sure-footed bighorn sheep traveler stands half-turned
+    toward the viewer, heavy curled horns, tawny coat and pale muzzle, calm steady eyes. They wear a dusty canvas duster over
+    a wool vest, a coiled rope over one shoulder and a walking staff in one hoof-hand. Wind tugs at a faded neckerchief. Warm
+    side light, long shadows, quietly capable mood, waist-up, the figure centered and filling the frame. Every figure in the
+    scene is an anthropomorphic animal in worn frontier clothes, with animal heads, fur and tails.
+  asset: shifting-lands/portraits/bighorn
+- key: shifting-lands-11-travelers-gorilla
+  entity: character
+  title: Gorilla traveler - custom species portrait
+  size: 1152x896
+  seed: 51082
+  task: t-052
+  prompt_prose: Dusk on a black-glass road under a violet sky. A broad, gentle gorilla traveler stands facing the viewer,
+    silver-grey fur on the shoulders, thoughtful dark eyes, a patched long coat straining across the back, rolled shirt sleeves
+    and a canvas satchel. One huge hand rests open at their side, the other holds a lantern low. No weapons. Soft lantern
+    light on the face, calm and patient mood, waist-up, the figure centered and filling the frame. Every figure in the scene
+    is an anthropomorphic animal in worn frontier clothes, with animal heads, fur and tails.
+  asset: shifting-lands/portraits/gorilla
