@@ -25,7 +25,7 @@ ROOT = Path(__file__).resolve().parents[3]
 ART_DIR = Path(__file__).resolve().parent
 # Round 18 is the 196-subject Western Cartoon forced rerender. Its rows
 # intentionally start without job/image fields; insert them only with evidence.
-ROUNDS = (13, 14, 15, 17, 18)
+ROUNDS = (13, 14, 15, 17, 18, 19)
 MEDIA_HOST = "media.acrocatranch.com"
 
 
