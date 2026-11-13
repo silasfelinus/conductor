@@ -14,7 +14,7 @@ from pathlib import Path
 
 import yaml
 
-from reconcile_delivery import fetch_jobs, job_request_id, matching_job, reconcile_row, timestamp
+from reconcile_delivery import fetch_jobs, job_request_id, matching_job, probe_media, reconcile_row, timestamp
 
 ROOT = Path(__file__).resolve().parents[3]
 ART = Path(__file__).resolve().parent
@@ -78,6 +78,51 @@ def audit(rows, jobs, *, reconcile=reconcile_row):
     return report
 
 
+
+def legacy_round1_unproven(art_dir: Path = ART):
+    """Early accepted plates need honest job/media evidence, not inferred approval."""
+    ledger = yaml.safe_load((art_dir / "ROUND-1.yaml").read_text(encoding="utf-8"))
+    return [
+        {**row, "_requested_at": ledger["requested_at"]}
+        for row in ledger.get("subjects") or []
+        if str(row.get("status") or "").lower() == "delivered"
+        and str(row.get("verdict") or "").lower().startswith("keep")
+        and not (row.get("art_job_id") and row.get("art_image_id") and row.get("delivery_check"))
+    ]
+
+
+def audit_legacy_round1(rows, jobs, *, probe=probe_media):
+    """Exact request + destination + timestamp match before even proposing provenance."""
+    report = []
+    for row in rows:
+        requested_at = timestamp(row["_requested_at"])
+        job = matching_job(row, jobs, requested_at)
+        media_time, media_evidence = probe(row["media_url"]) if job else (None, "no matching ArtJob")
+        created = timestamp(job.get("createdAt")) if job else None
+        proven = bool(
+            job
+            and str(job.get("status") or "").upper() == "DONE"
+            and isinstance(job.get("artImageId"), int)
+            and job["artImageId"] > 0
+            and media_time
+            and created
+            and media_time >= created
+        )
+        report.append({
+            "key": row["key"],
+            "request_id": row["request_id"],
+            "target_path": row["target_path"],
+            "job_id": job.get("id") if job else None,
+            "job_status": job.get("status") if job else None,
+            "image_id": job.get("artImageId") if job else None,
+            "created_at": job.get("createdAt") if job else None,
+            "media_evidence": media_evidence,
+            "proven_current_media": proven,
+            "explanation": "candidate for recorded provenance; no ledger mutated" if proven else "do not infer delivery provenance",
+        })
+    return report
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--out", type=Path, help="Write a detailed JSON diagnostic artifact")
@@ -90,8 +135,12 @@ def main():
     rows = latest_unmet()
     jobs = fetch_jobs(core)
     report = audit(rows, jobs)
+    legacy_report = audit_legacy_round1(legacy_round1_unproven(), jobs)
     summary = {
         "pending": len(report),
+        "legacy_missing_provenance": len(legacy_report),
+        "legacy_exact_job_matches": sum(x["job_id"] is not None for x in legacy_report),
+        "legacy_proven_current_media": sum(x["proven_current_media"] for x in legacy_report),
         "jobs_scanned": len(jobs),
         "same_destination_candidates": sum(
             len(row["same_destination_after_request"]) for row in report
@@ -108,10 +157,12 @@ def main():
             f"image={row['image_id']} newer-delivery={row['verified_newer_delivery']}"
             f" same-destination-candidates={row['same_destination_after_request']}"
         )
+    for row in legacy_report:
+        print(f"Round 1 legacy {row[\'key\']}: job={row[\'job_id\']} image={row[\'image_id\']} proven={row[\'proven_current_media\']}")
     if args.out:
         args.out.parent.mkdir(parents=True, exist_ok=True)
         args.out.write_text(
-            json.dumps({"summary": summary, "requests": report}, indent=2) + "\n",
+            json.dumps({"summary": summary, "requests": report, "legacy_round1": legacy_report}, indent=2) + "\n",
             encoding="utf-8",
         )
 
