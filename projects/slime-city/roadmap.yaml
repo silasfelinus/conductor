@@ -1304,10 +1304,7 @@ tasks:
   - id: t-054
     milestone: m2
     title: 'Ironjaw follow-through: lab-mutant identity in story, evolutions and remaining art'
-    status: review
-    owner: worker
-    claimed_by: 2026-11-13T041900Z-slime-city-t054-6e2b
-    claimed_at: '2026-11-13T04:19:00Z'
+    status: ready
     passes: 0
     stakes: reversible
     note: |-
@@ -1337,7 +1334,9 @@ tasks:
       Blocked image curation: no KR_API_TOKEN in runtime and DNS cannot resolve kind-robots.vercel.app. Exact 45-ID curation instructions recorded on kind_robots#4535; return task to ready for authenticated worker.
 
       Partial: hardened Ironjaw token art coverage test to check exact token keys and permit individually verified keeper plates without relaxing pending-image safety. Visual review remains pending authenticated access to kindrobots.org images.
-    updated: '2026-11-13T04:23:00Z'
+
+      Partial increment merged: kind_robots PR #5108, squash 9718223. All seven workflow runs on head 87f0b41 completed successfully. Exact-key token mapping and verified-keeper acceptance guards are now on main. Remaining: authenticated visual review of 45 token portraits, keeper-only art manifest wiring, non-creature and boss art review.
+    updated: '2026-11-13T06:25:00Z'
   - id: t-055
     title: "Slime City: first reconnectable, private human-vs-human CLASH matches"
     status: done
