@@ -76,6 +76,11 @@ jobs:
           if-no-files-found: error
           retention-days: 7
 
+      - name: Audit accepted Classic links and check real media
+        run: |
+          python scripts/shifting_desks_art_readiness.py
+          python projects/shifting-desks/encounters/link_art.py --probe
+
       - name: Download actual art and build contact sheets
         run: |
           python projects/shifting-desks/art/build_review_sheets.py \
