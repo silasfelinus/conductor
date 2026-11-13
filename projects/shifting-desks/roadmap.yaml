@@ -602,8 +602,8 @@ tasks:
   - id: t-032
     milestone: m3
     title: 'Land, review and link the art round 13 re-renders and round 14 tone-ladder renders'
-    status: review
-    updated: '2026-11-13T03:03:44.835Z'
+    status: ready
+    updated: '2026-11-13T03:26:39.968Z'
     depends_on: t-015
     passes: 0
     stakes: reversible
@@ -645,9 +645,8 @@ tasks:
       2026-11-12 PT: Recovered stale t-032 review and merged Conductor PR #7336 at 514538a60af909562addb29d6bdf828d90316cdf after 6/6 applicable Actions workflows passed (including full Python suite, Security Audit, art visual review and workflow/template validation). Authenticated production audit run 43335325581 scanned 1,076 Shifting Desks ArtJobs: 0 exact request/target matches, 0 newer same-destination alternate-ID candidates for 20 missing Classic repaint requests. Restored all 20 original prompt/seed/path/request IDs to projects/art-prompts.yaml as force-pending; fixed falsely done round-17 recovery. Created private six-cell two-model Western fidelity pilot (Gus roach, tiny robot eyeline, enormous stopped clock), with auto_submit ledger, no live-art overwrite until accepted. Added read-only production audit and automatic status/provenance checkpoint in existing Auto Art workflow. ART-READINESS audit still 201 accepted, 170 optional Western REDO, 20 not-yet-delivered latest Classic; queue is restored, NOT evidence of rendered/KEEP art. Remaining agent work is to confirm submitted ArtJob IDs, wait for completed renders, review fresh images individually and link KEEP, then re-run strict art/QA. Do not mark done or playtest yet; keep t-041 dependent and t-020 human fun verdict intact.
 
       2026-11-12 PT: All 20 replacement Classic ArtJobs are now DONE and delivered with ArtImage IDs and verified newer media, but have no KEEP/REDO verdict. Preparing a fresh, authenticated 20-Classic and six-private-pilot contact-sheet artifact to conduct image-by-image editorial review before linking art. Task is still not complete until each verdict, no-gore/scene-fidelity QA, and successful link_art.py --write --probe. Western skin remains suspended.
-    owner: worker
-    claimed_by: 20261113T030100Z-shifting-desks-t032-gpt6-visual-5c91
-    claimed_at: '2026-11-13T03:01:40.642Z'
+
+      2026-11-12 PT: Merged Conductor PR #7338 at 1980e682a17aa534cc093a45a4fc40eef83068e0; all six Actions workflows fully passed, including 4622-style Python suite, security audit and art visual-review workflow. New art evidence: 20/20 independently newer delivered Classic render files and 6/6 DONE private Western pilot images. Individually reviewed 20 Classic images: 6 KEEP and 14 REDO, with specific reasons and Image IDs in ROUND-13/14/15/17 and VISUAL-REVIEW-2026-11-12.md. Linked all four newly accepted encounter/location images in TOY-DIVISION, WELLNESS and SUBLEVEL-ZERO packs; two accepted endings use image destination conventions. Live link_art.py --probe passed 152/163 slots, 0 problems. Western pilot Krea2 2/3 fidelity vs Nova Comic 0/3; Western remains suspended, private images not published. Strict art readiness remains blocked at 202 accepted, 184 REDO (14 Classic plus 170 Western), 5 historical Round1 KEEP rows lacking provenance; 0 not delivered. Next: focused scene-first improvements of 14 Classic REDO, independent new ArtJobs/media/review, reconcile five old Round1 provenance, and keep t-041 waiting until finite art is actually accepted. No human fun gate or public-release change.
   - id: t-033
     milestone: m3
     title: 'Tone ladder: lower floors grow more Cronenbergian (rules and station art)'
