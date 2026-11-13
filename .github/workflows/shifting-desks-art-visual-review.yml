@@ -23,6 +23,11 @@ jobs:
           python-version: "3.12"
       - name: Install image review tooling
         run: pip install "Pillow>=10,<13" "PyYAML>=6,<7"
+      - name: Validate the isolated Western fidelity pilot (dry-run only)
+        run: |
+          python scripts/enqueue_art_requests.py \
+            projects/shifting-desks/art/SUBJECT-FIDELITY-PILOT-V1.yaml
+
       - name: Audit live Classic/recovery ArtJobs (no submission)
         if: ${{ github.event_name == 'workflow_dispatch' || github.event.pull_request.head.repo.full_name == github.repository }}
         env:
