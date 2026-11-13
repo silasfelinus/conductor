@@ -116,7 +116,7 @@ tasks:
       These 100 anchors are outlines, not implemented daily script records.
   - id: t-063
     title: 'Export and wire the ~430 rendered Emperor images that never reached the game'
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 20261113T050300Z-eod-t063-gpt6-c41e
     claimed_at: '2026-11-13T05:03:00Z'
@@ -124,7 +124,7 @@ tasks:
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-13T04:20:00Z'
+    updated: '2026-11-13T05:04:00Z'
     note: |-
       Silas 2026-11-11 PT, in session: "If there is unmade art it should definitely be added to the pipeline."
 
@@ -133,6 +133,8 @@ tasks:
       Curate each on contact sheets (reject off-model, re-queue rejects in a REDO ledger), export keepers to webp at their ledger asset paths, register them in the manifests, add chance-event art support, and verify a sample at 390/768/1440. This is the delivery lane for already-rendered art; t-046..t-052 keep their writing scope and any new art they author.
 
       Merged kind_robots PR #5106 at affa509ac267be9c4b8de5d127612042259373bc after all eight exact-head CI workflows succeeded. Chance-event choice cards now use exported room artwork as fallback, with a verified-delivery-only manifest for dedicated plates. Remaining rendered ArtImage exports, curation, and delivery are NOT complete; keep t-063 ready.
+
+      PR #5109 adds real-file integrity checks for every one of the 135 chance scenes and both choices, plus exported dedicated art manifest validation. The ~430-image delivery scope remains incomplete. Await exact-head CI and merge; do not mark ready for playtest.
   - id: t-064
     title: 'Painted ending plates and a persistent Endings gallery / reign scrapbook'
     status: review
