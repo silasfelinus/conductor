@@ -90,12 +90,12 @@ tasks:
       Full history: projects/every-villain-tactics/HISTORY.md#t-001
   - id: t-025
     title: 'Main-game standard: audit and close the gaps for Every Villain Tactics'
-    status: claimed
+    status: review
     milestone: m4
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-13T22:27:59.418Z'
+    updated: '2026-11-13T22:30:04.707Z'
     note: |-
       Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -118,6 +118,8 @@ tasks:
       In-scope combat/art/onboarding increment staged: illustrated map bases, Fire target buttons driven by deterministic hit odds, an origin+affinity 48-identity hero/villain chooser in stories and one-shots, automatic first-bell foil and conflict-free support identities. Companion Conductor ledger queues 12 distinct First Bell hero/villain comic reveal paintings. Existing completed arena ArtImage IDs were not duplicated. Code and art still require pull-request CI; dedicated painted assets are not yet shipped.
 
       Previous reversible painted ArtImage integration, legal Fire targets and 48-power entry chooser merged in Kind Robots #5099 (165c5b1) after CI. Conductor character reveal queue #7335 merged. This umbrella standard remains open for full rendered review, unfinished art and broader main-game polish.
+
+      Scope: attach all twelve DONE generated ArtImages 270741-270752 (ArtJobs 68782-68793) as original hero/villain comic popup paintings for the six First Bell speakers in Kind Robots. Private art loads through the existing authenticated ArtImage store, with Prom outcome art fallback for failed images and unrendered roles. Added complete per-role mapping tests. Does not affect Prom of Doom shared art. Broader main-game standard remains open.
     owner: worker
     claimed_by: 20261113T2215Z-evt-t025-reveal-9f3c
     claimed_at: '2026-11-13T22:27:59.418Z'
