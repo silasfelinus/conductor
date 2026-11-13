@@ -121,3 +121,28 @@ def test_repo_ledgers_have_no_new_templated_cells():
         if isinstance(ledger, dict) and auth.ledger_problems(ledger):
             failing[str(path.relative_to(ROOT))] = len(auth.ledger_problems(ledger))
     assert set(failing) <= HELD, {k: v for k, v in failing.items() if k not in HELD}
+
+
+def test_repo_ledgers_unsubmitted_cells_pass_negation_rules():
+    """Unsubmitted prose cells must not carry negations Kind Robots' prompt contract 422s.
+
+    zuzu-shifting-lands ROUND-11/12 (2026-11-13 PT) shipped 19 cells with "No other figures." and
+    "no legible writing"; Auto Art Generate skipped every one as contract-rejected. Catch it here.
+    """
+    from scripts.repair_negation_art_prompts import violations
+
+    failing = {}
+    for path in auth.find_ledgers(ROOT):
+        try:
+            ledger = yaml.safe_load(path.read_text())
+        except yaml.YAMLError:
+            continue
+        if not isinstance(ledger, dict) or not isinstance(ledger.get("subjects"), list):
+            continue
+        for subject in ledger["subjects"]:
+            if not isinstance(subject, dict) or subject.get("jobs"):
+                continue
+            prose = subject.get("prompt_prose")
+            if isinstance(prose, str) and violations(prose):
+                failing[f"{path.relative_to(ROOT)}::{subject.get('key')}"] = violations(prose)
+    assert not failing, failing
