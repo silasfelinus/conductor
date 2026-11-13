@@ -602,11 +602,8 @@ tasks:
   - id: t-032
     milestone: m3
     title: 'Land, review and link the art round 13 re-renders and round 14 tone-ladder renders'
-    status: review
-    owner: worker
-    claimed_by: 20261113T033050Z-shifting-desks-t032-gpt6-redo-b5c7
-    claimed_at: '2026-11-13T03:35:20.487Z'
-    updated: '2026-11-13T03:43:55.117Z'
+    status: ready
+    updated: '2026-11-13T03:52:46.804Z'
     depends_on: t-015
     passes: 0
     stakes: reversible
@@ -652,6 +649,8 @@ tasks:
       2026-11-12 PT: Merged Conductor PR #7338 at 1980e682a17aa534cc093a45a4fc40eef83068e0; all six Actions workflows fully passed, including 4622-style Python suite, security audit and art visual-review workflow. New art evidence: 20/20 independently newer delivered Classic render files and 6/6 DONE private Western pilot images. Individually reviewed 20 Classic images: 6 KEEP and 14 REDO, with specific reasons and Image IDs in ROUND-13/14/15/17 and VISUAL-REVIEW-2026-11-12.md. Linked all four newly accepted encounter/location images in TOY-DIVISION, WELLNESS and SUBLEVEL-ZERO packs; two accepted endings use image destination conventions. Live link_art.py --probe passed 152/163 slots, 0 problems. Western pilot Krea2 2/3 fidelity vs Nova Comic 0/3; Western remains suspended, private images not published. Strict art readiness remains blocked at 202 accepted, 184 REDO (14 Classic plus 170 Western), 5 historical Round1 KEEP rows lacking provenance; 0 not delivered. Next: focused scene-first improvements of 14 Classic REDO, independent new ArtJobs/media/review, reconcile five old Round1 provenance, and keep t-041 waiting until finite art is actually accepted. No human fun gate or public-release change.
 
       2026-11-12 PT: Authored a 14-subject Classic Round 19 with new idempotent forced Krea 2 request IDs and one-gag scene-first prompts, preserving Rounds 14/15 historical failures and the six accepted Classic images. Added queue/reconciliation wiring, negative-prompt safeguards, focused tests, and exact-ArtJob legacy Round 1 audit; unrendered requests must not be called delivered or KEEP. Open PR; verify CI and generation submission before task returns ready. Western style remains suspended.
+
+      2026-11-12 PT: Merged Conductor PR #7339 at 3e0f739dec902d5e5617df100cad58146c1723f1; latest six applicable Actions workflows passed, 4626 pytest passed/56 skipped. Created ROUND-19 with 14 new idempotent force-pending Krea2 Classic prompts rewritten for the actual missed subjects; all 14 exactly match durable queue IDs/paths (0 missing, 0 dupes). Previous ROUND-14/15 failed ArtJobs and accepted imagery retained. Authenticated live ArtJob audit recovered five historical ROUND-1 KEEP plates with exact request+destination jobs 38381-38385, images 246469/246471/246473/246475/246477, verified image/webp media modified newer than ArtJobs; persisted immutable IDs, HEAD evidence and original KEEP verdicts. Current Auto Art Generate run 43361753950 is executing the main-merge trigger; 14 Round19 ArtJob IDs not yet independently confirmed. Remaining: verify submission and durable IDs, new DONE ArtImages and media timestamps, review each of 14 new paintings independently KEEP/REDO, link only accepted, then evaluate strict Classic readiness and t-041 ending-art dependency. Western Cartoon remains suspended; 170 optional Western rejected art should be tracked separately from currently selectable Classic and Noir. Do not claim new jobs rendered until proven.
   - id: t-033
     milestone: m3
     title: 'Tone ladder: lower floors grow more Cronenbergian (rules and station art)'
