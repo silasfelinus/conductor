@@ -123,12 +123,10 @@ tasks:
     passes: 0
     depends_on: []
     updated: '2026-11-12T07:40:54+00:00'
-    note: |-
-      Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
+    note: >-
+      Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ...
 
-      Live today: 0 Achievement record(s) with this game's triggerCode prefix (checked against /api/achievements 2026-11-11). Target 12+ (usually 12-30; tie some to endings but don't go overboard). Mix story, skill, discovery and completion. Create the live records through the existing achievements API (label, message, icon, karma, triggerCode prefixed with the game slug), award them from the game store, show them with components/achievements/game-achievement-strip.vue, and verify one award live after deploy.
-
-      Achievement upgrade merged in kind_robots#5039 (940bc59), all checks green: 18 live achievements, endings awarded in recordIdentity; load/import never award. Title-menu entry left for the standard task. Catalog seed succeeded.
+      Full history: projects/comet-city-academy/HISTORY.md#t-035
     claimed_by: 20261112-ach-comet-city-academy-modest
     claimed_at: '2026-11-12T01:00:51Z'
   - id: t-012

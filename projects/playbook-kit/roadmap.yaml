@@ -57,62 +57,10 @@ tasks:
     owner: worker
     passes: 0
     stakes: reversible
-    note: |-
-      Declare utils/playbookKit/games/thisMeansWarp.ts describing the current slice
-      (captains are player choices, not followers; 12 crew; 3 antagonists; 4 endings).
-      It already exceeds Standard's 8 followers: declare tier saga or add a written
-      allowance. Mount PlaybookKitShell around the existing bridge console, report
-      unlocks with kit.unlock, and replace the bare finale with the Endings pane and
-      Scrapbook. Keep the game-of-captains-voyage-v1 save key. Coordinate with the
-      owning roadmap (projects/game-of-captains) and master issue kind_robots#4182,
-      whose UX spec already asks for a captain's log and discovered-ending scrapbook.
+    note: >-
+      Declare utils/playbookKit/games/thisMeansWarp.ts describing the current slice (captains are player choices, not followers; 12 crew; 3 antagonists; 4 endings).
 
-      SCOPE AUDIT 2026-11-11 PT (todo kind_robots#1325, Silas: "this game has now been changed to
-      Space Couch"): the game is SPACE COUCH (projects/game-of-captains roadmap, renamed
-      2026-10-26), so read "This Means Warp" / thisMeansWarp.ts above as Space Couch /
-      utils/playbookKit/games/spaceCouch.ts. That spec file already exists and is registered in
-      games/index.ts, but its own header calls it a preview ledger: its 5 endings (open-horizon,
-      last-couch-home, galactic-bargain, cost-command, uninvited-guest), 5 cast and 12 moments
-      do not match the shipped game (pages/play/game-of-captains.vue, ~5,000 lines with its own
-      console theme, ending screen and alien scrapbook; utils/gameOfCaptains/galacticEndings.ts =
-      4 base logs + 12 galactic families + 2 counter-council logs; 6 captains; 12 crew).
-      No kit.open/kit.unlock call exists in the game yet. Do it in three PRs, in order:
-      (1) rewrite spaceCouch.ts from the real ending/crew/captain ids (tier saga or written
-      allowance) with a contract test that every spec ending id maps to a reachable game ending;
-      (2) a pure mapper run-state -> kit unlocks plus kit.open('game-of-captains') and
-      kit.unlock wiring in the store, keeping game-of-captains-voyage-v1 untouched;
-      (3) only then mount PlaybookKitShell around the page, with phone/desktop screenshots per
-      docs/agents/frontend-verification.md. Not started this session: a single unattended pass
-      wrapping the 5,000-line page was judged too risky for an active high-priority game.
-
-      PARTIAL MERGED 2026-11-11 PT: step 1 of 3 landed. kind_robots#5009 squash 01e38906 after
-      all 14 checks green: utils/playbookKit/games/spaceCouch.ts rebuilt from the shipped game
-      ids (tier saga; acts First Voyage / Unwelcome Responsibility / The Last Command; 4
-      VoyageRun meters; 6 captains as figures, 12 crew followers, 8 nemeses; 18 endings = 4
-      base + 12 galactic + 2 counter, ids = artSlots slugify(run.ending) so kit.unlock can
-      read run.ending directly). New verifySpaceCouchKit.test.ts in test:playbook-kit pins
-      spec<->game. Next: step 2, pure run-state -> kit unlock mapper plus kit.open/kit.unlock
-      store wiring, game-of-captains-voyage-v1 untouched. Todo #1325 stays open until step 3.
-
-      PARTIAL MERGED 2026-11-11 PT: step 2 of 3 landed. kind_robots#5014 squash e75dc7f after
-      all 16 checks green: pure mapper utils/gameOfCaptains/kitUnlocks.ts (VoyageRun -> kit
-      moments/reveals/endings, 24/6/18 all reachable) and gameOfCaptainsStore persist() now
-      opens the game-of-captains kit and calls kit.unlock (try/catch, voyage-v1 save key
-      untouched); verifySpaceCouchKitUnlocks in test:playbook-kit. Next: step 3, mount
-      PlaybookKitShell around pages/play/game-of-captains.vue with 390/768/1440 screenshots.
-      Todo #1325 stays open until step 3.
-
-      REVIEW 2026-11-11 PT: step 3 of 3 open as kind_robots#5016 -- Space Couch in-game view
-      mounted inside PlaybookKitShell (HUD/menu in #bar-actions, 4 meters, kit panes, theme
-      space-couch, kit trailer marked seen behind the painted title). Local 390/768/1440
-      Playwright: 1 bar, 0 overflow, 0 errors, Endings pane 0/18. Merge then done; complete
-      todo #1325.
-
-      DONE 2026-11-11 PT: step 3 of 3 merged, kind_robots#5016 squash a57e98c after all 13
-      checks green. Space Couch now runs inside PlaybookKitShell; all three steps landed
-      (#5009, #5014, #5016). Todo #1325 completed. Not yet verified on production pixels
-      (needs Force Update); mid-voyage 390px bar fit unverified (kaizen: Playwright smoke into
-      chapter 1).
+      Full history: projects/playbook-kit/HISTORY.md#t-002
     claimed_by: 2026-11-11T124830Z-playbook-kit-t002-shell-k7q2
     claimed_at: '2026-11-11T12:48:08Z'
     updated: '2026-11-11T13:27:02Z'

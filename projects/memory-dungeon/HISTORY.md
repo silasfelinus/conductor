@@ -397,3 +397,16 @@ Live today: 0 Achievement record(s) with this game's triggerCode prefix (checked
 
 Achievement upgrade merged in kind_robots#5044 (0b547b4), all checks green: 20 live achievements from medal diffs in syncAchievements, reality completions e01-e06, minefield escape and the Warden win; hydrate/loadCheckpoint never award; site-level memory-master unchanged. Catalog seed run succeeded. Left: medals earned before this shipped are not back-filled; realities e07+ not mapped (Hoshimori covered by medals).
 <!-- note:end t-069 -->
+
+## t-070 — Run the memory-dungeon acceptance guard in the roadmap-validation CI job so a done-without-evidence close-out fails before merge
+
+<!-- note:begin t-070 -->
+Kaizen from the t-067 review (conductor PR #7294). scripts/check_memory_dungeon_acceptance.py currently runs only in session_sweep.py, so a close-out PR that marks a task done while its latest "remaining:" line is unmet still merges and is caught only by a later sweep. Add the check to the CI job that validates roadmap YAML (path-filtered to projects/memory-dungeon/roadmap.yaml is fine), with a test or smoke step proving it fails on a seeded bad roadmap. Reversible, CI-only; no task status changes.
+
+CI validation now invokes scripts/check_memory_dungeon_acceptance.py and runs a seeded negative/positive smoke against a temporary roadmap; PR pending checks.
+
+2026-11-12 PT review: rejected conductor#7326 at head 0bff092 (pass 1, quality). Details
+in the PR comment and retry_context.
+
+2026-11-12 PT review: merged conductor#7326 at head d7008837 (squash 18438ab7) after the retry fixed the workflow YAML. All 26 checks green including Validate roadmap YAML and Python test suite; guard and smoke also run locally. The roadmap-validation job now runs check_memory_dungeon_acceptance.py and a seeded bad/good smoke. Kaizen: t-071.
+<!-- note:end t-070 -->

@@ -296,3 +296,9 @@ Implementing the remaining deterministic drift only: Brainstorm milestone m6 is 
 Connector-only pass confirmed the remaining correction is exactly m6 status planned -> in-progress. No safe line-patch primitive is available for this large roadmap; a branch-only helper workflow was tested, did not activate, and was removed before merge. PR #3245 was closed with zero net changed files. Returning the task to ready rather than falsely completing it; the finding remains deterministic and suitable for a shell-capable worker.
 RESOLVED 2026-08-30 (conductor scheduled Agent run): applied the deterministic fix directly with real git/shell access after the prior connector-only session could not safely line-patch this large roadmap (PR #3245 closed with zero net changes). Edited m6 milestone status from planned to in-progress in projects/brainstorm/roadmap.yaml (m0-m5 were already done and needed no change, matching this note's own audit). re-ran check_milestone_status_drift.py after the edit: clean, no drift. No task-list or dependency changes made.
 <!-- note:end t-032 -->
+
+## t-033 — Riff board first slice: /play/brainstorm handheld game, human lines, coach sparks, Reactions, art per line
+
+<!-- note:begin t-033 -->
+2026-11-03 PT (Silas-directed session): first playable slice of the reopened product. kind_robots adds BrainstormRiff/BrainstormLine, a BRAINSTORM_LINE Reaction target (additive migration 20261103180000_brainstorm_riff_board), /api/brainstorm/riffs* and /api/brainstorm/lines/* routes, twelve seeded starter decks (Vanderbuilt Lacrosse, Trashcan Jones, Robert Smith, the brothers' crossover, terrible ice cream, I like Obama but, plus six more), heat ranking from Reactions, a Krea2 ArtJob per posted line, coach sparks through /api/brainstorm/generate (angles, never finished lines), table mode for pass-and-play, and the handheld console page at /play/brainstorm with its own console theme and Play tab.
+<!-- note:end t-033 -->

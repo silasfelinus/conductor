@@ -59,6 +59,14 @@ Act V (Days 41-50) and the eight ending families shipped in kind_robots#3869: hi
 Verified 2026-10-20 in kind_robots#3874. A seeded 13-policy harness (fortress/balance.ts; BALANCE-REPORT.md; CI test verifyEmperorFortressBalance) found the Freehold barn won the hideout in nearly every run, about 20 Ledger loans per full- barracks run, and A Hundred Candles unreachable. Fixed with cheaper, faction-spread chores, pledge-weighted hideout selection, two Rustline choices, wages 6 to 4, and two more lethal Act V expeditions with a two-death threshold. Each patron now hides with its faction in 88-100% of runs, all eight endings occur, and careful play loses the crypt 0-5% of the time. Follower moods show in the barracks and the advisor at the briefing. Responsive QA at 390, 768 and 1440 from Day 1 to the ending with real saves found no errors, broken art or horizontal scroll.
 <!-- note:end t-009 -->
 
+## t-010 — Obtain explicit human visual acceptance and public Play release approval
+
+<!-- note:begin t-010 -->
+Internal admin preview is permitted; no public /play route or published campaign without later explicit approval.
+
+APPROVED by Silas in session 2026-11-11 PT: "Emperor of dust should have already been moved to play long ago." Public Play release is approved. Verified the same day that /play/emperor-of-dust already serves (HTTP 200), /admin/emperor-of-dust 301-redirects there, and the game is listed in the Arcade placements and home visitor directory, so no further release step is needed. Remaining art delivery and polish continue under t-052 and the new t-063 (wire rendered art), t-064 (ending plates + gallery), t-065 (achievements) and t-066 (new-run carry-overs).
+<!-- note:end t-010 -->
+
 ## t-011 — Author 20 followers in the v0.3 schema (stats, secret traits, unique ability, allegiance, art briefs)
 
 <!-- note:begin t-011 -->
@@ -368,3 +376,13 @@ Completed broad role-first Emperor of Dust prose editorial audit across Acts I-V
 Silas, 2026-10-27 PT: "Anything that is in playbook forge and has quests unwritten or art prompts unwritten should be upgraded. (Memory dungeon will take the longest and should be last). Space couch has a lot of fresh writing still in need and still looking to capture that right blend of space comedy and satire. All art prompts should be written for the appropriate engine, no metaphors for krea2." Shared bar: kind_robots PR #4308 (verifyPlaybookArtPrompts, artPromptsComplete). Forge 2026-10-27: every beat is painted or has art; the plan is short four encounters and three quests.
 DONE 2026-10-27 PT: kind_robots #4322 merged as ea6455f after 20/20 checks. Four new audiences, each with a probe beat and a callback flag: Day 12 Brown Water, Day 28 The Post Comes Back, Day 31 Next Year in a Sack, Day 36 Over the Wall. Three new quests: Thirty-One Feet Down, Ninety-One Letters, The Carts in the Cut. Forge: encounters 116->120 (plan 120), quests 97->101 (plan 100). Adapter now counts quests posted inside audience beats and gives follower speakers follower art. The seven petitioners with rendered but unexported plates carry literal prompts (artPromptsComplete). The verifier now audits every node.
 <!-- note:end t-061 -->
+
+## t-065 — Emperor of Dust achievements for endings and long-run play
+
+<!-- note:begin t-065 -->
+Silas 2026-11-11 PT, in session: "Achievements?" Target 12+ live achievements per docs/agents/main-game-standard.md.
+
+Only three live Achievement records exist (emperor-of-dust-orders-carried-out, -day-well-ruled, -merciful-court) and all fire on Day 1-level play. Add live Achievement rows through the existing achievements API (label, message, icon, karma, triggerCode) and award them from stores/emperorFortressStore.ts: reach Day 50; one per ending (8); all eight endings; finish with no follower lost; earn both relics; recruit all secret followers; ring the Silent Bell. Show them with components/achievements/game-achievement-strip.vue on the ending screen and gallery. Verify one award live after deploy.
+
+Achievement upgrade merged in kind_robots#5056 (d35dd44), all checks green: 16 new + 3 kept = 19 (one per ending family x8, 50-day reign, triumph, crypt sealed, Abbess unmasked, first/both relics, no follower lost, full Codex). 'Every peace' skipped (needs the t-064 endings record). Catalog seed succeeded.
+<!-- note:end t-065 -->

@@ -1697,6 +1697,22 @@ Root cause confirmed in server/utils/artJobResourceRefresh.ts: the shared edit/r
 Fixed and merged in silasfelinus/kind_robots PR #3234 at f64f0ce2c2a88c4f99a2f9b476ea6d3f41292538. Multi-LoRA ArtJobs no longer hit the stale single-LoRA Resource-refresh 409 during edit or re-enqueue; stacked Resource paths refresh positionally by krLoraIndex without changing strengths or required/base LoRAs. Final tested head 83e7d0c595f31c2cfad28ff1384c417d3fbbd70e passed 29/29 PR workflows, including the LoRA retry-resource verifier, LoRA chain contract, TypeScript, ESLint ratchet, Prettier ratchet, and full Contract Tests.
 <!-- note:end t-130 -->
 
+## t-131 — Rehome navigation tools and retire legacy surfaces
+
+<!-- note:begin t-131 -->
+Silas-directed 2026-10-06 navigation cleanup:
+- Move Admin Users and Moderation out of the Admin navigation and expose them as admin-only buttons on Home > Account.
+- Move Animation Manager to Home > Account as a button visible to everyone, and remove the never-working Coverage Zone section rather than debugging it.
+- Remove LoRA Triage as an independent navigation route and expose it from Admin > Resources.
+- Move Appmaker, Conductor App, Mermaids, and Scene Animator into the existing Retired submenu under Admin.
+Preserve existing destination routes unless the implementation can safely remove a redundant navigation-only route without breaking direct links.
+
+Opened Kind Robots PR #3261 for the requested navigation cleanup. Navigation, layout, icon-safety, and Component Runtime Retirement checks are green; the full CI suite is still running before merge.
+
+2026-11-01 PT: reconciled to done — kind_robots PR #3261 (Rehome navigation tools and
+retire legacy surfaces) merged 2026-10-06 by Silas; the task had been left at review.
+<!-- note:end t-131 -->
+
 ## t-132 — Fix intermittent ArtJob queue controls rendering beside cards
 
 <!-- note:begin t-132 -->
@@ -1896,3 +1912,18 @@ Silas, 2026-10-10: "when i change to a new tab in a channel, the tutorial doesn'
 
 silasfelinus/kind_robots#3433 (merged 4587a57, 35/35 checks): staleness is now pageStore.describesPath(route.path) instead of a channel comparison in channel-select, workspace-header and workspace-sheet (contract added to verifyNavigationRouteAccess); /api/art/images/[id]/file redirects to imagePath?v=<updatedAt> so forced re-renders at the same media path bypass the browser's max-age=3600 copy. The "text heavy" cards were that stale cache, not the prompts: all 21 t-146 re-renders (ArtJobs 35135-35155) landed 09:09-09:33 UTC after the render box came back and were reviewed clean.
 <!-- note:end t-147 -->
+
+## t-148 — Universal end-of-run Playbook reviews linked to gameplay traces
+
+<!-- note:begin t-148 -->
+Silas-directed cross-playbook improvement: https://github.com/silasfelinus/kind_robots/issues/4216. Build a reusable persisted review contract and integrate all eight ending flows. Additive schema only, with admin-only history inspection and replay/restore coverage.
+
+Implementation in PR #4218 passed 35 check runs with one expected skip; seven prior failures repaired (Prisma generated-client log corruption and Emperor Node test shim). Review is code complete and verified; do not merge pending outward-facing release approval.
+
+All 35 runnable checks on implementation PR #4218 passed (one expected skip), including generated-client parity, TypeScript, seeded playthroughs and contract shards. Seven earlier failing checks were repaired; final outward-facing publication and production migration remain gated on Silas's explicit approval. Leave PR open.
+
+2026-11-01 PT: reconciled to done — Silas merged kind_robots PR #4218 (Playbook ending
+reviews with run histories) himself on 2026-10-26, which is the release decision this
+note was waiting on. Schema-affecting: production is live only after the Alexandria
+deploy runs its migration.
+<!-- note:end t-148 -->

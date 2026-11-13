@@ -107,6 +107,19 @@ An in-cabinet guide that teaches the table: a shot map diagram with arrows, then
 Merged kind_robots#3376: an in-cabinet FX3-style rules card. Pages: shot map drawn from the table definition (walls, posts, pops, ramp floors, flippers) with numbered arrows to all eight shots; villages (each of the 12 modes); multiball; more scoring; MALARIA-FREE wizard; mastery ladder. Every number comes from the rules constants. The sub-table stays secret until found once (mastery record): a lone '?' on the map, ??? on the ladder, no page mentions it; once found it gets its own SECRET VILLAGE page. Reachable from the attract loop and the pause screen (B, the Table guide panel switch, hints on how-to and pause screens).
 <!-- note:end t-015 -->
 
+## t-016 — The finish line: Silas plays it and judges it as good as any Pinball FX3 table
+
+<!-- note:begin t-016 -->
+FOR SILAS (gated only when it unblocks): play the table on desktop and touch and judge it against your standard (2026-10-07): "as good as any pinball fx3 table" -- "a truly fun, complex, and quality table". Before asking, agents must have met every line of FX3-QUALITY-BLUEPRINT.md "Acceptance bar", have TUNING.md numbers showing new players reach multiball and good players reach the wizard mode, and have found the hidden sub-table and returned from it in play. A screenshot must read as a physical pinball machine before any label is read. If the verdict is "not yet", fold each note into new tasks and keep the project active -- this project is never finished by task count.
+
+APPROVED TO CONTINUE by silasfelinus via Kind Robots. Gate released for the next agent. Yes, it’s great!
+
+2026-11-01 PT claim-staleness assessment (Silas: stale claims are more likely finished-
+but-unrecorded than abandoned): Silas confirmed kind-pinball is finished (2026-11-01);
+the 10-12 approval ('Yes, it's great!') already recorded his verdict. Closing the
+leftover task.
+<!-- note:end t-016 -->
+
 ## t-017 — FX3 quality reset: visual mockups + 3D architecture blueprint
 
 <!-- note:begin t-017 -->
