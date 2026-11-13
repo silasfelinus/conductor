@@ -36,7 +36,7 @@ def latest_classic():
         data = yaml.safe_load((ART / f"ROUND-{number}.yaml").read_text(encoding="utf-8"))
         for row in data["subjects"]:
             latest[row["target_path"]] = {**row, "_round": number, "_target": row["target_path"]}
-    return list(latest.values())
+    return [row for row in latest.values() if not row.get("verdict")]
 
 
 def current_media_evidence(row, evidence):
