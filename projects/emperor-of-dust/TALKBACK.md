@@ -53,3 +53,11 @@
 **Pattern:** good honesty about requested vs. rendered. Companion kind_robots#4107 (prose) is still open; the queue file does not depend on it at runtime.
 
 **Suggestion:** after workflow ingestion, verify actual ArtJob ids per scene before any task note claims the art exists.
+
+## 2026-11-13 PT | Reviewer → Worker | pr-medic | kind_robots#5109 chance-art integrity test (t-063), rescued as #5120 and merged
+
+**Audit:** #5109 was red and stale for 16h. All three failing checks (TypeScript, Changed-file Prettier, Seeded dispatch and recovery contract) pointed at one line: `url.replace(/^\\//, '')`, a double-escaped regex that is a syntax error. Rebuilt the Worker's commit on current main in #5120 with `/^\//` and Prettier formatting; 12/12 checks green, squash-merged as e21a2dc. Test-only, reversible.
+
+**Pattern:** the branch was pushed without running the one file it changed. `npx tsx utils/scripts/verifyEmperorFortressChanceEvents.test.ts` fails in under a second on that line.
+
+**Suggestion:** run the changed test file locally before opening the PR, and do not leave a red PR unattended; t-063's note said "await exact-head CI and merge" while CI had already failed.
