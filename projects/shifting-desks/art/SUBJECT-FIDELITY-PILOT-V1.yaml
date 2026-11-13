@@ -24,8 +24,8 @@ lanes:
   engine: comfy
   checkpoint: Illustrious/novaComicXL_v20.safetensors
   prompt: tags
-  suffix: western animated dark comedy, mature comic-book ink outlines, cel-shaded gouache,
-    single readable scene, confident staging, purposeful props, office background
+  suffix: western animated dark comedy, mature comic-book ink outlines, cel-shaded gouache, single readable scene,
+    confident staging, purposeful props, office background
   steps: 28
   cfg: 5
   sampler: euler_ancestral
@@ -35,84 +35,64 @@ subjects:
   size: 832x1216
   seed: 731001
   asset: shifting-desks/style-fidelity-pilot-v1/gus-grievance
-  prompt_prose: >-
-    A full-body seven-foot-tall real brown cockroach with a long segmented
-    chestnut chitin abdomen, six jointed insect legs, flexible antennae and
-    two large glossy insect eyes stands at an ordinary office grievance desk.
-    This is Gus, the union steward: he wears an open mustard cardigan and
-    half-moon reading glasses perched across his cockroach head. His front
-    foreleg presents a single blank grievance form to a human clerk. A second
-    worker politely waits behind a rope barrier. The central visual joke
-    is the enormous unmistakably insect-bodied cockroach competently filing
-    paperwork. Mid-century bureaucratic office, fluorescent light, vertical
-    two-thirds full-body scene, muted amber and carbon blue.
-  prompt_tags: >-
-    giant real brown cockroach insect, six articulated insect legs,
-    segmented chestnut insect abdomen, long antennae, glossy compound eyes,
-    mustard cardigan, half moon glasses, standing in office, one foreleg holding
-    blank grievance sheet, human clerk at counter, human worker waiting
-    in background, office ropes, fluorescent ceiling, three-quarter full body
-    shot, six legged insect anatomy, clear silhouette, absurd office comedy
-  negative: >-
-    insect girl, monster girl, human insect head, woman with antennae,
-    human face on insect, humanoid woman, cat ears, cosplay, furry,
-    human body silhouette, robot, human portrait, single character studio
-    backdrop, arched doorway, words, writing, text, logos, watermark,
-    nudity, gore, extra heads, giant sunglasses
+  prompt_prose: 'A full-body seven-foot-tall real brown cockroach with a long segmented chestnut chitin abdomen,
+    six jointed insect legs, flexible antennae and two large glossy insect eyes stands at an ordinary office grievance
+    desk. This is Gus, the union steward: he wears an open mustard cardigan and half-moon reading glasses perched
+    across his cockroach head. His front foreleg presents a single blank grievance form to a human clerk. A second
+    worker politely waits behind a rope barrier. The central visual joke is the enormous unmistakably insect-bodied
+    cockroach competently filing paperwork. Mid-century bureaucratic office, fluorescent light, vertical two-thirds
+    full-body scene, muted amber and carbon blue.'
+  prompt_tags: giant real brown cockroach insect, six articulated insect legs, segmented chestnut insect abdomen,
+    long antennae, glossy compound eyes, mustard cardigan, half moon glasses, standing in office, one foreleg holding
+    blank grievance sheet, human clerk at counter, human worker waiting in background, office ropes, fluorescent
+    ceiling, three-quarter full body shot, six legged insect anatomy, clear silhouette, absurd office comedy
+  negative: insect girl, monster girl, human insect head, woman with antennae, human face on insect, humanoid woman,
+    cat ears, cosplay, furry, human body silhouette, robot, human portrait, single character studio backdrop, arched
+    doorway, words, writing, text, logos, watermark, nudity, gore, extra heads, giant sunglasses
+  jobs:
+    krea-prose: 68743
+    nova-comic: 68744
 - key: windup-robot-eyeline
   title: Tiny wind-up robot looking up at clerk
   size: 832x1216
   seed: 731002
   asset: shifting-desks/style-fidelity-pilot-v1/robot-eyeline
-  prompt_prose: >-
-    A tiny tin wind-up robot, only the height of a stapler, stands on a
-    padded service-counter hatch with a brass winding key visible in its
-    back. The robot tilts its small round head sharply upward and gazes into
-    the bespectacled human office clerk's face above the counter. The clerk
-    leans down and returns the gaze, creating a clear diagonal eyeline
-    between the tiny hopeful robot and the much taller human. One tidy
-    stack of blank paperwork lies beside the robot. A single coherent
-    retro-futurist office scene with the little robot in the bottom half,
-    the clerk in the upper half, vertical composition and dramatic scale.
-  prompt_tags: >-
-    miniature windup tin robot on service counter, small brass key on
-    robot back, round smooth head tilted upward, tiny robot looking up,
-    bespectacled human clerk leaning down toward robot, mutual eye contact,
-    visible size contrast, paper stack on counter, cropped office cubicles,
-    diagonal character eyeline, hopeful robotic expression, one coherent
-    scene, vertical portrait layout
-  negative: >-
-    life sized robot, robot facing sideways, robot looking down,
-    robot portrait alone, extra robots, clock face, text, letters,
-    label, logo, watermark, anime schoolgirl, human with antennae,
-    blurry figures, excessive dials on robot chest, cropped head
+  prompt_prose: A tiny tin wind-up robot, only the height of a stapler, stands on a padded service-counter hatch
+    with a brass winding key visible in its back. The robot tilts its small round head sharply upward and gazes
+    into the bespectacled human office clerk's face above the counter. The clerk leans down and returns the gaze,
+    creating a clear diagonal eyeline between the tiny hopeful robot and the much taller human. One tidy stack of
+    blank paperwork lies beside the robot. A single coherent retro-futurist office scene with the little robot in
+    the bottom half, the clerk in the upper half, vertical composition and dramatic scale.
+  prompt_tags: miniature windup tin robot on service counter, small brass key on robot back, round smooth head tilted
+    upward, tiny robot looking up, bespectacled human clerk leaning down toward robot, mutual eye contact, visible
+    size contrast, paper stack on counter, cropped office cubicles, diagonal character eyeline, hopeful robotic
+    expression, one coherent scene, vertical portrait layout
+  negative: life sized robot, robot facing sideways, robot looking down, robot portrait alone, extra robots, clock
+    face, text, letters, label, logo, watermark, anime schoolgirl, human with antennae, blurry figures, excessive
+    dials on robot chest, cropped head
+  jobs:
+    krea-prose: 68745
+    nova-comic: 68746
 - key: stopped-clock-waiting-room
   title: Permanent Adjournment / the company waiting forever
   size: 832x1216
   seed: 731003
   asset: shifting-desks/style-fidelity-pilot-v1/permanent-adjournment
-  prompt_prose: >-
-    An endless underground corporate waiting room stretches deep into
-    darkness. Hundreds of identical vacant beige office chairs form narrow
-    straight rows toward a distant frosted meeting-room door. An enormous
-    antique brass clock hangs high on the rear wall with both hands stopped,
-    dwarfing everything below. Beneath the clock stands one small isolated
-    employee clutching a blank manila file. Behind the frosted door are
-    three pale human-shaped paper silhouettes, politely waiting. The
-    repeating chairs, solitary employee and gigantic stopped clock are
-    the three clear focal anchors. Bleak mid-century office architecture,
-    long deep vanishing-point perspective, oxblood and manila palette,
-    darkly comic existential corporate horror, vertical 2:3 composition.
-  prompt_tags: >-
-    enormous stopped brass wall clock, endless underground office waiting
-    room, hundreds of empty beige waiting chairs in narrow receding rows,
-    one tiny isolated office employee beneath huge stopped clock holding
-    folder, frosted office door at far end, three pale silhouettes behind
-    frosted door, deep linear perspective, stale fluorescent office lighting,
-    gloomy beige corporate architecture, dark workplace comedy, vertical
-    composition, one coherent empty room scene
-  negative: >-
-    classroom, school desks, teacher, chalkboard, auditorium,
-    lively crowd, bright colorful lecture room, clock missing,
-    clock on desk, multiple clocks, smiling group portrait, words,
-    titles, watermark, logo, gore, blood, outer space, city street
+  prompt_prose: An endless underground corporate waiting room stretches deep into darkness. Hundreds of identical
+    vacant beige office chairs form narrow straight rows toward a distant frosted meeting-room door. An enormous
+    antique brass clock hangs high on the rear wall with both hands stopped, dwarfing everything below. Beneath
+    the clock stands one small isolated employee clutching a blank manila file. Behind the frosted door are three
+    pale human-shaped paper silhouettes, politely waiting. The repeating chairs, solitary employee and gigantic
+    stopped clock are the three clear focal anchors. Bleak mid-century office architecture, long deep vanishing-point
+    perspective, oxblood and manila palette, darkly comic existential corporate horror, vertical 2:3 composition.
+  prompt_tags: enormous stopped brass wall clock, endless underground office waiting room, hundreds of empty beige
+    waiting chairs in narrow receding rows, one tiny isolated office employee beneath huge stopped clock holding
+    folder, frosted office door at far end, three pale silhouettes behind frosted door, deep linear perspective,
+    stale fluorescent office lighting, gloomy beige corporate architecture, dark workplace comedy, vertical composition,
+    one coherent empty room scene
+  negative: classroom, school desks, teacher, chalkboard, auditorium, lively crowd, bright colorful lecture room,
+    clock missing, clock on desk, multiple clocks, smiling group portrait, words, titles, watermark, logo, gore,
+    blood, outer space, city street
+  jobs:
+    krea-prose: 68747
+    nova-comic: 68748
