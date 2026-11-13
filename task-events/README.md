@@ -108,6 +108,10 @@ Two different kinds of invalid event are handled differently (conductor/t-127):
   These events are left queued (or consumed with no roadmap mutation) exactly as
   before. The workflow fails visibly on a genuine unresolved failure so it doesn't
   go unnoticed, and the event stays in place for diagnosis.
+  A `claim` on a non-recurring task that is already `done` or `cancelled` is the
+  exception: it can never apply, so it is consumed as `TASK_CLOSED` with no
+  roadmap mutation, the same way a lost claim race is. A recurring task's claim
+  stays queued, because the task rearms.
 - **Malformed events** (invalid YAML, an unsupported `operation`, a missing/invalid
   `project`/`task` field, or a project with no `roadmap.yaml`) can never become
   valid no matter how many times the processor retries them — normally

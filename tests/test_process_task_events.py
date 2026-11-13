@@ -1377,6 +1377,56 @@ class TaskEventProcessorTests(unittest.TestCase):
         self.assertTrue(path.exists(), "live-state failures stay queued for retry")
         self.assertFalse((self.root / "task-events" / "failed").exists())
 
+    def _set_task_status(self, task_id, status, extra=""):
+        roadmap_path = self.root / "projects" / "demo" / "roadmap.yaml"
+        data = yaml.safe_load(roadmap_path.read_text(encoding="utf-8"))
+        for task in data["tasks"]:
+            if task["id"] == task_id:
+                task["status"] = status
+                if extra:
+                    task[extra] = True
+        roadmap_path.write_text(yaml.safe_dump(data, sort_keys=False), encoding="utf-8")
+        return roadmap_path
+
+    def test_claim_on_closed_non_recurring_task_is_consumed_without_mutation(self):
+        # A done/cancelled non-recurring task never returns to ready, so the claim
+        # can never apply: consume it instead of failing every later run.
+        for status in ("done", "cancelled"):
+            with self.subTest(status=status):
+                roadmap_path = self._set_task_status("t-001", status)
+                before = roadmap_path.read_text(encoding="utf-8")
+                path = self.write_event(
+                    f"late-claim-{status}.yaml",
+                    {
+                        "version": 1,
+                        "project": "demo",
+                        "task": "t-001",
+                        "operation": "claim",
+                        "session": "sess-late",
+                    },
+                )
+                result = MODULE.process(path, dry_run=False)
+                self.assertIn("TASK_CLOSED", result)
+                self.assertEqual(before, roadmap_path.read_text(encoding="utf-8"))
+                self.assertFalse(path.exists())
+
+    def test_claim_on_done_recurring_task_stays_queued(self):
+        # A recurring task rearms back to ready, so its claim can still become valid.
+        self._set_task_status("t-001", "done", extra="recurring")
+        path = self.write_event(
+            "early-claim.yaml",
+            {
+                "version": 1,
+                "project": "demo",
+                "task": "t-001",
+                "operation": "claim",
+                "session": "sess-early",
+            },
+        )
+        with self.assertRaises(ValueError):
+            MODULE.process(path, dry_run=False)
+        self.assertTrue(path.exists())
+
     def test_main_reports_error_and_continues_after_quarantining(self):
         bad = self.write_event(
             "bad-op.yaml",
