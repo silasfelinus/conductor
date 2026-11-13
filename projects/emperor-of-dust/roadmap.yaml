@@ -167,12 +167,10 @@ tasks:
     passes: 0
     depends_on: []
     updated: '2026-11-12T07:40:55+00:00'
-    note: |-
+    note: >-
       Silas 2026-11-11 PT, in session: "Achievements?" Target 12+ live achievements per docs/agents/main-game-standard.md.
 
-      Only three live Achievement records exist (emperor-of-dust-orders-carried-out, -day-well-ruled, -merciful-court) and all fire on Day 1-level play. Add live Achievement rows through the existing achievements API (label, message, icon, karma, triggerCode) and award them from stores/emperorFortressStore.ts: reach Day 50; one per ending (8); all eight endings; finish with no follower lost; earn both relics; recruit all secret followers; ring the Silent Bell. Show them with components/achievements/game-achievement-strip.vue on the ending screen and gallery. Verify one award live after deploy.
-
-      Achievement upgrade merged in kind_robots#5056 (d35dd44), all checks green: 16 new + 3 kept = 19 (one per ending family x8, 50-day reign, triumph, crypt sealed, Abbess unmasked, first/both relics, no follower lost, full Codex). 'Every peace' skipped (needs the t-064 endings record). Catalog seed succeeded.
+      Full history: projects/emperor-of-dust/HISTORY.md#t-065
     claimed_by: 20261112-ach-emperor-of-dust-modest
     claimed_at: '2026-11-12T01:00:34Z'
   - id: t-066
@@ -337,10 +335,10 @@ tasks:
     gate_reason: publish
     stakes: outward-facing
     passes: 0
-    note: |-
-      Internal admin preview is permitted; no public /play route or published campaign without later explicit approval.
+    note: >-
+      Internal admin preview is permitted; no public /play route or published campaign without later explicit approval. APPROVED by Silas in session 2026-11-11 PT: "Emperor of dust should have already been moved to play long ago." Public Play release is approved.
 
-      APPROVED by Silas in session 2026-11-11 PT: "Emperor of dust should have already been moved to play long ago." Public Play release is approved. Verified the same day that /play/emperor-of-dust already serves (HTTP 200), /admin/emperor-of-dust 301-redirects there, and the game is listed in the Arcade placements and home visitor directory, so no further release step is needed. Remaining art delivery and polish continue under t-052 and the new t-063 (wire rendered art), t-064 (ending plates + gallery), t-065 (achievements) and t-066 (new-run carry-overs).
+      Full history: projects/emperor-of-dust/HISTORY.md#t-010
     gate_rechecked: '2026-10-14'
     approved_by_human: true
     updated: '2026-11-12T00:06:23+00:00'

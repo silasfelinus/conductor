@@ -1233,3 +1233,15 @@ Reconciled 2026-10-28: the moderation UI shipped in kind_robots#4358
 (pages/admin/guest-ratings.vue with /api/admin/guest-ratings release/dismiss).
 Only the 390/768/1440 screenshots remain unverified.
 <!-- note:end t-150 -->
+
+## t-153 — Replace homepage highlight placeholders with real generated project artwork
+
+<!-- note:begin t-153 -->
+Silas screenshot 2026-11-12 PT: homepage Explore rail deliberately renders gradient-only Slime City and Hybridizer cards. Correct the empty image fields using authentic public, delivered Krea artwork, not SVG/rasterized previews. Preserve guest visibility. Slime City has title-splash ArtImage 267791 in Conductor round TITLE-AND-BOSS-REACTIONS-ROUND-1. Hybridizer has publicly designated delivered starter ArtImages in STARTER-INGREDIENTS-ROUND-1; a dedicated fusion highlight should be generated separately, then wired once actually delivered. Public homepage change is gated pending human approval to publish; code and tests can be prepared on a PR.
+
+Built generated-art homepage highlights in kind_robots worker/interface-vision-t153-home-art-4a83c2. Slime City now uses delivered Krea ArtImage 267791; Hybridizer uses delivered starter images 258076, 258083 and 258078. Added navigation contract regression assertions. Dedicated Hybridizer home-hero art ledger prepared in Conductor. Public homepage placement requires human publication approval after verification.
+
+FOR SILAS: Homepage highlight change is implemented in open Kind Robots PR #5101. Slime City uses curated generated title ArtImage 267791 and Hybridizer uses three curated generated starter ArtImages 258076, 258083, and 258078 rather than gradients. The dedicated Hybridizer showcase art request merged as Conductor #7337 and the Auto Art Generate workflow was triggered; no new ArtJob or delivered hero confirmed. Code PR has passed TypeScript, formatting, navigation, layout, architecture, schema, and gameplay CI; remaining contract suite was still running at this update. HOMEPAGE PUBLICATION IS THE HUMAN GATE: do not merge PR #5101 without explicit approval. Public image byte delivery and visual geometry must be verified after actual production deployment. No schema changes.
+
+Silas explicitly approved the public homepage art change in chat on 2026-11-12 PT. All eight Kind Robots PR #5101 CI workflow suites completed successfully. PR #5101 was squash merged into main as cc727074fb00b549c5a1f212693747ec45f0a45d. Slime City and Hybridizer homepage highlights now reference curated generated art IDs, not empty gradient placeholders. No DB/schema changes. Self-hosted image publication and actual production rollout must be checked separately from the GitHub merge.
+<!-- note:end t-153 -->

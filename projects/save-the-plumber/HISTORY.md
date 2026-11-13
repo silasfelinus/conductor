@@ -123,3 +123,13 @@ Waits on the 20 enemy and boss sheets queued in silasfelinus/conductor#6158 (rew
 2026-10-14: front-page half merged in silasfelinus/kind_robots#3680 (e874c1dba26edb90374707155db9984e434af93d): the toy box shows all 14 enemy families looping their painted cycles with a hover/tap move, the world map's boss panel plays the attack sheet, and the slicer joins column-stacked shapes (spring hare above its spring). 13 of 14 enemy sheets and 2 of 8 boss sheets (Madame Pressure, Prism Mole) slice 6/6; tea-kettle knight and 6 boss sheets are still rendering. Remaining: put the other families into the playable level with their behaviours.
 Reconciled 2026-10-14: PR kind_robots#3680 merged 2026-10-14T06:37:47Z.
 <!-- note:end t-019 -->
+
+## t-029 — Save the Plumber achievement upgrade: 12 or more live achievements
+
+<!-- note:begin t-029 -->
+Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
+
+Live today: 0 Achievement record(s) with this game's triggerCode prefix (checked against /api/achievements 2026-11-11). Target 12+ (usually 12-30; tie some to endings but don't go overboard). Mix story, skill, discovery and completion. Create the live records through the existing achievements API (label, message, icon, karma, triggerCode prefixed with the game slug), award them from the game store, show them with components/achievements/game-achievement-strip.vue, and verify one award live after deploy.
+
+Achievement upgrade merged in kind_robots#5050 (d2de843), all checks green: 15 live arcade-prefixed achievements via a PlumberRun feat queue and mastered list (cross-session backfill; Every Heroine accumulates), Level Designer from the Maker store. Catalog run 43142839846 succeeded. Not wired: the two secret-exit achievements, because SECRET_EXITS_READY is empty so they could never be earned.
+<!-- note:end t-029 -->

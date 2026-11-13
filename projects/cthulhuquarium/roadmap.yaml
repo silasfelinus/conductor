@@ -141,12 +141,10 @@ tasks:
   passes: 0
   depends_on: []
   updated: '2026-11-12T07:40:54+00:00'
-  note: |-
-    Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
+  note: >-
+    Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ...
 
-    Live today: 0 Achievement record(s) with this game's triggerCode prefix (checked against /api/achievements 2026-11-11). Target 12+ (usually 12-30; tie some to endings but don't go overboard). Mix story, skill, discovery and completion. Create the live records through the existing achievements API (label, message, icon, karma, triggerCode prefixed with the game slug), award them from the game store, show them with components/achievements/game-achievement-strip.vue, and verify one award live after deploy.
-
-    Achievement upgrade merged in kind_robots#5036 (8e4cdb0), all checks green: 18 live achievements awarded from cthulhuquariumTankStore. Catalog seed succeeded.
+    Full history: projects/cthulhuquarium/HISTORY.md#t-101
   claimed_by: 20261112-ach-cthulhuquarium-modest
   claimed_at: '2026-11-12T01:00:49Z'
 
@@ -1837,10 +1835,10 @@ tasks:
   stakes: reversible
   passes: 0
   source_reference: projects/cthulhuquarium/docs/t-098-t-099-console-redesign.md
-  note: |-
-    Silas, 2026-11-05 PT, with four ChatGPT reference mockups (Tank, Feed, Creatures, Market): "It still looks more like a webapp than a console game ... This version is a little more freeware slop than I want, the design is a little too childish, but it's still better than what we have. I need a front end redesign, actual art assets generated, and much better fish designs for a lot of our fish." Take the reference's structure (bezelled tank as the stage, top HUD capsules, left care meters, bottom illustrated tab deck with L/R shoulder hints and button-prompt footer, featured-creature panel plus card strip, pedestal shop cards) and drop its childishness (chibi faces, blush, sparkle overload). Design rules in the source_reference doc. Real generated UI art (tab icons, title cartouche, frame ornaments), not CSS-only placeholders, once rendered.
+  note: >-
+    Silas, 2026-11-05 PT, with four ChatGPT reference mockups (Tank, Feed, Creatures, Market): "It still looks more like a webapp than a console game ...
 
-    Console UI shipped on kind_robots main: bezel shell, top HUD capsules, care meters, five-tab command deck with L/R and button-prompt footer, Creatures and Market screens (kind_robots#4840). The 13 painted Krea 2 UI pieces (tab icons, coin, plinth, corner ornament, meter and HUD icons) replaced the SVG fallbacks via canon cthulhuquarium#80 and kind_robots#4862. Live after the next production Force Update. Follow-ups not in scope: portrait-phone tank crop and the logged-out shop-window intro restyle.
+    Full history: projects/cthulhuquarium/HISTORY.md#t-098
   updated: '2026-11-07T02:14:00+00:00'
 - id: t-099
   milestone: m5

@@ -42,3 +42,13 @@ PLAN 2026-10-10: build against BOOK-ONE-OUTLINE.md (nine acts with budgets, act 
 Present final accessible preview, art coverage, combat/rules balance, endings checklist and gamebook tone for Silas's verdict. Do not expose publicly or assert production deployment until approval.
 2026-10-10: Silas, verbatim: "cool, this is good enough for public facing, move the gamebook out of admin". Public-launch verdict given ahead of the t-009 QA pass; kind_robots#3413 drops the admin gate (page + Play tab requiredRole). Merged is not deployed: live once Alexandria's deploy picks up main. t-009 QA continues post-launch.
 <!-- note:end t-010 -->
+
+## t-016 — Zuzu Gamebook achievement upgrade: 12 or more live achievements
+
+<!-- note:begin t-016 -->
+Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
+
+Live today: 3 Achievement record(s) with this game's triggerCode prefix (checked against /api/achievements 2026-11-11). Target 12+ (usually 12-30; tie some to endings but don't go overboard). Mix story, skill, discovery and completion. Create the live records through the existing achievements API (label, message, icon, karma, triggerCode prefixed with the game slug), award them from the game store, show them with components/achievements/game-achievement-strip.vue, and verify one award live after deploy.
+
+Achievement upgrade merged in kind_robots#5059 (641e448), all checks green: 14 new + 3 kept = 17; importCode never awards; ending-count achievements use a played-endings record that only real play grows. Catalog seed succeeded.
+<!-- note:end t-016 -->

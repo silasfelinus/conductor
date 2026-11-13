@@ -145,6 +145,19 @@ Silas 2026-10-27: "each crew combo can get 2 unique endings ... even just the en
 2026-10-30 (session 2026-10-30T11:47:12Z-spacecouch-q7r2): 440/440 trio endings exist (2 per party across all 220 parties, batches A-J; the last 200 via kind_robots#4487, #4493, #4497, #4500). Every ending is reachable by some run of three choices (contract-tested) and has a literal Krea 2 prompt. Boss endings were already 24/24. Painting remains art- queue work, not part of this close-out.
 <!-- note:end t-019 -->
 
+## t-020 — Space Couch: captain-first illustrated onboarding
+
+<!-- note:begin t-020 -->
+FROM GITHUB ISSUE silasfelinus/kind_robots#4533 (https://github.com/silasfelinus/kind_robots/issues/4533), opened by @silasfelinus on 2026-10-30. Imported by scripts/sync_github_issues.py. Reference the issue in the implementing PR (`Closes silasfelinus/kind_robots#4533`) so it closes on merge; the bridge closes it otherwise once this task is done.
+
+Track the user-requested Space Couch mobile onboarding changes: captain selection first, background second, illustrated options, and a revised corporate Couchscope.
+
+Kind Robots PR #4534 implements captain-first onboarding, compact phone dossier, rewritten corporate Couchscope, and secure store-owned ArtImage lookup. Conductor PR #6866 merged with 22 DONE ArtJobs 52152-52173 and ArtImages 258444-258465. App final-head CI underway; merge only after all checks pass. Authenticated device screenshots and production deploy remain separately unverified, so do not mark accepted or publicly released.
+
+2026-11-04 PT reconciliation: captain-first illustrated onboarding merged as kind_robots
+#4534 (10-31). Device QA belongs to t-011/t-012, so this task is complete.
+<!-- note:end t-020 -->
+
 ## t-021 — Deepen all 12 crew courtships and six crew-to-crew relationship pathways
 
 <!-- note:begin t-021 -->
@@ -277,3 +290,67 @@ Image-first Space Couch captain and crew selector: full-size delivered portrait 
 
 Triage 2026-10-30 (verified on kind_robots main 0bb3088): Couchscope personality test with 12 signs and 36 sign-exclusive quests at chapters 1/4/7 (#4361). The 4 question images are SVG placeholders (t-008).
 <!-- note:end t-030 -->
+
+## t-034 — Space Couch editorial readability pass: rotating transit prose, 30 success returns, sectioned final log
+
+<!-- note:begin t-034 -->
+Silas, 2026-11-04 PT, in-session: finish up Space Couch and assess text quality, mission uniqueness, fun, clarity, diversity of playthroughs and stickiness. Assessment: projects/game-of-captains/EDITORIAL-ASSESSMENT-2026-11-04.md (240-voyage scratch harness plus the 2,116-voyage matrix). kind_robots#4755 adds seeded no-repeat connective prose pools (within-voyage repeated sentences 34.4% -> 16.2%), a plain-success return for each of the 30 calls, rotating casino/bar reactions and plural fixes, plus optional endingSections rendered as labelled ending parts with the raw log collapsed. v1 saves remain compatible. Local game suite, vue-tsc, eslint and prettier pass; ending block checked as a CSS mock at 390/1280 px only. Merge when exact-head CI is green, then set done. Seeded default route split to t-035.
+
+2026-11-04 PT: Merged kind_robots#4755 as fdbab276d158b5bfc0484ef42073ad3461c1b39a after all 16 exact-head checks passed, including the full captains/antagonists/crews/endings matrix, TypeScript, four contract shards and production image build. Hydrated ending screen still unverified until the next Force Update; next is t-035.
+<!-- note:end t-034 -->
+
+## t-035 — Seeded pre-charted route for chapters 2-9 and reachable destination ending families
+
+<!-- note:begin t-035 -->
+2026-11-05 PT explicit human handoff: the previous claim `2026-11-05T224212Z-game-of-captains-t-035-r6` had no open Kind Robots/Conductor PR, game feature branch, or pending task event after 68 minutes. Silas explicitly directed pickup. Transferred the same claimed task to `20261105T235000Z-game-of-captains-t035-human-handoff-79f2` by exact-SHA compare-and-swap, preserving all prior work and notes. This is an intentional single-claim takeover, not a second competing claim.
+
+From EDITORIAL-ASSESSMENT-2026-11-04.md. The route board always pre-charts VOYAGE_BOARDS[ch][0], so a captain who accepts the default flies refugees -> archive -> bar ... on every seed (22 distinct nine-chapter sequences in 228 voyages), and the six destination ending families (Sanctuary Without a Map, Names on the Hull, Unlicensed Cure, Right to Refuse, A Table for Every Guest, Courtesy Accord) were reached 0 times in 240 mixed voyages. Keep chapter 1 on The Last Lifeboat; pre-chart a seeded call from missionBoard(run) for chapters 2-9 (prototype: rules.ts chartedCall used from nextDestination). The 2026-11-04 prototype broke pinned assumptions in verifyGameOfCaptains (report missionId == board[0]; synergies), AuthoredExpansion/AuthoredRemainder (concord-intake expected), ActThreeOpening, Scarcity (57 vs 60 authored scenes) and Traces (pinned ending per captain); re-pin those deliberately via the harness `chart` driver rather than weakening them. Then audit each destination family's earned() gate against real reachable flags and add a pinned trace per family.
+
+Seeded route diversity increment: after chapter one, nextDestination now chooses a reproducible mission among the actual eligible missionBoard offers, including prior world choices, crew and captain, without mutating saved missionId. The player may always override before travel. Added 42 complete seeded real-voyage tests for route variety, saves, chapter-by-chapter reachability and manual override. Existing trace and authored-case tests now explicitly chart their fixed legacy story routes rather than assuming an always-first default. Implementation branch worker/game-of-captains-t035-seeded-routes-9c72, PR and exact-head CI pending. Destination ending family organic reachability and verified browser/art QA remain separate independent acceptance.
+
+2026-11-05 PT: The seeded eligible-route fix landed in Kind Robots PR #4767 (squash 0eca96cd577a0762004d1b85d136206c56c94870), with all exact-head check groups passing, including the 42 full-voyage default-route tests, canonical gameplay suite, and full adversarial voyage matrix. Our implementation branch was deleted after merge. The original t-035 claim remained in review; releasing it to ready because destination-specific earned-ending organic reachability and balance are not yet independently measured or proved. Do not mark the destination-ending milestone done or infer human acceptance from the route fix. No production DB changes or new ArtJobs.
+
+2026-11-05 PT: Silas expressly asked us to resume this stalled claim. Scoped follow-through implementation: the route planner now favors eligible world-specific sequel calls from actually earned flags, while retaining a seeded chance to choose other missions and always allowing manual charting. Five destination threads have authored reminders in the briefing and visible return-call labels on mission cards. The Archive's consent and Hollow Lantern rescue now unlock the corresponding foundry and Windglass follow-ups even without specific crew, without weakening any other eligibility or save requirements. Expanded 42-voyage seeded regression for continuation weighting and chart override; preexisting six-family full-voyage trace suite remains the earned-ending acceptance gate. App branch worker/game-of-captains-t035-earned-threads-79f2; CI and PR pending. No deployment or human acceptance claimed.
+
+2026-11-05 PT: Human-authorized takeover complete. Merged Kind Robots #4838 at 6c7ef368c3113e01958f8744727f529dcda24746 after all 9 exact-head workflow groups succeeded. The existing six destination-ending families retain real player-driven pinned full-voyage traces for all captains, and 2,116 adversarial voyages passed. Seeded chart now favors earned sequel calls without forcing them; the Archive consent and Hollow Lantern rescue properly unlock their follow-up stories, and the image-led mission cards identify earned RETURN CALLs. Dedicated 42-voyage default chart regression passed with 40 distinct routes and 27 missions, preserving manual override and save replay. All scope of t-035 is complete; route-specific ending families still require deliberate choices rather than blind default policy, by design. Art/viewport review and final human acceptance belong to their own tasks. No deployment, database migration, or new ArtJobs.
+<!-- note:end t-035 -->
+
+## t-036 — Endgame supply balance: the hold should not run dry on ordinary voyages
+
+<!-- note:begin t-036 -->
+Silas, 2026-11-04 PT: "Space couch has a supplies issue, tweak it." Found by the 2026-11-04 game sprint (t-031 assessment): in the persona playtests the hold runs out of supplies by the end of 5/5 voyages for 3 of the 4 persona styles that run alien contacts; only the chaos captain avoids it. Tune the supply economy (income, costs, alien-contact drains, or a fair recovery path) so ordinary careful and kind play finishes with a thin but non-zero hold, scarcity still bites for reckless play, and pin the curve with a seeded persona battery. Do not break saves.
+
+2026-11-04 PT: supply tweak in kind_robots #4782. Alien contacts never touched the hold;
+the base voyage cost ~15/voyage in upkeep against 12 income. Now one supply refills the
+whole force bubble and good returns bring crates home (flawless +2, success +1). Voyages
+ending stocked: cautious 0/24 -> 18/24, completionist 0/24 -> 13/24, reckless 0/24 ->
+5/24, skipper 0/24 -> 3/24, chaos unchanged 24/24. Seeded battery pins the shape.
+
+kind_robots #4782 merged (squash f074838); CI green, seeded persona battery pins supply curve. Reviewer merge.
+<!-- note:end t-036 -->
+
+## t-037 — Show the supply swing on the mission report card (e.g. SUCCESS - +1 SUPPLY)
+
+<!-- note:begin t-037 -->
+Implemented exact actual supply swing on the Space Couch mission report, including featured consequence missions and an empty-hold regression test. App PR and checks to be verified; this is not the whole project's playtest handoff.
+
+Merged kind_robots PR #5083 at d5a17a2ef4e7b1944cfd43d62e706161b35ebceb. The mission report now shows actual supply swing, using an exact recorded delta with an old-save fallback. Verified completed green on formatting, TypeScript, layout, Playbook Kit, architecture, schema, gameplay slices, contract tests and full Space Couch adversarial voyages (nine CI runs). Production is self-hosted and this merged commit is not independently confirmed deployed.
+<!-- note:end t-037 -->
+
+## t-038 — Space Couch comedy and freshness pass: rotate the stock lines every voyage repeats
+
+<!-- note:begin t-038 -->
+Silas, 2026-11-11 PT, in session: "Work on space couch. Update and follow roadmap, submit art as needed, and generally work on improving text, uniqueness of adventures, and humor." A 36-voyage seeded probe (varied captains, crews, orders) found 236 sentences that appear in at least half of all voyages, so a returning player rereads the same jokes. The worst offenders are the 15 fixed deck-card setback lines (episodeConsole PLOT_SETBACKS), the crew-errand stock lines in rules.ts ("The crew makes an entrance that will be difficult to apologize for", "The first explosion is still visible from orbit"), the fixed constellation-quest suffixes, and the small transit pools (9-12 lines each, nine used per voyage). Scope: rotate those into larger seed-selected pools with sharper, more specific comedy; pin a cross-voyage freshness metric in a test. Done when the probe's half-of-voyages count falls by at least half with the full test:game-of-captains suite green and saves unchanged.
+2026-11-11 PT: kind_robots#5026 (review). New freshLines.ts pools rotate deck setbacks (15 -> 90 lines), crew-errand entrances/aftermaths/callbacks, constellation codas, mission-order replies, act openers and the finale line; every transit pool grows to 20 (waiting days 26); 8 new casino incidents (16 total, no repeat inside a voyage). Seeded 36-voyage probe: sentences in two-thirds of voyages 169 -> 39 (pinned <=60 by verifySpaceCouchFreshness.test.ts), in >=30/36 96 -> 21, in half 236 -> 138 (remainder mostly structural: system names, mission titles, status lines). In-voyage repeats 13.9% -> 10.5%. Full test:game-of-captains green locally. Kaizen: planet-deck success beats are flat one-liners; give the 10 planet cards specific funny success beats next.
+2026-11-11 PT: merged kind_robots#5026 as a7ae88443971efe186fed71bf668fd8438d39405 after all 16 exact-head checks passed (TypeScript, Prettier, 4 contract shards, seeded playthroughs, all-captains/antagonists/endings matrix, playbook kit/forge, layout contract, production image build). No deploy, migrations or ArtJobs. Follow-up worth a task: specific comic success beats for the 10 planet cards.
+<!-- note:end t-038 -->
+
+## t-040 — Space Couch achievement upgrade: 12 or more live achievements
+
+<!-- note:begin t-040 -->
+Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
+
+Live today: 0 Achievement record(s) with this game's triggerCode prefix (checked against /api/achievements 2026-11-11). Target 12+ (usually 12-30; tie some to endings but don't go overboard). Mix story, skill, discovery and completion. Create the live records through the existing achievements API (label, message, icon, karma, triggerCode prefixed with the game slug), award them from the game store, show them with components/achievements/game-achievement-strip.vue, and verify one award live after deploy.
+
+Achievement upgrade merged in kind_robots#5054 (d74a7dc), all checks green: 17 live achievements, endings via recordKitUnlocks; also added the shared Playbook Kit achievements pane. Not wired: High Roller (casino has no win state) and Every Captain's Chair (no cross-voyage record yet). Catalog seed succeeded.
+<!-- note:end t-040 -->

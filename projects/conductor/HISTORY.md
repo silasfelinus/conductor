@@ -2739,6 +2739,14 @@ Kaizen from conductor archive pass 2026-10-01: run scripts/archive_done_task_not
 Archived 26 done-task notes from kind-robots roadmap to HISTORY.md (175,436 -> 81,092 bytes), verified; merged in #5455.
 <!-- note:end t-202 -->
 
+## t-203 — Archive done-task notes for any roadmap over the 150KB advisory threshold (storybook 129KB, conductor 119KB next)
+
+<!-- note:begin t-203 -->
+Kaizen follow-up to t-202: when check_roadmap_note_size flags a roadmap, run scripts/archive_done_task_notes.py --project <slug>, verify with --verify-only, and confirm the flag clears. Also keeps conductor with an open task (validate_roadmaps requires one for active projects).
+2026-11-01 PT claim-staleness assessment (Silas: stale claims are more likely finished- but-unrecorded than abandoned): no archive-notes pass recorded after the 10-01 claim; run archive_done_task_notes.py for roadmaps over the advisory. Claim released.
+2026-11-01 PT: done in the token-essentialization pass 2 PR — archive_done_task_notes.py --all moved 235,961 bytes of done-task notes into per-project HISTORY.md (verify-only: every archive resolves), and archive_recurring_task_note.py archived 23 oversized live notes. memory-dungeon is now under the 150KB file threshold.
+<!-- note:end t-203 -->
+
 ## t-204 — Reconcile three accidentally-created Kind Robots projects after Conductor scaffold removal
 
 <!-- note:begin t-204 -->
@@ -2796,3 +2804,10 @@ alone while it is REJECTED (or the job id equals one listed under `rejected:`), 
 Merged via #6635: refresh_status skips REJECTED lanes and job ids listed under
 rejected:; two tests added.
 <!-- note:end t-208 -->
+
+## t-209 — check_pr_merged_drift.py should also match a merged PR whose body names the task (e.g. 'Conductor: slime-city/t-028'), not only its title
+
+<!-- note:begin t-209 -->
+Reviewer kaizen 2026-11-11 PT from slime-city/t-028: the implementation, silasfelinus/kind_robots#4924, merged 2026-11-10 PT, but the task sat at review for two days because gh_search_task_prs only matches "<project>/<task-id>" in PR titles and #4924 named the task only in its body ("Conductor: `slime-city/t-028`"). Extend the repo-scoped list-and-filter to accept an exact body match as a lower-confidence candidate (confirmed via gh_pr like title hits), with tests in tests/test_check_pr_merged_drift*.py.
+2026-11-11 PT: implemented on claude/focused-johnson-vfy0ty. Body matching is anchored to a declaration line (Conductor: label or a line starting with the ref). A live run surfaced 4 real stale review tasks via body matches: emperor-of-dust/t-060 (kind_robots#4206), hybridizer/t-009 (#4643, #4565), memory-dungeon/t-064 (#4971, #4957, both partial slices). Merged via silasfelinus/conductor#7262 once CI was green (review and done share that PR).
+<!-- note:end t-209 -->

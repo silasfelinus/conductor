@@ -113,12 +113,10 @@ tasks:
     passes: 0
     depends_on: []
     updated: '2026-11-12T07:40:56+00:00'
-    note: |-
+    note: >-
       Silas 2026-11-11 PT, in session: "Achievements?" Target 12+ live achievements per docs/agents/main-game-standard.md.
 
-      Slime City has no Achievement records. Add live rows through the existing achievements API and award them from the store: finish each crew's campaign (6), all six, each alliance ending, both endings for a crew, first Clash win, first private PvP win, evolve a fighter to level 3, district championships. Show with game-achievement-strip.vue on the finale and gallery; verify one award live after deploy.
-
-      Achievement upgrade merged in kind_robots#5043 (b2e3d81), all checks green: 19 live achievements (six crew Journeys, Conviction/Cunning endings, all crews, first Clash win, Journey chapter, level-3 card, first Meat pack, legal Alliance deck, district champion, VS win, Tower floor 6 and summit, Grand Pit finale) via a client Pinia plugin watching store actions; story load never awards. Catalog seed succeeded. Strip not yet mounted (title-screen task).
+      Full history: projects/slime-city/HISTORY.md#t-060
     claimed_by: 20261112-ach-slime-city-modest
     claimed_at: '2026-11-12T01:00:31Z'
   - id: t-061
@@ -129,19 +127,10 @@ tasks:
     passes: 0
     depends_on: []
     updated: '2026-11-12T02:16:21Z'
-    note: |-
-      Silas 2026-11-11 PT, in session: "does it unlock rewards?"
+    note: >-
+      Silas 2026-11-11 PT, in session: "does it unlock rewards?" Story card rewards stay inside the run by design and no Meat/wallet/card grants are allowed from story.
 
-      Story card rewards stay inside the run by design and no Meat/wallet/card grants are allowed from story. Add a lasting cosmetic per finished crew that does not touch the economy: a crew trophy on the profile/collection screen, an alternate card back or board frame, and a title. Account-saved, shown on the finale screen as "unlocked".
-
-      2026-11-11 PT: kind_robots#5041 adds crew trophies, titles and card-back frames. They
-      are derived from the account-saved endings gallery (TRIUMPH/COMPROMISE plate), so there
-      are no new save fields and no economy grants. They show as a trophy shelf in the endings
-      gallery and an UNLOCKED line on the finished-campaign panel. Next: an equip picker for
-      the card back and title (kaizen).
-
-      DONE 2026-11-11 PT: kind_robots#5041 merged (8678021). The change reaches kindrobots.org
-      on the next Unraid Force Update. Kaizen: t-065 (equip picker).
+      Full history: projects/slime-city/HISTORY.md#t-061
     owner: worker
     claimed_by: 2026-11-12T015546Z-slime-city-t-061-207tx9
     claimed_at: '2026-11-12T01:55:46Z'
@@ -276,20 +265,10 @@ tasks:
     depends_on: [t-003, t-004]
     passes: 0
     stakes: reversible
-    note: |-
-      CPU plays hidden armies with meaningful information limits, defends endzones, sends tactical runners and uses special cards. Test resource constraints, multi-team matchup balance, lane congestion, time-pressure fairness, seeded replays, multiple opponent personas and honest ties. Preserve reproducible failures and show compact analytical comparison of the three formats rather than declaring a winner from one test.
+    note: >-
+      CPU plays hidden armies with meaningful information limits, defends endzones, sends tactical runners and uses special cards.
 
-      Focused Blackout AI milestone: prioritize flag-carrier interception over low-HP bystanders; position visible-information defensive traps on approach and escape lanes rather than arbitrary flag-adjacent squares. Add deterministic hidden-info, target-priority and six-faction full-match seeded CPU contracts, preserving normal play and non-art execution. Source PR under CI. Further balancing, adversarial matrix, multi-variant replay evidence and readability testing stay in t-005.
-
-      Kind Robots PR #4612 merged as 86ff0e98451aa7d26fc77878f69eadaf85485925. Blackout CPU now prioritizes visible flag-carrier interception, tactical trap placement along escape/flag approach, and deterministic threat-based target selection. TypeScript, 4 gameplay contract shards, source and layout checks passed; container build remained in-progress at merge and needs eventual result verification. New mandatory seeded tactics and six-faction match replay contract. Reopen t-005 for full all-pairs balance and opponent personas, offensive/defensive variants, readable paced actions and adversarial telemetry. Art t-017 remains independent. Public release and subjective acceptance not requested.
-
-      Non-art Blackout matchup telemetry and all-pairs CPU audit slice: fixes stalled-round board fingerprint to include traps, flag and monster; counts new combat per round rather than cumulative knockouts; adds six-crew ordered matchup summaries with per-side scoring, contact/dead-round/trap metrics, incomplete/duplicate matrix rejection, sample-size warnings, and seeded replay regression. Code PR pending checks; no art wait. Further balance changes, AI personas and competitive PvP remain open.
-
-      RECONCILED 2026-11-11 PT: the delivered slices (#4612 Blackout CPU tactics, all-pairs
-      telemetry) stand; the remaining Blackout persona/balance scope was superseded by Silas's
-      2026-11-06 PT CLASH canonical rules (Blackout and the other arena formats are LEGACY, no
-      further balancing). CLASH CPU and matchup work continues in t-021 (done), t-056 (done),
-      t-057 (done) and t-058 (ready).
+      Full history: projects/slime-city/HISTORY.md#t-005
     updated: '2026-11-11T22:56:46Z'
     owner: worker
     claimed_by: 2026-11-02T000000Z-slime-city-t005-m4b8
@@ -301,22 +280,10 @@ tasks:
     depends_on: t-004
     passes: 0
     stakes: reversible
-    note: |-
-      Promote POC roster and specials into a beautiful illustrated collection with each crew's signature character and verified portrait art; visual deck builder, rarity, copies, card type, legal deck checks and faction colors. Inspect accessible last gallery item, card targeting, keyboard/gamepad and reduced motion. Never report CSS/vector mockups as real ArtJobs.
+    note: >-
+      Promote POC roster and specials into a beautiful illustrated collection with each crew's signature character and verified portrait art; visual deck builder, rarity, copies, card type, legal deck checks and faction colors.
 
-      Substantive non-art deck workbench slice: authored 12 playable Gutter Crown reserves (one creature and one effect per faction), account-owned legal deck editing with signature/4-creature checks, deterministic nonrewarding sparring using customized decks, and 24 rare-guaranteed earned packs without stranded cards. Saves via account-backed story CAS; server rejects unowned reserve loadouts. New source PR pending CI, no painting/ArtJob claims. Further 288 expansion cards, complete art, play balance and accessibility remain separate scope.
-
-      Kind Robots #4604 merged, all 19 latest-head checks passed: 12 authored Gutter Crown reserve cards, six account-backed legal custom decks, earned packs expanded to 72 collectible cards with 24 guaranteed rares, and seeded non-rewarding practice. Conductor #6926 merged with 12 distinct private art requests; accepted ArtJob receipts unverified, t-017 owns delivery. Reopen t-006 for the remaining 288 authored expansion cards, competitive reward-safe deck integration, deck accessibility and final UX/visual QA; do not wait for art.
-
-      Gutter Crown wave-two non-art expansion slice: 36 fully authored playable cards, six per crew with two rare and four normal each; explicit Ironjaw Blackout BULLDOZE action and blocked-lane counterplay; 108 collectible catalog with exactly 36 rare/72 nonrare for 36 duplicate-free 3-card packs; account-backed deck compatibility and all-cards gameplay contract. Implementation CI pending, art separately queued and not a blocker. Still 252 expansion cards outstanding plus UX, balance and art delivery.
-
-      Silas revised the card-pool floor: 40-50 total cards per crew including its ten founder loaners, or 240 total core/300 stretch, superseding old 300 additional / 360 total. PR #4620 brings the source to 108 total (18 per crew) on green merge; then 132 cards (22 per crew) remain to the core, not 252. Companion Conductor PR #6938 sets three thematic viable deck variants per faction and rare-safe pack math; both PRs await latest-head green verification.
-
-      RECONCILED 2026-11-11 PT: the collection and deck editor shipped and were superseded by
-      the CLASH-era work: 300 authored cards (t-018, t-020), owned-only collection with a
-      135-card base (#4996), art-forward deck builder with prebuilt starters (#4998), deck-as-
-      hand builder (#5005), Alliance deck library + Solo story deckbuilding (t-050). Remaining
-      card-art delivery lives in t-017/t-044/t-052/t-053; final visual QA in t-012.
+      Full history: projects/slime-city/HISTORY.md#t-006
     updated: '2026-11-11T22:56:49Z'
     owner: worker
     claimed_by: 2026-11-02T020221Z-slime-city-t006-b7c9
@@ -344,19 +311,9 @@ tasks:
     passes: 0
     stakes: reversible
     note: >-
-      Server-ledger match payout, earned card unlocks, loss consolation,
-      transparently priced Meat card purchases and PvE encounter draws,
-      explicit pool/minimum returns, rate control and no real-money
-      monetization or cash-out. Test farming, replay double-grants,
-      concurrency, exploit paths and collection persistence.
+      Server-ledger match payout, earned card unlocks, loss consolation, transparently priced Meat card purchases and PvE encounter draws, explicit pool/minimum returns, rate control and no real-money monetization or cash-out.
 
-      RECONCILED 2026-11-11 PT: earned Meat economy is live. server/api/slime-
-      city/finish.post.ts re-simulates the submitted CPU match commands server-side
-      (finishSlimeCityCpuMatch) before paying; progression.ts pays verified battles with a
-      10/day paid-battle cap, daily/weekly bounties with Pacific resets and receipts;
-      pack.post.ts sells Meat packs with duplicates; the city has one-time authored street
-      encounters per road; #5007 adds the after-match Meat breakdown. No real money or cash-
-      out anywhere.
+      Full history: projects/slime-city/HISTORY.md#t-008
     updated: '2026-11-11T22:56:52Z'
   - id: t-009
     milestone: m3
@@ -431,20 +388,9 @@ tasks:
     passes: 0
     stakes: reversible
     note: >-
-      Pacific-time reset, task category and eligibility, exact rewards,
-      no reclaims/double grants, persistent achievements, independent
-      challenges for different faction/flag/boss/rout/deck playstyles.
-      No pressure mechanics or premium currencies.
+      Pacific-time reset, task category and eligibility, exact rewards, no reclaims/double grants, persistent achievements, independent challenges for different faction/flag/boss/rout/deck playstyles.
 
-      MERGED 2026-11-11 PT: kind_robots#5024 squash 8e60bf5 (all 12 checks green). Eight
-      evergreen missions (first win, 3 and 6 crews, story rival bout, Tower win, a card at L3,
-      12 unlocked, 25 fights) in an optional evergreen ledger inside the account JSON, moved
-      only by server-replayed outcomes, claimed once ever through the existing claimChallenge
-      compare-and-swap; older saves restore empty; shown under COLLECTION / BOUNTIES.
-      Daily/weekly bounties were already live (t-008). Same PR finishes the t-055 multiplayer
-      route: finished-duel panel with REMATCH (private friend challenge, same crew), BACK TO
-      VS, SEE FINAL BOARD, forfeits included, and a W-L-D record on the VS PLAYERS card. Not
-      verified: 390/768/1440 screenshots (need a signed-in user; t-012/t-028).
+      Full history: projects/slime-city/HISTORY.md#t-010
     claimed_by: 2026-11-11T225402Z-slime-city-t-010-routes
     claimed_at: '2026-11-11T23:15:32Z'
     updated: '2026-11-11T23:45:09Z'
@@ -458,20 +404,9 @@ tasks:
     passes: 0
     stakes: reversible
     note: >-
-      Direct friend invitations in internal preview, turn ownership,
-      hidden-information redaction, server validation, timeouts,
-      deterministic shuffle/RNG, disconnection resume, permissions,
-      accessible turn log, anti-cheat adversarial tests. No public
-      matchmaking or externally announced multiplayer until approved.
+      Direct friend invitations in internal preview, turn ownership, hidden-information redaction, server validation, timeouts, deterministic shuffle/RNG, disconnection resume, permissions, accessible turn log, anti-cheat adversarial tests.
 
-      RECONCILED 2026-11-11 PT: delivered by slime-city/t-055 (see its note for the seven
-      merged kind_robots PRs): direct friend invitations, turn ownership, hidden-information
-      redaction, server-validated atomic commands, 7-day invite / 30-day inactivity expiry,
-      reconnect via saved duel id, participant-only forfeit, adversarial contract tests (npm
-      run test:slime-city-pvp). Its t-008 dependency is reconciled in the same PR. Note for
-      t-015: VS PLAYERS (friends, open challenges) is reachable by any signed-in player from
-      /play/slime-city since #4985/#5003; there is still no external promotion or
-      announcement.
+      Full history: projects/slime-city/HISTORY.md#t-011
     updated: '2026-11-11T22:56:43Z'
   - id: t-012
     milestone: m4
@@ -644,37 +579,10 @@ tasks:
     depends_on: t-027
     passes: 0
     stakes: reversible
-    note: |-
-      Silas, 2026-11-05 PT: "Decks should be 20 cards, not 10." t-027 gives FIVE ALLEYS 20-card crew decks first. This task moves the rest of the game: deck workbench legality (signature, creature/special minimums, mercenary cap scaled from 3 of 10), starter decks, campaign and story bouts, BLACKOUT's five-card hand and cycling, and the balance and constructed-deck tests, then re-measures crew balance (the t-021 and t-025 guards) on the new decks.
+    note: >-
+      Silas, 2026-11-05 PT: "Decks should be 20 cards, not 10." t-027 gives FIVE ALLEYS 20-card crew decks first.
 
-      Implemented a unified 20-card Solo/Alliance Clash surface, saved Alliance and Tower deck normalization, guaranteed legal turn-one draws when possible, explicit no-play pass, a new illustrated entrance and settings, and mercenary filtering plus tap-to-inspect card rules. Open implementation PR and verify all latest-head checks before merge. Historic legacy engines remain archived for replay compatibility.
-
-      PARTIAL MERGED 2026-11-09 PT: Kind Robots #4924 squash-merged at 8bfafce, all six latest-head workflows successful. Illustrated title/front door, settings, mercenary filter, tap-to-inspect card rules/L1-L3, explicit PASS, targeted hand legality and deterministic preservation of valid retired 30-card Alliance and Tower decks as 20-card saves are on main. Current main already had 20-card Solo/Alliance rules and improved faction balance; the old PR's Ironjaw 34.8% regression was NOT transplanted. Keep task ready for an adversarial opening-hand guarantee that preserves balance, 390/768/1440 layout acceptance and verifying remaining active-deck surfaces. No production deploy or human fun approval claimed.
-
-      2026-11-11 PT: opening-hand guarantee in review — kind_robots#4982. The round-1 opener's
-      single play may be a 2-slot power card when no 1-slot play is legal; dead starter
-      openings 1.5-8.4% (Ironjaw worst) -> <=0.03%. Replay-safe (legality only widens). 40/43
-      lab suites pass locally (3 need pinia). Remaining after merge: 390/768/1440 layout
-      acceptance.
-
-      2026-11-11 PT: MERGED kind_robots#4982 at 7bad1b9, all 11 checks green (TypeScript,
-      contract shards 1-4, layout-contract, Prettier). Opening-hand guarantee is on main. Re-
-      armed ready for the one remaining slice: 390/768/1440 layout acceptance of the active
-      20-card surfaces (no active surface still uses the legacy 10-card prototypes deck).
-
-      2026-11-11 PT: layout-acceptance attempt released, no diff. /play/slime-city needs a
-      signed-in user: the local nuxi dev server (no DB) shows only the login wall, and this
-      session's permission policy refused registering a disposable cypress-* user on
-      production for a Playwright pass. Next session with test-user access: sign in, then
-      capture 390/768/1440 of home, VS -> Fight CPU clash (20-card hand) and Collection; check
-      zero doc overflow and no spilling elements (script pattern: frontend-verification.md).
-      Production already serves a57e98c, so #4982 is live.
-
-      Reviewer reconciliation 2026-11-11 PT: the implementation shipped in
-      silasfelinus/kind_robots#4924 (head worker/slime-city-t028-frontdoor-e9c3, merged
-      2026-11-10 PT, body names conductor slime-city/t-028), and the 20-card Solo/Alliance
-      rules landed earlier in #4906/#4938. The task stayed at review with no PR recorded, so
-      this close-out records done.
+      Full history: projects/slime-city/HISTORY.md#t-028
     updated: '2026-11-11T22:51:50Z'
     owner: worker
     claimed_by: 2026-11-11T133600Z-slime-city-t028-layout-p3x9
@@ -1352,28 +1260,10 @@ tasks:
     passes: 0
     source_issue: "silasfelinus/kind_robots#4951"
     updated: '2026-11-11T22:56:25Z'
-    note: |-
-      FROM GITHUB ISSUE silasfelinus/kind_robots#4951 (https://github.com/silasfelinus/kind_robots/issues/4951), opened by @silasfelinus on 2026-11-10. Imported by scripts/sync_github_issues.py. Reference the issue in the implementing PR (`Closes silasfelinus/kind_robots#4951`) so it closes on merge; the bridge closes it otherwise once this task is done.
+    note: >-
+      FROM GITHUB ISSUE silasfelinus/kind_robots#4951 (https://github.com/silasfelinus/kind_robots/issues/4951), opened by @silasfelinus on 2026-11-10.
 
-      Silas 2026-11-09 PT: “build slime city multiplayer”. Deliver a scoped **admin-preview** PvP vertical slice without public launch: two authenticated human accounts, invite-code lobby, 20-card starter decks, existing three-stage CLASH evolution, server-owned turn transcript, hidden-hand redaction, strict seat authorization, atomic command serialization, reconnect via saved id, responsive art-led duel console, adversarial contract tests. Reuse existing SlimeCityMatch storage with separate `clash-pvp` mode, **no currency/rewards**, no schema migration or public matchmaking. Preserve older CPU modes. This is a technical slice of Conductor slime-city/t-011; unblock its economy dependency separately rather than silently completing it. Public Play exposure, real-user discovery and publishing remain a separate human gate.
-
-      2026-11-10 PT: Patched existing kind_robots PR #4952 branch to expire active PvP after 30 days of inactivity, waiting invites after 7 days, and retain settled match history. Added deterministic expiry and legacy JSON regression assertions. Commits 41845f9, aca9368, c77da8d. CI not yet reported; PR still merge-conflicted with main and unmerged. Next: reconcile, run checks, merge.
-
-      Implemented atomic participant-only PvP forfeit, idempotent retry, winner settlement, terminal command guard, store method, two-tap UI and contract assertions on existing kind_robots PR #4952. Latest commit 906f03c. No CI runs at head, merge conflict unresolved; keep open and do not deploy. Silas requests VS leftmost unified human/AI Solo/Alliance hub, saved decks, history and server-verified rewards; documented in roadmap issue #4535.
-
-      Adversarial PvP reconnect and stale-command recovery regression.
-
-      Adversarial review found rejected PvP moves and forfeits silently skipped server resync because sending=true; scoped fix and regression assertion prepared in kind_robots.
-
-      RECONCILED 2026-11-11 PT (Silas in-session: "clear roadmaps and finalize multiplayer and
-      single player routes"): the human-vs-human slice is merged and live. kind_robots #4952
-      (invite lobby, server transcript, hidden-hand redaction, seat auth, expiry, forfeit),
-      #4995 (stale-command/rejected-forfeit resync), #4983 (header shortcut + turn badge),
-      #4985/a4c4fd8 (/play/slime-city-pvp system route), #4993 (phone battle layout), #5001
-      (challenge friends, username/email invites, notifications), #5003 (open/private duels,
-      cancel/decline). Production /api/version serves e62577c, which contains all of them;
-      /play/slime-city-pvp returns 200. Finished-duel screen, rematch and W-L-D record follow
-      in the t-010 routes PR. Issue kind_robots#4951 is closed.
+      Full history: projects/slime-city/HISTORY.md#t-055
     owner: worker
     claimed_by: 2026-11-11T074350Z-slime-city-pvp-reconnect-6e8c2
     claimed_at: '2026-11-11T07:43:50Z'
@@ -1385,17 +1275,10 @@ tasks:
     passes: 0
     depends_on: t-021
     updated: '2026-11-11T20:17:20Z'
-    note: |-
-      Kaizen from t-021 (kind_robots#5021). The constructed-vs-constructed CLASH audit found Riot at 0.41-0.44 and Exchange around 0.60 across the constructed field, with the crew band deliberately loose (35-65%, spread <= 24 pts) because each ordered pairing gets only one bout. Add held-out seeds, or more bouts per pairing, so the crew rates are stable. Then decide whether Riot needs a lever (coordinate with t-051 fighters-first and t-052 ANARKISS reskin) and tighten the guard toward the starter guard. Internal preview only.
+    note: >-
+      Kaizen from t-021 (kind_robots#5021).
 
-      2026-11-11 PT: in review, kind_robots#5022. 4 bouts per ordered constructed pairing;
-      across five seed families Riot 0.430-0.473, Catgirls 0.435-0.457, Exchange 0.593-0.612,
-      spread 0.138-0.177. Riot needs no lever; Exchange running hot is the stable signal.
-      Guard tightened to 40-64% / 20-point spread.
-
-      2026-11-11 PT: MERGED kind_robots#5022 at fecfb71, all 11 checks green. Riot needs no
-      lever (0.430-0.473 over five seed families); Exchange ~0.60 is the stable outlier ->
-      kaizen t-057.
+      Full history: projects/slime-city/HISTORY.md#t-056
     owner: worker
     claimed_by: 2026-11-11T200500Z-slime-city-t056-riot-q8m3
     claimed_at: '2026-11-11T19:48:46Z'
@@ -1408,21 +1291,10 @@ tasks:
     passes: 0
     depends_on: t-056
     updated: '2026-11-11T21:22:22Z'
-    note: |-
-      Kaizen from t-056 (kind_robots#5022). At four bouts per ordered pairing, Exchange scored
-      0.593-0.612 across the constructed field in five disjoint seed families, the only crew
-      clearly outside the 40-seed starter band (42-58%). Find which Exchange decks or cards
-      carry it (the fighters build was 0.78), tune with an A/B on held-out seeds, keep the
-      starter guard green, then tighten verifySlimeCityClashConstructed toward 42-58% / 16 pts.
-      Internal preview only.
+    note: >-
+      Kaizen from t-056 (kind_robots#5022).
 
-      2026-11-11 PT: MERGED kind_robots#5023 at e62577c, all 11 checks green. Exchange's lead
-      was crew-wide (every constructed archetype ran hot, no single card carried it), so CALL
-      IN THE DEBT went from 5/8 to 4/7. Four seed families (0 tuned, 1-3 held out) now read
-      Exchange 0.552-0.569, Catgirls (the new low crew) 0.424-0.458, spread 0.113-0.141.
-      40-seed starters: Exchange 47.5% -> 45.8%, guard green. verifySlimeCityClashConstructed
-      tightened to 41-59% / 16 pts. 4/6 was rejected because it pushed the starter to 43.5%.
-      Internal preview only.
+      Full history: projects/slime-city/HISTORY.md#t-057
     owner: worker
     claimed_by: 2026-11-11T213000Z-slime-city-t057-exch-r7v2
     claimed_at: '2026-11-11T20:48:37Z'
@@ -1435,24 +1307,10 @@ tasks:
     passes: 0
     depends_on: t-057
     updated: '2026-11-12T00:26:24Z'
-    note: |-
-      Kaizen from t-057 (kind_robots#5023). With Exchange's CALL IN THE DEBT at 4/7, Catgirls
-      became the low crew in verifySlimeCityClashConstructed: 0.424-0.458 across seed families
-      0-3, while the floor is now 41%. Their 'fighters' (0.438) and 'specials' (0.178) builds lag
-      the field. The crafted Catgirls starter sits at 54% in the 40-seed sweep, so look at the
-      non-starter pool or the crew power first. Tune with an A/B on held-out seed families, keep
-      the starter guard green, then aim to tighten the constructed band to 42-58%. Internal
-      preview only.
+    note: >-
+      Kaizen from t-057 (kind_robots#5023).
 
-      2026-11-11 PT: kind_robots#5030 lifts NINE LIVES +2/+3 -> +3/+4 and tightens
-      verifySlimeCityClashConstructed to 42-58% / 15 pts. Families 0-3: Catgirls 0.433-0.463
-      -> 0.452-0.478; 40-seed starters 46.5-54.3%. Ablation found the larger drag is the CPU
-      over-valuing PIERCE gear vs unarmored fighters (Catgirls fighters deck 0.43 with
-      Surgical Piercers, 0.60 without); fixing it lifts Undertow starter to 59%, so filed as
-      t-064.
-
-      MERGED 2026-11-11 PT: kind_robots#5030 squash 5d7cce6 (11/11 checks green). Follow-up:
-      t-064 (PIERCE CPU valuation + starter rebalance).
+      Full history: projects/slime-city/HISTORY.md#t-058
     owner: worker
     claimed_by: 2026-11-11T234749Z-slime-city-t058-claude
     claimed_at: '2026-11-11T23:47:49Z'
