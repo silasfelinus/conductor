@@ -733,6 +733,21 @@ jobs:
         run: |
           bash scripts/checkpoint_art_state.sh "chore: checkpoint submitted ArtJob IDs [skip ci]"
 
+      # Classic Shifting Desks repaint rounds share destinations with older art.
+      # Record ONLY independently matched ArtJobs and media newer than each job.
+      # Checkpoint before long render waits so a timeout cannot lose provenance.
+      - name: Reconcile Shifting Desks Classic delivery evidence
+        if: ${{ steps.krhealth.outputs.up == 'true' }}
+        continue-on-error: true
+        timeout-minutes: 8
+        working-directory: conductor
+        env:
+          KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+          KR_BASE_URL: https://kindrobots.org
+        run: |
+          python projects/shifting-desks/art/reconcile_delivery.py --live --write
+          bash scripts/checkpoint_art_state.sh "chore: checkpoint Shifting Desks delivery evidence [skip ci]"
+
       # Settled cells (DONE with an ArtImage) are skipped, so this is one GET per
       # in-flight job, not per job ever submitted.
       - name: Refresh art ledger statuses
