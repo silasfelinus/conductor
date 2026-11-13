@@ -1,609 +1,123 @@
 {
-  "generated_at": "2026-11-12T15:00:01.761768+00:00",
+  "generated_at": "2026-11-13T15:00:02.228344+00:00",
   "host": "alexandria",
   "new": [
     {
       "baseline": null,
-      "container": "jellyfin",
-      "count": 4,
-      "fingerprint": "08f4d9c74321",
-      "sample": "Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.",
-      "severity": "error",
-      "skeleton": "microsoft.entityframeworkcore.dbupdateexception: an error occurred while saving the entity changes. see the inner exception for details."
-    },
-    {
-      "baseline": null,
-      "container": "jellyfin",
-      "count": 4,
-      "fingerprint": "1a0f4d9ad98a",
-      "sample": "---> Microsoft.Data.Sqlite.SqliteException (0x80004005): SQLite Error 19: 'FOREIGN KEY constraint failed'.",
-      "severity": "error",
-      "skeleton": "---> microsoft.data.sqlite.sqliteexception (<hex>): sqlite error <num>: <str>."
-    },
-    {
-      "baseline": null,
-      "container": "jellyfin",
-      "count": 4,
-      "fingerprint": "895822405825",
-      "sample": "--- End of inner exception stack trace ---",
-      "severity": "error",
-      "skeleton": "--- end of inner exception stack trace ---"
-    },
-    {
-      "baseline": null,
-      "container": "jellyfin",
-      "count": 4,
-      "fingerprint": "b1afc1ac61ce",
-      "sample": "[05:27:15] [WRN] [48] Emby.Server.Implementations.Library.Search.SearchManager: Search provider Database failed for term 'X'",
-      "severity": "warn",
-      "skeleton": "[<ts>] [wrn] [<num>] emby.server.implementations.library.search.searchmanager: search provider database failed for term <str>"
-    },
-    {
-      "baseline": null,
-      "container": "traefik",
-      "count": 2,
-      "fingerprint": "faf8b6d33045",
-      "sample": "2026-11-12T00:01:24-08:00 ERR error=\"building router handler: building TLS config: invalid CipherSuite: TLS_ECDHE_\" entryPointName=https routerName=code@docker",
-      "severity": "error",
-      "skeleton": "<ts> err error=<str> entrypointname=https routername=code@docker"
-    },
-    {
-      "baseline": null,
-      "container": "traefik",
-      "count": 2,
-      "fingerprint": "01652b25ec8c",
-      "sample": "2026-11-12T00:01:24-08:00 ERR error=\"building router handler: building TLS config: invalid CipherSuite: TLS_ECDHE_\" entryPointName=https routerName=prowlarr@docker",
-      "severity": "error",
-      "skeleton": "<ts> err error=<str> entrypointname=https routername=prowlarr@docker"
-    },
-    {
-      "baseline": null,
-      "container": "traefik",
-      "count": 2,
-      "fingerprint": "403df84b429d",
-      "sample": "2026-11-12T00:01:24-08:00 ERR error=\"building router handler: building TLS config: invalid CipherSuite: TLS_ECDHE_\" entryPointName=https routerName=tautulli@docker",
-      "severity": "error",
-      "skeleton": "<ts> err error=<str> entrypointname=https routername=tautulli@docker"
-    },
-    {
-      "baseline": null,
-      "container": "traefik",
-      "count": 2,
-      "fingerprint": "5bb1a86abd6b",
-      "sample": "2026-11-12T00:01:24-08:00 ERR error=\"building router handler: building TLS config: invalid CipherSuite: TLS_ECDHE_\" entryPointName=https routerName=media@docker",
-      "severity": "error",
-      "skeleton": "<ts> err error=<str> entrypointname=https routername=media@docker"
-    },
-    {
-      "baseline": null,
-      "container": "traefik",
-      "count": 2,
-      "fingerprint": "c5bc83f0c267",
-      "sample": "2026-11-12T00:01:24-08:00 ERR error=\"building router handler: building TLS config: invalid CipherSuite: TLS_ECDHE_\" entryPointName=https routerName=rainbowbutterflies@docker",
-      "severity": "error",
-      "skeleton": "<ts> err error=<str> entrypointname=https routername=rainbowbutterflies@docker"
-    },
-    {
-      "baseline": null,
-      "container": "traefik",
-      "count": 2,
-      "fingerprint": "59e5b259beeb",
-      "sample": "2026-11-12T00:01:24-08:00 ERR error=\"building router handler: building TLS config: invalid CipherSuite: TLS_ECDHE_\" entryPointName=https routerName=podgrab@docker",
-      "severity": "error",
-      "skeleton": "<ts> err error=<str> entrypointname=https routername=podgrab@docker"
-    },
-    {
-      "baseline": null,
-      "container": "traefik",
-      "count": 2,
-      "fingerprint": "544145934178",
-      "sample": "2026-11-12T00:01:24-08:00 ERR error=\"building router handler: building TLS config: invalid CipherSuite: TLS_ECDHE_\" entryPointName=https routerName=ownfoil@docker",
-      "severity": "error",
-      "skeleton": "<ts> err error=<str> entrypointname=https routername=ownfoil@docker"
-    },
-    {
-      "baseline": null,
-      "container": "traefik",
-      "count": 2,
-      "fingerprint": "0ca66d58876b",
-      "sample": "2026-11-12T00:01:24-08:00 ERR error=\"building router handler: building TLS config: invalid CipherSuite: TLS_ECDHE_\" entryPointName=https routerName=subtitles@docker",
-      "severity": "error",
-      "skeleton": "<ts> err error=<str> entrypointname=https routername=subtitles@docker"
-    },
-    {
-      "baseline": null,
-      "container": "traefik",
-      "count": 2,
-      "fingerprint": "00e0a57fb48a",
-      "sample": "2026-11-12T00:01:24-08:00 ERR error=\"building router handler: building TLS config: invalid CipherSuite: TLS_ECDHE_\" entryPointName=https routerName=radarr@docker",
-      "severity": "error",
-      "skeleton": "<ts> err error=<str> entrypointname=https routername=radarr@docker"
-    },
-    {
-      "baseline": null,
-      "container": "traefik",
-      "count": 2,
-      "fingerprint": "adb6fc0c59d2",
-      "sample": "2026-11-12T00:01:24-08:00 ERR error=\"building router handler: building TLS config: invalid CipherSuite: TLS_ECDHE_\" entryPointName=https routerName=adminer@file",
-      "severity": "error",
-      "skeleton": "<ts> err error=<str> entrypointname=https routername=adminer@file"
-    },
-    {
-      "baseline": null,
-      "container": "traefik",
-      "count": 2,
-      "fingerprint": "339fe88cf9a5",
-      "sample": "2026-11-12T00:01:24-08:00 ERR error=\"building router handler: building TLS config: invalid CipherSuite: TLS_ECDHE_\" entryPointName=https routerName=files@docker",
-      "severity": "error",
-      "skeleton": "<ts> err error=<str> entrypointname=https routername=files@docker"
-    },
-    {
-      "baseline": null,
-      "container": "traefik",
-      "count": 2,
-      "fingerprint": "fa959866b560",
-      "sample": "2026-11-12T00:01:24-08:00 ERR error=\"building router handler: building TLS config: invalid CipherSuite: TLS_ECDHE_\" entryPointName=https routerName=organizr@docker",
-      "severity": "error",
-      "skeleton": "<ts> err error=<str> entrypointname=https routername=organizr@docker"
-    },
-    {
-      "baseline": null,
-      "container": "traefik",
-      "count": 2,
-      "fingerprint": "98da4726ae24",
-      "sample": "2026-11-12T00:01:24-08:00 ERR error=\"building router handler: building TLS config: invalid CipherSuite: TLS_ECDHE_\" entryPointName=https routerName=kindrobots@file",
-      "severity": "error",
-      "skeleton": "<ts> err error=<str> entrypointname=https routername=kindrobots@file"
-    },
-    {
-      "baseline": null,
-      "container": "traefik",
-      "count": 2,
-      "fingerprint": "db4809d21d3f",
-      "sample": "2026-11-12T00:01:24-08:00 ERR error=\"building router handler: building TLS config: invalid CipherSuite: TLS_ECDHE_\" entryPointName=https routerName=audioask@docker",
-      "severity": "error",
-      "skeleton": "<ts> err error=<str> entrypointname=https routername=audioask@docker"
-    },
-    {
-      "baseline": null,
-      "container": "traefik",
-      "count": 2,
-      "fingerprint": "da1e6889708b",
-      "sample": "2026-11-12T00:01:24-08:00 ERR error=\"building router handler: building TLS config: invalid CipherSuite: TLS_ECDHE_\" entryPointName=https routerName=calibre@docker",
-      "severity": "error",
-      "skeleton": "<ts> err error=<str> entrypointname=https routername=calibre@docker"
-    },
-    {
-      "baseline": null,
-      "container": "traefik",
-      "count": 2,
-      "fingerprint": "9dfc7313664c",
-      "sample": "2026-11-12T00:01:24-08:00 ERR error=\"building router handler: building TLS config: invalid CipherSuite: TLS_ECDHE_\" entryPointName=https routerName=kapowarr@docker",
-      "severity": "error",
-      "skeleton": "<ts> err error=<str> entrypointname=https routername=kapowarr@docker"
-    },
-    {
-      "baseline": null,
-      "container": "traefik",
-      "count": 2,
-      "fingerprint": "3b95662a07e2",
-      "sample": "2026-11-12T00:01:24-08:00 ERR error=\"building router handler: building TLS config: invalid CipherSuite: TLS_ECDHE_\" entryPointName=https routerName=komga@docker",
-      "severity": "error",
-      "skeleton": "<ts> err error=<str> entrypointname=https routername=komga@docker"
-    },
-    {
-      "baseline": null,
-      "container": "traefik",
-      "count": 2,
-      "fingerprint": "262d641df543",
-      "sample": "2026-11-12T00:01:24-08:00 ERR error=\"building router handler: building TLS config: invalid CipherSuite: TLS_ECDHE_\" entryPointName=https routerName=https-api@docker",
-      "severity": "error",
-      "skeleton": "<ts> err error=<str> entrypointname=https routername=https-api@docker"
-    },
-    {
-      "baseline": null,
-      "container": "traefik",
-      "count": 2,
-      "fingerprint": "6f832d40e32e",
-      "sample": "2026-11-12T00:01:24-08:00 ERR error=\"building router handler: building TLS config: invalid CipherSuite: TLS_ECDHE_\" entryPointName=https routerName=comfy@file",
-      "severity": "error",
-      "skeleton": "<ts> err error=<str> entrypointname=https routername=comfy@file"
-    },
-    {
-      "baseline": null,
-      "container": "traefik",
-      "count": 2,
-      "fingerprint": "2f67e7a29fb2",
-      "sample": "2026-11-12T00:01:24-08:00 ERR error=\"building router handler: building TLS config: invalid CipherSuite: TLS_ECDHE_\" entryPointName=https routerName=hairbysuperkate@file",
-      "severity": "error",
-      "skeleton": "<ts> err error=<str> entrypointname=https routername=hairbysuperkate@file"
-    },
-    {
-      "baseline": null,
-      "container": "traefik",
-      "count": 2,
-      "fingerprint": "a70a658ae961",
-      "sample": "2026-11-12T00:01:24-08:00 ERR error=\"building router handler: building TLS config: invalid CipherSuite: TLS_ECDHE_\" entryPointName=https routerName=lola@file",
-      "severity": "error",
-      "skeleton": "<ts> err error=<str> entrypointname=https routername=lola@file"
-    },
-    {
-      "baseline": null,
-      "container": "traefik",
-      "count": 2,
-      "fingerprint": "a00b7a55589f",
-      "sample": "2026-11-12T00:01:24-08:00 ERR error=\"building router handler: building TLS config: invalid CipherSuite: TLS_ECDHE_\" entryPointName=https routerName=https-comfyui@docker",
-      "severity": "error",
-      "skeleton": "<ts> err error=<str> entrypointname=https routername=https-comfyui@docker"
-    },
-    {
-      "baseline": null,
-      "container": "traefik",
-      "count": 2,
-      "fingerprint": "db7d343aa99b",
-      "sample": "2026-11-12T00:01:24-08:00 ERR error=\"building router handler: building TLS config: invalid CipherSuite: TLS_ECDHE_\" entryPointName=https routerName=humboldtscoopsolutions@file",
-      "severity": "error",
-      "skeleton": "<ts> err error=<str> entrypointname=https routername=humboldtscoopsolutions@file"
-    },
-    {
-      "baseline": null,
-      "container": "traefik",
-      "count": 2,
-      "fingerprint": "9fb4b5f639ec",
-      "sample": "2026-11-12T00:01:24-08:00 ERR error=\"building router handler: building TLS config: invalid CipherSuite: TLS_ECDHE_\" entryPointName=https routerName=auth@docker",
-      "severity": "error",
-      "skeleton": "<ts> err error=<str> entrypointname=https routername=auth@docker"
-    },
-    {
-      "baseline": null,
-      "container": "traefik",
-      "count": 2,
-      "fingerprint": "ba7d4d286644",
-      "sample": "2026-11-12T00:01:24-08:00 ERR error=\"building router handler: building TLS config: invalid CipherSuite: TLS_ECDHE_\" entryPointName=https routerName=photos@docker",
-      "severity": "error",
-      "skeleton": "<ts> err error=<str> entrypointname=https routername=photos@docker"
-    },
-    {
-      "baseline": null,
-      "container": "traefik",
-      "count": 2,
-      "fingerprint": "8335a2f2bbbc",
-      "sample": "2026-11-12T00:01:24-08:00 ERR error=\"building router handler: building TLS config: invalid CipherSuite: TLS_ECDHE_\" entryPointName=https routerName=requests@docker",
-      "severity": "error",
-      "skeleton": "<ts> err error=<str> entrypointname=https routername=requests@docker"
-    },
-    {
-      "baseline": null,
-      "container": "traefik",
-      "count": 2,
-      "fingerprint": "2281a3bb698c",
-      "sample": "2026-11-12T00:01:24-08:00 ERR error=\"building router handler: building TLS config: invalid CipherSuite: TLS_ECDHE_\" entryPointName=https routerName=qbit@docker",
-      "severity": "error",
-      "skeleton": "<ts> err error=<str> entrypointname=https routername=qbit@docker"
-    },
-    {
-      "baseline": null,
-      "container": "traefik",
-      "count": 2,
-      "fingerprint": "294c169021e5",
-      "sample": "2026-11-12T00:01:24-08:00 ERR error=\"building router handler: building TLS config: invalid CipherSuite: TLS_ECDHE_\" entryPointName=https routerName=explore@docker",
-      "severity": "error",
-      "skeleton": "<ts> err error=<str> entrypointname=https routername=explore@docker"
-    },
-    {
-      "baseline": null,
-      "container": "traefik",
-      "count": 2,
-      "fingerprint": "65ee625ba848",
-      "sample": "2026-11-12T00:01:24-08:00 ERR error=\"building router handler: building TLS config: invalid CipherSuite: TLS_ECDHE_\" entryPointName=https routerName=audiobookshelf@docker",
-      "severity": "error",
-      "skeleton": "<ts> err error=<str> entrypointname=https routername=audiobookshelf@docker"
-    },
-    {
-      "baseline": null,
-      "container": "traefik",
-      "count": 2,
-      "fingerprint": "ad8c2c6a4ef9",
-      "sample": "2026-11-12T00:01:24-08:00 ERR error=\"building router handler: building TLS config: invalid CipherSuite: TLS_ECDHE_\" entryPointName=https routerName=ubooquity@docker",
-      "severity": "error",
-      "skeleton": "<ts> err error=<str> entrypointname=https routername=ubooquity@docker"
-    },
-    {
-      "baseline": null,
-      "container": "traefik",
-      "count": 2,
-      "fingerprint": "7c1e22cff79b",
-      "sample": "2026-11-12T00:01:24-08:00 ERR error=\"building router handler: building TLS config: invalid CipherSuite: TLS_ECDHE_\" entryPointName=https routerName=recipes@docker",
-      "severity": "error",
-      "skeleton": "<ts> err error=<str> entrypointname=https routername=recipes@docker"
-    },
-    {
-      "baseline": null,
-      "container": "traefik",
-      "count": 2,
-      "fingerprint": "26fce9291e6c",
-      "sample": "2026-11-12T00:01:24-08:00 ERR error=\"building router handler: building TLS config: invalid CipherSuite: TLS_ECDHE_\" entryPointName=https routerName=sab@docker",
-      "severity": "error",
-      "skeleton": "<ts> err error=<str> entrypointname=https routername=sab@docker"
-    },
-    {
-      "baseline": null,
-      "container": "traefik",
-      "count": 2,
-      "fingerprint": "2a01ee187fed",
-      "sample": "2026-11-12T00:01:24-08:00 ERR error=\"building router handler: building TLS config: invalid CipherSuite: TLS_ECDHE_\" entryPointName=https routerName=logs@docker",
-      "severity": "error",
-      "skeleton": "<ts> err error=<str> entrypointname=https routername=logs@docker"
-    },
-    {
-      "baseline": null,
-      "container": "traefik",
-      "count": 2,
-      "fingerprint": "1b382d85d3a4",
-      "sample": "2026-11-12T00:01:24-08:00 ERR error=\"building router handler: building TLS config: invalid CipherSuite: TLS_ECDHE_\" entryPointName=https routerName=jellyfin@docker",
-      "severity": "error",
-      "skeleton": "<ts> err error=<str> entrypointname=https routername=jellyfin@docker"
-    },
-    {
-      "baseline": null,
-      "container": "traefik",
-      "count": 2,
-      "fingerprint": "3bf1ba2a8b4a",
-      "sample": "2026-11-12T00:01:24-08:00 ERR error=\"building router handler: building TLS config: invalid CipherSuite: TLS_ECDHE_\" entryPointName=https routerName=books@docker",
-      "severity": "error",
-      "skeleton": "<ts> err error=<str> entrypointname=https routername=books@docker"
-    },
-    {
-      "baseline": null,
-      "container": "traefik",
-      "count": 2,
-      "fingerprint": "414c5cc40b93",
-      "sample": "2026-11-12T00:01:24-08:00 ERR error=\"building router handler: building TLS config: invalid CipherSuite: TLS_ECDHE_\" entryPointName=https routerName=rainbowbutterflies@file",
-      "severity": "error",
-      "skeleton": "<ts> err error=<str> entrypointname=https routername=rainbowbutterflies@file"
-    },
-    {
-      "baseline": null,
-      "container": "traefik",
-      "count": 2,
-      "fingerprint": "0e7e98500098",
-      "sample": "2026-11-12T00:01:24-08:00 ERR error=\"building router handler: building TLS config: invalid CipherSuite: TLS_ECDHE_\" entryPointName=https routerName=sonarr@docker",
-      "severity": "error",
-      "skeleton": "<ts> err error=<str> entrypointname=https routername=sonarr@docker"
-    },
-    {
-      "baseline": null,
-      "container": "traefik",
-      "count": 2,
-      "fingerprint": "e8bd82757ae0",
-      "sample": "2026-11-12T00:01:24-08:00 ERR error=\"building router handler: building TLS config: invalid CipherSuite: TLS_ECDHE_\" entryPointName=https routerName=serendipity-alexa@file",
-      "severity": "error",
-      "skeleton": "<ts> err error=<str> entrypointname=https routername=serendipity-alexa@file"
-    },
-    {
-      "baseline": null,
-      "container": "auth",
-      "count": 2,
-      "fingerprint": "c68bd81c0d66",
-      "sample": "time=\"2026-11-12T00:03:35-08:00\" level=error msg=\"Error occurred while attempting to authenticate a request\" error=\"header Authorization expected\" method=GET path=/api/verify remote_ip=160.79.106.236",
-      "severity": "error",
-      "skeleton": "time=<str> level=error msg=<str> error=<str> method=get path=<path>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
+      "container": "audiobookshelf",
       "count": 1,
-      "fingerprint": "cb15b5a96032",
-      "sample": "time=2026-11-12T00:16:54.161-08:00 comm=netdata source=daemon level=error errno=\"2, No such file or directory\" tid=802585 thread=ACLK_MAIN msg=\"ACLK: Cloud returned EC=\\\"n85Av424Yh-7918515\\\", Msg-Key:",
-      "severity": "error",
-      "skeleton": "time=<ts> comm=netdata source=daemon level=error errno=<str> tid=<num> thread=aclk_main msg=<str>n85av424yh-<num>\\<str>erragentalreadyconnected\\<str>delay retry <num>: agent already connected\\<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 1,
-      "fingerprint": "940052cd5ccf",
-      "sample": "time=2026-11-12T00:17:39.661-08:00 comm=netdata source=daemon level=error errno=\"2, No such file or directory\" tid=802585 thread=ACLK_MAIN msg=\"ACLK: Cloud returned EC=\\\"z6EgG6LNdm-9305595\\\", Msg-Key:",
-      "severity": "error",
-      "skeleton": "time=<ts> comm=netdata source=daemon level=error errno=<str> tid=<num> thread=aclk_main msg=<str>z6egg6lndm-<num>\\<str>erragentalreadyconnected\\<str>delay retry <num>: agent already connected\\<str>"
-    },
-    {
-      "baseline": null,
-      "container": "traefik",
-      "count": 1,
-      "fingerprint": "44b64daca8a5",
-      "sample": "2026-11-12T00:01:24-08:00 ERR Error during the build of the default TLS configuration error=\"building TLS config: invalid CipherSuite: TLS_ECDHE_\" entryPointName=kinddb",
-      "severity": "error",
-      "skeleton": "<ts> err error during the build of the default tls configuration error=<str> entrypointname=kinddb"
-    },
-    {
-      "baseline": null,
-      "container": "traefik",
-      "count": 1,
-      "fingerprint": "656d1acdac06",
-      "sample": "2026-11-12T00:01:24-08:00 ERR Error during the build of the default TLS configuration error=\"building TLS config: invalid CipherSuite: TLS_ECDHE_\" entryPointName=traefik",
-      "severity": "error",
-      "skeleton": "<ts> err error during the build of the default tls configuration error=<str> entrypointname=traefik"
-    },
-    {
-      "baseline": null,
-      "container": "traefik",
-      "count": 1,
-      "fingerprint": "005dd1c05939",
-      "sample": "2026-11-12T00:01:24-08:00 ERR Error during the build of the default TLS configuration error=\"building TLS config: invalid CipherSuite: TLS_ECDHE_\" entryPointName=http",
-      "severity": "error",
-      "skeleton": "<ts> err error during the build of the default tls configuration error=<str> entrypointname=http"
-    },
-    {
-      "baseline": null,
-      "container": "traefik",
-      "count": 1,
-      "fingerprint": "88caa9b11402",
-      "sample": "2026-11-12T00:01:24-08:00 ERR Error during the build of the default TLS configuration error=\"building TLS config: invalid CipherSuite: TLS_ECDHE_\" entryPointName=https",
-      "severity": "error",
-      "skeleton": "<ts> err error during the build of the default tls configuration error=<str> entrypointname=https"
-    },
-    {
-      "baseline": null,
-      "container": "tautulli",
-      "count": 1,
-      "fingerprint": "f88d581b6003",
-      "sample": "2026-11-11 18:12:36 - WARNING :: Thread-20 (run) : Tautulli Pmsconnect :: Unable to parse XML for get_current_activity: 'NoneType' object has no attribute 'getElementsByTagName'.",
-      "severity": "warn",
-      "skeleton": "<ts> - warning :: thread-<num> (run) : tautulli pmsconnect :: unable to parse xml for get_current_activity: <str> object has no attribute <str>."
-    },
-    {
-      "baseline": null,
-      "container": "jellyfin",
-      "count": 1,
-      "fingerprint": "fc4d7561e467",
-      "sample": "[05:03:52] [ERR] [60] Microsoft.EntityFrameworkCore.Database.Command: Failed executing DbCommand (8ms) [Parameters=[@p0='?' (Size = 36), @p1='?' (DbType = Guid), @p2='?' (DbType = Guid), @p3='?' (DbTy",
-      "severity": "error",
-      "skeleton": "[<ts>] [err] [<num>] microsoft.entityframeworkcore.database.command: failed executing dbcommand (<num>) [parameters=[@p0=<str> (size = <num>), @p1=<str> (dbtype = guid), @p2=<str> (dbtype = guid), @p3=<str> (dbtype = int32), @p4=<str> (dbtype = boolean), @p5=<str> (dbtype = datetime), @p6=<str> (dbt"
-    },
-    {
-      "baseline": null,
-      "container": "jellyfin",
-      "count": 1,
-      "fingerprint": "4be1c2f6fc13",
-      "sample": "[05:03:52] [ERR] [60] Microsoft.EntityFrameworkCore.Update: An exception occurred in the database while saving changes for context type 'Jellyfin.Database.Implementations.JellyfinDbContext'.",
-      "severity": "error",
-      "skeleton": "[<ts>] [err] [<num>] microsoft.entityframeworkcore.update: an exception occurred in the database while saving changes for context type <str>."
-    },
-    {
-      "baseline": null,
-      "container": "jellyfin",
-      "count": 1,
-      "fingerprint": "b150ba18c1e6",
-      "sample": "[05:03:52] [ERR] [60] Jellyfin.Database.Implementations.JellyfinDbContext: Error trying to save changes.",
-      "severity": "error",
-      "skeleton": "[<ts>] [err] [<num>] jellyfin.database.implementations.jellyfindbcontext: error trying to save changes."
-    },
-    {
-      "baseline": null,
-      "container": "jellyfin",
-      "count": 1,
-      "fingerprint": "af3882a24600",
-      "sample": "[05:03:52] [ERR] [60] Jellyfin.Api.Middleware.ExceptionMiddleware: Error processing request. URL POST <REDACTED-BLOB>.",
-      "severity": "error",
-      "skeleton": "[<ts>] [err] [<num>] jellyfin.api.middleware.exceptionmiddleware: error processing request. url post <redacted-blob>."
+      "fingerprint": "5237461d3947",
+      "sample": "[2026-11-12 12:46:06.218] INFO: [SocketAuthority] Socket 6VwkCPLr5VwlUWJyAABb disconnected from client \"superkate\" after 195970ms (Reason: ping timeout)",
+      "severity": "other",
+      "skeleton": "[<ts>] info: [socketauthority] socket 6vwkcplr5vwluwjyaabb disconnected from client <str> after <num> (reason: ping timeout)"
     },
     {
       "baseline": null,
       "container": "audiobookshelf",
       "count": 1,
-      "fingerprint": "8b7f299d501b",
-      "sample": "[2026-11-11 08:32:08.534] INFO: [SocketAuthority] Socket zV2p84DrYIEHDa1KAAA1 disconnected from client \"superkate\" after 120209ms (Reason: ping timeout)",
+      "fingerprint": "9436045eb36d",
+      "sample": "[2026-11-12 12:53:03.647] INFO: [SocketAuthority] Socket ioS5MCCCBmGSd-iqAABd disconnected from client \"superkate\" after 145385ms (Reason: ping timeout)",
       "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket zv2p84dryiehda1kaaa1 disconnected from client <str> after <num> (reason: ping timeout)"
+      "skeleton": "[<ts>] info: [socketauthority] socket ios5mcccbmgsd-iqaabd disconnected from client <str> after <num> (reason: ping timeout)"
     },
     {
       "baseline": null,
       "container": "audiobookshelf",
       "count": 1,
-      "fingerprint": "9264a5287f13",
-      "sample": "[2026-11-11 09:18:06.613] INFO: [SocketAuthority] Socket owiNVRbalmXbrZ-WAAA3 disconnected from client \"superkate\" after 206937ms (Reason: ping timeout)",
+      "fingerprint": "a49804dde161",
+      "sample": "[2026-11-12 13:02:13.951] INFO: [SocketAuthority] Socket FhfzhfHDiwmYNMBgAABf disconnected from client \"superkate\" after 95020ms (Reason: ping timeout)",
       "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket owinvrbalmxbrz-waaa3 disconnected from client <str> after <num> (reason: ping timeout)"
+      "skeleton": "[<ts>] info: [socketauthority] socket fhfzhfhdiwmynmbgaabf disconnected from client <str> after <num> (reason: ping timeout)"
     },
     {
       "baseline": null,
       "container": "audiobookshelf",
       "count": 1,
-      "fingerprint": "ff0c8d43c084",
-      "sample": "[2026-11-11 09:33:18.882] INFO: [SocketAuthority] Socket -0dQTWzYeCkVj5gLAAA5 disconnected from client \"superkate\" after 95066ms (Reason: ping timeout)",
+      "fingerprint": "5f41bca00839",
+      "sample": "[2026-11-12 13:12:51.746] INFO: [SocketAuthority] Socket 26q2qJtm-InVHc0bAABh disconnected from client \"superkate\" after 95313ms (Reason: ping timeout)",
       "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket -0dqtwzyeckvj5glaaa5 disconnected from client <str> after <num> (reason: ping timeout)"
+      "skeleton": "[<ts>] info: [socketauthority] socket 26q2qjtm-invhc0baabh disconnected from client <str> after <num> (reason: ping timeout)"
     },
     {
       "baseline": null,
       "container": "audiobookshelf",
       "count": 1,
-      "fingerprint": "cd84bd94e4ee",
-      "sample": "[2026-11-11 15:19:49.211] INFO: [SocketAuthority] Socket zB5a6Le44HkjdJ95AAA7 disconnected from client \"superkate\" after 145837ms (Reason: ping timeout)",
+      "fingerprint": "bfc153a90459",
+      "sample": "[2026-11-12 13:17:44.172] INFO: [SocketAuthority] Socket PdnGi8nfQVvqL0ZnAABj disconnected from client \"superkate\" after 95378ms (Reason: ping timeout)",
       "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket zb5a6le44hkjdj95aaa7 disconnected from client <str> after <num> (reason: ping timeout)"
+      "skeleton": "[<ts>] info: [socketauthority] socket pdngi8nfqvvql0znaabj disconnected from client <str> after <num> (reason: ping timeout)"
     },
     {
       "baseline": null,
       "container": "audiobookshelf",
       "count": 1,
-      "fingerprint": "a43e80023586",
-      "sample": "[2026-11-11 15:23:10.755] INFO: [SocketAuthority] Socket 7VF5gOz8RanVCaOkAAA9 disconnected from client \"superkate\" after 95368ms (Reason: ping timeout)",
+      "fingerprint": "be3e4ae18702",
+      "sample": "[2026-11-12 13:20:46.365] INFO: [SocketAuthority] Socket 93D8VVgBsuML_kEIAABl disconnected from client \"superkate\" after 95211ms (Reason: ping timeout)",
       "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket 7vf5goz8ranvcaokaaa9 disconnected from client <str> after <num> (reason: ping timeout)"
+      "skeleton": "[<ts>] info: [socketauthority] socket 93d8vvgbsuml_keiaabl disconnected from client <str> after <num> (reason: ping timeout)"
     },
     {
       "baseline": null,
       "container": "audiobookshelf",
       "count": 1,
-      "fingerprint": "181300ff307a",
-      "sample": "[2026-11-11 17:08:33.067] INFO: [SocketAuthority] Socket zuEM-L2Py-6aayTVAAA_ disconnected from client \"superkate\" after 120439ms (Reason: ping timeout)",
+      "fingerprint": "3c1523e80e5f",
+      "sample": "[2026-11-12 13:48:03.035] INFO: [SocketAuthority] Socket yvujudh3zH9r6lOoAABn disconnected from client \"superkate\" after 95504ms (Reason: ping timeout)",
       "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket zuem-l2py-6aaytvaaa_ disconnected from client <str> after <num> (reason: ping timeout)"
+      "skeleton": "[<ts>] info: [socketauthority] socket yvujudh3zh9r6looaabn disconnected from client <str> after <num> (reason: ping timeout)"
     },
     {
       "baseline": null,
       "container": "audiobookshelf",
       "count": 1,
-      "fingerprint": "5d0c43b6a6c0",
-      "sample": "[2026-11-11 17:14:00.525] INFO: [SocketAuthority] Socket lmngZgcoJn5iBcEbAABB disconnected from client \"superkate\" after 120531ms (Reason: ping timeout)",
+      "fingerprint": "f17650353f94",
+      "sample": "[2026-11-12 13:59:07.291] INFO: [SocketAuthority] Socket R3Bj2nfuLdvEWhEeAABp disconnected from client \"superkate\" after 95124ms (Reason: ping timeout)",
       "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket lmngzgcojn5ibcebaabb disconnected from client <str> after <num> (reason: ping timeout)"
+      "skeleton": "[<ts>] info: [socketauthority] socket r3bj2nfuldvewheeaabp disconnected from client <str> after <num> (reason: ping timeout)"
     },
     {
       "baseline": null,
       "container": "audiobookshelf",
       "count": 1,
-      "fingerprint": "cea69760a9b9",
-      "sample": "[2026-11-11 17:47:28.805] INFO: [SocketAuthority] Socket 79dvbUodrPVEYGq9AABD disconnected from client \"superkate\" after 95974ms (Reason: ping timeout)",
+      "fingerprint": "c05577eedaec",
+      "sample": "[2026-11-12 16:38:02.471] INFO: [SocketAuthority] Socket W5oagZlj7BuBLziRAABr disconnected from client \"superkate\" after 145714ms (Reason: ping timeout)",
       "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket 79dvbuodrpveygq9aabd disconnected from client <str> after <num> (reason: ping timeout)"
+      "skeleton": "[<ts>] info: [socketauthority] socket w5oagzlj7bublziraabr disconnected from client <str> after <num> (reason: ping timeout)"
     },
     {
       "baseline": null,
       "container": "audiobookshelf",
       "count": 1,
-      "fingerprint": "4d7506f7a7fe",
-      "sample": "[2026-11-11 20:48:53.441] INFO: [SocketAuthority] Socket lsbai5Pw59X-KyLWAABR disconnected from client \"superkate\" after 95119ms (Reason: ping timeout)",
+      "fingerprint": "0dd60e343807",
+      "sample": "[2026-11-12 16:44:51.582] INFO: [SocketAuthority] Socket XN1mkKObVuc8Rb4KAABt disconnected from client \"superkate\" after 399462ms (Reason: ping timeout)",
       "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket lsbai5pw59x-kylwaabr disconnected from client <str> after <num> (reason: ping timeout)"
+      "skeleton": "[<ts>] info: [socketauthority] socket xn1mkkobvuc8rb4kaabt disconnected from client <str> after <num> (reason: ping timeout)"
     },
     {
       "baseline": null,
       "container": "audiobookshelf",
       "count": 1,
-      "fingerprint": "0ee0bb610dbc",
-      "sample": "[2026-11-12 06:28:51.918] INFO: [SocketAuthority] Socket nf77Smy-_ZfJjI7uAABX disconnected from client \"superkate\" after 95054ms (Reason: ping timeout)",
+      "fingerprint": "ace805ee00c0",
+      "sample": "[2026-11-12 18:40:40.768] INFO: [SocketAuthority] Socket B_ARzds3NKQy2uHGAABv disconnected from client \"superkate\" after 195297ms (Reason: ping timeout)",
       "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket nf77smy-_zfjji7uaabx disconnected from client <str> after <num> (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "2c7c8743e672",
-      "sample": "[2026-11-12 06:51:26.843] INFO: [SocketAuthority] Socket NvQg5wNN8pgF5vDzAABZ disconnected from client \"superkate\" after 145195ms (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket nvqg5wnn8pgf5vdzaabz disconnected from client <str> after <num> (reason: ping timeout)"
+      "skeleton": "[<ts>] info: [socketauthority] socket b_arzds3nkqy2uhgaabv disconnected from client <str> after <num> (reason: ping timeout)"
     }
   ],
   "quiet": [
     {
-      "baseline": 19.0,
+      "baseline": 18.0,
+      "container": "proxysql",
+      "count": 0,
+      "fingerprint": "9caf510b320a",
+      "sample": "2026-11-11 08:13:39 MySQL_Session.cpp:6731:<REDACTED-BLOB>(): [WARNING] Error during query on (10,mariadb-kindrobots2,3306,44026): 1062, Duplicate entry 'compartmented-mourner' for key 'Facet_slug_key",
+      "severity": "warn",
+      "skeleton": "<ts> mysql_session.cpp:<num>:<redacted-blob>(): [warning] error during query on (<num>,mariadb-kindrobots2,<num>,<num>): <num>, duplicate entry <str> for key <str>"
+    },
+    {
+      "baseline": 18.0,
       "container": "hairpress",
       "count": 0,
       "fingerprint": "b32e674d9dd1",
       "sample": "[Wed Nov 11 03:43:20.821607 2026] [autoindex:error] [pid 56:tid 56] [client 52.242.132.37:0] AH01276: Cannot serve directory /var/www/html/wp-admin/js/: No matching DirectoryIndex (index.php,index.htm",
-      "severity": "error",
-      "skeleton": "[<ts>] [autoindex:error] [pid <num>:tid <num>] [client <ip>] ah01276: cannot serve directory <path>"
-    },
-    {
-      "baseline": 12.0,
-      "container": "scoopspress",
-      "count": 0,
-      "fingerprint": "e9aa591b1dc1",
-      "sample": "[Sun Nov 08 10:17:10.793842 2026] [autoindex:error] [pid 29:tid 29] [client 20.46.43.126:0] AH01276: Cannot serve directory /var/www/html/wp-includes/IXR/: No matching DirectoryIndex (index.php,index.",
       "severity": "error",
       "skeleton": "[<ts>] [autoindex:error] [pid <num>:tid <num>] [client <ip>] ah01276: cannot serve directory <path>"
     },
@@ -622,274 +136,247 @@
     "containers_scanned": 44,
     "containers_total": 44,
     "high_cardinality": [],
-    "lines_matched": 10082,
-    "lines_read": 153655,
-    "signatures_total": 201,
+    "lines_matched": 2421,
+    "lines_read": 135272,
+    "signatures_total": 110,
     "truncated": []
   },
   "spiking": [
     {
       "baseline": 0.0,
       "container": "qbit",
-      "count": 7949,
+      "count": 835,
       "fingerprint": "46d08c635a8f",
-      "sample": "Thu Nov 12 03:23:17 2026 AEAD Decrypt error: bad packet ID (may be a replay): [ #11011670 ] -- see the man page entry for --no-replay and --replay-window for more info or silence this warning with --m",
+      "sample": "Thu Nov 12 23:45:08 2026 AEAD Decrypt error: bad packet ID (may be a replay): [ #32542957 ] -- see the man page entry for --no-replay and --replay-window for more info or silence this warning with --m",
       "severity": "error",
       "skeleton": "<ts> aead decrypt error: bad packet id (may be a replay): [ #<hex> ] -- see the man page entry for --no-replay and --replay-window for more info or silence this warning with --mute-replay-warnings"
-    },
-    {
-      "baseline": 0.0,
-      "container": "prowlarr",
-      "count": 101,
-      "fingerprint": "50644f7835da",
-      "sample": "[Warn] Cardigann: [torrentdownload] Invalid category for value: 'VideoAnime'",
-      "severity": "warn",
-      "skeleton": "[warn] cardigann: [torrentdownload] invalid category for value: <str>"
-    },
-    {
-      "baseline": 0.0,
-      "container": "prowlarr",
-      "count": 101,
-      "fingerprint": "fbff6d0bedfc",
-      "sample": "[Warn] Cardigann: Invalid Release: '[AnimeRG] Prison School   01 (1080p) Kangoku Gakuen 1 MP4 [KoTuWa]' from indexer: TorrentDownload. No categories provided.",
-      "severity": "warn",
-      "skeleton": "[warn] cardigann: invalid release: <str> from indexer: torrentdownload. no categories provided."
-    },
-    {
-      "baseline": 0.0,
-      "container": "komga",
-      "count": 66,
-      "fingerprint": "c4a56760173f",
-      "sample": "2026-11-11T23:59:19.293-08:00  WARN 1 --- [taskProcessor-1] org.apache.pdfbox.pdfparser.COSParser    : found wrong object number. expected [2] found [1]",
-      "severity": "warn",
-      "skeleton": "<ts> warn <num> --- [taskprocessor-<num>] org.apache.pdfbox.pdfparser.cosparser : found wrong object number. expected [<num>] found [<num>]"
     }
   ],
   "top": [
     {
       "baseline": null,
       "container": "qbit",
-      "count": 7949,
+      "count": 835,
       "fingerprint": "46d08c635a8f",
-      "sample": "Thu Nov 12 03:23:17 2026 AEAD Decrypt error: bad packet ID (may be a replay): [ #11011670 ] -- see the man page entry for --no-replay and --replay-window for more info or silence this warning with --m",
+      "sample": "Thu Nov 12 23:45:08 2026 AEAD Decrypt error: bad packet ID (may be a replay): [ #32542957 ] -- see the man page entry for --no-replay and --replay-window for more info or silence this warning with --m",
       "severity": "error",
       "skeleton": "<ts> aead decrypt error: bad packet id (may be a replay): [ #<hex> ] -- see the man page entry for --no-replay and --replay-window for more info or silence this warning with --mute-replay-warnings"
     },
     {
       "baseline": null,
-      "container": "proxysql",
-      "count": 531,
-      "fingerprint": "a9cfc33818b3",
-      "sample": "2026-11-11 07:25:38 MySQL_Thread.cpp:5131:ProcessAllSessions_Healthy0(): [WARNING] Closing unhealthy client connection 172.21.0.1:49864 , user 'kindrobot_migrate' , hostgroup 30 , connection 43988",
-      "severity": "warn",
-      "skeleton": "<ts> mysql_thread.cpp<ip>processallsessions_healthy0(): [warning] closing unhealthy client connection <ip> , user <str> , hostgroup <num> , connection <num>"
-    },
-    {
-      "baseline": null,
       "container": "scoopspress",
-      "count": 425,
+      "count": 713,
       "fingerprint": "6497ddc377f6",
-      "sample": "[Wed Nov 11 19:45:12.888048 2026] [php:warn] [pid 26:tid 26] [client 75.111.66.70:0] PHP Warning:  Undefined variable $enable_postal_code in <REDACTED-BLOB>.cf7sa.front.action.php on line 90",
+      "sample": "[Thu Nov 12 07:45:33.266039 2026] [php:warn] [pid 33:tid 33] [client 66.132.224.82:0] PHP Warning:  Undefined variable $enable_postal_code in <REDACTED-BLOB>.cf7sa.front.action.php on line 90",
       "severity": "warn",
       "skeleton": "[<ts>] [php:warn] [pid <num>:tid <num>] [client <ip>] php warning: undefined variable $enable_postal_code in <redacted-blob>.cf7sa.front.action.php on line <num>"
     },
     {
       "baseline": null,
+      "container": "proxysql",
+      "count": 238,
+      "fingerprint": "a9cfc33818b3",
+      "sample": "2026-11-12 07:30:40 MySQL_Thread.cpp:5131:ProcessAllSessions_Healthy0(): [WARNING] Closing unhealthy client connection 172.21.0.1:57112 , user 'kindrobot_migrate' , hostgroup 30 , connection 88410",
+      "severity": "warn",
+      "skeleton": "<ts> mysql_thread.cpp<ip>processallsessions_healthy0(): [warning] closing unhealthy client connection <ip> , user <str> , hostgroup <num> , connection <num>"
+    },
+    {
+      "baseline": null,
+      "container": "netdata",
+      "count": 134,
+      "fingerprint": "8ef3774a1987",
+      "sample": "time=2026-11-12T17:34:14.571-08:00 comm=apps.plugin source=collector level=error errno=\"3, No such process\" tid=3651806  msg=\"Cannot process /host/proc/3707482/cgroup (command 'sh')\"",
+      "severity": "error",
+      "skeleton": "time=<ts> comm=apps.plugin source=collector level=error errno=<str> tid=<num> msg=\"cannot process <path>"
+    },
+    {
+      "baseline": null,
       "container": "requests",
-      "count": 111,
+      "count": 112,
       "fingerprint": "b0b22d3dd961",
-      "sample": "2026-11-12T12:34:42.339Z [error][Sonarr Scan]: Failed to process Sonarr media {\"errorMessage\":\"[TMDB] Failed to get TV show using the external TVDB ID: No show returned from API for ID 351587\",\"title\"",
+      "sample": "2026-11-13T12:34:27.043Z [error][Sonarr Scan]: Failed to process Sonarr media {\"errorMessage\":\"[TMDB] Failed to get TV show using the external TVDB ID: No show returned from API for ID 351003\",\"title\"",
       "severity": "error",
       "skeleton": "<ts> [error][sonarr scan]: failed to process sonarr media {<str>:<str>,<str>:<str>}"
     },
     {
       "baseline": null,
       "container": "netdata",
-      "count": 109,
-      "fingerprint": "2107195e439a",
-      "sample": "2026-11-12T01:41:02.286228Z  WARN ThreadId(09) journal_registry::registry::monitor: 23: Failed to send file system event: receiver dropped (channel closed)",
-      "severity": "error",
-      "skeleton": "<ts> warn threadid(<num>) journal_registry<ip>registry<ip>monitor: <num>: failed to send file system event: receiver dropped (channel closed)"
-    },
-    {
-      "baseline": null,
-      "container": "prowlarr",
-      "count": 101,
-      "fingerprint": "50644f7835da",
-      "sample": "[Warn] Cardigann: [torrentdownload] Invalid category for value: 'VideoAnime'",
-      "severity": "warn",
-      "skeleton": "[warn] cardigann: [torrentdownload] invalid category for value: <str>"
-    },
-    {
-      "baseline": null,
-      "container": "prowlarr",
-      "count": 101,
-      "fingerprint": "fbff6d0bedfc",
-      "sample": "[Warn] Cardigann: Invalid Release: '[AnimeRG] Prison School   01 (1080p) Kangoku Gakuen 1 MP4 [KoTuWa]' from indexer: TorrentDownload. No categories provided.",
-      "severity": "warn",
-      "skeleton": "[warn] cardigann: invalid release: <str> from indexer: torrentdownload. no categories provided."
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 94,
-      "fingerprint": "8ef3774a1987",
-      "sample": "time=2026-11-11T18:05:51.483-08:00 comm=apps.plugin source=collector level=error errno=\"3, No such process\" tid=802589  msg=\"Cannot process /host/proc/1159912/cgroup (command 'mariadbd-safe')\"",
-      "severity": "error",
-      "skeleton": "time=<ts> comm=apps.plugin source=collector level=error errno=<str> tid=<num> msg=\"cannot process <path>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 88,
+      "count": 55,
       "fingerprint": "24756dae8afd",
-      "sample": "time=2026-11-11T17:41:11.496-08:00 comm=spawn-unnamed source=collector level=warning tid=805527  msg=\"SPAWN SERVER: child with pid 805528 (request 1) exited with exit code 1: /usr/libexec/netdata/plug",
+      "sample": "time=2026-11-12T17:31:21.398-08:00 comm=spawn-unnamed source=collector level=warning tid=3655491  msg=\"SPAWN SERVER: child with pid 3655492 (request 1) exited with exit code 1: /usr/libexec/netdata/pl",
       "severity": "warn",
       "skeleton": "time=<ts> comm=spawn-unnamed source=collector level=warning tid=<num> msg=\"spawn server: child with pid <num> (request <num>) exited with exit code <num>: <path>"
     },
     {
       "baseline": null,
-      "container": "komga",
-      "count": 66,
-      "fingerprint": "c4a56760173f",
-      "sample": "2026-11-11T23:59:19.293-08:00  WARN 1 --- [taskProcessor-1] org.apache.pdfbox.pdfparser.COSParser    : found wrong object number. expected [2] found [1]",
-      "severity": "warn",
-      "skeleton": "<ts> warn <num> --- [taskprocessor-<num>] org.apache.pdfbox.pdfparser.cosparser : found wrong object number. expected [<num>] found [<num>]"
+      "container": "netdata",
+      "count": 54,
+      "fingerprint": "2107195e439a",
+      "sample": "2026-11-13T01:31:12.121761Z  WARN ThreadId(09) journal_registry::registry::monitor: 23: Failed to send file system event: receiver dropped (channel closed)",
+      "severity": "error",
+      "skeleton": "<ts> warn threadid(<num>) journal_registry<ip>registry<ip>monitor: <num>: failed to send file system event: receiver dropped (channel closed)"
     },
     {
       "baseline": null,
       "container": "netdata",
       "count": 42,
       "fingerprint": "29a758d0ae5d",
-      "sample": "time=2026-11-11T17:41:00.147-08:00 comm=tc-qos-helper.sh source=collector level=warning tid=802654 thread=tc-qos-helper request=\"'/usr/libexec/netdata/plugins.d/tc-qos-helper.sh' '1' \" msg=\"FireQOS is",
+      "sample": "time=2026-11-12T17:31:09.484-08:00 comm=tc-qos-helper.sh source=collector level=warning tid=3651871 thread=tc-qos-helper request=\"'/usr/libexec/netdata/plugins.d/tc-qos-helper.sh' '1' \" msg=\"FireQOS i",
       "severity": "warn",
       "skeleton": "time=<ts> comm=tc-qos-helper.sh source=collector level=warning tid=<num> thread=tc-qos-helper request=\"'<path>"
     },
     {
       "baseline": null,
       "container": "netdata",
-      "count": 34,
+      "count": 33,
       "fingerprint": "b4a4f3c0319b",
-      "sample": "time=2026-11-11T17:41:00.105-08:00 comm=spawn-plugins source=collector level=warning tid=801322  msg=\"SPAWN SERVER: child with pid 802633 (request 10) exited with exit code 1: /bin/sh -c \\\"exec /usr/l",
+      "sample": "time=2026-11-12T17:31:09.448-08:00 comm=spawn-plugins source=collector level=warning tid=3649877  msg=\"SPAWN SERVER: child with pid 3651850 (request 10) exited with exit code 1: /bin/sh -c \\\"exec /usr",
       "severity": "warn",
       "skeleton": "time=<ts> comm=spawn-plugins source=collector level=warning tid=<num> msg=\"spawn server: child with pid <num> (request <num>) exited with exit code <num>: <path>"
-    },
-    {
-      "baseline": null,
-      "container": "proxysql",
-      "count": 30,
-      "fingerprint": "9caf510b320a",
-      "sample": "2026-11-11 08:13:39 MySQL_Session.cpp:6731:<REDACTED-BLOB>(): [WARNING] Error during query on (10,mariadb-kindrobots2,3306,44026): 1062, Duplicate entry 'compartmented-mourner' for key 'Facet_slug_key",
-      "severity": "warn",
-      "skeleton": "<ts> mysql_session.cpp:<num>:<redacted-blob>(): [warning] error during query on (<num>,mariadb-kindrobots2,<num>,<num>): <num>, duplicate entry <str> for key <str>"
     },
     {
       "baseline": null,
       "container": "subtitles",
       "count": 28,
       "fingerprint": "581e297308ed",
-      "sample": "2026-11-11 11:07:11,535 - root                             (14a21f9ceb30) :  ERROR (utils:55) - BAZARR Error ('.bin' is not a valid video extension) trying to get video information for this file: /pc/",
+      "sample": "2026-11-12 11:07:11,202 - root                             (14a21a95cb30) :  ERROR (utils:55) - BAZARR Error ('.bin' is not a valid video extension) trying to get video information for this file: /pc/",
       "severity": "error",
       "skeleton": "<ts> - root (<hex>) : error (utils:<num>) - bazarr error (<str> is not a valid video extension) trying to get video information for this file: <path>"
     },
     {
       "baseline": null,
-      "container": "kapowarr",
-      "count": 16,
-      "fingerprint": "bdf55f360fff",
-      "sample": "\u001b[1;31:40m[23:51:19][WARNING] Refused by Cloudflare without a cf-mitigated: challenge header, so FlareSolverr was not asked. If this is a challenge, that header is what Kapowarr looks for.",
-      "severity": "warn",
-      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][warning] refused by cloudflare without a cf-mitigated: challenge header, so flaresolverr was not asked. if this is a challenge, that header is what kapowarr looks for."
-    },
-    {
-      "baseline": null,
-      "container": "kapowarr",
-      "count": 16,
-      "fingerprint": "2cdf70273bde",
-      "sample": "\u001b[1;31:40m[23:51:19][WARNING] GET request to https://files1.comics.<REDACTED-BLOB>.jpg returned with code 403",
-      "severity": "warn",
-      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][warning] get request to <url> returned with code <num>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 11,
-      "fingerprint": "381cf7bc9913",
-      "sample": "time=2026-11-11T18:05:53.000-08:00 level=error msg=\"Get \\\"http://%2Fvar%2Frun%2Fdocker.sock/v1.47/info\\\": context deadline exceeded\" plugin=go.d collector=docker job=local config_source=\"stock/file re",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str><url> context deadline exceeded<str>stock/file reader\""
-    },
-    {
-      "baseline": null,
       "container": "scoopspress",
-      "count": 10,
-      "fingerprint": "0174d77ccc5f",
-      "sample": "AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 172.21.0.19. Set the 'ServerName' directive globally to suppress this message",
-      "severity": "other",
-      "skeleton": "ah00558: apache2: could not reliably determine the server's fully qualified domain name, using <ip>. set the <str> directive globally to suppress this message"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 9,
-      "fingerprint": "435f030e9489",
-      "sample": "time=2026-11-11T17:43:45.725-08:00 comm=netdata source=health level=warning tid=802578 thread=HEALTH <REDACTED-BLOB> node=0d97141a699e instance=net_drops.br0 context=net.drops code=0 alert_id=17872786",
+      "count": 16,
+      "fingerprint": "4798ff1f70e0",
+      "sample": "[Thu Nov 12 07:02:50.098149 2026] [php:warn] [pid 160:tid 160] [client 213.209.159.133:0] PHP Warning:  Undefined variable $enable_postal_code in <REDACTED-BLOB>.cf7sa.front.action.php on line 90, ref",
       "severity": "warn",
-      "skeleton": "time=<ts> comm=netdata source=health level=warning tid=<num> thread=health <redacted-blob> node=<hex> instance=net_drops.br0 context=net.drops code=<num> alert_id=<hex> alert_unique_id=<hex> alert_event_id=<num> <redacted-blob> <redacted-blob> alert=inbound_packets_dropped_ratio alert_class=errors a"
+      "skeleton": "[<ts>] [php:warn] [pid <num>:tid <num>] [client <ip>] php warning: undefined variable $enable_postal_code in <redacted-blob>.cf7sa.front.action.php on line <num>, referer: <url>"
     },
     {
       "baseline": null,
       "container": "netdata",
-      "count": 9,
+      "count": 8,
       "fingerprint": "28346e8a5fd3",
-      "sample": "time=2026-11-11T17:43:45.727-08:00 comm=netdata source=health level=warning tid=802578 thread=HEALTH <REDACTED-BLOB> node=0d97141a699e instance=net_drops.shim-br0 context=net.drops code=0 alert_id=178",
+      "sample": "time=2026-11-12T21:09:55.223-08:00 comm=netdata source=health level=warning tid=3651795 thread=HEALTH <REDACTED-BLOB> node=00521bb5a201 instance=net_drops.shim-br0 context=net.drops code=0 alert_id=17",
       "severity": "warn",
       "skeleton": "time=<ts> comm=netdata source=health level=warning tid=<num> thread=health <redacted-blob> node=<hex> instance=net_drops.shim-br0 context=net.drops code=<num> alert_id=<hex> alert_unique_id=<hex> alert_event_id=<num> <redacted-blob> <redacted-blob> alert=inbound_packets_dropped_ratio alert_class=err"
     },
     {
       "baseline": null,
       "container": "netdata",
-      "count": 8,
-      "fingerprint": "016a7a33afc1",
-      "sample": "time=2026-11-12T00:16:53.609-08:00 comm=netdata source=daemon level=error tid=802585 thread=ACLK_MAIN msg=\"mqtt_ng_sync returned -1 != 0\"",
-      "severity": "error",
-      "skeleton": "time=<ts> comm=netdata source=daemon level=error tid=<num> thread=aclk_main msg=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "proxysql",
-      "count": 8,
-      "fingerprint": "8da141147da1",
-      "sample": "2026-11-11 09:09:55 MySQL_Thread.cpp:5131:ProcessAllSessions_Healthy0(): [WARNING] Closing unhealthy client connection 172.21.0.1:40860 , user 'unknown' , hostgroup -1 , connection 0",
+      "count": 6,
+      "fingerprint": "435f030e9489",
+      "sample": "time=2026-11-12T21:09:55.210-08:00 comm=netdata source=health level=warning tid=3651795 thread=HEALTH <REDACTED-BLOB> node=00521bb5a201 instance=net_drops.br0 context=net.drops code=0 alert_id=1787278",
       "severity": "warn",
-      "skeleton": "<ts> mysql_thread.cpp<ip>processallsessions_healthy0(): [warning] closing unhealthy client connection <ip> , user <str> , hostgroup -<num> , connection <num>"
+      "skeleton": "time=<ts> comm=netdata source=health level=warning tid=<num> thread=health <redacted-blob> node=<hex> instance=net_drops.br0 context=net.drops code=<num> alert_id=<hex> alert_unique_id=<hex> alert_event_id=<num> <redacted-blob> <redacted-blob> alert=inbound_packets_dropped_ratio alert_class=errors a"
     },
     {
       "baseline": null,
       "container": "scoopspress",
       "count": 6,
       "fingerprint": "b7cfe92bdfa7",
-      "sample": "[Thu Nov 12 04:27:04.328940 2026] [authz_core:error] [pid 158:tid 158] [client 207.175.218.17:0] AH01630: client denied by server configuration: /var/www/html/server-status",
+      "sample": "[Fri Nov 13 03:32:38.119668 2026] [authz_core:error] [pid 876:tid 876] [client 104.22.20.11:0] AH01630: client denied by server configuration: /var/www/html/server-status",
       "severity": "error",
       "skeleton": "[<ts>] [authz_core:error] [pid <num>:tid <num>] [client <ip>] ah01630: client denied by server configuration: <path>"
     },
     {
       "baseline": null,
-      "container": "flaresolverr",
-      "count": 5,
-      "fingerprint": "c93a360a7c2f",
-      "sample": "2026-11-12 07:58:05 ERROR    Error: Error solving the challenge. Timeout after 60.0 seconds.",
-      "severity": "error",
-      "skeleton": "<ts> error error: error solving the challenge. timeout after <num> seconds."
+      "container": "podgrab",
+      "count": 6,
+      "fingerprint": "99ac8664accb",
+      "sample": "Response status: 403 Forbidden",
+      "severity": "other",
+      "skeleton": "response status: <num> forbidden"
     },
     {
       "baseline": null,
-      "container": "flaresolverr",
+      "container": "netdata",
       "count": 5,
-      "fingerprint": "17856945a8bd",
-      "sample": "2026-11-12 07:58:05 INFO     172.21.0.1 POST http://192.168.7.172:8191/v1 500 Internal Server Error",
+      "fingerprint": "39a858d67d7c",
+      "sample": "time=2026-11-12T19:21:12.590-08:00 comm=apps.plugin source=collector level=error tid=3651806  msg=\"Cannot process /host/proc/1347920/limits (command 'curl')\"",
       "severity": "error",
-      "skeleton": "<ts> info <ip> post <url> <num> internal server error"
+      "skeleton": "time=<ts> comm=apps.plugin source=collector level=error tid=<num> msg=\"cannot process <path>"
+    },
+    {
+      "baseline": null,
+      "container": "netdata",
+      "count": 4,
+      "fingerprint": "7d1394e6bd47",
+      "sample": "time=2026-11-12T17:31:13.782-08:00 level=error msg=\"check failed: GET 'http://172.21.0.40:80/nginx_status' returned HTTP status code: 404\" plugin=go.d collector=nginx job=docker_media config_source=di",
+      "severity": "error",
+      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d collector=nginx job=docker_media config_source=discovered/sd:docker"
+    },
+    {
+      "baseline": null,
+      "container": "prowlarr",
+      "count": 4,
+      "fingerprint": "5dcec9bc3591",
+      "sample": "[Warn] AllowedHostsCheck: Allowed Hosts is not configured, requests for any hostname will be accepted. You can set this via settings or the config file",
+      "severity": "warn",
+      "skeleton": "[warn] allowedhostscheck: allowed hosts is not configured, requests for any hostname will be accepted. you can set this via settings or the config file"
+    },
+    {
+      "baseline": null,
+      "container": "prowlarr",
+      "count": 4,
+      "fingerprint": "50644f7835da",
+      "sample": "[Warn] Cardigann: [torrentdownload] Invalid category for value: 'TVFargo'",
+      "severity": "warn",
+      "skeleton": "[warn] cardigann: [torrentdownload] invalid category for value: <str>"
+    },
+    {
+      "baseline": null,
+      "container": "prowlarr",
+      "count": 4,
+      "fingerprint": "fbff6d0bedfc",
+      "sample": "[Warn] Cardigann: Invalid Release: 'Fargo S03E03 (720p WEB DL x265 HEVC 10bit AAC 2.0 MaD) [UTR]' from indexer: TorrentDownload. No categories provided.",
+      "severity": "warn",
+      "skeleton": "[warn] cardigann: invalid release: <str> from indexer: torrentdownload. no categories provided."
+    },
+    {
+      "baseline": null,
+      "container": "proxysql",
+      "count": 4,
+      "fingerprint": "8da141147da1",
+      "sample": "2026-11-12 09:37:00 MySQL_Thread.cpp:5131:ProcessAllSessions_Healthy0(): [WARNING] Closing unhealthy client connection 172.21.0.1:54998 , user 'unknown' , hostgroup -1 , connection 0",
+      "severity": "warn",
+      "skeleton": "<ts> mysql_thread.cpp<ip>processallsessions_healthy0(): [warning] closing unhealthy client connection <ip> , user <str> , hostgroup -<num> , connection <num>"
+    },
+    {
+      "baseline": null,
+      "container": "requests",
+      "count": 4,
+      "fingerprint": "f09eaa3a4f3f",
+      "sample": "2026-11-13T12:40:59.715Z [error][Tautulli API]: Something went wrong fetching media watch stats from Tautulli {\"errorMessage\":\"Request failed with status code 401\",\"ratingKey\":\"1944944\"}",
+      "severity": "error",
+      "skeleton": "<ts> [error][tautulli api]: something went wrong fetching media watch stats from tautulli {<str>:<str>,<str>:<str>}"
+    },
+    {
+      "baseline": null,
+      "container": "requests",
+      "count": 4,
+      "fingerprint": "5a7cd47114a3",
+      "sample": "2026-11-13T12:40:59.716Z [error][API]: Something went wrong fetching media watch data {\"errorMessage\":\"[Tautulli] Failed to fetch media watch stats: Request failed with status code 401\",\"mediaId\":\"179",
+      "severity": "error",
+      "skeleton": "<ts> [error][api]: something went wrong fetching media watch data {<str>:<str>,<str>:<str>}"
+    },
+    {
+      "baseline": null,
+      "container": "logs",
+      "count": 3,
+      "fingerprint": "f32488bcd831",
+      "sample": "{\"level\":\"warn\",\"env\":\"DOZZLE_USERNAME\",\"time\":\"2026-11-13T06:10:40-08:00\",\"message\":\"Unexpected environment variable\"}",
+      "severity": "warn",
+      "skeleton": "{<str>:<str>,<str>:<str>,<str>:<str>,<str>:<str>}"
+    },
+    {
+      "baseline": null,
+      "container": "netdata",
+      "count": 3,
+      "fingerprint": "0bebe0045345",
+      "sample": "time=2026-11-12T17:31:10.366-08:00 comm=netdata source=collector level=error errno=\"2, No such file or directory\" tid=3651815 thread=P[proc] module=proc.plugin[/proc/pressure] msg=\"Cannot read pressur",
+      "severity": "error",
+      "skeleton": "time=<ts> comm=netdata source=collector level=error errno=<str> tid=<num> thread=p[proc] module=proc.plugin[<path>"
     }
   ],
   "version": 1,
