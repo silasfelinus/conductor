@@ -158,7 +158,7 @@ def main():
             f" same-destination-candidates={row['same_destination_after_request']}"
         )
     for row in legacy_report:
-        print(f"Round 1 legacy {row[\'key\']}: job={row[\'job_id\']} image={row[\'image_id\']} proven={row[\'proven_current_media\']}")
+        print("Round 1 legacy {key}: job={job_id} image={image_id} proven={proven_current_media}".format(**row))
     if args.out:
         args.out.parent.mkdir(parents=True, exist_ok=True)
         args.out.write_text(
