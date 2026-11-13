@@ -60,7 +60,10 @@ def test_every_new_round19_request_has_an_idempotent_authoring_and_queue_match()
         matches = queued_by_id[art["request_id"]]
         assert len(matches) == 1, art["request_id"]
         row = matches[0]
-        assert row["force"] is True
+        # consume_art_requests.py clears `force` once a row is genuinely fulfilled,
+        # so only an unfulfilled row must still carry the one-shot flag.
+        if row["status"] != "done":
+            assert row["force"] is True
         assert row["target_repo"] == "silasfelinus/kind_robots"
         assert row["project_slug"] == "shifting-desks"
         assert row["image_path"] == art["target_path"].replace("kind_robots ", "")
