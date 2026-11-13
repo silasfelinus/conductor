@@ -2,6 +2,15 @@
 # end of every Auto Art Generate run. Do not hand-edit: fix the cause (see
 # docs/agents/roles/art-medic.md) and the next run drops the entry.
 failures:
+- source: requests
+  target: public/images/shifting-desks/window/dale-in-the-mustache.webp
+  kind: contract-rejected
+  rules:
+  - frame-noun
+  detail: 'enqueue failed: HTTP 422 Art prompt rejected by the prompt contract (1 violation): [frame-noun]
+    "The absurd removable moustache occupies almost one third of the frame." uses "frame" where no frame
+    is meant. Krea paints the noun: a body des…'
+  first_seen: '2026-11-13'
 - source: ledgers
   target: projects/every-villain-tactics/art/FIGHTER-REVEALS-2026-11-12.yaml
   kind: contract-rejected
