@@ -258,7 +258,7 @@ tasks:
   - id: t-030
     milestone: m3
     title: "Build scene-art production manifest and twelve-world coverage checks"
-    status: ready
+    status: claimed
     depends_on: t-018
     passes: 0
     stakes: reversible
@@ -299,7 +299,10 @@ tasks:
       Added twelve-playable-world production-art acceptance ledger distinguishing authored, submitted, rendered, delivered and viewport-accepted art; historical 752 ArtJob receipts remain separate from 384 gallery attachments. Conductor PR pending. Next: reconcile live ArtJob/ArtImage IDs and attachment URLs for e01/e02, resubmit only missing work.
 
       2026-11-13 PT: Conductor PR #7341 merged at ca2cf2b9af4c4c32ede00141de4c7a1115028ab4 after Worker PR CI, Security Audit, Process task events, and rerun handoff checks passed on c2321e2. The twelve-world art acceptance ledger is documentation only. Return ready for e01/e02 durable ArtJob-to-ArtImage and live attachment reconciliation; no new art submitted or visual acceptance established.
-    updated: '2026-11-13T17:55:00Z'
+    updated: '2026-11-13T20:50:05Z'
+    owner: worker
+    claimed_by: 2026-11-13T205005Z-memory-dungeon-t-030-a81f
+    claimed_at: '2026-11-13T20:50:05Z'
   - id: t-001
     milestone: m1
     title: "Seeded expedition reducer, room schema and Classic adapter"
