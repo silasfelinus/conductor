@@ -90,15 +90,12 @@ tasks:
       Full history: projects/every-villain-tactics/HISTORY.md#t-001
   - id: t-025
     title: 'Main-game standard: audit and close the gaps for Every Villain Tactics'
-    status: review
-    owner: worker
-    claimed_by: 20261112T235650818Z-evt-t025-d71f
-    claimed_at: '2026-11-12T23:56:50.818Z'
+    status: ready
     milestone: m4
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-13T00:06:15.020Z'
+    updated: '2026-11-13T03:56:54Z'
     note: |-
       Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -119,6 +116,8 @@ tasks:
       Earlier comic portrait and color fix was merged to kind_robots in PR #5097 (03a5ec2). User has now directed further combat/fire, map art, and 48-identity onboarding fixes; return the umbrella standard task to ready for another scoped increment.
 
       In-scope combat/art/onboarding increment staged: illustrated map bases, Fire target buttons driven by deterministic hit odds, an origin+affinity 48-identity hero/villain chooser in stories and one-shots, automatic first-bell foil and conflict-free support identities. Companion Conductor ledger queues 12 distinct First Bell hero/villain comic reveal paintings. Existing completed arena ArtImage IDs were not duplicated. Code and art still require pull-request CI; dedicated painted assets are not yet shipped.
+
+      Previous reversible painted ArtImage integration, legal Fire targets and 48-power entry chooser merged in Kind Robots #5099 (165c5b1) after CI. Conductor character reveal queue #7335 merged. This umbrella standard remains open for full rendered review, unfinished art and broader main-game polish.
   - id: t-026
     title: 'Every Villain Tactics achievement upgrade: 12 or more live achievements'
     status: done
@@ -213,8 +212,8 @@ tasks:
   - id: t-007
     milestone: m3
     title: "Write and implement all six distinctive tactical story missions"
-    status: ready
-    updated: '2026-11-06T23:47:51Z'
+    status: claimed
+    updated: '2026-11-13T03:56:55Z'
     depends_on: [t-003, t-005, t-006]
     passes: 0
     stakes: reversible
@@ -228,6 +227,9 @@ tasks:
       Authored 12 private Unstable Diffusers tactical art subjects in art/TACTICAL-ARENAS-ROUND-1.yaml: six campaign location plates, four existing one-shot location plates, and two illustrated First Bell outcomes. Auto-submit starts only after main merge and real ArtJob receipts must be verified separately. The six distinct story missions are still unfinished.
 
       Merged internal tactical art queue PR silasfelinus/conductor#7120 (8ea4ace24521d0f2e1fedec182b5ee3aadecdbda) with all PR checks completed successfully. Twelve private painted arena/result prompts now auto-submit through Auto Art Generate; accepted ArtJob IDs and rendered delivery still require receipts. The remaining authored six-mission story work remains ready and uncompleted.
+    owner: worker
+    claimed_by: 2026-11-13T035655Z-evt-t007-story-5c91
+    claimed_at: '2026-11-13T03:56:55Z'
   - id: t-008
     milestone: m3
     title: "Author 48 hero and villain playable arcs with distinct supporting cast"
