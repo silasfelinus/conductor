@@ -17,7 +17,7 @@ import yaml
 ROOT = Path(__file__).resolve().parents[3]
 ART = ROOT / "projects" / "shifting-desks" / "art"
 QUEUE = ROOT / "projects" / "art-prompts.yaml"
-ROUNDS = (13, 14, 15, 17)
+ROUNDS = (13, 14, 15, 17, 19)
 PREFIX = "kind_robots public/images/shifting-desks/"
 
 
@@ -25,6 +25,8 @@ def outstanding(art_dir: Path, queue_path: Path) -> dict:
     latest: dict[str, dict] = {}
     for num in ROUNDS:
         ledger_path = art_dir / f"ROUND-{num}.yaml"
+        if not ledger_path.exists():
+            continue
         data = yaml.safe_load(ledger_path.read_text(encoding="utf-8")) or {}
         for item in data.get("subjects") or []:
             path = str(item.get("target_path") or "")

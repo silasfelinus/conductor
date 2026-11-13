@@ -1,0 +1,306 @@
+# Shifting Desks Classic Round 19: 14 composition-first corrections after 2026-11-12 visual review.
+# Keep ROUND-14/15 and their verified delivered ArtJobs as immutable failure history.
+# Each new forced request is idempotent and separate. Never infer approval from a live URL.
+# Review all new ArtImages against these one-gag briefs, set KEEP/REDO, then link only KEEP.
+round: shifting-desks-19
+project_slug: shifting-desks
+task: t-032
+queue: projects/art-prompts.yaml requests
+requested_at: '2026-11-13T03:39:35.848Z'
+negative_prompt: "text, letters, numbers, watermark, logo, photo, photography, realistic render, 3d, grid, collage, panels, dismemberment, gore, injuries, ugly typography"
+subjects:
+- key: wellness
+  kind: "department"
+  department: "wellness"
+  title: "Wellness & Testing arrival"
+  source_ref: "encounters/WELLNESS-12.json department.arrival_art.brief"
+  replaces: ROUND-14 wellness (ArtJob 68758, ArtImage 270624)
+  failure_note: "\"redo: visual inspection 2026-11-12 PT, fresh ArtImage 270624: clinical blue corridor and green tanks, no breathing ribbed doorframes or windpipe ducts: biological tone ladder absent\""
+  request_id: shifting-desks-r19-wellness
+  engine: krea2
+  size: 1248x936
+  aspect: 4:3 landscape
+  seed: 69001
+  target_path: kind_robots public/images/shifting-desks/departments/wellness.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/departments/wellness.webp
+  prompt: "From inside an open industrial elevator, straight-on view of a short medical hallway. The three cream-colored doorways ahead are unmistakably made from thick, rounded, soft rib cushions growing directly out of the walls: fleshy accordion folds wrap around every doorway like the rib cage of a sleeping animal. Each opening has a gently pinched organic arch, contrasted against rigid steel elevator doors in the foreground. A bright lime green specimen tank glows through the far opening; one tiny beige welcome mat lies on the threshold. The ribbed living architecture, not laboratory equipment, fills most of this wide horizontal scene. Original mid-century corporate safety-manual illustration, hand-painted screenprint gouache, coarse halftone grain, boldly simplified flat shapes, muted manila and carbon blue with safety orange and oxblood accents, clearly readable silhouettes, darkly funny bureaucratic science fiction, every surface bare and unmarked."
+  negative_prompt: "text, letters, numbers, watermark, logo, photo, photography, realistic render, 3d, grid, collage, panels, dismemberment, gore, injuries, ugly typography, plain hospital corridor, ordinary door frames, generic hallway"
+  status: requested
+  delivery_check: null
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: cognitive-testing-chamber
+  kind: "location"
+  department: "wellness"
+  title: "Cognitive Testing Chamber"
+  source_ref: "encounters/WELLNESS-12.json locations[cognitive-testing-chamber].art.brief"
+  replaces: ROUND-14 cognitive-testing-chamber (ArtJob 68751, ArtImage 270617)
+  failure_note: "\"redo: visual inspection 2026-11-12 PT, fresh ArtImage 270617: near-photographic empty exam room; no breathing chair upholstery or ciliated grille, wrong graphic style\""
+  request_id: shifting-desks-r19-cognitive-testing-chamber
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 69002
+  target_path: kind_robots public/images/shifting-desks/locations/cognitive-testing-chamber.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/locations/cognitive-testing-chamber.webp
+  prompt: "A single padded ivory examination chair fills the center of a white psychological testing room, shown from close three-quarter angle. Its broad seat bulges upward like an inhaling lung: enormous soft upholstered folds, swollen rounded cushion and visibly pinched seam, with curved motion creases around its sides. One little coffee table stands beside it. A big round brass wall speaker directly above the chair has a fringe of delicate short pale cilia sprouting around its circular rim, leaning toward the occupied seat. Beyond the glass is the still, ordinary silhouette of an observing clerk. The impossible living chair and bristling speaker are the two unmistakable features. Original mid-century corporate safety-manual illustration, hand-painted screenprint gouache, coarse halftone grain, boldly simplified flat shapes, muted manila and carbon blue with safety orange and oxblood accents, clearly readable silhouettes, darkly funny bureaucratic science fiction, every surface bare and unmarked."
+  negative_prompt: "text, letters, numbers, watermark, logo, photo, photography, realistic render, 3d, grid, collage, panels, dismemberment, gore, injuries, ugly typography, empty room, generic examination furniture, photographic camera"
+  status: requested
+  delivery_check: null
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: mutation-suite
+  kind: "location"
+  department: "wellness"
+  title: "Mutation Suite"
+  source_ref: "encounters/WELLNESS-12.json locations[mutation-suite].art.brief"
+  replaces: ROUND-14 mutation-suite (ArtJob 68753, ArtImage 270619)
+  failure_note: "\"redo: visual inspection 2026-11-12 PT, fresh ArtImage 270619: tanks and vault exist but the workers display no identifiable extra eye, third hand or other mutation\""
+  request_id: shifting-desks-r19-mutation-suite
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 69003
+  target_path: kind_robots public/images/shifting-desks/locations/mutation-suite.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/locations/mutation-suite.webp
+  prompt: "Close view across two tall glass observation tanks in a clean clinic. In the foreground tank a calm smiling office worker floats upright in pale green liquid. This worker has exactly three human arms clearly visible: two normal arms spread gently sideways and a third smaller arm extending from the side of the torso, holding a bright orange fountain pen between its fingers. All three hands are fully separated against the glass, impossible to mistake for reflections. In the next tank a cheerful clerk has one conspicuous extra eye in the middle of a cheek, looking at the viewer. A tiny white-coated nurse waits with a paper cup; soft bubbles rise. The benign impossible mutations are large and legible, clean, undamaged skin and relaxed faces. Original mid-century corporate safety-manual illustration, hand-painted screenprint gouache, coarse halftone grain, boldly simplified flat shapes, muted manila and carbon blue with safety orange and oxblood accents, clearly readable silhouettes, darkly funny bureaucratic science fiction, every surface bare and unmarked."
+  negative_prompt: "text, letters, numbers, watermark, logo, photo, photography, realistic render, 3d, grid, collage, panels, dismemberment, gore, injuries, ugly typography, normal two-armed bodies, injured patients, wounds, blood"
+  status: requested
+  delivery_check: null
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: sub-level-zero
+  kind: "department"
+  department: "sub-level-zero"
+  title: "Sub-Level Zero arrival"
+  source_ref: "encounters/SUBLEVEL-ZERO-12.json department.arrival_art.brief"
+  replaces: ROUND-14 sub-level-zero (ArtJob 68756, ArtImage 270622)
+  failure_note: "\"redo: visual inspection 2026-11-12 PT, fresh ArtImage 270622: ordinary wood corridor and mustached portraits; no living oxblood veins, tongue carpet or iris door\""
+  request_id: shifting-desks-r19-sub-level-zero
+  engine: krea2
+  size: 1248x936
+  aspect: 4:3 landscape
+  seed: 69004
+  target_path: kind_robots public/images/shifting-desks/departments/sub-level-zero.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/departments/sub-level-zero.webp
+  prompt: "Wide view looking out of the elevator onto a plush executive corridor. The walls are made of glossy oxblood-colored upholstered leather with huge raised thick branching vein-shaped ridges visibly growing through the brown panels. A single long soft pinkish carpet runs away from camera as one enormous smooth tongue with rounded ribbed edges. At the far end sits a perfectly circular boardroom door with an opening that looks like a camera iris, rings of rounded red folds narrowing around a luminous center. Four oval portraits of the same moustached man hang symmetrically to the sides. Keep the elevator's rigid metal doorframe visible for contrast, and make the living walls and tongue runner the dominant shapes. Original mid-century corporate safety-manual illustration, hand-painted screenprint gouache, coarse halftone grain, boldly simplified flat shapes, muted manila and carbon blue with safety orange and oxblood accents, clearly readable silhouettes, darkly funny bureaucratic science fiction, every surface bare and unmarked."
+  negative_prompt: "text, letters, numbers, watermark, logo, photo, photography, realistic render, 3d, grid, collage, panels, dismemberment, gore, injuries, ugly typography, plain wooden corridor, ordinary carpet, blood, injuries"
+  status: requested
+  delivery_check: null
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: boardroom-antechamber
+  kind: "location"
+  department: "sub-level-zero"
+  title: "Boardroom Antechamber"
+  source_ref: "encounters/SUBLEVEL-ZERO-12.json locations[boardroom-antechamber].art.brief"
+  replaces: ROUND-14 boardroom-antechamber (ArtJob 68750, ArtImage 270616)
+  failure_note: "\"redo: visual inspection 2026-11-12 PT, fresh ArtImage 270616: ordinary leather waiting chairs and typewriters, not fused cushions or beetle-shell machines\""
+  request_id: shifting-desks-r19-boardroom-antechamber
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 69005
+  target_path: kind_robots public/images/shifting-desks/locations/boardroom-antechamber.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/locations/boardroom-antechamber.webp
+  prompt: "Close wide view of one oversized oxblood leather waiting chair growing impossibly into a wood-paneled executive wall. Its padded back and seat literally merge with the paneling: four thick glossy upholstery-root tendrils spread outward from its corners, one curling down into the carpet. The chair has Its rear legs disappear into padded roots in the wall. Beside it, an old-fashioned office typewriter sits on a desk, except its body is a shiny black beetle carapace with two long feathery antennae protruding from the carriage. The foreground chair-and-wall fusion and clearly insect-like machine dominate, with a small closed glowing double door behind them. Original mid-century corporate safety-manual illustration, hand-painted screenprint gouache, coarse halftone grain, boldly simplified flat shapes, muted manila and carbon blue with safety orange and oxblood accents, clearly readable silhouettes, darkly funny bureaucratic science fiction, every surface bare and unmarked."
+  negative_prompt: "text, letters, numbers, watermark, logo, photo, photography, realistic render, 3d, grid, collage, panels, dismemberment, gore, injuries, ugly typography, ordinary free-standing waiting chairs, normal typewriter, blood"
+  status: requested
+  delivery_check: null
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: server-room-zero
+  kind: "location"
+  department: "sub-level-zero"
+  title: "Server Room Zero"
+  source_ref: "encounters/SUBLEVEL-ZERO-12.json locations[server-room-zero].art.brief"
+  replaces: ROUND-14 server-room-zero (ArtJob 68755, ArtImage 270621)
+  failure_note: "\"redo: visual inspection 2026-11-12 PT, fresh ArtImage 270621: ordinary blue server racks, no living vein cables, puckering speaker mouths or flesh keyboard\""
+  request_id: shifting-desks-r19-server-room-zero
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 69006
+  target_path: kind_robots public/images/shifting-desks/locations/server-room-zero.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/locations/server-room-zero.webp
+  prompt: "An extreme close-up in a blue-green retro server room: two upright metal server cabinets are visibly tethered by one enormous glossy red ribbed tendon-cable, thick as a forearm, curving between them across the center of the picture. Little luminous green signal bulbs trace the fleshy cable. Each server's vent is a clearly rounded puckered soft mouth with a lip instead of a speaker grill. In the lower foreground a green phosphor crt terminal rests above an oversized pale-pink organic keyboard made of smooth cushion-like finger pads. The biological connecting cable, mouths and tactile keyboard occupy most of the image, with only a narrow aisle of racks behind. Original mid-century corporate safety-manual illustration, hand-painted screenprint gouache, coarse halftone grain, boldly simplified flat shapes, muted manila and carbon blue with safety orange and oxblood accents, clearly readable silhouettes, darkly funny bureaucratic science fiction, every surface bare and unmarked."
+  negative_prompt: "text, letters, numbers, watermark, logo, photo, photography, realistic render, 3d, grid, collage, panels, dismemberment, gore, injuries, ugly typography, ordinary blue server cabinets, tidy network patch cables"
+  status: requested
+  delivery_check: null
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: the-board
+  kind: "boss-face"
+  department: "sub-level-zero"
+  title: "The Board"
+  card: "the-board"
+  source_ref: "encounters/SUBLEVEL-ZERO-12.json boss.art.brief"
+  replaces: ROUND-14 the-board (ArtJob 68757, ArtImage 270623)
+  failure_note: "\"redo: visual inspection 2026-11-12 PT, fresh ArtImage 270623: eleven executives remain separate seated individuals, not a single fused body in a long suit\""
+  request_id: shifting-desks-r19-the-board
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 69007
+  target_path: kind_robots public/images/shifting-desks/cards/sub-level-zero/the-board.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/sub-level-zero/the-board.webp
+  prompt: "A darkly funny boardroom frontal group portrait. eleven different smiling executive heads grow directly out of one impossibly long horizontal grey suit-covered torso, an office centipede. There are eleven necks emerging shoulder-to-shoulder from a single continuous oversized jacket with no gaps between individuals and only one huge red striped necktie at its middle. The fused collective body wraps around the rear edge of a round conference table. In the foreground a tiny lone employee faces that single monstrous Board from the one empty chair, holding a blank paper. A luminous head in a jar sits on the table. The physically continuous long shared body, a single unbroken shared torso, must fill the middle half of the image. Original mid-century corporate safety-manual illustration, hand-painted screenprint gouache, coarse halftone grain, boldly simplified flat shapes, muted manila and carbon blue with safety orange and oxblood accents, clearly readable silhouettes, darkly funny bureaucratic science fiction, every surface bare and unmarked."
+  negative_prompt: "text, letters, numbers, watermark, logo, photo, photography, realistic render, 3d, grid, collage, panels, dismemberment, gore, injuries, ugly typography, eleven separate suits, separate chairs, eleven individual bodies, gore, exposed organs"
+  status: requested
+  delivery_check: null
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: dale-in-the-mustache
+  kind: "window-applicant"
+  department: "sub-level-zero"
+  title: "Dale, from Compliance, in a mustache"
+  card: "dale-in-the-mustache"
+  source_ref: "encounters/SUBLEVEL-ZERO-12.json window_shift.applicants[dale-in-the-mustache].art.brief"
+  replaces: ROUND-15 dale-in-the-mustache (ArtJob 68759, ArtImage 270625)
+  failure_note: "\"redo: visual inspection 2026-11-12 PT, fresh ArtImage 270625: normal dark natural mustache, not giant crooked white fake walrus mustache with exposed elastic\""
+  request_id: shifting-desks-r19-dale-in-the-mustache
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 69008
+  target_path: kind_robots public/images/shifting-desks/window/dale-in-the-mustache.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/window/dale-in-the-mustache.webp
+  prompt: "A comically ridiculous close headshot of a smug middle-aged compliance clerk wearing an obviously false costume moustache, a tremendous white fluffy woolly walrus moustache whose two ends extend far wider than the man's head and one end droops below his chin. The actual prop is a separate oversized snowy-white hairpiece; a conspicuous black elastic strap stretches from both ends along his cheeks and loops over each ear. The strap and fake edges are clearly visible. His nose and raised forefinger peek above the immense white disguise. Plain mid-century office backdrop, tight crop. The absurd removable moustache occupies almost one third of the frame. Original mid-century corporate safety-manual illustration, hand-painted screenprint gouache, coarse halftone grain, boldly simplified flat shapes, muted manila and carbon blue with safety orange and oxblood accents, clearly readable silhouettes, darkly funny bureaucratic science fiction, every surface bare and unmarked."
+  negative_prompt: "text, letters, numbers, watermark, logo, photo, photography, realistic render, 3d, grid, collage, panels, dismemberment, gore, injuries, ugly typography, small dark pencil mustache, real natural facial hair, normal moustache"
+  status: requested
+  delivery_check: null
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: the-taste-panel
+  kind: "card-face"
+  department: "wellness"
+  title: "The Taste Panel"
+  card: "the-taste-panel"
+  source_ref: "encounters/WELLNESS-12.json encounters[the-taste-panel].art.brief"
+  replaces: ROUND-15 the-taste-panel (ArtJob 68767, ArtImage 270633)
+  failure_note: "\"redo: visual inspection 2026-11-12 PT, fresh ArtImage 270633: four smiling diners around pink bowl; woman lacks required sour disgust expression, destroying the contrast gag\""
+  request_id: shifting-desks-r19-the-taste-panel
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 69009
+  target_path: kind_robots public/images/shifting-desks/cards/wellness/the-taste-panel.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/wellness/the-taste-panel.webp
+  prompt: "Four employees at a long cafeteria tasting bench are dipping four teaspoons into one giant shared round bowl of bright pink pudding, centrally framed. On the left sit three grinning delighted office tasters, closing their eyes and giving eager approval gestures. On the far right, one woman wearing a teal shirt is the glaring comic exception: she recoils backward, wrinkles her nose, squeezes her eyes shut and sticks her tongue all the way out in disgust, with a spoon raised away from her mouth. Place the three delighted faces and her extreme sour grimace at equal eye level, in one clearly readable contrasting row. Only the one shared bowl sits on the bare table. Original mid-century corporate safety-manual illustration, hand-painted screenprint gouache, coarse halftone grain, boldly simplified flat shapes, muted manila and carbon blue with safety orange and oxblood accents, clearly readable silhouettes, darkly funny bureaucratic science fiction, every surface bare and unmarked."
+  negative_prompt: "text, letters, numbers, watermark, logo, photo, photography, realistic render, 3d, grid, collage, panels, dismemberment, gore, injuries, ugly typography, everyone smiling, individual plates, all pleased expressions"
+  status: requested
+  delivery_check: null
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: the-suppression-drill
+  kind: "card-face"
+  department: "sub-level-zero"
+  title: "The Suppression Drill"
+  card: "the-suppression-drill"
+  source_ref: "encounters/SUBLEVEL-ZERO-12.json encounters[the-suppression-drill].art.brief"
+  replaces: ROUND-15 the-suppression-drill (ArtJob 68766, ArtImage 270632)
+  failure_note: "\"redo: visual inspection 2026-11-12 PT, fresh ArtImage 270632: smoke and crouching worker appear, but calm headphone-wearing janitor and puffed-cheek gag missing\""
+  request_id: shifting-desks-r19-the-suppression-drill
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 69010
+  target_path: kind_robots public/images/shifting-desks/cards/sub-level-zero/the-suppression-drill.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/sub-level-zero/the-suppression-drill.webp
+  prompt: "A medium-wide side view of a server-room fire drill. White cottony clouds of dry gas billow visibly upward out of square grated floor vents, drifting in thick waist-high puffs between the server cabinets; they are airborne clouds, not water. In the immediate foreground a worried employee crouches under a steel desk holding his breath, with both cheeks massively inflated round as balloons, lips clamped and eyes tightly squeezed shut. Farther back a serene janitor in big over-ear headphones and a headscarf calmly dusts a cabinet, wholly oblivious to the gas. Put amber warning beacons at ceiling corners. The comic contrast is puffed cheeks versus unbothered headphone wearer. Original mid-century corporate safety-manual illustration, hand-painted screenprint gouache, coarse halftone grain, boldly simplified flat shapes, muted manila and carbon blue with safety orange and oxblood accents, clearly readable silhouettes, darkly funny bureaucratic science fiction, every surface bare and unmarked."
+  negative_prompt: "text, letters, numbers, watermark, logo, photo, photography, realistic render, 3d, grid, collage, panels, dismemberment, gore, injuries, ugly typography, water on floor, flood, mop, frightened janitor"
+  status: requested
+  delivery_check: null
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: the-jam-in-tube-14
+  kind: "card-face"
+  department: "records"
+  title: "The Jam in Tube 14"
+  card: "the-jam-in-tube-14"
+  replaces: ROUND-15 the-jam-in-tube-14 (ArtJob 68765, ArtImage 270631)
+  failure_note: "\"redo: visual inspection 2026-11-12 PT, fresh ArtImage 270631: pipe and attentive worker present, but oversized single bulge in the brass tube missing\""
+  request_id: shifting-desks-r19-the-jam-in-tube-14
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 69011
+  target_path: kind_robots public/images/shifting-desks/cards/records/the-jam-in-tube-14.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/records/the-jam-in-tube-14.webp
+  prompt: "A close view of one fat horizontal polished brass pneumatic delivery pipe along a cream office wall. At its exact center the tube swells into one enormous smooth spherical brass bulge, a clear round ball trapped inside a narrower metal pipe, three times the ordinary diameter; the tube smoothly narrows again on both sides. The swollen silhouette looks like a snake that swallowed a basketball. One office worker in a wrinkled beige suit reaches upward and presses his ear flat against the side of that giant bulge, one hand cupped behind the ear. The giant continuous swollen tube dominates the image against a bare office wall. Original mid-century corporate safety-manual illustration, hand-painted screenprint gouache, coarse halftone grain, boldly simplified flat shapes, muted manila and carbon blue with safety orange and oxblood accents, clearly readable silhouettes, darkly funny bureaucratic science fiction, every surface bare and unmarked."
+  negative_prompt: "text, letters, numbers, watermark, logo, photo, photography, realistic render, 3d, grid, collage, panels, dismemberment, gore, injuries, ugly typography, gauge, round window, pressure valve, thin uninterrupted pipe"
+  status: requested
+  delivery_check: null
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: mutation-four-second-precognition
+  kind: "mutation"
+  title: "Four-Second Precognition"
+  source_ref: "encounters/DECKS.json mutations[four-second-precognition].art_prompt"
+  replaces: ROUND-15 mutation-four-second-precognition (ArtJob 68763, ArtImage 270629)
+  failure_note: "\"redo: visual inspection 2026-11-12 PT, fresh ArtImage 270629: green prone figure plus separate man, but no same-person phantom/real dual pose or clear tripwire step\""
+  request_id: shifting-desks-r19-mutation-four-second-precognition
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 69012
+  target_path: kind_robots public/images/shifting-desks/mutations/four-second-precognition.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/mutations/four-second-precognition.webp
+  prompt: "A single office hallway seen from a side angle, with a thick black power cable stretched across the floor from left to right. There are two versions of the exact same person with identical beige suit, glasses and hairstyle: ahead of the cable, a pale translucent green future-echo of the worker lies face-down sprawled on the floor, arms flung out after tripping; just behind the cable the solid real worker clearly lifts one knee high and steps over the cable, smiling because they have seen the fall. The fallen spectral duplicate and the stepping solid original occupy one continuous scene, one seamless scene. Same outfit establishes their identity and the four-second warning. Original mid-century corporate safety-manual illustration, hand-painted screenprint gouache, coarse halftone grain, boldly simplified flat shapes, muted manila and carbon blue with safety orange and oxblood accents, clearly readable silhouettes, darkly funny bureaucratic science fiction, every surface bare and unmarked."
+  negative_prompt: "text, letters, numbers, watermark, logo, photo, photography, realistic render, 3d, grid, collage, panels, dismemberment, gore, injuries, ugly typography, two different people, walking ghost, split comic panels"
+  status: requested
+  delivery_check: null
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: mutation-empathic-static
+  kind: "mutation"
+  title: "Empathic Static"
+  source_ref: "encounters/DECKS.json mutations[empathic-static].art_prompt"
+  replaces: ROUND-15 mutation-empathic-static (ArtJob 68761, ArtImage 270627)
+  failure_note: "\"redo: visual inspection 2026-11-12 PT, fresh ArtImage 270627: lightning bolt from ceiling instead of connecting foreheads; dramatic hair-raising static missing\""
+  request_id: shifting-desks-r19-mutation-empathic-static
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 69013
+  target_path: kind_robots public/images/shifting-desks/mutations/empathic-static.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/mutations/empathic-static.webp
+  prompt: "tight profile close-up of exactly two coworkers leaning forward face-to-face across a desk. Their foreheads are only a hand's breadth apart, both pairs of eyes gently closed. one short jagged gold electric spark visibly begins at the left person's forehead and ends at the right person's forehead, horizontally bridging their temples like a little lightning bridge. Both hairdos stick straight up in stiff electric spikes, and three blank sheets of paper float between their shoulders. The spark visibly joins the two foreheads at face level. Their expressions are surprised but safe, an absurd shared-emotion static shock. Original mid-century corporate safety-manual illustration, hand-painted screenprint gouache, coarse halftone grain, boldly simplified flat shapes, muted manila and carbon blue with safety orange and oxblood accents, clearly readable silhouettes, darkly funny bureaucratic science fiction, every surface bare and unmarked."
+  negative_prompt: "text, letters, numbers, watermark, logo, photo, photography, realistic render, 3d, grid, collage, panels, dismemberment, gore, injuries, ugly typography, lightning from sky, lightning from ceiling, open eyes"
+  status: requested
+  delivery_check: null
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: mutation-eyes-in-the-back-of-your-head
+  kind: "mutation"
+  title: "Eyes in the Back of Your Head"
+  source_ref: "encounters/DECKS.json mutations[eyes-in-the-back-of-your-head].art_prompt"
+  replaces: ROUND-15 mutation-eyes-in-the-back-of-your-head (ArtJob 68762, ArtImage 270628)
+  failure_note: "\"redo: visual inspection 2026-11-12 PT, fresh ArtImage 270628: no extra eyes visible on back of bob haircut and no stolen-stapler coworker reaction\""
+  request_id: shifting-desks-r19-mutation-eyes-in-the-back-of-your-head
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 69014
+  target_path: kind_robots public/images/shifting-desks/mutations/eyes-in-the-back-of-your-head.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/mutations/eyes-in-the-back-of-your-head.webp
+  prompt: "over-the-shoulder close view from directly behind a seated female clerk. The back of her rounded glossy black bob haircut fills nearly half the image, and in that hair at ear level are two enormous open human eyes, with white sclera, dark pupils and eyelids, set into the back of her head and looking straight toward the viewer. These are additional eyes in her hair; her normal face points away at the computer and is not visible. Behind her, a guilty coworker freezes on tiptoe holding a bright red stapler he was stealing, eyebrows raised and mouth open in panic as the rear eyes catch him. The extra pair of eyes is the undeniable central focal point. Original mid-century corporate safety-manual illustration, hand-painted screenprint gouache, coarse halftone grain, boldly simplified flat shapes, muted manila and carbon blue with safety orange and oxblood accents, clearly readable silhouettes, darkly funny bureaucratic science fiction, every surface bare and unmarked."
+  negative_prompt: "text, letters, numbers, watermark, logo, photo, photography, realistic render, 3d, grid, collage, panels, dismemberment, gore, injuries, ugly typography, plain haircut, rear view without eyes, face turned toward viewer"
+  status: requested
+  delivery_check: null
+  art_job_id: null
+  art_image_id: null
+  verdict: null
