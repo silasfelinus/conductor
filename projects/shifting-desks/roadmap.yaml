@@ -602,8 +602,8 @@ tasks:
   - id: t-032
     milestone: m3
     title: 'Land, review and link the art round 13 re-renders and round 14 tone-ladder renders'
-    status: review
-    updated: '2026-11-13T00:07:29.816Z'
+    status: ready
+    updated: '2026-11-13T00:27:49.391Z'
     depends_on: t-015
     passes: 0
     stakes: reversible
@@ -641,9 +641,8 @@ tasks:
       Completed image-by-image creative comparison of all 185 outstanding Western Cartoon round-18 renders against authored prompts: 26 KEEP, 159 REDO; preserves 11 previously rejected finales, so 170 total Western REDO, 26 KEEP, 0 undecided. Conductor worker PR adds all 196 sourced verdicts, a read-only diagnostic for the 20 stale Classic rerender requests, and updated evidence. Kind Robots companion PR temporarily suspends the objectively broken optional Western skin, retaining Classic and Noir; no media deletion, ArtJob resubmission, production deploy, or human-gate claim. CI and durable request reconciliation pending.
 
       Recovered stale review claim after confirming earlier worker has no open PR or remaining branch. Preparing authenticated, strictly read-only 20-request production ArtJob/media provenance audit in conductor, before any art requeue, overwrite, or visual acceptance. Follow with queue recovery and small Western Cartoon subject-fidelity pilot only after matching evidence; protect existing Classic art and keep optional Western suspended.
-    owner: worker
-    claimed_by: 20261113T000650Z-shifting-desks-t032-gpt6-recover-p8h3
-    claimed_at: '2026-11-13T00:06:18.288Z'
+
+      2026-11-12 PT: Recovered stale t-032 review and merged Conductor PR #7336 at 514538a60af909562addb29d6bdf828d90316cdf after 6/6 applicable Actions workflows passed (including full Python suite, Security Audit, art visual review and workflow/template validation). Authenticated production audit run 43335325581 scanned 1,076 Shifting Desks ArtJobs: 0 exact request/target matches, 0 newer same-destination alternate-ID candidates for 20 missing Classic repaint requests. Restored all 20 original prompt/seed/path/request IDs to projects/art-prompts.yaml as force-pending; fixed falsely done round-17 recovery. Created private six-cell two-model Western fidelity pilot (Gus roach, tiny robot eyeline, enormous stopped clock), with auto_submit ledger, no live-art overwrite until accepted. Added read-only production audit and automatic status/provenance checkpoint in existing Auto Art workflow. ART-READINESS audit still 201 accepted, 170 optional Western REDO, 20 not-yet-delivered latest Classic; queue is restored, NOT evidence of rendered/KEEP art. Remaining agent work is to confirm submitted ArtJob IDs, wait for completed renders, review fresh images individually and link KEEP, then re-run strict art/QA. Do not mark done or playtest yet; keep t-041 dependent and t-020 human fun verdict intact.
   - id: t-033
     milestone: m3
     title: 'Tone ladder: lower floors grow more Cronenbergian (rules and station art)'
