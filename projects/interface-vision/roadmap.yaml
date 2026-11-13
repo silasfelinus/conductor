@@ -2516,17 +2516,14 @@ tasks:
 - id: t-153
   milestone: m6
   title: "Replace homepage highlight placeholders with real generated project artwork"
-  status: claimed
+  status: review
   owner: worker
   claimed_by: '2026-11-13T005000Z-interface-vision-t153-highlight-4a83c2'
   claimed_at: '2026-11-13T00:50:00Z'
-  updated: '2026-11-13T00:50:00Z'
+  updated: '2026-11-13T00:55:20Z'
   passes: 0
   stakes: outward-facing
-  note: >-
-    Silas screenshot 2026-11-12 PT: homepage Explore rail deliberately renders gradient-only Slime City and Hybridizer cards.
-    Correct the empty image fields using authentic public, delivered Krea artwork, not SVG/rasterized previews. Preserve guest visibility.
-    Slime City has title-splash ArtImage 267791 in Conductor round TITLE-AND-BOSS-REACTIONS-ROUND-1.
-    Hybridizer has publicly designated delivered starter ArtImages in STARTER-INGREDIENTS-ROUND-1; a dedicated fusion highlight
-    should be generated separately, then wired once actually delivered. Public homepage change is gated pending human approval
-    to publish; code and tests can be prepared on a PR.
+  note: |-
+    Silas screenshot 2026-11-12 PT: homepage Explore rail deliberately renders gradient-only Slime City and Hybridizer cards. Correct the empty image fields using authentic public, delivered Krea artwork, not SVG/rasterized previews. Preserve guest visibility. Slime City has title-splash ArtImage 267791 in Conductor round TITLE-AND-BOSS-REACTIONS-ROUND-1. Hybridizer has publicly designated delivered starter ArtImages in STARTER-INGREDIENTS-ROUND-1; a dedicated fusion highlight should be generated separately, then wired once actually delivered. Public homepage change is gated pending human approval to publish; code and tests can be prepared on a PR.
+
+    Built generated-art homepage highlights in kind_robots worker/interface-vision-t153-home-art-4a83c2. Slime City now uses delivered Krea ArtImage 267791; Hybridizer uses delivered starter images 258076, 258083 and 258078. Added navigation contract regression assertions. Dedicated Hybridizer home-hero art ledger prepared in Conductor. Public homepage placement requires human publication approval after verification.
