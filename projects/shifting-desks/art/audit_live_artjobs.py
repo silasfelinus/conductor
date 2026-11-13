@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 from pathlib import Path
 
 import yaml
@@ -62,6 +63,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--out", type=Path, help="Write a detailed JSON diagnostic artifact")
     args = parser.parse_args()
+    sys.path.insert(0, str(ROOT))
     from scripts import consume_art_queue_core as core
 
     if not core.KR_API_TOKEN:
