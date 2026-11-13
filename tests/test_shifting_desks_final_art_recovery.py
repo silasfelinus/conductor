@@ -33,7 +33,12 @@ class ShiftingDesksFinalArtTests(unittest.TestCase):
         self.assertIn(44065, self.row["earlier_art_jobs"])
         self.assertIn(252101, self.row["earlier_art_images"])
         self.assertIn(252102, self.row["earlier_art_images"])
-        self.assertEqual(self.row["verdict"], None)
+        self.assertEqual(self.row["status"], "delivered")
+        self.assertEqual(self.row["art_job_id"], 68768)
+        self.assertEqual(self.row["art_image_id"], 270634)
+        self.assertTrue(self.row["verdict"].startswith("keep:"))
+        self.assertIn("ArtJob 68768 DONE, ArtImage 270634", self.row["delivery_check"])
+        self.assertIn("confirmed newer than ArtJob", self.row["delivery_check"])
         self.assertIn(17, self.reconciler.ROUNDS)
 
     def test_missing_media_is_not_misreported_as_delivered(self):
@@ -50,9 +55,19 @@ class ShiftingDesksFinalArtTests(unittest.TestCase):
             },
         }
         requested = self.reconciler.timestamp(self.round["requested_at"])
+        # Audit a hypothetical pending replacement, not the real delivered KEEP:
+        # immutable completed ledger rows are intentionally no-ops to reconcile_row.
+        pending = {
+            **self.row,
+            "status": "requested",
+            "art_job_id": None,
+            "art_image_id": None,
+            "delivery_check": None,
+            "verdict": None,
+        }
         with mock.patch.object(self.reconciler, "probe_media", return_value=(None, "HTTP 404")):
             changes = self.reconciler.reconcile_row(
-                self.row, [job], requested, probe=self.reconciler.probe_media
+                pending, [job], requested, probe=self.reconciler.probe_media
             )
         self.assertEqual(changes["status"], "rendered")
         self.assertEqual(changes["art_job_id"], 98765)

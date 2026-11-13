@@ -4,6 +4,7 @@ on:
     paths:
       - ".github/workflows/shifting-desks-art-visual-review.yml"
       - "projects/shifting-desks/art/build_review_sheets.py"
+      - "projects/shifting-desks/art/build_recovery_sheets.py"
       - "projects/shifting-desks/art/ROUND-18.yaml"
       - "projects/shifting-desks/art/check_request_queue.py"
       - "projects/shifting-desks/art/audit_live_artjobs.py"
@@ -58,6 +59,28 @@ jobs:
           path: ${{ runner.temp }}/shifting-desks-classic-queue.json
           if-no-files-found: error
           retention-days: 7
+      - name: Capture 20 fresh Classic replacements and six private pilot images
+        env:
+          KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+          KR_BASE_URL: https://kindrobots.org
+        run: |
+          python projects/shifting-desks/art/build_recovery_sheets.py \
+            --out "$RUNNER_TEMP/shifting-desks-current-recovery"
+
+      - name: Upload fresh recovery and private pilot review evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: shifting-desks-current-recovery-review
+          path: ${{ runner.temp }}/shifting-desks-current-recovery/
+          if-no-files-found: error
+          retention-days: 7
+
+      - name: Audit accepted Classic links and check real media
+        run: |
+          python scripts/shifting_desks_art_readiness.py
+          python projects/shifting-desks/encounters/link_art.py --probe
+
       - name: Download actual art and build contact sheets
         run: |
           python projects/shifting-desks/art/build_review_sheets.py \
