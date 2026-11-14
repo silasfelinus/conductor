@@ -257,18 +257,9 @@ def eligible_proposal(date_override: Optional[str]) -> tuple[Optional[Path], str
         if status in ("parked", "vetoed", "built", "building"):
             continue
         proposal = _data_block(text, "proposal-data")
-        if is_v4_day(today) and (
-            not isinstance(proposal, dict)
-            or proposal.get("bundle_version") != 4
-        ):
-            reason = (f"{p.name}: old 14-record draft retained as history; "
-                      "only private ten-object candidate bundles may run now")
-            continue
-        if (is_v3_day(pdate) and not is_v4_day(today)
-                and isinstance(proposal, dict)
-                and proposal.get("bundle_version") != 3):
-            reason = (f"{p.name}: old six-object draft retained for history; "
-                      "a version-3 proposal was required at that time")
+        if is_v3_day(pdate) and isinstance(proposal, dict) and proposal.get("bundle_version") != 3:
+            reason = (f"{p.name}: old buffered six-asset draft retained as idea inventory; "
+                      "a new independent 14-asset proposal is required after cutover")
             continue
         contract_errors = _canonical_proposal_errors(proposal)
         if contract_errors:
