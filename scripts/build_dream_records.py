@@ -257,7 +257,11 @@ def eligible_proposal(date_override: Optional[str]) -> tuple[Optional[Path], str
         if status in ("parked", "vetoed", "built", "building"):
             continue
         proposal = _data_block(text, "proposal-data")
-        if is_v3_day(pdate) and isinstance(proposal, dict) and proposal.get("bundle_version") != 3:
+        if is_v4_day(pdate) and isinstance(proposal, dict) and proposal.get("bundle_version") != 4:
+        message = (f"{path.name}: obsolete 14-asset draft retained as inventory; "
+                   "a ten-asset private setting/character proposal is required")
+        return _fail_and_pin(path, message, dry_run, already_pinned=already_pinned)
+    if is_v3_day(pdate) and not is_v4_day(pdate) and isinstance(proposal, dict) and proposal.get("bundle_version") != 3:
             reason = (f"{p.name}: old buffered six-asset draft retained as idea inventory; "
                       "a new independent 14-asset proposal is required after cutover")
             continue
@@ -989,10 +993,9 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
                                   title, vibe_line),
                   "/api/scenarios", rec.get("id") if rec else None)
 
-    # 7. Version 3 adds EIGHT distinctly attributed Zuzu-world records.
-    # None is a child of, linked to, or styled after the random daily PITCH.
-    # They share this build's rollback ledger and the same 14-request handoff.
-    if proposal.get("bundle_version") == 3:
+    # v3: eight historical extras. v4: only FOUR PRIVATE setting and character
+    # models. Both use the same transaction, rollback and durable ArtJob ledger.
+    if proposal.get("bundle_version") in (3, 4):
         extras = proposal["zuzu_assets"]
         created = {"locations": [], "characters": []}
         if proposal.get("bundle_version") == 3:
@@ -1314,7 +1317,11 @@ def run_build(date_override: Optional[str], dry_run: bool) -> dict[str, Any]:
             catalog = _load_resource_index()
             families = {
                 str(row.get("checkpoint_family") or "").lower()
-                for kind in ("locations", "characters", "rewards", "scenarios")
+                for kind in (
+                    ("locations", "characters")
+                    if proposal.get("bundle_version") == 4
+                    else ("locations", "characters", "rewards", "scenarios")
+                )
                 for row in proposal["zuzu_assets"][kind]
             }
             for family in families:
