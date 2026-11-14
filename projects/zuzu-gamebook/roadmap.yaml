@@ -199,10 +199,7 @@ tasks:
   - id: t-006
     milestone: m3
     title: Independently enqueue and review gamebook illustrations in batches
-    status: review
-    owner: worker
-    claimed_by: 20261114T121725112Z-zuzu-gamebook-t006-priority-art-6c72
-    claimed_at: '2026-11-14T12:17:25.112Z'
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: [t-005]
@@ -220,7 +217,9 @@ tasks:
       Merged Conductor PR #7308 (b3647f4cddb8e05b0de26358b1e5813054f76055) with all four workflows green: ROUND-20 manifest defines 14 PRIVATE Arthemy candidates for seven newly authored/unpainted route and fairness scenes, plus a source-backed 35-gap scene art audit. Auto Art Generate workflow #43188873701 triggered from the main push, but actual ArtJob IDs, DONE render receipts, visual review and exported WebPs are NOT yet verified. Keep t-006 ready, not done, until delivery and existing Round-17/18 stage-two review are completed; do not call artwork generated or game playtest-ready merely because the ledger was submitted.
 
       2026-11-14 PT: Round 20's 14 render candidates already have DONE ArtJobs 68674-68687, no duplicate submissions. New ROUND-21-PRIORITY-SCENE-FIDELITY.yaml queues 20 PRIVATE new candidates (10 high-value early-book unregistered sections x two compositions) at priority 1000; their actual ArtJob ids and visual keeper acceptance must be confirmed after merge. Keep task active for source-backed delivery/review, additional unregistered scenes, two-character LoRA corrections and final WebP integration.
-    updated: '2026-11-14T12:21:23.018Z'
+
+      2026-11-14 PT: Conductor #7387 merged at e22e260 after all 6 current-head workflows passed. Round 21 has 20 high-priority (1000), private, auto-submitted candidate cells for ten previously unregistered scene plates. Prior Round20 14 jobs (68674-68687) already DONE and were not duplicated. Auto Art Generate run 43595625564 was in progress at closeout; require actual new ArtJob IDs, DONE, visual review, accepted WebPs and exact section registration before closing t-006. A duplicate updated YAML key introduced by the connector claim was repaired in #7387; processor now reached review. Return t-006 ready for outstanding delivery/review and t-012 paired-cast fidelity.
+    updated: '2026-11-14T12:36:53.092Z'
   - id: t-007
     milestone: m3
     title: Integrate authored story bundle, chapter pacing and illustration manifest
