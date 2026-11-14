@@ -92,3 +92,14 @@ Conductor#6110's unchanged reviewed head merged in another session at `2026-10-1
 **What to improve:** the body skipped the handoff template (kind_robots does not enforce it, Conductor does; use it in both), and three commits carry the same message. The 26 KEEP Western renders are hidden along with the 170 rejected ones; say so in the task note so the next session does not re-review them. Not verified here: the picker in a browser. Production only changes on Silas's next Force Update.
 
 **Kaizen task:** t-052, make the art-styles test fail when a style is available while most of its reviewed renders are REDO.
+
+
+## 2026-11-14 PT | Reviewer merge | shifting-desks/t-032 | Conductor #7356
+
+**Decision:** squash-merged head `64acb0d` as `794b30f`. One Markdown brief, reversible, scoped to the task. Every check on the head passed; the single red "Validate Worker PR handoff" was a rerun of the first run, which carried the PR body from before the Worker added the headings. The edited body passed in its own run.
+
+**What worked:** the brief is specific. Each trial has one pass/fail line, a private destination and a no-overwrite rule, and it says what happens if all three fail (switch to reference/compositing instead of rerendering the same prompts).
+
+**What to improve:** the brief stopped at prose, so nothing would ever have rendered. This review turned it into `SUBJECT-FIDELITY-PILOT-V2.yaml` (auto_submit, Krea 2 only, is_public false). The first dry run rejected two of the three prompts under the `frame-noun` rule ("in the frame", "fills the vertical frame"). Run `enqueue_art_requests.py <ledger>` dry before handing off. The brief's "No face, no coworker…" lines are negations, and Krea 2 has no negative prompt, so the ledger states them as positive staging instead.
+
+**Kaizen task:** none added. The worker's suggestion (per-render acceptance before replacing a canonical URL) already holds through link_art.py and the KEEP-only linking rule.
