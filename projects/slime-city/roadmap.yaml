@@ -172,13 +172,12 @@ tasks:
     implementation_pr: 'silasfelinus/kind_robots#5091'
   - id: t-063
     title: 'Main-game standard: audit and close the gaps for Slime City'
-    status: review
-    owner: worker
+    status: ready
     milestone: m4
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-14T01:30:00Z'
+    updated: '2026-11-14T03:25:00Z'
     note: |-
       Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -205,8 +204,8 @@ tasks:
       ready so pickers can take the next slice. No work discarded.
 
       Added persistent, device-local default Clash deck format with invalid/blocked storage handling and Pinia regression coverage. Implementation branch worker/slime-city-t-063-default-format-7f4c9a; awaiting PR checks. Remaining main-game settings and acceptance work stays open.
-    claimed_by: 2026-11-14T011621Z-slime-city-t063-7f4c9a
-    claimed_at: '2026-11-14T01:16:21Z'
+
+      Slime City default Clash deck preference merged in kind_robots PR #5132 (squash ea92b51b50e685006642afa00fee26a48c985125) after six completed successful workflow runs on e19e7c1. Remaining t-063 settings and main-game standard gaps are not complete; return umbrella to ready for the next settings increment.
   - id: t-064
     title: 'CPU values PIERCE gear only against armor, then rebalance Undertow and Bloodfairies starters'
     status: ready
