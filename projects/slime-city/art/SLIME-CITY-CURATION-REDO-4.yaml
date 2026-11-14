@@ -1,0 +1,87 @@
+# slime-city curation redo 4 (2026-11-14 PT, slime-city/t-017): re-renders the four SLIME-CITY-CURATION-REDO-3
+# renders rejected at curation. Causes removed from the prompts:
+# - Festival Triage 269289: the "wounded drummer" painted as a child -> a bearded, greying adult drummer.
+# - Exchange chapter-5 defeat 269294: "palm-sized" fairies painted as chibi children -> human-sized adult
+#   fairies with weathered faces, stubble and tattoos.
+# - TURF board 269295: "chalk tags in the corners" painted as garbled letters -> paint splatter and slime only.
+# - Ironjaw Bonus Plate 269291: the lab tag, payroll paperwork and keypad grew garbled text -> bare scales and
+#   steel, with the booth reduced to a plain steel counter.
+# Same runtime assets, so a keeper replaces the fallback when wired. Public (Silas, 2026-11-07: "The art
+# should be public"). auto_submit.
+round: slime-city-curation-redo-4
+project_slug: slime-city
+designer: slime-city curation redo 4, 2026-11-14
+is_public: true
+is_mature: false
+cast_loras: false
+priority: 1000
+auto_submit: true
+lanes:
+- key: krea2
+  label: Krea2 Gutter Crown collectable comic inks
+  engine: krea2
+  prompt: prose
+  suffix: Bold Western adult-animation comic illustration, high-contrast ink contours, rich postapocalyptic saturated
+    color, strong central subject and crisp readable silhouette, every surface bare and unmarked, one continuous
+    scene
+- key: krea2-board
+  label: Krea 2 Slime City board floors
+  engine: krea2
+  prompt: prose
+  suffix: Colorful grungy comic gouache, thick ink texture, rust, slime green and neon magenta accents, top-down
+    tabletop game mat.
+subjects:
+- key: slime-r5-card-s3-bloodfairies-festival-triage-redo4
+  lane: krea2
+  entity: card-art
+  title: Festival Triage
+  asset: slime-city/cards/s3-bloodfairies-festival-triage
+  size: 832x1216
+  seed: 2386362
+  prompt_prose: A fairy tour medic, a full-grown punk woman in her thirties with long limbs, sharp cheekbones,
+    laugh lines and tattoo sleeves, studded leather vest and combat boots, ragged violet insect wings, with a
+    headlamp and a bandolier of blood-red vials, patches the ribs of a burly bearded drummer in his forties, greying
+    stubble, beer belly and sweat-soaked band shirt, sprawled grimacing across an upturned road case while she wraps
+    silver gaffer tape around him. Behind them a queue of bandaged middle-aged punk fairies with crow's feet and
+    mohawks taps their boots impatiently. Eye-level view at road-case height, a muddy festival field and violet
+    stage glow beyond.
+- key: slime-r5-card-s3-ironjaw-bonus-plate-redo4
+  lane: krea2
+  entity: card-art
+  title: Shift Bonus Plates
+  asset: slime-city/cards/s3-ironjaw-bonus-plate
+  size: 832x1216
+  seed: 2386375
+  prompt_prose: Across a bare riveted steel counter in a foundry break room, an adult iguana-man paymaster, an escaped
+    bio-lab mutant with spiny emerald scales, a dewlap and a riveted chrome jaw plate, heaves an enormous gleaming
+    steel plate over to a delighted lizard welder, who straps it across his belly like a new apron and pats it
+    proudly. Behind him a cat-eared rival in a cobalt jacket flexes sharp claws, eyeing the gap at the plate's edge.
+    Furnace glow, hanging chains and scuffed bare iron walls, over-the-shoulder view from behind the counter.
+- key: slime-story-exchange-05-defeat-redo4
+  lane: krea2
+  entity: campaign-defeat
+  title: slime story exchange 05 defeat
+  asset: slime-city/story/exchange/5/defeat
+  size: 1344x768
+  seed: 2382450
+  prompt_prose: Failure aftermath for the fifth Exchange chapter on the steps of the Meat Exchange in Crown Market.
+    A mustard-gold pinstripe financier in his sixties stands triumphant on the steps, flanked by armored retainers
+    clutching brass ledgers, while the Punk Bloodfairies' paint protest falls apart around him. The fairies are
+    human-sized grown punk women and men in their thirties and forties, weathered faces, stubble, crow's feet,
+    tattooed forearms, magenta mohawks, studded leather jackets and ragged violet insect wings; they retreat down the
+    steps with empty buckets as magenta paint drips uselessly off the gilded columns behind the financiers. One
+    fairy looks back over her shoulder, jaw set, already planning the next move. Grungy Western comic illustration,
+    bold inky outlines, luminous magenta and gold, rich gouache textures, wide cinematic view.
+- key: slime-board-turf-redo4
+  lane: krea2-board
+  entity: board-floor
+  title: Slime City TURF board
+  asset: slime-city/boards/turf
+  size: 1024x1024
+  seed: 1197301
+  prompt_prose: 'Top-down painted game board floor for a square street-gang territory game played on an abandoned
+    rooftop basketball court in a slime-drenched megacity: weathered teal and rust court paint with a thin pale
+    boundary line, splashes of neon magenta spray paint, a few bottle caps and a rolled-up sleeping bag along the
+    outer border, puddles of glowing green slime pooled in the cracks near the corners, warm sodium streetlight from
+    all four sides. Seen straight down from directly overhead, a flat square tabletop game mat of open ground reaching
+    every edge: even lighting, richer detail gathered along the borders and a calm, plain, readable middle.'
