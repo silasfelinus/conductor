@@ -103,3 +103,14 @@ Conductor#6110's unchanged reviewed head merged in another session at `2026-10-1
 **What to improve:** the brief stopped at prose, so nothing would ever have rendered. This review turned it into `SUBJECT-FIDELITY-PILOT-V2.yaml` (auto_submit, Krea 2 only, is_public false). The first dry run rejected two of the three prompts under the `frame-noun` rule ("in the frame", "fills the vertical frame"). Run `enqueue_art_requests.py <ledger>` dry before handing off. The brief's "No face, no coworker…" lines are negations, and Krea 2 has no negative prompt, so the ledger states them as positive staging instead.
 
 **Kaizen task:** none added. The worker's suggestion (per-render acceptance before replacing a canonical URL) already holds through link_art.py and the KEEP-only linking rule.
+
+
+## 2026-11-14 PT | Reviewer | shifting-desks/t-021 | Conductor #7378
+
+**Decision:** proposal, so merged the pitch file to `main` for visibility only and parked t-021 at `needs-human` for Silas's creative call. Nothing built, queued or deployed. All checks green except "Validate Worker PR handoff", which failed because the body used `### What changed` / `### Verification` instead of the required `### What changed / what I produced` / `### How I verified`; the reviewer renamed the headings; the run triggered by the edited body passed (a rerun of the original run replays the old body and stays red, as on #7356). Squash-merged as `6d71f74`.
+
+**Good:** respects the 2026-10-12 party-mode rejection; scoped as an opt-in epilogue behind an explicit archive unlock so a first loss never gets hijacked; reuses existing systems (Composure, Successors, Forms) and keeps the expansion out of the playtest finish line. The sample exchange carries the tone.
+
+**Improve:** copy the handoff headings verbatim from `scripts/check_pr_handoff_template.py` (third recurrence in this project's log). The pitch says "three earlier choices" are recalled, but names only examples; a route contract should list the exact flags.
+
+**Kaizen task:** none added; proposal not implemented. Worker's suggestion (route-contract check before any optional ending enters the registry) belongs in the first task if Silas approves.
