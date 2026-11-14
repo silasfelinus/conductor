@@ -209,17 +209,21 @@ tasks:
       ready so pickers can take the next slice. No work discarded.
   - id: t-064
     title: 'CPU values PIERCE gear only against armor, then rebalance Undertow and Bloodfairies starters'
-    status: claimed
+    status: ready
     milestone: m3
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-12T01:19:20Z'
+    updated: '2026-11-14T00:53:28Z'
     note: |-
       Found by t-058 (kind_robots#5030). chooseClashCpu's own-target grant scoring (utils/slimeCity/clash.ts, `missing.length * 2.8`) prices a PIERCE grant at full value even when the fighter across has no armor, so the CPU spends plays on PIERCE gear instead of deploying fighters. A swap ablation of the Catgirls fighters deck vs the other crews' constructed decks (24 seeds, both seats) read 0.432 with s1-surgical-piercers and 0.597 without; ninthlife (REGEN gear) 0.524 without. Prototype: value a PIERCE keyword at 0.6 unless `across.armor > 0`. That took the Catgirls fighters deck to 0.495, but the 40-seed starter sweep moved Undertow 54.5% -> 59.3% and Bloodfairies 44.3% -> 41.8% (guard 42-58%). Land the CPU fix together with a starter rebalance that keeps verifySlimeCityClash and verifySlimeCityClashConstructed green, and check whether REGEN gear on a full-health fighter is over-valued too. Internal preview only.
+
+      2026-11-13 PT intent audit (INTENT-AUDIT-2026-11-14.md): claim expired ~1-2 days ago
+      with no open PR; released to ready so the top-priority lane is pickable. Next step is
+      the one in the note above.
     owner: worker
-    claimed_by: 2026-11-12T011920Z-slime-city-t-064-g6k29
-    claimed_at: '2026-11-12T01:19:20Z'
+    claimed_by: ''
+    claimed_at: ''
   - id: t-002
     milestone: m1
     title: "Harden square movement, fog-of-war, action costs and three cadences"
