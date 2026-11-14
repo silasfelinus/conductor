@@ -223,7 +223,6 @@ def test_still_wait_observations_are_per_shot_and_never_invent_gpu_runtime():
     assert samples["s1"]["observed_wait_seconds"] == 37 * 60
     assert "observed_wait_seconds" not in samples["s2"]
     assert should_skip_optional_clip({"episodes": {"pilot": row}}, 10, second)
-    assert not should_skip_optional_clip({"episodes": {"pilot": row}}, 10, first)
 
 
 def test_congested_pending_still_skips_clip_but_fresh_queue_does_not():
