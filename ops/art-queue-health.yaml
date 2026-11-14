@@ -1,22 +1,4 @@
 # art-queue-health.yaml -- written by scripts/art_queue_health.py record at the
 # end of every Auto Art Generate run. Do not hand-edit: fix the cause (see
 # docs/agents/roles/art-medic.md) and the next run drops the entry.
-failures:
-- source: ledgers
-  target: projects/zuzu-shifting-lands/art/ROUND-11-NEW-TRAVELERS.yaml
-  kind: contract-rejected
-  rules:
-  - text-exclusion
-  - text-exclusion-pile
-  detail: 3 cell(s) skipped, e.g. shifting-lands-11-travelers-mags-every-name-on-the-wall [krea2], shifting-lands-11-travelers-your-face-on-the-old-bill
-    [krea2], shifting-lands-11-travelers-augustin-kept-the-vow [krea2]
-  first_seen: '2026-11-13'
-- source: ledgers
-  target: projects/zuzu-shifting-lands/art/ROUND-12-OUTCOMES.yaml
-  kind: contract-rejected
-  rules:
-  - people-negation
-  detail: 16 cell(s) skipped, e.g. shifting-lands-12-outcomes-a-road-of-bones--ask-who-laid-the-timbers--success-a
-    [krea2], shifting-lands-12-outcomes-a-road-of-bones--ask-who-laid-the-timbers--success-b [krea2],
-    shifting-lands-12-outcomes-footprint…
-  first_seen: '2026-11-13'
+failures: []
