@@ -1463,10 +1463,13 @@ tasks:
   - id: t-064
     milestone: m3
     title: "Bind the Earth letter and Last Train e03/e04 packets into the encounter registry with executable reducer tests"
-    status: ready
+    status: claimed
+    owner: worker
+    claimed_by: 2026-11-14T074700Z-memory-dungeon-t-064-9f28
+    claimed_at: '2026-11-14T07:47:00Z'
     stakes: reversible
     passes: 0
-    updated: '2026-11-14T06:46:50Z'
+    updated: '2026-11-14T07:47:00Z'
     note: |-
       2026-11-11 PT remaining: **Highest-value immediate code gap:** bind Last Train to actual e03/e04 encounters and replay-validated reachability; reject forged/out-of-order saved decisions. Evidence: RESET-TASK-EVIDENCE-AUDIT-2026-11-10.md (t-064 row).
       Kaizen from t-025 Last Train review (conductor#7168): two writer packets (Earth letters, Last Train) now specify 24 choices and state rules but neither is wired in. Audit occupied e03/e04 cells, bind scene IDs into the registry and Pinia persistence, and implement each packet's acceptance matrix as executable tests (replay, forged-choice, missing-state fallbacks) before any more prose packets.
