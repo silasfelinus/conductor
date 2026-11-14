@@ -180,11 +180,14 @@ def test_post_cutover_selector_skips_legacy_candidate_without_deleting_it(tmp_pa
     monkeypatch.setattr(records, "find_proposals", lambda: docs)
     monkeypatch.setattr(build_selector.creative_contract, "validate_path", lambda *_: [])
     selected, reason = build_selector.eligible_proposal("2026-10-13")
-    assert selected == docs[1][0]
-    assert docs[0][0].exists()
+    # Historical v3 manuscripts must remain on disk but cannot create new
+    # gameplay scenarios/rewards now that the v4 catalog-only policy applies.
+    assert selected is None
+    assert "old 14-record draft" in reason
+    assert all(row[0].exists() for row in docs)
 
 
-def test_scheduled_fourteen_asset_dream_writer_is_active():
+def test_scheduled_dream_writer_is_active_for_private_ten_asset_batches():
     workflow = (Path(__file__).resolve().parents[1] /
                 ".github/workflows/daily-digest.yml").read_text()
     author = workflow[workflow.index("- name: Author today's next Daily Dream proposal"):
