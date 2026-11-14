@@ -826,26 +826,25 @@ books:
     prompt_fingerprint: 93f3d90b8039e316d5a44498bee5b88c8e284549421aa40564a628ec1ad4a6f7
     approved_at: '2026-09-27T13:23:26Z'
     lock_seed: true
-    bw_job_id: 31682
-    bw_status: approved
-    bw_requested_at: '2026-09-27T13:23:27Z'
-    bw_art_image_id: 240201
-    bw_rendered_path: generated/bw/mr-018-bw.webp
-    bw_mechanical_info:
-      pixels: 16960
-      mean_saturation: 0.0005
-      colorful_fraction: 0.0
-      white_fraction: 0.7429
-      luma_std: 0.1359
-      size: 1024x1536
-      hf_ratio: 0.4451
-      tint_concentration: null
+    bw_status: running
+    bw_requested_at: '2026-11-14T23:21:50Z'
     bw_render_reasons: []
-    bw_completed_at: '2026-09-27T13:26:37Z'
     bw_approved_at: '2026-09-27T13:26:45Z'
     pair_status: final
     pair_semantic_score: null
     pair_finalized_at: '2026-09-27T13:26:45Z'
+    bw_revision_history:
+    - requested_at: '2026-11-14T23:21:49Z'
+      previous_status: approved
+      art_image_id: 240201
+      rendered_path: null
+      semantic_score: null
+      archived_path: projects/coloring-book/sets/monster-recast/generated/bw/revisions/studio/mr-018-bw-20261114T232149Z.webp
+      bw_source: null
+      bw_source_path: null
+    bw_source: color
+    bw_source_path: generated/color-proposals-v1/mr-018-doctor-feast.webp
+    bw_job_id: 69365
   - slot: 19
     id: mr-019
     slug: countess-vermin
@@ -873,6 +872,20 @@ books:
     adopted_color_at: '2026-11-05T03:06:42Z'
     approved_at: '2026-11-05T03:06:42Z'
     lock_seed: true
+    bw_revision_history:
+    - requested_at: '2026-11-14T23:31:52Z'
+      previous_status: pending
+      art_image_id: null
+      rendered_path: null
+      semantic_score: null
+      archived_path: null
+      bw_source: null
+      bw_source_path: null
+    bw_status: running
+    bw_source: color
+    bw_source_path: generated/color-proposals-v1/mr-019-countess-vermin.webp
+    bw_job_id: 69368
+    bw_requested_at: '2026-11-14T23:31:52Z'
   - slot: 20
     id: mr-020
     slug: fly-girl-summer
@@ -943,22 +956,15 @@ books:
       \ lands in POSITIVE conditioning and the picture fills with them. Say what the picture IS: \"a deserted scene\"\
       , \"a deserted street\", \"the subject alone on a plain ground\". Not \"frame\" -- see the frame-noun rule;\
       \ this remedy used to say it and Krea drew the frame."
-    render_gate_error_at: '2026-11-14T16:54:29Z'
+    render_gate_error_at: '2026-11-14T23:41:59Z'
   - slot: 22
     id: mr-022
     slug: prom-king
     title: Prom King Ascendant
-    status: approved
+    status: pending
     seed: 893550912
     image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-022-prom-king.webp
     source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-022
-    last_render_seed: 282588380
-    rendered_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-022-prom-king.webp
-    art_image_id: 17046
-    render_seed: 893550912
-    render_engine: krea2
-    completed_at: '2026-08-09T08:32:42Z'
-    prompt_fingerprint: b22239e256ebe29970b85de903f9869fbe9364c3b06a049748c27283d3aab911
     approved_at: '2026-09-27T15:59:37Z'
     lock_seed: true
     bw_job_id: 31697
@@ -976,6 +982,19 @@ books:
     - variant: bw
       path: generated/bw/mr-022-bw.webp
       replaced_at: '2026-11-05T03:06:43Z'
+    studio_revision_history:
+    - requested_at: '2026-11-14T23:41:59Z'
+      previous_status: approved
+      art_image_id: 17046
+      rendered_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-022-prom-king.webp
+      semantic_score: null
+      prompt_fingerprint: b22239e256ebe29970b85de903f9869fbe9364c3b06a049748c27283d3aab911
+      archived_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/revisions/mr-022-prom-king-20261114T234159Z.webp
+      masters_repointed:
+      - accepted
+    studio_revision_requested_at: '2026-11-14T23:41:59Z'
+    render_gate_error: job 69369 timed out after 600s (still queued/running)
+    render_gate_error_at: '2026-11-14T23:52:03Z'
   - slot: 23
     id: mr-023
     slug: babs-blob
