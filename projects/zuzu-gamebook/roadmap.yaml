@@ -103,7 +103,7 @@ tasks:
       original dice and combat rules, and established agent autonomy and art guardrails.
   - id: t-015
     title: 'Main-game standard: audit and close the gaps for Zuzu Gamebook'
-    status: claimed
+    status: review
     milestone: m5
     stakes: reversible
     passes: 0
@@ -111,7 +111,7 @@ tasks:
     owner: worker
     claimed_by: 20261114T111020Z-zuzu-t015-save-recovery-b7e9
     claimed_at: '2026-11-14T11:10:20Z'
-    updated: '2026-11-14T11:10:20Z'
+    updated: '2026-11-14T11:11:00Z'
     note: |-
       Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -126,6 +126,8 @@ tasks:
       Scoped implementation PR prepared: Zuzu's art-led title screen, four reading controls, painted endings, and persistent per-journey scrapbook with regression coverage. Main-game-standard acceptance remains open for account sync, complete art and human final QA.
 
       Merged Kind Robots PR #5070 at commit 37eafdd60de28e26fa4a2eb09237f96486a0743a after all ten current-head workflows completed green: illustrated entry screen, real text/font/contrast/motion settings, painted 15-ending catalogue, versioned local journey scrapbook and tests. Also merged Conductor PR #7307 for no duplicate master task and a true deferred final human gate. Main-game standard remains READY, not done: add cast discovery scrapbook, reconcile account-backed saves and full device testing with existing story/art tasks. Do not promote project to playtest, and keep GitHub master issue #4139 open.
+
+      Scoped save-load corruption isolation fix submitted in Kind Robots branch worker/zuzu-t015-save-recovery-b7e9; broader account sync, art and device QA remain open. Do not mark t-015 done.
   - id: t-016
     title: 'Zuzu Gamebook achievement upgrade: 12 or more live achievements'
     status: done
