@@ -25,19 +25,17 @@ From `utils/scripts/shiftingLandsArtCoverage.ts`, which enumerates every image s
 |---|---:|---:|---:|---:|
 | Shared card faces (V6) | 120 | 120 | 0 | 0 |
 | Cast cameo cards | 7 | 1 | 6 | 0 |
-| Travelers' own cards | 52 | 50 | 2 | 0 |
-| Choice outcomes (success/failure) | 1053 | 532 | 509 | 12 |
+| Travelers' own cards | 52 | 52 | 0 | 0 |
+| Choice outcomes (success/failure) | 1053 | 532 | 521 | 0 |
 | Trial route outcomes | 80 | 54 | 0 | 26 |
 | Shared endings | 19 | 19 | 0 | 0 |
-| Personal endings | 39 | 36 | 0 | 3 |
+| Personal endings | 39 | 39 | 0 | 0 |
 | Traveler portraits | 13 | 13 | 0 | 0 |
 | Species portraits | 13 | 13 | 0 | 0 |
 
 Notes:
 - **Cameo cards:** the 6 fallbacks show Book One plates without Zuzu in them. That is allowed, and the contract test checks it.
-- **Own cards:** 2 fall back to their location plate (`tamsin-the-foremans-offer`, `your-face-on-the-old-bill`).
-- **Personal endings:** 3 show the ending text without a plate (`ling-two-bowls-both-full`, `mags-every-name-on-the-wall`, `augustin-kept-the-vow`).
-- **ROUND-16-RETAKES:** queued 2026-11-14 PT to re-render these five. They will ship as a playtest-stage update and do not hold the flip.
+- **ROUND-16-RETAKES (2026-11-14 PT, playtest iteration):** shipped the last five plates. Every own card and personal ending now has its own painting.
 - **Outcomes and trial routes:** "No plate" means the matrix found neither a consequence plate nor a bespoke card plate. The game still never shows a blank. `outcomePlate` falls back to the played location's art, and `trialPlate` falls back to the land's trial or boss art (`stores/shiftingLandsJourneyStore.ts`).
 
 Every curated plate was checked by eye against its prompt. Rejected: human figures, lettering or pseudo-text, a koala or straw kasa outside Zuzu's own road, wrong species. Ledgers carry the verdicts: ROUND-3, ROUND-7, ROUND-8 to ROUND-15 (ROUND-16 queued) and ENDINGS-STANDARD-ROUND-1. An outcome without its own plate falls back to its card's painting (design, t-028).
