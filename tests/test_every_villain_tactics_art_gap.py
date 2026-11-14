@@ -84,7 +84,14 @@ def test_private_selected_checkpoint_and_distinct_render_provenance():
             assert row["size"] == "896x1152"
             assert len(row["prompt_prose"].split()) >= 55
             assert row["asset"].startswith("every-villain-tactics/")
-            assert not row.get("jobs"), "New batch must not invent ArtJob IDs"
+            # auto_submit batches gain real ArtJob receipts once the art
+            # reconciler submits them; authored rows must not carry any other
+            # shape (e.g. invented IDs for other lanes or non-integer values).
+            jobs = row.get("jobs") or {}
+            assert set(jobs) <= {lane["key"]}, f"{row['key']}: unexpected job lanes"
+            assert all(
+                isinstance(job, int) and job > 0 for job in jobs.values()
+            ), f"{row['key']}: ArtJob IDs must be positive integers"
             all_rows.append(row)
     assert len(all_rows) == 177
     assert len({row["key"] for row in all_rows}) == 177
