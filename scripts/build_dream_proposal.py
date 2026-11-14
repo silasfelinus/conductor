@@ -43,7 +43,9 @@ def _proposal_is_current_contract(text: str) -> bool:
         return False
     fm = _frontmatter_from_text(text)
     day = str(fm.get("proposal_date") or fm.get("created") or "")
-    if _v3_day(day) and proposal.get("bundle_version") != 3:
+    if _v4.is_v4_day(day) and proposal.get("bundle_version") != 4:
+        return False
+    if _v3_day(day) and not _v4.is_v4_day(day) and proposal.get("bundle_version") != 3:
         # Preserve earlier buffered six-asset manuscripts AS FILES, but don't
         # count them as a post-cutover complete daily authoring slot. A fresh
         # 14-asset proposal for that date is allowed; neither is overwritten.
@@ -150,12 +152,14 @@ try:
         is_v3_day as _v3_day,
     )
     from daily_dream_v3_contract import validate_v3 as _validate_v3_bundle
+    import daily_dream_v4_contract as _v4
 except ModuleNotFoundError:
     from scripts.daily_dream_v3_authoring import (
         extend_brief as _extend_zuzu_brief,
         is_v3_day as _v3_day,
     )
     from scripts.daily_dream_v3_contract import validate_v3 as _validate_v3_bundle
+    from scripts import daily_dream_v4_contract as _v4
 
 _six_asset_build_brief = build_brief
 _six_asset_validate_proposal = validate_proposal
@@ -174,7 +178,9 @@ def build_brief(day: str | None = None, catalog=None) -> dict[str, Any]:
 def validate_proposal(proposal: Any) -> list[str]:
     errors = _six_asset_validate_proposal(proposal)
     if isinstance(proposal, dict):
-        if proposal.get("bundle_version") == 3:
+        if proposal.get("bundle_version") == 4:
+            errors.extend(_v4.validate_v4(proposal))
+        elif proposal.get("bundle_version") == 3:
             errors.extend(_validate_v3_bundle(proposal))
         elif proposal.get("zuzu_assets"):
             errors.append("zuzu_assets require bundle_version 3")
@@ -186,20 +192,22 @@ _original_render_markdown = render_markdown
 
 def render_markdown(p: dict[str, Any], day: str) -> str:
     base = _original_render_markdown(p, day)
-    if p.get("bundle_version") != 3:
+    if p.get("bundle_version") not in (3, 4):
         return base
     extras = p["zuzu_assets"]
     lines = [
-        "## Eight additional Zuzu-world creations (independent of this Dream)",
+        ("## Four private Zuzu/Emperor setting and character candidates"
+         if p.get("bundle_version") == 4 else
+         "## Eight additional Zuzu-world creations (independent of this Dream)"),
         "",
-        "These creations belong to Zuzu Gamebook or Emperor of Dust. They do NOT",
+        "These object-catalog candidates belong to Zuzu Gamebook or Emperor of Dust. They do NOT",
         "inherit today's original Dream vibe, location, links, or visual style.",
         "",
     ]
-    for kind, titlekey in (
-        ("locations", "title"), ("characters", "name"),
-        ("rewards", "name"), ("scenarios", "title"),
-    ):
+    kinds = (("locations", "title"), ("characters", "name"))
+    if p.get("bundle_version") == 3:
+        kinds += (("rewards", "name"), ("scenarios", "title"))
+    for kind, titlekey in kinds:
         lines.append(f"### Zuzu {kind.title()} (2)")
         for row in extras[kind]:
             label = str(row[titlekey])
