@@ -1,18 +1,19 @@
 # Daily Dream pipeline
 
-> **Production restored 2026-11-14 PT at Silas's direction.** The Daily
-> Dream is again a daily creative commitment **alongside** Dead Air, not in its
-> place. One version-3 bundle produces six linked original-Dream entities plus
-> eight separate Zuzu Gamebook / Emperor of Dust creations, with fourteen
-> durable, target-specific ArtJobs. The single transactional writer and retry
-> ledger remain authoritative. Historical six-record bundles are preserved.
-> Model-paid proposal authoring stays opt-in; the scheduled builder may consume
-> already-authored valid v3 proposals without incurring authoring API spend.
->
+> **Current clarified contract, 2026-11-14 PT:** The original six linked
+> Daily Dream entities continue. Supplement them with exactly four PRIVATE
+> Kind Robots object-catalog candidates: one LOCATION/setting and one Character
+> model for each of Zuzu Gamebook and Emperor of Dust. No new game concepts,
+> scenarios, rewards, quests, branches or playtest roster. All ten objects
+> and ten ArtJobs share the single idempotent transactional writer.
+> Prior version-3 14-object bundles remain as historical data; unbuilt v3
+> drafts must not auto-run. Dead Air and the five actual project upgrades
+> remain independent; paid model proposal authoring stays opt-in.
+
 
 This is the canonical end-to-end contract for the Daily Dream. There is one object-creation path and one ordered morning cycle.
 
-## 2026-10-13 PT: fourteen-asset cutover (current)
+## 2026-11-14 PT: ten-object catalog-only production (current)
 
 The existing **sole object writer** remains `scripts/build_dream_records.py`.
 The original Daily Dream continues as a complete six-asset linked mini-world
@@ -22,11 +23,11 @@ two characters, two rewards and two consequential-choice scenarios, one in each
 category for Zuzu Gamebook and Emperor of Dust, with independent catalog Facets
 and actual Arthemy/Illustrious SDXL checkpoint ArtJobs.
 
-Exactly **14 distinct record ArtJobs** are staged and their targets retained in
+Exactly **10 distinct record ArtJobs** are staged and their targets retained in
 `built-data`. One transaction, one rollback policy, one morning workflow;
 historic built six-asset proposals stay readable and immutable. Future-dated
 unbuilt six-asset buffered files remain idea inventory, without being erased
-or silently promoted to a partial 14-asset run. The original Daily Dream keeps
+or silently promoted to a partial 10-asset run. The original Daily Dream keeps
 its Krea art lane and Zuzu receives separate provenance and digest headings.
 The operational ordering below is unchanged; old references to six requests
 in its historical sections describe the version-2 lane only.
@@ -36,15 +37,15 @@ in its historical sections describe the version-2 lane only.
 ```text
 Daily Digest morning cycle
     ↓
-author today's fourteen-asset steering proposal
+author today's ten-asset steering proposal
     ↓
 build digest JSON/email from the most recent ALREADY BUILT bundle
     ↓
 freeze today's email payload
     ↓
-build TODAY'S proposal into fourteen live records for TOMORROW
+build TODAY'S proposal into ten Kind Robots records for TOMORROW
     ↓
-attach Facets + submit fourteen durable priority ArtJobs
+attach Facets + submit ten durable priority ArtJobs
     ↓
 commit proposal/build/ArtJob evidence
     ↓
@@ -65,7 +66,7 @@ roughly a full day to render.
 ## 1. Author today's proposal
 
 At the start of the scheduled morning cycle, `scripts/author_dream_proposal.py` ensures
-that the current Pacific date has one canonical fourteen-asset proposal. Authoring is
+that the current Pacific date has one canonical ten-asset proposal. Authoring is
 idempotent and creates no database objects by itself.
 
 ## 2. Freeze today's digest from prior completed work
@@ -98,14 +99,14 @@ from an earlier day. Manual `--date` calls still target only the requested date.
 This prevents repeated completed worlds while valid proposals wait in the buffer,
 without discarding earlier creative work or spending API credits.
 
-The builder creates the complete fourteen-object bundle transactionally, records every
-resulting ID in `built-data`, and writes exactly fourteen stable art requests to
+The builder creates the complete ten-object bundle transactionally, records every
+resulting ID in `built-data`, and writes exactly ten stable art requests to
 `projects/art-prompts.yaml`. Immediately afterward,
 `scripts/apply_daily_dream_facets.py` attaches the persisted Facets.
 
 ## 4. Submit tomorrow's art immediately
 
-`scripts/submit_daily_dream_art.py` submits the fourteen newly staged `source: dream-cycle`
+`scripts/submit_daily_dream_art.py` submits the ten newly staged `source: dream-cycle`
 requests to Kind Robots and records each durable `last_art_job_id`. It does not wait
 for those renders, because they are not needed by the already-frozen email. The normal
 renderer now has the rest of the day and overnight to complete them.
@@ -189,7 +190,7 @@ CI enforces that:
 
 ## New-playbook daily challenge (2026-10-26 PT)
 
-Separate from both the original 14-asset Daily Dream and the five **already-built**
+Separate from both the current 10-object Daily Dream cycle and the five **already-built**
 daily project upgrades, each Pacific day's digest offers exactly three
 unapproved, **evolving** game-playbook concepts for Silas to consider. The owner is the
 Conductor session creative-docket step in `CLAUDE.md`, not a second scheduled
