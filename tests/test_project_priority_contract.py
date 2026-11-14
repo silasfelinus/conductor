@@ -72,6 +72,12 @@ def test_lead_projects_are_the_ones_silas_named():
     It remains active and high priority, without silently reprioritizing
     the protected creative focus or earlier arcade projects.
 
+    Updated 2026-11-14 PT on Silas's named playtest handoff (2026-11-13 PT: "help wrap
+    up Shifting Lands ... Last step is to flip the project to playtest"): Shifting
+    Lands leaves the focus group for the playtest lifecycle, which removes a game from
+    high-priority development rotation. The other six keep their relative order, and
+    every band behind them moves up one slot unchanged.
+
     The point of this test is unchanged: an agent tidying priority.yaml must not quietly
     reorder the top, and changing it means editing this test with a named human decision
     in the docstring.
@@ -82,7 +88,6 @@ def test_lead_projects_are_the_ones_silas_named():
     focus = [
         "weird-humboldt",
         "zuzu-gamebook",
-        "zuzu-shifting-lands",
         "emperor-of-dust",
         "rainbow-bullet-hell-space-princess",
         "save-the-plumber",
@@ -91,11 +96,11 @@ def test_lead_projects_are_the_ones_silas_named():
     # 2026-11-09: Silas elevated slime-city to rank 1; the named tier is unchanged behind it.
     assert order[0] == "slime-city"
     order = order[1:]
-    assert len(order) >= 15
-    assert order[:7] == focus
-    assert order[7:11] == ["kind-pinball", "zuzu-lair", "kr-arcade", "zuzu-showdown"]
-    assert order[11] == "memory-dungeon"
-    assert order[12:14] == ["cthulhuquarium", "kind-economy"]
+    assert len(order) >= 14
+    assert order[:6] == focus
+    assert order[6:10] == ["kind-pinball", "zuzu-lair", "kr-arcade", "zuzu-showdown"]
+    assert order[10] == "memory-dungeon"
+    assert order[11:13] == ["cthulhuquarium", "kind-economy"]
     for finished in ("kapowarr", "ai-art-academy"):
         assert finished not in order
 
@@ -119,18 +124,21 @@ def test_ecotone_high_priority_is_registered_and_pickable():
 
 
 def test_seven_creative_focus_projects_are_active_and_high_priority():
-    """2026-10-21: do not let creative focus silently become a label-only promise."""
+    """2026-10-21: do not let creative focus silently become a label-only promise.
+
+    2026-11-14 PT: zuzu-shifting-lands left the tier for playtest on Silas's
+    direction (2026-11-13 PT, "flip the project to playtest"); the other six stay.
+    """
     focus = {
         "weird-humboldt",
         "emperor-of-dust",
         "zuzu-gamebook",
-        "zuzu-shifting-lands",
         "shifting-desks",
         "rainbow-bullet-hell-space-princess",
         "save-the-plumber",
     }
     data = yaml.safe_load(PRIORITY.read_text(encoding="utf-8")) or {}
-    assert set(data["order"][1:8]) == focus
+    assert set(data["order"][1:7]) == focus
     raw = yaml.safe_load(OVERRIDES.read_text(encoding="utf-8")) or {}
     overrides = {row["slug"]: row for row in raw.get("overrides", [])}
     for slug in focus:
