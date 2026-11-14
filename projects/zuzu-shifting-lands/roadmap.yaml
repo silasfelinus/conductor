@@ -110,12 +110,12 @@ tasks:
       DB rows or gameplay deployment claimed; creative spoilers may be in source.
   - id: t-053
     title: 'Personalize every premade traveler: character-only cards, options and a personal thread (art high priority)'
-    status: claimed
+    status: done
     milestone: m3
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-13T22:40:52Z'
+    updated: '2026-11-14T06:53:23Z'
     note: |-
       Silas 2026-11-12 PT, in session: "Shifting lands Characters can still have special character only events, cards, or options. If we keep it to >10 characters, there's zero reason they can't be personalized to them. I like this idea a lot, high priority for art generation."
 
@@ -132,6 +132,11 @@ tasks:
       ART IS HIGH PRIORITY: queue every new card's plate in an auto_submit ledger at priority 1000 (Silas's "high priority for art generation"), following the world guardrails and the ROUND-8-TRAVELERS lane. The 13 traveler portraits and 19 ending plates were raised to priority 1000 on 2026-11-12.
 
       Open for Silas (from t-052): naming the fennec sister; whether children as playable characters may face the Abbess trial and death routes (harm currently off-screen).
+
+      Done 2026-11-14 PT: 13 premade roads (52 own cards, 39 choices, 39 endings) shipped in
+      kind_robots #5125-#5144; art 50/52 own cards, 36/39 personal endings; ROUND-16 retakes
+      queued as a playtest-stage update. See projects/zuzu-shifting-lands/READINESS-
+      DOSSIER-2026-11-14.md.
     owner: worker
     claimed_by: 2026-11-13T23:10:00Z-funny-mendel
     claimed_at: '2026-11-13T22:40:52Z'
@@ -431,7 +436,7 @@ tasks:
   - id: t-017
     milestone: m5
     title: "Seed/property-based playtests, difficulty balance and safe choice outcomes"
-    status: waiting
+    status: done
     owner: null
     passes: 0
     stakes: reversible
@@ -444,10 +449,15 @@ tasks:
       unearned hidden knowledge or unrecoverable save state. HP and reward
       progression are balanced across all five lands.
 
+      Done 2026-11-14 PT: seeded adversarial battery (1,176 journeys, 7 policies) and balance
+      report; kind 74%, every traveler 58-96%. See projects/zuzu-shifting-lands/READINESS-
+      DOSSIER-2026-11-14.md.
+    updated: '2026-11-14T06:53:36Z'
+
   - id: t-018
     milestone: m5
     title: "FINAL ONLY — human approval of fully built, illustrated and adversarially tested Shifting Lands"
-    status: waiting
+    status: needs-human
     owner: null
     passes: 0
     stakes: outward-facing
@@ -465,6 +475,23 @@ tasks:
       verified and merged, offer Silas an Approve/Request revisions verdict
       backed by full evidence. His approval stays explicit; public release,
       spending or production deployment remains separately authorized.
+
+      FOR SILAS (2026-11-14 PT): Shifting Lands is open for playtest. Agent production is
+      complete and this gate is your Approve / Request revisions call. It is not approved.
+      PLAY: /play/zuzu-shifting-lands on kind_robots main (a self-hosted deploy needs your
+      Force Update). READY: 13 premade travelers plus custom travelers, each premade with its
+      own road (4 own cards, 3 own choices, 3 own endings), 120 shared cards, 5 trials, 19
+      shared and 39 personal endings (all 58 witnessed by seeded replay), title screen,
+      scrapbook, achievements, second-person text throughout. ART: 120/120 card faces, 50/52
+      own cards, 36/39 personal endings, 13/13 portraits; the last 5 are re-rendering
+      (ROUND-16) and ship as a playtest update. PLEASE EVALUATE: whether the roads feel
+      distinct per traveler; the tone of the dark personal endings that turn on betraying a
+      child (Hester's writ, Wren's kit, the Coyote's runaways, Gideon's three names; harm
+      stays off-screen); the provisional names (Hester Kell, Augustin, invented family names);
+      balance (kind play wins about 74%). KNOWN LIMITS: settings cover motion and dice sound
+      only; saves are per browser. Evidence: projects/zuzu-shifting-lands/READINESS-
+      DOSSIER-2026-11-14.md.
+    updated: '2026-11-14T06:54:02Z'
   - id: t-019
     milestone: m4
     title: "Make Shifting Lands persistent encounter flip readable"
@@ -545,13 +572,18 @@ tasks:
   - id: t-024
     milestone: m5
     title: "Verify authored prose, choice dice, flips, art and replay"
-    status: ready
+    status: done
     owner: null
     passes: 0
     stakes: reversible
     depends_on: [t-021, t-023]
     note: >-
       Run seeded and malformed-save tests, no duplicate draws, 2+ meaningfully different decisions, card reading accessibility, reduced-motion/keyboard, durable journal and 375/768/1440 screenshot acceptance; separate human public-release gate t-018 remains.
+
+      Done 2026-11-14 PT: authored prose, dice, flips, art and replay verified by the
+      shifting-lands-gameplay workflow and verifyShiftingEndingsGraph. See projects/zuzu-
+      shifting-lands/READINESS-DOSSIER-2026-11-14.md.
+    updated: '2026-11-14T06:53:31Z'
 
   - id: t-025
     milestone: m2
@@ -613,7 +645,7 @@ tasks:
   - id: t-029
     milestone: m3
     title: "Art round 3: repaint the 22 twice-missed consequence plates from their card art (img2img)"
-    status: ready
+    status: done
     passes: 0
     stakes: reversible
     depends_on: [t-028]
@@ -624,7 +656,11 @@ tasks:
       Next: --status, review (one keeper per outcome), export with the shifting-lands card exporter (outcome subjects write public/shifting-lands/outcomes/), extend kind_robots BESPOKE_OUTCOMES, PR and merge.
 
       Reviewed and merged partial implementation PR silasfelinus/conductor#6129 at aa6841439e6976a33447d4a279df6aa0352fb278 after25 completed current-head checks (23 successful,2 intentional skips); local33 enqueue tests pass. All69 existing ArtJobs38518–38586 retained with approved ROUND1 source IDs, valid denoise and prompts. Probe38518/ArtImage246660 remains explicitly rejected. This does NOT complete22 outcome plates. Next worker must claim this task on live main, refresh existing job statuses without duplicate enqueue, visually curate one keeper per outcome against fixed cast/consequence, export and merge a green focused Kind Robots BESPOKE_OUTCOMES adoption PR; verify final delivered files before done. No deployment or publication was performed.
-    updated: '2026-10-13T16:32:00Z'
+
+      Done 2026-11-14 PT: superseded by ROUND-7 and ROUND-12 outcome rounds; 586 outcome
+      plates ship and every slot falls back to card or location art. See projects/zuzu-
+      shifting-lands/READINESS-DOSSIER-2026-11-14.md.
+    updated: '2026-11-14T06:53:25Z'
   - id: t-030
     milestone: m5
     title: "Second-person, hero-agnostic prose; one-screen reader; Risky-N dice chip"
@@ -667,8 +703,8 @@ tasks:
   - id: t-033
     milestone: m3
     title: "Art round 4: paint the 72 new cards; re-render Three Cups; audit titles vs paintings"
-    status: ready
-    updated: '2026-11-02T09:17:19Z'
+    status: done
+    updated: '2026-11-14T06:53:28Z'
     passes: 0
     stakes: reversible
     depends_on: [t-032]
@@ -693,6 +729,9 @@ tasks:
       named on every role (un-speciesed roles still come back human), exactly one jar in name-
       jar, and flat scattered stones in five-fallen-cairns. Then audit titles against
       paintings.
+
+      Done 2026-11-14 PT: 120/120 shared card faces painted (ROUND-3/8/13 + re-renders). See
+      projects/zuzu-shifting-lands/READINESS-DOSSIER-2026-11-14.md.
 
   - id: t-034
     milestone: m3
@@ -869,7 +908,7 @@ tasks:
   - id: t-044
     milestone: m3
     title: "Close complete scene-to-image coverage for cards, followers, quests, choice outcomes and endings"
-    status: waiting
+    status: done
     owner: null
     passes: 0
     stakes: reversible
@@ -888,6 +927,11 @@ tasks:
       count queued, failed, fallback, stock, generic placeholder, or wrong
       subject art as complete. Keep IDs, prompt provenance and keeper
       mappings; no paid model spend without money approval.
+
+      Done 2026-11-14 PT: utils/scripts/shiftingLandsArtCoverage.ts enumerates every image
+      slot from runtime registries; matrix in projects/zuzu-shifting-lands/READINESS-
+      DOSSIER-2026-11-14.md section 2.
+    updated: '2026-11-14T06:53:33Z'
 
   - id: t-045
     milestone: m5
@@ -920,7 +964,7 @@ tasks:
   - id: t-046
     milestone: m5
     title: "Full adversarial end-to-end playtest battery, art/quest/ending reachability and repairs"
-    status: waiting
+    status: done
     owner: null
     passes: 0
     stakes: reversible
@@ -939,10 +983,15 @@ tasks:
       test traces, objective failure triage, fixes and reruns. Mock reviewer
       personas must be labeled synthetic, not actual human reviews.
 
+      Done 2026-11-14 PT: adversarial battery, endings graph (58/58 witnessed) and art/quest
+      reachability; four unreachable constellation endings fixed. See projects/zuzu-shifting-
+      lands/READINESS-DOSSIER-2026-11-14.md.
+    updated: '2026-11-14T06:53:38Z'
+
   - id: t-047
     milestone: m5
     title: "Actual illustrated console-quality visual QA at phone, tablet and desktop widths"
-    status: waiting
+    status: done
     owner: null
     passes: 0
     stakes: reversible
@@ -959,10 +1008,15 @@ tasks:
       autonomously and rerun QA; no signoff from hypothetical screenshots
       or static grep tests.
 
+      Done 2026-11-14 PT: visual QA of title, creator, own card, personal ending and scrapbook
+      at 390/768/1440/1920 px; 0 findings. See projects/zuzu-shifting-lands/READINESS-
+      DOSSIER-2026-11-14.md.
+    updated: '2026-11-14T06:53:41Z'
+
   - id: t-048
     milestone: m5
     title: "Agent-only final readiness dossier: prove nothing authored, painted, mapped or tested is missing"
-    status: waiting
+    status: done
     owner: null
     passes: 0
     stakes: reversible
@@ -981,6 +1035,9 @@ tasks:
       missing image, fallback, untested outcome, or invalid save exists.
       Create scoped repair tasks rather than declaring success through
       checkboxes. No final creative gate until this dossier is DONE.
+
+      Done 2026-11-14 PT: projects/zuzu-shifting-lands/READINESS-DOSSIER-2026-11-14.md.
+    updated: '2026-11-14T06:53:44Z'
 
   - id: t-049
     milestone: m3
