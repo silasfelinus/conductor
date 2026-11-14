@@ -139,7 +139,16 @@ def test_assembly_accepts_motion_fallback_only_after_deadline():
 
 
 def test_future_episode_seeds_are_valid_and_context_free():
-    for slug in ("2026-11-13-plot-assist.yaml", "2026-11-14-clap-credit.yaml"):
+    for slug in (
+        "2026-11-13-plot-assist.yaml",
+        "2026-11-14-clap-credit.yaml",
+        "2026-11-15-apology-orchard.yaml",
+        "2026-11-16-tomorrow-hotline.yaml",
+        "2026-11-17-empty-square-realty.yaml",
+        "2026-11-18-yesterdays-weather.yaml",
+        "2026-11-19-opinion-zoo.yaml",
+        "2026-11-20-ghost-exit-interview.yaml",
+    ):
         e = load_episode(PILOT.parent / slug)
         assert len(e["shots"]) == 5
         assert sum(s["motion"] == "clip" for s in e["shots"]) <= 1
@@ -243,3 +252,22 @@ def test_congested_pending_still_skips_clip_but_fresh_queue_does_not():
     assert not should_skip_optional_clip(state, 60, start + timedelta(minutes=10))
     assert should_skip_optional_clip(state, 60, start + timedelta(minutes=31))
     assert should_skip_optional_clip({"episodes": {}}, 90 * 60)
+
+
+def test_next_seven_seed_films_have_original_visuals_and_story_progression():
+    from datetime import date, timedelta
+
+    base = date(2026, 11, 14)
+    seeded = [load_episode(path) for path in PILOT.parent.glob("*.yaml")]
+    by_date = {item["date"]: item for item in seeded}
+    assert len(by_date) == len(seeded)  # one source episode per proposed broadcast day
+    runway = [(base + timedelta(days=n)).isoformat() for n in range(7)]
+    assert set(runway).issubset(by_date)
+    assert len({by_date[d]["visual_style"] for d in runway}) == 7
+    all_prompts = [shot["image_prompt"] for d in runway
+                   for shot in by_date[d]["shots"]]
+    assert len(all_prompts) == len(set(all_prompts))
+    assert all(len(by_date[d]["references"]) >= 3 for d in runway)
+    assert all(by_date[d]["status"] == "authored" for d in runway)
+    assert all(sum(s["motion"] == "clip" for s in by_date[d]["shots"]) <= 1
+               for d in runway)
