@@ -225,12 +225,12 @@ tasks:
     implementation_pr: 'silasfelinus/kind_robots#5159'
   - id: t-063
     title: 'Main-game standard: audit and close the gaps for Slime City'
-    status: claimed
+    status: ready
     milestone: m4
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-14T19:46:29Z'
+    updated: '2026-11-14T20:16:49Z'
     note: |-
       Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -327,10 +327,19 @@ tasks:
       verifySlimeCityAllianceTower.test.ts and test:slime-city-lab exits 0. Still open per
       STANDARD-AUDIT-2026-11-12.md: CPU VS match resume on reload, and account import of guest
       saves (design decision for Silas).
+
+      2026-11-14 PT save/load slice: VS CPU MATCH RESUME. Each VS practice/reward move is kept
+      device-local (kr-slime-city-vs-bout-v1: frozen launch + command log, strictly validated,
+      account-scoped, 24h server settlement window). The VS screen shows RESUME MATCH /
+      ABANDON; resuming replays the moves onto the same deal, and reward matches are still
+      paid only by the server's replay. MERGED kind_robots#5174 squash aa7fe71 after 14/14
+      checks green; test:slime-city-lab exit 0 locally (new verifySlimeCityVsResume.test.ts).
+      Still open per STANDARD-AUDIT-2026-11-12.md: account import of guest saves on sign-in
+      (audit D1 proposes an offer-to-import prompt). That is the last save/load gap.
     owner: worker
     claimed_by: session_01L5NKxcY7wP1Pzg6U8oTRTk
     claimed_at: '2026-11-14T19:46:29Z'
-    implementation_pr: 'silasfelinus/kind_robots#5173'
+    implementation_pr: 'silasfelinus/kind_robots#5174'
   - id: t-064
     title: 'CPU values PIERCE gear only against armor, then rebalance Undertow and Bloodfairies starters'
     status: done
