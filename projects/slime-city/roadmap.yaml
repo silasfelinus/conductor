@@ -225,12 +225,12 @@ tasks:
     implementation_pr: 'silasfelinus/kind_robots#5159'
   - id: t-063
     title: 'Main-game standard: audit and close the gaps for Slime City'
-    status: claimed
+    status: ready
     milestone: m4
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-14T18:44:52Z'
+    updated: '2026-11-14T19:11:20Z'
     note: |-
       Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -317,10 +317,20 @@ tasks:
       checks green; test:slime-city-lab exit 0 locally. Still open per STANDARD-
       AUDIT-2026-11-12.md: mid-Clash Tower/VS resume on reload, and account import of guest
       saves (design decision).
+
+      2026-11-14 PT save/load slice: MID-FIGHT TOWER RESUME. Each Tower move is kept device-
+      local (kr-slime-city-tower-bout-v1: launch + Clash command log, strictly validated).
+      Reload keeps the floor in battle when the record matches account/run/floor, and RETURN
+      TO BATTLE replays the moves onto the same deal. With no record (other device/cleared
+      storage) it still forfeits. Rewarded bouts are still server-replayed. MERGED
+      kind_robots#5173 squash 1626d0e after 12/12 checks green. Tests are in
+      verifySlimeCityAllianceTower.test.ts and test:slime-city-lab exits 0. Still open per
+      STANDARD-AUDIT-2026-11-12.md: CPU VS match resume on reload, and account import of guest
+      saves (design decision for Silas).
     owner: worker
     claimed_by: session_01L5NKxbQYG3oeGxLNafNubA
     claimed_at: '2026-11-14T18:44:52Z'
-    implementation_pr: 'silasfelinus/kind_robots#5172'
+    implementation_pr: 'silasfelinus/kind_robots#5173'
   - id: t-064
     title: 'CPU values PIERCE gear only against armor, then rebalance Undertow and Bloodfairies starters'
     status: done
