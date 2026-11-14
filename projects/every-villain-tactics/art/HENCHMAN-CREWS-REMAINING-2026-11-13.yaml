@@ -1,0 +1,505 @@
+# 47 new one-hit species crew introductions, including the named captain.
+# The Warren Wreckers already have ArtJobs 50516-50518 / 56861-56863 in
+# CAPES-WESTERN-STYLE-CHECK-ROUND-1 (some DONE, preferred lane pending);
+# reuse/reconcile those rather than create a second same crew request.
+# Use the CURRENT Kind Robots villainHenchmen.json roster, not the older
+# Conductor table's three renamed crew concepts: Tadpole Interns,
+# Quilted Doorstep Goblins and Clockwork Wombat Ronin are canonical now.
+# Each distinct captain+crew painting is a BASE introduction, not the
+# telegraph, hit/disarm or single-captain close-up still owed in art QA.
+round: every-villain-tactics-one-hit-crew-introductions-2026-11-13
+series: prom-of-doom-and-every-villain-tactics
+project_slug: every-villain-tactics
+designer: Crossfire 48 species and captain character director
+is_public: false
+is_mature: false
+cast_loras: false
+auto_submit: true
+status: awaiting-submission
+priority: 690
+lanes:
+- key: unstable-production
+  label: Selected Unstable Diffusers mature Western animation
+  engine: comfy
+  checkpoint: SDXL/sdxlUnstableDiffusers_nihilmania.safetensors
+  prompt: prose
+  suffix: >-
+    Original Western animated superhero worldbuilding with expressive
+    nonhuman silhouettes, distinct scale and personality for each creature,
+    hand-inked and cel-painted shadows, tactile materials and atmospheric
+    depth, a memorable staging of the crew's mechanical battlefield trick,
+    readable small-character gestures in one cohesive vertical environment.
+  steps: 28
+  cfg: 7
+  sampler: dpmpp_2m
+subjects:
+- key: evt-henchman-crew-accident-fire
+  lane: unstable-production
+  entity: tactical-henchman-crew
+  title: "Claim Cinders | captain Ash Invoice and squad"
+  asset: every-villain-tactics/henchmen/accident-fire/crew-intro
+  size: 896x1152
+  seed: 818000
+  priority: 745
+  prompt_prose: "Claim Cinders is a one-hit tactical crew with this exact original silhouette: Receipt gremlins in asbestos ties with smoking insurance binders. Captain Ash Invoice leads the group at the back of a cluttered industrial claims counter. smoke coils around tiny buckled ties as the senior clerk prepares a seal. Their announced move is stamp a glowing insured tile which ignites next turn and the physical counter is leave or soak the stamped tile; place both in the scene through visible objects. Viewed at ground level from the perspective of a much larger hero, the captain and two crew members have clearly different scales. The captain and companions have distinct expressions and individualized poses, with a readable nonlethal rout or disarm opportunity."
+  negative: "photorealism, plastic 3d figure, cute generic mascot, famous franchise monster, identical symmetrical clone lineup, generic human cape hero, text, title lettering, HUD, trading card frame, watermark, logo, extra limbs, unreadable merged anatomy"
+- key: evt-henchman-crew-accident-air
+  lane: unstable-production
+  entity: tactical-henchman-crew
+  title: "Hushwings | captain Nell No-Air and squad"
+  asset: every-villain-tactics/henchmen/accident-air/crew-intro
+  size: 896x1152
+  seed: 818001
+  priority: 744
+  prompt_prose: "Hushwings is a one-hit tactical crew with this exact original silhouette: Translucent moths wearing masks full of stolen breaths. Captain Nell No-Air leads the group on the underside of a narrow ventilation duct. two translucent moths push a stolen-breath mask toward a third exhausted scout. Their announced move is vacuum a telegraphed corridor to disrupt ranged attacks and the physical counter is open its vent or change lanes; place both in the scene through visible objects. Almost a side-scrolling profile, one creature actively moving and others preparing a different action. The captain and companions have distinct expressions and individualized poses, with a readable nonlethal rout or disarm opportunity."
+  negative: "photorealism, plastic 3d figure, cute generic mascot, famous franchise monster, identical symmetrical clone lineup, generic human cape hero, text, title lettering, HUD, trading card frame, watermark, logo, extra limbs, unreadable merged anatomy"
+- key: evt-henchman-crew-accident-water
+  lane: unstable-production
+  entity: tactical-henchman-crew
+  title: "Drytap Octopi | captain Deputy Plink and squad"
+  asset: every-villain-tactics/henchmen/accident-water/crew-intro
+  size: 896x1152
+  seed: 818003
+  priority: 742
+  prompt_prose: "Drytap Octopi is a one-hit tactical crew with this exact original silhouette: Brass faucet octopuses with spinning water meters. Captain Deputy Plink leads the group around the mouth of an abandoned waterworks drain. brass tentacles turn a water meter while a colleague slips across wet tiles. Their announced move is siphon a marked wet tile and leave slick ground and the physical counter is operate the red shutoff valve; place both in the scene through visible objects. Low off-center framing, one creature crouched, one perched and one reaching rather than a synchronized lineup. The captain and companions have distinct expressions and individualized poses, with a readable nonlethal rout or disarm opportunity."
+  negative: "photorealism, plastic 3d figure, cute generic mascot, famous franchise monster, identical symmetrical clone lineup, generic human cape hero, text, title lettering, HUD, trading card frame, watermark, logo, extra limbs, unreadable merged anatomy"
+- key: evt-henchman-crew-accident-discipline
+  lane: unstable-production
+  entity: tactical-henchman-crew
+  title: "Ninety-Seconders | captain Ticky Tuesday and squad"
+  asset: every-villain-tactics/henchmen/accident-discipline/crew-intro
+  size: 896x1152
+  seed: 818004
+  priority: 741
+  prompt_prose: "Ninety-Seconders is a one-hit tactical crew with this exact original silhouette: Stopwatch heads on roller skates with minute-hand rapiers. Captain Ticky Tuesday leads the group on a tilted public square beneath a giant countdown clock. the captain raises a tiny sword-hand in time for the second dash. Their announced move is dash twice on the telegraphed countdown bell and the physical counter is interrupt the bell or block the marked finish; place both in the scene through visible objects. Overhead diagonal view makes the coming tile hazard legible, asymmetrical actors against realistic floor materials. The captain and companions have distinct expressions and individualized poses, with a readable nonlethal rout or disarm opportunity."
+  negative: "photorealism, plastic 3d figure, cute generic mascot, famous franchise monster, identical symmetrical clone lineup, generic human cape hero, text, title lettering, HUD, trading card frame, watermark, logo, extra limbs, unreadable merged anatomy"
+- key: evt-henchman-crew-accident-genius
+  lane: unstable-production
+  entity: tactical-henchman-crew
+  title: "Mistake Makers | captain Dot Matrix and squad"
+  asset: every-villain-tactics/henchmen/accident-genius/crew-intro
+  size: 896x1152
+  seed: 818005
+  priority: 740
+  prompt_prose: "Mistake Makers is a one-hit tactical crew with this exact original silhouette: Paper drones folded from wrong equations with correction-fluid eyes. Captain Dot Matrix leads the group among fallen examination desks in a research corridor. one paper drone folds a corner of a wrong equation as others wait for the delayed mark. Their announced move is mark a delayed error burst on an exact set of tiles and the physical counter is erase the calculation or vacate its footprint; place both in the scene through visible objects. Viewed through a transparent surface or a shallow waterline, with character faces near the edge. The captain and companions have distinct expressions and individualized poses, with a readable nonlethal rout or disarm opportunity."
+  negative: "photorealism, plastic 3d figure, cute generic mascot, famous franchise monster, identical symmetrical clone lineup, generic human cape hero, text, title lettering, HUD, trading card frame, watermark, logo, extra limbs, unreadable merged anatomy"
+- key: evt-henchman-crew-accident-birthright
+  lane: unstable-production
+  entity: tactical-henchman-crew
+  title: "Licensed Legends | captain Sir Cap-Permission and squad"
+  asset: every-villain-tactics/henchmen/accident-birthright/crew-intro
+  size: 896x1152
+  seed: 818006
+  priority: 739
+  prompt_prose: "Licensed Legends is a one-hit tactical crew with this exact original silhouette: Wind-up hero mascots in counterfeit velvet capes and legal badges. Captain Sir Cap-Permission leads the group under a rain-smeared publicity marquee. the fraudulent mascot leader signs a bogus permission token while brass gears turn. Their announced move is stamp a trademark seal disabling one signature action for a turn and the physical counter is break the seal or use an unlicensed basic action; place both in the scene through visible objects. A slightly canted point of view behind a civilian, with a clear path through the action. The captain and companions have distinct expressions and individualized poses, with a readable nonlethal rout or disarm opportunity."
+  negative: "photorealism, plastic 3d figure, cute generic mascot, famous franchise monster, identical symmetrical clone lineup, generic human cape hero, text, title lettering, HUD, trading card frame, watermark, logo, extra limbs, unreadable merged anatomy"
+- key: evt-henchman-crew-accident-social
+  lane: unstable-production
+  entity: tactical-henchman-crew
+  title: "Jinglejacks | captain Sponsor Moth and squad"
+  asset: every-villain-tactics/henchmen/accident-social/crew-intro
+  size: 896x1152
+  seed: 818007
+  priority: 738
+  prompt_prose: "Jinglejacks is a one-hit tactical crew with this exact original silhouette: Neon moths with billboard wings flashing sponsor jingles. Captain Sponsor Moth leads the group beside the buzzing loudspeakers at a night concert. the lead moth flashes a rhythm that draws the others into a living chain. Their announced move is link adjacent singers to extend a villain's range and the physical counter is break the chain or silence the relay speaker; place both in the scene through visible objects. Shot from a service hatch with the lead creature in close three-quarter profile and companions in separate depth planes. The captain and companions have distinct expressions and individualized poses, with a readable nonlethal rout or disarm opportunity."
+  negative: "photorealism, plastic 3d figure, cute generic mascot, famous franchise monster, identical symmetrical clone lineup, generic human cape hero, text, title lettering, HUD, trading card frame, watermark, logo, extra limbs, unreadable merged anatomy"
+- key: evt-henchman-crew-mutant-fire
+  lane: unstable-production
+  entity: tactical-henchman-crew
+  title: "Redaction Wraiths | captain Smudge and squad"
+  asset: every-villain-tactics/henchmen/mutant-fire/crew-intro
+  size: 896x1152
+  seed: 818008
+  priority: 737
+  prompt_prose: "Redaction Wraiths is a one-hit tactical crew with this exact original silhouette: Shredded registration papers held together by glowing black embers. Captain Smudge leads the group inside a drifting storm of shredded files at city records. the wraith captain brushes soot over the final unburnt line of a witness record. Their announced move is lay down a drifting soot curtain that blocks sightlines and the physical counter is use wind or take a different firing angle; place both in the scene through visible objects. From the crew's own tiny point of view, huge machinery or furniture reveals their scale. The captain and companions have distinct expressions and individualized poses, with a readable nonlethal rout or disarm opportunity."
+  negative: "photorealism, plastic 3d figure, cute generic mascot, famous franchise monster, identical symmetrical clone lineup, generic human cape hero, text, title lettering, HUD, trading card frame, watermark, logo, extra limbs, unreadable merged anatomy"
+- key: evt-henchman-crew-mutant-air
+  lane: unstable-production
+  entity: tactical-henchman-crew
+  title: "Confession Crows | captain Inspector Grackle and squad"
+  asset: every-villain-tactics/henchmen/mutant-air/crew-intro
+  size: 896x1152
+  seed: 818009
+  priority: 736
+  prompt_prose: "Confession Crows is a one-hit tactical crew with this exact original silhouette: Monocled crows carrying stolen keys and sealed scandal envelopes. Captain Inspector Grackle leads the group on rain-darkened tenement balconies. a crow inspects a stolen key while another flies toward a balcony perch. Their announced move is steal an objective token and flee toward a marked perch and the physical counter is intercept the perch or trade an innocuous secret; place both in the scene through visible objects. A distant environmental shot where the troop silhouettes vary despite their shared species design. The captain and companions have distinct expressions and individualized poses, with a readable nonlethal rout or disarm opportunity."
+  negative: "photorealism, plastic 3d figure, cute generic mascot, famous franchise monster, identical symmetrical clone lineup, generic human cape hero, text, title lettering, HUD, trading card frame, watermark, logo, extra limbs, unreadable merged anatomy"
+- key: evt-henchman-crew-mutant-earth
+  lane: unstable-production
+  entity: tactical-henchman-crew
+  title: "Tenant Bricks | captain Mortar Mabel and squad"
+  asset: every-villain-tactics/henchmen/mutant-earth/crew-intro
+  size: 896x1152
+  seed: 818010
+  priority: 735
+  prompt_prose: "Tenant Bricks is a one-hit tactical crew with this exact original silhouette: Marching red bricks with miniature tenant-union banners. Captain Mortar Mabel leads the group between cracked front steps and a broken tenants' wall. a brick leader uses a tiny mallet to shatter a load-bearing barrier. Their announced move is punch marked cover into rubble and the physical counter is reposition before their scrape-and-charge windup; place both in the scene through visible objects. Viewed at ground level from the perspective of a much larger hero, the captain and two crew members have clearly different scales. The captain and companions have distinct expressions and individualized poses, with a readable nonlethal rout or disarm opportunity."
+  negative: "photorealism, plastic 3d figure, cute generic mascot, famous franchise monster, identical symmetrical clone lineup, generic human cape hero, text, title lettering, HUD, trading card frame, watermark, logo, extra limbs, unreadable merged anatomy"
+- key: evt-henchman-crew-mutant-water
+  lane: unstable-production
+  entity: tactical-henchman-crew
+  title: "Harbor Repossessors | captain Captain Clack and squad"
+  asset: every-villain-tactics/henchmen/mutant-water/crew-intro
+  size: 896x1152
+  seed: 818011
+  priority: 734
+  prompt_prose: "Harbor Repossessors is a one-hit tactical crew with this exact original silhouette: Barnacled hermit crabs wearing shipping containers as shells. Captain Captain Clack leads the group across a flooded container-yard gantry. the crab captain prepares a tiny anchor cable while armored shellmates haul the rope. Their announced move is throw a telegraphed anchor cable that roots a shore target and the physical counter is sever the cable or leave the shoreline; place both in the scene through visible objects. Almost a side-scrolling profile, one creature actively moving and others preparing a different action. The captain and companions have distinct expressions and individualized poses, with a readable nonlethal rout or disarm opportunity."
+  negative: "photorealism, plastic 3d figure, cute generic mascot, famous franchise monster, identical symmetrical clone lineup, generic human cape hero, text, title lettering, HUD, trading card frame, watermark, logo, extra limbs, unreadable merged anatomy"
+- key: evt-henchman-crew-mutant-discipline
+  lane: unstable-production
+  entity: tactical-henchman-crew
+  title: "Fourfold Foils | captain Madame Practice and squad"
+  asset: every-villain-tactics/henchmen/mutant-discipline/crew-intro
+  size: 896x1152
+  seed: 818012
+  priority: 733
+  prompt_prose: "Fourfold Foils is a one-hit tactical crew with this exact original silhouette: Four-armed sparring mannequins with silk ribbons and foam swords. Captain Madame Practice leads the group inside a martial arts warehouse where flexible straps hang low. the foremost four-armed dummy demonstrates a disarming grip with blunt wooden blades. Their announced move is spin four weapons to disarm a close hero for one action and the physical counter is dodge the flourish or strike the ribbon knot; place both in the scene through visible objects. A close medium portrait of the named captain while at least one subordinate works at the back. The captain and companions have distinct expressions and individualized poses, with a readable nonlethal rout or disarm opportunity."
+  negative: "photorealism, plastic 3d figure, cute generic mascot, famous franchise monster, identical symmetrical clone lineup, generic human cape hero, text, title lettering, HUD, trading card frame, watermark, logo, extra limbs, unreadable merged anatomy"
+- key: evt-henchman-crew-mutant-genius
+  lane: unstable-production
+  entity: tactical-henchman-crew
+  title: "Domino Oracles | captain Seventh Pip and squad"
+  asset: every-villain-tactics/henchmen/mutant-genius/crew-intro
+  size: 896x1152
+  seed: 818013
+  priority: 732
+  prompt_prose: "Domino Oracles is a one-hit tactical crew with this exact original silhouette: Walking domino tiles with glowing warning dots. Captain Seventh Pip leads the group along the tilted floor of a probability laboratory. one domino tips deliberately while the adjacent sentries remain unnaturally upright. Their announced move is topple in a telegraphed line to chain one-tile stuns and the physical counter is step outside the lighted dots or knock one tile sideways; place both in the scene through visible objects. Low off-center framing, one creature crouched, one perched and one reaching rather than a synchronized lineup. The captain and companions have distinct expressions and individualized poses, with a readable nonlethal rout or disarm opportunity."
+  negative: "photorealism, plastic 3d figure, cute generic mascot, famous franchise monster, identical symmetrical clone lineup, generic human cape hero, text, title lettering, HUD, trading card frame, watermark, logo, extra limbs, unreadable merged anatomy"
+- key: evt-henchman-crew-mutant-birthright
+  lane: unstable-production
+  entity: tactical-henchman-crew
+  title: "Charity Cherubs | captain Pennywing and squad"
+  asset: every-villain-tactics/henchmen/mutant-birthright/crew-intro
+  size: 896x1152
+  seed: 818014
+  priority: 731
+  prompt_prose: "Charity Cherubs is a one-hit tactical crew with this exact original silhouette: Winged donation boxes with gilt halos and shelter keys. Captain Pennywing leads the group beneath the shelter's glowing donation hatch. the donation-box captain spreads wings to shelter a terrified civilian. Their announced move is intercept one blow intended for a named boss or captive and the physical counter is flank the halo's shield line or ring the shelter bell; place both in the scene through visible objects. Overhead diagonal view makes the coming tile hazard legible, asymmetrical actors against realistic floor materials. The captain and companions have distinct expressions and individualized poses, with a readable nonlethal rout or disarm opportunity."
+  negative: "photorealism, plastic 3d figure, cute generic mascot, famous franchise monster, identical symmetrical clone lineup, generic human cape hero, text, title lettering, HUD, trading card frame, watermark, logo, extra limbs, unreadable merged anatomy"
+- key: evt-henchman-crew-mutant-social
+  lane: unstable-production
+  entity: tactical-henchman-crew
+  title: "Smile Deputies | captain Grinny and squad"
+  asset: every-villain-tactics/henchmen/mutant-social/crew-intro
+  size: 896x1152
+  seed: 818015
+  priority: 730
+  prompt_prose: "Smile Deputies is a one-hit tactical crew with this exact original silhouette: Cardboard badges with felt handshakes and entirely fake medals. Captain Grinny leads the group in the smiling reception room of a coercive hostel. two deputies rehearse an insincere friendly handshake as a third flashes a forged medal. Their announced move is flash forged friendly badges that swap target highlights for one action and the physical counter is inspect the peeling badge to reveal the nonexistent precinct; place both in the scene through visible objects. Viewed through a transparent surface or a shallow waterline, with character faces near the edge. The captain and companions have distinct expressions and individualized poses, with a readable nonlethal rout or disarm opportunity."
+  negative: "photorealism, plastic 3d figure, cute generic mascot, famous franchise monster, identical symmetrical clone lineup, generic human cape hero, text, title lettering, HUD, trading card frame, watermark, logo, extra limbs, unreadable merged anatomy"
+- key: evt-henchman-crew-tech-fire
+  lane: unstable-production
+  entity: tactical-henchman-crew
+  title: "Kiln Kittens | captain Sparkplug and squad"
+  asset: every-villain-tactics/henchmen/tech-fire/crew-intro
+  size: 896x1152
+  seed: 818016
+  priority: 729
+  prompt_prose: "Kiln Kittens is a one-hit tactical crew with this exact original silhouette: Furnace-mouthed iron kittens with welding-goggle whiskers. Captain Sparkplug leads the group next to broken foundry furnaces and slag bins. the metal kitten leader noses a glowing slag pebble onto a cracked floor tile. Their announced move is leave a glowing slag square that weakens adjacent cover and the physical counter is quench the brightening pawprints before they melt; place both in the scene through visible objects. A slightly canted point of view behind a civilian, with a clear path through the action. The captain and companions have distinct expressions and individualized poses, with a readable nonlethal rout or disarm opportunity."
+  negative: "photorealism, plastic 3d figure, cute generic mascot, famous franchise monster, identical symmetrical clone lineup, generic human cape hero, text, title lettering, HUD, trading card frame, watermark, logo, extra limbs, unreadable merged anatomy"
+- key: evt-henchman-crew-tech-air
+  lane: unstable-production
+  entity: tactical-henchman-crew
+  title: "Air-Traffic Mayflies | captain Wingnut-9 and squad"
+  asset: every-villain-tactics/henchmen/tech-air/crew-intro
+  size: 896x1152
+  seed: 818017
+  priority: 728
+  prompt_prose: "Air-Traffic Mayflies is a one-hit tactical crew with this exact original silhouette: Origami runway drones with tiny tower-controller headsets. Captain Wingnut-9 leads the group below a runway control tower, between miniature warning beacons. the runway-drone captain paints a warning lane with an antenna while others hover. Their announced move is draw a flashing no-fly lane, forcing airborne units to land and the physical counter is disable the visible runway beacon; place both in the scene through visible objects. Shot from a service hatch with the lead creature in close three-quarter profile and companions in separate depth planes. The captain and companions have distinct expressions and individualized poses, with a readable nonlethal rout or disarm opportunity."
+  negative: "photorealism, plastic 3d figure, cute generic mascot, famous franchise monster, identical symmetrical clone lineup, generic human cape hero, text, title lettering, HUD, trading card frame, watermark, logo, extra limbs, unreadable merged anatomy"
+- key: evt-henchman-crew-tech-earth
+  lane: unstable-production
+  entity: tactical-henchman-crew
+  title: "Permit Crabs | captain Stampy and squad"
+  asset: every-villain-tactics/henchmen/tech-earth/crew-intro
+  size: 896x1152
+  seed: 818018
+  priority: 727
+  prompt_prose: "Permit Crabs is a one-hit tactical crew with this exact original silhouette: Excavator crabs with hardhat shells and stamp claws. Captain Stampy leads the group at a building permit checkpoint. a hardhat crab stamps a permit into wet concrete that rises into cover. Their announced move is raise a one-round barricade on a marked tile and the physical counter is erase its permit stamp or flank the fresh barricade; place both in the scene through visible objects. From the crew's own tiny point of view, huge machinery or furniture reveals their scale. The captain and companions have distinct expressions and individualized poses, with a readable nonlethal rout or disarm opportunity."
+  negative: "photorealism, plastic 3d figure, cute generic mascot, famous franchise monster, identical symmetrical clone lineup, generic human cape hero, text, title lettering, HUD, trading card frame, watermark, logo, extra limbs, unreadable merged anatomy"
+- key: evt-henchman-crew-tech-water
+  lane: unstable-production
+  entity: tactical-henchman-crew
+  title: "Rescue Quackers | captain Buoy Wonder and squad"
+  asset: every-villain-tactics/henchmen/tech-water/crew-intro
+  size: 896x1152
+  seed: 818019
+  priority: 726
+  prompt_prose: "Rescue Quackers is a one-hit tactical crew with this exact original silhouette: Rubber-duck rescue robots in stern little diving helmets. Captain Buoy Wonder leads the group on the flooded edge of a subway rescue dock. the duck-robot captain wraps a bubbled life ring around a confused target. Their announced move is wrap a unit in opaque flotation bubbles to obscure shots and the physical counter is pop the bubble from another angle or open its pressure plug; place both in the scene through visible objects. A distant environmental shot where the troop silhouettes vary despite their shared species design. The captain and companions have distinct expressions and individualized poses, with a readable nonlethal rout or disarm opportunity."
+  negative: "photorealism, plastic 3d figure, cute generic mascot, famous franchise monster, identical symmetrical clone lineup, generic human cape hero, text, title lettering, HUD, trading card frame, watermark, logo, extra limbs, unreadable merged anatomy"
+- key: evt-henchman-crew-tech-discipline
+  lane: unstable-production
+  entity: tactical-henchman-crew
+  title: "Parade Medals | captain Goldie Split and squad"
+  asset: every-villain-tactics/henchmen/tech-discipline/crew-intro
+  size: 896x1152
+  seed: 818020
+  priority: 725
+  prompt_prose: "Parade Medals is a one-hit tactical crew with this exact original silhouette: Marching enamel victory medals wearing little racing shoes. Captain Goldie Split leads the group at the front of an empty parade ground. the medal leader trails an unspooling relay ribbon for the marching companions. Their announced move is relay an extra sprint through a visible ribbon chain and the physical counter is break any connecting ribbon before the final runner moves; place both in the scene through visible objects. Viewed at ground level from the perspective of a much larger hero, the captain and two crew members have clearly different scales. The captain and companions have distinct expressions and individualized poses, with a readable nonlethal rout or disarm opportunity."
+  negative: "photorealism, plastic 3d figure, cute generic mascot, famous franchise monster, identical symmetrical clone lineup, generic human cape hero, text, title lettering, HUD, trading card frame, watermark, logo, extra limbs, unreadable merged anatomy"
+- key: evt-henchman-crew-tech-genius
+  lane: unstable-production
+  entity: tactical-henchman-crew
+  title: "Tadpole Interns | captain Professor Croakbottom and squad"
+  asset: every-villain-tactics/henchmen/tech-genius/crew-intro
+  size: 896x1152
+  seed: 818021
+  priority: 724
+  prompt_prose: "Tadpole Interns is a one-hit tactical crew with this exact original silhouette: Brass jump-suited amphibian biomech constructs with spring-coiled haunches, enlarged translucent throat sacs and ink-stained laboratory coats. Captain Professor Croakbottom leads the group in a mutant research lab among overturned incubators. the biomechanical tadpole chief bounces off a lab cabinet while its spring-legged interns slide into mutagen. Their announced move is ricochet across two tiles, leaving a sticky mutagen puddle that reduces nearby movement and the physical counter is set a safe grounded route or disable their spring-coil regulator; place both in the scene through visible objects. Almost a side-scrolling profile, one creature actively moving and others preparing a different action. The captain and companions have distinct expressions and individualized poses, with a readable nonlethal rout or disarm opportunity."
+  negative: "photorealism, plastic 3d figure, cute generic mascot, famous franchise monster, identical symmetrical clone lineup, generic human cape hero, text, title lettering, HUD, trading card frame, watermark, logo, extra limbs, unreadable merged anatomy"
+- key: evt-henchman-crew-tech-birthright
+  lane: unstable-production
+  entity: tactical-henchman-crew
+  title: "Warranty Wisps | captain Clause Nine and squad"
+  asset: every-villain-tactics/henchmen/tech-birthright/crew-intro
+  size: 896x1152
+  seed: 818022
+  priority: 723
+  prompt_prose: "Warranty Wisps is a one-hit tactical crew with this exact original silhouette: Holographic customer-service ghosts inside floating armor warranty cards. Captain Clause Nine leads the group within a sterile armor service-depot lobby. the senior hologram presents a translucent warranty case around a pinned ally. Their announced move is wrap a villain ally in one-use cover at the cost of movement and the physical counter is cross the fine-print boundary or disable its projector; place both in the scene through visible objects. A close medium portrait of the named captain while at least one subordinate works at the back. The captain and companions have distinct expressions and individualized poses, with a readable nonlethal rout or disarm opportunity."
+  negative: "photorealism, plastic 3d figure, cute generic mascot, famous franchise monster, identical symmetrical clone lineup, generic human cape hero, text, title lettering, HUD, trading card frame, watermark, logo, extra limbs, unreadable merged anatomy"
+- key: evt-henchman-crew-tech-social
+  lane: unstable-production
+  entity: tactical-henchman-crew
+  title: "Playback Puppets | captain Replay Ray and squad"
+  asset: every-villain-tactics/henchmen/tech-social/crew-intro
+  size: 896x1152
+  seed: 818023
+  priority: 722
+  prompt_prose: "Playback Puppets is a one-hit tactical crew with this exact original silhouette: Tripod television masks replaying doctored footage. Captain Replay Ray leads the group amid a crowded independent broadcast control room. the tripod-faced puppet projects a false heroic silhouette into a dangerous firing lane. Their announced move is conjure a false hero silhouette that attracts overwatch fire and the physical counter is spot the repeated frame or break the projecting camera; place both in the scene through visible objects. Low off-center framing, one creature crouched, one perched and one reaching rather than a synchronized lineup. The captain and companions have distinct expressions and individualized poses, with a readable nonlethal rout or disarm opportunity."
+  negative: "photorealism, plastic 3d figure, cute generic mascot, famous franchise monster, identical symmetrical clone lineup, generic human cape hero, text, title lettering, HUD, trading card frame, watermark, logo, extra limbs, unreadable merged anatomy"
+- key: evt-henchman-crew-magic-fire
+  lane: unstable-production
+  entity: tactical-henchman-crew
+  title: "Wicklings | captain Mother Ember and squad"
+  asset: every-villain-tactics/henchmen/magic-fire/crew-intro
+  size: 896x1152
+  seed: 818024
+  priority: 721
+  prompt_prose: "Wicklings is a one-hit tactical crew with this exact original silhouette: Candle-wick goblins with flame hair and salamander tongues. Captain Mother Ember leads the group in a candlelit workshop beside a fallen lantern. the eldest flame-haired goblin passes an ember along a lit wick chain. Their announced move is carry delayed ignition along a visibly lit chain of candles and the physical counter is snuff one flame or douse the chain; place both in the scene through visible objects. Overhead diagonal view makes the coming tile hazard legible, asymmetrical actors against realistic floor materials. The captain and companions have distinct expressions and individualized poses, with a readable nonlethal rout or disarm opportunity."
+  negative: "photorealism, plastic 3d figure, cute generic mascot, famous franchise monster, identical symmetrical clone lineup, generic human cape hero, text, title lettering, HUD, trading card frame, watermark, logo, extra limbs, unreadable merged anatomy"
+- key: evt-henchman-crew-magic-air
+  lane: unstable-production
+  entity: tactical-henchman-crew
+  title: "Marginalia Nimbus | captain Dewey Storm and squad"
+  asset: every-villain-tactics/henchmen/magic-air/crew-intro
+  size: 896x1152
+  seed: 818025
+  priority: 720
+  prompt_prose: "Marginalia Nimbus is a one-hit tactical crew with this exact original silhouette: Thundercloud librarians wearing overdue book slips as sashes. Captain Dewey Storm leads the group inside a library above the storm-swept civic roof. the thundercloud librarian opens a dripping overdue-book slip while ink rain gathers. Their announced move is rain ink on a marked area, obscuring line-of-sight labels and the physical counter is take shelter or return the overdue book; place both in the scene through visible objects. Viewed through a transparent surface or a shallow waterline, with character faces near the edge. The captain and companions have distinct expressions and individualized poses, with a readable nonlethal rout or disarm opportunity."
+  negative: "photorealism, plastic 3d figure, cute generic mascot, famous franchise monster, identical symmetrical clone lineup, generic human cape hero, text, title lettering, HUD, trading card frame, watermark, logo, extra limbs, unreadable merged anatomy"
+- key: evt-henchman-crew-magic-earth
+  lane: unstable-production
+  entity: tactical-henchman-crew
+  title: "Quilted Doorstep Goblins | captain Miss Hemlock Stitch and squad"
+  asset: every-villain-tactics/henchmen/magic-earth/crew-intro
+  size: 896x1152
+  seed: 818026
+  priority: 719
+  prompt_prose: "Quilted Doorstep Goblins is a one-hit tactical crew with this exact original silhouette: Grinning walking porch steps wearing patchwork capes, knitting-needle legs and dangling house keys for teeth. Captain Miss Hemlock Stitch leads the group along a crooked residential porch, quilted stairs winding away. the goblin porch captain stretches a patchwork staircase from one front door to another. Their announced move is stitch together adjacent street tiles and drag a chosen hero into a temporary quilt corridor and the physical counter is unpick the visible glowing seam or negotiate the goblins' tenant rights; place both in the scene through visible objects. A slightly canted point of view behind a civilian, with a clear path through the action. The captain and companions have distinct expressions and individualized poses, with a readable nonlethal rout or disarm opportunity."
+  negative: "photorealism, plastic 3d figure, cute generic mascot, famous franchise monster, identical symmetrical clone lineup, generic human cape hero, text, title lettering, HUD, trading card frame, watermark, logo, extra limbs, unreadable merged anatomy"
+- key: evt-henchman-crew-magic-water
+  lane: unstable-production
+  entity: tactical-henchman-crew
+  title: "Glass Doubles | captain Silver Sip and squad"
+  asset: every-villain-tactics/henchmen/magic-water/crew-intro
+  size: 896x1152
+  seed: 818027
+  priority: 718
+  prompt_prose: "Glass Doubles is a one-hit tactical crew with this exact original silhouette: Living water-glass reflections with borrowed faces. Captain Silver Sip leads the group across a mirrored wet ballroom with a shallow pool. one borrowed-face reflection steps from a water glass as its counterpart recedes. Their announced move is place a watery duplicate where a hero last stood and the physical counter is look for rippling feet or empty the summoning bowl; place both in the scene through visible objects. Shot from a service hatch with the lead creature in close three-quarter profile and companions in separate depth planes. The captain and companions have distinct expressions and individualized poses, with a readable nonlethal rout or disarm opportunity."
+  negative: "photorealism, plastic 3d figure, cute generic mascot, famous franchise monster, identical symmetrical clone lineup, generic human cape hero, text, title lettering, HUD, trading card frame, watermark, logo, extra limbs, unreadable merged anatomy"
+- key: evt-henchman-crew-magic-discipline
+  lane: unstable-production
+  entity: tactical-henchman-crew
+  title: "Bellbound Novices | captain Sister Ding and squad"
+  asset: every-villain-tactics/henchmen/magic-discipline/crew-intro
+  size: 896x1152
+  seed: 818028
+  priority: 717
+  prompt_prose: "Bellbound Novices is a one-hit tactical crew with this exact original silhouette: Bronze monastery bells walking on knotted ropes. Captain Sister Ding leads the group in the deserted vestibule of a monastery. the head bell rings once as rope-legged novice bells cover their ears. Their announced move is sound a timed chime that interrupts the queued ability in one square and the physical counter is silence the clapper or leave the ringing circle; place both in the scene through visible objects. From the crew's own tiny point of view, huge machinery or furniture reveals their scale. The captain and companions have distinct expressions and individualized poses, with a readable nonlethal rout or disarm opportunity."
+  negative: "photorealism, plastic 3d figure, cute generic mascot, famous franchise monster, identical symmetrical clone lineup, generic human cape hero, text, title lettering, HUD, trading card frame, watermark, logo, extra limbs, unreadable merged anatomy"
+- key: evt-henchman-crew-magic-genius
+  lane: unstable-production
+  entity: tactical-henchman-crew
+  title: "The Primelets | captain Eleven and squad"
+  asset: every-villain-tactics/henchmen/magic-genius/crew-intro
+  size: 896x1152
+  seed: 818029
+  priority: 716
+  prompt_prose: "The Primelets is a one-hit tactical crew with this exact original silhouette: Impossible bright polyhedra with prime numbers on their facets. Captain Eleven leads the group around a great chalk-marked geometric proof drawn across a floor. three impossible polyhedra connect their vertices over a blocked avenue. Their announced move is connect marked vertices into a zone-denying geometric proof and the physical counter is occupy or disrupt one corner before the polygon closes; place both in the scene through visible objects. A distant environmental shot where the troop silhouettes vary despite their shared species design. The captain and companions have distinct expressions and individualized poses, with a readable nonlethal rout or disarm opportunity."
+  negative: "photorealism, plastic 3d figure, cute generic mascot, famous franchise monster, identical symmetrical clone lineup, generic human cape hero, text, title lettering, HUD, trading card frame, watermark, logo, extra limbs, unreadable merged anatomy"
+- key: evt-henchman-crew-magic-birthright
+  lane: unstable-production
+  entity: tactical-henchman-crew
+  title: "Heirloom Hexes | captain Auntie Hem and squad"
+  asset: every-villain-tactics/henchmen/magic-birthright/crew-intro
+  size: 896x1152
+  seed: 818030
+  priority: 715
+  prompt_prose: "Heirloom Hexes is a one-hit tactical crew with this exact original silhouette: Animated embroidered family crests with needle feet and photo eyes. Captain Auntie Hem leads the group at a dinner table whose ancestral portraits watch. the embroidered crest captain pins a new family rule to a closing doorway. Their announced move is pin a house rule to one tile that punishes repeating an action and the physical counter is read its announced rule and choose a different action; place both in the scene through visible objects. Viewed at ground level from the perspective of a much larger hero, the captain and two crew members have clearly different scales. The captain and companions have distinct expressions and individualized poses, with a readable nonlethal rout or disarm opportunity."
+  negative: "photorealism, plastic 3d figure, cute generic mascot, famous franchise monster, identical symmetrical clone lineup, generic human cape hero, text, title lettering, HUD, trading card frame, watermark, logo, extra limbs, unreadable merged anatomy"
+- key: evt-henchman-crew-magic-social
+  lane: unstable-production
+  entity: tactical-henchman-crew
+  title: "Encore Hands | captain Velvet Glove and squad"
+  asset: every-villain-tactics/henchmen/magic-social/crew-intro
+  size: 896x1152
+  seed: 818031
+  priority: 714
+  prompt_prose: "Encore Hands is a one-hit tactical crew with this exact original silhouette: Floating sequined opera gloves that clap thunder. Captain Velvet Glove leads the group beneath a theater proscenium during an encore. a velvet opera glove claps a measured beat while other floating hands echo it. Their announced move is double an adjacent ally's next movement through rhythmic applause and the physical counter is interrupt the third counted clap; place both in the scene through visible objects. Almost a side-scrolling profile, one creature actively moving and others preparing a different action. The captain and companions have distinct expressions and individualized poses, with a readable nonlethal rout or disarm opportunity."
+  negative: "photorealism, plastic 3d figure, cute generic mascot, famous franchise monster, identical symmetrical clone lineup, generic human cape hero, text, title lettering, HUD, trading card frame, watermark, logo, extra limbs, unreadable merged anatomy"
+- key: evt-henchman-crew-alien-fire
+  lane: unstable-production
+  entity: tactical-henchman-crew
+  title: "Flare Skiffs | captain Little Sol and squad"
+  asset: every-villain-tactics/henchmen/alien-fire/crew-intro
+  size: 896x1152
+  seed: 818032
+  priority: 713
+  prompt_prose: "Flare Skiffs is a one-hit tactical crew with this exact original silhouette: Miniature solar-sail protest boats with star-dust banners. Captain Little Sol leads the group on the deck of a tiny refugee spacecraft facing a private sun. the bright little solar-sail leader guides the group down a striking beam of sunlight. Their announced move is sweep a light beam across a warned row then flee the edge and the physical counter is move into shade before the sail charges; place both in the scene through visible objects. A close medium portrait of the named captain while at least one subordinate works at the back. The captain and companions have distinct expressions and individualized poses, with a readable nonlethal rout or disarm opportunity."
+  negative: "photorealism, plastic 3d figure, cute generic mascot, famous franchise monster, identical symmetrical clone lineup, generic human cape hero, text, title lettering, HUD, trading card frame, watermark, logo, extra limbs, unreadable merged anatomy"
+- key: evt-henchman-crew-alien-air
+  lane: unstable-production
+  entity: tactical-henchman-crew
+  title: "Cloud Clerks | captain Undersecretary Mist and squad"
+  asset: every-villain-tactics/henchmen/alien-air/crew-intro
+  size: 896x1152
+  seed: 818033
+  priority: 712
+  prompt_prose: "Cloud Clerks is a one-hit tactical crew with this exact original silhouette: Cumulus bureaucrats with inkpad lightning and enormous diplomatic sashes. Captain Undersecretary Mist leads the group inside a cloud embassy's transparent paper-work room. the cloud clerk stamps an annexation seal onto mist before the guests arrive. Their announced move is declare a marked square annexed, increasing entry cost and the physical counter is counter-sign at the nearby flag or wait for the cloud to drift; place both in the scene through visible objects. Low off-center framing, one creature crouched, one perched and one reaching rather than a synchronized lineup. The captain and companions have distinct expressions and individualized poses, with a readable nonlethal rout or disarm opportunity."
+  negative: "photorealism, plastic 3d figure, cute generic mascot, famous franchise monster, identical symmetrical clone lineup, generic human cape hero, text, title lettering, HUD, trading card frame, watermark, logo, extra limbs, unreadable merged anatomy"
+- key: evt-henchman-crew-alien-earth
+  lane: unstable-production
+  entity: tactical-henchman-crew
+  title: "Display Goblins | captain Curator Chip and squad"
+  asset: every-villain-tactics/henchmen/alien-earth/crew-intro
+  size: 896x1152
+  seed: 818034
+  priority: 711
+  prompt_prose: "Display Goblins is a one-hit tactical crew with this exact original silhouette: Crystalline museum sprites wearing stolen exhibition plaques. Captain Curator Chip leads the group amid polished museum display cases and broken glass. a crystal sprite points toward an empty display pedestal as the case closes. Their announced move is build a temporary glass case around an exposed target and the physical counter is strike the projected corner clamp before the exhibit seals; place both in the scene through visible objects. Overhead diagonal view makes the coming tile hazard legible, asymmetrical actors against realistic floor materials. The captain and companions have distinct expressions and individualized poses, with a readable nonlethal rout or disarm opportunity."
+  negative: "photorealism, plastic 3d figure, cute generic mascot, famous franchise monster, identical symmetrical clone lineup, generic human cape hero, text, title lettering, HUD, trading card frame, watermark, logo, extra limbs, unreadable merged anatomy"
+- key: evt-henchman-crew-alien-water
+  lane: unstable-production
+  entity: tactical-henchman-crew
+  title: "Pearl Choir | captain Alto Clam and squad"
+  asset: every-villain-tactics/henchmen/alien-water/crew-intro
+  size: 896x1152
+  seed: 818035
+  priority: 710
+  prompt_prose: "Pearl Choir is a one-hit tactical crew with this exact original silhouette: Operatic clams with glowing pearls and sea-foam lace collars. Captain Alto Clam leads the group beneath an overgrown reef temple. an operatic clam opens its glowing pearl while companions answer in careful harmony. Their announced move is sing one target a tile closer to the watery edge and the physical counter is cover the pearl or move out of hearing; place both in the scene through visible objects. Viewed through a transparent surface or a shallow waterline, with character faces near the edge. The captain and companions have distinct expressions and individualized poses, with a readable nonlethal rout or disarm opportunity."
+  negative: "photorealism, plastic 3d figure, cute generic mascot, famous franchise monster, identical symmetrical clone lineup, generic human cape hero, text, title lettering, HUD, trading card frame, watermark, logo, extra limbs, unreadable merged anatomy"
+- key: evt-henchman-crew-alien-discipline
+  lane: unstable-production
+  entity: tactical-henchman-crew
+  title: "Clockwork Wombat Ronin | captain Lieutenant Teakettle and squad"
+  asset: every-villain-tactics/henchmen/alien-discipline/crew-intro
+  size: 896x1152
+  seed: 818036
+  priority: 709
+  prompt_prose: "Clockwork Wombat Ronin is a one-hit tactical crew with this exact original silhouette: Tiny armored wombat swordmasters with ticking portal watches, square lacquered hats and stubby brass katanas. Captain Lieutenant Teakettle leads the group among spinning portal watch faces on an alley rooftop. the watch-bearing wombat leader steps behind a target through a shimmering clock face. Their announced move is phase behind a marked target on the next turn, but leave a shimmering clock-face exit and the physical counter is protect the marked civilian or interrupt the portal watch before the phase completes; place both in the scene through visible objects. A slightly canted point of view behind a civilian, with a clear path through the action. The captain and companions have distinct expressions and individualized poses, with a readable nonlethal rout or disarm opportunity."
+  negative: "photorealism, plastic 3d figure, cute generic mascot, famous franchise monster, identical symmetrical clone lineup, generic human cape hero, text, title lettering, HUD, trading card frame, watermark, logo, extra limbs, unreadable merged anatomy"
+- key: evt-henchman-crew-alien-genius
+  lane: unstable-production
+  entity: tactical-henchman-crew
+  title: "Patent Pips | captain Provisional One and squad"
+  asset: every-villain-tactics/henchmen/alien-genius/crew-intro
+  size: 896x1152
+  seed: 818037
+  priority: 708
+  prompt_prose: "Patent Pips is a one-hit tactical crew with this exact original silhouette: Brass-and-paper patent forms on tiny measuring legs. Captain Provisional One leads the group in a patent office filled with dismantled medical gadgets. one patent form measures a confiscated prototype while others march on fine metal legs. Their announced move is confiscate the second use of a tagged gadget for one turn and the physical counter is present its original inventor or void the displayed claim; place both in the scene through visible objects. Shot from a service hatch with the lead creature in close three-quarter profile and companions in separate depth planes. The captain and companions have distinct expressions and individualized poses, with a readable nonlethal rout or disarm opportunity."
+  negative: "photorealism, plastic 3d figure, cute generic mascot, famous franchise monster, identical symmetrical clone lineup, generic human cape hero, text, title lettering, HUD, trading card frame, watermark, logo, extra limbs, unreadable merged anatomy"
+- key: evt-henchman-crew-alien-birthright
+  lane: unstable-production
+  entity: tactical-henchman-crew
+  title: "Mirror Pages | captain Squire Reverse and squad"
+  asset: every-villain-tactics/henchmen/alien-birthright/crew-intro
+  size: 896x1152
+  seed: 818038
+  priority: 707
+  prompt_prose: "Mirror Pages is a one-hit tactical crew with this exact original silhouette: Royal mirror shards riding velvet cushions and carrying reflective lances. Captain Squire Reverse leads the group on velvet cushions along the edge of a ruined throne room. the royal shard captain turns a reflective lance toward a linked mirror tile. Their announced move is hop between two marked mirrored tiles to flank a hero and the physical counter is cover either sparkling mirror before emergence; place both in the scene through visible objects. From the crew's own tiny point of view, huge machinery or furniture reveals their scale. The captain and companions have distinct expressions and individualized poses, with a readable nonlethal rout or disarm opportunity."
+  negative: "photorealism, plastic 3d figure, cute generic mascot, famous franchise monster, identical symmetrical clone lineup, generic human cape hero, text, title lettering, HUD, trading card frame, watermark, logo, extra limbs, unreadable merged anatomy"
+- key: evt-henchman-crew-alien-social
+  lane: unstable-production
+  entity: tactical-henchman-crew
+  title: "Welcome Mats | captain Hugbug Hob and squad"
+  asset: every-villain-tactics/henchmen/alien-social/crew-intro
+  size: 896x1152
+  seed: 818039
+  priority: 706
+  prompt_prose: "Welcome Mats is a one-hit tactical crew with this exact original silhouette: Hexagonal plush emissaries with embroidered names and too many arms. Captain Hugbug Hob leads the group at the open doorway of a too-friendly communal house. the plush emissary extends too many welcoming arms while its companions tighten a shared thread. Their announced move is emotionally link two units so moving apart costs extra range and the physical counter is call each individual's real name to dissolve the tether; place both in the scene through visible objects. A distant environmental shot where the troop silhouettes vary despite their shared species design. The captain and companions have distinct expressions and individualized poses, with a readable nonlethal rout or disarm opportunity."
+  negative: "photorealism, plastic 3d figure, cute generic mascot, famous franchise monster, identical symmetrical clone lineup, generic human cape hero, text, title lettering, HUD, trading card frame, watermark, logo, extra limbs, unreadable merged anatomy"
+- key: evt-henchman-crew-psychic-fire
+  lane: unstable-production
+  entity: tactical-henchman-crew
+  title: "Bedtime Matches | captain Tuck and squad"
+  asset: every-villain-tactics/henchmen/psychic-fire/crew-intro
+  size: 896x1152
+  seed: 818040
+  priority: 705
+  prompt_prose: "Bedtime Matches is a one-hit tactical crew with this exact original silhouette: Scorched matchstick dolls wearing patched quilts. Captain Tuck leads the group beside a child's empty bed and a small bowl of ashes. the patchwork-doll captain drags a tiny nightmare-shaped ember across a nursery floor. Their announced move is bring a nightmare-shaped burning tile beside a frightened hero and the physical counter is a discordant lullaby warns first; soothe the nearby frightened civilian; place both in the scene through visible objects. Viewed at ground level from the perspective of a much larger hero, the captain and two crew members have clearly different scales. The captain and companions have distinct expressions and individualized poses, with a readable nonlethal rout or disarm opportunity."
+  negative: "photorealism, plastic 3d figure, cute generic mascot, famous franchise monster, identical symmetrical clone lineup, generic human cape hero, text, title lettering, HUD, trading card frame, watermark, logo, extra limbs, unreadable merged anatomy"
+- key: evt-henchman-crew-psychic-air
+  lane: unstable-production
+  entity: tactical-henchman-crew
+  title: "Lift Bailiffs | captain Floaty Finch and squad"
+  asset: every-villain-tactics/henchmen/psychic-air/crew-intro
+  size: 896x1152
+  seed: 818041
+  priority: 704
+  prompt_prose: "Lift Bailiffs is a one-hit tactical crew with this exact original silhouette: Balloon-headed ticket collectors with dangling polished shoes. Captain Floaty Finch leads the group inside an elevator shaft where the floor has vanished. the balloon-headed collector floats a concrete block away from a defended lane. Their announced move is levitate a piece of cover away and expose a firing lane and the physical counter is grab their warning receipt before the cords tighten; place both in the scene through visible objects. Almost a side-scrolling profile, one creature actively moving and others preparing a different action. The captain and companions have distinct expressions and individualized poses, with a readable nonlethal rout or disarm opportunity."
+  negative: "photorealism, plastic 3d figure, cute generic mascot, famous franchise monster, identical symmetrical clone lineup, generic human cape hero, text, title lettering, HUD, trading card frame, watermark, logo, extra limbs, unreadable merged anatomy"
+- key: evt-henchman-crew-psychic-earth
+  lane: unstable-production
+  entity: tactical-henchman-crew
+  title: "Confession Cobbles | captain Pebble Judge and squad"
+  asset: every-villain-tactics/henchmen/psychic-earth/crew-intro
+  size: 896x1152
+  seed: 818042
+  priority: 703
+  prompt_prose: "Confession Cobbles is a one-hit tactical crew with this exact original silhouette: Whisper-mouthed stones wearing etched judge spectacles. Captain Pebble Judge leads the group along the cracked steps of the municipal courthouse. a cobble elder whispers an old accusation to a listening streetlamp. Their announced move is broadcast one buried secret, briefly disrupting the listener's focus and the physical counter is the stone vibrates first; leave the seam or counter with truth; place both in the scene through visible objects. A close medium portrait of the named captain while at least one subordinate works at the back. The captain and companions have distinct expressions and individualized poses, with a readable nonlethal rout or disarm opportunity."
+  negative: "photorealism, plastic 3d figure, cute generic mascot, famous franchise monster, identical symmetrical clone lineup, generic human cape hero, text, title lettering, HUD, trading card frame, watermark, logo, extra limbs, unreadable merged anatomy"
+- key: evt-henchman-crew-psychic-water
+  lane: unstable-production
+  entity: tactical-henchman-crew
+  title: "Apology Boats | captain Captain Sorry and squad"
+  asset: every-villain-tactics/henchmen/psychic-water/crew-intro
+  size: 896x1152
+  seed: 818043
+  priority: 702
+  prompt_prose: "Apology Boats is a one-hit tactical crew with this exact original silhouette: Paper sailboats folded from unsent apology letters. Captain Captain Sorry leads the group between tide pools and rows of unsent apology letters. the paper-boat captain pushes one folded apology into a swelling tide. Their announced move is flood a telegraphed square with grief and slow movement and the physical counter is unfold or deliver the letter before it reaches the destination; place both in the scene through visible objects. Low off-center framing, one creature crouched, one perched and one reaching rather than a synchronized lineup. The captain and companions have distinct expressions and individualized poses, with a readable nonlethal rout or disarm opportunity."
+  negative: "photorealism, plastic 3d figure, cute generic mascot, famous franchise monster, identical symmetrical clone lineup, generic human cape hero, text, title lettering, HUD, trading card frame, watermark, logo, extra limbs, unreadable merged anatomy"
+- key: evt-henchman-crew-psychic-discipline
+  lane: unstable-production
+  entity: tactical-henchman-crew
+  title: "Bookshades | captain Page Turn and squad"
+  asset: every-villain-tactics/henchmen/psychic-discipline/crew-intro
+  size: 896x1152
+  seed: 818044
+  priority: 701
+  prompt_prose: "Bookshades is a one-hit tactical crew with this exact original silhouette: Animated book spines in tiny veils carrying bookmark blades. Captain Page Turn leads the group among moving shelves in a closed municipal library. the leading book spine slips through a tiny gap in a closed shelf. Their announced move is slip through one obstruction to tag a unit behind cover and the physical counter is light the announced landing shelf before the jump; place both in the scene through visible objects. Overhead diagonal view makes the coming tile hazard legible, asymmetrical actors against realistic floor materials. The captain and companions have distinct expressions and individualized poses, with a readable nonlethal rout or disarm opportunity."
+  negative: "photorealism, plastic 3d figure, cute generic mascot, famous franchise monster, identical symmetrical clone lineup, generic human cape hero, text, title lettering, HUD, trading card frame, watermark, logo, extra limbs, unreadable merged anatomy"
+- key: evt-henchman-crew-psychic-genius
+  lane: unstable-production
+  entity: tactical-henchman-crew
+  title: "Thoughtbubbles | captain Password Please and squad"
+  asset: every-villain-tactics/henchmen/psychic-genius/crew-intro
+  size: 896x1152
+  seed: 818045
+  priority: 700
+  prompt_prose: "Thoughtbubbles is a one-hit tactical crew with this exact original silhouette: Floating speech-balloon masks with stray thoughts written across them. Captain Password Please leads the group over a cluttered psychic prediction map at a crowded station. a floating thought mask charts the likely next step of a hesitant courier. Their announced move is predict and mark the destination of a planned move and the physical counter is the prediction appears before the attack; choose a different square; place both in the scene through visible objects. Viewed through a transparent surface or a shallow waterline, with character faces near the edge. The captain and companions have distinct expressions and individualized poses, with a readable nonlethal rout or disarm opportunity."
+  negative: "photorealism, plastic 3d figure, cute generic mascot, famous franchise monster, identical symmetrical clone lineup, generic human cape hero, text, title lettering, HUD, trading card frame, watermark, logo, extra limbs, unreadable merged anatomy"
+- key: evt-henchman-crew-psychic-birthright
+  lane: unstable-production
+  entity: tactical-henchman-crew
+  title: "Tomorrow Ravens | captain Miss Maybe and squad"
+  asset: every-villain-tactics/henchmen/psychic-birthright/crew-intro
+  size: 896x1152
+  seed: 818046
+  priority: 699
+  prompt_prose: "Tomorrow Ravens is a one-hit tactical crew with this exact original silhouette: White-feathered fortune ravens with clockface eyes and prophecy slips. Captain Miss Maybe leads the group beside the silent hands of the clock of tomorrow. the fortune raven captain opens a prophecy slip as another bird watches a marked landing. Their announced move is mark a future strike tile then swoop precisely on schedule and the physical counter is read the forecast and change position to invalidate it; place both in the scene through visible objects. A slightly canted point of view behind a civilian, with a clear path through the action. The captain and companions have distinct expressions and individualized poses, with a readable nonlethal rout or disarm opportunity."
+  negative: "photorealism, plastic 3d figure, cute generic mascot, famous franchise monster, identical symmetrical clone lineup, generic human cape hero, text, title lettering, HUD, trading card frame, watermark, logo, extra limbs, unreadable merged anatomy"
+- key: evt-henchman-crew-psychic-social
+  lane: unstable-production
+  entity: tactical-henchman-crew
+  title: "Rumor Mites | captain Scoop Two and squad"
+  asset: every-villain-tactics/henchmen/psychic-social/crew-intro
+  size: 896x1152
+  seed: 818047
+  priority: 698
+  prompt_prose: "Rumor Mites is a one-hit tactical crew with this exact original silhouette: Ink-pawed newspaper gremlins with megaphone mouths. Captain Scoop Two leads the group at the curb outside a newsroom on the morning of a public scandal. the ink-pawed gremlin shouts into a megaphone while the other mites point toward a decoy. Their announced move is post a false accusation that briefly diverts targeting to a decoy and the physical counter is reveal the contradictory clipping or disable the press; place both in the scene through visible objects. Shot from a service hatch with the lead creature in close three-quarter profile and companions in separate depth planes. The captain and companions have distinct expressions and individualized poses, with a readable nonlethal rout or disarm opportunity."
+  negative: "photorealism, plastic 3d figure, cute generic mascot, famous franchise monster, identical symmetrical clone lineup, generic human cape hero, text, title lettering, HUD, trading card frame, watermark, logo, extra limbs, unreadable merged anatomy"
