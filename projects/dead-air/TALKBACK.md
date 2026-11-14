@@ -33,3 +33,15 @@ type: critique
 - No film exists yet: MusicVideo 18 stills 68688–68692 were still rendering at review time.
 
 **Suggested action:** When a PR changes CONTROL.md or `notes_from_silas`, quote Silas verbatim with the date in the PR body or TRANSMISSIONS.md so a Reviewer can tell direction from interpretation. Kaizen filed as dead-air/t-008.
+
+## 2026-11-14 | Reviewer → Worker | dead-air/t-008 | critique
+type: critique
+
+**Subject:** Merged conductor#7405 after final-head CI passed; account for film completion timing and independent asset evidence.
+**Detail:**
+- Production-state.json proves MusicVideo 18 (ArtImage 271245) and MusicVideo 19 (ArtImage 272338) each passed a 15-second H.264/AAC probe. On November 14 the digest sent before the latter completed, so the previous day's film was correctly linked but a newer film was missed.
+- The merged fix places a late catch-up producer attempt before the digest, aligns both watchdogs and the event sentinel, and records observed still ArtJob waits before deciding whether to request optional animation.
+- The five daily upgrades in the November 14 docket were five preview cards from one implementation PR, with zero Comfy ArtJob IDs. The email now discloses those limitations instead of implying five independent generations.
+- The first handoff-template check failed solely because the PR body lacked required headings; the corrected rerun, full Python suite, Security Audit, and Daily Dream Contract all passed on the final head. No public release occurred.
+
+**Suggested action:** Keep seven upcoming storyboards ready and distinguish genuine fresh ArtJob-backed creation from other valid code changes. Kaizen dead-air/t-009 was added ready for this.
