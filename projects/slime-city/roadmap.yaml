@@ -152,12 +152,12 @@ tasks:
     implementation_pr: 'silasfelinus/kind_robots#5041'
   - id: t-062
     title: 'Paint the journey final-choice endings and key journey scenes'
-    status: review
+    status: ready
     milestone: m3
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-14T05:49:55Z'
+    updated: '2026-11-14T06:04:12Z'
     note: |-
       Silas 2026-11-11 PT, in session: "There is unmade art it should definitely be added to the pipeline."
 
@@ -184,6 +184,14 @@ tasks:
       lettering) and wired in kind_robots#5141; all 18 journey epilogue plates now in
       SLIME_CITY_ART.story. Still open: 2-3 key journey-scene plates per crew (ledger plus a
       scene-art slot in the journey UI).
+
+      2026-11-14 PT: kind_robots#5141 merged (20579aa): ironjaw/journey-left wired, all 18
+      journey epilogue plates live, and the campaign backdrop now prefers
+      story['<crew>/scene-<beat-id>'] during a journey scene. conductor#7370 merged: JOURNEY-
+      SCENES-ROUND-1.yaml (18 plates, 3 key scenes per crew, auto_submit) queued. Next: once
+      those renders are DONE, fetch, contact-sheet review, wire keepers into
+      SLIME_CITY_ART.story as '<crew>/scene-<beat-id>' (bump SLIME_CITY_ART_COUNT and its
+      test), then close t-062.
     owner: worker
     claimed_by: 2026-11-14T054801Z-slime-city-t062-ij8r1
     claimed_at: '2026-11-14T05:48:01Z'
