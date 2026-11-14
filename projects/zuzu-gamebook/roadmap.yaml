@@ -107,15 +107,12 @@ tasks:
       original dice and combat rules, and established agent autonomy and art guardrails.
   - id: t-015
     title: 'Main-game standard: audit and close the gaps for Zuzu Gamebook'
-    status: review
-    owner: worker
-    claimed_by: 20261114T123728297Z-zuzu-gamebook-t015-cast-2d93
-    claimed_at: '2026-11-14T12:37:28.297Z'
+    status: ready
     milestone: m5
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-14T12:43:35.960Z'
+    updated: '2026-11-14T21:34:03.832Z'
     note: |-
       Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -136,6 +133,8 @@ tasks:
       2026-11-14 PT reconciliation: Kind Robots #5154 is MERGED and preserves independently valid browser saves when adjacent slots contain corrupt JSON. This is a completed slice, not the whole t-015 acceptance task. Return t-015 to ready for its remaining account-backed Continue and persistent cast-discovery scrapbook; don't redo the shipped title, 17 achievements or endings catalogue. Final phone/tablet QA is t-009 after art delivery.
 
       2026-11-14 PT: A scoped Kind Robots branch implements seven-character cast discoveries earned from newly visited story scenes/flags, persisted separately from the current run, migrated from local story progress, excluded from foreign save-code imports, and rendered as a locked-silhouette/portrait gallery in the Bell Ledger. Regression contract added. Pending CI and merge. Account-backed Continue and full device/art QA remain open; do not mark t-015 done or game playtest-ready.
+
+      2026-11-14 PT: Kind Robots cast scrapbook PR #5158 merged, with all workflow runs green. Seven-character discovery and persistence shipped. Re-arm t-015 for still-missing signed-in account-backed Continue and safe local fallback, without replaying cast/achievement awards from imported saves. No playtest promotion yet.
   - id: t-016
     title: 'Zuzu Gamebook achievement upgrade: 12 or more live achievements'
     status: done
@@ -228,37 +227,19 @@ tasks:
   - id: t-007
     milestone: m3
     title: Integrate authored story bundle, chapter pacing and illustration manifest
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 2026-11-14T211000Z-zuzu-gamebook-t-007-a8c1
     claimed_at: '2026-11-14T21:10:00Z'
-    updated: '2026-11-14T21:10:00Z'
+    updated: '2026-11-14T21:12:00Z'
     passes: 0
     stakes: reversible
     depends_on: [t-002, t-004]
-    note: >-
-      Validate all node ids and choice targets, all required effects/flags/items,
-      encounter termination, at least eight reachable endings, every ending
-      reachable from the start, and no no-win progression trap. Render real
-      hero/environment/aftermath images with meaningful alt text and fallbacks.
-      Add a test that explores reachable state as well as node graph shape.
+    note: |-
+      Validate all node ids and choice targets, all required effects/flags/items, encounter termination, at least eight reachable endings, every ending reachable from the start, and no no-win progression trap. Render real hero/environment/aftermath images with meaningful alt text and fallbacks. Add a test that explores reachable state as well as node graph shape.
+      2026-11-04 PT (round 3, pacing): Measured chapter pacing over 4,000 seeded walks (per- act section counts, single-way page chains, act transitions). Shipped: - Two Act VIII bridge sections (a8-under-the-wall, a8-behind-the-altar) for the three Act V outcomes that cut straight to the altar set piece. These were mission/investigate#success, crypt- glimpse/confront and a5-crypt-wren/hide, and they skipped Dustwater and the night road with no time passing. - Arrival lines for the Hollow Bell, Dustwater and mission-at- night act openings. - An "Act N · NAME" banner above the title on the first section of each act (actOpening). Phones never showed the chapter before. - A graceful missing- plate fallback: sectionPlate no longer throws, and stage and trail images fall back once on a load error. - A pacing contract in verifyZuzuGamebook: no backward act edges; act- skipping jumps must land on bridges; per-act section bands; at most 5 single-way pages in a row. Goldens are unchanged, saves are intact and no art was added. Remaining: Act IV is the longest act (16–25 sections, decisions every 1–2 pages). Act V's gate "deliver" choice makes the central act 2 pages on about 40% of random walks; that needs an editorial call. The Night Road long way (5 single-way pages) is kept as a deliberate slog.  Merged as kind_robots #4799; back to ready for the remaining scope.
 
-      2026-11-04 PT (round 3, pacing): Measured chapter pacing over 4,000 seeded walks (per-
-      act section counts, single-way page chains, act transitions). Shipped: - Two Act VIII
-      bridge sections (a8-under-the-wall, a8-behind-the-altar) for the three Act V outcomes
-      that cut straight to the altar set piece. These were mission/investigate#success, crypt-
-      glimpse/confront and a5-crypt-wren/hide, and they skipped Dustwater and the night road
-      with no time passing. - Arrival lines for the Hollow Bell, Dustwater and mission-at-
-      night act openings. - An "Act N · NAME" banner above the title on the first section of
-      each act (actOpening). Phones never showed the chapter before. - A graceful missing-
-      plate fallback: sectionPlate no longer throws, and stage and trail images fall back once
-      on a load error. - A pacing contract in verifyZuzuGamebook: no backward act edges; act-
-      skipping jumps must land on bridges; per-act section bands; at most 5 single-way pages
-      in a row. Goldens are unchanged, saves are intact and no art was added. Remaining: Act
-      IV is the longest act (16–25 sections, decisions every 1–2 pages). Act V's gate
-      "deliver" choice makes the central act 2 pages on about 40% of random walks; that needs
-      an editorial call. The Night Road long way (5 single-way pages) is kept as a deliberate
-      slog.  Merged as kind_robots #4799; back to ready for the remaining scope.
+      Scoped Act V delivery aftermath choice implemented on worker/zuzu-gamebook-t-007-delivery-aftermath-a8c1; existing art plate reused. CI and story contract verification pending; t-007 retains further scope.
     implementation_pr: 'silasfelinus/kind_robots#4799'
   - id: t-008
     milestone: m4
