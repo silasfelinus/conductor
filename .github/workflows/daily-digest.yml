@@ -149,7 +149,8 @@ jobs:
       - run: pip install pyyaml Pillow
 
       - name: Author today's next Daily Dream proposal
-        if: ${{ false }} # 2026-11-12: Silas moved daily creation to dead-air films.
+        # Original six linked Dream assets plus eight independent Zuzu assets.
+        # Anthropic API authoring remains opt-in; pre-authored proposals require no paid model call.
         id: daily_dream_author
         continue-on-error: true
         run: python scripts/author_dream_proposal.py
@@ -235,7 +236,7 @@ jobs:
       # evidence. Daily Dream sidecar failures are warnings; digest generation,
       # validation, configuration, and delivery still fail normally on their own.
       - name: Build today's Daily Dream proposal for tomorrow
-        if: ${{ false }} # historical writer parked; preserves all existing records.
+        # Canonical guarded single writer; never a parallel Zuzu creation path.
         id: daily_dream_build
         continue-on-error: true
         # Consume the oldest valid unbuilt proposal if the buffer is full and
@@ -311,15 +312,15 @@ jobs:
           fi
           if [ "${{ steps.daily_dream_build.outcome }}" = "failure" ]; then
             echo "::warning::Tomorrow's Daily Dream object build failed; digest delivery will continue."
-          elif [ "${{ steps.daily_dream_facets.outcome }}" != "success" ]; then
+          elif [ "${{ steps.daily_dream_build.outcome }}" = "success" ] && [ "${{ steps.daily_dream_facets.outcome }}" = "failure" ]; then
             echo "::warning::Tomorrow's Daily Dream Facet attachment failed; digest delivery will continue."
           elif [ "${{ steps.daily_dream_art.outcome }}" != "success" ]; then
             echo "::warning::Tomorrow's Daily Dream ArtJob submission was partial or failed; digest delivery will continue."
           fi
-          if [ "${{ steps.daily_dream_commit.outcome }}" != "success" ]; then
+          if [ "${{ steps.daily_dream_commit.outcome }}" = "failure" ]; then
             echo "::warning::Tomorrow's Daily Dream evidence commit failed; digest delivery will continue."
           fi
-          if [ "${{ steps.daily_dream_verify_live.outcome }}" != "success" ]; then
+          if [ "${{ steps.daily_dream_verify_live.outcome }}" = "failure" ]; then
             echo "::warning::Daily Dream live composed-field verification found drift (or failed to run); see the 'Verify live prose composition' step output above. Digest delivery will continue."
           fi
 

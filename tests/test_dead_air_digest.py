@@ -39,7 +39,8 @@ def test_digest_includes_private_final_only_with_probe(tmp_path):
     assert film["title"] == "A weird fake ad"
     assert film["url"].endswith("studio=music&video=18")
     html = dead_air_section(film)
-    assert "Watch the new commercial" in html
+    assert "Watch verified commercial" in html
+    assert film["fresh_today"] is True
     assert "private premiere" in html
 
 
@@ -54,3 +55,27 @@ def test_unprobed_or_invalid_final_never_links(tmp_path):
     film = dead_air_private_film_payload(str(path), str(tmp_path))
     assert film["status"] != "ready"
     assert not film.get("url")
+
+
+def test_yesterdays_verified_film_is_not_a_new_premiere(tmp_path):
+    from datetime import datetime, timedelta
+    from zoneinfo import ZoneInfo
+    yesterday = (datetime.now(ZoneInfo("America/Los_Angeles")).date()
+                 - timedelta(days=1)).isoformat()
+    episodes = tmp_path / "episodes"
+    episodes.mkdir()
+    (episodes / f"{yesterday}-clip.yaml").write_text(
+        "title: Yesterday's commercial\n", encoding="utf-8"
+    )
+    ledger = tmp_path / "state.json"
+    ledger.write_text(json.dumps({"episodes": {"clip": {
+        "status": "completed", "completed_pt": yesterday,
+        "music_video_id": 18, "final_art_image_id": 100,
+        "quality_probe": {"duration_seconds": 15.0},
+    }}}), encoding="utf-8")
+    film = dead_air_private_film_payload(str(ledger), str(episodes))
+    assert film["fresh_today"] is False
+    assert film["final_art_image_id"] == 100
+    html = dead_air_section(film)
+    assert "No film was completed today" in html
+    assert "private premiere" not in html

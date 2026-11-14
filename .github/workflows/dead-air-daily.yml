@@ -42,6 +42,8 @@ jobs:
           python -m pip install pyyaml
           sudo apt-get update -qq
           sudo apt-get install -y -qq ffmpeg espeak-ng
+      - name: Check authored seven-day runway
+        run: python scripts/check_dead_air_runway.py --days 7
       - name: Attempt oldest private unfinished commercial
         id: film
         shell: bash

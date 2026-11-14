@@ -153,6 +153,21 @@ def _asset_rows(proposal: dict[str, Any], *, probe_images: bool = True) -> list[
     seed = data.get("seed_facets") if isinstance(data.get("seed_facets"), dict) else {}
     elements = seed.get("elements") if isinstance(seed.get("elements"), dict) else {}
     art_entries = built.get("art") if isinstance(built.get("art"), list) else []
+    # The authored art request is not evidence of a real remote ArtJob.
+    # Only the submitter's durable last_art_job_id counts toward production.
+    try:
+        queue = yaml.safe_load((ROOT / "projects/art-prompts.yaml").read_text(encoding="utf-8")) or {}
+        queued = queue.get("requests", []) if isinstance(queue, dict) else []
+        job_by_request = {
+            str(item["id"]): int(item["last_art_job_id"])
+            for item in queued if isinstance(item, dict)
+            and item.get("source") == "dream-cycle"
+            and item.get("id") and isinstance(item.get("last_art_job_id"), int)
+            and item["last_art_job_id"] > 0
+        }
+    except (OSError, ValueError, yaml.YAMLError, TypeError):
+        job_by_request = {}
+
     art_by_element = {
         str(item.get("element") or ""): item
         for item in art_entries if isinstance(item, dict) and item.get("element")
@@ -267,6 +282,7 @@ def _asset_rows(proposal: dict[str, Any], *, probe_images: bool = True) -> list[
             "image_path": public_path,
             "art_status": "ready" if available else ("queued" if art else ("awaiting build" if not built else "queue metadata missing")),
             "request_id": art.get("request_id"),
+            "art_job_id": job_by_request.get(str(art.get("request_id") or "")),
         })
     return rows
 

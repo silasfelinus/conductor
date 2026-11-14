@@ -365,6 +365,35 @@ def _pitch_row(pitch: dict[str, Any], links_for, fallback_url: str) -> str:
     )
 
 
+def daily_asset_freshness_section(digest: dict[str, Any]) -> str:
+    """Count independently created record slots, submitted ArtJobs, and real images."""
+    current = digest.get("current_dream_output")
+    if not isinstance(current, dict) or not current.get("built"):
+        status = digest.get("daily_dream_output_status") or (
+            "No completed Daily Dream bundle eligible for this morning."
+        )
+        return ('<p style="color:#92400e"><strong>Daily Dream / Zuzu freshness:</strong> '
+                + esc(status) + '</p>')
+    assets = current.get("assets") or []
+    rows = [x for x in assets if isinstance(x, dict)]
+    dream = [x for x in rows if x.get("lane") == "dream"]
+    zuzu = [x for x in rows if x.get("lane") == "zuzu"]
+    job_ids = {x.get("art_job_id") for x in rows
+               if isinstance(x.get("art_job_id"), int) and x["art_job_id"] > 0}
+    rendered = sum(x.get("art_status") == "ready" for x in rows)
+    date = current.get("built_date") or current.get("proposal_date") or "unknown date"
+    counts = (
+        f"{len(dream)}/6 linked Dream records, {len(zuzu)}/8 independent Zuzu "
+        f"records, {len(job_ids)}/14 verified ArtJob IDs, "
+        f"{rendered}/{len(rows)} verified images"
+    )
+    return (
+        '<p style="color:#475569"><strong>Daily Dream / Zuzu asset evidence '
+        + esc(date) + ':</strong> ' + esc(counts)
+        + '. A queued request is not a delivered image.</p>'
+    )
+
+
 def dead_air_section(film: dict[str, Any] | None) -> str:
     """A private film can be linked to its owner's authenticated studio viewer."""
     if not isinstance(film, dict):
@@ -381,17 +410,24 @@ def dead_air_section(film: dict[str, Any] | None) -> str:
     url = str(film.get("url") or "")
     if not url.startswith("https://kindrobots.org/play/video-generator?"):
         return ""
+    fresh_today = film.get("fresh_today", True)
     clips = film.get("gpu_animated_shots")
     mix = f"{clips} generated clips" if isinstance(clips, int) else "motion edit"
+    heading = "private premiere" if fresh_today else "most recent film"
+    warning = (
+        "No film was completed today. Showing the last verified private film."
+        if not fresh_today else ""
+    )
     return (
         '<div style="margin:16px 0;padding:16px;border:1px solid #4338ca;'
         'border-radius:12px;background:#f5f3ff">'
-        '<h2 style="margin:0 0 6px;font-size:19px">📺 Dead Air: private premiere</h2>'
+        f'<h2 style="margin:0 0 6px;font-size:19px">📺 Dead Air: {heading}</h2>'
         f'<p style="margin:0 0 10px"><strong>{esc(film.get("title"))}</strong>'
         f' · {esc(film.get("date"))} PT · 15 seconds · {esc(mix)}</p>'
+        f'<p style="color:#92400e">{esc(warning)}</p>'
         f'<a style="display:inline-block;background:#312e81;color:white;'
         f'padding:10px 16px;border-radius:7px;text-decoration:none" '
-        f'href="{esc(url)}">Watch the new commercial (sign in)</a></div>'
+        f'href="{esc(url)}">Watch verified commercial (sign in)</a></div>'
     )
 
 
@@ -410,7 +446,9 @@ def daily_deliveries_section(daily: dict[str, Any] | None) -> str:
     # Five entries do not necessarily represent five independent PRs or art jobs.
     # Surface that distinction instead of implying today's digest grew five assets.
     unique_prs = {row.get("pull_request") for row in rows if row.get("pull_request")}
-    art_jobs = sum(len((row.get("art") or {}).get("job_ids") or []) for row in rows)
+    art_job_ids = {job for row in rows for job in (row.get("art") or {}).get("job_ids", []) or []
+                   if isinstance(job, int) and job > 0}
+    art_jobs = len(art_job_ids)
     evidence_notes = []
     if len(unique_prs) < len(rows):
         evidence_notes.append(
@@ -475,8 +513,8 @@ def daily_deliveries_section(daily: dict[str, Any] | None) -> str:
         '<p>These are actual PR-backed additions or clearly marked progress, not new ideas '
         'awaiting permission. Keep, request modifications, or reject after reviewing. '
         'A rejection creates follow-up rollback work, not an immediate destructive removal. '
-        'The old Daily Dream object writer is paused; Dead Air is the current '
-        'daily film production track.</p>'
+        'Daily Dream and its eight separate Zuzu assets are active alongside '
+        'the independent Dead Air private-film track.</p>'
         + evidence_notice
         + '<ol style="padding-left:20px">' + "".join(html) + '</ol></div>'
     )
@@ -796,7 +834,7 @@ def build_payload(digest: dict[str, Any]) -> dict[str, Any]:
     animation_html = animation_release_section(digest)
     operational_html = engine_banner(digest) + container_log_banner(digest) + review_html
     pitch_html = next_pitch_section(digest.get("next_dream_proposal"))
-    middle = dead_air_section(digest.get("dead_air_private_film")) + animation_html + operational_html + pitch_html + daily_deliveries_section(digest.get("daily_project_deliveries")) + playbook_challenge_section(digest.get("daily_playbook_challenge")) + daily_pitches_section(digest.get("daily_pitches"))
+    middle = dead_air_section(digest.get("dead_air_private_film")) + daily_asset_freshness_section(digest) + animation_html + operational_html + pitch_html + daily_deliveries_section(digest.get("daily_project_deliveries")) + playbook_challenge_section(digest.get("daily_playbook_challenge")) + daily_pitches_section(digest.get("daily_pitches"))
 
     # Place health and the next text pitch directly after the previous pitch's generated output.
     # If a build failed so there is no fresh output, put them immediately after

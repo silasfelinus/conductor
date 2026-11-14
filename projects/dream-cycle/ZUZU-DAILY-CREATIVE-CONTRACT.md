@@ -1,6 +1,6 @@
 # Daily Dream and daily pitch creative direction (Silas, 2026-10-12 PT)
 
-Status: **approved corrected direction; 14-asset Dream implementation pending**. This is a migration specification, not proof that the current six-record pipeline already meets it. The existing single-writer Daily Digest must remain healthy until an atomic, tested replacement is merged.
+Status: **restored as the canonical 14-asset daily creation contract (2026-11-14 PT)**. Version-3 single-writer support and tests exist; an enabled workflow and a successful ArtJob-backed live cycle are distinct checks. Old six-record history remains intact.
 
 ## Daily Dream after migration (corrected by Silas, 2026-10-12 PT)
 
