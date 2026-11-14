@@ -1184,7 +1184,7 @@ tasks:
   - id: t-053
     milestone: m2
     title: 'Meat Exchange reskin: Lovecraftian, dark, occult and weird (names, flavor, art)'
-    status: review
+    status: ready
     passes: 0
     stakes: reversible
     note: |-
@@ -1213,10 +1213,14 @@ tasks:
       Audited EXCHANGE-OCCULT-ROUND-1: 103 DONE ArtImages (40 base, 63 evolutions, IDs 269792-269894), none wired to artManifest.ts. Wrote projects/slime-city/docs/t-053-occult-art-integration-audit-2026-11-12.md (commit 48bf201a), updated master roadmap issue #4535 comment 6818498120. Needs authenticated image fetch/contact-sheet curation before safe manifest wiring; no code PR or deploy this cycle.
 
       Staged all 103 Exchange occult ArtImage IDs as pending curation in kind_robots, with executable manifest safety guard and contract-suite wiring. This is intake infrastructure, not verified image delivery. Keep/redo verdicts and runtime manifest integration remain.
-    updated: '2026-11-12T23:59:00Z'
+
+      2026-11-13 PT intent audit (INTENT-AUDIT-2026-11-14.md): status was review for ~36h with
+      no open PR in kind_robots or conductor and remaining scope listed above; returned to
+      ready so pickers can take the next slice. No work discarded.
+    updated: '2026-11-14T00:53:18Z'
     owner: worker
-    claimed_by: 2026-11-12T232024Z-slime-city-t053-audit-8f3c
-    claimed_at: '2026-11-12T23:20:24Z'
+    claimed_by: ''
+    claimed_at: ''
   - id: t-054
     milestone: m2
     title: 'Ironjaw follow-through: lab-mutant identity in story, evolutions and remaining art'
