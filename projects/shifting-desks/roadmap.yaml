@@ -606,8 +606,8 @@ tasks:
   - id: t-032
     milestone: m3
     title: 'Land, review and link the art round 13 re-renders and round 14 tone-ladder renders'
-    status: ready
-    updated: '2026-11-13T03:52:46.804Z'
+    status: claimed
+    updated: '2026-11-14T01:00:00Z'
     depends_on: t-015
     passes: 0
     stakes: reversible
@@ -655,6 +655,9 @@ tasks:
       2026-11-12 PT: Authored a 14-subject Classic Round 19 with new idempotent forced Krea 2 request IDs and one-gag scene-first prompts, preserving Rounds 14/15 historical failures and the six accepted Classic images. Added queue/reconciliation wiring, negative-prompt safeguards, focused tests, and exact-ArtJob legacy Round 1 audit; unrendered requests must not be called delivered or KEEP. Open PR; verify CI and generation submission before task returns ready. Western style remains suspended.
 
       2026-11-12 PT: Merged Conductor PR #7339 at 3e0f739dec902d5e5617df100cad58146c1723f1; latest six applicable Actions workflows passed, 4626 pytest passed/56 skipped. Created ROUND-19 with 14 new idempotent force-pending Krea2 Classic prompts rewritten for the actual missed subjects; all 14 exactly match durable queue IDs/paths (0 missing, 0 dupes). Previous ROUND-14/15 failed ArtJobs and accepted imagery retained. Authenticated live ArtJob audit recovered five historical ROUND-1 KEEP plates with exact request+destination jobs 38381-38385, images 246469/246471/246473/246475/246477, verified image/webp media modified newer than ArtJobs; persisted immutable IDs, HEAD evidence and original KEEP verdicts. Current Auto Art Generate run 43361753950 is executing the main-merge trigger; 14 Round19 ArtJob IDs not yet independently confirmed. Remaining: verify submission and durable IDs, new DONE ArtImages and media timestamps, review each of 14 new paintings independently KEEP/REDO, link only accepted, then evaluate strict Classic readiness and t-041 ending-art dependency. Western Cartoon remains suspended; 170 optional Western rejected art should be tracked separately from currently selectable Classic and Noir. Do not claim new jobs rendered until proven.
+    owner: worker
+    claimed_by: 2026-11-14T010000Z-shifting-desks-t-032-gpt6-b72f
+    claimed_at: '2026-11-14T01:00:00Z'
   - id: t-033
     milestone: m3
     title: 'Tone ladder: lower floors grow more Cronenbergian (rules and station art)'
