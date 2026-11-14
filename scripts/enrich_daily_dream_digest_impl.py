@@ -220,16 +220,17 @@ def _asset_rows(proposal: dict[str, Any], *, probe_images: bool = True) -> list[
         ("scenario", "Scenario", scenario.get("title"), _summary(scenario.get("setup")),
          builder_slugify(scenario.get("title") or "")),
     ]
-    if data.get("bundle_version") == 3:
-        # Eight additional production assets are NOT descendants of today's
+    if data.get("bundle_version") in (3, 4):
+        # Supplemental catalog assets are NOT descendants of today's
         # random Dream. Their own project is named on each visible card.
         extras = data.get("zuzu_assets") or {}
-        for kind, kind_label, title_key in (
+        kinds = [
             ("locations", "location", "title"),
             ("characters", "character", "name"),
-            ("rewards", "reward", "name"),
-            ("scenarios", "scenario", "title"),
-        ):
+        ]
+        if data.get("bundle_version") == 3:
+            kinds += [("rewards", "reward", "name"), ("scenarios", "scenario", "title")]
+        for kind, kind_label, title_key in kinds:
             for index, row in enumerate(extras.get(kind) or [], 1):
                 if not isinstance(row, dict):
                     continue
@@ -322,6 +323,7 @@ def proposal_payload(proposal: dict[str, Any], *, probe_images: bool = True) -> 
         "edit_link": f"https://github.com/silasfelinus/conductor/blob/main/{repo_path}",
         "assets": assets,
         "images": images,
+        "bundle_version": data.get("bundle_version"),
         "seed_facets": data.get("seed_facets"),
         "built": bool(built),
         "records_summary": _records_summary(built),
