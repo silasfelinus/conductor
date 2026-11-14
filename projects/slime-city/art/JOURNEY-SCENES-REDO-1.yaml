@@ -1,0 +1,50 @@
+# Slime City key journey scene plates, redo 1 (2026-11-14 PT, slime-city/t-062). Curation of
+# JOURNEY-SCENES-ROUND-1 kept 16 of 18 plates (6 wired in kind_robots#5143, 10 in the follow-up). Two go
+# again with a new seed:
+#  - riot/scene-curfew-on-joy (ArtImage 271845) painted a lettered license plate on the impounded truck's
+#    tailgate. The scene now shows the flatbed side-on, guards on its cargo deck, so no plate is in view.
+#  - exchange/scene-the-closing-of-the-book (ArtImage 271863) put several small, youthful-looking figures
+#    in the front row of the crowd. The crowd is now described as weathered, grown, broad-shouldered adults.
+# Same runtime assets, so each keeper replaces the fallback (the chapter plate) when wired. Positive terms
+# only. auto_submit.
+round: slime-city-journey-scenes-redo-1
+project_slug: slime-city
+designer: Slime City key journey scene plates, redo 1
+is_public: true
+is_mature: false
+cast_loras: false
+priority: 1000
+auto_submit: true
+lanes:
+- key: krea2-scene
+  label: Krea 2 Slime City key journey scene plates
+  engine: krea2
+  prompt: prose
+  suffix: Colorful grungy Western comic illustration, thick ink outlines, gouache textures, rust, slime green and
+    neon magenta palette, cinematic wide storybook scene, every character an adult, every surface bare and unmarked,
+    one continuous scene.
+subjects:
+- key: slime-scene-riot-curfew-on-joy-redo-1
+  lane: krea2-scene
+  entity: campaign-scene
+  title: Curfew on Joy (riot journey scene, redo)
+  asset: slime-city/story/riot/scene-curfew-on-joy
+  size: 1344x768
+  seed: 2293010
+  prompt_prose: 'A foundry yard at night behind a fence of glowing hot rivets: an impounded parade flatbed truck,
+    seen side-on in profile, carries a towering pipe organ built from chrome exhaust pipes, draped in party streamers
+    and dead disco lights. Outside the fence, punk demolition saints in soot-blackened robes and cracked manhole-ring
+    halos press against the bars with drums and sparklers, while adult chrome-jawed lizard security guards in hi-vis
+    vests sit bored on the flatbed''s plain steel cargo deck beside the organ.'
+- key: slime-scene-exchange-the-closing-of-the-book-redo-1
+  lane: krea2-scene
+  entity: campaign-scene
+  title: The Closing of the Book (exchange journey scene, redo)
+  asset: slime-city/story/exchange/scene-the-closing-of-the-book
+  size: 1344x768
+  seed: 2293018
+  prompt_prose: 'Under a black new moon, a vast underground chapel beneath Crown Market packed to the rafters with
+    weathered, broad-shouldered grown adults from every crew in Slime City: tall punk fairy rockers, scarred catgirl
+    scientists, chrome-jawed lizard workers, frog-skinned divers and demolition saints, all watching in silence.
+    At the altar, Auditor Prime Gilt, a heavyset adult butcher-banker with gold teeth and a monocle, holds a quill
+    over an open fleshy book, while the black water beneath the altar boils around enormous pale coiling tentacles.'
