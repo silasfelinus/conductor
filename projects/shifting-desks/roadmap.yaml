@@ -1018,16 +1018,17 @@ tasks:
     claimed_at: '2026-11-12T18:12:00Z'
   - id: t-053
     title: 'Install Pillow in the ci.yml pytest-suite job so PIL-dependent shifting-desks art tests run instead of skipping'
-    status: review
+    status: done
     milestone: m3
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-14T04:08:00Z'
+    updated: '2026-11-14T08:17:00Z'
     note: |-
       Kaizen from the reviewer merge of conductor#7363 (2026-11-13 PT). The new tests/test_shifting_desks_private_pilot_capture.py failed suite collection because the Python test suite job installs only pytest and pyyaml. The reviewer fix importorskips PIL there and runs the tests in shifting-desks-art-visual-review.yml instead. Add Pillow to the pytest-suite install, fix or ticket any art test that newly runs and fails, and confirm the pilot capture tests report as passed, not skipped, in the full suite.
 
       PR #7367 installs Pillow in full pytest suite so private pilot art tests execute instead of skipping. Awaiting exact-head CI; do not mark done before green checks and merge.
-    owner: worker
+
+      Verified merged Conductor PR #7367 at a24f71519c8016ea488b1da6f31e6b3f8afcdbad. Exact PR head feb312a146b6cac6c3a8bfbaaa1959c4628b47b3: Worker PR CI run 43555008422 completed success; Python test suite job 132325773204 completed success, including image-test dependencies installation and full pytest suite. Handoff template, Security Audit and task-event workflow also completed success. This closes the Pillow CI dependency task only, not t-032 art acceptance or playtest readiness.
     claimed_by: 2026-11-14T040500Z-shifting-desks-t053-6f29
     claimed_at: '2026-11-14T04:05:00Z'
