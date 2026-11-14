@@ -107,12 +107,12 @@ tasks:
       original dice and combat rules, and established agent autonomy and art guardrails.
   - id: t-015
     title: 'Main-game standard: audit and close the gaps for Zuzu Gamebook'
-    status: ready
+    status: claimed
     milestone: m5
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-14T21:34:03.832Z'
+    updated: '2026-11-14T21:44:12.747Z'
     note: |-
       Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -135,6 +135,9 @@ tasks:
       2026-11-14 PT: A scoped Kind Robots branch implements seven-character cast discoveries earned from newly visited story scenes/flags, persisted separately from the current run, migrated from local story progress, excluded from foreign save-code imports, and rendered as a locked-silhouette/portrait gallery in the Bell Ledger. Regression contract added. Pending CI and merge. Account-backed Continue and full device/art QA remain open; do not mark t-015 done or game playtest-ready.
 
       2026-11-14 PT: Kind Robots cast scrapbook PR #5158 merged, with all workflow runs green. Seven-character discovery and persistence shipped. Re-arm t-015 for still-missing signed-in account-backed Continue and safe local fallback, without replaying cast/achievement awards from imported saves. No playtest promotion yet.
+    owner: worker
+    claimed_by: 20261114T214412747Z-zuzu-gamebook-t015-cloud-c931
+    claimed_at: '2026-11-14T21:44:12.747Z'
   - id: t-016
     title: 'Zuzu Gamebook achievement upgrade: 12 or more live achievements'
     status: done
