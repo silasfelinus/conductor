@@ -219,7 +219,7 @@ tasks:
   - id: t-004
     milestone: m1
     title: "Audit live Zuzu Resource/Facet/Character/Scenario/Reward membership"
-    status: review
+    status: cancelled
     owner: worker
     passes: 0
     stakes: reversible
@@ -227,9 +227,12 @@ tasks:
       Read live owner-scoped rows and verify record IDs. Reconcile the resource-submissions.json candidates without guessing identities. Design a reversible world-membership tagging method using existing FacetProfile taxonomy/metadata, Packs and relation tables. Tag species, occupation, archetype, affiliation, location, scenarios and rewards; separate canon authority from randomizable pool membership.
 
       Opened read-only admin owner-ID reconciliation work and source-backed world membership audit plan for review. These source changes do not verify deployed database IDs or make tag writes; operational live confirmation remains pending.
+
+      2026-11-13 PT: cancelled by Silas in session during the playtest wrap-up.
     claimed_by: 2026-10-09T230800Z-zuzu-shifting-t004-a91c
     claimed_at: '2026-10-09T23:08:00Z'
-    updated: '2026-10-09T23:12:00Z'
+    updated: '2026-11-14T00:01:38Z'
+    cancelled_reason: 'Silas 2026-11-13 PT, in session: cancel (live-DB world-membership tooling the game does not use; it plays from a committed world snapshot)'
 
   - id: t-005
     milestone: m2
