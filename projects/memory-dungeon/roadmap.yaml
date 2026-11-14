@@ -1337,10 +1337,10 @@ tasks:
   - id: t-057
     milestone: m4
     title: "e09 Briar collision: Rowan leads, goblin Pip becomes a companion"
-    status: review
+    status: ready
     stakes: reversible
     passes: 0
-    updated: '2026-11-14T10:46:20Z'
+    updated: '2026-11-14T17:46:23Z'
     note: |-
       2026-11-11 PT remaining: Verify playable Rowan-led e09 route, Pip companion, earned memory fragments, ending callbacks. Evidence: RESET-TASK-EVIDENCE-AUDIT-2026-11-10.md (t-057 row).
       Silas 2026-11-05 PT: the researcher (Rowan) leads e09, not Pip. briarCollision.ts, briarCollisionRoute.ts, briarCollisionWitness.ts and the e09 stage (components/pages/memory-dungeon-briar-collision.vue) are written with Pip as the acting lead ("Pip spots...", "Pip exposes..."). Rewrite them so Rowan acts and Pip, the goblin courier, is a companion who still contributes courier knowledge. Keep coordinates, choice ids, fragment ids and save keys. Also update conductor story/BRIAR-COLLISION-PIP-QUESTS.json framing.
@@ -1366,9 +1366,8 @@ tasks:
       Focused e09 Rowan visual-lead correction in Kind Robots PR #5137: three establishing art subjects and three choice subjects now depict Rowan directing the action with Pip as courier companion; executable source contract added. CI pending, no real ArtJobs or production images. Remaining route, stage, witness, ending and rendered-art acceptance still open.
 
       2026-11-14 PT: Rewrote nine e09 playable console strings to make Rowan the acting researcher and Pip the courier companion, including entry, map accessibility, recorded outcomes and Chronicle. Kind Robots PR #5151, head c1e57139, pending exact-head CI. No IDs or save state changed; route, quest JSON, branch QA and art remain.
-    owner: worker
-    claimed_by: 2026-11-14T104510Z-memory-dungeon-t-057-3a91
-    claimed_at: '2026-11-14T10:45:10Z'
+
+      2026-11-14 09:46 PT: e09 Rowan-led stage copy PR silasfelinus/kind_robots#5151 merged as 63dfbfed after seven exact-head checks passed on 4ed3051. This is partial t-057 scope. Continue e09 route and Conductor quest JSON reconciliation, adversarial branches, art and rendered UI verification; no deployment.
   - id: t-058
     milestone: m3
     title: "e05 Scylla's Shore: replace template recipe sites with 64 authored sites"
