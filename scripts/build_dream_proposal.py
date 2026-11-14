@@ -79,6 +79,7 @@ def unbuilt_backlog() -> list[str]:
     can actually build under today's creative policy.
     """
     days: list[str] = []
+    current_v4 = _v4.is_v4_day(_target_date())
     for path in _files():
         if path.name.startswith("_") or path.name == "README.md":
             continue
@@ -87,6 +88,11 @@ def unbuilt_backlog() -> list[str]:
         if not fm.get("proposal") or re.search(r"<!--\s*built-data", text):
             continue
         if not _proposal_is_current_contract(text):
+            continue
+        # Built history stays intact. But old unbuilt v3 sidecars must not
+        # consume a slot in the five-draft authoring buffer after this policy
+        # change, or the author stops while the scheduled writer cannot run.
+        if current_v4 and (_proposal_data(text) or {}).get("bundle_version") != 4:
             continue
         days.append(str(fm.get("proposal_date") or fm.get("created") or path.name[:10]))
     return sorted(days)
