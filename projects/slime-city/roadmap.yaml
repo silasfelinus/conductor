@@ -551,14 +551,20 @@ tasks:
       of the 425 wired evolution ArtImages on kindrobots.org: all 200 with image data. Only
       remaining step is Silas's visual acceptance of an evolved fighter in Clash at
       phone/tablet/desktop (signed-in view); recommendation unchanged: accept and close.
-    updated: '2026-11-11T16:52:43Z'
+
+      Gate re-check 2026-11-14 PT (gate-triage): production /api/version now serves
+      kind_robots 3ba0c28 (main HEAD), still containing #4986; /play/slime-city returns 200.
+      Nothing deploy-blocked remains. Only Silas's subjective visual acceptance of an evolved
+      Clash fighter at phone/tablet/desktop is left; recommendation unchanged: accept and
+      close.
+    updated: '2026-11-14T11:46:37Z'
     owner: worker
     claimed_by: 2026-11-11T150000Z-slime-city-t022-evo-wire-q7m2
     claimed_at: '2026-11-11T05:50:08Z'
     implementation_pr: 'silasfelinus/kind_robots#4986'
     gate_reason: subjective-acceptance
     soft_gate: true
-    gate_rechecked: '2026-11-11'
+    gate_rechecked: '2026-11-14'
   - id: t-023
     milestone: m2
     title: "TURF: a Go-style mode where every card is one token"
