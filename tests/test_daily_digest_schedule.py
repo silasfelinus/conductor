@@ -32,7 +32,7 @@ def test_daily_digest_has_one_morning_cycle_and_hourly_is_report_only():
     assert len(digest) == 1
 
     minute, hour, *_ = digest[0].split()
-    assert int(hour) == 15
+    assert int(hour) == 17
     assert int(minute) >= 30
 
 
@@ -60,7 +60,7 @@ def test_digest_sentinel_recovers_from_non_schedule_conductor_activity():
     assert "github.event_name == 'pull_request'" not in sentinel
     assert "task-events/*.yaml" in workflow
     assert "pull_request_target:" in workflow
-    assert 'recovery_epoch="$(date -u -d "${today} 16:00:00" +%s)"' in sentinel
+    assert 'recovery_epoch="$(date -u -d "${today} 18:00:00" +%s)"' in sentinel
     assert "gh workflow run daily-digest.yml" in sentinel
 
 
