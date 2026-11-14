@@ -149,8 +149,8 @@ def test_scheduled_writer_does_not_reanimate_old_v3_scenarios(tmp_path, monkeypa
     old = example_v3()
     file_path = tmp_path / "old-v3.md"
     file_path.write_text(
-        "---\\nproposal: true\\nproposal_date: '2026-11-08'\\nstatus: outline\\n---\\n"
-        "<!-- proposal-data\\n" + json.dumps(old) + "\\n-->\\n",
+        "---\nproposal: true\nproposal_date: '2026-11-08'\nstatus: outline\n---\n"
+        "<!-- proposal-data\n" + json.dumps(old) + "\n-->\n",
         encoding="utf-8",
     )
     text = file_path.read_text()
