@@ -39,7 +39,8 @@ def test_digest_includes_private_final_only_with_probe(tmp_path):
     assert film["title"] == "A weird fake ad"
     assert film["url"].endswith("studio=music&video=18")
     html = dead_air_section(film)
-    assert "Watch the new commercial" in html
+    assert "Watch verified commercial" in html
+    assert film["fresh_today"] is True
     assert "private premiere" in html
 
 
