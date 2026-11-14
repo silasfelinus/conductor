@@ -118,7 +118,7 @@ def test_email_explicitly_distinguishes_shipped_and_progress(repo, monkeypatch):
     assert html.count("Modify</a>") == 5
     assert html.count("Reject / request rollback</a>") == 5
     assert "actual PR-backed" in html  # supported delivery description
-    assert "old Daily Dream object writer is paused" in html
+    assert "Daily Dream and its eight separate Zuzu assets are active" in html
     assert "No new Comfy ArtJob IDs" in html
 
     missing = email.daily_deliveries_section({"entries": [], "missing": True})
