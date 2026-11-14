@@ -3174,5 +3174,17 @@ tasks:
     worker/shifting-desks-t032-quarantine-western-skin-z7r4 was flagged STRANDED although its three files were
     byte-identical to main (rescue #5089). Add an empty-diff-vs-main check to the stranded classification, report such
     branches as superseded (safe for branch-janitor force_delete_branches), and cover it with a unit test.
+- id: t-211
+  title: "playtest handoff should fail closed when a roadmap's top level is not a mapping or its tasks key is not a list"
+  status: ready
+  stakes: reversible
+  owner: worker
+  passes: 0
+  updated: '2026-11-14T08:05:00Z'
+  note: >-
+    Reviewer kaizen 2026-11-14 PT from conductor#7374 (malformed task-entry guard). eligible_issues() in
+    sync_playtest_master_issues.py still calls .get("tasks") on whatever yaml.safe_load returns, so a roadmap whose top
+    level is a list raises AttributeError and aborts the whole sync, and a non-list tasks value is only rejected
+    incidentally. Report both as per-project problems (no issue closure) and cover them with unit tests.
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
