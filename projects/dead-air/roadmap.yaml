@@ -201,7 +201,7 @@ tasks:
   - id: t-009
     milestone: m4
     title: Enforce daily fresh-asset evidence and replenish the private episode slate
-    status: ready
+    status: review
     stakes: reversible
     passes: 0
     depends_on: []
@@ -211,7 +211,12 @@ tasks:
       Authored six additional private 15-second original storyboards for 2026-11-15..2026-11-20 PT, making seven dated unrendered episodes including the existing 2026-11-14 Clap Credit. Each includes five original scene prompts, distinct visual design, three formal cultural references, original voiceover and a bounded optional hero clip. Regression tests validate the full initial seven-day slate and uniqueness. This increment replenishes the content runway; the generalized asset-freshness guard remains separate scope for a subsequent increment. Production is private.
 
       Shipped a major partial increment via merged conductor PR #7406 at edf0d6a2951508d7640e4f45f9617819c584b500, with all four latest final-head workflows green including full Python tests. Six original private 15-second storyboards dated November 15-20 have validated painter prompts, five authored shots each, one optional clip maximum and three documented cultural studies. Together with the existing Clap Credit brief this supplies seven dated upcoming films. Storyboards are production input, not completed ArtImages or delivered videos. Return this nonrecurring task to ready for remaining fresh-asset guard and automatic rolling slate replenishment. Public release remains human gated.
-    updated: '2026-11-14T22:34:45Z'
+
+      Restored the canonical single-writer 14-asset daily cycle alongside Dead Air (six linked Dream and eight Zuzu/Emperor extras). Added verified ArtJob ID accounting for digest image cards, no-film-today warnings, and a seven-day private storyboard shortage guard. Existing paid-model proposal authoring remains opt-in; autonomous agent docket authoring is reactivated. PR and CI verification follow.
+    updated: '2026-11-14T23:09:15Z'
+    owner: worker
+    claimed_by: 2026-11-14T230000Z-dead-air-t009-8bf3
+    claimed_at: '2026-11-14T23:00:00Z'
   - id: t-010
     milestone: m4
     title: Keep generated lettering out of Dead Air motion clips and fix still prompt drift
