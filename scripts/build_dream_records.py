@@ -41,6 +41,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from art_prompt_conditional_check import conditional_instruction_violations  # noqa: E402
 from dream_sdxl_checkpoint_art import CHECKPOINT_LANES  # noqa: E402
 from daily_dream_v3_contract import validate_v3  # noqa: E402
+from daily_dream_v4_contract import validate_v4, is_v4_day  # noqa: E402
 from daily_dream_v3_authoring import is_v3_day  # noqa: E402
 from dream_art_prompts import (  # noqa: E402
     character_prompt,
@@ -163,8 +164,10 @@ def _canonical_proposal_errors(proposal: Optional[dict]) -> list[str]:
     """Return violations of the exact version-2 six-asset input contract."""
     if not isinstance(proposal, dict):
         return ["missing or invalid proposal-data block"]
+    if proposal.get("bundle_version") == 4:
+        return validate_v4(proposal)
     if proposal.get("bundle_version") == 3:
-        # One validated transaction, not an independent Zuzu REST writer.
+        # Historical 14-object v3 remains readable; the scheduler rejects it.
         return validate_v3(proposal)
     if proposal.get("zuzu_assets"):
         return ["unversioned Zuzu assets are forbidden; bundle_version 3 is required"]
@@ -639,10 +642,11 @@ def kr_call(method: str, endpoint: str, body: dict, dry_run: bool,
 
 def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple[dict, list, list[str]]:
     """Create rows + sheets; original six plus optional versioned Zuzu extras."""
-    if proposal.get("bundle_version") == 3:
-        errors = validate_v3(proposal)
+    if proposal.get("bundle_version") in (3, 4):
+        version = proposal["bundle_version"]
+        errors = validate_v4(proposal) if version == 4 else validate_v3(proposal)
         if errors:
-            raise ValueError("invalid v3 bundle before any writes: " + "; ".join(errors))
+            raise ValueError(f"invalid v{version} bundle before any writes: " + "; ".join(errors))
     results: list = []
     art_entries: list[str] = []
     built: dict[str, Any] = {
@@ -653,8 +657,8 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
         "sheets": {},
         "art": [],
     }
-    if proposal.get("bundle_version") == 3:
-        built["bundle_version"] = 3
+    if proposal.get("bundle_version") in (3, 4):
+        built["bundle_version"] = proposal["bundle_version"]
     title = proposal.get("title", slug)
     vibe = proposal.get("vibe", {})
     vibe_line = vibe.get("line", "")
