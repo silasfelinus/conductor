@@ -281,6 +281,59 @@ def production_budget(row: dict, now: datetime | None = None) -> tuple[int, bool
     return elapsed, elapsed >= MAX_PRODUCTION_SECONDS
 
 
+def observe_still_waits(row: dict, current: object, now: datetime | None = None) -> None:
+    """Record per-shot observed queue waits, without pretending to know GPU runtime.
+
+    The time between polls is an upper bound on completion observation, not the
+    renderer's processing duration. The first observation of an already-DONE
+    job deliberately cannot yield a wait measurement.
+    """
+    now = now or datetime.now(ZoneInfo("America/Los_Angeles"))
+    samples = row.setdefault("still_render_observations", {})
+    for scene in current.doc.get("scenes", []):
+        sid = scene.get("id")
+        job = current.scene_jobs.get(sid)
+        job_id = (scene.get("image") or {}).get("jobId")
+        if not job or not sid or not job_id:
+            continue
+        sample = samples.get(sid)
+        if not isinstance(sample, dict) or sample.get("job_id") != job_id:
+            sample = {
+                "job_id": job_id,
+                "first_seen_pt": now.isoformat(),
+                "first_seen_status": job.status,
+            }
+            samples[sid] = sample
+        if (job.status == "DONE" and job.art_image_id
+                and sample["first_seen_status"] != "DONE"
+                and "observed_wait_seconds" not in sample):
+            first = datetime.fromisoformat(sample["first_seen_pt"])
+            sample["observed_wait_seconds"] = max(0, int((now - first).total_seconds()))
+            sample["completed_seen_pt"] = now.isoformat()
+
+
+def should_skip_optional_clip(state: dict, elapsed: int, now: datetime | None = None) -> bool:
+    """Prefer the reliable kinetic edit when recent stills indicate congestion."""
+    if elapsed >= 90 * 60:
+        return True
+    now = now or datetime.now(ZoneInfo("America/Los_Angeles"))
+    for row in (state.get("episodes") or {}).values():
+        updated = row.get("updated_pt")
+        if not updated:
+            continue
+        if (now - datetime.fromisoformat(updated)).total_seconds() > 3 * 86400:
+            continue
+        for sample in (row.get("still_render_observations") or {}).values():
+            if sample.get("observed_wait_seconds", 0) >= 30 * 60:
+                return True
+            first = sample.get("first_seen_pt")
+            if (first and sample.get("first_seen_status") != "DONE"
+                    and "completed_seen_pt" not in sample
+                    and (now - datetime.fromisoformat(first)).total_seconds() >= 30 * 60):
+                return True
+    return False
+
+
 def ready_for_export(state: object, episode: dict, *, deadline_hit: bool) -> bool:
     """No clip may hold the morning film hostage past its production window."""
     if not hasattr(state, "doc") or not (state.doc.get("song") or {}).get("artImageId"):
@@ -382,6 +435,7 @@ def run_episode(e: dict, episode_path: Path, state: dict, state_file: Path, vide
             track = make_audio(e, Path(tmp))
             client.upload_song(video_id, track, 15.0, 110)
     state_now = read_state(client, video_id)
+    observe_still_waits(state["episodes"][e["slug"]], state_now)
     actions = plan_actions(state_now)
     if "render_scenes" in actions and deadline_hit:
         record(state, episode_path, e, status="budget-exhausted",
@@ -403,13 +457,15 @@ def run_episode(e: dict, episode_path: Path, state: dict, state_file: Path, vide
         print(f"  verified {len(submitted)} still ArtJob IDs: " +
               ", ".join(f"{sid}={job_id}" for sid, job_id in sorted(submitted.items())))
         state_now = read_state(client, video_id)
+        observe_still_waits(state["episodes"][e["slug"]], state_now)
     clip_ids = [s["id"] for s in e["shots"] if s["motion"] == "clip"]
     # Refresh elapsed time after submitting stills. A slow API response must
     # never reopen the clock or sneak in one extra GPU clip.
     elapsed, deadline_hit = production_budget(state["episodes"][e["slug"]])
     # One optional hero clip, with a strict cutoff on *new* GPU submissions.
     # Keep all requested IDs for evidence even if the deadline has passed.
-    requestable_clip_ids = [] if deadline_hit else clip_ids
+    skip_clip = should_skip_optional_clip(state, elapsed) or deadline_hit
+    requestable_clip_ids = [] if skip_clip else clip_ids
     for start in range(0, len(requestable_clip_ids), 8):
         request = clips_to_request(state_now, requestable_clip_ids[start:start + 8])
         if request:
@@ -421,6 +477,7 @@ def run_episode(e: dict, episode_path: Path, state: dict, state_file: Path, vide
                 elif outcome.get("jobId"):
                     print(f"Optional clip {outcome.get('sceneId')} ArtJob {outcome['jobId']}")
     state_now = read_state(client, video_id)
+    observe_still_waits(state["episodes"][e["slug"]], state_now)
     failures = [sid for sid, job in state_now.clip_jobs.items() if job.status in ("FAILED", "CANCELLED")]
     # Failed optional GPU animation is not a reason to sacrifice the morning
     # screening: keep the still and run the compositor's kinetic treatment.
@@ -440,11 +497,12 @@ def run_episode(e: dict, episode_path: Path, state: dict, state_file: Path, vide
         "clips": {s["id"]: (s.get("motion") or {}).get("jobId") for s in state_now.doc.get("scenes", [])},
     }
     record(state, episode_path, e, music_video_id=video_id, art_jobs=jobs,
-           status="rendering", motion_clips_ready=len(ready_clips))
+           status="rendering", motion_clips_ready=len(ready_clips),
+           optional_clip_skipped_for_congestion=skip_clip and not deadline_hit)
     save_state(state_file, state)
     # A finished clip is a bonus, not a required second GPU pass. The
     # two-hour deadline allows the edit to finish from rendered stills.
-    can_export = ready_for_export(state_now, e, deadline_hit=deadline_hit)
+    can_export = ready_for_export(state_now, e, deadline_hit=deadline_hit or skip_clip)
     if not can_export:
         print(f"Rendering private MusicVideo {video_id}: {len(ready_clips)}/{len(clip_ids)} motion clips; {elapsed}s elapsed")
         return EXIT_IN_PROGRESS

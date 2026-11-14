@@ -29,7 +29,7 @@ name: daily-digest
 
 on:
   schedule:
-    - cron: "30 15 * * *"  # ≈8:30am Pacific in DST.
+    - cron: "30 17 * * *"  # 9:30am PST / 10:30am PDT, after film catch-up.
   push:
     branches:
       - main
@@ -306,10 +306,10 @@ jobs:
       - name: Verify tomorrow's Daily Dream cycle
         if: ${{ always() }}
         run: |
-          if [ "${{ steps.daily_dream_author.outcome }}" != "success" ]; then
+          if [ "${{ steps.daily_dream_author.outcome }}" = "failure" ]; then
             echo "::warning::Daily Dream authoring failed; digest delivery will continue."
           fi
-          if [ "${{ steps.daily_dream_build.outcome }}" != "success" ]; then
+          if [ "${{ steps.daily_dream_build.outcome }}" = "failure" ]; then
             echo "::warning::Tomorrow's Daily Dream object build failed; digest delivery will continue."
           elif [ "${{ steps.daily_dream_facets.outcome }}" != "success" ]; then
             echo "::warning::Tomorrow's Daily Dream Facet attachment failed; digest delivery will continue."

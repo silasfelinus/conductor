@@ -32,7 +32,7 @@ def test_daily_digest_has_one_morning_cycle_and_hourly_is_report_only():
     assert len(digest) == 1
 
     minute, hour, *_ = digest[0].split()
-    assert int(hour) == 15
+    assert int(hour) == 17
     assert int(minute) >= 30
 
 
@@ -60,7 +60,7 @@ def test_digest_sentinel_recovers_from_non_schedule_conductor_activity():
     assert "github.event_name == 'pull_request'" not in sentinel
     assert "task-events/*.yaml" in workflow
     assert "pull_request_target:" in workflow
-    assert 'recovery_epoch="$(date -u -d "${today} 16:00:00" +%s)"' in sentinel
+    assert 'recovery_epoch="$(date -u -d "${today} 18:00:00" +%s)"' in sentinel
     assert "gh workflow run daily-digest.yml" in sentinel
 
 
@@ -103,3 +103,14 @@ def test_digest_freezes_email_before_preparing_tomorrows_art():
     assert "TZ=America/Los_Angeles date +%F" in workflow
     assert 'DAILY_DREAM_SCHEDULED: "1"' in workflow
     assert "continue-on-error: true" in workflow
+
+
+def test_dead_air_catch_up_precedes_morning_digest():
+    dead_air = ROOT / ".github" / "workflows" / "dead-air-daily.yml"
+    scripts = ROOT / "scripts" / "ensure_daily_digest.sh"
+    last_film_attempt = max(daily_minutes(c) for c in cron_schedules(dead_air))
+    digest = daily_minutes(cron_schedules(DIGEST)[0])
+    assert last_film_attempt < digest
+    assert last_film_attempt == 17 * 60
+    assert digest == 17 * 60 + 30
+    assert 'MIN_UTC_HOUR="${MIN_UTC_HOUR:-18}"' in scripts.read_text()

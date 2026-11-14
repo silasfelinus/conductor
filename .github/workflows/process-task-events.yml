@@ -172,14 +172,14 @@ jobs:
 
           today="$(date -u +%F)"
           now_epoch="$(date -u +%s)"
-          recovery_epoch="$(date -u -d "${today} 16:00:00" +%s)"
+          recovery_epoch="$(date -u -d "${today} 18:00:00" +%s)"
 
           if [ "$now_epoch" -lt "$recovery_epoch" ]; then
             echo "Before the daily digest recovery window; nothing to do."
             exit 0
           fi
 
-          since="${today}T15:00:00Z"
+          since="${today}T17:00:00Z"
           runs_json="$(gh api \
             -H 'Accept: application/vnd.github+json' \
             "repos/${GITHUB_REPOSITORY}/actions/workflows/daily-digest.yml/runs?per_page=100")"

@@ -118,5 +118,20 @@ def test_email_explicitly_distinguishes_shipped_and_progress(repo, monkeypatch):
     assert html.count("Modify</a>") == 5
     assert html.count("Reject / request rollback</a>") == 5
     assert "actual PR-backed" in html  # supported delivery description
+    assert "old Daily Dream object writer is paused" in html
+    assert "No new Comfy ArtJob IDs" in html
+
     missing = email.daily_deliveries_section({"entries": [], "missing": True})
     assert "No five-entry verified" in missing
+
+
+def test_digest_discloses_five_rows_from_one_pr(repo):
+    data = docket(repo)
+    for row in data["entries"]:
+        row["pull_request"] = data["entries"][0]["pull_request"]
+    (repo / "projects/dream-cycle/daily-deliveries/2026-10-13.yaml").write_text(
+        yaml.safe_dump(data)
+    )
+    html = email.daily_deliveries_section(dd.payload("2026-10-13"))
+    assert "5 entries came from 1 implementation PR(s)" in html
+    assert "Grouped design changes are not independent productions" in html
