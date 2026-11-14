@@ -138,11 +138,32 @@ Implementation work still follows the normal flow:
 2. Implement a focused change in the correct repository.
 3. Queue and verify `review` before opening the implementation PR.
 4. Inspect the complete diff, reviews, threads, mergeability, commit checks, and Actions logs.
-5. Fix failures on the same branch.
+5. Fix failures on the same branch (see "Formatting without a local runner" below).
 6. Merge only reversible, scoped, verified work allowed by `AGENTS.md`, using the expected head SHA.
 7. Queue and verify `done` or `rearm` after merge.
 8. Confirm the Conductor projection sync succeeded when the change affects Kind Robots.
 9. Confirm no stale claim, event, PR, or branch remains.
+
+### Formatting without a local runner
+
+Prettier fix-up rounds are the most common reason a first PR goes red: in
+kind_robots, 43% of merged PRs from 2026-09-15 to 11-14 carried Prettier
+fix-up commits, and ten needed ten or more. To get it right first time:
+
+- Write Prettier-shaped code: wrap at 80 columns the way Prettier does (about
+  40% of past fixes), trailing commas in every multi-line array/object/argument
+  list (about 30%), single quotes unless the string contains `'` (then double
+  quotes, never `\'`), no semicolons. Those cover roughly three quarters of all
+  past fix-up hunks.
+- Push every file of a change in **one** `push_files` commit, not one commit per
+  file. Each commit queues the whole PR check suite again.
+- In kind_robots, a red `Changed-file Prettier` check on a same-repository PR is
+  repaired by its `Push Prettier autofix` job, which commits the exact patch and
+  re-dispatches the checks. **Do not hand-apply the printed patch.** Wait for
+  the `style: autoformat changed files (Prettier)` commit, then re-read any file
+  before editing it again (its blob SHA changed). Apply the printed patch
+  yourself only for `.github/workflows/` files, and then apply the whole patch in
+  one commit.
 
 ## Invalid stopping reasons
 
