@@ -225,12 +225,12 @@ tasks:
     implementation_pr: 'silasfelinus/kind_robots#5159'
   - id: t-063
     title: 'Main-game standard: audit and close the gaps for Slime City'
-    status: claimed
+    status: ready
     milestone: m4
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-14T16:46:48Z'
+    updated: '2026-11-14T17:02:11Z'
     note: |-
       Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -301,10 +301,18 @@ tasks:
       2026-11-14 PT: kind_robots#5169 merged (squash 757b2a7) after all checks green. Re-armed
       ready for the next slice: in-play settings entry (Clash HUD gear) and remaining settings
       controls.
+
+      2026-11-14 PT in-play settings slice: Clash HUD gear (components/slime-city-quick-
+      settings.vue, beside LOG) opens a panel over the board with sound/music/effects/reduced
+      motion/large text/high contrast, calling the same store setters as the title settings
+      screen; never leaves or pauses the fight. Source contract in
+      verifySlimeCityClash.test.ts. MERGED kind_robots#5171 squash 7260622 after 13/13 checks
+      green. Still open per STANDARD-AUDIT-2026-11-12.md: reading/animation speed setting,
+      mid-Clash Tower/VS resume on reload, account import of guest saves (design decision).
     owner: worker
     claimed_by: session_01L5NKxceuyV3MkwtEp7WGfi
     claimed_at: '2026-11-14T16:46:48Z'
-    implementation_pr: 'silasfelinus/kind_robots#5169'
+    implementation_pr: 'silasfelinus/kind_robots#5171'
   - id: t-064
     title: 'CPU values PIERCE gear only against armor, then rebalance Undertow and Bloodfairies starters'
     status: done
