@@ -1,0 +1,52 @@
+# Zuzu Book One: final newly-authored Act V scene currently borrowing pilgrim-wagon.
+# Evidence: kind_robots/utils/zuzuGamebook/acts/act5.ts::a5-wellhouse-reckoning
+# (The Price of Water) and 2026-11-14 exact SECTION_PLATES audit.
+# Both candidate images are PRIVATE. DONE ArtJobs are NOT reviewed or exported WebPs.
+# After reviewing real pixels and cast fidelity, accept one into
+# public/zuzu-gamebook/scenes/sections/a5-wellhouse-reckoning.webp and register provenance.
+# Other 13 missing exact entries already have art candidates or a purpose-painted
+# shared plate. Do NOT resubmit those here.
+round: gamebook-22-wellhouse-reckoning
+series: zuzu-koala-assassin
+project_slug: zuzu-gamebook
+designer: Comic Studio
+is_public: false
+is_mature: false
+priority: 1000
+auto_submit: true
+lanes:
+- key: arthemy-house
+  label: Arthemy Western Art v3.0 private final book scene
+  engine: comfy
+  checkpoint: Illustrious/arthemyWesternArt_v30.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, very aesthetic, painterly weird west graphic novel, western comics (style), earthy contrasting colors, expressive illustrated storytelling
+  suffix: naturalistic anthropomorphic frontier world, readable three-part composition, hand-painted comic scene, bare unlettered surfaces
+  steps: 30
+  cfg: 5
+  sampler: euler_ancestral
+subjects:
+- key: gb22-a5-wellhouse-reckoning-1
+  entity: empty
+  lane: arthemy-house
+  title: The Price of Water - choice at the well-house
+  section: a5-wellhouse-reckoning
+  shape: wide
+  size: 1344x768
+  seed: 38221
+  negative: lowres, blurry, logos, watermark, lettering, text, humans, human faces, extra fingers, extra arms, fused bodies, duplicate figures, manga, disney, pixar, plastic, modern traffic, neon, gore
+  prompt_prose: "At a tiny sun-scoured frontier well-house beside chalk-white wagon ruts, a small animal mother in patched travel clothes holds an empty clay jug next to her thirsty little child. Several steps away Zuzu, the stocky grey-furred koala in a broad straw kasa and rust-brown poncho with orange zigzag edging, stands beside a wooden barrel of drinking water and a single silver coin glittering in his paw. His sole sheathed katana rides across his back. The three bodies are separated by a charged open space between jug and barrel. The cart has already gone; midday sun and deep road ruts embody an irreversible moral decision."
+  prompt_tags: weary anthropomorphic desert mother with empty earthenware jug, thirsty child beside her, Zuzu koala with wide straw kasa and rust poncho, single katana across back, water barrel, lone silver coin held in paw, well-house chalk wheel ruts, tense moral choice, three distinct separated figures, distant wide illustration
+  loras: []
+- key: gb22-a5-wellhouse-reckoning-2
+  entity: empty
+  lane: arthemy-house
+  title: The Price of Water - jug and silver detail
+  section: a5-wellhouse-reckoning
+  shape: wide
+  size: 1344x768
+  seed: 38222
+  negative: lowres, blurry, logos, watermark, lettering, text, humans, human faces, extra fingers, extra arms, fused bodies, duplicate figures, manga, disney, pixar, plastic, modern traffic, neon, gore
+  prompt_prose: "Low foreground view of a nearly empty wooden water barrel and one small silver coin resting on Zuzu's grey koala paw, partly emerging from a rust-brown poncho sleeve with orange zigzag edging. Across a short gap, the reaching paw of a weary animal mother holds out a large dry clay jug; her small thirsty child waits visibly several paces behind her beside the chalky old well-house. The dropped cart tracks cut through the baked earth behind them. A straw kasa and one katana hilt silhouette Zuzu at the far side. Natural light, solemn stakes and legible spatial separation between the hands, jug, child, water and coin."
+  prompt_tags: glinting silver coin, grey koala hand from rust poncho sleeve, wooden water barrel and clay jug closeup, exhausted animal mother extending jug, thirsty child standing separately in background, chalky well-house, deep wagon ruts, single katana and wide kasa silhouette, intimate western moral dilemma, distinct anatomy
+  loras: []
