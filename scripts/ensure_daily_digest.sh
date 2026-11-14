@@ -3,14 +3,14 @@
 #
 # This is deliberately shared by two callers with very different reliability:
 #
-#   * daily-digest-retry.yml  -- dedicated crons at 16:30 and 18:30 UTC
+#   * daily-digest-retry.yml  -- dedicated crons at 18:30 and 20:30 UTC
 #   * hourly-conductor.yml    -- an hourly cron that also carries this check
 #
 # The dedicated watchdog is the right tool but it has a fatal shared-mode
 # failure: it is itself a `schedule:` workflow, so when GitHub stops delivering
 # scheduled events to this repo it stops running for exactly the same reason the
-# digest did. That is not hypothetical. On 2026-08-31 the digest (15:30 UTC) and
-# both watchdog passes (16:30, 18:30) were all undelivered, and the digest had to
+# digest did. That is not hypothetical. On 2026-08-31 the digest (17:30 UTC) and
+# both watchdog passes (18:30, 20:30) were all undelivered, and the digest had to
 # be dispatched by hand. Over 08-26..08-31 the hourly conductor cron itself fired
 # only 3-5 times a day instead of 24 -- so no single schedule can be trusted, but
 # a cron that fires several times a day is a far better carrier than one with two
@@ -25,15 +25,15 @@
 #   GITHUB_REPOSITORY  required, owner/name
 #   WORKFLOW_FILE   defaults to daily-digest.yml
 #   MAX_ATTEMPTS    defaults to 3
-#   MIN_UTC_HOUR    defaults to 16; below this the digest is not yet overdue and
-#                   the script exits quietly. The digest cron is 15:30 UTC, so
+#   MIN_UTC_HOUR    defaults to 18; below this the digest is not yet overdue and
+#                   the script exits quietly. The digest cron is 17:30 UTC, so
 #                   an hourly carrier must not dispatch at 02:00 for a run that
 #                   is not due for another thirteen hours.
 set -euo pipefail
 
 WORKFLOW_FILE="${WORKFLOW_FILE:-daily-digest.yml}"
 MAX_ATTEMPTS="${MAX_ATTEMPTS:-3}"
-MIN_UTC_HOUR="${MIN_UTC_HOUR:-16}"
+MIN_UTC_HOUR="${MIN_UTC_HOUR:-18}"
 
 hour="$(date -u +%-H)"
 if (( hour < MIN_UTC_HOUR )); then
