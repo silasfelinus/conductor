@@ -882,7 +882,7 @@ tasks:
   - id: t-045
     milestone: m5
     title: "Generate and verify exhaustive endings/branches graph with reachable seed-action witnesses"
-    status: waiting
+    status: done
     owner: null
     passes: 0
     stakes: reversible
@@ -898,6 +898,14 @@ tasks:
       repair unreachable/dead paths; verify mutually exclusive conditions,
       correct credit, uniqueness, journal callbacks and spoiler control.
       Do not infer path completeness from an ending count alone.
+
+      2026-11-13 PT: kind_robots #5125 adds verifyShiftingEndingsGraph: all 19 shared and 39
+      own endings witnessed (traveler, seed, lean, trial plan) across 24192 journeys, every
+      witness replays exactly; evidence projects/zuzu-shifting-lands/ENDINGS-
+      GRAPH-2026-11-13.json (#7349). It found and fixed four constellation endings unreachable
+      since V8.
+    updated: '2026-11-14T00:02:17Z'
+    implementation_pr: 'silasfelinus/kind_robots#5125'
 
   - id: t-046
     milestone: m5
