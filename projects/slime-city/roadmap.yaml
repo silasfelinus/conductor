@@ -170,15 +170,15 @@ tasks:
     implementation_pr: 'silasfelinus/kind_robots#5091'
   - id: t-063
     title: 'Main-game standard: audit and close the gaps for Slime City'
-    status: review
+    status: ready
     owner: worker
-    claimed_by: 2026-11-12T121638Z-slime-city-t063-f8b2
-    claimed_at: '2026-11-12T12:16:38Z'
+    claimed_by: ''
+    claimed_at: ''
     milestone: m4
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-12T12:23:00Z'
+    updated: '2026-11-14T00:53:21Z'
     note: |-
       Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -199,6 +199,10 @@ tasks:
       Next claimer: start at the Continue control.
 
       2026-11-12 PT, recovered stale review event: Added saved-Journey Continue control to the existing art-first title screen. It appears only after story hydration and a won chapter, preserves the saved crew when roster preview changes, and opens the existing campaign flow. Review PR CI and UI verification; main-game standard umbrella remains unfinished.
+
+      2026-11-13 PT intent audit (INTENT-AUDIT-2026-11-14.md): status was review for ~36h with
+      no open PR in kind_robots or conductor and remaining scope listed above; returned to
+      ready so pickers can take the next slice. No work discarded.
   - id: t-064
     title: 'CPU values PIERCE gear only against armor, then rebalance Undertow and Bloodfairies starters'
     status: claimed
