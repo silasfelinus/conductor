@@ -224,7 +224,7 @@ tasks:
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-14T03:25:00Z'
+    updated: '2026-11-14T11:59:43Z'
     note: |-
       Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -253,6 +253,16 @@ tasks:
       Added persistent, device-local default Clash deck format with invalid/blocked storage handling and Pinia regression coverage. Implementation branch worker/slime-city-t-063-default-format-7f4c9a; awaiting PR checks. Remaining main-game settings and acceptance work stays open.
 
       Slime City default Clash deck preference merged in kind_robots PR #5132 (squash ea92b51b50e685006642afa00fee26a48c985125) after six completed successful workflow runs on e19e7c1. Remaining t-063 settings and main-game standard gaps are not complete; return umbrella to ready for the next settings increment.
+
+      2026-11-14 PT settings slice: persisted REDUCED MOTION toggle in Slime City settings
+      (store-owned, device-local kr-slime-city-reduced-motion-v1; calms shell
+      animations/transitions and uses the quicker Clash pace) in kind_robots#5156, store test
+      extended; test:slime-city-lab fail 0. Still open per STANDARD-AUDIT-2026-11-12.md: text
+      size, high contrast, reset progress with typed confirmation, an in-play settings entry,
+      and the title-console Scrapbook/Achievements tiles.
+
+      MERGED 2026-11-14 PT: kind_robots#5156 squash 06d6ce5 after 11/11 checks green. Umbrella
+      stays ready for the next settings slice.
   - id: t-064
     title: 'CPU values PIERCE gear only against armor, then rebalance Undertow and Bloodfairies starters'
     status: review
