@@ -675,11 +675,8 @@ tasks:
   - id: t-025
     milestone: m3
     title: "Author and build the other three Act I overworlds and dungeons"
-    status: review
-    owner: worker
-    claimed_by: 2026-11-14T013800Z-memory-dungeon-t-025-c7e4
-    claimed_at: '2026-11-14T01:38:00Z'
-    updated: '2026-11-14T01:39:00Z'
+    status: ready
+    updated: '2026-11-14T03:49:00Z'
     depends_on: t-022
     passes: 0
     stakes: reversible
@@ -705,6 +702,8 @@ tasks:
       Added deterministic regression assertions for twelve playable stages, four original/reflection pairs, 30+2 art deck budgets and legacy e13-e16 exclusion. This is a narrow campaign progression contract slice, not completion of the remaining maps or dungeons. Kind Robots PR pending; CI verification required.
 
       Scoped e03 Morrow narrative continuity: honest and bluffing responses to Mara at 2,1 both now echo at the 8,8 finale; regression asserts both. Kind Robots PR pending exact-head CI. Remaining e03-e12 content, art and device acceptance still open.
+
+      Scoped e03 Morrow finale consequence slice merged in kind_robots PR #5133 at 5013d9eb339c4e0120505ad5af19312b9d463a45. Eight required PR checks passed on exact head 9289cdaa39bdefd11d28d30e7a0da2a659e6d8a0. Mara honesty/bluff and fountain approach choices persist through save/restore and affect exclusive finale echoes. t-025 remains incomplete: additional overworld/dungeon content, art and acceptance outstanding. Released for future scoped work.
   - id: t-026
     milestone: m3
     title: "Author and build Act II: Stories We Inherit"
