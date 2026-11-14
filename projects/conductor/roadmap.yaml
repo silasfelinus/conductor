@@ -3162,5 +3162,17 @@ tasks:
   claimed_by: 2026-11-11T2305Z-conductor-t209-bodymatch-p3n8
   claimed_at: '2026-11-11T23:01:28Z'
   implementation_pr: 'silasfelinus/conductor#7262'
+- id: t-210
+  title: "branch_janitor.py should auto-classify a stranded branch as superseded when its diff against main is empty, so branch-medic doesn't decide it by hand"
+  status: ready
+  stakes: reversible
+  owner: worker
+  passes: 0
+  updated: '2026-11-13T23:50:00Z'
+  note: >-
+    Reviewer kaizen 2026-11-13 PT from conductor#7346 (branch-medic): kind_robots
+    worker/shifting-desks-t032-quarantine-western-skin-z7r4 was flagged STRANDED although its three files were
+    byte-identical to main (rescue #5089). Add an empty-diff-vs-main check to the stranded classification, report such
+    branches as superseded (safe for branch-janitor force_delete_branches), and cover it with a unit test.
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
