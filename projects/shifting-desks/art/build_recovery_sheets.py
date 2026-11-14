@@ -22,6 +22,7 @@ ART = Path(__file__).resolve().parent
 ROOT = ART.parents[2]
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "scripts"))
+sys.path.insert(0, str(ART))  # sibling build_review_sheets when imported, not run
 
 from build_review_sheets import image_from_media  # noqa: E402
 from enqueue_art_requests import fetch_source_image  # noqa: E402
@@ -63,18 +64,23 @@ def current_media_evidence(row, evidence):
     return now >= old
 
 
-def pilot_rows():
-    data = yaml.safe_load((ART / "SUBJECT-FIDELITY-PILOT-V1.yaml").read_text(encoding="utf-8"))
+def pilot_rows(version=1):
+    """Return private pilot evidence without mistaking a queued ArtJob for delivered art."""
+    if version not in (1, 2):
+        raise ValueError("unsupported pilot version")
+    data = yaml.safe_load((ART / f"SUBJECT-FIDELITY-PILOT-V{version}.yaml").read_text(encoding="utf-8"))
     for subject in data["subjects"]:
         for lane in data["lanes"]:
             key = lane["key"]
             job = (subject.get("jobs") or {}).get(key)
             art = (subject.get("art") or {}).get(key) or {}
             yield {
-                "_round": "PILOT",
+                "_round": f"PILOT-V{version}",
                 "key": subject["key"] + "--" + key,
                 "prompt": subject.get("prompt_tags") if lane.get("prompt") == "tags" else subject.get("prompt_prose"),
                 "negative": subject.get("negative"),
+                "pass": subject.get("pass"),
+                "fail": subject.get("fail"),
                 "job": job,
                 "image": art.get("art_image_id"),
                 "status": art.get("status", "not-recorded"),
@@ -148,14 +154,17 @@ def main():
             "image": row.get("art_image_id"), "path": row.get("_target"),
             "evidence": evidence, "fresh": fresh, "_image": img if fresh else None,
         })
-    private = []
-    for row in pilot_rows():
-        image, evidence = capture_pilot(row)
-        private.append({**row, "evidence": evidence, "_image": image})
+    pilots = {}
+    for version in (1, 2):
+        private = []
+        for row in pilot_rows(version):
+            image, evidence = capture_pilot(row)
+            private.append({**row, "evidence": evidence, "_image": image})
+        count = sheets(private, args.out / f"pilot-v{version}", f"PILOT V{version}")
+        pilots[f"pilot_v{version}_captured"] = count
+        pilots[f"pilot_v{version}_expected"] = len(private)
     c = sheets(classic, args.out / "classic", "CLASSIC")
-    p = sheets(private, args.out / "pilot", "PILOT")
-    summary = {"classic_captured_newer": c, "classic_expected": len(classic),
-               "pilot_captured": p, "pilot_expected": len(private)}
+    summary = {"classic_captured_newer": c, "classic_expected": len(classic), **pilots}
     (args.out / "summary.json").write_text(json.dumps(summary, indent=2), encoding="utf-8")
     print(json.dumps(summary), flush=True)
     return 0 if c == len(classic) and c == 20 else 1

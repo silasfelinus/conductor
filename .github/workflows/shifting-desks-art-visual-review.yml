@@ -5,6 +5,7 @@ on:
       - ".github/workflows/shifting-desks-art-visual-review.yml"
       - "projects/shifting-desks/art/build_review_sheets.py"
       - "projects/shifting-desks/art/build_recovery_sheets.py"
+      - "tests/test_shifting_desks_private_pilot_capture.py"
       - "projects/shifting-desks/art/ROUND-18.yaml"
       - "projects/shifting-desks/art/ROUND-19.yaml"
       - "projects/shifting-desks/art/SUBJECT-FIDELITY-PILOT-V2.yaml"
@@ -25,7 +26,9 @@ jobs:
         with:
           python-version: "3.12"
       - name: Install image review tooling
-        run: pip install "Pillow>=10,<13" "PyYAML>=6,<7"
+        run: pip install "Pillow>=10,<13" "PyYAML>=6,<7" pytest
+      - name: Private pilot capture regression tests
+        run: python -m pytest -q tests/test_shifting_desks_private_pilot_capture.py
       - name: Validate the isolated Western fidelity pilot (dry-run only)
         run: |
           python scripts/enqueue_art_requests.py \
@@ -63,7 +66,7 @@ jobs:
           path: ${{ runner.temp }}/shifting-desks-classic-queue.json
           if-no-files-found: error
           retention-days: 7
-      - name: Capture 20 fresh Classic replacements and six private pilot images
+      - name: Capture Classic replacements and both private pilot generations
         env:
           KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
           KR_BASE_URL: https://kindrobots.org
@@ -71,7 +74,7 @@ jobs:
           python projects/shifting-desks/art/build_recovery_sheets.py \
             --out "$RUNNER_TEMP/shifting-desks-current-recovery"
 
-      - name: Upload fresh recovery and private pilot review evidence
+      - name: Upload Classic recovery and V1/V2 private pilot review evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
