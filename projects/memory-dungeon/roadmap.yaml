@@ -1,3 +1,9 @@
+# 2026-11-13 PT alpha priority override (Silas): ZERO public players. Do not spend
+# development time on pre-v2/16-world save migration or compatibility tests.
+# Admin/test saves may start fresh. Keep current-version save/resume reliable.
+# Build order: authored playable e03-e12 maps/dungeons and consequences, prologue,
+# production art delivery/integration, endings, then adversarial/device acceptance.
+# Historical e13-e16 identifiers may remain inert; do not expand legacy support.
 # 2026-11-10 PT: Silas reconfirmed the TWELVE-overworld production cap and authorized
 # release of stale unfinished task claims. CONTROL.md (2026-10-30) is authoritative.
 # e01-e08 are four original/twisted pairs; e09-e12 are four collision finales.
@@ -624,12 +630,13 @@ tasks:
 
   - id: t-020
     milestone: m3
-    title: "Reconcile twelve-world canon, prologue and legacy e13-e16 compatibility"
+    title: "Finish playable prologue and current twelve-world start flow"
     status: claimed
     updated: '2026-11-13T21:45:08Z'
     passes: 0
     stakes: reversible
     note: |-
+      2026-11-13 PT ALPHA RESET: Silas confirms zero players. Stop legacy e13-e16 save migration, archival preservation and backwards-compatibility test work; resetting admin/test saves is acceptable. Focus on playable cinematic prologue, character choice, first meaningful action, current-version save/resume and Classic isolation. Do not erase production data without separate approval.
       2026-11-11 PT remaining: Verify intro/prologue and legacy e13–e16 archival saves, never treat old 16-world routing as current. Evidence: RESET-TASK-EVIDENCE-AUDIT-2026-11-10.md (t-020 row).
       Source: SIXTEEN-REALM-PRODUCTION.md. Replace former provisional Forgotten Depths opening with a modern Earth data-researcher life exchange with Morrow. Preserve Classic, BRIAR_START, gallery choices, existing 13 scenes and save keys or migrate them deliberately. Intro is skippable, cinematic and androgynous; first choice inside 90 seconds. Add verified character canon for mermaid twins Scylla/Char and Oren the permanently hooded headsman/logistics expert. Implement a playable opening on /play/memory, test save/Classic preservation, and create ArtJob requests or honest art placeholders.
       First playable modern-world Morrow prologue and Scylla/Char/Oren early scenes on kind_robots worker branch. Compatibility and restoration tests included. Full t-020 character/art work is staged to continue after this scoped slice.
