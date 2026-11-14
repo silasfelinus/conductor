@@ -100,18 +100,18 @@ tasks:
   - id: t-003
     milestone: m3
     title: Build first-class Dead Air private screening and human review workspace
-    status: claimed
+    status: review
     stakes: reversible
     passes: 0
     depends_on: t-001
-    note: >-
-      The existing morning digest can link verified private MusicVideo finals. Kind Robots still needs a compact cinema-first Dead Air
-      archive/gallery, ratings (Keep/Revise/Reject), reproducible shot credits,
-      failed render states and clear private/published distinctions.
+    note: |-
+      The existing morning digest can link verified private MusicVideo finals. Kind Robots still needs a compact cinema-first Dead Air archive/gallery, ratings (Keep/Revise/Reject), reproducible shot credits, failed render states and clear private/published distinctions.
+
+      Implemented first-class admin-only Dead Air cinema in Kind Robots with own-only series filter, existing authenticated private MP4 playback, reachable bounded film list, exact shot/ArtJob provenance, and persisted private Keep/Revise/Reject editorial decisions in validated MusicVideo docs. It does not toggle publication or delete films. Regression tests cover access, normalization and route contracts. Implementation PR and final-head CI validation follow.
     owner: worker
     claimed_by: 2026-11-14T232000Z-dead-air-t003-9d73
     claimed_at: '2026-11-14T23:20:00Z'
-    updated: '2026-11-14T23:20:00Z'
+    updated: '2026-11-14T23:51:00Z'
   - id: t-004
     milestone: m4
     title: Daily Dead Air film production and quality iteration
