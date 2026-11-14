@@ -1528,12 +1528,12 @@ tasks:
     owner: worker
   - id: t-066
     title: 'Guard that every journey epilogue in endings.ts has a queued art plate'
-    status: review
+    status: done
     milestone: m3
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-14T21:47:50Z'
+    updated: '2026-11-14T22:06:41Z'
     note: |-
       Kaizen from t-062 (conductor#7290, JOURNEY-EPILOGUES-ROUND-1.yaml, 18 plates). The ledger
       was hand-matched to the 6 crews x left/right/mixed epilogues in kind_robots
@@ -1552,6 +1552,10 @@ tasks:
       wired journey-plate count must equal authored count (18). Checked the wired manifest
       rather than the Conductor ledger because it is stricter and runs in kind_robots CI.
       Mutation check (dropping exchange/journey-mixed) fails naming the slug.
+
+      DONE 2026-11-14 PT: kind_robots#5180 squash-merged at c4cb102 with 12/12 checks green (1
+      skipped autofix). Kaizen: same authored-vs-wired guard for per-crew ending-
+      triumph/compromise plates.
     owner: worker
     claimed_by: 2026-11-14T22:10:00Z-session_01L5NKxYz5YWf3tBYQeZX8ad
     claimed_at: '2026-11-14T21:47:15Z'
