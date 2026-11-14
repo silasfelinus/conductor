@@ -103,12 +103,10 @@ tasks:
 
       Today the finale shows THE END text, one of two ending plates per crew (chosen by Conviction count), an optional alliance ending and the crew legacy favor. Nothing records endings already earned. Add a gallery: per crew, triumph/compromise and the journey final-choice endings plus alliance endings, X/N found, locked silhouettes, and a scrapbook page per finished run (chapters, choices, rivals beaten, favor taken, ending plates). Account-saved like campaign progress.
 
-      2026-11-13 PT intent audit (INTENT-AUDIT-2026-11-14.md): claim expired ~1-2 days ago
+      2026-11-13 PT intent audit (INTENT-AUDIT-2026-11-13.md): claim expired ~1-2 days ago
       with no open PR; released to ready so the top-priority lane is pickable. Next step is
       the one in the note above.
     owner: worker
-    claimed_by: ''
-    claimed_at: ''
   - id: t-060
     title: 'Slime City achievements (none exist yet)'
     status: done
@@ -176,8 +174,6 @@ tasks:
     title: 'Main-game standard: audit and close the gaps for Slime City'
     status: ready
     owner: worker
-    claimed_by: ''
-    claimed_at: ''
     milestone: m4
     stakes: reversible
     passes: 0
@@ -204,7 +200,7 @@ tasks:
 
       2026-11-12 PT, recovered stale review event: Added saved-Journey Continue control to the existing art-first title screen. It appears only after story hydration and a won chapter, preserves the saved crew when roster preview changes, and opens the existing campaign flow. Review PR CI and UI verification; main-game standard umbrella remains unfinished.
 
-      2026-11-13 PT intent audit (INTENT-AUDIT-2026-11-14.md): status was review for ~36h with
+      2026-11-13 PT intent audit (INTENT-AUDIT-2026-11-13.md): status was review for ~36h with
       no open PR in kind_robots or conductor and remaining scope listed above; returned to
       ready so pickers can take the next slice. No work discarded.
   - id: t-064
@@ -218,12 +214,10 @@ tasks:
     note: |-
       Found by t-058 (kind_robots#5030). chooseClashCpu's own-target grant scoring (utils/slimeCity/clash.ts, `missing.length * 2.8`) prices a PIERCE grant at full value even when the fighter across has no armor, so the CPU spends plays on PIERCE gear instead of deploying fighters. A swap ablation of the Catgirls fighters deck vs the other crews' constructed decks (24 seeds, both seats) read 0.432 with s1-surgical-piercers and 0.597 without; ninthlife (REGEN gear) 0.524 without. Prototype: value a PIERCE keyword at 0.6 unless `across.armor > 0`. That took the Catgirls fighters deck to 0.495, but the 40-seed starter sweep moved Undertow 54.5% -> 59.3% and Bloodfairies 44.3% -> 41.8% (guard 42-58%). Land the CPU fix together with a starter rebalance that keeps verifySlimeCityClash and verifySlimeCityClashConstructed green, and check whether REGEN gear on a full-health fighter is over-valued too. Internal preview only.
 
-      2026-11-13 PT intent audit (INTENT-AUDIT-2026-11-14.md): claim expired ~1-2 days ago
+      2026-11-13 PT intent audit (INTENT-AUDIT-2026-11-13.md): claim expired ~1-2 days ago
       with no open PR; released to ready so the top-priority lane is pickable. Next step is
       the one in the note above.
     owner: worker
-    claimed_by: ''
-    claimed_at: ''
   - id: t-002
     milestone: m1
     title: "Harden square movement, fog-of-war, action costs and three cadences"
@@ -927,8 +921,6 @@ tasks:
     title: "CLASH 300: individually crafted L1/L2/L3 effects for every existing card"
     status: ready
     owner: worker
-    claimed_by: ''
-    claimed_at: ''
     updated: '2026-11-14T00:53:13Z'
     depends_on: t-037
     passes: 0
@@ -970,7 +962,7 @@ tasks:
 
       Focused mercenary L3 engine regression in kind_robots worker branch: Flashmob Diversion and Living Scaffold summon distinct fragile attackers versus non-attacking defensive wings; full allied board denies flashmob. PR and CI follow; t-041 remains a broader 300-card QA umbrella.
 
-      2026-11-13 PT intent audit (INTENT-AUDIT-2026-11-14.md): status was review for ~36h with
+      2026-11-13 PT intent audit (INTENT-AUDIT-2026-11-13.md): status was review for ~36h with
       no open PR in kind_robots or conductor and remaining scope listed above; returned to
       ready so pickers can take the next slice. No work discarded.
   - id: t-042
@@ -1127,8 +1119,6 @@ tasks:
     title: 'Fighters-first redesign: fewer gear/tech/non-fighters, fewer and fewer kinds of random effects'
     status: ready
     owner: worker
-    claimed_by: ''
-    claimed_at: ''
     passes: 0
     stakes: reversible
     note: |-
@@ -1157,7 +1147,7 @@ tasks:
 
       Authored a source-grounded four-card fighter-first conversion shortlist in projects/slime-city/docs/t-051-fighter-ability-conversion-shortlist-2026-11-12.md. This is the requested candidate plan before wholesale card changes, not implementation. Next prototype two deterministic conversions with CLASH guards.
 
-      2026-11-13 PT intent audit (INTENT-AUDIT-2026-11-14.md): status was review for ~36h with
+      2026-11-13 PT intent audit (INTENT-AUDIT-2026-11-13.md): status was review for ~36h with
       no open PR in kind_robots or conductor and remaining scope listed above; returned to
       ready so pickers can take the next slice. No work discarded.
     updated: '2026-11-14T00:53:16Z'
@@ -1189,13 +1179,11 @@ tasks:
       (40 cards + 62 evolution stages). Remaining: curate the renders and wire them into
       artManifest.ts.
 
-      2026-11-13 PT intent audit (INTENT-AUDIT-2026-11-14.md): claim expired ~1-2 days ago
+      2026-11-13 PT intent audit (INTENT-AUDIT-2026-11-13.md): claim expired ~1-2 days ago
       with no open PR; released to ready so the top-priority lane is pickable. Next step is
       the one in the note above.
     owner: worker
     updated: '2026-11-14T00:53:23Z'
-    claimed_by: ''
-    claimed_at: ''
     implementation_pr: 'silasfelinus/kind_robots#5025'
   - id: t-053
     milestone: m2
@@ -1230,13 +1218,11 @@ tasks:
 
       Staged all 103 Exchange occult ArtImage IDs as pending curation in kind_robots, with executable manifest safety guard and contract-suite wiring. This is intake infrastructure, not verified image delivery. Keep/redo verdicts and runtime manifest integration remain.
 
-      2026-11-13 PT intent audit (INTENT-AUDIT-2026-11-14.md): status was review for ~36h with
+      2026-11-13 PT intent audit (INTENT-AUDIT-2026-11-13.md): status was review for ~36h with
       no open PR in kind_robots or conductor and remaining scope listed above; returned to
       ready so pickers can take the next slice. No work discarded.
     updated: '2026-11-14T00:53:18Z'
     owner: worker
-    claimed_by: ''
-    claimed_at: ''
   - id: t-054
     milestone: m2
     title: 'Ironjaw follow-through: lab-mutant identity in story, evolutions and remaining art'
@@ -1359,12 +1345,10 @@ tasks:
       back, and show the worn title on the campaign/profile header. Cosmetic only: no
       cards, Meat or wallet.
 
-      2026-11-13 PT intent audit (INTENT-AUDIT-2026-11-14.md): claim expired ~1-2 days ago
+      2026-11-13 PT intent audit (INTENT-AUDIT-2026-11-13.md): claim expired ~1-2 days ago
       with no open PR; released to ready so the top-priority lane is pickable. Next step is
       the one in the note above.
     owner: worker
-    claimed_by: ''
-    claimed_at: ''
   - id: t-066
     title: 'Guard that every journey epilogue in endings.ts has a queued art plate'
     status: ready
@@ -1381,9 +1365,7 @@ tasks:
       subject in a slime-city art ledger. A new crew or epilogue would then queue its art
       instead of silently falling back to the triumph/compromise plate.
 
-      2026-11-13 PT intent audit (INTENT-AUDIT-2026-11-14.md): claim expired ~1-2 days ago
+      2026-11-13 PT intent audit (INTENT-AUDIT-2026-11-13.md): claim expired ~1-2 days ago
       with no open PR; released to ready so the top-priority lane is pickable. Next step is
       the one in the note above.
     owner: worker
-    claimed_by: ''
-    claimed_at: ''
