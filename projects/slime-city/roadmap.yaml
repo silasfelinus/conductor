@@ -265,12 +265,12 @@ tasks:
       stays ready for the next settings slice.
   - id: t-064
     title: 'CPU values PIERCE gear only against armor, then rebalance Undertow and Bloodfairies starters'
-    status: review
+    status: done
     milestone: m3
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-14T09:19:25Z'
+    updated: '2026-11-14T12:50:00Z'
     note: |-
       Found by t-058 (kind_robots#5030). chooseClashCpu's own-target grant scoring (utils/slimeCity/clash.ts, `missing.length * 2.8`) prices a PIERCE grant at full value even when the fighter across has no armor, so the CPU spends plays on PIERCE gear instead of deploying fighters. A swap ablation of the Catgirls fighters deck vs the other crews' constructed decks (24 seeds, both seats) read 0.432 with s1-surgical-piercers and 0.597 without; ninthlife (REGEN gear) 0.524 without. Prototype: value a PIERCE keyword at 0.6 unless `across.armor > 0`. That took the Catgirls fighters deck to 0.495, but the 40-seed starter sweep moved Undertow 54.5% -> 59.3% and Bloodfairies 44.3% -> 41.8% (guard 42-58%). Land the CPU fix together with a starter rebalance that keeps verifySlimeCityClash and verifySlimeCityClashConstructed green, and check whether REGEN gear on a full-health fighter is over-valued too. Internal preview only.
 
@@ -279,7 +279,8 @@ tasks:
       the one in the note above.
 
       Partial CPU PIERCE armor-aware valuation implemented in kind_robots PR #5149; full starter and constructed matchup CI must pass before merge. Prior ablation warned of Undertow/Bloodfairies imbalance. Keep in review until tests and rebalance are complete.
-    owner: worker
+
+      Merged kind_robots PR #5149 as squash 964495258d36b6cb61586fb5fa9a3a116bf9a269. All six PR-head workflows on 2f76100dd599d627dd6c61f8f1b1391d0c99b75b completed successfully, including Contract Tests and starter/constructed balance guards. CPU PIERCE keyword value against unarmored lanes is 2.6 versus 2.8 against armor; no gameplay rules or acceptance thresholds changed. Follow-up: investigate REGEN gear valuation and low-selection cards separately.
     claimed_by: 2026-11-14T081829Z-slime-city-t064-c8f2a7
     claimed_at: '2026-11-14T08:18:29Z'
   - id: t-002
