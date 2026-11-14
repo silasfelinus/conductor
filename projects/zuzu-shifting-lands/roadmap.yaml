@@ -826,7 +826,7 @@ tasks:
   - id: t-043
     milestone: m3
     title: "Author and implement all follower and companion questlines, decisions and relationship outcomes"
-    status: ready
+    status: done
     owner: worker
     claimed_by: 2026-10-26T194650Z-zuzu-shifting-lands-t043-a8f3
     claimed_at: '2026-10-26T19:46:50Z'
@@ -847,7 +847,14 @@ tasks:
       kind_robots #4237 (kitchen sister callbacks) merged, and the note lists the remaining
       scope (offer/decline, departure/reunion, the rest of the follower roster). Back to ready
       so the work can be claimed; t-045/t-046 (the playtest battery) wait on it.
-    updated: '2026-11-05T06:03:26Z'
+
+      2026-11-13 PT: closed by Silas's decision in session ('Yes, close t-043'): the kitchen-
+      sister follower arc (recruit/decline/depart/reunion, V9) plus the 13 premades' personal
+      roads (52 own cards, 39 own choices, 39 endings, kind_robots #5125) cover companion
+      questlines. Reachability: verifyShiftingPersonalTravelers (2940 journeys) and
+      verifyShiftingEndingsGraph.
+    updated: '2026-11-14T00:02:14Z'
+    implementation_pr: 'silasfelinus/kind_robots#5125'
 
   - id: t-044
     milestone: m3
