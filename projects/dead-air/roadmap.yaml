@@ -115,11 +115,11 @@ tasks:
   - id: t-004
     milestone: m4
     title: Daily Dead Air film production and quality iteration
-    status: claimed
+    status: ready
     recurring: true
     daily_commitment: true
-    daily_last_checked: null
-    daily_last_completed: null
+    daily_last_checked: '2026-11-14'
+    daily_last_completed: '2026-11-14'
     stakes: reversible
     passes: 0
     depends_on: t-002
@@ -129,10 +129,20 @@ tasks:
       format experiments. Report reviewed finished media vs rendering or blocked,
       never falsely claim daily completion. Maintain concept/draft/rejection
       and behind-the-scenes logs without repeating a premise. No publishing.
+
+      2026-11-14 PT cycle: today's film MusicVideo 19 (ArtImage 272338, Plot Assist) and MV 18
+      downloaded, hash-verified and screened; review log projects/dead-
+      air/reviews/2026-11-14-screening.md. Found 4-6s of -55 dB dead air after the VO in both;
+      sound mix now has an audible station bed + sign-off chime, a dead-air guard, and
+      optional silent_tail_seconds (Clap Credit 1.0s). Prompt drift/fake lettering filed as
+      t-010. daily_last_completed=2026-11-14 reflects MV19's verified completion this PT date.
+      Next: Clap Credit renders on the overnight run.
+
+      Re-armed for the next Pacific day after PR #7407.
     owner: worker
     claimed_by: 2026-11-14T22:55:00Z-claude-a2d8tq
     claimed_at: '2026-11-14T22:46:45Z'
-    updated: '2026-11-14T22:46:45Z'
+    updated: '2026-11-14T22:50:59Z'
   - id: t-005
     milestone: m3
     title: Create rights-aware reference and private production provenance review
@@ -212,3 +222,13 @@ tasks:
     updated: '2026-11-14T23:47:00Z'
     claimed_by: 2026-11-14T230000Z-dead-air-t009-8bf3
     claimed_at: '2026-11-14T23:00:00Z'
+  - id: t-010
+    milestone: m4
+    title: Keep generated lettering out of Dead Air motion clips and fix still prompt drift
+    status: ready
+    stakes: reversible
+    passes: 0
+    depends_on: []
+    note: |-
+      Filed from the 2026-11-14 PT private screening review (projects/dead-air/reviews/2026-11-14-screening.md). MusicVideo 18's s3 GPU clip baked two lines of garbled fake subtitles and a magenta band into the picture, colliding with the compositor's real caption bar; MusicVideo 19's s1 still hallucinated pseudo-lettering on a sign, and its s3 still dropped the authored red motive-thread and swapped the mechanic scene for a kneeling-at-a-car composition. Apply the PAINT_GUARDS lettering check to motion prompts too (check every seeded episode still validates), steer premises whose subject is captions/subtitles toward non-text imagery, and consider a cheap automated still-vs-prompt check before export. Private production only; never publish.
+    updated: '2026-11-14T23:20:00Z'
