@@ -30,6 +30,14 @@ Before responding to any task, run a conductor sweep and report it to Silas:
    - **Dream docket** (step 7, re-enabled by Silas 2026-11-14 PT, parallel to Dead Air): if `build_dream_proposal.py --check` reports fewer than 5 unbuilt
      proposals, author exactly ONE version-3, fourteen-asset proposal this session (`--brief` → `--from-json`); exit 1 = empty, author
      now. Read `docs/sweep-checks.md` "Step 7" before authoring.
+   - **Dead Air storyboard runway** (continuous, independent of Dream): run
+     `python scripts/check_dead_air_runway.py --days 7` against today's Pacific
+     date. When it reports a missing date, author ONE original private five-shot
+     episode YAML for the earliest missing day using the canonical
+     `projects/dead-air/episodes/` schema and `dead_air_produce.validate`.
+     Keep source-rights and tone constraints, never mark authored as rendered, and
+     never publish the output. The daily private producer will submit ArtJobs
+     only when that dated episode becomes eligible.
    - **Five daily upgrades** (step 8, since 2026-10-13): build first, review afterward — five small,
      reversible, CI-tested improvements to active projects, PR-backed, recorded via
      `python scripts/daily_project_deliveries.py --brief` → `projects/dream-cycle/daily-deliveries/<date>.yaml`
