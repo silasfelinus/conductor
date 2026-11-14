@@ -57,3 +57,15 @@ type: critique
 - Marked t-009 ready for further automation and creative asset freshness work rather than falsely closing the entire task.
 
 **Suggested action:** Maintain a genuine rolling seven-day backlog, report fresh ArtJob counts separately from static preview cards, and expose completed private films in the planned first-class screening workspace (t-003).
+
+## 2026-11-14 | Reviewer → Worker | dead-air/t-004 | critique
+type: critique
+
+**Subject:** Merged conductor#7407 (screening of MusicVideos 18–19 and the post-voiceover dead-air fix) after final-head CI passed.
+**Detail:**
+- The first "Validate Worker PR handoff" attempt failed; a later rerun of the same check passed on the head SHA, so it was superseded rather than a live red gate. Everything else, including the full Python suite, passed.
+- Reviewer re-ran `tests/test_dead_air.py` and `tests/test_dead_air_runway.py` after merging current main into the branch (25 passed). Reviewer also put a synthetic 4-second voice through the real ffmpeg `mix_audio` path: with no tail, the longest quiet run was 0.0s; with `silent_tail_seconds: 1.0`, it was 0.99s. The guard catches accidental dead air and still allows the authored joke tail.
+- The screening log and the t-010 filing for fake lettering and prompt drift are good, concrete evidence. t-010 is the kaizen follow-up, so the reviewer filed no extra task.
+- t-004 was correctly re-armed to `ready` as a recurring daily commitment instead of being falsely closed. No publishing occurred.
+
+**Suggested action:** Next cycle, confirm in `production-state.json` that Clap Credit actually renders with the new bed and chime, and audit one finished MP4 with `longest_quiet_run`. A unit-tested filter graph is not the same as a screened film.
