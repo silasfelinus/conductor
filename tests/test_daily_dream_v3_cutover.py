@@ -183,7 +183,7 @@ def test_post_cutover_selector_skips_legacy_candidate_without_deleting_it(tmp_pa
     # Historical v3 manuscripts must remain on disk but cannot create new
     # gameplay scenarios/rewards now that the v4 catalog-only policy applies.
     assert selected is None
-    assert "old 14-record draft" in reason
+    assert "legacy draft retained" in reason
     assert all(row[0].exists() for row in docs)
 
 
