@@ -107,15 +107,12 @@ tasks:
       original dice and combat rules, and established agent autonomy and art guardrails.
   - id: t-015
     title: 'Main-game standard: audit and close the gaps for Zuzu Gamebook'
-    status: review
+    status: ready
     milestone: m5
     stakes: reversible
     passes: 0
     depends_on: []
-    owner: worker
-    claimed_by: 20261114T111020Z-zuzu-t015-save-recovery-b7e9
-    claimed_at: '2026-11-14T11:10:20Z'
-    updated: '2026-11-14T11:11:00Z'
+    updated: '2026-11-14T12:35:15.490Z'
     note: |-
       Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -132,6 +129,8 @@ tasks:
       Merged Kind Robots PR #5070 at commit 37eafdd60de28e26fa4a2eb09237f96486a0743a after all ten current-head workflows completed green: illustrated entry screen, real text/font/contrast/motion settings, painted 15-ending catalogue, versioned local journey scrapbook and tests. Also merged Conductor PR #7307 for no duplicate master task and a true deferred final human gate. Main-game standard remains READY, not done: add cast discovery scrapbook, reconcile account-backed saves and full device testing with existing story/art tasks. Do not promote project to playtest, and keep GitHub master issue #4139 open.
 
       Scoped save-load corruption isolation fix submitted in Kind Robots branch worker/zuzu-t015-save-recovery-b7e9; broader account sync, art and device QA remain open. Do not mark t-015 done.
+
+      2026-11-14 PT reconciliation: Kind Robots #5154 is MERGED and preserves independently valid browser saves when adjacent slots contain corrupt JSON. This is a completed slice, not the whole t-015 acceptance task. Return t-015 to ready for its remaining account-backed Continue and persistent cast-discovery scrapbook; don't redo the shipped title, 17 achievements or endings catalogue. Final phone/tablet QA is t-009 after art delivery.
   - id: t-016
     title: 'Zuzu Gamebook achievement upgrade: 12 or more live achievements'
     status: done
@@ -200,7 +199,7 @@ tasks:
   - id: t-006
     milestone: m3
     title: Independently enqueue and review gamebook illustrations in batches
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 20261114T121725112Z-zuzu-gamebook-t006-priority-art-6c72
     claimed_at: '2026-11-14T12:17:25.112Z'
@@ -219,7 +218,9 @@ tasks:
       2026-11-02 PT: ROUND-18 reviewed. a2-bell-view passes 8/8 (gb18-a2-bell-view-1, ArtImage 252193) and a4-bloom passes 7/8 (gb18-a4-bloom-3, 252199). a2-gift failed every seed (best 6/8: the mark read as a cartoon face; seed 2 is a modern zip pouch; seed 3 has a gallows-like frame). Its three rows are rerolled in place (the activator requires exactly 9 subjects), with the mark described as a carved bandit's domino mask on a single upright post. Round 19 activation waits on the gift re-review. Then fill ROUND-18-SELECTIONS.yaml from a fresh krea-receipt.json and run activate_zuzu_gamebook_stylepass.py --receipt.
 
       Merged Conductor PR #7308 (b3647f4cddb8e05b0de26358b1e5813054f76055) with all four workflows green: ROUND-20 manifest defines 14 PRIVATE Arthemy candidates for seven newly authored/unpainted route and fairness scenes, plus a source-backed 35-gap scene art audit. Auto Art Generate workflow #43188873701 triggered from the main push, but actual ArtJob IDs, DONE render receipts, visual review and exported WebPs are NOT yet verified. Keep t-006 ready, not done, until delivery and existing Round-17/18 stage-two review are completed; do not call artwork generated or game playtest-ready merely because the ledger was submitted.
-    updated: '2026-11-14T12:17:25.112Z'
+
+      2026-11-14 PT: Round 20's 14 render candidates already have DONE ArtJobs 68674-68687, no duplicate submissions. New ROUND-21-PRIORITY-SCENE-FIDELITY.yaml queues 20 PRIVATE new candidates (10 high-value early-book unregistered sections x two compositions) at priority 1000; their actual ArtJob ids and visual keeper acceptance must be confirmed after merge. Keep task active for source-backed delivery/review, additional unregistered scenes, two-character LoRA corrections and final WebP integration.
+    updated: '2026-11-14T12:21:23.018Z'
   - id: t-007
     milestone: m3
     title: Integrate authored story bundle, chapter pacing and illustration manifest
