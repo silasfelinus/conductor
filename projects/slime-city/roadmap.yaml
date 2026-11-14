@@ -157,7 +157,7 @@ tasks:
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-14T06:04:12Z'
+    updated: '2026-11-14T06:49:11Z'
     note: |-
       Silas 2026-11-11 PT, in session: "There is unmade art it should definitely be added to the pipeline."
 
@@ -192,10 +192,16 @@ tasks:
       those renders are DONE, fetch, contact-sheet review, wire keepers into
       SLIME_CITY_ART.story as '<crew>/scene-<beat-id>' (bump SLIME_CITY_ART_COUNT and its
       test), then close t-062.
+
+      2026-11-14 PT (scheduled cycle): JOURNEY-SCENES-ROUND-1 is 6 of 18 DONE (catgirls +
+      bloodfairies, ArtImages 271836-271841); fetched, contact-sheet reviewed (all keepers)
+      and wired in kind_robots#5143 as story['<crew>/scene-<beat-id>'] (SLIME_CITY_ART_COUNT
+      814). Ironjaw/riot/undertow/exchange jobs 69298-69309 were still RUNNING/PENDING. Next:
+      once DONE, fetch, review and wire the remaining 12, then close t-062.
     owner: worker
     claimed_by: 2026-11-14T054801Z-slime-city-t062-ij8r1
     claimed_at: '2026-11-14T05:48:01Z'
-    implementation_pr: 'silasfelinus/kind_robots#5141'
+    implementation_pr: 'silasfelinus/kind_robots#5143'
   - id: t-063
     title: 'Main-game standard: audit and close the gaps for Slime City'
     status: ready
