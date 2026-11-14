@@ -12,6 +12,9 @@ def playtest_readiness_errors(tasks: list[dict]) -> list[str]:
         return ["roadmap has no tasks"]
 
     errors = []
+    malformed = [index for index, task in enumerate(tasks, 1) if not isinstance(task, dict)]
+    if malformed:
+        errors.append("malformed roadmap tasks at positions: " + ", ".join(map(str, malformed[:12])))
     outstanding = [
         str(task.get("id", "<unknown>"))
         for task in tasks
