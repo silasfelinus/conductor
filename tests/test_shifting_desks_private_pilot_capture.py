@@ -2,6 +2,10 @@
 import importlib.util
 from pathlib import Path
 
+import pytest
+
+pytest.importorskip("PIL")
+
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPT = ROOT / "projects/shifting-desks/art/build_recovery_sheets.py"
 spec = importlib.util.spec_from_file_location("shifting_recovery_sheets", SCRIPT)
@@ -40,6 +44,5 @@ def test_pending_v2_jobs_cannot_be_passed_off_as_delivered(monkeypatch):
 
 
 def test_unknown_pilot_version_fails_closed():
-    import pytest
     with pytest.raises(ValueError, match="unsupported"):
         list(module.pilot_rows(3))

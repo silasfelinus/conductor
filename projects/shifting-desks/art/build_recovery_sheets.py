@@ -22,6 +22,7 @@ ART = Path(__file__).resolve().parent
 ROOT = ART.parents[2]
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "scripts"))
+sys.path.insert(0, str(ART))  # sibling build_review_sheets when imported, not run
 
 from build_review_sheets import image_from_media  # noqa: E402
 from enqueue_art_requests import fetch_source_image  # noqa: E402
