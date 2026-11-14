@@ -1,11 +1,13 @@
 # Daily Dream pipeline
 
-> **Historical pipeline, suspended for new object production as of 2026-11-12 PT.**
-> Silas redirected the daily creative object commitment to the separate continuous
-> `dead-air` film project. The archival, retry and existing-record contracts
-> below remain for diagnostics and existing outputs. The scheduled
-> `daily-digest.yml` no longer runs the new Dream author/build steps. Re-enable
-> only after an explicit future direction; no automatic 14-object cutover.
+> **Production restored 2026-11-14 PT at Silas's direction.** The Daily
+> Dream is again a daily creative commitment **alongside** Dead Air, not in its
+> place. One version-3 bundle produces six linked original-Dream entities plus
+> eight separate Zuzu Gamebook / Emperor of Dust creations, with fourteen
+> durable, target-specific ArtJobs. The single transactional writer and retry
+> ledger remain authoritative. Historical six-record bundles are preserved.
+> Model-paid proposal authoring stays opt-in; the scheduled builder may consume
+> already-authored valid v3 proposals without incurring authoring API spend.
 >
 
 This is the canonical end-to-end contract for the Daily Dream. There is one object-creation path and one ordered morning cycle.
@@ -34,15 +36,15 @@ in its historical sections describe the version-2 lane only.
 ```text
 Daily Digest morning cycle
     ↓
-author today's six-asset steering proposal
+author today's fourteen-asset steering proposal
     ↓
 build digest JSON/email from the most recent ALREADY BUILT bundle
     ↓
 freeze today's email payload
     ↓
-build TODAY'S proposal into six live records for TOMORROW
+build TODAY'S proposal into fourteen live records for TOMORROW
     ↓
-attach Facets + submit six durable priority ArtJobs
+attach Facets + submit fourteen durable priority ArtJobs
     ↓
 commit proposal/build/ArtJob evidence
     ↓
@@ -63,7 +65,7 @@ roughly a full day to render.
 ## 1. Author today's proposal
 
 At the start of the scheduled morning cycle, `scripts/author_dream_proposal.py` ensures
-that the current Pacific date has one canonical six-asset proposal. Authoring is
+that the current Pacific date has one canonical fourteen-asset proposal. Authoring is
 idempotent and creates no database objects by itself.
 
 ## 2. Freeze today's digest from prior completed work
@@ -96,14 +98,14 @@ from an earlier day. Manual `--date` calls still target only the requested date.
 This prevents repeated completed worlds while valid proposals wait in the buffer,
 without discarding earlier creative work or spending API credits.
 
-The builder creates the complete six-object bundle transactionally, records every
-resulting ID in `built-data`, and writes exactly six stable art requests to
+The builder creates the complete fourteen-object bundle transactionally, records every
+resulting ID in `built-data`, and writes exactly fourteen stable art requests to
 `projects/art-prompts.yaml`. Immediately afterward,
 `scripts/apply_daily_dream_facets.py` attaches the persisted Facets.
 
 ## 4. Submit tomorrow's art immediately
 
-`scripts/submit_daily_dream_art.py` submits the six newly staged `source: dream-cycle`
+`scripts/submit_daily_dream_art.py` submits the fourteen newly staged `source: dream-cycle`
 requests to Kind Robots and records each durable `last_art_job_id`. It does not wait
 for those renders, because they are not needed by the already-frozen email. The normal
 renderer now has the rest of the day and overnight to complete them.
