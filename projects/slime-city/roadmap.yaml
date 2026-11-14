@@ -1089,8 +1089,8 @@ tasks:
   - id: t-041
     milestone: m2
     title: "CLASH 300: individually crafted L1/L2/L3 effects for every existing card"
-    status: review
-    updated: '2026-11-14T23:22:00Z'
+    status: ready
+    updated: '2026-11-14T23:30:00Z'
     depends_on: t-037
     passes: 0
     stakes: reversible
@@ -1150,9 +1150,8 @@ tasks:
       First Catgirls rewrite committed as kind_robots 1f519b2: Clone Salvage L2 now builds a conditional echo; Emergency Molt L2 heals after hits; Spare Lives L2/L3 introduces tap triage and adjacent rescue. This is an initial implementation slice, NOT the full 900-stage editorial completion.
 
       First two full-faction manually authored editorial implementations are in Kind Robots: Catgirls PR #5182 (40 cards/120 stage roles, direct mechanics, stage copy, deterministic fixtures) and stacked Bloodfairies PR #5186 (40 cards/120 stage roles, 30 authored L1 descriptions, 30 legacy stage rewrites, 13 modified evolution arcs, targeted combat fixtures). Both PRs are open, undergoing CI; #5186 is temporarily based on #5182. Do not close t-041: 220 cards/660 stage roles still need the same manual pass, plus full seeded playtest/replay acceptance. After both PRs merge, release t-041 to ready for the next faction rather than leaving a stale claim.
-    owner: worker
-    claimed_by: 2026-11-14T230200Z-slime-city-t-041-gpt6-6c4a9e
-    claimed_at: '2026-11-14T23:02:00Z'
+
+      Partial work delivered, not complete: Catgirls implementation PR #5182 covers a manual 40-card/120-stage review and live combat fixes, and Bloodfairies stacked PR #5186 covers the next 40-card/120-stage pass. Both have source changes, card-by-card editorial ledgers, and targeted tests. CI is not yet green; #5186 must be retargeted to main after #5182 merges, checked at its final SHA, and merged only on completed green checks. Remaining scope: 220 cards and 660 stages across Ironjaw, Riot, Undertow, Exchange, Mercenaries, plus independent balance and seeded-replay QA. This release clears the current worker claim; next worker must first triage these two PRs, avoid editing their files concurrently, then claim t-041 before working a new non-overlapping faction. Never label the 900-stage task done on the basis of these first two passes.
   - id: t-042
     milestone: m2
     title: "Curate and wire the ogre redo-3 tokens: Picket Line Troll, Coal Cart Racer, Union Lunch Lady"
