@@ -167,18 +167,15 @@ tasks:
   - id: t-008
     milestone: m2
     title: Record per-shot render times and skip the optional GPU clip when the queue is congested
-    status: claimed
+    status: review
     stakes: reversible
     passes: 0
     depends_on: []
-    note: >-
-      Kaizen from conductor#7322 review (2026-11-12 PT). Keep a small per-shot
-      render-time history in production-state.json and have dead_air_produce.py
-      request zero generated clips when recent still renders ran long, so the
-      compositor cut is never waiting on a clip that cannot finish inside the
-      two-hour window. Also add one late-morning catch-up pass, since removing the
-      10am PT cron left no retry after 3:15am PST. Cover both with tests.
+    note: |-
+      Kaizen from conductor#7322 review (2026-11-12 PT). Keep a small per-shot render-time history in production-state.json and have dead_air_produce.py request zero generated clips when recent still renders ran long, so the compositor cut is never waiting on a clip that cannot finish inside the two-hour window. Also add one late-morning catch-up pass, since removing the 10am PT cron left no retry after 3:15am PST. Cover both with tests.
+
+      Added observed per-shot still queue waits, congestion-aware optional clip fallback, a late film catch-up pass, and digest/retry/recovery scheduling after the film. Verifying CI on the implementation PR before closing this task.
     owner: worker
     claimed_by: 2026-11-14T220600Z-dead-air-t008-74a1
     claimed_at: '2026-11-14T22:06:00Z'
-    updated: '2026-11-14T22:06:00Z'
+    updated: '2026-11-14T22:07:00Z'
