@@ -948,11 +948,8 @@ tasks:
   - id: t-041
     milestone: m2
     title: "CLASH 300: individually crafted L1/L2/L3 effects for every existing card"
-    status: review
-    owner: worker
-    claimed_by: 20261114T050025200Z-sc-t041-gpt6-8fk29
-    claimed_at: '2026-11-14T05:00:25.200Z'
-    updated: '2026-11-14T05:10:26.975Z'
+    status: ready
+    updated: '2026-11-14T06:25:50Z'
     depends_on: t-037
     passes: 0
     stakes: reversible
@@ -998,6 +995,8 @@ tasks:
       ready so pickers can take the next slice. No work discarded.
 
       In review: deterministic replayable fighter tap actions, chosen attack tradeoff, Catgirls pilot and one starter for each of the other five factions; Solo and PvP controls, reward transcripts and regression tests. CI verification pending.
+
+      2026-11-13 PT: merged kind_robots PR #5139 as squash 898c0c8 after six completed successful workflows on head 08e499b. Adds chosen tap activations with strike cost, PvP validation, CPU evaluation, six-crew pilot and replay tests. Partial 300-card umbrella; return ready for full-roster individual ability and constructed matchup audit.
   - id: t-042
     milestone: m2
     title: "Curate and wire the ogre redo-3 tokens: Picket Line Troll, Coal Cart Racer, Union Lunch Lady"
