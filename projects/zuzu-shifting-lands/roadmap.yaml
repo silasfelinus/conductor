@@ -137,12 +137,12 @@ tasks:
     claimed_at: '2026-11-13T22:40:52Z'
   - id: t-050
     title: 'Main-game standard: audit and close the gaps for Zuzu: Shifting Lands'
-    status: ready
+    status: done
     milestone: m5
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-11T23:42:29Z'
+    updated: '2026-11-14T00:02:22Z'
     note: |-
       Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -153,6 +153,13 @@ tasks:
       Character customization is delivered by its own task (character creator with Zuzu and Jeffery Mittens).
 
       Achievements are tracked by their own task; this one covers everything else.
+
+      2026-11-13 PT: closed the audit gaps. Title screen + persistent scrapbook (13 traveler
+      pages, 19 shared endings) kind_robots #5127; 19 shared ending plates + 13 portraits
+      #5125; 20 achievements (t-051); characters (t-052/t-053); replay hooks: 13 premades,
+      custom travelers, scrapbook completion. Settings remain motion/dice-sound (Partial in
+      the audit), noted for playtest.
+    implementation_pr: 'silasfelinus/kind_robots#5127'
   - id: t-051
     title: 'Zuzu: Shifting Lands achievement upgrade: 12 or more live achievements'
     status: done
@@ -185,7 +192,7 @@ tasks:
   - id: t-002
     milestone: m1
     title: "Autonomous first-slice design integration audit; defer Silas review to final"
-    status: ready
+    status: done
     owner: null
     passes: 0
     stakes: reversible
@@ -200,7 +207,10 @@ tasks:
       Historically t-002 was a soft needs-human checkpoint, rechecked on
       2026-10-23; that obsolete checkpoint must not delay all-agent creation
       or adversarial testing. ONLY final t-018 is creative approval.
-    updated: '2026-10-24'
+
+      2026-11-13 PT: self-review written to projects/zuzu-shifting-lands/SELF-
+      REVIEW-2026-11-13.md (conductor #7349); each finding is fixed, queued or decided there.
+    updated: '2026-11-14T00:02:20Z'
 
   - id: t-003
     milestone: m1
@@ -219,7 +229,7 @@ tasks:
   - id: t-004
     milestone: m1
     title: "Audit live Zuzu Resource/Facet/Character/Scenario/Reward membership"
-    status: review
+    status: cancelled
     owner: worker
     passes: 0
     stakes: reversible
@@ -227,9 +237,12 @@ tasks:
       Read live owner-scoped rows and verify record IDs. Reconcile the resource-submissions.json candidates without guessing identities. Design a reversible world-membership tagging method using existing FacetProfile taxonomy/metadata, Packs and relation tables. Tag species, occupation, archetype, affiliation, location, scenarios and rewards; separate canon authority from randomizable pool membership.
 
       Opened read-only admin owner-ID reconciliation work and source-backed world membership audit plan for review. These source changes do not verify deployed database IDs or make tag writes; operational live confirmation remains pending.
+
+      2026-11-13 PT: cancelled by Silas in session during the playtest wrap-up.
     claimed_by: 2026-10-09T230800Z-zuzu-shifting-t004-a91c
     claimed_at: '2026-10-09T23:08:00Z'
-    updated: '2026-10-09T23:12:00Z'
+    updated: '2026-11-14T00:01:38Z'
+    cancelled_reason: 'Silas 2026-11-13 PT, in session: cancel (live-DB world-membership tooling the game does not use; it plays from a committed world snapshot)'
 
   - id: t-005
     milestone: m2
@@ -336,7 +349,7 @@ tasks:
   - id: t-012
     milestone: m3
     title: "Create world-scoped live resource query, admin tagging and safe import"
-    status: waiting
+    status: cancelled
     owner: null
     passes: 0
     stakes: reversible
@@ -346,6 +359,10 @@ tasks:
       distinguish Facet SPECIES and OCCUPATION/ROLE cards; admin can inspect
       candidate rows, confirm patch vs create, edit and archive; protect private
       content, duplicate aliases and history.
+
+      2026-11-13 PT: cancelled by Silas in session during the playtest wrap-up.
+    updated: '2026-11-14T00:02:09Z'
+    cancelled_reason: 'Silas 2026-11-13 PT, in session: cancel (not needed for the game, which plays from a committed world snapshot; t-014 also needed separate paid-model consent)'
 
   - id: t-013
     milestone: m3
@@ -365,7 +382,7 @@ tasks:
   - id: t-014
     milestone: m3
     title: "Storybook-style optional prose generation with bounded rules state and offline fallback"
-    status: ready
+    status: cancelled
     owner: null
     passes: 0
     stakes: reversible
@@ -374,6 +391,10 @@ tasks:
       Validated narrative fact packet, non-duplicated lore, hidden-source
       isolation, no plot mutations by text generator; cache outputs and offer
       curated offline text. Mana/paid model consent separately gated.
+
+      2026-11-13 PT: cancelled by Silas in session during the playtest wrap-up.
+    updated: '2026-11-14T00:02:11Z'
+    cancelled_reason: 'Silas 2026-11-13 PT, in session: cancel (not needed for the game, which plays from a committed world snapshot; t-014 also needed separate paid-model consent)'
 
   - id: t-015
     milestone: m4
@@ -815,7 +836,7 @@ tasks:
   - id: t-043
     milestone: m3
     title: "Author and implement all follower and companion questlines, decisions and relationship outcomes"
-    status: ready
+    status: done
     owner: worker
     claimed_by: 2026-10-26T194650Z-zuzu-shifting-lands-t043-a8f3
     claimed_at: '2026-10-26T19:46:50Z'
@@ -836,7 +857,14 @@ tasks:
       kind_robots #4237 (kitchen sister callbacks) merged, and the note lists the remaining
       scope (offer/decline, departure/reunion, the rest of the follower roster). Back to ready
       so the work can be claimed; t-045/t-046 (the playtest battery) wait on it.
-    updated: '2026-11-05T06:03:26Z'
+
+      2026-11-13 PT: closed by Silas's decision in session ('Yes, close t-043'): the kitchen-
+      sister follower arc (recruit/decline/depart/reunion, V9) plus the 13 premades' personal
+      roads (52 own cards, 39 own choices, 39 endings, kind_robots #5125) cover companion
+      questlines. Reachability: verifyShiftingPersonalTravelers (2940 journeys) and
+      verifyShiftingEndingsGraph.
+    updated: '2026-11-14T00:02:14Z'
+    implementation_pr: 'silasfelinus/kind_robots#5125'
 
   - id: t-044
     milestone: m3
@@ -864,7 +892,7 @@ tasks:
   - id: t-045
     milestone: m5
     title: "Generate and verify exhaustive endings/branches graph with reachable seed-action witnesses"
-    status: waiting
+    status: done
     owner: null
     passes: 0
     stakes: reversible
@@ -880,6 +908,14 @@ tasks:
       repair unreachable/dead paths; verify mutually exclusive conditions,
       correct credit, uniqueness, journal callbacks and spoiler control.
       Do not infer path completeness from an ending count alone.
+
+      2026-11-13 PT: kind_robots #5125 adds verifyShiftingEndingsGraph: all 19 shared and 39
+      own endings witnessed (traveler, seed, lean, trial plan) across 24192 journeys, every
+      witness replays exactly; evidence projects/zuzu-shifting-lands/ENDINGS-
+      GRAPH-2026-11-13.json (#7349). It found and fixed four constellation endings unreachable
+      since V8.
+    updated: '2026-11-14T00:02:17Z'
+    implementation_pr: 'silasfelinus/kind_robots#5125'
 
   - id: t-046
     milestone: m5
