@@ -225,12 +225,12 @@ tasks:
     implementation_pr: 'silasfelinus/kind_robots#5159'
   - id: t-063
     title: 'Main-game standard: audit and close the gaps for Slime City'
-    status: claimed
+    status: needs-human
     milestone: m4
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-14T20:45:10Z'
+    updated: '2026-11-14T20:46:02Z'
     note: |-
       Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -336,6 +336,17 @@ tasks:
       checks green; test:slime-city-lab exit 0 locally (new verifySlimeCityVsResume.test.ts).
       Still open per STANDARD-AUDIT-2026-11-12.md: account import of guest saves on sign-in
       (audit D1 proposes an offer-to-import prompt). That is the last save/load gap.
+
+      2026-11-14 PT reconcile: title, settings and save/load slices are all merged (last:
+      kind_robots#5174 VS resume). The only remaining t-063 gap is account import of guest
+      saves on sign-in, which earlier slices flagged as Silas's call. QUESTION FOR SILAS: when
+      a guest signs in with a device-local Slime City journey, should we (a) offer IMPORT only
+      when the account story is still fresh (no chapters won), copying
+      campaign/journey/endings/scrapbook/decks but NOT tower cinders/bestFloor (those are
+      server-rewarded, so importing them would let guest play mint account currency); (b) also
+      import tower meta; or (c) never import (guest stays device-only)? Recommendation: (a).
+      Also open per audit section B: whether crew + deck choice counts as item 7 (customizable
+      characters). Achievements (t-060) and scrapbook (t-059) are tracked separately.
     owner: worker
     claimed_by: session_01L5NKxZnzZgXMzHdS6eqZ4d
     claimed_at: '2026-11-14T20:45:10Z'
