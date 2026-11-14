@@ -135,3 +135,26 @@ def test_digest_discloses_five_rows_from_one_pr(repo):
     html = email.daily_deliveries_section(dd.payload("2026-10-13"))
     assert "5 entries came from 1 implementation PR(s)" in html
     assert "Grouped design changes are not independent productions" in html
+
+
+def test_digest_asset_freshness_counts_real_jobs_separately_from_requests():
+    digest = {
+        "current_dream_output": {
+            "built": True, "built_date": "2026-11-14",
+            "assets": [
+                {"lane": "dream", "art_job_id": 17, "art_status": "ready"},
+                {"lane": "dream", "request_id": "card-only", "art_status": "queued"},
+                {"lane": "zuzu", "art_job_id": 18, "art_status": "queued"},
+            ],
+        },
+    }
+    html = email.daily_asset_freshness_section(digest)
+    assert "2/6 linked Dream records" in html
+    assert "1/8 independent Zuzu records" in html
+    assert "2/14 verified ArtJob IDs" in html
+    assert "1/3 verified images" in html
+    assert "queued request is not a delivered image" in html
+    missing = email.daily_asset_freshness_section({
+        "daily_dream_output_status": "No fresh bundle today."
+    })
+    assert "No fresh bundle today" in missing
