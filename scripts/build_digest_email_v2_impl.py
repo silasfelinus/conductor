@@ -413,20 +413,21 @@ def dead_air_section(film: dict[str, Any] | None) -> str:
     fresh_today = film.get("fresh_today", True)
     clips = film.get("gpu_animated_shots")
     mix = f"{clips} generated clips" if isinstance(clips, int) else "motion edit"
+    heading = "private premiere" if fresh_today else "most recent film"
+    warning = (
+        "No film was completed today. Showing the last verified private film."
+        if not fresh_today else ""
+    )
     return (
         '<div style="margin:16px 0;padding:16px;border:1px solid #4338ca;'
         'border-radius:12px;background:#f5f3ff">'
-        ('<h2 style="margin:0 0 6px;font-size:19px">📺 Dead Air: private premiere</h2>'
-         if fresh_today else
-         '<h2 style="margin:0 0 6px;font-size:19px">📺 Dead Air: most recent film</h2>')
+        f'<h2 style="margin:0 0 6px;font-size:19px">📺 Dead Air: {heading}</h2>'
         f'<p style="margin:0 0 10px"><strong>{esc(film.get("title"))}</strong>'
         f' · {esc(film.get("date"))} PT · 15 seconds · {esc(mix)}</p>'
-        + ('<p style="color:#92400e"><strong>No film was completed today.</strong> '
-           'Showing the most recent verified private film, not a fresh premiere.</p>'
-           if not fresh_today else '')
+        f'<p style="color:#92400e">{esc(warning)}</p>'
         f'<a style="display:inline-block;background:#312e81;color:white;'
         f'padding:10px 16px;border-radius:7px;text-decoration:none" '
-        f'href="{esc(url)}">Watch the new commercial (sign in)</a></div>'
+        f'href="{esc(url)}">Watch verified commercial (sign in)</a></div>'
     )
 
 
