@@ -159,7 +159,10 @@ fix-up commits, and ten needed ten or more. To get it right first time:
   file. Each commit queues the whole PR check suite again.
 - In kind_robots, a red `Changed-file Prettier` check on a same-repository PR is
   repaired by its `Push Prettier autofix` job, which commits the exact patch and
-  re-dispatches the checks. **Do not hand-apply the printed patch.** Wait for
+  re-dispatches the checks. The same patch carries the mechanical ESLint
+  ratchet fixes (Vue attribute order, import placement and duplicates,
+  `prefer-const`, unused imports); other new ESLint problems appear as
+  annotations on that check and still need a hand fix. **Do not hand-apply the printed patch.** Wait for
   the `style: autoformat changed files (Prettier)` commit, then re-read any file
   before editing it again (its blob SHA changed). Apply the printed patch
   yourself only for `.github/workflows/` files, and then apply the whole patch in
