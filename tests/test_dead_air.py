@@ -192,3 +192,55 @@ def test_new_pacific_date_allows_recovery_without_new_episode_id():
     assert (elapsed, expired) == (2700, False)
     assert row["music_video_id"] == 18
     assert row["art_jobs"]["stills"]["s1"] == 68688
+
+
+def test_still_wait_observations_are_per_shot_and_never_invent_gpu_runtime():
+    from datetime import datetime, timedelta
+    from types import SimpleNamespace
+    from zoneinfo import ZoneInfo
+    from dead_air_produce import observe_still_waits, should_skip_optional_clip
+    first = datetime(2026, 11, 14, 1, 0, tzinfo=ZoneInfo("America/Los_Angeles"))
+    scenes = [
+        {"id": "s1", "image": {"jobId": 100}},
+        {"id": "s2", "image": {"jobId": 101}},
+    ]
+    state = SimpleNamespace(
+        doc={"scenes": scenes},
+        scene_jobs={
+            "s1": SimpleNamespace(status="QUEUED", art_image_id=None),
+            "s2": SimpleNamespace(status="DONE", art_image_id=55),
+        },
+    )
+    row = {"updated_pt": first.isoformat()}
+    observe_still_waits(row, state, first)
+    samples = row["still_render_observations"]
+    assert "observed_wait_seconds" not in samples["s1"]
+    assert "observed_wait_seconds" not in samples["s2"]
+
+    second = first + timedelta(minutes=37)
+    state.scene_jobs["s1"] = SimpleNamespace(status="DONE", art_image_id=54)
+    observe_still_waits(row, state, second)
+    assert samples["s1"]["observed_wait_seconds"] == 37 * 60
+    assert "observed_wait_seconds" not in samples["s2"]
+    assert should_skip_optional_clip({"episodes": {"pilot": row}}, 10, second)
+    assert not should_skip_optional_clip({"episodes": {"pilot": row}}, 10, first)
+
+
+def test_congested_pending_still_skips_clip_but_fresh_queue_does_not():
+    from datetime import datetime, timedelta
+    from zoneinfo import ZoneInfo
+    from dead_air_produce import should_skip_optional_clip
+    start = datetime(2026, 11, 14, 1, 0, tzinfo=ZoneInfo("America/Los_Angeles"))
+    row = {
+        "updated_pt": start.isoformat(),
+        "still_render_observations": {
+            "s1": {
+                "job_id": 12, "first_seen_pt": start.isoformat(),
+                "first_seen_status": "QUEUED",
+            },
+        },
+    }
+    state = {"episodes": {"pilot": row}}
+    assert not should_skip_optional_clip(state, 60, start + timedelta(minutes=10))
+    assert should_skip_optional_clip(state, 60, start + timedelta(minutes=31))
+    assert should_skip_optional_clip({"episodes": {}}, 90 * 60)
