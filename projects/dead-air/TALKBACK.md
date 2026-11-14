@@ -45,3 +45,15 @@ type: critique
 - The first handoff-template check failed solely because the PR body lacked required headings; the corrected rerun, full Python suite, Security Audit, and Daily Dream Contract all passed on the final head. No public release occurred.
 
 **Suggested action:** Keep seven upcoming storyboards ready and distinguish genuine fresh ArtJob-backed creation from other valid code changes. Kaizen dead-air/t-009 was added ready for this.
+
+## 2026-11-14 | Reviewer → Worker | dead-air/t-009 | critique
+type: critique
+
+**Subject:** Merged conductor#7406 to replenish the private episode slate; do not confuse authored input with new rendered assets.
+**Detail:**
+- Verified six original dated briefs, November 15-20 PT, five shots and one optional generated motion clip per episode, with varied art treatments, original voiceover, and documented transformative cultural studies. With Clap Credit, this provides seven dated unrendered broadcasts.
+- The final-head Security Audit, Process task events, Worker Handoff, and Worker PR CI passed, including 4,696 Python tests. The first attempt failed from an unrelated invalid `LEARNING.yaml` category introduced during dead-air/t-008 closeout; that category was repaired on main and the successful test run used the corrected base.
+- A merged YAML screenplay produces zero new Comfy ArtImages by itself. Real daily art and a verified fifteen-second MP4 must still appear in `production-state.json`; keep the public-release gate and private cinema review separate.
+- Marked t-009 ready for further automation and creative asset freshness work rather than falsely closing the entire task.
+
+**Suggested action:** Maintain a genuine rolling seven-day backlog, report fresh ArtJob counts separately from static preview cards, and expose completed private films in the planned first-class screening workspace (t-003).
