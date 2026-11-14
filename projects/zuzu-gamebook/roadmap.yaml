@@ -107,7 +107,7 @@ tasks:
       original dice and combat rules, and established agent autonomy and art guardrails.
   - id: t-015
     title: 'Main-game standard: audit and close the gaps for Zuzu Gamebook'
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 20261114T123728297Z-zuzu-gamebook-t015-cast-2d93
     claimed_at: '2026-11-14T12:37:28.297Z'
@@ -115,7 +115,7 @@ tasks:
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-14T12:37:28.297Z'
+    updated: '2026-11-14T12:43:35.960Z'
     note: |-
       Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -134,6 +134,8 @@ tasks:
       Scoped save-load corruption isolation fix submitted in Kind Robots branch worker/zuzu-t015-save-recovery-b7e9; broader account sync, art and device QA remain open. Do not mark t-015 done.
 
       2026-11-14 PT reconciliation: Kind Robots #5154 is MERGED and preserves independently valid browser saves when adjacent slots contain corrupt JSON. This is a completed slice, not the whole t-015 acceptance task. Return t-015 to ready for its remaining account-backed Continue and persistent cast-discovery scrapbook; don't redo the shipped title, 17 achievements or endings catalogue. Final phone/tablet QA is t-009 after art delivery.
+
+      2026-11-14 PT: A scoped Kind Robots branch implements seven-character cast discoveries earned from newly visited story scenes/flags, persisted separately from the current run, migrated from local story progress, excluded from foreign save-code imports, and rendered as a locked-silhouette/portrait gallery in the Bell Ledger. Regression contract added. Pending CI and merge. Account-backed Continue and full device/art QA remain open; do not mark t-015 done or game playtest-ready.
   - id: t-016
     title: 'Zuzu Gamebook achievement upgrade: 12 or more live achievements'
     status: done
