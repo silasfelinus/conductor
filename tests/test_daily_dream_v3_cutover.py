@@ -182,3 +182,22 @@ def test_post_cutover_selector_skips_legacy_candidate_without_deleting_it(tmp_pa
     selected, reason = build_selector.eligible_proposal("2026-10-13")
     assert selected == docs[1][0]
     assert docs[0][0].exists()
+
+
+def test_scheduled_fourteen_asset_dream_writer_is_active():
+    workflow = (Path(__file__).resolve().parents[1] /
+                ".github/workflows/daily-digest.yml").read_text()
+    author = workflow[workflow.index("- name: Author today's next Daily Dream proposal"):
+                      workflow.index("- name: Review Alexandria's container logs")]
+    builder = workflow[workflow.index("- name: Build today's Daily Dream proposal"):
+                       workflow.index("- name: Attach Daily Dream Facets")]
+    assert "if: " + chr(36) + "{{ false }}" not in author + builder
+    assert "python scripts/author_dream_proposal.py" in author
+    assert "python scripts/run_daily_dream_build.py --date" in builder
+    assert 'DAILY_DREAM_SCHEDULED: "1"' in builder
+    assert "python scripts/apply_daily_dream_facets.py" in workflow
+    assert "python scripts/submit_daily_dream_art.py" in workflow
+    assert workflow.index("python scripts/build_digest_email_v2.py") < workflow.index(
+        "python scripts/run_daily_dream_build.py --date"
+    )
+    assert "inputs.spend_api_credits == true" in author
