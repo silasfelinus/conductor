@@ -1319,7 +1319,7 @@ def run_build(date_override: Optional[str], dry_run: bool) -> dict[str, Any]:
             + "; ".join(art_errors)
         )
         return _fail_and_pin(path, message, dry_run, already_pinned=already_pinned)
-    if proposal.get("bundle_version") == 3 and not dry_run:
+    if proposal.get("bundle_version") in (3, 4) and not dry_run:
         # Resolve BOTH real checkpoint resources before creating any DB objects.
         # A missing resource cannot become a silently substituted Krea job;
         # failures pin the proposal for explicit correction/retry.
@@ -1353,7 +1353,7 @@ def run_build(date_override: Optional[str], dry_run: bool) -> dict[str, Any]:
     except Exception as error:  # noqa: BLE001 - persist the retry before surfacing it
         message = f"{slug}: object creation crashed before the bundle could be recorded: {error}"
         return _fail_and_pin(path, message, dry_run, already_pinned=already_pinned)
-    expected_requests = 14 if proposal.get("bundle_version") == 3 else 6
+    expected_requests = {3: 14, 4: 10}.get(proposal.get("bundle_version"), 6)
     if len(art_entries) != expected_requests or len({
         _art_request_id(entry) for entry in art_entries
     }) != expected_requests or len(built.get("art") or []) != expected_requests:
