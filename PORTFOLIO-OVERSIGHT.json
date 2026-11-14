@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-11-14T18:15:31.859622+00:00",
+  "generated_at": "2026-11-14T22:35:35.722979+00:00",
   "summary": {
     "status": "clean",
     "roadmap_errors": 0,
-    "roadmap_warnings": 72,
+    "roadmap_warnings": 71,
     "project_forward_drift": 0,
     "project_reverse_orphans": 0,
     "project_unresolved": null,
@@ -15,7 +15,7 @@
   "openai_scheduled_agent": {
     "overdue": true,
     "last_activity": "2026-10-25T01:09:44+00:00",
-    "hours_since": 497.1,
+    "hours_since": 501.43,
     "stale_hours": 6.0,
     "marker": "openai-scheduled-",
     "note": "Legacy git diagnostic only: OPENAI-SCHEDULED-HEARTBEAT.json and coordination markers do not determine ChatGPT scheduler health. Native ChatGPT task metadata is authoritative for scheduler liveness."
@@ -35,20 +35,20 @@
     "unresolved": null
   },
   "roadmap_audit": {
-    "generated_at": "2026-11-14T18:15:31.859629+00:00",
+    "generated_at": "2026-11-14T22:35:35.722985+00:00",
     "summary": {
       "roadmaps": 95,
       "active_projects": 20,
       "continuous_projects": 15,
       "playtest_projects": 1,
-      "tasks": 2986,
-      "ready": 260,
-      "waiting": 213,
-      "needs_human": 36,
-      "in_progress": 36,
-      "done": 2364,
+      "tasks": 2987,
+      "ready": 256,
+      "waiting": 212,
+      "needs_human": 37,
+      "in_progress": 38,
+      "done": 2367,
       "errors": 0,
-      "warnings": 72,
+      "warnings": 71,
       "info": 130
     },
     "errors": [],
@@ -149,14 +149,7 @@
         "code": "STALE_IN_PROGRESS",
         "project": "cthulhuquarium",
         "task": "t-099",
-        "message": "Task has remained claimed for 8 days."
-      },
-      {
-        "severity": "warning",
-        "code": "STALE_CLAIM_FIELDS",
-        "project": "dead-air",
-        "task": "t-002",
-        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
+        "message": "Task has remained claimed for 9 days."
       },
       {
         "severity": "warning",
@@ -198,14 +191,14 @@
         "code": "STALE_IN_PROGRESS",
         "project": "emperor-of-dust",
         "task": "t-049",
-        "message": "Task has remained review for 20 days."
+        "message": "Task has remained review for 21 days."
       },
       {
         "severity": "warning",
         "code": "STALE_IN_PROGRESS",
         "project": "emperor-of-dust",
         "task": "t-050",
-        "message": "Task has remained review for 20 days."
+        "message": "Task has remained review for 21 days."
       },
       {
         "severity": "warning",
@@ -475,6 +468,13 @@
       },
       {
         "severity": "warning",
+        "code": "SOFT_NEEDS_HUMAN",
+        "project": "slime-city",
+        "task": "t-063",
+        "message": "needs-human has no obvious hard-gate marker; consider returning it to ready, setting soft_gate: true, or documenting the actual gate."
+      },
+      {
+        "severity": "warning",
         "code": "POSSIBLY_UNNECESSARY_GATE",
         "project": "tzaddik-gallery",
         "task": "t-013",
@@ -492,7 +492,7 @@
         "code": "STALE_IN_PROGRESS",
         "project": "weird-humboldt",
         "task": "t-020",
-        "message": "Task has remained review for 10 days."
+        "message": "Task has remained review for 11 days."
       },
       {
         "severity": "warning",
@@ -514,13 +514,6 @@
         "project": "weird-humboldt",
         "task": "t-060",
         "message": "Task has remained review for 22 days."
-      },
-      {
-        "severity": "warning",
-        "code": "STALE_CLAIM_FIELDS",
-        "project": "zuzu-gamebook",
-        "task": "t-007",
-        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
       },
       {
         "severity": "warning",
