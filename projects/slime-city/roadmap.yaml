@@ -225,12 +225,12 @@ tasks:
     implementation_pr: 'silasfelinus/kind_robots#5159'
   - id: t-063
     title: 'Main-game standard: audit and close the gaps for Slime City'
-    status: claimed
+    status: ready
     milestone: m4
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-14T17:46:38Z'
+    updated: '2026-11-14T18:12:08Z'
     note: |-
       Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -309,10 +309,18 @@ tasks:
       verifySlimeCityClash.test.ts. MERGED kind_robots#5171 squash 7260622 after 13/13 checks
       green. Still open per STANDARD-AUDIT-2026-11-12.md: reading/animation speed setting,
       mid-Clash Tower/VS resume on reload, account import of guest saves (design decision).
+
+      2026-11-14 PT settings slice: persisted CLASH SPEED (relaxed 1.6x / normal / quick 0.4x;
+      device-local kr-slime-city-clash-speed-v1) on the title settings screen and the in-play
+      Clash HUD gear. Clash pace is now computed live, so changes apply on the next beat.
+      Reduced motion still caps it at quick. MERGED kind_robots#5172 squash e364bf3 after all
+      checks green; test:slime-city-lab exit 0 locally. Still open per STANDARD-
+      AUDIT-2026-11-12.md: mid-Clash Tower/VS resume on reload, and account import of guest
+      saves (design decision).
     owner: worker
     claimed_by: session_01L5NKxcDQYxYJomzzpm8tJP
     claimed_at: '2026-11-14T17:46:38Z'
-    implementation_pr: 'silasfelinus/kind_robots#5171'
+    implementation_pr: 'silasfelinus/kind_robots#5172'
   - id: t-064
     title: 'CPU values PIERCE gear only against armor, then rebalance Undertow and Bloodfairies starters'
     status: done
