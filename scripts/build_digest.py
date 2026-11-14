@@ -173,6 +173,8 @@ def dead_air_private_film_payload(state_path="projects/dead-air/production-state
                 title = str(meta.get("title") or title)
             return {
                 "status": "ready", "date": completed.isoformat(), "title": title,
+                "fresh_today": completed == today,
+                "final_art_image_id": image_id,
                 "private": True, "music_video_id": video_id,
                 "url": f"https://kindrobots.org/play/video-generator?studio=music&video={video_id}",
                 "duration_seconds": probe["duration_seconds"],
@@ -184,6 +186,8 @@ def dead_air_private_film_payload(state_path="projects/dead-air/production-state
             "private": True,
             "title": "Dead Air commercial",
             "date": today.isoformat(),
+            "fresh_today": False,
+            "music_video_id": newest.get("music_video_id"),
         }
     except (OSError, ValueError, KeyError, TypeError, yaml.YAMLError) as error:
         return {"status": "unavailable", "private": True, "reason": str(error)[:160]}
