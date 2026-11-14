@@ -167,7 +167,7 @@ tasks:
   - id: t-008
     milestone: m2
     title: Record per-shot render times and skip the optional GPU clip when the queue is congested
-    status: ready
+    status: claimed
     stakes: reversible
     passes: 0
     depends_on: []
@@ -178,3 +178,7 @@ tasks:
       compositor cut is never waiting on a clip that cannot finish inside the
       two-hour window. Also add one late-morning catch-up pass, since removing the
       10am PT cron left no retry after 3:15am PST. Cover both with tests.
+    owner: worker
+    claimed_by: 2026-11-14T220600Z-dead-air-t008-74a1
+    claimed_at: '2026-11-14T22:06:00Z'
+    updated: '2026-11-14T22:06:00Z'
