@@ -162,3 +162,25 @@ def test_scheduled_writer_does_not_reanimate_old_v3_scenarios(tmp_path, monkeypa
     selected, reason = scheduler.eligible_proposal(None)
     assert selected is None
     assert "legacy draft retained" in reason
+
+
+def test_old_v3_drafts_do_not_count_toward_v4_authoring_buffer(tmp_path, monkeypatch):
+    old = tmp_path / "2026-11-08-history.md"
+    current = tmp_path / "2026-11-14-current.md"
+    for path, day, bundle in (
+        (old, "2026-11-08", 3),
+        (current, "2026-11-14", 4),
+    ):
+        path.write_text(
+            f"---\nproposal: true\nproposal_date: '{day}'\n"
+            f"status: outline\n---\n"
+            "<!-- proposal-data\n" + json.dumps({"bundle_version": bundle}) +
+            "\n-->\n",
+            encoding="utf-8",
+        )
+    monkeypatch.setattr(proposal_writer, "_files", lambda: [old, current])
+    monkeypatch.setattr(proposal_writer, "_target_date", lambda: "2026-11-14")
+    monkeypatch.setattr(
+        proposal_writer, "_proposal_is_current_contract", lambda _text: True
+    )
+    assert proposal_writer.unbuilt_backlog() == ["2026-11-14"]
