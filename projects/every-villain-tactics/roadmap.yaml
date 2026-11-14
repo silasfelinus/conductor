@@ -90,12 +90,12 @@ tasks:
       Full history: projects/every-villain-tactics/HISTORY.md#t-001
   - id: t-025
     title: 'Main-game standard: audit and close the gaps for Every Villain Tactics'
-    status: claimed
+    status: review
     milestone: m4
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-14T12:54:38.550Z'
+    updated: '2026-11-14T12:59:06.595Z'
     note: |-
       Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -126,6 +126,8 @@ tasks:
       2026-11-13 PT, user-directed remaining character art: staged 177 unique private Unstable Comfy art cells in three auto_submit ledgers, not chat ImageGen. 83 missing named Hero/Villain role reveals, 47 powered lieutenants and 47 one-hit crew introductions, each story-specific; preserved 12 DONE First Bell images, the direct Contingency villain art, Mags Hardpan DONE, and existing Warren Wreckers ArtJobs. Canonical roster name drift (three henchman types) resolved in favor of Kind Robots live JSON. Executable ledger coverage tests and ART-GAP reconciliation note included; awaiting CI/merge and then verified numeric ArtJob receipts from Auto Art Generate. Remaining animation, captain-closeup and rendered visual QA work stays open.
 
       2026-11-13 PT: Private Comfy character art gap batch merged to conductor main in PR #7360 (4217d6e) after Security Audit, PR handoff, task event, and full Worker CI passed (4,631 Python tests passed in first CI pass; corrected one people-negation prompt and second full CI green). Authored 177 new distinct auto_submit ArtJob requests in three ledgers: 83 Hero/Villain reveals, 47 powered lieutenants, 47 one-hit crew and captain introductions. Reused 12 DONE First Bell reveals, Contingency direct villain poster, Mags Hardpan DONE and Warren Wreckers prior jobs. Merge triggered Auto Art Generate run 43544657982, PENDING behind earlier run 43543279251; no new numeric ArtJob receipts yet. Must verify actual jobs under subjects.jobs.unstable-production and later ArtImages before describing the queue as submitted or art complete. User rejected the nine chat-generated generic hero poses, which are NOT game assets. Remaining tasks: confirm accepted Comfy ArtJob IDs and render quality; attach portraits; commission standees, captain closeups, strike/hit/ disarm and telegraph animations, then visual acceptance. No deployment.
+
+      2026-11-14 PT: verified all 177 new ArtJobs DONE with ArtImage receipts in Conductor three ledgers. Implementation branch attaches 83 new hero/villain images, 47 lieutenant and 47 henchman crew images, retains 12 original First Bell images, existing Mags Hardpan Unstable image and finished Warren Wreckers Nova Comic candidate; Contingency villain retains its public Prom poster. 191 private mappings serve all 48x4 comic viewpoints, with authenticated blob loader and Prom public fallback. Front menu now displays private painted reveals too, never duplicating media or making art public. Test covers IDs, uniqueness, names, fallback and role lookup. Awaiting CI/merge; visual review and production deployment remain separate.
     owner: worker
     claimed_by: 20261114T125438550Z-evt-evt-t025-art-attach-e93b
     claimed_at: '2026-11-14T12:54:38.550Z'
