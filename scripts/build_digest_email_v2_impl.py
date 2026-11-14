@@ -407,6 +407,25 @@ def daily_deliveries_section(daily: dict[str, Any] | None) -> str:
             '<p>No five-entry verified delivery docket was submitted for this Pacific day. '
             'No proposed additions are being presented as shipped.</p></div>'
         )
+    # Five entries do not necessarily represent five independent PRs or art jobs.
+    # Surface that distinction instead of implying today's digest grew five assets.
+    unique_prs = {row.get("pull_request") for row in rows if row.get("pull_request")}
+    art_jobs = sum(len((row.get("art") or {}).get("job_ids") or []) for row in rows)
+    evidence_notes = []
+    if len(unique_prs) < len(rows):
+        evidence_notes.append(
+            f"{len(rows)} entries came from {len(unique_prs)} implementation PR(s). "
+            "Grouped design changes are not independent productions."
+        )
+    if art_jobs == 0:
+        evidence_notes.append(
+            "No new Comfy ArtJob IDs are evidenced in these project upgrades; "
+            "linked static assets are not necessarily newly generated art."
+        )
+    evidence_notice = (
+        '<p style="color:#92400e">' + esc(" ".join(evidence_notes)) + '</p>'
+        if evidence_notes else ""
+    )
     import pitch_links
     html = []
     for row in rows:
@@ -456,8 +475,10 @@ def daily_deliveries_section(daily: dict[str, Any] | None) -> str:
         '<p>These are actual PR-backed additions or clearly marked progress, not new ideas '
         'awaiting permission. Keep, request modifications, or reject after reviewing. '
         'A rejection creates follow-up rollback work, not an immediate destructive removal. '
-        'The separate Daily Dream continues unchanged.</p>'
-        '<ol style="padding-left:20px">' + "".join(html) + '</ol></div>'
+        'The old Daily Dream object writer is paused; Dead Air is the current '
+        'daily film production track.</p>'
+        + evidence_notice
+        + '<ol style="padding-left:20px">' + "".join(html) + '</ol></div>'
     )
 
 
