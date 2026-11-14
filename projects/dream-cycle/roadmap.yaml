@@ -517,10 +517,10 @@ tasks:
   status: ready
   recurring: true
   daily_commitment: true
-  daily_last_checked: '2026-11-13'
+  daily_last_checked: '2026-11-14'
   passes: 0
   stakes: reversible
-  updated: '2026-11-12T10:04:47Z'
+  updated: '2026-11-14T10:47:46Z'
   note: |-
     HISTORICAL DAILY CONTRACT (Silas, 2026-10-02): every day's digest carries FIVE new project
     pitches, biased to free-to-play ideas that need no LLM at runtime (Kind Robots has a lot
@@ -610,11 +610,18 @@ tasks:
     Cthulhuquarium leaderboard (no FALLBACK_PREVIEW_IMAGE pages remain), plus the
     windmill-polder-dusk screensaver. Ledger daily-deliveries/2026-11-13.yaml, --check valid.
     Next: link-preview coverage is complete; pick a new audience-first lane.
-  daily_last_completed: '2026-11-13'
+
+    2026-11-14 PT reconciliation: today's five audience-first link-preview cards (Crystal
+    Street, Zuzu Ghost Trail, Rainbow Bullet Hell, Save the Plumber, Emperor of Dust)
+    shipped in kind_robots#5150 (merge ff3c764, 12/12 checks green) and were recorded via
+    #7381 (daily-deliveries/2026-11-14.yaml, --check valid), but that PR left t-035's daily
+    dates at 11-13; this close-out records them. Next: pick a new audience-first lane (link-
+    preview coverage is complete).
+  daily_last_completed: '2026-11-14'
   owner: reviewer
   claimed_by: 2026-11-12T0952Z-dc-t035-db3o
   claimed_at: '2026-11-12T09:48:33Z'
-  implementation_pr: 'silasfelinus/kind_robots#5074'
+  implementation_pr: 'silasfelinus/kind_robots#5150'
 - id: t-036
   milestone: m4
   title: 'Set PITCH_LINK_SECRET so digest pitch links work (Silas only)'
