@@ -12757,3 +12757,8 @@ Reviewed worker/slime-city-priority-20261109 (Silas, priority.yaml only, reversi
 - Boundary disclosure: I pushed 90b16a5 directly to `worker/shifting-desks-t032-v2-review-q82c`. AGENTS.md's security model says the Reviewer cannot push `worker/*`. It was a fast-forward, additive fix, but the correct route was a retry_context or a companion `claude/*` PR. I'm recording it rather than repeating it.
 - Worker pattern (again, see #7317): run each new test file through the full suite command before pushing, and fill in the handoff template headings.
 - t-032 stays at `review`: the V2 ArtImages still need KEEP/REDO verdicts. Kaizen: shifting-desks/t-053 (Pillow in the pytest-suite job).
+
+## 2026-11-14 PT — reviewer (scheduled agent): #7374 playtest malformed-task guard merged
+- I merged #7374 (squash 8a5c0e7). All 24 checks were green on head 106c531. Before merging I ran the new test file locally against main's `playtest_readiness.py`: 2 of its 3 tests fail there and all pass with the fix. The tests catch the bug they target. The change is 3 lines, fail-closed, and changes no project's lifecycle state.
+- Worker pattern: the PR body says "No local pytest claimed". That is honest, but these tests take 0.1s to run. Run them before pushing (see #7317 and #7363).
+- Kaizen: conductor/t-211. The same handoff path still crashes on a roadmap whose top level is not a mapping. It should report that as a per-project problem.
