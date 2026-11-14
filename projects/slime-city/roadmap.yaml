@@ -805,7 +805,7 @@ tasks:
   - id: t-017
     milestone: m2
     title: "Queue and verify distinct art for teams, districts and specials"
-    status: claimed
+    status: ready
     depends_on: t-001
     passes: 0
     stakes: reversible
@@ -844,11 +844,22 @@ tasks:
       imageData and imagePath 404, so they were re-queued in art/SLIME-CITY-CURATION-
       REDO-3.yaml; the Ironjaw prompts were rewritten as lab lizards. Next: curate REDO-3 once
       DONE, then screenshot the lab/Clash at 390/768/1440. No deploy claimed.
-    updated: '2026-11-14T20:46:54Z'
+
+      2026-11-14 PT curation of SLIME-CITY-CURATION-REDO-3 (all 10 DONE, bytes fetched with
+      auth): kept and wired 6 in kind_robots#5175 (cards afterparty-first-aid 269287, spare-
+      rivet-shower 269288, tripcord 269290, weld-patch 269292, quiet-listener 269293; Clash
+      playmat 269286 registered as boards/pitworks-clash but the Clash view still uses
+      pitworks-blackout until the playmat is checked against the alley grid). Rejected 4:
+      festival-triage 269289 (child in frame), exchange/5/defeat 269294 (childlike fairies),
+      TURF board 269295 and ironjaw bonus-plate 269291 (garbled painted glyphs). These are re-
+      queued in art/SLIME-CITY-CURATION-REDO-4.yaml with the causing nouns removed. Next:
+      curate REDO-4 once DONE; screenshot lab/Clash at 390/768/1440 when an authenticated
+      environment exists.
+    updated: '2026-11-14T20:52:11Z'
     owner: worker
     claimed_by: session_01L5NKxZnzZgXMzHdS6eqZ4d
     claimed_at: '2026-11-14T20:46:54Z'
-    implementation_pr: 'silasfelinus/kind_robots#5017'
+    implementation_pr: 'silasfelinus/kind_robots#5175'
   - id: t-018
     milestone: m2
     title: "Build 60 playable neutral mercenaries with legal faction mixing"
