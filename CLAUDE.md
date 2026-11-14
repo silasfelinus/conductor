@@ -27,8 +27,8 @@ Before responding to any task, run a conductor sweep and report it to Silas:
    (escalation or `security-flag`) with `tail -n 80 TALKBACK.md`. Never read or grep the whole file.
 5. **Daily rituals** — each has its own section in `docs/agents/daily-rituals.md`; open it only when
    the ritual is due:
-   - **Dream docket** (step 7): if `build_dream_proposal.py --check` reports fewer than 5 unbuilt
-     proposals, author exactly ONE this session (`--brief` → `--from-json`); exit 1 = empty, author
+   - **Dream docket** (step 7, re-enabled by Silas 2026-11-14 PT, parallel to Dead Air): if `build_dream_proposal.py --check` reports fewer than 5 unbuilt
+     proposals, author exactly ONE version-3, fourteen-asset proposal this session (`--brief` → `--from-json`); exit 1 = empty, author
      now. Read `docs/sweep-checks.md` "Step 7" before authoring.
    - **Five daily upgrades** (step 8, since 2026-10-13): build first, review afterward — five small,
      reversible, CI-tested improvements to active projects, PR-backed, recorded via
