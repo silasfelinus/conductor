@@ -69,11 +69,10 @@ tasks:
   - id: t-002
     milestone: m2
     title: Render and verify the first complete private fifteen-second pilot
-    status: review
-    owner: worker
+    status: done
     claimed_by: 2026-11-14T221205Z-dead-air-t002-2e0d
     claimed_at: '2026-11-14T22:12:05Z'
-    updated: '2026-11-14T22:12:35Z'
+    updated: '2026-11-14T22:12:55Z'
     stakes: reversible
     passes: 0
     depends_on: t-001
@@ -95,6 +94,8 @@ tasks:
       MusicVideo 18, then record the final ArtImage id here.
 
       First private film delivered and independently verified in durable production ledger and Actions output: The Closed Caption Department (MusicVideo 18, final ArtImage 271245), completed 2026-11-13 PT. 15.0 seconds, 1280x720 H.264/AAC, one generated motion clip and four kinetic shots; recorded still ArtJobs 68688-68692 and clip ArtJob 68794. Second private film Plot Assist also completed 2026-11-14 PT (MusicVideo 19, final ArtImage 272338). No public release authorization is inferred.
+
+      Pilot actually completed, not merely queued: MusicVideo 18 and final ArtImage 271245, 15-second H.264/AAC privately archived on 2026-11-13 PT. Rendered ArtJobs and independent probe are in the production ledger; a second verified MP4 (MusicVideo 19, final ArtImage 272338) confirms repeatability. Prior pilot implementation PRs conductor#7315 and conductor#7322 are merged. Release approval is separate dead-air/t-007. This resolves the dependency of dead-air/t-004 daily recurring production.
     implementation_pr: 'silasfelinus/conductor#7322'
   - id: t-003
     milestone: m3
@@ -110,7 +111,7 @@ tasks:
   - id: t-004
     milestone: m4
     title: Daily Dead Air film production and quality iteration
-    status: waiting
+    status: ready
     recurring: true
     daily_commitment: true
     daily_last_checked: null
