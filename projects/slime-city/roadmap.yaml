@@ -225,12 +225,12 @@ tasks:
     implementation_pr: 'silasfelinus/kind_robots#5159'
   - id: t-063
     title: 'Main-game standard: audit and close the gaps for Slime City'
-    status: claimed
+    status: ready
     milestone: m4
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-14T13:04:22Z'
+    updated: '2026-11-14T13:14:54Z'
     note: |-
       Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -269,9 +269,16 @@ tasks:
 
       MERGED 2026-11-14 PT: kind_robots#5156 squash 06d6ce5 after 11/11 checks green. Umbrella
       stays ready for the next settings slice.
+
+      2026-11-14 PT settings slice: persisted LARGE TEXT toggle (store-owned, device-local kr-
+      slime-city-large-text-v1; zoom 1.15 on the console shell because type is rem-sized) in
+      kind_robots#5163, store test extended. Still open per STANDARD-AUDIT-2026-11-12.md: high
+      contrast, reset progress with typed confirmation, an in-play settings entry, and the
+      title-console Scrapbook/Achievements tiles.
     owner: worker
     claimed_by: 2026-11-14T1305Z-slime-city-t063-largetext
     claimed_at: '2026-11-14T13:04:22Z'
+    implementation_pr: 'silasfelinus/kind_robots#5163'
   - id: t-064
     title: 'CPU values PIERCE gear only against armor, then rebalance Undertow and Bloodfairies starters'
     status: done
