@@ -269,3 +269,5 @@ def test_next_seven_seed_films_have_original_visuals_and_story_progression():
     assert len(all_prompts) == len(set(all_prompts))
     assert all(len(by_date[d]["references"]) >= 3 for d in runway)
     assert all(by_date[d]["status"] == "authored" for d in runway)
+    assert all(sum(s["motion"] == "clip" for s in by_date[d]["shots"]) <= 1
+               for d in runway)
