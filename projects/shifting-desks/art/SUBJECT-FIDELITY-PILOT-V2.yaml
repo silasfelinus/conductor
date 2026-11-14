@@ -1,0 +1,68 @@
+# Three private, subject-only fidelity tests after Round 19 went 14/14 REDO on scene fidelity.
+# Brief: projects/shifting-desks/art/ROUND-19-FIDELITY-PILOT.md (Conductor #7356).
+# Strategy: ONE impossible focal subject per image, no supporting story props. Krea 2 only,
+# because SUBJECT-FIDELITY-PILOT-V1 scored Krea 2 2/3 vs Nova Comic 0/3.
+# Not a ROUND-N ledger: these are candidates, never game assets. DO NOT link, overwrite
+# Classic/Noir production paths, or record KEEP until a reviewer inspects each render at full
+# size and thumbnail scale against its single pass/fail line below.
+round: shifting-desks-subject-fidelity-pilot-v2
+project_slug: shifting-desks
+designer: Shifting Desks art fidelity audit
+auto_submit: true
+priority: 55
+is_public: false
+is_mature: false
+cast_loras: false
+status: queued-fidelity-pilot
+lanes:
+- key: krea-prose
+  label: Krea 2 / single focal subject, prose
+  engine: krea2
+  prompt: prose
+  suffix: original mid-century corporate safety-manual gouache illustration, bold screenprint shapes, coarse halftone
+    grain, muted manila, carbon blue, safety orange and oxblood palette, flat painted artwork, single focal subject
+    readable at thumbnail scale
+subjects:
+- key: rear-eyes
+  title: Two open eyes in the back of a coworker's head
+  size: 832x1216
+  seed: 731101
+  asset: shifting-desks/style-fidelity-pilot-v2/rear-eyes
+  pass: two distinct open eyes embedded in the back of the hair, not on a normal face
+  fail: ordinary hair, eyes on a face, or ambiguous markings
+  prompt_prose: Extreme rear close-up of the back of a woman's head with a glossy black bob haircut, seen strictly
+    from behind so only hair and the nape of the neck are visible. Set directly into the back of the black hair
+    are exactly two enormous wide-open human eyes side by side, each with bright whites, a round dark iris, a pupil
+    and heavy upper and lower eyelids with lashes, staring straight at the viewer. The eyes are unmistakably part
+    of the back of the head. Plain cream background with nothing else shown; the uncanny gag fills the composition.
+  negative: face, front view, profile, nose, mouth, sunglasses, hair clips, text, logo, watermark, gore, blood
+- key: living-corridor
+  title: Corridor of three ribbed living doorframes
+  size: 1216x832
+  seed: 731102
+  asset: shifting-desks/style-fidelity-pilot-v2/living-corridor
+  pass: soft ribbed living doorframes clearly dominate all three openings
+  fail: normal rectangular doorframes or merely patterned wallpaper
+  prompt_prose: A straight-on, perfectly symmetrical view down an empty beige office corridor seen from inside an
+    open elevator. In the foreground a rigid, polished steel elevator threshold and door edges frame the view. The
+    corridor holds exactly three doorways, one on the left wall, one on the right wall and one at the far end. Every
+    doorframe is a giant soft fleshy accordion of thick padded organic ribs, pinkish-oxblood and gently bulging,
+    growing seamlessly out of the plaster wall like a throat, so each doorway looks alive. Bare walls and empty
+    carpet emphasize the three living doorframes.
+  negative: people, furniture, posters, tank, rectangular wooden door frames, wallpaper pattern, text, logo, watermark,
+    gore, blood
+- key: mutation-tank
+  title: Smiling three-armed worker inside a glass tank
+  size: 832x1216
+  seed: 731103
+  asset: shifting-desks/style-fidelity-pilot-v2/mutation-tank
+  pass: the whole worker, including all three arms, clearly inside the tank
+  fail: subject in front of the tank, two arms, or ambiguous limbs
+  prompt_prose: One large transparent upright cylindrical glass specimen tank fills the vertical composition, its glass
+    outline, metal cap, base and the flat surface line of pale green liquid near the top all plainly visible. Fully
+    submerged inside the liquid floats a cheerful smiling office worker in a white short-sleeved shirt and narrow
+    tie, with tiny bubbles around them. The worker has exactly three separate arms, two at the shoulders and a third
+    healthy arm growing from the middle of the torso, and that third hand holds an orange ballpoint pen. The entire
+    body, all three arms included, is inside the glass.
+  negative: second tank, nurse, scientist, extra eyes, extra heads, figure outside tank, text, logo, watermark, gore,
+    blood, injury
