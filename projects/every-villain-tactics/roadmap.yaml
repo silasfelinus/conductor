@@ -90,12 +90,12 @@ tasks:
       Full history: projects/every-villain-tactics/HISTORY.md#t-001
   - id: t-025
     title: 'Main-game standard: audit and close the gaps for Every Villain Tactics'
-    status: claimed
+    status: review
     milestone: m4
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-14T01:41:30.857Z'
+    updated: '2026-11-14T01:57:52.310Z'
     note: |-
       Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -122,6 +122,8 @@ tasks:
       Scope: attach all twelve DONE generated ArtImages 270741-270752 (ArtJobs 68782-68793) as original hero/villain comic popup paintings for the six First Bell speakers in Kind Robots. Private art loads through the existing authenticated ArtImage store, with Prom outcome art fallback for failed images and unrendered roles. Added complete per-role mapping tests. Does not affect Prom of Doom shared art. Broader main-game standard remains open.
 
       2026-11-13 PT: Merged Kind Robots #5124 (6e3cd89) after all eight checks passed, including four contract shards, TypeScript, Playbook gameplay, tactics, layout, formatting, architecture and schema. Attached twelve original DONE First Bell Hero/Villain ArtImages 270741-270752 from ArtJobs 68782-68793 through the existing authenticated private ArtImage store, with canonical Prom outcome-art fallbacks. Added portrait-fit presentation that preserves Prom of Doom's default cover behavior and regression tests verifying exactly twelve unique actor variants. Larger main-game standard task remains open for remaining art variants, campaign completion and rendered human playtest. No live deployment or publication was triggered.
+
+      2026-11-13 PT, user-directed remaining character art: staged 177 unique private Unstable Comfy art cells in three auto_submit ledgers, not chat ImageGen. 83 missing named Hero/Villain role reveals, 47 powered lieutenants and 47 one-hit crew introductions, each story-specific; preserved 12 DONE First Bell images, the direct Contingency villain art, Mags Hardpan DONE, and existing Warren Wreckers ArtJobs. Canonical roster name drift (three henchman types) resolved in favor of Kind Robots live JSON. Executable ledger coverage tests and ART-GAP reconciliation note included; awaiting CI/merge and then verified numeric ArtJob receipts from Auto Art Generate. Remaining animation, captain-closeup and rendered visual QA work stays open.
     owner: worker
     claimed_by: 20261114T0139Z-evt-t025-artgap-d8a4
     claimed_at: '2026-11-14T01:41:30.857Z'
