@@ -1463,13 +1463,13 @@ tasks:
   - id: t-064
     milestone: m3
     title: "Bind the Earth letter and Last Train e03/e04 packets into the encounter registry with executable reducer tests"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 2026-11-14T074700Z-memory-dungeon-t-064-9f28
     claimed_at: '2026-11-14T07:47:00Z'
     stakes: reversible
     passes: 0
-    updated: '2026-11-14T07:47:00Z'
+    updated: '2026-11-14T07:48:10Z'
     note: |-
       2026-11-11 PT remaining: **Highest-value immediate code gap:** bind Last Train to actual e03/e04 encounters and replay-validated reachability; reject forged/out-of-order saved decisions. Evidence: RESET-TASK-EVIDENCE-AUDIT-2026-11-10.md (t-064 row).
       Kaizen from t-025 Last Train review (conductor#7168): two writer packets (Earth letters, Last Train) now specify 24 choices and state rules but neither is wired in. Audit occupied e03/e04 cells, bind scene IDs into the registry and Pinia persistence, and implement each packet's acceptance matrix as executable tests (replay, forged-choice, missing-state fallbacks) before any more prose packets.
@@ -1500,6 +1500,8 @@ tasks:
       Partial Last Train replay chronology hardening in kind_robots PR #5142, head 6ebf4a221c4a31b235370de746cbf09d62a730fd. Added adversarial e04/e03/e04 test preventing retroactive e03 token minting and forged save acceptance. CI pending; not merged. Remaining registry/Pinia wiring, letter branches, production ArtJobs, rendered QA. No art or deployment.
 
       CI recovery increment on Kind Robots PR #5142: fixed exact Prettier diff at 222ec420; prior Contract Tests and Fast Changed-File Formatting failed on formatting. New exact-head workflows queued, not yet green. Keep task ready for encounter registry and Pinia wiring, art and browser acceptance. No deployment or ArtJobs.
+
+      Focused adversarial Last Train malformed e04 boundary fix in kind_robots PR #5147. CI pending; runtime registry and Pinia wiring still outstanding.
   - id: t-065
     milestone: m4
     title: "Audit merged PRs for each task released in the 2026-11-10 twelve-world reset and close only proven-complete scope"
