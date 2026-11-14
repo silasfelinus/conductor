@@ -32,7 +32,7 @@ Keep an episode's script, rejected versions, pop-culture reference analysis, hum
 ## Known integration limits
 
 - The code-backed MusicVideo scenes can hold exact shots, duration, style and prompts. Generic `scenes/plan` would overwrite the comic timing; the adapter writes the scene plan itself before render.
-- The music-video pipeline can synthesize a song with ACE-Step, but a 15-second commercial needs authored dialogue. The adapter creates local espeak/FFmpeg provisional VO and a restrained tone bed; voice acting and sound design deserve a human/artistic pass before publication.
+- The music-video pipeline can synthesize a song with ACE-Step, but a 15-second commercial needs authored dialogue. The adapter creates local espeak/FFmpeg provisional VO over an audible original station bed (detuned drone, broadcast hiss, two-note sign-off chime) and refuses any mix with more than 0.6s of accidental dead air below -45 dB. An episode may author a short deliberate silence with `silent_tail_seconds` (0–1.5). Voice acting and sound design still deserve a human/artistic pass before publication.
 - LTX/WAN hero animation is slow on a 12 GB GPU. The adapter permits **one optional clip** per film. Its other shots move using deliberately authored Ken Burns/pans/zooms, title overlays and hard edits. Clip completion is never fabricated; the deadline cut can render without a clip.
 - Run in a Python environment with `pyyaml`, FFmpeg, FFprobe and espeak available. Never print KR_API_TOKEN.
 - `--start` is only for authorized private drafts. Never set `isPublic=true`, deploy, email or externally publish from this script.

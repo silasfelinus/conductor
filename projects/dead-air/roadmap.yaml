@@ -114,8 +114,8 @@ tasks:
     status: claimed
     recurring: true
     daily_commitment: true
-    daily_last_checked: null
-    daily_last_completed: null
+    daily_last_checked: '2026-11-14'
+    daily_last_completed: '2026-11-14'
     stakes: reversible
     passes: 0
     depends_on: t-002
@@ -202,3 +202,13 @@ tasks:
 
       Shipped a major partial increment via merged conductor PR #7406 at edf0d6a2951508d7640e4f45f9617819c584b500, with all four latest final-head workflows green including full Python tests. Six original private 15-second storyboards dated November 15-20 have validated painter prompts, five authored shots each, one optional clip maximum and three documented cultural studies. Together with the existing Clap Credit brief this supplies seven dated upcoming films. Storyboards are production input, not completed ArtImages or delivered videos. Return this nonrecurring task to ready for remaining fresh-asset guard and automatic rolling slate replenishment. Public release remains human gated.
     updated: '2026-11-14T22:34:45Z'
+  - id: t-010
+    milestone: m4
+    title: Keep generated lettering out of Dead Air motion clips and fix still prompt drift
+    status: ready
+    stakes: reversible
+    passes: 0
+    depends_on: []
+    note: |-
+      Filed from the 2026-11-14 PT private screening review (projects/dead-air/reviews/2026-11-14-screening.md). MusicVideo 18's s3 GPU clip baked two lines of garbled fake subtitles and a magenta band into the picture, colliding with the compositor's real caption bar; MusicVideo 19's s1 still hallucinated pseudo-lettering on a sign, and its s3 still dropped the authored red motive-thread and swapped the mechanic scene for a kneeling-at-a-car composition. Apply the PAINT_GUARDS lettering check to motion prompts too (check every seeded episode still validates), steer premises whose subject is captions/subtitles toward non-text imagery, and consider a cheap automated still-vs-prompt check before export. Private production only; never publish.
+    updated: '2026-11-14T23:20:00Z'
