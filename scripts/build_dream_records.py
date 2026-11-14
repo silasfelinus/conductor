@@ -771,10 +771,13 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
         Callers that omit it get a de-duplicated slugify of the title. See
         specs/SLUG-POLICY.md."""
         resolved_slug = dream_slug or uniq_slug(dtitle)
+        private_candidate = bool(project_target and proposal.get("bundle_version") == 4)
+        designer = f"{DESIGNER}:{project_target}" if private_candidate else DESIGNER
         dream_body = {
             "title": dtitle, "slug": resolved_slug,
-            "dreamType": dream_type, "designer": DESIGNER, "creationSource": CREATION_SOURCE,
-            "isPublic": True, "description": description,
+            "dreamType": dream_type, "designer": designer, "creationSource": CREATION_SOURCE,
+            "isPublic": not private_candidate, "allowReviews": not private_candidate,
+            "description": description,
             "flavorText": flavor[:500] if flavor else None,
             "artPrompt": art_prompt or None, "icon": icon,
         }
@@ -785,14 +788,14 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
                 "title": dtitle,
                 "slug": resolved_slug,
                 "dreamType": dream_type,
-                "designer": DESIGNER,
+                "designer": designer,
                 "description": description,
             },
         )
         if not dream:
             return None
         sheet_body = {
-            "designer": DESIGNER, "isPublic": True,
+            "designer": designer, "isPublic": not private_candidate,
             # extraData is a String @db.LongText column — send JSON as a string,
             # not a raw object (an object 400s with a Prisma-invalid error).
             "extraData": json.dumps({**extra_base, "elementType": dream_type,
@@ -991,10 +994,9 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
     # They share this build's rollback ledger and the same 14-request handoff.
     if proposal.get("bundle_version") == 3:
         extras = proposal["zuzu_assets"]
-        created = {
-            "locations": [], "characters": [],
-            "rewards": [], "scenarios": [],
-        }
+        created = {"locations": [], "characters": []}
+        if proposal.get("bundle_version") == 3:
+            created.update({"rewards": [], "scenarios": []})
         zuzu_location_ids: dict[str, int] = {}
         zuzu_location_titles: dict[str, str] = {}
         built["records"]["zuzu"] = created
@@ -1036,7 +1038,9 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
             rec = card_dream(
                 "LOCATION", loc["title"], description, loc["local_rule"],
                 art_prompt, "kind-icon:map-pin", el,
-                {"title": loc["title"], "subtitle": "Zuzu location",
+                {"title": loc["title"],
+                 "subtitle": ("Private proposed setting for " + project
+                              if proposal.get("bundle_version") == 4 else "Zuzu location"),
                  "hook": loc["art_direction"],
                  **trio([("Known For", loc["known_for"]),
                          ("Local Rule", loc["local_rule"]),
@@ -1062,8 +1066,12 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
                 ch["name"], ch["look"], ch["role_drive"], ch["carries"],
                 scene_world, tone, style=CHECKPOINT_LANES[family]["style"],
             )
+            candidate = proposal.get("bundle_version") == 4
             body = {
-                "name": ch["name"], "designer": DESIGNER, "isPublic": True,
+                "name": ch["name"],
+                "designer": f"{DESIGNER}:{project}" if candidate else DESIGNER,
+                "isPublic": not candidate, "allowReviews": not candidate,
+                **({"role": "Proposed character model"} if candidate else {}),
                 "drive": ch["role_drive"], "quirks": ch["complication"],
                 "backstory": " ".join((ch["carries"], ch["complication"])),
                 "artPrompt": art_prompt,
@@ -1085,7 +1093,7 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
                       "/api/characters", rec.get("id") if rec else None,
                       project_target=project, checkpoint_family=family)
 
-        for rw in extras["rewards"]:
+        for rw in extras.get("rewards", []):
             project, family, scene_world, tone = zuzu_style(rw)
             el = "zuzu-" + project + "-" + slugify(rw["name"])
             kind = str(rw["reward_type"]).upper()
@@ -1117,7 +1125,7 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
                       "/api/rewards", rec.get("id") if rec else None,
                       project_target=project, checkpoint_family=family)
 
-        for sc in extras["scenarios"]:
+        for sc in extras.get("scenarios", []):
             project, family, scene_world, tone = zuzu_style(sc)
             el = "zuzu-" + project + "-" + slugify(sc["title"]) + "-scenario"
             location_title = zuzu_location_titles.get(project, "")
