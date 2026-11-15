@@ -1611,3 +1611,29 @@ tasks:
     claimed_by: 2026-11-14T22:10:00Z-session_01L5NKxYz5YWf3tBYQeZX8ad
     claimed_at: '2026-11-14T21:47:15Z'
     implementation_pr: 'silasfelinus/kind_robots#5180'
+  - id: t-067
+    title: "Signed-in non-admin visitors should see a calm local-play state, not STORY SYNC ERROR, when progress/story return admin-preview 403"
+    status: ready
+    stakes: reversible
+    owner: worker
+    passes: 0
+    updated: '2026-11-15T08:30:00Z'
+    note: >-
+      Found 2026-11-15 PT during t-017 verification on production /play/slime-city with a fresh cypress-* user:
+      GET /api/slime-city/progress and /api/slime-city/story return 403 "Slime City progression is admin-preview only"
+      (requireSlimeCityPreviewUser), and the lab header shows a red "STORY SYNC ERROR · RELOAD" badge at 768 and 1440
+      (hidden at 390). The gate is intentional; the error presentation is not. Treat that specific 403 as a local-only
+      preview mode (no error badge, no reload loop, short neutral copy), keep the server gate unchanged, and cover it
+      with a store/component test. Audience-first: this is the public play URL.
+  - id: t-068
+    title: "Clash FIGHT button clips past the right edge of the side panel at 1440px"
+    status: ready
+    stakes: reversible
+    owner: worker
+    passes: 0
+    updated: '2026-11-15T08:30:00Z'
+    note: >-
+      Found 2026-11-15 PT during t-017 verification: at a 1440x900 viewport, VS-vs-CPU Clash, the bottom control row
+      (deck, SOUND, UNDO, FIGHT) overflows so the FIGHT button runs past the side panel's right border. 390 and 768 fit.
+      Constrain the row (shrink/wrap labels or reduce gaps), add a layout-contract assertion at 1440, and screenshot
+      390/768/1440 after.
