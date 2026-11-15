@@ -747,11 +747,11 @@ tasks:
   - id: t-029
     milestone: m3
     title: "Establish full enemy, item, achievements and unlock economy"
-    status: review
+    status: ready
     owner: worker
     claimed_by: 2026-11-15T214601Z-memory-dungeon-t-029-7c91e4
     claimed_at: '2026-11-15T21:46:01Z'
-    updated: '2026-11-15T21:50:04Z'
+    updated: '2026-11-15T22:47:38Z'
     depends_on: t-021
     passes: 0
     stakes: reversible
@@ -776,6 +776,13 @@ tasks:
       Focused negative-purse save corruption guard with regression coverage; implementation PR pending exact-head CI. Broader economy catalogs remain unfinished.
 
       Authored six Earth-pair earned non-stat unlocks and a 120-scenario adversarial contract in a scoped Conductor PR. Documentation only; runtime wiring, tests and art remain.
+
+      2026-11-15 PT reviewer: merged conductor#7451 (6bc5c2c) after its only red check, the
+      Worker PR handoff validator, passed once I reformatted the body into the required
+      headings. This slice is docs-only (T029-EARTH-PAIR-UNLOCK-ECONOMY.md). The task goes
+      back to ready for runtime binding, the wider enemy/item/unlock catalog, art and
+      acceptance. Kaizen: t-072.
+    implementation_pr: 'silasfelinus/conductor#7451'
   - id: t-031
     milestone: m4
     title: "Adversarial balance, continuity and cross-world reachability suite"
