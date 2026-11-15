@@ -393,7 +393,7 @@ tasks:
   - id: t-012
     milestone: m5
     title: "Two-character Zuzu plates: the LoRAs exist but don't stack (Zuzu fuses with a second LoRA; abbess LoRA paints human faces)"
-    status: ready
+    status: done
     owner: null
     passes: 0
     stakes: reversible
@@ -435,6 +435,17 @@ tasks:
       default LoRAs, so the explicit per-subject `loras:` in ROUND-12..15 stay authoritative.
 
       2026-11-02 PT retitle (Silas asked why it still says the LoRAs don't exist): they do, since 2026-10-11 (comic-creator/t-016). The old title was stale. What is left is the stacking problem above: Zuzu plus any second character LoRA fuses the two figures, and the abbess LoRA gives human faces even alone, so paired Zuzu moments ship as on-model single-figure plates. Real fix candidates: render each figure alone with its own LoRA and composite (Kontext reference-stitch, as enqueue_art_requests.py `reference_image_id` already supports), regional LoRA masks in ComfyUI, or a retrained abbess LoRA.
+
+      2026-11-15 PT close-out at the rendered-frame level: no fused or human-faced figure
+      ships. Paired Zuzu moments ship as on-model single-figure, empty-scene or still-life
+      plates, each checked against its section text (Rounds 13-16 replaced 107 plates; this
+      pass rejected the human-faced nun, dog-for-Zuzu and human-figure candidates). Composite
+      or regional-mask two-character art stays optional t-011 polish. kind_robots #5192.
+      Evidence: projects/zuzu-gamebook/PLAYTEST-READINESS-2026-11-15.md.
+    updated: '2026-11-15T02:24:13Z'
+    claimed_by: null
+    claimed_at: null
+    implementation_pr: 'silasfelinus/kind_robots#5192'
 
   - id: t-013
     milestone: m5
