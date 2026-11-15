@@ -1506,7 +1506,7 @@ tasks:
   - id: t-088
     milestone: m8
     title: "Glitch Garden depth slice 1: Prism core and the classic's missing rules"
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
     note: >-
@@ -1523,16 +1523,20 @@ tasks:
       prism flower powers (pink/gold/cyan/violet, up to two per beam), sprinkler cans with
       chaining, patch multiplier, data-driven garden format, double-density sprites, pilot
       probe waves 1-10 and Pixel/HD screenshots.
+
+      2026-11-14 PT: shipped in silasfelinus/kind_robots#5199 (squash 7dd5098), all CI checks
+      green (TypeScript, contract shards 1-4, cabinet viewport, Rescue Rally cabinet
+      contract). Lane evidence in the PR body; staged fixtures only, no human pacing claimed.
     owner: worker
     claimed_by: 2026-11-15T0319Z-arcade-lane-glitch-elegant-noether
     claimed_at: '2026-11-15T03:19:42Z'
-    updated: '2026-11-15T03:19:42Z'
-    implementation_pr: 'silasfelinus/kind_robots#3731'
+    updated: '2026-11-15T04:03:12Z'
+    implementation_pr: 'silasfelinus/kind_robots#5199'
 
   - id: t-089
     milestone: m8
     title: "Glitch Garden depth slice 2: Spring and Summer"
-    status: waiting
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-088
@@ -1594,7 +1598,7 @@ tasks:
   - id: t-093
     milestone: m8
     title: "Lantern Swarm depth slice 1: Formation engine and the Rooftop Festival"
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
     note: >-
@@ -1605,15 +1609,20 @@ tasks:
       Silas, 2026-10-11: "I need an assessment done of the other arcade games. I want the same level of
       quality improvements, they should not just be thin veneers of the old games. But newer, better, even
       more awesome."
+
+      2026-11-14 PT: shipped in silasfelinus/kind_robots#5199 (squash 7dd5098), all CI checks
+      green (TypeScript, contract shards 1-4, cabinet viewport, Rescue Rally cabinet
+      contract). Lane evidence in the PR body; staged fixtures only, no human pacing claimed.
     owner: worker
     claimed_by: 2026-11-15T0319Z-arcade-lane-lantern-elegant-noether
     claimed_at: '2026-11-15T03:19:45Z'
-    updated: '2026-11-15T03:19:45Z'
+    updated: '2026-11-15T04:03:15Z'
+    implementation_pr: 'silasfelinus/kind_robots#5199'
 
   - id: t-094
     milestone: m8
     title: "Lantern Swarm depth slice 2: Welcome Glow, the Flock and the Evening fork"
-    status: waiting
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-093
@@ -2270,7 +2279,7 @@ tasks:
   - id: t-136
     milestone: m8
     title: "Seed Burst depth slice 1: Seed Pouch, Garden Gate and the first grumps"
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
     note: >-
@@ -2281,15 +2290,20 @@ tasks:
       Silas, 2026-10-11: "I need an assessment done of the other arcade games. I want the same level of
       quality improvements, they should not just be thin veneers of the old games. But newer, better, even
       more awesome."
+
+      2026-11-14 PT: shipped in silasfelinus/kind_robots#5199 (squash 7dd5098), all CI checks
+      green (TypeScript, contract shards 1-4, cabinet viewport, Rescue Rally cabinet
+      contract). Lane evidence in the PR body; staged fixtures only, no human pacing claimed.
     owner: worker
     claimed_by: 2026-11-15T0319Z-arcade-lane-seedburst-elegant-noether
     claimed_at: '2026-11-15T03:19:48Z'
-    updated: '2026-11-15T03:19:48Z'
+    updated: '2026-11-15T04:03:18Z'
+    implementation_pr: 'silasfelinus/kind_robots#5199'
 
   - id: t-137
     milestone: m8
     title: "Seed Burst depth slice 2: Spring and Summer"
-    status: waiting
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-136
@@ -2451,7 +2465,7 @@ tasks:
   - id: t-147
     milestone: m8
     title: "Verify Rescue Rally co-op and solo aim through the actual shared-cabinet input consumer."
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
     depends_on: t-038
@@ -2464,10 +2478,15 @@ tasks:
       at phone/tablet/desktop widths. Keep staged scenarios explicit and avoid claiming live deployment
       or human pacing from fixtures. Fix only a reproduced scoped consumer problem; preserve tests,
       auth and score ceilings.
+
+      2026-11-14 PT: shipped in silasfelinus/kind_robots#5199 (squash 7dd5098), all CI checks
+      green (TypeScript, contract shards 1-4, cabinet viewport, Rescue Rally cabinet
+      contract). Lane evidence in the PR body; staged fixtures only, no human pacing claimed.
     owner: worker
     claimed_by: 2026-11-15T0322Z-arcade-lane-verify-elegant-noether
     claimed_at: '2026-11-15T03:22:48Z'
-    updated: '2026-11-15T03:22:48Z'
+    updated: '2026-11-15T04:03:21Z'
+    implementation_pr: 'silasfelinus/kind_robots#5199'
 
   - id: t-148
     milestone: m8
@@ -2683,7 +2702,16 @@ tasks:
       deploys the merge, earn one arcade achievement (e.g. Gloom Invaders sunny-skies)
       and one event achievement while signed in, and confirm the popup, the cabinet
       pane's earned state and the /achievements?section=arcade chip counts at 390/768/1440.
-    updated: '2026-10-15T03:50:00Z'
+
+      2026-11-14 PT progress: production check -- all 128 active arcade Achievement rows have
+      imagePath art that fetches 200 image/webp from kindrobots.org (redirects followed). With
+      Silas's in-session permission a live record was created for him: AchievementRecord #913,
+      arcade-gloom-invaders-sunny-skies (id 1201), userId 1, isConfirmed false, so the earn
+      popup fires on his next signed-in page load. REMAINING: signed-in browser check of
+      popup, cabinet pane earned state and /achievements?section=arcade chip counts at
+      390/768/1440 -- a signed-in agent browser is blocked in the sandbox; folded into the
+      final playtest acceptance checklist.
+    updated: '2026-11-15T04:04:39Z'
   - id: t-158
     milestone: m9
     title: "Ghost Trail Gen-2 design: Bell Road overworld graph, secret exits, haunted houses"
