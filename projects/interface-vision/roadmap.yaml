@@ -2368,7 +2368,7 @@ tasks:
 - id: t-145
   milestone: m6
   title: "Viewport-first admin and creator tools sweep with tutorial-first help"
-  status: claimed
+  status: review
   passes: 0
   stakes: reversible
   note: |-
@@ -2389,7 +2389,9 @@ tasks:
     Silas-directed mobile account hub fix prepared in kind_robots branch worker/interface-vision-t145-mobile-account-hub-d7e2b. The phone dropdown anchors to the full workspace header while desktop remains avatar-anchored; navigation regression checks added. PR and CI review follow; the wider t-145 sweep remains open.
 
     Silas-reported phone account manager clipping repaired and merged in kind_robots PR #3986 (squash SHA 983867e49519ba87d5d0eb1049df72e9c1a1c435). The mobile dropdown uses the workspace header width and preserves the avatar badge; tablet and desktop stay avatar-anchored. All 17 workflows completed successfully on exact PR head 2389c700f9d8a276845f477fb16cf844e88b4595, including Navigation Consolidation, Layout, Tablet Navigation, TypeScript, Changed-file Prettier, and all four Contract Test shards. Production self-hosted deployment/authenticated visual verification are not yet established. Return this multi-slice sitewide admin/creator sweep to ready.
-  updated: '2026-11-15T12:12:35Z'
+
+    2026-11-15 PT: Silas's iPad Advert Studio screenshot exposed a desktop-only split threshold and transparent editor controls. Scoped fix on worker/interface-vision-t145-advert-studio-tablet-a83c: tablet-width split, bounded editor scrolling, readable panel and regression assertions. Verify PR CI; return recurring multi-slice sweep to ready after merge.
+  updated: '2026-11-15T12:18:00Z'
   owner: worker
   claimed_by: 2026-11-15T121235Z-interface-vision-t-145-advert-layout-a83c
   claimed_at: '2026-11-15T12:12:35Z'
