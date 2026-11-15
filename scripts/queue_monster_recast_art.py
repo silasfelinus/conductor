@@ -40,7 +40,7 @@ STYLE_SUFFIX = (
     "coloring book: thick confident black outlines, extremely detailed but readable shapes, "
     "flat bounded color fills, hard-edged secondary color shapes instead of gradients, strong "
     "readable silhouette, serious theatrical camp, original character design. One single scene as "
-    "one full-bleed image, the artwork running off all four edges of the picture, every surface "
+    "one full-bleed image, the artwork bleeding edge to edge, every surface "
     "in it bare and unmarked."
 )
 
