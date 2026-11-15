@@ -248,7 +248,12 @@ def build_plan(token: str | None, *, close_done: bool) -> tuple[Plan, dict]:
             plan.imports.append(entry)
 
     if close_done:
+        master_sources = master_issue_sources()
         for source, (slug, task) in sorted(mirrored.items()):
+            # Master issues close only through the verified playtest handoff.
+            # Protect them even if conductor:skip is accidentally removed.
+            if source in master_sources:
+                continue
             if task.get("status") != "done" or source not in open_sources:
                 continue
             plan.close.append({"source": source, "project": slug, "task": str(task.get("id"))})
