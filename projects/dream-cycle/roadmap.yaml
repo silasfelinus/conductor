@@ -690,3 +690,27 @@ tasks:
   updated: '2026-10-13T11:07:44Z'
   note: >-
     Kaizen from conductor#6117. The first real build-first docket was manually verified against live GitHub: five distinct gameplay additions merged October13PT, with33 completed passing checks each. daily_project_deliveries.validate currently validates evidence URL/SHA shapes, not source truth. Add a read-only verification command that confirms merged PR and claimed merge SHA, exact implementation head check completion, and Pacific-day attribution, with fixtures for stale heads, prior-day merges, pending/red CI and duplicate implementation evidence. Keep ordinary unit CI network-independent, retain current human gates and do not deploy/send/change source systems. Existing historical dockets must remain intact; an unavailable connector is verification pending, never fake success.
+- id: t-040
+  milestone: m4
+  title: 'Make conductor#7410 (v4 6+4 Dream catalog contract) pass the existing Dream builder test suite'
+  status: ready
+  passes: 1
+  stakes: reversible
+  updated: '2026-11-15T00:55:00Z'
+  retry_context: >-
+    pass 1 failed (quality, reviewer 2026-11-14 PT): conductor#7410 head 32fa1cb is red on
+    "Python test suite" and "contract". 15 existing tests fail: test_build_dream_proposal.py (5),
+    test_daily_dream_build_freshness.py (9), test_dream_stale_recovery.py (1). All 45 pass on main.
+    Cause: v4 gating keys on the wall-clock target date. unbuilt_backlog() skips every non-v4
+    proposal when today is a v4 day, and run_daily_dream_build refuses every non-v4 draft as
+    "legacy draft retained". That drops the fixtures' dated six-asset drafts and hides the
+    "creative contract failed" message the tests check. Fix one of two ways. (a) Pin the target
+    date in those fixtures and add v4 fixtures for the new behaviour. (b) Narrow the filters to
+    bundle_version == 3, if pre-v3 six-asset manuscripts should still drain. Say in the PR which
+    one you chose. Run the full `pytest -q tests/` before pushing; don't rely on the new test file
+    alone. The CONTROL.md/CLAUDE.md wording records a Silas clarification. Cite where Silas gave
+    it in the PR body so the reviewer can confirm it.
+  note: >-
+    Created by reviewer 2026-11-14 PT for untracked PR conductor#7410
+    (worker/dream-cycle-catalog-only-10-assets-20261114). The PR stays open; the Worker pushes
+    fixes to the same branch. Close this task when #7410 merges green.
