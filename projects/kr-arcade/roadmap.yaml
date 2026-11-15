@@ -2660,7 +2660,7 @@ tasks:
   - id: t-153
     milestone: m8
     title: "Verify Cable Crawler earned spares through cabinet retirement and Workbench continuation."
-    status: review
+    status: done
     passes: 0
     stakes: reversible
     depends_on: t-065
@@ -2678,10 +2678,15 @@ tasks:
       ceilings and required checks. Separate staged evidence from human50-60minute pacing
       and deployed-device acceptance. Dependency resolution releases this follow-up after
       verified t-065 closeout.
+
+      2026-11-14 PT: shipped in silasfelinus/kind_robots#5200 (squash 40ddbb4); all 15 CI
+      checks green on the merged head incl. TypeScript, contract shards 1-4, cabinet viewport
+      and the arcade cabinet browser contracts. Staged fixtures/pilot probes only; no human
+      pacing claimed.
     owner: worker
     claimed_by: 2026-11-15T0405Z-arcade-lane-verify5-elegant-noether
     claimed_at: '2026-11-15T04:05:33Z'
-    updated: '2026-11-15T04:24:47Z'
+    updated: '2026-11-15T04:24:50Z'
     implementation_pr: 'silasfelinus/kind_robots#5200'
   - id: t-154
     milestone: m8
