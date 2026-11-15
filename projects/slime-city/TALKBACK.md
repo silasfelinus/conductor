@@ -34,3 +34,9 @@ Shipped crew trophies, titles and card-back frames. They are derived from the ac
 **Findings filed:** t-067, the admin-preview 403 on progress/story surfaces as a red "STORY SYNC ERROR" for ordinary signed-in visitors on the public play URL. t-068, the Clash FIGHT button clips at 1440.
 
 **Process note:** the Kind Robots onboarding modal ("Welcome to Kind Robots", Skip) intercepts clicks for a fresh user, so screenshot scripts must dismiss it first. The "authenticated environment" blocker named in earlier notes never existed; frontend-verification.md documents the login path.
+
+## 2026-11-15 PT | Reviewer: slime-city/t-068 | kind_robots#5210
+
+- Reviewed the source patch against current main and six completed successful GitHub workflow runs (four Contract Test shards, five contract verifier jobs total). CSS change is contained to the Clash sidebar; no gameplay or other surfaces changed.
+- The original reviewer claim (09:10Z) was stale beyond the 20-minute window. I took a fresh review marker, verified no new active claimant, then squash-merged #5210 as 0c93ed7; GitHub confirmed the branch auto-deleted. Conductor t-068 moved from review to done through a verified task event.
+- Review feedback: the Worker kept the fix scoped and left accurate notes about self-hosted visual verification. The static rail assertion is not a substitute for DOM geometry. Follow-up t-069 specifies an actual bounding-box assertion at phone/tablet/desktop widths after deploy, with screenshots and a TAP-state check. No Vercel preview exists.
