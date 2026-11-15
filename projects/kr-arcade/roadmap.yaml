@@ -1361,7 +1361,7 @@ tasks:
   - id: t-079
     milestone: m8
     title: "Brick Bloom depth slice 2: Seedling House and Vine Hall"
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
     depends_on: t-078
@@ -1379,15 +1379,20 @@ tasks:
       neighbours down), trellis (breaks from below only) crates and sprites, with tests.
       PART 3 SHIPPED (kind_robots#3948, merged): pollen mite was already in; snail bot now patrols Vine Hall (2 hits, 150 x stage). REMAINING: ladybot ring, Mister Mulch, The Tangle Rose, Potting
       Bench, golden seeds 1-2, house map screen, save/resume via saves.ts.
+
+      2026-11-15 PT: shipped in silasfelinus/kind_robots#5202 (squash 53db9ed); all 15 CI
+      checks green incl. TypeScript, contract shards 1-4, cabinet viewport and arcade cabinet
+      browser contracts. Staged fixtures/pilot probes only; no human pacing claimed.
     owner: worker
     claimed_by: 2026-11-15T0407Z-arcade-lane-brick-elegant-noether
     claimed_at: '2026-11-15T04:07:42Z'
-    updated: '2026-11-15T04:07:42Z'
+    updated: '2026-11-15T08:39:48Z'
+    implementation_pr: 'silasfelinus/kind_robots#5202'
 
   - id: t-080
     milestone: m8
     title: "Brick Bloom depth slice 3: Cactus Dome and Lily Pond House"
-    status: waiting
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-079
@@ -2174,7 +2179,7 @@ tasks:
   - id: t-127
     milestone: m8
     title: "Quilt Quest depth slice 1: Pressure and pictures"
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
     note: >-
@@ -2184,15 +2189,20 @@ tasks:
       kind_robots utils/arcade/games/ (registry slug quilt-quest). Silas, 2026-10-11: "I need an assessment
       done of the other arcade games. I want the same level of quality improvements, they should not just be
       thin veneers of the old games. But newer, better, even more awesome."
+
+      2026-11-15 PT: shipped in silasfelinus/kind_robots#5202 (squash 53db9ed); all 15 CI
+      checks green incl. TypeScript, contract shards 1-4, cabinet viewport and arcade cabinet
+      browser contracts. Staged fixtures/pilot probes only; no human pacing claimed.
     owner: worker
     claimed_by: 2026-11-15T0359Z-arcade-lane-quilt-elegant-noether
     claimed_at: '2026-11-15T03:59:48Z'
-    updated: '2026-11-15T03:59:48Z'
+    updated: '2026-11-15T08:39:41Z'
+    implementation_pr: 'silasfelinus/kind_robots#5202'
 
   - id: t-128
     milestone: m8
     title: "Quilt Quest depth slice 2: Patchwork Parlour and Hoop Studio"
-    status: waiting
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-127
@@ -2494,7 +2504,7 @@ tasks:
   - id: t-146
     milestone: m8
     title: "Measure Butterfly Joust limited-life survival and first-clear pacing against the authored campaign target."
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
     depends_on: t-050
@@ -2508,10 +2518,15 @@ tasks:
       inflate elapsed time, weaken assertions or label the target met without evidence. Make a focused
       balance fix only if the measurements reproduce a scoped problem, with before/after evidence.
       Attach actual renderer evidence for any visible change and document remaining human-play limits.
+
+      2026-11-15 PT: shipped in silasfelinus/kind_robots#5202 (squash 53db9ed); all 15 CI
+      checks green incl. TypeScript, contract shards 1-4, cabinet viewport and arcade cabinet
+      browser contracts. Staged fixtures/pilot probes only; no human pacing claimed.
     owner: worker
     claimed_by: 2026-11-15T0411Z-arcade-lane-verify6-elegant-noether
     claimed_at: '2026-11-15T04:11:18Z'
-    updated: '2026-11-15T04:11:18Z'
+    updated: '2026-11-15T08:39:53Z'
+    implementation_pr: 'silasfelinus/kind_robots#5202'
 
   - id: t-147
     milestone: m8
@@ -2587,7 +2602,7 @@ tasks:
   - id: t-150
     milestone: m8
     title: "Verify Ribbon Riders wrap topology at arena seams and the capture-size boundary."
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
     depends_on: t-074
@@ -2607,11 +2622,15 @@ tasks:
       matrix and exact 160/320 boundary, expected cells from authored rectangles, all 17 CI
       checks green. STILL OPEN: public-steering captures for representative shapes and native
       renderer evidence for one seam case.
+
+      2026-11-15 PT: shipped in silasfelinus/kind_robots#5202 (squash 53db9ed); all 15 CI
+      checks green incl. TypeScript, contract shards 1-4, cabinet viewport and arcade cabinet
+      browser contracts. Staged fixtures/pilot probes only; no human pacing claimed.
     owner: worker
     claimed_by: 2026-11-15T0417Z-arcade-lane-verify7-elegant-noether
     claimed_at: '2026-11-15T04:17:21Z'
-    updated: '2026-11-15T04:17:21Z'
-    implementation_pr: 'silasfelinus/kind_robots#3701'
+    updated: '2026-11-15T08:40:00Z'
+    implementation_pr: 'silasfelinus/kind_robots#5202'
 
   - id: t-151
     milestone: m8
