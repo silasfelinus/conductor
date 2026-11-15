@@ -41,7 +41,11 @@ Before responding to any task, run a conductor sweep and report it to Silas:
    - **Five daily upgrades** (step 8, since 2026-10-13): build first, review afterward — five small,
      reversible, CI-tested improvements to active projects, PR-backed, recorded via
      `python scripts/daily_project_deliveries.py --brief` → `projects/dream-cycle/daily-deliveries/<date>.yaml`
-     → `--materialize` → `--check`. **Audience-first window through 2026-11-25 PT:** at least three
+     → `--materialize` → `--check`. Starting 2026-11-15 PT, each entry names
+     a DISTINCT canonical project `roadmap_task: t-NNN`. Append
+     `daily-delivery:<date>/<slug>` and the implementation PR to that existing
+     task's note; never generate five separate roadmaps.
+     **Audience-first window through 2026-11-25 PT:** at least three
      of the five help a first-time visitor find, understand, share or support the site.
    - **Playbook challenge** (step 9): **stopped** by Silas 2026-10-29 PT (CONTROL.md "2026-10-29 PT
      daily creative correction"). Do not author `pitches/playbook-challenges/` dockets or revive them
