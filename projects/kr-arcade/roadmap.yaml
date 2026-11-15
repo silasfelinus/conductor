@@ -2454,7 +2454,7 @@ tasks:
   - id: t-147
     milestone: m8
     title: "Verify Rescue Rally co-op and solo aim through the actual shared-cabinet input consumer."
-    status: review
+    status: done
     passes: 0
     stakes: reversible
     depends_on: t-038
@@ -2467,10 +2467,14 @@ tasks:
       at phone/tablet/desktop widths. Keep staged scenarios explicit and avoid claiming live deployment
       or human pacing from fixtures. Fix only a reproduced scoped consumer problem; preserve tests,
       auth and score ceilings.
+
+      2026-11-14 PT: shipped in silasfelinus/kind_robots#5199 (squash 7dd5098), all CI checks
+      green (TypeScript, contract shards 1-4, cabinet viewport, Rescue Rally cabinet
+      contract). Lane evidence in the PR body; staged fixtures only, no human pacing claimed.
     owner: worker
     claimed_by: 2026-11-15T0322Z-arcade-lane-verify-elegant-noether
     claimed_at: '2026-11-15T03:22:48Z'
-    updated: '2026-11-15T03:51:46Z'
+    updated: '2026-11-15T04:03:21Z'
     implementation_pr: 'silasfelinus/kind_robots#5199'
 
   - id: t-148
