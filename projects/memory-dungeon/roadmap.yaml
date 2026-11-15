@@ -900,12 +900,9 @@ tasks:
   - id: t-037
     milestone: m2
     title: "Build bounded cross-realm consequence ledger"
-    status: review
-    updated: '2026-11-15T07:53:00Z'
+    status: ready
+    updated: '2026-11-15T10:45:16Z'
     depends_on: t-022
-    owner: worker
-    claimed_by: 2026-11-15T075120Z-memory-dungeon-t-037-c8f4
-    claimed_at: '2026-11-15T07:51:20Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -922,6 +919,8 @@ tasks:
       2026-11-04 PT cleanup pass: stale review with an expired claim; the recorded slice landed (or was superseded) and the note itself lists remaining scope, so back to ready for the next slice rather than done.
 
       Added six serialized original/mirrored House worldframe restoration regressions in Kind Robots; CI and PR review pending. Broader consequence-ledger acceptance remains open.
+
+      2026-11-15 PT: Merged focused six-worldframe serialized restoration regression PR #5205 (squash c1e56e93); six exact-head workflows green, including Contract Tests. Full bounded cross-realm ledger and adversarial acceptance remain open; return to ready for next scoped increment.
   - id: t-038
     title: "Memory Dungeon master bible: 8 original/twisted worlds, 4 collision finales, 12 total"
     status: review
