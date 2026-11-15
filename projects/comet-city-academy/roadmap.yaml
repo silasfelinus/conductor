@@ -843,7 +843,7 @@ tasks:
     source_issue: "silasfelinus/kind_robots#4181"
     updated: '2026-11-01'
     note: |-
-      FROM GITHUB ISSUE silasfelinus/kind_robots#4181 (https://github.com/silasfelinus/kind_robots/issues/4181), opened by @silasfelinus on 2026-10-25. Imported by scripts/sync_github_issues.py. Reference the issue in the implementing PR (`Closes silasfelinus/kind_robots#4181`) so it closes on merge; the bridge closes it otherwise once this task is done.
+      FROM GITHUB ISSUE silasfelinus/kind_robots#4181 (https://github.com/silasfelinus/kind_robots/issues/4181), opened by @silasfelinus on 2026-10-25. Imported by scripts/sync_github_issues.py. Reference the canonical roadmap in implementation PRs with `Refs silasfelinus/kind_robots#4181`, never `Closes`. Keep #4181 open throughout finite build, art and QA work. Only the verified playtest handoff workflow may prefix `[FLAGGED FOR HUMAN TESTING]` and close the single master issue after Conductor lifecycle, priority, evidence and genuine `needs-human` subjective-acceptance gate are confirmed; closing the issue is not human approval or permission to publish.
 
       # Prom of Doom (Capes & Tassels series) | Master Completion Roadmap
 

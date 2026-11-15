@@ -73,6 +73,7 @@ OVERRIDES_FILE = ROOT / "project-overrides.yaml"
 
 TRUSTED_ASSOCIATIONS = {"OWNER", "MEMBER", "COLLABORATOR"}
 SKIP_LABEL = "conductor:skip"
+MASTER_ISSUES_FILE = ROOT / "docs" / "agents" / "master-issues.yaml"
 PROJECT_LABEL_PREFIX = "project:"
 INACTIVE_LIFECYCLES = {"paused", "retired", "finished"}
 BODY_LIMIT = 3000
@@ -262,16 +263,41 @@ def _quote(value: str) -> str:
     return json.dumps(value, ensure_ascii=False)
 
 
-def task_note(entry: dict) -> str:
+def master_issue_sources(path: Path | None = None) -> set[str]:
+    """``owner/repo#N`` for every indexed master issue (docs/agents/master-issues.yaml).
+
+    A master issue tracks a whole project and closes only at the verified playtest
+    handoff, so an imported task must never tell its PR to ``Closes`` it.
+    """
+    doc = load_yaml(path or MASTER_ISSUES_FILE)
+    sources: set[str] = set()
+    for url in (doc.get("master_issues") or {}).values():
+        match = re.match(r"https://github\.com/([^/]+/[^/]+)/issues/(\d+)/?$", str(url).strip())
+        if match:
+            sources.add(f"{match.group(1)}#{match.group(2)}")
+    return sources
+
+
+def task_note(entry: dict, master_sources: set[str] | None = None) -> str:
     body = entry["body"].replace("\r\n", "\n").strip()
     if len(body) > BODY_LIMIT:
         body = body[:BODY_LIMIT].rstrip() + f"\n\n[... truncated; read the full issue at {entry['url']}]"
-    header = (
+    prefix = (
         f"FROM GITHUB ISSUE {entry['source']} ({entry['url']}), opened by @{entry['author']}"
-        f" on {entry['created']}. Imported by scripts/sync_github_issues.py. Reference the issue"
-        f" in the implementing PR (`Closes {entry['source']}`) so it closes on merge; the bridge"
-        " closes it otherwise once this task is done."
+        f" on {entry['created']}. Imported by scripts/sync_github_issues.py."
     )
+    if master_sources is None:
+        master_sources = master_issue_sources()
+    if entry["source"] in master_sources:
+        header = (
+            f"{prefix} This is a project master issue: reference it in implementation PRs with"
+            f" `Refs {entry['source']}`, never `Closes`. Only the verified playtest handoff closes it."
+        )
+    else:
+        header = (
+            f"{prefix} Reference the issue in the implementing PR (`Closes {entry['source']}`) so it"
+            " closes on merge; the bridge closes it otherwise once this task is done."
+        )
     return f"{header}\n\n{body}" if body else header
 
 
