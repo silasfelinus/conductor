@@ -1525,12 +1525,12 @@ tasks:
     implementation_pr: 'silasfelinus/kind_robots#5030'
   - id: t-065
     title: 'Let players equip an unlocked crew card back and title'
-    status: claimed
+    status: done
     milestone: m3
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-15T03:54:35Z'
+    updated: '2026-11-15T04:19:52Z'
     note: >-
       Kaizen from t-061 (kind_robots#5041): crew trophies, titles and card-back frames
       unlock from finished campaigns (utils/slimeCity/crewTrophies.ts) but are only
@@ -1542,9 +1542,21 @@ tasks:
       2026-11-13 PT intent audit (INTENT-AUDIT-2026-11-13.md): claim expired ~1-2 days ago
       with no open PR; released to ready so the top-priority lane is pickable. Next step is
       the one in the note above.
+
+      2026-11-14 PT: kind_robots#5201 adds optional cardBack/title on the story save
+      (validated against the save's endings; retired endings unequip instead of voiding the
+      story), store equipCosmetic(), USE CARD BACK / WEAR TITLE toggles on the trophy shelf,
+      the equipped frame on the Clash deck icon and the worn title in the campaign header.
+      Cosmetic only. Local: test:slime-city-lab and vue-tsc green. Next: merge on green CI,
+      then done; visual check after deploy.
+
+      MERGED 2026-11-14 PT: kind_robots#5201 squash d2e3980, all 12 checks green. Visual check
+      of the trophy-shelf picker, Clash deck back and worn title rides with the next
+      authenticated screenshot pass (t-017).
     owner: worker
     claimed_by: 2026-11-15T03:54:35Z-c7f2
     claimed_at: '2026-11-15T03:54:35Z'
+    implementation_pr: 'silasfelinus/kind_robots#5201'
   - id: t-066
     title: 'Guard that every journey epilogue in endings.ts has a queued art plate'
     status: done
