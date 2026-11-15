@@ -610,8 +610,8 @@ tasks:
   - id: t-032
     milestone: m3
     title: 'Land, review and link the art round 13 re-renders and round 14 tone-ladder renders'
-    status: claimed
-    updated: '2026-11-15T23:03:27Z'
+    status: review
+    updated: '2026-11-15T23:11:00Z'
     depends_on: t-015
     passes: 0
     stakes: reversible
@@ -671,6 +671,8 @@ tasks:
       2026-11-15 PT: Audited actual Auto Art Generate run 43710225215 and Round 19 contact-sheet artifact 14085491858; verified no pending render deliveries, 181 of 195 Classic images accepted with 14 explicitly rejected, and suspended Western Cartoon 26 of 196 accepted with 170 rejected. Implemented playtest-required Classic-only strict art gate with optional-style failures still reported; tests protect against accidental approval of any rejected Classic image. Wrote exact 14-subject/ArtJob/ArtImage acceptance checkpoint under art/PLAYTEST-ART-CHECKPOINT-2026-11-15.md. Still need genuine correction or scene-faithful fallback for 14 Classic REDO, original art task remains unfinished; no auto-KEEP or new ArtJobs. Implementation PR checks pending.
 
       Recovered stale art-worker claim 20261115T134905Z-shifting-desks-t032-playtest-art-f8a2: over 9 hours old at 2026-11-15 14:56 PT, no open Shifting Desks conductor/kind_robots PR or t-032 branch. The Classic-only strict gate and Nov 15 checkpoint are already on Conductor main. 181 of 195 Classic images accepted; 14 DONE-delivered images remain REDO (no missing generation queue entries), plus suspended optional Western skin. Preserve editorial REDO, do not resubmit identical failed prompts. Resume art correction with genuine image-edit/compositing fidelity pilot, followed by verified ArtJobs, curation, link/probe and final gate.
+
+      Silas corrected the pipeline preference on 2026-11-15 PT: use faster img2img rather than slow Kontext. Implemented three private, reference-guided, eight-step DreamShaper XL Turbo SDXL-img2img test cells using the V2 rejected ArtImages as sources (271721, 271722, 271723). The new auto_submit ledger in art/SDXL-IMG2IMG-CORRECTION-PILOT-1.yaml uses independent seeds and source provenance without target paths, so original Classic production artwork and ROUND-19 REDO verdicts are protected. Regression test guards request shape and private-only processing. The PR is awaiting review and CI; until auto art submits this ledger, no new ArtJob or ArtImage should be reported as created.
     owner: worker
     claimed_by: 20261115T230327Z-shifting-desks-t032-kontext-a61f
     claimed_at: '2026-11-15T23:03:27Z'
