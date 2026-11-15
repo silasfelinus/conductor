@@ -503,6 +503,19 @@ PART 1 SHIPPED (kind_robots#3712, merged 7788778): CPU Core component (5 mazes, 
 PART 2 SHIPPED 2026-10-17 (kind_robots#3792, squash 63f53db, CI green): secret BIOS component (3 green-screen mazes, Boot Loader boss with 3 checksum sockets and line-by- line wall rewrites, opened by all 30 golden bytes), true ending, and No Bites / Big Surge / Battery Saver maze medals saved with the run. Test: utils/scripts/verifyCabinetCableCrawlerBios.test.ts.
 <!-- note:end t-067 -->
 
+## t-068 — Cable Crawler depth slice 5: Multiplayer and the extra modes
+
+<!-- note:begin t-068 -->
+CABINETS.md section 8, Cable Crawler (Nibbler riff), slice 5 of 5: Multiplayer and the extra modes. The upgrade is "The Mainframe Odyssey". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read the game's section first; this slice's scope is item 5 under its '#### Slices', and 'Rules for every slice' at the top applies. Code: kind_robots utils/arcade/games/ (registry slug cable-crawler). Silas, 2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality improvements, they should not just be thin veneers of the old games. But newer, better, even more awesome."
+
+PART 1 SHIPPED 2026-10-18 (kind_robots#3844, squash 2701210, 18/18 checks green): mode select (selectScreen), Marathon (33-maze cycle, speed ramp, shrinking clock, nine-digit counter, Odyssey save untouched) and Maze Trials (time attack on cleared mazes, best times in the save). Test: utils/scripts/verifyCabinetCableCrawlerModes.test.ts. REMAINING for t-068: Tangle (2-4 cables, Team and Race through players frames, registry maxPlayers), then the registry blurb, howTo and games.yaml entry.
+
+2026-11-14 PT: shipped in silasfelinus/kind_robots#5200 (squash 40ddbb4); all 15 CI
+checks green on the merged head incl. TypeScript, contract shards 1-4, cabinet viewport
+and the arcade cabinet browser contracts. Staged fixtures/pilot probes only; no human
+pacing claimed.
+<!-- note:end t-068 -->
+
 ## t-069 — Seed Lander depth slice 1: Flight core
 
 <!-- note:begin t-069 -->
@@ -539,6 +552,13 @@ PART 1 SHIPPED 2026-10-16 (kind_robots #3732, squash b5b2c45): Storm Shelf islan
 CLOSED 2026-10-20: Moon Garden, Old Lander, Seed Vault, Gale Season already on kind_robots main (verified by tests); Storm Shelf lightning clouds + wet-pod rain weight shipped in kind_robots#3923 (squash dac2a72).
 <!-- note:end t-072 -->
 
+## t-073 — Seed Lander depth slice 5: Two pods and the modes
+
+<!-- note:begin t-073 -->
+CABINETS.md section 9, Seed Lander (Lunar Lander riff), slice 5 of 5: Two pods and the modes. The upgrade is "The Great Replanting". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read the game's section first; this slice's scope is item 5 under its '#### Slices', and 'Rules for every slice' at the top applies. Code: kind_robots utils/arcade/games/ (registry slug seed-lander). Silas, 2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality improvements, they should not just be thin veneers of the old games. But newer, better, even more awesome." PART 1 SHIPPED (kind_robots#3924, merged 24076bf): Daily Hill, per-mission Time Trial, mastery ranks (seedLander/modes.ts). REMAINING: maxPlayers 2 Tandem co-op (shared cargo, double-plant bonus), Relay, medal boards.
+2026-11-14 PT: shipped in silasfelinus/kind_robots#5200 (squash 40ddbb4); all 15 CI checks green on the merged head incl. TypeScript, contract shards 1-4, cabinet viewport and the arcade cabinet browser contracts. Staged fixtures/pilot probes only; no human pacing claimed.
+<!-- note:end t-073 -->
+
 ## t-074 — Ribbon Riders depth slice 1: The riding feel and the wrap-up
 
 <!-- note:begin t-074 -->
@@ -548,6 +568,14 @@ Merged as kind_robots#3592: a 48x48 grid with bigger animated bikes, brake and t
 Independent reviewer audit on October 12, 2026 at 2:53 AM PT confirmed kind_robots#3592 merged at 76061205dbe9e441b91d0eb44f7ac6745238368e, current head 8b84c29e6ab32e4a78ef43f7d53d0c858aee96df with all 29 checks completed green. Read the complete ten-file diff and first-slice specification. All 29 cabinet suites passed independently; actual native renderer at 390/768/1440 widths showed public-steering wrap capturing a rival and awarding area score, plus timed-gate and Pier arenas without overflow. Fixtures use staged arena state, not live deployment or human campaign pacing evidence. First slice accepted; later fairgrounds/bosses/co-op remain separate tasks. Clear residual owner on already-done t-074 and add the missing idempotent completion learning.
 <!-- note:end t-074 -->
 
+## t-075 — Ribbon Riders depth slice 2: The first two fairgrounds
+
+<!-- note:begin t-075 -->
+CABINETS.md section 10, Ribbon Riders (Tron light cycles riff), slice 2 of 4: The first two fairgrounds. The upgrade is "The Lantern Festival Circuit". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read the game's section first; this slice's scope is item 2 under its '#### Slices', and 'Rules for every slice' at the top applies. Code: kind_robots utils/arcade/games/ (registry slug ribbon-riders). Silas, 2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality improvements, they should not just be thin veneers of the old games. But newer, better, even more awesome."
+2026-11-01 PT claim-staleness assessment (Silas: stale claims are more likely finished- but-unrecorded than abandoned): no slice-2 (first two fairgrounds / Lantern Festival Circuit) PR found; only slice 1 (#3592) and extra arenas (#3852, #3857). Released for pickup.
+2026-11-15 PT: shipped in silasfelinus/kind_robots#5208 (squash 5f36178); all 15 CI checks green incl. TypeScript, contract shards 1-4, cabinet viewport and arcade cabinet browser contracts. Pilot probes/staged fixtures only; no human pacing claimed.
+<!-- note:end t-075 -->
+
 ## t-078 — Brick Bloom depth slice 1: The bloom core
 
 <!-- note:begin t-078 -->
@@ -556,12 +584,67 @@ CABINETS.md section 11, Brick Bloom (Breakout / Arkanoid riff), slice 1 of 5: Th
 Reconciled 2026-10-14: slice 1 PR kind_robots#3643 merged 2026-10-13T21:48:27Z; later slices tracked as t-079+.
 <!-- note:end t-078 -->
 
+## t-079 — Brick Bloom depth slice 2: Seedling House and Vine Hall
+
+<!-- note:begin t-079 -->
+CABINETS.md section 11, Brick Bloom (Breakout / Arkanoid riff), slice 2 of 5: Seedling House and Vine Hall. The upgrade is "The Glasshouse Grand Tour". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read the game's section first; this slice's scope is item 2 under its '#### Slices', and 'Rules for every slice' at the top applies. Code: kind_robots utils/arcade/games/ (registry slug brick-bloom). Silas, 2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality improvements, they should not just be thin veneers of the old games. But newer, better, even more awesome."
+PART 2 SHIPPED (kind_robots#3725, merged): Grand Tour wires Seedling House + Vine Hall into the cabinet by vent (last-crate side picks the vent), root (2 hits), vine (pulls neighbours down), trellis (breaks from below only) crates and sprites, with tests. PART 3 SHIPPED (kind_robots#3948, merged): pollen mite was already in; snail bot now patrols Vine Hall (2 hits, 150 x stage). REMAINING: ladybot ring, Mister Mulch, The Tangle Rose, Potting Bench, golden seeds 1-2, house map screen, save/resume via saves.ts.
+2026-11-15 PT: shipped in silasfelinus/kind_robots#5202 (squash 53db9ed); all 15 CI checks green incl. TypeScript, contract shards 1-4, cabinet viewport and arcade cabinet browser contracts. Staged fixtures/pilot probes only; no human pacing claimed.
+<!-- note:end t-079 -->
+
+## t-080 — Brick Bloom depth slice 3: Cactus Dome and Lily Pond House
+
+<!-- note:begin t-080 -->
+CABINETS.md section 11, Brick Bloom (Breakout / Arkanoid riff), slice 3 of 5: Cactus Dome and Lily Pond House. The upgrade is "The Glasshouse Grand Tour". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read the game's section first; this slice's scope is item 3 under its '#### Slices', and 'Rules for every slice' at the top applies. Code: kind_robots utils/arcade/games/ (registry slug brick-bloom). Silas, 2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality improvements, they should not just be thin veneers of the old games. But newer, better, even more awesome."
+
+Recovery review checkpoint for PR silasfelinus/kind_robots#5211, merged at 947a9770897c41403a6be99b5fee1ef9fd8c6ac7 after the browser check passed on its latest rerun. All nine PR checks completed successfully.
+
+Completed by merged Kind Robots PR #5211 (squash SHA 947a9770897c41403a6be99b5fee1ef9fd8c6ac7); current check attempts were green, including the rerun of the intermittently failing Rescue Rally suite. One separate regression-test timing hardening PR #5217 is in progress.
+<!-- note:end t-080 -->
+
 ## t-083 — Pixel Hop depth slice 1: The board and rule engine
 
 <!-- note:begin t-083 -->
 CABINETS.md section 12, Pixel Hop (Q*bert riff), slice 1 of 5: The board and rule engine. The upgrade is "The Painted Planets". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read the game's section first; this slice's scope is item 1 under its '#### Slices', and 'Rules for every slice' at the top applies. Code: kind_robots utils/arcade/games/ (registry slug pixel-hop). Silas, 2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality improvements, they should not just be thin veneers of the old games. But newer, better, even more awesome."
 2026-11-01 PT claim-staleness assessment (Silas: stale claims are more likely finished- but-unrecorded than abandoned): slice 1 (board and rule engine) merged in kind_robots#3644, with follow-on rule work in #3788/#3817/#3829/#3837. Claim never closed.
 <!-- note:end t-083 -->
+
+## t-084 — Pixel Hop depth slice 2: Candy Comet and Rondo Ring
+
+<!-- note:begin t-084 -->
+CABINETS.md section 12, Pixel Hop (Q*bert riff), slice 2 of 5: Candy Comet and Rondo Ring. The upgrade is "The Painted Planets". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read the game's section first; this slice's scope is item 2 under its '#### Slices', and 'Rules for every slice' at the top applies. Code: kind_robots utils/arcade/games/ (registry slug pixel-hop). Silas, 2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality improvements, they should not just be thin veneers of the old games. But newer, better, even more awesome."
+2026-11-01 PT: dependency t-083 closed done in the stale-claim reconciliation; promoted to ready.
+2026-11-15 PT: shipped in silasfelinus/kind_robots#5208 (squash 5f36178); all 15 CI checks green incl. TypeScript, contract shards 1-4, cabinet viewport and arcade cabinet browser contracts. Pilot probes/staged fixtures only; no human pacing claimed.
+<!-- note:end t-084 -->
+
+## t-088 — Glitch Garden depth slice 1: Prism core and the classic's missing rules
+
+<!-- note:begin t-088 -->
+CABINETS.md section 13, Glitch Garden (Centipede riff), slice 1 of 5: Prism core and the classic's missing rules. The upgrade is "The Four Seasons of the Glitch". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read the game's section first; this slice's scope is item 1 under its '#### Slices', and 'Rules for every slice' at the top applies. Code: kind_robots utils/arcade/games/ (registry slug glitch-garden). Silas, 2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality improvements, they should not just be thin veneers of the old games. But newer, better, even more awesome."
+Part 1 (kind_robots#3731): slime snail, glitched lamps, plunge, side-crawlers, lamp creep, wave palettes, beetle speed cap, dead lamps curve retired. Remaining for slice 1: prism flower powers (pink/gold/cyan/violet, up to two per beam), sprinkler cans with chaining, patch multiplier, data-driven garden format, double-density sprites, pilot probe waves 1-10 and Pixel/HD screenshots.
+2026-11-14 PT: shipped in silasfelinus/kind_robots#5199 (squash 7dd5098), all CI checks green (TypeScript, contract shards 1-4, cabinet viewport, Rescue Rally cabinet contract). Lane evidence in the PR body; staged fixtures only, no human pacing claimed.
+<!-- note:end t-088 -->
+
+## t-089 — Glitch Garden depth slice 2: Spring and Summer
+
+<!-- note:begin t-089 -->
+CABINETS.md section 13, Glitch Garden (Centipede riff), slice 2 of 5: Spring and Summer. The upgrade is "The Four Seasons of the Glitch". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read the game's section first; this slice's scope is item 2 under its '#### Slices', and 'Rules for every slice' at the top applies. Code: kind_robots utils/arcade/games/ (registry slug glitch-garden). Silas, 2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality improvements, they should not just be thin veneers of the old games. But newer, better, even more awesome."
+2026-11-15 PT: shipped in silasfelinus/kind_robots#5208 (squash 5f36178); all 15 CI checks green incl. TypeScript, contract shards 1-4, cabinet viewport and arcade cabinet browser contracts. Pilot probes/staged fixtures only; no human pacing claimed.
+<!-- note:end t-089 -->
+
+## t-093 — Lantern Swarm depth slice 1: Formation engine and the Rooftop Festival
+
+<!-- note:begin t-093 -->
+CABINETS.md section 14, Lantern Swarm (Galaga riff), slice 1 of 5: Formation engine and the Rooftop Festival. The upgrade is "The Long Night Festival". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read the game's section first; this slice's scope is item 1 under its '#### Slices', and 'Rules for every slice' at the top applies. Code: kind_robots utils/arcade/games/ (registry slug lantern-swarm). Silas, 2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality improvements, they should not just be thin veneers of the old games. But newer, better, even more awesome."
+2026-11-14 PT: shipped in silasfelinus/kind_robots#5199 (squash 7dd5098), all CI checks green (TypeScript, contract shards 1-4, cabinet viewport, Rescue Rally cabinet contract). Lane evidence in the PR body; staged fixtures only, no human pacing claimed.
+<!-- note:end t-093 -->
+
+## t-094 — Lantern Swarm depth slice 2: Welcome Glow, the Flock and the Evening fork
+
+<!-- note:begin t-094 -->
+CABINETS.md section 14, Lantern Swarm (Galaga riff), slice 2 of 5: Welcome Glow, the Flock and the Evening fork. The upgrade is "The Long Night Festival". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read the game's section first; this slice's scope is item 2 under its '#### Slices', and 'Rules for every slice' at the top applies. Code: kind_robots utils/arcade/games/ (registry slug lantern-swarm). Silas, 2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality improvements, they should not just be thin veneers of the old games. But newer, better, even more awesome."
+2026-11-15 PT: shipped in silasfelinus/kind_robots#5208 (squash 5f36178); all 15 CI checks green incl. TypeScript, contract shards 1-4, cabinet viewport and arcade cabinet browser contracts. Pilot probes/staged fixtures only; no human pacing claimed.
+<!-- note:end t-094 -->
 
 ## t-098 — Rover Ramble depth slice 1: Course engine and Moon 1
 
@@ -570,12 +653,142 @@ CABINETS.md section 15, Rover Ramble (Moon Patrol riff), slice 1 of 4: Course en
 Slice 1 shipped (kind_robots#3854, squash 460ecc2): authored A-Z course (roverRamble/course.ts) replacing ROVER_CURVES, outpost reports with stamps, course end at Z, rear-view HUD and pursuers, landmines, tanks, bomber and zig saucers, moon creepers, dust devils, ramps with big-air, boulder stomp. Moons 2-5 reuse the threats on harder scripts until slices 2-4. CI green (57 cabinet suites).
 <!-- note:end t-098 -->
 
+## t-102 — Hedgehog Crossing depth slice 1: Lanes as data and the Family Parade
+
+<!-- note:begin t-102 -->
+CABINETS.md section 16, Hedgehog Crossing (Frogger riff), slice 1 of 4: Lanes as data and the Family Parade. The upgrade is "The Long Way Home". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read the game's section first; this slice's scope is item 1 under its '#### Slices', and 'Rules for every slice' at the top applies. Code: kind_robots utils/arcade/games/ (registry slug hedgehog-crossing). Silas, 2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality improvements, they should not just be thin veneers of the old games. But newer, better, even more awesome."
+Part 1 shipped in silasfelinus/kind_robots#3925 (merge 593fc5a): escalation table with no plateau (rules.ts), grass snake with tongue-flick tell, lost hoglet + Family Parade (follow-the-leader, bump-back, Parade Bonus), Bristle Dash, cabinet suite verifyCabinetHedgehogCrossing. Verified: test:arcade-engine, eslint/prettier, vue-tsc, pilot probe seeds 1-6, Chromium render, 18 CI checks green. REMAINING for t-102: snapping log (eyes open before it yawns; ride tail half), heron (shadow sweeps a creek column), delivery bot (blinker before lane change), lanes-as-data refactor of LANES.
+2026-11-15 PT: shipped in silasfelinus/kind_robots#5208 (squash 5f36178); all 15 CI checks green incl. TypeScript, contract shards 1-4, cabinet viewport and arcade cabinet browser contracts. Pilot probes/staged fixtures only; no human pacing claimed.
+<!-- note:end t-102 -->
+
+## t-106 — Burrow Buddy depth slice 1: Soil that moves
+
+<!-- note:begin t-106 -->
+CABINETS.md section 17, Burrow Buddy (Dig Dug riff), slice 1 of 4: Soil that moves. The upgrade is "The Year Under the Garden". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read the game's section first; this slice's scope is item 1 under its '#### Slices', and 'Rules for every slice' at the top applies. Code: kind_robots utils/arcade/games/ (registry slug burrow-buddy). Silas, 2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality improvements, they should not just be thin veneers of the old games. But newer, better, even more awesome."
+
+Recovery review checkpoint for PR silasfelinus/kind_robots#5211, merged at 947a9770897c41403a6be99b5fee1ef9fd8c6ac7 after the browser check passed on its latest rerun. All nine PR checks completed successfully.
+
+Completed by merged Kind Robots PR #5211 (squash SHA 947a9770897c41403a6be99b5fee1ef9fd8c6ac7); current check attempts were green, including the rerun of the intermittently failing Rescue Rally suite. One separate regression-test timing hardening PR #5217 is in progress.
+<!-- note:end t-106 -->
+
+## t-122 — Cocoa Counter depth slice 1: Orders and the Cozy core
+
+<!-- note:begin t-122 -->
+CABINETS.md section 21, Cocoa Counter (Tapper riff), slice 1 of 5: Orders and the Cozy core. The upgrade is "The Cozy Cafe Tour". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read the game's section first; this slice's scope is item 1 under its '#### Slices', and 'Rules for every slice' at the top applies. Code: kind_robots utils/arcade/games/ (registry slug cocoa-counter). Silas, 2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality improvements, they should not just be thin veneers of the old games. But newer, better, even more awesome."
+2026-11-14 PT: shipped in silasfelinus/kind_robots#5200 (squash 40ddbb4); all 15 CI checks green on the merged head incl. TypeScript, contract shards 1-4, cabinet viewport and the arcade cabinet browser contracts. Staged fixtures/pilot probes only; no human pacing claimed.
+<!-- note:end t-122 -->
+
+## t-123 — Cocoa Counter depth slice 2: Snowdrop Cafe and the Seaside Smoothie Shack
+
+<!-- note:begin t-123 -->
+CABINETS.md section 21, Cocoa Counter (Tapper riff), slice 2 of 5: Snowdrop Cafe and the Seaside Smoothie Shack. The upgrade is "The Cozy Cafe Tour". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read the game's section first; this slice's scope is item 2 under its '#### Slices', and 'Rules for every slice' at the top applies. Code: kind_robots utils/arcade/games/ (registry slug cocoa-counter). Silas, 2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality improvements, they should not just be thin veneers of the old games. But newer, better, even more awesome."
+2026-11-15 PT: shipped in silasfelinus/kind_robots#5208 (squash 5f36178); all 15 CI checks green incl. TypeScript, contract shards 1-4, cabinet viewport and arcade cabinet browser contracts. Pilot probes/staged fixtures only; no human pacing claimed.
+<!-- note:end t-123 -->
+
+## t-127 — Quilt Quest depth slice 1: Pressure and pictures
+
+<!-- note:begin t-127 -->
+CABINETS.md section 22, Quilt Quest (Qix riff), slice 1 of 5: Pressure and pictures. The upgrade is "The Heirloom Quilt". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read the game's section first; this slice's scope is item 1 under its '#### Slices', and 'Rules for every slice' at the top applies. Code: kind_robots utils/arcade/games/ (registry slug quilt-quest). Silas, 2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality improvements, they should not just be thin veneers of the old games. But newer, better, even more awesome."
+2026-11-15 PT: shipped in silasfelinus/kind_robots#5202 (squash 53db9ed); all 15 CI checks green incl. TypeScript, contract shards 1-4, cabinet viewport and arcade cabinet browser contracts. Staged fixtures/pilot probes only; no human pacing claimed.
+<!-- note:end t-127 -->
+
+## t-132 — Gloom Invaders depth slice 1: Weather and the garden
+
+<!-- note:begin t-132 -->
+CABINETS.md section 23, Gloom Invaders (Space Invaders riff), slice 1 of 4: Weather and the garden. The upgrade is "A Year of Weather". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read the game's section first; this slice's scope is item 1 under its '#### Slices', and 'Rules for every slice' at the top applies. Code: kind_robots utils/arcade/games/ (registry slug gloom-invaders). Silas, 2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality improvements, they should not just be thin veneers of the old games. But newer, better, even more awesome."
+
+Recovery review checkpoint for PR silasfelinus/kind_robots#5211, merged at 947a9770897c41403a6be99b5fee1ef9fd8c6ac7 after the browser check passed on its latest rerun. All nine PR checks completed successfully.
+
+Completed by merged Kind Robots PR #5211 (squash SHA 947a9770897c41403a6be99b5fee1ef9fd8c6ac7); current check attempts were green, including the rerun of the intermittently failing Rescue Rally suite. One separate regression-test timing hardening PR #5217 is in progress.
+<!-- note:end t-132 -->
+
+## t-136 — Seed Burst depth slice 1: Seed Pouch, Garden Gate and the first grumps
+
+<!-- note:begin t-136 -->
+CABINETS.md section 24, Seed Burst (Bomberman riff), slice 1 of 5: Seed Pouch, Garden Gate and the first grumps. The upgrade is "The Four Seasons Allotment". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read the game's section first; this slice's scope is item 1 under its '#### Slices', and 'Rules for every slice' at the top applies. Code: kind_robots utils/arcade/games/ (registry slug seed-burst). Silas, 2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality improvements, they should not just be thin veneers of the old games. But newer, better, even more awesome."
+2026-11-14 PT: shipped in silasfelinus/kind_robots#5199 (squash 7dd5098), all CI checks green (TypeScript, contract shards 1-4, cabinet viewport, Rescue Rally cabinet contract). Lane evidence in the PR body; staged fixtures only, no human pacing claimed.
+<!-- note:end t-136 -->
+
+## t-137 — Seed Burst depth slice 2: Spring and Summer
+
+<!-- note:begin t-137 -->
+CABINETS.md section 24, Seed Burst (Bomberman riff), slice 2 of 5: Spring and Summer. The upgrade is "The Four Seasons Allotment". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read the game's section first; this slice's scope is item 2 under its '#### Slices', and 'Rules for every slice' at the top applies. Code: kind_robots utils/arcade/games/ (registry slug seed-burst). Silas, 2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality improvements, they should not just be thin veneers of the old games. But newer, better, even more awesome."
+2026-11-15 PT: shipped in silasfelinus/kind_robots#5208 (squash 5f36178); all 15 CI checks green incl. TypeScript, contract shards 1-4, cabinet viewport and arcade cabinet browser contracts. Pilot probes/staged fixtures only; no human pacing claimed.
+<!-- note:end t-137 -->
+
+## t-141 — Station Sweep depth slice 1: Critters that grow up, and tools to match
+
+<!-- note:begin t-141 -->
+CABINETS.md section 25, Station Sweep (Xenophobe riff), slice 1 of 5: Critters that grow up, and tools to match. The upgrade is "The Orbit Line". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read the game's section first; this slice's scope is item 1 under its '#### Slices', and 'Rules for every slice' at the top applies. Code: kind_robots utils/arcade/games/ (registry slug station-sweep). Silas, 2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality improvements, they should not just be thin veneers of the old games. But newer, better, even more awesome."
+2026-11-14 PT: shipped in silasfelinus/kind_robots#5200 (squash 40ddbb4); all 15 CI checks green on the merged head incl. TypeScript, contract shards 1-4, cabinet viewport and the arcade cabinet browser contracts. Staged fixtures/pilot probes only; no human pacing claimed.
+<!-- note:end t-141 -->
+
+## t-142 — Station Sweep depth slice 2: Rooms and the first two stations
+
+<!-- note:begin t-142 -->
+CABINETS.md section 25, Station Sweep (Xenophobe riff), slice 2 of 5: Rooms and the first two stations. The upgrade is "The Orbit Line". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read the game's section first; this slice's scope is item 2 under its '#### Slices', and 'Rules for every slice' at the top applies. Code: kind_robots utils/arcade/games/ (registry slug station-sweep). Silas, 2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality improvements, they should not just be thin veneers of the old games. But newer, better, even more awesome."
+
+Recovery review checkpoint for PR silasfelinus/kind_robots#5211, merged at 947a9770897c41403a6be99b5fee1ef9fd8c6ac7 after the browser check passed on its latest rerun. All nine PR checks completed successfully.
+
+Completed by merged Kind Robots PR #5211 (squash SHA 947a9770897c41403a6be99b5fee1ef9fd8c6ac7); current check attempts were green, including the rerun of the intermittently failing Rescue Rally suite. One separate regression-test timing hardening PR #5217 is in progress.
+<!-- note:end t-142 -->
+
+## t-146 — Measure Butterfly Joust limited-life survival and first-clear pacing against the authored campaign target.
+
+<!-- note:begin t-146 -->
+Reviewer kaizen from the merged t-049/t-050 audit (kind_robots#3559 and #3575). Read CABINETS.md section 4 and current Kind Robots instructions. The authored first-clear target is 45-60 minutes; the existing unlimited-life pilot and staged ending checks do not establish human pacing. Add or reuse a bounded deterministic limited-life playtest harness, run multiple seeds, record early-death/survival and clear-time distributions and separate bot estimates from human evidence. Preserve the original difficulty and campaign rules while measuring; do not inflate elapsed time, weaken assertions or label the target met without evidence. Make a focused balance fix only if the measurements reproduce a scoped problem, with before/after evidence. Attach actual renderer evidence for any visible change and document remaining human-play limits.
+2026-11-15 PT: shipped in silasfelinus/kind_robots#5202 (squash 53db9ed); all 15 CI checks green incl. TypeScript, contract shards 1-4, cabinet viewport and arcade cabinet browser contracts. Staged fixtures/pilot probes only; no human pacing claimed.
+<!-- note:end t-146 -->
+
+## t-147 — Verify Rescue Rally co-op and solo aim through the actual shared-cabinet input consumer.
+
+<!-- note:begin t-147 -->
+Reviewer kaizen after kind_robots#3581: existing deterministic game tests inject frames directly. Exercise the real ArcadeCabinet input routing for 2-4 seats, keyboard/gamepad/touch as supported, and the solo twin-stick versus multi-seat aim contract. Verify menu selection, distinct seat motion and partner revival with consumer-generated frames, including disconnect/reconnect or absent secondary input. Use a bounded browser fixture with actual consumers and game renderer at phone/tablet/desktop widths. Keep staged scenarios explicit and avoid claiming live deployment or human pacing from fixtures. Fix only a reproduced scoped consumer problem; preserve tests, auth and score ceilings.
+2026-11-14 PT: shipped in silasfelinus/kind_robots#5199 (squash 7dd5098), all CI checks green (TypeScript, contract shards 1-4, cabinet viewport, Rescue Rally cabinet contract). Lane evidence in the PR body; staged fixtures only, no human pacing claimed.
+<!-- note:end t-147 -->
+
+## t-148 — Verify Battery Maze saved-entry mode eligibility through the shared cabinet and save-store consumer.
+
+<!-- note:begin t-148 -->
+Reviewer kaizen after kind_robots#3579: current game-level tests cover saved mode/player-count combinations, but the real ArcadeCabinet/store path still needs bounded integration evidence. Load a valid campaign and step-0 Overclocked checkpoint through the actual save store, configure 1-4 seats through the cabinet, then select Continue or an eligible mode with real consumer controls. Verify solo and two-robot continuation, 3/4-seat Tag roles, and preserved campaign checkpoints, golden bolts and medals after leaving Tag. Include one co-op-to-solo life-pool case. Reuse the existing shared cabinet/input components instead of a second implementation. Use scoped browser fixtures with explicit staged data; fix only a reproduced integration gap and keep auth, validators, required checks and score ceilings intact. Do not claim deployment or human pacing.
+2026-11-14 PT: shipped in silasfelinus/kind_robots#5200 (squash 40ddbb4); all 15 CI checks green on the merged head incl. TypeScript, contract shards 1-4, cabinet viewport and the arcade cabinet browser contracts. Staged fixtures/pilot probes only; no human pacing claimed.
+<!-- note:end t-148 -->
+
 ## t-149 — Verify Sink Suds earned records through the shared cabinet keepSave and retirement lifecycle.
 
 <!-- note:begin t-149 -->
 Reviewer kaizen after repaired kind_robots#3558: the game and withSave/JSON/sanitizeSaves helpers now preserve New Wash -> Squeaky Clean progress. Exercise the actual ArcadeCabinet and arcade store consumer: load a valid later-room checkpoint with prior medals/times, choose New Wash, finish a staged Squeaky Clean basin, then leave/retire and reopen the cabinet through the real keepSave path. Verify new and old best times, medals, reached rooms, skin, golden soap and clear persist while the campaign checkpoint resets. Cover immediate exit after New Wash as a separate transition. Reuse the existing consumers, scoped browser fixtures and storage boundary; fix only a reproduced integration gap. Preserve auth, alerts, validators, required checks and score ceilings. Keep staged fixture evidence distinct from deployment or human campaign timing.
 RAN 2026-10-20: added utils/scripts/verifyCabinetSinkSudsSaves.test.ts (kind_robots#3892): New Wash -> Squeaky Clean -> leave/return through withSave/JSON/sanitizeSaves keeps new+old times, medals, reached, skin, golden, clear; checkpoint resets; slower run keeps best; immediate exit after New Wash covered. No integration gap found; test-only.
 <!-- note:end t-149 -->
+
+## t-150 — Verify Ribbon Riders wrap topology at arena seams and the capture-size boundary.
+
+<!-- note:begin t-150 -->
+Reviewer kaizen after merged kind_robots#3592: existing first-slice coverage checks one ring and a simple open seam. Add a bounded deterministic matrix of independently specified shapes for horizontal/vertical toroidal seams, wall/pillar sides, the road-ahead and teammate exclusions, and exact 160-cell versus Bow-doubled limits. Expected captured cells must be constructed from the authored shape, not copied from the implementation flood fill. Include public-steering captures for representative shapes and native renderer evidence for one seam case. Preserve the first-slice wrap rule and later campaign scope; fix only a reproduced scoped topology defect. Keep staged fixtures distinct from live deployment and human pacing evidence.
+2026-10-15 PT partial: kind_robots#3701 merged (35b9146) adding verifyCabinetRibbonRidersWrapTopology.test.ts: seam/wall/pillar/road-ahead/teammate matrix and exact 160/320 boundary, expected cells from authored rectangles, all 17 CI checks green. STILL OPEN: public-steering captures for representative shapes and native renderer evidence for one seam case.
+2026-11-15 PT: shipped in silasfelinus/kind_robots#5202 (squash 53db9ed); all 15 CI checks green incl. TypeScript, contract shards 1-4, cabinet viewport and arcade cabinet browser contracts. Staged fixtures/pilot probes only; no human pacing claimed.
+<!-- note:end t-150 -->
+
+## t-151 — Verify Bumper Bubbles pantry saves through the shared cabinet retirement and Continue lifecycle.
+
+<!-- note:begin t-151 -->
+Reviewer kaizen after kind_robots#3594: game/helper round trips preserve the third pantry card, but the actual ArcadeCabinet and arcade store keepSave/retirement consumer needs integration coverage. Load a valid wing 5/6/7 checkpoint with earlier recipe cards, acquire the third card in a staged pantry, exit immediately through the real cabinet retirement path, and reopen with public Continue input. Assert cards, letters and the intended wing checkpoint persist, including exit before the next periodic save. Reuse the existing shared consumers and bounded browser fixtures; fix only reproduced integration defects. Preserve auth, storage validators, required checks and score caps. Keep staged fixture evidence distinct from deployment and human campaign duration.
+2026-11-14 PT: shipped in silasfelinus/kind_robots#5200 (squash 40ddbb4); all 15 CI checks green on the merged head incl. TypeScript, contract shards 1-4, cabinet viewport and the arcade cabinet browser contracts. Staged fixtures/pilot probes only; no human pacing claimed.
+<!-- note:end t-151 -->
+
+## t-152 — Verify Butterfly Blaster earned history through cabinet retirement and first-checkpoint reload.
+
+<!-- note:begin t-152 -->
+Reviewer kaizen after kind_robots#3646, targeting the repeated earned-profile persistence quality pattern in LEARNING-REPORT. The game and save-helper regressions now preserve dawn/Zero Night history through B New Season and step-zero reload. Exercise the actual ArcadeCabinet/store keepSave and retirement lifecycle: load each earned ending profile, choose New Season, leave immediately before the first periodic save, reopen, then start and retire again. Verify cleared, zero and all threads persist while score, lives, campaign checkpoint and Dry Season lap reset only when requested; A/Start Continue must retain current-run resources. Reuse real consumers and bounded browser fixtures, not a copied save handler. Fix only reproduced scoped integration defects. Preserve validators, auth, score ceilings and required checks; distinguish staged profiles from full human campaign timing and deployment evidence. The task-event dependency resolver releases this follow-up after verified t-057 closeout.
+2026-11-14 PT: shipped in silasfelinus/kind_robots#5200 (squash 40ddbb4); all 15 CI checks green on the merged head incl. TypeScript, contract shards 1-4, cabinet viewport and the arcade cabinet browser contracts. Staged fixtures/pilot probes only; no human pacing claimed.
+<!-- note:end t-152 -->
+
+## t-153 — Verify Cable Crawler earned spares through cabinet retirement and Workbench continuation.
+
+<!-- note:begin t-153 -->
+Reviewer kaizen after kind_robots#3654, targeting the repeated writer-reader/profile persistence quality pattern. Game/helper tests now preserve score-earned cables through99 while Workbench purchases stop9. Exercise the actual ArcadeCabinet/store keepSave and retirement path with legitimate score awards around9/10/98/99, a later component checkpoint and golden bytes/kit. Reopen through A/Start Continue; at the real Workbench reject a cable purchase above its nine-cable ceiling without spending copper or reducing earned lives, then buy another eligible item, exit immediately and reload. Include an actual loss followed by re-earning at the saved-life ceiling. Reuse real consumers and bounded staged fixtures, not copied save or input handlers; fix only a reproduced integration gap. Preserve strict validators, auth, score ceilings and required checks. Separate staged evidence from human50-60minute pacing and deployed-device acceptance. Dependency resolution releases this follow-up after verified t-065 closeout.
+2026-11-14 PT: shipped in silasfelinus/kind_robots#5200 (squash 40ddbb4); all 15 CI checks green on the merged head incl. TypeScript, contract shards 1-4, cabinet viewport and the arcade cabinet browser contracts. Staged fixtures/pilot probes only; no human pacing claimed.
+<!-- note:end t-153 -->
 
 ## t-156 — Achievements: three per game with badge art, an achievements section, and a refreshed jellybean catalog
 
@@ -596,3 +809,33 @@ DONE 2026-10-22: ghost-trail/GEN2-BELL-ROAD.md and bellRoad.json (validate_bell_
 art/GHOST-TRAIL-GEN2-ROUND-1.yaml (8 subjects x Arthemy/Z-Image = 16 cells) submitted 2026-10-22 via scripts/sweep_art_ledgers.py. Review each render in the ledger (keep/reroll), then hand keepers to t-160.
 2026-10-22: all 16 DONE and reviewed in the ledger. Z-Image is the overworld-map lane (real top-down maps); Arthemy turned 'map' into character vignettes and is kept only as concept art. Next: hand the Z-Image maps to t-160.
 <!-- note:end t-159 -->
+
+## t-167 — Every listed cabinet's title art is rendered and served on production, with a registry contract that keeps it that way
+
+<!-- note:begin t-167 -->
+Silas, 2026-11-15 PT: full parity with the whole roadmap may not be reasonable; finish the latest tasks and triage next steps that make publicly shared arcade links presentable. This milestone is that triage. The m8 depth pass (50 open slices) continues in the background and is not a gate for sharing.
+
+All 36 registry entries in kind_robots utils/arcade/games.ts declare titleArt (/images/arcade/games/*-title.webp), but those files are delivered by the art pipeline, not git, so a missing render means a shared link unfurls with no picture and the hall shows an empty slot. Check each URL on kindrobots.org; for any miss, enqueue through POST /api/art/enqueue (reuse a failed ArtJob id rather than duplicating) and verify the final URL. Add a contract test that every listed cabinet has a titleArt path and an image-shaped fallback. Queued is not rendered is not delivered is not verified.
+
+2026-11-15 PT: shipped in kind_robots#5223 (squash d6c2187): verifyArcadeShareCheck contract (every hall cabinet has its own root-relative raster titleArt; the hall keeps its fallback) plus the daily/dispatchable Arcade share live check workflow. Live check run silasfelinus/kind_robots/actions/runs/43724797909 (2026-11-15 PT, main d6c2187+): all 34 hall cabinets' title art is served as an image on kindrobots.org, 0 missing. The workflow fails on any future miss.
+<!-- note:end t-167 -->
+
+## t-168 — Showcase shelf: the hall leads with the eleven full-depth cabinets; cabinets still growing carry a small stamp instead of being hidden
+
+<!-- note:begin t-168 -->
+Silas, 2026-11-15 PT: full parity with the whole roadmap may not be reasonable; finish the latest tasks and triage next steps that make publicly shared arcade links presentable. This milestone is that triage. The m8 depth pass (50 open slices) continues in the background and is not a gate for sharing.
+
+As of 2026-11-15 these cabinets have every depth slice done: Pipe Pals, Prize Show Panic, Rescue Rally, Battery Maze, Sink Suds, Butterfly Joust, Kindness Gauntlet, Butterfly Blaster, Bumper Bubbles, Cable Crawler, Seed Lander. Sixteen more are mid-depth (Brick Bloom 3/5 down to Petal Post, Rain Catcher and Repair Rampage at 0/4). Drive the shelf from a registry field (for example `showcase: true`), not a list in the component, so a cabinet joins the shelf when its last depth slice merges. Independent of t-167: cards keep their image-shaped fallback until art lands. Mid-depth cabinets stay playable with a "Growing" stamp on their card. Add a hall-level Share button (the cabinet header already has one) and keep the existing Against Malaria link visible to a first-time visitor. Art-first per docs/ui-surface-standards.md; no new persistent header.
+
+2026-11-15 PT: shipped in kind_robots#5222 (squash 9dfb49a), all checks green. Registry field `shelf` ('showcase' | 'growing'); 11 showcase, 17 growing (16 mid-depth + Zuzu Ghost Trail). arrangeArcadeHall orders showcase, standard, growing with ratings inside each shelf; Growing stamp; hall Share button; both share buttons go through arcadeStore.shareLink. Depth lanes: when a cabinet's last depth slice merges, flip its `shelf` to 'showcase' in the same PR. Merged is not deployed.
+<!-- note:end t-168 -->
+
+## t-170 — Share my score: the game-over screen offers a one-tap share with the score and the cabinet link
+
+<!-- note:begin t-170 -->
+Silas, 2026-11-15 PT: full parity with the whole roadmap may not be reasonable; finish the latest tasks and triage next steps that make publicly shared arcade links presentable. This milestone is that triage. The m8 depth pass (50 open slices) continues in the background and is not a gate for sharing.
+
+Reuse pages/play/arcade/index.vue shareGame (navigator.share with clipboard fallback). Text shape: "I scored N in <Game> at the Kind Robots Arcade" plus the cabinet URL. The button can ship before t-166 merges, and the per-cabinet unfurl improves the shared card once it does. No initials or account data in the text. Logic in the arcade store, not the component.
+
+2026-11-15 PT: shipped in kind_robots#5225 (squash 81955f8), all checks green. After a run the cabinet header Share button reads "Share my N" and shares "I scored N in <Game> at the Kind Robots Arcade. Can you beat it?" with the ?game= link. Follow-up idea, not required: a game-over overlay button inside arcade-cabinet.vue for pinned fullscreen play.
+<!-- note:end t-170 -->

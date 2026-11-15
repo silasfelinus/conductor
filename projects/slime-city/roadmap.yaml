@@ -98,24 +98,10 @@ tasks:
     passes: 0
     depends_on: []
     updated: '2026-11-14T04:48:29Z'
-    note: |-
+    note: >-
       Silas 2026-11-11 PT, in session: asked whether finishing a crew campaign leaves an ending scrapbook.
 
-      Today the finale shows THE END text, one of two ending plates per crew (chosen by Conviction count), an optional alliance ending and the crew legacy favor. Nothing records endings already earned. Add a gallery: per crew, triumph/compromise and the journey final-choice endings plus alliance endings, X/N found, locked silhouettes, and a scrapbook page per finished run (chapters, choices, rivals beaten, favor taken, ending plates). Account-saved like campaign progress.
-
-      2026-11-13 PT intent audit (INTENT-AUDIT-2026-11-13.md): claim expired ~1-2 days ago
-      with no open PR; released to ready so the top-priority lane is pickable. Next step is
-      the one in the note above.
-
-      2026-11-14 PT reconciliation: the gallery + scrapbook already landed on kind_robots main
-      bundled in #5087 (c7da0e0, utils/slimeCity/endings.ts, components/slime-city-
-      endings.vue, endings/scrapbook fields in storySave.ts) and was extended by #5091
-      (journey-ending finale art). Regression utils/scripts/verifySlimeCityEndings.test.ts
-      (catalog per crew, earned ids, idempotent recordFinishedRuns, validators) runs in CI via
-      test:slime-city-lab. No new code needed.
-
-      Done: implementation verified on kind_robots main; closed by reconciliation session
-      2026-11-14T0930Z-sc-t059-pzkx.
+      Full history: projects/slime-city/HISTORY.md#t-059
     owner: worker
     claimed_by: 2026-11-14T0930Z-sc-t059-pzkx
     claimed_at: '2026-11-14T04:47:37Z'
@@ -158,67 +144,10 @@ tasks:
     passes: 0
     depends_on: []
     updated: '2026-11-14T12:48:54Z'
-    note: |-
-      Silas 2026-11-11 PT, in session: "There is unmade art it should definitely be added to the pipeline."
+    note: >-
+      Silas 2026-11-11 PT, in session: "There is unmade art it should definitely be added to the pipeline." Each crew's ending plate is picked by the older Conviction/Cunning count; the new journey final choice (e.g. Exchange: PAID IN FULL vs signing her own name) changes only the text
 
-      Each crew's ending plate is picked by the older Conviction/Cunning count; the new journey final choice (e.g. Exchange: PAID IN FULL vs signing her own name) changes only the text, and the 15 journey scenes per crew have no art of their own. Author a ledger with one plate per final-choice outcome (6 crews x 2) plus the strongest 2-3 journey scenes per crew, pass art_ledger_authoring and the live prompt contract, queue it, then curate and wire into SLIME_CITY_ART.story so the finale shows the ending the player actually chose.
-
-      2026-11-12 PT: queued JOURNEY-EPILOGUES-ROUND-1.yaml: 18 plates, one per journey
-      epilogue (6 crews x left/right/mixed; the epilogue, not the triumph/compromise count, is
-      what the final choice changes), assets slime-city/story/<crew>/journey-<key>. Next:
-      after the renders land, curate the keepers, add story['<crew>/journey-<key>'] to
-      kind_robots utils/slimeCity/artManifest.ts and have the finale/endings gallery prefer
-      the journey plate over the triumph/compromise plate. Still open: 2-3 key journey-scene
-      plates per crew.
-
-      2026-11-12 PT (later cycle): all 18 JOURNEY-EPILOGUES-ROUND-1 plates rendered; fetched
-      and contact-sheet reviewed. 17 kept and wired in kind_robots#5091 as
-      story['<crew>/journey-<key>']: the finale now paints the earned journey ending ahead of
-      the triumph/compromise plate, and the endings gallery shows each found journey ending's
-      own plate. ironjaw/journey-left (ArtImage 269920) painted a misspelled shop sign and is
-      re-queued in JOURNEY-EPILOGUES-REDO-1.yaml (priority 1000). Next: wire the Ironjaw redo
-      once DONE; still open: 2-3 key journey-scene plates per crew (ledger plus a scene-art
-      slot in the journey UI).
-
-      2026-11-14 PT: ironjaw/journey-left redo (ArtImage 270401) fetched, reviewed (no
-      lettering) and wired in kind_robots#5141; all 18 journey epilogue plates now in
-      SLIME_CITY_ART.story. Still open: 2-3 key journey-scene plates per crew (ledger plus a
-      scene-art slot in the journey UI).
-
-      2026-11-14 PT: kind_robots#5141 merged (20579aa): ironjaw/journey-left wired, all 18
-      journey epilogue plates live, and the campaign backdrop now prefers
-      story['<crew>/scene-<beat-id>'] during a journey scene. conductor#7370 merged: JOURNEY-
-      SCENES-ROUND-1.yaml (18 plates, 3 key scenes per crew, auto_submit) queued. Next: once
-      those renders are DONE, fetch, contact-sheet review, wire keepers into
-      SLIME_CITY_ART.story as '<crew>/scene-<beat-id>' (bump SLIME_CITY_ART_COUNT and its
-      test), then close t-062.
-
-      2026-11-14 PT (scheduled cycle): JOURNEY-SCENES-ROUND-1 is 6 of 18 DONE (catgirls +
-      bloodfairies, ArtImages 271836-271841); fetched, contact-sheet reviewed (all keepers)
-      and wired in kind_robots#5143 as story['<crew>/scene-<beat-id>'] (SLIME_CITY_ART_COUNT
-      814). Ironjaw/riot/undertow/exchange jobs 69298-69309 were still RUNNING/PENDING. Next:
-      once DONE, fetch, review and wire the remaining 12, then close t-062.
-
-      2026-11-14 PT (same cycle, later): all 18 JOURNEY-SCENES-ROUND-1 renders DONE. 16 kept
-      (6 in kind_robots#5143, 10 more in the follow-up PR). Two re-queued in JOURNEY-SCENES-
-      REDO-1.yaml (priority 1000): riot/scene-curfew-on-joy (271845, lettered license plate)
-      and exchange/scene-the-closing-of-the-book (271863, youthful-looking front-row figures).
-      Next: once those DONE, review, wire, bump SLIME_CITY_ART_COUNT (824 -> 826) and close
-      t-062.
-
-      2026-11-14 PT (afternoon cycle): JOURNEY-SCENES-REDO-1 both DONE. riot/scene-curfew-on-
-      joy 271886 kept (side-on flatbed, no plate, all adults) and wired in kind_robots#5152
-      (SLIME_CITY_ART_COUNT 825). exchange/scene-the-closing-of-the-book 271887 rejected again
-      (small seated front-row figures incl. a youthful-looking girl, full moon, crucifix); re-
-      queued as JOURNEY-SCENES-REDO-2.yaml (seed 2293118, low altar camera, crowd only as tall
-      standing adult silhouettes on a balcony). Next: once REDO-2 is DONE, review, wire as
-      story['exchange/scene-the-closing-of-the-book'], bump the count to 826 and close t-062.
-
-      2026-11-14 PT (scheduled cycle): JOURNEY-SCENES-REDO-2 DONE (job 69322, ArtImage
-      272149): low altar camera, adult-only balcony crowd, no lettering; kept and wired in
-      kind_robots#5159 as story['exchange/scene-the-closing-of-the-book']
-      (SLIME_CITY_ART_COUNT 826). All 18 journey epilogue plates and all 18 key journey-scene
-      plates are now live; t-062 complete.
+      Full history: projects/slime-city/HISTORY.md#t-062
     owner: worker
     claimed_by: 2026-11-14T185500Z-slime-city-t062-cc7
     claimed_at: '2026-11-14T10:50:07Z'
@@ -367,16 +296,10 @@ tasks:
     passes: 0
     depends_on: []
     updated: '2026-11-14T12:50:00Z'
-    note: |-
-      Found by t-058 (kind_robots#5030). chooseClashCpu's own-target grant scoring (utils/slimeCity/clash.ts, `missing.length * 2.8`) prices a PIERCE grant at full value even when the fighter across has no armor, so the CPU spends plays on PIERCE gear instead of deploying fighters. A swap ablation of the Catgirls fighters deck vs the other crews' constructed decks (24 seeds, both seats) read 0.432 with s1-surgical-piercers and 0.597 without; ninthlife (REGEN gear) 0.524 without. Prototype: value a PIERCE keyword at 0.6 unless `across.armor > 0`. That took the Catgirls fighters deck to 0.495, but the 40-seed starter sweep moved Undertow 54.5% -> 59.3% and Bloodfairies 44.3% -> 41.8% (guard 42-58%). Land the CPU fix together with a starter rebalance that keeps verifySlimeCityClash and verifySlimeCityClashConstructed green, and check whether REGEN gear on a full-health fighter is over-valued too. Internal preview only.
+    note: >-
+      Found by t-058 (kind_robots#5030).
 
-      2026-11-13 PT intent audit (INTENT-AUDIT-2026-11-13.md): claim expired ~1-2 days ago
-      with no open PR; released to ready so the top-priority lane is pickable. Next step is
-      the one in the note above.
-
-      Partial CPU PIERCE armor-aware valuation implemented in kind_robots PR #5149; full starter and constructed matchup CI must pass before merge. Prior ablation warned of Undertow/Bloodfairies imbalance. Keep in review until tests and rebalance are complete.
-
-      Merged kind_robots PR #5149 as squash 964495258d36b6cb61586fb5fa9a3a116bf9a269. All six PR-head workflows on 2f76100dd599d627dd6c61f8f1b1391d0c99b75b completed successfully, including Contract Tests and starter/constructed balance guards. CPU PIERCE keyword value against unarmored lanes is 2.6 versus 2.8 against armor; no gameplay rules or acceptance thresholds changed. Follow-up: investigate REGEN gear valuation and low-selection cards separately.
+      Full history: projects/slime-city/HISTORY.md#t-064
     claimed_by: 2026-11-14T081829Z-slime-city-t064-c8f2a7
     claimed_at: '2026-11-14T08:18:29Z'
   - id: t-002
@@ -828,65 +751,10 @@ tasks:
     depends_on: t-001
     passes: 0
     stakes: reversible
-    note: |-
-      Generate 6 unmistakably different crew hero illustrations, 7 district panoramic keys, 3 board layouts and first 36 collectible creature/spell/trap/equipment card illustrations through real ArtJobs; show per-asset pending/done/failed provenance and connect verified ArtImages in the internal lab. Never substitute CSS illustrations or prompt text for delivered art.
-      2026-10-30 art refill: conductor #6828 (7aa20da) added projects/slime-city/art/CREWS- DISTRICTS-CARDS-ROUND-1.yaml, an auto-submit Krea 2 ledger at priority 650. It covers 6 crew hero scenes, 7 district panoramas, all 36 prototype cards and 3 board layouts (blackout/gridiron/bloodrush), keyed by prototypes.ts ids as slime- city/{crews,districts,cards,boards}/<id>. 51 are queued as jobs 52035-52085; slime-card- plating hit HTTP 502 and is retrying. Prompts are original (projects/slime-city/ART- PROMPTS.md never existed): all adults, slapstick non-gory violence. Next: once DONE, review renders, export to public/slime-city via scripts/export_round_art.py, and wire a small manifest and lookup into /admin/slime-city (the lab currently shows card symbols) with per-asset pending/done/failed provenance. Not done until verified ArtImages show in the lab.
+    note: >-
+      Generate 6 unmistakably different crew hero illustrations, 7 district panoramic keys, 3 board layouts and first 36 collectible creature/spell/trap/equipment card illustrations through real ArtJobs; show per-asset pending/done/failed provenance and connect verified ArtImages in th
 
-      First authenticated ArtImage integration for Slime City internal lab is staged on worker/slime-city-t017-art-ledger-20261031T082251Z-z8m2. Conductor round-one ledger has 52 DONE subjects with unique ArtImage IDs: six crew portraits, seven district panoramas, 36 starter card illustrations, three arena scenes. Typed manifest records exact provenance; a Pinia loader requests private bytes with user JWT and exposes loaded/unavailable status. Artwork is wired into roster, city, campaign, cards, modes and arena. The other 24 starter cards remain honest fallbacks. Tests assert coverage and missingness. Delivered bytes and actual rendered browser screenshots NOT yet verified. Kind Robots CI and PR still pending.
-
-      PARTIAL 2026-10-31 PT: Merged Kind Robots PR #4551 (a2ddb7aa1612f938a292559e3a6df11ac1be559b), with 15/15 latest-head GitHub CI workflows successful, including TypeScript, changed-file formatting, layout and four contract shards. Conductor Krea 2 round-one ledger now records 52 DONE ArtImages: six crew paintings, seven district panoramas, 36 individual starter card paintings and three arena scenes; 52 IDs are unique. A typed immutable provenance manifest and account-authenticated transient blob image loader now drive actual image slots in internal Slime City roster, city, STORY splash, mode preview, arena, hand, card inspection, and collection. The UI exposes ArtImage IDs, loaded/unavailable state, and the remaining 24 missing card illustrations instead of counting queued or ledger-only renders as visible proof. Actual private media bytes and rendered visuals on the self-hosted deployment remain unverified, so t-017 must stay READY for next delivery-validation slice. No public files were exported, no permissions made public, and no production currency or database changes were made.
-
-      Round-two ledger authored for 168 new unique art slots (24 missing starter cards, 6 openings, 30 chapter scenes, 60 choice-result plates, 30 defeat plates, 12 endings, 6 attack-family icons) plus campaign aftermath text for every faction/choice/result. Companion Conductor and Kind Robots PRs under CI; live ArtJob IDs and visual delivery unverified until the auto-art sweep runs.
-
-      PARTIAL 2026-11-01 PT: Conductor PR #6911 merged at 7962f4de4a1458d29f512297ce5bbed4cb1da563 after Worker PR CI, security and handoff validation. Round-2 private auto_submit ledger defines 168 distinct Krea2 subjects: 24 remaining S0 cards, 6 openings, 30 chapter scenes, 60 choice outcomes, 30 defeat art, 12 endings, and 6 attack icons. Kind Robots companion PR #4591 merged at 21f357d673f6b959be49d55f1a4ebee48e209140 after 12/12 latest-head workflows passed; 120 unique written victory/loss passages now appear after the corresponding campaign battles. Auto Art Generate run #41306307982 was PENDING at verification, NOT confirmed submitted: zero new ArtJob IDs verified. Keep t-017 READY to reconcile accepted IDs after sweep, and check ArtImages/actual private delivery; do not re-enqueue duplicates. Existing 52 round-one DONE ArtImage IDs retained.
-
-      Private art ledger PR #6951 merged at 48fd811 after all latest-head CI passed. 192 card illustrations from wave three, finale, and mercenaries are in three auto_submit ledgers; Auto Art Generate run #41429062635 is pending behind another active art sweep. Accepted Job IDs and rendered ArtImages have NOT yet been confirmed. Reopen t-017 once jobs have accepted receipts to verify private delivered bytes and attach the new card images. No duplicate requests or public publication.
-
-      2026-11-02 PT curation (Silas: curate the Slime City art): 215 finished renders not yet
-      in the game were reviewed. 118 keep, wired into kind_robots
-      utils/slimeCity/artManifest.ts in kind_robots#4661: 37 cards, 77 story plates in a new
-      story group, 4 attack icons. The campaign screen now shows the opening, each chapter
-      scene, the won-approach or defeat plate and the earned ending. 97 redo (chapter titles
-      painted as text, starter cards drawn as card frames, real-world logos, a few child-
-      looking characters), re-rendered in art/SLIME-CITY-CURATION-REDO-1.yaml with those
-      causes removed from the prompts. Next: curate the redo round and the wave-three, finale
-      and mercenary card ledgers as they render.
-
-      PARTIAL MERGED 2026-11-11 PT: kind_robots#5017 squash d4872ac (11/11 checks green).
-      Curated finished TITLE-AND-BOSS-REACTIONS / FACTION-IDENTITY / ANARKISS / CURATION-
-      REDO-2 renders on contact sheets after authenticated fetches: wired 23 boss mood
-      portraits (SLIME_CITY_ART.bosses; Anarkiss supersedes circus Riot, identity round
-      supersedes ogre Ironjaw and old Exchange; Ironjaw ready 267992 rejected for a misspelled
-      painted sign), title-splash 267791, crews riot 267977 and exchange 267983, cards
-      s1-pocket-punk and s3-undertow-long-drain-sting. Also closes the t-049 follow-up. Ten
-      DONE renders (ArtImages 265264-265273 minus the two wired, plus TURF 261338) have empty
-      imageData and imagePath 404, so they were re-queued in art/SLIME-CITY-CURATION-
-      REDO-3.yaml; the Ironjaw prompts were rewritten as lab lizards. Next: curate REDO-3 once
-      DONE, then screenshot the lab/Clash at 390/768/1440. No deploy claimed.
-
-      2026-11-14 PT curation of SLIME-CITY-CURATION-REDO-3 (all 10 DONE, bytes fetched with
-      auth): kept and wired 6 in kind_robots#5175 (cards afterparty-first-aid 269287, spare-
-      rivet-shower 269288, tripcord 269290, weld-patch 269292, quiet-listener 269293; Clash
-      playmat 269286 registered as boards/pitworks-clash but the Clash view still uses
-      pitworks-blackout until the playmat is checked against the alley grid). Rejected 4:
-      festival-triage 269289 (child in frame), exchange/5/defeat 269294 (childlike fairies),
-      TURF board 269295 and ironjaw bonus-plate 269291 (garbled painted glyphs). These are re-
-      queued in art/SLIME-CITY-CURATION-REDO-4.yaml with the causing nouns removed. Next:
-      curate REDO-4 once DONE; screenshot lab/Clash at 390/768/1440 when an authenticated
-      environment exists.
-
-      2026-11-15 PT curation of SLIME-CITY-CURATION-REDO-4 (all 4 DONE, bytes fetched with auth and reviewed): kept all 4 and wired them in kind_robots#5196, (squash 2110141) after 11/11 checks green. The cards s3-bloodfairies-festival-triage 272504 (adult medic, no child in frame) and s3-ironjaw-bonus-plate 272505 (lizard paymaster, no glyphs) were the last two unillustrated cards, so all 300 playable cards now have art, and the Overworld test now asserts zero fallbacks. Story exchange/5/defeat 272506 shows grown punk fairies. The TURF rooftop court 272507 is registered as boards/turf-court only, because the district-floor contract keeps TURF on each district's Blackout floor. Whether the shared court should replace those floors is a small design call that is open to any agent. Remaining before done: screenshot the lab and Clash at 390/768/1440 in an authenticated environment. No new ArtJobs and no deploy claimed.
-
-      2026-11-15 PT (00:30) authenticated screenshots, lab Home and VS-vs-CPU Clash at
-      390/768/1440 on production kindrobots.org with a disposable cypress-* user (registered
-      via admin key, cleaned up after; sanctioned flow in docs/agents/frontend-
-      verification.md). Every crew, district board and hand card rendered art; zero broken
-      Slime City images, zero page errors. All 300 cards illustrated (REDO-4), so the art
-      scope of this task is met. Out-of-scope findings filed: t-067 (a signed-in non-admin
-      sees STORY SYNC ERROR because /api/slime-city/progress and /story 403 as admin-preview
-      only), t-068 (1440 Clash FIGHT button clips the right edge of the side panel). Also
-      seen: the nav project image /images/channels/projects/brainstorm.webp returns 404 site-
-      wide (not Slime City). No deploy, no ArtJobs.
+      Full history: projects/slime-city/HISTORY.md#t-017
     updated: '2026-11-15T08:10:29Z'
     implementation_pr: 'silasfelinus/kind_robots#5196'
     owner: worker
@@ -1565,27 +1433,9 @@ tasks:
     depends_on: []
     updated: '2026-11-15T04:19:52Z'
     note: >-
-      Kaizen from t-061 (kind_robots#5041): crew trophies, titles and card-back frames
-      unlock from finished campaigns (utils/slimeCity/crewTrophies.ts) but are only
-      previewed. Add an equip picker saving optional `cardBack`/`title` fields on the
-      story save (validated against unlocked crews), apply the frame to the Clash card
-      back, and show the worn title on the campaign/profile header. Cosmetic only: no
-      cards, Meat or wallet.
+      Kaizen from t-061 (kind_robots#5041): crew trophies, titles and card-back frames unlock from finished campaigns (utils/slimeCity/crewTrophies.ts) but are only previewed.
 
-      2026-11-13 PT intent audit (INTENT-AUDIT-2026-11-13.md): claim expired ~1-2 days ago
-      with no open PR; released to ready so the top-priority lane is pickable. Next step is
-      the one in the note above.
-
-      2026-11-14 PT: kind_robots#5201 adds optional cardBack/title on the story save
-      (validated against the save's endings; retired endings unequip instead of voiding the
-      story), store equipCosmetic(), USE CARD BACK / WEAR TITLE toggles on the trophy shelf,
-      the equipped frame on the Clash deck icon and the worn title in the campaign header.
-      Cosmetic only. Local: test:slime-city-lab and vue-tsc green. Next: merge on green CI,
-      then done; visual check after deploy.
-
-      MERGED 2026-11-14 PT: kind_robots#5201 squash d2e3980, all 12 checks green. Visual check
-      of the trophy-shelf picker, Clash deck back and worn title rides with the next
-      authenticated screenshot pass (t-017).
+      Full history: projects/slime-city/HISTORY.md#t-065
     owner: worker
     claimed_by: 2026-11-15T03:54:35Z-c7f2
     claimed_at: '2026-11-15T03:54:35Z'
@@ -1598,28 +1448,10 @@ tasks:
     passes: 0
     depends_on: []
     updated: '2026-11-14T22:06:41Z'
-    note: |-
-      Kaizen from t-062 (conductor#7290, JOURNEY-EPILOGUES-ROUND-1.yaml, 18 plates). The ledger
-      was hand-matched to the 6 crews x left/right/mixed epilogues in kind_robots
-      utils/slimeCity/endings.ts. Add a small check (conductor test or kind_robots spec) that
-      fails when an authored journey epilogue key has no slime-city/story/<crew>/journey-<key>
-      subject in a slime-city art ledger. A new crew or epilogue would then queue its art
-      instead of silently falling back to the triumph/compromise plate.
+    note: >-
+      Kaizen from t-062 (conductor#7290, JOURNEY-EPILOGUES-ROUND-1.yaml, 18 plates).
 
-      2026-11-13 PT intent audit (INTENT-AUDIT-2026-11-13.md): claim expired ~1-2 days ago
-      with no open PR; released to ready so the top-priority lane is pickable. Next step is
-      the one in the note above.
-
-      2026-11-14 PT: kind_robots#5180 adds the reverse guard in
-      verifySlimeCityEndings.test.ts: every crew's authored journey epilogue (endingCatalog
-      kind journey) must resolve via endingArtSlug to a wired SLIME_CITY_ART.story plate, and
-      wired journey-plate count must equal authored count (18). Checked the wired manifest
-      rather than the Conductor ledger because it is stricter and runs in kind_robots CI.
-      Mutation check (dropping exchange/journey-mixed) fails naming the slug.
-
-      DONE 2026-11-14 PT: kind_robots#5180 squash-merged at c4cb102 with 12/12 checks green (1
-      skipped autofix). Kaizen: same authored-vs-wired guard for per-crew ending-
-      triumph/compromise plates.
+      Full history: projects/slime-city/HISTORY.md#t-066
     owner: worker
     claimed_by: 2026-11-14T22:10:00Z-session_01L5NKxYz5YWf3tBYQeZX8ad
     claimed_at: '2026-11-14T21:47:15Z'
@@ -1632,21 +1464,9 @@ tasks:
     passes: 0
     updated: '2026-11-15T09:14:20Z'
     note: >-
-      Found 2026-11-15 PT during t-017 verification on production /play/slime-city with a fresh cypress-* user:
-      GET /api/slime-city/progress and /api/slime-city/story return 403 "Slime City progression is admin-preview only"
-      (requireSlimeCityPreviewUser), and the lab header shows a red "STORY SYNC ERROR · RELOAD" badge at 768 and 1440
-      (hidden at 390). The gate is intentional; the error presentation is not. Treat that specific 403 as a local-only
-      preview mode (no error badge, no reload loop, short neutral copy), keep the server gate unchanged, and cover it
-      with a store/component test. Audience-first: this is the public play URL.
+      Found 2026-11-15 PT during t-017 verification on production /play/slime-city with a fresh cypress-* user: GET /api/slime-city/progress and /api/slime-city/story return 403 "Slime City progression is admin-preview only" (requireSlimeCityPreviewUser), and the lab header shows a red
 
-      2026-11-15 PT daily-delivery:2026-11-15/slime-city-local-play | PR:
-      silasfelinus/kind_robots#5209 (merged c24cef2, CI green incl. contract shards) |
-      progress/story 403 from requireSlimeCityPreviewUser now puts the lab in a per-account
-      LOCAL PLAY state: device save via the guest path, neutral role=status notice, no STORY
-      SYNC ERROR badge; server gate unchanged; verifySlimeCityPreviewGate.test.ts added to
-      test:slime-city-lab.
-
-      Closed 2026-11-15 PT after kind_robots#5209 merged green (c24cef2).
+      Full history: projects/slime-city/HISTORY.md#t-067
     claimed_by: 2026-11-15T08:54:11Z-dgz3sp
     claimed_at: '2026-11-15T08:54:11Z'
     implementation_pr: 'silasfelinus/kind_robots#5209'
@@ -1656,12 +1476,10 @@ tasks:
     stakes: reversible
     passes: 0
     updated: '2026-11-15T10:59:07.944Z'
-    note: |-
-      Found 2026-11-15 PT during t-017 verification: at a 1440x900 viewport, VS-vs-CPU Clash, the bottom control row (deck, SOUND, UNDO, FIGHT) overflows so the FIGHT button runs past the side panel's right border. 390 and 768 fit. Constrain the row (shrink/wrap labels or reduce gaps), add a layout-contract assertion at 1440, and screenshot 390/768/1440 after.
+    note: >-
+      Found 2026-11-15 PT during t-017 verification: at a 1440x900 viewport, VS-vs-CPU Clash, the bottom control row (deck, SOUND, UNDO, FIGHT) overflows so the FIGHT button runs past the side panel's right border.
 
-      2026-11-15 PT: Implemented 1440px Clash side-rail overflow containment on worker/slime-city-t-068-console-row-20261115T0903Z-k8q4. Sound toggle is icon-only inside the narrow console (keeps its aria-label), its basis is capped at 2.25rem, action row/buttons may shrink; static Clash contract pins 1440 rail bounds and CSS invariants. Pending implementation PR and full CI. Production is self-hosted without PR preview; actual 390/768/1440 screenshots remain unverified and should be checked after deployment.
-
-      Reviewer 2026-11-15 PT: kind_robots#5210 squash-merged as 0c93ed7c5d345346cd4fde297f3635bf8675a45b after all six Actions workflows and all four Contract Test shards completed successfully. Diff limited to components/slime-city-clash.vue and utils/scripts/verifySlimeCityClash.test.ts. Source-level rail containment verified in regression test. Production is self-hosted: deployment and 390/768/1440 pixel screenshots remain unverified, not a blocking human gate.
+      Full history: projects/slime-city/HISTORY.md#t-068
     claimed_by: 20261115T090305Z-slime-city-t-068-k8q4
     claimed_at: '2026-11-15T09:03:05.663Z'
   - id: t-069

@@ -3194,16 +3194,9 @@ tasks:
   passes: 0
   updated: '2026-11-15T07:58:32Z'
   note: >-
-    Reviewer kaizen 2026-11-14 PT from conductor#7423 (shifting-desks/t-048 note fix). sync_github_issues.task_note()
-    told every import to use `Closes <issue>`, including project master issues that only the verified playtest
-    handoff may close. Six more roadmaps (emperor-of-dust, weird-humboldt, memory-dungeon, game-of-captains,
-    rainbow-bullet-hell-space-princess, comet-city-academy) still carried that instruction. This cycle: task_note()
-    now writes `Refs` for any source indexed in docs/agents/master-issues.yaml; the six generated preambles were
-    corrected to the #7423 wording; tests pin both the importer behaviour and a no-roadmap-says-Closes-a-master
-    guard. Implementation PR on branch claude/focused-johnson-j51a6c.
+    Reviewer kaizen 2026-11-14 PT from conductor#7423 (shifting-desks/t-048 note fix).
 
-    2026-11-14 PT: merged conductor#7424 (41fd3d6), CI green. Importer writes Refs for
-    master issues; six stale notes corrected; guard test added.
+    Full history: projects/conductor/HISTORY.md#t-212
   implementation_pr: 'silasfelinus/conductor#7424'
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
