@@ -211,3 +211,15 @@ def test_no_roadmap_tells_a_pr_to_close_a_master_issue():
         if f"`Closes {source}`" in path.read_text(encoding="utf-8")
     ]
     assert not offenders, offenders
+
+
+def test_master_issue_never_auto_closes_even_without_skip_label(tmp_path, monkeypatch):
+    projects = _fixture(tmp_path, monkeypatch, {"o/r": [_issue(1)]})
+    path = projects / "alpha" / "roadmap.yaml"
+    path.write_text(path.read_text().replace(
+        'title: "First"\n  status: done',
+        'title: "First"\n  status: done\n  source_issue: "o/r#1"'))
+    monkeypatch.setattr(bridge, "master_issue_sources", lambda: {"o/r#1"})
+    plan, _ = bridge.build_plan(None, close_done=True)
+    assert plan.close == []
+    assert plan.imports == []
