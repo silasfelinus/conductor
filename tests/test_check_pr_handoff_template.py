@@ -62,3 +62,12 @@ def test_main_missing_stakes_exits_one_and_annotates_stderr(monkeypatch, capsys)
     err = capsys.readouterr().err
     assert github_error_annotation("### Stakes") in err
     assert "### Stakes" in err
+
+
+def test_repo_pull_request_template_satisfies_the_handoff_check():
+    """The GitHub PR template must carry every heading the validator requires, so a
+    connector Worker that starts from it (memory-dungeon/t-072) can't fail the check."""
+    from pathlib import Path
+
+    template = Path(__file__).resolve().parents[1] / ".github" / "pull_request_template.md"
+    assert missing_sections(template.read_text(encoding="utf-8")) == []

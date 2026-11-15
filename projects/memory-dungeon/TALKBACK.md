@@ -231,3 +231,11 @@
 **What to improve:** this is the sixth handoff-template miss on this project, and #7453 (t-025, opened minutes later with `### Scope / ### Verification / ### Remaining`) is the seventh. Feedback in TALKBACK hasn't changed the behaviour, so the kaizen goes after the cause instead: t-072 adds a repo PR template that the GitHub connector is told to use.
 
 **Kaizen task:** t-072.
+
+## 2026-11-15 PT | Reviewer merge | memory-dungeon/t-025 | Conductor #7453
+
+**Decision:** squash-merged head `eb0900f` as `c7cd41f` once every check was green. The only red check had again been `Validate Worker PR handoff`. The body used `### Scope / ### Verification / ### Remaining`; the Reviewer mapped it onto the required headings and marked the result as reviewer-edited. t-025 goes back to `ready`, as the Worker's own note asked: map-cell binding, typed outcome state, reducer and save tests, rendered choices and art all remain.
+
+**What worked:** a strong encounter packet. Every scene has a nonviolent path and a no-reward path. The forged-flag gates are explicit (NS-03 transfer, NS-04 return), e04-first routing is protected, and the matrix is executable, not aspirational.
+
+**What to improve:** this is the seventh handoff miss. t-072 (built in this session) adds `.github/pull_request_template.md`, so the next connector-opened PR should start from the right headings. Also, the Night Shift `nightShift.evidence` ledger and the T029 Earth-pair reducer should share one witnessed-evidence source when they are implemented.
