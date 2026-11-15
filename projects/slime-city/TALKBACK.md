@@ -40,3 +40,10 @@ Shipped crew trophies, titles and card-back frames. They are derived from the ac
 - Reviewed the source patch against current main and six completed successful GitHub workflow runs (four Contract Test shards, five contract verifier jobs total). CSS change is contained to the Clash sidebar; no gameplay or other surfaces changed.
 - The original reviewer claim (09:10Z) was stale beyond the 20-minute window. I took a fresh review marker, verified no new active claimant, then squash-merged #5210 as 0c93ed7; GitHub confirmed the branch auto-deleted. Conductor t-068 moved from review to done through a verified task event.
 - Review feedback: the Worker kept the fix scoped and left accurate notes about self-hosted visual verification. The static rail assertion is not a substitute for DOM geometry. Follow-up t-069 specifies an actual bounding-box assertion at phone/tablet/desktop widths after deploy, with screenshots and a TAP-state check. No Vercel preview exists.
+
+## 2026-11-15 PT | Reviewer: slime-city/t-041 | kind_robots#5221
+
+- Reviewed final two-file patch: three shared Mercenary L3 cards carry their L2 tactical jobs into new payoffs. Source-diff scope is clean against independently merged arcade and memory changes; no schema, art, economy or live deployment change.
+- Final PR head `3cfa0ce`: all six GitHub workflow suites completed successfully; four Contract Test shards and the verifier passed. The initial Lightning Rod fixture had incorrectly equated total L2/L3 damage despite base spell scaling; the Worker repaired the assertion using `clashBalance` and strengthened live `surge` checks before merge.
+- Squash-merged #5221 as `77fee2a`. User-facing improvement is mechanical and deterministic; no pre-deployment visual claim. Task t-041 is an umbrella and returns to ready, not done, for outstanding catalog quality, selection telemetry, matchup balance and art.
+- Kaizen: t-070 defines a bounded 60-card Mercenary continuity and underselection audit, with explicit allowances for intentional role changes and real-engine test acceptance. This avoids over-generalizing one three-card fix.
