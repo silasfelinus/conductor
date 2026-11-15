@@ -1,0 +1,91 @@
+date: '2026-11-15'
+entries:
+- slug: space-couch-share-card
+  title: 'Front door: Space Couch link preview card'
+  target: game-of-captains
+  roadmap_task: t-041
+  kind: front-door
+  summary: Shared Space Couch links now unfurl with a designed titled card built from the red-sofa bridge art instead
+    of an untitled splash image.
+  status: shipped
+  pull_request: https://github.com/silasfelinus/kind_robots/pull/5209
+  checks_url: https://github.com/silasfelinus/kind_robots/actions/runs/43696882768
+  checks: passed
+  merge_sha: c24cef2ba52ed83a79c02f7f6e72500f7fbcfa90
+  verification: verifyGameLinkPreview.test.ts passed locally and in CI; card rendered in Chromium at 1200x630 and
+    checked by eye
+  art:
+    status: delivered
+    url: https://kindrobots.org/game-of-captains/link-preview.webp
+  preview_url: https://kindrobots.org/play/game-of-captains
+- slug: prom-of-doom-share-card
+  title: 'Front door: Prom of Doom link preview card'
+  target: comet-city-academy
+  roadmap_task: t-034
+  kind: front-door
+  summary: Shared Prom of Doom links now unfurl with a designed titled card over the Comet City rooftop art instead
+    of an untitled splash image.
+  status: shipped
+  pull_request: https://github.com/silasfelinus/kind_robots/pull/5209
+  checks_url: https://github.com/silasfelinus/kind_robots/actions/runs/43696882768
+  checks: passed
+  merge_sha: c24cef2ba52ed83a79c02f7f6e72500f7fbcfa90
+  verification: verifyGameLinkPreview.test.ts passed locally and in CI; card rendered in Chromium at 1200x630 and
+    checked by eye
+  art:
+    status: delivered
+    url: https://kindrobots.org/comet-city-academy/link-preview.webp
+  preview_url: https://kindrobots.org/play/comet-city-academy
+- slug: slime-city-duel-invite-card
+  title: 'Front door: Slime City duel invite link preview'
+  target: slime-city
+  roadmap_task: t-063
+  kind: front-door
+  summary: Shared Slime City duel invite links previously had no social preview at all; the PvP page now carries
+    its own meta and a code-drawn You have been challenged card.
+  status: shipped
+  pull_request: https://github.com/silasfelinus/kind_robots/pull/5209
+  checks_url: https://github.com/silasfelinus/kind_robots/actions/runs/43696882768
+  checks: passed
+  merge_sha: c24cef2ba52ed83a79c02f7f6e72500f7fbcfa90
+  verification: verifyGameLinkPreview.test.ts passed locally and in CI; card rendered in Chromium at 1200x630 and
+    checked by eye
+  art:
+    status: delivered
+    url: https://kindrobots.org/slime-city-pvp/link-preview.webp
+  preview_url: https://kindrobots.org/play/slime-city-pvp
+- slug: zuzu-share-cards
+  title: 'Front door: Zuzu Gamebook and Shifting Lands link preview cards'
+  target: interface-vision
+  roadmap_task: t-151
+  kind: front-door
+  summary: Shared Zuzu gamebook and Shifting Lands links now unfurl with designed titled cards instead of raw scene
+    and encounter card art.
+  status: shipped
+  pull_request: https://github.com/silasfelinus/kind_robots/pull/5209
+  checks_url: https://github.com/silasfelinus/kind_robots/actions/runs/43696882768
+  checks: passed
+  merge_sha: c24cef2ba52ed83a79c02f7f6e72500f7fbcfa90
+  verification: verifyGameLinkPreview.test.ts passed locally and in CI; card rendered in Chromium at 1200x630 and
+    checked by eye
+  art:
+    status: delivered
+    url: https://kindrobots.org/zuzu-gamebook/link-preview.webp
+  preview_url: https://kindrobots.org/play/zuzu-gamebook
+- slug: slime-city-local-play
+  title: 'Slime City: calm LOCAL PLAY instead of STORY SYNC ERROR'
+  target: slime-city
+  roadmap_task: t-067
+  kind: bug-fix
+  summary: Signed-in visitors outside the Slime City admin preview no longer see a red STORY SYNC ERROR badge; the
+    lab plays and saves on their device with a neutral notice.
+  status: shipped
+  pull_request: https://github.com/silasfelinus/kind_robots/pull/5209
+  checks_url: https://github.com/silasfelinus/kind_robots/actions/runs/43696882768
+  checks: passed
+  merge_sha: c24cef2ba52ed83a79c02f7f6e72500f7fbcfa90
+  verification: verifySlimeCityPreviewGate.test.ts, AccountBoundary and StorySave passed locally; full test:slime-city-lab
+    contract shards passed in CI
+  art:
+    status: not-required
+  preview_url: https://kindrobots.org/play/slime-city
