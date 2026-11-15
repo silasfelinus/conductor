@@ -91,7 +91,7 @@ def roadmap_closeout_errors(date, entry, label, seen_tasks):
     return []
 
 
-def validate(date, docket):
+def validate(date, docket, *, verify_roadmap=True):
     if date < CUTOVER:
         return ["Delivery mode starts 2026-10-13 PT; historical pitches remain unchanged"]
     if not isinstance(docket, dict) or str(docket.get("date")) != date:
@@ -113,7 +113,14 @@ def validate(date, docket):
         if entry.get("target") not in active:
             errors.append(f"{label}: must target an existing active project")
         if date >= ROADMAP_CLOSEOUT_CUTOVER:
-            errors.extend(roadmap_closeout_errors(date, entry, label, roadmap_tasks))
+            if verify_roadmap:
+                errors.extend(roadmap_closeout_errors(date, entry, label, roadmap_tasks))
+            else:
+                task_id = str(entry.get("roadmap_task") or "")
+                task_key = (entry.get("target"), task_id)
+                if not TASK.fullmatch(task_id) or task_key in roadmap_tasks:
+                    errors.append(f"{label}: missing or duplicate roadmap_task")
+                roadmap_tasks.add(task_key)
         for field in ("title", "kind", "summary", "verification"):
             if len(str(entry.get(field) or "").strip()) < 5:
                 errors.append(f"{label}: missing meaningful {field}")
@@ -201,7 +208,10 @@ def decision(path):
 
 def payload(date):
     docket = load(date)
-    if validate(date, docket):
+    # A roadmap task may later have its dated note archived or its lifecycle
+    # reconciled. Validate live task receipts for the active day, but preserve
+    # already-delivered historical review cards by their recorded task IDs.
+    if validate(date, docket, verify_roadmap=date >= today()):
         return {"date": date, "entries": [], "missing": True}
     entries = []
     for row in docket["entries"]:
@@ -216,7 +226,7 @@ def feedback():
     work = []
     for path in sorted(DIR.glob("????-??-??.yaml")):
         docket = load(path.stem)
-        if validate(path.stem, docket):
+        if validate(path.stem, docket, verify_roadmap=False):
             continue
         for row in docket["entries"]:
             review = record_path(path.stem, row["slug"])
