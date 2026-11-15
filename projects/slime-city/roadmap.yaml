@@ -818,7 +818,7 @@ tasks:
   - id: t-017
     milestone: m2
     title: "Queue and verify distinct art for teams, districts and specials"
-    status: ready
+    status: claimed
     depends_on: t-001
     passes: 0
     stakes: reversible
@@ -870,8 +870,11 @@ tasks:
       environment exists.
 
       2026-11-15 PT curation of SLIME-CITY-CURATION-REDO-4 (all 4 DONE, bytes fetched with auth and reviewed): kept all 4 and wired them in kind_robots#5196, (squash 2110141) after 11/11 checks green. The cards s3-bloodfairies-festival-triage 272504 (adult medic, no child in frame) and s3-ironjaw-bonus-plate 272505 (lizard paymaster, no glyphs) were the last two unillustrated cards, so all 300 playable cards now have art, and the Overworld test now asserts zero fallbacks. Story exchange/5/defeat 272506 shows grown punk fairies. The TURF rooftop court 272507 is registered as boards/turf-court only, because the district-floor contract keeps TURF on each district's Blackout floor. Whether the shared court should replace those floors is a small design call that is open to any agent. Remaining before done: screenshot the lab and Clash at 390/768/1440 in an authenticated environment. No new ArtJobs and no deploy claimed.
-    updated: '2026-11-15T03:06:41+00:00'
+    updated: '2026-11-15T07:59:38Z'
     implementation_pr: 'silasfelinus/kind_robots#5196'
+    owner: worker
+    claimed_by: 2026-11-15T08:02:00Z-claude-j51a6c
+    claimed_at: '2026-11-15T07:59:38Z'
   - id: t-018
     milestone: m2
     title: "Build 60 playable neutral mercenaries with legal faction mixing"
