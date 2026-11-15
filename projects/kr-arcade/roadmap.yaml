@@ -2752,16 +2752,18 @@ tasks:
   - id: t-160
     milestone: m9
     title: "Ghost Trail Gen-2 overworld and save slots (reuse the Save the Plumber overworld module)"
-    status: ready
+    status: claimed
     depends_on: [t-158]
-    owner: null
+    owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-10-22T10:30:00Z'
+    updated: '2026-11-15T04:26:41Z'
     note: >-
       Reuse the pure overworld/save-slot module built for save-the-plumber/t-011 (generalize it into
       utils/arcade/ rather than copying). Bell Road map screen, three save slots, per-level clear and
       secret flags, relics, subweapons, deaths/time, migration from the current Ghost Trail save.
+    claimed_by: 2026-11-15T0426Z-arcade-lane-ghost-elegant-noether
+    claimed_at: '2026-11-15T04:26:41Z'
   - id: t-161
     milestone: m9
     title: "Ghost Trail Gen-2 stages: split acts into levels, sub-areas, secret exits, haunted houses"
