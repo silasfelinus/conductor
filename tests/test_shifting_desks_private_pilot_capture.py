@@ -31,6 +31,9 @@ def test_v2_subject_only_pilot_has_three_isolated_queued_jobs():
     assert {row["job"] for row in rows} == {69090, 69091, 69092}
     assert all(row["_round"] == "PILOT-V2" for row in rows)
     assert all(row["pass"] and row["fail"] for row in rows)
+    assert all(row["verdict"] == "REDO" for row in rows)
+    assert all(row["review_note"] and "ArtImage" in row["review_note"] for row in rows)
+    assert {row["evidence_artifact_id"] for row in rows} == {14164533392}
 
 
 def test_pending_v2_jobs_cannot_be_passed_off_as_delivered(monkeypatch):
