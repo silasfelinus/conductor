@@ -670,8 +670,8 @@ tasks:
   - id: t-025
     milestone: m3
     title: "Author and build the other three Act I overworlds and dungeons"
-    status: review
-    updated: '2026-11-15T22:49:00Z'
+    status: ready
+    updated: '2026-11-15T22:53:26Z'
     depends_on: t-022
     passes: 0
     stakes: reversible
@@ -701,9 +701,14 @@ tasks:
       Scoped e03 Morrow finale consequence slice merged in kind_robots PR #5133 at 5013d9eb339c4e0120505ad5af19312b9d463a45. Eight required PR checks passed on exact head 9289cdaa39bdefd11d28d30e7a0da2a659e6d8a0. Mara honesty/bluff and fountain approach choices persist through save/restore and affect exclusive finale echoes. t-025 remains incomplete: additional overworld/dungeon content, art and acceptance outstanding. Released for future scoped work.
 
       Authored four optional e03/e04 Night Shift scenes with twelve stable choices, witnessed-evidence gates, replay-safe outcome rules, and seeded implementation acceptance matrix. Conductor PR pending; not executable or art-delivered. Return ready after merging for implementation.
+
+      2026-11-15 PT reviewer: merged conductor#7453 (c7cd41f) after the handoff body was
+      reformatted. The Night Shift packet is docs-only; back to ready for map-cell binding,
+      outcome state, tests, rendered choices and art.
     owner: worker
     claimed_by: 2026-11-15T224251Z-memory-dungeon-t-025-b84d
     claimed_at: '2026-11-15T22:42:51Z'
+    implementation_pr: 'silasfelinus/conductor#7453'
   - id: t-026
     milestone: m3
     title: "Author and build Act II: Stories We Inherit"
