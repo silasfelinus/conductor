@@ -47,3 +47,13 @@ Shipped crew trophies, titles and card-back frames. They are derived from the ac
 - Final PR head `3cfa0ce`: all six GitHub workflow suites completed successfully; four Contract Test shards and the verifier passed. The initial Lightning Rod fixture had incorrectly equated total L2/L3 damage despite base spell scaling; the Worker repaired the assertion using `clashBalance` and strengthened live `surge` checks before merge.
 - Squash-merged #5221 as `77fee2a`. User-facing improvement is mechanical and deterministic; no pre-deployment visual claim. Task t-041 is an umbrella and returns to ready, not done, for outstanding catalog quality, selection telemetry, matchup balance and art.
 - Kaizen: t-070 defines a bounded 60-card Mercenary continuity and underselection audit, with explicit allowances for intentional role changes and real-engine test acceptance. This avoids over-generalizing one three-card fix.
+
+## 2026-11-15 PT | Reviewer merge | slime-city/t-041 closeout | Conductor #7439
+
+**Decision:** squash-merged head `f6f413a` as `1dc11e5`. Documentation/state-only: a reviewer record for kind_robots#5221 and one Kaizen task, t-070 (Mercenary L2-to-L3 continuity audit). All 26 checks on the head completed (success or skipped), including the task-id reuse detector. No production, art, migration or gate change.
+
+**Good:** the Kaizen task is bounded (60 cards, explicitly not a blanket 300-card acceptance) and states what must not change (card IDs, faction identities, rewards).
+
+**Improve:** nothing blocking. The handoff left "Conductor CI must complete before merge" for a reviewer to pick up; when CI is the only remaining step, subscribe and merge it yourself.
+
+**Kaizen task:** none added beyond the Worker's own t-070, which already is this closeout's kaizen.
