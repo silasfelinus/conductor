@@ -1,8 +1,0 @@
-version: 1
-project: shifting-desks
-task: t-049
-operation: review
-session: 20261115T131609Z-shifting-desks-t-049-gpt6-e6c2
-updated: '2026-11-15T13:18:21.724Z'
-note: >-
-  Shifting Desks t-049 independent recovery QA slice: guarded store hydration against one localStorage getItem failure without clearing valid run, and retained existing slots without write-through on incomplete reads. Added live Pinia store regression coverage for five individually blocked keys, malformed imports, failed-write rollback and portable backup restoration. Kind Robots branch worker/shifting-desks-t-049-recovery-guard-e6c2; PR and exact-head CI pending. This does not complete account-backed saves, browser/device acceptance or art readiness, so keep t-049 open after landing.
