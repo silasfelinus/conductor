@@ -274,11 +274,11 @@ tasks:
   - id: t-008
     milestone: m4
     title: Combat, powers, dice, inventory and save/resume UI polish
-    status: review
+    status: done
     owner: worker
-    claimed_by: 2026-11-15T020615Z-zuzu-gamebook-t-008-c4f2
-    claimed_at: '2026-11-15T02:06:15Z'
-    updated: '2026-11-15T02:06:15Z'
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-11-15T02:26:21Z'
     passes: 0
     stakes: reversible
     depends_on: [t-002, t-003]
@@ -325,7 +325,16 @@ tasks:
       codes if QR sharing is wanted, and the Ledger dialog may need the same under-header
       placement on tablets. Merged as kind_robots#4864 (2026-11-06, with a capture-group guard
       fix in terms.ts).
-    implementation_pr: 'silasfelinus/kind_robots#4864'
+
+      2026-11-15 PT close-out: combat calibration pinned by a seeded 400-seed test in
+      kind_robots #5192 (merged b01655b): Guard best vs the Abbess (66%), Quiet Draw best vs
+      crocodile (93%) and the jackal band (50%), Feint the best free answer to the band once
+      Resolve is spent, Strike never best. UI polish shipped earlier (#4826, #4864); every
+      fight-outcome section now has a painted plate. Shorter save codes remain optional
+      polish. The 2026-11-15 heal-before-hurt preview slice (#5191, latent bug) moved to
+      playtest_iteration t-018 with its claim intact. Evidence: projects/zuzu-
+      gamebook/PLAYTEST-READINESS-2026-11-15.md.
+    implementation_pr: 'silasfelinus/kind_robots#5192'
   - id: t-009
     milestone: m5
     title: QA and editorial playtest of every route, ending and device
