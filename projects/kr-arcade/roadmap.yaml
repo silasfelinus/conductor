@@ -2679,7 +2679,16 @@ tasks:
       deploys the merge, earn one arcade achievement (e.g. Gloom Invaders sunny-skies)
       and one event achievement while signed in, and confirm the popup, the cabinet
       pane's earned state and the /achievements?section=arcade chip counts at 390/768/1440.
-    updated: '2026-10-15T03:50:00Z'
+
+      2026-11-14 PT progress: production check -- all 128 active arcade Achievement rows have
+      imagePath art that fetches 200 image/webp from kindrobots.org (redirects followed). With
+      Silas's in-session permission a live record was created for him: AchievementRecord #913,
+      arcade-gloom-invaders-sunny-skies (id 1201), userId 1, isConfirmed false, so the earn
+      popup fires on his next signed-in page load. REMAINING: signed-in browser check of
+      popup, cabinet pane earned state and /achievements?section=arcade chip counts at
+      390/768/1440 -- a signed-in agent browser is blocked in the sandbox; folded into the
+      final playtest acceptance checklist.
+    updated: '2026-11-15T04:04:39Z'
   - id: t-158
     milestone: m9
     title: "Ghost Trail Gen-2 design: Bell Road overworld graph, secret exits, haunted houses"
