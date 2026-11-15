@@ -114,15 +114,12 @@ tasks:
       Full history: projects/shifting-desks/HISTORY.md#t-001
   - id: t-049
     title: 'Main-game standard: audit and close the gaps for Shifting Desks'
-    status: review
-    owner: worker
-    claimed_by: 20261113T120222Z-shifting-t049-gpt6-c8d1
-    claimed_at: '2026-11-13T12:02:22Z'
+    status: ready
     milestone: m5
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-13T12:06:00Z'
+    updated: '2026-11-15T13:15:01.807Z'
     note: |-
       Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -143,6 +140,8 @@ tasks:
       Kind Robots PR #5111 merged at c91347a976dd0de2a7942995c3cd6d44ab821e8c after all seven exact-head checks passed on 2d447504f1dd60bf88a6e268de09c1c40699b2b2. Personnel Archive now shows saved former-employee dossiers. This is a partial standard increment: account-save design, complete browser playthrough, production deployment, and subjective handoff remain unverified. Return t-049 to ready, not done.
 
       Scoped portable browser progress backup/restore implemented in kind_robots branch worker/shifting-desks-t-049-backup-c8d1. Review and CI pending; broader main-game standard remains incomplete.
+
+      Reconciled stale 2026-11-13 review: Kind Robots PRs #5111, #5115 and #5123 are merged; no open Shifting Desks PR was found. Portable backup/restore landed, but full store recovery regression coverage and browser/account-backed acceptance remain open. Return t-049 to ready for the next independent verified implementation slice.
   - id: t-050
     title: 'Shifting Desks achievement upgrade: 12 or more live achievements'
     status: done
