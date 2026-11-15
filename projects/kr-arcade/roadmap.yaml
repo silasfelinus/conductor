@@ -2957,11 +2957,11 @@ tasks:
   - id: t-164
     milestone: m10
     title: "Cross-game responsive resolution, render-budget and character-readability contract (issue #4062)"
-    status: claimed
+    status: review
     passes: 0
     stakes: reversible
     source_issue: silasfelinus/kind_robots#4062
-    updated: '2026-11-15T13:16:50Z'
+    updated: '2026-11-15T13:23:00Z'
     note: |-
       Silas-directed 2026-10-23. Begin with shared Arcade display fit and backing-pixel budget, actual height/width responsive bounds and regression tests at phone landscape/portrait, tablet and desktop DPRs. Follow with genre-specific camera and sprite legibility improvements for Save the Plumber, Rainbow Princess, Ghost Trail, Zuzu Showdown, classic cabinets and Memory Dungeon, without changing deterministic gameplay or forcing square memory boards into 16:9. Full acceptance and per-game follow-up specification: kind_robots issue #4062.
 
@@ -2976,6 +2976,8 @@ tasks:
       2026-11-15 PT: Brick Bloom mobile touch-control slice committed on worker/kr-arcade-t-164-brick-bloom-touch-bb61ae (376a93a). Swipe/drag paddle input, no gameplay D-pad or permanent A/B cluster, contextual action buttons, mobile browser viewport test. This is one slice of the broader t-164 cross-game audit; requeue after safe PR merge.
 
       Brick Bloom mobile touch UI slice merged 2026-11-15 in silasfelinus/kind_robots#5215 (squash 5dfd29aebe0823c30019c15f027dd88bfab6e5fb). Paddle now accepts captured touch drag/swipe; persistent D-pad and A/B controls are suppressed during normal gameplay, while contextual Launch/Skip/Curl and full Potting Bench menus remain accessible. The real cabinet Chromium viewport matrix covered 390x844 at DPR 1,2,3 and passed; screenshot artifact 14161727709 visually shows a clear paddle area. On the final PR head, all 15 substantive GitHub checks completed successfully; only optional Push Prettier autofix was skipped after autoformat. Requeue this non-recurring cross-game t-164 for remaining camera, readability, and other-game device audits. Keep kind_robots issue #4062 open; no production deployment was attempted.
+
+      2026-11-15 PT: Brick Bloom follow-up touch ergonomics committed as f5f882c on worker/kr-arcade-t-164-paddle-slide-lane-a73c09. Adds dedicated full-width finger lane beneath the playable canvas with portrait/landscape sizing, keeps canvas drag available, and extends real Chromium viewport matrix to phone/tablet/landscape with lane geometry and paddle-direction checks. Requeue broader kr-arcade/t-164 viewport audit after safe PR merge.
     owner: worker
     claimed_by: 2026-11-15T131650Z-kr-arcade-t-164-paddlelane-a73c09
     claimed_at: '2026-11-15T13:16:50Z'
