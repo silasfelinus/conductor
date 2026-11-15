@@ -1288,11 +1288,11 @@ tasks:
   - id: t-075
     milestone: m8
     title: "Ribbon Riders depth slice 2: The first two fairgrounds"
-    status: claimed
+    status: done
     owner: worker
     claimed_by: 2026-11-15T0837Z-arcade-lane-ribbon-r-elegant-noether
     claimed_at: '2026-11-15T08:37:42Z'
-    updated: '2026-11-15T08:37:42Z'
+    updated: '2026-11-15T09:11:48Z'
     passes: 0
     stakes: reversible
     depends_on: t-074
@@ -1310,10 +1310,15 @@ tasks:
       Circuit) PR found; only slice 1 (#3592) and extra arenas (#3852, #3857). Released for
       pickup.
 
+      2026-11-15 PT: shipped in silasfelinus/kind_robots#5208 (squash 5f36178); all 15 CI
+      checks green incl. TypeScript, contract shards 1-4, cabinet viewport and arcade cabinet
+      browser contracts. Pilot probes/staged fixtures only; no human pacing claimed.
+    implementation_pr: 'silasfelinus/kind_robots#5208'
+
   - id: t-076
     milestone: m8
     title: "Ribbon Riders depth slice 3: The last two fairgrounds and the endings"
-    status: waiting
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-075
@@ -1459,7 +1464,7 @@ tasks:
   - id: t-084
     milestone: m8
     title: "Pixel Hop depth slice 2: Candy Comet and Rondo Ring"
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
     depends_on: t-083
@@ -1473,15 +1478,20 @@ tasks:
 
       2026-11-01 PT: dependency t-083 closed done in the stale-claim reconciliation; promoted
       to ready.
-    updated: '2026-11-15T08:37:44Z'
+
+      2026-11-15 PT: shipped in silasfelinus/kind_robots#5208 (squash 5f36178); all 15 CI
+      checks green incl. TypeScript, contract shards 1-4, cabinet viewport and arcade cabinet
+      browser contracts. Pilot probes/staged fixtures only; no human pacing claimed.
+    updated: '2026-11-15T09:11:30Z'
     owner: worker
     claimed_by: 2026-11-15T0837Z-arcade-lane-pixelhop-r-elegant-noether
     claimed_at: '2026-11-15T08:37:44Z'
+    implementation_pr: 'silasfelinus/kind_robots#5208'
 
   - id: t-085
     milestone: m8
     title: "Pixel Hop depth slice 3: Glacier Moon and Clockwork Planet"
-    status: waiting
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-084
@@ -1557,7 +1567,7 @@ tasks:
   - id: t-089
     milestone: m8
     title: "Glitch Garden depth slice 2: Spring and Summer"
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
     depends_on: t-088
@@ -1568,15 +1578,20 @@ tasks:
       top applies. Code: kind_robots utils/arcade/games/ (registry slug glitch-garden). Silas, 2026-10-11: "I
       need an assessment done of the other arcade games. I want the same level of quality improvements, they
       should not just be thin veneers of the old games. But newer, better, even more awesome."
+
+      2026-11-15 PT: shipped in silasfelinus/kind_robots#5208 (squash 5f36178); all 15 CI
+      checks green incl. TypeScript, contract shards 1-4, cabinet viewport and arcade cabinet
+      browser contracts. Pilot probes/staged fixtures only; no human pacing claimed.
     owner: worker
     claimed_by: 2026-11-15T0837Z-arcade-lane-glitch2-r-elegant-noether
     claimed_at: '2026-11-15T08:37:35Z'
-    updated: '2026-11-15T08:37:35Z'
+    updated: '2026-11-15T09:11:24Z'
+    implementation_pr: 'silasfelinus/kind_robots#5208'
 
   - id: t-090
     milestone: m8
     title: "Glitch Garden depth slice 3: Autumn and Winter"
-    status: waiting
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-089
@@ -1647,7 +1662,7 @@ tasks:
   - id: t-094
     milestone: m8
     title: "Lantern Swarm depth slice 2: Welcome Glow, the Flock and the Evening fork"
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
     depends_on: t-093
@@ -1659,15 +1674,20 @@ tasks:
       Silas, 2026-10-11: "I need an assessment done of the other arcade games. I want the same level of
       quality improvements, they should not just be thin veneers of the old games. But newer, better, even
       more awesome."
+
+      2026-11-15 PT: shipped in silasfelinus/kind_robots#5208 (squash 5f36178); all 15 CI
+      checks green incl. TypeScript, contract shards 1-4, cabinet viewport and arcade cabinet
+      browser contracts. Pilot probes/staged fixtures only; no human pacing claimed.
     owner: worker
     claimed_by: 2026-11-15T0837Z-arcade-lane-lantern2-r-elegant-noether
     claimed_at: '2026-11-15T08:37:38Z'
-    updated: '2026-11-15T08:37:38Z'
+    updated: '2026-11-15T09:11:42Z'
+    implementation_pr: 'silasfelinus/kind_robots#5208'
 
   - id: t-095
     milestone: m8
     title: "Lantern Swarm depth slice 3: The Midnight and Small Hours forks"
-    status: waiting
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-094
@@ -1780,7 +1800,7 @@ tasks:
   - id: t-102
     milestone: m8
     title: "Hedgehog Crossing depth slice 1: Lanes as data and the Family Parade"
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
     note: >-
@@ -1799,16 +1819,20 @@ tasks:
       pilot probe seeds 1-6, Chromium render, 18 CI checks green. REMAINING for t-102:
       snapping log (eyes open before it yawns; ride tail half), heron (shadow sweeps a creek
       column), delivery bot (blinker before lane change), lanes-as-data refactor of LANES.
+
+      2026-11-15 PT: shipped in silasfelinus/kind_robots#5208 (squash 5f36178); all 15 CI
+      checks green incl. TypeScript, contract shards 1-4, cabinet viewport and arcade cabinet
+      browser contracts. Pilot probes/staged fixtures only; no human pacing claimed.
     owner: worker
     claimed_by: 2026-11-15T0837Z-arcade-lane-hedgehog-r-elegant-noether
     claimed_at: '2026-11-15T08:37:50Z'
-    updated: '2026-11-15T08:37:50Z'
-    implementation_pr: 'silasfelinus/kind_robots#3925'
+    updated: '2026-11-15T09:12:00Z'
+    implementation_pr: 'silasfelinus/kind_robots#5208'
 
   - id: t-103
     milestone: m8
     title: "Hedgehog Crossing depth slice 2: Leg 1 and the scrolling engine"
-    status: waiting
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-102
@@ -2132,7 +2156,7 @@ tasks:
   - id: t-123
     milestone: m8
     title: "Cocoa Counter depth slice 2: Snowdrop Cafe and the Seaside Smoothie Shack"
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
     depends_on: t-122
@@ -2144,15 +2168,20 @@ tasks:
       Silas, 2026-10-11: "I need an assessment done of the other arcade games. I want the same level of
       quality improvements, they should not just be thin veneers of the old games. But newer, better, even
       more awesome."
+
+      2026-11-15 PT: shipped in silasfelinus/kind_robots#5208 (squash 5f36178); all 15 CI
+      checks green incl. TypeScript, contract shards 1-4, cabinet viewport and arcade cabinet
+      browser contracts. Pilot probes/staged fixtures only; no human pacing claimed.
     owner: worker
     claimed_by: 2026-11-15T0837Z-arcade-lane-cocoa2-r-elegant-noether
     claimed_at: '2026-11-15T08:37:52Z'
-    updated: '2026-11-15T08:37:52Z'
+    updated: '2026-11-15T09:11:54Z'
+    implementation_pr: 'silasfelinus/kind_robots#5208'
 
   - id: t-124
     milestone: m8
     title: "Cocoa Counter depth slice 3: Moonbase Milk Bar and Clocktower Tea Room"
-    status: waiting
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-123
@@ -2374,7 +2403,7 @@ tasks:
   - id: t-137
     milestone: m8
     title: "Seed Burst depth slice 2: Spring and Summer"
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
     depends_on: t-136
@@ -2385,15 +2414,20 @@ tasks:
       applies. Code: kind_robots utils/arcade/games/ (registry slug seed-burst). Silas, 2026-10-11: "I need an
       assessment done of the other arcade games. I want the same level of quality improvements, they should
       not just be thin veneers of the old games. But newer, better, even more awesome."
+
+      2026-11-15 PT: shipped in silasfelinus/kind_robots#5208 (squash 5f36178); all 15 CI
+      checks green incl. TypeScript, contract shards 1-4, cabinet viewport and arcade cabinet
+      browser contracts. Pilot probes/staged fixtures only; no human pacing claimed.
     owner: worker
     claimed_by: 2026-11-15T0837Z-arcade-lane-seedburst2-r-elegant-noether
     claimed_at: '2026-11-15T08:37:40Z'
-    updated: '2026-11-15T08:37:40Z'
+    updated: '2026-11-15T09:11:36Z'
+    implementation_pr: 'silasfelinus/kind_robots#5208'
 
   - id: t-138
     milestone: m8
     title: "Seed Burst depth slice 3: Autumn and Winter"
-    status: waiting
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-137
