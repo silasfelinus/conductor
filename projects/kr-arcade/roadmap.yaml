@@ -2598,7 +2598,7 @@ tasks:
   - id: t-150
     milestone: m8
     title: "Verify Ribbon Riders wrap topology at arena seams and the capture-size boundary."
-    status: review
+    status: done
     passes: 0
     stakes: reversible
     depends_on: t-074
@@ -2618,10 +2618,14 @@ tasks:
       matrix and exact 160/320 boundary, expected cells from authored rectangles, all 17 CI
       checks green. STILL OPEN: public-steering captures for representative shapes and native
       renderer evidence for one seam case.
+
+      2026-11-15 PT: shipped in silasfelinus/kind_robots#5202 (squash 53db9ed); all 15 CI
+      checks green incl. TypeScript, contract shards 1-4, cabinet viewport and arcade cabinet
+      browser contracts. Staged fixtures/pilot probes only; no human pacing claimed.
     owner: worker
     claimed_by: 2026-11-15T0417Z-arcade-lane-verify7-elegant-noether
     claimed_at: '2026-11-15T04:17:21Z'
-    updated: '2026-11-15T08:39:56Z'
+    updated: '2026-11-15T08:40:00Z'
     implementation_pr: 'silasfelinus/kind_robots#5202'
 
   - id: t-151
