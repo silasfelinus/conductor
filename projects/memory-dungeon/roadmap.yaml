@@ -964,11 +964,11 @@ tasks:
     updated: '2026-11-08T17:48:00Z'
   - id: t-040
     title: "Memory Dungeon: deliver painted 6×6 House dungeon floorplans, not just the 8×8 overworld maps"
-    status: ready
+    status: claimed
     stakes: reversible
     passes: 0
     source_issue: "silasfelinus/kind_robots#4380"
-    updated: '2026-11-08T08:47:00Z'
+    updated: '2026-11-15T18:46:10Z'
     note: >-
       2026-11-11 PT remaining: Gameplay geometry is not painted art; require delivered 6×6 floorplan images and visual acceptance. Evidence: RESET-TASK-EVIDENCE-AUDIT-2026-11-10.md (t-040 row).
       FROM GITHUB ISSUE silasfelinus/kind_robots#4380 (https://github.com/silasfelinus/kind_robots/issues/4380), opened by @silasfelinus on 2026-10-28. Imported by scripts/sync_github_issues.py. Reference the issue in the implementing PR (`Closes silasfelinus/kind_robots#4380`) so it closes on merge; the bridge closes it otherwise once this task is done.
@@ -1001,6 +1001,9 @@ tasks:
       for the next slice rather than done.
 
       Added six regression checks for committed House atlas delivery receipts, image IDs, destinations and aggregate counts. Both Krea2 jobs 50365/50366 now have delivered checkpoint entries with ArtImages 257966/257967. Live independent HEAD and rendered six-by-six topology/device QA remain outstanding; do not close issue #4380.
+    owner: worker
+    claimed_by: 2026-11-15T184610Z-memory-dungeon-t-040-c91e
+    claimed_at: '2026-11-15T18:46:10Z'
   - id: t-041
     milestone: m3
     title: "Hoshimori e07 warm folklore: playable 16-site proof, Pip youth thread and first oven rooms"
