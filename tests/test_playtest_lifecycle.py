@@ -53,7 +53,7 @@ def test_issue_handoff_is_scoped_to_valid_playtest_games(tmp_path: Path):
     game.mkdir()
     (game / "roadmap.yaml").write_text(
         "tasks:\n"
-        "  - id: t-001\n    status: done\n"
+        "  - id: t-001\n    status: done\n",
         encoding="utf-8",
     )
     projects = {
@@ -86,7 +86,7 @@ def _handoff_fixture(tmp_path, monkeypatch, *, status="playtest", task_status="d
     )
     (tmp_path / "projects" / "game" / "roadmap.yaml").write_text(
         "tasks:\n"
-        f"  - id: t-001\n    status: {task_status}\n"
+        f"  - id: t-001\n    status: {task_status}\n",
         encoding="utf-8",
     )
     monkeypatch.setattr(handoff, "ROOT", tmp_path)
