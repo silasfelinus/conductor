@@ -581,15 +581,15 @@ tasks:
   - id: t-018
     milestone: m5
     title: 'Playtest polish: fight-preview HP applies heal before hurt, matching the reducer'
-    status: review
+    status: done
     owner: worker
     playtest_iteration: true
     passes: 0
     stakes: reversible
     depends_on: []
-    claimed_by: 2026-11-15T020615Z-zuzu-gamebook-t-008-c4f2
-    claimed_at: '2026-11-15T02:06:15Z'
-    implementation_pr: 'silasfelinus/kind_robots#5191'
+    claimed_by: null
+    claimed_at: null
+    implementation_pr: 'silasfelinus/kind_robots#5195'
     note: >-
       Split out of t-008 on 2026-11-15 PT at the playtest handoff so the slice keeps its
       owner without blocking the handoff. Kind Robots PR #5191 (opened by the t-008 claim
@@ -599,3 +599,9 @@ tasks:
       failing; the new test assigns to a BOOK scene's effects, which the scene type likely
       makes readonly. The owner should fix the typing, get CI green and merge, then mark
       this done.
+
+      2026-11-15 PT: Silas confirmed nobody else is working on this project, so the claim was
+      taken over as stale. kind_robots #5195 merged (f6a2e37, 14/14 checks green); it carries
+      the #5191 heal-before-hurt fix plus the missing probe Choice label that failed
+      TypeScript. #5191 closed as superseded.
+    updated: '2026-11-15T02:56:40Z'
