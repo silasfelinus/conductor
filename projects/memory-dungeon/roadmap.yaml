@@ -1204,7 +1204,7 @@ tasks:
     implementation_pr: 'silasfelinus/kind_robots#4729'
   - id: t-051
     title: "Memory Dungeon: rebalance Briar's 64-tile pacing and House room variety"
-    status: claimed
+    status: review
     stakes: reversible
     passes: 0
     source_issue: "silasfelinus/kind_robots#4721"
@@ -1224,6 +1224,8 @@ tasks:
       Partial Briar pacing slice merged as kind_robots PR #4783, squash a13933a79d51aa06257f32e70356eb65d7df181c; eight CI checks green on head 7b69f15fc7d5b3ca2ccb33739a137778a13aaab3. Keep task ready for remaining 64-tile encounter mix and House room variety.
 
       House validator now accepts one-choice lore discoveries with a valid automatic choice ID, rejects missing automatic IDs, and has mutation-based regression coverage. Existing authored choices and save identifiers preserved. Remaining House room pacing and 64-tile variety remain open.
+
+      Scoped three cross-realm clue discoveries to auto-resolve with existing choice IDs; alternate historical choices remain valid for saves. Kind Robots PR pending CI. Broader Briar and House pacing remains unfinished.
     owner: worker
     claimed_by: 2026-11-15T034228Z-memory-dungeon-t-051-b83e
     claimed_at: '2026-11-15T03:42:28Z'
