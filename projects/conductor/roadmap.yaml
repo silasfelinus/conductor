@@ -3188,11 +3188,11 @@ tasks:
     incidentally. Report both as per-project problems (no issue closure) and cover them with unit tests.
 - id: t-212
   title: "Issue bridge must never tell a PR to Close a project master issue; fix the stale imported notes that do"
-  status: review
+  status: done
   stakes: reversible
   owner: reviewer
   passes: 0
-  updated: '2026-11-15T08:05:00Z'
+  updated: '2026-11-15T07:58:32Z'
   note: >-
     Reviewer kaizen 2026-11-14 PT from conductor#7423 (shifting-desks/t-048 note fix). sync_github_issues.task_note()
     told every import to use `Closes <issue>`, including project master issues that only the verified playtest
@@ -3201,5 +3201,9 @@ tasks:
     now writes `Refs` for any source indexed in docs/agents/master-issues.yaml; the six generated preambles were
     corrected to the #7423 wording; tests pin both the importer behaviour and a no-roadmap-says-Closes-a-master
     guard. Implementation PR on branch claude/focused-johnson-j51a6c.
+
+    2026-11-14 PT: merged conductor#7424 (41fd3d6), CI green. Importer writes Refs for
+    master issues; six stale notes corrected; guard test added.
+  implementation_pr: 'silasfelinus/conductor#7424'
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
