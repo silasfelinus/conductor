@@ -1623,11 +1623,11 @@ tasks:
     implementation_pr: 'silasfelinus/kind_robots#5180'
   - id: t-067
     title: "Signed-in non-admin visitors should see a calm local-play state, not STORY SYNC ERROR, when progress/story return admin-preview 403"
-    status: review
+    status: done
     stakes: reversible
     owner: worker
     passes: 0
-    updated: '2026-11-15T09:14:18Z'
+    updated: '2026-11-15T09:14:20Z'
     note: >-
       Found 2026-11-15 PT during t-017 verification on production /play/slime-city with a fresh cypress-* user:
       GET /api/slime-city/progress and /api/slime-city/story return 403 "Slime City progression is admin-preview only"
@@ -1642,6 +1642,8 @@ tasks:
       LOCAL PLAY state: device save via the guest path, neutral role=status notice, no STORY
       SYNC ERROR badge; server gate unchanged; verifySlimeCityPreviewGate.test.ts added to
       test:slime-city-lab.
+
+      Closed 2026-11-15 PT after kind_robots#5209 merged green (c24cef2).
     claimed_by: 2026-11-15T08:54:11Z-dgz3sp
     claimed_at: '2026-11-15T08:54:11Z'
     implementation_pr: 'silasfelinus/kind_robots#5209'
