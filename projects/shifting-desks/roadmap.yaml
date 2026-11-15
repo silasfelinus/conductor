@@ -114,12 +114,12 @@ tasks:
       Full history: projects/shifting-desks/HISTORY.md#t-001
   - id: t-049
     title: 'Main-game standard: audit and close the gaps for Shifting Desks'
-    status: ready
+    status: claimed
     milestone: m5
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-15T13:38:25.921Z'
+    updated: '2026-11-15T22:32:00Z'
     note: |-
       Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -146,6 +146,9 @@ tasks:
       Shifting Desks t-049 independent recovery QA slice: guarded store hydration against one localStorage getItem failure without clearing valid run, and retained existing slots without write-through on incomplete reads. Added live Pinia store regression coverage for five individually blocked keys, malformed imports, failed-write rollback and portable backup restoration. Kind Robots branch worker/shifting-desks-t-049-recovery-guard-e6c2; PR and exact-head CI pending. This does not complete account-backed saves, browser/device acceptance or art readiness, so keep t-049 open after landing.
 
       2026-11-15 PT: Kind Robots PR #5219 merged as 047e0abcea2371fd735fe75978b9d96e3df9d7bf. Exact head 6ae3f28de77afdda25be4c0f1a17f9492d2a67b5: Shifting Desks gameplay, TypeScript, changed-file formatting, layout, schema-parity, architecture and repository contracts all completed success. Saved runs now survive unreadable neighboring browser storage without rewriting partially reconstructed records; live Pinia tests cover blocked slots, guarded backup import and rollback. Return to ready: account-backed save decision, full deployed browser/device acceptance and remaining main-game standard items are NOT verified. Art t-032/t-041 and reward t-046 remain separate blockers.
+    owner: worker
+    claimed_by: 20261115T223200Z-shifting-desks-t049-gallery-c7e9
+    claimed_at: '2026-11-15T22:32:00Z'
   - id: t-050
     title: 'Shifting Desks achievement upgrade: 12 or more live achievements'
     status: done
