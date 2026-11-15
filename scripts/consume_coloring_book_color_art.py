@@ -64,17 +64,16 @@ COLOR_SUFFIX = (
     # strongest open text-rendering lineage available. The garbled fake title
     # text IMAGE-GEN-QUALITY-REVIEW.md recorded in this lane is what that buys.
     "One coherent full-bleed scene, clear hands and contact points, and enough closed shapes to "
-    "support a later faithful line-art conversion. The artwork runs off all four edges of the "
-    "picture as one continuous image, every surface in it bare and unmarked, hard-edged ink "
+    "support a later faithful line-art conversion. The artwork bleeds edge to edge as one "
+    "continuous image, every surface in it bare and unmarked, hard-edged ink "
     "throughout, drawn and printed rather than photographed."
 )
 
 LOGO_SUFFIX = (
     f" Render this as a finished inked-comic coloring-book design master, portrait 2:3: {INKED_STYLE}, "
     "and a strong iconic silhouette. A recognizable emblem or mascot variation is allowed because "
-    "this is the designated Kind Robots logo page, but include no readable words, letters, watermark, "
-    "signature, border, comic panels, collage, contact sheet, soft airbrush haze, painterly blur, "
-    "or photographic rendering."
+    "this is the designated Kind Robots logo page. One continuous full-bleed image, every surface in "
+    "it bare and unmarked, hard-edged ink throughout, drawn and printed rather than photographed."
 )
 
 # Content-safety floor for every coloring-book render, all three books. This was
