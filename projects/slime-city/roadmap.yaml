@@ -1648,11 +1648,11 @@ tasks:
   - id: t-069
     milestone: m4
     title: 'Real-browser regression: FIGHT stays inside Clash sidebar at 390/768/1440'
-    status: ready
+    status: claimed
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-15T11:01:00Z'
+    updated: '2026-11-15T11:25:10.424Z'
     note: >-
       Reviewer kaizen from slime-city/t-068, kind_robots#5210 (squash 0c93ed7). The
       1440px control strip overflow is addressed by a CSS/source contract, but source
@@ -1663,3 +1663,6 @@ tasks:
       and the viewport, save screenshots, and regression-test the measured bounds
       in the existing Slime City layout/audit harness. Do not claim the result
       from static CSS checks or a Vercel preview (retired).
+    owner: worker
+    claimed_by: 20261115T112510Z-slime-city-t-069-gpt6-c4f27
+    claimed_at: '2026-11-15T11:25:10.424Z'
