@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Close a game's master roadmap issue only after the actual playtest handoff.
 
-Conductor lifecycle and task gates are authoritative. The issue is flagged and
+Conductor lifecycle and finite roadmap verification are authoritative. The issue is flagged and
 closed as completed to clear the open roadmap backlog, but no human verdict or
 publication permission is implied.
 Run from the Conductor root, using ISSUE_BRIDGE_TOKEN for cross-repository writes.
