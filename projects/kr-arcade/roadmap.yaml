@@ -2380,7 +2380,7 @@ tasks:
   - id: t-137
     milestone: m8
     title: "Seed Burst depth slice 2: Spring and Summer"
-    status: review
+    status: done
     passes: 0
     stakes: reversible
     depends_on: t-136
@@ -2391,10 +2391,14 @@ tasks:
       applies. Code: kind_robots utils/arcade/games/ (registry slug seed-burst). Silas, 2026-10-11: "I need an
       assessment done of the other arcade games. I want the same level of quality improvements, they should
       not just be thin veneers of the old games. But newer, better, even more awesome."
+
+      2026-11-15 PT: shipped in silasfelinus/kind_robots#5208 (squash 5f36178); all 15 CI
+      checks green incl. TypeScript, contract shards 1-4, cabinet viewport and arcade cabinet
+      browser contracts. Pilot probes/staged fixtures only; no human pacing claimed.
     owner: worker
     claimed_by: 2026-11-15T0837Z-arcade-lane-seedburst2-r-elegant-noether
     claimed_at: '2026-11-15T08:37:40Z'
-    updated: '2026-11-15T09:11:33Z'
+    updated: '2026-11-15T09:11:36Z'
     implementation_pr: 'silasfelinus/kind_robots#5208'
 
   - id: t-138
