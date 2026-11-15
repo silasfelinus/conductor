@@ -8,6 +8,16 @@ from scripts.shifting_desks_art_readiness import classify, inventory, markdown
 PREFIX = "kind_robots public/images/shifting-desks/"
 
 
+def report_field(report: dict, name: str) -> bool:
+    """Assert structured readiness evidence, independent of Markdown styling."""
+    fields = {
+        "Required Classic ready": "ready",
+        "Optional variant catalog ready": "catalog_ready",
+    }
+    return report[fields[name]]
+
+
+
 def row(name, *, status="delivered", verdict="keep: matches prompt", check="HEAD 200", **extra):
     return {
         "key": name,
@@ -64,13 +74,14 @@ def test_classic_and_western_have_separate_acceptance(tmp_path):
     assert not report["catalog_ready"]
     assert report["required_blocked"] == []
     assert len(report["optional_blocked"]) == 1
-    assert "**Optional variant catalog ready:** NO" in markdown(report)
+    assert report_field(report, "Optional variant catalog ready") is False
+    assert report_field(report, "Required Classic ready") is True
     assert "western-cartoon: 1 unaccepted variant renders" in markdown(report)
 
     # Rejected core art still blocks playtest even with an empty ArtJob queue.
     round_file(tmp_path, 19, [row("a", verdict="redo: wrong subject")])
     report = inventory(tmp_path)
-    assert not report["ready"]
+    assert report_field(report, "Required Classic ready") is False
     assert report["required_blocked"][0]["key"] == "a"
     assert len(report["optional_blocked"]) == 1
     assert "ROUND-19" in markdown(report)
