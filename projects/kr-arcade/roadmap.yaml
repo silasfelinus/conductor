@@ -73,6 +73,10 @@ milestones:
     title: "DISPLAY QUALITY — responsive viewport and render budgets across game genres"
     weight: 20
     status: in-progress
+  - id: m11
+    title: "SHARE READY — a publicly shared cabinet link lands well for a first-time visitor"
+    weight: 25
+    status: in-progress
 
 tasks:
   - id: t-001
@@ -2972,3 +2976,94 @@ tasks:
       2026-11-15 PT: Brick Bloom mobile touch-control slice committed on worker/kr-arcade-t-164-brick-bloom-touch-bb61ae (376a93a). Swipe/drag paddle input, no gameplay D-pad or permanent A/B cluster, contextual action buttons, mobile browser viewport test. This is one slice of the broader t-164 cross-game audit; requeue after safe PR merge.
 
       Brick Bloom mobile touch UI slice merged 2026-11-15 in silasfelinus/kind_robots#5215 (squash 5dfd29aebe0823c30019c15f027dd88bfab6e5fb). Paddle now accepts captured touch drag/swipe; persistent D-pad and A/B controls are suppressed during normal gameplay, while contextual Launch/Skip/Curl and full Potting Bench menus remain accessible. The real cabinet Chromium viewport matrix covered 390x844 at DPR 1,2,3 and passed; screenshot artifact 14161727709 visually shows a clear paddle area. On the final PR head, all 15 substantive GitHub checks completed successfully; only optional Push Prettier autofix was skipped after autoformat. Requeue this non-recurring cross-game t-164 for remaining camera, readability, and other-game device audits. Keep kind_robots issue #4062 open; no production deployment was attempted.
+
+  - id: t-166
+    milestone: m11
+    title: "Per-cabinet link previews: a shared ?game= link unfurls as that cabinet, not the generic hall card"
+    status: review
+    passes: 0
+    stakes: reversible
+    implementation_pr: 'silasfelinus/kind_robots#5218'
+    updated: '2026-11-15T13:30:00Z'
+    note: |-
+      Silas, 2026-11-15 PT: full parity with the whole roadmap may not be reasonable; finish the latest tasks and triage next steps that make publicly shared arcade links presentable. This milestone is that triage. The m8 depth pass (50 open slices) continues in the background and is not a gate for sharing.
+
+      Implemented in kind_robots#5218 (claude/arcade-cabinet-link-previews): per-cabinet og:/twitter: title, blurb and titleArt; shortArcadeBlurb moved to utils/arcade/blurb.ts. That PR body cites "kr-arcade/t-165", but t-165 is reserved for the Rescue Rally flake kaizen in conductor#7435; this task is the canonical record for the link-preview work. Close to done when #5218 merges green. Merged is not deployed; the live crawler check is t-171.
+
+  - id: t-167
+    milestone: m11
+    title: "Every listed cabinet's title art is rendered and served on production, with a registry contract that keeps it that way"
+    status: ready
+    passes: 0
+    stakes: reversible
+    updated: '2026-11-15T13:30:00Z'
+    note: |-
+      Silas, 2026-11-15 PT: full parity with the whole roadmap may not be reasonable; finish the latest tasks and triage next steps that make publicly shared arcade links presentable. This milestone is that triage. The m8 depth pass (50 open slices) continues in the background and is not a gate for sharing.
+
+      All 36 registry entries in kind_robots utils/arcade/games.ts declare titleArt (/images/arcade/games/*-title.webp), but those files are delivered by the art pipeline, not git, so a missing render means a shared link unfurls with no picture and the hall shows an empty slot. Check each URL on kindrobots.org; for any miss, enqueue through POST /api/art/enqueue (reuse a failed ArtJob id rather than duplicating) and verify the final URL. Add a contract test that every listed cabinet has a titleArt path and an image-shaped fallback. Queued is not rendered is not delivered is not verified.
+
+  - id: t-168
+    milestone: m11
+    title: "Showcase shelf: the hall leads with the eleven full-depth cabinets; cabinets still growing carry a small stamp instead of being hidden"
+    status: ready
+    passes: 0
+    stakes: reversible
+    depends_on: [t-167]
+    updated: '2026-11-15T13:30:00Z'
+    note: |-
+      Silas, 2026-11-15 PT: full parity with the whole roadmap may not be reasonable; finish the latest tasks and triage next steps that make publicly shared arcade links presentable. This milestone is that triage. The m8 depth pass (50 open slices) continues in the background and is not a gate for sharing.
+
+      As of 2026-11-15 these cabinets have every depth slice done: Pipe Pals, Prize Show Panic, Rescue Rally, Battery Maze, Sink Suds, Butterfly Joust, Kindness Gauntlet, Butterfly Blaster, Bumper Bubbles, Cable Crawler, Seed Lander. Sixteen more are mid-depth (Brick Bloom 3/5 down to Petal Post, Rain Catcher and Repair Rampage at 0/4). Drive the shelf from a registry field (for example `showcase: true`), not a list in the component, so a cabinet joins the shelf when its last depth slice merges. Mid-depth cabinets stay playable with a "Growing" stamp on their card. Add a hall-level Share button (the cabinet header already has one) and keep the existing Against Malaria link visible to a first-time visitor. Art-first per docs/ui-surface-standards.md; no new persistent header.
+
+  - id: t-169
+    milestone: m11
+    title: "Cold open from a shared link on a phone: showcase cabinets load, start and play with no account at 390px and 768px"
+    status: waiting
+    passes: 0
+    stakes: reversible
+    depends_on: [t-168]
+    updated: '2026-11-15T13:30:00Z'
+    note: |-
+      Silas, 2026-11-15 PT: full parity with the whole roadmap may not be reasonable; finish the latest tasks and triage next steps that make publicly shared arcade links presentable. This milestone is that triage. The m8 depth pass (50 open slices) continues in the background and is not a gate for sharing.
+
+      A browser contract over the showcase set: direct-load /play/arcade?game=<slug> with a fresh context (no session, no localStorage) at 390x844 and 768x1024. Assert the cabinet is reachable in one tap, touch controls are visible, sound starts only after the first tap, there is no auth wall or console error, and the Arcade hall back link works. Scoped slice of t-164's device audit; do not duplicate t-164's viewport matrix, extend it.
+
+  - id: t-170
+    milestone: m11
+    title: "Share my score: the game-over screen offers a one-tap share with the score and the cabinet link"
+    status: ready
+    passes: 0
+    stakes: reversible
+    depends_on: [t-166]
+    updated: '2026-11-15T13:30:00Z'
+    note: |-
+      Silas, 2026-11-15 PT: full parity with the whole roadmap may not be reasonable; finish the latest tasks and triage next steps that make publicly shared arcade links presentable. This milestone is that triage. The m8 depth pass (50 open slices) continues in the background and is not a gate for sharing.
+
+      Reuse pages/play/arcade/index.vue shareGame (navigator.share with clipboard fallback). Text shape: "I scored N in <Game> at the Kind Robots Arcade" plus the cabinet URL, so the unfurl from t-166 does the rest. No initials or account data in the text. Logic in the arcade store, not the component.
+
+  - id: t-171
+    milestone: m11
+    title: "After deploy, verify cabinet unfurls live with crawler user agents and fold the check into the daily Kind Robots UI check"
+    status: waiting
+    passes: 0
+    stakes: reversible
+    depends_on: [t-166, t-167]
+    updated: '2026-11-15T13:30:00Z'
+    note: |-
+      Silas, 2026-11-15 PT: full parity with the whole roadmap may not be reasonable; finish the latest tasks and triage next steps that make publicly shared arcade links presentable. This milestone is that triage. The m8 depth pass (50 open slices) continues in the background and is not a gate for sharing.
+
+      Merged is not deployed: wait for the image to publish and the Unraid deploy to run. Then fetch each showcase cabinet URL as facebookexternalhit, Discordbot and Twitterbot, assert og:title, og:description, an absolute raster og:image that returns 200, and twitter:card. Record results in the task note. The agent sandbox cannot reach kindrobots.org, so this runs from CI or the existing daily UI-check scheduled task.
+
+  - id: t-172
+    milestone: m11
+    title: "Silas: a 60-second phone check of three shared cabinet links before broadcasting"
+    status: waiting
+    passes: 0
+    stakes: outward-facing
+    gate_human: true
+    depends_on: [t-169, t-171]
+    updated: '2026-11-15T13:30:00Z'
+    note: |-
+      Silas, 2026-11-15 PT: full parity with the whole roadmap may not be reasonable; finish the latest tasks and triage next steps that make publicly shared arcade links presentable. This milestone is that triage. The m8 depth pass (50 open slices) continues in the background and is not a gate for sharing.
+
+      The only human gate in m11. Paste three showcase links into Messages or Discord, confirm the cards look right, tap one, play thirty seconds. Then the arcade is ready to share publicly. Agents do not post or announce anywhere.
