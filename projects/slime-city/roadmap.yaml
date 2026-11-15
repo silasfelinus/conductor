@@ -1110,8 +1110,8 @@ tasks:
   - id: t-041
     milestone: m2
     title: "CLASH 300: individually crafted L1/L2/L3 effects for every existing card"
-    status: review
-    updated: '2026-11-15T13:40:01.313Z'
+    status: ready
+    updated: '2026-11-15T14:04:02.891Z'
     depends_on: t-037
     passes: 0
     stakes: reversible
@@ -1185,9 +1185,8 @@ tasks:
       MERGED partial Ironjaw editorial increment: kind_robots PR #5204, main squash 4267deef61404f900f6d698b7fc91b6efac0847c, final head dbf4a77. Verified all six latest-head GitHub workflows completed success, including four Contract Test shards, TypeScript, formatting, layout, architecture and schema. 40 Ironjaw cards reviewed, thirty authored L1 role texts, nine targeted L3 continuity improvements, six battle-state fixtures, forty-row counterplay ledger. Overlapping PR #5203 closed as superseded after validating its three changes on main. Task remains INCOMPLETE: 180 cards in Riot, Undertow, Exchange and shared Mercenaries still need independent editorial and gameplay audit, plus constructed match balance, seeded replays, art and human fun acceptance. Release for next pass.
 
       2026-11-15 PT: Scoped three Mercenary L3 continuities: Traffic Witch retains L2 Green Wave on hit alongside one-shot Gridlock, Crowd-Sourced Lightning retains L2 crowded target zap alongside boss pressure, and Streetlight Confession retains L2 adjacent fighter power alongside its piercing hit across. Added real Clash board fixtures and deterministic repeatability coverage. Implementation commit ab398069 on worker/slime-city-t-041-mercenary-payoff-20261115T1337Z-c8a4; PR and CI pending. Task remains partial: 300-card editorial, low-selection QA, art and constructed balance still open.
-    owner: worker
-    claimed_by: 20261115T133703Z-slime-city-t-041-gpt6-merc-c8a4
-    claimed_at: '2026-11-15T13:37:03.533Z'
+
+      2026-11-15 PT: Merged kind_robots PR #5221, squash 77fee2a7cf88e65390e10e330a3eabe1828a8d9f. Three shared Mercenary Level 3 evolutions retain their prior strategic Level 2 utility: Traffic Witch keeps a neighboring-fighter rally with its once-per-hit gridlock, Crowd-Sourced Lightning keeps crowd-powered target zap alongside boss pressure, and Streetlight Confession keeps neighbor attack surge alongside a piercing hit. Battle-state and deterministic regression fixtures pass. Current head 3cfa0ce3 had six completed successful workflows including all four Contract Test shards and verifier. This closes one independent increment only. Return t-041 to ready for remaining 300-card curation, underselected cards, constructed balance and art QA; no production deploy or subjective acceptance claimed.
   - id: t-042
     milestone: m2
     title: "Curate and wire the ogre redo-3 tokens: Picket Line Troll, Coal Cart Racer, Union Lunch Lady"
@@ -1247,10 +1246,9 @@ tasks:
       art_image_ids, curate on contact sheets (reject ogre/human/plain-dinosaur reads and any
       lettering) and wire into kind_robots artManifest.ts. Ironjaw campaign story art
       (ironjaw/1..5) is still ogre-era: next round.
-    owner: worker
-    claimed_by: 2026-11-11T225402Z-slime-city-t-044-lizard-evo
-    claimed_at: '2026-11-11T22:54:07Z'
-    updated: '2026-11-11T23:45:12Z'
+
+      2026-11-15 PT: authenticated fetch + contact-sheet curation of all 129 unwired IRONJAW-LIZARDS-ROUND-1/2 renders. Wired 114 in kind_robots#5224 (15 base cards, ironjaw/ready boss portrait, 42 board tokens, 56 L2/L3 evolution stages); ironjawLizardArtCoverage.json records token verdicts. Rejected 15 for painted lettering (union sashes/armband, awning, shop and neon signs) or crowds/a lead figure reading human; those keep current art. Queued IRONJAW-LIZARDS-REDO-1.yaml (15 subjects, fresh seeds, plain-sash and lizard-crowd wording, priority 1000, auto_submit; live prompt contract 15/15). Released claim. NEXT: once the sweep writes art_image_ids, curate the redo and wire keepers; then repaint ogre-era Ironjaw campaign story art (ironjaw/1..5). Rung 1 (ready task, priority order); not a human gate.
+    updated: '2026-11-15T14:00:00Z'
   - id: t-045
     milestone: m2
     title: "The Punk Bloodfairies become Slime City's band crew"
