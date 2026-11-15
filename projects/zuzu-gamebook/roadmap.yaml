@@ -333,7 +333,7 @@ tasks:
   - id: t-009
     milestone: m5
     title: QA and editorial playtest of every route, ending and device
-    status: waiting
+    status: done
     owner: null
     passes: 0
     stakes: reversible
@@ -344,6 +344,18 @@ tasks:
       keyboard/touch/reduced motion, and screenshots at 375px/768px/desktop.
       Real preview inspection before marking ready; flag public publishing
       and Silas's creative acceptance as explicit human gates.
+
+      2026-11-15 PT QA close-out: npm run test:zuzu-gamebook passes on #5192 head (graph,
+      reachability, acyclic, act pacing, stateful exploration, plates 385/385, items, dice, 15
+      golden witnesses, 1,500- and 12,000-walk fight batteries, wounded matrices, saves, power
+      costs, title/settings/endings/scrapbook). Live device pass on kindrobots.org at
+      390/768/1024/1440/1280x600: no overflow, no page errors, plates load, keyboard reaches
+      choices. Minor: phone card captions are small (about 9px), flagged as a playtest
+      question. Evidence: projects/zuzu-gamebook/PLAYTEST-READINESS-2026-11-15.md.
+    updated: '2026-11-15T02:24:18Z'
+    claimed_by: null
+    claimed_at: null
+    implementation_pr: 'silasfelinus/kind_robots#5192'
   - id: t-010
     milestone: m5
     title: Public launch and Silas's visual/story verdict
