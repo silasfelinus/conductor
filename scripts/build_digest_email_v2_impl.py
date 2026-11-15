@@ -480,6 +480,15 @@ def daily_deliveries_section(daily: dict[str, Any] | None) -> str:
             f'<a href="{esc(preview)}">🎮 Play/view change</a> · ' if preview.startswith("https://") else ""
         )
         extra += f'<a href="{esc(link)}">PR</a> · <a href="{esc(checks)}">CI evidence</a>'
+        if row.get("roadmap_task"):
+            roadmap_url = (
+                "https://github.com/silasfelinus/conductor/blob/main/"
+                f"projects/{row['target']}/roadmap.yaml"
+            )
+            extra += (
+                f' · <a href="{esc(roadmap_url)}">'
+                f'Canonical roadmap {esc(row["roadmap_task"])}</a>'
+            )
         if art.get("url") and str(art["url"]).startswith("https://"):
             extra += f' · <a href="{esc(art["url"])}">🎨 Finished artwork</a>'
         elif art.get("status") == "queued":
@@ -513,7 +522,7 @@ def daily_deliveries_section(daily: dict[str, Any] | None) -> str:
         '<p>These are actual PR-backed additions or clearly marked progress, not new ideas '
         'awaiting permission. Keep, request modifications, or reject after reviewing. '
         'A rejection creates follow-up rollback work, not an immediate destructive removal. '
-        'Daily Dream and its eight separate Zuzu assets are active alongside '
+        'Daily Dream and project-catalog art remain independent alongside '
         'the independent Dead Air private-film track.</p>'
         + evidence_notice
         + '<ol style="padding-left:20px">' + "".join(html) + '</ol></div>'
