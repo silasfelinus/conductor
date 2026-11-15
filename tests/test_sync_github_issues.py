@@ -186,3 +186,28 @@ def test_apply_then_comment_from_handoff(tmp_path, monkeypatch):
     method, path, body = calls[0]
     assert (method, path) == ("POST", "repos/o/r/issues/1/comments")
     assert "alpha/t-002" in body["body"]
+
+
+def test_master_issue_import_says_refs_never_closes(tmp_path):
+    index = tmp_path / "master-issues.yaml"
+    index.write_text("master_issues:\n  demo: https://github.com/o/r/issues/7\n", encoding="utf-8")
+    masters = bridge.master_issue_sources(index)
+    assert masters == {"o/r#7"}
+    entry = {"source": "o/r#7", "title": "T", "body": "b", "url": "https://github.com/o/r/issues/7",
+             "author": "a", "created": "d"}
+    note = bridge.task_note(entry, masters)
+    assert "`Refs o/r#7`" in note and "`Closes o/r#7`" not in note
+    ordinary = dict(entry, source="o/r#8", url="https://github.com/o/r/issues/8")
+    assert "`Closes o/r#8`" in bridge.task_note(ordinary, masters)
+
+
+def test_no_roadmap_tells_a_pr_to_close_a_master_issue():
+    masters = bridge.master_issue_sources()
+    assert masters, "master-issues.yaml should index at least one master issue"
+    offenders = [
+        f"{path.parent.name}: {source}"
+        for path in sorted((bridge.ROOT / "projects").glob("*/roadmap.yaml"))
+        for source in sorted(masters)
+        if f"`Closes {source}`" in path.read_text(encoding="utf-8")
+    ]
+    assert not offenders, offenders

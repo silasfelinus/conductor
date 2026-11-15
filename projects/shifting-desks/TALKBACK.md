@@ -114,3 +114,14 @@ Conductor#6110's unchanged reviewed head merged in another session at `2026-10-1
 **Improve:** copy the handoff headings verbatim from `scripts/check_pr_handoff_template.py` (third recurrence in this project's log). The pitch says "three earlier choices" are recalled, but names only examples; a route contract should list the exact flags.
 
 **Kaizen task:** none added; proposal not implemented. Worker's suggestion (route-contract check before any optional ending enters the registry) belongs in the first task if Silas approves.
+
+
+## 2026-11-15 PT | Reviewer merge | shifting-desks/t-048 | Conductor #7423
+
+**Decision:** squash-merged head `a4c2721` as `2a84adc`. One-line, reversible correction to the issue-bridge preamble on t-048: implementation PRs now `Refs` kind_robots#4150 instead of `Closes`, matching `docs/agents/master-issues.yaml`. No status, gate or code change. Every check passed except "Validate Worker PR handoff"; the reviewer rewrote the body into the template (original text kept) and the run on the edited body passed.
+
+**Good:** catches a real premature-closure hazard and keeps the wording aligned with the playtest-handoff policy.
+
+**Improve:** fourth handoff-template miss in this project's log. Copy the headings from `scripts/check_pr_handoff_template.py` even for one-line PRs. The note was rewritten in place; acceptable here because it is generated bridge boilerplate, but `close_task.py --append-note` is the norm for agent-written history. The same stale `Closes` line sat in six other roadmaps; grep for siblings before fixing one.
+
+**Kaizen task:** conductor/t-212, importer writes `Refs` for master issues, the six stale notes are corrected, and a test guards against regressions.

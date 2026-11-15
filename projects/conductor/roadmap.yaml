@@ -3186,5 +3186,20 @@ tasks:
     sync_playtest_master_issues.py still calls .get("tasks") on whatever yaml.safe_load returns, so a roadmap whose top
     level is a list raises AttributeError and aborts the whole sync, and a non-list tasks value is only rejected
     incidentally. Report both as per-project problems (no issue closure) and cover them with unit tests.
+- id: t-212
+  title: "Issue bridge must never tell a PR to Close a project master issue; fix the stale imported notes that do"
+  status: review
+  stakes: reversible
+  owner: reviewer
+  passes: 0
+  updated: '2026-11-15T08:05:00Z'
+  note: >-
+    Reviewer kaizen 2026-11-15 PT from conductor#7423 (shifting-desks/t-048 note fix). sync_github_issues.task_note()
+    told every import to use `Closes <issue>`, including project master issues that only the verified playtest
+    handoff may close. Six more roadmaps (emperor-of-dust, weird-humboldt, memory-dungeon, game-of-captains,
+    rainbow-bullet-hell-space-princess, comet-city-academy) still carried that instruction. This cycle: task_note()
+    now writes `Refs` for any source indexed in docs/agents/master-issues.yaml; the six generated preambles were
+    corrected to the #7423 wording; tests pin both the importer behaviour and a no-roadmap-says-Closes-a-master
+    guard. Implementation PR on branch claude/focused-johnson-j51a6c.
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
