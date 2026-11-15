@@ -234,11 +234,11 @@ tasks:
   - id: t-023
     milestone: m2
     title: "Deliver photograph Chronicle, Earth timeline and ending spoiler gates"
-    status: ready
+    status: claimed
     depends_on: t-018
     passes: 0
     stakes: reversible
-    updated: '2026-11-06T23:48:00Z'
+    updated: '2026-11-15T00:46:32Z'
     note: |-
       2026-11-11 PT remaining: Audit 24 playable-world beats, retired archival beats and spoiler gates; do not delete older photos. Evidence: RESET-TASK-EVIDENCE-AUDIT-2026-11-10.md (t-023 row).
       Author 32 fixed collectible photo beats, two per world, with out-of-order journal reconciliation, once-only claims, proper Earth chronology, and meaningful hero reactions. World 1 photos occur at 2,5 (dismissal) and 8,6 (friend's humiliation). Morrow later builds authentic work, friendship and romance; do not unmistakably reveal their children before World 16.
@@ -261,6 +261,9 @@ tasks:
       2026-11-06 PT: PR kind_robots#4861 merged (23fbe3ed) after all eight exact-head checks passed on a63e8257. e08 Hoshimori 5,7 and 6,7 authored, earth-16 now recoverable with replay and forged-choice tests. Remaining Chronicle pickup routes, delivered art and ending validation. No ArtJobs or deployment.
 
       Added two authored e08 crossings at 5,5 and 6,5 with distinct choices and replay-safe flags; expanded site-count validator and regression assertions to 48. Kind Robots PR pending exact-head CI. Remaining Hoshimori sites, Chronicle photos and art not complete.
+    owner: worker
+    claimed_by: 2026-11-15T004632Z-memory-dungeon-t-023-a91c7
+    claimed_at: '2026-11-15T00:46:32Z'
   - id: t-030
     milestone: m3
     title: "Build scene-art production manifest and twelve-world coverage checks"
@@ -312,8 +315,8 @@ tasks:
   - id: t-001
     milestone: m1
     title: "Seeded expedition reducer, room schema and Classic adapter"
-    status: ready
-    updated: '2026-11-07T16:52:00Z'
+    status: claimed
+    updated: '2026-11-15T02:43:53Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -354,6 +357,9 @@ tasks:
 
       Added a pure seeded three-floor six-room-per-floor simulator with versioned saves, deterministic unique room identities, immutable idempotent outcomes and adversarial Node regression tests. Partial t-001 only; Classic adapter and real gameplay integration remain. Kind Robots PR pending CI.
     implementation_pr: 'silasfelinus/kind_robots#4801'
+    owner: worker
+    claimed_by: 2026-11-15T024353Z-memory-dungeon-t-001-f6c2
+    claimed_at: '2026-11-15T02:43:53Z'
   - id: t-002
     milestone: m1
     title: "Optional scope feedback on story and complexity"
@@ -458,8 +464,8 @@ tasks:
   - id: t-009
     milestone: m3
     title: "Author floor story, recurring cast and consequential decisions"
-    status: ready
-    updated: '2026-11-07T13:48:02Z'
+    status: claimed
+    updated: '2026-11-15T06:42:24Z'
     passes: 0
     stakes: reversible
     note: >-
@@ -482,6 +488,9 @@ tasks:
       2026-11-04 PT cleanup pass: stale review with an expired claim; the recorded slice
       landed (or was superseded) and the note itself lists remaining scope, so back to ready
       for the next slice rather than done.
+    owner: worker
+    claimed_by: 2026-11-15T064224Z-memory-dungeon-t-009-b72e
+    claimed_at: '2026-11-15T06:42:24Z'
   - id: t-010
     milestone: m3
     title: "Ship riddle and logic minigame framework plus authored puzzle pack"
@@ -891,36 +900,32 @@ tasks:
   - id: t-037
     milestone: m2
     title: "Build bounded cross-realm consequence ledger"
-    status: ready
-    updated: '2026-11-07T02:42:26Z'
+    status: review
+    updated: '2026-11-15T12:54:00Z'
     depends_on: t-022
     passes: 0
     stakes: reversible
-    note: >-
-      2026-11-11 PT remaining: Prove bounded replay-backed cross-world outcomes and restoration. Evidence: RESET-TASK-EVIDENCE-AUDIT-2026-11-10.md (t-037 row).
-      Preserve all World One choices in the Chronicle, but promote only compact resolution, relationship, portable discovery and cross-realm collaboration facts into future-world conditions. Give those effects real dialogue, route, reward or ending changes; retire paid debts, prevent old flags softlocking the main path, and test incompatible decisions. Reuse one interpreter and published story contracts instead of enumerating every 16-realm choice permutation.
-
+    note: |-
+      2026-11-11 PT remaining: Prove bounded replay-backed cross-world outcomes and restoration. Evidence: RESET-TASK-EVIDENCE-AUDIT-2026-11-10.md (t-037 row). Preserve all World One choices in the Chronicle, but promote only compact resolution, relationship, portable discovery and cross-realm collaboration facts into future-world conditions. Give those effects real dialogue, route, reward or ending changes; retire paid debts, prevent old flags softlocking the main path, and test incompatible decisions. Reuse one interpreter and published story contracts instead of enumerating every 16-realm choice permutation.
       First-two-reality adversarial slice: initial minefield exit was guaranteed safe and immediately awarded victory; now requires full safe-floor clearance. Added recovery from exhausted 600-move logs, dropped no-op actions and blocked double-purchase of an unchanged lantern hint. Added 24 greedy/expert seed checks, 16 cross-map seal combination checks and 24 first-two-reality Earth photo collection order checks. Source-backed findings and remaining device, narrative and art-delivery gaps documented in Kind Robots. PR review underway; do not close full t-037 cross-realm ledger work or t-036 full-world QA.
-
       Early adversarial first-two-world gameplay pass merged as Kind Robots PR #4202, squash b0b40d940b401bf125dbd026ecba79bb812285bf, all fourteen required PR workflows green. Repaired P0 instant-win minefield exit (exit is intentionally safe), P1 600-move save softlock/repeated no-op logging (now restartable) and P2 duplicate lantern hint charges. Added 24 seed-scoped greedy/expert archive runs, 16 reflected/original seal inspection combinations and 24 ordered cross-reality photo collections plus a reproducible findings/limitations report. Master issue #4136 updated with commit and precise scope. Return t-037 to READY because full bounded cross-realm consequence ledger is not complete. Keep t-036 full human/device/art-dependent adversarial acceptance blocked until its separate prerequisites; do not imply browser image review or final release.
-
       Second adversarial pass on the 36-room mirrored House uncovered skip-through progression: rooms without memory/logic mini-challenges let players advance into unvisited rooms without making their authored decisions. Updated darkHouseExits to require both solved challenges and committed consequences before first-entry advancement, preserving visited retreat and old saves. [...]
-
       [Earlier history (9,572 chars) archived verbatim to projects/memory-dungeon/T037-HISTORY.md -- read it there only when you need a specific past cycle. Append new cycles below, one short paragraph each.]
-
       Scoped two-reality courier resource consequence implemented on a focused Kind Robots branch: sheltering the mirrored courier earns a one-time lantern or wildflower based on the actual original courier choice. Invalid and missing history earn nothing. PR and exact-head CI pending; full cross-realm ledger remains unfinished.
-
       2026-10-27 PT: Merged Kind Robots PR #4302 at 67f4c79fa255581ba366887896bf14ed75fef438 after all 18 exact-head checks and 13 Actions workflows passed on ed3883f3e86b82048a0113edcdcc0e6a84e212dc (Contract Tests #40535382165, TypeScript #40535382102, Prettier #40535382281). Sheltering the mirrored courier at 3,4 now awards one once-only resource determined by the actual original 2,4 choice: lend earns a wildflower, copy earns a lantern. Missing/invalid choices and alternate mirrored decision award nothing; authored callback names the earned resource. Three-file diff; no ArtJobs or deployment. Master issue #4136 updated. Return READY for deeper later-reality resource, route, and relationship consequences; browser/device and art acceptance remain outstanding. Not For Human Gate.
-
       Scoped Pip/borrowed-voice cross-reality consequence: four source-validated traveler responses, corrected invented original history, persisted mirrored choices and distinct House callbacks. Kind Robots worker branch prepared; PR CI pending. No new ArtJobs or deployment; later-world ledger, rendered visual QA and campaign remain open.
-
       2026-10-27 10:58 AM PT: Kind Robots PR #4307 merged at 7f5b1578c9a201cb731a1f3d8ba4652e6413ffa3 after all 18 exact-head checks and 13 workflows passed on 45c3d31d32516401281d69bd82606a8ff26ee5ed (Contract Tests #40554278280, TypeScript #40554278258, formatting #40554278484). Corrected fabricated original history at Dark Briar 3,5 and authored four Pip/borrowed-voice traveler resolutions from real original and mirrored choices, with distinct earned House epilogues and save/invalid-choice tests. Master issue #4136 comment 6449671345 documents evidence. No ArtJobs, deploy or visual acceptance. Return READY: later-world consequence hooks, art and browser/device QA remain. Not For Human Gate.
-
       Scoped royal-sisters consequence increment: original Briar escort/question and mirrored Scylla/Char testimony now yield four distinct earned scene resolutions and later House epilogue callbacks. Corrected the mirrored lantern callback to the actual original question. Kind Robots focused PR and exact-head CI pending; full later-realm ledger remains unfinished.
+      2026-11-04 PT cleanup pass: stale review with an expired claim; the recorded slice landed (or was superseded) and the note itself lists remaining scope, so back to ready for the next slice rather than done.
 
-      2026-11-04 PT cleanup pass: stale review with an expired claim; the recorded slice
-      landed (or was superseded) and the note itself lists remaining scope, so back to ready
-      for the next slice rather than done.
+      Added six serialized original/mirrored House worldframe restoration regressions in Kind Robots; CI and PR review pending. Broader consequence-ledger acceptance remains open.
+
+      2026-11-15 PT: Merged focused six-worldframe serialized restoration regression PR #5205 (squash c1e56e93); six exact-head workflows green, including Contract Tests. Full bounded cross-realm ledger and adversarial acceptance remain open; return to ready for next scoped increment.
+
+      Added six adversarial forged original/mirrored House ending combinations to the existing first-two-world consequence contract. Tests assert restored labels remain unset and physical aftermath cannot be manufactured. Focused Kind Robots PR pending exact-head CI; broader ledger remains unfinished.
+    owner: worker
+    claimed_by: 2026-11-15T125200Z-memory-dungeon-t-037-7c4d91
+    claimed_at: '2026-11-15T12:52:00Z'
   - id: t-038
     title: "Memory Dungeon master bible: 8 original/twisted worlds, 4 collision finales, 12 total"
     status: review
@@ -932,7 +937,7 @@ tasks:
     passes: 0
     source_issue: "silasfelinus/kind_robots#4136"
     note: |-
-      2026-11-11 PT remaining: Reconcile narrative bible against 12-world canon, final POV and Char causality. Evidence: RESET-TASK-EVIDENCE-AUDIT-2026-11-10.md (t-038 row). FROM GITHUB ISSUE silasfelinus/kind_robots#4136 (https://github.com/silasfelinus/kind_robots/issues/4136), opened by @silasfelinus on 2026-10-25. Imported by scripts/sync_github_issues.py. Reference the issue in the implementing PR (`Closes silasfelinus/kind_robots#4136`) so it closes on merge; the bridge closes it otherwise once this task is done. # Memory Dungeon: complete branching-campaign production and quality contract > **Status: design / master tracking issue, not a statement that 16 worlds or their art are shipped.** > **Owner:** Memory Dungeon. **Existing game:** `/play/memory`; preserve Classic Match. > **Creative direction:** Silas, October 24, 2026 (PT). **Priority:** World One console-quality vertical slice, then reusable pipeline and authored campaign. The player must NOT be told there are sixteen overworlds. Eight world templates, sixteen experienced incarnations, and a private five-movement rhythm are **internal production structure only**; the final two templates form one consecutive, multi-reality conclusion. ## 1. North star and non-negotiable experience Build an **art-led, single-screen, console-grade dark-fairy-tale RPG** in which remembering visual pairs opens a real geographical world, and selecting a revealed square introduces an individually authored moment: character, monster, treasure, danger, mystery, puzzle, stranger, clue, consequence, or secret. **The overworld is not 64 turns of ordinary Memory Match; a revealed position is a place to visit.** Encounters may invoke a nested tactical two-card matching fight, but dialogue, treasures and revelations must not demand a redundant battle board. Difficulty comes from interesting choices and changed rules, not endless click labor. Players begin as an adult contemporary Earth data researcher tricked into an exchange of lives with **Morrow**, an inquisitive fey changeling who wants a mundane, understandable life. The **Reimaginer** can remake realities from incomplete desires: the player will later inhabit Morrow's Earth-side viewpoint and Scylla's mermaid perspective, discovering the costs and gifts of changing home. We inhabit Morrow's fairy-tale existence; at first glimpses of Earth suggest he is ruining ours. [...]
+      2026-11-11 PT remaining: Reconcile narrative bible against 12-world canon, final POV and Char causality. Evidence: RESET-TASK-EVIDENCE-AUDIT-2026-11-10.md (t-038 row). FROM GITHUB ISSUE silasfelinus/kind_robots#4136 (https://github.com/silasfelinus/kind_robots/issues/4136), opened by @silasfelinus on 2026-10-25. Imported by scripts/sync_github_issues.py. Reference the canonical roadmap in implementation PRs with `Refs silasfelinus/kind_robots#4136`, never `Closes`. Keep #4136 open throughout finite build, art and QA work. Only the verified playtest handoff workflow may prefix `[FLAGGED FOR HUMAN TESTING]` and close the single master issue after Conductor lifecycle, priority, evidence and genuine `needs-human` subjective-acceptance gate are confirmed; closing the issue is not human approval or permission to publish. # Memory Dungeon: complete branching-campaign production and quality contract > **Status: design / master tracking issue, not a statement that 16 worlds or their art are shipped.** > **Owner:** Memory Dungeon. **Existing game:** `/play/memory`; preserve Classic Match. > **Creative direction:** Silas, October 24, 2026 (PT). **Priority:** World One console-quality vertical slice, then reusable pipeline and authored campaign. The player must NOT be told there are sixteen overworlds. Eight world templates, sixteen experienced incarnations, and a private five-movement rhythm are **internal production structure only**; the final two templates form one consecutive, multi-reality conclusion. ## 1. North star and non-negotiable experience Build an **art-led, single-screen, console-grade dark-fairy-tale RPG** in which remembering visual pairs opens a real geographical world, and selecting a revealed square introduces an individually authored moment: character, monster, treasure, danger, mystery, puzzle, stranger, clue, consequence, or secret. **The overworld is not 64 turns of ordinary Memory Match; a revealed position is a place to visit.** Encounters may invoke a nested tactical two-card matching fight, but dialogue, treasures and revelations must not demand a redundant battle board. Difficulty comes from interesting choices and changed rules, not endless click labor. Players begin as an adult contemporary Earth data researcher tricked into an exchange of lives with **Morrow**, an inquisitive fey changeling who wants a mundane, understandable life. The **Reimaginer** can remake realities from incomplete desires: the player will later inhabit Morrow's Earth-side viewpoint and Scylla's mermaid perspective, discovering the costs and gifts of changing home. We inhabit Morrow's fairy-tale existence; at first glimpses of Earth suggest he is ruining ours. [...]
       [Earlier history (7,155 chars) archived verbatim to projects/memory-dungeon/T038-HISTORY.md -- read it there only when you need a specific past cycle. Append new cycles below, one short paragraph each.]
       Scoped e12 Vesper writer packet: two original Hoshimori collision scenes, six cost-bearing outcomes, replay-safe fragment/effect contract and nine-route adversarial contract test. Writer packet only; not integrated into runtime or submitted as ArtJobs. Continue umbrella after PR checks and merge.
       2026-11-07 PT: Reviewer merged conductor PR #7145 (8c5487a44): e12 Vesper writer packet (two Hoshimori scenes, six outcomes, nine-route replay/forgery tests). Initial red CI was a roadmap duplicate-key defect already fixed on main plus a PR-body template miss; fixed by branch update and body edit. Writer packet only; runtime integration, ArtJobs and device QA remain. Umbrella stays ready.
@@ -959,11 +964,11 @@ tasks:
     updated: '2026-11-08T17:48:00Z'
   - id: t-040
     title: "Memory Dungeon: deliver painted 6×6 House dungeon floorplans, not just the 8×8 overworld maps"
-    status: ready
+    status: claimed
     stakes: reversible
     passes: 0
     source_issue: "silasfelinus/kind_robots#4380"
-    updated: '2026-11-08T08:47:00Z'
+    updated: '2026-11-15T18:46:10Z'
     note: >-
       2026-11-11 PT remaining: Gameplay geometry is not painted art; require delivered 6×6 floorplan images and visual acceptance. Evidence: RESET-TASK-EVIDENCE-AUDIT-2026-11-10.md (t-040 row).
       FROM GITHUB ISSUE silasfelinus/kind_robots#4380 (https://github.com/silasfelinus/kind_robots/issues/4380), opened by @silasfelinus on 2026-10-28. Imported by scripts/sync_github_issues.py. Reference the issue in the implementing PR (`Closes silasfelinus/kind_robots#4380`) so it closes on merge; the bridge closes it otherwise once this task is done.
@@ -996,6 +1001,9 @@ tasks:
       for the next slice rather than done.
 
       Added six regression checks for committed House atlas delivery receipts, image IDs, destinations and aggregate counts. Both Krea2 jobs 50365/50366 now have delivered checkpoint entries with ArtImages 257966/257967. Live independent HEAD and rendered six-by-six topology/device QA remain outstanding; do not close issue #4380.
+    owner: worker
+    claimed_by: 2026-11-15T184610Z-memory-dungeon-t-040-c91e
+    claimed_at: '2026-11-15T18:46:10Z'
   - id: t-041
     milestone: m3
     title: "Hoshimori e07 warm folklore: playable 16-site proof, Pip youth thread and first oven rooms"
@@ -1198,11 +1206,11 @@ tasks:
     implementation_pr: 'silasfelinus/kind_robots#4729'
   - id: t-051
     title: "Memory Dungeon: rebalance Briar's 64-tile pacing and House room variety"
-    status: ready
+    status: claimed
     stakes: reversible
     passes: 0
     source_issue: "silasfelinus/kind_robots#4721"
-    updated: '2026-11-05T07:54:00Z'
+    updated: '2026-11-15T05:42:06Z'
     note: |-
       2026-11-11 PT remaining: Independent 64-site/36-room pacing run, choice density and fun acceptance. Evidence: RESET-TASK-EVIDENCE-AUDIT-2026-11-10.md (t-051 row).
       FROM GITHUB ISSUE silasfelinus/kind_robots#4721 (https://github.com/silasfelinus/kind_robots/issues/4721), opened by @silasfelinus on 2026-11-03. Imported by scripts/sync_github_issues.py. Reference the issue in the implementing PR (`Closes silasfelinus/kind_robots#4721`) so it closes on merge; the bridge closes it otherwise once this task is done.
@@ -1218,6 +1226,13 @@ tasks:
       Partial Briar pacing slice merged as kind_robots PR #4783, squash a13933a79d51aa06257f32e70356eb65d7df181c; eight CI checks green on head 7b69f15fc7d5b3ca2ccb33739a137778a13aaab3. Keep task ready for remaining 64-tile encounter mix and House room variety.
 
       House validator now accepts one-choice lore discoveries with a valid automatic choice ID, rejects missing automatic IDs, and has mutation-based regression coverage. Existing authored choices and save identifiers preserved. Remaining House room pacing and 64-tile variety remain open.
+
+      Scoped three cross-realm clue discoveries to auto-resolve with existing choice IDs; alternate historical choices remain valid for saves. Kind Robots PR pending CI. Broader Briar and House pacing remains unfinished.
+
+      Three additional Briar cross-realm clue auto-discoveries merged in kind_robots PR #5198, squash a51e2f8f95b275507da14ffdf92e0aa40da3f502; all eight PR-head Actions passed on fa6c4d1. Partial pacing increment only. Still needs independent 64-site and 36-room pacing playthrough, House shortcuts/treasure/room variety and UI acceptance.
+    owner: worker
+    claimed_by: 2026-11-15T054206Z-memory-dungeon-t-051-6e9c
+    claimed_at: '2026-11-15T05:42:06Z'
   - id: t-052
     milestone: m3
     title: "e03 Morrow's Shift: replace template recipe sites with 64 authored sites in the live Earth stage"
@@ -1446,10 +1461,10 @@ tasks:
   - id: t-063
     milestone: m3
     title: "Browser-test the Enter the Choking Works button at e06 4,6 at 390, 820 and 1440 widths, including save/restore mid-dungeon"
-    status: ready
+    status: claimed
     stakes: reversible
     passes: 0
-    updated: '2026-11-09T17:50:28Z'
+    updated: '2026-11-15T19:44:07Z'
     note: |-
       2026-11-11 PT remaining: Actual rendered button click, measured layout at 390/820/1440, mid-dungeon save/restore still required. Evidence: RESET-TASK-EVIDENCE-AUDIT-2026-11-10.md (t-063 row).
       Kaizen from t-062 review: CI covers the store and verifier, but nothing exercises the new sea-stage button, the choking mode in memory-dungeon.vue, or the shared stage's dungeon="choking" prop in a real browser. Add a Playwright interruption/layout check mirroring the Breathing Works one, and confirm a reload mid-dungeon restores room and flags.
@@ -1465,6 +1480,9 @@ tasks:
       Added an adversarial Choking Works browser regression proving arrival at e06 4,6 alone does not unlock the dungeon: the choice must be resolved first at all three viewports. Rendered Vue component and geometry coverage remain outstanding.
 
       2026-11-06 PT: Merged kind_robots#4847 (849cc7cb) after all seven workflows passed on exact head 9529b3db. Choking Works e06 4,6 cannot unlock by arrival alone; encounter decision is required at 390/820/1440. Remaining: rendered Vue button click and measured DOM geometry at those widths. No ArtJobs or deployment.
+    owner: worker
+    claimed_by: 2026-11-15T194407Z-memory-dungeon-t-063-8f29
+    claimed_at: '2026-11-15T19:44:07Z'
   - id: t-064
     milestone: m3
     title: "Bind the Earth letter and Last Train e03/e04 packets into the encounter registry with executable reducer tests"

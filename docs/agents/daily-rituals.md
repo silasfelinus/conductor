@@ -29,6 +29,18 @@
    Run python scripts/daily_project_deliveries.py --brief, author five
    evidenced entries at projects/dream-cycle/daily-deliveries/<Pacific-date>.yaml,
    then --materialize and --check before the morning digest.
+   **2026-11-15 PT and later: canonical roadmap closeout belongs to EVERY
+   improvement.** Each docket row gets `roadmap_task: t-NNN`, referencing
+   a different existing task in its owning `projects/<target>/roadmap.yaml`.
+   Append one concise proof line to that task's note:
+   `daily-delivery:YYYY-MM-DD/<entry-slug> | PR: owner/repo#N |
+   <specific change and verification>`. Keep real remaining work and status
+   intact: a small shipped increment does not finish a game or close its
+   human-playtest gate. If still in progress, record the actual work and
+   next step without asserting completion. The --check validator requires
+   five separate task references with the exact PR evidence. These are
+   task updates WITHIN existing roadmaps, not five new roadmap files.
+   Continue using task-event claims/reviews and archive oversized notes.
    The signed inbox handles Keep / Modify / Reject AFTER implementation.
    --feedback is the agent queue for modifications and scoped tested rollback
    PRs. Reject does not destructively remove live data. Existing hard gates

@@ -575,3 +575,15 @@ Five shipped entries (four Shifting Desks, one Zuzu Gamebook), each with a merge
 Three-field diff in `projects/dream-cycle/roadmap.yaml` (`daily_last_checked`, `daily_last_completed`, `updated` -> 2026-10-25). Reversible, no gated work. Latest attempt of every check green; one earlier "Validate Worker PR handoff" failure was superseded by a successful rerun on the same head. Squash-merged (035e5b8).
 
 **Kaizen:** deferred; the Worker's suggestion (auto-bump t-035 dates when deliveries are recorded) is already the recurring-commitment closeout path covered by t-035 itself.
+
+## 2026-11-14 PT — reviewer (scheduled agent): #7410 v4 6+4 catalog contract returned for changes
+- I did not merge #7410 (head 32fa1cb). "Python test suite" and "contract" are red. 15 existing Dream builder tests fail on the branch, and I reproduced that locally: 45/45 pass on main and 15/51 fail on the branch.
+- Cause: the v4 gate keys on today's wall-clock date. `unbuilt_backlog()` drops every non-v4 draft, and `run_daily_dream_build` refuses every non-v4 draft as "legacy". That catches pre-v3 six-asset fixtures too, not just the v3 fourteen-asset sidecars the PR targets.
+- Retry tracked as dream-cycle/t-040 (passes 1, with retry_context). The branch merges cleanly with main. The direction (fewer assets, no new Zuzu/Emperor gameplay) is the safer one. The CONTROL.md/CLAUDE.md rewording should cite where Silas gave the clarification.
+- Worker pattern (again, see #7317, #7363, #7374): run the full `pytest -q tests/` before pushing a contract change. The new test file passing alone isn't enough.
+
+## 2026-11-15 PT — reviewer (scheduled agent): t-040 fix prepared for #7410; gated on provenance
+- Re-reviewed #7410 at the same head (32fa1cb). Reproduced the 15 failures (main 494 pass on the Dream/digest set, branch 15 fail).
+- Prepared fix (a): a `pre_v4_dream_contract` fixture in `tests/conftest.py` pins `daily_dream_v4_contract.CUTOVER_DAY` to the far future for the three legacy files. This keeps their drain, retry and stale logic under test. `test_daily_dream_v4_catalog.py` already covers v4. Result: 500/500 pass. It's posted as a patch comment on #7410, because this session can't push to the worker branch.
+- Not merged: the retry_context asks for a citation of Silas's 2026-11-14 "catalog-only 6+4" clarification. Neither main nor the PR body has one (git-author identity is shared with agent sessions, so authorship isn't proof). This PR rewrites CONTROL.md and CLAUDE.md policy. t-040 is parked `needs-human` (soft gate) for Silas to confirm the direction. After that, apply the patch, wait for green, and merge.
+- This PR (#7415) first carried the worker branch plus the fix. I cut it back to bookkeeping only, so #7410 stays the single PR for the change.

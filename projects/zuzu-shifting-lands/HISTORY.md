@@ -9,6 +9,23 @@ Each note below is the **verbatim** original — nothing is summarized or trimme
 markers delimit each note exactly; `archive_done_task_notes.py --verify-only` re-extracts
 every note and checks it byte-for-byte against what the roadmap recorded.
 
+## t-002 — Autonomous first-slice design integration audit; defer Silas review to final
+
+<!-- note:begin t-002 -->
+Silas on 2026-10-24 explicitly removed the early optional creative-review
+checkpoint. The first playable slice exists. Worker should self-review
+scope, cast/quest taxonomy, core design cohesion, missing follower paths,
+game feel and source-of-truth drift, recording concrete follow-up tasks
+and linking findings into master kind_robots#3917. No needs-human
+transition, creative-approval request or release gate at this stage.
+Historically t-002 was a soft needs-human checkpoint, rechecked on
+2026-10-23; that obsolete checkpoint must not delay all-agent creation
+or adversarial testing. ONLY final t-018 is creative approval.
+
+2026-11-13 PT: self-review written to projects/zuzu-shifting-lands/SELF-
+REVIEW-2026-11-13.md (conductor #7349); each finding is fixed, queued or decided there.
+<!-- note:end t-002 -->
+
 ## t-003 — Build typed, versioned world/resource and encounter manifests
 
 <!-- note:begin t-003 -->
@@ -124,6 +141,13 @@ contract regexes (attemptTrialWithCue rename; Prettier trailing comma in matchMe
 Gameplay contract CI green. Merged != deployed: live after the next Alexandria deploy.
 <!-- note:end t-016 -->
 
+## t-017 — Seed/property-based playtests, difficulty balance and safe choice outcomes
+
+<!-- note:begin t-017 -->
+Test draw/flip/deal/discard state idempotence, saved face state, correct pile counts, animation independence, rapid taps and source ArtImage provenance. Multiple seeds never produce impossible tiles, duplicate uniqueness collisions, independently rolled species/job pairs, unearned hidden knowledge or unrecoverable save state. HP and reward progression are balanced across all five lands.
+Done 2026-11-14 PT: seeded adversarial battery (1,176 journeys, 7 policies) and balance report; kind 74%, every traveler 58-96%. See projects/zuzu-shifting-lands/READINESS- DOSSIER-2026-11-14.md.
+<!-- note:end t-017 -->
+
 ## t-019 — Make Shifting Lands persistent encounter flip readable
 
 <!-- note:begin t-019 -->
@@ -180,6 +204,13 @@ Deliver or link approved per-encounter art matching each fixed cast, preserving 
 Done 2026-10-12: art round 1 (projects/zuzu-shifting-lands/art/ROUND-1.yaml) plus rerolls painted 51 of 52 Shifting Lands cards, two Arthemy house-lane seeds each, reviewed against each card's cast and brief and exported to kind_robots public/shifting- lands/cards (BESPOKE_CARDS). Shipped in kind_robots#3572 and #3586. A Road of Bones missed twice and deliberately keeps its reused bone-valley plate; the Homestead trial keeps the gamebook abbess-welcome plate.
 <!-- note:end t-023 -->
 
+## t-024 — Verify authored prose, choice dice, flips, art and replay
+
+<!-- note:begin t-024 -->
+Run seeded and malformed-save tests, no duplicate draws, 2+ meaningfully different decisions, card reading accessibility, reduced-motion/keyboard, durable journal and 375/768/1440 screenshot acceptance; separate human public-release gate t-018 remains.
+Done 2026-11-14 PT: authored prose, dice, flips, art and replay verified by the shifting-lands-gameplay workflow and verifyShiftingEndingsGraph. See projects/zuzu- shifting-lands/READINESS-DOSSIER-2026-11-14.md.
+<!-- note:end t-024 -->
+
 ## t-025 — Integrate four later-land authored packs with V4-safe replay into private board
 
 <!-- note:begin t-025 -->
@@ -220,6 +251,20 @@ Next (after rest_until, once the shared render queue drains): enqueue_art_reques
 Done 2026-10-13: rerolls reviewed, 27 of 49 keep, shipped with kind_robots#3623 (173) for 200 of 222 painted consequence plates. The 22 outcomes that missed twice keep the graded card-art fallback and can be revisited in a later art round: the-locked-dormitory--search-lock--failure, a-crust-for-the-road--offer-help--failure, the-silent-bell--climb-stairs--success, the-mended-compass--compare-the-two-charts--failure, three-cups-on-the-table--question-the-armed-patrons--failure, footprints-in-the-silt--follow-the-wet-prints--failure, hammer-under-the-stone--brace-the-loosened-wall--success, hammer-under-the-stone--inspect-the-fresh-cuts--success, hammer-under-the-stone--inspect-the-fresh-cuts--failure, the-empty-pay-cart--read-the-pay-sheet-aloud--success, the-glass-vein--cut-a-safe-sample--failure, the-watchful-overhang--test-the-ledge-alone--success, the-toll-without-a-keeper--challenge-the-false-toll--success, the-map-in-ashes--persuade-her-to-stop--failure, the-third-shadow--count-the-lantern-positions--success, the-cooling-stones--mark-the-unsafe-seam--success, ashes-at-the-border--offer-to-scout-the-tower--failure, the-last-watchfire--volunteer-for-the-search--failure, the-closed-infirmary--inspect-the-sealed-room--failure, the-price-of-silence--refuse-the-secret-bargain--success, trial-verge--confront--success, trial-verge--parley--success.
 <!-- note:end t-028 -->
 
+## t-029 — Art round 3: repaint the 22 twice-missed consequence plates from their card art (img2img)
+
+<!-- note:begin t-029 -->
+Silas, 2026-10-13: "Are there still 22 missing? Find a solution." After t-028, 22 of 222 outcomes still show the graded card-art fallback: two text-to-image tries each could not hold them (the mole mason painted as a fox/rat three times, the boar as a feral herd, the washed-out bridge intact, both Verge trial successes a closed door, a modern road). Text alone cannot pin the species or the scene change.
+Fix: art/ROUND-3.yaml repaints each from its card's approved ROUND-1 painting with sdxl-img2img on the SAME Arthemy house checkpoint (not Kontext/Flux, which Silas dropped for these plates on 2026-10-10), so the keeper holds species, costume and setting while the prompt moves the moment to the consequence. Three strengths per outcome (denoise 0.5/0.65/0.8), 66 subjects. scripts/enqueue_art_requests.py gains the sdxl-img2img lane (source image, denoise, house sampler settings; tests). Probe ArtJob 38518 first, then the rest.
+Next: --status, review (one keeper per outcome), export with the shifting-lands card exporter (outcome subjects write public/shifting-lands/outcomes/), extend kind_robots BESPOKE_OUTCOMES, PR and merge.
+
+Reviewed and merged partial implementation PR silasfelinus/conductor#6129 at aa6841439e6976a33447d4a279df6aa0352fb278 after25 completed current-head checks (23 successful,2 intentional skips); local33 enqueue tests pass. All69 existing ArtJobs38518–38586 retained with approved ROUND1 source IDs, valid denoise and prompts. Probe38518/ArtImage246660 remains explicitly rejected. This does NOT complete22 outcome plates. Next worker must claim this task on live main, refresh existing job statuses without duplicate enqueue, visually curate one keeper per outcome against fixed cast/consequence, export and merge a green focused Kind Robots BESPOKE_OUTCOMES adoption PR; verify final delivered files before done. No deployment or publication was performed.
+
+Done 2026-11-14 PT: superseded by ROUND-7 and ROUND-12 outcome rounds; 586 outcome
+plates ship and every slot falls back to card or location art. See projects/zuzu-
+shifting-lands/READINESS-DOSSIER-2026-11-14.md.
+<!-- note:end t-029 -->
+
 ## t-030 — Second-person, hero-agnostic prose; one-screen reader; Risky-N dice chip
 
 <!-- note:begin t-030 -->
@@ -239,6 +284,33 @@ Done 2026-10-18: kind_robots#3836 merged as 6d6852433b5c6be80f34eb42300022f8ed40
 Eight cards per location in every land (Homestead +12, other lands +15 each), 3-4 choices per card, at least half the cards with a certain sacrifice/refusal choice, about a third with a route gated on the ten shared deed flags, in the 2026-10-18 voice: hard decisions, the cost of sacrifice, doing good that is not always rewarded. Second person, hero-agnostic. Each new card ships an art brief for t-033.
 Done 2026-10-18 in kind_robots#3836 (6d6852433b5c6be80f34eb42300022f8ed40784a): 72 new cards (8 per location, 120 total), 81 added choices on the original 48, 444 choices; 108 cards with a certain route, 43 gated on the ten deed flags. Balance at merge (400 seeds): V5 random 29% complete; V6 random 40%, cautious 45%, ruthless 46%, kind 28% (kindness costs, by design; t-034 should make it pay in endings). Art briefs: art/V6-CARD-BRIEFS.json.
 <!-- note:end t-032 -->
+
+## t-033 — Art round 4: paint the 72 new cards; re-render Three Cups; audit titles vs paintings
+
+<!-- note:begin t-033 -->
+Silas, 2026-10-18: "the challenge is three cups on the table, and the picture only shows a mouse and an empty table." The ROUND-1 keeper public/shifting-lands/cards/three-cups-on-the-table.webp has a cook, a lantern and a bare table: no cups. Re-render it with the three cups explicit and countable, audit all 48 existing card paintings for every object their titles promise, and paint the 72 V6 cards from the art briefs shipped with t-032 (fixed cast per card, the traveler out of frame or seen from behind, no lettering), same house checkpoint and exporter as ROUND-1/2.
+Ready 2026-10-18: art/V6-CARD-BRIEFS.json holds one brief per V6 card (72) written with the card, plus the Three Cups re-render brief. The new cards currently fall back to their location painting (sceneArt encounterArt), so the board never shows an empty slot; a keeper exported to public/shifting-lands/cards/<id>.webp and listed in BESPOKE_CARDS replaces it.
+
+Source art round four shipped in conductor PR 6401 (57b514f): 72 V6 cards plus two Three Cups prompts, with full CI green. Work still pending: queue, review rendered images, export card keepers and verify delivered URLs. Return to ready for next owner; this is not a completed art-delivery task.
+
+2026-10-22 PT: the ledger had never been submitted (no workflow step reached it while the render box idled). Submitted 74 jobs (43280-43353); all 74 are DONE with ArtImage ids recorded in art/ROUND-4.yaml, which now opts into scripts/sweep_art_ledgers.py. Remaining: curate (foreground objects and counts, fixed species and cast, no text), export keepers into public/shifting-lands/cards, and audit titles vs paintings.
+
+2026-10-22: curated ROUND-4: 4 of 74 keep and shipped in silasfelinus/kind_robots#4033 (The Moved Fence Posts, The Mule That Fears the Dark, The Mule on the Glass, and Three Cups re-rendered with the cups on the table). The other 70 lost their story objects to lone cloaked figures or came back human; all 72 V6 cards are re-rendering in ROUND-5.yaml on Z-Image/Krea 2 (146 jobs). Next: curate ROUND-5 and ship the keepers.
+
+2026-11-02 PT: ROUND-5 was already curated on 2026-10-23 (43 of 73 cards kept and
+shipped; recorded only in its ledger header until now). ROUND-6 curated: 10 of 27 cards
+keep (two-maps-one-channel, the-cart-in-the-dry-wash, a-letter-for-the-warden, the-
+fortieth-stone, a-loom-too-wide, the-guttering-debt-candle, salt-for-the-burial, arrows-
+in-childrens-chalk, the-press-gang-at-the-milestone, the-fork-in-the-black-glass),
+exported and added to BESPOKE_CARDS in silasfelinus/kind_robots#4634. Verdicts are on
+every ROUND-6 subject. Next: ROUND-7 for the 17 misses. Their briefs need a species
+named on every role (un-speciesed roles still come back human), exactly one jar in name-
+jar, and flat scattered stones in five-fallen-cairns. Then audit titles against
+paintings.
+
+Done 2026-11-14 PT: 120/120 shared card faces painted (ROUND-3/8/13 + re-renders). See
+projects/zuzu-shifting-lands/READINESS-DOSSIER-2026-11-14.md.
+<!-- note:end t-033 -->
 
 ## t-034 — Endings from the moral ledger and trial outcomes (Desks-level ending variety)
 
@@ -408,6 +480,64 @@ Created separate V8 ruleset with earned compassionate trial odds, meaningful sco
 Merged silasfelinus/kind_robots#4054 as 58359c64c713864d2e51e34318166cf11a38ddd0 after all sixteen latest-head CI workflows passed, including V7/V8 gameplay, TypeScript, formatting and full Contract Tests. New V8 journeys strengthen earned Witness, Solidarity, and 1-HP Scout routes, show exact 2d6 odds, preserve all V7 save ledgers, and simulate 300 matching seeds for each of five playstyles per version. Kind completion rose from 70.7 to 87.7 percent, cautious from 77.7 to 92.7 under the corrected probability-aware policy; dark-route outcomes were unchanged. No production deployment or human playtest claimed.
 <!-- note:end t-042 -->
 
+## t-043 — Author and implement all follower and companion questlines, decisions and relationship outcomes
+
+<!-- note:begin t-043 -->
+Audit the complete actual companion/follower roster and source-backed identity. Each recruitable traveler must have at least one meaningful fully authored multi-beat quest, encountered or declined introduction, success/failure and departure/betrayal/reunion effects, interaction with cross-land choices, and accurate journal/character rail UI. No species-based morality, invented database entity, dead quest route, or empty decorative companion. Build a cast x quest x decision/result matrix with testable save/replay-safe flags and concrete seed/action traces. Coordinate bespoke art manifest in t-044. Split delivery into independently tested land/follower PRs.
+
+First source-anchored kitchen novice relationship arc implemented for V8 as three deterministic earned callbacks (Dustwater, Tablelands, Cave), with trust, departure and conditional reconciliation from actual encounter and trial choices. Dedicated CI regression added. This is a partial t-043 slice: no party recruitment, explicit follower action UI or full roster coverage yet; keep task active.
+
+2026-10-26 PT: merged first kitchen sister relationship callback arc in kind_robots PR #4237 (86cecc3), exact-head 15/15 CI workflows green, Shifting Lands gameplay tests include forged-source and three-beat regressions. Details and remaining scope: kind_robots#3917 comment 6423633883. This is not a recruitable follower or full questline; next implement real offer/decline, multi-beat player actions, departure/reunion, replay-safe persistence and seeded witnesses, then extend roster and art coverage. No ArtJobs, deployment or final human gate this cycle.
+
+First replay-safe V9 kitchen sister follower recruitment, refusal, canyon moral choice and cave reconciliation implementation prepared on worker/zuzu-shifting-lands-t-043-follower-v9-a8f3. Focused PR and exact-head CI to follow; full roster, art, cross-device verification and final gate remain outstanding.
+
+2026-11-04 PT cleanup pass: stale review since 2026-10-26 with an expired claim.
+kind_robots #4237 (kitchen sister callbacks) merged, and the note lists the remaining
+scope (offer/decline, departure/reunion, the rest of the follower roster). Back to ready
+so the work can be claimed; t-045/t-046 (the playtest battery) wait on it.
+
+2026-11-13 PT: closed by Silas's decision in session ('Yes, close t-043'): the kitchen-
+sister follower arc (recruit/decline/depart/reunion, V9) plus the 13 premades' personal
+roads (52 own cards, 39 own choices, 39 endings, kind_robots #5125) cover companion
+questlines. Reachability: verifyShiftingPersonalTravelers (2940 journeys) and
+verifyShiftingEndingsGraph.
+<!-- note:end t-043 -->
+
+## t-044 — Close complete scene-to-image coverage for cards, followers, quests, choice outcomes and endings
+
+<!-- note:begin t-044 -->
+Build inspectable requirements-driven asset coverage matrix for all 120 encounter fronts, custom backs, every authored choice's success and failure image, all trials/approaches/results, every follower quest beat/result and terminal ending and milestone reveal. Enumerate image requirements from actual runtime/story registry, not hardcoded guesses; group explicitly justified identical-context reuse only. Missing/unverified art must enter durable real ArtJobs and be verified rendered, imported, displayed in the correct scene and visually faithful to text (Three Cups must literally have three cups). Do not count queued, failed, fallback, stock, generic placeholder, or wrong subject art as complete. Keep IDs, prompt provenance and keeper mappings; no paid model spend without money approval.
+Done 2026-11-14 PT: utils/scripts/shiftingLandsArtCoverage.ts enumerates every image slot from runtime registries; matrix in projects/zuzu-shifting-lands/READINESS- DOSSIER-2026-11-14.md section 2.
+<!-- note:end t-044 -->
+
+## t-045 — Generate and verify exhaustive endings/branches graph with reachable seed-action witnesses
+
+<!-- note:begin t-045 -->
+Graph actual game-state predicates and path transitions, including five trials, encounter flags, follower quest outcomes, moral marks, items, victory, death, retirement, bittersweet and secret endings. Export readable graph (Mermaid/Graphviz and machine-readable registry) with node/edge labels and precise prerequisites. Test all branches reachable with deterministic seed/action traces or document and repair unreachable/dead paths; verify mutually exclusive conditions, correct credit, uniqueness, journal callbacks and spoiler control. Do not infer path completeness from an ending count alone.
+2026-11-13 PT: kind_robots #5125 adds verifyShiftingEndingsGraph: all 19 shared and 39 own endings witnessed (traveler, seed, lean, trial plan) across 24192 journeys, every witness replays exactly; evidence projects/zuzu-shifting-lands/ENDINGS- GRAPH-2026-11-13.json (#7349). It found and fixed four constellation endings unreachable since V8.
+<!-- note:end t-045 -->
+
+## t-046 — Full adversarial end-to-end playtest battery, art/quest/ending reachability and repairs
+
+<!-- note:begin t-046 -->
+After all content and art are delivered, run reproducible multi-seed adverse policy agents for kind, ruthless, greedy, cautious, mixed, chaotic and pathological saves and attempts. Hit each quest beat, action success/failure, return, refusal, betrayal, five boss paths, all endings and rendered image routes with actual reducer transitions. Verify rare path witnesses and adversarial soft locks, resource exploits, unearned flags, RNG tampering, save versions, high/low luck, rapid UI actions and recovery. Fail coverage gate if any required path or art is unreachable or unpainted. Record coverage dashboards, test traces, objective failure triage, fixes and reruns. Mock reviewer personas must be labeled synthetic, not actual human reviews.
+Done 2026-11-14 PT: adversarial battery, endings graph (58/58 witnessed) and art/quest reachability; four unreachable constellation endings fixed. See projects/zuzu-shifting- lands/READINESS-DOSSIER-2026-11-14.md.
+<!-- note:end t-046 -->
+
+## t-047 — Actual illustrated console-quality visual QA at phone, tablet and desktop widths
+
+<!-- note:begin t-047 -->
+Render and interact with a fully authored board, encounter, follower quest, victory, death, gallery, journal and ending at 390px, 768px, 1440px and wide display. Check stage prominence, legible all-width art and decisions, single-screen no-webapp layout, reachable controls/scroll owners, art cropping, audio/mute, reduced-motion, keyboard/touch, save resume and inaccessible paths. Save actual screenshots/video and structured issues. Repair blocking defects autonomously and rerun QA; no signoff from hypothetical screenshots or static grep tests.
+Done 2026-11-14 PT: visual QA of title, creator, own card, personal ending and scrapbook at 390/768/1440/1920 px; 0 findings. See projects/zuzu-shifting-lands/READINESS- DOSSIER-2026-11-14.md.
+<!-- note:end t-047 -->
+
+## t-048 — Agent-only final readiness dossier: prove nothing authored, painted, mapped or tested is missing
+
+<!-- note:begin t-048 -->
+Prior to any human-approval request, produce single verifiable completeness dossier linked from kind_robots#3917: every authored card/choice/follower/quest/result/trial and painted image bound to the correct UI slot; all endings graphed and visited by real seeded traces; all adversarial and accessibility/visual test findings corrected; all latest-head CI checks green; live resources verified and source manifest reconciled. Audit EVERY project task and verify all non-human development dependencies done. Block t-018 while any critical/high defect, unreviewed human-like quest branch, missing image, fallback, untested outcome, or invalid save exists. Create scoped repair tasks rather than declaring success through checkboxes. No final creative gate until this dossier is DONE.
+Done 2026-11-14 PT: projects/zuzu-shifting-lands/READINESS-DOSSIER-2026-11-14.md.
+<!-- note:end t-048 -->
+
 ## t-049 — Spent deeds: consume medicine/favor flags once spent (deck schemaVersion 2 + save migration)
 
 <!-- note:begin t-049 -->
@@ -435,6 +565,26 @@ Limit: a hand-edited save can drop the field and get the old rule for history it
 recorded, but only that.  Merged as kind_robots #4830.
 <!-- note:end t-049 -->
 
+## t-050 — Main-game standard: audit and close the gaps for Zuzu: Shifting Lands
+
+<!-- note:begin t-050 -->
+Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
+
+AUDIT DONE 2026-11-12: projects/zuzu-shifting-lands/STANDARD-AUDIT-2026-11-12.md holds the Met/Partial/Missing table, a proposed achievement list with award points, character-fit notes and the three smallest next PRs. Start there.
+
+Start with the audit table from docs/agents/main-game-standard.md (title screen; settings menu; save/load and persistent progress; 12+ achievements; scrapbook; multiple endings with painted plates; customizable characters; 3+ replay hooks), marking each Met / Partial / Missing with evidence (file, route, live record). Put the table in this note and the first PR. Then close each gap in small CI-tested PRs; queue any needed ending, scrapbook or portrait art in an auto_submit ledger.
+
+Character customization is delivered by its own task (character creator with Zuzu and Jeffery Mittens).
+
+Achievements are tracked by their own task; this one covers everything else.
+
+2026-11-13 PT: closed the audit gaps. Title screen + persistent scrapbook (13 traveler
+pages, 19 shared endings) kind_robots #5127; 19 shared ending plates + 13 portraits
+#5125; 20 achievements (t-051); characters (t-052/t-053); replay hooks: 13 premades,
+custom travelers, scrapbook completion. Settings remain motion/dice-sound (Partial in
+the audit), noted for playtest.
+<!-- note:end t-050 -->
+
 ## t-051 — Zuzu: Shifting Lands achievement upgrade: 12 or more live achievements
 
 <!-- note:begin t-051 -->
@@ -456,3 +606,28 @@ Encounters must respect identity: any encounter, follower or quest featuring the
 
 Character creator merged in kind_robots#5038 (bf8c03f) with all CI green: premade Zuzu (unchanged stats), Jeffery Mittens (knows the old roads; 8 existing routes) and the fennec siblings (sister with her brother), plus a 13-point custom traveler (name, species from the Book One cast, pronouns). Ledger v10 snapshots the character; V9 saves restore as Zuzu and replay byte-identically (pinned 300-seed digest). Identity-aware encounters: cast-tag sidecar, 7 cameo cards and 3 self-variants so a player never meets themselves (swept every character x seeds 1-500 x 15 locations). Portraits queued in conductor#7282 (ROUND-8-TRAVELERS, 13 portraits). Follow-ups: the 3 live achievement messages still name Zuzu (zuzu-shifting-lands achievement task), no scrapbook yet (standard task). Open for Silas: children as playable characters facing the Abbess trial and death routes (harm kept off-screen), naming the fennec sister, stat tuning.
 <!-- note:end t-052 -->
+
+## t-053 — Personalize every premade traveler: character-only cards, options and a personal thread (art high priority)
+
+<!-- note:begin t-053 -->
+Silas 2026-11-12 PT, in session: "Shifting lands Characters can still have special character only events, cards, or options. If we keep it to >10 characters, there's zero reason they can't be personalized to them. I like this idea a lot, high priority for art generation."
+
+Roster cap: 13 or fewer premades (Silas, same day: "That should be <10 characters, but whatevs. 13 is fine and reasonable") so every premade can be personalized. Builds on the character creator (t-052, kind_robots#5038: Zuzu, Jeffery Mittens, the fennec siblings, plus a custom traveler; cast-tag sidecar, cameo cards and self-variants in utils/shiftingLands).
+
+Deliver, per premade character:
+- character-only encounter cards in their signature lands (drawn only when that character is playing), written in the deck's second-person style and canon voice;
+- character-only choice options on existing cards (gated by the character's signature/identity deed flags, which the validator already supports);
+- at least one personal quest thread or ending variant that pays off their backstory (e.g. Jeffery's old raider crew, the sister keeping her brother fed, Zuzu's road from Edo).
+- CUSTOM ENDINGS PER CHARACTER (Silas 2026-11-12 PT: "We might as well have custom endings for each character. Great thing for the scrapbook."): every premade gets its own ending variants with their own painted plates (queued at priority 1000), and each character's endings are tracked as their own row/page in the Shifting Lands scrapbook (endings found per character, X of N).
+Custom travelers keep the shared pool (species/stat-driven options are a stretch goal).
+Keep replays deterministic (sidecar files, optional params, pinned digests as t-052 did) and extend verifyShiftingCharacterCreator so every premade reaches its personal cards and never meets itself.
+
+ART IS HIGH PRIORITY: queue every new card's plate in an auto_submit ledger at priority 1000 (Silas's "high priority for art generation"), following the world guardrails and the ROUND-8-TRAVELERS lane. The 13 traveler portraits and 19 ending plates were raised to priority 1000 on 2026-11-12.
+
+Open for Silas (from t-052): naming the fennec sister; whether children as playable characters may face the Abbess trial and death routes (harm currently off-screen).
+
+Done 2026-11-14 PT: 13 premade roads (52 own cards, 39 choices, 39 endings) shipped in
+kind_robots #5125-#5144; art 50/52 own cards, 36/39 personal endings; ROUND-16 retakes
+queued as a playtest-stage update. See projects/zuzu-shifting-lands/READINESS-
+DOSSIER-2026-11-14.md.
+<!-- note:end t-053 -->

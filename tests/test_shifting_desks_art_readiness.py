@@ -8,6 +8,16 @@ from scripts.shifting_desks_art_readiness import classify, inventory, markdown
 PREFIX = "kind_robots public/images/shifting-desks/"
 
 
+def report_field(report: dict, name: str) -> bool:
+    """Assert structured readiness evidence, independent of Markdown styling."""
+    fields = {
+        "Required Classic ready": "ready",
+        "Optional variant catalog ready": "catalog_ready",
+    }
+    return report[fields[name]]
+
+
+
 def row(name, *, status="delivered", verdict="keep: matches prompt", check="HEAD 200", **extra):
     return {
         "key": name,
@@ -60,7 +70,38 @@ def test_classic_and_western_have_separate_acceptance(tmp_path):
     assert report["targets"] == 2
     assert report["styles"]["classic"]["accepted"] == 1
     assert report["styles"]["western-cartoon"]["unreviewed"] == 1
-    assert not report["ready"]
+    assert report["ready"], "unselected optional art cannot block the base game"
+    assert not report["catalog_ready"]
+    assert report["required_blocked"] == []
+    assert len(report["optional_blocked"]) == 1
+    assert report_field(report, "Optional variant catalog ready") is False
+    assert report_field(report, "Required Classic ready") is True
+    assert "western-cartoon: 1 unaccepted variant renders" in markdown(report)
+
+    # Rejected core art still blocks playtest even with an empty ArtJob queue.
+    round_file(tmp_path, 19, [row("a", verdict="redo: wrong subject")])
+    report = inventory(tmp_path)
+    assert report_field(report, "Required Classic ready") is False
+    assert report["required_blocked"][0]["key"] == "a"
+    assert len(report["optional_blocked"]) == 1
+    assert "ROUND-19" in markdown(report)
+
+
+def test_no_classic_ledger_cannot_grant_readiness(tmp_path):
+    western = row("a")
+    western["target_path"] = PREFIX + "styles/western-cartoon/cards/a.webp"
+    round_file(tmp_path, 18, [western])
+    report = inventory(tmp_path)
+    assert report["catalog_ready"]
+    assert not report["ready"], "optional artwork alone never proves a playable base edition"
+
+
+def test_corrupt_optional_ledger_does_not_hide_parse_errors(tmp_path):
+    round_file(tmp_path, 2, [row("a")])
+    round_file(tmp_path, 18, [{"key": "bad", "target_path": "not-public"}])
+    report = inventory(tmp_path)
+    assert not report["ready"], "invalid optional ledger records are still audited"
+    assert any("invalid target path" in error for error in report["errors"])
 
 
 def test_duplicate_and_invalid_targets_are_fatal_even_if_all_other_rows_kept(tmp_path):

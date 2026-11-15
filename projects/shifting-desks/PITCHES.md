@@ -123,3 +123,9 @@ That gives the cockroaches, deathtraps, psych tests, nuclear toys, mutant powers
 - **Party mode:** *"Not at all."* Removed from the roadmap; do not re-pitch it.
 - **Title:** *Shifting Desks*, confirmed (the first answer did not register because the question offered no keep-as-is option).
 - **Pitch E** (afterlife bureaucracy) remains a possible secret ending / later expansion (t-021).
+
+## Rebrand (Silas, 2026-11-14 PT)
+
+- **New title: *The Elevator Only Goes Down*.** Silas: *"shifting desks needs a rebrand. It's a much weirder and more complicated game, and deserves both a highlight image and front end that doesn't look sterile, and a name that's more evocative."* Picked from four pitches drawn from the world bible: *The Elevator Only Goes Down* (the game's own hook line), *Sub-Level Zero*, *Wellness Weekend*, *Rightsized*.
+- Display name only: the slug, route (`/play/shifting-desks`), files, storage keys and this project folder keep `shifting-desks`.
+- New key art queued in [art/KEY-ART-REBRAND-1.yaml](art/KEY-ART-REBRAND-1.yaml); the title-screen restyle (elevator floor-indicator title, descent hero, PAL ticker) ships in Kind Robots.

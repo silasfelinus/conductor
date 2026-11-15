@@ -513,14 +513,14 @@ tasks:
   implementation_pr: 'silasfelinus/conductor#5214'
 - id: t-035
   milestone: m4
-  title: 'Daily pitches: author five expansions of existing projects'
+  title: 'Daily improvements: ship five changes and close out their canonical roadmap tasks'
   status: ready
   recurring: true
   daily_commitment: true
   daily_last_checked: '2026-11-14'
   passes: 0
   stakes: reversible
-  updated: '2026-11-14T10:47:46Z'
+  updated: '2026-11-15T09:14:55Z'
   note: |-
     HISTORICAL DAILY CONTRACT (Silas, 2026-10-02): every day's digest carries FIVE new project
     pitches, biased to free-to-play ideas that need no LLM at runtime (Kind Robots has a lot
@@ -617,10 +617,18 @@ tasks:
     #7381 (daily-deliveries/2026-11-14.yaml, --check valid), but that PR left t-035's daily
     dates at 11-13; this close-out records them. Next: pick a new audience-first lane (link-
     preview coverage is complete).
+
+    Nov 14 PT user-directed refinement: retain five real daily PR-backed project increments, not five newly created roadmaps. From Nov 15 each one must cite a distinct existing canonical project roadmap task with a dated, PR-specific implementation and verification note. Enforce in daily delivery validator, show roadmap evidence in each review card, and preserve historical deliveries. Reversible PR and final checks pending.
+
+    2026-11-14 PT: merged conductor PR #7414 (5a5a57f245fe67db88474950886fa5d1545c6909) after all six workflow groups including the full Python test suite completed green. Starting 2026-11-15 PT each of five daily project improvements records its own distinct existing canonical project roadmap task, a dated delivery marker and the actual implementation PR and test evidence. Original game roadmaps are not closed on one increment; historical deliveries remain unchanged and visible after archival. Re-arm recurring daily improvement commitment; Nov 15 new deliveries have NOT been performed.
+
+    2026-11-15 PT daily cycle: five audience-first upgrades shipped in kind_robots#5209
+    (merged c24cef2, CI green): designed link-preview cards for Space Couch, Prom of Doom,
+    Zuzu gamebook + Shifting Lands, Slime City duel invites (page had no meta), plus slime-
+    city/t-067 LOCAL PLAY instead of STORY SYNC ERROR. Ledger projects/dream-cycle/daily-
+    deliveries/2026-11-15.yaml (--check valid). Next: remaining raw-art previews (ecotone,
+    zuzu-showdown, zuzu-pinball) or a non-preview audience lane.
   daily_last_completed: '2026-11-14'
-  owner: reviewer
-  claimed_by: 2026-11-12T0952Z-dc-t035-db3o
-  claimed_at: '2026-11-12T09:48:33Z'
   implementation_pr: 'silasfelinus/kind_robots#5150'
 - id: t-036
   milestone: m4
@@ -690,3 +698,28 @@ tasks:
   updated: '2026-10-13T11:07:44Z'
   note: >-
     Kaizen from conductor#6117. The first real build-first docket was manually verified against live GitHub: five distinct gameplay additions merged October13PT, with33 completed passing checks each. daily_project_deliveries.validate currently validates evidence URL/SHA shapes, not source truth. Add a read-only verification command that confirms merged PR and claimed merge SHA, exact implementation head check completion, and Pacific-day attribution, with fixtures for stale heads, prior-day merges, pending/red CI and duplicate implementation evidence. Keep ordinary unit CI network-independent, retain current human gates and do not deploy/send/change source systems. Existing historical dockets must remain intact; an unavailable connector is verification pending, never fake success.
+- id: t-040
+  milestone: m4
+  title: 'Make conductor#7410 (v4 6+4 Dream catalog contract) pass the existing Dream builder test suite'
+  status: needs-human
+  passes: 1
+  stakes: reversible
+  updated: '2026-11-15T02:47:28+00:00'
+  retry_context: >-
+    pass 1 failed (quality, reviewer 2026-11-14 PT): conductor#7410 head 32fa1cb is red on
+    "Python test suite" and "contract". 15 existing tests fail: test_build_dream_proposal.py (5),
+    test_daily_dream_build_freshness.py (9), test_dream_stale_recovery.py (1). All 45 pass on main.
+    Cause: v4 gating keys on the wall-clock target date. unbuilt_backlog() skips every non-v4
+    proposal when today is a v4 day, and run_daily_dream_build refuses every non-v4 draft as
+    "legacy draft retained". That drops the fixtures' dated six-asset drafts and hides the
+    "creative contract failed" message the tests check. Fix one of two ways. (a) Pin the target
+    date in those fixtures and add v4 fixtures for the new behaviour. (b) Narrow the filters to
+    bundle_version == 3, if pre-v3 six-asset manuscripts should still drain. Say in the PR which
+    one you chose. Run the full `pytest -q tests/` before pushing; don't rely on the new test file
+    alone. The CONTROL.md/CLAUDE.md wording records a Silas clarification. Cite where Silas gave
+    it in the PR body so the reviewer can confirm it.
+  note: |-
+    Created by reviewer 2026-11-14 PT for untracked PR conductor#7410 (worker/dream-cycle-catalog-only-10-assets-20261114). The PR stays open; the Worker pushes fixes to the same branch. Close this task when #7410 merges green.
+
+    2026-11-15 PT reviewer: fix for the 15 legacy-test regressions is ready (pin v4 CUTOVER_DAY for legacy Dream scheduling tests via a conftest fixture; 500/500 Dream/digest tests pass) and posted as a patch comment on conductor#7410. Merge is gated only on Silas confirming the 2026-11-14 "6 Dream + 4 private Zuzu/Emperor setting/character candidates, no new gameplay" CONTROL.md/CLAUDE.md clarification, which has no citable source on main. On confirmation: apply the patch to the worker branch, wait for green CI, merge, close t-040.
+  soft_gate: true

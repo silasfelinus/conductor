@@ -3186,5 +3186,17 @@ tasks:
     sync_playtest_master_issues.py still calls .get("tasks") on whatever yaml.safe_load returns, so a roadmap whose top
     level is a list raises AttributeError and aborts the whole sync, and a non-list tasks value is only rejected
     incidentally. Report both as per-project problems (no issue closure) and cover them with unit tests.
+- id: t-212
+  title: "Issue bridge must never tell a PR to Close a project master issue; fix the stale imported notes that do"
+  status: done
+  stakes: reversible
+  owner: reviewer
+  passes: 0
+  updated: '2026-11-15T07:58:32Z'
+  note: >-
+    Reviewer kaizen 2026-11-14 PT from conductor#7423 (shifting-desks/t-048 note fix).
+
+    Full history: projects/conductor/HISTORY.md#t-212
+  implementation_pr: 'silasfelinus/conductor#7424'
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'

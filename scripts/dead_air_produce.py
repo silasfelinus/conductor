@@ -118,6 +118,9 @@ def validate(e: dict) -> list[str]:
             problems.append(f"shot {index} invalid motion type")
     if abs(cursor - 15) > .01:
         problems.append("film must end at 15.0s")
+    tail = e.get("silent_tail_seconds", 0)
+    if not isinstance(tail, (int, float)) or isinstance(tail, bool) or not 0 <= tail <= MAX_SILENT_TAIL:
+        problems.append(f"silent_tail_seconds must be a number from 0 to {MAX_SILENT_TAIL}")
     if clips > MAX_GPU_CLIPS:
         problems.append(f"at most {MAX_GPU_CLIPS} generated clip may be requested within the budget")
     # Camera animation is intentional movement, not an image slideshow; every
@@ -179,8 +182,92 @@ def scenes_for(e: dict) -> list[dict]:
     return output
 
 
+MAX_SILENT_TAIL = 1.5  # an authored "dead-silent last beat" is a joke, not a gap
+QUIET_DB = -45.0  # below this the mix reads as accidental dead air
+CHIME_LENGTH = 1.2
+
+
+def silent_tail_seconds(episode: dict) -> float:
+    """Seconds of deliberate silence the brief asks for at the very end (0 by default)."""
+    try:
+        tail = float(episode.get("silent_tail_seconds") or 0)
+    except (TypeError, ValueError):
+        return 0.0
+    return max(0.0, min(MAX_SILENT_TAIL, tail))
+
+
+def audio_mix_filter(silent_tail: float) -> str:
+    """FFmpeg graph: voice over an audible station bed, ending on a two-note sign-off chime.
+
+    Inputs: 0 voice, 1 drone low, 2 drone fifth, 3 broadcast hiss, 4 chime high, 5 chime low.
+    (lavfi sine sources are 1/8 amplitude, hence the gains.) The 2026-11-14 review of MusicVideos 18 and 19 found 4-6s of near-silence (-55 dB)
+    after the voiceover, because the only bed was a 220 Hz sine at 0.018 gain. The bed
+    now sits around -30 dBFS for the whole film, and only an authored silent tail cuts it.
+    """
+    audible_end = DURATION - silent_tail
+    chime_at = max(0.0, audible_end - CHIME_LENGTH - 0.1)
+    high_ms, low_ms = int(chime_at * 1000), int((chime_at + 0.28) * 1000)
+    graph = (
+        "[0:a]adelay=350|350,volume=1.2,apad,atrim=duration=15[vo];"
+        "[1:a][2:a]amix=inputs=2:normalize=0,tremolo=f=0.6:d=0.35,volume=0.22[drone];"
+        "[3:a]lowpass=f=2400,highpass=f=300,volume=0.5[hiss];"
+        "[drone][hiss]amix=inputs=2:normalize=0,afade=t=in:d=0.25[bed];"
+        f"[4:a]afade=t=out:st=0.05:d={CHIME_LENGTH - 0.05:.2f}:curve=exp,volume=1.4,"
+        f"adelay={high_ms}|{high_ms}[ch1];"
+        f"[5:a]afade=t=out:st=0.05:d={CHIME_LENGTH - 0.05:.2f}:curve=exp,volume=1.4,"
+        f"adelay={low_ms}|{low_ms}[ch2];"
+        "[vo][bed][ch1][ch2]amix=inputs=4:duration=first:normalize=0"
+    )
+    if silent_tail > 0:
+        graph += f",volume=enable='gte(t\\,{audible_end:.3f})':volume=0"
+    return graph + ",alimiter=limit=0.93,atrim=duration=15[mix]"
+
+
+def longest_quiet_run(track: Path) -> float:
+    """Longest stretch (seconds) of the track quieter than QUIET_DB."""
+    proc = subprocess.run(
+        ["ffmpeg", "-nostdin", "-i", str(track), "-af", f"silencedetect=n={QUIET_DB}dB:d=0.3",
+         "-f", "null", "-"], capture_output=True, text=True, check=False)
+    if proc.returncode:
+        raise PipelineError("could not measure the sound mix")
+    longest, start = 0.0, None
+    for line in proc.stderr.splitlines():
+        if "silence_start:" in line:
+            start = float(line.rsplit("silence_start:", 1)[1].split()[0])
+        elif "silence_end:" in line and start is not None:
+            end = float(line.rsplit("silence_end:", 1)[1].split("|")[0])
+            longest, start = max(longest, end - start), None
+    if start is not None:  # silence running to the end of the file
+        longest = max(longest, DURATION - start)
+    return round(longest, 2)
+
+
+def mix_audio(voice: Path, episode: dict, workdir: Path) -> Path:
+    """Mix a narration WAV into the 15-second Dead Air soundtrack and refuse accidental dead air."""
+    tail = silent_tail_seconds(episode)
+    song = workdir / "dead-air-15sec.mp3"
+    sr = "sample_rate=44100:duration=15"
+    command = [
+        "ffmpeg", "-nostdin", "-y", "-loglevel", "error", "-i", str(voice),
+        "-f", "lavfi", "-i", f"sine=frequency=110:{sr}",
+        "-f", "lavfi", "-i", f"sine=frequency=164.8:{sr}",
+        "-f", "lavfi", "-i", "anoisesrc=color=pink:amplitude=0.02:sample_rate=44100:duration=15",
+        "-f", "lavfi", "-i", f"sine=frequency=880:sample_rate=44100:duration={CHIME_LENGTH}",
+        "-f", "lavfi", "-i", f"sine=frequency=659.25:sample_rate=44100:duration={CHIME_LENGTH}",
+        "-filter_complex", audio_mix_filter(tail),
+        "-map", "[mix]", "-t", "15", "-ar", "44100", "-c:a", "libmp3lame", "-q:a", "4", str(song),
+    ]
+    proc = subprocess.run(command, capture_output=True, text=True, check=False)
+    if proc.returncode:
+        raise PipelineError(f"sound mix failed: {proc.stderr[-350:]}")
+    quiet = longest_quiet_run(song)
+    if quiet > tail + 0.6:
+        raise PipelineError(f"sound mix has {quiet}s of dead air (authored silent tail {tail}s)")
+    return song
+
+
 def make_audio(episode: dict, workdir: Path) -> Path:
-    """Provisional original spoken VO + very quiet station-tone bed, exactly 15 seconds.
+    """Provisional original spoken VO over an audible station bed, exactly 15 seconds.
 
     This intentionally never reuses copyrighted music or dialogue. A later creative
     audio pass can replace the provisional narration before approval for publication.
@@ -194,20 +281,7 @@ def make_audio(episode: dict, workdir: Path) -> Path:
                               stdout=output, stderr=subprocess.PIPE, check=False)
     if proc.returncode:
         raise PipelineError("provisional voice synthesis failed")
-    song = workdir / "dead-air-15sec.mp3"
-    command = [
-        "ffmpeg", "-nostdin", "-y", "-loglevel", "error",
-        "-i", str(voice), "-f", "lavfi", "-i", "sine=frequency=220:sample_rate=44100:duration=15",
-        "-filter_complex",
-        "[0:a]adelay=350|350,volume=1.2,apad,atrim=duration=15[vo];"
-        "[1:a]volume=0.018[bed];[vo][bed]amix=inputs=2:duration=first:normalize=0,"
-        "alimiter=limit=0.93,atrim=duration=15[mix]",
-        "-map", "[mix]", "-t", "15", "-ar", "44100", "-c:a", "libmp3lame", "-q:a", "4", str(song),
-    ]
-    proc = subprocess.run(command, capture_output=True, text=True, check=False)
-    if proc.returncode:
-        raise PipelineError(f"sound mix failed: {proc.stderr[-350:]}")
-    return song
+    return mix_audio(voice, episode, workdir)
 
 
 def caption_export(raw: Path, output: Path, episode: dict, workspace: Path) -> dict:

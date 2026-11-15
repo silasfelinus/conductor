@@ -15,9 +15,9 @@ goal: >-
   contract) across Composure, Clearance, Suspicion, Successors and Forms, with
   secret-society and mutation cards, deathtraps, psych tests, giant cockroaches,
   nuclear-capable toys, callbacks to classic works and at least ten distinct
-  endings. Deterministic, seeded and saveable, with no LLM at play time. Finished only
-  after balance simulation, accessible phone/tablet/desktop review and Silas's
-  verdict that it is genuinely funny and fun.
+  endings. Deterministic, seeded and saveable, with no LLM at play time. Ready for human playtests only after balance simulation, accessible
+  phone/tablet/desktop review, delivered artwork and verified playable flows.
+  Silas's subjective fun verdict and any broader promotion follow afterward.
 notes_from_silas: |
   2026-10-12 PT: "I have a new conductor project. It should be modeled after the Zuzu
   shifting lands and Zuzu gamebook, ideally picking the best ideas from each. My
@@ -114,15 +114,12 @@ tasks:
       Full history: projects/shifting-desks/HISTORY.md#t-001
   - id: t-049
     title: 'Main-game standard: audit and close the gaps for Shifting Desks'
-    status: review
-    owner: worker
-    claimed_by: 20261113T120222Z-shifting-t049-gpt6-c8d1
-    claimed_at: '2026-11-13T12:02:22Z'
+    status: ready
     milestone: m5
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-13T12:06:00Z'
+    updated: '2026-11-15T13:38:25.921Z'
     note: |-
       Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -143,6 +140,12 @@ tasks:
       Kind Robots PR #5111 merged at c91347a976dd0de2a7942995c3cd6d44ab821e8c after all seven exact-head checks passed on 2d447504f1dd60bf88a6e268de09c1c40699b2b2. Personnel Archive now shows saved former-employee dossiers. This is a partial standard increment: account-save design, complete browser playthrough, production deployment, and subjective handoff remain unverified. Return t-049 to ready, not done.
 
       Scoped portable browser progress backup/restore implemented in kind_robots branch worker/shifting-desks-t-049-backup-c8d1. Review and CI pending; broader main-game standard remains incomplete.
+
+      Reconciled stale 2026-11-13 review: Kind Robots PRs #5111, #5115 and #5123 are merged; no open Shifting Desks PR was found. Portable backup/restore landed, but full store recovery regression coverage and browser/account-backed acceptance remain open. Return t-049 to ready for the next independent verified implementation slice.
+
+      Shifting Desks t-049 independent recovery QA slice: guarded store hydration against one localStorage getItem failure without clearing valid run, and retained existing slots without write-through on incomplete reads. Added live Pinia store regression coverage for five individually blocked keys, malformed imports, failed-write rollback and portable backup restoration. Kind Robots branch worker/shifting-desks-t-049-recovery-guard-e6c2; PR and exact-head CI pending. This does not complete account-backed saves, browser/device acceptance or art readiness, so keep t-049 open after landing.
+
+      2026-11-15 PT: Kind Robots PR #5219 merged as 047e0abcea2371fd735fe75978b9d96e3df9d7bf. Exact head 6ae3f28de77afdda25be4c0f1a17f9492d2a67b5: Shifting Desks gameplay, TypeScript, changed-file formatting, layout, schema-parity, architecture and repository contracts all completed success. Saved runs now survive unreadable neighboring browser storage without rewriting partially reconstructed records; live Pinia tests cover blocked slots, guarded backup import and rollback. Return to ready: account-backed save decision, full deployed browser/device acceptance and remaining main-game standard items are NOT verified. Art t-032/t-041 and reward t-046 remain separate blockers.
   - id: t-050
     title: 'Shifting Desks achievement upgrade: 12 or more live achievements'
     status: done
@@ -443,24 +446,6 @@ tasks:
     claimed_at: '2026-10-13T11:37:58Z'
     updated: '2026-10-13T12:10:46Z'
     implementation_pr: 'silasfelinus/kind_robots#3635'
-  - id: t-020
-    milestone: m5
-    title: "Silas's fun verdict and wider promotion (home, Arcade, sharing)"
-    status: ready
-    depends_on:
-      - t-018
-      - t-019
-    owner: null
-    passes: 0
-    stakes: outward-facing
-    gate_human: true
-    gate_reason: subjective-acceptance
-    note: >-
-      Hard gate. The public /play/shifting-desks page and its Projects tab were authorized
-      by Silas on 2026-10-12 PT and ship as the game grows. This task is what remains
-      human-only: his verdict that the full game is genuinely funny and fun, and any wider
-      promotion (home page feature, Arcade listing, external sharing). Agents prepare
-      device screenshots, then stop at needs-human.
   - id: t-021
     milestone: m5
     title: "Pitch: Department of Posthumous Affairs expansion / secret ending"
@@ -622,7 +607,10 @@ tasks:
     milestone: m3
     title: 'Land, review and link the art round 13 re-renders and round 14 tone-ladder renders'
     status: review
-    updated: '2026-11-14T08:01:00Z'
+    owner: worker
+    claimed_by: 20261115T134905Z-shifting-desks-t032-playtest-art-f8a2
+    claimed_at: '2026-11-15T13:49:05.940Z'
+    updated: '2026-11-15T13:53:26.682Z'
     depends_on: t-015
     passes: 0
     stakes: reversible
@@ -676,9 +664,10 @@ tasks:
       2026-11-14 PT reviewer: merged Conductor #7356 (Round 19 subject-only fidelity brief) as 794b30f; all checks green on head 64acb0d (one stale handoff-check rerun carried the pre-edit PR body). Queued the brief as projects/shifting-desks/art/SUBJECT-FIDELITY-PILOT-V2.yaml: three private Krea 2 cells (rear-eyes, living-corridor, mutation-tank), auto_submit, is_public false, private style-fidelity-pilot-v2 destinations, each with a single pass/fail line; all three pass the prompt contract in dry run. No ArtJob IDs exist yet; nothing is delivered or KEEP. Next: after the Auto Art sweep writes job IDs and ArtImage IDs, review each render at full size and thumbnail scale against its pass/fail line and record KEEP/REDO; if all three fail, escalate to reference/compositing per the brief. Do not link art, mark done, or promote playtest; t-020 human gate untouched.
 
       Added CI capture and regression tests for all three already-submitted V2 private ArtJobs (69090-69092), preserving V1 evidence and preventing PENDING images from being called delivered. Visual verdicts and accepted art still outstanding.
-    owner: worker
-    claimed_by: 2026-11-13T234500Z-shifting-desks-t032-ptpilot-q82c
-    claimed_at: '2026-11-14T07:45:00Z'
+
+      2026-11-15 PT recovery of stale review after checking no open Shifting Desks PRs. Auto Art Generate run 43710225215 (Nov 15 PT) reports no queued Shifting Desks work and zero undelivered latest ledger slots, but 14/195 Classic and 170/196 suspended Western Cartoon visual REDO. This is genuine pending curation, not pending ArtJobs. Reopen art acceptance for a scoped evidence-backed readiness/usable-style correction; do not auto-KEEP rejected media or approve final game.
+
+      2026-11-15 PT: Audited actual Auto Art Generate run 43710225215 and Round 19 contact-sheet artifact 14085491858; verified no pending render deliveries, 181 of 195 Classic images accepted with 14 explicitly rejected, and suspended Western Cartoon 26 of 196 accepted with 170 rejected. Implemented playtest-required Classic-only strict art gate with optional-style failures still reported; tests protect against accidental approval of any rejected Classic image. Wrote exact 14-subject/ArtJob/ArtImage acceptance checkpoint under art/PLAYTEST-ART-CHECKPOINT-2026-11-15.md. Still need genuine correction or scene-faithful fallback for 14 Classic REDO, original art task remains unfinished; no auto-KEEP or new ArtJobs. Implementation PR checks pending.
   - id: t-033
     milestone: m3
     title: 'Tone ladder: lower floors grow more Cronenbergian (rules and station art)'
@@ -973,7 +962,7 @@ tasks:
     source_issue: "silasfelinus/kind_robots#4150"
     updated: '2026-11-06T13:34:20Z'
     note: |-
-      FROM GITHUB ISSUE silasfelinus/kind_robots#4150 (https://github.com/silasfelinus/kind_robots/issues/4150), opened by @silasfelinus on 2026-10-25. Imported by scripts/sync_github_issues.py. Reference the issue in the implementing PR (`Closes silasfelinus/kind_robots#4150`) so it closes on merge; the bridge closes it otherwise once this task is done.
+      FROM GITHUB ISSUE silasfelinus/kind_robots#4150 (https://github.com/silasfelinus/kind_robots/issues/4150), opened by @silasfelinus on 2026-10-25. Imported by scripts/sync_github_issues.py. Reference the canonical roadmap in implementation PRs with `Refs silasfelinus/kind_robots#4150`, never `Closes`. Keep #4150 open throughout finite build, art and QA work. Only the verified playtest handoff workflow may prefix `[FLAGGED FOR HUMAN TESTING]` and close the single master issue after Conductor lifecycle, priority, and completed finite art/build/QA evidence are confirmed; human trials and subjective approval follow *after* roadmap closure and never authorize publication.
 
       # Shifting Desks: roadmap to completion
 
@@ -985,7 +974,7 @@ tasks:
 
       A **complete, genuinely fun, illustrated, console-quality one-screen game**, not a web-form demo. Player can replay five deeply distinctive departments (3 locations each, presently 24 authored cards/department), make difficult no-clean-win decisions, discover every authored ending (currently **11**), acquire mutations/society entanglements, earn real persistent visual rewards, and keep a satisfying collectible personnel archive. Every art-facing beat should use coherent, reviewed images rather than permanent blank or generic placeholders. The last release candidate must survive adversarial simulations, browser playthroughs, accessibility/device testing, hostile save/data tests, and editorial/mocked player reviews. No outstanding actionable art, text, design, balance, or UI polish work may remain before the **Human Gate** transition.
 
-      A green PR is not proof of an Alexandria deployment or of a good player experience. Verify source, published image, actual self-hosted deployment (when authorized), and real-device/browser acceptance separately. Human approval controls final design signoff and wider promotion; do not bypass existing [Conductor t-020](https://github.com/silasfelinus/conductor/blob/main/projects/shifting-desks/roadmap.yaml) or other actual human gates.
+      A green PR is not proof of an Alexandria deployment or of a good player experience. Verify source, published image, actual self-hosted deployment (when authorized), and real-device/browser acceptance separately. Human approval controls final design signoff and wider promotion; human testing and wider-promotion approvals remain separate decisions documented in [POST-PLAYTEST-DECISIONS.md](https://github.com/silasfelinus/conductor/blob/main/projects/shifting-desks/POST-PLAYTEST-DECISIONS.md).
 
       ## Workstreams and completion checklist
 
@@ -1039,11 +1028,41 @@ tasks:
     passes: 0
     depends_on: []
     updated: '2026-11-14T08:17:00Z'
-    note: |-
-      Kaizen from the reviewer merge of conductor#7363 (2026-11-13 PT). The new tests/test_shifting_desks_private_pilot_capture.py failed suite collection because the Python test suite job installs only pytest and pyyaml. The reviewer fix importorskips PIL there and runs the tests in shifting-desks-art-visual-review.yml instead. Add Pillow to the pytest-suite install, fix or ticket any art test that newly runs and fails, and confirm the pilot capture tests report as passed, not skipped, in the full suite.
+    note: >-
+      Kaizen from the reviewer merge of conductor#7363 (2026-11-13 PT).
 
-      PR #7367 installs Pillow in full pytest suite so private pilot art tests execute instead of skipping. Awaiting exact-head CI; do not mark done before green checks and merge.
-
-      Verified merged Conductor PR #7367 at a24f71519c8016ea488b1da6f31e6b3f8afcdbad. Exact PR head feb312a146b6cac6c3a8bfbaaa1959c4628b47b3: Worker PR CI run 43555008422 completed success; Python test suite job 132325773204 completed success, including image-test dependencies installation and full pytest suite. Handoff template, Security Audit and task-event workflow also completed success. This closes the Pillow CI dependency task only, not t-032 art acceptance or playtest readiness.
+      Full history: projects/shifting-desks/HISTORY.md#t-053
     claimed_by: 2026-11-14T040500Z-shifting-desks-t053-6f29
     claimed_at: '2026-11-14T04:05:00Z'
+  - id: t-020
+    title: 'Make shifting-desks art-readiness tests assert parsed report fields instead of raw markdown substrings'
+    status: done
+    milestone: m3
+    stakes: reversible
+    passes: 0
+    depends_on: []
+    updated: '2026-11-15T17:48:19Z'
+    note: |-
+      Kaizen from the reviewer rescue of conductor#7437 as #7441 (2026-11-15 PT). The only Python-suite failure was a test looking for 'Optional variant catalog ready: NO' while markdown() renders it bold. Add a small helper in tests/test_shifting_desks_art_readiness.py (or a structured summary dict from the script) so readiness assertions check the value of each header field, independent of emphasis or column formatting. Keep every existing behavioural assertion; no ArtJobs, no gate changes.
+
+      Structured readiness header assertions; no art or lifecycle changes.
+
+      Implemented structured boolean readiness assertions in conductor PR #7444 (head ccca484f28b826e381fb53468a4aae67ada00c62). Awaiting exact-head CI and review before merge; no art, production, or lifecycle changes.
+
+      2026-11-15 PT reviewer: merged #7444 (squash 2e9f983). Tests now assert
+      ready/catalog_ready fields; CI green after handoff template was added.
+    owner: worker
+    claimed_by: 20261115T170705Z-playtest-t020-gpt6-4d8c
+    claimed_at: '2026-11-15T17:07:05Z'
+    implementation_pr: 'silasfelinus/conductor#7444'
+  - id: t-054
+    title: 'Drop the label-mapping report_field helper in test_shifting_desks_art_readiness.py and assert report["ready"]/["catalog_ready"] directly'
+    status: ready
+    milestone: m3
+    stakes: reversible
+    passes: 0
+    depends_on: []
+    updated: '2026-11-15T17:55:00Z'
+    note: >-
+      Kaizen from the reviewer merge of conductor#7444 (2026-11-15 PT). The helper maps Markdown label strings to dict keys, an
+      indirection that re-couples the test to report wording; direct key assertions read clearer. Test-only, one file.

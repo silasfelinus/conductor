@@ -26,6 +26,7 @@ ROOT = Path(__file__).resolve().parents[1]
 ART = ROOT / "projects" / "shifting-desks" / "art"
 PATTERN = re.compile(r"^ROUND-(\d+)\.yaml$")
 PUBLIC_PREFIX = "kind_robots public/images/shifting-desks/"
+CORE_STYLE = "classic"  # The only required art edition; variants fall back to Classic.
 
 
 def classify(row: dict) -> str:
@@ -94,17 +95,25 @@ def inventory(art_dir: Path = ART) -> dict:
     for row in entries:
         relative = row["path"][len(PUBLIC_PREFIX):]
         style = relative.split("/")[1] if relative.startswith("styles/") else "classic"
+        row["style"] = style
         stats = styles.setdefault(style, {"total": 0, "accepted": 0, "not_delivered": 0, "unreviewed": 0, "redo": 0, "missing_provenance": 0})
         stats["total"] += 1
         stats[row["state"]] += 1
+    blocked = [row for row in entries if row["state"] != "accepted"]
+    required = [row for row in entries if row["style"] == CORE_STYLE]
+    required_blocked = [row for row in required if row["state"] != "accepted"]
+    optional_blocked = [row for row in blocked if row["style"] != CORE_STYLE]
     return {
         "rounds": rounds,
         "targets": len(entries),
         "counts": counts,
         "styles": styles,
-        "blocked": [row for row in entries if row["state"] != "accepted"],
+        "blocked": blocked,
+        "required_blocked": required_blocked,
+        "optional_blocked": optional_blocked,
         "errors": problems,
-        "ready": not problems and all(row["state"] == "accepted" for row in entries) and bool(entries),
+        "catalog_ready": not problems and not blocked and bool(entries),
+        "ready": not problems and not required_blocked and bool(required),
     }
 
 
@@ -117,7 +126,13 @@ def markdown(result: dict) -> str:
         "recorded KEEP is unreviewed, **not** complete. Do not requeue an existing",
         "ArtJob from this report alone; reconcile production jobs and media first.",
         "",
-        f"**Targets:** {result['targets']}  |  **Art-ready:** {'yes' if result['ready'] else 'NO'}",
+        f"**Targets:** {result['targets']}  |  **Required Classic ready:** {'yes' if result['ready'] else 'NO'}",
+        f"**Optional variant catalog ready:** {'yes' if result['catalog_ready'] else 'NO'}",
+        "",
+        "Playtest requires accepted Classic artwork. Optional editions such as the",
+        "suspended Western Cartoon must never block the base game, but all their",
+        "rejected art remains visible below. This audit does not grant a KEEP,",
+        "certify deployment, or waive any gameplay/device checks.",
         "",
         "| Style | Accepted | Delivered, awaiting review | Not delivered | Redo | Missing evidence | Total |",
         "|---|---:|---:|---:|---:|---:|---:|",
@@ -129,8 +144,8 @@ def markdown(result: dict) -> str:
             f"{counts['missing_provenance']} | {counts['total']} |"
         )
     lines += ["", "## Required work (highest-impact slots first)", ""]
-    pending = [x for x in result["blocked"] if x["state"] == "not_delivered"]
-    review = [x for x in result["blocked"] if x["state"] != "not_delivered"]
+    pending = [x for x in result["required_blocked"] if x["state"] == "not_delivered"]
+    review = [x for x in result["required_blocked"] if x["state"] != "not_delivered"]
     for title, rows in (("Delivery evidence required", pending), ("Visual decision required", review)):
         lines += [f"### {title} ({len(rows)})", ""]
         for row in rows[:25]:
@@ -141,6 +156,17 @@ def markdown(result: dict) -> str:
         if len(rows) > 25:
             lines.append(f"- ... and {len(rows) - 25} more; use `--json` for every row")
         lines.append("")
+    optional = result["optional_blocked"]
+    lines += [
+        f"## Non-blocking optional style findings ({len(optional)})",
+        "",
+        "These remain recorded as failures and must not be shown to players",
+        "until curated. Existing style suspension and Classic fallback are unchanged.",
+        "",
+    ]
+    for style, count in sorted(Counter(row["style"] for row in optional).items()):
+        lines.append(f"- {style}: {count} unaccepted variant renders")
+    lines.append("")
     if result["errors"]:
         lines += ["## Ledger errors", ""] + [f"- {error}" for error in result["errors"]]
     lines += [
@@ -162,7 +188,16 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--json", action="store_true", help="full machine-readable evidence")
     parser.add_argument("--markdown", action="store_true", help="report with open slots")
-    parser.add_argument("--strict", action="store_true", help="fail while any art slot is unaccepted")
+    parser.add_argument(
+        "--strict",
+        action="store_true",
+        help="fail while required Classic artwork is unaccepted (optional skins reported separately)",
+    )
+    parser.add_argument(
+        "--all-styles-strict",
+        action="store_true",
+        help="fail while any optional style is unaccepted too",
+    )
     parser.add_argument("--art-dir", type=Path, default=ART, help="ledger directory, for tests")
     args = parser.parse_args()
     report = inventory(args.art_dir)
@@ -175,7 +210,11 @@ def main() -> int:
         print(f"By style: {report['styles']}")
         for error in report["errors"]:
             print("ERROR:", error)
-    return 1 if report["errors"] or (args.strict and not report["ready"]) else 0
+    return 1 if (
+        report["errors"]
+        or (args.strict and not report["ready"])
+        or (args.all_styles_strict and not report["catalog_ready"])
+    ) else 0
 
 
 if __name__ == "__main__":

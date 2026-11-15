@@ -1,0 +1,278 @@
+# Zuzu Gamebook ROUND-23: finish the last four sections without an acceptable exact plate.
+# Reviewed 2026-11-15 PT against real pixels (contact sheets of every Round 16-22 candidate):
+#   a2-bell-view  - live plate is the SVG placeholder bell-view-original.svg. Krea 252193 (gb18-a2-bell-view-1)
+#                   passes scene truth 8/8 (foreground bell, rail overlook, pale distant tower, straight line of
+#                   tracks) but is photographic. Style-pass it into the house ink look.
+#   a4-bloom      - live plate is the SVG placeholder desert-bloom-original.svg. Krea 252199 (gb18-a4-bloom-3)
+#                   passes 7/8 (yellow/white/violet carpet, water in hollows); photographic. Style-pass it.
+#   a5-wellhouse-reckoning - Round 22 272577 drew a dog with a giant wheel-barrel, 272578 a human woman: both
+#                   rejected. Re-compose as an EMPTY still life (no figures), the way candle-wax and
+#                   kasa-on-water succeed, so no fusion or human-face failure is possible.
+#   a8-behind-the-altar - Round 20 270440/270441 both drew human-faced nuns (canon: no humans): rejected.
+#                   Re-compose as an empty view from behind the altar.
+# Private ArtJobs only. DONE is not delivered: review pixels, export WebP, register SECTION_PLATES.
+round: gamebook-23-final-plate-finish
+series: zuzu-koala-assassin
+project_slug: zuzu-gamebook
+designer: Comic Studio
+is_public: false
+is_mature: false
+priority: 1000
+auto_submit: true
+cast_loras: false
+lanes:
+- key: arthemy-house
+  label: Arthemy Western Art v3.0 (house style, private)
+  engine: comfy
+  checkpoint: Illustrious/arthemyWesternArt_v30.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, absurdres, very aesthetic, toon (style), western comics (style),
+    gritty, dark atmosphere, high contrast, heavy shadows, weathered, grimy
+  suffix: western, dusty, dramatic lighting, detailed painted graphic novel, deserted still scene
+  steps: 30
+  cfg: 5
+  sampler: euler_ancestral
+- key: arthemy-style
+  label: Arthemy v3.0 source-preserving SDXL img2img
+  engine: sdxl-img2img
+  checkpoint: Illustrious/arthemyWesternArt_v30.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, toon (style), western comics (style), painted graphic novel, bold ink outlines,
+    flat painted shadows, weathered ink work
+  suffix: painterly western comic finish, earthy colors, retain exact source composition and placement of objects
+  steps: 30
+  cfg: 5
+  sampler: euler_ancestral
+subjects:
+- key: gb23-a2-bell-view-mid
+  title: From the Bell - house-style pass of Krea 252193 (mid)
+  section: a2-bell-view
+  entity: scenery
+  lane: arthemy-style
+  size: 1344x768
+  source_image_id: 252193
+  source_krea_key: gb18-a2-bell-view-1
+  denoise: 0.45
+  seed: 29301
+  negative: figure, face, person, corridor, tunnel, closed room, cabin, crowded scene, city, extra bells, photograph,
+    photorealistic, logo, watermark, lettering
+  prompt_tags: large dark iron bell hanging in the foreground from a timber canopy, wooden rail, high lookout over
+    an ochre and white salt desert, one thin pale tower far away in the heat haze, a long straight line of tiny
+    footprints crossing the flat toward it, ink outlines, western comic painting
+  prompt_prose: Preserve the source composition exactly - foreground bell, rail, distant pale tower and the straight
+    line of small tracks - and repaint it as an inked western graphic-novel panel.
+  jobs:
+    arthemy-style: 69370
+  art:
+    arthemy-style:
+      status: DONE
+      art_image_id: 272618
+  verdict: 'KEEP (2026-11-15): inked bell, rail, pale far tower, straight line of tracks - shipped as bell-view
+    and sections/a2-bell-view'
+- key: gb23-a2-bell-view-bold
+  title: From the Bell - house-style pass of Krea 252193 (bold)
+  section: a2-bell-view
+  entity: scenery
+  lane: arthemy-style
+  size: 1344x768
+  source_image_id: 252193
+  source_krea_key: gb18-a2-bell-view-1
+  denoise: 0.6
+  seed: 29302
+  negative: figure, face, person, corridor, tunnel, closed room, cabin, crowded scene, city, extra bells, photograph,
+    photorealistic, logo, watermark, lettering
+  prompt_tags: large dark iron bell hanging in the foreground from a timber canopy, wooden rail, high lookout over
+    an ochre and white salt desert, one thin pale tower far away in the heat haze, a long straight line of tiny
+    footprints crossing the flat toward it, ink outlines, western comic painting
+  prompt_prose: Preserve the source composition exactly - foreground bell, rail, distant pale tower and the straight
+    line of small tracks - and repaint it as an inked western graphic-novel panel.
+  jobs:
+    arthemy-style: 69371
+  art:
+    arthemy-style:
+      status: DONE
+      art_image_id: 272619
+  verdict: 'second: bell turned lantern-like'
+- key: gb23-a4-bloom-mid
+  title: After the Rain - house-style pass of Krea 252199 (mid)
+  section: a4-bloom
+  entity: scenery
+  lane: arthemy-style
+  size: 1344x768
+  source_image_id: 252199
+  source_krea_key: gb18-a4-bloom-3
+  denoise: 0.45
+  seed: 29311
+  negative: figure, person, cabin, tree, house, empty field, architecture, sparse flowers, photograph, photorealistic,
+    logo, watermark, lettering
+  prompt_tags: dense carpet of small yellow, white and deep violet desert wildflowers after rain, wet dark earth,
+    rainwater standing in hollows, morning light, ink outlines, western comic painting
+  prompt_prose: Preserve the exact dense carpet of yellow, white and violet desert wildflowers and the puddles,
+    and repaint it as an inked western graphic-novel panel.
+  jobs:
+    arthemy-style: 69372
+  art:
+    arthemy-style:
+      status: DONE
+      art_image_id: 272620
+  verdict: 'KEEP (2026-11-15): yellow/white/violet carpet with rain in the hollows - shipped as desert-bloom and
+    sections/a4-bloom'
+- key: gb23-a4-bloom-bold
+  title: After the Rain - house-style pass of Krea 252199 (bold)
+  section: a4-bloom
+  entity: scenery
+  lane: arthemy-style
+  size: 1344x768
+  source_image_id: 252199
+  source_krea_key: gb18-a4-bloom-3
+  denoise: 0.6
+  seed: 29312
+  negative: figure, person, cabin, tree, house, empty field, architecture, sparse flowers, photograph, photorealistic,
+    logo, watermark, lettering
+  prompt_tags: dense carpet of small yellow, white and deep violet desert wildflowers after rain, wet dark earth,
+    rainwater standing in hollows, morning light, ink outlines, western comic painting
+  prompt_prose: Preserve the exact dense carpet of yellow, white and violet desert wildflowers and the puddles,
+    and repaint it as an inked western graphic-novel panel.
+  jobs:
+    arthemy-style: 69373
+  art:
+    arthemy-style:
+      status: DONE
+      art_image_id: 272621
+  verdict: 'second: violet ground swallows the white flowers, no standing water'
+- key: gb23-a5-wellhouse-reckoning-1
+  title: The Price of Water - empty still life (wide)
+  section: a5-wellhouse-reckoning
+  entity: empty
+  lane: arthemy-house
+  shape: wide
+  size: 1344x768
+  seed: 38231
+  negative: worst quality, lowres, blurry, watermark, signature, logo, text, words, letters, person, people, human,
+    human face, animal, character, figure, giant barrel, wagon wheel, modern, asphalt, automobiles
+  prompt_tags: small sun-bleached adobe well-house with a dark doorway at midday, one ordinary wooden water barrel
+    with a tin dipper beside the door, an empty clay jug standing alone on the ground in front of the barrel, a
+    single silver coin resting on the barrel lid, two deep wagon wheel ruts cut through white chalk leading away
+    to the horizon, harsh sun, long quiet, deserted still scene
+  prompt_prose: An empty frontier well-house at noon. A water barrel with a dipper, an empty clay jug waiting in
+    front of it, one silver coin on the lid, and two deep wagon ruts in white chalk running away..
+  jobs:
+    arthemy-house: 69374
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 272622
+  verdict: 'reject: dark interior with eyes in the doorway'
+- key: gb23-a5-wellhouse-reckoning-2
+  title: The Price of Water - empty still life (close)
+  section: a5-wellhouse-reckoning
+  entity: empty
+  lane: arthemy-house
+  shape: wide
+  size: 1344x768
+  seed: 38232
+  negative: worst quality, lowres, blurry, watermark, signature, logo, text, words, letters, person, people, human,
+    human face, animal, character, figure, giant barrel, wagon wheel, modern, asphalt, automobiles
+  prompt_tags: close low view of an empty clay jug on cracked white chalk ground beside a wooden water barrel, one
+    silver coin glinting on the barrel lid, adobe well-house wall behind, deep wagon wheel ruts in the chalk leading
+    off into heat haze, harsh noon sun, deserted still scene
+  prompt_prose: Close on an empty clay jug beside a water barrel with one silver coin on its lid, the adobe well-house
+    behind and wagon ruts running away..
+  jobs:
+    arthemy-house: 69375
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 272623
+  verdict: 'reject: dim metal jug, no barrel, coin or noon'
+- key: gb23-a8-behind-the-altar-1
+  title: Behind the Altar - empty view from the dark (wide)
+  section: a8-behind-the-altar
+  entity: empty
+  lane: arthemy-house
+  shape: wide
+  size: 1344x768
+  seed: 35251
+  negative: worst quality, lowres, blurry, watermark, signature, logo, text, words, letters, person, people, nun,
+    human, human face, figure, character, statue, cross, crucifix, gore
+  prompt_tags: view from the darkness behind a rough stone altar in an underground adobe chapel, a row of thick
+    black candles burning on the altar, a coil of hemp rope on the stone, cold black seam in the wall behind, single
+    taper glow at the foot of a stone stair, deep shadow, weird west horror, deserted still scene
+  prompt_prose: Looking out from the dark behind a stone altar - black candles alight, coiled rope on the stone,
+    a cold black seam in the wall, the glow of a taper on the stair..
+  jobs:
+    arthemy-house: 69376
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 272624
+  verdict: 'reject: reads as a hearth fire'
+- key: gb23-a8-behind-the-altar-2
+  title: Behind the Altar - empty view from the dark (candle close)
+  section: a8-behind-the-altar
+  entity: empty
+  lane: arthemy-house
+  shape: wide
+  size: 1344x768
+  seed: 35252
+  negative: worst quality, lowres, blurry, watermark, signature, logo, text, words, letters, person, people, nun,
+    human, human face, figure, character, statue, cross, crucifix, gore
+  prompt_tags: close on a stone altar edge with many black candles being lit, black wax pooling, a coil of rope
+    and a small dropped child's bandage on the stone, beyond the altar a cold black fold in the wall, underground
+    adobe crypt, deep shadow, weird west horror, deserted still scene
+  prompt_prose: Close on the altar - black candles lit, wax pooling, coiled rope and a dropped bandage, and the
+    cold black fold in the wall beyond..
+  jobs:
+    arthemy-house: 69377
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 272625
+  verdict: 'reject: human child'
+- key: gb23-a5-wellhouse-reckoning-3
+  title: The Price of Water - noon exterior reroll
+  section: a5-wellhouse-reckoning
+  entity: empty
+  lane: arthemy-house
+  shape: wide
+  size: 1344x768
+  seed: 38233
+  negative: worst quality, lowres, blurry, watermark, signature, logo, text, words, letters, person, people, human,
+    human face, animal, character, figure, eyes, interior, night, darkness, metal vase, giant barrel, wagon wheel,
+    modern, asphalt
+  prompt_tags: outdoors in blazing noon sunlight, a small whitewashed adobe well-house on a bright white chalk road,
+    a wooden water barrel with iron hoops beside its door, a round brown earthenware clay jug standing empty on
+    the ground in front of the barrel, one shining silver coin on the barrel lid, two deep wagon wheel ruts cut
+    through the white chalk running away to the hazy horizon, hard short shadows, deserted still scene
+  prompt_prose: Outdoors at blazing noon - a whitewashed adobe well-house, a hooped water barrel, an empty brown
+    clay jug in front of it, one silver coin on the lid, wagon ruts in white chalk running to the horizon.
+  jobs:
+    arthemy-house: 69396
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 272627
+  verdict: 'reject: flat door and barrels, no jug - scene bound to the a6-badger-sold canteen-and-coins plate instead'
+- key: gb23-a8-behind-the-altar-3
+  title: Behind the Altar - black candles reroll
+  section: a8-behind-the-altar
+  entity: empty
+  lane: arthemy-house
+  shape: wide
+  size: 1344x768
+  seed: 35253
+  negative: worst quality, lowres, blurry, watermark, signature, logo, text, words, letters, person, people, nun,
+    human, human face, figure, character, statue, cross, crucifix, fireplace, hearth, bonfire, gore
+  prompt_tags: rough stone altar slab in an underground adobe crypt seen from low behind it, a long row of tall
+    thin black wax candles standing on the altar each with a small flame, black wax dripping down the stone, a coil
+    of hemp rope lying on the altar, a narrow black seam splitting the wall, cold blue shadow, weird west horror,
+    deserted still scene
+  prompt_prose: A rough stone altar in a crypt with a row of tall black candles burning on it, black wax dripping,
+    a coil of rope on the slab and a narrow black seam in the wall behind.
+  jobs:
+    arthemy-house: 69397
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 272628
+  verdict: 'reject: a face carved into the altar - scene bound to the purpose-painted candle-wax plate instead'

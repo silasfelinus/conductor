@@ -271,3 +271,51 @@ def test_next_seven_seed_films_have_original_visuals_and_story_progression():
     assert all(by_date[d]["status"] == "authored" for d in runway)
     assert all(sum(s["motion"] == "clip" for s in by_date[d]["shots"]) <= 1
                for d in runway)
+
+
+def _synthetic_voice(tmp_path, seconds=8.5):
+    import subprocess
+    voice = tmp_path / "voice.wav"
+    subprocess.run(["ffmpeg", "-nostdin", "-y", "-loglevel", "error", "-f", "lavfi", "-i",
+                    f"sine=frequency=300:duration={seconds}", "-af", "volume=2", str(voice)],
+                   check=True)
+    return voice
+
+
+def test_mix_keeps_station_bed_audible_after_voiceover(tmp_path):
+    """2026-11-14 review: MusicVideos 18/19 fell to -55 dB for 4-6s after the VO ended."""
+    import shutil
+    import pytest
+    if not shutil.which("ffmpeg"):
+        pytest.skip("ffmpeg unavailable")
+    from dead_air_produce import mix_audio, longest_quiet_run
+    song = mix_audio(_synthetic_voice(tmp_path), {}, tmp_path)
+    assert longest_quiet_run(song) <= 0.6
+
+
+def test_authored_silent_tail_is_short_and_honored(tmp_path):
+    import shutil
+    import pytest
+    if not shutil.which("ffmpeg"):
+        pytest.skip("ffmpeg unavailable")
+    from dead_air_produce import mix_audio, longest_quiet_run
+    song = mix_audio(_synthetic_voice(tmp_path), {"silent_tail_seconds": 1.0}, tmp_path)
+    assert 0.8 <= longest_quiet_run(song) <= 1.6
+    episode = load_episode(PILOT)
+    assert any("silent_tail" in p for p in validate({**episode, "silent_tail_seconds": 4}))
+    assert not validate({**episode, "silent_tail_seconds": 1.0})
+
+
+def test_quiet_run_detector_flags_the_old_near_silent_tail(tmp_path):
+    import shutil
+    import subprocess
+    import pytest
+    if not shutil.which("ffmpeg"):
+        pytest.skip("ffmpeg unavailable")
+    from dead_air_produce import longest_quiet_run
+    track = tmp_path / "old.mp3"
+    subprocess.run(["ffmpeg", "-nostdin", "-y", "-loglevel", "error",
+                    "-f", "lavfi", "-i", "sine=frequency=300:duration=9",
+                    "-af", "volume=2,apad,atrim=duration=15", "-c:a", "libmp3lame", str(track)],
+                   check=True)
+    assert longest_quiet_run(track) >= 5.5

@@ -112,5 +112,5 @@ inherit today's original Dream vibe, location, links, or visual style.
 -->
 
 <!-- build-attempt-data
-{"status": "retry", "attempted_at": "2026-11-11T08:13:38.587446-08:00", "message": "2026-11-04-sixty-three-pins-out-of-line.md: supplemental art prompt preflight failed BEFORE DB writes: A Gem from the Undertow: conditional-instruction: 'only when'", "attempt_count": 5}
+{"status": "retry", "attempted_at": "2026-11-15T10:04:11.557187-08:00", "message": "2026-11-04-sixty-three-pins-out-of-line.md: supplemental art prompt preflight failed BEFORE DB writes: A Gem from the Undertow: conditional-instruction: 'only when'", "attempt_count": 6}
 -->

@@ -1,4 +1,13 @@
 # art-queue-health.yaml -- written by scripts/art_queue_health.py record at the
 # end of every Auto Art Generate run. Do not hand-edit: fix the cause (see
 # docs/agents/roles/art-medic.md) and the next run drops the entry.
-failures: []
+failures:
+- source: kr-failed-jobs
+  target: ArtJob 69344
+  kind: kr-job-failed
+  rules:
+  - people-negation
+  detail: 'engine=COMFY; error=ArtJob validation failed before claim: Art prompt rejected by the prompt
+    contract (1 violation): [people-negation] not human eyes names the people you do not want on an engine
+    whose negative prompt is inert, so the noun…'
+  first_seen: '2026-11-15'

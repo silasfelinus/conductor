@@ -2811,3 +2811,10 @@ rejected:; two tests added.
 Reviewer kaizen 2026-11-11 PT from slime-city/t-028: the implementation, silasfelinus/kind_robots#4924, merged 2026-11-10 PT, but the task sat at review for two days because gh_search_task_prs only matches "<project>/<task-id>" in PR titles and #4924 named the task only in its body ("Conductor: `slime-city/t-028`"). Extend the repo-scoped list-and-filter to accept an exact body match as a lower-confidence candidate (confirmed via gh_pr like title hits), with tests in tests/test_check_pr_merged_drift*.py.
 2026-11-11 PT: implemented on claude/focused-johnson-vfy0ty. Body matching is anchored to a declaration line (Conductor: label or a line starting with the ref). A live run surfaced 4 real stale review tasks via body matches: emperor-of-dust/t-060 (kind_robots#4206), hybridizer/t-009 (#4643, #4565), memory-dungeon/t-064 (#4971, #4957, both partial slices). Merged via silasfelinus/conductor#7262 once CI was green (review and done share that PR).
 <!-- note:end t-209 -->
+
+## t-212 — Issue bridge must never tell a PR to Close a project master issue; fix the stale imported notes that do
+
+<!-- note:begin t-212 -->
+Reviewer kaizen 2026-11-14 PT from conductor#7423 (shifting-desks/t-048 note fix). sync_github_issues.task_note() told every import to use `Closes <issue>`, including project master issues that only the verified playtest handoff may close. Six more roadmaps (emperor-of-dust, weird-humboldt, memory-dungeon, game-of-captains, rainbow-bullet-hell-space-princess, comet-city-academy) still carried that instruction. This cycle: task_note() now writes `Refs` for any source indexed in docs/agents/master-issues.yaml; the six generated preambles were corrected to the #7423 wording; tests pin both the importer behaviour and a no-roadmap-says-Closes-a-master guard. Implementation PR on branch claude/focused-johnson-j51a6c.
+2026-11-14 PT: merged conductor#7424 (41fd3d6), CI green. Importer writes Refs for master issues; six stale notes corrected; guard test added.
+<!-- note:end t-212 -->

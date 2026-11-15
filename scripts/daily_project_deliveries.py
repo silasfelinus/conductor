@@ -12,10 +12,12 @@ import yaml
 ROOT = Path(__file__).resolve().parent.parent
 DIR = ROOT / "projects/dream-cycle/daily-deliveries"
 CUTOVER = "2026-10-13"
+ROADMAP_CLOSEOUT_CUTOVER = "2026-11-15"
 PR = re.compile(r"https://github\.com/[\w.-]+/[\w.-]+/pull/[1-9]\d*")
 RUN = re.compile(r"https://github\.com/[\w.-]+/[\w.-]+/actions/runs/[1-9]\d*")
 SHA = re.compile(r"[a-fA-F0-9]{40}")
 SLUG = re.compile(r"[a-z0-9]+(?:-[a-z0-9]+)*")
+TASK = re.compile(r"t-[0-9]{3,}")
 
 
 def today():
@@ -45,7 +47,51 @@ def active_targets():
             e.get("status") in ("active", "continuous") and e.get("slug") and not e.get("parent")}
 
 
-def validate(date, docket):
+
+def roadmap_closeout_errors(date, entry, label, seen_tasks):
+    """Verify a delivery was recorded in its owning existing Conductor roadmap.
+
+    The short dated marker lives in the existing task's note so it survives
+    ordinary project coordination and is not mistaken for a fifth new roadmap.
+    """
+    target = str(entry.get("target") or "")
+    task_id = str(entry.get("roadmap_task") or "")
+    if not TASK.fullmatch(task_id):
+        return [f"{label}: roadmap_task must reference an existing t-NNN task"]
+    task_key = (target, task_id)
+    if task_key in seen_tasks:
+        return [f"{label}: duplicate roadmap task; five distinct scoped improvements are required"]
+    seen_tasks.add(task_key)
+    path = ROOT / "projects" / target / "roadmap.yaml"
+    if not SLUG.fullmatch(target) or not path.is_file():
+        return [f"{label}: canonical projects/{target}/roadmap.yaml is missing"]
+    try:
+        roadmap = yaml.safe_load(path.read_text(encoding="utf-8"))
+    except (OSError, yaml.YAMLError):
+        return [f"{label}: canonical roadmap could not be read"]
+    if not isinstance(roadmap, dict) or roadmap.get("project") != target:
+        return [f"{label}: canonical roadmap project identity does not match {target}"]
+    tasks = roadmap.get("tasks")
+    if not isinstance(tasks, list):
+        return [f"{label}: canonical roadmap has no task list"]
+    task = next((item for item in tasks
+                 if isinstance(item, dict) and item.get("id") == task_id), None)
+    if task is None:
+        return [f"{label}: {target}/{task_id} does not exist in its canonical roadmap"]
+    marker = f"daily-delivery:{date}/{entry.get('slug')}"
+    note = str(task.get("note") or "")
+    if marker not in note:
+        return [f"{label}: {target}/{task_id} missing {marker} in task note"]
+    pr_url = str(entry.get("pull_request") or "")
+    match = PR.fullmatch(pr_url)
+    if match:
+        suffix = pr_url.removeprefix("https://github.com/").replace("/pull/", "#")
+        if pr_url not in note and suffix not in note:
+            return [f"{label}: {target}/{task_id} note must cite delivery implementation PR"]
+    return []
+
+
+def validate(date, docket, *, verify_roadmap=True):
     if date < CUTOVER:
         return ["Delivery mode starts 2026-10-13 PT; historical pitches remain unchanged"]
     if not isinstance(docket, dict) or str(docket.get("date")) != date:
@@ -54,6 +100,7 @@ def validate(date, docket):
     if not isinstance(entries, list) or len(entries) != 5:
         return [f"{date}: require exactly five real updates, never padded pitches"]
     errors, seen, active = [], set(), active_targets()
+    roadmap_tasks = set()
     for number, entry in enumerate(entries, 1):
         label = f"entry {number}"
         if not isinstance(entry, dict):
@@ -65,6 +112,15 @@ def validate(date, docket):
         seen.add(slug)
         if entry.get("target") not in active:
             errors.append(f"{label}: must target an existing active project")
+        if date >= ROADMAP_CLOSEOUT_CUTOVER:
+            if verify_roadmap:
+                errors.extend(roadmap_closeout_errors(date, entry, label, roadmap_tasks))
+            else:
+                task_id = str(entry.get("roadmap_task") or "")
+                task_key = (entry.get("target"), task_id)
+                if not TASK.fullmatch(task_id) or task_key in roadmap_tasks:
+                    errors.append(f"{label}: missing or duplicate roadmap_task")
+                roadmap_tasks.add(task_key)
         for field in ("title", "kind", "summary", "verification"):
             if len(str(entry.get(field) or "").strip()) < 5:
                 errors.append(f"{label}: missing meaningful {field}")
@@ -111,6 +167,11 @@ def record_text(date, row):
         evidence.append(f"Art URL: {art['url']}")
     if art.get("job_ids"):
         evidence.append(f"ArtJob IDs: {art['job_ids']}")
+    if row.get("roadmap_task"):
+        evidence.append(
+            f"Canonical roadmap: projects/{row['target']}/roadmap.yaml "
+            f"task {row['roadmap_task']}"
+        )
     if row.get("next_step"):
         evidence.append(f"Next step: {row['next_step']}")
     return (f"# Pitch: {row['title']}\n"
@@ -147,7 +208,10 @@ def decision(path):
 
 def payload(date):
     docket = load(date)
-    if validate(date, docket):
+    # A roadmap task may later have its dated note archived or its lifecycle
+    # reconciled. Validate live task receipts for the active day, but preserve
+    # already-delivered historical review cards by their recorded task IDs.
+    if validate(date, docket, verify_roadmap=date >= today()):
         return {"date": date, "entries": [], "missing": True}
     entries = []
     for row in docket["entries"]:
@@ -162,7 +226,7 @@ def feedback():
     work = []
     for path in sorted(DIR.glob("????-??-??.yaml")):
         docket = load(path.stem)
-        if validate(path.stem, docket):
+        if validate(path.stem, docket, verify_roadmap=False):
             continue
         for row in docket["entries"]:
             review = record_path(path.stem, row["slug"])
@@ -196,6 +260,13 @@ def main():
               "status (shipped|in-progress), pull_request, checks_url, verification, art: {status, "
               "url/job_ids}, and preview_url where available. Shipped: merge_sha, checks: passed. "
               "In-progress: next_step. Prefer five shipped; never mislabel progress as finished.")
+        if args.date >= ROADMAP_CLOSEOUT_CUTOVER:
+            print("Every entry also needs roadmap_task: t-NNN. Update that EXISTING "
+                  "project's projects/<target>/roadmap.yaml task note with "
+                  "daily-delivery:<date>/<entry-slug>, the implementation PR (owner/repo#N), "
+                  "and concrete change/check evidence. Use five distinct scoped tasks; "
+                  "do not create five new roadmaps or mark unfinished game roadmaps done. "
+                  "The --check validator verifies the actual canonical tasks.")
         print("Then --materialize and --check; deliver using the existing signed review inbox. "
               "Use --feedback to pick up user modification and rollback requests.")
         if args.date <= AUDIENCE_WINDOW_END:

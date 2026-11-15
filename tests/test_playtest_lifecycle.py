@@ -25,33 +25,27 @@ def test_playtest_is_workable_fallback_with_continuous():
     ) == ["build", "ongoing", "game"]
 
 
-def test_readiness_needs_real_human_gate_and_all_finite_agent_tasks_complete():
-    gate = {
-        "id": "t-002",
+def test_readiness_requires_complete_build_not_a_human_playtest_task():
+    done = {"id": "build", "status": "done"}
+    verdict = {
+        "id": "human-verdict",
         "status": "needs-human",
         "gate_human": True,
         "gate_reason": "subjective-acceptance",
     }
-    assert playtest_readiness_errors([{"id": "t-001", "status": "done"}, gate]) == []
-    assert playtest_readiness_errors([{"id": "t-001", "status": "ready"}, gate])
-    assert playtest_readiness_errors([{"id": "t-001", "status": "done"}])
-    assert playtest_readiness_errors([{"id": "t-001", "status": "done"}, {**gate, "status": "waiting"}])
-    assert playtest_readiness_errors([{"id": "t-001", "status": "done"}, {**gate, "approved_by_human": True}])
-    assert playtest_readiness_errors(
-        [{"id": "t-001", "status": "done"}, {**gate, "gate_reason": "publish"}]
-    )
-    assert playtest_readiness_errors(
-        [{"id": "t-001", "status": "ready", "recurring": True}, gate]
-    ) == []
-    assert playtest_readiness_errors(
-        [{"id": "t-003", "status": "ready", "playtest_iteration": True}, gate]
-    ) == []
-    assert playtest_readiness_errors(
-        [{"id": "art", "status": "waiting", "gate_human": True, "gate_reason": "creative-approval"}, gate]
-    )
-    assert playtest_readiness_errors(
-        [{"id": "legal", "status": "needs-human", "gate_human": True, "gate_reason": "legal"}, gate]
-    )
+    assert playtest_readiness_errors([done]) == []
+    assert playtest_readiness_errors([done, verdict]) == []
+    assert playtest_readiness_errors([{"id": "build", "status": "ready"}])
+    assert playtest_readiness_errors([done, {**verdict, "status": "ready"}])
+    assert playtest_readiness_errors([done, {**verdict, "status": "waiting"}])
+    assert playtest_readiness_errors([done, {"id": "art", "status": "review"}])
+    assert playtest_readiness_errors([done, {"id": "legal", "status": "needs-human",
+                                            "gate_human": True, "gate_reason": "legal"}])
+    assert playtest_readiness_errors([done, {"id": "post-launch", "status": "ready",
+                                            "playtest_iteration": True}]) == []
+    assert playtest_readiness_errors([done, {"id": "recurring", "status": "ready",
+                                            "recurring": True}]) == []
+
 
 
 def test_issue_handoff_is_scoped_to_valid_playtest_games(tmp_path: Path):
@@ -59,9 +53,7 @@ def test_issue_handoff_is_scoped_to_valid_playtest_games(tmp_path: Path):
     game.mkdir()
     (game / "roadmap.yaml").write_text(
         "tasks:\n"
-        "  - id: t-001\n    status: done\n"
-        "  - id: t-002\n    status: needs-human\n    gate_human: true\n"
-        "    gate_reason: subjective-acceptance\n",
+        "  - id: t-001\n    status: done\n",
         encoding="utf-8",
     )
     projects = {
@@ -94,9 +86,7 @@ def _handoff_fixture(tmp_path, monkeypatch, *, status="playtest", task_status="d
     )
     (tmp_path / "projects" / "game" / "roadmap.yaml").write_text(
         "tasks:\n"
-        f"  - id: t-001\n    status: {task_status}\n"
-        "  - id: t-002\n    status: needs-human\n"
-        "    gate_human: true\n    gate_reason: subjective-acceptance\n",
+        f"  - id: t-001\n    status: {task_status}\n",
         encoding="utf-8",
     )
     monkeypatch.setattr(handoff, "ROOT", tmp_path)

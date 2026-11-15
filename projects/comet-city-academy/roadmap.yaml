@@ -104,7 +104,7 @@ tasks:
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-11T23:42:29Z'
+    updated: '2026-11-15T09:14:09Z'
     note: |-
       Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -115,6 +115,12 @@ tasks:
       Item 7 (customizable characters) applies "in most cases": if this genre makes it a poor fit, say so in the audit with the reason and leave it for Silas rather than skipping silently.
 
       Achievements are tracked by their own task; this one covers everything else.
+
+      2026-11-15 PT daily-delivery:2026-11-15/prom-of-doom-share-card | PR:
+      silasfelinus/kind_robots#5209 (merged c24cef2, CI green) | /play/comet-city-academy now
+      unfurls with a designed Prom of Doom card (public/comet-city-academy/link-preview.webp)
+      instead of the untitled splash; verifyGameLinkPreview.test.ts pins it. Main-game audit
+      itself still open.
   - id: t-035
     title: 'Prom of Doom achievement upgrade: 12 or more live achievements'
     status: done
@@ -843,7 +849,7 @@ tasks:
     source_issue: "silasfelinus/kind_robots#4181"
     updated: '2026-11-01'
     note: |-
-      FROM GITHUB ISSUE silasfelinus/kind_robots#4181 (https://github.com/silasfelinus/kind_robots/issues/4181), opened by @silasfelinus on 2026-10-25. Imported by scripts/sync_github_issues.py. Reference the issue in the implementing PR (`Closes silasfelinus/kind_robots#4181`) so it closes on merge; the bridge closes it otherwise once this task is done.
+      FROM GITHUB ISSUE silasfelinus/kind_robots#4181 (https://github.com/silasfelinus/kind_robots/issues/4181), opened by @silasfelinus on 2026-10-25. Imported by scripts/sync_github_issues.py. Reference the canonical roadmap in implementation PRs with `Refs silasfelinus/kind_robots#4181`, never `Closes`. Keep #4181 open throughout finite build, art and QA work. Only the verified playtest handoff workflow may prefix `[FLAGGED FOR HUMAN TESTING]` and close the single master issue after Conductor lifecycle, priority, evidence and genuine `needs-human` subjective-acceptance gate are confirmed; closing the issue is not human approval or permission to publish.
 
       # Prom of Doom (Capes & Tassels series) | Master Completion Roadmap
 

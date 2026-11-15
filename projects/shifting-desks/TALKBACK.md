@@ -114,3 +114,31 @@ Conductor#6110's unchanged reviewed head merged in another session at `2026-10-1
 **Improve:** copy the handoff headings verbatim from `scripts/check_pr_handoff_template.py` (third recurrence in this project's log). The pitch says "three earlier choices" are recalled, but names only examples; a route contract should list the exact flags.
 
 **Kaizen task:** none added; proposal not implemented. Worker's suggestion (route-contract check before any optional ending enters the registry) belongs in the first task if Silas approves.
+
+
+## 2026-11-14 PT | Reviewer merge | shifting-desks/t-048 | Conductor #7423
+
+**Decision:** squash-merged head `a4c2721` as `2a84adc`. One-line, reversible correction to the issue-bridge preamble on t-048: implementation PRs now `Refs` kind_robots#4150 instead of `Closes`, matching `docs/agents/master-issues.yaml`. No status, gate or code change. Every check passed except "Validate Worker PR handoff"; the reviewer rewrote the body into the template (original text kept) and the run on the edited body passed.
+
+**Good:** catches a real premature-closure hazard and keeps the wording aligned with the playtest-handoff policy.
+
+**Improve:** fourth handoff-template miss in this project's log. Copy the headings from `scripts/check_pr_handoff_template.py` even for one-line PRs. The note was rewritten in place; acceptable here because it is generated bridge boilerplate, but `close_task.py --append-note` is the norm for agent-written history. The same stale `Closes` line sat in six other roadmaps; grep for siblings before fixing one.
+
+**Kaizen task:** conductor/t-212, importer writes `Refs` for master issues, the six stale notes are corrected, and a test guards against regressions.
+
+
+## 2026-11-15 PT | Reviewer rescue | shifting-desks/t-032 | Conductor #7437 → #7441
+
+**Decision:** rescued #7437 (9 Worker commits, unchanged) as #7441 with one test fix; #7437 closes as superseded once #7441 merges. Failure triaged **actionable**, no pass spent: `test_classic_and_western_have_separate_acceptance` asserted `"Optional variant catalog ready: NO"`, but `markdown()` renders `**Optional variant catalog ready:** NO`. Reproduced locally (1 fail / 12 pass), 13/13 after the fix. Confirmed `shifting_desks_art_readiness.py --strict` still returns 1 on the current ledgers (Classic 181 accepted / 14 REDO), as the Worker's notes required. t-032 stays open.
+
+**Good:** the Classic-only release gate is scoped well: rejected Classic art still blocks, optional styles stay visible and `--all-styles-strict` keeps the old behaviour available. The negative tests (no Classic ledger, corrupt optional ledger) are the right edges. Pilot verdicts carry ArtJob/ArtImage/artifact provenance.
+
+**Improve:** the PR body said "Python CI must pass on this PR head" but the PR sat red; run the touched test file locally before pushing — this one fails in under a second.
+
+**Kaizen task:** shifting-desks/t-020, assert parsed report fields instead of raw markdown substrings.
+
+## 2026-11-15 PT | Reviewer | shifting-desks/t-020 | Conductor #7444
+
+**Decision:** merge once green. This is a test-only change: `test_classic_and_western_have_separate_acceptance` now asserts the report's boolean `ready`/`catalog_ready` fields instead of Markdown substrings. That closes the kaizen from the #7441 rescue. Python test suite was green on `ccca484`. The only red check was `Validate Worker PR handoff`: the connector-only session's body had none of the AGENTS.md headings. Triaged as **actionable**, no pass spent. The Reviewer added the handoff sections, which re-runs the check.
+
+**Improve:** the `report_field` helper maps label strings to keys, an indirection the test doesn't need; `report["catalog_ready"] is False` reads more clearly. Connector-only Workers should still paste the handoff template; it is enforced in CI.
