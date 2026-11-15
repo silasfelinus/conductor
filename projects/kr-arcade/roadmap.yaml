@@ -3009,3 +3009,13 @@ tasks:
       2026-11-15 PT: Brick Bloom mobile touch-control slice committed on worker/kr-arcade-t-164-brick-bloom-touch-bb61ae (376a93a). Swipe/drag paddle input, no gameplay D-pad or permanent A/B cluster, contextual action buttons, mobile browser viewport test. This is one slice of the broader t-164 cross-game audit; requeue after safe PR merge.
 
       Brick Bloom mobile touch UI slice merged 2026-11-15 in silasfelinus/kind_robots#5215 (squash 5dfd29aebe0823c30019c15f027dd88bfab6e5fb). Paddle now accepts captured touch drag/swipe; persistent D-pad and A/B controls are suppressed during normal gameplay, while contextual Launch/Skip/Curl and full Potting Bench menus remain accessible. The real cabinet Chromium viewport matrix covered 390x844 at DPR 1,2,3 and passed; screenshot artifact 14161727709 visually shows a clear paddle area. On the final PR head, all 15 substantive GitHub checks completed successfully; only optional Push Prettier autofix was skipped after autoformat. Requeue this non-recurring cross-game t-164 for remaining camera, readability, and other-game device audits. Keep kind_robots issue #4062 open; no production deployment was attempted.
+
+  - id: t-165
+    milestone: m10
+    title: "Root-cause the intermittent verifyRescueRallyCabinet 'and not seat 1' failure in the cabinet browser contracts"
+    status: ready
+    passes: 0
+    stakes: reversible
+    updated: '2026-11-15T13:00:00Z'
+    note: |-
+      Reviewer kaizen from kind_robots#5211 (2026-11-15 PT). Job 132764631321 ("Seats, menus, aim and saves through the actual cabinet in Chromium") failed at utils/scripts/verifyRescueRallyCabinet.browser.test.mjs:344 ("and not seat 1"). The PR did not touch Rescue Rally, and the same job passed on the PR's previous head and on its single re-run. Find the race, likely seat-assignment timing versus the assertion, and make the test wait on the real state rather than wall-clock. Do not skip or quarantine the test.
