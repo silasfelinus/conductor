@@ -221,3 +221,13 @@
 **Kaizen task:** t-071, parse every workflow file from a workflow other than `ci.yml`, so an unparseable CI file is a red check and not ten missing ones.
 
 **Housekeeping in the same PR:** the roadmap was over the 150,000-byte advisory (156,389). Archived four done-task notes to `HISTORY.md` and the head of the t-034, t-038 and t-040 notes to their `T0xx-HISTORY.md` files with the verified archival scripts; the acceptance guard still reports OK.
+
+## 2026-11-15 PT | Reviewer merge | memory-dungeon/t-029 | Conductor #7451
+
+**Decision:** squash-merged head `cd9b104` as `6bc5c2c`. Every check was green except `Validate Worker PR handoff`: the body was one paragraph. The Reviewer reformatted it into the required headings, marked as reviewer-edited with the claims unchanged. The re-run passed and the PR merged. t-029 goes back to `ready`, not done, because the note and document both say runtime binding, the wider catalog, art and acceptance remain.
+
+**What worked:** an honest, tightly scoped docs slice. The six unlocks change choices and information, never stats. Each has a forged-state rejection rule, and the 120-class matrix is concrete enough to turn into fixtures.
+
+**What to improve:** this is the sixth handoff-template miss on this project, and #7453 (t-025, opened minutes later with `### Scope / ### Verification / ### Remaining`) is the seventh. Feedback in TALKBACK hasn't changed the behaviour, so the kaizen goes after the cause instead: t-072 adds a repo PR template that the GitHub connector is told to use.
+
+**Kaizen task:** t-072.

@@ -1579,3 +1579,13 @@ tasks:
     owner: worker
     claimed_by: 2026-11-12T185128Z-memory-dungeon-t-071-b83e
     claimed_at: '2026-11-12T18:51:28Z'
+  - id: t-072
+    milestone: m4
+    title: "Add a .github/pull_request_template.md that mirrors the AGENTS.md Worker handoff headings so connector-opened worker PRs start from the template"
+    status: ready
+    stakes: reversible
+    passes: 0
+    depends_on: []
+    updated: '2026-11-15T22:55:00Z'
+    note: |-
+      Kaizen from the t-029 review (conductor#7451). This is the sixth `Validate Worker PR handoff` miss on this project; #7453 (t-025) is the seventh. LEARNING-REPORT flags the same pattern for connector-only Workers. The GitHub MCP server tells agents to look for a pull_request_template.md before calling create_pull_request, and conductor doesn't have one. Add one that lists exactly the six headings `scripts/check_pr_handoff_template.py` requires, plus the optional Flags section. Add a pytest that asserts the template satisfies `missing_sections()` == []. Reversible and docs/CI-only. It lives in this roadmap because the conductor project takes no new tasks.
