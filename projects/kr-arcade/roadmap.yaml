@@ -2617,7 +2617,7 @@ tasks:
   - id: t-152
     milestone: m8
     title: "Verify Butterfly Blaster earned history through cabinet retirement and first-checkpoint reload."
-    status: review
+    status: done
     passes: 0
     stakes: reversible
     depends_on: t-057
@@ -2634,10 +2634,15 @@ tasks:
       validators, auth, score ceilings and required checks; distinguish staged profiles from
       full human campaign timing and deployment evidence. The task-event dependency resolver
       releases this follow-up after verified t-057 closeout.
+
+      2026-11-14 PT: shipped in silasfelinus/kind_robots#5200 (squash 40ddbb4); all 15 CI
+      checks green on the merged head incl. TypeScript, contract shards 1-4, cabinet viewport
+      and the arcade cabinet browser contracts. Staged fixtures/pilot probes only; no human
+      pacing claimed.
     owner: worker
     claimed_by: 2026-11-15T0359Z-arcade-lane-verify4-elegant-noether
     claimed_at: '2026-11-15T03:59:01Z'
-    updated: '2026-11-15T04:24:28Z'
+    updated: '2026-11-15T04:24:31Z'
     implementation_pr: 'silasfelinus/kind_robots#5200'
 
   - id: t-153
