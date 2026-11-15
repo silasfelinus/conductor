@@ -1,0 +1,278 @@
+# Ironjaw lizard people, redo round (2026-11-15 PT, slime-city/t-044). Contact-sheet curation of rounds 1 and 2
+# wired 114 of 129 renders (kind_robots#5224). These 15 were rejected: painted lettering on union sashes, an
+# armband, an awning and shop/neon signs, or crowds and a lead figure that read as human instead of lizard people.
+# Same prompts with each sash/armband made plain, crowds turned to face the viewer as lizards, and a bare-surface
+# clause; fresh seeds. Same runtime assets: a keeper replaces the current fallback in kind_robots
+# utils/slimeCity/artManifest.ts. auto_submit.
+round: slime-city-ironjaw-lizards-redo-1
+project_slug: slime-city
+designer: Slime City Ironjaw lizard people, redo 1
+is_public: true
+is_mature: false
+cast_loras: false
+priority: 1000
+auto_submit: true
+lanes:
+- key: krea2-card
+  label: Krea 2 Slime City illustrated collectible cards
+  engine: krea2
+  prompt: prose
+  suffix: Western adult-animation gouache painting, mature playful postapocalyptic fantasy, crisp thick black ink contours,
+    vibrant high-contrast gouache shading, grounded expressive poses, expressive acting and distinctive costumes, saturated
+    colored rim-lighting, one continuous full-bleed vertical scene, every surface bare and unmarked.
+- key: krea2-token
+  label: Krea 2 Slime City reaction-face board tokens
+  engine: krea2
+  prompt: prose
+  suffix: Western adult-animation gouache painting, crisp thick black ink contours, vibrant high-contrast shading, a single
+    character head-and-shoulders portrait filling the whole square canvas edge to edge, face large and readable at small sizes,
+    dark vignette background bleeding off every side, saturated colored rim-lighting, every surface bare and unmarked.
+- key: krea-evolution
+  label: Krea 2, escalated lizard evolution stages written per card
+  engine: krea2
+  prompt: prose
+  suffix: Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines,
+    saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed
+    scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+subjects:
+- key: slime-r18-token-union-millwright-fierce-lizard
+  lane: krea2-token
+  entity: token-art
+  title: Union Millwright (fierce)
+  asset: slime-city/tokens/union-millwright/fierce
+  size: 1024x1024
+  seed: 1196000
+  prompt_prose: 'Head-and-shoulders portrait of Union Millwright, a broad sandy-tan iguana engineer with a spiny back crest,
+    amber welding goggles on his brow and a plain solid red sash across his barrel chest. An Ironjaw Chrome Lizard: an adult
+    humanoid lizard person with a long reptilian snout, pebbled scales, slit-pupil reptile eyes, a riveted chrome lower jaw
+    with steel teeth and a thick swinging tail, cybernetic seams and foundry soot across the scales. Expression: a bellowing
+    strike chant, chrome jaw wide open and a big wrench shaken overhead. Every sash, armband, awning, booth, banner and wall
+    surface is a plain solid colour, bare and unmarked.'
+  replaces_art_image_id: 267378
+  redo_reason: sash lettering
+- key: slime-r18-token-union-millwright-guard-lizard
+  lane: krea2-token
+  entity: token-art
+  title: Union Millwright (guard)
+  asset: slime-city/tokens/union-millwright/guard
+  size: 1024x1024
+  seed: 1196001
+  prompt_prose: 'Head-and-shoulders portrait of Union Millwright, a broad sandy-tan iguana engineer with a spiny back crest,
+    amber welding goggles on his brow and a plain solid red sash across his barrel chest. An Ironjaw Chrome Lizard: an adult
+    humanoid lizard person with a long reptilian snout, pebbled scales, slit-pupil reptile eyes, a riveted chrome lower jaw
+    with steel teeth and a thick swinging tail, cybernetic seams and foundry soot across the scales. Expression: arms folded
+    over the plain red sash, goggles down, a stubborn immovable glare. Every sash, armband, awning, booth, banner and wall
+    surface is a plain solid colour, bare and unmarked.'
+  replaces_art_image_id: 267379
+  redo_reason: sash lettering
+- key: slime-r18-token-union-millwright-hurt-lizard
+  lane: krea2-token
+  entity: token-art
+  title: Union Millwright (hurt)
+  asset: slime-city/tokens/union-millwright/hurt
+  size: 1024x1024
+  seed: 1196002
+  prompt_prose: 'Head-and-shoulders portrait of Union Millwright, a broad sandy-tan iguana engineer with a spiny back crest,
+    amber welding goggles on his brow and a plain solid red sash across his barrel chest. An Ironjaw Chrome Lizard: an adult
+    humanoid lizard person with a long reptilian snout, pebbled scales, slit-pupil reptile eyes, a riveted chrome lower jaw
+    with steel teeth and a thick swinging tail, cybernetic seams and foundry soot across the scales. Expression: goggles cracked,
+    chrome jaw dented and hanging loose, a groan through gritted steel teeth. Every sash, armband, awning, booth, banner and
+    wall surface is a plain solid colour, bare and unmarked.'
+  replaces_art_image_id: 267380
+  redo_reason: sash lettering
+- key: slime-r18-evo-union-millwright-l2-lizard
+  lane: krea-evolution
+  entity: card-art
+  title: 'Union Millwright L2: Keeps the Line Running'
+  asset: slime-city/evolutions/union-millwright@2
+  size: 832x1216
+  seed: 1196003
+  prompt_prose: 'Union Millwright, a broad sandy-tan iguana engineer with a spiny back crest, a long reptilian snout, a thick
+    swinging tail, amber welding goggles on his brow and a plain solid red sash across his barrel chest, an escaped bio-lab
+    mutant lizard with pebbled scales, slit-pupil reptile eyes, a riveted chrome lower jaw and a plain steel specimen tag
+    clipped to one ear-hole. The broken turbine he once hauled out of the flooded lab basement now roars on his back, rebuilt
+    into a glowing generator that drives a six-armed hydraulic tool harness. Low-angle hero shot: he looms over a hissing
+    conveyor line in a vast assembly hall built over old sewer tunnels, a wrench twice his height in hand, bolting a dented
+    lizard comrade''s shoulder armor back on while small rival brawlers charge through orange sparks and teal steam. Every
+    sash, armband, awning, booth, banner and wall surface is a plain solid colour, bare and unmarked.'
+  replaces_art_image_id: 269578
+  redo_reason: sash lettering
+- key: slime-r18-evo-union-millwright-l3-lizard
+  lane: krea-evolution
+  entity: card-art
+  title: 'Union Millwright L3: Gates Thrown Open'
+  asset: slime-city/evolutions/union-millwright@3
+  size: 832x1216
+  seed: 1196004
+  prompt_prose: Union Millwright, a broad sandy-tan iguana engineer with a spiny back crest, a long reptilian snout, a thick
+    swinging tail, amber welding goggles on his brow and a plain solid red sash across his barrel chest, an escaped bio-lab
+    mutant lizard with pebbled scales, slit-pupil reptile eyes, a riveted chrome lower jaw and a plain steel specimen tag
+    clipped to one ear-hole. Now towering taller than the smokestacks, he wears his old turbine grown into a colossal golden
+    sunburst spinning behind his head like a halo and rips two skyscraper-sized laboratory blast gates open with both arms.
+    A parade of a thousand small mutant lizard workers in overalls floods out onto a glowing street, scaly tails swinging,
+    brass bolts raining like confetti, every rooftop cheering. Heroic low-angle view, sunrise gold and rose light pouring
+    past him. Every sash, armband, awning, booth, banner and wall surface is a plain solid colour, bare and unmarked.
+  replaces_art_image_id: 269579
+  redo_reason: sash lettering
+- key: slime-r18-evo-merc-picket-troll-l2-lizard
+  lane: krea-evolution
+  entity: card-art
+  title: 'Picket Line Komodo L2: Permanent Overtime'
+  asset: slime-city/evolutions/merc-picket-troll@2
+  size: 832x1216
+  seed: 1196005
+  prompt_prose: 'Picket Line Komodo, an enormous dusty-brown komodo dragon with a long forked tongue and a heavy tail, in
+    a dented yellow hard hat with a thermos on a chain, an escaped bio-lab mutant lizard with pebbled scales, slit-pupil reptile
+    eyes, a riveted chrome lower jaw and a plain steel specimen tag clipped to one ear-hole. He now wears a plain glowing
+    gold armband and a beacon on his hard hat, a blanket over his shoulders. Low-angle hero shot at the factory gate: he looms
+    through emerald dawn fog, his thermos now twice as big and steaming like a kettle. Around his clawed feet the picket line
+    runs a hundred lizard workers long, and small foremen peer from guard towers. Sunrise gold. Every sash, armband, awning,
+    booth, banner and wall surface is a plain solid colour, bare and unmarked.'
+  replaces_art_image_id: 269603
+  redo_reason: armband lettering
+- key: slime-r18-evo-s2-ironjaw-shift-change-shove-l2-lizard
+  lane: krea-evolution
+  entity: card-art
+  title: 'Shift-Change Shove L2: Linked Arms'
+  asset: slime-city/evolutions/s2-ironjaw-shift-change-shove@2
+  size: 832x1216
+  seed: 1196006
+  prompt_prose: 'A burly rust-red bearded dragon shift steward woman with a spiky scale beard, a thick tail, a dented hard
+    hat and a hazard-orange work vest, an escaped bio-lab mutant lizard with pebbled scales, slit-pupil reptile eyes, a riveted
+    chrome lower jaw and a plain steel specimen tag clipped to one ear-hole. She has torn down the solid orange street-food
+    awning from the downpour and now holds it overhead, twice as big, as a glowing canopy shield. Low-angle hero shot: she
+    looms at the tip of a line of armored mutant lizard protesters linking arms and tails in a tight wedge, shimmering light
+    spreading over their shoulders as small rival sentries'' batons bounce off. Rain and hot magenta sparks. Every sash, armband,
+    awning, booth, banner and wall surface is a plain solid colour, bare and unmarked.'
+  replaces_art_image_id: 269609
+  redo_reason: awning lettering
+- key: slime-r18-evo-s3-ironjaw-bonus-plate-l2-lizard
+  lane: krea-evolution
+  entity: card-art
+  title: 'Shift Bonus Plates L2: Overtime Bonus'
+  asset: slime-city/evolutions/s3-ironjaw-bonus-plate@2
+  size: 832x1216
+  seed: 1196007
+  prompt_prose: 'An adult iguana paymaster with spiny emerald-and-gold scales, a dewlap, a long tail, sleeve garters and a
+    stack of gleaming steel plates, an escaped bio-lab mutant lizard with pebbled scales, slit-pupil reptile eyes, a riveted
+    chrome lower jaw and a plain steel specimen tag clipped to his collar. The payroll booth has become a roaring steel press,
+    and he feeds a second gleaming plate through the slot to the same delighted lizard worker, who now wears three layers
+    of polished steel strapped over his belly and swells broad as a boiler. Low-angle hero shot: the paymaster looms behind
+    the booth counter, coins and steam spilling out, small cat-eared rivals in cobalt jackets flexing their claws at the thickened
+    plates. Bronze lamplight and white steam. Every sash, armband, awning, booth, banner and wall surface is a plain solid
+    colour, bare and unmarked.'
+  replaces_art_image_id: 269613
+  redo_reason: shop sign lettering
+- key: slime-r18-evo-s3-ironjaw-reallocation-l2-lizard
+  lane: krea-evolution
+  entity: card-art
+  title: 'Union Reallocation L2: Show of Hands'
+  asset: slime-city/evolutions/s3-ironjaw-reallocation@2
+  size: 832x1216
+  seed: 1196008
+  prompt_prose: 'A burly blue-tongued skink worker with glossy tan-and-brown banded scales, a thick tail, a lowered hard hat
+    and work boots dug in to charge, an escaped bio-lab mutant lizard with pebbled scales, slit-pupil reptile eyes, a riveted
+    chrome lower jaw and a plain steel specimen tag clipped to one ear-hole. Hundreds of raised scaly hands from the crew
+    now pour bronze light into him, forging an oversized shoulder plow and a glowing aura, his cobalt-blue tongue flicking.
+    Low-angle hero shot: he looms over the packed shop floor under girders and old lab vats, the crew''s raised hands small
+    around his knees as rival guards back away nervously in warm bronze light. Every worker in the crowd faces the viewer
+    as a scaly mutant lizard person with a long snout, slit-pupil eyes and a swinging tail. Every sash, armband, awning, booth,
+    banner and wall surface is a plain solid colour, bare and unmarked.'
+  replaces_art_image_id: 269615
+  redo_reason: human crowd
+- key: slime-r18-evo-s1-bolt-clamp-l2-lizard
+  lane: krea-evolution
+  entity: card-art
+  title: 'Union Bolt Clamp L2: Braced Line'
+  asset: slime-city/evolutions/s1-bolt-clamp@2
+  size: 832x1216
+  seed: 1196009
+  prompt_prose: 'A sly crimson-and-black banded collared lizard trapper woman whose head is fully reptilian, a long scaly
+    snout and frilled collar, with a long whip tail, in grease-stained union coveralls, working a giant jointed iron clamp,
+    an escaped bio-lab mutant lizard with pebbled scales, slit-pupil reptile eyes, a riveted chrome lower jaw and a plain
+    steel specimen tag clipped to one ear-hole. The iron clamp is now twice as big, worked by a glowing lever gauntlet. Low-angle
+    hero shot: she looms over a crowded factory courtyard as the clamp snaps shut on a rival boot, two armored lizards beside
+    her bracing behind shimmering shields of light while the small rival flails. Sparks flying, orange and teal glow. Every
+    worker in the crowd faces the viewer as a scaly mutant lizard person with a long snout, slit-pupil eyes and a swinging
+    tail. Every sash, armband, awning, booth, banner and wall surface is a plain solid colour, bare and unmarked.'
+  replaces_art_image_id: 269623
+  redo_reason: human lead figure
+- key: slime-r18-evo-s3-ironjaw-forklift-chock-l3-lizard
+  lane: krea-evolution
+  entity: card-art
+  title: 'Forklift Chock L3: Back on the Forks'
+  asset: slime-city/evolutions/s3-ironjaw-forklift-chock@3
+  size: 832x1216
+  seed: 1196010
+  prompt_prose: A cheerful sunset-orange fat-tailed gecko forklift driver with a safety vest and a rusty wedge-shaped wheel
+    chock, an escaped bio-lab mutant lizard with pebbled scales, slit-pupil reptile eyes, a riveted chrome lower jaw and a
+    plain steel specimen tag clipped to one ear-hole. Now a giant towering over the warehouses on a forklift the height of
+    a skyscraper, his fat tail curled happily around the seat, he sets a building-sized chock down in the middle of the avenue.
+    The trench-coated spy is pinned again beneath it, brass goggles flying, his whole rival convoy stalled behind him. Fifty
+    small forklifts driven by lizards parade below with flashing lights. Heroic low-angle view, hazard yellow, neon violet
+    and midnight blue. Every sash, armband, awning, booth, banner and wall surface is a plain solid colour, bare and unmarked.
+  replaces_art_image_id: 269628
+  redo_reason: neon sign lettering
+- key: slime-r18-evo-s2-ironjaw-overtime-pistons-l2-lizard
+  lane: krea-evolution
+  entity: card-art
+  title: 'Overtime Pistons L2: Mandatory Overtime'
+  asset: slime-city/evolutions/s2-ironjaw-overtime-pistons@2
+  size: 832x1216
+  seed: 1196011
+  prompt_prose: 'A tough storm-grey caiman lizard engineer with a bright orange head, a ridged tail and two hulking hydraulic
+    leg braces with oily steel rods, an escaped bio-lab mutant lizard with pebbled scales, slit-pupil reptile eyes, a riveted
+    chrome lower jaw and a plain steel specimen tag clipped to one ear-hole. He now wears the yellow rubber gloves from the
+    old repair stall, inflated twice as big like boxing gloves, and his braces sprout glowing turbo vents. Low-angle hero
+    shot: he looms over a neon-lit street as the pistons kick him into a lunge the instant his feet land, steam jetting from
+    his heels, small rivals scattering. Turquoise haze and dirty amber light. Every sash, armband, awning, booth, banner and
+    wall surface is a plain solid colour, bare and unmarked.'
+  replaces_art_image_id: 269637
+  redo_reason: neon sign lettering
+- key: slime-r18-card-s2-ironjaw-shift-change-shove-lizard
+  lane: krea2-card
+  entity: card-art
+  title: Shift-Change Shove
+  asset: slime-city/cards/s2-ironjaw-shift-change-shove
+  size: 832x1216
+  seed: 1196012
+  prompt_prose: A tight wedge of mutant lizard union workers marches arm in arm, hard hats lowered like battering rams and
+    faces perfectly serene, thermoses of coffee tucked under their elbows. At the point of the wedge a burly rust-red bearded
+    dragon shift steward woman, an escaped bio-lab mutant lizard with pebbled scales, slit-pupil reptile eyes, a riveted chrome
+    lower jaw and a plain steel specimen tag clipped to one ear-hole, bumps a startled rival clean off the end of a foundry
+    gantry. Drifting sparks and bronze furnace glow; head-on view from just ahead of the advancing wedge. Every worker in
+    the crowd faces the viewer as a scaly mutant lizard person with a long snout, slit-pupil eyes and a swinging tail. Every
+    sash, armband, awning, booth, banner and wall surface is a plain solid colour, bare and unmarked.
+  replaces_art_image_id: 269653
+  redo_reason: lettering human crowd
+- key: slime-r18-card-s3-ironjaw-reallocation-lizard
+  lane: krea2-card
+  entity: card-art
+  title: Union Reallocation
+  asset: slime-city/cards/s3-ironjaw-reallocation
+  size: 832x1216
+  seed: 1196013
+  prompt_prose: A crowd of mutant lizard workers raises scaly clawed hands in a show-of-hands vote on the shop floor, and
+    the worker they chose, a burly blue-tongued skink with glossy tan-and-brown banded scales, an escaped bio-lab mutant lizard
+    with pebbled scales, slit-pupil reptile eyes, a riveted chrome lower jaw and a plain steel specimen tag clipped to one
+    ear-hole, stands in the middle, suddenly lit bronze by furnace light, lowering his hard hat and digging in his boots to
+    charge. Wide view from behind the crowd of raised arms, steel girders and old lab vats overhead. Every worker in the crowd
+    faces the viewer as a scaly mutant lizard person with a long snout, slit-pupil eyes and a swinging tail. Every sash, armband,
+    awning, booth, banner and wall surface is a plain solid colour, bare and unmarked.
+  replaces_art_image_id: 269655
+  redo_reason: human crowd
+- key: slime-r18-card-s3-ironjaw-overtime-toll-lizard
+  lane: krea2-card
+  entity: card-art
+  title: Overtime Paywall
+  asset: slime-city/cards/s3-ironjaw-overtime-toll
+  size: 832x1216
+  seed: 1196014
+  prompt_prose: A spring-loaded steel turnstile pops up from the foundry floor and clamps a trench-coated intruder's ankle
+    in an iron cuff, while a mechanical arm extends a tin cup toward him for payment. Inside a tiny booth wired to car batteries
+    by dangling extension cords, a crafty lilac-and-grey mourning gecko toll keeper woman in a yellow visor, an escaped bio-lab
+    mutant lizard with pebbled scales, slit-pupil reptile eyes, a riveted chrome lower jaw and a plain steel specimen tag
+    clipped to one ear-hole, holds out an open clawed palm. Wide view of the narrow gated lane in bronze furnace light. Every
+    sash, armband, awning, booth, banner and wall surface is a plain solid colour, bare and unmarked.
+  replaces_art_image_id: 269658
+  redo_reason: sign lettering
