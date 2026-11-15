@@ -569,3 +569,24 @@ tasks:
       in projects/zuzu-gamebook/PLAYTEST-READINESS-2026-11-15.md. His feedback becomes
       playtest_iteration tasks.
     updated: '2026-11-15T02:24:21Z'
+  - id: t-018
+    milestone: m5
+    title: 'Playtest polish: fight-preview HP applies heal before hurt, matching the reducer'
+    status: review
+    owner: worker
+    playtest_iteration: true
+    passes: 0
+    stakes: reversible
+    depends_on: []
+    claimed_by: 2026-11-15T020615Z-zuzu-gamebook-t-008-c4f2
+    claimed_at: '2026-11-15T02:06:15Z'
+    implementation_pr: 'silasfelinus/kind_robots#5191'
+    note: >-
+      Split out of t-008 on 2026-11-15 PT at the playtest handoff so the slice keeps its
+      owner without blocking the handoff. Kind Robots PR #5191 (opened by the t-008 claim
+      above) makes fightFrom() heal before hurting, matching enter/applyEffects. The bug is
+      latent: no Book One scene carries both heal and hurt today (checked on main b01655b),
+      so it is defensive polish, not a playtest blocker. At handoff its TypeScript check was
+      failing; the new test assigns to a BOOK scene's effects, which the scene type likely
+      makes readonly. The owner should fix the typing, get CI green and merge, then mark
+      this done.
