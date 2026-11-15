@@ -84,6 +84,9 @@ def pilot_rows(version=1):
                 "job": job,
                 "image": art.get("art_image_id"),
                 "status": art.get("status", "not-recorded"),
+                "verdict": art.get("verdict"),
+                "review_note": art.get("review_note"),
+                "evidence_artifact_id": art.get("evidence_artifact_id"),
                 "lane": key,
             }
 
