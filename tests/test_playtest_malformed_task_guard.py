@@ -8,7 +8,7 @@ from scripts.playtest_readiness import playtest_readiness_errors
 from scripts.sync_playtest_master_issues import eligible_issues
 
 
-def test_malformed_tasks_cannot_pass_human_gate():
+def test_malformed_tasks_cannot_pass_handoff():
     tasks = [
         {"id": "t-001", "status": "done"},
         None,
@@ -20,13 +20,14 @@ def test_malformed_tasks_cannot_pass_human_gate():
     assert any("malformed roadmap tasks at positions: 2, 3" in error for error in errors)
 
 
-def test_valid_human_handoff_still_passes():
+def test_valid_handoff_does_not_need_human_verdict_task():
     tasks = [
         {"id": "t-001", "status": "done"},
         {"id": "t-002", "status": "needs-human", "gate_human": True,
          "gate_reason": "creative-approval", "approved_by_human": False},
     ]
     assert playtest_readiness_errors(tasks) == []
+    assert playtest_readiness_errors([{"id": "t-001", "status": "done"}]) == []
 
 
 def test_malformed_project_cannot_close_master_issue(tmp_path: Path):
