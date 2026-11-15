@@ -600,8 +600,13 @@ books:
       masters_repointed:
       - accepted
     studio_revision_requested_at: '2026-11-05T04:00:16Z'
-    render_gate_error: job 69344 timed out after 600s (still queued/running)
-    render_gate_error_at: '2026-11-14T14:41:55Z'
+    render_gate_error: "job [abandoned] FAILED: ArtJob validation failed before claim: Art prompt rejected by the\
+      \ prompt contract (1 violation):\n  [people-negation] not human eyes names the people you do not want on an\
+      \ engine whose negative prompt is inert, so the noun lands in POSITIVE conditioning and the picture fills\
+      \ with them. Say what the picture IS: \"a deserted scene\", \"a deserted street\", \"the subject alone on\
+      \ a plain ground\". Not \"frame\" -- see the frame-noun rule; this remedy used to say it and Krea drew the\
+      \ frame."
+    render_gate_error_at: '2026-11-15T16:02:54Z'
   - slot: 13
     id: mr-013
     slug: ansel-bell
@@ -951,12 +956,23 @@ books:
       prompt_fingerprint: 72a8c86dc88d21706fbba508622a8d298897251d5fe7d1526dcd1a0146d09f63
       archived_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/revisions/mr-021-invisible-flasher-20261105T050557Z.webp
     studio_revision_requested_at: '2026-11-05T05:05:57Z'
-    render_gate_error: "enqueue failed: HTTP 422 Art prompt rejected by the prompt contract (1 violation):\n  [people-negation]\
-      \ no face around it names the people you do not want on an engine whose negative prompt is inert, so the noun\
-      \ lands in POSITIVE conditioning and the picture fills with them. Say what the picture IS: \"a deserted scene\"\
-      , \"a deserted street\", \"the subject alone on a plain ground\". Not \"frame\" -- see the frame-noun rule;\
-      \ this remedy used to say it and Krea drew the frame."
-    render_gate_error_at: '2026-11-15T11:46:52Z'
+    render_failures:
+    - attempt: 1
+      seed: 677153116
+      engine: krea2
+      art_image_id: 273070
+      prompt_fingerprint: 2f835210ab5e0fcf1ab02455c8f1c3b47545ff133ad7099c2733d222a34fc817
+      gate: mechanical
+      reasons: &id001
+      - single-hue tint/wash — near-neutral pixels share a consistent hue (concentration=0.97, reject at >= 0.9),
+        the signature of a duotone/sepia filter rather than the house style's flat cel-shaded multi-color palette
+        (coloring-book/t-045)
+      rejected_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/rejected/render/rejected/mr-021-invisible-flasher-attempt-1-seed-677153116.webp
+      checked_at: '2026-11-15T16:06:28Z'
+    render_attempts: 1
+    last_rejected_art_image_id: 273070
+    last_render_seed: 677153116
+    last_render_reasons: *id001
   - slot: 22
     id: mr-022
     slug: prom-king
@@ -1105,7 +1121,7 @@ books:
       art_image_id: 24054
       prompt_fingerprint: fa4853aa5fc4494e4c431249338742d70e3dd534a4f4b0806dd35e4ca6c92d08
       gate: mechanical
-      reasons: &id001
+      reasons: &id002
       - single-hue tint/wash — near-neutral pixels share a consistent hue (concentration=0.97, reject at >= 0.9),
         the signature of a duotone/sepia filter rather than the house style's flat cel-shaded multi-color palette
         (coloring-book/t-045)
@@ -1114,7 +1130,7 @@ books:
     render_attempts: 1
     last_rejected_art_image_id: 24054
     last_render_seed: 1794629632
-    last_render_reasons: *id001
+    last_render_reasons: *id002
     rendered_path: projects/coloring-book/sets/monster-recast/approved/gothic-schoolgirl-color.webp
     art_image_id: 24055
     render_seed: 434342201
@@ -1274,14 +1290,14 @@ books:
       art_image_id: 240237
       prompt_fingerprint: d74b77c571d3cc965c1d8bb8dc4e167e70a615ad5e91b253332b4bc077c0be8c
       gate: mechanical
-      reasons: &id002
+      reasons: &id003
       - single-hue tint/wash — near-neutral pixels share a consistent hue (concentration=1.00, reject at >= 0.9),
         the signature of a duotone/sepia filter rather than the house style's flat cel-shaded multi-color palette
         (coloring-book/t-045)
       rejected_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/rejected/render/rejected/mr-028-backward-boy-attempt-2-seed-695481638.webp
       checked_at: '2026-09-27T18:11:44Z'
     render_attempts: 2
-    last_render_reasons: *id002
+    last_render_reasons: *id003
     rendered_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-028-backward-boy.webp
     art_image_id: 271878
     render_seed: 149691324
@@ -1603,7 +1619,7 @@ books:
       \ no text names text on an engine whose negative prompt is inert, so the word lands in POSITIVE conditioning\
       \ on a model from the strongest open text-rendering lineage there is. State the wanted result instead: \"\
       every surface bare and unmarked\"."
-    render_gate_error_at: '2026-11-14T16:54:30Z'
+    render_gate_error_at: '2026-11-15T16:06:30Z'
   - slot: 36
     id: mr-group-001
     slug: monster-matinee
@@ -1689,7 +1705,7 @@ books:
     id: hwr-002
     slug: the-grand-staircase
     title: The Grand Staircase
-    status: pending
+    status: done
     seed: 1683257364
     source_ref: projects/coloring-book/sets/hollywood-recast/proposals.yaml#hwr-002
     image_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-002-the-grand-staircase.webp
@@ -1741,8 +1757,12 @@ books:
     pair_status: final
     pair_semantic_score: null
     pair_finalized_at: '2026-09-27T04:06:50Z'
-    render_gate_error: job 69354 timed out after 900s (still queued/running)
-    render_gate_error_at: '2026-11-14T19:33:17Z'
+    rendered_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-002-the-grand-staircase.webp
+    art_image_id: 272986
+    render_seed: 1216349335
+    render_engine: krea2
+    completed_at: '2026-11-15T16:06:42Z'
+    prompt_fingerprint: b6602bdf3b54f0dc3c9867343c8e8e268163cd8bb1296508f723e120ee765158
   - slot: 3
     id: hwr-003
     slug: desert-wheel-queen
@@ -1783,7 +1803,7 @@ books:
     id: hwr-004
     slug: rain-on-the-backlot
     title: Rain on the Backlot
-    status: pending
+    status: done
     seed: 954164708
     source_ref: projects/coloring-book/sets/hollywood-recast/proposals.yaml#hwr-004
     image_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-004-rain-on-the-backlot.webp
@@ -1828,8 +1848,12 @@ books:
       prompt_fingerprint: 121daa9f7b00e02c2e56190553e6b3b56564fb44fdac34fa6beff93c78616c71
       archived_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/revisions/hwr-004-rain-on-the-backlot-20261114T191812Z.webp
     studio_revision_requested_at: '2026-11-14T19:18:12Z'
-    render_gate_error: job 69355 timed out after 900s (still queued/running)
-    render_gate_error_at: '2026-11-14T19:48:22Z'
+    rendered_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-004-rain-on-the-backlot.webp
+    art_image_id: 272988
+    render_seed: 2035576777
+    render_engine: krea2
+    completed_at: '2026-11-15T16:06:42Z'
+    prompt_fingerprint: 0b1826b52c887407c4068b367f53caecfbf9a8f93c52c2f3d2f6d6b352933fbd
   - slot: 5
     id: hwr-005
     slug: midnight-detective
@@ -2060,7 +2084,7 @@ books:
     id: hwr-010
     slug: rooftop-sign-song
     title: Rooftop Sign Song
-    status: pending
+    status: done
     seed: 99172636
     source_ref: projects/coloring-book/sets/hollywood-recast/proposals.yaml#hwr-010
     image_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-010-rooftop-sign-song.webp
@@ -2105,7 +2129,7 @@ books:
       art_image_id: 271867
       prompt_fingerprint: 6cb21c30cc83fc6ed1eed0785552a9351ff801ed79b3d7a3dbe6cf4fbf7545fd
       gate: mechanical
-      reasons: &id003
+      reasons: &id004
       - rendered essentially monochrome/desaturated for a color-stage master (mean_saturation=0.057, colorful_fraction=0.017)
         — intermittent color-engine defect, coloring-book/t-044
       rejected_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/rejected/render/rejected/hwr-010-rooftop-sign-song-attempt-1-seed-1788968302.webp
@@ -2113,14 +2137,18 @@ books:
     render_attempts: 1
     last_rejected_art_image_id: 271867
     last_render_seed: 1788968302
-    last_render_reasons: *id003
-    render_gate_error: job 69353 timed out after 600s (still queued/running)
-    render_gate_error_at: '2026-11-14T17:04:32Z'
+    last_render_reasons: *id004
+    rendered_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-010-rooftop-sign-song.webp
+    art_image_id: 272985
+    render_seed: 370758448
+    render_engine: krea2
+    completed_at: '2026-11-15T16:06:42Z'
+    prompt_fingerprint: a269f550694b99210b3185c473e04efb32061aaa0bb0134100abe9a53f08830d
   - slot: 11
     id: hwr-011
     slug: the-gentle-giant-visitor
     title: The Gentle Giant Visitor
-    status: pending
+    status: done
     seed: 1812672509
     source_ref: projects/coloring-book/sets/hollywood-recast/proposals.yaml#hwr-011
     image_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-011-the-gentle-giant-visitor.webp
@@ -2165,8 +2193,12 @@ books:
       prompt_fingerprint: 342b5c5a0e3edb8fdb0bc44a157a23858082620896f9afed6993b66371f8058c
       archived_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/revisions/hwr-011-the-gentle-giant-visitor-20261114T191812Z.webp
     studio_revision_requested_at: '2026-11-14T19:18:12Z'
-    render_gate_error: job 69356 timed out after 900s (still queued/running)
-    render_gate_error_at: '2026-11-14T20:03:26Z'
+    rendered_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-011-the-gentle-giant-visitor.webp
+    art_image_id: 272989
+    render_seed: 538069929
+    render_engine: krea2
+    completed_at: '2026-11-15T16:06:42Z'
+    prompt_fingerprint: ecf9c9c125a8d08dec0105a9cd4228e56820b3f1159526857b9bfeb6cd614560
   - slot: 12
     id: hwr-012
     slug: last-train-first-kiss
@@ -2374,7 +2406,7 @@ books:
     id: hwr-018
     slug: nebula-crooner
     title: Nebula Crooner
-    status: pending
+    status: done
     seed: 909229750
     source_ref: projects/coloring-book/sets/hollywood-recast/proposals.yaml#hwr-018
     image_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-018-nebula-crooner.webp
@@ -2419,13 +2451,17 @@ books:
       prompt_fingerprint: 548ea1d31ee46f692543082f56697ba303aa6bb449e89da36c970cac05c1137b
       archived_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/revisions/hwr-018-nebula-crooner-20261114T191812Z.webp
     studio_revision_requested_at: '2026-11-14T19:18:12Z'
-    render_gate_error: job 69357 timed out after 900s (still queued/running)
-    render_gate_error_at: '2026-11-14T20:18:30Z'
+    rendered_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-018-nebula-crooner.webp
+    art_image_id: 272990
+    render_seed: 220919692
+    render_engine: krea2
+    completed_at: '2026-11-15T16:06:42Z'
+    prompt_fingerprint: cdeeee99333513246b4f0880ae0ed8f93a9f79900d3bc320bbdcd7cfb5145119
   - slot: 19
     id: hwr-019
     slug: the-house-on-marigold-hill
     title: The House on Marigold Hill
-    status: pending
+    status: done
     seed: 1708405007
     source_ref: projects/coloring-book/sets/hollywood-recast/proposals.yaml#hwr-019
     image_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-019-the-house-on-marigold-hill.webp
@@ -2470,8 +2506,12 @@ books:
       prompt_fingerprint: 4044a4e9c7444beccacaf7ddc5c59763eef5d9100c50fdb8accc0b0f91c24144
       archived_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/revisions/hwr-019-the-house-on-marigold-hill-20261114T191812Z.webp
     studio_revision_requested_at: '2026-11-14T19:18:12Z'
-    render_gate_error: job 69358 timed out after 900s (still queued/running)
-    render_gate_error_at: '2026-11-14T20:33:31Z'
+    rendered_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-019-the-house-on-marigold-hill.webp
+    art_image_id: 272991
+    render_seed: 212897479
+    render_engine: krea2
+    completed_at: '2026-11-15T16:06:42Z'
+    prompt_fingerprint: 747b9e465b72a6e055a0c18a66c7cb9b5a872ff7767a53331e5fd38f0eb87d4f
   - slot: 20
     id: hwr-020
     slug: director-of-monsters
@@ -2523,14 +2563,14 @@ books:
       art_image_id: null
       prompt_fingerprint: 10548edccb5a24a45f6bf3f869fbb10b7a4cd6e55e1103121f54ff0af8ea1f1f
       gate: mechanical
-      reasons: &id004
+      reasons: &id005
       - single-hue tint/wash — near-neutral pixels share a consistent hue (concentration=0.95, reject at >= 0.9),
         the signature of a duotone/sepia filter rather than the house style's flat cel-shaded multi-color palette
         (coloring-book/t-045)
       rejected_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/rejected/render/rejected/hwr-021-the-silent-mechanic-attempt-1-seed-0.webp
       checked_at: '2026-09-27T11:57:23Z'
     render_attempts: 1
-    last_render_reasons: *id004
+    last_render_reasons: *id005
     studio_revision_history:
     - requested_at: '2026-09-27T14:00:07Z'
       previous_status: done
@@ -2816,7 +2856,7 @@ books:
     id: hwr-030
     slug: highland-heatwave
     title: Highland Heatwave
-    status: pending
+    status: done
     seed: 2014978001
     source_ref: projects/coloring-book/sets/hollywood-recast/proposals.yaml#hwr-030
     image_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-030-highland-heatwave.webp
@@ -2887,8 +2927,12 @@ books:
     pair_status: final
     pair_semantic_score: null
     pair_finalized_at: '2026-09-27T09:04:04Z'
-    render_gate_error: job 69359 timed out after 900s (still queued/running)
-    render_gate_error_at: '2026-11-14T20:48:37Z'
+    rendered_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-030-highland-heatwave.webp
+    art_image_id: 272992
+    render_seed: 452966782
+    render_engine: krea2
+    completed_at: '2026-11-15T16:06:42Z'
+    prompt_fingerprint: daba74721549bfde67cb867ecf568f856c7efd32330347173a11c206c963f305
   - slot: 31
     id: hwr-031
     slug: alien-at-the-premiere
@@ -3037,7 +3081,7 @@ books:
     id: hwr-035
     slug: awards-night-stampede
     title: Awards Night Stampede
-    status: pending
+    status: done
     seed: 63421594
     source_ref: projects/coloring-book/sets/hollywood-recast/proposals.yaml#hwr-035
     image_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-035-awards-night-stampede.webp
@@ -3082,8 +3126,12 @@ books:
       prompt_fingerprint: 71278523bb6850fcedbf759300130efbd739c916950078eb65788a2b80b00acb
       archived_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/revisions/hwr-035-awards-night-stampede-20261114T191812Z.webp
     studio_revision_requested_at: '2026-11-14T19:18:12Z'
-    render_gate_error: job 69360 timed out after 900s (still queued/running)
-    render_gate_error_at: '2026-11-14T21:03:38Z'
+    rendered_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-035-awards-night-stampede.webp
+    art_image_id: 272993
+    render_seed: 1890527170
+    render_engine: krea2
+    completed_at: '2026-11-15T16:06:42Z'
+    prompt_fingerprint: 659d74e76e451bb7dbd28d7d1cf576f1a4504ef1bc137ead9c9f05645b805068
   - slot: 36
     id: hwr-036
     slug: the-recast-marquee
