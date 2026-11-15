@@ -1,0 +1,135 @@
+# Shifting Desks highlight / key art for the rebrand (Silas, 2026-11-14 PT: "It's a much weirder and more
+# complicated game, and deserves both a highlight image and front end that doesn't look sterile ... New art should
+# be submitted"). Three wide compositions, two seeds each, for the front door, the share card and the adverts.
+# Name-agnostic (the title is pending), text-free, positive-only prompts per ART-DIRECTION.md. The tone ladder
+# is the point: sunny campus on top, the building quietly becoming a body at the bottom. Generated art is
+# pre-approved (AGENTS.md). auto_submit.
+round: shifting-desks-key-art-rebrand-1
+project_slug: shifting-desks
+designer: Shifting Desks rebrand key art, round 1
+is_public: true
+is_mature: false
+cast_loras: false
+auto_submit: true
+negative_prompt: text, letters, words, numbers, logo, watermark, signature, photorealistic, photograph, 3d render,
+  blurry, low quality, deformed, extra limbs, bad hands, cropped, collage, grid, blood, gore, wound
+lanes:
+- key: poster
+  label: Krea 2 Shifting Desks safety-poster key art
+  engine: krea2
+  prompt: prose
+  suffix: mid-century corporate safety-manual illustration crossed with a retro-futurist beige office, screen-printed
+    gouache with halftone grain and slight ink misregistration, flat confident shapes and crisp silhouettes, limited
+    palette of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, cinematic wide 16:9
+    composition, every surface bare and unmarked
+subjects:
+- key: sd-key-cutaway-a
+  lane: poster
+  entity: key-art
+  title: The elevator only goes down (cutaway)
+  asset: shifting-desks/key-art/cutaway
+  size: 1344x768
+  seed: 4411001
+  prompt_prose: 'A grand cross-section cutaway of a corporate campus built on a sealed vault: on the surface a sunny
+    modernist office park with lawns and smiling new hires holding welcome balloons, and beneath it a single glass
+    elevator shaft plunging through stacked floors, a cathedral of brass pneumatic tubes, a toy laboratory of plush
+    bears with a warm heartbeat glow, a green-lit testing vault where a polite clerk with a third hand holds a pen,
+    and at the very bottom a wood-paneled boardroom where a kindly old head floats in a glowing glass jar wired
+    to a speaker; the elevator car is halfway down, one tiny new hire inside waving cheerfully'
+  jobs:
+    poster: 69378
+  art:
+    poster:
+      status: DONE
+      art_image_id: 272626
+- key: sd-key-cutaway-b
+  lane: poster
+  entity: key-art
+  title: The elevator only goes down (cutaway, seed b)
+  asset: shifting-desks/key-art/cutaway-b
+  size: 1344x768
+  seed: 4411002
+  prompt_prose: 'A grand cross-section cutaway of a corporate campus built on a sealed vault: on the surface a sunny
+    modernist office park with lawns and smiling new hires holding welcome balloons, and beneath it a single glass
+    elevator shaft plunging through stacked floors, a cathedral of brass pneumatic tubes, a toy laboratory of plush
+    bears with a warm heartbeat glow, a green-lit testing vault where a polite clerk with a third hand holds a pen,
+    and at the very bottom a wood-paneled boardroom where a kindly old head floats in a glowing glass jar wired
+    to a speaker; the elevator car is halfway down, one tiny new hire inside waving cheerfully'
+  jobs:
+    poster: 69379
+  art:
+    poster:
+      status: PENDING
+      art_image_id: null
+- key: sd-key-orientation-a
+  lane: poster
+  entity: key-art
+  title: Welcome to Orientation (Gus and the new hires)
+  asset: shifting-desks/key-art/orientation
+  size: 1344x768
+  seed: 4411011
+  prompt_prose: A cheerful orientation hall of folding chairs and beige terminals glowing green, a row of nervous
+    new hires in lanyards holding identical welcome folders, a beaming rounded beige speaker-box mascot with two
+    kind round lamp eyes hovering at the podium, and in the front row a seven-foot cockroach with a glossy chestnut
+    shell, a mustard cardigan and half-moon glasses politely raising one hand with a question; behind them an open
+    elevator door glows ominous fluorescent green, its only button pointing down
+  jobs:
+    poster: 69380
+  art:
+    poster:
+      status: PENDING
+      art_image_id: null
+- key: sd-key-orientation-b
+  lane: poster
+  entity: key-art
+  title: Welcome to Orientation (seed b)
+  asset: shifting-desks/key-art/orientation-b
+  size: 1344x768
+  seed: 4411012
+  prompt_prose: A cheerful orientation hall of folding chairs and beige terminals glowing green, a row of nervous
+    new hires in lanyards holding identical welcome folders, a beaming rounded beige speaker-box mascot with two
+    kind round lamp eyes hovering at the podium, and in the front row a seven-foot cockroach with a glossy chestnut
+    shell, a mustard cardigan and half-moon glasses politely raising one hand with a question; behind them an open
+    elevator door glows ominous fluorescent green, its only button pointing down
+  jobs:
+    poster: 69381
+  art:
+    poster:
+      status: PENDING
+      art_image_id: null
+- key: sd-key-board-a
+  lane: poster
+  entity: key-art
+  title: The Board at the bottom
+  asset: shifting-desks/key-art/board
+  size: 1344x768
+  seed: 4411021
+  prompt_prose: A deep oxblood boardroom where the walls are smooth glossy upholstered leather gently breathing,
+    cables run like tendons along the ceiling, eleven executives sit fused shoulder to shoulder into one very long
+    tidy pinstripe suit along a polished table, and at the head of the table a kindly old founder head smiles from
+    a glowing green glass jar wired to a brass speaker; a single small new hire in a lanyard stands in the doorway
+    holding a neat folder, politely waiting to be noticed
+  jobs:
+    poster: 69382
+  art:
+    poster:
+      status: PENDING
+      art_image_id: null
+- key: sd-key-board-b
+  lane: poster
+  entity: key-art
+  title: The Board at the bottom (seed b)
+  asset: shifting-desks/key-art/board-b
+  size: 1344x768
+  seed: 4411022
+  prompt_prose: A deep oxblood boardroom where the walls are smooth glossy upholstered leather gently breathing,
+    cables run like tendons along the ceiling, eleven executives sit fused shoulder to shoulder into one very long
+    tidy pinstripe suit along a polished table, and at the head of the table a kindly old founder head smiles from
+    a glowing green glass jar wired to a brass speaker; a single small new hire in a lanyard stands in the doorway
+    holding a neat folder, politely waiting to be noticed
+  jobs:
+    poster: 69383
+  art:
+    poster:
+      status: PENDING
+      art_image_id: null
