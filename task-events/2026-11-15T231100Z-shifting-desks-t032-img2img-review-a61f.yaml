@@ -1,0 +1,17 @@
+version: 1
+project: shifting-desks
+task: t-032
+operation: review
+session: 20261115T230327Z-shifting-desks-t032-kontext-a61f
+updated: '2026-11-15T23:11:00Z'
+note: >-
+  Silas corrected the pipeline preference on 2026-11-15 PT: use faster img2img
+  rather than slow Kontext. Implemented three private, reference-guided,
+  eight-step DreamShaper XL Turbo SDXL-img2img test cells using the V2
+  rejected ArtImages as sources (271721, 271722, 271723).
+  The new auto_submit ledger in art/SDXL-IMG2IMG-CORRECTION-PILOT-1.yaml
+  uses independent seeds and source provenance without target paths, so
+  original Classic production artwork and ROUND-19 REDO verdicts are protected.
+  Regression test guards request shape and private-only processing.
+  The PR is awaiting review and CI; until auto art submits this ledger, no
+  new ArtJob or ArtImage should be reported as created.
