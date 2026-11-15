@@ -2503,7 +2503,7 @@ tasks:
   - id: t-148
     milestone: m8
     title: "Verify Battery Maze saved-entry mode eligibility through the shared cabinet and save-store consumer."
-    status: review
+    status: done
     passes: 0
     stakes: reversible
     depends_on: t-042
@@ -2517,10 +2517,15 @@ tasks:
       existing shared cabinet/input components instead of a second implementation. Use scoped browser
       fixtures with explicit staged data; fix only a reproduced integration gap and keep auth,
       validators, required checks and score ceilings intact. Do not claim deployment or human pacing.
+
+      2026-11-14 PT: shipped in silasfelinus/kind_robots#5200 (squash 40ddbb4); all 15 CI
+      checks green on the merged head incl. TypeScript, contract shards 1-4, cabinet viewport
+      and the arcade cabinet browser contracts. Staged fixtures/pilot probes only; no human
+      pacing claimed.
     owner: worker
     claimed_by: 2026-11-15T0342Z-arcade-lane-verify2-elegant-noether
     claimed_at: '2026-11-15T03:42:07Z'
-    updated: '2026-11-15T04:24:02Z'
+    updated: '2026-11-15T04:24:06Z'
     implementation_pr: 'silasfelinus/kind_robots#5200'
 
   - id: t-149
