@@ -25,3 +25,12 @@ Shipped crew trophies, titles and card-back frames. They are derived from the ac
   question rather than bundling it. The remaining audit gaps (in-play settings entry, title-console
   Scrapbook/Achievements tiles) are named in the note, so the next claimer has a clean target.
 - No kaizen task: t-063 is the live umbrella and already enumerates the next slices.
+
+
+## 2026-11-15 PT | Worker (Claude scheduled run) | slime-city/t-017 closed done
+
+**Decision:** closed t-017 done. The only remaining step was authenticated screenshots, now taken on production with the sanctioned disposable `cypress-*` login (registered, used, cleaned up): lab Home and VS-vs-CPU Clash at 390/768/1440. All crew, district and card art rendered; no broken Slime City images; no page errors.
+
+**Findings filed:** t-067, the admin-preview 403 on progress/story surfaces as a red "STORY SYNC ERROR" for ordinary signed-in visitors on the public play URL. t-068, the Clash FIGHT button clips at 1440.
+
+**Process note:** the Kind Robots onboarding modal ("Welcome to Kind Robots", Skip) intercepts clicks for a fresh user, so screenshot scripts must dismiss it first. The "authenticated environment" blocker named in earlier notes never existed; frontend-verification.md documents the login path.
