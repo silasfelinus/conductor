@@ -64,7 +64,7 @@ def test_classic_and_western_have_separate_acceptance(tmp_path):
     assert not report["catalog_ready"]
     assert report["required_blocked"] == []
     assert len(report["optional_blocked"]) == 1
-    assert "Optional variant catalog ready: NO" in markdown(report)
+    assert "**Optional variant catalog ready:** NO" in markdown(report)
     assert "western-cartoon: 1 unaccepted variant renders" in markdown(report)
 
     # Rejected core art still blocks playtest even with an empty ArtJob queue.
