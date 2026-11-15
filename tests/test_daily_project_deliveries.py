@@ -173,7 +173,7 @@ def roadmap_docket(repo, date="2026-11-15"):
             "status": "ready",
             "note": (
                 f"daily-delivery:{date}/{row['slug']} | "
-                f"PR: silasfelinus/kind_robots#{101 + index} | "
+                f"PR: silasfelinus/kind_robots#{100 + index} | "
                 "Shipped and checked against actual GitHub CI."
             ),
         })
@@ -227,7 +227,7 @@ def test_new_daily_roadmap_entry_must_record_its_exact_delivery_and_pr(repo):
 
     roadmap["tasks"][0]["note"] = (
         "daily-delivery:2026-11-15/chapter-0 | "
-        "PR: https://github.com/silasfelinus/kind_robots/pull/101"
+        "PR: https://github.com/silasfelinus/kind_robots/pull/100"
     )
     path.write_text(yaml.safe_dump(roadmap))
     assert dd.validate("2026-11-15", data) == []
