@@ -1,0 +1,64 @@
+# Private Shifting Desks correction A/B: SDXL Turbo img2img against previously rejected
+# subject-only V2 ArtImages. Not a ROUND-N ledger: do not link generated candidates
+# to the five encounter packs, change ROUND-19 verdicts, or overwrite live paths.
+# Human visual review must verify the focal gag at full size AND thumbnail size.
+# If these three fail, stop repeated diffusion attempts and use explicit compositing.
+round: shifting-desks-sdxl-img2img-pilot-1
+project_slug: shifting-desks
+task: t-032
+designer: Shifting Desks art correction
+auto_submit: true
+priority: 85
+is_public: false
+is_mature: false
+cast_loras: false
+status: private-correction-pilot
+lanes:
+  - key: dreamshaper-turbo-i2i
+    label: SDXL DreamShaper Turbo 8-step img2img
+    engine: sdxl-img2img
+    checkpoint: SDXL/dreamshaperXL_v21TurboDPMSDE.safetensors
+    prompt: prose
+    steps: 8
+    cfg: 2
+    suffix: "Original mid-century corporate safety-manual painting, simplified gouache screenprint shapes, coarse halftone, manila and carbon blue, safety orange and oxblood, flat painted illustration with legible silhouettes."
+subjects:
+  - key: rear-eyes-edit
+    title: Two enormous eyes embedded in the back of a hairstyle
+    source_image_id: 271721
+    source_art_job_id: 69090
+    source_verdict: REDO
+    size: 832x1216
+    denoise: 0.83
+    seed: 831501
+    asset: shifting-desks/private-correction-pilot-1/rear-eyes-edit
+    pass: "Two separate, clearly open eyes with sclera, iris, pupil and lids are embedded in the back of the black bob, facing the viewer."
+    fail: "Only ordinary hair, painted eye motifs, or a face/front profile; extra eyes are not visible as anatomical eyes."
+    prompt_prose: "Rear view, close-up of a black-haired office worker looking away from the viewer, shoulders and the back of a rounded bob haircut filling the portrait. Two enormous separate open living human eyes are embedded directly in the back of the bob at ear height. Each extra eye has bright white sclera, a circular dark iris and pupil, raised upper lid, lower lid and eyelashes, staring straight at the viewer from the hair. The office worker's face stays turned away. A plain cream office wall and a tiny nape of the neck keep the two rear eyes visually dominant. Brightly readable unsettling comic anatomy."
+    negative: "ordinary untouched hair, hair ornament, eyeglasses, front face, nose, text, letters, watermark, photograph, realistic 3d"
+  - key: living-doors-edit
+    title: Three padded organic-rib doorframes growing from a corridor
+    source_image_id: 271722
+    source_art_job_id: 69091
+    source_verdict: REDO
+    size: 1216x832
+    denoise: 0.80
+    seed: 831502
+    asset: shifting-desks/private-correction-pilot-1/living-doors-edit
+    pass: "Three visibly soft, thick ribbed doorframe throats dominate their corridor openings rather than conventional rectangular doors."
+    fail: "Rectangular wooden or metal frames remain, or ribs read as wallpaper trim."
+    prompt_prose: "One perfectly symmetric corporate hallway seen from a rigid metallic elevator threshold. Three doorways at left, right and far center are giant biological throats built into the beige plaster wall. Around the whole edge of each opening, thick swollen pink and oxblood ribs grow outward like a stack of overlapping flesh-colored accordion cushions. Every doorframe has an unmistakable rounded organic silhouette and deep dark folds between soft padded ribs. The smooth rectangular elevator steel frames in foreground contrast strongly with the three living, breathing doorway throats. Empty carpet keeps the fleshy door arches as the main graphic subjects."
+    negative: "ordinary rectangular door trim, normal hospital doors, wallpaper, wooden molding, people, typography, watermark, photography, gore"
+  - key: three-arm-tank-edit
+    title: Three clearly separate arms on an employee entirely inside one tank
+    source_image_id: 271723
+    source_art_job_id: 69092
+    source_verdict: REDO
+    size: 832x1216
+    denoise: 0.80
+    seed: 831503
+    asset: shifting-desks/private-correction-pilot-1/three-arm-tank-edit
+    pass: "Smiling worker wholly submerged inside one outlined glass tank, with three anatomically distinct arms; the torso-grown third hand holds an orange pen."
+    fail: "Two arms only, merged hands or arms, employee beyond the glass border, or unclear liquid level."
+    prompt_prose: "A single tall rounded transparent glass specimen tank fills the frame, with a prominent curved glass border, thick glass base and upper cap, a horizontal green liquid surface near the top and tiny submerged bubbles. Fully inside that glass tank floats a calm smiling office clerk wearing a cream short-sleeve shirt and narrow tie. The clerk possesses three separate visible human arms: left shoulder arm extended left, right shoulder arm extended right, plus a third complete arm emerging independently from the center of the torso and bent upward to hold a bright orange ballpoint pen. All three hands are separate and entirely behind the transparent tank glass. One clean frontal view makes the benign impossible anatomy obvious at thumbnail scale."
+    negative: "two arms, merged arms, overlapping hands, body outside glass, second tank, nurse, words, logo, photograph, gore"
