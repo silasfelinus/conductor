@@ -2961,11 +2961,11 @@ tasks:
   - id: t-164
     milestone: m10
     title: "Cross-game responsive resolution, render-budget and character-readability contract (issue #4062)"
-    status: review
+    status: ready
     passes: 0
     stakes: reversible
     source_issue: silasfelinus/kind_robots#4062
-    updated: '2026-11-15T13:23:00Z'
+    updated: '2026-11-15T13:31:00Z'
     note: |-
       Silas-directed 2026-10-23. Begin with shared Arcade display fit and backing-pixel budget, actual height/width responsive bounds and regression tests at phone landscape/portrait, tablet and desktop DPRs. Follow with genre-specific camera and sprite legibility improvements for Save the Plumber, Rainbow Princess, Ghost Trail, Zuzu Showdown, classic cabinets and Memory Dungeon, without changing deterministic gameplay or forcing square memory boards into 16:9. Full acceptance and per-game follow-up specification: kind_robots issue #4062.
 
@@ -2982,9 +2982,8 @@ tasks:
       Brick Bloom mobile touch UI slice merged 2026-11-15 in silasfelinus/kind_robots#5215 (squash 5dfd29aebe0823c30019c15f027dd88bfab6e5fb). Paddle now accepts captured touch drag/swipe; persistent D-pad and A/B controls are suppressed during normal gameplay, while contextual Launch/Skip/Curl and full Potting Bench menus remain accessible. The real cabinet Chromium viewport matrix covered 390x844 at DPR 1,2,3 and passed; screenshot artifact 14161727709 visually shows a clear paddle area. On the final PR head, all 15 substantive GitHub checks completed successfully; only optional Push Prettier autofix was skipped after autoformat. Requeue this non-recurring cross-game t-164 for remaining camera, readability, and other-game device audits. Keep kind_robots issue #4062 open; no production deployment was attempted.
 
       2026-11-15 PT: Brick Bloom follow-up touch ergonomics committed as f5f882c on worker/kr-arcade-t-164-paddle-slide-lane-a73c09. Adds dedicated full-width finger lane beneath the playable canvas with portrait/landscape sizing, keeps canvas drag available, and extends real Chromium viewport matrix to phone/tablet/landscape with lane geometry and paddle-direction checks. Requeue broader kr-arcade/t-164 viewport audit after safe PR merge.
-    owner: worker
-    claimed_by: 2026-11-15T131650Z-kr-arcade-t-164-paddlelane-a73c09
-    claimed_at: '2026-11-15T13:16:50Z'
+
+      Brick Bloom thumb-slide lane follow-up merged 2026-11-15 PT as silasfelinus/kind_robots#5220 (squash c4f0a1948b95473f6dd3f7a0c48a5cd1d50fc835). The game now reserves a full-width, generously tall finger strip below the scaled playfield, maintains canvas dragging, and adjusts strip size for landscape. Real Chromium browser test exercised 390x844, 768x1024, 1024x1366 and 844x390 at DPR 1/2/3, verified unobstructed layout and paddle travel; screenshot artifact 14163208317 visually inspected. All 15 substantive PR checks green; optional Prettier autofix skipped. No deployment attempted. Keep broader cross-game issue #4062 open and return t-164 to ready for remaining viewport/readability/QA work.
 
   - id: t-165
     milestone: m10
