@@ -2500,7 +2500,7 @@ tasks:
   - id: t-146
     milestone: m8
     title: "Measure Butterfly Joust limited-life survival and first-clear pacing against the authored campaign target."
-    status: review
+    status: done
     passes: 0
     stakes: reversible
     depends_on: t-050
@@ -2514,10 +2514,14 @@ tasks:
       inflate elapsed time, weaken assertions or label the target met without evidence. Make a focused
       balance fix only if the measurements reproduce a scoped problem, with before/after evidence.
       Attach actual renderer evidence for any visible change and document remaining human-play limits.
+
+      2026-11-15 PT: shipped in silasfelinus/kind_robots#5202 (squash 53db9ed); all 15 CI
+      checks green incl. TypeScript, contract shards 1-4, cabinet viewport and arcade cabinet
+      browser contracts. Staged fixtures/pilot probes only; no human pacing claimed.
     owner: worker
     claimed_by: 2026-11-15T0411Z-arcade-lane-verify6-elegant-noether
     claimed_at: '2026-11-15T04:11:18Z'
-    updated: '2026-11-15T08:39:50Z'
+    updated: '2026-11-15T08:39:53Z'
     implementation_pr: 'silasfelinus/kind_robots#5202'
 
   - id: t-147
