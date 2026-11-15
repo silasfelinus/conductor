@@ -118,7 +118,7 @@ def test_email_explicitly_distinguishes_shipped_and_progress(repo, monkeypatch):
     assert html.count("Modify</a>") == 5
     assert html.count("Reject / request rollback</a>") == 5
     assert "actual PR-backed" in html  # supported delivery description
-    assert "Daily Dream and its eight separate Zuzu assets are active" in html
+    assert "Daily Dream and project-catalog art remain independent" in html
     assert "No new Comfy ArtJob IDs" in html
 
     missing = email.daily_deliveries_section({"entries": [], "missing": True})
@@ -253,3 +253,12 @@ def test_in_progress_delivery_also_has_a_canonical_roadmap_progress_note(repo):
     assert dd.validate("2026-11-15", data) == []
     row.pop("roadmap_task")
     assert "roadmap_task" in " ".join(dd.validate("2026-11-15", data))
+
+
+def test_daily_digest_links_canonical_roadmap_evidence(repo):
+    data, _ = roadmap_docket(repo)
+    dd.materialize("2026-11-15", data)
+    html = email.daily_deliveries_section(dd.payload("2026-11-15"))
+    assert "Canonical roadmap t-101" in html
+    assert "projects/zuzu-gamebook/roadmap.yaml" in html
+    assert html.count("Canonical roadmap t-") == 5
