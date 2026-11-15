@@ -158,3 +158,98 @@ def test_digest_asset_freshness_counts_real_jobs_separately_from_requests():
         "daily_dream_output_status": "No fresh bundle today."
     })
     assert "No fresh bundle today" in missing
+
+
+def roadmap_docket(repo, date="2026-11-15"):
+    """Five discrete scoped improvements can all share ONE existing roadmap."""
+    data = docket(repo, date)
+    tasks = []
+    for index, row in enumerate(data["entries"]):
+        task_id = f"t-{101 + index:03d}"
+        row["roadmap_task"] = task_id
+        tasks.append({
+            "id": task_id,
+            "title": f"Deliver the independent upgrade {index}",
+            "status": "ready",
+            "note": (
+                f"daily-delivery:{date}/{row['slug']} | "
+                f"PR: silasfelinus/kind_robots#{101 + index} | "
+                "Shipped and checked against actual GitHub CI."
+            ),
+        })
+    path = repo / "projects/zuzu-gamebook/roadmap.yaml"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(yaml.safe_dump({
+        "project": "zuzu-gamebook", "kind": "software", "tasks": tasks,
+    }))
+    return data, path
+
+
+def test_new_daily_closeout_requires_five_distinct_existing_roadmap_tasks(repo):
+    data, path = roadmap_docket(repo)
+    assert dd.validate("2026-11-15", data) == []
+    assert len(dd.materialize("2026-11-15", data)) == 5
+    body = dd.record_path("2026-11-15", data["entries"][0]["slug"]).read_text()
+    assert "Canonical roadmap: projects/zuzu-gamebook/roadmap.yaml task t-101" in body
+
+    without_roadmap = copy.deepcopy(data)
+    without_roadmap["entries"][0].pop("roadmap_task")
+    assert "roadmap_task" in " ".join(dd.validate("2026-11-15", without_roadmap))
+
+    fake_task = copy.deepcopy(data)
+    fake_task["entries"][0]["roadmap_task"] = "t-999"
+    assert "does not exist" in " ".join(dd.validate("2026-11-15", fake_task))
+
+    duplicate = copy.deepcopy(data)
+    duplicate["entries"][1]["roadmap_task"] = "t-101"
+    assert "duplicate roadmap task" in " ".join(dd.validate("2026-11-15", duplicate))
+
+    path.unlink()
+    assert "canonical" in " ".join(dd.validate("2026-11-15", data))
+
+
+def test_new_daily_roadmap_entry_must_record_its_exact_delivery_and_pr(repo):
+    data, path = roadmap_docket(repo)
+    roadmap = yaml.safe_load(path.read_text())
+    roadmap["tasks"][0]["note"] = "A preexisting task without any new work."
+    path.write_text(yaml.safe_dump(roadmap))
+    assert "missing daily-delivery:2026-11-15/chapter-0" in " ".join(
+        dd.validate("2026-11-15", data)
+    )
+
+    roadmap["tasks"][0]["note"] = (
+        "daily-delivery:2026-11-15/chapter-0 | PR: kind_robots#999"
+    )
+    path.write_text(yaml.safe_dump(roadmap))
+    assert "must cite delivery implementation PR" in " ".join(
+        dd.validate("2026-11-15", data)
+    )
+
+    roadmap["tasks"][0]["note"] = (
+        "daily-delivery:2026-11-15/chapter-0 | "
+        "PR: https://github.com/silasfelinus/kind_robots/pull/101"
+    )
+    path.write_text(yaml.safe_dump(roadmap))
+    assert dd.validate("2026-11-15", data) == []
+
+    roadmap["project"] = "a-different-project"
+    path.write_text(yaml.safe_dump(roadmap))
+    assert "identity does not match" in " ".join(dd.validate("2026-11-15", data))
+
+
+def test_existing_historical_daily_deliveries_keep_their_valid_contract(repo):
+    historical = docket(repo, "2026-11-14")
+    assert all("roadmap_task" not in row for row in historical["entries"])
+    assert dd.validate("2026-11-14", historical) == []
+
+
+def test_in_progress_delivery_also_has_a_canonical_roadmap_progress_note(repo):
+    data, path = roadmap_docket(repo)
+    row = data["entries"][0]
+    row["status"] = "in-progress"
+    row.pop("merge_sha")
+    row.pop("checks")
+    row["next_step"] = "Complete card metadata and rerun regression tests."
+    assert dd.validate("2026-11-15", data) == []
+    row.pop("roadmap_task")
+    assert "roadmap_task" in " ".join(dd.validate("2026-11-15", data))
