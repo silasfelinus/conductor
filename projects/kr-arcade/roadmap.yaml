@@ -2514,7 +2514,7 @@ tasks:
   - id: t-142
     milestone: m8
     title: "Station Sweep depth slice 2: Rooms and the first two stations"
-    status: review
+    status: done
     passes: 0
     stakes: reversible
     depends_on: t-141
@@ -2525,10 +2525,16 @@ tasks:
       top applies. Code: kind_robots utils/arcade/games/ (registry slug station-sweep). Silas, 2026-10-11: "I
       need an assessment done of the other arcade games. I want the same level of quality improvements, they
       should not just be thin veneers of the old games. But newer, better, even more awesome."
+
+      2026-11-15 PT reviewer close-out: shipped in silasfelinus/kind_robots#5211 (Arcade depth
+      wave 5, squash 947a977). All 15 checks green after one re-run of the cabinet seats/saves
+      job, which had failed on verifyRescueRallyCabinet. Rescue Rally is outside this PR's
+      diff and passed on the previous head. The implementing lane's claim had expired without
+      a close-out.
     owner: worker
     claimed_by: 2026-11-15T0837Z-arcade-lane-station2-r-elegant-noether
     claimed_at: '2026-11-15T08:37:54Z'
-    updated: '2026-11-15T12:53:35Z'
+    updated: '2026-11-15T12:53:38Z'
     implementation_pr: 'silasfelinus/kind_robots#5211'
 
   - id: t-143
