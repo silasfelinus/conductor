@@ -142,3 +142,11 @@ Conductor#6110's unchanged reviewed head merged in another session at `2026-10-1
 **Decision:** merge once green. This is a test-only change: `test_classic_and_western_have_separate_acceptance` now asserts the report's boolean `ready`/`catalog_ready` fields instead of Markdown substrings. That closes the kaizen from the #7441 rescue. Python test suite was green on `ccca484`. The only red check was `Validate Worker PR handoff`: the connector-only session's body had none of the AGENTS.md headings. Triaged as **actionable**, no pass spent. The Reviewer added the handoff sections, which re-runs the check.
 
 **Improve:** the `report_field` helper maps label strings to keys, an indirection the test doesn't need; `report["catalog_ready"] is False` reads more clearly. Connector-only Workers should still paste the handoff template; it is enforced in CI.
+
+## 2026-11-15 PT | Reviewer | shifting-desks/t-054 | Conductor #7449
+
+**Decision:** merged once green. Test-only kaizen from #7444: the `report_field` label-to-key helper is gone, and the test asserts `report["ready"]` / `report["catalog_ready"]` directly. All checks were green on `558e05d` except `Validate Worker PR handoff`, because the body had no AGENTS.md headings. Triaged **actionable**, no pass spent. The Reviewer rewrote the body into the template and re-ran the check.
+
+**Improve:** this is the fifth handoff-template miss in this project's log, and the third today from the same connector-only Worker shape. Copy the headings from `scripts/check_pr_handoff_template.py` before opening the PR. The diff left `catalog_ready` asserted twice in a row (`not report[...]` and `is False`).
+
+**Kaizen task:** shifting-desks/t-055, collapse the duplicate `catalog_ready` assertion.
