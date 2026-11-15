@@ -1154,7 +1154,7 @@ tasks:
   - id: t-068
     milestone: m8
     title: "Cable Crawler depth slice 5: Multiplayer and the extra modes"
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
     depends_on: t-067
@@ -1162,10 +1162,16 @@ tasks:
       CABINETS.md section 8, Cable Crawler (Nibbler riff), slice 5 of 5: Multiplayer and the extra modes. The upgrade is "The Mainframe Odyssey". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read the game's section first; this slice's scope is item 5 under its '#### Slices', and 'Rules for every slice' at the top applies. Code: kind_robots utils/arcade/games/ (registry slug cable-crawler). Silas, 2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality improvements, they should not just be thin veneers of the old games. But newer, better, even more awesome."
 
       PART 1 SHIPPED 2026-10-18 (kind_robots#3844, squash 2701210, 18/18 checks green): mode select (selectScreen), Marathon (33-maze cycle, speed ramp, shrinking clock, nine-digit counter, Odyssey save untouched) and Maze Trials (time attack on cleared mazes, best times in the save). Test: utils/scripts/verifyCabinetCableCrawlerModes.test.ts. REMAINING for t-068: Tangle (2-4 cables, Team and Race through players frames, registry maxPlayers), then the registry blurb, howTo and games.yaml entry.
-    updated: '2026-11-15T03:38:36Z'
+
+      2026-11-14 PT: shipped in silasfelinus/kind_robots#5200 (squash 40ddbb4); all 15 CI
+      checks green on the merged head incl. TypeScript, contract shards 1-4, cabinet viewport
+      and the arcade cabinet browser contracts. Staged fixtures/pilot probes only; no human
+      pacing claimed.
+    updated: '2026-11-15T04:24:25Z'
     owner: worker
     claimed_by: 2026-11-15T0338Z-arcade-lane-cable-elegant-noether
     claimed_at: '2026-11-15T03:38:36Z'
+    implementation_pr: 'silasfelinus/kind_robots#5200'
 
   - id: t-069
     milestone: m8
@@ -1239,7 +1245,7 @@ tasks:
   - id: t-073
     milestone: m8
     title: "Seed Lander depth slice 5: Two pods and the modes"
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
     depends_on: t-072
@@ -1253,10 +1259,16 @@ tasks:
       PART 1 SHIPPED (kind_robots#3924, merged 24076bf): Daily Hill, per-mission Time Trial, mastery ranks
       (seedLander/modes.ts). REMAINING: maxPlayers 2 Tandem co-op (shared cargo, double-plant bonus), Relay,
       medal boards.
+
+      2026-11-14 PT: shipped in silasfelinus/kind_robots#5200 (squash 40ddbb4); all 15 CI
+      checks green on the merged head incl. TypeScript, contract shards 1-4, cabinet viewport
+      and the arcade cabinet browser contracts. Staged fixtures/pilot probes only; no human
+      pacing claimed.
     owner: worker
-    updated: '2026-11-15T03:46:41Z'
+    updated: '2026-11-15T04:24:37Z'
     claimed_by: 2026-11-15T0346Z-arcade-lane-lander-elegant-noether
     claimed_at: '2026-11-15T03:46:41Z'
+    implementation_pr: 'silasfelinus/kind_robots#5200'
 
   - id: t-074
     milestone: m8
@@ -2071,7 +2083,7 @@ tasks:
   - id: t-122
     milestone: m8
     title: "Cocoa Counter depth slice 1: Orders and the Cozy core"
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
     note: >-
@@ -2081,15 +2093,21 @@ tasks:
       applies. Code: kind_robots utils/arcade/games/ (registry slug cocoa-counter). Silas, 2026-10-11: "I need
       an assessment done of the other arcade games. I want the same level of quality improvements, they should
       not just be thin veneers of the old games. But newer, better, even more awesome."
+
+      2026-11-14 PT: shipped in silasfelinus/kind_robots#5200 (squash 40ddbb4); all 15 CI
+      checks green on the merged head incl. TypeScript, contract shards 1-4, cabinet viewport
+      and the arcade cabinet browser contracts. Staged fixtures/pilot probes only; no human
+      pacing claimed.
     owner: worker
     claimed_by: 2026-11-15T0347Z-arcade-lane-cocoa-elegant-noether
     claimed_at: '2026-11-15T03:47:11Z'
-    updated: '2026-11-15T03:47:11Z'
+    updated: '2026-11-15T04:24:43Z'
+    implementation_pr: 'silasfelinus/kind_robots#5200'
 
   - id: t-123
     milestone: m8
     title: "Cocoa Counter depth slice 2: Snowdrop Cafe and the Seaside Smoothie Shack"
-    status: waiting
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-122
@@ -2379,7 +2397,7 @@ tasks:
   - id: t-141
     milestone: m8
     title: "Station Sweep depth slice 1: Critters that grow up, and tools to match"
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
     note: >-
@@ -2390,15 +2408,21 @@ tasks:
       2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality
       improvements, they should not just be thin veneers of the old games. But newer, better, even more
       awesome."
+
+      2026-11-14 PT: shipped in silasfelinus/kind_robots#5200 (squash 40ddbb4); all 15 CI
+      checks green on the merged head incl. TypeScript, contract shards 1-4, cabinet viewport
+      and the arcade cabinet browser contracts. Staged fixtures/pilot probes only; no human
+      pacing claimed.
     owner: worker
     claimed_by: 2026-11-15T0319Z-arcade-lane-station-elegant-noether
     claimed_at: '2026-11-15T03:19:50Z'
-    updated: '2026-11-15T03:19:50Z'
+    updated: '2026-11-15T04:24:12Z'
+    implementation_pr: 'silasfelinus/kind_robots#5200'
 
   - id: t-142
     milestone: m8
     title: "Station Sweep depth slice 2: Rooms and the first two stations"
-    status: waiting
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-141
@@ -2506,7 +2530,7 @@ tasks:
   - id: t-148
     milestone: m8
     title: "Verify Battery Maze saved-entry mode eligibility through the shared cabinet and save-store consumer."
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
     depends_on: t-042
@@ -2520,10 +2544,16 @@ tasks:
       existing shared cabinet/input components instead of a second implementation. Use scoped browser
       fixtures with explicit staged data; fix only a reproduced integration gap and keep auth,
       validators, required checks and score ceilings intact. Do not claim deployment or human pacing.
+
+      2026-11-14 PT: shipped in silasfelinus/kind_robots#5200 (squash 40ddbb4); all 15 CI
+      checks green on the merged head incl. TypeScript, contract shards 1-4, cabinet viewport
+      and the arcade cabinet browser contracts. Staged fixtures/pilot probes only; no human
+      pacing claimed.
     owner: worker
     claimed_by: 2026-11-15T0342Z-arcade-lane-verify2-elegant-noether
     claimed_at: '2026-11-15T03:42:07Z'
-    updated: '2026-11-15T03:42:07Z'
+    updated: '2026-11-15T04:24:06Z'
+    implementation_pr: 'silasfelinus/kind_robots#5200'
 
   - id: t-149
     milestone: m8
@@ -2574,7 +2604,7 @@ tasks:
   - id: t-151
     milestone: m8
     title: "Verify Bumper Bubbles pantry saves through the shared cabinet retirement and Continue lifecycle."
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
     depends_on: t-061
@@ -2588,15 +2618,21 @@ tasks:
       Reuse the existing shared consumers and bounded browser fixtures; fix only reproduced
       integration defects. Preserve auth, storage validators, required checks and score caps.
       Keep staged fixture evidence distinct from deployment and human campaign duration.
+
+      2026-11-14 PT: shipped in silasfelinus/kind_robots#5200 (squash 40ddbb4); all 15 CI
+      checks green on the merged head incl. TypeScript, contract shards 1-4, cabinet viewport
+      and the arcade cabinet browser contracts. Staged fixtures/pilot probes only; no human
+      pacing claimed.
     owner: worker
     claimed_by: 2026-11-15T0353Z-arcade-lane-verify3-elegant-noether
     claimed_at: '2026-11-15T03:53:24Z'
-    updated: '2026-11-15T03:53:24Z'
+    updated: '2026-11-15T04:24:18Z'
+    implementation_pr: 'silasfelinus/kind_robots#5200'
 
   - id: t-152
     milestone: m8
     title: "Verify Butterfly Blaster earned history through cabinet retirement and first-checkpoint reload."
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
     depends_on: t-057
@@ -2613,15 +2649,21 @@ tasks:
       validators, auth, score ceilings and required checks; distinguish staged profiles from
       full human campaign timing and deployment evidence. The task-event dependency resolver
       releases this follow-up after verified t-057 closeout.
+
+      2026-11-14 PT: shipped in silasfelinus/kind_robots#5200 (squash 40ddbb4); all 15 CI
+      checks green on the merged head incl. TypeScript, contract shards 1-4, cabinet viewport
+      and the arcade cabinet browser contracts. Staged fixtures/pilot probes only; no human
+      pacing claimed.
     owner: worker
     claimed_by: 2026-11-15T0359Z-arcade-lane-verify4-elegant-noether
     claimed_at: '2026-11-15T03:59:01Z'
-    updated: '2026-11-15T03:59:01Z'
+    updated: '2026-11-15T04:24:31Z'
+    implementation_pr: 'silasfelinus/kind_robots#5200'
 
   - id: t-153
     milestone: m8
     title: "Verify Cable Crawler earned spares through cabinet retirement and Workbench continuation."
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
     depends_on: t-065
@@ -2639,10 +2681,16 @@ tasks:
       ceilings and required checks. Separate staged evidence from human50-60minute pacing
       and deployed-device acceptance. Dependency resolution releases this follow-up after
       verified t-065 closeout.
+
+      2026-11-14 PT: shipped in silasfelinus/kind_robots#5200 (squash 40ddbb4); all 15 CI
+      checks green on the merged head incl. TypeScript, contract shards 1-4, cabinet viewport
+      and the arcade cabinet browser contracts. Staged fixtures/pilot probes only; no human
+      pacing claimed.
     owner: worker
     claimed_by: 2026-11-15T0405Z-arcade-lane-verify5-elegant-noether
     claimed_at: '2026-11-15T04:05:33Z'
-    updated: '2026-11-15T04:05:33Z'
+    updated: '2026-11-15T04:24:50Z'
+    implementation_pr: 'silasfelinus/kind_robots#5200'
   - id: t-154
     milestone: m8
     title: "Arcade audio approval-queue admin page, and cabinets that switch music scenes"
