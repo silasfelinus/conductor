@@ -1154,7 +1154,7 @@ tasks:
   - id: t-068
     milestone: m8
     title: "Cable Crawler depth slice 5: Multiplayer and the extra modes"
-    status: review
+    status: done
     passes: 0
     stakes: reversible
     depends_on: t-067
@@ -1162,7 +1162,12 @@ tasks:
       CABINETS.md section 8, Cable Crawler (Nibbler riff), slice 5 of 5: Multiplayer and the extra modes. The upgrade is "The Mainframe Odyssey". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read the game's section first; this slice's scope is item 5 under its '#### Slices', and 'Rules for every slice' at the top applies. Code: kind_robots utils/arcade/games/ (registry slug cable-crawler). Silas, 2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality improvements, they should not just be thin veneers of the old games. But newer, better, even more awesome."
 
       PART 1 SHIPPED 2026-10-18 (kind_robots#3844, squash 2701210, 18/18 checks green): mode select (selectScreen), Marathon (33-maze cycle, speed ramp, shrinking clock, nine-digit counter, Odyssey save untouched) and Maze Trials (time attack on cleared mazes, best times in the save). Test: utils/scripts/verifyCabinetCableCrawlerModes.test.ts. REMAINING for t-068: Tangle (2-4 cables, Team and Race through players frames, registry maxPlayers), then the registry blurb, howTo and games.yaml entry.
-    updated: '2026-11-15T04:24:21Z'
+
+      2026-11-14 PT: shipped in silasfelinus/kind_robots#5200 (squash 40ddbb4); all 15 CI
+      checks green on the merged head incl. TypeScript, contract shards 1-4, cabinet viewport
+      and the arcade cabinet browser contracts. Staged fixtures/pilot probes only; no human
+      pacing claimed.
+    updated: '2026-11-15T04:24:25Z'
     owner: worker
     claimed_by: 2026-11-15T0338Z-arcade-lane-cable-elegant-noether
     claimed_at: '2026-11-15T03:38:36Z'
