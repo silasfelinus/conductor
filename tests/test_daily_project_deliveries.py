@@ -182,6 +182,9 @@ def roadmap_docket(repo, date="2026-11-15"):
     path.write_text(yaml.safe_dump({
         "project": "zuzu-gamebook", "kind": "software", "tasks": tasks,
     }))
+    (repo / "projects/dream-cycle/daily-deliveries" / f"{date}.yaml").write_text(
+        yaml.safe_dump(data)
+    )
     return data, path
 
 
