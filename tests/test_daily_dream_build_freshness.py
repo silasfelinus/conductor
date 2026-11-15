@@ -108,6 +108,9 @@ def backlog(tmp_path, monkeypatch):
     # (today minus 2 days) is a v3 day and would be rejected as an old buffered draft, so pin
     # the cutover off to keep testing freshness rather than the bundle version.
     monkeypatch.setattr(runner.core, "is_v3_day", lambda day: False)
+    # Same for the 2026-11-14 v4 (6+4 catalog-only) cutover: these tests cover
+    # freshness/selection, not bundle version; v4 gating has its own suite.
+    monkeypatch.setattr(runner.v4, "is_v4_day", lambda day: False)
     return root
 
 

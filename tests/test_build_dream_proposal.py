@@ -249,6 +249,9 @@ def test_from_json_writes_when_creative_contract_passes(tmp_path, monkeypatch):
 def test_check_cli_reports_docket_depth_not_a_calendar_hit(
     tmp_path, monkeypatch, capsys
 ):
+    # Docket-depth semantics only; the v4 bundle-version gate is covered in
+    # tests/test_daily_dream_v4_catalog.py.
+    monkeypatch.setattr(bdp._v4, "is_v4_day", lambda day: False)
     # Authoring pauses while the buffer is deep, so "no proposal dated today" is
     # expected and must not read as a failure. An empty docket is the real alarm.
     monkeypatch.setattr(bdp, "BACKLOG", tmp_path)
@@ -268,6 +271,9 @@ def test_check_cli_reports_docket_depth_not_a_calendar_hit(
 
 
 def test_check_cli_is_quiet_once_the_buffer_is_full(tmp_path, monkeypatch, capsys):
+    # Docket-depth semantics only; the v4 bundle-version gate is covered in
+    # tests/test_daily_dream_v4_catalog.py.
+    monkeypatch.setattr(bdp._v4, "is_v4_day", lambda day: False)
     monkeypatch.setattr(bdp, "BACKLOG", tmp_path)
     for day in range(1, bdp.TARGET_BUFFER_DAYS + 1):
         (tmp_path / f"2026-07-0{day}-entry.md").write_text(
@@ -283,6 +289,9 @@ def test_check_cli_is_quiet_once_the_buffer_is_full(tmp_path, monkeypatch, capsy
 
 
 def test_check_cli_fetches_before_reading_the_docket(tmp_path, monkeypatch):
+    # Docket-depth semantics only; the v4 bundle-version gate is covered in
+    # tests/test_daily_dream_v4_catalog.py.
+    monkeypatch.setattr(bdp._v4, "is_v4_day", lambda day: False)
     monkeypatch.setattr(bdp, "BACKLOG", tmp_path)
     calls = []
     monkeypatch.setattr(bdp, "fetch_main", lambda quiet=True: calls.append("fetch") or True)
@@ -329,6 +338,9 @@ def _docket_file(backlog, name, *, proposal=True, built=False, day=None):
 
 
 def test_unbuilt_backlog_is_the_build_docket_oldest_first(tmp_path, monkeypatch):
+    # Docket-depth semantics only; the v4 bundle-version gate is covered in
+    # tests/test_daily_dream_v4_catalog.py.
+    monkeypatch.setattr(bdp._v4, "is_v4_day", lambda day: False)
     backlog = tmp_path / "backlog"
     backlog.mkdir()
     monkeypatch.setattr(bdp, "BACKLOG", backlog)
@@ -341,6 +353,9 @@ def test_unbuilt_backlog_is_the_build_docket_oldest_first(tmp_path, monkeypatch)
 
 
 def test_unbuilt_backlog_excludes_the_template_and_readme(tmp_path, monkeypatch):
+    # Docket-depth semantics only; the v4 bundle-version gate is covered in
+    # tests/test_daily_dream_v4_catalog.py.
+    monkeypatch.setattr(bdp._v4, "is_v4_day", lambda day: False)
     # _template-proposal.md carries `proposal: true` and a 2026-01-01 placeholder
     # date. Counting it inflates the docket by one and stops authoring a day early.
     backlog = tmp_path / "backlog"
