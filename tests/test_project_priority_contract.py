@@ -78,6 +78,11 @@ def test_lead_projects_are_the_ones_silas_named():
     high-priority development rotation. The other six keep their relative order, and
     every band behind them moves up one slot unchanged.
 
+    Updated 2026-11-15 PT on Silas's named playtest handoff ("Help us get Zuzu Gamebook
+    through the final lap ... the project on kind robots will be set to 'playtest' and
+    normal"): Zuzu Gamebook leaves the focus group the same way. The other five keep their
+    relative order, and every band behind them moves up one more slot unchanged.
+
     The point of this test is unchanged: an agent tidying priority.yaml must not quietly
     reorder the top, and changing it means editing this test with a named human decision
     in the docstring.
@@ -87,7 +92,6 @@ def test_lead_projects_are_the_ones_silas_named():
 
     focus = [
         "weird-humboldt",
-        "zuzu-gamebook",
         "emperor-of-dust",
         "rainbow-bullet-hell-space-princess",
         "save-the-plumber",
@@ -97,10 +101,10 @@ def test_lead_projects_are_the_ones_silas_named():
     assert order[0] == "slime-city"
     order = order[1:]
     assert len(order) >= 14
-    assert order[:6] == focus
-    assert order[6:10] == ["kind-pinball", "zuzu-lair", "kr-arcade", "zuzu-showdown"]
-    assert order[10] == "memory-dungeon"
-    assert order[11:13] == ["cthulhuquarium", "kind-economy"]
+    assert order[:5] == focus
+    assert order[5:9] == ["kind-pinball", "zuzu-lair", "kr-arcade", "zuzu-showdown"]
+    assert order[9] == "memory-dungeon"
+    assert order[10:12] == ["cthulhuquarium", "kind-economy"]
     for finished in ("kapowarr", "ai-art-academy"):
         assert finished not in order
 
@@ -128,17 +132,18 @@ def test_seven_creative_focus_projects_are_active_and_high_priority():
 
     2026-11-14 PT: zuzu-shifting-lands left the tier for playtest on Silas's
     direction (2026-11-13 PT, "flip the project to playtest"); the other six stay.
+    2026-11-15 PT: zuzu-gamebook left the same way ("the project on kind robots will be
+    set to 'playtest' and normal"); the other five stay.
     """
     focus = {
         "weird-humboldt",
         "emperor-of-dust",
-        "zuzu-gamebook",
         "shifting-desks",
         "rainbow-bullet-hell-space-princess",
         "save-the-plumber",
     }
     data = yaml.safe_load(PRIORITY.read_text(encoding="utf-8")) or {}
-    assert set(data["order"][1:7]) == focus
+    assert set(data["order"][1:6]) == focus
     raw = yaml.safe_load(OVERRIDES.read_text(encoding="utf-8")) or {}
     overrides = {row["slug"]: row for row in raw.get("overrides", [])}
     for slug in focus:

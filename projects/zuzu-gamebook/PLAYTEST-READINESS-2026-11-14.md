@@ -1,6 +1,7 @@
 # Zuzu Gamebook: human-playtest readiness assessment
 **As of:** 2026-11-14 PT  
-**Decision:** NOT YET READY. Keep `active` / `high` and [master issue #4139](https://github.com/silasfelinus/kind_robots/issues/4139) open. This is an evidence-led remaining-work plan, not a new speculative feature list.
+**Superseded 2026-11-15 PT:** every item below is closed; see [PLAYTEST-READINESS-2026-11-15.md](PLAYTEST-READINESS-2026-11-15.md).  
+**Decision (2026-11-14):** NOT YET READY. Keep `active` / `high` and [master issue #4139](https://github.com/silasfelinus/kind_robots/issues/4139) open. This is an evidence-led remaining-work plan, not a new speculative feature list.
 
 ## What has already landed
 - Nine-act deterministic Book One, with a historical checked baseline of **377 sections and 15 endings** (recount against current source at final handoff), dice, skills, Honor/Taint, combat, inventory and saves. Legal fresh-start seeds and frozen full-route replay witnesses for all 15 endings were added in [#4032](https://github.com/silasfelinus/kind_robots/pull/4032) and [#4037](https://github.com/silasfelinus/kind_robots/pull/4037) (15 fixtures, 1,217 player actions). Re-run on current `main` before handoff.
