@@ -1617,11 +1617,11 @@ tasks:
     implementation_pr: 'silasfelinus/kind_robots#5180'
   - id: t-067
     title: "Signed-in non-admin visitors should see a calm local-play state, not STORY SYNC ERROR, when progress/story return admin-preview 403"
-    status: ready
+    status: claimed
     stakes: reversible
     owner: worker
     passes: 0
-    updated: '2026-11-15T08:30:00Z'
+    updated: '2026-11-15T08:54:11Z'
     note: >-
       Found 2026-11-15 PT during t-017 verification on production /play/slime-city with a fresh cypress-* user:
       GET /api/slime-city/progress and /api/slime-city/story return 403 "Slime City progression is admin-preview only"
@@ -1629,6 +1629,8 @@ tasks:
       (hidden at 390). The gate is intentional; the error presentation is not. Treat that specific 403 as a local-only
       preview mode (no error badge, no reload loop, short neutral copy), keep the server gate unchanged, and cover it
       with a store/component test. Audience-first: this is the public play URL.
+    claimed_by: 2026-11-15T08:54:11Z-dgz3sp
+    claimed_at: '2026-11-15T08:54:11Z'
   - id: t-068
     title: "Clash FIGHT button clips past the right edge of the side panel at 1440px"
     status: ready
