@@ -978,8 +978,8 @@ tasks:
   - id: t-041
     milestone: m2
     title: "CLASH 300: individually crafted L1/L2/L3 effects for every existing card"
-    status: claimed
-    updated: '2026-11-15T18:48:50Z'
+    status: ready
+    updated: '2026-11-15T19:10:27Z'
     depends_on: t-037
     passes: 0
     stakes: reversible
@@ -1055,9 +1055,24 @@ tasks:
       2026-11-15 PT: Scoped three Mercenary L3 continuities: Traffic Witch retains L2 Green Wave on hit alongside one-shot Gridlock, Crowd-Sourced Lightning retains L2 crowded target zap alongside boss pressure, and Streetlight Confession retains L2 adjacent fighter power alongside its piercing hit across. Added real Clash board fixtures and deterministic repeatability coverage. Implementation commit ab398069 on worker/slime-city-t-041-mercenary-payoff-20261115T1337Z-c8a4; PR and CI pending. Task remains partial: 300-card editorial, low-selection QA, art and constructed balance still open.
 
       2026-11-15 PT: Merged kind_robots PR #5221, squash 77fee2a7cf88e65390e10e330a3eabe1828a8d9f. Three shared Mercenary Level 3 evolutions retain their prior strategic Level 2 utility: Traffic Witch keeps a neighboring-fighter rally with its once-per-hit gridlock, Crowd-Sourced Lightning keeps crowd-powered target zap alongside boss pressure, and Streetlight Confession keeps neighbor attack surge alongside a piercing hit. Battle-state and deterministic regression fixtures pass. Current head 3cfa0ce3 had six completed successful workflows including all four Contract Test shards and verifier. This closes one independent increment only. Return t-041 to ready for remaining 300-card curation, underselected cards, constructed balance and art QA; no production deploy or subjective acceptance claimed.
+
+      2026-11-15 PT: kind_robots PR #5226 (head 2fca9fd): three L3 evolutions keep the L2 job
+      their design notes promise -- Midnight Janitor keeps Mops Up heal before Closing Time
+      duel, Secondhand Halo keeps Still Warm mend (no weaker L3 without a fallen ally), Long
+      Drain Sting keeps Long Reach weakest-foe sting alongside the strongest-foe stun. Real-
+      board fixtures fail on old defs; 11 related Slime City suites pass locally. Audit
+      method: compared L2 vs L3 action shapes across riot/undertow/exchange/mercA/mercB and
+      flagged only cards whose own arc comment contradicts the code; most remaining drops are
+      documented ROLE SHIFTs. Partial increment; umbrella stays open.
+
+      2026-11-15 PT: MERGED kind_robots #5226, squash 257dcbb4, head 2fca9fd; all 11 check
+      runs green (4 contract shards, verifiers, TypeScript, Prettier, layout, verify x2). One
+      increment only; return to ready for remaining 300-card curation, constructed balance and
+      art QA.
     owner: worker
     claimed_by: 2026-11-15T18:48:49Z-claude-kq3qkd
     claimed_at: '2026-11-15T18:48:50Z'
+    implementation_pr: 'silasfelinus/kind_robots#5226'
   - id: t-042
     milestone: m2
     title: "Curate and wire the ogre redo-3 tokens: Picket Line Troll, Coal Cart Racer, Union Lunch Lady"
