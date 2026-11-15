@@ -1,0 +1,82 @@
+# Fast reference-guided correction of three rejected Shifting Desks Classic images.
+# Source ArtImages are the REJECTED V2 renders, not accepted game assets.
+# A/B pilot: SDXL DreamShaper Turbo img2img (8-step profile) at two denoise levels.
+# No production path, entity_art, or automatic overwrite. Review each candidate
+# against its exact anatomical/architectural acceptance test before promotion.
+# Submit: python scripts/enqueue_art_requests.py projects/shifting-desks/art/SDXL-IMG2IMG-FIDELITY-PILOT.yaml --live
+# Refresh: python scripts/enqueue_art_requests.py projects/shifting-desks/art/SDXL-IMG2IMG-FIDELITY-PILOT.yaml --status
+round: shifting-desks-sdxl-img2img-fidelity-pilot-20261115
+project_slug: shifting-desks
+designer: Shifting Desks Classic fidelity recovery
+priority: 55
+auto_submit: true
+is_public: false
+is_mature: false
+cast_loras: false
+status: awaiting-artjobs-and-human-fidelity-review
+lanes:
+- key: sdxl-turbo-i2i
+  label: DreamShaper XL Turbo source-image correction
+  engine: sdxl-img2img
+  checkpoint: SDXL/dreamshaperXL_v21TurboDPMSDE.safetensors
+  prompt: prose
+  steps: 8
+  cfg: 2
+  sampler: dpmpp_sde
+  denoise: 0.55
+subjects:
+- key: rear-eyes
+  title: Extra pair of eyes on the back of the head
+  size: 832x1216
+  source_image_id: 271721
+  seed: 731201
+  denoise: 0.65
+  pass: Two unmistakable open human eyes with whites, pupils and eyelids embedded in rear hair; normal face invisible
+  fail: Plain hair, facial eyes, markings that only suggest eyes
+  prompt_prose: >-
+    Rear view of one seated office clerk, black bob haircut and neck filling
+    the composition. On the BACK of the glossy black hair, facing directly
+    toward us, TWO enormous wide-open human eyes embedded in the hair itself.
+    Each eye has a bright white sclera, black iris, round pupil, distinct upper
+    and lower eyelids and eyelashes. Her normal face points away. The impossible
+    eyes are the central visible subject. Original 1960s corporate safety manual
+    gouache painting, flat bold screenprinted shapes, manila paper and carbon
+    blue shadows, safety orange accents, darkly funny surreal office illustration.
+  negative: text, watermark, front facing woman, ordinary haircut, decorative hair clips, blurry eyes
+- key: living-corridor
+  title: Three soft accordion-ribbed living doorframes
+  size: 1216x832
+  source_image_id: 271722
+  seed: 731202
+  denoise: 0.68
+  pass: Three door openings are surrounded by thick bulging soft organic ribs
+  fail: Rectangular conventional doorframes, striped wallpaper or flat painted ribs
+  prompt_prose: >-
+    Symmetrical view out of an open steel elevator into a beige office corridor.
+    THREE doorways, one on each side wall and one at the far end, each opening
+    surrounded by a giant thick FLESHY ACCORDION of softly bulging oxblood-pink
+    rounded organic ribs. These padded living folds grow directly from the wall,
+    forming curved throat-like door openings, visibly three dimensional against
+    the hard steel elevator threshold. Original mid-century corporate safety
+    handbook gouache illustration, flat screenprint palette, coarse halftone,
+    manila beige, muted carbon blue and oxblood red.
+  negative: text, logos, conventional wooden doorframes, ordinary square doors, flat wallpaper stripes
+- key: mutation-tank
+  title: Smiling worker with three arms submerged in glass tank
+  size: 832x1216
+  source_image_id: 271723
+  seed: 731203
+  denoise: 0.62
+  pass: One complete smiling worker INSIDE transparent tank with three separately visible arms
+  fail: Worker outside tank, two arms, obscured extra arm or broken glass boundary
+  prompt_prose: >-
+    One transparent upright cylindrical glass specimen tank with visible metal
+    cap, base, curved glass walls and a green liquid surface near the top.
+    Fully submerged INSIDE the glass is one cheerful smiling office clerk
+    in a white shirt and tie, with exactly THREE complete arms: left shoulder
+    arm, right shoulder arm, and a clearly separate THIRD arm emerging from
+    the middle of the torso and holding a bright orange pen. All three hands
+    visible and separated, surrounded by little bubbles INSIDE the tank.
+    Original mid-century corporate safety handbook gouache illustration,
+    flat screenprint shapes, muted manila and carbon blue, orange accent.
+  negative: text, logos, two arms, worker outside tank, extra heads, injury, gore
