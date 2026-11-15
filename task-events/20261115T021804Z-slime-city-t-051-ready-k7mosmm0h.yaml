@@ -1,0 +1,8 @@
+version: 1
+project: slime-city
+task: t-051
+operation: ready
+session: 20261115T021605Z-slime-city-t-051-k7mosmm0h
+updated: '2026-11-15T02:18:04.984Z'
+note: >-
+  2026-11-14 PT source audit: the proposed Shredders/Choker equipment-to-fighter conversion is not a simple kind swap. clash.ts placementLegal treats all creatures as replaceable fighters, whereas equipment requires a live friendly target; playClash has specialized L2/L3 equipment branches, and clashPower reads gearLevels.choker to provide a global L3 SWARM anthem. verifySlimeCityClash.test.ts asserts both evolved behaviors. A naive swap would silently erase both cards' existing tier identities and break deterministic tests. No card code changed; preserve the established mechanics until a compatibility-safe implementation and held-out matchup tests can ship. Next step: prototype one card with explicit enter-trigger and L3 aura migration, then compare starter and constructed balance.
