@@ -215,7 +215,7 @@ tasks:
   - id: t-006
     milestone: m3
     title: Independently enqueue and review gamebook illustrations in batches
-    status: ready
+    status: done
     passes: 0
     stakes: reversible
     depends_on: [t-005]
@@ -237,7 +237,18 @@ tasks:
       2026-11-14 PT: Conductor #7387 merged at e22e260 after all 6 current-head workflows passed. Round 21 has 20 high-priority (1000), private, auto-submitted candidate cells for ten previously unregistered scene plates. Prior Round20 14 jobs (68674-68687) already DONE and were not duplicated. Auto Art Generate run 43595625564 was in progress at closeout; require actual new ArtJob IDs, DONE, visual review, accepted WebPs and exact section registration before closing t-006. A duplicate updated YAML key introduced by the connector claim was repaired in #7387; processor now reached review. Return t-006 ready for outstanding delivery/review and t-012 paired-cast fidelity.
 
       2026-11-14 PT latest verified main: 385 authored Book One sections, 371 exact SECTION_PLATES bindings and 371 corresponding checked-in section WebPs (all present); 14 exact registration gaps are a1-ridge-retreat, a2-bell-view, a2-wax, a3-apples-reach, a4-bloom, a4-well-scatter, a4-well-slip, a5-wellhouse-reckoning, a8-behind-the-altar, a8-give-ground, a8-under-the-wall, a8-wounded-flight, apple-tree, ending-water. Round20 covers seven with 14 DONE images 270438-270451; Round17/18 has DONE candidate art for apple-tree, a2-wax, a3-apples-reach, a2-bell-view, a4-bloom; ending-water already purpose-painted legacy kasa-on-water. New Act V a5-wellhouse-reckoning lacked any art queue entry; Conductor PR #7409 MERGED after all four checks green, two private max-priority Arthemy candidates in ROUND-22-WELLHOUSE-RECKONING.yaml. Auto Art Generate run 43652630082 was queued; ArtJob IDs pending. The only remaining work for t-006 is authenticated actual-frame fidelity review, keeper selection, approved WebP export, exact section registration, and re-running source/render tests; do not claim DONE images imply visually accepted artwork. Keep t-012 two-character LoRA gate separate. No public release or playtest promotion yet.
-    updated: '2026-11-14T23:19:38.445Z'
+
+      2026-11-15 PT close-out: kind_robots #5192 merged (b01655b, 13/13 checks green). All 14
+      remaining plate gaps resolved after real-pixel review: six Round 20 keepers, Round 23
+      house-style passes 272618 (bell view) and 272620 (desert bloom) replacing both SVG
+      stand-ins, and six purpose-painted plates bound to their sections. 385/385 sections and
+      all 15 endings have an exact painted plate, enforced by contract. Per-image verdicts in
+      art/ROUND-20, ROUND-22, ROUND-23. Evidence: projects/zuzu-gamebook/PLAYTEST-
+      READINESS-2026-11-15.md.
+    updated: '2026-11-15T02:24:10Z'
+    claimed_by: null
+    claimed_at: null
+    implementation_pr: 'silasfelinus/kind_robots#5192'
   - id: t-007
     milestone: m3
     title: Integrate authored story bundle, chapter pacing and illustration manifest
