@@ -606,8 +606,8 @@ tasks:
   - id: t-032
     milestone: m3
     title: 'Land, review and link the art round 13 re-renders and round 14 tone-ladder renders'
-    status: review
-    updated: '2026-11-14T08:01:00Z'
+    status: ready
+    updated: '2026-11-15T13:47:59.483Z'
     depends_on: t-015
     passes: 0
     stakes: reversible
@@ -661,9 +661,8 @@ tasks:
       2026-11-14 PT reviewer: merged Conductor #7356 (Round 19 subject-only fidelity brief) as 794b30f; all checks green on head 64acb0d (one stale handoff-check rerun carried the pre-edit PR body). Queued the brief as projects/shifting-desks/art/SUBJECT-FIDELITY-PILOT-V2.yaml: three private Krea 2 cells (rear-eyes, living-corridor, mutation-tank), auto_submit, is_public false, private style-fidelity-pilot-v2 destinations, each with a single pass/fail line; all three pass the prompt contract in dry run. No ArtJob IDs exist yet; nothing is delivered or KEEP. Next: after the Auto Art sweep writes job IDs and ArtImage IDs, review each render at full size and thumbnail scale against its pass/fail line and record KEEP/REDO; if all three fail, escalate to reference/compositing per the brief. Do not link art, mark done, or promote playtest; t-020 human gate untouched.
 
       Added CI capture and regression tests for all three already-submitted V2 private ArtJobs (69090-69092), preserving V1 evidence and preventing PENDING images from being called delivered. Visual verdicts and accepted art still outstanding.
-    owner: worker
-    claimed_by: 2026-11-13T234500Z-shifting-desks-t032-ptpilot-q82c
-    claimed_at: '2026-11-14T07:45:00Z'
+
+      2026-11-15 PT recovery of stale review after checking no open Shifting Desks PRs. Auto Art Generate run 43710225215 (Nov 15 PT) reports no queued Shifting Desks work and zero undelivered latest ledger slots, but 14/195 Classic and 170/196 suspended Western Cartoon visual REDO. This is genuine pending curation, not pending ArtJobs. Reopen art acceptance for a scoped evidence-backed readiness/usable-style correction; do not auto-KEEP rejected media or approve final game.
   - id: t-033
     milestone: m3
     title: 'Tone ladder: lower floors grow more Cronenbergian (rules and station art)'
