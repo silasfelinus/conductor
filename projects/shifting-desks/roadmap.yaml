@@ -114,12 +114,12 @@ tasks:
       Full history: projects/shifting-desks/HISTORY.md#t-001
   - id: t-049
     title: 'Main-game standard: audit and close the gaps for Shifting Desks'
-    status: review
+    status: ready
     milestone: m5
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-15T22:35:00Z'
+    updated: '2026-11-15T22:58:00Z'
     note: |-
       Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -148,9 +148,8 @@ tasks:
       2026-11-15 PT: Kind Robots PR #5219 merged as 047e0abcea2371fd735fe75978b9d96e3df9d7bf. Exact head 6ae3f28de77afdda25be4c0f1a17f9492d2a67b5: Shifting Desks gameplay, TypeScript, changed-file formatting, layout, schema-parity, architecture and repository contracts all completed success. Saved runs now survive unreadable neighboring browser storage without rewriting partially reconstructed records; live Pinia tests cover blocked slots, guarded backup import and rollback. Return to ready: account-backed save decision, full deployed browser/device acceptance and remaining main-game standard items are NOT verified. Art t-032/t-041 and reward t-046 remain separate blockers.
 
       Scoped Personnel Archive Art Files gallery: show earned job, society and mutation artwork with classified locked entries; preserve validated art-unlock keys across receipt rotation and legacy saves. Kind Robots branch worker/shifting-desks-t-049-archive-art-gallery-c7e9 with test and CI integration. t-049 remains unfinished beyond this slice: account-backed save decision and deployed browser/device acceptance. Independent Shifting Desks art task t-032 remains claimed, with 14 Classic REDO paints awaiting actual correction.
-    owner: worker
-    claimed_by: 20261115T223200Z-shifting-desks-t049-gallery-c7e9
-    claimed_at: '2026-11-15T22:32:00Z'
+
+      Kind Robots #5227 merged on verified exact head 51f2834b9cd3aa7b16a71d8d5b28ec8665ac18d3 (all eight GitHub checks completed successful), merge ea74d2f43a30b7843637a61c8c22e441a1c98505. Art Files archive discovery/gallery, permanent unlocks, and rejected-mutation image withholding shipped to main. Further t-049 work includes account-backed save evaluation and deployed-browser acceptance; do not mark the full standard finished or claim production deploy.
   - id: t-050
     title: 'Shifting Desks achievement upgrade: 12 or more live achievements'
     status: done
@@ -611,11 +610,8 @@ tasks:
   - id: t-032
     milestone: m3
     title: 'Land, review and link the art round 13 re-renders and round 14 tone-ladder renders'
-    status: review
-    owner: worker
-    claimed_by: 20261115T134905Z-shifting-desks-t032-playtest-art-f8a2
-    claimed_at: '2026-11-15T13:49:05.940Z'
-    updated: '2026-11-15T13:53:26.682Z'
+    status: ready
+    updated: '2026-11-15T22:58:01Z'
     depends_on: t-015
     passes: 0
     stakes: reversible
@@ -673,6 +669,8 @@ tasks:
       2026-11-15 PT recovery of stale review after checking no open Shifting Desks PRs. Auto Art Generate run 43710225215 (Nov 15 PT) reports no queued Shifting Desks work and zero undelivered latest ledger slots, but 14/195 Classic and 170/196 suspended Western Cartoon visual REDO. This is genuine pending curation, not pending ArtJobs. Reopen art acceptance for a scoped evidence-backed readiness/usable-style correction; do not auto-KEEP rejected media or approve final game.
 
       2026-11-15 PT: Audited actual Auto Art Generate run 43710225215 and Round 19 contact-sheet artifact 14085491858; verified no pending render deliveries, 181 of 195 Classic images accepted with 14 explicitly rejected, and suspended Western Cartoon 26 of 196 accepted with 170 rejected. Implemented playtest-required Classic-only strict art gate with optional-style failures still reported; tests protect against accidental approval of any rejected Classic image. Wrote exact 14-subject/ArtJob/ArtImage acceptance checkpoint under art/PLAYTEST-ART-CHECKPOINT-2026-11-15.md. Still need genuine correction or scene-faithful fallback for 14 Classic REDO, original art task remains unfinished; no auto-KEEP or new ArtJobs. Implementation PR checks pending.
+
+      Recovered stale art-worker claim 20261115T134905Z-shifting-desks-t032-playtest-art-f8a2: over 9 hours old at 2026-11-15 14:56 PT, no open Shifting Desks conductor/kind_robots PR or t-032 branch. The Classic-only strict gate and Nov 15 checkpoint are already on Conductor main. 181 of 195 Classic images accepted; 14 DONE-delivered images remain REDO (no missing generation queue entries), plus suspended optional Western skin. Preserve editorial REDO, do not resubmit identical failed prompts. Resume art correction with genuine image-edit/compositing fidelity pilot, followed by verified ArtJobs, curation, link/probe and final gate.
   - id: t-033
     milestone: m3
     title: 'Tone ladder: lower floors grow more Cronenbergian (rules and station art)'
@@ -866,10 +864,7 @@ tasks:
   - id: t-046
     milestone: m5
     title: 'Reward-layer adversarial QA across all eleven endings and screen shapes'
-    status: review
-    owner: worker
-    claimed_by: 2026-11-13T161600Z-shifting-desks-t-046-p7q4
-    claimed_at: '2026-11-13T16:16:00Z'
+    status: ready
     depends_on:
       - t-040
       - t-042
@@ -878,7 +873,7 @@ tasks:
       - t-045
     passes: 0
     stakes: reversible
-    updated: '2026-11-13T16:18:00Z'
+    updated: '2026-11-15T22:58:02Z'
     note: |-
       P2, independent of art delivery per Silas 2026-11-01 PT. Simulate at least 2000 seeded diverse styles; every reachable ending shows distinct payoff and a saved evidence card. Check replay rewards, correct lock/unlock progress, saved migrations, no duplicate accounts or achievements, true raw grade values, no four-Exceptional result, keyboard/screenreader, no forced page scroll at phone/tablet/desktop, and image fallback. Run mock reviews asking whether the ending and archive feel earned, funny and replayable. Do not override t-020 owner's subjective fun and promotion gate.
 
@@ -943,6 +938,8 @@ tasks:
       Shifting Desks keyboard accessibility QA slice merged as Kind Robots #5094 (16689e15addf7f19b64e6365006f97bce1c276de), with all seven PR workflows completed successfully including the 2000-seed gameplay/reward QA, TypeScript, layout and contracts. Four Personnel File tab panels plus the Archive panel are keyboard-focusable, with new Cypress assertions for arrow/Home/End, archive modal and locked endings at 390/768/1440. The dispatched browser Cypress suite was NOT run against a deployed build; screen-reader/device acceptance and editorial funny/earned/replayable evaluation remain open. This task returns to ready for remaining QA. Human t-020 gate untouched; not playtest-ready yet.
 
       Scoped CI evidence repair: correct the Actions upload-artifact multiline path so the 2000-seed release QA report and adversarial report are both retained; missing files now fail the upload. Browser and creative acceptance remain unfinished.
+
+      Recovered stale review claim 2026-11-13T161600Z-shifting-desks-t-046-p7q4: over two days old, no open Shifting Desks PR or t-046 branch in conductor/kind_robots. Prior reward QA and CI upload fix are merged; live deployed Cypress 390/768/1440, cross-device acceptance and adversarial editorial verification remain unfinished. Keep ready, not done, until actual browser evidence is checked.
 
   - id: t-047
     milestone: m5
