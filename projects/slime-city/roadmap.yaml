@@ -1633,15 +1633,14 @@ tasks:
     claimed_at: '2026-11-15T08:54:11Z'
   - id: t-068
     title: "Clash FIGHT button clips past the right edge of the side panel at 1440px"
-    status: claimed
+    status: review
     stakes: reversible
     owner: worker
     passes: 0
-    updated: '2026-11-15T09:03:05.663Z'
-    note: >-
-      Found 2026-11-15 PT during t-017 verification: at a 1440x900 viewport, VS-vs-CPU Clash, the bottom control row
-      (deck, SOUND, UNDO, FIGHT) overflows so the FIGHT button runs past the side panel's right border. 390 and 768 fit.
-      Constrain the row (shrink/wrap labels or reduce gaps), add a layout-contract assertion at 1440, and screenshot
-      390/768/1440 after.
+    updated: '2026-11-15T09:08:10.373Z'
+    note: |-
+      Found 2026-11-15 PT during t-017 verification: at a 1440x900 viewport, VS-vs-CPU Clash, the bottom control row (deck, SOUND, UNDO, FIGHT) overflows so the FIGHT button runs past the side panel's right border. 390 and 768 fit. Constrain the row (shrink/wrap labels or reduce gaps), add a layout-contract assertion at 1440, and screenshot 390/768/1440 after.
+
+      2026-11-15 PT: Implemented 1440px Clash side-rail overflow containment on worker/slime-city-t-068-console-row-20261115T0903Z-k8q4. Sound toggle is icon-only inside the narrow console (keeps its aria-label), its basis is capped at 2.25rem, action row/buttons may shrink; static Clash contract pins 1440 rail bounds and CSS invariants. Pending implementation PR and full CI. Production is self-hosted without PR preview; actual 390/768/1440 screenshots remain unverified and should be checked after deployment.
     claimed_by: 20261115T090305Z-slime-city-t-068-k8q4
     claimed_at: '2026-11-15T09:03:05.663Z'
