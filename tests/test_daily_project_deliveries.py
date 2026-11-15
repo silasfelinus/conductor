@@ -262,3 +262,16 @@ def test_daily_digest_links_canonical_roadmap_evidence(repo):
     assert "Canonical roadmap t-101" in html
     assert "projects/zuzu-gamebook/roadmap.yaml" in html
     assert html.count("Canonical roadmap t-") == 5
+
+
+def test_historical_review_survives_when_roadmap_task_note_is_archived(repo, monkeypatch):
+    data, path = roadmap_docket(repo)
+    dd.materialize("2026-11-15", data)
+    assert dd.validate("2026-11-15", data) == []
+    path.unlink()  # The completion receipt remains in the saved pitch record.
+    assert "canonical" in " ".join(dd.validate("2026-11-15", data))
+    monkeypatch.setattr(dd, "today", lambda: "2026-11-17")
+    result = dd.payload("2026-11-15")
+    assert result["missing"] is False
+    assert len(result["entries"]) == 5
+    assert result["entries"][0]["roadmap_task"] == "t-101"
