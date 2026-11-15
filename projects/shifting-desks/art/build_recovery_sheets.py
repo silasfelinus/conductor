@@ -138,6 +138,20 @@ def sheets(rows, directory, label):
     return sum(bool(r.get("_image")) for r in rows)
 
 
+def pilot_capture_errors(pilots: dict[str, int]) -> list[str]:
+    """A recorded DONE pilot needs actual readable image evidence, not just an ID."""
+    errors = []
+    for version in (1, 2):
+        key = f"pilot_v{version}"
+        done = pilots[f"{key}_recorded_done"]
+        captured = pilots[f"{key}_captured"]
+        if captured != done:
+            errors.append(f"{key}: captured {captured}/{done} delivered ArtImages")
+        if pilots[f"{key}_done_missing_image"]:
+            errors.append(f"{key}: DONE ArtJob missing an ArtImage ID")
+    return errors
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--out", type=Path, required=True)
@@ -163,11 +177,18 @@ def main():
         count = sheets(private, args.out / f"pilot-v{version}", f"PILOT V{version}")
         pilots[f"pilot_v{version}_captured"] = count
         pilots[f"pilot_v{version}_expected"] = len(private)
+        pilots[f"pilot_v{version}_recorded_done"] = sum(
+            row["status"] == "DONE" and bool(row["image"]) for row in private
+        )
+        pilots[f"pilot_v{version}_done_missing_image"] = sum(
+            row["status"] == "DONE" and not row["image"] for row in private
+        )
     c = sheets(classic, args.out / "classic", "CLASSIC")
-    summary = {"classic_captured_newer": c, "classic_expected": len(classic), **pilots}
+    errors = pilot_capture_errors(pilots)
+    summary = {"classic_captured_newer": c, "classic_expected": len(classic), **pilots, "errors": errors}
     (args.out / "summary.json").write_text(json.dumps(summary, indent=2), encoding="utf-8")
     print(json.dumps(summary), flush=True)
-    return 0 if c == len(classic) and c == 20 else 1
+    return 0 if c == len(classic) and c == 20 and not errors else 1
 
 
 if __name__ == "__main__":
