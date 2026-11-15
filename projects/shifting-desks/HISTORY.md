@@ -402,3 +402,13 @@ Live today: 3 Achievement record(s) with this game's triggerCode prefix (checked
 
 Achievement upgrade merged in kind_robots#5055 (530b270), all checks green: 14 new + 3 kept = 17 (nine milestones, Kind Rewrite and Posthumous Affairs endings, every ending, Daily Memo run, all five jobs). verifyShiftingDesks now checks the three live codes remain rather than exactly three. Catalog seed succeeded.
 <!-- note:end t-050 -->
+
+## t-053 — Install Pillow in the ci.yml pytest-suite job so PIL-dependent shifting-desks art tests run instead of skipping
+
+<!-- note:begin t-053 -->
+Kaizen from the reviewer merge of conductor#7363 (2026-11-13 PT). The new tests/test_shifting_desks_private_pilot_capture.py failed suite collection because the Python test suite job installs only pytest and pyyaml. The reviewer fix importorskips PIL there and runs the tests in shifting-desks-art-visual-review.yml instead. Add Pillow to the pytest-suite install, fix or ticket any art test that newly runs and fails, and confirm the pilot capture tests report as passed, not skipped, in the full suite.
+
+PR #7367 installs Pillow in full pytest suite so private pilot art tests execute instead of skipping. Awaiting exact-head CI; do not mark done before green checks and merge.
+
+Verified merged Conductor PR #7367 at a24f71519c8016ea488b1da6f31e6b3f8afcdbad. Exact PR head feb312a146b6cac6c3a8bfbaaa1959c4628b47b3: Worker PR CI run 43555008422 completed success; Python test suite job 132325773204 completed success, including image-test dependencies installation and full pytest suite. Handoff template, Security Audit and task-event workflow also completed success. This closes the Pillow CI dependency task only, not t-032 art acceptance or playtest readiness.
+<!-- note:end t-053 -->
