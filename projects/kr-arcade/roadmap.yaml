@@ -2338,7 +2338,7 @@ tasks:
   - id: t-132
     milestone: m8
     title: "Gloom Invaders depth slice 1: Weather and the garden"
-    status: review
+    status: done
     passes: 0
     stakes: reversible
     note: >-
@@ -2348,10 +2348,16 @@ tasks:
       top applies. Code: kind_robots utils/arcade/games/ (registry slug gloom-invaders). Silas, 2026-10-11: "I
       need an assessment done of the other arcade games. I want the same level of quality improvements, they
       should not just be thin veneers of the old games. But newer, better, even more awesome."
+
+      2026-11-15 PT reviewer close-out: shipped in silasfelinus/kind_robots#5211 (Arcade depth
+      wave 5, squash 947a977). All 15 checks green after one re-run of the cabinet seats/saves
+      job, which had failed on verifyRescueRallyCabinet. Rescue Rally is outside this PR's
+      diff and passed on the previous head. The implementing lane's claim had expired without
+      a close-out.
     owner: worker
     claimed_by: 2026-11-15T0846Z-arcade-lane-gloom-elegant-noether
     claimed_at: '2026-11-15T08:46:50Z'
-    updated: '2026-11-15T12:53:45Z'
+    updated: '2026-11-15T12:53:47Z'
     implementation_pr: 'silasfelinus/kind_robots#5211'
 
   - id: t-133
