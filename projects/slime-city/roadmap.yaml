@@ -818,7 +818,7 @@ tasks:
   - id: t-017
     milestone: m2
     title: "Queue and verify distinct art for teams, districts and specials"
-    status: claimed
+    status: done
     depends_on: t-001
     passes: 0
     stakes: reversible
@@ -870,7 +870,18 @@ tasks:
       environment exists.
 
       2026-11-15 PT curation of SLIME-CITY-CURATION-REDO-4 (all 4 DONE, bytes fetched with auth and reviewed): kept all 4 and wired them in kind_robots#5196, (squash 2110141) after 11/11 checks green. The cards s3-bloodfairies-festival-triage 272504 (adult medic, no child in frame) and s3-ironjaw-bonus-plate 272505 (lizard paymaster, no glyphs) were the last two unillustrated cards, so all 300 playable cards now have art, and the Overworld test now asserts zero fallbacks. Story exchange/5/defeat 272506 shows grown punk fairies. The TURF rooftop court 272507 is registered as boards/turf-court only, because the district-floor contract keeps TURF on each district's Blackout floor. Whether the shared court should replace those floors is a small design call that is open to any agent. Remaining before done: screenshot the lab and Clash at 390/768/1440 in an authenticated environment. No new ArtJobs and no deploy claimed.
-    updated: '2026-11-15T07:59:38Z'
+
+      2026-11-15 PT (00:30) authenticated screenshots, lab Home and VS-vs-CPU Clash at
+      390/768/1440 on production kindrobots.org with a disposable cypress-* user (registered
+      via admin key, cleaned up after; sanctioned flow in docs/agents/frontend-
+      verification.md). Every crew, district board and hand card rendered art; zero broken
+      Slime City images, zero page errors. All 300 cards illustrated (REDO-4), so the art
+      scope of this task is met. Out-of-scope findings filed: t-067 (a signed-in non-admin
+      sees STORY SYNC ERROR because /api/slime-city/progress and /story 403 as admin-preview
+      only), t-068 (1440 Clash FIGHT button clips the right edge of the side panel). Also
+      seen: the nav project image /images/channels/projects/brainstorm.webp returns 404 site-
+      wide (not Slime City). No deploy, no ArtJobs.
+    updated: '2026-11-15T08:10:29Z'
     implementation_pr: 'silasfelinus/kind_robots#5196'
     owner: worker
     claimed_by: 2026-11-15T08:02:00Z-claude-j51a6c
