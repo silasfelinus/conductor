@@ -269,11 +269,8 @@ tasks:
   - id: t-011
     milestone: m5
     title: Continuing autonomous chapter, art and balance evolution
-    status: review
-    owner: worker
-    claimed_by: 2026-11-16T113536Z-zuzu-t011-ui-7c3b
-    claimed_at: '2026-11-16T11:35:36Z'
-    updated: '2026-11-16T11:42:56.679Z'
+    status: ready
+    updated: '2026-11-16T12:00:03.795Z'
     passes: 0
     recurring: true
     stakes: reversible
@@ -300,6 +297,8 @@ tasks:
       2026-11-14 PT: readiness dossier and roadmap index merged in conductor PR #7384 (9f5d3856); master Kind Robots issue #4139 updated with ordered blockers and close-at-playtest policy. Re-arm recurring t-011; finite t-006/t-012 art, t-007/t-008/t-013 text+combat, t-015 standards and t-009 QA still control handoff.
 
       Screenshot-requested header and choice-card overlap fix committed to Kind Robots worker/zuzu-gamebook-t-011-overlap-7c3b (ac9fce4); PR and CI review in progress. No game rules or external publishing changes.
+
+      Merged silasfelinus/kind_robots#5250 at 5b02c4d after all 9 current-head workflow suites passed. Prevented workspace greeting collision, moved the HUD below 2xl, and preserved full Zuzu choice text in card hints and accessible details. Added regression tests. No new art, game rules, schema or deployment changes; recurring playtest UI refinement task is available again.
   - id: t-012
     milestone: m5
     title: "Two-character Zuzu plates: the LoRAs exist but don't stack (Zuzu fuses with a second LoRA; abbess LoRA paints human faces)"
