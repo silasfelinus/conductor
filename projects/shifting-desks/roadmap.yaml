@@ -610,8 +610,8 @@ tasks:
   - id: t-032
     milestone: m3
     title: 'Land, review and link the art round 13 re-renders and round 14 tone-ladder renders'
-    status: ready
-    updated: '2026-11-16T01:05:00Z'
+    status: claimed
+    updated: '2026-11-16T04:41:00Z'
     depends_on: t-015
     passes: 0
     stakes: reversible
@@ -679,6 +679,9 @@ tasks:
       Implemented evidence-only SDXL img2img candidate capture for ArtJobs 69431-69433 and ArtImages 273305-273307. The workflow now checks actual retrieved image bytes, saves labeled previews and source lineage, and fails if any recorded DONE image is inaccessible. Review CI and visually judge all three images before any KEEP, production art link, or playtest promotion. No artwork was approved or published.
 
       Merged Conductor PR #7462 at 6d5feecc4f681165de628fd27219616eb73117e7 after all exact-head GitHub checks completed green on 16acf2c0. The authenticated visual evidence workflow captured 20/20 Classic and 12/12 private pilot images, with zero missing. Inspected full-size SDXL ArtImages 273305, 273306, 273307 (ArtJobs 69431-69433), 0 KEEP/3 REDO: no rear eyes, no organic door ribs, and only two arms in tank. Recorded verdicts, individual reasons, source provenance and screenshot artifact 14189401216 in art/SDXL-IMG2IMG-CORRECTION-PILOT-1.yaml and the visual review report. No new job, live image overwrite or deployment. Next: targeted masked compositing/inpainting, full-scene acceptance and linkage for the fourteen original Classic REDO scenes; browser QA still open. Do not mark t-032 done or promote playtest.
+    owner: worker
+    claimed_by: 2026-11-16T044100Z-shifting-desks-t032-krea-gpt6-p43
+    claimed_at: '2026-11-16T04:41:00Z'
   - id: t-033
     milestone: m3
     title: 'Tone ladder: lower floors grow more Cronenbergian (rules and station art)'
