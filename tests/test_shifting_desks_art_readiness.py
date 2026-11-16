@@ -61,7 +61,6 @@ def test_classic_and_western_have_separate_acceptance(tmp_path):
     assert report["styles"]["classic"]["accepted"] == 1
     assert report["styles"]["western-cartoon"]["unreviewed"] == 1
     assert report["ready"], "unselected optional art cannot block the base game"
-    assert not report["catalog_ready"]
     assert report["required_blocked"] == []
     assert len(report["optional_blocked"]) == 1
     assert report["catalog_ready"] is False
