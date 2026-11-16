@@ -47,7 +47,7 @@ def test_remaining_source_images_match_delivered_classic_round19_not_prototypes(
     }
     assert not is_auto_ledger(later)
     assert later["auto_submit"] is False
-    assert later["status"] == "staged-awaiting-three-image-pilot-review"
+    assert later["status"] == "staged-awaiting-localized-inpaint"
     assert later["is_public"] is False
     assert later["task"] == "t-032"
     assert later["cast_loras"] is False
