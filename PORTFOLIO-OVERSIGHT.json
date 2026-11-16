@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-11-16T06:45:13.082888+00:00",
+  "generated_at": "2026-11-16T22:17:18.946530+00:00",
   "summary": {
     "status": "clean",
     "roadmap_errors": 0,
-    "roadmap_warnings": 76,
+    "roadmap_warnings": 84,
     "project_forward_drift": 0,
     "project_reverse_orphans": 0,
     "project_unresolved": null,
@@ -15,7 +15,7 @@
   "openai_scheduled_agent": {
     "overdue": true,
     "last_activity": "2026-10-25T01:09:44+00:00",
-    "hours_since": 533.59,
+    "hours_since": 549.13,
     "stale_hours": 6.0,
     "marker": "openai-scheduled-",
     "note": "Legacy git diagnostic only: OPENAI-SCHEDULED-HEARTBEAT.json and coordination markers do not determine ChatGPT scheduler health. Native ChatGPT task metadata is authoritative for scheduler liveness."
@@ -35,21 +35,21 @@
     "unresolved": null
   },
   "roadmap_audit": {
-    "generated_at": "2026-11-16T06:45:13.082893+00:00",
+    "generated_at": "2026-11-16T22:17:18.946536+00:00",
     "summary": {
-      "roadmaps": 95,
-      "active_projects": 19,
+      "roadmaps": 96,
+      "active_projects": 20,
       "continuous_projects": 15,
       "playtest_projects": 2,
-      "tasks": 3010,
-      "ready": 231,
-      "waiting": 193,
-      "needs_human": 39,
-      "in_progress": 51,
-      "done": 2419,
+      "tasks": 3031,
+      "ready": 233,
+      "waiting": 201,
+      "needs_human": 40,
+      "in_progress": 56,
+      "done": 2424,
       "errors": 0,
-      "warnings": 76,
-      "info": 132
+      "warnings": 84,
+      "info": 133
     },
     "errors": [],
     "warnings": [
@@ -139,10 +139,17 @@
       },
       {
         "severity": "warning",
+        "code": "STALE_CLAIM_FIELDS",
+        "project": "crystal-street",
+        "task": "t-024",
+        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
+      },
+      {
+        "severity": "warning",
         "code": "STALE_IN_PROGRESS",
         "project": "cthulhuquarium",
         "task": "t-099",
-        "message": "Task has remained claimed for 10 days."
+        "message": "Task has remained claimed for 11 days."
       },
       {
         "severity": "warning",
@@ -150,6 +157,48 @@
         "project": "dead-air",
         "task": "t-004",
         "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
+      },
+      {
+        "severity": "warning",
+        "code": "IN_PROGRESS_WITHOUT_TIMESTAMP",
+        "project": "deepheart",
+        "task": "t-001",
+        "message": "Claimed/review task has no parseable updated timestamp."
+      },
+      {
+        "severity": "warning",
+        "code": "IN_PROGRESS_WITHOUT_TIMESTAMP",
+        "project": "deepheart",
+        "task": "t-002",
+        "message": "Claimed/review task has no parseable updated timestamp."
+      },
+      {
+        "severity": "warning",
+        "code": "IN_PROGRESS_WITHOUT_TIMESTAMP",
+        "project": "deepheart",
+        "task": "t-003",
+        "message": "Claimed/review task has no parseable updated timestamp."
+      },
+      {
+        "severity": "warning",
+        "code": "IN_PROGRESS_WITHOUT_TIMESTAMP",
+        "project": "deepheart",
+        "task": "t-004",
+        "message": "Claimed/review task has no parseable updated timestamp."
+      },
+      {
+        "severity": "warning",
+        "code": "IN_PROGRESS_WITHOUT_TIMESTAMP",
+        "project": "deepheart",
+        "task": "t-005",
+        "message": "Claimed/review task has no parseable updated timestamp."
+      },
+      {
+        "severity": "warning",
+        "code": "IN_PROGRESS_WITHOUT_TIMESTAMP",
+        "project": "deepheart",
+        "task": "t-011",
+        "message": "Claimed/review task has no parseable updated timestamp."
       },
       {
         "severity": "warning",
@@ -205,7 +254,7 @@
         "code": "STALE_IN_PROGRESS",
         "project": "emperor-of-dust",
         "task": "t-060",
-        "message": "Task has remained review for 20 days."
+        "message": "Task has remained review for 21 days."
       },
       {
         "severity": "warning",
@@ -233,7 +282,7 @@
         "code": "STALE_IN_PROGRESS",
         "project": "emperor-of-dust",
         "task": "t-067",
-        "message": "Task has remained review for 3 days."
+        "message": "Task has remained review for 4 days."
       },
       {
         "severity": "warning",
@@ -289,21 +338,21 @@
         "code": "STALE_IN_PROGRESS",
         "project": "hybridizer",
         "task": "t-009",
-        "message": "Task has remained review for 13 days."
+        "message": "Task has remained review for 14 days."
       },
       {
         "severity": "warning",
         "code": "STALE_IN_PROGRESS",
         "project": "interface-vision",
         "task": "t-105",
-        "message": "Task has remained review for 3 days."
+        "message": "Task has remained review for 4 days."
       },
       {
         "severity": "warning",
         "code": "STALE_IN_PROGRESS",
         "project": "interface-vision",
         "task": "t-149",
-        "message": "Task has remained review for 26 days."
+        "message": "Task has remained review for 27 days."
       },
       {
         "severity": "warning",
@@ -370,6 +419,13 @@
       },
       {
         "severity": "warning",
+        "code": "STALE_IN_PROGRESS",
+        "project": "memory-dungeon",
+        "task": "t-020",
+        "message": "Task has remained claimed for 3 days."
+      },
+      {
+        "severity": "warning",
         "code": "STALE_CLAIM_FIELDS",
         "project": "memory-dungeon",
         "task": "t-029",
@@ -379,7 +435,21 @@
         "severity": "warning",
         "code": "STALE_IN_PROGRESS",
         "project": "memory-dungeon",
+        "task": "t-030",
+        "message": "Task has remained claimed for 3 days."
+      },
+      {
+        "severity": "warning",
+        "code": "STALE_IN_PROGRESS",
+        "project": "memory-dungeon",
         "task": "t-049",
+        "message": "Task has remained review for 4 days."
+      },
+      {
+        "severity": "warning",
+        "code": "STALE_IN_PROGRESS",
+        "project": "memory-dungeon",
+        "task": "t-055",
         "message": "Task has remained review for 3 days."
       },
       {
@@ -387,14 +457,14 @@
         "code": "STALE_IN_PROGRESS",
         "project": "memory-dungeon",
         "task": "t-068",
-        "message": "Task has remained claimed for 3 days."
+        "message": "Task has remained claimed for 4 days."
       },
       {
         "severity": "warning",
         "code": "STALE_IN_PROGRESS",
         "project": "memory-dungeon",
         "task": "t-071",
-        "message": "Task has remained claimed for 3 days."
+        "message": "Task has remained claimed for 4 days."
       },
       {
         "severity": "warning",
@@ -429,14 +499,14 @@
         "code": "STALE_IN_PROGRESS",
         "project": "rainbow-bullet-hell-space-princess",
         "task": "t-034",
-        "message": "Task has remained review for 21 days."
+        "message": "Task has remained review for 22 days."
       },
       {
         "severity": "warning",
         "code": "STALE_IN_PROGRESS",
         "project": "ruler-hooked",
         "task": "t-057",
-        "message": "Task has remained review for 9 days."
+        "message": "Task has remained review for 10 days."
       },
       {
         "severity": "warning",
@@ -464,7 +534,7 @@
         "code": "STALE_IN_PROGRESS",
         "project": "save-the-plumber",
         "task": "t-028",
-        "message": "Task has remained review for 3 days."
+        "message": "Task has remained review for 4 days."
       },
       {
         "severity": "warning",
@@ -478,14 +548,14 @@
         "code": "STALE_IN_PROGRESS",
         "project": "shifting-desks",
         "task": "t-051",
-        "message": "Task has remained claimed for 3 days."
+        "message": "Task has remained claimed for 4 days."
       },
       {
         "severity": "warning",
         "code": "STALE_IN_PROGRESS",
         "project": "shifting-desks",
         "task": "t-052",
-        "message": "Task has remained claimed for 3 days."
+        "message": "Task has remained claimed for 4 days."
       },
       {
         "severity": "warning",
@@ -510,20 +580,6 @@
       },
       {
         "severity": "warning",
-        "code": "STALE_CLAIM_FIELDS",
-        "project": "slime-city",
-        "task": "t-069",
-        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
-      },
-      {
-        "severity": "warning",
-        "code": "STALE_CLAIM_FIELDS",
-        "project": "slime-city",
-        "task": "t-070",
-        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
-      },
-      {
-        "severity": "warning",
         "code": "POSSIBLY_UNNECESSARY_GATE",
         "project": "tzaddik-gallery",
         "task": "t-013",
@@ -541,14 +597,14 @@
         "code": "STALE_IN_PROGRESS",
         "project": "weird-humboldt",
         "task": "t-020",
-        "message": "Task has remained review for 12 days."
+        "message": "Task has remained review for 13 days."
       },
       {
         "severity": "warning",
         "code": "STALE_IN_PROGRESS",
         "project": "weird-humboldt",
         "task": "t-027",
-        "message": "Task has remained review for 6 days."
+        "message": "Task has remained review for 7 days."
       },
       {
         "severity": "warning",
