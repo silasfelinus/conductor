@@ -858,3 +858,48 @@ def test_krea2_source_is_fetched_once_and_prompt_only_is_still_supported(tmp_pat
     body = enq.build_request(KREA_EDIT_LEDGER, ledger["lanes"][0], prompt_only)
     assert "sourceImageBase64" not in body
     assert "denoise" not in body
+
+
+def test_sdxl_targeted_api_payload_has_strict_regions_and_deployment_guard():
+    ledger = {
+        "project_slug": "shifting-desks", "is_public": False,
+        "designer": "Shifting Desks QA", "priority": 85,
+    }
+    lane = {
+        "engine": "sdxl-targeted", "key": "sdxl-local", "prompt": "prose",
+        "checkpoint": "SDXL/dreamshaperXL_v21TurboDPMSDE.safetensors",
+        "steps": 8, "cfg": 2, "mode": "crop",
+    }
+    subject = {
+        "key": "three-arm-tank", "source_image_id": 273631,
+        "size": "832x1216",
+        "prompt_prose": "An office worker has three fully jointed arms with a third holding an orange pen.",
+        "targets": [{"type": "box", "box": [0.32, 0.47, 0.84, 0.82], "bleedPx": 16, "featherPx": 10}],
+        "denoise": 0.72, "seed": 932821,
+    }
+    source = "data:image/png;base64,YWJj"
+    body = enq.build_targeted_request(ledger, lane, subject, source)
+    assert body["engine"] == "sdxl"
+    assert body["imageData"] == source
+    assert body["targets"] == subject["targets"]
+    assert body["denoise"] == 0.72
+    assert body["steps"] == 8 and body["cfg"] == 2
+    assert body["isPublic"] is False
+    assert body["projectSlug"] == "shifting-desks"
+    assert enq.request_url(body).endswith("/api/art/inpaint-targets")
+    assert enq.request_url({"maskData": source}).endswith("/api/comfy/kontext/enqueue")
+    assert enq.request_url({"engine": "krea2"}).endswith("/api/art/enqueue")
+    try:
+        enq.build_targeted_request(ledger, lane, subject, None)
+    except ValueError as exc:
+        assert "real ArtImage" in str(exc)
+    else:
+        raise AssertionError("target edits must never silently lose source bytes")
+    try:
+        enq.build_targeted_request({**ledger, "is_public": True}, lane, subject, source)
+    except ValueError as exc:
+        assert "private" in str(exc)
+    else:
+        raise AssertionError("a private correction cannot be published")
+
+

@@ -1,0 +1,56 @@
+# Shifting Desks t-032: one LAST missing relationship after V5 full-size review.
+# V5 authentic artifact 14213687064 accepted rear-eyes 273629 and organic
+# doors 273630. This source 273631 still has only two arms.
+# New Kind Robots targeted SDXL API PR #5249 MUST be merged and independently
+# verified deployed on Alexandria BEFORE auto_submit can become true.
+# No public Classic path, entity auto-link or speculative KEEP allowed.
+round: shifting-desks-sdxl-targeted-inpaint-pilot-1
+project_slug: shifting-desks
+task: t-032
+designer: Shifting Desks anatomical correction
+auto_submit: false
+priority: 85
+is_public: false
+is_mature: false
+cast_loras: false
+status: staged-awaiting-targeted-sdxl-deployment
+lanes:
+- key: sdxl-targeted-local
+  engine: sdxl-targeted
+  label: DreamShaper XL Turbo / explicit source-pixel-locked target regions
+  prompt: prose
+  checkpoint: SDXL/dreamshaperXL_v21TurboDPMSDE.safetensors
+  mode: crop
+  steps: 8
+  cfg: 2
+  denoise: 0.72
+  bleed_px: 16
+  feather_px: 10
+  context_px: 144
+subjects:
+- key: three-arm-tank
+  title: A separately articulated third arm growing from the clerk torso
+  source_image_id: 273631
+  source_art_job_id: 69458
+  source_verdict: REDO
+  source_evidence_artifact_id: 14213687064
+  size: 832x1248
+  seed: 932821
+  targets:
+  - type: box
+    box: [0.36, 0.58, 0.70, 0.80]
+    bleedPx: 16
+    featherPx: 10
+  asset: shifting-desks/private-sdxl-targeted-inpaint-pilot-1/third-arm
+  pass: One smiling clerk in one glass tank with three distinct complete arms and three attached hands, the extra torso-grown hand visibly holding an orange pen.
+  fail: Two normal arms, an extra hand with no elbow and shoulder, misplaced pen or repeated limb instead of the original two plus one extra.
+  prompt_prose: >-
+    A cheerful illustrated white-shirted office clerk floats inside a single
+    green-filled glass laboratory tank. His usual left arm is raised beside his
+    head; his usual right arm rests below. An additional completely separate
+    third human arm emerges from the right center of his white shirt and extends
+    out across his torso, with visible shoulder connection, forearm, elbow,
+    wrist and five-fingered hand clasping one bright orange ballpoint pen.
+    The three human arms and their hands are clearly separate inside the tank.
+  jobs: {}
+  art: {}

@@ -81,7 +81,7 @@ VIDEO_ENGINES = ("wan", "ltx")
 # Engines that take the subject's source_image_id as an input image. sdxl-img2img
 # (zuzu-shifting-lands t-029) repaints an approved render on the house checkpoint, so
 # the cast and style hold while the scene changes; Kontext swaps in Flux.
-SOURCE_ENGINES = ("kontext", "sdxl-img2img", *VIDEO_ENGINES)
+SOURCE_ENGINES = ("kontext", "sdxl-img2img", "sdxl-targeted", *VIDEO_ENGINES)
 SDXL_ENGINES = ("comfy", "sdxl-img2img")
 
 
@@ -195,6 +195,8 @@ def build_request(ledger, lane, subject, source_image=None, last_image=None):
     Kontext lane sends it as the image to edit, a video lane as the first frame
     (with ``last_image``, the subject's ``last_image_id``, as the last).
     """
+    if lane["engine"] == "sdxl-targeted":
+        raise ValueError("Use build_targeted_request for the SDXL region-targeted editing API")
     width, height = core.parse_size(subject.get("size"))
     body = {
         "engine": lane["engine"],
@@ -575,9 +577,63 @@ def build_masked_request(ledger, lane, subject, source_image, mask):
     return body
 
 
+def build_targeted_request(ledger, lane, subject, source_image):
+    """Reusable region/bleed API payload. No mask rendering in Conductor."""
+    if not source_image or not subject.get("source_image_id"):
+        raise ValueError(f"{subject.get('key')}: targeted SDXL requires real ArtImage source bytes")
+    if ledger.get("is_public") is True or subject.get("entity_art") or subject.get("target_path"):
+        raise ValueError("Targeted correction must stay private and cannot auto-link entity/Classic art")
+    targets = subject.get("targets")
+    if not isinstance(targets, list) or not targets or len(targets) > 12:
+        raise ValueError(f"{subject.get('key')}: provide 1-12 explicit box/polygon targets")
+    for target in targets:
+        if target.get("type") == "box":
+            box = target.get("box")
+            if not isinstance(box, (list, tuple)) or len(box) != 4:
+                raise ValueError("target box must have four coordinates")
+            l, t, r, b = (float(v) for v in box)
+            if not (0 <= l < r <= 1 and 0 <= t < b <= 1):
+                raise ValueError("target box must be valid normalized fractions")
+        elif target.get("type") == "polygon":
+            pts = target.get("points")
+            if not isinstance(pts, list) or len(pts) < 3:
+                raise ValueError("target polygon needs at least three points")
+        else:
+            raise ValueError("target type must be box or polygon")
+    body = {
+        "engine": "sdxl",
+        "imageData": source_image,
+        "prompt": compose_prompt(lane, subject),
+        "targets": targets,
+        "mode": subject.get("mode", lane.get("mode", "crop")),
+        "bleedPx": subject.get("bleed_px", lane.get("bleed_px", 12)),
+        "featherPx": subject.get("feather_px", lane.get("feather_px", 8)),
+        "contextPx": subject.get("context_px", lane.get("context_px", 128)),
+        "steps": subject.get("steps", lane.get("steps", 8)),
+        "cfg": subject.get("cfg", lane.get("cfg", 2)),
+        "denoise": subject.get("denoise", lane.get("denoise", 0.70)),
+        "checkpoint": subject.get("checkpoint", lane.get("checkpoint")),
+        "seed": int(subject.get("seed", lane.get("seed", 932821))),
+        "isPublic": False,
+        "isMature": bool(ledger.get("is_mature", False)),
+        "projectSlug": ledger.get("project_slug"),
+        "priority": subject.get("priority", ledger.get("priority", 85)),
+    }
+    if subject.get("negative"):
+        body["negativePrompt"] = str(subject["negative"])
+    if ledger.get("designer"):
+        body["designer"] = ledger["designer"]
+    if not body["checkpoint"]:
+        raise ValueError("SDXL targeted edits require an explicit checkpoint path")
+    return body
+
+
 def request_url(body):
     """Masked Kontext edits use the Kontext queue route; everything else the art enqueue route."""
-    route = "/api/comfy/kontext/enqueue" if "maskData" in body else "/api/art/enqueue"
+    if body.get("engine") == "sdxl" and body.get("targets"):
+        route = "/api/art/inpaint-targets"
+    else:
+        route = "/api/comfy/kontext/enqueue" if "maskData" in body else "/api/art/enqueue"
     return f"{core.KR_BASE_URL}{route}"
 
 
@@ -618,7 +674,9 @@ def submit(path, header, ledger, cells, post=None, fetch_source=None, live=None)
             source = compose_source(subject, fetch)
         if lane["engine"] in VIDEO_ENGINES and subject.get("last_image_id"):
             last = fetch(subject["last_image_id"])
-        if source and subject.get("mask_box"):
+        if lane["engine"] == "sdxl-targeted":
+            body = build_targeted_request(ledger, lane, subject, source)
+        elif source and subject.get("mask_box"):
             body = build_masked_request(ledger, lane, subject, source, make_mask(source, subject["mask_box"]))
         else:
             body = build_request(ledger, lane, subject, source, last)
@@ -722,7 +780,11 @@ def main(argv=None):
                 or (lane["engine"] == "krea2" and (subject.get("source_image_id") or subject.get("source_url")))
                 else None
             )
-            body = build_request(ledger, lane, subject, source)
+            body = (
+                build_targeted_request(ledger, lane, subject, source)
+                if lane["engine"] == "sdxl-targeted"
+                else build_request(ledger, lane, subject, source)
+            )
             if lane["engine"] in VIDEO_ENGINES:
                 last = f" -> ArtImage {subject['last_image_id']}" if subject.get("last_image_id") else ""
                 print(f"    frames: ArtImage {subject.get('source_image_id')}{last}, {body['durationSeconds']}s")
@@ -730,8 +792,14 @@ def main(argv=None):
                 extra = f", reference ArtImage {subject['reference_image_id']}" if subject.get("reference_image_id") else ""
                 crop = f", crop {subject['source_crop']}" if subject.get("source_crop") else ""
                 crop += f", masked {subject['mask_box']} via /api/comfy/kontext/enqueue" if subject.get("mask_box") else ""
+                crop += ", explicit target regions via /api/art/inpaint-targets" if lane["engine"] == "sdxl-targeted" else ""
                 print(f"    source: ArtImage {subject.get('source_image_id')}{crop}{extra}")
-            print(f"  {subject['key']} [{lane['key']}] {body['width']}x{body['height']} \"{body['promptString'][:70]}\"")
+            printable = body.get("promptString") or body.get("prompt") or ""
+            if "width" in body and "height" in body:
+                width, height = body["width"], body["height"]
+            else:
+                width, height = core.parse_size(subject.get("size"))
+            print(f'  {subject["key"]} [{lane["key"]}] {width}x{height} "{printable[:70]}"')
             if rules:
                 print(f"    REJECTED by the prompt contract {rules}: --live will skip this cell")
         return 0

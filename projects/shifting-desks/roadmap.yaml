@@ -1151,3 +1151,17 @@ tasks:
     claimed_by: 2026-11-16T010300Z-shifting-desks-t-056-mcaqgx
     claimed_at: '2026-11-16T01:02:03Z'
     implementation_pr: 'silasfelinus/conductor#7464'
+  - id: t-057
+    title: 'Test that enqueue_art_requests.py dry-run prints the request body size for non-targeted lanes and the subject size for sdxl-targeted lanes'
+    status: ready
+    milestone: m3
+    stakes: reversible
+    passes: 0
+    depends_on: []
+    updated: '2026-11-16T13:20:00Z'
+    note: |-
+      Reviewer kaizen from the review of the t-032 V5-verdict/SDXL-targets worker branch,
+      2026-11-16 PT. The branch switched the dry-run print to core.parse_size(subject size),
+      silently dropping lane-derived body width/height; the Reviewer restored body size when
+      present. Add a capsys test in tests/test_enqueue_art_requests.py covering both paths.
+      Test-only, one file.
