@@ -48,7 +48,7 @@ def test_pending_v2_jobs_cannot_be_passed_off_as_delivered(monkeypatch):
 
 def test_unknown_pilot_version_fails_closed():
     with pytest.raises(ValueError, match="unsupported"):
-        list(module.pilot_rows(4))
+        list(module.pilot_rows(5))
 
 
 def test_done_pilot_artimages_cannot_disappear_from_review_artifact():
@@ -59,6 +59,8 @@ def test_done_pilot_artimages_cannot_disappear_from_review_artifact():
         "pilot_v2_done_missing_image": 0,
         "pilot_v3_captured": 3, "pilot_v3_recorded_done": 3,
         "pilot_v3_done_missing_image": 0,
+        "pilot_v4_captured": 0, "pilot_v4_recorded_done": 0,
+        "pilot_v4_done_missing_image": 0,
     }
     assert module.pilot_capture_errors(good) == []
     missing = {**good, "pilot_v2_captured": 2}
@@ -79,6 +81,8 @@ def test_queued_pilot_is_not_counted_as_a_failed_delivery():
         "pilot_v2_done_missing_image": 0,
         "pilot_v3_captured": 3, "pilot_v3_recorded_done": 3,
         "pilot_v3_done_missing_image": 0,
+        "pilot_v4_captured": 0, "pilot_v4_recorded_done": 0,
+        "pilot_v4_done_missing_image": 0,
     }
     assert module.pilot_capture_errors(report) == []
 
@@ -121,7 +125,61 @@ def test_img2img_done_image_missing_from_evidence_is_blocking():
         "pilot_v2_done_missing_image": 0,
         "pilot_v3_captured": 2, "pilot_v3_recorded_done": 3,
         "pilot_v3_done_missing_image": 0,
+        "pilot_v4_captured": 0, "pilot_v4_recorded_done": 0,
+        "pilot_v4_done_missing_image": 0,
     }
     assert module.pilot_capture_errors(report) == [
         "pilot_v3: captured 2/3 delivered ArtImages"
     ]
+
+
+def test_v4_krea_img2img_pilot_is_private_source_referenced_and_replay_safe():
+    rows = list(module.pilot_rows(4))
+    assert len(rows) == 3
+    assert {row["key"] for row in rows} == {
+        "rear-eyes--krea2-source-edit",
+        "living-doors--krea2-source-edit",
+        "three-arm-tank--krea2-source-edit",
+    }
+    assert {row["source_image_id"] for row in rows} == {
+        271721, 271722, 271723,
+    }
+    assert {row["source_art_job_id"] for row in rows} == {
+        69090, 69091, 69092,
+    }
+    assert all(row["_round"] == "PILOT-V4" for row in rows)
+    assert all(row["pass"] and row["fail"] for row in rows)
+    assert all(row["lane"] == "krea2-source-edit" for row in rows)
+    assert all(row["checkpoint"] is None for row in rows)
+    assert all(0.6 <= row["denoise"] <= 0.72 for row in rows)
+    assert all(row["asset"].startswith("shifting-desks/private-") for row in rows)
+    assert all(row["job"] is None or row["job"] > 0 for row in rows)
+    assert all(row["image"] is None or row["image"] > 0 for row in rows)
+    assert all(row["verdict"] in (None, "KEEP", "REDO") for row in rows)
+
+
+def test_v4_finished_art_without_image_is_not_marked_captured():
+    report = {
+        "pilot_v1_captured": 6, "pilot_v1_recorded_done": 6,
+        "pilot_v1_done_missing_image": 0,
+        "pilot_v2_captured": 3, "pilot_v2_recorded_done": 3,
+        "pilot_v2_done_missing_image": 0,
+        "pilot_v3_captured": 3, "pilot_v3_recorded_done": 3,
+        "pilot_v3_done_missing_image": 0,
+        "pilot_v4_captured": 1, "pilot_v4_recorded_done": 2,
+        "pilot_v4_done_missing_image": 1,
+    }
+    assert module.pilot_capture_errors(report) == [
+        "pilot_v4: captured 1/2 delivered ArtImages",
+        "pilot_v4: DONE ArtJob missing an ArtImage ID",
+    ]
+
+
+def test_visual_review_runs_after_art_sweep_status_checkpoints_skip_ci():
+    workflow = (
+        ROOT / ".github/workflows/shifting-desks-art-visual-review.yml"
+    ).read_text(encoding="utf-8")
+    assert "workflow_run:" in workflow
+    assert 'workflows: ["Auto Art Generate"]' in workflow
+    assert "github.event.workflow_run.head_branch == 'main'" in workflow
+    assert '"projects/shifting-desks/art/KREA-IMG2IMG-CORRECTION-PILOT-1.yaml"' in workflow

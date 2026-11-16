@@ -1,19 +1,21 @@
 # Private Krea 2 Turbo img2img pilot for Shifting Desks t-032.
 # This uses the *existing* Kind Robots Krea 2 Comfy model, not the Krea website.
-# Backend must first deploy the Krea VAEEncode source-image fix from Kind Robots.
-# Keep auto_submit false until deployed capability is independently verified;
-# the previous live API silently ignored krea2 sourceImageBase64.
+# Proven live backend: Kind Robots #5234 / commit 61737d7900cdb59136ea2508f709ec66a5329a32.
+# Alexandria /api/version returned that exact commit at 2026-11-16T08:06:11Z;
+# verified by workflow https://github.com/silasfelinus/kind_robots/actions/runs/43827962036 .
+# Activate only these three private, source-referenced Krea2 jobs. Keep all
+# production Classic targets untouched until independent visual KEEP.
 # These three renders are candidates only: never overwrite Classic live art.
 round: shifting-desks-krea-img2img-pilot-1
 project_slug: shifting-desks
 task: t-032
 designer: Shifting Desks corrective art
-auto_submit: false
+auto_submit: true
 priority: 85
 is_public: false
 is_mature: false
 cast_loras: false
-status: awaiting-krea-img2img-deployment
+status: queued-private-krea-img2img-pilot
 lanes:
 - key: krea2-source-edit
   label: Krea 2 Turbo / source image edit / isolated fidelity
