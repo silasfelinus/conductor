@@ -3198,5 +3198,19 @@ tasks:
 
     Full history: projects/conductor/HISTORY.md#t-212
   implementation_pr: 'silasfelinus/conductor#7424'
+- id: t-213
+  milestone: m1
+  title: 'Have the Worker PR handoff workflow post the missing-heading skeleton as a PR comment so connector-only Workers can fix the body without a Reviewer rewrite'
+  status: ready
+  stakes: reversible
+  passes: 0
+  depends_on: []
+  updated: '2026-11-16T01:15:00Z'
+  note: >-
+    Reviewer kaizen 2026-11-15 PT from conductor#7461/#7464 (shifting-desks/t-055, t-056). The
+    handoff check failed on four connector-opened worker PRs today (shifting-desks TALKBACK) and
+    each time a Reviewer rewrote the body by hand; .github/pull_request_template.md (t-072)
+    does not reach connector-opened PRs. On failure, have pr-handoff-template.yml comment once
+    with the template headings filled from the existing body, without editing the body itself.
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
