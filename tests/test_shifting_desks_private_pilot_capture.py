@@ -173,3 +173,13 @@ def test_v4_finished_art_without_image_is_not_marked_captured():
         "pilot_v4: captured 1/2 delivered ArtImages",
         "pilot_v4: DONE ArtJob missing an ArtImage ID",
     ]
+
+
+def test_visual_review_runs_after_art_sweep_status_checkpoints_skip_ci():
+    workflow = (
+        ROOT / ".github/workflows/shifting-desks-art-visual-review.yml"
+    ).read_text(encoding="utf-8")
+    assert "workflow_run:" in workflow
+    assert 'workflows: ["Auto Art Generate"]' in workflow
+    assert "github.event.workflow_run.head_branch == 'main'" in workflow
+    assert '"projects/shifting-desks/art/KREA-IMG2IMG-CORRECTION-PILOT-1.yaml"' in workflow

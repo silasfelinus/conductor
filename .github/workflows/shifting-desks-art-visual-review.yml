@@ -4,6 +4,12 @@ on:
     branches: [main]
     paths:
       - "projects/shifting-desks/art/KREA-IMG2IMG-CORRECTION-PILOT-1.yaml"
+  # ArtJob and ArtImage status checkpoints on main use [skip ci], so a push
+  # filter alone cannot see completed Krea candidates. Capture after the
+  # whole art sweep instead, even if unrelated queue cells fail.
+  workflow_run:
+    workflows: ["Auto Art Generate"]
+    types: [completed]
   pull_request:
     paths:
       - ".github/workflows/shifting-desks-art-visual-review.yml"
@@ -24,6 +30,9 @@ permissions:
 
 jobs:
   visual-evidence:
+    if: >-
+      github.event_name != 'workflow_run' ||
+      github.event.workflow_run.head_branch == 'main'
     runs-on: ubuntu-latest
     timeout-minutes: 18
     steps:
