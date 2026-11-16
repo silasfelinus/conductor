@@ -239,3 +239,13 @@
 **What worked:** a strong encounter packet. Every scene has a nonviolent path and a no-reward path. The forged-flag gates are explicit (NS-03 transfer, NS-04 return), e04-first routing is protected, and the matrix is executable, not aspirational.
 
 **What to improve:** this is the seventh handoff miss. t-072 (built in this session) adds `.github/pull_request_template.md`, so the next connector-opened PR should start from the right headings. Also, the Night Shift `nightShift.evidence` ledger and the T029 Earth-pair reducer should share one witnessed-evidence source when they are implemented.
+
+## 2026-11-15 PT | Reviewer | memory-dungeon/t-025 | Conductor #7459
+
+**Decision:** squash-merged head `5c6a297` as `51d64c2` with every check green. Docs-only companion to the Night Shift packet: complete dialogue, immediate responses, delayed callbacks and locked-choice reasons for the four e03/e04 scenes. The earlier red (Python suite + `validate-pr`) was not this diff: main briefly carried duplicate `owner`/`claimed_by`/`claimed_at` keys in this roadmap and slime-city's, plus a then-stale shifting-desks pilot test. Main validated clean again, so the Reviewer updated the branch and CI went green. Triaged **transient**, no pass spent. t-025 returns to `ready` (claim fields cleared), as the Worker asked.
+
+**What worked:** handoff headings were correct first time, the first clean one in this log after t-072's template landed. The scenes keep stable choice IDs, a no-reward option per scene and a no-double-penalty rule for repeated suspicion.
+
+**What to improve:** the beats still name evidence keys ad hoc; bind them to one typed ledger before runtime work (kaizen t-073). Same-day housekeeping: archived t-029's 7.1KB live note (round 2) and one done note so the roadmap file is back under 150KB.
+
+**Kaizen task:** memory-dungeon/t-073, shared witnessed-evidence ledger.
