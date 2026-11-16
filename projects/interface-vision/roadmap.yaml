@@ -2571,3 +2571,15 @@ tasks:
     Silas's 2026-11-16 PT screenshot feedback: remove the giant Terror on Crystal Street opening promo (keep its game entry), collapse the Against Malaria Foundation call to a one-row link, and replace weak Arcade/Shifting Desks/other homepage highlights with game-specific, cinematic, painted-image-first presentation. Preserve destination routes, the one bounded gallery scroll owner, the optional Advert Studio gallery and cross-width responsiveness. Deliver implementation as a Kind Robots PR; any newly queued illustration remains independently tracked until rendered and chosen.
 
     Visitor homepage source and contract changes opened as silasfelinus/kind_robots#5244 on 2026-11-16 PT. Removes oversized Crystal Street intro, provides a one-row AMF link, redesigns the game art gallery, replaces Arcade and Elevator fallbacks, and connects to selected Advert Studio hero art. An Arcade hero slot is registered for a future render. No ArtJob has been queued or selected; CI and visual verification remain pending.
+
+- id: t-156
+  milestone: m6
+  title: Paint, deliver, and curate AAA flagship advert hero art
+  status: ready
+  owner:
+  passes: 0
+  stakes: reversible
+  recurring: false
+  depends_on: t-155
+  note: >-
+    Follow-up to Silas's 2026-11-16 PT homepage image critique and kind_robots#5244. Code redesign alone does not deliver the grander artwork he asked for. Use Kind Robots's durable ArtJob queue to produce distinct premium wide cinematic illustrations for Kind Robots Arcade (art slot adverts/arcade/hero) and The Elevator Only Goes Down (art slot adverts/the-elevator-only-goes-down/hero). The Arcade should be an impossible, lavish hand-painted hall whose real cabinet worlds spill into the frame, not a generic pair of cute gamers at machines; the Elevator should have vertiginous architectural scale and real dark comedy, not a bland flat office. Reuse existing canon and consider Krea image-to-image for precise revisions. Queue via approved API/wrapper with prompt, slot, artist, engine krea2, 1344x768 and an idempotent request key; record ArtJob IDs. Monitor render, select/attach finished ArtImages through Advert Studio without assuming queued=delivered, and verify their final URLs. Audit other flagship tiles (Prom of Doom, Space Couch, Slime City, Ecotone, Save the Plumber, Memory Dungeon) for equally weak artwork and queue distinct improvements when justified; preserve old art until delivered. Validate the first-screen display at 390, 768, and 1440 pixels. Do not claim new art generated based on the prompt or PR alone.
