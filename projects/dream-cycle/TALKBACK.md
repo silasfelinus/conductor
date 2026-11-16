@@ -587,3 +587,10 @@ Three-field diff in `projects/dream-cycle/roadmap.yaml` (`daily_last_checked`, `
 - Prepared fix (a): a `pre_v4_dream_contract` fixture in `tests/conftest.py` pins `daily_dream_v4_contract.CUTOVER_DAY` to the far future for the three legacy files. This keeps their drain, retry and stale logic under test. `test_daily_dream_v4_catalog.py` already covers v4. Result: 500/500 pass. It's posted as a patch comment on #7410, because this session can't push to the worker branch.
 - Not merged: the retry_context asks for a citation of Silas's 2026-11-14 "catalog-only 6+4" clarification. Neither main nor the PR body has one (git-author identity is shared with agent sessions, so authorship isn't proof). This PR rewrites CONTROL.md and CLAUDE.md policy. t-040 is parked `needs-human` (soft gate) for Silas to confirm the direction. After that, apply the patch, wait for green, and merge.
 - This PR (#7415) first carried the worker branch plus the fix. I cut it back to bookkeeping only, so #7410 stays the single PR for the change.
+
+
+## 2026-11-16 PT — reviewer: #7410 catalog-only v4 contract merged after gate triage
+- Reconciled the soft gate against Silas's explicit 2026-11-14 ChatGPT direction: keep the independent six-asset Daily Dream, while Zuzu Gamebook and Emperor of Dust receive only one private proposed setting and one private proposed character model each—no new rewards, scenarios, quests, branches, or playable concepts.
+- Rechecked current head `aa927e2`: Security Audit, Daily Dream Contract, Roadmap Audit, Daily Dream Creative Contract, Worker PR CI, Worker PR handoff template, and Process task events all completed successfully. Earlier 15-test failures were superseded.
+- Squash-merged #7410 as `dcb2b75`. No publication, deploy, spend, or live catalog-object creation occurred. Queued the session-aware t-040 done event with exact merge/check evidence.
+- Review lesson: before preserving a reversible provenance gate, check standing user direction; a missing repository citation does not erase an explicit scoped clarification.
