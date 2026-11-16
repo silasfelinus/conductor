@@ -1,0 +1,20 @@
+version: 1
+project: slime-city
+task: t-069
+operation: needs-human
+soft_gate: true
+note: >-
+  2026-11-16 PT: the production Clash audit finally ran (Responsive Layout Audit run
+  43828805291, controls job, after interface-vision/t-154 / kind_robots#5239). Phone
+  390 passed with FIGHT inside the console (rail 153-374, fight 282-368; with TAP:
+  tap 171-239, fight 282-368). Tablet 768 and desktop 1440 timed out waiting for
+  slime-vs-tab / slime-vs-fight-cpu. Reproduced locally: /play/slime-city has
+  requiredPermission: authenticated (content/channels/arcade/slime-city.md), and an
+  anonymous browser is redirected to /login?redirect=/play/slime-city a few seconds
+  after hydration at every width. Phone passed only because it finished before the
+  redirect. Not a layout defect: the audit needs a signed-in session. Silas decision:
+  provide a low-privilege production audit account (e.g. secrets
+  KR_AUDIT_USERNAME/KR_AUDIT_PASSWORD) for auditSlimeCityClashLayout.mjs to sign in
+  with, or allow anonymous play of Clash. The only existing credential is
+  CYPRESS_BETA_ADMIN_TOKEN, and an admin token is deliberately not used against
+  production. Phone geometry is not counted as a pass because the redirect raced it.
