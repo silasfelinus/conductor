@@ -174,6 +174,8 @@ def test_v4_finished_art_without_image_is_not_marked_captured():
         "pilot_v3_done_missing_image": 0,
         "pilot_v4_captured": 1, "pilot_v4_recorded_done": 2,
         "pilot_v4_done_missing_image": 1,
+        "pilot_v5_captured": 0, "pilot_v5_recorded_done": 0,
+        "pilot_v5_done_missing_image": 0,
     }
     assert module.pilot_capture_errors(report) == [
         "pilot_v4: captured 1/2 delivered ArtImages",
@@ -189,6 +191,7 @@ def test_visual_review_runs_after_art_sweep_status_checkpoints_skip_ci():
     assert 'workflows: ["Auto Art Generate"]' in workflow
     assert "github.event.workflow_run.head_branch == 'main'" in workflow
     assert '"projects/shifting-desks/art/KREA-IMG2IMG-CORRECTION-PILOT-1.yaml"' in workflow
+    assert '"projects/shifting-desks/art/KONTEXT-MASKED-CORRECTION-PILOT-1.yaml"' in workflow
 
 
 def test_v5_masked_kontext_candidate_capture_preserves_edit_regions():
