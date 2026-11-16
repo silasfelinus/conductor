@@ -786,3 +786,75 @@ def test_compose_prompt_keeps_final_period_and_prefix_seam():
     lane = {"prompt": "prose", "prefix": "masterpiece, best quality.", "suffix": ""}
     subject = {"prompt_prose": "A quiet canyon at dawn."}
     assert enq.compose_prompt(lane, subject) == "masterpiece, best quality, A quiet canyon at dawn."
+
+
+KREA_EDIT_LEDGER = {
+    "project_slug": "shifting-desks",
+    "is_public": False,
+    "cast_loras": False,
+    "lanes": [
+        {
+            "key": "krea-edit",
+            "engine": "krea2",
+            "prompt": "prose",
+            "steps": 8,
+            "cfg": 1,
+            "sampler": "euler",
+        }
+    ],
+    "subjects": [{
+        "key": "rear-eyes",
+        "source_image_id": 271721,
+        "size": "832x1216",
+        "prompt_prose": "A woman with visible eyes on the back of her head",
+        "negative": "logo, text",
+        "denoise": 0.63,
+        "seed": 932001,
+    }],
+}
+
+
+def test_krea2_source_image_is_not_silently_dropped():
+    lane, subject = KREA_EDIT_LEDGER["lanes"][0], KREA_EDIT_LEDGER["subjects"][0]
+    data = "data:image/webp;base64,YWJj"
+    body = enq.build_request(KREA_EDIT_LEDGER, lane, subject, data)
+    assert body["engine"] == "krea2"
+    assert body["sourceImageBase64"] == data
+    assert body["denoise"] == 0.63
+    assert (body["steps"], body["cfg"], body["sampler"]) == (8, 1, "euler")
+    assert body["negativePrompt"] == "logo, text"
+    assert body["isPublic"] is False
+
+    try:
+        enq.build_request(KREA_EDIT_LEDGER, lane, subject)
+    except ValueError as exc:
+        assert "source_image_id" in str(exc)
+    else:
+        raise AssertionError("Krea edit must fail closed without source bytes")
+
+
+def test_krea2_source_is_fetched_once_and_prompt_only_is_still_supported(tmp_path):
+    path = tmp_path / "krea.yaml"
+    path.write_text(yaml.safe_dump(KREA_EDIT_LEDGER, sort_keys=False))
+    header, ledger = enq.load_ledger(path)
+    seen = []
+    fetched = []
+    result = enq.submit(
+        path,
+        header,
+        ledger,
+        list(enq.iter_cells(ledger)),
+        post=lambda body: (seen.append(body), (200, {"data": {"jobId": 80001}}))[1],
+        fetch_source=lambda image_id: (
+            fetched.append(image_id), "data:image/webp;base64,YWJj"
+        )[1],
+    )
+    assert result == (1, 0)
+    assert fetched == [271721]
+    assert seen[0]["sourceImageBase64"].startswith("data:image/webp;")
+
+    prompt_only = dict(KREA_EDIT_LEDGER["subjects"][0])
+    prompt_only.pop("source_image_id")
+    body = enq.build_request(KREA_EDIT_LEDGER, ledger["lanes"][0], prompt_only)
+    assert "sourceImageBase64" not in body
+    assert "denoise" not in body
