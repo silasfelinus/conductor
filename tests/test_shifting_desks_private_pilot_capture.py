@@ -101,8 +101,12 @@ def test_v3_sdxl_img2img_pilot_records_all_three_rendered_sources():
         69090, 69091, 69092,
     }
     assert all(row["status"] == "DONE" for row in rows)
-    assert all(row["verdict"] is None for row in rows)
+    assert all(row["verdict"] == "REDO" for row in rows)
     assert all(row["pass"] and row["fail"] for row in rows)
+    assert all("ArtImage" in row["review_note"] for row in rows)
+    assert {row["evidence_artifact_id"] for row in rows} == {
+        14189401216,
+    }
     assert all(row["denoise"] > 0 for row in rows)
     assert all(row["checkpoint"].endswith(".safetensors") for row in rows)
     assert all(row["asset"].startswith("shifting-desks/private-") for row in rows)
