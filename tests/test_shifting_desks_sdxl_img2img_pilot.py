@@ -32,7 +32,13 @@ def test_private_sdxl_turbo_pilot_builds_genuine_image_to_image_jobs():
     for subject, lane in cells:
         assert subject["source_image_id"] == SOURCES[subject["key"]]
         assert subject["source_verdict"] == "REDO"
-        assert "jobs" not in subject, "no fabricated ArtJob IDs"
+        # Authoring must not hand-write ArtJob IDs, but once the ledger sweep
+        # submits the cell its checkpoint commit records the real ID per lane.
+        recorded = subject.get("jobs") or {}
+        assert set(recorded) <= {lane["key"]}, "jobs only for this ledger's lane"
+        assert all(isinstance(v, int) and v > 0 for v in recorded.values()), (
+            "recorded ArtJob IDs must be real positive integers"
+        )
         assert "target_path" not in subject, "private trials cannot overwrite live art"
         assert "entity_art" not in subject, "private trials cannot attach to live records"
         assert "media_url" not in subject, "no live destination for unapproved artwork"

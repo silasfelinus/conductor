@@ -980,48 +980,28 @@ tasks:
     title: "CLASH 300: individually crafted L1/L2/L3 effects for every existing card"
     status: review
     owner: worker
-    claimed_by: 2026-11-15T231627Z-slime-city-t-041-c8f2a7
-    claimed_at: '2026-11-15T23:16:27Z'
-    updated: '2026-11-15T23:16:27Z'
+    claimed_by: 2026-11-16T013200Z-slime-city-t-041-k7q2
+    claimed_at: '2026-11-16T01:32:00Z'
+    updated: '2026-11-16T01:32:00Z'
     depends_on: t-037
     passes: 0
     stakes: reversible
-    note: >-
+    note: |-
       Silas, 2026-11-07 PT: "The ultimate goal will be crafted redesigns of all 300 cards." The authoritative full inventory is projects/slime-city/CARD-REDESIGN-300.md. Each existing catalog identity must have an individually authored journey, not generic L2/L3 stats or duplicated effects. One interesting payoff per card, strategic counterplay, deterministic battle fixture and replay, and CPU reachability audits. Keep all 300 IDs and six distinct crew identities; do not add cards, faction-hate, economy mutations, art or a publication without authorization. Finish original t-037's 70 designs first, then this umbrella governs the remaining 230 redesigns, tracking progress against the full roster.
-
       2026-11-08 PT: Silas reviewed a first data-driven pass (kind_robots branch claude/pensive-albattani-ibljzj, commits b5a4093/5e7659b, never PR'd) and rejected the approach: "doing it programmatically has a big risk of just giving stat boosts to later game cards ... Do some research on good ccg design before moving forward and creating a plan." Also: "We should have fresh art on the evolutions, not just frame effects." Plan with research, design rules (trajectories instead of a universal stat ramp, L2 = new decision, L3 = named transformation with counterplay, faction tool ownership), per-level Flux Kontext art for all 300, and a 10-card Catgirls pilot gate: projects/slime-city/CLASH-EVOLUTION-PLAN.md. Awaiting Silas's answers to the plan's open questions before the pilot starts; the parked branch keeps only its engine hooks for reuse.
-
       Audit checkpoint: kind_robots #4907 has 300 merged custom evolutions. The default CPU sweep only uses fixed 20-card decks, so this session adds 300-card constructed-deck matchup coverage, mirrored seeds, reachability, duplicate-mechanic reporting and deterministic replays on a worker PR. Continue per-card balance and fun QA before accepting the full catalog.
-
       2026-11-08 PT: Audited the merged 300 custom evolution arcs and shipped reproducible 1,230-match constructed Solo/Alliance QA in Kind Robots #4908 (squash f2a7a6e, all eight final-head workflow runs green). Solo first seat 49.6%, Alliance first seat 40%; 279/300 cards used, 160 at L3, 21 never selected, two exact mechanical arc duplicates. Conductor #7176 (squash 2e88f66) updates the 300-row ledger to 70 MERGED and 230 LIVE_QA and records findings in CLASH-EVOLUTION-QA-2026-11-08.md. Remain ready: resolve unplayed cards and duplicate paths, assess CPU evolution valuation, run larger constructed matchups and bespoke 230-card payoff fixtures. Human fun acceptance, art delivery and production deployment not claimed.
-
       Tactical evolution increment in review: CPU now values actual board-relevant staged effects and lasting gear instead of a generic arrival bonus; Bloodfairy Banana Bouncer becomes a swarm encore rather than an Ironjaw boss/heal clone, and Undertow Backwater IOU becomes three-lane stun rather than an Exchange splash clone. [...]
-
       [Earlier history (15,073 chars) archived verbatim to projects/slime-city/T041-HISTORY.md -- read it there only when you need a specific past cycle. Append new cycles below, one short paragraph each.]
-
       MERGED partial Ironjaw editorial increment: kind_robots PR #5204, main squash 4267deef61404f900f6d698b7fc91b6efac0847c, final head dbf4a77. Verified all six latest-head GitHub workflows completed success, including four Contract Test shards, TypeScript, formatting, layout, architecture and schema. 40 Ironjaw cards reviewed, thirty authored L1 role texts, nine targeted L3 continuity improvements, six battle-state fixtures, forty-row counterplay ledger. Overlapping PR #5203 closed as superseded after validating its three changes on main. Task remains INCOMPLETE: 180 cards in Riot, Undertow, Exchange and shared Mercenaries still need independent editorial and gameplay audit, plus constructed match balance, seeded replays, art and human fun acceptance. Release for next pass.
-
       2026-11-15 PT: Scoped three Mercenary L3 continuities: Traffic Witch retains L2 Green Wave on hit alongside one-shot Gridlock, Crowd-Sourced Lightning retains L2 crowded target zap alongside boss pressure, and Streetlight Confession retains L2 adjacent fighter power alongside its piercing hit across. Added real Clash board fixtures and deterministic repeatability coverage. Implementation commit ab398069 on worker/slime-city-t-041-mercenary-payoff-20261115T1337Z-c8a4; PR and CI pending. Task remains partial: 300-card editorial, low-selection QA, art and constructed balance still open.
-
       2026-11-15 PT: Merged kind_robots PR #5221, squash 77fee2a7cf88e65390e10e330a3eabe1828a8d9f. Three shared Mercenary Level 3 evolutions retain their prior strategic Level 2 utility: Traffic Witch keeps a neighboring-fighter rally with its once-per-hit gridlock, Crowd-Sourced Lightning keeps crowd-powered target zap alongside boss pressure, and Streetlight Confession keeps neighbor attack surge alongside a piercing hit. Battle-state and deterministic regression fixtures pass. Current head 3cfa0ce3 had six completed successful workflows including all four Contract Test shards and verifier. This closes one independent increment only. Return t-041 to ready for remaining 300-card curation, underselected cards, constructed balance and art QA; no production deploy or subjective acceptance claimed.
+      2026-11-15 PT: kind_robots PR #5226 (head 2fca9fd): three L3 evolutions keep the L2 job their design notes promise -- Midnight Janitor keeps Mops Up heal before Closing Time duel, Secondhand Halo keeps Still Warm mend (no weaker L3 without a fallen ally), Long Drain Sting keeps Long Reach weakest-foe sting alongside the strongest-foe stun. Real- board fixtures fail on old defs; 11 related Slime City suites pass locally. Audit method: compared L2 vs L3 action shapes across riot/undertow/exchange/mercA/mercB and flagged only cards whose own arc comment contradicts the code; most remaining drops are documented ROLE SHIFTs. Partial increment; umbrella stays open.
+      2026-11-15 PT: MERGED kind_robots #5226, squash 257dcbb4, head 2fca9fd; all 11 check runs green (4 contract shards, verifiers, TypeScript, Prettier, layout, verify x2). One increment only; return to ready for remaining 300-card curation, constructed balance and art QA.
 
-      2026-11-15 PT: kind_robots PR #5226 (head 2fca9fd): three L3 evolutions keep the L2 job
-      their design notes promise -- Midnight Janitor keeps Mops Up heal before Closing Time
-      duel, Secondhand Halo keeps Still Warm mend (no weaker L3 without a fallen ally), Long
-      Drain Sting keeps Long Reach weakest-foe sting alongside the strongest-foe stun. Real-
-      board fixtures fail on old defs; 11 related Slime City suites pass locally. Audit
-      method: compared L2 vs L3 action shapes across riot/undertow/exchange/mercA/mercB and
-      flagged only cards whose own arc comment contradicts the code; most remaining drops are
-      documented ROLE SHIFTs. Partial increment; umbrella stays open.
+      2026-11-15 PT: kind_robots #5228 merged as 306915b4e185989d6afb3f57236aea7d11d595c4. Final head ed6348e: six PR checks (Contract Tests, TypeScript, formatting, layout, architecture, schema parity) completed successfully; branch janitor also succeeded. Added 25 lowest-selection cards, L2/L3 reachability, and exact replay coverage of 30 archetypes. No combat or card balance changed. Partial QA increment only; return t-041 to ready for remaining 300-card editorial and balance work.
 
-      2026-11-15 PT: MERGED kind_robots #5226, squash 257dcbb4, head 2fca9fd; all 11 check
-      runs green (4 contract shards, verifiers, TypeScript, Prettier, layout, verify x2). One
-      increment only; return to ready for remaining 300-card curation, constructed balance and
-      art QA.
-    owner: worker
-    claimed_by: 2026-11-15T18:48:49Z-claude-kq3qkd
-    claimed_at: '2026-11-15T18:48:50Z'
-    implementation_pr: 'silasfelinus/kind_robots#5226'
+      Constructed QA selection rates previously used total play commands divided by card deck appearances; repeated plays inflated the ranking. New scoped Kind Robots branch counts distinct card-selected bouts by side and denominator, preserving raw play counts and adding bounded-rate assertions. Implementation PR and CI follow; umbrella remains partial.
   - id: t-042
     milestone: m2
     title: "Curate and wire the ogre redo-3 tokens: Picket Line Troll, Coal Cart Racer, Union Lunch Lady"
