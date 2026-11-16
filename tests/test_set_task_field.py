@@ -509,3 +509,18 @@ def test_append_note_text_keeps_deeper_block_indent_parseable():
         "Silas said one thing.\n\nStory rewards stay in the run.\n\nNew cycle shipped."
     )
     assert task["owner"] == "worker"
+
+
+def test_flow_list_value_renders_as_yaml_list():
+    # conductor/t-214: `--set depends_on=[t-037, t-051]` used to land as a quoted string.
+    assert stf.normalize_scalar("[t-037, t-051]") == "[t-037, t-051]"
+    assert stf.normalize_scalar("[t-037,t-051]") == "[t-037, t-051]"
+    assert stf.normalize_scalar("[]") == "[]"
+    out = stf.set_task_field_text(ROADMAP, "t-002", "depends_on", "[t-001, t-003]")
+    tasks = {t["id"]: t for t in yaml.safe_load(out)["tasks"]}
+    assert tasks["t-002"]["depends_on"] == ["t-001", "t-003"]
+
+
+def test_flow_list_with_unsafe_items_stays_quoted():
+    assert stf.normalize_scalar("[yes, t-001]") == "'[yes, t-001]'"
+    assert stf.normalize_scalar("[a b, c]") == "'[a b, c]'"

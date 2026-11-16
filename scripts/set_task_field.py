@@ -112,6 +112,12 @@ TIMESTAMP_RE = re.compile(
 )
 
 
+# A flow list of bare ids, e.g. `[t-037, t-051]` passed to `--set depends_on=...`.
+# Rendered as a YAML flow sequence instead of a quoted string (slime-city/t-041,
+# conductor#7500: the quoted form parsed as one string, not a list).
+FLOW_LIST_ITEM_RE = re.compile(r"[A-Za-z0-9_.:/@+-]+")
+
+
 class TaskFieldError(Exception):
     pass
 
@@ -128,6 +134,17 @@ def normalize_scalar(value: str) -> str:
         return lowered
     if re.fullmatch(r"-?\d+", raw):
         return raw
+    if raw.startswith("[") and raw.endswith("]"):
+        items = [item.strip() for item in raw[1:-1].split(",")]
+        if items == [""]:
+            return "[]"
+        if all(
+            FLOW_LIST_ITEM_RE.fullmatch(item)
+            and item.lower() not in YAML11_BOOL_WORDS
+            and not TIMESTAMP_RE.match(item)
+            for item in items
+        ):
+            return "[" + ", ".join(items) + "]"
     if (
         lowered not in YAML11_BOOL_WORDS
         and not TIMESTAMP_RE.match(raw)
