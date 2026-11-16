@@ -46,7 +46,16 @@ def test_masked_pilot_sources_are_real_krea_redos_and_private():
             0 <= box[0] < box[2] <= 1 and 0 <= box[1] < box[3] <= 1
             for box in subject["mask_box"]
         )
-        assert subject["jobs"] == {} and subject["art"] == {}
+        # Queued before submission; once the auto-ledger submits, the only
+        # lane is kontext-localized with real job ids and render statuses.
+        assert subject["jobs"] == {} or set(subject["jobs"]) == {"kontext-localized"}
+        if subject["jobs"]:
+            assert isinstance(subject["jobs"]["kontext-localized"], int)
+            art = subject["art"]["kontext-localized"]
+            assert art["status"] in {"PENDING", "RUNNING", "DONE", "FAILED"}
+            assert art["status"] != "DONE" or isinstance(art["art_image_id"], int)
+        else:
+            assert subject["art"] == {}
         assert "target_path" not in subject
         assert "entity_art" not in subject
         assert subject["pass"] and subject["fail"] and subject["prompt_prose"]
