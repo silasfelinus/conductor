@@ -654,7 +654,7 @@ tasks:
   - id: t-014
     milestone: m4
     title: "Specify Ecotone single-surface board and responsive tab layout"
-    status: ready
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -672,9 +672,17 @@ tasks:
       2026-11-15 PT intent audit (INTENT-AUDIT-2026-11-16.md): in review since 2026-10-22 with
       an expired claim (2026-10-22T025013Z-t014-layout), no completion record and no PR found.
       Released to ready. The spec scope in the title is unchanged.
-    claimed_by: 2026-10-22T025013Z-t014-layout
-    claimed_at: '2026-10-22T02:50:14Z'
-    updated: '2026-11-16T03:53:40Z'
+
+      2026-11-16 PT reconcile: the deliverable already exists. projects/weird-
+      humboldt/ECOTONE-LAYOUT-SPEC.md (headed t-014, landed via Conductor #7208 under a
+      mislabeled slime-city commit) covers the surface model with html/body never scrolling,
+      screen structure, tab/dialog definitions, inner scroll ownership, a layout table for
+      320x568 through 1920x1080 incl. 375x667, 390x844, 768x1024, 820x1180, 1024x768, 1280x720
+      wide-short and 1440x900, and testable viewport rules V1-V10. Text-only; no deploy or
+      art. t-015/t-016 implementation unblock on this dependency.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-11-16T23:49:55Z'
   - id: t-015
     milestone: m4
     title: "Build persistent 56-signature gallery and Kind Robots achievements"
