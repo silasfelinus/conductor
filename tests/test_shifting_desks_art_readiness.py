@@ -111,3 +111,38 @@ def test_repo_inventory_has_real_render_ledgers():
     # This is a guard against accidental blanket approvals: an unreviewed
     # delivered Western render must not be counted as an accepted painting.
     assert report["styles"]["western-cartoon"]["accepted"] <= report["styles"]["western-cartoon"]["total"]
+
+
+def _run_main(monkeypatch, tmp_path, *flags):
+    from scripts import shifting_desks_art_readiness as readiness
+
+    monkeypatch.setattr(
+        "sys.argv", ["shifting_desks_art_readiness.py", "--art-dir", str(tmp_path), *flags]
+    )
+    return readiness.main()
+
+
+def _western(name, **extra):
+    western = row(name, **extra)
+    western["target_path"] = PREFIX + "styles/western-cartoon/cards/" + name + ".webp"
+    return western
+
+
+def test_strict_flags_pass_when_both_styles_are_accepted(tmp_path, monkeypatch, capsys):
+    round_file(tmp_path, 2, [row("a")])
+    round_file(tmp_path, 18, [_western("a")])
+    report = inventory(tmp_path)
+    assert report["ready"] is True
+    assert report["catalog_ready"] is True
+    assert _run_main(monkeypatch, tmp_path, "--strict") == 0
+    assert _run_main(monkeypatch, tmp_path, "--all-styles-strict") == 0
+    capsys.readouterr()
+
+
+def test_all_styles_strict_fails_only_on_unaccepted_optional_art(tmp_path, monkeypatch, capsys):
+    round_file(tmp_path, 2, [row("a")])
+    round_file(tmp_path, 18, [_western("a", verdict=None)])
+    assert _run_main(monkeypatch, tmp_path) == 0
+    assert _run_main(monkeypatch, tmp_path, "--strict") == 0, "optional skins never block the base game"
+    assert _run_main(monkeypatch, tmp_path, "--all-styles-strict") == 1
+    capsys.readouterr()
