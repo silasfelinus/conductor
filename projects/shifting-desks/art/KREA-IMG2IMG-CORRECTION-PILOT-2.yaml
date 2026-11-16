@@ -1,0 +1,202 @@
+# Shifting Desks / remaining eleven Classic Round 19 REDOs / Krea2 source-image corrections.
+# Draft only. Do NOT auto-submit until pilot ArtJobs 69448-69450 have
+# independent full-resolution KEEP/REDO verdicts and the agent chooses a
+# controlled batch. Source image ids are delivered ROUND-19 ArtImages, not
+# unverified prompt queue requests. Never overwrite live Classic targets.
+round: shifting-desks-krea-img2img-remaining-11
+project_slug: shifting-desks
+task: t-032
+designer: Shifting Desks correction backlog
+auto_submit: false
+priority: 74
+is_public: false
+is_mature: false
+cast_loras: false
+status: staged-awaiting-three-image-pilot-review
+lanes:
+- key: krea2-source-edit
+  label: Krea 2 Turbo controlled reference-image correction
+  engine: krea2
+  prompt: prose
+  steps: 8
+  cfg: 1
+  sampler: euler
+  scheduler: simple
+  suffix: Mid-century corporate safety manual illustration, painted gouache, coarse halftone print texture, graphic simplified silhouettes, aged manila and carbon blue, warm safety orange and oxblood accents. Preserve recognizable scene identity and composition.
+subjects:
+- key: cognitive-testing-chamber
+  title: "Cognitive Testing Chamber"
+  source_image_id: 271147
+  source_round: 19
+  source_verdict: REDO
+  size: 832x1248
+  denoise: 0.6
+  seed: 944001
+  asset: shifting-desks/private-krea-edit-pilot-2/cognitive-testing-chamber
+  pass: "An enormous cream upholstered examination chair visibly bulges like a breathing lung, and a large brass speaker above it has short delicate cilia around its rim."
+  fail: "An ordinary rigid chair, smooth cushion, blank wall speaker, or a second chair instead of a changed primary chair."
+  prompt_prose: >-
+    Keep this exact psychological testing room, single ivory chair, little side table and observing clerk behind glass. Transform ONLY the chair upholstery into enormous soft ballooning lung-like cushions with rounded folds and pinched moving seams. Above the chair add a big round brass wall speaker ringed by a conspicuous fringe of fine pale cilia. Make the breathing chair and ciliated speaker large, unambiguous anatomical jokes rather than changing the room layout.
+  negative: "text, watermark, ordinary unmodified detail, unrelated scene, photographic rendering, multiple-panel collage, gore"
+  jobs: {}
+  art: {}
+- key: sub-level-zero
+  title: "Sub-Level Zero arrival"
+  source_image_id: 271149
+  source_round: 19
+  source_verdict: REDO
+  size: 1248x936
+  denoise: 0.64
+  seed: 944002
+  asset: shifting-desks/private-krea-edit-pilot-2/sub-level-zero
+  pass: "Executive hallway walls sprout huge raised oxblood branching veins, a continuous smooth tongue-shaped carpet, and a circular iris-fold doorway."
+  fail: "Flat red wall panels, an ordinary runner carpet, a conventional round door, or disconnected decorative red wires."
+  prompt_prose: >-
+    Preserve the elevator view into this executive corridor, its walls, portrait layout and deep vanishing point. Replace the flat burgundy paneling with three-dimensional bulging branching vein-shaped ridges under glossy red leather. Transform the entire central hallway carpet into one continuous long broad pink tongue with rounded moist-looking edges. Make the far doorway a sharply visible circular camera-iris aperture edged with thick living oxblood folds. These three anatomical architectural details must dominate and remain readable at small size.
+  negative: "text, watermark, ordinary unmodified detail, unrelated scene, photographic rendering, multiple-panel collage, gore"
+  jobs: {}
+  art: {}
+- key: boardroom-antechamber
+  title: "Boardroom Antechamber"
+  source_image_id: 271150
+  source_round: 19
+  source_verdict: REDO
+  size: 832x1248
+  denoise: 0.61
+  seed: 944003
+  asset: shifting-desks/private-krea-edit-pilot-2/boardroom-antechamber
+  pass: "One oversized oxblood leather chair is visibly fused into a wood-paneled wall by at least four thick continuous padded upholstery-root tendrils."
+  fail: "A normal free-standing chair, chair simply touching the wall, cables, or unrelated red decoration."
+  prompt_prose: >-
+    Keep the existing executive waiting room viewpoint, dark wood wall and ONE red leather armchair. Make the chair organically grow into the wall: four enormous thick glossy padded red upholstery-root tendrils physically leave the chair back and seat and disappear into the wooden wall panels without gaps, forming a single impossible fused object. The tendrils must be unmistakably part of the chair upholstery, not separate wires or vines. Keep the furniture silhouette and satirical corporate illustration styling.
+  negative: "text, watermark, ordinary unmodified detail, unrelated scene, photographic rendering, multiple-panel collage, gore"
+  jobs: {}
+  art: {}
+- key: server-room-zero
+  title: "Server Room Zero"
+  source_image_id: 271151
+  source_round: 19
+  source_verdict: REDO
+  size: 832x1248
+  denoise: 0.62
+  seed: 944004
+  asset: shifting-desks/private-krea-edit-pilot-2/server-room-zero
+  pass: "One enormous forearm-thick glossy red ribbed tendon visibly connects exactly two distinct server cabinets in the foreground."
+  fail: "Multiple thin straight red wires, exposed piping, a loose disconnected cable, or an ordinary data-center cable bundle."
+  prompt_prose: >-
+    Retain the same two large steel server cabinets and close retro data-center composition. Replace the ordinary straight wires between the cabinets with ONE unmistakable continuous biological tendon-cable, glossy dark red and as thick as a human forearm, strongly arched between both rack faces. Make its rounded accordion ribs, stretched living surface and two physically connected endpoints impossible to miss. Normal thin cables may remain in the background but never compete with this central impossible tendon.
+  negative: "text, watermark, ordinary unmodified detail, unrelated scene, photographic rendering, multiple-panel collage, gore"
+  jobs: {}
+  art: {}
+- key: the-board
+  title: "The Board"
+  source_image_id: 271152
+  source_round: 19
+  source_verdict: REDO
+  size: 832x1248
+  denoise: 0.72
+  seed: 944005
+  asset: shifting-desks/private-krea-edit-pilot-2/the-board
+  pass: "Eleven clearly different smiling executive heads and necks emerge from ONE uninterrupted extra-long horizontal gray business-suit torso."
+  fail: "Eleven separate standing people, ordinary group portraits, severed heads, or a multi-panel collage."
+  prompt_prose: >-
+    Keep the darkly comic boardroom portrait framing. Change the eleven individual executives into ONE impossibly elongated continuous shoulder-and-torso shape in one unbroken gray business suit spanning the composition. Eleven distinct necks grow directly from the same uninterrupted suit collar, carrying eleven different cheerful executive heads, all clearly connected to one shared body like a bureaucratic centipede. There must be no separate torsos, gaps, panel dividers or second row of bodies. Keep the effect PG-13 absurd rather than gory.
+  negative: "text, watermark, ordinary unmodified detail, unrelated scene, photographic rendering, multiple-panel collage, gore"
+  jobs: {}
+  art: {}
+- key: dale-in-the-mustache
+  title: "Dale, from Compliance, in a mustache"
+  source_image_id: 271444
+  source_round: 19
+  source_verdict: REDO
+  size: 832x1248
+  denoise: 0.53
+  seed: 944006
+  asset: shifting-desks/private-krea-edit-pilot-2/dale-in-the-mustache
+  pass: "Enormous obviously fake snowy-white walrus mustache is held in place by a visible black elastic strap stretching around Dale's cheeks and behind both ears."
+  fail: "Ordinary natural facial hair, white whiskers attached to the skin, or no visible strap."
+  prompt_prose: >-
+    Keep the close headshot and smug expression of this compliance clerk. He wears ONE ludicrous huge fluffy bright white woolly false walrus mustache, much wider than his face, sitting above his mouth like a separate costume prop. Add a CLEAR narrow BLACK ELASTIC STRAP attached to both ends of the fake mustache, curving conspicuously across both cheeks and behind his ears. The black strap and visible costume construction are the comedy; make their geometry obvious rather than painting a natural white mustache.
+  negative: "text, watermark, ordinary unmodified detail, unrelated scene, photographic rendering, multiple-panel collage, gore"
+  jobs: {}
+  art: {}
+- key: the-taste-panel
+  title: "The Taste Panel"
+  source_image_id: 271153
+  source_round: 19
+  source_verdict: REDO
+  size: 832x1248
+  denoise: 0.6
+  seed: 944007
+  asset: shifting-desks/private-krea-edit-pilot-2/the-taste-panel
+  pass: "Four tasters share one giant pink pudding bowl; the teal-shirted woman recoils in an unmistakable extreme sour grimace with tongue sticking out."
+  fail: "Four uniformly happy workers, multiple pudding bowls, or a subtle nearly-neutral reaction."
+  prompt_prose: >-
+    Preserve four office workers in the cafeteria at one communal giant bowl of pink pudding, with teaspoons and three smiling tasters. Give ONLY the teal-shirted woman an enormous comic sour reaction: body leaning violently backward, eyes scrunched shut, cheeks wrinkled, mouth wide and tongue extended well outside it in visible disgust. The other three must remain positively delighted by the same pudding. Make the taste contrast legible at thumbnail size, with all four coworkers and exactly one shared bowl.
+  negative: "text, watermark, ordinary unmodified detail, unrelated scene, photographic rendering, multiple-panel collage, gore"
+  jobs: {}
+  art: {}
+- key: the-suppression-drill
+  title: "The Suppression Drill"
+  source_image_id: 271154
+  source_round: 19
+  source_verdict: REDO
+  size: 832x1248
+  denoise: 0.59
+  seed: 944008
+  asset: shifting-desks/private-krea-edit-pilot-2/the-suppression-drill
+  pass: "Employee crouches amid thick waist-high white vent fog with both cheeks exaggeratedly puffed out like a full balloon holding breath."
+  fail: "Normal cheeks, smoke from above, an upright employee, or flames instead of floor-vent gas."
+  prompt_prose: >-
+    Keep the clean retro server room, worker crouched between cabinets, and white suppressant fog rising from grated floor vents. The employee is holding their breath so hard that BOTH cheeks swell outward into huge round balloon shapes, the mouth sealed tight and eyes comically strained, unmistakable even in a thumbnail. Increase the solid cottony fog puffs coming UP from square floor grates, drifting waist-high around the crouched employee. No fire, no injury, only absurd corporate safety-drill comedy.
+  negative: "text, watermark, ordinary unmodified detail, unrelated scene, photographic rendering, multiple-panel collage, gore"
+  jobs: {}
+  art: {}
+- key: the-jam-in-tube-14
+  title: "The Jam in Tube 14"
+  source_image_id: 271155
+  source_round: 19
+  source_verdict: REDO
+  size: 832x1248
+  denoise: 0.64
+  seed: 944009
+  asset: shifting-desks/private-krea-edit-pilot-2/the-jam-in-tube-14
+  pass: "A horizontal polished brass delivery tube swells at its center into an enormous perfectly spherical bulge visibly trapping a worker or parcel silhouette inside."
+  fail: "A normal pipe valve, wheel, separate brass tank, straight pipe or no object visibly jammed inside the swelling."
+  prompt_prose: >-
+    Preserve the cream office wall and one horizontal polished brass pneumatic delivery pipe. The middle of THIS SAME continuous tube balloons outward into a gigantic smooth round sphere, far wider than the pipe, visibly enclosing the shadowy silhouette of a trapped clerk curled up inside the sealed brass jam. Show a clear pipe-to-sphere-to-pipe transition on both sides with matching brass material; remove conventional pipe valves or wheels that could be mistaken for the required spherical blockage. One impossible jam dominates the image.
+  negative: "text, watermark, ordinary unmodified detail, unrelated scene, photographic rendering, multiple-panel collage, gore"
+  jobs: {}
+  art: {}
+- key: mutation-four-second-precognition
+  title: "Four-Second Precognition"
+  source_image_id: 271156
+  source_round: 19
+  source_verdict: REDO
+  size: 832x1248
+  denoise: 0.62
+  seed: 944010
+  asset: shifting-desks/private-krea-edit-pilot-2/mutation-four-second-precognition
+  pass: "Two identical copies of the SAME beige-suited clerk are visible at once: one steps over a floor cable while a ghostlike future echo trips over it."
+  fail: "Only one person, two different people, two unrelated poses, or no visible cable trip."
+  prompt_prose: >-
+    Keep this single long office hallway and thick black electrical cable stretched across the floor. Show TWO visually identical versions of the same beige-suited, glasses-wearing employee in the same frame. The solid present-day employee on the left is carefully stepping OVER the cable. A translucent, offset future echo of the EXACT SAME person one pace ahead is clearly mid-trip over that same cable, arms windmilling, one foot hooked under it and papers flying. Distinguish the future version by a pale blue see-through outline rather than facial or clothing differences.
+  negative: "text, watermark, ordinary unmodified detail, unrelated scene, photographic rendering, multiple-panel collage, gore"
+  jobs: {}
+  art: {}
+- key: mutation-empathic-static
+  title: "Empathic Static"
+  source_image_id: 271157
+  source_round: 19
+  source_verdict: REDO
+  size: 832x1248
+  denoise: 0.56
+  seed: 944011
+  asset: shifting-desks/private-krea-edit-pilot-2/mutation-empathic-static
+  pass: "Exactly two closed-eyed coworkers lean forehead-to-forehead with ONE bright short jagged golden electricity spark visibly crossing the narrow gap."
+  fail: "No electric spark, a spark elsewhere, touching foreheads, extra faces, or a generic glowing aura."
+  prompt_prose: >-
+    Retain exactly two seated office coworkers in strong profile across a desk, closed eyes and foreheads nearly touching but still separated by a hand's breadth. Add one thick jagged GOLD LIGHTNING SPARK crossing the empty air between their foreheads, with a vivid yellow-white core, tiny gold branching prongs and a strong glow; the central arc MUST bridge forehead to forehead with clearly separated endpoints. Everything else stays ordinary blue-and-cream corporate illustration, so the impossible empathic transfer becomes unmistakable.
+  negative: "text, watermark, ordinary unmodified detail, unrelated scene, photographic rendering, multiple-panel collage, gore"
+  jobs: {}
+  art: {}
