@@ -978,8 +978,8 @@ tasks:
   - id: t-041
     milestone: m2
     title: "CLASH 300: individually crafted L1/L2/L3 effects for every existing card"
-    status: claimed
-    updated: '2026-11-16T07:48:50Z'
+    status: ready
+    updated: '2026-11-16T08:08:13+00:00'
     depends_on: t-037
     passes: 0
     stakes: reversible
@@ -1011,10 +1011,8 @@ tasks:
       shift phrase now reads 'a free adjacent alley' (160). All 12 check runs green. One
       increment only; return to ready for remaining 300-card curation, constructed balance and
       art QA.
-    owner: worker
-    claimed_by: 2026-11-16T0730Z-t041-pd5v7b
-    claimed_at: '2026-11-16T07:48:50Z'
-    implementation_pr: 'silasfelinus/kind_robots#5232'
+
+      2026-11-16 PT: released claim 2026-11-16T0730Z-t041-pd5v7b without changes. The constructed report (3120 bouts) still shows 14 dead two-slot cards, e.g. s3-catgirls-stolen-saw and s3-catgirls-spare-lives. Cause: chooseClashCpu divides every score by b.plays, and a cost-4 grant spell scores roughly half a fighter. Fixing it means changing cards or the CPU comparator, which the test output attributes to t-051 (candidate list goes to Silas first), so this session switched to interface-vision/t-154. No work discarded.
   - id: t-042
     milestone: m2
     title: "Curate and wire the ogre redo-3 tokens: Picket Line Troll, Coal Cart Racer, Union Lunch Lady"
