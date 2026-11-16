@@ -2751,17 +2751,23 @@ tasks:
   - id: t-166
     milestone: m11
     title: "Per-cabinet link previews: a shared ?game= link unfurls as that cabinet, not the generic hall card"
-    status: review
+    status: done
     passes: 0
     stakes: reversible
     implementation_pr: 'silasfelinus/kind_robots#5218'
-    updated: '2026-11-15T14:45:00Z'
+    updated: '2026-11-16T04:00:33Z'
     note: |-
       Silas, 2026-11-15 PT: full parity with the whole roadmap may not be reasonable; finish the latest tasks and triage next steps that make publicly shared arcade links presentable. This milestone is that triage. The m8 depth pass (50 open slices) continues in the background and is not a gate for sharing.
 
       Implemented in kind_robots#5218 (claude/arcade-cabinet-link-previews): per-cabinet og:/twitter: title, blurb and titleArt; shortArcadeBlurb moved to utils/arcade/blurb.ts. That PR body cites "kr-arcade/t-165", but t-165 is the Rescue Rally flake kaizen (fix in kind_robots#5217); this task is the canonical record for the link-preview work. Close to done when #5218 merges green. Merged is not deployed; the live crawler check is t-171.
 
       Live check run silasfelinus/kind_robots/actions/runs/43724797909 (2026-11-15 PT, main d6c2187+): 33 of 34 cabinet links still unfurl with og:title "The Arcade" for facebookexternalhit, Discordbot and Twitterbot (only Zuzu Showdown, which has its own page, unfurls as itself). That is exactly what #5218 fixes; it was green and clean at 14:40Z.
+
+      2026-11-15 PT reviewer: updated kind_robots#5218 onto current main (main had changed
+      pages/play/arcade/index.vue via #5222/#5225), re-ran CI, and all 15 checks passed on
+      head 1ef0937. Squash-merged as ccafc5b. Merged is not deployed: the live crawler
+      confirmation is t-171 (dispatch arcade-share-live-check with strict_unfurl=true after
+      deploy).
   - id: t-167
     milestone: m11
     title: "Every listed cabinet's title art is rendered and served on production, with a registry contract that keeps it that way"
@@ -2815,7 +2821,7 @@ tasks:
   - id: t-171
     milestone: m11
     title: "After deploy, verify cabinet unfurls live with crawler user agents and fold the check into the daily Kind Robots UI check"
-    status: waiting
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: [t-166, t-167]

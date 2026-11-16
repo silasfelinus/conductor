@@ -654,7 +654,7 @@ tasks:
   - id: t-014
     milestone: m4
     title: "Specify Ecotone single-surface board and responsive tab layout"
-    status: review
+    status: ready
     owner: worker
     passes: 0
     stakes: reversible
@@ -668,9 +668,13 @@ tasks:
       Keep interactive choices and main illustrated card visible, no
       clipped controls, compact toolbar, no second huge masthead.
       No Kind Robots deploy or new artwork on this design task.
+
+      2026-11-15 PT intent audit (INTENT-AUDIT-2026-11-16.md): in review since 2026-10-22 with
+      an expired claim (2026-10-22T025013Z-t014-layout), no completion record and no PR found.
+      Released to ready. The spec scope in the title is unchanged.
     claimed_by: 2026-10-22T025013Z-t014-layout
     claimed_at: '2026-10-22T02:50:14Z'
-    updated: '2026-10-22T02:50:47Z'
+    updated: '2026-11-16T03:53:40Z'
   - id: t-015
     milestone: m4
     title: "Build persistent 56-signature gallery and Kind Robots achievements"
@@ -1437,17 +1441,23 @@ tasks:
   - id: t-060
     milestone: m3
     title: "Ecotone P2: report causal route overlap and encounter starvation"
-    status: review
+    status: done
     passes: 0
     stakes: reversible
     note: |-
       Triage 2026-10-22 PT: existing 1260 unique decision-history signatures are not evidence of unique dramatic middle chapters. Extend the deterministic adversarial contract with played-card route signatures, per-chapter coverage, matched-seed overlap, meaningful later-option changes from saved flags, and rare-event visibility by persona. Emit counters, baseline and examples without inventing success thresholds or claiming human fun scores. Keep the 84 ending, art-slot and cultural exclusions unchanged. Source: PLAYSTYLE-TRIAGE-2026-10-22.md.
 
       Implemented CI path-overlap instrumentation in the existing 1,260-run adversarial playstyle contract: distinct full card paths versus side-encounter paths, 10 pairwise Jaccard comparisons per matched group, per-chapter coverage, rare and never-seen side scenes, and flag-only eligibility deltas. Added editorial methodology doc explaining what counts are not human fun scores. Branch worker/weird-humboldt-t060-overlap-f98d6e; waiting for CI.
+
+      2026-11-15 PT intent audit (INTENT-AUDIT-2026-11-16.md): kind_robots#4053 (head
+      worker/weird-humboldt-t060-overlap-f98d6e) merged 2026-10-23 04:59Z. The 'waiting for
+      CI' line above was stale. The PR delivers the instrumentation the task specifies, with
+      no remaining scope listed. Closed done.
     owner: worker
     claimed_by: 2026-10-23T024850Z-wh-t060-f98d6e
     claimed_at: '2026-10-23T02:48:50Z'
-    updated: '2026-10-23T03:00:00Z'
+    updated: '2026-11-16T03:53:37Z'
+    implementation_pr: 'silasfelinus/kind_robots#4053'
   - id: t-030
     milestone: m2
     title: "Derive validator PER_CHAPTER card counts from ENCOUNTER-SEEDS.md instead of hand-maintained constants"
