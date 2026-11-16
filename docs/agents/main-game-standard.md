@@ -34,6 +34,7 @@ baseline underneath.
 - Space Couch (`game-of-captains`)
 - Every Villain Tactics
 - MONSTRIQUE (`monstress-convention`)
+- Deepheart (`deepheart`)
 
 A new full-length game joins this list when it's created. Paused or finished main games
 (Zuzu's Lair, Zuzu Showdown) meet the standard if they're reopened.

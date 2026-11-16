@@ -1,0 +1,190 @@
+# Deepheart: a saga-tier playbook on the Playbook Kit, scaffolded 2026-11-16 by scripts/new_playbook.py.
+# Silas asked for a ~50-preset roster up front, so the tier starts at saga with written
+# allowances (kind_robots utils/playbookKit/games/deepheart.ts). Master issue: kind_robots#5256.
+project: deepheart
+kind: software
+autonomous: true
+goal: >-
+  Deepheart: a saga-tier party dungeon crawler on the Playbook Kit in Kind Robots. Delve three layers with a hero and one to three companions from a 50-character preset roster; puzzle, treasure, combat, choice and campfire rooms; supports and romances that depend on the party; role and pair synergies with a party optimizer; multiple endings with painted plates; main-game standard (title screen, settings, save/load, 12+ achievements, scrapbook, customizable hero, replay hooks); every picture rendered; then playtest.
+notes_from_silas: |
+  Silas, 2026-11-16 PT: New dungeon crawler project game. User can delve into a three layer dungeon with one or more companions. Traditional dungeon dwelling aesthetic. Romance options depending on party. Presets with romances and supports, romanceable or not, should encompass the majority of the variety, start with 50 or so players and companions, then try to optimize based on special combinations, roles, etc. include rooms based on puzzles, simple treasures, combats, choice rooms with special endings, etc. / To confirm and align: all our games should have a GitHub project issue, which functions as the roadmap, and this project will start on kind robots as high priority. The goal is to fully complete it, including art and everything, at which point it will be marked as ready for human testing, and then swapped to playtest mode on kind robots with normal priority. For now though, like all our games, we want: achievements, save load, art first design, front end, multiple endings, scrapbook like system, multiple characters, etc
+milestones:
+  - id: m1
+    title: "SHAPE - spec, roster, party builder and first playable screen"
+    weight: 15
+    status: in-progress
+  - id: m2
+    title: "PLAYABLE - the whole delve, every ending, the main-game standard"
+    weight: 35
+    status: in-progress
+  - id: m3
+    title: "DEPTH - support and romance writing, balance, account saves, sound"
+    weight: 20
+    status: not-started
+  - id: m4
+    title: "ART & SHIP - every picture rendered, adversarial QA, playtest handoff"
+    weight: 30
+    status: not-started
+tasks:
+  - id: t-001
+    milestone: m1
+    title: "Kit spec, 50-preset roster, supports, synergies, optimizer and the /admin/deepheart preview"
+    status: review
+    owner: null
+    passes: 0
+    stakes: reversible
+    implementation_pr: 'silasfelinus/kind_robots#5257'
+    note: |-
+      Shipped in kind_robots#5257: utils/deepheart/{roster,party}.ts, the saga kit spec with
+      allowances for followers/romances/threads, the builder with hero customization
+      (name, identity, drawn-to, boon) and the goal optimizer. Close once merged.
+  - id: t-002
+    milestone: m1
+    title: "Master GitHub issue as the roadmap hub; Conductor project at high priority"
+    status: review
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: |-
+      kind_robots#5256 ([ROADMAP] Deepheart | Master Coordination, conductor:skip). Indexed
+      in docs/agents/master-issues.yaml; added to the main-game list in
+      docs/agents/main-game-standard.md; project-overrides priority high. Close once this
+      Conductor PR merges.
+  - id: t-003
+    milestone: m2
+    title: "Seeded engine: three layers, fights, puzzles, treasure, choice rooms, campfires, bosses, finale"
+    status: review
+    owner: null
+    passes: 0
+    stakes: reversible
+    implementation_pr: 'silasfelinus/kind_robots#5257'
+    note: |-
+      utils/deepheart/engine.ts; npm run test:deepheart plays 60 seeded delves and proves a
+      seed replays exactly. Close once merged.
+  - id: t-004
+    milestone: m2
+    title: "Party rules: supports, synergies, mutual romance, oaths, poly and married pairs"
+    status: review
+    owner: null
+    passes: 0
+    stakes: reversible
+    implementation_pr: 'silasfelinus/kind_robots#5257'
+    note: |-
+      Romance requires mutual attraction (hero identity + drawn-to vs each companion's).
+      Brannoc and Thessaly are courted together; Quillon and Ambrose start married when
+      both delve. Aromantic presets swear oaths instead. Close once merged.
+  - id: t-005
+    milestone: m2
+    title: "Nine endings reachable from a fresh seed; scrapbook unlocked by play"
+    status: review
+    owner: null
+    passes: 0
+    stakes: reversible
+    implementation_pr: 'silasfelinus/kind_robots#5257'
+    note: |-
+      verifyDeepheart.test.ts replays a trace to every ending and checks engine moments
+      against the 72 scrapbook moments both ways. Close once merged.
+  - id: t-006
+    milestone: m2
+    title: "Main-game standard: title, settings, save/load, 20 achievements, chronicle; verify one award live"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    implementation_pr: 'silasfelinus/kind_robots#5257'
+    note: |-
+      Audit table lives in kind_robots#5256. Shipped: title screen, kit settings, autosave +
+      3 versioned slots, chronicle (run pages, delvers met, endings, supports), 20 achievements
+      awarded through rewardAchievementByCode. Remaining: seed the catalog rows and verify one
+      award live after deploy.
+  - id: t-007
+    milestone: m3
+    title: "Two-tier support scenes for all 35 pairs; three campfire beats per romance and oath"
+    status: waiting
+    depends_on: t-005
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: |-
+      Today each support has one scene and each companion has blurb, secret and heart lines.
+      Write a second support tier and a three-beat arc per romanceable preset, keeping the
+      romance setting able to hide every romance beat.
+  - id: t-008
+    milestone: m3
+    title: "Room variety and balance from seeded sims"
+    status: waiting
+    depends_on: t-005
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: |-
+      More choice events and puzzle variants per layer; tune so auto-play survival stays
+      near 75-85% across party sizes and the Gilded threshold needs real greed.
+  - id: t-009
+    milestone: m3
+    title: "Account-backed save for signed-in players with local fallback"
+    status: waiting
+    depends_on: t-006
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: |-
+      Main-game standard item 3. Keep the versioned local record as the fallback.
+  - id: t-010
+    milestone: m3
+    title: "Sound and music behind the kit sound setting"
+    status: waiting
+    depends_on: t-006
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: |-
+      Torchlit ambience per layer, combat stings, a campfire theme; respect the kit's
+      sound setting and reduced motion.
+  - id: t-011
+    milestone: m4
+    title: "Art ledger: queue every brief auto_submit"
+    status: review
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: |-
+      projects/deepheart/art/WRITTEN-BACKLOG-2026-11-16-KIT-DEEPHEART.yaml queues the 139
+      unpainted kit pictures (key art, 57 portraits, 41 romance plates, 9 ending plates, 31
+      scene/support plates) auto_submit at priority 1, from scripts/scan_written_art.py.
+      Still to queue: 3 faction emblems, 6 room plates (utils/deepheart/art.ts ROOM_ART) and
+      the 20 achievement badges (kind_robots scripts/generate_achievement_art.ts after the
+      catalog rows are seeded). Queued is not rendered: t-012 verifies delivery.
+  - id: t-012
+    milestone: m4
+    title: "Every picture rendered, delivered, URL-verified and wired (set src / RENDERED_ART)"
+    status: waiting
+    depends_on: t-011
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: |-
+      Queued is not rendered is not delivered. Portraits land under /images/deepheart/.
+  - id: t-013
+    milestone: m4
+    title: "Adversarial seeded playthroughs and 390/768/1440 px checks"
+    status: waiting
+    depends_on: t-006
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: |-
+      Exploit, neglect and refusal runs; saves survive reload; no page overflow; the hand,
+      builder and fight deck usable on a phone.
+  - id: t-014
+    milestone: m4
+    title: "Playtest graduation: readiness gate, status playtest at normal priority, flag the hub"
+    status: waiting
+    depends_on: [t-007, t-008, t-009, t-010, t-012, t-013]
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: |-
+      Silas, 2026-11-16 PT: once complete including art, mark ready for human testing and
+      swap to playtest with normal priority. Follow docs/agents/hourly-playtest-advancement.md
+      "Graduation". Public /play release stays a separate human gate.
