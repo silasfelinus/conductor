@@ -978,7 +978,7 @@ tasks:
   - id: t-041
     milestone: m2
     title: "CLASH 300: individually crafted L1/L2/L3 effects for every existing card"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 2026-11-16T013200Z-slime-city-t-041-k7q2
     claimed_at: '2026-11-16T01:32:00Z'
@@ -1000,6 +1000,8 @@ tasks:
       2026-11-15 PT: MERGED kind_robots #5226, squash 257dcbb4, head 2fca9fd; all 11 check runs green (4 contract shards, verifiers, TypeScript, Prettier, layout, verify x2). One increment only; return to ready for remaining 300-card curation, constructed balance and art QA.
 
       2026-11-15 PT: kind_robots #5228 merged as 306915b4e185989d6afb3f57236aea7d11d595c4. Final head ed6348e: six PR checks (Contract Tests, TypeScript, formatting, layout, architecture, schema parity) completed successfully; branch janitor also succeeded. Added 25 lowest-selection cards, L2/L3 reachability, and exact replay coverage of 30 archetypes. No combat or card balance changed. Partial QA increment only; return t-041 to ready for remaining 300-card editorial and balance work.
+
+      Constructed QA selection rates previously used total play commands divided by card deck appearances; repeated plays inflated the ranking. New scoped Kind Robots branch counts distinct card-selected bouts by side and denominator, preserving raw play counts and adding bounded-rate assertions. Implementation PR and CI follow; umbrella remains partial.
   - id: t-042
     milestone: m2
     title: "Curate and wire the ogre redo-3 tokens: Picket Line Troll, Coal Cart Racer, Union Lunch Lady"
