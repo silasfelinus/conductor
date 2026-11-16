@@ -207,4 +207,35 @@ tasks:
     depends_on: []
     note: |-
       Filed from the 2026-11-14 PT private screening review (projects/dead-air/reviews/2026-11-14-screening.md). MusicVideo 18's s3 GPU clip baked two lines of garbled fake subtitles and a magenta band into the picture, colliding with the compositor's real caption bar; MusicVideo 19's s1 still hallucinated pseudo-lettering on a sign, and its s3 still dropped the authored red motive-thread and swapped the mechanic scene for a kneeling-at-a-car composition. Apply the PAINT_GUARDS lettering check to motion prompts too (check every seeded episode still validates), steer premises whose subject is captions/subtitles toward non-text imagery, and consider a cheap automated still-vs-prompt check before export. Private production only; never publish.
-    updated: '2026-11-14T23:20:00Z'
+
+      2026-11-16 PT added evidence (projects/dead-air/reviews/2026-11-16-screening.md): MusicVideo 21's s5 dropped the authored gardener's face from the final fruit, losing the punchline, and s2 rendered ordinary fruit instead of ceramic ears; MusicVideo 20 showed the s4 reveal jaguar in s2 and s3 because it is named in the episode-wide visual_style.
+    updated: '2026-11-16T11:50:00Z'
+  - id: t-011
+    milestone: m4
+    title: Make Dead Air's follow-up production passes independent of GitHub's late schedule queue
+    status: ready
+    stakes: reversible
+    passes: 0
+    depends_on: []
+    note: |-
+      Filed from the 2026-11-16 PT private screening review (projects/dead-air/reviews/2026-11-16-screening.md). dead-air-daily.yml schedules four overnight passes for 01:00-03:15 PT, but GitHub starts them six to seven hours late: render-progress commits landed 09:06-10:00 PT on 2026-11-13, 07:43-08:42 PT on 2026-11-14 and 08:14 PT on 2026-11-15, and on 2026-11-16 no scheduled pass had run by 03:20 PT. Films therefore miss the morning screening deadline, and the optional GPU clip (requestable only inside the first 90 minutes of the two-hour budget, after stills exist) is never requested, so every film exports all-kinetic (Clap Credit: gpu_animated_shots 0 with s4 authored motion: clip). Make the follow-up passes not depend on the schedule queue: for example, let a pass that exits 3 (still rendering) poll inside its own job and then re-dispatch the workflow via workflow_dispatch, strictly bounded by the existing two-hour budget so a film that can never export cannot loop. Keep the scheduled crons as a fallback, add a test for the bound, and verify on a real overnight run. Private production only; never publish.
+    updated: '2026-11-16T11:25:00Z'
+  - id: t-012
+    milestone: m3
+    title: Decide the visibility of the four publicly playable Dead Air films and merge the private-by-default fix
+    status: needs-human
+    stakes: outward-facing
+    gate_human: true
+    gate_reason: publish
+    security_flag: true
+    passes: 0
+    depends_on: []
+    note: |-
+      FOR SILAS (2026-11-16 PT). What was found: every Dead Air film so far is publicly listed and playable on kindrobots.org without signing in. MusicVideos 18 (Closed Caption Department), 19 (Plot Assist), 20 (Clap Credit) and 21 (Apology Orchard) all read isPublic true; the visitor gallery feed lists them and /api/music-video/21/video returned the full MP4 to an anonymous request. Evidence and method: projects/dead-air/reviews/2026-11-16-screening.md.
+
+      Why: Kind Robots' MusicVideo.isPublic defaults to true (prisma/music-video.prisma) and scripts/dead_air_produce.py never sets it, so each film has been public from export. The README says new films stay private drafts until you approve publication, and t-007 gates any public release, so this happened without your decision.
+
+      What to decide: (1) Make the four films private, or keep some or all public on purpose. To make them private, open each in the Kind Robots music video editor and switch off sharing, or tell an agent in-session to PATCH isPublic false on MusicVideos 18-21. An agent session tried this on 2026-11-16 and its permission guard refused the change to live site data, so nothing was changed. (2) Merge or reject the open conductor PR "dead-air: create new films private and verify it", which makes the producer set and verify isPublic false whenever it creates or resumes a film. Until it merges, the next overnight run creates another public film.
+
+      What unblocks: your answer here or in session. Agents must not set approved_by_human. The daily production task t-004 stays open; the security flag in projects/dead-air/TALKBACK.md needs your acknowledgement before the next agent cycle on this project.
+    updated: '2026-11-16T11:50:00Z'

@@ -69,3 +69,15 @@ type: critique
 - t-004 was correctly re-armed to `ready` as a recurring daily commitment instead of being falsely closed. No publishing occurred.
 
 **Suggested action:** Next cycle, confirm in `production-state.json` that Clap Credit actually renders with the new bed and chime, and audit one finished MP4 with `longest_quiet_run`. A unit-tested filter graph is not the same as a screened film.
+
+## 2026-11-16 | Worker → Reviewer | dead-air/t-012 | security-flag
+type: security-flag
+
+**Subject:** All four Dead Air films are publicly listed and playable on kindrobots.org, although the project requires private drafts until Silas approves a release.
+**Detail:**
+- Anonymous checks on 2026-11-16 at about 03:35 PT: `GET /api/music-video` listed MusicVideos 18, 19, 20 and 21 with `isPublic: true`; `GET /api/music-video/21/video` returned HTTP 200 `video/mp4` with the full 1,960,755-byte final. Full evidence: `projects/dead-air/reviews/2026-11-16-screening.md`.
+- Cause: Kind Robots' `MusicVideo.isPublic` defaults to true and `scripts/dead_air_produce.py` never sets it. No agent switched anything public; the films were public from export, starting with MusicVideo 18 on 2026-11-13.
+- Earlier entries and reviews in this project that say "No publishing occurred" or "private film" were written without checking the record's visibility and are wrong on that point.
+- This session tried to set the four records to `isPublic: false`. Its permission guard refused the change to live site data, so the films are still public. No secret was exposed and no rotation is needed.
+
+**Suggested action:** Silas decides dead-air/t-012: make the four films private (or keep them public on purpose) and merge or reject the producer fix that creates new films private and verifies it. Reviewers should check `isPublic` on the record before writing "private" in any Dead Air review.
