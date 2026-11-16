@@ -984,8 +984,8 @@ tasks:
   - id: t-041
     milestone: m2
     title: "CLASH 300: individually crafted L1/L2/L3 effects for every existing card"
-    status: ready
-    updated: '2026-11-16T08:08:13+00:00'
+    status: claimed
+    updated: '2026-11-16T13:53:44Z'
     depends_on: t-037
     passes: 0
     stakes: reversible
@@ -1019,6 +1019,9 @@ tasks:
       art QA.
 
       2026-11-16 PT: released claim 2026-11-16T0730Z-t041-pd5v7b without changes. The constructed report (3120 bouts) still shows 14 dead two-slot cards, e.g. s3-catgirls-stolen-saw and s3-catgirls-spare-lives. Cause: chooseClashCpu divides every score by b.plays, and a cost-4 grant spell scores roughly half a fighter. Fixing it means changing cards or the CPU comparator, which the test output attributes to t-051 (candidate list goes to Silas first), so this session switched to interface-vision/t-154. No work discarded.
+    owner: worker
+    claimed_by: 2026-11-16T1345Z-t041-oxpi
+    claimed_at: '2026-11-16T13:53:44Z'
   - id: t-042
     milestone: m2
     title: "Curate and wire the ogre redo-3 tokens: Picket Line Troll, Coal Cart Racer, Union Lunch Lady"
