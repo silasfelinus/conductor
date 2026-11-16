@@ -2555,3 +2555,17 @@ tasks:
     2026-11-16 PT: kind_robots PR #5239. Root cause: about 78 routes x 3 viewports ran serially, and each navigation waited for networkidle with a 90s timeout; polling pages never go idle. Fix: navigate on load (60s), then a networkidle wait capped at 15s (splash and image-settle waits kept); a round-robin --shard i/n with no overlap and no routes dropped; per-page timing log; workflow is a 6-shard matrix (max-parallel 3, 45-min timeout) plus a separate controls job (Clash, gallery chrome, tablet nav) so a slow sweep can't skip them; contract test. Production measurement: ~34s per page, about 22 min per shard. Done only when a dispatched or scheduled run completes every job; record the run id here and on slime-city/t-069.
   claimed_by: 2026-11-16T0750Z-t154-pd5v7b
   claimed_at: '2026-11-16T07:51:33Z'
+
+- id: t-155
+  milestone: m6
+  title: Redesign the visitor homepage opening and featured game posters
+  status: claimed
+  owner: worker
+  claimed_by: 2026-11-16T084600Z-interface-vision-t-155-f218
+  claimed_at: '2026-11-16T08:46:00Z'
+  updated: '2026-11-16T08:46:00Z'
+  passes: 0
+  stakes: reversible
+  recurring: false
+  note: >-
+    Silas's 2026-11-16 PT screenshot feedback: remove the giant Terror on Crystal Street opening promo (keep its game entry), collapse the Against Malaria Foundation call to a one-row link, and replace weak Arcade/Shifting Desks/other homepage highlights with game-specific, cinematic, painted-image-first presentation. Preserve destination routes, the one bounded gallery scroll owner, the optional Advert Studio gallery and cross-width responsiveness. Deliver implementation as a Kind Robots PR; any newly queued illustration remains independently tracked until rendered and chosen.
