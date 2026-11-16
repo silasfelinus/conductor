@@ -33,6 +33,7 @@ from typing import Optional
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import build_dream_records as core  # noqa: E402
 import check_dream_creative_contract as creative_contract  # noqa: E402
+import daily_dream_v4_contract as v4  # noqa: E402
 
 
 def eligible_proposal(date_override: Optional[str]) -> tuple[Optional[Path], str]:
@@ -73,6 +74,13 @@ def eligible_proposal(date_override: Optional[str]) -> tuple[Optional[Path], str
             continue
 
         proposal = core._data_block(text, "proposal-data")
+        # Silas 2026-11-14: old 14-object bundles are historical only.
+        # Never create additional Zuzu/Emperor scenarios or rewards.
+        if v4.is_v4_day(today) and (not isinstance(proposal, dict)
+                                   or proposal.get("bundle_version") != 4):
+            reason = (f"{path.name}: legacy draft retained, not auto-built; "
+                      "the current writer requires private setting/character candidates")
+            continue
         if core.is_v3_day(proposal_date) and isinstance(proposal, dict) and proposal.get("bundle_version") != 3:
             reason = (f"{path.name}: old six-asset buffer retained for review; "
                       "re-author a separate fourteen-asset proposal for the date")

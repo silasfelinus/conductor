@@ -270,6 +270,35 @@ and character name literally."""
 
 
 
+V4_SYSTEM_ADDENDUM = """
+NOVEMBER 14 CORRECTION. AUTHOR TEN TOTAL RECORDS, NOT FOURTEEN.
+Keep the exact original six linked Daily Dream rows. Add a SEPARATE,
+PRIVATE, UNLINKED object-catalog candidate allocation:
+
+"bundle_version": 4,
+"zuzu_assets": {
+  "locations": [TWO dicts, one each for zuzu-gamebook and emperor-of-dust;
+                fields title, known_for, local_rule, best_scene, art_direction,
+                project_target, checkpoint_family],
+  "characters": [TWO dicts, one each for zuzu-gamebook and emperor-of-dust;
+                 fields name, role_drive, carries, complication, look,
+                 project_target, checkpoint_family]
+}
+
+Do NOT write any Zuzu/Emperor rewards, scenarios, episodes, moral dilemmas,
+story branches, game systems, quests, events or new game concepts.
+The four rows are proposed setting/backdrop ideas and character models to
+store privately in their respective Kind Robots object catalogs. They are
+NOT additions to the games' playtest content or approved canon.
+No relation to the original random Daily Dream. The preexisting game settings
+are fixed: Weird West Edo samurai Koala Zuzu; earlier ash/brass Emperor era.
+Gamebook uses arthemy; Emperor uses illustrious. Each candidate must have
+an independent, visually specific art direction, but must not demand new
+playable narrative. Keep the six original Dream rows and their visual style.
+Return JSON only.
+"""
+
+
 V3_SYSTEM_ADDENDUM = """
 CRITICAL: FROM THIS DAILY CYCLE, PRODUCE FOURTEEN ASSETS TOTAL.
 Keep the entire original Daily Dream JSON shape, all six original records and
@@ -836,7 +865,11 @@ def author(day: str, api_key: str, verbose: bool = True) -> dict:
         try:
             proposal = parse_json_object(call_claude(
                 ask,
-                SYSTEM_PROMPT + (V3_SYSTEM_ADDENDUM if brief.get("bundle_version") == 3 else ""),
+                SYSTEM_PROMPT + (
+                    V4_SYSTEM_ADDENDUM if brief.get("bundle_version") == 4
+                    else V3_SYSTEM_ADDENDUM if brief.get("bundle_version") == 3
+                    else ""
+                ),
                 api_key,
             ))
         except (ValueError, json.JSONDecodeError) as error:
@@ -845,8 +878,8 @@ def author(day: str, api_key: str, verbose: bool = True) -> dict:
                 print("  rejected: " + complaints[0], file=sys.stderr)
             continue
 
-        if brief.get("bundle_version") == 3:
-            proposal["bundle_version"] = 3
+        if brief.get("bundle_version") in (3, 4):
+            proposal["bundle_version"] = brief["bundle_version"]
             assign_zuzu_provenance(proposal)
 
         proposal["seed_facets"] = merge_invented_facets(

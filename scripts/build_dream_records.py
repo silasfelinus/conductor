@@ -41,6 +41,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from art_prompt_conditional_check import conditional_instruction_violations  # noqa: E402
 from dream_sdxl_checkpoint_art import CHECKPOINT_LANES  # noqa: E402
 from daily_dream_v3_contract import validate_v3  # noqa: E402
+from daily_dream_v4_contract import validate_v4, is_v4_day  # noqa: E402
 from daily_dream_v3_authoring import is_v3_day  # noqa: E402
 from dream_art_prompts import (  # noqa: E402
     character_prompt,
@@ -163,8 +164,10 @@ def _canonical_proposal_errors(proposal: Optional[dict]) -> list[str]:
     """Return violations of the exact version-2 six-asset input contract."""
     if not isinstance(proposal, dict):
         return ["missing or invalid proposal-data block"]
+    if proposal.get("bundle_version") == 4:
+        return validate_v4(proposal)
     if proposal.get("bundle_version") == 3:
-        # One validated transaction, not an independent Zuzu REST writer.
+        # Historical 14-object v3 remains readable; the scheduler rejects it.
         return validate_v3(proposal)
     if proposal.get("zuzu_assets"):
         return ["unversioned Zuzu assets are forbidden; bundle_version 3 is required"]
@@ -639,10 +642,11 @@ def kr_call(method: str, endpoint: str, body: dict, dry_run: bool,
 
 def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple[dict, list, list[str]]:
     """Create rows + sheets; original six plus optional versioned Zuzu extras."""
-    if proposal.get("bundle_version") == 3:
-        errors = validate_v3(proposal)
+    if proposal.get("bundle_version") in (3, 4):
+        version = proposal["bundle_version"]
+        errors = validate_v4(proposal) if version == 4 else validate_v3(proposal)
         if errors:
-            raise ValueError("invalid v3 bundle before any writes: " + "; ".join(errors))
+            raise ValueError(f"invalid v{version} bundle before any writes: " + "; ".join(errors))
     results: list = []
     art_entries: list[str] = []
     built: dict[str, Any] = {
@@ -653,8 +657,8 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
         "sheets": {},
         "art": [],
     }
-    if proposal.get("bundle_version") == 3:
-        built["bundle_version"] = 3
+    if proposal.get("bundle_version") in (3, 4):
+        built["bundle_version"] = proposal["bundle_version"]
     title = proposal.get("title", slug)
     vibe = proposal.get("vibe", {})
     vibe_line = vibe.get("line", "")
@@ -767,10 +771,13 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
         Callers that omit it get a de-duplicated slugify of the title. See
         specs/SLUG-POLICY.md."""
         resolved_slug = dream_slug or uniq_slug(dtitle)
+        private_candidate = bool(project_target and proposal.get("bundle_version") == 4)
+        designer = f"{DESIGNER}:{project_target}" if private_candidate else DESIGNER
         dream_body = {
             "title": dtitle, "slug": resolved_slug,
-            "dreamType": dream_type, "designer": DESIGNER, "creationSource": CREATION_SOURCE,
-            "isPublic": True, "description": description,
+            "dreamType": dream_type, "designer": designer, "creationSource": CREATION_SOURCE,
+            "isPublic": not private_candidate, "allowReviews": not private_candidate,
+            "description": description,
             "flavorText": flavor[:500] if flavor else None,
             "artPrompt": art_prompt or None, "icon": icon,
         }
@@ -781,14 +788,14 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
                 "title": dtitle,
                 "slug": resolved_slug,
                 "dreamType": dream_type,
-                "designer": DESIGNER,
+                "designer": designer,
                 "description": description,
             },
         )
         if not dream:
             return None
         sheet_body = {
-            "designer": DESIGNER, "isPublic": True,
+            "designer": designer, "isPublic": not private_candidate,
             # extraData is a String @db.LongText column — send JSON as a string,
             # not a raw object (an object 400s with a Prisma-invalid error).
             "extraData": json.dumps({**extra_base, "elementType": dream_type,
@@ -982,15 +989,13 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
                                   title, vibe_line),
                   "/api/scenarios", rec.get("id") if rec else None)
 
-    # 7. Version 3 adds EIGHT distinctly attributed Zuzu-world records.
-    # None is a child of, linked to, or styled after the random daily PITCH.
-    # They share this build's rollback ledger and the same 14-request handoff.
-    if proposal.get("bundle_version") == 3:
+    # v3: eight historical extras. v4: only FOUR PRIVATE setting and character
+    # models. Both use the same transaction, rollback and durable ArtJob ledger.
+    if proposal.get("bundle_version") in (3, 4):
         extras = proposal["zuzu_assets"]
-        created = {
-            "locations": [], "characters": [],
-            "rewards": [], "scenarios": [],
-        }
+        created = {"locations": [], "characters": []}
+        if proposal.get("bundle_version") == 3:
+            created.update({"rewards": [], "scenarios": []})
         zuzu_location_ids: dict[str, int] = {}
         zuzu_location_titles: dict[str, str] = {}
         built["records"]["zuzu"] = created
@@ -1032,7 +1037,9 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
             rec = card_dream(
                 "LOCATION", loc["title"], description, loc["local_rule"],
                 art_prompt, "kind-icon:map-pin", el,
-                {"title": loc["title"], "subtitle": "Zuzu location",
+                {"title": loc["title"],
+                 "subtitle": ("Private proposed setting for " + project
+                              if proposal.get("bundle_version") == 4 else "Zuzu location"),
                  "hook": loc["art_direction"],
                  **trio([("Known For", loc["known_for"]),
                          ("Local Rule", loc["local_rule"]),
@@ -1058,8 +1065,12 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
                 ch["name"], ch["look"], ch["role_drive"], ch["carries"],
                 scene_world, tone, style=CHECKPOINT_LANES[family]["style"],
             )
+            candidate = proposal.get("bundle_version") == 4
             body = {
-                "name": ch["name"], "designer": DESIGNER, "isPublic": True,
+                "name": ch["name"],
+                "designer": f"{DESIGNER}:{project}" if candidate else DESIGNER,
+                "isPublic": not candidate, "allowReviews": not candidate,
+                **({"role": "Proposed character model"} if candidate else {}),
                 "drive": ch["role_drive"], "quirks": ch["complication"],
                 "backstory": " ".join((ch["carries"], ch["complication"])),
                 "artPrompt": art_prompt,
@@ -1081,7 +1092,7 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
                       "/api/characters", rec.get("id") if rec else None,
                       project_target=project, checkpoint_family=family)
 
-        for rw in extras["rewards"]:
+        for rw in extras.get("rewards", []):
             project, family, scene_world, tone = zuzu_style(rw)
             el = "zuzu-" + project + "-" + slugify(rw["name"])
             kind = str(rw["reward_type"]).upper()
@@ -1113,7 +1124,7 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
                       "/api/rewards", rec.get("id") if rec else None,
                       project_target=project, checkpoint_family=family)
 
-        for sc in extras["scenarios"]:
+        for sc in extras.get("scenarios", []):
             project, family, scene_world, tone = zuzu_style(sc)
             el = "zuzu-" + project + "-" + slugify(sc["title"]) + "-scenario"
             location_title = zuzu_location_titles.get(project, "")
@@ -1277,9 +1288,16 @@ def run_build(date_override: Optional[str], dry_run: bool) -> dict[str, Any]:
     fm = _frontmatter(text)
     proposal = _data_block(text, "proposal-data")
     pdate = str(fm.get("proposal_date") or fm.get("created") or "")
-    if is_v3_day(pdate) and isinstance(proposal, dict) and proposal.get("bundle_version") != 3:
+    if (is_v4_day(pdate) and isinstance(proposal, dict)
+            and proposal.get("bundle_version") != 4):
+        message = (f"{path.name}: a v4 ten-object private catalog proposal "
+                   "is required instead of the older fourteen-object batch")
+        return _fail_and_pin(path, message, dry_run, already_pinned=already_pinned)
+    if (is_v3_day(pdate) and not is_v4_day(pdate)
+            and isinstance(proposal, dict)
+            and proposal.get("bundle_version") != 3):
         message = (f"{path.name}: six-asset legacy draft is preserved but requires "
-                   "an independently authored v3 proposal before building")
+                   "the historical v3 proposal")
         return _fail_and_pin(path, message, dry_run, already_pinned=already_pinned)
     contract_errors = _canonical_proposal_errors(proposal)
     if contract_errors:
@@ -1292,7 +1310,7 @@ def run_build(date_override: Optional[str], dry_run: bool) -> dict[str, Any]:
             + "; ".join(art_errors)
         )
         return _fail_and_pin(path, message, dry_run, already_pinned=already_pinned)
-    if proposal.get("bundle_version") == 3 and not dry_run:
+    if proposal.get("bundle_version") in (3, 4) and not dry_run:
         # Resolve BOTH real checkpoint resources before creating any DB objects.
         # A missing resource cannot become a silently substituted Krea job;
         # failures pin the proposal for explicit correction/retry.
@@ -1302,7 +1320,11 @@ def run_build(date_override: Optional[str], dry_run: bool) -> dict[str, Any]:
             catalog = _load_resource_index()
             families = {
                 str(row.get("checkpoint_family") or "").lower()
-                for kind in ("locations", "characters", "rewards", "scenarios")
+                for kind in (
+                    ("locations", "characters")
+                    if proposal.get("bundle_version") == 4
+                    else ("locations", "characters", "rewards", "scenarios")
+                )
                 for row in proposal["zuzu_assets"][kind]
             }
             for family in families:
@@ -1322,7 +1344,7 @@ def run_build(date_override: Optional[str], dry_run: bool) -> dict[str, Any]:
     except Exception as error:  # noqa: BLE001 - persist the retry before surfacing it
         message = f"{slug}: object creation crashed before the bundle could be recorded: {error}"
         return _fail_and_pin(path, message, dry_run, already_pinned=already_pinned)
-    expected_requests = 14 if proposal.get("bundle_version") == 3 else 6
+    expected_requests = {3: 14, 4: 10}.get(proposal.get("bundle_version"), 6)
     if len(art_entries) != expected_requests or len({
         _art_request_id(entry) for entry in art_entries
     }) != expected_requests or len(built.get("art") or []) != expected_requests:

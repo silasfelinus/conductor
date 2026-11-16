@@ -253,13 +253,15 @@ def _record_targets(proposal: dict[str, Any], built: dict[str, Any]) -> list[dic
     # V3 keeps the six original targets, then adds eight independent Zuzu
     # targets by their own IDs. No Facet for an unrelated random daily world
     # is copied onto a Zuzu production asset.
-    if proposal.get("bundle_version") == 3:
+    if proposal.get("bundle_version") in (3, 4):
         zuzu = records.get("zuzu") if isinstance(records.get("zuzu"), dict) else {}
-        for kind, model, singular in (
+        models = [
             ("locations", "Dream", "location"),
             ("characters", "Character", "character"),
-            ("scenarios", "Scenario", "scenario"),
-        ):
+        ]
+        if proposal.get("bundle_version") == 3:
+            models.append(("scenarios", "Scenario", "scenario"))
+        for kind, model, singular in models:
             rows = zuzu.get(kind) if isinstance(zuzu.get(kind), list) else []
             for index, row in enumerate(rows, 1):
                 add(f"zuzu_{singular}_{index}", model, row)
@@ -287,7 +289,7 @@ def apply_file(path: Path, token: str, *, dry_run: bool = False, force: bool = F
         return False, "already complete", False
 
     targets = _record_targets(proposal, built)
-    expected = 14 if proposal.get("bundle_version") == 3 else 6
+    expected = {3: 14, 4: 10}.get(proposal.get("bundle_version"), 6)
     if len(targets) != expected:
         return False, f"waiting for complete records ({len(targets)}/{expected} Facet targets)", False
 

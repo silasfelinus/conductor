@@ -38,6 +38,8 @@ def test_stale_entropy_proposals_do_not_fill_or_own_the_docket_date(tmp_path, mo
     monkeypatch.setattr(dreams, "BACKLOG", tmp_path)
     # This test isolates docket/version semantics; full proposal validity has its own suite.
     monkeypatch.setattr(dreams, "validate_proposal", lambda proposal: [])
+    # Entropy-version semantics only; v4 bundle gating has its own suite.
+    monkeypatch.setattr(dreams._v4, "is_v4_day", lambda day: False)
 
     stale = tmp_path / f"{day}-old-contract.md"
     stale.write_text(

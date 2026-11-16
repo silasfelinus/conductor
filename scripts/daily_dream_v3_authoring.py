@@ -13,8 +13,10 @@ from typing import Any
 
 try:
     from daily_dream_v3_contract import FACET_SLOTS, PROJECT_TARGETS
+    import daily_dream_v4_contract as v4
 except ModuleNotFoundError:  # scripts.* package imports from pytest
     from scripts.daily_dream_v3_contract import FACET_SLOTS, PROJECT_TARGETS
+    from scripts import daily_dream_v4_contract as v4
 
 CUTOVER_DAY = "2026-10-13"
 ZU_SLOTS = FACET_SLOTS[6:]
@@ -43,7 +45,8 @@ def extend_brief(brief: dict[str, Any], catalog: dict[str, list[dict[str, Any]]]
     spent = {_id(f) for slot in FACET_SLOTS[:6]
              for f in elements[slot] if isinstance(f, dict)}
     day = str(out["proposal_date"])
-    for index, slot in enumerate(ZU_SLOTS):
+    slots = v4.ZUZU_SLOTS if v4.is_v4_day(day) else ZU_SLOTS
+    for index, slot in enumerate(slots):
         owner = PROJECT_TARGETS[index % 2] if "reward" not in slot else (
             "zuzu-gamebook" if slot == "zuzu_reward_item" else "emperor-of-dust"
         )
@@ -63,6 +66,40 @@ def extend_brief(brief: dict[str, Any], catalog: dict[str, list[dict[str, Any]]]
         unique = {(_id(row), str(row.get("taxonomy"))): row for row in pool}
         selected = rng.sample(list(unique.values()), k=min(2, len(unique)))
         elements[slot] = copy.deepcopy(selected)
+    if v4.is_v4_day(day):
+        # Silas 2026-11-14: these are private candidate OBJECTS, never new
+        # gamebook chapters, story choices, dispatches, rewards, or characters
+        # automatically inserted into either playable game's canonical roster.
+        seed["version"] = 4
+        out["bundle_version"] = 4
+        out["required_counts"] = {
+            "vibe": 1, "locations": 1, "characters": 1,
+            "reward_item": 1, "reward_skill": 1, "scenarios": 1,
+            "zuzu_locations": 2, "zuzu_characters": 2,
+        }
+        out["instructions"].extend([
+            "Exactly SIX linked original Daily Dream objects PLUS FOUR separate "
+            "private reusable catalog candidates: one LOCATION/setting and one "
+            "Character MODEL for each of Zuzu Gamebook and Emperor of Dust.",
+            "zuzu_assets contains ONLY locations and characters; do not produce "
+            "Zuzu rewards, scenarios, encounters, branching content, quests, "
+            "gameplay rules, scenes, choices or new game concepts.",
+            "The two locations are proposed environmental world settings and the "
+            "two characters are visual/background models, not changes to the "
+            "games' canon, active NPC rosters, levels, or playtesting paths.",
+            "Every supplemental candidate must use its own project_target, "
+            "an appropriate Arthemy/Illustrious checkpoint, and independent "
+            "registered Facets. Never link to today's random Dream vibe.",
+            "Zuzu Gamebook: anthropomorphic Weird West/Edo setting and characters. "
+            "When Zuzu appears, depict a short, stocky koala with rust-brown "
+            "poncho, conical straw kasa and katana on his back, not a cowboy hat.",
+            "Emperor of Dust: keep the existing pre-Zuzu ash-and-brass setting "
+            "and established follower lore. Do not invent new mechanics.",
+            "Catalog proposals stay PRIVATE pending review. Art describes a "
+            "setting backdrop or character model with readable silhouette; "
+            "do not write new playable narrative.",
+        ])
+        return out
     seed["version"] = 3
     out["bundle_version"] = 3
     out["required_counts"] = {
@@ -108,7 +145,8 @@ def assign_zuzu_provenance(proposal: dict[str, Any]) -> dict[str, Any]:
     extras = proposal.get("zuzu_assets")
     if not isinstance(extras, dict):
         return proposal
-    for kind in ("locations", "characters", "rewards", "scenarios"):
+    kinds = ("locations", "characters") if proposal.get("bundle_version") == 4 else ("locations", "characters", "rewards", "scenarios")
+    for kind in kinds:
         rows = extras.get(kind)
         if not isinstance(rows, list) or len(rows) != 2:
             continue

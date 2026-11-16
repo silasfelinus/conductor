@@ -382,9 +382,15 @@ def daily_asset_freshness_section(digest: dict[str, Any]) -> str:
                if isinstance(x.get("art_job_id"), int) and x["art_job_id"] > 0}
     rendered = sum(x.get("art_status") == "ready" for x in rows)
     date = current.get("built_date") or current.get("proposal_date") or "unknown date"
+    private_catalog = current.get("bundle_version") == 4
+    target = 10 if private_catalog else 14
+    expected_candidates = 4 if private_catalog else 8
+    label = ("private setting/character candidates" if private_catalog
+             else "independent Zuzu records")
     counts = (
-        f"{len(dream)}/6 linked Dream records, {len(zuzu)}/8 independent Zuzu "
-        f"records, {len(job_ids)}/14 verified ArtJob IDs, "
+        f"{len(dream)}/6 linked Dream records, "
+        f"{len(zuzu)}/{expected_candidates} {label}, "
+        f"{len(job_ids)}/{target} verified ArtJob IDs, "
         f"{rendered}/{len(rows)} verified images"
     )
     return (

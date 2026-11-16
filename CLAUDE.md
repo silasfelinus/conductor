@@ -28,7 +28,7 @@ Before responding to any task, run a conductor sweep and report it to Silas:
 5. **Daily rituals** — each has its own section in `docs/agents/daily-rituals.md`; open it only when
    the ritual is due:
    - **Dream docket** (step 7, re-enabled by Silas 2026-11-14 PT, parallel to Dead Air): if `build_dream_proposal.py --check` reports fewer than 5 unbuilt
-     proposals, author exactly ONE version-3, fourteen-asset proposal this session (`--brief` → `--from-json`); exit 1 = empty, author
+     proposals, author exactly ONE version-4, ten-asset proposal this session (six linked Dream creations, plus four private setting/character model candidates and no Zuzu/Emperor gameplay) (`--brief` → `--from-json`); exit 1 = empty, author
      now. Read `docs/sweep-checks.md` "Step 7" before authoring.
    - **Dead Air storyboard runway** (continuous, independent of Dream): run
      `python scripts/check_dead_air_runway.py --days 7` against today's Pacific

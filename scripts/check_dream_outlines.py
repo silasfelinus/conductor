@@ -14,8 +14,10 @@ import yaml
 
 try:
     import daily_dream_v3_contract as v3
+    import daily_dream_v4_contract as v4
 except ModuleNotFoundError:  # loaded as scripts.check_dream_outlines in tests
     from scripts import daily_dream_v3_contract as v3
+    from scripts import daily_dream_v4_contract as v4
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_BACKLOG = ROOT / "projects" / "dream-cycle" / "backlog"
@@ -87,6 +89,8 @@ def is_placeholder(body: Optional[str]) -> bool:
 def _canonical_errors(data: Optional[dict[str, Any]]) -> list[str]:
     if not isinstance(data, dict):
         return ["missing or invalid proposal-data block"]
+    if data.get("bundle_version") == v4.BUNDLE_VERSION:
+        return v4.validate_v4(data)
     if data.get("bundle_version") == v3.BUNDLE_VERSION:
         return v3.validate_v3(data)
     errors: list[str] = []
