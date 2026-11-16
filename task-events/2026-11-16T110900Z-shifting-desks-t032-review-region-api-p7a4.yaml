@@ -1,0 +1,15 @@
+version: 1
+project: shifting-desks
+task: t-032
+operation: review
+session: 2026-11-16T110000Z-shifting-desks-t032-region-api-gpt6-p7a4
+updated: '2026-11-16T11:09:00Z'
+note: >-
+  Implemented the Kind Robots SDXL targeted-inpainting API branch
+  worker/shifting-desks-t-032-targeted-sdxl-inpaint-p7a4 with reusable
+  multi-box/polygon normalized targets, per-target bleed and feather,
+  full-frame/crop modes, exact original-pixel final Comfy composite,
+  previewOnly mask responses, private durable ArtJobs, retry dedup and
+  source/mask provenance. Added the DB-free regression contract to CI.
+  Prepare PR and verify all exact-head checks. Do not mark source art
+  accepted or submit private render jobs before this backend deploys.
