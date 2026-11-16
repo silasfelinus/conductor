@@ -29,8 +29,7 @@ tasks:
   - id: t-001
     milestone: m1
     title: "Kit spec, 50-preset roster, supports, synergies, optimizer and the /admin/deepheart preview"
-    status: review
-    owner: null
+    status: done
     passes: 0
     stakes: reversible
     implementation_pr: 'silasfelinus/kind_robots#5257'
@@ -38,11 +37,13 @@ tasks:
       Shipped in kind_robots#5257: utils/deepheart/{roster,party}.ts, the saga kit spec with
       allowances for followers/romances/threads, the builder with hero customization
       (name, identity, drawn-to, boon) and the goal optimizer. Close once merged.
+
+      Merged Kind Robots #5257 (ea704ae8): fifty-preset roster, party optimizer, customization and ADMIN front-end now on main.
+    updated: '2026-11-16T22:55:22Z'
   - id: t-002
     milestone: m1
     title: "Master GitHub issue as the roadmap hub; Conductor project at high priority"
-    status: review
-    owner: null
+    status: done
     passes: 0
     stakes: reversible
     note: |-
@@ -50,22 +51,26 @@ tasks:
       in docs/agents/master-issues.yaml; added to the main-game list in
       docs/agents/main-game-standard.md; project-overrides priority high. Close once this
       Conductor PR merges.
+
+      Merged Conductor #7489 (2f184fbc) and verified Deepheart active/high, master issue Kind Robots #5256.
+    updated: '2026-11-16T22:55:22Z'
   - id: t-003
     milestone: m2
     title: "Seeded engine: three layers, fights, puzzles, treasure, choice rooms, campfires, bosses, finale"
-    status: review
-    owner: null
+    status: done
     passes: 0
     stakes: reversible
     implementation_pr: 'silasfelinus/kind_robots#5257'
     note: |-
       utils/deepheart/engine.ts; npm run test:deepheart plays 60 seeded delves and proves a
       seed replays exactly. Close once merged.
+
+      Merged Kind Robots #5257 (ea704ae8): deterministic three-layer room and combat engine; Playbook Kit CI successful.
+    updated: '2026-11-16T22:55:22Z'
   - id: t-004
     milestone: m2
     title: "Party rules: supports, synergies, mutual romance, oaths, poly and married pairs"
-    status: review
-    owner: null
+    status: done
     passes: 0
     stakes: reversible
     implementation_pr: 'silasfelinus/kind_robots#5257'
@@ -73,17 +78,22 @@ tasks:
       Romance requires mutual attraction (hero identity + drawn-to vs each companion's).
       Brannoc and Thessaly are courted together; Quillon and Ambrose start married when
       both delve. Aromantic presets swear oaths instead. Close once merged.
+
+      Merged Kind Robots #5257 (ea704ae8): support, romance, oath, poly/married-pair and role synergy rules.
+    updated: '2026-11-16T22:55:22Z'
   - id: t-005
     milestone: m2
     title: "Nine endings reachable from a fresh seed; scrapbook unlocked by play"
-    status: review
-    owner: null
+    status: done
     passes: 0
     stakes: reversible
     implementation_pr: 'silasfelinus/kind_robots#5257'
     note: |-
       verifyDeepheart.test.ts replays a trace to every ending and checks engine moments
       against the 72 scrapbook moments both ways. Close once merged.
+
+      Merged Kind Robots #5257 (ea704ae8): nine ending traces and scrapbook moment contract verified in Playbook Kit CI.
+    updated: '2026-11-16T22:55:22Z'
   - id: t-006
     milestone: m2
     title: "Main-game standard: title, settings, save/load, 20 achievements, chronicle; verify one award live"
@@ -100,7 +110,7 @@ tasks:
   - id: t-007
     milestone: m3
     title: "Two-tier support scenes for all 35 pairs; three campfire beats per romance and oath"
-    status: waiting
+    status: ready
     depends_on: t-005
     owner: null
     passes: 0
@@ -112,7 +122,7 @@ tasks:
   - id: t-008
     milestone: m3
     title: "Room variety and balance from seeded sims"
-    status: waiting
+    status: ready
     depends_on: t-005
     owner: null
     passes: 0
