@@ -610,8 +610,8 @@ tasks:
   - id: t-032
     milestone: m3
     title: 'Land, review and link the art round 13 re-renders and round 14 tone-ladder renders'
-    status: ready
-    updated: '2026-11-15T23:15:31Z'
+    status: claimed
+    updated: '2026-11-16T00:50:00Z'
     depends_on: t-015
     passes: 0
     stakes: reversible
@@ -675,6 +675,9 @@ tasks:
       Silas corrected the pipeline preference on 2026-11-15 PT: use faster img2img rather than slow Kontext. Implemented three private, reference-guided, eight-step DreamShaper XL Turbo SDXL-img2img test cells using the V2 rejected ArtImages as sources (271721, 271722, 271723). The new auto_submit ledger in art/SDXL-IMG2IMG-CORRECTION-PILOT-1.yaml uses independent seeds and source provenance without target paths, so original Classic production artwork and ROUND-19 REDO verdicts are protected. Regression test guards request shape and private-only processing. The PR is awaiting review and CI; until auto art submits this ledger, no new ArtJob or ArtImage should be reported as created.
 
       Fast img2img correction pilot merged as Conductor PR #7458, exact head 4f21b2b7208747f75a506cf0ec1b0f3db6881070, all four current PR check suites successful (Python suite and security included), squash merge f22f421a394547dbce787ac83206af84cc6721e9. New private, auto_submit SDXL DreamShaper Turbo 8-step img2img ledger: projects/shifting-desks/art/SDXL-IMG2IMG-CORRECTION-PILOT-1.yaml; references existing rejected V2 source ArtImages 271721, 271722, 271723. At post-merge verification the ledger had no new jobs/ArtImage ids yet: auto-art-sweep must submit, then record IDs and status before visually judging candidates. Preserve all fourteen Classic ROUND-19 REDO verdicts and live media until independently approved. This task is still unfinished; returned to ready to prevent a phantom active claim. User explicitly prefers fast img2img over slow Kontext for the remaining art corrections.
+    owner: worker
+    claimed_by: 2026-11-16T005000Z-shifting-desks-t032-gpt6-d9e4
+    claimed_at: '2026-11-16T00:50:00Z'
   - id: t-033
     milestone: m3
     title: 'Tone ladder: lower floors grow more Cronenbergian (rules and station art)'
