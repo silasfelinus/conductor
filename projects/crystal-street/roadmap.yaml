@@ -132,12 +132,12 @@ tasks:
       Full history: projects/crystal-street/HISTORY.md#t-001
   - id: t-024
     title: 'Main-game standard: audit and close the gaps for Terrors on Crystal Street'
-    status: review
+    status: ready
     milestone: m3
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-16T08:04:51Z'
+    updated: '2026-11-16T11:47:32Z'
     note: |-
       Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -152,9 +152,15 @@ tasks:
       Achievements are tracked by their own task; this one covers everything else.
 
       Scrapbook silhouette slice prepared in kind_robots worker/crystal-street-t-024-scrapbook-silhouettes-b7e1: anonymous locked nightmares and friends with catalog-grounded counts. Remaining t-024 scope is not complete; return to ready after this slice merges.
+
+      2026-11-16 PT reviewer: scrapbook silhouette slice merged as kind_robots#5240 (de95ff2;
+      all 14 checks green). Locked nightmare/friend silhouettes + X/N counts live. Remaining
+      t-024 scope: ending-specific silhouettes and the rest of STANDARD-AUDIT-2026-11-12.md;
+      returned to ready.
     owner: worker
     claimed_by: 20261116T080029Z-crystal-street-t-024-silhouettes-b7e1
     claimed_at: '2026-11-16T08:00:29Z'
+    implementation_pr: 'silasfelinus/kind_robots#5240'
   - id: t-025
     title: 'Terrors on Crystal Street achievement upgrade: 12 or more live achievements'
     status: needs-human
@@ -556,3 +562,14 @@ tasks:
       Full history: projects/crystal-street/HISTORY.md#t-023
     updated: '2026-10-27T18:55:57Z'
     implementation_pr: 'silasfelinus/kind_robots#4318'
+  - id: t-026
+    title: 'Add rendered phone/desktop accessibility and spoiler-regression coverage for each Crystal Street scrapbook tab'
+    status: ready
+    milestone: m3
+    owner: null
+    stakes: reversible
+    passes: 0
+    depends_on: []
+    updated: '2026-11-16T11:50:00Z'
+    note: |-
+      Kaizen from kind_robots#5240 (t-024 silhouette slice, merged 2026-11-16 PT). That PR's verification was unit-level only (discoveryProgress) plus Vue template compilation; no rendered check proves locked slots never leak a name, portrait src or alt text. Add a component/layout-contract test that mounts each scrapbook tab (weeks, nightmares, endings, friends, achievements) with an empty, partial and complete save and asserts: locked slots render only "???" and the generic aria-label, no catalog name/portrait path appears for undiscovered entries, and the X/N counts match. Run it at phone and desktop widths in the existing layout-contract harness.
