@@ -1082,12 +1082,14 @@ tasks:
     implementation_pr: 'silasfelinus/conductor#7449'
   - id: t-055
     title: 'Collapse the duplicate catalog_ready assertion in test_classic_and_western_have_separate_acceptance'
-    status: ready
+    status: claimed
     owner: worker
     milestone: m3
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-15T20:50:00Z'
+    updated: '2026-11-16T00:12:00Z'
     note: |-
       Kaizen from the reviewer merge of conductor#7449 (2026-11-15 PT). After t-054 the test asserts both `not report["catalog_ready"]` and `report["catalog_ready"] is False` a few lines apart; keep the `is False` form only. Test-only, one file.
+    claimed_by: 2026-11-16T001200Z-shifting-desks-t-055-7d91
+    claimed_at: '2026-11-16T00:12:00Z'
