@@ -610,8 +610,8 @@ tasks:
   - id: t-032
     milestone: m3
     title: 'Land, review and link the art round 13 re-renders and round 14 tone-ladder renders'
-    status: review
-    updated: '2026-11-16T00:52:00Z'
+    status: ready
+    updated: '2026-11-16T01:05:00Z'
     depends_on: t-015
     passes: 0
     stakes: reversible
@@ -677,9 +677,8 @@ tasks:
       Fast img2img correction pilot merged as Conductor PR #7458, exact head 4f21b2b7208747f75a506cf0ec1b0f3db6881070, all four current PR check suites successful (Python suite and security included), squash merge f22f421a394547dbce787ac83206af84cc6721e9. New private, auto_submit SDXL DreamShaper Turbo 8-step img2img ledger: projects/shifting-desks/art/SDXL-IMG2IMG-CORRECTION-PILOT-1.yaml; references existing rejected V2 source ArtImages 271721, 271722, 271723. At post-merge verification the ledger had no new jobs/ArtImage ids yet: auto-art-sweep must submit, then record IDs and status before visually judging candidates. Preserve all fourteen Classic ROUND-19 REDO verdicts and live media until independently approved. This task is still unfinished; returned to ready to prevent a phantom active claim. User explicitly prefers fast img2img over slow Kontext for the remaining art corrections.
 
       Implemented evidence-only SDXL img2img candidate capture for ArtJobs 69431-69433 and ArtImages 273305-273307. The workflow now checks actual retrieved image bytes, saves labeled previews and source lineage, and fails if any recorded DONE image is inaccessible. Review CI and visually judge all three images before any KEEP, production art link, or playtest promotion. No artwork was approved or published.
-    owner: worker
-    claimed_by: 2026-11-16T005000Z-shifting-desks-t032-gpt6-d9e4
-    claimed_at: '2026-11-16T00:50:00Z'
+
+      Merged Conductor PR #7462 at 6d5feecc4f681165de628fd27219616eb73117e7 after all exact-head GitHub checks completed green on 16acf2c0. The authenticated visual evidence workflow captured 20/20 Classic and 12/12 private pilot images, with zero missing. Inspected full-size SDXL ArtImages 273305, 273306, 273307 (ArtJobs 69431-69433), 0 KEEP/3 REDO: no rear eyes, no organic door ribs, and only two arms in tank. Recorded verdicts, individual reasons, source provenance and screenshot artifact 14189401216 in art/SDXL-IMG2IMG-CORRECTION-PILOT-1.yaml and the visual review report. No new job, live image overwrite or deployment. Next: targeted masked compositing/inpainting, full-scene acceptance and linkage for the fourteen original Classic REDO scenes; browser QA still open. Do not mark t-032 done or promote playtest.
   - id: t-033
     milestone: m3
     title: 'Tone ladder: lower floors grow more Cronenbergian (rules and station art)'
@@ -1123,3 +1122,6 @@ tasks:
       Added two main()-level tests: both styles accepted -> --strict and --all-styles-strict
       exit 0; unaccepted Western variant -> --strict 0, --all-styles-strict 1. 9/9 readiness
       tests pass locally.
+    owner: worker
+    claimed_by: 2026-11-16T010300Z-shifting-desks-t-056-mcaqgx
+    claimed_at: '2026-11-16T01:02:03Z'
