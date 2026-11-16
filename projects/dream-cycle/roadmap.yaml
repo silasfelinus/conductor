@@ -701,10 +701,10 @@ tasks:
 - id: t-040
   milestone: m4
   title: 'Make conductor#7410 (v4 6+4 Dream catalog contract) pass the existing Dream builder test suite'
-  status: needs-human
+  status: done
   passes: 1
   stakes: reversible
-  updated: '2026-11-15T02:47:28+00:00'
+  updated: '2026-11-16T08:23:00Z'
   retry_context: >-
     pass 1 failed (quality, reviewer 2026-11-14 PT): conductor#7410 head 32fa1cb is red on
     "Python test suite" and "contract". 15 existing tests fail: test_build_dream_proposal.py (5),
@@ -722,4 +722,5 @@ tasks:
     Created by reviewer 2026-11-14 PT for untracked PR conductor#7410 (worker/dream-cycle-catalog-only-10-assets-20261114). The PR stays open; the Worker pushes fixes to the same branch. Close this task when #7410 merges green.
 
     2026-11-15 PT reviewer: fix for the 15 legacy-test regressions is ready (pin v4 CUTOVER_DAY for legacy Dream scheduling tests via a conftest fixture; 500/500 Dream/digest tests pass) and posted as a patch comment on conductor#7410. Merge is gated only on Silas confirming the 2026-11-14 "6 Dream + 4 private Zuzu/Emperor setting/character candidates, no new gameplay" CONTROL.md/CLAUDE.md clarification, which has no citable source on main. On confirmation: apply the patch to the worker branch, wait for green CI, merge, close t-040.
-  soft_gate: true
+
+    Merged conductor#7410 as dcb2b75064cfb04109cd0a84e9b4cf64fbb81d81 after applying Silas's 2026-11-14 catalog-only clarification and verifying all seven exact-head workflows passed on aa927e2. The earlier 15 test failures were superseded; no publish, deploy, spend, or live object creation was performed.
