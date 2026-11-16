@@ -984,8 +984,8 @@ tasks:
   - id: t-041
     milestone: m2
     title: "CLASH 300: individually crafted L1/L2/L3 effects for every existing card"
-    status: claimed
-    updated: '2026-11-16T14:49:24Z'
+    status: ready
+    updated: '2026-11-16T15:06:10Z'
     depends_on: t-037
     passes: 0
     stakes: reversible
@@ -1031,10 +1031,19 @@ tasks:
       docs/agents/slime-city-undertow-evolution-review.md. One increment only; Riot, Exchange
       and Mercenary editorial passes, constructed balance, art and fun acceptance remain open.
       Return to ready.
+
+      2026-11-16 PT: MERGED kind_robots #5259, squash f4faf3d, head e3bf700; all 12 check runs
+      green. Riot editorial pass: 30 authored L1 roles, distinct where eleven cards share the
+      bare VOLATILE line and five spells share the deal-plus-neighbors template. A test
+      asserts rendering, distinctness and the 160-char face at L1-L3. The arc comments already
+      matched the L3 code, so there are no rule changes and CLASH balance is untouched. Review
+      doc: docs/agents/slime-city-riot-evolution-review.md. One increment only; Exchange and
+      Mercenary editorial passes, constructed balance, art and fun acceptance remain. Return
+      to ready.
     owner: worker
     claimed_by: 2026-11-16T1450Z-t041-riot7q
     claimed_at: '2026-11-16T14:49:24Z'
-    implementation_pr: 'silasfelinus/kind_robots#5258'
+    implementation_pr: 'silasfelinus/kind_robots#5259'
   - id: t-042
     milestone: m2
     title: "Curate and wire the ogre redo-3 tokens: Picket Line Troll, Coal Cart Racer, Union Lunch Lady"
