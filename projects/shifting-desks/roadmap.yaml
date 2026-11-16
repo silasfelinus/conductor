@@ -1087,16 +1087,35 @@ tasks:
     implementation_pr: 'silasfelinus/conductor#7449'
   - id: t-055
     title: 'Collapse the duplicate catalog_ready assertion in test_classic_and_western_have_separate_acceptance'
-    status: review
+    status: done
     owner: worker
     milestone: m3
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-16T00:14:00Z'
+    updated: '2026-11-16T00:48:34Z'
     note: |-
       Kaizen from the reviewer merge of conductor#7449 (2026-11-15 PT). After t-054 the test asserts both `not report["catalog_ready"]` and `report["catalog_ready"] is False` a few lines apart; keep the `is False` form only. Test-only, one file.
 
       Removed the redundant catalog_ready negative assertion while preserving the explicit False check. Implementation commit cc545503; PR verification pending.
+
+      Reviewer 2026-11-15 PT: merged conductor#7461 (squash 2b53d9c) after rewriting the PR
+      body to the AGENTS.md handoff template so 'Validate Worker PR handoff' passed; all other
+      exact-head checks green. Kaizen: t-056.
     claimed_by: 2026-11-16T001200Z-shifting-desks-t-055-7d91
     claimed_at: '2026-11-16T00:12:00Z'
+    implementation_pr: 'silasfelinus/conductor#7461'
+  - id: t-056
+    title: 'Cover the --all-styles-strict exit code of shifting_desks_art_readiness.py for both-styles-accepted and Western-blocked inventories'
+    status: ready
+    milestone: m3
+    stakes: reversible
+    passes: 0
+    depends_on: []
+    updated: '2026-11-16T00:55:00Z'
+    note: |-
+      Reviewer kaizen from the merge of conductor#7461 (t-055), 2026-11-15 PT. The readiness
+      tests exercise inventory() only; main()'s `--all-styles-strict` branch (exit non-zero when
+      catalog_ready is False) has no test, and no fixture has Classic and Western-cartoon both
+      accepted (ready and catalog_ready both True). Add two tmp_path cases to
+      tests/test_shifting_desks_art_readiness.py asserting the exit codes. Test-only, one file.

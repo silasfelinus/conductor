@@ -410,3 +410,16 @@ in the PR comment and retry_context.
 
 2026-11-12 PT review: merged conductor#7326 at head d7008837 (squash 18438ab7) after the retry fixed the workflow YAML. All 26 checks green including Validate roadmap YAML and Python test suite; guard and smoke also run locally. The roadmap-validation job now runs check_memory_dungeon_acceptance.py and a seeded bad/good smoke. Kaizen: t-071.
 <!-- note:end t-070 -->
+
+## t-072 — Add a .github/pull_request_template.md that mirrors the AGENTS.md Worker handoff headings so connector-opened worker PRs start from the template
+
+<!-- note:begin t-072 -->
+Kaizen from the t-029 review (conductor#7451). This is the sixth `Validate Worker PR handoff` miss on this project; #7453 (t-025) is the seventh. LEARNING-REPORT flags the same pattern for connector-only Workers. The GitHub MCP server tells agents to look for a pull_request_template.md before calling create_pull_request, and conductor doesn't have one. Add one that lists exactly the six headings `scripts/check_pr_handoff_template.py` requires, plus the optional Flags section. Add a pytest that asserts the template satisfies `missing_sections()` == []. Reversible and docs/CI-only. It lives in this roadmap because the conductor project takes no new tasks.
+
+2026-11-15 PT: added .github/pull_request_template.md with the six required handoff
+headings plus optional Flags, and a pytest pinning it to REQUIRED_SECTIONS. The
+validator accepts the template. PR pending.
+
+2026-11-15 PT: merged conductor#7455 (3584055) on green CI. The template now ships, and
+a pytest pins it to the validator.
+<!-- note:end t-072 -->

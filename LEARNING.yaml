@@ -18710,3 +18710,13 @@ records:
   failure_category: null
   lesson: Connector-only Workers keep opening PRs without the handoff headings; paste the
     check_pr_handoff_template.py headings even for one-file test PRs.
+- date: '2026-11-15'
+  project: shifting-desks
+  task: t-055
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: Even after the t-054 lesson the next one-line PR used ad-hoc headings; validate the
+    body locally with check_pr_handoff_template.py before opening, not after CI goes red.
