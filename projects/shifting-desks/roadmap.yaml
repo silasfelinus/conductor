@@ -877,7 +877,7 @@ tasks:
   - id: t-046
     milestone: m5
     title: 'Reward-layer adversarial QA across all eleven endings and screen shapes'
-    status: claimed
+    status: review
     depends_on:
       - t-040
       - t-042
@@ -886,7 +886,7 @@ tasks:
       - t-045
     passes: 0
     stakes: reversible
-    updated: '2026-11-16T06:06:09Z'
+    updated: '2026-11-16T06:12:00Z'
     note: |-
       P2, independent of art delivery per Silas 2026-11-01 PT. Simulate at least 2000 seeded diverse styles; every reachable ending shows distinct payoff and a saved evidence card. Check replay rewards, correct lock/unlock progress, saved migrations, no duplicate accounts or achievements, true raw grade values, no four-Exceptional result, keyboard/screenreader, no forced page scroll at phone/tablet/desktop, and image fallback. Run mock reviews asking whether the ending and archive feel earned, funny and replayable. Do not override t-020 owner's subjective fun and promotion gate.
 
@@ -953,6 +953,8 @@ tasks:
       Scoped CI evidence repair: correct the Actions upload-artifact multiline path so the 2000-seed release QA report and adversarial report are both retained; missing files now fail the upload. Browser and creative acceptance remain unfinished.
 
       Recovered stale review claim 2026-11-13T161600Z-shifting-desks-t-046-p7q4: over two days old, no open Shifting Desks PR or t-046 branch in conductor/kind_robots. Prior reward QA and CI upload fix are merged; live deployed Cypress 390/768/1440, cross-device acceptance and adversarial editorial verification remain unfinished. Keep ready, not done, until actual browser evidence is checked.
+
+      Added compact-phone and wide-tablet browser coverage and repeat-ending reward reload idempotence assertions in Kind Robots commit 9198bbb1. Awaiting exact-head CI and deployed browser execution; remaining art and human-device acceptance are not complete.
     owner: worker
     claimed_by: 2026-11-16T060609Z-shifting-desks-t-046-g6k9
     claimed_at: '2026-11-16T06:06:09Z'
