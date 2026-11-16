@@ -215,6 +215,18 @@ def build_request(ledger, lane, subject, source_image=None, last_image=None):
         body["priority"] = priority
     if lane.get("checkpoint"):
         body["checkpoint"] = lane["checkpoint"]
+    if lane["engine"] == "krea2":
+        # The normal Krea 2 lane stays prompt-only unless the subject supplies
+        # an existing ArtImage. This edit path must not silently drop the source.
+        if (subject.get("source_image_id") or subject.get("source_url")) and not source_image:
+            raise ValueError(f"{subject.get('key')}: Krea img2img requires the source_image_id bytes")
+        if source_image:
+            body["sourceImageBase64"] = source_image
+            denoise = subject.get("denoise", lane.get("denoise", 0.65))
+            body["denoise"] = float(denoise)
+        for field in ("steps", "cfg", "sampler", "scheduler"):
+            if lane.get(field) is not None:
+                body[field] = lane[field]
     if lane["engine"] in SDXL_ENGINES:
         # Optional per-lane overrides (a checkpoint author's recommended settings).
         # Absent, Kind Robots applies the checkpoint family's sampler profile. The
@@ -249,7 +261,7 @@ def build_request(ledger, lane, subject, source_image=None, last_image=None):
         body["loras"] = [
             {"resourceId": int(lora["resource_id"]), "strength": float(lora.get("strength", 0.8))} for lora in loras
         ]
-    if lane["engine"] in SDXL_ENGINES and subject.get("negative"):
+    if lane["engine"] in (*SDXL_ENGINES, "krea2") and subject.get("negative"):
         body["negativePrompt"] = " ".join(str(subject["negative"]).split())
     for field, key in (("projectSlug", "project_slug"), ("designer", "designer")):
         if ledger.get(key):
@@ -261,7 +273,7 @@ def build_request(ledger, lane, subject, source_image=None, last_image=None):
         body["seed"] = int(seed)
     entity_art = build_entity_art(subject)
     if entity_art:
-        if lane["engine"] in SOURCE_ENGINES:
+        if lane["engine"] in SOURCE_ENGINES or (lane["engine"] == "krea2" and source_image):
             raise ValueError(f"{subject.get('key')}: entity_art recreates from a prompt; use a prompt-only lane")
         body["entityArt"] = entity_art
     return body
@@ -600,7 +612,9 @@ def submit(path, header, ledger, cells, post=None, fetch_source=None, live=None)
             print(f"  FAILED {subject['key']} [{lane['key']}]: prompt contract {rules}", file=sys.stderr)
             continue
         source = last = None
-        if lane["engine"] in SOURCE_ENGINES and (subject.get("source_image_id") or subject.get("source_url")):
+        if (lane["engine"] in SOURCE_ENGINES or lane["engine"] == "krea2") and (
+            subject.get("source_image_id") or subject.get("source_url")
+        ):
             source = compose_source(subject, fetch)
         if lane["engine"] in VIDEO_ENGINES and subject.get("last_image_id"):
             last = fetch(subject["last_image_id"])
@@ -702,7 +716,12 @@ def main(argv=None):
         print(f"DRY RUN: {len(pending)} of {len(cells)} cells would be submitted via {core.KR_BASE_URL}")
         broken = contract_rules(pending)
         for (subject, lane), rules in zip(pending, broken):
-            source = "data:image/png;base64," if lane["engine"] in SOURCE_ENGINES else None
+            source = (
+                "data:image/png;base64,"
+                if lane["engine"] in SOURCE_ENGINES
+                or (lane["engine"] == "krea2" and (subject.get("source_image_id") or subject.get("source_url")))
+                else None
+            )
             body = build_request(ledger, lane, subject, source)
             if lane["engine"] in VIDEO_ENGINES:
                 last = f" -> ArtImage {subject['last_image_id']}" if subject.get("last_image_id") else ""
