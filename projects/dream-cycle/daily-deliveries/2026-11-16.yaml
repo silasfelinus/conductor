@@ -1,0 +1,87 @@
+date: '2026-11-16'
+entries:
+- slug: login-names-destination
+  title: 'Front door: sign-in page names where you were headed'
+  target: interface-vision
+  roadmap_task: t-151
+  kind: front-door
+  summary: Signed-out visitors bounced from a gated link to /login now see a real tab title and a note naming the
+    page they were opening instead of a tab titled Robots.
+  status: shipped
+  pull_request: https://github.com/silasfelinus/kind_robots/pull/5248
+  checks_url: https://github.com/silasfelinus/kind_robots/actions/runs/43855819500
+  checks: passed
+  merge_sha: 88b21a1b3703bfd4a46ba1886f65cef6f6633bd7
+  verification: verifyLoginDestination.test.ts passed locally and in contract shard 4; same-origin redirect parsing
+    covered
+  art:
+    status: not-required
+  preview_url: https://kindrobots.org/login?redirect=/play/slime-city
+- slug: route-scoped-tab-titles
+  title: 'Tab titles: no more Robots or stale titles on dedicated pages'
+  target: interface-vision
+  roadmap_task: t-104
+  kind: bug-fix
+  summary: The app shell only uses the page store title when it describes the current route, so dedicated pages
+    fall back to the site name rather than Robots or the previous page.
+  status: shipped
+  pull_request: https://github.com/silasfelinus/kind_robots/pull/5248
+  checks_url: https://github.com/silasfelinus/kind_robots/actions/runs/43855819500
+  checks: passed
+  merge_sha: 88b21a1b3703bfd4a46ba1886f65cef6f6633bd7
+  verification: verifyFrontDoorPolish.test.ts and TypeScript passed in CI; live audit found /login, /build-bench
+    and gated redirects titled Robots before the fix
+  art:
+    status: not-required
+  preview_url: https://kindrobots.org/build-bench
+- slug: phone-mission-line
+  title: 'Homepage: malaria mission line wraps on phones'
+  target: interface-vision
+  roadmap_task: t-143
+  kind: front-door
+  summary: The homepage line Free games, no ads, helping fund mosquito nets was cut off mid-word at phone width
+    and now wraps so first visitors read the whole mission.
+  status: shipped
+  pull_request: https://github.com/silasfelinus/kind_robots/pull/5248
+  checks_url: https://github.com/silasfelinus/kind_robots/actions/runs/43855819500
+  checks: passed
+  merge_sha: 88b21a1b3703bfd4a46ba1886f65cef6f6633bd7
+  verification: Observed truncation at 390px on production; verifyFrontDoorPolish.test.ts pins no-truncate; layout-contract
+    passed
+  art:
+    status: not-required
+  preview_url: https://kindrobots.org/
+- slug: honest-gated-share-cards
+  title: 'Share cards: honest about sign-in and private previews'
+  target: slime-city
+  roadmap_task: t-063
+  kind: front-door
+  summary: Shared Slime City links now say Sign in free to play, and admin-only gallery and studio cards say private
+    preview instead of promising free browsing behind a login wall.
+  status: shipped
+  pull_request: https://github.com/silasfelinus/kind_robots/pull/5248
+  checks_url: https://github.com/silasfelinus/kind_robots/actions/runs/43855819500
+  checks: passed
+  merge_sha: 88b21a1b3703bfd4a46ba1886f65cef6f6633bd7
+  verification: verifyFrontDoorPolish.test.ts derives gates from content frontmatter and checks 6 cards; verifyGameLinkPreview
+    passed; five cards re-rendered in Chromium at 1200x630 and checked by eye
+  art:
+    status: delivered
+    url: https://kindrobots.org/slime-city/link-preview.webp
+  preview_url: https://kindrobots.org/play/slime-city
+- slug: showcase-cold-open-probe
+  title: 'Arcade: live cold-open probe for shared showcase links'
+  target: kr-arcade
+  roadmap_task: t-169
+  kind: reliability
+  summary: A new live probe opens every showcase cabinet from a shared link in a fresh phone and tablet browser
+    and reports login walls, errors, missing canvas or overflow.
+  status: shipped
+  pull_request: https://github.com/silasfelinus/kind_robots/pull/5248
+  checks_url: https://github.com/silasfelinus/kind_robots/actions/runs/43855819500
+  checks: passed
+  merge_sha: 88b21a1b3703bfd4a46ba1886f65cef6f6633bd7
+  verification: 'node utils/scripts/checkArcadeColdOpenLive.mjs against production: 22/22 clean at 390x844 and 768x1024'
+  art:
+    status: not-required
+  preview_url: https://kindrobots.org/play/arcade?game=pipe-pals
