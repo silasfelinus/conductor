@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Capture current, independently delivered Classic art and private Western pilot images.
+"""Capture delivered Classic artwork and private V1/V2/SDXL img2img pilots.
 
 Writes review-only JPG previews, contact sheets, and a provenance manifest.
 Never marks KEEP, updates images, submits ArtJobs or publishes the private pilot.
@@ -66,9 +66,14 @@ def current_media_evidence(row, evidence):
 
 def pilot_rows(version=1):
     """Return private pilot evidence without mistaking a queued ArtJob for delivered art."""
-    if version not in (1, 2):
+    if version not in (1, 2, 3):
         raise ValueError("unsupported pilot version")
-    data = yaml.safe_load((ART / f"SUBJECT-FIDELITY-PILOT-V{version}.yaml").read_text(encoding="utf-8"))
+    ledger = (
+        "SDXL-IMG2IMG-CORRECTION-PILOT-1.yaml"
+        if version == 3
+        else f"SUBJECT-FIDELITY-PILOT-V{version}.yaml"
+    )
+    data = yaml.safe_load((ART / ledger).read_text(encoding="utf-8"))
     for subject in data["subjects"]:
         for lane in data["lanes"]:
             key = lane["key"]
@@ -88,6 +93,11 @@ def pilot_rows(version=1):
                 "review_note": art.get("review_note"),
                 "evidence_artifact_id": art.get("evidence_artifact_id"),
                 "lane": key,
+                "source_image_id": subject.get("source_image_id"),
+                "source_art_job_id": subject.get("source_art_job_id"),
+                "denoise": subject.get("denoise"),
+                "checkpoint": lane.get("checkpoint"),
+                "asset": subject.get("asset"),
             }
 
 
@@ -144,7 +154,7 @@ def sheets(rows, directory, label):
 def pilot_capture_errors(pilots: dict[str, int]) -> list[str]:
     """A recorded DONE pilot needs actual readable image evidence, not just an ID."""
     errors = []
-    for version in (1, 2):
+    for version in (1, 2, 3):
         key = f"pilot_v{version}"
         done = pilots[f"{key}_recorded_done"]
         captured = pilots[f"{key}_captured"]
@@ -172,7 +182,7 @@ def main():
             "evidence": evidence, "fresh": fresh, "_image": img if fresh else None,
         })
     pilots = {}
-    for version in (1, 2):
+    for version in (1, 2, 3):
         private = []
         for row in pilot_rows(version):
             image, evidence = capture_pilot(row)
