@@ -2806,6 +2806,13 @@ tasks:
       A browser contract over the showcase set: direct-load /play/arcade?game=<slug> with a fresh context (no session, no localStorage) at 390x844 and 768x1024. Assert the cabinet is reachable in one tap, touch controls are visible, sound starts only after the first tap, there is no auth wall or console error, and the Arcade hall back link works. Scoped slice of t-164's device audit; do not duplicate t-164's viewport matrix, extend it.
 
       2026-11-15 PT: ready now that t-168 is done. Use the 11 cabinets with `shelf: 'showcase'` as the set.
+
+      2026-11-16 PT daily-delivery:2026-11-16/showcase-cold-open-probe | PR:
+      silasfelinus/kind_robots#5248 | Added utils/scripts/checkArcadeColdOpenLive.mjs: fresh-context
+      ?game= cold opens for the 11 showcase cabinets at 390x844 and 768x1024 (canvas, START, no
+      redirect/auth wall, no console/page errors, no horizontal scroll). Production 2026-11-16: 22/22
+      clean. Remaining: tap-to-start sound assertion, touch-control visibility and hall back-link
+      check in a fixture-backed CI contract.
   - id: t-170
     milestone: m11
     title: "Share my score: the game-over screen offers a one-tap share with the score and the cabinet link"

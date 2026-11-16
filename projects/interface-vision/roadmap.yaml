@@ -1791,6 +1791,12 @@ tasks:
     Sitewide viewport-first initial implementation is ready for CI review: the scheduled responsive browser audit now records page-flow and clipped last gallery items across expanded public routes, plus bounded Ghost Trail/Pinball stages and collapsed Showdown controls with reference text in tutorial sidebar. Companion Conductor work specifies further public/gallery/admin batches and final screenshot atlas. Code awaiting PR and exact-head checks, no deploy.
 
     Sitewide viewport-first first batch shipped in Kind Robots PR #3673, merged as a97747b50b09f2f03edace24f9b4746a245550b1 from exact-head 0dd03c38ebfad96e3716057c659f8ad213f1497f after all 32 workflows completed successfully (including TypeScript, Layout, Contract Tests, Prettier, Workflow paths and branch janitor). Resolved two scoped CI quality issues without loosening checks: exact generated audit JSON path allowance and formatter-normalized Showdown disclosure. Added viewport owner/gallery reachability measurements and audit artifact, expanded public route scan, bounded Ghost Trail/Pinball stages, Showdown settings disclosure, and tutorial help. Companion Conductor PR #6165 merged as 89724c91c5f64080d00b0c216c12f66825553b52, tracking independent public, gallery, admin and final deployment/screenshot tasks t-143..t-146. No art job, game engine changes, database migration, public route moves, manual deployment or live three-device visual verification performed. Return t-104 to ready/resting for consistency fallback; specific finite sitewide work now belongs to t-143..t-146.
+
+    2026-11-16 PT daily-delivery:2026-11-16/route-scoped-tab-titles | PR:
+    silasfelinus/kind_robots#5248 | app.vue uses the page-store title/description only when
+    pageStore.describesPath(route) is true, so dedicated pages fall back to the site name instead of
+    "Robots" or a stale content title; Build Bench and Shared with me set their own titles. Pinned
+    by verifyFrontDoorPolish.test.ts.
   updated: '2026-10-14T05:36:12Z'
   implementation_pr: 'silasfelinus/kind_robots#2912'
   retry_context: ''
@@ -2349,6 +2355,10 @@ tasks:
     Implemented true contained mode for ArcadeCabinet on /play/arcade?game: the marquee/title/control panel consume bounded height and the playfield is aspect-fit via ResizeObserver against the remaining screen wrap instead of 62svh. The game pane is no longer scroll-owned. Added direct Battery Maze route to the existing 390/820/1440 browser audit and hard fail if cabinet, game screen or Start button is clipped; source regression assertions updated. Repository formatter passed and temporary workflow removed, four-file diff scoped. Awaiting PR exact-head CI and actual deployed-screen atlas.
 
     Screenshot-reported Arcade height bug fixed and merged in Kind Robots PR #3684 as 98fa6e1b1302a81d1d3db0c0c9561635342d1204. Exact PR head df13ebc0fbd4bb338135d85b2c26d26a8a646a3c passed all 31 actual GitHub workflows including TypeScript, four contract shards, layout and formatting. Root cause: PR #3677 bounded parent scroll but ArcadeCabinet still sized canvas from 62svh plus natural-height marquee/title/panel, hiding Start/settings. New opt-in contained sizing measures remaining screen-wrap height with ResizeObserver, constrains canvas by aspect ratio, keeps game pane non-scrolling and Start visible; exceptional controls can scroll only within panel. Responsive Playwright audit now checks actual cabinet, screen, panel and Start geometry for Battery Maze and Ghost Trail at 390/820/1440 and fails on clipped game controls. Temporary formatter workflow removed, code branch cleaned. No live deployed PR preview or post-deploy screenshot verification, no ArtJob, engine, route, DB, or API changes. t-143 remains ready for other public play surfaces.
+
+    2026-11-16 PT daily-delivery:2026-11-16/phone-mission-line | PR: silasfelinus/kind_robots#5248 |
+    Homepage malaria mission line truncated to 'Helping fund mosqui...' at 390px; it now wraps (no
+    truncate), pinned by verifyFrontDoorPolish.test.ts.
   updated: '2026-10-14T07:51:00Z'
 
 - id: t-144
@@ -2501,6 +2511,12 @@ tasks:
     Lands (playtest projects, recorded here as the site-wide first-visit lane) now unfurl
     with designed titled cards instead of raw scene/card art; verifyGameLinkPreview.test.ts
     pins both. Drop-off analysis itself still waits on a week of site-stats events.
+
+    2026-11-16 PT daily-delivery:2026-11-16/login-names-destination | PR:
+    silasfelinus/kind_robots#5248 | Gated links (Slime City, admin previews) bounce signed-out
+    visitors to /login, whose tab read "Robots" with no reason given. Login now sets 'Sign in to
+    open <page> | Kind Robots' and a note naming the destination; verifyLoginDestination.test.ts in
+    contract shard 4. Site-stats still too thin (10 views/7d) for drop-off ranking.
   updated: '2026-11-15T09:14:15Z'
 
 - id: t-152
