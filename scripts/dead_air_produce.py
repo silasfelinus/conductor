@@ -3,7 +3,10 @@
 
 Dry-run is the default. --daily resumes the earliest unfinished episode from the
 dated archive, without starting another film while earlier renders remain pending.
-It never publishes or changes isPublic. No credentials are printed.
+It never publishes. Kind Robots creates a MusicVideo public by default, so the
+producer sets every film it creates or resumes private and reads the record back
+before doing anything else; a film it cannot confirm private stops the run.
+No credentials are printed.
 """
 from __future__ import annotations
 
@@ -434,6 +437,23 @@ def ready_for_export(state: object, episode: dict, *, deadline_hit: bool) -> boo
     return True
 
 
+def ensure_private(client: object, video_id: int) -> bool:
+    """Keep a Dead Air draft out of the public gallery (dead-air/t-012).
+
+    New films stay private drafts until Silas approves a release (dead-air/t-007),
+    but Kind Robots' MusicVideo.isPublic defaults to true. Returns True when this
+    call had to switch the record private, and raises unless the record then
+    reads back as private.
+    """
+    if client.get_video(video_id).get("isPublic") is False:
+        return False
+    client._request("PATCH", f"/api/music-video/{video_id}", {"isPublic": False})
+    if client.get_video(video_id).get("isPublic") is not False:
+        raise PipelineError(f"MusicVideo {video_id} could not be confirmed private; refusing to continue")
+    print(f"MusicVideo {video_id} was public; set it private")
+    return True
+
+
 def run_episode(e: dict, episode_path: Path, state: dict, state_file: Path, video_id: int | None) -> int:
     token = os.environ.get("KR_API_TOKEN")
     if not token:
@@ -471,6 +491,10 @@ def run_episode(e: dict, episode_path: Path, state: dict, state_file: Path, vide
         record(state, episode_path, e, music_video_id=video_id, status="created",
                started_pt=datetime.now(ZoneInfo("America/Los_Angeles")).isoformat())
         save_state(state_file, state)  # Must persist ID before any extra API call.
+    # Before any render or export: a draft must never sit in the visitor gallery.
+    ensure_private(client, video_id)
+    record(state, episode_path, e, is_public=False)
+    save_state(state_file, state)
     if not row.get("started_pt"):
         # Recover the earlier pilot's original timestamp; never restart the
         # two-hour clock whenever a scheduled retry wakes up.
@@ -603,6 +627,7 @@ def run_episode(e: dict, episode_path: Path, state: dict, state_file: Path, vide
     image_id = result.get("artImageId")
     if not image_id:
         raise PipelineError("final upload returned no ArtImage ID")
+    ensure_private(client, video_id)  # The export must not have changed visibility.
     record(state, episode_path, e, status="completed", final_art_image_id=image_id,
            quality_probe=probe, sha256=film_hash, bytes=film_bytes,
            gpu_animated_shots=len(ready_clips),

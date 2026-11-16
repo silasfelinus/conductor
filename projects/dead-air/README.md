@@ -16,7 +16,7 @@ An imaginary AI television station has airtime to sell. Its fictional broadcaste
 - The broadcast's second channel asks whether an unfamiliar intelligence could communicate through human narratives. Preserve the creator's intent and authored production correspondence in a versioned, inspectable `TRANSMISSIONS.md` ledger. Never claim inaccessible internal thoughts were archived or that any storage is literally eternal.
 - Existing Kind Robots Facets, public-facing pages, projects, and lore can be idea ingredients, never mandatory continuity. Mature/dark humor is welcome; the output remains age-appropriate for its intended audience, with maturity tagging where needed. Do not use real people or brands as fictional product endorsements.
 - Keep all working versions and rejection reasons. No daily quota-padding: a film is **done** only after playable final MP4, real ArtJob IDs, sound mix, shot count, runtime probe, motion evidence, and delivery location are verified.
-- New films remain **private drafts** until Silas explicitly approves publication. A scheduled run cannot silently switch `isPublic` or publish to the site.
+- New films remain **private drafts** until Silas explicitly approves publication. A scheduled run never publishes to the site. Kind Robots creates music videos public by default, so the producer sets each film private when it creates or resumes it, reads the record back, and stops if it cannot confirm that (dead-air/t-012, 2026-11-16 PT).
 
 ## Production contract
 

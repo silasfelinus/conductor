@@ -319,3 +319,63 @@ def test_quiet_run_detector_flags_the_old_near_silent_tail(tmp_path):
                     "-af", "volume=2,apad,atrim=duration=15", "-c:a", "libmp3lame", str(track)],
                    check=True)
     assert longest_quiet_run(track) >= 5.5
+
+
+class _VisibilityClient:
+    """Minimal stand-in for KrClient: one MusicVideo record and a PATCH log."""
+
+    def __init__(self, is_public, patch_takes_effect=True):
+        self.record = {"id": 7, "isPublic": is_public}
+        self.patch_takes_effect = patch_takes_effect
+        self.patches = []
+
+    def get_video(self, video_id):
+        assert video_id == 7
+        return dict(self.record)
+
+    def _request(self, method, path, body=None):
+        self.patches.append((method, path, body))
+        if self.patch_takes_effect and body and "isPublic" in body:
+            self.record["isPublic"] = body["isPublic"]
+        return {}
+
+
+def test_new_film_is_switched_private_because_the_site_defaults_to_public():
+    from dead_air_produce import ensure_private
+
+    client = _VisibilityClient(is_public=True)
+    assert ensure_private(client, 7) is True
+    assert client.patches == [("PATCH", "/api/music-video/7", {"isPublic": False})]
+    assert client.record["isPublic"] is False
+
+
+def test_already_private_film_is_left_alone():
+    from dead_air_produce import ensure_private
+
+    client = _VisibilityClient(is_public=False)
+    assert ensure_private(client, 7) is False
+    assert client.patches == []
+
+
+def test_film_that_cannot_be_confirmed_private_stops_the_run():
+    import pytest
+    from dead_air_produce import ensure_private, PipelineError
+
+    stuck = _VisibilityClient(is_public=True, patch_takes_effect=False)
+    with pytest.raises(PipelineError, match="could not be confirmed private"):
+        ensure_private(stuck, 7)
+    # A record with no visibility field at all is not proof of privacy either.
+    unknown = _VisibilityClient(is_public=None, patch_takes_effect=False)
+    with pytest.raises(PipelineError, match="could not be confirmed private"):
+        ensure_private(unknown, 7)
+
+
+def test_producer_enforces_privacy_before_any_render_and_before_reporting_completion():
+    source = (ROOT / "scripts/dead_air_produce.py").read_text(encoding="utf-8")
+    body = source[source.index("def run_episode("):source.index("def main(")]
+    first = body.index("ensure_private(client, video_id)")
+    assert first < body.index("client.get_video(video_id)[\"doc\"]")
+    assert first < body.index("client.upload_song(")
+    last = body.rindex("ensure_private(client, video_id)")
+    assert first != last
+    assert body.index("client.upload_final(") < last < body.index("Completed private film")
