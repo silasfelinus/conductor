@@ -132,12 +132,12 @@ tasks:
       Full history: projects/crystal-street/HISTORY.md#t-001
   - id: t-024
     title: 'Main-game standard: audit and close the gaps for Terrors on Crystal Street'
-    status: review
+    status: ready
     milestone: m3
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-16T12:16:30Z'
+    updated: '2026-11-16T16:04:31Z'
     note: |-
       Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -159,10 +159,16 @@ tasks:
       returned to ready.
 
       Ending-silhouette slice pushed to Kind Robots branch worker/crystal-street-t-024-ending-silhouettes-c4f2 at 1aff9b4: spoiler-safe locked scene silhouettes across the 92 nightmare ending slots and 4 special endings, catalog-grounded found/96 progress, focused reel shows all four slots, and duplicate/stale save keys cannot inflate counts. Local discovery and 16-achievement tests passed; adversarial fuzz completed 6,624 weeks with every invariant held. Remaining t-024 standard-audit scope stays open.
+
+      2026-11-16 PT: MERGED kind_robots #5252, squash a9d92a0; all 13 check runs green after
+      pr-medic fix 10f9ba0 (the ending wall still called the removed villainEndings import,
+      failing vue-tsc; it now counts nightmare endings via discoveryProgress over the 92-key
+      catalog). Locked ending silhouettes slice only; the broader main-game-standard umbrella
+      and t-026 rendered coverage remain. Return to ready.
     owner: worker
     claimed_by: 20261116T120757Z-crystal-street-t-024-endings-c4f2
     claimed_at: '2026-11-16T12:07:57Z'
-    implementation_pr: 'silasfelinus/kind_robots#5240'
+    implementation_pr: 'silasfelinus/kind_robots#5252'
   - id: t-025
     title: 'Terrors on Crystal Street achievement upgrade: 12 or more live achievements'
     status: needs-human
