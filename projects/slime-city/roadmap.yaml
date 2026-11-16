@@ -1292,7 +1292,7 @@ tasks:
   - id: t-053
     milestone: m2
     title: 'Meat Exchange reskin: Lovecraftian, dark, occult and weird (names, flavor, art)'
-    status: claimed
+    status: ready
     passes: 0
     stakes: reversible
     note: |-
@@ -1340,11 +1340,22 @@ tasks:
       (3c242eb). 96 occult Exchange renders are live in artManifest.ts. Remaining: curate
       EXCHANGE-OCCULT-REDO-1 (7 subjects) once its art_image_ids land, then wire the keepers.
       Claim released.
-    updated: '2026-11-16T18:51:00Z'
+
+      2026-11-16 PT: fetched all 7 EXCHANGE-OCCULT-REDO-1 renders (authenticated, 7/7 bytes
+      OK) and curated on a contact sheet. kind_robots#5263 merged (squash 5cdf31f, all checks
+      green) wires 3 keepers: s2-exchange-invisible-lien card 273424, s3-exchange-wage-
+      garnisher card 273425, wage-garnisher@2 273427; verdicts in exchangeOccultArtIntake.json
+      redoRounds with a contract test. Rejected 4 (invisible-lien@2 273426, wage-garnisher@3
+      273428, payment-reminder@3 273429 for persistent sign lettering; collection-badge@3
+      273430 for lettering + pointed hoods). Queued EXCHANGE-OCCULT-REDO-2.yaml (4 subjects,
+      seeds 1297100-1297103, settings moved to bare stone tunnels/cisterns with positive
+      wording only, no negation nouns; live prompt contract pass, auto_submit). NEXT: curate
+      redo 2 once art_image_ids land. Not a human gate.
+    updated: '2026-11-16T19:02:45Z'
     owner: worker
     claimed_at: '2026-11-16T18:51:00Z'
     claimed_by: 2026-11-16T1900Z-occult-redo1
-    implementation_pr: 'silasfelinus/kind_robots#5233'
+    implementation_pr: 'silasfelinus/kind_robots#5263'
   - id: t-054
     milestone: m2
     title: 'Ironjaw follow-through: lab-mutant identity in story, evolutions and remaining art'
