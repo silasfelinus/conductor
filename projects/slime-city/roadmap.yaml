@@ -978,8 +978,8 @@ tasks:
   - id: t-041
     milestone: m2
     title: "CLASH 300: individually crafted L1/L2/L3 effects for every existing card"
-    status: ready
-    updated: '2026-11-16T02:17:00Z'
+    status: claimed
+    updated: '2026-11-16T02:45:00Z'
     depends_on: t-037
     passes: 0
     stakes: reversible
@@ -1001,6 +1001,9 @@ tasks:
       Constructed QA selection rates previously used total play commands divided by card deck appearances; repeated plays inflated the ranking. New scoped Kind Robots branch counts distinct card-selected bouts by side and denominator, preserving raw play counts and adding bounded-rate assertions. Implementation PR and CI follow; umbrella remains partial.
 
       2026-11-15 PT: kind_robots PR #5230 merged as dba90f251b8e15cd0e7fa450899a0982076fa246 from head 73b84ea80d667ddf2947cf867642d166fa6ad96e. Six final-head GitHub workflows completed successfully (Contract Tests with four shards, TypeScript, formatting, layout, architecture, schema). Corrected constructed low-selection report to count distinct player bouts per card, rather than repeat play commands, retaining raw plays and evolution reachability. Bounded selection assertions added. This is partial QA only; t-041 remains open for targeted underselected-card and evolution design work.
+    owner: worker
+    claimed_by: 2026-11-16T024500Z-slime-city-t-041-lowselect-f6b83c
+    claimed_at: '2026-11-16T02:45:00Z'
   - id: t-042
     milestone: m2
     title: "Curate and wire the ogre redo-3 tokens: Picket Line Troll, Coal Cart Racer, Union Lunch Lady"
