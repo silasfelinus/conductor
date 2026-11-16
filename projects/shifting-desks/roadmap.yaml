@@ -610,8 +610,8 @@ tasks:
   - id: t-032
     milestone: m3
     title: 'Land, review and link the art round 13 re-renders and round 14 tone-ladder renders'
-    status: claimed
-    updated: '2026-11-16T08:43:00Z'
+    status: review
+    updated: '2026-11-16T08:48:00Z'
     depends_on: t-015
     passes: 0
     stakes: reversible
@@ -687,6 +687,8 @@ tasks:
       Verified real Alexandria production code by Kind Robots Tzaddik run 43827962036; /api/version reported exact Krea backend commit 61737d7900cdb59136ea2508f709ec66a5329a32 at 08:06:11Z. Prepared Conductor branch worker/shifting-desks-t-032-activate-krea-e71c to opt in the three existing private Krea ArtImage-source corrections 271721-271723 to the durable art sweep and keep strict no-live-link and visual KEEP/REDO protections. Await CI and merge; no job id yet.
 
       Merged scoped private Krea img2img activation and automatic V4 evidence capture as Conductor PR #7474, squash 7a72e0043a8de65c7942089e21fedf39ca6231f8, exact head 34bde41552a6ddffcf8966104044249c43b95ab9, 24 completed successful checks plus 2 skipped. Alexandria /api/version was independently verified serving Krea-enabled Kind Robots backend commit 61737d7900cdb59136ea2508f709ec66a5329a32 by run 43827962036. Private Krea ledger auto_submit is now true for original ArtImages 271721, 271722, 271723 (rear eyes, living corridor, three-arm tank). Auto Art Generate run 43832607328 triggered by merge and is still progressing through earlier shared queue phases; Krea pilot ArtJob IDs remain unrecorded as of this note. Do not claim renders or repeat the submission: ledger request keys dedupe retried jobs. Inspect its checkpointed jobs/art IDs after the sweep, then fetch V4 full-size previews and record evidence-backed KEEP/REDO before any Classic production linking. Fourteen Classic REDOs and agent browser QA still block playtest, master issue #4150 stays open.
+
+      Prepared a second PRIVATE inactive Krea 2 img2img correction ledger covering the eleven Classic Round 19 REDO scenes NOT covered by submitted pilot ArtJobs 69448-69450. All eleven use actual delivered original ArtImage sources from ROUND-19, targeted individual pass/fail composition briefs, unique seeds and strength settings. No jobs were submitted in this batch; auto_submit remains false pending actual visual KEEP/REDO verdicts on the three-image pilot. Regression tests assert exact 14-scene union, source image IDs, request payloads and no automatic production links. Implementation PR and CI pending.
     owner: worker
     claimed_by: 20261116T084300Z-shifting-desks-t032-second-batch-g6-f2b9
     claimed_at: '2026-11-16T08:43:00Z'
