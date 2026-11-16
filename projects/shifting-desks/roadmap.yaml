@@ -610,40 +610,25 @@ tasks:
   - id: t-032
     milestone: m3
     title: 'Land, review and link the art round 13 re-renders and round 14 tone-ladder renders'
-    status: review
-    updated: '2026-11-16T11:09:00Z'
+    status: ready
+    updated: '2026-11-16T22:15:00Z'
     depends_on: t-015
     passes: 0
     stakes: reversible
-    note: >-
+    note: |-
       From t-015's 2026-10-20 PT art pass: all 184 delivered renders (rounds 2-12) were reviewed against their briefs; 159 keep, 25 sent back for garbled lettering on the focal prop (The Safe-Distance Memo, The Founder's Desk, Which Office Supply Are You?), a missing core gag (The Hungry Detector's teeth, Dale's false mustache, the precognition echo tripping, the Suppression Drill fog) or an off-style render (Security Desk). Mail for Kevin rendered its capsules as ammunition with one held to the worker's temple. ROUND-13.yaml queues 25 forced Krea 2 re-renders at the same paths with prompts rewritten to each review note (all pass the live checkArtPromptContract). To finish: once Auto Art Generate fulfills shifting-desks-r13-*, GET each media_url, record delivery_check and art_job_id, view each render against its prompt and set verdict keep/redo, then run python projects/shifting-desks/encounters/link_art.py --write --probe (20 pack slots link; the other 5 are job, mutation and ending art) and commit. Western Cartoon and Noir editions of these 25 subjects were rendered from the old prompts and were not reviewed here.
-
       2026-10-20 PT: art round 14 (t-033) adds nine tone-ladder renders for the Wellness and Sub-Level Zero department arrivals, six locations and the Board. Review them the same way, and also against ART-DIRECTION.md "Tone ladder": body-horror texture that stays smooth and upholstered is a keep, while blood, wounds, exposed organs or anyone in distress is a redo. Then run link_art.py --write (all 29 pending slots link once kept).
-
-      2026-10-20 PT: round 13 reviewed. 24/25 landed (all new files); 15 keep, linked
-      (link_art.py 148/163, probed live); 9 still missed their gag and are recomposed in
-      ROUND-15. Remaining: ending-the-kind-rewrite (round 13, still rendering), the 9 tone-
-      ladder renders in ROUND-14 and the 9 in ROUND-15. Review each, then link_art.py --write
-      --probe.
-
+      2026-10-20 PT: round 13 reviewed. 24/25 landed (all new files); 15 keep, linked (link_art.py 148/163, probed live); 9 still missed their gag and are recomposed in ROUND-15. Remaining: ending-the-kind-rewrite (round 13, still rendering), the 9 tone- ladder renders in ROUND-14 and the 9 in ROUND-15. Review each, then link_art.py --write --probe.
       Art delivery first: created provenance-verified round-13-15 reconciler, tests, a generator-workflow step, and keep-only art-linking semantics. Open PR and verify CI; remaining art must be independently rendered, reviewed, and linked before t-032 can be closed.
-
       Art delivery is Silas's explicit priority (2026-10-22 PT). Merged source PR silasfelinus/conductor#6515 at 7c6d36c43f48dc92876304b801cd9c1aa59e1d8b with 24 completed checks (23 success, one intentionally skipped). The scheduled Auto Art Generate job now reconciles ROUND-13 through ROUND-15 against completed ArtJobs and newer media files, records ArtJob and ArtImage IDs only with evidence, and never grants a visual keep verdict. link_art.py now links only delivered and explicitly kept renders. Remain READY: one round-13 and nine each round-14/15 rows still need delivery evidence, visual keep/redo decisions and link_art.py --write --probe before closure. Review production workflow logs and actual media, do not reenqueue jobs merely because ledger status says requested; source queue had already pruned these requests. [...]
-
       [Earlier history (17,655 chars) archived verbatim to projects/shifting-desks/T032-HISTORY.md -- read it there only when you need a specific past cycle. Append new cycles below, one short paragraph each.]
-
       Verified real Alexandria production code by Kind Robots Tzaddik run 43827962036; /api/version reported exact Krea backend commit 61737d7900cdb59136ea2508f709ec66a5329a32 at 08:06:11Z. Prepared Conductor branch worker/shifting-desks-t-032-activate-krea-e71c to opt in the three existing private Krea ArtImage-source corrections 271721-271723 to the durable art sweep and keep strict no-live-link and visual KEEP/REDO protections. Await CI and merge; no job id yet.
-
       Merged scoped private Krea img2img activation and automatic V4 evidence capture as Conductor PR #7474, squash 7a72e0043a8de65c7942089e21fedf39ca6231f8, exact head 34bde41552a6ddffcf8966104044249c43b95ab9, 24 completed successful checks plus 2 skipped. Alexandria /api/version was independently verified serving Krea-enabled Kind Robots backend commit 61737d7900cdb59136ea2508f709ec66a5329a32 by run 43827962036. Private Krea ledger auto_submit is now true for original ArtImages 271721, 271722, 271723 (rear eyes, living corridor, three-arm tank). Auto Art Generate run 43832607328 triggered by merge and is still progressing through earlier shared queue phases; Krea pilot ArtJob IDs remain unrecorded as of this note. Do not claim renders or repeat the submission: ledger request keys dedupe retried jobs. Inspect its checkpointed jobs/art IDs after the sweep, then fetch V4 full-size previews and record evidence-backed KEEP/REDO before any Classic production linking. Fourteen Classic REDOs and agent browser QA still block playtest, master issue #4150 stays open.
-
       Prepared a second PRIVATE inactive Krea 2 img2img correction ledger covering the eleven Classic Round 19 REDO scenes NOT covered by submitted pilot ArtJobs 69448-69450. All eleven use actual delivered original ArtImage sources from ROUND-19, targeted individual pass/fail composition briefs, unique seeds and strength settings. No jobs were submitted in this batch; auto_submit remains false pending actual visual KEEP/REDO verdicts on the three-image pilot. Regression tests assert exact 14-scene union, source image IDs, request payloads and no automatic production links. Implementation PR and CI pending.
-
       Previous worker's scoped Kontext masked PR #7480 merged on 2026-11-16, and ArtJobs 69456-69458 delivered ArtImages 273629-273631. The prior review claim is stale; resume t-032 with Silas's explicit instruction for a reusable SDXL multi-target masked-inpainting API with strict bleed. Do not assume any new ArtImage is KEEP without full pixel review.
-
       Implemented the Kind Robots SDXL targeted-inpainting API branch worker/shifting-desks-t-032-targeted-sdxl-inpaint-p7a4 with reusable multi-box/polygon normalized targets, per-target bleed and feather, full-frame/crop modes, exact original-pixel final Comfy composite, previewOnly mask responses, private durable ArtJobs, retry dedup and source/mask provenance. Added the DB-free regression contract to CI. Prepare PR and verify all exact-head checks. Do not mark source art accepted or submit private render jobs before this backend deploys.
-    owner: worker
-    claimed_by: 2026-11-16T110000Z-shifting-desks-t032-region-api-gpt6-p7a4
-    claimed_at: '2026-11-16T11:00:00Z'
+
+      Kind Robots PR #5249 merged as b514d9973415129d33d99d45c4b67ccbba4590ad. Exact-head CI: 14 successful, 1 skipped, zero failed. New private authenticated /api/art/inpaint-targets route supports box/polygon regions, bleed, feather, crop/full-frame, pixel-locked SDXL compositing, mask previews and ArtJob provenance. Source code merged, Alexandria deployment not verified. Do not enqueue new targeted SDXL ArtJobs until deployed backend serves the merge. Then submit exactly three private, deduplicated corrections (rear eyes, living ribbed doorways, third arm), inspect full-size results, and link only accepted ArtImages. Fourteen Classic REDOs and agent QA still block playtest; keep canonical roadmap issue #4150 open.
   - id: t-033
     milestone: m3
     title: 'Tone ladder: lower floors grow more Cronenbergian (rules and station art)'
