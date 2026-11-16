@@ -1,31 +1,31 @@
 {
-  "generated_at": "2026-11-15T18:57:02.813242+00:00",
+  "generated_at": "2026-11-16T06:45:13.082888+00:00",
   "summary": {
-    "status": "semantic-review-upcoming",
+    "status": "clean",
     "roadmap_errors": 0,
-    "roadmap_warnings": 71,
+    "roadmap_warnings": 76,
     "project_forward_drift": 0,
     "project_reverse_orphans": 0,
     "project_unresolved": null,
     "openai_scheduled_agent_overdue": true,
     "openai_scheduled_agent_authoritative": false,
     "intent_review_due": false,
-    "intent_review_upcoming": true
+    "intent_review_upcoming": false
   },
   "openai_scheduled_agent": {
     "overdue": true,
     "last_activity": "2026-10-25T01:09:44+00:00",
-    "hours_since": 521.79,
+    "hours_since": 533.59,
     "stale_hours": 6.0,
     "marker": "openai-scheduled-",
     "note": "Legacy git diagnostic only: OPENAI-SCHEDULED-HEARTBEAT.json and coordination markers do not determine ChatGPT scheduler health. Native ChatGPT task metadata is authoritative for scheduler liveness."
   },
   "intent_review": {
     "due": false,
-    "upcoming": true,
-    "last_report": "INTENT-AUDIT-2026-11-13.md",
-    "days_since": 2,
-    "days_until_due": 1.0,
+    "upcoming": false,
+    "last_report": "INTENT-AUDIT-2026-11-16.md",
+    "days_since": 0,
+    "days_until_due": 3.0,
     "stale_days": 3.0,
     "failed_attempt": null
   },
@@ -35,31 +35,24 @@
     "unresolved": null
   },
   "roadmap_audit": {
-    "generated_at": "2026-11-15T18:57:02.813251+00:00",
+    "generated_at": "2026-11-16T06:45:13.082893+00:00",
     "summary": {
       "roadmaps": 95,
       "active_projects": 19,
       "continuous_projects": 15,
       "playtest_projects": 2,
-      "tasks": 3004,
-      "ready": 225,
-      "waiting": 194,
+      "tasks": 3010,
+      "ready": 231,
+      "waiting": 193,
       "needs_human": 39,
-      "in_progress": 57,
-      "done": 2412,
+      "in_progress": 51,
+      "done": 2419,
       "errors": 0,
-      "warnings": 71,
+      "warnings": 76,
       "info": 132
     },
     "errors": [],
     "warnings": [
-      {
-        "severity": "warning",
-        "code": "STALE_CLAIM_FIELDS",
-        "project": "animation-manager",
-        "task": "t-007",
-        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
-      },
       {
         "severity": "warning",
         "code": "STALE_CLAIM_FIELDS",
@@ -149,7 +142,7 @@
         "code": "STALE_IN_PROGRESS",
         "project": "cthulhuquarium",
         "task": "t-099",
-        "message": "Task has remained claimed for 9 days."
+        "message": "Task has remained claimed for 10 days."
       },
       {
         "severity": "warning",
@@ -188,17 +181,17 @@
       },
       {
         "severity": "warning",
-        "code": "STALE_IN_PROGRESS",
+        "code": "STALE_CLAIM_FIELDS",
         "project": "emperor-of-dust",
         "task": "t-049",
-        "message": "Task has remained review for 21 days."
+        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
       },
       {
         "severity": "warning",
-        "code": "STALE_IN_PROGRESS",
+        "code": "STALE_CLAIM_FIELDS",
         "project": "emperor-of-dust",
         "task": "t-050",
-        "message": "Task has remained review for 21 days."
+        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
       },
       {
         "severity": "warning",
@@ -219,13 +212,20 @@
         "code": "STALE_IN_PROGRESS",
         "project": "emperor-of-dust",
         "task": "t-062",
-        "message": "Task has remained review for 11 days."
+        "message": "Task has remained review for 12 days."
       },
       {
         "severity": "warning",
         "code": "STALE_CLAIM_FIELDS",
         "project": "emperor-of-dust",
         "task": "t-064",
+        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
+      },
+      {
+        "severity": "warning",
+        "code": "STALE_CLAIM_FIELDS",
+        "project": "emperor-of-dust",
+        "task": "t-066",
         "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
       },
       {
@@ -370,6 +370,20 @@
       },
       {
         "severity": "warning",
+        "code": "STALE_CLAIM_FIELDS",
+        "project": "memory-dungeon",
+        "task": "t-029",
+        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
+      },
+      {
+        "severity": "warning",
+        "code": "STALE_IN_PROGRESS",
+        "project": "memory-dungeon",
+        "task": "t-049",
+        "message": "Task has remained review for 3 days."
+      },
+      {
+        "severity": "warning",
         "code": "STALE_IN_PROGRESS",
         "project": "memory-dungeon",
         "task": "t-068",
@@ -429,7 +443,7 @@
         "code": "STALE_IN_PROGRESS",
         "project": "ruler-hooked",
         "task": "t-066",
-        "message": "Task has remained review for 7 days."
+        "message": "Task has remained review for 8 days."
       },
       {
         "severity": "warning",
@@ -482,6 +496,34 @@
       },
       {
         "severity": "warning",
+        "code": "STALE_CLAIM_FIELDS",
+        "project": "slime-city",
+        "task": "t-053",
+        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
+      },
+      {
+        "severity": "warning",
+        "code": "STALE_CLAIM_FIELDS",
+        "project": "slime-city",
+        "task": "t-054",
+        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
+      },
+      {
+        "severity": "warning",
+        "code": "STALE_CLAIM_FIELDS",
+        "project": "slime-city",
+        "task": "t-069",
+        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
+      },
+      {
+        "severity": "warning",
+        "code": "STALE_CLAIM_FIELDS",
+        "project": "slime-city",
+        "task": "t-070",
+        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
+      },
+      {
+        "severity": "warning",
         "code": "POSSIBLY_UNNECESSARY_GATE",
         "project": "tzaddik-gallery",
         "task": "t-013",
@@ -489,17 +531,17 @@
       },
       {
         "severity": "warning",
-        "code": "STALE_IN_PROGRESS",
+        "code": "STALE_CLAIM_FIELDS",
         "project": "weird-humboldt",
         "task": "t-014",
-        "message": "Task has remained review for 24 days."
+        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
       },
       {
         "severity": "warning",
         "code": "STALE_IN_PROGRESS",
         "project": "weird-humboldt",
         "task": "t-020",
-        "message": "Task has remained review for 11 days."
+        "message": "Task has remained review for 12 days."
       },
       {
         "severity": "warning",
@@ -514,13 +556,6 @@
         "project": "weird-humboldt",
         "task": "t-045",
         "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
-      },
-      {
-        "severity": "warning",
-        "code": "STALE_IN_PROGRESS",
-        "project": "weird-humboldt",
-        "task": "t-060",
-        "message": "Task has remained review for 23 days."
       },
       {
         "severity": "warning",
