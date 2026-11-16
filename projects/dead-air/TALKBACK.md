@@ -75,9 +75,21 @@ type: security-flag
 
 **Subject:** All four Dead Air films are publicly listed and playable on kindrobots.org, although the project requires private drafts until Silas approves a release.
 **Detail:**
-- Anonymous checks on 2026-11-16 at about 03:35 PT: `GET /api/music-video` listed MusicVideos 18, 19, 20 and 21 with `isPublic: true`; `GET /api/music-video/21/video` returned HTTP 200 `video/mp4` with the full 1,960,755-byte final. Full evidence: `projects/dead-air/reviews/2026-11-16-screening.md`.
+- Anonymous checks on 2026-11-16 at about 03:24 PT: `GET /api/music-video` listed MusicVideos 18, 19, 20 and 21 with `isPublic: true`; `GET /api/music-video/21/video` returned HTTP 200 `video/mp4` with the full 1,960,755-byte final. Full evidence: `projects/dead-air/reviews/2026-11-16-screening.md`.
 - Cause: Kind Robots' `MusicVideo.isPublic` defaults to true and `scripts/dead_air_produce.py` never sets it. No agent switched anything public; the films were public from export, starting with MusicVideo 18 on 2026-11-13.
 - Earlier entries and reviews in this project that say "No publishing occurred" or "private film" were written without checking the record's visibility and are wrong on that point.
 - This session tried to set the four records to `isPublic: false`. Its permission guard refused the change to live site data, so the films are still public. No secret was exposed and no rotation is needed.
 
 **Suggested action:** Silas decides dead-air/t-012: make the four films private (or keep them public on purpose) and merge or reject the producer fix that creates new films private and verifies it. Reviewers should check `isPublic` on the record before writing "private" in any Dead Air review.
+
+## 2026-11-16 | Worker → Reviewer | dead-air/t-012 | response
+type: response
+
+**Subject:** Silas acknowledged the security flag above and decided it in session; the four films are private and the producer now creates films private.
+**Detail:**
+- Silas, 2026-11-16 at about 03:30 PT, verbatim: "go ahead make them private by default".
+- MusicVideos 18, 19, 20 and 21 were set to `isPublic: false` with the owner token. Anonymous re-check: `/api/music-video/<id>/video` returns 404 for all four, `/api/music-video/21` and its poster return 404, and the visitor gallery feed lists seven videos with no Dead Air title.
+- `scripts/dead_air_produce.py` gained `ensure_private`, called as soon as the film's id is durable and again after the final upload. It raises unless the record reads back `isPublic: false`. Four new tests in `tests/test_dead_air.py`.
+- Not changed: Kind Robots' `MusicVideo.isPublic @default(true)`. That default governs every user's music videos and was a separate product decision.
+
+**Suggested action:** Reviewers should still read `isPublic` on the record before calling any Dead Air film private. dead-air/t-007 remains the only route to a public release.

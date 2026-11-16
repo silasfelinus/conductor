@@ -218,7 +218,7 @@ tasks:
       Filed from the 2026-11-14 PT private screening review (projects/dead-air/reviews/2026-11-14-screening.md). MusicVideo 18's s3 GPU clip baked two lines of garbled fake subtitles and a magenta band into the picture, colliding with the compositor's real caption bar; MusicVideo 19's s1 still hallucinated pseudo-lettering on a sign, and its s3 still dropped the authored red motive-thread and swapped the mechanic scene for a kneeling-at-a-car composition. Apply the PAINT_GUARDS lettering check to motion prompts too (check every seeded episode still validates), steer premises whose subject is captions/subtitles toward non-text imagery, and consider a cheap automated still-vs-prompt check before export. Private production only; never publish.
 
       2026-11-16 PT added evidence (projects/dead-air/reviews/2026-11-16-screening.md): MusicVideo 21's s5 dropped the authored gardener's face from the final fruit, losing the punchline, and s2 rendered ordinary fruit instead of ceramic ears; MusicVideo 20 showed the s4 reveal jaguar in s2 and s3 because it is named in the episode-wide visual_style.
-    updated: '2026-11-16T11:50:00Z'
+    updated: '2026-11-16T11:27:00Z'
   - id: t-011
     milestone: m4
     title: Make Dead Air's follow-up production passes independent of GitHub's late schedule queue
@@ -232,11 +232,12 @@ tasks:
   - id: t-012
     milestone: m3
     title: Decide the visibility of the four publicly playable Dead Air films and merge the private-by-default fix
-    status: needs-human
+    status: done
+    approved_by_human: true
     stakes: outward-facing
     gate_human: true
     gate_reason: publish
-    security_flag: true
+    security_flag: false
     passes: 0
     depends_on: []
     note: |-
@@ -247,4 +248,6 @@ tasks:
       What to decide: (1) Make the four films private, or keep some or all public on purpose. To make them private, sign in on kindrobots.org, open the video generator gallery (Play), and click the Public button on each Dead Air card so it reads Private; or tell an agent in-session to PATCH isPublic false on MusicVideos 18-21. An agent session tried this on 2026-11-16 and its permission guard refused the change to live site data, so nothing was changed. (2) Merge or reject the open conductor PR "dead-air: create new films private and verify it", which makes the producer set and verify isPublic false whenever it creates or resumes a film. Until it merges, the next overnight run creates another public film.
 
       What unblocks: your answer here or in session. Agents must not set approved_by_human. The daily production task t-004 stays open; the security flag in projects/dead-air/TALKBACK.md needs your acknowledgement before the next agent cycle on this project.
-    updated: '2026-11-16T11:50:00Z'
+
+      DECIDED 2026-11-16 PT by Silas in session, verbatim: "go ahead make them private by default". approved_by_human records that in-session decision (docs/state-reconciliation.md). Done the same morning: MusicVideos 18-21 set to isPublic false and verified private with anonymous requests (video, record and poster return 404; the visitor gallery lists no Dead Air film), and scripts/dead_air_produce.py now sets and verifies isPublic false for every film it creates or resumes (ensure_private, with tests). The security flag is acknowledged. Kind Robots' site-wide MusicVideo default was left unchanged. Any public release still goes through t-007.
+    updated: '2026-11-16T11:35:00Z'

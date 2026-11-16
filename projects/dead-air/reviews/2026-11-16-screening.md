@@ -74,7 +74,7 @@ check before export.
 ## The films are public, not private
 
 **Every Dead Air film so far has been publicly listed and playable on kindrobots.org.**
-Checked without credentials on 2026-11-16 at about 03:35 PT:
+Checked without credentials on 2026-11-16 at about 03:24 PT:
 
 - `GET /api/music-video` (the visitor gallery feed) listed MusicVideos 18, 19, 20 and 21 with
   `isPublic: true` and `isOwner: false`.
@@ -93,6 +93,14 @@ This session attempted to set the four records to `isPublic: false`; the session
 guard refused the change to live site data, so **they are still public**. The decision and
 the fix are filed as dead-air/t-012 (needs-human) with a security flag in
 `projects/dead-air/TALKBACK.md`.
+
+**Resolved the same morning.** Silas answered in session at about 03:30 PT: "go ahead make
+them private by default". This session then set MusicVideos 18, 19, 20 and 21 to
+`isPublic: false` and re-ran the anonymous checks: the video, record and poster endpoints
+return 404 for all four, and the visitor gallery feed lists seven videos, none of them Dead
+Air. `scripts/dead_air_produce.py` now sets every film it creates or resumes private, reads
+the record back, and stops the run if it cannot confirm that. The site-wide default for
+other music videos was left alone.
 
 ## Scheduled passes arrive hours late
 
