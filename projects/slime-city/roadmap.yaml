@@ -1290,7 +1290,7 @@ tasks:
   - id: t-054
     milestone: m2
     title: 'Ironjaw follow-through: lab-mutant identity in story, evolutions and remaining art'
-    status: claimed
+    status: ready
     passes: 0
     stakes: reversible
     note: |-
@@ -1330,7 +1330,13 @@ tasks:
       Scoped COG portrait fallback fix on worker/slime-city-t-054-evolution-art-fallback-8c73f2; preserves L3 painting for alternate evolution choices while separate art is pending. Tests added to Slime City suite; PR/CI verification follows. Ironjaw art curation remains open.
 
       2026-11-13 PT: kind_robots#5118 merged as ddd053c after all eight PR workflows completed successfully. Alternate COG L3 art now falls back to curated L3, then L2, then base, with regression coverage. This is a partial t-054 increment, not the Ironjaw art-curation finish. Remaining: visually inspect pending Ironjaw renders and integrate approved three-tier evolution ladders and board portraits.
-    updated: '2026-11-15T18:17:20Z'
+
+      2026-11-15 PT intent audit (INTENT-AUDIT-2026-11-16.md): claim 2026-11-15T181720Z-slime-
+      city-t-054-q8v4 expired (about 10h old, no open PR or branch for it in kind_robots or
+      conductor). Released to ready with nothing discarded. Next: the Remaining line above
+      (inspect pending Ironjaw renders and wire the approved three-tier ladders and board
+      portraits).
+    updated: '2026-11-16T03:53:01Z'
     owner: worker
     claimed_by: 2026-11-15T181720Z-slime-city-t-054-q8v4
     claimed_at: '2026-11-15T18:17:20Z'
