@@ -16,6 +16,7 @@ def test_krea_pilot_uses_real_reference_images_and_never_publishes():
     ledger = yaml.safe_load(LEDGER.read_text(encoding="utf-8"))
     assert is_auto_ledger(ledger), "verified live Krea backend enables private submission"
     assert ledger["auto_submit"] is True
+    assert ledger["round"] == "shifting-desks-krea-img2img-pilot-1"
     assert ledger["status"] == "queued-private-krea-img2img-pilot"
     assert ledger["task"] == "t-032"
     assert ledger["is_public"] is False
