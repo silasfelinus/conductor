@@ -3212,5 +3212,20 @@ tasks:
     each time a Reviewer rewrote the body by hand; .github/pull_request_template.md (t-072)
     does not reach connector-opened PRs. On failure, have pr-handoff-template.yml comment once
     with the template headings filled from the existing body, without editing the body itself.
+- id: t-214
+  milestone: m1
+  title: 'set_task_field / close_task --set should write a flow-list value like [t-037, t-051] as a YAML list, not a quoted string'
+  status: review
+  stakes: reversible
+  owner: reviewer
+  passes: 0
+  depends_on: []
+  updated: '2026-11-16T20:55:00Z'
+  note: >-
+    Reviewer kaizen 2026-11-16 PT from conductor#7500 (slime-city/t-041 constructed checkpoint):
+    the Worker had to hand-fix depends_on after close_task.py --set depends_on=[t-037, t-051]
+    wrote a quoted string. normalize_scalar now renders a bracketed list of safe bare ids as a
+    YAML flow sequence; unsafe items (YAML 1.1 bool words, timestamps, spaces) stay quoted.
+    Tests in tests/test_set_task_field.py.
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'

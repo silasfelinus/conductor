@@ -57,3 +57,13 @@ Shipped crew trophies, titles and card-back frames. They are derived from the ac
 **Improve:** nothing blocking. The handoff left "Conductor CI must complete before merge" for a reviewer to pick up; when CI is the only remaining step, subscribe and merge it yourself.
 
 **Kaizen task:** none added beyond the Worker's own t-070, which already is this closeout's kaizen.
+
+## 2026-11-16 PT | Reviewer merge | slime-city/t-041 constructed checkpoint | Conductor #7500
+
+**Decision:** squash-merged head `66ce2ae` as `1c9fc14`. Docs/state only: `CLASH-CONSTRUCTED-CHECKPOINT-2026-11-16.md` plus t-041 → `waiting` on `[t-037, t-051]`. The latest attempt of every check on the head passed; the first "Validate Worker PR handoff" failure was superseded by a green rerun after the body edit. No game code, art or gate change.
+
+**Good:** parking an umbrella that would otherwise re-audit every hour. Findings rest on evidence (3,120 bouts, 400-bout swap diagnostics), and the Ironjaw/fighters 82.7% call is explicitly tied to Silas's fighters-first direction rather than nerfed on reflex.
+
+**Improve:** t-041 still carries `owner`/`claimed_by`/`claimed_at` while `waiting`. That's harmless today, but clear claim fields when parking so the next pickup after t-051 isn't misread as a live claim. t-051 itself has sat in `review` since 2026-11-15 (kind_robots#4965), so it's t-041's real blocker now.
+
+**Kaizen task:** conductor/t-214. This is the Worker's suggestion: `--set depends_on=[...]` wrote a quoted string. It was implemented in the same reviewer PR (`normalize_scalar` now renders a flow list of safe ids as a YAML list).
