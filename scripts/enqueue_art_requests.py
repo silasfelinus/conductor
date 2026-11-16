@@ -189,15 +189,14 @@ def build_video_fields(lane, subject, first_image, last_image=None):
 
 
 def build_request(ledger, lane, subject, source_image=None, last_image=None):
-    if lane["engine"] == "sdxl-targeted":
-        raise ValueError("Use build_targeted_request for the SDXL region-targeted editing API")
-
     """The /api/art/enqueue body for one (subject, lane) cell.
 
     ``source_image`` is the data URL of the subject's ``source_image_id``; a
     Kontext lane sends it as the image to edit, a video lane as the first frame
     (with ``last_image``, the subject's ``last_image_id``, as the last).
     """
+    if lane["engine"] == "sdxl-targeted":
+        raise ValueError("Use build_targeted_request for the SDXL region-targeted editing API")
     width, height = core.parse_size(subject.get("size"))
     body = {
         "engine": lane["engine"],
@@ -578,8 +577,6 @@ def build_masked_request(ledger, lane, subject, source_image, mask):
     return body
 
 
-
-
 def build_targeted_request(ledger, lane, subject, source_image):
     """Reusable region/bleed API payload. No mask rendering in Conductor."""
     if not source_image or not subject.get("source_image_id"):
@@ -798,7 +795,10 @@ def main(argv=None):
                 crop += ", explicit target regions via /api/art/inpaint-targets" if lane["engine"] == "sdxl-targeted" else ""
                 print(f"    source: ArtImage {subject.get('source_image_id')}{crop}{extra}")
             printable = body.get("promptString") or body.get("prompt") or ""
-            width, height = core.parse_size(subject.get("size"))
+            if "width" in body and "height" in body:
+                width, height = body["width"], body["height"]
+            else:
+                width, height = core.parse_size(subject.get("size"))
             print(f'  {subject["key"]} [{lane["key"]}] {width}x{height} "{printable[:70]}"')
             if rules:
                 print(f"    REJECTED by the prompt contract {rules}: --live will skip this cell")
