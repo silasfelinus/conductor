@@ -3,19 +3,21 @@
 # Proven live backend: Kind Robots #5234 / commit 61737d7900cdb59136ea2508f709ec66a5329a32.
 # Alexandria /api/version returned that exact commit at 2026-11-16T08:06:11Z;
 # verified by workflow https://github.com/silasfelinus/kind_robots/actions/runs/43827962036 .
-# Activate only these three private, source-referenced Krea2 jobs. Keep all
-# production Classic targets untouched until independent visual KEEP.
-# These three renders are candidates only: never overwrite Classic live art.
+# All three private Krea source edits rendered and received independent full-size
+# 2026-11-16 PT visual REDO verdicts. Neither global Krea 2 img2img nor the
+# earlier SDXL whole-frame attempt inserted the required relational detail.
+# Retired from auto-submission; future corrections require localized masked
+# inpainting or deliberate compositing before any Classic production linking.
 round: shifting-desks-krea-img2img-pilot-1
 project_slug: shifting-desks
 task: t-032
 designer: Shifting Desks corrective art
-auto_submit: true
+auto_submit: false
 priority: 85
 is_public: false
 is_mature: false
 cast_loras: false
-status: queued-private-krea-img2img-pilot
+status: reviewed-3-redo-requires-localized-edits
 lanes:
 - key: krea2-source-edit
   label: Krea 2 Turbo / source image edit / isolated fidelity
@@ -52,6 +54,10 @@ subjects:
     krea2-source-edit:
       status: DONE
       art_image_id: 273605
+      verdict: REDO
+      review_note: >-
+        ArtImage 273605, full-size 832x1216 review 2026-11-16 PT: the entire black bob shows continuous hair and paint highlights; neither of the two required rear-facing anatomical eyes exists. Attractive painted style, but the sole surreal scene beat is missing.
+      evidence_artifact_id: 14210147265
 - key: living-doors
   title: Three organic throat doorframes growing in an empty office corridor
   source_image_id: 271722
@@ -76,6 +82,10 @@ subjects:
     krea2-source-edit:
       status: DONE
       art_image_id: 273606
+      verdict: REDO
+      review_note: >-
+        ArtImage 273606, full-size 1216x832 review 2026-11-16 PT: three openings have slim smooth pink painted trim and normal door leaves; no swollen padded accordion ribs, living folds or throat-like architecture on any of them.
+      evidence_artifact_id: 14210147265
 - key: three-arm-tank
   title: Smiling three-armed office clerk fully within a liquid tank
   source_image_id: 271723
@@ -103,3 +113,7 @@ subjects:
     krea2-source-edit:
       status: DONE
       art_image_id: 273607
+      verdict: REDO
+      review_note: >-
+        ArtImage 273607, full-size 832x1216 review 2026-11-16 PT: worker is inside the filled green tank and holds an orange pen in a raised normal arm; only two arms exist. No separately attached third arm emerges from the torso, so the required mutation gag is absent.
+      evidence_artifact_id: 14210147265

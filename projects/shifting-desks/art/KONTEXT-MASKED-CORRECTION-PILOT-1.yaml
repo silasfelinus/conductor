@@ -1,0 +1,116 @@
+# Shifting Desks t-032: PRIVATE masked edits to three visually failed Krea V4 renders.
+# Uses the existing Flux Kontext maskData route /api/comfy/kontext/enqueue.
+# Verified pixels in authenticated artifact 14210147265, 2026-11-16 PT.
+# White mask regions are generated from normalized boxes; black pixels stay.
+# Only produces review candidates. Never link or overwrite Classic target art.
+round: shifting-desks-kontext-masked-pilot-1
+project_slug: shifting-desks
+task: t-032
+designer: Shifting Desks localized visual correction
+auto_submit: true
+priority: 85
+is_public: false
+is_mature: false
+cast_loras: false
+status: queued-private-mask-guided-corrections
+lanes:
+- key: kontext-localized
+  label: Flux Kontext regional inpaint from private Krea source images
+  engine: kontext
+  prompt: prose
+  steps: 16
+  guidance: 2.5
+  suffix: Painted mid-century corporate safety manual gouache, graphic flat colors, thick clean brush edges, delicate
+    printed halftone grain, aged cream background, dark blue, rose pink and orange accents.
+subjects:
+- key: rear-eyes
+  title: Two anatomically complete eyes set into the back of a dark bob
+  source_image_id: 273605
+  source_art_job_id: 69448
+  source_verdict: REDO
+  size: 832x1216
+  mask_box:
+  - - 0.24
+    - 0.33
+    - 0.48
+    - 0.55
+  - - 0.52
+    - 0.33
+    - 0.76
+    - 0.55
+  asset: shifting-desks/private-kontext-masked-pilot-1/rear-eyes
+  pass: Two visibly open human eyes with complete whites, irises, pupils and upper and lower eyelids emerge directly
+    from the hair at the back of the bob.
+  fail: Plain hair, paint highlights resembling eyes, frontal face turn, or cropped-off eyelids.
+  prompt_prose: An office clerk with a short glossy black bob hairstyle seen from directly behind. Two complete
+    human eyes are embedded side by side in the middle of the back of her hair, their ivory whites, bright teal
+    round irises, black pupils and distinct upper and lower eyelids facing straight back at the viewer. The eyes
+    are organic anatomical features growing directly from the glossy hair. Her head remains rear-facing above a
+    plain cream uniform collar.
+  jobs:
+    kontext-localized: 69456
+  art:
+    kontext-localized:
+      status: DONE
+      art_image_id: 273629
+- key: living-doors
+  title: Three ribbed fleshy door throats in an ordinary office corridor
+  source_image_id: 273606
+  source_art_job_id: 69449
+  source_verdict: REDO
+  size: 1216x832
+  mask_box:
+  - - 0.24
+    - 0.07
+    - 0.39
+    - 0.7
+  - - 0.41
+    - 0.16
+    - 0.58
+    - 0.62
+  - - 0.62
+    - 0.07
+    - 0.77
+    - 0.7
+  asset: shifting-desks/private-kontext-masked-pilot-1/living-doors
+  pass: All three original left, middle and right doors are surrounded by large thick overlapping organic rose-pink
+    accordion ribs protruding from the wall.
+  fail: Smooth thin pink door trim, conventional doorway geometry, wall decoration, or fewer than three ribbed doorframes.
+  prompt_prose: Looking out from a steel elevator into a quiet three-door office hallway. Each of the left, far-center
+    and right doorframes is a living soft swollen biological throat growing from the plaster wall, with broad thick
+    rose-pink cushioned folds wrapping all the way around each opening. Deep curved accordion ribs bulge outward
+    in layer upon layer like enormous organic padded rings. The ordinary steel elevator and empty cream corridor
+    frame three unmistakably living doorways.
+  jobs:
+    kontext-localized: 69457
+  art:
+    kontext-localized:
+      status: DONE
+      art_image_id: 273630
+- key: three-arm-tank
+  title: Distinct third torso-grown arm holding a bright orange pen
+  source_image_id: 273607
+  source_art_job_id: 69450
+  source_verdict: REDO
+  size: 832x1216
+  mask_box:
+  - - 0.4
+    - 0.54
+    - 0.83
+    - 0.74
+  asset: shifting-desks/private-kontext-masked-pilot-1/three-arm-tank
+  pass: Exactly three separately articulated human arms extend from the same employee while submerged in one tank,
+    with the extra torso-grown hand visibly clutching an orange pen.
+  fail: Only two arms, a floating extra hand with no elbow and shoulder, merged hands, or extra arm outside the
+    tank.
+  prompt_prose: A smiling white-shirted office employee floats fully inside one clear green-liquid laboratory tank.
+    His ordinary left arm stays raised beside his head and his ordinary right arm rests low. In addition a third
+    complete human arm sprouts visibly from the middle right of his white-shirted torso, curves outward across his
+    chest and ends in a distinct extra hand holding a bright orange ballpoint pen. All three whole articulated arms
+    and their three hands are separated and visible inside the clear glass.
+  jobs:
+    kontext-localized: 69458
+  art:
+    kontext-localized:
+      status: DONE
+      art_image_id: 273631
