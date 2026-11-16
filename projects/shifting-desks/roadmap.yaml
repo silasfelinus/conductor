@@ -610,8 +610,8 @@ tasks:
   - id: t-032
     milestone: m3
     title: 'Land, review and link the art round 13 re-renders and round 14 tone-ladder renders'
-    status: ready
-    updated: '2026-11-16T10:56:00Z'
+    status: claimed
+    updated: '2026-11-16T11:00:00Z'
     depends_on: t-015
     passes: 0
     stakes: reversible
@@ -691,6 +691,9 @@ tasks:
       Prepared a second PRIVATE inactive Krea 2 img2img correction ledger covering the eleven Classic Round 19 REDO scenes NOT covered by submitted pilot ArtJobs 69448-69450. All eleven use actual delivered original ArtImage sources from ROUND-19, targeted individual pass/fail composition briefs, unique seeds and strength settings. No jobs were submitted in this batch; auto_submit remains false pending actual visual KEEP/REDO verdicts on the three-image pilot. Regression tests assert exact 14-scene union, source image IDs, request payloads and no automatic production links. Implementation PR and CI pending.
 
       Previous worker's scoped Kontext masked PR #7480 merged on 2026-11-16, and ArtJobs 69456-69458 delivered ArtImages 273629-273631. The prior review claim is stale; resume t-032 with Silas's explicit instruction for a reusable SDXL multi-target masked-inpainting API with strict bleed. Do not assume any new ArtImage is KEEP without full pixel review.
+    owner: worker
+    claimed_by: 2026-11-16T110000Z-shifting-desks-t032-region-api-gpt6-p7a4
+    claimed_at: '2026-11-16T11:00:00Z'
   - id: t-033
     milestone: m3
     title: 'Tone ladder: lower floors grow more Cronenbergian (rules and station art)'
