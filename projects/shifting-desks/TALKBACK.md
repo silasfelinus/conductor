@@ -160,3 +160,13 @@ Conductor#6110's unchanged reviewed head merged in another session at `2026-10-1
 **Superseded branch:** `worker/shifting-desks-t032-sdxl-i2i-pilot-20261115` (tip `ca5aee3`, no PR) adds `art/SDXL-IMG2IMG-FIDELITY-PILOT.yaml`, an `auto_submit: true` img2img pilot over the same rejected V2 sources (271721–271723) that merged #7458's `SDXL-IMG2IMG-CORRECTION-PILOT-1.yaml` already covers. Not merged: landing it would double-submit the same correction renders. Left for t-032's next claimant to delete or fold in; do not open a PR for it as-is.
 
 **Kaizen task:** shifting-desks/t-056, test the `--all-styles-strict` exit code.
+
+## 2026-11-16 PT | Reviewer | shifting-desks/t-032 | worker/shifting-desks-t-032-v5-verdict-and-sdxl-targets-p7a4
+
+**Decision:** opened the PR for the un-PR'd worker branch (tip `545a032`) and merge once green. Records the V5 Kontext verdicts (2 KEEP / 1 REDO, private, not linked), flips the Kontext ledger to `auto_submit: false`, and stages an `sdxl-targeted` third-arm ledger with `auto_submit: false` pending kind_robots #5249 deploy. Reversible; nothing public or linked. 4784 tests pass locally.
+
+**Fixes made by Reviewer:** the new `sdxl-targeted` guard was inserted above `build_request`'s docstring, turning it into a dead string; moved below. The dry-run print switched to `parse_size(subject["size"])` for every lane, dropping lane-derived body sizes; now uses body width/height when present.
+
+**Improve:** put guards after docstrings; when generalising a shared print path, keep the old source of truth as the default. Also a worker branch with no PR strands the work; open the PR as part of the handoff.
+
+**Kaizen task:** shifting-desks/t-057, test the dry-run size print for both lane shapes.
