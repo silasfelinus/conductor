@@ -1550,11 +1550,11 @@ tasks:
   - id: t-070
     milestone: m2
     title: 'Mercenary L2-to-L3 tactical continuity and constructed-selection audit'
-    status: claimed
+    status: done
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-16T17:48:59Z'
+    updated: '2026-11-16T18:13:43Z'
     note: |-
       Kaizen after kind_robots#5221 (slime-city/t-041, 2026-11-15 PT). Check all sixty shared Mercenary cards' actual L2 and L3 battle behavior, starting with cards that are rarely chosen in constructed CPU games. Identify unintended lost L2 utility versus deliberate L3 role shifts; do NOT require every L3 to inherit every L2 action automatically. For any concrete improvement, preserve counterplay and crew-neutral identity, add seeded real-Clash tests for target/occupancy, deterministic replay, CPU selection rationale, and measure held-out matchup impact. Keep card IDs, the six faction identities, and rewards unchanged. This is a bounded mercenary QA slice of umbrella t-041, not blanket completion of the 300-card ledger.
       2026-11-15 PT intent audit (INTENT-AUDIT-2026-11-16.md): claim 2026-11-15T161438Z-slime- city-t-070-g6b2k9 expired (about 12h old, no open PR or branch for it). Released to ready. The bounded Mercenary L2-to-L3 QA scope above is unchanged.
@@ -1564,6 +1564,18 @@ tasks:
       MERGED Kind Robots PR #5255, squash 566f1699286652ebc50b12d183acbc1f0f054bd6 from exact head ae666dc1418c23d70ecae74b534066c2b37ac3c5. Auction Golem L3 now retains its L2 facing-foe -2 power suppression after the piercing eviction, and Midwife of Sparks L3 retains its L2 adjacent VOLATILE priming before its existing death-triggered echoes. Real-board occupied/empty/isolated fixtures, deterministic commands, CPU choice and 160-character card-face coverage pass. The 3,120-bout constructed report now exposes the 9 Mercenaries actually used by those 30 decks: Grease Oracle 0/208 selected bouts and Union Owl 15/416 are the low-selection leads, but their L2-to-L3 continuity is already correct. The separate 1,080-match all-roster sweep covers all 60 Mercenaries; fixed-seed aggregate output was byte-for-byte unchanged versus main. All 12 exact-head GitHub checks completed successfully (four Contract shards, verifier, TypeScript, Prettier, layout, architecture, schema parity and security). This closes one bounded increment only; return t-070 to ready for the remaining all-60 behavior review. No art jobs, visual surface, schema or deployment.
 
       Check-count correction for #5255 exact head ae666dc: 11 checks completed successfully (four Contract shards, Contract verifier, TypeScript, Changed-file Prettier, layout, architecture, schema parity and GitGuardian); the twelfth check, Push Prettier autofix, completed as expected with conclusion SKIPPED because formatting already passed. The six required workflow runs all completed successfully. This correction supersedes the preceding shorthand that called all 12 successful.
+
+      2026-11-16 PT: MERGED kind_robots #5262, squash 5b91cf1, head 39e481a; 11 checks
+      success, Push Prettier autofix skipped as expected. All-60 L2-to-L3 review done: a
+      mechanical pass flagged 35 Mercenaries whose L2 effect does not recur verbatim at L3;
+      each was read against its arc. The only unintended loss was Broken Halo, whose L3 now
+      keeps its on-hit adjacent heal. The death-time crew heal was traded away to keep the
+      160-char face (now 152). A seeded real-Clash fixture covers the fix and fails on the old
+      definition. The default balance report is byte-identical to main. The other 34 are
+      deliberate role shifts, choose-ones, supersets or price arcs (docs/agents/slime-city-
+      mercenary-l2-l3-continuity-audit.md). Rarely-selected constructed Mercenaries stay with
+      t-051/t-041; no art, schema or deploy.
     owner: worker
     claimed_by: 2026-11-16T1750Z-t070-opus
     claimed_at: '2026-11-16T17:48:59Z'
+    implementation_pr: 'silasfelinus/kind_robots#5262'
