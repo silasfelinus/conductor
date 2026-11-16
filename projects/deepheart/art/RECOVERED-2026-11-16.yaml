@@ -1,0 +1,61 @@
+# Renders Kind Robots finished for this project that nothing in Conductor or kind_robots recorded:
+# no ledger cell, request or manifest names their ArtJob or ArtImage id. Written by
+# scripts/reconcile_unrecorded_art.py (Silas, 2026-11-11 PT: "art that was requested and made but
+# not linked"). Not auto_submit: nothing here is ever re-rendered.
+#
+# art-medic triage (docs/agents/roles/art-medic.md "Unrecorded art"): give every subject a
+# `triage:` of linked (wired into the game/site; say where in `linked_to:`), adopted (moved into
+# the ledger cell it belongs to), duplicate (`duplicate_of:` the kept job), or rejected (off-brief;
+# adult renders are marked mature, never deleted).
+round: deepheart-recovered-2026-11-16
+project_slug: deepheart
+designer: Recovered unrecorded renders
+auto_submit: false
+lanes:
+- key: recovered
+  label: Rendered by Kind Robots but recorded nowhere; adopted by reconcile_unrecorded_art.py
+  engine: recovered
+  prompt: prose
+subjects:
+- key: recovered-69599
+  lane: recovered
+  title: unrecorded render
+  prompt_prose: A torchlit stone stairway spiralling down into a vast three-tiered dungeon, a small adventuring
+    party with lanterns on the top landing, a glowing red heart-shaped crystal far below, one bold subject centred
+    on a plain bright backdrop, cel-shaded with glossy highlights and a bold dark outline, premium game icon, square
+    composition, every surface bare and unmarked
+  jobs:
+    recovered: 69599
+  art:
+    recovered:
+      status: DONE
+      art_image_id: 273943
+  created_at: '2026-11-16T15:00:40.589Z'
+- key: recovered-69600
+  lane: recovered
+  title: unrecorded render
+  prompt_prose: A torchlit stone stairway spiralling down into a vast three-tiered dungeon, a small adventuring
+    party with lanterns on the top landing, a glowing red heart-shaped crystal far below, vertical 2:3 portrait
+    composition with a clear foreground subject and layered depth, hand-painted game illustration with rich saturated
+    color and warm rim light, every surface bare and unmarked
+  jobs:
+    recovered: 69600
+  art:
+    recovered:
+      status: DONE
+      art_image_id: 273944
+  created_at: '2026-11-16T15:05:42.041Z'
+- key: recovered-69601
+  lane: recovered
+  title: unrecorded render
+  prompt_prose: A torchlit stone stairway spiralling down into a vast three-tiered dungeon, a small adventuring
+    party with lanterns on the top landing, a glowing red heart-shaped crystal far below, wide 16:9 landscape with
+    a strong foreground anchor and a deep atmospheric background, cinematic hand-painted game illustration, every
+    surface bare and unmarked
+  jobs:
+    recovered: 69601
+  art:
+    recovered:
+      status: DONE
+      art_image_id: 273945
+  created_at: '2026-11-16T15:10:43.363Z'
