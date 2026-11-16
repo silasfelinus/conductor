@@ -154,8 +154,7 @@ tasks:
   - id: t-011
     milestone: m4
     title: "Art ledger: queue every brief auto_submit"
-    status: review
-    owner: null
+    status: ready
     passes: 0
     stakes: reversible
     note: |-
@@ -165,6 +164,9 @@ tasks:
       Still to queue: 3 faction emblems, 6 room plates (utils/deepheart/art.ts ROOM_ART) and
       the 20 achievement badges (kind_robots scripts/generate_achievement_art.ts after the
       catalog rows are seeded). Queued is not rendered: t-012 verifies delivery.
+
+      Deepheart foundation merged as Kind Robots #5257. The 139-item written art backlog exists, but t-011 remains unfinished: 3 faction emblems, 6 room plates and 20 achievement badges still need submission; queue completion cannot be inferred from prompt files.
+    updated: '2026-11-16T22:58:00Z'
   - id: t-012
     milestone: m4
     title: "Every picture rendered, delivered, URL-verified and wired (set src / RENDERED_ART)"
