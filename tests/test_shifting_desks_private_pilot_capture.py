@@ -48,7 +48,7 @@ def test_pending_v2_jobs_cannot_be_passed_off_as_delivered(monkeypatch):
 
 def test_unknown_pilot_version_fails_closed():
     with pytest.raises(ValueError, match="unsupported"):
-        list(module.pilot_rows(3))
+        list(module.pilot_rows(4))
 
 
 def test_done_pilot_artimages_cannot_disappear_from_review_artifact():
@@ -57,6 +57,8 @@ def test_done_pilot_artimages_cannot_disappear_from_review_artifact():
         "pilot_v1_done_missing_image": 0,
         "pilot_v2_captured": 3, "pilot_v2_recorded_done": 3,
         "pilot_v2_done_missing_image": 0,
+        "pilot_v3_captured": 3, "pilot_v3_recorded_done": 3,
+        "pilot_v3_done_missing_image": 0,
     }
     assert module.pilot_capture_errors(good) == []
     missing = {**good, "pilot_v2_captured": 2}
@@ -75,5 +77,47 @@ def test_queued_pilot_is_not_counted_as_a_failed_delivery():
         "pilot_v1_done_missing_image": 0,
         "pilot_v2_captured": 2, "pilot_v2_recorded_done": 2,
         "pilot_v2_done_missing_image": 0,
+        "pilot_v3_captured": 3, "pilot_v3_recorded_done": 3,
+        "pilot_v3_done_missing_image": 0,
     }
     assert module.pilot_capture_errors(report) == []
+
+
+def test_v3_sdxl_img2img_pilot_records_all_three_rendered_sources():
+    """Every new DONE img2img candidate must appear with verifiable source lineage."""
+    rows = list(module.pilot_rows(3))
+    assert len(rows) == 3
+    assert {row["key"] for row in rows} == {
+        "rear-eyes-edit--dreamshaper-turbo-i2i",
+        "living-doors-edit--dreamshaper-turbo-i2i",
+        "three-arm-tank-edit--dreamshaper-turbo-i2i",
+    }
+    assert {row["job"] for row in rows} == {69431, 69432, 69433}
+    assert {row["image"] for row in rows} == {273305, 273306, 273307}
+    assert {row["source_image_id"] for row in rows} == {
+        271721, 271722, 271723,
+    }
+    assert {row["source_art_job_id"] for row in rows} == {
+        69090, 69091, 69092,
+    }
+    assert all(row["status"] == "DONE" for row in rows)
+    assert all(row["verdict"] is None for row in rows)
+    assert all(row["pass"] and row["fail"] for row in rows)
+    assert all(row["denoise"] > 0 for row in rows)
+    assert all(row["checkpoint"].endswith(".safetensors") for row in rows)
+    assert all(row["asset"].startswith("shifting-desks/private-") for row in rows)
+    assert all(row["_round"] == "PILOT-V3" for row in rows)
+
+
+def test_img2img_done_image_missing_from_evidence_is_blocking():
+    report = {
+        "pilot_v1_captured": 6, "pilot_v1_recorded_done": 6,
+        "pilot_v1_done_missing_image": 0,
+        "pilot_v2_captured": 3, "pilot_v2_recorded_done": 3,
+        "pilot_v2_done_missing_image": 0,
+        "pilot_v3_captured": 2, "pilot_v3_recorded_done": 3,
+        "pilot_v3_done_missing_image": 0,
+    }
+    assert module.pilot_capture_errors(report) == [
+        "pilot_v3: captured 2/3 delivered ArtImages"
+    ]
