@@ -1234,7 +1234,7 @@ tasks:
   - id: t-053
     milestone: m2
     title: 'Meat Exchange reskin: Lovecraftian, dark, occult and weird (names, flavor, art)'
-    status: claimed
+    status: review
     passes: 0
     stakes: reversible
     note: |-
@@ -1267,10 +1267,21 @@ tasks:
       2026-11-13 PT intent audit (INTENT-AUDIT-2026-11-13.md): status was review for ~36h with
       no open PR in kind_robots or conductor and remaining scope listed above; returned to
       ready so pickers can take the next slice. No work discarded.
-    updated: '2026-11-16T02:52:44Z'
+
+      2026-11-15 PT: fetched all 103 EXCHANGE-OCCULT-ROUND-1 ArtImages through the
+      authenticated endpoint (103/103 bytes OK) and reviewed them on contact sheets.
+      kind_robots#5233 wires 96 keepers into artManifest.ts (39 base cards, 57 L2/L3 stages)
+      and records verdicts in exchangeOccultArtIntake.json. 7 marked redo, with current art
+      kept: sign/banner lettering (269814, 269857, 269862, 269894), the Vein-Tithe Novice
+      drawn as a child (269816, 269861, 269862), and Klan-like pointed white hoods (269875).
+      Queued EXCHANGE-OCCULT-REDO-1.yaml (7 subjects, fresh seeds, bare-surface/adult/cowl
+      clauses, priority 1000, auto_submit; prompt contract 7/7). NEXT: once the sweep writes
+      art_image_ids, curate the redo and wire the keepers. Not a human gate.
+    updated: '2026-11-16T03:01:04Z'
     owner: worker
     claimed_at: '2026-11-16T02:52:44Z'
     claimed_by: 2026-11-16T02:52:00Z-claude-jhk0lh
+    implementation_pr: 'silasfelinus/kind_robots#5233'
   - id: t-054
     milestone: m2
     title: 'Ironjaw follow-through: lab-mutant identity in story, evolutions and remaining art'
