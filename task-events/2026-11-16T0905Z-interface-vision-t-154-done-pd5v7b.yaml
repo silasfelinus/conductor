@@ -1,0 +1,26 @@
+version: 1
+project: interface-vision
+task: t-154
+operation: done
+note: >-
+  2026-11-16 PT: kind_robots#5239 merged (squash 2f2bcad). Dispatched run 43828805291
+  on main completed all 7 jobs, each with a real pass or fail, in about 43 minutes:
+  route sweep shards 1-6 took ~19-22 min each (shard 4: 36 pages in 1126s), and the
+  separate controls job ran gallery chrome (pass), tablet nav (pass) and the Slime
+  City Clash audit, which produced its first real verdict. Real defects found: phone
+  /facets select SPILL (fixed in kind_robots#5245) and the Clash audit is blocked by
+  the login gate (recorded on slime-city/t-069). The audit is red because of those
+  defects, not a timeout.
+verify_pr: silasfelinus/kind_robots#5239
+learning:
+  date: 2026-11-16
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    A browser sweep that waits for networkidle on every page grows silently with
+    its route list until it hits the job timeout. Bound the idle wait, shard by
+    route, and keep downstream audits in their own job so a slow sweep can't skip
+    them.
