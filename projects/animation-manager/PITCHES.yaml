@@ -2794,3 +2794,17 @@ pitches:
         verification:
           - headless Chromium render at 1280x720 and 390x844, no page errors
           - registered in stores/animationCatalog.ts
+  - id: honeycomb-hive
+    title: Honeycomb Hive
+    status: shipped
+    priority: 99
+    surprise: Bees tend a warm close-up honeycomb whose cells slowly fill with honey, seal under pale wax caps and are harvested on a closed-form cycle; hover draws nearby bees to the pointer, click pours a golden ripple outward through the comb.
+    builds:
+      - version: 1
+        status: shipped
+        component: components/screenfx/honeycomb-hive.vue
+        pull_request: silasfelinus/kind_robots#5235
+        released_at: '2026-11-15T14:00:00Z'
+        verification:
+          - headless Chromium render at 1280x720, 390x844 and reduced-motion 800x500, no page errors
+          - registered in stores/animationCatalog.ts

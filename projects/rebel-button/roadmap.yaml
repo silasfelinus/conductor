@@ -57,12 +57,15 @@ tasks:
     # parallel and blocks nothing. Without soft_gate, audit_human_gates.py
     # classifies it `[hard]` and it reports to Silas as a blocker every session.
     soft_gate: true
+    gate_reason: creative-approval
+    gate_rechecked: '2026-11-15'
     note: >
       FOR SILAS: soft checkpoint, nothing is blocked on it. Read DESIGN-BRIEF.md
       and confirm or redirect the scope. Development is already underway; if you
       redirect, agents fold your correction into the roadmap and keep moving.
       (Outward-facing/irreversible steps still hard-gate as always.)
-    gate_rechecked: '2026-11-09'
+      Re-triaged 2026-11-15 PT (scheduled agent): still only Silas can confirm
+      the scope; no agent path exists, development is not blocked.
 
   - id: t-003
     milestone: m2
