@@ -1,0 +1,129 @@
+# Meat Exchange occult, redo round (2026-11-15 PT, slime-city/t-053). Contact-sheet curation of
+# EXCHANGE-OCCULT-ROUND-1 wired 96 of 103 renders (kind_robots#5233). These 7 were rejected: painted
+# sign/banner lettering, the Vein-Tithe Novice drawn as a child, and pointed white eyehole hoods that read
+# as Klan robes. Same prompts plus a bare-surface clause, an explicit adult description, or rounded cowls;
+# fresh seeds. Same runtime assets: a keeper replaces the current art in kind_robots
+# utils/slimeCity/artManifest.ts after curation. auto_submit.
+round: slime-city-exchange-occult-redo-1
+project_slug: slime-city
+designer: Slime City Meat Exchange occult, redo 1
+is_public: true
+is_mature: false
+cast_loras: false
+priority: 1000
+auto_submit: true
+lanes:
+- key: krea2-card
+  label: Krea 2 Slime City occult Exchange cards
+  engine: krea2
+  prompt: prose
+  suffix: Western adult-animation gouache painting, playful eldritch fantasy beneath a drowned megacity market,
+    crisp thick black ink contours, vibrant high-contrast gouache shading, drowned teal, bone ivory, raw-meat crimson
+    and candle gold palette, flickering candlelight and glowing teal water light, every figure a grown adult, one
+    continuous full-bleed vertical scene, every surface bare and unmarked.
+- key: krea-evolution
+  label: Krea 2 occult Exchange evolution stages, escalating per card
+  engine: krea2
+  prompt: prose
+  suffix: Hand-painted vivid inked western adult cartoon, playful eldritch fantasy beneath a drowned megacity market,
+    thick expressive outlines, drowned teal, bone ivory, raw-meat crimson and candle gold palette, flickering candlelight
+    and glowing teal water light, bold clear shapes, high contrast, every figure a grown adult, one continuous full-bleed
+    vertical scene, every surface bare and unmarked.
+subjects:
+- key: slime-occult-exchange-card-s2-exchange-invisible-lien-redo1
+  lane: krea2-card
+  entity: card-art
+  title: Unseen Hook
+  asset: slime-city/cards/s2-exchange-invisible-lien
+  size: 832x1216
+  seed: 1297000
+  prompt_prose: A barbed brass hook on a fine shimmering fishing line. It rises from a crack between the cobblestones
+    of a misty market alley and snags the coattail of a hurrying adult courier, teal fog curling around his boots
+    as his parcels go flying. Every sign, banner, awning, booth, page and wall surface is a plain solid colour,
+    bare and unmarked.
+  replaces_art_image_id: 269814
+  redo_reason: painted shop-sign lettering
+- key: slime-occult-exchange-card-s3-exchange-wage-garnisher-redo1
+  lane: krea2-card
+  entity: card-art
+  title: Vein-Tithe Novice
+  asset: slime-city/cards/s3-exchange-wage-garnisher
+  size: 832x1216
+  seed: 1297001
+  prompt_prose: A gaunt adult acolyte in a short black hooded cape with a silver lancet and a crystal vial on a
+    chain. She taps a sparring adult brawler on the arm with her lancet the instant his punch lands, and a thread
+    of crimson light flows into her vial, her cheeks puffed with concentration in a lantern-lit alley. The acolyte
+    is a tall, gaunt, clearly grown woman in her forties with adult proportions, a long face, crow's feet and a
+    stern mouth; not small, not cute. Every sign, banner, awning, booth, page and wall surface is a plain solid
+    colour, bare and unmarked.
+  replaces_art_image_id: 269816
+  redo_reason: acolyte reads as a child
+- key: slime-occult-exchange-evo-s2-exchange-invisible-lien-l2-redo1
+  lane: krea-evolution
+  entity: card-art
+  title: 'Unseen Hook L2: The Hook Takes Hold'
+  asset: slime-city/evolutions/s2-exchange-invisible-lien@2
+  size: 832x1216
+  seed: 1297002
+  prompt_prose: A barbed brass hook on a fine shimmering fishing line. Low-angle hero shot of the line pulled taut
+    as a harp string, dragging the snagged adult courier backward toward a glowing drain where a pale tentacle reels
+    him in like a patient fisherman. Every sign, banner, awning, booth, page and wall surface is a plain solid colour,
+    bare and unmarked.
+  replaces_art_image_id: 269857
+  redo_reason: painted banner lettering
+- key: slime-occult-exchange-evo-s3-exchange-wage-garnisher-l2-redo1
+  lane: krea-evolution
+  entity: card-art
+  title: 'Vein-Tithe Novice L2: The Vein-Tithe'
+  asset: slime-city/evolutions/s3-exchange-wage-garnisher@2
+  size: 832x1216
+  seed: 1297003
+  prompt_prose: A gaunt adult acolyte in a short black hooded cape with a silver lancet and a crystal vial on a
+    chain. Low-angle hero shot of the novice on a chapel balcony as dozens of shimmering crimson light threads stream
+    up from a brawl below into a growing crystal reliquary she holds overhead. The acolyte is a tall, gaunt, clearly
+    grown woman in her forties with adult proportions, a long face, crow's feet and a stern mouth; not small, not
+    cute. Every sign, banner, awning, booth, page and wall surface is a plain solid colour, bare and unmarked.
+  replaces_art_image_id: 269861
+  redo_reason: acolyte reads as a child
+- key: slime-occult-exchange-evo-s3-exchange-wage-garnisher-l3-redo1
+  lane: krea-evolution
+  entity: card-art
+  title: 'Vein-Tithe Novice L3: The Veins Run Dry'
+  asset: slime-city/evolutions/s3-exchange-wage-garnisher@3
+  size: 832x1216
+  seed: 1297004
+  prompt_prose: A gaunt adult acolyte in a short black hooded cape with a silver lancet and a crystal vial on a
+    chain. The novice, now towering and solemn, stands at the heart of a dry cracked canal as rippling crimson ribbons
+    drain from every rival adult brawler around her toward her raised reliquary, the brawlers drooping like wilted
+    flowers. The acolyte is a tall, gaunt, clearly grown woman in her forties with adult proportions, a long face,
+    crow's feet and a stern mouth; not small, not cute. Every sign, banner, awning, booth, page and wall surface
+    is a plain solid colour, bare and unmarked.
+  replaces_art_image_id: 269862
+  redo_reason: painted sign lettering; acolyte reads as a child
+- key: slime-occult-exchange-evo-s3-exchange-payment-reminder-l3-redo1
+  lane: krea-evolution
+  entity: card-art
+  title: 'The First Knell L3: The Procession of Collectors'
+  asset: slime-city/evolutions/s3-exchange-payment-reminder@3
+  size: 832x1216
+  seed: 1297005
+  prompt_prose: A small black envelope sealed with a blob of gold wax. A grand candlelit procession of bare-faced butcher-priests,
+    almsmen, bell-ringers and skeletal acolytes surges down a flooded avenue beneath a colossal tolling bell, every
+    member raising cleavers and hooks in a joyful charge. The crowd wears loose, softly rounded monk cowls of black
+    and oxblood wool pushed back so every face shows. Every sign, banner, awning, booth, page and wall surface is
+    a plain solid colour, bare and unmarked.
+  replaces_art_image_id: 269875
+  redo_reason: pointed white eyehole hoods read as Klan robes
+- key: slime-occult-exchange-evo-s3-exchange-collection-badge-l3-redo1
+  lane: krea-evolution
+  entity: card-art
+  title: 'Bone Tithe Sigil L3: Marshal of the Bone Tithe'
+  asset: slime-city/evolutions/s3-exchange-collection-badge@3
+  size: 832x1216
+  seed: 1297006
+  prompt_prose: A carved ivory bone brooch shaped like a many-eyed sunburst. The fighter, now a towering marshal
+    in ivory bone armor with the brooch blazing like a sun on her chest, leads a line of glowing adult acolytes
+    shoulder to shoulder through a flooded plaza, their eyes lit gold. Every sign, banner, awning, booth, page and
+    wall surface is a plain solid colour, bare and unmarked.
+  replaces_art_image_id: 269894
+  redo_reason: painted sign lettering
