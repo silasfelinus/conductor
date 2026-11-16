@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Capture delivered Classic artwork and private V1/V2/SDXL/Krea img2img pilots.
+"""Capture delivered Classic artwork, image edits and localized masked pilots.
 
 Writes review-only JPG previews, contact sheets, and a provenance manifest.
 Never marks KEEP, updates images, submits ArtJobs or publishes the private pilot.
@@ -71,6 +71,7 @@ def pilot_rows(version=1):
         2: "SUBJECT-FIDELITY-PILOT-V2.yaml",
         3: "SDXL-IMG2IMG-CORRECTION-PILOT-1.yaml",
         4: "KREA-IMG2IMG-CORRECTION-PILOT-1.yaml",
+        5: "KONTEXT-MASKED-CORRECTION-PILOT-1.yaml",
     }
     if version not in ledgers:
         raise ValueError("unsupported pilot version")
@@ -98,6 +99,7 @@ def pilot_rows(version=1):
                 "source_image_id": subject.get("source_image_id"),
                 "source_art_job_id": subject.get("source_art_job_id"),
                 "denoise": subject.get("denoise"),
+                "mask_box": subject.get("mask_box"),
                 "checkpoint": lane.get("checkpoint"),
                 "asset": subject.get("asset"),
             }
@@ -156,7 +158,7 @@ def sheets(rows, directory, label):
 def pilot_capture_errors(pilots: dict[str, int]) -> list[str]:
     """A recorded DONE pilot needs actual readable image evidence, not just an ID."""
     errors = []
-    for version in (1, 2, 3, 4):
+    for version in (1, 2, 3, 4, 5):
         key = f"pilot_v{version}"
         done = pilots[f"{key}_recorded_done"]
         captured = pilots[f"{key}_captured"]
@@ -184,7 +186,7 @@ def main():
             "evidence": evidence, "fresh": fresh, "_image": img if fresh else None,
         })
     pilots = {}
-    for version in (1, 2, 3, 4):
+    for version in (1, 2, 3, 4, 5):
         private = []
         for row in pilot_rows(version):
             image, evidence = capture_pilot(row)
