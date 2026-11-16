@@ -984,9 +984,9 @@ tasks:
   - id: t-041
     milestone: m2
     title: "CLASH 300: individually crafted L1/L2/L3 effects for every existing card"
-    status: claimed
-    updated: '2026-11-16T19:47:34Z'
-    depends_on: t-037
+    status: waiting
+    updated: '2026-11-16T19:53:07Z'
+    depends_on: [t-037, t-051]
     passes: 0
     stakes: reversible
     note: |-
@@ -1058,6 +1058,14 @@ tasks:
       evolution-review.md. All six crews plus Mercenaries now have their editorial pass.
       Remaining: constructed balance (the dead two-slot cards are tracked in t-051), art and
       fun acceptance. Back to ready.
+
+      2026-11-16 PT: Constructed checkpoint on kind_robots main c843ad9: 3,120 bouts, PASS.
+      Crews 44.3-55.7%, first seat 51%. Every never-played or low-selection card costs two
+      slots, which is t-051's redesign scope. Ironjaw/fighters is the top deck at 82.7% from
+      extra one-slot fighters, consistent with fighters-first; no nerf. See projects/slime-
+      city/CLASH-CONSTRUCTED-CHECKPOINT-2026-11-16.md. Now waits on t-051. Art is tracked in
+      t-044, t-052, t-053 and t-054; the fun verdict is outside the roadmap. After t-051
+      merges, rerun test:slime-city-clash-constructed.
     owner: worker
     claimed_by: 2026-11-16T1946Z-t041-constructed
     claimed_at: '2026-11-16T19:47:34Z'
