@@ -610,8 +610,8 @@ tasks:
   - id: t-032
     milestone: m3
     title: 'Land, review and link the art round 13 re-renders and round 14 tone-ladder renders'
-    status: ready
-    updated: '2026-11-16T07:56:00Z'
+    status: claimed
+    updated: '2026-11-16T08:17:00Z'
     depends_on: t-015
     passes: 0
     stakes: reversible
@@ -683,6 +683,9 @@ tasks:
       Added true source-image Krea 2 editing through a Comfy VAEEncode graph on Kind Robots branch worker/shifting-desks-t-032-krea-img2img-p43, and a private three-subject correction pilot in Conductor branch worker/shifting-desks-t-032-krea-ledger-p43. The existing Krea 2 API silently ignored source images, so the pilot deliberately stays auto_submit false until the backend is shipped and deployed. Pending PR CI, merge and runtime capability verification. ArtJob 69431-69433 failures remain rejected, no new jobs or KEEP verdicts.
 
       Shipped source-image Krea 2 editing code in Kind Robots PR #5234, merged at 61737d7900cdb59136ea2508f709ec66a5329a32 after 16 successful CI checks and one skipped. Conductor Krea pilot request transport and three-source private ledger merged in PR #7469 (ec455b6f07157b379646b65ea8e24d81daed1561). Production container publication workflow 43826987299 was still running when checked, and Alexandria Unraid deployment is unverified. Keep private KREA-IMG2IMG-CORRECTION-PILOT-1.yaml auto_submit false until exact backend deployment verification. Original images 271721-271723 are available; there are no new Krea pilot ArtJob IDs or visual KEEP verdicts. Once deployed, activate the pilot and review every result before production linking. Fourteen Classic art REDOs and deployed browser QA remain open; this finite art task is not done and playtest handoff is blocked.
+    owner: worker
+    claimed_by: 20261116T081700Z-shifting-desks-t032-krea-activate-gpt6-e71c
+    claimed_at: '2026-11-16T08:17:00Z'
   - id: t-033
     milestone: m3
     title: 'Tone ladder: lower floors grow more Cronenbergian (rules and station art)'
