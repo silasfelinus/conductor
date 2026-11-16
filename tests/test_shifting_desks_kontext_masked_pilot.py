@@ -21,11 +21,11 @@ EXPECTED = {
 
 def test_masked_pilot_sources_are_real_krea_redos_and_private():
     data = yaml.safe_load(PATH.read_text(encoding="utf-8"))
-    assert is_auto_ledger(data)
-    assert data["auto_submit"] is True
+    assert not is_auto_ledger(data)
+    assert data["auto_submit"] is False
     assert data["is_public"] is False
     assert data["task"] == "t-032"
-    assert data["status"] == "queued-private-mask-guided-corrections"
+    assert data["status"] == "reviewed-2-keep-1-redo-private-not-linked"
     assert len(data["lanes"]) == 1
     lane = data["lanes"][0]
     assert lane["engine"] == "kontext"
@@ -33,6 +33,8 @@ def test_masked_pilot_sources_are_real_krea_redos_and_private():
     assert lane["guidance"] == 2.5
     subjects = data["subjects"]
     assert len(subjects) == len(EXPECTED) == 3
+    verdicts = {"rear-eyes": "KEEP", "living-doors": "KEEP", "three-arm-tank": "REDO"}
+    actual_jobs = {"rear-eyes": (69456, 273629), "living-doors": (69457, 273630), "three-arm-tank": (69458, 273631)}
     assert {s["key"] for s in subjects} == set(EXPECTED)
     for subject in subjects:
         image_id, job_id, box_count, size = EXPECTED[subject["key"]]
@@ -46,16 +48,14 @@ def test_masked_pilot_sources_are_real_krea_redos_and_private():
             0 <= box[0] < box[2] <= 1 and 0 <= box[1] < box[3] <= 1
             for box in subject["mask_box"]
         )
-        # Queued before submission; once the auto-ledger submits, the only
-        # lane is kontext-localized with real job ids and render statuses.
-        assert subject["jobs"] == {} or set(subject["jobs"]) == {"kontext-localized"}
-        if subject["jobs"]:
-            assert isinstance(subject["jobs"]["kontext-localized"], int)
-            art = subject["art"]["kontext-localized"]
-            assert art["status"] in {"PENDING", "RUNNING", "DONE", "FAILED"}
-            assert art["status"] != "DONE" or isinstance(art["art_image_id"], int)
-        else:
-            assert subject["art"] == {}
+        job_id, art_id = actual_jobs[subject["key"]]
+        assert subject["jobs"] == {"kontext-localized": job_id}
+        art = subject["art"]["kontext-localized"]
+        assert art["status"] == "DONE"
+        assert art["art_image_id"] == art_id
+        assert art["verdict"] == verdicts[subject["key"]]
+        assert art["evidence_artifact_id"] == 14213687064
+        assert "Visual inspection" in art["review_note"]
         assert "target_path" not in subject
         assert "entity_art" not in subject
         assert subject["pass"] and subject["fail"] and subject["prompt_prose"]

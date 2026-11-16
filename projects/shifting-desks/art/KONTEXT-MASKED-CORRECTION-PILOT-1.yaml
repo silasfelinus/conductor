@@ -2,17 +2,18 @@
 # Uses the existing Flux Kontext maskData route /api/comfy/kontext/enqueue.
 # Verified pixels in authenticated artifact 14210147265, 2026-11-16 PT.
 # White mask regions are generated from normalized boxes; black pixels stay.
-# Only produces review candidates. Never link or overwrite Classic target art.
+# Reviewed from artifact 14213687064: two KEEP (eyes, doors), one REDO (arm).
+# All source images remain private. No live Classic asset has been overwritten.
 round: shifting-desks-kontext-masked-pilot-1
 project_slug: shifting-desks
 task: t-032
 designer: Shifting Desks localized visual correction
-auto_submit: true
+auto_submit: false
 priority: 85
 is_public: false
 is_mature: false
 cast_loras: false
-status: queued-private-mask-guided-corrections
+status: reviewed-2-keep-1-redo-private-not-linked
 lanes:
 - key: kontext-localized
   label: Flux Kontext regional inpaint from private Krea source images
@@ -53,6 +54,10 @@ subjects:
     kontext-localized:
       status: DONE
       art_image_id: 273629
+      verdict: KEEP
+      review_note: >-
+        Visual inspection 2026-11-16 PT of original 832x1216: two fully open teal anatomical eyes, white sclera, pupil and lids unmistakably emerge from back of dark bob. Satisfies requested gag; keep as private accepted art, not yet linked to public Classic path.
+      evidence_artifact_id: 14213687064
 - key: living-doors
   title: Three ribbed fleshy door throats in an ordinary office corridor
   source_image_id: 273606
@@ -87,6 +92,10 @@ subjects:
     kontext-localized:
       status: DONE
       art_image_id: 273630
+      verdict: KEEP
+      review_note: >-
+        Visual inspection 2026-11-16 PT of original 1216x832: left center and right corridor openings have rounded swollen rose-pink overlapping accordion ribs, not conventional trim. Scene still recognizable. Keep as private accepted art, not yet linked to public Classic path.
+      evidence_artifact_id: 14213687064
 - key: three-arm-tank
   title: Distinct third torso-grown arm holding a bright orange pen
   source_image_id: 273607
@@ -114,3 +123,7 @@ subjects:
     kontext-localized:
       status: DONE
       art_image_id: 273631
+      verdict: REDO
+      review_note: >-
+        Visual inspection 2026-11-16 PT of original 832x1216: employee remains two-armed. Orange pen is in ordinary raised arm; distinct third torso-grown arm absent. Requires targeted SDXL regional inpaint.
+      evidence_artifact_id: 14213687064
