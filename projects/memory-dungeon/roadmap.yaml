@@ -670,11 +670,11 @@ tasks:
   - id: t-025
     milestone: m3
     title: "Author and build the other three Act I overworlds and dungeons"
-    status: review
+    status: ready
     owner: worker
     claimed_by: 2026-11-15T234608Z-memory-dungeon-t-025-f82c11
     claimed_at: '2026-11-15T23:46:08Z'
-    updated: '2026-11-15T23:50:00Z'
+    updated: '2026-11-16T00:53:03Z'
     depends_on: t-022
     passes: 0
     stakes: reversible
@@ -710,7 +710,12 @@ tasks:
       outcome state, tests, rendered choices and art.
 
       Authored exact dialogue, immediate responses, delayed callbacks, locked-choice reasons and ten adversarial state cases for the four existing e03/e04 Night Shift encounters. Documentation-only partial scope in Conductor PR; runtime integration, tests, art and map cells remain. Return ready after merge.
-    implementation_pr: 'silasfelinus/conductor#7453'
+
+      Reviewer 2026-11-15 PT: merged conductor#7459 (squash 51d64c2), docs-only Night Shift
+      dialogue beats. Earlier red was main's transient duplicate claim keys, cleared by a
+      branch update; all checks green on 5c6a297. Back to ready: map-cell binding, typed
+      outcome state, reducer/save tests, rendered choices and art remain.
+    implementation_pr: 'silasfelinus/conductor#7459'
   - id: t-026
     milestone: m3
     title: "Author and build Act II: Stories We Inherit"
