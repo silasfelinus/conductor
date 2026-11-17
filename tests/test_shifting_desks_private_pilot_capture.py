@@ -245,7 +245,9 @@ def test_v6_sdxl_targeted_pilot_has_rendered_source_and_mask():
     assert row["job"] == 69681
     assert row["image"] == 274183
     assert row["status"] == "DONE"
-    assert row["verdict"] is None
+    assert row["verdict"] == "REDO"
+    assert row["evidence_artifact_id"] == 14293774749
+    assert "two arms" in row["review_note"]
     assert row["source_image_id"] == 273631
     assert row["source_art_job_id"] == 69458
     assert row["mask_box"] == [[0.36, 0.58, 0.70, 0.80]]
