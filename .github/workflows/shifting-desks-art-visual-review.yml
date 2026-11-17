@@ -113,6 +113,22 @@ jobs:
           if-no-files-found: warn
           retention-days: 14
 
+      - name: Diagnose V7 private masked-VAE pixel changes once delivered
+        env:
+          KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+          KR_BASE_URL: https://kindrobots.org
+        run: |
+          python projects/shifting-desks/art/diagnose_targeted_edit.py \
+            --pilot-version 7 --out "$RUNNER_TEMP/shifting-desks-targeted-v7"
+      - name: Upload V7 private image-delta and feather-mask evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: shifting-desks-targeted-v7-diagnostic
+          path: ${{ runner.temp }}/shifting-desks-targeted-v7/
+          if-no-files-found: warn
+          retention-days: 14
+
       - name: Upload Classic and all V1-V7 private pilot review evidence
         if: always()
         uses: actions/upload-artifact@v4

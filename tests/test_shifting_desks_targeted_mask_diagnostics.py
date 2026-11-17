@@ -61,3 +61,50 @@ def test_crop_cannot_escape_source_frame():
     with pytest.raises(ValueError, match="bounds"):
         probe.metrics(source, changed, mask, mask,
                       {"x": 120, "y": 120, "width": 80, "height": 80})
+
+
+def test_fully_black_composite_is_reported_as_no_effective_edit_region():
+    source, changed, hard, crop = setup_case()
+    empty = Image.new("L", hard.size, 0)
+    report = probe.metrics(source, changed, hard, empty, crop)
+    assert report["mask_pixels"] == 1024
+    assert report["soft_mask_pixels"] == 0
+    assert report["soft_mask_fraction_of_hard"] == 0.0
+
+
+def test_soft_mask_reports_nonzero_editable_interior():
+    source, changed, hard, crop = setup_case()
+    report = probe.metrics(source, changed, hard, hard, crop)
+    assert report["mask_pixels"] == report["soft_mask_pixels"] == 1024
+    assert report["soft_mask_fraction_of_hard"] == 1.0
+
+
+def test_v7_pending_is_explicit_and_never_fetches_or_claims_done(tmp_path, monkeypatch):
+    import json
+    import sys
+    import yaml
+
+    ledger = {
+        "lanes": [{"key": "sdxl-masked-vae"}],
+        "subjects": [{
+            "key": "third-arm",
+            "source_image_id": 273631,
+            "jobs": {},
+            "art": {},
+        }],
+    }
+    (tmp_path / "SDXL-MASKED-VAE-CORRECTION-PILOT-2.yaml").write_text(
+        yaml.safe_dump(ledger), encoding="utf-8"
+    )
+    out = tmp_path / "evidence"
+    monkeypatch.setattr(probe, "ART", tmp_path)
+    monkeypatch.setattr(
+        sys, "argv",
+        ["diagnose_targeted_edit.py", "--out", str(out), "--pilot-version", "7"],
+    )
+    assert probe.main() == 0
+    data = json.loads((out / "diagnostic.json").read_text())
+    assert data["pilot_version"] == 7
+    assert data["status"] == "pending"
+    assert data["art_job_id"] is None
+    assert data["art_image_id"] is None
