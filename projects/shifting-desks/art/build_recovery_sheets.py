@@ -72,6 +72,7 @@ def pilot_rows(version=1):
         3: "SDXL-IMG2IMG-CORRECTION-PILOT-1.yaml",
         4: "KREA-IMG2IMG-CORRECTION-PILOT-1.yaml",
         5: "KONTEXT-MASKED-CORRECTION-PILOT-1.yaml",
+        6: "SDXL-TARGETED-CORRECTION-PILOT-1.yaml",
     }
     if version not in ledgers:
         raise ValueError("unsupported pilot version")
@@ -98,8 +99,12 @@ def pilot_rows(version=1):
                 "lane": key,
                 "source_image_id": subject.get("source_image_id"),
                 "source_art_job_id": subject.get("source_art_job_id"),
-                "denoise": subject.get("denoise"),
-                "mask_box": subject.get("mask_box"),
+                "denoise": subject.get("denoise", lane.get("denoise")),
+                "mask_box": subject.get("mask_box") or [
+                    t["box"] for t in subject.get("targets", [])
+                    if t.get("type") == "box"
+                ],
+                "target_regions": subject.get("targets"),
                 "checkpoint": lane.get("checkpoint"),
                 "asset": subject.get("asset"),
             }
@@ -158,13 +163,13 @@ def sheets(rows, directory, label):
 def pilot_capture_errors(pilots: dict[str, int]) -> list[str]:
     """A recorded DONE pilot needs actual readable image evidence, not just an ID."""
     errors = []
-    for version in (1, 2, 3, 4, 5):
+    for version in (1, 2, 3, 4, 5, 6):
         key = f"pilot_v{version}"
-        done = pilots[f"{key}_recorded_done"]
-        captured = pilots[f"{key}_captured"]
+        done = pilots.get(f"{key}_recorded_done", 0)
+        captured = pilots.get(f"{key}_captured", 0)
         if captured != done:
             errors.append(f"{key}: captured {captured}/{done} delivered ArtImages")
-        if pilots[f"{key}_done_missing_image"]:
+        if pilots.get(f"{key}_done_missing_image", 0):
             errors.append(f"{key}: DONE ArtJob missing an ArtImage ID")
     return errors
 
@@ -186,7 +191,7 @@ def main():
             "evidence": evidence, "fresh": fresh, "_image": img if fresh else None,
         })
     pilots = {}
-    for version in (1, 2, 3, 4, 5):
+    for version in (1, 2, 3, 4, 5, 6):
         private = []
         for row in pilot_rows(version):
             image, evidence = capture_pilot(row)
