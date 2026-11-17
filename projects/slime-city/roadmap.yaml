@@ -593,14 +593,20 @@ tasks:
       Nothing deploy-blocked remains. Only Silas's subjective visual acceptance of an evolved
       Clash fighter at phone/tablet/desktop is left; recommendation unchanged: accept and
       close.
-    updated: '2026-11-14T11:46:37Z'
+
+      Gate re-check 2026-11-17 PT (gate-triage, DEPLOY_PREREQ_MET): production serves
+      kind_robots d5898c8 (newer than #4986) and /play/slime-city returns 200, so no
+      deploy-blocked step remains. Recommendation (written 2026-11-11 PT) unchanged: accept
+      and close. Gate-triage adopts it under the 2026-09-30 default-recommendation rule if
+      Silas hasn't answered by 2026-11-18 PT.
+    updated: '2026-11-17T19:49:47Z'
     owner: worker
     claimed_by: 2026-11-11T150000Z-slime-city-t022-evo-wire-q7m2
     claimed_at: '2026-11-11T05:50:08Z'
     implementation_pr: 'silasfelinus/kind_robots#4986'
     gate_reason: subjective-acceptance
     soft_gate: true
-    gate_rechecked: '2026-11-14'
+    gate_rechecked: '2026-11-17'
   - id: t-023
     milestone: m2
     title: "TURF: a Go-style mode where every card is one token"
