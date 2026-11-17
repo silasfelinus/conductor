@@ -3230,5 +3230,21 @@ tasks:
 
     2026-11-16 PT: merged conductor#7501 as 94ea951; all checks green. Done.
   implementation_pr: 'silasfelinus/conductor#7501'
+- id: t-215
+  milestone: m1
+  title: 'Art sweeps should recognise a deliberate new-direction ledger (repaint/reskin of already-rendered assets) and not report it as duplicate submission'
+  status: ready
+  stakes: reversible
+  owner: null
+  passes: 0
+  depends_on: []
+  updated: '2026-11-17T03:05:00Z'
+  note: >-
+    Reviewer kaizen 2026-11-17 from conductor#7511 (deepheart/t-012 anthro style trial and held
+    94-subject repaint): the Worker had to explain in comments and the PR body that the new
+    ledgers deliberately re-render assets whose 168 earlier ArtJobs are DONE. Give art ledgers an
+    explicit opt-in marker (e.g. `supersedes_round:` naming the prior round) that the
+    duplicate/unrecorded-art checks honour, with a test that an unmarked re-submission of the
+    same asset is still flagged.
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
