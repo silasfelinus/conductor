@@ -610,8 +610,8 @@ tasks:
   - id: t-032
     milestone: m3
     title: 'Land, review and link the art round 13 re-renders and round 14 tone-ladder renders'
-    status: claimed
-    updated: '2026-11-17T02:28:59Z'
+    status: review
+    updated: '2026-11-17T02:30:14Z'
     depends_on: t-015
     passes: 0
     stakes: reversible
@@ -629,6 +629,8 @@ tasks:
       Implemented the Kind Robots SDXL targeted-inpainting API branch worker/shifting-desks-t-032-targeted-sdxl-inpaint-p7a4 with reusable multi-box/polygon normalized targets, per-target bleed and feather, full-frame/crop modes, exact original-pixel final Comfy composite, previewOnly mask responses, private durable ArtJobs, retry dedup and source/mask provenance. Added the DB-free regression contract to CI. Prepare PR and verify all exact-head checks. Do not mark source art accepted or submit private render jobs before this backend deploys.
 
       Kind Robots PR #5249 merged as b514d9973415129d33d99d45c4b67ccbba4590ad. Exact-head CI: 14 successful, 1 skipped, zero failed. New private authenticated /api/art/inpaint-targets route supports box/polygon regions, bleed, feather, crop/full-frame, pixel-locked SDXL compositing, mask previews and ArtJob provenance. Source code merged, Alexandria deployment not verified. Do not enqueue new targeted SDXL ArtJobs until deployed backend serves the merge. Then submit exactly three private, deduplicated corrections (rear eyes, living ribbed doorways, third arm), inspect full-size results, and link only accepted ArtImages. Fourteen Classic REDOs and agent QA still block playtest; keep canonical roadmap issue #4150 open.
+
+      Independent production evidence in Kind Robots Tzaddik run 44000603006: /api/version served 7edbe1d35c4b05bf20fc2ef033488512c87d82f0 at 2026-11-17T02:10:57Z, a verified descendant of SDXL targeted-inpainting backend merge b514d997. Activated only the already prepared third-arm private targeted pilot for the next durable ArtJob sweep; retained source ArtImage 273631, explicit mask, per-region bleed and feather, deduplication, no public asset link, and KEEP/REDO human/agent review gate. Existing rear-eyes and living-doors private KEEP images are not requeued. CI and PR review pending; t-032 and master issue #4150 remain open.
     owner: worker
     claimed_by: 20261117T022859Z-shifting-desks-t-032-gpt6-b9c2
     claimed_at: '2026-11-17T02:28:59Z'
