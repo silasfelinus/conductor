@@ -48,7 +48,7 @@ def test_pending_v2_jobs_cannot_be_passed_off_as_delivered(monkeypatch):
 
 def test_unknown_pilot_version_fails_closed():
     with pytest.raises(ValueError, match="unsupported"):
-        list(module.pilot_rows(7))
+        list(module.pilot_rows(8))
 
 
 def test_done_pilot_artimages_cannot_disappear_from_review_artifact():
