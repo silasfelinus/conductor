@@ -1797,6 +1797,11 @@ tasks:
     pageStore.describesPath(route) is true, so dedicated pages fall back to the site name instead of
     "Robots" or a stale content title; Build Bench and Shared with me set their own titles. Pinned
     by verifyFrontDoorPolish.test.ts.
+
+    2026-11-17 PT daily-delivery:2026-11-17/not-found-way-back | PR: silasfelinus/kind_robots#5279 |
+    The not-found panel said 'No Nuxt Content page was found for /x' with no exit. It now explains
+    the link may be old or mistyped and offers Play free games / Home / Support the mission buttons
+    on the shared kr-panel; test forbids the framework jargon.
   updated: '2026-10-14T05:36:12Z'
   implementation_pr: 'silasfelinus/kind_robots#2912'
   retry_context: ''
@@ -2359,6 +2364,11 @@ tasks:
     2026-11-16 PT daily-delivery:2026-11-16/phone-mission-line | PR: silasfelinus/kind_robots#5248 |
     Homepage malaria mission line truncated to 'Helping fund mosqui...' at 390px; it now wraps (no
     truncate), pinned by verifyFrontDoorPolish.test.ts.
+
+    2026-11-17 PT daily-delivery:2026-11-17/support-url-aliases | PR: silasfelinus/kind_robots#5279
+    | /support, /donate and /give (guessable support URLs) were soft 404s; they now 302 to /giving,
+    and /shop and /giftshop to /sanctuary. Contract test checks each target is a real channel tab,
+    content page or Vue page and that no alias shadows a real page.
   updated: '2026-10-14T07:51:00Z'
 
 - id: t-144
@@ -2373,6 +2383,12 @@ tasks:
     Scoped homepage gallery fix prepared on kind_robots branch worker/interface-vision-mobile-featured-scroll-20261026: moved the Crystal Street promotion, heading and category controls inside the featured panel's existing bounded scroll owner, switched phone featured cards to one column and preserved wider breakpoint layouts, with source regression checks. This is one slice of the broader gallery audit; return the umbrella task to ready after CI-green merge.
 
     Shipped one scoped visitor-home gallery reachability fix in silasfelinus/kind_robots#4249, merged SHA 762a98ea7f730e7a33445ec82f8611c2c1c3685e. Exact head 24e98df0b89f73461add6fa476ef7f6abd2c682a passed 21 of 21 completed GitHub check runs, including TypeScript, Navigation Consolidation, Layout Contract, Prettier and all four contract shards. Crystal Street promo, heading, filters and featured cards share one bounded scroll owner; phones show one wider card, tablets two, desktop three or four. Live deployment and responsive screenshot acceptance not yet verified. Resume the remaining gallery reachability audit under this task.
+
+    2026-11-17 PT daily-delivery:2026-11-17/front-door-live-probe | PR:
+    silasfelinus/kind_robots#5279 | New read-only utils/scripts/checkFrontDoorRoutesLive.mjs probes
+    10 hub/guessable URLs (/play, /projects, /home, /signup, ...) for a redirect to a loading hub
+    and a nonsense URL for HTTP 404. Production before deploy: 11/11 problems. /projects now reaches
+    /storybook, /home reaches /, /signup reaches /register. Re-run after deploy.
   updated: '2026-10-26T22:16:18Z'
 
 - id: t-145
@@ -2517,6 +2533,12 @@ tasks:
     visitors to /login, whose tab read "Robots" with no reason given. Login now sets 'Sign in to
     open <page> | Kind Robots' and a note naming the destination; verifyLoginDestination.test.ts in
     contract shard 4. Site-stats still too thin (10 views/7d) for drop-off ranking.
+
+    2026-11-17 PT daily-delivery:2026-11-17/honest-404-status | PR: silasfelinus/kind_robots#5279 |
+    Every unknown URL was a soft 404 (HTTP 200, title 'Kind Robots', indexable). The catch-all now
+    sets HTTP 404 during SSR, titles the tab 'Page not found | Kind Robots' and marks it noindex;
+    verifyFrontDoorRoutes.test.ts in contract shard 4. Drop-off ranking still waits on site-stats
+    volume.
   updated: '2026-11-15T09:14:15Z'
 
 - id: t-152

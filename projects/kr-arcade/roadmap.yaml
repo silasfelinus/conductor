@@ -2813,6 +2813,12 @@ tasks:
       redirect/auth wall, no console/page errors, no horizontal scroll). Production 2026-11-16: 22/22
       clean. Remaining: tap-to-start sound assertion, touch-control visibility and hall back-link
       check in a fixture-backed CI contract.
+
+      2026-11-17 PT daily-delivery:2026-11-17/play-hub-redirect | PR: silasfelinus/kind_robots#5279
+      | kindrobots.org/play and /games (the URLs a visitor types for the games hub) answered HTTP
+      200 with 'No Nuxt Content page was found for /play'; both now 302 to /play/arcade via
+      FRONT_DOOR_ALIASES, pinned by verifyFrontDoorRoutes.test.ts. Remaining t-169 work unchanged
+      (tap-to-start sound, touch controls, hall back-link contract).
   - id: t-170
     milestone: m11
     title: "Share my score: the game-over screen offers a one-tap share with the score and the cabinet link"
