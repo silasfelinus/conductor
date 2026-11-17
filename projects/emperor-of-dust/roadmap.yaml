@@ -116,12 +116,12 @@ tasks:
       These 100 anchors are outlines, not implemented daily script records.
   - id: t-063
     title: 'Export and wire the ~430 rendered Emperor images that never reached the game'
-    status: ready
+    status: claimed
     milestone: m5
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-13T22:06:08+00:00'
+    updated: '2026-11-17T06:58:38Z'
     note: |-
       Silas 2026-11-11 PT, in session: "If there is unmade art it should definitely be added to the pipeline."
 
@@ -134,6 +134,9 @@ tasks:
       PR #5109 adds real-file integrity checks for every one of the 135 chance scenes and both choices, plus exported dedicated art manifest validation. The ~430-image delivery scope remains incomplete. Await exact-head CI and merge; do not mark ready for playtest.
 
       2026-11-13 PT: merged kind_robots#5120 (e21a2dc, 12/12 checks green), a rescue of #5109. It adds real-file integrity checks for all 135 chance scenes and both choices, plus exported-plate manifest validation. #5109 sat red for 16h on one double-escaped regex (line 113), which failed TypeScript, Prettier and the dispatch contract. The ~430-image export and delivery scope is still incomplete; next claimer continues the exports.
+    owner: reviewer
+    claimed_by: 2026-11-17T065837Z-eod-t063-q75wjq
+    claimed_at: '2026-11-17T06:58:38Z'
   - id: t-064
     title: 'Painted ending plates and a persistent Endings gallery / reign scrapbook'
     status: ready
