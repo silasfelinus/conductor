@@ -1,0 +1,41 @@
+# Ironjaw lizard people, redo round 4 (2026-11-17 PT, slime-city/t-054). A manifest sweep for Ironjaw slots still
+# wired to pre-rebrand image ids (< 267360) found SLIME_CITY_ART.cards['s2-ironjaw-foundry-lion'] = 261426, whose
+# contact-sheet review shows a green ogre in a hard hat riding the crane lion. Its three board tokens
+# (263562-263564) are rider-free mechanical lion faces and stay; lockjaw 261429, forklift-chock 261492 and
+# slag-spill 261493 show only boots and a suited manager, no ogres, and stay. The repaint keeps the L2/L3 ladder's
+# rider (a slate-grey gecko bookkeeper) so the card and its evolutions read as one character. Fresh seed, positive
+# wording only. A keeper replaces 261426 at the cards slot. auto_submit.
+round: slime-city-ironjaw-lizards-redo-4
+project_slug: slime-city
+designer: Slime City Ironjaw lizard people, redo 4
+is_public: true
+is_mature: false
+cast_loras: false
+priority: 1000
+auto_submit: true
+lanes:
+- key: krea2-card
+  label: Krea 2 Slime City illustrated collectible cards
+  engine: krea2
+  prompt: prose
+  suffix: Western adult-animation gouache painting, mature playful postapocalyptic fantasy, crisp thick black ink
+    contours, vibrant high-contrast gouache shading, grounded expressive poses, expressive acting and distinctive
+    costumes, saturated colored rim-lighting, one continuous full-bleed vertical scene, every surface bare and unmarked.
+subjects:
+- key: slime-r20-card-s2-ironjaw-foundry-lion-lizard-redo4
+  lane: krea2-card
+  entity: card-art
+  title: Foundry Lion
+  asset: slime-city/cards/s2-ironjaw-foundry-lion
+  size: 832x1216
+  seed: 1197500
+  prompt_prose: 'Foundry Lion, a hulking mechanical lion welded together from a yellow construction crane, its mane
+    a fan of hooked steel cables and pulley wheels, roaring through a riveted chrome jaw, its tail a swinging crane
+    hook. In the saddle rides a small slate-grey gecko bookkeeper with a long curling tail, wide slit-pupil reptile
+    eyes, a dented yellow hard hat, sleeve garters and a fat coin purse on his belt, an escaped bio-lab mutant lizard
+    with pebbled scales and a plain steel specimen tag clipped to one ear-hole. Low-angle shot on a rusty steel
+    girder bridge: the lion shoulders through a pile of scrap crates, sending them tumbling, while the gecko clutches
+    the reins with one claw and counts coins with the other. Smokestacks and a crane skyline behind, molten-orange
+    furnace glow under a hazy blue sky.'
+  replaces_art_image_id: 261426
+  redo_reason: green ogre rider in a hard hat (pre-rebrand card art)
