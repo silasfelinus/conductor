@@ -604,6 +604,9 @@ def build_targeted_request(ledger, lane, subject, source_image):
         "engine": "sdxl",
         "imageData": source_image,
         "prompt": compose_prompt(lane, subject),
+        "inpaintEncoding": subject.get(
+            "inpaint_encoding", lane.get("inpaint_encoding", "source-preserving")
+        ),
         "targets": targets,
         "mode": subject.get("mode", lane.get("mode", "crop")),
         "bleedPx": subject.get("bleed_px", lane.get("bleed_px", 12)),
