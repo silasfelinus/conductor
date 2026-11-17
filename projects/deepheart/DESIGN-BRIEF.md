@@ -194,13 +194,21 @@ a successful or failed final audience has actually happened.
 ### Scrapbook as a relationship flowchart
 
 The Deepheart Scrapbook has **Court Connections** and **Lived Moments** tabs.
-The former is a genuine node-and-edge flowchart for all six rulers, with
+The former is a genuine node-and-edge flowchart for all twelve rulers, with
 thirty-two typed connections: kinship, affairs, former lovers, annulments, grudges,
 schemes and revenge. Unknown nobles are concealed and unknown links are
 unlabelled; actually meeting, investigating, and resolving a final audience
 unlocks names and relationship explanations. Clicking a known node filters its
 connection captions and dossiers. This is a story graph, not a decorative
 family-tree picture.
+
+A final audience also unlocks the patron's immortality secret, explaining
+the unique loophole that returns them from physical destruction. The
+visual direction's exception is deliberate: **human faces for gods, animal
+anatomy for everyone mortal**. These new divine designs remain authored
+briefs until the private model comparison establishes a consistent cartoon
+finish; do not flood the render queue with a fresh batch of human-looking
+villagers or unapproved canon art.
 
 The private art bible may display spoiler-rich visual design prompts, while
 the public scrapbook only reveals what the individual save has earned.
