@@ -379,3 +379,30 @@ def test_producer_enforces_privacy_before_any_render_and_before_reporting_comple
     last = body.rindex("ensure_private(client, video_id)")
     assert first != last
     assert body.index("client.upload_final(") < last < body.index("Completed private film")
+
+
+def test_relative_episode_path_is_resolved_before_production(monkeypatch, tmp_path):
+    """2026-11-17: `--episode projects/dead-air/...` crashed in record()'s relative_to(ROOT)."""
+    import dead_air_produce
+    seen = {}
+    monkeypatch.chdir(ROOT)
+    monkeypatch.setattr(dead_air_produce, "run_episode",
+                        lambda e, path, *a: seen.setdefault("path", path) and 0)
+    state = tmp_path / "state.json"
+    rel = PILOT.relative_to(ROOT)
+    dead_air_produce.main(["--episode", str(rel), "--video-id", "1", "--resume",
+                           "--state-file", str(state)])
+    assert seen["path"].is_absolute()
+    assert seen["path"].relative_to(ROOT) == rel
+
+
+def test_reveal_motif_is_not_painted_into_every_shot():
+    """MV20 and MV22 spent their reveals in s1 because the motif sat in visual_style,
+    which is appended to every still prompt. Unrendered briefs whose reveal is the jaguar
+    must name it only in the shots that reveal it."""
+    for path in sorted((ROOT / "projects/dead-air/episodes").glob("*.yaml")):
+        e = load_episode(path)
+        if e.get("status") != "authored" or e["date"] < "2026-11-17":
+            continue
+        if "jaguar" in e["reveal"].lower():
+            assert "jaguar" not in e["visual_style"].lower(), path.name
