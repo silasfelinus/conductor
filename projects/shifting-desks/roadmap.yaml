@@ -610,8 +610,8 @@ tasks:
   - id: t-032
     milestone: m3
     title: 'Land, review and link the art round 13 re-renders and round 14 tone-ladder renders'
-    status: ready
-    updated: '2026-11-17T04:41:25Z'
+    status: claimed
+    updated: '2026-11-17T05:46:01Z'
     depends_on: t-015
     passes: 0
     stakes: reversible
@@ -641,6 +641,9 @@ tasks:
       Investigating near-no-op private ArtImage 274183 without submitting a duplicate: one scoped Conductor PR adds exact-source previewOnly hard/soft mask validation, inside/outside target pixel-difference measurements, and an evidence artifact with tests. t-032 remains unfinished until actual Classic art and production-link verification.
 
       2026-11-16 PT continuation: Conductor #7517 merged green (35a49bb) with authenticated mask/pixel diagnostic; V6 ArtImage 274183 remains private REDO, 95,908 hard-mask pixels but only 0.001 percent of them significantly changed. Kind Robots #5271 merged after all nine completed green workflows (6c897c72): opt-in masked-source VAE backend, default behavior unchanged. Conductor #7518 merged green (311c5aa): V7 two-region/pen relocation trial staged with auto_submit false, zero jobs. Publish Production Container workflow 44018824100 was in progress on merge, NOT proof of Alexandria live deploy. Next: verify production serves backend commit 6c897c72 and previewOnly echoes masked-vae; then enable exactly one private V7 render, inspect real pixels and continue 14 Classic REDO deliveries. Do not close t-032 or master issue #4150 yet.
+    owner: worker
+    claimed_by: 20261117T054601Z-shifting-desks-t032-v7-a94e
+    claimed_at: '2026-11-17T05:46:01Z'
   - id: t-033
     milestone: m3
     title: 'Tone ladder: lower floors grow more Cronenbergian (rules and station art)'
