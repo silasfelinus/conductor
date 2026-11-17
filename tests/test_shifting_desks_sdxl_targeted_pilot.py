@@ -25,9 +25,14 @@ def test_only_rejected_third_arm_awaits_strict_pixel_targeting():
     }
     assert not is_auto_ledger(prior)
     data = yaml.safe_load(TARGET.read_text(encoding="utf-8"))
-    assert not is_auto_ledger(data)
-    assert data["auto_submit"] is False
-    assert data["status"] == "staged-awaiting-targeted-sdxl-deployment"
+    assert is_auto_ledger(data)
+    assert data["auto_submit"] is True
+    assert data["status"] == "ready-for-private-submission"
+    verification = data["deployment_verification"]
+    assert verification["live_commit"] == "7edbe1d35c4b05bf20fc2ef033488512c87d82f0"
+    assert verification["backend_merge_commit"] == "b514d9973415129d33d99d45c4b67ccbba4590ad"
+    assert verification["workflow_run_id"] == 44000603006
+    assert verification["workflow_job_id"] == 133763393689
     assert data["is_public"] is False
     assert len(data["subjects"]) == len(data["lanes"]) == 1
     subject, lane = data["subjects"][0], data["lanes"][0]
