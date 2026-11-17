@@ -26,9 +26,9 @@ kind_robots#5256.
 
 ## 4. Cast
 
-- **Followers:** 50 presets across 15 roles and many ancestries. Any of them can lead. 42 are romanceable (mutual attraction required), 6 are aromantic and swear oaths instead, Quillon and Ambrose are married, and Brannoc and Thessaly are a poly couple courted together.
+- **Followers:** 50 anthropomorphic presets across 15 roles, with species limited to the visual art specification. Any of them can lead. 42 are romanceable (mutual attraction required), 6 are aromantic and swear oaths instead, Quillon and Ambrose are married, and Brannoc and Thessaly are a poly couple courted together.
 - **Principal villain:** the Hollow King, the first delver, who took the heart and was taken by it. Reveal `king-name`, endings Redemption and Delver.
-- **Other villains:** the Bone Warden, Mother Brine and Vesper the Lich. **Figures:** Ottoline the Undermerchant, Snag the goblin, Maren of the Weeping Door.
+- **Other villains:** the Bone Warden, Mother Brine and Vesper the Lich. **Figures:** Ottoline the Undermerchant, Snag, Maren of the Weeping Door.
 - **Romance:** optional and player-chosen, built at campfires; hidden when the romance setting is off.
 
 ## 5. Factions, reveals and endings
