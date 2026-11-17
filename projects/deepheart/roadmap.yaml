@@ -154,7 +154,7 @@ tasks:
   - id: t-011
     milestone: m4
     title: "Art ledger: queue every brief auto_submit"
-    status: review
+    status: done
     passes: 0
     stakes: reversible
     note: |-
@@ -168,14 +168,15 @@ tasks:
       Deepheart foundation merged as Kind Robots #5257. The 139-item written art backlog exists, but t-011 remains unfinished: 3 faction emblems, 6 room plates and 20 achievement badges still need submission; queue completion cannot be inferred from prompt files.
 
       Authored 29 remaining Deepheart asset prompts in worker/deepheart-t-011-missing-art-6b4278fa: 3 factions, 6 room plates and 20 achievements, sourced from the live Kind Robots catalog and art spec. The idempotent auto_submit queue will run after a green merge; review status pending verification of accepted ArtJob IDs.
-    updated: '2026-11-16T23:29:00Z'
-    owner: worker
+
+      Merged Conductor #7505 as fae31db; Auto Art Generate 43983771297 successfully submitted and checkpointed 29 unique Deepheart ArtJobs 69628-69656 in projects/deepheart/art/MISSING-ASSETS-2026-11-16.yaml (3 emblems, 6 rooms, 20 achievements). Previously queued original 139 jobs 69460-69598 are all DONE with ArtImage IDs. No duplicates. Submission is complete; t-012 now owns rendered media URL verification and wiring, including association of the badge ArtImages with live Achievement records.
+    updated: '2026-11-17T00:05:10Z'
     claimed_by: 2026-11-16T232300Z-deepheart-t-011-6b4278fa
     claimed_at: '2026-11-16T23:23:00Z'
   - id: t-012
     milestone: m4
     title: "Every picture rendered, delivered, URL-verified and wired (set src / RENDERED_ART)"
-    status: waiting
+    status: ready
     depends_on: t-011
     owner: null
     passes: 0
