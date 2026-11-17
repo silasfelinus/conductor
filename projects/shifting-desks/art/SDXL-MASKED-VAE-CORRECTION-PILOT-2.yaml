@@ -45,32 +45,34 @@ subjects:
   seed: 932822
   targets:
   - type: box
-    box: [0.18, 0.25, 0.42, 0.50]
+    box:
+    - 0.18
+    - 0.25
+    - 0.42
+    - 0.5
     bleedPx: 16
     featherPx: 10
   - type: box
-    box: [0.34, 0.53, 0.72, 0.78]
+    box:
+    - 0.34
+    - 0.53
+    - 0.72
+    - 0.78
     bleedPx: 16
     featherPx: 10
   asset: shifting-desks/private-masked-vae-pilot-2/third-arm
-  pass: >-
-    Exactly one clerk inside one glass tank has three separately attached complete arms and three hands.
-    His ordinary left arm is raised with an empty hand. His ordinary right arm is lowered.
-    A clearly connected new torso-grown third arm bends through a shoulder, elbow and wrist;
-    only the new third hand visibly holds the bright orange pen.
-  fail: >-
-    Only two arms; extra detached hand, hidden joint or inconsistent limb count;
-    orange pen left in the raised original hand; second tank or repeated clerk;
-    materially unchanged in the edited region.
-  prompt_prose: >-
-    Mid-century corporate safety-illustration gouache, stylized painted shapes, tasteful halftone.
-    One cheerful white-shirted male office clerk floats in one upright transparent
-    green laboratory tank. His original left arm remains raised with an empty open hand.
-    His original right arm hangs low. A brand-new third complete human arm sprouts
-    visibly from the right middle of his white shirt, crosses his chest diagonally,
-    and ends in a third five-fingered hand grasping the one bright orange ballpoint
-    pen. The new arm has its own clearly separate shoulder, elbow, forearm and wrist.
-    Exactly three full arms attach to the same cheerful clerk, exactly three hands.
-    Cream, green, blue-gray and orange flat painted colors, coherent anatomical silhouettes.
+  pass: Exactly one clerk inside one glass tank has three separately attached complete arms and three hands. His
+    ordinary left arm is raised with an empty hand. His ordinary right arm is lowered. A clearly connected new torso-grown
+    third arm bends through a shoulder, elbow and wrist; only the new third hand visibly holds the bright orange
+    pen.
+  fail: Only two arms; extra detached hand, hidden joint or inconsistent limb count; orange pen left in the raised
+    original hand; second tank or repeated clerk; materially unchanged in the edited region.
+  prompt_prose: Mid-century corporate safety-illustration gouache, stylized painted shapes, tasteful halftone. One
+    cheerful white-shirted male office clerk floats in one upright transparent green laboratory tank. His original
+    left arm remains raised with an empty open hand. His original right arm hangs low. A brand-new third complete
+    human arm sprouts visibly from the right middle of his white shirt, crosses his chest diagonally, and ends in
+    a third five-fingered hand grasping the one bright orange ballpoint pen. The new arm has its own clearly separate
+    shoulder, elbow, forearm and wrist. Exactly three full arms attach to the same cheerful clerk, exactly three
+    hands. Cream, green, blue-gray and orange flat painted colors, coherent anatomical silhouettes.
   jobs: {}
   art: {}
