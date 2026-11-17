@@ -128,3 +128,6 @@ jobs:
           path: ${{ runner.temp }}/shifting-desks-art-review/
           if-no-files-found: error
           retention-days: 7
+      # Preserve the full visual evidence bundle even if queue integrity is broken.
+      - name: Fail review if Classic request queue is missing or duplicated
+        run: python projects/shifting-desks/art/check_request_queue.py --strict

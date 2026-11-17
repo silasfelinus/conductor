@@ -76,6 +76,7 @@ def main() -> int:
     ap.add_argument("--queue", type=Path, default=QUEUE)
     ap.add_argument("--art-dir", type=Path, default=ART)
     ap.add_argument("--out", type=Path)
+    ap.add_argument("--strict", action="store_true", help="exit non-zero for missing or duplicated Classic requests")
     args = ap.parse_args()
     data = outstanding(args.art_dir, args.queue)
     result = json.dumps(data, indent=2)
@@ -85,7 +86,7 @@ def main() -> int:
     print(f"Shifting Desks classic queue: {data['outstanding']} latest unmet, "
           f"{data['queued']} queued, {data['missing_from_queue']} missing, "
           f"{len(data['duplicates'])} duplicate IDs; statuses {data['status_counts']}")
-    return 0
+    return 1 if args.strict and (data["missing_from_queue"] or data["duplicates"]) else 0
 
 
 if __name__ == "__main__":
