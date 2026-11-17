@@ -1098,7 +1098,7 @@ tasks:
   - id: t-044
     milestone: m2
     title: "Lizard art: Ironjaw crew poster, card art, evolutions and board tokens"
-    status: claimed
+    status: ready
     depends_on: t-043
     passes: 0
     stakes: reversible
@@ -1156,8 +1156,19 @@ tasks:
       campaign.ts text. Released claim. NEXT: once the sweep writes art_image_ids, curate
       story round 1 on a contact sheet and replace the ogre-era ids in artManifest.ts story;
       then check ironjaw/hit|gloat|beaten boss portraits. Rung 1; not a human gate.
-    updated: '2026-11-17T05:47:55Z'
-    implementation_pr: 'silasfelinus/kind_robots#5265'
+
+      2026-11-17 PT: authenticated fetch + contact sheets of all 23 IRONJAW-LIZARDS-STORY-
+      ROUND-1 plates. kind_robots#5272 wires 19 keepers over their ogre-era ids in
+      SLIME_CITY_ART.story (opening, 1/cunning, 1/defeat, 2/scene, 2/defeat, all of ch3-5,
+      both endings) with storyRounds verdicts + a contract test. Rejected 4: 1/scene 274143
+      (lettered sign, human guards), 1/conviction 274144 (human strike ring), 2/conviction
+      274148 and 2/cunning 274149 (clock numerals, toad-like workers). Queued IRONJAW-LIZARDS-
+      STORY-REDO-1.yaml (4 subjects, seeds 1197300-1197303, hands-only clock dial, lizard-only
+      figures; live prompt contract 4/4, auto_submit). Released claim. NEXT: curate story redo
+      1 and wire keepers; then check ironjaw/hit|gloat|beaten boss portraits. Rung 1; not a
+      human gate.
+    updated: '2026-11-17T05:54:28Z'
+    implementation_pr: 'silasfelinus/kind_robots#5272'
     owner: worker
     claimed_by: 2026-11-17T05:47:54Z-r9hy7cz
     claimed_at: '2026-11-17T05:47:55Z'
