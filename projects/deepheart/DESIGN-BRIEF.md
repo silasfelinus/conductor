@@ -51,3 +51,11 @@ kind_robots#5256.
 - Agent-owned: everything on the roadmap through t-013, including rendered art and 390 / 768 / 1440 px checks.
 - Graduation (t-014): playtest at normal priority; the hub issue is flagged and closed.
 - Silas: human playtest verdict, then any public `/play` release (publish gate).
+
+## Visual canon: anthro Deepheart (Silas, 2026-11-16 PT)
+
+- Living characters belong to an **anthropomorphic animal-person fantasy**, with a Zuzu-family animation sensibility but original designs. Every preset has one explicit visual species, silhouette, coloration, size, costume and role in Kind Robots `utils/deepheart/anthro.ts`. Species appear **only in art prompts**, never titles, biographies, UI labels or dialogue. Introduce someone as “Jeffery the Rogue,” never “Jeffery the Raccoon.”
+- Preserve all fifty playable identities, IDs, gender diversity, romance/oath preferences, relationships, abilities and saves. The cast spans men, women and nonbinary people, ages, body sizes, mobility and silhouettes, mammals, birds, reptiles, insects and amphibians. Animal design must not imply character, culture, or combat balance.
+- The builder starts on the Hero tab; all fifty presets can lead or be selected as companions. Maintain an art-led, single-screen console with bounded scrolling.
+- The earlier 139 kit images and 29 supplemental images remain traceable, but their human/fantasy-humanoid renderings do not establish final anthro visual acceptance. The new 94-subject private auto-submit ledger repaints 50 playable portraits, 41 romance moments and 3 supporting figures. Undead and elemental bosses remain monstrous; all remaining scenes/endings require anthro consistency before final delivery.
+- Queued is not rendered or attached: verify accepted ArtJobs, ArtImages, canonical files and working URLs before marking t-012 complete. Do not confuse submission with delivery.
