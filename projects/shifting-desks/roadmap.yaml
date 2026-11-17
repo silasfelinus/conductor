@@ -610,8 +610,8 @@ tasks:
   - id: t-032
     milestone: m3
     title: 'Land, review and link the art round 13 re-renders and round 14 tone-ladder renders'
-    status: review
-    updated: '2026-11-17T02:56:04Z'
+    status: ready
+    updated: '2026-11-17T03:54:42+00:00'
     depends_on: t-015
     passes: 0
     stakes: reversible
@@ -635,9 +635,8 @@ tasks:
       Production-gated private SDXL third-arm correction was activated in merged Conductor PR #7512, squash 7c37462baf449ce2df3b1078f9ac22bc11c5d92a, after all exact-head CI checks passed. Auto Art Generate workflow 44004142755 launched on that merge and reached the opted-in art-ledger submission sweep. It is still running at this checkpoint; the ArtJob ID, ArtImage delivery and pixel KEEP/REDO verdict are NOT yet verified. Follow the committed ledger subject three-arm-tank / sdxl-targeted-local, then inspect actual full-resolution output and transfer only approved art. The 14 Classic redo scenes, t-041 and cross-device QA remain blockers.
 
       Rendered private SDXL pilot ArtJob 69681 has ArtImage 274183. The current visual-review workflow omitted pilot V6, so a scoped Conductor PR adds authenticated full-image V6 capture, provenance and fail-closed regression tests before any KEEP/REDO decision. No automatic publishing or Classic asset replacement.
-    owner: worker
-    claimed_by: 20261117T025408Z-shifting-desks-t032-v6f4
-    claimed_at: '2026-11-17T02:54:08Z'
+
+      Reviewer merged Conductor PR #7513 (squash 2003300, exact head d94f0fe, all 25 checks green or skipped): V6 authenticated capture plus REDO verdict for SDXL targeted ArtJob 69681 / ArtImage 274183 (clerk still two-armed, ~1.29/255 mean diff from source). Checkpoint only; master art task stays open. Released claim. Next cycle: diagnose why the targeted SDXL composite barely diverges from source (mask/latent/denoise) before spending another ArtJob; kaizen t-058.
   - id: t-033
     milestone: m3
     title: 'Tone ladder: lower floors grow more Cronenbergian (rules and station art)'
