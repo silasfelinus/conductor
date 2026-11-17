@@ -1162,8 +1162,8 @@ tasks:
   - id: t-045
     milestone: m4
     title: "Ecotone: optional time with every companion, and a chosen-family (polycule) utopia ending"
-    status: needs-human
-    updated: '2026-11-17T18:48:29Z'
+    status: done
+    updated: '2026-11-17T19:46:29Z'
     approved_by_human: true
     passes: 0
     stakes: reversible
@@ -1276,11 +1276,20 @@ tasks:
       SILAS: answer either question to return t-045 to ready. Recommendation stands and is
       adopted by gate-triage 2026-11-24 PT if unanswered: keep The Long Table as a derived
       coda, keep 'follow' resetting the party, then close t-045 done.
+
+      2026-11-17 PT gate-triage (APPROVED_PARKED, third pass): the approved sketch is fully
+      delivered. (1) Hangouts with every met guide plus bond counts and tiers:
+      #4017/#4741-#4744/#4814. (2) 'together' at the crossroads grows the crew to 3-4 guides:
+      #4014/#4740. (3) Group ending lines: 5 crews x 7 lenses x 2 fates in #5284, plus the
+      Long Table coda. Existing saves and endings stay intact, with seeded tests. Closed as
+      done to end the ready/needs-human loop. The two later questions (a Long Table ledger
+      slot; bring-along beyond the crossroads) go beyond the approved scope, so they moved to
+      their own gated task, t-075, which keeps the recommendation and the 2026-11-24 PT
+      adoption date. Art stays with t-042.
     owner: worker
     claimed_by: null
     claimed_at: null
     implementation_pr: 'silasfelinus/kind_robots#5284'
-    gate_reason: creative-approval
   - id: t-046
     milestone: m2
     title: "Second draft I: make high-leverage regional decisions genuinely distinct"
@@ -1725,5 +1734,34 @@ tasks:
       Kaizen from the t-024 reconciliation review (PR #7143): t-023's note text describes the three-lens opening journeys, which belong to t-024.
 
       Full history: projects/weird-humboldt/HISTORY.md#t-071
+    claimed_by: null
+    claimed_at: null
+  - id: t-075
+    milestone: m4
+    title: "Ecotone design call: Long Table ledger slot and bring-along beyond the crossroads"
+    status: needs-human
+    gate_human: true
+    gate_reason: creative-approval
+    gate_rechecked: '2026-11-17'
+    depends_on: []
+    owner: worker
+    passes: 0
+    stakes: reversible
+    updated: '2026-11-17T20:00:00Z'
+    note: |-
+      Split from t-045 (closed done 2026-11-17 PT; its approved sketch is delivered). These two
+      questions came up after the approval and are new creative scope, not covered by it.
+      FOR SILAS: (1) Should The Long Table chosen-family ending get its own collectible
+      ledger/gallery slot? That means a new ending ID, changes to save/ledger counts, and
+      t-042-style art in 4 styles. Or should it stay a derived coda above the normal ending?
+      (2) Bring-along beyond the crossroads: today 'follow' resets the travel party, and
+      verifyEcotoneHangouts.test.ts asserts that following does not create a group scene.
+      Should following a newcomer keep the current crew, or offer a later chance to re-invite
+      a guide left behind?
+      RECOMMENDATION (ADOPT under the 2026-09-30 default-recommendation rule if unanswered by
+      2026-11-24 PT): keep The Long Table as a derived coda with no new ledger ID, and keep
+      'follow' resetting the party ('together' already grows crews to 3-4). If adopted, close
+      this as done with no code change. If Silas picks otherwise, set the task to ready and
+      scope the chosen change in kind_robots.
     claimed_by: null
     claimed_at: null
