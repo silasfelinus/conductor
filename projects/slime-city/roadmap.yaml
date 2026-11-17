@@ -1338,7 +1338,7 @@ tasks:
   - id: t-053
     milestone: m2
     title: 'Meat Exchange reskin: Lovecraftian, dark, occult and weird (names, flavor, art)'
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
     note: |-
@@ -1397,11 +1397,18 @@ tasks:
       seeds 1297100-1297103, settings moved to bare stone tunnels/cisterns with positive
       wording only, no negation nouns; live prompt contract pass, auto_submit). NEXT: curate
       redo 2 once art_image_ids land. Not a human gate.
-    updated: '2026-11-17T01:59:00Z'
+
+      2026-11-17 PT: authenticated fetch (4/4 bytes OK) and full-size review of EXCHANGE-
+      OCCULT-REDO-2 (274060-274063): all lettering-free, adult, no pointed hoods.
+      kind_robots#5267 merged (squash 55ab130, all checks green) wires all 4 into
+      artManifest.ts and records redo round 2 in exchangeOccultArtIntake.json; the intake test
+      now chains redo rounds. Every Exchange card and evolution slot now carries curated
+      occult art, and names/flavor landed earlier (#5027, #5015): task done.
+    updated: '2026-11-17T02:13:41Z'
     owner: worker
     claimed_at: '2026-11-17T01:59:00Z'
     claimed_by: 2026-11-17T020500Z-occredo2
-    implementation_pr: 'silasfelinus/kind_robots#5263'
+    implementation_pr: 'silasfelinus/kind_robots#5267'
   - id: t-054
     milestone: m2
     title: 'Ironjaw follow-through: lab-mutant identity in story, evolutions and remaining art'
