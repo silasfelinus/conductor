@@ -180,3 +180,11 @@ Conductor#6110's unchanged reviewed head merged in another session at `2026-10-1
 **Improve:** the ~1.29/255 near-no-op was only found by hand. Measure it in code before the next targeted spend (t-058). Diagnose mask/latent/denoise before resubmitting; don't rerun the same prompt/seed.
 
 **Kaizen task:** shifting-desks/t-058, an in-mask difference metric for sdxl-targeted captures.
+
+## 2026-11-16 PT | Reviewer | shifting-desks/t-032 | Conductor #7523 + kind_robots#5273 (audit)
+
+**Decision:** audited after the Worker self-merged both (conductor #7523, kind_robots#5273 squash `65cca70`). Both scoped and reversible. #5273 has the right root cause: Sharp `.blur().raw()` promotes a 1-channel mask to RGB, so a 1-byte/pixel loop read it as black. Re-applying `.greyscale()` after the blur fixes it, and the new `soft.some(>=128)` guard fails before an ArtJob is created. #7523's V7 diagnostic writes an explicit `pending` record instead of guessing; 8/8 diagnostic tests passed locally on the head.
+
+**Observed:** good kaizen from the Worker. `soft <= hard` alone is always satisfied by a black mask, so the new positive-interior and channel-count assertions are what make the test meaningful. Small gap: the V7 path reports `status: pending` for a FAILED ArtJob too. Harmless now, but a failed V7 would look like it was still waiting.
+
+**Improve:** have the diagnostic name FAILED distinctly from pending once V7 lands, so the dashboard never shows a failed job as in flight.
