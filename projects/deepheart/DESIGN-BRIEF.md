@@ -113,15 +113,42 @@ surface's understanding of identity.
 
 | Fairy ruler | Magical jurisdiction | Political pressure |
 | --- | --- | --- |
-| Duchess Aveline, Mistress of Names | Names, citizenship and erasure | Registry determines who counts as a person |
-| Prince Ilex, Weight of the World | Gravity, stairs, transit | Toll lifts determine whose food and medicine can move |
-| Lady Serein, Matron of Interest | Debt and borrowed tomorrows | Tomorrow can be repossessed |
-| Lord Vireo, Last Supper | Food multiplication and famine | Royal banquets control community kitchens |
-| Countess Cauline, Seamstress of the Hour | Stolen, rewoven time | Working hours are hereditary collateral |
-| Consort Ludo, Prince of False Faces | Masks, fame and public memory | Gossip and propaganda rewrite dissent |
+| Duchess Aveline, Mistress of Names | Hera / Mnemosyne: makes names and laws alter physical reality | Registry determines who counts as a person |
+| Prince Ilex, Weight of the World | Zeus / Janus: folds gravity, streets and floors | Toll lifts determine whose food and medicine can move |
+| Magistrate Astraea, Justice Before the Crime | Athena / Nemesis: makes verdicts precede and create crimes | Pre-emptive prisons punish imagined dissent |
+| General Marsyn, War Nobody Won | Ares / Mars: turns political arguments into literal battlefields | Unending wars are profitable entertainment |
+| Lady Serein, Matron of Interest | Hades / Plutus: borrows tomorrow and rewrites yesterday's debt | Tomorrow can be repossessed |
+| Lord Vireo, Last Supper | Dionysus / Ceres: makes food and famine into revised reality | Royal banquets control community kitchens |
+| Duke Nerion, Second Sea | Poseidon / Neptune: redraws waterlines, waterfalls and coastlines | The flood wards move with his moods |
+| Lady Veloura, People's Beloved | Aphrodite / Venus: rewrites what crowds find admirable | Public sympathy becomes a royal monopoly |
+| Countess Cauline, Seamstress of the Hour | Chronos / the Fates: tears and resews real hours | Working hours are hereditary collateral |
+| Consort Ludo, Prince of False Faces | Hermes / Dionysus: edits history through public memory | Propaganda makes lies become monuments |
+| Foundry Saint Caldera, Last Spark | Hephaestus / Vulcan / Hestia: rewrites matter and heat | Workers freeze beside machines they invented |
+| Duchess Nysa, Spring That Won't End | Persephone / Demeter: traps cities in a chosen season | Unwanted eternal growth destroys homes |
 
 The court is a **bored family of scheming adult nobles**, not an unbroken
-villain team. Their power is immense, their emotional maturity questionable.
+villain team. **All twelve are genuinely immortal.** They do not merely
+possess long lifespans: drowning, execution, physical destruction, and even
+erasure from a historical record cannot make their deaths permanent. Each
+god reappears through a different loophole in the rules of existence. They
+can be contained, embarrassed, legally disempowered, persuaded, or denied
+an audience, but never slain for good. A mortal society has to keep living
+with the consequences of their apparently temporary whims.
+
+Their powers are **edits to reality**, not superhero spells: names rewrite
+who exists on a map, verdicts summon crimes, gravity rearranges floors,
+arguments grow weapons, the sea floods upward, debt revises yesterday,
+applause rewrites value, time unpicks working hours, heat obeys patents,
+and spring grows buildings apart. Some gods are sincere but incapable of
+restraint. Others have outlived every possible pleasure and replay a bad
+wedding, a petty rivalry, or a humiliating dinner for centuries because it
+is the last thing that makes them feel anything.
+
+Greek and Roman archetypes are **design influences**, not literal imported
+Olympians: the names, relationships, powers and consequences are original
+to Deepheart. Aveline echoes Hera/Mnemosyne, Astraea Athena/Nemesis,
+Marsyn Ares, Nerion Poseidon, Veloura Venus, Caldera Vulcan/Hestia,
+and Nysa Persephone/Demeter, among others. Their power is immense, their emotional maturity questionable.
 At the core are half-siblings, an annulled marriage with collateral claims,
 cousins whose youthful affair was erased from the registry, estranged parents,
 adopted heirs, a staged engagement, feuds, false genealogies, leaked letters,
@@ -130,7 +157,7 @@ relationships, written to illuminate the political machinery they built.
 
 ### Playable audiences and endings
 
-Six fairy audience events can appear throughout the three strata. The
+Twelve fairy audience events (four per stratum) can appear throughout the three strata. The
 player may bargain, expose, defy, or walk away. The first meeting reveals the
 god's human face in the scrapbook. Successful investigations and bargains
 reveal one of twelve distinct connections in the family diagram.
@@ -143,11 +170,32 @@ success/failure epilogue and unlocks the relevant reveal entry. Declining all
 audiences ends normally. This preserves old ending IDs, saves and achievements
 while layering a personal court resolution onto the original finish.
 
+Each selected outcome also unlocks a deity-specific "deathless secret"
+that explains the supernatural loophole that brings this god back from
+destruction. This information remains hidden in the public scrapbook until
+a successful or failed final audience has actually happened.
+
+### Added immortal family feuds
+
+- Astraea and Marsyn divorced and remarried eight hundred times, each time
+  trying to prevent the same war; Ilex disputes whether either is truly
+  his heir.
+- Nerion and Serein's divorce literally mortgaged the ocean. Caldera still
+  heats their secret underwater refuge, while Nysa grows flooded wedding
+  flowers through Nerion's palace.
+- Veloura and Ludo are mirror-born siblings who continually sell each
+  other's manufactured romances as authentic. Vireo caters the breakups.
+- Caldera and Cauline turned stolen factory hours into a technical standard.
+  Nysa and Caldera's impossible wedding in every season became the first
+  winter in the deep forges.
+- Nysa and Vireo compete to create food and demand gratitude for giving
+  it away, while Serein continues to collect interest on their harvest.
+
 ### Scrapbook as a relationship flowchart
 
 The Deepheart Scrapbook has **Court Connections** and **Lived Moments** tabs.
 The former is a genuine node-and-edge flowchart for all six rulers, with
-twelve typed connections: kinship, affairs, former lovers, annulments, grudges,
+thirty-two typed connections: kinship, affairs, former lovers, annulments, grudges,
 schemes and revenge. Unknown nobles are concealed and unknown links are
 unlabelled; actually meeting, investigating, and resolving a final audience
 unlocks names and relationship explanations. Clicking a known node filters its
