@@ -170,3 +170,13 @@ Conductor#6110's unchanged reviewed head merged in another session at `2026-10-1
 **Improve:** put guards after docstrings; when generalising a shared print path, keep the old source of truth as the default. Also a worker branch with no PR strands the work; open the PR as part of the handoff.
 
 **Kaizen task:** shifting-desks/t-057, test the dry-run size print for both lane shapes.
+
+## 2026-11-17 PT | Reviewer | shifting-desks/t-032 | Conductor #7513
+
+**Decision:** merged (squash `2003300`, exact head `d94f0fe`, 25 checks green or intentionally skipped). Adds V6 (`SDXL-TARGETED-CORRECTION-PILOT-1.yaml`) to the visual-review workflow and capture script, records the REDO for ArtJob 69681 / ArtImage 274183 (still two arms), and adds fail-closed tests so a DONE ID never counts as accepted art. Scoped, reversible, nothing public or linked.
+
+**Observed:** good handoff. Template headings correct, PR opened at push time, verdict based on real pixels rather than job status. `pilot_capture_errors` now uses `.get(..., 0)`, which keeps older reports from failing but also hides a missing key. Acceptable here because the capture/done comparison still trips on real gaps.
+
+**Improve:** the ~1.29/255 near-no-op was only found by hand. Measure it in code before the next targeted spend (t-058). Diagnose mask/latent/denoise before resubmitting; don't rerun the same prompt/seed.
+
+**Kaizen task:** shifting-desks/t-058, an in-mask difference metric for sdxl-targeted captures.
