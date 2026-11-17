@@ -423,3 +423,18 @@ validator accepts the template. PR pending.
 2026-11-15 PT: merged conductor#7455 (3584055) on green CI. The template now ships, and
 a pytest pins it to the validator.
 <!-- note:end t-072 -->
+
+## t-073 — Define one typed witnessed-encounter evidence ledger shared by the Night Shift scenes and the t-029 economy reducer, before either binds outcome state
+
+<!-- note:begin t-073 -->
+Reviewer kaizen from the merge of conductor#7459 (t-025 Night Shift dialogue beats),
+2026-11-15 PT; the Worker's own suggestion, raised twice now. The beats doc commits
+evidence (`uniform-name`, `attendant-account`, `visiting-hours`, ...) "from the witnessed
+scene event, not a free-floating inventory flag". Add the shared event type, a pure
+commit-once reducer and save/restore tests in kind_robots so t-025's runtime binding and
+t-029 both consume it instead of parallel booleans. No art, no UI.
+
+Implemented typed witnessed-event ledger and adversarial save/replay tests in kind_robots branch worker/memory-dungeon-t-073-witness-ledger-6f1c9. Runtime binding remains separate follow-on work; exact-head CI pending.
+
+Merged kind_robots PR #5231 at 0ee7f1c1acd98a15d9c0753c6f9ad159b1f5edfc after all eight exact-head GitHub Actions workflow runs completed successfully on e66724b65a5543ac7c79d13023e9330a2c37155c. Typed commit-once ledger and adversarial restore tests shipped. Runtime binding remains follow-on work.
+<!-- note:end t-073 -->

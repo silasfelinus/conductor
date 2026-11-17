@@ -125,6 +125,14 @@ Text-only deterministic tests proving that all initial perception states and arc
 12 text-only tests in tests/test_weird_humboldt_future_branching.py: sober parity, no identity gates, hopeful outcomes reachable, no dominant vote flag, Cedar parents intact.
 <!-- note:end t-013 -->
 
+## t-014 — Specify Ecotone single-surface board and responsive tab layout
+
+<!-- note:begin t-014 -->
+Apply VIEWPORT-ACHIEVEMENTS-CONTRACT.md, matching the modern Shifting Lands journey board and Shifting Desks layout primitives. Write text-only responsive layout plan, screen structure, tab/overlay definitions, inner scroll ownership, and testable viewport rules for 375x667, 390x844, 768x1024, 820x1180, 1024x768, 1440x900 and wide-short screens. Never allow document/body/game-page scrolling. Keep interactive choices and main illustrated card visible, no clipped controls, compact toolbar, no second huge masthead. No Kind Robots deploy or new artwork on this design task.
+2026-11-15 PT intent audit (INTENT-AUDIT-2026-11-16.md): in review since 2026-10-22 with an expired claim (2026-10-22T025013Z-t014-layout), no completion record and no PR found. Released to ready. The spec scope in the title is unchanged.
+2026-11-16 PT reconcile: the deliverable already exists. projects/weird- humboldt/ECOTONE-LAYOUT-SPEC.md (headed t-014, landed via Conductor #7208 under a mislabeled slime-city commit) covers the surface model with html/body never scrolling, screen structure, tab/dialog definitions, inner scroll ownership, a layout table for 320x568 through 1920x1080 incl. 375x667, 390x844, 768x1024, 820x1180, 1024x768, 1280x720 wide-short and 1440x900, and testable viewport rules V1-V10. Text-only; no deploy or art. t-015/t-016 implementation unblock on this dependency.
+<!-- note:end t-014 -->
+
 ## t-017 — Author four optimistic companion routes and personal epilogues
 
 <!-- note:begin t-017 -->
@@ -501,6 +509,19 @@ Implemented optional four-Saturday creek-monitoring commitment in Quiet Way, wit
 
 Implemented and merged Kind Robots PR #4052 as e12ba035924b2484df3937db911937af9d19fe75 after all 13 final-head GitHub workflows finished green (including Ecotone Gameplay Contract, TypeScript, changed-file Prettier, four full contract shards + verifiers). Quiet Way now has a fourth costly, checked volunteer monitoring commitment, distinctive failure, honest callbacks and an earned restoration-credit path to the same collectible solo endings. All seven lenses, saved games and art slots tested. No deployment, public release, image generation or excluded content changes claimed.
 <!-- note:end t-059 -->
+
+## t-060 — Ecotone P2: report causal route overlap and encounter starvation
+
+<!-- note:begin t-060 -->
+Triage 2026-10-22 PT: existing 1260 unique decision-history signatures are not evidence of unique dramatic middle chapters. Extend the deterministic adversarial contract with played-card route signatures, per-chapter coverage, matched-seed overlap, meaningful later-option changes from saved flags, and rare-event visibility by persona. Emit counters, baseline and examples without inventing success thresholds or claiming human fun scores. Keep the 84 ending, art-slot and cultural exclusions unchanged. Source: PLAYSTYLE-TRIAGE-2026-10-22.md.
+
+Implemented CI path-overlap instrumentation in the existing 1,260-run adversarial playstyle contract: distinct full card paths versus side-encounter paths, 10 pairwise Jaccard comparisons per matched group, per-chapter coverage, rare and never-seen side scenes, and flag-only eligibility deltas. Added editorial methodology doc explaining what counts are not human fun scores. Branch worker/weird-humboldt-t060-overlap-f98d6e; waiting for CI.
+
+2026-11-15 PT intent audit (INTENT-AUDIT-2026-11-16.md): kind_robots#4053 (head
+worker/weird-humboldt-t060-overlap-f98d6e) merged 2026-10-23 04:59Z. The 'waiting for
+CI' line above was stale. The PR delivers the instrumentation the task specifies, with
+no remaining scope listed. Closed done.
+<!-- note:end t-060 -->
 
 ## t-061 — Add chapter-anchor scene schema to the card validator before authoring the six anchors
 
