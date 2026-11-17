@@ -1576,8 +1576,8 @@ tasks:
   - id: t-066
     milestone: m5
     title: "Polish Ecotone opening, route previews, customizable player portraits, and tablet layout"
-    status: claimed
-    updated: '2026-11-17T18:49:06Z'
+    status: ready
+    updated: '2026-11-17T19:22:01Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -1625,8 +1625,16 @@ tasks:
       unrelated Slime City test). Still open: ~1,000 other unexported ART-STANDARD-ROUND-2
       renders (~70MB), to ship in per-case batches with the same recipe (filter subjects by
       asset prefix, then export_ecotone_art.export + write_manifest).
+
+      2026-11-17 PT routine: two more per-case art batches merged: kind_robots#5285 (b745275)
+      MY-01..MY-04 and #5286 (d5898c8) MY-06..MY-09, each 28 case cards x 4 styles = 112 webp
+      (~8 MB), manifest regenerated from disk; all CI green; no held art, no ArtJobs. Each
+      style now ships 275 pictures. Still open: MY-10..MY-12 case cards (84 webp), mysteries/*
+      Real Endings, events/*, and cards/wh|co|fr|la|lx (~650 renders; check the contract
+      accepts those keys first). Local Pillow was broken; export from a venv with
+      pillow+pyyaml.
     owner: worker
-    implementation_pr: 'silasfelinus/kind_robots#5283'
+    implementation_pr: 'silasfelinus/kind_robots#5286'
     claimed_by: 2026-11-17T-routine-184828-c2
     claimed_at: '2026-11-17T18:49:06Z'
 
