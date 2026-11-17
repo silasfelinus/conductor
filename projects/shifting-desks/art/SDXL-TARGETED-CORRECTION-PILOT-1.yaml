@@ -45,19 +45,23 @@ subjects:
   seed: 932821
   targets:
   - type: box
-    box: [0.36, 0.58, 0.70, 0.80]
+    box:
+    - 0.36
+    - 0.58
+    - 0.7
+    - 0.8
     bleedPx: 16
     featherPx: 10
   asset: shifting-desks/private-sdxl-targeted-inpaint-pilot-1/third-arm
-  pass: One smiling clerk in one glass tank with three distinct complete arms and three attached hands, the extra torso-grown hand visibly holding an orange pen.
-  fail: Two normal arms, an extra hand with no elbow and shoulder, misplaced pen or repeated limb instead of the original two plus one extra.
-  prompt_prose: >-
-    A cheerful illustrated white-shirted office clerk floats inside a single
-    green-filled glass laboratory tank. His usual left arm is raised beside his
-    head; his usual right arm rests below. An additional completely separate
-    third human arm emerges from the right center of his white shirt and extends
-    out across his torso, with visible shoulder connection, forearm, elbow,
-    wrist and five-fingered hand clasping one bright orange ballpoint pen.
-    The three human arms and their hands are clearly separate inside the tank.
-  jobs: {}
+  pass: One smiling clerk in one glass tank with three distinct complete arms and three attached hands, the extra
+    torso-grown hand visibly holding an orange pen.
+  fail: Two normal arms, an extra hand with no elbow and shoulder, misplaced pen or repeated limb instead of the
+    original two plus one extra.
+  prompt_prose: A cheerful illustrated white-shirted office clerk floats inside a single green-filled glass laboratory
+    tank. His usual left arm is raised beside his head; his usual right arm rests below. An additional completely
+    separate third human arm emerges from the right center of his white shirt and extends out across his torso,
+    with visible shoulder connection, forearm, elbow, wrist and five-fingered hand clasping one bright orange ballpoint
+    pen. The three human arms and their hands are clearly separate inside the tank.
+  jobs:
+    sdxl-targeted-local: 69681
   art: {}
