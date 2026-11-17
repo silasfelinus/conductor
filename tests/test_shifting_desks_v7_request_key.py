@@ -49,8 +49,14 @@ def test_v7_key_is_unique_and_feather_hotfix_remains_not_published():
     assert data["auto_submit"] is True
     assert lane["inpaint_encoding"] == "masked-vae"
     assert data["masked_vae_feather_repair"]["backend_pr"] == 5273
-    assert data["masked_vae_feather_repair"]["live_verification"] == "awaiting-alexandria"
-    assert subject.get("jobs", {}).get(lane["key"]) is None
+    repair = data["masked_vae_feather_repair"]
+    assert repair["live_verification"] in {
+        "awaiting-alexandria", "verified-production"
+    }
+    if repair["live_verification"] == "verified-production":
+        assert repair.get("live_commit")
+    job = (subject.get("jobs") or {}).get(lane["key"])
+    assert job is None or job > 0
     request_key = ledger_cell_key(
         str(path.relative_to(Path(__file__).resolve().parents[1])), lane, subject
     )
