@@ -64,3 +64,17 @@ Restored the canonical single-writer 14-asset daily cycle alongside Dead Air (si
 
 Merged conductor PR #7408 at c5fbb54318a35677ab1b213498593a800d81fe72. All six final-head workflow groups, including the full Python test suite, Security Audit, Daily Dream Contract and Roadmap Audit, completed green. The canonical single-writer v3 Daily Dream is re-enabled alongside Dead Air: six linked Dream rows and eight independent Zuzu/Emperor rows with registered model lanes and fourteen durable ArtJob targets. Morning digest now records submitted ArtJob IDs separately from verified media and distinguishes a same-day finished film from yesterday's premiere. A seven-day original screenplay-runway guard runs in each private producer attempt and agent top-up instructions are restored. No claim that a fresh live fourteen-row bundle or video was created solely by merging this code; confirm on the next scheduled production run. Paid proposal authoring and public release remain gated.
 <!-- note:end t-009 -->
+
+## t-012 — Decide the visibility of the four publicly playable Dead Air films and merge the private-by-default fix
+
+<!-- note:begin t-012 -->
+FOR SILAS (2026-11-16 PT). What was found: every Dead Air film so far is publicly listed and playable on kindrobots.org without signing in. MusicVideos 18 (Closed Caption Department), 19 (Plot Assist), 20 (Clap Credit) and 21 (Apology Orchard) all read isPublic true; the visitor gallery feed lists them and /api/music-video/21/video returned the full MP4 to an anonymous request. Evidence and method: projects/dead-air/reviews/2026-11-16-screening.md.
+
+Why: Kind Robots' MusicVideo.isPublic defaults to true (prisma/music-video.prisma) and scripts/dead_air_produce.py never sets it, so each film has been public from export. The README says new films stay private drafts until you approve publication, and t-007 gates any public release, so this happened without your decision.
+
+What to decide: (1) Make the four films private, or keep some or all public on purpose. To make them private, sign in on kindrobots.org, open the video generator gallery (Play), and click the Public button on each Dead Air card so it reads Private; or tell an agent in-session to PATCH isPublic false on MusicVideos 18-21. An agent session tried this on 2026-11-16 and its permission guard refused the change to live site data, so nothing was changed. (2) Merge or reject the open conductor PR "dead-air: create new films private and verify it", which makes the producer set and verify isPublic false whenever it creates or resumes a film. Until it merges, the next overnight run creates another public film.
+
+What unblocks: your answer here or in session. Agents must not set approved_by_human. The daily production task t-004 stays open; the security flag in projects/dead-air/TALKBACK.md needs your acknowledgement before the next agent cycle on this project.
+
+DECIDED 2026-11-16 PT by Silas in session, verbatim: "go ahead make them private by default". approved_by_human records that in-session decision (docs/state-reconciliation.md). Done the same morning: MusicVideos 18-21 set to isPublic false and verified private with anonymous requests (video, record and poster return 404; the visitor gallery lists no Dead Air film), and scripts/dead_air_produce.py now sets and verifies isPublic false for every film it creates or resumes (ensure_private, with tests). The security flag is acknowledged. Kind Robots' site-wide MusicVideo default was left unchanged. Any public release still goes through t-007.
+<!-- note:end t-012 -->

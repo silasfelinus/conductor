@@ -1102,94 +1102,10 @@ tasks:
     depends_on: t-043
     passes: 0
     stakes: reversible
-    note: |-
-      Follow-up to t-043. Queue Krea art ledgers (auto_submit) for the lizard Ironjaw crew poster, every Ironjaw card and lizard mercenary, their evolutions and fierce/guard/hurt board tokens, using the new names and descriptions. Prompts in positive terms only. Curate on contact sheets and replace the ogre ids in artManifest.ts. Until lizard art lands, ogre art stays as a fallback.
+    note: >-
+      Follow-up to t-043.
 
-      2026-11-09 PT: queued projects/slime-city/art/IRONJAW-LIZARDS-ROUND-1.yaml (auto_submit,
-      61 Krea renders, seeds 1194000-1194253): the lizard Ironjaw crew poster, 15 creature
-      cards (Foundry Lion stays a lion) and their fierce/guard/hurt tokens. Each creature has
-      a hand-written species and scale colour (slate-grey gecko Scrapper, gila-monster Spark
-      Welder, horned-lizard Bulldozard, black monitor Maw-9000, teal frilled-neck Lunch Lady,
-      komodo Picket Line Komodo, etc.), positive terms only. NEXT: once the sweep writes
-      art_image_ids back, curate on a contact sheet (reject anything that reads as an ogre, a
-      human or a plain green dinosaur) and replace the ogre ids in kind_robots
-      utils/slimeCity/artManifest.ts (cards, tokens, crews.ironjaw). Spells/traps/equipment
-      art gets checked for ogres after.
-
-      2026-11-09 PT scope addition: EVOLUTIONS-IRONJAW-KREA.yaml already rendered all 54 Ironjaw
-      L2/L3 evolution stages as ogres (2026-11-08, before the lizard direction). Evolution art
-      is not wired yet (artManifest evolutions is empty), so players see none of it. Before
-      wiring evolutions, queue a lizard Ironjaw evolution round from the same per-card story
-      ladders with the IRONJAW-LIZARDS-ROUND-1 species/colour anchors, and skip the ogre renders.
-
-      2026-11-11 PT (Silas: all art at high priority): conductor#7263 merged IRONJAW-LIZARDS-
-      ROUND-2.yaml, 84 Krea subjects at priority 1000: all 65 Ironjaw L2/L3 evolution stages
-      as lab-mutant lizards (54 ogre stages re-authored + 11 never queued), 18 spell/trap/gear
-      cards repainted, Forewoman Rivet ready portrait. Remaining: once the sweep writes
-      art_image_ids, curate on contact sheets (reject ogre/human/plain-dinosaur reads and any
-      lettering) and wire into kind_robots artManifest.ts. Ironjaw campaign story art
-      (ironjaw/1..5) is still ogre-era: next round.
-
-      2026-11-15 PT: authenticated fetch + contact-sheet curation of all 129 unwired IRONJAW-LIZARDS-ROUND-1/2 renders. Wired 114 in kind_robots#5224 (15 base cards, ironjaw/ready boss portrait, 42 board tokens, 56 L2/L3 evolution stages); ironjawLizardArtCoverage.json records token verdicts. Rejected 15 for painted lettering (union sashes/armband, awning, shop and neon signs) or crowds/a lead figure reading human; those keep current art. Queued IRONJAW-LIZARDS-REDO-1.yaml (15 subjects, fresh seeds, plain-sash and lizard-crowd wording, priority 1000, auto_submit; live prompt contract 15/15). Released claim. NEXT: once the sweep writes art_image_ids, curate the redo and wire keepers; then repaint ogre-era Ironjaw campaign story art (ironjaw/1..5). Rung 1 (ready task, priority order); not a human gate.
-
-      2026-11-16 PT: authenticated fetch + contact sheet of all 15 IRONJAW-LIZARDS-REDO-1 renders. Kept 8 and wired them in kind_robots#5236: union-millwright fierce/guard/hurt tokens 273007-9, union-millwright@2/@3 273010/1, s1-bolt-clamp@2 273016, and cards s2-ironjaw-shift-change-shove 273019 and s3-ironjaw-reallocation 273020. Rejected 7 (273012 human tower guards; 273013/273017/273018 neon sign glyphs; 273014 lettered booth sign; 273015 human crowd; 273021 human lead + lettering). Queued IRONJAW-LIZARDS-REDO-2.yaml (7 subjects, seeds 1197000-1197006, blank-walled industrial settings, every secondary figure named as a lizard; live prompt contract 7/7, auto_submit). Released claim. NEXT: once the sweep writes art_image_ids, curate redo 2 and wire keepers; then repaint ogre-era Ironjaw campaign story art (ironjaw/1..5). Rung 1; not a human gate.
-
-      2026-11-16 PT: authenticated fetch + contact sheet of all 7 IRONJAW-LIZARDS-REDO-2
-      renders. kind_robots#5264 merged (squash c843ad9, all checks green) wires 5 keepers:
-      shift-change-shove@2 273518, reallocation@2 273520, forklift-chock@3 273521, overtime-
-      pistons@2 273522, s3-ironjaw-overtime-toll card 273523; verdicts in
-      ironjawLizardArtCoverage.json redoRounds with a contract test; overworld evolution count
-      484->488. Rejected 2: merc-picket-troll@2 273517 (letter-like glyphs on glowing
-      armband), bonus-plate@2 273519 (lettering on booth roof). Queued IRONJAW-LIZARDS-
-      REDO-3.yaml (2 subjects, seeds 1197100-1197101, plain cloth band / tight counter
-      framing, positive wording only; live prompt contract pass, auto_submit). NEXT: curate
-      redo 3; then repaint ogre-era Ironjaw campaign story art (ironjaw/1..5). Not a human
-      gate.
-
-      2026-11-16 PT: authenticated fetch + review of both IRONJAW-LIZARDS-REDO-3 renders; both
-      clean (plain cloth band, counter framing, no lettering). kind_robots#5265 wires merc-
-      picket-troll@2 274064 and s3-ironjaw-bonus-plate@2 274065 (coverage + overworld tests
-      pass); every Ironjaw card/token/evolution redo slot is now lizard-painted. Queued
-      IRONJAW-LIZARDS-STORY-ROUND-1.yaml (23 subjects, seeds 1197200-1197222, priority 1000,
-      auto_submit, live prompt contract 23/23): opening, ironjaw/1..5
-      scene/conviction/cunning/defeat and both endings repainted as lizards from current
-      campaign.ts text. Released claim. NEXT: once the sweep writes art_image_ids, curate
-      story round 1 on a contact sheet and replace the ogre-era ids in artManifest.ts story;
-      then check ironjaw/hit|gloat|beaten boss portraits. Rung 1; not a human gate.
-
-      2026-11-17 PT: authenticated fetch + contact sheets of all 23 IRONJAW-LIZARDS-STORY-
-      ROUND-1 plates. kind_robots#5272 wires 19 keepers over their ogre-era ids in
-      SLIME_CITY_ART.story (opening, 1/cunning, 1/defeat, 2/scene, 2/defeat, all of ch3-5,
-      both endings) with storyRounds verdicts + a contract test. Rejected 4: 1/scene 274143
-      (lettered sign, human guards), 1/conviction 274144 (human strike ring), 2/conviction
-      274148 and 2/cunning 274149 (clock numerals, toad-like workers). Queued IRONJAW-LIZARDS-
-      STORY-REDO-1.yaml (4 subjects, seeds 1197300-1197303, hands-only clock dial, lizard-only
-      figures; live prompt contract 4/4, auto_submit). Released claim. NEXT: curate story redo
-      1 and wire keepers; then check ironjaw/hit|gloat|beaten boss portraits. Rung 1; not a
-      human gate.
-
-      2026-11-17 PT (later): authenticated fetch of all 4 IRONJAW-LIZARDS-STORY-REDO-1
-      plates. kind_robots#5277 wires 3 keepers over ogre-era ids: 1/scene 274340,
-      1/conviction 274341, 2/conviction 274342 (storyRounds verdicts; coverage test
-      passes). Rejected 2/cunning 274343 (toad-faced foreground worker, third clock
-      hand). Queued IRONJAW-LIZARDS-STORY-REDO-2.yaml (1 subject, seed 1197400, frog
-      divers pushed to the background, exactly two clock hands; live prompt contract
-      1/1, auto_submit). Released claim. NEXT: curate story redo 2 and wire it; then
-      check ironjaw/hit|gloat|beaten boss portraits. Rung 1; not a human gate.
-
-      2026-11-17 PT boss-portrait check (kind_robots#5277 and conductor#7526 merged green):
-      fetched ironjaw/hit 267993, gloat 267994, beaten 267995 and ready 269661. All four
-      are already cobalt tegu Rivet in overalls with lab-tank backdrops. Tags carry only
-      scribble marks: no ogres, no humans, no legible lettering. No boss repaint needed.
-      Only remaining t-044 work: curate IRONJAW-LIZARDS-STORY-REDO-2 (ironjaw/2/cunning)
-      once the sweep writes art_image_id, then close t-044. Rung 1; not a human gate.
-
-      2026-11-17 PT: authenticated fetch + review of IRONJAW-LIZARDS-STORY-REDO-2 (ArtJob
-      69742, art 274374): cobalt Rivet at a blank-faced shift-clock, chromatic lizard crew,
-      frog divers small in the drain, no numerals or lettering (thin sweep hand cosmetic
-      only). kind_robots#5280 wires it at ironjaw/2/cunning over ogre-era 262259 with a
-      storyRounds keep verdict; coverage test passes. Every Ironjaw crew, card, token,
-      evolution, story and boss slot is now lizard-painted. Closing t-044.
+      Full history: projects/slime-city/HISTORY.md#t-044
     updated: '2026-11-17T11:58:17Z'
     implementation_pr: 'silasfelinus/kind_robots#5280'
     owner: worker
@@ -1327,43 +1243,10 @@ tasks:
     status: done
     passes: 0
     stakes: reversible
-    note: |-
-      Silas, 2026-11-10 PT: "the riot squad has a demolition focus and really needs to lean into circus
-      daredevils." Crew text landed in kind_robots#4949 (travelling demolition circus: human cannonballs,
-      wall-of-death riders, fire-eaters, a ringmaster with a detonator). Remaining: card names and flavor
-      for the 40 Riot cards in that voice (keep ids and mechanics), and art: crew poster + boss portraits
-      queued in art/FACTION-IDENTITY-ROUND-1.yaml; creature card renders in a follow-up round.
-      UPDATE 2026-11-10 PT: Silas: "Rebrand for riot squad, become Anarkiss: anarchy circus
-      performing rocky horror crew. Anarkissed". kind_robots#4949 renames the crew ANARKISS (members:
-      the Anarkissed; motto "Get Anarkissed."; id stays `riot`) and rewrites every Riot Saints mention.
-      Remaining: card names and flavor in the glam midnight-musical anarchy-circus voice (original:
-      no borrowed characters, songs or names), and art from art/ANARKISS-ROUND-1.yaml, which
-      supersedes the Riot circus subjects in art/FACTION-IDENTITY-ROUND-1.yaml.
+    note: >-
+      Silas, 2026-11-10 PT: "the riot squad has a demolition focus and really needs to lean into circus daredevils." Crew text landed in kind_robots#4949 (travelling demolition circus: human cannonballs, wall-of-death riders, fire-eaters, a ringmaster with a detonator).
 
-      2026-11-11 PT: kind_robots#5025 merged (squash e882add, all checks green): all 40 Riot
-      cards carry Anarkiss names and flavor (Glitter Rat, Firebrand Dolly, Jackhammer Kaboom,
-      Big Top Detonator...), 29 evolution titles, leftover Saints copy fixed, Clash log and
-      FEATURED reward names follow; ids/mechanics byte-identical; crews guard added.
-      conductor#7265 merged ANARKISS-CARDS-ROUND-2.yaml: 102 Krea subjects at priority 1000
-      (40 cards + 62 evolution stages). Remaining: curate the renders and wire them into
-      artManifest.ts.
-
-      2026-11-13 PT intent audit (INTENT-AUDIT-2026-11-13.md): claim expired ~1-2 days ago
-      with no open PR; released to ready so the top-priority lane is pickable. Next step is
-      the one in the note above.
-
-      2026-11-15 PT: Art-manifest implementation staged on worker/slime-city-t-052-anarkiss-art-20261115T0837Z-q8m4r2: 40 base ANARKISS cards and 62 evolution-stage ArtImage IDs from DONE ledger ANARKISS-CARDS-ROUND-2, with ledger coverage assertions. Pending GitHub CI, authenticated image-byte and contact-sheet visual curation; three older Riot Choir stage images remain outside the new ledger. Do not close task until actual art verified.
-
-      2026-11-15 PT: Kind Robots PR #5206 merged as 859bd9b9bdcb49bb2ba325242bf726dadf4f7559 after all six GitHub CI workflows passed, including all four contract shards and TypeScript. All 40 base and 62 evolution art IDs from ANARKISS-CARDS-ROUND-2 map in artManifest.ts with completeness tests. Worker branch auto-deleted. Remaining for t-052: authenticated 102-image byte fetch and contact-sheet visual curation; three older Riot Choir evolution images still need repaint/verification. Self-hosted image API inaccessible from this session, so no delivery/visual acceptance is claimed. Task returns to ready for art QA, not done.
-
-      2026-11-15 PT correction to previous closeout: the three s1-riot-choir evolution keys (at 2, 3, 3b) belong to the Bloodfairies faction, NOT ANARKISS. Source: kind_robots utils/slimeCity/gutterCrownWaveTwo.ts declares team bloodfairies; utils/slimeCity/evolutions/bloodfairies.ts includes Glitter Riot Choir. They should NOT be included in the Anarkiss repaint ledger or treated as Anarkiss gaps. All 40 Anarkiss base cards and all 62 Anarkiss evolution stages are mapped by merged #5206. Only authenticated delivery and contact-sheet visual curation remain for t-052.
-
-      2026-11-17 PT: authenticated fetch (102/102 bytes OK) and contact-sheet curation of all
-      102 ANARKISS-CARDS-ROUND-2 renders, with 5-up zooms of sign-prone plates. All 102 kept:
-      on-theme glam midnight-musical anarchy circus, adult figures, no painted lettering.
-      kind_robots#5266 merged (squash 7edbe1d, all 14 checks green) records verdicts in
-      anarkissArtCuration.json with a contract test that each keeper is wired at its
-      artManifest slot. Every Anarkiss card and evolution is now curated; task done.
+      Full history: projects/slime-city/HISTORY.md#t-052
     updated: '2026-11-17T01:58:25Z'
     owner: worker
     claimed_by: 2026-11-17T013500Z-anarkqa
@@ -1375,69 +1258,10 @@ tasks:
     status: done
     passes: 0
     stakes: reversible
-    note: |-
-      Silas, 2026-11-10 PT: "the meat merchants need a real lovecraftian vibe, a lot dark, with also
-      satanic and weirdnesses. they look too much like gta vi bros". Crew text landed in kind_robots#4949
-      (a drowned butcher-priesthood kneeling to the Thing That Hungers beneath Crown Market). Remaining:
-      card names and flavor for the 40 Exchange cards (keep ids, mechanics and the meat economy), and art:
-      crew poster + boss portraits queued in art/FACTION-IDENTITY-ROUND-1.yaml; creature cards next.
+    note: >-
+      Silas, 2026-11-10 PT: "the meat merchants need a real lovecraftian vibe, a lot dark, with also satanic and weirdnesses.
 
-      Partial occult identity pass for ten Exchange founder cards and two reserve cards, with contract guard; kind_robots PR #5000. Remaining roster and art still open.
-
-      Meat Exchange occult founder flavor pass merged as kind_robots PR #5000, squash commit 532cc1f6fa310ef9d4a99bc01a80cbf1d1a79233. All 11 substantive checks completed successfully on head 02fb55ed80c0431693269592063d43fedefae297. This was only 10 founders plus 2 reserve cards, not the remaining roster or art. Return task to ready for the next distinct Exchange identity increment.
-
-      Authored 63 distinct Meat Exchange L2/L3/choice evolution titles with drowned chapel, ossuary, bone tithe, flesh-ledger identity; no card IDs, stats, effects or stage triggers changed. Regression assertions added. Remaining art and broader roster audit still open.
-
-      Merged kind_robots PR #5015 as squash 2f0ff818499124d0c2fa880139f89f2a9975811b after all 11 checks completed successfully on head 695527114057cbfd52d096790ed1b22f07f62c5d. All 63 Exchange evolution titles now carry occult identity, with compact choice text and regression guards. Remaining task scope: base roster naming/flavor audit and visual/card-art integration; not complete.
-
-      2026-11-11 PT: kind_robots#5027 merged (squash 498b25b, all checks green): 39 of 40
-      Exchange cards renamed in the drowned-chapel voice (Ossuary Goblin, Tithe-Bell Ringer,
-      Butcher-Priest, Reliquary Snare...; The Meat Mogul keeps his name), 28 wave cards'
-      flavor recast with rules clauses intact, FEATURED reward + Clash fixture/banter follow;
-      ids/mechanics byte-identical; crews guard covers all 40. conductor#7268 merged EXCHANGE-
-      OCCULT-ROUND-1.yaml: 103 Krea subjects at priority 1000 (40 cards + 63 rite evolution
-      stages). Remaining: curate the renders and wire them into artManifest.ts.
-
-      Audited EXCHANGE-OCCULT-ROUND-1: 103 DONE ArtImages (40 base, 63 evolutions, IDs 269792-269894), none wired to artManifest.ts. Wrote projects/slime-city/docs/t-053-occult-art-integration-audit-2026-11-12.md (commit 48bf201a), updated master roadmap issue #4535 comment 6818498120. Needs authenticated image fetch/contact-sheet curation before safe manifest wiring; no code PR or deploy this cycle.
-
-      Staged all 103 Exchange occult ArtImage IDs as pending curation in kind_robots, with executable manifest safety guard and contract-suite wiring. This is intake infrastructure, not verified image delivery. Keep/redo verdicts and runtime manifest integration remain.
-
-      2026-11-13 PT intent audit (INTENT-AUDIT-2026-11-13.md): status was review for ~36h with
-      no open PR in kind_robots or conductor and remaining scope listed above; returned to
-      ready so pickers can take the next slice. No work discarded.
-
-      2026-11-15 PT: fetched all 103 EXCHANGE-OCCULT-ROUND-1 ArtImages through the
-      authenticated endpoint (103/103 bytes OK) and reviewed them on contact sheets.
-      kind_robots#5233 wires 96 keepers into artManifest.ts (39 base cards, 57 L2/L3 stages)
-      and records verdicts in exchangeOccultArtIntake.json. 7 marked redo, with current art
-      kept: sign/banner lettering (269814, 269857, 269862, 269894), the Vein-Tithe Novice
-      drawn as a child (269816, 269861, 269862), and Klan-like pointed white hoods (269875).
-      Queued EXCHANGE-OCCULT-REDO-1.yaml (7 subjects, fresh seeds, bare-surface/adult/cowl
-      clauses, priority 1000, auto_submit; prompt contract 7/7). NEXT: once the sweep writes
-      art_image_ids, curate the redo and wire the keepers. Not a human gate.
-
-      kind_robots#5233 merged (squash f150da3) with all 11 checks green; conductor#7466 merged
-      (3c242eb). 96 occult Exchange renders are live in artManifest.ts. Remaining: curate
-      EXCHANGE-OCCULT-REDO-1 (7 subjects) once its art_image_ids land, then wire the keepers.
-      Claim released.
-
-      2026-11-16 PT: fetched all 7 EXCHANGE-OCCULT-REDO-1 renders (authenticated, 7/7 bytes
-      OK) and curated on a contact sheet. kind_robots#5263 merged (squash 5cdf31f, all checks
-      green) wires 3 keepers: s2-exchange-invisible-lien card 273424, s3-exchange-wage-
-      garnisher card 273425, wage-garnisher@2 273427; verdicts in exchangeOccultArtIntake.json
-      redoRounds with a contract test. Rejected 4 (invisible-lien@2 273426, wage-garnisher@3
-      273428, payment-reminder@3 273429 for persistent sign lettering; collection-badge@3
-      273430 for lettering + pointed hoods). Queued EXCHANGE-OCCULT-REDO-2.yaml (4 subjects,
-      seeds 1297100-1297103, settings moved to bare stone tunnels/cisterns with positive
-      wording only, no negation nouns; live prompt contract pass, auto_submit). NEXT: curate
-      redo 2 once art_image_ids land. Not a human gate.
-
-      2026-11-17 PT: authenticated fetch (4/4 bytes OK) and full-size review of EXCHANGE-
-      OCCULT-REDO-2 (274060-274063): all lettering-free, adult, no pointed hoods.
-      kind_robots#5267 merged (squash 55ab130, all checks green) wires all 4 into
-      artManifest.ts and records redo round 2 in exchangeOccultArtIntake.json; the intake test
-      now chains redo rounds. Every Exchange card and evolution slot now carries curated
-      occult art, and names/flavor landed earlier (#5027, #5015): task done.
+      Full history: projects/slime-city/HISTORY.md#t-053
     updated: '2026-11-17T02:13:41Z'
     owner: worker
     claimed_at: '2026-11-17T01:59:00Z'
@@ -1449,67 +1273,10 @@ tasks:
     status: done
     passes: 0
     stakes: reversible
-    note: |-
-      Silas, 2026-11-10 PT: Ironjaw "should have already been rebranded lizards, but also needs art to
-      represent, is supposed to be the overall bioexperiment lab rat tmntrpg feel." kind_robots#4949 wired
-      the lizard crew poster and 15 creature cards and recast the crew as escaped bio-lab mutant lizards.
-      Remaining: Ironjaw story and campaign prose that still describes ogres or cybernetic workers,
-      non-creature card art that shows ogres, and boss portraits (queued in
-      art/FACTION-IDENTITY-ROUND-1.yaml).
+    note: >-
+      Silas, 2026-11-10 PT: Ironjaw "should have already been rebranded lizards, but also needs art to represent, is supposed to be the overall bioexperiment lab rat tmntrpg feel." kind_robots#4949 wired the lizard crew poster and 15 creature cards and recast the crew as escaped bio-la
 
-      2026-11-11 PT: kind_robots#5020 rewrites the remaining Ironjaw campaign prose (prologue,
-      LIVING BLUEPRINT, STOLEN TAILS, TWO UNIONS, PROTOTYPE SCANNER, support/rival/aftermath)
-      from cybernetics/implants to lab-bred mutants, tail-harvest growth serum and gene tags;
-      chrome jaws kept. Journey test now guards ogre/orc/cybernetic/implant wording. Remaining
-      after merge: non-creature card art still showing ogres and Ironjaw boss portraits (art
-      rounds; see t-017 REDO-3, t-044).
-
-      PARTIAL MERGED 2026-11-11 PT: kind_robots#5020 squash 636b334 (11/11 checks green).
-      Ironjaw prose is lab-mutant throughout; guard in verifySlimeCityIronjawJourney.
-      Remaining: non-creature card art still showing ogres and Ironjaw boss portraits, after
-      the REDO-3/t-044 lizard renders land.
-
-      Source-audited IRONJAW-LIZARDS-ROUND-1 against runtime manifest: 61 completed images, only 16 wired (crew plus 15 cards); 45 lizard board tokens remain unwired. Staged provenance coverage and executable regression test in Kind Robots. No unverified art was wired. Remaining: authenticated token visual curation, non-fighter ogre repaint audit and boss art.
-
-      Reviewer verified all eight head-SHA e159307 CI workflows successful and merged kind_robots PR #5102 as squash e1e9ac0. This ships 61-image Ironjaw provenance inventory and executable coverage guard only. Return to ready for authenticated curation of 45 token images and remaining non-fighter/boss art.
-
-      Blocked image curation: no KR_API_TOKEN in runtime and DNS cannot resolve kind-robots.vercel.app. Exact 45-ID curation instructions recorded on kind_robots#4535; return task to ready for authenticated worker.
-
-      Partial: hardened Ironjaw token art coverage test to check exact token keys and permit individually verified keeper plates without relaxing pending-image safety. Visual review remains pending authenticated access to kindrobots.org images.
-
-      Partial increment merged: kind_robots PR #5108, squash 9718223. All seven workflow runs on head 87f0b41 completed successfully. Exact-key token mapping and verified-keeper acceptance guards are now on main. Remaining: authenticated visual review of 45 token portraits, keeper-only art manifest wiring, non-creature and boss art review.
-
-      PR #5113 guards exact Ironjaw crew/card artwork slots; awaiting CI. Forty-five token images remain pending visual review.
-
-      PR #5113 merged as 1301b07; six checks green; remaining 45 token images require curation.
-
-      Scoped COG portrait fallback fix on worker/slime-city-t-054-evolution-art-fallback-8c73f2; preserves L3 painting for alternate evolution choices while separate art is pending. Tests added to Slime City suite; PR/CI verification follows. Ironjaw art curation remains open.
-
-      2026-11-13 PT: kind_robots#5118 merged as ddd053c after all eight PR workflows completed successfully. Alternate COG L3 art now falls back to curated L3, then L2, then base, with regression coverage. This is a partial t-054 increment, not the Ironjaw art-curation finish. Remaining: visually inspect pending Ironjaw renders and integrate approved three-tier evolution ladders and board portraits.
-
-      2026-11-15 PT intent audit (INTENT-AUDIT-2026-11-16.md): claim 2026-11-15T181720Z-slime-
-      city-t-054-q8v4 expired (about 10h old, no open PR or branch for it in kind_robots or
-      conductor). Released to ready with nothing discarded. Next: the Remaining line above
-      (inspect pending Ironjaw renders and wire the approved three-tier ladders and board
-      portraits).
-
-      2026-11-17 PT: audited every Ironjaw art slot against the live manifest. All 30
-      evolution ladders (L2/L3, plus the 3 choose-one L3b) are lizard-painted; tokens, story
-      plates and boss portraits finished under t-044. Only 7 Ironjaw slots still use pre-
-      rebrand ids (< 267360). After an authenticated contact-sheet check, only the Foundry
-      Lion card 261426 shows an ogre (green rider in a hard hat). Its tokens 263562-263564 are
-      rider-free mech-lion faces, and lockjaw 261429, forklift-chock 261492 and slag-spill
-      261493 show no ogres, so all of those stay. Queued IRONJAW-LIZARDS-REDO-4.yaml (1
-      subject, seed 1197500, gecko-bookkeeper rider to match the L2/L3 ladder, auto_submit).
-      NEXT: once the sweep writes art_image_id, curate it and wire it at
-      SLIME_CITY_ART.cards['s2-ironjaw-foundry-lion'] with a redoRounds verdict, then close
-      t-054. Rung 1; not a human gate.
-
-      2026-11-17 PT: reviewed IRONJAW-LIZARDS-REDO-4 render 274534 (grey gecko bookkeeper
-      rides the crane lion, no ogre or lettering) and wired it at
-      SLIME_CITY_ART.cards['s2-ironjaw-foundry-lion'] with a redoRounds keep verdict.
-      kind_robots#5281 merged as squash 41528a4 with all checks green. That was the last ogre-
-      era Ironjaw slot, so t-054 is done.
+      Full history: projects/slime-city/HISTORY.md#t-054
     updated: '2026-11-17T14:02:23Z'
     owner: worker
     claimed_by: 2026-11-17T124734Z-slime-city-t-054-r7k2
@@ -1672,26 +1439,10 @@ tasks:
     passes: 0
     depends_on: []
     updated: '2026-11-16T18:13:43Z'
-    note: |-
-      Kaizen after kind_robots#5221 (slime-city/t-041, 2026-11-15 PT). Check all sixty shared Mercenary cards' actual L2 and L3 battle behavior, starting with cards that are rarely chosen in constructed CPU games. Identify unintended lost L2 utility versus deliberate L3 role shifts; do NOT require every L3 to inherit every L2 action automatically. For any concrete improvement, preserve counterplay and crew-neutral identity, add seeded real-Clash tests for target/occupancy, deterministic replay, CPU selection rationale, and measure held-out matchup impact. Keep card IDs, the six faction identities, and rewards unchanged. This is a bounded mercenary QA slice of umbrella t-041, not blanket completion of the 300-card ledger.
-      2026-11-15 PT intent audit (INTENT-AUDIT-2026-11-16.md): claim 2026-11-15T161438Z-slime- city-t-070-g6b2k9 expired (about 12h old, no open PR or branch for it). Released to ready. The bounded Mercenary L2-to-L3 QA scope above is unchanged.
+    note: >-
+      Kaizen after kind_robots#5221 (slime-city/t-041, 2026-11-15 PT).
 
-      Implemented a bounded Mercenary continuity increment on Kind Robots branch worker/slime-city-t-070-mercenary-continuity-n4x8 at ae666dc: Auction Golem L3 retains its L2 facing-foe power suppression after the piercing eviction, and Midwife of Sparks L3 retains its L2 adjacent VOLATILE priming before its separate death payoff. Added occupancy, deterministic replay, CPU choice, card-face and constructed Mercenary selection evidence. Local checks pass; fixed-seed 1,080-match held-out results are unchanged. PR and exact-head CI follow; task remains a bounded partial audit of all 60 Mercenaries.
-
-      MERGED Kind Robots PR #5255, squash 566f1699286652ebc50b12d183acbc1f0f054bd6 from exact head ae666dc1418c23d70ecae74b534066c2b37ac3c5. Auction Golem L3 now retains its L2 facing-foe -2 power suppression after the piercing eviction, and Midwife of Sparks L3 retains its L2 adjacent VOLATILE priming before its existing death-triggered echoes. Real-board occupied/empty/isolated fixtures, deterministic commands, CPU choice and 160-character card-face coverage pass. The 3,120-bout constructed report now exposes the 9 Mercenaries actually used by those 30 decks: Grease Oracle 0/208 selected bouts and Union Owl 15/416 are the low-selection leads, but their L2-to-L3 continuity is already correct. The separate 1,080-match all-roster sweep covers all 60 Mercenaries; fixed-seed aggregate output was byte-for-byte unchanged versus main. All 12 exact-head GitHub checks completed successfully (four Contract shards, verifier, TypeScript, Prettier, layout, architecture, schema parity and security). This closes one bounded increment only; return t-070 to ready for the remaining all-60 behavior review. No art jobs, visual surface, schema or deployment.
-
-      Check-count correction for #5255 exact head ae666dc: 11 checks completed successfully (four Contract shards, Contract verifier, TypeScript, Changed-file Prettier, layout, architecture, schema parity and GitGuardian); the twelfth check, Push Prettier autofix, completed as expected with conclusion SKIPPED because formatting already passed. The six required workflow runs all completed successfully. This correction supersedes the preceding shorthand that called all 12 successful.
-
-      2026-11-16 PT: MERGED kind_robots #5262, squash 5b91cf1, head 39e481a; 11 checks
-      success, Push Prettier autofix skipped as expected. All-60 L2-to-L3 review done: a
-      mechanical pass flagged 35 Mercenaries whose L2 effect does not recur verbatim at L3;
-      each was read against its arc. The only unintended loss was Broken Halo, whose L3 now
-      keeps its on-hit adjacent heal. The death-time crew heal was traded away to keep the
-      160-char face (now 152). A seeded real-Clash fixture covers the fix and fails on the old
-      definition. The default balance report is byte-identical to main. The other 34 are
-      deliberate role shifts, choose-ones, supersets or price arcs (docs/agents/slime-city-
-      mercenary-l2-l3-continuity-audit.md). Rarely-selected constructed Mercenaries stay with
-      t-051/t-041; no art, schema or deploy.
+      Full history: projects/slime-city/HISTORY.md#t-070
     owner: worker
     claimed_by: 2026-11-16T1750Z-t070-opus
     claimed_at: '2026-11-16T17:48:59Z'

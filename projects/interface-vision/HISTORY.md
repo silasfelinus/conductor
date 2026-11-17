@@ -1245,3 +1245,13 @@ FOR SILAS: Homepage highlight change is implemented in open Kind Robots PR #5101
 
 Silas explicitly approved the public homepage art change in chat on 2026-11-12 PT. All eight Kind Robots PR #5101 CI workflow suites completed successfully. PR #5101 was squash merged into main as cc727074fb00b549c5a1f212693747ec45f0a45d. Slime City and Hybridizer homepage highlights now reference curated generated art IDs, not empty gradient placeholders. No DB/schema changes. Self-hosted image publication and actual production rollout must be checked separately from the GitHub merge.
 <!-- note:end t-153 -->
+
+## t-155 — Redesign the visitor homepage opening and featured game posters
+
+<!-- note:begin t-155 -->
+Silas's 2026-11-16 PT screenshot feedback: remove the giant Terror on Crystal Street opening promo (keep its game entry), collapse the Against Malaria Foundation call to a one-row link, and replace weak Arcade/Shifting Desks/other homepage highlights with game-specific, cinematic, painted-image-first presentation. Preserve destination routes, the one bounded gallery scroll owner, the optional Advert Studio gallery and cross-width responsiveness. Deliver implementation as a Kind Robots PR; any newly queued illustration remains independently tracked until rendered and chosen.
+
+Visitor homepage source and contract changes opened as silasfelinus/kind_robots#5244 on 2026-11-16 PT. Removes oversized Crystal Street intro, provides a one-row AMF link, redesigns the game art gallery, replaces Arcade and Elevator fallbacks, and connects to selected Advert Studio hero art. An Arcade hero slot is registered for a future render. No ArtJob has been queued or selected; CI and visual verification remain pending.
+
+Confirmed silasfelinus/kind_robots#5244 merged into main at 31d9a622fabef0491738bdf1387e0dee924851f9 on 2026-11-16T09:06:31Z. All eight required PR workflows completed successfully: Playbook Slices Gameplay 43835263395; TypeScript 43835263347; Project Architecture 43835263354; Schema Migration Parity 43835263362; Layout Contract 43835263566; Fast Changed-File Formatting 43835263538; Navigation Consolidation 43835263519; Contract Tests 43835263371. The original huge Crystal Street promo is replaced by the single-row malaria mission and game-led showcase, including painted Elevator art and real cabinet covers in Arcade. New cinematic artwork is NOT yet rendered/curated and remains tracked under separate task interface-vision/t-156. No self-hosted deploy or post-deploy visual verification claimed.
+<!-- note:end t-155 -->

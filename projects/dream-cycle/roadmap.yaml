@@ -724,9 +724,7 @@ tasks:
     one you chose. Run the full `pytest -q tests/` before pushing; don't rely on the new test file
     alone. The CONTROL.md/CLAUDE.md wording records a Silas clarification. Cite where Silas gave
     it in the PR body so the reviewer can confirm it.
-  note: |-
-    Created by reviewer 2026-11-14 PT for untracked PR conductor#7410 (worker/dream-cycle-catalog-only-10-assets-20261114). The PR stays open; the Worker pushes fixes to the same branch. Close this task when #7410 merges green.
+  note: >-
+    Created by reviewer 2026-11-14 PT for untracked PR conductor#7410 (worker/dream-cycle-catalog-only-10-assets-20261114).
 
-    2026-11-15 PT reviewer: fix for the 15 legacy-test regressions is ready (pin v4 CUTOVER_DAY for legacy Dream scheduling tests via a conftest fixture; 500/500 Dream/digest tests pass) and posted as a patch comment on conductor#7410. Merge is gated only on Silas confirming the 2026-11-14 "6 Dream + 4 private Zuzu/Emperor setting/character candidates, no new gameplay" CONTROL.md/CLAUDE.md clarification, which has no citable source on main. On confirmation: apply the patch to the worker branch, wait for green CI, merge, close t-040.
-
-    Merged conductor#7410 as dcb2b75064cfb04109cd0a84e9b4cf64fbb81d81 after applying Silas's 2026-11-14 catalog-only clarification and verifying all seven exact-head workflows passed on aa927e2. The earlier 15 test failures were superseded; no publish, deploy, spend, or live object creation was performed.
+    Full history: projects/dream-cycle/HISTORY.md#t-040

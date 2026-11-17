@@ -152,6 +152,19 @@ Simulate thousands of seeded runs with several policy bots (complier, rebel, cow
 DONE 2026-10-13 PT. Conductor #6122 (84b3f13): BALANCE-REPORT.md and the data-driven tuning (swap-the-file spends its Successor on success and is Risky 9; squeeze-the-duck is Risky 9; Humming Door and Spare Mustaches weight 3; thaw kept at 2). Kind Robots #3635 (68a0ed8): utils/shiftingDesks/balance.ts, five temperament bots plus a random baseline at 2,000 seeded runs each; verifyShiftingDesksBalance.test.ts runs in the gameplay CI (green, same numbers as the report). Elimination: complier 18.7%, rebel 35.8%, coward 0.1%, saint 19.9%, schemer 45.0% (was 54.0%), random 14.4%; every ending reached; no dominant or ungated dead choices. The Coward's near-total survival, paid for in Successors and with no payoff endings, is flagged for Silas's t-020 verdict.
 <!-- note:end t-019 -->
 
+## t-020 — Make shifting-desks art-readiness tests assert parsed report fields instead of raw markdown substrings
+
+<!-- note:begin t-020 -->
+Kaizen from the reviewer rescue of conductor#7437 as #7441 (2026-11-15 PT). The only Python-suite failure was a test looking for 'Optional variant catalog ready: NO' while markdown() renders it bold. Add a small helper in tests/test_shifting_desks_art_readiness.py (or a structured summary dict from the script) so readiness assertions check the value of each header field, independent of emphasis or column formatting. Keep every existing behavioural assertion; no ArtJobs, no gate changes.
+
+Structured readiness header assertions; no art or lifecycle changes.
+
+Implemented structured boolean readiness assertions in conductor PR #7444 (head ccca484f28b826e381fb53468a4aae67ada00c62). Awaiting exact-head CI and review before merge; no art, production, or lifecycle changes.
+
+2026-11-15 PT reviewer: merged #7444 (squash 2e9f983). Tests now assert
+ready/catalog_ready fields; CI green after handoff template was added.
+<!-- note:end t-020 -->
+
 ## t-022 — Hidden Test Results: Obedience, Empathy, Ingenuity and Spite grading
 
 <!-- note:begin t-022 -->
@@ -403,6 +416,20 @@ Live today: 3 Achievement record(s) with this game's triggerCode prefix (checked
 Achievement upgrade merged in kind_robots#5055 (530b270), all checks green: 14 new + 3 kept = 17 (nine milestones, Kind Rewrite and Posthumous Affairs endings, every ending, Daily Memo run, all five jobs). verifyShiftingDesks now checks the three live codes remain rather than exactly three. Catalog seed succeeded.
 <!-- note:end t-050 -->
 
+## t-051 — Fail the art visual-review workflow when check_request_queue.py finds missing or duplicate Classic rerender request IDs
+
+<!-- note:begin t-051 -->
+Kaizen from reviewer merge of conductor#7316 (2026-11-12 PT). The new read-only check_request_queue.py only reports missing_from_queue and duplicates in an uploaded JSON artifact, so a CI run that finds stale or duplicated Classic rerender requests still goes green and nobody reads the result. Add a --strict flag that exits non-zero on missing_from_queue > 0 or any duplicates, use it in shifting-desks-art-visual-review.yml once the current 20 stale requests are reconciled, and cover both cases in tests/test_shifting_desks_art_request_queue.py.
+
+Implement strict read-only Classic queue audit and focused regression coverage; defer workflow enforcement until stale queue is reconciled.
+
+Recovered a 2026-11-12 claim after five days. No open implementation PR or Shifting Desks task branch for this queue strictness guard exists. The check_request_queue.py CLI and visual review workflow still lack --strict enforcement; resume task rather than treating claim as delivery.
+
+Added the missing --strict CLI failure mode, regression coverage for missing, duplicate and clean request IDs, and post-artifact-upload workflow enforcement. Confirmed live art-review run 43999272773 baseline: zero unmet, zero missing and zero duplicates. Focused Conductor branch worker/shifting-desks-t-051-strict-queue-f3d8; exact-head CI to follow. No art state or renders mutated.
+
+Merged Conductor PR #7510, squash 26f5d41d4dba4ff0c3bdf0a1fca5439e8d616fb0, exact head fcab62543ffc7012ade84d86a7322ab151ce95be. All current-head checks passed including Worker PR CI, full pytest suite, Security Audit, art visual review and handoff. Strict queue audit fails on missing or duplicate Classic request IDs after evidence artifacts have been saved.
+<!-- note:end t-051 -->
+
 ## t-053 — Install Pillow in the ci.yml pytest-suite job so PIL-dependent shifting-desks art tests run instead of skipping
 
 <!-- note:begin t-053 -->
@@ -412,3 +439,57 @@ PR #7367 installs Pillow in full pytest suite so private pilot art tests execute
 
 Verified merged Conductor PR #7367 at a24f71519c8016ea488b1da6f31e6b3f8afcdbad. Exact PR head feb312a146b6cac6c3a8bfbaaa1959c4628b47b3: Worker PR CI run 43555008422 completed success; Python test suite job 132325773204 completed success, including image-test dependencies installation and full pytest suite. Handoff template, Security Audit and task-event workflow also completed success. This closes the Pillow CI dependency task only, not t-032 art acceptance or playtest readiness.
 <!-- note:end t-053 -->
+
+## t-054 — Drop the label-mapping report_field helper in test_shifting_desks_art_readiness.py and assert report["ready"]/["catalog_ready"] directly
+
+<!-- note:begin t-054 -->
+Kaizen from the reviewer merge of conductor#7444 (2026-11-15 PT). The helper maps Markdown label strings to dict keys, an indirection that re-couples the test to report wording; direct key assertions read clearer. Test-only, one file.
+
+Replaced label-mapping helper with direct structured readiness assertions in tests/test_shifting_desks_art_readiness.py. PR and CI verification pending.
+
+2026-11-15 PT reviewer: merged #7449 (squash f99d648). Direct ready/catalog_ready
+assertions; CI green after reviewer added the handoff template to the PR body.
+<!-- note:end t-054 -->
+
+## t-055 — Collapse the duplicate catalog_ready assertion in test_classic_and_western_have_separate_acceptance
+
+<!-- note:begin t-055 -->
+Kaizen from the reviewer merge of conductor#7449 (2026-11-15 PT). After t-054 the test asserts both `not report["catalog_ready"]` and `report["catalog_ready"] is False` a few lines apart; keep the `is False` form only. Test-only, one file.
+
+Removed the redundant catalog_ready negative assertion while preserving the explicit False check. Implementation commit cc545503; PR verification pending.
+
+Reviewer 2026-11-15 PT: merged conductor#7461 (squash 2b53d9c) after rewriting the PR
+body to the AGENTS.md handoff template so 'Validate Worker PR handoff' passed; all other
+exact-head checks green. Kaizen: t-056.
+<!-- note:end t-055 -->
+
+## t-056 — Cover the --all-styles-strict exit code of shifting_desks_art_readiness.py for both-styles-accepted and Western-blocked inventories
+
+<!-- note:begin t-056 -->
+Reviewer kaizen from the merge of conductor#7461 (t-055), 2026-11-15 PT. The readiness
+tests exercise inventory() only; main()'s `--all-styles-strict` branch (exit non-zero when
+catalog_ready is False) has no test, and no fixture has Classic and Western-cartoon both
+accepted (ready and catalog_ready both True). Add two tmp_path cases to
+tests/test_shifting_desks_art_readiness.py asserting the exit codes. Test-only, one file.
+
+Added two main()-level tests: both styles accepted -> --strict and --all-styles-strict
+exit 0; unaccepted Western variant -> --strict 0, --all-styles-strict 1. 9/9 readiness
+tests pass locally.
+
+2026-11-15 PT: merged conductor#7464 (squash 8bf66f4) with every check green after
+resolving a claim/close-out roadmap conflict.
+<!-- note:end t-056 -->
+
+## t-057 — Test that enqueue_art_requests.py dry-run prints the request body size for non-targeted lanes and the subject size for sdxl-targeted lanes
+
+<!-- note:begin t-057 -->
+Reviewer kaizen from the review of the t-032 V5-verdict/SDXL-targets worker branch,
+2026-11-16 PT. The branch switched the dry-run print to core.parse_size(subject size),
+silently dropping lane-derived body width/height; the Reviewer restored body size when
+present. Add a capsys test in tests/test_enqueue_art_requests.py covering both paths.
+Test-only, one file.
+
+Added a two-lane dry-run regression that distinguishes printed normal request geometry from the targeted inpainting subject dimensions. Scoped Conductor branch worker/shifting-desks-t-057-dry-run-size-e4c9, CI to follow; no private art submitted, linked or marked accepted.
+
+Completed two-lane dry-run geometry regression in merged Conductor PR #7509 (merge 84d1ea7d5443d21cc95fef3b60235db6d8d22a88). Exact head 849a2ee passed Worker PR CI, Security Audit, and the rerun Worker PR handoff template. No art was submitted or linked.
+<!-- note:end t-057 -->

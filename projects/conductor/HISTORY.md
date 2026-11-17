@@ -2818,3 +2818,10 @@ Reviewer kaizen 2026-11-11 PT from slime-city/t-028: the implementation, silasfe
 Reviewer kaizen 2026-11-14 PT from conductor#7423 (shifting-desks/t-048 note fix). sync_github_issues.task_note() told every import to use `Closes <issue>`, including project master issues that only the verified playtest handoff may close. Six more roadmaps (emperor-of-dust, weird-humboldt, memory-dungeon, game-of-captains, rainbow-bullet-hell-space-princess, comet-city-academy) still carried that instruction. This cycle: task_note() now writes `Refs` for any source indexed in docs/agents/master-issues.yaml; the six generated preambles were corrected to the #7423 wording; tests pin both the importer behaviour and a no-roadmap-says-Closes-a-master guard. Implementation PR on branch claude/focused-johnson-j51a6c.
 2026-11-14 PT: merged conductor#7424 (41fd3d6), CI green. Importer writes Refs for master issues; six stale notes corrected; guard test added.
 <!-- note:end t-212 -->
+
+## t-214 — set_task_field / close_task --set should write a flow-list value like [t-037, t-051] as a YAML list, not a quoted string
+
+<!-- note:begin t-214 -->
+Reviewer kaizen 2026-11-16 PT from conductor#7500 (slime-city/t-041 constructed checkpoint): the Worker had to hand-fix depends_on after close_task.py --set depends_on=[t-037, t-051] wrote a quoted string. normalize_scalar now renders a bracketed list of safe bare ids as a YAML flow sequence; unsafe items (YAML 1.1 bool words, timestamps, spaces) stay quoted. Tests in tests/test_set_task_field.py.
+2026-11-16 PT: merged conductor#7501 as 94ea951; all checks green. Done.
+<!-- note:end t-214 -->

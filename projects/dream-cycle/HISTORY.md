@@ -228,3 +228,13 @@ the status to done once both secrets exist.
 Silas 2026-10-10 in session: PITCH_LINK_SECRET was added in both places days ago; the
 roadmap was never updated. Closed on his word.
 <!-- note:end t-036 -->
+
+## t-040 — Make conductor#7410 (v4 6+4 Dream catalog contract) pass the existing Dream builder test suite
+
+<!-- note:begin t-040 -->
+Created by reviewer 2026-11-14 PT for untracked PR conductor#7410 (worker/dream-cycle-catalog-only-10-assets-20261114). The PR stays open; the Worker pushes fixes to the same branch. Close this task when #7410 merges green.
+
+2026-11-15 PT reviewer: fix for the 15 legacy-test regressions is ready (pin v4 CUTOVER_DAY for legacy Dream scheduling tests via a conftest fixture; 500/500 Dream/digest tests pass) and posted as a patch comment on conductor#7410. Merge is gated only on Silas confirming the 2026-11-14 "6 Dream + 4 private Zuzu/Emperor setting/character candidates, no new gameplay" CONTROL.md/CLAUDE.md clarification, which has no citable source on main. On confirmation: apply the patch to the worker branch, wait for green CI, merge, close t-040.
+
+Merged conductor#7410 as dcb2b75064cfb04109cd0a84e9b4cf64fbb81d81 after applying Silas's 2026-11-14 catalog-only clarification and verifying all seven exact-head workflows passed on aa927e2. The earlier 15 test failures were superseded; no publish, deploy, spend, or live object creation was performed.
+<!-- note:end t-040 -->
