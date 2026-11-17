@@ -304,3 +304,55 @@ def test_v7_completed_image_missing_pixel_evidence_is_blocking():
     ]
     report["pilot_v7_captured"] = 1
     assert module.pilot_capture_errors(report) == []
+
+def test_targeted_pixel_capture_flags_a_real_near_no_op(monkeypatch):
+    import base64
+    import io
+    from PIL import Image
+
+    original = Image.new("RGB", (80, 80), "#527891")
+    buffer = io.BytesIO()
+    original.save(buffer, format="PNG")
+    encoded = base64.b64encode(buffer.getvalue()).decode("ascii")
+    monkeypatch.setattr(
+        module, "fetch_source_image",
+        lambda _: "data:image/png;base64," + encoded,
+    )
+    row = {
+        "_round": "PILOT-V6",
+        "source_image_id": 273631,
+        "target_regions": [{
+            "type": "box", "box": [0.25, 0.25, 0.75, 0.75],
+            "bleedPx": 0,
+        }],
+    }
+    delta = module.targeted_pixel_delta(row, original.copy())
+    assert delta["assessment"] == "REDO_NO_OP"
+    assert delta["mean_absolute_rgb_in_mask"] == 0
+    assert delta["changed_fraction_at_16_in_mask"] == 0
+    assert delta["near_no_op"] is True
+
+    improved = original.copy()
+    for x in range(30, 50):
+        for y in range(30, 50):
+            improved.putpixel((x, y), (240, 50, 75))
+    report = module.targeted_pixel_delta(row, improved)
+    assert report["assessment"] == "VISUAL_REVIEW_REQUIRED"
+    assert report["mean_absolute_rgb_in_mask"] > 3
+    assert report["changed_fraction_at_16_in_mask"] > 0.1
+    assert report["near_no_op"] is False
+    assert "KEEP" in report["note"]
+
+
+def test_targeted_pixel_capture_fails_closed_without_valid_mask():
+    row = {
+        "_round": "PILOT-V7",
+        "source_image_id": 273631,
+        "target_regions": [{"type": "polygon", "points": []}],
+    }
+    from PIL import Image
+    result = module.targeted_pixel_delta(row, Image.new("RGB", (80, 80)))
+    assert result["assessment"] == "UNVERIFIED"
+    assert module.pilot_capture_errors({
+        "pilot_v7_pixel_unverified": 1,
+    }) == ["pilot_v7: delivered edit lacks measured source pixels"]

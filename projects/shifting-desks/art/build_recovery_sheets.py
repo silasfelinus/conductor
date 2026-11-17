@@ -16,7 +16,7 @@ import sys
 from pathlib import Path
 
 import yaml
-from PIL import Image, ImageDraw, ImageOps
+from PIL import Image, ImageChops, ImageDraw, ImageOps, ImageStat
 
 ART = Path(__file__).resolve().parent
 ROOT = ART.parents[2]
@@ -129,6 +129,72 @@ def capture_pilot(row):
         return None, {"error": type(exc).__name__}
 
 
+
+def targeted_pixel_delta(row, rendered):
+    """Machine no-op guard for delivered V6/V7 private SDXL edits.
+
+    The mask is the union of the requested target boxes plus bleed, not the
+    server's authoritative composite mask. A material change still needs
+    independent visual review; this function NEVER grants a KEEP verdict.
+    """
+    if row["_round"] not in ("PILOT-V6", "PILOT-V7"):
+        return None
+    if rendered is None or not row.get("source_image_id"):
+        return {"assessment": "UNVERIFIED", "reason": "source or render absent"}
+    targets = row.get("target_regions") or []
+    if not targets or any(target.get("type") != "box" for target in targets):
+        return {"assessment": "UNVERIFIED", "reason": "unsupported target geometry"}
+    try:
+        source_data = fetch_source_image(row["source_image_id"])
+        if not source_data.startswith("data:image/"):
+            raise ValueError("source image was not returned as a data URL")
+        raw = base64.b64decode(source_data.split(",", 1)[1], validate=True)
+        source = Image.open(io.BytesIO(raw)).convert("RGB")
+        edited = rendered.convert("RGB")
+        if source.size != edited.size:
+            raise ValueError("source and render have different dimensions")
+        width, height = source.size
+        mask = Image.new("L", source.size, 0)
+        draw = ImageDraw.Draw(mask)
+        for target in targets:
+            x0, y0, x1, y1 = (float(v) for v in target["box"])
+            if not (0 <= x0 < x1 <= 1 and 0 <= y0 < y1 <= 1):
+                raise ValueError("invalid normalized target")
+            bleed = int(target.get("bleedPx") or 0)
+            if bleed < 0:
+                raise ValueError("negative target bleed")
+            draw.rectangle((
+                max(0, int(x0 * width) - bleed),
+                max(0, int(y0 * height) - bleed),
+                min(width - 1, int(x1 * width) + bleed),
+                min(height - 1, int(y1 * height) + bleed),
+            ), fill=255)
+        mask_pixels = mask.histogram()[255]
+        if not mask_pixels or mask_pixels == width * height:
+            raise ValueError("empty or whole-frame target mask")
+        difference = ImageChops.difference(source, edited)
+        channels = difference.split()
+        intense = ImageChops.lighter(
+            ImageChops.lighter(channels[0], channels[1]), channels[2]
+        ).point(lambda value: 255 if value >= 16 else 0)
+        changed_pixels = ImageChops.multiply(intense, mask).histogram()[255]
+        average = sum(ImageStat.Stat(difference, mask=mask).mean) / 3
+        changed_fraction = changed_pixels / mask_pixels
+        no_op = average < 3.0 and changed_fraction < 0.005
+        return {
+            "assessment": "REDO_NO_OP" if no_op else "VISUAL_REVIEW_REQUIRED",
+            "source_image_id": row["source_image_id"],
+            "mask_basis": "requested target boxes including bleed",
+            "mask_pixels": mask_pixels,
+            "mean_absolute_rgb_in_mask": round(average, 3),
+            "changed_fraction_at_16_in_mask": round(changed_fraction, 6),
+            "near_no_op": no_op,
+            "note": "No-op guard only; never an automatic art KEEP",
+        }
+    except (KeyError, IndexError, OSError, ValueError, TypeError) as exc:
+        return {"assessment": "UNVERIFIED", "reason": type(exc).__name__}
+
+
 def sheets(rows, directory, label):
     directory.mkdir(parents=True, exist_ok=True)
     previews = directory / "previews"
@@ -172,6 +238,8 @@ def pilot_capture_errors(pilots: dict[str, int]) -> list[str]:
             errors.append(f"{key}: captured {captured}/{done} delivered ArtImages")
         if pilots.get(f"{key}_done_missing_image", 0):
             errors.append(f"{key}: DONE ArtJob missing an ArtImage ID")
+        if pilots.get(f"{key}_pixel_unverified", 0):
+            errors.append(f"{key}: delivered edit lacks measured source pixels")
     return errors
 
 
@@ -196,7 +264,9 @@ def main():
         private = []
         for row in pilot_rows(version):
             image, evidence = capture_pilot(row)
-            private.append({**row, "evidence": evidence, "_image": image})
+            pixel = targeted_pixel_delta(row, image)
+            private.append({**row, "evidence": evidence,
+                            "pixel_evidence": pixel, "_image": image})
         count = sheets(private, args.out / f"pilot-v{version}", f"PILOT V{version}")
         pilots[f"pilot_v{version}_captured"] = count
         pilots[f"pilot_v{version}_expected"] = len(private)
@@ -206,6 +276,15 @@ def main():
         pilots[f"pilot_v{version}_done_missing_image"] = sum(
             row["status"] == "DONE" and not row["image"] for row in private
         )
+        if version in (6, 7):
+            pilots[f"pilot_v{version}_pixel_no_op_redo"] = sum(
+                row["pixel_evidence"]["assessment"] == "REDO_NO_OP"
+                for row in private if row["status"] == "DONE"
+            )
+            pilots[f"pilot_v{version}_pixel_unverified"] = sum(
+                row["pixel_evidence"]["assessment"] == "UNVERIFIED"
+                for row in private if row["status"] == "DONE"
+            )
     c = sheets(classic, args.out / "classic", "CLASSIC")
     errors = pilot_capture_errors(pilots)
     summary = {"classic_captured_newer": c, "classic_expected": len(classic), **pilots, "errors": errors}
