@@ -1,0 +1,87 @@
+date: '2026-11-17'
+entries:
+- slug: play-hub-redirect
+  title: 'Front door: kindrobots.org/play opens the arcade'
+  target: kr-arcade
+  roadmap_task: t-169
+  kind: front-door
+  summary: Typing kindrobots.org/play or /games showed a bare Page not found panel; both now redirect to the arcade
+    hall.
+  status: shipped
+  pull_request: https://github.com/silasfelinus/kind_robots/pull/5279
+  checks_url: https://github.com/silasfelinus/kind_robots/actions/runs/44062384383
+  checks: passed
+  merge_sha: 7a2aca97524bb0672292f3ae6d23d68a050d8b56
+  verification: Live probe found /play and /games answering HTTP 200 soft 404s; verifyFrontDoorRoutes.test.ts pins
+    the 302 targets in contract shard 4
+  art:
+    status: not-required
+  preview_url: https://kindrobots.org/play
+- slug: honest-404-status
+  title: Unknown links return a real 404 kept out of search
+  target: interface-vision
+  roadmap_task: t-151
+  kind: front-door
+  summary: Every mistyped or stale link answered HTTP 200 with the generic site title; it now returns 404, titled
+    Page not found, noindex.
+  status: shipped
+  pull_request: https://github.com/silasfelinus/kind_robots/pull/5279
+  checks_url: https://github.com/silasfelinus/kind_robots/actions/runs/44062384383
+  checks: passed
+  merge_sha: 7a2aca97524bb0672292f3ae6d23d68a050d8b56
+  verification: checkFrontDoorRoutesLive.mjs found a nonsense URL answering 200 on production; contract test asserts
+    SSR setResponseStatus 404 and noindex
+  art:
+    status: not-required
+  preview_url: https://kindrobots.org/no-such-page
+- slug: not-found-way-back
+  title: Not-found page offers a way back instead of jargon
+  target: interface-vision
+  roadmap_task: t-104
+  kind: front-door
+  summary: The not-found panel said No Nuxt Content page was found with no exit; it now explains and links Play,
+    Home and Support.
+  status: shipped
+  pull_request: https://github.com/silasfelinus/kind_robots/pull/5279
+  checks_url: https://github.com/silasfelinus/kind_robots/actions/runs/44062384383
+  checks: passed
+  merge_sha: 7a2aca97524bb0672292f3ae6d23d68a050d8b56
+  verification: Contract test forbids the framework jargon and requires the three NuxtLinks; layout-contract one-header
+    rule passes
+  art:
+    status: not-required
+  preview_url: https://kindrobots.org/no-such-page
+- slug: support-url-aliases
+  title: Guessable support and shop URLs reach giving and the gift shop
+  target: interface-vision
+  roadmap_task: t-143
+  kind: support
+  summary: Visitors typing /donate, /give, /support, /shop or /giftshop hit soft 404s; they now land on the giving
+    and gift shop tabs.
+  status: shipped
+  pull_request: https://github.com/silasfelinus/kind_robots/pull/5279
+  checks_url: https://github.com/silasfelinus/kind_robots/actions/runs/44062384383
+  checks: passed
+  merge_sha: 7a2aca97524bb0672292f3ae6d23d68a050d8b56
+  verification: Contract test checks every alias target is a real channel tab, content page or Vue page and shadows
+    nothing
+  art:
+    status: not-required
+  preview_url: https://kindrobots.org/donate
+- slug: front-door-live-probe
+  title: Live probe for hub URLs and honest 404s
+  target: interface-vision
+  roadmap_task: t-144
+  kind: reliability
+  summary: A new read-only probe checks ten hub URLs redirect to loading pages and that unknown URLs answer 404
+    after each deploy.
+  status: shipped
+  pull_request: https://github.com/silasfelinus/kind_robots/pull/5279
+  checks_url: https://github.com/silasfelinus/kind_robots/actions/runs/44062384383
+  checks: passed
+  merge_sha: 7a2aca97524bb0672292f3ae6d23d68a050d8b56
+  verification: 'node utils/scripts/checkFrontDoorRoutesLive.mjs against production before deploy: 11/11 problems
+    reported, as expected'
+  art:
+    status: not-required
+  preview_url: https://kindrobots.org/projects
