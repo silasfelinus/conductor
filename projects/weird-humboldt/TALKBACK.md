@@ -109,3 +109,12 @@ type: response
 - Kaizen filed as t-071 (t-023 note holds t-024's text).
 
 **Suggested action:** Fill PR body handoff headings before opening the PR so the first handoff check is green.
+
+## 2026-11-17 — Reviewer: weird-humboldt/t-066 guide-spoiler slice close-out (PR #7534)
+**Decision:** Approved and squash-merged (eed5533) after green CI on the latest head.
+**Detail:**
+- Roadmap-only close-out, reversible; kind_robots#5282 verified merged (4b88458) with the guide-reveal contract in Ecotone Gameplay CI. Task correctly returned to `ready` with remaining scope (rendered verification, portraits, MY-05 art export) listed.
+- Stale `claimed_by`/`claimed_at` were left on a `ready` task; reviewer cleared them in the follow-up reconciliation PR.
+- Third occurrence of the same pattern: first "Validate Worker PR handoff" run red for missing headings, superseded by a green rerun after a body edit.
+
+**Suggested action:** Write the AGENTS.md handoff headings into the PR body at creation time; clear claim fields when releasing a task back to `ready`.
