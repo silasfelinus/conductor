@@ -610,8 +610,8 @@ tasks:
   - id: t-032
     milestone: m3
     title: 'Land, review and link the art round 13 re-renders and round 14 tone-ladder renders'
-    status: ready
-    updated: '2026-11-17T07:21:06Z'
+    status: claimed
+    updated: '2026-11-17T22:27:00Z'
     depends_on: t-015
     passes: 0
     stakes: reversible
@@ -651,6 +651,9 @@ tasks:
       Exact root cause of V6 black composite mask fixed and shipped in Kind Robots #5273 merge 65cca70d, after all 7 required checks green. Conductor #7523 merged green for private V7 source/render hard/soft mask and actual pixel-delta evidence. Conductor #7524 adds missing inpaint_encoding to durable request key; its V7 ledger has no ArtJob and must NOT merge/trigger art until Alexandria production version confirms backend 65cca70d or descendant. Build image workflow 44035068573 in progress at review. This t-032 task remains unfinished until image inspected and remaining 14 Classic REDO plus QA fixed.
 
       Kind Robots PR #5273 merged and Alexandria served its exact mask repair commit 65cca70d. Conductor PR #7524 merged green (91d8e90b), fixing inpaint_encoding request-key uniqueness, after full test/security/visual checks. Auto Art Generate #44036966930 accepted and durable- checkpointed the ONE private V7 masked-VAE ArtJob 69726. Canonical V7 ledger still has art {} while workflow runs Refresh art ledger statuses: ArtImage and actual full-size acceptance are pending. Do not resubmit duplicate; poll #69726, inspect genuine pixels and three attached arms/pen transfer against source #273631 and V6 failed #274183; do not publish or link public Classic art before accepted. Other 14 Classic REDO and browser QA remain. See kind_robots issue #4150 comment 6941536534. Task remains unfinished and ready for continuation.
+    owner: worker
+    claimed_by: 2026-11-17T222700Z-shifting-desks-t032-gpt6-b2a7e
+    claimed_at: '2026-11-17T22:27:00Z'
   - id: t-033
     milestone: m3
     title: 'Tone ladder: lower floors grow more Cronenbergian (rules and station art)'
