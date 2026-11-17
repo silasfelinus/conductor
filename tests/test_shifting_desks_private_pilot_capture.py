@@ -48,7 +48,7 @@ def test_pending_v2_jobs_cannot_be_passed_off_as_delivered(monkeypatch):
 
 def test_unknown_pilot_version_fails_closed():
     with pytest.raises(ValueError, match="unsupported"):
-        list(module.pilot_rows(6))
+        list(module.pilot_rows(7))
 
 
 def test_done_pilot_artimages_cannot_disappear_from_review_artifact():
@@ -192,6 +192,7 @@ def test_visual_review_runs_after_art_sweep_status_checkpoints_skip_ci():
     assert "github.event.workflow_run.head_branch == 'main'" in workflow
     assert '"projects/shifting-desks/art/KREA-IMG2IMG-CORRECTION-PILOT-1.yaml"' in workflow
     assert '"projects/shifting-desks/art/KONTEXT-MASKED-CORRECTION-PILOT-1.yaml"' in workflow
+    assert '"projects/shifting-desks/art/SDXL-TARGETED-CORRECTION-PILOT-1.yaml"' in workflow
 
 
 def test_v5_masked_kontext_candidate_capture_preserves_edit_regions():
@@ -233,3 +234,36 @@ def test_v5_finished_image_without_pixels_is_a_review_error():
     assert module.pilot_capture_errors(report) == [
         "pilot_v5: captured 2/3 delivered ArtImages"
     ]
+
+
+def test_v6_sdxl_targeted_pilot_has_rendered_source_and_mask():
+    rows = list(module.pilot_rows(6))
+    assert len(rows) == 1
+    (row,) = rows
+    assert row["_round"] == "PILOT-V6"
+    assert row["key"] == "three-arm-tank--sdxl-targeted-local"
+    assert row["job"] == 69681
+    assert row["image"] == 274183
+    assert row["status"] == "DONE"
+    assert row["verdict"] is None
+    assert row["source_image_id"] == 273631
+    assert row["source_art_job_id"] == 69458
+    assert row["mask_box"] == [[0.36, 0.58, 0.70, 0.80]]
+    assert row["target_regions"][0]["bleedPx"] == 16
+    assert row["target_regions"][0]["featherPx"] == 10
+    assert row["checkpoint"].endswith(".safetensors")
+    assert row["pass"] and row["fail"]
+    assert row["asset"].startswith("shifting-desks/private-")
+
+
+def test_v6_requires_full_image_evidence_not_merely_a_done_status():
+    recorded = {
+        "pilot_v6_captured": 0,
+        "pilot_v6_recorded_done": 1,
+        "pilot_v6_done_missing_image": 0,
+    }
+    assert module.pilot_capture_errors(recorded) == [
+        "pilot_v6: captured 0/1 delivered ArtImages"
+    ]
+    recorded["pilot_v6_captured"] = 1
+    assert module.pilot_capture_errors(recorded) == []
