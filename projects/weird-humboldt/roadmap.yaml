@@ -1585,8 +1585,8 @@ tasks:
   - id: t-066
     milestone: m5
     title: "Polish Ecotone opening, route previews, customizable player portraits, and tablet layout"
-    status: claimed
-    updated: '2026-11-17T22:04:21Z'
+    status: ready
+    updated: '2026-11-17T22:14:32Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -1665,8 +1665,14 @@ tasks:
       slots.events, so ship them only once the board draws event art. Still open:
       cards/wh-031..wh-120 plus la/fr/co/lx cards (~376 renders). Export from a venv with
       pillow+pyyaml.
+
+      2026-11-17 PT routine: WH-031..WH-060 card art merged as kind_robots#5290 (1af14b6). 29
+      cards x 4 styles = 116 webp (~8.7 MB), manifest regenerated from disk; contract passes,
+      all 13 checks green; no held art, no ArtJobs. Still open: cards/wh-061..wh-120 plus
+      la/fr/co/lx cards (~260 renders); events/* stays unshipped until the board draws event
+      art.
     owner: worker
-    implementation_pr: 'silasfelinus/kind_robots#5289'
+    implementation_pr: 'silasfelinus/kind_robots#5290'
     claimed_by: routine-96ligm-2
     claimed_at: '2026-11-17T22:04:21Z'
 
