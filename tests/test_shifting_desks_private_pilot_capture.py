@@ -290,7 +290,13 @@ def test_v7_masked_vae_capture_is_private_and_artjob_provenanced():
     assert row["asset"].startswith("shifting-desks/private-")
     assert row["job"] is None or row["job"] > 0
     assert row["image"] is None or row["image"] > 0
-    assert row["verdict"] in (None, "KEEP", "REDO")
+    assert row["job"] == 69726
+    assert row["image"] == 274359
+    assert row["status"] == "DONE"
+    assert row["verdict"] == "REDO"
+    assert row["evidence_artifact_id"] == 14345505662
+    assert "only TWO attached arms" in row["review_note"]
+    assert "composition failed" in row["review_note"]
 
 
 def test_v7_completed_image_missing_pixel_evidence_is_blocking():

@@ -5,12 +5,12 @@ round: shifting-desks-sdxl-masked-vae-pilot-2
 project_slug: shifting-desks
 task: t-032
 designer: Shifting Desks anatomy corrective second pilot
-auto_submit: true
+auto_submit: false
 priority: 85
 is_public: false
 is_mature: false
 cast_loras: false
-status: ready-for-private-submission
+status: reviewed-redo
 deployment_verification:
   backend_merge_commit: 6c897c72b4c0fc58a7fc795ded222ff012a71da0
   live_commit: 1d43a4edd6b58daa5e9004c56947a524a4e944f2
@@ -91,3 +91,19 @@ subjects:
     sdxl-masked-vae:
       status: DONE
       art_image_id: 274359
+      verdict: REDO
+      review_note: >-
+        2026-11-17 PT, actual 832x1248 V7 ArtImage 274359 visually compared
+        against V5 source 273631 using Conductor visual-review run 44120268742,
+        review artifact 14345505662. Clerk still has only TWO attached arms;
+        orange pen remains in the original raised left hand. No third shoulder,
+        elbow, wrist or hand. Fails the V7 anatomy brief: do not KEEP, publish,
+        or link as the Classic mutation-suite replacement. Independent masked
+        pixel diagnostics (artifact 14343659935) measured 198755 hard-mask
+        pixels, 198297 soft-mask pixels and 79.1306 percent materially changed
+        within mask: composite is no longer black/no-op, but composition failed.
+        Do not rerun identical settings; use a fundamentally different controlled
+        correction or composition strategy. Source issue kind_robots#4150,
+        comment 6962742037.
+      evidence_artifact_id: 14345505662
+      pixel_diagnostic_artifact_id: 14343659935
