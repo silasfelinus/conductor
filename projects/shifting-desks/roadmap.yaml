@@ -610,8 +610,8 @@ tasks:
   - id: t-032
     milestone: m3
     title: 'Land, review and link the art round 13 re-renders and round 14 tone-ladder renders'
-    status: ready
-    updated: '2026-11-17T03:54:42+00:00'
+    status: claimed
+    updated: '2026-11-17T04:17:20Z'
     depends_on: t-015
     passes: 0
     stakes: reversible
@@ -637,6 +637,9 @@ tasks:
       Rendered private SDXL pilot ArtJob 69681 has ArtImage 274183. The current visual-review workflow omitted pilot V6, so a scoped Conductor PR adds authenticated full-image V6 capture, provenance and fail-closed regression tests before any KEEP/REDO decision. No automatic publishing or Classic asset replacement.
 
       Reviewer merged Conductor PR #7513 (squash 2003300, exact head d94f0fe, all 25 checks green or skipped): V6 authenticated capture plus REDO verdict for SDXL targeted ArtJob 69681 / ArtImage 274183 (clerk still two-armed, ~1.29/255 mean diff from source). Checkpoint only; master art task stays open. Released claim. Next cycle: diagnose why the targeted SDXL composite barely diverges from source (mask/latent/denoise) before spending another ArtJob; kaizen t-058.
+    owner: worker
+    claimed_by: 20261117T041720Z-shifting-desks-t032-probe-b4c9
+    claimed_at: '2026-11-17T04:17:20Z'
   - id: t-033
     milestone: m3
     title: 'Tone ladder: lower floors grow more Cronenbergian (rules and station art)'
