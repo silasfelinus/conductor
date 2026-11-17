@@ -902,4 +902,53 @@ def test_sdxl_targeted_api_payload_has_strict_regions_and_deployment_guard():
     else:
         raise AssertionError("a private correction cannot be published")
 
+def test_dry_run_uses_body_size_except_for_targeted_edits(tmp_path, monkeypatch, capsys):
+    ledger = {
+        "project_slug": "shifting-desks",
+        "is_public": False,
+        "lanes": [
+            {"key": "standard", "engine": "zimage", "prompt": "prose"},
+            {
+                "key": "targeted",
+                "engine": "sdxl-targeted",
+                "prompt": "prose",
+                "checkpoint": "SDXL/dreamshaperXL_v21TurboDPMSDE.safetensors",
+            },
+        ],
+        "subjects": [
+            {
+                "key": "full-frame",
+                "lane": "standard",
+                "size": "1024x1024",
+                "prompt_prose": "An office worker in a brightly lit cubicle.",
+            },
+            {
+                "key": "third-arm",
+                "lane": "targeted",
+                "size": "832x1216",
+                "source_image_id": 273631,
+                "prompt_prose": "A third arm holds an orange pen.",
+                "targets": [
+                    {"type": "box", "box": [0.32, 0.47, 0.84, 0.82]},
+                ],
+            },
+        ],
+    }
+    path = tmp_path / "dry-run.yaml"
+    path.write_text(yaml.safe_dump(ledger, sort_keys=False))
+    monkeypatch.setattr(enq, "contract_rules", lambda cells: [[] for _ in cells])
 
+    original_build = enq.build_request
+
+    def sized_request(ledger, lane, subject, source_image=None):
+        body = original_build(ledger, lane, subject, source_image)
+        body["width"], body["height"] = 1536, 768
+        return body
+
+    monkeypatch.setattr(enq, "build_request", sized_request)
+
+    assert enq.main([str(path)]) == 0
+    output = capsys.readouterr().out
+    assert 'full-frame [standard] 1536x768 "' in output
+    assert 'third-arm [targeted] 832x1216 "' in output
+    assert "explicit target regions via /api/art/inpaint-targets" in output
