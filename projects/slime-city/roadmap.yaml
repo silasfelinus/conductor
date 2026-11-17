@@ -1446,7 +1446,7 @@ tasks:
   - id: t-054
     milestone: m2
     title: 'Ironjaw follow-through: lab-mutant identity in story, evolutions and remaining art'
-    status: ready
+    status: done
     passes: 0
     stakes: reversible
     note: |-
@@ -1504,10 +1504,17 @@ tasks:
       NEXT: once the sweep writes art_image_id, curate it and wire it at
       SLIME_CITY_ART.cards['s2-ironjaw-foundry-lion'] with a redoRounds verdict, then close
       t-054. Rung 1; not a human gate.
-    updated: '2026-11-17T12:51:55Z'
+
+      2026-11-17 PT: reviewed IRONJAW-LIZARDS-REDO-4 render 274534 (grey gecko bookkeeper
+      rides the crane lion, no ogre or lettering) and wired it at
+      SLIME_CITY_ART.cards['s2-ironjaw-foundry-lion'] with a redoRounds keep verdict.
+      kind_robots#5281 merged as squash 41528a4 with all checks green. That was the last ogre-
+      era Ironjaw slot, so t-054 is done.
+    updated: '2026-11-17T14:02:23Z'
     owner: worker
     claimed_by: 2026-11-17T124734Z-slime-city-t-054-r7k2
     claimed_at: '2026-11-17T12:47:35Z'
+    implementation_pr: 'silasfelinus/kind_robots#5281'
   - id: t-055
     title: "Slime City: first reconnectable, private human-vs-human CLASH matches"
     status: done
