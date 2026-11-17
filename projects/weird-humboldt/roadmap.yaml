@@ -1585,8 +1585,8 @@ tasks:
   - id: t-066
     milestone: m5
     title: "Polish Ecotone opening, route previews, customizable player portraits, and tablet layout"
-    status: claimed
-    updated: '2026-11-17T20:01:17Z'
+    status: ready
+    updated: '2026-11-17T20:13:50Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -1642,8 +1642,15 @@ tasks:
       Real Endings, events/*, and cards/wh|co|fr|la|lx (~650 renders; check the contract
       accepts those keys first). Local Pillow was broken; export from a venv with
       pillow+pyyaml.
+
+      2026-11-17 PT routine: MY-10..MY-12 case cards merged as kind_robots#5287 (194bd7d). 21
+      cards x 4 styles = 84 webp (5.6 MB), manifest regenerated from disk. All 13 checks
+      green, no held art, no ArtJobs. Mystery case cards are now complete for MY-01..MY-12
+      across all four styles. Still open: mysteries/* Real Endings, events/*, and
+      cards/wh|co|fr|la|lx (~570 renders; first check that the contract accepts those keys).
+      Export from a venv with pillow+pyyaml.
     owner: worker
-    implementation_pr: 'silasfelinus/kind_robots#5286'
+    implementation_pr: 'silasfelinus/kind_robots#5287'
     claimed_by: 2026-11-17T-routine-nnaufl-my10
     claimed_at: '2026-11-17T20:01:17Z'
 
