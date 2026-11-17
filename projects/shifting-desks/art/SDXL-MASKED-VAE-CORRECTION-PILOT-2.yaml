@@ -1,16 +1,23 @@
 # Private second hypothesis for t-032 after V6 near-zero masked pixels.
-# Stage only. No automatic generation before the opt-in Kind Robots backend
-# PR #5271 has merged and verified on the actual self-hosted production route.
+# Backend PR #5271 merged; production /api/version reached the merged commit.
+# Submit only after a live previewOnly+masked-vae mask preflight passes.
 round: shifting-desks-sdxl-masked-vae-pilot-2
 project_slug: shifting-desks
 task: t-032
 designer: Shifting Desks anatomy corrective second pilot
-auto_submit: false
+auto_submit: true
 priority: 85
 is_public: false
 is_mature: false
 cast_loras: false
-status: staged-awaiting-masked-vae-deployment
+status: ready-for-private-submission
+deployment_verification:
+  backend_merge_commit: 6c897c72b4c0fc58a7fc795ded222ff012a71da0
+  live_commit: 1d43a4edd6b58daa5e9004c56947a524a4e944f2
+  probe_run_id: 44025707717
+  probe_job_id: 133845415758
+  live_verified_at: '2026-11-17T05:40:54Z'
+  note: Production version from the successful Tzaddik workflow; live API preview is still required before queueing.
 lanes:
 - key: sdxl-masked-vae
   engine: sdxl-targeted
