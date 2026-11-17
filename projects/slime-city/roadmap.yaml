@@ -1098,7 +1098,7 @@ tasks:
   - id: t-044
     milestone: m2
     title: "Lizard art: Ironjaw crew poster, card art, evolutions and board tokens"
-    status: claimed
+    status: done
     depends_on: t-043
     passes: 0
     stakes: reversible
@@ -1183,8 +1183,15 @@ tasks:
       scribble marks: no ogres, no humans, no legible lettering. No boss repaint needed.
       Only remaining t-044 work: curate IRONJAW-LIZARDS-STORY-REDO-2 (ironjaw/2/cunning)
       once the sweep writes art_image_id, then close t-044. Rung 1; not a human gate.
-    updated: '2026-11-17T11:47:55Z'
-    implementation_pr: 'silasfelinus/kind_robots#5277'
+
+      2026-11-17 PT: authenticated fetch + review of IRONJAW-LIZARDS-STORY-REDO-2 (ArtJob
+      69742, art 274374): cobalt Rivet at a blank-faced shift-clock, chromatic lizard crew,
+      frog divers small in the drain, no numerals or lettering (thin sweep hand cosmetic
+      only). kind_robots#5280 wires it at ironjaw/2/cunning over ogre-era 262259 with a
+      storyRounds keep verdict; coverage test passes. Every Ironjaw crew, card, token,
+      evolution, story and boss slot is now lizard-painted. Closing t-044.
+    updated: '2026-11-17T11:58:17Z'
+    implementation_pr: 'silasfelinus/kind_robots#5280'
     owner: worker
     claimed_by: 2026-11-17T1150Z-slime-city-t-044-r7
     claimed_at: '2026-11-17T11:47:55Z'
