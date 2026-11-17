@@ -36,8 +36,13 @@ def test_v7_has_independent_request_key_and_correct_arm_movement():
     assert subject["prior_failed_art_image_id"] == 274183
     assert subject["seed"] != 932821
     assert len(subject["targets"]) == 2
-    assert subject["jobs"] == {}
-    assert subject["art"] == {}
+    # Auto-Art checkpoints the ID on main as soon as a job is accepted.
+    # This test must remain green after real V7 delivery.
+    job = (subject.get("jobs") or {}).get("sdxl-masked-vae")
+    image = (subject.get("art") or {}).get("sdxl-masked-vae") or {}
+    assert job is None or job > 0
+    assert image.get("art_image_id") is None or image["art_image_id"] > 0
+    assert image.get("verdict") in (None, "KEEP", "REDO")
     assert "target_path" not in subject
     assert "entity_art" not in subject
     assert "pen" in subject["pass"].lower()

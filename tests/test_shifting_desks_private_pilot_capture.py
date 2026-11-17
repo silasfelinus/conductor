@@ -193,6 +193,7 @@ def test_visual_review_runs_after_art_sweep_status_checkpoints_skip_ci():
     assert '"projects/shifting-desks/art/KREA-IMG2IMG-CORRECTION-PILOT-1.yaml"' in workflow
     assert '"projects/shifting-desks/art/KONTEXT-MASKED-CORRECTION-PILOT-1.yaml"' in workflow
     assert '"projects/shifting-desks/art/SDXL-TARGETED-CORRECTION-PILOT-1.yaml"' in workflow
+    assert '"projects/shifting-desks/art/SDXL-MASKED-VAE-CORRECTION-PILOT-2.yaml"' in workflow
 
 
 def test_v5_masked_kontext_candidate_capture_preserves_edit_regions():
@@ -269,3 +270,37 @@ def test_v6_requires_full_image_evidence_not_merely_a_done_status():
     ]
     recorded["pilot_v6_captured"] = 1
     assert module.pilot_capture_errors(recorded) == []
+
+
+def test_v7_masked_vae_capture_is_private_and_artjob_provenanced():
+    rows = list(module.pilot_rows(7))
+    assert len(rows) == 1
+    (row,) = rows
+    assert row["_round"] == "PILOT-V7"
+    assert row["key"] == "three-arm-tank-recomposition--sdxl-masked-vae"
+    assert row["source_image_id"] == 273631
+    assert row["source_art_job_id"] == 69458
+    assert row["mask_box"] == [
+        [0.18, 0.25, 0.42, 0.50],
+        [0.34, 0.53, 0.72, 0.78],
+    ]
+    assert len(row["target_regions"]) == 2
+    assert row["checkpoint"].endswith(".safetensors")
+    assert row["pass"] and row["fail"]
+    assert row["asset"].startswith("shifting-desks/private-")
+    assert row["job"] is None or row["job"] > 0
+    assert row["image"] is None or row["image"] > 0
+    assert row["verdict"] in (None, "KEEP", "REDO")
+
+
+def test_v7_completed_image_missing_pixel_evidence_is_blocking():
+    report = {
+        "pilot_v7_recorded_done": 1,
+        "pilot_v7_captured": 0,
+        "pilot_v7_done_missing_image": 0,
+    }
+    assert module.pilot_capture_errors(report) == [
+        "pilot_v7: captured 0/1 delivered ArtImages"
+    ]
+    report["pilot_v7_captured"] = 1
+    assert module.pilot_capture_errors(report) == []
