@@ -62,3 +62,102 @@ kind_robots#5256.
 - Trial scenes: Oona the heavyset bison guardian; Vex the nonbinary bat rogue; the Ossuary Horror; Oona and Vex confronting the beast; and an affectionate waterfall bath for the established **adult** Brannoc/Thessaly couple, with deep opaque water, cascading white spray, rocks and ferns blocking anatomy below shoulders. Images are marked private and mature, and no public release is authorized.
 - The admin-only, mature-enabled `/admin/deepheart/bible` is the staging room: private cast briefs, visual canon, five-subject gallery grouped by model, ArtJob status, local ratings and review notes. Compare before commissioning the full 94. The bible link appears on the Deepheart admin title screen only for qualifying viewers.
 - Queued is not rendered or attached: verify accepted ArtJobs, ArtImages, canonical files and working URLs before marking t-012 complete. Do not confuse submission with delivery.
+
+
+## The vertical world: politics all the way down (Silas, November 16 PT)
+
+Deepheart is a **settled vertical world**, not a staircase of combat arenas. The
+surface is home to animal-person adventurers, guilds, sponsors and ordinary
+families. Beneath it, entire communities make their lives around shafts,
+reservoirs, markets, graveyards, heatworks and root gardens. Riches can be found
+below, but the surface habit of calling every valuable discovery "loot" is a
+form of colonial blindness. The underground has its own cultures, property
+claims, unions, merchants and politics.
+
+- **Bellmouth and the Ossuary Gate:** Surface supply depots and gravekeepers,
+  ropewalk porters, toll elevators, lantern schools and debt registries. The
+  residents are not obliged to welcome treasure hunters into their homes.
+- **The Drowned Halls:** A lived-in floodplain of barges, water markets,
+  landlord-held dry stairways, salvage crews, community kitchens and
+  neighbourhood councils. Access to clean water and upward transit is power.
+- **The Ember Deep:** Forgers, heatworks labourers, root-farm commons, legal
+  disputes over the mountain's living heart and nobles who regard time as
+  their hereditary property.
+
+Punk aesthetics should come from lived-in civic resistance: scavenged heraldry,
+repaired jackets, hand-painted strike signs, anarchic music, salvage and neon
+thread in old court gowns. The cyberpunk parallel is **vertical privilege,
+resource monopolies, identity paperwork, access control, financial debt and
+propaganda**, transposed into fantasy without turning the setting into a
+computer world.
+
+**Playable obstacle grammar:** Minor threats include a busted lift or a
+sabotaged school beam. Major threats include a flood-ward eviction, debt-backed
+food shortages, and an industrial lockout. Every added society/fairy choice
+event offers multiple nonviolent d20 ability checks and a no-roll refusal or
+costly alternative. Checks use the seeded run RNG, 1d20 plus the best conscious
+party member's relevant stat divided by four (rounded down, minimum zero),
+against a visible difficulty. Failures cost resources or cause harm but do not
+silently force combat. Rolls and totals are printed in the run log and remain
+deterministic across save/reload.
+
+## The Glass Family: the fairy court
+
+All mortal residents are anthropomorphic animal people. **The six fairy gods
+are the deliberate supernatural exception:** they look eerily and
+unmistakably **human**, with varied adult complexions, body types and gender
+presentations. This is not explained at introduction. The player discovers
+the anomaly organically, and different locals offer incompatible theories.
+Later revelations establish how much these rulers have manipulated the
+surface's understanding of identity.
+
+| Fairy ruler | Magical jurisdiction | Political pressure |
+| --- | --- | --- |
+| Duchess Aveline, Mistress of Names | Names, citizenship and erasure | Registry determines who counts as a person |
+| Prince Ilex, Weight of the World | Gravity, stairs, transit | Toll lifts determine whose food and medicine can move |
+| Lady Serein, Matron of Interest | Debt and borrowed tomorrows | Tomorrow can be repossessed |
+| Lord Vireo, Last Supper | Food multiplication and famine | Royal banquets control community kitchens |
+| Countess Cauline, Seamstress of the Hour | Stolen, rewoven time | Working hours are hereditary collateral |
+| Consort Ludo, Prince of False Faces | Masks, fame and public memory | Gossip and propaganda rewrite dissent |
+
+The court is a **bored family of scheming adult nobles**, not an unbroken
+villain team. Their power is immense, their emotional maturity questionable.
+At the core are half-siblings, an annulled marriage with collateral claims,
+cousins whose youthful affair was erased from the registry, estranged parents,
+adopted heirs, a staged engagement, feuds, false genealogies, leaked letters,
+public hookups, breakups, and revenge plots. These are non-explicit soap-opera
+relationships, written to illuminate the political machinery they built.
+
+### Playable audiences and endings
+
+Six fairy audience events can appear throughout the three strata. The
+player may bargain, expose, defy, or walk away. The first meeting reveals the
+god's human face in the scrapbook. Successful investigations and bargains
+reveal one of twelve distinct connections in the family diagram.
+
+Once a god has been met, the player may accept one **last audience** after
+choosing any of Deepheart's original nine major endings. This is an optional
+second decision hand: choose which known patron to face, then **bargain,
+expose, or defy** on a visible 1d20 check. Each choice has a distinct
+success/failure epilogue and unlocks the relevant reveal entry. Declining all
+audiences ends normally. This preserves old ending IDs, saves and achievements
+while layering a personal court resolution onto the original finish.
+
+### Scrapbook as a relationship flowchart
+
+The Deepheart Scrapbook has **Court Connections** and **Lived Moments** tabs.
+The former is a genuine node-and-edge flowchart for all six rulers, with
+twelve typed connections: kinship, affairs, former lovers, annulments, grudges,
+schemes and revenge. Unknown nobles are concealed and unknown links are
+unlabelled; actually meeting, investigating, and resolving a final audience
+unlocks names and relationship explanations. Clicking a known node filters its
+connection captions and dossiers. This is a story graph, not a decorative
+family-tree picture.
+
+The private art bible may display spoiler-rich visual design prompts, while
+the public scrapbook only reveals what the individual save has earned.
+**Do not resume the 94-image bulk anthro repaint until the existing 40-image
+model comparison has established the accepted mature Western cartoon style.**
+When rendering these rulers, their human faces must be visibly distinct from
+the world's anthropomorphic citizens; use their human appearances only in
+fairy art prompts, not as a reason to revert the mortal cast to generic humans.
