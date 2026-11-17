@@ -663,6 +663,8 @@ def main(argv: list[str] | None = None) -> int:
                 return EXIT_IN_PROGRESS
         if episode_path is None:
             raise ValueError("--episode or --daily is required")
+        # record() stores the path relative to the repo, which needs an absolute path.
+        episode_path = episode_path.resolve()
         episode = load_episode(episode_path)
         if args.resume and not (args.video_id or state["episodes"].get(episode["slug"], {}).get("music_video_id")):
             raise ValueError("resume requires a recorded MusicVideo ID")
