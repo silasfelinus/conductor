@@ -116,12 +116,12 @@ tasks:
       These 100 anchors are outlines, not implemented daily script records.
   - id: t-063
     title: 'Export and wire the ~430 rendered Emperor images that never reached the game'
-    status: claimed
+    status: ready
     milestone: m5
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-17T06:58:38Z'
+    updated: '2026-11-17T07:06:06Z'
     note: |-
       Silas 2026-11-11 PT, in session: "If there is unmade art it should definitely be added to the pipeline."
 
@@ -134,9 +134,20 @@ tasks:
       PR #5109 adds real-file integrity checks for every one of the 135 chance scenes and both choices, plus exported dedicated art manifest validation. The ~430-image delivery scope remains incomplete. Await exact-head CI and merge; do not mark ready for playtest.
 
       2026-11-13 PT: merged kind_robots#5120 (e21a2dc, 12/12 checks green), a rescue of #5109. It adds real-file integrity checks for all 135 chance scenes and both choices, plus exported-plate manifest validation. #5109 sat red for 16h on one double-escaped regex (line 113), which failed TypeScript, Prettier and the dispatch contract. The ~430-image export and delivery scope is still incomplete; next claimer continues the exports.
+
+      2026-11-16 PT: quest slice. Contact-sheet curation of all 63 QUESTS-MISSING-ROUND-2
+      renders: kind_robots#5276 ships 48 keepers (QUEST_ART 228->276) and adds
+      verifyEmperorQuestArt (every entry ships, every file listed, every entry an authored
+      quest). 15 rejected (6 human figures, 2 lettered signs, 6 gallery plates drawn as open
+      valleys, 1 off-location); verdicts in the ledger and rerolled in QUESTS-MISSING-
+      REDO-1.yaml (auto_submit, prompt contract 15/15). Released claim. NEXT: curate that
+      redo; then chance-event, audience/consequence/barracks/forge and secret-story plates,
+      and the q-d42 cave-forage v3 set. Live 390/768/1440 screenshot not taken; same format as
+      the 228 already shipped.
     owner: reviewer
     claimed_by: 2026-11-17T065837Z-eod-t063-q75wjq
     claimed_at: '2026-11-17T06:58:38Z'
+    implementation_pr: 'silasfelinus/kind_robots#5276'
   - id: t-064
     title: 'Painted ending plates and a persistent Endings gallery / reign scrapbook'
     status: ready
