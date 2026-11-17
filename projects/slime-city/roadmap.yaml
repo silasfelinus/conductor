@@ -1098,7 +1098,7 @@ tasks:
   - id: t-044
     milestone: m2
     title: "Lizard art: Ironjaw crew poster, card art, evolutions and board tokens"
-    status: claimed
+    status: ready
     depends_on: t-043
     passes: 0
     stakes: reversible
@@ -1145,8 +1145,19 @@ tasks:
       framing, positive wording only; live prompt contract pass, auto_submit). NEXT: curate
       redo 3; then repaint ogre-era Ironjaw campaign story art (ironjaw/1..5). Not a human
       gate.
-    updated: '2026-11-17T00:47:27Z'
-    implementation_pr: 'silasfelinus/kind_robots#5264'
+
+      2026-11-16 PT: authenticated fetch + review of both IRONJAW-LIZARDS-REDO-3 renders; both
+      clean (plain cloth band, counter framing, no lettering). kind_robots#5265 wires merc-
+      picket-troll@2 274064 and s3-ironjaw-bonus-plate@2 274065 (coverage + overworld tests
+      pass); every Ironjaw card/token/evolution redo slot is now lizard-painted. Queued
+      IRONJAW-LIZARDS-STORY-ROUND-1.yaml (23 subjects, seeds 1197200-1197222, priority 1000,
+      auto_submit, live prompt contract 23/23): opening, ironjaw/1..5
+      scene/conviction/cunning/defeat and both endings repainted as lizards from current
+      campaign.ts text. Released claim. NEXT: once the sweep writes art_image_ids, curate
+      story round 1 on a contact sheet and replace the ogre-era ids in artManifest.ts story;
+      then check ironjaw/hit|gloat|beaten boss portraits. Rung 1; not a human gate.
+    updated: '2026-11-17T00:54:53Z'
+    implementation_pr: 'silasfelinus/kind_robots#5265'
     owner: worker
     claimed_by: 2026-11-17T00:47:26Z-c6yat2s
     claimed_at: '2026-11-17T00:47:27Z'
