@@ -611,7 +611,7 @@ tasks:
     milestone: m3
     title: 'Land, review and link the art round 13 re-renders and round 14 tone-ladder renders'
     status: review
-    updated: '2026-11-17T06:50:12Z'
+    updated: '2026-11-17T07:04:06Z'
     depends_on: t-015
     passes: 0
     stakes: reversible
@@ -647,6 +647,8 @@ tasks:
       Merged Conductor PR #7520 at 1efa2562 after all five exact-head checks green, activating only the private two-region masked-VAE V7 ledger behind free live previewOnly encoding+mask validation. Kind Robots deployment 1d43a4ed verified to descend from backend 6c897c72. Auto Art Generate run 44027456778 reached its ledger sweep and completed its job-ID checkpoint, but the canonical V7 ledger still showed jobs {} and art {}. Its Continue-on-error sweep can mask a failed or skipped submission; the overall workflow remains in Refresh art ledger statuses, so full logs are not yet downloadable. Next action: read completed sweep logs, diagnose V7 specific reason, repair and submit once via stable requestKey. No V7 ArtJob, ArtImage, KEEP, public Classic link or playtest readiness is claimed. See kind_robots#4150 comment 6940238421. Existing other Classic 14 REDO and browser QA remain; keep t-032 ready and master issue open.
 
       Found root cause of private V6 near-no-op and V7 preflight rejection: Sharp blur inflated grayscale mask to three channels; one-channel indexing made soft composite all black. Node reproduction and V6 artifact 14298374729 establish the failure. Kind Robots PR #5273 fixes encoding after blur and adds fail-closed empty-soft-mask defense with full-size two-region regression tests. Companion scoped Conductor PR adds an evidence-only V7 diagnostic that reports pending until DONE image, then captures actual hard/soft masks and source/render pixel-delta for editorial inspection. Both PRs must pass exact-head CI; V7 still needs Alexandria deployment and authentic ArtJob/ArtImage acceptance. This is NOT task completion.
+
+      Exact root cause of V6 black composite mask fixed and shipped in Kind Robots #5273 merge 65cca70d, after all 7 required checks green. Conductor #7523 merged green for private V7 source/render hard/soft mask and actual pixel-delta evidence. Conductor #7524 adds missing inpaint_encoding to durable request key; its V7 ledger has no ArtJob and must NOT merge/trigger art until Alexandria production version confirms backend 65cca70d or descendant. Build image workflow 44035068573 in progress at review. This t-032 task remains unfinished until image inspected and remaining 14 Classic REDO plus QA fixed.
     owner: worker
     claimed_by: 20261117T061650Z-shifting-desks-t032-v7mask-7f35
     claimed_at: '2026-11-17T06:16:50Z'
