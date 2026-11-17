@@ -51,6 +51,8 @@ def metrics(source: Image.Image, edited: Image.Image, hard: Image.Image,
         raise ValueError("Soft mask escapes pixel-locked hard mask")
     masked = hard_full.point(lambda x: 255 if x >= 128 else 0)
     count = masked.histogram()[255]
+    softened = soft_full.point(lambda x: 255 if x >= 128 else 0)
+    soft_count = softened.histogram()[255]
     if not count or count == source.width * source.height:
         raise ValueError("Target mask must be nonempty and not cover entire image")
     diff = ImageChops.difference(source, edited)
@@ -64,6 +66,8 @@ def metrics(source: Image.Image, edited: Image.Image, hard: Image.Image,
     return {
         "size": list(source.size),
         "mask_pixels": count,
+        "soft_mask_pixels": soft_count,
+        "soft_mask_fraction_of_hard": round(soft_count / count, 6),
         "mask_fraction": round(count / (source.width * source.height), 6),
         "inside_changed_fraction_at_16": round(in_changed / count, 6),
         "outside_changed_fraction_at_16": round(
@@ -78,14 +82,34 @@ def metrics(source: Image.Image, edited: Image.Image, hard: Image.Image,
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--out", type=Path, required=True)
+    parser.add_argument("--pilot-version", type=int, choices=(6, 7), default=6)
     args = parser.parse_args()
     args.out.mkdir(parents=True, exist_ok=True)
-    ledger = yaml.safe_load((ART / "SDXL-TARGETED-CORRECTION-PILOT-1.yaml").read_text())
+    filename = {
+        6: "SDXL-TARGETED-CORRECTION-PILOT-1.yaml",
+        7: "SDXL-MASKED-VAE-CORRECTION-PILOT-2.yaml",
+    }[args.pilot_version]
+    ledger = yaml.safe_load((ART / filename).read_text(encoding="utf-8"))
     subject, lane = ledger["subjects"][0], ledger["lanes"][0]
-    job = subject.get("jobs", {}).get(lane["key"])
-    art = subject.get("art", {}).get(lane["key"], {})
+    job = (subject.get("jobs") or {}).get(lane["key"])
+    art = (subject.get("art") or {}).get(lane["key"]) or {}
+    if art.get("status") == "DONE" and not art.get("art_image_id"):
+        raise ValueError("DONE ArtJob is missing its ArtImage ID")
     if not job or art.get("status") != "DONE" or not art.get("art_image_id"):
-        raise ValueError("Targeted V6 ArtJob and ArtImage must be completed")
+        if args.pilot_version != 7:
+            raise ValueError("Targeted V6 ArtJob and ArtImage must be completed")
+        pending = {
+            "pilot_version": 7,
+            "status": "pending",
+            "art_job_id": job,
+            "art_image_id": art.get("art_image_id"),
+            "note": "No V7 image accepted yet. Do not infer visual success.",
+        }
+        (args.out / "diagnostic.json").write_text(
+            json.dumps(pending, indent=2) + "\n", encoding="utf-8"
+        )
+        print(json.dumps(pending))
+        return 0
     source_data = compose_source(subject, fetch_source_image)
     source = decode_image(source_data)
     edited = decode_image(fetch_source_image(art["art_image_id"]))
@@ -98,10 +122,14 @@ def main() -> int:
     data = response.get("data", {}) if isinstance(response, dict) else {}
     if status != 200 or not data.get("previewOnly"):
         raise RuntimeError(f"previewOnly failed: HTTP {status}")
+    if args.pilot_version == 7 and data.get("inpaintEncoding") != "masked-vae":
+        raise RuntimeError("V7 preview did not acknowledge the masked-VAE encoding")
     crop = data["crop"]
     hard, soft = decode_image(data["noiseMaskData"]), decode_image(data["compositeMaskData"])
     summary = metrics(source, edited, hard, soft, crop)
     summary.update({
+        "pilot_version": args.pilot_version,
+        "status": "measured",
         "art_job_id": job,
         "art_image_id": art["art_image_id"],
         "source_image_id": subject["source_image_id"],
