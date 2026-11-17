@@ -6,6 +6,7 @@ on:
       - "projects/shifting-desks/art/KREA-IMG2IMG-CORRECTION-PILOT-1.yaml"
       - "projects/shifting-desks/art/KONTEXT-MASKED-CORRECTION-PILOT-1.yaml"
       - "projects/shifting-desks/art/SDXL-TARGETED-CORRECTION-PILOT-1.yaml"
+      - "projects/shifting-desks/art/diagnose_targeted_edit.py"
   # ArtJob and ArtImage status checkpoints on main use [skip ci], so a push
   # filter alone cannot see completed Krea candidates. Capture after the
   # whole art sweep instead, even if unrelated queue cells fail.
@@ -18,6 +19,7 @@ on:
       - "projects/shifting-desks/art/build_review_sheets.py"
       - "projects/shifting-desks/art/build_recovery_sheets.py"
       - "tests/test_shifting_desks_private_pilot_capture.py"
+      - "tests/test_shifting_desks_targeted_mask_diagnostics.py"
       - "projects/shifting-desks/art/ROUND-18.yaml"
       - "projects/shifting-desks/art/ROUND-19.yaml"
       - "projects/shifting-desks/art/SUBJECT-FIDELITY-PILOT-V2.yaml"
@@ -92,6 +94,22 @@ jobs:
         run: |
           python projects/shifting-desks/art/build_recovery_sheets.py \
             --out "$RUNNER_TEMP/shifting-desks-current-recovery"
+
+      - name: Diagnose V6 targeted SDXL masks and original-versus-result pixels
+        env:
+          KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+          KR_BASE_URL: https://kindrobots.org
+        run: |
+          python projects/shifting-desks/art/diagnose_targeted_edit.py \
+            --out "$RUNNER_TEMP/shifting-desks-targeted-v6"
+      - name: Upload V6 targeted mask / image-delta diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: shifting-desks-targeted-v6-diagnostic
+          path: ${{ runner.temp }}/shifting-desks-targeted-v6/
+          if-no-files-found: warn
+          retention-days: 14
 
       - name: Upload Classic and all V1-V6 private pilot review evidence
         if: always()
