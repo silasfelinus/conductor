@@ -176,13 +176,16 @@ tasks:
   - id: t-012
     milestone: m4
     title: "Every picture rendered, delivered, URL-verified and wired (set src / RENDERED_ART)"
-    status: ready
+    status: claimed
     depends_on: t-011
-    owner: null
+    owner: worker
     passes: 0
     stakes: reversible
     note: |-
       Queued is not rendered is not delivered. Portraits land under /images/deepheart/.
+    claimed_by: 2026-11-17T021800Z-deepheart-t-012-8e7dc42
+    claimed_at: '2026-11-17T02:18:00Z'
+    updated: '2026-11-17T02:18:00Z'
   - id: t-013
     milestone: m4
     title: "Adversarial seeded playthroughs and 390/768/1440 px checks"
