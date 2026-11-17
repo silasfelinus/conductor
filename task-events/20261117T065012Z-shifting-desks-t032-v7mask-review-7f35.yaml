@@ -1,0 +1,8 @@
+version: 1
+project: shifting-desks
+task: t-032
+operation: review
+session: 20261117T061650Z-shifting-desks-t032-v7mask-7f35
+updated: '2026-11-17T06:50:12Z'
+note: >-
+  Found root cause of private V6 near-no-op and V7 preflight rejection: Sharp blur inflated grayscale mask to three channels; one-channel indexing made soft composite all black. Node reproduction and V6 artifact 14298374729 establish the failure. Kind Robots PR #5273 fixes encoding after blur and adds fail-closed empty-soft-mask defense with full-size two-region regression tests. Companion scoped Conductor PR adds an evidence-only V7 diagnostic that reports pending until DONE image, then captures actual hard/soft masks and source/render pixel-delta for editorial inspection. Both PRs must pass exact-head CI; V7 still needs Alexandria deployment and authentic ArtJob/ArtImage acceptance. This is NOT task completion.
