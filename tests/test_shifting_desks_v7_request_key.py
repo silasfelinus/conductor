@@ -46,7 +46,9 @@ def test_v7_key_is_unique_and_feather_hotfix_remains_not_published():
     data = yaml.safe_load(path.read_text(encoding="utf-8"))
     subject, lane = data["subjects"][0], data["lanes"][0]
     assert data["is_public"] is False
-    assert data["auto_submit"] is True
+    assert data["auto_submit"] is False
+    assert data["status"] == "reviewed-redo"
+    assert subject["art"][lane["key"]]["verdict"] == "REDO"
     assert lane["inpaint_encoding"] == "masked-vae"
     assert data["masked_vae_feather_repair"]["backend_pr"] == 5273
     repair = data["masked_vae_feather_repair"]

@@ -1,4 +1,4 @@
-"""V7 may submit once, privately, only after production masked-VAE preflight."""
+"""V7 was private and preflight-gated; failed art must remain quarantined."""
 from pathlib import Path
 
 import yaml
@@ -11,19 +11,24 @@ V6 = ART / "SDXL-TARGETED-CORRECTION-PILOT-1.yaml"
 V7 = ART / "SDXL-MASKED-VAE-CORRECTION-PILOT-2.yaml"
 
 
-def test_v7_is_private_and_auto_enabled_after_verified_backend_deployment():
+def test_v7_is_private_and_submission_disabled_after_visual_redo():
     previous = yaml.safe_load(V6.read_text(encoding="utf-8"))
     data = yaml.safe_load(V7.read_text(encoding="utf-8"))
     assert previous["subjects"][0]["art"]["sdxl-targeted-local"]["verdict"] == "REDO"
-    assert data["auto_submit"] is True
-    assert is_auto_ledger(data)
+    assert data["auto_submit"] is False
+    assert not is_auto_ledger(data)
     assert data["deployment_verification"]["backend_merge_commit"].startswith("6c897c72")
     assert data["deployment_verification"]["live_commit"].startswith("1d43a4ed")
     assert data["deployment_verification"]["probe_run_id"] == 44025707717
     assert data["is_public"] is False
-    assert data["status"] == "ready-for-private-submission"
+    assert data["status"] == "reviewed-redo"
     assert data["project_slug"] == "shifting-desks"
     assert len(data["subjects"]) == len(data["lanes"]) == 1
+    art = data["subjects"][0]["art"]["sdxl-masked-vae"]
+    assert art["status"] == "DONE"
+    assert art["art_image_id"] == 274359
+    assert art["verdict"] == "REDO"
+    assert art["evidence_artifact_id"] == 14345505662
 
 
 def test_v7_has_independent_request_key_and_correct_arm_movement():
