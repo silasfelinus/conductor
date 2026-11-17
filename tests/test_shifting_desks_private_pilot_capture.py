@@ -295,7 +295,7 @@ def test_v7_masked_vae_capture_is_private_and_artjob_provenanced():
     assert row["status"] == "DONE"
     assert row["verdict"] == "REDO"
     assert row["evidence_artifact_id"] == 14345505662
-    assert "two attached arms" in row["review_note"]
+    assert "only TWO attached arms" in row["review_note"]
     assert "composition failed" in row["review_note"]
 
 
