@@ -18,6 +18,16 @@ deployment_verification:
   probe_job_id: 133845415758
   live_verified_at: '2026-11-17T05:40:54Z'
   note: Production version from the successful Tzaddik workflow; live API preview is still required before queueing.
+masked_vae_feather_repair:
+  backend_pr: 5273
+  backend_merge_commit: 65cca70d1164f90b9f58414284e52c27a362395c
+  live_verification: verified-production
+  live_commit: 65cca70d1164f90b9f58414284e52c27a362395c
+  probe_run_id: 44035891368
+  probe_job_id: 133878554477
+  live_verified_at: '2026-11-17T07:05:59Z'
+  note: Alexandria /api/version confirmed exact repair commit; preflight will still validate real V7 masks before enqueue.
+  evidence: V6 hard mask valid but feather all-black; Sharp blur RGB expansion fixed and tested.
 lanes:
 - key: sdxl-masked-vae
   engine: sdxl-targeted

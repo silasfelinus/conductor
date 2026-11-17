@@ -34,9 +34,9 @@ _ALLOWED = re.compile(r"[^A-Za-z0-9_.:/#@+=-]")
 # Fields of a ledger subject / lane that decide what renders. Curation fields added after a
 # render (art, review, rejected, notes ...) are deliberately excluded so the key never drifts.
 _SUBJECT_RENDER_PREFIXES = ("prompt", "negative", "source_", "last_image", "reference_", "mask_")
-_SUBJECT_RENDER_FIELDS = ("size", "seed", "denoise", "loras", "duration", "loop", "entity_art")
+_SUBJECT_RENDER_FIELDS = ("size", "seed", "denoise", "loras", "duration", "loop", "entity_art", "inpaint_encoding")
 _LANE_RENDER_FIELDS = (
-    "engine", "checkpoint", "prompt", "prefix", "suffix", "steps", "cfg", "sampler", "guidance",
+    "engine", "checkpoint", "inpaint_encoding", "prompt", "prefix", "suffix", "steps", "cfg", "sampler", "guidance",
     "denoise", "loras", "seed", "fps", "output_format",
 )
 # A request's render-deciding fields. `force` and `render_nonce` are included on purpose: a row
