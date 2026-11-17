@@ -1086,12 +1086,12 @@ tasks:
     implementation_pr: 'silasfelinus/conductor#7464'
   - id: t-057
     title: 'Test that enqueue_art_requests.py dry-run prints the request body size for non-targeted lanes and the subject size for sdxl-targeted lanes'
-    status: review
+    status: done
     milestone: m3
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-17T02:15:09Z'
+    updated: '2026-11-17T02:22:19Z'
     note: |-
       Reviewer kaizen from the review of the t-032 V5-verdict/SDXL-targets worker branch,
       2026-11-16 PT. The branch switched the dry-run print to core.parse_size(subject size),
@@ -1100,6 +1100,7 @@ tasks:
       Test-only, one file.
 
       Added a two-lane dry-run regression that distinguishes printed normal request geometry from the targeted inpainting subject dimensions. Scoped Conductor branch worker/shifting-desks-t-057-dry-run-size-e4c9, CI to follow; no private art submitted, linked or marked accepted.
-    owner: worker
+
+      Completed two-lane dry-run geometry regression in merged Conductor PR #7509 (merge 84d1ea7d5443d21cc95fef3b60235db6d8d22a88). Exact head 849a2ee passed Worker PR CI, Security Audit, and the rerun Worker PR handoff template. No art was submitted or linked.
     claimed_by: 2026-11-17T021348Z-shifting-desks-t-057-gpt6-e4c9
     claimed_at: '2026-11-17T02:13:48Z'
