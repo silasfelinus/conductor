@@ -16,3 +16,13 @@ Side-by-side native-size JPG review of baseline and result (both 832×1248) show
 **Decision:** keep ArtImage 274183 **private/REDO**. Do not map it to a public Classic target, run `link_art.py` for it, or resubmit an identical SDXL request. Investigate the mask/latent/compositing result and verify the output actually diverges in the permitted edit footprint before another candidate is considered. An explicit illustrated third-arm compositing layer may be more reliable than repeating this generative prompt.
 
 V5's unrelated **rear-eyes** (273629) and **living-doors** (273630) remain independently accepted **KEEP** privately. Public delivery and the other Classic REDO gaps remain unfinished. The roadmap task **t-032** and [master #4150](https://github.com/silasfelinus/kind_robots/issues/4150) stay open; Shifting Desks is **not** flagged ready for human playtests.
+
+## Debugging the no-op before retrying
+
+The site route creates a `SetLatentNoiseMask` from a hard PNG mask and applies the decoded sample through `ImageCompositeMasked` with a separate soft PNG mask. The ledger alone cannot tell which stage ignored its intended edit. Before spending another ArtJob:
+
+1. Use the private `/api/art/inpaint-targets` `previewOnly` path with the **same source and box**. Decode `noiseMaskData` and `compositeMaskData`, and assert their red channels contain substantial nonzero pixels in the chest rectangle, with zero pixels away from the allowed area.
+2. Inspect the ComfyUI input images and the saved workflow graph for ArtJob 69681, including the sampled output of the KSampler/VAEDecode **before** image compositing. Determine whether the latent edit, the composite, or the ArtImage output routing is responsible for the no-op.
+3. Require a source-versus-result nontrivial in-mask pixel delta before sending another candidate to editorial acceptance. A visible third attached arm and a pen in that new hand remain the independent **human-visible** pass criteria.
+
+Do not infer a broken node from JPEG preview similarity alone. The exact failure stage remains unverified.
