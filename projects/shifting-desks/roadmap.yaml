@@ -610,8 +610,8 @@ tasks:
   - id: t-032
     milestone: m3
     title: 'Land, review and link the art round 13 re-renders and round 14 tone-ladder renders'
-    status: review
-    updated: '2026-11-17T05:48:02Z'
+    status: ready
+    updated: '2026-11-17T06:06:07Z'
     depends_on: t-015
     passes: 0
     stakes: reversible
@@ -643,9 +643,8 @@ tasks:
       2026-11-16 PT continuation: Conductor #7517 merged green (35a49bb) with authenticated mask/pixel diagnostic; V6 ArtImage 274183 remains private REDO, 95,908 hard-mask pixels but only 0.001 percent of them significantly changed. Kind Robots #5271 merged after all nine completed green workflows (6c897c72): opt-in masked-source VAE backend, default behavior unchanged. Conductor #7518 merged green (311c5aa): V7 two-region/pen relocation trial staged with auto_submit false, zero jobs. Publish Production Container workflow 44018824100 was in progress on merge, NOT proof of Alexandria live deploy. Next: verify production serves backend commit 6c897c72 and previewOnly echoes masked-vae; then enable exactly one private V7 render, inspect real pixels and continue 14 Classic REDO deliveries. Do not close t-032 or master issue #4150 yet.
 
       After live Kind Robots version 1d43a4ed was verified to contain backend commit 6c897c72, a scoped Conductor PR opts the one private V7 two-target ledger into automation, but adds an authenticated previewOnly masked-vae echo plus hard/soft-mask validation before any paid ArtJob. It refuses submission on stale backend, blank/escaping mask, or bad crop. Dedup durable requestKey remains; full test suite and PR review pending. This is a submission checkpoint, not t-032 completion or public art acceptance.
-    owner: worker
-    claimed_by: 20261117T054601Z-shifting-desks-t032-v7-a94e
-    claimed_at: '2026-11-17T05:46:01Z'
+
+      Merged Conductor PR #7520 at 1efa2562 after all five exact-head checks green, activating only the private two-region masked-VAE V7 ledger behind free live previewOnly encoding+mask validation. Kind Robots deployment 1d43a4ed verified to descend from backend 6c897c72. Auto Art Generate run 44027456778 reached its ledger sweep and completed its job-ID checkpoint, but the canonical V7 ledger still showed jobs {} and art {}. Its Continue-on-error sweep can mask a failed or skipped submission; the overall workflow remains in Refresh art ledger statuses, so full logs are not yet downloadable. Next action: read completed sweep logs, diagnose V7 specific reason, repair and submit once via stable requestKey. No V7 ArtJob, ArtImage, KEEP, public Classic link or playtest readiness is claimed. See kind_robots#4150 comment 6940238421. Existing other Classic 14 REDO and browser QA remain; keep t-032 ready and master issue open.
   - id: t-033
     milestone: m3
     title: 'Tone ladder: lower floors grow more Cronenbergian (rules and station art)'

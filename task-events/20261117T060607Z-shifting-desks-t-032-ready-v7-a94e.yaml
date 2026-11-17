@@ -1,8 +1,0 @@
-version: 1
-project: shifting-desks
-task: t-032
-operation: ready
-session: 20261117T054601Z-shifting-desks-t032-v7-a94e
-updated: '2026-11-17T06:06:07Z'
-note: >-
-  Merged Conductor PR #7520 at 1efa2562 after all five exact-head checks green, activating only the private two-region masked-VAE V7 ledger behind free live previewOnly encoding+mask validation. Kind Robots deployment 1d43a4ed verified to descend from backend 6c897c72. Auto Art Generate run 44027456778 reached its ledger sweep and completed its job-ID checkpoint, but the canonical V7 ledger still showed jobs {} and art {}. Its Continue-on-error sweep can mask a failed or skipped submission; the overall workflow remains in Refresh art ledger statuses, so full logs are not yet downloadable. Next action: read completed sweep logs, diagnose V7 specific reason, repair and submit once via stable requestKey. No V7 ArtJob, ArtImage, KEEP, public Classic link or playtest readiness is claimed. See kind_robots#4150 comment 6940238421. Existing other Classic 14 REDO and browser QA remain; keep t-032 ready and master issue open.
