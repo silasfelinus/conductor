@@ -1,0 +1,300 @@
+# Emperor of Dust missing-quest art, redo round 1 (2026-11-16 PT, emperor-of-dust/t-063). Contact-sheet curation of
+# QUESTS-MISSING-ROUND-2 kept 48 of 63. Rerolls the 15 rejects: burrow-gallery quests framed as tunnel interiors (the
+# model drew open valleys), every figure explicitly animal-folk (6 renders drew humans), and plain unlettered signs.
+# Same lane and asset paths; fresh seeds. Curate on a contact sheet, export keepers with scripts/export_round_art.py
+# (--only per asset, --force only over a rejected file that was never exported), rebuild QUEST_ART. auto_submit.
+round: emperor-missing-quests-2-redo-1
+project_slug: emperor-of-dust
+designer: Comic Studio
+is_public: false
+is_mature: false
+cast_loras: false
+auto_submit: true
+lanes:
+- key: arthemy-house
+  label: Arthemy Western Art v3.0 (house, author settings)
+  engine: comfy
+  checkpoint: Illustrious/arthemyWesternArt_v30.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, absurdres, very aesthetic, toon (style), western comics (style), weathered,
+    dramatic lighting, painterly, wide story illustration
+  suffix: kiln ochre, deep crimson and tarnished brass palette, ash-grey sky, salvage and dusty wasteland, nuanced lighting,
+    non-graphic storytelling, all signage blank
+  steps: 30
+  cfg: 5
+  sampler: euler_ancestral
+subjects:
+- key: eodq2r1-q-d07-galleries-notice
+  lane: arthemy-house
+  title: Under the Ford (notice)
+  quest: q-d07-galleries
+  variant: notice
+  asset: quests/q-d07-galleries
+  size: 1344x768
+  seed: 78900
+  negative: (nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore, illegible
+    faces, distorted paws, human face, human skin, text, letters, numbers, sign lettering, open sky
+  prompt_tags: 'underground interior view inside low lamplit mole burrow tunnels, earthen ceiling overhead, timber props,
+    enclosed underground space, storytelling scene, original anthropomorphic animal-folk frontier setting, low, lamplit burrow
+    galleries cut beneath the riverbank and worn stone shafts, Opening situation: Go down the old Mole galleries under the
+    Eastern Ford, quietly. Komodo’s runner says rubble and rats. See for yourself., action and reaction visible in one composition,
+    expressive anthropomorphic residents in practical frontier clothing, readable foreground and deep environmental context,
+    every figure an anthropomorphic animal-folk character with a furred or feathered muzzle, plain unpainted wooden signs
+    and cart sides'
+  replaces_art_image_id: 250983
+  redo_reason: open valley with no burrow galleries under the ford
+- key: eodq2r1-q-d07-galleries-success
+  lane: arthemy-house
+  title: Under the Ford (success)
+  quest: q-d07-galleries
+  variant: success
+  asset: quests/q-d07-galleries-success
+  size: 1344x768
+  seed: 78901
+  negative: (nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore, illegible
+    faces, distorted paws, human face, human skin, text, letters, numbers, sign lettering, open sky
+  prompt_tags: 'underground interior view inside low lamplit mole burrow tunnels, earthen ceiling overhead, timber props,
+    enclosed underground space, storytelling scene, original anthropomorphic animal-folk frontier setting, low, lamplit burrow
+    galleries cut beneath the riverbank and worn stone shafts, A successful mission aftermath: No rubble. No rats. Forty Mole
+    families in dry galleries, and a path to the old door worn smooth by small feet. They asked the party not to tell the
+    tower. The party told you anyway., action and reaction visible in one composition, expressive anthropomorphic residents
+    in practical frontier clothing, readable foreground and deep environmental context, every figure an anthropomorphic animal-folk
+    character with a furred or feathered muzzle, plain unpainted wooden signs and cart sides'
+  replaces_art_image_id: 250984
+  redo_reason: a cabin on a hillside; no burrow galleries
+- key: eodq2r1-q-d07-galleries-failure
+  lane: arthemy-house
+  title: Under the Ford (failure)
+  quest: q-d07-galleries
+  variant: failure
+  asset: quests/q-d07-galleries-failure
+  size: 1344x768
+  seed: 78902
+  negative: (nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore, illegible
+    faces, distorted paws, human face, human skin, text, letters, numbers, sign lettering, open sky
+  prompt_tags: 'underground interior view inside low lamplit mole burrow tunnels, earthen ceiling overhead, timber props,
+    enclosed underground space, storytelling scene, original anthropomorphic animal-folk frontier setting, low, lamplit burrow
+    galleries cut beneath the riverbank and worn stone shafts, The consequences of an unsuccessful mission: The party went
+    down with a lamp and came up without it. Something in the dark took it out of a hand, politely., action and reaction visible
+    in one composition, expressive anthropomorphic residents in practical frontier clothing, readable foreground and deep
+    environmental context, every figure an anthropomorphic animal-folk character with a furred or feathered muzzle, plain
+    unpainted wooden signs and cart sides'
+  replaces_art_image_id: 250985
+  redo_reason: riverside walker in open country; no burrow galleries
+- key: eodq2r1-r-debt-collector-notice
+  lane: arthemy-house
+  title: The Collector at the Yard (notice)
+  quest: r-debt-collector
+  variant: notice
+  asset: quests/r-debt-collector
+  size: 1344x768
+  seed: 78903
+  negative: (nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore, illegible
+    faces, distorted paws, human face, human skin, text, letters, numbers, sign lettering
+  prompt_tags: 'storytelling scene, original anthropomorphic animal-folk frontier setting, pale salt-trading road by a patched
+    wasteland fortress, market stalls and old wagon tracks, Opening situation: The Ledger has sent a collector to the Yard
+    with a list of names. He is taking tools. He will take beds next. The Yard wants the crown to stand between., action and
+    reaction visible in one composition, expressive anthropomorphic residents in practical frontier clothing, readable foreground
+    and deep environmental context, every figure an anthropomorphic animal-folk character with a furred or feathered muzzle,
+    plain unpainted wooden signs and cart sides'
+  replaces_art_image_id: 250989
+  redo_reason: human faces in the cart
+- key: eodq2r1-r-runaway-runner-failure
+  lane: arthemy-house
+  title: A Runner in the Reeds (failure)
+  quest: r-runaway-runner
+  variant: failure
+  asset: quests/r-runaway-runner-failure
+  size: 1344x768
+  seed: 78904
+  negative: (nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore, illegible
+    faces, distorted paws, human face, human skin, text, letters, numbers, sign lettering
+  prompt_tags: 'storytelling scene, original anthropomorphic animal-folk frontier setting, marsh causeway with reed huts,
+    slow black water, and lantern-bearing residents, The consequences of an unsuccessful mission: Her tracks went into the
+    water and did not come out. The Crows say the crown let her go. The Crows may be right., action and reaction visible in
+    one composition, expressive anthropomorphic residents in practical frontier clothing, readable foreground and deep environmental
+    context, every figure an anthropomorphic animal-folk character with a furred or feathered muzzle, plain unpainted wooden
+    signs and cart sides'
+  replaces_art_image_id: 250994
+  redo_reason: a lone pagoda in a field; no marsh causeway
+- key: eodq2r1-r-fever-ward-notice
+  lane: arthemy-house
+  title: Fever in the Yard (notice)
+  quest: r-fever-ward
+  variant: notice
+  asset: quests/r-fever-ward
+  size: 1344x768
+  seed: 78905
+  negative: (nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore, illegible
+    faces, distorted paws, human face, human skin, text, letters, numbers, sign lettering
+  prompt_tags: 'storytelling scene, original anthropomorphic animal-folk frontier setting, pale salt-trading road by a patched
+    wasteland fortress, market stalls and old wagon tracks, Opening situation: A fever is moving through the Yard’s back rows.
+    The healer has one bed and nine names. Somebody has to choose, or find more beds., action and reaction visible in one
+    composition, expressive anthropomorphic residents in practical frontier clothing, readable foreground and deep environmental
+    context, every figure an anthropomorphic animal-folk character with a furred or feathered muzzle, plain unpainted wooden
+    signs and cart sides'
+  replaces_art_image_id: 250995
+  redo_reason: lettering on the cart side (signage must be blank)
+- key: eodq2r1-r-fever-ward-success
+  lane: arthemy-house
+  title: Fever in the Yard (success)
+  quest: r-fever-ward
+  variant: success
+  asset: quests/r-fever-ward-success
+  size: 1344x768
+  seed: 78906
+  negative: (nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore, illegible
+    faces, distorted paws, human face, human skin, text, letters, numbers, sign lettering
+  prompt_tags: 'storytelling scene, original anthropomorphic animal-folk frontier setting, pale salt-trading road by a patched
+    wasteland fortress, market stalls and old wagon tracks, A successful mission aftermath: Seven of nine stood up again.
+    The healer burned the bedding of the other two and wrote their names on the wall., action and reaction visible in one
+    composition, expressive anthropomorphic residents in practical frontier clothing, readable foreground and deep environmental
+    context, every figure an anthropomorphic animal-folk character with a furred or feathered muzzle, plain unpainted wooden
+    signs and cart sides'
+  replaces_art_image_id: 250996
+  redo_reason: lettered shop fascia signs (signage must be blank)
+- key: eodq2r1-r-salt-weigh-failure
+  lane: arthemy-house
+  title: Short Weight at the Scales (failure)
+  quest: r-salt-weigh
+  variant: failure
+  asset: quests/r-salt-weigh-failure
+  size: 1344x768
+  seed: 78907
+  negative: (nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore, illegible
+    faces, distorted paws, human face, human skin, text, letters, numbers, sign lettering
+  prompt_tags: 'storytelling scene, original anthropomorphic animal-folk frontier setting, pale salt-trading road by a patched
+    wasteland fortress, market stalls and old wagon tracks, The consequences of an unsuccessful mission: The party weighed
+    every pan twice and found nothing. The cooks still swear the pound is short., action and reaction visible in one composition,
+    expressive anthropomorphic residents in practical frontier clothing, readable foreground and deep environmental context,
+    every figure an anthropomorphic animal-folk character with a furred or feathered muzzle, plain unpainted wooden signs
+    and cart sides'
+  replaces_art_image_id: 251003
+  redo_reason: human shopkeeper face and a glyph plate on the stall
+- key: eodq2r1-r-fen-gave-back-success
+  lane: arthemy-house
+  title: What the Fen Gave Back (success)
+  quest: r-fen-gave-back
+  variant: success
+  asset: quests/r-fen-gave-back-success
+  size: 1344x768
+  seed: 78908
+  negative: (nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore, illegible
+    faces, distorted paws, human face, human skin, text, letters, numbers, sign lettering
+  prompt_tags: 'storytelling scene, original anthropomorphic animal-folk frontier setting, marsh causeway with reed huts,
+    slow black water, and lantern-bearing residents, A successful mission aftermath: The coin was old crown brass with a face
+    nobody knew. The party copied it and put it back between the teeth. The fen took the body down again without a ripple.,
+    action and reaction visible in one composition, expressive anthropomorphic residents in practical frontier clothing, readable
+    foreground and deep environmental context, every figure an anthropomorphic animal-folk character with a furred or feathered
+    muzzle, plain unpainted wooden signs and cart sides'
+  replaces_art_image_id: 251011
+  redo_reason: crowned human knight
+- key: eodq2r1-r-low-galleries-notice
+  lane: arthemy-house
+  title: Water in the Low Galleries (notice)
+  quest: r-low-galleries
+  variant: notice
+  asset: quests/r-low-galleries
+  size: 1344x768
+  seed: 78909
+  negative: (nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore, illegible
+    faces, distorted paws, human face, human skin, text, letters, numbers, sign lettering, open sky
+  prompt_tags: 'underground interior view inside low lamplit mole burrow tunnels, earthen ceiling overhead, timber props,
+    enclosed underground space, storytelling scene, original anthropomorphic animal-folk frontier setting, low, lamplit burrow
+    galleries cut beneath the riverbank and worn stone shafts, Opening situation: Rain found a crack and the Moles’ lowest
+    galleries are flooding. The nursery is down there. Bring hands and buckets and do not stop., action and reaction visible
+    in one composition, expressive anthropomorphic residents in practical frontier clothing, readable foreground and deep
+    environmental context, every figure an anthropomorphic animal-folk character with a furred or feathered muzzle, plain
+    unpainted wooden signs and cart sides'
+  replaces_art_image_id: 251013
+  redo_reason: open field with a crow and a hare; no flooding galleries or nursery
+- key: eodq2r1-r-low-galleries-success
+  lane: arthemy-house
+  title: Water in the Low Galleries (success)
+  quest: r-low-galleries
+  variant: success
+  asset: quests/r-low-galleries-success
+  size: 1344x768
+  seed: 78910
+  negative: (nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore, illegible
+    faces, distorted paws, human face, human skin, text, letters, numbers, sign lettering, open sky
+  prompt_tags: 'underground interior view inside low lamplit mole burrow tunnels, earthen ceiling overhead, timber props,
+    enclosed underground space, storytelling scene, original anthropomorphic animal-folk frontier setting, low, lamplit burrow
+    galleries cut beneath the riverbank and worn stone shafts, A successful mission aftermath: A bucket line forty paws long,
+    all night. The nursery is dry. The Moles named the new gallery after the party and then changed their minds and named
+    it after the bucket., action and reaction visible in one composition, expressive anthropomorphic residents in practical
+    frontier clothing, readable foreground and deep environmental context, every figure an anthropomorphic animal-folk character
+    with a furred or feathered muzzle, plain unpainted wooden signs and cart sides'
+  replaces_art_image_id: 251014
+  redo_reason: lamp tower by a river; no galleries
+- key: eodq2r1-r-low-galleries-failure
+  lane: arthemy-house
+  title: Water in the Low Galleries (failure)
+  quest: r-low-galleries
+  variant: failure
+  asset: quests/r-low-galleries-failure
+  size: 1344x768
+  seed: 78911
+  negative: (nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore, illegible
+    faces, distorted paws, human face, human skin, text, letters, numbers, sign lettering, open sky
+  prompt_tags: 'underground interior view inside low lamplit mole burrow tunnels, earthen ceiling overhead, timber props,
+    enclosed underground space, storytelling scene, original anthropomorphic animal-folk frontier setting, low, lamplit burrow
+    galleries cut beneath the riverbank and worn stone shafts, The consequences of an unsuccessful mission: The water came
+    faster than the buckets. The Moles closed the lowest door with the water on the other side. They will not say who was
+    behind it., action and reaction visible in one composition, expressive anthropomorphic residents in practical frontier
+    clothing, readable foreground and deep environmental context, every figure an anthropomorphic animal-folk character with
+    a furred or feathered muzzle, plain unpainted wooden signs and cart sides'
+  replaces_art_image_id: 251015
+  redo_reason: a lamp over a tub in a lake; no galleries
+- key: eodq2r1-r-verge-scouts-failure
+  lane: arthemy-house
+  title: Plum Scouts on the Ridge (failure)
+  quest: r-verge-scouts
+  variant: failure
+  asset: quests/r-verge-scouts-failure
+  size: 1344x768
+  seed: 78912
+  negative: (nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore, illegible
+    faces, distorted paws, human face, human skin, text, letters, numbers, sign lettering
+  prompt_tags: 'storytelling scene, original anthropomorphic animal-folk frontier setting, river ford and Freehold farms under
+    dry hills, weathered bridges and rough barns, The consequences of an unsuccessful mission: The scouts were not scouts.
+    The party came back over the ridge carrying what they could., action and reaction visible in one composition, expressive
+    anthropomorphic residents in practical frontier clothing, readable foreground and deep environmental context, every figure
+    an anthropomorphic animal-folk character with a furred or feathered muzzle, plain unpainted wooden signs and cart sides'
+  replaces_art_image_id: 251018
+  redo_reason: human rider on the bull
+- key: eodq2r1-r-deserter-failure
+  lane: arthemy-house
+  title: A Watchman Over the Wall (failure)
+  quest: r-deserter
+  variant: failure
+  asset: quests/r-deserter-failure
+  size: 1344x768
+  seed: 78913
+  negative: (nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore, illegible
+    faces, distorted paws, human face, human skin, text, letters, numbers, sign lettering
+  prompt_tags: 'storytelling scene, original anthropomorphic animal-folk frontier setting, pale salt-trading road by a patched
+    wasteland fortress, market stalls and old wagon tracks, The consequences of an unsuccessful mission: He was gone. The
+    purse turned up in a Pack game, two nights later., action and reaction visible in one composition, expressive anthropomorphic
+    residents in practical frontier clothing, readable foreground and deep environmental context, every figure an anthropomorphic
+    animal-folk character with a furred or feathered muzzle, plain unpainted wooden signs and cart sides'
+  replaces_art_image_id: 251021
+  redo_reason: human children in the cart
+- key: eodq2r1-r-ferry-stalled-notice
+  lane: arthemy-house
+  title: The Ferry Will Not Cross (notice)
+  quest: r-ferry-stalled
+  variant: notice
+  asset: quests/r-ferry-stalled
+  size: 1344x768
+  seed: 78914
+  negative: (nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore, illegible
+    faces, distorted paws, human face, human skin, text, letters, numbers, sign lettering
+  prompt_tags: 'storytelling scene, original anthropomorphic animal-folk frontier setting, marsh causeway with reed huts,
+    slow black water, and lantern-bearing residents, Opening situation: The Mirefen ferryman has tied up his raft and will
+    not cross until someone pays what the last passenger owed him. The last passenger was a crown courier, and he drowned.,
+    action and reaction visible in one composition, expressive anthropomorphic residents in practical frontier clothing, readable
+    foreground and deep environmental context, every figure an anthropomorphic animal-folk character with a furred or feathered
+    muzzle, plain unpainted wooden signs and cart sides'
+  replaces_art_image_id: 251031
+  redo_reason: crowned human ferryman

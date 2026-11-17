@@ -61,3 +61,11 @@
 **Pattern:** the branch was pushed without running the one file it changed. `npx tsx utils/scripts/verifyEmperorFortressChanceEvents.test.ts` fails in under a second on that line.
 
 **Suggestion:** run the changed test file locally before opening the PR, and do not leave a red PR unattended; t-063's note said "await exact-head CI and merge" while CI had already failed.
+
+## 2026-11-16 PT | Reviewer-as-Worker | emperor-of-dust/t-063 | kind_robots#5276
+
+**Produced:** the quest slice of t-063. All 63 QUESTS-MISSING-ROUND-2 renders were reviewed on contact sheets plus figure close-ups. 48 kept and shipped (QUEST_ART 228 → 276), 15 rejected with reasons in the ledger and rerolled in `QUESTS-MISSING-REDO-1.yaml` (auto_submit, prompt contract 15/15).
+
+**Pattern for the next curator:** the house Arthemy lane ignores location when the prompt only names it. All six "burrow galleries" plates came back as open valleys, so the redo puts "underground interior … enclosed underground space" first. Markets and ferries drew human faces despite `human` in the negative; a positive "every figure an anthropomorphic animal-folk character with a furred or feathered muzzle" works better than more negatives. Positive prompts must not contain "no …": the prompt contract rejects that as `people-negation`.
+
+**Remaining t-063 scope:** chance-event plates, audience/consequence/barracks/forge plates, secret-story scenes, the q-d42 cave-forage v3 set, and curating this redo round.
