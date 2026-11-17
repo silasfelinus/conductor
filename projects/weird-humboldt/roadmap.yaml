@@ -1567,7 +1567,7 @@ tasks:
     milestone: m5
     title: "Polish Ecotone opening, route previews, customizable player portraits, and tablet layout"
     status: ready
-    updated: '2026-11-17T15:09:17Z'
+    updated: '2026-11-17T17:31:57Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -1604,8 +1604,19 @@ tasks:
       ending; derived only, no save/ledger change; verifyEcotoneGuideReveal added to Ecotone
       Gameplay CI. Still open: rendered phone/tablet/desktop verification post-deploy,
       portrait asset delivery, Bellwether MY-05-G1..G3 art export (needs token).
+
+      2026-11-17 PT: (a) Rendered production check of kindrobots.org/play/ecotone with
+      Playwright on iPhone 13, iPad (portrait and landscape) and 1440px desktop: no horizontal
+      overflow, no page errors, 12 player portraits plus upload visible, 3 route previews
+      shown, Guides tab shows 4 no-spoiler silhouettes (so #5282 is live). (b) Bellwether art
+      exported: kind_robots#5283 (c620fce) ships all 7 MY-05 case cards (cold, G1-G3, reveal,
+      unmasked, encore) x 4 styles = 28 webp (1.9MB); the contract now counts MYSTERY_CARDS
+      keys as known art. All CI green (shard 1 needed one re-run after timing out in an
+      unrelated Slime City test). Still open: ~1,000 other unexported ART-STANDARD-ROUND-2
+      renders (~70MB), to ship in per-case batches with the same recipe (filter subjects by
+      asset prefix, then export_ecotone_art.export + write_manifest).
     owner: worker
-    implementation_pr: 'silasfelinus/kind_robots#5282'
+    implementation_pr: 'silasfelinus/kind_robots#5283'
 
   - id: t-067
     milestone: m1
