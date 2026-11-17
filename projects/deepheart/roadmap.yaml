@@ -176,18 +176,17 @@ tasks:
   - id: t-012
     milestone: m4
     title: "Every picture rendered, delivered, URL-verified and wired (set src / RENDERED_ART)"
-    status: review
+    status: ready
     depends_on: t-011
-    owner: worker
     passes: 0
     stakes: reversible
     note: |-
       Queued is not rendered is not delivered. Portraits land under /images/deepheart/.
 
       Anthro direction work in review: fifty unique portrait specifications, hero-first selector, species-free player labels, and a new 94-subject private repaint ledger. Rendering and canonical delivery remain outstanding and must return t-012 to ready after the PRs merge.
-    claimed_by: 2026-11-17T021800Z-deepheart-t-012-8e7dc42
-    claimed_at: '2026-11-17T02:18:00Z'
-    updated: '2026-11-17T02:22:00Z'
+
+      The Deepheart anthropomorphic-cartoony visual canon, hero-first builder, and private mature-admin comparison bible /admin/deepheart/bible were merged in kind_robots PR #5268 with ten completed green CI workflows. The 40-cell 5-scenes-by-8-models high-priority (900) private style trial manifest was merged in conductor PR #7511; the 94-cell bulk repaint remains drafted with auto_submit: false until art direction is reviewed. The Conductor bible URL fix merged in PR #7515 with successful Worker PR CI. Resume this task to confirm Auto Art Generate accepted all 40 ArtJob IDs, inspect actually rendered mature/private images, decide the cartoon-anthro style before unlocking the 94-cell repaint, and wire URL-verified art to the runtime. At this handoff no ArtJob IDs or delivered image URLs for the new trial were verified. Do not close t-012 yet.
+    updated: '2026-11-17T03:21:06Z'
   - id: t-013
     milestone: m4
     title: "Adversarial seeded playthroughs and 390/768/1440 px checks"
