@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-11-16T22:17:18.946530+00:00",
+  "generated_at": "2026-11-17T08:05:45.045665+00:00",
   "summary": {
     "status": "clean",
     "roadmap_errors": 0,
-    "roadmap_warnings": 84,
+    "roadmap_warnings": 77,
     "project_forward_drift": 0,
     "project_reverse_orphans": 0,
     "project_unresolved": null,
@@ -15,7 +15,7 @@
   "openai_scheduled_agent": {
     "overdue": true,
     "last_activity": "2026-10-25T01:09:44+00:00",
-    "hours_since": 549.13,
+    "hours_since": 558.93,
     "stale_hours": 6.0,
     "marker": "openai-scheduled-",
     "note": "Legacy git diagnostic only: OPENAI-SCHEDULED-HEARTBEAT.json and coordination markers do not determine ChatGPT scheduler health. Native ChatGPT task metadata is authoritative for scheduler liveness."
@@ -24,8 +24,8 @@
     "due": false,
     "upcoming": false,
     "last_report": "INTENT-AUDIT-2026-11-16.md",
-    "days_since": 0,
-    "days_until_due": 3.0,
+    "days_since": 1,
+    "days_until_due": 2.0,
     "stale_days": 3.0,
     "failed_attempt": null
   },
@@ -35,20 +35,20 @@
     "unresolved": null
   },
   "roadmap_audit": {
-    "generated_at": "2026-11-16T22:17:18.946536+00:00",
+    "generated_at": "2026-11-17T08:05:45.045671+00:00",
     "summary": {
       "roadmaps": 96,
       "active_projects": 20,
       "continuous_projects": 15,
       "playtest_projects": 2,
-      "tasks": 3031,
-      "ready": 233,
-      "waiting": 201,
+      "tasks": 3033,
+      "ready": 232,
+      "waiting": 198,
       "needs_human": 40,
-      "in_progress": 56,
-      "done": 2424,
+      "in_progress": 51,
+      "done": 2435,
       "errors": 0,
-      "warnings": 84,
+      "warnings": 77,
       "info": 133
     },
     "errors": [],
@@ -160,48 +160,6 @@
       },
       {
         "severity": "warning",
-        "code": "IN_PROGRESS_WITHOUT_TIMESTAMP",
-        "project": "deepheart",
-        "task": "t-001",
-        "message": "Claimed/review task has no parseable updated timestamp."
-      },
-      {
-        "severity": "warning",
-        "code": "IN_PROGRESS_WITHOUT_TIMESTAMP",
-        "project": "deepheart",
-        "task": "t-002",
-        "message": "Claimed/review task has no parseable updated timestamp."
-      },
-      {
-        "severity": "warning",
-        "code": "IN_PROGRESS_WITHOUT_TIMESTAMP",
-        "project": "deepheart",
-        "task": "t-003",
-        "message": "Claimed/review task has no parseable updated timestamp."
-      },
-      {
-        "severity": "warning",
-        "code": "IN_PROGRESS_WITHOUT_TIMESTAMP",
-        "project": "deepheart",
-        "task": "t-004",
-        "message": "Claimed/review task has no parseable updated timestamp."
-      },
-      {
-        "severity": "warning",
-        "code": "IN_PROGRESS_WITHOUT_TIMESTAMP",
-        "project": "deepheart",
-        "task": "t-005",
-        "message": "Claimed/review task has no parseable updated timestamp."
-      },
-      {
-        "severity": "warning",
-        "code": "IN_PROGRESS_WITHOUT_TIMESTAMP",
-        "project": "deepheart",
-        "task": "t-011",
-        "message": "Claimed/review task has no parseable updated timestamp."
-      },
-      {
-        "severity": "warning",
         "code": "STALE_CLAIM_FIELDS",
         "project": "emperor-of-dust",
         "task": "t-033",
@@ -261,7 +219,14 @@
         "code": "STALE_IN_PROGRESS",
         "project": "emperor-of-dust",
         "task": "t-062",
-        "message": "Task has remained review for 12 days."
+        "message": "Task has remained review for 13 days."
+      },
+      {
+        "severity": "warning",
+        "code": "STALE_CLAIM_FIELDS",
+        "project": "emperor-of-dust",
+        "task": "t-063",
+        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
       },
       {
         "severity": "warning",
@@ -456,6 +421,13 @@
         "severity": "warning",
         "code": "STALE_IN_PROGRESS",
         "project": "memory-dungeon",
+        "task": "t-064",
+        "message": "Task has remained review for 3 days."
+      },
+      {
+        "severity": "warning",
+        "code": "STALE_IN_PROGRESS",
+        "project": "memory-dungeon",
         "task": "t-068",
         "message": "Task has remained claimed for 4 days."
       },
@@ -499,7 +471,7 @@
         "code": "STALE_IN_PROGRESS",
         "project": "rainbow-bullet-hell-space-princess",
         "task": "t-034",
-        "message": "Task has remained review for 22 days."
+        "message": "Task has remained review for 23 days."
       },
       {
         "severity": "warning",
@@ -513,7 +485,7 @@
         "code": "STALE_IN_PROGRESS",
         "project": "ruler-hooked",
         "task": "t-066",
-        "message": "Task has remained review for 8 days."
+        "message": "Task has remained review for 9 days."
       },
       {
         "severity": "warning",
@@ -547,13 +519,6 @@
         "severity": "warning",
         "code": "STALE_IN_PROGRESS",
         "project": "shifting-desks",
-        "task": "t-051",
-        "message": "Task has remained claimed for 4 days."
-      },
-      {
-        "severity": "warning",
-        "code": "STALE_IN_PROGRESS",
-        "project": "shifting-desks",
         "task": "t-052",
         "message": "Task has remained claimed for 4 days."
       },
@@ -568,13 +533,6 @@
         "severity": "warning",
         "code": "STALE_CLAIM_FIELDS",
         "project": "slime-city",
-        "task": "t-053",
-        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
-      },
-      {
-        "severity": "warning",
-        "code": "STALE_CLAIM_FIELDS",
-        "project": "slime-city",
         "task": "t-054",
         "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
       },
@@ -584,13 +542,6 @@
         "project": "tzaddik-gallery",
         "task": "t-013",
         "message": "Reversible software task is human-gated without an obvious hard-gate reason in its note."
-      },
-      {
-        "severity": "warning",
-        "code": "STALE_CLAIM_FIELDS",
-        "project": "weird-humboldt",
-        "task": "t-014",
-        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
       },
       {
         "severity": "warning",
