@@ -1585,8 +1585,8 @@ tasks:
   - id: t-066
     milestone: m5
     title: "Polish Ecotone opening, route previews, customizable player portraits, and tablet layout"
-    status: claimed
-    updated: '2026-11-17T20:46:40Z'
+    status: ready
+    updated: '2026-11-17T21:02:54Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -1649,8 +1649,16 @@ tasks:
       across all four styles. Still open: mysteries/* Real Endings, events/*, and
       cards/wh|co|fr|la|lx (~570 renders; first check that the contract accepts those keys).
       Export from a venv with pillow+pyyaml.
+
+      2026-11-17 PT routine: mystery Real Ending art merged as kind_robots#5288 (6c88c13). 36
+      endings (mysteries/<case>/<ending>, drawn by mysteryEndingArtKey) x 4 styles = 144 webp
+      (~10 MB), manifest regenerated from disk (332 pictures per style). The contract now
+      counts mysteryEndingArtKey keys as known pictures. All 14 checks green, no held art, no
+      ArtJobs. Still open: events/* (12 webp) and cards/wh|co|fr|la|lx (~516 renders, 460 of
+      them cards/wh). Check that the contract accepts those keys first. Export from a venv
+      with pillow+pyyaml.
     owner: worker
-    implementation_pr: 'silasfelinus/kind_robots#5287'
+    implementation_pr: 'silasfelinus/kind_robots#5288'
     claimed_by: 2026-11-17T-routine-dck2ie
     claimed_at: '2026-11-17T20:46:40Z'
 
