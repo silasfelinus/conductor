@@ -964,12 +964,12 @@ tasks:
       2026-11-06 PT: Silas-directed choice-hand visual pass merged in kind_robots PR #4859 (92c68b9); all seven CI suites passed on e1faf7b. Cards now expand on desktop, display more legible intent, and use contextual encounter art when unique outcome art is absent. Tablet/dense-hand geometry stays bounded. Umbrella completion issue #4150 remains open for unique choice art, game QA and human verdict.
   - id: t-051
     title: 'Fail the art visual-review workflow when check_request_queue.py finds missing or duplicate Classic rerender request IDs'
-    status: review
+    status: done
     milestone: m3
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-17T02:25:05Z'
+    updated: '2026-11-17T02:32:06Z'
     note: |-
       Kaizen from reviewer merge of conductor#7316 (2026-11-12 PT). The new read-only check_request_queue.py only reports missing_from_queue and duplicates in an uploaded JSON artifact, so a CI run that finds stale or duplicated Classic rerender requests still goes green and nobody reads the result. Add a --strict flag that exits non-zero on missing_from_queue > 0 or any duplicates, use it in shifting-desks-art-visual-review.yml once the current 20 stale requests are reconciled, and cover both cases in tests/test_shifting_desks_art_request_queue.py.
 
@@ -978,7 +978,8 @@ tasks:
       Recovered a 2026-11-12 claim after five days. No open implementation PR or Shifting Desks task branch for this queue strictness guard exists. The check_request_queue.py CLI and visual review workflow still lack --strict enforcement; resume task rather than treating claim as delivery.
 
       Added the missing --strict CLI failure mode, regression coverage for missing, duplicate and clean request IDs, and post-artifact-upload workflow enforcement. Confirmed live art-review run 43999272773 baseline: zero unmet, zero missing and zero duplicates. Focused Conductor branch worker/shifting-desks-t-051-strict-queue-f3d8; exact-head CI to follow. No art state or renders mutated.
-    owner: worker
+
+      Merged Conductor PR #7510, squash 26f5d41d4dba4ff0c3bdf0a1fca5439e8d616fb0, exact head fcab62543ffc7012ade84d86a7322ab151ce95be. All current-head checks passed including Worker PR CI, full pytest suite, Security Audit, art visual review and handoff. Strict queue audit fails on missing or duplicate Classic request IDs after evidence artifacts have been saved.
     claimed_by: 2026-11-17T022415Z-shifting-desks-t-051-gpt6-f3d8
     claimed_at: '2026-11-17T02:23:55Z'
   - id: t-052
