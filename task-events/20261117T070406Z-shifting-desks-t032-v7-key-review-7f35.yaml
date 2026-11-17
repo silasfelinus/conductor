@@ -1,0 +1,8 @@
+version: 1
+project: shifting-desks
+task: t-032
+operation: review
+session: 20261117T061650Z-shifting-desks-t032-v7mask-7f35
+updated: '2026-11-17T07:04:06Z'
+note: >-
+  Exact root cause of V6 black composite mask fixed and shipped in Kind Robots #5273 merge 65cca70d, after all 7 required checks green. Conductor #7523 merged green for private V7 source/render hard/soft mask and actual pixel-delta evidence. Conductor #7524 adds missing inpaint_encoding to durable request key; its V7 ledger has no ArtJob and must NOT merge/trigger art until Alexandria production version confirms backend 65cca70d or descendant. Build image workflow 44035068573 in progress at review. This t-032 task remains unfinished until image inspected and remaining 14 Classic REDO plus QA fixed.
