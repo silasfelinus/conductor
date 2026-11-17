@@ -6,6 +6,7 @@ on:
       - "projects/shifting-desks/art/KREA-IMG2IMG-CORRECTION-PILOT-1.yaml"
       - "projects/shifting-desks/art/KONTEXT-MASKED-CORRECTION-PILOT-1.yaml"
       - "projects/shifting-desks/art/SDXL-TARGETED-CORRECTION-PILOT-1.yaml"
+      - "projects/shifting-desks/art/SDXL-MASKED-VAE-CORRECTION-PILOT-2.yaml"
       - "projects/shifting-desks/art/diagnose_targeted_edit.py"
   # ArtJob and ArtImage status checkpoints on main use [skip ci], so a push
   # filter alone cannot see completed Krea candidates. Capture after the
@@ -27,6 +28,7 @@ on:
       - "projects/shifting-desks/art/KREA-IMG2IMG-CORRECTION-PILOT-1.yaml"
       - "projects/shifting-desks/art/KONTEXT-MASKED-CORRECTION-PILOT-1.yaml"
       - "projects/shifting-desks/art/SDXL-TARGETED-CORRECTION-PILOT-1.yaml"
+      - "projects/shifting-desks/art/SDXL-MASKED-VAE-CORRECTION-PILOT-2.yaml"
       - "projects/shifting-desks/art/check_request_queue.py"
       - "projects/shifting-desks/art/audit_live_artjobs.py"
   workflow_dispatch:
@@ -87,7 +89,7 @@ jobs:
           path: ${{ runner.temp }}/shifting-desks-classic-queue.json
           if-no-files-found: error
           retention-days: 7
-      - name: Capture Classic replacements and private edit pilots V1-V6
+      - name: Capture Classic replacements and private edit pilots V1-V7
         env:
           KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
           KR_BASE_URL: https://kindrobots.org
@@ -111,7 +113,7 @@ jobs:
           if-no-files-found: warn
           retention-days: 14
 
-      - name: Upload Classic and all V1-V6 private pilot review evidence
+      - name: Upload Classic and all V1-V7 private pilot review evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:

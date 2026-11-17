@@ -640,6 +640,62 @@ def request_url(body):
     return f"{core.KR_BASE_URL}{route}"
 
 
+def verify_masked_vae_preview(body, post):
+    """Prove the live private route understands masked VAE *before* creating an ArtJob.
+
+    The preview-only endpoint returns the actual mask PNGs without billing or
+    queue mutation. A stale deployment may silently ignore an unknown field;
+    never submit the paid render until the server explicitly echoes the mode.
+    """
+    import base64
+    import io
+
+    from PIL import Image, ImageChops
+
+    if body.get("inpaintEncoding") != "masked-vae":
+        raise ValueError("masked-VAE preflight requires the opt-in encoder")
+    status, response = post({**body, "previewOnly": True})
+    data = response.get("data") if isinstance(response, dict) else None
+    if (
+        status != 200 or not isinstance(data, dict)
+        or data.get("previewOnly") is not True
+        or data.get("inpaintEncoding") != "masked-vae"
+        or data.get("mode") != body.get("mode")
+    ):
+        raise ValueError("live targeted API did not confirm previewOnly + masked-vae")
+
+    def decode_png(field):
+        value = data.get(field)
+        if not isinstance(value, str) or not value.startswith("data:image/png;base64,"):
+            raise ValueError("targeted preview missing its " + field + " PNG")
+        raw = base64.b64decode(value.split(",", 1)[1], validate=True)
+        image = Image.open(io.BytesIO(raw))
+        image.load()
+        return image.convert("RGB").getchannel("R")
+
+    hard = decode_png("noiseMaskData")
+    soft = decode_png("compositeMaskData")
+    if hard.size != soft.size or not hard.getbbox() or not soft.getbbox():
+        raise ValueError("targeted preview returned empty or mismatched mask data")
+    if ImageChops.subtract(soft, hard).getbbox():
+        raise ValueError("soft mask escapes the source-pixel-locked hard mask")
+    bounds = data.get("crop") or {}
+    try:
+        x, y, width, height = (int(bounds[k]) for k in ("x", "y", "width", "height"))
+        original_width, original_height = int(data["width"]), int(data["height"])
+    except (KeyError, ValueError, TypeError) as exc:
+        raise ValueError("targeted preview returned invalid crop metadata") from exc
+    if (
+        min(x, y) < 0 or min(width, height) <= 0
+        or x + width > original_width or y + height > original_height
+        or hard.width < width or hard.height < height
+    ):
+        raise ValueError("targeted preview crop/mask extends outside original image")
+    if hard.getextrema()[1] < 128 or soft.getextrema()[1] < 128:
+        raise ValueError("targeted preview contains no usable editable pixels")
+    return {"crop": bounds, "mask_size": hard.size}
+
+
 def submit(path, header, ledger, cells, post=None, fetch_source=None, live=None):
     """POST every cell that has no job id yet; write the id back after each one."""
     post = post or (lambda body: core.http_json("POST", request_url(body), body))
@@ -686,6 +742,19 @@ def submit(path, header, ledger, cells, post=None, fetch_source=None, live=None)
         # Names this cell to Kind Robots so a resubmit after a lost write-back (killed session,
         # cancelled run) returns the existing job instead of rendering again. See art_request_key.py.
         body["requestKey"] = ledger_cell_key(ledger_relpath(path), lane, subject)
+        if lane["engine"] == "sdxl-targeted" and body.get("inpaintEncoding") == "masked-vae":
+            try:
+                verified = verify_masked_vae_preview(body, post)
+            except (ValueError, OSError, RuntimeError) as exc:
+                failures += 1
+                print(
+                    f"  FAILED {subject['key']} [{lane['key']}]: private masked-VAE preflight: {exc}",
+                    file=sys.stderr,
+                )
+                continue
+            print(
+                f"  verified live masked-VAE preview for {subject['key']}: crop {verified['crop']}"
+            )
         status, resp = post(body)
         job_id = ((resp or {}).get("data") or {}).get("jobId") if isinstance(resp, dict) else None
         if status in (200, 201) and job_id:

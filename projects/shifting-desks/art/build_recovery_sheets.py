@@ -73,6 +73,7 @@ def pilot_rows(version=1):
         4: "KREA-IMG2IMG-CORRECTION-PILOT-1.yaml",
         5: "KONTEXT-MASKED-CORRECTION-PILOT-1.yaml",
         6: "SDXL-TARGETED-CORRECTION-PILOT-1.yaml",
+        7: "SDXL-MASKED-VAE-CORRECTION-PILOT-2.yaml",
     }
     if version not in ledgers:
         raise ValueError("unsupported pilot version")
@@ -163,7 +164,7 @@ def sheets(rows, directory, label):
 def pilot_capture_errors(pilots: dict[str, int]) -> list[str]:
     """A recorded DONE pilot needs actual readable image evidence, not just an ID."""
     errors = []
-    for version in (1, 2, 3, 4, 5, 6):
+    for version in (1, 2, 3, 4, 5, 6, 7):
         key = f"pilot_v{version}"
         done = pilots.get(f"{key}_recorded_done", 0)
         captured = pilots.get(f"{key}_captured", 0)
@@ -191,7 +192,7 @@ def main():
             "evidence": evidence, "fresh": fresh, "_image": img if fresh else None,
         })
     pilots = {}
-    for version in (1, 2, 3, 4, 5, 6):
+    for version in (1, 2, 3, 4, 5, 6, 7):
         private = []
         for row in pilot_rows(version):
             image, evidence = capture_pilot(row)
