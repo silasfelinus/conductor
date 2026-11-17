@@ -1,0 +1,229 @@
+# Five controlled tests x eight model lanes. Each seed is shared across lanes.
+# User-directed PT 2026-11-16: anthropomorphic mature Western fantasy animation.
+# The waterfall shows adult partners, affection and complete tasteful occlusion.
+# These private ArtJobs are the high-priority style gate before the 94-piece repaint.
+round: deepheart-cartoon-anthro-style-trial-2026-11-16
+project_slug: deepheart
+designer: Deepheart Anthro Style Trial 2026-11-16
+is_public: false
+is_mature: true
+cast_loras: false
+priority: 900
+auto_submit: true
+lanes:
+- key: krea2
+  label: Krea 2 prose
+  engine: krea2
+  prompt: prose
+  suffix: Hand-painted graphic Western fantasy animation, expressive faces, dynamic silhouettes and rich cel-shaded light.
+- key: arthemy
+  label: Arthemy Western Art v3.0
+  engine: comfy
+  checkpoint: Illustrious/arthemyWesternArt_v30.safetensors
+  prompt: tags
+  prefix: >-
+    masterpiece, best quality, amazing quality, expressive anthro animal people, mature western fantasy
+    television animation, bold 2d linework, flat cel shadows, hand-painted watercolor background, theatrical
+    acting, cinematic staging
+  suffix: hand-inked animation character art, mature dark fantasy, vivid jewel tone lighting
+  steps: 30
+  cfg: 5
+  sampler: euler_ancestral
+- key: nova-comic
+  label: Nova Comic XL v2.0
+  engine: comfy
+  checkpoint: Illustrious/novaComicXL_v20.safetensors
+  prompt: tags
+  prefix: >-
+    masterpiece, best quality, amazing quality, expressive anthro animal people, mature western fantasy
+    television animation, bold 2d linework, flat cel shadows, hand-painted watercolor background, theatrical
+    acting, cinematic staging
+  suffix: hand-inked animation character art, mature dark fantasy, vivid jewel tone lighting
+  steps: 28
+  cfg: 5
+  sampler: euler_ancestral
+- key: illustrij
+  label: Illustrij v2.1
+  engine: comfy
+  checkpoint: Illustrious/illustrij_v21.safetensors
+  prompt: tags
+  prefix: >-
+    masterpiece, best quality, amazing quality, expressive anthro animal people, mature western fantasy
+    television animation, bold 2d linework, flat cel shadows, hand-painted watercolor background, theatrical
+    acting, cinematic staging
+  suffix: hand-inked animation character art, mature dark fantasy, vivid jewel tone lighting
+  steps: 28
+  cfg: 5
+  sampler: euler_ancestral
+- key: ntrmix
+  label: NTR Mix Illustrious XL
+  engine: comfy
+  checkpoint: Illustrious/ntrMIXIllustriousXL_xii.safetensors
+  prompt: tags
+  prefix: >-
+    masterpiece, best quality, amazing quality, expressive anthro animal people, mature western fantasy
+    television animation, bold 2d linework, flat cel shadows, hand-painted watercolor background, theatrical
+    acting, cinematic staging
+  suffix: hand-inked animation character art, mature dark fantasy, vivid jewel tone lighting
+  steps: 28
+  cfg: 5
+  sampler: euler_ancestral
+- key: furrytoon
+  label: Furrytoon Mix XL v3
+  engine: comfy
+  checkpoint: Illustrious/furrytoonmix_xlV3.safetensors
+  prompt: tags
+  prefix: >-
+    masterpiece, best quality, amazing quality, expressive anthro animal people, mature western fantasy
+    television animation, bold 2d linework, flat cel shadows, hand-painted watercolor background, theatrical
+    acting, cinematic staging
+  suffix: hand-inked animation character art, mature dark fantasy, vivid jewel tone lighting
+  steps: 28
+  cfg: 5
+  sampler: euler_ancestral
+- key: ill-realism
+  label: Illustrious Realism
+  engine: comfy
+  checkpoint: Illustrious/illustriousRealism_ilXL10V40.safetensors
+  prompt: tags
+  prefix: >-
+    masterpiece, best quality, amazing quality, expressive anthro animal people, mature western fantasy
+    television animation, bold 2d linework, flat cel shadows, hand-painted watercolor background, theatrical
+    acting, cinematic staging
+  suffix: hand-inked animation character art, mature dark fantasy, vivid jewel tone lighting
+  steps: 28
+  cfg: 5
+  sampler: euler_ancestral
+- key: realism-by
+  label: Realism Illustrious By v5.5
+  engine: comfy
+  checkpoint: Illustrious/realismIllustriousBy_v55FP16.safetensors
+  prompt: tags
+  prefix: >-
+    masterpiece, best quality, amazing quality, expressive anthro animal people, mature western fantasy
+    television animation, bold 2d linework, flat cel shadows, hand-painted watercolor background, theatrical
+    acting, cinematic staging
+  suffix: hand-inked animation character art, mature dark fantasy, vivid jewel tone lighting
+  steps: 28
+  cfg: 5
+  sampler: euler_ancestral
+subjects:
+- key: guardian-oona
+  entity: style-test
+  title: "Oona Vell"
+  asset: deepheart/style-trial/guardian-oona
+  size: 832x1216
+  seed: 2373001
+  prompt_prose: >-
+    Oona Vell, an adult anthropomorphic bison woman with a towering heavyset build, dark chestnut fur, amber
+    eyes, and closely cropped head fur, stands holding a heavy tavern door used as a shield. Scratched armor
+    and leather straps hang over a dark green tunic. She looks tired but resolute on an ancient crypt
+    staircase. Full-body upright portrait, low camera, warm torchlight from left, cobalt shadow on right.
+    Hand-drawn mature Western fantasy animation, elastic expressive facial acting, vivid cel-painted shadows,
+    broad graphic shapes and rough painted stone.
+  prompt_tags: >-
+    1woman, adult anthro bison woman, bison head, chestnut fur, amber eyes, bulky heavyset body, large
+    muscular arms, stocky physique, weathered armor, green tunic, wooden tavern door shield, scarred metal
+    hinges, ancient crypt staircase, standing full body, resolute tired expression, low angle, orange
+    torchlight, cobalt shadows, adult western cartoon, hand-drawn animation, gouache backgrounds, bold inked
+    outlines, expressive character acting, cel shading
+  negative: >-
+    human faces, human bodies, realistic human skin, chibi, plush toy, photorealistic photograph, glossy 3d
+    render, explicit nudity, genitals, nipples, exposed breasts, sexual activity, child, underage, toddler,
+    text, lettering, watermark, signature, extra limbs, duplicate heads
+- key: rogue-vex
+  entity: style-test
+  title: "Vex Marlowe"
+  asset: deepheart/style-trial/rogue-vex
+  size: 832x1216
+  seed: 2373002
+  prompt_prose: >-
+    Vex Marlowe, an adult androgynous anthropomorphic black bat rogue with enormous pointed ears, velvet dark
+    fur, wine-red wing membranes folded down the sides of a fitted hooded leather coat, and keen bright eyes,
+    crouches on a wet castle parapet, holding two stolen keys between long clawed fingers. One ear tilts up
+    while the other angles forward. Slender agile frame, asymmetrical sly grin. Dramatic three-quarter
+    portrait, amber lantern against deep indigo night, hand-inked mature Western fantasy cartoon, expressive
+    facial acting, saturated color and cel-painted shadows.
+  prompt_tags: >-
+    1person, adult androgynous anthro bat rogue, black velvet fur, anthropomorphic bat face, enormous pointed
+    ears, wine-red wing membranes, leathery bat wings, slim agile build, long clawed fingers, hooded fitted
+    black leather coat, twin stolen keys, crouching, wet stone castle parapet, sly asymmetrical grin, amber
+    lantern, indigo night, adult western animation, sharp expressive eyes, cel shading, hand-inked outlines,
+    gouache fantasy background
+  negative: >-
+    human faces, human bodies, realistic human skin, chibi, plush toy, photorealistic photograph, glossy 3d
+    render, explicit nudity, genitals, nipples, exposed breasts, sexual activity, child, underage, toddler,
+    text, lettering, watermark, signature, extra limbs, duplicate heads
+- key: ossuary-horror
+  entity: style-test
+  title: "The Ossuary Horror"
+  asset: deepheart/style-trial/ossuary-horror
+  size: 1344x768
+  seed: 2373003
+  prompt_prose: >-
+    An enormous crypt predator with a crocodilian skull, six jointed bone-plated limbs, ragged black feathers
+    along its spine, and a long segmented tail crawls out of a shattered sarcophagus in a flooded underground
+    mausoleum. Its open jaw is crowded with curved ivory teeth and its blind sockets glow like molten coins.
+    Broken helmets and splintered spears scatter across the stone. Wide low camera from the puddle beside its
+    front claws, hard orange torchlight on bone against violet shadows. A frightening creature painted in the
+    same expressive adult Western fantasy animation as the animal adventurers.
+  prompt_tags: >-
+    1monster, huge monstrous skeletal crocodilian beast, six bone-plated legs, segmented long tail, black
+    ragged feathers, fanged jaws, glowing gold eye sockets, shattered sarcophagus, flooded mausoleum,
+    scattered helmets and broken spears, wet cobblestone, looming crouch, wide low angle, orange torchlight,
+    violet crypt shadows, violent dark fantasy, western action cartoon, inked anatomy, painterly cel shading
+  negative: >-
+    human faces, human bodies, realistic human skin, chibi, plush toy, photorealistic photograph, glossy 3d
+    render, explicit nudity, genitals, nipples, exposed breasts, sexual activity, child, underage, toddler,
+    text, lettering, watermark, signature, extra limbs, duplicate heads
+- key: bone-court-fight
+  entity: style-test
+  title: "The Broken Shield"
+  asset: deepheart/style-trial/bone-court-fight
+  size: 1344x768
+  seed: 2373004
+  prompt_prose: >-
+    A towering adult anthropomorphic bison guardian with chestnut fur and a cracked wooden door shield braces
+    against a lunging six-legged bone-plated crocodilian crypt beast. Beside her, an agile adult
+    anthropomorphic black bat rogue in a hooded leather coat vaults from a fallen pillar, wine-red folded
+    wings streaming behind, one dagger raised. The beast's ivory fangs strike the door and send splinters
+    into torchlit air. Scraped armor, mud, and a small red stain on a bandage show the cost of battle.
+    Side-on wide camera at chest height, bold inked silhouettes, dramatic adult Western fantasy cartoon, hot
+    amber rim light and cobalt dungeon shadows.
+  prompt_tags: >-
+    2 anthro adventurers, 1 monster, adult bison woman guardian, chestnut fur, heavyset muscular body, wooden
+    door shield cracked, adult black bat rogue, huge bat ears, wine red bat wings, hooded leather coat, bat
+    person leaping from stone pillar, dagger, bone-plated crocodilian crypt beast, six limbs, ivory jaws,
+    shield collision, flying wood splinters, old crypt, mud, wounded bandage, dynamic side view, mature
+    western fantasy animation, expressive action poses, sharp ink outlines, cel painted shadow, amber blue
+    lighting
+  negative: >-
+    human faces, human bodies, realistic human skin, chibi, plush toy, photorealistic photograph, glossy 3d
+    render, explicit nudity, genitals, nipples, exposed breasts, sexual activity, child, underage, toddler,
+    text, lettering, watermark, signature, extra limbs, duplicate heads
+- key: waterfall-vow
+  entity: style-test
+  title: "The Waterfall Vow"
+  asset: deepheart/style-trial/waterfall-vow
+  size: 1344x768
+  seed: 2373005
+  prompt_prose: >-
+    Two clearly adult married anthropomorphic animal adventurers bathe together in a secluded rocky pool
+    beneath a broad white waterfall. Brannoc is a compact heavyset russet wild boar man with small curved
+    tusks and a braided dark mane. Thessaly is a tall athletic golden lioness woman with warm amber eyes and
+    a cream muzzle. They stand close in the chest-deep pool, foreheads together, gently holding hands. The
+    foreground rock, overlapping broad ferns, deep opaque water, and a thick falling curtain of white spray
+    cover their torsos below the shoulders. Their faces and upper shoulders are visible. Luminous blue-green
+    water, warm evening mist, expressive tender adult western animated fantasy, painterly cel shading and
+    bold inked animal shapes.
+  prompt_tags: >-
+    2 adults, married couple, anthro wild boar man, anthro lioness woman, boar snout, small tusks, russet
+    fur, braided dark mane, golden lioness fur, cream muzzle, athletic adult woman, stout adult man, intimate
+    affectionate eye contact, touching foreheads, hand holding, bathing together in secluded waterfall pool,
+    opaque chest deep water, broad foreground fern leaves, stone foreground, thick white waterfall spray
+    covering bodies, heads and upper shoulders visible, romantic tender expressions, fantasy western
+    animation, cel shaded water, lush painterly backdrop, evening blue green mist
+  negative: >-
+    human faces, human bodies, realistic human skin, chibi, plush toy, photorealistic photograph, glossy 3d
+    render, explicit nudity, genitals, nipples, exposed breasts, sexual activity, child, underage, toddler,
+    text, lettering, watermark, signature, extra limbs, duplicate heads

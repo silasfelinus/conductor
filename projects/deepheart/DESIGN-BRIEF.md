@@ -26,9 +26,9 @@ kind_robots#5256.
 
 ## 4. Cast
 
-- **Followers:** 50 presets across 15 roles and many ancestries. Any of them can lead. 42 are romanceable (mutual attraction required), 6 are aromantic and swear oaths instead, Quillon and Ambrose are married, and Brannoc and Thessaly are a poly couple courted together.
+- **Followers:** 50 anthropomorphic presets across 15 roles, with species limited to the visual art specification. Any of them can lead. 42 are romanceable (mutual attraction required), 6 are aromantic and swear oaths instead, Quillon and Ambrose are married, and Brannoc and Thessaly are a poly couple courted together.
 - **Principal villain:** the Hollow King, the first delver, who took the heart and was taken by it. Reveal `king-name`, endings Redemption and Delver.
-- **Other villains:** the Bone Warden, Mother Brine and Vesper the Lich. **Figures:** Ottoline the Undermerchant, Snag the goblin, Maren of the Weeping Door.
+- **Other villains:** the Bone Warden, Mother Brine and Vesper the Lich. **Figures:** Ottoline the Undermerchant, Snag, Maren of the Weeping Door.
 - **Romance:** optional and player-chosen, built at campfires; hidden when the romance setting is off.
 
 ## 5. Factions, reveals and endings
@@ -51,3 +51,14 @@ kind_robots#5256.
 - Agent-owned: everything on the roadmap through t-013, including rendered art and 390 / 768 / 1440 px checks.
 - Graduation (t-014): playtest at normal priority; the hub issue is flagged and closed.
 - Silas: human playtest verdict, then any public `/play` release (publish gate).
+
+## Visual canon: anthro Deepheart (Silas, 2026-11-16 PT)
+
+- Living characters belong to an **anthropomorphic animal-person fantasy**, with a Zuzu-family animation sensibility but original designs. Every preset has one explicit visual species, silhouette, coloration, size, costume and role in Kind Robots `utils/deepheart/anthro.ts`. Species appear **only in art prompts**, never titles, biographies, UI labels or dialogue. Introduce someone as “Jeffery the Rogue,” never “Jeffery the Raccoon.”
+- Preserve all fifty playable identities, IDs, gender diversity, romance/oath preferences, relationships, abilities and saves. The cast spans men, women and nonbinary people, ages, body sizes, mobility and silhouettes, mammals, birds, reptiles, insects and amphibians. Animal design must not imply character, culture, or combat balance.
+- The builder starts on the Hero tab; all fifty presets can lead or be selected as companions. Maintain an art-led, single-screen console with bounded scrolling.
+- The 139 kit images and 29 supplemental images remain traceable, but their human/fantasy-humanoid renderings are NOT accepted as final anthro art. The proposed 94-subject repaint (50 portraits, 41 romances, 3 figures) is now a PRIVATE DRAFT with `auto_submit: false` pending the new style trial. Avoid generating an entire wrong-style cast a second time. Undead and elemental bosses remain monsters.
+- **Private high-priority style trial (2026-11-16 PT):** five fixed-seed scenes across eight render lanes (40 independent ArtJobs): Krea 2 plus the available Arthemy, Nova Comic, Illustrij, NTR Mix, Furrytoon, Illustrious Realism and Realism Illustrious By checkpoints. `projects/deepheart/art/ANTHRO-STYLE-TRIAL-2026-11-16.yaml` has `priority: 900` and `auto_submit: true`. Every scene specifies physical anthro anatomy and modern mature Western fantasy-cel-animation direction.
+- Trial scenes: Oona the heavyset bison guardian; Vex the nonbinary bat rogue; the Ossuary Horror; Oona and Vex confronting the beast; and an affectionate waterfall bath for the established **adult** Brannoc/Thessaly couple, with deep opaque water, cascading white spray, rocks and ferns blocking anatomy below shoulders. Images are marked private and mature, and no public release is authorized.
+- The admin-only, mature-enabled `/admin/deepheart-bible` is the staging room: private cast briefs, visual canon, five-subject gallery grouped by model, ArtJob status, local ratings and review notes. Compare before commissioning the full 94. The bible link appears on the Deepheart admin title screen only for qualifying viewers.
+- Queued is not rendered or attached: verify accepted ArtJobs, ArtImages, canonical files and working URLs before marking t-012 complete. Do not confuse submission with delivery.
