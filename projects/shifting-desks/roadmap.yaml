@@ -610,8 +610,8 @@ tasks:
   - id: t-032
     milestone: m3
     title: 'Land, review and link the art round 13 re-renders and round 14 tone-ladder renders'
-    status: claimed
-    updated: '2026-11-17T02:54:08Z'
+    status: review
+    updated: '2026-11-17T02:56:04Z'
     depends_on: t-015
     passes: 0
     stakes: reversible
@@ -633,6 +633,8 @@ tasks:
       Independent production evidence in Kind Robots Tzaddik run 44000603006: /api/version served 7edbe1d35c4b05bf20fc2ef033488512c87d82f0 at 2026-11-17T02:10:57Z, a verified descendant of SDXL targeted-inpainting backend merge b514d997. Activated only the already prepared third-arm private targeted pilot for the next durable ArtJob sweep; retained source ArtImage 273631, explicit mask, per-region bleed and feather, deduplication, no public asset link, and KEEP/REDO human/agent review gate. Existing rear-eyes and living-doors private KEEP images are not requeued. CI and PR review pending; t-032 and master issue #4150 remain open.
 
       Production-gated private SDXL third-arm correction was activated in merged Conductor PR #7512, squash 7c37462baf449ce2df3b1078f9ac22bc11c5d92a, after all exact-head CI checks passed. Auto Art Generate workflow 44004142755 launched on that merge and reached the opted-in art-ledger submission sweep. It is still running at this checkpoint; the ArtJob ID, ArtImage delivery and pixel KEEP/REDO verdict are NOT yet verified. Follow the committed ledger subject three-arm-tank / sdxl-targeted-local, then inspect actual full-resolution output and transfer only approved art. The 14 Classic redo scenes, t-041 and cross-device QA remain blockers.
+
+      Rendered private SDXL pilot ArtJob 69681 has ArtImage 274183. The current visual-review workflow omitted pilot V6, so a scoped Conductor PR adds authenticated full-image V6 capture, provenance and fail-closed regression tests before any KEEP/REDO decision. No automatic publishing or Classic asset replacement.
     owner: worker
     claimed_by: 20261117T025408Z-shifting-desks-t032-v6f4
     claimed_at: '2026-11-17T02:54:08Z'
