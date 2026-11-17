@@ -1,0 +1,102 @@
+# Emperor of Dust missing-quest art, redo round 2 (2026-11-17 PT, emperor-of-dust/t-063). Contact-sheet curation of
+# QUESTS-MISSING-REDO-1 kept 11 of 15 (kind_robots#5291). Rerolls the 4 rejects: three drew human faces on drivers,
+# riders or wagon children, one drew an open lake instead of the marsh causeway. Same lane and asset paths; fresh
+# seeds; humans named explicitly in the negative. Curate on a contact sheet, export keepers with
+# scripts/export_round_art.py --only per asset, add them to QUEST_ART. auto_submit.
+round: emperor-missing-quests-2-redo-2
+project_slug: emperor-of-dust
+designer: Comic Studio
+is_public: false
+is_mature: false
+cast_loras: false
+auto_submit: true
+lanes:
+- key: arthemy-house
+  label: Arthemy Western Art v3.0 (house, author settings)
+  engine: comfy
+  checkpoint: Illustrious/arthemyWesternArt_v30.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, absurdres, very aesthetic, toon (style), western comics (style), weathered,
+    dramatic lighting, painterly, wide story illustration
+  suffix: kiln ochre, deep crimson and tarnished brass palette, ash-grey sky, salvage and dusty wasteland, nuanced lighting,
+    non-graphic storytelling, all signage blank
+  steps: 30
+  cfg: 5
+  sampler: euler_ancestral
+subjects:
+- key: eodq2r2-r-runaway-runner-failure
+  lane: arthemy-house
+  title: A Runner in the Reeds (failure)
+  quest: r-runaway-runner
+  variant: failure
+  asset: quests/r-runaway-runner-failure
+  size: 1344x768
+  seed: 79004
+  negative: (nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore, illegible
+    faces, distorted paws, human face, human skin, text, letters, numbers, sign lettering, humans, people, man, woman, child,
+    human rider, human driver, open lake, rowboat, crow
+  prompt_tags: 'raised plank causeway across a reed marsh with thatched reed huts on stilts, storytelling scene, original
+    anthropomorphic animal-folk frontier setting, marsh causeway with reed huts, slow black water, and lantern-bearing residents,
+    The consequences of an unsuccessful mission: Her tracks went into the water and did not come out. The Crows say the crown
+    let her go. The Crows may be right., action and reaction visible in one composition, expressive anthropomorphic residents
+    in practical frontier clothing, readable foreground and deep environmental context, every figure an anthropomorphic animal-folk
+    character with a furred or feathered muzzle, plain unpainted wooden signs and cart sides'
+  replaces_art_image_id: 274348
+  redo_reason: a crow in a rowboat on an open lake; no marsh causeway or reed huts
+- key: eodq2r2-r-fever-ward-success
+  lane: arthemy-house
+  title: Fever in the Yard (success)
+  quest: r-fever-ward
+  variant: success
+  asset: quests/r-fever-ward-success
+  size: 1344x768
+  seed: 79006
+  negative: (nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore, illegible
+    faces, distorted paws, human face, human skin, text, letters, numbers, sign lettering, humans, people, man, woman, child,
+    human rider, human driver
+  prompt_tags: 'storytelling scene, original anthropomorphic animal-folk frontier setting, pale salt-trading road by a patched
+    wasteland fortress, market stalls and old wagon tracks, A successful mission aftermath: Seven of nine stood up again.
+    The healer burned the bedding of the other two and wrote their names on the wall., action and reaction visible in one
+    composition, expressive anthropomorphic residents in practical frontier clothing, readable foreground and deep environmental
+    context, every figure, including drivers, riders and children, an anthropomorphic animal-folk character with a furred
+    or feathered muzzle, plain unpainted wooden signs and cart sides'
+  replaces_art_image_id: 274350
+  redo_reason: hooded woman and children with human faces in the wagon
+- key: eodq2r2-r-verge-scouts-failure
+  lane: arthemy-house
+  title: Plum Scouts on the Ridge (failure)
+  quest: r-verge-scouts
+  variant: failure
+  asset: quests/r-verge-scouts-failure
+  size: 1344x768
+  seed: 79012
+  negative: (nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore, illegible
+    faces, distorted paws, human face, human skin, text, letters, numbers, sign lettering, humans, people, man, woman, child,
+    human rider, human driver
+  prompt_tags: 'storytelling scene, original anthropomorphic animal-folk frontier setting, river ford and Freehold farms under
+    dry hills, weathered bridges and rough barns, The consequences of an unsuccessful mission: The scouts were not scouts.
+    The party came back over the ridge carrying what they could., action and reaction visible in one composition, expressive
+    anthropomorphic residents in practical frontier clothing, readable foreground and deep environmental context, every figure,
+    including drivers, riders and children, an anthropomorphic animal-folk character with a furred or feathered muzzle, plain
+    unpainted wooden signs and cart sides'
+  replaces_art_image_id: 274356
+  redo_reason: two human riders on the bull
+- key: eodq2r2-r-deserter-failure
+  lane: arthemy-house
+  title: A Watchman Over the Wall (failure)
+  quest: r-deserter
+  variant: failure
+  asset: quests/r-deserter-failure
+  size: 1344x768
+  seed: 79013
+  negative: (nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore, illegible
+    faces, distorted paws, human face, human skin, text, letters, numbers, sign lettering, humans, people, man, woman, child,
+    human rider, human driver
+  prompt_tags: 'storytelling scene, original anthropomorphic animal-folk frontier setting, pale salt-trading road by a patched
+    wasteland fortress, market stalls and old wagon tracks, The consequences of an unsuccessful mission: He was gone. The
+    purse turned up in a Pack game, two nights later., action and reaction visible in one composition, expressive anthropomorphic
+    residents in practical frontier clothing, readable foreground and deep environmental context, every figure, including
+    drivers, riders and children, an anthropomorphic animal-folk character with a furred or feathered muzzle, plain unpainted
+    wooden signs and cart sides'
+  replaces_art_image_id: 274357
+  redo_reason: human-faced driver on the background cart
