@@ -16,9 +16,8 @@ ART = Path(__file__).resolve().parent
 ROOT = ART.parents[2]
 sys.path[:0] = [str(ROOT), str(ROOT / "scripts")]
 from enqueue_art_requests import (  # noqa: E402
-    build_targeted_request, compose_source, fetch_source_image,
+    build_targeted_request, compose_source, fetch_source_image, core,
 )
-import core  # noqa: E402
 
 
 def decode_image(data: str) -> Image.Image:
