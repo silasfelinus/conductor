@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import importlib.util
+import json
 from pathlib import Path
 
 import yaml
@@ -84,3 +85,57 @@ def test_delivered_latest_round_has_no_outstanding_job(tmp_path):
     result = module.outstanding(folder, queue)
     assert result["outstanding"] == 0
     assert result["requests"] == []
+
+def test_strict_mode_fails_missing_or_duplicate_request_ids(tmp_path, monkeypatch):
+    folder, queue = seed(tmp_path)
+    report = tmp_path / "classic-queue.json"
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "check_request_queue.py",
+            "--strict",
+            "--art-dir",
+            str(folder),
+            "--queue",
+            str(queue),
+            "--out",
+            str(report),
+        ],
+    )
+    assert module.main() == 1
+    assert json.loads(report.read_text())["missing_from_queue"] == 1
+
+    queue.write_text(
+        yaml.safe_dump(
+            {
+                "requests": [
+                    {"id": "shifting-desks-r15-sample", "status": "pending"},
+                    {"id": "shifting-desks-r15-sample", "status": "pending"},
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+    assert module.main() == 1
+    assert json.loads(report.read_text())["duplicates"] == [
+        "shifting-desks-r15-sample"
+    ]
+
+    queue.write_text(
+        yaml.safe_dump(
+            {"requests": [{"id": "shifting-desks-r15-sample", "status": "pending"}]}
+        ),
+        encoding="utf-8",
+    )
+    assert module.main() == 0
+    assert json.loads(report.read_text())["missing_from_queue"] == 0
+    assert json.loads(report.read_text())["duplicates"] == []
+
+
+def test_non_strict_queue_audit_keeps_reporting_without_failing(tmp_path, monkeypatch):
+    folder, queue = seed(tmp_path)
+    monkeypatch.setattr(
+        "sys.argv",
+        ["check_request_queue.py", "--art-dir", str(folder), "--queue", str(queue)],
+    )
+    assert module.main() == 0
