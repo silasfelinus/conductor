@@ -828,9 +828,20 @@ overrides:
     kind: software
 
   - slug: shifting-desks
-    status: active # Silas 2026-10-12 PT, darkly comic office-dystopia card adventure (Shifting Lands board + Gamebook depth)
-    priority: high
+    status: playtest # Silas 2026-11-17 PT authorizes early public playtesting with known polish/QA gaps
+    priority: normal
     kind: software
+    early_playtest_owner_waiver:
+      approved_by: Silas
+      approved_on: '2026-11-17'
+      direction: 'Switch the switches and open the park; remaining polish belongs in playtesting.'
+      known_open_tasks:
+        - t-041
+        - t-046
+        - t-048
+        - t-049
+        - t-052
+      handoff: projects/shifting-desks/PLAYTEST-HANDOFF-2026-11-17.md
 
   - slug: weird-humboldt
     status: active # 2026-10-19 PT, Silas-directed ongoing creative development, art gated

@@ -8,15 +8,8 @@ The handoff does not authorize publication, sharing, or wider promotion.
 from __future__ import annotations
 
 
-def playtest_readiness_errors(tasks: list[dict]) -> list[str]:
-    if not tasks:
-        return ["roadmap has no tasks"]
-
-    errors = []
-    malformed = [index for index, task in enumerate(tasks, 1) if not isinstance(task, dict)]
-    if malformed:
-        errors.append("malformed roadmap tasks at positions: " + ", ".join(map(str, malformed[:12])))
-    outstanding = [
+def pending_agent_owned_task_ids(tasks: list[dict]) -> list[str]:
+    return [
         str(task.get("id", "<unknown>"))
         for task in tasks
         if isinstance(task, dict)
@@ -29,6 +22,17 @@ def playtest_readiness_errors(tasks: list[dict]) -> list[str]:
             and task.get("gate_reason") in ("subjective-acceptance", "creative-approval", "publish")
         )
     ]
+
+
+def playtest_readiness_errors(tasks: list[dict]) -> list[str]:
+    if not tasks:
+        return ["roadmap has no tasks"]
+
+    errors = []
+    malformed = [index for index, task in enumerate(tasks, 1) if not isinstance(task, dict)]
+    if malformed:
+        errors.append("malformed roadmap tasks at positions: " + ", ".join(map(str, malformed[:12])))
+    outstanding = pending_agent_owned_task_ids(tasks)
     if outstanding:
         errors.append("agent-owned tasks still open: " + ", ".join(outstanding[:12]))
 

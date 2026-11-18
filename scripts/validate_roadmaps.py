@@ -51,9 +51,11 @@ import yaml
 try:
     from project_lifecycle import PROJECT_LIFECYCLE_STATUSES, load_project_overrides
     from playtest_readiness import playtest_readiness_errors
+    from sync_playtest_master_issues import explicitly_waived_owner_playtest
 except ModuleNotFoundError:  # imported as scripts.validate_roadmaps in pytest
     from scripts.project_lifecycle import PROJECT_LIFECYCLE_STATUSES, load_project_overrides
     from scripts.playtest_readiness import playtest_readiness_errors
+    from scripts.sync_playtest_master_issues import explicitly_waived_owner_playtest
 
 ROOT = Path(__file__).resolve().parents[1]
 # The status lifecycle AGENTS.md defines ("Status lifecycle": ready -> claimed ->
@@ -155,7 +157,11 @@ def main() -> int:
                 ok = False
 
         if lifecycle == "playtest":
-            for problem in playtest_readiness_errors(data["tasks"]):
+            readiness_errors = playtest_readiness_errors(data["tasks"])
+            if explicitly_waived_owner_playtest(slug, override, data["tasks"], readiness_errors):
+                print(f"owner-approved early playtest: {slug}, unfinished original tasks remain", file=sys.stderr)
+                readiness_errors = []
+            for problem in readiness_errors:
                 print(f"playtest readiness failed for {slug}: {problem}", file=sys.stderr)
                 ok = False
 

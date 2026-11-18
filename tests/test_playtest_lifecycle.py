@@ -133,3 +133,45 @@ def test_active_project_does_not_close_master_issue(tmp_path, monkeypatch):
     monkeypatch.setattr(handoff, "github_issue", lambda *args: writes.append(args))
     assert handoff.main() == 0
     assert writes == [], "active development must not alter the roadmap issue"
+
+def test_shifting_desks_owner_waiver_preserves_known_incomplete_work(tmp_path: Path):
+    game = tmp_path / "shifting-desks"
+    game.mkdir()
+    (game / "roadmap.yaml").write_text(
+        "tasks:\n"
+        "  - id: t-041\n    status: claimed\n"
+        "  - id: t-046\n    status: review\n"
+        "  - id: t-021\n    status: needs-human\n"
+        "    gate_human: true\n    gate_reason: creative-approval\n",
+        encoding="utf-8",
+    )
+    project = {
+        "status": "playtest",
+        "early_playtest_owner_waiver": {
+            "approved_by": "Silas",
+            "approved_on": "2026-11-17",
+            "direction": "Open for early public playtesting",
+            "handoff": "projects/shifting-desks/PLAYTEST-HANDOFF-2026-11-17.md",
+            "known_open_tasks": ["t-041", "t-046"],
+        },
+    }
+    master = {"shifting-desks": "https://github.com/silasfelinus/kind_robots/issues/4150"}
+    eligible, errors = eligible_issues({"shifting-desks": project}, master, tmp_path)
+    assert eligible == [("shifting-desks", 4150)]
+    assert errors == []
+
+    # Never extend this owner waiver to newly discovered incomplete work.
+    with (game / "roadmap.yaml").open("a", encoding="utf-8") as file:
+        file.write("  - id: t-999\n    status: ready\n")
+    eligible, errors = eligible_issues({"shifting-desks": project}, master, tmp_path)
+    assert eligible == []
+    assert "t-999" in str(errors)
+
+    # The exception may not be borrowed by a different game.
+    eligible, errors = eligible_issues(
+        {"another-game": project},
+        {"another-game": "https://github.com/silasfelinus/kind_robots/issues/4150"},
+        tmp_path,
+    )
+    assert eligible == []
+    assert errors
