@@ -239,3 +239,49 @@ The 94-cell Krea 2 `ANTHRO-REPAINT-2026-11-16.yaml` and the 41-cell Furrytoon
 sweep. Rendering, delivery, URL verification, mature-only unlock wiring and
 final promotion of art are separate acceptance checks. Completed older
 pre-anthro Krea 2 jobs must not be treated as accepted replacements.
+
+## The price of goodness (Silas, 2026-11-17 PT)
+
+**Deepheart is a roguelike about the cost of being good.** Unlike Emperor of
+Dust's duties of rule, the dungeon tests whether a person will sacrifice their
+own chance of getting out alive to help someone else. Good outcomes are
+possible, not guaranteed, and should not be the default optimal route to
+riches or combat supremacy. The tempting shortcuts are practical: sell the
+workers' rights, take the orphans' coal, let the flood victims fend for
+themselves, accept a ruler's offer. A refusal is a choice, not a secret
+punishment or an automatic moral success.
+
+**Playable rules:**
+
+- A compassionate action may consume gold, potions or party health
+  **before** a visible seeded d20 check. Failure does not refund that risk.
+  Distinguish intention and achievement: sacrifice is recorded when paid;
+  mercy is earned by actually helping. A merciful ending requires repeated
+  help and at least two meaningful sacrifices, not a single cheap gesture.
+- The best conscious member's relevant stat contributes a d20 modifier,
+  with up to +2 from other sufficiently skilled conscious party members.
+  Combat class, injuries, stat allocation, equipment, bonds, roles and
+  composition must have tactical consequences. Show the effective crew
+  modifier on choice cards so players can plan rather than guess.
+- Every party should have a difficult but legible route to compassion, not
+  only holy parties. A weaker party may pay in health or money rather than
+  being blocked by a compulsory impossible roll. Exploitative options can be
+  profitable. Follow through later with persistent social consequences and
+  companion responses, without converting morality into a binary alignment
+  slider.
+- A **custom original hero** is distinct from all 50 presets; presets
+  remain the fully authored companion roster. Custom creation offers a name,
+  gender, attraction, role/class, original species/appearance description,
+  a boon and four allocatable stat points. The custom hero occupies its own
+  independent party slot, does not impersonate a canon preset and is saved
+  with the existing versioned run. Until a player-specific art pipeline is
+  available, use an honest illustrated/typographic placeholder, never
+  borrow a preset character's portrait as their identity.
+
+**Balance tests to complete before playtest:** check survival across party
+sizes and classes (target 75–85% autoplay survival), ensure the Gilded ending
+requires actual greed, prove the Redemption path is difficult but reachable
+from clean seeds without holy specialization, and compare seeded d20
+outcomes for differently skilled living parties. Save/load and preset
+achievements must not regress. Keep the art queue undisturbed while the
+approved 135-image repaint and after-hours batches finish.
