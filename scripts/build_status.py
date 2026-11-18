@@ -12,6 +12,11 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 try:
+    from playtest_readiness import pending_agent_owned_task_ids
+except ModuleNotFoundError:
+    from scripts.playtest_readiness import pending_agent_owned_task_ids
+
+try:
     from project_lifecycle import PROJECT_LIFECYCLE_STATUSES, lifecycle_status, load_project_overrides
 except ModuleNotFoundError:  # imported as scripts.build_status in pytest
     from scripts.project_lifecycle import PROJECT_LIFECYCLE_STATUSES, lifecycle_status, load_project_overrides
@@ -41,15 +46,23 @@ def compute_progress(milestones: list[dict], tasks: list[dict] | None = None) ->
         for m in milestones
     )
     if total_m and done_m > 0:
-        return round(done_m / total_m * 100, 1)
-    # Fall back to task-completion ratio when milestones are uninformative.
-    # `cancelled` tasks (closed unbuilt when Silas retires a project) leave the denominator.
-    # Mirrored in kind_robots server/utils/conductorRoadmap.ts computeProgress.
-    tasks = [t for t in tasks if t.get("status") != "cancelled"]
-    if tasks:
-        done_t = sum(1 for t in tasks if t.get("status") == "done")
-        return round(done_t / len(tasks) * 100, 1)
-    return 0.0
+        progress = round(done_m / total_m * 100, 1)
+    else:
+        # Milestones may be stale; preserve the existing task-ratio fallback.
+        counted = [t for t in tasks if t.get("status") != "cancelled"]
+        done_t = sum(1 for t in counted if t.get("status") == "done")
+        progress = round(done_t / len(counted) * 100, 1) if counted else 0.0
+
+    # 100% is a finite-work handoff, not milestone arithmetic. Genuine release
+    # approvals and deferred subjective verdicts are exempt, but unfinished
+    # authored content, art, build and QA must hold the number below 100.
+    finite = [
+        task for task in tasks
+        if not task.get("recurring") and not task.get("playtest_iteration")
+    ]
+    if finite:
+        return min(progress, 99.0) if pending_agent_owned_task_ids(tasks) else 100.0
+    return progress
 
 
 def count_tasks(tasks: list[dict]) -> dict[str, int]:
