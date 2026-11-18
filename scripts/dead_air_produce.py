@@ -199,6 +199,9 @@ def silent_tail_seconds(episode: dict) -> float:
     return max(0.0, min(MAX_SILENT_TAIL, tail))
 
 
+MIX_PEAK_LIMIT = 0.8  # linear sample ceiling of the provisional mix
+
+
 def audio_mix_filter(silent_tail: float) -> str:
     """FFmpeg graph: voice over an audible station bed, ending on a two-note sign-off chime.
 
@@ -223,7 +226,10 @@ def audio_mix_filter(silent_tail: float) -> str:
     )
     if silent_tail > 0:
         graph += f",volume=enable='gte(t\\,{audible_end:.3f})':volume=0"
-    return graph + ",alimiter=limit=0.93,atrim=duration=15[mix]"
+    # level=0: alimiter's default auto-level adds make-up gain that pushes every limited
+    # peak back to 0 dBFS, which is why MusicVideos 22 and 23 measured 0.0 / -0.2 dBFS
+    # despite "limit=0.93". 0.8 (about -1.9 dBFS) leaves room for the MP3 then AAC re-encodes.
+    return graph + f",alimiter=limit={MIX_PEAK_LIMIT}:level=0,atrim=duration=15[mix]"
 
 
 def longest_quiet_run(track: Path) -> float:
