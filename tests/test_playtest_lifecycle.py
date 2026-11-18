@@ -36,6 +36,7 @@ def test_readiness_requires_complete_build_not_a_human_playtest_task():
     }
     assert playtest_readiness_errors([done]) == []
     assert playtest_readiness_errors([done, verdict]) == []
+    assert playtest_readiness_errors([verdict]) == ["no completed finite production task"]
     assert playtest_readiness_errors([{"id": "build", "status": "ready"}])
     assert playtest_readiness_errors([done, {**verdict, "status": "ready"}]) == []
     assert playtest_readiness_errors([done, {**verdict, "status": "waiting"}]) == []
@@ -55,6 +56,7 @@ def test_one_hundred_percent_means_no_agent_owned_production_left():
     milestones = [{"weight": 100, "status": "done"}]
     unfinished_art = [{"id": "art", "status": "ready"}]
     assert compute_progress(milestones, unfinished_art) == 99.0
+    assert compute_progress(milestones, [{"id": "cancelled", "status": "cancelled"}]) == 99.0
 
     finished = [{"id": "build", "status": "done"}]
     assert compute_progress([{"weight": 100, "status": "in-progress"}], finished) == 100.0
