@@ -196,6 +196,7 @@ def test_shifting_desks_owner_waiver_preserves_known_incomplete_work(tmp_path: P
     game.mkdir()
     (game / "roadmap.yaml").write_text(
         "tasks:\n"
+        "  - id: t-001\n    status: done\n"
         "  - id: t-041\n    status: claimed\n"
         "  - id: t-046\n    status: review\n"
         "  - id: t-021\n    status: needs-human\n"
