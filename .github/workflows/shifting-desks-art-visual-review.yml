@@ -69,6 +69,8 @@ jobs:
           path: ${{ runner.temp }}/shifting-desks-manual-install.json
           if-no-files-found: error
           retention-days: 14
+      - name: Superseded Round 19 evidence regression
+        run: python -m pytest -q tests/test_shifting_desks_superseded_review_round.py
       - name: Validate the isolated Western fidelity pilot (dry-run only)
         run: |
           python scripts/enqueue_art_requests.py \
