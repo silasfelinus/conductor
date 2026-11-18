@@ -990,8 +990,8 @@ tasks:
   - id: t-041
     milestone: m2
     title: "CLASH 300: individually crafted L1/L2/L3 effects for every existing card"
-    status: claimed
-    updated: '2026-11-18T17:47:14Z'
+    status: ready
+    updated: '2026-11-18T18:26:32Z'
     depends_on: [t-037, t-051]
     passes: 0
     stakes: reversible
@@ -1138,10 +1138,21 @@ tasks:
       Undertow; CLASH_CREW_BUDGET riot is all-or-nothing (0.5 put Riot at 67.5% in the starter
       sweep). Open: Undertow, now the lowest constructed crew at 44.9%; art; human fun
       acceptance. Back to ready.
+
+      2026-11-18 PT: MERGED kind_robots #5315, squash b4ccfa9, head 85f8da0; all 12 check runs
+      green. Undertow lifted off the bottom of constructed CLASH. Rubber Drysuit (played in
+      598 of 600 non-starter Undertow bouts, 33% win) now adds +2 armor in CLASH (+3 at L3)
+      via a shared clashArmorGain helper that also drives the badge and rules text; catalog
+      text is untouched because other modes keep +1. Long Drain Sting (L1 Drain Line: boss 2)
+      and Backwater IOU (L1 Fine Print: draw 1) get authored L1 stages carried into L2/L3;
+      both went dead without them. Constructed QA, 3,120 bouts: Undertow 44.9 -> 49.6%,
+      undertow/fighters 45.2 -> 57.0%, crews 43.6-54.4%, first seat 52.4%, 0 dead two-slot
+      cards. Held-out families +5000/+9000: Undertow +5.6/+4.2, Riot -1.5/-0.8. Dropped
+      levers: global CPU armor valuation x1 (Riot 41.5%, under the band); +1 attack on
+      Interrogation Eel (stranded Long Drain Sting). Open: Riot is again the lowest crew at
+      43.6%; art and human fun acceptance. Back to ready.
     owner: worker
     implementation_pr: 'silasfelinus/kind_robots#5314'
-    claimed_by: 2026-11-18-sched-7uyolo
-    claimed_at: '2026-11-18T17:47:14Z'
   - id: t-042
     milestone: m2
     title: "Curate and wire the ogre redo-3 tokens: Picket Line Troll, Coal Cart Racer, Union Lunch Lady"
