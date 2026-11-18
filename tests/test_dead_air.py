@@ -306,6 +306,30 @@ def test_authored_silent_tail_is_short_and_honored(tmp_path):
     assert not validate({**episode, "silent_tail_seconds": 1.0})
 
 
+def test_loud_voice_mix_keeps_headroom_after_lossy_encodes(tmp_path):
+    """2026-11-17/18 reviews: finals peaked at 0.0 and -0.2 dBFS (alimiter auto-level make-up gain)."""
+    import re
+    import shutil
+    import subprocess
+    import pytest
+    if not shutil.which("ffmpeg"):
+        pytest.skip("ffmpeg unavailable")
+    from dead_air_produce import mix_audio
+    voice = tmp_path / "loud.wav"
+    subprocess.run(["ffmpeg", "-nostdin", "-y", "-loglevel", "error", "-f", "lavfi", "-i",
+                    "anoisesrc=color=white:amplitude=1:duration=9:sample_rate=22050",
+                    "-af", "bandpass=f=900:w=1400,tremolo=f=4:d=0.8,volume=60,"
+                    "alimiter=limit=0.99:level=0", str(voice)], check=True)
+    song = mix_audio(voice, {}, tmp_path)
+    final = tmp_path / "final.m4a"
+    subprocess.run(["ffmpeg", "-nostdin", "-y", "-loglevel", "error", "-i", str(song),
+                    "-c:a", "aac", "-b:a", "160k", str(final)], check=True)
+    stats = subprocess.run(["ffmpeg", "-nostdin", "-i", str(final), "-af", "volumedetect",
+                            "-f", "null", "-"], capture_output=True, text=True).stderr
+    peak = float(re.search(r"max_volume: (-?[\d.]+) dB", stats).group(1))
+    assert peak <= -0.5
+
+
 def test_quiet_run_detector_flags_the_old_near_silent_tail(tmp_path):
     import shutil
     import subprocess

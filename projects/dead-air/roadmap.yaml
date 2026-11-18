@@ -102,8 +102,8 @@ tasks:
     status: ready
     recurring: true
     daily_commitment: true
-    daily_last_checked: '2026-11-17'
-    daily_last_completed: '2026-11-17'
+    daily_last_checked: '2026-11-18'
+    daily_last_completed: '2026-11-18'
     stakes: reversible
     passes: 0
     depends_on: t-002
@@ -141,10 +141,17 @@ tasks:
       AAC; clip skipped for congestion. Fixed: jaguar-reveal briefs 11-18/11-19 no longer
       paint the jaguar into every shot (with test); producer resolves relative --episode
       paths. daily_last_completed=2026-11-17 reflects MV22's verified completion.
+
+      2026-11-18 PT cycle: MusicVideo 23 (The Empty Square, ArtImage 275278) completed private
+      on this session's 02:45 PT resume; downloaded, hash-verified and screened, review log
+      projects/dead-air/reviews/2026-11-18-screening.md. The s4 reveal held (mascot only in
+      s4), and the s5 recursive TV tag works. Defects: photoreal people instead of airbrush,
+      s2/s3 filmstrip premise missing, brief identity cues dropped, sound field unused, clip
+      skipped for congestion. Fixed: alimiter auto-level was pushing limited peaks back to 0
+      dBFS; the mix now uses limit=0.8:level=0 (-1.1 dBFS after AAC), with a test.
+      daily_last_completed=2026-11-18 reflects MV23's verified completion.
     owner: worker
-    claimed_by: ''
-    claimed_at: ''
-    updated: '2026-11-17T10:51:43Z'
+    updated: '2026-11-18T10:50:05Z'
   - id: t-005
     milestone: m3
     title: Create rights-aware reference and private production provenance review
