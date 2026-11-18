@@ -41,7 +41,14 @@ from pathlib import Path
 import yaml
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from set_task_field import append_note_text, set_task_field_text, TaskFieldError  # noqa: E402
+from set_task_field import (  # noqa: E402
+    append_note_text,
+    field_value_end,
+    find_task_block,
+    set_task_field_text,
+    TaskFieldError,
+)
+from check_pr_handoff_template import REQUIRED_SECTIONS  # noqa: E402
 from branch_ancestry import classify_relationship  # noqa: E402
 from git_plumbing import (  # noqa: E402
     GitError,
@@ -113,7 +120,44 @@ def apply_close(
             text = set_task_field_text(text, task_id, field, value, force=force)
         except TaskFieldError as exc:
             raise CloseError(f"ERROR: could not apply close field {field}: {exc}") from exc
+    if status == "ready":
+        # Releasing a task back to the queue must drop its claim, matching the
+        # task-events path (process_task_events.compute_transition_ops). Stale
+        # claimed_by/claimed_at on a ready task recurred in weird-humboldt
+        # close-outs (TALKBACK 2026-11-17, PR #7534 and #7561).
+        for field in RELEASE_FIELDS:
+            if field not in extra_fields:
+                text = unset_task_field_text(text, task_id, field)
     return text
+
+
+RELEASE_FIELDS = ("claimed_by", "claimed_at")
+
+
+def unset_task_field_text(text: str, task_id: str, field: str) -> str:
+    """Remove ``field`` (and its value block) from ``task_id``; no-op if absent."""
+    lines = text.splitlines(keepends=True)
+    try:
+        start, end, field_indent = find_task_block(lines, task_id)
+    except TaskFieldError as exc:
+        raise CloseError(f"ERROR: could not clear {field}: {exc}") from exc
+    prefix = " " * field_indent + f"{field}:"
+    for idx in range(start + 1, end):
+        line = lines[idx]
+        if line.startswith(prefix) and (len(line) == len(prefix) or line[len(prefix)] in " \n\r"):
+            value_end = field_value_end(lines, idx, end, field_indent)
+            del lines[idx:value_end]
+            return "".join(lines)
+    return text
+
+
+def handoff_body_skeleton(project: str, task_id: str, status: str) -> str:
+    """PR body skeleton carrying every heading check_pr_handoff_template requires."""
+    hints = {
+        "### Task": f"{project}/{task_id} close-out -> status={status}.",
+        "### Stakes": "Reversible. Roadmap bookkeeping only.",
+    }
+    return "\n\n".join(f"{heading}\n{hints.get(heading, '<fill in>')}" for heading in REQUIRED_SECTIONS)
 
 
 def _try_resolve(ref: str) -> str | None:
@@ -273,6 +317,8 @@ def close(
         if pushed:
             print(f"PUSHED: {project}/{task_id} -> status={status} on branch {branch}")
             print(f"Open a PR from {branch} into main to land this close-out.")
+            print("PR body skeleton (Validate Worker PR handoff needs every heading):")
+            print(handoff_body_skeleton(project, task_id, status))
             return
 
         print(

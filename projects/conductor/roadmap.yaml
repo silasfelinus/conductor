@@ -3242,5 +3242,21 @@ tasks:
     explicit opt-in marker (e.g. `supersedes_round:` naming the prior round) that the
     duplicate/unrecorded-art checks honour, with a test that an unmarked re-submission of the
     same asset is still flagged.
+- id: t-216
+  milestone: m1
+  title: 'One-time reconciliation: clear stale claimed_by/claimed_at from every ready task that still carries them, and add a sweep check so it cannot recur'
+  status: ready
+  stakes: reversible
+  owner: null
+  passes: 0
+  depends_on: []
+  updated: '2026-11-18T06:55:00Z'
+  note: >-
+    Reviewer kaizen 2026-11-18 from conductor#7561 (weird-humboldt/t-070 close-out). The same
+    session's PR fixes close_task.py so a status=ready close drops claimed_by/claimed_at
+    (matching process_task_events.compute_transition_ops). On origin/main 38+ ready tasks still
+    carry a claim (emperor-of-dust x9, comet-city-academy x7, game-of-captains x3, and others).
+    Clear them with one task-events batch, then add a session_sweep check that flags
+    status=ready with claimed_by set.
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
