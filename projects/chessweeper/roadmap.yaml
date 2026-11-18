@@ -28,13 +28,17 @@ tasks:
   - id: t-001
     milestone: m1
     title: "Build and wire the playable three-theme Chessweeper frontend at /play/chessweeper"
-    status: ready
+    status: claimed
     passes: 0
     stakes: outward-facing
     gate_human: true
     gate_reason: publish
     note: |-
       Source prototype: the user's standalone Chessweeper x Disc Room HTML5 game from ChatGPT (2026-11-17 PT). Bring the working chess/mine/disc loop to the actual Kind Robots frontend, register Play navigation, and make all three mode-specific rules playable: Sugar Rush freeze/combo, Ashen Last Stand, Jackpot Double-or-Nothing multiplier/multiball. Reversible code can be submitted to PR; public release/deployment needs an explicit human publication decision.
+    owner: worker
+    claimed_by: 2026-11-18T084300Z-chessweeper-t001-q7m2
+    claimed_at: '2026-11-18T08:43:00Z'
+    updated: '2026-11-18T08:43:00Z'
   - id: t-002
     milestone: m2
     title: "Deepen Sugarbomb, Ashen and Jackpot into three replayable campaigns"
