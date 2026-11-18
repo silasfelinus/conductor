@@ -1682,3 +1682,34 @@ tasks:
       scope the chosen change in kind_robots.
     claimed_by: null
     claimed_at: null
+
+  - id: t-076
+    milestone: m4
+    title: "Ecotone owner call: paint the 15 withheld ending plates (Mara x 14, ecotopia-mdma-dark) or keep the fallback"
+    status: needs-human
+    gate_human: true
+    gate_reason: creative-approval
+    depends_on: []
+    owner: worker
+    passes: 0
+    stakes: reversible
+    updated: '2026-11-18T23:40:00Z'
+    note: |-
+      Split from t-072 (main-game standard audit, 2026-11-18 PT). 69 of 84 ending plates are
+      painted in all four styles. The other 15 (all 14 endings/mara-* plus
+      endings/ecotopia-mdma-dark) are withheld by the fail-closed hold in kind_robots
+      utils/ecotone/reviewHold.ts. Silas's 2026-10-22 PT directive says to keep existing
+      runtime/art suppression in place, and the file says removal needs a separate documented
+      review and owner signoff. So this is the owner's call, not agent work. In play these
+      endings show the code-drawn scene fallback with full text, title, epilogue and dossier.
+      Nothing is broken or blank.
+      FOR SILAS: (1) Approve a NEW Mara visual design for ending plates: a fictional,
+      independent Humboldt tattoo artist with her studio, apprentices and the six-winged bird
+      design, and no tribal, reservation or culturally coded imagery (EXCLUDED-CONTENT-2026-10-22.md)?
+      (2) Re-render ecotopia-mdma-dark without the portrait that triggered the hold?
+      RECOMMENDATION: yes to both. An agent writes 15 literal prompts, queues them x4 styles
+      through ART-STANDARD.yaml (auto_submit), narrows reviewHold.ts so new renders show while
+      every old held asset stays held, and adds a test for that. Until then, playtest uses the
+      fallback. Creative and cultural judgment, so no default adoption: this waits for Silas.
+    claimed_by: null
+    claimed_at: null
