@@ -684,7 +684,7 @@ tasks:
   - id: t-015
     milestone: m4
     title: "Build persistent 56-signature gallery and Kind Robots achievements"
-    status: waiting
+    status: done
     depends_on: [t-005, t-012, t-014, t-020]
     owner: null
     passes: 0
@@ -700,6 +700,15 @@ tasks:
       shared achievements catalog, not a bespoke rewards backend.
       Do not invent unlocks or art IDs. Keep gallery text/image fallbacks
       working and obey existing publishing/art gates.
+
+      2026-11-18 PT reconciliation: delivered under the current 84-ending canon, not the
+      superseded 56. The Endings gallery shows X/84 with locked, spoiler-safe slots (aria-
+      labels name no locked ending). The ledger kr.ecotone.endings.v1 persists across refresh
+      and new runs, is deduplicated, and is sanitized against forged IDs. Each card opens a
+      dossier (t-074). Achievements come from the shared catalog, not a bespoke backend: 18
+      weird-humboldt achievements (t-073, verifyEcotoneAchievements), awarded only from played
+      steps. Browser proof: t-016 audit (kind_robots#5320).
+    updated: '2026-11-18T23:29:00Z'
   - id: t-016
     milestone: m5
     title: "Verify viewport-first layout and achievements through mounted browser tests"
