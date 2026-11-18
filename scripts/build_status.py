@@ -61,7 +61,10 @@ def compute_progress(milestones: list[dict], tasks: list[dict] | None = None) ->
         if not task.get("recurring") and not task.get("playtest_iteration")
     ]
     if finite:
-        return min(progress, 99.0) if pending_agent_owned_task_ids(tasks) else 100.0
+        has_completed = any(task.get("status") == "done" for task in finite)
+        if not has_completed or pending_agent_owned_task_ids(tasks):
+            return min(progress, 99.0)
+        return 100.0
     return progress
 
 
