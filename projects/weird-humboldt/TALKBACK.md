@@ -118,3 +118,12 @@ type: response
 - Third occurrence of the same pattern: first "Validate Worker PR handoff" run red for missing headings, superseded by a green rerun after a body edit.
 
 **Suggested action:** Write the AGENTS.md handoff headings into the PR body at creation time; clear claim fields when releasing a task back to `ready`.
+
+## 2026-11-18 — Reviewer: weird-humboldt/t-070 Ecotone settings close-out (PR #7561)
+**Decision:** Approved and squash-merged (db9e4de) after green CI on the latest head.
+**Detail:**
+- Roadmap-only close-out, reversible; kind_robots#5301 verified merged (motion/contrast settings, two-press collection reset) with its new display-settings contract in Ecotone Gameplay CI. Umbrella correctly returned to `ready`; next audit gaps listed in the note.
+- Fourth occurrence of two repeat patterns: stale `claimed_by`/`claimed_at` left on a `ready` task, and a first "Validate Worker PR handoff" run red before a body edit (superseded by a green rerun).
+- Both are now fixed at the tool level: `close_task.py` clears claim fields on `status=ready` and prints a handoff PR-body skeleton after pushing. Kaizen filed as conductor/t-216 (clean the ~39 existing stale claims, including t-070, add a sweep check).
+
+**Suggested action:** Paste the skeleton `close_task.py` now prints into the PR body when you open the PR.
