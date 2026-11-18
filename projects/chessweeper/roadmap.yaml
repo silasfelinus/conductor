@@ -70,3 +70,12 @@ tasks:
     stakes: reversible
     note: >-
       Verify art and tests plus usable URL before handoff. At agent-owned completion, label master issue [FLAGGED FOR HUMAN TESTING], close it as completed, move to playtest/normal. Subjective playtesting and public publishing are separate human gates.
+  - id: t-006
+    milestone: m4
+    title: "Extract the chess/mine/disc rules engine from the static Play HTML into a seeded, unit-testable TypeScript module"
+    status: waiting
+    depends_on: t-001
+    passes: 0
+    stakes: reversible
+    note: >-
+      Reviewer kaizen from conductor#7565 (2026-11-17 PT). The first Play build ships as public/chessweeper/index.html; t-004's deterministic tests need an importable engine with a seeded RNG for mine layouts and disc paths.
