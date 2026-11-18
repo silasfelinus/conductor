@@ -764,7 +764,7 @@ tasks:
   - id: t-020
     milestone: m2
     title: "Author 8 core futures and 56 short ending signature paragraphs"
-    status: review
+    status: done
     depends_on: [t-019, t-012, t-017]
     owner: worker
     passes: 0
@@ -786,9 +786,15 @@ tasks:
       (24 new cocaine/meth/mdma) in endings/signatures.yaml already authored and validated;
       added distinctness regression test (unique titles/art/alt text, max pairwise Jaccard
       <0.5). No art or release; awaits Silas creative review (t-004).
+
+      2026-11-18 PT reconciliation: authored and validated 2026-11-03. Its stated wait,
+      creative review t-004, is done. The 56-signature target was superseded by the shipped
+      84-ending canon (6 leads x 7 lenses x hope/dark, utils/ecotone/content.ts ENDING_IDS).
+      Every ending has a dossier title, signature and epilogue (verifyEcotoneEndingDossier).
+      Closed for the playtest handoff; no art or publication implied.
     claimed_by: 2026-11-03T0000Z-wh-t020-a1
     claimed_at: '2026-11-03T18:56:23Z'
-    updated: '2026-11-03T18:57:26Z'
+    updated: '2026-11-18T23:28:57Z'
   - id: t-021
     milestone: m3
     title: "Test all 56 earned signature endings and causal callbacks"
