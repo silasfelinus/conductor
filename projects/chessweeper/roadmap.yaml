@@ -3,7 +3,7 @@ project: chessweeper
 kind: software
 autonomous: true
 goal: >-
-  Ship Chessweeper to a human-testable complete game in Kind Robots /play with three fully playable, visibly and mechanically distinct styles: Sugarbomb Kingdom (kawaii combo puzzle), Ashen Checkmate (gritty tactical survival) and Jackpot Apocalypse (neon casino pinball risk/reward). Shared legal chess, Minesweeper clues/mines, hazard discs, mouse/keyboard/touch, save or repeatable progress, painted art, complete QA and a final Playtest handoff. Public publication is separately gated.
+  Ship Chessweeper to a human-testable complete game in Kind Robots /play with three fully playable, visibly and mechanically distinct styles: Sugarbomb Kingdom (kawaii combo puzzle), Ashen Checkmate (gritty tactical survival) and Jackpot Apocalypse (neon casino pinball risk/reward). Shared legal chess, Minesweeper clues/mines, hazard discs, mouse/keyboard/touch, persistent progression and settings, at least four authored endings per world, achievements, a discoverable scrapbook, integrated tutorial sidebar, painted hero/highlight/art, complete QA and a final Playtest handoff. Public publication is separately gated.
 notes_from_silas: |-
   Silas, 2026-11-17 PT: "hey computer can you make me uhh chess minesweeper and disc room in html5"; then "combine them"; then three redesign pitches with a very kawaii Lisa Frank bubblegum style, a Dark Souls gritty style, and a third chosen by the designer (Jackpot Apocalypse). "@GitHub add this to conductor, we expect playable version of all three styles, on the front end on /play".
   Rebuild this as a true three-way gameplay mashup. No three unrelated demos, no merely recolored CSS switch. Implement original art instead of copying branded visuals. Expected target /play/chessweeper; add a Play tab and project presentation in Kind Robots. Every published/release action remains a separate human approval.
@@ -55,7 +55,7 @@ tasks:
     passes: 0
     stakes: reversible
     note: >-
-      Tune distinct pacing, scoring, hazards, meta-progression and win/loss messaging; balance each with seeded trials.
+      Tune distinct pacing, scoring, hazards and world campaigns. Include at least four authored endings per world, end-state selection and scrapbook discovery; achievements for chess/mines/discs/world skills, persistent records, save/continue and settings. In-page meta systems first prototyped in kind_robots#5305 must be hardened, reviewed for account/device save semantics and migrated to canonical Kind Robots stores as appropriate. Balance with seeded trials and assess meaningful replayability.
   - id: t-003
     milestone: m3
     title: "Queue, deliver and attach original illustrated art for all three mode identities"
@@ -63,7 +63,7 @@ tasks:
     passes: 0
     stakes: reversible
     note: >-
-      Use durable Kind Robots ArtJobs with exact IDs, variants and target paths. Three independently art-directed hero/board/piece sets plus unified icon, card and hero. Verify delivery and real image URLs, not merely queue submission. First art prompts are in ART-PROMPTS.md.
+      Use durable Kind Robots ArtJobs with exact IDs, variants and target paths. Create a polished home/highlight and Advert Studio image, original project icon, card and hero, and three independently art-directed hero/board/piece sets. Attach images to actual Play, highlight, tutorial and scrapbook surfaces. Verify delivery and final visible image URLs; queued or CSS/SVG placeholder artwork does not count. First art prompts are in ART-PROMPTS.md.
   - id: t-004
     milestone: m4
     title: "Add deterministic tests, full playthroughs and 390/768/1440 viewport QA"
@@ -72,7 +72,7 @@ tasks:
     passes: 0
     stakes: reversible
     note: >-
-      Test legal special chess moves, checkmate/stalemate, mine first-probe behavior, clue cascade, collisions, ability recharge and all three unique mode mechanics, keyboard/touch; screenshots at phone/tablet/desktop.
+      Test legal special chess moves, checkmate/stalemate, mine first-probe behavior, clue cascade, collisions, ability recharge and all three unique mode mechanics. Add full runs for four endings per world, achievement triggers, saves/continue, settings persistence, scrapbook reachability, tutorial registration and all three Play/highlight surfaces. Screenshots and input QA at 390/768/1440, including keyboard and touch; test account/device semantics explicitly.
   - id: t-005
     milestone: m4
     title: "Finish remaining finite roadmap, mark for human testing and set playtest/normal"
@@ -81,7 +81,7 @@ tasks:
     passes: 0
     stakes: reversible
     note: >-
-      Verify art and tests plus usable URL before handoff. At agent-owned completion, label master issue [FLAGGED FOR HUMAN TESTING], close it as completed, move to playtest/normal. Subjective playtesting and public publishing are separate human gates.
+      Verify art, complete metagame systems, authored endings, tutorial/sidebar, highlight, tests and usable URL before handoff. At agent-owned completion, label master issue [FLAGGED FOR HUMAN TESTING], close it as completed, move to playtest/normal. Subjective playtesting and public publishing are separate human gates.
   - id: t-006
     milestone: m4
     title: "Extract the chess/mine/disc rules engine from the static Play HTML into a seeded, unit-testable TypeScript module"
