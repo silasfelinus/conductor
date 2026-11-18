@@ -20,14 +20,37 @@ import yaml
 
 try:
     from project_lifecycle import load_project_overrides
-    from playtest_readiness import playtest_readiness_errors
+    from playtest_readiness import playtest_readiness_errors, pending_agent_owned_task_ids
 except ModuleNotFoundError:
     from scripts.project_lifecycle import load_project_overrides
-    from scripts.playtest_readiness import playtest_readiness_errors
+    from scripts.playtest_readiness import playtest_readiness_errors, pending_agent_owned_task_ids
 
 ROOT = Path(__file__).resolve().parents[1]
 PREFIX = "[FLAGGED FOR HUMAN TESTING] "
 MASTER_URL = re.compile(r"^https://github\.com/silasfelinus/kind_robots/issues/(\d+)$")
+
+
+def explicitly_waived_owner_playtest(slug: str, config: dict, tasks: list[dict], errors: list[str]) -> bool:
+    """One documented owner decision can accept known open tasks, never unknown tasks.
+
+    This is a narrow early-access exception for Downward Mobility, not a way
+    to turn unfinished ordinary project roadmaps into approved playtests.
+    """
+    waiver = config.get("early_playtest_owner_waiver")
+    if slug != "shifting-desks" or not isinstance(waiver, dict):
+        return False
+    if waiver.get("approved_by") != "Silas" or str(waiver.get("approved_on")) != "2026-11-17":
+        return False
+    if not waiver.get("handoff") or not waiver.get("direction"):
+        return False
+    known = waiver.get("known_open_tasks")
+    if not isinstance(known, list) or len(known) != len(set(map(str, known))):
+        return False
+    if not all(isinstance(task_id, str) and task_id.startswith("t-") for task_id in known):
+        return False
+    pending = pending_agent_owned_task_ids(tasks)
+    expected_error = "agent-owned tasks still open: " + ", ".join(pending[:12])
+    return bool(pending) and errors == [expected_error] and set(pending).issubset(set(known))
 
 
 def eligible_issues(overrides: dict, masters: dict, roadmaps_dir: Path) -> tuple[list[tuple[str, int]], list[str]]:
@@ -46,7 +69,11 @@ def eligible_issues(overrides: dict, masters: dict, roadmaps_dir: Path) -> tuple
             problems.append(f"{slug}: roadmap missing")
             continue
         tasks = (yaml.safe_load(path.read_text(encoding="utf-8")) or {}).get("tasks", [])
-        for problem in playtest_readiness_errors(tasks):
+        errors = playtest_readiness_errors(tasks)
+        if explicitly_waived_owner_playtest(slug, config, tasks, errors):
+            print(f"OWNER-APPROVED EARLY PLAYTEST {slug}: known unfinished tasks retained", file=sys.stderr)
+            errors = []
+        for problem in errors:
             problems.append(f"{slug}: {problem}")
         if not any(problem.startswith(f"{slug}:") for problem in problems):
             changes.append((slug, int(match.group(1))))

@@ -83,6 +83,10 @@ def test_lead_projects_are_the_ones_silas_named():
     normal"): Zuzu Gamebook leaves the focus group the same way. The other five keep their
     relative order, and every band behind them moves up one more slot unchanged.
 
+    Updated 2026-11-17 PT: Silas explicitly authorized Downward Mobility (formerly
+    Shifting Desks) to open for early human playtesting, moving it out of the
+    protected high-priority development band. The other four preserve their order.
+
     The point of this test is unchanged: an agent tidying priority.yaml must not quietly
     reorder the top, and changing it means editing this test with a named human decision
     in the docstring.
@@ -95,16 +99,16 @@ def test_lead_projects_are_the_ones_silas_named():
         "emperor-of-dust",
         "rainbow-bullet-hell-space-princess",
         "save-the-plumber",
-        "shifting-desks",
     ]
     # 2026-11-09: Silas elevated slime-city to rank 1; the named tier is unchanged behind it.
     assert order[0] == "slime-city"
     order = order[1:]
     assert len(order) >= 14
-    assert order[:5] == focus
-    assert order[5:9] == ["kind-pinball", "zuzu-lair", "kr-arcade", "zuzu-showdown"]
-    assert order[9] == "memory-dungeon"
-    assert order[10:12] == ["cthulhuquarium", "kind-economy"]
+    assert order[:4] == focus
+    assert order[4:8] == ["kind-pinball", "zuzu-lair", "kr-arcade", "zuzu-showdown"]
+    assert order[8] == "memory-dungeon"
+    assert order[9:11] == ["cthulhuquarium", "kind-economy"]
+    assert order.index("shifting-desks") > order.index("zuzu-shifting-lands")
     for finished in ("kapowarr", "ai-art-academy"):
         assert finished not in order
 
@@ -127,28 +131,31 @@ def test_ecotone_high_priority_is_registered_and_pickable():
     assert overrides["weird-humboldt"]["priority"] == "high"
 
 
-def test_seven_creative_focus_projects_are_active_and_high_priority():
+def test_remaining_creative_focus_projects_are_active_and_high_priority():
     """2026-10-21: do not let creative focus silently become a label-only promise.
 
     2026-11-14 PT: zuzu-shifting-lands left the tier for playtest on Silas's
     direction (2026-11-13 PT, "flip the project to playtest"); the other six stay.
     2026-11-15 PT: zuzu-gamebook left the same way ("the project on kind robots will be
     set to 'playtest' and normal"); the other five stay.
+    2026-11-17 PT: Downward Mobility joins playtest at the owner's explicit
+    early-access direction. The remaining four stay active/high.
     """
     focus = {
         "weird-humboldt",
         "emperor-of-dust",
-        "shifting-desks",
         "rainbow-bullet-hell-space-princess",
         "save-the-plumber",
     }
     data = yaml.safe_load(PRIORITY.read_text(encoding="utf-8")) or {}
-    assert set(data["order"][1:6]) == focus
+    assert set(data["order"][1:5]) == focus
     raw = yaml.safe_load(OVERRIDES.read_text(encoding="utf-8")) or {}
     overrides = {row["slug"]: row for row in raw.get("overrides", [])}
     for slug in focus:
         assert overrides[slug]["status"] == "active", slug
         assert overrides[slug]["priority"] == "high", slug
+    assert overrides["shifting-desks"]["status"] == "playtest"
+    assert overrides["shifting-desks"]["priority"] == "normal"
 
 
 def test_control_priority_band_matches_priority_queue():
