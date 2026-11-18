@@ -2791,7 +2791,7 @@ tasks:
     passes: 0
     stakes: reversible
     depends_on: [t-168]
-    updated: '2026-11-15T14:45:00Z'
+    updated: '2026-11-18T11:07:21Z'
     note: |-
       Silas, 2026-11-15 PT: full parity with the whole roadmap may not be reasonable; finish the latest tasks and triage next steps that make publicly shared arcade links presentable. This milestone is that triage. The m8 depth pass (50 open slices) continues in the background and is not a gate for sharing.
 
@@ -2811,6 +2811,14 @@ tasks:
       200 with 'No Nuxt Content page was found for /play'; both now 302 to /play/arcade via
       FRONT_DOOR_ALIASES, pinned by verifyFrontDoorRoutes.test.ts. Remaining t-169 work unchanged
       (tap-to-start sound, touch controls, hall back-link contract).
+
+      2026-11-18 PT daily-delivery:2026-11-18/daily-cold-open-probe | PR:
+      silasfelinus/kind_robots#5309 | Live checkArcadeColdOpenLive.mjs from this session:
+      22/22 showcase cold opens clean on kindrobots.org (11 cabinets x 390x844 and 768x1024,
+      fresh context). arcade-share-live-check.yml gains a cold-open job running it daily, so a
+      login wall, page error, missing canvas or lost hall link on a shared cabinet link turns
+      the scheduled run red. Remaining t-169 work unchanged (tap-to-start sound, touch-control
+      and hall back-link fixture contract).
   - id: t-170
     milestone: m11
     title: "Share my score: the game-over screen offers a one-tap share with the score and the cabinet link"
@@ -2826,17 +2834,24 @@ tasks:
   - id: t-171
     milestone: m11
     title: "After deploy, verify cabinet unfurls live with crawler user agents and fold the check into the daily Kind Robots UI check"
-    status: ready
+    status: done
     passes: 0
     stakes: reversible
     depends_on: [t-166, t-167]
-    updated: '2026-11-15T14:45:00Z'
+    updated: '2026-11-18T11:13:36Z'
     note: |-
       Silas, 2026-11-15 PT: full parity with the whole roadmap may not be reasonable; finish the latest tasks and triage next steps that make publicly shared arcade links presentable. This milestone is that triage. The m8 depth pass (50 open slices) continues in the background and is not a gate for sharing.
 
       Merged is not deployed: wait for the image to publish and the Unraid deploy to run. Then fetch each showcase cabinet URL as facebookexternalhit, Discordbot and Twitterbot, assert og:title, og:description, an absolute raster og:image that returns 200, and twitter:card. Record results in the task note. The agent sandbox cannot reach kindrobots.org, so this runs from CI or the existing daily UI-check scheduled task.
 
       2026-11-15 PT: the check exists (kind_robots#5223, .github/workflows/arcade-share-live-check.yml, daily 15:17 UTC). After #5218 merges and deploys, dispatch it with strict_unfurl=true; done when every showcase cabinet unfurls as itself with a 200 og:image, then consider making strict the scheduled default.
+
+      2026-11-18 PT daily-delivery:2026-11-18/strict-unfurl-schedule | PR:
+      silasfelinus/kind_robots#5309 (merged 6407369) | Live checkArcadeShareLive.ts --unfurl
+      --strict-unfurl from this session: 34 cabinets, 0 missing title art, 0 unfurl problems
+      for facebookexternalhit, Discordbot and Twitterbot. Done criterion met, so strict is now
+      the scheduled default (dispatch input defaults to true too). Done.
+    implementation_pr: 'silasfelinus/kind_robots#5309'
   - id: t-172
     milestone: m11
     title: "Silas: a 60-second phone check of three shared cabinet links before broadcasting"
