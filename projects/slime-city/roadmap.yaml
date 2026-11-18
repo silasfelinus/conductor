@@ -990,8 +990,8 @@ tasks:
   - id: t-041
     milestone: m2
     title: "CLASH 300: individually crafted L1/L2/L3 effects for every existing card"
-    status: claimed
-    updated: '2026-11-18T16:45:01Z'
+    status: ready
+    updated: '2026-11-18T17:18:48Z'
     depends_on: [t-037, t-051]
     passes: 0
     stakes: reversible
@@ -1126,10 +1126,20 @@ tasks:
       verifySlimeCityClashCpuEvolutions. Constructed QA, 3,120 bouts: dead two-slot cards 0,
       crews 42.4-55.8%, first seat 51.9%. Open: Riot at the 42% band edge, art and human fun
       acceptance. Back to ready.
+
+      2026-11-18 PT: MERGED kind_robots #5314, squash 2721828, head 8ef7ae3; all checks green.
+      Riot moved off the 42% constructed band edge. Fireworks Strongman (s3-riot-firework-
+      bishop), Riot's only off-starter two-slot fighter, gets +1 strike at L1 and L3 (L3 keeps
+      the 1.6x ramp). Decks with him unplayed won 39.6% of bouts; decks that played him won
+      51.2%. Constructed QA, 3,120 bouts: Riot 42.4 -> 44.6%, crew spread 13.4 -> 10.7 points,
+      dead two-slot cards 0, first seat 51.9%. Two held-out seed families: Riot +2.9 and +1.5
+      points. Starter sweep unchanged (Riot 49.8%). Levers tried and dropped: FUSE BOX 3/5
+      gave +1 point; FUSE BOX 4/5 stranded a dead card; a CPU trap penalty gave +0.9 and cost
+      Undertow; CLASH_CREW_BUDGET riot is all-or-nothing (0.5 put Riot at 67.5% in the starter
+      sweep). Open: Undertow, now the lowest constructed crew at 44.9%; art; human fun
+      acceptance. Back to ready.
     owner: worker
-    implementation_pr: 'silasfelinus/kind_robots#5313'
-    claimed_by: 2026-11-18-sched-np84bb
-    claimed_at: '2026-11-18T16:45:01Z'
+    implementation_pr: 'silasfelinus/kind_robots#5314'
   - id: t-042
     milestone: m2
     title: "Curate and wire the ogre redo-3 tokens: Picket Line Troll, Coal Cart Racer, Union Lunch Lady"
