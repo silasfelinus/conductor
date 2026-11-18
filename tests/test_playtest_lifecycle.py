@@ -74,6 +74,28 @@ def test_issue_handoff_is_scoped_to_valid_playtest_games(tmp_path: Path):
     assert errors
 
 
+
+def test_handoff_fails_closed_for_malformed_roadmap_structures(tmp_path: Path):
+    game = tmp_path / "game"
+    game.mkdir()
+    project = {"game": {"status": "playtest"}}
+    issue = {"game": "https://github.com/silasfelinus/kind_robots/issues/123"}
+    for bad_yaml in (
+        "- id: t-001\\n  status: done\\n",
+        "ready\\n",
+        "tasks: null\\n",
+        "tasks: {t-001: done}\\n",
+        "tasks: 'done'\\n",
+        "tasks: []\\n",
+        "tasks: [invalid\\n",
+    ):
+        (game / "roadmap.yaml").write_text(bad_yaml, encoding="utf-8")
+        issues, errors = eligible_issues(project, issue, tmp_path)
+        assert issues == [], f"must not close issue for {bad_yaml!r}"
+        assert errors and errors[0].startswith("game:")
+
+
+
 def _handoff_fixture(tmp_path, monkeypatch, *, status="playtest", task_status="done"):
     (tmp_path / "projects" / "game").mkdir(parents=True)
     (tmp_path / "docs" / "agents").mkdir(parents=True)
