@@ -115,19 +115,18 @@ def test_handoff_fails_closed_for_malformed_roadmap_structures(tmp_path: Path):
     project = {"game": {"status": "playtest"}}
     issue = {"game": "https://github.com/silasfelinus/kind_robots/issues/123"}
     for bad_yaml in (
-        "- id: t-001\\n  status: done\\n",
-        "ready\\n",
-        "tasks: null\\n",
-        "tasks: {t-001: done}\\n",
-        "tasks: 'done'\\n",
-        "tasks: []\\n",
-        "tasks: [invalid\\n",
+        "- id: t-001\n  status: done\n",
+        "ready\n",
+        "tasks: null\n",
+        "tasks: {t-001: done}\n",
+        "tasks: 'done'\n",
+        "tasks: []\n",
+        "tasks: [invalid\n",
     ):
         (game / "roadmap.yaml").write_text(bad_yaml, encoding="utf-8")
         issues, errors = eligible_issues(project, issue, tmp_path)
         assert issues == [], f"must not close issue for {bad_yaml!r}"
         assert errors and errors[0].startswith("game:")
-
 
 
 def _handoff_fixture(tmp_path, monkeypatch, *, status="playtest", task_status="done"):
