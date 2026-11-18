@@ -1206,7 +1206,7 @@ tasks:
   - id: t-051
     milestone: m2
     title: 'Fighters-first redesign: fewer gear/tech/non-fighters, fewer and fewer kinds of random effects'
-    status: review
+    status: ready
     owner: worker
     claimed_by: 20261115T021605Z-slime-city-t-051-k7mosmm0h
     claimed_at: '2026-11-15T02:16:05Z'
@@ -1241,8 +1241,19 @@ tasks:
       2026-11-13 PT intent audit (INTENT-AUDIT-2026-11-13.md): status was review for ~36h with
       no open PR in kind_robots or conductor and remaining scope listed above; returned to
       ready so pickers can take the next slice. No work discarded.
-    updated: '2026-11-15T02:22:30Z'
-    implementation_pr: 'silasfelinus/kind_robots#4965'
+
+      2026-11-17 PT intent audit (INTENT-AUDIT-2026-11-18.md): this task sat in review from
+      11-15 02:22Z with an expired claim and no note. The cycle's PR, kind_robots#5193, merged
+      at 11-15 04:29Z: Patent Shredder gear became a three-stage support fighter (the first
+      conversion from the four-card shortlist). t-041 is waiting on this task, and it is the
+      top-priority project's critical path, so it goes back to ready. Next slice: per CLASH-
+      CONSTRUCTED-CHECKPOINT-2026-11-16.md, prototype the next deterministic conversion from
+      the shortlist, aimed at the 14 never-played two-slot cards (deadTwoSlotCards). Keep card
+      ids and the 42-58% / spread<=12 guard, and rerun test:slime-city-clash-constructed
+      afterward. Wholesale cuts beyond the shortlist still go to Silas first. No work
+      discarded.
+    updated: '2026-11-18T00:47:01Z'
+    implementation_pr: 'silasfelinus/kind_robots#5193'
   - id: t-052
     milestone: m2
     title: 'ANARKISS reskin (was Riot Saints): anarchy circus midnight-musical crew (names, flavor, art)'
