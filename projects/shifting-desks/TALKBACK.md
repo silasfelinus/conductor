@@ -188,3 +188,11 @@ Conductor#6110's unchanged reviewed head merged in another session at `2026-10-1
 **Observed:** good kaizen from the Worker. `soft <= hard` alone is always satisfied by a black mask, so the new positive-interior and channel-count assertions are what make the test meaningful. Small gap: the V7 path reports `status: pending` for a FAILED ArtJob too. Harmless now, but a failed V7 would look like it was still waiting.
 
 **Improve:** have the diagnostic name FAILED distinctly from pending once V7 lands, so the dashboard never shows a failed job as in flight.
+
+## 2026-11-18 PT — reviewer (scheduled agent): Project-title guard fix #7569 merged
+
+**Decision:** merged conductor#7569 (`worker/shifting-desks-project-title-guard-fix-p9a2`). The first run of the owner-approved title workflow (44262814458) failed closed on `unexpected existing Project title`: the live row's title wasn't in the hard-coded historical-title allowlist. The fix identifies the row by the unique immutable `conductorSlug`, keeps the positive-id and non-mature guards, and rejects only a blank title. All 24 checks green, 2/2 tests passed locally, no competing review claim. The rename and public visibility are recorded owner decisions (CONTROL.md, 2026-11-17 PT). Post-merge run 44269967281 succeeded.
+
+**Observed:** the original allowlist guarded against the wrong risk. Identity belongs on the slug, not a mutable display string.
+
+**Improve:** one-shot production writes should not keep a push trigger after they succeed. Kaizen t-059 retires it so a future owner retitle can't be reverted.

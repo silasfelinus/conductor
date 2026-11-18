@@ -12809,3 +12809,7 @@ Reviewed worker/slime-city-priority-20261109 (Silas, priority.yaml only, reversi
 - Watch items for t-012: (1) the anthro direction is cited as "Silas, 2026-11-16 PT" in DESIGN-BRIEF.md, but no verbatim quote exists in CONTROL.md or on kind_robots#5256. The next Deepheart session should record his words in CONTROL.md. (2) Companion kind_robots#5268 (admin bible) was still open and blocked at review time. (3) The Worker flagged possible unintended nudity from the Realism By and NTR Mix lanes. Those renders need adult-admin review before any adoption, and must never be used in public.
 - Pattern (good): running a small fixed-seed style bake-off before bulk-submitting a 94-image repaint is the right way to avoid a second wrong-style cast. Reuse it for any whole-cast restyle.
 - Rituals for 2026-11-16 PT were already satisfied: Dead Air runway 7/7, Dream docket 5 unbuilt, deliveries valid.
+
+## 2026-11-18 PT — reviewer (scheduled agent): conductor#7569 merged; Dead Air 2026-11-24 authored
+- Reviewer: select_role named `worker/shifting-desks-project-title-guard-fix-p9a2` (#7569). Merged it once all checks were green. Its title workflow then succeeded (run 44269967281). Details are in projects/shifting-desks/TALKBACK.md. Kaizen: shifting-desks/t-059.
+- Dead Air runway was missing 2026-11-24. Authored `2026-11-24-leftover-hour.yaml` (original, private, five shots, `status: authored`). `dead_air_produce.validate` returns clean, and the runway is now 7/7. Dream docket holds 5 unbuilt, so no proposal was due.

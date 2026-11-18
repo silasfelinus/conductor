@@ -26,3 +26,5 @@ Complete an Orientation-to-Board run and try a contrasting job/society; inspect 
 The display name is **Downward Mobility**, formerly Shifting Desks / The Elevator Only Goes Down. Preserve `/play/shifting-desks`, game IDs, save keys, ArtJob identities and existing poster slots. Source/Advert PR: Kind Robots #5302. Manual Project DB title change and rerender of pre-rendered social WebP must be separately verified; they are not proven by this source handoff. User authorized the in-site playtest opening/deployment; **no extra paid advertising, third-party announcements, secrets, money or unrelated production changes** are included.
 
 **Master issue:** [Kind Robots #4150](https://github.com/silasfelinus/kind_robots/issues/4150) will be flagged for testing and closed with this disclosed waiver, not because its original build checklist was falsely completed.
+
+**Project DB title applied (2026-11-18):** `downward-mobility-project-title.yml` run 44269967281 PATCHed the single `conductorSlug=shifting-desks` Project to **Downward Mobility** after the conductorSlug identity fix (#7569). The workflow is now manual-dispatch only (t-059).

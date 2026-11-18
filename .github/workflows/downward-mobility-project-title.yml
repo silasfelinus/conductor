@@ -1,12 +1,8 @@
 name: Apply owner-approved Downward Mobility project title
 
+# One-shot: applied successfully in run 44269967281 (2026-11-18). Push trigger removed so a
+# later owner retitle is never silently reverted; re-run only by manual dispatch.
 on:
-  push:
-    branches: [main]
-    paths:
-      - projects/shifting-desks/PLAYTEST-HANDOFF-2026-11-17.md
-      - scripts/update_downward_mobility_project.py
-      - .github/workflows/downward-mobility-project-title.yml
   workflow_dispatch:
 
 permissions:
