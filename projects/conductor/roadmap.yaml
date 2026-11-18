@@ -3264,5 +3264,21 @@ tasks:
     carry a claim (emperor-of-dust x9, comet-city-academy x7, game-of-captains x3, and others).
     Clear them with one task-events batch, then add a session_sweep check that flags
     status=ready with claimed_by set.
+- id: t-217
+  milestone: m1
+  title: 'Validate Worker PR handoff should fail when a worker branch rolls a roadmap task status back relative to origin/main'
+  status: ready
+  stakes: reversible
+  owner: null
+  passes: 0
+  depends_on: []
+  updated: '2026-11-18T23:00:00Z'
+  note: >-
+    Reviewer kaizen 2026-11-18 PT from conductor#7589/#7590 (t-211). The worker branch was cut
+    before task-events moved t-211 to review, and its roadmap.yaml diff would have put the task
+    back to claimed and dropped its note. CI passed that part silently. Add a PR check, with a
+    unit test, that compares each task's status and note in the PR head against origin/main and
+    flags a backward transition, such as review to claimed or done to ready, that the PR does not
+    explain with a task-event.
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'

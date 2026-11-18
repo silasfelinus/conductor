@@ -12813,3 +12813,9 @@ Reviewed worker/slime-city-priority-20261109 (Silas, priority.yaml only, reversi
 ## 2026-11-18 PT — reviewer (scheduled agent): conductor#7569 merged; Dead Air 2026-11-24 authored
 - Reviewer: select_role named `worker/shifting-desks-project-title-guard-fix-p9a2` (#7569). Merged it once all checks were green. Its title workflow then succeeded (run 44269967281). Details are in projects/shifting-desks/TALKBACK.md. Kaizen: shifting-desks/t-059.
 - Dead Air runway was missing 2026-11-24. Authored `2026-11-24-leftover-hour.yaml` (original, private, five shots, `status: authored`). `dead_air_produce.validate` returns clean, and the runway is now 7/7. Dream docket holds 5 unbuilt, so no proposal was due.
+
+## 2026-11-18 PT — reviewer (scheduled agent): conductor/t-211 merged via #7590; kind_robots#5319 merged; kaizen conductor/t-217
+- Reviewer: select_role named `worker/conductor-t-211-playtest-closeout-20261118-pc7f2` (#7589). One CI test failed: `test_shifting_desks_owner_waiver_preserves_known_incomplete_work`. The fixture had no `done` task, so the new "no completed finite production task" rule correctly rejected it. The real roadmap has 56 done tasks, so I fixed the fixture, not the waiver. The branch was also stale: it would have reverted conductor/t-211 from `review` back to `claimed`. I restored main's roadmap.yaml.
+- Merged as #7590 from the session branch. #7589 is closed as superseded. Companion kind_robots#5319 (TS progress parity: the 99% cap and the subjective/publish exemptions) was green and its logic matches `pending_agent_owned_task_ids`, so I merged it. t-211 is done.
+- Pattern: worker branches that edit roadmap.yaml can quietly undo task-event transitions. Kaizen conductor/t-217 adds a check for this.
+- Rituals for 2026-11-18 PT were already satisfied: Dead Air runway 7/7, Dream docket 5 unbuilt, deliveries valid.
