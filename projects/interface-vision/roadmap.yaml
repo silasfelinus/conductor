@@ -1802,10 +1802,19 @@ tasks:
     The not-found panel said 'No Nuxt Content page was found for /x' with no exit. It now explains
     the link may be old or mistyped and offers Play free games / Home / Support the mission buttons
     on the shared kr-panel; test forbids the framework jargon.
-  updated: '2026-10-14T05:36:12Z'
+
+    2026-11-18 PT daily-delivery:2026-11-18/site-name-tab-titles | PR:
+    silasfelinus/kind_robots#5309 | Content pages showed bare tab titles (Storybook, Memory
+    Dungeon, Support, Terrors on Crystal Street) while dedicated pages appended ' | Kind
+    Robots' by hand. app.vue now sets titleTemplate via siteTabTitle() in
+    utils/sharePreview.ts, which skips titles already naming the site; og:title unchanged.
+    Pinned in verifySharePreview.test.ts. Live tab titles not yet re-checked after deploy.
+  updated: '2026-11-18T11:07:14Z'
   implementation_pr: 'silasfelinus/kind_robots#2912'
   retry_context: ''
   min_rest_hours: 24
+  noop_streak: 0
+  rest_until: '2026-11-19T11:07:14Z'
 
 - id: t-123
   milestone: m5
