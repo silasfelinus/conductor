@@ -1206,7 +1206,7 @@ tasks:
   - id: t-051
     milestone: m2
     title: 'Fighters-first redesign: fewer gear/tech/non-fighters, fewer and fewer kinds of random effects'
-    status: claimed
+    status: review
     passes: 0
     stakes: reversible
     note: |-
@@ -1264,11 +1264,21 @@ tasks:
 
       2026-11-17 PT: kind_robots#5300 merged (0a67cb4). Back to ready for the last shortlist
       slice, Ninth Life Collar (Catgirls).
-    updated: '2026-11-18T07:54:35Z'
+
+      2026-11-18 PT: silasfelinus/kind_robots#5307 converts Ninth Life Collar (id kept) into a
+      2-cost Catgirls belled-stray fighter, the fourth and last shortlist conversion. Arrival
+      lends one neighbor REGEN (L1), plus a 1-HP spare life (L2), and gives both neighbors
+      both at L3. Lab-Escape Atlas takes its legacy ten-card slot; the Collar stays rare. FIVE
+      ALLEYS Catgirls HP offset 0.25 -> 1.25 (guard 0.152 -> 0.087, held-out 0.055). Full
+      test:slime-city-lab and vue-tsc pass. CLASH starter spread unchanged at 10.3;
+      constructed Catgirls 49.4% -> 55.5%, crew spread 13.1 (guard 15); dead two-slot cards
+      stay 13. Shortlist complete: next is Silas's call on wholesale cuts beyond it, or a
+      fifth conversion aimed at the Catgirls' dead two-slot cards (spare-lives, stolen-saw).
+    updated: '2026-11-18T08:21:48Z'
     owner: worker
     claimed_by: 2026-11-18T07:56:00Z-02bk9x
     claimed_at: '2026-11-18T07:54:35Z'
-    implementation_pr: 'silasfelinus/kind_robots#5300'
+    implementation_pr: 'silasfelinus/kind_robots#5307'
   - id: t-052
     milestone: m2
     title: 'ANARKISS reskin (was Riot Saints): anarchy circus midnight-musical crew (names, flavor, art)'
