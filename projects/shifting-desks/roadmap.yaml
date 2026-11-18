@@ -610,8 +610,8 @@ tasks:
   - id: t-032
     milestone: m3
     title: 'Land, review and link the art round 13 re-renders and round 14 tone-ladder renders'
-    status: ready
-    updated: '2026-11-17T22:40:00Z'
+    status: claimed
+    updated: '2026-11-18T02:55:00Z'
     depends_on: t-015
     passes: 0
     stakes: reversible
@@ -655,6 +655,9 @@ tasks:
       Actual private V7 ArtJob 69726 / ArtImage 274359 inspected against source 273631 from visual evidence run 44120268742, artifact 14345505662. V7 still has only two arms; pen stays in the wrong hand. Pixel diagnostics artifact 14343659935 confirms effective mask changes but failed composition. Scoped PR records REDO and disables further automatic V7 submissions. Fourteen Classic REDOs, final ending images and browser QA remain unfinished.
 
       Verified and merged Conductor PR #7548 at abb9a0c41f3d0c60b9d25d6e9bbc36bed7f88020 after all exact-head workflow checks completed successfully (Python suite, Shifting Desks visual review, Security Audit, handoff, task events). V7 private ArtJob 69726 / ArtImage 274359 is durably REDO: two attached arms and pen in original hand, though mask is materially editing. Art review run 44120268742 artifacts 14345505662 and 14343659935. Auto submission of this failed recipe is now disabled; no new ArtJob or public link was made. See Kind Robots master issue #4150 comment 6962742037. Continue other fourteen Classic art REDOs and accepted asset linking, t-041 illustrated ending verification, browser QA t-046 and standard t-049. This original finite build task is NOT done, so remain active/high; no playtest promotion, issue closure or publication is authorized yet.
+    owner: worker
+    claimed_by: 2026-11-18T025500Z-shifting-desks-t032-img-install-b64a
+    claimed_at: '2026-11-18T02:55:00Z'
   - id: t-033
     milestone: m3
     title: 'Tone ladder: lower floors grow more Cronenbergian (rules and station art)'
