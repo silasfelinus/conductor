@@ -1429,7 +1429,7 @@ tasks:
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-16T09:01:31+00:00'
+    updated: '2026-11-18T01:01:02Z'
     note: |-
       Reviewer kaizen from slime-city/t-068, kind_robots#5210 (squash 0c93ed7). The 1440px control strip overflow is addressed by a CSS/source contract, but source matching cannot prove real DOM geometry. After the self-hosted production image includes the merged commit, run the sanctioned real-browser layout audit at 390, 768 and 1440 pixels on VS-vs-CPU Clash, with and without an available TAP ability. Assert data-testid=clash-pass stays fully inside .clash-console and the viewport, save screenshots, and regression-test the measured bounds in the existing Slime City layout/audit harness. Do not claim the result from static CSS checks or a Vercel preview (retired).
 
@@ -1445,6 +1445,17 @@ tasks:
       vision/t-154 (audit timeout) lands.
 
       2026-11-16 PT: the production Clash audit finally ran (Responsive Layout Audit run 43828805291, controls job, after interface-vision/t-154 / kind_robots#5239). Phone 390 passed with FIGHT inside the console (rail 153-374, fight 282-368; with TAP: tap 171-239, fight 282-368). Tablet 768 and desktop 1440 timed out waiting for slime-vs-tab / slime-vs-fight-cpu. Reproduced locally: /play/slime-city has requiredPermission: authenticated (content/channels/arcade/slime-city.md), and an anonymous browser is redirected to /login?redirect=/play/slime-city a few seconds after hydration at every width. Phone passed only because it finished before the redirect. Not a layout defect: the audit needs a signed-in session. Silas decision: provide a low-privilege production audit account (e.g. secrets KR_AUDIT_USERNAME/KR_AUDIT_PASSWORD) for auditSlimeCityClashLayout.mjs to sign in with, or allow anonymous play of Clash. The only existing credential is CYPRESS_BETA_ADMIN_TOKEN, and an admin token is deliberately not used against production. Phone geometry is not counted as a pass because the redirect raced it.
+
+      2026-11-17 PT: Silas asked whether an API key works. It doesn't, as the code stands. A
+      user apiKey authenticates API calls (server/utils/authGuard.ts validateUserApiKeyAuth),
+      but /play/slime-city's authenticated guard needs a browser session: a JWT from
+      /api/auth/login.post.ts (username + password), checked by /api/auth/validate/token.ts,
+      which rejects anything that isn't a JWT. The ask is unchanged: a non-admin production
+      account stored as kind_robots Actions secrets KR_AUDIT_USERNAME and KR_AUDIT_PASSWORD.
+      After that, the agent work is: auditSlimeCityClashLayout.mjs signs in through
+      /api/auth/login (it has no login step today), and the controls job in responsive-layout-
+      audit.yml passes the two secrets through. Alternative with no secret: Silas allows
+      anonymous Clash play.
     claimed_by: 20261115T112510Z-slime-city-t-069-gpt6-c4f27
     claimed_at: '2026-11-15T11:25:10.424Z'
     soft_gate: true
