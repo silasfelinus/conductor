@@ -1140,7 +1140,7 @@ tasks:
     claimed_at: '2026-11-17T22:15:00Z'
   - id: t-059
     title: 'Retire the one-shot Downward Mobility Project-title workflow now that it has applied the rename'
-    status: ready
+    status: done
     milestone: m3
     stakes: reversible
     passes: 0
@@ -1153,3 +1153,6 @@ tasks:
       push touching the handoff doc or script and would silently revert a future owner retitle to
       "Downward Mobility". Remove the push trigger (or the workflow and script) and record the
       applied run in the handoff, so a one-shot production write cannot replay. CI-only change.
+
+      Implemented in Conductor PR #7572: push trigger removed, workflow is manual-dispatch only, and
+      the applied run is recorded in the workflow header and the playtest handoff.
