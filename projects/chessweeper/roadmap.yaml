@@ -1,0 +1,72 @@
+# Chessweeper: one three-mode chess / minesweeper / bouncing disc action-puzzle.
+project: chessweeper
+kind: software
+autonomous: true
+goal: >-
+  Ship Chessweeper to a human-testable complete game in Kind Robots /play with three fully playable, visibly and mechanically distinct styles: Sugarbomb Kingdom (kawaii combo puzzle), Ashen Checkmate (gritty tactical survival) and Jackpot Apocalypse (neon casino pinball risk/reward). Shared legal chess, Minesweeper clues/mines, hazard discs, mouse/keyboard/touch, save or repeatable progress, painted art, complete QA and a final Playtest handoff. Public publication is separately gated.
+notes_from_silas: |-
+  Silas, 2026-11-17 PT: "hey computer can you make me uhh chess minesweeper and disc room in html5"; then "combine them"; then three redesign pitches with a very kawaii Lisa Frank bubblegum style, a Dark Souls gritty style, and a third chosen by the designer (Jackpot Apocalypse). "@GitHub add this to conductor, we expect playable version of all three styles, on the front end on /play".
+  Rebuild this as a true three-way gameplay mashup. No three unrelated demos, no merely recolored CSS switch. Implement original art instead of copying branded visuals. Expected target /play/chessweeper; add a Play tab and project presentation in Kind Robots. Every published/release action remains a separate human approval.
+milestones:
+  - id: m1
+    title: "FOUNDATION — shared chess / mines / discs and complete three-style first playable"
+    weight: 45
+    status: not-started
+  - id: m2
+    title: "PERSONALITY — each style's unique mechanics and game feel"
+    weight: 20
+    status: not-started
+  - id: m3
+    title: "ART & POLISH — three painted identities, audio, settings, records"
+    weight: 20
+    status: not-started
+  - id: m4
+    title: "QUALITY — deterministic tests, devices, playtest-ready handoff"
+    weight: 15
+    status: not-started
+tasks:
+  - id: t-001
+    milestone: m1
+    title: "Build and wire the playable three-theme Chessweeper frontend at /play/chessweeper"
+    status: ready
+    passes: 0
+    stakes: outward-facing
+    gate_human: true
+    gate_reason: publish
+    note: |-
+      Source prototype: the user's standalone Chessweeper x Disc Room HTML5 game from ChatGPT (2026-11-17 PT). Bring the working chess/mine/disc loop to the actual Kind Robots frontend, register Play navigation, and make all three mode-specific rules playable: Sugar Rush freeze/combo, Ashen Last Stand, Jackpot Double-or-Nothing multiplier/multiball. Reversible code can be submitted to PR; public release/deployment needs an explicit human publication decision.
+  - id: t-002
+    milestone: m2
+    title: "Deepen Sugarbomb, Ashen and Jackpot into three replayable campaigns"
+    status: waiting
+    depends_on: t-001
+    passes: 0
+    stakes: reversible
+    note: >-
+      Tune distinct pacing, scoring, hazards, meta-progression and win/loss messaging; balance each with seeded trials.
+  - id: t-003
+    milestone: m3
+    title: "Queue, deliver and attach original illustrated art for all three mode identities"
+    status: ready
+    passes: 0
+    stakes: reversible
+    note: >-
+      Use durable Kind Robots ArtJobs with exact IDs, variants and target paths. Three independently art-directed hero/board/piece sets plus unified icon, card and hero. Verify delivery and real image URLs, not merely queue submission. First art prompts are in ART-PROMPTS.md.
+  - id: t-004
+    milestone: m4
+    title: "Add deterministic tests, full playthroughs and 390/768/1440 viewport QA"
+    status: waiting
+    depends_on: t-001
+    passes: 0
+    stakes: reversible
+    note: >-
+      Test legal special chess moves, checkmate/stalemate, mine first-probe behavior, clue cascade, collisions, ability recharge and all three unique mode mechanics, keyboard/touch; screenshots at phone/tablet/desktop.
+  - id: t-005
+    milestone: m4
+    title: "Finish remaining finite roadmap, mark for human testing and set playtest/normal"
+    status: waiting
+    depends_on: t-002
+    passes: 0
+    stakes: reversible
+    note: >-
+      Verify art and tests plus usable URL before handoff. At agent-owned completion, label master issue [FLAGGED FOR HUMAN TESTING], close it as completed, move to playtest/normal. Subjective playtesting and public publishing are separate human gates.
