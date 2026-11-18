@@ -3176,16 +3176,18 @@ tasks:
     branches as superseded (safe for branch-janitor force_delete_branches), and cover it with a unit test.
 - id: t-211
   title: "playtest handoff should fail closed when a roadmap's top level is not a mapping or its tasks key is not a list"
-  status: ready
+  status: claimed
   stakes: reversible
   owner: worker
   passes: 0
-  updated: '2026-11-14T08:05:00Z'
+  updated: '2026-11-18T22:25:26Z'
   note: >-
     Reviewer kaizen 2026-11-14 PT from conductor#7374 (malformed task-entry guard). eligible_issues() in
     sync_playtest_master_issues.py still calls .get("tasks") on whatever yaml.safe_load returns, so a roadmap whose top
     level is a list raises AttributeError and aborts the whole sync, and a non-list tasks value is only rejected
     incidentally. Report both as per-project problems (no issue closure) and cover them with unit tests.
+  claimed_by: 2026-11-18T222526Z-conductor-t211-gpt6-pc7f2
+  claimed_at: '2026-11-18T22:25:26Z'
 - id: t-212
   title: "Issue bridge must never tell a PR to Close a project master issue; fix the stale imported notes that do"
   status: done
