@@ -3280,5 +3280,22 @@ tasks:
     unit test, that compares each task's status and note in the PR head against origin/main and
     flags a backward transition, such as review to claimed or done to ready, that the PR does not
     explain with a task-event.
+- id: t-218
+  milestone: m1
+  title: 'Playtest readiness check should verify main-game-standard surfaces (tutorial sidebar registration, delivered art, authored endings, persisted progress) before a game can hand off'
+  status: ready
+  stakes: reversible
+  owner: null
+  passes: 0
+  depends_on: []
+  updated: '2026-11-18T23:50:00Z'
+  note: >-
+    Reviewer kaizen 2026-11-18 PT from conductor#7592 (chessweeper game-standard scope
+    clarification). Roadmaps now spell out the main-game standard in prose, but
+    playtest_readiness.py only checks finite task state, so a game can reach 100 percent with
+    placeholder art or no endings if the tasks were closed loosely. Add an opt-in per-roadmap
+    `game_standard:` evidence block (sidebar entry path, delivered image URLs, ending count,
+    achievement count, save-store key) that the readiness check validates, with unit tests;
+    report missing evidence as a per-project blocker rather than failing the whole sync.
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
