@@ -188,6 +188,24 @@ def build_video_fields(lane, subject, first_image, last_image=None):
     return fields
 
 
+
+def cell_request_key(ledger_relpath, ledger, lane, subject):
+    """Preserve Conductor idempotency while routing Advert Studio hero candidates.
+
+    Kind Robots advert sync recognizes only advert-studio:<slot>@<nonce>
+    request keys. The render digest supplies a stable, prompt-sensitive nonce.
+    """
+    key = ledger_cell_key(ledger_relpath, lane, subject)
+    slot = subject.get("advert_slot")
+    if slot is None:
+        return key
+    if ledger.get("project_slug") != "adverts" or not re.fullmatch(
+        r"adverts/[a-z0-9][a-z0-9-]*/(hero|card-[123])", str(slot)
+    ):
+        raise ValueError(f"Invalid Advert Studio art slot: {slot}")
+    return f"advert-studio:{slot}@{key.rsplit('=', 1)[-1]}"
+
+
 def build_request(ledger, lane, subject, source_image=None, last_image=None):
     """The /api/art/enqueue body for one (subject, lane) cell.
 
@@ -741,7 +759,7 @@ def submit(path, header, ledger, cells, post=None, fetch_source=None, live=None)
             body = build_request(ledger, lane, subject, source, last)
         # Names this cell to Kind Robots so a resubmit after a lost write-back (killed session,
         # cancelled run) returns the existing job instead of rendering again. See art_request_key.py.
-        body["requestKey"] = ledger_cell_key(ledger_relpath(path), lane, subject)
+        body["requestKey"] = cell_request_key(ledger_relpath(path), ledger, lane, subject)
         if lane["engine"] == "sdxl-targeted" and body.get("inpaintEncoding") == "masked-vae":
             try:
                 verified = verify_masked_vae_preview(body, post)
