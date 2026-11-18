@@ -507,19 +507,21 @@ tasks:
   - id: t-012
     milestone: m4
     title: "Full card and campaign coverage, prototype evaluation and visual QA"
-    status: waiting
-    depends_on: [t-009, t-010, t-011]
+    status: ready
+    depends_on: [t-010, t-011]
     owner: null
     passes: 0
     stakes: reversible
     note: >-
-      Complete six team campaigns, balanced specials and collection,
-      replay/provenance audit, end-to-end AI and PvP tests, all three
-      formats retained for comparison until Silas makes final
-      combat decision. Confirm real ArtJobs/ArtImages, responsive
-      rendered 390/768/1440/XL, gamepad/keyboard/touch, motion
-      reduction, reconnect and resource exploits. Record a final
-      design recommendation; subjective acceptance remains human.
+      2026-11-18 PT owner closeout: all six authored crew campaigns are merged
+      (t-009 is a deferred subjective fun verdict, not a QA prerequisite).
+      Verify canonical CLASH 300-card evolution and full campaign branches,
+      constructed-deck balance, real delivered ArtImages, CPU and PvP
+      reconnect/forfeit/expiry and account security, resource exploits,
+      gamepad/keyboard/touch, and rendered 390/768/1440/XL layouts.
+      Produce reproducible multi-seed full-route tests and a player handoff
+      checklist. This is agent-owned QA, not approval to publish.
+
   - id: t-013
     milestone: m1
     title: "Optional scope/course correction, final rules chosen after prototype comparison"
