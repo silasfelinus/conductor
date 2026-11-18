@@ -67,3 +67,13 @@ Shipped crew trophies, titles and card-back frames. They are derived from the ac
 **Improve:** t-041 still carries `owner`/`claimed_by`/`claimed_at` while `waiting`. That's harmless today, but clear claim fields when parking so the next pickup after t-051 isn't misread as a live claim. t-051 itself has sat in `review` since 2026-11-15 (kind_robots#4965), so it's t-041's real blocker now.
 
 **Kaizen task:** conductor/t-214. This is the Worker's suggestion: `--set depends_on=[...]` wrote a quoted string. It was implemented in the same reviewer PR (`normalize_scalar` now renders a flow list of safe ids as a YAML list).
+
+## 2026-11-18 PT | Reviewer merge | slime-city/t-041 near-dead ratchet | kind_robots #5316 + Conductor #7585
+
+**Decision:** squash-merged kind_robots#5316 (head `242c857`, as `0c2c04d`) and then Conductor#7585 (head `3bac920`, as `dbaccf0`), in dependency order. #5316 is test-only: it fails the constructed suite on any one-slot card chosen in under 3% of its bouts, caps near-dead two-slot cards at 18, and adds `nearDeadTwoSlotCards` to the report. All 12 kind_robots checks and all 26 conductor checks on the heads passed or were skipped. No game behavior, art or gate change.
+
+**Good:** the PR exposes a false-green ("0 dead" meant only "played once") and backs it with three seed families. Experiments that didn't work are recorded rather than shipped. The claim fields were cleared when the task went back to `ready`, which fixes the last review's complaint.
+
+**Improve:** the `nearDead` filter counts every card under 3%, not only two-slot cards. It is correct today because the one-slot assertion fails first, but the ceiling's name suggests it counts two-slot cards only. If a zero-cost card ever appears, filter the ceiling count by `clashPlayCost >= 2`. One comment line runs past 80 columns (Prettier accepted it).
+
+**Kaizen task:** slime-city/t-071. It runs the dead and near-dead ratchets on one held-out seed family as well, so a fix tuned to the suite's own seeds can't pass by luck.
