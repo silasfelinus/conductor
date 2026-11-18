@@ -990,8 +990,8 @@ tasks:
   - id: t-041
     milestone: m2
     title: "CLASH 300: individually crafted L1/L2/L3 effects for every existing card"
-    status: claimed
-    updated: '2026-11-18T13:46:04Z'
+    status: ready
+    updated: '2026-11-18T14:18:54Z'
     depends_on: [t-037, t-051]
     passes: 0
     stakes: reversible
@@ -1098,10 +1098,20 @@ tasks:
       saw) lose when played, so they need card buffs, not CPU work. That is the next step.
       Kaizen: in CLASH, a splash:'all' blast only hits enemy neighbors, which contradicts its
       card text. Back to ready.
+
+      2026-11-18 PT: MERGED kind_robots #5311, squash 3e5fd8a, head 3c934dd; all 12 check runs
+      green. The last six dead two-slot specials each got an authored level-one stage, carried
+      into L2/L3 so a level-up never loses it. Union Reallocation: all allies +1 lasting
+      power. Furnace Overdrive: +2 lasting power and +3 life. Wrong Side of the Curtain: 2
+      damage to the rival boss. Breeding Hunger: draw 1. Mark of the Procession: +2 lasting
+      power and boss +2. Stolen Bone Saw: 1 damage across and +1 lasting power. Constructed
+      QA, 3,120 bouts: dead two-slot cards 6 -> 0. Crews 42.7-55.6% (unchanged), first seat
+      51.7%. Suite ceiling is now 0. Real-board L1 fixtures are in verifySlimeCityEvolutions.
+      Remaining: the splash:'all' blast hits only enemy neighbors, contradicting its card text
+      (kaizen). Also open: Riot sits at the 42% band edge, plus art and human fun acceptance.
+      Back to ready.
     owner: worker
-    implementation_pr: 'silasfelinus/kind_robots#5310'
-    claimed_by: 2026-11-18T13:46:04Z-rt698
-    claimed_at: '2026-11-18T13:46:04Z'
+    implementation_pr: 'silasfelinus/kind_robots#5311'
   - id: t-042
     milestone: m2
     title: "Curate and wire the ogre redo-3 tokens: Picket Line Troll, Coal Cart Racer, Union Lunch Lady"
