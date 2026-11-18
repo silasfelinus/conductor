@@ -891,7 +891,7 @@ tasks:
   - id: t-025
     milestone: m3
     title: "Test new opening-lens reachability, callbacks and one-screen UI"
-    status: waiting
+    status: done
     depends_on: [t-024, t-016, t-027]
     owner: null
     passes: 0
@@ -917,6 +917,19 @@ tasks:
       questions, never force a stance or good/dark outcome. All
       all 56 lead x opening x final paths need a credible two-sided stakes
       scene and an earned hybrid choice or meaningful counterargument.
+
+      2026-11-18 PT reconciliation: verified against the shipped game. All seven lenses can
+      open every route, and lens choice never forces a terminal state or ending
+      (verifyEcotone, verifyEcotoneSceneOffers, SoberParity). The mid-run chemistry moment
+      changes currentState, never openingState or the ending ID
+      (verifyEcotoneClarityRecovery). Callbacks need their saved flag and scene; there are no
+      fabricated follow histories, and every ID in the 84/84 ledger is witnessed
+      (verifyEcotone). Value tensions are two-sided, with no mandatory ideology
+      (verifyEcotonePlaystyles: 252/252 sampled groups differ in decisions, state and
+      endings). One-screen epilogue/dossier panels at phone, tablet and desktop: t-016 audit,
+      266/266. Depended on t-027 only for optional new candidates, which now wait on Silas's
+      curation; any kept card enters through the CI suites.
+    updated: '2026-11-18T23:54:31Z'
   - id: t-026
     milestone: m2
     title: "Specify modular finale assembly and 56 ending signatures"
