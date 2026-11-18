@@ -2601,24 +2601,10 @@ tasks:
   stakes: reversible
   depends_on: []
   updated: '2026-11-18T00:46:52Z'
-  note: |-
-    Found by the 2026-11-15 PT intent audit (INTENT-AUDIT-2026-11-16.md). In kind_robots, the scheduled .github/workflows/responsive-layout-audit.yml (job timeout-minutes: 60) ends `cancelled` every day. Runs 43300254868 (11-12), 43497639896 (11-13), 43626817456 (11-14) and 43750478367 (11-15) all failed the same way. In 43750478367, step 9 "Audit responsive layout" ran 19:07Z to 20:06Z and was cancelled at the timeout. Step 10 "Audit Slime City Clash controls" was then skipped and step 12 (tablet menu) never finished. The daily layout audit has therefore produced no verdict for days, and slime-city/t-069's production FIGHT-containment check has never run.
-    Do: find why the route sweep now exceeds an hour (route count growth, a hanging route or wait, retries), and fix the cause rather than only raising the timeout. Bound per-route waits, or shard the sweep into a matrix, and give the Slime City Clash audit its own job or step so a slow sweep cannot skip it. Never skip or quarantine routes to get green. Done when one scheduled or dispatched run completes every step with a real pass/fail. Record the run id here and on slime-city/t-069.
+  note: >-
+    Found by the 2026-11-15 PT intent audit (INTENT-AUDIT-2026-11-16.md).
 
-    2026-11-16 PT: kind_robots PR #5239. Root cause: about 78 routes x 3 viewports ran serially, and each navigation waited for networkidle with a 90s timeout; polling pages never go idle. Fix: navigate on load (60s), then a networkidle wait capped at 15s (splash and image-settle waits kept); a round-robin --shard i/n with no overlap and no routes dropped; per-page timing log; workflow is a 6-shard matrix (max-parallel 3, 45-min timeout) plus a separate controls job (Clash, gallery chrome, tablet nav) so a slow sweep can't skip them; contract test. Production measurement: ~34s per page, about 22 min per shard. Done only when a dispatched or scheduled run completes every job; record the run id here and on slime-city/t-069.
-
-    2026-11-16 PT: kind_robots#5239 merged (squash 2f2bcad). Dispatched run 43828805291 on main completed all 7 jobs, each with a real pass or fail, in about 43 minutes: route sweep shards 1-6 took ~19-22 min each (shard 4: 36 pages in 1126s), and the separate controls job ran gallery chrome (pass), tablet nav (pass) and the Slime City Clash audit, which produced its first real verdict. Real defects found: phone /facets select SPILL (fixed in kind_robots#5245) and the Clash audit is blocked by the login gate (recorded on slime-city/t-069). The audit is red because of those defects, not a timeout.
-
-    AUTO-PARKED by process_task_events.py (conductor/t-112): this event's operation was 'done' and named silasfelinus/kind_robots#5245 as merged, but the GitHub API reports it is not merged yet. Re-queue a fresh 'done' event once the PR actually merges.
-
-    2026-11-17 PT intent audit (INTENT-AUDIT-2026-11-18.md): the 11-16 AUTO-PARK was a race.
-    kind_robots#5245 merged at 09:04:16Z, three minutes after the 09:01Z done event was
-    checked. The done criterion is met: dispatched run 43828805291 and scheduled runs
-    43970590358 (11-16) and 44178607947 (11-17) completed every job. All six route-sweep
-    shards passed in about 20 minutes each, and the controls job ran all three audits
-    (gallery chrome and tablet nav pass). The run is red only because the Slime City Clash
-    step hits the login gate, which is slime-city/t-069's secrets gate, not this task's.
-    Closed done.
+    Full history: projects/interface-vision/HISTORY.md#t-154
   claimed_by: 2026-11-16T0750Z-t154-pd5v7b
   claimed_at: '2026-11-16T07:51:33Z'
   soft_gate: true
