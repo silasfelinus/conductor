@@ -1532,11 +1532,11 @@ tasks:
   - id: t-071
     milestone: m2
     title: 'Run the constructed CLASH dead/near-dead ratchets on one held-out seed family so they stop tracking suite-seed luck'
-    status: ready
+    status: claimed
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-18T19:30:00Z'
+    updated: '2026-11-18T20:47:33Z'
     note: >-
       Kaizen after kind_robots#5316 (slime-city/t-041, 2026-11-18 PT). #5316 showed Twin Omens
       and Spare Nine Lives are fully dead on the +5000/+9000 seed families while the suite's
@@ -1545,3 +1545,6 @@ tasks:
       in the JSON output, and assert ceilings for it too, so a card fix tuned to suite seeds
       cannot pass by luck. Keep CI runtime within budget (one extra family, not three). No
       card, CPU or reward changes.
+    owner: worker
+    claimed_by: 2026-11-18T204733Z-sc071
+    claimed_at: '2026-11-18T20:47:33Z'
