@@ -2,6 +2,8 @@
 
 A playtest project has shipped its finite authored content and verification work.
 Only explicitly recurring iterative polish and independent non-build approvals may remain.
+A genuine subjective fun verdict or separate publication approval is not a finite
+production task even when its legacy task is still marked waiting.
 Human playtesting and a subjective verdict happen AFTER the roadmap is closed.
 The handoff does not authorize publication, sharing, or wider promotion.
 """
@@ -18,8 +20,13 @@ def pending_agent_owned_task_ids(tasks: list[dict]) -> list[str]:
         and task.get("status") not in ("done", "cancelled")
         and not (
             task.get("gate_human") is True
-            and task.get("status") == "needs-human"
-            and task.get("gate_reason") in ("subjective-acceptance", "creative-approval", "publish")
+            and (
+                task.get("gate_reason") in ("subjective-acceptance", "publish")
+                or (
+                    task.get("gate_reason") == "creative-approval"
+                    and task.get("status") == "needs-human"
+                )
+            )
         )
     ]
 
@@ -29,6 +36,14 @@ def playtest_readiness_errors(tasks: list[dict]) -> list[str]:
         return ["roadmap has no tasks"]
 
     errors = []
+    if not any(
+        isinstance(task, dict)
+        and task.get("status") == "done"
+        and not task.get("recurring")
+        and not task.get("playtest_iteration")
+        for task in tasks
+    ):
+        errors.append("no completed finite production task")
     malformed = [index for index, task in enumerate(tasks, 1) if not isinstance(task, dict)]
     if malformed:
         errors.append("malformed roadmap tasks at positions: " + ", ".join(map(str, malformed[:12])))

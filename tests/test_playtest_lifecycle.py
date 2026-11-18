@@ -7,6 +7,7 @@ from scripts.project_lifecycle import (
     ordered_workable_slugs,
 )
 from scripts.playtest_readiness import playtest_readiness_errors
+from scripts.build_status import compute_progress
 from scripts import sync_playtest_master_issues as handoff
 from scripts.sync_playtest_master_issues import eligible_issues, PREFIX
 
@@ -35,10 +36,13 @@ def test_readiness_requires_complete_build_not_a_human_playtest_task():
     }
     assert playtest_readiness_errors([done]) == []
     assert playtest_readiness_errors([done, verdict]) == []
+    assert playtest_readiness_errors([verdict]) == ["no completed finite production task"]
     assert playtest_readiness_errors([{"id": "build", "status": "ready"}])
-    assert playtest_readiness_errors([done, {**verdict, "status": "ready"}])
-    assert playtest_readiness_errors([done, {**verdict, "status": "waiting"}])
+    assert playtest_readiness_errors([done, {**verdict, "status": "ready"}]) == []
+    assert playtest_readiness_errors([done, {**verdict, "status": "waiting"}]) == []
     assert playtest_readiness_errors([done, {"id": "art", "status": "review"}])
+    assert playtest_readiness_errors([done, {"id": "publish", "status": "waiting",
+                                            "gate_human": True, "gate_reason": "publish"}]) == []
     assert playtest_readiness_errors([done, {"id": "legal", "status": "needs-human",
                                             "gate_human": True, "gate_reason": "legal"}])
     assert playtest_readiness_errors([done, {"id": "post-launch", "status": "ready",
@@ -46,6 +50,38 @@ def test_readiness_requires_complete_build_not_a_human_playtest_task():
     assert playtest_readiness_errors([done, {"id": "recurring", "status": "ready",
                                             "recurring": True}]) == []
 
+
+
+def test_one_hundred_percent_means_no_agent_owned_production_left():
+    milestones = [{"weight": 100, "status": "done"}]
+    unfinished_art = [{"id": "art", "status": "ready"}]
+    assert compute_progress(milestones, unfinished_art) == 99.0
+    assert compute_progress(milestones, [{"id": "cancelled", "status": "cancelled"}]) == 99.0
+
+    finished = [{"id": "build", "status": "done"}]
+    assert compute_progress([{"weight": 100, "status": "in-progress"}], finished) == 100.0
+
+    human_verdict = {
+        "id": "verdict",
+        "status": "needs-human",
+        "gate_human": True,
+        "gate_reason": "subjective-acceptance",
+    }
+    assert compute_progress(milestones, finished + [human_verdict]) == 100.0
+
+    waiting_verdict = {**human_verdict, "status": "waiting"}
+    assert compute_progress(milestones, finished + [waiting_verdict]) == 100.0
+
+    release_gate = {
+        "id": "publish",
+        "status": "needs-human",
+        "gate_human": True,
+        "gate_reason": "publish",
+    }
+    assert compute_progress(milestones, finished + [release_gate]) == 100.0
+
+    no_production = [{"id": "recurring", "status": "ready", "recurring": True}]
+    assert compute_progress([{"weight": 100, "status": "in-progress"}], no_production) == 50.0
 
 
 def test_issue_handoff_is_scoped_to_valid_playtest_games(tmp_path: Path):
@@ -72,6 +108,27 @@ def test_issue_handoff_is_scoped_to_valid_playtest_games(tmp_path: Path):
     issues, errors = eligible_issues(projects, {"game": "https://github.com/silasfelinus/kind_robots/issues/123"}, tmp_path)
     assert not issues
     assert errors
+
+
+
+def test_handoff_fails_closed_for_malformed_roadmap_structures(tmp_path: Path):
+    game = tmp_path / "game"
+    game.mkdir()
+    project = {"game": {"status": "playtest"}}
+    issue = {"game": "https://github.com/silasfelinus/kind_robots/issues/123"}
+    for bad_yaml in (
+        "- id: t-001\n  status: done\n",
+        "ready\n",
+        "tasks: null\n",
+        "tasks: {t-001: done}\n",
+        "tasks: 'done'\n",
+        "tasks: []\n",
+        "tasks: [invalid\n",
+    ):
+        (game / "roadmap.yaml").write_text(bad_yaml, encoding="utf-8")
+        issues, errors = eligible_issues(project, issue, tmp_path)
+        assert issues == [], f"must not close issue for {bad_yaml!r}"
+        assert errors and errors[0].startswith("game:")
 
 
 def _handoff_fixture(tmp_path, monkeypatch, *, status="playtest", task_status="done"):
@@ -139,6 +196,7 @@ def test_shifting_desks_owner_waiver_preserves_known_incomplete_work(tmp_path: P
     game.mkdir()
     (game / "roadmap.yaml").write_text(
         "tasks:\n"
+        "  - id: t-001\n    status: done\n"
         "  - id: t-041\n    status: claimed\n"
         "  - id: t-046\n    status: review\n"
         "  - id: t-021\n    status: needs-human\n"
