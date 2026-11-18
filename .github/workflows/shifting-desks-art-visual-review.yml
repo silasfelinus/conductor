@@ -23,6 +23,7 @@ on:
       - "tests/test_shifting_desks_targeted_mask_diagnostics.py"
       - "projects/shifting-desks/art/ROUND-18.yaml"
       - "projects/shifting-desks/art/ROUND-19.yaml"
+      - "projects/shifting-desks/art/ROUND-20.yaml"
       - "projects/shifting-desks/art/MANUAL-CLASSIC-2026-11-17.json"
       - "scripts/verify_shifting_desks_manual_intake.py"
       - "tests/test_shifting_desks_manual_intake.py"
@@ -68,6 +69,8 @@ jobs:
           path: ${{ runner.temp }}/shifting-desks-manual-install.json
           if-no-files-found: error
           retention-days: 14
+      - name: Superseded Round 19 evidence regression
+        run: python -m pytest -q tests/test_shifting_desks_superseded_review_round.py
       - name: Validate the isolated Western fidelity pilot (dry-run only)
         run: |
           python scripts/enqueue_art_requests.py \
@@ -159,6 +162,11 @@ jobs:
           python scripts/shifting_desks_art_readiness.py
           python projects/shifting-desks/encounters/link_art.py --probe
 
+      - name: Confirm manual Classic release art and encounter links strictly
+        run: |
+          python scripts/verify_shifting_desks_manual_intake.py --strict
+          python scripts/shifting_desks_art_readiness.py --strict
+          python projects/shifting-desks/encounters/link_art.py
       - name: Download actual art and build contact sheets
         run: |
           python projects/shifting-desks/art/build_review_sheets.py \

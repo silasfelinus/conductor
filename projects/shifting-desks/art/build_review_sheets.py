@@ -142,6 +142,11 @@ def main() -> int:
     }
     (args.out / "summary.json").write_text(json.dumps(summary, indent=2), encoding="utf-8")
     print(json.dumps(summary), flush=True)
+    # An explicitly requested round can legitimately have zero entries once a
+    # newer accepted round supersedes every rejected image in that round.
+    # The full/current audit still fails closed if it cannot review any art.
+    if args.round is not None and summary["selected"] == 0:
+        return 0
     return 0 if summary["received"] else 1
 
 

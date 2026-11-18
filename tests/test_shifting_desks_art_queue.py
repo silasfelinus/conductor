@@ -1,5 +1,6 @@
 """Live submissions must match authoring ledgers; fulfilled rows may leave the queue."""
 import copy
+import re
 import sys
 from pathlib import Path
 
@@ -15,9 +16,17 @@ def check_submission_copies(requests, subjects):
     ids = [row["id"] for row in requests]
     assert len(ids) == len(set(ids)), "duplicate submission request"
     for subject in subjects:
+        # Manually installed images have no enqueue job or request ID. Their
+        # deployment and source SHA-256 are independently validated by the
+        # Shifting Desks manual-intake checker.
+        if subject.get("delivery_source") == "manual-installed-art":
+            assert subject.get("status") == "delivered"
+            assert "request_id" not in subject
+            assert re.fullmatch(r"[0-9a-f]{64}", subject.get("source_sha256", ""))
+            continue
         assert not violations(subject["prompt"]), subject["request_id"]
     for request in requests:
-        matches = [subject for subject in subjects if subject["request_id"] == request["id"]]
+        matches = [subject for subject in subjects if subject.get("request_id") == request["id"]]
         assert len(matches) == 1, ("missing or duplicate authoring subject", request["id"])
         subject = matches[0]
         assert " ".join(subject["prompt"].split()) == " ".join(request["prompt"].split()), request["id"]
@@ -70,3 +79,14 @@ def test_live_submission_requires_one_authoring_subject(queued_subject, duplicat
     request, subject = queued_subject
     with pytest.raises(AssertionError, match="authoring subject"):
         check_submission_copies([request], [subject, subject] if duplicate else [])
+
+
+def test_manual_delivered_image_does_not_impersonate_an_art_queue_request(queued_subject):
+    request, subject = queued_subject
+    manual = {"delivery_source": "manual-installed-art", "status": "delivered",
+              "source_sha256": "a" * 64}
+    check_submission_copies([request], [subject, manual])
+    with pytest.raises(AssertionError):
+        check_submission_copies([request], [subject, {**manual, "request_id": request["id"]}])
+    with pytest.raises(AssertionError):
+        check_submission_copies([request], [subject, {**manual, "source_sha256": ""}])
