@@ -990,8 +990,8 @@ tasks:
   - id: t-041
     milestone: m2
     title: "CLASH 300: individually crafted L1/L2/L3 effects for every existing card"
-    status: claimed
-    updated: '2026-11-18T14:45:16Z'
+    status: ready
+    updated: '2026-11-18T15:05:47Z'
     depends_on: [t-037, t-051]
     passes: 0
     stakes: reversible
@@ -1110,10 +1110,16 @@ tasks:
       Remaining: the splash:'all' blast hits only enemy neighbors, contradicting its card text
       (kaizen). Also open: Riot sits at the 42% band edge, plus art and human fun acceptance.
       Back to ready.
+
+      2026-11-18 PT: MERGED kind_robots #5312, squash d738209, head 5e77379; all 12 check runs
+      green. Kaizen fixed: in CLASH, splash:'all' blasts (nine cards whose text says
+      'including your own') now also deal 1 to the caster's fighters in adjacent alleys;
+      Confetti keeps its authored pattern. Regression fixture covers three splash:'all' cards
+      plus an enemies-only control. Constructed QA, 3,120 bouts: dead two-slot cards 0, crews
+      42.4-55.6%, first seat 51.7%. Open: Riot near the 42% band edge, CPU blast valuation
+      ignores friendly splash, art and human fun acceptance. Back to ready.
     owner: worker
-    implementation_pr: 'silasfelinus/kind_robots#5311'
-    claimed_by: cjkro6
-    claimed_at: '2026-11-18T14:45:16Z'
+    implementation_pr: 'silasfelinus/kind_robots#5312'
   - id: t-042
     milestone: m2
     title: "Curate and wire the ogre redo-3 tokens: Picket Line Troll, Coal Cart Racer, Union Lunch Lady"
