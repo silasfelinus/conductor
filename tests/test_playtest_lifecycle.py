@@ -37,9 +37,11 @@ def test_readiness_requires_complete_build_not_a_human_playtest_task():
     assert playtest_readiness_errors([done]) == []
     assert playtest_readiness_errors([done, verdict]) == []
     assert playtest_readiness_errors([{"id": "build", "status": "ready"}])
-    assert playtest_readiness_errors([done, {**verdict, "status": "ready"}])
-    assert playtest_readiness_errors([done, {**verdict, "status": "waiting"}])
+    assert playtest_readiness_errors([done, {**verdict, "status": "ready"}]) == []
+    assert playtest_readiness_errors([done, {**verdict, "status": "waiting"}]) == []
     assert playtest_readiness_errors([done, {"id": "art", "status": "review"}])
+    assert playtest_readiness_errors([done, {"id": "publish", "status": "waiting",
+                                            "gate_human": True, "gate_reason": "publish"}]) == []
     assert playtest_readiness_errors([done, {"id": "legal", "status": "needs-human",
                                             "gate_human": True, "gate_reason": "legal"}])
     assert playtest_readiness_errors([done, {"id": "post-launch", "status": "ready",
@@ -66,7 +68,7 @@ def test_one_hundred_percent_means_no_agent_owned_production_left():
     assert compute_progress(milestones, finished + [human_verdict]) == 100.0
 
     waiting_verdict = {**human_verdict, "status": "waiting"}
-    assert compute_progress(milestones, finished + [waiting_verdict]) == 99.0
+    assert compute_progress(milestones, finished + [waiting_verdict]) == 100.0
 
     release_gate = {
         "id": "publish",
