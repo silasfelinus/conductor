@@ -1585,8 +1585,8 @@ tasks:
   - id: t-066
     milestone: m5
     title: "Polish Ecotone opening, route previews, customizable player portraits, and tablet layout"
-    status: claimed
-    updated: '2026-11-17T23:48:03Z'
+    status: ready
+    updated: '2026-11-18T00:35:23Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -1671,8 +1671,16 @@ tasks:
       all 13 checks green; no held art, no ArtJobs. Still open: cards/wh-061..wh-120 plus
       la/fr/co/lx cards (~260 renders); events/* stays unshipped until the board draws event
       art.
+
+      2026-11-17 PT routine: remaining card art merged in three kind_robots PRs, all CI green:
+      #5292 (64cd0b4) WH-061..WH-090, 112 webp; #5293 (8bb7660) WH-091..WH-120, 120 webp
+      (contract shard 4 timed out once in unrelated pinball tests, passed on the single re-
+      run); #5294 (3acf3a3) la/fr/co/lx cards, 56 webp. Every finished ART-STANDARD-ROUND-2
+      card render now ships in all four styles; manifest regenerated from disk; no held art,
+      no ArtJobs. Still open: events/* (12 renders) until the board draws event art; broader
+      prose rewrite.
     owner: worker
-    implementation_pr: 'silasfelinus/kind_robots#5290'
+    implementation_pr: 'silasfelinus/kind_robots#5294'
     claimed_by: routine-mzt5cf-20261117T234803Z
     claimed_at: '2026-11-17T23:48:03Z'
 
