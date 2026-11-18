@@ -990,8 +990,8 @@ tasks:
   - id: t-041
     milestone: m2
     title: "CLASH 300: individually crafted L1/L2/L3 effects for every existing card"
-    status: review
-    updated: '2026-11-18T13:05:21Z'
+    status: ready
+    updated: '2026-11-18T13:15:16Z'
     depends_on: [t-037, t-051]
     passes: 0
     stakes: reversible
@@ -1085,10 +1085,21 @@ tasks:
       comparison against the best pair of one-slot plays, scored on full matchups. Then re-
       tune the crew bands, since Riot already sits at the lower edge. Remaining after that:
       art and human fun acceptance. Released for the next pass.
+
+      2026-11-18 PT: MERGED kind_robots #5310, squash 9223dbf, head b15e793; all 12 check runs
+      green. CPU two-slot valuation: chooseClashCpuPlay judges a two-slot spell/gear against
+      the best pair of one-slot plays (distinct card and alley) plus
+      CLASH_CPU_TWO_SLOT_MARGIN=2 instead of halving it. Two-slot fighters keep the per-slot
+      rule (full-value pairing dropped the Catgirls starter to 35.8%). Constructed QA, 3,120
+      bouts: dead two-slot cards 13 -> 6, crews 42.6-55.7%. Starter guard unchanged; the suite
+      now fails above 6 dead. Margins 0/1/3 read 3/5/10 dead, and margin 0 put Riot at 41.6%,
+      under the band. The six still dead (ironjaw reallocation/furnace-overdrive, riot wrong-
+      side-of-blast, exchange compound-interest-notice/acquisition-clause, catgirls stolen-
+      saw) lose when played, so they need card buffs, not CPU work. That is the next step.
+      Kaizen: in CLASH, a splash:'all' blast only hits enemy neighbors, which contradicts its
+      card text. Back to ready.
     owner: worker
     implementation_pr: 'silasfelinus/kind_robots#5310'
-    claimed_by: 2026-11-18T124559Z-t041-pair
-    claimed_at: '2026-11-18T12:46:00Z'
   - id: t-042
     milestone: m2
     title: "Curate and wire the ogre redo-3 tokens: Picket Line Troll, Coal Cart Racer, Union Lunch Lady"
