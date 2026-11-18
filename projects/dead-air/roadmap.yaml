@@ -150,8 +150,15 @@ tasks:
       skipped for congestion. Fixed: alimiter auto-level was pushing limited peaks back to 0
       dBFS; the mix now uses limit=0.8:level=0 (-1.1 dBFS after AAC), with a test.
       daily_last_completed=2026-11-18 reflects MV23's verified completion.
+
+      2026-11-18 PT daily-delivery:2026-11-18/vo-peak-headroom | PR:
+      silasfelinus/conductor#7574 | Mix limiter used alimiter's default auto-level, which re-
+      normalised limited peaks to full scale (MV22 0.0 dBFS, MV23 -0.2 dBFS). Now
+      limit=0.8:level=0; a worst-case loud voice through MP3 then AAC peaks at -1.1 dBFS.
+      test_loud_voice_mix_keeps_headroom_after_lossy_encodes fails on the old mix and passes
+      on the new.
     owner: worker
-    updated: '2026-11-18T10:50:05Z'
+    updated: '2026-11-18T11:07:00Z'
   - id: t-005
     milestone: m3
     title: Create rights-aware reference and private production provenance review
