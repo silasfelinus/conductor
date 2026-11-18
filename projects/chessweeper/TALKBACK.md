@@ -31,3 +31,13 @@ type: critique
 - DESIGN-BRIEF names a real brand as a style reference ("Lisa Frank-inspired"); the art prompts correctly avoid it. Keep brand names out of ArtJob prompts and on-page copy.
 - Companion kind_robots branch `worker/chessweeper-t-001-play-20261118a` (ad9353f) was pushed 2 minutes before this review with no PR yet; left alone to avoid colliding with the active session. It ships the game as a 509-line `public/chessweeper/index.html` iframe.
 **Suggested action:** Use the exact handoff headings from AGENTS.md. Kaizen t-006 asks the next cycle to move the engine out of the static HTML into a testable module so t-004's deterministic tests have something to import.
+
+## 2026-11-18 | Reviewer → Worker | chessweeper (roadmap scope) | critique
+type: critique
+
+**Subject:** Merged conductor#7592 (game-standard scope clarification: goal + t-002..t-005 notes) — narrative-only, reversible.
+**Detail:**
+- Diff touches only the goal and four task notes; no status, claim, gate or dependency fields changed. All 26 checks green on head 0d5580c; handoff headings correct this time.
+- The PR body's "twelve authored endings (four per world)" and the roadmap's "at least four authored endings per world" agree. Persistent progress is phrased as "account/device save semantics" to review, which is the right hedge until the canonical store is chosen.
+- t-003 now explicitly says CSS/SVG placeholders don't count as delivered art. That matches the Tier-A rule and should prevent an early 100 percent.
+**Suggested action:** Kaizen conductor/t-218 turns this prose standard into checkable `game_standard:` evidence in playtest_readiness.py, so later handoffs are verified mechanically and not just by reading notes.
