@@ -1,121 +1,158 @@
-{
-  "round": "visitor-highlight-art-identities-2026-11-17",
-  "series": "kind-robots-editorial-homepage",
-  "project_slug": "adverts",
-  "designer": "Kind Robots: project-specific highlight art director",
-  "is_public": false,
-  "is_mature": false,
-  "cast_loras": false,
-  "priority": 950,
-  "auto_submit": true,
-  "status": "awaiting-submission",
-  "intent": "New illustration candidates for seven Advert Studio hero slots plus the Admin Advert Studio illustration. Existing selected art stays live until curated. The admin tile requires a separate eventual asset hookup.",
-  "lanes": [
-    {
-      "key": "krea-west",
-      "engine": "krea2",
-      "prompt": "prose"
-    },
-    {
-      "key": "flux-noir",
-      "engine": "flux2",
-      "prompt": "prose"
-    },
-    {
-      "key": "unstable-pulp",
-      "engine": "comfy",
-      "checkpoint": "SDXL/sdxlUnstableDiffusers_nihilmania.safetensors",
-      "steps": 28,
-      "cfg": 7,
-      "sampler": "dpmpp_2m",
-      "prompt": "prose"
-    },
-    {
-      "key": "zimage-studio",
-      "engine": "zimage",
-      "prompt": "prose"
-    }
-  ],
-  "subjects": [
-    {
-      "key": "emperor-dust-komodo",
-      "lane": "krea-west",
-      "asset": "homepage/emperor-of-dust/hero",
-      "advert_slot": "adverts/emperor-of-dust/hero",
-      "size": "1344x768",
-      "seed": 26111701,
-      "prompt_prose": "Young Komodo, a lean anthropomorphic monitor lizard advisor in a weather-cracked military frock coat and brass insignia, stands on the wind-scoured parapet of a ramshackle frontier fortress, an old route map blowing against his clawed hand. Below him, a column of fox, crow, hyena and tortoise frontier folk pulls improbable carts across a scorched salt plain toward rusted railway bridges and a half-buried clock tower. Vultures circle in a greenish copper sunset; storm clouds gather beyond the mesa. Sweeping weird-west wasteland panorama, dusty monumental oil-paint illustration with scratched pigments, rust-red and tobacco-brown shadows, oxidized turquoise lanterns, kinetic wind and extravagant painterly atmosphere. Komodo's intelligent reptilian face and complete articulated hands are readable at card size.",
-      "jobs": {}
-    },
-    {
-      "key": "shifting-lands-jeffery",
-      "lane": "krea-west",
-      "asset": "homepage/zuzu-shifting-lands/hero",
-      "advert_slot": "adverts/shifting-lands/hero",
-      "size": "1344x768",
-      "seed": 26111702,
-      "prompt_prose": "Jeffery Mittens, a scrappy young anthropomorphic raccoon traveler with a battered satchel and fingerless gloves, stands at a fork in the broken roads of the post-collapse Zuzu landscape. Giant weathered illustrated story cards jut from red earth as physical doorways: a flooded railway tunnel on one, a salvage caravan on another, an ember-lit settlement on a third. A distant hooded fox caravan crosses a tilted stone aqueduct. An expressive inked animal-adventure comic book spread with rough pencil hatching, tactile paper grain, dynamic diagonal perspective, sage green, ochre and coral red accents. The interlocking cards reveal choices and consequences in the environment; the raccoon's ringed tail, muzzle and paws are distinctly animal, creating a different visual language from the oil-painted Emperor landscape.",
-      "jobs": {}
-    },
-    {
-      "key": "ecotone-redwood-mystery",
-      "lane": "flux-noir",
-      "asset": "homepage/ecotone/hero",
-      "advert_slot": "adverts/ecotone/hero",
-      "size": "1344x768",
-      "seed": 26111703,
-      "prompt_prose": "A northern California coastal highway diner at midnight beneath immense redwood trees and Pacific fog, wet pavement glowing beneath amber sodium lamps. An aging station wagon and a parked unmarked government sedan flank the diner. Two adult local friends study a folded trail map, field recorder and strange luminous lichen under the diner awning; one wears a rain jacket and work boots, the other a faded thrift-store cardigan, both individual and believably lived-in. A remote light hangs silently between the trees beyond a distant logging road; colorful roadside kinetic-sculpture scraps sit near a payphone. A wistful supernatural mystery visual-novel establishing shot, realistic gouache and charcoal over textured 1990s 35mm film grain, deep forest green, damp indigo, peach tungsten light, mysterious human-scale intimacy, portrait-like facial acting held within a richly observed Humboldt landscape.",
-      "jobs": {}
-    },
-    {
-      "key": "prom-of-doom-catastrophe",
-      "lane": "unstable-pulp",
-      "asset": "homepage/prom-of-doom/hero",
-      "advert_slot": "adverts/prom-of-doom/hero",
-      "size": "1344x768",
-      "seed": 26111704,
-      "prompt_prose": "Nighttime superhero catastrophe in an original coastal city: a broad-shouldered Black adult heroine in a shredded gold-and-indigo protective suit slams through the shattered skylight of a school gym with a wounded masked ally under one arm. Across the frame, a colossal reptilian-armored villain tears a steel beam from the roof while a scarlet-cloaked flyer plunges to stop it. A blood-streaked gauntlet, shattered teeth of a mechanical mask, concrete splinters and impact sparks show punishing consequences. Ambulance strobes illuminate the prom decorations scattered across the flooded floor far below. Aggressive asymmetrical adult Western comic-book key art, raw pulp-action energy, heavy expressive brush ink, halftone shadows, powerful foreshortening, cinematic 1970s animation cel texture, magenta siren highlights and bruised midnight blues. An ensemble in fierce motion, devastating physical stakes and unmistakable original superhero costumes.",
-      "negative": "text, lettering, typography, watermark, logo, signature, anime high school romance, chibi proportions, soft dating sim art, extra limbs, duplicate limbs, missing hands, malformed joints, cropped faces, 3d game render",
-      "jobs": {}
-    },
-    {
-      "key": "ruler-capybara-court",
-      "lane": "krea-west",
-      "asset": "homepage/ruler-hooked/hero",
-      "advert_slot": "adverts/ruler-hooked/hero",
-      "size": "1344x768",
-      "seed": 26111705,
-      "prompt_prose": "A magnificently plump elderly anthropomorphic capybara queen with russet fur, a crooked jeweled crown and a patchwork brocade fishing cape balances a fishing rod from a floating velvet throne. Her throne room has become a fluorescent tidal estuary: colossal translucent fish swim through rose-colored chandeliers, porcelain courtiers row tiny boats, and giant rainbow water lilies grow through a checkerboard marble floor. Her expression is stubborn, delighted and entirely sovereign; her furry paws control the reel with practiced authority. Exuberant adult psychedelic storybook lithograph, handmade silkscreen grain, molten orange, acid pink, deep violet and electric sea green, playful medieval ornamentation and absurd royal grandeur. A charismatic nonhuman protagonist commands the image.",
-      "jobs": {}
-    },
-    {
-      "key": "elevator-abyss",
-      "lane": "flux-noir",
-      "asset": "homepage/shifting-desks-elevator/hero",
-      "advert_slot": "adverts/the-elevator-only-goes-down/hero",
-      "size": "1344x768",
-      "seed": 26111706,
-      "prompt_prose": "A vertiginous architectural cutaway of an impossible civil-service headquarters descending through the earth: one tiny golden elevator with transparent walls drops past endless floors of filing cabinets, interrogation rooms, enormous pneumatic tubes, broken clocks and clerks queuing for signatures. Inside, a frazzled anthropomorphic owl accountant in a cheap necktie clutches a suitcase while a stoic human janitor in faded coveralls inspects a single red button. Far below, office departments give way to smoky caverns and an immense machine stamping empty paper. Visually precise dark bureaucratic farce, surreal retro-futurist production illustration with crooked constructivist geometry, layered cut-paper and lithograph textures, bruised black-green, sickly ivory and poisonous vermilion, dramatic plunging perspective. Menace and absurd slapstick occupy the same building.",
-      "jobs": {}
-    },
-    {
-      "key": "arcade-impossible-cabinet-hall",
-      "lane": "krea-west",
-      "asset": "homepage/arcade/hero",
-      "advert_slot": "adverts/arcade/hero",
-      "size": "1344x768",
-      "seed": 26111707,
-      "prompt_prose": "A spectacular old-fashioned California ice-cream parlor transformed into an impossible arcade cathedral: dozens of wildly different illustrated cabinet machines cascade up a vast vaulted hall. One cabinet opens onto a moonlit ghost trail, another spills bright pinball planets into the air, another contains an underwater kingdom, another leaks colorful cartoon monsters. Polished wood floors reflect coral neon and saturated rainbow lamps; stacks of tickets and soft-serve cups decorate the foreground. Tiny distant players are incidental to the vast wondrous cabinet worlds. Rich airbrushed 1980s arcade poster painting with hand-letterpress grain, sweeping fisheye architectural depth, exuberant prismatic light, jewel blues and hot pinks, each game universe visibly distinct and oversized.",
-      "jobs": {}
-    },
-    {
-      "key": "advert-studio-admin-workshop",
-      "lane": "zimage-studio",
-      "asset": "admin/adverts/highlight",
-      "size": "1024x1024",
-      "seed": 26111708,
-      "prompt_prose": "An exuberant underground printmaking studio filled with enormous brass rollers, ink trays and articulated robot arms assembling a stack of finished illustrated game posters. In the nearest poster frames a sea monster, starship sofa, wasteland reptile and superhero showdown occupy distinct little worlds; broad blank banner areas await editorial headlines. An older human art director with ink-stained hands and a little wheeled paint-mixing robot stand before a wall of pinned color proofs. Visually elaborate contemporary editorial illustration, risograph dots and screenprint misregistration, sunburst orange, ultramarine, acid green and violet, dramatic workshop lighting, unmistakably about composing and exporting promotional artwork rather than playing a game.",
-      "jobs": {}
-    }
-  ]
-}
+round: visitor-highlight-art-identities-2026-11-17
+series: kind-robots-editorial-homepage
+project_slug: adverts
+designer: 'Kind Robots: project-specific highlight art director'
+is_public: false
+is_mature: false
+cast_loras: false
+priority: 950
+auto_submit: true
+status: awaiting-submission
+intent: New illustration candidates for seven Advert Studio hero slots plus the Admin Advert Studio illustration.
+  Existing selected art stays live until curated. The admin tile requires a separate eventual asset hookup.
+lanes:
+- key: krea-west
+  engine: krea2
+  prompt: prose
+- key: flux-noir
+  engine: flux2
+  prompt: prose
+- key: unstable-pulp
+  engine: comfy
+  checkpoint: SDXL/sdxlUnstableDiffusers_nihilmania.safetensors
+  steps: 28
+  cfg: 7
+  sampler: dpmpp_2m
+  prompt: prose
+- key: zimage-studio
+  engine: zimage
+  prompt: prose
+subjects:
+- key: emperor-dust-komodo
+  lane: krea-west
+  asset: homepage/emperor-of-dust/hero
+  advert_slot: adverts/emperor-of-dust/hero
+  size: 1344x768
+  seed: 26111701
+  prompt_prose: Young Komodo, a lean anthropomorphic monitor lizard advisor in a weather-cracked military frock
+    coat and brass insignia, stands on the wind-scoured parapet of a ramshackle frontier fortress, an old route
+    map blowing against his clawed hand. Below him, a column of fox, crow, hyena and tortoise frontier folk pulls
+    improbable carts across a scorched salt plain toward rusted railway bridges and a half-buried clock tower. Vultures
+    circle in a greenish copper sunset; storm clouds gather beyond the mesa. Sweeping weird-west wasteland panorama,
+    dusty monumental oil-paint illustration with scratched pigments, rust-red and tobacco-brown shadows, oxidized
+    turquoise lanterns, kinetic wind and extravagant painterly atmosphere. Komodo's intelligent reptilian face and
+    complete articulated hands are readable at card size.
+  jobs:
+    krea-west: 69753
+- key: shifting-lands-jeffery
+  lane: krea-west
+  asset: homepage/zuzu-shifting-lands/hero
+  advert_slot: adverts/shifting-lands/hero
+  size: 1344x768
+  seed: 26111702
+  prompt_prose: 'Jeffery Mittens, a scrappy young anthropomorphic raccoon traveler with a battered satchel and fingerless
+    gloves, stands at a fork in the broken roads of the post-collapse Zuzu landscape. Giant weathered illustrated
+    story cards jut from red earth as physical doorways: a flooded railway tunnel on one, a salvage caravan on another,
+    an ember-lit settlement on a third. A distant hooded fox caravan crosses a tilted stone aqueduct. An expressive
+    inked animal-adventure comic book spread with rough pencil hatching, tactile paper grain, dynamic diagonal perspective,
+    sage green, ochre and coral red accents. The interlocking cards reveal choices and consequences in the environment;
+    the raccoon''s ringed tail, muzzle and paws are distinctly animal, creating a different visual language from
+    the oil-painted Emperor landscape.'
+  jobs:
+    krea-west: 69754
+- key: ecotone-redwood-mystery
+  lane: flux-noir
+  asset: homepage/ecotone/hero
+  advert_slot: adverts/ecotone/hero
+  size: 1344x768
+  seed: 26111703
+  prompt_prose: A northern California coastal highway diner at midnight beneath immense redwood trees and Pacific
+    fog, wet pavement glowing beneath amber sodium lamps. An aging station wagon and a parked unmarked government
+    sedan flank the diner. Two adult local friends study a folded trail map, field recorder and strange luminous
+    lichen under the diner awning; one wears a rain jacket and work boots, the other a faded thrift-store cardigan,
+    both individual and believably lived-in. A remote light hangs silently between the trees beyond a distant logging
+    road; colorful roadside kinetic-sculpture scraps sit near a payphone. A wistful supernatural mystery visual-novel
+    establishing shot, realistic gouache and charcoal over textured 1990s 35mm film grain, deep forest green, damp
+    indigo, peach tungsten light, mysterious human-scale intimacy, portrait-like facial acting held within a richly
+    observed Humboldt landscape.
+  jobs:
+    flux-noir: 69755
+- key: prom-of-doom-catastrophe
+  lane: unstable-pulp
+  asset: homepage/prom-of-doom/hero
+  advert_slot: adverts/prom-of-doom/hero
+  size: 1344x768
+  seed: 26111704
+  prompt_prose: 'Nighttime superhero catastrophe in an original coastal city: a broad-shouldered Black adult heroine
+    in a shredded gold-and-indigo protective suit slams through the shattered skylight of a school gym with a wounded
+    masked ally under one arm. Across the frame, a colossal reptilian-armored villain tears a steel beam from the
+    roof while a scarlet-cloaked flyer plunges to stop it. A blood-streaked gauntlet, shattered teeth of a mechanical
+    mask, concrete splinters and impact sparks show punishing consequences. Ambulance strobes illuminate the prom
+    decorations scattered across the flooded floor far below. Aggressive asymmetrical adult Western comic-book key
+    art, raw pulp-action energy, heavy expressive brush ink, halftone shadows, powerful foreshortening, cinematic
+    1970s animation cel texture, magenta siren highlights and bruised midnight blues. An ensemble in fierce motion,
+    devastating physical stakes and unmistakable original superhero costumes.'
+  negative: text, lettering, typography, watermark, logo, signature, anime high school romance, chibi proportions,
+    soft dating sim art, extra limbs, duplicate limbs, missing hands, malformed joints, cropped faces, 3d game render
+  jobs:
+    unstable-pulp: 69756
+- key: ruler-capybara-court
+  lane: krea-west
+  asset: homepage/ruler-hooked/hero
+  advert_slot: adverts/ruler-hooked/hero
+  size: 1344x768
+  seed: 26111705
+  prompt_prose: 'A magnificently plump elderly anthropomorphic capybara queen with russet fur, a crooked jeweled
+    crown and a patchwork brocade fishing cape balances a fishing rod from a floating velvet throne. Her throne
+    room has become a fluorescent tidal estuary: colossal translucent fish swim through rose-colored chandeliers,
+    porcelain courtiers row tiny boats, and giant rainbow water lilies grow through a checkerboard marble floor.
+    Her expression is stubborn, delighted and entirely sovereign; her furry paws control the reel with practiced
+    authority. Exuberant adult psychedelic storybook lithograph, handmade silkscreen grain, molten orange, acid
+    pink, deep violet and electric sea green, playful medieval ornamentation and absurd royal grandeur. A charismatic
+    nonhuman protagonist commands the image.'
+  jobs:
+    krea-west: 69757
+- key: elevator-abyss
+  lane: flux-noir
+  asset: homepage/shifting-desks-elevator/hero
+  advert_slot: adverts/the-elevator-only-goes-down/hero
+  size: 1344x768
+  seed: 26111706
+  prompt_prose: 'A vertiginous architectural cutaway of an impossible civil-service headquarters descending through
+    the earth: one tiny golden elevator with transparent walls drops past endless floors of filing cabinets, interrogation
+    rooms, enormous pneumatic tubes, broken clocks and clerks queuing for signatures. Inside, a frazzled anthropomorphic
+    owl accountant in a cheap necktie clutches a suitcase while a stoic human janitor in faded coveralls inspects
+    a single red button. Far below, office departments give way to smoky caverns and an immense machine stamping
+    empty paper. Visually precise dark bureaucratic farce, surreal retro-futurist production illustration with crooked
+    constructivist geometry, layered cut-paper and lithograph textures, bruised black-green, sickly ivory and poisonous
+    vermilion, dramatic plunging perspective. Menace and absurd slapstick occupy the same building.'
+  jobs:
+    flux-noir: 69758
+- key: arcade-impossible-cabinet-hall
+  lane: krea-west
+  asset: homepage/arcade/hero
+  advert_slot: adverts/arcade/hero
+  size: 1344x768
+  seed: 26111707
+  prompt_prose: 'A spectacular old-fashioned California ice-cream parlor transformed into an impossible arcade cathedral:
+    dozens of wildly different illustrated cabinet machines cascade up a vast vaulted hall. One cabinet opens onto
+    a moonlit ghost trail, another spills bright pinball planets into the air, another contains an underwater kingdom,
+    another leaks colorful cartoon monsters. Polished wood floors reflect coral neon and saturated rainbow lamps;
+    stacks of tickets and soft-serve cups decorate the foreground. Tiny distant players are incidental to the vast
+    wondrous cabinet worlds. Rich airbrushed 1980s arcade poster painting with hand-letterpress grain, sweeping
+    fisheye architectural depth, exuberant prismatic light, jewel blues and hot pinks, each game universe visibly
+    distinct and oversized.'
+  jobs: {}
+- key: advert-studio-admin-workshop
+  lane: zimage-studio
+  asset: admin/adverts/highlight
+  size: 1024x1024
+  seed: 26111708
+  prompt_prose: An exuberant underground printmaking studio filled with enormous brass rollers, ink trays and articulated
+    robot arms assembling a stack of finished illustrated game posters. In the nearest poster frames a sea monster,
+    starship sofa, wasteland reptile and superhero showdown occupy distinct little worlds; broad blank banner areas
+    await editorial headlines. An older human art director with ink-stained hands and a little wheeled paint-mixing
+    robot stand before a wall of pinned color proofs. Visually elaborate contemporary editorial illustration, risograph
+    dots and screenprint misregistration, sunburst orange, ultramarine, acid green and violet, dramatic workshop
+    lighting, unmistakably about composing and exporting promotional artwork rather than playing a game.
+  jobs: {}
