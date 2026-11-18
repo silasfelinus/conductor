@@ -23,6 +23,9 @@ on:
       - "tests/test_shifting_desks_targeted_mask_diagnostics.py"
       - "projects/shifting-desks/art/ROUND-18.yaml"
       - "projects/shifting-desks/art/ROUND-19.yaml"
+      - "projects/shifting-desks/art/MANUAL-CLASSIC-2026-11-17.json"
+      - "scripts/verify_shifting_desks_manual_intake.py"
+      - "tests/test_shifting_desks_manual_intake.py"
       - "projects/shifting-desks/art/SUBJECT-FIDELITY-PILOT-V2.yaml"
       - "projects/shifting-desks/art/SDXL-IMG2IMG-CORRECTION-PILOT-1.yaml"
       - "projects/shifting-desks/art/KREA-IMG2IMG-CORRECTION-PILOT-1.yaml"
@@ -52,6 +55,20 @@ jobs:
         run: pip install "Pillow>=10,<13" "PyYAML>=6,<7" pytest
       - name: Private pilot capture regression tests
         run: python -m pytest -q tests/test_shifting_desks_private_pilot_capture.py
+      - name: Regression tests for manually transferred Classic files
+        run: python -m pytest -q tests/test_shifting_desks_manual_intake.py
+      - name: Verify served images against manual replacement SHA-256 evidence
+        run: |
+          python scripts/verify_shifting_desks_manual_intake.py \\
+            --output "$RUNNER_TEMP/shifting-desks-manual-install.json"
+      - name: Upload manual image installation evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: shifting-desks-manual-install
+          path: ${{ runner.temp }}/shifting-desks-manual-install.json
+          if-no-files-found: error
+          retention-days: 14
       - name: Validate the isolated Western fidelity pilot (dry-run only)
         run: |
           python scripts/enqueue_art_requests.py \
