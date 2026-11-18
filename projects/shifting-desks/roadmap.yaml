@@ -610,8 +610,8 @@ tasks:
   - id: t-032
     milestone: m3
     title: 'Land, review and link the art round 13 re-renders and round 14 tone-ladder renders'
-    status: review
-    updated: '2026-11-18T03:07:00Z'
+    status: done
+    updated: '2026-11-18T03:31:00Z'
     depends_on: t-015
     passes: 0
     stakes: reversible
@@ -657,7 +657,8 @@ tasks:
       Verified and merged Conductor PR #7548 at abb9a0c41f3d0c60b9d25d6e9bbc36bed7f88020 after all exact-head workflow checks completed successfully (Python suite, Shifting Desks visual review, Security Audit, handoff, task events). V7 private ArtJob 69726 / ArtImage 274359 is durably REDO: two attached arms and pen in original hand, though mask is materially editing. Art review run 44120268742 artifacts 14345505662 and 14343659935. Auto submission of this failed recipe is now disabled; no new ArtJob or public link was made. See Kind Robots master issue #4150 comment 6962742037. Continue other fourteen Classic art REDOs and accepted asset linking, t-041 illustrated ending verification, browser QA t-046 and standard t-049. This original finite build task is NOT done, so remain active/high; no playtest promotion, issue closure or publication is authorized yet.
 
       Manual install evidence audit PR prepared: 14 approved-source SHA-256 targets, read-only public live-media bytes/mime/dimension probe, offline tests, CI artifact. Original ROUND-19 REDO states remain until true live image evidence.
-    owner: worker
+
+      2026-11-17 PT: Art gap closed. Conductor PR #7555 merged e58995d after 23 green checks (2 skipped), recording 14 exact source SHA fingerprints and independently checking live kindrobots.org media (run 44227907057, artifact 14393243808, 14/14 HTTP 200 WebP/dimensions/SHA256 matches). Conductor PR #7556 merged 2fa579ff after 23 successful checks (2 skipped), adding Round 20 provenance-verified KEEP verdicts, linking eleven encounter art slots, and making Classic art strict readiness, linked slots and manual bytes part of CI. Superseded Round 19 REDOs remain historical. Optional Western Cartoon art is suspended, not required for Classic playtest. Browser end-of-run visuals, accessibility, t-041 and t-049 remain separate.
     claimed_by: 2026-11-18T025500Z-shifting-desks-t032-img-install-b64a
     claimed_at: '2026-11-18T02:55:00Z'
   - id: t-033
@@ -773,7 +774,7 @@ tasks:
   - id: t-041
     milestone: m3
     title: 'Deliver unique illustrated ending hero artwork and linked achievement badges for all endings'
-    status: waiting
+    status: ready
     depends_on: t-032
     owner: null
     passes: 0
