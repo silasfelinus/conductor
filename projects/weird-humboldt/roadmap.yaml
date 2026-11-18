@@ -920,7 +920,7 @@ tasks:
   - id: t-027
     milestone: m2
     title: "Generate and curate high-value middle encounters and art briefs"
-    status: review
+    status: needs-human
     depends_on: [t-026, t-022]
     owner: worker
     passes: 0
@@ -943,9 +943,24 @@ tasks:
       plus scripts/validate_weird_humboldt_candidates.py (dedupe, 2-4 consequences,
       exclusion/unsafe-content scan, provenance). Next: Silas Keep/Modify/Reject; then convert
       kept ones to cards.
+
+      2026-11-18 PT: Generation and validation are finished; what remains is Silas's curation
+      call, which the task reserves to him. FOR SILAS: 8 optional middle-encounter candidates
+      sit in projects/weird-humboldt/candidates/MIDDLE-CANDIDATES-2026-11-09.yaml (MC-001 'The
+      Hearing Where Both Experts Were Right' through MC-008 'A Dam Nobody Wanted to Name').
+      Each is a short value-conflict scene with 2-4 consequences, already deduped and
+      stereotype-scanned. Mark each Keep, Modify or Reject in its curation.decision. They are
+      additions, not gaps: the shipped game already has ~180 authored cards and all 84 endings
+      reachable, so playtest does not wait on this. RECOMMENDATION: let playtesters play
+      first, then keep only the candidates that fill a pacing hole testers report. Kept ones
+      become playtest_iteration tasks (convert to cards, run the CI suites). Unanswered by
+      2026-11-25 PT: adopt 'reject all for now, revisit after playtest feedback' under the
+      default-recommendation rule.
     claimed_by: 2026-11-09T12:47:22Z-agent
     claimed_at: '2026-11-09T12:47:23Z'
-    updated: '2026-11-09T12:48:35Z'
+    updated: '2026-11-18T23:29:26Z'
+    gate_human: true
+    gate_reason: creative-approval
   - id: t-028
     milestone: m3
     title: "Validate 2x2 ending callbacks and eight-core composition"
