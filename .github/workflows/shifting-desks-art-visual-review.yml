@@ -23,6 +23,7 @@ on:
       - "tests/test_shifting_desks_targeted_mask_diagnostics.py"
       - "projects/shifting-desks/art/ROUND-18.yaml"
       - "projects/shifting-desks/art/ROUND-19.yaml"
+      - "projects/shifting-desks/art/ROUND-20.yaml"
       - "projects/shifting-desks/art/MANUAL-CLASSIC-2026-11-17.json"
       - "scripts/verify_shifting_desks_manual_intake.py"
       - "tests/test_shifting_desks_manual_intake.py"
@@ -159,6 +160,11 @@ jobs:
           python scripts/shifting_desks_art_readiness.py
           python projects/shifting-desks/encounters/link_art.py --probe
 
+      - name: Confirm manual Classic release art and encounter links strictly
+        run: |
+          python scripts/verify_shifting_desks_manual_intake.py --strict
+          python scripts/shifting_desks_art_readiness.py --strict
+          python projects/shifting-desks/encounters/link_art.py
       - name: Download actual art and build contact sheets
         run: |
           python projects/shifting-desks/art/build_review_sheets.py \
