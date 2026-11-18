@@ -3176,17 +3176,22 @@ tasks:
     branches as superseded (safe for branch-janitor force_delete_branches), and cover it with a unit test.
 - id: t-211
   title: "playtest handoff should fail closed when a roadmap's top level is not a mapping or its tasks key is not a list"
-  status: review
+  status: done
   stakes: reversible
   owner: worker
   passes: 0
-  updated: '2026-11-18T22:32:00Z'
+  updated: '2026-11-18T22:54:45Z'
   note: |-
     Reviewer kaizen 2026-11-14 PT from conductor#7374 (malformed task-entry guard). eligible_issues() in sync_playtest_master_issues.py still calls .get("tasks") on whatever yaml.safe_load returns, so a roadmap whose top level is a list raises AttributeError and aborts the whole sync, and a non-list tasks value is only rejected incidentally. Report both as per-project problems (no issue closure) and cover them with unit tests.
 
     Added fail-closed malformed roadmap handoff guard/tests, synchronized finite 100-percent readiness semantics with the Kind Robots projection, and audited all sixteen open game master issues. Slime City QA unblocked from a subjective campaign verdict; Ecotone hub updated to the November 15 close-on-handoff rule. Conductor and Kind Robots implementation PRs prepared; CI remains to be verified.
+
+    Reviewer 2026-11-18 PT: merged via conductor#7590 (superseded #7589 after fixing the
+    shifting-desks waiver fixture and a stale roadmap revert); kind_robots#5319 parity
+    merged.
   claimed_by: 2026-11-18T222526Z-conductor-t211-gpt6-pc7f2
   claimed_at: '2026-11-18T22:25:26Z'
+  implementation_pr: 'silasfelinus/conductor#7590'
 - id: t-212
   title: "Issue bridge must never tell a PR to Close a project master issue; fix the stale imported notes that do"
   status: done
@@ -3259,5 +3264,21 @@ tasks:
     carry a claim (emperor-of-dust x9, comet-city-academy x7, game-of-captains x3, and others).
     Clear them with one task-events batch, then add a session_sweep check that flags
     status=ready with claimed_by set.
+- id: t-217
+  milestone: m1
+  title: 'Validate Worker PR handoff should fail when a worker branch rolls a roadmap task status back relative to origin/main'
+  status: ready
+  stakes: reversible
+  owner: null
+  passes: 0
+  depends_on: []
+  updated: '2026-11-18T23:00:00Z'
+  note: >-
+    Reviewer kaizen 2026-11-18 PT from conductor#7589/#7590 (t-211). The worker branch was cut
+    before task-events moved t-211 to review, and its roadmap.yaml diff would have put the task
+    back to claimed and dropped its note. CI passed that part silently. Add a PR check, with a
+    unit test, that compares each task's status and note in the PR head against origin/main and
+    flags a backward transition, such as review to claimed or done to ready, that the PR does not
+    explain with a task-event.
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
