@@ -36,6 +36,14 @@ def playtest_readiness_errors(tasks: list[dict]) -> list[str]:
         return ["roadmap has no tasks"]
 
     errors = []
+    if not any(
+        isinstance(task, dict)
+        and task.get("status") == "done"
+        and not task.get("recurring")
+        and not task.get("playtest_iteration")
+        for task in tasks
+    ):
+        errors.append("no completed finite production task")
     malformed = [index for index, task in enumerate(tasks, 1) if not isinstance(task, dict)]
     if malformed:
         errors.append("malformed roadmap tasks at positions: " + ", ".join(map(str, malformed[:12])))
