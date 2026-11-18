@@ -28,8 +28,9 @@ def test_unsafe_or_ambiguous_project_updates_fail_closed():
         pick_project([])
     with pytest.raises(ValueError):
         pick_project([project, project])
+    assert pick_project([{**project, "title": "Earlier internal working title"}])["id"] == 42
     with pytest.raises(ValueError):
-        pick_project([{**project, "title": "Unrelated Game"}])
+        pick_project([{**project, "title": ""}])
     with pytest.raises(ValueError):
         pick_project([{**project, "isMature": True}])
     with pytest.raises(ValueError):

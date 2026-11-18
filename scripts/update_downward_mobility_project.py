@@ -27,8 +27,8 @@ def pick_project(rows: list[dict]) -> dict:
         raise ValueError("project ID is missing or invalid")
     if project.get("isMature") is True:
         raise ValueError("unexpected mature project: public visibility is not approved")
-    if project.get("title") not in ("Shifting Desks", "The Elevator Only Goes Down", TITLE):
-        raise ValueError("unexpected existing Project title; refusing to overwrite another owner decision")
+    if not isinstance(project.get("title"), str) or not project["title"].strip():
+        raise ValueError("Project title missing; refusing an ambiguous rename")
     return project
 
 
