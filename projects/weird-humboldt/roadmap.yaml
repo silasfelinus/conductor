@@ -807,7 +807,7 @@ tasks:
   - id: t-021
     milestone: m3
     title: "Test all 56 earned signature endings and causal callbacks"
-    status: waiting
+    status: done
     depends_on: [t-019, t-020, t-005, t-018, t-022]
     owner: null
     passes: 0
@@ -824,6 +824,16 @@ tasks:
       global 56/56 achievement. Verify 2x2 payoff combinations from saved choice flags and
       no invented callbacks. Coordinate t-016 one-screen
       browser QA, and preserve art/publication gates.
+
+      2026-11-18 PT reconciliation: verifyEcotone.test.ts asserts all 84 endings have real
+      fully played deterministic witnesses (8,400 seeded campaigns plus Wild Way runs). It
+      also checks 42 hope/42 dark, 14 per lead, every lens can begin each route, save round-
+      trip per seed, met-before-follow integrity, and callbacks only with their flag and scene
+      (max 2). Parents-together invariant: verifyEcotoneCompanionContinuity/CompanionTime.
+      Sober positive routes: verifyEcotoneSoberParity. Dedupe and achievements:
+      verifyEcotoneAchievements. kind_robots#5320 makes CI run all 27 Ecotone suites; 19
+      previously ran in no workflow.
+    updated: '2026-11-18T23:29:03Z'
   - id: t-022
     milestone: m3
     title: "Build seeded random side-stories between stay/follow companion crossroads"
