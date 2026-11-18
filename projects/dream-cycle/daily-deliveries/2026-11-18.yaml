@@ -1,0 +1,86 @@
+date: '2026-11-18'
+entries:
+- slug: site-name-tab-titles
+  title: 'Tab titles: every page names Kind Robots'
+  target: interface-vision
+  roadmap_task: t-104
+  kind: front-door
+  summary: Content pages such as Storybook, Memory Dungeon and Support showed bare tab titles with no site name;
+    every tab, bookmark and search result now reads '<page> | Kind Robots'.
+  status: shipped
+  pull_request: https://github.com/silasfelinus/kind_robots/pull/5309
+  checks_url: KR_CHECKS_URL
+  checks: passed
+  merge_sha: KR_MERGE_SHA
+  verification: Live production titles checked before the change (Storybook, Navigation, Support, Memory Dungeon
+    lacked the site name); siteTabTitle cases and the app.vue titleTemplate pinned in verifySharePreview.test.ts
+  art:
+    status: not-required
+  preview_url: https://kindrobots.org/storybook
+- slug: honest-app-description
+  title: Home-screen install describes the site as it is today
+  target: interface-vision
+  roadmap_task: t-151
+  kind: front-door
+  summary: The PWA manifest still called the site 'A friendly AI playground for humans and robots'; it now says
+    free handmade games, illustrated stories and an art gallery, no ads, no account.
+  status: shipped
+  pull_request: https://github.com/silasfelinus/kind_robots/pull/5309
+  checks_url: KR_CHECKS_URL
+  checks: passed
+  merge_sha: KR_MERGE_SHA
+  verification: Live /manifest.webmanifest returned the outdated description; verifySharePreview.test.ts forbids
+    it and requires the front-door wording
+  art:
+    status: not-required
+  preview_url: https://kindrobots.org/manifest.webmanifest
+- slug: strict-unfurl-schedule
+  title: 'Arcade share links: daily check now fails on a broken unfurl'
+  target: kr-arcade
+  roadmap_task: t-171
+  kind: share
+  summary: Live strict crawler check found all 34 cabinets unfurling as themselves for Facebook, Discord and
+    Twitter, so the scheduled check now fails on any unfurl regression.
+  status: shipped
+  pull_request: https://github.com/silasfelinus/kind_robots/pull/5309
+  checks_url: KR_CHECKS_URL
+  checks: passed
+  merge_sha: KR_MERGE_SHA
+  verification: checkArcadeShareLive.ts --unfurl --strict-unfurl against kindrobots.org reported 34 cabinets, 0
+    missing title art, 0 unfurl problems; workflow strictness pinned in verifySharePreview.test.ts
+  art:
+    status: not-required
+  preview_url: https://kindrobots.org/play/arcade?game=battery-maze
+- slug: daily-cold-open-probe
+  title: 'Arcade share links: daily phone and tablet cold-open probe'
+  target: kr-arcade
+  roadmap_task: t-169
+  kind: share
+  summary: Every showcase cabinet link is now opened daily in a fresh browser at phone and tablet size, failing
+    on login walls, page errors or a lost way back.
+  status: shipped
+  pull_request: https://github.com/silasfelinus/kind_robots/pull/5309
+  checks_url: KR_CHECKS_URL
+  checks: passed
+  merge_sha: KR_MERGE_SHA
+  verification: checkArcadeColdOpenLive.mjs run live from this session reported 22/22 showcase cold opens clean
+    on kindrobots.org; the new workflow job is pinned in verifySharePreview.test.ts
+  art:
+    status: not-required
+  preview_url: https://kindrobots.org/play/arcade?game=seed-lander
+- slug: vo-peak-headroom
+  title: 'Dead Air: voiceover no longer peaks at full scale'
+  target: dead-air
+  roadmap_task: t-004
+  kind: quality
+  summary: The film mixer's limiter auto-level pushed every limited peak back to 0 dBFS; it now leaves about two
+    decibels of headroom through the MP3 and AAC encodes.
+  status: shipped
+  pull_request: https://github.com/silasfelinus/conductor/pull/7574
+  checks_url: https://github.com/silasfelinus/conductor/actions/runs/44289151925
+  checks: passed
+  merge_sha: dceb70022938a06cc4b51ebc5734641430d99b98
+  verification: MusicVideo 23 final measured -0.2 dBFS peak; worst-case synthetic voice measured 0.0 dBFS before
+    and -1.1 dBFS after; new pytest fails on the old mix and passes on the new
+  art:
+    status: not-required
