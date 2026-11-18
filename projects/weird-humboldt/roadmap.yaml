@@ -712,7 +712,7 @@ tasks:
   - id: t-016
     milestone: m5
     title: "Verify viewport-first layout and achievements through mounted browser tests"
-    status: waiting
+    status: review
     depends_on: [t-014, t-015, t-021]
     owner: null
     passes: 0
@@ -729,6 +729,19 @@ tasks:
       duplicate award prevention, keyboard/touch/focus, reduced motion,
       art failure fallback. Do not treat static CSS inspection or
       one screenshot as proof. Release still needs t-007 human gate.
+
+      2026-11-18 PT: utils/scripts/auditEcotoneViewports.browser.mjs (npm run audit:ecotone-
+      viewports) drives the real /play/ecotone in Chromium at 320/375/390, 768/820, 1024x600,
+      1280x720, 1440 and 1920. Saves are engine-played (ecotoneBrowserFixtures.ts: all 84
+      endings earned by seeded play, a mid-run save, a finished run, 30 scrapbook pages).
+      Checks: no document scroll on every tab, the welcome-back title, the beat screen, the
+      end screen and the dossier; 84/84 unlock count; locked slots never name their ending;
+      ledger persists across reload; keyboard focus ring on the tab bar; reduced motion plus
+      blocked art leave no broken images. Result against a local production build: 266/266
+      checks passed. Award dedupe stays in verifyEcotoneAchievements. Release still sits
+      behind t-007.
+    updated: '2026-11-18T23:54:19Z'
+    implementation_pr: 'silasfelinus/kind_robots#5320'
   - id: t-017
     milestone: m2
     title: "Author four optimistic companion routes and personal epilogues"
