@@ -59,8 +59,7 @@ jobs:
         run: python -m pytest -q tests/test_shifting_desks_manual_intake.py
       - name: Verify served images against manual replacement SHA-256 evidence
         run: |
-          python scripts/verify_shifting_desks_manual_intake.py \\
-            --output "$RUNNER_TEMP/shifting-desks-manual-install.json"
+          python scripts/verify_shifting_desks_manual_intake.py --output "$RUNNER_TEMP/shifting-desks-manual-install.json"
       - name: Upload manual image installation evidence
         if: always()
         uses: actions/upload-artifact@v4
