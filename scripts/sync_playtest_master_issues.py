@@ -68,7 +68,18 @@ def eligible_issues(overrides: dict, masters: dict, roadmaps_dir: Path) -> tuple
         if not path.exists():
             problems.append(f"{slug}: roadmap missing")
             continue
-        tasks = (yaml.safe_load(path.read_text(encoding="utf-8")) or {}).get("tasks", [])
+        try:
+            roadmap = yaml.safe_load(path.read_text(encoding="utf-8"))
+        except yaml.YAMLError as error:
+            problems.append(f"{slug}: invalid roadmap YAML: {error}")
+            continue
+        if not isinstance(roadmap, dict):
+            problems.append(f"{slug}: roadmap root must be a mapping")
+            continue
+        tasks = roadmap.get("tasks")
+        if not isinstance(tasks, list):
+            problems.append(f"{slug}: roadmap tasks must be a list")
+            continue
         errors = playtest_readiness_errors(tasks)
         if explicitly_waived_owner_playtest(slug, config, tasks, errors):
             print(f"OWNER-APPROVED EARLY PLAYTEST {slug}: known unfinished tasks retained", file=sys.stderr)
