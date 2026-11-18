@@ -691,3 +691,11 @@ Verify provenance of finished generated assets before claiming coverage; keep pr
 - **2017 Blood Moon**: immaculate idol photobook. Draculina, Roxie, distinctly frog/salamander Laguna and youthful tartan-collared Scottish werewolf Siobhan of The Pack; missing Blobzo collectible.
 - **2024 Six Decades of Screams**: glossy luxury legacy-anniversary release. Draculina, Laguna, Cleo Pappatra and polished younger Pack replacement, with the departed Siobhan fan pin. The new recruit is distinct from Siobhan; not an old wolf re-render.
 - Preserve source image/year/artists/prompt/source paths and exact delivery state. The seven generated chat images are *concepts*, not verified queued ArtJobs. Follow ALBUM-ART-REGISTER.md before publishing or attaching imagery.
+
+## Chessweeper — Three coherent original game identities (2026-11-17 PT)
+- chessweeper-icon.webp (256x256): original icon, chess king with a glowing sweeping circular saw and a single red mine; high-contrast silhouette, readable at tiny scale; no lettering.
+- chessweeper-card.webp (512x768): original three-world vertical split, bubblegum kawaii candy chess / bone-black gothic ruin / neon casino pinball; shared 8×8 chessboard visual spine; game-box illustration, no existing franchise characters or logos.
+- chessweeper-hero.webp (1280x720): heroic cutaway through one 8×8 chess arena morphing into three wholly distinct original environments: sticker-bright candy creatures and glitter wheels; soot-dark armored chess champions facing rusted doom discs; violet/gold chrome casino pinball jackpot with flying blade balls. No text.
+- chessweeper-sugarbomb-hero.webp: original bubblegum kawaii maximalist illustration with toy candy pieces, rainbow leopard motifs, sticky glitter and giant rotating lollipop hazards; avoid copying existing licensed sticker-brand graphics.
+- chessweeper-ashen-hero.webp: dark medieval cathedral board, ghostly armored pieces, carved stone clues, cursed mines, rusted execution saws, embers and crumbling spires; bespoke visual identity, readable silhouettes.
+- chessweeper-jackpot-hero.webp: chrome neon 1980s casino pinball arena, jackpot multiplier signage, two endangered chess kings, bladed silver pinballs, fuchsia/cobalt/gold carnival lighting, original artwork without existing game/trademark logos.
