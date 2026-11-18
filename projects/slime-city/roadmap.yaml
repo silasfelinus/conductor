@@ -1206,7 +1206,7 @@ tasks:
   - id: t-051
     milestone: m2
     title: 'Fighters-first redesign: fewer gear/tech/non-fighters, fewer and fewer kinds of random effects'
-    status: claimed
+    status: review
     passes: 0
     stakes: reversible
     note: |-
@@ -1251,10 +1251,21 @@ tasks:
       discarded.
 
       2026-11-17 PT: silasfelinus/kind_robots#5297 converted Spiked Choker (id kept) into a 1-cost Bloodfairies SWARM backup-singer fighter, the second conversion from the shortlist. Arriving spreads SWARM to one neighbor (L1) or both (L2+), and at L3 adjacent SWARM allies strike +1. The CLASH starter keeps 13 fighters of 20 (Choker takes Pollen Queen's slot). Roadie Megaphone takes the legacy ten-card slot. Blackout parity trims Bloodfairies/Undertow by 1/8. Full test:slime-city-lab passes. CLASH spread is 9.8 (main 12.0), dead two-slot cards went 14 -> 13, and Bloodfairies campaign ch2 has 6/16 wins (main 2/16). Next slice: Ninth Life Collar (Catgirls) or Razor Spurs (Bloodfairies) from the shortlist. Wholesale cuts beyond it still go to Silas first.
-    updated: '2026-11-18T04:47:33Z'
+
+      2026-11-17 PT: silasfelinus/kind_robots#5300 converts Razor Spurs (id kept) into a
+      2-cost Bloodfairies stage-diver fighter, the third conversion from the shortlist.
+      Arrival gives one neighbor +1 strike this round at L1 and both neighbors at L2; at L3
+      both neighbors get +1 lasting attack. The CLASH starter is unchanged at 13 fighters of
+      20 (Riot Choir leaves). Blood Mic takes Spurs' legacy gear slot, and Spurs stays rare.
+      The Bloodrush PARITY edge for Bloodfairies goes 1.375 -> 1.25. Full test:slime-city-lab
+      passes. CLASH spread is 10.3 (main 9.8), and dead two-slot cards stay at 13. Next slice:
+      Ninth Life Collar (Catgirls), the last card on the shortlist. Wholesale cuts beyond it
+      still go to Silas first.
+    updated: '2026-11-18T05:49:33Z'
     owner: worker
     claimed_by: 2026-11-18T04:48:00Z-ea0cjy
     claimed_at: '2026-11-18T04:47:33Z'
+    implementation_pr: 'silasfelinus/kind_robots#5300'
   - id: t-052
     milestone: m2
     title: 'ANARKISS reskin (was Riot Saints): anarchy circus midnight-musical crew (names, flavor, art)'
