@@ -855,3 +855,19 @@ Reuse pages/play/arcade/index.vue shareGame (navigator.share with clipboard fall
 
 2026-11-15 PT: shipped in kind_robots#5225 (squash 81955f8), all checks green. After a run the cabinet header Share button reads "Share my N" and shares "I scored N in <Game> at the Kind Robots Arcade. Can you beat it?" with the ?game= link. Follow-up idea, not required: a game-over overlay button inside arcade-cabinet.vue for pinned fullscreen play.
 <!-- note:end t-170 -->
+
+## t-171 — After deploy, verify cabinet unfurls live with crawler user agents and fold the check into the daily Kind Robots UI check
+
+<!-- note:begin t-171 -->
+Silas, 2026-11-15 PT: full parity with the whole roadmap may not be reasonable; finish the latest tasks and triage next steps that make publicly shared arcade links presentable. This milestone is that triage. The m8 depth pass (50 open slices) continues in the background and is not a gate for sharing.
+
+Merged is not deployed: wait for the image to publish and the Unraid deploy to run. Then fetch each showcase cabinet URL as facebookexternalhit, Discordbot and Twitterbot, assert og:title, og:description, an absolute raster og:image that returns 200, and twitter:card. Record results in the task note. The agent sandbox cannot reach kindrobots.org, so this runs from CI or the existing daily UI-check scheduled task.
+
+2026-11-15 PT: the check exists (kind_robots#5223, .github/workflows/arcade-share-live-check.yml, daily 15:17 UTC). After #5218 merges and deploys, dispatch it with strict_unfurl=true; done when every showcase cabinet unfurls as itself with a 200 og:image, then consider making strict the scheduled default.
+
+2026-11-18 PT daily-delivery:2026-11-18/strict-unfurl-schedule | PR:
+silasfelinus/kind_robots#5309 (merged 6407369) | Live checkArcadeShareLive.ts --unfurl
+--strict-unfurl from this session: 34 cabinets, 0 missing title art, 0 unfurl problems
+for facebookexternalhit, Discordbot and Twitterbot. Done criterion met, so strict is now
+the scheduled default (dispatch input defaults to true too). Done.
+<!-- note:end t-171 -->

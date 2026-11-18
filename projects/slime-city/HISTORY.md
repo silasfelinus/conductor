@@ -944,6 +944,79 @@ wants that stricter rule. Follow-on: silasfelinus/kind_robots#4956 makes
 story/campaign/tower fights pay rewards.
 <!-- note:end t-050 -->
 
+## t-051 — Fighters-first redesign: fewer gear/tech/non-fighters, fewer and fewer kinds of random effects
+
+<!-- note:begin t-051 -->
+Silas, 2026-11-10 PT, playtest feedback from the Catgirls: "there are too many gear, tech,
+non-fighters. the game should be built around fighters that do cool stuff. we need less random
+things, and less different random things."
+
+Scope: audit each crew's 40 cards and starters by kind (fighter / spell / trap / gear) and by
+random effects. Raise starter and base decks to a clear fighter majority (target 13-15 fighters of
+20), fold the best gear/tech effects into fighters' own abilities where possible, and cut the number
+of distinct random mechanics (chance rolls, random targets, random blasts) to a small, legible set.
+Keep card ids where possible so saves survive; keep the CLASH crew balance guard (each crew 42-58%,
+spread <= 12) green on held-out seeds. Present the plan to Silas before cutting cards wholesale.
+
+Opened kind_robots PR #4958 (aad8fc0), an executable six-crew starter composition report with 20-card, uniqueness, crew legality and 300-card invariants. CI pending; fighter-first redesign and held-out balance remain.
+
+2026-11-10 PT: silasfelinus/kind_robots#4965 merged. (1) Every crew's starter now fields
+13 fighters of 20: CLASH_FIGHTERS_FIRST swaps two extra specials per crew for two
+fighters, pairs chosen by CPU sweep; crew spread 9.3/9.5/10.3/12.5 on seeds
+700/5000/12000/20000 (main 9.3/16.5/10.0/4.8), guard green. (2) Fewer kinds of random:
+no random targets anywhere (randomFoe -> weakest/strongest foe), non-ANARKISS coin flips
+became rules (Safety-Pin, Pogo Brat, Grease Oracle, Allergy Season L3, Homebrew Antidote
+L2); seeded gambles live only with ANARKISS and its Bribe Rat; a test guards both.
+Remaining scope: fold the best gear/tech effects into fighters' own abilities — present
+the candidate list to Silas before changing cards.
+
+Authored a source-grounded four-card fighter-first conversion shortlist in projects/slime-city/docs/t-051-fighter-ability-conversion-shortlist-2026-11-12.md. This is the requested candidate plan before wholesale card changes, not implementation. Next prototype two deterministic conversions with CLASH guards.
+
+2026-11-13 PT intent audit (INTENT-AUDIT-2026-11-13.md): status was review for ~36h with
+no open PR in kind_robots or conductor and remaining scope listed above; returned to
+ready so pickers can take the next slice. No work discarded.
+
+2026-11-17 PT intent audit (INTENT-AUDIT-2026-11-18.md): this task sat in review from
+11-15 02:22Z with an expired claim and no note. The cycle's PR, kind_robots#5193, merged
+at 11-15 04:29Z: Patent Shredder gear became a three-stage support fighter (the first
+conversion from the four-card shortlist). t-041 is waiting on this task, and it is the
+top-priority project's critical path, so it goes back to ready. Next slice: per CLASH-
+CONSTRUCTED-CHECKPOINT-2026-11-16.md, prototype the next deterministic conversion from
+the shortlist, aimed at the 14 never-played two-slot cards (deadTwoSlotCards). Keep card
+ids and the 42-58% / spread<=12 guard, and rerun test:slime-city-clash-constructed
+afterward. Wholesale cuts beyond the shortlist still go to Silas first. No work
+discarded.
+
+2026-11-17 PT: silasfelinus/kind_robots#5297 converted Spiked Choker (id kept) into a 1-cost Bloodfairies SWARM backup-singer fighter, the second conversion from the shortlist. Arriving spreads SWARM to one neighbor (L1) or both (L2+), and at L3 adjacent SWARM allies strike +1. The CLASH starter keeps 13 fighters of 20 (Choker takes Pollen Queen's slot). Roadie Megaphone takes the legacy ten-card slot. Blackout parity trims Bloodfairies/Undertow by 1/8. Full test:slime-city-lab passes. CLASH spread is 9.8 (main 12.0), dead two-slot cards went 14 -> 13, and Bloodfairies campaign ch2 has 6/16 wins (main 2/16). Next slice: Ninth Life Collar (Catgirls) or Razor Spurs (Bloodfairies) from the shortlist. Wholesale cuts beyond it still go to Silas first.
+
+2026-11-17 PT: silasfelinus/kind_robots#5300 converts Razor Spurs (id kept) into a
+2-cost Bloodfairies stage-diver fighter, the third conversion from the shortlist.
+Arrival gives one neighbor +1 strike this round at L1 and both neighbors at L2; at L3
+both neighbors get +1 lasting attack. The CLASH starter is unchanged at 13 fighters of
+20 (Riot Choir leaves). Blood Mic takes Spurs' legacy gear slot, and Spurs stays rare.
+The Bloodrush PARITY edge for Bloodfairies goes 1.375 -> 1.25. Full test:slime-city-lab
+passes. CLASH spread is 10.3 (main 9.8), and dead two-slot cards stay at 13. Next slice:
+Ninth Life Collar (Catgirls), the last card on the shortlist. Wholesale cuts beyond it
+still go to Silas first.
+
+2026-11-17 PT: kind_robots#5300 merged (0a67cb4). Back to ready for the last shortlist
+slice, Ninth Life Collar (Catgirls).
+
+2026-11-18 PT: silasfelinus/kind_robots#5307 converts Ninth Life Collar (id kept) into a
+2-cost Catgirls belled-stray fighter, the fourth and last shortlist conversion. Arrival
+lends one neighbor REGEN (L1), plus a 1-HP spare life (L2), and gives both neighbors
+both at L3. Lab-Escape Atlas takes its legacy ten-card slot; the Collar stays rare. FIVE
+ALLEYS Catgirls HP offset 0.25 -> 1.25 (guard 0.152 -> 0.087, held-out 0.055). Full
+test:slime-city-lab and vue-tsc pass. CLASH starter spread unchanged at 10.3;
+constructed Catgirls 49.4% -> 55.5%, crew spread 13.1 (guard 15); dead two-slot cards
+stay 13. Shortlist complete: next is Silas's call on wholesale cuts beyond it, or a
+fifth conversion aimed at the Catgirls' dead two-slot cards (spare-lives, stolen-saw).
+
+2026-11-18 PT: kind_robots#5307 merged (3ffb8c0). The four-card fighters-first shortlist
+is complete, so t-051 closes done. Any wholesale cut beyond the shortlist is Silas's
+call, and t-041 can now resolve.
+<!-- note:end t-051 -->
+
 ## t-052 — ANARKISS reskin (was Riot Saints): anarchy circus midnight-musical crew (names, flavor, art)
 
 <!-- note:begin t-052 -->

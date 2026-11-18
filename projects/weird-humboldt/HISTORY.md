@@ -340,6 +340,129 @@ Silas (2026-10-20): the race sections match the actual event, over road, over du
 2026-11-01 PT claim-staleness assessment (Silas: stale claims are more likely finished- but-unrecorded than abandoned): real-course kinetic race with recurring sculptures and the slug-sinking flag merged in kind_robots#3895; bay-rescue consequences in #4241. Claim never closed.
 <!-- note:end t-044 -->
 
+## t-045 — Ecotone: optional time with every companion, and a chosen-family (polycule) utopia ending
+
+<!-- note:begin t-045 -->
+Silas (2026-10-20): the companions shouldn't be single-lead only; give optional routes to spend time with everyone, and an endpoint where the weekend ends with more than one of them, "the polyamorist utopia". Not a romance sim: frame it as found family and open-hearted connection, romance optional and PG-13, no jealousy mechanic punishing the player. Design sketch: (1) companion hangout beats a run can take with any companion already met, not only the active lead (a bond count per companion instead of one activeLead); (2) the crossroads gains "bring them along" beside follow/stay, so the party can grow; (3) ending lines for finishing together: Silas's count is four new branches (e.g. one per group shape, or the four three-companion groups plus all four); settle which before writing. Each new ending line is 7 lenses x 2 fates = 14 endings, and under the art standard (t-042) 14 pictures x 4 styles. Keep existing saves and the single-lead endings intact; seeded-replay tests cover reaching each new line.
+
+First reviewed implementation slice: a shared optional potluck encounter now names only actually met companions, with four distinct voices and a callback for the Kinetic Bay sinking. Original choices, IDs, saved games, and art keys remain stable. Full group-travel/collectible-ending scope remains pending and will be returned to ready after the merged slice.
+
+First scoped optional ensemble-scene slice merged as silasfelinus/kind_robots#4007 (eb8c435428c81077e66987a053fe2de1144b8250). All 13 GitHub Actions workflows on PR head completed successfully, including Ecotone Gameplay Contract, TypeScript, Contract Tests and formatting. FR-ASSEMBLY-01 renders two actually-met guides' unique voices and remembers the slug_sank setback; existing saves, endings, story branches and art IDs are unchanged. Larger t-045 work remains ready: optional bonding/hangouts, bring-them-along party state, multi-companion finale lines, and matching art.
+
+Implemented the first playable two-guide companion slice in Kind Robots: the real mid-journey crossroads has a third consensual invite choice, a validated optional co-traveler saved field preserving version-4 saves, a non-stacking single-assist skill rule, current co-traveler reactions, eligibility for each co-guide's own quests, and a bespoke future passage for each of six pairs across hopeful/dark county outcomes. The existing 56 collectible signature IDs and illustrations remain unchanged; full optional hangouts, larger traveling groups, new collectible group futures and artwork remain to develop. Added seeded replay and legacy-save tests. No cultural-review-held text or images changed, no art submitted, and no public deployment authorized. Merge only after fully green CI.
+
+Merged Kind Robots PR #4014 as 4203595d66d959e54a3ad7c825e706ca958cd558 after all 15 PR workflows completed with success, including TypeScript, Ecotone gameplay and all four contract shards. The playable crossroads can now invite a new guide to travel with the existing lead. Optional validated co-travelers survive version-4 save/restore, inherited solo saves remain valid, guides help without stacking, their relevant quests remain eligible and formerly met guides do not materialize as present companions. Six uniquely written two-guide pairs each have hopeful and dark final passages in the play UI, while the 56 old collectible endings stay intact. Deterministic seeded tests cover all pairs and legacy saves. Return t-045 to ready, not done: still need optional bond-building hangouts, third/fourth party-member opportunities, collectible joint signatures and art in four styles coordinated with t-042. No Wiyot/Tuluwat-review-held work, new ArtJobs, or deployment.
+
+Second playable t-045 slice prepared: four bespoke opt-in personal interludes after a consensual two-guide invitation, each with three choices, meaningful checked success/failure, partner perspective, unique art asset slots, and 16 distinct earned ending callbacks. The scene is inserted after crossroads via state transition, without changing authored route indices or old version-4 saves. The new authored cards are excluded from random white-rabbit forks and no image generation is submitted while t-042 owns art. Added deterministic game/saving/asset-slot tests and editorial document. Held Wiyot/Tuluwat content and deployment unchanged. Merge only after all CI checks succeed.
+
+Second playable t-045 slice merged as Kind Robots PR #4017 c261f353a3a68c1694c176b0f80a65bcbffe0d42. All 15 CI workflows completed successfully, including the Ecotone gameplay contract, TypeScript, formatting and four contract shards plus verifiers. New companionHangouts.ts provides four different opt-in scenes with three meaningful decisions apiece after an explicit two-guide invitation. Separately authored successful and failed rolls leave distinct flags, and all 16 choices/results get earned finale callbacks; card and outcome art keys are planned but no ArtJobs have been generated. New private cards cannot enter random forks. Route arrays and version-4 saved games remain stable. Seeded tests cover 12 party permutations times 120 seeds, choices, successes, failures, art slots, mid-scene restore, and declined invitations. t-045 remains ready for true bond progression, additional guide reunion routes, three/four-person parties, dedicated group ending unlocks and their four-style art. No Wiyot/Tuluwat held contents or public deployment were touched.
+
+Third t-045 slice merged as kind_robots#4740 (c56e897): hopeful/dark shared futures for
+all four three-guide crews and the full four-guide crew, with a distinctness test; all
+CI green. Still pending: bond progression, hangouts for later invitees, four-style art
+(t-042).
+
+Fourth t-045 slice merged as kind_robots#4741 (bd8889c): test locks in that a third
+invited guide gets a hangout; derived companionBondCounts(flags) helper (no save
+change). All CI green. Still pending: UI use of bond counts, bring-along beyond
+crossroads, four-style art (t-042).
+
+Fifth t-045 slice merged as kind_robots#4742 (52e6d06): Guides-tab cards show per-guide
+shared-memory count from companionBondCounts (derived, no save change). All 12 checks
+green. Still pending: bring-along beyond crossroads, four-style art (t-042). Local
+prettier differs from CI; trust CI Changed-file Prettier.
+
+Sixth t-045 slice merged as kind_robots#4743 (e4be07c): after the invitee's hangout, the
+already-traveling guide gets their own scene once per run; all CI green. Still pending:
+bring-along beyond crossroads, four-style art (t-042).
+
+2026-11-04 PT seventh slice merged as kind_robots#4744 (f7d5a6a): derived bond tier
+wording (New friend / Close friend / Chosen family) on Guides cards; 13 checks green.
+Still pending: bring-along beyond crossroads, four-style art (t-042).
+
+2026-11-04 PT seventh slice merged as kind_robots#4744 (f7d5a6a): derived bond tier
+wording (New friend / Close friend / Chosen family) on Guides cards; 13 checks green.
+Still pending: bring-along beyond crossroads, four-style art (t-042).
+
+Eighth t-045 slice merged as kind_robots#4750 (6c1c0e5): chosen-family finale coda when
+two or more guides reach Close friend; derived from flags, no save change; all 13 checks
+green. Still pending: bring-along beyond crossroads, four-style art (t-042).
+
+2026-11-04 PT: no slice shipped. Remaining gameplay item (bring-along beyond crossroads)
+contradicts verifyEcotoneHangouts.test.ts, which deliberately asserts 'follow' does not
+invent a group scene; needs a design call before more code. Art is t-042.
+
+2026-11-04 PT: Prepared t-045 slice "free hours + The Long Table" (patch vs 153abdeb, PR
+pending). Every guide the player has met now offers one optional, dice-free free-hour
+scene per run (Mara grapefruit line / Kit streetlight juggling / Juniper redwood vigil /
+Cedar tailgate supper with his still-married folks' leftovers): two warm options each
+(one +1 nerve) plus a no-cost "not tonight". The scenes come one per evening, with any
+remaining ones just before the finale, through the mystery/#4774 digression slot, so
+ROUTES indices and v4 saves are unchanged. A derived chosen-family ending, "The Long
+Table" (found family, consensual and non-explicit, no ranking), appears above the normal
+ending when the player spent free hours with 3+ guides and the county is hopeful. Free
+hours now count toward bonds, so the #4750 coda is reachable in play. The new
+verifyEcotoneCompanionTime covers 1,512 seeded runs: each free hour is reachable, mid-
+scene restore works, decline is a no-op, the ending is reached on all routes by warm
+play and never by careless play, dark stays reachable, meters are finite. All Ecotone
+tests, KrChoiceHand and playbook pass (84/84 audit slots). Still pending: deciding
+whether The Long Table gets a ledger/gallery slot, its four-style art (t-042), and
+bring-along beyond crossroads (still blocked on the design call).  Merged as kind_robots
+#4814; back to ready for the remaining scope.
+
+2026-11-17 PT: no code slice; every remaining t-045 item needs a design call. QUESTION
+FOR SILAS: (1) Should The Long Table chosen-family ending get its own collectible
+ledger/gallery slot (new ending ID; touches save/ledger counts, and t-042-style art in 4
+styles), or stay a derived coda above the normal ending? (2) 'Bring-along beyond
+crossroads': today 'follow' resets the travel party, and verifyEcotoneHangouts.test.ts
+asserts that following does not create a group scene. Should following a newcomer keep
+the current crew, or offer a later chance to re-invite a guide you left behind? Party
+growth via 'together' at each crossroads already works (3- and 4-guide crews have
+futures). Answer either one and t-045 returns to ready.
+
+2026-11-17 PT gate-triage re-check: both open questions (Long Table ledger slot; bring-
+along beyond crossroads) are creative design calls asked today, not yet answered; no
+CONTROL.md/notes_from_silas entry answers them, and all remaining code depends on them
+(art is t-042). gate_reason: creative-approval. RECOMMENDATION (adopt under the
+2026-09-30 default-recommendation rule if unanswered by 2026-11-24 PT): (1) keep The
+Long Table as a derived coda, no new ledger ID, so save/ledger counts and t-042 art
+scope stay unchanged; (2) keep 'follow' resetting the party (existing test stays
+authoritative) since 'together' already grows crews to 3-4; then close t-045's gameplay
+scope as done and leave art to t-042.
+
+2026-11-17 PT gate-triage (APPROVED_PARKED): approved_by_human already covers the
+sketch, and its item (3) is not finished: each group ending line was specified as 7
+lenses x 2 fates = 14 endings, but the five group crews (four three-guide + all four)
+only have hopeful/dark futures. Returned to ready. NEXT AGENT STEP: give each of the five
+group futures lens-aware variants (opening lens x hopeful/dark), derived at render time
+with no save or ledger-ID change, plus a seeded test that every crew x lens x fate text is
+distinct and reachable; leave art slots planned only (t-042). The two extra questions
+above stay open with the recommendation and are not blockers for this step.
+
+Ninth t-045 slice merged as kind_robots#5284 (c0ef5d4): lens-aware crew futures, 5 crews
+x 7 lenses x 2 fates = 70 distinct texts derived from openingState (no save/ending-
+ID/art-slot change; pairs unchanged); seeded distinctness test; all 14 checks green.
+Still pending: the two open design questions (recommendation adopts 2026-11-24 PT) and
+four-style art (t-042).
+
+2026-11-17 PT routine: parked at needs-human. Item (3) is now complete (#5284: 5 crews x
+7 lenses x 2 fates). The only remaining gameplay scope is the two open design questions
+above (Long Table ledger slot; bring-along beyond crossroads); art belongs to t-042. FOR
+SILAS: answer either question to return t-045 to ready. Recommendation stands and is
+adopted by gate-triage 2026-11-24 PT if unanswered: keep The Long Table as a derived
+coda, keep 'follow' resetting the party, then close t-045 done.
+
+2026-11-17 PT gate-triage (APPROVED_PARKED, third pass): the approved sketch is fully
+delivered. (1) Hangouts with every met guide plus bond counts and tiers:
+#4017/#4741-#4744/#4814. (2) 'together' at the crossroads grows the crew to 3-4 guides:
+#4014/#4740. (3) Group ending lines: 5 crews x 7 lenses x 2 fates in #5284, plus the
+Long Table coda. Existing saves and endings stay intact, with seeded tests. Closed as
+done to end the ready/needs-human loop. The two later questions (a Long Table ledger
+slot; bring-along beyond the crossroads) go beyond the approved scope, so they moved to
+their own gated task, t-075, which keeps the recommendation and the 2026-11-24 PT
+adoption date. Art stays with t-042.
+<!-- note:end t-045 -->
+
 ## t-046 — Second draft I: make high-leverage regional decisions genuinely distinct
 
 <!-- note:begin t-046 -->
@@ -572,6 +695,114 @@ Submitted 12 idempotent private Krea 2 portrait art requests under canonical pub
 
 Merged Conductor PR #6585 (0647ea1742e233c9f77d94b2f7ee1c41408dad5c): 12 distinct private Krea 2 512x768 portrait requests committed to projects/art-prompts.yaml without deleting any previous entry, keyed to stable ecotone/avatar IDs and self-hosted media paths. GitHub triggered Auto Art Generate run 40072994485; at last inspection it was still sweeping earlier art ledgers. All 12 requests remain pending with no last_art_job_id assigned yet. This is queue submission, NOT proof of rendering or final delivery. Merged kind_robots PR #4108 (710887a8e966213e92508a931e5884c5ca4c67b9) after all 15 final-head CI checks passed. Onboarding uses responsive swipeable portrait cards, image-error fallbacks, stable saved identities and path/selection regression tests. Both working branches cleaned. No production deploy or image-render completion claimed.
 <!-- note:end t-065 -->
+
+## t-066 — Polish Ecotone opening, route previews, customizable player portraits, and tablet layout
+
+<!-- note:begin t-066 -->
+Silas's October 24 2026 PT tablet screenshot: PC portraits are not visible, players need to change/upload their own image, opening route cards must preview what might happen before committing, and opening prose must be shorter without advance companion or drug spoilers. Reduce fixed left-column title footprint; preserve one-screen reading and existing saved games and art IDs. Verify exact-head CI, queue/media delivery state, and tablet presentation.
+
+Silas-directed Ecotone stage repair: encounter prose and immediate choices occupy a scrollable left column, portraits/scene art their own right panel; earned endings render a collectible image card. Responsive mobile stage retains bounded art above content, and existing onboarding test asserts layout, direct-choice and ending behaviors. Kind Robots worker PR follows; no art jobs or deploy.
+
+2026-10-26 PT: Silas-directed encounter/ending layout slice MERGED to Kind Robots main as PR #4252 (squash 059d1035007c76e8d435a5d8c110b737b0d6eb3b). All 15 latest-head workflows on a8ea7ee4aa3c49327dcaa60bfab736cc33d16e63 completed successfully: TypeScript, layout, formatting, Ecotone gameplay and full contract tests included. Art is now isolated on right at wide screens, narration and immediate choices on left, responsive art above text at phone widths, unlocked ending card shown in art panel. No new ArtJobs or deploy. Keep this broader t-066 ready for outstanding actual rendered phone/tablet/desktop verification after self-hosted deployment and remaining portrait media delivery.
+
+2026-11-04 PT: Text/clarity half of t-066 prepared as patch weird-
+humboldt-t-066-r2.patch against kind_robots origin/main
+a13933a79d51aa06257f32e70356eb65d7df181c. Changes: the opening story panel now says what
+the player is choosing and shows a tablet-readable preview for each route (real day
+range, "feels like", "at stake"), with no companion or substance spoilers; route cards
+show a short kind line and an accurate Fri–Sun / Fri–Wed / Sat–Mon chip; the title pitch
+names all three routes and says that identity choices are flavor only; the "explore the
+whole cast" copy is fixed; the header restart now confirms before abandoning a run in
+progress; the tablet title wordmark is reduced. verifyEcotoneOnboarding pins these
+invariants: each preview hook is reachable in its own route's beats, difficulty and Wild
+Way claims match futureTarget/wildTarget, random play reaches hope on every route, and
+identity never changes the run. All 21 verifyEcotone*.test.ts, KrChoiceHand and Playbook
+tests pass, and prettier and eslint are clean; full vue-tsc was OOM-killed locally.
+Still open: rendered phone/tablet/desktop verification after deploy, the Guides tab
+revealing companions before a run, portrait media delivery, and PR/CI/merge by the
+coordinator.  Merged as kind_robots #4789. Back to ready for the remaining scope.
+
+2026-11-06 PT, Silas-directed Ecotone screenshot pass: complete visible choice cards with art fallbacks and full hover/focus text, tighter prose/typography and outcomes, companion portrait dialogue, no player-facing rewind controls, plus Midnight Mane editorial rewrite and a regression contract. Implementation on kind_robots worker/weird-humboldt-t-066-ecotone-screen-7c9f, awaiting PR CI; no publish/deploy or art-job writes.
+
+2026-11-06 PT: Ecotone screenshot-led UX pass merged to kind_robots main in PR #4854, squash aa540d9a1cf614957837ef55ecf1112120af9b4a. Nine of nine completed latest-head CI suites passed: Ecotone Gameplay, layout, TypeScript, formatting, narrative accessibility, architecture, Playbook Kit, migration parity, and contract shards. Visible full-height choice cards and art/scene fallback, full hover/focus copy, smaller narrator text, companion portrait dialogue, compact outcomes with optional illustrated second view, no visible undo/rewind, and Midnight Mane wording improved. Remaining t-066 scope includes rendered phone/tablet/desktop verification post-deploy, portrait asset delivery and guide spoilers; broader prose rewrite and art export remain open. Specific new art finding: all three Bellwether case-card scenes MY-05-G1/G2/G3 have DONE entries in art/ART-STANDARD-ROUND-2.yaml in each of four styles (ArtJobs 47600-47611), but cards/my-05-g1/g2/g3 are absent from kind_robots utils/ecotone/artManifest.ts and public/ecotone/styles cards. The export script supports ledger input but needs API token and a checkout; do not claim these private finished ArtImages shipped or render to clients before export. No production deploy or art export performed.
+
+2026-11-17 PT: guide-spoiler slice merged as kind_robots#5282 (4b88458), all 14 checks
+green. Guides tab now shows unmet guides as a no-spoiler silhouette (no
+name/portrait/bio/line/meeting place) until met this run or named as lead by an earned
+ending; derived only, no save/ledger change; verifyEcotoneGuideReveal added to Ecotone
+Gameplay CI. Still open: rendered phone/tablet/desktop verification post-deploy,
+portrait asset delivery, Bellwether MY-05-G1..G3 art export (needs token).
+
+2026-11-17 PT: (a) Rendered production check of kindrobots.org/play/ecotone with
+Playwright on iPhone 13, iPad (portrait and landscape) and 1440px desktop: no horizontal
+overflow, no page errors, 12 player portraits plus upload visible, 3 route previews
+shown, Guides tab shows 4 no-spoiler silhouettes (so #5282 is live). (b) Bellwether art
+exported: kind_robots#5283 (c620fce) ships all 7 MY-05 case cards (cold, G1-G3, reveal,
+unmasked, encore) x 4 styles = 28 webp (1.9MB); the contract now counts MYSTERY_CARDS
+keys as known art. All CI green (shard 1 needed one re-run after timing out in an
+unrelated Slime City test). Still open: ~1,000 other unexported ART-STANDARD-ROUND-2
+renders (~70MB), to ship in per-case batches with the same recipe (filter subjects by
+asset prefix, then export_ecotone_art.export + write_manifest).
+
+2026-11-17 PT routine: two more per-case art batches merged: kind_robots#5285 (b745275)
+MY-01..MY-04 and #5286 (d5898c8) MY-06..MY-09, each 28 case cards x 4 styles = 112 webp
+(~8 MB), manifest regenerated from disk; all CI green; no held art, no ArtJobs. Each
+style now ships 275 pictures. Still open: MY-10..MY-12 case cards (84 webp), mysteries/*
+Real Endings, events/*, and cards/wh|co|fr|la|lx (~650 renders; check the contract
+accepts those keys first). Local Pillow was broken; export from a venv with
+pillow+pyyaml.
+
+2026-11-17 PT routine: MY-10..MY-12 case cards merged as kind_robots#5287 (194bd7d). 21
+cards x 4 styles = 84 webp (5.6 MB), manifest regenerated from disk. All 13 checks
+green, no held art, no ArtJobs. Mystery case cards are now complete for MY-01..MY-12
+across all four styles. Still open: mysteries/* Real Endings, events/*, and
+cards/wh|co|fr|la|lx (~570 renders; first check that the contract accepts those keys).
+Export from a venv with pillow+pyyaml.
+
+2026-11-17 PT routine: mystery Real Ending art merged as kind_robots#5288 (6c88c13). 36
+endings (mysteries/<case>/<ending>, drawn by mysteryEndingArtKey) x 4 styles = 144 webp
+(~10 MB), manifest regenerated from disk (332 pictures per style). The contract now
+counts mysteryEndingArtKey keys as known pictures. All 14 checks green, no held art, no
+ArtJobs. Still open: events/* (12 webp) and cards/wh|co|fr|la|lx (~516 renders, 460 of
+them cards/wh). Check that the contract accepts those keys first. Export from a venv
+with pillow+pyyaml.
+
+2026-11-17 PT routine: WH-001..WH-030 card art merged as kind_robots#5289 (c96445c). 28
+cards x 4 styles = 112 webp (~7.5 MB), manifest regenerated from disk; contract passes
+locally and all 13 checks green; no held art, no ArtJobs. events/* (12 renders)
+deliberately NOT shipped: eventArtKey has no in-game consumer and the contract excludes
+slots.events, so ship them only once the board draws event art. Still open:
+cards/wh-031..wh-120 plus la/fr/co/lx cards (~376 renders). Export from a venv with
+pillow+pyyaml.
+
+2026-11-17 PT routine: WH-031..WH-060 card art merged as kind_robots#5290 (1af14b6). 29
+cards x 4 styles = 116 webp (~8.7 MB), manifest regenerated from disk; contract passes,
+all 13 checks green; no held art, no ArtJobs. Still open: cards/wh-061..wh-120 plus
+la/fr/co/lx cards (~260 renders); events/* stays unshipped until the board draws event
+art.
+
+2026-11-17 PT routine: remaining card art merged in three kind_robots PRs, all CI green:
+#5292 (64cd0b4) WH-061..WH-090, 112 webp; #5293 (8bb7660) WH-091..WH-120, 120 webp
+(contract shard 4 timed out once in unrelated pinball tests, passed on the single re-
+run); #5294 (3acf3a3) la/fr/co/lx cards, 56 webp. Every finished ART-STANDARD-ROUND-2
+card render now ships in all four styles; manifest regenerated from disk; no held art,
+no ArtJobs. Still open: events/* (12 renders) until the board draws event art; broader
+prose rewrite.
+
+2026-11-17 PT intent audit (INTENT-AUDIT-2026-11-18.md): checkpoint before closing; see
+the next note.
+
+2026-11-17 PT intent audit: every item in Silas's 10-24 tablet-screenshot brief is
+merged and verified on production. Checked on 11-17 PT with Playwright on iPhone 13,
+iPad portrait and landscape, and 1440 desktop: 12 player portraits plus upload are
+visible, 3 route previews show, the Guides tab shows no spoilers (#5282), and there is
+no overflow. The shorter opening prose and tablet wordmark shipped in #4789 and #4854.
+Since then, five hourly cycles reused this task to export the ART-STANDARD-ROUND-2
+backlog (#5283-#5294). That export is finished. The rest is not t-066 scope: events/*
+art waits on a board feature that doesn't exist yet, and 'broader prose rewrite' has no
+acceptance criteria. Closed done, so the next weird-humboldt claim goes to real open
+work instead of re-claiming a satisfied polish task.
+<!-- note:end t-066 -->
 
 ## t-067 — Grep Ecotone docs for the withdrawn Mara tribal/casino-grant backstory and correct leftovers
 
