@@ -7,6 +7,7 @@ from scripts.project_lifecycle import (
     ordered_workable_slugs,
 )
 from scripts.playtest_readiness import playtest_readiness_errors
+from scripts.build_status import compute_progress
 from scripts import sync_playtest_master_issues as handoff
 from scripts.sync_playtest_master_issues import eligible_issues, PREFIX
 
@@ -46,6 +47,37 @@ def test_readiness_requires_complete_build_not_a_human_playtest_task():
     assert playtest_readiness_errors([done, {"id": "recurring", "status": "ready",
                                             "recurring": True}]) == []
 
+
+
+def test_one_hundred_percent_means_no_agent_owned_production_left():
+    milestones = [{"weight": 100, "status": "done"}]
+    unfinished_art = [{"id": "art", "status": "ready"}]
+    assert compute_progress(milestones, unfinished_art) == 99.0
+
+    finished = [{"id": "build", "status": "done"}]
+    assert compute_progress([{"weight": 100, "status": "in-progress"}], finished) == 100.0
+
+    human_verdict = {
+        "id": "verdict",
+        "status": "needs-human",
+        "gate_human": True,
+        "gate_reason": "subjective-acceptance",
+    }
+    assert compute_progress(milestones, finished + [human_verdict]) == 100.0
+
+    waiting_verdict = {**human_verdict, "status": "waiting"}
+    assert compute_progress(milestones, finished + [waiting_verdict]) == 99.0
+
+    release_gate = {
+        "id": "publish",
+        "status": "needs-human",
+        "gate_human": True,
+        "gate_reason": "publish",
+    }
+    assert compute_progress(milestones, finished + [release_gate]) == 100.0
+
+    no_production = [{"id": "recurring", "status": "ready", "recurring": True}]
+    assert compute_progress([{"weight": 100, "status": "in-progress"}], no_production) == 50.0
 
 
 def test_issue_handoff_is_scoped_to_valid_playtest_games(tmp_path: Path):
