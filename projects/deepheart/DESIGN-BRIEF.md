@@ -217,3 +217,25 @@ model comparison has established the accepted mature Western cartoon style.**
 When rendering these rulers, their human faces must be visibly distinct from
 the world's anthropomorphic citizens; use their human appearances only in
 fairy art prompts, not as a reason to revert the mortal cast to generic humans.
+
+## Art model decision (Silas, 2026-11-17 PT)
+
+The approved primary Deepheart renderer is **Krea 2** for all standard art:
+hero/companion portraits, environments, gods, monsters, combat, endings and
+ordinary romantic story moments. The Krea 2 lane won the private five-scene,
+eight-model trial overall. Its look is painterly mature Western fantasy
+animation with expressive anthro silhouettes and varied adult physiques.
+
+**Furrytoon Mix XL v3** (`Illustrious/furrytoonmix_xlV3.safetensors`) is
+the approved exception for distinct, mature-only romantic unlock plates. These
+are private, separate assets and do not replace normal Playbook Kit romance
+moment illustrations. All depicted partners must be consenting adults, with
+natural body hair/fur, varied physiques, affectionate gestures and sensitive,
+non-graphic composition. Private previews require administrator plus mature
+opt-in; a future in-game unlock view also needs the matching romance discovery.
+
+The 94-cell Krea 2 `ANTHRO-REPAINT-2026-11-16.yaml` and the 41-cell Furrytoon
+`AFTER-HOURS-ROMANCE-2026-11-17.yaml` are enabled for the scheduled ArtJob
+sweep. Rendering, delivery, URL verification, mature-only unlock wiring and
+final promotion of art are separate acceptance checks. Completed older
+pre-anthro Krea 2 jobs must not be treated as accepted replacements.
