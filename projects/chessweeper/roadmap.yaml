@@ -28,7 +28,7 @@ tasks:
   - id: t-001
     milestone: m1
     title: "Build and wire the playable three-theme Chessweeper frontend at /play/chessweeper"
-    status: review
+    status: needs-human
     passes: 0
     stakes: outward-facing
     gate_human: true
@@ -37,10 +37,16 @@ tasks:
       Source prototype: the user's standalone Chessweeper x Disc Room HTML5 game from ChatGPT (2026-11-17 PT). Bring the working chess/mine/disc loop to the actual Kind Robots frontend, register Play navigation, and make all three mode-specific rules playable: Sugar Rush freeze/combo, Ashen Last Stand, Jackpot Double-or-Nothing multiplier/multiball. Reversible code can be submitted to PR; public release/deployment needs an explicit human publication decision.
 
       Kind Robots PR #5305 now contains three playable themed game variants at /play/chessweeper. JavaScript syntax and headless rule-set smoke tests passed, including Sugar Rush, Ashen Last Stand, Double or Nothing, first-probe safety and legal chess. Branch CI navigation, layout, formatting, architecture, schema and TypeScript checks green; contract tests still running. Do not merge until the publication gate is explicitly cleared.
-    owner: worker
+
+      First three-world HTML5 playable implemented in Kind Robots PR #5305. Source is /play/chessweeper and public/chessweeper/index.html. Features Sugar Rush, Ashen Last Stand, Jackpot wagering/multiball. Local browser smoke checks passed for three worlds, unique powers, and 390px layout; PR CI in progress. Publication gate remains in force; do not merge/deploy without explicit release authorization.
+
+      FOR SILAS: The three-mode HTML5 game is playable in PR kind_robots#5305, with the Play tab and /play/chessweeper route, Sugar Rush, Ashen Last Stand, and Jackpot wagering/multiball. Local browser tests passed with no JS errors or mobile horizontal overflow at 390px. GitHub checks passed formatting, TypeScript, layout, navigation, project architecture and schema; Contract Tests were still running on latest head when checked. This change is outward-facing, so PR is open and unmerged pending explicit public publication permission. Next action: once CI is fully green and the publishing gate is cleared, merge PR #5305; then continue t-002/003/004 for full game polish and painted art. Conductor project scaffolding PR #7565 was merged.
+
+      FOR SILAS: The three playable Chessweeper world implementations are in Kind Robots PR #5305, including route and Play tab. Local headless game-engine smoke tests passed (mode switching, mines, chess move, Sugar Rush freeze, Ashen Last Stand and Jackpot Double or Nothing). Branch CI architecture, layout, navigation, schema, TypeScript and formatting checks passed; final contract check status must be rechecked at review. PR is intentionally unmerged because t-001 is marked outward-facing/publish and requires a separate explicit release decision. No public deployment has occurred. The next action is to approve or reject the /play/chessweeper publication; PR remains available for review. Painted art, end-to-end browser QA, progression and Playtest handoff remain separate tasks.
     claimed_by: 2026-11-18T084300Z-chessweeper-t001-q7m2
     claimed_at: '2026-11-18T08:43:00Z'
-    updated: '2026-11-18T09:02:00Z'
+    updated: '2026-11-18T09:16:00Z'
+    soft_gate: false
   - id: t-002
     milestone: m2
     title: "Deepen Sugarbomb, Ashen and Jackpot into three replayable campaigns"
