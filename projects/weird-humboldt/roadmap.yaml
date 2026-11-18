@@ -1585,8 +1585,8 @@ tasks:
   - id: t-066
     milestone: m5
     title: "Polish Ecotone opening, route previews, customizable player portraits, and tablet layout"
-    status: review
-    updated: '2026-11-18T00:47:12Z'
+    status: done
+    updated: '2026-11-18T00:47:15Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -1682,6 +1682,17 @@ tasks:
 
       2026-11-17 PT intent audit (INTENT-AUDIT-2026-11-18.md): checkpoint before closing; see
       the next note.
+
+      2026-11-17 PT intent audit: every item in Silas's 10-24 tablet-screenshot brief is
+      merged and verified on production. Checked on 11-17 PT with Playwright on iPhone 13,
+      iPad portrait and landscape, and 1440 desktop: 12 player portraits plus upload are
+      visible, 3 route previews show, the Guides tab shows no spoilers (#5282), and there is
+      no overflow. The shorter opening prose and tablet wordmark shipped in #4789 and #4854.
+      Since then, five hourly cycles reused this task to export the ART-STANDARD-ROUND-2
+      backlog (#5283-#5294). That export is finished. The rest is not t-066 scope: events/*
+      art waits on a board feature that doesn't exist yet, and 'broader prose rewrite' has no
+      acceptance criteria. Closed done, so the next weird-humboldt claim goes to real open
+      work instead of re-claiming a satisfied polish task.
     owner: worker
     implementation_pr: 'silasfelinus/kind_robots#5294'
     claimed_by: routine-mzt5cf-20261117T234803Z
