@@ -202,9 +202,9 @@ tasks:
   - id: t-006
     milestone: m2
     title: "Add online 1–4 player co-op rooms with deterministic synchronization"
-    status: ready
+    status: claimed
     depends_on: [t-005]
-    owner: null
+    owner: worker
     passes: 0
     stakes: reversible
     note: >-
@@ -213,6 +213,9 @@ tasks:
       Respect existing app auth/rate-limit/privacy conventions. Verify
       divergence across 1–4 clients at simulated packet loss and latency.
       Avoid secret creation/billing without a human gate.
+    claimed_by: 2026-11-19T235900Z-rainbow-t006-k4m8
+    claimed_at: '2026-11-19T23:59:00Z'
+    updated: '2026-11-19T23:59:00Z'
   - id: t-007
     milestone: m3
     title: "Author and integrate stages 1–2 with complete tutorial and bosses"
