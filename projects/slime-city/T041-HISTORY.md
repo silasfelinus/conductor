@@ -91,3 +91,200 @@ runs green (4 contract shards, verifiers, TypeScript, Prettier, layout, verify x
 increment only; return to ready for remaining 300-card curation, constructed balance and
 art QA.
 <!-- note:end t-041 -->
+
+## Round 2 (archived 2026-11-19)
+
+<!-- note:begin t-041 round 2 -->
+Silas, 2026-11-07 PT: "The ultimate goal will be crafted redesigns of all 300 cards." The authoritative full inventory is projects/slime-city/CARD-REDESIGN-300.md. Each existing catalog identity must have an individually authored journey, not generic L2/L3 stats or duplicated effects. One interesting payoff per card, strategic counterplay, deterministic battle fixture and replay, and CPU reachability audits. Keep all 300 IDs and six distinct crew identities; do not add cards, faction-hate, economy mutations, art or a publication without authorization. Finish original t-037's 70 designs first, then this umbrella governs the remaining 230 redesigns, tracking progress against the full roster.
+2026-11-08 PT: Silas reviewed a first data-driven pass (kind_robots branch claude/pensive-albattani-ibljzj, commits b5a4093/5e7659b, never PR'd) and rejected the approach: "doing it programmatically has a big risk of just giving stat boosts to later game cards ... Do some research on good ccg design before moving forward and creating a plan." Also: "We should have fresh art on the evolutions, not just frame effects." Plan with research, design rules (trajectories instead of a universal stat ramp, L2 = new decision, L3 = named transformation with counterplay, faction tool ownership), per-level Flux Kontext art for all 300, and a 10-card Catgirls pilot gate: projects/slime-city/CLASH-EVOLUTION-PLAN.md. Awaiting Silas's answers to the plan's open questions before the pilot starts; the parked branch keeps only its engine hooks for reuse.
+Audit checkpoint: kind_robots #4907 has 300 merged custom evolutions. The default CPU sweep only uses fixed 20-card decks, so this session adds 300-card constructed-deck matchup coverage, mirrored seeds, reachability, duplicate-mechanic reporting and deterministic replays on a worker PR. Continue per-card balance and fun QA before accepting the full catalog.
+2026-11-08 PT: Audited the merged 300 custom evolution arcs and shipped reproducible 1,230-match constructed Solo/Alliance QA in Kind Robots #4908 (squash f2a7a6e, all eight final-head workflow runs green). Solo first seat 49.6%, Alliance first seat 40%; 279/300 cards used, 160 at L3, 21 never selected, two exact mechanical arc duplicates. Conductor #7176 (squash 2e88f66) updates the 300-row ledger to 70 MERGED and 230 LIVE_QA and records findings in CLASH-EVOLUTION-QA-2026-11-08.md. Remain ready: resolve unplayed cards and duplicate paths, assess CPU evolution valuation, run larger constructed matchups and bespoke 230-card payoff fixtures. Human fun acceptance, art delivery and production deployment not claimed.
+Tactical evolution increment in review: CPU now values actual board-relevant staged effects and lasting gear instead of a generic arrival bonus; Bloodfairy Banana Bouncer becomes a swarm encore rather than an Ironjaw boss/heal clone, and Undertow Backwater IOU becomes three-lane stun rather than an Exchange splash clone. [...]
+[Earlier history (15,073 chars) archived verbatim to projects/slime-city/T041-HISTORY.md -- read it there only when you need a specific past cycle. Append new cycles below, one short paragraph each.]
+MERGED partial Ironjaw editorial increment: kind_robots PR #5204, main squash 4267deef61404f900f6d698b7fc91b6efac0847c, final head dbf4a77. Verified all six latest-head GitHub workflows completed success, including four Contract Test shards, TypeScript, formatting, layout, architecture and schema. 40 Ironjaw cards reviewed, thirty authored L1 role texts, nine targeted L3 continuity improvements, six battle-state fixtures, forty-row counterplay ledger. Overlapping PR #5203 closed as superseded after validating its three changes on main. Task remains INCOMPLETE: 180 cards in Riot, Undertow, Exchange and shared Mercenaries still need independent editorial and gameplay audit, plus constructed match balance, seeded replays, art and human fun acceptance. Release for next pass.
+2026-11-15 PT: Scoped three Mercenary L3 continuities: Traffic Witch retains L2 Green Wave on hit alongside one-shot Gridlock, Crowd-Sourced Lightning retains L2 crowded target zap alongside boss pressure, and Streetlight Confession retains L2 adjacent fighter power alongside its piercing hit across. Added real Clash board fixtures and deterministic repeatability coverage. Implementation commit ab398069 on worker/slime-city-t-041-mercenary-payoff-20261115T1337Z-c8a4; PR and CI pending. Task remains partial: 300-card editorial, low-selection QA, art and constructed balance still open.
+2026-11-15 PT: Merged kind_robots PR #5221, squash 77fee2a7cf88e65390e10e330a3eabe1828a8d9f. Three shared Mercenary Level 3 evolutions retain their prior strategic Level 2 utility: Traffic Witch keeps a neighboring-fighter rally with its once-per-hit gridlock, Crowd-Sourced Lightning keeps crowd-powered target zap alongside boss pressure, and Streetlight Confession keeps neighbor attack surge alongside a piercing hit. Battle-state and deterministic regression fixtures pass. Current head 3cfa0ce3 had six completed successful workflows including all four Contract Test shards and verifier. This closes one independent increment only. Return t-041 to ready for remaining 300-card curation, underselected cards, constructed balance and art QA; no production deploy or subjective acceptance claimed.
+2026-11-15 PT: kind_robots PR #5226 (head 2fca9fd): three L3 evolutions keep the L2 job their design notes promise -- Midnight Janitor keeps Mops Up heal before Closing Time duel, Secondhand Halo keeps Still Warm mend (no weaker L3 without a fallen ally), Long Drain Sting keeps Long Reach weakest-foe sting alongside the strongest-foe stun. Real- board fixtures fail on old defs; 11 related Slime City suites pass locally. Audit method: compared L2 vs L3 action shapes across riot/undertow/exchange/mercA/mercB and flagged only cards whose own arc comment contradicts the code; most remaining drops are documented ROLE SHIFTs. Partial increment; umbrella stays open.
+2026-11-15 PT: MERGED kind_robots #5226, squash 257dcbb4, head 2fca9fd; all 11 check runs green (4 contract shards, verifiers, TypeScript, Prettier, layout, verify x2). One increment only; return to ready for remaining 300-card curation, constructed balance and art QA.
+
+2026-11-15 PT: kind_robots #5228 merged as 306915b4e185989d6afb3f57236aea7d11d595c4. Final head ed6348e: six PR checks (Contract Tests, TypeScript, formatting, layout, architecture, schema parity) completed successfully; branch janitor also succeeded. Added 25 lowest-selection cards, L2/L3 reachability, and exact replay coverage of 30 archetypes. No combat or card balance changed. Partial QA increment only; return t-041 to ready for remaining 300-card editorial and balance work.
+
+Constructed QA selection rates previously used total play commands divided by card deck appearances; repeated plays inflated the ranking. New scoped Kind Robots branch counts distinct card-selected bouts by side and denominator, preserving raw play counts and adding bounded-rate assertions. Implementation PR and CI follow; umbrella remains partial.
+
+2026-11-15 PT: kind_robots PR #5230 merged as dba90f251b8e15cd0e7fa450899a0982076fa246 from head 73b84ea80d667ddf2947cf867642d166fa6ad96e. Six final-head GitHub workflows completed successfully (Contract Tests with four shards, TypeScript, formatting, layout, architecture, schema). Corrected constructed low-selection report to count distinct player bouts per card, rather than repeat play commands, retaining raw plays and evolution reachability. Bounded selection assertions added. This is partial QA only; t-041 remains open for targeted underselected-card and evolution design work.
+
+2026-11-15 PT: Scoped L3 open-lane payoff repair on branch worker/slime-city-t-041-l3-openlane-20261116T0245-f6b83c, commit 53e1d2f. Catgirls Roof Phantom retains its L2 open-lane boss shot when the L3 tap moves it to safety; Anarkiss Wall-of-Death Rider retains its open-lane ambush surge alongside its L3 retreat. Real-board fixtures cover enemy blocking, denied escape, and deterministic pure-command replay. Full seeded constructed matchup and CI results pending.
+
+2026-11-16 PT: MERGED kind_robots #5232, squash 0f35a194, head 2b76f0d. Rooftop Phantom
+L3 keeps its L2 open-lane 2-point boss chip before the safe sidestep; Riot Bike
+Messenger L3 keeps the open-lane +2 ambush surge before retreating. Reviewer fix: CI
+shard 1 failed the 160-char face contract (Skyline Specter rendered 165), so the shared
+shift phrase now reads 'a free adjacent alley' (160). All 12 check runs green. One
+increment only; return to ready for remaining 300-card curation, constructed balance and
+art QA.
+
+2026-11-16 PT: released claim 2026-11-16T0730Z-t041-pd5v7b without changes. The constructed report (3120 bouts) still shows 14 dead two-slot cards, e.g. s3-catgirls-stolen-saw and s3-catgirls-spare-lives. Cause: chooseClashCpu divides every score by b.plays, and a cost-4 grant spell scores roughly half a fighter. Fixing it means changing cards or the CPU comparator, which the test output attributes to t-051 (candidate list goes to Silas first), so this session switched to interface-vision/t-154. No work discarded.
+
+2026-11-16 PT: MERGED kind_robots #5258, squash 1046f3cf, head 98adde1; all 12 check
+runs green. Undertow editorial pass: 30 authored L1 roles (distinct even where four
+disarm spells share native text) and four L3 continuity repairs whose arc comment still
+named the dropped L2 job: Needle Rain Agent keeps its arrival chip, Basement Watchdog
+its dying bark, Periscope Lens its spotter aura, Tunnel Harpoon its barbs. Real-board
+fixtures fail on the old definitions. Quiet Room Listener's shield retention was backed
+out after CI shard 1 failed the 12-point CLASH crew spread (main already sits at exactly
+12.0: Catgirls 44.8%, Ironjaw 56.8%); its comment now documents the trade. Review doc:
+docs/agents/slime-city-undertow-evolution-review.md. One increment only; Riot, Exchange
+and Mercenary editorial passes, constructed balance, art and fun acceptance remain open.
+Return to ready.
+
+2026-11-16 PT: MERGED kind_robots #5259, squash f4faf3d, head e3bf700; all 12 check runs
+green. Riot editorial pass: 30 authored L1 roles, distinct where eleven cards share the
+bare VOLATILE line and five spells share the deal-plus-neighbors template. A test
+asserts rendering, distinctness and the 160-char face at L1-L3. The arc comments already
+matched the L3 code, so there are no rule changes and CLASH balance is untouched. Review
+doc: docs/agents/slime-city-riot-evolution-review.md. One increment only; Exchange and
+Mercenary editorial passes, constructed balance, art and fun acceptance remain. Return
+to ready.
+
+2026-11-16 PT: MERGED kind_robots #5260, squash b34930b, head 4984554; all 12 check runs
+green. Exchange editorial pass: 30 authored L1 roles, distinct where seven cards share
+the bare COLLECT line, five spells 'Deal N and stun' and five traps the next-foe
+template. A test asserts rendering, distinctness and the 160-char face at L1-L3
+(longest: golden-bailiff 154). No rule changes; CLASH balance untouched. Review doc:
+docs/agents/slime-city-exchange-evolution-review.md. One increment only; Mercenary
+editorial passes, constructed balance, art and fun acceptance remain. Return to ready.
+
+2026-11-16 PT: MERGED kind_robots #5261, squash 210e884, head 60d1c81. All check runs
+green (11 passed, 1 skipped). This is the Mercenary editorial pass: 50 authored L1 roles
+across mercenaryA/B. Each role is distinct where 15 traps share the Next-foe template
+and fighters, spells and gear repeat keyword lines. A test asserts each role renders, is
+distinct and fits the 160-char face at L1-L3 (longest: market-tripwire 126). No rule
+changes, so CLASH balance is untouched. Review doc: docs/agents/slime-city-mercenary-
+evolution-review.md. All six crews plus Mercenaries now have their editorial pass.
+Remaining: constructed balance (the dead two-slot cards are tracked in t-051), art and
+fun acceptance. Back to ready.
+
+2026-11-16 PT: Constructed checkpoint on kind_robots main c843ad9: 3,120 bouts, PASS.
+Crews 44.3-55.7%, first seat 51%. Every never-played or low-selection card costs two
+slots, which is t-051's redesign scope. Ironjaw/fighters is the top deck at 82.7% from
+extra one-slot fighters, consistent with fighters-first; no nerf. See projects/slime-
+city/CLASH-CONSTRUCTED-CHECKPOINT-2026-11-16.md. Now waits on t-051. Art is tracked in
+t-044, t-052, t-053 and t-054; the fun verdict is outside the roadmap. After t-051
+merges, rerun test:slime-city-clash-constructed.
+
+2026-11-18 PT: Reconciled. All six faction editorial passes are already merged (Exchange
+and Mercenary #5261 included; 30 levelOneText per crew file and 25+25 Mercenary). On
+main, constructed QA reads 3120 bouts, crews 42.4-55.6%, and 13 dead two-slot cards,
+every one a 2-slot spell or gear (blast, debt, root, grant, boost). Experiment, not
+shipped: chooseClashCpu's generic damage-spell score ignores blast neighbor splash and
+debt/root stun, so I added a read-only rider valuation. Dead stayed at 13 (two revived,
+two new: posthumous-saint, collection-badge) and Riot fell to 42.0%, under the 42% band,
+so I reverted it. The binding cause is score /= b.plays: a two-slot spell must beat the
+best one-slot fighter at half value. Next step: replace the per-slot halving with a
+comparison against the best pair of one-slot plays, scored on full matchups. Then re-
+tune the crew bands, since Riot already sits at the lower edge. Remaining after that:
+art and human fun acceptance. Released for the next pass.
+
+2026-11-18 PT: MERGED kind_robots #5310, squash 9223dbf, head b15e793; all 12 check runs
+green. CPU two-slot valuation: chooseClashCpuPlay judges a two-slot spell/gear against
+the best pair of one-slot plays (distinct card and alley) plus
+CLASH_CPU_TWO_SLOT_MARGIN=2 instead of halving it. Two-slot fighters keep the per-slot
+rule (full-value pairing dropped the Catgirls starter to 35.8%). Constructed QA, 3,120
+bouts: dead two-slot cards 13 -> 6, crews 42.6-55.7%. Starter guard unchanged; the suite
+now fails above 6 dead. Margins 0/1/3 read 3/5/10 dead, and margin 0 put Riot at 41.6%,
+under the band. The six still dead (ironjaw reallocation/furnace-overdrive, riot wrong-
+side-of-blast, exchange compound-interest-notice/acquisition-clause, catgirls stolen-
+saw) lose when played, so they need card buffs, not CPU work. That is the next step.
+Kaizen: in CLASH, a splash:'all' blast only hits enemy neighbors, which contradicts its
+card text. Back to ready.
+
+2026-11-18 PT: MERGED kind_robots #5311, squash 3e5fd8a, head 3c934dd; all 12 check runs
+green. The last six dead two-slot specials each got an authored level-one stage, carried
+into L2/L3 so a level-up never loses it. Union Reallocation: all allies +1 lasting
+power. Furnace Overdrive: +2 lasting power and +3 life. Wrong Side of the Curtain: 2
+damage to the rival boss. Breeding Hunger: draw 1. Mark of the Procession: +2 lasting
+power and boss +2. Stolen Bone Saw: 1 damage across and +1 lasting power. Constructed
+QA, 3,120 bouts: dead two-slot cards 6 -> 0. Crews 42.7-55.6% (unchanged), first seat
+51.7%. Suite ceiling is now 0. Real-board L1 fixtures are in verifySlimeCityEvolutions.
+Remaining: the splash:'all' blast hits only enemy neighbors, contradicting its card text
+(kaizen). Also open: Riot sits at the 42% band edge, plus art and human fun acceptance.
+Back to ready.
+
+2026-11-18 PT: MERGED kind_robots #5312, squash d738209, head 5e77379; all 12 check runs
+green. Kaizen fixed: in CLASH, splash:'all' blasts (nine cards whose text says
+'including your own') now also deal 1 to the caster's fighters in adjacent alleys;
+Confetti keeps its authored pattern. Regression fixture covers three splash:'all' cards
+plus an enemies-only control. Constructed QA, 3,120 bouts: dead two-slot cards 0, crews
+42.4-55.6%, first seat 51.7%. Open: Riot near the 42% band edge, CPU blast valuation
+ignores friendly splash, art and human fun acceptance. Back to ready.
+
+2026-11-18 PT: MERGED kind_robots #5313, squash 5501d59, head 17132dc; all 12 check runs
+green. CLASH CPU now scores blast splash (cpuBlastSplashValue mirrors the resolver:
+rival neighbors, splash:'all' friendly fire, Confetti/Mosh patterns, armor/guard soak),
+so it no longer blasts its own wounded fighters. Regression fixture in
+verifySlimeCityClashCpuEvolutions. Constructed QA, 3,120 bouts: dead two-slot cards 0,
+crews 42.4-55.8%, first seat 51.9%. Open: Riot at the 42% band edge, art and human fun
+acceptance. Back to ready.
+
+2026-11-18 PT: MERGED kind_robots #5314, squash 2721828, head 8ef7ae3; all checks green.
+Riot moved off the 42% constructed band edge. Fireworks Strongman (s3-riot-firework-
+bishop), Riot's only off-starter two-slot fighter, gets +1 strike at L1 and L3 (L3 keeps
+the 1.6x ramp). Decks with him unplayed won 39.6% of bouts; decks that played him won
+51.2%. Constructed QA, 3,120 bouts: Riot 42.4 -> 44.6%, crew spread 13.4 -> 10.7 points,
+dead two-slot cards 0, first seat 51.9%. Two held-out seed families: Riot +2.9 and +1.5
+points. Starter sweep unchanged (Riot 49.8%). Levers tried and dropped: FUSE BOX 3/5
+gave +1 point; FUSE BOX 4/5 stranded a dead card; a CPU trap penalty gave +0.9 and cost
+Undertow; CLASH_CREW_BUDGET riot is all-or-nothing (0.5 put Riot at 67.5% in the starter
+sweep). Open: Undertow, now the lowest constructed crew at 44.9%; art; human fun
+acceptance. Back to ready.
+
+2026-11-18 PT: MERGED kind_robots #5315, squash b4ccfa9, head 85f8da0; all 12 check runs
+green. Undertow lifted off the bottom of constructed CLASH. Rubber Drysuit (played in
+598 of 600 non-starter Undertow bouts, 33% win) now adds +2 armor in CLASH (+3 at L3)
+via a shared clashArmorGain helper that also drives the badge and rules text; catalog
+text is untouched because other modes keep +1. Long Drain Sting (L1 Drain Line: boss 2)
+and Backwater IOU (L1 Fine Print: draw 1) get authored L1 stages carried into L2/L3;
+both went dead without them. Constructed QA, 3,120 bouts: Undertow 44.9 -> 49.6%,
+undertow/fighters 45.2 -> 57.0%, crews 43.6-54.4%, first seat 52.4%, 0 dead two-slot
+cards. Held-out families +5000/+9000: Undertow +5.6/+4.2, Riot -1.5/-0.8. Dropped
+levers: global CPU armor valuation x1 (Riot 41.5%, under the band); +1 attack on
+Interrogation Eel (stranded Long Drain Sting). Open: Riot is again the lowest crew at
+43.6%; art and human fun acceptance. Back to ready.
+
+2026-11-18 PT: kind_robots #5316 adds a near-dead ratchet to constructed CLASH QA. The
+dead-card ceiling of 0 only means played once: on suite seeds 18 two-slot cards are
+chosen in under 3% of their bouts (Dress Rehearsal Pyro, Breeding Hunger, Glitterglass
+Flood, Twin Omens, Mark of the Procession, Bone Tithe Sigil, Juggernaut, Chimera,
+others; many 1-3 of 208-416). Held-out families +5000/+9000 read 17/19, and Twin Omens
+and Spare Nine Lives drop to zero plays there. Suite now fails on any one-slot card
+under 3% (lowest: Floodlight Leak, 3.4-4.3%) and caps near-dead two-slot cards at 18.
+Tried and dropped: Dress Rehearsal Pyro L1 stages (Riot +/-0.3 pts); Twin Omens L1
+second omen (2 to weakest foe) revives it off-suite but strands Breeding Hunger on suite
+seeds. The Exchange two-slot spells crowd each other out, so they need a design pass,
+not per-card nudges. Riot is 43.6% (45.8/44.9 held-out), inside the band. Next: a two-
+slot special redesign to push the 18 down. Back to ready.
+
+2026-11-19 PT: MERGED kind_robots#5347 (squash e894b7e, head aa521ae; all 12 checks
+green). CLASH_CPU_TWO_SLOT_MARGIN 2 -> 0: the margin, not the cards, was starving most
+two-slot specials once #5315 lifted Riot. Constructed QA 3,120 bouts: near-dead two-slot
+18 -> 8; held-out +5000 dead 2 -> 0, near-dead 16 -> 7; +9000 dead 2 -> 0, near-dead 17
+-> 6. Crews 43.3-55.0% (Riot 43.3%), first seat 52.3%; riot/heavy 32.2 -> 27.9% is the
+deck to watch; 4,500-game starter balance report unchanged; ceilings ratcheted (18->8,
+held-out 2->0, 16->7). Still near-dead: Juggernaut, Chimera, Grease Oracle, Spare Nine
+Lives, Glitterglass Flood, Breeding Hunger, Compound Notice, Acquisition Clause. Next:
+CLASH-only L1 stage sparing the caster's adjacent fighters for the self-splash blasts
+(Glitterglass Flood, Dress Rehearsal Pyro), then per-card passes on the rest. Back to
+ready.
+
+2026-11-19 PT: kind_robots#5349 (head e4a813ab) adds CLASH_L1_CLEAN_SPLASH: level-one
+Glitterglass Flood and Dress Rehearsal Pyro spare the caster's adjacent fighters;
+friendly splash returns at L2/L3 where crafted stages already cut allies. Resolver and
+CPU splash valuation share clashSplashHitsAllies. Constructed QA: suite near-dead two-
+slot 8 -> 7; held-out +5000 7 -> 5, +9000 6 -> 5; 0 dead; crews/first seat unchanged;
+ceilings ratcheted. Still near-dead: Juggernaut, Chimera, Grease Oracle, Spare Nine
+Lives, Acquisition Clause, both Compound Notices (next: the Exchange notice cluster).
+Awaiting exact-head CI.
+
+MERGED kind_robots#5349 (squash 004e373, head e4a813a; all 12 checks green). Back to
+ready for the remaining near-dead cards.
+<!-- note:end t-041 round 2 -->
