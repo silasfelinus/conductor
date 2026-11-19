@@ -715,7 +715,7 @@ tasks:
   - id: t-016
     milestone: m5
     title: "Verify viewport-first layout and achievements through mounted browser tests"
-    status: review
+    status: done
     depends_on: [t-014, t-015, t-021]
     owner: null
     passes: 0
@@ -743,7 +743,12 @@ tasks:
       blocked art leave no broken images. Result against a local production build: 266/266
       checks passed. Award dedupe stays in verifyEcotoneAchievements. Release still sits
       behind t-007.
-    updated: '2026-11-18T23:54:19Z'
+
+      2026-11-19 PT: kind_robots#5320 merged (607724d). CI now runs all 27 Ecotone suites and
+      checks the audit fixtures stay engine-reachable. The mounted audit is a local/deploy
+      tool (npm run audit:ecotone-viewports); after the next Force Update, run it against
+      https://kindrobots.org for live evidence.
+    updated: '2026-11-19T00:03:18Z'
     implementation_pr: 'silasfelinus/kind_robots#5320'
   - id: t-017
     milestone: m2
