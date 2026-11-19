@@ -1,0 +1,492 @@
+# Ecotone reviewed-Mara art (weird-humboldt t-076). Silas, 2026-11-19 PT, in session: "the 15 ... plates
+# should be generated. we are expecting all roadmaps before human testing are okayed. do it."
+# A NEW Mara design: a fictional, independent Humboldt tattoo artist with no tribal, reservation or culturally
+# coded imagery (EXCLUDED-CONTENT-2026-10-22.md). Her 14 ending plates, ecotopia-mdma-dark, her guide portrait and
+# the two KN-1 pictures that drew the withdrawn design are re-rendered here under reviewed/<original key>.
+# The original renders stay held, fail-closed, in kind_robots utils/ecotone/reviewHold.ts. Only the keys listed
+# in its reviewed allowlist resolve to these files. WH-121 is excluded content and never gets one.
+# Same four lanes as ART-STANDARD.yaml. Submit with scripts/enqueue_art_requests.py; export with
+# scripts/export_ecotone_art.py. Private.
+round: ecotone-reviewed-mara-2026-11-19
+project_slug: weird-humboldt
+designer: Ecotone
+is_public: false
+is_mature: false
+cast_loras: false
+lanes:
+- key: zimage
+  label: Z-Image Turbo (Painted, default style)
+  engine: zimage
+  prompt: prose
+  suffix: painterly illustration, coastal fog, redwood greens, teal and amber light
+- key: krea2
+  label: Krea 2 (Film Still)
+  engine: krea2
+  prompt: prose
+  suffix: painterly illustration, coastal fog, redwood greens, teal and amber light
+- key: arthemy
+  label: Arthemy Western Art v3.0 (Western Art)
+  engine: comfy
+  checkpoint: Illustrious/arthemyWesternArt_v30.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, absurdres, very aesthetic, painterly, cinematic lighting
+  suffix: north coast california, coastal fog, redwood greens, teal and amber light
+  steps: 28
+  cfg: 5
+  sampler: euler_ancestral
+- key: novacomic
+  label: Nova Comic XL v2.0 (Comic)
+  engine: comfy
+  checkpoint: Illustrious/novaComicXL_v20.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, absurdres, very aesthetic, painterly, cinematic lighting
+  suffix: north coast california, coastal fog, redwood greens, teal and amber light
+  steps: 28
+  cfg: 5
+  sampler: euler_ancestral
+subjects:
+- key: rev-companions-mara
+  asset: reviewed/companions/mara
+  title: 'Mara, guide portrait (reviewed design, 2026-11-19): independent tattoo artist after closing'
+  size: 1344x768
+  seed: 72190
+  negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
+    signature, text, letters, words, logo, anthro, furry, animal ears, blurry, multiple views, headdress, feathers,
+    war paint, costume, feather headdress, ceremonial regalia, tribal pattern, beadwork, braids, long black hair
+  prompt_tags: medium shot, 1girl, solo, woman in her mid thirties, chin-length dark brown bob, blunt bangs, freckles,
+    small silver hoop earrings, fine-line botanical tattoos on forearms, black t-shirt, canvas shop apron, pencil
+    behind ear, arms crossed, dry half smile, looking at viewer, tattoo studio interior, flash sheets on wall, birds
+    and ferns drawings, glowing light table, desk lamp, evening, warm light, crisp focus
+  prompt_prose: Medium shot of a woman in her mid-thirties with a chin-length dark brown bob, blunt bangs, freckles,
+    small silver hoop earrings and fine-line botanical tattoos down both forearms, in a black t-shirt and a canvas
+    shop apron, a pencil behind her ear. She stands with her arms crossed and a dry, knowing half smile in her small
+    independent tattoo studio after closing. Behind her, flash sheets of birds and ferns cover the wall, a light
+    table glows and a desk lamp throws warm light. Crisp focus.
+  jobs:
+    zimage: 69917
+    krea2: 69918
+    arthemy: 69919
+    novacomic: 69920
+- key: rev-endings-mara-sober-hope
+  asset: reviewed/endings/mara-sober-hope
+  title: 'Mara ending, sober, hope: Lines That Last, the spring touch-up (reviewed Mara design, 2026-11-19)'
+  size: 1344x768
+  seed: 72153
+  negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
+    signature, text, letters, words, logo, anthro, furry, animal ears, blurry, multiple views, headdress, feathers,
+    war paint, costume, feather headdress, ceremonial regalia, tribal pattern, beadwork, braids, long black hair
+  prompt_tags: medium shot, pov, pov hands, 1girl, adult woman, woman in her mid thirties, chin-length dark brown
+    bob, blunt bangs, freckles, small silver hoop earrings, fine-line botanical tattoos on forearms, black t-shirt,
+    canvas shop apron, pencil behind ear, half smile, focused, forearm tattoo, six-winged bird tattoo, tattoo studio
+    interior, apprentices in background, large window, town plaza, blossoming trees, spring morning, clear daylight,
+    crisp focus
+  prompt_prose: Close medium shot from the player's point of view on a clear spring morning. A woman in her mid-thirties
+    with a chin-length dark brown bob, blunt bangs, freckles, small silver hoop earrings and fine-line botanical
+    tattoos down both forearms, in a black t-shirt and a canvas shop apron, a pencil behind her ear, bends over
+    the player's outstretched forearm, touching up a fine-line tattoo of a six-winged bird. Behind her, three apprentices
+    work at bright stations, and a tall window opens onto a small-town plaza with blossoming trees. Crisp, clear
+    light.
+  jobs:
+    zimage: 69921
+    krea2: 69922
+    arthemy: 69923
+    novacomic: 69924
+- key: rev-endings-mara-sober-dark
+  asset: reviewed/endings/mara-sober-dark
+  title: 'Mara ending, sober, dark: Fine-Print Ink, loading out of the old shop (reviewed Mara design, 2026-11-19)'
+  size: 1344x768
+  seed: 72154
+  negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
+    signature, text, letters, words, logo, anthro, furry, animal ears, blurry, multiple views, headdress, feathers,
+    war paint, costume, feather headdress, ceremonial regalia, signage, lettering, tribal pattern, beadwork, braids,
+    long black hair
+  prompt_tags: wide shot, 1girl, solo, adult woman, woman in her mid thirties, chin-length dark brown bob, blunt
+    bangs, freckles, small silver hoop earrings, fine-line botanical tattoos on forearms, black t-shirt, canvas
+    shop apron, pencil behind ear, serious expression, carrying framed art, folded tattoo chair, old hatchback,
+    empty storefront, papered-over windows, town plaza, bronze statue, winter morning, cold clear light, long shadows,
+    crisp focus, somber
+  prompt_prose: Wide shot of a quiet small-town plaza on a cold, clear winter morning. A woman in her mid-thirties
+    with a chin-length dark brown bob, blunt bangs, freckles, small silver hoop earrings and fine-line botanical
+    tattoos down both forearms, in a black t-shirt and a canvas shop apron, a pencil behind her ear, loads a folded
+    tattoo chair and a stack of framed flash art into an old hatchback outside an emptied storefront, its windows
+    papered over with blank sheets. A bronze statue stands behind her. Her half smile is gone. Crisp light, long
+    shadows.
+  jobs:
+    zimage: 69925
+    krea2: 69926
+    arthemy: 69927
+    novacomic: 69928
+- key: rev-endings-mara-tipsy-hope
+  asset: reviewed/endings/mara-tipsy-hope
+  title: 'Mara ending, tipsy, hope: Open Studio, open-studio night (reviewed Mara design, 2026-11-19)'
+  size: 1344x768
+  seed: 72155
+  negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
+    signature, text, letters, words, logo, anthro, furry, animal ears, blurry, multiple views, headdress, feathers,
+    war paint, costume, feather headdress, ceremonial regalia, tribal pattern, beadwork, braids, long black hair
+  prompt_tags: medium shot, 1girl, adult woman, woman in her mid thirties, chin-length dark brown bob, blunt bangs,
+    freckles, small silver hoop earrings, fine-line botanical tattoos on forearms, black t-shirt, canvas shop apron,
+    pencil behind ear, raising glass, half smile, crowd, multiple others, holding drinks, tattoo studio, open doors,
+    framed art on walls, six-winged bird designs, string lights, summer evening, warm glow, bokeh, festive, slight
+    motion blur
+  prompt_prose: Medium-wide shot of a tattoo studio's open-studio night on a warm summer evening, its doors open
+    to the sidewalk. String lights loop over a laughing crowd holding drinks, and framed bird flash fills the walls,
+    a small blank paper tag pinned under each piece. At the centre, a woman in her mid-thirties with a chin-length
+    dark brown bob, blunt bangs, freckles, small silver hoop earrings and fine-line botanical tattoos down both
+    forearms, in a black t-shirt and a canvas shop apron, a pencil behind her ear raises a glass, half smiling.
+    Warm glow, festive blur.
+  jobs:
+    zimage: 69929
+    krea2: 69930
+    arthemy: 69931
+    novacomic: 69932
+- key: rev-endings-mara-tipsy-dark
+  asset: reviewed/endings/mara-tipsy-dark
+  title: 'Mara ending, tipsy, dark: Stolen Flash, her bird on someone else''s stall (reviewed Mara design, 2026-11-19)'
+  size: 1344x768
+  seed: 72156
+  negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
+    signature, text, letters, words, logo, anthro, furry, animal ears, blurry, multiple views, headdress, feathers,
+    war paint, costume, feather headdress, ceremonial regalia, lettering, tribal pattern, beadwork, braids, long
+    black hair
+  prompt_tags: wide shot, 1girl, adult woman, woman in her mid thirties, chin-length dark brown bob, blunt bangs,
+    freckles, small silver hoop earrings, fine-line botanical tattoos on forearms, black t-shirt, canvas shop apron,
+    pencil behind ear, standing at edge, holding cup, melancholy, crowd, multiple others, night market, merchandise
+    stall, tote bags, mugs, six-winged bird print, string lights, warm glow, bokeh, festive blur
+  prompt_prose: Wide shot of a crowded night market under strings of warm bulbs. At a slick pop-up stall, vendors
+    sell tote bags and mugs printed with a six-winged bird design while happy shoppers hold them up. Off to one
+    side, a woman in her mid-thirties with a chin-length dark brown bob, blunt bangs, freckles, small silver hoop
+    earrings and fine-line botanical tattoos down both forearms, in a black t-shirt and a canvas shop apron, a pencil
+    behind her ear stands alone with an untouched drink, watching her own bird go by. Warm glow, festive blur.
+  jobs:
+    zimage: 69933
+    krea2: 69934
+    arthemy: 69935
+    novacomic: 69936
+- key: rev-endings-mara-stoned-hope
+  asset: reviewed/endings/mara-stoned-hope
+  title: 'Mara ending, stoned, hope: Room to Grow, the cooperative studio hall (reviewed Mara design, 2026-11-19)'
+  size: 1344x768
+  seed: 72157
+  negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
+    signature, text, letters, words, logo, anthro, furry, animal ears, blurry, multiple views, headdress, feathers,
+    war paint, costume, feather headdress, ceremonial regalia, tribal pattern, beadwork, braids, long black hair
+  prompt_tags: wide shot, 1girl, adult woman, woman in her mid thirties, chin-length dark brown bob, blunt bangs,
+    freckles, small silver hoop earrings, fine-line botanical tattoos on forearms, black t-shirt, canvas shop apron,
+    pencil behind ear, leaning in doorway, holding mug, smile, 1other, painter, converted warehouse, artist studios,
+    open doors, hanging ferns, potted plants, long hallway, autumn afternoon, soft green haze, dreamy, soft focus
+  prompt_prose: Wide shot down the long hall of an old waterfront warehouse converted into a cooperative of small
+    artist studios, every door open, ferns and potted plants everywhere. In the foreground, a woman in her mid-thirties
+    with a chin-length dark brown bob, blunt bangs, freckles, small silver hoop earrings and fine-line botanical
+    tattoos down both forearms, in a black t-shirt and a canvas shop apron, a pencil behind her ear leans in her
+    doorway with a mug of tea, chatting with a neighbouring painter. Late autumn afternoon, a soft green haze softening
+    every edge.
+  jobs:
+    zimage: 69937
+    krea2: 69938
+    arthemy: 69939
+    novacomic: 69940
+- key: rev-endings-mara-stoned-dark
+  asset: reviewed/endings/mara-stoned-dark
+  title: 'Mara ending, stoned, dark: Souvenir Humboldt, the souvenir window (reviewed Mara design, 2026-11-19)'
+  size: 1344x768
+  seed: 72158
+  negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
+    signature, text, letters, words, logo, anthro, furry, animal ears, blurry, multiple views, headdress, feathers,
+    war paint, costume, feather headdress, ceremonial regalia, lettering, tribal pattern, beadwork, braids, long
+    black hair
+  prompt_tags: medium shot, 1girl, solo, adult woman, woman in her mid thirties, chin-length dark brown bob, blunt
+    bangs, freckles, small silver hoop earrings, fine-line botanical tattoos on forearms, black t-shirt, canvas
+    shop apron, pencil behind ear, profile, hands in apron pockets, melancholy, shop window, souvenir display, mugs,
+    t-shirts, snow globes, six-winged bird print, rain on glass, reflection, wet sidewalk, fog, afternoon, soft
+    green haze, muted colors, dreamy
+  prompt_prose: Medium shot on a wet sidewalk on a foggy afternoon. Behind the rain-streaked window of a glossy
+    souvenir shop, shelves of mugs, t-shirts and snow globes all carry the same six-winged bird design. A woman
+    in her mid-thirties with a chin-length dark brown bob, blunt bangs, freckles, small silver hoop earrings and
+    fine-line botanical tattoos down both forearms, in a black t-shirt and a canvas shop apron, a pencil behind
+    her ear, stands before the glass in profile, hands in her apron pockets, her faint reflection over the display.
+    Soft green haze, muted and dreamlike.
+  jobs:
+    zimage: 69941
+    krea2: 69942
+    arthemy: 69943
+    novacomic: 69944
+- key: rev-endings-mara-tripping-balls-hope
+  asset: reviewed/endings/mara-tripping_balls-hope
+  title: 'Mara ending, tripping, hope: Original Line, the copies fly home (reviewed Mara design, 2026-11-19)'
+  size: 1344x768
+  seed: 72159
+  negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
+    signature, text, letters, words, logo, anthro, furry, animal ears, blurry, multiple views, headdress, feathers,
+    war paint, costume, feather headdress, ceremonial regalia, tribal pattern, beadwork, braids, long black hair
+  prompt_tags: medium shot, 1girl, adult woman, woman in her mid thirties, chin-length dark brown bob, blunt bangs,
+    freckles, small silver hoop earrings, fine-line botanical tattoos on forearms, black t-shirt, canvas shop apron,
+    pencil behind ear, sitting at drawing table, sketchbook, half smile, glowing line art birds, six-winged bird,
+    flying drawings, scattered papers, desk lamp, rain on window, winter night, kaleidoscopic, colour bleeding at
+    edges, chromatic aberration, psychedelic, surreal
+  prompt_prose: Medium shot of a cluttered drawing table on a rainy winter night. A woman in her mid-thirties with
+    a chin-length dark brown bob, blunt bangs, freckles, small silver hoop earrings and fine-line botanical tattoos
+    down both forearms, in a black t-shirt and a canvas shop apron, a pencil behind her ear, sits before an open
+    sketchbook as dozens of copies of a six-winged bird lift off scattered papers and mugs as glowing line drawings,
+    swirl across the room and settle back into the single original on her page. Kaleidoscopic colour bleeds at the
+    edges.
+  jobs:
+    zimage: 69945
+    krea2: 69946
+    arthemy: 69947
+    novacomic: 69948
+- key: rev-endings-mara-tripping-balls-dark
+  asset: reviewed/endings/mara-tripping_balls-dark
+  title: 'Mara ending, tripping, dark: Erased Signature, the machine''s wall of birds (reviewed Mara design, 2026-11-19)'
+  size: 1344x768
+  seed: 72160
+  negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
+    signature, text, letters, words, logo, anthro, furry, animal ears, blurry, multiple views, headdress, feathers,
+    war paint, costume, feather headdress, ceremonial regalia, user interface, lettering, tribal pattern, beadwork,
+    braids, long black hair
+  prompt_tags: wide shot, 1girl, adult woman, woman in her mid thirties, chin-length dark brown bob, blunt bangs,
+    freckles, small silver hoop earrings, fine-line botanical tattoos on forearms, black t-shirt, canvas shop apron,
+    pencil behind ear, from side, holding pencil, crumpled paper, small figure, hotel lobby, giant video wall, glowing
+    screens, repeating six-winged bird designs, distorted patterns, dim interior, kaleidoscopic, colour bleeding
+    at edges, chromatic aberration, uncanny, lonely
+  prompt_prose: Wide shot of a sleek, dim hotel lobby dominated by a wall of huge glowing screens generating endless
+    variations of a six-winged bird, each slightly wrong, wings multiplying and smearing. Small in the foreground,
+    a woman in her mid-thirties with a chin-length dark brown bob, blunt bangs, freckles, small silver hoop earrings
+    and fine-line botanical tattoos down both forearms, in a black t-shirt and a canvas shop apron, a pencil behind
+    her ear stands with a pencil in her hand and a crumpled sketch at her feet. Kaleidoscopic colour bleeds at the
+    edges, uncanny and lonely.
+  jobs:
+    zimage: 69949
+    krea2: 69950
+    arthemy: 69951
+    novacomic: 69952
+- key: rev-endings-mara-cocaine-hope
+  asset: reviewed/endings/mara-cocaine-hope
+  title: 'Mara ending, cocaine, hope: the waiting list at the convention (reviewed Mara design, 2026-11-19)'
+  size: 1344x768
+  seed: 72161
+  negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
+    signature, text, letters, words, logo, anthro, furry, animal ears, blurry, multiple views, headdress, feathers,
+    war paint, costume, feather headdress, ceremonial regalia, tribal pattern, beadwork, braids, long black hair
+  prompt_tags: wide shot, 1girl, adult woman, woman in her mid thirties, chin-length dark brown bob, blunt bangs,
+    freckles, small silver hoop earrings, fine-line botanical tattoos on forearms, black t-shirt, canvas shop apron,
+    pencil behind ear, drawing, focused, convention hall, tattoo booth, framed flash art, six-winged bird, long
+    queue, crowd, multiple others, neon tube lights, cyan and magenta, harsh lighting, high contrast, sharp edges,
+    night
+  prompt_prose: Wide shot of a packed tattoo convention hall at night under hard neon tubes. At a busy booth hung
+    with framed six-winged bird flash, a woman in her mid-thirties with a chin-length dark brown bob, blunt bangs,
+    freckles, small silver hoop earrings and fine-line botanical tattoos down both forearms, in a black t-shirt
+    and a canvas shop apron, a pencil behind her ear sketches a new design with total focus while a long line of
+    excited clients snakes past the barrier. Harsh high-contrast cyan and magenta neon, razor-sharp edges, crisp
+    black shadows.
+  jobs:
+    zimage: 69953
+    krea2: 69954
+    arthemy: 69955
+    novacomic: 69956
+- key: rev-endings-mara-cocaine-dark
+  asset: reviewed/endings/mara-cocaine-dark
+  title: 'Mara ending, cocaine, dark: the billboard over the highway (reviewed Mara design, 2026-11-19)'
+  size: 1344x768
+  seed: 72162
+  negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
+    signature, text, letters, words, logo, anthro, furry, animal ears, blurry, multiple views, headdress, feathers,
+    war paint, costume, feather headdress, ceremonial regalia, lettering, brand name, tribal pattern, beadwork,
+    braids, long black hair
+  prompt_tags: low angle, wide shot, 1girl, adult woman, woman in her mid thirties, chin-length dark brown bob,
+    blunt bangs, freckles, small silver hoop earrings, fine-line botanical tattoos on forearms, black t-shirt, canvas
+    shop apron, pencil behind ear, looking up, standing by car, old hatchback, gas station, neon canopy, highway,
+    giant billboard, six-winged bird design, car advertisement, night, harsh neon lighting, high contrast, cyan
+    and pink, sharp edges, lonely
+  prompt_prose: Low angle wide shot of a roadside gas station on a highway at night. Above it towers a giant backlit
+    billboard showing a gleaming rental car beside a huge six-winged bird design. Under the station's neon canopy,
+    a woman in her mid-thirties with a chin-length dark brown bob, blunt bangs, freckles, small silver hoop earrings
+    and fine-line botanical tattoos down both forearms, in a black t-shirt and a canvas shop apron, a pencil behind
+    her ear stands by her old hatchback, staring up at it. Harsh high-contrast neon, cold cyan and hot pink, sharp
+    edges.
+  jobs:
+    zimage: 69957
+    krea2: 69958
+    arthemy: 69959
+    novacomic: 69960
+- key: rev-endings-mara-meth-hope
+  asset: reviewed/endings/mara-meth-hope
+  title: 'Mara ending, meth, hope: three a.m. on the plaza (reviewed Mara design, 2026-11-19)'
+  size: 1344x768
+  seed: 72163
+  negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
+    signature, text, letters, words, logo, anthro, furry, animal ears, blurry, multiple views, headdress, feathers,
+    war paint, costume, feather headdress, ceremonial regalia, tribal pattern, beadwork, braids, long black hair
+  prompt_tags: wide shot, 1girl, solo, adult woman, woman in her mid thirties, chin-length dark brown bob, blunt
+    bangs, freckles, small silver hoop earrings, fine-line botanical tattoos on forearms, black t-shirt, canvas
+    shop apron, pencil behind ear, holding keys, looking up, tired, empty sidewalk, town plaza, building mural,
+    six-winged bird mural, fog, sodium streetlights, orange light, night, film grain, jittery, quiet
+  prompt_prose: Wide shot of a small-town plaza at three in the morning, fog drifting under sodium-orange streetlights.
+    A woman in her mid-thirties with a chin-length dark brown bob, blunt bangs, freckles, small silver hoop earrings
+    and fine-line botanical tattoos down both forearms, in a black t-shirt and a canvas shop apron, a pencil behind
+    her ear, stands alone on the empty sidewalk outside her dark studio, keys in hand, looking up at a fresh mural
+    of a six-winged bird on the building's side wall. Tired but steady. Jittery grain, nothing glamorous, quiet
+    pride.
+  jobs:
+    zimage: 69961
+    krea2: 69962
+    arthemy: 69963
+    novacomic: 69964
+- key: rev-endings-mara-meth-dark
+  asset: reviewed/endings/mara-meth-dark
+  title: 'Mara ending, meth, dark: the kitchen table at night (reviewed Mara design, 2026-11-19)'
+  size: 1344x768
+  seed: 72164
+  negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
+    signature, text, letters, words, logo, anthro, furry, animal ears, blurry, multiple views, headdress, feathers,
+    war paint, costume, feather headdress, ceremonial regalia, tribal pattern, beadwork, braids, long black hair
+  prompt_tags: medium shot, 1girl, solo, adult woman, woman in her mid thirties, chin-length dark brown bob, blunt
+    bangs, freckles, small silver hoop earrings, fine-line botanical tattoos on forearms, black t-shirt, canvas
+    shop apron, pencil behind ear, sitting, holding pencil, blank sketchbook, work lamp, kitchen table, cardboard
+    boxes, cramped kitchen, window blinds, sodium streetlight, orange light, night, film grain, jittery, sleepless,
+    lonely
+  prompt_prose: Medium shot of a cramped kitchen at night, the blinds striped with sodium-orange light from the
+    streetlamp outside. A woman in her mid-thirties with a chin-length dark brown bob, blunt bangs, freckles, small
+    silver hoop earrings and fine-line botanical tattoos down both forearms, in a black t-shirt and a canvas shop
+    apron, a pencil behind her ear, sits alone at the table under a work lamp, a blank sketchbook open before her
+    and a pencil idle in her fingers, shop supplies stacked in boxes along the counter. Jittery grain, sleepless
+    and lonely.
+  jobs:
+    zimage: 69965
+    krea2: 69966
+    arthemy: 69967
+    novacomic: 69968
+- key: rev-endings-mara-mdma-hope
+  asset: reviewed/endings/mara-mdma-hope
+  title: 'Mara ending, MDMA, hope: the anniversary on the lawn (reviewed Mara design, 2026-11-19)'
+  size: 1344x768
+  seed: 72165
+  negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
+    signature, text, letters, words, logo, anthro, furry, animal ears, blurry, multiple views, headdress, feathers,
+    war paint, costume, feather headdress, ceremonial regalia, tribal pattern, beadwork, braids, long black hair
+  prompt_tags: wide shot, 1girl, adult woman, woman in her mid thirties, chin-length dark brown bob, blunt bangs,
+    freckles, small silver hoop earrings, fine-line botanical tattoos on forearms, black t-shirt, canvas shop apron,
+    pencil behind ear, group hug, laughing, multiple others, crowd, arms around shoulders, forearm tattoos, six-winged
+    bird tattoo, town plaza, lawn, golden hour, early summer, warm glow, soft light, bloom, joyful
+  prompt_prose: Wide shot of a small-town plaza lawn at golden hour in early summer. A woman in her mid-thirties
+    with a chin-length dark brown bob, blunt bangs, freckles, small silver hoop earrings and fine-line botanical
+    tattoos down both forearms, in a black t-shirt and a canvas shop apron, a pencil behind her ear, is wrapped
+    in a laughing group hug by three young apprentices while clients crowd around, arms around each other, proudly
+    showing six-winged bird tattoos on their forearms. Everyone glows. Warm soft light, gentle bloom, affectionate.
+  jobs:
+    zimage: 69969
+    krea2: 69970
+    arthemy: 69971
+    novacomic: 69972
+- key: rev-endings-mara-mdma-dark
+  asset: reviewed/endings/mara-mdma-dark
+  title: 'Mara ending, MDMA, dark: the backyard potluck (reviewed Mara design, 2026-11-19)'
+  size: 1344x768
+  seed: 72166
+  negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
+    signature, text, letters, words, logo, anthro, furry, animal ears, blurry, multiple views, headdress, feathers,
+    war paint, costume, feather headdress, ceremonial regalia, tribal pattern, beadwork, braids, long black hair
+  prompt_tags: medium shot, 1girl, adult woman, woman in her mid thirties, chin-length dark brown bob, blunt bangs,
+    freckles, small silver hoop earrings, fine-line botanical tattoos on forearms, black t-shirt, canvas shop apron,
+    pencil behind ear, being hugged, group hug, bittersweet smile, multiple others, forearm tattoos, six-winged
+    bird tattoo, closed sketchbook, backyard, potluck table, folding chairs, lanterns, dusk, late autumn, warm glow,
+    soft light, bittersweet
+  prompt_prose: Medium-wide shot of a small rented house's backyard at dusk in late autumn, with mismatched lanterns,
+    folding chairs and a potluck table. Old friends and former clients pull a woman in her mid-thirties with a chin-length
+    dark brown bob, blunt bangs, freckles, small silver hoop earrings and fine-line botanical tattoos down both
+    forearms, in a black t-shirt and a canvas shop apron, a pencil behind her ear into a long warm hug, sleeves
+    rolled to show bird tattoos she drew years ago. Her own sketchbook lies closed on a chair. Glowing and touchy,
+    but bittersweet.
+  jobs:
+    zimage: 69973
+    krea2: 69974
+    arthemy: 69975
+    novacomic: 69976
+- key: rev-endings-ecotopia-mdma-dark
+  asset: reviewed/endings/ecotopia-mdma-dark
+  title: 'Ecotopia, mdma, dark: Some Mornings the Elk Come Down (reviewed Mara design, 2026-11-19)'
+  size: 1344x768
+  seed: 72167
+  negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
+    signature, text, letters, words, logo, anthro, furry, animal ears, blurry, multiple views, face, looking at
+    viewer, clothed animals, headdress, feathers, war paint, costume, ceremonial regalia, braids
+  prompt_tags: wide shot, scenery, from behind, 1other, small figure, figure in weathered rain jacket, waving, binoculars
+    around neck, split-rail fence, (elk cow nuzzling calf:1.2), two ravens preening each other, meadow, small cabin
+    on hill, late summer morning, warm glow, soft bloom, bittersweet
+  prompt_prose: A late-summer morning in a meadow below a little cabin. An elk cow nuzzles her calf, and two ravens
+    preen each other on the split-rail fence. Small at the fence, a figure in a weathered rain jacket, seen from
+    behind, raises a hand to wave at the elk, binoculars around their neck. Glowing, warm, soft bloom light, kind
+    and quiet and a little sad.
+  jobs:
+    zimage: 69977
+    krea2: 69978
+    arthemy: 69979
+    novacomic: 69980
+- key: rev-cards-kn-1
+  asset: reviewed/cards/kn-1
+  title: KN-1 The Night Before on the Plaza (reviewed Mara design, 2026-11-19)
+  size: 1344x768
+  seed: 72168
+  negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
+    signature, text, letters, words, logo, anthro, furry, animal ears, blurry, multiple views, headdress, feathers,
+    war paint, costume, tribal pattern, beadwork, braids, long black hair
+  prompt_tags: wide shot, scenery, night, town plaza, palm trees, bronze statue, brick storefronts, string lights,
+    giant rainbow shrimp sculpture, long green dragon sculpture exhaling fog, great white shark sculpture in pinstripe
+    suit and necktie, raft of sea otter sculptures holding paws, bicycle wheels, art car, row of pickup trucks,
+    (welding sparks:1.1), folding table, tattoo artist with a chin-length dark brown bob, crowd admiring, festive,
+    warm lamplight
+  prompt_prose: 'Wide shot at night of a small-town plaza with palm trees, a bronze statue and old brick storefronts
+    under string lights. Parked around the square are giant pedal-powered art sculptures: a twenty-foot shrimp dyed
+    vivid rainbow hair-dye colors, a long green dragon breathing theatrical fog, a great white shark in a pinstripe
+    suit and necktie, and a raft of sea otter sculptures holding paws. Welding sparks fly along a row of pickups
+    behind them, and across the square a tattoo artist with a chin-length dark brown bob and blunt bangs paints
+    a racer''s arm at a folding table.'
+  jobs:
+    zimage: 69981
+    krea2: 69982
+    arthemy: 69983
+    novacomic: 69984
+- key: rev-outcomes-kn-1-pit-success
+  asset: reviewed/outcomes/kn-1/pit-success
+  title: 'KN-1 Pit row: a mechanic welds for a team he isn''t on (reviewed Mara design, 2026-11-19)'
+  size: 1344x768
+  seed: 72169
+  negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
+    signature, text, letters, words, logo, anthro, furry, animal ears, blurry, multiple views, sombrero, poncho,
+    gun, rifle, headdress, feathers, war paint, costume, ceremonial regalia, braids
+  prompt_tags: medium shot, 1boy, rugged rural man in his thirties, mixed latino heritage, warm light brown skin,
+    dark hair, short beard stubble, worn trucker cap, welding goggles, oil-stained canvas work jacket, kneeling,
+    welding, (welding sparks:1.2), broken axle, art sculpture, old pickup truck, open truck door, vintage cb radio
+    handset on coiled cord, faded green ribbon on antenna, night, work lights
+  prompt_prose: Medium shot at night on a pit row behind parked art sculptures. A rugged man in his thirties of
+    mixed Latino heritage, with warm light brown skin, dark hair and short beard stubble, in a worn trucker cap,
+    dark welding goggles and an oil-stained canvas work jacket, kneels welding a broken axle under a sculpture that
+    isn't his, sparks spraying. Beside him, an old pickup with a faded green ribbon on its antenna has a vintage
+    CB radio handset on a coiled cord, its red light glowing mid-broadcast.
+  jobs:
+    zimage: 69985
+    krea2: 69986
+    arthemy: 69987
+    novacomic: 69988
+- key: rev-outcomes-kn-1-flash-success
+  asset: reviewed/outcomes/kn-1/flash-success
+  title: 'KN-1 Tattoo table: a six-winged bird on your arm (reviewed Mara design, 2026-11-19)'
+  size: 1344x768
+  seed: 72170
+  negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
+    signature, text, letters, words, logo, anthro, furry, animal ears, blurry, multiple views, headdress, feathers,
+    war paint, costume, tribal pattern, beadwork, braids, long black hair
+  prompt_tags: pov, pov hands, forearm, close-up, adult woman, woman in her mid thirties, chin-length dark brown
+    bob, blunt bangs, freckles, small silver hoop earrings, fine-line botanical tattoos on forearms, black t-shirt,
+    canvas shop apron, pencil behind ear, half smile, painting on skin, fine brush, (six-winged bird design:1.2),
+    body paint, folding table, tattoo flash sheets, string lights, night
+  prompt_prose: Close point-of-view shot looking down at your own forearm resting on a folding table covered in
+    tattoo flash sheets under string lights. A woman in her mid-thirties with a chin-length dark brown bob, blunt
+    bangs, freckles, small silver hoop earrings and fine-line botanical tattoos down both forearms, in a black t-shirt
+    and a canvas shop apron with a pencil behind her ear, paints a small six-winged bird on your skin with a fine
+    brush. She wears a dry, knowing half smile and does not look up.
+  jobs:
+    zimage: 69989
+    krea2: 69990
+    arthemy: 69991
+    novacomic: 69992
