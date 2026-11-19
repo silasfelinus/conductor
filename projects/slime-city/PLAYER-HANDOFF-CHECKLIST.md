@@ -11,10 +11,10 @@ Legend: ✅ automated evidence on main · 🟡 partial · ⬜ open
 
 | Check | State | Evidence / next step |
 | --- | --- | --- |
-| Every crew × every one of the 32 choice paths finishes through the real Blackout engine, with multiple seeds and retry after loss | 🟡 | `utils/scripts/verifySlimeCityFullRoutes.test.ts` (kind_robots#5323): 576 routes, ~4.1k engine fights. Mark ✅ once it merges |
-| Defeats and draws never advance the story or record decisions; stale, wrong-rival and post-finale results are ignored | 🟡 | Same test |
-| Both endings (triumph or compromise) are reachable for every crew | 🟡 | Same test |
-| Earned favour → story echo → crew legacy transitions | 🟡 | Same test, plus `verifySlimeCityCampaignPlaytest.test.ts` |
+| Every crew × every one of the 32 choice paths finishes through the real Blackout engine, with multiple seeds and retry after loss | ✅ | `utils/scripts/verifySlimeCityFullRoutes.test.ts` (kind_robots#5323, merged af20fd5): 576 routes, ~4.1k engine fights |
+| Defeats and draws never advance the story or record decisions; stale, wrong-rival and post-finale results are ignored | ✅ | Same test |
+| Both endings (triumph or compromise) are reachable for every crew | ✅ | Same test |
+| Earned favour → story echo → crew legacy transitions | ✅ | Same test, plus `verifySlimeCityCampaignPlaytest.test.ts` |
 | Per-crew journey scene branches (left/right) | ✅ | `verifySlimeCity*Journey.test.ts` (six crews and alliance) |
 | Story save and restore, guest and account | ✅ | `verifySlimeCityStorySave.test.ts`, `verifySlimeCityGuestStory.test.ts` |
 
