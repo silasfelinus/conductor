@@ -564,7 +564,7 @@ tasks:
   - id: t-007
     milestone: m5
     title: "Deliver integrated preview, simulated balance, accessibility and launch review"
-    status: waiting
+    status: needs-human
     depends_on: [t-003, t-005, t-006, t-016, t-018, t-021]
     owner: null
     passes: 0
@@ -581,7 +581,15 @@ tasks:
       fine." The t-018 battery's finding (careful play reaches hope on every seed; worst-value
       play still reaches hope ~55-83% per companion x lens) is accepted for now; do not add
       difficulty bite unless Silas revisits.
-    updated: '2026-11-05T05:13:30Z'
+
+      2026-11-19 PT: Every build dependency (t-003, t-005, t-006, t-016, t-018, t-021) is
+      done, and the game moved to playtest (PLAYTEST-HANDOFF-2026-11-18.md). FOR SILAS: this
+      gate is only about wider publication and promotion of Ecotone beyond in-site
+      playtesting. Examples: announcing it, sharing it on social media, featuring it on the
+      front page or in outreach. Playtesting at kindrobots.org/play/ecotone needs no decision
+      here. Decide after reading playtest feedback. No recommendation is adopted by default
+      (publish gate).
+    updated: '2026-11-19T00:03:21Z'
   - id: t-008
     milestone: m2
     title: "Prove festival lenses and sober story parity"
