@@ -977,8 +977,8 @@ tasks:
   - id: t-041
     milestone: m2
     title: "CLASH 300: individually crafted L1/L2/L3 effects for every existing card"
-    status: claimed
-    updated: '2026-11-19T16:46:15Z'
+    status: ready
+    updated: '2026-11-19T17:06:51Z'
     depends_on: [t-037, t-051]
     passes: 0
     stakes: reversible
@@ -1163,10 +1163,20 @@ tasks:
       CLASH-only L1 stage sparing the caster's adjacent fighters for the self-splash blasts
       (Glitterglass Flood, Dress Rehearsal Pyro), then per-card passes on the rest. Back to
       ready.
+
+      2026-11-19 PT: kind_robots#5349 (head e4a813ab) adds CLASH_L1_CLEAN_SPLASH: level-one
+      Glitterglass Flood and Dress Rehearsal Pyro spare the caster's adjacent fighters;
+      friendly splash returns at L2/L3 where crafted stages already cut allies. Resolver and
+      CPU splash valuation share clashSplashHitsAllies. Constructed QA: suite near-dead two-
+      slot 8 -> 7; held-out +5000 7 -> 5, +9000 6 -> 5; 0 dead; crews/first seat unchanged;
+      ceilings ratcheted. Still near-dead: Juggernaut, Chimera, Grease Oracle, Spare Nine
+      Lives, Acquisition Clause, both Compound Notices (next: the Exchange notice cluster).
+      Awaiting exact-head CI.
+
+      MERGED kind_robots#5349 (squash 004e373, head e4a813a; all 12 checks green). Back to
+      ready for the remaining near-dead cards.
     owner: worker
-    implementation_pr: 'silasfelinus/kind_robots#5347'
-    claimed_by: 20261119T164700Z-t041-splash-g6l81k
-    claimed_at: '2026-11-19T16:46:15Z'
+    implementation_pr: 'silasfelinus/kind_robots#5349'
   - id: t-042
     milestone: m2
     title: "Curate and wire the ogre redo-3 tokens: Picket Line Troll, Coal Cart Racer, Union Lunch Lady"
