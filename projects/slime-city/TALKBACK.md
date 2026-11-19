@@ -93,3 +93,13 @@ Shipped crew trophies, titles and card-back frames. They are derived from the ac
 **Not done:** the spell-heavy deck is still weak because its two-slot specials are near-dead. That is t-041's card pass, not a new task.
 
 **Kaizen suggestion:** when t-041 lifts a two-slot special, raise `SPECIALS_ARCHETYPE_FLOOR` in the same PR, just as the near-dead ceiling is lowered.
+
+## 2026-11-19 PT | Claude worker | slime-city/t-041 two-slot CPU margin | kind_robots #5347
+
+**Did:** the near-dead count was mostly caused by the CPU's own bias. `CLASH_CPU_TWO_SLOT_MARGIN = 2` required every two-slot special to beat the best pair of one-slot plays by 2 points. The margin was originally added because Riot sat under its floor at 0. Since then #5315 has lifted Riot, so I re-measured margin 0. Results: near-dead two-slot cards 18 -> 8. Held-out +5000: 2 dead -> 0. Held-out +9000: 2 dead -> 0. Crews 43.3-55.0%. The starter balance report gives identical numbers. Ceilings were ratcheted in the same PR.
+
+**Note:** the specials archetype moved only 26.0 -> 26.7%, so I left `SPECIALS_ARCHETYPE_FLOOR` at 25% (previous kaizen). riot/heavy fell 32.2 -> 27.9%, so watch it.
+
+**Pattern:** before writing per-card nudges for a crowd of under-played cards, sweep the CPU comparator's constants. A shared bias shows up as many cards failing at once.
+
+**Kaizen suggestion:** give the self-splash blasts (Glitterglass Flood, Dress Rehearsal Pyro) a CLASH-only L1 stage that spares the caster's adjacent fighters.
