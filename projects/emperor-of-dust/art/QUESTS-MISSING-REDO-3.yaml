@@ -1,0 +1,69 @@
+# Emperor of Dust missing-quest art, redo round 3 (2026-11-19 PT, emperor-of-dust/t-063). Contact-sheet curation of
+# QUESTS-MISSING-REDO-2 kept 2 of 4 (kind_robots#5348). Rerolls the 2 rejects: human-faced cart riders on the verge
+# scouts failure, and human portrait posters (with no healer scene) on the fever ward success. Same lane and asset
+# paths; fresh seeds; the story is now staged explicitly and posters/portraits are named in the negative. Curate at
+# full size, export keepers with scripts/export_round_art.py --only per asset, add them to QUEST_ART. auto_submit.
+round: emperor-missing-quests-2-redo-3
+project_slug: emperor-of-dust
+designer: Comic Studio
+is_public: false
+is_mature: false
+cast_loras: false
+auto_submit: true
+lanes:
+- key: arthemy-house
+  label: Arthemy Western Art v3.0 (house, author settings)
+  engine: comfy
+  checkpoint: Illustrious/arthemyWesternArt_v30.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, absurdres, very aesthetic, toon (style), western comics (style),
+    weathered, dramatic lighting, painterly, wide story illustration
+  suffix: kiln ochre, deep crimson and tarnished brass palette, ash-grey sky, salvage and dusty wasteland, nuanced
+    lighting, non-graphic storytelling, all signage blank
+  steps: 30
+  cfg: 5
+  sampler: euler_ancestral
+subjects:
+- key: eodq2r3-r-fever-ward-success
+  lane: arthemy-house
+  title: Fever in the Yard (success)
+  quest: r-fever-ward
+  variant: success
+  asset: quests/r-fever-ward-success
+  size: 1344x768
+  seed: 79101
+  negative: (nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore,
+    illegible faces, distorted paws, human face, human skin, text, letters, numbers, sign lettering, humans, people,
+    man, woman, child, human rider, human driver, portrait, poster, framed picture, wanted poster, painting on wall,
+    human portrait, human hands
+  prompt_tags: 'storytelling scene, open-sided canvas healer tent in a fortress yard with seven recovering animal-folk
+    patients on cots and a badger healer burning old bedding in a brazier, original anthropomorphic animal-folk frontier
+    setting, pale salt-trading road by a patched wasteland fortress, market stalls and old wagon tracks, A successful
+    mission aftermath: Seven of nine stood up again. The healer burned the bedding of the other two and wrote their names
+    on the wall., action and reaction visible in one composition, expressive anthropomorphic residents in practical frontier
+    clothing, readable foreground and deep environmental context, every figure, including drivers, riders and children,
+    an anthropomorphic animal-folk character with a furred or feathered muzzle, plain unpainted wooden signs and cart
+    sides'
+  replaces_art_image_id: 274865
+  redo_reason: human portrait posters on the wall; no healer or bedding story
+- key: eodq2r3-r-verge-scouts-failure
+  lane: arthemy-house
+  title: Plum Scouts on the Ridge (failure)
+  quest: r-verge-scouts
+  variant: failure
+  asset: quests/r-verge-scouts-failure
+  size: 1344x768
+  seed: 79102
+  negative: (nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore,
+    illegible faces, distorted paws, human face, human skin, text, letters, numbers, sign lettering, humans, people,
+    man, woman, child, human rider, human driver, portrait, poster, framed picture, wanted poster, painting on wall,
+    human portrait, human hands
+  prompt_tags: 'storytelling scene, a weary party of fox, goat and badger folk walking back over a dry ridge on foot
+    carrying salvaged packs, no wagon, original anthropomorphic animal-folk frontier setting, river ford and Freehold
+    farms under dry hills, weathered bridges and rough barns, The consequences of an unsuccessful mission: The scouts
+    were not scouts. The party came back over the ridge carrying what they could., action and reaction visible in one
+    composition, expressive anthropomorphic residents in practical frontier clothing, readable foreground and deep environmental
+    context, every figure, including drivers, riders and children, an anthropomorphic animal-folk character with a furred
+    or feathered muzzle, plain unpainted wooden signs and cart sides'
+  replaces_art_image_id: 274866
+  redo_reason: the two cart riders have human faces
