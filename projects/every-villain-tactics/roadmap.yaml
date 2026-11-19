@@ -497,22 +497,18 @@ tasks:
   - id: t-021
     milestone: m3
     title: "Ship 48 power-specific playable origin opening battles"
-    status: claimed
+    status: review
     depends_on: [t-005, t-017]
     owner: worker
     claimed_by: 20261119T230200Z-every-villain-tactics-t-021-f8q3
     claimed_at: '2026-11-19T23:02:00Z'
-    updated: '2026-11-19T23:02:00Z'
+    updated: '2026-11-19T23:06:50Z'
     passes: 0
     stakes: reversible
-    note: >-
-      48/48 authored metadata blueprints and typed lookup now exist in Kind
-      Robots identityCampaignStages.json; the dossier displays those concepts.
-      Make each origin a physically unique playable opening with an original
-      arena, power-only solution, meaningful alternative choice, durable
-      consequences and distinct cinematic intro; support arbitrary hero role.
-      Start with one complete vertical slice and adversarial playtest before
-      scaling. Do not count the authored 48 as 48 tested maps.
+    note: |-
+      48/48 authored metadata blueprints and typed lookup now exist in Kind Robots identityCampaignStages.json; the dossier displays those concepts. Make each origin a physically unique playable opening with an original arena, power-only solution, meaningful alternative choice, durable consequences and distinct cinematic intro; support arbitrary hero role. Start with one complete vertical slice and adversarial playtest before scaling. Do not count the authored 48 as 48 tested maps.
+
+      2026-11-19 PT: Implemented shared Prom identity and side handoff to Tactics from /play/comet-city-academy on worker branch worker/every-villain-tactics-t-021-20261119T230200Z-f8q3. Three-file change adds Story/Tactics selection, hero/villain selection only for Tactics, canonical signature routing into the existing First Bell setup, and menu regression contracts. This is a partial vertical slice: 48 unique origin arenas and in-game consequences still require implementation.
   - id: t-022
     milestone: m3
     title: "Build 48 villain-owned lairs with changing tactical environments"
