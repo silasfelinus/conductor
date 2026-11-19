@@ -1861,6 +1861,12 @@ tasks:
     One illustrated launcher now names the active tab and icon at every breakpoint. Removed the second desktop tab-picker mount; updated navigation and tablet geometry contracts. Implementation PR and CI verification pending.
 
     Merged silasfelinus/kind_robots#4688 as c55fb9ddd978faa65af55b16f84248d3d2f5d1f8 after eight successful CI runs. Unified navigation now labels the active tab. Self-hosted deploy not verified.
+
+    2026-11-19 PT daily-delivery:2026-11-19/website-site-name | PR:
+    silasfelinus/kind_robots#5340 | Home page now emits schema.org WebSite JSON-LD
+    (buildWebsiteJsonLd in utils/sharePreview.ts) so search results can label the site 'Kind
+    Robots'; emitted only on /, pinned in verifySharePreview.test.ts. Not yet checked with a
+    live rich-results test.
   implementation_pr: 'silasfelinus/kind_robots#3073'
   approved_by_human: true
   min_rest_hours: 24
@@ -2398,6 +2404,13 @@ tasks:
     10 hub/guessable URLs (/play, /projects, /home, /signup, ...) for a redirect to a loading hub
     and a nonsense URL for HTTP 404. Production before deploy: 11/11 problems. /projects now reaches
     /storybook, /home reaches /, /signup reaches /register. Re-run after deploy.
+
+    2026-11-19 PT daily-delivery:2026-11-19/sitemap-standalone-games | PR:
+    silasfelinus/kind_robots#5340 | Zuzu Ghost Trail and Sliding Tile Gallery are public
+    arcade tabs (200, own link previews) but were absent from sitemap.xml.
+    STANDALONE_GAME_PATHS adds them; the contract requires each to have a page and an arcade
+    tab, and forbids duplicate sitemap URLs. Monstrique deliberately excluded (admin
+    channel).
   updated: '2026-10-26T22:16:18Z'
 
 - id: t-145
@@ -2555,6 +2568,12 @@ tasks:
     robots.'; it now matches the front door: free handmade browser games, illustrated
     stories and a robot-made art gallery, no ads, no account. Pinned in
     verifySharePreview.test.ts. Drop-off ranking still waits on site-stats volume.
+
+    2026-11-19 PT daily-delivery:2026-11-19/canonical-urls | PR:
+    silasfelinus/kind_robots#5340 | Live pages had og:url but no <link rel=canonical>, so
+    /play aliases and ?game= deep links could index separately. app.vue now declares a
+    canonical URL from the query-free shareUrl; verifySharePreview.test.ts pins it and the
+    query/trailing-slash stripping. Live tag not yet re-checked after deploy.
   updated: '2026-11-18T11:07:17Z'
 
 - id: t-152

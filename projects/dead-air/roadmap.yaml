@@ -102,7 +102,7 @@ tasks:
     status: ready
     recurring: true
     daily_commitment: true
-    daily_last_checked: '2026-11-18'
+    daily_last_checked: '2026-11-19'
     daily_last_completed: '2026-11-18'
     stakes: reversible
     passes: 0
@@ -157,6 +157,14 @@ tasks:
       limit=0.8:level=0; a worst-case loud voice through MP3 then AAC peaks at -1.1 dBFS.
       test_loud_voice_mix_keeps_headroom_after_lossy_encodes fails on the old mix and passes
       on the new.
+
+      2026-11-19 PT daily-delivery:2026-11-19/runway-empty-chair-rental | PR:
+      silasfelinus/conductor#7613 | Authored the missing 2026-11-25 brief (The Empty Chair
+      Rental, early-1960s Technicolor department-store ad); runway 7/7. Identity cues are
+      concrete visuals (MV23 lesson) and the yellow-TV reveal stays out of visual_style.
+      Merging triggered run 44500315933, which started today's MusicVideo 24 (Yesterday's
+      Weather), still ArtJobs 70785-70789, clip skipped for congestion; status rendering, not
+      yet completed.
     owner: worker
     updated: '2026-11-18T11:07:00Z'
   - id: t-005
@@ -241,6 +249,13 @@ tasks:
       Filed from the 2026-11-14 PT private screening review (projects/dead-air/reviews/2026-11-14-screening.md). MusicVideo 18's s3 GPU clip baked two lines of garbled fake subtitles and a magenta band into the picture, colliding with the compositor's real caption bar; MusicVideo 19's s1 still hallucinated pseudo-lettering on a sign, and its s3 still dropped the authored red motive-thread and swapped the mechanic scene for a kneeling-at-a-car composition. Apply the PAINT_GUARDS lettering check to motion prompts too (check every seeded episode still validates), steer premises whose subject is captions/subtitles toward non-text imagery, and consider a cheap automated still-vs-prompt check before export. Private production only; never publish.
 
       2026-11-16 PT added evidence (projects/dead-air/reviews/2026-11-16-screening.md): MusicVideo 21's s5 dropped the authored gardener's face from the final fruit, losing the punchline, and s2 rendered ordinary fruit instead of ceramic ears; MusicVideo 20 showed the s4 reveal jaguar in s2 and s3 because it is named in the episode-wide visual_style.
+
+      2026-11-19 PT daily-delivery:2026-11-19/motion-lettering-guard | PR:
+      silasfelinus/conductor#7614 | validate() now rejects lettering words (text, caption,
+      subtitle, logo, signage) in any motion_prompt, as still prompts already were; MV18's s3
+      clip had baked fake subtitles. test_motion_prompts_are_lettering_guarded_like_stills;
+      all 13 authored episodes still validate. Remaining t-010 items: caption-themed premises,
+      still-vs-prompt check.
     updated: '2026-11-16T11:27:00Z'
   - id: t-011
     milestone: m4

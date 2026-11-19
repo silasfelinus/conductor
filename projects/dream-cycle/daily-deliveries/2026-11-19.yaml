@@ -1,0 +1,85 @@
+date: '2026-11-19'
+entries:
+- slug: canonical-urls
+  title: Every page declares one canonical address
+  target: interface-vision
+  roadmap_task: t-151
+  kind: front-door
+  summary: Live pages carried og:url but no canonical link, so /play aliases and ?game= deep links could be indexed
+    separately; every page now declares its query-free canonical URL.
+  status: shipped
+  pull_request: https://github.com/silasfelinus/kind_robots/pull/5340
+  checks_url: https://github.com/silasfelinus/kind_robots/actions/runs/44500398041
+  checks: passed
+  merge_sha: 78cb32a14a141b26691782f4e582a21904524e9c
+  verification: Live / /giving /about had no rel=canonical before the change; verifySharePreview.test.ts pins the app.vue
+    canonical link and query/trailing-slash stripping
+  art:
+    status: not-required
+  preview_url: https://kindrobots.org/
+- slug: sitemap-standalone-games
+  title: Sitemap lists Ghost Trail and Sliding Tile Gallery
+  target: interface-vision
+  roadmap_task: t-144
+  kind: front-door
+  summary: Two public arcade games with their own pages and link previews were missing from sitemap.xml, so search
+    engines were never told they exist; both are now listed.
+  status: shipped
+  pull_request: https://github.com/silasfelinus/kind_robots/pull/5340
+  checks_url: https://github.com/silasfelinus/kind_robots/actions/runs/44500398041
+  checks: passed
+  merge_sha: 78cb32a14a141b26691782f4e582a21904524e9c
+  verification: Live /play/zuzu-ghost-trail and /play/sliding-tile-gallery return 200 but were absent from the live
+    sitemap; contract requires each listed route to have a page and an arcade tab and forbids duplicate URLs
+  art:
+    status: not-required
+  preview_url: https://kindrobots.org/sitemap.xml
+- slug: website-site-name
+  title: Search results can name the site Kind Robots
+  target: interface-vision
+  roadmap_task: t-105
+  kind: front-door
+  summary: The home page now emits schema.org WebSite structured data so search engines label results with the site
+    name Kind Robots instead of guessing from the domain.
+  status: shipped
+  pull_request: https://github.com/silasfelinus/kind_robots/pull/5340
+  checks_url: https://github.com/silasfelinus/kind_robots/actions/runs/44500398041
+  checks: passed
+  merge_sha: 78cb32a14a141b26691782f4e582a21904524e9c
+  verification: buildWebsiteJsonLd name/url and the home-only emission pinned in verifySharePreview.test.ts; live
+    rich-results test not yet run after deploy
+  art:
+    status: not-required
+  preview_url: https://kindrobots.org/
+- slug: motion-lettering-guard
+  title: 'Dead Air: motion prompts cannot ask for lettering'
+  target: dead-air
+  roadmap_task: t-010
+  kind: quality
+  summary: The lettering guard that keeps fake text out of stills now also rejects text, caption and subtitle words
+    in motion prompts, after a GPU clip baked fake subtitles into a film.
+  status: shipped
+  pull_request: https://github.com/silasfelinus/conductor/pull/7614
+  checks_url: https://github.com/silasfelinus/conductor/actions/runs/44500303522
+  checks: passed
+  merge_sha: ee47c246decc3b86fe068a08702d0a9564b17942
+  verification: test_motion_prompts_are_lettering_guarded_like_stills rejects a subtitle motion prompt; all 13 authored
+    episodes still pass --dry-run
+  art:
+    status: not-required
+- slug: runway-empty-chair-rental
+  title: 'Dead Air: seven-day runway filled with The Empty Chair Rental'
+  target: dead-air
+  roadmap_task: t-004
+  kind: content
+  summary: Authored the missing 2026-11-25 private five-shot brief, an early-1960s department-store ad for rented
+    holiday dinner guests, restoring the full seven-day film runway.
+  status: shipped
+  pull_request: https://github.com/silasfelinus/conductor/pull/7613
+  checks_url: https://github.com/silasfelinus/conductor/actions/runs/44499604066
+  checks: passed
+  merge_sha: d22d072df89d95a24013e1bdb0496d4df5c11278
+  verification: check_dead_air_runway.py --days 7 reports 7/7; dead_air_produce --dry-run passes; tests/test_dead_air.py
+    passes; authored only, not rendered
+  art:
+    status: not-required
