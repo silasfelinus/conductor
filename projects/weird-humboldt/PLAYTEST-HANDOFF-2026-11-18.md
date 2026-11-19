@@ -30,6 +30,7 @@
   - reduced motion and the missing-art fallback
 
   Result: see the t-016 note.
+- The four companion-time scene pictures (CT-MARA/KIT/JUNIPER/CEDAR-01) had written prompts but were never queued. They're now queued in `art/WRITTEN-BACKLOG-2026-11-19-ECOTONE.yaml` (private, auto_submit) and render without further agent work. The Mara scene shows only her studio, not her. Until the renders land, those four scenes use the code-drawn fallback.
 - kind_robots#5321 fixed a production build break (Deepheart) found during this work. Without it, the next deploy would have failed.
 
 ## Open owner decisions (not blockers for playtest)
