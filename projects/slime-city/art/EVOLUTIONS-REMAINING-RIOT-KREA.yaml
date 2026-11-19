@@ -1,0 +1,309 @@
+# Slime City evolution art, Riot: remaining cards, Krea 2 (2026-11-19 PT, slime-city/t-012).
+# kind_robots utils/scripts/verifySlimeCityArtCoverage.test.ts ratchets the cards that still show their level-1
+# painting at L2/L3. These 10 Riot cards were never queued by the t-041 evolution rounds
+# (EVOLUTIONS-RIOT-KREA.yaml covers the crafted-catalog cards), so their evolved stages had no art at all.
+# Same ladder as the t-041 Krea rounds (CLASH-EVOLUTION-PLAN.md section 4): L2 a low-angle hero shot filling the
+# frame with new signature gear; L3 legendary, the biggest thing in the scene, the district reacting, a finale
+# palette. Each stage paints the card's tested clashTwists.ts story without naming a mechanic. Identity carries
+# over through a per-card look anchor drawn from the wired level-1 prompt. Keepers are wired as
+# SLIME_CITY_ART.evolutions['<cardId>@2' | '@3'] and the per-crew ratchet baseline is lowered. auto_submit: true.
+round: slime-city-evolutions-remaining-riot-krea
+project_slug: slime-city
+designer: Slime City evolution art, Riot remaining cards (Krea 2)
+is_public: true
+is_mature: false
+cast_loras: false
+priority: 640
+auto_submit: true
+lanes:
+- key: krea-evolution
+  label: Krea 2, escalated evolution stages written per card
+  engine: krea2
+  prompt: prose
+subjects:
+- key: slime-krea-evo-rat-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Glitter Rat L2: Chorus of Rats'
+  asset: slime-city/evolutions/rat@2
+  size: 832x1216
+  seed: 1119201
+  prompt_prose: 'A scrappy adult sewer rat performer standing upright, fur dusted with gold glitter, a tiny hot magenta
+    sequin vest and torn fishnet sleeves, cheeks puffed around fizzing gold sparklers. Now he leads a conga line of three
+    glitter rats, each one bigger and more sequined than the last, his tail fuse sizzling bright. Low-angle hero shot in
+    the junkyard big top: he fills the view on the front-row railing, sparklers blazing, as the rat behind him pops in
+    a puff of gold glitter and the crowd shrieks with delight. Hand-painted vivid inked western adult cartoon for a grungy
+    colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high
+    contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every
+    surface is bare and unmarked.'
+- key: slime-krea-evo-rat-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Glitter Rat L3: Rat King Finale'
+  asset: slime-city/evolutions/rat@3
+  size: 832x1216
+  seed: 1119202
+  prompt_prose: A scrappy adult sewer rat performer standing upright, fur dusted with gold glitter, a tiny hot magenta sequin
+    vest and torn fishnet sleeves, cheeks puffed around fizzing gold sparklers. Now he is a towering rat king made of a
+    hundred glittering rats stacked shoulder to shoulder, all crowned in sparklers, as tall as the big top's center pole.
+    Bursts of gold confetti fireworks blast outward from his flanks into a line of rival fighters tumbling back across the
+    stage, the whole district roaring, heroic low-angle view in a hot magenta and blazing gold finale palette. Hand-painted
+    vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated
+    gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene.
+    Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-firebrand-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Firebrand Dolly L2: Double Fire'
+  asset: slime-city/evolutions/firebrand@2
+  size: 832x1216
+  seed: 1119203
+  prompt_prose: 'A curvy adult pyro-showgirl with a towering teal beehive, a black lace corset, fishnet stockings, gold
+    sequin opera gloves and smeared crimson lipstick. Now she holds twin flamethrower torches shaped like microphones. Low-angle
+    hero shot on a stage of crushed cars: she fills the view, spitting two roaring pink fireballs at once, one blasting
+    a rival backwards and the other whooshing wide past his ear, scorching a wall of wrecked car seats. Hand-painted vivid
+    inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty
+    neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every
+    character is a clearly adult grown-up. Every surface is bare and unmarked.'
+- key: slime-krea-evo-firebrand-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Firebrand Dolly L3: Phoenix Matinee'
+  asset: slime-city/evolutions/firebrand@3
+  size: 832x1216
+  seed: 1119204
+  prompt_prose: A curvy adult pyro-showgirl with a towering teal beehive, a black lace corset, fishnet stockings, gold sequin
+    opera gloves and smeared crimson lipstick. Now she rises as a giant phoenix showgirl taller than the big top, her beehive
+    a blazing teal bonfire, spitting a twin river of pink fire that roars down the avenue and sends a rival crew diving
+    into a fountain. The whole district lights up like a fireworks finale, heroic low-angle view in a pink flame and teal
+    neon finale palette. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick
+    expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with
+    one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-kaboom-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Jackhammer Kaboom L2: Encore Charge'
+  asset: slime-city/evolutions/kaboom@2
+  size: 832x1216
+  seed: 1119205
+  prompt_prose: 'A broad-shouldered adult demolition diva with a shaved head, gold glitter eyeliner, a black lace bodysuit
+    under a studded hot magenta leather jacket, and a chrome jackhammer. Her jackhammer is now a double-barreled chrome
+    drill glowing hot. Low-angle hero shot: she fills the view, blowing a tearful kiss toward a puff of exploding glitter
+    where a fallen bandmate stood, then punching her drill clean through a rival''s riveted armor plate in a teal spotlight.
+    Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines,
+    saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed
+    scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.'
+- key: slime-krea-evo-kaboom-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Jackhammer Kaboom L3: Brings Down the House'
+  asset: slime-city/evolutions/kaboom@3
+  size: 832x1216
+  seed: 1119206
+  prompt_prose: A broad-shouldered adult demolition diva with a shaved head, gold glitter eyeliner, a black lace bodysuit
+    under a studded hot magenta leather jacket, and a chrome jackhammer. Now she is as tall as a tenement, her drill a spinning
+    tower of chrome, burrowing straight through three walls and a rival line to punch out right under the rival boss's gilded
+    throne, bricks and sequins erupting skyward. The whole block crumbles in a celebratory wave of confetti, heroic low-angle
+    view in a hot magenta and brick-dust gold finale palette. Hand-painted vivid inked western adult cartoon for a grungy
+    colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high
+    contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every
+    surface is bare and unmarked.
+- key: slime-krea-evo-bomber-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Big Top Detonator L2: Shrapnel Bow'
+  asset: slime-city/evolutions/bomber@2
+  size: 832x1216
+  seed: 1119207
+  prompt_prose: 'A towering adult drummer with a bushy gold-glitter beard, a hot magenta sequin tailcoat and black lace
+    cravat, a car-sized bass drum strapped to his chest with an enormous fuse. His drum now bristles with brass sparklers
+    and gold spikes, the fuse burned to a spark. Low-angle hero shot at center ring: he fills the view mid-bow as the drum
+    bursts in a glittering ring of gold shrapnel that sends rival fighters on either side flying, his grin wide. Hand-painted
+    vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated
+    gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene.
+    Every character is a clearly adult grown-up. Every surface is bare and unmarked.'
+- key: slime-krea-evo-bomber-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Big Top Detonator L3: Curtain Call Kaboom'
+  asset: slime-city/evolutions/bomber@3
+  size: 832x1216
+  seed: 1119208
+  prompt_prose: A towering adult drummer with a bushy gold-glitter beard, a hot magenta sequin tailcoat and black lace cravat,
+    a car-sized bass drum strapped to his chest with an enormous fuse. Now his drum explodes into a mushroom cloud of gold
+    glitter as tall as the whole big top, the shockwave flattening every rival fighter across the junkyard while his own
+    cheering bandmates stagger back singed. His glittering ghost takes one last colossal bow in the smoke, heroic low-angle
+    view in a gold glitter and hot magenta finale palette. Hand-painted vivid inked western adult cartoon for a grungy colorful
+    street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast,
+    tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface
+    is bare and unmarked.
+- key: slime-krea-evo-firestorm-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Unrehearsed Pyro Cue L2: Second Take'
+  asset: slime-city/evolutions/firestorm@2
+  size: 832x1216
+  seed: 1119209
+  prompt_prose: 'A frantic adult lighting technician in a black lace crop top and a gold sequin headset, at a battered lighting
+    desk. Now the lighting desk is a towering control console with two giant red levers. Low-angle hero shot: the technician
+    fills the view, yanking the second lever after a fizzled first try, and a roaring pink flame column bursts up right
+    under a rival''s boots while a sputtering teal puff dies beside it. Hand-painted vivid inked western adult cartoon for
+    a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette,
+    high contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up.
+    Every surface is bare and unmarked.'
+- key: slime-krea-evo-firestorm-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Unrehearsed Pyro Cue L3: Whole Rig Goes Up'
+  asset: slime-city/evolutions/firestorm@3
+  size: 832x1216
+  seed: 1119210
+  prompt_prose: 'A frantic adult lighting technician in a black lace crop top and a gold sequin headset, at a battered lighting
+    desk. Now the entire stage rig erupts: a hundred flame columns roar skyward in a crown of pink and teal fire around
+    the technician, now standing giant atop the console, flames scorching the rival crew and singeing the chorus line''s
+    feather boas. The district skyline glows like a festival, heroic low-angle view in a pink flame and teal neon finale
+    palette. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive
+    outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous
+    full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.'
+- key: slime-krea-evo-badluck-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Trapdoor Surprise L2: Double Trouble'
+  asset: slime-city/evolutions/badluck@2
+  size: 832x1216
+  seed: 1119211
+  prompt_prose: 'A scuffed junkyard big top stage trapdoor with a lit grenade on a velvet cushion, and a smirking adult
+    stagehand in fishnets peeking from the wings. Now two trapdoors gape open side by side. Low-angle stage-floor view:
+    the smirking stagehand stands tall in the view, pulling a lever, as one rival in a pinstripe suit drops into a burst
+    of gold sparks and a second grenade bounces toward the rival beside him, hats flying. Hand-painted vivid inked western
+    adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors,
+    bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character is
+    a clearly adult grown-up. Every surface is bare and unmarked.'
+- key: slime-krea-evo-badluck-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Trapdoor Surprise L3: Floor Show Collapse'
+  asset: slime-city/evolutions/badluck@3
+  size: 832x1216
+  seed: 1119212
+  prompt_prose: A scuffed junkyard big top stage trapdoor with a lit grenade on a velvet cushion, and a smirking adult stagehand
+    in fishnets peeking from the wings. Now the whole big top stage is a chessboard of trapdoors flipping open at once,
+    grenades popping up like jack-in-the-boxes, rival fighters tumbling in every direction amid gold explosions while the
+    stagehand, now giant on a balcony, conducts with a lit match. The crowd roars, heroic low-angle view in a gold spark
+    and velvet crimson finale palette. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting
+    fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait
+    framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and
+    unmarked.
+- key: slime-krea-evo-fuse-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Cannonball Booster L2: Overpowered Thrust'
+  asset: slime-city/evolutions/fuse@2
+  size: 832x1216
+  seed: 1119213
+  prompt_prose: 'A chunky brass human-cannonball booster rocket with tail fins, painted hot magenta with gold sequin trim
+    and strapped on with leather harness straps to a startled adult acrobat in black lace. The booster is now a triple-barreled
+    rocket roaring with pink exhaust. Low-angle hero shot: the acrobat fills the view, rocketing across the big top fists-first
+    with her hair smoking and the harness straps singeing her shoulders, determined grin. Hand-painted vivid inked western
+    adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors,
+    bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character is
+    a clearly adult grown-up. Every surface is bare and unmarked.'
+- key: slime-krea-evo-fuse-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Cannonball Booster L3: Human Comet'
+  asset: slime-city/evolutions/fuse@3
+  size: 832x1216
+  seed: 1119214
+  prompt_prose: A chunky brass human-cannonball booster rocket with tail fins, painted hot magenta with gold sequin trim
+    and strapped on with leather harness straps to a startled adult acrobat in black lace. Now the acrobat is a blazing
+    comet streaking across the night sky above the whole district, the booster a cathedral-sized rocket. A wincing bandmate
+    dangles from her ankle as she slams fist-first into a rival line, sending them flying, as rooftops of fans point skyward,
+    heroic low-angle view in a pink exhaust and starry gold finale palette. Hand-painted vivid inked western adult cartoon
+    for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette,
+    high contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up.
+    Every surface is bare and unmarked.
+- key: slime-krea-evo-confetti-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Glitter Cannon L2: Wider Spread'
+  asset: slime-city/evolutions/confetti@2
+  size: 832x1216
+  seed: 1119215
+  prompt_prose: 'A battered circus cannon painted hot magenta with gold stars, its barrel crammed with glitter and sparks,
+    manned by adult Anarkiss performers in platform heels. The cannon is now a triple-barreled glitter cannon on tank treads.
+    Low-angle hero shot: it fills the view, blasting a roaring cone of gold glitter into a rival trio while two Anarkiss
+    dancers beside it get knocked off their heels, coated in sparkle. Hand-painted vivid inked western adult cartoon for
+    a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette,
+    high contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up.
+    Every surface is bare and unmarked.'
+- key: slime-krea-evo-confetti-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Glitter Cannon L3: Glitter Apocalypse'
+  asset: slime-city/evolutions/confetti@3
+  size: 832x1216
+  seed: 1119216
+  prompt_prose: A battered circus cannon painted hot magenta with gold stars, its barrel crammed with glitter and sparks,
+    manned by adult Anarkiss performers in platform heels. Now the cannon is as big as a battleship turret, mounted on the
+    big top's roof, firing a glitter tsunami that buries the whole rival row and far-off foes in gold sparkle, while every
+    Anarkiss performer down the street is dusted too. The whole district glitters like a snow globe, heroic low-angle view
+    in a gold glitter and hot magenta finale palette. Hand-painted vivid inked western adult cartoon for a grungy colorful
+    street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast,
+    tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface
+    is bare and unmarked.
+- key: slime-krea-evo-fusevest-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Sparkler Corset L2: Short Fuse'
+  asset: slime-city/evolutions/fusevest@2
+  size: 832x1216
+  seed: 1119217
+  prompt_prose: 'A black lace corset with gold sequin panels and forty lit sparklers sewn into its boning, worn by a grinning
+    adult performer in the wings. The sparklers now spit long gold sparks in every direction. Low-angle hero shot: the performer
+    fills the view mid-strut toward the rivals, the corset hissing, as a rival beside her leaps back with his coat tails
+    smoking. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive
+    outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous
+    full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.'
+- key: slime-krea-evo-fusevest-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Sparkler Corset L3: Grand Finale Corset'
+  asset: slime-city/evolutions/fusevest@3
+  size: 832x1216
+  seed: 1119218
+  prompt_prose: A black lace corset with gold sequin panels and forty lit sparklers sewn into its boning, worn by a grinning
+    adult performer in the wings. Now the corset erupts into a towering fountain of gold sparks taller than the big top,
+    the performer at its heart striking a final pose as glittering embers rain onto every rival across the stage and singe
+    her own cheering bandmates' feather boas. The whole district lights up like New Year's Eve, heroic low-angle view in
+    a gold spark and black lace finale palette. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting
+    fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait
+    framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and
+    unmarked.
+- key: slime-krea-evo-drink-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Hold My Sequins L2: Coin Flip Jump'
+  asset: slime-city/evolutions/drink@2
+  size: 832x1216
+  seed: 1119219
+  prompt_prose: 'A daring adult stuntman in tight black lace and a gold sequin jacket, with a motorbike and a ramp of wrecked
+    cars. Now the ramp is twice as tall and the motorbike sprouts rocket boosters. Low-angle hero shot: he fills the view
+    mid-air through a ring of fire, half triumph, half disaster, one boot smoking and a laughing friend in fishnets clutching
+    his sequined jacket below. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy,
+    thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing
+    with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.'
+- key: slime-krea-evo-drink-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Hold My Sequins L3: Stunt of the Century'
+  asset: slime-city/evolutions/drink@3
+  size: 832x1216
+  seed: 1119220
+  prompt_prose: A daring adult stuntman in tight black lace and a gold sequin jacket, with a motorbike and a ramp of wrecked
+    cars. Now he soars on a rocket motorbike over the whole district, jumping a line of six rival trucks, a canal and the
+    rival boss's mansion in one blazing arc of fire, sequins streaming behind him like a comet's tail as the crowd on every
+    rooftop holds its breath. Heroic low-angle view in a fire orange and teal spotlight finale palette. Hand-painted vivid
+    inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty
+    neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every
+    character is a clearly adult grown-up. Every surface is bare and unmarked.

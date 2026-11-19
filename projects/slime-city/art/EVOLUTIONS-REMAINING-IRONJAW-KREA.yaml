@@ -1,0 +1,317 @@
+# Slime City evolution art, Ironjaw: remaining cards, Krea 2 (2026-11-19 PT, slime-city/t-012).
+# kind_robots utils/scripts/verifySlimeCityArtCoverage.test.ts ratchets the cards that still show their level-1
+# painting at L2/L3. These 10 Ironjaw cards were never queued by the t-041 evolution rounds
+# (EVOLUTIONS-IRONJAW-KREA.yaml covers the crafted-catalog cards), so their evolved stages had no art at all.
+# Same ladder as the t-041 Krea rounds (CLASH-EVOLUTION-PLAN.md section 4): L2 a low-angle hero shot filling the
+# frame with new signature gear; L3 legendary, the biggest thing in the scene, the district reacting, a finale
+# palette. Each stage paints the card's tested clashTwists.ts story without naming a mechanic. Identity carries
+# over through a per-card look anchor drawn from the wired level-1 prompt. Keepers are wired as
+# SLIME_CITY_ART.evolutions['<cardId>@2' | '@3'] and the per-crew ratchet baseline is lowered. auto_submit: true.
+round: slime-city-evolutions-remaining-ironjaw-krea
+project_slug: slime-city
+designer: Slime City evolution art, Ironjaw remaining cards (Krea 2)
+is_public: true
+is_mature: false
+cast_loras: false
+priority: 640
+auto_submit: true
+lanes:
+- key: krea-evolution
+  label: Krea 2, escalated evolution stages written per card
+  engine: krea2
+  prompt: prose
+subjects:
+- key: slime-krea-evo-scrapper-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Chrome Scrapper L2: Shield Wall'
+  asset: slime-city/evolutions/scrapper@2
+  size: 832x1216
+  seed: 1119101
+  prompt_prose: 'A stocky adult slate-grey gecko brawler with pebbled scales, slit-pupil eyes, a riveted chrome lower jaw,
+    patched union overalls and both fists wrapped in dented scrap-metal knuckles. Now his scrap knuckles have grown into
+    two car-door shields riveted to his forearms. Low-angle hero shot in a scrapyard ring of crushed cars: he fills the
+    view, grinning, swinging a shining hubcap shield onto the shoulder of the lizard crewmate beside him while rival punches
+    spark off both of them, a new dent glowing on every shield. Hand-painted vivid inked western adult cartoon for a grungy
+    colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high
+    contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every
+    surface is bare and unmarked.'
+- key: slime-krea-evo-scrapper-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Chrome Scrapper L3: Junkyard Bulwark'
+  asset: slime-city/evolutions/scrapper@3
+  size: 832x1216
+  seed: 1119102
+  prompt_prose: A stocky adult slate-grey gecko brawler with pebbled scales, slit-pupil eyes, a riveted chrome lower jaw,
+    patched union overalls and both fists wrapped in dented scrap-metal knuckles. Now he stands as tall as a crane, armored
+    head to tail in a rolling mountain of welded car doors and hubcaps, flinging glowing scrap shields across the whole
+    foundry district so every lizard worker below catches one on their arm. Rival brawlers bounce off the shining shield
+    line like hail, furnace stacks roar in salute, heroic low-angle view in a molten gold and steel-blue finale palette.
+    Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines,
+    saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed
+    scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-welder-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Spark Welder L2: Field Medic Torch'
+  asset: slime-city/evolutions/welder@2
+  size: 832x1216
+  seed: 1119103
+  prompt_prose: 'An adult orange-and-black beaded gila-monster mechanic with slit-pupil eyes, a riveted chrome jaw, oil-stained
+    overalls, a welding visor flipped up and a glowing torch nozzle. Her torch is now a twin-nozzle rig on a backpack tank,
+    its flame a gentle healing blue. Low-angle hero shot on a smoking barricade: she towers over the view, sealing a glowing
+    seam on the cracked chrome arm of the lizard brawler at her left while a fan of blue sparks knits the dented armor of
+    the crewmate at her right back together. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting
+    fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait
+    framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and
+    unmarked.'
+- key: slime-krea-evo-welder-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Spark Welder L3: Foundry Lifeline'
+  asset: slime-city/evolutions/welder@3
+  size: 832x1216
+  seed: 1119104
+  prompt_prose: An adult orange-and-black beaded gila-monster mechanic with slit-pupil eyes, a riveted chrome jaw, oil-stained
+    overalls, a welding visor flipped up and a glowing torch nozzle. Now she is as huge as a furnace tower, a blue-white
+    welding sun blazing from her visor, a hundred torch arms spraying healing sparks down over a whole battered picket line
+    of lizard workers whose cracks seal shut in glowing gold seams. The conveyor belts behind her rise like a cathedral,
+    heroic low-angle view in a cobalt and molten gold finale palette. Hand-painted vivid inked western adult cartoon for
+    a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette,
+    high contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up.
+    Every surface is bare and unmarked.
+- key: slime-krea-evo-bulldozer-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Bulldozard L2: Blade Upgrade'
+  asset: slime-city/evolutions/bulldozer@2
+  size: 832x1216
+  seed: 1119105
+  prompt_prose: 'A massive adult rust-brown horned lizard with pebbled scales, slit-pupil eyes, a riveted chrome jaw, a
+    yellow bulldozer blade bolted across his chest and a crown of steel-capped horns. His chest blade is now twice as wide
+    with a toothed chrome edge and hydraulic rams. Low-angle hero shot: he fills the view, bulldozing through a rival''s
+    riveted shield wall, the toothed blade biting straight through the steel plates in a spray of rivets and bricks. Hand-painted
+    vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated
+    gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene.
+    Every character is a clearly adult grown-up. Every surface is bare and unmarked.'
+- key: slime-krea-evo-bulldozer-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Bulldozard L3: Through to the Boss'
+  asset: slime-city/evolutions/bulldozer@3
+  size: 832x1216
+  seed: 1119106
+  prompt_prose: A massive adult rust-brown horned lizard with pebbled scales, slit-pupil eyes, a riveted chrome jaw, a yellow
+    bulldozer blade bolted across his chest and a crown of steel-capped horns. Now he is as big as a freight locomotive,
+    his blade a city-block plow, pushing through an entire row of rival blockers, a brick wall and a gilded gate in one
+    charge to slam the shocked rival crew boss off her balcony throne. The whole street buckles in a wave of bricks behind
+    him, foundry workers cheering from rooftops, heroic low-angle view in a hazard yellow and furnace red finale palette.
+    Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines,
+    saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed
+    scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-juggernaut-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Maw-9000 L2: Rebuilt Pistons'
+  asset: slime-city/evolutions/juggernaut@2
+  size: 832x1216
+  seed: 1119107
+  prompt_prose: 'A towering adult black monitor lizard cyborg with slit-pupil red furnace eyes inside a tank-tread exoframe,
+    a huge hinged chrome jaw and smokestacks behind his shoulders. His exoframe now bristles with brand-new pumping chrome
+    pistons along both arms, steam jetting from every joint. Low-angle hero shot in the burning arena gate: he fills the
+    view, driving a piston-powered uppercut that launches a rival fighter skyward, his hinged jaw roaring open. Hand-painted
+    vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated
+    gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene.
+    Every character is a clearly adult grown-up. Every surface is bare and unmarked.'
+- key: slime-krea-evo-juggernaut-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Maw-9000 L3: Siege Form'
+  asset: slime-city/evolutions/juggernaut@3
+  size: 832x1216
+  seed: 1119108
+  prompt_prose: A towering adult black monitor lizard cyborg with slit-pupil red furnace eyes inside a tank-tread exoframe,
+    a huge hinged chrome jaw and smokestacks behind his shoulders. Now he has rebuilt himself into a walking siege fortress
+    as tall as the arena, smokestacks blazing like volcano vents, his chrome jaw a drawbridge. As he arrives, glowing steel
+    plates fly off his hull and bolt themselves onto the lizard comrades marching at either side. The arena walls crumble
+    before him and the crowd scatters, heroic low-angle view in a furnace red and black-chrome finale palette. Hand-painted
+    vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated
+    gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene.
+    Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-overclock-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Overclock Core L2: Redline Surge'
+  asset: slime-city/evolutions/overclock@2
+  size: 832x1216
+  seed: 1119109
+  prompt_prose: 'A broad adult bronze-scaled tegu bruiser with a long snout, pebbled scales, slit-pupil eyes, a riveted
+    chrome lower jaw, a plain steel specimen tag on one ear-hole and a steel socket on his chest. The mutagen core in his
+    chest now glows white-hot and too bright, lightning crawling over his scaly arms while smoke curls from his own singed
+    scales. Low-angle hero shot in the cracked reactor room: he fills the view mid-roar, surging forward with a crackling
+    punch, gritting his chrome jaw against the burn. Hand-painted vivid inked western adult cartoon for a grungy colorful
+    street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast,
+    tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface
+    is bare and unmarked.'
+- key: slime-krea-evo-overclock-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Overclock Core L3: Core Meltdown'
+  asset: slime-city/evolutions/overclock@3
+  size: 832x1216
+  seed: 1119110
+  prompt_prose: 'A broad adult bronze-scaled tegu bruiser with a long snout, pebbled scales, slit-pupil eyes, a riveted
+    chrome lower jaw, a plain steel specimen tag on one ear-hole and a steel socket on his chest. Now the core has gone
+    supernova: he towers as tall as the reactor dome, wreathed in a storm of orange lightning, scales smoking and cracking
+    with light as he slams down a fist that blasts a ring of electricity outward, flinging every nearby rival across the
+    lab. Specimen tanks shatter in a circle and the whole foundry district''s lights flare at once, heroic low-angle view
+    in an electric white and furnace orange finale palette. Hand-painted vivid inked western adult cartoon for a grungy
+    colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high
+    contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every
+    surface is bare and unmarked.'
+- key: slime-krea-evo-shocktrap-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Shock Plate L2: Arc Jump'
+  asset: slime-city/evolutions/shocktrap@2
+  size: 832x1216
+  seed: 1119111
+  prompt_prose: 'A riveted steel floor plate crackling with green electricity in a grimy Ironjaw factory corridor, chrome
+    lizard workers lurking nearby. The plate is now ringed with copper coils, and its lightning leaps sideways. Low-angle
+    close view down the corridor: a jolted rival in a pinstripe suit hangs frozen mid-air with his hair on end while a forked
+    green bolt jumps from him to zap a second rival sneaking alongside, a grinning lizard mechanic peeking over the coils.
+    Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines,
+    saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed
+    scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.'
+- key: slime-krea-evo-shocktrap-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Shock Plate L3: Grid Lockdown'
+  asset: slime-city/evolutions/shocktrap@3
+  size: 832x1216
+  seed: 1119112
+  prompt_prose: A riveted steel floor plate crackling with green electricity in a grimy Ironjaw factory corridor, chrome
+    lizard workers lurking nearby. Now the whole factory floor has become one giant glowing circuit board as wide as the
+    district, green lightning arching skyward like a cage. Three rival intruders are frozen in crackling green shackles
+    welded to the floor, smoke curling from their shoes, while lizard workers watch from catwalks with popcorn, heroic low-angle
+    view in a toxic green and steel-blue finale palette. Hand-painted vivid inked western adult cartoon for a grungy colorful
+    street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast,
+    tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface
+    is bare and unmarked.
+- key: slime-krea-evo-plating-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Foundry Plating L2: Crew Plating'
+  asset: slime-city/evolutions/plating@2
+  size: 832x1216
+  seed: 1119113
+  prompt_prose: 'Cheerful adult mutant lizard mechanics, a stubby rust-red skink and a long-snouted silver monitor with
+    riveted chrome lower jaws and plain steel specimen tags, armoring a huge slate-blue tegu. Now the mechanics swing a
+    giant hammer each, and fresh curved armor sheets fly off the anvil onto the tegu and both lizard comrades beside him.
+    Low-angle hero shot on the sewer foundry catwalk: three proud armored lizards flex shoulder to shoulder, sparks spraying
+    from every hammer blow. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy,
+    thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing
+    with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.'
+- key: slime-krea-evo-plating-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Foundry Plating L3: Armor the Union'
+  asset: slime-city/evolutions/plating@3
+  size: 832x1216
+  seed: 1119114
+  prompt_prose: Cheerful adult mutant lizard mechanics, a stubby rust-red skink and a long-snouted silver monitor with riveted
+    chrome lower jaws and plain steel specimen tags, armoring a huge slate-blue tegu. Now an enormous plating press as tall
+    as a cathedral stamps out shining armor sheets that rain down over the whole foundry district, every lizard worker in
+    the street catching a gleaming pauldron as the two mechanics ride the press like conductors. Furnaces blaze in salute,
+    heroic low-angle view in a burnished bronze and molten gold finale palette. Hand-painted vivid inked western adult cartoon
+    for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette,
+    high contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up.
+    Every surface is bare and unmarked.
+- key: slime-krea-evo-wreckingfist-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Wrecking Fist L2: Bulldoze Swing'
+  asset: slime-city/evolutions/wreckingfist@2
+  size: 832x1216
+  seed: 1119115
+  prompt_prose: 'An enormous modular chrome fist with hydraulic pistons and a hand-sized wrecking ball on a chain, worn
+    by a broad adult green-skinned Ironjaw ogre forge worker with a chrome jaw plate and reclaimed factory armor. The wrecking
+    ball is now the size of a boulder, spiked, and spinning on a thick chain from his chrome fist. Low-angle hero shot in
+    the orange-lit foundry: he fills the view, the swinging ball crashing through a rival''s riveted shield and a padlocked
+    gate behind it in one blow. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy,
+    thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing
+    with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.'
+- key: slime-krea-evo-wreckingfist-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Wrecking Fist L3: Demolition Day'
+  asset: slime-city/evolutions/wreckingfist@3
+  size: 832x1216
+  seed: 1119116
+  prompt_prose: An enormous modular chrome fist with hydraulic pistons and a hand-sized wrecking ball on a chain, worn by
+    a broad adult green-skinned Ironjaw ogre forge worker with a chrome jaw plate and reclaimed factory armor. Now the ogre
+    stands crane-tall and the wrecking ball is as big as a water tower, swinging clean through a rival blocker, a brick
+    tenement wall and the rival boss's armored limousine in one sweep while a second rival tumbles from the shockwave. The
+    district shakes and chrome scraps fly like fireworks, heroic low-angle view in a demolition orange and gunmetal finale
+    palette. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive
+    outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous
+    full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-ducttape-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Duct-Tape Weld L2: Tape Armor'
+  asset: slime-city/evolutions/ducttape@2
+  size: 832x1216
+  seed: 1119117
+  prompt_prose: 'A weary adult pale-blue skink engineer with a stubby tail, pebbled scales, slit-pupil eyes, a riveted chrome
+    lower jaw and a plain steel specimen tag, wrapping glowing orange industrial weld tape. Now he swings a roll of glowing
+    orange weld tape as big as a tire. Low-angle hero shot in the sewer workshop: he wraps a dented lizard comrade from
+    shoulder to tail in thick shining tape that hardens into gleaming armor plates, steam hissing from the seams, the comrade
+    flexing proudly. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick
+    expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with
+    one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.'
+- key: slime-krea-evo-ducttape-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Duct-Tape Weld L3: Scrap Resurrection'
+  asset: slime-city/evolutions/ducttape@3
+  size: 832x1216
+  seed: 1119118
+  prompt_prose: A weary adult pale-blue skink engineer with a stubby tail, pebbled scales, slit-pupil eyes, a riveted chrome
+    lower jaw and a plain steel specimen tag, wrapping glowing orange industrial weld tape. Now he stands giant atop a mountain
+    of scrap, a tape roll the size of a merry-go-round spinning in his hands as glowing orange tape whips down and wraps
+    a fallen comrade's scattered parts into a rattling, grinning scrap-metal echo of him that rises back to its feet. Lizard
+    workers gasp from every catwalk, heroic low-angle view in a weld orange and sewer teal finale palette. Hand-painted
+    vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated
+    gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene.
+    Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-slap-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Hydraulic Slap L2: Stunning Slap'
+  asset: slime-city/evolutions/slap@2
+  size: 832x1216
+  seed: 1119119
+  prompt_prose: 'A broad adult green-skinned Ironjaw ogre mechanic with a chrome jaw plate and reclaimed factory armor,
+    swinging a massive hydraulic hand. His hydraulic hand is now twice as big with roaring pistons along each finger. Low-angle
+    hero shot in the foundry arena: he fills the view mid-swing as an open palm connects with a rival brawler, cartoon
+    stars and birds circling the rival''s head as he spins dizzily off his feet. Hand-painted vivid inked western adult
+    cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold
+    clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly
+    adult grown-up. Every surface is bare and unmarked.'
+- key: slime-krea-evo-slap-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Hydraulic Slap L3: Slap Heard Downtown'
+  asset: slime-city/evolutions/slap@3
+  size: 832x1216
+  seed: 1119120
+  prompt_prose: A broad adult green-skinned Ironjaw ogre mechanic with a chrome jaw plate and reclaimed factory armor, swinging
+    a massive hydraulic hand. Now the hydraulic palm is as big as a billboard, swung by a giant ogre astride a crane, slapping
+    an entire line of three rivals so hard that a shockwave ripples across the district, windows rattling, every rival reeling
+    with stars spinning overhead. Workers on rooftops shield their ears and cheer, heroic low-angle view in a toxic green
+    and furnace orange finale palette. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting
+    fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait
+    framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and
+    unmarked.
