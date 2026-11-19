@@ -159,7 +159,7 @@ tasks:
     implementation_pr: 'silasfelinus/kind_robots#5291'
   - id: t-064
     title: 'Painted ending plates and a persistent Endings gallery / reign scrapbook'
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 2026-11-19T044230Z-eod-t064-7b3e
     claimed_at: '2026-11-19T04:42:30Z'
@@ -167,7 +167,7 @@ tasks:
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-19T04:42:30Z'
+    updated: '2026-11-19T04:48:05Z'
     note: |-
       Silas 2026-11-11 PT, in session: asked what happens at Day 50 and for "an ending scrapbook".
 
@@ -187,6 +187,8 @@ tasks:
       increment (chronicle). Per the note's own 'Return to ready, not done', review -> ready.
       Remaining: painted ending plates and full plate integration; confirm whether the
       scrapbook snapshot work landed (no open kind_robots PR found).
+
+      Emperor scrapbook/Chronicle implementation branch ships persistent resolved epilogue snapshots, backward-compatible old saves, a dedicated eight-fate locked/unlocked illustrated Chronicle with earned per-reign entries and loss/peace detail, and an end-screen plate slot with graceful fallback. Eight DONE original ending ArtImages still require curated binary export to public/emperor-of-dust/endings/ before t-064 can be marked done. App PR exact-head CI must pass; this increment is partial pending art.
   - id: t-065
     title: 'Emperor of Dust achievements for endings and long-run play'
     status: done
