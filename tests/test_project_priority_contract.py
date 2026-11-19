@@ -87,6 +87,11 @@ def test_lead_projects_are_the_ones_silas_named():
     Shifting Desks) to open for early human playtesting, moving it out of the
     protected high-priority development band. The other four preserve their order.
 
+    Updated 2026-11-18 PT on Silas's named playtest handoff ("Work on wrapping up
+    Ecotone ... the kind robots project can be switched to 'normal' and 'playtest'"):
+    Ecotone (weird-humboldt) leaves the focus group the same way. The other three keep
+    their relative order, and every band behind them moves up one more slot unchanged.
+
     The point of this test is unchanged: an agent tidying priority.yaml must not quietly
     reorder the top, and changing it means editing this test with a named human decision
     in the docstring.
@@ -95,7 +100,6 @@ def test_lead_projects_are_the_ones_silas_named():
     order = data.get("order") or []
 
     focus = [
-        "weird-humboldt",
         "emperor-of-dust",
         "rainbow-bullet-hell-space-princess",
         "save-the-plumber",
@@ -103,12 +107,13 @@ def test_lead_projects_are_the_ones_silas_named():
     # 2026-11-09: Silas elevated slime-city to rank 1; the named tier is unchanged behind it.
     assert order[0] == "slime-city"
     order = order[1:]
-    assert len(order) >= 14
-    assert order[:4] == focus
-    assert order[4:8] == ["kind-pinball", "zuzu-lair", "kr-arcade", "zuzu-showdown"]
-    assert order[8] == "memory-dungeon"
-    assert order[9:11] == ["cthulhuquarium", "kind-economy"]
+    assert len(order) >= 13
+    assert order[:3] == focus
+    assert order[3:7] == ["kind-pinball", "zuzu-lair", "kr-arcade", "zuzu-showdown"]
+    assert order[7] == "memory-dungeon"
+    assert order[8:10] == ["cthulhuquarium", "kind-economy"]
     assert order.index("shifting-desks") > order.index("zuzu-shifting-lands")
+    assert order.index("weird-humboldt") > order.index("shifting-desks")
     for finished in ("kapowarr", "ai-art-academy"):
         assert finished not in order
 
@@ -117,18 +122,19 @@ def test_lead_projects_are_the_ones_silas_named():
     assert order.index("mandarin-tutor") > order.index("art-archive")
 
 
-def test_ecotone_high_priority_is_registered_and_pickable():
-    """Silas 2026-10-19: continued Ecotone creative development is high-priority work."""
+def test_ecotone_graduated_to_playtest_normal():
+    """Silas 2026-10-19 made Ecotone high-priority development; 2026-11-18 PT he directed
+    its playtest handoff ("switched to 'normal' and 'playtest'") once the roadmap was done."""
     priority = yaml.safe_load(PRIORITY.read_text(encoding="utf-8")) or {}
     order = priority.get("order") or []
     assert order.count("weird-humboldt") == 1
-    # 2026-11-09: Silas elevated slime-city to rank 1; Ecotone stays directly behind it.
-    assert order.index("weird-humboldt") <= 1
+    # Beside the other playtest games, out of the protected focus band.
+    assert order.index("weird-humboldt") > order.index("shifting-desks")
 
     raw = yaml.safe_load(OVERRIDES.read_text(encoding="utf-8")) or {}
     overrides = {item["slug"]: item for item in raw.get("overrides", [])}
-    assert overrides["weird-humboldt"]["status"] == "active"
-    assert overrides["weird-humboldt"]["priority"] == "high"
+    assert overrides["weird-humboldt"]["status"] == "playtest"
+    assert overrides["weird-humboldt"]["priority"] == "normal"
 
 
 def test_remaining_creative_focus_projects_are_active_and_high_priority():
@@ -140,15 +146,16 @@ def test_remaining_creative_focus_projects_are_active_and_high_priority():
     set to 'playtest' and normal"); the other five stay.
     2026-11-17 PT: Downward Mobility joins playtest at the owner's explicit
     early-access direction. The remaining four stay active/high.
+    2026-11-18 PT: Ecotone (weird-humboldt) joins playtest on Silas's direction
+    ("switched to 'normal' and 'playtest'"). The remaining three stay.
     """
     focus = {
-        "weird-humboldt",
         "emperor-of-dust",
         "rainbow-bullet-hell-space-princess",
         "save-the-plumber",
     }
     data = yaml.safe_load(PRIORITY.read_text(encoding="utf-8")) or {}
-    assert set(data["order"][1:5]) == focus
+    assert set(data["order"][1:4]) == focus
     raw = yaml.safe_load(OVERRIDES.read_text(encoding="utf-8")) or {}
     overrides = {row["slug"]: row for row in raw.get("overrides", [])}
     for slug in focus:
@@ -156,6 +163,8 @@ def test_remaining_creative_focus_projects_are_active_and_high_priority():
         assert overrides[slug]["priority"] == "high", slug
     assert overrides["shifting-desks"]["status"] == "playtest"
     assert overrides["shifting-desks"]["priority"] == "normal"
+    assert overrides["weird-humboldt"]["status"] == "playtest"
+    assert overrides["weird-humboldt"]["priority"] == "normal"
 
 
 def test_control_priority_band_matches_priority_queue():

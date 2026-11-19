@@ -423,12 +423,12 @@ tasks:
       gameplay was created.
   - id: t-072
     title: 'Main-game standard: audit and close the gaps for Ecotone: Weird Humboldt'
-    status: claimed
+    status: done
     milestone: m5
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-18T23:11:37Z'
+    updated: '2026-11-19T00:03:15Z'
     note: |-
       Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -439,9 +439,24 @@ tasks:
       Item 7 (customizable characters) applies "in most cases": if this genre makes it a poor fit, say so in the audit with the reason and leave it for Silas rather than skipping silently.
 
       Achievements are tracked by their own task; this one covers everything else.
+
+      2026-11-18 PT: Last two gaps from STANDARD-AUDIT-2026-11-12 closed in kind_robots#5320.
+      Scrapbook (kr.ecotone.runs.v1): one page per finished weekend, written only by a played
+      step (met/followed guides, decisive checks, ending), shown in Journal and cleared by the
+      collection reset. Guides tab now remembers guides met on earlier weekends.
+      verifyEcotoneScrapbook covers 36 played weekends. Remaining audit row: 15 ending plates
+      (14 mara-* + ecotopia-mdma-dark) stay withheld by the fail-closed reviewHold.ts owner
+      directive (2026-10-22 PT 'keep existing runtime/art suppression in place'). They render
+      the code-drawn fallback scene and are now owner decision t-076, not agent work. Title,
+      settings, save/load, achievements (t-073), endings, characters and replay hooks are all
+      Met.
+
+      2026-11-19 PT: kind_robots#5320 merged (607724d), all 16 checks green. Main-game
+      standard audit closed; the held plates moved to owner call t-076.
     owner: worker
     claimed_by: 20261118T2300Z-ecotone-playtest-k7q2
     claimed_at: '2026-11-18T23:11:37Z'
+    implementation_pr: 'silasfelinus/kind_robots#5320'
 
   - id: t-073
     title: 'Ecotone: Weird Humboldt achievement upgrade: 12 or more live achievements'
@@ -549,7 +564,7 @@ tasks:
   - id: t-007
     milestone: m5
     title: "Deliver integrated preview, simulated balance, accessibility and launch review"
-    status: waiting
+    status: needs-human
     depends_on: [t-003, t-005, t-006, t-016, t-018, t-021]
     owner: null
     passes: 0
@@ -566,7 +581,15 @@ tasks:
       fine." The t-018 battery's finding (careful play reaches hope on every seed; worst-value
       play still reaches hope ~55-83% per companion x lens) is accepted for now; do not add
       difficulty bite unless Silas revisits.
-    updated: '2026-11-05T05:13:30Z'
+
+      2026-11-19 PT: Every build dependency (t-003, t-005, t-006, t-016, t-018, t-021) is
+      done, and the game moved to playtest (PLAYTEST-HANDOFF-2026-11-18.md). FOR SILAS: this
+      gate is only about wider publication and promotion of Ecotone beyond in-site
+      playtesting. Examples: announcing it, sharing it on social media, featuring it on the
+      front page or in outreach. Playtesting at kindrobots.org/play/ecotone needs no decision
+      here. Decide after reading playtest feedback. No recommendation is adopted by default
+      (publish gate).
+    updated: '2026-11-19T00:03:21Z'
   - id: t-008
     milestone: m2
     title: "Prove festival lenses and sober story parity"
@@ -672,7 +695,7 @@ tasks:
   - id: t-015
     milestone: m4
     title: "Build persistent 56-signature gallery and Kind Robots achievements"
-    status: waiting
+    status: done
     depends_on: [t-005, t-012, t-014, t-020]
     owner: null
     passes: 0
@@ -688,10 +711,19 @@ tasks:
       shared achievements catalog, not a bespoke rewards backend.
       Do not invent unlocks or art IDs. Keep gallery text/image fallbacks
       working and obey existing publishing/art gates.
+
+      2026-11-18 PT reconciliation: delivered under the current 84-ending canon, not the
+      superseded 56. The Endings gallery shows X/84 with locked, spoiler-safe slots (aria-
+      labels name no locked ending). The ledger kr.ecotone.endings.v1 persists across refresh
+      and new runs, is deduplicated, and is sanitized against forged IDs. Each card opens a
+      dossier (t-074). Achievements come from the shared catalog, not a bespoke backend: 18
+      weird-humboldt achievements (t-073, verifyEcotoneAchievements), awarded only from played
+      steps. Browser proof: t-016 audit (kind_robots#5320).
+    updated: '2026-11-18T23:29:00Z'
   - id: t-016
     milestone: m5
     title: "Verify viewport-first layout and achievements through mounted browser tests"
-    status: waiting
+    status: done
     depends_on: [t-014, t-015, t-021]
     owner: null
     passes: 0
@@ -708,6 +740,24 @@ tasks:
       duplicate award prevention, keyboard/touch/focus, reduced motion,
       art failure fallback. Do not treat static CSS inspection or
       one screenshot as proof. Release still needs t-007 human gate.
+
+      2026-11-18 PT: utils/scripts/auditEcotoneViewports.browser.mjs (npm run audit:ecotone-
+      viewports) drives the real /play/ecotone in Chromium at 320/375/390, 768/820, 1024x600,
+      1280x720, 1440 and 1920. Saves are engine-played (ecotoneBrowserFixtures.ts: all 84
+      endings earned by seeded play, a mid-run save, a finished run, 30 scrapbook pages).
+      Checks: no document scroll on every tab, the welcome-back title, the beat screen, the
+      end screen and the dossier; 84/84 unlock count; locked slots never name their ending;
+      ledger persists across reload; keyboard focus ring on the tab bar; reduced motion plus
+      blocked art leave no broken images. Result against a local production build: 266/266
+      checks passed. Award dedupe stays in verifyEcotoneAchievements. Release still sits
+      behind t-007.
+
+      2026-11-19 PT: kind_robots#5320 merged (607724d). CI now runs all 27 Ecotone suites and
+      checks the audit fixtures stay engine-reachable. The mounted audit is a local/deploy
+      tool (npm run audit:ecotone-viewports); after the next Force Update, run it against
+      https://kindrobots.org for live evidence.
+    updated: '2026-11-19T00:03:18Z'
+    implementation_pr: 'silasfelinus/kind_robots#5320'
   - id: t-017
     milestone: m2
     title: "Author four optimistic companion routes and personal epilogues"
@@ -752,7 +802,7 @@ tasks:
   - id: t-020
     milestone: m2
     title: "Author 8 core futures and 56 short ending signature paragraphs"
-    status: review
+    status: done
     depends_on: [t-019, t-012, t-017]
     owner: worker
     passes: 0
@@ -774,13 +824,19 @@ tasks:
       (24 new cocaine/meth/mdma) in endings/signatures.yaml already authored and validated;
       added distinctness regression test (unique titles/art/alt text, max pairwise Jaccard
       <0.5). No art or release; awaits Silas creative review (t-004).
+
+      2026-11-18 PT reconciliation: authored and validated 2026-11-03. Its stated wait,
+      creative review t-004, is done. The 56-signature target was superseded by the shipped
+      84-ending canon (6 leads x 7 lenses x hope/dark, utils/ecotone/content.ts ENDING_IDS).
+      Every ending has a dossier title, signature and epilogue (verifyEcotoneEndingDossier).
+      Closed for the playtest handoff; no art or publication implied.
     claimed_by: 2026-11-03T0000Z-wh-t020-a1
     claimed_at: '2026-11-03T18:56:23Z'
-    updated: '2026-11-03T18:57:26Z'
+    updated: '2026-11-18T23:28:57Z'
   - id: t-021
     milestone: m3
     title: "Test all 56 earned signature endings and causal callbacks"
-    status: waiting
+    status: done
     depends_on: [t-019, t-020, t-005, t-018, t-022]
     owner: null
     passes: 0
@@ -797,6 +853,16 @@ tasks:
       global 56/56 achievement. Verify 2x2 payoff combinations from saved choice flags and
       no invented callbacks. Coordinate t-016 one-screen
       browser QA, and preserve art/publication gates.
+
+      2026-11-18 PT reconciliation: verifyEcotone.test.ts asserts all 84 endings have real
+      fully played deterministic witnesses (8,400 seeded campaigns plus Wild Way runs). It
+      also checks 42 hope/42 dark, 14 per lead, every lens can begin each route, save round-
+      trip per seed, met-before-follow integrity, and callbacks only with their flag and scene
+      (max 2). Parents-together invariant: verifyEcotoneCompanionContinuity/CompanionTime.
+      Sober positive routes: verifyEcotoneSoberParity. Dedupe and achievements:
+      verifyEcotoneAchievements. kind_robots#5320 makes CI run all 27 Ecotone suites; 19
+      previously ran in no workflow.
+    updated: '2026-11-18T23:29:03Z'
   - id: t-022
     milestone: m3
     title: "Build seeded random side-stories between stay/follow companion crossroads"
@@ -841,7 +907,7 @@ tasks:
   - id: t-025
     milestone: m3
     title: "Test new opening-lens reachability, callbacks and one-screen UI"
-    status: waiting
+    status: done
     depends_on: [t-024, t-016, t-027]
     owner: null
     passes: 0
@@ -867,6 +933,19 @@ tasks:
       questions, never force a stance or good/dark outcome. All
       all 56 lead x opening x final paths need a credible two-sided stakes
       scene and an earned hybrid choice or meaningful counterargument.
+
+      2026-11-18 PT reconciliation: verified against the shipped game. All seven lenses can
+      open every route, and lens choice never forces a terminal state or ending
+      (verifyEcotone, verifyEcotoneSceneOffers, SoberParity). The mid-run chemistry moment
+      changes currentState, never openingState or the ending ID
+      (verifyEcotoneClarityRecovery). Callbacks need their saved flag and scene; there are no
+      fabricated follow histories, and every ID in the 84/84 ledger is witnessed
+      (verifyEcotone). Value tensions are two-sided, with no mandatory ideology
+      (verifyEcotonePlaystyles: 252/252 sampled groups differ in decisions, state and
+      endings). One-screen epilogue/dossier panels at phone, tablet and desktop: t-016 audit,
+      266/266. Depended on t-027 only for optional new candidates, which now wait on Silas's
+      curation; any kept card enters through the CI suites.
+    updated: '2026-11-18T23:54:31Z'
   - id: t-026
     milestone: m2
     title: "Specify modular finale assembly and 56 ending signatures"
@@ -883,7 +962,7 @@ tasks:
   - id: t-027
     milestone: m2
     title: "Generate and curate high-value middle encounters and art briefs"
-    status: review
+    status: needs-human
     depends_on: [t-026, t-022]
     owner: worker
     passes: 0
@@ -906,13 +985,28 @@ tasks:
       plus scripts/validate_weird_humboldt_candidates.py (dedupe, 2-4 consequences,
       exclusion/unsafe-content scan, provenance). Next: Silas Keep/Modify/Reject; then convert
       kept ones to cards.
+
+      2026-11-18 PT: Generation and validation are finished; what remains is Silas's curation
+      call, which the task reserves to him. FOR SILAS: 8 optional middle-encounter candidates
+      sit in projects/weird-humboldt/candidates/MIDDLE-CANDIDATES-2026-11-09.yaml (MC-001 'The
+      Hearing Where Both Experts Were Right' through MC-008 'A Dam Nobody Wanted to Name').
+      Each is a short value-conflict scene with 2-4 consequences, already deduped and
+      stereotype-scanned. Mark each Keep, Modify or Reject in its curation.decision. They are
+      additions, not gaps: the shipped game already has ~180 authored cards and all 84 endings
+      reachable, so playtest does not wait on this. RECOMMENDATION: let playtesters play
+      first, then keep only the candidates that fill a pacing hole testers report. Kept ones
+      become playtest_iteration tasks (convert to cards, run the CI suites). Unanswered by
+      2026-11-25 PT: adopt 'reject all for now, revisit after playtest feedback' under the
+      default-recommendation rule.
     claimed_by: 2026-11-09T12:47:22Z-agent
     claimed_at: '2026-11-09T12:47:23Z'
-    updated: '2026-11-09T12:48:35Z'
+    updated: '2026-11-18T23:29:26Z'
+    gate_human: true
+    gate_reason: creative-approval
   - id: t-028
     milestone: m3
     title: "Validate 2x2 ending callbacks and eight-core composition"
-    status: waiting
+    status: done
     depends_on: [t-026, t-027, t-021]
     owner: null
     passes: 0
@@ -930,6 +1024,15 @@ tasks:
       ideology or substance morality gates, Cedar family
       invariant and 56/56 gallery completion. No art
       or public release approval.
+
+      2026-11-18 PT reconciliation: 2x2 earned-flag pairs are proven per region.
+      verifyEcotoneCausalForest (seam/slug paired negotiations), CausalKinetic (sunk/upright x
+      photo, all four outcomes from new games) and CausalQuiet (tracks/photo, all four earned
+      results) cover them, each with saved-ID stability and forged-choice rejection. Every one
+      of the 84 IDs resolves one future plus signature, with at most two source-backed
+      callbacks (verifyEcotone audit). No ideology or substance gate: verifyEcotonePlaystyles
+      and SoberParity. Cedar invariant: CompanionContinuity. One-screen layout: t-016 audit.
+    updated: '2026-11-18T23:29:06Z'
   - id: t-029
     milestone: m4
     title: "Ship the Ecotone Play front page and playable prologue slice"
@@ -1525,12 +1628,12 @@ tasks:
     implementation_pr: 'silasfelinus/kind_robots#4310'
   - id: t-070
     title: "Ecotone: Weird Humboldt — Master Roadmap to Verified Playtest Readiness"
-    status: ready
+    status: done
     stakes: reversible
     owner: worker
     passes: 0
     source_issue: "silasfelinus/kind_robots#4145"
-    updated: '2026-11-18T20:21:20Z'
+    updated: '2026-11-19T00:03:24Z'
     note: |-
       2026-11-18 PT owner directive supersedes the historical FINAL CREATIVE
       APPROVAL language below: the finite roadmap closes at agent-verified
@@ -1576,6 +1679,15 @@ tasks:
       mid-beat (kind_robots#5317). Verified via local nuxi dev + Playwright at 390 and 1440
       widths. Umbrella stays open. Next from that audit: 15 missing ending plates (14 Mara +
       ecotopia-mdma-dark); guides-met and per-run scrapbook pages.
+
+      2026-11-19 PT: The master roadmap reached verified readiness for human tests, so the
+      finite build queue is empty. Under the playtest policy (AGENTS.md 'Human gates'), the
+      roadmap ends at that verified readiness. The final subjective design approval named in
+      the issue happens after playtesting, outside this roadmap. Owner calls left open: t-007
+      (publish), t-027 (optional candidates), t-075 and t-076 (creative). Handoff:
+      projects/weird-humboldt/PLAYTEST-HANDOFF-2026-11-18.md. kind_robots#4145 is renamed
+      'ready for human tests' and closed as completed. That closure records agent production
+      being complete, not human acceptance.
     implementation_pr: 'silasfelinus/kind_robots#5317'
   - id: t-071
     milestone: m2
@@ -1619,5 +1731,36 @@ tasks:
       'follow' resetting the party ('together' already grows crews to 3-4). If adopted, close
       this as done with no code change. If Silas picks otherwise, set the task to ready and
       scope the chosen change in kind_robots.
+    claimed_by: null
+    claimed_at: null
+
+  - id: t-076
+    milestone: m4
+    title: "Ecotone owner call: paint the 15 withheld ending plates (Mara x 14, ecotopia-mdma-dark) or keep the fallback"
+    status: needs-human
+    gate_human: true
+    gate_reason: creative-approval
+    depends_on: []
+    owner: worker
+    passes: 0
+    stakes: reversible
+    updated: '2026-11-18T23:40:00Z'
+    note: |-
+      Split from t-072 (main-game standard audit, 2026-11-18 PT). 69 of 84 ending plates are
+      painted in all four styles. The other 15 (all 14 endings/mara-* plus
+      endings/ecotopia-mdma-dark) are withheld by the fail-closed hold in kind_robots
+      utils/ecotone/reviewHold.ts. Silas's 2026-10-22 PT directive says to keep existing
+      runtime/art suppression in place, and the file says removal needs a separate documented
+      review and owner signoff. So this is the owner's call, not agent work. In play these
+      endings show the code-drawn scene fallback with full text, title, epilogue and dossier.
+      Nothing is broken or blank.
+      FOR SILAS: (1) Approve a NEW Mara visual design for ending plates: a fictional,
+      independent Humboldt tattoo artist with her studio, apprentices and the six-winged bird
+      design, and no tribal, reservation or culturally coded imagery (EXCLUDED-CONTENT-2026-10-22.md)?
+      (2) Re-render ecotopia-mdma-dark without the portrait that triggered the hold?
+      RECOMMENDATION: yes to both. An agent writes 15 literal prompts, queues them x4 styles
+      through ART-STANDARD.yaml (auto_submit), narrows reviewHold.ts so new renders show while
+      every old held asset stays held, and adds a test for that. Until then, playtest uses the
+      fallback. Creative and cultural judgment, so no default adoption: this waits for Silas.
     claimed_by: null
     claimed_at: null
