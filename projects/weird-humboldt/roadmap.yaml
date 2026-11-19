@@ -1755,14 +1755,14 @@ tasks:
   - id: t-076
     milestone: m4
     title: "Ecotone owner call: paint the 15 withheld ending plates (Mara x 14, ecotopia-mdma-dark) or keep the fallback"
-    status: needs-human
+    status: done
     gate_human: true
     gate_reason: creative-approval
     depends_on: []
     owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-11-18T23:40:00Z'
+    updated: '2026-11-19T03:33:44Z'
     note: |-
       Split from t-072 (main-game standard audit, 2026-11-18 PT). 69 of 84 ending plates are
       painted in all four styles. The other 15 (all 14 endings/mara-* plus
@@ -1780,8 +1780,19 @@ tasks:
       through ART-STANDARD.yaml (auto_submit), narrows reviewHold.ts so new renders show while
       every old held asset stays held, and adds a test for that. Until then, playtest uses the
       fallback. Creative and cultural judgment, so no default adoption: this waits for Silas.
+
+      2026-11-19 PT DECIDED by Silas in session: the withheld plates 'should be generated'. A
+      new Mara design was written: a fictional independent tattoo artist with a dark bob,
+      bangs, freckles and botanical forearm tattoos, and no cultural coding. 19 pictures x 4
+      styles were rendered (ArtJob 69917-69992): her 14 plates, ecotopia-mdma-dark, her guide
+      portrait and the KN-1 card and two outcomes. They are exported under reviewed/<key>
+      (kind_robots#5325 allowlist, #5331 art). Original held renders stay unserved and WH-121
+      stays excluded. One Comic render was withdrawn on review (blood-like droplets) and falls
+      back to Painted.
     claimed_by: null
     claimed_at: null
+    approved_by_human: true
+    implementation_pr: 'silasfelinus/kind_robots#5331'
 
   - id: t-077
     milestone: m4
