@@ -24,6 +24,8 @@
 
 ## Verification on record
 
+- **100% art coverage** (2026-11-19, t-079): every card (171), choice outcome (680) and ending (84) has its own painted picture in the default style, and `verifyEcotone` now fails if one ever goes missing. This came from 542 rendered-but-unshipped outcomes (kind_robots#5343), 8 missing cards and 194 new outcome pictures (#5346, #5358). Eight off-prompt tag-style renders were withdrawn and fall back to Painted.
+
 - **27 Ecotone CI suites now run on every Ecotone PR** (kind_robots#5320). 19 of them previously ran in no workflow. They cover all 84 endings witnessed by real seeded play, 8,400-campaign and 1,764-journey adversarial audits, sober parity, the 2x2 causal chains, companion continuity, the Cedar invariant, and save round-trips.
 - **Mounted browser audit** `npm run audit:ecotone-viewports` runs at nine sizes, 320 to 1920, including short landscape. With engine-played saves, it checks:
   - no document scroll on any tab, the title, the beat screen, the end screen or the dossier
@@ -43,9 +45,9 @@ Decided by Silas, 2026-11-19 PT ("we are expecting all roadmaps before human tes
 - **t-075 (done):** The Long Table stays a coda, and following someone new still resets the travel party.
 - **t-027 / t-077:** all eight middle-encounter candidates were built as cards (see below).
 
-Still open, and after human testing:
+- **t-007 (cancelled):** "Wider publication and promotion should not be a part of the roadmap. It can be closed." Publication and promotion are decided outside the roadmap, and nothing here authorizes them.
 
-- **t-007:** wider publication or promotion of Ecotone (`gate_reason: publish`).
+**Nothing is open before human testing.** The only remaining step is the Unraid Force Update that deploys this work. Optional polish such as t-078 (re-rendering three withdrawn Comic pictures) runs as playtest iterations.
 
 ## Human playtest checklist
 
