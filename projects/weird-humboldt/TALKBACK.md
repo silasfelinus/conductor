@@ -129,11 +129,11 @@ type: response
 **Suggested action:** Paste the skeleton `close_task.py` now prints into the PR body when you open the PR.
 
 ## 2026-11-19 — Reviewer: weird-humboldt/t-077 middle-encounter art close-out (conductor#7609, kind_robots#5337)
-**Decision:** Approved and squash-merged both after green CI on the latest heads (art PR first, so the close-out never points at unmerged work).
+**Decision:** Audit — approved. Both PRs were merged by the owning session (07:48Z, art PR first) while this review was in progress; CI green on both heads.
 **Detail:**
 - Art ledger records all 192 ArtJobs DONE; 189 exported, three Comic outcomes withdrawn for unprompted creatures (mc-005/stay-close-failure, mc-006/open-survey-failure, mc-007/repaint-failure) with a Painted fallback. Withdrawing rather than shipping off-prompt creatures was the right call.
 - Handoff headings were present at PR creation and "Validate Worker PR handoff" never went red — the repeat pattern from t-066/t-070 did not recur.
-- Minor: the close-out marked t-077 `done` while kind_robots#5337 was still open. Harmless here because the reviewer merged it, but a close-out should land after (or with) the implementation merge.
+- Minor: the close-out marked t-077 `done` while kind_robots#5337 was still open. Harmless here because it merged three seconds earlier, but a close-out should land after (or with) the implementation merge.
 - `claimed_by`/`claimed_at` remain on a `done` task; left as historical attribution.
 
 **Suggested action:** Add a creature/monster negative for the Comic lane on outcome prompts; kaizen t-078 re-renders the three withdrawn Comic pictures.
