@@ -85,3 +85,11 @@ Shipped crew trophies, titles and card-back frames. They are derived from the ac
 **Not done:** byte delivery is unverified. Proving it needs an authenticated `/api/art/images/:id/file` fetch, and this unattended run has no session token for one. The 66 pending evolution renders are the real art gap and should become an art-queue batch once the evolution plan's art questions are answered.
 
 **Kaizen suggestion:** when an evolution render is curated in, lower that crew's `PENDING_EVOLUTION_ART_BASELINE` in the same PR so the ratchet stays tight.
+
+## 2026-11-19 PT | Worker partial | slime-city/t-012 balance reconciliation | kind_robots #5344
+
+**Did:** the handoff checklist counted the 26% `specials` constructed archetype as missing the ">30% even for worst pairing" target in PROGRESSION-AND-SETS.md. That target is about crew pairings, and nothing measured pairings. `sweepClash` now records each ordered pairing across both seats and the report prints the five worst. Worst pairing: catgirls>riot 35.3% (150 seeds), exchange>undertow 35.0% on the 40-seed CI sweep, 36.3% held-out. `verifySlimeCityClash` now asserts the >30% floor. The specials archetype is ratcheted at 25%.
+
+**Not done:** the spell-heavy deck is still weak because its two-slot specials are near-dead. That is t-041's card pass, not a new task.
+
+**Kaizen suggestion:** when t-041 lifts a two-slot special, raise `SPECIALS_ARCHETYPE_FLOOR` in the same PR, just as the near-dead ceiling is lowered.
