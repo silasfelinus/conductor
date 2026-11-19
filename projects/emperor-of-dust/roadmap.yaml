@@ -1108,7 +1108,7 @@ tasks:
   - id: t-051
     milestone: m5
     title: "Twenty-follower barracks dialogue: rewrite branches and submit conversation art"
-    status: review
+    status: ready
     passes: 0
     stakes: reversible
     note: |-
@@ -1138,11 +1138,9 @@ tasks:
       remaining scope.
 
       Scoped Kiyo canon correction in Kind Robots branch worker/emperor-of-dust-t-051-kiyo-canon-6b9f. F003 metadata incorrectly advertised a seventh romance on the barracks screen and in Playbook Forge, despite a six-person canonical romance roster and Kiyo's existing friendship/medical-ethics story. Corrected only the romanceable flag and pinned the exact six ids in the fortress contract. Legacy dialogue IDs and save flags remain unchanged. Exact-head PR CI still required. Conversation art, fuller line-by-line voice acceptance and actual art export remain unfinished.
-    updated: '2026-11-19T10:02:00Z'
-    owner: worker
-    claimed_by: 20261119T095700Z-eod-t051-canon-voice-6b9f
-    claimed_at: '2026-11-19T09:57:00Z'
-    implementation_pr: 'silasfelinus/kind_robots#4817'
+
+      2026-11-19 PT: Kind Robots #5341 merged as 0b37cf69ff949dcbf93295606d9040e67dda82f5 after all seven exact-head workflows completed successfully on 108e48dd53d4fb534bf83ed6b0baec0b64224dc1, including Emperor Dispatch, four Contract Tests shards, TypeScript, Prettier and Layout. Kiyo F003 now correctly remains a starter but is non-romanceable per the six-person F001/F002/F006/F007/ F016/F018 canon. Barracks and Playbook no longer label her available for romance. Existing kiyo-romance-2 legacy dialogue ID, friendship choices, effects and saved runs are unchanged. Full 125-talk line-level voice acceptance and rendered conversation art curation/export/delivery remain undone. Return this partial task to ready, not done.
+    updated: '2026-11-19T10:12:00Z'
   - id: t-052
     milestone: m5
     title: "Illustrated scene delivery and full 50-day choice-and-art coverage audit"
