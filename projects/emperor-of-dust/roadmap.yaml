@@ -203,12 +203,12 @@ tasks:
     claimed_at: '2026-11-12T01:00:34Z'
   - id: t-066
     title: 'New-reign carry-overs: ending-earned unlocks that change the next run'
-    status: claimed
+    status: review
     milestone: m5
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-19T02:51:00Z'
+    updated: '2026-11-19T03:04:00Z'
     owner: worker
     claimed_by: 2026-11-19T025100Z-eod-t066-f28bd
     claimed_at: '2026-11-19T02:51:00Z'
@@ -223,6 +223,8 @@ tasks:
       endings and legacy writ) plus #5103/#5104 (chronicle/scrapbook) merged, so 'PR pending
       CI' is stale. Remaining per this note: the UI selector and the full ending-family unlock
       design. Released from review to ready.
+
+      Feature commit ca369584: eight ending-specific starting favors and a no-favor choice; fixed new-run legacy application; Chronicle selector and title-screen preview; backwards-compatible stored preferences and regression assertions. Exact-head GitHub Actions required before merging.
   - id: t-067
     title: 'Main-game standard: audit and close the gaps for Emperor of Dust'
     status: review
