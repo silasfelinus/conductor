@@ -1818,3 +1818,20 @@ tasks:
       routes. Art: art/MIDDLE-ENCOUNTERS-2026-11-19.yaml, 8 cards + 40 outcomes x 4 lanes =
       192 ArtJobs (69993-70184).
       Next: merge the kind_robots PR; export renders when done; close.
+  - id: t-078
+    milestone: m4
+    title: "Ecotone: re-render the 3 withdrawn middle-encounter Comic outcomes with a no-creature negative so all 48 pictures ship in four styles"
+    status: ready
+    playtest_iteration: true
+    depends_on: [t-077]
+    owner: worker
+    passes: 0
+    stakes: reversible
+    updated: '2026-11-19T08:00:00Z'
+    note: |-
+      Reviewer kaizen from t-077 (kind_robots#5337). Three Comic renders drew unprompted
+      creatures and were withdrawn (mc-005/stay-close-failure, mc-006/open-survey-failure,
+      mc-007/repaint-failure); they fall back to Painted. Add "creature, monster, giant" to the
+      Comic-lane negative for these prompts, re-queue 3 ArtJobs via
+      art/MIDDLE-ENCOUNTERS-2026-11-19.yaml, review the contact sheet, export and regenerate
+      artManifest.ts. Done when all 48 middle-encounter pictures have four accepted styles.
