@@ -3,10 +3,6 @@ name: Emperor of Dust private ending-art review
 # One-use, encrypted intake only. No private image pixels or contact sheet
 # are ever uploaded unencrypted or committed to this public repository.
 on:
-  push:
-    branches: [main]
-    paths:
-      - '.github/workflows/emperor-of-dust-private-art-review.yml'
   workflow_dispatch:
 
 permissions:
@@ -21,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     env:
-      KR_BASE_URL: https://kindrobots.org
+      KR_BASE_URL: https://kind-robots.vercel.app
       KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
     steps:
       - uses: actions/checkout@v4
