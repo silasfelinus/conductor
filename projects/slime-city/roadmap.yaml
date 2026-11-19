@@ -977,8 +977,8 @@ tasks:
   - id: t-041
     milestone: m2
     title: "CLASH 300: individually crafted L1/L2/L3 effects for every existing card"
-    status: review
-    updated: '2026-11-19T15:11:30Z'
+    status: ready
+    updated: '2026-11-19T15:21:30Z'
     depends_on: [t-037, t-051]
     passes: 0
     stakes: reversible
@@ -1151,10 +1151,20 @@ tasks:
       seeds. The Exchange two-slot spells crowd each other out, so they need a design pass,
       not per-card nudges. Riot is 43.6% (45.8/44.9 held-out), inside the band. Next: a two-
       slot special redesign to push the 18 down. Back to ready.
+
+      2026-11-19 PT: MERGED kind_robots#5347 (squash e894b7e, head aa521ae; all 12 checks
+      green). CLASH_CPU_TWO_SLOT_MARGIN 2 -> 0: the margin, not the cards, was starving most
+      two-slot specials once #5315 lifted Riot. Constructed QA 3,120 bouts: near-dead two-slot
+      18 -> 8; held-out +5000 dead 2 -> 0, near-dead 16 -> 7; +9000 dead 2 -> 0, near-dead 17
+      -> 6. Crews 43.3-55.0% (Riot 43.3%), first seat 52.3%; riot/heavy 32.2 -> 27.9% is the
+      deck to watch; 4,500-game starter balance report unchanged; ceilings ratcheted (18->8,
+      held-out 2->0, 16->7). Still near-dead: Juggernaut, Chimera, Grease Oracle, Spare Nine
+      Lives, Glitterglass Flood, Breeding Hunger, Compound Notice, Acquisition Clause. Next:
+      CLASH-only L1 stage sparing the caster's adjacent fighters for the self-splash blasts
+      (Glitterglass Flood, Dress Rehearsal Pyro), then per-card passes on the rest. Back to
+      ready.
     owner: worker
     implementation_pr: 'silasfelinus/kind_robots#5347'
-    claimed_by: 20261119T145800Z-sc-t041-twoslot-c7
-    claimed_at: '2026-11-19T14:49:46Z'
   - id: t-042
     milestone: m2
     title: "Curate and wire the ogre redo-3 tokens: Picket Line Troll, Coal Cart Racer, Union Lunch Lady"
