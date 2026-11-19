@@ -1,0 +1,16 @@
+version: 1
+project: game-of-captains
+task: t-041
+operation: review
+owner: worker
+session: 20261119T231100Z-space-couch-t041-voyage-ledger-k8p5
+updated: '2026-11-19T23:13:47Z'
+note: >-
+  2026-11-19 PT: next scoped t-041 improvement on worker/game-of-captains-t-041-voyage-ledger-k8p5.
+  Added versioned and bounded completed-voyage archive with dedicated localStorage
+  key, final-run dossiers covering captain, selected crew, decisions, losses,
+  ending prose, saved log and play dates, plus safe v1 restore/duplicate handling.
+  Existing voyage v1 save key and stable game identifiers unchanged. Added
+  source and deterministic contract tests. Implementation PR, exact-head CI and
+  merge pending. This is a partial standard improvement; settings, account-save
+  checks, ending plates, visual QA and final t-041 are not complete.
