@@ -106,6 +106,12 @@ def validate(e: dict) -> list[str]:
                 problems.append(f"shot {index} missing {field}")
         if isinstance(shot.get("image_prompt"), str):
             problems.extend(f"shot {index} {p}" for p in paint_prompt_problems(shot["image_prompt"]))
+        # MV18's s3 GPU clip baked garbled fake subtitles into the picture: the
+        # motion model paints lettering it reads, exactly like the still model.
+        if isinstance(shot.get("motion_prompt"), str):
+            found = PAINT_GUARDS["lettering"].search(shot["motion_prompt"])
+            if found:
+                problems.append(f"shot {index} motion lettering: {found.group(0)}")
         try:
             start, end = float(shot["start"]), float(shot["end"])
             if abs(start - cursor) > .01 or end <= start or end > 15.001:
