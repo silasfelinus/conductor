@@ -39,7 +39,7 @@ Legend: ✅ automated evidence on main · 🟡 partial · ⬜ open
 | --- | --- | --- |
 | Gamepad, keyboard and touch play a full match | ⬜ | Needs a browser-driven pass |
 | Rendered 390 / 768 / 1440 / XL layouts | 🟡 | `audit:slime-city-clash-layout`; earlier captures are in `playtest/`. Re-capture on current main |
-| Real delivered ArtImages in every required slot (fallbacks otherwise) | ⬜ | Reconcile the art manifest against delivered ArtImage IDs |
+| Real delivered ArtImages in every required slot (fallbacks otherwise) | 🟡 | Manifest reconciled 2026-11-19 PT in `verifySlimeCityArtCoverage.test.ts` (kind_robots#5327, in `test:slime-city-lab`): 300/300 cards have base art; all 1,353 ArtImage ids are unique (none borrowed); every evolution key names a real card stage; every card at L1–L3 and on both branches resolves to its own painting. 66 cards still have no L2/L3 painting and show an earlier stage (bloodfairies 14, undertow 12, ironjaw/riot/exchange/mercenary 10 each, catgirls 0). A per-crew ratchet holds that count, so lower the baselines as renders land. Still open: an authenticated byte-delivery spot check, and the 66 pending evolution renders |
 
 ## Human-owned, outside this checklist
 

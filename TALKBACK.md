@@ -12824,3 +12824,9 @@ Reviewed worker/slime-city-priority-20261109 (Silas, priority.yaml only, reversi
 - Reviewer: select_role still listed `worker/conductor-t-211-playtest-closeout-20261118-pc7f2`. Every script, doc and SOURCE_OF_TRUTH change on it is byte-identical on main (#7590). Main also carries the CI fixture fix, and newer task-event state for slime-city/t-012 and weird-humboldt/t-070. Nothing to merge. Remote deletion was refused in this sandbox, so the branch stays until `branch-janitor` (`force_delete_branches`) clears it.
 - Left `worker/chessweeper-priority-20261118` alone. It was 10 minutes old with no PR, so a session is likely still working on it. It changes chessweeper `priority: normal` → `high` with no Silas citation in the override comment, and every other priority change in project-overrides.yaml quotes him. Its owning session should add the citation, or Silas should confirm the change, before it merges.
 - Worker slice: slime-city/t-012 constructed balance re-run on kind_robots main be2745d. All crews are inside 40–60%. The `specials` archetype is under the 30% floor (26% overall). Details are in PLAYER-HANDOFF-CHECKLIST.md.
+
+## 2026-11-19 PT | Reviewer (unattended) | worker branch triage
+
+- `worker/conductor-t-211-playtest-closeout-20261118-pc7f2`: closed PR #7589 was superseded by #7590, which is merged. The branch is stale and safe for the branch janitor to delete.
+- `worker/chessweeper-priority-20261118` (1 commit, chessweeper `priority: normal` → `high`): still not merged and has no PR after about 70 minutes. It still has no Silas citation in the override comment, `CONTROL.md`, `SILAS-NOTES.yaml` or kind_robots#5304, and changing priority is a human steering decision. Silas should confirm it before a PR is opened. Delete the branch if he doesn't.
+- With no reviewable PRs left, I fell through to ready work on slime-city/t-012 (art reconciliation, kind_robots#5327).
