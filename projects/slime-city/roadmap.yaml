@@ -507,7 +507,7 @@ tasks:
   - id: t-012
     milestone: m4
     title: "Full card and campaign coverage, prototype evaluation and visual QA"
-    status: claimed
+    status: ready
     depends_on: [t-010, t-011]
     passes: 0
     stakes: reversible
@@ -556,11 +556,17 @@ tasks:
       DONE renders, wire SLIME_CITY_ART.evolutions['<id>@2'|'@3'], lower the ratchet baseline.
       Remaining: signed-in keyboard/touch input run, real-controller gamepad check, re-capture
       after #5332, CLASH 300 closeout (t-041). Released back to ready.
-    updated: '2026-11-19T18:47:20Z'
+
+      2026-11-19 PT partial (evolution art wired): all 132 EVOLUTIONS-REMAINING Krea renders
+      finished. Contact-sheet curation kept 130 and rejected s1-pocket-punk@2 (real soft-drink
+      logo) and fusevest@2 (headless torso crop); verdicts recorded in the ledgers.
+      kind_robots#5354 wires the 130 into SLIME_CITY_ART.evolutions and lowers the ratchet
+      from 66 pending to 2 (298/300 cards with L2+L3 art). Remaining: rerender those two L2
+      stages, signed-in keyboard/touch input run, real-controller gamepad check, re-capture
+      after #5332, CLASH 300 closeout (t-041). Released back to ready.
+    updated: '2026-11-19T18:51:59Z'
     owner: worker
-    implementation_pr: 'silasfelinus/kind_robots#5345'
-    claimed_by: session_01L5NKxci6E4ZudN7SDvVzP6
-    claimed_at: '2026-11-19T18:47:20Z'
+    implementation_pr: 'silasfelinus/kind_robots#5354'
 
   - id: t-013
     milestone: m1
