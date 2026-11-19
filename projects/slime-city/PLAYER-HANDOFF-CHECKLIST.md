@@ -23,7 +23,7 @@ Legend: ✅ automated evidence on main · 🟡 partial · ⬜ open
 | Check | State | Evidence / next step |
 | --- | --- | --- |
 | CLASH 300 L1/L2/L3 evolution coverage | 🟡 | t-041 is still `ready`. `verifySlimeCityEvolutions.test.ts` covers the crafted sets. Close it out when t-041 lands |
-| Constructed-deck balance across crews | 🟡 | `verifySlimeCityClashConstructed.test.ts`, `verifySlimeCityFactionBalance.test.ts`; re-run `balance:slime-city-clash` and record win spreads |
+| Constructed-deck balance across crews | 🟡 | Re-run 2026-11-18 PT on kind_robots main `be2745d`. `balance:slime-city-clash` (150 seeds × 9000 offset, 4,500 CPU games, both seats): first seat 51.2%, draws 0.0%, round-limit 0.1%, avg 9.3 rounds; crews catgirls 41.7 · bloodfairies 51.6 · ironjaw 50.7 · riot 50.5 · undertow 51.9 · exchange 53.6 (11.9-pt spread, all inside the 40–60% target, catgirls at the low edge). `verifySlimeCityClashConstructed.test.ts` PASS: 3,120 bouts over 30 legal 20-card decks, first seat 52.4%, crews 43.6–54.4%; 0 dead and 18 near-dead two-slot cards, held-out +5000 has 2 dead (`s2-bloodfairies-glitterglass-flood`, `s3-exchange-compound-notice`). Open: the `specials` archetype wins 26% overall (riot/specials 17.3%, ironjaw/specials 20.7%, under the 30% worst-case floor in PROGRESSION-AND-SETS.md) while `fighters` wins 69%. Re-run after t-041 lands before calling this ✅ |
 | Resource exploits (double claims, pack duplication, wallet races) | ✅ | `verifySlimeCityStore.test.ts`, `verifySlimeCityAccountBoundary.test.ts`, `verifySlimeCityProgression.test.ts` |
 
 ## Multiplayer and accounts
