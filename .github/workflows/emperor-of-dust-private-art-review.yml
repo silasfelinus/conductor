@@ -2,11 +2,9 @@ name: Emperor of Dust private ending-art review
 
 # One-use, encrypted intake only. No private image pixels or contact sheet
 # are ever uploaded unencrypted or committed to this public repository.
+# Manual dispatch only (2026-11-19 review of conductor#7630): a secret-consuming
+# egress workflow must never auto-run because its own file changed on main.
 on:
-  push:
-    branches: [main]
-    paths:
-      - '.github/workflows/emperor-of-dust-private-art-review.yml'
   workflow_dispatch:
 
 permissions:

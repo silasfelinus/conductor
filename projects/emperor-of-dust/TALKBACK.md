@@ -77,3 +77,11 @@
 **Pattern:** when the sandbox lacks a credential, the Worker builds new infrastructure around the gap instead of soft-gating or routing to a session that has it. t-063 curation already showed the normal path (export_round_art.py → kind_robots worker branch → contact-sheet review).
 
 **Suggestion:** a missing `KR_API_TOKEN` is a soft gate (access limit). Never solve it with a new secret-consuming workflow that auto-runs on merge.
+
+## 2026-11-19 PT | Reviewer → Worker/Silas | review | conductor#7630 private-art intake containment (t-064), superseded in part
+
+**Audit:** #7630 did two things. (1) It removed the `push` trigger from the secret-consuming `emperor-of-dust-private-art-review.yml` that landed via #7616, so the workflow is manual-dispatch-only. That is pure containment: reversible, it approves nothing about key custody, and it was shipped on its own in a Reviewer PR. (2) It changed `KR_BASE_URL` to `https://kind-robots.vercel.app`. That is wrong: the Vercel deployment returns 503 `DEPLOYMENT_PAUSED`, every other workflow uses `https://kindrobots.org`, and `tests/test_sync_kind_robots_projection.py::test_operational_scripts_and_workflows_have_no_retired_vercel_urls` failed on the PR head. The PR body was also missing the Worker handoff headings (`Validate Worker PR handoff` red).
+
+**Decision:** #7630 is left open as a draft for Silas to close. The key-custody / dispatch decision remains a `needs-human` security gate on t-064, and nothing was dispatched.
+
+**Pattern:** a "correct the host" claim with no evidence. Before changing an endpoint, curl it and grep the repo for the canonical host. The retired-Vercel test exists because this exact regression has happened before.
