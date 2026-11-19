@@ -85,12 +85,12 @@ tasks:
       Full history: projects/game-of-captains/HISTORY.md#t-001
   - id: t-041
     title: 'Main-game standard: audit and close the gaps for Space Couch'
-    status: claimed
+    status: review
     milestone: m4
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-19T23:11:00Z'
+    updated: '2026-11-19T23:13:47Z'
     note: |-
       Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -111,6 +111,8 @@ tasks:
       2026-11-19 PT scoped main-game standards pass on worker/game-of-captains-t-041-20261119t2251-r7q9: title (Partial: Achievements button and live strip implemented pending CI); settings (Partial: title and Kit still split); save/load (Partial: local v1 voyage, account-backed alien guide only); achievements (Partial: 12+ catalog code, live award/API unverified); scrapbook (Partial: species, moments and endings, no completed voyage pages); multiple endings (Partial: paintings incomplete); characters (Met: captain, crew and origin choices); replay (Met: constellation, randomized episodes, collectible aliens and branching). This is the first small PR for title Achievements access; more t-041 work remains. Never close as done from this slice.
 
       2026-11-19 PT: Kind Robots PR #5359 merged as 05a100315ab9c15ac5e9115f20ef84116703d77d. Seven of seven original exact-head workflow groups completed success, including all four contract shards; title Achievements access and existing global award display landed. Partial t-041 only. Remaining: persistent finished-voyage log, unified settings, save compatibility and delivery/visual acceptance.
+
+      2026-11-19 PT: next scoped t-041 improvement on worker/game-of-captains-t-041-voyage-ledger-k8p5. Added versioned and bounded completed-voyage archive with dedicated localStorage key, final-run dossiers covering captain, selected crew, decisions, losses, ending prose, saved log and play dates, plus safe v1 restore/duplicate handling. Existing voyage v1 save key and stable game identifiers unchanged. Added source and deterministic contract tests. Implementation PR, exact-head CI and merge pending. This is a partial standard improvement; settings, account-save checks, ending plates, visual QA and final t-041 are not complete.
     owner: worker
     claimed_by: 20261119T231100Z-space-couch-t041-voyage-ledger-k8p5
     claimed_at: '2026-11-19T23:11:00Z'
