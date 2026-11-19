@@ -9,7 +9,7 @@
 - **Three weekend routes:** the Green Ribbon Fair, the Kinetic Grand Championship and the Quiet Way. All three run through six regional chapters, about 180 authored cards, seeded draws, and 2d6 checks with real setbacks.
 - **Seven opening lenses**, from Sober to Tripping Balls plus three chemical detours. None of them forces an outcome.
 - **Four guides** (Mara, Kit, Juniper, Cedar), with stay/follow crossroads, optional companion time and the chosen-family coda. You can also finish alone or take the Wild Way.
-- **84 collectible endings** (6 leads x 7 lenses x hopeful/dark). Each has a dossier with signature, epilogue and picture. 69 have painted plates in four art styles; the rest use the code-drawn fallback (see t-076).
+- **84 collectible endings** (6 leads x 7 lenses x hopeful/dark). Each has a dossier with signature, epilogue and picture. **All 84 have painted plates in four art styles** (2026-11-19: Mara's 14 plates and `ecotopia-mdma-dark` re-rendered from a new, non-culturally-coded Mara design, t-076).
 - **Twelve once-per-run local mysteries** with Case Files and 36 Real Endings.
 - **Main-game standard:**
   - welcome-back title screen
@@ -19,6 +19,8 @@
   - a Scrapbook page per finished weekend
   - a Guides tab that remembers who you've met
   - 12 avatars, 6 personalities and 7 origin archetypes
+
+- **Eight new middle encounters** (2026-11-19, t-077): a harbor diner buyout, a Hammond Trail mural, a culvert hearing, a food-share rule, a ridge radio forecast, a shared fire-break survey, a quiet person at a festival gate, and a dam nobody named. They sit two per region in chapters 2-5, each with an earned finale callback. Their 192 pictures are rendering; until they land, those cards use the code-drawn scene.
 
 ## Verification on record
 
@@ -33,12 +35,17 @@
 - The four companion-time scene pictures (CT-MARA/KIT/JUNIPER/CEDAR-01) had written prompts but were never queued. They're now queued in `art/WRITTEN-BACKLOG-2026-11-19-ECOTONE.yaml` (private, auto_submit) and render without further agent work. The Mara scene shows only her studio, not her. Until the renders land, those four scenes use the code-drawn fallback.
 - kind_robots#5321 fixed a production build break (Deepheart) found during this work. Without it, the next deploy would have failed.
 
-## Open owner decisions (not blockers for playtest)
+## Owner decisions
 
-- **t-076:** paint the 15 withheld ending plates (14 Mara + `ecotopia-mdma-dark`) from a new, non-culturally-coded Mara design? Recommendation: yes.
-- **t-075:** should the Long Table get its own ledger slot, and should the crew come along past the crossroads? Recommendation (adopted 2026-11-24 PT if unanswered): keep both as they are.
-- **t-027:** Keep/Modify/Reject eight optional middle-encounter candidates. Recommendation: decide after playtest feedback.
-- **t-007:** wider publication or promotion of Ecotone (`gate_reason: publish`). Separate from playtesting.
+Decided by Silas, 2026-11-19 PT ("we are expecting all roadmaps before human testing are okayed. do it."):
+
+- **t-076 (done):** the 15 withheld plates were generated from a new Mara design, along with her Guides portrait and the KN-1 pictures (19 pictures x 4 styles).
+- **t-075 (done):** The Long Table stays a coda, and following someone new still resets the travel party.
+- **t-027 / t-077:** all eight middle-encounter candidates were built as cards (see below).
+
+Still open, and after human testing:
+
+- **t-007:** wider publication or promotion of Ecotone (`gate_reason: publish`).
 
 ## Human playtest checklist
 
