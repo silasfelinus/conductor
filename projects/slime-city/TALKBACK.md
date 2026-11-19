@@ -77,3 +77,11 @@ Shipped crew trophies, titles and card-back frames. They are derived from the ac
 **Improve:** the `nearDead` filter counts every card under 3%, not only two-slot cards. It is correct today because the one-slot assertion fails first, but the ceiling's name suggests it counts two-slot cards only. If a zero-cost card ever appears, filter the ceiling count by `clashPlayCost >= 2`. One comment line runs past 80 columns (Prettier accepted it).
 
 **Kaizen task:** slime-city/t-071. It runs the dead and near-dead ratchets on one held-out seed family as well, so a fix tuned to the suite's own seeds can't pass by luck.
+
+## 2026-11-19 PT | Worker partial | slime-city/t-012 art reconciliation | kind_robots #5327
+
+**Did:** reconciled the art manifest against the 300-card catalog as a test, not a one-off report. `verifySlimeCityArtCoverage.test.ts` checks that base art covers all 300 cards, that no ArtImage is shared by two slots (1,353 unique), that evolution keys name real card stages, and that every level and branch resolves to the card's own painting. A per-crew ratchet holds the 66 cards still without L2/L3 paintings.
+
+**Not done:** byte delivery is unverified. Proving it needs an authenticated `/api/art/images/:id/file` fetch, and this unattended run has no session token for one. The 66 pending evolution renders are the real art gap and should become an art-queue batch once the evolution plan's art questions are answered.
+
+**Kaizen suggestion:** when an evolution render is curated in, lower that crew's `PENDING_EVOLUTION_ART_BASELINE` in the same PR so the ratchet stays tight.
