@@ -1,0 +1,923 @@
+# Ecotone middle-encounter art (weird-humboldt t-027 build, t-077). Silas, 2026-11-19 PT, in session:
+# "Go ahead and build the 8 candidate encounters." The art standard (t-042) gives every card and every choice
+# outcome its own picture in each of the four style lanes. 8 cards + 40 outcomes = 48 subjects x 4 lanes.
+# Card prompts are copied verbatim from kind_robots utils/ecotone/artPrompts.ts. Companions never appear in
+# outcome art (it cannot know who you travel with); the player is the figure in the weathered rain jacket seen
+# from behind; no readable text; animals stay real. Submit with scripts/enqueue_art_requests.py; export with
+# scripts/export_ecotone_art.py. Private.
+round: ecotone-middle-encounters-2026-11-19
+project_slug: weird-humboldt
+designer: Ecotone
+is_public: false
+is_mature: false
+cast_loras: false
+lanes:
+- key: zimage
+  label: Z-Image Turbo (Painted, default style)
+  engine: zimage
+  prompt: prose
+  suffix: painterly illustration, coastal fog, redwood greens, teal and amber light
+- key: krea2
+  label: Krea 2 (Film Still)
+  engine: krea2
+  prompt: prose
+  suffix: painterly illustration, coastal fog, redwood greens, teal and amber light
+- key: arthemy
+  label: Arthemy Western Art v3.0 (Western Art)
+  engine: comfy
+  checkpoint: Illustrious/arthemyWesternArt_v30.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, absurdres, very aesthetic, painterly, cinematic lighting
+  suffix: north coast california, coastal fog, redwood greens, teal and amber light
+  steps: 28
+  cfg: 5
+  sampler: euler_ancestral
+- key: novacomic
+  label: Nova Comic XL v2.0 (Comic)
+  engine: comfy
+  checkpoint: Illustrious/novaComicXL_v20.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, absurdres, very aesthetic, painterly, cinematic lighting
+  suffix: north coast california, coastal fog, redwood greens, teal and amber light
+  steps: 28
+  cfg: 5
+  sampler: euler_ancestral
+subjects:
+- key: mid-cards-mc-001
+  asset: cards/mc-001
+  title: MC-001 The Hearing Where Both Experts Were Right, card
+  size: 1344x768
+  seed: 72300
+  negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
+    signature, text, letters, words, logo, anthro, furry, animal ears, blurry, multiple views
+  prompt_tags: medium-wide shot, public hearing, wood-paneled meeting hall, dusk, folding chairs, two experts at
+    whiteboard, river diagrams, woman in fleece vest, man in safety vest, wall clock with two sets of hands, officials
+    at long table, 1other, from behind, weathered rain jacket
+  prompt_prose: 'A medium-wide view of a small public hearing in an old wood-paneled meeting hall at dusk, rows
+    of folding chairs half full. At the front two experts stand at a shared whiteboard covered in river diagrams:
+    a fish biologist in a fleece vest pointing at a drawn culvert, and a county engineer in a reflective safety
+    vest pointing at a drawn road. A wall clock above the door has two sets of hands. A board of three officials
+    sits at a long table. A figure in a weathered rain jacket sits in the back row holding a comment card, seen
+    from behind.'
+  jobs:
+    zimage: 69993
+    krea2: 69994
+    arthemy: 69995
+    novacomic: 69996
+- key: mid-cards-mc-002
+  asset: cards/mc-002
+  title: MC-002 The Shop That Would Not Franchise, card
+  size: 1344x768
+  seed: 72301
+  negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
+    signature, text, letters, words, logo, anthro, furry, animal ears, blurry, multiple views
+  prompt_tags: medium-wide shot, harbor diner, foggy morning, counter, mismatched chrome stools, glass pie case,
+    berry pie slices, knife in pie, uncanny, elderly woman in apron, cook in white t-shirt, man in fishing jacket,
+    businessman with folder, fishing boats through window, 1other, from behind, weathered rain jacket
+  prompt_prose: A medium-wide view inside a small harbor diner on a foggy morning, a long counter with mismatched
+    chrome stools and a glass pie case full of dark berry pie slices. One slice has a knife standing in it, the
+    cut sealing itself closed behind the blade. A gray-haired owner in an apron leans on the register, a middle-aged
+    cook in a white t-shirt stands at the pass, and a man in a fishing jacket sits at the counter with coffee. A
+    visitor in a suit lays a folder on the counter. Fishing boats show through the fogged window. A figure in a
+    weathered rain jacket sits at the end of the counter, seen from behind.
+  jobs:
+    zimage: 69997
+    krea2: 69998
+    arthemy: 69999
+    novacomic: 70000
+- key: mid-cards-mc-003
+  asset: cards/mc-003
+  title: MC-003 The Forecast That Asked to Be Wrong, card
+  size: 1344x768
+  seed: 72302
+  negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
+    signature, text, letters, words, logo, anthro, furry, animal ears, blurry, multiple views
+  prompt_tags: wide shot, night, foggy ridge, small wooden radio shack, glowing window, antenna mast, red light,
+    older woman in knit cap, headphones, old radio set, reel-to-reel recorder, paper map, winding backroad, school
+    bus at bottom of hill, 1other, from behind, weathered rain jacket
+  prompt_prose: A small wooden radio repeater shack on a foggy ridge at night, its window glowing yellow, a tall
+    antenna mast above it blinking red. Inside, an older volunteer in a knit cap sits at a cluttered desk with an
+    old radio set, a reel-to-reel recorder and a paper road map, one hand pressed to her headphones. Below the ridge,
+    a winding backroad disappears into the fog, with a single school bus parked at the bottom of the hill. A figure
+    in a weathered rain jacket stands in the doorway, seen from behind.
+  jobs:
+    zimage: 70001
+    krea2: 70002
+    arthemy: 70003
+    novacomic: 70004
+- key: mid-cards-mc-004
+  asset: cards/mc-004
+  title: MC-004 Mutual Aid Has a Waiting List, card
+  size: 1344x768
+  seed: 72303
+  negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
+    signature, text, letters, words, logo, anthro, furry, animal ears, blurry, multiple views
+  prompt_tags: wide shot, church basement, window light, volunteers in aprons, sorting vegetables and bread, wooden
+    crates, folding tables, tired young woman at top of stairs, empty cloth bag, coordinator with clipboard, crate
+    of red apples on steps, 1other, from behind, weathered rain jacket, carrying crate
+  prompt_prose: A warm church basement with low ceilings and window light, volunteers in aprons sorting vegetables
+    and bread into wooden crates on long folding tables. At the open door at the top of the stairs stands a tired
+    young woman in a hospital-cafeteria uniform holding an empty cloth bag. A coordinator with a clipboard faces
+    her kindly. On the outside steps sits a crate of red apples that nobody is claiming. A figure in a weathered
+    rain jacket carries a crate, seen from behind.
+  jobs:
+    zimage: 70005
+    krea2: 70006
+    arthemy: 70007
+    novacomic: 70008
+- key: mid-cards-mc-005
+  asset: cards/mc-005
+  title: MC-005 The Quiet Person at the Festival Gate, card
+  size: 1344x768
+  seed: 72304
+  negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
+    signature, text, letters, words, logo, anthro, furry, animal ears, blurry, multiple views
+  prompt_tags: wide shot, night, lantern-lit forest path, paper lanterns, redwoods, distant glowing stage, hooded
+    person alone on mossy log, friendly festivalgoers at a distance, tea cups, gate volunteer with lanyard, dim
+    lanterns near log, 1other, from behind, weathered rain jacket
+  prompt_prose: A lantern-lit forest path at the gate of a small riverside music night, paper lanterns strung between
+    redwoods, a distant stage glowing through the trees. An adult in a hooded sweatshirt sits alone on a mossy log
+    beside the gate, hood up, watching the lights. A few friendly festivalgoers hover at a polite distance with
+    cups of tea, and a gate volunteer with a lanyard looks unsure. The lanterns nearest the log burn dimmer than
+    the rest. A figure in a weathered rain jacket stands back on the path, seen from behind.
+  jobs:
+    zimage: 70009
+    krea2: 70010
+    arthemy: 70011
+    novacomic: 70012
+- key: mid-cards-mc-006
+  asset: cards/mc-006
+  title: MC-006 Old Growth, Old Grudge, New Lease, card
+  size: 1344x768
+  seed: 72305
+  negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
+    signature, text, letters, words, logo, anthro, furry, animal ears, blurry, multiple views
+  prompt_tags: wide shot, golden hour, sunny ridge, river valley, second-growth redwoods, old greenhouse frames,
+    sagging wire fence, stone chimney ringed with flowers, two families, old man in suspenders, older woman in sun
+    hat, picnic table, tablet with map, small survey drone, 1other, from behind, weathered rain jacket
+  prompt_prose: A wide view of a sunny ridge parcel at golden hour above a forested river valley, second-growth
+    redwoods on one side and old greenhouse frames on the other, split by a sagging wire fence. In the middle of
+    the fence line stands a lone stone chimney ringed by bright flowers. Two families face each other across a picnic
+    table, an old timber man in suspenders and an older woman in a sun hat, each with grown children behind them,
+    a tablet showing a map on the table between them. A small survey drone hovers overhead. A figure in a weathered
+    rain jacket stands at the table end, seen from behind.
+  jobs:
+    zimage: 70013
+    krea2: 70014
+    arthemy: 70015
+    novacomic: 70016
+- key: mid-cards-mc-007
+  asset: cards/mc-007
+  title: MC-007 The Mural That Outlived Its Argument, card
+  size: 1344x768
+  seed: 72306
+  negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
+    signature, text, letters, words, logo, anthro, furry, animal ears, blurry, multiple views
+  prompt_tags: wide shot, concrete trail underpass, coastal dunes, low tide, faded mural, pink salmon, old bicycles,
+    young woman in paint-spattered overalls, rolled sketch, neighbors, child on small bicycle, beach grass, sand,
+    1other, from behind, weathered rain jacket
+  prompt_prose: A wide view of a concrete trail underpass by coastal dunes at low tide. Its long wall holds a faded
+    mural of pink salmon and old bicycles, weathered to soft newspaper colors, and the painted salmon all face upstream.
+    A young muralist in paint-spattered overalls holds a rolled sketch and a grant folder. A few neighbors stand
+    nearby, one with a child on a small bicycle, some pointing at the wall, some with arms folded. Beach grass and
+    sand drift at the mouth of the underpass. A figure in a weathered rain jacket stands on the trail, seen from
+    behind.
+  jobs:
+    zimage: 70017
+    krea2: 70018
+    arthemy: 70019
+    novacomic: 70020
+- key: mid-cards-mc-008
+  asset: cards/mc-008
+  title: MC-008 A Dam Nobody Wanted to Name, card
+  size: 1344x768
+  seed: 72307
+  negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
+    signature, text, letters, words, logo, anthro, furry, animal ears, blurry, multiple views
+  prompt_tags: wide shot, summer afternoon, small weathered concrete dam, forest creek, crack, water spilling, deep
+    green swimming hole, families on sunlit rocks, beach towels, children skipping stones, people in waders, man
+    in hard hat with clipboard, 1other, from behind, weathered rain jacket
+  prompt_prose: A wide view of a small weathered concrete dam across a forest creek on a warm summer afternoon,
+    a thin crack running down its face and water spilling over the top. Below it a deep green swimming hole with
+    families on sunlit rocks, colorful beach towels spread out, two children skipping stones. On one bank stand
+    members of a fishing club in waders; on the other, a state engineer in a hard hat holds a clipboard. A figure
+    in a weathered rain jacket stands on the rocks between them, seen from behind.
+  jobs:
+    zimage: 70021
+    krea2: 70022
+    arthemy: 70023
+    novacomic: 70024
+- key: mid-outcomes-mc-002-keep-menu-success
+  asset: outcomes/mc-002/keep-menu-success
+  title: 'MC-002 outcome: The diner saved by prepaid breakfasts'
+  size: 1344x768
+  seed: 72308
+  negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
+    signature, text, letters, words, logo, anthro, furry, animal ears, blurry, multiple views
+  prompt_tags: medium shot, diner interior, counter, chrome stools, crowd of regulars, fishing jackets, elderly
+    woman, apron, laughing, tearful, handing out cards, cook at grill, berry pie, clean slice, morning light, fogged
+    windows, 1other, from behind, weathered rain jacket, warm, hopeful
+  prompt_prose: A warm harbor diner at breakfast, regulars in fishing jackets crowding the counter, a gray-haired
+    owner in an apron laughing with wet eyes as she hands out paper punch cards. The cook works the grill. A berry
+    pie on the counter has one clean slice cut out of it. A figure in a weathered rain jacket sits at the counter,
+    seen from behind. Soft morning light through fogged windows.
+  jobs:
+    zimage: 70025
+    krea2: 70026
+    arthemy: 70027
+    novacomic: 70028
+- key: mid-outcomes-mc-002-keep-menu-failure
+  asset: outcomes/mc-002/keep-menu-failure
+  title: 'MC-002 outcome: The diner gets smaller'
+  size: 1344x768
+  seed: 72309
+  negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
+    signature, text, letters, words, logo, anthro, furry, animal ears, blurry, multiple views
+  prompt_tags: wide shot, diner interior, empty, upturned stools, gray afternoon, elderly woman wiping counter,
+    alone, window, man with duffel bag, old car, handshake, farewell, 1other, from behind, weathered rain jacket,
+    melancholy, muted colors
+  prompt_prose: A nearly empty harbor diner on a gray afternoon, half the stools upturned on the counter, a small
+    blank card taped to the door. The owner wipes the counter alone. Outside, the cook carries a duffel bag to an
+    old car, shaking hands goodbye. A figure in a weathered rain jacket stands at the door, seen from behind.
+  jobs:
+    arthemy: 70029
+    novacomic: 70030
+    zimage: 70175
+    krea2: 70176
+- key: mid-outcomes-mc-002-take-buyout-success
+  asset: outcomes/mc-002/take-buyout-success
+  title: 'MC-002 outcome: Six jobs kept in writing'
+  size: 1344x768
+  seed: 72310
+  negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
+    signature, text, letters, words, logo, anthro, furry, animal ears, blurry, multiple views
+  prompt_tags: medium shot, remodeled diner, booth, modern lighting, cook, waitresses, reading contract, relieved,
+    businessman in suit, handshake, elderly woman, plain pie, plastic dome, 1other, from behind, weathered rain
+    jacket, daylight, bittersweet
+  prompt_prose: A booth in a remodeled harbor diner, clean new menus and modern lighting, a cook in a white t-shirt
+    and two waitresses reading a signed contract together with relieved faces. A businessman in a suit shakes the
+    owner’s hand. On the counter, a new plain pie under a plastic dome. A figure in a weathered rain jacket sits
+    in the window booth, seen from behind.
+  jobs:
+    zimage: 70031
+    krea2: 70032
+    arthemy: 70033
+    novacomic: 70034
+- key: mid-outcomes-mc-002-take-buyout-failure
+  asset: outcomes/mc-002/take-buyout-failure
+  title: 'MC-002 outcome: The pie case goes dark'
+  size: 1344x768
+  seed: 72311
+  negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
+    signature, text, letters, words, logo, anthro, furry, animal ears, blurry, multiple views
+  prompt_tags: wide shot, diner interior, night, renovation, plastic sheeting, ladders, paint cans, dark glass pie
+    case, sliced pie, neatly cut, eerie, empty room, 1other, from behind, weathered rain jacket, cold light, melancholy
+  prompt_prose: A harbor diner at night under remodeling, plastic sheeting over the windows, ladders and paint cans
+    by the counter. The glass pie case is dark and empty except for a row of berry pie slices, each one neatly cut,
+    set out as if waiting for someone. A figure in a weathered rain jacket looks at the case from the doorway, seen
+    from behind.
+  jobs:
+    zimage: 70035
+    krea2: 70036
+    arthemy: 70037
+    novacomic: 70038
+- key: mid-outcomes-mc-002-co-op-success
+  asset: outcomes/mc-002/co-op-success
+  title: 'MC-002 outcome: A co-op on a placemat'
+  size: 1344x768
+  seed: 72312
+  negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
+    signature, text, letters, words, logo, anthro, furry, animal ears, blurry, multiple views
+  prompt_tags: medium shot, diner booth, night, cook, two waitresses, leaning over placemat, handwritten notes,
+    coffee cups, shared pie, elderly woman at register, arms crossed, small smile, 1other, from behind, weathered
+    rain jacket, warm lamp light, hopeful
+  prompt_prose: A late-night diner booth, a cook and two waitresses leaning over a paper placemat covered in pencil
+    arrows and little sketches, coffee cups and a shared slice of berry pie between them. The owner watches from
+    the register with folded arms and a small smile. A figure in a weathered rain jacket sits across from them,
+    seen from behind. Warm lamp light.
+  jobs:
+    arthemy: 70039
+    novacomic: 70040
+    zimage: 70177
+    krea2: 70178
+- key: mid-outcomes-mc-007-restore-success
+  asset: outcomes/mc-007/restore-success
+  title: 'MC-007 outcome: The old salmon restored'
+  size: 1344x768
+  seed: 72313
+  negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
+    signature, text, letters, words, logo, anthro, furry, animal ears, blurry, multiple views
+  prompt_tags: wide shot, underpass, restored mural, pink salmon, bicycles, vintage colors, neighbors on bicycles,
+    taking photos, parent and child, young woman walking away, rolled paper, 1other, from behind, weathered rain
+    jacket, holding paint can, golden hour, hopeful
+  prompt_prose: A trail underpass with a freshly restored mural of pink salmon and old bicycles in soft vintage
+    colors. Neighbors stop on bikes to take photos, a parent pointing out details to a child. A young muralist with
+    a rolled sketch walks away down the trail. A figure in a weathered rain jacket holds a paint can, seen from
+    behind. Golden afternoon light.
+  jobs:
+    zimage: 70041
+    krea2: 70042
+    arthemy: 70043
+    novacomic: 70044
+- key: mid-outcomes-mc-007-restore-failure
+  asset: outcomes/mc-007/restore-failure
+  title: 'MC-007 outcome: The salmon swim in circles'
+  size: 1344x768
+  seed: 72314
+  negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
+    signature, text, letters, words, logo, anthro, furry, animal ears, blurry, multiple views
+  prompt_tags: wide shot, underpass, mural, overly bright colors, salmon swimming in circle, surreal, puzzled neighbors,
+    one laughing, 1other, from behind, weathered rain jacket, holding paintbrush, overcast light, uncanny
+  prompt_prose: A trail underpass mural restored in colors that are slightly too bright and strange, like a remembered
+    photograph, the painted salmon swimming in a loop around the wall. Neighbors stand with puzzled faces, one laughing.
+    A figure in a weathered rain jacket stands with a dripping brush, seen from behind.
+  jobs:
+    zimage: 70045
+    krea2: 70046
+    arthemy: 70047
+    novacomic: 70048
+- key: mid-outcomes-mc-007-repaint-success
+  asset: outcomes/mc-007/repaint-success
+  title: 'MC-007 outcome: Forty neighbors at sketch night'
+  size: 1344x768
+  seed: 72315
+  negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
+    signature, text, letters, words, logo, anthro, furry, animal ears, blurry, multiple views
+  prompt_tags: wide shot, underpass, dusk, string lights, crowd, neighbors holding photographs, lively debate, young
+    woman, paint-spattered overalls, pinning sketches to wall, faded mural, 1other, from behind, weathered rain
+    jacket, warm light, lively
+  prompt_prose: A crowded sketch night under a trail bridge at dusk, string lights hung from the concrete, forty
+    neighbors holding up family photographs and arguing cheerfully. A young muralist in paint-spattered overalls
+    pins sketches to the wall over the faded salmon. A figure in a weathered rain jacket stands in the crowd, seen
+    from behind.
+  jobs:
+    zimage: 70049
+    krea2: 70050
+    arthemy: 70051
+    novacomic: 70052
+- key: mid-outcomes-mc-007-repaint-failure
+  asset: outcomes/mc-007/repaint-failure
+  title: 'MC-007 outcome: One old salmon painted back'
+  size: 1344x768
+  seed: 72316
+  negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
+    signature, text, letters, words, logo, anthro, furry, animal ears, blurry, multiple views
+  prompt_tags: wide shot, underpass, early morning, new mural, stylized faces, small pink salmon in corner, painted
+    overnight, paint can, quiet, 1other, crouching, from behind, weathered rain jacket, soft light, bittersweet
+  prompt_prose: Early morning under a trail bridge, a handsome new mural of stylized faces covers the wall, and
+    in one lower corner a single small faded-style pink salmon has been painted back in overnight. A paint can sits
+    beside it. A figure in a weathered rain jacket crouches to look at the salmon, seen from behind.
+  jobs:
+    zimage: 70053
+    krea2: 70054
+    arthemy: 70055
+    novacomic: 70056
+- key: mid-outcomes-mc-007-new-panel-success
+  asset: outcomes/mc-007/new-panel-success
+  title: 'MC-007 outcome: A lesson by video'
+  size: 1344x768
+  seed: 72317
+  negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
+    signature, text, letters, words, logo, anthro, furry, animal ears, blurry, multiple views
+  prompt_tags: medium shot, underpass, young woman sitting on bucket, tablet on crate, video call, older woman painting
+    on screen, faded salmon mural, blank primed panel, pencil outlines, 1other, from behind, weathered rain jacket,
+    afternoon light, hopeful
+  prompt_prose: A young muralist sits on an overturned bucket under a trail bridge, a tablet propped on a paint
+    crate showing an older painter demonstrating a brush stroke. Beside the faded salmon mural, a blank primed panel
+    waits on the wall, pencil outlines just begun. A figure in a weathered rain jacket holds the tablet steady,
+    seen from behind.
+  jobs:
+    zimage: 70057
+    krea2: 70058
+    arthemy: 70059
+    novacomic: 70060
+- key: mid-outcomes-mc-001-biologist-success
+  asset: outcomes/mc-001/biologist-success
+  title: 'MC-001 outcome: Salmon reach the open bridge'
+  size: 1344x768
+  seed: 72318
+  negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
+    signature, text, letters, words, logo, anthro, furry, animal ears, blurry, multiple views
+  prompt_tags: wide shot, forest creek, new bridge, clear water, salmon in shallows, woman in waders, kneeling,
+    pointing, rural road, detour barrier, spring, redwoods, 1other, from behind, weathered rain jacket, dappled
+    light, hopeful
+  prompt_prose: A small new open-span bridge over a forest creek in spring, clear water running beneath it, a fish
+    biologist in waders kneeling at the bank pointing at silver salmon in the shallows. On the rural road above,
+    a detour barrier. A figure in a weathered rain jacket watches from the bank, seen from behind.
+  jobs:
+    zimage: 70061
+    krea2: 70062
+    arthemy: 70063
+    novacomic: 70064
+- key: mid-outcomes-mc-001-biologist-failure
+  asset: outcomes/mc-001/biologist-failure
+  title: 'MC-001 outcome: A closure in fire season'
+  size: 1344x768
+  seed: 72319
+  negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
+    signature, text, letters, words, logo, anthro, furry, animal ears, blurry, multiple views
+  prompt_tags: wide shot, rural road, closed, construction barriers, unfinished bridge, smoky sky, distant glow,
+    line of cars, detour, late summer, 1other, from behind, weathered rain jacket, tense, hazy orange light
+  prompt_prose: A closed rural road in late summer, orange construction barriers and an unfinished bridge, a hazy
+    smoky sky with a distant orange glow over the ridge. A line of residents’ cars waits on the long detour. A figure
+    in a weathered rain jacket stands by a barrier, seen from behind.
+  jobs:
+    zimage: 70065
+    krea2: 70066
+    arthemy: 70067
+    novacomic: 70068
+- key: mid-outcomes-mc-001-engineer-success
+  asset: outcomes/mc-001/engineer-success
+  title: 'MC-001 outcome: The road holds'
+  size: 1344x768
+  seed: 72320
+  negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
+    signature, text, letters, words, logo, anthro, furry, animal ears, blurry, multiple views
+  prompt_tags: wide shot, rural road, repaired culvert, after rain, pickup truck passing, man in safety vest, woman
+    in fleece vest, handshake, creek pooling, overcast, 1other, from behind, weathered rain jacket, bittersweet
+  prompt_prose: A repaired culvert under a rural road after rain, the road open with a pickup truck passing, a county
+    engineer in a safety vest checking the concrete. Upstream, the creek pools behind the culvert where no fish
+    can pass. A biologist in a fleece vest shakes the engineer’s hand. A figure in a weathered rain jacket watches
+    from the roadside, seen from behind.
+  jobs:
+    zimage: 70069
+    krea2: 70070
+    arthemy: 70071
+    novacomic: 70072
+- key: mid-outcomes-mc-001-engineer-failure
+  asset: outcomes/mc-001/engineer-failure
+  title: 'MC-001 outcome: Check your dates'
+  size: 1344x768
+  seed: 72321
+  negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
+    signature, text, letters, words, logo, anthro, furry, animal ears, blurry, multiple views
+  prompt_tags: medium shot, public hearing room, wood paneling, woman standing in back row, holding old photograph,
+    speaking, audience turning heads, microphone stand, 1other, from behind, weathered rain jacket, slumped shoulders,
+    dusk light, somber
+  prompt_prose: A wood-paneled public hearing room, a woman in the back row standing and speaking gently but firmly,
+    a faded evacuation photograph in her hand. Heads turn toward her. A figure in a weathered rain jacket stands
+    at the comment microphone, seen from behind, shoulders slumped. Dusk light through tall windows.
+  jobs:
+    zimage: 70073
+    krea2: 70074
+    arthemy: 70075
+    novacomic: 70076
+- key: mid-outcomes-mc-001-both-success
+  asset: outcomes/mc-001/both-success
+  title: 'MC-001 outcome: Half a river, half a road'
+  size: 1344x768
+  seed: 72322
+  negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
+    signature, text, letters, words, logo, anthro, furry, animal ears, blurry, multiple views
+  prompt_tags: wide shot, evening, fog, old meeting hall, two people walking, woman in fleece vest, man in safety
+    vest, arguing, gesturing, rolled plan, street lamps, 1other, from behind, weathered rain jacket, hopeful, humorous
+  prompt_prose: Two experts walk out of an old meeting hall into the evening fog, a fish biologist in a fleece vest
+    and a county engineer in a safety vest, both gesturing at the same rolled plan while arguing. Behind them the
+    board members lock the doors. A figure in a weathered rain jacket follows a few steps back, seen from behind.
+  jobs:
+    zimage: 70077
+    krea2: 70078
+    arthemy: 70079
+    novacomic: 70080
+- key: mid-outcomes-mc-004-waive-success
+  asset: outcomes/mc-004/waive-success
+  title: 'MC-004 outcome: One exception'
+  size: 1344x768
+  seed: 72323
+  negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
+    signature, text, letters, words, logo, anthro, furry, animal ears, blurry, multiple views
+  prompt_tags: medium shot, church basement, food share, young woman, cafeteria uniform, filling bag, vegetables,
+    bread, volunteers in aprons, exchanging look, coordinator with clipboard, 1other, from behind, weathered rain
+    jacket, warm window light
+  prompt_prose: A church basement food share, a tired young woman in a cafeteria uniform filling a cloth bag with
+    vegetables and bread, thanking the volunteers. Two volunteers in aprons exchange a wary look across the table.
+    The coordinator smiles carefully. A figure in a weathered rain jacket holds a crate, seen from behind.
+  jobs:
+    zimage: 70081
+    krea2: 70082
+    arthemy: 70083
+    novacomic: 70084
+- key: mid-outcomes-mc-004-waive-failure
+  asset: outcomes/mc-004/waive-failure
+  title: 'MC-004 outcome: An apron on the table'
+  size: 1344x768
+  seed: 72324
+  negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
+    signature, text, letters, words, logo, anthro, furry, animal ears, blurry, multiple views
+  prompt_tags: wide shot, church basement, crumpled apron on table, man leaving up stairs, young woman leaving with
+    empty bag, crate of red apples on steps, 1other, standing alone, from behind, weathered rain jacket, dim light,
+    regret
+  prompt_prose: A church basement food share after an argument, a volunteer’s apron left crumpled on the sorting
+    table, his back disappearing up the stairs. The young woman in the cafeteria uniform leaves through the door
+    with an empty bag. A crate of red apples still sits on the outside steps. A figure in a weathered rain jacket
+    stands alone by the table, seen from behind.
+  jobs:
+    zimage: 70085
+    krea2: 70086
+    arthemy: 70087
+    novacomic: 70088
+- key: mid-outcomes-mc-004-enforce-success
+  asset: outcomes/mc-004/enforce-success
+  title: 'MC-004 outcome: The share survives the winter'
+  size: 1344x768
+  seed: 72325
+  negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
+    signature, text, letters, words, logo, anthro, furry, animal ears, blurry, multiple views
+  prompt_tags: wide shot, winter evening, church basement door, food share inside, volunteers at stations, pinned
+    rota, young woman walking away, streetlight, 1other, from behind, weathered rain jacket, cold blue light, bittersweet
+  prompt_prose: A snowy-gray winter evening outside a church basement door, the food share in full swing inside
+    with every volunteer at a station, a plain paper sheet pinned to the door. Down the street, a young woman in
+    a cafeteria uniform walks away under a streetlight. A figure in a weathered rain jacket stands at the door,
+    seen from behind.
+  jobs:
+    arthemy: 70089
+    novacomic: 70090
+    zimage: 70179
+    krea2: 70180
+- key: mid-outcomes-mc-004-enforce-failure
+  asset: outcomes/mc-004/enforce-failure
+  title: 'MC-004 outcome: Made it sound like a punishment'
+  size: 1344x768
+  seed: 72326
+  negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
+    signature, text, letters, words, logo, anthro, furry, animal ears, blurry, multiple views
+  prompt_tags: medium shot, church basement doorway, young woman leaving, empty bag, hurt expression, volunteer
+    in apron frowning, 1other, from behind, weathered rain jacket, hand raised, harsh overhead light, awkward
+  prompt_prose: A church basement doorway, a young woman in a cafeteria uniform turning to leave with an empty bag,
+    her face hurt. Behind her, a volunteer in an apron frowns at a figure in a weathered rain jacket, seen from
+    behind, who has one hand raised mid-explanation. Harsh overhead light.
+  jobs:
+    zimage: 70091
+    krea2: 70092
+    arthemy: 70093
+    novacomic: 70094
+- key: mid-outcomes-mc-004-lighter-way-success
+  asset: outcomes/mc-004/lighter-way-success
+  title: 'MC-004 outcome: The 5 a.m. bread run'
+  size: 1344x768
+  seed: 72327
+  negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
+    signature, text, letters, words, logo, anthro, furry, animal ears, blurry, multiple views
+  prompt_tags: wide shot, dawn, bakery back door, young woman, cafeteria uniform, loading bread into crates, hand
+    cart, church basement door down street, two crates of red apples, 1other, from behind, weathered rain jacket,
+    soft pink dawn light, hopeful
+  prompt_prose: Dawn at the back door of a small bakery, a young woman in a cafeteria uniform loading loaves of
+    unsold bread into wooden crates on a hand cart. Down the street, the lit door of a church basement. On its steps,
+    two crates of red apples. A figure in a weathered rain jacket holds the cart steady, seen from behind.
+  jobs:
+    zimage: 70095
+    krea2: 70096
+    arthemy: 70097
+    novacomic: 70098
+- key: mid-outcomes-mc-003-act-early-success
+  asset: outcomes/mc-003/act-early-success
+  title: 'MC-003 outcome: The bus on the safe side'
+  size: 1344x768
+  seed: 72328
+  negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
+    signature, text, letters, words, logo, anthro, furry, animal ears, blurry, multiple views
+  prompt_tags: wide shot, foggy backroad, morning, small landslide, mud, rocks, yellow school bus past the slide,
+    taillights, ridge, radio shack, antenna, 1other, from behind, weathered rain jacket, relief, soft gray light
+  prompt_prose: A foggy backroad below a ridge on a Saturday morning, a small landslide of mud and rocks across
+    the road, and a yellow school bus already safely past it on the far side, its taillights glowing. On the ridge
+    above, a radio shack with its antenna. A figure in a weathered rain jacket watches from the roadside, seen from
+    behind.
+  jobs:
+    zimage: 70099
+    krea2: 70100
+    arthemy: 70101
+    novacomic: 70102
+- key: mid-outcomes-mc-003-act-early-failure
+  asset: outcomes/mc-003/act-early-failure
+  title: 'MC-003 outcome: Flashlights at the bad curve'
+  size: 1344x768
+  seed: 72329
+  negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
+    signature, text, letters, words, logo, anthro, furry, animal ears, blurry, multiple views
+  prompt_tags: wide shot, pre-dawn, fog, backroad curve, older woman in knit cap, waving flashlight, 1other, from
+    behind, weathered rain jacket, stopped yellow school bus, small landslide ahead, bus driver leaning out, tense,
+    blue light
+  prompt_prose: Pre-dawn on a foggy backroad curve, an older volunteer in a knit cap and a figure in a weathered
+    rain jacket, seen from behind, wave flashlights at a stopped yellow school bus while a small landslide spills
+    across the road ahead of it. The bus driver leans out of the window.
+  jobs:
+    zimage: 70103
+    krea2: 70104
+    arthemy: 70105
+    novacomic: 70106
+- key: mid-outcomes-mc-003-share-publicly-success
+  asset: outcomes/mc-003/share-publicly-success
+  title: 'MC-003 outcome: A road watch'
+  size: 1344x768
+  seed: 72330
+  negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
+    signature, text, letters, words, logo, anthro, furry, animal ears, blurry, multiple views
+  prompt_tags: wide shot, foggy backroad, neighbors in rain gear, road watch, thermoses, flashlights, waving traffic,
+    small landslide, paper notice on post, community, 1other, from behind, weathered rain jacket, dawn, hopeful
+  prompt_prose: Neighbors in rain gear stand along a foggy backroad with thermoses and flashlights in a loose road
+    watch, one waving traffic to a stop just before a small landslide. A plain paper notice is pinned to a post.
+    A figure in a weathered rain jacket stands among them, seen from behind.
+  jobs:
+    arthemy: 70107
+    novacomic: 70108
+    zimage: 70181
+    krea2: 70182
+- key: mid-outcomes-mc-003-share-publicly-failure
+  asset: outcomes/mc-003/share-publicly-failure
+  title: 'MC-003 outcome: People at the gate'
+  size: 1344x768
+  seed: 72331
+  negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
+    signature, text, letters, words, logo, anthro, furry, animal ears, blurry, multiple views
+  prompt_tags: wide shot, ridge, radio shack, dusk, small angry crowd at gate, holding phones, older woman in knit
+    cap in doorway, arms folded, 1other, from behind, weathered rain jacket, tense, cold light
+  prompt_prose: A ridge-top radio shack at dusk, a small crowd of angry people at its gate holding phones up, an
+    older volunteer in a knit cap standing in the doorway with her arms folded. A figure in a weathered rain jacket
+    stands between the crowd and the shack, seen from behind.
+  jobs:
+    zimage: 70109
+    krea2: 70110
+    arthemy: 70111
+    novacomic: 70112
+- key: mid-outcomes-mc-003-let-it-be-success
+  asset: outcomes/mc-003/let-it-be-success
+  title: 'MC-003 outcome: Blankets on the wrong side'
+  size: 1344x768
+  seed: 72332
+  negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
+    signature, text, letters, words, logo, anthro, furry, animal ears, blurry, multiple views
+  prompt_tags: wide shot, foggy backroad, dusk, yellow school bus stopped, small landslide, children wrapped in
+    blankets, thermos cups, older woman in knit cap handing out blankets, 1other, from behind, weathered rain jacket,
+    carrying thermos, warm and cold light, care
+  prompt_prose: A foggy backroad at dusk, a yellow school bus stopped behind a small landslide, children wrapped
+    in blankets drinking from thermos cups beside it. An older volunteer in a knit cap passes out blankets. A figure
+    in a weathered rain jacket carries a thermos, seen from behind.
+  jobs:
+    zimage: 70113
+    krea2: 70114
+    arthemy: 70115
+    novacomic: 70116
+- key: mid-outcomes-mc-006-open-survey-success
+  asset: outcomes/mc-006/open-survey-success
+  title: 'MC-006 outcome: Thirty years of flowers'
+  size: 1344x768
+  seed: 72333
+  negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
+    signature, text, letters, words, logo, anthro, furry, animal ears, blurry, multiple views
+  prompt_tags: wide shot, ridge, picnic table, two families, tablet with map, old man in suspenders pointing, older
+    woman in sun hat, surprised, stone chimney with flowers, redwoods, greenhouse frames, 1other, from behind, weathered
+    rain jacket, golden hour, reconciliation
+  prompt_prose: A picnic table on a sunny ridge, two families gathered around a map on a tablet, an old timber man
+    in suspenders pointing at a stone chimney ringed with flowers while an older woman in a sun hat covers her mouth
+    in surprise. Redwoods and old greenhouse frames behind them. A figure in a weathered rain jacket stands at the
+    table end, seen from behind.
+  jobs:
+    zimage: 70117
+    krea2: 70118
+    arthemy: 70119
+    novacomic: 70120
+- key: mid-outcomes-mc-006-open-survey-failure
+  asset: outcomes/mc-006/open-survey-failure
+  title: 'MC-006 outcome: A break through an argument'
+  size: 1344x768
+  seed: 72334
+  negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
+    signature, text, letters, words, logo, anthro, furry, animal ears, blurry, multiple views
+  prompt_tags: wide shot, ridge, fire crew, yellow shirts, chainsaws, cutting fire break, two families standing
+    apart, arms folded, young man photographing shed, 1other, from behind, weathered rain jacket, harsh sunlight,
+    conflict
+  prompt_prose: A fire crew in yellow shirts cuts a fire break across a ridge with chainsaws, while on either side
+    two families stand apart with folded arms, a young man holding up a phone to photograph a shed. A figure in
+    a weathered rain jacket stands in the middle, seen from behind.
+  jobs:
+    zimage: 70121
+    krea2: 70122
+    arthemy: 70123
+    novacomic: 70124
+- key: mid-outcomes-mc-006-county-keeps-success
+  asset: outcomes/mc-006/county-keeps-success
+  title: 'MC-006 outcome: A quiet break'
+  size: 1344x768
+  seed: 72335
+  negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
+    signature, text, letters, words, logo, anthro, furry, animal ears, blurry, multiple views
+  prompt_tags: wide shot, ridge, clean fire break, second-growth redwoods, fire crew packing tools, county truck,
+    sunset, distant houses, people watching from porches, 1other, from behind, weathered rain jacket, quiet, bittersweet
+  prompt_prose: A clean fire break running along a ridge through second-growth redwoods, a county fire crew packing
+    tools into a truck at sunset. Far off on each side, a family’s house with a person watching from the porch.
+    A figure in a weathered rain jacket walks the cleared line, seen from behind.
+  jobs:
+    zimage: 70125
+    krea2: 70126
+    arthemy: 70127
+    novacomic: 70128
+- key: mid-outcomes-mc-006-county-keeps-failure
+  asset: outcomes/mc-006/county-keeps-failure
+  title: 'MC-006 outcome: The old foundation'
+  size: 1344x768
+  seed: 72336
+  negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
+    signature, text, letters, words, logo, anthro, furry, animal ears, blurry, multiple views
+  prompt_tags: wide shot, ridge, fresh fire break, broken greenhouse foundation, concrete rubble, older woman in
+    sun hat holding form, 1other, kneeling, from behind, weathered rain jacket, overcast, regret
+  prompt_prose: A freshly cut fire break on a ridge that runs straight through the concrete foundation of an old
+    greenhouse, broken pieces scattered. An older woman in a sun hat stands at the edge holding a paper form. A
+    figure in a weathered rain jacket kneels by the rubble, seen from behind.
+  jobs:
+    zimage: 70129
+    krea2: 70130
+    arthemy: 70131
+    novacomic: 70132
+- key: mid-outcomes-mc-006-co-own-success
+  asset: outcomes/mc-006/co-own-success
+  title: 'MC-006 outcome: The drone lands'
+  size: 1344x768
+  seed: 72337
+  negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
+    signature, text, letters, words, logo, anthro, furry, animal ears, blurry, multiple views
+  prompt_tags: medium shot, ridge, dusk, survey drone landing on picnic table, paper with signatures, two older
+    women at opposite ends, almost smiling, stubborn, 1other, from behind, weathered rain jacket, warm light, hopeful
+  prompt_prose: A small survey drone settles onto a picnic table on a ridge at dusk, beside a single sheet of paper
+    with two pen scribbles at the bottom. An old timber woman and an older woman in a sun hat sit at opposite ends
+    of the table, neither looking at the other, both almost smiling. A figure in a weathered rain jacket sits between
+    them, seen from behind.
+  jobs:
+    arthemy: 70133
+    novacomic: 70134
+    zimage: 70183
+    krea2: 70184
+- key: mid-outcomes-mc-005-ask-once-success
+  asset: outcomes/mc-005/ask-once-success
+  title: 'MC-005 outcome: Keeping the helpers away'
+  size: 1344x768
+  seed: 72338
+  negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
+    signature, text, letters, words, logo, anthro, furry, animal ears, blurry, multiple views
+  prompt_tags: wide shot, night, forest gate, paper lanterns, 1other, from behind, weathered rain jacket, gesturing
+    politely, two festivalgoers with tea cups, hooded person on mossy log, almost smiling, warm lantern light, respectful
+    distance
+  prompt_prose: A lantern-lit forest gate at a riverside music night, a figure in a weathered rain jacket seen from
+    behind politely turning away two friendly festivalgoers with cups of tea, while an adult in a hood sits alone
+    on a mossy log watching the lanterns, almost smiling.
+  jobs:
+    zimage: 70135
+    krea2: 70136
+    arthemy: 70137
+    novacomic: 70138
+- key: mid-outcomes-mc-005-ask-once-failure
+  asset: outcomes/mc-005/ask-once-failure
+  title: 'MC-005 outcome: Hood still up'
+  size: 1344x768
+  seed: 72339
+  negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
+    signature, text, letters, words, logo, anthro, furry, animal ears, blurry, multiple views
+  prompt_tags: wide shot, night, forest gate, paper lanterns, hooded person alone on log, face hidden, 1other, walking
+    away, from behind, weathered rain jacket, glancing back, ambiguous, quiet
+  prompt_prose: A lantern-lit forest gate at night, an adult in a hood sitting alone on a mossy log, face hidden.
+    A figure in a weathered rain jacket walks away down the path, seen from behind, glancing back once. The lanterns
+    burn steadily.
+  jobs:
+    zimage: 70139
+    krea2: 70140
+    arthemy: 70141
+    novacomic: 70142
+- key: mid-outcomes-mc-005-stay-close-success
+  asset: outcomes/mc-005/stay-close-success
+  title: 'MC-005 outcome: Walked to the first-aid tent'
+  size: 1344x768
+  seed: 72340
+  negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
+    signature, text, letters, words, logo, anthro, furry, animal ears, blurry, multiple views
+  prompt_tags: wide shot, night, lantern-lit path, 1other, from behind, weathered rain jacket, walking slowly, hooded
+    person, exhausted, small first-aid tent, red cross, volunteer holding sandwich, care, warm light
+  prompt_prose: A lantern-lit path at a riverside music night, a figure in a weathered rain jacket seen from behind
+    walking slowly beside an exhausted adult in a hood toward a small first-aid tent with a red cross on its flap.
+    A volunteer at the tent holds out a sandwich.
+  jobs:
+    zimage: 70143
+    krea2: 70144
+    arthemy: 70145
+    novacomic: 70146
+- key: mid-outcomes-mc-005-stay-close-failure
+  asset: outcomes/mc-005/stay-close-failure
+  title: 'MC-005 outcome: An empty log'
+  size: 1344x768
+  seed: 72341
+  negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
+    signature, text, letters, words, logo, anthro, furry, animal ears, blurry, multiple views
+  prompt_tags: wide shot, night, empty mossy log, dim lanterns, two friends carrying paper plates, looking around,
+    1other, from behind, weathered rain jacket, shoulders dropped, melancholy, dark forest
+  prompt_prose: A mossy log by a forest gate, empty, with the lanterns above it burning dim. Two friends arrive
+    carrying paper plates of food, looking around for someone who has gone. A figure in a weathered rain jacket
+    stands nearby, seen from behind, shoulders dropped.
+  jobs:
+    zimage: 70147
+    krea2: 70148
+    arthemy: 70149
+    novacomic: 70150
+- key: mid-outcomes-mc-005-check-later-success
+  asset: outcomes/mc-005/check-later-success
+  title: 'MC-005 outcome: Sitting together on the log'
+  size: 1344x768
+  seed: 72342
+  negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
+    signature, text, letters, words, logo, anthro, furry, animal ears, blurry, multiple views
+  prompt_tags: medium shot, late night, two people sitting on mossy log, from behind, hooded person, 1other, weathered
+    rain jacket, side by side, worn dog collar between them, paper lanterns, steady warm light, quiet, tender
+  prompt_prose: Late night at a riverside music night, an adult in a hood and a figure in a weathered rain jacket,
+    both seen from behind, sitting side by side on a mossy log, not touching, looking at the lanterns. A worn dog
+    collar rests on the log between them. The lanterns burn steadily.
+  jobs:
+    zimage: 70151
+    krea2: 70152
+    arthemy: 70153
+    novacomic: 70154
+- key: mid-outcomes-mc-008-remove-success
+  asset: outcomes/mc-008/remove-success
+  title: 'MC-008 outcome: The Bathtub'
+  size: 1344x768
+  seed: 72343
+  negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
+    signature, text, letters, words, logo, anthro, furry, animal ears, blurry, multiple views
+  prompt_tags: wide shot, forest creek, flowing freely, concrete dam remains on banks, salmon in riffles, children
+    splashing in shallow pool, rocks, summer, 1other, from behind, weathered rain jacket, bittersweet, warm light
+  prompt_prose: A forest creek flowing freely where an old dam once stood, only its concrete stubs left on the banks,
+    salmon visible in the riffles. Downstream, children splash in a small shallow new swimming pool among rocks.
+    A figure in a weathered rain jacket stands on a stub of the old dam, seen from behind.
+  jobs:
+    zimage: 70155
+    krea2: 70156
+    arthemy: 70157
+    novacomic: 70158
+- key: mid-outcomes-mc-008-remove-failure
+  asset: outcomes/mc-008/remove-failure
+  title: 'MC-008 outcome: Two banks, two sides'
+  size: 1344x768
+  seed: 72344
+  negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
+    signature, text, letters, words, logo, anthro, furry, animal ears, blurry, multiple views
+  prompt_tags: wide shot, forest creek, removed dam, fast water, people in waders on one bank, families with towels
+    on other bank, not looking at each other, 1other, standing in shallows, from behind, weathered rain jacket,
+    overcast, division
+  prompt_prose: A forest creek after a dam removal, the water running fast through the gap, a fishing club in waders
+    on one bank and swimming families with folded towels on the other, not looking at each other. A figure in a
+    weathered rain jacket stands in the shallows between them, seen from behind.
+  jobs:
+    zimage: 70159
+    krea2: 70160
+    arthemy: 70161
+    novacomic: 70162
+- key: mid-outcomes-mc-008-repair-success
+  asset: outcomes/mc-008/repair-success
+  title: 'MC-008 outcome: Towels on the warm rocks'
+  size: 1344x768
+  seed: 72345
+  negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
+    signature, text, letters, words, logo, anthro, furry, animal ears, blurry, multiple views
+  prompt_tags: wide shot, repaired concrete dam, fresh patches, water spilling, deep green swimming hole, families,
+    bright towels, sunlit rocks, children jumping, man with clipboard, 1other, from behind, weathered rain jacket,
+    summer, hopeful
+  prompt_prose: A repaired small concrete dam with fresh patches on its face, water spilling smoothly over the top
+    into a deep green swimming hole. Families spread bright towels on sunlit rocks and children jump in. A fishing-club
+    member writes a letter on a clipboard on the far bank. A figure in a weathered rain jacket sits on a rock, seen
+    from behind.
+  jobs:
+    zimage: 70163
+    krea2: 70164
+    arthemy: 70165
+    novacomic: 70166
+- key: mid-outcomes-mc-008-repair-failure
+  asset: outcomes/mc-008/repair-failure
+  title: 'MC-008 outcome: Two summers fenced off'
+  size: 1344x768
+  seed: 72346
+  negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
+    signature, text, letters, words, logo, anthro, furry, animal ears, blurry, multiple views
+  prompt_tags: wide shot, cracked small dam, swimming hole, orange safety fence, empty rocks, folding table, bake
+    sale tray, jar of coins, summer, 1other, from behind, weathered rain jacket, waiting, muted light
+  prompt_prose: A small cracked dam above a swimming hole surrounded by an orange safety fence, the warm rocks empty.
+    A folding table nearby holds a bake-sale tray and a jar of coins. A figure in a weathered rain jacket stands
+    at the fence, seen from behind.
+  jobs:
+    zimage: 70167
+    krea2: 70168
+    arthemy: 70169
+    novacomic: 70170
+- key: mid-outcomes-mc-008-partial-breach-success
+  asset: outcomes/mc-008/partial-breach-success
+  title: 'MC-008 outcome: A name, then a notch'
+  size: 1344x768
+  seed: 72347
+  negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
+    signature, text, letters, words, logo, anthro, furry, animal ears, blurry, multiple views
+  prompt_tags: wide shot, crowd in swimsuits and towels, sunlit rocks, forest swimming hole, cheering, water rushing
+    through notch, small concrete dam, woman holding pie, celebration, 1other, from behind, weathered rain jacket,
+    dripping, golden afternoon, joyful
+  prompt_prose: A crowd of two hundred people in swimsuits and towels on sunlit rocks around a forest swimming hole,
+    cheering as water rushes through a fresh notch cut in a small concrete dam. A woman holds up a pie. A figure
+    in a weathered rain jacket stands dripping on a rock, seen from behind.
+  jobs:
+    zimage: 70171
+    krea2: 70172
+    arthemy: 70173
+    novacomic: 70174

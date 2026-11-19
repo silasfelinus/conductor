@@ -1004,6 +1004,10 @@ tasks:
       candidates enters the build roadmap before human testing. MIDDLE-
       CANDIDATES-2026-11-09.yaml stays as source material; any candidate that playtest
       feedback calls for comes back as a playtest_iteration task.
+
+      2026-11-19 PT REVISED by Silas in session: 'Go ahead and build the 8 candidate
+      encounters.' All eight are kept and built as playtest_iteration task t-077; curation
+      decisions are recorded as keep (reviewer: Silas) in MIDDLE-CANDIDATES-2026-11-09.yaml.
     claimed_by: 2026-11-09T12:47:22Z-agent
     claimed_at: '2026-11-09T12:47:23Z'
     updated: '2026-11-19T01:31:42Z'
@@ -1778,3 +1782,28 @@ tasks:
       fallback. Creative and cultural judgment, so no default adoption: this waits for Silas.
     claimed_by: null
     claimed_at: null
+
+  - id: t-077
+    milestone: m4
+    title: "Ecotone: build the 8 curated middle encounters (MC-001 to MC-008) with finale callbacks and art"
+    status: review
+    playtest_iteration: true
+    depends_on: []
+    owner: worker
+    passes: 0
+    stakes: reversible
+    claimed_by: 20261119T0330Z-ecotone-middle-k2v7
+    claimed_at: '2026-11-19T03:30:00Z'
+    updated: '2026-11-19T03:30:00Z'
+    note: |-
+      Silas, 2026-11-19 PT, in session: "Go ahead and build the 8 candidate encounters."
+      Source: candidates/MIDDLE-CANDIDATES-2026-11-09.yaml (t-027). Playtest iteration:
+      owner-directed new content after the 2026-11-18 handoff, not unfinished original scope.
+      Build: kind_robots utils/ecotone/middleEncounters.ts. Eight cards in chapters 2-5 (two
+      per region). Each has two rolled choices plus one honest slower third way, every
+      outcome leaves a flag, there are lines for all four guides and for solo play, and each
+      card gets one finale callback. Card picture prompts are in artPrompts.ts.
+      verifyEcotoneMiddleEncounters plays 7,200 choices; all 8 cards are drawn on all 3
+      routes. Art: art/MIDDLE-ENCOUNTERS-2026-11-19.yaml, 8 cards + 40 outcomes x 4 lanes =
+      192 ArtJobs (69993-70184).
+      Next: merge the kind_robots PR; export renders when done; close.
