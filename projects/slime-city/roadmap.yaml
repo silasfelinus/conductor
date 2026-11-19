@@ -507,7 +507,7 @@ tasks:
   - id: t-012
     milestone: m4
     title: "Full card and campaign coverage, prototype evaluation and visual QA"
-    status: claimed
+    status: ready
     depends_on: [t-010, t-011]
     passes: 0
     stakes: reversible
@@ -564,11 +564,16 @@ tasks:
       from 66 pending to 2 (298/300 cards with L2+L3 art). Remaining: rerender those two L2
       stages, signed-in keyboard/touch input run, real-controller gamepad check, re-capture
       after #5332, CLASH 300 closeout (t-041). Released back to ready.
-    updated: '2026-11-19T19:47:13Z'
+
+      2026-11-19 PT partial (L2 rerenders curated): s1-pocket-punk@2 rerender 276544 kept
+      (plain can) and wired in kind_robots#5356; the bloodfairies ratchet drops to 0, so
+      299/300 cards now have L2+L3 art. fusevest@2 rerender 276545 rejected (no sparklers),
+      and r3 is queued in EVOLUTIONS-REMAINING-RERENDER-KREA (seed 1119517). Remaining: curate
+      and wire fusevest@2 r3, signed-in keyboard/touch input run, real-controller gamepad
+      check, re-capture after #5332, CLASH 300 closeout (t-041). Released back to ready.
+    updated: '2026-11-19T19:49:17Z'
     owner: worker
-    implementation_pr: 'silasfelinus/kind_robots#5354'
-    claimed_by: session_01L5NKxaFeStKwejGS5LnXWC
-    claimed_at: '2026-11-19T19:47:13Z'
+    implementation_pr: 'silasfelinus/kind_robots#5356'
 
   - id: t-013
     milestone: m1
