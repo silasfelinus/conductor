@@ -143,3 +143,20 @@ DONE 2026-10-25 PT. kind_robots PR #4187 merged as 0c0cb4280133b45c3c9ace875a886
 Silas, 2026-10-27 PT: "Anything that is in playbook forge and has quests unwritten or art prompts unwritten should be upgraded. (Memory dungeon will take the longest and should be last). Space couch has a lot of fresh writing still in need and still looking to capture that right blend of space comedy and satire. All art prompts should be written for the appropriate engine, no metaphors for krea2." Shared bar: kind_robots PR #4308 (verifyPlaybookArtPrompts, artPromptsComplete). Forge 2026-10-27: 591 unpainted beats have no prompt surfaced to the Forge (Z-Image first lane). Port and fix this project's ledger prompts, and write the rest.
 DONE 2026-10-27 PT: kind_robots #4318 merged as 98c0278 after 19/19 checks. All 591 unpainted beats (23 nightmares with leads, nights, finales and endings; 78 daylight beats; 100 night-deck cards; 22 companion meetings) now carry rewritten literal prompts in the game's own data. They run 356-734 chars and keep one look per recurring character. artPromptsComplete is on, and crystalStreetArtContract finds 0 violations across 3771 prompts. allArtPrompts and future rounds inherit them.
 <!-- note:end t-023 -->
+
+## t-025 — Terrors on Crystal Street achievement upgrade: 12 or more live achievements
+
+<!-- note:begin t-025 -->
+Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
+
+Live today: 0 Achievement record(s) with this game's triggerCode prefix (checked against /api/achievements 2026-11-11). Target 12+ (usually 12-30; tie some to endings but don't go overboard). Mix story, skill, discovery and completion. Create the live records through the existing achievements API (label, message, icon, karma, triggerCode prefixed with the game slug), award them from the game store, show them with components/achievements/game-achievement-strip.vue, and verify one award live after deploy.
+
+Achievement upgrade merged in kind_robots#5053 (9e620b3), all checks green: 16 live achievements awarded only through commit(); the scrapbook gained an Achievements tab (title menu unchanged). Catalog seed run succeeded. Superseded first attempt kind_robots#5046 closed unmerged; its branch needs branch-janitor cleanup.
+
+AUTO-PARKED by process_task_events.py (conductor/t-112): this event's operation was 'done' and named silasfelinus/kind_robots#5046 as merged, but the GitHub API reports it is not merged yet. Re-queue a fresh 'done' event once the PR actually merges.
+
+2026-11-19 PT gate-triage: auto-park was a false stop. The done event named superseded
+#5046 (closed unmerged); the replacement kind_robots#5053 merged 2026-11-12 (9e620b3)
+with all checks green. Re-checked live: https://kindrobots.org/api/achievements returns
+16 crystal-street achievement records (target 12+). Closed done.
+<!-- note:end t-025 -->

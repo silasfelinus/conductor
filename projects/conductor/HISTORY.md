@@ -2812,6 +2812,18 @@ Reviewer kaizen 2026-11-11 PT from slime-city/t-028: the implementation, silasfe
 2026-11-11 PT: implemented on claude/focused-johnson-vfy0ty. Body matching is anchored to a declaration line (Conductor: label or a line starting with the ref). A live run surfaced 4 real stale review tasks via body matches: emperor-of-dust/t-060 (kind_robots#4206), hybridizer/t-009 (#4643, #4565), memory-dungeon/t-064 (#4971, #4957, both partial slices). Merged via silasfelinus/conductor#7262 once CI was green (review and done share that PR).
 <!-- note:end t-209 -->
 
+## t-211 — playtest handoff should fail closed when a roadmap's top level is not a mapping or its tasks key is not a list
+
+<!-- note:begin t-211 -->
+Reviewer kaizen 2026-11-14 PT from conductor#7374 (malformed task-entry guard). eligible_issues() in sync_playtest_master_issues.py still calls .get("tasks") on whatever yaml.safe_load returns, so a roadmap whose top level is a list raises AttributeError and aborts the whole sync, and a non-list tasks value is only rejected incidentally. Report both as per-project problems (no issue closure) and cover them with unit tests.
+
+Added fail-closed malformed roadmap handoff guard/tests, synchronized finite 100-percent readiness semantics with the Kind Robots projection, and audited all sixteen open game master issues. Slime City QA unblocked from a subjective campaign verdict; Ecotone hub updated to the November 15 close-on-handoff rule. Conductor and Kind Robots implementation PRs prepared; CI remains to be verified.
+
+Reviewer 2026-11-18 PT: merged via conductor#7590 (superseded #7589 after fixing the
+shifting-desks waiver fixture and a stale roadmap revert); kind_robots#5319 parity
+merged.
+<!-- note:end t-211 -->
+
 ## t-212 — Issue bridge must never tell a PR to Close a project master issue; fix the stale imported notes that do
 
 <!-- note:begin t-212 -->

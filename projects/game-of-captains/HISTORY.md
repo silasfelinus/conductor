@@ -345,6 +345,16 @@ Silas, 2026-11-11 PT, in session: "Work on space couch. Update and follow roadma
 2026-11-11 PT: merged kind_robots#5026 as a7ae88443971efe186fed71bf668fd8438d39405 after all 16 exact-head checks passed (TypeScript, Prettier, 4 contract shards, seeded playthroughs, all-captains/antagonists/endings matrix, playbook kit/forge, layout contract, production image build). No deploy, migrations or ArtJobs. Follow-up worth a task: specific comic success beats for the 10 planet cards.
 <!-- note:end t-038 -->
 
+## t-039 — Space Couch planet deck: give each of the 10 planet cards specific comic success beats
+
+<!-- note:begin t-039 -->
+From t-038 (2026-11-11 PT, kind_robots#5026). The planet card is drawn every chapter, and its success text is a short civic summary ("Tenants negotiate a public gravity guarantee.") that reads the same in every voyage (~20 of 36 seeded voyages per line). Write a specific, funny success beat for each card x order (10 cards x 3 orders), in the deadpan procedural couch voice, keeping the ethics of each order (ask = locals decide, document = the record stands, override = it works and costs consent). Keep the existing line as the first clause so saves and pinned traces stay valid; extend verifySpaceCouchFreshness.test.ts.
+
+Authored 30 distinct second-beat planetary successes (ten cards times ask/document/override), preserving each original opening clause and its consent/record/intervention distinction. Added a deterministic freshness contract for all thirty paths in kind_robots. Implementation commit ce4bd2d730d325ee1df2ff9cddbc2f8bedbb64cd; exact-head CI pending.
+
+Merged kind_robots PR #5329 as 98eb60873100b84f314a619413d4eff04a0be2b0; nine exact-head GitHub Actions workflows completed successfully on 6736ac4c85e86d3e2abbac08e76712beac7789ec. All 30 planetary success beats delivered without changing initial save-compatible clauses.
+<!-- note:end t-039 -->
+
 ## t-040 — Space Couch achievement upgrade: 12 or more live achievements
 
 <!-- note:begin t-040 -->

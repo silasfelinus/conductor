@@ -386,3 +386,22 @@ Only three live Achievement records exist (emperor-of-dust-orders-carried-out, -
 
 Achievement upgrade merged in kind_robots#5056 (d35dd44), all checks green: 16 new + 3 kept = 19 (one per ending family x8, 50-day reign, triumph, crypt sealed, Abbess unmasked, first/both relics, no follower lost, full Codex). 'Every peace' skipped (needs the t-064 endings record). Catalog seed succeeded.
 <!-- note:end t-065 -->
+
+## t-066 — New-reign carry-overs: ending-earned unlocks that change the next run
+
+<!-- note:begin t-066 -->
+Silas 2026-11-11 PT, in session: "Are there unlocks that carry over into future rounds?"
+
+Today only two Items of Power (Eye of the Elder Crow, Komodo's Brass Hourglass) and the follower Codex persist between runs. Design and implement a small legacy layer earned by endings: e.g. one heirloom per ending family, unlockable starting options (a chosen first follower, a faction favor, a harder "second reign" setting), each visible on the start screen with how it was earned. Keep runs from becoming trivial (balance report before/after), persist like the relic vault, and cover with store tests.
+
+First scoped legacy slice: persistent earned ending ids and optional five-brass veteran writ on a new reign, with malformed-save protection and focused tests. UI selector and complete ending-family unlock design remain open; implementation PR pending CI.
+
+2026-11-15 PT intent audit (INTENT-AUDIT-2026-11-16.md): kind_robots#5093 (earned
+endings and legacy writ) plus #5103/#5104 (chronicle/scrapbook) merged, so 'PR pending
+CI' is stale. Remaining per this note: the UI selector and the full ending-family unlock
+design. Released from review to ready.
+
+Feature commit ca369584: eight ending-specific starting favors and a no-favor choice; fixed new-run legacy application; Chronicle selector and title-screen preview; backwards-compatible stored preferences and regression assertions. Exact-head GitHub Actions required before merging.
+
+Completed legacy replay unlocks. Kind Robots PR #5328 merged at 5c2e5c8f84bcb981f1b8c5596a37f6032abdef50 after 8/8 exact-head GitHub Actions workflows completed successfully on e9e401f. Fixed newRun bypassing applyLegacy, offered eight distinct earned starting faction favors versus the five-brass writ or no bonus, exposed selection in Chronicle and title preview, and tested save compatibility and all choices. Master roadmap issue remains open for independent original art, literary, and five-act acceptance tasks.
+<!-- note:end t-066 -->
