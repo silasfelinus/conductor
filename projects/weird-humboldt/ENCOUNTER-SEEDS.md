@@ -95,7 +95,7 @@
 
 ## 4 · Backroads and bad reception | Blue Lake
 - **WH-061 · Town Council of Stray Radios:** Walkie-talkies vote on a municipal emergency nobody can identify.
-- **WH-062 · The Casino of Lost Tuesdays:** A slot machine pays out in memories of work shifts never worked.
+- **WH-062 · The Casino of Lost Tuesdays:** A slot machine pays out in memories of work shifts never worked. *(2026-11-19 PT, Silas: set at an unnamed fictional truck-stop casino, not in Blue Lake.)*
 - **WH-063 · The Bridge from the Other Side:** A stranger remembers crossing a bridge that was demolished before their birth.
 - **WH-064 · The Banjo that Predicts Lightning:** A musician plays weather forecasts as bluegrass solos.
 - **WH-065 · A Community Potluck for Cryptids:** A potluck has a strict no-photography policy and suspiciously good pie.
