@@ -3297,5 +3297,22 @@ tasks:
     `game_standard:` evidence block (sidebar entry path, delivered image URLs, ending count,
     achievement count, save-store key) that the readiness check validates, with unit tests;
     report missing evidence as a per-project blocker rather than failing the whole sync.
+- id: t-219
+  milestone: m1
+  title: 'Flag project-overrides.yaml priority changes that lack a dated Silas quote or source link'
+  status: ready
+  stakes: reversible
+  owner: null
+  passes: 0
+  depends_on: []
+  updated: '2026-11-19T00:00:00Z'
+  note: >-
+    Reviewer kaizen 2026-11-19 PT from conductor#7598 (chessweeper normal to high). The PR
+    body said "Silas's explicit high-priority full art direction" but carried no quote, link or
+    date, and the overrides comment still dates from 2026-11-17. Priority is Silas's steering
+    lever (tests/test_project_priority_contract.py pins earlier changes to verbatim quotes).
+    Add a PR check, with a unit test, that compares each override's priority against
+    origin/main and asks the PR to cite the direction (quote plus PT date, or issue/comment
+    link) in the stanza comment or PR body when a priority changes.
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
