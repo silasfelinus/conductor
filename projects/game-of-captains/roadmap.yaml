@@ -591,7 +591,7 @@ tasks:
   - id: t-031
     title: "Space Couch: 101 absurd alien species, three-choice sightings, and escalating scrapbook oddities"
     status: review
-    updated: '2026-11-19T04:46:04.265Z'
+    updated: '2026-11-19T04:46:31.764Z'
     stakes: reversible
     passes: 0
     source_issue: "silasfelinus/kind_robots#4592"
@@ -661,6 +661,8 @@ tasks:
       record rule for returning runaways only) is accepted as designed.
 
       Verified the original alien-ledger curation held 20 species and two milestone paintings. The original 22 rejected ArtJobs were still in the runtime mapping. On app branch worker/game-of-captains-t-031-alien-curation-20261119T044345Z-r8v5, removed those rejected jobs from viewer delivery, retained 85 curated original jobs, recorded 22 DONE redo candidates (ArtJobs 60625-60646, ArtImages 262131-262152), and added a regression test for complete coverage and review holds. Redos are not certified without actual pixel review; the existing fallback stays. CI pending.
+
+      Scoped safety fix quarantines 22 rejected original alien plates and holds 22 completed redo candidates for visual curation. Exact-head CI and PR review pending; t-031 is not done.
     implementation_pr: 'silasfelinus/kind_robots#4771'
     owner: worker
     claimed_by: 20261119044345Z-game-of-captains-t031-artgate-r8v5
