@@ -940,8 +940,8 @@ tasks:
   - id: t-046
     milestone: m5
     title: "Act I continuation: polish Days 4–10 quest and audience paths, then submit scene art"
-    status: ready
-    updated: '2026-11-05T21:52:10Z'
+    status: claimed
+    updated: '2026-11-19T09:57:27.550Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -996,8 +996,8 @@ tasks:
       playtest; Day 16's turn-away line still says the card comes down "a week later" for
       players who already saw it burned.  Merged as kind_robots #4829.
     owner: worker
-    claimed_by: 2026-11-05T210436Z-emperor-of-dust-t-046-r5
-    claimed_at: '2026-11-05T21:04:36Z'
+    claimed_by: 20261119T095727Z-eod-t046-f8c2
+    claimed_at: '2026-11-19T09:57:27.550Z'
     implementation_pr: 'silasfelinus/kind_robots#4829'
   - id: t-047
     milestone: m5
@@ -1106,7 +1106,7 @@ tasks:
   - id: t-051
     milestone: m5
     title: "Twenty-follower barracks dialogue: rewrite branches and submit conversation art"
-    status: claimed
+    status: review
     passes: 0
     stakes: reversible
     note: |-
@@ -1134,7 +1134,9 @@ tasks:
       openings, and a decision on Kiyo's romanceable:true data flag, which conflicts with the
       cast bible. Do not mark done.  Merged as kind_robots #4817; back to ready for the
       remaining scope.
-    updated: '2026-11-19T09:57:00Z'
+
+      Scoped Kiyo canon correction in Kind Robots branch worker/emperor-of-dust-t-051-kiyo-canon-6b9f. F003 metadata incorrectly advertised a seventh romance on the barracks screen and in Playbook Forge, despite a six-person canonical romance roster and Kiyo's existing friendship/medical-ethics story. Corrected only the romanceable flag and pinned the exact six ids in the fortress contract. Legacy dialogue IDs and save flags remain unchanged. Exact-head PR CI still required. Conversation art, fuller line-by-line voice acceptance and actual art export remain unfinished.
+    updated: '2026-11-19T10:02:00Z'
     owner: worker
     claimed_by: 20261119T095700Z-eod-t051-canon-voice-6b9f
     claimed_at: '2026-11-19T09:57:00Z'
