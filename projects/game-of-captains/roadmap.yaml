@@ -223,7 +223,7 @@ tasks:
   - id: t-009
     milestone: m3
     title: "Deliver unique mission outcome, conversation and ending illustration coverage"
-    status: ready
+    status: claimed
     depends_on: t-007
     passes: 0
     stakes: reversible
@@ -259,7 +259,10 @@ tasks:
       Authored 512 exact-key Krea 2 private art queue entries for the 128 content-stable Serendipity/constellation/nemesis episode cards: 128 pre-decision scene reveals and 384 explicitly failed outcomes across ask/document/override. The 384 DONE success paintings, 70 planet plates and existing ArtJobs were not duplicated. Low-priority auto_submit ledgers are on conductor worker branch worker/game-of-captains-t-009-episode-unpainted-20261119T071133Z-m4k8 at commit c8a47bc1f6851f72ee39c72b03c565eea9134205. ArtJob ID submission, rendering, curation, runtime integration and media URL checks still pending; return t-009 to ready after the queue change merges. No production deployment.
 
       2026-11-18 PT: Merged Conductor PR #7607 at 070bf4a709c26a7cd304702ed5fcf8fca4ba09fd after exact-head Worker PR CI passed and updated handoff validation passed. Two private priority-1 auto_submit ledgers provide 128 unique episode reveals and 384 matching failure result paintings for content-stable Serendipity, constellation, and nemesis cards. 384 existing DONE success images and 70 planetary plates were not duplicated. 512 requests are on Conductor main; auto-art submission ArtJob IDs, rendering, independent curation, runtime integration and authorized URL checks remain to verify. Return task to ready, not done. No production deploy.
-    updated: '2026-11-19T07:20:07.723Z'
+    updated: '2026-11-19T07:21:50.261Z'
+    owner: worker
+    claimed_by: 20261119T072150Z-game-of-captains-t009-casino-art-j3n7
+    claimed_at: '2026-11-19T07:21:50.261Z'
   - id: t-010
     milestone: m4
     title: "Run antagonist-by-captain-by-crew adversarial and every-ending seeded traces"
