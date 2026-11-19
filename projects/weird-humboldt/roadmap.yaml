@@ -1553,13 +1553,13 @@ tasks:
   - id: t-078
     milestone: m4
     title: "Ecotone: re-render the 3 withdrawn middle-encounter Comic outcomes with a no-creature negative so all 48 pictures ship in four styles"
-    status: claimed
+    status: done
     playtest_iteration: true
     depends_on: [t-077]
     owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-11-19T23:02:10Z'
+    updated: '2026-11-19T23:31:08Z'
     note: |-
       Reviewer kaizen from t-077 (kind_robots#5337). Three Comic renders drew unprompted
       creatures and were withdrawn (mc-005/stay-close-failure, mc-006/open-survey-failure,
@@ -1567,8 +1567,15 @@ tasks:
       Comic-lane negative for these prompts, re-queue 3 ArtJobs via
       art/MIDDLE-ENCOUNTERS-2026-11-19.yaml, review the contact sheet, export and regenerate
       artManifest.ts. Done when all 48 middle-encounter pictures have four accepted styles.
+
+      2026-11-19 PT: Silas asked to 'Redo the three art pieces.' mc-005 re-rendered clean on
+      its first retry. mc-006 and mc-007 drew creatures again on their original seed and were
+      retried with concrete daylight tags and new seeds (ArtJob 71154-71158; rejected renders
+      kept on record in the ledger). Exported in kind_robots#5365. All 48 middle-encounter
+      pictures now ship in four styles.
     claimed_by: 20261119T2300Z-ecotone-t078-nova-b6x1
     claimed_at: '2026-11-19T23:02:10Z'
+    implementation_pr: 'silasfelinus/kind_robots#5365'
 
   - id: t-079
     milestone: m5

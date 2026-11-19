@@ -47,7 +47,7 @@ Decided by Silas, 2026-11-19 PT ("we are expecting all roadmaps before human tes
 
 - **t-007 (cancelled):** "Wider publication and promotion should not be a part of the roadmap. It can be closed." Publication and promotion are decided outside the roadmap, and nothing here authorizes them.
 
-**Nothing is open before human testing.** The only remaining step is the Unraid Force Update that deploys this work. Optional polish such as t-078 (re-rendering three withdrawn Comic pictures) runs as playtest iterations.
+**Nothing is open before human testing.** The only remaining step is the Unraid Force Update that deploys this work. All 48 middle-encounter pictures ship in four styles (t-078, done), and WH-062's casino is an unnamed fictional truck-stop casino rather than Blue Lake (2026-11-19).
 
 ## Human playtest checklist
 
