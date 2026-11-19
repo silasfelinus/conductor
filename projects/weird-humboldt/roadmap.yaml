@@ -962,7 +962,7 @@ tasks:
   - id: t-027
     milestone: m2
     title: "Generate and curate high-value middle encounters and art briefs"
-    status: needs-human
+    status: done
     depends_on: [t-026, t-022]
     owner: worker
     passes: 0
@@ -998,11 +998,18 @@ tasks:
       become playtest_iteration tasks (convert to cards, run the CI suites). Unanswered by
       2026-11-25 PT: adopt 'reject all for now, revisit after playtest feedback' under the
       default-recommendation rule.
+
+      2026-11-19 PT DECIDED by Silas in session: 'we are expecting all roadmaps before human
+      testing are okayed. do it.' The written recommendation is adopted: none of the 8
+      candidates enters the build roadmap before human testing. MIDDLE-
+      CANDIDATES-2026-11-09.yaml stays as source material; any candidate that playtest
+      feedback calls for comes back as a playtest_iteration task.
     claimed_by: 2026-11-09T12:47:22Z-agent
     claimed_at: '2026-11-09T12:47:23Z'
-    updated: '2026-11-18T23:29:26Z'
+    updated: '2026-11-19T01:31:42Z'
     gate_human: true
     gate_reason: creative-approval
+    approved_by_human: true
   - id: t-028
     milestone: m3
     title: "Validate 2x2 ending callbacks and eight-core composition"
