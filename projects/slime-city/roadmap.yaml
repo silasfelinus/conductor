@@ -507,53 +507,19 @@ tasks:
   - id: t-012
     milestone: m4
     title: "Full card and campaign coverage, prototype evaluation and visual QA"
-    status: claimed
+    status: ready
     depends_on: [t-010, t-011]
-    owner: worker
     passes: 0
     stakes: reversible
-    note: >-
-      2026-11-18 PT owner closeout: all six authored crew campaigns are merged
-      (t-009 is a deferred subjective fun verdict, not a QA prerequisite).
-      Verify canonical CLASH 300-card evolution and full campaign branches,
-      constructed-deck balance, real delivered ArtImages, CPU and PvP
-      reconnect/forfeit/expiry and account security, resource exploits,
-      gamepad/keyboard/touch, and rendered 390/768/1440/XL layouts.
-      Produce reproducible multi-seed full-route tests and a player handoff
-      checklist. This is agent-owned QA, not approval to publish.
+    note: |-
+      2026-11-18 PT owner closeout: all six authored crew campaigns are merged (t-009 is a deferred subjective fun verdict, not a QA prerequisite). Verify canonical CLASH 300-card evolution and full campaign branches, constructed-deck balance, real delivered ArtImages, CPU and PvP reconnect/forfeit/expiry and account security, resource exploits, gamepad/keyboard/touch, and rendered 390/768/1440/XL layouts. Produce reproducible multi-seed full-route tests and a player handoff checklist. This is agent-owned QA, not approval to publish.
+      2026-11-19 PT partial: multi-seed full-route campaign QA added in kind_robots#5323 (verifySlimeCityFullRoutes.test.ts: 6 crews x 32 choice paths x 3 seeds through the real Blackout engine, ~4.1k fights, both endings reachable per crew, deterministic replay; in test:slime-city-lab). Player handoff checklist started at projects/slime-city/PLAYER- HANDOFF-CHECKLIST.md. Still open: CLASH 300 closeout (t-041), constructed balance re- run, two-browser reconnect, gamepad/keyboard/touch pass, current-main 390/768/1440/XL captures, delivered-ArtImage reconciliation.
+      2026-11-18 PT partial (balance re-run): on kind_robots main be2745d, balance:slime-city-clash 4,500 CPU games put every crew inside 40-60% (catgirls 41.7% low edge, 11.9-pt spread, first seat 51.2%); constructed suite PASS (3,120 bouts, crews 43.6-54.4%). Open finding: specials archetype wins 26% (riot/specials 17.3%), below the 30% floor. Recorded in PLAYER-HANDOFF-CHECKLIST.md; re-run after t-041 lands.
+      2026-11-19 PT partial (art reconciliation): kind_robots#5327 adds verifySlimeCityArtCoverage.test.ts to test:slime-city-lab. 300/300 base card art, 1,353 unique ArtImage ids, every L1-L3 branch resolves to the card's own painting; 66 cards still lack L2/L3 evolution renders (per-crew ratchet). Remaining: authenticated byte spot check, the 66 evolution renders, CLASH 300 closeout, specials balance, two-browser reconnect, input pass, current-main layout captures.
+      2026-11-19 PT partial (layout captures): signed-in production (9f86056) /play/slime-city captured at 390/768/1440/2560, no overflow or broken images; Clash layout audit 390/768/1440 passed. XL splash title slid under the crew poster; fixed in kind_robots#5332 (title cap 7rem). Remaining: re-capture after #5332 deploys, the 66 evolution renders, CLASH 300 closeout, specials balance, two-browser reconnect, input pass.
 
-      2026-11-19 PT partial: multi-seed full-route campaign QA added in kind_robots#5323
-      (verifySlimeCityFullRoutes.test.ts: 6 crews x 32 choice paths x 3 seeds through the real
-      Blackout engine, ~4.1k fights, both endings reachable per crew, deterministic replay; in
-      test:slime-city-lab). Player handoff checklist started at projects/slime-city/PLAYER-
-      HANDOFF-CHECKLIST.md. Still open: CLASH 300 closeout (t-041), constructed balance re-
-      run, two-browser reconnect, gamepad/keyboard/touch pass, current-main 390/768/1440/XL
-      captures, delivered-ArtImage reconciliation.
-
-      2026-11-18 PT partial (balance re-run): on kind_robots main be2745d,
-      balance:slime-city-clash 4,500 CPU games put every crew inside 40-60%
-      (catgirls 41.7% low edge, 11.9-pt spread, first seat 51.2%); constructed
-      suite PASS (3,120 bouts, crews 43.6-54.4%). Open finding: specials
-      archetype wins 26% (riot/specials 17.3%), below the 30% floor. Recorded in
-      PLAYER-HANDOFF-CHECKLIST.md; re-run after t-041 lands.
-
-      2026-11-19 PT partial (art reconciliation): kind_robots#5327 adds
-      verifySlimeCityArtCoverage.test.ts to test:slime-city-lab. 300/300
-      base card art, 1,353 unique ArtImage ids, every L1-L3 branch resolves to
-      the card's own painting; 66 cards still lack L2/L3 evolution renders
-      (per-crew ratchet). Remaining: authenticated byte spot check, the 66
-      evolution renders, CLASH 300 closeout, specials balance, two-browser
-      reconnect, input pass, current-main layout captures.
-
-      2026-11-19 PT partial (layout captures): signed-in production (9f86056) /play/slime-city
-      captured at 390/768/1440/2560, no overflow or broken images; Clash layout audit
-      390/768/1440 passed. XL splash title slid under the crew poster; fixed in
-      kind_robots#5332 (title cap 7rem). Remaining: re-capture after #5332 deploys, the 66
-      evolution renders, CLASH 300 closeout, specials balance, two-browser reconnect, input
-      pass.
-    updated: '2026-11-19T05:45:33Z'
-    claimed_by: session_01L5NKxYu6terLxUxuKXHZMw
-    claimed_at: '2026-11-19T05:45:33Z'
+      2026-11-19 PT partial (input pass): kind_robots#5335 adds audit:slime-city-clash-input, which plays whole CPU Clash matches keyboard-only (Tab/Enter) and touch-only (Pixel 7 taps). /play/slime-city is account-gated, and anonymous runs are redirected to /login mid-match, so the audit needs --storage-state from a signed-in QA browser and fails with SIGNED_OUT otherwise. Gamepad is unsupported because Clash has no Gamepad API binding, so it needs a binding or a scope decision. Remaining: a signed-in input run, gamepad, re-capture after #5332, the 66 evolution renders, CLASH 300 closeout, specials balance, two-browser reconnect. Released back to ready.
+    updated: '2026-11-19T06:04:06+00:00'
 
   - id: t-013
     milestone: m1
