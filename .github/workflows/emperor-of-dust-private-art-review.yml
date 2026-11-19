@@ -1,0 +1,108 @@
+name: Emperor of Dust private ending-art review
+
+# One-use, encrypted intake only. No private image pixels or contact sheet
+# are ever uploaded unencrypted or committed to this public repository.
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/emperor-of-dust-private-art-review.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: emperor-of-dust-private-art-review
+  cancel-in-progress: false
+
+jobs:
+  private-review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      KR_BASE_URL: https://kindrobots.org
+      KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install private art review dependencies
+        run: python -m pip install 'PyYAML>=6,<7' 'Pillow>=10,<13'
+      - name: Check credential without disclosing it
+        run: |
+          if [ -z "$KR_API_TOKEN" ]; then
+            echo "::error::KR_API_TOKEN unavailable: no private render bytes will be exported."
+            exit 1
+          fi
+      - name: Export eight original ArtImage binaries to runner scratch only
+        run: |
+          python scripts/export_round_art.py \
+            projects/emperor-of-dust/art/ENDINGS-ROUND-1.yaml \
+            --kind-robots "$RUNNER_TEMP/eod-review" \
+            --prefix emperor-of-dust --only '^endings/'
+      - name: Validate all eight actual files, prepare provenance and contact sheet
+        run: |
+          python - <<'PY'
+          import hashlib
+          import json
+          import os
+          from pathlib import Path
+          from PIL import Image, ImageDraw, ImageOps
+
+          root = Path(os.environ['RUNNER_TEMP']) / 'eod-review'
+          art = root / 'public/emperor-of-dust/endings'
+          expected = [
+              'bell-restored', 'open-roads', 'iron-peace', 'crows-bargain',
+              'witchwater-throne', 'tunnels-and-councils',
+              'long-night', 'hundred-candles',
+          ]
+          results = []
+          canvas = Image.new('RGB', (1120, 1408), '#17120f')
+          draw = ImageDraw.Draw(canvas)
+          for index, key in enumerate(expected):
+              file = art / (key + '.webp')
+              if not file.is_file() or file.stat().st_size < 5000:
+                  raise RuntimeError(f'{key}: original rendered WebP missing or empty')
+              with Image.open(file) as original:
+                  if original.format != 'WEBP':
+                      raise RuntimeError(f'{key}: not WebP')
+                  w, h = original.size
+                  if w < 960 or h < 500:
+                      raise RuntimeError(f'{key}: too small ({w}x{h})')
+                  preview = ImageOps.contain(original.convert('RGB'), (536, 304))
+              x = 12 + (index % 2) * 560
+              y = 12 + (index // 2) * 352
+              canvas.paste(preview, (x, y))
+              draw.text((x + 5, y + 310), key, fill='#fff5dc')
+              results.append({
+                  'asset': 'endings/' + key,
+                  'sha256': hashlib.sha256(file.read_bytes()).hexdigest(),
+                  'width': w, 'height': h, 'bytes': file.stat().st_size,
+              })
+          canvas.save(root / 'ending-contact-sheet.jpg', quality=90)
+          (root / 'private-review-manifest.json').write_text(
+              json.dumps({'source': 'original private ArtImage ids from ENDINGS-ROUND-1.yaml',
+                          'delivery': 'not yet reviewed or shipped', 'images': results}, indent=2) + '\n'
+          )
+          print(f'Validated {len(results)} original image files in ephemeral scratch.')
+          PY
+      - name: Encrypt review material before upload
+        run: |
+          cd "$RUNNER_TEMP/eod-review"
+          zip -qr "$RUNNER_TEMP/eod-private-source.zip" \
+            public/emperor-of-dust/endings/ ending-contact-sheet.jpg private-review-manifest.json
+          openssl cms -encrypt -binary -aes256 \
+            -in "$RUNNER_TEMP/eod-private-source.zip" \
+            -out "$RUNNER_TEMP/eod-private-source.p7m" -outform DER \
+            "$GITHUB_WORKSPACE/projects/emperor-of-dust/art/private-review-2026-11-19.cert.pem"
+          test -s "$RUNNER_TEMP/eod-private-source.p7m"
+          echo "Private render material encrypted; no plaintext artwork will be uploaded."
+      - name: Upload encrypted package only
+        uses: actions/upload-artifact@v4
+        with:
+          name: emperor-endings-2026-11-19-encrypted-review
+          path: ${{ runner.temp }}/eod-private-source.p7m
+          if-no-files-found: error
+          retention-days: 2
