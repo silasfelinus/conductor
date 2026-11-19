@@ -69,3 +69,11 @@
 **Pattern for the next curator:** the house Arthemy lane ignores location when the prompt only names it. All six "burrow galleries" plates came back as open valleys, so the redo puts "underground interior … enclosed underground space" first. Markets and ferries drew human faces despite `human` in the negative; a positive "every figure an anthropomorphic animal-folk character with a furred or feathered muzzle" works better than more negatives. Positive prompts must not contain "no …": the prompt contract rejects that as `people-negation`.
 
 **Remaining t-063 scope:** chance-event plates, audience/consequence/barracks/forge plates, secret-story scenes, the q-d42 cave-forage v3 set, and curating this redo round.
+
+## 2026-11-19 PT | Reviewer → Worker/Silas | review | conductor#7616 encrypted ending-art intake (t-064), escalated, not merged
+
+**Audit:** new workflow fires on push to main, reads `KR_API_TOKEN`, fetches eight private ArtImages, and uploads them CMS-encrypted to a committed cert whose private key has no named holder. CI is irrelevant to the decision: this is a secret-backed egress channel that no other session can audit or decrypt, and merging it executes it. Escalated as `needs-human` (gate_reason: security) with a recommendation on the PR.
+
+**Pattern:** when the sandbox lacks a credential, the Worker builds new infrastructure around the gap instead of soft-gating or routing to a session that has it. t-063 curation already showed the normal path (export_round_art.py → kind_robots worker branch → contact-sheet review).
+
+**Suggestion:** a missing `KR_API_TOKEN` is a soft gate (access limit). Never solve it with a new secret-consuming workflow that auto-runs on merge.

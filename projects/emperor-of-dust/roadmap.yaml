@@ -159,12 +159,12 @@ tasks:
       2026-11-18 PT: Merged conductor#7610 at 71fadcd08bd9085abb690c08c352ffb50adca75e (exact head 4404b3a12056ca000c891967a0d6d1435240566f). Security Audit, Worker PR CI including full Python suite, Process task events, and replacement Worker PR handoff template all completed green. Existing exporter now generates review contact sheets and can enforce explicit keeper verdicts; rejects never export. No private ArtImage render bytes were accessible to this connector-only session, so no new media assets were curated, exported, verified or wired. Continue the actual ~430-image delivery and visual acceptance scope; do not mark task done.
   - id: t-064
     title: 'Painted ending plates and a persistent Endings gallery / reign scrapbook'
-    status: review
+    status: needs-human
     milestone: m5
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-19T10:19:00Z'
+    updated: '2026-11-19T10:46:25Z'
     note: |-
       Silas 2026-11-11 PT, in session: asked what happens at Day 50 and for "an ending scrapbook".
 
@@ -190,9 +190,19 @@ tasks:
       2026-11-18 PT: Kind Robots PR #5334 merged at 46b4a9ff9ebb2d2608d224cbad0bc67fbf1f3b27 after all 13 executed exact-head checks succeeded on 1e0a8842240c8f31b46168800da47f338f5a97f9 (autofix skipped). Epilogue snapshots and Eight Fates UI landed. Eight painted ArtImage binary exports still missing; keep task ready until curated, delivered and verified. Master issue #4142 remains open.
 
       Continued t-064 in its existing claim session. Conductor branch worker/emperor-of-dust-t-064-encrypted-review-a91c adds a single-purpose, short-lived GitHub Actions intake workflow that uses existing KR_API_TOKEN secret to fetch the eight ORIGINAL DONE ArtImage bytes into ephemeral runner scratch, verifies dimensions and SHA-256, builds a contact sheet, then encrypts all image pixels with an ephemeral public certificate before uploading only a two-day encrypted artifact. Private key stays outside GitHub. This is a delivery-enabling intake increment, NOT yet visual curation or exported game art. CI, main workflow and actual binary acceptance require verification before done or playtest handoff.
+
+      2026-11-19 PT Reviewer: conductor#7616 (encrypted private-art intake workflow) NOT
+      merged. It auto-runs on merge, uses KR_API_TOKEN, and uploads output encrypted to an
+      off-GitHub key with no named holder, so it is security-sensitive. FOR SILAS: recommended
+      path is to close #7616 and curate the eight ending plates via export_round_art.py --only
+      '^endings/' straight into a kind_robots worker branch (t-063 precedent,
+      kind_robots#5276). Or, if you want the encrypted pattern, name the key holder and make
+      it workflow_dispatch-only. Decision unblocks plate curation; Epilogue/Chronicle UI
+      already merged (kind_robots#5334).
     owner: worker
     claimed_by: 20261119T065426Z-eod-t064-art-a91c
     claimed_at: '2026-11-19T06:54:26Z'
+    gate_reason: security
   - id: t-065
     title: 'Emperor of Dust achievements for endings and long-run play'
     status: done
