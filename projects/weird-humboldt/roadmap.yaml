@@ -1567,3 +1567,28 @@ tasks:
       Comic-lane negative for these prompts, re-queue 3 ArtJobs via
       art/MIDDLE-ENCOUNTERS-2026-11-19.yaml, review the contact sheet, export and regenerate
       artManifest.ts. Done when all 48 middle-encounter pictures have four accepted styles.
+
+  - id: t-079
+    milestone: m5
+    title: "Ecotone: pre-playtest art completeness audit (every card, outcome and ending painted)"
+    status: done
+    depends_on: []
+    owner: worker
+    passes: 0
+    stakes: reversible
+    implementation_pr: 'silasfelinus/kind_robots#5358'
+    updated: '2026-11-19T22:30:00Z'
+    note: |-
+      Silas, 2026-11-19 PT: "Are we done done before human play tests?" A slot-by-slot audit of
+      the default style found cards 163/171 and outcomes 160/680 (endings 84/84).
+      Fixes: 542 rendered-but-unexported outcomes shipped (OUTCOMES-BACKLOG + MYSTERIES-ROUND-1,
+      kind_robots#5343). 8 missing cards rendered in 4 styles (CARD-GAPS-2026-11-19.yaml, 32
+      ArtJobs; 8 off-prompt tag-lane renders withdrawn). 194 final outcome pictures (182
+      failure plates + 12 companion-time successes) written, validated and rendered
+      (OUTCOMES-FINAL-2026-11-19.yaml), shipped in #5346 and #5358.
+      Result: 171/171 cards, 680/680 outcomes, 84/84 endings. verifyEcotone enforces 100%
+      coverage (WH-121 exempt); the Forge reports needsArt=0. t-007 was cancelled by Silas the
+      same day. Nothing open before human tests except the Unraid Force Update.
+      Flagged, not changed: WH-062 "The Casino of Lost Tuesdays" is set at a Blue Lake casino.
+      Blue Lake's real casino is tribally owned. Silas may want to review it against
+      EXCLUDED-CONTENT-2026-10-22.md.
