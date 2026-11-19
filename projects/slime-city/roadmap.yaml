@@ -564,7 +564,7 @@ tasks:
   - id: t-022
     milestone: m2
     title: "Paint reaction-face board tokens for every creature and wire them in"
-    status: needs-human
+    status: done
     depends_on: t-013
     passes: 0
     stakes: reversible
@@ -625,14 +625,21 @@ tasks:
       deploy-blocked step remains. Recommendation (written 2026-11-11 PT) unchanged: accept
       and close. Gate-triage adopts it under the 2026-09-30 default-recommendation rule if
       Silas hasn't answered by 2026-11-18 PT.
-    updated: '2026-11-17T19:49:47Z'
+
+      2026-11-19 PT gate-triage: ADOPTED under the 2026-09-30 default-recommendation rule
+      (recommendation 'accept and close' written 2026-11-11 PT, unanswered 8 days; reversible
+      subjective acceptance, approved_by_human left unset). Re-checked: production
+      /api/version serves kind_robots 9f86056 (newer than #4986) and /play/slime-city returns
+      200. Closed done; Silas can reopen if he wants reaction tokens back on hover/hurt
+      states.
+    updated: '2026-11-19T03:50:40Z'
     owner: worker
     claimed_by: 2026-11-11T150000Z-slime-city-t022-evo-wire-q7m2
     claimed_at: '2026-11-11T05:50:08Z'
     implementation_pr: 'silasfelinus/kind_robots#4986'
     gate_reason: subjective-acceptance
-    soft_gate: true
-    gate_rechecked: '2026-11-17'
+    soft_gate: false
+    gate_rechecked: '2026-11-19'
   - id: t-023
     milestone: m2
     title: "TURF: a Go-style mode where every card is one token"
