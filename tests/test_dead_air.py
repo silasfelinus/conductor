@@ -430,3 +430,13 @@ def test_reveal_motif_is_not_painted_into_every_shot():
             continue
         if "jaguar" in e["reveal"].lower():
             assert "jaguar" not in e["visual_style"].lower(), path.name
+
+
+def test_motion_prompts_are_lettering_guarded_like_stills():
+    """MV18's s3 GPU clip baked garbled fake subtitles into the picture (t-010)."""
+    episode = load_episode(PILOT)
+    altered = {**episode, "shots": [dict(s) for s in episode["shots"]]}
+    altered["shots"][3]["motion_prompt"] = "Subtitles scroll across the bottom of the screen."
+    assert any("motion lettering: Subtitles" in e for e in validate(altered))
+    for path in sorted((ROOT / "projects/dead-air/episodes").glob("*.yaml")):
+        assert not [e for e in validate(load_episode(path)) if "motion lettering" in e], path.name
