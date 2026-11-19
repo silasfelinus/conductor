@@ -20,7 +20,7 @@
   - a Guides tab that remembers who you've met
   - 12 avatars, 6 personalities and 7 origin archetypes
 
-- **Eight new middle encounters** (2026-11-19, t-077): a harbor diner buyout, a Hammond Trail mural, a culvert hearing, a food-share rule, a ridge radio forecast, a shared fire-break survey, a quiet person at a festival gate, and a dam nobody named. They sit two per region in chapters 2-5, each with an earned finale callback. Their 192 pictures are rendering; until they land, those cards use the code-drawn scene.
+- **Eight new middle encounters** (2026-11-19, t-077): a harbor diner buyout, a Hammond Trail mural, a culvert hearing, a food-share rule, a ridge radio forecast, a shared fire-break survey, a quiet person at a festival gate, and a dam nobody named. They sit two per region in chapters 2-5, each with an earned finale callback. All 48 of their pictures are painted in four styles (three Comic renders were withdrawn on review and fall back to Painted).
 
 ## Verification on record
 

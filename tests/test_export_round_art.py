@@ -57,3 +57,49 @@ def test_manifest_writes_a_new_file(tmp_path):
     assert ts.read_text() == (
         "// generated\n\nexport const WARP_ART: readonly string[] = [\n  'portraits/crew-pell',\n]\n"
     )
+
+
+def test_rejected_renders_never_ship_and_strict_mode_requires_keep(tmp_path):
+    kept = subject("quests/keeper")
+    kept["verdict"] = "keep: on model"
+    rejected = subject("quests/rejected")
+    rejected["verdict"] = "reject: human rider"
+    unreviewed = subject("quests/unreviewed")
+    subjects = [kept, rejected, unreviewed]
+
+    ordinary = era.plan(subjects, tmp_path, "emperor-of-dust")
+    assert [dest.name for _subject, _id, dest in ordinary] == [
+        "keeper.webp", "unreviewed.webp"
+    ]
+    strict = era.plan(
+        subjects, tmp_path, "emperor-of-dust", require_keep=True
+    )
+    assert [dest.name for _subject, _id, dest in strict] == ["keeper.webp"]
+
+
+def test_sheet_generates_review_without_export_or_token(tmp_path, monkeypatch):
+    import export_crystal_street_art as crystal
+
+    ledger = tmp_path / "round.yaml"
+    ledger.write_text(
+        "subjects:\n"
+        "- asset: quests/keeper\n"
+        "  art: {lane: {status: DONE, art_image_id: 270430}}\n"
+        "- asset: rooms/skip\n"
+        "  art: {lane: {status: DONE, art_image_id: 270431}}\n"
+    )
+    called = []
+
+    def capture(subjects, out, thumb):
+        called.append(([subject["asset"] for subject in subjects], out, thumb))
+
+    monkeypatch.setattr(crystal, "contact_sheet", capture)
+    result = era.main([
+        str(ledger), "--kind-robots", str(tmp_path),
+        "--only", "^quests/", "--sheet", str(tmp_path / "review.jpg"),
+    ])
+    assert result == 0
+    assert called == [(
+        ["quests/keeper"], str(tmp_path / "review.jpg"), (220, 145)
+    )]
+    assert not (tmp_path / "public").exists()

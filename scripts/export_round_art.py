@@ -25,6 +25,8 @@ Usage:
         --manifest utils/gameOfCaptains/artManifest.ts --manifest-root game-of-captains \\
         --manifest-const WARP_ART
     python scripts/export_round_art.py LEDGER --dry-run      # list what would be written
+    python scripts/export_round_art.py LEDGER --sheet /tmp/round.jpg  # review before export
+    python scripts/export_round_art.py LEDGER --require-keep  # export only approved artwork
 
 Environment: KR_API_TOKEN, KR_BASE_URL (default https://kindrobots.org).
 """
@@ -55,7 +57,13 @@ def target(kind_robots, prefix, asset):
     return Path(kind_robots) / "public" / ("/".join(parts) + ".webp")
 
 
-def plan(subjects, kind_robots, prefix, only=None, force=False):
+def approved_for_export(subject, require_keep=False):
+    """Never export a rejected render; strict mode requires an explicit keeper verdict."""
+    verdict = str(subject.get("verdict") or "").strip().lower()
+    return verdict.startswith("keep") if verdict else not require_keep
+
+
+def plan(subjects, kind_robots, prefix, only=None, force=False, require_keep=False):
     """(subject, image id, destination) for every finished subject that still needs a file."""
     pattern = re.compile(only) if only else None
     out = []
@@ -63,6 +71,8 @@ def plan(subjects, kind_robots, prefix, only=None, force=False):
         asset = subject.get("asset")
         image_id = finished(subject)
         if not asset or not image_id or (pattern and not pattern.search(asset)):
+            continue
+        if not approved_for_export(subject, require_keep=require_keep):
             continue
         dest = target(kind_robots, prefix, asset)
         if dest.exists() and not force:
@@ -120,6 +130,15 @@ def main(argv=None):
     parser.add_argument("--max-edge", type=int, default=1344)
     parser.add_argument("--force", action="store_true", help="overwrite files that exist")
     parser.add_argument("--dry-run", action="store_true")
+    parser.add_argument(
+        "--require-keep",
+        action="store_true",
+        help="export only subjects marked with a keep verdict; never export rejects",
+    )
+    parser.add_argument(
+        "--sheet",
+        help="make a labelled contact sheet for visual review; do not export any art",
+    )
     parser.add_argument("--manifest", help="TypeScript file, relative to kind_robots")
     parser.add_argument("--manifest-root", help="folder under public/ the manifest lists")
     parser.add_argument("--manifest-const", default="ART")
@@ -128,7 +147,20 @@ def main(argv=None):
     subjects = []
     for ledger in args.ledgers:
         subjects += yaml.safe_load(Path(ledger).read_text()).get("subjects") or []
-    todo = plan(subjects, args.kind_robots, args.prefix, args.only, args.force)
+    if args.sheet:
+        from export_crystal_street_art import contact_sheet
+
+        candidates = [
+            subject for subject in subjects
+            if not args.only or re.search(args.only, subject.get("asset") or "")
+        ]
+        contact_sheet(candidates, args.sheet, thumb=(220, 145))
+        return 0
+
+    todo = plan(
+        subjects, args.kind_robots, args.prefix, args.only, args.force,
+        require_keep=args.require_keep,
+    )
     if args.dry_run:
         for subject, image_id, dest in todo:
             print(f"{image_id}\t{dest}")

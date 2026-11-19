@@ -1797,7 +1797,7 @@ tasks:
   - id: t-077
     milestone: m4
     title: "Ecotone: build the 8 curated middle encounters (MC-001 to MC-008) with finale callbacks and art"
-    status: review
+    status: done
     playtest_iteration: true
     depends_on: []
     owner: worker
@@ -1805,7 +1805,7 @@ tasks:
     stakes: reversible
     claimed_by: 20261119T0330Z-ecotone-middle-k2v7
     claimed_at: '2026-11-19T03:30:00Z'
-    updated: '2026-11-19T03:30:00Z'
+    updated: '2026-11-19T07:37:56Z'
     note: |-
       Silas, 2026-11-19 PT, in session: "Go ahead and build the 8 candidate encounters."
       Source: candidates/MIDDLE-CANDIDATES-2026-11-09.yaml (t-027). Playtest iteration:
@@ -1818,6 +1818,11 @@ tasks:
       routes. Art: art/MIDDLE-ENCOUNTERS-2026-11-19.yaml, 8 cards + 40 outcomes x 4 lanes =
       192 ArtJobs (69993-70184).
       Next: merge the kind_robots PR; export renders when done; close.
+
+      2026-11-19 PT: built in kind_robots#5330 (merged), art in #5337. 192/192 ArtJobs DONE,
+      exported 189 after review; three Comic outcomes withdrawn for unprompted creatures and
+      fall back to Painted. All Ecotone suites green.
+    implementation_pr: 'silasfelinus/kind_robots#5337'
   - id: t-078
     milestone: m4
     title: "Ecotone: re-render the 3 withdrawn middle-encounter Comic outcomes with a no-creature negative so all 48 pictures ship in four styles"
