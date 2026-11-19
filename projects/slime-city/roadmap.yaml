@@ -507,7 +507,7 @@ tasks:
   - id: t-012
     milestone: m4
     title: "Full card and campaign coverage, prototype evaluation and visual QA"
-    status: claimed
+    status: ready
     depends_on: [t-010, t-011]
     owner: worker
     passes: 0
@@ -521,9 +521,15 @@ tasks:
       gamepad/keyboard/touch, and rendered 390/768/1440/XL layouts.
       Produce reproducible multi-seed full-route tests and a player handoff
       checklist. This is agent-owned QA, not approval to publish.
-    claimed_by: 2026-11-19T004623Z-slime-city-t-012-qa
-    claimed_at: '2026-11-19T00:46:24Z'
-    updated: '2026-11-19T00:46:24Z'
+
+      2026-11-19 PT partial: multi-seed full-route campaign QA added in kind_robots#5323
+      (verifySlimeCityFullRoutes.test.ts: 6 crews x 32 choice paths x 3 seeds through the real
+      Blackout engine, ~4.1k fights, both endings reachable per crew, deterministic replay; in
+      test:slime-city-lab). Player handoff checklist started at projects/slime-city/PLAYER-
+      HANDOFF-CHECKLIST.md. Still open: CLASH 300 closeout (t-041), constructed balance re-
+      run, two-browser reconnect, gamepad/keyboard/touch pass, current-main 390/768/1440/XL
+      captures, delivered-ArtImage reconciliation.
+    updated: '2026-11-19T00:49:52Z'
 
   - id: t-013
     milestone: m1
