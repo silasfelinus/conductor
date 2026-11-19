@@ -1,0 +1,288 @@
+# Slime City evolution art, Exchange, remaining cards (2026-11-19 PT, slime-city/t-012).
+# These cards were never queued by the t-041 evolution rounds (EVOLUTIONS-*-KREA.yaml), so they still show an
+# earlier painting at L2/L3; kind_robots utils/scripts/verifySlimeCityArtCoverage.test.ts holds that count in a
+# per-crew ratchet. Same Krea 2 ladder as the t-041 rounds (CLASH-EVOLUTION-PLAN.md section 4): L2 a low-angle
+# hero shot with new signature gear, L3 legendary and the biggest thing in the scene, each prompt opened by a
+# per-card look anchor from the card's level-1 painting. Keepers are wired as
+# SLIME_CITY_ART.evolutions['<cardId>@2' | '@3'] and lower the ratchet baseline. auto_submit: true.
+round: slime-city-evolutions-remaining-exchange-krea
+project_slug: slime-city
+designer: Slime City evolution art, Exchange remaining cards (Krea 2)
+is_public: true
+is_mature: false
+cast_loras: false
+priority: 640
+auto_submit: true
+lanes:
+- key: krea-evolution
+  label: Krea 2, escalated evolution stages written per card
+  engine: krea2
+  prompt: prose
+subjects:
+- key: slime-krea-evo-repo-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Ossuary Goblin L2: Collateral Hoard'
+  asset: slime-city/evolutions/repo@2
+  size: 832x1216
+  seed: 1119401
+  prompt_prose: 'A small wiry adult goblin acolyte with sea-green skin, huge lantern eyes, a too-big hooded robe of wet
+    black velvet and a jangling ring of tiny brass keys. Now its arms bulge with stolen strength and a heap of hinges, teacups
+    and candlesticks towers behind it. Low-angle hero shot in a candlelit chapel: it looms over the camera, hefting a giant
+    iron nail like a spear, a fallen ally’s helmet hung proudly on its belt. Hand-painted vivid inked western adult cartoon
+    for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette,
+    high contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up.
+    Every surface is bare and unmarked.'
+- key: slime-krea-evo-repo-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Ossuary Goblin L3: Lord of the Ossuary'
+  asset: slime-city/evolutions/repo@3
+  size: 832x1216
+  seed: 1119402
+  prompt_prose: A wiry adult goblin with sea-green skin, huge lantern eyes and a hooded robe of wet black velvet, now grown
+    enormous atop a mountain of pried-loose doors, bells and candlesticks filling the whole chapel nave. It holds a giant
+    brass meat scale aloft, and a stream of glowing gold flows from the scale back to its crew boss below. Acolytes bow
+    along the pews. Heroic low-angle view, candle gold and bone ivory palette. Hand-painted vivid inked western adult cartoon
+    for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette,
+    high contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up.
+    Every surface is bare and unmarked.
+- key: slime-krea-evo-collector-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Tithe-Bell Ringer L2: Ringing the Bell'
+  asset: slime-city/evolutions/collector@2
+  size: 832x1216
+  seed: 1119403
+  prompt_prose: 'A heavyset adult broker in a mustard pinstripe suit with a door-sized ledger and a gold pocket watch. Now
+    he swings a huge drowned brass tithe-bell on a chain. Low-angle hero shot in a gilded market hall: he fills the view
+    mid-swing, the bell ringing out shock rings, as a defeated rival slumps away and his own knuckles glow brighter. Hand-painted
+    vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated
+    gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene.
+    Every character is a clearly adult grown-up. Every surface is bare and unmarked.'
+- key: slime-krea-evo-collector-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Tithe-Bell Ringer L3: The Toll of Crown Market'
+  asset: slime-city/evolutions/collector@3
+  size: 832x1216
+  seed: 1119404
+  prompt_prose: A heavyset adult broker in a mustard pinstripe suit, now a giant standing inside a bell tower, ringing a
+    colossal drowned tithe-bell that shakes the whole of Crown Market. Each knocked-out rival in the street below sends
+    a glowing gold thread up into his fists, his wounds closing with every chime. Merchants cover their ears in doorways.
+    Heroic low-angle view, brass gold and bruised violet palette. Hand-painted vivid inked western adult cartoon for a grungy
+    colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high
+    contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every
+    surface is bare and unmarked.
+- key: slime-krea-evo-broker-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Butcher-Priest L2: The Buyout'
+  asset: slime-city/evolutions/broker@2
+  size: 832x1216
+  seed: 1119405
+  prompt_prose: 'A slick adult arena agent with slicked-back silver hair, a fur stole and a gold-toothed grin, now in a
+    blood-red butcher-priest vestment over his suit with a ceremonial cleaver. Low-angle hero shot under a velvet awning:
+    he looms over the camera, pressing a glowing gold seal onto the back of a sweating ally who is fading away into smoke
+    as the priest swells with stolen muscle. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting
+    fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait
+    framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and
+    unmarked.'
+- key: slime-krea-evo-broker-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Butcher-Priest L3: High Priest of the Drain'
+  asset: slime-city/evolutions/broker@3
+  size: 832x1216
+  seed: 1119406
+  prompt_prose: A slick adult agent with slicked-back silver hair and a gold-toothed grin, now a towering high priest in
+    gold and blood-red vestments, risen over a cathedral-sized market drain. Fading allies drift into his open briefcase
+    as glowing gold, and his arms swell to the size of tree trunks. The drain whispers back a column of light. Heroic low-angle
+    view, crimson and gold palette. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting
+    fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait
+    framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and
+    unmarked.
+- key: slime-krea-evo-mogul-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'The Meat Mogul L2: Patron of Collectors'
+  asset: slime-city/evolutions/mogul@2
+  size: 832x1216
+  seed: 1119407
+  prompt_prose: 'An enormous adult tycoon in a gold brocade suit with a cigar-shaped sausage. Now he stands up from his
+    throne of meat parcels, gold rings flashing. Low-angle hero shot in a gilded arena box: he fills the view, pointing
+    his sausage like a baton, and two mustard-suited collectors beside him glow with gold muscle as they crack their knuckles.
+    Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines,
+    saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed
+    scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.'
+- key: slime-krea-evo-mogul-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'The Meat Mogul L3: The Mint Beneath the Market'
+  asset: slime-city/evolutions/mogul@3
+  size: 832x1216
+  seed: 1119408
+  prompt_prose: An enormous adult tycoon in a gold brocade suit, now revealed as a vast many-armed thing rising from beneath
+    Crown Market, his merchant face grinning above the rooftops. Every collector in the streets below glows gold and charges,
+    and each knockout sends a golden coin of light up into the crew boss’s chest. The whole market bows. Heroic low-angle
+    view, molten gold and meat-red palette. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting
+    fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait
+    framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and
+    unmarked.
+- key: slime-krea-evo-collection-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Summons of the Butchers L2: Collected With Interest'
+  asset: slime-city/evolutions/collection@2
+  size: 832x1216
+  seed: 1119409
+  prompt_prose: 'Two muscular adult bruisers in mustard suits shaking brass tokens out of a protesting ogre’s pockets. Now
+    they wear hooded butcher aprons. Low-angle hero shot in a gilded marketplace: they tower over the camera, dangling the
+    ogre upside down, and the shower of tokens streams as glowing gold into the hands of their grateful crew boss behind
+    them. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive
+    outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous
+    full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.'
+- key: slime-krea-evo-collection-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Summons of the Butchers L3: The Great Summons'
+  asset: slime-city/evolutions/collection@3
+  size: 832x1216
+  seed: 1119410
+  prompt_prose: Two muscular adult bruisers in mustard suits and butcher aprons, now giants standing over the whole marketplace
+    with a rival ogre held upside down between them like a piggy bank. A gold waterfall of tokens pours down to heal their
+    boss and to empower a crowd of cheering collectors who flex below. Shop awnings flap in the wind. Heroic low-angle view,
+    mustard gold and crimson palette. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting
+    fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait
+    framing with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and
+    unmarked.
+- key: slime-krea-evo-debttrap-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Hungry Sigil L2: Twin Sigils'
+  asset: slime-city/evolutions/debttrap@2
+  size: 832x1216
+  seed: 1119411
+  prompt_prose: 'A trapdoor sigil springing open beneath a velvet carpet in a golden market hall. Now an adult Exchange
+    clerk in a mustard pinstripe suit kneels huge in the foreground, chalking a second smaller glowing gold sigil on the
+    floor beside the first. Low-angle hero shot: a rival gladiator teeters at the lip of the open pit full of receipts.
+    Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines,
+    saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed
+    scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.'
+- key: slime-krea-evo-debttrap-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Hungry Sigil L3: The Hungry Floor'
+  asset: slime-city/evolutions/debttrap@3
+  size: 832x1216
+  seed: 1119412
+  prompt_prose: An adult Exchange clerk in a mustard pinstripe suit, now a giant presiding over a market hall whose whole
+    floor is a glowing web of hungry gold sigils. Three rival gladiators plunge at once into three receipt-filled pits,
+    ledgers flapping like bats. Shoppers peer down from the balconies. Heroic low-angle view, gold sigil glow and velvet
+    purple palette. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick
+    expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with
+    one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-contract-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Drowned Saint''s Hide L2: Sealed and Surviving'
+  asset: slime-city/evolutions/contract@2
+  size: 832x1216
+  seed: 1119413
+  prompt_prose: 'An adult gladiator wrapped in a heavy iron-bound stitched hide that glows with gold chains. Now the hide
+    is thicker and studded with brass rivets. Low-angle hero shot: the gladiator fills the view, shrugging off a rival
+    blow in a gilded arena, and a warm thread of gold light flows from the armor back to the crew boss behind. Hand-painted
+    vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated
+    gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene.
+    Every character is a clearly adult grown-up. Every surface is bare and unmarked.'
+- key: slime-krea-evo-contract-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Drowned Saint''s Hide L3: Armor of the Drowned Saint'
+  asset: slime-city/evolutions/contract@3
+  size: 832x1216
+  seed: 1119414
+  prompt_prose: An adult gladiator in a stitched drowned-saint hide, now a giant clad in a radiant cathedral of gold chained
+    armor, a halo of chains turning overhead. Shimmering gold shields wrap the allies at each side and threads of light
+    heal their boss. The arena crowd raises candles. Heroic low-angle view, holy gold and sea-green palette. Hand-painted
+    vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated
+    gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene.
+    Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-foreclosure-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'The Chapel''s Tithe L2: Tithe Taken'
+  asset: slime-city/evolutions/foreclosure@2
+  size: 832x1216
+  seed: 1119415
+  prompt_prose: 'A massive golden stamp slamming down. Now an adult Exchange priest in mustard and black robes swings it
+    like a hammer. Low-angle hero shot: the stamp fills the view, a rival flattened dazed beneath it with stars around
+    his head, and a glowing gold stream flows from the impact to heal the priest’s crew boss. Hand-painted vivid inked western
+    adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors,
+    bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character is
+    a clearly adult grown-up. Every surface is bare and unmarked.'
+- key: slime-krea-evo-foreclosure-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'The Chapel''s Tithe L3: Debtors’ March'
+  asset: slime-city/evolutions/foreclosure@3
+  size: 832x1216
+  seed: 1119416
+  prompt_prose: An adult Exchange priest in mustard and black robes, now a giant swinging a golden stamp the size of a house
+    over the whole chapel square. The flattened rival is knocked out, the boss behind glows healed, and a sad little adult
+    debtor in a paper suit marches out of the dust to join the crew. Townsfolk watch from steps. Heroic low-angle view,
+    gold and ash palette. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy,
+    thick expressive outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing
+    with one continuous full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-handshake-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Blackened Palm Oath L2: Oath Passed Down'
+  asset: slime-city/evolutions/handshake@2
+  size: 832x1216
+  seed: 1119417
+  prompt_prose: 'Two adult fighters clasping hands over a stone altar between tall green candles, the hooded priest’s hand
+    charcoal-black and smoking. Now the gold light spirals up the fighter’s arm and leaps onward to clasp the hands of two
+    allies beside him. Low-angle hero shot: the priest looms over the camera, three glowing palms raised behind him. Hand-painted
+    vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated
+    gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene.
+    Every character is a clearly adult grown-up. Every surface is bare and unmarked.'
+- key: slime-krea-evo-handshake-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Blackened Palm Oath L3: The Whole Crew Swears'
+  asset: slime-city/evolutions/handshake@3
+  size: 832x1216
+  seed: 1119418
+  prompt_prose: A hooded adult priest with a charcoal-black smoking hand, now a giant towering over a vast chapel. Every
+    fighter of the crew stands below in a long line, each with a blackened palm raised and gold spirals racing up their
+    arms into a single blazing oath column. Candles in every window flare green. Heroic low-angle view, emerald candle and
+    gold palette. Hand-painted vivid inked western adult cartoon for a grungy colorful street-fighting fantasy, thick expressive
+    outlines, saturated gritty neon colors, bold clear silhouette, high contrast, tall portrait framing with one continuous
+    full-bleed scene. Every character is a clearly adult grown-up. Every surface is bare and unmarked.
+- key: slime-krea-evo-hushmoney-l2
+  entity: card-art
+  lane: krea-evolution
+  title: 'Merciful Altar L2: Altar Gives Back'
+  asset: slime-city/evolutions/hushmoney@2
+  size: 832x1216
+  seed: 1119419
+  prompt_prose: A mustard-gold briefcase of brass tokens beside a velvet curtain, now opened on a glowing chapel altar.
+    An adult Exchange acolyte kneels huge in the foreground while warm gold light pours from the altar into a wounded ally,
+    closing his cuts, and a thread of light rises toward the crew boss. Hand-painted vivid inked western adult cartoon for
+    a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors, bold clear silhouette,
+    high contrast, tall portrait framing with one continuous full-bleed scene. Every character is a clearly adult grown-up.
+    Every surface is bare and unmarked.
+- key: slime-krea-evo-hushmoney-l3
+  entity: card-art
+  lane: krea-evolution
+  title: 'Merciful Altar L3: The Overflowing Altar'
+  asset: slime-city/evolutions/hushmoney@3
+  size: 832x1216
+  seed: 1119420
+  prompt_prose: An adult Exchange acolyte, now kneeling beside a colossal altar that fills the chapel, gold light overflowing
+    like a fountain. A healed ally rises inside a shimmering golden shell, and the crew boss behind glows restored. Worshippers
+    fill the pews holding out cups. Heroic low-angle view, warm gold and velvet red palette. Hand-painted vivid inked western
+    adult cartoon for a grungy colorful street-fighting fantasy, thick expressive outlines, saturated gritty neon colors,
+    bold clear silhouette, high contrast, tall portrait framing with one continuous full-bleed scene. Every character is
+    a clearly adult grown-up. Every surface is bare and unmarked.

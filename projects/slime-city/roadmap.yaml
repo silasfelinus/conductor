@@ -507,7 +507,7 @@ tasks:
   - id: t-012
     milestone: m4
     title: "Full card and campaign coverage, prototype evaluation and visual QA"
-    status: claimed
+    status: ready
     depends_on: [t-010, t-011]
     passes: 0
     stakes: reversible
@@ -547,11 +547,18 @@ tasks:
       two-browser Playwright run). Remaining: signed-in keyboard/touch input run, real-
       controller gamepad check, re-capture after #5332, the 66 evolution renders, CLASH 300
       closeout (t-041). Released back to ready.
-    updated: '2026-11-19T13:48:25Z'
+      2026-11-19 PT partial (evolution art queued): the 66 cards in verifySlimeCityArtCoverage's
+      ratchet were never queued by the t-041 rounds (those cover the 230 redesigns plus the
+      Catgirls pilot). Six auto_submit Krea 2 ledgers, projects/slime-city/art/EVOLUTIONS-
+      REMAINING-{BLOODFAIRIES,IRONJAW,RIOT,UNDERTOW,EXCHANGE,MERCENARIES}-KREA.yaml, queue 132
+      per-card L2/L3 prompts painting each card's clashTwists/evolution story (seeds 1119001+).
+      art_ledger_authoring 0 problems; kind_robots live prompt contract 132/132. Next: curate
+      DONE renders, wire SLIME_CITY_ART.evolutions['<id>@2'|'@3'], lower the ratchet baseline.
+      Remaining: signed-in keyboard/touch input run, real-controller gamepad check, re-capture
+      after #5332, CLASH 300 closeout (t-041). Released back to ready.
+    updated: '2026-11-19T14:30:00Z'
     owner: worker
     implementation_pr: 'silasfelinus/kind_robots#5345'
-    claimed_by: 20261119T1400Z-slime-evo66-9lok
-    claimed_at: '2026-11-19T13:48:25Z'
 
   - id: t-013
     milestone: m1
