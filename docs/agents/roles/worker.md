@@ -32,9 +32,11 @@ Read AGENTS.md (core) first; this playbook adds only what this role needs.
   of the time — resolve any such conflict by taking main's copy per hard rule 9
   (they're auto-generated). This keeps trivial auto-gen conflicts off the Reviewer's
   plate (kaizen from PR #550, conductor/t-045).
-- **software:** open a PR into `main`, fill the handoff template (including "Flags for
-  Reviewer"), set task `status: review`, verify it, resolve conflicts if present, and **merge
-  it** — reversible/scoped/verified software work is merged, not parked at an open PR. After a
+- **software:** set `status: review` and verify it before opening a scoped PR into
+  `main` with the required handoff template. Resolve conflicts, inspect every completed
+  latest-head check, and **merge when green**; a pending check is not permission to merge.
+  After review+PR handoff, immediately claim another independent ready task while CI runs,
+  per [continuous production pipeline](../continuous-production-pipeline.md). On a
   successful safe merge, **before hand-writing `status: done`**, check `task-events/` for an
   already-queued event naming this same project/task (a "PR merged" auto-queue mechanism can
   race a manual close-out — both derive staleness from the same monotonically increasing
@@ -60,16 +62,15 @@ Read AGENTS.md (core) first; this playbook adds only what this role needs.
 - **content:** write the draft file, open a PR, set `status: needs-human`.
 - **proposal:** write `pitches/<date>-<slug>.md` using the pitch template, open a PR, set
   `status: needs-human`.
-- **Every run ends with a clean `main` and no leftover branch.** The required terminal state
-  for reversible, scoped, verified, non-gated work is **merged into `main`** — not an open PR
-  left for a human to merge. Do not "park" safe work at an open PR because no one told you to
-  merge: merging safe work is the default, not a request. Only work that is genuinely unsafe,
-  human-gated, outward-facing, irreversible, or blocked ends unmerged — and it ends at
-  `status: needs-human` with its PR open (so it isn't lost), never as a silent stranded branch.
-  Merged branches are removed automatically (the repo's delete-on-merge setting + the
-  `branch-janitor` workflow); never leave a no-PR branch behind. Work one task in flight at a
-  time — you may complete several tasks in a single run, but finish each (merged, or parked at
-  `needs-human` with a PR) before claiming the next. Never hold two active claims at once.
+- **Leave no orphan branch or indefinitely pending PR.** Reversible, scoped, non-gated
+  software with **completed green** checks belongs merged into `main`; never park a green
+  PR for Silas to merge. A PR with pending CI stays open at verified `review` while the
+  Worker advances another independent task. A PR needing a hard gate stays open at
+  `needs-human`; no release, publication, irreversible mutation, or subjective approval
+  is inferred from green checks. Merged branches are auto-removed; never finish with
+  only a pushed branch and no PR. Keep one **active claimed** task at a time; a review
+  PR is a tracked handoff and does not block claiming another independent ready task.
+  On CI completion, fix/merge and reconcile the review PR rather than abandoning it.
 - **On closing a task at `done`** (e.g. after a safe self-merge): append the outcome record
   to `LEARNING.yaml`.
 - **Merge conflicts:** resolve them intelligently. Keep both sides when they are independent,

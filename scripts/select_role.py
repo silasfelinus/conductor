@@ -117,7 +117,8 @@ archaeology on stale branches; the audit is time-boxed (must happen roughly
 weekly regardless of other queue state) so it outranks fresh ready-task
 pickup once overdue, but never preempts anything already broken or
 reviewable; idle falls through last:
-  1. candidate_worker_branch_count > 0        -> reviewer
+  1. actionable worker PR/branch > 0           -> reviewer
+     (pending-CI review PRs do not preempt independent production work)
   2. failing_scheduled_workflow_count > 0     -> workflow-medic
   3. red_stale_pr_count > 0                   -> pr-medic
   4. stranded_branch_count > 0                -> branch-medic
@@ -389,6 +390,53 @@ def commit_combined_state(repo: str, sha: str, token: str) -> str | None:
     if any(run.get('conclusion') in _BAD_CHECK_CONCLUSIONS for run in current_runs):
         return 'failure'
     return 'success'
+
+
+def split_pending_worker_reviews(
+    branches: list[dict], repo: str, token: str
+) -> tuple[list[dict], list[dict]]:
+    """Do not consume a reviewer session merely to watch queued PR checks.
+
+    An orphan worker branch still needs rescue, and a worker PR with completed
+    green or red checks still needs review. Only an OPEN PR with actively
+    pending CI is handed off to the production pipeline. If GitHub cannot
+    establish its state, prefer reviewer over a potentially unsafe new claim.
+    """
+    if not branches or not token:
+        return branches, []
+
+    before_errors = len(_unreachable_urls)
+    pull_requests = list_open_prs(repo, token)
+    if len(_unreachable_urls) != before_errors:
+        return branches, []
+
+    by_branch: dict[str, dict] = {}
+    for pr in pull_requests:
+        head = pr.get('head') or {}
+        name = head.get('ref')
+        origin = (head.get('repo') or {}).get('full_name')
+        if name and (not origin or origin == repo):
+            by_branch[str(name)] = pr
+
+    actionable: list[dict] = []
+    pending: list[dict] = []
+    for branch in branches:
+        pr = by_branch.get(str(branch.get('branch') or ''))
+        if not pr or pr.get('draft'):
+            actionable.append(branch)
+            continue
+        sha = (pr.get('head') or {}).get('sha')
+        status = commit_combined_state(repo, str(sha), token) if sha else None
+        if status == 'pending':
+            pending.append({
+                **branch,
+                'pr_number': pr.get('number'),
+                'head_sha': sha,
+                'ci_state': status,
+            })
+        else:
+            actionable.append(branch)
+    return actionable, pending
 
 
 def find_red_stale_prs_in_repo(
@@ -1034,7 +1082,10 @@ def select_role(
     except Exception as error:  # pragma: no cover - network-dependent
         print(f'[select-role] remote refresh warning: {error}', file=sys.stderr)
 
-    review_branches = run_reviewer.remote_worker_branches()
+    all_review_branches = run_reviewer.remote_worker_branches()
+    review_branches, pending_worker_prs = split_pending_worker_reviews(
+        all_review_branches, LOCAL_REPO, github_token
+    )
     reviewable_prs = find_reviewable_claude_prs(LOCAL_REPO, github_token, grace_minutes=pr_grace_minutes)
     failing_workflows = find_failing_scheduled_workflows(
         LOCAL_REPO,
@@ -1206,6 +1257,8 @@ def select_role(
         'repos_checked': repos,
         'candidate_worker_branch_count': len(review_branches),
         'candidate_worker_branches': review_branches,
+        'pending_worker_pr_count': len(pending_worker_prs),
+        'pending_worker_prs': pending_worker_prs,
         'candidate_reviewable_pr_count': len(reviewable_prs),
         'candidate_reviewable_prs': reviewable_prs,
         'failing_scheduled_workflow_count': len(failing_workflows),

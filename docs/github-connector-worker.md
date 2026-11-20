@@ -137,12 +137,18 @@ Implementation work still follows the normal flow:
 1. Create `worker/<project>-<task-id>-<session>` from the post-claim `main` commit.
 2. Implement a focused change in the correct repository.
 3. Queue and verify `review` before opening the implementation PR.
-4. Inspect the complete diff, reviews, threads, mergeability, commit checks, and Actions logs.
-5. Fix failures on the same branch (see "Formatting without a local runner" below).
-6. Merge only reversible, scoped, verified work allowed by `AGENTS.md`, using the expected head SHA.
-7. Queue and verify `done` or `rearm` after merge.
-8. Confirm the Conductor projection sync succeeded when the change affects Kind Robots.
-9. Confirm no stale claim, event, PR, or branch remains.
+4. Inspect the complete diff and latest-head CI; subscribe to completed PR activity if
+   supported. Queued checks or a GitHub `mergeable` flag are not green.
+5. After `review` is verified and a PR is open, the task is handed off. While CI
+   runs, atomically claim and implement another **independent** `ready` task; never
+   hold two actively claimed tasks or edit another worker's claim. See
+   [continuous production pipeline](agents/continuous-production-pipeline.md).
+6. On completed CI, fix failures on the original branch or merge only reversible,
+   scoped, fully green, non-gated work using its expected head SHA.
+7. After merge, queue and verify `done` only for completed scope; otherwise
+   `ready` for partial nonrecurring tasks, or `rearm` for truly recurring work.
+8. Confirm Conductor projection sync where required.
+9. Confirm no stale claim, event, review PR, or orphan branch remains.
 
 ### Formatting without a local runner
 
