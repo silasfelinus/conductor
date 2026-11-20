@@ -41,18 +41,21 @@ def is_auto_ledger(data) -> bool:
     )
 
 
-def find_ledgers(root: Path | None = None) -> list[Path]:
+def find_ledgers(root: Path | None = None, *, with_data: bool = False) -> list:
     root = root or ROOT
-    found = set()
+    found = {}
     for pattern in PATTERNS:
         for path in root.glob(pattern):
+            if path in found:
+                continue
             try:
                 data = yaml.safe_load(path.read_text())
             except (OSError, yaml.YAMLError):
                 continue
             if is_auto_ledger(data):
-                found.add(path)
-    return sorted(found)
+                found[path] = data
+    paths = sorted(found)
+    return [(path, found[path]) for path in paths] if with_data else paths
 
 
 def open_cells(data) -> int:

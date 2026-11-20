@@ -25,8 +25,9 @@ def last_commit_timestamp(path: Path, root: Path = ROOT) -> int | None:
     return int(stamp) if result.returncode == 0 and stamp.isdecimal() else None
 
 
-def missing_receipts(path: Path, *, now: int, max_age_hours: int = 24, root: Path = ROOT) -> bool:
-    data = yaml.safe_load(path.read_text()) or {}
+def missing_receipts(path: Path, *, now: int, max_age_hours: int = 24, root: Path = ROOT, data=None) -> bool:
+    if data is None:
+        data = yaml.safe_load(path.read_text()) or {}
     subjects = data.get("subjects") or []
     if not subjects or open_cells(data) == 0:
         return False
@@ -43,8 +44,8 @@ def main(argv=None) -> int:
     parser.add_argument("--max-age-hours", type=int, default=24)
     args = parser.parse_args(argv)
     overdue = [
-        path for path in find_ledgers()
-        if missing_receipts(path, now=int(time.time()), max_age_hours=args.max_age_hours)
+        path for path, data in find_ledgers(with_data=True)
+        if missing_receipts(path, now=int(time.time()), max_age_hours=args.max_age_hours, data=data)
     ]
     for path in overdue:
         print(f"OVERDUE art ledger without recorded ArtJob receipts: {path.relative_to(ROOT)}")
