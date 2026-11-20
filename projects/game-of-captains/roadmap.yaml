@@ -85,12 +85,12 @@ tasks:
       Full history: projects/game-of-captains/HISTORY.md#t-001
   - id: t-041
     title: 'Main-game standard: audit and close the gaps for Space Couch'
-    status: claimed
+    status: review
     milestone: m4
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-20T00:02:09Z'
+    updated: '2026-11-20T00:07:00Z'
     note: |-
       Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -115,6 +115,8 @@ tasks:
       2026-11-19 PT: next scoped t-041 improvement on worker/game-of-captains-t-041-voyage-ledger-k8p5. Added versioned and bounded completed-voyage archive with dedicated localStorage key, final-run dossiers covering captain, selected crew, decisions, losses, ending prose, saved log and play dates, plus safe v1 restore/duplicate handling. Existing voyage v1 save key and stable game identifiers unchanged. Added source and deterministic contract tests. Implementation PR, exact-head CI and merge pending. This is a partial standard improvement; settings, account-save checks, ending plates, visual QA and final t-041 are not complete.
 
       2026-11-19 PT: Kind Robots PR #5363 merged as 3d5e54bdd09df54c0c8dd0ba0da5ccc9542afcab. All ten latest exact-head PR workflow groups completed success, including the full Space Couch adversarial voyages and all four Contract Tests shards. The completed-voyage archive records every finished run (captain, crew, outcomes, mission and consequence choices, fallen redshirts, final text and log) without changing the active v1 save key. Restored v1 completed runs backfill; duplicate, malformed-record and no-eviction regressions covered. Task remains partial: unify title/in-game settings, account-backed voyage saves, verify live 12+ achievements and delivered ending art/viewport checks; no playtest handoff yet.
+
+      2026-11-19 PT: scoped main-game quality slice on worker/game-of-captains-t-041-shared-settings-m5v7. Title screen now mounts the same PlaybookKitSettings panel as the in-voyage settings tab. Existing Space Couch largeText and reducedMotion flags are migrated on the first Kit save only; an existing saved Kit preference always wins, unreadable legacy data does not destroy Kit or voyage data, and the legacy key is never removed or rewritten. Visible typography/motion and opening reels read reactive Kit-derived settings. Deterministic test covers migration mapping and source wiring. CI, PR and visual QA remain to verify. t-041 remains PARTIAL after merge: account voyage sync, original paintings, live achievement awards and 390/768/1440 visual evidence remain.
     owner: worker
     claimed_by: 20261120T000209Z-space-couch-t041-unified-settings-m5v7
     claimed_at: '2026-11-20T00:02:09Z'
