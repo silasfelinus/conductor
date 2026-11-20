@@ -20,8 +20,8 @@ class ReceiptParseOnceTests(unittest.TestCase):
             folder.mkdir(parents=True)
             ledger = folder / "round.yaml"
             ledger.write_text(
-                "auto_submit: true\\nlanes:\\n  - key: portrait\\n"
-                "subjects:\\n  - key: captain\\n    jobs: {}\\n"
+                "auto_submit: true\nlanes:\n  - key: portrait\n"
+                "subjects:\n  - key: captain\n    jobs: {}\n"
             )
             original = sweep.yaml.safe_load
             parses = []
@@ -48,7 +48,7 @@ class ReceiptParseOnceTests(unittest.TestCase):
             folder = root / "projects" / "demo" / "art"
             folder.mkdir(parents=True)
             path = folder / "round.yaml"
-            path.write_text("auto_submit: true\\nlanes: []\\nsubjects: []\\n")
+            path.write_text("auto_submit: true\nlanes: []\nsubjects: []\n")
             self.assertEqual(sweep.find_ledgers(root), [path])
 
 
