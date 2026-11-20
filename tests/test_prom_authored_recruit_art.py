@@ -44,5 +44,10 @@ def test_authored_recruit_portraits_are_private_and_canon_consistent():
             assert name in subject["title"]
             assert name in subject["prompt_prose"]
             assert subject["size"] == "768x1024"
-            assert "jobs" not in subject
-            assert "art" not in subject
+            # The art queue records submitted job ids and rendered status after
+            # authoring; tolerate them but keep them on the ledger's one lane.
+            jobs = subject.get("jobs") or {}
+            assert set(jobs).issubset({"krea2"})
+            assert all(isinstance(job_id, int) and job_id > 0 for job_id in jobs.values())
+            art = subject.get("art") or {}
+            assert set(art).issubset(set(jobs))
