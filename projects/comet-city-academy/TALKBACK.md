@@ -46,3 +46,14 @@ Merged (squash 9017e41). Art ledgers/prompts only, reversible, CI green. The fiv
 **Remaining:** t-004 returns to `ready` for broader roster injury follow-ups, faction relationships, and character-specific delayed callbacks. This was a gameplay effect and save contract, not final art or self-hosted deployment verification.
 
 **Kaizen:** Show local case memory in the investigation dossier, with a player-visible rationale for the trust bonus or cost.
+
+
+## 2026-11-20 PT · Reviewer · t-007 authored-recruit portraits · PR #7678
+
+**Decision:** Merged Conductor PR #7678 (eight private Krea 2 requests, neutral + injured, for Vesna Duarte, Bram Kowalczyk, Femi Ilunga and Cyrus Adeyemi). Every physical description matches `RECRUIT-AND-ROMANCE-BIBLE.md` rows 13–16; the contract test checks privacy flags, unique keys/seeds/assets and the absence of invented ArtJob receipts.
+
+**What I found:** The Worker's claim commit (b6829b7) added fresh `owner`/`claimed_by`/`claimed_at` on t-007 without removing the 2026-10-30 trio at the bottom of the task. That broke `validate_roadmaps.py` on main and reddened this PR, every other PR and `process-task-events` (3 consecutive failures). Fixed in #7679. The PR body also lacked the required handoff headings; the reviewer repaired it.
+
+**Pattern for Workers:** Claim with `claim_task.py` / a task-event rather than hand-editing the roadmap, and run `python scripts/validate_roadmaps.py` before pushing any roadmap edit. Use the exact AGENTS.md handoff headings (`### Task`, `### What changed / what I produced`, `### How I verified`, `### Stakes`, `### Kaizen suggestion`, `### Notes for reviewer`).
+
+**Remaining:** These are requests only. t-007 returns to `ready`: confirm ArtJob acceptance for this ledger, export/wire the portraits only if a runtime surface asks for them (these four are "Not planned" as runtime recruits), and continue runtime-recruit emotion/injury art, maps and visual QA.
