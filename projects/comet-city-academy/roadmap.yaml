@@ -228,11 +228,11 @@ tasks:
       Reviewed and merged by the reviewer role (branch worker/comet-city-academy-t-041-loader-parity-p9f2): test_all_opted_in_art_ledgers_have_identical_safe_loader_data skips without libyaml and otherwise compares CSafeLoader and SafeLoader parses of every find_ledgers() path. Locally 9 pass, 1 skip. Cost note: the pure-Python parse of the 240 opted-in ledgers takes ~32s, so the test adds roughly that to CI. Kaizen t-042 measures it.
   - id: t-042
     title: "Measure the loader-parity test's CI runtime and move it to a scheduled lane if it adds more than 15 seconds to pytest"
-    status: review
+    status: done
     owner: worker
     claimed_by: 2026-11-20T214515Z-comet-t042-q6m2
     claimed_at: '2026-11-20T21:45:15Z'
-    updated: '2026-11-20T21:48:15Z'
+    updated: '2026-11-20T22:47:33Z'
     milestone: m3
     stakes: reversible
     passes: 0
@@ -241,6 +241,26 @@ tasks:
       Kaizen from t-041 review. SafeLoader takes ~32s locally on the 240 opted-in ledgers, and CI pays that on every PR. Read the pytest --durations output from a ci.yml run. If the test costs more than 15s, mark it slow and run it from a daily workflow, or compare only ledgers changed since the last run. Report the before and after numbers.
 
       Scoped CI increment: move the full 240-ledger C/Python YAML parity test from every PR to a daily and manually dispatchable Art Loader Parity workflow; retain all fast art-ledger tests on every PR and add a scheduling regression. Worker PR baseline: 4859 passed, 8 skipped in 219.02s on 2026-11-20; local slow test reported about 32s, exact individual CI duration not emitted by old command. New --durations flag will expose after-run timings. Staged in conductor fc0997c.
+
+      Reviewed and merged by the reviewer role (2026-11-20 PT, #7695, squash e48d115). The
+      full C/Python SafeLoader parity test is now marked art_parity. PR CI runs 'not
+      art_parity', and the new 'Daily art ledger loader parity' workflow runs it daily at
+      15:17 UTC and on manual dispatch. A scheduling regression test stops it from quietly
+      returning to every PR. PR CI was green on fc0997c. Superseded #7688 (duplicate of the
+      t-040 work already merged in #7689) closed. Kaizen t-043 records the measured
+      before/after suite time.
+    implementation_pr: 'silasfelinus/conductor#7695'
+  - id: t-043
+    title: "Record the before/after Python test-suite time from the first post-#7695 CI run and the first daily parity run in a short note"
+    status: ready
+    owner: worker
+    updated: '2026-11-20T22:50:00Z'
+    milestone: m3
+    stakes: reversible
+    passes: 0
+    depends_on: [t-042]
+    note: |-
+      Kaizen from t-042 review (#7695). Before the split, Worker PR CI took 219.02s for 4,859 tests (run 44810467441). Read the --durations output from the first completed post-merge PR CI run and from the first 'Daily art ledger loader parity' run. Write the measured delta in this note, and confirm the daily job really runs the parity test rather than skipping it when CSafeLoader is missing. If it skipped, fix the workflow so the comparison runs.
   - id: t-012
     milestone: m2
     title: "Promote the seven-day demo into Capes & Tassels name and genuine day/night map slice"
@@ -662,14 +682,11 @@ tasks:
     implementation_pr: 'silasfelinus/kind_robots#4325'
   - id: t-021
     title: "Prom of Doom: 48-origin × affinity visual identity revival, Dr. Frog and Granny Mayhem"
-    status: review
-    owner: worker
-    claimed_by: 2026-11-20T131730Z-comet-t021-a72f
-    claimed_at: '2026-11-20T13:17:30Z'
+    status: ready
     stakes: reversible
     passes: 0
     source_issue: "silasfelinus/kind_robots#4403"
-    updated: '2026-11-20T13:24:00Z'
+    updated: '2026-11-20T23:06:00Z'
     note: |-
       FROM GITHUB ISSUE silasfelinus/kind_robots#4403 (https://github.com/silasfelinus/kind_robots/issues/4403), opened by @silasfelinus on 2026-10-28. Imported by scripts/sync_github_issues.py. Reference the issue in the implementing PR (`Closes silasfelinus/kind_robots#4403`) so it closes on merge; the bridge closes it otherwise once this task is done.
 
@@ -700,6 +717,8 @@ tasks:
       PARTIAL WORK MERGED. Kind Robots #4527 squash commit 7ace16a676f2e74e529027eaf227bbf6f379ae00 passed all 19 latest-head GitHub workflows (Academy seeded gameplay, TypeScript, format, contract shards and production container build). Opening has distinct descriptive origin/affinity cards with existing Comfy WEBP illustrations instead of emojis, trimmed boilerplate, a private Tactical Mode link, a cross-run Scrapbook and Settings. New 30-day terms have independent saved tactical and night-patrol booleans; visual-novel nights use story decisions and seeded existing dispatch, including the day-three split/concentrate dilemma, while every combination preserves the same relationships, crises and finale. Four-mode adversarial tests and legacy-save validation are in CI. Conductor #6860 merged at 80e0ba2ee1ae432ffa26ecf4725cd0c51bb9b64a, with all 6 latest-head workflows green. It includes a 14-subject, private auto-submit Unstable Diffusers Comfy icon ledger and a minimal unrelated stale-duplicate YAML updated-key repair required to unblock global roadmap validation. Actual icon ArtJob IDs are NOT YET RECORDED; its first push-triggered Auto Art Generate run was cancelled while an earlier scheduled art sweep was active. The durable ledger is waiting for the next successful auto sweep. Rendered icon delivery, alpha-matted transparent PNG exports, final live media URLs, visual device QA and self-hosted Unraid deploy verification remain pending. Broad t-021's 48-identity art and project content scope remains unfinished; return ready.
 
       Partial implementation: twelve canonical fire/genius visual signatures across all six origins and invariant tests. Remaining 36 signatures, art delivery and Dr. Frog/Granny Mayhem story integration remain open; PR must not close task.
+
+      PR silasfelinus/kind_robots#5439 merged as fc0d37751ed36875042e86089424bbbd79ef8ea9 after eight completed green checks. Twelve canonical visual contracts delivered; thirty-six signatures, actual art attachment, and remaining original t-021 scope are unfinished. Return to ready for independent further implementation.
   - id: t-022
     title: "Prom of Doom: rewrite nighttime patrol as player-led missions with authored secrets and roster growth"
     status: claimed

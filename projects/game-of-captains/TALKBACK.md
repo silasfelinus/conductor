@@ -31,3 +31,10 @@
 - **Positive:** registered exactly 22 DONE redo images as unselected curator candidates with fixed ArtJob/ArtImage provenance; runtime accepts only explicit liked-and-selected candidates with the existing viewer-specific access filter. The 22 failed originals remain quarantined, and no image was automatically approved or published.
 - **Remaining:** direct physical image review and authenticated private art URLs, redshirt and ending art coverage, responsive 390/768/1440 browser QA, and final roadmap readiness all remain agent-owned. t-031 goes back to READY partial. Master issue #4182 and species issue #4592 remain open.
 - **Lesson:** make art candidates independently inspectable, but separate render status, human-visible verdict, viewer authorization and delivered-game display at every stage.
+
+## 2026-11-20 PT — t-033 redshirt curator navigation, duplicate review
+
+- **Decision:** merged scoped reversible kind_robots PR #5447 as `35d30b2` after seven completed-success latest-head Actions groups; closed duplicate PR #5446 unmerged. Both independently implemented the same art-slot deep link, so merging both would create unnecessary conflicts.
+- **Verification:** three-file change filters the Forge to Space Couch redshirt slots and keeps single-candidate review visible, with source-based regression assertions. Saved-game IDs, access control and image verdicts unchanged.
+- **Follow-up:** t-033 is still READY/partial, not art-delivered. The 23 portrait candidates and one power plate require actual image inspection, explicit selection and authenticated URL checks. The four older REVIEW tasks were inspected against main and queued for READY reconciliation; no completed gameplay/art scope was relabeled done.
+- **Lesson:** compare contemporaneous worker PRs before merging; an active review flag without recent work should not block independent next steps.

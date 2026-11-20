@@ -223,11 +223,8 @@ tasks:
   - id: t-007
     milestone: m3
     title: "Write and implement all six distinctive tactical story missions"
-    status: review
-    owner: worker
-    claimed_by: 20261120T220000Z-every-villain-t007-epilogues-v83n
-    claimed_at: '2026-11-20T21:53:12.452Z'
-    updated: '2026-11-20T21:55:59.431Z'
+    status: ready
+    updated: '2026-11-20T23:06:00Z'
     depends_on: [t-003, t-005, t-006]
     passes: 0
     stakes: reversible
@@ -271,6 +268,8 @@ tasks:
       Canonical Crossfire rival continuity staged: the chosen First Bell foil now commands the remaining five stage battles (without changing the separate one-shot cast), and each checkpoint keeps the optional saved foil signature. A duplicate supporting rival gets a stable alternate identity. Old journal stages without foil metadata still load, recovering the chosen opponent on subsequent chapters. Test expanded across all 48 canonical leaders, 5 chapters, legacy migration, forgery and stand-alone compatibility. App PR and completed CI checks required before this can be considered merged.
 
       Six authored Crossfire chapter debriefs now branch on actual rescue, evidence or command choices; four Prom Night conclusions derive from the completed first five battles plus the final shelter/command choice, rather than the HERO/VILLAIN menu selection. Story beats reuse 48 canonical identities, the stable foil, the old Crossfire save key and the existing battle-result art. Added 6x3 chapter-choice checks, all 48 lead aliases, all four earned finales and loss/skip guards in the dedicated Tactics test. Implementation PR pending CI. Full 48-route authoring, cinematic art and whole-run acceptance remain pending.
+
+      PR silasfelinus/kind_robots#5449 was already merged; the first Tactics workflow run 44825830068 failed with no jobs, but the subsequent run 44825892656 on the same head completed successfully. Six choice-aware chapter reports and four earned conclusions shipped; personal routes, art and adversarial complete-campaign acceptance remain unfinished. Return to ready.
   - id: t-008
     milestone: m3
     title: "Author 48 hero and villain playable arcs with distinct supporting cast"
@@ -522,11 +521,8 @@ tasks:
   - id: t-021
     milestone: m3
     title: "Ship 48 power-specific playable origin opening battles"
-    status: review
-    owner: worker
-    claimed_by: 2026-11-20T123452Z-every-villain-t021-valcourt-7c91
-    claimed_at: '2026-11-20T12:34:52Z'
-    updated: '2026-11-20T12:44:09Z'
+    status: ready
+    updated: '2026-11-20T23:06:00Z'
     depends_on: [t-005, t-017]
     passes: 0
     stakes: reversible
@@ -546,6 +542,8 @@ tasks:
       2026-11-20 PT: Kind Robots #5425 and Conductor #7666 merged and verified. Cornerstone's Street That Sank is playable origin #3/48. All remaining 45 power-specific origins, dedicated production renders, and end-to-end validation are unfinished; release task for the next focused iteration.
 
       2026-11-20 PT: Fourth power-specific origin, Captain Valcourt's Unlicensed Rescue, implemented on worker/every-villain-tactics-t-021-valcourt-7c91. Hero/villain cinematic, ally-target cape shield rescue gate, two civilian evacuations, timed encounter, decision flags, save anti-forgery and adversarial tests. Pending dedicated Krea 2 venue and latest-head CI. Remaining 44 origins still open; review this increment only.
+
+      PR silasfelinus/kind_robots#5434 merged as 0c6ef1de8086b671663aefb0f0292972a0201f6a after seven completed green checks. Captain Valcourt origin fight shipped; remaining forty-four unique origin battles and art verification are still pending. Return to ready.
   - id: t-022
     milestone: m3
     title: "Build 48 villain-owned lairs with changing tactical environments"

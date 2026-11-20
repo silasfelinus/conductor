@@ -85,15 +85,12 @@ tasks:
       Full history: projects/game-of-captains/HISTORY.md#t-001
   - id: t-041
     title: 'Main-game standard: audit and close the gaps for Space Couch'
-    status: review
-    owner: worker
-    claimed_by: 20261120T185100Z-game-of-captains-t041-c8f2a9
-    claimed_at: '2026-11-20T18:51:00Z'
+    status: ready
     milestone: m4
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-20T18:55:00Z'
+    updated: '2026-11-20T23:03:50.597Z'
     note: |-
       Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -142,7 +139,8 @@ tasks:
       resolving main conflicts. Additive-only migration (CREATE TABLE SpaceCouchVoyageSave).
       Partial slice: t-041 stays ready for remaining save/load and verification gates per the
       PR.
-    implementation_pr: 'silasfelinus/kind_robots#5430'
+
+      Old review claim from 18:51 UTC had no new task activity; account-save PR #5430 and prior main-game standard slices are merged. Remaining authenticated browser, art and viewport standards are NOT done. Return to READY for the next worker, preserving prior contributions.
 
   - id: t-040
     title: 'Space Couch achievement upgrade: 12 or more live achievements'
@@ -236,11 +234,8 @@ tasks:
   - id: t-008
     milestone: m3
     title: "Deliver Space Couch painted red-sofa ship, pocket-room, shield, crew and world art"
-    status: review
-    owner: worker
-    claimed_by: 20261120T124631Z-game-of-captains-t008-z7p4n2
-    claimed_at: '2026-11-20T12:46:31Z'
-    updated: '2026-11-20T12:50:49Z'
+    status: ready
+    updated: '2026-11-20T23:03:50.597Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -264,13 +259,12 @@ tasks:
       Scoped artwork-recovery improvement: make failed alien, redshirt and voyage painting lookups retryable instead of permanently marked loaded. Add an accessible refresh control in Ship Settings and run a new regression in test:game-of-captains. Review only; authentic art URLs and visual curation still block completion.
 
       Partial art-delivery reliability fix. Space Couch now has an explicit player control to refresh curated alien, redshirt and voyage paintings without resetting the voyage. Failed artwork fetches preserve already delivered images, pending refreshes cannot cross account changes, and the existing fallback remains. Branch worker/game-of-captains-t-008-art-refresh-z7p4n2. Do not mark t-008 DONE: painting acceptance, URL checks and 390/768/1440 browser evidence remain.
+
+      Old 12:46 UTC review claim is stale; legacy art-refresh PR #5437 was closed superseded, with retry handling merged through green PR #5442. Real painted asset acceptance and responsive URL checks remain. Return to READY, not DONE.
   - id: t-009
     milestone: m3
     title: "Deliver unique mission outcome, conversation and ending illustration coverage"
-    status: review
-    owner: worker
-    claimed_by: 20261120T095531798Z-game-of-captains-t-009-k7v3m
-    claimed_at: '2026-11-20T09:55:31.798Z'
+    status: ready
     depends_on: t-007
     passes: 0
     stakes: reversible
@@ -312,7 +306,9 @@ tasks:
       2026-11-18 PT: Merged Conductor PR #7608 at 2a2f895478b94bb0df728b1414652e31f19fec99 after all exact-head CI workflows completed successfully. Added 88 new private priority-1 Krea 2 casino art requests across 16 live incident families: 16 reveals, 48 failures, and 24 successes for eight previously unpainted incidents. Preserved 24 existing DONE casino successes. The auto_submit ledger is projects/game-of-captains/art/CASINO-ART-GAPS-ROUND-2.yaml. Remaining: ArtJob ID allocation, rendering, visual curation, runtime incident-key lookup and authenticated media URLs. This is a partial t-009 increment, not delivery or game playtest readiness. No production deploy.
 
       Partial painted casino episode coverage: wired 87 independently ledger-verified DONE ArtImage references (24 ROUND-1 success and 63 ROUND-2 candidates) through the existing viewer-filtered onboarding-art API. Added deterministic incident-title artwork lookup without changing saved system/chapter card IDs, plus regression checks. 25 PENDING jobs excluded. Kind Robots commit 2064d4a0743bbac15a19edb03a518947ecd9bd26. Physical artwork quality, authenticated image delivery and remaining choice scenes unverified; return to READY after green CI and merge, not DONE.
-    updated: '2026-11-20T09:58:29.605Z'
+
+      Old 09:55 UTC review claim is stale and commit 2064d4 is already on main, but partial casino images, missing render/curation and final result coverage remain. Return to READY for delivery.
+    updated: '2026-11-20T23:03:50.597Z'
   - id: t-010
     milestone: m4
     title: "Run antagonist-by-captain-by-crew adversarial and every-ending seeded traces"
@@ -332,10 +328,7 @@ tasks:
   - id: t-011
     milestone: m4
     title: "Independently red-team Space Couch humor, ethics and couch/force bubble visuals"
-    status: review
-    owner: worker
-    claimed_by: 2026-11-20T065349Z-game-of-captains-t-011-x7m2q9
-    claimed_at: '2026-11-20T06:53:49Z'
+    status: ready
     depends_on: t-010
     passes: 0
     stakes: reversible
@@ -376,7 +369,9 @@ tasks:
       Connector session reconciled existing task claim but did not produce a verified implementation or visual QA. Release task to READY for the next worker; do not count as completed.
 
       Partial independent red-team fix: corrected redshirt field mission forecasts to account for the actual one-in-ten trained or one-in-five untrained fatality risk. Added regression checks tying learned previews to resolved mission records. Kind Robots branch worker/game-of-captains-t-011-quest-forecast-x7m2q9, commit 5b5576f9926a2330b9e6c872ad2d93a38121c841. Art and viewport QA remain.
-    updated: '2026-11-20T07:01:15Z'
+
+      Old 06:53 UTC review claim is stale and forecast-fix commit 5b5576 is on main. Independent ethics, pacing, actual painting and browser viewport QA remain. Return to READY, not DONE.
+    updated: '2026-11-20T23:03:50.597Z'
   - id: t-012
     milestone: m4
     title: "Final human design acceptance after completion; separate publish gate"
@@ -736,7 +731,7 @@ tasks:
     stakes: reversible
     passes: 0
     source_issue: "silasfelinus/kind_robots#4182"
-    updated: '2026-11-05T02:42:22Z'
+    updated: '2026-11-20T23:05:01.961Z'
     note: |-
       FROM GITHUB ISSUE silasfelinus/kind_robots#4182 (https://github.com/silasfelinus/kind_robots/issues/4182), opened by @silasfelinus on 2026-10-25. Imported by scripts/sync_github_issues.py. Reference the canonical roadmap in implementation PRs with `Refs silasfelinus/kind_robots#4182`, never `Closes`. Keep #4182 open throughout finite build, art and QA work. Only the verified playtest handoff workflow may prefix `[FLAGGED FOR HUMAN TESTING]` and close the single master issue after Conductor lifecycle, priority, evidence and genuine `needs-human` subjective-acceptance gate are confirmed; closing the issue is not human approval or permission to publish.
 
@@ -794,9 +789,8 @@ tasks:
 
       2026-11-04 PT reconciliation: master umbrella; kind_robots #4671 merged 11-02. Back to
       ready for the rest of Act III.
-    owner: worker
-    claimed_by: 20261102T205000Z-space-couch-t032-c7e9
-    claimed_at: '2026-11-02T20:50:00Z'
+
+      Reconciled master roadmap metadata: task was already READY but carried an obsolete claimed_by/claimed_at from 2026-11-02. Clear historical ownership for clean scheduling, retain canonical #4182 open and all outstanding delivery and viewport gates; no subjective acceptance is required for the future playtest handoff.
   - id: t-033
     milestone: m3
     title: "Curate, re-render and ship the 100 redshirt portraits and secret-power plates"

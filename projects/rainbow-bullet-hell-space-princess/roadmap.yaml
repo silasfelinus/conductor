@@ -605,14 +605,11 @@ tasks:
   - id: t-027
     milestone: m6
     title: "Gen-2 memory: save slots, route map screen, medals and the persistent Palace Hangar"
-    status: review
-    owner: worker
-    claimed_by: 20261120T215800Z-rainbow-t027-progress-comms-f2r9
-    claimed_at: '2026-11-20T21:57:40.786Z'
+    status: ready
     depends_on: [t-026]
     passes: 0
     stakes: reversible
-    updated: '2026-11-20T21:59:04.179Z'
+    updated: '2026-11-20T23:06:40Z'
     note: |-
       2026-11-20T11:21:42Z connector recovery: prior claim 2026-11-20T05:40:00Z expired after 341 minutes, no open Rainbow PR or branch; implementing Palace Hangar on a scoped worker branch.
 
@@ -643,6 +640,8 @@ tasks:
       Scope-limited Act replay PR silasfelinus/kind_robots#5443 merged as 4712fe42e5465dbe28d8cc25d482a917b45e7c56 after all 12 latest-head workflow runs completed successfully, including TypeScript after declaring the replayClear return property. Unlock-validated Act replay, 1-4 local seats, save isolation and earned Hangar medals are on main. t-027 remains incomplete until route-node branch navigation and full progression acceptance are verified.
 
       Added slot-specific Lilt-7 and named-pilot comms on the Seas map. First launch, return flight, discovered branching routes, rescues and Motherland allegiance now have distinct deterministic dialogue, backed by the active save-slot flags rather than account-wide mastery. Existing Rainbow replay and logbook regression tests cover the new selection rules. This is a partial t-027 slice; full map-node navigation and progression acceptance remain.
+
+      Scope-limited Kind Robots PR #5450 merged at 0f3a842665d2570ff547f1272d43a74dd2fbabf1 after nine completed passing checks. Per-slot pilot/Lilt comms now ship, but full route-node navigation and progression acceptance remain unfinished. Return to ready.
   - id: t-028
     milestone: m6
     title: "Gen-2 alternate stages: four branch stages with their own guardians"
@@ -893,28 +892,35 @@ tasks:
   - id: t-043
     milestone: m4
     title: "Fever Dream look: review the doodle re-renders (DOODLE-SET-2) and ship the keepers"
-    status: ready
+    status: review
+    claimed_by: 20261120T231020Z-rainbow-t043-sheet-d4w8
+    claimed_at: '2026-11-20T23:10:20Z'
     depends_on: [t-036]
     owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-11-20T21:55:00Z'
+    updated: '2026-11-20T23:11:30Z'
     note: |-
       Follow-up to t-036 (kind_robots#4764). art/DOODLE-SET-2.yaml (35 cells, auto_submit) re-renders what art/DOODLE-SET-1-REVIEW.yaml held: Solenne's portrait and comms (skin and hair lock), three ships (colour and silhouette lock), 12 boss phases (B02/B04/B07/B09), 17 enemies and guardians, and 2 pickups, each sprite on a source_margin green border so it stays whole. When the cells are DONE: contact-sheet them (portraits beside their CAST-MANIFEST identity locks; sprites keyed on dark, with the frame-edge check), flip the passing entries in DOODLE-SET-1-REVIEW.yaml to keep (a boss only with all three phases), re-run scripts/export_rainbow_doodle_art.py --kind-robots ../kind_robots, run utils/scripts/verifyRainbowFeverDream.test.ts, and PR the files. Once all four ships pass, also flip ships/petal-wing to keep.
 
       Added export fail-closed checks for incomplete curated boss phase groups and missing finished key art. Art inspection and integration remain outstanding; this is a partial safety increment.
 
       Reviewer 2026-11-20: export guard merged via PR #7694 (dry run passes on current ledgers; fails closed with exit 1 when a kept boss lacks finished phases). Back to ready, claim released: the contact-sheet review, keeper flips and the kind_robots export PR are still to do. All 12 DOODLE-SET-2 boss phases (b02/b04/b07/b09) already have finished renders. Kaizen t-046.
+
+      2026-11-20 PT: Added private DOODLE-SET-2 comparison sheets, ArtJob/ArtImage provenance and four tests. Visual acceptance and actual export still open; scoped PR awaiting CI.
+
   - id: t-046
     milestone: m4
     title: "Add a pytest that pins the Fever Dream export's fail-closed boss-phase and key-art preflight"
-    status: claimed
+    status: review
     claimed_by: 20261120T230500Z-rainbow-t046-regression-b6m4
     claimed_at: '2026-11-20T23:05:00Z'
     depends_on: []
     owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-11-20T23:05:00Z'
+    updated: '2026-11-20T23:09:00Z'
     note: |-
       Kaizen from the PR #7694 review. The guard was verified by hand only. Build a tmp kind_robots tree with three boss phase webps and key-art, feed ledgers with one phase unfinished, and assert main(--dry-run) exits 1 naming the missing phase; then with all phases DONE assert it gets past preflight (stub render_path so no PIL or network is needed).
+
+      Added three pytest cases for incomplete boss phases, missing key art, and successful fully rendered dry-run export; PR and CI review still required.

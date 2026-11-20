@@ -742,7 +742,7 @@ tasks:
   - id: t-033
     milestone: m5
     title: "Export the market item icons and the pending room/quest rerolls when they render"
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
     note: |-
@@ -764,8 +764,21 @@ tasks:
       enqueue_art_requests.py --status ITEMS-ROUND-7, curate at full size, export keepers with
       export_round_art.py --require-keep --max-edge 320. ITEM_ART stays 25/30. Released to
       ready.
-    updated: '2026-11-20T22:49:36Z'
+
+      2026-11-20 PT (r7): ITEMS-ROUND-7 (Krea 2 prose lane) all 5 DONE. The full-size check
+      kept all 5: crowbar, lockpick-roll, courier-spurs, rustline-cutters and hyena-tooth
+      (verdicts in the ledger). Exported at 320px to kind_robots#5451 (ITEM_ART 25 -> 30,
+      every market item now has an icon). The contract test now requires an icon for every
+      ITEMS entry. The room and quest rerolls were already resolved (barracks
+      kind_robots#3955, cave-forage conductor#7655). Done once #5451 merges green. Lesson: two
+      Arthemy rounds missed these literal objects, and the Krea prose lane got all five on its
+      first try.
+
+      kind_robots#5451 merged green (squash 9e57005, all 14 checks passed). The Emperor market
+      ships 30/30 item icons. Task complete.
+    updated: '2026-11-20T23:01:37Z'
     owner: reviewer
+    implementation_pr: 'silasfelinus/kind_robots#5451'
     claimed_by: 2026-11-20T225900Z-reviewer-r3faxq
     claimed_at: '2026-11-20T22:49:36Z'
   - id: t-034
@@ -1055,8 +1068,8 @@ tasks:
   - id: t-047
     milestone: m5
     title: "Act II story and art pass: Days 11–20 quests and court audiences"
-    status: claimed
-    updated: '2026-11-20T23:00:01.209Z'
+    status: review
+    updated: '2026-11-20T23:04:14.082Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -1097,14 +1110,16 @@ tasks:
       Partial Act II editorial increment. Branch worker/emperor-of-dust-t-047-act2-outcomes-f6b93 rewrites eight quest success/failure/expiry results to name the concrete costs of sabotage, refugee shelter, Hollow Bell protection, and Ford repair. Adds eight engine-output regressions in verifyEmperorFortress.test.ts. All IDs, flags, effects, saves and art paths unchanged. Await exact-head CI and merge; source writing/art scope remains unfinished.
 
       2026-11-20 PT partial Act II acceptance shipped: kind_robots#5411 merged at bce4a63a6346e403d98613efe44aea6be36c344b after all eight exact-head workflows and 14 check runs succeeded on head 52d5e1167682a4f3328f7f80eee80759ae93bc5c (Emperor Dispatch 44708296334; Contract Tests 44708296509). Eight Day 13/18/19/20 outcome rewrites and eight real questOutcomeText regressions added; IDs, effects, saves, art paths unchanged. Remaining full Act II dialogue audit and verified rendered art delivery are still open. Return to ready, not done.
+
+      2026-11-20 PT partial Act II editorial acceptance: Kind Robots commit de04f34d89f10e3020ca0cae791fd7e672e0c95a rewrites 17 distinct Days 12-20 material court and quest aftermaths and adds a 14-choice opening-response contract plus one-day cistern timeline regression. IDs, costs, effects, flags, and save shapes unchanged. Complete Days 11-20 editorial/art coverage and verified ArtImage deliveries remain open; this is not t-047 completion. Exact-head PR CI and merge pending.
     owner: worker
     claimed_by: 20261120T230001209Z-eod-t047-story-6c2f
     claimed_at: '2026-11-20T23:00:01.209Z'
   - id: t-048
     milestone: m5
     title: "Act III story and art pass: Days 21–30 Abbey ambiguity and aftermaths"
-    status: ready
-    updated: '2026-11-20T10:23:29.082Z'
+    status: claimed
+    updated: '2026-11-20T23:10:15.903Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -1139,6 +1154,9 @@ tasks:
       Scoped Days 28 and 30 court choice clarity implementation prepared in Kind Robots branch worker/emperor-of-dust-t-048-gate-costs-91a6. Full acceptance and art remain pending.
 
       2026-11-20 PT partial Act III editorial acceptance shipped via Kind Robots #5415, merged as 84f57cf8ce616b07df1100fd7c9b32d5315783e0. Exact PR head ef90628d99613e4b4bddefa716178a046fbdcc02 completed eight green GitHub Actions workflows and all 14 check runs, including the Emperor Dispatch suite with eighteen real five-act campaigns, full contract shards, TypeScript and Prettier. Reworked Day 28 Sable sanctuary and Day 30 fortress shelter decision labels and six outcomes; added engine-level route and save checks. Scene IDs, flags, effects, saves and art paths remain unchanged. The remaining Act III audience acceptance, rendered ArtImage review/export/delivery and visual QA are unfinished; return this task to ready rather than done. Master #4142 remains open and the project active.
+    owner: worker
+    claimed_by: 20261120T231015903Z-eod-t048-voice-8a5e
+    claimed_at: '2026-11-20T23:10:15.903Z'
   - id: t-049
     milestone: m5
     title: "Act IV story and art pass: Days 31–40 Komodo loyalty and betrayal"
