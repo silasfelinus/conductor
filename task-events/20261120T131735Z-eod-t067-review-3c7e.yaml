@@ -1,8 +1,0 @@
-version: 1
-project: emperor-of-dust
-task: t-067
-operation: review
-session: 20261120T131037Z-eod-t067-reset-3c7e
-updated: '2026-11-20T13:17:35.538Z'
-note: >-
-  Partial main-game-standard closeout: Kind Robots worker/emperor-of-dust-t-067-reset-progress-3c7e adds an explicit ERASE-confirmed reset of all Emperor autosave/3 slots/codex/relic/legacy/scrapbook/intro progress, preserving reading settings and other games. Refused/unreadable storage is guarded with rollback attempts, resets in-memory Pinia state, and returns the title screen. Splash now has a direct Achievements link and names the Chronicle/Scrapbook. Store test covers successful reset, reload, corrupt slot, separate keys, and blocked/read failures. PR and exact-head CI still required. Account-backed saves, image plates, responsive visual approval and optional ruler creation remain open.

@@ -247,12 +247,12 @@ tasks:
       Full history: projects/emperor-of-dust/HISTORY.md#t-066
   - id: t-067
     title: 'Main-game standard: audit and close the gaps for Emperor of Dust'
-    status: claimed
+    status: review
     milestone: m5
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-20T13:10:37.433Z'
+    updated: '2026-11-20T13:17:35.538Z'
     note: |-
       Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -267,6 +267,8 @@ tasks:
       Title console first slice: explicit Continue/Day, guarded New Reign, and Settings access; further standard gaps remain for this task.
 
       2026-11-20 PT: Previous t-067 review was last updated 2026-11-12 and its initial title console is merged. Releasing stale review for the still-unfinished main-game standard: reset-progress safety, title achievements/scrapbook discovery, and final art/QA. User explicitly directed continued progress toward completion; don't mark it done.
+
+      Partial main-game-standard closeout: Kind Robots worker/emperor-of-dust-t-067-reset-progress-3c7e adds an explicit ERASE-confirmed reset of all Emperor autosave/3 slots/codex/relic/legacy/scrapbook/intro progress, preserving reading settings and other games. Refused/unreadable storage is guarded with rollback attempts, resets in-memory Pinia state, and returns the title screen. Splash now has a direct Achievements link and names the Chronicle/Scrapbook. Store test covers successful reset, reload, corrupt slot, separate keys, and blocked/read failures. PR and exact-head CI still required. Account-backed saves, image plates, responsive visual approval and optional ruler creation remain open.
     owner: worker
     claimed_by: 20261120T131037Z-eod-t067-reset-3c7e
     claimed_at: '2026-11-20T13:10:37.433Z'
