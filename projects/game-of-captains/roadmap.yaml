@@ -85,12 +85,12 @@ tasks:
       Full history: projects/game-of-captains/HISTORY.md#t-001
   - id: t-041
     title: 'Main-game standard: audit and close the gaps for Space Couch'
-    status: claimed
+    status: review
     milestone: m4
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-20T06:51:00Z'
+    updated: '2026-11-20T06:59:00Z'
     owner: worker
     claimed_by: 2026-11-20T065100Z-game-of-captains-t-041-v6n2
     claimed_at: '2026-11-20T06:51:00Z'
@@ -130,6 +130,8 @@ tasks:
       Scoped achievement threshold bug fix: collector badges now award only when a threshold is crossed, with regression tests. This is partial t-041, not completion.
 
       Kind Robots PR #5391 merged as e0e535259aa6b60c3c0a6df7ed11cc2fae27e5ea; all nine exact-head workflow groups completed success. Alien collection achievement milestones now award only upon threshold crossing, with regression coverage. This is a partial t-041 improvement; art delivery, authenticated visual QA and final main-game standard remain unfinished.
+
+      Scoped replay-dossier fix in Kind Robots: retain distinct choice paths for same-seed same-ending replays, preserve legacy IDs, add regression coverage. Partial t-041; art and full readiness still open.
 
   - id: t-040
     title: 'Space Couch achievement upgrade: 12 or more live achievements'
