@@ -908,11 +908,13 @@ tasks:
   - id: t-046
     milestone: m4
     title: "Add a pytest that pins the Fever Dream export's fail-closed boss-phase and key-art preflight"
-    status: ready
+    status: claimed
+    claimed_by: 20261120T230500Z-rainbow-t046-regression-b6m4
+    claimed_at: '2026-11-20T23:05:00Z'
     depends_on: []
     owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-11-20T21:55:00Z'
+    updated: '2026-11-20T23:05:00Z'
     note: |-
       Kaizen from the PR #7694 review. The guard was verified by hand only. Build a tmp kind_robots tree with three boss phase webps and key-art, feed ledgers with one phase unfinished, and assert main(--dry-run) exits 1 naming the missing phase; then with all phases DONE assert it gets past preflight (stub render_path so no PIL or network is needed).
