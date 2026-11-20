@@ -173,6 +173,15 @@ tasks:
       past main-side test drift and repairing the handoff headings. Kaizen follow-up: t-038
       (single-parse ledger scan; checker ~78s vs 90s sweep timeout without libyaml).
     implementation_pr: 'silasfelinus/conductor#7683'
+  - id: t-038
+    title: "Make check_auto_art_receipts.py parse each art ledger once so its session-sweep row stays well under the 90s timeout"
+    status: ready
+    milestone: m3
+    stakes: reversible
+    passes: 0
+    depends_on: []
+    note: |-
+      Kaizen from t-037 review (Conductor PR #7683). In a sandbox without libyaml the checker took ~78s: sweep_art_ledgers.find_ledgers() pure-Python-parses ~240 YAML files (~60s), then missing_receipts() re-parses every match (~15s). The session sweep's per-check timeout is 90s, so the new auto_art_receipts row can flip to TIMEOUT under load. Reuse the parsed data (e.g. have find_ledgers optionally return (path, data) pairs, or prefer yaml.CSafeLoader when available) and add a test that each ledger is loaded once.
   - id: t-012
     milestone: m2
     title: "Promote the seven-day demo into Capes & Tassels name and genuine day/night map slice"
