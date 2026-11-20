@@ -842,10 +842,9 @@ tasks:
   - id: t-024
     milestone: m3
     title: "Deploy 48 named one-hit villain henchman species in night patrol and Yearbook"
-    status: review
+    status: ready
     depends_on: t-003
-    owner: worker
-    updated: '2026-11-20T21:44:20Z'
+    updated: '2026-11-20T23:14:08.420Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -860,9 +859,8 @@ tasks:
       cards and multi-seed tests; claim released.
 
       Scoped playable increment: new earned SPECIES Yearbook cards and choice-specific next-night callbacks for all 48 canonical rival crews, with 6-seed/3-approach regression coverage, staged in kind_robots commit 03a65f7. Facet rows, ArtJobs, final render delivery and broader playtest QA remain unfinished; do not close t-024 on this partial increment.
-    implementation_pr: 'silasfelinus/kind_robots#5412'
-    claimed_by: 2026-11-20T214130Z-comet-t024-r8k3
-    claimed_at: '2026-11-20T21:41:30Z'
+
+      PR silasfelinus/kind_robots#5445 merged as 3880493ddae44d87414f2d1e6ed636b88d0ea7dc after all eight latest-head workflows passed, including the corrected day-25 six-seed crew patrol playthrough test. Earned SPECIES Yearbook cards and next-night captain callbacks now live in main. t-024 remains open for real Facet rows, ArtJobs, rendered/verified portraits, Forge integration and broader QA.
   - id: t-025
     milestone: m3
     title: "Integrate 48 unique power origins and villain lairs into Prom day-night narrative"
