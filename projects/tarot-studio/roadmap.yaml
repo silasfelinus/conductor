@@ -123,3 +123,11 @@ tasks:
     stakes: reversible
     depends_on: t-006
     note: 'Admin tab reachable at 390/768/1440, cards filter and save across devices, print export validated; no claim of live deploy without evidence.'
+  - id: t-010
+    milestone: m2
+    title: 'Add a contract test that every Kind Robots tarot card oracleId resolves to a canonical Kind Oracle spec identity'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: 'Reviewer kaizen from t-001 (#7670): enforce the DESIGN-BRIEF data-ownership boundary so all 78 seeded cards keep canonical Kind Oracle ids (Wands->Sparks, Cups->Currents, Swords->Breezes, Pentacles->Cogs, court ranks mapped) and art records never fork reading identity.'
