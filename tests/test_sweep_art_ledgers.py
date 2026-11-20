@@ -97,7 +97,6 @@ def test_text_gate_skips_parse_for_files_that_never_opt_in(tmp_path, monkeypatch
     assert len(parsed) == 2
 
 
-
 def test_loader_uses_accelerated_safe_loader_when_available(monkeypatch):
     calls = []
 

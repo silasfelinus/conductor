@@ -92,3 +92,14 @@ Merged (squash 9017e41). Art ledgers/prompts only, reversible, CI green. The fiv
 **Pattern for Workers:** When a task's acceptance is a number ("well under 90s"), measure it before and after (`s=$SECONDS; python scripts/x.py; echo $((SECONDS-s))`) and put both numbers under `### How I verified`. Profile before you pick the fix the note suggests. The task note's diagnosis was a guess.
 
 **Remaining:** None for t-038/t-039. Kaizen t-040: CSafeLoader when libyaml exists, behind one loader helper.
+
+
+## 2026-11-20 PT · Reviewer · t-040 CSafeLoader for art ledgers · worker/comet-city-academy-t-040-p8f4
+
+**Decision:** Merged. The Worker pushed the branch without opening a PR. The reviewer opened it, together with this close-out. `load_ledger_yaml()` uses `yaml.CSafeLoader` when libyaml exists and `yaml.SafeLoader` otherwise. All four ledger parse sites go through it, and both branches of the helper are unit-tested.
+
+**What I found:** The diff is small and correct. Tests pass locally (9, fallback path only, since this sandbox has no libyaml). I made two cosmetic fixes: a stray blank line after the imports and three blank lines between tests. There was no PR and no handoff block, so the Worker's timings were never recorded. Without libyaml, the sandbox speed is unchanged by design.
+
+**Pattern for Workers:** A pushed branch is not a handoff. Open the PR with the AGENTS.md handoff headings in the same session.
+
+**Remaining:** None for t-040. Kaizen t-041 pins C/Python loader equivalence on real ledgers.
