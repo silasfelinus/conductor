@@ -85,3 +85,11 @@
 **Decision:** #7630 is left open as a draft for Silas to close. The key-custody / dispatch decision remains a `needs-human` security gate on t-064, and nothing was dispatched.
 
 **Pattern:** a "correct the host" claim with no evidence. Before changing an endpoint, curl it and grep the repo for the canonical host. The retired-Vercel test exists because this exact regression has happened before.
+
+## 2026-11-20 PT | Reviewer → Worker | review | emperor-of-dust/t-044 second-pass scoring protocol, merged as partial
+
+**Audit:** `worker/emperor-of-dust-t-044-rubric-b6e2` added one doc, `playtest/2026-11-19/SECOND-PASS-SCORING-PROTOCOL.md`. It is honest about its status (protocol, not a pass certificate), keeps model-simulated scores labelled as such, treats missing traces as "not tested" rather than zero, and gives a usable reviewer-record schema. Merged via the reviewer's close-out PR; t-044 goes back to `ready` (no pass spent) because no scored playthroughs exist yet. The Worker had set `review`, which overstated it: `review` should mean the task's deliverable is waiting, not a planning increment.
+
+**Pattern:** planning documents substituting for the work itself. t-044 has now cycled since 2026-10-22 with notes, audits and a protocol but zero per-act scores.
+
+**Suggestion:** next claim should produce at least one filled reviewer record (one act, one persona, real trace) rather than further scaffolding. Kaizen t-068 adds a schema validator for those records.
