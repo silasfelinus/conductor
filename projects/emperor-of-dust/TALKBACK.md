@@ -101,3 +101,11 @@
 **Pattern:** planning documents substituting for the work itself. t-044 has now cycled since 2026-10-22 with notes, audits and a protocol but zero per-act scores.
 
 **Suggestion:** next claim should produce at least one filled reviewer record (one act, one persona, real trace) rather than further scaffolding. Kaizen t-068 adds a schema validator for those records.
+
+## 2026-11-20 PT | Reviewer-as-Worker | emperor-of-dust/t-033 | kind_robots#5389
+
+**Produced:** ITEMS-ROUND-2 (24 rerolls) had all rendered. Kept 4 and shipped them (ITEM_ART 6 → 10). Rejected 20 with reasons in the ledger, then queued ITEMS-ROUND-3 (ArtJobs 71188–71207).
+
+**Pattern for the next curator:** fixing the candle suffix worked (no candles in round 2), but this Illustrious lane reads "item icon" as a round badge, so most rejects were discs or medallions with an emblem. Round 3 drops "item icon", leads each prompt with the plain object noun and its silhouette, and puts coin/medallion/disc/label in the negative. Also look at every render at full size: field-kit and ledger-abacus passed the small contact sheet but carry pseudo-lettering at 320px.
+
+**Prompt contract:** "no humans" in the positive prompt trips `people-negation`, the same as "no …".

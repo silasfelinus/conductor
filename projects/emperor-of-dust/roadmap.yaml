@@ -738,7 +738,7 @@ tasks:
   - id: t-033
     milestone: m5
     title: "Export the market item icons and the pending room/quest rerolls when they render"
-    status: claimed
+    status: ready
     passes: 0
     stakes: reversible
     note: >-
@@ -771,11 +771,22 @@ tasks:
       it, and export keepers with export_round_art.py --require-keep --max-edge 320, adding
       them to ITEM_ART. The q-d42 cave-forage v3 set (42353-42355) is still to be checked.
       Released to ready.
+
+      2026-11-20 PT partial: ITEMS-ROUND-2 all 24 DONE. Contact sheet plus full-size check
+      kept 4 (caravan-salve, silent-bell-rosary, verge-signet, watch-buckler), shipped in
+      kind_robots#5389 (ITEM_ART 6 -> 10). Rejected 20 (mostly generic discs or the wrong
+      object; field-kit and ledger-abacus were dropped at full size for pseudo-lettering).
+      Verdicts are in the ledger. Rerolls are in ITEMS-ROUND-3.yaml (ArtJobs 71188-71207): the
+      prefix drops 'item icon', prompts lead with the object noun, and the negative adds
+      coin/medallion/disc/label. Next: enqueue_art_requests.py --status ITEMS-ROUND-3, curate
+      at full size, export keepers. The q-d42 cave-forage v3 set (42353-42355) is still
+      unchecked.
+
+      kind_robots#5389 merged at 4504d1f (13/13 checks green). Released to ready: curate
+      ITEMS-ROUND-3 (71188-71207) once it renders.
     owner: reviewer
-    updated: '2026-11-20T04:23:01Z'
-    implementation_pr: 'silasfelinus/kind_robots#5383'
-    claimed_by: 20261120T042600Z-t033-ghwshg
-    claimed_at: '2026-11-20T04:23:01Z'
+    updated: '2026-11-20T04:41:24Z'
+    implementation_pr: 'silasfelinus/kind_robots#5389'
   - id: t-034
     milestone: m5
     title: "Phone width: tapping a fortress room tab shifts the frame sideways"
