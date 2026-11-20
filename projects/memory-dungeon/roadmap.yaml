@@ -1,3 +1,7 @@
+# 2026-11-20 PT PLAYTEST HANDOFF (Silas): "roadmap should aim to get to human play test
+# ready, nothing beyond." Project is playtest/normal. All agent-owned tasks are done or
+# cancelled; the twelve-world notes below are history for a future roadmap, not open work.
+# Tester handoff: PLAYTEST-HANDOFF-2026-11-20.md. New fixes: playtest_iteration: true.
 # 2026-11-13 PT alpha priority override (Silas): ZERO public players. Do not spend
 # development time on pre-v2/16-world save migration or compatibility tests.
 # Admin/test saves may start fresh. Keep current-version save/resume reliable.
@@ -31,6 +35,13 @@ goal: >-
   Finish only after adversarial seeded playtests, meaningful endings,
   balance/accessibility QA and Silas's subjective gameplay verdict.
 notes_from_silas: |
+  2026-11-20 PT (Silas, in session): "You are responsible for getting memory dungeon
+  ready for human play tests, which will involve tagging and closing the open GitHub
+  roadmap and then changing the kind robots project to "playtest" with normal priority.
+  ... roadmap should aim to get to human play test ready, nothing beyond." Applied: the
+  playtest build is prologue -> e01/House -> e02 -> e03/e04 -> e05/e06 -> e07/e08 -> e09
+  -> e10 plus Classic Match. Beyond-playtest tasks were cancelled with cancelled_reason;
+  the subjective verdict happens after the roadmap, per the playtest lifecycle.
   2026-11-10 PT (Silas's explicit correction): twelve overworlds e01-e12 are the
   complete production target. Earlier references to sixteen realms, 32 photographs
   across sixteen worlds, and e13-e16 as new playable locations are superseded.
@@ -169,12 +180,12 @@ tasks:
     claimed_at: '2026-10-24T20:57:00Z'
   - id: t-068
     title: 'Main-game standard: audit and close the gaps for Memory Dungeon'
-    status: claimed
+    status: cancelled
     milestone: m4
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-12T14:46:05Z'
+    updated: '2026-11-20T06:30:00Z'
     note: |-
       Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -200,9 +211,17 @@ tasks:
       Corrected the launcher that publicly displayed obsolete World 1 of 16 text; added a source regression to the existing memory-world contract suite. This is one small t-068 title-screen quality increment; settings, scrapbook, art export and visual QA remain.
 
       2026-11-12 PT: Launcher canon subtitle and regression merged in kind_robots PR #5081 as 985fb13ac3339f0bb968b38f66860a249b017caf. All six exact-head GitHub Actions workflows passed. Broader main-game-standard t-068 remains incomplete: settings, scrapbook, ending art and rendered-device acceptance. Return ready for next gap closure.
+
+      2026-11-20 PT cancelled (playtest rescope). Silas 2026-11-20 PT, in session: "roadmap
+      should aim to get to human play test ready, nothing beyond." The playtest build is the
+      reachable chain prologue -> e01 Briar + House -> e02 -> e03/e04 -> e05/e06 -> e07/e08 ->
+      e09 -> e10, plus Classic Match. 12+ live achievements (t-069), title screen, save slots
+      and 12 committed House epilogue plates shipped. Extra settings and a unified scrapbook
+      are post-playtest polish.
     owner: worker
-    claimed_by: 2026-11-12T144605Z-memory-dungeon-t-068-f3c8
-    claimed_at: '2026-11-12T14:46:05Z'
+    claimed_by: null
+    claimed_at: null
+    cancelled_reason: 'Silas 2026-11-20 PT: roadmap ends at human-playtest readiness. 12+ live achievements (t-069), title screen, save slots and 12 committed House epilogue plates shipped. Extra settings and a unified scrapbook are post-playtest polish.'
   - id: t-069
     title: 'Memory Dungeon achievement upgrade: 12 or more live achievements'
     status: done
@@ -234,11 +253,11 @@ tasks:
   - id: t-023
     milestone: m2
     title: "Deliver photograph Chronicle, Earth timeline and ending spoiler gates"
-    status: claimed
+    status: cancelled
     depends_on: t-018
     passes: 0
     stakes: reversible
-    updated: '2026-11-15T00:46:32Z'
+    updated: '2026-11-20T06:30:00Z'
     note: |-
       2026-11-11 PT remaining: Audit 24 playable-world beats, retired archival beats and spoiler gates; do not delete older photos. Evidence: RESET-TASK-EVIDENCE-AUDIT-2026-11-10.md (t-023 row).
       Author 32 fixed collectible photo beats, two per world, with out-of-order journal reconciliation, once-only claims, proper Earth chronology, and meaningful hero reactions. World 1 photos occur at 2,5 (dismissal) and 8,6 (friend's humiliation). Morrow later builds authentic work, friendship and romance; do not unmistakably reveal their children before World 16.
@@ -261,13 +280,21 @@ tasks:
       2026-11-06 PT: PR kind_robots#4861 merged (23fbe3ed) after all eight exact-head checks passed on a63e8257. e08 Hoshimori 5,7 and 6,7 authored, earth-16 now recoverable with replay and forged-choice tests. Remaining Chronicle pickup routes, delivered art and ending validation. No ArtJobs or deployment.
 
       Added two authored e08 crossings at 5,5 and 6,5 with distinct choices and replay-safe flags; expanded site-count validator and regression assertions to 48. Kind Robots PR pending exact-head CI. Remaining Hoshimori sites, Chronicle photos and art not complete.
+
+      2026-11-20 PT cancelled (playtest rescope). Silas 2026-11-20 PT, in session: "roadmap
+      should aim to get to human play test ready, nothing beyond." The playtest build is the
+      reachable chain prologue -> e01 Briar + House -> e02 -> e03/e04 -> e05/e06 -> e07/e08 ->
+      e09 -> e10, plus Classic Match. Chronicle photographs, timeline and spoiler gates
+      shipped for the reachable worlds. Remaining Hoshimori photos and art are beyond
+      playtest.
     owner: worker
-    claimed_by: 2026-11-15T004632Z-memory-dungeon-t-023-a91c7
-    claimed_at: '2026-11-15T00:46:32Z'
+    claimed_by: null
+    claimed_at: null
+    cancelled_reason: 'Silas 2026-11-20 PT: roadmap ends at human-playtest readiness. Chronicle photographs, timeline and spoiler gates shipped for the reachable worlds. Remaining Hoshimori photos and art are beyond playtest.'
   - id: t-030
     milestone: m3
     title: "Build scene-art production manifest and twelve-world coverage checks"
-    status: claimed
+    status: cancelled
     depends_on: t-018
     passes: 0
     stakes: reversible
@@ -294,15 +321,22 @@ tasks:
       Added twelve-playable-world production-art acceptance ledger distinguishing authored, submitted, rendered, delivered and viewport-accepted art; historical 752 ArtJob receipts remain separate from 384 gallery attachments. Conductor PR pending. Next: reconcile live ArtJob/ArtImage IDs and attachment URLs for e01/e02, resubmit only missing work.
 
       2026-11-13 PT: Conductor PR #7341 merged at ca2cf2b9af4c4c32ede00141de4c7a1115028ab4 after Worker PR CI, Security Audit, Process task events, and rerun handoff checks passed on c2321e2. The twelve-world art acceptance ledger is documentation only. Return ready for e01/e02 durable ArtJob-to-ArtImage and live attachment reconciliation; no new art submitted or visual acceptance established.
-    updated: '2026-11-13T20:50:05Z'
+
+      2026-11-20 PT cancelled (playtest rescope). Silas 2026-11-20 PT, in session: "roadmap
+      should aim to get to human play test ready, nothing beyond." The playtest build is the
+      reachable chain prologue -> e01 Briar + House -> e02 -> e03/e04 -> e05/e06 -> e07/e08 ->
+      e09 -> e10, plus Classic Match. World One manifest checks shipped (#4860); 752/752
+      ArtJobs delivered. Twelve-world coverage is beyond playtest.
+    updated: '2026-11-20T06:30:00Z'
     owner: worker
-    claimed_by: 2026-11-13T205005Z-memory-dungeon-t-030-a81f
-    claimed_at: '2026-11-13T20:50:05Z'
+    claimed_by: null
+    claimed_at: null
+    cancelled_reason: 'Silas 2026-11-20 PT: roadmap ends at human-playtest readiness. World One manifest checks shipped (#4860); 752/752 ArtJobs delivered. Twelve-world coverage is beyond playtest.'
   - id: t-001
     milestone: m1
     title: "Seeded expedition reducer, room schema and Classic adapter"
-    status: claimed
-    updated: '2026-11-15T02:43:53Z'
+    status: cancelled
+    updated: '2026-11-20T06:30:00Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -342,14 +376,23 @@ tasks:
       remaining scope.
 
       Added a pure seeded three-floor six-room-per-floor simulator with versioned saves, deterministic unique room identities, immutable idempotent outcomes and adversarial Node regression tests. Partial t-001 only; Classic adapter and real gameplay integration remain. Kind Robots PR pending CI.
+
+      2026-11-20 PT cancelled (playtest rescope). Silas 2026-11-20 PT, in session: "roadmap
+      should aim to get to human play test ready, nothing beyond." The playtest build is the
+      reachable chain prologue -> e01 Briar + House -> e02 -> e03/e04 -> e05/e06 -> e07/e08 ->
+      e09 -> e10, plus Classic Match. Original roguelite expedition reducer; the shipped game
+      moved to the fixed overworld + House design (2026-10-22 PT direction). Shipped slices
+      stand (#4801, seeded three-floor simulator). Classic adapter integration and e03+
+      harness work are beyond playtest.
     implementation_pr: 'silasfelinus/kind_robots#4801'
     owner: worker
-    claimed_by: 2026-11-15T024353Z-memory-dungeon-t-001-f6c2
-    claimed_at: '2026-11-15T02:43:53Z'
+    claimed_by: null
+    claimed_at: null
+    cancelled_reason: 'Silas 2026-11-20 PT: roadmap ends at human-playtest readiness. Original roguelite expedition reducer; the shipped game moved to the fixed overworld + House design (2026-10-22 PT direction). Shipped slices stand (#4801, seeded three-floor simulator). Classic adapter integration and e03+ harness work are beyond playtest.'
   - id: t-002
     milestone: m1
     title: "Optional scope feedback on story and complexity"
-    status: needs-human
+    status: cancelled
     soft_gate: true
     owner: null
     passes: 0
@@ -360,7 +403,16 @@ tasks:
       setting, recurring cast and weapon geometry. Continue reversible
       work immediately; do not require approval as a prerequisite.
       This is not production deploy/public release approval.
+
+      2026-11-20 PT cancelled (playtest rescope). Silas 2026-11-20 PT, in session: "roadmap
+      should aim to get to human play test ready, nothing beyond." The playtest build is the
+      reachable chain prologue -> e01 Briar + House -> e02 -> e03/e04 -> e05/e06 -> e07/e08 ->
+      e09 -> e10, plus Classic Match. Stale optional soft gate from 2026-10-22 about the
+      superseded Forgotten Depths setting. Silas's 2026-11-20 PT direction replaces it; no
+      decision is pending.
     gate_rechecked: '2026-10-22'
+    cancelled_reason: 'Silas 2026-11-20 PT: roadmap ends at human-playtest readiness. Stale optional soft gate from 2026-10-22 about the superseded Forgotten Depths setting. Silas''s 2026-11-20 PT direction replaces it; no decision is pending.'
+    updated: '2026-11-20T06:30:00Z'
   - id: t-003
     milestone: m1
     title: "Verify and preserve existing Memory Dungeon front-end links"
@@ -377,7 +429,7 @@ tasks:
   - id: t-004
     milestone: m2
     title: "Create character, set difficulty/depth and play authored intro"
-    status: waiting
+    status: cancelled
     depends_on: t-001
     owner: null
     passes: 0
@@ -387,10 +439,19 @@ tasks:
       independent Short/Full/Endless depth, meaningful authored opening,
       immediate decision and clear Classic/RPG mode selection within
       current page and one-screen accessible stage.
+
+      2026-11-20 PT cancelled (playtest rescope). Silas 2026-11-20 PT, in session: "roadmap
+      should aim to get to human play test ready, nothing beyond." The playtest build is the
+      reachable chain prologue -> e01 Briar + House -> e02 -> e03/e04 -> e05/e06 -> e07/e08 ->
+      e09 -> e10, plus Classic Match. Character creation / difficulty-depth intro from the
+      original roguelite design; the shipped prologue (t-020) covers the start flow.
+      Customizable characters are beyond playtest.
+    cancelled_reason: 'Silas 2026-11-20 PT: roadmap ends at human-playtest readiness. Character creation / difficulty-depth intro from the original roguelite design; the shipped prologue (t-020) covers the start flow. Customizable characters are beyond playtest.'
+    updated: '2026-11-20T06:30:00Z'
   - id: t-005
     milestone: m2
     title: "Procedural room director for three encounter piles and floor forks"
-    status: waiting
+    status: cancelled
     depends_on: t-001
     owner: null
     passes: 0
@@ -400,6 +461,14 @@ tasks:
       monster, treasure piles plus authored injections; risk/Danger
       telegraph, meaningful fork/choice and rest/extract at exits;
       reachability invariants and multi-seed simulation tests.
+
+      2026-11-20 PT cancelled (playtest rescope). Silas 2026-11-20 PT, in session: "roadmap
+      should aim to get to human play test ready, nothing beyond." The playtest build is the
+      reachable chain prologue -> e01 Briar + House -> e02 -> e03/e04 -> e05/e06 -> e07/e08 ->
+      e09 -> e10, plus Classic Match. Procedural room director from the original roguelite
+      design, superseded by the authored overworld and dungeons. Beyond playtest.
+    cancelled_reason: 'Silas 2026-11-20 PT: roadmap ends at human-playtest readiness. Procedural room director from the original roguelite design, superseded by the authored overworld and dungeons. Beyond playtest.'
+    updated: '2026-11-20T06:30:00Z'
   - id: t-006
     milestone: m1
     title: "Spatial weapon combat specification and shape-playtest prototype"
@@ -414,8 +483,8 @@ tasks:
   - id: t-007
     milestone: m2
     title: "Integrate RPG combat masks and telegraphed enemies into match board"
-    status: claimed
-    updated: '2026-11-16T04:51:41Z'
+    status: cancelled
+    updated: '2026-11-20T06:30:00Z'
     depends_on: t-006
     passes: 0
     stakes: reversible
@@ -434,13 +503,22 @@ tasks:
       for the next slice rather than done.
 
       Added 640 deterministic perfect-memory combat playthroughs across ten authored rooms, restoring checkpoints after every action. Kind Robots commit a05badda; exact-head CI pending. Remaining t-007 rescue objective, enemy board mutation and larger set-piece.
+
+      2026-11-20 PT cancelled (playtest rescope). Silas 2026-11-20 PT, in session: "roadmap
+      should aim to get to human play test ready, nothing beyond." The playtest build is the
+      reachable chain prologue -> e01 Briar + House -> e02 -> e03/e04 -> e05/e06 -> e07/e08 ->
+      e09 -> e10, plus Classic Match. Combat masks and 640 deterministic combat playthroughs
+      shipped (npm run test:memory-dungeon-combat passes: 5 player models x 3 boards x 200
+      seeds). Rescue objective, enemy board mutation and the larger set-piece are beyond
+      playtest.
     owner: worker
-    claimed_by: 2026-11-16T045141Z-memory-dungeon-t-007-a91c
-    claimed_at: '2026-11-16T04:51:41Z'
+    claimed_by: null
+    claimed_at: null
+    cancelled_reason: 'Silas 2026-11-20 PT: roadmap ends at human-playtest readiness. Combat masks and 640 deterministic combat playthroughs shipped (npm run test:memory-dungeon-combat passes: 5 player models x 3 boards x 200 seeds). Rescue objective, enemy board mutation and the larger set-piece are beyond playtest.'
   - id: t-008
     milestone: m2
     title: "Recruit companions and unlock skills, relic synergies and levels"
-    status: waiting
+    status: cancelled
     depends_on: t-007
     owner: null
     passes: 0
@@ -450,11 +528,19 @@ tasks:
       run-earned sidegrade per floor and meaningful gear patterns
       rather than raw damage upgrades. New combinations unlock
       tradeoffs, story gates, and geometry without automatic victory.
+
+      2026-11-20 PT cancelled (playtest rescope). Silas 2026-11-20 PT, in session: "roadmap
+      should aim to get to human play test ready, nothing beyond." The playtest build is the
+      reachable chain prologue -> e01 Briar + House -> e02 -> e03/e04 -> e05/e06 -> e07/e08 ->
+      e09 -> e10, plus Classic Match. Companion recruitment / skill trees from the original
+      roguelite design. Beyond playtest.
+    cancelled_reason: 'Silas 2026-11-20 PT: roadmap ends at human-playtest readiness. Companion recruitment / skill trees from the original roguelite design. Beyond playtest.'
+    updated: '2026-11-20T06:30:00Z'
   - id: t-009
     milestone: m3
     title: "Author floor story, recurring cast and consequential decisions"
-    status: claimed
-    updated: '2026-11-15T06:42:24Z'
+    status: cancelled
+    updated: '2026-11-20T06:30:00Z'
     passes: 0
     stakes: reversible
     note: >-
@@ -477,13 +563,20 @@ tasks:
       2026-11-04 PT cleanup pass: stale review with an expired claim; the recorded slice
       landed (or was superseded) and the note itself lists remaining scope, so back to ready
       for the next slice rather than done.
+
+      2026-11-20 PT cancelled (playtest rescope). Silas 2026-11-20 PT, in session: "roadmap
+      should aim to get to human play test ready, nothing beyond." The playtest build is the
+      reachable chain prologue -> e01 Briar + House -> e02 -> e03/e04 -> e05/e06 -> e07/e08 ->
+      e09 -> e10, plus Classic Match. Floor story and recurring cast shipped across the
+      e01-e10 authored sites. Remaining authoring is beyond playtest.
     owner: worker
-    claimed_by: 2026-11-15T064224Z-memory-dungeon-t-009-b72e
-    claimed_at: '2026-11-15T06:42:24Z'
+    claimed_by: null
+    claimed_at: null
+    cancelled_reason: 'Silas 2026-11-20 PT: roadmap ends at human-playtest readiness. Floor story and recurring cast shipped across the e01-e10 authored sites. Remaining authoring is beyond playtest.'
   - id: t-010
     milestone: m3
     title: "Ship riddle and logic minigame framework plus authored puzzle pack"
-    status: waiting
+    status: cancelled
     depends_on: t-005
     owner: null
     passes: 0
@@ -495,10 +588,19 @@ tasks:
       reasonable accessibility and fair failure continuations;
       callbacks to existing Kind Robots minigames only via their
       *own original shared mechanics*, without awkward page swaps.
+
+      2026-11-20 PT cancelled (playtest rescope). Silas 2026-11-20 PT, in session: "roadmap
+      should aim to get to human play test ready, nothing beyond." The playtest build is the
+      reachable chain prologue -> e01 Briar + House -> e02 -> e03/e04 -> e05/e06 -> e07/e08 ->
+      e09 -> e10, plus Classic Match. Logic floors shipped as the Minefield (test:memory-
+      dungeon-minefield passes: 160 guess-free floors). A broader riddle pack is beyond
+      playtest.
+    cancelled_reason: 'Silas 2026-11-20 PT: roadmap ends at human-playtest readiness. Logic floors shipped as the Minefield (test:memory-dungeon-minefield passes: 160 guess-free floors). A broader riddle pack is beyond playtest.'
+    updated: '2026-11-20T06:30:00Z'
   - id: t-011
     milestone: m3
     title: "Build first 24 room records, 3 guardians, endings and validator"
-    status: waiting
+    status: cancelled
     depends_on: t-005
     owner: null
     passes: 0
@@ -509,10 +611,18 @@ tasks:
       dialogue; validator for reachable actions, seeded deck variety,
       prompt coverage and first three floor bosses; failures stay
       interesting rather than immediate locked doors.
+
+      2026-11-20 PT cancelled (playtest rescope). Silas 2026-11-20 PT, in session: "roadmap
+      should aim to get to human play test ready, nothing beyond." The playtest build is the
+      reachable chain prologue -> e01 Briar + House -> e02 -> e03/e04 -> e05/e06 -> e07/e08 ->
+      e09 -> e10, plus Classic Match. Procedural room records from the original design,
+      superseded by the authored 36-room House and per-world dungeons. Beyond playtest.
+    cancelled_reason: 'Silas 2026-11-20 PT: roadmap ends at human-playtest readiness. Procedural room records from the original design, superseded by the authored 36-room House and per-world dungeons. Beyond playtest.'
+    updated: '2026-11-20T06:30:00Z'
   - id: t-012
     milestone: m2
     title: "Save/resume, defeat/extract and cross-run Chronicle"
-    status: waiting
+    status: cancelled
     depends_on: t-005
     owner: null
     passes: 0
@@ -522,10 +632,19 @@ tasks:
       chronicled decisions/secrets/relationships; failed run still
       unlocks information and opening variants; replay cannot farm
       the same reward without consuming a decision or reroll seed.
+
+      2026-11-20 PT cancelled (playtest rescope). Silas 2026-11-20 PT, in session: "roadmap
+      should aim to get to human play test ready, nothing beyond." The playtest build is the
+      reachable chain prologue -> e01 Briar + House -> e02 -> e03/e04 -> e05/e06 -> e07/e08 ->
+      e09 -> e10, plus Classic Match. Save/resume shipped as versioned localStorage saves,
+      three manual checkpoints and the Chronicle (reload -> Continue verified 2026-11-20 PT).
+      Defeat/extract from the original roguelite design is beyond playtest.
+    cancelled_reason: 'Silas 2026-11-20 PT: roadmap ends at human-playtest readiness. Save/resume shipped as versioned localStorage saves, three manual checkpoints and the Chronicle (reload -> Continue verified 2026-11-20 PT). Defeat/extract from the original roguelite design is beyond playtest.'
+    updated: '2026-11-20T06:30:00Z'
   - id: t-013
     milestone: m3
     title: "Deliver character, room, weapon and ending art pipeline"
-    status: claimed
+    status: cancelled
     passes: 0
     stakes: reversible
     note: |-
@@ -541,10 +660,18 @@ tasks:
       2026-11-04 PT cleanup pass: stale review with an expired claim; the recorded slice
       landed (or was superseded) and the note itself lists remaining scope, so back to ready
       for the next slice rather than done.
-    updated: '2026-11-16T05:45:24Z'
+
+      2026-11-20 PT cancelled (playtest rescope). Silas 2026-11-20 PT, in session: "roadmap
+      should aim to get to human play test ready, nothing beyond." The playtest build is the
+      reachable chain prologue -> e01 Briar + House -> e02 -> e03/e04 -> e05/e06 -> e07/e08 ->
+      e09 -> e10, plus Classic Match. 752 of 752 Memory Dungeon ArtJobs rendered and delivered
+      (audit_memory_dungeon_art_delivery.py --live, 2026-11-20 PT). Further pipeline work is
+      beyond playtest.
+    updated: '2026-11-20T06:30:00Z'
     owner: worker
-    claimed_by: 2026-11-16T054524Z-memory-dungeon-t-013-b7e2
-    claimed_at: '2026-11-16T05:45:24Z'
+    claimed_by: null
+    claimed_at: null
+    cancelled_reason: 'Silas 2026-11-20 PT: roadmap ends at human-playtest readiness. 752 of 752 Memory Dungeon ArtJobs rendered and delivered (audit_memory_dungeon_art_delivery.py --live, 2026-11-20 PT). Further pipeline work is beyond playtest.'
   - id: t-016
     milestone: m2
     title: "Build bullseye sweet spots and solver-verified minefield challenge floors"
@@ -589,7 +716,7 @@ tasks:
   - id: t-019
     milestone: m3
     title: "Produce game-screen concept mockups for five scene families"
-    status: ready
+    status: cancelled
     passes: 0
     stakes: reversible
     note: |-
@@ -598,11 +725,18 @@ tasks:
       2026-11-04 PT cleanup pass: released an expired claim (no activity since the claim, no open PR found for it); back to ready.
 
       Authored five responsive interactive console screen composition studies (overworld, shaped memory combat, treasure, logic vault, avatar). HTML design proof only, not production illustrations or runtime integration. Review 390/768/1440px geometry and replace concept symbols with commissioned art before closing.
-    updated: '2026-11-08T09:54:00Z'
+
+      2026-11-20 PT cancelled (playtest rescope). Silas 2026-11-20 PT, in session: "roadmap
+      should aim to get to human play test ready, nothing beyond." The playtest build is the
+      reachable chain prologue -> e01 Briar + House -> e02 -> e03/e04 -> e05/e06 -> e07/e08 ->
+      e09 -> e10, plus Classic Match. Concept mockups are design scaffolding; the shipped UI
+      is what testers see. Beyond playtest.
+    updated: '2026-11-20T06:30:00Z'
+    cancelled_reason: 'Silas 2026-11-20 PT: roadmap ends at human-playtest readiness. Concept mockups are design scaffolding; the shipped UI is what testers see. Beyond playtest.'
   - id: t-014
     milestone: m4
     title: "Run adversarial multi-seed balance and player-story tests"
-    status: waiting
+    status: cancelled
     depends_on: t-007
     owner: null
     passes: 0
@@ -614,10 +748,19 @@ tasks:
       resource loops, unwinnable puzzles, room repetition, threats,
       fair short runs, useful defeat rewards and distinguishable
       story endings. Document metrics and fix critical regressions.
+
+      2026-11-20 PT cancelled (playtest rescope). Silas 2026-11-20 PT, in session: "roadmap
+      should aim to get to human play test ready, nothing beyond." The playtest build is the
+      reachable chain prologue -> e01 Briar + House -> e02 -> e03/e04 -> e05/e06 -> e07/e08 ->
+      e09 -> e10, plus Classic Match. Seeded adversarial suites exist and pass (World One 20
+      runs, Dark Briar 36 runs, 0 softlocks, 2026-11-20 PT). Further balance comes from human
+      playtest feedback, after the roadmap.
+    cancelled_reason: 'Silas 2026-11-20 PT: roadmap ends at human-playtest readiness. Seeded adversarial suites exist and pass (World One 20 runs, Dark Briar 36 runs, 0 softlocks, 2026-11-20 PT). Further balance comes from human playtest feedback, after the roadmap.'
+    updated: '2026-11-20T06:30:00Z'
   - id: t-015
     milestone: m4
     title: "Finish accessible one-screen UI and request subjective verdict"
-    status: waiting
+    status: cancelled
     depends_on: t-014
     owner: null
     passes: 0
@@ -629,11 +772,20 @@ tasks:
       game acceptance is for Silas; production deploy/outward-facing
       release are separate explicit human gates.
 
+      2026-11-20 PT cancelled (playtest rescope). Silas 2026-11-20 PT, in session: "roadmap
+      should aim to get to human play test ready, nothing beyond." The playtest build is the
+      reachable chain prologue -> e01 Briar + House -> e02 -> e03/e04 -> e05/e06 -> e07/e08 ->
+      e09 -> e10, plus Classic Match. The subjective verdict happens after the roadmap closes
+      (AGENTS.md playtest lifecycle), not inside it. Accessibility settings beyond what
+      shipped are post-playtest.
+    cancelled_reason: 'Silas 2026-11-20 PT: roadmap ends at human-playtest readiness. The subjective verdict happens after the roadmap closes (AGENTS.md playtest lifecycle), not inside it. Accessibility settings beyond what shipped are post-playtest.'
+    updated: '2026-11-20T06:30:00Z'
+
   - id: t-020
     milestone: m3
     title: "Finish playable prologue and current twelve-world start flow"
-    status: claimed
-    updated: '2026-11-13T21:45:08Z'
+    status: done
+    updated: '2026-11-20T06:30:00Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -654,13 +806,22 @@ tasks:
       2026-11-04 PT cleanup pass: released an expired claim (no activity since the claim, no open PR found for it); back to ready.
 
       Authored a twelve-world legacy-save compatibility matrix with nine executable acceptance cases, explicit e13-e16 archival retention, Rowan/Pip identity distinctions, Char causal lead selection, and Classic/Chronicle preservation. Conductor PR pending; runtime migration, artwork and browser QA remain unfinished.
+
+      2026-11-20 PT remaining met: production /play/memory (kindrobots.org) checked in
+      Chromium at 390, 820 and 1440 wide: launcher -> prologue choice -> Briar overworld ->
+      reload -> Continue Briar Marches, with no horizontal scroll, broken images or page
+      errors. e10's end now tells testers they reached the end of the playtest build
+      (kind_robots#5388). Remaining e11/e12 start-flow scope is cancelled as beyond playtest
+      (Silas 2026-11-20 PT, in session: "roadmap should aim to get to human play test ready,
+      nothing beyond." The playtest build is the reachable chain prologue -> e01 Briar + House
+      -> e02 -> e03/e04 -> e05/e06 -> e07/e08 -> e09 -> e10, plus Classic Match.)
     owner: worker
-    claimed_by: 2026-11-13T214508Z-memory-dungeon-t-020-b7e9
-    claimed_at: '2026-11-13T21:45:08Z'
+    claimed_by: null
+    claimed_at: null
   - id: t-024
     milestone: m3
     title: "Playtest and polish Scylla, Char, Oren and recurring party arcs"
-    status: waiting
+    status: cancelled
     depends_on: t-020
     passes: 0
     stakes: reversible
@@ -673,12 +834,20 @@ tasks:
       carries an axe, shines in logistics and needs no invented traumatic
       reveal. Author first scene, mid-campaign conflict, and earned
       reconciliation. Request key character art and verify delivery.
+
+      2026-11-20 PT cancelled (playtest rescope). Silas 2026-11-20 PT, in session: "roadmap
+      should aim to get to human play test ready, nothing beyond." The playtest build is the
+      reachable chain prologue -> e01 Briar + House -> e02 -> e03/e04 -> e05/e06 -> e07/e08 ->
+      e09 -> e10, plus Classic Match. This task is itself a playtest-and-polish pass; that
+      happens with human testers after the roadmap closes.
+    cancelled_reason: 'Silas 2026-11-20 PT: roadmap ends at human-playtest readiness. This task is itself a playtest-and-polish pass; that happens with human testers after the roadmap closes.'
+    updated: '2026-11-20T06:30:00Z'
   - id: t-025
     milestone: m3
     title: "Author and build the other three Act I overworlds and dungeons"
-    status: review
+    status: cancelled
     owner: worker
-    updated: '2026-11-16T06:55:00Z'
+    updated: '2026-11-20T06:30:00Z'
     depends_on: t-022
     passes: 0
     stakes: reversible
@@ -721,13 +890,20 @@ tasks:
       outcome state, reducer/save tests, rendered choices and art remain.
 
       Scoped e03/e04 witness-ledger integration fix: scene completion keys now include world ID, permitting reused scene slugs across overworlds without enabling repeat rewards within one world. Added cross-world save/restore and anti-farming regression assertions. Focused Kind Robots PR pending CI; broader t-025 scope remains unfinished.
+
+      2026-11-20 PT cancelled (playtest rescope). Silas 2026-11-20 PT, in session: "roadmap
+      should aim to get to human play test ready, nothing beyond." The playtest build is the
+      reachable chain prologue -> e01 Briar + House -> e02 -> e03/e04 -> e05/e06 -> e07/e08 ->
+      e09 -> e10, plus Classic Match. e03-e06 overworlds and dungeons shipped (t-052..t-062
+      done). Remaining e03-e12 content and device acceptance are beyond playtest.
     implementation_pr: 'silasfelinus/conductor#7459'
-    claimed_by: 2026-11-16T064701Z-memory-dungeon-t-025-8c4e91
-    claimed_at: '2026-11-16T06:47:01Z'
+    claimed_by: null
+    claimed_at: null
+    cancelled_reason: 'Silas 2026-11-20 PT: roadmap ends at human-playtest readiness. e03-e06 overworlds and dungeons shipped (t-052..t-062 done). Remaining e03-e12 content and device acceptance are beyond playtest.'
   - id: t-026
     milestone: m3
     title: "Author and build Act II: Stories We Inherit"
-    status: waiting
+    status: cancelled
     depends_on: t-025
     passes: 0
     stakes: reversible
@@ -737,10 +913,18 @@ tasks:
       ethics of class, growing up, promises and collective ecology;
       8 Earth photos covering a better job and friendships.
       Branch into four reviewable realm deliveries.
+
+      2026-11-20 PT cancelled (playtest rescope). Silas 2026-11-20 PT, in session: "roadmap
+      should aim to get to human play test ready, nothing beyond." The playtest build is the
+      reachable chain prologue -> e01 Briar + House -> e02 -> e03/e04 -> e05/e06 -> e07/e08 ->
+      e09 -> e10, plus Classic Match. Act II authoring beyond the reachable e01-e10 chain.
+      Beyond playtest.
+    cancelled_reason: 'Silas 2026-11-20 PT: roadmap ends at human-playtest readiness. Act II authoring beyond the reachable e01-e10 chain. Beyond playtest.'
+    updated: '2026-11-20T06:30:00Z'
   - id: t-027
     milestone: m3
     title: "Author and build Act III: The Better Life"
-    status: waiting
+    status: cancelled
     depends_on: t-026
     passes: 0
     stakes: reversible
@@ -750,10 +934,17 @@ tasks:
       Introduce identity/body trade rules and Morrow's honest romance.
       Preserve multiple fair solutions, encounter variation and
       gallery art per narrative milestone.
+
+      2026-11-20 PT cancelled (playtest rescope). Silas 2026-11-20 PT, in session: "roadmap
+      should aim to get to human play test ready, nothing beyond." The playtest build is the
+      reachable chain prologue -> e01 Briar + House -> e02 -> e03/e04 -> e05/e06 -> e07/e08 ->
+      e09 -> e10, plus Classic Match. Act III authoring. Beyond playtest.
+    cancelled_reason: 'Silas 2026-11-20 PT: roadmap ends at human-playtest readiness. Act III authoring. Beyond playtest.'
+    updated: '2026-11-20T06:30:00Z'
   - id: t-028
     milestone: m3
     title: "Build e09-e12 collision finale and ~32 consequence-backed core endings"
-    status: waiting
+    status: cancelled
     depends_on: t-027
     passes: 0
     stakes: reversible
@@ -764,14 +955,23 @@ tasks:
       endings × 4 distinct relationship epilogues with unique artwork,
       consent and no perfect reset, plus 256 map locations and 144
       dungeon rooms. Tests cover endings reachable without spoilers.
+
+      2026-11-20 PT cancelled (playtest rescope). Silas 2026-11-20 PT, in session: "roadmap
+      should aim to get to human play test ready, nothing beyond." The playtest build is the
+      reachable chain prologue -> e01 Briar + House -> e02 -> e03/e04 -> e05/e06 -> e07/e08 ->
+      e09 -> e10, plus Classic Match. e11/e12 collision finale and ~32 endings. The playtest
+      build ends after e10 with an explicit end-of-build message (kind_robots#5388). Beyond
+      playtest.
+    cancelled_reason: 'Silas 2026-11-20 PT: roadmap ends at human-playtest readiness. e11/e12 collision finale and ~32 endings. The playtest build ends after e10 with an explicit end-of-build message (kind_robots#5388). Beyond playtest.'
+    updated: '2026-11-20T06:30:00Z'
   - id: t-029
     milestone: m3
     title: "Establish full enemy, item, achievements and unlock economy"
-    status: ready
+    status: cancelled
     owner: worker
-    claimed_by: 2026-11-15T214601Z-memory-dungeon-t-029-7c91e4
-    claimed_at: '2026-11-15T21:46:01Z'
-    updated: '2026-11-15T22:47:38Z'
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-11-20T06:30:00Z'
     depends_on: t-021
     passes: 0
     stakes: reversible
@@ -795,11 +995,18 @@ tasks:
       headings. This slice is docs-only (T029-EARTH-PAIR-UNLOCK-ECONOMY.md). The task goes
       back to ready for runtime binding, the wider enemy/item/unlock catalog, art and
       acceptance. Kaizen: t-072.
+
+      2026-11-20 PT cancelled (playtest rescope). Silas 2026-11-20 PT, in session: "roadmap
+      should aim to get to human play test ready, nothing beyond." The playtest build is the
+      reachable chain prologue -> e01 Briar + House -> e02 -> e03/e04 -> e05/e06 -> e07/e08 ->
+      e09 -> e10, plus Classic Match. Reward-ledger validation shipped (#4888) and 12+ live
+      achievements shipped (t-069). The full enemy/item/unlock catalog is beyond playtest.
     implementation_pr: 'silasfelinus/conductor#7451'
+    cancelled_reason: 'Silas 2026-11-20 PT: roadmap ends at human-playtest readiness. Reward-ledger validation shipped (#4888) and 12+ live achievements shipped (t-069). The full enemy/item/unlock catalog is beyond playtest.'
   - id: t-031
     milestone: m4
     title: "Adversarial balance, continuity and cross-world reachability suite"
-    status: waiting
+    status: cancelled
     depends_on: t-028
     passes: 0
     stakes: reversible
@@ -813,6 +1020,14 @@ tasks:
       save duplication or unresolvable story locks. Phone/tablet/
       desktop one-screen art-first review and Silas's verdict remain
       separate gates.
+
+      2026-11-20 PT cancelled (playtest rescope). Silas 2026-11-20 PT, in session: "roadmap
+      should aim to get to human play test ready, nothing beyond." The playtest build is the
+      reachable chain prologue -> e01 Briar + House -> e02 -> e03/e04 -> e05/e06 -> e07/e08 ->
+      e09 -> e10, plus Classic Match. Cross-world reachability suite for the twelve-world
+      finale. Beyond playtest.
+    cancelled_reason: 'Silas 2026-11-20 PT: roadmap ends at human-playtest readiness. Cross-world reachability suite for the twelve-world finale. Beyond playtest.'
+    updated: '2026-11-20T06:30:00Z'
 
   - id: t-032
     milestone: m4
@@ -830,7 +1045,7 @@ tasks:
   - id: t-033
     milestone: m3
     title: "Produce and deliver 32-card collectible decks per realm"
-    status: waiting
+    status: cancelled
     depends_on: t-030
     passes: 0
     stakes: reversible
@@ -844,11 +1059,19 @@ tasks:
       scenes, fully delivered/verified Comfy images and accessibility.
       Commit per-world manifests and validators before mass-generating.
 
+      2026-11-20 PT cancelled (playtest rescope). Silas 2026-11-20 PT, in session: "roadmap
+      should aim to get to human play test ready, nothing beyond." The playtest build is the
+      reachable chain prologue -> e01 Briar + House -> e02 -> e03/e04 -> e05/e06 -> e07/e08 ->
+      e09 -> e10, plus Classic Match. 32-card collectible decks for every realm. Beyond
+      playtest.
+    cancelled_reason: 'Silas 2026-11-20 PT: roadmap ends at human-playtest readiness. 32-card collectible decks for every realm. Beyond playtest.'
+    updated: '2026-11-20T06:30:00Z'
+
   - id: t-034
     milestone: m2
     title: "Polish World One as a complete one-screen console with save slots"
-    status: ready
-    updated: '2026-11-05T02:41:53Z'
+    status: done
+    updated: '2026-11-20T06:30:00Z'
     depends_on: t-022
     passes: 0
     stakes: reversible
@@ -874,12 +1097,22 @@ tasks:
       2026-11-05 PT game-sprint: an adversarial World One store playtest found and fixed a save-loss bug. Players answer the four cross-world seal scenes (1,1 / 5,2 / 8,1 / 8,8) from the round-four sigil inspector, but restoreBriarSave dropped those answers on every reload or checkpoint load, because those squares are never revealed or visited. New utils/scripts/verifyMemoryWorldOnePlaytest.test.mjs drives the real Pinia store through every UI-reachable World One action with five seeded personas (20 runs, about 37k actions, about 2.4k reloads and checkpoint swaps). It found no softlocks and no negative or NaN resources; Briar and House saves restore unchanged; every speedrunner opens the gate; all three Hearth endings are reached. The Kind Robots patch (base 00cdc524) has gone to the coordinator, who will push it as branch worker/memory-dungeon-t-034-world- one-playtest-gs and open the PR. Still open for t-034: rendered phone/tablet/desktop console QA and acceptance of the painted House atlas. Next: run the t-036 personas on this harness once the t-035 art lands, or extend the harness to Dark Briar and the Dark House now.
 
       2026-11-04 PT: seal-answer save fix and World One adversarial store playtest merged as kind_robots #4776 (squash 8d1e8ed). Still in review pending rendered phone/tablet/desktop QA.
+
+      2026-11-20 PT remaining met: rendered single-screen console at 390/820/1440 on
+      production with no page scroll (screenshots taken this session); manual save slots
+      (utils/memoryDungeon/saveSlots.ts) and reload -> Continue verified in the browser; World
+      One end-to-end acceptance via npm run test:memory-world-one-playtest on main d7cafdd2:
+      20 seeded runs, 36,692 actions, 2,425 reloads, endings break/release/renew, 0 softlocks
+      or save drifts. Painted-art polish beyond this is post-playtest (Silas 2026-11-20 PT, in
+      session: "roadmap should aim to get to human play test ready, nothing beyond." The
+      playtest build is the reachable chain prologue -> e01 Briar + House -> e02 -> e03/e04 ->
+      e05/e06 -> e07/e08 -> e09 -> e10, plus Classic Match.)
     implementation_pr: 'silasfelinus/kind_robots#4776'
 
   - id: t-035
     milestone: m3
     title: "Deliver World One Comfy portraits, monsters, backgrounds and card art"
-    status: waiting
+    status: cancelled
     depends_on: t-030
     passes: 0
     stakes: reversible
@@ -893,10 +1126,18 @@ tasks:
       30+2 collectible card images and branch-specific outcomes. Prompt
       only is never done. Record job failures, retries and image coverage.
 
+      2026-11-20 PT cancelled (playtest rescope). Silas 2026-11-20 PT, in session: "roadmap
+      should aim to get to human play test ready, nothing beyond." The playtest build is the
+      reachable chain prologue -> e01 Briar + House -> e02 -> e03/e04 -> e05/e06 -> e07/e08 ->
+      e09 -> e10, plus Classic Match. Further World One Comfy art. Shipped World One art
+      renders with 0 broken images on production; more is beyond playtest.
+    cancelled_reason: 'Silas 2026-11-20 PT: roadmap ends at human-playtest readiness. Further World One Comfy art. Shipped World One art renders with 0 broken images on production; more is beyond playtest.'
+    updated: '2026-11-20T06:30:00Z'
+
   - id: t-036
     milestone: m4
     title: "Adversarially playtest and review complete World One loop"
-    status: waiting
+    status: cancelled
     depends_on:
       - t-034
       - t-035
@@ -913,11 +1154,19 @@ tasks:
       phone, tablet and desktop. Silas verdict and external release
       are separate human gates.
 
+      2026-11-20 PT cancelled (playtest rescope). Silas 2026-11-20 PT, in session: "roadmap
+      should aim to get to human play test ready, nothing beyond." The playtest build is the
+      reachable chain prologue -> e01 Briar + House -> e02 -> e03/e04 -> e05/e06 -> e07/e08 ->
+      e09 -> e10, plus Classic Match. The seeded World One playtest passes (20 runs, 0
+      softlocks); the human review is the playtest itself.
+    cancelled_reason: 'Silas 2026-11-20 PT: roadmap ends at human-playtest readiness. The seeded World One playtest passes (20 runs, 0 softlocks); the human review is the playtest itself.'
+    updated: '2026-11-20T06:30:00Z'
+
   - id: t-037
     milestone: m2
     title: "Build bounded cross-realm consequence ledger"
-    status: review
-    updated: '2026-11-15T12:54:00Z'
+    status: cancelled
+    updated: '2026-11-20T06:30:00Z'
     depends_on: t-022
     passes: 0
     stakes: reversible
@@ -939,16 +1188,23 @@ tasks:
       2026-11-15 PT: Merged focused six-worldframe serialized restoration regression PR #5205 (squash c1e56e93); six exact-head workflows green, including Contract Tests. Full bounded cross-realm ledger and adversarial acceptance remain open; return to ready for next scoped increment.
 
       Added six adversarial forged original/mirrored House ending combinations to the existing first-two-world consequence contract. Tests assert restored labels remain unset and physical aftermath cannot be manufactured. Focused Kind Robots PR pending exact-head CI; broader ledger remains unfinished.
+
+      2026-11-20 PT cancelled (playtest rescope). Silas 2026-11-20 PT, in session: "roadmap
+      should aim to get to human play test ready, nothing beyond." The playtest build is the
+      reachable chain prologue -> e01 Briar + House -> e02 -> e03/e04 -> e05/e06 -> e07/e08 ->
+      e09 -> e10, plus Classic Match. Bounded consequence-ledger slices shipped. Remaining
+      cross-realm scope is beyond playtest.
     owner: worker
-    claimed_by: 2026-11-15T125200Z-memory-dungeon-t-037-7c4d91
-    claimed_at: '2026-11-15T12:52:00Z'
+    claimed_by: null
+    claimed_at: null
+    cancelled_reason: 'Silas 2026-11-20 PT: roadmap ends at human-playtest readiness. Bounded consequence-ledger slices shipped. Remaining cross-realm scope is beyond playtest.'
   - id: t-038
     title: "Memory Dungeon master bible: 8 original/twisted worlds, 4 collision finales, 12 total"
-    status: review
+    status: cancelled
     owner: worker
-    claimed_by: 2026-11-14T214720Z-memory-dungeon-t-038-a81c
-    claimed_at: '2026-11-14T21:47:20Z'
-    updated: '2026-11-14T21:47:20Z'
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-11-20T06:30:00Z'
     stakes: reversible
     passes: 0
     source_issue: "silasfelinus/kind_robots#4136"
@@ -959,11 +1215,18 @@ tasks:
       2026-11-07 PT: Reviewer merged conductor PR #7145 (8c5487a44): e12 Vesper writer packet (two Hoshimori scenes, six outcomes, nine-route replay/forgery tests). Initial red CI was a roadmap duplicate-key defect already fixed on main plus a PR-body template miss; fixed by branch update and body edit. Writer packet only; runtime integration, ArtJobs and device QA remain. Umbrella stays ready.
 
       Scoped current-canon reconciliation: Rowan e09 playable POV and Pip courier role, Vesper e07/e08 viewpoint, delivery-roadmap acceptance wording. PR follows; the larger master-bible and gameplay acceptance remain unfinished.
+
+      2026-11-20 PT cancelled (playtest rescope). Silas 2026-11-20 PT, in session: "roadmap
+      should aim to get to human play test ready, nothing beyond." The playtest build is the
+      reachable chain prologue -> e01 Briar + House -> e02 -> e03/e04 -> e05/e06 -> e07/e08 ->
+      e09 -> e10, plus Classic Match. Narrative bible reconciliation is documentation, not
+      playtest-blocking. Beyond playtest.
     implementation_pr: 'silasfelinus/conductor#7145'
+    cancelled_reason: 'Silas 2026-11-20 PT: roadmap ends at human-playtest readiness. Narrative bible reconciliation is documentation, not playtest-blocking. Beyond playtest.'
   - id: t-039
     milestone: m2
     title: 'Playbook Forge upgrade (last, per Silas): fix 195 failing prompts, write 6 missing, then grow quests and encounters toward plan'
-    status: ready
+    status: cancelled
     stakes: reversible
     passes: 0
     note: |-
@@ -977,14 +1240,21 @@ tasks:
       2026-11-08 PT: Kind Robots PR #4911 merged as 350e2881971650d4069735b7ed8eb076c3c7938d; all eight exact-head workflows green. Forge prompt completeness now checks real art-required nodes. Remaining prompt lint, missing prompts and quest expansion still open; return READY.
 
       Focused Forge readiness correction: require minimum-length, literal Krea2 medium prompts and reject common negative/abstract wording. The 195 historical lint failures and six missing beats remain outstanding; do not mark complete.
-    updated: '2026-11-08T17:48:00Z'
+
+      2026-11-20 PT cancelled (playtest rescope). Silas 2026-11-20 PT, in session: "roadmap
+      should aim to get to human play test ready, nothing beyond." The playtest build is the
+      reachable chain prologue -> e01 Briar + House -> e02 -> e03/e04 -> e05/e06 -> e07/e08 ->
+      e09 -> e10, plus Classic Match. Playbook Forge prompt upgrade (marked 'last, per
+      Silas'). Beyond playtest.
+    updated: '2026-11-20T06:30:00Z'
+    cancelled_reason: 'Silas 2026-11-20 PT: roadmap ends at human-playtest readiness. Playbook Forge prompt upgrade (marked ''last, per Silas''). Beyond playtest.'
   - id: t-040
     title: "Memory Dungeon: deliver painted 6×6 House dungeon floorplans, not just the 8×8 overworld maps"
-    status: claimed
+    status: cancelled
     stakes: reversible
     passes: 0
     source_issue: "silasfelinus/kind_robots#4380"
-    updated: '2026-11-15T18:46:10Z'
+    updated: '2026-11-20T06:30:00Z'
     note: >-
       2026-11-11 PT remaining: Gameplay geometry is not painted art; require delivered 6×6 floorplan images and visual acceptance. Evidence: RESET-TASK-EVIDENCE-AUDIT-2026-11-10.md (t-040 row).
       FROM GITHUB ISSUE silasfelinus/kind_robots#4380 (https://github.com/silasfelinus/kind_robots/issues/4380), opened by @silasfelinus on 2026-10-28. Imported by scripts/sync_github_issues.py. Reference the issue in the implementing PR (`Closes silasfelinus/kind_robots#4380`) so it closes on merge; the bridge closes it otherwise once this task is done.
@@ -1017,9 +1287,16 @@ tasks:
       for the next slice rather than done.
 
       Added six regression checks for committed House atlas delivery receipts, image IDs, destinations and aggregate counts. Both Krea2 jobs 50365/50366 now have delivered checkpoint entries with ArtImages 257966/257967. Live independent HEAD and rendered six-by-six topology/device QA remain outstanding; do not close issue #4380.
+
+      2026-11-20 PT cancelled (playtest rescope). Silas 2026-11-20 PT, in session: "roadmap
+      should aim to get to human play test ready, nothing beyond." The playtest build is the
+      reachable chain prologue -> e01 Briar + House -> e02 -> e03/e04 -> e05/e06 -> e07/e08 ->
+      e09 -> e10, plus Classic Match. House atlases shipped and the House plays with committed
+      art. Further floorplan painting is beyond playtest.
     owner: worker
-    claimed_by: 2026-11-15T184610Z-memory-dungeon-t-040-c91e
-    claimed_at: '2026-11-15T18:46:10Z'
+    claimed_by: null
+    claimed_at: null
+    cancelled_reason: 'Silas 2026-11-20 PT: roadmap ends at human-playtest readiness. House atlases shipped and the House plays with committed art. Further floorplan painting is beyond playtest.'
   - id: t-041
     milestone: m3
     title: "Hoshimori e07 warm folklore: playable 16-site proof, Pip youth thread and first oven rooms"
@@ -1065,7 +1342,7 @@ tasks:
   - id: t-044
     milestone: m3
     title: "Hoshimori e08: complete 64-site yokai horror map, 36 rooms and cross-pair consequences"
-    status: ready
+    status: cancelled
     depends_on:
       - t-042
       - t-043
@@ -1107,13 +1384,20 @@ tasks:
       Focused e08 earned-exit increment: campaign completion now requires all 64 replay-valid night sites plus a completed Furnace of Names exit. Both council consequences and all three Furnace endings have adversarial contract coverage. Production art, gallery integration and rendered device acceptance remain.
 
       Merged kind_robots#5253 as 0d5e14d after all eight exact-head workflows passed on c2cd7aa. e08 now completes only after 64 replay-valid night sites, an earned Southern Council consequence and a completed Furnace exit; both council branches and all three Furnace endings are adversarially covered. Remaining: production art delivery and final URL verification, 30+2 gallery integration, and rendered 390/768/1440 night-to-Furnace acceptance.
-    updated: '2026-11-16T12:36:50Z'
+
+      2026-11-20 PT cancelled (playtest rescope). Silas 2026-11-20 PT, in session: "roadmap
+      should aim to get to human play test ready, nothing beyond." The playtest build is the
+      reachable chain prologue -> e01 Briar + House -> e02 -> e03/e04 -> e05/e06 -> e07/e08 ->
+      e09 -> e10, plus Classic Match. e08's 64 night sites, Southern Council consequence and
+      Furnace exit shipped (#5253). Remaining art and gallery integration are beyond playtest.
+    updated: '2026-11-20T06:30:00Z'
     implementation_pr: 'silasfelinus/kind_robots#5253'
+    cancelled_reason: 'Silas 2026-11-20 PT: roadmap ends at human-playtest readiness. e08''s 64 night sites, Southern Council consequence and Furnace exit shipped (#5253). Remaining art and gallery integration are beyond playtest.'
   - id: t-045
     milestone: m3
     title: "Hoshimori e07/e08 art: style proofs, map/oven atlases and two 30+2 collectible galleries"
-    status: ready
-    updated: '2026-11-08T13:57:00Z'
+    status: cancelled
+    updated: '2026-11-20T06:30:00Z'
     depends_on:
       - t-041
       - t-043
@@ -1136,10 +1420,17 @@ tasks:
       2026-11-04 PT cleanup pass: stale review with an expired claim; the recorded slice landed (or was superseded) and the note itself lists remaining scope, so back to ready for the next slice rather than done.
 
       Submitted eight distinct Hoshimori e07/e08 gallery round-five requests from canonical briefs, four per world. Workflow submission and checkpoint wiring prepared in a focused PR. Accepted ArtJob IDs, ArtImages, media delivery and remaining 32 gallery faces require post-merge verification; keep task active.
+
+      2026-11-20 PT cancelled (playtest rescope). Silas 2026-11-20 PT, in session: "roadmap
+      should aim to get to human play test ready, nothing beyond." The playtest build is the
+      reachable chain prologue -> e01 Briar + House -> e02 -> e03/e04 -> e05/e06 -> e07/e08 ->
+      e09 -> e10, plus Classic Match. Hoshimori art rounds shipped and delivered (752/752
+      ArtJobs delivered). The remaining 30+2 gallery faces are beyond playtest.
+    cancelled_reason: 'Silas 2026-11-20 PT: roadmap ends at human-playtest readiness. Hoshimori art rounds shipped and delivered (752/752 ArtJobs delivered). The remaining 30+2 gallery faces are beyond playtest.'
   - id: t-046
     milestone: m4
     title: "Hoshimori pair adversarial acceptance: complete routes, companions, art and accessibility"
-    status: waiting
+    status: cancelled
     depends_on:
       - t-042
       - t-044
@@ -1155,11 +1446,19 @@ tasks:
       topology, actual artwork and readability. Record defects with
       reproduction, fix them, retain Classic Match, and keep final public
       release and overall game verdict human-gated.
+
+      2026-11-20 PT cancelled (playtest rescope). Silas 2026-11-20 PT, in session: "roadmap
+      should aim to get to human play test ready, nothing beyond." The playtest build is the
+      reachable chain prologue -> e01 Briar + House -> e02 -> e03/e04 -> e05/e06 -> e07/e08 ->
+      e09 -> e10, plus Classic Match. Hoshimori pair acceptance beyond the shipped routes;
+      human playtest covers it.
+    cancelled_reason: 'Silas 2026-11-20 PT: roadmap ends at human-playtest readiness. Hoshimori pair acceptance beyond the shipped routes; human playtest covers it.'
+    updated: '2026-11-20T06:30:00Z'
   - id: t-047
     milestone: m4
     title: "Build e09-e12 four collision overworlds, 64 sites and dungeons each, with Pip/Morrow/Char/Vesper POV"
-    status: ready
-    updated: '2026-11-08T04:49:50Z'
+    status: cancelled
+    updated: '2026-11-20T06:30:00Z'
     stakes: reversible
     passes: 0
     note: |-
@@ -1171,6 +1470,13 @@ tasks:
       2026-11-04 PT cleanup pass: stale review with an expired claim; the recorded slice
       landed (or was superseded) and the note itself lists remaining scope, so back to ready
       for the next slice rather than done.
+
+      2026-11-20 PT cancelled (playtest rescope). Silas 2026-11-20 PT, in session: "roadmap
+      should aim to get to human play test ready, nothing beyond." The playtest build is the
+      reachable chain prologue -> e01 Briar + House -> e02 -> e03/e04 -> e05/e06 -> e07/e08 ->
+      e09 -> e10, plus Classic Match. e09 and e10 collision maps shipped and reachable.
+      e11/e12 are beyond playtest.
+    cancelled_reason: 'Silas 2026-11-20 PT: roadmap ends at human-playtest readiness. e09 and e10 collision maps shipped and reachable. e11/e12 are beyond playtest.'
 
   - id: t-048
     milestone: m3
@@ -1188,11 +1494,11 @@ tasks:
       Full history: projects/memory-dungeon/HISTORY.md#t-048
   - id: t-049
     title: "Memory Dungeon character match deck erroneously reports zero images"
-    status: review
+    status: done
     stakes: reversible
     passes: 0
     source_issue: "silasfelinus/kind_robots#4682"
-    updated: '2026-11-12T20:55:00Z'
+    updated: '2026-11-20T06:30:00Z'
     note: |-
       2026-11-11 PT remaining: Verify character with existing art displays actual matches in live UI, including no-art fallback and saved deck. Evidence: RESET-TASK-EVIDENCE-AUDIT-2026-11-10.md (t-049 row).
       FROM GITHUB ISSUE silasfelinus/kind_robots#4682 (https://github.com/silasfelinus/kind_robots/issues/4682), opened by @silasfelinus on 2026-11-02. Imported by scripts/sync_github_issues.py. Reference the issue in the implementing PR (`Closes silasfelinus/kind_robots#4682`) so it closes on merge; the bridge closes it otherwise once this task is done.
@@ -1206,9 +1512,15 @@ tasks:
       2026-11-06 PT: Rechecked #4682 and current deck resolver. Earlier #4777 fix remains in main. The existing Chromium memory-world test stubs resolveMemoryDungeonDeck entirely, so its passing browser runs cannot validate the actual Characters / Non-mature round-three art fetch. No authenticated UI reproduction or new code delivered this session; return ready for a genuine browser/API fixture, not done.
 
       Partial Character deck hardening: isolate failed linked ArtImage lookups per candidate while preserving visibility checks; added source regression. Browser authenticated round-three validation and full art availability remain open. Kind Robots worker branch prepared for PR and CI.
+
+      2026-11-20 PT remaining met: on production, signed out, the Kind Robots > Character non-
+      mature deck dealt real Character portraits (e.g. /images/characters/margin.webp) into
+      the Briar overworld with 0 broken images, no alert and no page errors; the Enchanted
+      deck likewise. The resolver fixes (#4777 and later hardening) are on main. Signed-in
+      mature decks were not rechecked.
     owner: worker
-    claimed_by: 2026-11-12T205135Z-memory-dungeon-t-049-a7c4
-    claimed_at: '2026-11-12T20:51:35Z'
+    claimed_by: null
+    claimed_at: null
   - id: t-050
     milestone: m3
     title: "Make Oren's House rest shortcut traversable and save-safe"
@@ -1226,11 +1538,11 @@ tasks:
     implementation_pr: 'silasfelinus/kind_robots#4729'
   - id: t-051
     title: "Memory Dungeon: rebalance Briar's 64-tile pacing and House room variety"
-    status: claimed
+    status: cancelled
     stakes: reversible
     passes: 0
     source_issue: "silasfelinus/kind_robots#4721"
-    updated: '2026-11-15T05:42:06Z'
+    updated: '2026-11-20T06:30:00Z'
     note: |-
       2026-11-11 PT remaining: Independent 64-site/36-room pacing run, choice density and fun acceptance. Evidence: RESET-TASK-EVIDENCE-AUDIT-2026-11-10.md (t-051 row).
       FROM GITHUB ISSUE silasfelinus/kind_robots#4721 (https://github.com/silasfelinus/kind_robots/issues/4721), opened by @silasfelinus on 2026-11-03. Imported by scripts/sync_github_issues.py. Reference the issue in the implementing PR (`Closes silasfelinus/kind_robots#4721`) so it closes on merge; the bridge closes it otherwise once this task is done.
@@ -1250,9 +1562,16 @@ tasks:
       Scoped three cross-realm clue discoveries to auto-resolve with existing choice IDs; alternate historical choices remain valid for saves. Kind Robots PR pending CI. Broader Briar and House pacing remains unfinished.
 
       Three additional Briar cross-realm clue auto-discoveries merged in kind_robots PR #5198, squash a51e2f8f95b275507da14ffdf92e0aa40da3f502; all eight PR-head Actions passed on fa6c4d1. Partial pacing increment only. Still needs independent 64-site and 36-room pacing playthrough, House shortcuts/treasure/room variety and UI acceptance.
+
+      2026-11-20 PT cancelled (playtest rescope). Silas 2026-11-20 PT, in session: "roadmap
+      should aim to get to human play test ready, nothing beyond." The playtest build is the
+      reachable chain prologue -> e01 Briar + House -> e02 -> e03/e04 -> e05/e06 -> e07/e08 ->
+      e09 -> e10, plus Classic Match. Pacing and variety rebalance is exactly what human
+      playtesting should inform. Revisit as a playtest_iteration task once testers report.
     owner: worker
-    claimed_by: 2026-11-15T054206Z-memory-dungeon-t-051-6e9c
-    claimed_at: '2026-11-15T05:42:06Z'
+    claimed_by: null
+    claimed_at: null
+    cancelled_reason: 'Silas 2026-11-20 PT: roadmap ends at human-playtest readiness. Pacing and variety rebalance is exactly what human playtesting should inform. Revisit as a playtest_iteration task once testers report.'
   - id: t-052
     milestone: m3
     title: "e03 Morrow's Shift: replace template recipe sites with 64 authored sites in the live Earth stage"
@@ -1301,13 +1620,13 @@ tasks:
   - id: t-055
     milestone: m3
     title: "e08 Hearth of Perfect Safety: rewrite the 16 night sites to Vesper's POV and finish the map"
-    status: review
+    status: cancelled
     owner: worker
-    claimed_by: 2026-11-13T134600Z-memory-dungeon-t055-92e4
-    claimed_at: '2026-11-13T13:46:00Z'
+    claimed_by: null
+    claimed_at: null
     stakes: reversible
     passes: 0
-    updated: '2026-11-13T13:51:00Z'
+    updated: '2026-11-20T06:30:00Z'
     note: >-
       2026-11-11 PT remaining: Audit every authored night site for Vesper's POV, original horror and earned consequences. Evidence: RESET-TASK-EVIDENCE-AUDIT-2026-11-10.md (t-055 row).
       Silas 2026-11-05 PT: the first eight overworlds keep one protagonist per pair, so e08 is Vesper's, not Scylla's (kind_robots#4778 already moved the viewpoint contract). hoshimoriNight.ts's 16 playable sites and store still describe "a separate Scylla-viewpoint expedition". Rewrite them from Vesper's POV without changing coordinates or choice ids, keep the Junji-Ito-tonal psychological/architectural horror register, then continue toward 64 sites and the dark Oven per t-044. Char's fate branches still apply through campaign flags, not through POV.
@@ -1331,6 +1650,13 @@ tasks:
       2026-11-13 04:52 PT: PR silasfelinus/kind_robots#5114 merged as 68b524acb73bdbb470549a8b3bd20e732e1211cc after all six exact-head GitHub Actions checks passed on fa098c5611c9e1d65c19de7c12b9312aa74e78fb. Added 18 guardian-entry-ending adversarial paths and replay/save integrity. Task remains ready: rendered e08 Furnace entry, mid-dungeon reload, campaign-ending propagation, production art and viewport QA remain unfinished.
 
       Added interruption/save-restore assertions at FN-12, FN-24, FN-31, guardian and climax for both e08 Furnace entries; climax selection alone must not count as an earned exit. Implementation PR and exact-head CI pending. Real browser reload, art delivery and campaign propagation remain.
+
+      2026-11-20 PT cancelled (playtest rescope). Silas 2026-11-20 PT, in session: "roadmap
+      should aim to get to human play test ready, nothing beyond." The playtest build is the
+      reachable chain prologue -> e01 Briar + House -> e02 -> e03/e04 -> e05/e06 -> e07/e08 ->
+      e09 -> e10, plus Classic Match. e08 Vesper POV and 64 sites shipped (#5112). Remaining
+      art and device acceptance are beyond playtest.
+    cancelled_reason: 'Silas 2026-11-20 PT: roadmap ends at human-playtest readiness. e08 Vesper POV and 64 sites shipped (#5112). Remaining art and device acceptance are beyond playtest.'
   - id: t-056
     milestone: m2
     title: "Name the researcher (Rowan) as the e01/e02 and e09 lead; Pip stays a supporting NPC"
@@ -1348,10 +1674,10 @@ tasks:
   - id: t-057
     milestone: m4
     title: "e09 Briar collision: Rowan leads, goblin Pip becomes a companion"
-    status: claimed
+    status: cancelled
     stakes: reversible
     passes: 0
-    updated: '2026-11-14T20:50:36Z'
+    updated: '2026-11-20T06:30:00Z'
     note: |-
       2026-11-11 PT remaining: Verify playable Rowan-led e09 route, Pip companion, earned memory fragments, ending callbacks. Evidence: RESET-TASK-EVIDENCE-AUDIT-2026-11-10.md (t-057 row).
       Silas 2026-11-05 PT: the researcher (Rowan) leads e09, not Pip. briarCollision.ts, briarCollisionRoute.ts, briarCollisionWitness.ts and the e09 stage (components/pages/memory-dungeon-briar-collision.vue) are written with Pip as the acting lead ("Pip spots...", "Pip exposes..."). Rewrite them so Rowan acts and Pip, the goblin courier, is a companion who still contributes courier knowledge. Keep coordinates, choice ids, fragment ids and save keys. Also update conductor story/BRIAR-COLLISION-PIP-QUESTS.json framing.
@@ -1379,9 +1705,17 @@ tasks:
       2026-11-14 PT: Rewrote nine e09 playable console strings to make Rowan the acting researcher and Pip the courier companion, including entry, map accessibility, recorded outcomes and Chronicle. Kind Robots PR #5151, head c1e57139, pending exact-head CI. No IDs or save state changed; route, quest JSON, branch QA and art remain.
 
       2026-11-14 09:46 PT: e09 Rowan-led stage copy PR silasfelinus/kind_robots#5151 merged as 63dfbfed after seven exact-head checks passed on 4ed3051. This is partial t-057 scope. Continue e09 route and Conductor quest JSON reconciliation, adversarial branches, art and rendered UI verification; no deployment.
+
+      2026-11-20 PT cancelled (playtest rescope). Silas 2026-11-20 PT, in session: "roadmap
+      should aim to get to human play test ready, nothing beyond." The playtest build is the
+      reachable chain prologue -> e01 Briar + House -> e02 -> e03/e04 -> e05/e06 -> e07/e08 ->
+      e09 -> e10, plus Classic Match. e09 Rowan-led collision shipped and reachable; visual-
+      lead contract passes (test:memory-briar-visual-lead). Remaining rendered-art acceptance
+      is beyond playtest.
     owner: worker
-    claimed_by: 2026-11-14T205036Z-memory-dungeon-t-057-7c91
-    claimed_at: '2026-11-14T20:50:36Z'
+    claimed_by: null
+    claimed_at: null
+    cancelled_reason: 'Silas 2026-11-20 PT: roadmap ends at human-playtest readiness. e09 Rowan-led collision shipped and reachable; visual-lead contract passes (test:memory-briar-visual-lead). Remaining rendered-art acceptance is beyond playtest.'
   - id: t-058
     milestone: m3
     title: "e05 Scylla's Shore: replace template recipe sites with 64 authored sites"
@@ -1459,10 +1793,10 @@ tasks:
   - id: t-063
     milestone: m3
     title: "Browser-test the Enter the Choking Works button at e06 4,6 at 390, 820 and 1440 widths, including save/restore mid-dungeon"
-    status: claimed
+    status: cancelled
     stakes: reversible
     passes: 0
-    updated: '2026-11-15T19:44:07Z'
+    updated: '2026-11-20T06:30:00Z'
     note: |-
       2026-11-11 PT remaining: Actual rendered button click, measured layout at 390/820/1440, mid-dungeon save/restore still required. Evidence: RESET-TASK-EVIDENCE-AUDIT-2026-11-10.md (t-063 row).
       Kaizen from t-062 review: CI covers the store and verifier, but nothing exercises the new sea-stage button, the choking mode in memory-dungeon.vue, or the shared stage's dungeon="choking" prop in a real browser. Add a Playwright interruption/layout check mirroring the Breathing Works one, and confirm a reload mid-dungeon restores room and flags.
@@ -1478,19 +1812,26 @@ tasks:
       Added an adversarial Choking Works browser regression proving arrival at e06 4,6 alone does not unlock the dungeon: the choice must be resolved first at all three viewports. Rendered Vue component and geometry coverage remain outstanding.
 
       2026-11-06 PT: Merged kind_robots#4847 (849cc7cb) after all seven workflows passed on exact head 9529b3db. Choking Works e06 4,6 cannot unlock by arrival alone; encounter decision is required at 390/820/1440. Remaining: rendered Vue button click and measured DOM geometry at those widths. No ArtJobs or deployment.
+
+      2026-11-20 PT cancelled (playtest rescope). Silas 2026-11-20 PT, in session: "roadmap
+      should aim to get to human play test ready, nothing beyond." The playtest build is the
+      reachable chain prologue -> e01 Briar + House -> e02 -> e03/e04 -> e05/e06 -> e07/e08 ->
+      e09 -> e10, plus Classic Match. Choking Works unlock rule shipped and contract-tested
+      (#4847). A per-button device check deep in e06 is covered by the human playtest.
     owner: worker
-    claimed_by: 2026-11-15T194407Z-memory-dungeon-t-063-8f29
-    claimed_at: '2026-11-15T19:44:07Z'
+    claimed_by: null
+    claimed_at: null
+    cancelled_reason: 'Silas 2026-11-20 PT: roadmap ends at human-playtest readiness. Choking Works unlock rule shipped and contract-tested (#4847). A per-button device check deep in e06 is covered by the human playtest.'
   - id: t-064
     milestone: m3
     title: "Bind the Earth letter and Last Train e03/e04 packets into the encounter registry with executable reducer tests"
-    status: review
+    status: cancelled
     owner: worker
-    claimed_by: 2026-11-14T074700Z-memory-dungeon-t-064-9f28
-    claimed_at: '2026-11-14T07:47:00Z'
+    claimed_by: null
+    claimed_at: null
     stakes: reversible
     passes: 0
-    updated: '2026-11-14T07:48:10Z'
+    updated: '2026-11-20T06:30:00Z'
     note: |-
       2026-11-11 PT remaining: **Highest-value immediate code gap:** bind Last Train to actual e03/e04 encounters and replay-validated reachability; reject forged/out-of-order saved decisions. Evidence: RESET-TASK-EVIDENCE-AUDIT-2026-11-10.md (t-064 row).
       Kaizen from t-025 Last Train review (conductor#7168): two writer packets (Earth letters, Last Train) now specify 24 choices and state rules but neither is wired in. Audit occupied e03/e04 cells, bind scene IDs into the registry and Pinia persistence, and implement each packet's acceptance matrix as executable tests (replay, forged-choice, missing-state fallbacks) before any more prose packets.
@@ -1523,6 +1864,13 @@ tasks:
       CI recovery increment on Kind Robots PR #5142: fixed exact Prettier diff at 222ec420; prior Contract Tests and Fast Changed-File Formatting failed on formatting. New exact-head workflows queued, not yet green. Keep task ready for encounter registry and Pinia wiring, art and browser acceptance. No deployment or ArtJobs.
 
       Focused adversarial Last Train malformed e04 boundary fix in kind_robots PR #5147. CI pending; runtime registry and Pinia wiring still outstanding.
+
+      2026-11-20 PT cancelled (playtest rescope). Silas 2026-11-20 PT, in session: "roadmap
+      should aim to get to human play test ready, nothing beyond." The playtest build is the
+      reachable chain prologue -> e01 Briar + House -> e02 -> e03/e04 -> e05/e06 -> e07/e08 ->
+      e09 -> e10, plus Classic Match. e03/e04 Last Train hardening slices shipped. Remaining
+      registry and letter-branch scope is beyond playtest.
+    cancelled_reason: 'Silas 2026-11-20 PT: roadmap ends at human-playtest readiness. e03/e04 Last Train hardening slices shipped. Remaining registry and letter-branch scope is beyond playtest.'
   - id: t-065
     milestone: m4
     title: "Audit merged PRs for each task released in the 2026-11-10 twelve-world reset and close only proven-complete scope"
@@ -1586,16 +1934,24 @@ tasks:
   - id: t-071
     milestone: m4
     title: "Parse every .github/workflows/*.yml from a workflow other than ci.yml so an unparseable CI file shows as a red check"
-    status: claimed
+    status: cancelled
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-12T18:51:28Z'
+    updated: '2026-11-20T06:30:00Z'
     note: |-
       Kaizen from the t-070 review (conductor#7326). Head 0bff092 made .github/workflows/ci.yml unparseable; GitHub then ran none of its jobs and the PR showed 16 green checks instead of 26, so nothing was red. Add a step to the Static checks workflow (or any workflow that is not ci.yml) that yaml.safe_loads every file under .github/workflows/ and fails on the first parse error, with a pytest that seeds one bad file. Reversible, CI-only; lives in this roadmap because the conductor project is finished and takes no new tasks.
+
+      2026-11-20 PT cancelled (playtest rescope). Silas 2026-11-20 PT, in session: "roadmap
+      should aim to get to human play test ready, nothing beyond." The playtest build is the
+      reachable chain prologue -> e01 Briar + House -> e02 -> e03/e04 -> e05/e06 -> e07/e08 ->
+      e09 -> e10, plus Classic Match. Conductor CI kaizen (parse every workflow file) parked
+      here because the conductor project takes no new tasks. Unrelated to Memory Dungeon
+      playtest readiness; re-file wherever conductor tooling should be tracked.
     owner: worker
-    claimed_by: 2026-11-12T185128Z-memory-dungeon-t-071-b83e
-    claimed_at: '2026-11-12T18:51:28Z'
+    claimed_by: null
+    claimed_at: null
+    cancelled_reason: 'Silas 2026-11-20 PT: roadmap ends at human-playtest readiness. Conductor CI kaizen (parse every workflow file) parked here because the conductor project takes no new tasks. Unrelated to Memory Dungeon playtest readiness; re-file wherever conductor tooling should be tracked.'
   - id: t-072
     milestone: m4
     title: "Add a .github/pull_request_template.md that mirrors the AGENTS.md Worker handoff headings so connector-opened worker PRs start from the template"
