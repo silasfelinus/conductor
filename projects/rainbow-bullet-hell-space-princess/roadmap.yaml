@@ -892,14 +892,14 @@ tasks:
   - id: t-043
     milestone: m4
     title: "Fever Dream look: review the doodle re-renders (DOODLE-SET-2) and ship the keepers"
-    status: review
-    claimed_by: 20261120T231020Z-rainbow-t043-sheet-d4w8
-    claimed_at: '2026-11-20T23:10:20Z'
+    status: ready
+    claimed_by: ''
+    claimed_at: ''
     depends_on: [t-036]
     owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-11-20T23:11:30Z'
+    updated: '2026-11-20T23:46:44Z'
     note: |-
       Follow-up to t-036 (kind_robots#4764). art/DOODLE-SET-2.yaml (35 cells, auto_submit) re-renders what art/DOODLE-SET-1-REVIEW.yaml held: Solenne's portrait and comms (skin and hair lock), three ships (colour and silhouette lock), 12 boss phases (B02/B04/B07/B09), 17 enemies and guardians, and 2 pickups, each sprite on a source_margin green border so it stays whole. When the cells are DONE: contact-sheet them (portraits beside their CAST-MANIFEST identity locks; sprites keyed on dark, with the frame-edge check), flip the passing entries in DOODLE-SET-1-REVIEW.yaml to keep (a boss only with all three phases), re-run scripts/export_rainbow_doodle_art.py --kind-robots ../kind_robots, run utils/scripts/verifyRainbowFeverDream.test.ts, and PR the files. Once all four ships pass, also flip ships/petal-wing to keep.
 
@@ -908,6 +908,11 @@ tasks:
       Reviewer 2026-11-20: export guard merged via PR #7694 (dry run passes on current ledgers; fails closed with exit 1 when a kept boss lacks finished phases). Back to ready, claim released: the contact-sheet review, keeper flips and the kind_robots export PR are still to do. All 12 DOODLE-SET-2 boss phases (b02/b04/b07/b09) already have finished renders. Kaizen t-046.
 
       2026-11-20 PT: Added private DOODLE-SET-2 comparison sheets, ArtJob/ArtImage provenance and four tests. Visual acceptance and actual export still open; scoped PR awaiting CI.
+
+      Reviewer 2026-11-20: review-sheet builder merged via PR #7699
+      (scripts/review_rainbow_doodle_art.py; verdicts stay PENDING_VISUAL_INSPECTION). Back to
+      ready, claim released: generate sheets, do the visual pass, flip keepers in DOODLE-
+      SET-1-REVIEW.yaml, export to kind_robots and PR.
 
   - id: t-046
     milestone: m4
