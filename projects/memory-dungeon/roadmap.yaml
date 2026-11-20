@@ -820,6 +820,12 @@ tasks:
       endings × 4 distinct relationship epilogues with unique artwork,
       consent and no perfect reset, plus 256 map locations and 144
       dungeon rooms. Tests cover endings reachable without spoilers.
+
+      2026-11-20 PT: e11/e12 built and authored (#5405, #5406). The e12 Last Door takes the
+      e12 verdict and the final choice; verifyMemoryFinaleCollision proves all 32 core endings
+      reachable through real routes, and the ending screen renders title, closing and
+      epilogue. Remaining: 32 ending plates (PART-4) and device acceptance.
+    updated: '2026-11-20T08:35:00Z'
   - id: t-029
     milestone: m3
     title: "Establish full enemy, item, achievements and unlock economy"
@@ -1230,7 +1236,7 @@ tasks:
     milestone: m4
     title: "Build e09-e12 four collision overworlds, 64 sites and dungeons each, with Pip/Morrow/Char/Vesper POV"
     status: ready
-    updated: '2026-11-08T04:49:50Z'
+    updated: '2026-11-20T08:35:00Z'
     stakes: reversible
     passes: 0
     note: |-
@@ -1242,6 +1248,11 @@ tasks:
       2026-11-04 PT cleanup pass: stale review with an expired claim; the recorded slice
       landed (or was superseded) and the note itself lists remaining scope, so back to ready
       for the next slice rather than done.
+
+      2026-11-20 PT: kind_robots#5405 (merged) made e11 and e12 playable stages (shared finale
+      console, replay-only fragments, Last Door). kind_robots#5406 (merged 85e4f119) authored
+      all 64 e11 and 64 e12 sites plus the 96 boilerplate e09/e10 sites; contract: no world
+      shows recipe boilerplate. Remaining: their art (PART-4/5 ledgers) and device acceptance.
 
   - id: t-048
     milestone: m3
@@ -1437,7 +1448,7 @@ tasks:
     status: ready
     stakes: reversible
     passes: 0
-    updated: '2026-11-20T06:00:00Z'
+    updated: '2026-11-20T08:35:00Z'
     note: |-
       2026-11-11 PT remaining: Verify playable Rowan-led e09 route, Pip companion, earned memory fragments, ending callbacks. Evidence: RESET-TASK-EVIDENCE-AUDIT-2026-11-10.md (t-057 row).
       Silas 2026-11-05 PT: the researcher (Rowan) leads e09, not Pip. briarCollision.ts, briarCollisionRoute.ts, briarCollisionWitness.ts and the e09 stage (components/pages/memory-dungeon-briar-collision.vue) are written with Pip as the acting lead ("Pip spots...", "Pip exposes..."). Rewrite them so Rowan acts and Pip, the goblin courier, is a companion who still contributes courier knowledge. Keep coordinates, choice ids, fragment ids and save keys. Also update conductor story/BRIAR-COLLISION-PIP-QUESTS.json framing.
@@ -1470,6 +1481,10 @@ tasks:
       the only agent working on this project currently, so any claimed roadmap items are
       likely stale"). Playtest-ready means the complete twelve-world game; see
       ASSESSMENT-2026-11-20.md for this task's gap.
+
+      2026-11-20 PT: kind_robots#5406 (merged) authored the 42 remaining e09 sites (Rowan
+      lead, Pip companion); e09 now has no recipe sites. Remaining: plates (PART-4/5) and
+      device acceptance.
     owner: worker
     claimed_by: null
     claimed_at: null
@@ -1735,16 +1750,22 @@ tasks:
   - id: t-074
     milestone: m3
     title: "Display delivered event art: catalog art status is hard-coded 'placeholder', so e03-e10 scene plates never show"
-    status: claimed
+    status: done
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-20T07:19:03Z'
+    updated: '2026-11-20T08:35:00Z'
     note: >-
       2026-11-20 assessment: overworldEventCatalog.ts art() always returns status 'placeholder'; the e03-e10 stages render scene art only when status === 'delivered', so every site shows 'Illustration pending'. Add a generated, committed manifest of delivered event-art paths (verified by ranged GET; the media host 404s HEAD), read it in the catalog, and add a contract test. Then re-key or re-commission choice art whose paths moved when e03-e06 sites were rewritten (current paths: e03 4/127, e04 7/127, e05 7/131, e06 9/139 choice images present).
+
+      2026-11-20 PT remaining met: kind_robots#5405 (merged c3ec947a) derives catalog art
+      status from a committed delivered-art manifest (npm run memory:delivered-art, ranged GET
+      probe); scene and choice plates now display when served. Contract in
+      verifyMemoryOverworldEvents. Moved choice paths are re-commissioned in EVENT-OUTCOME-
+      REQUESTS-PART-5.
     owner: worker
-    claimed_by: 2026-11-20T072500Z-memory-dungeon-t-074-cs01
-    claimed_at: '2026-11-20T07:19:03Z'
+    claimed_by: null
+    claimed_at: null
   - id: t-075
     milestone: m3
     title: "Commission and wire scene plates for every e03-e12 overworld site (0 of 640 exist at catalog paths)"
@@ -1752,9 +1773,15 @@ tasks:
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-20T06:00:00Z'
+    updated: '2026-11-20T08:35:00Z'
     note: >-
       2026-11-20 assessment: no establishing-scene image exists at any e03-e12 catalog path (ranged GET, 0/640). Queue one plate per authored site through the art ledger, verify delivery, and surface it via t-074's manifest. e11/e12 plates follow their authored sites (t-047).
+
+      2026-11-20 PT: every e03-e12 scene and choice plate that the media host does not serve
+      is requested: EVENT-OUTCOME-REQUESTS-PART-4 (scenes, priority 60) and PART-5 (choices,
+      40), generated by kind_robots utils/scripts/exportMemoryArtRequests.ts; all prompts pass
+      the server prompt contract. Remaining: renders, delivery, then npm run memory:delivered-
+      art.
   - id: t-076
     milestone: m3
     title: "Illustrate Hoshimori (e07/e08) and the five later dungeons, which currently render text only"
@@ -1762,9 +1789,13 @@ tasks:
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-20T06:00:00Z'
+    updated: '2026-11-20T08:35:00Z'
     note: >-
       2026-11-20 assessment: memory-dungeon-hoshimori.vue, memory-dungeon-hoshimori-night.vue and memory-dungeon-sublevel.vue (Sublevel B, Drowned Archive, Breathing Works, Choking Works, Furnace of Names) render no images at all. Wire existing delivered Hoshimori art where it fits, commission room and choice plates for the rest, and add display contracts.
+
+      2026-11-20 PT: kind_robots#5407 wires room and choice plates into all ten dungeons (Red
+      Oven included) and scene/choice plates into the Hoshimori stages; requests in PART-6
+      (rooms, 30) and PART-7 (dungeon choices, 20). Remaining: renders and delivery.
   - id: t-077
     milestone: m3
     title: "Build dungeons for e09-e12 (none exist; catalog marks 6,2 and 3,6 as dungeon sites)"
@@ -1772,9 +1803,15 @@ tasks:
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-20T06:00:00Z'
+    updated: '2026-11-20T08:35:00Z'
     note: >-
       2026-11-20 assessment: e01-e08 each have a playable dungeon; e09, e10, e11 and e12 have none. Author and build one dungeon per collision world on the authoredDungeon engine, with an earned exit, consequences and art, linked from its overworld.
+
+      2026-11-20 PT: kind_robots#5406 (merged) built the four late dungeons on the authored-
+      dungeon engine: e09 Memory Vault (BV), e10 Specimen Stacks (SP), e11 Well of Records
+      (WR), e12 Brine Tunnel (BT); 36 rooms, two entries, guardian, three endings each;
+      verifyMemoryLateDungeons plays both entries to every ending. Remaining: room and choice
+      plates (PART-6/7).
   - id: t-078
     milestone: m3
     title: "Final endings screen: show the ~32 core endings with paintings after e12"
@@ -1782,9 +1819,13 @@ tasks:
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-20T06:00:00Z'
+    updated: '2026-11-20T08:35:00Z'
     note: >-
       2026-11-20 assessment: memoryCoreEnding()/memoryEndingConsequences() exist in reimaginerCampaign.ts but no component renders them and nothing reaches them until e12 exists. Build the ending sequence and endings gallery, commission one plate per ending, and test every ending is reachable by seeded route.
+
+      2026-11-20 PT: ending screen built in #5405 (title, closing, epilogue); plate display
+      wired in kind_robots#5407; 32 ending plates requested in EVENT-OUTCOME-REQUESTS-PART-4.
+      Remaining: plate delivery.
   - id: t-079
     milestone: m3
     title: "Full illustrated opening: replace the one-screen prologue with an illustrated intro sequence"
@@ -1792,6 +1833,10 @@ tasks:
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-20T06:00:00Z'
+    updated: '2026-11-20T08:35:00Z'
     note: >-
       2026-11-20 assessment: the prologue is one background image, four paragraphs and one choice. Build a short illustrated intro (Rowan's life, Morrow's trade, arrival in Briar) with commissioned plates, skippable, saved, and accessible, leading into the existing prologue choice.
+
+      2026-11-20 PT: kind_robots#5406 (merged) added the six-panel illustrated opening before
+      the prologue choice (Back/Next/Skip). Panel plates requested in EVENT-OUTCOME-REQUESTS-
+      PART-4. Remaining: plate delivery and device check.
