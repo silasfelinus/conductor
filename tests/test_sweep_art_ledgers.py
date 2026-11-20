@@ -73,3 +73,26 @@ def test_live_sweep_survives_a_ledger_error_and_runs_high_priority_first(tmp_pat
     assert "swept 3 ledger(s), 1 with submission failures" in out
     assert [path for path, flag in calls if flag == "--live"] == [str(high), str(broken), str(low)]
     assert (str(low), "--status") in calls, "the sweep continues past a failing ledger"
+
+
+def test_text_gate_skips_parse_for_files_that_never_opt_in(tmp_path, monkeypatch):
+    subjects = [{"key": "s1", "prompt_prose": "x"}]
+    on = _write(tmp_path / "projects/p/art/ON.yaml", auto_submit=True, lanes=LANES, subjects=subjects)
+    _write(tmp_path / "projects/p/art/OFF.yaml", auto_submit=False, lanes=LANES, subjects=subjects)
+    _write(tmp_path / "projects/p/art/PLAIN.yaml", lanes=LANES, subjects=subjects)
+    yes = tmp_path / "projects/p/art/YES.yaml"
+    yes.write_text("'auto_submit': yes\nlanes: []\nsubjects: []\n")
+    parsed = []
+    original = sweep.yaml.safe_load
+
+    def counted(text):
+        parsed.append(text)
+        return original(text)
+
+    monkeypatch.setattr(sweep.yaml, "safe_load", counted)
+    found = sweep.find_ledgers(tmp_path)
+
+    # YAML 1.1 ``yes`` is True to PyYAML, so the loose gate must still let it through.
+    assert found == sorted([on, yes])
+    assert len(parsed) == 2
+

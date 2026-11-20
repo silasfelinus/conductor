@@ -18866,3 +18866,25 @@ records:
   lesson: "Before registering a script in session_sweep.py, time it in a libyaml-less sandbox.
     The 90s per-check timeout is shared headroom, and a double YAML parse of ~240 ledgers
     already uses ~78s of it."
+- date: '2026-11-20'
+  project: comet-city-academy
+  task: t-038
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "A perf task with a numeric target needs before/after timings in the handoff. Removing
+    the second parse saved nothing measurable (85s vs 88s); the cost was parsing 27 MB of art YAML
+    during discovery, which a cheap text gate cut to ~21s (t-039)."
+- date: '2026-11-20'
+  project: comet-city-academy
+  task: t-039
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "A text prefilter in front of a slow parser should err loose (case, quoting, YAML 1.1
+    booleans). A false match costs one parse; a false miss silently drops a ledger. Prove
+    equivalence once against a full parse."
