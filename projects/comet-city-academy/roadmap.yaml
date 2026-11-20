@@ -806,12 +806,10 @@ tasks:
   - id: t-024
     milestone: m3
     title: "Deploy 48 named one-hit villain henchman species in night patrol and Yearbook"
-    status: review
+    status: ready
     depends_on: t-003
     owner: worker
-    claimed_by: 2026-11-20T063500Z-comet-t024-chat-7b29
-    claimed_at: '2026-11-20T06:35:00Z'
-    updated: '2026-11-20T09:22:00Z'
+    updated: '2026-11-20T20:02:00Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -820,6 +818,11 @@ tasks:
       Scoped increment: tactical rival victories now record the opponent's canonical signature henchman breed, captain, move and counter in the earned Prom scrapbook; regression added. Full patrol spawning, art and species delivery remain.
 
       Expanded crew work staged in kind_robots PR #5412: all 48 canonical signature one-hit crews can appear as a one-time late-month night patrol encounter; counter, mercy and coercion choices change actual standing, influence, danger and alignment. Old rotating scene choices remain available; Yearbook memories and legacy-save validation extended. CI and publication approval pending; do not call the task finished or close master issue #4181.
+
+      Reconciled 2026-11-20: kind_robots#5412 merged 09:46Z (48 signature crews as night-
+      patrol encounter). Task stays open for Facet rows/ArtJobs, durable art URLs, species
+      cards and multi-seed tests; claim released.
+    implementation_pr: 'silasfelinus/kind_robots#5412'
   - id: t-025
     milestone: m3
     title: "Integrate 48 unique power origins and villain lairs into Prom day-night narrative"
