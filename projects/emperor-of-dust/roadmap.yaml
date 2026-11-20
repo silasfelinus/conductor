@@ -760,10 +760,20 @@ tasks:
       polish/tools/items.py in the 2026-10-20 session scratchpad (paths need updating).
       2026-10-21 04:20Z: ITEMS-ROUND-1 status DONE=3, RUNNING=1, PENDING=26; re-check with
       enqueue_art_requests.py --status and export once all 30 are DONE.
+
+      2026-11-19 PT partial: ITEMS-ROUND-1 was all DONE but never exported (ITEM_ART was
+      empty). Curated on contact sheets: kept 6 (road-lantern, carbide-lamp, abbey-candle,
+      night-draught, brass-bell-charm, surveyors-glass) and shipped them with an ITEM_ART
+      contract test in kind_robots#5383. Rejected 24 because the lane suffix 'warm
+      candlelight' drew a candle dish instead of the item; verdicts are in the ledger. Rerolls
+      are in ITEMS-ROUND-2.yaml (ArtJobs 71164-71187; suffix now rim light, candles in the
+      negative). Next: run enqueue_art_requests.py --status on ITEMS-ROUND-2, contact-sheet
+      it, and export keepers with export_round_art.py --require-keep --max-edge 320, adding
+      them to ITEM_ART. The q-d42 cave-forage v3 set (42353-42355) is still to be checked.
+      Released to ready.
     owner: worker
-    claimed_by: 2026-10-21T000500Z-eod-t-033
-    claimed_at: '2026-10-21T00:07:36Z'
-    updated: '2026-10-21T01:28:16Z'
+    updated: '2026-11-20T02:58:29Z'
+    implementation_pr: 'silasfelinus/kind_robots#5383'
   - id: t-034
     milestone: m5
     title: "Phone width: tapping a fortress room tab shifts the frame sideways"
@@ -935,6 +945,8 @@ tasks:
       says per-act rubric scoring is still open), and EditorialAcceptance calls itself a
       deterministic proxy. Back to ready to do the scored per-act second playtest as written
       (read-only, no art needed).
+
+      Added a reproducible second-pass five-act scoring protocol and evidence schema on worker/emperor-of-dust-t-044-rubric-b6e2. This is a partial increment; actual scored playthroughs and transcripts remain pending.
 
       2026-11-20 PT reviewer: merged the worker's SECOND-PASS-SCORING-PROTOCOL.md
       (playtest/2026-11-19/) as a partial increment; rubric, evidence rules and reviewer-
@@ -1193,7 +1205,11 @@ tasks:
       Scoped Kind Robots branch worker/emperor-of-dust-t-052-viewport-3c82 closes a real QA inventory gap: the existing scheduled real-Chromium Responsive Layout Audit omitted /play/emperor-of-dust entirely. Added the route at standard 390/820/1440 widths and a targeted additional 768x1024 viewport only for Emperor, retaining all other routes and 3-width backdrop comparisons. Added Emperor onboarding/ layout contract assertions to prevent re-omission. This adds future screenshot/geometry coverage, not a completed screenshot review of the deployed latest build. Existing daily 2026-11-19 audit had all six route shards green but no Emperor route and separate controls failure. Exact-head PR CI required. ArtImage delivery and in-game scene QA remain outstanding.
 
       2026-11-19 PT: Kind Robots PR #5366 merged as e68b87cdd2ba1eb249fe5c2508dbbc16877c05b4. The exact PR head 7669c92fd8e9ce02e22ded8757cb72ab7e4c6f16 completed green in all seven required checks, plus branch janitor, including full Emperor Dispatch, four contract shards, TypeScript, Prettier and Layout. The real-browser responsive audit now includes /play/emperor-of-dust at 390/820/1440 and targeted 768 pixels with screenshot outputs. Actual post-deploy screenshots have NOT been captured/reviewed, no images were delivered, and the remaining Day 1-50 choice/art acceptance is incomplete. Return t-052 to ready rather than claiming final QA readiness.
-    updated: '2026-11-20T00:08:10Z'
+
+      Partial save-integrity acceptance increment: align active quest party validation with quest-defined min/max, the Lumen Many Hands exception, mandatory companions and dead-follower exclusion. New real-engine contract regressions cover malformed loaded parties and a legal Many Hands save. Awaiting Kind Robots PR exact-head checks; this does not finish t-052 artwork delivery or campaign/visual acceptance.
+
+      2026-11-19 PT partial save-integrity increment merged as kind_robots#5382 at ba707ae8fa57bee7f0aefe9dca8bf4bda0f7de70. Exact PR head 9b089cef0e431e88759befd1355e3b7a614eb1b8 completed all eight GitHub Actions workflows successfully, including Emperor Dispatch full-campaign acceptance, TypeScript, Prettier, and all four contract shards. Real save validation now rejects active mission parties that exceed quest-defined limits, omit required companions, or include dead followers, while preserving the legitimate Lumen Many Hands exception. New positive and negative full-engine save/restore regressions pass. This is NOT final t-052 acceptance: delivered ArtImage binaries, full per-choice illustration and follower dialogue audits, scored five-act editorial review, and live 390/768/1440 screenshot inspections remain. Keep #4142 open and the finite roadmap active.
+    updated: '2026-11-20T03:15:24.965Z'
   - id: t-053
     milestone: m5
     title: "Prevent Young Komodo flashing through the startup splash before the introduction"
