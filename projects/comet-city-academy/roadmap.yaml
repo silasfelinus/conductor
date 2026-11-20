@@ -159,13 +159,15 @@ tasks:
     owner: worker
     claimed_by: 2026-11-20T171220Z-comet-t037-a6d4
     claimed_at: '2026-11-20T17:12:20Z'
-    updated: '2026-11-20T17:12:20Z'
+    updated: '2026-11-20T17:15:50Z'
     milestone: m3
     stakes: reversible
     passes: 0
     depends_on: []
     note: |-
       Kaizen from t-036 review (Conductor PR #7681). scripts/check_auto_art_receipts.py currently only prints OVERDUE lines in the auto-art-generate run log. Feed its count into the existing art-queue health report or session sweep line so a missing-receipt ledger is visible without opening Actions.
+
+      Added auto_art_receipts to the startup sweep and regression coverage; PR pending CI.
   - id: t-012
     milestone: m2
     title: "Promote the seven-day demo into Capes & Tassels name and genuine day/night map slice"
