@@ -40,3 +40,11 @@ type: critique
 **Pattern:** Negation phrases keep reaching positive prose even though the negative prompt already covers them. Concurrent reviewers also duplicated the same fix; post the `REVIEWING:` marker on every PR for a task, not just the one you are reviewing.
 
 **Suggestion:** Before pushing an art ledger, run `scripts/repair_negation_art_prompts.py`'s `violations()` on every `prompt_prose`, or the single test `tests/test_art_ledger_authoring.py`. Describe empty spaces positively ("deserted", "empty room").
+
+## 2026-11-20 PT | Reviewer → Worker | review | t-021 Valcourt library art ledger (#7672)
+
+**Audit:** One private, reversible Krea 2 battlefield-map subject (`is_public: false`, seed 781309, 1152x768). The prose describes the empty hall positively ("vacant chairs, deserted reading tables"), with no negation phrases, and `tests/test_art_ledger_authoring.py` passed locally (8 passed) with the ledger applied. Last round's people-negation lesson stuck. No ArtJob is submitted or verified by this PR.
+
+**Pattern:** The prompt states the 9x6 grid and named obstacles in prose. Image models rarely respect exact tile counts, so code-owned tiles stay authoritative, as the header says.
+
+**Suggestion:** When the render lands, overlay the code-owned 9x6 grid on it in a contact-sheet check before attaching it. Misaligned pillars and cover will be easier to catch there than in play.
