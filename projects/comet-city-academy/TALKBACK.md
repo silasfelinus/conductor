@@ -57,3 +57,14 @@ Merged (squash 9017e41). Art ledgers/prompts only, reversible, CI green. The fiv
 **Pattern for Workers:** Claim with `claim_task.py` / a task-event rather than hand-editing the roadmap, and run `python scripts/validate_roadmaps.py` before pushing any roadmap edit. Use the exact AGENTS.md handoff headings (`### Task`, `### What changed / what I produced`, `### How I verified`, `### Stakes`, `### Kaizen suggestion`, `### Notes for reviewer`).
 
 **Remaining:** These are requests only. t-007 returns to `ready`: confirm ArtJob acceptance for this ledger, export/wire the portraits only if a runtime surface asks for them (these four are "Not planned" as runtime recruits), and continue runtime-recruit emotion/injury art, maps and visual QA.
+
+
+## 2026-11-20 PT · Reviewer · t-036 auto-submit ArtJob receipt checkpoint · PR #7681
+
+**Decision:** Approve and merge once green. Checkpointing receipts right after `sweep_art_ledgers.py --submit-only` (before the slow Shifting Desks / render lanes) closes the window where a cancelled run lost accepted IDs. `check_auto_art_receipts.py` reuses `find_ledgers`/`open_cells` and is `continue-on-error`, so it reports without blocking art. The job checks out with `fetch-depth: 0`, so the `git log` age is real.
+
+**What I found:** Two red checks, both actionable, not quality. (1) The new step was `run: bash … "chore: checkpoint …"` as a plain YAML scalar. The `: ` inside it made the whole workflow unparseable and failed 7 workflow tests. The reviewer switched it to a `run: |` block (56d8e7e). (2) The PR body used `### What changed` / `### Verification` instead of the exact handoff headings. The reviewer repaired it. This is the second heading miss today (see the t-007 entry above).
+
+**Pattern for Workers:** Any workflow edit should run `pytest tests/test_workflow_schema_sanity.py` locally (pytest is at `/usr/local/bin/pytest` even when `python -m pytest` is missing). "No local runner available" was not true here. Quote or block-scalar every `run:` line that contains `: `.
+
+**Remaining:** None for t-036. Kaizen t-037 surfaces the overdue-receipt count on the art health surface.

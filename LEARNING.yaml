@@ -18844,3 +18844,14 @@ records:
   failure_category: null
   lesson: When a filter reuses a tri-state helper, check what each state also covers. Here
     'pending' also meant "zero check runs", so the filter needed a staleness escape hatch.
+- date: '2026-11-20'
+  project: comet-city-academy
+  task: t-036
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: A workflow `run:` plain scalar containing ': ' (e.g. a "chore: ..." commit message)
+    breaks YAML parsing for the whole workflow. Use a block scalar, and run
+    test_workflow_schema_sanity.py before pushing workflow edits.
