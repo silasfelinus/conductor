@@ -229,11 +229,11 @@ tasks:
   - id: t-008
     milestone: m3
     title: "Deliver Space Couch painted red-sofa ship, pocket-room, shield, crew and world art"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 20261120T124631Z-game-of-captains-t008-z7p4n2
     claimed_at: '2026-11-20T12:46:31Z'
-    updated: '2026-11-13T22:02:54+00:00'
+    updated: '2026-11-20T12:50:49Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -253,6 +253,10 @@ tasks:
       2026-11-12 PT, Silas: "whatever horoscope i get, there is no original art" and "there needs to be a wild break possible to avoid the horoscope, with at least 32 endings". Merged kind_robots#5082 (fc9ee12, 16/16 checks green): wired the 19 DONE COUCHSCOPE-AND-OPENING-ROUND-1 ArtImages 261262-261280 that had been rendered but never connected (all 12 constellation reveal plates, trolley question + 3 answers, red-couch mission cards for refugees/archive/bar, so The Last Lifeboat no longer shows the SVG title card). Added the Couchscope WILD BREAK: refuse the screening at any time, 4x2x4 branching escape through 13 scenes to 32 distinct endings, each with its own text, +1 starting perk and finale coda; launch unsigned, per-browser found-endings ledger; VoyageRun.wildBreak validated on restore. Queued 45 matching plates in conductor#7318 (WILD-BREAK-ROUND-1, priority 950), not yet submitted at merge time. Next: once DONE, curate a contact sheet and wire couchscope/wild/<scene> and couchscope/wild-end/<ending> ids into kind_robots utils/gameOfCaptains/onboardingArt.ts. Art remains incomplete; no deploy or human gate.
 
       2026-11-13 PT: all 45 WILD-BREAK-ROUND-1 plates rendered DONE (ArtImages 270132-270176). Curated on a contact sheet: kept 43 (all 13 wild break scenes, 30 of 32 endings) and wired them into kind_robots utils/gameOfCaptains/onboardingArt.ts in kind_robots#5119. Rejected the-long-way-round (Nighthawks pastiche with legible lettering) and nothing-in-particular (legible GIFT sign); redos queued in art/WILD-BREAK-REDO-1.yaml, wire them under the same couchscope/wild-end keys once DONE. Remaining t-008 art scope is unchanged; no deploy or human gate.
+
+      Scoped artwork-recovery improvement: make failed alien, redshirt and voyage painting lookups retryable instead of permanently marked loaded. Add an accessible refresh control in Ship Settings and run a new regression in test:game-of-captains. Review only; authentic art URLs and visual curation still block completion.
+
+      Partial art-delivery reliability fix. Space Couch now has an explicit player control to refresh curated alien, redshirt and voyage paintings without resetting the voyage. Failed artwork fetches preserve already delivered images, pending refreshes cannot cross account changes, and the existing fallback remains. Branch worker/game-of-captains-t-008-art-refresh-z7p4n2. Do not mark t-008 DONE: painting acceptance, URL checks and 390/768/1440 browser evidence remain.
   - id: t-009
     milestone: m3
     title: "Deliver unique mission outcome, conversation and ending illustration coverage"

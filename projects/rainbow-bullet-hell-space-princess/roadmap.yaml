@@ -102,7 +102,7 @@ tasks:
       not rendered assets, and no playable implementation is claimed.
   - id: t-044
     title: 'Main-game standard: audit and close the gaps for Rainbow Bullet Hell Space Princess'
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 20261120T124400Z-rainbow-t044-scrapbook-q6v2
     claimed_at: '2026-11-20T12:44:00Z'
@@ -110,7 +110,7 @@ tasks:
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-20T12:44:00Z'
+    updated: '2026-11-20T12:46:10Z'
     note: |-
       Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -125,6 +125,8 @@ tasks:
       Stale claim recovery: no matching open Rainbow PR or implementation branch; no code is identified as committed by this claim. Keep main-game logbook and other acceptance gaps open, and reclaim before implementing.
 
       Scoped Seas flight-log implementation pushed as 856edb03ba7a5a49a5668018e631eec6e44bc654: progress silhouettes, earned medals, current Act and ending count; added pure logbook regression test. This is one part of the still-open main-game standard, not completion of t-044.
+
+      Added a scoped ending scrapbook to the Rainbow cabinet, tracking only the three actually earned finale choices and keeping unearned endings locked. Distinct Motherland-road variant recording, incomplete ending illustrations, and remaining main-game-standard acceptance remain open.
   - id: t-045
     title: 'Rainbow Bullet Hell Space Princess achievement upgrade: 12 or more live achievements'
     status: done
@@ -603,14 +605,11 @@ tasks:
   - id: t-027
     milestone: m6
     title: "Gen-2 memory: save slots, route map screen, medals and the persistent Palace Hangar"
-    status: review
-    owner: worker
-    claimed_by: 20261120T112142Z-rainbow-t027-hangar-n8c4
-    claimed_at: '2026-11-20T11:21:42Z'
+    status: ready
     depends_on: [t-026]
     passes: 0
     stakes: reversible
-    updated: '2026-11-20T11:31:14Z'
+    updated: '2026-11-20T12:51:00Z'
     note: |-
       2026-11-20T11:21:42Z connector recovery: prior claim 2026-11-20T05:40:00Z expired after 341 minutes, no open Rainbow PR or branch; implementing Palace Hangar on a scoped worker branch.
 
@@ -623,6 +622,8 @@ tasks:
       Added saved-fork route intelligence to the Seas cards and a regression test. This is a partial route-map improvement, not the playable route navigation or Palace Hangar completion.
 
       Implemented a working per-save-slot Palace Hangar. Best earned Act medals fund bounded shield, charge and life bonuses, persisted in Arcade preferences and equipped by all four pilots in the live cabinet. Tests added. Code branch worker/rainbow-bullet-hell-space-princess-t-027-hangar-x7p5. This is partial t-027: route-map navigation and stage replay remain open.
+
+      Scoped Palace Hangar PR silasfelinus/kind_robots#5423 merged after twelve completed green workflows at d1c300d. Hangar slot upgrades, medal spending and four-seat bonuses are shipped to main, but playable Luminous Ocean route-node navigation and authored stage replay remain unfinished.
   - id: t-028
     milestone: m6
     title: "Gen-2 alternate stages: four branch stages with their own guardians"
