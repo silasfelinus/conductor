@@ -1,0 +1,48 @@
+# Private production painting for Cornerstone's third playable power-origin mission.
+# The code-owned 9x6 grid, tile cover and hazard rules remain authoritative.
+# Queued does not mean rendered, attached or verified.
+round: every-villain-tactics-sunken-street-v1
+series: prom-of-doom-and-every-villain-tactics
+project_slug: every-villain-tactics
+designer: Cornerstone's Street That Sank playable origin arena
+is_public: false
+is_mature: false
+cast_loras: false
+auto_submit: true
+status: awaiting-submission
+priority: 950
+lanes:
+- key: krea2
+  label: Krea 2 literal overhead western animation background
+  engine: krea2
+  prompt: prose
+  suffix: Hand-painted western superhero animation aesthetic with precise ink outlines, expressive but realistic materials, saturated gouache colors, readable street surfaces, clean overhead battlefield composition.
+subjects:
+- key: evt-cornerstone-sunken-street
+  lane: krea2
+  entity: battlefield-map
+  title: 'Cornerstone: Sunken Academy Bus Stop'
+  asset: every-villain-tactics/maps/sunken-street
+  size: 1152x768
+  seed: 781299
+  priority: 950
+  prompt_prose: >-
+    Straight down camera looking at the whole rectangular roadway beside a modern superhero academy bus stop in late afternoon.
+    Nine evenly proportioned street sections across and six deep, with a contiguous traversable ground surface from edge to edge.
+    The west side is an intact light concrete walkway with a few low waist-high safety barriers.
+    The middle has a jagged fractured band of asphalt and a raised wedge of compacted earth on the north-central edge,
+    showing where the pavement buckled around a sinkhole.
+    A ruptured underground water main is visible through a gap in the upper middle asphalt with blue water pooling
+    in a narrow channel. One further weak crumbling curb lies at the lower middle edge of the sinkhole.
+    The east side holds a yellow school bus at a steep angle above the opening, with its side doors visible and
+    an accessible path along its left side. The bus body forms a single obvious tall full-cover obstruction,
+    while a small waterworks pump to the west and a broken asphalt chunk provide lower cover.
+    Four heavy masonry roadside barriers stand at the far top and bottom edges, leaving the middle traversable.
+    An unpeopled bus stop with deserted sidewalks, a solitary yellow school bus and a clear unobstructed playable road surface.
+    Every sidewalk joint, crumbling curb, low barrier, pipe and bus silhouette is crisp and readable at small scale.
+    Fixed orthographic bird's-eye view, physically flat rectangular battlefield painted from corner to corner,
+    clean western comic ink contours, carefully controlled painterly cel shading, daylight from upper left.
+  negative: >-
+    text, letters, numbers, street names, signs with writing, road labels, compass, map legend, interface grid,
+    HUD, menu, floating indicators, tiny figurines, characters, human bodies, isometric perspective, horizon,
+    perspective vanishing point, toy diorama, 3d render, photos, cropped board edges, watermark
