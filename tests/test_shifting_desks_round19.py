@@ -59,12 +59,14 @@ def test_every_new_round19_request_has_an_idempotent_authoring_and_queue_match()
     for art in rows:
         matches = queued_by_id.get(art["request_id"], [])
         if not matches:
-            # The queue prunes a request once its image is delivered. A pruned
-            # row is fine only when the round file itself holds the
-            # delivery evidence; anything else is a lost request.
+            # build_workspace.normalize_art_requests retires a completed round
+            # request from the queue once shifting_desks_round_evidence finds
+            # its evidence safe in this ledger. A retired row must leave all of
+            # it behind; a row that simply vanished is still a failure.
             assert art["status"] == "delivered", art["request_id"]
-            assert art.get("art_job_id") and art.get("art_image_id"), art["request_id"]
-            assert art.get("media_url"), art["request_id"]
+            assert int(art["art_job_id"]) > 0, art["request_id"]
+            assert int(art["art_image_id"]) > 0, art["request_id"]
+            assert str(art.get("delivery_check") or "").strip(), art["request_id"]
             continue
         assert len(matches) == 1, art["request_id"]
         row = matches[0]
