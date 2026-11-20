@@ -1249,7 +1249,7 @@ tasks:
   - id: t-052
     milestone: m5
     title: "Illustrated scene delivery and full 50-day choice-and-art coverage audit"
-    status: claimed
+    status: review
     passes: 0
     stakes: reversible
     note: |-
@@ -1274,7 +1274,9 @@ tasks:
       Partial save-integrity acceptance increment: align active quest party validation with quest-defined min/max, the Lumen Many Hands exception, mandatory companions and dead-follower exclusion. New real-engine contract regressions cover malformed loaded parties and a legal Many Hands save. Awaiting Kind Robots PR exact-head checks; this does not finish t-052 artwork delivery or campaign/visual acceptance.
 
       2026-11-19 PT partial save-integrity increment merged as kind_robots#5382 at ba707ae8fa57bee7f0aefe9dca8bf4bda0f7de70. Exact PR head 9b089cef0e431e88759befd1355e3b7a614eb1b8 completed all eight GitHub Actions workflows successfully, including Emperor Dispatch full-campaign acceptance, TypeScript, Prettier, and all four contract shards. Real save validation now rejects active mission parties that exceed quest-defined limits, omit required companions, or include dead followers, while preserving the legitimate Lumen Many Hands exception. New positive and negative full-engine save/restore regressions pass. This is NOT final t-052 acceptance: delivered ArtImage binaries, full per-choice illustration and follower dialogue audits, scored five-act editorial review, and live 390/768/1440 screenshot inspections remain. Keep #4142 open and the finite roadmap active.
-    updated: '2026-11-20T23:24:04.233Z'
+
+      Prepared Kind Robots physical-media audit at commit e0ea630d1fb07622c8ca509097e8be742dab593e. The existing Emperor Dispatch CI now checks actual local shipped WebP RIFF signatures and content hashes across public/emperor-of-dust, verifies quest manifest physical counts, emits artifacts/emperor/editorial-media-delivery.json with 8 exact ending plate paths, local bytes/sha256 and explicit remote ArtImages unverified. Does NOT misclassify queued/DONE database metadata as delivered. Exact-head CI and PR merge pending. Eight actual painted ending files, ArtImage curation/export, full story and browser QA still unfinished: return t-052 to ready after partial merge, not done.
+    updated: '2026-11-20T23:26:25.626Z'
     owner: worker
     claimed_by: 20261120T232404233Z-eod-t052-qa-4ba6
     claimed_at: '2026-11-20T23:24:04.233Z'
