@@ -83,16 +83,41 @@ def test_text_gate_skips_parse_for_files_that_never_opt_in(tmp_path, monkeypatch
     yes = tmp_path / "projects/p/art/YES.yaml"
     yes.write_text("'auto_submit': yes\nlanes: []\nsubjects: []\n")
     parsed = []
-    original = sweep.yaml.safe_load
+    original = sweep.load_ledger_yaml
 
     def counted(text):
         parsed.append(text)
         return original(text)
 
-    monkeypatch.setattr(sweep.yaml, "safe_load", counted)
+    monkeypatch.setattr(sweep, "load_ledger_yaml", counted)
     found = sweep.find_ledgers(tmp_path)
 
     # YAML 1.1 ``yes`` is True to PyYAML, so the loose gate must still let it through.
     assert found == sorted([on, yes])
     assert len(parsed) == 2
 
+
+def test_loader_uses_accelerated_safe_loader_when_available(monkeypatch):
+    calls = []
+
+    def load(text, *, Loader):
+        calls.append(Loader)
+        return {"auto_submit": True}
+
+    monkeypatch.setattr(sweep.yaml, "load", load)
+    monkeypatch.setattr(sweep.yaml, "CSafeLoader", type("FastSafeLoader", (), {}), raising=False)
+    assert sweep.load_ledger_yaml("auto_submit: true") == {"auto_submit": True}
+    assert calls == [sweep.yaml.CSafeLoader]
+
+
+def test_loader_falls_back_to_python_safe_loader(monkeypatch):
+    calls = []
+
+    def load(text, *, Loader):
+        calls.append(Loader)
+        return {"auto_submit": True}
+
+    monkeypatch.setattr(sweep.yaml, "load", load)
+    monkeypatch.delattr(sweep.yaml, "CSafeLoader", raising=False)
+    assert sweep.load_ledger_yaml("auto_submit: true") == {"auto_submit": True}
+    assert calls == [sweep.yaml.SafeLoader]

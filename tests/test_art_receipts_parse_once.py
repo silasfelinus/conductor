@@ -23,14 +23,16 @@ class ReceiptParseOnceTests(unittest.TestCase):
                 "auto_submit: true\nlanes:\n  - key: portrait\n"
                 "subjects:\n  - key: captain\n    jobs: {}\n"
             )
-            original = sweep.yaml.safe_load
+            original = sweep.load_ledger_yaml
             parses = []
 
             def counted(value):
                 parses.append(value)
                 return original(value)
 
-            with patch.object(sweep.yaml, "safe_load", side_effect=counted):
+            with patch.object(
+                sweep, "load_ledger_yaml", side_effect=counted
+            ), patch.object(receipts, "load_ledger_yaml", side_effect=counted):
                 found = sweep.find_ledgers(root, with_data=True)
                 self.assertEqual(len(found), 1)
                 path, data = found[0]

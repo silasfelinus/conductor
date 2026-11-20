@@ -8,9 +8,7 @@ import subprocess
 import time
 from pathlib import Path
 
-import yaml
-
-from sweep_art_ledgers import ROOT, find_ledgers, open_cells
+from sweep_art_ledgers import ROOT, find_ledgers, load_ledger_yaml, open_cells
 
 
 def last_commit_timestamp(path: Path, root: Path = ROOT) -> int | None:
@@ -27,7 +25,7 @@ def last_commit_timestamp(path: Path, root: Path = ROOT) -> int | None:
 
 def missing_receipts(path: Path, *, now: int, max_age_hours: int = 24, root: Path = ROOT, data=None) -> bool:
     if data is None:
-        data = yaml.safe_load(path.read_text()) or {}
+        data = load_ledger_yaml(path.read_text()) or {}
     subjects = data.get("subjects") or []
     if not subjects or open_cells(data) == 0:
         return False

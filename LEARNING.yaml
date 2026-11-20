@@ -18888,3 +18888,13 @@ records:
   lesson: "A text prefilter in front of a slow parser should err loose (case, quoting, YAML 1.1
     booleans). A false match costs one parse; a false miss silently drops a ledger. Prove
     equivalence once against a full parse."
+- date: '2026-11-20'
+  project: comet-city-academy
+  task: t-040
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Route every parse through one small helper so a loader swap is one line and tests can
+    monkeypatch a single seam instead of yaml.safe_load globally."
