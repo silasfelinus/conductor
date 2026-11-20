@@ -893,15 +893,26 @@ tasks:
   - id: t-043
     milestone: m4
     title: "Fever Dream look: review the doodle re-renders (DOODLE-SET-2) and ship the keepers"
-    status: review
+    status: ready
     depends_on: [t-036]
     owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-11-20T21:34:00Z'
-    claimed_by: 20261120T213200Z-rainbow-t043-export-guard-n8p4
-    claimed_at: '2026-11-20T21:32:00Z'
+    updated: '2026-11-20T21:55:00Z'
     note: |-
       Follow-up to t-036 (kind_robots#4764). art/DOODLE-SET-2.yaml (35 cells, auto_submit) re-renders what art/DOODLE-SET-1-REVIEW.yaml held: Solenne's portrait and comms (skin and hair lock), three ships (colour and silhouette lock), 12 boss phases (B02/B04/B07/B09), 17 enemies and guardians, and 2 pickups, each sprite on a source_margin green border so it stays whole. When the cells are DONE: contact-sheet them (portraits beside their CAST-MANIFEST identity locks; sprites keyed on dark, with the frame-edge check), flip the passing entries in DOODLE-SET-1-REVIEW.yaml to keep (a boss only with all three phases), re-run scripts/export_rainbow_doodle_art.py --kind-robots ../kind_robots, run utils/scripts/verifyRainbowFeverDream.test.ts, and PR the files. Once all four ships pass, also flip ships/petal-wing to keep.
 
       Added export fail-closed checks for incomplete curated boss phase groups and missing finished key art. Art inspection and integration remain outstanding; this is a partial safety increment.
+
+      Reviewer 2026-11-20: export guard merged via PR #7694 (dry run passes on current ledgers; fails closed with exit 1 when a kept boss lacks finished phases). Back to ready, claim released: the contact-sheet review, keeper flips and the kind_robots export PR are still to do. All 12 DOODLE-SET-2 boss phases (b02/b04/b07/b09) already have finished renders. Kaizen t-046.
+  - id: t-046
+    milestone: m4
+    title: "Add a pytest that pins the Fever Dream export's fail-closed boss-phase and key-art preflight"
+    status: ready
+    depends_on: []
+    owner: worker
+    passes: 0
+    stakes: reversible
+    updated: '2026-11-20T21:55:00Z'
+    note: |-
+      Kaizen from the PR #7694 review. The guard was verified by hand only. Build a tmp kind_robots tree with three boss phase webps and key-art, feed ledgers with one phase unfinished, and assert main(--dry-run) exits 1 naming the missing phase; then with all phases DONE assert it gets past preflight (stub render_path so no PIL or network is needed).
