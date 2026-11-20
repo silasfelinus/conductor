@@ -1,0 +1,14 @@
+version: 1
+project: rainbow-bullet-hell-space-princess
+task: t-027
+operation: review
+owner: worker
+session: 20261120T211600Z-rainbow-t027-replay-v4s8
+updated: '2026-11-20T21:25:00Z'
+note: >-
+  Implemented a separate unlocked-Act replay launch path from the Seas map.
+  It validates completion for the active save slot, reconstructs stage-start
+  state without mutating the saved campaign, supports 1–4 pilots, stops at the
+  selected Act clear, and awards the improved replay medal only to the Hangar.
+  Scoped regression test added. t-027 remains partial until route-map branch
+  navigation and other acceptance are verified.
