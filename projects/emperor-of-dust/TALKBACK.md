@@ -109,3 +109,11 @@
 **Pattern for the next curator:** fixing the candle suffix worked (no candles in round 2), but this Illustrious lane reads "item icon" as a round badge, so most rejects were discs or medallions with an emblem. Round 3 drops "item icon", leads each prompt with the plain object noun and its silhouette, and puts coin/medallion/disc/label in the negative. Also look at every render at full size: field-kit and ledger-abacus passed the small contact sheet but carry pseudo-lettering at 320px.
 
 **Prompt contract:** "no humans" in the positive prompt trips `people-negation`, the same as "no …".
+
+## 2026-11-19 PT | Worker | emperor-of-dust/t-046 | kind_robots#5392
+
+**Produced:** an editorial slice of Days 4–10. Rewrote 17 thin quest aftermaths and 10 early-board chore outcomes, all of which the editorial screen had flagged as under 100 characters. Added a t-046 guard in `verifyEmperorFortress` that fails on any Days 4–10 quest result under 100 characters, and confirmed it fails against the old prose. Flagged rows went from 458 to 442. Merged with 13 green checks.
+
+**Pattern:** the Day 4 quest block was written as one-line beats. They were terse and sometimes flavorful, but the failure and expiry tiers said nothing about who lost what. When lengthening them, the easy mistake is to invent consequences (an injury, a toast to a rival) that the tier's mechanics don't apply. Two of my own drafts did this and I rewrote both before committing.
+
+**Suggestion:** the largest remaining Days 4–10 cluster is 25 scenes whose terminal choices share the same direct mechanics. That is a design fix (make one effect differ), not a prose fix. Do it per scene with an engine assertion each, rather than rewording.
