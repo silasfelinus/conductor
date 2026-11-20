@@ -1404,12 +1404,14 @@ tasks:
   - id: t-068
     milestone: m4
     title: "Add a validator that checks t-044 playtest reviewer-record YAMLs against the second-pass scoring protocol schema"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 2026-11-20T041800Z-eod-t068-8f3c
     claimed_at: '2026-11-20T04:18:00Z'
     stakes: reversible
     passes: 0
-    updated: '2026-11-20T04:18:00Z'
+    updated: '2026-11-20T04:20:00Z'
     note: |-
       Reviewer kaizen from the 2026-11-20 PT merge of playtest/2026-11-19/SECOND-PASS-SCORING-PROTOCOL.md. Add a small conductor script plus test that loads every reviewer record under projects/emperor-of-dust/playtest/<date>/ and fails when a score lacks trace_path/transcript_path/kind_robots_sha/seed, when a score is outside 1-5 (N/A allowed), or when a per-act total is reported with any N/A dimension. Keeps model-simulated scores from being mistaken for complete evidence.
+
+      Implemented second-pass reviewer evidence validator and focused tests on worker/emperor-of-dust-t-068-evidence-8f3c. Await exact-head CI before completion.
