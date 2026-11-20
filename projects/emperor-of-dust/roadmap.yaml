@@ -1169,7 +1169,7 @@ tasks:
   - id: t-052
     milestone: m5
     title: "Illustrated scene delivery and full 50-day choice-and-art coverage audit"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: '20261120T024930Z-eod-t052-silascorrect-9c63'
     claimed_at: '2026-11-20T02:49:30.753Z'
@@ -1193,7 +1193,9 @@ tasks:
       Scoped Kind Robots branch worker/emperor-of-dust-t-052-viewport-3c82 closes a real QA inventory gap: the existing scheduled real-Chromium Responsive Layout Audit omitted /play/emperor-of-dust entirely. Added the route at standard 390/820/1440 widths and a targeted additional 768x1024 viewport only for Emperor, retaining all other routes and 3-width backdrop comparisons. Added Emperor onboarding/ layout contract assertions to prevent re-omission. This adds future screenshot/geometry coverage, not a completed screenshot review of the deployed latest build. Existing daily 2026-11-19 audit had all six route shards green but no Emperor route and separate controls failure. Exact-head PR CI required. ArtImage delivery and in-game scene QA remain outstanding.
 
       2026-11-19 PT: Kind Robots PR #5366 merged as e68b87cdd2ba1eb249fe5c2508dbbc16877c05b4. The exact PR head 7669c92fd8e9ce02e22ded8757cb72ab7e4c6f16 completed green in all seven required checks, plus branch janitor, including full Emperor Dispatch, four contract shards, TypeScript, Prettier and Layout. The real-browser responsive audit now includes /play/emperor-of-dust at 390/820/1440 and targeted 768 pixels with screenshot outputs. Actual post-deploy screenshots have NOT been captured/reviewed, no images were delivered, and the remaining Day 1-50 choice/art acceptance is incomplete. Return t-052 to ready rather than claiming final QA readiness.
-    updated: '2026-11-20T02:49:30.753Z'
+
+      Partial save-integrity acceptance increment: align active quest party validation with quest-defined min/max, the Lumen Many Hands exception, mandatory companions and dead-follower exclusion. New real-engine contract regressions cover malformed loaded parties and a legal Many Hands save. Awaiting Kind Robots PR exact-head checks; this does not finish t-052 artwork delivery or campaign/visual acceptance.
+    updated: '2026-11-20T02:53:32.396Z'
   - id: t-053
     milestone: m5
     title: "Prevent Young Komodo flashing through the startup splash before the introduction"
