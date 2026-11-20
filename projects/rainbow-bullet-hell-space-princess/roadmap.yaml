@@ -601,15 +601,17 @@ tasks:
   - id: t-027
     milestone: m6
     title: "Gen-2 memory: save slots, route map screen, medals and the persistent Palace Hangar"
-    status: review
+    status: claimed
     owner: worker
-    claimed_by: 20261120T054000Z-rainbow-t027-route-h9v2
-    claimed_at: '2026-11-20T05:40:00Z'
+    claimed_by: 20261120T112142Z-rainbow-t027-hangar-n8c4
+    claimed_at: '2026-11-20T11:21:42Z'
     depends_on: [t-026]
     passes: 0
     stakes: reversible
-    updated: '2026-11-20T05:45:00Z'
+    updated: '2026-11-20T11:21:42Z'
     note: |-
+      2026-11-20T11:21:42Z connector recovery: prior claim 2026-11-20T05:40:00Z expired after 341 minutes, no open Rainbow PR or branch; implementing Palace Hangar on a scoped worker branch.
+
       Reuse the generalized overworld/save-slot module (save-the-plumber/t-011, kr-arcade/t-160). Three slots; route map with cleared nodes, medals and discovered branches; a hangar where medals buy permanent, bounded upgrades (never pay-to-win against the fairness rules); pilot comms that recognise progress (first visit vs return, a branch found, a friend rescued last run). Migrate the current save.
 
       Stale claim recovery: no matching open Rainbow PR or implementation branch; save slots, route map and Palace Hangar must be verified from current main before further implementation.
