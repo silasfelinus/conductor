@@ -738,7 +738,7 @@ tasks:
   - id: t-033
     milestone: m5
     title: "Export the market item icons and the pending room/quest rerolls when they render"
-    status: review
+    status: ready
     passes: 0
     stakes: reversible
     note: >-
@@ -781,11 +781,12 @@ tasks:
       coin/medallion/disc/label. Next: enqueue_art_requests.py --status ITEMS-ROUND-3, curate
       at full size, export keepers. The q-d42 cave-forage v3 set (42353-42355) is still
       unchecked.
+
+      kind_robots#5389 merged at 4504d1f (13/13 checks green). Released to ready: curate
+      ITEMS-ROUND-3 (71188-71207) once it renders.
     owner: reviewer
-    updated: '2026-11-20T04:26:38Z'
+    updated: '2026-11-20T04:41:24Z'
     implementation_pr: 'silasfelinus/kind_robots#5389'
-    claimed_by: 20261120T042600Z-t033-ghwshg
-    claimed_at: '2026-11-20T04:23:01Z'
   - id: t-034
     milestone: m5
     title: "Phone width: tapping a fortress room tab shifts the frame sideways"
