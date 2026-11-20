@@ -248,9 +248,41 @@ def main(argv=None):
     subjects = [s for ledger in LEDGERS for s in yaml.safe_load(ledger.read_text())["subjects"]]
     decisions = yaml.safe_load(REVIEW.read_text())["decisions"]
 
+    # A curated boss is one visual unit: do not silently mix painted and classic
+    # phases when a re-render is missing or a ledger is only partially complete.
+    classic = classic_assets(kind_robots)
+    for key, value in decisions.items():
+        if not key.startswith("bosses/") or decision(value)[0] != "keep":
+            continue
+        phases = [rel for rel in classic if review_key(rel) == key]
+        absent = [
+            rel for rel in phases
+            if not any(
+                subject.get("asset") == f"{ART}/doodle/{rel}"
+                and finished_id(subject)
+                for subject in subjects
+            )
+        ]
+        if not phases or absent:
+            print(
+                f"cannot keep {key}: missing finished phases: "
+                + ", ".join(absent or ["all phases"]),
+                file=sys.stderr,
+            )
+            return 1
+
+    if decision(decisions.get("key-art", "hold"))[0] == "keep":
+        if not any(
+            subject.get("asset") == f"{ART}/doodle/key-art"
+            and finished_id(subject)
+            for subject in subjects
+        ):
+            print("cannot keep key-art: no finished render", file=sys.stderr)
+            return 1
+
     out_root = kind_robots / "public" / ART / "doodle"
     written, missing = [], []
-    for rel in classic_assets(kind_robots):
+    for rel in classic:
         key = review_key(rel)
         if key not in decisions:
             missing.append(rel)
