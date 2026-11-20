@@ -50,7 +50,11 @@ tasks:
     stakes: reversible
     soft_gate: true
     gate_reason: creative-approval
-    note: 'FOR SILAS: Development continues. Confirm or adjust design as desired; printing, checkout and product publication are separately gated.'
+    note: |-
+      FOR SILAS: Development continues. Confirm or adjust design as desired; printing, checkout and product publication are separately gated.
+
+      Gate re-triage 2026-11-20 PT (reviewer session 2026-11-20T1800Z-reviewer-q72wqt): still a genuine soft creative-approval gate. It asks for Silas's optional stylistic/release direction. No CONTROL.md note or notes_from_silas answers it, no task depends on it, and t-004/t-010 stay claimable. There is no written agent recommendation, so the 7-day adoption rule doesn't apply. Stamped gate_rechecked.
+    gate_rechecked: '2026-11-20'
   - id: t-003
     milestone: m2
     title: 'Ship private admin Tarot Studio with durable multi-deck/card editing and filters'
