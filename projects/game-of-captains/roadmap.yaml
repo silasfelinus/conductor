@@ -800,7 +800,7 @@ tasks:
   - id: t-033
     milestone: m3
     title: "Curate, re-render and ship the 100 redshirt portraits and secret-power plates"
-    status: claimed
+    status: ready
     passes: 0
     stakes: reversible
     lane: art
@@ -813,10 +813,13 @@ tasks:
       2026-11-19 PT: scoped redshirt art delivery integration on worker/game-of-captains-t-033-curated-redshirt-slots-j8q4. The game's daily personnel deck now reads curator-selected ArtSlot images from a dedicated guest-safe endpoint, retaining the existing static portraits and glyph fallback on missing or broken URLs. An exact selected candidate MUST have verdict liked and its ArtImage must be public, active and non-mature. DONE ArtJobs are never autoaccepted; 24 uncurated Krea2 round-three cells and missing source WebPs remain REVIEW HOLD. Pure parser and source-level safety regression added to the seeded test suite. Await exact-head CI, manual rendered image review, and authenticated delivery checks; this is partial t-033, not DONE or human approval.
 
       2026-11-19 PT: Kind Robots PR #5387 merged to main as a45ae0501aa77bca0358447429d1352f36136afb after all 14 exact-head GitHub Actions workflows completed SUCCESS, including TypeScript, seeded gameplay, full Space Couch adversarial voyages, image privacy regressions, PR-only container validation, and all four Contract Tests shards. Introduced publicly readable liked-plus-selected ArtSlot runtime art for redshirts with shipped-file and glyph fallback, plus 24 immutable DONE round-three ArtJob/ArtImage references and an explicit curator-only, idempotent registration action in the Forge. No render auto-liked, auto-selected or auto-published. The existing 77/100 shipped portraits and 99/100 plates remain; 23 new portraits and one plate are still unreviewed candidate renders. Actual source-image pixel acceptance, authenticated media URLs, and final shipment are unverified. Return t-033 to READY (partial), not DONE; no human approval implied. Replayed after unrelated emperor-of-dust roadmap duplicate-key repair.
-    updated: '2026-11-20T21:44:19.158Z'
-    owner: worker
-    claimed_by: 20261120T214419158Z-game-of-captains-t033-5lzrh
-    claimed_at: '2026-11-20T21:44:19.158Z'
+
+      Scoped redshirt review UX fix committed as app 04fe607: Forge links to the exact game-of-captains/redshirts/ ArtSlot set, with single-candidate slots visible instead of hidden by the default multiple-only filter. Added regression assertions. This is a PARTIAL t-033 implementation; 23 portraits and one power plate are still unapproved, and authenticated final image delivery remains unverified. Await PR and exact-head CI, then return this nonrecurring task to READY unless real artwork is independently accepted.
+
+      PR #5446 repairs the Forge redshirt curation link so 24 candidate slots appear even with one render. Artwork remains unapproved pending visual and authenticated delivery verification.
+
+      Partial: PR #5446 fixes redshirt curation deep-link, including single-candidate slots. Await exact-head CI and merge; 23 portrait renders and one secret-power plate still require actual visual acceptance and authenticated delivery before t-033 can be done.
+    updated: '2026-11-20T21:49:20Z'
   - id: t-034
     milestone: m4
     title: "Space Couch editorial readability pass: rotating transit prose, 30 success returns, sectioned final log"
