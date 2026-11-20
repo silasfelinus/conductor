@@ -328,7 +328,7 @@ tasks:
       slots. Preserve persistent ship/party state across seamless boss
       transitions, with rare optional tableau checkpoints after Acts III
       and V. See ACT-STRUCTURE.md. Do not mark done for a document alone.
-    status: claimed
+    status: review
     claimed_by: 2026-11-20T003545Z-rainbow-t012-roster-k8j3
     claimed_at: '2026-11-20T00:40:12Z'
     depends_on: [t-002, t-009]
@@ -343,7 +343,9 @@ tasks:
       Authored all fifteen distinct pilot-set reveal responses and ending stingers, integrated them into Act VI and the finale by the actual four-bit pilot mask, and added script validation. Implementation commit 98343fc9a85723dbd73fdd35098e718632df0a10; t-012 still has further audio, comms settings and cinematic work.
 
       Merged Kind Robots PR #5360 as 0635f88902e2cd7aef0b27c4eb89239d1d821e9c after all 10 latest workflow checks passed. The 15 pilot-set reveal and ending tracks are integrated, but comms settings, cinematic boards and audio remain. Release claim for continued implementation.
-    updated: '2026-11-20T00:40:12Z'
+
+      Implemented independent local 1-4 player C.A.T.S. crew selection and checkpoint-safe ordered pilot rosters, making the 15 previously merged authored dialogue masks reachable in real play. PR pending. Audio, subtitle controls, full cinematics and 15-mask runtime QA remain open; this review is a partial implementation, not task completion.
+    updated: '2026-11-20T00:44:03Z'
   - id: t-013
     milestone: m5
     title: "Deterministic combat fairness, multiplayer soak and campaign QA"
