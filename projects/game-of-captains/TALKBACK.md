@@ -16,3 +16,11 @@
 - **Positive:** current-save format, completed-run IDs and account-bound records preserved. Explicit import confirmation, JSON shape validation, duplicate-safe history merge and rollback on failed storage writes reduce the risk of losing a run.
 - **Remaining:** finish the agent-owned art and responsive verification tasks; do not conflate a local backup with authenticated cloud save or claim subjective art approval. t-041 remains READY (partial).
 - **Lesson:** test both historical progress import paths and the union of unique records rather than assuming imported history supersedes local progress.
+
+## 2026-11-19 PT · t-033 curated redshirt ArtSlots (#5387)
+
+- **Decision:** merged reversible app PR [#5387](https://github.com/silasfelinus/kind_robots/pull/5387), squash `a45ae0501aa77bca0358447429d1352f36136afb`.
+- **Verified:** all 14 exact-head workflows completed success, including TypeScript, formatting, gameplay, adversarial voyages, repository-wide contracts, privacy rules, and PR container validation. Production deployment and authenticated render URLs are **not** verified.
+- **Positive:** 24 known DONE round-three Krea2 images now have an explicit curator registration route and Forge UI. A public redshirt art endpoint delivers only the selected `liked` ArtSlot candidate when its image is public, active and non-mature, with the previously shipped portrait or glyph retained as a safe fallback.
+- **Remaining:** 77/100 static portraits and 99/100 static power plates remain shipped; 23 portrait and one power replacement require genuine image review, approval and final source shipment. No private ArtJob status was mistaken for accepted art. Task stays READY (partial), issue #4182 stays open.
+- **Lesson:** distinguish rendered, registered, reviewed, selected, publicly deliverable, and visually inspected states; make the workflow safely navigable without auto-approving uncurated images.

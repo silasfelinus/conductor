@@ -223,14 +223,11 @@ tasks:
   - id: t-007
     milestone: m3
     title: "Write and implement all six distinctive tactical story missions"
-    status: review
-    updated: '2026-11-20T04:08:40Z'
+    status: ready
+    updated: '2026-11-20T04:42:40Z'
     depends_on: [t-003, t-005, t-006]
     passes: 0
     stakes: reversible
-    owner: worker
-    claimed_by: 2026-11-20T040500Z-every-villain-tactics-t-007-prom-finale-k6p9
-    claimed_at: '2026-11-20T04:05:00Z'
     note: |-
       First Bell: basic combat; Science Wing Lockdown: doors and destructible cover; Crosswalk Crisis: civilian rescue/split objectives; Rooftop Broadcast: elevation/overwatch/betrayal; Under-Comet Breach: hazards/timer/multi-squad; Prom Night Everybody's Villain: three-phase finale. Each needs original opening, branching mid-fight, closing scenes, story callbacks and losses.
 
@@ -261,6 +258,8 @@ tasks:
       2026-11-19 PT: Under-Comet Breach, Crossfire chapter five, merged into silasfelinus/kind_robots main via PR #5381 (d7cafdd) after all seven latest-head workflow suites passed. Distinct timed seal-keeper battle, split entry, hazards, waves, nine authored branching scenes and seeded QA. Return unfinished six-mission umbrella t-007 to ready: Prom Night finale and durable linked chapter progression still need implementation. This is not full campaign or human-playtest readiness.
 
       2026-11-19 PT: Staged playable Prom Night: Everybody's Villain chapter-six finale on Kind Robots worker branch worker/every-villain-tactics-t-007-prom-night-finale-20261120T040500Z-k6p9. Distinct 9x6 ballroom, three phases of rival/borrower/mascot pressure, round-three and round-five waves, collapsing dance floor, hazard/cover rules, eleven hero/villain-aware scenes and consequences. Reuses finished ArtImage 265025. Fixed survive-round victory shortcut so players cannot win by clearing early rivals. New seeded gameplay assertions cover phases, choice effects, and earned round-six victory. Pending PR verification. Umbrella remains unfinished until the six missions form a persistent campaign with real postbattle advancement, callbacks and acceptance QA.
+
+      2026-11-19 PT CI recovery: Crossfire's authored sixth Prom Night finale merged in kind_robots PR #5386 as c4e9282 after all seven latest-head workflows completed green. Corrected the unrelated Slime City PvP reconnect regression to schedule two simultaneous host-tab races by host action, preserving the strict one-winner assertion and full Slime City contract coverage. Earlier Prom patrol rescue PR #5385 had already merged as fee5f93; obsolete failing PR #5370 is closed. All six Crossfire battle stages are independently selectable and playable, but the six-chapter persistent progression, carryover and full end-to-end acceptance testing are still incomplete. Return umbrella t-007 to ready for campaign linking; do not close canonical issue #4407 or mark Playtest.
   - id: t-008
     milestone: m3
     title: "Author 48 hero and villain playable arcs with distinct supporting cast"

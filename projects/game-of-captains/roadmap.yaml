@@ -85,12 +85,15 @@ tasks:
       Full history: projects/game-of-captains/HISTORY.md#t-001
   - id: t-041
     title: 'Main-game standard: audit and close the gaps for Space Couch'
-    status: ready
+    status: review
+    owner: worker
+    claimed_by: 2026-11-20T030701Z-game-of-captains-t-041-v6n2
+    claimed_at: '2026-11-20T03:07:01Z'
     milestone: m4
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-20T01:35:18Z'
+    updated: '2026-11-20T03:07:01Z'
     note: |-
       Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -123,6 +126,8 @@ tasks:
       2026-11-19 PT agent-owned main-game standard slice: implemented a reversible, versioned JSON backup for Space Couch current v1 voyage and finished-run history, accessible in Captain's Log. Explicit user-controlled import preview and confirm before replacing an active run; duplicate-safe completed-run merge; corrupted, oversized or wrong-game files rejected. Existing voyage save key, game slug and account-owned guide/achievements remain untouched. CI/PR and browser evidence pending. This does not assert authenticated cloud saves, original art approval, mobile QA or playtest DONE.
 
       2026-11-19 PT: Kind Robots PR #5378 merged into main at a4de97d2e954c64926781b5c52653eb572b42734; all nine exact-head workflow groups completed SUCCESS, including TypeScript, Playbook Kit, formatting, seeded gameplay, the full adversarial Space Couch matrix and four contract shards. Added a user-controlled versioned JSON backup of active v1 voyage and completed-run history, staged import validation, explicit replace confirmation, duplicate-safe merge and rollback on failed storage writes. Existing save keys and account-owned achievement and alien-guide data preserved. Remaining t-041 scope includes authenticated cloud-save verification, real rendered art and viewport checks, not human subjective approval. Return to READY (partial), never DONE for this slice.
+
+      Scoped achievement threshold bug fix: collector badges now award only when a threshold is crossed, with regression tests. This is partial t-041, not completion.
 
   - id: t-040
     title: 'Space Couch achievement upgrade: 12 or more live achievements'
@@ -759,8 +764,7 @@ tasks:
   - id: t-033
     milestone: m3
     title: "Curate, re-render and ship the 100 redshirt portraits and secret-power plates"
-    status: review
-    owner: worker
+    status: ready
     passes: 0
     stakes: reversible
     lane: art
@@ -771,10 +775,9 @@ tasks:
       2026-11-11 PT: merged kind_robots#5028 as ef67f9da2826c334392b19aa21816ae12d217d04 after all 14 exact-head checks passed: 117 round-2 keepers shipped (77/100 portraits, 99/100 plates) and redshirt portraits now show on the daily console personnel cards. REDSHIRTS- ROUND-3.yaml (24 cells, auto_submit) is on main and awaits rendering. Back to ready: next session curates ROUND-3 on contact sheets (reject gold arrowhead chest badges, ordinary animals, human faces, trademarks), exports keepers with export_round_art.py --only, and closes when rs-001..rs-100 all ship both images.
 
       2026-11-19 PT: scoped redshirt art delivery integration on worker/game-of-captains-t-033-curated-redshirt-slots-j8q4. The game's daily personnel deck now reads curator-selected ArtSlot images from a dedicated guest-safe endpoint, retaining the existing static portraits and glyph fallback on missing or broken URLs. An exact selected candidate MUST have verdict liked and its ArtImage must be public, active and non-mature. DONE ArtJobs are never autoaccepted; 24 uncurated Krea2 round-three cells and missing source WebPs remain REVIEW HOLD. Pure parser and source-level safety regression added to the seeded test suite. Await exact-head CI, manual rendered image review, and authenticated delivery checks; this is partial t-033, not DONE or human approval.
-    claimed_by: 20261120T040814Z-space-couch-t033-slots-j8q4
-    claimed_at: '2026-11-20T04:08:14Z'
-    updated: '2026-11-20T04:12:24Z'
-    implementation_pr: 'silasfelinus/kind_robots#5028'
+
+      2026-11-19 PT: Kind Robots PR #5387 merged to main as a45ae0501aa77bca0358447429d1352f36136afb after all 14 exact-head GitHub Actions workflows completed SUCCESS, including TypeScript, seeded gameplay, full Space Couch adversarial voyages, image privacy regressions, PR-only container validation, and all four Contract Tests shards. Introduced publicly readable liked-plus-selected ArtSlot runtime art for redshirts with shipped-file and glyph fallback, plus 24 immutable DONE round-three ArtJob/ArtImage references and an explicit curator-only, idempotent registration action in the Forge. No render auto-liked, auto-selected or auto-published. The existing 77/100 shipped portraits and 99/100 plates remain; 23 new portraits and one plate are still unreviewed candidate renders. Actual source-image pixel acceptance, authenticated media URLs, and final shipment are unverified. Return t-033 to READY (partial), not DONE; no human approval implied. Replayed after unrelated emperor-of-dust roadmap duplicate-key repair.
+    updated: '2026-11-20T04:43:12Z'
   - id: t-034
     milestone: m4
     title: "Space Couch editorial readability pass: rotating transit prose, 30 success returns, sectioned final log"
