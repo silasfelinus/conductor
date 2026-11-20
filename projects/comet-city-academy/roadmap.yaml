@@ -200,17 +200,19 @@ tasks:
       Kaizen from t-038 review (PR #7686 did not move the measured runtime). sweep_art_ledgers.find_ledgers() now runs a loose, case-insensitive OPT_IN_HINT regex (quoted key, true/yes/on, comments count) before yaml.safe_load, so ~half of the 401 art YAML files (~13 MB) are never parsed. check_auto_art_receipts.py: ~85s to ~21s locally without libyaml. A one-time full-parse comparison found the same 240-ish opted-in ledgers with and without the gate; a unit test pins the skip and the YAML 1.1 "yes" case.
   - id: t-040
     title: "Load art ledgers with yaml.CSafeLoader when libyaml is available, keeping the pure-Python fallback and the parse-once tests"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 2026-11-20T191420Z-comet-city-academy-t-040-p8f4
     claimed_at: '2026-11-20T19:14:20Z'
-    updated: '2026-11-20T19:14:20Z'
+    updated: '2026-11-20T19:16:40Z'
     milestone: m3
     stakes: reversible
     passes: 0
     depends_on: [t-039]
     note: |-
       Kaizen from t-039. GitHub runners usually ship libyaml, sandboxes do not. Route find_ledgers and the receipt checker through one loader helper so tests can still count parses.
+
+      Implemented accelerated safe YAML ledger loading with fallback, shared receipt audit loader, and regression tests; branch worker/comet-city-academy-t-040-p8f4.
   - id: t-012
     milestone: m2
     title: "Promote the seven-day demo into Capes & Tassels name and genuine day/night map slice"
