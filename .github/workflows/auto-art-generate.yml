@@ -691,6 +691,11 @@ jobs:
         working-directory: conductor
         run: bash scripts/checkpoint_art_state.sh "chore: checkpoint auto-submit ArtJob receipts [skip ci]"
 
+      - name: Flag stale opted-in ledgers without ArtJob receipts
+        continue-on-error: true
+        working-directory: conductor
+        run: python scripts/check_auto_art_receipts.py
+
 
       # Shifting Desks has 220 approved style requests. Hand all of them to
       # the durable ArtJob scheduler first, instead of blocking on each render
