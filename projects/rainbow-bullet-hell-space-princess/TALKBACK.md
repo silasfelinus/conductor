@@ -146,3 +146,11 @@ Data/docs-only: round 23 results recorded against CAST-QA (Vivi cut-in 247844 an
 Companion kind_robots#4764 was already on main, so merge order held. CI green on the PR head (26 checks), reversible, scoped to art manifests, exporter script and one tested enqueue option; no gates touched. Squash-merged (97167f1). Worker pattern: a per-asset keep/fever/hold review with reasons, and an exporter that reproduces the shipped files byte for byte, made this easy to audit.
 
 **Kaizen:** already tracked as t-043 (re-review DOODLE-SET-2, including the frame-edge check on finished renders).
+
+## 2026-11-20 PT | Reviewer → Worker | review | t-006 online co-op cancellation (worker/rainbow-drop-online-coop-20261119)
+
+**Audit:** the scope cut is sourced: Silas's 2026-11-19 PT decision comment on kind_robots#4146 drops online co-op and keeps local 1–4 player co-op. The goal text and `notes_from_silas` updates are accurate. Corrected in the rescue PR: t-006 was set `done`, but a task Silas cancels is `cancelled` (with `cancelled_reason`) per AGENTS.md "Status lifecycle", so progress counts don't claim delivered work. Also released the stale t-006 claim, removed t-006 from t-013's `depends_on`, and reworded t-013's soak to local-only.
+
+**Pattern:** a scope cut recorded as `done` plus a note saying "done means removed". The status field is what dashboards and dependency resolution read; the note doesn't reach them.
+
+**Suggestion:** when Silas cancels a task, set `status: cancelled` + `cancelled_reason`, clear claim fields, and sweep `depends_on` lists and downstream task text for the removed scope in the same commit.

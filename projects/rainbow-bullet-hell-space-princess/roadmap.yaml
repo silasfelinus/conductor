@@ -5,15 +5,18 @@ autonomous: true
 goal: >-
   Ship a lavish, complete original side-scrolling bullet-shmup campaign in the
   Kind Robots Arcade: pink and pastel-rainbow future-tech oceanic space opera,
-  1–4 simultaneous browser players with local and online co-op, fair readable
+  1–4 simultaneous local browser players (no online co-op), fair readable
   but demanding combat, at least eight authored multi-phase stages, distinct
   branching routes, eight end-stage bosses and a final boss, sea-life-inspired
   enemy fleet, varied upgradable weapons, shields, pickups, limited supers,
   foreground/midground/background parallax, animation, cinematic opening,
   interludes, multiple endings, and save/continue/leaderboard integration.
-  No runtime LLM. Accept only after measured end-to-end gameplay, 1/2/3/4
+  No online rooms, matchmaking, network sync, or multiplayer servers. No runtime LLM.
+  Accept only after measured end-to-end gameplay, local 1/2/3/4
   player soak, art and accessibility review, and Silas's hands-on verdict.
 notes_from_silas: |
+  2026-11-19 PT (latest direction): Online co-op is dropped as too server intensive and beyond scope. Local 1–4-player co-op remains mandatory. Do not build online rooms, matchmaking, network synchronization or host recovery; these are not playtest-readiness blockers. Task t-006 is canceled by this decision.
+
   2026-10-23 PT, later the same night (verbatim): "Ok, so I want you to do ditch the dog and cats theme…actually,
   just the dogs part. They can be cats and have a special princess kitty power or whatever, that's cool. But keep
   the villains to be the bioecology space animals, and we can develop plot as we go (but having a turn when the
@@ -205,21 +208,23 @@ tasks:
     implementation_pr: 'silasfelinus/kind_robots#3768'
   - id: t-006
     milestone: m2
-    title: "Add online 1–4 player co-op rooms with deterministic synchronization"
-    status: claimed
+    title: "CANCELED by Silas: online co-op out of scope"
+    status: cancelled
+    cancelled_reason: silas-scope-cut-2026-11-19
     depends_on: [t-005]
     owner: worker
     passes: 0
     stakes: reversible
     note: >-
+      CANCELED, NOT IMPLEMENTED. Silas explicitly dropped online co-op on 2026-11-19 PT as server-intensive and beyond scope. Status is cancelled: the requirement was removed, not delivered (source: kind_robots#4146 scope-decision comment, 2026-11-19 PT). Local 1–4-player co-op remains required under t-005. Earlier transport/lobby instructions below are superseded.
       Design low-cost authoritative room transport, lobby/invites, join
       synchronization, bounded prediction, reconnect and host-loss recovery.
       Respect existing app auth/rate-limit/privacy conventions. Verify
       divergence across 1–4 clients at simulated packet loss and latency.
       Avoid secret creation/billing without a human gate.
-    claimed_by: 2026-11-19T235900Z-rainbow-t006-k4m8
-    claimed_at: '2026-11-19T23:59:00Z'
-    updated: '2026-11-19T23:59:00Z'
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-11-20T04:20:00Z'
   - id: t-007
     milestone: m3
     title: "Author and integrate stages 1–2 with complete tutorial and bosses"
@@ -350,7 +355,7 @@ tasks:
     milestone: m5
     title: "Deterministic combat fairness, multiplayer soak and campaign QA"
     status: waiting
-    depends_on: [t-006, t-009, t-010, t-011, t-012]
+    depends_on: [t-009, t-010, t-011, t-012]
     owner: null
     passes: 0
     stakes: reversible
@@ -358,7 +363,7 @@ tasks:
       Full-route autoplay/property runs, zero unavoidable-hit scenarios
       at documented skill window, seeded repeatability, 60 Hz render
       target and acceptable mobile fallback, browser refresh/resume,
-      1/2/3/4 player soak under latency, keyboard/gamepad and phone/tablet/
+      local 1/2/3/4 player soak (no online co-op, t-006 cancelled), keyboard/gamepad and phone/tablet/
       desktop UI snapshots. Record measured median completion duration
       and test all endings; never assert parity to commercial classics
       based solely on an encounter list.
