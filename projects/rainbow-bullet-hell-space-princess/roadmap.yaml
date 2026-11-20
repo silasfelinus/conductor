@@ -299,7 +299,7 @@ tasks:
   - id: t-011
     milestone: m4
     title: "Build lavish stage parallax, readable effects and character animation"
-    status: claimed
+    status: review
     depends_on: [t-002, t-007]
     passes: 0
     stakes: reversible
@@ -315,7 +315,9 @@ tasks:
       Scoped ambient-motion fix: the sky's star twinkles and doodle pulses/rotation now honor calm-motion drift; full painted art and atlas scope remains outstanding.
 
       Recovered stale review after PR #5355 was merged as ce8717b1; painted scenery, sprite atlases, visual effects and verification remain. No matching open Rainbow PR or task branch found. Return to ready, preserving shipped work.
-    updated: '2026-11-20T09:51:00Z'
+
+      Added two distant painted parallax depths to every main Act using its integrated reviewed scenery strips, with subdued alpha, independent scroll speeds, calm-motion scaling and regression assertions. Implementation commit 0a4553aa7b8040b8b523521fc03971750edf7364; broader original painted scenery and sprite-artist scope remains.
+    updated: '2026-11-20T10:04:00Z'
     owner: worker
     claimed_by: 2026-11-20T095100Z-rainbow-t011-k7m4
     claimed_at: '2026-11-20T09:51:00Z'

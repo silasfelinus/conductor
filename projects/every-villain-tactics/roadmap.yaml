@@ -223,11 +223,11 @@ tasks:
   - id: t-007
     milestone: m3
     title: "Write and implement all six distinctive tactical story missions"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 20261120095357Z-every-villain-t007-a6bf
     claimed_at: '2026-11-20T09:53:57.832Z'
-    updated: '2026-11-20T09:53:57.832Z'
+    updated: '2026-11-20T09:59:37.590Z'
     depends_on: [t-003, t-005, t-006]
     passes: 0
     stakes: reversible
@@ -263,6 +263,8 @@ tasks:
       2026-11-19 PT: Staged playable Prom Night: Everybody's Villain chapter-six finale on Kind Robots worker branch worker/every-villain-tactics-t-007-prom-night-finale-20261120T040500Z-k6p9. Distinct 9x6 ballroom, three phases of rival/borrower/mascot pressure, round-three and round-five waves, collapsing dance floor, hazard/cover rules, eleven hero/villain-aware scenes and consequences. Reuses finished ArtImage 265025. Fixed survive-round victory shortcut so players cannot win by clearing early rivals. New seeded gameplay assertions cover phases, choice effects, and earned round-six victory. Pending PR verification. Umbrella remains unfinished until the six missions form a persistent campaign with real postbattle advancement, callbacks and acceptance QA.
 
       2026-11-19 PT CI recovery: Crossfire's authored sixth Prom Night finale merged in kind_robots PR #5386 as c4e9282 after all seven latest-head workflows completed green. Corrected the unrelated Slime City PvP reconnect regression to schedule two simultaneous host-tab races by host action, preserving the strict one-winner assertion and full Slime City contract coverage. Earlier Prom patrol rescue PR #5385 had already merged as fee5f93; obsolete failing PR #5370 is closed. All six Crossfire battle stages are independently selectable and playable, but the six-chapter persistent progression, carryover and full end-to-end acceptance testing are still incomplete. Return umbrella t-007 to ready for campaign linking; do not close canonical issue #4407 or mark Playtest.
+
+      Focused Crossfire campaign connection on worker/every-villain-tactics-t-007-crossfire-journal-a6bf: six authored chapters now have an ordered replayable progression journal, separate v1 Crossfire key with embedded validated v2 battle checkpoints, first-bell ending requirement, next-stage advancement and resume UI. Script-specific scenes, shared 48 identities and old slot keys are preserved. Full six-chapter adversarial acceptance, cast-specific branching, art and 48-route completion remain pending. Kind Robots PR/checks to follow.
   - id: t-008
     milestone: m3
     title: "Author 48 hero and villain playable arcs with distinct supporting cast"
