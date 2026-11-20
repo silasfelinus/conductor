@@ -74,6 +74,11 @@ def _patched(
             select_role.run_reviewer, "remote_worker_branches", return_value=list(remote_worker_branches)
         ),
         mock.patch.object(
+            select_role,
+            "split_pending_worker_reviews",
+            side_effect=lambda branches, _repo, _token: (branches, []),
+        ),
+        mock.patch.object(
             select_role, "find_reviewable_claude_prs", return_value=list(reviewable_claude_prs)
         ),
         mock.patch.object(
@@ -167,6 +172,65 @@ def test_active_pr_repair_preempts_semantic_review_approaching():
             result = select_role.select_role()
     assert result["role"] == "reviewer"
     assert result["semantic_intent_review_upcoming"] is True
+
+
+def test_pending_worker_pr_allows_independent_content_task():
+    """The selector must not spend a whole session watching queued CI."""
+    pending = [{"branch": "worker/game-1", "pr_number": 42, "ci_state": "pending"}]
+    with _apply(_patched(
+        remote_worker_branches=[{"branch": "worker/game-1"}],
+        queue_summary=SOME_READY_TASK,
+    )):
+        with mock.patch.object(
+            select_role, "split_pending_worker_reviews", return_value=([], pending)
+        ):
+            result = select_role.select_role(github_token="fake-token")
+
+    assert result["role"] == "worker"
+    assert result["candidate_worker_branch_count"] == 0
+    assert result["pending_worker_pr_count"] == 1
+    assert result["pending_worker_prs"][0]["pr_number"] == 42
+
+
+def test_pending_worker_review_filter_preserves_ready_or_orphan_branches():
+    refs = [
+        {"branch": "worker/wait"},
+        {"branch": "worker/green"},
+        {"branch": "worker/orphan"},
+    ]
+    prs = [
+        {"number": 41, "head": {"ref": "worker/wait", "sha": "a1"}},
+        {"number": 42, "head": {"ref": "worker/green", "sha": "b2"}},
+    ]
+    with mock.patch.object(select_role, "list_open_prs", return_value=prs):
+        with mock.patch.object(
+            select_role, "commit_combined_state",
+            side_effect=lambda _repo, sha, _token: (
+                "pending" if sha == "a1" else "success"
+            ),
+        ):
+            actionable, waiting = select_role.split_pending_worker_reviews(
+                refs, "silasfelinus/conductor", "fake-token"
+            )
+    assert [b["branch"] for b in actionable] == [
+        "worker/green", "worker/orphan"
+    ]
+    assert waiting[0]["pr_number"] == 41
+    assert waiting[0]["ci_state"] == "pending"
+
+
+def test_worker_review_filter_fails_safe_on_unknown_ci():
+    refs = [{"branch": "worker/unknown"}]
+    prs = [{"number": 51, "head": {"ref": "worker/unknown", "sha": "a1"}}]
+    with mock.patch.object(select_role, "list_open_prs", return_value=prs):
+        with mock.patch.object(
+            select_role, "commit_combined_state", return_value=None
+        ):
+            actionable, waiting = select_role.split_pending_worker_reviews(
+                refs, "silasfelinus/conductor", "fake-token"
+            )
+    assert actionable == refs
+    assert waiting == []
 
 
 def test_reviewer_outranks_everything():
