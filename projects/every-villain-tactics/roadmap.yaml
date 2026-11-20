@@ -514,11 +514,8 @@ tasks:
   - id: t-021
     milestone: m3
     title: "Ship 48 power-specific playable origin opening battles"
-    status: review
-    owner: worker
-    claimed_by: 2026-11-20T064100Z-evt-t021-skyline-2af1
-    claimed_at: '2026-11-20T06:41:00Z'
-    updated: '2026-11-20T07:00:00Z'
+    status: ready
+    updated: '2026-11-20T09:21:00Z'
     depends_on: [t-005, t-017]
     passes: 0
     stakes: reversible
@@ -530,6 +527,8 @@ tasks:
       2026-11-19 PT recovery: Shared Prom Story/Tactics launcher and 48-identity handoff merged in kind_robots PR #5362 (a415282). First power-specific playable Backdraft diner origin merged in PR #5371 on 2026-11-19 PT after runtime/story-flag and regression-test fixes. Diner-specific painted art remains queued under Conductor PR #7637 and is not delivered. Return t-021 to ready for the remaining 47 unique playable origin battles, art integration and QA. This is partial completion, not 48/48.
 
       Focused Skyline (accident-air) origin increment: Ferris Wheel Without Air is a selectable power-specific two-civilian tactical rescue with a unique 9x6 arena, collapsing catwalk, Updraft Catch-only air corridor, hero/villain cinematic variation, branching consequence choice, versioned save guard and seeded regression tests. This is the second implemented power opener, not completion of 48/48; art reuses an existing harborline painting pending a purpose-made Ferris Wheel scene. Kind Robots PR pending CI.
+
+      Skyline Ferris Wheel Without Air origin battle merged in silasfelinus/kind_robots#5403 (d2eb3a65) on 2026-11-20 PT after all eight latest-head workflows completed green. Unique playable 9x6 two-passenger rescue, canonical Updraft Catch air-bridge objective, authored branching scenes, versioned save integrity and adversarial regression. Two completed origins out of 48; remaining 46, production Ferris painting and full identity acceptance are still outstanding. Release claim to ready.
   - id: t-022
     milestone: m3
     title: "Build 48 villain-owned lairs with changing tactical environments"
