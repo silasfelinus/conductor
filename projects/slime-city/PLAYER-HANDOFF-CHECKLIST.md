@@ -1,47 +1,57 @@
 # Slime City: player handoff checklist (t-012)
 
-Started 2026-11-19 PT. This is an agent-owned QA ledger. It is **not** a playtest verdict
-(t-009, t-014) or publish authorization (t-015). Mark a row done only when its evidence is
-merged on `kind_robots` main and you have rechecked it. A queued prompt or green CI on an
-unmerged branch does not count.
+Started 2026-11-19 PT, closed 2026-11-19 PT. This is an agent-owned QA ledger. It is **not** a
+playtest verdict (t-009, t-014) or publish authorization (t-015). A row is done only when its
+evidence is merged on `kind_robots` main and was rechecked. The tester-facing handoff is
+[PLAYTEST-HANDOFF-2026-11-19.md](PLAYTEST-HANDOFF-2026-11-19.md).
 
-Legend: ✅ automated evidence on main · 🟡 partial · ⬜ open
+Legend: ✅ evidence on main or measured on production · 🧍 needs a person
 
 ## Story and campaign routes
 
-| Check | State | Evidence / next step |
+| Check | State | Evidence |
 | --- | --- | --- |
-| Every crew × every one of the 32 choice paths finishes through the real Blackout engine, with multiple seeds and retry after loss | ✅ | `utils/scripts/verifySlimeCityFullRoutes.test.ts` (kind_robots#5323, merged af20fd5): 576 routes, ~4.1k engine fights |
+| Every crew × every one of the 32 choice paths finishes through the real engine, with multiple seeds and retry after loss | ✅ | `verifySlimeCityFullRoutes.test.ts`: 576 routes, 4,088 engine fights |
 | Defeats and draws never advance the story or record decisions; stale, wrong-rival and post-finale results are ignored | ✅ | Same test |
 | Both endings (triumph or compromise) are reachable for every crew | ✅ | Same test |
 | Earned favour → story echo → crew legacy transitions | ✅ | Same test, plus `verifySlimeCityCampaignPlaytest.test.ts` |
 | Per-crew journey scene branches (left/right) | ✅ | `verifySlimeCity*Journey.test.ts` (six crews and alliance) |
-| Story save and restore, guest and account | ✅ | `verifySlimeCityStorySave.test.ts`, `verifySlimeCityGuestStory.test.ts` |
+| Story save and restore, device and account | ✅ | `verifySlimeCityStorySave.test.ts`, `verifySlimeCityGuestStory.test.ts` |
+| A device journey can move into a fresh account story, without the Tower legacy | ✅ | `verifySlimeCityGuestImport.test.ts` (kind_robots#5379), plus a real-browser run on a local build |
+| A Journey chapter in a real browser on production: three decisions, approach, fight, defeat, TRY AGAIN | ✅ | 2026-11-19 PT, signed-in test user on production |
 
 ## Cards and balance
 
-| Check | State | Evidence / next step |
+| Check | State | Evidence |
 | --- | --- | --- |
-| CLASH 300 L1/L2/L3 evolution coverage | 🟡 | t-041 is still `ready`. `verifySlimeCityEvolutions.test.ts` covers the crafted sets. Close it out when t-041 lands |
-| Constructed-deck balance across crews | 🟡 | Re-run 2026-11-18 PT on kind_robots main `be2745d`. `balance:slime-city-clash` (150 seeds × 9000 offset, 4,500 CPU games, both seats): first seat 51.2%, draws 0.0%, round-limit 0.1%, avg 9.3 rounds; crews catgirls 41.7 · bloodfairies 51.6 · ironjaw 50.7 · riot 50.5 · undertow 51.9 · exchange 53.6 (11.9-pt spread, all inside the 40–60% target, catgirls at the low edge). `verifySlimeCityClashConstructed.test.ts` PASS: 3,120 bouts over 30 legal 20-card decks, first seat 52.4%, crews 43.6–54.4%; 0 dead and 18 near-dead two-slot cards, held-out +5000 has 2 dead (`s2-bloodfairies-glitterglass-flood`, `s3-exchange-compound-notice`). Open: the `specials` archetype wins 26% overall (riot/specials 17.3%, ironjaw/specials 20.7%, under the 30% worst-case floor in PROGRESSION-AND-SETS.md) while `fighters` wins 69%. Re-run after t-041 lands before calling this ✅2026-11-19 PT reconciliation (kind_robots#5344): the >30% target is per crew pairing, now measured directly. Worst head-to-head is catgirls>riot 35.3% (150 seeds, 300 games), exchange>undertow 35.0% on the 40-seed CI sweep (asserted in `verifySlimeCityClash`), 36.3% held-out +5000. The 26% `specials` figure is a deck-builder probe (8 fighters + 12 specials) dragged down by near-dead two-slot specials (t-041), not a pairing; ratcheted at a 25% floor in `verifySlimeCityClashConstructed` to rise as t-041 lands. |
+| CLASH 300 L1/L2/L3 evolution coverage | ✅ | t-041 done. 230 crafted journeys through the engine at every level; 0 duplicate journeys; every one of the 300 cards played by the CPU in seeded QA (kind_robots#5379). `CARD-REDESIGN-300.md` records the evidence and what it leaves open |
+| Constructed-deck balance across crews | ✅ | `verifySlimeCityClashConstructed.test.ts` on main `5b715a7`: 3,120 bouts over 30 legal decks, crews 43.4–55.1% (Riot lowest), first seat 52.4%, 0 dead cards on suite and held-out seeds. The worst crew pairing stays above the 30% target (asserted in `verifySlimeCityClash.test.ts`). The spell-heavy probe deck wins 26.7%, above its 25% ratchet floor |
 | Resource exploits (double claims, pack duplication, wallet races) | ✅ | `verifySlimeCityStore.test.ts`, `verifySlimeCityAccountBoundary.test.ts`, `verifySlimeCityProgression.test.ts` |
+
+Reported, not gated: the CPU picks six two-slot cards in under 3% of bouts, and plays 237 of the
+300 cards at level three. Both are in the tester handoff.
 
 ## Multiplayer and accounts
 
-| Check | State | Evidence / next step |
+| Check | State | Evidence |
 | --- | --- | --- |
-| CPU and PvP reconnect, forfeit and expiry | 🟡 | `verifySlimeCityPvp.test.ts`, `verifySlimeCityVsResume.test.ts`; still needs a two-browser reconnect check |
-| Account security and hidden-information redaction | ✅ | t-011 done; `verifySlimeCityPvp.test.ts` |
+| Reconnect, stale tab, forfeit and expiry | ✅ | `verifySlimeCityPvp.test.ts`, `verifySlimeCityPvpReconnect.test.ts` (in-memory database), and on production 2026-11-19 PT: a real duel between two test accounts, 18 of 18 checks, including a refused stale move, reload onto the same board and idempotent forfeit. Idle expiry is covered by the unit test only |
+| Account security and hidden-information redaction | ✅ | t-011 done; the production duel confirmed a signed-out visitor gets 401, a third account cannot join or read the board, a client-supplied seat is rejected, and each seat sees only a count of the rival's hand |
 
 ## Experience, art and layout
 
-| Check | State | Evidence / next step |
+| Check | State | Evidence |
 | --- | --- | --- |
-| Gamepad, keyboard and touch play a full match | 🟡 | 2026-11-19 PT: `npm run audit:slime-city-clash-input` (kind_robots#5335) plays whole CPU Clash matches keyboard-only (Tab/Enter) and touch-only (Pixel 7 taps). `/play/slime-city` is account-gated, and anonymous runs are redirected to `/login` mid-match, so it needs `--storage-state` from a signed-in QA browser and fails with `SIGNED_OUT` otherwise. Still open: one signed-in run of both modes. Gamepad is not supported: Clash has no Gamepad API binding, so it needs either a binding (e.g. reuse `utils/arcade/input.ts`) or a decision to drop gamepad from scope. Also: `audit:slime-city-clash-layout` only passes anonymously by racing the same redirect |
-| Rendered 390 / 768 / 1440 / XL layouts | 🟡 | 2026-11-19 PT on production 9f86056: signed-in splash captured at 390/768/1440/2560 with no horizontal overflow or broken images; `audit:slime-city-clash-layout` 390/768/1440 + TAP passed. XL title overran into the crew poster; fix in kind_robots#5332. Re-capture after it deploys. Notes: anonymous visitors land on sign-in; a new account sees the 4-step welcome tour on top of the game first. |
-| Real delivered ArtImages in every required slot (fallbacks otherwise) | 🟡 | Manifest reconciled 2026-11-19 PT in `verifySlimeCityArtCoverage.test.ts` (kind_robots#5327, in `test:slime-city-lab`): 300/300 cards have base art; all 1,353 ArtImage ids are unique (none borrowed); every evolution key names a real card stage; every card at L1–L3 and on both branches resolves to its own painting. 66 cards still have no L2/L3 painting and show an earlier stage (bloodfairies 14, undertow 12, ironjaw/riot/exchange/mercenary 10 each, catgirls 0). A per-crew ratchet holds that count, so lower the baselines as renders land. Still open: an authenticated byte-delivery spot check, and curating the 66 pending evolution renders (all 132 L2/L3 prompts queued 2026-11-19 PT in `art/EVOLUTIONS-REMAINING-*-KREA.yaml`; wire keepers and lower the ratchet) |
+| Keyboard and touch play a full match | ✅ | `npm run audit:slime-city-clash-input`, signed in on production: keyboard-only (Tab/Enter) and touch-only (Pixel 7) matches both finish, on builds `bf47039`, `16fd717`, `5b715a7` and `db5d615` |
+| Gamepad | ✅ 🧍 | Bound in kind_robots#5336 and unit-tested (`verifySlimeCityClashGamepad.test.ts`). No physical controller has been tried |
+| Clash layout in a real browser | ✅ | `npm run audit:slime-city-clash-layout`, signed in on production build `db5d615`: 21 of 21 cases. In-play controls at 390/768/1440 with and without TAP; a held card at each width; the rail at 1440×780, 1366×768 and 1280×720; result controls in both result states. Eight of these failed on `bf47039` and were fixed in kind_robots#5376. The UNDO label squeezed beside TAP was fixed in kind_robots#5380; the audit now fails any control narrower than its label, and passes on `db5d615` |
+| Rendered 390 / 768 / 1440 / XL layouts | ✅ | Production build `16fd717`: title screen at 390/768/1440/2560 with the title inside its column (2560: 1286 of 1300px, the #5332 fix), no overflow or broken images. All five tabs at 390 and 1440: no console errors, broken images or page scroll |
+| Real delivered ArtImages in every slot | ✅ | `npm run audit:slime-city-art-delivery` against production as a signed-in non-admin: 1,485 of 1,485 manifest slots return an image. `verifySlimeCityArtCoverage.test.ts`: 300/300 base cards, 300/300 with L2 and L3 paintings, every ArtImage id unique |
+| Tutorial describes the game that ships | ✅ | kind_robots#5379: the Play tutorial no longer teaches BLACKOUT or offers MEATBALL |
 
 ## Human-owned, outside this checklist
 
 - t-009 / t-014: subjective fun verdict and acceptance (Silas).
 - t-015: public Play launch authorization (Silas).
+- A physical gamepad.
+- Optional: a non-admin audit account as the `KR_AUDIT_USERNAME` / `KR_AUDIT_PASSWORD` secrets, so the daily layout audit covers Slime City.

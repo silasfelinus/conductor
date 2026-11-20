@@ -591,15 +591,20 @@ tasks:
   - id: t-027
     milestone: m6
     title: "Gen-2 memory: save slots, route map screen, medals and the persistent Palace Hangar"
-    status: ready
+    status: review
+    owner: worker
+    claimed_by: 20261120T025100Z-rainbow-t027-j7x5
+    claimed_at: '2026-11-20T02:53:04Z'
     depends_on: [t-026]
     passes: 0
     stakes: reversible
-    updated: '2026-11-20T00:10:00Z'
+    updated: '2026-11-20T02:57:38Z'
     note: |-
       Reuse the generalized overworld/save-slot module (save-the-plumber/t-011, kr-arcade/t-160). Three slots; route map with cleared nodes, medals and discovered branches; a hangar where medals buy permanent, bounded upgrades (never pay-to-win against the fairness rules); pilot comms that recognise progress (first visit vs return, a branch found, a friend rescued last run). Migrate the current save.
 
       Stale claim recovery: no matching open Rainbow PR or implementation branch; save slots, route map and Palace Hangar must be verified from current main before further implementation.
+
+      Three independent versioned checkpoint slots are implemented on a scoped Kind Robots branch with a Seas slot picker and test; slot one preserves the legacy save key. This is a partial t-027 PR, not completion of the route map or Palace Hangar.
   - id: t-028
     milestone: m6
     title: "Gen-2 alternate stages: four branch stages with their own guardians"
