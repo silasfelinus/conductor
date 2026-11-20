@@ -1,3 +1,6 @@
+# 2026-11-20 PT (Silas): playtest-ready is the COMPLETE game: 12 worlds, 12 dungeons, full
+# opening, endings, art for every choice, scripted interactions. The same-day premature
+# playtest handoff (conductor#7650) was reverted. Gap list: ASSESSMENT-2026-11-20.md.
 # 2026-11-13 PT alpha priority override (Silas): ZERO public players. Do not spend
 # development time on pre-v2/16-world save migration or compatibility tests.
 # Admin/test saves may start fresh. Keep current-version save/resume reliable.
@@ -31,6 +34,14 @@ goal: >-
   Finish only after adversarial seeded playtests, meaningful endings,
   balance/accessibility QA and Silas's subjective gameplay verdict.
 notes_from_silas: |
+  2026-11-20 PT (Silas, in session, correcting an agent that cut scope and marked the game
+  playtest after e10): "That's not what 'everything until ready for human play test' means.
+  You should have all 12 worlds 12 dungeons, full opening, endings, art for all choices,
+  scripted interactions....do an assessment and make sure you are really done." Then:
+  "that's absolutely not what was intended. Keep building." Playtest-ready = all twelve
+  overworlds with authored sites, twelve dungeons, a full illustrated opening, the ending
+  set, displayed art for every scene and choice, and scripted interactions. "Nothing beyond"
+  means no work past that bar, not cutting the bar. Gap list: ASSESSMENT-2026-11-20.md.
   2026-11-10 PT (Silas's explicit correction): twelve overworlds e01-e12 are the
   complete production target. Earlier references to sixteen realms, 32 photographs
   across sixteen worlds, and e13-e16 as new playable locations are superseded.
@@ -169,12 +180,12 @@ tasks:
     claimed_at: '2026-10-24T20:57:00Z'
   - id: t-068
     title: 'Main-game standard: audit and close the gaps for Memory Dungeon'
-    status: claimed
+    status: ready
     milestone: m4
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-12T14:46:05Z'
+    updated: '2026-11-20T06:00:00Z'
     note: |-
       Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -200,9 +211,14 @@ tasks:
       Corrected the launcher that publicly displayed obsolete World 1 of 16 text; added a source regression to the existing memory-world contract suite. This is one small t-068 title-screen quality increment; settings, scrapbook, art export and visual QA remain.
 
       2026-11-12 PT: Launcher canon subtitle and regression merged in kind_robots PR #5081 as 985fb13ac3339f0bb968b38f66860a249b017caf. All six exact-head GitHub Actions workflows passed. Broader main-game-standard t-068 remains incomplete: settings, scrapbook, ending art and rendered-device acceptance. Return ready for next gap closure.
+
+      2026-11-20 PT: stale claim/review released to ready (Silas, in session: "you are likely
+      the only agent working on this project currently, so any claimed roadmap items are
+      likely stale"). Playtest-ready means the complete twelve-world game; see
+      ASSESSMENT-2026-11-20.md for this task's gap.
     owner: worker
-    claimed_by: 2026-11-12T144605Z-memory-dungeon-t-068-f3c8
-    claimed_at: '2026-11-12T14:46:05Z'
+    claimed_by: null
+    claimed_at: null
   - id: t-069
     title: 'Memory Dungeon achievement upgrade: 12 or more live achievements'
     status: done
@@ -234,11 +250,11 @@ tasks:
   - id: t-023
     milestone: m2
     title: "Deliver photograph Chronicle, Earth timeline and ending spoiler gates"
-    status: claimed
+    status: ready
     depends_on: t-018
     passes: 0
     stakes: reversible
-    updated: '2026-11-15T00:46:32Z'
+    updated: '2026-11-20T06:00:00Z'
     note: |-
       2026-11-11 PT remaining: Audit 24 playable-world beats, retired archival beats and spoiler gates; do not delete older photos. Evidence: RESET-TASK-EVIDENCE-AUDIT-2026-11-10.md (t-023 row).
       Author 32 fixed collectible photo beats, two per world, with out-of-order journal reconciliation, once-only claims, proper Earth chronology, and meaningful hero reactions. World 1 photos occur at 2,5 (dismissal) and 8,6 (friend's humiliation). Morrow later builds authentic work, friendship and romance; do not unmistakably reveal their children before World 16.
@@ -261,13 +277,18 @@ tasks:
       2026-11-06 PT: PR kind_robots#4861 merged (23fbe3ed) after all eight exact-head checks passed on a63e8257. e08 Hoshimori 5,7 and 6,7 authored, earth-16 now recoverable with replay and forged-choice tests. Remaining Chronicle pickup routes, delivered art and ending validation. No ArtJobs or deployment.
 
       Added two authored e08 crossings at 5,5 and 6,5 with distinct choices and replay-safe flags; expanded site-count validator and regression assertions to 48. Kind Robots PR pending exact-head CI. Remaining Hoshimori sites, Chronicle photos and art not complete.
+
+      2026-11-20 PT: stale claim/review released to ready (Silas, in session: "you are likely
+      the only agent working on this project currently, so any claimed roadmap items are
+      likely stale"). Playtest-ready means the complete twelve-world game; see
+      ASSESSMENT-2026-11-20.md for this task's gap.
     owner: worker
-    claimed_by: 2026-11-15T004632Z-memory-dungeon-t-023-a91c7
-    claimed_at: '2026-11-15T00:46:32Z'
+    claimed_by: null
+    claimed_at: null
   - id: t-030
     milestone: m3
     title: "Build scene-art production manifest and twelve-world coverage checks"
-    status: claimed
+    status: ready
     depends_on: t-018
     passes: 0
     stakes: reversible
@@ -294,15 +315,20 @@ tasks:
       Added twelve-playable-world production-art acceptance ledger distinguishing authored, submitted, rendered, delivered and viewport-accepted art; historical 752 ArtJob receipts remain separate from 384 gallery attachments. Conductor PR pending. Next: reconcile live ArtJob/ArtImage IDs and attachment URLs for e01/e02, resubmit only missing work.
 
       2026-11-13 PT: Conductor PR #7341 merged at ca2cf2b9af4c4c32ede00141de4c7a1115028ab4 after Worker PR CI, Security Audit, Process task events, and rerun handoff checks passed on c2321e2. The twelve-world art acceptance ledger is documentation only. Return ready for e01/e02 durable ArtJob-to-ArtImage and live attachment reconciliation; no new art submitted or visual acceptance established.
-    updated: '2026-11-13T20:50:05Z'
+
+      2026-11-20 PT: stale claim/review released to ready (Silas, in session: "you are likely
+      the only agent working on this project currently, so any claimed roadmap items are
+      likely stale"). Playtest-ready means the complete twelve-world game; see
+      ASSESSMENT-2026-11-20.md for this task's gap.
+    updated: '2026-11-20T06:00:00Z'
     owner: worker
-    claimed_by: 2026-11-13T205005Z-memory-dungeon-t-030-a81f
-    claimed_at: '2026-11-13T20:50:05Z'
+    claimed_by: null
+    claimed_at: null
   - id: t-001
     milestone: m1
     title: "Seeded expedition reducer, room schema and Classic adapter"
-    status: claimed
-    updated: '2026-11-15T02:43:53Z'
+    status: ready
+    updated: '2026-11-20T06:00:00Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -342,10 +368,15 @@ tasks:
       remaining scope.
 
       Added a pure seeded three-floor six-room-per-floor simulator with versioned saves, deterministic unique room identities, immutable idempotent outcomes and adversarial Node regression tests. Partial t-001 only; Classic adapter and real gameplay integration remain. Kind Robots PR pending CI.
+
+      2026-11-20 PT: stale claim/review released to ready (Silas, in session: "you are likely
+      the only agent working on this project currently, so any claimed roadmap items are
+      likely stale"). Playtest-ready means the complete twelve-world game; see
+      ASSESSMENT-2026-11-20.md for this task's gap.
     implementation_pr: 'silasfelinus/kind_robots#4801'
     owner: worker
-    claimed_by: 2026-11-15T024353Z-memory-dungeon-t-001-f6c2
-    claimed_at: '2026-11-15T02:43:53Z'
+    claimed_by: null
+    claimed_at: null
   - id: t-002
     milestone: m1
     title: "Optional scope feedback on story and complexity"
@@ -414,8 +445,8 @@ tasks:
   - id: t-007
     milestone: m2
     title: "Integrate RPG combat masks and telegraphed enemies into match board"
-    status: claimed
-    updated: '2026-11-16T04:51:41Z'
+    status: ready
+    updated: '2026-11-20T06:00:00Z'
     depends_on: t-006
     passes: 0
     stakes: reversible
@@ -434,9 +465,14 @@ tasks:
       for the next slice rather than done.
 
       Added 640 deterministic perfect-memory combat playthroughs across ten authored rooms, restoring checkpoints after every action. Kind Robots commit a05badda; exact-head CI pending. Remaining t-007 rescue objective, enemy board mutation and larger set-piece.
+
+      2026-11-20 PT: stale claim/review released to ready (Silas, in session: "you are likely
+      the only agent working on this project currently, so any claimed roadmap items are
+      likely stale"). Playtest-ready means the complete twelve-world game; see
+      ASSESSMENT-2026-11-20.md for this task's gap.
     owner: worker
-    claimed_by: 2026-11-16T045141Z-memory-dungeon-t-007-a91c
-    claimed_at: '2026-11-16T04:51:41Z'
+    claimed_by: null
+    claimed_at: null
   - id: t-008
     milestone: m2
     title: "Recruit companions and unlock skills, relic synergies and levels"
@@ -453,8 +489,8 @@ tasks:
   - id: t-009
     milestone: m3
     title: "Author floor story, recurring cast and consequential decisions"
-    status: claimed
-    updated: '2026-11-15T06:42:24Z'
+    status: ready
+    updated: '2026-11-20T06:00:00Z'
     passes: 0
     stakes: reversible
     note: >-
@@ -477,9 +513,14 @@ tasks:
       2026-11-04 PT cleanup pass: stale review with an expired claim; the recorded slice
       landed (or was superseded) and the note itself lists remaining scope, so back to ready
       for the next slice rather than done.
+
+      2026-11-20 PT: stale claim/review released to ready (Silas, in session: "you are likely
+      the only agent working on this project currently, so any claimed roadmap items are
+      likely stale"). Playtest-ready means the complete twelve-world game; see
+      ASSESSMENT-2026-11-20.md for this task's gap.
     owner: worker
-    claimed_by: 2026-11-15T064224Z-memory-dungeon-t-009-b72e
-    claimed_at: '2026-11-15T06:42:24Z'
+    claimed_by: null
+    claimed_at: null
   - id: t-010
     milestone: m3
     title: "Ship riddle and logic minigame framework plus authored puzzle pack"
@@ -525,7 +566,7 @@ tasks:
   - id: t-013
     milestone: m3
     title: "Deliver character, room, weapon and ending art pipeline"
-    status: claimed
+    status: ready
     passes: 0
     stakes: reversible
     note: |-
@@ -541,10 +582,15 @@ tasks:
       2026-11-04 PT cleanup pass: stale review with an expired claim; the recorded slice
       landed (or was superseded) and the note itself lists remaining scope, so back to ready
       for the next slice rather than done.
-    updated: '2026-11-16T05:45:24Z'
+
+      2026-11-20 PT: stale claim/review released to ready (Silas, in session: "you are likely
+      the only agent working on this project currently, so any claimed roadmap items are
+      likely stale"). Playtest-ready means the complete twelve-world game; see
+      ASSESSMENT-2026-11-20.md for this task's gap.
+    updated: '2026-11-20T06:00:00Z'
     owner: worker
-    claimed_by: 2026-11-16T054524Z-memory-dungeon-t-013-b7e2
-    claimed_at: '2026-11-16T05:45:24Z'
+    claimed_by: null
+    claimed_at: null
   - id: t-016
     milestone: m2
     title: "Build bullseye sweet spots and solver-verified minefield challenge floors"
@@ -632,8 +678,8 @@ tasks:
   - id: t-020
     milestone: m3
     title: "Finish playable prologue and current twelve-world start flow"
-    status: claimed
-    updated: '2026-11-13T21:45:08Z'
+    status: ready
+    updated: '2026-11-20T06:00:00Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -654,9 +700,14 @@ tasks:
       2026-11-04 PT cleanup pass: released an expired claim (no activity since the claim, no open PR found for it); back to ready.
 
       Authored a twelve-world legacy-save compatibility matrix with nine executable acceptance cases, explicit e13-e16 archival retention, Rowan/Pip identity distinctions, Char causal lead selection, and Classic/Chronicle preservation. Conductor PR pending; runtime migration, artwork and browser QA remain unfinished.
+
+      2026-11-20 PT: stale claim/review released to ready (Silas, in session: "you are likely
+      the only agent working on this project currently, so any claimed roadmap items are
+      likely stale"). Playtest-ready means the complete twelve-world game; see
+      ASSESSMENT-2026-11-20.md for this task's gap.
     owner: worker
-    claimed_by: 2026-11-13T214508Z-memory-dungeon-t-020-b7e9
-    claimed_at: '2026-11-13T21:45:08Z'
+    claimed_by: null
+    claimed_at: null
   - id: t-024
     milestone: m3
     title: "Playtest and polish Scylla, Char, Oren and recurring party arcs"
@@ -676,9 +727,9 @@ tasks:
   - id: t-025
     milestone: m3
     title: "Author and build the other three Act I overworlds and dungeons"
-    status: review
+    status: ready
     owner: worker
-    updated: '2026-11-16T06:55:00Z'
+    updated: '2026-11-20T06:00:00Z'
     depends_on: t-022
     passes: 0
     stakes: reversible
@@ -721,9 +772,14 @@ tasks:
       outcome state, reducer/save tests, rendered choices and art remain.
 
       Scoped e03/e04 witness-ledger integration fix: scene completion keys now include world ID, permitting reused scene slugs across overworlds without enabling repeat rewards within one world. Added cross-world save/restore and anti-farming regression assertions. Focused Kind Robots PR pending CI; broader t-025 scope remains unfinished.
+
+      2026-11-20 PT: stale claim/review released to ready (Silas, in session: "you are likely
+      the only agent working on this project currently, so any claimed roadmap items are
+      likely stale"). Playtest-ready means the complete twelve-world game; see
+      ASSESSMENT-2026-11-20.md for this task's gap.
     implementation_pr: 'silasfelinus/conductor#7459'
-    claimed_by: 2026-11-16T064701Z-memory-dungeon-t-025-8c4e91
-    claimed_at: '2026-11-16T06:47:01Z'
+    claimed_by: null
+    claimed_at: null
   - id: t-026
     milestone: m3
     title: "Author and build Act II: Stories We Inherit"
@@ -916,8 +972,8 @@ tasks:
   - id: t-037
     milestone: m2
     title: "Build bounded cross-realm consequence ledger"
-    status: review
-    updated: '2026-11-15T12:54:00Z'
+    status: ready
+    updated: '2026-11-20T06:00:00Z'
     depends_on: t-022
     passes: 0
     stakes: reversible
@@ -939,16 +995,21 @@ tasks:
       2026-11-15 PT: Merged focused six-worldframe serialized restoration regression PR #5205 (squash c1e56e93); six exact-head workflows green, including Contract Tests. Full bounded cross-realm ledger and adversarial acceptance remain open; return to ready for next scoped increment.
 
       Added six adversarial forged original/mirrored House ending combinations to the existing first-two-world consequence contract. Tests assert restored labels remain unset and physical aftermath cannot be manufactured. Focused Kind Robots PR pending exact-head CI; broader ledger remains unfinished.
+
+      2026-11-20 PT: stale claim/review released to ready (Silas, in session: "you are likely
+      the only agent working on this project currently, so any claimed roadmap items are
+      likely stale"). Playtest-ready means the complete twelve-world game; see
+      ASSESSMENT-2026-11-20.md for this task's gap.
     owner: worker
-    claimed_by: 2026-11-15T125200Z-memory-dungeon-t-037-7c4d91
-    claimed_at: '2026-11-15T12:52:00Z'
+    claimed_by: null
+    claimed_at: null
   - id: t-038
     title: "Memory Dungeon master bible: 8 original/twisted worlds, 4 collision finales, 12 total"
-    status: review
+    status: ready
     owner: worker
-    claimed_by: 2026-11-14T214720Z-memory-dungeon-t-038-a81c
-    claimed_at: '2026-11-14T21:47:20Z'
-    updated: '2026-11-14T21:47:20Z'
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-11-20T06:00:00Z'
     stakes: reversible
     passes: 0
     source_issue: "silasfelinus/kind_robots#4136"
@@ -959,6 +1020,11 @@ tasks:
       2026-11-07 PT: Reviewer merged conductor PR #7145 (8c5487a44): e12 Vesper writer packet (two Hoshimori scenes, six outcomes, nine-route replay/forgery tests). Initial red CI was a roadmap duplicate-key defect already fixed on main plus a PR-body template miss; fixed by branch update and body edit. Writer packet only; runtime integration, ArtJobs and device QA remain. Umbrella stays ready.
 
       Scoped current-canon reconciliation: Rowan e09 playable POV and Pip courier role, Vesper e07/e08 viewpoint, delivery-roadmap acceptance wording. PR follows; the larger master-bible and gameplay acceptance remain unfinished.
+
+      2026-11-20 PT: stale claim/review released to ready (Silas, in session: "you are likely
+      the only agent working on this project currently, so any claimed roadmap items are
+      likely stale"). Playtest-ready means the complete twelve-world game; see
+      ASSESSMENT-2026-11-20.md for this task's gap.
     implementation_pr: 'silasfelinus/conductor#7145'
   - id: t-039
     milestone: m2
@@ -980,11 +1046,11 @@ tasks:
     updated: '2026-11-08T17:48:00Z'
   - id: t-040
     title: "Memory Dungeon: deliver painted 6×6 House dungeon floorplans, not just the 8×8 overworld maps"
-    status: claimed
+    status: ready
     stakes: reversible
     passes: 0
     source_issue: "silasfelinus/kind_robots#4380"
-    updated: '2026-11-15T18:46:10Z'
+    updated: '2026-11-20T06:00:00Z'
     note: >-
       2026-11-11 PT remaining: Gameplay geometry is not painted art; require delivered 6×6 floorplan images and visual acceptance. Evidence: RESET-TASK-EVIDENCE-AUDIT-2026-11-10.md (t-040 row).
       FROM GITHUB ISSUE silasfelinus/kind_robots#4380 (https://github.com/silasfelinus/kind_robots/issues/4380), opened by @silasfelinus on 2026-10-28. Imported by scripts/sync_github_issues.py. Reference the issue in the implementing PR (`Closes silasfelinus/kind_robots#4380`) so it closes on merge; the bridge closes it otherwise once this task is done.
@@ -1017,9 +1083,14 @@ tasks:
       for the next slice rather than done.
 
       Added six regression checks for committed House atlas delivery receipts, image IDs, destinations and aggregate counts. Both Krea2 jobs 50365/50366 now have delivered checkpoint entries with ArtImages 257966/257967. Live independent HEAD and rendered six-by-six topology/device QA remain outstanding; do not close issue #4380.
+
+      2026-11-20 PT: stale claim/review released to ready (Silas, in session: "you are likely
+      the only agent working on this project currently, so any claimed roadmap items are
+      likely stale"). Playtest-ready means the complete twelve-world game; see
+      ASSESSMENT-2026-11-20.md for this task's gap.
     owner: worker
-    claimed_by: 2026-11-15T184610Z-memory-dungeon-t-040-c91e
-    claimed_at: '2026-11-15T18:46:10Z'
+    claimed_by: null
+    claimed_at: null
   - id: t-041
     milestone: m3
     title: "Hoshimori e07 warm folklore: playable 16-site proof, Pip youth thread and first oven rooms"
@@ -1188,11 +1259,11 @@ tasks:
       Full history: projects/memory-dungeon/HISTORY.md#t-048
   - id: t-049
     title: "Memory Dungeon character match deck erroneously reports zero images"
-    status: review
+    status: ready
     stakes: reversible
     passes: 0
     source_issue: "silasfelinus/kind_robots#4682"
-    updated: '2026-11-12T20:55:00Z'
+    updated: '2026-11-20T06:00:00Z'
     note: |-
       2026-11-11 PT remaining: Verify character with existing art displays actual matches in live UI, including no-art fallback and saved deck. Evidence: RESET-TASK-EVIDENCE-AUDIT-2026-11-10.md (t-049 row).
       FROM GITHUB ISSUE silasfelinus/kind_robots#4682 (https://github.com/silasfelinus/kind_robots/issues/4682), opened by @silasfelinus on 2026-11-02. Imported by scripts/sync_github_issues.py. Reference the issue in the implementing PR (`Closes silasfelinus/kind_robots#4682`) so it closes on merge; the bridge closes it otherwise once this task is done.
@@ -1206,9 +1277,14 @@ tasks:
       2026-11-06 PT: Rechecked #4682 and current deck resolver. Earlier #4777 fix remains in main. The existing Chromium memory-world test stubs resolveMemoryDungeonDeck entirely, so its passing browser runs cannot validate the actual Characters / Non-mature round-three art fetch. No authenticated UI reproduction or new code delivered this session; return ready for a genuine browser/API fixture, not done.
 
       Partial Character deck hardening: isolate failed linked ArtImage lookups per candidate while preserving visibility checks; added source regression. Browser authenticated round-three validation and full art availability remain open. Kind Robots worker branch prepared for PR and CI.
+
+      2026-11-20 PT: stale claim/review released to ready (Silas, in session: "you are likely
+      the only agent working on this project currently, so any claimed roadmap items are
+      likely stale"). Playtest-ready means the complete twelve-world game; see
+      ASSESSMENT-2026-11-20.md for this task's gap.
     owner: worker
-    claimed_by: 2026-11-12T205135Z-memory-dungeon-t-049-a7c4
-    claimed_at: '2026-11-12T20:51:35Z'
+    claimed_by: null
+    claimed_at: null
   - id: t-050
     milestone: m3
     title: "Make Oren's House rest shortcut traversable and save-safe"
@@ -1226,11 +1302,11 @@ tasks:
     implementation_pr: 'silasfelinus/kind_robots#4729'
   - id: t-051
     title: "Memory Dungeon: rebalance Briar's 64-tile pacing and House room variety"
-    status: claimed
+    status: ready
     stakes: reversible
     passes: 0
     source_issue: "silasfelinus/kind_robots#4721"
-    updated: '2026-11-15T05:42:06Z'
+    updated: '2026-11-20T06:00:00Z'
     note: |-
       2026-11-11 PT remaining: Independent 64-site/36-room pacing run, choice density and fun acceptance. Evidence: RESET-TASK-EVIDENCE-AUDIT-2026-11-10.md (t-051 row).
       FROM GITHUB ISSUE silasfelinus/kind_robots#4721 (https://github.com/silasfelinus/kind_robots/issues/4721), opened by @silasfelinus on 2026-11-03. Imported by scripts/sync_github_issues.py. Reference the issue in the implementing PR (`Closes silasfelinus/kind_robots#4721`) so it closes on merge; the bridge closes it otherwise once this task is done.
@@ -1250,9 +1326,14 @@ tasks:
       Scoped three cross-realm clue discoveries to auto-resolve with existing choice IDs; alternate historical choices remain valid for saves. Kind Robots PR pending CI. Broader Briar and House pacing remains unfinished.
 
       Three additional Briar cross-realm clue auto-discoveries merged in kind_robots PR #5198, squash a51e2f8f95b275507da14ffdf92e0aa40da3f502; all eight PR-head Actions passed on fa6c4d1. Partial pacing increment only. Still needs independent 64-site and 36-room pacing playthrough, House shortcuts/treasure/room variety and UI acceptance.
+
+      2026-11-20 PT: stale claim/review released to ready (Silas, in session: "you are likely
+      the only agent working on this project currently, so any claimed roadmap items are
+      likely stale"). Playtest-ready means the complete twelve-world game; see
+      ASSESSMENT-2026-11-20.md for this task's gap.
     owner: worker
-    claimed_by: 2026-11-15T054206Z-memory-dungeon-t-051-6e9c
-    claimed_at: '2026-11-15T05:42:06Z'
+    claimed_by: null
+    claimed_at: null
   - id: t-052
     milestone: m3
     title: "e03 Morrow's Shift: replace template recipe sites with 64 authored sites in the live Earth stage"
@@ -1301,13 +1382,13 @@ tasks:
   - id: t-055
     milestone: m3
     title: "e08 Hearth of Perfect Safety: rewrite the 16 night sites to Vesper's POV and finish the map"
-    status: review
+    status: ready
     owner: worker
-    claimed_by: 2026-11-13T134600Z-memory-dungeon-t055-92e4
-    claimed_at: '2026-11-13T13:46:00Z'
+    claimed_by: null
+    claimed_at: null
     stakes: reversible
     passes: 0
-    updated: '2026-11-13T13:51:00Z'
+    updated: '2026-11-20T06:00:00Z'
     note: >-
       2026-11-11 PT remaining: Audit every authored night site for Vesper's POV, original horror and earned consequences. Evidence: RESET-TASK-EVIDENCE-AUDIT-2026-11-10.md (t-055 row).
       Silas 2026-11-05 PT: the first eight overworlds keep one protagonist per pair, so e08 is Vesper's, not Scylla's (kind_robots#4778 already moved the viewpoint contract). hoshimoriNight.ts's 16 playable sites and store still describe "a separate Scylla-viewpoint expedition". Rewrite them from Vesper's POV without changing coordinates or choice ids, keep the Junji-Ito-tonal psychological/architectural horror register, then continue toward 64 sites and the dark Oven per t-044. Char's fate branches still apply through campaign flags, not through POV.
@@ -1331,6 +1412,11 @@ tasks:
       2026-11-13 04:52 PT: PR silasfelinus/kind_robots#5114 merged as 68b524acb73bdbb470549a8b3bd20e732e1211cc after all six exact-head GitHub Actions checks passed on fa098c5611c9e1d65c19de7c12b9312aa74e78fb. Added 18 guardian-entry-ending adversarial paths and replay/save integrity. Task remains ready: rendered e08 Furnace entry, mid-dungeon reload, campaign-ending propagation, production art and viewport QA remain unfinished.
 
       Added interruption/save-restore assertions at FN-12, FN-24, FN-31, guardian and climax for both e08 Furnace entries; climax selection alone must not count as an earned exit. Implementation PR and exact-head CI pending. Real browser reload, art delivery and campaign propagation remain.
+
+      2026-11-20 PT: stale claim/review released to ready (Silas, in session: "you are likely
+      the only agent working on this project currently, so any claimed roadmap items are
+      likely stale"). Playtest-ready means the complete twelve-world game; see
+      ASSESSMENT-2026-11-20.md for this task's gap.
   - id: t-056
     milestone: m2
     title: "Name the researcher (Rowan) as the e01/e02 and e09 lead; Pip stays a supporting NPC"
@@ -1348,10 +1434,10 @@ tasks:
   - id: t-057
     milestone: m4
     title: "e09 Briar collision: Rowan leads, goblin Pip becomes a companion"
-    status: claimed
+    status: ready
     stakes: reversible
     passes: 0
-    updated: '2026-11-14T20:50:36Z'
+    updated: '2026-11-20T06:00:00Z'
     note: |-
       2026-11-11 PT remaining: Verify playable Rowan-led e09 route, Pip companion, earned memory fragments, ending callbacks. Evidence: RESET-TASK-EVIDENCE-AUDIT-2026-11-10.md (t-057 row).
       Silas 2026-11-05 PT: the researcher (Rowan) leads e09, not Pip. briarCollision.ts, briarCollisionRoute.ts, briarCollisionWitness.ts and the e09 stage (components/pages/memory-dungeon-briar-collision.vue) are written with Pip as the acting lead ("Pip spots...", "Pip exposes..."). Rewrite them so Rowan acts and Pip, the goblin courier, is a companion who still contributes courier knowledge. Keep coordinates, choice ids, fragment ids and save keys. Also update conductor story/BRIAR-COLLISION-PIP-QUESTS.json framing.
@@ -1379,9 +1465,14 @@ tasks:
       2026-11-14 PT: Rewrote nine e09 playable console strings to make Rowan the acting researcher and Pip the courier companion, including entry, map accessibility, recorded outcomes and Chronicle. Kind Robots PR #5151, head c1e57139, pending exact-head CI. No IDs or save state changed; route, quest JSON, branch QA and art remain.
 
       2026-11-14 09:46 PT: e09 Rowan-led stage copy PR silasfelinus/kind_robots#5151 merged as 63dfbfed after seven exact-head checks passed on 4ed3051. This is partial t-057 scope. Continue e09 route and Conductor quest JSON reconciliation, adversarial branches, art and rendered UI verification; no deployment.
+
+      2026-11-20 PT: stale claim/review released to ready (Silas, in session: "you are likely
+      the only agent working on this project currently, so any claimed roadmap items are
+      likely stale"). Playtest-ready means the complete twelve-world game; see
+      ASSESSMENT-2026-11-20.md for this task's gap.
     owner: worker
-    claimed_by: 2026-11-14T205036Z-memory-dungeon-t-057-7c91
-    claimed_at: '2026-11-14T20:50:36Z'
+    claimed_by: null
+    claimed_at: null
   - id: t-058
     milestone: m3
     title: "e05 Scylla's Shore: replace template recipe sites with 64 authored sites"
@@ -1459,10 +1550,10 @@ tasks:
   - id: t-063
     milestone: m3
     title: "Browser-test the Enter the Choking Works button at e06 4,6 at 390, 820 and 1440 widths, including save/restore mid-dungeon"
-    status: claimed
+    status: ready
     stakes: reversible
     passes: 0
-    updated: '2026-11-15T19:44:07Z'
+    updated: '2026-11-20T06:00:00Z'
     note: |-
       2026-11-11 PT remaining: Actual rendered button click, measured layout at 390/820/1440, mid-dungeon save/restore still required. Evidence: RESET-TASK-EVIDENCE-AUDIT-2026-11-10.md (t-063 row).
       Kaizen from t-062 review: CI covers the store and verifier, but nothing exercises the new sea-stage button, the choking mode in memory-dungeon.vue, or the shared stage's dungeon="choking" prop in a real browser. Add a Playwright interruption/layout check mirroring the Breathing Works one, and confirm a reload mid-dungeon restores room and flags.
@@ -1478,19 +1569,24 @@ tasks:
       Added an adversarial Choking Works browser regression proving arrival at e06 4,6 alone does not unlock the dungeon: the choice must be resolved first at all three viewports. Rendered Vue component and geometry coverage remain outstanding.
 
       2026-11-06 PT: Merged kind_robots#4847 (849cc7cb) after all seven workflows passed on exact head 9529b3db. Choking Works e06 4,6 cannot unlock by arrival alone; encounter decision is required at 390/820/1440. Remaining: rendered Vue button click and measured DOM geometry at those widths. No ArtJobs or deployment.
+
+      2026-11-20 PT: stale claim/review released to ready (Silas, in session: "you are likely
+      the only agent working on this project currently, so any claimed roadmap items are
+      likely stale"). Playtest-ready means the complete twelve-world game; see
+      ASSESSMENT-2026-11-20.md for this task's gap.
     owner: worker
-    claimed_by: 2026-11-15T194407Z-memory-dungeon-t-063-8f29
-    claimed_at: '2026-11-15T19:44:07Z'
+    claimed_by: null
+    claimed_at: null
   - id: t-064
     milestone: m3
     title: "Bind the Earth letter and Last Train e03/e04 packets into the encounter registry with executable reducer tests"
-    status: review
+    status: ready
     owner: worker
-    claimed_by: 2026-11-14T074700Z-memory-dungeon-t-064-9f28
-    claimed_at: '2026-11-14T07:47:00Z'
+    claimed_by: null
+    claimed_at: null
     stakes: reversible
     passes: 0
-    updated: '2026-11-14T07:48:10Z'
+    updated: '2026-11-20T06:00:00Z'
     note: |-
       2026-11-11 PT remaining: **Highest-value immediate code gap:** bind Last Train to actual e03/e04 encounters and replay-validated reachability; reject forged/out-of-order saved decisions. Evidence: RESET-TASK-EVIDENCE-AUDIT-2026-11-10.md (t-064 row).
       Kaizen from t-025 Last Train review (conductor#7168): two writer packets (Earth letters, Last Train) now specify 24 choices and state rules but neither is wired in. Audit occupied e03/e04 cells, bind scene IDs into the registry and Pinia persistence, and implement each packet's acceptance matrix as executable tests (replay, forged-choice, missing-state fallbacks) before any more prose packets.
@@ -1523,6 +1619,11 @@ tasks:
       CI recovery increment on Kind Robots PR #5142: fixed exact Prettier diff at 222ec420; prior Contract Tests and Fast Changed-File Formatting failed on formatting. New exact-head workflows queued, not yet green. Keep task ready for encounter registry and Pinia wiring, art and browser acceptance. No deployment or ArtJobs.
 
       Focused adversarial Last Train malformed e04 boundary fix in kind_robots PR #5147. CI pending; runtime registry and Pinia wiring still outstanding.
+
+      2026-11-20 PT: stale claim/review released to ready (Silas, in session: "you are likely
+      the only agent working on this project currently, so any claimed roadmap items are
+      likely stale"). Playtest-ready means the complete twelve-world game; see
+      ASSESSMENT-2026-11-20.md for this task's gap.
   - id: t-065
     milestone: m4
     title: "Audit merged PRs for each task released in the 2026-11-10 twelve-world reset and close only proven-complete scope"
@@ -1586,16 +1687,21 @@ tasks:
   - id: t-071
     milestone: m4
     title: "Parse every .github/workflows/*.yml from a workflow other than ci.yml so an unparseable CI file shows as a red check"
-    status: claimed
+    status: ready
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-12T18:51:28Z'
+    updated: '2026-11-20T06:00:00Z'
     note: |-
       Kaizen from the t-070 review (conductor#7326). Head 0bff092 made .github/workflows/ci.yml unparseable; GitHub then ran none of its jobs and the PR showed 16 green checks instead of 26, so nothing was red. Add a step to the Static checks workflow (or any workflow that is not ci.yml) that yaml.safe_loads every file under .github/workflows/ and fails on the first parse error, with a pytest that seeds one bad file. Reversible, CI-only; lives in this roadmap because the conductor project is finished and takes no new tasks.
+
+      2026-11-20 PT: stale claim/review released to ready (Silas, in session: "you are likely
+      the only agent working on this project currently, so any claimed roadmap items are
+      likely stale"). Playtest-ready means the complete twelve-world game; see
+      ASSESSMENT-2026-11-20.md for this task's gap.
     owner: worker
-    claimed_by: 2026-11-12T185128Z-memory-dungeon-t-071-b83e
-    claimed_at: '2026-11-12T18:51:28Z'
+    claimed_by: null
+    claimed_at: null
   - id: t-072
     milestone: m4
     title: "Add a .github/pull_request_template.md that mirrors the AGENTS.md Worker handoff headings so connector-opened worker PRs start from the template"
@@ -1626,3 +1732,63 @@ tasks:
       Full history: projects/memory-dungeon/HISTORY.md#t-073
     claimed_by: 2026-11-16T024803Z-memory-dungeon-t-073-6f1c9
     claimed_at: '2026-11-16T02:48:03Z'
+  - id: t-074
+    milestone: m3
+    title: "Display delivered event art: catalog art status is hard-coded 'placeholder', so e03-e10 scene plates never show"
+    status: ready
+    stakes: reversible
+    passes: 0
+    depends_on: []
+    updated: '2026-11-20T06:00:00Z'
+    note: >-
+      2026-11-20 assessment: overworldEventCatalog.ts art() always returns status 'placeholder'; the e03-e10 stages render scene art only when status === 'delivered', so every site shows 'Illustration pending'. Add a generated, committed manifest of delivered event-art paths (verified by ranged GET; the media host 404s HEAD), read it in the catalog, and add a contract test. Then re-key or re-commission choice art whose paths moved when e03-e06 sites were rewritten (current paths: e03 4/127, e04 7/127, e05 7/131, e06 9/139 choice images present).
+  - id: t-075
+    milestone: m3
+    title: "Commission and wire scene plates for every e03-e12 overworld site (0 of 640 exist at catalog paths)"
+    status: ready
+    stakes: reversible
+    passes: 0
+    depends_on: []
+    updated: '2026-11-20T06:00:00Z'
+    note: >-
+      2026-11-20 assessment: no establishing-scene image exists at any e03-e12 catalog path (ranged GET, 0/640). Queue one plate per authored site through the art ledger, verify delivery, and surface it via t-074's manifest. e11/e12 plates follow their authored sites (t-047).
+  - id: t-076
+    milestone: m3
+    title: "Illustrate Hoshimori (e07/e08) and the five later dungeons, which currently render text only"
+    status: ready
+    stakes: reversible
+    passes: 0
+    depends_on: []
+    updated: '2026-11-20T06:00:00Z'
+    note: >-
+      2026-11-20 assessment: memory-dungeon-hoshimori.vue, memory-dungeon-hoshimori-night.vue and memory-dungeon-sublevel.vue (Sublevel B, Drowned Archive, Breathing Works, Choking Works, Furnace of Names) render no images at all. Wire existing delivered Hoshimori art where it fits, commission room and choice plates for the rest, and add display contracts.
+  - id: t-077
+    milestone: m3
+    title: "Build dungeons for e09-e12 (none exist; catalog marks 6,2 and 3,6 as dungeon sites)"
+    status: ready
+    stakes: reversible
+    passes: 0
+    depends_on: []
+    updated: '2026-11-20T06:00:00Z'
+    note: >-
+      2026-11-20 assessment: e01-e08 each have a playable dungeon; e09, e10, e11 and e12 have none. Author and build one dungeon per collision world on the authoredDungeon engine, with an earned exit, consequences and art, linked from its overworld.
+  - id: t-078
+    milestone: m3
+    title: "Final endings screen: show the ~32 core endings with paintings after e12"
+    status: ready
+    stakes: reversible
+    passes: 0
+    depends_on: []
+    updated: '2026-11-20T06:00:00Z'
+    note: >-
+      2026-11-20 assessment: memoryCoreEnding()/memoryEndingConsequences() exist in reimaginerCampaign.ts but no component renders them and nothing reaches them until e12 exists. Build the ending sequence and endings gallery, commission one plate per ending, and test every ending is reachable by seeded route.
+  - id: t-079
+    milestone: m3
+    title: "Full illustrated opening: replace the one-screen prologue with an illustrated intro sequence"
+    status: ready
+    stakes: reversible
+    passes: 0
+    depends_on: []
+    updated: '2026-11-20T06:00:00Z'
+    note: >-
+      2026-11-20 assessment: the prologue is one background image, four paragraphs and one choice. Build a short illustrated intro (Rowan's life, Morrow's trade, arrival in Briar) with commissioned plates, skippable, saved, and accessible, leading into the existing prologue choice.
