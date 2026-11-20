@@ -54,7 +54,7 @@ tasks:
   - id: t-003
     milestone: m2
     title: 'Ship private admin Tarot Studio with durable multi-deck/card editing and filters'
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -62,9 +62,15 @@ tasks:
       Kind Robots /admin/tarot plus ADMIN nav, persistent additive data model and 78-card seed per deck, prompt/checkpoint/LoRA editing, safe admin auth and tests. Keep all private.
 
       Kind Robots worker/tarot-studio-t-003-20261120-6c4d includes persistent 78-card multi-deck admin studio, additive migration, protected APIs and catalog tests; real ArtJob submission is next task t-004.
+
+      pr-medic 2026-11-20: fixed red CI (Prettier-split inline handler broke template
+      compile/build, missing prisma generate output, duplicate admin tab icon) and
+      kind_robots#5433 merged green. Additive-only migration audited (CREATE TABLE x2, ADD
+      CONSTRAINT); production deploy follows the normal migration process.
     claimed_by: 2026-11-20T123835Z-tarot-studio-t-003-a7f2
     claimed_at: '2026-11-20T12:38:35Z'
-    updated: '2026-11-20T12:42:10Z'
+    updated: '2026-11-20T17:22:14Z'
+    implementation_pr: 'silasfelinus/kind_robots#5433'
   - id: t-004
     milestone: m2
     title: 'ArtJobs submit, retry, observe and approve card face/back with provenance'
