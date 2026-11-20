@@ -892,14 +892,14 @@ tasks:
   - id: t-043
     milestone: m4
     title: "Fever Dream look: review the doodle re-renders (DOODLE-SET-2) and ship the keepers"
-    status: review
-    claimed_by: 20261120T231020Z-rainbow-t043-sheet-d4w8
-    claimed_at: '2026-11-20T23:10:20Z'
+    status: ready
+    claimed_by: ''
+    claimed_at: ''
     depends_on: [t-036]
     owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-11-20T23:11:30Z'
+    updated: '2026-11-20T23:46:44Z'
     note: |-
       Follow-up to t-036 (kind_robots#4764). art/DOODLE-SET-2.yaml (35 cells, auto_submit) re-renders what art/DOODLE-SET-1-REVIEW.yaml held: Solenne's portrait and comms (skin and hair lock), three ships (colour and silhouette lock), 12 boss phases (B02/B04/B07/B09), 17 enemies and guardians, and 2 pickups, each sprite on a source_margin green border so it stays whole. When the cells are DONE: contact-sheet them (portraits beside their CAST-MANIFEST identity locks; sprites keyed on dark, with the frame-edge check), flip the passing entries in DOODLE-SET-1-REVIEW.yaml to keep (a boss only with all three phases), re-run scripts/export_rainbow_doodle_art.py --kind-robots ../kind_robots, run utils/scripts/verifyRainbowFeverDream.test.ts, and PR the files. Once all four ships pass, also flip ships/petal-wing to keep.
 
@@ -909,18 +909,49 @@ tasks:
 
       2026-11-20 PT: Added private DOODLE-SET-2 comparison sheets, ArtJob/ArtImage provenance and four tests. Visual acceptance and actual export still open; scoped PR awaiting CI.
 
+      Reviewer 2026-11-20: review-sheet builder merged via PR #7699
+      (scripts/review_rainbow_doodle_art.py; verdicts stay PENDING_VISUAL_INSPECTION). Back to
+      ready, claim released: generate sheets, do the visual pass, flip keepers in DOODLE-
+      SET-1-REVIEW.yaml, export to kind_robots and PR.
+
   - id: t-046
     milestone: m4
     title: "Add a pytest that pins the Fever Dream export's fail-closed boss-phase and key-art preflight"
-    status: review
+    status: done
     claimed_by: 20261120T230500Z-rainbow-t046-regression-b6m4
     claimed_at: '2026-11-20T23:05:00Z'
     depends_on: []
     owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-11-20T23:09:00Z'
+    updated: '2026-11-20T23:46:35Z'
     note: |-
       Kaizen from the PR #7694 review. The guard was verified by hand only. Build a tmp kind_robots tree with three boss phase webps and key-art, feed ledgers with one phase unfinished, and assert main(--dry-run) exits 1 naming the missing phase; then with all phases DONE assert it gets past preflight (stub render_path so no PIL or network is needed).
 
       Added three pytest cases for incomplete boss phases, missing key art, and successful fully rendered dry-run export; PR and CI review still required.
+
+      Reviewer 2026-11-20: merged PR #7698 (three pytest cases pin fail-closed boss-phase and
+      key-art preflight; CI green). Done.
+    implementation_pr: 'silasfelinus/conductor#7698'
+  - id: t-047
+    milestone: m4
+    title: "Make review_rainbow_doodle_art.py print an edge-risk summary so the DOODLE-SET-2 visual pass starts from the risky sprites"
+    status: ready
+    depends_on: []
+    owner: worker
+    passes: 0
+    stakes: reversible
+    updated: '2026-11-20T23:55:00Z'
+    note: |-
+      Kaizen from the PR #7699 review. The sheet builder records edge_check per asset in visual-review.yaml but only prints a count. Print each edge-risk asset (rel path, ArtImage id) after the run and add a test that a non-green border appears in that list. Never change keeper verdicts.
+  - id: t-048
+    milestone: m4
+    title: "Share one tmp kind_robots + DOODLE ledger fixture between the Rainbow doodle export and review tests"
+    status: ready
+    depends_on: []
+    owner: worker
+    passes: 0
+    stakes: reversible
+    updated: '2026-11-20T23:55:00Z'
+    note: |-
+      Kaizen from the PR #7698 review. tests/test_export_rainbow_doodle_art.py and tests/test_review_rainbow_doodle_art.py each hand-build classic webps and ledgers with slightly different shapes (art.krea vs art.kontext, jobs present or not). Move the builder into one helper so both suites exercise the same ledger shape the real DOODLE-SET-2.yaml uses.
