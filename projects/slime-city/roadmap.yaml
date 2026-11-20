@@ -527,7 +527,7 @@ tasks:
   - id: t-012
     milestone: m4
     title: "Full card and campaign coverage, prototype evaluation and visual QA"
-    status: claimed
+    status: done
     depends_on: [t-010, t-011]
     passes: 0
     stakes: reversible
@@ -598,11 +598,25 @@ tasks:
       precedence across every card. Remaining: signed-in keyboard/touch input run, real-
       controller gamepad check, re-capture after #5332, CLASH 300 closeout (t-041). Released
       back to ready.
-    updated: '2026-11-20T02:18:34Z'
+
+      2026-11-19 PT DONE. Every row of PLAYER-HANDOFF-CHECKLIST.md is closed with evidence,
+      and the tester handoff is PLAYTEST-HANDOFF-2026-11-19.md. Merged this cycle on
+      kind_robots: #5372 (a production build break in another game's page, plus a CI guard
+      that compiles every Vue template), #5376 (six Clash defects found by a signed-in real-
+      browser pass), #5379 (CPU play evidence for all 300 cards, device-journey import, art
+      delivery audit, tutorial copy for CLASH) and #5380 (UNDO label cut off beside TAP).
+      Measured on production build db5d615, signed in as a non-admin test account: Clash
+      layout audit 21 of 21 cases, keyboard-only and touch-only full matches. Measured on
+      production earlier the same day: art delivery 1,485 of 1,485 manifest slots, a two-
+      account duel 18 of 18 checks, a Journey chapter and a Tower climb walked in the browser,
+      title screen at 390/768/1440/2560 and all five tabs at 390 and 1440. Reported for human
+      play, not gated: no physical gamepad has been tried; the CPU picks six two-slot cards in
+      under 3% of bouts and plays 237 of 300 cards at level three. t-014 moves to needs-human.
+    updated: '2026-11-20T02:46:08Z'
     owner: worker
-    implementation_pr: 'silasfelinus/kind_robots#5357'
-    claimed_by: 2026-11-20T022000Z-slime-city-playtest-lqz02n
-    claimed_at: '2026-11-20T02:18:34Z'
+    implementation_pr: 'silasfelinus/kind_robots#5380'
+    claimed_by: null
+    claimed_at: null
 
   - id: t-013
     milestone: m1
@@ -743,7 +757,7 @@ tasks:
   - id: t-014
     milestone: m4
     title: "Subjective acceptance of the finished internal game"
-    status: waiting
+    status: needs-human
     depends_on: t-012
     owner: null
     passes: 0
@@ -756,6 +770,12 @@ tasks:
       design feedback. Agents must finish all reversible fixes
       before presenting this gate. Your creative approval does
       not authorize external release.
+
+      2026-11-19 PT: agent QA (t-012) is done and Slime City is in playtest. Start from
+      projects/slime-city/PLAYTEST-HANDOFF-2026-11-19.md: the route, what was verified, known
+      limits and a twelve-step play checklist. This gate is your verdict only; no agent may
+      claim or approve it.
+    updated: '2026-11-20T02:46:08Z'
   - id: t-015
     milestone: m4
     title: "Authorize public Play launch and community exposure separately"
