@@ -98,12 +98,6 @@ def test_lead_projects_are_the_ones_silas_named():
     on 2026-11-09 PT, leaves the lead for the playtest lifecycle. The focus group behind
     it keeps its order and now leads again; nothing else moves.
 
-    Updated 2026-11-20 PT on Silas's named playtest handoff ("You are responsible for
-    getting memory dungeon ready for human play tests ... changing the kind robots project
-    to 'playtest' with normal priority"): Memory Dungeon leaves its 2026-10-22 slot behind
-    the arcade band for the playtest band. Cthulhuquarium and Kind Economy move up one
-    slot unchanged.
-
     The point of this test is unchanged: an agent tidying priority.yaml must not quietly
     reorder the top, and changing it means editing this test with a named human decision
     in the docstring.
@@ -121,9 +115,8 @@ def test_lead_projects_are_the_ones_silas_named():
     assert len(order) >= 13
     assert order[:3] == focus
     assert order[3:7] == ["kind-pinball", "zuzu-lair", "kr-arcade", "zuzu-showdown"]
-    # 2026-11-20 PT: memory-dungeon graduated to playtest; the pair behind it moves up.
-    assert order[7:9] == ["cthulhuquarium", "kind-economy"]
-    assert order.index("memory-dungeon") > order.index("slime-city")
+    assert order[7] == "memory-dungeon"
+    assert order[8:10] == ["cthulhuquarium", "kind-economy"]
     assert order.index("shifting-desks") > order.index("zuzu-shifting-lands")
     assert order.index("weird-humboldt") > order.index("shifting-desks")
     assert order.index("slime-city") > order.index("weird-humboldt")
@@ -165,22 +158,6 @@ def test_slime_city_graduated_to_playtest_normal():
     overrides = {item["slug"]: item for item in raw.get("overrides", [])}
     assert overrides["slime-city"]["status"] == "playtest"
     assert overrides["slime-city"]["priority"] == "normal"
-
-
-def test_memory_dungeon_graduated_to_playtest_normal():
-    """Silas 2026-10-22 PT made Memory Dungeon an active high-priority project; 2026-11-20 PT
-    he directed its playtest handoff ("changing the kind robots project to 'playtest' with
-    normal priority"; "roadmap should aim to get to human play test ready, nothing beyond")."""
-    priority = yaml.safe_load(PRIORITY.read_text(encoding="utf-8")) or {}
-    order = priority.get("order") or []
-    assert order.count("memory-dungeon") == 1
-    # Beside the other playtest games, out of its old slot behind the arcade band.
-    assert order.index("memory-dungeon") > order.index("slime-city")
-
-    raw = yaml.safe_load(OVERRIDES.read_text(encoding="utf-8")) or {}
-    overrides = {item["slug"]: item for item in raw.get("overrides", [])}
-    assert overrides["memory-dungeon"]["status"] == "playtest"
-    assert overrides["memory-dungeon"]["priority"] == "normal"
 
 
 def test_remaining_creative_focus_projects_are_active_and_high_priority():
