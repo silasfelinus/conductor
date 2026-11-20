@@ -1,0 +1,109 @@
+# Tarot Studio — user-directed extension of Kind Oracle, 2026-11-20 PT
+project: tarot-studio
+kind: software
+goal: 'A persistent private multi-deck admin art bible for 78-card SuperKate, Kind Robots and Zuzu tarot decks, with editable prompts/checkpoints/LoRAs, ArtJob provenance, filtering, approvals, printer-ready exports and a human-gated accessible giftshop fulfillment path.'
+notes_from_silas: |
+  Recover and reuse Kind Oracle, don't replace it. The first product is a private SuperKate deck.
+  Other decks include Kind Robots and Zuzu, with space for more. Every card's prompt,
+  checkpoint, LoRAs and review status must be adjustable in the admin bible.
+  Filter by deck, checkpoint, rank, suit and major/minor arcana.
+  Future Kind Robots deck: sell in the accessible giftshop, first by paid order +
+  admin fulfillment email, later by printer API auto fulfillment.
+milestones:
+  - id: m1
+    title: 'SHAPE — recovered engine, art bible, print-provider design'
+    weight: 20
+    status: in-progress
+  - id: m2
+    title: 'BUILD — persisted admin editor, ArtJobs, deck coverage'
+    weight: 55
+    status: not-started
+  - id: m3
+    title: 'POLISH — print proofs, accessibility and gated commerce'
+    weight: 25
+    status: not-started
+tasks:
+  - id: t-001
+    milestone: m1
+    title: 'Write architecture and printing design brief, reusing Kind Oracle'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: 'Document restored engine, canonical 78-card identities, project-specific art, print provider choices, data ownership and release gates.'
+  - id: t-002
+    milestone: m1
+    title: 'Optional owner direction on stylistic themes and release plan'
+    status: needs-human
+    owner: null
+    passes: 0
+    stakes: reversible
+    soft_gate: true
+    gate_reason: creative-approval
+    note: 'FOR SILAS: Development continues. Confirm or adjust design as desired; printing, checkout and product publication are separately gated.'
+  - id: t-003
+    milestone: m2
+    title: 'Ship private admin Tarot Studio with durable multi-deck/card editing and filters'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: 'Kind Robots /admin/tarot plus ADMIN nav, persistent additive data model and 78-card seed per deck, prompt/checkpoint/LoRA editing, safe admin auth and tests. Keep all private.'
+  - id: t-004
+    milestone: m2
+    title: 'ArtJobs submit, retry, observe and approve card face/back with provenance'
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-003
+    note: 'Use existing queue with a stable request key and explicit queued/rendered/reviewed transitions. Need image preview, resubmission and all 78 faces + deck back.'
+  - id: t-005
+    milestone: m2
+    title: 'Finish bespoke deck bibles and printable content for SuperKate, Kind Robots and Zuzu'
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-004
+    note: 'Review consistent art, upright/reversed meanings and card back, full 78-card coverage, preserve Kind Oracle engine mapping; physical proof readiness.'
+  - id: t-006
+    milestone: m3
+    title: 'Export vendor-neutral printer-ready files with automated bleed/DPI checks'
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-005
+    note: 'Use calibrated safe zones and bleed, 78 faces + back, order, packaging, booklet and licensed source; no external order yet.'
+  - id: t-007
+    milestone: m3
+    title: 'Prepare accessible Kind Robots giftshop listing and paid order notification workflow'
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: outward-facing
+    gate_human: true
+    gate_reason: publish
+    depends_on: t-006
+    note: 'FOR SILAS: require physical proof, product price/fulfillment terms and explicit publication approval before enabling storefront, checkout or emails to customers.'
+  - id: t-008
+    milestone: m3
+    title: 'Optional automated vendor API fulfillment, shipment status and cost caps'
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: outward-facing
+    gate_human: true
+    gate_reason: money
+    depends_on: t-007
+    note: 'FOR SILAS: vendor enrollment, credentials, actual costs and fulfillment are gated. Build provider adapter in dry run first, then request approval.'
+  - id: t-009
+    milestone: m3
+    title: 'Run keyboard/screen-reader/mobile accessibility and full deck quality acceptance'
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-006
+    note: 'Admin tab reachable at 390/768/1440, cards filter and save across devices, print export validated; no claim of live deploy without evidence.'

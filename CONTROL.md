@@ -896,3 +896,21 @@ with persistent aquariums, a collectible monster-fish bestiary, and browsable pu
 - Silas, 2026-11-16 PT: every game has a GitHub project issue that functions as the roadmap; Deepheart starts on Kind Robots at high priority; fully complete it including art, then mark ready for human testing and swap to playtest at normal priority. Like all our games: achievements, save/load, art-first design, front end, multiple endings, scrapbook, multiple characters.
 - Silas, 2026-11-17 PT: Deepheart's roguelike moral theme is that being good is possible but **hard**, with real sacrifices rather than free virtue; each delver and companion's statistics and skills must substantially change survival and nonviolent outcomes. Support an independent custom hero, with original identity, class and stats, as well as choosing one of the 50 presets. Keep the queued approved art moving and finish balance and playtest readiness without adding speculative new art batches.
 
+
+### tarot-studio  (software)
+**Direction:** Build an admin-only, persistent multi-deck Tarot Studio around the recovered
+Kind Oracle art/reading work. Three starting decks: bespoke SuperKate Tarot (private),
+Kind Robots Tarot (reuse the October 2026 78-card oracle canon), and Zuzu Tarot.
+A 78-card editable art bible per deck includes prompt, checkpoint, LoRAs, status,
+art job provenance and print review. Filters by deck, arcana, suit, rank, checkpoint
+and review state. Use the existing ArtJob pipeline, never promise generated art
+before delivery. Later, printer-neutral exports, proofing and a fully accessible
+gift shop product on Kind Robots with admin order emails, followed by optional
+vendor API order fulfillment.
+**Notes:**
+- Silas requested this on 2026-11-20 PT. The original kind-oracle project is
+  preserved as a Daily Dream Workshop member; do not delete its engine/spec.
+- All artwork and editable recipes are private until accepted. SuperKate's deck
+  is a personal gift; never presume authorization to use a real portrait likeness.
+- Product publication, checkout, external printing, vendor accounts/keys, and
+  money require an explicit human gate. Reversible internal tools may merge.
