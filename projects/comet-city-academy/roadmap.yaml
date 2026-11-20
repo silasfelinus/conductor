@@ -155,11 +155,11 @@ tasks:
       Reviewer 2026-11-20: merged Conductor PR #7681 after fixing a workflow YAML plain-scalar colon (56d8e7e) and the PR handoff headings. Kaizen follow-up: t-037.
   - id: t-037
     title: "Surface the count of auto-submit art ledgers overdue for ArtJob receipts on the art health surface, not just in Actions logs"
-    status: review
+    status: done
     owner: worker
     claimed_by: 2026-11-20T171220Z-comet-t037-a6d4
     claimed_at: '2026-11-20T17:12:20Z'
-    updated: '2026-11-20T17:15:50Z'
+    updated: '2026-11-20T17:59:51Z'
     milestone: m3
     stakes: reversible
     passes: 0
@@ -168,6 +168,11 @@ tasks:
       Kaizen from t-036 review (Conductor PR #7681). scripts/check_auto_art_receipts.py currently only prints OVERDUE lines in the auto-art-generate run log. Feed its count into the existing art-queue health report or session sweep line so a missing-receipt ledger is visible without opening Actions.
 
       Added auto_art_receipts to the startup sweep and regression coverage; PR pending CI.
+
+      Reviewer 2026-11-20 PT: merged Conductor PR #7683 (9d2248b) after updating the branch
+      past main-side test drift and repairing the handoff headings. Kaizen follow-up: t-038
+      (single-parse ledger scan; checker ~78s vs 90s sweep timeout without libyaml).
+    implementation_pr: 'silasfelinus/conductor#7683'
   - id: t-012
     milestone: m2
     title: "Promote the seven-day demo into Capes & Tassels name and genuine day/night map slice"
