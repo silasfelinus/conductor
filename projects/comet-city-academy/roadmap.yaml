@@ -228,8 +228,11 @@ tasks:
       Reviewed and merged by the reviewer role (branch worker/comet-city-academy-t-041-loader-parity-p9f2): test_all_opted_in_art_ledgers_have_identical_safe_loader_data skips without libyaml and otherwise compares CSafeLoader and SafeLoader parses of every find_ledgers() path. Locally 9 pass, 1 skip. Cost note: the pure-Python parse of the 240 opted-in ledgers takes ~32s, so the test adds roughly that to CI. Kaizen t-042 measures it.
   - id: t-042
     title: "Measure the loader-parity test's CI runtime and move it to a scheduled lane if it adds more than 15 seconds to pytest"
-    status: ready
+    status: claimed
     owner: worker
+    claimed_by: 2026-11-20T214515Z-comet-t042-q6m2
+    claimed_at: '2026-11-20T21:45:15Z'
+    updated: '2026-11-20T21:45:15Z'
     milestone: m3
     stakes: reversible
     passes: 0
