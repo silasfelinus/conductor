@@ -209,21 +209,22 @@ tasks:
   - id: t-006
     milestone: m2
     title: "CANCELED by Silas: online co-op out of scope"
-    status: done
+    status: cancelled
+    cancelled_reason: silas-scope-cut-2026-11-19
     depends_on: [t-005]
     owner: worker
     passes: 0
     stakes: reversible
     note: >-
-      CANCELED, NOT IMPLEMENTED. Silas explicitly dropped online co-op on 2026-11-19 PT as server-intensive and beyond scope. This done state means the requirement was removed, not delivered. Local 1–4-player co-op remains required under t-005. Earlier transport/lobby instructions below are superseded.
+      CANCELED, NOT IMPLEMENTED. Silas explicitly dropped online co-op on 2026-11-19 PT as server-intensive and beyond scope. Status is cancelled: the requirement was removed, not delivered (source: kind_robots#4146 scope-decision comment, 2026-11-19 PT). Local 1–4-player co-op remains required under t-005. Earlier transport/lobby instructions below are superseded.
       Design low-cost authoritative room transport, lobby/invites, join
       synchronization, bounded prediction, reconnect and host-loss recovery.
       Respect existing app auth/rate-limit/privacy conventions. Verify
       divergence across 1–4 clients at simulated packet loss and latency.
       Avoid secret creation/billing without a human gate.
-    claimed_by: 2026-11-19T235900Z-rainbow-t006-k4m8
-    claimed_at: '2026-11-19T23:59:00Z'
-    updated: '2026-11-19T23:59:00Z'
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-11-20T04:20:00Z'
   - id: t-007
     milestone: m3
     title: "Author and integrate stages 1–2 with complete tutorial and bosses"
@@ -354,7 +355,7 @@ tasks:
     milestone: m5
     title: "Deterministic combat fairness, multiplayer soak and campaign QA"
     status: waiting
-    depends_on: [t-006, t-009, t-010, t-011, t-012]
+    depends_on: [t-009, t-010, t-011, t-012]
     owner: null
     passes: 0
     stakes: reversible
@@ -362,7 +363,7 @@ tasks:
       Full-route autoplay/property runs, zero unavoidable-hit scenarios
       at documented skill window, seeded repeatability, 60 Hz render
       target and acceptable mobile fallback, browser refresh/resume,
-      1/2/3/4 player soak under latency, keyboard/gamepad and phone/tablet/
+      local 1/2/3/4 player soak (no online co-op, t-006 cancelled), keyboard/gamepad and phone/tablet/
       desktop UI snapshots. Record measured median completion duration
       and test all endings; never assert parity to commercial classics
       based solely on an encounter list.
