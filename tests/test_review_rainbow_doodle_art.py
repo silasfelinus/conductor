@@ -50,7 +50,12 @@ def test_matte_check_flags_a_cropped_non_green_edge():
     assert not reviewer.clear_green_border(green)
 
 
-def test_review_builds_private_comparisons_and_pending_verdicts(tmp_path):
+def test_review_builds_private_comparisons_and_pending_verdicts(tmp_path, monkeypatch):
+    monkeypatch.setattr(
+        reviewer.exporter,
+        "key_green",
+        lambda image: image.convert("RGBA"),
+    )
     subjects = [
         _write_subject(tmp_path, "ships/halo-fin", 263272),
         _write_subject(tmp_path, "portraits/p3-solenne", 263269),
