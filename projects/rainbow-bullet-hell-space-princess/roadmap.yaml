@@ -605,14 +605,14 @@ tasks:
   - id: t-027
     milestone: m6
     title: "Gen-2 memory: save slots, route map screen, medals and the persistent Palace Hangar"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 2026-11-20T163900Z-rainbow-t027-v8p4
     claimed_at: '2026-11-20T16:39:00Z'
     depends_on: [t-026]
     passes: 0
     stakes: reversible
-    updated: '2026-11-20T16:39:00Z'
+    updated: '2026-11-20T16:41:00Z'
     note: |-
       2026-11-20T11:21:42Z connector recovery: prior claim 2026-11-20T05:40:00Z expired after 341 minutes, no open Rainbow PR or branch; implementing Palace Hangar on a scoped worker branch.
 
@@ -627,6 +627,8 @@ tasks:
       Implemented a working per-save-slot Palace Hangar. Best earned Act medals fund bounded shield, charge and life bonuses, persisted in Arcade preferences and equipped by all four pilots in the live cabinet. Tests added. Code branch worker/rainbow-bullet-hell-space-princess-t-027-hangar-x7p5. This is partial t-027: route-map navigation and stage replay remain open.
 
       Scoped Palace Hangar PR silasfelinus/kind_robots#5423 merged after twelve completed green workflows at d1c300d. Hangar slot upgrades, medal spending and four-seat bonuses are shipped to main, but playable Luminous Ocean route-node navigation and authored stage replay remain unfinished.
+
+      Scoped keyboard-accessible route node inspection with stage descriptions and earned route intel committed as 7d7663b. This is partial t-027; actual replay selection and full route navigation remain outstanding.
   - id: t-028
     milestone: m6
     title: "Gen-2 alternate stages: four branch stages with their own guardians"
