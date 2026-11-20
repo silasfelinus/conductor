@@ -1,0 +1,111 @@
+# Emperor of Dust market item icons, round 6 (2026-11-20 PT, emperor-of-dust/t-033). ITEMS-ROUND-5 kept 0 of 5:
+# the crowbar was right but a hairline sliver, lockpicks drew a brass tube, spurs a boot, cutters a clamp-blade, the
+# tooth a toothed bone. Round 6 forces close-up framing, names familiar look-alikes (pencil roll, horseshoe band,
+# pendant charm) and negates each wrong object. Curate at FULL size, export keepers with
+# scripts/export_round_art.py --require-keep --max-edge 320, and add ids to ITEM_ART. auto_submit.
+round: emperor-items-6
+project_slug: emperor-of-dust
+designer: Comic Studio
+is_public: false
+is_mature: false
+cast_loras: false
+auto_submit: true
+lanes:
+- key: arthemy-house
+  label: Arthemy Western Art v3.0 (house, author settings)
+  engine: comfy
+  checkpoint: Illustrious/arthemyWesternArt_v30.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, absurdres, very aesthetic, toon (style), western comics (style),
+    weathered, dramatic lighting, still life, single object, centered, object focus
+  suffix: kiln ochre, deep crimson and tarnished brass palette, warm rim light, dark plain background, salvage,
+    wasteland
+  steps: 30
+  cfg: 5
+  sampler: euler_ancestral
+subjects:
+- key: eodi-old-road-crowbar-v6
+  lane: arthemy-house
+  title: 'Market item: old-road-crowbar (v6)'
+  item: old-road-crowbar
+  asset: items/old-road-crowbar
+  size: 1024x1024
+  seed: 76001
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, hands, person, character, multiple objects, cluttered, candle,
+    candlestick, candle flame, lit wick, second object, animal, bird, creature, label, plaque, coin, medallion,
+    round disc, emblem shield, goose, duck, swan, feathers, beak, cane, umbrella, thin wire, needle, tiny object,
+    distant, small in frame
+  prompt_tags: heavy iron crowbar, thick black pry bar, close-up, the bar fills the frame from corner to corner
+    diagonally, large hooked forked claw end in the foreground, pitted rusty metal, the only object, resting alone
+    on a dark worn wooden surface, soft rim light
+  jobs:
+    arthemy-house: 71221
+- key: eodi-lockpick-roll-v6
+  lane: arthemy-house
+  title: 'Market item: lockpick-roll (v6)'
+  item: lockpick-roll
+  asset: items/lockpick-roll
+  size: 1024x1024
+  seed: 76002
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, hands, person, character, multiple objects, cluttered, candle,
+    candlestick, candle flame, lit wick, second object, animal, bird, creature, label, plaque, coin, medallion,
+    round disc, emblem shield, wrench, spanner, closed wallet, knife, trousers, tube, cylinder, pipe, scroll case,
+    ring, key ring, single pick
+  prompt_tags: open brown leather tool roll laid flat like a pencil roll, a row of many thin steel lock picks standing
+    in stitched leather pockets side by side, top-down flat lay, close-up, the only object, resting alone on a dark
+    worn wooden surface, soft rim light
+  jobs:
+    arthemy-house: 71222
+- key: eodi-courier-spurs-v6
+  lane: arthemy-house
+  title: 'Market item: courier-spurs (v6)'
+  item: courier-spurs
+  asset: items/courier-spurs
+  size: 1024x1024
+  seed: 76003
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, hands, person, character, multiple objects, cluttered, candle,
+    candlestick, candle flame, lit wick, second object, animal, bird, creature, label, plaque, coin, medallion,
+    round disc, emblem shield, wheel, cart wheel, bicycle, gear, horseshoe, badge, sheriff star, boot, shoe, foot,
+    leg, cart wheel, bicycle, gear, sheriff star, badge
+  prompt_tags: single western spur on its own, curved steel heel band shaped like a horseshoe, a short neck at the
+    back holding a spiked star-shaped rowel, small leather strap, close-up, side view, the only object, resting
+    alone on a dark worn wooden surface, soft rim light
+  jobs:
+    arthemy-house: 71223
+- key: eodi-rustline-cutters-v6
+  lane: arthemy-house
+  title: 'Market item: rustline-cutters (v6)'
+  item: rustline-cutters
+  asset: items/rustline-cutters
+  size: 1024x1024
+  seed: 76004
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, hands, person, character, multiple objects, cluttered, candle,
+    candlestick, candle flame, lit wick, second object, animal, bird, creature, label, plaque, coin, medallion,
+    round disc, emblem shield, scissors, knife, blade, serrated edge, dagger, blade, sword, knife, clamp, vise,
+    saw, upright, standing
+  prompt_tags: large bolt cutters, two long straight steel handle arms with worn red grips joined at short heavy
+    steel cutting jaws, lying flat diagonally, top-down view, close-up, the only object, resting alone on a dark
+    worn wooden surface, soft rim light
+  jobs:
+    arthemy-house: 71224
+- key: eodi-hyena-tooth-v6
+  lane: arthemy-house
+  title: 'Market item: hyena-tooth (v6)'
+  item: hyena-tooth
+  asset: items/hyena-tooth
+  size: 1024x1024
+  seed: 76005
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, hands, person, character, multiple objects, cluttered, candle,
+    candlestick, candle flame, lit wick, second object, animal, bird, creature, label, plaque, coin, medallion,
+    round disc, emblem shield, skull, head, face, horns, jaw, bust, monster, fur, eyes, bone, dog bone, femur, row
+    of teeth, dentures, bullet, jaw, skull, brass
+  prompt_tags: single large curved animal fang on a knotted leather cord, a pendant charm, one ivory tooth with
+    a pointed tip and a dark root, close-up, the only object, resting alone on a dark worn wooden surface, soft
+    rim light
+  jobs:
+    arthemy-house: 71225

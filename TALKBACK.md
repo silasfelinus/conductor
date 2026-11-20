@@ -12830,3 +12830,9 @@ Reviewed worker/slime-city-priority-20261109 (Silas, priority.yaml only, reversi
 - `worker/conductor-t-211-playtest-closeout-20261118-pc7f2`: closed PR #7589 was superseded by #7590, which is merged. The branch is stale and safe for the branch janitor to delete.
 - `worker/chessweeper-priority-20261118` (1 commit, chessweeper `priority: normal` → `high`): still not merged and has no PR after about 70 minutes. It still has no Silas citation in the override comment, `CONTROL.md`, `SILAS-NOTES.yaml` or kind_robots#5304, and changing priority is a human steering decision. Silas should confirm it before a PR is opened. Delete the branch if he doesn't.
 - With no reviewable PRs left, I fell through to ready work on slime-city/t-012 (art reconciliation, kind_robots#5327).
+
+## 2026-11-19 PT | pr-medic (unattended) | conductor#7643 superseded
+
+- select_role named conductor#7643 (emperor-of-dust/t-044 scoring protocol) as red and stale. The only failing check was `Validate Worker PR handoff`, and it failed only because the PR body was missing the AGENTS.md handoff headings. I rewrote the body with those headings, kept the content the same, and the check went green.
+- The PR could not be merged. Its head branch has been deleted, and its one file (`projects/emperor-of-dust/playtest/2026-11-19/SECOND-PASS-SCORING-PROTOCOL.md`) is already on main with identical content via #7646. I left a comment on the PR. It is safe to close as superseded. t-044 stays open for real scored playthroughs.
+- Pattern: worker PR bodies that follow a generic Summary/Why/Scope template fail the handoff validator. Workers should start from the AGENTS.md handoff headings.
