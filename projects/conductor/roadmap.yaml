@@ -3310,5 +3310,25 @@ tasks:
     Add a PR check, with a unit test, that compares each override's priority against
     origin/main and asks the PR to cite the direction (quote plus PT date, or issue/comment
     link) in the stanza comment or PR body when a priority changes.
+- id: t-220
+  milestone: m1
+  title: 'Route worker PRs whose CI never starts (zero check runs) to reviewer after a grace period'
+  status: ready
+  stakes: reversible
+  owner: null
+  passes: 0
+  depends_on: []
+  updated: '2026-11-20T00:00:00Z'
+  note: >-
+    Reviewer kaizen 2026-11-20 PT from conductor#7674 (continuous production pipeline).
+    split_pending_worker_reviews treats commit_combined_state == 'pending' as "CI still
+    running" and drops the PR from reviewer candidates, but commit_combined_state also
+    returns 'pending' when a head has no check runs at all (workflows skipped, not
+    triggered, or the head was pushed with [skip ci]). Such a PR would never re-enter the
+    reviewer lane. Use the PR head commit age (or the newest check-run start time) so a
+    "pending" state older than a grace period, for example 90 minutes, counts as
+    actionable. Add a unit test alongside the three #7674 tests in tests/test_select_role.py.
+    This also covers the worker's kaizen: an in-flight PR record should hand CI-complete PRs
+    back for repair or merge before unrelated work.
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'

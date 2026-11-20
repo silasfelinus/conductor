@@ -12836,3 +12836,9 @@ Reviewed worker/slime-city-priority-20261109 (Silas, priority.yaml only, reversi
 - select_role named conductor#7643 (emperor-of-dust/t-044 scoring protocol) as red and stale. The only failing check was `Validate Worker PR handoff`, and it failed only because the PR body was missing the AGENTS.md handoff headings. I rewrote the body with those headings, kept the content the same, and the check went green.
 - The PR could not be merged. Its head branch has been deleted, and its one file (`projects/emperor-of-dust/playtest/2026-11-19/SECOND-PASS-SCORING-PROTOCOL.md`) is already on main with identical content via #7646. I left a comment on the PR. It is safe to close as superseded. t-044 stays open for real scored playthroughs.
 - Pattern: worker PR bodies that follow a generic Summary/Why/Scope template fail the handoff validator. Workers should start from the AGENTS.md handoff headings.
+
+## 2026-11-20 PT | reviewer (scheduled agent) | conductor#7674 merged; kaizen conductor/t-220
+
+- select_role named `worker/conductor-continuous-production-pipeline-20261120T0454PT` (#7674). It adds the continuous production pipeline, which Silas directed on 2026-11-20 PT. The new doc and the AGENTS.md, worker-playbook and connector-worker edits relax hard rule 4 (only one active claim, but review PRs may wait for CI while the next task proceeds). The selector fix moves pending-CI worker PRs out of the reviewer candidates and fails safe on unknown CI state. All 26 checks were completed green on head 520d130 and there were no review claims, so I squash-merged it (cca5c40).
+- Watch item, now kaizen conductor/t-220: `commit_combined_state` also returns `pending` when a commit has zero check runs. A worker PR whose CI never triggers would silently drop out of the reviewer lane forever. It needs a staleness grace period.
+- Pattern (good): the PR body plainly said CI was "still pending, do not call it green". It was handed off honestly and not merged early.
