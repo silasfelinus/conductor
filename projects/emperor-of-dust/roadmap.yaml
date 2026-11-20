@@ -760,10 +760,20 @@ tasks:
       polish/tools/items.py in the 2026-10-20 session scratchpad (paths need updating).
       2026-10-21 04:20Z: ITEMS-ROUND-1 status DONE=3, RUNNING=1, PENDING=26; re-check with
       enqueue_art_requests.py --status and export once all 30 are DONE.
+
+      2026-11-19 PT partial: ITEMS-ROUND-1 was all DONE but never exported (ITEM_ART was
+      empty). Curated on contact sheets: kept 6 (road-lantern, carbide-lamp, abbey-candle,
+      night-draught, brass-bell-charm, surveyors-glass) and shipped them with an ITEM_ART
+      contract test in kind_robots#5383. Rejected 24 because the lane suffix 'warm
+      candlelight' drew a candle dish instead of the item; verdicts are in the ledger. Rerolls
+      are in ITEMS-ROUND-2.yaml (ArtJobs 71164-71187; suffix now rim light, candles in the
+      negative). Next: run enqueue_art_requests.py --status on ITEMS-ROUND-2, contact-sheet
+      it, and export keepers with export_round_art.py --require-keep --max-edge 320, adding
+      them to ITEM_ART. The q-d42 cave-forage v3 set (42353-42355) is still to be checked.
+      Released to ready.
     owner: worker
-    claimed_by: 2026-10-21T000500Z-eod-t-033
-    claimed_at: '2026-10-21T00:07:36Z'
-    updated: '2026-10-21T01:28:16Z'
+    updated: '2026-11-20T02:58:29Z'
+    implementation_pr: 'silasfelinus/kind_robots#5383'
   - id: t-034
     milestone: m5
     title: "Phone width: tapping a fortress room tab shifts the frame sideways"
