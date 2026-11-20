@@ -999,8 +999,8 @@ tasks:
   - id: t-041
     milestone: m2
     title: "CLASH 300: individually crafted L1/L2/L3 effects for every existing card"
-    status: claimed
-    updated: '2026-11-19T23:49:24Z'
+    status: ready
+    updated: '2026-11-20T00:08:38Z'
     depends_on: [t-037, t-051]
     passes: 0
     stakes: reversible
@@ -1047,10 +1047,17 @@ tasks:
 
       MERGED kind_robots#5349 (squash 004e373, head e4a813a; all 12 checks green). Back to
       ready for the remaining near-dead cards.
+
+      2026-11-19 PT: MERGED kind_robots#5367 (squash f4ee2b9, head 5f726ea; all 12 checks
+      green). Level-one Twin Omens (s3-exchange-compound-notice) gains 'The Second Omen': 1
+      damage to the target's adjacent foes, previewing the L3 cross default. Constructed QA
+      3,120 bouts: suite near-dead two-slot 7 -> 6 (Twin Omens off); held-out +5000 0 dead / 5
+      near-dead unchanged (Twin Omens still there); crews 43.4-55.1%; ceiling ratcheted 7 ->
+      6. Still near-dead: Juggernaut, Spare Nine Lives, Chimera, Grease Oracle, Acquisition
+      Clause, Breeding Hunger. Next: Breeding Hunger/Acquisition Clause (Exchange two-slot
+      cost-4/5 spells). Back to ready.
     owner: worker
-    implementation_pr: 'silasfelinus/kind_robots#5349'
-    claimed_by: session_01L5NKxayLT6RbhM7Ki9ycL4
-    claimed_at: '2026-11-19T23:49:24Z'
+    implementation_pr: 'silasfelinus/kind_robots#5367'
   - id: t-042
     milestone: m2
     title: "Curate and wire the ogre redo-3 tokens: Picket Line Troll, Coal Cart Racer, Union Lunch Lady"
