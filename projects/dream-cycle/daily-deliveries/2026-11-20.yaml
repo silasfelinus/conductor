@@ -1,0 +1,84 @@
+date: '2026-11-20'
+entries:
+- slug: guessable-url-aliases
+  title: Guessable contact, help and shop URLs reach real pages
+  target: interface-vision
+  roadmap_task: t-144
+  kind: front-door
+  summary: Eleven URLs a first-time visitor might type, such as /contact, /help and /gallery, returned 404; each
+    now redirects to the matching About, Art, Sanctuary or Giving page.
+  status: shipped
+  pull_request: https://github.com/silasfelinus/kind_robots/pull/5416
+  checks_url: https://github.com/silasfelinus/kind_robots/actions/runs/44715055903
+  checks: passed
+  merge_sha: 80196ac9ed4a836461033233232b773471d4d8c8
+  verification: Live curl showed 404 for all eleven before the change; verifyFrontDoorRoutes.test.ts checks each
+    target is a real tab or page and no alias shadows one. Live redirects not yet re-checked after deploy.
+  art:
+    status: not-required
+  preview_url: https://kindrobots.org/contact
+- slug: game-share-previews
+  title: Chessweeper and The Ruler Is Hooked share with their own card
+  target: interface-vision
+  roadmap_task: t-151
+  kind: share
+  summary: Links to Chessweeper shared as Welcome to Kind Robots and The Ruler Is Hooked as Ruler Hooked on the
+    generic arcade splash; both now share their own title, blurb and art and appear in the sitemap.
+  status: shipped
+  pull_request: https://github.com/silasfelinus/kind_robots/pull/5416
+  checks_url: https://github.com/silasfelinus/kind_robots/actions/runs/44715055903
+  checks: passed
+  merge_sha: 80196ac9ed4a836461033233232b773471d4d8c8
+  verification: Live og:title/og:description captured before the change; verifySharePreview.test.ts pins both preview
+    titles and sitemap coverage.
+  art:
+    status: not-required
+  preview_url: https://kindrobots.org/play/chessweeper
+- slug: stale-share-description
+  title: Share descriptions never borrow another page subtitle
+  target: interface-vision
+  roadmap_task: t-104
+  kind: share
+  summary: The app shell fell back to the page store subtitle even when it described a different page, so dedicated
+    pages could share Welcome to Kind Robots; the fallback is now guarded per route.
+  status: shipped
+  pull_request: https://github.com/silasfelinus/kind_robots/pull/5416
+  checks_url: https://github.com/silasfelinus/kind_robots/actions/runs/44715055903
+  checks: passed
+  merge_sha: 80196ac9ed4a836461033233232b773471d4d8c8
+  verification: verifySharePreview.test.ts forbids the bare pageStore.subtitle fallback and requires the describesPath
+    guard.
+  art:
+    status: not-required
+  preview_url: https://kindrobots.org/
+- slug: register-plain-copy
+  title: Register page says what a free account is for
+  target: interface-vision
+  roadmap_task: t-105
+  kind: front-door
+  summary: The register page preview read Registration with a list of jargon like jellybean tracking and prompt
+    retention; it now says Create a free account and that games stay free without one.
+  status: shipped
+  pull_request: https://github.com/silasfelinus/kind_robots/pull/5416
+  checks_url: https://github.com/silasfelinus/kind_robots/actions/runs/44715055903
+  checks: passed
+  merge_sha: 80196ac9ed4a836461033233232b773471d4d8c8
+  verification: verifyFrontDoorPolish.test.ts pins the new title and forbids the old jargon in the description.
+  art:
+    status: not-required
+  preview_url: https://kindrobots.org/register
+- slug: prettier-ratchet-tighten
+  title: Prettier ratchet tightened from 1047 to 930 files
+  target: interface-vision
+  roadmap_task: t-137
+  kind: quality
+  summary: Formatted the error page and email confirmation page and re-recorded the shrink-only Prettier baseline
+    so already-clean files can no longer regress unnoticed.
+  status: shipped
+  pull_request: https://github.com/silasfelinus/kind_robots/pull/5416
+  checks_url: https://github.com/silasfelinus/kind_robots/actions/runs/44715055903
+  checks: passed
+  merge_sha: 80196ac9ed4a836461033233232b773471d4d8c8
+  verification: Ratchet run locally with the lockfile prettier 3.9.10 and passed in CI on the PR.
+  art:
+    status: not-required

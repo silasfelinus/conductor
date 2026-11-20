@@ -1809,6 +1809,12 @@ tasks:
     Robots' by hand. app.vue now sets titleTemplate via siteTabTitle() in
     utils/sharePreview.ts, which skips titles already naming the site; og:title unchanged.
     Pinned in verifySharePreview.test.ts. Live tab titles not yet re-checked after deploy.
+
+    2026-11-20 PT daily-delivery:2026-11-20/stale-share-description | PR:
+    silasfelinus/kind_robots#5416 (merged 80196ac9) | app.vue's share description fell back to
+    pageStore.subtitle even when the store described another page (default 'Welcome to Kind
+    Robots'). The fallback is now routePageSubtitle, guarded by pageStore.describesPath like
+    title and description; verifySharePreview.test.ts forbids the bare fallback.
   updated: '2026-11-18T11:07:14Z'
   implementation_pr: 'silasfelinus/kind_robots#2912'
   retry_context: ''
@@ -1867,6 +1873,12 @@ tasks:
     (buildWebsiteJsonLd in utils/sharePreview.ts) so search results can label the site 'Kind
     Robots'; emitted only on /, pinned in verifySharePreview.test.ts. Not yet checked with a
     live rich-results test.
+
+    2026-11-20 PT daily-delivery:2026-11-20/register-plain-copy | PR:
+    silasfelinus/kind_robots#5416 (merged 80196ac9) | /register shared as 'Registration' /
+    'Register to unlock leaderboards, user navigation, jellybean tracking ... prompt retention'.
+    content/register.md now reads 'Create a free account' and says what an account is for and
+    that games stay free without one; pinned in verifyFrontDoorPolish.test.ts.
   implementation_pr: 'silasfelinus/kind_robots#3073'
   approved_by_human: true
   min_rest_hours: 24
@@ -2278,6 +2290,12 @@ tasks:
     content, 10 files).
 
     Connector-only cycle verified PR #2956's follow-up finding against current main: the Prettier ratchet already runs in Contract Tests, but its baseline now has 33 newly-unformatted files from unrelated merges. This transport cannot run the repository-pinned Prettier or safely regenerate the exact-membership baseline, so no hand-formatted/baseline-forged slice was attempted. Re-armed without consuming a pass.
+
+    2026-11-20 PT daily-delivery:2026-11-20/prettier-ratchet-tighten | PR:
+    silasfelinus/kind_robots#5416 (merged 80196ac9) | Formatted error.vue and pages/email-
+    confirmation.vue and re-recorded prettier-ratchet-baseline.json with prettier 3.9.10
+    (lockfile): 1047 -> 930 unformatted files; most of the drop is files already clean but still
+    listed. CI ratchet passed.
   updated: '2026-09-21T17:25:00Z'
   implementation_pr: 'silasfelinus/kind_robots#2956'
 - id: t-138
@@ -2411,6 +2429,13 @@ tasks:
     STANDALONE_GAME_PATHS adds them; the contract requires each to have a page and an arcade
     tab, and forbids duplicate sitemap URLs. Monstrique deliberately excluded (admin
     channel).
+
+    2026-11-20 PT daily-delivery:2026-11-20/guessable-url-aliases | PR:
+    silasfelinus/kind_robots#5416 (merged 80196ac9) | Live /contact, /help, /faq, /about-us,
+    /mission, /gallery, /store, /merch, /donations, /charity and /fundraiser were 404s.
+    FRONT_DOOR_ALIASES now 302s them to /about (which carries the contact address), /art,
+    /sanctuary and /giving. verifyFrontDoorRoutes.test.ts checks every target is real and
+    requires /contact, /help and /gallery. Live redirects not yet re-checked after deploy.
   updated: '2026-10-26T22:16:18Z'
 
 - id: t-145
@@ -2574,6 +2599,13 @@ tasks:
     /play aliases and ?game= deep links could index separately. app.vue now declares a
     canonical URL from the query-free shareUrl; verifySharePreview.test.ts pins it and the
     query/trailing-slash stripping. Live tag not yet re-checked after deploy.
+
+    2026-11-20 PT daily-delivery:2026-11-20/game-share-previews | PR:
+    silasfelinus/kind_robots#5416 (merged 80196ac9) | Live /play/chessweeper shared as 'Kind
+    Robots / Welcome to Kind Robots' and /play/ruler-hooked as 'Ruler Hooked' with a 'slideshow
+    sim' blurb, both on the generic arcade splash. Both now have SHARE_PREVIEWS entries (title,
+    blurb, game art) and so sitemap entries; content/play/ruler-hooked.md title/description
+    match the arcade tab. Pinned in verifySharePreview.test.ts.
   updated: '2026-11-18T11:07:17Z'
 
 - id: t-152
