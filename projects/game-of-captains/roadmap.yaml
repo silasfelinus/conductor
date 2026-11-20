@@ -85,15 +85,12 @@ tasks:
       Full history: projects/game-of-captains/HISTORY.md#t-001
   - id: t-041
     title: 'Main-game standard: audit and close the gaps for Space Couch'
-    status: review
-    owner: worker
-    claimed_by: 2026-11-20T030701Z-game-of-captains-t-041-v6n2
-    claimed_at: '2026-11-20T03:07:01Z'
+    status: ready
     milestone: m4
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-20T03:07:01Z'
+    updated: '2026-11-20T05:02:00Z'
     note: |-
       Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -128,6 +125,8 @@ tasks:
       2026-11-19 PT: Kind Robots PR #5378 merged into main at a4de97d2e954c64926781b5c52653eb572b42734; all nine exact-head workflow groups completed SUCCESS, including TypeScript, Playbook Kit, formatting, seeded gameplay, the full adversarial Space Couch matrix and four contract shards. Added a user-controlled versioned JSON backup of active v1 voyage and completed-run history, staged import validation, explicit replace confirmation, duplicate-safe merge and rollback on failed storage writes. Existing save keys and account-owned achievement and alien-guide data preserved. Remaining t-041 scope includes authenticated cloud-save verification, real rendered art and viewport checks, not human subjective approval. Return to READY (partial), never DONE for this slice.
 
       Scoped achievement threshold bug fix: collector badges now award only when a threshold is crossed, with regression tests. This is partial t-041, not completion.
+
+      Kind Robots PR #5391 merged as e0e535259aa6b60c3c0a6df7ed11cc2fae27e5ea; all nine exact-head workflow groups completed success. Alien collection achievement milestones now award only upon threshold crossing, with regression coverage. This is a partial t-041 improvement; art delivery, authenticated visual QA and final main-game standard remain unfinished.
 
   - id: t-040
     title: 'Space Couch achievement upgrade: 12 or more live achievements'
