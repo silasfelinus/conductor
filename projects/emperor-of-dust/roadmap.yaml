@@ -1169,10 +1169,7 @@ tasks:
   - id: t-052
     milestone: m5
     title: "Illustrated scene delivery and full 50-day choice-and-art coverage audit"
-    status: review
-    owner: worker
-    claimed_by: '20261120T024930Z-eod-t052-silascorrect-9c63'
-    claimed_at: '2026-11-20T02:49:30.753Z'
+    status: ready
     passes: 0
     stakes: reversible
     note: |-
@@ -1195,7 +1192,9 @@ tasks:
       2026-11-19 PT: Kind Robots PR #5366 merged as e68b87cdd2ba1eb249fe5c2508dbbc16877c05b4. The exact PR head 7669c92fd8e9ce02e22ded8757cb72ab7e4c6f16 completed green in all seven required checks, plus branch janitor, including full Emperor Dispatch, four contract shards, TypeScript, Prettier and Layout. The real-browser responsive audit now includes /play/emperor-of-dust at 390/820/1440 and targeted 768 pixels with screenshot outputs. Actual post-deploy screenshots have NOT been captured/reviewed, no images were delivered, and the remaining Day 1-50 choice/art acceptance is incomplete. Return t-052 to ready rather than claiming final QA readiness.
 
       Partial save-integrity acceptance increment: align active quest party validation with quest-defined min/max, the Lumen Many Hands exception, mandatory companions and dead-follower exclusion. New real-engine contract regressions cover malformed loaded parties and a legal Many Hands save. Awaiting Kind Robots PR exact-head checks; this does not finish t-052 artwork delivery or campaign/visual acceptance.
-    updated: '2026-11-20T02:53:32.396Z'
+
+      2026-11-19 PT partial save-integrity increment merged as kind_robots#5382 at ba707ae8fa57bee7f0aefe9dca8bf4bda0f7de70. Exact PR head 9b089cef0e431e88759befd1355e3b7a614eb1b8 completed all eight GitHub Actions workflows successfully, including Emperor Dispatch full-campaign acceptance, TypeScript, Prettier, and all four contract shards. Real save validation now rejects active mission parties that exceed quest-defined limits, omit required companions, or include dead followers, while preserving the legitimate Lumen Many Hands exception. New positive and negative full-engine save/restore regressions pass. This is NOT final t-052 acceptance: delivered ArtImage binaries, full per-choice illustration and follower dialogue audits, scored five-act editorial review, and live 390/768/1440 screenshot inspections remain. Keep #4142 open and the finite roadmap active.
+    updated: '2026-11-20T03:15:24.965Z'
   - id: t-053
     milestone: m5
     title: "Prevent Young Komodo flashing through the startup splash before the introduction"
