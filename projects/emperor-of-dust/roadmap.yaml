@@ -741,70 +741,17 @@ tasks:
     status: ready
     passes: 0
     stakes: reversible
-    note: >-
-      ArtJobs 42323-42352 (art/ITEMS-ROUND-1.yaml, 30 market item icons) and 42158-42162
-      (ROOMS-ROUND-1 barracks v2, QUESTS-ROUND-1 q-d42-cave-forage) were queued 2026-10-20 behind
-      a multi-hour backlog. Run enqueue_art_requests.py --status on each ledger (safe on relay
-      502s since conductor#6416), contact-sheet and review, reroll rejects as -v2 subjects, export
-      keepers to kind_robots public/emperor-of-dust/items/<id>.webp (list in ITEM_ART), rooms/
-      (ROOM_ART) and quests/ (QUEST_ART), and record approved/keepers in the ledgers.
+    note: |-
+      ArtJobs 42323-42352 (art/ITEMS-ROUND-1.yaml, 30 market item icons) and 42158-42162 (ROOMS-ROUND-1 barracks v2, QUESTS-ROUND-1 q-d42-cave-forage) were queued 2026-10-20 behind a multi-hour backlog. Run enqueue_art_requests.py --status on each ledger (safe on relay 502s since conductor#6416), contact-sheet and review, reroll rejects as -v2 subjects, export keepers to kind_robots public/emperor-of-dust/items/<id>.webp (list in ITEM_ART), rooms/ (ROOM_ART) and quests/ (QUEST_ART), and record approved/keepers in the ledgers.
+      2026-10-21 partial: barracks backdrop keeper barracks-b-v2 exported in kind_robots#3955 (f8a577a), ledgers updated in conductor#6431 (5f33b39). Cave-forage v2 rerolls (42160-42162) rejected (no cave in any); v3 rerolls queued as ArtJobs 42353-42355. All 30 item icons (42323-42352) still PENDING behind a slow shared queue (~85 jobs ahead at 01:20Z). Re-armed to ready: when the queue reaches them, run enqueue_art_requests.py --status on ITEMS-ROUND-1 and QUESTS-ROUND-1, review on contact sheets, export items to public/emperor-of-dust/items/<id>.webp (320px, q80) listed in ITEM_ART and the cave set to quests/ in QUEST_ART, then render the market at 1440/390. Helper: polish/tools/items.py in the 2026-10-20 session scratchpad (paths need updating). 2026-10-21 04:20Z: ITEMS-ROUND-1 status DONE=3, RUNNING=1, PENDING=26; re-check with enqueue_art_requests.py --status and export once all 30 are DONE.
+      2026-11-19 PT partial: ITEMS-ROUND-1 was all DONE but never exported (ITEM_ART was empty). Curated on contact sheets: kept 6 (road-lantern, carbide-lamp, abbey-candle, night-draught, brass-bell-charm, surveyors-glass) and shipped them with an ITEM_ART contract test in kind_robots#5383. Rejected 24 because the lane suffix 'warm candlelight' drew a candle dish instead of the item; verdicts are in the ledger. Rerolls are in ITEMS-ROUND-2.yaml (ArtJobs 71164-71187; suffix now rim light, candles in the negative). Next: run enqueue_art_requests.py --status on ITEMS-ROUND-2, contact-sheet it, and export keepers with export_round_art.py --require-keep --max-edge 320, adding them to ITEM_ART. The q-d42 cave-forage v3 set (42353-42355) is still to be checked. Released to ready.
+      2026-11-20 PT partial: ITEMS-ROUND-2 all 24 DONE. Contact sheet plus full-size check kept 4 (caravan-salve, silent-bell-rosary, verge-signet, watch-buckler), shipped in kind_robots#5389 (ITEM_ART 6 -> 10). Rejected 20 (mostly generic discs or the wrong object; field-kit and ledger-abacus were dropped at full size for pseudo-lettering). Verdicts are in the ledger. Rerolls are in ITEMS-ROUND-3.yaml (ArtJobs 71188-71207): the prefix drops 'item icon', prompts lead with the object noun, and the negative adds coin/medallion/disc/label. Next: enqueue_art_requests.py --status ITEMS-ROUND-3, curate at full size, export keepers. The q-d42 cave-forage v3 set (42353-42355) is still unchecked.
+      kind_robots#5389 merged at 4504d1f (13/13 checks green). Released to ready: curate ITEMS-ROUND-3 (71188-71207) once it renders.
+      2026-11-20 PT partial: ITEMS-ROUND-3 all 20 DONE. Contact sheet plus full-size check kept 12 (bell-clapper, freehold-spade, lamplight-folio, ledger-abacus, lost-human- gauntlet, magpie-scales, rain-feather, reed-poppet, signal-coil, snare-kit, storm-glass- vial, witchwater-phial), shipped in kind_robots#5394 (ITEM_ART 10 -> 22). Rejected 8 (verdicts in ledger). Rerolls are in ITEMS-ROUND-4.yaml (auto_submit, seeds 74001-74008) with plainer object nouns and wrong-object negatives. Next: enqueue_art_requests.py --status ITEMS-ROUND-4, curate at full size, export keepers. The q-d42 cave-forage v3 set (42353-42355) is still unchecked. Released to ready.
+      2026-11-20 PT partial (r4): ITEMS-ROUND-4 all 8 DONE; full-size check kept 3 (field-kit, saltroad-waybill, crow-glass-eye), shipped in kind_robots#5400 (ITEM_ART 22 -> 25). Rejected 5 (crowbar drew a goose, lockpicks a spanner, spurs a wheel, cutters a blade, tooth a creature bust); rerolls in ITEMS-ROUND-5.yaml (auto_submit, seeds 75001-75005). q-d42 cave-forage v3 finally checked: notice+success approved and exported to QUEST_ART in the same PR; failure rejected (warm fire, full baskets) and falls back to the notice. Ledgers in conductor#7655. Next: enqueue_art_requests.py --status ITEMS-ROUND-5, curate at full size, export keepers. Released to ready.
 
-      2026-10-21 partial: barracks backdrop keeper barracks-b-v2 exported in kind_robots#3955
-      (f8a577a), ledgers updated in conductor#6431 (5f33b39). Cave-forage v2 rerolls
-      (42160-42162) rejected (no cave in any); v3 rerolls queued as ArtJobs 42353-42355. All
-      30 item icons (42323-42352) still PENDING behind a slow shared queue (~85 jobs ahead at
-      01:20Z). Re-armed to ready: when the queue reaches them, run enqueue_art_requests.py
-      --status on ITEMS-ROUND-1 and QUESTS-ROUND-1, review on contact sheets, export items to
-      public/emperor-of-dust/items/<id>.webp (320px, q80) listed in ITEM_ART and the cave set
-      to quests/ in QUEST_ART, then render the market at 1440/390. Helper:
-      polish/tools/items.py in the 2026-10-20 session scratchpad (paths need updating).
-      2026-10-21 04:20Z: ITEMS-ROUND-1 status DONE=3, RUNNING=1, PENDING=26; re-check with
-      enqueue_art_requests.py --status and export once all 30 are DONE.
-
-      2026-11-19 PT partial: ITEMS-ROUND-1 was all DONE but never exported (ITEM_ART was
-      empty). Curated on contact sheets: kept 6 (road-lantern, carbide-lamp, abbey-candle,
-      night-draught, brass-bell-charm, surveyors-glass) and shipped them with an ITEM_ART
-      contract test in kind_robots#5383. Rejected 24 because the lane suffix 'warm
-      candlelight' drew a candle dish instead of the item; verdicts are in the ledger. Rerolls
-      are in ITEMS-ROUND-2.yaml (ArtJobs 71164-71187; suffix now rim light, candles in the
-      negative). Next: run enqueue_art_requests.py --status on ITEMS-ROUND-2, contact-sheet
-      it, and export keepers with export_round_art.py --require-keep --max-edge 320, adding
-      them to ITEM_ART. The q-d42 cave-forage v3 set (42353-42355) is still to be checked.
-      Released to ready.
-
-      2026-11-20 PT partial: ITEMS-ROUND-2 all 24 DONE. Contact sheet plus full-size check
-      kept 4 (caravan-salve, silent-bell-rosary, verge-signet, watch-buckler), shipped in
-      kind_robots#5389 (ITEM_ART 6 -> 10). Rejected 20 (mostly generic discs or the wrong
-      object; field-kit and ledger-abacus were dropped at full size for pseudo-lettering).
-      Verdicts are in the ledger. Rerolls are in ITEMS-ROUND-3.yaml (ArtJobs 71188-71207): the
-      prefix drops 'item icon', prompts lead with the object noun, and the negative adds
-      coin/medallion/disc/label. Next: enqueue_art_requests.py --status ITEMS-ROUND-3, curate
-      at full size, export keepers. The q-d42 cave-forage v3 set (42353-42355) is still
-      unchecked.
-
-      kind_robots#5389 merged at 4504d1f (13/13 checks green). Released to ready: curate
-      ITEMS-ROUND-3 (71188-71207) once it renders.
-
-      2026-11-20 PT partial: ITEMS-ROUND-3 all 20 DONE. Contact sheet plus full-size check
-      kept 12 (bell-clapper, freehold-spade, lamplight-folio, ledger-abacus, lost-human-
-      gauntlet, magpie-scales, rain-feather, reed-poppet, signal-coil, snare-kit, storm-glass-
-      vial, witchwater-phial), shipped in kind_robots#5394 (ITEM_ART 10 -> 22). Rejected 8
-      (verdicts in ledger). Rerolls are in ITEMS-ROUND-4.yaml (auto_submit, seeds 74001-74008)
-      with plainer object nouns and wrong-object negatives. Next: enqueue_art_requests.py
-      --status ITEMS-ROUND-4, curate at full size, export keepers. The q-d42 cave-forage v3
-      set (42353-42355) is still unchecked. Released to ready.
-
-      2026-11-20 PT partial (r4): ITEMS-ROUND-4 all 8 DONE; full-size check kept 3 (field-kit,
-      saltroad-waybill, crow-glass-eye), shipped in kind_robots#5400 (ITEM_ART 22 -> 25).
-      Rejected 5 (crowbar drew a goose, lockpicks a spanner, spurs a wheel, cutters a blade,
-      tooth a creature bust); rerolls in ITEMS-ROUND-5.yaml (auto_submit, seeds 75001-75005).
-      q-d42 cave-forage v3 finally checked: notice+success approved and exported to QUEST_ART
-      in the same PR; failure rejected (warm fire, full baskets) and falls back to the notice.
-      Ledgers in conductor#7655. Next: enqueue_art_requests.py --status ITEMS-ROUND-5, curate
-      at full size, export keepers. Released to ready.
-    owner: worker
-    updated: '2026-11-20T06:52:49Z'
-    implementation_pr: 'silasfelinus/kind_robots#5400'
+      2026-11-20 PT partial (r5): ITEMS-ROUND-5 all 5 DONE. Full-size check kept 0. The crowbar was the right object but only a hairline sliver at icon size; lockpick-roll drew a brass tube and one pick, courier-spurs a boot with no spur, rustline-cutters a clamp-blade, hyena-tooth a toothed bone. Verdicts are in the ledger. Rerolls are in ITEMS-ROUND-6.yaml (ArtJobs 71221-71225, seeds 76001-76005): close-up framing, familiar look-alikes (pencil roll, horseshoe band, pendant charm) and wrong-object negatives. ITEM_ART stays 25/30. Next: enqueue_art_requests.py --status ITEMS-ROUND-6, curate at full size, export keepers with export_round_art.py --require-keep --max-edge 320. Released to ready.
+    updated: '2026-11-20T07:55:57+00:00'
   - id: t-034
     milestone: m5
     title: "Phone width: tapping a fortress room tab shifts the frame sideways"
