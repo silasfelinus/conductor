@@ -738,7 +738,7 @@ tasks:
   - id: t-033
     milestone: m5
     title: "Export the market item icons and the pending room/quest rerolls when they render"
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
     note: |-
@@ -751,7 +751,10 @@ tasks:
       2026-11-20 PT partial (r4): ITEMS-ROUND-4 all 8 DONE; full-size check kept 3 (field-kit, saltroad-waybill, crow-glass-eye), shipped in kind_robots#5400 (ITEM_ART 22 -> 25). Rejected 5 (crowbar drew a goose, lockpicks a spanner, spurs a wheel, cutters a blade, tooth a creature bust); rerolls in ITEMS-ROUND-5.yaml (auto_submit, seeds 75001-75005). q-d42 cave-forage v3 finally checked: notice+success approved and exported to QUEST_ART in the same PR; failure rejected (warm fire, full baskets) and falls back to the notice. Ledgers in conductor#7655. Next: enqueue_art_requests.py --status ITEMS-ROUND-5, curate at full size, export keepers. Released to ready.
 
       2026-11-20 PT partial (r5): ITEMS-ROUND-5 all 5 DONE. Full-size check kept 0. The crowbar was the right object but only a hairline sliver at icon size; lockpick-roll drew a brass tube and one pick, courier-spurs a boot with no spur, rustline-cutters a clamp-blade, hyena-tooth a toothed bone. Verdicts are in the ledger. Rerolls are in ITEMS-ROUND-6.yaml (ArtJobs 71221-71225, seeds 76001-76005): close-up framing, familiar look-alikes (pencil roll, horseshoe band, pendant charm) and wrong-object negatives. ITEM_ART stays 25/30. Next: enqueue_art_requests.py --status ITEMS-ROUND-6, curate at full size, export keepers with export_round_art.py --require-keep --max-edge 320. Released to ready.
-    updated: '2026-11-20T07:55:57+00:00'
+    updated: '2026-11-20T11:48:32Z'
+    owner: reviewer
+    claimed_by: 2026-11-20T11:52:00Z-reviewer-t033-krr4cc
+    claimed_at: '2026-11-20T11:48:32Z'
   - id: t-034
     milestone: m5
     title: "Phone width: tapping a fortress room tab shifts the frame sideways"
