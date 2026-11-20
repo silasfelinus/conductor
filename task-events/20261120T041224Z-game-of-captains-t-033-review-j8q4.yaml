@@ -1,0 +1,19 @@
+version: 1
+project: game-of-captains
+task: t-033
+operation: review
+owner: worker
+session: 20261120T040814Z-space-couch-t033-slots-j8q4
+updated: '2026-11-20T04:12:24Z'
+note: >-
+  2026-11-19 PT: scoped redshirt art delivery integration on
+  worker/game-of-captains-t-033-curated-redshirt-slots-j8q4.
+  The game's daily personnel deck now reads curator-selected ArtSlot images
+  from a dedicated guest-safe endpoint, retaining the existing static
+  portraits and glyph fallback on missing or broken URLs. An exact selected
+  candidate MUST have verdict liked and its ArtImage must be public, active
+  and non-mature. DONE ArtJobs are never autoaccepted; 24 uncurated Krea2
+  round-three cells and missing source WebPs remain REVIEW HOLD. Pure
+  parser and source-level safety regression added to the seeded test suite.
+  Await exact-head CI, manual rendered image review, and authenticated
+  delivery checks; this is partial t-033, not DONE or human approval.
