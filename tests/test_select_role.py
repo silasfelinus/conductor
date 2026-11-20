@@ -199,7 +199,8 @@ def test_pending_worker_review_filter_preserves_ready_or_orphan_branches():
         {"branch": "worker/orphan"},
     ]
     prs = [
-        {"number": 41, "head": {"ref": "worker/wait", "sha": "a1"}},
+        {"number": 41, "updated_at": "2099-01-01T00:00:00Z",
+         "head": {"ref": "worker/wait", "sha": "a1"}},
         {"number": 42, "head": {"ref": "worker/green", "sha": "b2"}},
     ]
     with mock.patch.object(select_role, "list_open_prs", return_value=prs):
@@ -217,6 +218,28 @@ def test_pending_worker_review_filter_preserves_ready_or_orphan_branches():
     ]
     assert waiting[0]["pr_number"] == 41
     assert waiting[0]["ci_state"] == "pending"
+
+
+def test_long_pending_worker_pr_returns_to_reviewer():
+    """conductor/t-220: zero check runs also reads as 'pending'; don't hide it forever."""
+    from datetime import datetime, timezone
+
+    now = datetime(2026, 11, 20, 14, 0, tzinfo=timezone.utc)
+    refs = [{"branch": "worker/fresh"}, {"branch": "worker/stuck"}, {"branch": "worker/nodate"}]
+    prs = [
+        {"number": 61, "updated_at": "2026-11-20T13:30:00Z",
+         "head": {"ref": "worker/fresh", "sha": "f1"}},
+        {"number": 62, "updated_at": "2026-11-20T12:00:00Z",
+         "head": {"ref": "worker/stuck", "sha": "s1"}},
+        {"number": 63, "head": {"ref": "worker/nodate", "sha": "n1"}},
+    ]
+    with mock.patch.object(select_role, "list_open_prs", return_value=prs), \
+            mock.patch.object(select_role, "commit_combined_state", return_value="pending"):
+        actionable, waiting = select_role.split_pending_worker_reviews(
+            refs, "silasfelinus/conductor", "fake-token", now=now
+        )
+    assert [b["branch"] for b in actionable] == ["worker/stuck", "worker/nodate"]
+    assert [w["pr_number"] for w in waiting] == [61]
 
 
 def test_worker_review_filter_fails_safe_on_unknown_ci():

@@ -226,6 +226,10 @@ DEFAULT_PR_STALE_HOURS = 3.0
 # still actively pushing to its own branch isn't immediately flagged as
 # something else needs to review it (conductor/t-083).
 DEFAULT_PR_GRACE_MINUTES = 5.0
+# conductor/t-220: a worker PR whose CI has looked "pending" for this long is
+# treated as stuck (commit_combined_state also reports 'pending' when a head has
+# no check runs at all) and is handed back to the reviewer lane.
+STALE_PENDING_CI_MINUTES = 90.0
 DEFAULT_BRANCH_STALE_HOURS = branch_janitor.DEFAULT_STALE_HOURS
 DEFAULT_PREFIXES = branch_janitor.DEFAULT_PREFIXES
 
@@ -393,7 +397,12 @@ def commit_combined_state(repo: str, sha: str, token: str) -> str | None:
 
 
 def split_pending_worker_reviews(
-    branches: list[dict], repo: str, token: str
+    branches: list[dict],
+    repo: str,
+    token: str,
+    *,
+    stale_minutes: float = STALE_PENDING_CI_MINUTES,
+    now: datetime | None = None,
 ) -> tuple[list[dict], list[dict]]:
     """Do not consume a reviewer session merely to watch queued PR checks.
 
@@ -401,7 +410,13 @@ def split_pending_worker_reviews(
     green or red checks still needs review. Only an OPEN PR with actively
     pending CI is handed off to the production pipeline. If GitHub cannot
     establish its state, prefer reviewer over a potentially unsafe new claim.
+
+    conductor/t-220: 'pending' also means "no check runs at all", so a PR
+    whose CI never starts would otherwise leave the reviewer lane forever.
+    A pending PR untouched (`updated_at`) for `stale_minutes` or more, or
+    with no parseable `updated_at`, is treated as actionable.
     """
+    now = now or datetime.now(timezone.utc)
     if not branches or not token:
         return branches, []
 
@@ -427,7 +442,7 @@ def split_pending_worker_reviews(
             continue
         sha = (pr.get('head') or {}).get('sha')
         status = commit_combined_state(repo, str(sha), token) if sha else None
-        if status == 'pending':
+        if status == 'pending' and not _pending_ci_is_stale(pr, now, stale_minutes):
             pending.append({
                 **branch,
                 'pr_number': pr.get('number'),
@@ -437,6 +452,17 @@ def split_pending_worker_reviews(
         else:
             actionable.append(branch)
     return actionable, pending
+
+
+def _pending_ci_is_stale(pr: dict, now: datetime, stale_minutes: float) -> bool:
+    updated_at = pr.get('updated_at')
+    try:
+        touched = datetime.strptime(str(updated_at), '%Y-%m-%dT%H:%M:%SZ').replace(
+            tzinfo=timezone.utc
+        )
+    except (TypeError, ValueError):
+        return True  # unknown age: fail safe toward review
+    return (now - touched).total_seconds() / 60.0 >= stale_minutes
 
 
 def find_red_stale_prs_in_repo(
