@@ -114,3 +114,14 @@ Merged (squash 9017e41). Art ledgers/prompts only, reversible, CI green. The fiv
 **Pattern for Workers:** This is the second branch in a row pushed without a PR. A pushed branch is not a handoff. Also, when a test reads real repo data, state its runtime in the handoff.
 
 **Remaining:** None for t-041. Kaizen t-042.
+
+
+## 2026-11-20 PT · Reviewer · t-042 parity test moved to a daily lane · #7695
+
+**Decision:** Merged (#7695, squash e48d115). This time the Worker opened a PR with the full handoff block, an improvement on t-040/t-041. The exhaustive C/Python SafeLoader parity test is marked `art_parity`. PR CI runs `-m "not art_parity"` and the new read-only `Daily art ledger loader parity` workflow runs it daily and on dispatch. A small regression test pins that split. All 24 checks were green on the head.
+
+**What I found:** The change is scoped to test cadence and touches no product data. The handoff says plainly that the 32s figure is local and the CI delta isn't measured yet. Kaizen t-043 asks for that number and for confirmation that the daily run doesn't silently skip. Housekeeping: stale PR #7688 (the t-040 branch, opened late, red only because main had already moved) was closed as superseded by #7689. Its branch `worker/comet-city-academy-t-040-p8f4` remains on origin because this session's branch delete was denied. branch-janitor should clear it.
+
+**Pattern for Workers:** Good: handoff headings filled, uncertainty flagged. Keep doing that. When a branch's work lands through someone else's PR, close your own PR in the same session so it doesn't go red-stale.
+
+**Remaining:** None for t-042. Kaizen t-043.

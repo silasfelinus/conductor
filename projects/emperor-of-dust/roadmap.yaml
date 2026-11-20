@@ -742,7 +742,7 @@ tasks:
   - id: t-033
     milestone: m5
     title: "Export the market item icons and the pending room/quest rerolls when they render"
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
     note: |-
@@ -764,8 +764,21 @@ tasks:
       enqueue_art_requests.py --status ITEMS-ROUND-7, curate at full size, export keepers with
       export_round_art.py --require-keep --max-edge 320. ITEM_ART stays 25/30. Released to
       ready.
-    updated: '2026-11-20T22:49:36Z'
+
+      2026-11-20 PT (r7): ITEMS-ROUND-7 (Krea 2 prose lane) all 5 DONE. The full-size check
+      kept all 5: crowbar, lockpick-roll, courier-spurs, rustline-cutters and hyena-tooth
+      (verdicts in the ledger). Exported at 320px to kind_robots#5451 (ITEM_ART 25 -> 30,
+      every market item now has an icon). The contract test now requires an icon for every
+      ITEMS entry. The room and quest rerolls were already resolved (barracks
+      kind_robots#3955, cave-forage conductor#7655). Done once #5451 merges green. Lesson: two
+      Arthemy rounds missed these literal objects, and the Krea prose lane got all five on its
+      first try.
+
+      kind_robots#5451 merged green (squash 9e57005, all 14 checks passed). The Emperor market
+      ships 30/30 item icons. Task complete.
+    updated: '2026-11-20T23:01:37Z'
     owner: reviewer
+    implementation_pr: 'silasfelinus/kind_robots#5451'
     claimed_by: 2026-11-20T225900Z-reviewer-r3faxq
     claimed_at: '2026-11-20T22:49:36Z'
   - id: t-034
