@@ -215,17 +215,27 @@ tasks:
       Reviewed and merged by the reviewer role: load_ledger_yaml() picks yaml.CSafeLoader when present and yaml.SafeLoader otherwise; every ledger parse in sweep_art_ledgers and check_auto_art_receipts goes through it, and the parse-once test now counts calls to the helper. 9 tests pass locally (libyaml absent, fallback path). Kaizen t-041 pins loader equivalence on real ledgers.
   - id: t-041
     title: "Add a test that CSafeLoader and SafeLoader produce identical data for every opted-in art ledger when libyaml is installed"
-    status: review
+    status: done
     owner: worker
-    claimed_by: 2026-11-20T202102Z-comet-city-academy-t-041-p9f2
-    claimed_at: '2026-11-20T20:21:02Z'
-    updated: '2026-11-20T20:24:15Z'
+    updated: '2026-11-20T21:30:00Z'
     milestone: m3
     stakes: reversible
     passes: 0
     depends_on: [t-040]
     note: |-
       Kaizen from t-040 review. CI runners use the C loader and sandboxes use the Python one, so a parser difference would pass locally and change behavior in Actions. Skip the test when yaml.CSafeLoader is missing; otherwise compare both parses of each find_ledgers() path.
+
+      Reviewed and merged by the reviewer role (branch worker/comet-city-academy-t-041-loader-parity-p9f2): test_all_opted_in_art_ledgers_have_identical_safe_loader_data skips without libyaml and otherwise compares CSafeLoader and SafeLoader parses of every find_ledgers() path. Locally 9 pass, 1 skip. Cost note: the pure-Python parse of the 240 opted-in ledgers takes ~32s, so the test adds roughly that to CI. Kaizen t-042 measures it.
+  - id: t-042
+    title: "Measure the loader-parity test's CI runtime and move it to a scheduled lane if it adds more than 15 seconds to pytest"
+    status: ready
+    owner: worker
+    milestone: m3
+    stakes: reversible
+    passes: 0
+    depends_on: [t-041]
+    note: |-
+      Kaizen from t-041 review. SafeLoader takes ~32s locally on the 240 opted-in ledgers, and CI pays that on every PR. Read the pytest --durations output from a ci.yml run. If the test costs more than 15s, mark it slow and run it from a daily workflow, or compare only ledgers changed since the last run. Report the before and after numbers.
   - id: t-012
     milestone: m2
     title: "Promote the seven-day demo into Capes & Tassels name and genuine day/night map slice"
