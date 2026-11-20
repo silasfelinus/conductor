@@ -18898,3 +18898,13 @@ records:
   failure_category: null
   lesson: "Route every parse through one small helper so a loader swap is one line and tests can
     monkeypatch a single seam instead of yaml.safe_load globally."
+- date: '2026-11-20'
+  project: comet-city-academy
+  task: t-041
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "A test that sweeps real repo data with the slow code path inherits that path's
+    runtime on every CI run. Measure it before merging and budget it like a feature."

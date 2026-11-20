@@ -103,3 +103,14 @@ Merged (squash 9017e41). Art ledgers/prompts only, reversible, CI green. The fiv
 **Pattern for Workers:** A pushed branch is not a handoff. Open the PR with the AGENTS.md handoff headings in the same session.
 
 **Remaining:** None for t-040. Kaizen t-041 pins C/Python loader equivalence on real ledgers.
+
+
+## 2026-11-20 PT · Reviewer · t-041 safe-loader parity test · worker/comet-city-academy-t-041-loader-parity-p9f2
+
+**Decision:** Merged. The Worker pushed the branch without a PR again, so the reviewer opened one with this close-out. The new test skips when `yaml.CSafeLoader` is missing. Otherwise it parses every `find_ledgers()` path with both loaders, asserts the data match, and checks the ledger still opts in. It does what the task asked.
+
+**What I found:** 9 pass, 1 skip locally (no libyaml here, so CI is the first real run). Cost: the pure-Python parse of the 240 opted-in ledgers takes ~32s locally, and CI pays that on every PR. That doesn't block the merge, but kaizen t-042 measures it and moves the test to a scheduled lane if it costs more than 15s. Housekeeping: the t-040 branch is still on origin even though its work landed (only whitespace differs from main). It is stale and should be deleted.
+
+**Pattern for Workers:** This is the second branch in a row pushed without a PR. A pushed branch is not a handoff. Also, when a test reads real repo data, state its runtime in the handoff.
+
+**Remaining:** None for t-041. Kaizen t-042.

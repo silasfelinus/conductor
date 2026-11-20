@@ -121,3 +121,21 @@ def test_loader_falls_back_to_python_safe_loader(monkeypatch):
     monkeypatch.delattr(sweep.yaml, "CSafeLoader", raising=False)
     assert sweep.load_ledger_yaml("auto_submit: true") == {"auto_submit": True}
     assert calls == [sweep.yaml.SafeLoader]
+
+
+def test_all_opted_in_art_ledgers_have_identical_safe_loader_data():
+    """CI's LibYAML path must agree with the sandbox's Python path on real ledgers."""
+    import pytest
+
+    fast_loader = getattr(yaml, "CSafeLoader", None)
+    if fast_loader is None:
+        pytest.skip("LibYAML CSafeLoader is not installed")
+
+    ledgers = sweep.find_ledgers(sweep.ROOT)
+    assert ledgers, "expected at least one opted-in production art ledger"
+    for path in ledgers:
+        source = path.read_text()
+        python_data = yaml.load(source, Loader=yaml.SafeLoader)
+        fast_data = yaml.load(source, Loader=fast_loader)
+        assert fast_data == python_data, f"safe YAML loader mismatch: {path}"
+        assert sweep.is_auto_ledger(fast_data)
