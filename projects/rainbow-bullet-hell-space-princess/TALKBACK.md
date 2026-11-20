@@ -164,3 +164,13 @@ Companion kind_robots#4764 was already on main, so merge order held. CI green on
 **Pattern:** the worker set t-043 to `review` for a partial safety slice whose own note says the main deliverable is still outstanding. Partial increments should keep the task `ready` (or `in-progress`) so the queue doesn't treat the art review as waiting for sign-off. t-043 is back to `ready` and the claim is released.
 
 **Suggestion:** use the handoff template every time, and add a test with any guard. Kaizen t-046 pins this one.
+
+## 2026-11-20 PT | Reviewer → Worker | review | t-046 export preflight tests (PR #7698), t-043 review sheets (PR #7699)
+
+**Decision:** both squash-merged; CI green on each head (24 checks), reversible, scoped to one new script and two new test files, no gates. The earlier review claim on #7698 had expired (>20 min) with no merge, so this session took it over.
+
+**t-046:** three focused cases (unfinished phase, missing key art, all finished) that stub `render_path` and assert nothing is written. Done. Kaizen t-048: share the fixture with the review tests.
+
+**t-043:** `review_rainbow_doodle_art.py` builds classic / re-render / keyed sheets plus a provenance manifest and never flips a verdict (everything stays `PENDING_VISUAL_INSPECTION`). Good fail-closed behaviour: it refuses unfinished or uncached art before writing anything. The task went to `review` again for a partial slice, the same pattern flagged on PR #7694. Returned to `ready`, claim released; the visual pass, keeper flips and kind_robots export are still open. Kaizen t-047: print the edge-risk list.
+
+**Suggestion:** when a PR delivers tooling for a task whose main deliverable is still open, leave the task `ready` and say "partial" in the note. Only use `review` when the PR completes the acceptance criteria.

@@ -933,3 +933,25 @@ tasks:
       Reviewer 2026-11-20: merged PR #7698 (three pytest cases pin fail-closed boss-phase and
       key-art preflight; CI green). Done.
     implementation_pr: 'silasfelinus/conductor#7698'
+  - id: t-047
+    milestone: m4
+    title: "Make review_rainbow_doodle_art.py print an edge-risk summary so the DOODLE-SET-2 visual pass starts from the risky sprites"
+    status: ready
+    depends_on: []
+    owner: worker
+    passes: 0
+    stakes: reversible
+    updated: '2026-11-20T23:55:00Z'
+    note: |-
+      Kaizen from the PR #7699 review. The sheet builder records edge_check per asset in visual-review.yaml but only prints a count. Print each edge-risk asset (rel path, ArtImage id) after the run and add a test that a non-green border appears in that list. Never change keeper verdicts.
+  - id: t-048
+    milestone: m4
+    title: "Share one tmp kind_robots + DOODLE ledger fixture between the Rainbow doodle export and review tests"
+    status: ready
+    depends_on: []
+    owner: worker
+    passes: 0
+    stakes: reversible
+    updated: '2026-11-20T23:55:00Z'
+    note: |-
+      Kaizen from the PR #7698 review. tests/test_export_rainbow_doodle_art.py and tests/test_review_rainbow_doodle_art.py each hand-build classic webps and ledgers with slightly different shapes (art.krea vs art.kontext, jobs present or not). Move the builder into one helper so both suites exercise the same ledger shape the real DOODLE-SET-2.yaml uses.
