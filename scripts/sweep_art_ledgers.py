@@ -22,6 +22,7 @@ Environment: KR_API_TOKEN (for --live), KR_BASE_URL.
 from __future__ import annotations
 
 import argparse
+import re
 import sys
 from pathlib import Path
 
@@ -29,6 +30,12 @@ import yaml
 
 ROOT = Path(__file__).resolve().parent.parent
 PATTERNS = ("projects/*/art/*.yaml", "projects/*/art/**/*.yaml")
+# Cheap text gate before the (pure-Python, without libyaml) YAML parse. Half of the ~27 MB of
+# art YAML never says ``auto_submit: true``; parsing it pushed check_auto_art_receipts.py to
+# ~85s against session_sweep's 90s per-check timeout (comet-city-academy/t-039). The pattern
+# is deliberately loose (any case, quoted key, YAML 1.1 ``yes``/``on``, comments too): a false
+# match only costs a parse, a false miss would silently drop a ledger from the art sweep.
+OPT_IN_HINT = re.compile(r"auto_submit['\"]?\s*:\s*(?:true|yes|on)\b", re.IGNORECASE)
 
 
 def is_auto_ledger(data) -> bool:
@@ -49,7 +56,10 @@ def find_ledgers(root: Path | None = None, *, with_data: bool = False) -> list:
             if path in found:
                 continue
             try:
-                data = yaml.safe_load(path.read_text())
+                text = path.read_text()
+                if not OPT_IN_HINT.search(text):
+                    continue
+                data = yaml.safe_load(text)
             except (OSError, yaml.YAMLError):
                 continue
             if is_auto_ledger(data):

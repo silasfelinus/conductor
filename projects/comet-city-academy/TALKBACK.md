@@ -79,3 +79,16 @@ Merged (squash 9017e41). Art ledgers/prompts only, reversible, CI green. The fiv
 **Pattern for Workers:** Copy the PR handoff block from AGENTS.md verbatim rather than paraphrasing its headings. The validator matches the exact text. When adding a check to the startup sweep, time it (`time python scripts/<check>.py`) and say so in the handoff.
 
 **Remaining:** None for t-037. Kaizen t-038 is single-parse ledger scanning for the receipt checker.
+
+
+## 2026-11-20 PT · Reviewer · t-038 single-parse receipt audit · PR #7686 (+ t-039 text gate)
+
+**Decision:** Merged Conductor PR #7686. The change is correct and backward compatible: `find_ledgers(with_data=True)` returns `(path, data)` pairs, it skips paths repeated by the overlapping glob patterns, and the receipt audit reuses the parse. Tests pass locally and in CI.
+
+**What I found:** (1) The PR body used `### What changed` / `### Verification` / `### Kaizen` again, and the handoff validator was red. I repaired the body. That is the fourth heading miss today. (2) The fix did not reach the task's goal. Timed without libyaml, the checker took 85s on main and 88s on the branch. The second parse was never the cost. Discovery was: it parsed all ~27 MB of art YAML, and half of those files never opt in. The handoff claimed no timing, so the miss was invisible from the PR.
+
+**Follow-up done in this session (t-039):** I added a loose `OPT_IN_HINT` regex gate before `yaml.safe_load` in `find_ledgers`. It is case-insensitive, accepts quoted keys and true/yes/on, and counts comments too. The checker went from ~85s to ~21s. A one-time full-parse comparison matched the gated result exactly. A unit test pins the parse skip and the YAML 1.1 `yes` case.
+
+**Pattern for Workers:** When a task's acceptance is a number ("well under 90s"), measure it before and after (`s=$SECONDS; python scripts/x.py; echo $((SECONDS-s))`) and put both numbers under `### How I verified`. Profile before you pick the fix the note suggests. The task note's diagnosis was a guess.
+
+**Remaining:** None for t-038/t-039. Kaizen t-040: CSafeLoader when libyaml exists, behind one loader helper.

@@ -175,11 +175,9 @@ tasks:
     implementation_pr: 'silasfelinus/conductor#7683'
   - id: t-038
     title: "Make check_auto_art_receipts.py parse each art ledger once so its session-sweep row stays well under the 90s timeout"
-    status: review
+    status: done
     owner: worker
-    claimed_by: 20261120T181155Z-prom-t038-parse-once-c7a9
-    claimed_at: '2026-11-20T18:11:55Z'
-    updated: '2026-11-20T18:20:00Z'
+    updated: '2026-11-20T19:05:00Z'
     milestone: m3
     stakes: reversible
     passes: 0
@@ -187,7 +185,28 @@ tasks:
     note: |-
       Kaizen from t-037 review (Conductor PR #7683). In a sandbox without libyaml the checker took ~78s: sweep_art_ledgers.find_ledgers() pure-Python-parses ~240 YAML files (~60s), then missing_receipts() re-parses every match (~15s). The session sweep's per-check timeout is 90s, so the new auto_art_receipts row can flip to TIMEOUT under load. Reuse the parsed data (e.g. have find_ledgers optionally return (path, data) pairs, or prefer yaml.CSafeLoader when available) and add a test that each ledger is loaded once.
 
-      Receipt audit now reuses discovery-parsed YAML, with regression coverage for one parse per opted-in ledger and backward-compatible path-only discovery. PR pending checks.
+      Receipt audit now reuses discovery-parsed YAML, with regression coverage for one parse per opted-in ledger and backward-compatible path-only discovery. Merged as Conductor PR #7686 (reviewer repaired handoff headings). Reviewer timing in a libyaml-less sandbox: 85s on main vs 88s on the branch, so the second parse was not the bottleneck; discovery parsing of ~27 MB of art YAML was. Follow-up t-039 adds a text gate before the parse.
+    implementation_pr: 'silasfelinus/conductor#7686'
+  - id: t-039
+    title: "Skip the YAML parse for art files that never say auto_submit true so the receipt checker runs far under the sweep timeout"
+    status: done
+    owner: reviewer
+    updated: '2026-11-20T19:05:00Z'
+    milestone: m3
+    stakes: reversible
+    passes: 0
+    depends_on: [t-038]
+    note: |-
+      Kaizen from t-038 review (PR #7686 did not move the measured runtime). sweep_art_ledgers.find_ledgers() now runs a loose, case-insensitive OPT_IN_HINT regex (quoted key, true/yes/on, comments count) before yaml.safe_load, so ~half of the 401 art YAML files (~13 MB) are never parsed. check_auto_art_receipts.py: ~85s to ~21s locally without libyaml. A one-time full-parse comparison found the same 240-ish opted-in ledgers with and without the gate; a unit test pins the skip and the YAML 1.1 "yes" case.
+  - id: t-040
+    title: "Load art ledgers with yaml.CSafeLoader when libyaml is available, keeping the pure-Python fallback and the parse-once tests"
+    status: ready
+    milestone: m3
+    stakes: reversible
+    passes: 0
+    depends_on: [t-039]
+    note: |-
+      Kaizen from t-039. GitHub runners usually ship libyaml, sandboxes do not. Route find_ledgers and the receipt checker through one loader helper so tests can still count parses.
   - id: t-012
     milestone: m2
     title: "Promote the seven-day demo into Capes & Tassels name and genuine day/night map slice"
