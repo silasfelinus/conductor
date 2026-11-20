@@ -154,12 +154,12 @@ tasks:
     implementation_pr: 'silasfelinus/kind_robots#5159'
   - id: t-063
     title: 'Main-game standard: audit and close the gaps for Slime City'
-    status: needs-human
+    status: ready
     milestone: m4
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-15T09:14:12Z'
+    updated: '2026-11-20T00:05:39Z'
     note: |-
       Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -290,10 +290,18 @@ tasks:
       requires sign-in; card text and raster now say 'Sign in free to play'. Same pass relabels
       admin-only Tzaddik, Daily Pitches, Comic Studio, Art Archive and Butterfly Gallery cards as
       private preview; verifyFrontDoorPolish.test.ts derives gates from content frontmatter.
-    claimed_by: session_01L5NKxZnzZgXMzHdS6eqZ4d
-    claimed_at: '2026-11-14T20:45:10Z'
+
+      2026-11-19 PT: back to ready. Silas has not picked (a), (b) or (c). In session today he
+      made the session responsible for finishing every non-human Slime City task before
+      playtest, so it is building the written recommendation (a): offer IMPORT only into a
+      fresh account story; copy campaign, journey, endings, scrapbook and decks; never tower
+      cinders or bestFloor. Reversible, and reported to him as an agent decision he can
+      change. Item 7 is recorded as crew + deck choice plus the equipable card backs and
+      titles (t-061, t-065).
+    claimed_by: null
+    claimed_at: null
     implementation_pr: 'silasfelinus/kind_robots#5174'
-    soft_gate: true
+    soft_gate: false
   - id: t-064
     title: 'CPU values PIERCE gear only against armor, then rebalance Undertow and Bloodfairies starters'
     status: done
@@ -1371,11 +1379,11 @@ tasks:
   - id: t-069
     milestone: m4
     title: 'Real-browser regression: FIGHT stays inside Clash sidebar at 390/768/1440'
-    status: needs-human
+    status: ready
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-18T01:01:02Z'
+    updated: '2026-11-20T00:05:39Z'
     note: |-
       Reviewer kaizen from slime-city/t-068, kind_robots#5210 (squash 0c93ed7). The 1440px control strip overflow is addressed by a CSS/source contract, but source matching cannot prove real DOM geometry. After the self-hosted production image includes the merged commit, run the sanctioned real-browser layout audit at 390, 768 and 1440 pixels on VS-vs-CPU Clash, with and without an available TAP ability. Assert data-testid=clash-pass stays fully inside .clash-console and the viewport, save screenshots, and regression-test the measured bounds in the existing Slime City layout/audit harness. Do not claim the result from static CSS checks or a Vercel preview (retired).
 
@@ -1402,9 +1410,17 @@ tasks:
       /api/auth/login (it has no login step today), and the controls job in responsive-layout-
       audit.yml passes the two secrets through. Alternative with no secret: Silas allows
       anonymous Clash play.
-    claimed_by: 20261115T112510Z-slime-city-t-069-gpt6-c4f27
-    claimed_at: '2026-11-15T11:25:10.424Z'
-    soft_gate: true
+
+      2026-11-19 PT re-triage: the done criterion (a real signed-in run of audit:slime-city-
+      clash-layout against production at 390/768/1440) needs no new secret.
+      docs/agents/frontend-verification.md documents the disposable cypress-* test-user sign-
+      in, and kind_robots#5332's verification already used it. Back to ready so a session can
+      add --storage-state to the layout audit, run it signed in against production and record
+      the measurements. Whether the scheduled workflow gets its own signed-in session needs a
+      secret, stays Silas's call and is not part of this task.
+    claimed_by: null
+    claimed_at: null
+    soft_gate: false
   - id: t-070
     milestone: m2
     title: 'Mercenary L2-to-L3 tactical continuity and constructed-selection audit'
