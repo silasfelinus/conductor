@@ -38,6 +38,11 @@ PATTERNS = ("projects/*/art/*.yaml", "projects/*/art/**/*.yaml")
 OPT_IN_HINT = re.compile(r"auto_submit['\"]?\s*:\s*(?:true|yes|on)\b", re.IGNORECASE)
 
 
+def load_ledger_yaml(text: str):
+    """Use LibYAML when installed, otherwise the equivalent safe Python loader."""
+    return yaml.load(text, Loader=getattr(yaml, "CSafeLoader", yaml.SafeLoader))
+
+
 def is_auto_ledger(data) -> bool:
     """A ledger opts in with a top-level ``auto_submit: true`` and has lanes and subjects."""
     return (
@@ -59,7 +64,7 @@ def find_ledgers(root: Path | None = None, *, with_data: bool = False) -> list:
                 text = path.read_text()
                 if not OPT_IN_HINT.search(text):
                     continue
-                data = yaml.safe_load(text)
+                data = load_ledger_yaml(text)
             except (OSError, yaml.YAMLError):
                 continue
             if is_auto_ledger(data):
@@ -99,7 +104,7 @@ def main(argv=None) -> int:
         return 0
     if not args.live:
         for path in ledgers:
-            print(f"{path.relative_to(ROOT)}: {open_cells(yaml.safe_load(path.read_text()))} open cell(s)")
+            print(f"{path.relative_to(ROOT)}: {open_cells(load_ledger_yaml(path.read_text()))} open cell(s)")
         return 0
 
     sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -129,7 +134,7 @@ def main(argv=None) -> int:
 def ledger_priority(path: Path) -> float:
     """A ledger's top-level ``priority`` (higher sweeps first); 0 if absent or unreadable."""
     try:
-        value = (yaml.safe_load(path.read_text()) or {}).get("priority", 0)
+        value = (load_ledger_yaml(path.read_text()) or {}).get("priority", 0)
         return float(value)
     except Exception:  # noqa: BLE001
         return 0.0
