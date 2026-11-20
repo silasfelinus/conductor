@@ -1,0 +1,16 @@
+version: 1
+project: game-of-captains
+task: t-041
+operation: review
+owner: worker
+session: 20261120T010958Z-space-couch-t041-backup-r6p2
+updated: '2026-11-20T01:13:44Z'
+note: >-
+  2026-11-19 PT agent-owned main-game standard slice: implemented a
+  reversible, versioned JSON backup for Space Couch current v1 voyage and
+  finished-run history, accessible in Captain's Log. Explicit user-controlled
+  import preview and confirm before replacing an active run; duplicate-safe
+  completed-run merge; corrupted, oversized or wrong-game files rejected.
+  Existing voyage save key, game slug and account-owned guide/achievements
+  remain untouched. CI/PR and browser evidence pending. This does not assert
+  authenticated cloud saves, original art approval, mobile QA or playtest DONE.
