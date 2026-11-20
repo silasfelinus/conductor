@@ -793,9 +793,18 @@ tasks:
       with plainer object nouns and wrong-object negatives. Next: enqueue_art_requests.py
       --status ITEMS-ROUND-4, curate at full size, export keepers. The q-d42 cave-forage v3
       set (42353-42355) is still unchecked. Released to ready.
+
+      2026-11-20 PT partial (r4): ITEMS-ROUND-4 all 8 DONE; full-size check kept 3 (field-kit,
+      saltroad-waybill, crow-glass-eye), shipped in kind_robots#5400 (ITEM_ART 22 -> 25).
+      Rejected 5 (crowbar drew a goose, lockpicks a spanner, spurs a wheel, cutters a blade,
+      tooth a creature bust); rerolls in ITEMS-ROUND-5.yaml (auto_submit, seeds 75001-75005).
+      q-d42 cave-forage v3 finally checked: notice+success approved and exported to QUEST_ART
+      in the same PR; failure rejected (warm fire, full baskets) and falls back to the notice.
+      Ledgers in conductor#7655. Next: enqueue_art_requests.py --status ITEMS-ROUND-5, curate
+      at full size, export keepers. Released to ready.
     owner: worker
-    updated: '2026-11-20T05:51:51Z'
-    implementation_pr: 'silasfelinus/kind_robots#5394'
+    updated: '2026-11-20T06:52:49Z'
+    implementation_pr: 'silasfelinus/kind_robots#5400'
   - id: t-034
     milestone: m5
     title: "Phone width: tapping a fortress room tab shifts the frame sideways"

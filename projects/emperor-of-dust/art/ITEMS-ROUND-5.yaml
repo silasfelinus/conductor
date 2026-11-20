@@ -1,0 +1,94 @@
+# Emperor of Dust market item icons, round 5 (2026-11-20 PT, emperor-of-dust/t-033). ITEMS-ROUND-4 kept 3 of 8
+# (field-kit, saltroad-waybill, crow-glass-eye; ITEM_ART 22 -> 25). These 5 rerolls replace its rejects: the
+# crowbar drops 'goose-neck' (it drew a goose), lockpicks are top-down with no tension wrench, the spur names a
+# cowboy spur and negates wheels, the cutters become bolt cutters, and the tooth negates skull/head/horns.
+# Curate at FULL size, export keepers with scripts/export_round_art.py --require-keep --max-edge 320, and add
+# ids to ITEM_ART. auto_submit.
+round: emperor-items-5
+project_slug: emperor-of-dust
+designer: Comic Studio
+is_public: false
+is_mature: false
+cast_loras: false
+auto_submit: true
+lanes:
+- key: arthemy-house
+  label: Arthemy Western Art v3.0 (house, author settings)
+  engine: comfy
+  checkpoint: Illustrious/arthemyWesternArt_v30.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, absurdres, very aesthetic, toon (style), western comics (style), weathered,
+    dramatic lighting, still life, single object, centered, object focus
+  suffix: kiln ochre, deep crimson and tarnished brass palette, warm rim light, dark plain background, salvage, wasteland
+  steps: 30
+  cfg: 5
+  sampler: euler_ancestral
+subjects:
+- key: eodi-old-road-crowbar-v5
+  lane: arthemy-house
+  title: 'Market item: old-road-crowbar (v5)'
+  item: old-road-crowbar
+  asset: items/old-road-crowbar
+  size: 1024x1024
+  seed: 75001
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters, words,
+    logo, writing, caption, ui, frame, border, hands, person, character, multiple objects, cluttered, candle, candlestick,
+    candle flame, lit wick, second object, animal, bird, creature, label, plaque, coin, medallion, round disc, emblem shield,
+    goose, duck, swan, feathers, beak, cane, umbrella
+  prompt_tags: iron crowbar, long straight black iron pry bar, one end bent into a short hook with a forked claw, the other
+    end a flat chisel tip, pitted rusty metal, lying flat diagonally, the only object, resting alone on a dark worn wooden
+    surface, soft rim light
+- key: eodi-lockpick-roll-v5
+  lane: arthemy-house
+  title: 'Market item: lockpick-roll (v5)'
+  item: lockpick-roll
+  asset: items/lockpick-roll
+  size: 1024x1024
+  seed: 75002
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters, words,
+    logo, writing, caption, ui, frame, border, hands, person, character, multiple objects, cluttered, candle, candlestick,
+    candle flame, lit wick, second object, animal, bird, creature, label, plaque, coin, medallion, round disc, emblem shield,
+    wrench, spanner, closed wallet, knife, trousers
+  prompt_tags: unrolled leather tool roll lying flat and open, a row of six thin steel needle picks with tiny bent tips
+    tucked into stitched pockets, the only object, top-down view, resting alone on a dark worn wooden surface, soft rim
+    light
+- key: eodi-courier-spurs-v5
+  lane: arthemy-house
+  title: 'Market item: courier-spurs (v5)'
+  item: courier-spurs
+  asset: items/courier-spurs
+  size: 1024x1024
+  seed: 75003
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters, words,
+    logo, writing, caption, ui, frame, border, hands, person, character, multiple objects, cluttered, candle, candlestick,
+    candle flame, lit wick, second object, animal, bird, creature, label, plaque, coin, medallion, round disc, emblem shield,
+    wheel, cart wheel, bicycle, gear, horseshoe, badge, sheriff star
+  prompt_tags: cowboy spur, U-shaped steel heel band, short shank sticking out the back ending in a small star-toothed rowel,
+    worn leather strap through the band, side view, the only object, resting alone on a dark worn wooden surface, soft rim
+    light
+- key: eodi-rustline-cutters-v5
+  lane: arthemy-house
+  title: 'Market item: rustline-cutters (v5)'
+  item: rustline-cutters
+  asset: items/rustline-cutters
+  size: 1024x1024
+  seed: 75004
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters, words,
+    logo, writing, caption, ui, frame, border, hands, person, character, multiple objects, cluttered, candle, candlestick,
+    candle flame, lit wick, second object, animal, bird, creature, label, plaque, coin, medallion, round disc, emblem shield,
+    scissors, knife, blade, serrated edge, dagger
+  prompt_tags: bolt cutters, short rusty bolt cutters with two thick curved jaws closed together, two long red-gripped handles,
+    side view, the only object, resting alone on a dark worn wooden surface, soft rim light
+- key: eodi-hyena-tooth-v5
+  lane: arthemy-house
+  title: 'Market item: hyena-tooth (v5)'
+  item: hyena-tooth
+  asset: items/hyena-tooth
+  size: 1024x1024
+  seed: 75005
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters, words,
+    logo, writing, caption, ui, frame, border, hands, person, character, multiple objects, cluttered, candle, candlestick,
+    candle flame, lit wick, second object, animal, bird, creature, label, plaque, coin, medallion, round disc, emblem shield,
+    skull, head, face, horns, jaw, bust, monster, fur, eyes
+  prompt_tags: single loose tooth, one long curved ivory fang lying on its side, pointed tip and thick root, bone-white
+    with yellowed root, close-up, the only object, resting alone on a dark worn wooden surface, soft rim light

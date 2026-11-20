@@ -4547,6 +4547,7 @@ subjects:
   quest: q-d42-cave-forage
   variant: notice
   asset: quests/q-d42-cave-forage
+  verdict: 'keep: inside the cave, foragers at a campfire with a basket (2026-11-20 PT full-size check, t-033)'
   size: 1344x768
   seed: 62400
   negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
@@ -4568,6 +4569,7 @@ subjects:
   quest: q-d42-cave-forage
   variant: success
   asset: quests/q-d42-cave-forage-success
+  verdict: 'keep: cave mouth onto grey mountains, forager at a fire with a cooking pot (2026-11-20 PT full-size check, t-033)'
   size: 1344x768
   seed: 62401
   negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
@@ -4588,6 +4590,7 @@ subjects:
   quest: q-d42-cave-forage
   variant: failure
   asset: quests/q-d42-cave-forage-failure
+  verdict: 'reject: warm bright fire and full baskets read as plenty, not hunger (2026-11-20 PT full-size check, t-033)'
   size: 1344x768
   seed: 62402
   negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
@@ -4603,6 +4606,8 @@ subjects:
       status: DONE
       art_image_id: 250282
 approved:
+- eodq-q-d42-cave-forage-notice-v3
+- eodq-q-d42-cave-forage-success-v3
 - eodq-q-d01-well-road-notice
 - eodq-q-d01-aqueduct-repair-notice
 - eodq-q-d01-toll-parley-notice
@@ -4839,9 +4844,8 @@ rejected:
   eodq-q-d42-cave-forage-success-v2: 'no crows and two foragers fed at a fire, but an open-air snowy valley: no
     cave'
   eodq-q-d42-cave-forage-failure-v2: 'no crows, but no cave and no people: a pot steaming on a bare slope'
-pending:
-  eodq-q-d42-cave-forage-notice-v3: ArtJob 42353, queued 2026-10-21 (t-033)
-  eodq-q-d42-cave-forage-success-v3: ArtJob 42354, queued 2026-10-21 (t-033)
-  eodq-q-d42-cave-forage-failure-v3: ArtJob 42355, queued 2026-10-21 (t-033)
+  eodq-q-d42-cave-forage-failure-v3: 'a cave, but a warm bright fire and full baskets read as plenty, not hunger
+    (2026-11-20 PT, t-033); the dawn report falls back to the notice'
+pending: {}
 export_notes:
   eodq-q-d30-hold-the-line-success: thin black frame baked in; cropped (12, 12, 1334, 767) before resize
