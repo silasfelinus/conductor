@@ -738,7 +738,7 @@ tasks:
   - id: t-033
     milestone: m5
     title: "Export the market item icons and the pending room/quest rerolls when they render"
-    status: claimed
+    status: ready
     passes: 0
     stakes: reversible
     note: >-
@@ -784,11 +784,18 @@ tasks:
 
       kind_robots#5389 merged at 4504d1f (13/13 checks green). Released to ready: curate
       ITEMS-ROUND-3 (71188-71207) once it renders.
+
+      2026-11-20 PT partial: ITEMS-ROUND-3 all 20 DONE. Contact sheet plus full-size check
+      kept 12 (bell-clapper, freehold-spade, lamplight-folio, ledger-abacus, lost-human-
+      gauntlet, magpie-scales, rain-feather, reed-poppet, signal-coil, snare-kit, storm-glass-
+      vial, witchwater-phial), shipped in kind_robots#5394 (ITEM_ART 10 -> 22). Rejected 8
+      (verdicts in ledger). Rerolls are in ITEMS-ROUND-4.yaml (auto_submit, seeds 74001-74008)
+      with plainer object nouns and wrong-object negatives. Next: enqueue_art_requests.py
+      --status ITEMS-ROUND-4, curate at full size, export keepers. The q-d42 cave-forage v3
+      set (42353-42355) is still unchecked. Released to ready.
     owner: worker
-    updated: '2026-11-20T05:48:11Z'
-    implementation_pr: 'silasfelinus/kind_robots#5389'
-    claimed_by: session_01L5NKxbQLrmDDgcRgUUHjXL
-    claimed_at: '2026-11-20T05:48:11Z'
+    updated: '2026-11-20T05:51:51Z'
+    implementation_pr: 'silasfelinus/kind_robots#5394'
   - id: t-034
     milestone: m5
     title: "Phone width: tapping a fortress room tab shifts the frame sideways"
