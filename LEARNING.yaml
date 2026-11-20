@@ -18852,6 +18852,6 @@ records:
   passes: 0
   outcome: done
   failure_category: null
-  lesson: A workflow `run:` plain scalar containing ': ' (e.g. a "chore: ..." commit message)
-    breaks YAML parsing for the whole workflow. Use a block scalar, and run
-    test_workflow_schema_sanity.py before pushing workflow edits.
+  lesson: "A workflow run line written as a plain YAML scalar that contains a colon-space
+    (e.g. a chore-prefixed commit message) breaks parsing of the whole workflow. Use a
+    block scalar, and run test_workflow_schema_sanity.py before pushing workflow edits."
