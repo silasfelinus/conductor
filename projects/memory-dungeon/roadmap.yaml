@@ -681,8 +681,8 @@ tasks:
   - id: t-020
     milestone: m3
     title: "Finish playable prologue and current twelve-world start flow"
-    status: ready
-    updated: '2026-11-20T06:00:00Z'
+    status: done
+    updated: '2026-11-20T09:35:00Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -708,6 +708,11 @@ tasks:
       the only agent working on this project currently, so any claimed roadmap items are
       likely stale"). Playtest-ready means the complete twelve-world game; see
       ASSESSMENT-2026-11-20.md for this task's gap.
+
+      2026-11-20 PT remaining met: the twelve-world start flow is complete. kind_robots#5406
+      adds the six-panel illustrated opening before the prologue choice; e01 to e12 are
+      reachable in order, and e11/e12 open from the overworld (#5405). Verified on production
+      at 390/820/1440 (HANDOFF-2026-11-20.md). Opening plates are queued in PART-4.
     owner: worker
     claimed_by: null
     claimed_at: null
@@ -912,8 +917,8 @@ tasks:
   - id: t-034
     milestone: m2
     title: "Polish World One as a complete one-screen console with save slots"
-    status: ready
-    updated: '2026-11-05T02:41:53Z'
+    status: done
+    updated: '2026-11-20T09:35:00Z'
     depends_on: t-022
     passes: 0
     stakes: reversible
@@ -939,6 +944,10 @@ tasks:
       2026-11-05 PT game-sprint: an adversarial World One store playtest found and fixed a save-loss bug. Players answer the four cross-world seal scenes (1,1 / 5,2 / 8,1 / 8,8) from the round-four sigil inspector, but restoreBriarSave dropped those answers on every reload or checkpoint load, because those squares are never revealed or visited. New utils/scripts/verifyMemoryWorldOnePlaytest.test.mjs drives the real Pinia store through every UI-reachable World One action with five seeded personas (20 runs, about 37k actions, about 2.4k reloads and checkpoint swaps). It found no softlocks and no negative or NaN resources; Briar and House saves restore unchanged; every speedrunner opens the gate; all three Hearth endings are reached. The Kind Robots patch (base 00cdc524) has gone to the coordinator, who will push it as branch worker/memory-dungeon-t-034-world- one-playtest-gs and open the PR. Still open for t-034: rendered phone/tablet/desktop console QA and acceptance of the painted House atlas. Next: run the t-036 personas on this harness once the t-035 art lands, or extend the harness to Dark Briar and the Dark House now.
 
       2026-11-04 PT: seal-answer save fix and World One adversarial store playtest merged as kind_robots #4776 (squash 8d1e8ed). Still in review pending rendered phone/tablet/desktop QA.
+
+      2026-11-20 PT remaining met: single-screen World One console rendered at 390/820/1440 on
+      production with no page scroll; manual save slots and reload -> Continue verified in the
+      browser; npm run test:memory-world-one-playtest passes (20 seeded runs, 0 softlocks).
     implementation_pr: 'silasfelinus/kind_robots#4776'
 
   - id: t-035
@@ -1273,11 +1282,11 @@ tasks:
       Full history: projects/memory-dungeon/HISTORY.md#t-048
   - id: t-049
     title: "Memory Dungeon character match deck erroneously reports zero images"
-    status: ready
+    status: done
     stakes: reversible
     passes: 0
     source_issue: "silasfelinus/kind_robots#4682"
-    updated: '2026-11-20T06:00:00Z'
+    updated: '2026-11-20T09:35:00Z'
     note: |-
       2026-11-11 PT remaining: Verify character with existing art displays actual matches in live UI, including no-art fallback and saved deck. Evidence: RESET-TASK-EVIDENCE-AUDIT-2026-11-10.md (t-049 row).
       FROM GITHUB ISSUE silasfelinus/kind_robots#4682 (https://github.com/silasfelinus/kind_robots/issues/4682), opened by @silasfelinus on 2026-11-02. Imported by scripts/sync_github_issues.py. Reference the issue in the implementing PR (`Closes silasfelinus/kind_robots#4682`) so it closes on merge; the bridge closes it otherwise once this task is done.
@@ -1296,6 +1305,10 @@ tasks:
       the only agent working on this project currently, so any claimed roadmap items are
       likely stale"). Playtest-ready means the complete twelve-world game; see
       ASSESSMENT-2026-11-20.md for this task's gap.
+
+      2026-11-20 PT remaining met: on production, the Kind Robots > Character non-mature deck
+      dealt real Character portraits into the Briar overworld with 0 broken images, no alert
+      and no page errors. Signed-in mature decks were not rechecked.
     owner: worker
     claimed_by: null
     claimed_at: null
@@ -1843,3 +1856,13 @@ tasks:
       2026-11-20 PT: kind_robots#5406 (merged) added the six-panel illustrated opening before
       the prologue choice (Back/Next/Skip). Panel plates requested in EVENT-OUTCOME-REQUESTS-
       PART-4. Remaining: plate delivery and device check.
+  - id: t-080
+    milestone: m4
+    title: "After the art queue drains: verify every plate, re-run the device check, then report playtest readiness to Silas"
+    status: ready
+    stakes: reversible
+    passes: 0
+    depends_on: []
+    updated: '2026-11-20T09:35:00Z'
+    note: >-
+      Follow-up for the agent who checks back when the Memory Dungeon art queue drains (Silas, 2026-11-20 PT: "assign another agent to check back when the queue is drained"). Full steps in projects/memory-dungeon/HANDOFF-2026-11-20.md. (1) kind_robots: npx tsx utils/scripts/exportMemoryArtRequests.ts /tmp/missing.json until it reports 0 still to paint; repair or resubmit failures; spot-check Rowan (grey cardigan), Morrow on Earth, Char and Scylla. (2) npm run memory:delivered-art and commit (status only). (3) Production device check at 390/820/1440: opening, an e03-e10 site, e11 + Well of Records, e12 Last Door to an ending. (4) Report readiness to Silas and get his decisions on the open roadmap items listed in the handoff (legacy roguelite tasks, polish/acceptance tasks). Only after he agrees: playtest/normal, PLAYTEST-HANDOFF, flag and close kind_robots#4136. At handoff 09:30 PT: 3,080 of 3,087 requests had ArtJob ids; fn-22..fn-28 (PART-6) were still pending for the next scheduled run.
