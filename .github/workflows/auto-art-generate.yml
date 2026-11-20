@@ -684,6 +684,14 @@ jobs:
           set -o pipefail
           python scripts/sweep_art_ledgers.py --live --submit-only 2>&1 | tee "$RUNNER_TEMP/art-ledgers.log"
 
+      # Persist accepted ArtJob receipts before any other slow submission lane.
+      # A cancelled run must not forget ids and enqueue duplicate renders.
+      - name: Checkpoint opted-in art ledger ArtJob receipts
+        if: ${{ steps.ledger_sweep.outcome == 'success' }}
+        working-directory: conductor
+        run: bash scripts/checkpoint_art_state.sh "chore: checkpoint auto-submit ArtJob receipts [skip ci]"
+
+
       # Shifting Desks has 220 approved style requests. Hand all of them to
       # the durable ArtJob scheduler first, instead of blocking on each render
       # (up to 300s each) inside a 150-minute workflow. Stable request IDs and
