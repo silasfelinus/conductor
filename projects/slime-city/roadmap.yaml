@@ -1379,11 +1379,11 @@ tasks:
   - id: t-069
     milestone: m4
     title: 'Real-browser regression: FIGHT stays inside Clash sidebar at 390/768/1440'
-    status: ready
+    status: claimed
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-20T00:05:39Z'
+    updated: '2026-11-20T00:27:10Z'
     note: |-
       Reviewer kaizen from slime-city/t-068, kind_robots#5210 (squash 0c93ed7). The 1440px control strip overflow is addressed by a CSS/source contract, but source matching cannot prove real DOM geometry. After the self-hosted production image includes the merged commit, run the sanctioned real-browser layout audit at 390, 768 and 1440 pixels on VS-vs-CPU Clash, with and without an available TAP ability. Assert data-testid=clash-pass stays fully inside .clash-console and the viewport, save screenshots, and regression-test the measured bounds in the existing Slime City layout/audit harness. Do not claim the result from static CSS checks or a Vercel preview (retired).
 
@@ -1418,9 +1418,10 @@ tasks:
       add --storage-state to the layout audit, run it signed in against production and record
       the measurements. Whether the scheduled workflow gets its own signed-in session needs a
       secret, stays Silas's call and is not part of this task.
-    claimed_by: null
-    claimed_at: null
+    claimed_by: 2026-11-20T003500Z-slime-city-playtest-lqz02n
+    claimed_at: '2026-11-20T00:27:10Z'
     soft_gate: false
+    owner: worker
   - id: t-070
     milestone: m2
     title: 'Mercenary L2-to-L3 tactical continuity and constructed-selection audit'
