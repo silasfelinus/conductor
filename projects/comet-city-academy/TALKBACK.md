@@ -68,3 +68,14 @@ Merged (squash 9017e41). Art ledgers/prompts only, reversible, CI green. The fiv
 **Pattern for Workers:** Any workflow edit should run `pytest tests/test_workflow_schema_sanity.py` locally (pytest is at `/usr/local/bin/pytest` even when `python -m pytest` is missing). "No local runner available" was not true here. Quote or block-scalar every `run:` line that contains `: `.
 
 **Remaining:** None for t-036. Kaizen t-037 surfaces the overdue-receipt count on the art health surface.
+
+
+## 2026-11-20 PT · Reviewer · t-037 overdue ArtJob receipts in session sweep · PR #7683
+
+**Decision:** Merged Conductor PR #7683 after CI went green on the updated head. One registry line adds `auto_art_receipts` (`scripts/check_auto_art_receipts.py`) to `session_sweep.py`, so an overdue no-receipt ledger is a flagged startup row instead of a line buried in the auto-art Actions log. The regression test pins the registration and checks that the script exists.
+
+**What I found:** Two red checks on the first head, neither caused by the diff. (1) `test_prom_authored_recruit_art` failed because of main-side ledger drift; it passes on current main, so I updated the branch. (2) The PR body used `### What changed` / `### Verification` / `### Kaizen` instead of the exact handoff headings. I repaired it. That makes three heading misses today (t-007, t-036, t-037). Locally the branch's tests passed (3), and in a full `session_sweep.py` run the new row was `ok`. Performance concern: without libyaml the checker takes ~78s against the 90s per-check timeout (double YAML parse). Kaizen t-038 covers it.
+
+**Pattern for Workers:** Copy the PR handoff block from AGENTS.md verbatim rather than paraphrasing its headings. The validator matches the exact text. When adding a check to the startup sweep, time it (`time python scripts/<check>.py`) and say so in the handoff.
+
+**Remaining:** None for t-037. Kaizen t-038 is single-parse ledger scanning for the receipt checker.
