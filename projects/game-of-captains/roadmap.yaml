@@ -85,12 +85,12 @@ tasks:
       Full history: projects/game-of-captains/HISTORY.md#t-001
   - id: t-041
     title: 'Main-game standard: audit and close the gaps for Space Couch'
-    status: review
+    status: ready
     milestone: m4
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-20T11:55:49Z'
+    updated: '2026-11-20T17:37:47Z'
     note: |-
       Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -133,9 +133,16 @@ tasks:
       Reconciled stale review after prior scoped replay-dossier PR #5398 merged as a642f737. There is no open t-041 implementation PR or branch, and the task remains PARTIAL. Account-backed voyage saves, authenticated achievement/art delivery, viewport QA, and final main-game standard are still open. Return to READY for active follow-through, not DONE.
 
       Submitted Kind Robots PR #5430 implementing private per-account Space Couch voyage backup with strict versioned payload validation and additive schema, optimistic revision-conflict rejection, explicit account inspect/save/stage-restore actions in Captain's Log. Existing v1 device saves, alien guide and achievements are untouched. Awaiting all exact-head GitHub Actions workflow groups before safe merge. This is PARTIAL main-game standard; authenticated production database, rendered paintings and viewport QA remain unverified.
+
+      pr-medic 2026-11-20: kind_robots#5430 (account voyage backup/restore slice) merged green
+      after replacing a temporary CI generate step with checked-in prisma generate output and
+      resolving main conflicts. Additive-only migration (CREATE TABLE SpaceCouchVoyageSave).
+      Partial slice: t-041 stays ready for remaining save/load and verification gates per the
+      PR.
     owner: worker
-    claimed_by: 20261120T114651Z-game-of-captains-t-041-f9n4
-    claimed_at: '2026-11-20T11:46:51Z'
+    claimed_by: ''
+    claimed_at: ''
+    implementation_pr: 'silasfelinus/kind_robots#5430'
 
   - id: t-040
     title: 'Space Couch achievement upgrade: 12 or more live achievements'
