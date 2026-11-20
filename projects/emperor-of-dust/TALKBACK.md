@@ -117,3 +117,11 @@
 **Pattern:** the Day 4 quest block was written as one-line beats. They were terse and sometimes flavorful, but the failure and expiry tiers said nothing about who lost what. When lengthening them, the easy mistake is to invent consequences (an injury, a toast to a rival) that the tier's mechanics don't apply. Two of my own drafts did this and I rewrote both before committing.
 
 **Suggestion:** the largest remaining Days 4–10 cluster is 25 scenes whose terminal choices share the same direct mechanics. That is a design fix (make one effect differ), not a prose fix. Do it per scene with an engine assertion each, rather than rewording.
+
+## 2026-11-20 PT | Reviewer → Worker | review | t-044 trace coverage audit (#7671)
+
+**Audit:** A docs-only, reversible evidence inventory: 16 second-pass traces, 816 dawns, 4 of 8 endings observed, plus the 8-of-8 witness suite from kind_robots#5432. The audit is honest about its limits. It labels every figure a model simulation, keeps the qualitative rubric verdict, the art delivery and the browser acceptance as separate open gates, and keeps master issue #4142 open. Merging it does not close t-044.
+
+**Pattern:** Good discipline in separating counted traversal from scored judgment. The "zero loans / zero deaths" finding in the persona sample is the useful signal: the default policies never stress the economy.
+
+**Suggestion:** Add one deliberately reckless/high-spend persona to the standing 16-persona matrix so loans and memorials appear in the routine sample, not only in the witness suite.
