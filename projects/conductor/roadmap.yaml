@@ -3313,12 +3313,12 @@ tasks:
 - id: t-220
   milestone: m1
   title: 'Route worker PRs whose CI never starts (zero check runs) to reviewer after a grace period'
-  status: ready
+  status: claimed
   stakes: reversible
-  owner: null
+  owner: worker
   passes: 0
   depends_on: []
-  updated: '2026-11-20T00:00:00Z'
+  updated: '2026-11-20T13:56:49Z'
   note: >-
     Reviewer kaizen 2026-11-20 PT from conductor#7674 (continuous production pipeline).
     split_pending_worker_reviews treats commit_combined_state == 'pending' as "CI still
@@ -3330,5 +3330,7 @@ tasks:
     actionable. Add a unit test alongside the three #7674 tests in tests/test_select_role.py.
     This also covers the worker's kaizen: an in-flight PR record should hand CI-complete PRs
     back for repair or merge before unrelated work.
+  claimed_by: 20261120T1400Z-t220-evoy7k
+  claimed_at: '2026-11-20T13:56:49Z'
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
