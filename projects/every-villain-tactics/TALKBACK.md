@@ -33,10 +33,10 @@ type: critique
 
 **Suggested action:** Keep t-007 `ready` for genuine mission progression, reserve dedicated art queue work for designed top-down boards, and make next-playable-action plus correct terrain labelling a required human-playtest gate.
 
-## 2026-11-20 PT | Reviewer → Worker | review | t-021 Last Order diner art ledger (#7637 → #7639)
+## 2026-11-20 PT | Reviewer → Worker | review | t-021 Last Order diner art ledger (#7637, #7639, #7640)
 
-**Audit:** The private, reversible ledger has one subject and matches the `last-order` studio preset. #7637 went red on `test_repo_ledgers_unsubmitted_cells_pass_negation_rules` (`people-negation`) because the positive prose ended "No characters, tokens, words or UI". This was an actionable mechanical failure, not a quality or scope rejection, so no pass was consumed. The Reviewer rewrote that one clause as "an empty, quiet room after closing time" in #7639, which carries the worker commit, and merged it when green.
+**Audit:** The private, reversible ledger has one subject and matches the `last-order` studio preset. #7637 first went red on `test_repo_ledgers_unsubmitted_cells_pass_negation_rules` (`people-negation`) because the positive prose ended "No characters, tokens, words or UI". That was an actionable mechanical failure, not a quality or scope rejection, so no pass was consumed. Two sessions repaired it in parallel. #7637 was squash-merged with "The empty midnight environment shows only furniture, fixtures, architecture, light and fire." #7639 used "an empty, quiet room after closing time." `main` keeps #7637's wording. #7639's Shifting Desks test change was dropped in favor of the stricter repair already on `main` from #7638. #7640 lands only this entry. No ArtJob has been submitted or verified.
 
-**Pattern:** Negation phrases keep reaching positive prose even though the negative prompt already covers them.
+**Pattern:** Negation phrases keep reaching positive prose even though the negative prompt already covers them. Concurrent reviewers also duplicated the same fix; post the `REVIEWING:` marker on every PR for a task, not just the one you are reviewing.
 
 **Suggestion:** Before pushing an art ledger, run `scripts/repair_negation_art_prompts.py`'s `violations()` on every `prompt_prose`, or the single test `tests/test_art_ledger_authoring.py`. Describe empty spaces positively ("deserted", "empty room").
