@@ -1,3 +1,4 @@
+import pytest
 import yaml
 
 import scripts.sweep_art_ledgers as sweep
@@ -123,9 +124,9 @@ def test_loader_falls_back_to_python_safe_loader(monkeypatch):
     assert calls == [sweep.yaml.SafeLoader]
 
 
+@pytest.mark.art_parity
 def test_all_opted_in_art_ledgers_have_identical_safe_loader_data():
-    """CI's LibYAML path must agree with the sandbox's Python path on real ledgers."""
-    import pytest
+    """Scheduled parity audit: LibYAML and Python agree on production ledgers."""
 
     fast_loader = getattr(yaml, "CSafeLoader", None)
     if fast_loader is None:

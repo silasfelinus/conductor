@@ -1,0 +1,27 @@
+name: Daily art ledger loader parity
+
+# Full real-ledger SafeLoader parsing takes about 32s on developer hardware.
+# PR CI still runs all fast art-ledger tests, while this exhaustive comparison
+# checks every opted-in production ledger once daily and on demand.
+on:
+  schedule:
+    - cron: '17 15 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check-loader-parity:
+    name: Compare LibYAML and Python SafeLoader
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install test dependencies
+        run: python -m pip install pytest pyyaml
+      - name: Compare all opted-in production ledgers
+        run: pytest -q -m art_parity tests/test_sweep_art_ledgers.py --durations=3
