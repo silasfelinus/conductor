@@ -932,7 +932,7 @@ tasks:
   - id: t-044
     milestone: m4
     title: "Second playtest: score the rewritten game against the 2026-10-21 rubric"
-    status: review
+    status: ready
     passes: 0
     stakes: reversible
     note: |-
@@ -947,10 +947,15 @@ tasks:
       (read-only, no art needed).
 
       Added a reproducible second-pass five-act scoring protocol and evidence schema on worker/emperor-of-dust-t-044-rubric-b6e2. This is a partial increment; actual scored playthroughs and transcripts remain pending.
+
+      2026-11-20 PT reviewer: merged the worker's SECOND-PASS-SCORING-PROTOCOL.md
+      (playtest/2026-11-19/) as a partial increment; rubric, evidence rules and reviewer-
+      record schema are sound. Not done: no reviewer records, traces or per-act scores exist
+      yet. Back to ready (no pass spent; incomplete, not a quality failure). Next cycle: run
+      the per-act scored reads per this protocol (max three reviewers at once) and fill
+      reviewer records under playtest/2026-11-19/.
     owner: worker
-    claimed_by: 20261120T024800Z-emperor-t044-b6e2
-    claimed_at: '2026-11-20T02:48:00Z'
-    updated: '2026-11-20T02:51:00Z'
+    updated: '2026-11-20T03:45:46Z'
   - id: t-045
     milestone: m5
     title: "Story and art pilot: revise early quest aftermaths and queue illustrated throne-room choices"
@@ -1396,3 +1401,12 @@ tasks:
     owner: worker
     claimed_by: 20261104T003742Z-eod-t062-independent-editorial-c71d
     claimed_at: '2026-11-04T00:37:42Z'
+  - id: t-068
+    milestone: m4
+    title: "Add a validator that checks t-044 playtest reviewer-record YAMLs against the second-pass scoring protocol schema"
+    status: ready
+    stakes: reversible
+    passes: 0
+    updated: '2026-11-20T03:50:00Z'
+    note: |-
+      Reviewer kaizen from the 2026-11-20 PT merge of playtest/2026-11-19/SECOND-PASS-SCORING-PROTOCOL.md. Add a small conductor script plus test that loads every reviewer record under projects/emperor-of-dust/playtest/<date>/ and fails when a score lacks trace_path/transcript_path/kind_robots_sha/seed, when a score is outside 1-5 (N/A allowed), or when a per-act total is reported with any N/A dimension. Keeps model-simulated scores from being mistaken for complete evidence.
