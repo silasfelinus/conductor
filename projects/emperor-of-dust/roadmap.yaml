@@ -738,7 +738,7 @@ tasks:
   - id: t-033
     milestone: m5
     title: "Export the market item icons and the pending room/quest rerolls when they render"
-    status: claimed
+    status: ready
     passes: 0
     stakes: reversible
     note: >-
@@ -771,11 +771,22 @@ tasks:
       it, and export keepers with export_round_art.py --require-keep --max-edge 320, adding
       them to ITEM_ART. The q-d42 cave-forage v3 set (42353-42355) is still to be checked.
       Released to ready.
+
+      2026-11-20 PT partial: ITEMS-ROUND-2 all 24 DONE. Contact sheet plus full-size check
+      kept 4 (caravan-salve, silent-bell-rosary, verge-signet, watch-buckler), shipped in
+      kind_robots#5389 (ITEM_ART 6 -> 10). Rejected 20 (mostly generic discs or the wrong
+      object; field-kit and ledger-abacus were dropped at full size for pseudo-lettering).
+      Verdicts are in the ledger. Rerolls are in ITEMS-ROUND-3.yaml (ArtJobs 71188-71207): the
+      prefix drops 'item icon', prompts lead with the object noun, and the negative adds
+      coin/medallion/disc/label. Next: enqueue_art_requests.py --status ITEMS-ROUND-3, curate
+      at full size, export keepers. The q-d42 cave-forage v3 set (42353-42355) is still
+      unchecked.
+
+      kind_robots#5389 merged at 4504d1f (13/13 checks green). Released to ready: curate
+      ITEMS-ROUND-3 (71188-71207) once it renders.
     owner: reviewer
-    updated: '2026-11-20T04:23:01Z'
-    implementation_pr: 'silasfelinus/kind_robots#5383'
-    claimed_by: 20261120T042600Z-t033-ghwshg
-    claimed_at: '2026-11-20T04:23:01Z'
+    updated: '2026-11-20T04:41:24Z'
+    implementation_pr: 'silasfelinus/kind_robots#5389'
   - id: t-034
     milestone: m5
     title: "Phone width: tapping a fortress room tab shifts the frame sideways"
@@ -934,11 +945,11 @@ tasks:
   - id: t-044
     milestone: m4
     title: "Second playtest: score the rewritten game against the 2026-10-21 rubric"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 2026-11-20T043100Z-eod-t044-c71f
     claimed_at: '2026-11-20T04:31:00Z'
-    updated: '2026-11-20T04:31:00Z'
+    updated: '2026-11-20T04:31:13Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -960,8 +971,8 @@ tasks:
       yet. Back to ready (no pass spent; incomplete, not a quality failure). Next cycle: run
       the per-act scored reads per this protocol (max three reviewers at once) and fill
       reviewer records under playtest/2026-11-19/.
-    owner: worker
-    updated: '2026-11-20T03:45:46Z'
+
+      Implemented full day-by-day modeled campaign trace capture across eight policies and two seeds; narrative scenes, choices, dispatches, quest results, 51 dawns, saved checkpoints and Day 31 rewind. Kind Robots PR #5390 open. Independent rubric scoring still open.
   - id: t-045
     milestone: m5
     title: "Story and art pilot: revise early quest aftermaths and queue illustrated throne-room choices"
@@ -979,7 +990,7 @@ tasks:
     milestone: m5
     title: "Act I continuation: polish Days 4–10 quest and audience paths, then submit scene art"
     status: ready
-    updated: '2026-11-19T14:00:00Z'
+    updated: '2026-11-20 05:03:00+00:00'
     passes: 0
     stakes: reversible
     note: |-
@@ -1037,6 +1048,8 @@ tasks:
       Partial Act I continuity repair prepared on Kind Robots worker/emperor-of-dust-t-046-20261119-f8c2: Day 16 mapmaker rejection no longer burns the ration card a second time after the Day 11 consequence of the Day 4 denial. Regression asserts both Day 4 branches and preserved outcomes. Exact-head CI and art delivery remain unverified.
 
       2026-11-19 PT: Reviewer merged kind_robots#5342 at c7ceb5cce4aca68dcaa67fdb9b08adb58619b334 after all eight exact-head workflows succeeded on f41df235c8a5ae51ef91dac5e4e299cb98552794. Day 16 mapmaker rejection now respects Day 4 denial and Day 11 destruction of the ration-card map, with regression assertions for both routes. This is partial t-046 work; remaining Days 4-10 editorial coverage and genuine art exports/delivery remain open. Return to ready, not done.
+
+      2026-11-19 PT: Worker merged kind_robots#5392 at a94347fa15441f64868b8e29f8158bee7249fe0c after 13 exact-head checks succeeded on 1e3aa95869adb23a4525fc96b0ad3cedf7e4f46c. It rewrites 17 Days 4-10 quest aftermaths that the editorial screen flagged as under 100 characters: Day 4 survey/crow-elders/crow-roost/feast, Day 7 galleries expiry, and Day 9 convoy triumph, which now counts the nine wagons. It also deepens 10 early-board chore outcomes. The new prose stays inside each tier's real mechanics. A new t-046 regression in verifyEmperorFortress fails on any Days 4-10 quest result under 100 characters; I confirmed it fails against the old prose. Editorial flagged rows went from 458 to 442. Still open: 25 Days 4-10 scenes whose two terminal choices share mechanics, 24 unread-flag rows, 17 short after-responses, and the art half (plates, ArtJob receipts, render review, wiring). Partial work, so the task returns to ready rather than done (no pass spent).
   - id: t-047
     milestone: m5
     title: "Act II story and art pass: Days 11–20 quests and court audiences"
