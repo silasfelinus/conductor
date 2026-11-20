@@ -1,0 +1,129 @@
+# Emperor of Dust market item icons, round 4 (2026-11-20 PT, emperor-of-dust/t-033). ITEMS-ROUND-3 kept 12 of 20
+# (shipped in kind_robots#5394, ITEM_ART 10 -> 22). These 8 rerolls replace its rejects: prompts swap in a plainer,
+# more drawable object noun (single spur, pliers, scroll, satchel, tooth) and the negative adds the wrong objects
+# round 3 drew. Curate at FULL size, export keepers with scripts/export_round_art.py --require-keep --max-edge 320,
+# and add ids to ITEM_ART. auto_submit.
+round: emperor-items-4
+project_slug: emperor-of-dust
+designer: Comic Studio
+is_public: false
+is_mature: false
+cast_loras: false
+auto_submit: true
+lanes:
+- key: arthemy-house
+  label: Arthemy Western Art v3.0 (house, author settings)
+  engine: comfy
+  checkpoint: Illustrious/arthemyWesternArt_v30.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, absurdres, very aesthetic, toon (style), western comics (style), weathered,
+    dramatic lighting, still life, single object, centered, object focus
+  suffix: kiln ochre, deep crimson and tarnished brass palette, warm rim light, dark plain background, salvage, wasteland
+  steps: 30
+  cfg: 5
+  sampler: euler_ancestral
+subjects:
+- key: eodi-old-road-crowbar-v4
+  lane: arthemy-house
+  title: 'Market item: old-road-crowbar (v4)'
+  item: old-road-crowbar
+  asset: items/old-road-crowbar
+  size: 1024x1024
+  seed: 74001
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters, words, logo,
+    writing, caption, ui, frame, border, hands, person, character, multiple objects, cluttered, candle, candlestick, candle
+    flame, lit wick, second object, animal, bird, creature, label, plaque, coin, medallion, round disc, emblem shield, trousers,
+    clothing, spear, arrowhead, star
+  prompt_tags: crowbar, straight steel pry bar with a hooked goose-neck end and a flat split claw, pitted salvaged steel,
+    lying diagonally, the only object, resting alone on a dark worn wooden surface, soft rim light
+- key: eodi-lockpick-roll-v4
+  lane: arthemy-house
+  title: 'Market item: lockpick-roll (v4)'
+  item: lockpick-roll
+  asset: items/lockpick-roll
+  size: 1024x1024
+  seed: 74002
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters, words, logo,
+    writing, caption, ui, frame, border, hands, person, character, multiple objects, cluttered, candle, candlestick, candle
+    flame, lit wick, second object, animal, bird, creature, label, plaque, coin, medallion, round disc, emblem shield, trousers,
+    clothing, spear, arrowhead, star
+  prompt_tags: lockpick set, flat open leather wallet, five slender steel lockpicks fanned in a row, small tension wrench,
+    the only object, resting alone on a dark worn wooden surface, soft rim light
+- key: eodi-field-kit-v4
+  lane: arthemy-house
+  title: 'Market item: field-kit (v4)'
+  item: field-kit
+  asset: items/field-kit
+  size: 1024x1024
+  seed: 74003
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters, words, logo,
+    writing, caption, ui, frame, border, hands, person, character, multiple objects, cluttered, candle, candlestick, candle
+    flame, lit wick, second object, animal, bird, creature, label, plaque, coin, medallion, round disc, emblem shield, red
+    cross, medical symbol, bottle, trousers, clothing, spear, arrowhead, star
+  prompt_tags: canvas satchel, open drab canvas bag with a buckle flap, rolled bandages and a coil of twine spilling out,
+    no emblems, no crosses, the only object, resting alone on a dark worn wooden surface, soft rim light
+- key: eodi-courier-spurs-v4
+  lane: arthemy-house
+  title: 'Market item: courier-spurs (v4)'
+  item: courier-spurs
+  asset: items/courier-spurs
+  size: 1024x1024
+  seed: 74004
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters, words, logo,
+    writing, caption, ui, frame, border, hands, person, character, multiple objects, cluttered, candle, candlestick, candle
+    flame, lit wick, second object, animal, bird, creature, label, plaque, coin, medallion, round disc, emblem shield, trousers,
+    clothing, spear, arrowhead, star
+  prompt_tags: single riding spur, curved steel heel band with a small spinning rowel wheel at the back, buckled leather strap,
+    side view, the only object, resting alone on a dark worn wooden surface, soft rim light
+- key: eodi-saltroad-waybill-v4
+  lane: arthemy-house
+  title: 'Market item: saltroad-waybill (v4)'
+  item: saltroad-waybill
+  asset: items/saltroad-waybill
+  size: 1024x1024
+  seed: 74005
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters, words, logo,
+    writing, caption, ui, frame, border, hands, person, character, multiple objects, cluttered, candle, candlestick, candle
+    flame, lit wick, second object, animal, bird, creature, label, plaque, coin, medallion, round disc, emblem shield, trousers,
+    clothing, spear, arrowhead, star
+  prompt_tags: rolled scroll, rolled tan parchment scroll tied with a red string, blank paper, salt crystals on the paper,
+    the only object, resting alone on a dark worn wooden surface, soft rim light
+- key: eodi-rustline-cutters-v4
+  lane: arthemy-house
+  title: 'Market item: rustline-cutters (v4)'
+  item: rustline-cutters
+  asset: items/rustline-cutters
+  size: 1024x1024
+  seed: 74006
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters, words, logo,
+    writing, caption, ui, frame, border, hands, person, character, multiple objects, cluttered, candle, candlestick, candle
+    flame, lit wick, second object, animal, bird, creature, label, plaque, coin, medallion, round disc, emblem shield, trousers,
+    clothing, spear, arrowhead, star
+  prompt_tags: pliers, rusty heavy steel pliers with hinged jaws, two long handles joined at a single pivot bolt, side view,
+    the only object, resting alone on a dark worn wooden surface, soft rim light
+- key: eodi-crow-glass-eye-v4
+  lane: arthemy-house
+  title: 'Market item: crow-glass-eye (v4)'
+  item: crow-glass-eye
+  asset: items/crow-glass-eye
+  size: 1024x1024
+  seed: 74007
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters, words, logo,
+    writing, caption, ui, frame, border, hands, person, character, multiple objects, cluttered, candle, candlestick, candle
+    flame, lit wick, second object, animal, bird, creature, label, plaque, coin, medallion, round disc, emblem shield, trousers,
+    clothing, spear, arrowhead, star
+  prompt_tags: monocle, single small round clear glass lens in a thin brass ring, a thin chain attached, magnifying glass
+    reflection, the only object, resting alone on a dark worn wooden surface, soft rim light
+- key: eodi-hyena-tooth-v4
+  lane: arthemy-house
+  title: 'Market item: hyena-tooth (v4)'
+  item: hyena-tooth
+  asset: items/hyena-tooth
+  size: 1024x1024
+  seed: 74008
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters, words, logo,
+    writing, caption, ui, frame, border, hands, person, character, multiple objects, cluttered, candle, candlestick, candle
+    flame, lit wick, second object, animal, bird, creature, label, plaque, coin, medallion, round disc, emblem shield, trousers,
+    clothing, spear, arrowhead, star
+  prompt_tags: animal tooth, one large curved yellowed fang with a pointed tip and a broad root, close-up, the only object,
+    resting alone on a dark worn wooden surface, soft rim light
