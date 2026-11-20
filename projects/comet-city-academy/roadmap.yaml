@@ -250,6 +250,17 @@ tasks:
       t-040 work already merged in #7689) closed. Kaizen t-043 records the measured
       before/after suite time.
     implementation_pr: 'silasfelinus/conductor#7695'
+  - id: t-043
+    title: "Record the before/after Python test-suite time from the first post-#7695 CI run and the first daily parity run in a short note"
+    status: ready
+    owner: worker
+    updated: '2026-11-20T22:50:00Z'
+    milestone: m3
+    stakes: reversible
+    passes: 0
+    depends_on: [t-042]
+    note: |-
+      Kaizen from t-042 review (#7695). Before the split, Worker PR CI took 219.02s for 4,859 tests (run 44810467441). Read the --durations output from the first completed post-merge PR CI run and from the first 'Daily art ledger loader parity' run. Write the measured delta in this note, and confirm the daily job really runs the parity test rather than skipping it when CSafeLoader is missing. If it skipped, fix the workflow so the comparison runs.
   - id: t-012
     milestone: m2
     title: "Promote the seven-day demo into Capes & Tassels name and genuine day/night map slice"
