@@ -215,11 +215,11 @@ tasks:
       Reviewed and merged by the reviewer role: load_ledger_yaml() picks yaml.CSafeLoader when present and yaml.SafeLoader otherwise; every ledger parse in sweep_art_ledgers and check_auto_art_receipts goes through it, and the parse-once test now counts calls to the helper. 9 tests pass locally (libyaml absent, fallback path). Kaizen t-041 pins loader equivalence on real ledgers.
   - id: t-041
     title: "Add a test that CSafeLoader and SafeLoader produce identical data for every opted-in art ledger when libyaml is installed"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 2026-11-20T202102Z-comet-city-academy-t-041-p9f2
     claimed_at: '2026-11-20T20:21:02Z'
-    updated: '2026-11-20T20:21:02Z'
+    updated: '2026-11-20T20:24:15Z'
     milestone: m3
     stakes: reversible
     passes: 0
