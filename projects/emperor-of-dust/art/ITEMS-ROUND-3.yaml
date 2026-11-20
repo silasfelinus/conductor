@@ -1,0 +1,327 @@
+# Emperor of Dust market item icons, round 3 (2026-11-20 PT, emperor-of-dust/t-033). ITEMS-ROUND-2 kept 4 of 24
+# (caravan-salve, silent-bell-rosary, verge-signet, watch-buckler). Most rejects came back as generic discs/medallions or the
+# wrong object, so the lane prefix drops "item icon" (which pulled toward round badges), each prompt now LEADS with the plain
+# object noun and its silhouette, and the negative adds coin/medallion/disc/plaque/label. 20 rerolls, fresh seeds, auto_submit.
+# Curate at FULL size (two round-2 keepers failed only at full size for pseudo-lettering), export keepers with
+# scripts/export_round_art.py --require-keep --max-edge 320, and add ids to ITEM_ART.
+round: emperor-items-3
+project_slug: emperor-of-dust
+designer: Comic Studio
+is_public: false
+is_mature: false
+cast_loras: false
+auto_submit: true
+lanes:
+- key: arthemy-house
+  label: Arthemy Western Art v3.0 (house, author settings)
+  engine: comfy
+  checkpoint: Illustrious/arthemyWesternArt_v30.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, absurdres, very aesthetic, toon (style), western comics (style),
+    weathered, dramatic lighting, still life, single object, centered, object focus
+  suffix: kiln ochre, deep crimson and tarnished brass palette, warm rim light, dark plain background, salvage,
+    wasteland
+  steps: 30
+  cfg: 5
+  sampler: euler_ancestral
+subjects:
+- key: eodi-old-road-crowbar-v3
+  lane: arthemy-house
+  title: 'Market item: old-road-crowbar (v3)'
+  item: old-road-crowbar
+  asset: items/old-road-crowbar
+  size: 1024x1024
+  seed: 73001
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, hands, person, character, multiple objects, cluttered, candle,
+    candlestick, candle flame, lit wick, second object, animal, bird, creature, label, plaque, coin, medallion,
+    round disc, emblem shield
+  prompt_tags: crowbar, long steel pry bar with a curved split claw end, pitted salvaged steel, road grit, the only
+    object, resting alone on a dark worn wooden surface, soft rim light
+  jobs:
+    arthemy-house: 71188
+- key: eodi-lockpick-roll-v3
+  lane: arthemy-house
+  title: 'Market item: lockpick-roll (v3)'
+  item: lockpick-roll
+  asset: items/lockpick-roll
+  size: 1024x1024
+  seed: 73002
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, hands, person, character, multiple objects, cluttered, candle,
+    candlestick, candle flame, lit wick, second object, animal, bird, creature, label, plaque, coin, medallion,
+    round disc, emblem shield
+  prompt_tags: lockpicks, unrolled brown leather tool roll, a row of thin steel picks tucked in leather pockets,
+    the only object, resting alone on a dark worn wooden surface, soft rim light
+  jobs:
+    arthemy-house: 71189
+- key: eodi-storm-glass-vial-v3
+  lane: arthemy-house
+  title: 'Market item: storm-glass-vial (v3)'
+  item: storm-glass-vial
+  asset: items/storm-glass-vial
+  size: 1024x1024
+  seed: 73003
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, hands, person, character, multiple objects, cluttered, candle,
+    candlestick, candle flame, lit wick, second object, animal, bird, creature, label, plaque, coin, medallion,
+    round disc, emblem shield
+  prompt_tags: glass vial, clear corked glass tube, grey storm cloud swirling inside the glass, the only object,
+    resting alone on a dark worn wooden surface, soft rim light
+  jobs:
+    arthemy-house: 71190
+- key: eodi-field-kit-v3
+  lane: arthemy-house
+  title: 'Market item: field-kit (v3)'
+  item: field-kit
+  asset: items/field-kit
+  size: 1024x1024
+  seed: 73004
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, hands, person, character, multiple objects, cluttered, candle,
+    candlestick, candle flame, lit wick, second object, animal, bird, creature, label, plaque, coin, medallion,
+    round disc, emblem shield
+  prompt_tags: first aid pouch, open canvas satchel, rolled bandages, a sewing needle, small plain unlabeled brown
+    bottle, the only object, resting alone on a dark worn wooden surface, soft rim light
+  jobs:
+    arthemy-house: 71191
+- key: eodi-courier-spurs-v3
+  lane: arthemy-house
+  title: 'Market item: courier-spurs (v3)'
+  item: courier-spurs
+  asset: items/courier-spurs
+  size: 1024x1024
+  seed: 73005
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, hands, person, character, multiple objects, cluttered, candle,
+    candlestick, candle flame, lit wick, second object, animal, bird, creature, label, plaque, coin, medallion,
+    round disc, emblem shield
+  prompt_tags: spurs, a pair of riding spurs with spiked star rowels and leather straps, dusty steel, the only object,
+    resting alone on a dark worn wooden surface, soft rim light
+  jobs:
+    arthemy-house: 71192
+- key: eodi-bell-clapper-v3
+  lane: arthemy-house
+  title: 'Market item: bell-clapper (v3)'
+  item: bell-clapper
+  asset: items/bell-clapper
+  size: 1024x1024
+  seed: 73006
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, hands, person, character, multiple objects, cluttered, candle,
+    candlestick, candle flame, lit wick, second object, animal, bird, creature, label, plaque, coin, medallion,
+    round disc, emblem shield
+  prompt_tags: bell clapper, long cracked iron rod ending in a heavy round iron ball, chapel rust, the only object,
+    resting alone on a dark worn wooden surface, soft rim light
+  jobs:
+    arthemy-house: 71193
+- key: eodi-saltroad-waybill-v3
+  lane: arthemy-house
+  title: 'Market item: saltroad-waybill (v3)'
+  item: saltroad-waybill
+  asset: items/saltroad-waybill
+  size: 1024x1024
+  seed: 73007
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, hands, person, character, multiple objects, cluttered, candle,
+    candlestick, candle flame, lit wick, second object, animal, bird, creature, label, plaque, coin, medallion,
+    round disc, emblem shield
+  prompt_tags: folded paper, folded parchment letter tied with string, red wax seal, salt crust, plain unwritten
+    paper, the only object, resting alone on a dark worn wooden surface, soft rim light
+  jobs:
+    arthemy-house: 71194
+- key: eodi-rustline-cutters-v3
+  lane: arthemy-house
+  title: 'Market item: rustline-cutters (v3)'
+  item: rustline-cutters
+  asset: items/rustline-cutters
+  size: 1024x1024
+  seed: 73008
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, hands, person, character, multiple objects, cluttered, candle,
+    candlestick, candle flame, lit wick, second object, animal, bird, creature, label, plaque, coin, medallion,
+    round disc, emblem shield
+  prompt_tags: bolt cutters, long two-handled bolt cutters with short heavy jaws, rail rust, the only object, resting
+    alone on a dark worn wooden surface, soft rim light
+  jobs:
+    arthemy-house: 71195
+- key: eodi-signal-coil-v3
+  lane: arthemy-house
+  title: 'Market item: signal-coil (v3)'
+  item: signal-coil
+  asset: items/signal-coil
+  size: 1024x1024
+  seed: 73009
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, hands, person, character, multiple objects, cluttered, candle,
+    candlestick, candle flame, lit wick, second object, animal, bird, creature, label, plaque, coin, medallion,
+    round disc, emblem shield
+  prompt_tags: wire spool, wooden spool wound with shiny copper wire, faint blue glow, the only object, resting
+    alone on a dark worn wooden surface, soft rim light
+  jobs:
+    arthemy-house: 71196
+- key: eodi-magpie-scales-v3
+  lane: arthemy-house
+  title: 'Market item: magpie-scales (v3)'
+  item: magpie-scales
+  asset: items/magpie-scales
+  size: 1024x1024
+  seed: 73010
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, hands, person, character, multiple objects, cluttered, candle,
+    candlestick, candle flame, lit wick, second object, animal, bird, creature, label, plaque, coin, medallion,
+    round disc, emblem shield
+  prompt_tags: balance scale, small brass balance scale with two hanging pans, one black and white feather lying
+    in a pan, the only object, resting alone on a dark worn wooden surface, soft rim light
+  jobs:
+    arthemy-house: 71197
+- key: eodi-lost-human-gauntlet-v3
+  lane: arthemy-house
+  title: 'Market item: lost-human-gauntlet (v3)'
+  item: lost-human-gauntlet
+  asset: items/lost-human-gauntlet
+  size: 1024x1024
+  seed: 73011
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, hands, person, character, multiple objects, cluttered, candle,
+    candlestick, candle flame, lit wick, second object, animal, bird, creature, label, plaque, coin, medallion,
+    round disc, emblem shield
+  prompt_tags: gauntlet, armored mechanical glove, steel finger plates, exposed wires, empty glove lying flat, the
+    only object, resting alone on a dark worn wooden surface, soft rim light
+  jobs:
+    arthemy-house: 71198
+- key: eodi-crow-glass-eye-v3
+  lane: arthemy-house
+  title: 'Market item: crow-glass-eye (v3)'
+  item: crow-glass-eye
+  asset: items/crow-glass-eye
+  size: 1024x1024
+  seed: 73012
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, hands, person, character, multiple objects, cluttered, candle,
+    candlestick, candle flame, lit wick, second object, animal, bird, creature, label, plaque, coin, medallion,
+    round disc, emblem shield
+  prompt_tags: monocle, round black glass lens in a thin rim hanging from a leather cord, the only object, resting
+    alone on a dark worn wooden surface, soft rim light
+  jobs:
+    arthemy-house: 71199
+- key: eodi-rain-feather-v3
+  lane: arthemy-house
+  title: 'Market item: rain-feather (v3)'
+  item: rain-feather
+  asset: items/rain-feather
+  size: 1024x1024
+  seed: 73013
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, hands, person, character, multiple objects, cluttered, candle,
+    candlestick, candle flame, lit wick, second object, animal, bird, creature, label, plaque, coin, medallion,
+    round disc, emblem shield
+  prompt_tags: feather, single long black feather, raindrops beaded on the vanes, lying flat, the only object, resting
+    alone on a dark worn wooden surface, soft rim light
+  jobs:
+    arthemy-house: 71200
+- key: eodi-reed-poppet-v3
+  lane: arthemy-house
+  title: 'Market item: reed-poppet (v3)'
+  item: reed-poppet
+  asset: items/reed-poppet
+  size: 1024x1024
+  seed: 73014
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, hands, person, character, multiple objects, cluttered, candle,
+    candlestick, candle flame, lit wick, second object, animal, bird, creature, label, plaque, coin, medallion,
+    round disc, emblem shield
+  prompt_tags: straw doll, small doll woven from green reeds and tied with twine, hair tufts, the only object, resting
+    alone on a dark worn wooden surface, soft rim light
+  jobs:
+    arthemy-house: 71201
+- key: eodi-witchwater-phial-v3
+  lane: arthemy-house
+  title: 'Market item: witchwater-phial (v3)'
+  item: witchwater-phial
+  asset: items/witchwater-phial
+  size: 1024x1024
+  seed: 73015
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, hands, person, character, multiple objects, cluttered, candle,
+    candlestick, candle flame, lit wick, second object, animal, bird, creature, label, plaque, coin, medallion,
+    round disc, emblem shield
+  prompt_tags: potion bottle, small stoppered glass phial, cloudy green liquid inside the glass, the only object,
+    resting alone on a dark worn wooden surface, soft rim light
+  jobs:
+    arthemy-house: 71202
+- key: eodi-snare-kit-v3
+  lane: arthemy-house
+  title: 'Market item: snare-kit (v3)'
+  item: snare-kit
+  asset: items/snare-kit
+  size: 1024x1024
+  seed: 73016
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, hands, person, character, multiple objects, cluttered, candle,
+    candlestick, candle flame, lit wick, second object, animal, bird, creature, label, plaque, coin, medallion,
+    round disc, emblem shield
+  prompt_tags: wire snare, coiled wire loop noose with a small iron hook and knotted cord, the only object, resting
+    alone on a dark worn wooden surface, soft rim light
+  jobs:
+    arthemy-house: 71203
+- key: eodi-hyena-tooth-v3
+  lane: arthemy-house
+  title: 'Market item: hyena-tooth (v3)'
+  item: hyena-tooth
+  asset: items/hyena-tooth
+  size: 1024x1024
+  seed: 73017
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, hands, person, character, multiple objects, cluttered, candle,
+    candlestick, candle flame, lit wick, second object, animal, bird, creature, label, plaque, coin, medallion,
+    round disc, emblem shield
+  prompt_tags: fang necklace, one large curved yellowed animal fang hanging on a leather cord, the only object,
+    resting alone on a dark worn wooden surface, soft rim light
+  jobs:
+    arthemy-house: 71204
+- key: eodi-freehold-spade-v3
+  lane: arthemy-house
+  title: 'Market item: freehold-spade (v3)'
+  item: freehold-spade
+  asset: items/freehold-spade
+  size: 1024x1024
+  seed: 73018
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, hands, person, character, multiple objects, cluttered, candle,
+    candlestick, candle flame, lit wick, second object, animal, bird, creature, label, plaque, coin, medallion,
+    round disc, emblem shield
+  prompt_tags: shovel, garden spade with a long wooden handle and iron blade, handle bound with wire, the only object,
+    resting alone on a dark worn wooden surface, soft rim light
+  jobs:
+    arthemy-house: 71205
+- key: eodi-ledger-abacus-v3
+  lane: arthemy-house
+  title: 'Market item: ledger-abacus (v3)'
+  item: ledger-abacus
+  asset: items/ledger-abacus
+  size: 1024x1024
+  seed: 73019
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, hands, person, character, multiple objects, cluttered, candle,
+    candlestick, candle flame, lit wick, second object, animal, bird, creature, label, plaque, coin, medallion,
+    round disc, emblem shield
+  prompt_tags: abacus, wooden frame abacus with brass beads on wires, plain unmarked frame, the only object, resting
+    alone on a dark worn wooden surface, soft rim light
+  jobs:
+    arthemy-house: 71206
+- key: eodi-lamplight-folio-v3
+  lane: arthemy-house
+  title: 'Market item: lamplight-folio (v3)'
+  item: lamplight-folio
+  asset: items/lamplight-folio
+  size: 1024x1024
+  seed: 73020
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, hands, person, character, multiple objects, cluttered, candle,
+    candlestick, candle flame, lit wick, second object, animal, bird, creature, label, plaque, coin, medallion,
+    round disc, emblem shield
+  prompt_tags: closed book, closed leather-bound book, a small oil lamp emblem embossed on the plain cover, the
+    only object, resting alone on a dark worn wooden surface, soft rim light
+  jobs:
+    arthemy-house: 71207
