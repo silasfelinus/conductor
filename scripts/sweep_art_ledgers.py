@@ -46,6 +46,8 @@ def find_ledgers(root: Path | None = None, *, with_data: bool = False) -> list:
     found = {}
     for pattern in PATTERNS:
         for path in root.glob(pattern):
+            if path in found:
+                continue
             try:
                 data = yaml.safe_load(path.read_text())
             except (OSError, yaml.YAMLError):
