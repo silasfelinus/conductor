@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from scripts.validate_emperor_reviewers import validate_record
+from scripts.validate_emperor_reviewers import PLAYTEST, validate_directory, validate_record
 
 
 def record():
@@ -55,3 +55,8 @@ def test_incorrect_total_rejected():
     data["acts"][3]["total"] = 25
     errors = validate_record(data, Path("reviewer.yaml"))
     assert any("total is incorrect" in error for error in errors)
+
+
+def test_committed_reviewer_records_pass():
+    """Prevent unvalidated evidence records from entering the playtest archive."""
+    assert validate_directory(PLAYTEST) == []
