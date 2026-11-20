@@ -910,11 +910,11 @@ tasks:
   - id: t-044
     milestone: m4
     title: "Second playtest: score the rewritten game against the 2026-10-21 rubric"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: '2026-11-20T113100Z-eod-t044-scorer-b4e9'
     claimed_at: '2026-11-20T11:29:04.716Z'
-    updated: '2026-11-20T11:29:04.716Z'
+    updated: '2026-11-20T11:34:36.876Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -940,6 +940,8 @@ tasks:
       Implemented full day-by-day modeled campaign trace capture across eight policies and two seeds; narrative scenes, choices, dispatches, quest results, 51 dawns, saved checkpoints and Day 31 rewind. Kind Robots PR #5390 open. Independent rubric scoring still open.
 
       2026-11-19 PT: Merged Kind Robots #5390 at fe974cf80f94b52eee1aadafdcb0a8617214efa3 after all eight exact-head workflows completed successfully on e40e79f90b4c4e655934fb1b56a5111f4906088f. The Emperor workflow generated a 14.35 MB artifact with sixteen reproducible 50-day model-simulation traces, narrative transcripts, checkpoints and rewind evidence. This is simulation evidence, not independent scored editorial or human playtest acceptance. Release t-044 to ready for real act-by-act scoring, documented weaknesses, repairs and cross-width QA.
+
+      Inspected actual Kind Robots run 44675257192 / artifact 14601418218 (16 complete model-simulated campaigns). All 51 dawns, four distinct ending IDs, zero observed deaths or loan use; selected marshal-17 for act-by-act source-grounded scoring. Kind Robots branch worker/emperor-of-dust-t044-trace-fidelity-b4e9 records actual choice costs/requirements and ending coverage; PR and independent review record staged next. This is partial t-044, not full independent scored multi-persona acceptance.
     implementation_pr: 'silasfelinus/kind_robots#5390'
   - id: t-045
     milestone: m5
