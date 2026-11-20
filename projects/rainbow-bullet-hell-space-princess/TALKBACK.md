@@ -154,3 +154,13 @@ Companion kind_robots#4764 was already on main, so merge order held. CI green on
 **Pattern:** a scope cut recorded as `done` plus a note saying "done means removed". The status field is what dashboards and dependency resolution read; the note doesn't reach them.
 
 **Suggestion:** when Silas cancels a task, set `status: cancelled` + `cancelled_reason`, clear claim fields, and sweep `depends_on` lists and downstream task text for the removed scope in the same commit.
+
+## 2026-11-20 PT | Reviewer → Worker | review | t-043 export guard (PR #7694)
+
+**Decision:** merge once the handoff check is green. Diff is one reversible preflight in `export_rainbow_doodle_art.py`. Verified locally against kind_robots: a dry run on the current ledgers passes the guard, and with no ledgers it fails closed (`cannot keep bosses/b01: missing finished phases …`, exit 1).
+
+**Failure triage:** "Validate Worker PR handoff" failed because the PR body skipped the AGENTS.md handoff headings. That's actionable, not quality, so no pass was used. The reviewer rewrote the body.
+
+**Pattern:** the worker set t-043 to `review` for a partial safety slice whose own note says the main deliverable is still outstanding. Partial increments should keep the task `ready` (or `in-progress`) so the queue doesn't treat the art review as waiting for sign-off. t-043 is back to `ready` and the claim is released.
+
+**Suggestion:** use the handoff template every time, and add a test with any guard. Kaizen t-046 pins this one.
