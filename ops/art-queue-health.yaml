@@ -1,19 +1,4 @@
 # art-queue-health.yaml -- written by scripts/art_queue_health.py record at the
 # end of every Auto Art Generate run. Do not hand-edit: fix the cause (see
 # docs/agents/roles/art-medic.md) and the next run drops the entry.
-failures:
-- source: requests
-  target: projects/images/chessweeper-icon.webp
-  kind: timeout
-  detail: job 71162 timed out after 300s (still queued/running)
-  first_seen: '2026-11-20'
-- source: requests
-  target: projects/images/kind-word-puzzles-hero.webp
-  kind: timeout
-  detail: job 71160 timed out after 300s (still queued/running)
-  first_seen: '2026-11-20'
-- source: requests
-  target: projects/images/slime-city-icon.webp
-  kind: timeout
-  detail: job 71161 timed out after 300s (still queued/running)
-  first_seen: '2026-11-20'
+failures: []
