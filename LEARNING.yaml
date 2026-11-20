@@ -18834,3 +18834,13 @@ records:
   failure_category: null
   lesson: A design brief that names the data-ownership boundary (art/print state vs canonical
     reading identity) up front gives later implementation PRs a concrete review criterion.
+- date: '2026-11-20'
+  project: conductor
+  task: t-220
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: When a filter reuses a tri-state helper, check what each state also covers. Here
+    'pending' also meant "zero check runs", so the filter needed a staleness escape hatch.
