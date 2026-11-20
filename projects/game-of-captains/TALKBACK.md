@@ -24,3 +24,10 @@
 - **Positive:** 24 known DONE round-three Krea2 images now have an explicit curator registration route and Forge UI. A public redshirt art endpoint delivers only the selected `liked` ArtSlot candidate when its image is public, active and non-mature, with the previously shipped portrait or glyph retained as a safe fallback.
 - **Remaining:** 77/100 static portraits and 99/100 static power plates remain shipped; 23 portrait and one power replacement require genuine image review, approval and final source shipment. No private ArtJob status was mistaken for accepted art. Task stays READY (partial), issue #4182 stays open.
 - **Lesson:** distinguish rendered, registered, reviewed, selected, publicly deliverable, and visually inspected states; make the workflow safely navigable without auto-approving uncurated images.
+
+## 2026-11-20 PT · t-031 alien redo curation workflow (#5422)
+
+- **Decision:** merged reversible Kind Robots PR [#5422](https://github.com/silasfelinus/kind_robots/pull/5422) as `708a0f8c893dead1bf31f897f9dfc2feefbb7bba` after all 12 exact-head GitHub Actions workflows completed success, including TypeScript, four contract shards, formatting and full Space Couch adversarial voyages.
+- **Positive:** registered exactly 22 DONE redo images as unselected curator candidates with fixed ArtJob/ArtImage provenance; runtime accepts only explicit liked-and-selected candidates with the existing viewer-specific access filter. The 22 failed originals remain quarantined, and no image was automatically approved or published.
+- **Remaining:** direct physical image review and authenticated private art URLs, redshirt and ending art coverage, responsive 390/768/1440 browser QA, and final roadmap readiness all remain agent-owned. t-031 goes back to READY partial. Master issue #4182 and species issue #4592 remain open.
+- **Lesson:** make art candidates independently inspectable, but separate render status, human-visible verdict, viewer authorization and delivered-game display at every stage.
