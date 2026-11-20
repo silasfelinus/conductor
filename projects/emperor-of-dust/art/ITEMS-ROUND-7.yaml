@@ -1,0 +1,103 @@
+# Emperor of Dust market item icons, round 7 (2026-11-20 PT, emperor-of-dust/t-033). ITEMS-ROUND-6 kept 0 of 5 on the
+# Arthemy (Illustrious) lane: the crowbar drew a bent hairpin rod, the lockpick roll a closed leather tube with no
+# picks, the spurs a spiked mace ball, the cutters a flat tong/clamp, the tooth a dagger pendant with a crossguard.
+# Rounds 5 and 6 both missed these five objects on the tag lane, so round 7 switches to the Krea 2 prose lane, which
+# follows literal object descriptions (Krea runs at cfg 1, so no negatives; wanted results are stated instead), and keeps the house palette in the suffix so icons sit beside the Arthemy set.
+# Curate at FULL size, export keepers with scripts/export_round_art.py --require-keep --max-edge 320, add ids to
+# ITEM_ART. auto_submit.
+round: emperor-items-7
+project_slug: emperor-of-dust
+designer: Comic Studio
+is_public: false
+is_mature: false
+cast_loras: false
+auto_submit: true
+lanes:
+- key: krea2
+  label: Krea 2 literal still-life object icon
+  engine: krea2
+  prompt: prose
+  suffix: Western comic book illustration with bold ink outlines and flat painted shading, weathered wasteland salvage,
+    kiln ochre, deep crimson and tarnished brass palette, warm rim light, a single object seen close up, large and
+    centered, dark plain background, every surface bare and unmarked.
+subjects:
+- key: eodi-old-road-crowbar-v7
+  lane: krea2
+  title: 'Market item: old-road-crowbar (v7)'
+  item: old-road-crowbar
+  asset: items/old-road-crowbar
+  size: 1024x1024
+  seed: 77001
+  prompt_prose: A single thick, heavy iron crowbar lying diagonally, seen close up from the lower left to the upper
+    right. One end curls into a tight J-shaped hook with a split nail-pulling claw; the other end is a flat chisel
+    tip. The bar is as thick as a thumb and pitted with orange rust and black iron.
+  jobs:
+    krea2: 74311
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+- key: eodi-lockpick-roll-v7
+  lane: krea2
+  title: 'Market item: lockpick-roll (v7)'
+  item: lockpick-roll
+  asset: items/lockpick-roll
+  size: 1024x1024
+  seed: 77002
+  prompt_prose: Seen from directly above, an unrolled brown leather tool wrap lies fully open and flat. Its stitched
+    pockets hold a neat row of eight slender steel lock picks and tension wrenches with small hooked and wavy tips,
+    their round wooden handles poking out of the pockets in a line. A leather tie cord trails from one edge.
+  jobs:
+    krea2: 74312
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+- key: eodi-courier-spurs-v7
+  lane: krea2
+  title: 'Market item: courier-spurs (v7)'
+  item: courier-spurs
+  asset: items/courier-spurs
+  size: 1024x1024
+  seed: 77003
+  prompt_prose: A single pair of old western riding spurs lying side by side with no boot. Each spur is a U-shaped
+    tarnished brass heel band with leather straps and buckles, and at the back of each band a short shank ends in
+    a small star-shaped spinning rowel. The two U-shaped heel bands are the largest shapes, seen close up.
+  jobs:
+    krea2: 74313
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+- key: eodi-rustline-cutters-v7
+  lane: krea2
+  title: 'Market item: rustline-cutters (v7)'
+  item: rustline-cutters
+  asset: items/rustline-cutters
+  size: 1024x1024
+  seed: 77004
+  prompt_prose: A single pair of heavy bolt cutters lying diagonally, seen close up. Two long straight red-painted
+    steel handles with worn rubber grips meet at a hinged compound joint, ending in short thick curved steel jaws
+    that are slightly open. Rust streaks the jaws and the paint is chipped.
+  jobs:
+    krea2: 74314
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+- key: eodi-hyena-tooth-v7
+  lane: krea2
+  title: 'Market item: hyena-tooth (v7)'
+  item: hyena-tooth
+  asset: items/hyena-tooth
+  size: 1024x1024
+  seed: 77005
+  prompt_prose: Close-up of a single large curved animal fang, an old yellowed hyena canine tooth with a pointed
+    ivory tip and a thick brown root, bound at the root with a wrap of brass wire and hung on a knotted leather
+    cord. The tooth is natural bone and enamel, gently curved like a claw, seen large and close up.
+  jobs:
+    krea2: 74315
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
