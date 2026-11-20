@@ -148,12 +148,11 @@ tasks:
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-20T15:10:00Z'
-    note: >-
-      Kaizen from t-007 review of Conductor PR #7678 (AUTHORED-RECRUITS-PORTRAITS-2026-11-20.yaml).
-      Several t-007 notes record merged request ledgers whose ArtJob IDs never appeared. Make the
-      sweep/auto-submit path checkpoint each accepted ArtJob ID into the subject entry, and add a
-      check that flags auto_submit ledgers older than a day with no recorded IDs.
+    updated: '2026-11-20T15:25:00Z'
+    note: |-
+      Kaizen from t-007 review of Conductor PR #7678 (AUTHORED-RECRUITS-PORTRAITS-2026-11-20.yaml). Several t-007 notes record merged request ledgers whose ArtJob IDs never appeared. Make the sweep/auto-submit path checkpoint each accepted ArtJob ID into the subject entry, and add a check that flags auto_submit ledgers older than a day with no recorded IDs.
+
+      Added immediate durable receipt checkpoint after art ledger submission, stale no-receipt audit, and regression tests; implementation PR pending checks.
   - id: t-012
     milestone: m2
     title: "Promote the seven-day demo into Capes & Tassels name and genuine day/night map slice"
