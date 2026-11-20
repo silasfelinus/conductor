@@ -223,11 +223,14 @@ tasks:
   - id: t-007
     milestone: m3
     title: "Write and implement all six distinctive tactical story missions"
-    status: ready
-    updated: '2026-11-20T00:28:00Z'
+    status: review
+    updated: '2026-11-20T01:10:30Z'
     depends_on: [t-003, t-005, t-006]
     passes: 0
     stakes: reversible
+    owner: worker
+    claimed_by: 2026-11-20T010620Z-every-villain-tactics-t-007-rooftop-m7b2
+    claimed_at: '2026-11-20T01:06:20Z'
     note: |-
       First Bell: basic combat; Science Wing Lockdown: doors and destructible cover; Crosswalk Crisis: civilian rescue/split objectives; Rooftop Broadcast: elevation/overwatch/betrayal; Under-Comet Breach: hazards/timer/multi-squad; Prom Night Everybody's Villain: three-phase finale. Each needs original opening, branching mid-fight, closing scenes, story callbacks and losses.
 
@@ -248,6 +251,8 @@ tasks:
       2026-11-13 PT: Merged Crosswalk Crisis in Kind Robots #5121 (c310b0d) after all seven workflows passed. A real three-civilian eight-round rescue stage with traffic cover, runoff hazard, licensed mascot reinforcements, seven branching comic scenes, 48-identity support and authored outcome is playable from One-Shots using generated Crosswalk ArtImage 265022. The dedicated tactics, layout, TypeScript, formatting, architecture, schema, and four contract shards were green. Remaining t-007: connected six-chapter progression, Rooftop Broadcast, Under-Comet Breach, Prom Night finale, and full mission playthrough QA. Separately, all twelve first-six-cast hero/villain reveal ArtImages (270741–270752) are DONE but need attachment/visual verification under the art task.
 
       2026-11-19 PT recovery: prior claim from 2026-11-19T20:25:00Z exceeded Conductor's 90-minute lease. GitHub branch search found no worker/every-villain-tactics-t-007 branch and open PR searches found no Rooftop Broadcast or Crossfire implementation PR. Releasing the stale reservation without changing any accepted mission content; First Bell, Science Wing and Crosswalk progress remains preserved on main.
+
+      2026-11-19 PT: Staged playable Rooftop Broadcast tactical chapter four as a distinct selectable one-shot on Kind Robots branch worker/every-villain-tactics-t-007-rooftop-20261120T010620Z-m7b2. Elevated 9x6 antenna hold, catwalk collapse, cover and telegraphed Licensed Legends reinforcement; nine hero/villain-aware scenes with gameplay-altering warning versus jamming decision, conditional closing consequences and deterministic studio tests. Uses existing finished ArtImage 265023. This is a vertical slice, not linked six-chapter progression. Rooftop test CI and final PR review remain required, then return umbrella t-007 to ready.
   - id: t-008
     milestone: m3
     title: "Author 48 hero and villain playable arcs with distinct supporting cast"
@@ -496,18 +501,17 @@ tasks:
   - id: t-021
     milestone: m3
     title: "Ship 48 power-specific playable origin opening battles"
-    status: review
+    status: ready
     depends_on: [t-005, t-017]
-    owner: worker
-    claimed_by: 20261119T230200Z-every-villain-tactics-t-021-f8q3
-    claimed_at: '2026-11-19T23:02:00Z'
-    updated: '2026-11-19T23:06:50Z'
+    updated: '2026-11-20T01:17:00Z'
     passes: 0
     stakes: reversible
     note: |-
       48/48 authored metadata blueprints and typed lookup now exist in Kind Robots identityCampaignStages.json; the dossier displays those concepts. Make each origin a physically unique playable opening with an original arena, power-only solution, meaningful alternative choice, durable consequences and distinct cinematic intro; support arbitrary hero role. Start with one complete vertical slice and adversarial playtest before scaling. Do not count the authored 48 as 48 tested maps.
 
       2026-11-19 PT: Implemented shared Prom identity and side handoff to Tactics from /play/comet-city-academy on worker branch worker/every-villain-tactics-t-021-20261119T230200Z-f8q3. Three-file change adds Story/Tactics selection, hero/villain selection only for Tactics, canonical signature routing into the existing First Bell setup, and menu regression contracts. This is a partial vertical slice: 48 unique origin arenas and in-game consequences still require implementation.
+
+      2026-11-19 PT recovery: Shared Prom Story/Tactics launcher and 48-identity handoff merged in kind_robots PR #5362 (a415282). First power-specific playable Backdraft diner origin merged in PR #5371 on 2026-11-19 PT after runtime/story-flag and regression-test fixes. Diner-specific painted art remains queued under Conductor PR #7637 and is not delivered. Return t-021 to ready for the remaining 47 unique playable origin battles, art integration and QA. This is partial completion, not 48/48.
   - id: t-022
     milestone: m3
     title: "Build 48 villain-owned lairs with changing tactical environments"
