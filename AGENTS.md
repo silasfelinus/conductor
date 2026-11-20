@@ -51,13 +51,13 @@ the question.
   and not "read AGENTS.md first" unless it makes rule-bound changes (then name the section). `Explore`
   for read-only search; `model: "haiku"`/`"sonnet"` for mechanical lookups. Ask for a short
   conclusion. Git-mutating subagents need `isolation: 'worktree'` (hard rule 12).
-- **Don't babysit CI.** Each wake of a session re-reads its whole context (~80k tokens), so a turn
-  per "N checks pending" update costs as much as real work. After opening a PR, call
-  `subscribe_pr_activity` and end your turn: GitHub wakes you once, when every check suite has
-  finished (verified on conductor#6913), and you merge then. No timers, watchers or per-check polls.
-  `enable_pr_auto_merge` does not work on these repos: no required checks, so it refuses both
-  pending and green PRs. (2026-11-01: 20 of an hourly run's 21 turns were CI-wait wakes, ~40% of
-  its cost.)
+- **Keep production moving while CI runs (Silas, 2026-11-20 PT).** A verified `review`
+  handoff and open PR free the Worker to claim the next **independent** ready task while the
+  previous PR's checks run. Subscribe for PR completion when supported; never spend a run
+  polling queued checks. Only one task may be actively `claimed`; review PRs remain owned
+  until failed checks are repaired or completed green checks permit a safe merge. Respect
+  dependencies, conflicting files, task ownership and publication gates. See
+  [continuous production pipeline](docs/agents/continuous-production-pipeline.md).
 - **Read at the level you need.** Portfolio → `python scripts/project_triage.py` (completion tier
   and lanes per project); project → `show_task.py <project> --list`; task → `show_task.py <id>`.
   Never open roadmaps to answer a portfolio question.
@@ -75,6 +75,7 @@ the question.
 | Situation | Doc |
 | --- | --- |
 | Claiming, `review`/`done` transitions, dependencies, umbrella tasks | [`docs/agents/picking-work.md`](docs/agents/picking-work.md) |
+| Continue content creation while PR checks run | [`docs/agents/continuous-production-pipeline.md`](docs/agents/continuous-production-pipeline.md) |
 | Parking at `needs-human`, writing FOR SILAS notes, `gate-triage` | [`docs/agents/human-gates.md`](docs/agents/human-gates.md) |
 | kind_robots / other target repo, secrets, branch hygiene, rescue PRs | [`docs/agents/cross-repo.md`](docs/agents/cross-repo.md) |
 | Role selection, never-idle ladder detail | [`docs/agents/role-assignment.md`](docs/agents/role-assignment.md) |
@@ -352,7 +353,8 @@ Numbers are stable (TALKBACK cites them); full text and incidents: [`docs/agents
 2. High-stakes drafts are drafts → `needs-human`, never auto-fired.
 3. 3 passes per software task (retries + challenges), then `blocked`; only quality/scope failures
    spend a pass.
-4. One task in flight at a time; finish, hand off or park each before claiming the next.
+4. At most one task actively `claimed` per Worker. A verified `review` handoff with an open PR
+   can await CI while another independent task is claimed; retain responsibility for every PR.
 5. Never touch DNS, secrets, billing, deploys, or send/publish anything without `needs-human`.
 6. Scope discipline: unrelated problems become new `ready` tasks, not extra diff.
 7. TALKBACK is append-only; the only exception is the verified archival carve-out.
@@ -369,7 +371,7 @@ Numbers are stable (TALKBACK cites them); full text and incidents: [`docs/agents
 12. `isolation: 'worktree'` is REQUIRED for any background Agent that mutates git state in a repo
     the foreground session is using.
 13. A delegated agent's "waiting for CI, will re-check" is not a live block: subscribe to its PR
-    (per "Don't babysit CI"), merge when green, then stop the agent via `SendMessage`.
+    (per "Keep production moving while CI runs"), merge when green, then stop the agent via `SendMessage`.
 14. Secrets on the Unraid host live in `<checkout>/.secrets/` (`/mnt/user/appdata/kind_robots/.secrets/`),
     never under `/mnt/user/pc` (bulk non-secret data there is fine).
 15. Any command you hand a human must be incapable of printing a secret: presence checks, `sed
