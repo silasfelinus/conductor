@@ -3313,12 +3313,12 @@ tasks:
 - id: t-220
   milestone: m1
   title: 'Route worker PRs whose CI never starts (zero check runs) to reviewer after a grace period'
-  status: claimed
+  status: review
   stakes: reversible
   owner: worker
   passes: 0
   depends_on: []
-  updated: '2026-11-20T13:56:49Z'
+  updated: '2026-11-20T13:58:41Z'
   note: >-
     Reviewer kaizen 2026-11-20 PT from conductor#7674 (continuous production pipeline).
     split_pending_worker_reviews treats commit_combined_state == 'pending' as "CI still
