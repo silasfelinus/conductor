@@ -432,6 +432,18 @@ def test_reveal_motif_is_not_painted_into_every_shot():
             assert "jaguar" not in e["visual_style"].lower(), path.name
 
 
+def test_yellow_television_reveal_is_not_in_visual_style():
+    """MV22 and MV24 showed the yellow single-eyed television in shots that never named it,
+    because the motif sat in visual_style (appended to every still prompt). Unrendered briefs
+    must place it only in the shots that reveal it."""
+    for path in sorted((ROOT / "projects/dead-air/episodes").glob("*.yaml")):
+        e = load_episode(path)
+        if e.get("status") != "authored" or e["date"] < "2026-11-20":
+            continue
+        style = e["visual_style"].lower()
+        assert not ("yellow" in style and ("television" in style or "eye" in style)), path.name
+
+
 def test_motion_prompts_are_lettering_guarded_like_stills():
     """MV18's s3 GPU clip baked garbled fake subtitles into the picture (t-010)."""
     episode = load_episode(PILOT)

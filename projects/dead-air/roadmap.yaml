@@ -102,8 +102,8 @@ tasks:
     status: ready
     recurring: true
     daily_commitment: true
-    daily_last_checked: '2026-11-19'
-    daily_last_completed: '2026-11-18'
+    daily_last_checked: '2026-11-20'
+    daily_last_completed: '2026-11-20'
     stakes: reversible
     passes: 0
     depends_on: t-002
@@ -165,8 +165,18 @@ tasks:
       Merging triggered run 44500315933, which started today's MusicVideo 24 (Yesterday's
       Weather), still ArtJobs 70785-70789, clip skipped for congestion; status rendering, not
       yet completed.
+
+      2026-11-20 PT cycle: MusicVideo 25 (The Opinion Zoo, ArtImage 277155) completed private
+      on this session's 02:46 PT --daily resume; MV24 (Yesterday's Weather, completed 11-19
+      unscreened) and MV25 downloaded, hash-verified and screened, review log projects/dead-
+      air/reviews/2026-11-20-screening.md. Peaks -1.7/-1.8 dBFS (limiter fix holds),
+      watercolor medium held all of MV25, s4 zoo reversal is the run's best gag. Defects:
+      MV24's yellow station eye leaked into s1/s2 via visual_style; MV25 s5 lost the two-dads
+      family; identity/age cues still dropped; clip skipped for congestion again. Fixed:
+      removed the yellow-TV clause from visual_style in briefs 11-20..11-24, with a regression
+      test. daily_last_completed=2026-11-20 reflects MV25's verified completion.
     owner: worker
-    updated: '2026-11-18T11:07:00Z'
+    updated: '2026-11-20T10:49:25Z'
   - id: t-005
     milestone: m3
     title: Create rights-aware reference and private production provenance review
