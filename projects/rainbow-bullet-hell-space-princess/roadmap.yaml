@@ -605,14 +605,14 @@ tasks:
   - id: t-027
     milestone: m6
     title: "Gen-2 memory: save slots, route map screen, medals and the persistent Palace Hangar"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 20261120T215800Z-rainbow-t027-progress-comms-f2r9
     claimed_at: '2026-11-20T21:57:40.786Z'
     depends_on: [t-026]
     passes: 0
     stakes: reversible
-    updated: '2026-11-20T21:57:40.786Z'
+    updated: '2026-11-20T21:59:04.179Z'
     note: |-
       2026-11-20T11:21:42Z connector recovery: prior claim 2026-11-20T05:40:00Z expired after 341 minutes, no open Rainbow PR or branch; implementing Palace Hangar on a scoped worker branch.
 
@@ -641,6 +641,8 @@ tasks:
       Implemented a separate unlocked-Act replay launch path from the Seas map. It validates completion for the active save slot, reconstructs stage-start state without mutating the saved campaign, supports 1–4 pilots, stops at the selected Act clear, and awards the improved replay medal only to the Hangar. Scoped regression test added. t-027 remains partial until route-map branch navigation and other acceptance are verified.
 
       Scope-limited Act replay PR silasfelinus/kind_robots#5443 merged as 4712fe42e5465dbe28d8cc25d482a917b45e7c56 after all 12 latest-head workflow runs completed successfully, including TypeScript after declaring the replayClear return property. Unlock-validated Act replay, 1-4 local seats, save isolation and earned Hangar medals are on main. t-027 remains incomplete until route-node branch navigation and full progression acceptance are verified.
+
+      Added slot-specific Lilt-7 and named-pilot comms on the Seas map. First launch, return flight, discovered branching routes, rescues and Motherland allegiance now have distinct deterministic dialogue, backed by the active save-slot flags rather than account-wide mastery. Existing Rainbow replay and logbook regression tests cover the new selection rules. This is a partial t-027 slice; full map-node navigation and progression acceptance remain.
   - id: t-028
     milestone: m6
     title: "Gen-2 alternate stages: four branch stages with their own guardians"

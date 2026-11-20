@@ -223,11 +223,11 @@ tasks:
   - id: t-007
     milestone: m3
     title: "Write and implement all six distinctive tactical story missions"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 20261120T220000Z-every-villain-t007-epilogues-v83n
     claimed_at: '2026-11-20T21:53:12.452Z'
-    updated: '2026-11-20T21:53:12.452Z'
+    updated: '2026-11-20T21:55:59.431Z'
     depends_on: [t-003, t-005, t-006]
     passes: 0
     stakes: reversible
@@ -269,6 +269,8 @@ tasks:
       Continuity increment staged in Kind Robots: completed Crossfire mission choices grant a first-volley guarded squad leader after mercy/rescue or mark the enemy lead after gathering evidence. Surviving squadmates carry at most one wound into the next chapter. All effects derive from completed v2 battle snapshots and are persisted in the existing v1 Crossfire journal; 11 branch scenarios plus wounded/downed ally and save-validation tests added. A compact HUD disclosure shows the prior chapter callback. Remaining authored dialogue, visual acceptance, original art and 48 bespoke routes are not yet complete.
 
       Canonical Crossfire rival continuity staged: the chosen First Bell foil now commands the remaining five stage battles (without changing the separate one-shot cast), and each checkpoint keeps the optional saved foil signature. A duplicate supporting rival gets a stable alternate identity. Old journal stages without foil metadata still load, recovering the chosen opponent on subsequent chapters. Test expanded across all 48 canonical leaders, 5 chapters, legacy migration, forgery and stand-alone compatibility. App PR and completed CI checks required before this can be considered merged.
+
+      Six authored Crossfire chapter debriefs now branch on actual rescue, evidence or command choices; four Prom Night conclusions derive from the completed first five battles plus the final shelter/command choice, rather than the HERO/VILLAIN menu selection. Story beats reuse 48 canonical identities, the stable foil, the old Crossfire save key and the existing battle-result art. Added 6x3 chapter-choice checks, all 48 lead aliases, all four earned finales and loss/skip guards in the dedicated Tactics test. Implementation PR pending CI. Full 48-route authoring, cinematic art and whole-run acceptance remain pending.
   - id: t-008
     milestone: m3
     title: "Author 48 hero and villain playable arcs with distinct supporting cast"
