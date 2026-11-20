@@ -1,8 +1,0 @@
-version: 1
-project: game-of-captains
-task: t-041
-operation: review
-session: 20261120T233522243Z-goc-t041-restore-6f91
-updated: '2026-11-20T23:36:56.054Z'
-note: >-
-  Scoped recovery fix in app commit 4132e315: a failed Space Couch backup import now restores both prior browser save keys, including writes that mutate before throwing; reports when rollback itself fails. Added functional failure-injection regression tests. This is PARTIAL t-041 only; signed-in server backup, art delivery, responsive/browser checks and master handoff remain unverified. Await exact-head CI and safe PR merge, then return READY, not DONE.

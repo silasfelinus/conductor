@@ -227,7 +227,7 @@ tasks:
     owner: worker
     claimed_by: 20261120T234210Z-evt-t007-finale-network-z8p4
     claimed_at: '2026-11-20T23:34:33.287Z'
-    updated: '2026-11-20T23:06:00Z'
+    updated: '2026-11-20T23:47:30Z'
     depends_on: [t-003, t-005, t-006]
     passes: 0
     stakes: reversible
@@ -273,6 +273,8 @@ tasks:
       Six authored Crossfire chapter debriefs now branch on actual rescue, evidence or command choices; four Prom Night conclusions derive from the completed first five battles plus the final shelter/command choice, rather than the HERO/VILLAIN menu selection. Story beats reuse 48 canonical identities, the stable foil, the old Crossfire save key and the existing battle-result art. Added 6x3 chapter-choice checks, all 48 lead aliases, all four earned finales and loss/skip guards in the dedicated Tactics test. Implementation PR pending CI. Full 48-route authoring, cinematic art and whole-run acceptance remain pending.
 
       PR silasfelinus/kind_robots#5449 was already merged; the first Tactics workflow run 44825830068 failed with no jobs, but the subsequent run 44825892656 on the same head completed successfully. Six choice-aware chapter reports and four earned conclusions shipped; personal routes, art and adversarial complete-campaign acceptance remain unfinished. Return to ready.
+
+      Scoped Crossfire sixth-chapter gameplay increment staged as kind_robots commit ee07c64. Cumulative five-chapter rescue evidence now changes the final tactical opening: 3 earned rescue decisions guard all surviving squadmates, and 2 evidence branches mark all starting rivals. Preserves legacy saves, seeded campaign structure and canonical identities. New regression covers cumulative branch thresholds, losses and v2 save/load. 48 bespoke fixed-identity routes, art completeness and full QA remain.
   - id: t-008
     milestone: m3
     title: "Author 48 hero and villain playable arcs with distinct supporting cast"
