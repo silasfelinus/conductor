@@ -85,12 +85,12 @@ tasks:
       Full history: projects/game-of-captains/HISTORY.md#t-001
   - id: t-041
     title: 'Main-game standard: audit and close the gaps for Space Couch'
-    status: review
+    status: ready
     milestone: m4
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-20T01:13:44Z'
+    updated: '2026-11-20T01:35:18Z'
     note: |-
       Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -121,9 +121,8 @@ tasks:
       2026-11-19 PT: Kind Robots PR #5368 merged into main as 98bec1780a071b1b3fdbc971c2f79e16a57136d1 after all nine exact-head GitHub Actions workflow groups COMPLETED/SUCCESS, including all four Contract Tests shards, Playbook Kit, TypeScript, layout, seeded gameplay and the full Space Couch adversarial voyages suite. Title Ship Settings now reuses the Kit settings sheet and same reactive text/motion preferences as the voyage. Legacy largeText/reducedMotion flags import only on a missing Kit save; stored Kit settings always win, old preferences remain untouched, and existing v1 voyage save keys and stable game IDs are unchanged. This is PARTIAL t-041 closure; remaining authenticated voyage/achievement records, real rendered painted ending URL checks and 390/768/1440 browser QA remain. No human approval implied.
 
       2026-11-19 PT agent-owned main-game standard slice: implemented a reversible, versioned JSON backup for Space Couch current v1 voyage and finished-run history, accessible in Captain's Log. Explicit user-controlled import preview and confirm before replacing an active run; duplicate-safe completed-run merge; corrupted, oversized or wrong-game files rejected. Existing voyage save key, game slug and account-owned guide/achievements remain untouched. CI/PR and browser evidence pending. This does not assert authenticated cloud saves, original art approval, mobile QA or playtest DONE.
-    owner: worker
-    claimed_by: 20261120T010958Z-space-couch-t041-backup-r6p2
-    claimed_at: '2026-11-20T01:09:58Z'
+
+      2026-11-19 PT: Kind Robots PR #5378 merged into main at a4de97d2e954c64926781b5c52653eb572b42734; all nine exact-head workflow groups completed SUCCESS, including TypeScript, Playbook Kit, formatting, seeded gameplay, the full adversarial Space Couch matrix and four contract shards. Added a user-controlled versioned JSON backup of active v1 voyage and completed-run history, staged import validation, explicit replace confirmation, duplicate-safe merge and rollback on failed storage writes. Existing save keys and account-owned achievement and alien-guide data preserved. Remaining t-041 scope includes authenticated cloud-save verification, real rendered art and viewport checks, not human subjective approval. Return to READY (partial), never DONE for this slice.
 
   - id: t-040
     title: 'Space Couch achievement upgrade: 12 or more live achievements'
