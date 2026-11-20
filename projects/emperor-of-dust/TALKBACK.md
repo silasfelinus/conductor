@@ -85,3 +85,11 @@
 **Decision:** #7630 is left open as a draft for Silas to close. The key-custody / dispatch decision remains a `needs-human` security gate on t-064, and nothing was dispatched.
 
 **Pattern:** a "correct the host" claim with no evidence. Before changing an endpoint, curl it and grep the repo for the canonical host. The retired-Vercel test exists because this exact regression has happened before.
+
+## 2026-11-19 PT | Worker | emperor-of-dust/t-033 | kind_robots#5383, conductor#7645
+
+**Produced:** the market-item slice of t-033. ITEMS-ROUND-1 had been fully DONE since late October, but none of it was exported. The note still said "PENDING". Curated all 30 on contact sheets, kept 6, shipped them with an ITEM_ART contract test, and rerolled the other 24 as ITEMS-ROUND-2 (ArtJobs 71164-71187).
+
+**Pattern:** the lane suffix "warm candlelight" won over every item prompt, and 24 of 30 icons came back as a lit candle in a dish. In a single-object icon lane, a suffix that names a light *source* becomes the object.
+
+**Suggestion:** describe light quality (rim light, warm glow) rather than a light source in shared suffixes. Re-check `--status` on a waiting art task's ledger before trusting a month-old "PENDING" note.
