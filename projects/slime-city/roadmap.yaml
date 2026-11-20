@@ -154,12 +154,12 @@ tasks:
     implementation_pr: 'silasfelinus/kind_robots#5159'
   - id: t-063
     title: 'Main-game standard: audit and close the gaps for Slime City'
-    status: claimed
+    status: done
     milestone: m4
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-20T02:04:16Z'
+    updated: '2026-11-20T02:12:27Z'
     note: |-
       Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -298,9 +298,20 @@ tasks:
       cinders or bestFloor. Reversible, and reported to him as an agent decision he can
       change. Item 7 is recorded as crew + deck choice plus the equipable card backs and
       titles (t-061, t-065).
-    claimed_by: 2026-11-20T021000Z-slime-city-playtest-lqz02n
-    claimed_at: '2026-11-20T02:04:16Z'
-    implementation_pr: 'silasfelinus/kind_robots#5174'
+
+      2026-11-19 PT: device-journey import built and MERGED in kind_robots#5379 (squash
+      5b715a7; all 15 checks green; reviewed there with the other two commits). When an
+      account's own story is fresh and this device holds a journey with progress, the title
+      screen offers to copy it in: city, campaigns, journey seat, decks, endings, scrapbook
+      and cosmetics. The Tower legacy and any Tower run are never copied, the device copy is
+      untouched, and Not now hides the offer for the visit. verifySlimeCityGuestImport.test.ts
+      is in test:slime-city-lab; a real-browser check on a local build confirmed the offer,
+      the saved account story (2 wins, 1 ending, account Tower, account revision) and both
+      cases where it must not appear. Every row of STANDARD-AUDIT-2026-11-12.md is now met, taking item 7 (customizable characters) as crew and deck choice plus the equipable card backs and titles.
+      Done. Option (a) was an agent decision: Silas can ask for (b) or (c).
+    claimed_by: null
+    claimed_at: null
+    implementation_pr: 'silasfelinus/kind_robots#5379'
     soft_gate: false
     owner: worker
   - id: t-064
@@ -1008,8 +1019,8 @@ tasks:
   - id: t-041
     milestone: m2
     title: "CLASH 300: individually crafted L1/L2/L3 effects for every existing card"
-    status: review
-    updated: '2026-11-20T01:57:46Z'
+    status: done
+    updated: '2026-11-20T02:12:27Z'
     depends_on: [t-037, t-051]
     passes: 0
     stakes: reversible
@@ -1079,10 +1090,18 @@ tasks:
       Spare Nine Lives, Grease Oracle, Mark of the Procession, Breeding Hunger) are reported
       in the playtest handoff as a question for human play, not held as agent work. In review
       until #5379 merges; the 300-row ledger is promoted in the same close-out.
+
+      2026-11-19 PT: MERGED kind_robots#5379 (squash 5b715a7, head aab8f14; all 15 checks
+      green). Reveal the Ledger and Secondhand Halo each have a level-one payoff, the 300-card
+      matchup suite plays 294 cards, the constructed suite proves the other six, and both
+      share lib/slimeCityCpuReach.ts. CARD-REDESIGN-300.md promotes the 230 LIVE_QA rows to
+      QA_PASSED with the evidence and states what is not claimed: the CPU plays 237 of 300 at
+      level three, six two-slot cards are picked in under 3% of bouts, and fun is t-009/t-014.
+      Done. Further card tuning comes from human play as playtest_iteration tasks.
     owner: worker
     implementation_pr: 'silasfelinus/kind_robots#5379'
-    claimed_by: 2026-11-20T013500Z-slime-city-playtest-lqz02n
-    claimed_at: '2026-11-20T01:33:03Z'
+    claimed_by: null
+    claimed_at: null
   - id: t-042
     milestone: m2
     title: "Curate and wire the ogre redo-3 tokens: Picket Line Troll, Coal Cart Racer, Union Lunch Lady"
