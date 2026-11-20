@@ -99,12 +99,12 @@ tasks:
       not rendered assets, and no playable implementation is claimed.
   - id: t-044
     title: 'Main-game standard: audit and close the gaps for Rainbow Bullet Hell Space Princess'
-    status: claimed
+    status: ready
     milestone: m6
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-19T10:35:00Z'
+    updated: '2026-11-20T00:10:00Z'
     note: |-
       Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -115,9 +115,8 @@ tasks:
       Item 7 (customizable characters) applies "in most cases": if this genre makes it a poor fit, say so in the audit with the reason and leave it for Silas rather than skipping silently.
 
       Achievements are tracked by their own task; this one covers everything else.
-    owner: worker
-    claimed_by: 2026-11-19T103500Z-rainbow-t044-logbook-k7p2
-    claimed_at: '2026-11-19T10:35:00Z'
+
+      Stale claim recovery: no matching open Rainbow PR or implementation branch; no code is identified as committed by this claim. Keep main-game logbook and other acceptance gaps open, and reclaim before implementing.
   - id: t-045
     title: 'Rainbow Bullet Hell Space Princess achievement upgrade: 12 or more live achievements'
     status: done
@@ -290,7 +289,7 @@ tasks:
   - id: t-011
     milestone: m4
     title: "Build lavish stage parallax, readable effects and character animation"
-    status: review
+    status: ready
     depends_on: [t-002, t-007]
     passes: 0
     stakes: reversible
@@ -304,10 +303,9 @@ tasks:
       PR silasfelinus/kind_robots#5351 merged as 27dae5faad78467b2af7bb39ad8264e241150603 after nine GitHub Actions workflows completed successfully, including TypeScript, Rainbow Cabinet Browser Contract, viewport matrix, Contract Tests and formatting. Added slow-moving bioluminescent ocean atmosphere. Task remains incomplete: painted stage planes, sprite atlases, lens/bloom and visual acceptance are outstanding.
 
       Scoped ambient-motion fix: the sky's star twinkles and doodle pulses/rotation now honor calm-motion drift; full painted art and atlas scope remains outstanding.
-    owner: worker
-    claimed_by: 2026-11-19T235955Z-rainbow-t011-calm-q9r4
-    claimed_at: '2026-11-19T23:59:55Z'
-    updated: '2026-11-20T00:03:00Z'
+
+      Recovered stale review after PR #5355 was merged as ce8717b1; painted scenery, sprite atlases, visual effects and verification remain. No matching open Rainbow PR or task branch found. Return to ready, preserving shipped work.
+    updated: '2026-11-20T00:10:00Z'
   - id: t-012
     milestone: m4
     title: "Produce opening, between-stage dialogue, endings, sound and score"
@@ -325,9 +323,8 @@ tasks:
       slots. Preserve persistent ship/party state across seamless boss
       transitions, with rare optional tableau checkpoints after Acts III
       and V. See ACT-STRUCTURE.md. Do not mark done for a document alone.
-    status: review
+    status: ready
     depends_on: [t-002, t-009]
-    owner: worker
     passes: 0
     stakes: reversible
     note: |-
@@ -337,10 +334,9 @@ tasks:
       2026-11-06 PT (writing half, round 6): the finale now pays off the Act V allegiance choice. Each road (turn on the empire or stay the course) times each final choice is a named ending: ASK FIRST, OPEN WATER, NO MORE LEASHES, PEACE BY ORDER, AN EMPTY OCEAN and ORDERS BROKEN, plus the three shipped endings for flights saved before the memorial. The road sets the world consequence, Lilt's resolution, the epilogue for each crew size and the send-off, and the rescue verdict has four tiers. The credits and THE END name the ending. Acts VII and VIII close on a bridge line for each road, and the finale's opening and turn answer the road. Act I's opening is three punchy lines. A skips the ending line by line, and ending lines hold for 180 frames. verifyRainbowStoryScript pins: - intro, turn and outro dialogue for every Act; - 4,101 lines that fit the comms box at arcade pace, with no absent speakers; - every ending reachable by flying it; - the skip, through the engine.  Remains: the 15 partyMask composition tracks, with pilot-specific solo lines (dialogue is still written in seat terms and renamed by the pilot select); ROUTE-MAP route stingers once the t-028 alt flags exist; subtitle and comms settings (full, essential or off; replay); cinematic ending boards; and the sound and score half. Merged as kind_robots#4866 (2026-11-06).
 
       Authored all fifteen distinct pilot-set reveal responses and ending stingers, integrated them into Act VI and the finale by the actual four-bit pilot mask, and added script validation. Implementation commit 98343fc9a85723dbd73fdd35098e718632df0a10; t-012 still has further audio, comms settings and cinematic work.
-    claimed_by: 2026-11-19T225135Z-rainbow-t012-9k7q
-    claimed_at: '2026-11-19T22:54:03Z'
-    updated: '2026-11-19T22:59:21Z'
-    implementation_pr: 'silasfelinus/kind_robots#4866'
+
+      Merged Kind Robots PR #5360 as 0635f88902e2cd7aef0b27c4eb89239d1d821e9c after all 10 latest workflow checks passed. The 15 pilot-set reveal and ending tracks are integrated, but comms settings, cinematic boards and audio remain. Release claim for continued implementation.
+    updated: '2026-11-20T00:10:00Z'
   - id: t-013
     milestone: m5
     title: "Deterministic combat fairness, multiplayer soak and campaign QA"
@@ -586,32 +582,27 @@ tasks:
   - id: t-027
     milestone: m6
     title: "Gen-2 memory: save slots, route map screen, medals and the persistent Palace Hangar"
-    status: claimed
+    status: ready
     depends_on: [t-026]
-    owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-11-19T18:42:00Z'
-    note: >-
-      Reuse the generalized overworld/save-slot module (save-the-plumber/t-011, kr-arcade/t-160).
-      Three slots; route map with cleared nodes, medals and discovered branches; a hangar where
-      medals buy permanent, bounded upgrades (never pay-to-win against the fairness rules); pilot
-      comms that recognise progress (first visit vs return, a branch found, a friend rescued last
-      run). Migrate the current save.
-    claimed_by: 2026-11-19T184200Z-rainbow-t027-n8q4
-    claimed_at: '2026-11-19T18:42:00Z'
+    updated: '2026-11-20T00:10:00Z'
+    note: |-
+      Reuse the generalized overworld/save-slot module (save-the-plumber/t-011, kr-arcade/t-160). Three slots; route map with cleared nodes, medals and discovered branches; a hangar where medals buy permanent, bounded upgrades (never pay-to-win against the fairness rules); pilot comms that recognise progress (first visit vs return, a branch found, a friend rescued last run). Migrate the current save.
+
+      Stale claim recovery: no matching open Rainbow PR or implementation branch; save slots, route map and Palace Hangar must be verified from current main before further implementation.
   - id: t-028
     milestone: m6
     title: "Gen-2 alternate stages: four branch stages with their own guardians"
-    status: claimed
+    status: ready
     depends_on: [t-026]
-    owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-11-19T13:40:14Z'
-    note: One stage per PR, authored to the existing Act pacing and fairness rules, each with a guardian.
-    claimed_by: 20261119T134014Z-rainbow-t028-q6v9
-    claimed_at: '2026-11-19T13:40:14Z'
+    updated: '2026-11-20T00:10:00Z'
+    note: |-
+      One stage per PR, authored to the existing Act pacing and fairness rules, each with a guardian.
+
+      Stale claim recovery: no matching open Rainbow PR or implementation branch; preserve authored alternate stage scope and resume from actual main-branch implementation.
   - id: t-029
     milestone: m6
     title: "Gen-2 art round 1: route map, Palace Hangar and four alternate-stage backdrops"
@@ -755,18 +746,15 @@ tasks:
   - id: t-038
     milestone: m4
     title: "Recut the thrash-metal opening from the doodle art"
-    status: claimed
+    status: ready
     depends_on: [t-036]
-    owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-11-19T22:00:00Z'
-    note: >-
-      Silas chose to hold the old-style opening clips (44645-44653) and recut from new-style stills. New WAN
-      clip ledger from t-035/t-036 keepers, then scripts/export_rainbow_opening.py with the new SHOTS; the thrash
-      track (44644) stays.
-    claimed_by: 2026-11-19T220000Z-rainbow-t038-r8m3
-    claimed_at: '2026-11-19T22:00:00Z'
+    updated: '2026-11-20T00:10:00Z'
+    note: |-
+      Silas chose to hold the old-style opening clips (44645-44653) and recut from new-style stills. New WAN clip ledger from t-035/t-036 keepers, then scripts/export_rainbow_opening.py with the new SHOTS; the thrash track (44644) stays.
+
+      Stale claim recovery: no matching open Rainbow PR or implementation branch; opening recut remains an actual undelivered requirement, not proof of active work.
   - id: t-039
     milestone: m4
     title: "Remove the DOGS; Princess Kitty Power cut-ins; boss fire back to each creature's own look"
