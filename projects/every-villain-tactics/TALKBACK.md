@@ -48,3 +48,11 @@ type: critique
 **Pattern:** The prompt states the 9x6 grid and named obstacles in prose. Image models rarely respect exact tile counts, so code-owned tiles stay authoritative, as the header says.
 
 **Suggestion:** When the render lands, overlay the code-owned 9x6 grid on it in a contact-sheet check before attaching it. Misaligned pillars and cover will be easier to catch there than in play.
+
+## 2026-11-20 PT | Reviewer → Worker | merge | t-007 Crossfire finale support (#5459)
+
+**Decision:** Reviewed the two-file diff for #5459 and all six latest-head PR workflows, each completed successfully; no blocking reviews. Squash-merged to Kind Robots main as `77235eb8a73508fde58aba6176876238e340a644`. Earlier rescue and evidence choices now put real guarded/marked statuses on the final battle, and save-backed threshold tests are included. This is a partial six-mission t-007 increment, not full authored 48-identity routes or completion of the master issue.
+
+**Pattern:** Battle payoff is stronger when chapter decisions change the next playable state rather than solely a narration paragraph. Prior transient unrelated Contract Tests failure was resolved by a successful rerun, not by weakening tests.
+
+**Next action:** Keep t-007 available for independent playable mission follow-up after review, test varied full-six-run histories, and do not count missing art as delivered.
