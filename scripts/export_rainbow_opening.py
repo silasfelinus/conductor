@@ -118,6 +118,38 @@ def track_image_id() -> tuple[str, int | None]:
     return max(mine, key=lambda job: job["id"]).get("status", "?"), None
 
 
+
+def validate_opening_queue_budget(ledger: dict) -> None:
+    """Reject WAN requests the opening exporter cannot decode before GPU enqueue.
+
+    Queue callers may invoke this preflight without needing audio, ffmpeg, or
+    downloaded art. A finished clip's actual metadata is still checked at export.
+    """
+    if ledger.get("round") != DOODLE_ROUND:
+        return
+    lanes = {lane.get("key"): lane for lane in ledger.get("lanes", [])}
+    lane = lanes.get("wan-mp4")
+    if not lane:
+        raise ValueError("opening WAN queue is missing its wan-mp4 lane")
+    fps = lane.get("fps")
+    if type(fps) is not int or fps <= 0:
+        raise ValueError(f"opening WAN lane has invalid fps: {fps!r}")
+    for shot in ledger.get("subjects", []):
+        if shot.get("lane") != "wan-mp4":
+            continue
+        duration = shot.get("duration")
+        if (type(duration) not in (int, float) or
+                not math.isfinite(duration) or duration <= 0):
+            raise ValueError(f"{shot.get('key')}: invalid WAN duration {duration!r}")
+        frames = math.ceil(duration * fps)
+        if duration > MAX_CLIP_SECONDS or frames > MAX_CLIP_FRAMES:
+            raise ValueError(
+                f"{shot.get('key')}: WAN request {duration:g}s at {fps} fps "
+                f"({frames} frames) exceeds opening clip budget "
+                f"({MAX_CLIP_SECONDS}s, {MAX_CLIP_FRAMES} frames); do not enqueue"
+            )
+
+
 def shot_sources(ledger: dict, stills_only: bool):
     """Per shot: (key, beats, source still id, delivered clip id or None)."""
     by_key = {subject["key"]: subject for subject in ledger["subjects"]}
@@ -415,10 +447,19 @@ def main(argv=None):
     parser.add_argument("--stills-only", action="store_true", help="cut from the stills even where clips are DONE")
     parser.add_argument("--allow-silent", action="store_true", help="preview cut with no track (never shipped)")
     parser.add_argument("--out", help="write the MP4 here instead of shipping into kind_robots (a preview)")
+    parser.add_argument("--check-queue-budget", action="store_true", help="validate WAN duration/fps before submitting ArtJobs")
     args = parser.parse_args(argv)
 
     kind_robots = Path(args.kind_robots)
     ledger = yaml.safe_load(Path(args.ledger).read_text())
+    try:
+        validate_opening_queue_budget(ledger)
+    except ValueError as exc:
+        print(f"opening WAN queue budget: {exc}", file=sys.stderr)
+        return EXIT_ERROR
+    if args.check_queue_budget:
+        print("opening WAN queue budget: OK")
+        return EXIT_DONE
     sources = list(shot_sources(ledger, args.stills_only))
     if ledger.get("round") == DOODLE_ROUND:
         # The approved first-round review is the identity-lock authority.
