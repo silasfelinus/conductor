@@ -204,3 +204,9 @@ Companion kind_robots#4764 was already on main, so merge order held. CI green on
 - **Bug fixed:** `validated_clip` tested WebM with `b"\\x1a\\x45\\xdf\\xa3"`, a double-escaped literal that never matches. Every real WebM clip would have silently fallen back to its still. The test fixtures had the same escaping, so `b"\\x00...ftyp"` never reached ffprobe, and the "undersized" and "short decode" tests passed through the unknown-container branch, testing nothing. Fixed both, and added a test that MP4 and WebM headers actually reach ffprobe.
 - **Pattern:** the same escaping slip hit game-of-captains #7740 in the same hour (kaizen game-of-captains/t-043).
 - **Suggestion:** a fail-closed test should assert *which* branch rejected the input (mock call counts), not only the `None` result.
+
+## 2026-11-21 PT · Reviewer: opening validated-clip accounting (#7752)
+
+- **Decision:** merged (b7e0a00) on green exact-head CI. Small, reversible, in scope: the manifest now counts a shot as animated only when `safe_clip_download` actually decoded it, so a corrupt `DONE` clip that fell back to a still no longer inflates the count. Both tests (mixed and still-only) patch the network boundary and assert the accepted keys.
+- **Finding:** the only red check was Validate Worker PR handoff (prose body, no template headings). The Reviewer rewrote the body; the diff was unchanged. The PR also named no task id: it is an untracked follow-up to t-049.
+- **Suggestion:** open follow-ups as a task first (`next_free_task_id.py`) and use the handoff template. Kaizen t-050.
