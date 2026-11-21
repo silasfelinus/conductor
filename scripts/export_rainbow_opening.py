@@ -159,7 +159,7 @@ def clip_frames(payload: bytes):
     from PIL import Image
 
     is_mp4 = payload[4:8] == b"ftyp"
-    is_webm = payload.startswith(b"\\x1a\\x45\\xdf\\xa3")
+    is_webm = payload.startswith(b"\x1a\x45\xdf\xa3")
     if is_mp4 or is_webm:
         with tempfile.TemporaryDirectory() as work:
             source = Path(work) / ("shot.mp4" if is_mp4 else "shot.webm")
