@@ -85,11 +85,11 @@ tasks:
       Full history: projects/game-of-captains/HISTORY.md#t-001
   - id: t-041
     title: 'Main-game standard: audit and close the gaps for Space Couch'
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 20261121T234100Z-goc-t041-backup-7b9e
     claimed_at: '2026-11-21T23:41:00Z'
-    updated: '2026-11-21T23:41:00Z'
+    updated: '2026-11-21T23:43:00Z'
     milestone: m4
     stakes: reversible
     passes: 0
@@ -150,6 +150,8 @@ tasks:
       Kind Robots PR #5460 merged at bdbfc0e9a91dff37ee708a092ce5f64bc5ac4237 on 2026-11-20 PT after all nine exact-head gameplay, contract, typecheck, format, layout, schema and Space Couch adversarial workflows completed SUCCESS. Backups now roll back both browser save keys after partial writes, with failure-injection regression checks. PARTIAL t-041 only: authenticated browser restoration, art verification and 390/768/1440 QA remain. Return to READY; no human approval claimed.
 
       Partial main-game QA: the scheduled real-browser responsive audit previously omitted /play/game-of-captains and lacked the required 768px tablet sample. Added Space Couch to the daily route sweep and the targeted 768px path alongside 390/1440 with a regression test. Implementation branch worker/game-of-captains-t-041-responsive-audit-20261120-f3a9. Review/merge after exact-head CI; still needs deployed screenshots, authenticated account/achievement/painted-art checks. Keep t-041 READY after partial merge, not DONE.
+
+      Partial main-game-standard backup reliability repair. App branch worker/game-of-captains-t-041-backup-race-20261121-7b9e protects asynchronous file selection from stale reads, invalidates cancelled/account-switched staging, guards oversized portable exports, and tests out-of-order selections and cancellations. Remaining authenticated cloud-save, painted-art, and browser-width verification remain open. Review/CI pending.
 
   - id: t-040
     title: 'Space Couch achievement upgrade: 12 or more live achievements'
