@@ -38,6 +38,7 @@ Usage:
 
 from __future__ import annotations
 
+import json
 import pathlib
 import sys
 
@@ -203,7 +204,15 @@ def main() -> None:
         args = [a for a in args if a != spec]
     fish_dir = pathlib.Path(args[0]) if args else (
         pathlib.Path(__file__).resolve().parents[4] / "cthulhuquarium" / "fish")
-    species = roster(fish_dir, defaults, stat_rarity)
+    if "--roster" in sys.argv:  # a JSON snapshot (descent_roster.json) instead of the canon fish/
+        species = json.loads(pathlib.Path(sys.argv[sys.argv.index("--roster") + 1]).read_text())
+    else:
+        species = roster(fish_dir, defaults, stat_rarity)
+    if "--write-roster" in sys.argv:
+        out = pathlib.Path(sys.argv[sys.argv.index("--write-roster") + 1])
+        out.write_text(json.dumps(species, indent=0) + "\n")
+        print(f"wrote {len(species)} species to {out}")
+        return
     print(f"{len(species)} species; rarity by {'highest stat' if stat_rarity else 'canon rarity'}; "
           f"floor keys {keys or 'none'}")
     roster_of = {**PLAYERS, **SUITE} if "--suite" in sys.argv else PLAYERS
