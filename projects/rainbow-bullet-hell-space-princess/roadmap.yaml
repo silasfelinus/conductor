@@ -1049,14 +1049,16 @@ tasks:
   - id: t-052
     milestone: m4
     title: "Check each queued opening WAN job against the export clip budget (8s, 128 frames) at queue time so over-budget renders fail before spending GPU time"
-    status: claimed
+    status: review
     depends_on: []
     passes: 0
     stakes: reversible
-    updated: '2026-11-21T22:36:00Z'
+    updated: '2026-11-21T22:40:00Z'
     source: kaizen-pr-7768
     note: |-
       Reviewer kaizen from the 2026-11-21 PT merge of conductor#7768, which caps opening clip decode at MAX_CLIP_SECONDS=8 / MAX_CLIP_FRAMES=128 in scripts/export_rainbow_opening.py. A WAN job queued with a longer length would now render fine and then be rejected at export. Share the constants with the opening queue/ledger code and fail loudly at queue time, with a test.
+
+      Added pre-enqueue WAN clip budget validator and tests for approved ledger, excessive duration, excessive frame rate and invalid inputs. PR pending CI; queue submission integration remains to verify.
     owner: worker
     claimed_by: 20261121T223600Z-rainbow-t052-r8p6
     claimed_at: '2026-11-21T22:36:00Z'
