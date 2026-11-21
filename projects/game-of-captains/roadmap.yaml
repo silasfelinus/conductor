@@ -954,11 +954,10 @@ tasks:
     updated: '2026-11-19T03:43:13Z'
   - id: t-042
     title: "Share one art-ledger status vocabulary across Space Couch ledger tests so guards stop hard-coding stale status subsets"
-    status: review
-    owner: worker
+    status: done
     claimed_by: 20261121T104742Z-goc-t042-7q2m
     claimed_at: '2026-11-21T10:50:00Z'
-    updated: '2026-11-21T10:50:09.519Z'
+    updated: '2026-11-21T11:50:00Z'
     milestone: m4
     passes: 0
     stakes: reversible
@@ -968,3 +967,5 @@ tasks:
       Kaizen from review of conductor#7736 (2026-11-21 PT): the new chapter-nine provenance guard allowed only PENDING/REJECTED/ACCEPTED and broke as soon as the live art sweep checkpointed the jobs to DONE. Export the canonical ArtJob status set (PENDING, DONE, ERROR, plus curator verdicts) from one helper and use it in every Space Couch ledger test; keep DONE distinct from visual acceptance.
 
       Shared source-aligned ArtJob/curator status validator, migrated Chapter 9 and cast ledger tests, and added synthetic provenance and acceptance coverage. Implementation commit 2edf6cae34246ee3983e9c59796e00188210b8b7 pending CI.
+
+      PR silasfelinus/conductor#7742 merged as dee98964e660c273928dc39d1fe56408a4b7bad4 after all four exact-head Actions workflows completed successfully. Shared ledger-status and provenance regression coverage landed; DONE remains distinct from visual acceptance.
