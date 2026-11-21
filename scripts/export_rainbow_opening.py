@@ -4,10 +4,10 @@
 rainbow-bullet-hell-space-princess t-034. Silas (2026-10-23 PT): "We can use a real animation at the
 beginning, maybe a 15 second high energy thrash metal music video."
 
-The picture is nine shots cut to the beat of the ACE-Step thrash track (kind_robots
+The picture is eight C.A.T.S. doodle shots cut to the beat of the ACE-Step thrash track (kind_robots
 ``utils/arcade/games/rainbowOpening.ts`` RAINBOW_OPENING_TRACK, job designer ``rainbow-score:v1:opening``):
 
-* each shot plays its WAN clip from ``art/OPENING-CLIPS-1.yaml`` once that clip is DONE (sped up, ping-ponged
+* each shot plays its WAN MP4 from ``art/OPENING-CLIPS-2-DOODLE.yaml`` once that clip is DONE (sped up, ping-ponged
   to fill the shot), or until then the approved still it is pinned to, with a punch-in and beat shake;
 * every downbeat pulses the zoom, every cut opens on a white flash, and the last beats slam the title on.
 
@@ -40,7 +40,7 @@ from pathlib import Path
 import yaml
 
 ROOT = Path(__file__).resolve().parent.parent
-LEDGER = ROOT / "projects/rainbow-bullet-hell-space-princess/art/OPENING-CLIPS-1.yaml"
+LEDGER = ROOT / "projects/rainbow-bullet-hell-space-princess/art/OPENING-CLIPS-2-DOODLE.yaml"
 VIDEO_DIR = Path("public") / "rainbow-princess-video"
 MANIFEST = Path("utils") / "arcade" / "games" / "rainbowOpening.ts"
 TRACK_KEY = "rainbow-score:v1:opening"
@@ -62,6 +62,17 @@ SHOTS = [
     ("opening-08-dolphin-fleet", 6),
     ("opening-09-ships-launch", 12),
 ]
+DOODLE_SHOTS = [
+    ("intro-cats-launch", 8),
+    ("intro-lilt-signal", 4),
+    ("intro-dolphin-armada", 6),
+    ("intro-maribel-bloom", 3),
+    ("intro-azure-prism", 3),
+    ("intro-solenne-halo", 3),
+    ("intro-vivi-comet", 3),
+    ("intro-cats-formation", 14),
+]
+DOODLE_ROUND = "rainbow-doodle-opening-recut-2"
 TITLE_BEATS = 6
 EXIT_DONE, EXIT_ERROR, EXIT_RENDERING = 0, 1, 3
 FONTS = [
@@ -108,9 +119,11 @@ def track_image_id() -> tuple[str, int | None]:
 def shot_sources(ledger: dict, stills_only: bool):
     """Per shot: (key, beats, source still id, delivered clip id or None)."""
     by_key = {subject["key"]: subject for subject in ledger["subjects"]}
-    for key, beats in SHOTS:
+    doodle = ledger.get("round") == DOODLE_ROUND
+    lane = "wan-mp4" if doodle else "wan-clips"
+    for key, beats in (DOODLE_SHOTS if doodle else SHOTS):
         subject = by_key[key]
-        art = (subject.get("art") or {}).get("wan-clips") or {}
+        art = (subject.get("art") or {}).get(lane) or {}
         clip = art.get("art_image_id") if art.get("status") == "DONE" and not stills_only else None
         yield key, beats, int(subject["source_image_id"]), (int(clip) if clip else None)
 
@@ -141,14 +154,41 @@ def zoomed(frame, zoom: float, dx: float = 0.0, dy: float = 0.0):
     return frame.resize(SIZE, Image.BICUBIC, box=(left, top, left + cw, top + ch))
 
 
-def clip_frames(webp: bytes):
+def clip_frames(payload: bytes):
+    """Decode ArtImage MP4/WebM and animated WebP to the same RGB frames."""
     from PIL import Image
 
-    image = Image.open(io.BytesIO(webp))
-    frames = []
-    for index in range(getattr(image, "n_frames", 1)):
-        image.seek(index)
-        frames.append(cover(image.convert("RGB")))
+    is_mp4 = payload[4:8] == b"ftyp"
+    is_webm = payload.startswith(b"\x1a\x45\xdf\xa3")
+    if is_mp4 or is_webm:
+        with tempfile.TemporaryDirectory() as work:
+            source = Path(work) / ("shot.mp4" if is_mp4 else "shot.webm")
+            source.write_bytes(payload)
+            command = [
+                "ffmpeg", "-v", "error", "-nostdin", "-i", str(source),
+                "-vf",
+                f"fps={CLIP_FPS},scale={SIZE[0]}:{SIZE[1]}:force_original_aspect_ratio=increase,"
+                f"crop={SIZE[0]}:{SIZE[1]}",
+                "-f", "rawvideo", "-pix_fmt", "rgb24", "pipe:1",
+            ]
+            result = subprocess.run(command, capture_output=True, check=False)
+            if result.returncode:
+                raise RuntimeError(
+                    f"WAN video decode failed: {result.stderr.decode(errors='replace')[-500:]}"
+                )
+            frame_size = SIZE[0] * SIZE[1] * 3
+            if not result.stdout or len(result.stdout) % frame_size:
+                raise RuntimeError("WAN video decode produced incomplete RGB frames")
+            frames = [
+                Image.frombytes("RGB", SIZE, result.stdout[i : i + frame_size])
+                for i in range(0, len(result.stdout), frame_size)
+            ]
+    else:
+        image = Image.open(io.BytesIO(payload))
+        frames = []
+        for index in range(getattr(image, "n_frames", 1)):
+            image.seek(index)
+            frames.append(cover(image.convert("RGB")))
     # WAN settles from the sharp plate over its first frames; skip them.
     return frames[3:] if len(frames) > 12 else frames
 
