@@ -459,9 +459,6 @@ def main(argv=None):
             print("WAN clips rejected (stills substituted): " + ", ".join(rejected_clips), file=sys.stderr)
         if args.out:
             return EXIT_DONE
-        target.with_name("opening-rejected-clips.json").write_text(
-            json.dumps({"rejected_shots": rejected_clips, "accepted_shots": accepted_clips}, indent=2) + "\n"
-        )
         report = delivery_report(sources, accepted_clips, rejected_clips)
         target.with_name("opening-delivery-report.json").write_text(
             json.dumps(report, indent=2) + "\n"
