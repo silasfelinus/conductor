@@ -217,6 +217,21 @@ tasks:
     gallery stays beside it. Verified: 23 of 23 remembered, replay + Esc.
   implementation_pr: 'silasfelinus/kind_robots#5479'
 
+- id: t-106
+  title: 'Pin simulate_descent.py casual-player floor-open days in a regression test so economy.yaml floor_keys can not drift silently'
+  status: ready
+  milestone: m5
+  stakes: reversible
+  passes: 0
+  depends_on: []
+  updated: '2026-11-21T07:55:00Z'
+  note: >-
+    Reviewer kaizen from PR #7731 (t-105 pacing). floor_keys (150 / 3,000 / 30,000 / 400,000) were tuned
+    with data/simulate_descent.py to casual II day 1, III day 2, IV day 5, V ~day 14, and are mirrored in
+    kind_robots utils/cthulhuquariumFloors.ts FLOOR_KEY_COSTS, but nothing asserts either. Add a fast test
+    that runs the casual profile and checks the floor-open days stay within a band, plus a check that the
+    TS mirror matches economy.yaml.
+
 - id: t-105
   title: 'Pacing: price and pay by canon rarity, and sell each floor''s key'
   status: claimed

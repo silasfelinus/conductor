@@ -702,6 +702,74 @@ def test_fetch_image_b64_raises_when_image_path_fallback_is_also_empty(monkeypat
         consumer.fetch_image_b64(23966)
 
 
+def _private_image_record(monkeypatch):
+    monkeypatch.setattr(
+        consumer,
+        "http_json",
+        lambda method, url, timeout=None: (
+            200,
+            {"success": True, "data": {"imageData": None, "imagePath": "/images/private.webp"}},
+        ),
+    )
+
+
+def test_fetch_image_b64_uses_authenticated_file_route_for_private_image(monkeypatch):
+    # Regression (2026-11-21, PR #7731): a private ArtImage 404s at its public
+    # imagePath; the owner-authenticated /api/art/images/<id>/file route serves it.
+    # Without this fallback finished private renders looked lost and re-rendered.
+    _private_image_record(monkeypatch)
+    monkeypatch.setattr(consumer, "KR_API_TOKEN", "test-token")
+    seen = []
+
+    def fake_urlopen(request, timeout=None):
+        if isinstance(request, str):
+            seen.append(("public", request))
+            raise consumer.urllib.error.HTTPError(request, 404, "Not Found", {}, None)
+        seen.append(("auth", request.full_url, request.get_header("Authorization")))
+        return _FakeUrlResponse(200, b"private-bytes")
+
+    monkeypatch.setattr(consumer.urllib.request, "urlopen", fake_urlopen)
+
+    result = consumer.fetch_image_b64(277832)
+
+    assert base64.b64decode(result) == b"private-bytes"
+    assert seen[0] == ("public", f"{consumer.KR_BASE_URL}/images/private.webp")
+    assert seen[1] == (
+        "auth",
+        f"{consumer.KR_BASE_URL}/api/art/images/277832/file",
+        "Bearer test-token",
+    )
+
+
+def test_fetch_image_b64_private_fallback_without_token_still_raises(monkeypatch):
+    _private_image_record(monkeypatch)
+    monkeypatch.setattr(consumer, "KR_API_TOKEN", "")
+
+    def fake_urlopen(request, timeout=None):
+        if not isinstance(request, str):
+            raise AssertionError("must not call the authenticated route without a token")
+        raise consumer.urllib.error.HTTPError(request, 404, "Not Found", {}, None)
+
+    monkeypatch.setattr(consumer.urllib.request, "urlopen", fake_urlopen)
+
+    with pytest.raises(RuntimeError, match="imagePath fallback fetch failed"):
+        consumer.fetch_image_b64(277832)
+
+
+def test_fetch_image_b64_raises_when_authenticated_route_also_fails(monkeypatch):
+    _private_image_record(monkeypatch)
+    monkeypatch.setattr(consumer, "KR_API_TOKEN", "test-token")
+
+    def fake_urlopen(request, timeout=None):
+        url = request if isinstance(request, str) else request.full_url
+        raise consumer.urllib.error.HTTPError(url, 404, "Not Found", {}, None)
+
+    monkeypatch.setattr(consumer.urllib.request, "urlopen", fake_urlopen)
+
+    with pytest.raises(RuntimeError, match="imagePath fallback fetch failed"):
+        consumer.fetch_image_b64(277832)
+
+
 def test_delivery_identity_reads_repo_and_path():
     assert consumer.delivery_identity(
         {"targetRepo": "silasfelinus/Conductor", "imagePath": "projects\\a\\b.webp"}
