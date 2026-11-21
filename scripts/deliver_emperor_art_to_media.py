@@ -36,6 +36,16 @@ ROOT = Path(__file__).resolve().parent.parent
 LEDGER_DIR = ROOT / "projects" / "emperor-of-dust" / "art"
 MAX_BATCH = 24
 DELIVERY_ROUTE = "/api/admin/emperor-of-dust/art-deliver"
+EXPORTABLE_ROOTS = {
+    "audiences", "barracks", "cast", "chance-events", "consequences",
+    "endings", "followers", "items", "npcs", "quests", "rooms", "talks",
+}
+
+
+def expected_media_url(asset):
+    if asset.startswith(("followers/", "npcs/")):
+        asset = "cast/" + asset
+    return f"/images/emperor-of-dust/{asset}.webp"
 
 
 def done_image_id(subject):
@@ -81,8 +91,16 @@ def build_plan(entries, only=None):
             pattern is None or pattern.search(row["asset"])
         )
     ]
+    unsupported = [
+        row for row in selected
+        if row["asset"].split("/", 1)[0] not in EXPORTABLE_ROOTS
+    ]
+    exportable = [
+        row for row in selected
+        if row["asset"].split("/", 1)[0] in EXPORTABLE_ROOTS
+    ]
     groups = {}
-    for row in selected:
+    for row in exportable:
         groups.setdefault(row["asset"], []).append(row)
 
     keepers, unreviewed, rejected, collisions = [], [], [], []
@@ -120,6 +138,7 @@ def build_plan(entries, only=None):
         "unreviewed": unreviewed,
         "rejected": rejected,
         "collisions": collisions,
+        "unsupported": unsupported,
         "summary": {
             "rendered": len(selected),
             "uniqueAssets": len(groups),
@@ -127,6 +146,7 @@ def build_plan(entries, only=None):
             "unreviewed": len(unreviewed),
             "rejected": len(rejected),
             "collisions": len(collisions),
+            "unsupported": len(unsupported),
         },
     }
 
@@ -211,9 +231,7 @@ def reconcile(
             if (
                 result.get("asset") != candidate["asset"]
                 or result.get("artImageId") != candidate["artImageId"]
-                or result.get("url") != (
-                    f"/images/emperor-of-dust/{candidate['asset']}.webp"
-                )
+                or result.get("url") != expected_media_url(candidate["asset"])
             ):
                 raise RuntimeError("Delivery receipt provenance mismatch.")
             if write and result.get("status") == "would-write":
