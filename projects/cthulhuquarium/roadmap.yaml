@@ -1869,7 +1869,7 @@ tasks:
 - id: t-091
   milestone: m4
   title: Image-first cinematic quality and cross-device acceptance for every room
-  status: waiting
+  status: done
   owner: null
   stakes: reversible
   passes: 0
@@ -1888,7 +1888,13 @@ tasks:
     reduced-motion still fallback and native accessibility. Visually verify
     on the actual self-hosted deployment or a faithful rendered preview;
     source tests alone do not establish layout acceptance.
-  updated: '2026-10-23T11:40:00Z'
+
+    Cross-device acceptance (qa/acceptance.mjs): 390x844, 768x1024, 1024x1366, 1366x1024,
+    1440x900, 1280x600 each 31/31, plus reduced motion with every portrait 404ing 4/4.
+    Screenshot sheet qa/acceptance-2026-11-21.jpg. Remaining 320px / short-landscape gaps
+    listed in RC-DOSSIER.md.
+  updated: '2026-11-21T10:04:19Z'
+  implementation_pr: 'silasfelinus/kind_robots#5501'
 
 - id: t-092
   milestone: m5
