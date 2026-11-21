@@ -45,13 +45,28 @@ import yaml
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 
-def finished(subject):
-    """The subject's finished ArtImage id from whichever lane rendered it, or None."""
-    for art in (subject.get("art") or {}).values():
-        if (art or {}).get("status") == "DONE" and art.get("art_image_id"):
-            return art["art_image_id"]
+def curator_decision(subject):
+    """Rejects outrank keep markers, regardless of whether stored on a lane."""
+    verdict = str(subject.get("verdict") or "").strip().lower()
+    states = {
+        (art or {}).get("status")
+        for art in (subject.get("art") or {}).values()
+    }
+    if verdict.startswith("reject") or "REJECTED" in states:
+        return "reject"
+    if verdict.startswith("keep") or "ACCEPTED" in states:
+        return "keep"
     return None
 
+
+def finished(subject):
+    """A render ArtImage ID, including explicitly accepted curator records."""
+    for art in (subject.get("art") or {}).values():
+        if (art or {}).get("status") in {"DONE", "ACCEPTED"}:
+            image_id = art.get("art_image_id")
+            if type(image_id) is int and image_id > 0:
+                return image_id
+    return None
 
 def target(kind_robots, prefix, asset):
     parts = [p for p in (prefix.strip("/"), str(asset).strip("/")) if p]
@@ -91,12 +106,12 @@ def audit(subjects, kind_robots, prefix, only=None, require_keep=False):
             continue
         destination = target(kind_robots, prefix, asset)
         image_id = finished(subject)
-        verdict = str(subject.get("verdict") or "").strip().lower()
-        if verdict.startswith("reject"):
+        decision = curator_decision(subject)
+        if decision == "reject":
             state = "rejected"
         elif image_id is None:
             state = "render-pending"
-        elif require_keep and not verdict.startswith("keep"):
+        elif require_keep and decision != "keep":
             state = "curation-needed"
         elif is_valid_webp(destination):
             state = "shipped"
@@ -135,8 +150,8 @@ def audit(subjects, kind_robots, prefix, only=None, require_keep=False):
 
 def approved_for_export(subject, require_keep=False):
     """Never export a rejected render; strict mode requires an explicit keeper verdict."""
-    verdict = str(subject.get("verdict") or "").strip().lower()
-    return verdict.startswith("keep") if verdict else not require_keep
+    decision = curator_decision(subject)
+    return decision == "keep" if require_keep else decision != "reject"
 
 
 def plan(subjects, kind_robots, prefix, only=None, force=False, require_keep=False):
