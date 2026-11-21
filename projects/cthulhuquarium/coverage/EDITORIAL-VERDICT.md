@@ -1,6 +1,6 @@
 # Editorial verdict — writing and coverage (t-092)
 
-2026-11-21. Inputs: `coverage-2026-11-21.json` (kind_robots
+2026-11-21. Inputs: `report-2026-11-21.json` (kind_robots
 `utils/scripts/reportCthulhuquariumCoverage.ts`), and an independent read of
 canon `story/scenes.yaml`, `story/barks.yaml`, `characters/*.yaml` and the
 player-facing text of all 151 fish by a reviewer given only the canon and the
