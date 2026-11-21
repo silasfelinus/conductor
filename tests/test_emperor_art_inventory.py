@@ -1,3 +1,4 @@
+import json
 import tempfile
 import unittest
 from pathlib import Path
@@ -120,6 +121,68 @@ class EmperorArtInventoryTests(unittest.TestCase):
         (source / "chanceArt.ts").write_text("const chanceArtCandidatesExtra = true", encoding="utf-8")
         report = inventory(self.ledgers, self.app)
         self.assertEqual(report["assets"][0]["reference_class"], "unreferenced")
+
+    def manifest(self, runtime, static=()):
+        path = self.root / "editorial-art-runtime-paths.json"
+        path.write_text(json.dumps({
+            "version": 1,
+            "runtime_asset_paths": list(runtime),
+            "static_asset_paths": list(static),
+        }), encoding="utf-8")
+        return path
+
+    def test_exact_builder_path_promotes_without_lying_about_delivery(self):
+        self.ledger("a.yaml", [
+            self.subject("hit", "chance-events/rain/collect", 10, 20),
+            self.subject("miss", "chance-events/rain/refuse", 11, 21),
+        ])
+        media = self.app / "public/emperor-of-dust/chance-events/rain"
+        media.mkdir(parents=True)
+        (media / "collect.webp").write_bytes(b"RIFF\\x00\\x00\\x00\\x00WEBP")
+        manifest = self.manifest(["chance-events/rain/collect"])
+        report = inventory(self.ledgers, self.app, manifest)
+        by_asset = {row["asset"]: row for row in report["assets"]}
+        hit = by_asset["chance-events/rain/collect"]
+        self.assertEqual(hit["reference_class"], "builder_reachable")
+        self.assertTrue(hit["exported"])
+        self.assertFalse(by_asset["chance-events/rain/refuse"]["exported"])
+        self.assertEqual(by_asset["chance-events/rain/refuse"]
+                         ["reference_class"], "unreferenced")
+        self.assertEqual(report["summary"]["exported_builder_reachable"], 1)
+        self.assertTrue(report["summary"]["runtime_manifest_available"])
+
+    def test_reachable_unexported_done_art_stays_unshipped(self):
+        self.ledger("a.yaml", [
+            self.subject("ending", "endings/bell-restored", 68220, 270430),
+        ])
+        report = inventory(
+            self.ledgers, self.app,
+            self.manifest(["endings/bell-restored"]),
+        )
+        self.assertEqual(report["assets"][0]["reference_class"],
+                         "builder_reachable")
+        self.assertFalse(report["assets"][0]["exported"])
+        self.assertEqual(report["summary"]["with_done_image_no_export"], 1)
+        self.assertEqual(report["summary"]
+                         ["done_builder_reachable_without_export"], 1)
+
+    def test_manifest_is_exact_not_prefix_or_regex(self):
+        self.ledger("a.yaml", [
+            self.subject("a", "rooms/a", 10, 20),
+            self.subject("ab", "rooms/ab", 11, 21),
+        ])
+        report = inventory(self.ledgers, self.app,
+                           self.manifest([], ["rooms/ab"]))
+        by_asset = {row["asset"]: row for row in report["assets"]}
+        self.assertEqual(by_asset["rooms/a"]["reference_class"], "unreferenced")
+        self.assertEqual(by_asset["rooms/ab"]["reference_class"],
+                         "builder_reachable")
+
+    def test_invalid_runtime_manifest_fails_closed(self):
+        self.ledger("a.yaml", [self.subject("a", "rooms/a", 10, 20)])
+        malformed = self.manifest(["../../secret"])
+        with self.assertRaises(ValueError):
+            inventory(self.ledgers, self.app, malformed)
 
     def test_rejects_path_traversal(self):
         self.ledger("a.yaml", [{"key": "bad", "asset": "../secret"}])
