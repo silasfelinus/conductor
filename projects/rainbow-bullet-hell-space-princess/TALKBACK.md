@@ -174,3 +174,10 @@ Companion kind_robots#4764 was already on main, so merge order held. CI green on
 **t-043:** `review_rainbow_doodle_art.py` builds classic / re-render / keyed sheets plus a provenance manifest and never flips a verdict (everything stays `PENDING_VISUAL_INSPECTION`). Good fail-closed behaviour: it refuses unfinished or uncached art before writing anything. The task went to `review` again for a partial slice, the same pattern flagged on PR #7694. Returned to `ready`, claim released; the visual pass, keeper flips and kind_robots export are still open. Kaizen t-047: print the edge-risk list.
 
 **Suggestion:** when a PR delivers tooling for a task whose main deliverable is still open, leave the task `ready` and say "partial" in the note. Only use `review` when the PR completes the acceptance criteria.
+
+
+## 2026-11-20 17:26 PT — Reviewer: Rainbow Seas guardian-result labels (#5466)
+
+**Decision:** merged scoped, reversible Kind Robots PR #5466 (commit `0cd1dd50`) after all ten latest-head Actions workflows finished successfully. The diff stays within route discovery and earned outcome labels plus their regression fixture, with no fabricated guardian defeats. The code preserves undiscovered/partially settled routes and does not change game physics, ArtJobs or public permissions.
+
+**Caveat:** t-027 remains incomplete: discovered alternative routes still need independently navigable nodes, full persistent progression acceptance and standalone alternate-Act flights. The Pearl Warden (#5468) and Sunken Lighthouse X3 score (#5476) are separate t-028 contributions, not evidence of that end-to-end route-map handoff. The reviewer recommends a shared alternate-stage checkpoint adapter and tests before more presentation polish.
