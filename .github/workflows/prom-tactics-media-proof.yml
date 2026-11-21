@@ -1,0 +1,66 @@
+name: Prom and Tactics Private Media Proof
+
+# Fetch finished original artwork through the authenticated production ArtImage
+# API and verify that the bytes decode. Never upload private image artifacts,
+# write image bytes to this public repository, or treat DONE as curator approval.
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/prom-tactics-media-proof.yml"
+      - "scripts/verify_prom_tactics_media.py"
+      - "tests/test_prom_tactics_media_verification.py"
+      - "projects/every-villain-tactics/art/ONE-HIT-CREW-TELEGRAPHS-2026-11-20.yaml"
+      - "projects/comet-city-academy/art/UNSTABLE-PRODUCTION-FAMILY-ROUND-1.yaml"
+      - "projects/comet-city-academy/art/FRANCHISE-SAFE-RERENDERS-ROUND-1.yaml"
+      - "projects/comet-city-academy/art/RUNTIME-REFILL-ROUND-1.yaml"
+      - "projects/comet-city-academy/art/OCT-29-CAST-KREA2-ROUND-1.yaml"
+  workflow_dispatch:
+  schedule:
+    - cron: "41 15 * * *"
+
+concurrency:
+  group: prom-tactics-private-media-proof
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  verify-private-media:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      KR_BASE_URL: https://kindrobots.org
+      KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+      PYTHONUNBUFFERED: "1"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install media verification dependencies
+        run: pip install pyyaml pillow pytest
+      - name: Unit-test safe receipt and image verification
+        run: python -m pytest -q tests/test_prom_tactics_media_verification.py
+      - name: Verify production API credential is configured
+        run: |
+          if [ -z "$KR_API_TOKEN" ]; then
+            echo "::error::Production media token is unavailable; no private images fetched."
+            exit 1
+          fi
+      - name: Verify twelve Tactics telegraph image downloads
+        run: |
+          python scripts/verify_prom_tactics_media.py \
+            projects/every-villain-tactics/art/ONE-HIT-CREW-TELEGRAPHS-2026-11-20.yaml \
+            --require-count 12
+      - name: Verify Prom candidate image downloads
+        run: |
+          python scripts/verify_prom_tactics_media.py \
+            projects/comet-city-academy/art/UNSTABLE-PRODUCTION-FAMILY-ROUND-1.yaml \
+            projects/comet-city-academy/art/FRANCHISE-SAFE-RERENDERS-ROUND-1.yaml \
+            projects/comet-city-academy/art/RUNTIME-REFILL-ROUND-1.yaml \
+            projects/comet-city-academy/art/OCT-29-CAST-KREA2-ROUND-1.yaml \
+            --require-count 14
