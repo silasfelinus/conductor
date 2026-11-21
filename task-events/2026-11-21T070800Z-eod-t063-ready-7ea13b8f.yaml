@@ -1,0 +1,16 @@
+version: 1
+project: emperor-of-dust
+task: t-063
+operation: ready
+updated: '2026-11-21T07:08:00Z'
+note: >-
+  Recovered stale review: predecessor session 20261121T0419Z-eod-t063-api-client-4f2c
+  left task in review after its PR #7723 was closed as rescued. Conductor
+  PR #7726 already merged the reviewed delivery-client code and WebP fixture
+  fix (squash c77133d977d44aaddf6ec615b732277e34f89055). PR #7723
+  explicitly says superseded via rescue; its branch is gone and no open
+  Emperor-specific Conductor PR remains. This nonrecurring task is partial:
+  no verified physical ArtImage exports, visually approved ending plates,
+  dedicated asset manifest deliveries or cross-width in-app checks. Return
+  t-063 to ready for authenticated curation and physical-media integration;
+  do not treat queued/DONE ArtJobs or delivered scripts as shipped art.
