@@ -1,0 +1,174 @@
+# Newly authored market-account scenes from kind_robots PR #5506.
+# These 15 subjects do not occur in the pre-existing Emperor art ledgers.
+# auto_submit declares intent; jobs/art IDs must be recorded by the authenticated enqueuer.
+# Do not claim submitted or delivered until jobs and physical WebPs are verified.
+round: emperor-market-account-2026-11-21
+project_slug: emperor-of-dust
+designer: Comic Studio
+auto_submit: true
+priority: 70
+is_public: false
+is_mature: false
+cast_loras: false
+lanes:
+- key: arthemy-house
+  label: Arthemy Western Art v3.0
+  engine: comfy
+  checkpoint: Illustrious/arthemyWesternArt_v30.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, very aesthetic, painterly western comics, cinematic narrative scene, expressive animal-folk characters
+  suffix: original anthropomorphic frontier fantasy, dusty kiln ochre and deep crimson, tarnished brass, dramatic practical lighting, richly detailed environment, blank unmarked papers and signs
+  steps: 30
+  cfg: 5
+  sampler: euler_ancestral
+subjects:
+- key: eod-market-d28-market-bill-notice
+  lane: arthemy-house
+  title: "Four Market Receipts"
+  audience: d28-market-bill
+  variant: notice
+  asset: audiences/d28-market-bill/notice
+  size: 1344x768
+  seed: 882100
+  negative: nude, nsfw, human, human skin, human face, photorealism, watermark, signature, letters, text, typography, logo, caption, signs with writing, screen ui, gore, blurry, lowres, distorted anatomy, extra limbs, extra fingers
+  prompt_tags: "An elderly anthropomorphic badger egg seller with a worn leather basket and loose-soled boots lays four stamped blank receipts on the lowest step of a dusty fortress throne dais, while an upright stoat ledger factor in a narrow ochre coat holds a thick charter open, a young upright lizard adviser stands beside a brass throne, afternoon sun through high windows"
+- key: eod-market-d28-market-bill-reserve-yard
+  lane: arthemy-house
+  title: "Four Chalk Pitches"
+  audience: d28-market-bill
+  variant: reserve-yard
+  asset: audiences/d28-market-bill/reserve-yard
+  size: 1344x768
+  seed: 882101
+  negative: nude, nsfw, human, human skin, human face, photorealism, watermark, signature, letters, text, typography, logo, caption, signs with writing, screen ui, gore, blurry, lowres, distorted anatomy, extra limbs, extra fingers
+  prompt_tags: "Four chalk rectangles freshly marked on rough stone beside a fortress bakery, anthropomorphic fox and badger stallkeepers arranging eggs and vegetables on wooden tables, a disgruntled wolf quartermaster carrying heavy grain sacks beneath a leaking awning, warm oven light and red dust"
+- key: eod-market-d28-market-bill-open-warrants
+  lane: arthemy-house
+  title: "The Posted Warrants"
+  audience: d28-market-bill
+  variant: open-warrants
+  asset: audiences/d28-market-bill/open-warrants
+  size: 1344x768
+  seed: 882102
+  negative: nude, nsfw, human, human skin, human face, photorealism, watermark, signature, letters, text, typography, logo, caption, signs with writing, screen ui, gore, blurry, lowres, distorted anatomy, extra limbs, extra fingers
+  prompt_tags: "At the outer fortress gate an anthropomorphic hare clerk pins four blank market papers to a timber noticeboard, a small elderly badger seller clutching a wicker basket watches as an angry stoat merchant points at her, other animal-folk traders crowd around the board under grey war clouds"
+- key: eod-market-d28-market-bill-muster-sellers
+  lane: arthemy-house
+  title: "The Army Kitchens"
+  audience: d28-market-bill
+  variant: muster-sellers
+  asset: audiences/d28-market-bill/muster-sellers
+  size: 1344x768
+  seed: 882103
+  negative: nude, nsfw, human, human skin, human face, photorealism, watermark, signature, letters, text, typography, logo, caption, signs with writing, screen ui, gore, blurry, lowres, distorted anatomy, extra limbs, extra fingers
+  prompt_tags: "Inside a smoky fortress military kitchen, four tired anthropomorphic animal-folk market sellers wearing plain linen aprons carry steaming iron pots, their empty wicker baskets stacked behind a locked storeroom door, a wolf quartermaster counting brass coins at a wooden counter, firelight and fatigue"
+- key: eod-market-d37-market-bill-notice
+  lane: arthemy-house
+  title: "The Burning Market Ledger"
+  audience: d37-market-bill
+  variant: notice
+  asset: audiences/d37-market-bill/notice
+  size: 1344x768
+  seed: 882104
+  negative: nude, nsfw, human, human skin, human face, photorealism, watermark, signature, letters, text, typography, logo, caption, signs with writing, screen ui, gore, blurry, lowres, distorted anatomy, extra limbs, extra fingers
+  prompt_tags: "A thin upright stoat factor in a faded rust-colored coat stands at a fortress map table holding a heavy soot-stained market ledger, through a tall window burning merchant wagons light the road, four tiny animal-folk figures push handcarts toward the city gate at dawn"
+- key: eod-market-d37-market-bill-escort
+  lane: arthemy-house
+  title: "The Four Escorted Carts"
+  audience: d37-market-bill
+  variant: escort
+  asset: audiences/d37-market-bill/escort
+  size: 1344x768
+  seed: 882105
+  negative: nude, nsfw, human, human skin, human face, photorealism, watermark, signature, letters, text, typography, logo, caption, signs with writing, screen ui, gore, blurry, lowres, distorted anatomy, extra limbs, extra fingers
+  prompt_tags: "Four market handcarts loaded with eggs, grain and bundled children move along a muddy river road, two armored anthropomorphic wolf watch guards walking beside them with lanterns, an elderly badger seller looks back at the smoke rising from the fortress grain shed, pale morning fog"
+- key: eod-market-d37-market-bill-leave
+  lane: arthemy-house
+  title: "The Broken Axle"
+  audience: d37-market-bill
+  variant: leave
+  asset: audiences/d37-market-bill/leave
+  size: 1344x768
+  seed: 882106
+  negative: nude, nsfw, human, human skin, human face, photorealism, watermark, signature, letters, text, typography, logo, caption, signs with writing, screen ui, gore, blurry, lowres, distorted anatomy, extra limbs, extra fingers
+  prompt_tags: "A solitary elderly anthropomorphic badger market seller kneels beside a handcart with a snapped wooden axle outside a fortress wall at dusk, three abandoned wagon tracks disappear into a blackened empty road, the fortified grain shed remains dry and guarded in the distance"
+- key: eod-market-d37-market-bill-hide-copy
+  lane: arthemy-house
+  title: "The Archive Floor"
+  audience: d37-market-bill
+  variant: hide-copy
+  asset: audiences/d37-market-bill/hide-copy
+  size: 1344x768
+  seed: 882107
+  negative: nude, nsfw, human, human skin, human face, photorealism, watermark, signature, letters, text, typography, logo, caption, signs with writing, screen ui, gore, blurry, lowres, distorted anatomy, extra limbs, extra fingers
+  prompt_tags: "In a cramped stone archive cellar lit by one lantern, an elderly anthropomorphic badger seller and a stoat ledger factor hide a tin box full of blank parchment warrants beneath loose floorboards, two frightened animal-folk traders wait behind a stack of ledgers, water stains climbing the wall"
+- key: eod-market-d37-market-bill-post-copy
+  lane: arthemy-house
+  title: "Names at the Gate"
+  audience: d37-market-bill
+  variant: post-copy
+  asset: audiences/d37-market-bill/post-copy
+  size: 1344x768
+  seed: 882108
+  negative: nude, nsfw, human, human skin, human face, photorealism, watermark, signature, letters, text, typography, logo, caption, signs with writing, screen ui, gore, blurry, lowres, distorted anatomy, extra limbs, extra fingers
+  prompt_tags: "An anthropomorphic hare clerk reads from a large blank parchment sheet at a fortress gate while four anxious animal-folk market sellers stand shoulder to shoulder beside him, flames spread along a distant market roof, hostile shadowed merchants watch from beneath the gate arch"
+- key: eod-market-d37-market-bill-redeem-pay
+  lane: arthemy-house
+  title: "The Paid Kitchen Hands"
+  audience: d37-market-bill
+  variant: redeem-pay
+  asset: audiences/d37-market-bill/redeem-pay
+  size: 1344x768
+  seed: 882109
+  negative: nude, nsfw, human, human skin, human face, photorealism, watermark, signature, letters, text, typography, logo, caption, signs with writing, screen ui, gore, blurry, lowres, distorted anatomy, extra limbs, extra fingers
+  prompt_tags: "Four exhausted anthropomorphic animal-folk kitchen workers stand outside a military bakery with small leather wage purses in their hands, an elderly badger seller weighs a handful of brass coins on a portable scale, hungry soldiers in the background scrape the last stew from an empty cauldron"
+- key: eod-market-d37-market-bill-sell-claims
+  lane: arthemy-house
+  title: "The Sold Wages"
+  audience: d37-market-bill
+  variant: sell-claims
+  asset: audiences/d37-market-bill/sell-claims
+  size: 1344x768
+  seed: 882110
+  negative: nude, nsfw, human, human skin, human face, photorealism, watermark, signature, letters, text, typography, logo, caption, signs with writing, screen ui, gore, blurry, lowres, distorted anatomy, extra limbs, extra fingers
+  prompt_tags: "At a candlelit fortress accounting desk, an upright stoat factor in a rust-colored coat hands a stack of brass coins to a royal treasurer while four weary anthropomorphic market cooks remain visible through a barred kitchen doorway, blank wage warrants spread across the desk"
+- key: eod-market-d46-market-bill-notice
+  lane: arthemy-house
+  title: "One Cracked Egg"
+  audience: d46-market-bill
+  variant: notice
+  asset: audiences/d46-market-bill/notice
+  size: 1344x768
+  seed: 882111
+  negative: nude, nsfw, human, human skin, human face, photorealism, watermark, signature, letters, text, typography, logo, caption, signs with writing, screen ui, gore, blurry, lowres, distorted anatomy, extra limbs, extra fingers
+  prompt_tags: "Inside a dim exile hideout with rough stone walls and travel blankets, an elderly anthropomorphic badger egg seller places a wicker basket containing one cracked egg and four folded blank market receipts on a plain wooden table before a tired upright lizard ruler, thin light from a cave opening"
+- key: eod-market-d46-market-bill-food
+  lane: arthemy-house
+  title: "Four Food Carts"
+  audience: d46-market-bill
+  variant: food
+  asset: audiences/d46-market-bill/food
+  size: 1344x768
+  seed: 882112
+  negative: nude, nsfw, human, human skin, human face, photorealism, watermark, signature, letters, text, typography, logo, caption, signs with writing, screen ui, gore, blurry, lowres, distorted anatomy, extra limbs, extra fingers
+  prompt_tags: "Four handcarts loaded with sacks of flour, eggs and fresh bread leave a hidden mountain camp at sunrise, an elderly anthropomorphic badger seller guiding the first cart, several hungry animal-folk families waiting on the river path, no banners or official seals on the supplies"
+- key: eod-market-d46-market-bill-record
+  lane: arthemy-house
+  title: "The Four Accounts"
+  audience: d46-market-bill
+  variant: record
+  asset: audiences/d46-market-bill/record
+  size: 1344x768
+  seed: 882113
+  negative: nude, nsfw, human, human skin, human face, photorealism, watermark, signature, letters, text, typography, logo, caption, signs with writing, screen ui, gore, blurry, lowres, distorted anatomy, extra limbs, extra fingers
+  prompt_tags: "An elderly anthropomorphic badger market seller and an upright lizard exile ruler sit together at a scarred wooden table carefully copying four blank market papers by oil lamp, one paper weighted by a cracked eggshell, a stoat clerk watches through the doorway of a stone refuge"
+- key: eod-market-d46-market-bill-burn
+  lane: arthemy-house
+  title: "The Burning Warrants"
+  audience: d46-market-bill
+  variant: burn
+  asset: audiences/d46-market-bill/burn
+  size: 1344x768
+  seed: 882114
+  negative: nude, nsfw, human, human skin, human face, photorealism, watermark, signature, letters, text, typography, logo, caption, signs with writing, screen ui, gore, blurry, lowres, distorted anatomy, extra limbs, extra fingers
+  prompt_tags: "In a sheltered stone courtyard at twilight an upright lizard exile ruler burns a small stack of blank market papers in a shallow iron brazier, an elderly anthropomorphic badger seller stands nearby with empty hands, orange embers illuminating a wicker egg basket and an abandoned brass scale"
