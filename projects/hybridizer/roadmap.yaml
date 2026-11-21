@@ -128,7 +128,7 @@ tasks:
   - id: t-007
     milestone: m3
     title: "Pre-generate and verify curated 4,000 launch hybrids"
-    status: review
+    status: done
     depends_on: t-004
     owner: worker
     passes: 0
@@ -138,10 +138,19 @@ tasks:
       2026-10-30 progress: launch pipeline live. kind_robots #4484 (art prompt: the hybrid itself as one blended creature or object on a plain backdrop, no jar/specimen/lab staging; admin POST /api/hybridizer/batch) and #4512 (batch priority 90: behind interactive 100 and project runtime art, ahead of bulk backfill). conductor #6815: deterministic 4,000-pair LAUNCH-PAIRS.json (36-pair showcase first, every starter used 35-75 times) and the 20-minute 'Hybridizer launch batch' workflow, which keeps a 60-render window full and marks a hybrid delivered only after its image URL answers. At close: 96/4,000 submitted, 36 verified delivered (the full showcase, reviewed on a contact sheet; Silas approved the look). The workflow keeps running unattended; reopen to done when the ledger reaches 4,000 verified.
 
       Curation round 1 (2026-11-21 PT). Silas set the acceptance bar this session: "While one pass for quality is warranted, after those are resubmitted, I'm happy as long as we have the hybridized fully working to react and resubmit bad hybrids in game." All 4,000 launch hybrids are rendered and delivered (live status READY for every pair; the ledger lagged by 1,004 because GitHub ran the 20-minute schedule only 3-4 times a day and each run refreshed only 400 entries; the workflow now refreshes every open entry). Every one was reviewed visually on labeled contact sheets: 1,856 FAIL (769 one ingredient only, 567 two separate creatures, 515 missing fruit/object ingredient, 5 other incl. an echidna+ninja IP lookalike), 398 WEAK, 1,746 PASS. Committed as projects/hybridizer/art/CURATION-ROUND-1.json. The launch batch workflow files one admin curation re-render per FAIL (new seed, fused-body guidance, priority 1, up to 1,000 per run), drops the ledger's verifiedAt until the new image answers, and refuses to post until the deployed server advertises the curation contract. kind_robots #5490 adds the in-game "Not a hybrid? Re-roll" for any signed-in player on public discoveries plus admin curation mode, a large phone reveal and requester-only ready toasts. Close as done once #5490 is live and the workflow reports the 1,856 curation resubmits filed; WEAK entries and any disappointing re-renders are handled by in-game re-roll.
+
+      Done 2026-11-21 PT against Silas's bar. kind_robots #5490 is live (production
+      4c22a520+). All 1,856 FAIL pairs have a curation re-render filed: launch-batch runs 87
+      and 89 recorded 1,002 in the ledger with job IDs; run 88 filed the other 854 but lost
+      its checkpoint, and every one of those 854 was confirmed QUEUED live under a newer job
+      (the server's one-revision-at-a-time guard rejected 990 duplicate attempts). The
+      conductor follow-up makes queued runs start from latest main and adopts already-running
+      re-renders so none is filed twice. 398 WEAK and any disappointing re-renders are handled
+      by the in-game re-roll.
     claimed_by: 20261030T112000Z-hybridizer-t007-q7h2
     claimed_at: '2026-10-30T11:41:43Z'
-    updated: '2026-11-21T04:30:00Z'
-    implementation_pr: 'silasfelinus/kind_robots#4484'
+    updated: '2026-11-21T07:58:28Z'
+    implementation_pr: 'silasfelinus/kind_robots#5490'
   - id: t-008
     milestone: m2
     title: "Accept user-submitted ingredient images securely"
