@@ -91,7 +91,28 @@ def _is_webp(path: Path) -> bool:
     return len(header) == 12 and header[:4] == b"RIFF" and header[8:12] == b"WEBP"
 
 
-def inventory(ledger_dir: Path, app_root: Path | None = None):
+def read_runtime_manifest(path: Path | None) -> set[str]:
+    """Load exact authored builder paths, not a speculative pattern match."""
+    if path is None:
+        return set()
+    manifest = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(manifest, dict) or manifest.get("version") != 1:
+        raise ValueError("Unsupported Emperor runtime art manifest")
+    assets: set[str] = set()
+    for key in ("runtime_asset_paths", "static_asset_paths"):
+        entries = manifest.get(key)
+        if not isinstance(entries, list) or any(
+            not isinstance(asset, str)
+            or not re.fullmatch(r"[A-Za-z0-9-]+(?:/[A-Za-z0-9-]+)*", asset)
+            for asset in entries
+        ):
+            raise ValueError(f"Invalid Emperor runtime manifest: {key}")
+        assets.update(entries)
+    return assets
+
+
+def inventory(ledger_dir: Path, app_root: Path | None = None,
+              runtime_manifest: Path | None = None):
     grouped = defaultdict(list)
     for ledger, subject in subjects_from_ledgers(ledger_dir):
         asset = str(subject["asset"]).strip().removesuffix(".webp")
@@ -112,6 +133,7 @@ def inventory(ledger_dir: Path, app_root: Path | None = None):
                 "job_id": None, "art_image_id": None, "status": "NOT_SUBMITTED",
             })
     references = scan_references(app_root) if app_root else {}
+    exact_runtime_assets = read_runtime_manifest(runtime_manifest)
     results = []
     for asset, entries in sorted(grouped.items()):
         path = f"public/emperor-of-dust/{asset}.webp"
@@ -121,12 +143,15 @@ def inventory(ledger_dir: Path, app_root: Path | None = None):
         matches = [name for name, content in references.items()
                    if _exact_reference(asset, content)]
         runtime_candidates = runtime_reference_candidates(asset, references) if app_root else []
+        builder_reachable = asset in exact_runtime_assets
         image_ids = sorted({str(e["art_image_id"]) for e in entries if e["art_image_id"] is not None})
         job_ids = sorted({str(e["job_id"]) for e in entries if e["job_id"] is not None})
         results.append({
             "asset": asset, "media_path": path, "exported": exported,
             "reference_files": matches, "runtime_reference_candidates": runtime_candidates,
+            "runtime_manifest_reachable": builder_reachable,
             "reference_class": ("static" if matches else
+                                "builder_reachable" if builder_reachable else
                                 "runtime_candidate" if runtime_candidates else "unreferenced"),
             "job_ids": job_ids, "art_image_ids": image_ids,
             "render_records": entries, "has_done_image": any(
@@ -139,6 +164,9 @@ def inventory(ledger_dir: Path, app_root: Path | None = None):
         "with_done_image_no_export": sum(x["has_done_image"] and x["exported"] is False for x in results),
         "exported_without_static_reference": sum(x["exported"] is True and not x["reference_files"] for x in results),
         "exported_runtime_candidates": sum(x["exported"] is True and x["reference_class"] == "runtime_candidate" for x in results),
+        "exported_builder_reachable": sum(x["exported"] is True and x["reference_class"] == "builder_reachable" for x in results),
+        "done_builder_reachable_without_export": sum(x["has_done_image"] and x["exported"] is False and x["runtime_manifest_reachable"] for x in results),
+        "runtime_manifest_available": runtime_manifest is not None,
         "exported_without_known_reference": sum(x["exported"] is True and x["reference_class"] == "unreferenced" for x in results),
         "conflicting_image_ids": sum(x["conflicting_image_ids"] for x in results),
         "export_verification_available": app_root is not None,
@@ -151,8 +179,15 @@ def main():
     parser.add_argument("--ledgers", type=Path, default=LEDGERS)
     parser.add_argument("--kind-robots", type=Path, help="local checkout root for real file and reference checks")
     parser.add_argument("--output", type=Path, help="write JSON audit here; stdout otherwise")
+    parser.add_argument("--runtime-manifest", type=Path,
+                        help="exact authored game art paths from the Kind Robots route test")
     args = parser.parse_args()
-    report = inventory(args.ledgers, args.kind_robots)
+    manifest = args.runtime_manifest
+    if manifest is None and args.kind_robots:
+        candidate = args.kind_robots / 'artifacts/emperor/editorial-art-runtime-paths.json'
+        if candidate.is_file():
+            manifest = candidate
+    report = inventory(args.ledgers, args.kind_robots, manifest)
     encoded = json.dumps(report, indent=2)
     if args.output:
         args.output.write_text(encoded + "\n", encoding="utf-8")
