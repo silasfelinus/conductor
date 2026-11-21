@@ -442,8 +442,8 @@ tasks:
   - id: t-018
     milestone: m3
     title: "One-hit henchmen and Picnic Panic one-shot encounter"
-    status: claimed
-    updated: '2026-11-21T19:07:00Z'
+    status: review
+    updated: '2026-11-21T19:09:00Z'
     depends_on: [t-004, t-017]
     passes: 0
     stakes: reversible
@@ -465,6 +465,8 @@ tasks:
       Partial art integration: map all twelve source-receipted Krea2 one-hit crew warning/action/counter/captain ArtImages 277786-277797 (jobs 74393-74404) and expose them as a private authenticated battle-gallery in the playable Tactics board, with responsive styling, provenance data IDs and source-backed regression assertions. The UI keeps the tactical warnings and does not publish private media. Still needed: inspect actual private image bytes, approve/reject art, live UI verification, SPECIES/Facet records and full-run QA. Code PR pending CI; do not mark t-018 done yet.
 
       Partial art delivery PR kind_robots#5507 merged at 4f226742aa078bc31c5e4b7295b584ed22cc52e7 after all 8 latest-head GitHub Actions checks completed green. Mapped all twelve source-receipted private one-hit crew ArtImages 277786-277797 to authenticated battle-gallery selectors and painted burrow/clock-portal warning cells. Still no authenticated ArtImage byte QA or final approved replacement media, no SPECIES Facet proof or complete playtest. Return unfinished t-018 to ready rather than done; preserve all existing job/image receipts.
+
+      Scoped private-art crash repair on worker/every-villain-tactics-t-018-crew-guard-k9m4: filter unsupported one-hit crew kinds before art prefetch and gallery rendering; add prototype-key and unmapped-crew regression coverage. Existing ArtJob and ArtImage receipts untouched. This is partial t-018 scope; return to ready after merge for media QA and SPECIES records.
     owner: worker
     claimed_by: 2026-11-21T190700Z-every-villain-tactics-t-018-k9m4
     claimed_at: '2026-11-21T19:07:00Z'
