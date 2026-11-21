@@ -77,14 +77,16 @@ async function freshPlayer() {
   sql(`update User set introDismissedAt=NOW() where id=${uid}`)
   // Room for ten species of any size (a fixture, not a purchase).
   sql(`update Aquarium set sizeCap=40 where id=${tank}`)
-  const shelf = (await api('/api/aquarium/catalog?take=24', null, token)).data
+  const shelf = (await api('/api/aquarium/catalog?take=60', null, token)).data
   let bought = 0
+  const refused = []
   for (const m of shelf) {
     if (bought >= 10) break
     const r = await api('/api/aquarium/purchase', { type: 'species', monsterId: m.id }, token)
     if (r.success) bought++
+    else refused.push(r.message)
   }
-  if (bought < 10) throw new Error(`fixture: only ${bought} species bought`)
+  if (bought < 10) throw new Error(`fixture: only ${bought} species bought (${refused.slice(0, 3).join(' | ')})`)
   await api('/api/aquarium/feed', {}, token)
   // Every scene seen except Below Stairs', which the key purchase plays.
   for (const id of SCENE_IDS) {
