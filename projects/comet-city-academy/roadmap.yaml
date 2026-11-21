@@ -271,6 +271,8 @@ tasks:
     passes: 0
     note: |-
       Kaizen from kind_robots#5505 (rescue of #5496): the test asserted `promArt(identityArtKey` in the atlas source, so a correct refactor to `identityArtwork` turned CI red for 3.6h. Assert resolved behaviour instead of source text.
+
+      Replaced brittle atlas art call-shape assertions with runtime shipped and canon-safe resolution counts (48/47 physical and 47/46 accepted). Added credentialed private ArtImage media probe, synthetic tests and dedicated push/manual workflow on Conductor. Probe fetches and decodes real source media without persisting or publishing private image bytes. This is a review handoff; live proof awaits workflow execution and visual art QA remains separate.
     claimed_by: 2026-11-21T233600Z-comet-city-academy-t-044-b7c4
     claimed_at: '2026-11-21T23:36:00Z'
   - id: t-012
