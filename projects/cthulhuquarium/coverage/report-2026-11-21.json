@@ -1,0 +1,1683 @@
+{
+  "generatedFrom": "kind_robots utils/cthulhuquariumCanon.generated.ts",
+  "totals": {
+    "scenes": 23,
+    "replies": 12,
+    "barkPools": 15,
+    "barkLines": 109,
+    "backgrounds": 16,
+    "species": 151
+  },
+  "perFloor": [
+    {
+      "floor": 1,
+      "name": "The Shop Floor",
+      "species": 32,
+      "scenes": 3
+    },
+    {
+      "floor": 2,
+      "name": "Below Stairs",
+      "species": 41,
+      "scenes": 4
+    },
+    {
+      "floor": 3,
+      "name": "The Flooded Wing",
+      "species": 36,
+      "scenes": 3
+    },
+    {
+      "floor": 4,
+      "name": "The Conservatory",
+      "species": 25,
+      "scenes": 3
+    },
+    {
+      "floor": 5,
+      "name": "The Bottom of Things",
+      "species": 17,
+      "scenes": 4
+    }
+  ],
+  "problems": [],
+  "scenes": [
+    {
+      "id": "intro",
+      "title": "The Arrival",
+      "trigger": "intro",
+      "floor": 1,
+      "plate": "screen-arrival",
+      "background": null,
+      "beats": 13,
+      "replies": 0,
+      "reachedBy": "first visit (loadStory)"
+    },
+    {
+      "id": "first_unlock",
+      "title": "The First Purchase",
+      "trigger": "first_unlock",
+      "floor": 1,
+      "plate": "screen-first-unlock",
+      "background": null,
+      "beats": 2,
+      "replies": 0,
+      "reachedBy": "first species bought"
+    },
+    {
+      "id": "bestiary_complete",
+      "title": "Every One",
+      "trigger": "bestiary_complete",
+      "floor": null,
+      "plate": "screen-bestiary-complete",
+      "background": null,
+      "beats": 2,
+      "replies": 0,
+      "reachedBy": "book completed"
+    },
+    {
+      "id": "after_the_last_aquarium",
+      "title": "After the Last Aquarium",
+      "trigger": "finale",
+      "floor": null,
+      "plate": "screen-after-the-last-aquarium",
+      "background": null,
+      "beats": 3,
+      "replies": 0,
+      "reachedBy": "Last Aquarium bought"
+    },
+    {
+      "id": "milestone_bestiary_5",
+      "title": "The Kelp Stair",
+      "trigger": "milestone:bestiary_5",
+      "floor": 1,
+      "plate": "screen-milestone-kelp-stair",
+      "background": "kelp-stair",
+      "beats": 2,
+      "replies": 0,
+      "reachedBy": "milestone bestiary_5"
+    },
+    {
+      "id": "milestone_bestiary_10",
+      "title": "Below Stairs",
+      "trigger": "floor_open:2",
+      "floor": 2,
+      "plate": null,
+      "background": "sunken-pantry",
+      "beats": 4,
+      "replies": 3,
+      "reachedBy": "key to floor 2 bought"
+    },
+    {
+      "id": "milestone_bestiary_15",
+      "title": "The Drowned Chapel",
+      "trigger": "milestone:bestiary_15",
+      "floor": 2,
+      "plate": null,
+      "background": "drowned-chapel",
+      "beats": 2,
+      "replies": 0,
+      "reachedBy": "milestone bestiary_15"
+    },
+    {
+      "id": "milestone_bestiary_20",
+      "title": "The Wreck of the Portsmouth",
+      "trigger": "milestone:bestiary_20",
+      "floor": 2,
+      "plate": "screen-milestone-portsmouth",
+      "background": "wreck-of-the-portsmouth",
+      "beats": 1,
+      "replies": 0,
+      "reachedBy": "milestone bestiary_20"
+    },
+    {
+      "id": "milestone_bestiary_25",
+      "title": "The Flooded Wing",
+      "trigger": "floor_open:3",
+      "floor": 3,
+      "plate": null,
+      "background": "sorting-office",
+      "beats": 5,
+      "replies": 3,
+      "reachedBy": "key to floor 3 bought"
+    },
+    {
+      "id": "milestone_bestiary_35",
+      "title": "The Counting House",
+      "trigger": "milestone:bestiary_35",
+      "floor": 3,
+      "plate": null,
+      "background": "counting-house",
+      "beats": 1,
+      "replies": 0,
+      "reachedBy": "milestone bestiary_35"
+    },
+    {
+      "id": "milestone_bestiary_50",
+      "title": "The Conservatory",
+      "trigger": "floor_open:4",
+      "floor": 4,
+      "plate": null,
+      "background": "flooded-conservatory",
+      "beats": 5,
+      "replies": 3,
+      "reachedBy": "key to floor 4 bought"
+    },
+    {
+      "id": "milestone_bestiary_70",
+      "title": "The Catacomb",
+      "trigger": "milestone:bestiary_70",
+      "floor": 4,
+      "plate": null,
+      "background": "catacomb",
+      "beats": 2,
+      "replies": 0,
+      "reachedBy": "milestone bestiary_70"
+    },
+    {
+      "id": "milestone_bestiary_95",
+      "title": "The Bottom of Things",
+      "trigger": "floor_open:5",
+      "floor": 5,
+      "plate": null,
+      "background": "abyssal-plain",
+      "beats": 5,
+      "replies": 3,
+      "reachedBy": "key to floor 5 bought"
+    },
+    {
+      "id": "milestone_bestiary_125",
+      "title": "The Opera House",
+      "trigger": "milestone:bestiary_125",
+      "floor": 5,
+      "plate": null,
+      "background": "opera-house",
+      "beats": 1,
+      "replies": 0,
+      "reachedBy": "milestone bestiary_125"
+    },
+    {
+      "id": "milestone_bestiary_151",
+      "title": "The Reading Room",
+      "trigger": "milestone:bestiary_151",
+      "floor": 5,
+      "plate": null,
+      "background": "the-reading-room",
+      "beats": 2,
+      "replies": 0,
+      "reachedBy": "milestone bestiary_151"
+    },
+    {
+      "id": "milestone_first_full_tank",
+      "title": "A Full House",
+      "trigger": "milestone:first_full_tank",
+      "floor": null,
+      "plate": null,
+      "background": "public-baths",
+      "beats": 2,
+      "replies": 0,
+      "reachedBy": "milestone first_full_tank"
+    },
+    {
+      "id": "milestone_first_evolution",
+      "title": "The Hatchery",
+      "trigger": "milestone:first_evolution",
+      "floor": null,
+      "plate": "screen-milestone-hatchery",
+      "background": "hatchery",
+      "beats": 2,
+      "replies": 0,
+      "reachedBy": "milestone first_evolution"
+    },
+    {
+      "id": "milestone_first_spotless_tank",
+      "title": "The Scullery",
+      "trigger": "milestone:first_spotless_tank",
+      "floor": null,
+      "plate": null,
+      "background": "scullery",
+      "beats": 2,
+      "replies": 0,
+      "reachedBy": "milestone first_spotless_tank"
+    },
+    {
+      "id": "milestone_first_rivalry_resolved",
+      "title": "The Duelling Ground",
+      "trigger": "milestone:first_rivalry_resolved",
+      "floor": null,
+      "plate": null,
+      "background": "duelling-ground",
+      "beats": 2,
+      "replies": 0,
+      "reachedBy": "milestone first_rivalry_resolved"
+    },
+    {
+      "id": "floor_first_2",
+      "title": "Up from Below Stairs",
+      "trigger": "floor_first:2",
+      "floor": 2,
+      "plate": "screen-floor-first-2",
+      "background": null,
+      "beats": 2,
+      "replies": 0,
+      "reachedBy": "first species from floor 2"
+    },
+    {
+      "id": "floor_first_3",
+      "title": "A Delivery from the Wing",
+      "trigger": "floor_first:3",
+      "floor": 3,
+      "plate": "screen-floor-first-3",
+      "background": null,
+      "beats": 2,
+      "replies": 0,
+      "reachedBy": "first species from floor 3"
+    },
+    {
+      "id": "floor_first_4",
+      "title": "Something from the Conservatory",
+      "trigger": "floor_first:4",
+      "floor": 4,
+      "plate": "screen-floor-first-4",
+      "background": null,
+      "beats": 2,
+      "replies": 0,
+      "reachedBy": "first species from floor 4"
+    },
+    {
+      "id": "floor_first_5",
+      "title": "Up from the Bottom",
+      "trigger": "floor_first:5",
+      "floor": 5,
+      "plate": "screen-floor-first-5",
+      "background": null,
+      "beats": 3,
+      "replies": 0,
+      "reachedBy": "first species from floor 5"
+    }
+  ],
+  "barks": [
+    {
+      "context": "shop",
+      "speaker": "charlotte",
+      "lines": 12,
+      "shownBy": "named in game code"
+    },
+    {
+      "context": "floor_key",
+      "speaker": "charlotte",
+      "lines": 5,
+      "shownBy": "named in game code"
+    },
+    {
+      "context": "sets",
+      "speaker": "charlotte",
+      "lines": 6,
+      "shownBy": "named in game code"
+    },
+    {
+      "context": "decor",
+      "speaker": "charlotte",
+      "lines": 6,
+      "shownBy": "named in game code"
+    },
+    {
+      "context": "upgrades",
+      "speaker": "charlotte",
+      "lines": 6,
+      "shownBy": "named in game code"
+    },
+    {
+      "context": "sell",
+      "speaker": "charlotte",
+      "lines": 5,
+      "shownBy": "named in game code"
+    },
+    {
+      "context": "backgrounds",
+      "speaker": "charlotte",
+      "lines": 5,
+      "shownBy": "named in game code"
+    },
+    {
+      "context": "bestiary",
+      "speaker": "wilbur",
+      "lines": 10,
+      "shownBy": "named in game code"
+    },
+    {
+      "context": "fed",
+      "speaker": "wilbur",
+      "lines": 10,
+      "shownBy": "named in game code"
+    },
+    {
+      "context": "cleaned",
+      "speaker": "wilbur",
+      "lines": 8,
+      "shownBy": "named in game code"
+    },
+    {
+      "context": "hungry",
+      "speaker": "wilbur",
+      "lines": 6,
+      "shownBy": "named in game code"
+    },
+    {
+      "context": "rare_event",
+      "speaker": "wilbur",
+      "lines": 8,
+      "shownBy": "named in game code"
+    },
+    {
+      "context": "startle",
+      "speaker": "wilbur",
+      "lines": 6,
+      "shownBy": "named in game code"
+    },
+    {
+      "context": "welcome_back",
+      "speaker": "charlotte",
+      "lines": 8,
+      "shownBy": "named in game code"
+    },
+    {
+      "context": "idle",
+      "speaker": "wilbur",
+      "lines": 8,
+      "shownBy": "named in game code"
+    }
+  ],
+  "backgrounds": [
+    {
+      "key": "parlour",
+      "unlock": "default",
+      "reachable": true
+    },
+    {
+      "key": "kelp-stair",
+      "unlock": "bestiary_5",
+      "reachable": true
+    },
+    {
+      "key": "sunken-pantry",
+      "unlock": "bestiary_10",
+      "reachable": true
+    },
+    {
+      "key": "drowned-chapel",
+      "unlock": "bestiary_15",
+      "reachable": true
+    },
+    {
+      "key": "wreck-of-the-portsmouth",
+      "unlock": "bestiary_20",
+      "reachable": true
+    },
+    {
+      "key": "sorting-office",
+      "unlock": "bestiary_25",
+      "reachable": true
+    },
+    {
+      "key": "counting-house",
+      "unlock": "bestiary_35",
+      "reachable": true
+    },
+    {
+      "key": "flooded-conservatory",
+      "unlock": "bestiary_50",
+      "reachable": true
+    },
+    {
+      "key": "catacomb",
+      "unlock": "bestiary_70",
+      "reachable": true
+    },
+    {
+      "key": "abyssal-plain",
+      "unlock": "bestiary_95",
+      "reachable": true
+    },
+    {
+      "key": "opera-house",
+      "unlock": "bestiary_125",
+      "reachable": true
+    },
+    {
+      "key": "the-reading-room",
+      "unlock": "bestiary_151",
+      "reachable": true
+    },
+    {
+      "key": "public-baths",
+      "unlock": "first_full_tank",
+      "reachable": true
+    },
+    {
+      "key": "hatchery",
+      "unlock": "first_evolution",
+      "reachable": true
+    },
+    {
+      "key": "scullery",
+      "unlock": "first_spotless_tank",
+      "reachable": true
+    },
+    {
+      "key": "duelling-ground",
+      "unlock": "first_rivalry_resolved",
+      "reachable": true
+    }
+  ],
+  "species": [
+    {
+      "slug": "bailiff-eel",
+      "name": "Bailiff Eel",
+      "floor": 3,
+      "motion": "undulate",
+      "plate": "scraperboard",
+      "voices": true
+    },
+    {
+      "slug": "brass-tack-goby",
+      "name": "Brass Tack Goby",
+      "floor": 1,
+      "motion": "tailbeat",
+      "plate": "gosse",
+      "voices": true
+    },
+    {
+      "slug": "brine-courtiers",
+      "name": "Brine Courtiers",
+      "floor": 2,
+      "motion": "ripple",
+      "plate": "gyotaku",
+      "voices": true
+    },
+    {
+      "slug": "candle-snail",
+      "name": "Candle Snail",
+      "floor": 1,
+      "motion": "breathe",
+      "plate": "gosse",
+      "voices": true
+    },
+    {
+      "slug": "catfish-common",
+      "name": "Bottom Catfish",
+      "floor": 1,
+      "motion": "tailbeat",
+      "plate": "gosse",
+      "voices": true
+    },
+    {
+      "slug": "cellar-newt",
+      "name": "Cellar Newt",
+      "floor": 1,
+      "motion": "undulate",
+      "plate": "gosse",
+      "voices": true
+    },
+    {
+      "slug": "chandelier-lion",
+      "name": "Chandelier Lion",
+      "floor": 3,
+      "motion": "tailbeat",
+      "plate": "trade-card",
+      "voices": true
+    },
+    {
+      "slug": "choirfish",
+      "name": "Choirfish",
+      "floor": 2,
+      "motion": "tailbeat",
+      "plate": "blaschka",
+      "voices": true
+    },
+    {
+      "slug": "crawdad-common",
+      "name": "Ditch Crawdad",
+      "floor": 1,
+      "motion": "breathe",
+      "plate": "trade-card",
+      "voices": true
+    },
+    {
+      "slug": "culvert-eel",
+      "name": "Culvert Eel",
+      "floor": 2,
+      "motion": "undulate",
+      "plate": "scraperboard",
+      "voices": true
+    },
+    {
+      "slug": "doorstep-whelk",
+      "name": "Doorstep Whelk",
+      "floor": 1,
+      "motion": "breathe",
+      "plate": "gosse",
+      "voices": true
+    },
+    {
+      "slug": "draught-stickleback",
+      "name": "Draught Stickleback",
+      "floor": 1,
+      "motion": "tailbeat",
+      "plate": "gosse",
+      "voices": true
+    },
+    {
+      "slug": "drifting-bell",
+      "name": "Drifting Bell",
+      "floor": 2,
+      "motion": "pulse",
+      "plate": "blaschka",
+      "voices": true
+    },
+    {
+      "slug": "drowned-carp",
+      "name": "Drowned Carp",
+      "floor": 1,
+      "motion": "tailbeat",
+      "plate": "gosse",
+      "voices": true
+    },
+    {
+      "slug": "elder-rustfish",
+      "name": "Elder Rustfish",
+      "floor": 2,
+      "motion": "tailbeat",
+      "plate": "gosse",
+      "voices": true
+    },
+    {
+      "slug": "errand-guppy",
+      "name": "Errand Guppy",
+      "floor": 1,
+      "motion": "tailbeat",
+      "plate": "gosse",
+      "voices": true
+    },
+    {
+      "slug": "folding-fry",
+      "name": "Folding Fry",
+      "floor": 1,
+      "motion": "rigid",
+      "plate": "gyotaku",
+      "voices": true
+    },
+    {
+      "slug": "fractal-bloom",
+      "name": "Fractal Bloom",
+      "floor": 4,
+      "motion": "sway",
+      "plate": "haeckel",
+      "voices": true
+    },
+    {
+      "slug": "glass-shrimp",
+      "name": "Glass Shrimp",
+      "floor": 1,
+      "motion": "tailbeat",
+      "plate": "blaschka",
+      "voices": true
+    },
+    {
+      "slug": "glass-weaver",
+      "name": "Glass Weaver",
+      "floor": 4,
+      "motion": "breathe",
+      "plate": "haeckel",
+      "voices": true
+    },
+    {
+      "slug": "gravel-tetra",
+      "name": "Gravel Tetra",
+      "floor": 1,
+      "motion": "tailbeat",
+      "plate": "gosse",
+      "voices": true
+    },
+    {
+      "slug": "guppy-common",
+      "name": "Feeder Guppy",
+      "floor": 1,
+      "motion": "tailbeat",
+      "plate": "gosse",
+      "voices": true
+    },
+    {
+      "slug": "gutter-minnow",
+      "name": "Gutter Minnow",
+      "floor": 1,
+      "motion": "tailbeat",
+      "plate": "gosse",
+      "voices": true
+    },
+    {
+      "slug": "kitchen-perch",
+      "name": "Kitchen Perch",
+      "floor": 1,
+      "motion": "tailbeat",
+      "plate": "gosse",
+      "voices": true
+    },
+    {
+      "slug": "lamplight-angler",
+      "name": "Lamplight Angler",
+      "floor": 2,
+      "motion": "tailbeat",
+      "plate": "trade-card",
+      "voices": true
+    },
+    {
+      "slug": "ledger-crab",
+      "name": "Ledger Crab",
+      "floor": 2,
+      "motion": "breathe",
+      "plate": "trade-card",
+      "voices": true
+    },
+    {
+      "slug": "lint-shrimp",
+      "name": "Lint Shrimp",
+      "floor": 1,
+      "motion": "tailbeat",
+      "plate": "gosse",
+      "voices": true
+    },
+    {
+      "slug": "marsh-sovereign-crawdad",
+      "name": "Marsh Sovereign",
+      "floor": 2,
+      "motion": "breathe",
+      "plate": "trade-card",
+      "voices": true
+    },
+    {
+      "slug": "moebius-crab",
+      "name": "Moebius Crab",
+      "floor": 4,
+      "motion": "breathe",
+      "plate": "haeckel",
+      "voices": true
+    },
+    {
+      "slug": "old-catfish",
+      "name": "Whiskered Elder",
+      "floor": 2,
+      "motion": "tailbeat",
+      "plate": "gosse",
+      "voices": true
+    },
+    {
+      "slug": "pane-limpet",
+      "name": "Pane Limpet",
+      "floor": 1,
+      "motion": "breathe",
+      "plate": "trade-card",
+      "voices": true
+    },
+    {
+      "slug": "parlour-rustfish",
+      "name": "Parlour Rustfish",
+      "floor": 1,
+      "motion": "tailbeat",
+      "plate": "gosse",
+      "voices": true
+    },
+    {
+      "slug": "penny-bream",
+      "name": "Penny Bream",
+      "floor": 1,
+      "motion": "tailbeat",
+      "plate": "gosse",
+      "voices": true
+    },
+    {
+      "slug": "pier-blenny",
+      "name": "Pier Blenny",
+      "floor": 1,
+      "motion": "tailbeat",
+      "plate": "gosse",
+      "voices": true
+    },
+    {
+      "slug": "pin-shrimp",
+      "name": "Pin Shrimp",
+      "floor": 1,
+      "motion": "breathe",
+      "plate": "gosse",
+      "voices": true
+    },
+    {
+      "slug": "portsmouth-bitterling",
+      "name": "Portsmouth Bitterling",
+      "floor": 1,
+      "motion": "tailbeat",
+      "plate": "gosse",
+      "voices": true
+    },
+    {
+      "slug": "postmark-snail",
+      "name": "Postmark Snail",
+      "floor": 1,
+      "motion": "breathe",
+      "plate": "gosse",
+      "voices": true
+    },
+    {
+      "slug": "rain-barrel-roach",
+      "name": "Rain Barrel Roach",
+      "floor": 1,
+      "motion": "tailbeat",
+      "plate": "gosse",
+      "voices": true
+    },
+    {
+      "slug": "rainbow-nudibranch",
+      "name": "Rainbow Nudibranch",
+      "floor": 2,
+      "motion": "ripple",
+      "plate": "haeckel",
+      "voices": true
+    },
+    {
+      "slug": "sardine-common",
+      "name": "Harbor Sardine",
+      "floor": 1,
+      "motion": "tailbeat",
+      "plate": "gosse",
+      "voices": true
+    },
+    {
+      "slug": "sea-camel",
+      "name": "Sea Camel",
+      "floor": 2,
+      "motion": "ripple",
+      "plate": "trade-card",
+      "voices": true
+    },
+    {
+      "slug": "silt-loach",
+      "name": "Silt Loach",
+      "floor": 1,
+      "motion": "undulate",
+      "plate": "gosse",
+      "voices": true
+    },
+    {
+      "slug": "skimmer-fry",
+      "name": "Skimmer Fry",
+      "floor": 1,
+      "motion": "tailbeat",
+      "plate": "gyotaku",
+      "voices": true
+    },
+    {
+      "slug": "standpipe-goby",
+      "name": "Standpipe Goby",
+      "floor": 1,
+      "motion": "tailbeat",
+      "plate": "gosse",
+      "voices": true
+    },
+    {
+      "slug": "sump-blob",
+      "name": "Sump Blob",
+      "floor": 1,
+      "motion": "breathe",
+      "plate": "blaschka",
+      "voices": true
+    },
+    {
+      "slug": "the-accumulation",
+      "name": "The Accumulation",
+      "floor": 2,
+      "motion": "breathe",
+      "plate": "blaschka",
+      "voices": true
+    },
+    {
+      "slug": "the-aggregate",
+      "name": "The Aggregate",
+      "floor": 2,
+      "motion": "tailbeat",
+      "plate": "gyotaku",
+      "voices": true
+    },
+    {
+      "slug": "the-almoner",
+      "name": "The Almoner",
+      "floor": 2,
+      "motion": "breathe",
+      "plate": "trade-card",
+      "voices": true
+    },
+    {
+      "slug": "the-annexation",
+      "name": "The Annexation",
+      "floor": 3,
+      "motion": "breathe",
+      "plate": "scraperboard",
+      "voices": true
+    },
+    {
+      "slug": "the-antiphon",
+      "name": "The Antiphon",
+      "floor": 3,
+      "motion": "tailbeat",
+      "plate": "haeckel",
+      "voices": true
+    },
+    {
+      "slug": "the-association",
+      "name": "The Association",
+      "floor": 2,
+      "motion": "tailbeat",
+      "plate": "trade-card",
+      "voices": true
+    },
+    {
+      "slug": "the-auditor",
+      "name": "The Auditor",
+      "floor": 4,
+      "motion": "tailbeat",
+      "plate": "scraperboard",
+      "voices": true
+    },
+    {
+      "slug": "the-backlog",
+      "name": "The Backlog",
+      "floor": 3,
+      "motion": "breathe",
+      "plate": "moulage",
+      "voices": true
+    },
+    {
+      "slug": "the-balance",
+      "name": "The Balance",
+      "floor": 4,
+      "motion": "breathe",
+      "plate": "haeckel",
+      "voices": true
+    },
+    {
+      "slug": "the-bedding",
+      "name": "The Bedding",
+      "floor": 4,
+      "motion": "breathe",
+      "plate": "moulage",
+      "voices": true
+    },
+    {
+      "slug": "the-catacomb",
+      "name": "The Catacomb",
+      "floor": 3,
+      "motion": "breathe",
+      "plate": "scraperboard",
+      "voices": true
+    },
+    {
+      "slug": "the-catchment",
+      "name": "The Catchment",
+      "floor": 5,
+      "motion": "breathe",
+      "plate": "riso",
+      "voices": true
+    },
+    {
+      "slug": "the-census",
+      "name": "The Census",
+      "floor": 3,
+      "motion": "breathe",
+      "plate": "gyotaku",
+      "voices": true
+    },
+    {
+      "slug": "the-clerestory",
+      "name": "The Clerestory",
+      "floor": 5,
+      "motion": "breathe",
+      "plate": "haeckel",
+      "voices": true
+    },
+    {
+      "slug": "the-cold-snap",
+      "name": "The Cold Snap",
+      "floor": 2,
+      "motion": "rigid",
+      "plate": "haeckel",
+      "voices": true
+    },
+    {
+      "slug": "the-committee",
+      "name": "The Committee",
+      "floor": 4,
+      "motion": "sway",
+      "plate": "haeckel",
+      "voices": true
+    },
+    {
+      "slug": "the-concern",
+      "name": "The Concern",
+      "floor": 5,
+      "motion": "breathe",
+      "plate": "riso",
+      "voices": true
+    },
+    {
+      "slug": "the-conservatory",
+      "name": "The Conservatory",
+      "floor": 5,
+      "motion": "breathe",
+      "plate": "riso",
+      "voices": true
+    },
+    {
+      "slug": "the-consignment",
+      "name": "The Consignment",
+      "floor": 4,
+      "motion": "rigid",
+      "plate": "moulage",
+      "voices": true
+    },
+    {
+      "slug": "the-continuance",
+      "name": "The Continuance",
+      "floor": 2,
+      "motion": "tailbeat",
+      "plate": "moulage",
+      "voices": true
+    },
+    {
+      "slug": "the-coronation",
+      "name": "The Coronation",
+      "floor": 4,
+      "motion": "rigid",
+      "plate": "haeckel",
+      "voices": true
+    },
+    {
+      "slug": "the-courier",
+      "name": "The Courier",
+      "floor": 2,
+      "motion": "tailbeat",
+      "plate": "trade-card",
+      "voices": true
+    },
+    {
+      "slug": "the-court",
+      "name": "The Court",
+      "floor": 3,
+      "motion": "breathe",
+      "plate": "gyotaku",
+      "voices": true
+    },
+    {
+      "slug": "the-delivery",
+      "name": "The Delivery",
+      "floor": 3,
+      "motion": "rigid",
+      "plate": "trade-card",
+      "voices": true
+    },
+    {
+      "slug": "the-doorkeeper",
+      "name": "The Doorkeeper",
+      "floor": 3,
+      "motion": "tailbeat",
+      "plate": "scraperboard",
+      "voices": true
+    },
+    {
+      "slug": "the-double-entry",
+      "name": "The Double Entry",
+      "floor": 3,
+      "motion": "breathe",
+      "plate": "scraperboard",
+      "voices": true
+    },
+    {
+      "slug": "the-downspout",
+      "name": "The Downspout",
+      "floor": 2,
+      "motion": "breathe",
+      "plate": "blaschka",
+      "voices": true
+    },
+    {
+      "slug": "the-efflorescence",
+      "name": "The Efflorescence",
+      "floor": 5,
+      "motion": "sway",
+      "plate": "haeckel",
+      "voices": true
+    },
+    {
+      "slug": "the-endowment",
+      "name": "The Endowment",
+      "floor": 3,
+      "motion": "breathe",
+      "plate": "trade-card",
+      "voices": true
+    },
+    {
+      "slug": "the-enforcement",
+      "name": "The Enforcement",
+      "floor": 4,
+      "motion": "breathe",
+      "plate": "moulage",
+      "voices": true
+    },
+    {
+      "slug": "the-enquiry-desk",
+      "name": "The Enquiry Desk",
+      "floor": 4,
+      "motion": "breathe",
+      "plate": "moulage",
+      "voices": true
+    },
+    {
+      "slug": "the-estimate",
+      "name": "The Estimate",
+      "floor": 2,
+      "motion": "tailbeat",
+      "plate": "gyotaku",
+      "voices": true
+    },
+    {
+      "slug": "the-final-notice",
+      "name": "The Final Notice",
+      "floor": 3,
+      "motion": "breathe",
+      "plate": "scraperboard",
+      "voices": true
+    },
+    {
+      "slug": "the-first-demand",
+      "name": "The First Demand",
+      "floor": 4,
+      "motion": "breathe",
+      "plate": "moulage",
+      "voices": true
+    },
+    {
+      "slug": "the-fixture",
+      "name": "The Fixture",
+      "floor": 4,
+      "motion": "breathe",
+      "plate": "haeckel",
+      "voices": true
+    },
+    {
+      "slug": "the-float",
+      "name": "The Float",
+      "floor": 2,
+      "motion": "tailbeat",
+      "plate": "trade-card",
+      "voices": true
+    },
+    {
+      "slug": "the-foundation",
+      "name": "The Foundation",
+      "floor": 4,
+      "motion": "breathe",
+      "plate": "scraperboard",
+      "voices": true
+    },
+    {
+      "slug": "the-founding-rustfish",
+      "name": "The Founding Rustfish",
+      "floor": 4,
+      "motion": "tailbeat",
+      "plate": "moulage",
+      "voices": true
+    },
+    {
+      "slug": "the-foyer",
+      "name": "The Foyer",
+      "floor": 4,
+      "motion": "breathe",
+      "plate": "riso",
+      "voices": true
+    },
+    {
+      "slug": "the-freeholder",
+      "name": "The Freeholder",
+      "floor": 3,
+      "motion": "breathe",
+      "plate": "scraperboard",
+      "voices": true
+    },
+    {
+      "slug": "the-glasshouse",
+      "name": "The Glasshouse",
+      "floor": 4,
+      "motion": "breathe",
+      "plate": "blaschka",
+      "voices": true
+    },
+    {
+      "slug": "the-guest-list",
+      "name": "The Guest List",
+      "floor": 4,
+      "motion": "breathe",
+      "plate": "moulage",
+      "voices": true
+    },
+    {
+      "slug": "the-harbors-due",
+      "name": "The Harbor's Due",
+      "floor": 5,
+      "motion": "breathe",
+      "plate": "moulage",
+      "voices": true
+    },
+    {
+      "slug": "the-hold",
+      "name": "The Hold",
+      "floor": 4,
+      "motion": "breathe",
+      "plate": "moulage",
+      "voices": true
+    },
+    {
+      "slug": "the-holotype",
+      "name": "The Holotype",
+      "floor": 3,
+      "motion": "tailbeat",
+      "plate": "haeckel",
+      "voices": true
+    },
+    {
+      "slug": "the-household",
+      "name": "The Household",
+      "floor": 2,
+      "motion": "tailbeat",
+      "plate": "trade-card",
+      "voices": true
+    },
+    {
+      "slug": "the-inquiry",
+      "name": "The Inquiry",
+      "floor": 3,
+      "motion": "tailbeat",
+      "plate": "scraperboard",
+      "voices": true
+    },
+    {
+      "slug": "the-inventory",
+      "name": "The Inventory",
+      "floor": 4,
+      "motion": "breathe",
+      "plate": "gyotaku",
+      "voices": true
+    },
+    {
+      "slug": "the-keyhole",
+      "name": "The Keyhole",
+      "floor": 2,
+      "motion": "breathe",
+      "plate": "scraperboard",
+      "voices": true
+    },
+    {
+      "slug": "the-long-consideration",
+      "name": "The Long Consideration",
+      "floor": 5,
+      "motion": "breathe",
+      "plate": "moulage",
+      "voices": true
+    },
+    {
+      "slug": "the-long-crossing",
+      "name": "The Long Crossing",
+      "floor": 3,
+      "motion": "tailbeat",
+      "plate": "trade-card",
+      "voices": true
+    },
+    {
+      "slug": "the-long-office",
+      "name": "The Long Office",
+      "floor": 3,
+      "motion": "tailbeat",
+      "plate": "riso",
+      "voices": true
+    },
+    {
+      "slug": "the-long-patience",
+      "name": "The Long Patience",
+      "floor": 5,
+      "motion": "undulate",
+      "plate": "scraperboard",
+      "voices": true
+    },
+    {
+      "slug": "the-long-study",
+      "name": "The Long Study",
+      "floor": 5,
+      "motion": "breathe",
+      "plate": "moulage",
+      "voices": true
+    },
+    {
+      "slug": "the-mains",
+      "name": "The Mains",
+      "floor": 2,
+      "motion": "breathe",
+      "plate": "blaschka",
+      "voices": true
+    },
+    {
+      "slug": "the-manifest",
+      "name": "The Manifest",
+      "floor": 5,
+      "motion": "breathe",
+      "plate": "riso",
+      "voices": true
+    },
+    {
+      "slug": "the-marginalia",
+      "name": "The Marginalia",
+      "floor": 4,
+      "motion": "pulse",
+      "plate": "blaschka",
+      "voices": true
+    },
+    {
+      "slug": "the-night-watch",
+      "name": "The Night Watch",
+      "floor": 4,
+      "motion": "breathe",
+      "plate": "scraperboard",
+      "voices": true
+    },
+    {
+      "slug": "the-observation",
+      "name": "The Observation",
+      "floor": 3,
+      "motion": "breathe",
+      "plate": "scraperboard",
+      "voices": true
+    },
+    {
+      "slug": "the-parcel",
+      "name": "The Parcel",
+      "floor": 2,
+      "motion": "rigid",
+      "plate": "gyotaku",
+      "voices": true
+    },
+    {
+      "slug": "the-permanent-collection",
+      "name": "The Permanent Collection",
+      "floor": 5,
+      "motion": "breathe",
+      "plate": "haeckel",
+      "voices": true
+    },
+    {
+      "slug": "the-pleasant-island",
+      "name": "The Pleasant Island",
+      "floor": 5,
+      "motion": "breathe",
+      "plate": "riso",
+      "voices": true
+    },
+    {
+      "slug": "the-principal",
+      "name": "The Principal",
+      "floor": 4,
+      "motion": "tailbeat",
+      "plate": "moulage",
+      "voices": true
+    },
+    {
+      "slug": "the-proprietor",
+      "name": "The Proprietor",
+      "floor": 4,
+      "motion": "breathe",
+      "plate": "moulage",
+      "voices": true
+    },
+    {
+      "slug": "the-provision",
+      "name": "The Provision",
+      "floor": 2,
+      "motion": "tailbeat",
+      "plate": "trade-card",
+      "voices": true
+    },
+    {
+      "slug": "the-quire",
+      "name": "The Quire",
+      "floor": 3,
+      "motion": "rigid",
+      "plate": "gyotaku",
+      "voices": true
+    },
+    {
+      "slug": "the-reading-bell",
+      "name": "The Reading Bell",
+      "floor": 3,
+      "motion": "pulse",
+      "plate": "blaschka",
+      "voices": true
+    },
+    {
+      "slug": "the-reading-room",
+      "name": "The Reading Room",
+      "floor": 3,
+      "motion": "breathe",
+      "plate": "moulage",
+      "voices": true
+    },
+    {
+      "slug": "the-receiving-line",
+      "name": "The Receiving Line",
+      "floor": 5,
+      "motion": "breathe",
+      "plate": "riso",
+      "voices": true
+    },
+    {
+      "slug": "the-reckoning",
+      "name": "The Reckoning",
+      "floor": 3,
+      "motion": "tailbeat",
+      "plate": "scraperboard",
+      "voices": true
+    },
+    {
+      "slug": "the-reconciliation",
+      "name": "The Reconciliation",
+      "floor": 5,
+      "motion": "tailbeat",
+      "plate": "riso",
+      "voices": true
+    },
+    {
+      "slug": "the-round",
+      "name": "The Round",
+      "floor": 3,
+      "motion": "tailbeat",
+      "plate": "gyotaku",
+      "voices": true
+    },
+    {
+      "slug": "the-sconce",
+      "name": "The Sconce",
+      "floor": 2,
+      "motion": "tailbeat",
+      "plate": "trade-card",
+      "voices": true
+    },
+    {
+      "slug": "the-second-notice",
+      "name": "The Second Notice",
+      "floor": 2,
+      "motion": "breathe",
+      "plate": "scraperboard",
+      "voices": true
+    },
+    {
+      "slug": "the-seven-lights",
+      "name": "The Seven Lights",
+      "floor": 3,
+      "motion": "tailbeat",
+      "plate": "trade-card",
+      "voices": true
+    },
+    {
+      "slug": "the-sexton",
+      "name": "The Sexton",
+      "floor": 2,
+      "motion": "breathe",
+      "plate": "trade-card",
+      "voices": true
+    },
+    {
+      "slug": "the-silence",
+      "name": "The Silence",
+      "floor": 4,
+      "motion": "breathe",
+      "plate": "riso",
+      "voices": true
+    },
+    {
+      "slug": "the-single-fish",
+      "name": "The Single Fish",
+      "floor": 3,
+      "motion": "tailbeat",
+      "plate": "gyotaku",
+      "voices": true
+    },
+    {
+      "slug": "the-small-hours",
+      "name": "The Small Hours",
+      "floor": 3,
+      "motion": "undulate",
+      "plate": "scraperboard",
+      "voices": true
+    },
+    {
+      "slug": "the-spectacle",
+      "name": "The Spectacle",
+      "floor": 3,
+      "motion": "ripple",
+      "plate": "haeckel",
+      "voices": true
+    },
+    {
+      "slug": "the-stocktake",
+      "name": "The Stocktake",
+      "floor": 5,
+      "motion": "breathe",
+      "plate": "scraperboard",
+      "voices": true
+    },
+    {
+      "slug": "the-subscription",
+      "name": "The Subscription",
+      "floor": 2,
+      "motion": "tailbeat",
+      "plate": "gyotaku",
+      "voices": true
+    },
+    {
+      "slug": "the-substrate",
+      "name": "The Substrate",
+      "floor": 3,
+      "motion": "breathe",
+      "plate": "scraperboard",
+      "voices": true
+    },
+    {
+      "slug": "the-summons",
+      "name": "The Summons",
+      "floor": 2,
+      "motion": "undulate",
+      "plate": "scraperboard",
+      "voices": true
+    },
+    {
+      "slug": "the-tenant",
+      "name": "The Tenant",
+      "floor": 2,
+      "motion": "breathe",
+      "plate": "trade-card",
+      "voices": true
+    },
+    {
+      "slug": "the-testimony",
+      "name": "The Testimony",
+      "floor": 3,
+      "motion": "undulate",
+      "plate": "scraperboard",
+      "voices": true
+    },
+    {
+      "slug": "the-threshold",
+      "name": "The Threshold",
+      "floor": 3,
+      "motion": "breathe",
+      "plate": "riso",
+      "voices": true
+    },
+    {
+      "slug": "the-type-specimen",
+      "name": "The Type Specimen",
+      "floor": 2,
+      "motion": "tailbeat",
+      "plate": "moulage",
+      "voices": true
+    },
+    {
+      "slug": "the-undercroft",
+      "name": "The Undercroft",
+      "floor": 2,
+      "motion": "undulate",
+      "plate": "gosse",
+      "voices": true
+    },
+    {
+      "slug": "the-undercurrent",
+      "name": "The Undercurrent",
+      "floor": 2,
+      "motion": "undulate",
+      "plate": "gosse",
+      "voices": true
+    },
+    {
+      "slug": "the-understone",
+      "name": "The Understone",
+      "floor": 3,
+      "motion": "breathe",
+      "plate": "scraperboard",
+      "voices": true
+    },
+    {
+      "slug": "the-understudy",
+      "name": "The Understudy",
+      "floor": 3,
+      "motion": "tailbeat",
+      "plate": "moulage",
+      "voices": true
+    },
+    {
+      "slug": "the-unlidded-rustfish",
+      "name": "The Unlidded Rustfish",
+      "floor": 3,
+      "motion": "tailbeat",
+      "plate": "moulage",
+      "voices": true
+    },
+    {
+      "slug": "the-usher",
+      "name": "The Usher",
+      "floor": 2,
+      "motion": "tailbeat",
+      "plate": "scraperboard",
+      "voices": true
+    },
+    {
+      "slug": "the-verger",
+      "name": "The Verger",
+      "floor": 3,
+      "motion": "breathe",
+      "plate": "scraperboard",
+      "voices": true
+    },
+    {
+      "slug": "the-vespers",
+      "name": "The Vespers",
+      "floor": 2,
+      "motion": "sway",
+      "plate": "blaschka",
+      "voices": true
+    },
+    {
+      "slug": "the-vigil",
+      "name": "The Vigil",
+      "floor": 5,
+      "motion": "breathe",
+      "plate": "moulage",
+      "voices": true
+    },
+    {
+      "slug": "the-vitrine",
+      "name": "The Vitrine",
+      "floor": 2,
+      "motion": "tailbeat",
+      "plate": "blaschka",
+      "voices": true
+    },
+    {
+      "slug": "the-waiting-list",
+      "name": "The Waiting List",
+      "floor": 5,
+      "motion": "undulate",
+      "plate": "riso",
+      "voices": true
+    },
+    {
+      "slug": "the-waterline",
+      "name": "The Waterline",
+      "floor": 2,
+      "motion": "undulate",
+      "plate": "gyotaku",
+      "voices": true
+    },
+    {
+      "slug": "the-watershed",
+      "name": "The Watershed",
+      "floor": 3,
+      "motion": "ripple",
+      "plate": "haeckel",
+      "voices": true
+    },
+    {
+      "slug": "the-welcome",
+      "name": "The Welcome",
+      "floor": 2,
+      "motion": "sway",
+      "plate": "trade-card",
+      "voices": true
+    },
+    {
+      "slug": "thumbnail-dace",
+      "name": "Thumbnail Dace",
+      "floor": 1,
+      "motion": "tailbeat",
+      "plate": "gosse",
+      "voices": true
+    },
+    {
+      "slug": "till-minnow",
+      "name": "Till Minnow",
+      "floor": 1,
+      "motion": "tailbeat",
+      "plate": "gosse",
+      "voices": true
+    },
+    {
+      "slug": "tithe-shoal",
+      "name": "Tithe Shoal",
+      "floor": 2,
+      "motion": "tailbeat",
+      "plate": "gyotaku",
+      "voices": true
+    },
+    {
+      "slug": "wrapping-sole",
+      "name": "Wrapping Sole",
+      "floor": 1,
+      "motion": "ripple",
+      "plate": "gosse",
+      "voices": true
+    }
+  ]
+}

@@ -115,12 +115,12 @@ tasks:
     Full history: projects/cthulhuquarium/HISTORY.md#t-001
 - id: t-100
   title: 'Main-game standard: audit and close the gaps for Cthulhuquarium'
-  status: claimed
+  status: done
   milestone: m5
   stakes: reversible
   passes: 0
   depends_on: []
-  updated: '2026-11-21T07:25:19Z'
+  updated: '2026-11-21T09:49:08Z'
   note: |-
     Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -133,9 +133,14 @@ tasks:
     Item 7 (customizable characters) applies "in most cases": if this genre makes it a poor fit, say so in the audit with the reason and leave it for Silas rather than skipping silently.
 
     Achievements are tracked by their own task; this one covers everything else.
+
+    Merged kind_robots #5498 (settings, title card, endings shelf) plus #5500/#5501 fixes.
+    Re-audit: STANDARD-AUDIT-2026-11-21.md, every item Met except characters (left for
+    Silas).
   owner: worker
   claimed_by: 2026-11-21T1900Z-cthq-playtest-01L5NK
   claimed_at: '2026-11-21T07:25:19Z'
+  implementation_pr: 'silasfelinus/kind_robots#5498'
 - id: t-102
   title: 'The descent: five floors of the building gate the fish by canon tier, and every species is obtainable again'
   status: done
@@ -219,12 +224,12 @@ tasks:
 
 - id: t-106
   title: 'Pin simulate_descent.py casual-player floor-open days in a regression test so economy.yaml floor_keys can not drift silently'
-  status: ready
+  status: done
   milestone: m5
   stakes: reversible
   passes: 0
   depends_on: []
-  updated: '2026-11-21T07:55:00Z'
+  updated: '2026-11-21T10:07:25Z'
   note: >-
     Reviewer kaizen from PR #7731 (t-105 pacing). floor_keys (150 / 3,000 / 30,000 / 400,000) were tuned
     with data/simulate_descent.py to casual II day 1, III day 2, IV day 5, V ~day 14, and are mirrored in
@@ -232,14 +237,19 @@ tasks:
     that runs the casual profile and checks the floor-open days stay within a band, plus a check that the
     TS mirror matches economy.yaml.
 
+    tests/test_cthulhuquarium_descent_pacing.py pins casual floor-open days (II d1, III
+    <=d2, IV d3-5, V wk1-2) from a committed roster snapshot, and checks kind_robots
+    FLOOR_KEY_COSTS mirrors economy.yaml floor_keys.
+  implementation_pr: 'silasfelinus/conductor#7735'
+
 - id: t-105
   title: 'Pacing: price and pay by canon rarity, and sell each floor''s key'
-  status: claimed
+  status: done
   milestone: m5
   stakes: reversible
   passes: 0
   depends_on: []
-  updated: '2026-11-21T19:00:00Z'
+  updated: '2026-11-21T09:49:05Z'
   claimed_by: 2026-11-21T1900Z-cthq-playtest-01L5NK
   claimed_at: '2026-11-21T19:00:00Z'
   note: >-
@@ -251,6 +261,11 @@ tasks:
     III day 2, IV day 5, V ~day 14). Veterans who reached floors before keys existed get them free.
 
     Full history: projects/cthulhuquarium/HISTORY.md#t-105
+
+    Merged kind_robots #5497 (canon-rarity economy, floor keys 150/3000/30000/400000). After
+    the RC review, grandfathering moved from a wall-clock cutoff to a per-tank marker
+    (#5501). Pacing evidence: ECONOMY-SUITE.md.
+  implementation_pr: 'silasfelinus/kind_robots#5497'
 
 - id: t-101
   title: 'Cthulhuquarium achievement upgrade: 12 or more live achievements'
@@ -1510,7 +1525,7 @@ tasks:
 - id: t-069
   milestone: m3
   title: 'FINAL HUMAN GATE ONLY: approve Cthulhuquarium final design or request rewrites'
-  status: waiting
+  status: needs-human
   gate_human: true
   stakes: reversible
   passes: 0
@@ -1576,7 +1591,13 @@ tasks:
     APPROVE now' paragraphs above are historical and no longer actionable.
     Do not infer approval or close the umbrella issue on a CI pass.
 
-  updated: '2026-10-25T00:54:00Z'
+    FOR SILAS (2026-11-21): every dependency is done and the project is in playtest. Play
+    /play/aquarium after the next Force Update (kind_robots #5501 and #5503 on main) using
+    projects/cthulhuquarium/PLAYTEST-CHECKLIST.md; RC-DOSSIER.md has the evidence, the three
+    independent reviews and how to reach the deep floors in a short session. Approve the
+    design, or request rewrites with direction.
+
+  updated: '2026-11-21T10:21:22Z'
   gate_reason: subjective-acceptance
   gate_rechecked: '2026-10-10'
 
@@ -1689,7 +1710,7 @@ tasks:
 - id: t-084
   milestone: m4
   title: 'Staged schema cleanup: drop the breeding, egg and hidden-stat columns once t-082 is live'
-  status: claimed
+  status: done
   owner: worker
   stakes: reversible
   passes: 0
@@ -1704,9 +1725,26 @@ tasks:
     plus any Monster evolution rows that only breeding could reach if Silas agrees. Check first that no
     deployed build still reads them (grep the running image's server bundle), call it out as
     schema-affecting, and confirm merged -> image published -> deployed -> schema verified.
-  updated: '2026-11-21T07:25:29Z'
+
+    Two-step drop: a one-step drop would break purchases between migrate deploy and the
+    container swap (Prisma selects every declared column). Step 1 merged as kind_robots
+    #5499 (fields out of schema and client; pending provenance marker prisma/migration-
+    provenance/20261121080406_drop_aquarium_breeding_eggs_hidden_stats.pending.txt). Step 2
+    = projects/cthulhuquarium/data/t-084-step2-migration.sql as kind_robots
+    prisma/migrations/20261121080406_drop_aquarium_breeding_eggs_hidden_stats/migration.sql,
+    deleting the pending marker in the same PR; merge only once
+    https://kindrobots.org/api/version shows a commit containing #5499 (Silas approved
+    shipping when verified, 2026-11-21).
+
+    Step 2 merged as kind_robots #5503 after production /api/version showed 66a0f65c
+    (contains #5499): AquariumStock.stat*/parentAId/parentBId, AquariumCodexEntry.bestStat*
+    and AquariumEgg dropped. Replayed on local MariaDB; exploit suite 26/26 and key play-
+    through 15/15 against the dropped schema. Production applies it on the next Force Update
+    (deploy-unraid runs migrate deploy before the container swap).
+  updated: '2026-11-21T10:14:22Z'
   claimed_by: 2026-11-21T1900Z-cthq-playtest-01L5NK
   claimed_at: '2026-11-21T07:25:29Z'
+  implementation_pr: 'silasfelinus/kind_robots#5503'
 
 - id: t-085
   milestone: m4
@@ -1775,7 +1813,7 @@ tasks:
 - id: t-089
   milestone: m4
   title: Verify single-screen console shell and collectible effects together
-  status: claimed
+  status: done
   stakes: reversible
   passes: 0
   depends_on:
@@ -1792,15 +1830,20 @@ tasks:
     2026-11-05 PT: created original illustrated handheld-console visual mockups for the aquarium tank/feeding and Ruler Hooked fishing/petition, plus a review board and implementation map on worker/cthulhuquarium-t-089-handheld-20261105-6f7b. This is a design proof, not completion of the combined tank/layout/coin-input QA scope; follow-up verification remains outstanding.
 
     2026-11-05 PT: finished the requested pre-implementation visual mockups for Cthulhuquarium and Ruler Hooked in kind_robots PR #4812 (four 16:9 illustrated SVG screens, preview.html and implementation mapping). The PR remains open for visual acceptance and does not alter runtime. This existing task's actual console/coin/feeding QA is not complete; returning it to ready rather than falsely marking done.
-  updated: '2026-11-21T07:25:31Z'
+
+    qa/acceptance.mjs verifies the console shell at six viewports (no outer scroll, every
+    room, keyboard Q/E/Tab, canvas renders). Defects fixed in #5500 (HUD overflow at
+    390/768) and #5501.
+  updated: '2026-11-21T10:04:13Z'
   owner: worker
   claimed_by: 2026-11-21T1900Z-cthq-playtest-01L5NK
   claimed_at: '2026-11-21T07:25:31Z'
+  implementation_pr: 'silasfelinus/kind_robots#5500'
 
 - id: t-090
   milestone: m4
   title: Prioritize full-screen Charlotte and Wilbur cinematic art delivery
-  status: claimed
+  status: done
   owner: worker
   stakes: reversible
   passes: 0
@@ -1832,13 +1875,18 @@ tasks:
     step is deliver.sh (harvest + build_story_art) and a kind_robots sync PR, then visual
     review. Caution: build_sprites.py judges staleness by mtime, which is wrong in a fresh
     clone; build named slugs only.
-  updated: '2026-11-21T07:25:21Z'
+
+    All cinematic art delivered: Wilbur's 20 per-floor portraits (canon #86, #89; 5 rejected
+    and re-rendered), the floor and ending plates incl. Bottom of Things, synced in
+    kind_robots #5500/#5501. Canon art/LEDGER.md 385/385.
+  updated: '2026-11-21T10:04:16Z'
   claimed_by: 2026-11-21T1900Z-cthq-playtest-01L5NK
   claimed_at: '2026-11-21T07:25:21Z'
+  implementation_pr: 'silasfelinus/kind_robots#5501'
 - id: t-091
   milestone: m4
   title: Image-first cinematic quality and cross-device acceptance for every room
-  status: waiting
+  status: done
   owner: null
   stakes: reversible
   passes: 0
@@ -1857,12 +1905,18 @@ tasks:
     reduced-motion still fallback and native accessibility. Visually verify
     on the actual self-hosted deployment or a faithful rendered preview;
     source tests alone do not establish layout acceptance.
-  updated: '2026-10-23T11:40:00Z'
+
+    Cross-device acceptance (qa/acceptance.mjs): 390x844, 768x1024, 1024x1366, 1366x1024,
+    1440x900, 1280x600 each 31/31, plus reduced motion with every portrait 404ing 4/4.
+    Screenshot sheet qa/acceptance-2026-11-21.jpg. Remaining 320px / short-landscape gaps
+    listed in RC-DOSSIER.md.
+  updated: '2026-11-21T10:04:19Z'
+  implementation_pr: 'silasfelinus/kind_robots#5501'
 
 - id: t-092
   milestone: m5
   title: Comprehensive writing, event, fish/progression and canon editorial pass
-  status: claimed
+  status: done
   owner: worker
   stakes: reversible
   passes: 0
@@ -1887,14 +1941,18 @@ tasks:
     report, a full complete-session transcript review including rare events and the first-
     return flow, the unused sets/decor/upgrades bark pools, and a review of the 151 species
     voices for stale breeding references.
-  updated: '2026-11-21T07:25:24Z'
-  implementation_pr: 'silasfelinus/cthulhuquarium#82'
+
+    Coverage report (kind_robots #5498, coverage/report-2026-11-21.json: 23 scenes, 15 bark
+    pools, 16 backgrounds, all reachable). Editorial passes canon #85 and #88 (RC review).
+    Verdict: coverage/EDITORIAL-VERDICT.md.
+  updated: '2026-11-21T09:49:11Z'
+  implementation_pr: 'silasfelinus/kind_robots#5498'
   claimed_by: 2026-11-21T1900Z-cthq-playtest-01L5NK
   claimed_at: '2026-11-21T07:25:24Z'
 - id: t-093
   milestone: m5
   title: Finish and visually verify every required aquarium art/scene asset
-  status: waiting
+  status: done
   owner: null
   stakes: reversible
   passes: 0
@@ -1909,11 +1967,17 @@ tasks:
     missing critical assets, prioritizing cinematic Charlotte and Wilbur.
     Reject wrong characters, placeholder SVG, broken/low-res images and
     mismatched scenes. Queued or drafted prompts are not delivered art.
-  updated: '2026-10-25T00:54:00Z'
+
+    canon scripts/art_ledger.py (#87) records every required render from prompt to its
+    binding in the game; art/LEDGER.md shows 385 of 385 done (#90). Visual review: Wilbur
+    floor contact sheet (5 of 20 rejected for a magenta bruise or pale bar, re-rendered and
+    accepted in #89); QA screenshot sheet at qa/acceptance-2026-11-21.jpg.
+  updated: '2026-11-21T09:49:45Z'
+  implementation_pr: 'silasfelinus/cthulhuquarium#90'
 - id: t-094
   milestone: m5
   title: Full adversarial aquarium, idle economy, persistence and exploit suite
-  status: claimed
+  status: done
   owner: worker
   stakes: reversible
   passes: 0
@@ -1935,13 +1999,18 @@ tasks:
     2/6/21/46 min and about 2h. This is a balance decision for Silas (see PLAYTEST-
     CHECKLIST.md section 5) and has not been retuned. API exploit checks already pass: a
     locked-floor purchase returns 403, and a forged or orphaned reply id returns 400.
-  updated: '2026-11-21T07:25:26Z'
+
+    ECONOMY-SUITE.md: nine strategies over the roster; 26 adversarial API checks incl.
+    concurrency (tick, buys, finale, grandfathering) after the row-lock fixes in #5501. Main
+    pacing question (floor V key wait) handed to the playtest.
+  updated: '2026-11-21T10:04:25Z'
   claimed_by: 2026-11-21T1900Z-cthq-playtest-01L5NK
   claimed_at: '2026-11-21T07:25:26Z'
+  implementation_pr: 'silasfelinus/kind_robots#5501'
 - id: t-095
   milestone: m5
   title: Full-screen art-first UX and accessibility acceptance on real rendered viewports
-  status: waiting
+  status: done
   owner: null
   stakes: reversible
   passes: 0
@@ -1957,11 +2026,17 @@ tasks:
     accurate canvas hit targets, keyboard/touch, readable labels, reduced
     motion and image/network recovery. Repair and reverify failures, not just
     pass static contract checks.
-  updated: '2026-10-25T00:54:00Z'
+
+    Art-first UX and accessibility on rendered screens: settings contrast and Esc (#5500),
+    scene focus management, in-game Motion setting live, settings before network, missing-
+    portrait fallback (#5501). Follow-ups (modal dialogs focus/Esc, reply-card roles, load
+    retry) in RC-DOSSIER.md.
+  updated: '2026-11-21T10:04:22Z'
+  implementation_pr: 'silasfelinus/kind_robots#5501'
 - id: t-096
   milestone: m5
   title: Independent adversarial release-candidate review and complete evidence dossier
-  status: waiting
+  status: done
   owner: null
   stakes: reversible
   passes: 0
@@ -1982,7 +2057,12 @@ tasks:
     browser screenshots, gameplay verdict, job/PR/check links and exact
     unblocked final review instructions. No human approval request until this
     dossier and ALL other prereqs are done.
-  updated: '2026-10-25T00:54:00Z'
+
+    RC-DOSSIER.md: three independent reviews (technical/economy, experience, front-
+    end/a11y), every finding dispositioned; blocking ones fixed in kind_robots #5501 and
+    canon #88; playtest instructions included.
+  updated: '2026-11-21T10:04:28Z'
+  implementation_pr: 'silasfelinus/kind_robots#5501'
 - id: t-097
   milestone: m5
   title: 'Playbook Forge upgrade: write the 16 empty thread beats and literal Krea 2 prompts for all 189 beats'
@@ -2011,7 +2091,7 @@ tasks:
 - id: t-099
   milestone: m5
   title: 'Fish roster redesign: one in-tank sprite style for all 151 species, new designs for the stock-fish, object and sheet-shaped ones'
-  status: claimed
+  status: done
   owner: worker
   stakes: reversible
   passes: 0
@@ -2026,6 +2106,11 @@ tasks:
     design that keeps its name, joke and field note. Work happens in the canon repo
     (fish/*.yaml sprite.prompt, scripts/render_art.py, build_sprites.py, deliver.sh) and syncs to
     kind_robots.
-  updated: '2026-11-05T21:24:53Z'
+
+    All 151 sprites and 151 swimming clips in the one in-tank style are rendered, built and
+    bundled (canon art/LEDGER.md, 385 of 385 required renders done; last clips in canon #84,
+    content-hash builds so a fresh clone never re-cuts).
+  updated: '2026-11-21T09:49:23Z'
   claimed_by: 2026-11-05T212600Z-claude-t099-01L5NK
   claimed_at: '2026-11-05T21:24:53Z'
+  implementation_pr: 'silasfelinus/cthulhuquarium#84'
