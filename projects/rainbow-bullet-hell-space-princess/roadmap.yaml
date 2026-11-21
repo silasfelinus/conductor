@@ -1040,3 +1040,14 @@ tasks:
     source: kaizen-pr-7764
     note: |-
       Reviewer kaizen from the 2026-11-21 PT merge of conductor#7764. t-050 writes the rejected shot keys to a sidecar opening-rejected-clips.json beside the media, but the manifest and delivery report the task named still do not show them. Read the sidecar (or pass the list directly) into the manifest/delivery report, with a test, and note the shot keys a reviewer should re-queue.
+  - id: t-052
+    milestone: m4
+    title: "Check each queued opening WAN job against the export clip budget (8s, 128 frames) at queue time so over-budget renders fail before spending GPU time"
+    status: ready
+    depends_on: []
+    passes: 0
+    stakes: reversible
+    updated: '2026-11-21T20:55:00Z'
+    source: kaizen-pr-7768
+    note: |-
+      Reviewer kaizen from the 2026-11-21 PT merge of conductor#7768, which caps opening clip decode at MAX_CLIP_SECONDS=8 / MAX_CLIP_FRAMES=128 in scripts/export_rainbow_opening.py. A WAN job queued with a longer length would now render fine and then be rejected at export. Share the constants with the opening queue/ledger code and fail loudly at queue time, with a test.

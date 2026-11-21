@@ -216,3 +216,9 @@ Companion kind_robots#4764 was already on main, so merge order held. CI green on
 - **Decision:** merged (852e731) on green CI. Small, reversible, in scope: `render()` records DONE clips that failed validation (pending shots correctly excluded), the export prints them and writes `opening-rejected-clips.json`. Both new tests patch the network boundary and assert the exact keys; 12 pass locally.
 - **Finding:** again the only red check was Validate Worker PR handoff — the body was prose with no template headings (third time in a row on this project). The Reviewer rewrote it; diff unchanged. The task asked for the list "in the manifest and delivery report"; a sidecar JSON was shipped instead, which is acceptable but leaves the report half (kaizen t-051).
 - **Suggestion:** run `check_pr_handoff_template.py` on the body before opening the PR.
+
+## 2026-11-21 PT · Reviewer: opening bounded WAN decode (#7768)
+
+- **Decision:** merged (38a48b1) on green exact-head CI. Small, reversible, in scope: ffmpeg decode now carries `-t 8` and `-frames:v 128`, ffprobe rejects clips over 8s / 128 frames before decode, animated images over budget are rejected before seeking, and the decoded count is bounded. 15 tests pass locally.
+- **Finding:** the earlier review's double-escaped `b"\\x00"` fixture was fixed by the Worker (same escaping slip as #7752's predecessor). Handoff check red again on a prose body — fourth time today on this project; the Reviewer added the template headings, diff unchanged. Untracked follow-up (no task id), like #7752.
+- **Suggestion:** template the body and run `check_pr_handoff_template.py` before opening. Kaizen t-052 (queue-time clip budget).
