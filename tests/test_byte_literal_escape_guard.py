@@ -20,7 +20,7 @@ SCANNED_DIRS = ("scripts", "tests")
 # Add an exact (relative path, line) only when a deliberately literal
 # backslash-x sequence is needed, with a comment explaining the exception.
 ALLOWLIST: set[tuple[str, int]] = set()
-DOUBLE_ESCAPE = re.compile(r"(?<!\\)\\\\\\\\x[0-9a-fA-F]{2}")
+DOUBLE_ESCAPE = re.compile(r"(?<!\\)\\\\x[0-9a-fA-F]{2}")
 BYTE_PREFIX = re.compile(r"(?i)^(?:br|rb|b)[\"']")
 
 
