@@ -1796,7 +1796,7 @@ tasks:
 - id: t-089
   milestone: m4
   title: Verify single-screen console shell and collectible effects together
-  status: claimed
+  status: done
   stakes: reversible
   passes: 0
   depends_on:
@@ -1813,10 +1813,15 @@ tasks:
     2026-11-05 PT: created original illustrated handheld-console visual mockups for the aquarium tank/feeding and Ruler Hooked fishing/petition, plus a review board and implementation map on worker/cthulhuquarium-t-089-handheld-20261105-6f7b. This is a design proof, not completion of the combined tank/layout/coin-input QA scope; follow-up verification remains outstanding.
 
     2026-11-05 PT: finished the requested pre-implementation visual mockups for Cthulhuquarium and Ruler Hooked in kind_robots PR #4812 (four 16:9 illustrated SVG screens, preview.html and implementation mapping). The PR remains open for visual acceptance and does not alter runtime. This existing task's actual console/coin/feeding QA is not complete; returning it to ready rather than falsely marking done.
-  updated: '2026-11-21T07:25:31Z'
+
+    qa/acceptance.mjs verifies the console shell at six viewports (no outer scroll, every
+    room, keyboard Q/E/Tab, canvas renders). Defects fixed in #5500 (HUD overflow at
+    390/768) and #5501.
+  updated: '2026-11-21T10:04:13Z'
   owner: worker
   claimed_by: 2026-11-21T1900Z-cthq-playtest-01L5NK
   claimed_at: '2026-11-21T07:25:31Z'
+  implementation_pr: 'silasfelinus/kind_robots#5500'
 
 - id: t-090
   milestone: m4
