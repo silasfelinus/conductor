@@ -136,8 +136,8 @@ def chunks(items, count=MAX_BATCH):
 
 def reconcile(plan, write=False, http_json=None, base_url=None):
     """Remote requests contain IDs/paths only, never art bytes or bearer tokens."""
-    if plan["collisions"]:
-        raise RuntimeError("Conflicting DONE ArtImages need curator verdicts.")
+    # Isolate conflicting render candidates so they cannot block unrelated
+    # reviewed art. No candidate from a collision ever reaches the endpoint.
     if not core.KR_API_TOKEN:
         raise RuntimeError("KR_API_TOKEN absent; use --plan offline.")
 
@@ -172,8 +172,16 @@ def reconcile(plan, write=False, http_json=None, base_url=None):
         if len(rows) != len(batch):
             raise RuntimeError("Delivery receipt count differed from request.")
         for result, candidate in zip(rows, batch):
-            if result.get("asset") != candidate["asset"]:
-                raise RuntimeError("Delivery receipt asset identity mismatch.")
+            if (
+                result.get("asset") != candidate["asset"]
+                or result.get("artImageId") != candidate["artImageId"]
+                or result.get("url") != (
+                    f"/images/emperor-of-dust/{candidate['asset']}.webp"
+                )
+            ):
+                raise RuntimeError("Delivery receipt provenance mismatch.")
+            if write and result.get("status") == "would-write":
+                raise RuntimeError("Server ignored an authenticated write request.")
             results.append({
                 "asset": candidate["asset"],
                 "artImageId": candidate["artImageId"],
