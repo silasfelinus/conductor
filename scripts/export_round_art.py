@@ -68,6 +68,7 @@ def finished(subject):
                 return image_id
     return None
 
+
 def target(kind_robots, prefix, asset):
     parts = [p for p in (prefix.strip("/"), str(asset).strip("/")) if p]
     for entry in parts:

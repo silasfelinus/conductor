@@ -80,18 +80,20 @@ def test_rejected_renders_never_ship_and_strict_mode_requires_keep(tmp_path):
     assert [dest.name for _subject, _id, dest in strict] == ["keeper.webp"]
 
 
-
 def test_curator_lane_acceptance_allows_strict_export_without_text_verdict(tmp_path):
     rendered = subject("ship/pocket-room", status="ACCEPTED", image=277778)
     unreviewed = subject("ship/other", status="DONE", image=277779)
 
     assert era.finished(rendered) == 277778
-    assert era.plan([rendered, unreviewed], tmp_path, "game-of-captains",
-                    require_keep=True) == [
+    exported = era.plan(
+        [rendered, unreviewed], tmp_path, "game-of-captains", require_keep=True,
+    )
+    assert exported == [
         (rendered, 277778, tmp_path / "public/game-of-captains/ship/pocket-room.webp"),
     ]
-    report = era.audit([rendered, unreviewed], tmp_path, "game-of-captains",
-                       require_keep=True)
+    report = era.audit(
+        [rendered, unreviewed], tmp_path, "game-of-captains", require_keep=True,
+    )
     assert report["counts"] == {"curation-needed": 1, "export-ready": 1}
 
 
@@ -108,9 +110,14 @@ def test_curator_lane_reject_blocks_export_even_with_stale_keep_verdict(tmp_path
                 require_keep=strict,
             )
         ]
-    report = era.audit([rejected, untouched], tmp_path, "game-of-captains",
-                       require_keep=True)
+    report = era.audit(
+        [rejected, untouched], tmp_path, "game-of-captains", require_keep=True,
+    )
     assert report["counts"] == {"curation-needed": 1, "rejected": 1}
+    accepted_without_id = subject("ship/not-rendered", status="ACCEPTED", image=None)
+    assert era.plan([accepted_without_id], tmp_path, "game-of-captains",
+                    require_keep=True) == []
+
 
 def test_sheet_generates_review_without_export_or_token(tmp_path, monkeypatch):
     import export_crystal_street_art as crystal
