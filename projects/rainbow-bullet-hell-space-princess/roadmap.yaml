@@ -993,13 +993,18 @@ tasks:
   - id: t-049
     milestone: m4
     title: "Validate each rendered opening clip's container, size and identity lock before the opening export composes it"
-    status: claimed
+    status: done
     depends_on: []
     passes: 0
     stakes: reversible
-    updated: '2026-11-21T11:15:00Z'
+    updated: '2026-11-21T12:03:22Z'
     note: |-
       Kaizen from the PR #7730 review (worker suggestion). scripts/export_rainbow_opening.py now decodes WAN MP4/WebM via ffmpeg but trusts whatever bytes come back. Add a fail-closed per-clip check that runs before composition: magic-byte container type, minimum frame count and dimensions, and that the ledger subject's source_image_id still matches its DOODLE-SET-1 identity-locked keeper. Report bad clips by shot key and fall back to the pinned still instead of emitting a broken cut.
+
+      Reviewer 2026-11-21 PT: rescued worker PR #7747 as #7749 (merged c8d204f) after fixing
+      the double-escaped WebM magic literal and fixtures that never reached ffprobe; 11 tests
+      pass and all 8 live recut-2 shots pass the keeper gate. #7747 closed as superseded.
     owner: worker
     claimed_by: 20261121T111500Z-rainbow-t049-clipcheck-k7m4
     claimed_at: '2026-11-21T11:15:00Z'
+    implementation_pr: 'silasfelinus/conductor#7749'
