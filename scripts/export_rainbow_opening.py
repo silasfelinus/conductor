@@ -193,6 +193,40 @@ def clip_frames(payload: bytes):
     return frames[3:] if len(frames) > 12 else frames
 
 
+def validated_clip(payload: bytes, key: str, expected_size=(832, 480)) -> list | None:
+    """Fail closed on corrupt or undersized WAN media, retaining the approved still."""
+    from PIL import Image
+
+    is_mp4 = len(payload) > 12 and payload[4:8] == b"ftyp"
+    is_webm = payload.startswith(b"\\x1a\\x45\\xdf\\xa3")
+    if not (is_mp4 or is_webm):
+        print(f"{key}: unsupported WAN container; using approved still", file=sys.stderr)
+        return None
+    try:
+        with tempfile.TemporaryDirectory() as work:
+            source = Path(work) / ("clip.mp4" if is_mp4 else "clip.webm")
+            source.write_bytes(payload)
+            probe = subprocess.run(
+                ["ffprobe", "-v", "error", "-select_streams", "v:0",
+                 "-show_entries", "stream=width,height,nb_frames",
+                 "-of", "json", str(source)],
+                capture_output=True, text=True, check=True, timeout=30,
+            )
+            streams = json.loads(probe.stdout).get("streams") or []
+            if not streams:
+                raise ValueError("no video stream")
+            width, height = int(streams[0]["width"]), int(streams[0]["height"])
+            if width < expected_size[0] or height < expected_size[1]:
+                raise ValueError(f"undersized video {width}x{height}")
+        frames = clip_frames(payload)
+        if len(frames) < 12 or not all(isinstance(frame, Image.Image) for frame in frames):
+            raise ValueError(f"insufficient decoded frames ({len(frames)})")
+        return frames
+    except (OSError, ValueError, KeyError, RuntimeError, subprocess.SubprocessError) as exc:
+        print(f"{key}: invalid WAN clip ({exc}); using approved still", file=sys.stderr)
+        return None
+
+
 def ping_pong(count: int, length: int) -> int:
     if length <= 1:
         return 0
@@ -241,7 +275,7 @@ def render(sources, last: list):
     for index, (key, beats, still_id, clip_id) in enumerate(sources):
         start = round(elapsed_beats * beat * FPS)
         end = round((elapsed_beats + beats) * beat * FPS)
-        frames = clip_frames(download(clip_id)) if clip_id else None
+        frames = validated_clip(download(clip_id), key) if clip_id else None
         still = None if frames else cover(Image.open(io.BytesIO(download(still_id))).convert("RGB"))
         last_shot = index == len(sources) - 1
         for n in range(end - start):
