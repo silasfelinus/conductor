@@ -152,7 +152,7 @@ def inventory(ledger_dir: Path, app_root: Path | None = None,
             "runtime_manifest_reachable": builder_reachable,
             "reference_class": ("static" if matches else
                                 "builder_reachable" if builder_reachable else
-                                "runtime_candidate" if runtime_candidates else "unreferenced"),
+                                "runtime_candidate" if runtime_manifest is None and runtime_candidates else "unreferenced"),
             "job_ids": job_ids, "art_image_ids": image_ids,
             "render_records": entries, "has_done_image": any(
                 e["status"] == "DONE" and e["art_image_id"] is not None for e in entries),
