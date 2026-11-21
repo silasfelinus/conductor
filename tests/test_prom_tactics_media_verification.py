@@ -8,7 +8,9 @@ from PIL import Image
 from scripts.verify_prom_tactics_media import candidates, report, verify
 
 ROOT = Path(__file__).resolve().parents[1]
-TACTICS = ROOT / "projects/every-villain-tactics/art/ONE-HIT-CREW-TELEGRAPHS-2026-11-20.yaml"
+TACTICS = (
+    ROOT / "projects/every-villain-tactics/art/ONE-HIT-CREW-TELEGRAPHS-2026-11-20.yaml"
+)
 PROM = ROOT / "projects/comet-city-academy/art/UNSTABLE-PRODUCTION-FAMILY-ROUND-1.yaml"
 FLOW = ROOT / ".github/workflows/prom-tactics-media-proof.yml"
 
