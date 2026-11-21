@@ -4,6 +4,7 @@ import subprocess
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 from PIL import Image
 
@@ -31,6 +32,31 @@ class DoodleOpeningTests(unittest.TestCase):
         self.assertEqual(len(sources), 8)
         self.assertEqual([item[3] for item in sources], list(range(9000, 9008)))
         self.assertTrue(all(item[3] is None for item in opening.shot_sources(ledger, True)))
+
+    def test_manifest_clip_count_tracks_only_validated_video(self):
+        """A DONE ledger entry with corrupt bytes must not inflate the shipped clip count."""
+        accepted = []
+        still = io.BytesIO()
+        Image.new("RGB", (64, 36), "pink").save(still, "PNG")
+        good = [Image.new("RGB", opening.SIZE, "cyan") for _ in range(12)]
+        sources = [("valid", 1, 101, 201), ("corrupt", 1, 102, 202)]
+        with (
+            patch.object(opening, "safe_clip_download", side_effect=[good, None]),
+            patch.object(opening, "download", return_value=still.getvalue()),
+        ):
+            frames = list(opening.render(sources, [], accepted))
+        self.assertGreater(len(frames), 0)
+        self.assertEqual(accepted, ["valid"])
+        self.assertEqual(len(accepted), 1)
+
+    def test_still_only_opening_has_no_accepted_clips(self):
+        accepted = []
+        still = io.BytesIO()
+        Image.new("RGB", (64, 36), "pink").save(still, "PNG")
+        with patch.object(opening, "download", return_value=still.getvalue()):
+            frames = list(opening.render([("still", 1, 101, None)], [], accepted))
+        self.assertGreater(len(frames), 0)
+        self.assertEqual(accepted, [])
 
     def test_original_ledger_still_works(self):
         old = {
