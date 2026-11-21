@@ -1699,7 +1699,7 @@ tasks:
 - id: t-084
   milestone: m4
   title: 'Staged schema cleanup: drop the breeding, egg and hidden-stat columns once t-082 is live'
-  status: claimed
+  status: waiting
   owner: worker
   stakes: reversible
   passes: 0
@@ -1714,9 +1714,20 @@ tasks:
     plus any Monster evolution rows that only breeding could reach if Silas agrees. Check first that no
     deployed build still reads them (grep the running image's server bundle), call it out as
     schema-affecting, and confirm merged -> image published -> deployed -> schema verified.
-  updated: '2026-11-21T07:25:29Z'
+
+    Two-step drop: a one-step drop would break purchases between migrate deploy and the
+    container swap (Prisma selects every declared column). Step 1 merged as kind_robots
+    #5499 (fields out of schema and client; pending provenance marker prisma/migration-
+    provenance/20261121080406_drop_aquarium_breeding_eggs_hidden_stats.pending.txt). Step 2
+    = projects/cthulhuquarium/data/t-084-step2-migration.sql as kind_robots
+    prisma/migrations/20261121080406_drop_aquarium_breeding_eggs_hidden_stats/migration.sql,
+    deleting the pending marker in the same PR; merge only once
+    https://kindrobots.org/api/version shows a commit containing #5499 (Silas approved
+    shipping when verified, 2026-11-21).
+  updated: '2026-11-21T09:50:17Z'
   claimed_by: 2026-11-21T1900Z-cthq-playtest-01L5NK
   claimed_at: '2026-11-21T07:25:29Z'
+  implementation_pr: 'silasfelinus/kind_robots#5499'
 
 - id: t-085
   milestone: m4
