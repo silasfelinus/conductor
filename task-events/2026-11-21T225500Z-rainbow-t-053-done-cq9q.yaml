@@ -1,0 +1,21 @@
+version: 1
+project: rainbow-bullet-hell-space-princess
+task: t-053
+operation: done
+session: session_01L5NKxcJxgPDYWiJQ7aJALS
+updated: '2026-11-21T22:55:00Z'
+verify_pr: silasfelinus/conductor#7777
+implementation_pr: silasfelinus/conductor#7777
+note: >-
+  Reviewer 2026-11-21 PT: merged conductor#7777 (00b602b) on green exact-head CI.
+  write_delivery_report() writes only opening-delivery-report.json and deletes a stale
+  opening-rejected-clips.json; no reader of the legacy file exists in conductor or kind_robots.
+  27 opening tests pass on combined main with #7776.
+learning:
+  date: 2026-11-21
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: When a follow-up adds a richer artifact, retire the older overlapping one in the same lane instead of keeping two sources of truth.
