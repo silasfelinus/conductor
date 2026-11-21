@@ -693,3 +693,21 @@ Live today: 0 Achievement record(s) with this game's triggerCode prefix (checked
 
 Achievement upgrade merged in kind_robots#5036 (8e4cdb0), all checks green: 18 live achievements awarded from cthulhuquariumTankStore. Catalog seed succeeded.
 <!-- note:end t-101 -->
+
+## t-102 — The descent: five floors gate the fish by tier
+
+<!-- note:begin t-102 -->
+Filed 2026-11-21 PT from Silas's in-session direction (see the roadmap note). Plan: floors + obtainable roster (t-102), staged scenes with replies and Wilbur floor portraits (t-103), Memory Book (t-104).
+<!-- note:end t-102 -->
+
+## t-103 — Visual-novel interstitials
+
+<!-- note:begin t-103 -->
+Filed 2026-11-21 PT from Silas's in-session direction (see the roadmap note). Plan: floors + obtainable roster (t-102), staged scenes with replies and Wilbur floor portraits (t-103), Memory Book (t-104).
+<!-- note:end t-103 -->
+
+## t-104 — Memory Book
+
+<!-- note:begin t-104 -->
+Filed 2026-11-21 PT from Silas's in-session direction (see the roadmap note). Plan: floors + obtainable roster (t-102), staged scenes with replies and Wilbur floor portraits (t-103), Memory Book (t-104).
+<!-- note:end t-104 -->
