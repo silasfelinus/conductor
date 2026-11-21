@@ -991,8 +991,8 @@ tasks:
     implementation_pr: 'silasfelinus/conductor#7753'
   - id: t-044
     title: "Add a matching double-escaped byte-signature guard to kind_robots TypeScript tests"
-    status: claimed
-    updated: '2026-11-21T13:41:00Z'
+    status: review
+    updated: '2026-11-21T13:44:00Z'
     milestone: m4
     passes: 0
     stakes: reversible
@@ -1000,6 +1000,8 @@ tasks:
     source: kaizen-t-043
     note: |-
       Reviewer kaizen from the 2026-11-21 PT merge of conductor#7753 (t-043, Python-only guard). The rainbow#7747 WebM magic-check bug was the same double-escaped hex habit, in production code. Add a small Vitest guard in kind_robots that flags a double-backslash-x hex escape inside Uint8Array/Buffer signature literals in server/ and utils/, with an exact path:line allow-list.
+
+      Added TypeScript AST-based byte-signature escape guard and positive/negative fixtures in kind_robots branch worker/game-of-captains-t-044-20261121-c8e7; pending exact-head CI.
     owner: worker
     claimed_by: 2026-11-21T134100Z-goc-t044-c8e7
     claimed_at: '2026-11-21T13:41:00Z'
