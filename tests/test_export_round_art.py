@@ -40,7 +40,7 @@ def test_manifest_replaces_only_the_named_array(tmp_path):
     for name in ("followers/F001/portrait/neutral", "followers/F021/portrait/neutral"):
         path = root / f"{name}.webp"
         path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_bytes(b"RIFF" + b"\\x10\\x00\\x00\\x00" + b"WEBP" + b"VP8 " + b"\\x00" * 8)
+        path.write_bytes(b"RIFF" + b"\x10\x00\x00\x00" + b"WEBP" + b"VP8 " + b"\x00" * 8)
     ts = tmp_path / "castArt.ts"
     ts.write_text(
         "// header\nexport const CAST_ART: readonly string[] = [\n  'old',\n]\n\n"
@@ -111,7 +111,7 @@ def test_sheet_generates_review_without_export_or_token(tmp_path, monkeypatch):
 def test_valid_webp_is_not_reexported_without_force(tmp_path):
     image = tmp_path / "public" / "game" / "cast" / "a.webp"
     image.parent.mkdir(parents=True)
-    image.write_bytes(b"RIFF" + b"\\x10\\x00\\x00\\x00" + b"WEBP" + b"VP8 " + b"\\x00" * 8)
+    image.write_bytes(b"RIFF" + b"\x10\x00\x00\x00" + b"WEBP" + b"VP8 " + b"\x00" * 8)
     assert era.is_valid_webp(image)
     assert era.plan([subject("cast/a")], tmp_path, "game") == []
     assert len(era.plan([subject("cast/a")], tmp_path, "game", force=True)) == 1
@@ -121,7 +121,7 @@ def test_audit_distinguishes_exported_corrupt_rejected_pending_and_review(tmp_pa
     root = tmp_path / "public" / "emperor-of-dust" / "endings"
     root.mkdir(parents=True)
     (root / "ready.webp").write_bytes(
-        b"RIFF" + b"\\x10\\x00\\x00\\x00" + b"WEBP" + b"VP8 " + b"\\x00" * 8
+        b"RIFF" + b"\x10\x00\x00\x00" + b"WEBP" + b"VP8 " + b"\x00" * 8
     )
     (root / "broken.webp").write_bytes(b"not an image")
     ready = subject("endings/ready", image=270430)
@@ -174,11 +174,11 @@ def test_export_rejects_path_traversal_or_windows_separators(tmp_path, asset):
 def test_offline_audit_cli_never_fetches_render_bytes(tmp_path, capsys):
     ledger = tmp_path / "round.yaml"
     ledger.write_text(
-        "subjects:\\n"
-        "- asset: endings/open-roads\\n"
-        "  key: eod-ending-open-roads\\n"
-        "  jobs: {arthemy-house: 68221}\\n"
-        "  art: {arthemy-house: {status: DONE, art_image_id: 270431}}\\n"
+        "subjects:\n"
+        "- asset: endings/open-roads\n"
+        "  key: eod-ending-open-roads\n"
+        "  jobs: {arthemy-house: 68221}\n"
+        "  art: {arthemy-house: {status: DONE, art_image_id: 270431}}\n"
     )
     assert era.main([
         str(ledger), "--kind-robots", str(tmp_path),
@@ -203,6 +203,6 @@ def test_manifest_excludes_corrupted_files(tmp_path):
     root.mkdir(parents=True)
     (root / "missing.webp").write_bytes(b"corrupt")
     (root / "valid.webp").write_bytes(
-        b"RIFF" + b"\\x10\\x00\\x00\\x00" + b"WEBP" + b"VP8 " + b"\\x00" * 8
+        b"RIFF" + b"\x10\x00\x00\x00" + b"WEBP" + b"VP8 " + b"\x00" * 8
     )
     assert era.manifest_entries(tmp_path, "emperor-of-dust/endings") == ["valid"]
