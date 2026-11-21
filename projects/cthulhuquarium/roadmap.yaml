@@ -1826,7 +1826,7 @@ tasks:
 - id: t-090
   milestone: m4
   title: Prioritize full-screen Charlotte and Wilbur cinematic art delivery
-  status: claimed
+  status: done
   owner: worker
   stakes: reversible
   passes: 0
@@ -1858,9 +1858,14 @@ tasks:
     step is deliver.sh (harvest + build_story_art) and a kind_robots sync PR, then visual
     review. Caution: build_sprites.py judges staleness by mtime, which is wrong in a fresh
     clone; build named slugs only.
-  updated: '2026-11-21T07:25:21Z'
+
+    All cinematic art delivered: Wilbur's 20 per-floor portraits (canon #86, #89; 5 rejected
+    and re-rendered), the floor and ending plates incl. Bottom of Things, synced in
+    kind_robots #5500/#5501. Canon art/LEDGER.md 385/385.
+  updated: '2026-11-21T10:04:16Z'
   claimed_by: 2026-11-21T1900Z-cthq-playtest-01L5NK
   claimed_at: '2026-11-21T07:25:21Z'
+  implementation_pr: 'silasfelinus/kind_robots#5501'
 - id: t-091
   milestone: m4
   title: Image-first cinematic quality and cross-device acceptance for every room
