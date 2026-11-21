@@ -605,14 +605,14 @@ tasks:
   - id: t-027
     milestone: m6
     title: "Gen-2 memory: save slots, route map screen, medals and the persistent Palace Hangar"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 20261121T003414Z-rainbow-t027-n8p4
     claimed_at: '2026-11-21T00:34:14Z'
     depends_on: [t-026]
     passes: 0
     stakes: reversible
-    updated: '2026-11-20T23:06:40Z'
+    updated: '2026-11-21T00:41:00Z'
     note: |-
       2026-11-20T11:21:42Z connector recovery: prior claim 2026-11-20T05:40:00Z expired after 341 minutes, no open Rainbow PR or branch; implementing Palace Hangar on a scoped worker branch.
 
@@ -645,17 +645,19 @@ tasks:
       Added slot-specific Lilt-7 and named-pilot comms on the Seas map. First launch, return flight, discovered branching routes, rescues and Motherland allegiance now have distinct deterministic dialogue, backed by the active save-slot flags rather than account-wide mastery. Existing Rainbow replay and logbook regression tests cover the new selection rules. This is a partial t-027 slice; full map-node navigation and progression acceptance remain.
 
       Scope-limited Kind Robots PR #5450 merged at 0f3a842665d2570ff547f1272d43a74dd2fbabf1 after nine completed passing checks. Per-slot pilot/Lilt comms now ship, but full route-node navigation and progression acceptance remain unfinished. Return to ready.
+
+      Added route discovery guardrails, separate nursery and armory guardian outcome intel, and regression cases on scoped app branch. Partial t-027; full route navigation and progression acceptance remain.
   - id: t-028
     milestone: m6
     title: "Gen-2 alternate stages: four branch stages with their own guardians"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 20261121T003342Z-rainbow-t028-cache-m7q4
     claimed_at: '2026-11-21T00:33:42Z'
     depends_on: [t-026]
     passes: 0
     stakes: reversible
-    updated: '2026-11-21T00:33:42Z'
+    updated: '2026-11-21T00:35:26Z'
     note: |-
       One stage per PR, authored to the existing Act pacing and fairness rules, each with a guardian.
 
@@ -670,6 +672,8 @@ tasks:
       Added dedicated in-flight Lantern Matriarch encounter with alternating ring/fan telegraphs, guardian outcome independent of Act III, checkpoint/continue recovery, and four-seat engine and legacy-save regression tests. Partial t-028, standalone Gen-2 Act/map/art and three other alternatives remain.
 
       PR silasfelinus/kind_robots#5448 merged as a5b11d71a199a8e7ee179af22433f908a318cb90 after 12 completed successful workflows. Armory Siren branch guardian, telegraphs, checkpoint persistence and four-seat tests shipped. Partial t-028: four independent alternate Acts, painted guardian art and complete branch QA remain; return to ready.
+
+      2026-11-21T00:35:26Z PT-context sprint: Act VI low shield-cache now has an independent Pearl Warden encounter, rotating safe-gapped hoop and aimed crescents, per-checkpoint defeated/escaped state with legacy-save safety, and 1/4-seat regression. Code commit 2e8ef21e on worker/rainbow-bullet-hell-space-princess-t-028-reef-cache-m7q4. This is a partial t-028 milestone, not completion of four standalone alternate Acts or production guardian art.
   - id: t-029
     milestone: m6
     title: "Gen-2 art round 1: route map, Palace Hangar and four alternate-stage backdrops"
@@ -941,14 +945,18 @@ tasks:
   - id: t-047
     milestone: m4
     title: "Make review_rainbow_doodle_art.py print an edge-risk summary so the DOODLE-SET-2 visual pass starts from the risky sprites"
-    status: ready
+    status: review
+    claimed_by: 2026-11-21T015230Z-rainbow-t047-edge-risk-k8h2
+    claimed_at: '2026-11-21T01:52:30Z'
     depends_on: []
     owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-11-20T23:55:00Z'
+    updated: '2026-11-21T01:54:07Z'
     note: |-
       Kaizen from the PR #7699 review. The sheet builder records edge_check per asset in visual-review.yaml but only prints a count. Print each edge-risk asset (rel path, ArtImage id) after the run and add a test that a non-green border appears in that list. Never change keeper verdicts.
+
+      Added edge-risk sprite relative paths and ArtImage IDs to the private doodle review CLI, with an offline mixed-border regression. Implementation commit 7d936bc460c8dbcd1cbe8bf4127de541722476a0; review pending.
   - id: t-048
     milestone: m4
     title: "Share one tmp kind_robots + DOODLE ledger fixture between the Rainbow doodle export and review tests"

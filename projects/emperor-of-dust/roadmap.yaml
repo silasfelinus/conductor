@@ -1262,11 +1262,8 @@ tasks:
   - id: t-052
     milestone: m5
     title: "Illustrated scene delivery and full 50-day choice-and-art coverage audit"
-    status: review
-    owner: worker
-    claimed_by: 20261121T003301541Z-eod-t052-9b07efe3
-    claimed_at: '2026-11-21T00:33:30.243Z'
-    updated: '2026-11-21T00:33:30.243Z'
+    status: ready
+    updated: '2026-11-21T01:49:19.101Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -1295,6 +1292,10 @@ tasks:
       Prepared Kind Robots physical-media audit at commit e0ea630d1fb07622c8ca509097e8be742dab593e. The existing Emperor Dispatch CI now checks actual local shipped WebP RIFF signatures and content hashes across public/emperor-of-dust, verifies quest manifest physical counts, emits artifacts/emperor/editorial-media-delivery.json with 8 exact ending plate paths, local bytes/sha256 and explicit remote ArtImages unverified. Does NOT misclassify queued/DONE database metadata as delivered. Exact-head CI and PR merge pending. Eight actual painted ending files, ArtImage curation/export, full story and browser QA still unfinished: return t-052 to ready after partial merge, not done.
 
       Physical media inventory delivered via Kind Robots PR #5457 merged as ccaa31dd0716c29c1b7178ac36000c6568de32ad with 13 exact-head checks green or skipped. CI verified 616 committed WebP files and 291 quest files, with zero of eight expected ending plates present. Private ArtImage validation, game visual acceptance, full 50-day editorial coverage and art delivery remain incomplete. Return finite task to ready, not done.
+
+      2026-11-21T00:35:07.204Z partial art coverage QA: worker/emperor-of-dust-t-052-art-route-coverage-9b07efe3 inventories authored court, chance, quest, follower and ending illustration routes against physical WebP bytes, writes CI evidence for all 50 days, and protects playable fallback art. Await exact-head PR CI. This is not an art export, painted ending, scored human playtest or complete t-052 delivery; return to ready after merge.
+
+      Confirmed Kind Robots PR #5467 merged to main at head 5d710a3f5eeba0067e016f07b4effc41c3cc3bcb after 8/8 CI workflows completed successfully (including Emperor dispatch, physical WebP route coverage, all contract shards and format/typecheck). This was an art-inventory/route-validation increment only: no additional painted binaries or remote ArtImage exports, eight ending plates still missing, full visual QA and per-choice curated delivery outstanding. Return nonrecurring t-052 to ready for actual remaining illustrated acceptance work, not done.
   - id: t-053
     milestone: m5
     title: "Prevent Young Komodo flashing through the startup splash before the introduction"
@@ -1449,7 +1450,7 @@ tasks:
     status: review
     stakes: reversible
     passes: 0
-    updated: '2026-11-04T00:47:15Z'
+    updated: '2026-11-21T01:47:54.038Z'
     source_issue: 'silasfelinus/kind_robots#4142'
     note: |-
       Silas 2026-11-02: comprehensively polish dialogue across all five acts and make consequential decisions echo in later scenes, quests, follower conversations and endings. Audit the current five-act playable dialogue and flag graph; implement distinct cross-act callbacks with honest costs, no dominant options, canon-consistent voices and clear choice labels. Preserve save/quest/flag identifiers, arrival chronology, true ambiguity about the Abbey and Komodo, and the established ending eligibility gates. Verify reachable conditional dialogue, save/load, quest aid, flag age, balance and adversarial campaigns. Track both the Tobin/Hollow Bell public-record thread and the bonded-runner thread across acts, and score every affected scene against the existing five-axis rubric. This is a dedicated cross-act story lane to coordinate work without claiming unrelated ongoing art tasks t-046 through t-052. Keep #4142 open until full game completion.
@@ -1483,8 +1484,10 @@ tasks:
       2026-11-03 PT: merged Kind Robots PR #4719 as 56493022893b5441c192aef4fc2f6042fe84513d after all eight exact-head workflows and four contract shards plus verifier passed. All twelve rare throne audiences are now reachable through legitimate 50-day campaigns with legal market purchases, unassigned dispatches and due-payment consequences. Audit artifact 13276114015 confirms 120/120 throne audiences, 125/125 follower talks, zero unvisited. No scene/save IDs, schema, production deployment or ArtJobs changed. Keep #4142 open for independent qualitative prose and consequence assessment, delivered-art verification, and final human approval.
 
       2026-11-03 PT: independent five-act reader/continuity review found two substantive issues in verified campaign and choice code: Pip hired Day 1 was reintroduced as a fresh applicant on Day 4, and Day 39/49 forced Hesper's testimony and the bonded runner's redress into mutually exclusive single-story records. Worker branch makes Pip's staff-specific scene preserve the missing page and introduces costly, mutually gated combined witness and record decisions with distinct epilogues. Independent review doc includes judgments, evidence, remaining scope and save caveat. Exact-head CI and focused regression testing pending; master #4142 remains open.
+
+      Partial five-act continuity increment: Day 18 refugee water-cart or Watch-escort decisions now earn distinct costly Day 39 public-accounting options, distinct Day 49 record choices, and honest, conditional postwar epilogue ledger variants. Added a real-engine choice/save/epilogue regression, wired into the Emperor dispatch CI. Worker branch worker/emperor-of-dust-t-062-refugee-record-c7f3; review and exact-head checks pending. Art outputs, comprehensive editorial score pass and master issue #4142 still unfinished. Return to ready after a verified merge, not done.
     owner: worker
-    claimed_by: 20261104T003742Z-eod-t062-independent-editorial-c71d
+    claimed_by: 20261121T0121Z-eod-t062-refugee-memory-c7f3
     claimed_at: '2026-11-04T00:37:42Z'
   - id: t-068
     milestone: m4

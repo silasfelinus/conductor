@@ -325,19 +325,18 @@ tasks:
   - id: t-011
     milestone: m3
     title: "Save, fork, share and browse versioned community levels"
-    status: claimed
+    status: review
     depends_on: [t-004, t-005]
     owner: worker
     passes: 0
     stakes: reversible
-    note: >-
-      Authenticated drafts, private permissions, immutable versions, provenance,
-      editable forks and level browsing. Validate user scenario schemas,
-      scripts and referenced assets; prevent code execution/private asset leaks.
-      External public publishing remains a separate human gate.
-    claimed_by: 2026-11-20T071644Z-every-villain-tactics-t011-9c4e
-    claimed_at: '2026-11-20T07:16:44Z'
-    updated: '2026-11-20T07:16:44Z'
+    note: |-
+      Authenticated drafts, private permissions, immutable versions, provenance, editable forks and level browsing. Validate user scenario schemas, scripts and referenced assets; prevent code execution/private asset leaks. External public publishing remains a separate human gate.
+
+      Scoped browser-private stage draft revision history, six previous immutable playable snapshots per local draft, safe restore-as-new-version, name-safe independent local forks and provenance. Added Stage Studio UI and revision, tamper, legacy-save and boundary regressions. Implementation branch worker/every-villain-tactics-t-011-revision-ledger-m8k4 at 5abf1e68176e32f71582a7007c95f8dfb0a0ad8d. CI pending. This is NOT authenticated cloud sharing or public publication: full t-011 still requires secure server drafts and private permission enforcement.
+    claimed_by: 20261121T011203Z-evt-t011-versioned-drafts-m8k4
+    claimed_at: '2026-11-21T01:12:03Z'
+    updated: '2026-11-21T01:14:10Z'
   - id: t-012
     milestone: m4
     title: "Audit and deliver painted art, reused portraits and animation states"
@@ -494,7 +493,7 @@ tasks:
     status: review
     depends_on: [t-006, t-016]
     passes: 0
-    updated: '2026-11-21T00:53:00Z'
+    updated: '2026-11-21T01:01:00Z'
     stakes: reversible
     note: |-
       Mission-end scored breakdown for flawless survival, zero damage, no knockouts, optional secrets, rescues and tactical bonuses, with explicit eligible conditions. Replay-safe recorded points, scrapbook heroes won with, villains beaten and authored route discoveries. Distinguish end-of-turn summaries from mission completion.
@@ -506,6 +505,8 @@ tasks:
       Added durable squad-damage history across gunfire, overwatch, powers and environmental hazards. The untouched medal now requires historical zero damage rather than healed full HP. Legacy saves remain compatible, cannot claim unrecorded flawless medals. Regression tests pending PR CI.
 
       Merged Kind Robots PR #4568 as 9d2ab94dfc87c034682818e6348941cb11bfa75c after all 18 check runs completed successfully. Tactics now records historical squad damage across attacks, overwatch, powers, area hits, fire, water and collapsed floors. Untouched is earned only on a true no-damage victory; healed extraction does not qualify and old saves cannot invent provenance. Remaining task scope: secret-route medals, hero-villain history and campaign level achievements.
+
+      After reclaiming the stale t-019 claim and verifying session ownership, authored code for secret-trigger scoring, a new verified hidden-route medal and achievement, and visible 48-identity hero/villain/supported record in the Tactics scrapbook. Reversible scoped PR kind_robots#5470 is open at b0d27fb302e1fb93c536c25dbc0afa20b7049276 with regressions committed. CI pending: no local runtime execution in this connector-only session. Not done: 6-chapter full campaign scoring QA and broader secret-route audit.
     owner: worker
     claimed_by: 20261121T005300Z-evt-t019-route-ledger-w5h7
     claimed_at: '2026-11-21T00:53:00Z'

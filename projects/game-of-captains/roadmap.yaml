@@ -85,11 +85,11 @@ tasks:
       Full history: projects/game-of-captains/HISTORY.md#t-001
   - id: t-041
     title: 'Main-game standard: audit and close the gaps for Space Couch'
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 20261121T003500Z-goc-t041-qa-f3a9
     claimed_at: '2026-11-21T00:31:12.092Z'
-    updated: '2026-11-21T00:31:12.092Z'
+    updated: '2026-11-21T00:33:13.282Z'
     milestone: m4
     stakes: reversible
     passes: 0
@@ -148,6 +148,8 @@ tasks:
       Scoped recovery fix in app commit 4132e315: a failed Space Couch backup import now restores both prior browser save keys, including writes that mutate before throwing; reports when rollback itself fails. Added functional failure-injection regression tests. This is PARTIAL t-041 only; signed-in server backup, art delivery, responsive/browser checks and master handoff remain unverified. Await exact-head CI and safe PR merge, then return READY, not DONE.
 
       Kind Robots PR #5460 merged at bdbfc0e9a91dff37ee708a092ce5f64bc5ac4237 on 2026-11-20 PT after all nine exact-head gameplay, contract, typecheck, format, layout, schema and Space Couch adversarial workflows completed SUCCESS. Backups now roll back both browser save keys after partial writes, with failure-injection regression checks. PARTIAL t-041 only: authenticated browser restoration, art verification and 390/768/1440 QA remain. Return to READY; no human approval claimed.
+
+      Partial main-game QA: the scheduled real-browser responsive audit previously omitted /play/game-of-captains and lacked the required 768px tablet sample. Added Space Couch to the daily route sweep and the targeted 768px path alongside 390/1440 with a regression test. Implementation branch worker/game-of-captains-t-041-responsive-audit-20261120-f3a9. Review/merge after exact-head CI; still needs deployed screenshots, authenticated account/achievement/painted-art checks. Keep t-041 READY after partial merge, not DONE.
 
   - id: t-040
     title: 'Space Couch achievement upgrade: 12 or more live achievements'
@@ -241,8 +243,11 @@ tasks:
   - id: t-008
     milestone: m3
     title: "Deliver Space Couch painted red-sofa ship, pocket-room, shield, crew and world art"
-    status: ready
-    updated: '2026-11-20T23:03:50.597Z'
+    status: review
+    owner: worker
+    claimed_by: 2026-11-21T014400Z-game-of-captains-t-008-q7m4
+    claimed_at: '2026-11-21T01:44:00Z'
+    updated: '2026-11-21T01:51:00Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -268,6 +273,8 @@ tasks:
       Partial art-delivery reliability fix. Space Couch now has an explicit player control to refresh curated alien, redshirt and voyage paintings without resetting the voyage. Failed artwork fetches preserve already delivered images, pending refreshes cannot cross account changes, and the existing fallback remains. Branch worker/game-of-captains-t-008-art-refresh-z7p4n2. Do not mark t-008 DONE: painting acceptance, URL checks and 390/768/1440 browser evidence remain.
 
       Old 12:46 UTC review claim is stale; legacy art-refresh PR #5437 was closed superseded, with retry handling merged through green PR #5442. Real painted asset acceptance and responsive URL checks remain. Return to READY, not DONE.
+
+      Eight new physically explicit red-couch shield and folding-pocket-room scene requests authored in SHIELD-POCKET-CONTINUITY-ROUND-1. Submission, original render review, accepted image IDs and runtime integration remain outstanding. This is partial t-008, not art delivery.
   - id: t-009
     milestone: m3
     title: "Deliver unique mission outcome, conversation and ending illustration coverage"
