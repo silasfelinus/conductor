@@ -1780,6 +1780,15 @@ tasks:
     Each first-run intro beat and authored story interstitial should have a
     suitable large image, with no placeholder portrait substituting for a
     queued missing scene. Art work should lead this project's next iteration.
+
+    2026-11-21 PT (session 01L5NK, t-103): the dialogue is now a staged full-screen scene
+    for every non-tutorial beat (kind_robots#5479), so plates and portraits fill the screen.
+    Art submitted directly through canon render_art.py with Silas's admin token: 20 Wilbur
+    per-floor portraits, 5 new scene plates, and 5 re-renders of the 2026-11-02 Forge plates
+    (ArtImages 268216-268222 now 404 on the server). 30 jobs in canon art/jobs.yaml; next
+    step is deliver.sh (harvest + build_story_art) and a kind_robots sync PR, then visual
+    review. Caution: build_sprites.py judges staleness by mtime, which is wrong in a fresh
+    clone; build named slugs only.
   updated: '2026-10-23T11:40:00Z'
 - id: t-091
   milestone: m4
@@ -1870,6 +1879,15 @@ tasks:
     offline returns, privacy, race-safe rewards and legitimate unlocks.
     Independently critique actual FUN and pacing, fix all high-impact issues,
     then rerun the suite and publish action transcripts/defect evidence.
+
+    2026-11-21 PT pacing finding (t-102): projects/cthulhuquarium/data/simulate_descent.py,
+    an 80%-click collector against the real 151-species roster, opens floors II-V at 2/6/17
+    min and fills the book in about 1h20m. The server pays and prices each fish by its
+    highest stat rarity (a leftover of the removed hidden stats), so 31 of 32 commons pay
+    uncommon or rare coins at a 25-70 coin price. Pricing and paying by canon rarity gives
+    2/6/21/46 min and about 2h. This is a balance decision for Silas (see PLAYTEST-
+    CHECKLIST.md section 5) and has not been retuned. API exploit checks already pass: a
+    locked-floor purchase returns 403, and a forged or orphaned reply id returns 400.
   updated: '2026-10-25T00:54:00Z'
 - id: t-095
   milestone: m5
