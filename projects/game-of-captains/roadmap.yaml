@@ -969,3 +969,13 @@ tasks:
       Shared source-aligned ArtJob/curator status validator, migrated Chapter 9 and cast ledger tests, and added synthetic provenance and acceptance coverage. Implementation commit 2edf6cae34246ee3983e9c59796e00188210b8b7 pending CI.
 
       PR silasfelinus/conductor#7742 merged as dee98964e660c273928dc39d1fe56408a4b7bad4 after all four exact-head Actions workflows completed successfully. Shared ledger-status and provenance regression coverage landed; DONE remains distinct from visual acceptance.
+  - id: t-043
+    milestone: m4
+    title: "Fail CI on double-escaped byte literals in new scripts and tests"
+    status: ready
+    stakes: reversible
+    passes: 0
+    depends_on: []
+    updated: '2026-11-21T11:55:42Z'
+    note: |-
+      Reviewer kaizen from the 2026-11-21 PT rescue merge of conductor#7748 (fixture wrote escaped backslashes, so every WebP fixture was invalid; the same bug hit rainbow#7747's WebM magic check in production code). Add a small lint test over scripts/ and tests/ that flags a backslash-backslash-x sequence inside a bytes literal, with an allow-list for intentional cases, so the connector Worker's escaping habit is caught before CI runs the logic.

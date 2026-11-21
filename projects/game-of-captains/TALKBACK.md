@@ -51,3 +51,9 @@
 - **Finding:** CI was green on the stale base, but once merged with main the new test failed. The live art sweep (`22edc4e`) had just checkpointed all 12 chapter-nine jobs to `DONE` with ArtImage ids, and the guard's allow-list (`PENDING/REJECTED/ACCEPTED`) didn't include `DONE`. Actionable rather than quality, so no pass spent. The reviewer made a one-line adaptation: `DONE`/`ACCEPTED` need a positive ArtImage id, `PENDING`/`ERROR` need none, and `DONE` still doesn't imply visual acceptance. The PR body also lacked the handoff template (Validate Worker PR handoff was red); filled in.
 - **Pattern:** the worker understood the render-vs-accepted distinction, but hard-coded the status vocabulary from a snapshot of the ledger. Ledger statuses move under the branch hourly.
 - **Suggestion:** before handoff, run new ledger tests against a fresh `origin/main` merge, and source status names from one shared set (kaizen t-042).
+
+## 2026-11-21 PT · Reviewer: t-033 redshirt delivery audit (#7740 → rescue #7748)
+
+- **Decision:** rescued and merged #7748 (446cb48), closed #7740. The audit script is unchanged. The test fixture wrote `b"\\x10\\x00..."` (escaped backslashes), so the RIFF size became 16 ASCII bytes, `WEBP` sat at the wrong offset and the audit correctly rejected every fixture: 2 Python-suite failures. The PR body also lacked the handoff headings. Actionable, so no pass spent.
+- **Pattern:** the same double-escaped byte literal appeared the same hour in rainbow #7747 (production code there). It looks like a tool-escaping habit in the connector Worker, not a one-off.
+- **Suggestion:** kaizen t-043 adds a test that rejects `\\x` inside a `b"..."` literal in new scripts/tests.
