@@ -2116,13 +2116,13 @@ tasks:
   implementation_pr: 'silasfelinus/cthulhuquarium#84'
 - id: t-107
   title: 'A second, swappable art style: style registry, settings picker and per-file Classic fallback in kind_robots; a style dimension in the canon pipeline'
-  status: claimed
+  status: done
   milestone: m5
   stakes: reversible
   passes: 0
   playtest_iteration: true
   depends_on: []
-  updated: '2026-11-21T11:00:00Z'
+  updated: '2026-11-21T11:21:14Z'
   note: >-
     Silas, 2026-11-21: "we should add a different art style. Something from illustrious probably. The
     user should be able to swap between them, like we do with shifting desks." Decided in session:
@@ -2131,8 +2131,16 @@ tasks:
     card, Classic the default, saved per browser. Code ships before any art and shows nothing until a
     second style is available. Plan: /root plan "Cthulhuquarium: a second, swappable art style on
     Illustrious" steps 2-3.
+
+    Merged kind_robots #5508 (style registry, per-file Classic fallback, reactive resolvers
+    and canvas caches, swatch picker in settings and on the title card, sync of
+    styles/<id>/built; verified live with a temporary tinted style) and canon #91
+    (art/styles.yaml, styled adopt-only jobs for all 227 stills, style_ledger.py,
+    build_style.py, art_ledger --style). The style turns available once t-109's character,
+    plate and background rounds pass review.
   claimed_by: 2026-11-21T1100Z-cthq-styles-01L5NK
   claimed_at: '2026-11-21T11:00:00Z'
+  implementation_pr: 'silasfelinus/kind_robots#5508'
 - id: t-108
   title: 'Pick the second art style from the Illustrious style check'
   status: needs-human
