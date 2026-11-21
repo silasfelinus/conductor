@@ -59,6 +59,37 @@ class DoodleOpeningTests(unittest.TestCase):
         self.assertGreater(len(frames), 0)
         self.assertEqual(accepted, [])
 
+    def test_rejected_shot_keys_record_only_failed_done_clips(self):
+        accepted, rejected = [], []
+        still = io.BytesIO()
+        Image.new("RGB", (64, 36), "pink").save(still, "PNG")
+        good = [Image.new("RGB", opening.SIZE, "cyan") for _ in range(12)]
+        sources = [
+            ("good-shot", 1, 101, 201),
+            ("bad-shot", 1, 102, 202),
+            ("pending-shot", 1, 103, None),
+        ]
+        with (
+            patch.object(opening, "safe_clip_download", side_effect=[good, None]),
+            patch.object(opening, "download", return_value=still.getvalue()),
+        ):
+            frames = list(opening.render(sources, [], accepted, rejected))
+        self.assertGreater(len(frames), 0)
+        self.assertEqual(accepted, ["good-shot"])
+        self.assertEqual(rejected, ["bad-shot"])
+
+    def test_still_only_opening_has_no_rejected_shots(self):
+        accepted, rejected = [], []
+        still = io.BytesIO()
+        Image.new("RGB", (64, 36), "pink").save(still, "PNG")
+        with patch.object(opening, "download", return_value=still.getvalue()):
+            frames = list(opening.render(
+                [("pending-shot", 1, 101, None)], [], accepted, rejected
+            ))
+        self.assertGreater(len(frames), 0)
+        self.assertEqual(accepted, [])
+        self.assertEqual(rejected, [])
+
     def test_rejects_long_wan_clip_before_rgb_decode(self):
         payload = b"0000ftyp" + b"video-payload"
         probe = subprocess.CompletedProcess(
