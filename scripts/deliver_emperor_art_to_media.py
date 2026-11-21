@@ -48,7 +48,9 @@ def expected_media_url(asset):
     return f"/images/emperor-of-dust/{asset}.webp"
 
 
-def done_image_id(subject):
+def done_image_ids(subject):
+    """Keep EVERY completed lane candidate until a curator chooses one."""
+    image_ids = []
     for art in (subject.get("art") or {}).values():
         if not isinstance(art, dict):
             continue
@@ -57,9 +59,9 @@ def done_image_id(subject):
                 image_id = int(art["art_image_id"])
             except (ValueError, TypeError):
                 continue
-            if image_id > 0:
-                return image_id
-    return None
+            if image_id > 0 and image_id not in image_ids:
+                image_ids.append(image_id)
+    return image_ids
 
 
 def load_ledger_entries(directory=LEDGER_DIR):
@@ -72,13 +74,14 @@ def load_ledger_entries(directory=LEDGER_DIR):
         for subject in payload.get("subjects") or []:
             if not isinstance(subject, dict) or not subject.get("asset"):
                 continue
-            entries.append({
-                "asset": str(subject["asset"]),
-                "key": str(subject.get("key") or ""),
-                "artImageId": done_image_id(subject),
-                "verdict": str(subject.get("verdict") or "").strip().lower(),
-                "ledger": file.name,
-            })
+            for image_id in done_image_ids(subject) or [None]:
+                entries.append({
+                    "asset": str(subject["asset"]),
+                    "key": str(subject.get("key") or ""),
+                    "artImageId": image_id,
+                    "verdict": str(subject.get("verdict") or "").strip().lower(),
+                    "ledger": file.name,
+                })
     return entries
 
 
