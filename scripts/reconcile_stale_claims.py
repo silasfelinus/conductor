@@ -13,12 +13,14 @@ concurrent newer claims win instead of being overwritten.
 from __future__ import annotations
 
 import argparse
+import sys
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
 import yaml
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 from project_lifecycle import lifecycle_status, load_project_overrides
 from roadmap_claims import CLAIM_TTL_MINUTES, claim_is_stale
 from roadmap_deps import dependency_satisfied
