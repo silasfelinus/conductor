@@ -75,12 +75,13 @@ That's a balance decision for you; it's recorded on t-094.
 
 ## 6. Art to judge as it arrives
 
-These renders were queued 2026-11-21 (conductor `art/FLOORS-ROUND-1-F2..F5`) and
-reach the game after canon `render_art.py adopt` + `deliver.sh`:
+These renders were submitted directly through the canon pipeline on 2026-11-21
+(30 jobs in canon `art/jobs.yaml`) and reach the game with the next `deliver.sh`
+run plus a kind_robots sync:
 
 - [ ] Wilbur's 20 per-floor portraits. He should look a little worse on each floor, and
       nobody should mention it. *Question: is the escalation funny-dark or too much?*
 - [ ] Five scene plates: the first creature from each floor, and the post-finale.
-- [ ] Five plates rendered 2026-11-02 and never delivered (first purchase,
-      bestiary complete, Kelp Stair, Portsmouth, Hatchery). They are now adopted
-      into the canon manifest for the next harvest.
+- [ ] Five plates first rendered 2026-11-02 and never delivered (first purchase,
+      bestiary complete, Kelp Stair, Portsmouth, Hatchery). Those images are gone
+      from the server (404), so they were re-rendered in the same batch.
