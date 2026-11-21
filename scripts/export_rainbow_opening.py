@@ -379,6 +379,17 @@ def delivery_report(sources, accepted_clips, rejected_clips):
     }
 
 
+
+def write_delivery_report(target: Path, sources, accepted_clips, rejected_clips):
+    """Write the single authoritative review sidecar; remove legacy duplicates."""
+    report = delivery_report(sources, accepted_clips, rejected_clips)
+    target.with_name("opening-delivery-report.json").write_text(
+        json.dumps(report, indent=2) + "\\n"
+    )
+    target.with_name("opening-rejected-clips.json").unlink(missing_ok=True)
+    return report
+
+
 def write_manifest(kind_robots: Path, media: dict | None):
     path = kind_robots / MANIFEST
     text = path.read_text()
@@ -459,10 +470,7 @@ def main(argv=None):
             print("WAN clips rejected (stills substituted): " + ", ".join(rejected_clips), file=sys.stderr)
         if args.out:
             return EXIT_DONE
-        report = delivery_report(sources, accepted_clips, rejected_clips)
-        target.with_name("opening-delivery-report.json").write_text(
-            json.dumps(report, indent=2) + "\n"
-        )
+        report = write_delivery_report(target, sources, accepted_clips, rejected_clips)
         print(f"WAN re-queue shots: {', '.join(report['wan_requeue_shots']) or 'none'}")
         url = "/" + str(VIDEO_DIR.relative_to("public")).replace("\\", "/")
         write_manifest(kind_robots, {
