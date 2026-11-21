@@ -172,11 +172,11 @@ tasks:
   - id: t-009
     milestone: m4
     title: "Adversarial QA, full-width layout review and final subjective acceptance"
-    status: review
+    status: done
     owner: worker
     claimed_by: 20261102T102330Z-hybridizer-t-009-52ce
     claimed_at: '2026-11-02T10:26:43.508Z'
-    updated: '2026-11-21T04:31:00Z'
+    updated: '2026-11-21T07:58:31Z'
     depends_on: t-003
     passes: 0
     stakes: reversible
@@ -192,6 +192,16 @@ tasks:
       Scoped atlas/remix implementation in Kind Robots PR #4643. Data-backed atlas totals and pagination, reused-art badge, saved-hybrid gallery with rating and versions, editable-weight prompt resubmission. TypeScript, formatting, layout, visibility, architecture, migration, and other completed workflows green; four Contract Tests shards green. Auto-merge enabled after the queued Contract verifiers aggregator finishes. Not live until Unraid container deploy. Keep t-009 open for remaining private-upload coverage, adversarial art QA and rendered 390/768/1440/XL acceptance.
 
       2026-11-21 PT rendered check of production /play/hybridizer (commit 0d422b75) at 390, 768 and 1440: no horizontal overflow, 30/30 images loaded, 0 broken. Found and fixed in kind_robots #5490: at <=820px container width the discovery reveal collapsed to a ~30px thumbnail and its actions were clipped (console now scrolls, reveal clamps 220-460px; verified by injecting the CSS on production at 390/768), and signed-out visitors received "X is illustrated!" toasts for shared launch renders they never requested (now only fusions, retries, remixes and re-rolls the player requested). Community re-roll adversarial contracts: injected direction/weight ignored, no escalation to curation, private discoveries stay creator-only. Remaining before handoff: t-008 private uploads (unbuilt) and a post-deploy recheck at 390/768/1440.
+
+      Agent QA complete 2026-11-21 PT on production b7a1821c (includes #5490 and #5493):
+      390/768/1440 no horizontal overflow, 0 broken images, reveal 326x256 / 678x460 / 531x373
+      (was a ~30px thumbnail on phones), no ready toasts for signed-out visitors, upload
+      endpoints 401 when signed out. Contract coverage: community re-roll cannot inject prompt
+      text or escalate to curation; private discoveries and uploads are owner-only; uploads
+      sniffed by magic bytes, re-encoded without EXIF/GPS, rate-limited. The subjective
+      fun/design verdict moves to human playtesting after handoff (GAME-PLAYTEST-
+      CLOSEOUT-2026-11-18), not this finite task.
+    implementation_pr: 'silasfelinus/kind_robots#5490'
   - id: t-010
     milestone: m4
     title: "Authorize external public release separately"
