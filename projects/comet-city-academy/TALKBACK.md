@@ -125,3 +125,9 @@ Merged (squash 9017e41). Art ledgers/prompts only, reversible, CI green. The fiv
 **Pattern for Workers:** Good: handoff headings filled, uncertainty flagged. Keep doing that. When a branch's work lands through someone else's PR, close your own PR in the same session so it doesn't go red-stale.
 
 **Remaining:** None for t-042. Kaizen t-043.
+
+## 2026-11-21 PT | reviewer (scheduled agent) | t-032 outcome-art reuse rescued as kind_robots#5505
+
+- #5496 had been red for about 3.6h on **Seeded game-playthrough contracts**, with no worker activity. Its own change was correct. The failure came from `verifyCapesStyleCheck.test.ts`, which asserted the literal `promArt(identityArtKey` call in the atlas source, and the PR intentionally replaced that call with `identityArtwork`. I updated the assertion, ran all 12 slice steps locally (all OK), and opened #5505 carrying #5496's head unchanged. All checks went green and I squash-merged it (95a4391). #5496 is closed as superseded, and branch-janitor is dispatched for its branch.
+- t-032 returns to `ready` per the PR's handoff, since this was a partial delivery. Master issue #4181 stays open.
+- Pattern: connector-only workers can't run the slice tests locally, so a source-shape regex that "pins" an old call breaks valid refactors. Kaizen t-044: assert behaviour, not source text.
