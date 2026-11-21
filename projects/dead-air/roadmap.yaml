@@ -99,11 +99,11 @@ tasks:
   - id: t-004
     milestone: m4
     title: Daily Dead Air film production and quality iteration
-    status: claimed
+    status: ready
     recurring: true
     daily_commitment: true
-    daily_last_checked: '2026-11-20'
-    daily_last_completed: '2026-11-20'
+    daily_last_checked: '2026-11-21'
+    daily_last_completed: '2026-11-21'
     stakes: reversible
     passes: 0
     depends_on: t-002
@@ -175,10 +175,19 @@ tasks:
       family; identity/age cues still dropped; clip skipped for congestion again. Fixed:
       removed the yellow-TV clause from visual_style in briefs 11-20..11-24, with a regression
       test. daily_last_completed=2026-11-20 reflects MV25's verified completion.
+
+      2026-11-21 PT cycle: MusicVideo 26 (The Ghost Exit Interview, ArtImage 277935) completed
+      private on this session's --daily resume; downloaded, hash-verified and screened, review
+      log projects/dead-air/reviews/2026-11-21-screening.md. Peak -1.8 dBFS (limiter fix
+      holds), 1990s training-cartoon look held all five shots. Defects: the brief itself
+      painted the yellow TV into s2 (reveal spent early), s3 ghost/human roles swapped, s5
+      'like snow' simile rendered literally, clip skipped for congestion again. Fixed:
+      test_yellow_television_reveal_waits_for_the_reversal_shot guards unrendered briefs.
+      daily_last_completed=2026-11-21 reflects MV26's verified completion. PR
+      silasfelinus/conductor#7741.
     owner: worker
-    updated: '2026-11-21T10:51:41Z'
-    claimed_by: 2026-11-21T1100Z-dead-air-t004-01L5NK
-    claimed_at: '2026-11-21T10:51:41Z'
+    updated: '2026-11-21T10:54:08Z'
+    implementation_pr: 'silasfelinus/conductor#7741'
   - id: t-005
     milestone: m3
     title: Create rights-aware reference and private production provenance review

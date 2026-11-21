@@ -59,3 +59,20 @@ def test_canonical_origin_is_defined_by_shared_callers():
     for relative_path in shared_callers:
         text = (ROOT / relative_path).read_text(encoding="utf-8")
         assert CANONICAL_ORIGIN in text, f"canonical Kind Robots origin missing from {relative_path}"
+
+
+def test_no_workflow_or_script_reintroduces_retired_origin():
+    """Glob guard: a NEW workflow or script must not reach the retired host either.
+
+    The fixed list above missed new files; worker branches re-added
+    kind-robots.vercel.app three times on 2026-11-20/21 (#7722 and
+    worker/prom-tactics-art-api-base-20261121-0220). The host answers
+    DEPLOYMENT_PAUSED, so any caller using it silently loses art submissions.
+    """
+    patterns = (".github/workflows/*.yml", ".github/workflows/*.yaml", "scripts/*.py", "ops/**/*.py")
+    offenders = []
+    for pattern in patterns:
+        for path in sorted(ROOT.glob(pattern)):
+            if RETIRED_ORIGIN in path.read_text(encoding="utf-8", errors="ignore"):
+                offenders.append(str(path.relative_to(ROOT)))
+    assert not offenders, f"retired Vercel origin found in: {offenders}"
