@@ -28,6 +28,24 @@ def test_all_eight_original_ending_plates_are_rendered_in_canonical_ledger():
     assert plan["summary"]["keepers"] == 0
 
 
+def test_multi_lane_done_art_candidates_require_explicit_curation(tmp_path):
+    ledger = tmp_path / "MULTI.yaml"
+    ledger.write_text(
+        "subjects:\\n"
+        "- key: multi-lane\\n"
+        "  asset: audiences/d01-aqueduct-repair\\n"
+        "  art:\\n"
+        "    first: {status: DONE, art_image_id: 270430}\\n"
+        "    second: {status: DONE, art_image_id: 270999}\\n"
+    )
+    rows = delivery.load_ledger_entries(tmp_path)
+    assert [row["artImageId"] for row in rows] == [270430, 270999]
+    plan = delivery.build_plan(rows)
+    assert plan["summary"]["collisions"] == 1
+    assert plan["keepers"] == []
+    assert plan["collisions"][0]["renderIds"] == [270430, 270999]
+
+
 def test_keeper_wins_over_rejected_and_unreviewed_redos():
     rows = [
         record("quests/example", 1, "reject: off model"),
