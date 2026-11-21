@@ -24,7 +24,11 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 45
     steps:
+      # Queued runs must start from the newest ledger, not the commit that triggered them,
+      # or a run can act on stale state and lose its checkpoint (2026-11-21, runs 87/88).
       - uses: actions/checkout@v4
+        with:
+          ref: main
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"

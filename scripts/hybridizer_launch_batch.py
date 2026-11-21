@@ -207,6 +207,24 @@ def resubmit_curation(api: Api, ledger: dict, rows: list, limit: int) -> dict:
         if not entry or not entry.get("fusionId") or done.get("round", 0) >= round_no:
             report["skipped"] += 1
             continue
+        rejected = verdict.get("artImageId") or entry.get("artImageId")
+        # A newer job than the launch render means this pair is already being (or has been)
+        # re-rendered: by an earlier run whose ledger checkpoint was lost, or by a player's
+        # in-game re-roll. Adopt it instead of filing a second re-render.
+        live = (api.call("GET", f"/api/hybridizer/fusions/{entry['fusionId']}/status").get("data") or {})
+        if live.get("artJobId") and entry.get("artJobId") and live["artJobId"] != entry["artJobId"]:
+            entry["curation"] = {
+                "round": round_no,
+                "reason": verdict.get("reason"),
+                "rejectedArtImageId": rejected,
+                "resubmitJobId": live["artJobId"],
+                "adopted": True,
+                "resubmittedAt": now(),
+            }
+            entry["status"] = live.get("status") or "QUEUED"
+            entry.pop("verifiedAt", None)
+            report["adopted"] = report.get("adopted", 0) + 1
+            continue
         # Only a delivered primary can be revised; undelivered pairs wait for a later run.
         if entry.get("status") != "READY":
             report["skipped"] += 1
@@ -225,7 +243,7 @@ def resubmit_curation(api: Api, ledger: dict, rows: list, limit: int) -> dict:
         entry["curation"] = {
             "round": round_no,
             "reason": verdict.get("reason"),
-            "rejectedArtImageId": entry.get("artImageId"),
+            "rejectedArtImageId": rejected,
             "resubmitJobId": (result.get("data") or {}).get("jobId"),
             "resubmittedAt": now(),
         }
