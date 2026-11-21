@@ -133,6 +133,64 @@ tasks:
     Item 7 (customizable characters) applies "in most cases": if this genre makes it a poor fit, say so in the audit with the reason and leave it for Silas rather than skipping silently.
 
     Achievements are tracked by their own task; this one covers everything else.
+- id: t-102
+  title: 'The descent: five floors of the building gate the fish by canon tier, and every species is obtainable again'
+  status: claimed
+  milestone: m5
+  stakes: reversible
+  passes: 0
+  depends_on: []
+  updated: '2026-11-21T07:00:00Z'
+  claimed_by: 2026-11-21T0700Z-cthq-descent-01L5NK
+  claimed_at: '2026-11-21T07:00:00Z'
+  note: >-
+    Silas 2026-11-21 PT, in session: "a really important thing is the overall experience, how well we handle the
+    style of the conversations, use the character models for interstitial storytelling, and have a clear narrative
+    progression, with increasingly weirder and more interesting fish." Decided in session: HARD floors.
+    Found: 92 of 151 species are evolution-only (unlock_cost 0 + evolves_from) and became unobtainable when t-082
+    removed breeding (aquarium.ts eligibleWhere NOT arm); milestones 70/95/125/151 are unreachable. Fix: price
+    them at their rarity default. Then five floors = canon tiers 1-5, opening at bestiary 10/25/50/95 (Shop Floor,
+    Below Stairs, The Flooded Wing, The Glasshouse, The Bottom of Things); server rejects unowned species on a
+    locked floor; Market teases the next floor as silhouettes. Owned/ever-owned species never lock.
+
+    Full history: projects/cthulhuquarium/HISTORY.md#t-102
+
+- id: t-103
+  title: 'Visual-novel interstitials: full-screen staged scenes, typewriter text, floor-transition replies, Wilbur floor portraits'
+  status: claimed
+  milestone: m5
+  stakes: reversible
+  passes: 0
+  depends_on: []
+  updated: '2026-11-21T07:00:00Z'
+  claimed_by: 2026-11-21T0700Z-cthq-descent-01L5NK
+  claimed_at: '2026-11-21T07:00:00Z'
+  note: >-
+    Silas 2026-11-21 PT (same session as t-102). Decided: occasional player replies at floor transitions only
+    (kr-choice-hand); Wilbur's portraits escalate per floor in art only, never mentioned in text. Every non-tutorial
+    beat becomes a full-screen staged scene (plate or floor background, both characters staged, pose crossfade,
+    typewriter with tap-to-complete, skip, reduced motion). Canon: floor-opening scenes rewritten, floor_first_N
+    and after_the_last_aquarium added, first_hatch/first_breed retired. Art queued in an auto_submit ledger.
+
+    Full history: projects/cthulhuquarium/HISTORY.md#t-103
+
+- id: t-104
+  title: 'Memory Book: rewatch every seen scene, plus the background gallery (main-game scrapbook)'
+  status: claimed
+  milestone: m5
+  stakes: reversible
+  passes: 0
+  depends_on: []
+  updated: '2026-11-21T07:00:00Z'
+  claimed_by: 2026-11-21T0700Z-cthq-descent-01L5NK
+  claimed_at: '2026-11-21T07:00:00Z'
+  note: >-
+    Closes the scrapbook gap named in STANDARD-AUDIT-2026-11-12.md (t-100). A Memory Book panel opened from the
+    World & story room: X of N memories, seen scenes replayable as full-screen interstitials, unseen ones as
+    silhouettes, the 16 backgrounds and the finale plate locked until earned.
+
+    Full history: projects/cthulhuquarium/HISTORY.md#t-104
+
 - id: t-101
   title: 'Cthulhuquarium achievement upgrade: 12 or more live achievements'
   status: done

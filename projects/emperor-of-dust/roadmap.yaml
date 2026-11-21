@@ -1262,8 +1262,11 @@ tasks:
   - id: t-052
     milestone: m5
     title: "Illustrated scene delivery and full 50-day choice-and-art coverage audit"
-    status: ready
-    updated: '2026-11-21T01:49:19.101Z'
+    status: claimed
+    owner: worker
+    claimed_by: 20261121T0246Z-eod-t052-answer-art-bb73
+    claimed_at: '2026-11-21T02:46:47.211Z'
+    updated: '2026-11-21T02:46:47.211Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -1447,10 +1450,10 @@ tasks:
   - id: t-062
     milestone: m4
     title: "Five-act dialogue and long-range consequence continuity pass"
-    status: review
+    status: ready
     stakes: reversible
     passes: 0
-    updated: '2026-11-21T01:47:54.038Z'
+    updated: '2026-11-21T02:46:41.644Z'
     source_issue: 'silasfelinus/kind_robots#4142'
     note: |-
       Silas 2026-11-02: comprehensively polish dialogue across all five acts and make consequential decisions echo in later scenes, quests, follower conversations and endings. Audit the current five-act playable dialogue and flag graph; implement distinct cross-act callbacks with honest costs, no dominant options, canon-consistent voices and clear choice labels. Preserve save/quest/flag identifiers, arrival chronology, true ambiguity about the Abbey and Komodo, and the established ending eligibility gates. Verify reachable conditional dialogue, save/load, quest aid, flag age, balance and adversarial campaigns. Track both the Tobin/Hollow Bell public-record thread and the bonded-runner thread across acts, and score every affected scene against the existing five-axis rubric. This is a dedicated cross-act story lane to coordinate work without claiming unrelated ongoing art tasks t-046 through t-052. Keep #4142 open until full game completion.
@@ -1486,9 +1489,8 @@ tasks:
       2026-11-03 PT: independent five-act reader/continuity review found two substantive issues in verified campaign and choice code: Pip hired Day 1 was reintroduced as a fresh applicant on Day 4, and Day 39/49 forced Hesper's testimony and the bonded runner's redress into mutually exclusive single-story records. Worker branch makes Pip's staff-specific scene preserve the missing page and introduces costly, mutually gated combined witness and record decisions with distinct epilogues. Independent review doc includes judgments, evidence, remaining scope and save caveat. Exact-head CI and focused regression testing pending; master #4142 remains open.
 
       Partial five-act continuity increment: Day 18 refugee water-cart or Watch-escort decisions now earn distinct costly Day 39 public-accounting options, distinct Day 49 record choices, and honest, conditional postwar epilogue ledger variants. Added a real-engine choice/save/epilogue regression, wired into the Emperor dispatch CI. Worker branch worker/emperor-of-dust-t-062-refugee-record-c7f3; review and exact-head checks pending. Art outputs, comprehensive editorial score pass and master issue #4142 still unfinished. Return to ready after a verified merge, not done.
-    owner: worker
-    claimed_by: 20261121T0121Z-eod-t062-refugee-memory-c7f3
-    claimed_at: '2026-11-04T00:37:42Z'
+
+      Kind Robots PR #5478 merged into main at 0508ed4ba63907618863232bfe9c0c586128a319. All eight required exact-head GitHub Actions workflows completed success, including Emperor Dispatch and all Contract Test shards. Delivered refugee water-cart versus Watch escort continuity from Day 18 to Day 39 accounting to Day 49 record and conditional epilogue, with save and choice regression. This is a partial t-062 narrative increment: comprehensive scored all-act acceptance, further callback coverage, real art delivery and browser QA remain. Return nonrecurring t-062 to ready, not done.
   - id: t-068
     milestone: m4
     title: "Add a validator that checks t-044 playtest reviewer-record YAMLs against the second-pass scoring protocol schema"
