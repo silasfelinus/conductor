@@ -131,3 +131,8 @@ Merged (squash 9017e41). Art ledgers/prompts only, reversible, CI green. The fiv
 - #5496 had been red for about 3.6h on **Seeded game-playthrough contracts**, with no worker activity. Its own change was correct. The failure came from `verifyCapesStyleCheck.test.ts`, which asserted the literal `promArt(identityArtKey` call in the atlas source, and the PR intentionally replaced that call with `identityArtwork`. I updated the assertion, ran all 12 slice steps locally (all OK), and opened #5505 carrying #5496's head unchanged. All checks went green and I squash-merged it (95a4391). #5496 is closed as superseded, and branch-janitor is dispatched for its branch.
 - t-032 returns to `ready` per the PR's handoff, since this was a partial delivery. Master issue #4181 stays open.
 - Pattern: connector-only workers can't run the slice tests locally, so a source-shape regex that "pins" an old call breaks valid refactors. Kaizen t-044: assert behaviour, not source text.
+
+## 2026-11-21 PT · Reviewer: kind_robots #5480 (t-002 recruits) and #5488 (t-031 production gallery)
+
+- **Decision:** merged both (a8a1e9c, 3bcaf10) on all-green CI. Both are reversible and scoped: #5480 touches only `utils/cometAcademy/*` plus its tests, and #5488 adds an admin-only gallery. Pre-merge verification is CI-only (no previews, per frontend-verification.md). Neither closes its umbrella task.
+- **Not merged:** #5509 (t-032 art quarantine). Its TypeScript job is red, and the diagnostics are only in the run artifact. The worker said it would fix CI failures, so it's left to them.

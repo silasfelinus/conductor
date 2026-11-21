@@ -197,3 +197,10 @@ Companion kind_robots#4764 was already on main, so merge order held. CI green on
 **Caveat:** this is a request ledger, not delivered clips, so t-038 goes back to `ready` with the claim released rather than staying in `review`. This is the same partial-slice pattern flagged on #7694 and t-043. The PR body did say "partial" honestly, which helps. Next: confirm the auto-submitted ArtJob IDs, inspect the renders, then export and wire in the cut.
 
 **Kaizen:** t-049 (worker's suggestion): a fail-closed per-clip container, size and identity validator before composition.
+
+## 2026-11-21 PT · Reviewer: t-049 opening clip preflight (#7747 → rescue)
+
+- **Decision:** rescued on the reviewer branch; #7747 to be closed once the rescue merges. The worker's design is sound: fail closed to the approved still, and refuse export on a non-keeper source. All 8 shots of the live `rainbow-doodle-opening-recut-2` ledger pass the keeper gate, so it doesn't block the real cut.
+- **Bug fixed:** `validated_clip` tested WebM with `b"\\x1a\\x45\\xdf\\xa3"`, a double-escaped literal that never matches. Every real WebM clip would have silently fallen back to its still. The test fixtures had the same escaping, so `b"\\x00...ftyp"` never reached ffprobe, and the "undersized" and "short decode" tests passed through the unknown-container branch, testing nothing. Fixed both, and added a test that MP4 and WebM headers actually reach ffprobe.
+- **Pattern:** the same escaping slip hit game-of-captains #7740 in the same hour (kaizen game-of-captains/t-043).
+- **Suggestion:** a fail-closed test should assert *which* branch rejected the input (mock call counts), not only the `None` result.

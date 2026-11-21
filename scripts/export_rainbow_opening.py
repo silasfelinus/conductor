@@ -193,6 +193,49 @@ def clip_frames(payload: bytes):
     return frames[3:] if len(frames) > 12 else frames
 
 
+def validated_clip(payload: bytes, key: str, expected_size=(832, 480)) -> list | None:
+    """Fail closed on corrupt or undersized WAN media, retaining the approved still."""
+    from PIL import Image
+
+    is_mp4 = len(payload) > 12 and payload[4:8] == b"ftyp"
+    is_webm = payload.startswith(b"\x1a\x45\xdf\xa3")
+    if not (is_mp4 or is_webm):
+        print(f"{key}: unsupported WAN container; using approved still", file=sys.stderr)
+        return None
+    try:
+        with tempfile.TemporaryDirectory() as work:
+            source = Path(work) / ("clip.mp4" if is_mp4 else "clip.webm")
+            source.write_bytes(payload)
+            probe = subprocess.run(
+                ["ffprobe", "-v", "error", "-select_streams", "v:0",
+                 "-show_entries", "stream=width,height,nb_frames",
+                 "-of", "json", str(source)],
+                capture_output=True, text=True, check=True, timeout=30,
+            )
+            streams = json.loads(probe.stdout).get("streams") or []
+            if not streams:
+                raise ValueError("no video stream")
+            width, height = int(streams[0]["width"]), int(streams[0]["height"])
+            if width < expected_size[0] or height < expected_size[1]:
+                raise ValueError(f"undersized video {width}x{height}")
+        frames = clip_frames(payload)
+        if len(frames) < 12 or not all(isinstance(frame, Image.Image) for frame in frames):
+            raise ValueError(f"insufficient decoded frames ({len(frames)})")
+        return frames
+    except (OSError, ValueError, KeyError, RuntimeError, subprocess.SubprocessError) as exc:
+        print(f"{key}: invalid WAN clip ({exc}); using approved still", file=sys.stderr)
+        return None
+
+
+def safe_clip_download(clip_id: int, key: str):
+    """An unavailable WAN artifact must not prevent the still-backed cut."""
+    try:
+        return validated_clip(download(clip_id), key)
+    except (OSError, ValueError, RuntimeError) as exc:
+        print(f"{key}: WAN download failed ({exc}); using approved still", file=sys.stderr)
+        return None
+
+
 def ping_pong(count: int, length: int) -> int:
     if length <= 1:
         return 0
@@ -241,7 +284,7 @@ def render(sources, last: list):
     for index, (key, beats, still_id, clip_id) in enumerate(sources):
         start = round(elapsed_beats * beat * FPS)
         end = round((elapsed_beats + beats) * beat * FPS)
-        frames = clip_frames(download(clip_id)) if clip_id else None
+        frames = safe_clip_download(clip_id, key) if clip_id else None
         still = None if frames else cover(Image.open(io.BytesIO(download(still_id))).convert("RGB"))
         last_shot = index == len(sources) - 1
         for n in range(end - start):
@@ -334,6 +377,27 @@ def main(argv=None):
     kind_robots = Path(args.kind_robots)
     ledger = yaml.safe_load(Path(args.ledger).read_text())
     sources = list(shot_sources(ledger, args.stills_only))
+    if ledger.get("round") == DOODLE_ROUND:
+        # The approved first-round review is the identity-lock authority.
+        approved = yaml.safe_load(
+            (LEDGER.parent / "DOODLE-SET-1-REVIEW.yaml").read_text()
+        )["decisions"]
+        first_round = yaml.safe_load(
+            (LEDGER.parent / "DOODLE-SET-1.yaml").read_text()
+        )
+        keep_ids = {
+            int(subject["art"][subject["lane"]]["art_image_id"])
+            for subject in first_round["subjects"]
+            if approved.get(subject.get("asset", "").removeprefix("rainbow-princess-art/doodle/")) == "keep"
+            and (subject.get("art") or {}).get(subject["lane"], {}).get("status") == "DONE"
+        }
+        checked = []
+        for key, beats, still_id, clip_id in sources:
+            if still_id not in keep_ids:
+                print(f"{key}: source ArtImage {still_id} is not an approved DOODLE-SET-1 keeper; refusing export", file=sys.stderr)
+                return EXIT_ERROR
+            checked.append((key, beats, still_id, clip_id))
+        sources = checked
     seconds = round(sum(beats for _, beats, _, _ in sources) * 60.0 / BPM, 3)
 
     with tempfile.TemporaryDirectory() as work:

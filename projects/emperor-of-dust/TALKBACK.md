@@ -125,3 +125,11 @@
 **Pattern:** Good discipline in separating counted traversal from scored judgment. The "zero loans / zero deaths" finding in the persona sample is the useful signal: the default policies never stress the economy.
 
 **Suggestion:** Add one deliberately reckless/high-spend persona to the standing 16-persona matrix so loans and memorials appear in the routine sample, not only in the witness suite.
+
+## 2026-11-21 PT | Reviewer | t-063 market-account art ledger (#7745)
+
+**Decision:** merged as 45d52f3 (squash) once green. One ledger file, 15 distinct keys/assets/seeds, private, `auto_submit: true`; generated art is pre-approved. The earlier "Validate Worker PR handoff" failure was superseded by a green rerun on the same head.
+
+**Pattern:** good restraint. It separates genuinely new subjects from the ~1,149 slot count, so done renders aren't re-queued.
+
+**Suggestion:** kaizen t-069 (ArtJob → ArtImage → media → manifest-slot inventory) so future slot audits can't inflate queue counts.
