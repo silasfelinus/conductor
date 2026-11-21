@@ -34,10 +34,11 @@ Environment: KR_API_TOKEN, KR_BASE_URL (default https://kindrobots.org).
 from __future__ import annotations
 
 import argparse
+import json
 import re
 import sys
 from concurrent.futures import ThreadPoolExecutor
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 
 import yaml
 
@@ -53,8 +54,83 @@ def finished(subject):
 
 
 def target(kind_robots, prefix, asset):
-    parts = [p for p in (prefix.strip("/"), asset.strip("/")) if p]
+    parts = [p for p in (prefix.strip("/"), str(asset).strip("/")) if p]
+    for entry in parts:
+        path = PurePosixPath(entry)
+        if (
+            "\\" in entry
+            or entry.startswith("/")
+            or any(piece in (".", "..") for piece in entry.split("/"))
+            or path.is_absolute()
+        ):
+            raise ValueError(f"Unsafe art asset path: {entry!r}")
+    if not parts:
+        raise ValueError("Art asset path cannot be empty")
     return Path(kind_robots) / "public" / ("/".join(parts) + ".webp")
+
+
+def is_valid_webp(path):
+    """Check that an on-disk target is a nonempty WebP, not merely a filename."""
+    try:
+        if not path.is_file() or path.stat().st_size < 20:
+            return False
+        with path.open("rb") as stream:
+            header = stream.read(12)
+        return header[:4] == b"RIFF" and header[8:12] == b"WEBP"
+    except OSError:
+        return False
+
+
+def audit(subjects, kind_robots, prefix, only=None, require_keep=False):
+    """Offline per-render delivery report; never requires the production API token."""
+    pattern = re.compile(only) if only else None
+    rows = []
+    for subject in subjects:
+        asset = subject.get("asset")
+        if not asset or (pattern and not pattern.search(str(asset))):
+            continue
+        destination = target(kind_robots, prefix, asset)
+        image_id = finished(subject)
+        verdict = str(subject.get("verdict") or "").strip().lower()
+        if verdict.startswith("reject"):
+            state = "rejected"
+        elif image_id is None:
+            state = "render-pending"
+        elif require_keep and not verdict.startswith("keep"):
+            state = "curation-needed"
+        elif is_valid_webp(destination):
+            state = "shipped"
+        elif destination.exists():
+            state = "corrupt"
+        else:
+            state = "export-ready"
+        jobs = subject.get("jobs") or {}
+        rows.append({
+            "asset": str(asset),
+            "key": str(subject.get("key") or ""),
+            "art_image_id": image_id,
+            "art_job_ids": sorted(
+                int(job) for job in jobs.values()
+                if isinstance(job, int) or (isinstance(job, str) and job.isdigit())
+            ),
+            "state": state,
+            "path": str(destination),
+        })
+
+    by_asset = {}
+    for row in rows:
+        if row["state"] not in ("rejected", "render-pending", "curation-needed"):
+            by_asset.setdefault(row["asset"], set()).add(row["art_image_id"])
+    collisions = {asset for asset, ids in by_asset.items() if len(ids) > 1}
+    for row in rows:
+        if row["asset"] in collisions and row["state"] not in (
+            "rejected", "render-pending", "curation-needed"
+        ):
+            row["state"] = "collision"
+    counts = {}
+    for row in rows:
+        counts[row["state"]] = counts.get(row["state"], 0) + 1
+    return {"counts": dict(sorted(counts.items())), "total": len(rows), "rows": rows}
 
 
 def approved_for_export(subject, require_keep=False):
@@ -75,15 +151,27 @@ def plan(subjects, kind_robots, prefix, only=None, force=False, require_keep=Fal
         if not approved_for_export(subject, require_keep=require_keep):
             continue
         dest = target(kind_robots, prefix, asset)
-        if dest.exists() and not force:
+        if is_valid_webp(dest) and not force:
             continue
         out.append((subject, image_id, dest))
-    return out
+    unique = {}
+    for subject, image_id, dest in out:
+        previous = unique.get(dest)
+        if previous and previous[1] != image_id:
+            raise ValueError(
+                f"Competing DONE renders for {dest}: ArtImages "
+                f"{previous[1]} and {image_id}. Curate the ledger first."
+            )
+        unique[dest] = (subject, image_id, dest)
+    return list(unique.values())
 
 
 def manifest_entries(kind_robots, root):
     base = Path(kind_robots) / "public" / root.strip("/")
-    return sorted(str(p.relative_to(base).with_suffix("")) for p in base.rglob("*.webp"))
+    return sorted(
+        str(p.relative_to(base).with_suffix(""))
+        for p in base.rglob("*.webp") if is_valid_webp(p)
+    )
 
 
 def render_array(name, entries):
@@ -131,6 +219,10 @@ def main(argv=None):
     parser.add_argument("--force", action="store_true", help="overwrite files that exist")
     parser.add_argument("--dry-run", action="store_true")
     parser.add_argument(
+        "--audit", action="store_true",
+        help="offline JSON report of shipped, missing, rejected and corrupt assets",
+    )
+    parser.add_argument(
         "--require-keep",
         action="store_true",
         help="export only subjects marked with a keep verdict; never export rejects",
@@ -147,6 +239,12 @@ def main(argv=None):
     subjects = []
     for ledger in args.ledgers:
         subjects += yaml.safe_load(Path(ledger).read_text()).get("subjects") or []
+    if args.audit:
+        print(json.dumps(
+            audit(subjects, args.kind_robots, args.prefix, args.only,
+                  require_keep=args.require_keep), indent=2, sort_keys=True,
+        ))
+        return 0
     if args.sheet:
         from export_crystal_street_art import contact_sheet
 
@@ -173,6 +271,8 @@ def main(argv=None):
         _subject, image_id, dest = item
         dest.parent.mkdir(parents=True, exist_ok=True)
         fit(load_image(image_id), args.max_edge).save(dest, "WEBP", quality=82, method=6)
+        if not is_valid_webp(dest):
+            raise RuntimeError(f"ArtImage {image_id}: invalid WebP output {dest}")
         return str(dest)
 
     with ThreadPoolExecutor(max_workers=6) as pool:
