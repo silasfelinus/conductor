@@ -2143,7 +2143,7 @@ tasks:
   implementation_pr: 'silasfelinus/kind_robots#5508'
 - id: t-108
   title: 'Pick the second art style from the Illustrious style check'
-  status: needs-human
+  status: cancelled
   milestone: m5
   stakes: reversible
   passes: 0
@@ -2151,7 +2151,7 @@ tasks:
   gate_human: true
   gate_reason: creative-approval
   depends_on: []
-  updated: '2026-11-21T11:20:39Z'
+  updated: '2026-11-21T11:33:25Z'
   note: >-
     art/ILLUSTRIOUS-STYLE-CHECK-1.yaml renders six subjects (Charlotte hero, Wilbur explaining, the
     arrival plate, the parlour background, Lint Shrimp, The Concern) on three Illustrious checkpoints:
@@ -2167,6 +2167,12 @@ tasks:
     closest to the brief. All three added a diver to the parlour and lost some of Wilbur's
     look; both are prompt fixes before the full rounds. Pick A, B or C, or ask for other
     checkpoints.
+
+    Cancelled 2026-11-21: after seeing the style check, Silas: "Actually, I've changed my
+    mind, I think krea2 is the best (classic). No update needed after all." Classic stays
+    the only style. The swap code (kind_robots #5508) and the canon style pipeline (#91) are
+    merged and dormant: the picker shows nothing while Classic is the only available style,
+    so nothing is visible to players.
 - id: t-109
   title: 'Render the chosen second style for every still, round by round, reviewed before it ships'
   status: waiting
