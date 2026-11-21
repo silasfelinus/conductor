@@ -1960,7 +1960,7 @@ tasks:
 - id: t-094
   milestone: m5
   title: Full adversarial aquarium, idle economy, persistence and exploit suite
-  status: claimed
+  status: done
   owner: worker
   stakes: reversible
   passes: 0
@@ -1982,9 +1982,14 @@ tasks:
     2/6/21/46 min and about 2h. This is a balance decision for Silas (see PLAYTEST-
     CHECKLIST.md section 5) and has not been retuned. API exploit checks already pass: a
     locked-floor purchase returns 403, and a forged or orphaned reply id returns 400.
-  updated: '2026-11-21T07:25:26Z'
+
+    ECONOMY-SUITE.md: nine strategies over the roster; 26 adversarial API checks incl.
+    concurrency (tick, buys, finale, grandfathering) after the row-lock fixes in #5501. Main
+    pacing question (floor V key wait) handed to the playtest.
+  updated: '2026-11-21T10:04:25Z'
   claimed_by: 2026-11-21T1900Z-cthq-playtest-01L5NK
   claimed_at: '2026-11-21T07:25:26Z'
+  implementation_pr: 'silasfelinus/kind_robots#5501'
 - id: t-095
   milestone: m5
   title: Full-screen art-first UX and accessibility acceptance on real rendered viewports
