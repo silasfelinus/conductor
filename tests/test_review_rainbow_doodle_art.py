@@ -115,3 +115,42 @@ def test_review_offline_fails_closed_for_uncached_art(tmp_path):
             ledger=ledger,
         )
     assert not out.exists()
+
+
+def test_cli_lists_edge_risk_sprite_and_artimage_id(tmp_path, monkeypatch, capsys):
+    monkeypatch.setattr(
+        reviewer.exporter,
+        "key_green",
+        lambda image: image.convert("RGBA"),
+    )
+    subjects = [
+        _write_subject(tmp_path, "ships/halo-fin", 263272, green=False),
+        _write_subject(tmp_path, "ships/petal-wing", 263273),
+    ]
+    ledger = _write_ledger(tmp_path, subjects)
+    manifest = reviewer.generate_review(
+        tmp_path / "kind_robots",
+        tmp_path / "review",
+        tmp_path / "cache",
+        offline=True,
+        ledger=ledger,
+    )
+    assert [entry["edge_check"] for entry in manifest["assets"]] == [
+        "edge-risk",
+        "clear-border",
+    ]
+    monkeypatch.setattr(
+        reviewer,
+        "generate_review",
+        lambda *_args, **_kwargs: manifest,
+    )
+
+    assert reviewer.main(["--offline"]) == 0
+    output = capsys.readouterr().out
+    assert "1 edge-risk sprite(s) need visual inspection:" in output
+    assert "ships/halo-fin (ArtImage 263272)" in output
+    assert "ships/petal-wing (ArtImage 263273)" not in output
+    assert all(
+        entry["verdict"] == "PENDING_VISUAL_INSPECTION"
+        for entry in manifest["assets"]
+    )
