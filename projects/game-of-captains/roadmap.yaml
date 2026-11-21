@@ -243,11 +243,11 @@ tasks:
   - id: t-008
     milestone: m3
     title: "Deliver Space Couch painted red-sofa ship, pocket-room, shield, crew and world art"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 20261121T105120Z-goc-t008-w9r2
     claimed_at: '2026-11-21T10:51:20.049Z'
-    updated: '2026-11-21T10:51:20.049Z'
+    updated: '2026-11-21T10:53:12.550Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -277,6 +277,8 @@ tasks:
       Eight new physically explicit red-couch shield and folding-pocket-room scene requests authored in SHIELD-POCKET-CONTINUITY-ROUND-1. Submission, original render review, accepted image IDs and runtime integration remain outstanding. This is partial t-008, not art delivery.
 
       https://github.com/silasfelinus/conductor/pull/7707 merged to main as an authored private image-request ledger. This was a partial increment, NOT visually delivered art: authenticated original ArtImage review, ArtJob provenance, accepted render export, and actual playable UI integration remain open. Return finite art task to ready for curation.
+
+      Repaired shared art exporter to recognize curator ACCEPTED imagery and fail closed on REJECTED records even with contradictory legacy keeper text. Added strict-export and offline-audit regressions for Space Couch plate IDs. Branch commit adb4e69b71e200435906af42a540b9307bc474de; broader painted art delivery, authenticated inspection and 390/768/1440 checks remain open.
   - id: t-009
     milestone: m3
     title: "Deliver unique mission outcome, conversation and ending illustration coverage"

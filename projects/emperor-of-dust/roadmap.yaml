@@ -1462,13 +1462,13 @@ tasks:
   - id: t-062
     milestone: m4
     title: "Five-act dialogue and long-range consequence continuity pass"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 20261121T105115Z-eod-t062-51e7
     claimed_at: '2026-11-21T10:51:15.929Z'
     stakes: reversible
     passes: 0
-    updated: '2026-11-21T10:51:15.929Z'
+    updated: '2026-11-21T10:55:04.068Z'
     source_issue: 'silasfelinus/kind_robots#4142'
     note: |-
       Silas 2026-11-02: comprehensively polish dialogue across all five acts and make consequential decisions echo in later scenes, quests, follower conversations and endings. Audit the current five-act playable dialogue and flag graph; implement distinct cross-act callbacks with honest costs, no dominant options, canon-consistent voices and clear choice labels. Preserve save/quest/flag identifiers, arrival chronology, true ambiguity about the Abbey and Komodo, and the established ending eligibility gates. Verify reachable conditional dialogue, save/load, quest aid, flag age, balance and adversarial campaigns. Track both the Tobin/Hollow Bell public-record thread and the bonded-runner thread across acts, and score every affected scene against the existing five-axis rubric. This is a dedicated cross-act story lane to coordinate work without claiming unrelated ongoing art tasks t-046 through t-052. Keep #4142 open until full game completion.
@@ -1510,6 +1510,8 @@ tasks:
       Partial cross-act narrative delivery: new Day 12 Yard cistern debt carries three conditional, brass-priced Day 39 Congress remedies into three Day 49 historical record choices, with twelve outcome-specific epilogue branches including Long Night and unredeemed debts. New engine-based regression checks gates, 15/25 brass outlays, records, saves and epilogues. Code commit e1cadea01c9d18bbf4877a0247909cdc29c5b8f4 on worker/emperor-of-dust-t-062-water-debt-ecd582f6; CI and PR verification remain pending. This is partial t-062; comprehensive editorial scoring, art delivery and responsive full-campaign QA remain. Keep #4142 active.
 
       Partial Yard water debt continuity landed via kind_robots PR #5492, squash SHA 57ed4af8e5437e2c1802e16e66f7523f07b016ff. Six exact-head workflow runs completed successfully, including Emperor Dispatch, TypeScript, formatting, architecture, layout, and contract tests. Full five-act editorial coverage and physical art delivery remain unfinished; return this nonrecurring task to ready, not done.
+
+      Partial market-charter continuity increment: Day 8 stall outcomes now drive Day 28 food and property accounts, Day 37 evacuation/wage/record choices, Day 46 exile settlements and earned ending text. Kind Robots branch worker/emperor-of-dust-t-062-market-account-51e7 commit 53606f85870e99ee4b2672bed315a4331faa48ad adds real-engine choice/save/epilogue regression and dispatch CI. Await exact-head PR checks; full fifty-day editorial acceptance and private ArtImage export remain open. Keep t-062 nonrecurring and return to ready after safe merge.
   - id: t-068
     milestone: m4
     title: "Add a validator that checks t-044 playtest reviewer-record YAMLs against the second-pass scoring protocol schema"
