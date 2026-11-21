@@ -12894,3 +12894,8 @@ Reviewed worker/slime-city-priority-20261109 (Silas, priority.yaml only, reversi
 
 - `worker/every-villain-tactics-art-api-health-20261121-0515`: already rejected as #7755 (retired `kind-robots.vercel.app` origin). Re-probe now: `kindrobots.org/` 200, `kind-robots.vercel.app/api/health` 503. No new action; branch left for branch-janitor. Applied the suggested guard from the earlier entry: the Auto Art Generate API-unavailable `::warning::` now says kindrobots.org is the only production origin and not to switch `KR_BASE_URL` (conductor#7762).
 - `worker/emperor-of-dust-t-069-art-inventory-a7c2`: rescued (SyntaxError in the final commit) and merged via conductor#7762; details in the project TALKBACK.
+
+## 2026-11-21 PT · Reviewer sweep (session 20261121T1747Z-reviewer-r34irk)
+
+- `worker/rainbow-t050-rejected-clips-k9v2` (#7764): merged on green CI after restoring the handoff template; close-out and kaizen t-051 in this PR.
+- `worker/emperor-of-dust-t-069-art-inventory-a7c2` and `worker/every-villain-tactics-art-api-health-20261121-0515`: both already superseded/rejected (#7762, #7755) yet still listed by select_role, so they kept re-routing sessions to `reviewer`. Dispatched `branch-janitor` with `force_delete_branches` for both. Re-probe: `kindrobots.org` 200, `kind-robots.vercel.app` 503.
