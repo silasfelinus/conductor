@@ -1,0 +1,7 @@
+version: 1
+project: emperor-of-dust
+task: t-063
+operation: ready
+updated: '2026-11-21T04:10:00Z'
+note: >-
+  Conductor PR #7721 merged at ef363e547bdf661ed53cb6b20ec630c754b396b2. It added offline ArtImage delivery audit, conflicting-render and corrupt-file checks; real image export remains open. The exact-head Worker PR handoff-template check failed and Worker's CI/security workflows were queued in the retrieved report; do not count those as passed. Return partial nonrecurring t-063 to ready for authenticated, durable image delivery.
