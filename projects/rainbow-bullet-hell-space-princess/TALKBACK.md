@@ -228,3 +228,11 @@ Companion kind_robots#4764 was already on main, so merge order held. CI green on
 - **Decision:** merged (e94f0e5) on green exact-head CI. Small, reversible, in scope: `delivery_report()` writes `opening-delivery-report.json` with accepted shots, rejected shots, WAN requeue shots and still-fallback shots, and prints the requeue keys at export. Pending, unrendered shots are correctly kept out of the requeue list, and two tests assert the exact keys. This closes the half of t-050 that was left open.
 - **Finding:** once more the only red check was Validate Worker PR handoff, on a prose body (Change/Verification/Handoff). That makes five today. The Reviewer rewrote the body with the template headings; the diff was unchanged. The handoff check went green on re-run.
 - **Suggestion:** this is now systematic. Whatever opens these Worker PRs should start from the AGENTS.md template rather than prose. Kaizen t-053 folds the now-duplicate `opening-rejected-clips.json` sidecar into the report.
+
+## 2026-11-21 PT · Reviewer: t-052 queue budget preflight (#7776) and t-053 single delivery sidecar (#7777)
+
+- **Decision:** merged both on green exact-head CI (#7777 → 00b602b, #7776 → 61a4f2a). They touch different hunks of `scripts/export_rainbow_opening.py`; 27 opening tests pass on the combined main.
+- **#7776:** `validate_opening_queue_budget()` rejects WAN subjects over 8s / 128 frames and bad fps/duration (including NaN), and the live ledger passes. The exporter now refuses an over-budget ledger, and `--check-queue-budget` exits before any network or ffmpeg work. The task asked for a check "at queue time", but no queue script exists, so the flag is the hook. Nothing calls it yet (kaizen t-054).
+- **#7777:** `write_delivery_report()` is now the only sidecar writer and removes a stale `opening-rejected-clips.json`. No reader of the legacy file exists in conductor or kind_robots. The test asserts that only the one JSON file remains.
+- **Pattern:** good news. Both PRs passed the handoff template check (#7776's first attempt was red; its re-run on the corrected body was green). After five prose bodies earlier today, the template suggestion is being followed.
+- **Suggestion:** keep one function per sidecar or budget rule, as both PRs did, so follow-ups can reuse it (kaizen t-055 reuses the budget arithmetic in the report).
