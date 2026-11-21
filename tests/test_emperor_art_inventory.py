@@ -96,11 +96,11 @@ class EmperorArtInventoryTests(unittest.TestCase):
         source.mkdir(parents=True)
         (source / "chanceArt.ts").write_text(
             'export function chanceArtCandidates(eventId, choiceId) { '
-            'return emperorMediaArtUrl(\`chance-events/\${eventId}/\${choiceId}\`) }',
+            'return emperorMediaArtUrl(`chance-events/${eventId}/${choiceId}`) }',
             encoding="utf-8")
         media = self.app / "public/emperor-of-dust/chance-events/rain"
         media.mkdir(parents=True)
-        (media / "collect.webp").write_bytes(b"RIFF\\x00\\x00\\x00\\x00WEBP")
+        (media / "collect.webp").write_bytes(b"RIFF\x00\x00\x00\x00WEBP")
         report = inventory(self.ledgers, self.app)
         asset = report["assets"][0]
         self.assertEqual(asset["reference_class"], "runtime_candidate")
