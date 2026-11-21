@@ -1032,19 +1032,20 @@ tasks:
   - id: t-051
     milestone: m4
     title: "Surface opening-rejected-clips.json in the opening manifest or delivery report so the WAN re-queue list is visible without re-running the export"
-    status: review
+    status: done
     owner: worker
-    claimed_by: 20261121T213102Z-rainbow-t051-j7m4
-    claimed_at: '2026-11-21T21:31:02Z'
     depends_on: []
     passes: 0
     stakes: reversible
-    updated: '2026-11-21T21:35:00Z'
+    updated: '2026-11-21T21:50:00Z'
     source: kaizen-pr-7764
+    implementation_pr: 'silasfelinus/conductor#7774'
     note: |-
       Reviewer kaizen from the 2026-11-21 PT merge of conductor#7764. t-050 writes the rejected shot keys to a sidecar opening-rejected-clips.json beside the media, but the manifest and delivery report the task named still do not show them. Read the sidecar (or pass the list directly) into the manifest/delivery report, with a test, and note the shot keys a reviewer should re-queue.
 
       Opening exporter now writes opening-delivery-report.json with accepted, rejected, pending-still and exact WAN requeue shot keys; added two regression tests. Implementation PR pending checks.
+
+      Reviewer merged conductor#7774 (e94f0e5) on green exact-head CI after rewriting the prose PR body into the handoff template; code unchanged. Kaizen t-053.
   - id: t-052
     milestone: m4
     title: "Check each queued opening WAN job against the export clip budget (8s, 128 frames) at queue time so over-budget renders fail before spending GPU time"
@@ -1056,3 +1057,14 @@ tasks:
     source: kaizen-pr-7768
     note: |-
       Reviewer kaizen from the 2026-11-21 PT merge of conductor#7768, which caps opening clip decode at MAX_CLIP_SECONDS=8 / MAX_CLIP_FRAMES=128 in scripts/export_rainbow_opening.py. A WAN job queued with a longer length would now render fine and then be rejected at export. Share the constants with the opening queue/ledger code and fail loudly at queue time, with a test.
+  - id: t-053
+    milestone: m4
+    title: "Fold opening-rejected-clips.json into opening-delivery-report.json so the opening export writes one review sidecar instead of two overlapping ones"
+    status: ready
+    depends_on: []
+    passes: 0
+    stakes: reversible
+    updated: '2026-11-21T21:50:00Z'
+    source: kaizen-pr-7774
+    note: |-
+      Reviewer kaizen from the 2026-11-21 PT merge of conductor#7774. scripts/export_rainbow_opening.py now writes both opening-rejected-clips.json (t-050) and opening-delivery-report.json (t-051), and the report's rejected_shots/accepted_shots duplicate the older sidecar. Drop the older file (or make it a pointer), update any reader, and keep the tests asserting exact keys. Open the PR with the AGENTS.md handoff headings; five Worker PRs on this project today went red only on that check.
