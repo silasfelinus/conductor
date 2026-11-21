@@ -68,7 +68,7 @@ RUNTIME_BUILDERS = (
 def _exact_reference(asset: str, content: str) -> bool:
     """Avoid rooms/a matching rooms/ab or rooms/a-success."""
     token = re.escape(asset)
-    return re.search(r"(?<![a-zA-Z0-9_/-])" + token +
+    return re.search(r"(?<![a-zA-Z0-9_-])" + token +
                      r"(?![a-zA-Z0-9_/-])", content) is not None
 
 
