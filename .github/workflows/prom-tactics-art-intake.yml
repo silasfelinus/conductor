@@ -1,0 +1,125 @@
+name: Prom and Tactics ArtJob Fast Intake
+
+# Bypass long generic art submission/render pipelines. Submit accepted Krea 2
+# work promptly, record real ArtJob IDs and never block on rendered output.
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/prom-tactics-art-intake.yml"
+      - "projects/every-villain-tactics/art/ONE-HIT-CREW-TELEGRAPHS-2026-11-20.yaml"
+      - "projects/comet-city-academy/art/OCT-29-CAST-KREA2-ROUND-1.yaml"
+  schedule:
+    - cron: "17 * * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: prom-tactics-art-intake
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  submit-approved-private-art:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      KR_BASE_URL: https://kindrobots.org
+      KR_FALLBACK_BASE_URL: ${{ vars.KR_ART_API_BASE_URL }}
+      KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+      PYTHONUNBUFFERED: "1"
+    steps:
+      # Use latest main receipt state, not an older push trigger's commit.
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install art intake dependencies
+        run: pip install pyyaml Pillow pytest
+      - name: Verify real authenticated ArtJob API
+        run: |
+          if [ -z "$KR_API_TOKEN" ]; then
+            echo "::error::KR_API_TOKEN is missing; submission cannot proceed."
+            exit 1
+          fi
+          # Probe the configured production API and an optional explicit
+          # repository-variable override; never hardcode a retired host.
+          for origin in "$KR_BASE_URL" "$KR_FALLBACK_BASE_URL"; do
+            [ -n "$origin" ] || continue
+            status="$(curl --silent --show-error --location --max-time 20 \
+              --output /dev/null --write-out '%{http_code}' \
+              "$origin/api/health/database" || true)"
+            if [ "$status" = "200" ]; then
+              echo "KR_BASE_URL=$origin" >> "$GITHUB_ENV"
+              echo "::notice::Kind Robots ArtJob API healthy at $origin."
+              exit 0
+            fi
+          done
+          echo "::error::Neither approved Kind Robots API origin passed health; no jobs submitted."
+          exit 1
+      - name: Verify approved private art intake contracts
+        run: |
+          python -m pytest -q tests/test_evt_one_hit_crew_tells.py \
+            tests/test_prom_oct29_art_ledger.py \
+            tests/test_prom_tactics_art_intake.py
+      # The server deduplicates each deterministic requestKey. If an earlier
+      # job was accepted but its workflow cancelled, this returns its same ID.
+      # Checkpoint partial successes even if later cells fail.
+      - name: Submit missing Tactics telegraphs and checkpoint ArtJob IDs
+        id: tactics
+        continue-on-error: true
+        run: |
+          set +e
+          python scripts/enqueue_art_requests.py \
+            projects/every-villain-tactics/art/ONE-HIT-CREW-TELEGRAPHS-2026-11-20.yaml --live
+          enqueue_status=$?
+          bash scripts/checkpoint_art_state.sh \
+            "chore: record Tactics one-hit ArtJob receipts [skip ci]"
+          checkpoint_status=$?
+          if [ "$enqueue_status" -ne 0 ] || [ "$checkpoint_status" -ne 0 ]; then
+            echo "::error::Tactics submission incomplete; accepted job IDs checkpointed when possible."
+            exit 1
+          fi
+      - name: Submit missing October Prom art and checkpoint ArtJob IDs
+        id: prom
+        continue-on-error: true
+        run: |
+          set +e
+          python scripts/enqueue_art_requests.py \
+            projects/comet-city-academy/art/OCT-29-CAST-KREA2-ROUND-1.yaml --live
+          enqueue_status=$?
+          bash scripts/checkpoint_art_state.sh \
+            "chore: record October Prom ArtJob receipts [skip ci]"
+          checkpoint_status=$?
+          if [ "$enqueue_status" -ne 0 ] || [ "$checkpoint_status" -ne 0 ]; then
+            echo "::error::Prom submission incomplete; accepted job IDs checkpointed when possible."
+            exit 1
+          fi
+      - name: Refresh ArtJob status and delivered ArtImage receipts
+        continue-on-error: true
+        run: |
+          set +e
+          python scripts/enqueue_art_requests.py \
+            projects/every-villain-tactics/art/ONE-HIT-CREW-TELEGRAPHS-2026-11-20.yaml --status
+          python scripts/enqueue_art_requests.py \
+            projects/comet-city-academy/art/OCT-29-CAST-KREA2-ROUND-1.yaml --status
+          bash scripts/checkpoint_art_state.sh \
+            "chore: refresh Prom and Tactics art receipt statuses [skip ci]"
+      # A successful request count is not a completed ArtJob or approved art.
+      # Require durable accepted IDs for each of the 36 distinct cells.
+      - name: Require durable ArtJob IDs for all 36 cells
+        if: always()
+        run: |
+          python scripts/verify_prom_tactics_art_intake.py --require-jobs
+          if [ "${{ steps.tactics.outcome }}" != "success" ] || \
+             [ "${{ steps.prom.outcome }}" != "success" ]; then
+            echo "::error::One or more art submission phases failed."
+            exit 1
+          fi
