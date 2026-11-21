@@ -2,8 +2,21 @@
 # end of every Auto Art Generate run. Do not hand-edit: fix the cause (see
 # docs/agents/roles/art-medic.md) and the next run drops the entry.
 failures:
-- source: requests
-  target: public/images/channels/admin/ban-meme.webp
-  kind: timeout
-  detail: job 74335 timed out after 300s (still queued/running)
+- source: ledgers
+  target: projects/game-of-captains/art/ETHICAL-OUTCOMES-ROUND-1.yaml
+  kind: contract-rejected
+  rules:
+  - text-exclusion
+  - text-exclusion-pile
+  detail: 10 cell(s) skipped, e.g. sc-outcome-evacuation-success [krea2], sc-outcome-evacuation-failure
+    [krea2], sc-outcome-first-contact-trust [krea2]
+  first_seen: '2026-11-21'
+- source: ledgers
+  target: projects/game-of-captains/art/SHIELD-POCKET-CONTINUITY-ROUND-1.yaml
+  kind: contract-rejected
+  rules:
+  - text-exclusion
+  - text-exclusion-pile
+  detail: 8 cell(s) skipped, e.g. sc-continuity-shield-asteroid [krea2], sc-continuity-shield-storm [krea2],
+    sc-continuity-shield-docking [krea2]
   first_seen: '2026-11-21'
