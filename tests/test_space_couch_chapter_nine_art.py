@@ -52,7 +52,6 @@ def test_chapter_nine_paintings_have_distinct_story_action():
         assert prop in by_key[key], key
 
 
-
 def test_chapter_nine_submitted_jobs_are_traceable_without_fake_acceptance():
     """Submitted renders must never masquerade as inspected, delivered art."""
     ledger = yaml.safe_load(LEDGER.read_text())
@@ -65,10 +64,11 @@ def test_chapter_nine_submitted_jobs_are_traceable_without_fake_acceptance():
         job_ids.append(job_id)
 
         art = subject["art"]["krea2"]
-        assert art["status"] in {"PENDING", "REJECTED", "ACCEPTED"}
-        if art["status"] == "PENDING":
-            assert art["art_image_id"] is None
-        elif art["status"] == "ACCEPTED":
+        # DONE is the live sweep's "rendered" checkpoint, not visual acceptance.
+        assert art["status"] in {"PENDING", "DONE", "ERROR", "REJECTED", "ACCEPTED"}
+        if art["status"] in {"PENDING", "ERROR"}:
+            assert art.get("art_image_id") is None
+        elif art["status"] in {"DONE", "ACCEPTED"}:
             assert isinstance(art["art_image_id"], int)
             assert art["art_image_id"] > 0
 
