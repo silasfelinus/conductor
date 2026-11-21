@@ -40,7 +40,7 @@ def test_oct29_private_production_contract():
             assert item["lane"] == "krea2"
             assert item["size"] == ("768x1024" if variant == "portrait" else "1344x768")
             assert 120 <= len(item["prompt_prose"]) <= 900
-            assert not re.search(r"\\b(?:no|not|without|frame|chapter)\\b", item["prompt_prose"], re.I)
+            assert not re.search(r"\b(?:no|not|without|frame|chapter)\b", item["prompt_prose"], re.I)
             assert "jobs" not in item, "request drafting does not invent accepted ArtJob IDs"
             assert "art" not in item, "request drafting does not claim an ArtImage delivery"
     for cast_member in pitch["characters"]:
