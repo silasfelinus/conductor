@@ -2194,3 +2194,24 @@ tasks:
     the only style. The swap code (kind_robots #5508) and the canon style pipeline (#91) are
     merged and dormant: the picker shows nothing while Classic is the only available style,
     so nothing is visible to players.
+- id: t-110
+  title: 'Complete the game: music, a sound for every event, painted decor and collector, the 44 redesigned book cards, the room plate'
+  status: claimed
+  milestone: m5
+  stakes: reversible
+  passes: 0
+  playtest_iteration: true
+  depends_on: []
+  updated: '2026-11-21T13:00:00Z'
+  note: >-
+    From the 2026-11-21 completeness audit Silas asked for ("Do we have everything for a full game? Do we
+    have sound and music? All art and animations, etc?"), then: "Go ahead with all of it, synthesized
+    theme is fine." Gaps found: no music; buying, selling, cleaning, upgrades, the floor key, decor, sets,
+    scenery, scenes, milestones and the endings were silent; the six decorations and the Roaming
+    Collector were emoji; the room upgrade had no plate; the 44 species redesigned on 2026-11-05 still
+    showed their old concept on the book card (several not creatures at all); six unused egg images
+    shipped. Code: kind_robots #5512 (synthesized floor themes, 23 effects, Music setting, painted decor
+    hooks, eggs removed). Art: canon ui/decor-*, ui/swimmer-collector, plates/upgrade-room (render_art);
+    cards via art/REDESIGNED-CARDS-1.yaml and scripts/deliver_cthulhuquarium_cards.py.
+  claimed_by: 2026-11-21T1300Z-cthq-complete-01L5NK
+  claimed_at: '2026-11-21T13:00:00Z'

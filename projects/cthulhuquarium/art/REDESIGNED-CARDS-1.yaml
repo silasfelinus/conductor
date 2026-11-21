@@ -1,0 +1,717 @@
+# Cthulhuquarium book cards for the 44 species redesigned on 2026-11-05 (conductor cthulhuquarium/t-110).
+# Their swimming sprites were redrawn then (t-099) and their card art_prompt subjects changed to match, but the
+# card plates were never re-rendered, so the book, the creatures room and the reveal showed the old concept
+# (several not even creatures: a jar, frying pans, a keyhole). Same Krea 2 Classic engine and each species' own
+# book-plate medium (fish/<slug>.yaml `plate`), one lane per medium so each prompt holds only its own subject.
+# Delivered to kind_robots by scripts/deliver_cthulhuquarium_cards.py. Submitted with Silas's admin token. Private.
+round: cthulhuquarium-redesigned-cards-1
+project_slug: cthulhuquarium
+designer: Cthulhuquarium book cards (t-110)
+is_public: false
+is_mature: false
+cast_loras: false
+auto_submit: false
+priority: 700
+lanes:
+- key: gosse-1
+  label: Krea 2, gosse plate
+  engine: krea2
+  prompt: prose
+  suffix: hand- coloured lithograph plate from an 1850s natural history book, fine engraved line under flat hand-laid
+    watercolour washes, Prussian blue and madder and gamboge, visible plate mark, foxed paper, the wash running
+    slightly outside the line, the creature alone on the sheet, a wide plain margin of foxed paper beneath it
+- key: gosse-2
+  label: Krea 2, gosse plate
+  engine: krea2
+  prompt: prose
+  suffix: hand-coloured lithograph plate from an 1850s natural history book, fine engraved line under flat hand-laid
+    watercolour washes, Prussian blue and madder and gamboge, visible plate mark, foxed paper, the wash running
+    slightly outside the line, the creature alone on the sheet, a wide plain margin of foxed paper beneath it
+- key: gosse-3
+  label: Krea 2, gosse plate
+  engine: krea2
+  prompt: prose
+  suffix: hand- coloured lithograph plate from an 1850s natural history book, fine engraved line under flat hand-
+    laid watercolour washes, Prussian blue and madder and gamboge, visible plate mark, foxed paper, the wash running
+    slightly outside the line, the creature alone on the sheet, a wide plain margin of foxed paper beneath it
+- key: trade-card-1
+  label: Krea 2, trade-card plate
+  engine: krea2
+  prompt: prose
+  suffix: chromolithograph cigarette card from around 1900, small format with a printed ornamental border, four-
+    colour stone printing, visible misregistration and dot rosettes, slightly garish cheap inks, corners worn round,
+    the creature alone, a plain cream ribbon of bare paper along the bottom edge
+- key: gosse-4
+  label: Krea 2, gosse plate
+  engine: krea2
+  prompt: prose
+  suffix: hand-coloured lithograph plate from an 1850s natural history book, fine engraved line under flat hand-
+    laid watercolour washes, Prussian blue and madder and gamboge, visible plate mark, foxed paper, the wash running
+    slightly outside the line, the creature alone on the sheet, a wide plain margin of foxed paper beneath it
+- key: trade-card-2
+  label: Krea 2, trade-card plate
+  engine: krea2
+  prompt: prose
+  suffix: chromolithograph cigarette card from around 1900, small format with a printed ornamental border, four-colour
+    stone printing, visible misregistration and dot rosettes, slightly garish cheap inks, corners worn round, the
+    creature alone, a plain cream ribbon of bare paper along the bottom edge
+- key: scraperboard-1
+  label: Krea 2, scraperboard plate
+  engine: krea2
+  prompt: prose
+  suffix: scraperboard illustration, white line scratched out of solid black ink with a blade, pure black and pure
+    white only, every tone built from line density, form built entirely from cut hatching, the creature alone, the
+    board around it left solid uncut black
+- key: haeckel-1
+  label: Krea 2, haeckel plate
+  engine: krea2
+  prompt: prose
+  suffix: ornamental natural history plate, obsessive radial symmetry, the organism arranged as design to fill the
+    sheet, fine line and restrained colour, ruled ornamental border, the creature alone inside the ruled border,
+    a plain strip of bare paper beneath it
+- key: moulage-1
+  label: Krea 2, moulage plate
+  engine: krea2
+  prompt: prose
+  suffix: wet specimen preserved in a sealed glass jar of fluid, formalin yellow, colours leached toward parchment,
+    the glass refracting the body where it presses against it, a handwritten paper label tied on with string, the
+    jar standing alone, the label's brown ink faded to pale looping scribbles
+- key: riso-1
+  label: Krea 2, riso plate
+  engine: krea2
+  prompt: prose
+  suffix: risograph print in two fluorescent spot inks on cheap absorbent paper, deliberate misregistration, the
+    inks overprinting to a third colour where they cross, flat unblended areas, paper showing through, the creature
+    alone on the sheet, wide bare margins
+- key: blaschka-1
+  label: Krea 2, blaschka plate
+  engine: krea2
+  prompt: prose
+  suffix: lampworked glass model on a thin wire mount, transparent hollow body, light passing through the glass
+    and pooling where it thickens, colour suspended in the glass itself, museum specimen on a small wooden base,
+    faint dust, the glass creature standing alone, a small plain cream paper tag on the wooden base
+- key: gyotaku-1
+  label: Krea 2, gyotaku plate
+  engine: krea2
+  prompt: prose
+  suffix: gyotaku fish rubbing, sumi ink pressed directly from the body onto fibrous washi paper, flat black, coverage
+    uneven, the ink thin and skipping where the body lifted away, fins printing as fine radiating lines, one wet
+    painted eye added afterward by hand, the creature alone in the middle of the sheet, the rest of the sheet bare
+subjects:
+- key: doorstep-whelk
+  lane: gosse-1
+  title: Doorstep Whelk (book card, redesigned)
+  size: 1024x1024
+  seed: 347257
+  prompt_prose: a ridged sandstone-coloured whelk whose shell opening is a tiny arched front door with a brass knocker,
+    a soft cream foot beneath, two eyestalks peering over the doorway
+  asset: cthulhuquarium/card/doorstep-whelk
+  jobs:
+    gosse-1: 76390
+  art:
+    gosse-1:
+      status: DONE
+      art_image_id: 277957
+- key: gravel-tetra
+  lane: gosse-2
+  title: Gravel Tetra (book card, redesigned)
+  size: 1024x1024
+  seed: 198694
+  prompt_prose: a small stout olive tetra with one bright copper stripe, its lower jaw a tiny shovel scoop full
+    of gravel, small pebbles stuck along its back
+  asset: cthulhuquarium/card/gravel-tetra
+  jobs:
+    gosse-2: 76391
+  art:
+    gosse-2:
+      status: DONE
+      art_image_id: 277958
+- key: kitchen-perch
+  lane: gosse-3
+  title: Kitchen Perch (book card, redesigned)
+  size: 1024x1024
+  seed: 417107
+  prompt_prose: a chunky striped perch in dark olive and brass yellow whose spiny dorsal fin is a row of tiny copper
+    kitchen knife blades, one eye rolled toward the viewer
+  asset: cthulhuquarium/card/kitchen-perch
+  jobs:
+    gosse-3: 76392
+  art:
+    gosse-3:
+      status: DONE
+      art_image_id: 277959
+- key: pane-limpet
+  lane: trade-card-1
+  title: Pane Limpet (book card, redesigned)
+  size: 1024x1024
+  seed: 970323
+  prompt_prose: a small limpet with a striped teal and cream conical shell, a single large curious eye peeking out
+    from under the rim, a frilled foot squeezed out all round
+  asset: cthulhuquarium/card/pane-limpet
+  jobs:
+    trade-card-1: 76393
+  art:
+    trade-card-1:
+      status: DONE
+      art_image_id: 277960
+- key: parlour-rustfish
+  lane: gosse-1
+  title: Parlour Rustfish (book card, redesigned)
+  size: 1024x1024
+  seed: 670464
+  prompt_prose: a plump cheerful fish whose scales are flaking plates of rust-orange iron, a flowing double tail,
+    a pleased expression, a few rust flakes drifting off its body
+  asset: cthulhuquarium/card/parlour-rustfish
+  jobs:
+    gosse-1: 76394
+  art:
+    gosse-1:
+      status: DONE
+      art_image_id: 277961
+- key: penny-bream
+  lane: gosse-4
+  title: Penny Bream (book card, redesigned)
+  size: 1024x1024
+  seed: 462225
+  prompt_prose: a deep-bodied little bream whose scales are worn copper pennies, each stamped with a tiny profile,
+    dull pewter fins
+  asset: cthulhuquarium/card/penny-bream
+  jobs:
+    gosse-4: 76395
+  art:
+    gosse-4:
+      status: DONE
+      art_image_id: 277962
+- key: portsmouth-bitterling
+  lane: gosse-2
+  title: Portsmouth Bitterling (book card, redesigned)
+  size: 1024x1024
+  seed: 570075
+  prompt_prose: a small round iridescent rose and violet fish carrying a borrowed spiral shell on its back far too
+    small for it, entirely pleased with itself
+  asset: cthulhuquarium/card/portsmouth-bitterling
+  jobs:
+    gosse-2: 76396
+  art:
+    gosse-2:
+      status: DONE
+      art_image_id: 277963
+- key: postmark-snail
+  lane: gosse-2
+  title: Postmark Snail (book card, redesigned)
+  size: 1024x1024
+  seed: 998718
+  prompt_prose: a small dark snail whose flat shell top is a circular inked postmark with wavy cancellation lines,
+    a soft grey body extended
+  asset: cthulhuquarium/card/postmark-snail
+  jobs:
+    gosse-2: 76397
+  art:
+    gosse-2:
+      status: DONE
+      art_image_id: 277964
+- key: rain-barrel-roach
+  lane: gosse-2
+  title: Rain Barrel Roach (book card, redesigned)
+  size: 1024x1024
+  seed: 218656
+  prompt_prose: a stout silver roach with dark iron hoop bands circling its body and wood-grain stave stripes along
+    its back, rain-drop spots on its fins
+  asset: cthulhuquarium/card/rain-barrel-roach
+  jobs:
+    gosse-2: 76398
+  art:
+    gosse-2:
+      status: DONE
+      art_image_id: 277965
+- key: sardine-common
+  lane: gosse-1
+  title: Harbor Sardine (book card, redesigned)
+  size: 1024x1024
+  seed: 148924
+  prompt_prose: a small sleek sardine with one enormous mirror-bright eye filling half its head, silver- blue torpedo
+    body with a single row of tiny glowing lantern spots along its flank
+  asset: cthulhuquarium/card/sardine-common
+  jobs:
+    gosse-1: 76399
+  art:
+    gosse-1:
+      status: DONE
+      art_image_id: 277966
+- key: silt-loach
+  lane: gosse-2
+  title: Silt Loach (book card, redesigned)
+  size: 1024x1024
+  seed: 745408
+  prompt_prose: a long sludge-brown loach with ochre spots and a single periscope eye on a short stalk rising from
+    the top of its head
+  asset: cthulhuquarium/card/silt-loach
+  jobs:
+    gosse-2: 76400
+  art:
+    gosse-2:
+      status: DONE
+      art_image_id: 277967
+- key: standpipe-goby
+  lane: gosse-2
+  title: Standpipe Goby (book card, redesigned)
+  size: 1024x1024
+  seed: 281932
+  prompt_prose: a small dumpy grey goby ringed with brass pipe-collar bands, a little brass tap handle growing from
+    its forehead
+  asset: cthulhuquarium/card/standpipe-goby
+  jobs:
+    gosse-2: 76401
+  art:
+    gosse-2:
+      status: DONE
+      art_image_id: 277968
+- key: the-association
+  lane: trade-card-2
+  title: The Association (book card, redesigned)
+  size: 1024x1024
+  seed: 870867
+  prompt_prose: a small deep-bodied fish with a striped band of civic red and gold scales across its body, a heavy
+    gold chain of office hanging around its neck, a puffed pompous chest
+  asset: cthulhuquarium/card/the-association
+  jobs:
+    trade-card-2: 76402
+  art:
+    trade-card-2:
+      status: DONE
+      art_image_id: 277969
+- key: the-auditor
+  lane: scraperboard-1
+  title: The Auditor (book card, redesigned)
+  size: 1024x1024
+  seed: 510793
+  prompt_prose: a tall flat upright fish whose body is a closed ledger book standing on end, a leather spine for
+    a back, gilt page edges along its belly, page-thin fins fanned along the top, a single narrow eye behind a round
+    brass monocle, a long thin disapproving mouth, slate grey and ink blue
+  asset: cthulhuquarium/card/the-auditor
+  jobs:
+    scraperboard-1: 76403
+  art:
+    scraperboard-1:
+      status: DONE
+      art_image_id: 277970
+- key: the-balance
+  lane: haeckel-1
+  title: The Balance (book card, redesigned)
+  size: 1024x1024
+  seed: 421687
+  prompt_prose: a symmetrical pale crustacean holding two shallow brass scale pans on long level claws, its thin
+    upright body forming the central beam, one eye on each side held perfectly level
+  asset: cthulhuquarium/card/the-balance
+  jobs:
+    haeckel-1: 76404
+  art:
+    haeckel-1:
+      status: DONE
+      art_image_id: 277971
+- key: the-bedding
+  lane: moulage-1
+  title: The Bedding (book card, redesigned)
+  size: 1024x1024
+  seed: 624073
+  prompt_prose: a broad flat burrowing creature whose back is banded in layers of sand, silt, clay and shell, a
+    small key and tiny shells embedded in its stripes, a blunt head with sleepy eyes at the front
+  asset: cthulhuquarium/card/the-bedding
+  jobs:
+    moulage-1: 76405
+  art:
+    moulage-1:
+      status: DONE
+      art_image_id: 277972
+- key: the-catacomb
+  lane: scraperboard-1
+  title: The Catacomb (book card, redesigned)
+  size: 1024x1024
+  seed: 634929
+  prompt_prose: a long bone-white blind cave salamander with a row of small carved grey stone arches rising along
+    its spine, each arch a little niche holding a tiny fish skull, pale pink feathery gills, smooth eyeless head
+  asset: cthulhuquarium/card/the-catacomb
+  jobs:
+    scraperboard-1: 76406
+  art:
+    scraperboard-1:
+      status: RUNNING
+      art_image_id: null
+- key: the-catchment
+  lane: riso-1
+  title: The Catchment (book card, redesigned)
+  size: 1024x1024
+  seed: 594282
+  prompt_prose: an immense flat ray seen from above, its wide wings carved with fine branching grooves that run
+    inward toward one deep central mouth, slate blue and silt brown
+  asset: cthulhuquarium/card/the-catchment
+  jobs:
+    riso-1: 76407
+  art:
+    riso-1:
+      status: PENDING
+      art_image_id: null
+- key: the-clerestory
+  lane: haeckel-1
+  title: The Clerestory (book card, redesigned)
+  size: 1024x1024
+  seed: 739665
+  prompt_prose: a tall arched creature whose body is panels of leaded coloured glass in turquoise and gold, warm
+    light shining through the coloured glass, two dark eyes near its pointed peak, short tentacles at its base
+  asset: cthulhuquarium/card/the-clerestory
+  jobs:
+    haeckel-1: 76408
+  art:
+    haeckel-1:
+      status: PENDING
+      art_image_id: null
+- key: the-concern
+  lane: riso-1
+  title: The Concern (book card, redesigned)
+  size: 1024x1024
+  seed: 116789
+  prompt_prose: an immense hermit creature carrying a whole little Victorian shopfront as its shell, a glowing shop
+    window full of tiny tanks, a striped awning above it, many thin legs beneath
+  asset: cthulhuquarium/card/the-concern
+  jobs:
+    riso-1: 76409
+  art:
+    riso-1:
+      status: PENDING
+      art_image_id: null
+- key: the-conservatory
+  lane: riso-1
+  title: The Conservatory (book card, redesigned)
+  size: 1024x1024
+  seed: 667414
+  prompt_prose: an enormous domed creature whose ribcage is curved greenhouse glass ribs filled with dense green
+    ferns, a small dark doorway mouth at its base, thick roots for legs
+  asset: cthulhuquarium/card/the-conservatory
+  jobs:
+    riso-1: 76410
+  art:
+    riso-1:
+      status: PENDING
+      art_image_id: null
+- key: the-consignment
+  lane: moulage-1
+  title: The Consignment (book card, redesigned)
+  size: 1024x1024
+  seed: 271810
+  prompt_prose: a tall creature made of a stack of corded brown parcels fused into one body, crab legs emerging
+    from the bottom parcel, two eyes peering from a gap between parcels, paper tags fluttering
+  asset: cthulhuquarium/card/the-consignment
+  jobs:
+    moulage-1: 76411
+  art:
+    moulage-1:
+      status: PENDING
+      art_image_id: null
+- key: the-delivery
+  lane: trade-card-2
+  title: The Delivery (book card, redesigned)
+  size: 1024x1024
+  seed: 224457
+  prompt_prose: a squared brown-paper package creature drifting upright, wax-sealed with string, small fins pushing
+    out through its torn corners, one large eye peering from a tear in the paper
+  asset: cthulhuquarium/card/the-delivery
+  jobs:
+    trade-card-2: 76412
+  art:
+    trade-card-2:
+      status: PENDING
+      art_image_id: null
+- key: the-downspout
+  lane: blaschka-1
+  title: The Downspout (book card, redesigned)
+  size: 1024x1024
+  seed: 588283
+  prompt_prose: a long vertical tube worm with a flared funnel mouth at the top and a segmented verdigris copper
+    body, a column of tiny bubbles pouring from its mouth
+  asset: cthulhuquarium/card/the-downspout
+  jobs:
+    blaschka-1: 76413
+  art:
+    blaschka-1:
+      status: PENDING
+      art_image_id: null
+- key: the-enquiry-desk
+  lane: moulage-1
+  title: The Enquiry Desk (book card, redesigned)
+  size: 1024x1024
+  seed: 894175
+  prompt_prose: a broad low crab-shaped creature with a flat polished wooden carapace, a small hatch window in its
+    front with one eye looking out, paper slips drifting from the hatch
+  asset: cthulhuquarium/card/the-enquiry-desk
+  jobs:
+    moulage-1: 76414
+  art:
+    moulage-1:
+      status: PENDING
+      art_image_id: null
+- key: the-foundation
+  lane: scraperboard-1
+  title: The Foundation (book card, redesigned)
+  size: 1024x1024
+  seed: 886740
+  prompt_prose: an enormous flat flounder whose back is a mossy stone slab with gravel heaped on it, a wide seam
+    of a mouth along its front edge, two small eyes on top
+  asset: cthulhuquarium/card/the-foundation
+  jobs:
+    scraperboard-1: 76415
+  art:
+    scraperboard-1:
+      status: PENDING
+      art_image_id: null
+- key: the-foyer
+  lane: riso-1
+  title: The Foyer (book card, redesigned)
+  size: 1024x1024
+  seed: 498728
+  prompt_prose: a vast creature whose ribs form a rounded arched doorway, warm chandelier light glowing from inside
+    its open chest, fins hanging in heavy velvet-red folds
+  asset: cthulhuquarium/card/the-foyer
+  jobs:
+    riso-1: 76416
+  art:
+    riso-1:
+      status: PENDING
+      art_image_id: null
+- key: the-guest-list
+  lane: moulage-1
+  title: The Guest List (book card, redesigned)
+  size: 1024x1024
+  seed: 898474
+  prompt_prose: a tall upright eel-shaped creature whose pale flank is ruled into a column of lines with tiny handwritten
+    names, most lines struck through, a pointed pen-nib head
+  asset: cthulhuquarium/card/the-guest-list
+  jobs:
+    moulage-1: 76417
+  art:
+    moulage-1:
+      status: PENDING
+      art_image_id: null
+- key: the-hold
+  lane: moulage-1
+  title: The Hold (book card, redesigned)
+  size: 1024x1024
+  seed: 882208
+  prompt_prose: a big slack sack-shaped creature with stitched indigo canvas skin, a wide grinning seam of a mouth
+    across its lower half, drawstring tentacles hanging beneath
+  asset: cthulhuquarium/card/the-hold
+  jobs:
+    moulage-1: 76418
+  art:
+    moulage-1:
+      status: PENDING
+      art_image_id: null
+- key: the-holotype
+  lane: haeckel-1
+  title: The Holotype (book card, redesigned)
+  size: 1024x1024
+  seed: 607581
+  prompt_prose: a pale shrimp with fine measuring scale markings ruled along its body and tiny lettered reference
+    labels on each limb
+  asset: cthulhuquarium/card/the-holotype
+  jobs:
+    haeckel-1: 76419
+  art:
+    haeckel-1:
+      status: PENDING
+      art_image_id: null
+- key: the-inventory
+  lane: gyotaku-1
+  title: The Inventory (book card, redesigned)
+  size: 1024x1024
+  seed: 208324
+  prompt_prose: a box-shaped crustacean whose shell is divided into a grid of small compartments, each compartment
+    holding a different tiny creature peering out
+  asset: cthulhuquarium/card/the-inventory
+  jobs:
+    gyotaku-1: 76420
+  art:
+    gyotaku-1:
+      status: PENDING
+      art_image_id: null
+- key: the-keyhole
+  lane: scraperboard-1
+  title: The Keyhole (book card, redesigned)
+  size: 1024x1024
+  seed: 496310
+  prompt_prose: a paper-thin fish cut in a keyhole outline with a single enormous round eye in the middle of its
+    body
+  asset: cthulhuquarium/card/the-keyhole
+  jobs:
+    scraperboard-1: 76421
+  art:
+    scraperboard-1:
+      status: PENDING
+      art_image_id: null
+- key: the-long-study
+  lane: moulage-1
+  title: The Long Study (book card, redesigned)
+  size: 1024x1024
+  seed: 179039
+  prompt_prose: an immense folded creature whose body is shelves and pigeonholes packed with rolled papers, one
+    long thin arm drawing out a scroll, two small glowing eyes at the top
+  asset: cthulhuquarium/card/the-long-study
+  jobs:
+    moulage-1: 76422
+  art:
+    moulage-1:
+      status: PENDING
+      art_image_id: null
+- key: the-manifest
+  lane: riso-1
+  title: The Manifest (book card, redesigned)
+  size: 1024x1024
+  seed: 226696
+  prompt_prose: a towering creature with a long sheet of pale skin unrolling from a thick coiled base, glowing rows
+    of script on its surface, a small head peering over the top edge
+  asset: cthulhuquarium/card/the-manifest
+  jobs:
+    riso-1: 76423
+  art:
+    riso-1:
+      status: PENDING
+      art_image_id: null
+- key: the-permanent-collection
+  lane: haeckel-1
+  title: The Permanent Collection (book card, redesigned)
+  size: 1024x1024
+  seed: 640415
+  prompt_prose: a vast slow armoured creature whose shell is a round display cabinet of concentric rings, hundreds
+    of small pinned specimens fixed in the rings, a heavy plated head
+  asset: cthulhuquarium/card/the-permanent-collection
+  jobs:
+    haeckel-1: 76424
+  art:
+    haeckel-1:
+      status: PENDING
+      art_image_id: null
+- key: the-provision
+  lane: trade-card-2
+  title: The Provision (book card, redesigned)
+  size: 1024x1024
+  seed: 497501
+  prompt_prose: a small plain guppy with an oversized fan tail carrying a woven reed basket of wriggling grubs in
+    its mouth
+  asset: cthulhuquarium/card/the-provision
+  jobs:
+    trade-card-2: 76425
+  art:
+    trade-card-2:
+      status: PENDING
+      art_image_id: null
+- key: the-receiving-line
+  lane: riso-1
+  title: The Receiving Line (book card, redesigned)
+  size: 1024x1024
+  seed: 282521
+  prompt_prose: a procession of five arched bell-shaped creatures in a row, each smaller than the last, warm light
+    inside each bell dimming down the line
+  asset: cthulhuquarium/card/the-receiving-line
+  jobs:
+    riso-1: 76426
+  art:
+    riso-1:
+      status: PENDING
+      art_image_id: null
+- key: the-silence
+  lane: riso-1
+  title: The Silence (book card, redesigned)
+  size: 1024x1024
+  seed: 858725
+  prompt_prose: a wide soft grey-white ray with velvet skin, enormous dark calm eyes, its tiny mouth sewn shut with
+    a single neat stitch
+  asset: cthulhuquarium/card/the-silence
+  jobs:
+    riso-1: 76427
+  art:
+    riso-1:
+      status: PENDING
+      art_image_id: null
+- key: the-stocktake
+  lane: scraperboard-1
+  title: The Stocktake (book card, redesigned)
+  size: 1024x1024
+  seed: 951283
+  prompt_prose: a huge angular stick-insect creature with long jointed limbs, one limb holding a quill drawing a
+    line, shelf-shaped plates along its back stacked with tiny jars
+  asset: cthulhuquarium/card/the-stocktake
+  jobs:
+    scraperboard-1: 76428
+  art:
+    scraperboard-1:
+      status: PENDING
+      art_image_id: null
+- key: the-substrate
+  lane: scraperboard-1
+  title: The Substrate (book card, redesigned)
+  size: 1024x1024
+  seed: 651620
+  prompt_prose: a wide flat creature camouflaged as a gravel bed, its back covered in coarse gravel arranged in
+    flowing lines, one huge eye opening in the middle
+  asset: cthulhuquarium/card/the-substrate
+  jobs:
+    scraperboard-1: 76429
+  art:
+    scraperboard-1:
+      status: PENDING
+      art_image_id: null
+- key: the-undercurrent
+  lane: gosse-2
+  title: The Undercurrent (book card, redesigned)
+  size: 1024x1024
+  seed: 866916
+  prompt_prose: a long pale eel-loach with a keel-shaped back fin and gravel-coloured mottling, a small plough-blade
+    snout
+  asset: cthulhuquarium/card/the-undercurrent
+  jobs:
+    gosse-2: 76430
+  art:
+    gosse-2:
+      status: PENDING
+      art_image_id: null
+- key: the-waiting-list
+  lane: riso-1
+  title: The Waiting List (book card, redesigned)
+  size: 1024x1024
+  seed: 792084
+  prompt_prose: a very long vertical chain of small sleeping pod creatures linked nose to tail, the bottom pod awake
+    with one open eye
+  asset: cthulhuquarium/card/the-waiting-list
+  jobs:
+    riso-1: 76431
+  art:
+    riso-1:
+      status: PENDING
+      art_image_id: null
+- key: the-watershed
+  lane: haeckel-1
+  title: The Watershed (book card, redesigned)
+  size: 1024x1024
+  seed: 661205
+  prompt_prose: a round radial jelly-star creature with fine branching glowing channels converging toward one dark
+    centre
+  asset: cthulhuquarium/card/the-watershed
+  jobs:
+    haeckel-1: 76432
+  art:
+    haeckel-1:
+      status: PENDING
+      art_image_id: null
+- key: wrapping-sole
+  lane: gosse-4
+  title: Wrapping Sole (book card, redesigned)
+  size: 1024x1024
+  seed: 840156
+  prompt_prose: a flat sandy sole wrapped over the edge of a stone, its skin patterned in brown-paper creases with
+    a string line crossing its back, both eyes on its upper side
+  asset: cthulhuquarium/card/wrapping-sole
+  jobs:
+    gosse-4: 76433
+  art:
+    gosse-4:
+      status: PENDING
+      art_image_id: null

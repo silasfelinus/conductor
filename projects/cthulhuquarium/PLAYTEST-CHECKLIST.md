@@ -100,3 +100,28 @@ player (two 10-minute visits a day) at:
 - [ ] The five plates first rendered 2026-11-02 were never lost. They were private
       images the delivery fetch couldn't read without authentication. That's fixed,
       and they are delivered.
+
+## 7. Sound and music (t-110)
+
+Sound starts off. Turn it on with the speaker in the HUD; Settings has Volume and a
+Music toggle. Everything is synthesized in the browser, no audio files.
+
+- [ ] The theme starts a moment after sound is switched on: a slow music box over a
+      soft pad. *Question: does it suit the shop, and does it get tiresome?*
+- [ ] Buy a key and go down: each floor's variation is lower, slower and darker (the
+      Bottom of Things is a drone with a few far bells). It changes at the end of a
+      phrase, not mid-note.
+- [ ] Every action has a small sound: buying, the reveal, releasing, cleaning,
+      upgrades, the floor key (keys, then a lock far below), decor, sets, new
+      scenery, milestones, the book complete, the finale, scene page-turns and
+      replies, tab changes, and a soft knock when something can't be bought yet.
+      *Question: is anything too loud, too frequent or missing?*
+- [ ] Music off in Settings stops the theme and keeps the effects.
+
+## 8. Art added after the audit (t-110)
+
+- [ ] The six decorations and the Roaming Collector are painted cut-outs in the tank
+      and the Relics shop (they were emoji).
+- [ ] The book cards of the 44 species redesigned on 2026-11-05 match the creature
+      that swims (they showed the old concept).
+- [ ] The room upgrade has its own plate.
