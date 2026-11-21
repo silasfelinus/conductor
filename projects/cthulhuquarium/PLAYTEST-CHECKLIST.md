@@ -1,7 +1,8 @@
 # Cthulhuquarium: human playtest checklist
 
 For Silas, at `/play/aquarium` on kindrobots.org once the next Force Update has
-deployed kind_robots #5472 and #5479. This is a handoff sheet, not a gate. It
+deployed kind_robots #5472, #5479, #5497 (canon rarity and floor keys), #5498
+(settings, title card, endings) and the QA-fixes PR that follows #5499. This is a handoff sheet, not a gate. It
 lists what to look at and what each thing should feel like, so a verdict can
 be specific. Allow 20–30 minutes on a phone and 10 on a desktop. Use a **fresh
 account** for parts 1–3 and your own tank for part 4.
@@ -13,7 +14,12 @@ account** for parts 1–3 and your own tank for part 4.
 - [ ] The tutorial beats (buy a free fish, Feed) drop to the small sheet so the
       buttons stay reachable. The intro's last line from Charlotte promises "floors below
       this one".
-- [ ] The HUD shows a **"I · The Shop Floor"** capsule.
+- [ ] The HUD shows a **"I · The Shop Floor"** capsule. On a phone, nothing in the
+      HUD is cut off at the right edge.
+- [ ] Reload in a new tab. A **title card** appears once per browser session, over
+      the arrival plate: Enter the tank, Memory Book, Settings and Achievements.
+- [ ] The **gear** opens Settings: volume, text speed, larger story text, high
+      contrast and motion. The changes should show in the next scene. Esc closes it.
 - [ ] The Market has today's commons, plus three **black silhouettes** reading
       "Something further down — Below Stairs opens when you know 10 species".
       *Question: does the tease make you want to get there?*
@@ -22,7 +28,10 @@ account** for parts 1–3 and your own tank for part 4.
 
 - [ ] At 5 species the **Kelp Stair** scene plays full-screen, over its own
       painted plate once that render is harvested, and the room's art until then.
-- [ ] At 10 species, **Below Stairs** plays:
+- [ ] At 10 species nothing plays yet. The toast says Charlotte has the key behind
+      the counter, and the Market shows **"The key to Below Stairs · 150"**.
+      *Question: does buying a key feel like an event, or like a toll?*
+- [ ] Buying the key plays **Below Stairs**:
   - the pantry is the backdrop;
   - Charlotte hands over the key;
   - Wilbur takes the lamp;
@@ -55,33 +64,39 @@ account** for parts 1–3 and your own tank for part 4.
       with a short Wilbur and Charlotte scene.
 - [ ] If you bought The Last Aquarium, "After the Last Aquarium" plays once.
       *Question: does it land as a soft ending without breaking the mystery?*
+- [ ] The Memory Book's **Endings** shelf shows three cards. Each is dark until
+      earned: Every One (book complete), After the Last Aquarium, and The Bottom of
+      Things (the floor V key).
 
-## 5. Pacing (the open question)
+## 5. Pacing (decided 2026-11-21: canon rarity + slower floors)
 
-The simulator `projects/cthulhuquarium/data/simulate_descent.py` (a very active
-collector clicking 80% of coins) opens the floors at **2 / 6 / 17 minutes** and
-fills the book in **about 1h20m**. The server pays and prices each fish by the
-highest of its six stat rarities, a leftover of the removed hidden-stats
-system. Pricing by each fish's canon rarity instead gives **2 / 6 / 21 / 46
-minutes** and about 2 hours.
+Each fish is now priced and paid by its canon rarity, and each floor needs a
+one-time key: 150, 3,000, 30,000 and 400,000 coins. Tanks that reached a floor
+before the change keep it. The simulator (`ECONOMY-SUITE.md`) puts a casual
+player (two 10-minute visits a day) at:
 
-*Question: should the descent take days rather than an afternoon?* If so, the
-levers are:
-- price and pay by canon rarity;
-- raise the floor thresholds;
-- give each floor an entry cost.
+| Floor | Day |
+|---|---|
+| II | 1 |
+| III | 2 |
+| IV | 5 |
+| V | about 14.5 |
+| Book complete | about 16 |
 
-That's a balance decision for you; it's recorded on t-094.
+- [ ] *Question: does the long save for the floor V key drag?* Once floors I–IV are
+      bought out, a casual player waits about 8 days with no new species, only
+      decor, sets and upgrades to buy. If it drags, 250,000 shortens that to about
+      5 days. That's a one-constant change.
 
-## 6. Art to judge as it arrives
+## 6. Art to judge
 
-These renders were submitted directly through the canon pipeline on 2026-11-21
-(30 jobs in canon `art/jobs.yaml`) and reach the game with the next `deliver.sh`
-run plus a kind_robots sync:
-
-- [ ] Wilbur's 20 per-floor portraits. He should look a little worse on each floor, and
-      nobody should mention it. *Question: is the escalation funny-dark or too much?*
-- [ ] Five scene plates: the first creature from each floor, and the post-finale.
-- [ ] Five plates first rendered 2026-11-02 and never delivered (first purchase,
-      bestiary complete, Kelp Stair, Portsmouth, Hatchery). Those images are gone
-      from the server (404), so they were re-rendered in the same batch.
+- [ ] Wilbur's per-floor portraits: 15 of 20 are delivered (canon #86). Five were
+      rejected for a magenta "bruise" or a pale bar and are re-rendering
+      (`art/WILBUR-FLOORS-KONTEXT-2.yaml`). Until they land, those beats use his base
+      pose. He should look a little worse on each floor, and nobody should mention
+      it. *Question: is the escalation funny-dark or too much?*
+- [ ] The floor scene plates, the post-finale plate and the Bottom of Things ending
+      plate.
+- [ ] The five plates first rendered 2026-11-02 were never lost. They were private
+      images the delivery fetch couldn't read without authentication. That's fixed,
+      and they are delivered.
