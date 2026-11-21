@@ -976,9 +976,11 @@ tasks:
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-21T12:41:00Z'
+    updated: '2026-11-21T12:46:00Z'
     note: |-
       Reviewer kaizen from the 2026-11-21 PT rescue merge of conductor#7748 (fixture wrote escaped backslashes, so every WebP fixture was invalid; the same bug hit rainbow#7747's WebM magic check in production code). Add a small lint test over scripts/ and tests/ that flags a backslash-backslash-x sequence inside a bytes literal, with an allow-list for intentional cases, so the connector Worker's escaping habit is caught before CI runs the logic.
+
+      Implemented tokenize-based CI regression guard for double-escaped hex in bytes literals across scripts and tests, with detector cases and explicit exception hook. Worker branch worker/game-of-captains-t-043-bytes-lint-b7c29; pending exact-head CI and merge.
     owner: worker
     claimed_by: 20261121T124100Z-goc-t043-b7c29
     claimed_at: '2026-11-21T12:41:00Z'
