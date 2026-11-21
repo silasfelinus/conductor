@@ -1049,14 +1049,17 @@ tasks:
   - id: t-052
     milestone: m4
     title: "Check each queued opening WAN job against the export clip budget (8s, 128 frames) at queue time so over-budget renders fail before spending GPU time"
-    status: ready
+    status: claimed
     depends_on: []
     passes: 0
     stakes: reversible
-    updated: '2026-11-21T20:55:00Z'
+    updated: '2026-11-21T22:36:00Z'
     source: kaizen-pr-7768
     note: |-
       Reviewer kaizen from the 2026-11-21 PT merge of conductor#7768, which caps opening clip decode at MAX_CLIP_SECONDS=8 / MAX_CLIP_FRAMES=128 in scripts/export_rainbow_opening.py. A WAN job queued with a longer length would now render fine and then be rejected at export. Share the constants with the opening queue/ledger code and fail loudly at queue time, with a test.
+    owner: worker
+    claimed_by: 20261121T223600Z-rainbow-t052-r8p6
+    claimed_at: '2026-11-21T22:36:00Z'
   - id: t-053
     milestone: m4
     title: "Fold opening-rejected-clips.json into opening-delivery-report.json so the opening export writes one review sidecar instead of two overlapping ones"
