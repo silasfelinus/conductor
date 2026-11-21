@@ -222,3 +222,9 @@ Companion kind_robots#4764 was already on main, so merge order held. CI green on
 - **Decision:** merged (38a48b1) on green exact-head CI. Small, reversible, in scope: ffmpeg decode now carries `-t 8` and `-frames:v 128`, ffprobe rejects clips over 8s / 128 frames before decode, animated images over budget are rejected before seeking, and the decoded count is bounded. 15 tests pass locally.
 - **Finding:** the earlier review's double-escaped `b"\\x00"` fixture was fixed by the Worker (same escaping slip as #7752's predecessor). Handoff check red again on a prose body — fourth time today on this project; the Reviewer added the template headings, diff unchanged. Untracked follow-up (no task id), like #7752.
 - **Suggestion:** template the body and run `check_pr_handoff_template.py` before opening. Kaizen t-052 (queue-time clip budget).
+
+## 2026-11-21 PT · Reviewer: t-051 opening delivery report (#7774)
+
+- **Decision:** merged (e94f0e5) on green exact-head CI. Small, reversible, in scope: `delivery_report()` writes `opening-delivery-report.json` with accepted shots, rejected shots, WAN requeue shots and still-fallback shots, and prints the requeue keys at export. Pending, unrendered shots are correctly kept out of the requeue list, and two tests assert the exact keys. This closes the half of t-050 that was left open.
+- **Finding:** once more the only red check was Validate Worker PR handoff, on a prose body (Change/Verification/Handoff). That makes five today. The Reviewer rewrote the body with the template headings; the diff was unchanged. The handoff check went green on re-run.
+- **Suggestion:** this is now systematic. Whatever opens these Worker PRs should start from the AGENTS.md template rather than prose. Kaizen t-053 folds the now-duplicate `opening-rejected-clips.json` sidecar into the report.
