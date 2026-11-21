@@ -116,15 +116,12 @@ tasks:
       These 100 anchors are outlines, not implemented daily script records.
   - id: t-063
     title: 'Export and wire the ~430 rendered Emperor images that never reached the game'
-    status: claimed
-    owner: worker
-    claimed_by: 20261121T1121Z-eod-art-audit-9c41
-    claimed_at: '2026-11-21T11:17:03.471Z'
+    status: ready
     milestone: m5
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-21T11:17:03.471Z'
+    updated: '2026-11-21T11:18:19.758Z'
     note: |-
       Silas 2026-11-11 PT, in session: "If there is unmade art it should definitely be added to the pipeline."
 
@@ -178,6 +175,8 @@ tasks:
       Partial physical export delivery increment on worker/emperor-of-dust-t-063-media-batch-4f2c: source-ledger crawler audits original eight DONE endings and the remaining Emperor ArtImages, separates reviewed keepers from unreviewed and rejected renders, fails closed on conflicting rerolls, batches verified keeper IDs and asset paths into the admin-authenticated durable-media endpoint, validates per-file provenance receipts, and adds CI tests plus a manual-only workflow with an explicit publication approval input. This does NOT re-render or export any artwork by itself; original image pixels still require private review and authenticated delivery. Keep t-063 open after partial merge, #4142 open.
 
       Recovered stale review: predecessor session 20261121T0419Z-eod-t063-api-client-4f2c left task in review after its PR #7723 was closed as rescued. Conductor PR #7726 already merged the reviewed delivery-client code and WebP fixture fix (squash c77133d977d44aaddf6ec615b732277e34f89055). PR #7723 explicitly says superseded via rescue; its branch is gone and no open Emperor-specific Conductor PR remains. This nonrecurring task is partial: no verified physical ArtImage exports, visually approved ending plates, dedicated asset manifest deliveries or cross-width in-app checks. Return t-063 to ready for authenticated curation and physical-media integration; do not treat queued/DONE ArtJobs or delivered scripts as shipped art.
+
+      Partial art queue deduplication sprint 2026-11-21: audited historical Emperor ledgers (1214 DONE ArtImages in prior audit) and established that 879 audience-choice and 270 chance-choice slots are not 1149 unique unrendered requests. Conductor PR #7745 adds 15 genuinely new market-account story plates as an auto_submit private art ledger, with stable destination paths and unique prompts. Auto Art Generate on main will enqueue them only after merge and healthy API/render-box checks; no new ArtJob IDs are yet verified. Existing DONE ArtImages remain an authenticated physical-delivery and curation backlog, not a reason to regenerate. Keep t-063 ready and #4142 open; do not claim actual submission or media delivery from ledger authoring alone.
   - id: t-064
     title: 'Painted ending plates and a persistent Endings gallery / reign scrapbook'
     status: needs-human
