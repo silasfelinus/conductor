@@ -68,5 +68,12 @@ def test_t018_private_one_hit_telegraph_art_contract():
             prose = item["prompt_prose"]
             assert 120 <= len(prose) <= 900
             assert not re.search(r"\b(?:no|not|without|frame|caption|title|text)\b", prose, re.I)
-            assert "jobs" not in item
-            assert "art" not in item
+            # Drafts carry no receipts; after the auto-submit checkpoint the only
+            # allowed receipt is one real ArtJob id (plus status) for this lane.
+            if "jobs" in item or "art" in item:
+                assert set(item.get("jobs") or {}) == {item["lane"]}
+                job_id = item["jobs"][item["lane"]]
+                assert isinstance(job_id, int) and job_id > 0
+                assert set(item.get("art") or {}) <= {item["lane"]}
+                for state in (item.get("art") or {}).values():
+                    assert state.get("status")

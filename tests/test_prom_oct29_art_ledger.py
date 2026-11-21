@@ -41,7 +41,14 @@ def test_oct29_private_production_contract():
             assert item["size"] == ("768x1024" if variant == "portrait" else "1344x768")
             assert 120 <= len(item["prompt_prose"]) <= 900
             assert not re.search(r"\b(?:no|not|without|frame|chapter)\b", item["prompt_prose"], re.I)
-            assert "jobs" not in item, "request drafting does not invent accepted ArtJob IDs"
-            assert "art" not in item, "request drafting does not claim an ArtImage delivery"
+            # Drafts carry no receipts; after the auto-submit checkpoint the only
+            # allowed receipt is one real ArtJob id (plus status) for this lane.
+            if "jobs" in item or "art" in item:
+                assert set(item.get("jobs") or {}) == {item["lane"]}, "receipt lane matches request"
+                job_id = item["jobs"][item["lane"]]
+                assert isinstance(job_id, int) and job_id > 0, "receipt is a real accepted ArtJob id"
+                assert set(item.get("art") or {}) <= {item["lane"]}
+                for state in (item.get("art") or {}).values():
+                    assert state.get("status"), "ArtImage receipt records a status"
     for cast_member in pitch["characters"]:
         assert any(row["title"].startswith(cast_member["name"]) for row in subjects)
