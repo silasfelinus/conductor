@@ -168,6 +168,7 @@ def clip_frames(payload: bytes):
             source.write_bytes(payload)
             command = [
                 "ffmpeg", "-v", "error", "-nostdin", "-i", str(source),
+                "-t", str(MAX_CLIP_SECONDS),
                 "-vf",
                 f"fps={CLIP_FPS},scale={SIZE[0]}:{SIZE[1]}:force_original_aspect_ratio=increase,"
                 f"crop={SIZE[0]}:{SIZE[1]}",
@@ -189,7 +190,10 @@ def clip_frames(payload: bytes):
     else:
         image = Image.open(io.BytesIO(payload))
         frames = []
-        for index in range(getattr(image, "n_frames", 1)):
+        frame_count = getattr(image, "n_frames", 1)
+        if frame_count > MAX_CLIP_FRAMES:
+            raise ValueError(f"excessive animated image frames {frame_count}")
+        for index in range(frame_count):
             image.seek(index)
             frames.append(cover(image.convert("RGB")))
     # WAN settles from the sharp plate over its first frames; skip them.
