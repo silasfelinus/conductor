@@ -148,6 +148,10 @@ def reconcile(plan, write=False, http_json=None, base_url=None):
     candidates = plan["keepers"] if write else (
         plan["keepers"] + plan["unreviewed"]
     )
+    if write and not candidates:
+        raise RuntimeError(
+            "No curator-approved keeper ArtImages in this scope; no media written."
+        )
     results = []
     for batch in chunks(candidates):
         payload = {
