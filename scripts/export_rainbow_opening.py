@@ -50,6 +50,8 @@ FPS = 24
 SIZE = (1280, 720)
 CLIP_FPS = 16
 CLIP_SPEED = 1.5
+MAX_CLIP_FRAMES = 128
+MAX_CLIP_SECONDS = 8
 # (ledger key, beats). The title slams on over the last TITLE_BEATS beats of the final shot.
 SHOTS = [
     ("opening-01-palace-storm", 8),
@@ -166,9 +168,11 @@ def clip_frames(payload: bytes):
             source.write_bytes(payload)
             command = [
                 "ffmpeg", "-v", "error", "-nostdin", "-i", str(source),
+                "-t", str(MAX_CLIP_SECONDS),
                 "-vf",
                 f"fps={CLIP_FPS},scale={SIZE[0]}:{SIZE[1]}:force_original_aspect_ratio=increase,"
                 f"crop={SIZE[0]}:{SIZE[1]}",
+                "-frames:v", str(MAX_CLIP_FRAMES),
                 "-f", "rawvideo", "-pix_fmt", "rgb24", "pipe:1",
             ]
             result = subprocess.run(command, capture_output=True, check=False, timeout=90)
@@ -186,7 +190,10 @@ def clip_frames(payload: bytes):
     else:
         image = Image.open(io.BytesIO(payload))
         frames = []
-        for index in range(getattr(image, "n_frames", 1)):
+        frame_count = getattr(image, "n_frames", 1)
+        if frame_count > MAX_CLIP_FRAMES:
+            raise ValueError(f"excessive animated image frames {frame_count}")
+        for index in range(frame_count):
             image.seek(index)
             frames.append(cover(image.convert("RGB")))
     # WAN settles from the sharp plate over its first frames; skip them.
@@ -220,13 +227,13 @@ def validated_clip(payload: bytes, key: str, expected_size=(832, 480)) -> list |
                 raise ValueError(f"undersized video {width}x{height}")
             # Bound untrusted WAN media before decoding full RGB frames into memory.
             duration = streams[0].get("duration") or json.loads(probe.stdout).get("format", {}).get("duration")
-            if duration is None or not (0.5 <= float(duration) <= 20):
+            if duration is None or not (0.5 <= float(duration) <= MAX_CLIP_SECONDS):
                 raise ValueError(f"invalid video duration {duration}")
             frame_count = streams[0].get("nb_frames")
-            if frame_count not in (None, "N/A") and int(frame_count) > 480:
+            if frame_count not in (None, "N/A") and int(frame_count) > MAX_CLIP_FRAMES:
                 raise ValueError(f"excessive video frames {frame_count}")
         frames = clip_frames(payload)
-        if len(frames) < 12 or not all(isinstance(frame, Image.Image) for frame in frames):
+        if not 12 <= len(frames) <= MAX_CLIP_FRAMES or not all(isinstance(frame, Image.Image) for frame in frames):
             raise ValueError(f"insufficient decoded frames ({len(frames)})")
         return frames
     except (OSError, ValueError, KeyError, RuntimeError, OverflowError, subprocess.SubprocessError) as exc:

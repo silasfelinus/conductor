@@ -132,6 +132,40 @@ class DoodleOpeningTests(unittest.TestCase):
         ):
             self.assertEqual(opening.validated_clip(payload, "good-shot"), frames)
 
+    def test_decode_command_has_hard_frame_ceiling(self):
+        """Even inaccurate ffprobe metadata cannot trigger unbounded RGB output."""
+        payload = b"0000ftyp" + b"video-payload"
+        frame_bytes = opening.SIZE[0] * opening.SIZE[1] * 3
+        fake = subprocess.CompletedProcess([], 0, stdout=b"\x00" * frame_bytes, stderr=b"")
+        with patch.object(opening.subprocess, "run", return_value=fake) as run:
+            frames = opening.clip_frames(payload)
+        self.assertEqual(len(frames), 1)
+        command = run.call_args.args[0]
+        self.assertEqual(command[command.index("-frames:v") + 1], str(opening.MAX_CLIP_FRAMES))
+        self.assertEqual(command[command.index("-t") + 1], str(opening.MAX_CLIP_SECONDS))
+
+    def test_animated_image_frame_budget_rejects_before_decode(self):
+        image = unittest.mock.MagicMock()
+        image.n_frames = opening.MAX_CLIP_FRAMES + 1
+        with patch.object(Image, "open", return_value=image):
+            with self.assertRaisesRegex(ValueError, "excessive animated image frames"):
+                opening.clip_frames(b"animated-image-payload")
+        image.seek.assert_not_called()
+
+    def test_rejects_clip_exceeding_decode_budget(self):
+        payload = b"0000ftyp" + b"video-payload"
+        probe = subprocess.CompletedProcess(
+            [], 0, stdout=json.dumps({"streams": [{
+                "width": 1280, "height": 720, "duration": "9.0", "nb_frames": "120"
+            }]}), stderr="",
+        )
+        with (
+            patch.object(opening.subprocess, "run", return_value=probe),
+            patch.object(opening, "clip_frames") as decode,
+        ):
+            self.assertIsNone(opening.validated_clip(payload, "over-budget"))
+            decode.assert_not_called()
+
     def test_original_ledger_still_works(self):
         old = {
             "round": "opening-clips-1",
