@@ -56,6 +56,7 @@ jobs:
           git sparse-checkout init --no-cone
           git sparse-checkout set --no-cone \
             '/projects/*/roadmap.yaml' \
+            '/project-overrides.yaml' \
             '/task-events/*.yaml' \
             '/task-events/failed/*' \
             '/scripts/*.py' \
@@ -105,6 +106,9 @@ jobs:
             if [ -f scripts/repair_duplicate_updated.py ]; then
               python3 scripts/repair_duplicate_updated.py
             fi
+            # Expired claims stay visibly claimed forever unless reconciled.
+            # Run in this serialized, fetch/retry-safe writer so a newer claim wins.
+            python3 scripts/reconcile_stale_claims.py --apply
             python3 scripts/process_task_events.py || had_error=1
             python3 scripts/validate_roadmaps.py
 
