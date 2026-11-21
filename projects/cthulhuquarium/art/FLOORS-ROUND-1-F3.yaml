@@ -1,0 +1,112 @@
+# Cthulhuquarium descent, round 1, floor 3 (conductor t-103, Silas 2026-11-21 PT: "use the character
+# models for interstitial storytelling" and, asked, "Yes, escalate" for Wilbur).
+# 20 Wilbur dialogue portraits, one set of five poses per floor II-V, each floor's injuries
+# added to the last (canon characters/wilbur-stint.yaml art.floor_variants), plus the five new
+# scene plates (canon story/plates.yaml: four first-of-floor plates and the post-finale plate).
+# Prompts are copied verbatim from the canon's render_art.py jobs, so `canon_key` lets the canon
+# repo adopt the finished ArtJobs (`python3 scripts/render_art.py adopt --ledger <this file>`)
+# and `harvest`/deliver.sh brings them into the game; nothing here is delivered by itself.
+# auto_submit: true. Private. Queued is not rendered; rendered is not delivered.
+round: cthulhuquarium-floors-round-1-f3
+project_slug: cthulhuquarium
+designer: Cthulhuquarium descent (t-103)
+is_public: false
+is_mature: false
+cast_loras: false
+auto_submit: true
+lanes:
+- key: krea2
+  label: Krea 2, the canon tank and portrait register
+  engine: krea2
+  prompt: prose
+subjects:
+- key: floors-wilbur-stint-greeting-f3
+  lane: krea2
+  entity: cthulhuquarium-story
+  title: wilbur stint greeting f3
+  canon_key: portraits/wilbur-stint-greeting-f3
+  size: 896x1152
+  seed: 893106
+  prompt_prose: waist-up portrait of Wilbur Stint, a weary injured sad-sack man with his right arm in a thick white
+    plaster cast held in a sling, several adhesive bandages stuck across his nose, forehead and chin, a bald patch
+    on the top of his head with long lank stringy brown hair hanging past his shoulders around it, round wire spectacles
+    with one lens cracked and taped, a long droopy melancholy face with tired baggy eyes, stubble, three fingers
+    of his left hand wrapped in gauze bandage, a scratch on one cheek, gangly and stooped with hunched shoulders,
+    rumpled rolled shirtsleeves and a shabby waistcoat missing a button, a pencil behind his ear, a fresh square
+    of white gauze taped over his left eyebrow, a second sticking plaster across the bridge of his nose, a crepe
+    bandage wound around his throat, a row of small round red sucker-mark bruises along his jaw, raising his bandaged
+    left hand in a small shy wave, a hopeful lopsided smile arriving late, hand-tinted albumen carte-de-visite photograph,
+    warm sepia and deep blacks, painted tint on his cheeks and the white of the plasters, crisp studio focus, isolated
+    on a plain flat pale grey studio backdrop, even soft light
+- key: floors-wilbur-stint-explaining-f3
+  lane: krea2
+  entity: cthulhuquarium-story
+  title: wilbur stint explaining f3
+  canon_key: portraits/wilbur-stint-explaining-f3
+  size: 896x1152
+  seed: 893107
+  prompt_prose: waist-up portrait of Wilbur Stint, a weary injured sad-sack man with his right arm in a thick white
+    plaster cast held in a sling, several adhesive bandages stuck across his nose, forehead and chin, a bald patch
+    on the top of his head with long lank stringy brown hair hanging past his shoulders around it, round wire spectacles
+    with one lens cracked and taped, a long droopy melancholy face with tired baggy eyes, stubble, three fingers
+    of his left hand wrapped in gauze bandage, a scratch on one cheek, gangly and stooped with hunched shoulders,
+    rumpled rolled shirtsleeves and a shabby waistcoat missing a button, a pencil behind his ear, a fresh square
+    of white gauze taped over his left eyebrow, a second sticking plaster across the bridge of his nose, a crepe
+    bandage wound around his throat, a row of small round red sucker-mark bruises along his jaw, holding up a small
+    brass tin of fish food in his bandaged hand to show it, earnest concentrating expression, eyebrows raised helpfully,
+    hand-tinted albumen carte-de-visite photograph, warm sepia and deep blacks, painted tint on his cheeks and the
+    white of the plasters, crisp studio focus, isolated on a plain flat pale grey studio backdrop, even soft light
+- key: floors-wilbur-stint-wince-f3
+  lane: krea2
+  entity: cthulhuquarium-story
+  title: wilbur stint wince f3
+  canon_key: portraits/wilbur-stint-wince-f3
+  size: 896x1152
+  seed: 893108
+  prompt_prose: waist-up portrait of Wilbur Stint, a weary injured sad-sack man with his right arm in a thick white
+    plaster cast held in a sling, several adhesive bandages stuck across his nose, forehead and chin, a bald patch
+    on the top of his head with long lank stringy brown hair hanging past his shoulders around it, round wire spectacles
+    with one lens cracked and taped, a long droopy melancholy face with tired baggy eyes, stubble, three fingers
+    of his left hand wrapped in gauze bandage, a scratch on one cheek, gangly and stooped with hunched shoulders,
+    rumpled rolled shirtsleeves and a shabby waistcoat missing a button, a pencil behind his ear, a fresh square
+    of white gauze taped over his left eyebrow, a second sticking plaster across the bridge of his nose, a crepe
+    bandage wound around his throat, a row of small round red sucker-mark bruises along his jaw, flinching with
+    a pained brave grimace, shoulders hunched up to his ears, a brand-new plaster on his thumb, hand-tinted albumen
+    carte-de-visite photograph, warm sepia and deep blacks, painted tint on his cheeks and the white of the plasters,
+    crisp studio focus, isolated on a plain flat pale grey studio backdrop, even soft light
+- key: floors-wilbur-stint-hopeful-f3
+  lane: krea2
+  entity: cthulhuquarium-story
+  title: wilbur stint hopeful f3
+  canon_key: portraits/wilbur-stint-hopeful-f3
+  size: 896x1152
+  seed: 893109
+  prompt_prose: waist-up portrait of Wilbur Stint, a weary injured sad-sack man with his right arm in a thick white
+    plaster cast held in a sling, several adhesive bandages stuck across his nose, forehead and chin, a bald patch
+    on the top of his head with long lank stringy brown hair hanging past his shoulders around it, round wire spectacles
+    with one lens cracked and taped, a long droopy melancholy face with tired baggy eyes, stubble, three fingers
+    of his left hand wrapped in gauze bandage, a scratch on one cheek, gangly and stooped with hunched shoulders,
+    rumpled rolled shirtsleeves and a shabby waistcoat missing a button, a pencil behind his ear, a fresh square
+    of white gauze taped over his left eyebrow, a second sticking plaster across the bridge of his nose, a crepe
+    bandage wound around his throat, a row of small round red sucker-mark bruises along his jaw, clutching a clipboard
+    to his chest with his good hand, a small shy genuinely pleased smile, eyes bright behind the cracked spectacles,
+    hand-tinted albumen carte-de-visite photograph, warm sepia and deep blacks, painted tint on his cheeks and the
+    white of the plasters, crisp studio focus, isolated on a plain flat pale grey studio backdrop, even soft light
+- key: floors-wilbur-stint-alarmed-f3
+  lane: krea2
+  entity: cthulhuquarium-story
+  title: wilbur stint alarmed f3
+  canon_key: portraits/wilbur-stint-alarmed-f3
+  size: 896x1152
+  seed: 893110
+  prompt_prose: waist-up portrait of Wilbur Stint, a weary injured sad-sack man with his right arm in a thick white
+    plaster cast held in a sling, several adhesive bandages stuck across his nose, forehead and chin, a bald patch
+    on the top of his head with long lank stringy brown hair hanging past his shoulders around it, round wire spectacles
+    with one lens cracked and taped, a long droopy melancholy face with tired baggy eyes, stubble, three fingers
+    of his left hand wrapped in gauze bandage, a scratch on one cheek, gangly and stooped with hunched shoulders,
+    rumpled rolled shirtsleeves and a shabby waistcoat missing a button, a pencil behind his ear, a fresh square
+    of white gauze taped over his left eyebrow, a second sticking plaster across the bridge of his nose, a crepe
+    bandage wound around his throat, a row of small round red sucker-mark bruises along his jaw, eyes wide with
+    alarm behind his spectacles, leaning back, his long hair swinging, the net raised defensively across his body,
+    hand-tinted albumen carte-de-visite photograph, warm sepia and deep blacks, painted tint on his cheeks and the
+    white of the plasters, crisp studio focus, isolated on a plain flat pale grey studio backdrop, even soft light

@@ -1,0 +1,185 @@
+# Cthulhuquarium descent, round 1, floor 2 (with the five new scene plates) (conductor t-103, Silas 2026-11-21 PT: "use the character
+# models for interstitial storytelling" and, asked, "Yes, escalate" for Wilbur).
+# 20 Wilbur dialogue portraits, one set of five poses per floor II-V, each floor's injuries
+# added to the last (canon characters/wilbur-stint.yaml art.floor_variants), plus the five new
+# scene plates (canon story/plates.yaml: four first-of-floor plates and the post-finale plate).
+# Prompts are copied verbatim from the canon's render_art.py jobs, so `canon_key` lets the canon
+# repo adopt the finished ArtJobs (`python3 scripts/render_art.py adopt --ledger <this file>`)
+# and `harvest`/deliver.sh brings them into the game; nothing here is delivered by itself.
+# auto_submit: true. Private. Queued is not rendered; rendered is not delivered.
+round: cthulhuquarium-floors-round-1-f2
+project_slug: cthulhuquarium
+designer: Cthulhuquarium descent (t-103)
+is_public: false
+is_mature: false
+cast_loras: false
+auto_submit: true
+lanes:
+- key: krea2
+  label: Krea 2, the canon tank and portrait register
+  engine: krea2
+  prompt: prose
+subjects:
+- key: floors-wilbur-stint-greeting-f2
+  lane: krea2
+  entity: cthulhuquarium-story
+  title: wilbur stint greeting f2
+  canon_key: portraits/wilbur-stint-greeting-f2
+  size: 896x1152
+  seed: 893101
+  prompt_prose: waist-up portrait of Wilbur Stint, a weary injured sad-sack man with his right arm in a thick white
+    plaster cast held in a sling, several adhesive bandages stuck across his nose, forehead and chin, a bald patch
+    on the top of his head with long lank stringy brown hair hanging past his shoulders around it, round wire spectacles
+    with one lens cracked and taped, a long droopy melancholy face with tired baggy eyes, stubble, three fingers
+    of his left hand wrapped in gauze bandage, a scratch on one cheek, gangly and stooped with hunched shoulders,
+    rumpled rolled shirtsleeves and a shabby waistcoat missing a button, a pencil behind his ear, a fresh square
+    of white gauze taped over his left eyebrow, a second sticking plaster across the bridge of his nose, raising
+    his bandaged left hand in a small shy wave, a hopeful lopsided smile arriving late, hand-tinted albumen carte-de-visite
+    photograph, warm sepia and deep blacks, painted tint on his cheeks and the white of the plasters, crisp studio
+    focus, isolated on a plain flat pale grey studio backdrop, even soft light
+- key: floors-wilbur-stint-explaining-f2
+  lane: krea2
+  entity: cthulhuquarium-story
+  title: wilbur stint explaining f2
+  canon_key: portraits/wilbur-stint-explaining-f2
+  size: 896x1152
+  seed: 893102
+  prompt_prose: waist-up portrait of Wilbur Stint, a weary injured sad-sack man with his right arm in a thick white
+    plaster cast held in a sling, several adhesive bandages stuck across his nose, forehead and chin, a bald patch
+    on the top of his head with long lank stringy brown hair hanging past his shoulders around it, round wire spectacles
+    with one lens cracked and taped, a long droopy melancholy face with tired baggy eyes, stubble, three fingers
+    of his left hand wrapped in gauze bandage, a scratch on one cheek, gangly and stooped with hunched shoulders,
+    rumpled rolled shirtsleeves and a shabby waistcoat missing a button, a pencil behind his ear, a fresh square
+    of white gauze taped over his left eyebrow, a second sticking plaster across the bridge of his nose, holding
+    up a small brass tin of fish food in his bandaged hand to show it, earnest concentrating expression, eyebrows
+    raised helpfully, hand-tinted albumen carte-de-visite photograph, warm sepia and deep blacks, painted tint on
+    his cheeks and the white of the plasters, crisp studio focus, isolated on a plain flat pale grey studio backdrop,
+    even soft light
+- key: floors-wilbur-stint-wince-f2
+  lane: krea2
+  entity: cthulhuquarium-story
+  title: wilbur stint wince f2
+  canon_key: portraits/wilbur-stint-wince-f2
+  size: 896x1152
+  seed: 893103
+  prompt_prose: waist-up portrait of Wilbur Stint, a weary injured sad-sack man with his right arm in a thick white
+    plaster cast held in a sling, several adhesive bandages stuck across his nose, forehead and chin, a bald patch
+    on the top of his head with long lank stringy brown hair hanging past his shoulders around it, round wire spectacles
+    with one lens cracked and taped, a long droopy melancholy face with tired baggy eyes, stubble, three fingers
+    of his left hand wrapped in gauze bandage, a scratch on one cheek, gangly and stooped with hunched shoulders,
+    rumpled rolled shirtsleeves and a shabby waistcoat missing a button, a pencil behind his ear, a fresh square
+    of white gauze taped over his left eyebrow, a second sticking plaster across the bridge of his nose, flinching
+    with a pained brave grimace, shoulders hunched up to his ears, a brand-new plaster on his thumb, hand-tinted
+    albumen carte-de-visite photograph, warm sepia and deep blacks, painted tint on his cheeks and the white of
+    the plasters, crisp studio focus, isolated on a plain flat pale grey studio backdrop, even soft light
+- key: floors-wilbur-stint-hopeful-f2
+  lane: krea2
+  entity: cthulhuquarium-story
+  title: wilbur stint hopeful f2
+  canon_key: portraits/wilbur-stint-hopeful-f2
+  size: 896x1152
+  seed: 893104
+  prompt_prose: waist-up portrait of Wilbur Stint, a weary injured sad-sack man with his right arm in a thick white
+    plaster cast held in a sling, several adhesive bandages stuck across his nose, forehead and chin, a bald patch
+    on the top of his head with long lank stringy brown hair hanging past his shoulders around it, round wire spectacles
+    with one lens cracked and taped, a long droopy melancholy face with tired baggy eyes, stubble, three fingers
+    of his left hand wrapped in gauze bandage, a scratch on one cheek, gangly and stooped with hunched shoulders,
+    rumpled rolled shirtsleeves and a shabby waistcoat missing a button, a pencil behind his ear, a fresh square
+    of white gauze taped over his left eyebrow, a second sticking plaster across the bridge of his nose, clutching
+    a clipboard to his chest with his good hand, a small shy genuinely pleased smile, eyes bright behind the cracked
+    spectacles, hand-tinted albumen carte-de-visite photograph, warm sepia and deep blacks, painted tint on his
+    cheeks and the white of the plasters, crisp studio focus, isolated on a plain flat pale grey studio backdrop,
+    even soft light
+- key: floors-wilbur-stint-alarmed-f2
+  lane: krea2
+  entity: cthulhuquarium-story
+  title: wilbur stint alarmed f2
+  canon_key: portraits/wilbur-stint-alarmed-f2
+  size: 896x1152
+  seed: 893105
+  prompt_prose: waist-up portrait of Wilbur Stint, a weary injured sad-sack man with his right arm in a thick white
+    plaster cast held in a sling, several adhesive bandages stuck across his nose, forehead and chin, a bald patch
+    on the top of his head with long lank stringy brown hair hanging past his shoulders around it, round wire spectacles
+    with one lens cracked and taped, a long droopy melancholy face with tired baggy eyes, stubble, three fingers
+    of his left hand wrapped in gauze bandage, a scratch on one cheek, gangly and stooped with hunched shoulders,
+    rumpled rolled shirtsleeves and a shabby waistcoat missing a button, a pencil behind his ear, a fresh square
+    of white gauze taped over his left eyebrow, a second sticking plaster across the bridge of his nose, eyes wide
+    with alarm behind his spectacles, leaning back, his long hair swinging, the net raised defensively across his
+    body, hand-tinted albumen carte-de-visite photograph, warm sepia and deep blacks, painted tint on his cheeks
+    and the white of the plasters, crisp studio focus, isolated on a plain flat pale grey studio backdrop, even
+    soft light
+- key: floors-screen-floor-first-2
+  lane: krea2
+  entity: cthulhuquarium-story
+  title: screen floor first 2
+  canon_key: plates/screen-floor-first-2
+  size: 1344x768
+  seed: 893121
+  prompt_prose: a narrow stone cellar stair rising into a gaslit Victorian aquarium shop, a gangly stooped young
+    man with long lank brown hair around a bald crown, round wire spectacles with one taped lens, his right arm
+    in a white plaster cast and sling and bandages on his nose and chin climbing the top steps holding a brass oil
+    lamp high in his left hand, a small glass carrying jar hooked over his cast with a pale many-finned creature
+    inside pressed to the jar's side, dusty pantry shelves of stoppered preserving jars on the cellar walls below
+    him, warm lamplight on worn steps, hand-tinted albumen carte-de-visite photograph, warm sepia, deep blacks,
+    painted amber tint on the lamp flame
+- key: floors-screen-floor-first-3
+  lane: krea2
+  entity: cthulhuquarium-story
+  title: screen floor first 3
+  canon_key: plates/screen-floor-first-3
+  size: 1344x768
+  seed: 893122
+  prompt_prose: a gaslit Victorian aquarium shop counter piled with brown paper parcels tied with string and covered
+    in postage stamps, one parcel torn open with dark water spilling across the counter and a glossy blue creature
+    with stamps still stuck to its back slipping out into a waiting glass tank, a gangly stooped young man with
+    long lank brown hair around a bald crown, round wire spectacles with one taped lens, his right arm in a white
+    plaster cast and sling and bandages on his nose and chin standing in rubber waders dripping wet to the knees
+    holding a long-handled net, a tall old woman with a towering silver-white pompadour, kohl-rimmed eyes and oxblood
+    lips, in a high-necked black silk mourning gown with leg-of-mutton sleeves and black lace gloves behind the
+    counter holding up a signed paper receipt with delight, hand-tinted albumen carte-de-visite photograph, sepia
+    shadows, painted Prussian-blue tint on the water
+- key: floors-screen-floor-first-4
+  lane: krea2
+  entity: cthulhuquarium-story
+  title: screen floor first 4
+  canon_key: plates/screen-floor-first-4
+  size: 1344x768
+  seed: 893123
+  prompt_prose: a tall glass aquarium tank in a gaslit Victorian shop, inside the tank a strange pale creature with
+    long branching frond-like fins leaning toward a brass lamp set on the tank lid, tendrils of green weed growing
+    from its back toward the light, a gangly stooped young man with long lank brown hair around a bald crown, round
+    wire spectacles with one taped lens, his right arm in a white plaster cast and sling and bandages on his nose
+    and chin kneeling beside the tank and smiling shyly at it, a tall old woman with a towering silver-white pompadour,
+    kohl-rimmed eyes and oxblood lips, in a high-necked black silk mourning gown with leg-of-mutton sleeves and
+    black lace gloves standing behind him studying the creature through a gold lorgnette, hand-tinted albumen carte-de-visite
+    photograph, warm sepia, painted sea-green tint on the glass
+- key: floors-screen-floor-first-5
+  lane: krea2
+  entity: cthulhuquarium-story
+  title: screen floor first 5
+  canon_key: plates/screen-floor-first-5
+  size: 1344x768
+  seed: 893124
+  prompt_prose: the top landing of a dark stone stairwell in a Victorian building, a heavy wooden door standing
+    open, on the landing floor a large glass jar holding a smooth black creature that glows with its own soft blue
+    light from within, the blue glow lighting the stair walls, a gangly stooped young man with long lank brown hair
+    around a bald crown, round wire spectacles with one taped lens, his right arm in a white plaster cast and sling
+    and bandages on his nose and chin standing in the doorway with a brass lamp lowered in his left hand and his
+    eyes wide behind his spectacles, hand-tinted albumen carte-de-visite photograph, deep blacks, painted cobalt
+    tint on the glow
+- key: floors-screen-after-the-last-aquarium
+  lane: krea2
+  entity: cthulhuquarium-story
+  title: screen after the last aquarium
+  canon_key: plates/screen-after-the-last-aquarium
+  size: 1344x768
+  seed: 893125
+  prompt_prose: the interior of a gaslit Victorian aquarium curiosity shop at night, an ornate gilded aquarium tank
+    on a carved pedestal at the centre of the room with a small paper price tag tied to its brass handle by a black
+    ribbon, a tall old woman with a towering silver-white pompadour, kohl-rimmed eyes and oxblood lips, in a high-necked
+    black silk mourning gown with leg-of-mutton sleeves and black lace gloves standing beside it with both gloved
+    hands clasped at her breast in delight, a gangly stooped young man with long lank brown hair around a bald crown,
+    round wire spectacles with one taped lens, his right arm in a white plaster cast and sling and bandages on his
+    nose and chin behind her turned toward the dark shop window holding up a pencil and an open notebook, a large
+    pale smooth shape filling the far side of the rain-streaked window panes, hand-tinted albumen carte-de-visite
+    photograph, warm sepia, deep blacks, painted green tint in the tanks
