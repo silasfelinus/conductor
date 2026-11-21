@@ -2175,16 +2175,22 @@ tasks:
     so nothing is visible to players.
 - id: t-109
   title: 'Render the chosen second style for every still, round by round, reviewed before it ships'
-  status: waiting
+  status: cancelled
   milestone: m5
   stakes: reversible
   passes: 0
   playtest_iteration: true
   depends_on: [t-107, t-108]
-  updated: '2026-11-21T11:00:00Z'
+  updated: '2026-11-21T11:33:28Z'
   note: >-
     Rounds after the pick: characters (heroes, Charlotte 5 poses, Wilbur 5 base poses); Wilbur's 20
     floor variants as Kontext edits of his styled base poses; 15 plates and 16 backgrounds; 13 UI; 151
     fish sprites in floor batches, floor I reviewed first (non-human drift is the known Illustrious
     risk). Each round: submit, harvest, build, contact-sheet review, withdraw and re-queue misses, canon
     PR, kind_robots sync. The style turns available once characters, plates and backgrounds pass.
+
+    Cancelled 2026-11-21: after seeing the style check, Silas: "Actually, I've changed my
+    mind, I think krea2 is the best (classic). No update needed after all." Classic stays
+    the only style. The swap code (kind_robots #5508) and the canon style pipeline (#91) are
+    merged and dormant: the picker shows nothing while Classic is the only available style,
+    so nothing is visible to players.
