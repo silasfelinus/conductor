@@ -1,45 +1,14 @@
 """The Fever Dream art reviewer produces evidence, never auto-approves images."""
 
-from pathlib import Path
-
 import pytest
 import yaml
 from PIL import Image
 
 import scripts.review_rainbow_doodle_art as reviewer
-
-
-def _write_subject(root, rel, image_id, *, status="DONE", green=True):
-    root = Path(root)
-    if rel.startswith("portraits/"):
-        classic = root / "kind_robots/public/rainbow-princess-portraits" / (
-            rel.split("/", 1)[1] + ".webp"
-        )
-    else:
-        classic = root / "kind_robots/public/rainbow-princess-art" / f"{rel}.webp"
-    classic.parent.mkdir(parents=True, exist_ok=True)
-    Image.new("RGBA", (64, 48), (120, 50, 200, 255)).save(classic, "WEBP")
-
-    cached = root / "cache" / f"{rel}-{image_id}.png"
-    cached.parent.mkdir(parents=True, exist_ok=True)
-    matte = (0, 255, 0) if green else (200, 20, 60)
-    render = Image.new("RGB", (64, 48), matte)
-    for x in range(16, 48):
-        for y in range(10, 38):
-            render.putpixel((x, y), (180, 50, 200))
-    render.save(cached)
-
-    return {
-        "asset": f"rainbow-princess-art/doodle/{rel}",
-        "jobs": {"kontext": image_id - 200000},
-        "art": {"kontext": {"status": status, "art_image_id": image_id}},
-    }
-
-
-def _write_ledger(root, subjects):
-    ledger = Path(root) / "DOODLE-SET-2.yaml"
-    ledger.write_text(yaml.safe_dump({"subjects": subjects}))
-    return ledger
+from rainbow_doodle_fixture import (
+    make_doodle_subject as _write_subject,
+    write_doodle_ledger as _write_ledger,
+)
 
 
 def test_matte_check_flags_a_cropped_non_green_edge():
