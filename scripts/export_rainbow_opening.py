@@ -227,6 +227,15 @@ def validated_clip(payload: bytes, key: str, expected_size=(832, 480)) -> list |
         return None
 
 
+def safe_clip_download(clip_id: int, key: str):
+    """An unavailable WAN artifact must not prevent the still-backed cut."""
+    try:
+        return validated_clip(download(clip_id), key)
+    except (OSError, ValueError, RuntimeError) as exc:
+        print(f"{key}: WAN download failed ({exc}); using approved still", file=sys.stderr)
+        return None
+
+
 def ping_pong(count: int, length: int) -> int:
     if length <= 1:
         return 0
@@ -275,7 +284,7 @@ def render(sources, last: list):
     for index, (key, beats, still_id, clip_id) in enumerate(sources):
         start = round(elapsed_beats * beat * FPS)
         end = round((elapsed_beats + beats) * beat * FPS)
-        frames = validated_clip(download(clip_id), key) if clip_id else None
+        frames = safe_clip_download(clip_id, key) if clip_id else None
         still = None if frames else cover(Image.open(io.BytesIO(download(still_id))).convert("RGB"))
         last_shot = index == len(sources) - 1
         for n in range(end - start):
