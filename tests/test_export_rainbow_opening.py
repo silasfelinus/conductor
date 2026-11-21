@@ -90,6 +90,30 @@ class DoodleOpeningTests(unittest.TestCase):
         self.assertEqual(accepted, [])
         self.assertEqual(rejected, [])
 
+    def test_delivery_report_is_only_sidecar_and_cleans_legacy(self):
+        sources = [
+            ("accepted", 1, 101, 201),
+            ("rejected", 1, 102, 202),
+            ("pending", 1, 103, None),
+        ]
+        with tempfile.TemporaryDirectory() as work:
+            target = Path(work) / "opening.mp4"
+            legacy = target.with_name("opening-rejected-clips.json")
+            legacy.write_text('{"obsolete": true}')
+            report = opening.write_delivery_report(
+                target, sources, ["accepted"], ["rejected"]
+            )
+            output = target.with_name("opening-delivery-report.json")
+            self.assertFalse(legacy.exists())
+            self.assertEqual(json.loads(output.read_text()), report)
+            self.assertTrue(output.read_text().endswith("\n"))
+            self.assertEqual(report["wan_requeue_shots"], ["rejected"])
+            self.assertEqual(report["still_fallback_shots"], ["rejected", "pending"])
+            self.assertEqual(
+                [p.name for p in Path(work).glob("opening-*.json")],
+                ["opening-delivery-report.json"],
+            )
+
     def test_delivery_report_distinguishes_rejected_from_pending_stills(self):
         sources = [
             ("accepted", 1, 101, 201),
