@@ -1908,7 +1908,7 @@ tasks:
 - id: t-093
   milestone: m5
   title: Finish and visually verify every required aquarium art/scene asset
-  status: waiting
+  status: done
   owner: null
   stakes: reversible
   passes: 0
@@ -1923,7 +1923,13 @@ tasks:
     missing critical assets, prioritizing cinematic Charlotte and Wilbur.
     Reject wrong characters, placeholder SVG, broken/low-res images and
     mismatched scenes. Queued or drafted prompts are not delivered art.
-  updated: '2026-10-25T00:54:00Z'
+
+    canon scripts/art_ledger.py (#87) records every required render from prompt to its
+    binding in the game; art/LEDGER.md shows 385 of 385 done (#90). Visual review: Wilbur
+    floor contact sheet (5 of 20 rejected for a magenta bruise or pale bar, re-rendered and
+    accepted in #89); QA screenshot sheet at qa/acceptance-2026-11-21.jpg.
+  updated: '2026-11-21T09:49:45Z'
+  implementation_pr: 'silasfelinus/cthulhuquarium#90'
 - id: t-094
   milestone: m5
   title: Full adversarial aquarium, idle economy, persistence and exploit suite
