@@ -138,7 +138,7 @@ class EmperorArtInventoryTests(unittest.TestCase):
         ])
         media = self.app / "public/emperor-of-dust/chance-events/rain"
         media.mkdir(parents=True)
-        (media / "collect.webp").write_bytes(b"RIFF\\x00\\x00\\x00\\x00WEBP")
+        (media / "collect.webp").write_bytes(b"RIFF\x00\x00\x00\x00WEBP")
         manifest = self.manifest(["chance-events/rain/collect"])
         report = inventory(self.ledgers, self.app, manifest)
         by_asset = {row["asset"]: row for row in report["assets"]}
