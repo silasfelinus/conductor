@@ -55,6 +55,25 @@ class EmperorArtInventoryTests(unittest.TestCase):
         self.assertEqual(inventory(self.ledgers, self.app)["summary"]
                          ["exported_without_static_reference"], 1)
 
+    def test_non_webp_file_is_not_an_export(self):
+        self.ledger("a.yaml", [self.subject("a", "rooms/a", 10, 20)])
+        media = self.app / "public/emperor-of-dust/rooms"
+        media.mkdir(parents=True)
+        (media / "a.webp").write_bytes(b"<html>not an image</html>")
+        report = inventory(self.ledgers, self.app)
+        self.assertFalse(report["assets"][0]["exported"])
+        self.assertEqual(report["summary"]["with_done_image_no_export"], 1)
+
+    def test_ignores_files_unrelated_to_emperor(self):
+        self.ledger("a.yaml", [self.subject("a", "rooms/a", 10, 20)])
+        media = self.app / "public/emperor-of-dust/rooms"
+        media.mkdir(parents=True)
+        (media / "a.webp").write_bytes(b"RIFF\x00\x00\x00\x00WEBP")
+        (self.app / "pages").mkdir()
+        (self.app / "pages/other.vue").write_text('"rooms/a"', encoding="utf-8")
+        report = inventory(self.ledgers, self.app)
+        self.assertEqual(report["summary"]["exported_without_static_reference"], 1)
+
     def test_missing_jobs_not_counted_as_done(self):
         self.ledger("a.yaml", [{"key": "new", "asset": "endings/new"}])
         report = inventory(self.ledgers)

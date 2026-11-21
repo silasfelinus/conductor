@@ -43,8 +43,21 @@ def scan_references(app_root: Path):
                 content = path.read_text(encoding="utf-8")
             except UnicodeError:
                 continue
+            # Only Emperor-owned files can be evidence; scanning every server
+            # file against ~900 assets made a real checkout run take minutes.
+            if dirname != "utils/emperorOfDust" and "emperor" not in content.lower():
+                continue
             hits[path.relative_to(app_root).as_posix()] = content
     return hits
+
+
+def _is_webp(path: Path) -> bool:
+    """A nonempty file is not an export: require the RIFF....WEBP container signature."""
+    if not path.is_file():
+        return False
+    with path.open("rb") as handle:
+        header = handle.read(12)
+    return len(header) == 12 and header[:4] == b"RIFF" and header[8:12] == b"WEBP"
 
 
 def inventory(ledger_dir: Path, app_root: Path | None = None):
@@ -72,7 +85,7 @@ def inventory(ledger_dir: Path, app_root: Path | None = None):
     for asset, entries in sorted(grouped.items()):
         path = f"public/emperor-of-dust/{asset}.webp"
         file_path = app_root / path if app_root else None
-        exported = (file_path.is_file() and file_path.stat().st_size >= 12\n                    and file_path.open("rb").read(4) == b"RIFF"\n                    and file_path.open("rb").read(12)[8:12] == b"WEBP") if file_path else None
+        exported = _is_webp(file_path) if file_path else None
         # A dynamic path assembled at runtime will not be detected by static text search.
         matches = [name for name, content in references.items()
                    if asset in content or f"/{asset}.webp" in content]
