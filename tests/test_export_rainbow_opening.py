@@ -1,4 +1,5 @@
 import io
+import json
 import shutil
 import subprocess
 import tempfile
@@ -57,6 +58,48 @@ class DoodleOpeningTests(unittest.TestCase):
             frames = list(opening.render([("still", 1, 101, None)], [], accepted))
         self.assertGreater(len(frames), 0)
         self.assertEqual(accepted, [])
+
+    def test_rejects_long_wan_clip_before_rgb_decode(self):
+        payload = b"0000ftyp" + b"video-payload"
+        probe = subprocess.CompletedProcess(
+            [], 0, stdout=json.dumps({"streams": [{"width": 1280, "height": 720,
+                                                     "duration": "90.0", "nb_frames": "1440"}]}),
+            stderr="",
+        )
+        with (
+            patch.object(opening.subprocess, "run", return_value=probe),
+            patch.object(opening, "clip_frames") as decode,
+        ):
+            self.assertIsNone(opening.validated_clip(payload, "long-shot"))
+            decode.assert_not_called()
+
+    def test_rejects_excessive_frame_count_before_decode(self):
+        payload = b"0000ftyp" + b"video-payload"
+        probe = subprocess.CompletedProcess(
+            [], 0, stdout=json.dumps({"streams": [{"width": 1280, "height": 720,
+                                                     "duration": "10.0", "nb_frames": "900"}]}),
+            stderr="",
+        )
+        with (
+            patch.object(opening.subprocess, "run", return_value=probe),
+            patch.object(opening, "clip_frames") as decode,
+        ):
+            self.assertIsNone(opening.validated_clip(payload, "oversized-shot"))
+            decode.assert_not_called()
+
+    def test_accepts_bounded_clip(self):
+        payload = b"0000ftyp" + b"video-payload"
+        probe = subprocess.CompletedProcess(
+            [], 0, stdout=json.dumps({"streams": [{"width": 1280, "height": 720,
+                                                     "duration": "2.0", "nb_frames": "32"}]}),
+            stderr="",
+        )
+        frames = [Image.new("RGB", opening.SIZE, "pink") for _ in range(12)]
+        with (
+            patch.object(opening.subprocess, "run", return_value=probe),
+            patch.object(opening, "clip_frames", return_value=frames),
+        ):
+            self.assertEqual(opening.validated_clip(payload, "good-shot"), frames)
 
     def test_original_ledger_still_works(self):
         old = {
