@@ -50,3 +50,26 @@ def test_chapter_nine_paintings_have_distinct_story_action():
         "deposit-copy-rewrite": "counterfeit book",
     }.items():
         assert prop in by_key[key], key
+
+
+def test_chapter_nine_submitted_jobs_are_traceable_without_fake_acceptance():
+    """Submitted renders must never masquerade as inspected, delivered art."""
+    ledger = yaml.safe_load(LEDGER.read_text())
+    subjects = ledger["subjects"]
+    job_ids = []
+    for subject in subjects:
+        assert set(subject["jobs"]) == {"krea2"}
+        job_id = subject["jobs"]["krea2"]
+        assert isinstance(job_id, int) and job_id > 0
+        job_ids.append(job_id)
+
+        art = subject["art"]["krea2"]
+        # DONE is the live sweep's "rendered" checkpoint, not visual acceptance.
+        assert art["status"] in {"PENDING", "DONE", "ERROR", "REJECTED", "ACCEPTED"}
+        if art["status"] in {"PENDING", "ERROR"}:
+            assert art.get("art_image_id") is None
+        elif art["status"] in {"DONE", "ACCEPTED"}:
+            assert isinstance(art["art_image_id"], int)
+            assert art["art_image_id"] > 0
+
+    assert len(set(job_ids)) == len(subjects)
