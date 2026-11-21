@@ -14,7 +14,8 @@ them. The playtest itself is [PLAYTEST-CHECKLIST.md](PLAYTEST-CHECKLIST.md).
 | kind_robots | #5498 | Settings, title card, endings shelf, coverage report (t-100, t-092) |
 | kind_robots | #5499 | t-084 step 1: breeding/egg/stat fields out of the Prisma client |
 | kind_robots | #5500 | Cross-device QA fixes; editorial pass and 15 Wilbur floor portraits |
-| kind_robots | RC fixes PR | Review fixes below; last 5 portraits; second editorial pass |
+| kind_robots | #5501 | Review fixes below; last 5 portraits; second editorial pass |
+| kind_robots | #5503 | t-084 step 2: drop the breeding/egg/stat columns (irreversible) |
 | canon | #82–#89 | Scenes, plates, editorial passes, Wilbur's 20 floor portraits, art ledger |
 | conductor | #7702, #7717, #7735 | Ledgers, simulators, suites, audits, this dossier |
 
@@ -52,7 +53,7 @@ conclusions.
 | Glass winks: "it tapped back", "trying to get out", "kept count", the outside face of the glass, visitors kept on an island, "never stops watching" | **Fixed** in canon #88 |
 | Wilbur as the joke: "he always comes back up", and the startle bark shown with his wince portrait | **Fixed:** the line is rewritten and the startle pool uses `explaining` |
 | Floor scenes treated keys as gifts | **Fixed:** floor III acknowledges the sale, floor IV gets a cut copy of her mother's key, and the floor V key is no longer "opens nothing" |
-| "Portsmouth · After closing" eyebrow; the locked ending hint "the most expensive thing in the shop" | **Fixed** (kind_robots RC PR) |
+| "Portsmouth · After closing" eyebrow; the locked ending hint "the most expensive thing in the shop" | **Fixed** (kind_robots #5501) |
 | A 30-minute playtest only reaches floors I–II | **Playtest instruction** (below) |
 | The weirdness curve jumps at floor II and then flattens; three fish names collide with place names | Follow-up, needs your design eye |
 | The intro switches between sheet and full screen five times | Follow-up |
@@ -70,14 +71,15 @@ conclusions.
 
 ## How to run the playtest
 
-1. **Wait for the deploy.** Force-update once kind_robots main includes the RC fixes PR. Then check that `/api/version` shows it.
+1. **Wait for the deploy.** Force-update once kind_robots main includes #5501 and #5503. Then check that `/api/version` shows them.
 2. **A fresh account for the first 20 minutes**, on a phone. This covers the intro, the first purchases, buying the key and Below Stairs.
 3. **Then a seeded tank, to see the deep story.** A 30-minute session never reaches floors III–V, so either:
    - play your own veteran tank: its floors are kept, and each visit plays one missed floor scene; or
    - watch the floor scenes in order from the Memory Book, under World & story.
 4. **Use the checklist.** Write a verdict per item in [PLAYTEST-CHECKLIST.md](PLAYTEST-CHECKLIST.md). The pacing question (the long save before the floor V key) and "is Wilbur's escalation sympathetic" matter most.
 
-## Not done here, on purpose
+## Close-out
 
-- **t-084 step 2**, the irreversible column drop. Merge it only once `/api/version` shows a build containing #5499.
-- **Graduating the project to `playtest` status.** `playtest_readiness.py` decides that, after the merges and the roadmap close-out.
+- **t-084 step 2 shipped** as kind_robots #5503. It went out only after `/api/version` showed production running 66a0f65c, which contains step 1 (#5499). The columns drop on the next Force Update, which runs `migrate deploy` before the container swap.
+- **All agent-owned tasks are done**, t-084 through t-106. t-106 pins the casual pacing in CI (`tests/test_cthulhuquarium_descent_pacing.py`).
+- **The project moved to `playtest`** in `project-overrides.yaml` once `playtest_readiness` passed. That move doesn't publish or promote anything.

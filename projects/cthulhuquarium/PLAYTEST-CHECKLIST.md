@@ -2,7 +2,7 @@
 
 For Silas, at `/play/aquarium` on kindrobots.org once the next Force Update has
 deployed kind_robots #5472, #5479, #5497 (canon rarity and floor keys), #5498
-(settings, title card, endings), #5500 (cross-device fixes) and the RC-fixes PR
+(settings, title card, endings), #5500 (cross-device fixes), #5501 (RC fixes) and #5503 (schema cleanup)
 (see [RC-DOSSIER.md](RC-DOSSIER.md), which also says how to reach the deep floors
 in a short session). This is a handoff sheet, not a gate. It
 lists what to look at and what each thing should feel like, so a verdict can
