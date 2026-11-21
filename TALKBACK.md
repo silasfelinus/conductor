@@ -12849,3 +12849,13 @@ Reviewed worker/slime-city-priority-20261109 (Silas, priority.yaml only, reversi
 - #7704 (worker, Emperor t-052 duplicate) was already superseded by #7703 per Silas's PR comment. I closed it. Deleting its branch failed (push disconnect), so branch-janitor will clear it.
 - #7705 (Rainbow t-028 guardian art ledger): it was red only from the main breakage. I updated the branch, and all checks went green. It is private, pre-approved generated art, so I squash-merged it (4fe341c). #7707 (Space Couch shield art) failed the handoff validator for a non-template body. I restructured the body into the AGENTS.md headings with the same content, and it merged elsewhere after going green.
 - Pattern: this is the second duplicate-`updated` claim writer in one day (Emperor t-052, then IV t-104). #7706 auto-repairs at task-events time, but the claim writer should replace an existing task-level `updated` rather than insert a new one. Pattern (repeat): a worker PR body was not in the handoff template.
+
+## 2026-11-20 PT | reviewer (scheduled agent) | four worker PRs diagnosed red; t197 duplicate-`updated` branch superseded
+
+- select_role named 4 worker branches. Each one already has a PR (#7718, #7719, #7722, #7723) with a worker active in the last hour. Every Python-suite failure is PR-specific and actionable, not a main breakage. I posted exact fixes and spent no passes:
+  - #7718: chapter-nine cells now pass the live contract. The new test requires "alien" in every prompt, but `deposit-copy-truth` omits it.
+  - #7719: MIRROR-SHOAL-X4 says "No lettering" and "no words, numbers, logos", which trips the text-exclusion rule.
+  - #7722: the Prom/Tactics intake workflow re-adds the retired `kind-robots.vercel.app` fallback origin.
+  - #7723: the test payload uses `b"\\x14..."` literal escapes, which shifts `WEBP` off offset 8.
+- `worker/conductor-t197-emperor-duplicate-updated-r8n2` (no PR) removes a duplicate Emperor `updated:` that main no longer has. A strict duplicate-key load of the Emperor roadmap on main is clean, so the branch is superseded. Deleting it from this sandbox was denied, so it's left for branch-janitor.
+- Pattern (repeat, 2 of 4 PRs): workers still write negation phrasing ("no lettering", "no words") into krea2 prompts. Pattern (repeat): escaped-literal bugs in test fixtures. #7723's previous commit fixed `\\n`, and this head has the same mistake with `\\x`. Workers should run the touched test files locally before handing off; every one of these failures reproduces in under a minute.
