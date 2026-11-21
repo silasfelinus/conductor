@@ -77,7 +77,7 @@ def runtime_reference_candidates(asset: str, references: dict[str, str]):
     candidates = []
     for source, symbol, pattern in RUNTIME_BUILDERS:
         content = references.get(source, "")
-        if pattern.fullmatch(asset) and re.search(r"\\b" + re.escape(symbol) + r"\\b", content):
+        if pattern.fullmatch(asset) and re.search(r"\b" + re.escape(symbol) + r"\b", content):
             candidates.append(source)
     return sorted(set(candidates))
 
