@@ -12859,3 +12859,13 @@ Reviewed worker/slime-city-priority-20261109 (Silas, priority.yaml only, reversi
   - #7723: the test payload uses `b"\\x14..."` literal escapes, which shifts `WEBP` off offset 8.
 - `worker/conductor-t197-emperor-duplicate-updated-r8n2` (no PR) removes a duplicate Emperor `updated:` that main no longer has. A strict duplicate-key load of the Emperor roadmap on main is clean, so the branch is superseded. Deleting it from this sandbox was denied, so it's left for branch-janitor.
 - Pattern (repeat, 2 of 4 PRs): workers still write negation phrasing ("no lettering", "no words") into krea2 prompts. Pattern (repeat): escaped-literal bugs in test fixtures. #7723's previous commit fixed `\\n`, and this head has the same mistake with `\\x`. Workers should run the touched test files locally before handing off; every one of these failures reproduces in under a minute.
+
+## 2026-11-21 PT | reviewer (scheduled agent) | rescue of #7718, #7719, #7722, #7723; main was red from `[skip ci]` receipts
+
+- select_role named the same 4 worker PRs. For about an hour after the 04:50Z diagnoses, none of #7718, #7719 or #7723 got a new commit. #7722 got one commit (the Vercel-origin fix) but was still red. I merged all four branches into one session branch, fixed each remaining failure, and opened a superseding PR:
+  - #7723: the WebP fixture still used `b"\\x14..."` literal escapes. Replaced them with real bytes.
+  - #7718: the `deposit-copy-truth` prompt now says "alien adventurers". The live contract passes 12/12.
+  - #7719: the Mirror Shoal X4 cells had more negation than the first failure showed. The test truncates its dict, so it reported only some of them. Six cells now state the exclusion positively ("every surface bare and unmarked", "one continuous full-bleed scene", "deserted"), and the `violations()` scan is clean.
+  - #7722's two new failures did not come from that PR. **Main itself was red.** The `[skip ci]` checkpoint commits 01282b3 and a08f9b9 wrote real ArtJob receipts into ONE-HIT-CREW-TELEGRAPHS-2026-11-20 and OCT-29-CAST-KREA2-ROUND-1. Both contract tests still asserted `"jobs" not in item`. The tests now accept exactly one positive-integer ArtJob id for the item's own lane, plus an ArtImage status. Draft-time invention is still caught.
+- The full suite passes locally on the merge result: 4912 passed.
+- Pattern (new): an acceptance test written at draft time that asserts receipts are absent will break as soon as auto-submit checkpoints the ledger. Because those checkpoints are `[skip ci]`, main shows green while it is red, and every later PR takes the blame. Draft-contract tests should check receipt shape, not receipt absence.
