@@ -57,3 +57,10 @@
 - **Decision:** rescued and merged #7748 (446cb48), closed #7740. The audit script is unchanged. The test fixture wrote `b"\\x10\\x00..."` (escaped backslashes), so the RIFF size became 16 ASCII bytes, `WEBP` sat at the wrong offset and the audit correctly rejected every fixture: 2 Python-suite failures. The PR body also lacked the handoff headings. Actionable, so no pass spent.
 - **Pattern:** the same double-escaped byte literal appeared the same hour in rainbow #7747 (production code there). It looks like a tool-escaping habit in the connector Worker, not a one-off.
 - **Suggestion:** kaizen t-043 adds a test that rejects `\\x` inside a `b"..."` literal in new scripts/tests.
+
+## 2026-11-21 PT · Reviewer: t-043 byte-literal escape guard (#7753)
+
+- **Decision:** merged (118588e) once exact-head CI was green. Test-only, reversible, in scope. The tokenize approach correctly ignores comments, docstrings and ordinary strings.
+- **Finding:** the only red check was Validate Worker PR handoff: the body lacked the AGENTS.md headings for the third Space Couch PR running (#7736, #7740, #7753). The Reviewer rewrote the body; the diff was unchanged. Actionable, no pass spent.
+- **Pattern:** the connector Worker writes a prose body and skips the template. Its code was fine each time.
+- **Suggestion:** start every PR body from the AGENTS.md template and run `printf '%s' "$BODY" | python scripts/check_pr_handoff_template.py --head-ref <branch>` before opening. Kaizen t-044 extends the guard to kind_robots TypeScript.
