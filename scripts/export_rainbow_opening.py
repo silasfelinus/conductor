@@ -384,7 +384,7 @@ def write_delivery_report(target: Path, sources, accepted_clips, rejected_clips)
     """Write the single authoritative review sidecar; remove legacy duplicates."""
     report = delivery_report(sources, accepted_clips, rejected_clips)
     target.with_name("opening-delivery-report.json").write_text(
-        json.dumps(report, indent=2) + "\\n"
+        json.dumps(report, indent=2) + "\n"
     )
     target.with_name("opening-rejected-clips.json").unlink(missing_ok=True)
     return report
