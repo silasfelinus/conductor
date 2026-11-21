@@ -2025,7 +2025,7 @@ tasks:
 - id: t-099
   milestone: m5
   title: 'Fish roster redesign: one in-tank sprite style for all 151 species, new designs for the stock-fish, object and sheet-shaped ones'
-  status: claimed
+  status: done
   owner: worker
   stakes: reversible
   passes: 0
@@ -2040,6 +2040,11 @@ tasks:
     design that keeps its name, joke and field note. Work happens in the canon repo
     (fish/*.yaml sprite.prompt, scripts/render_art.py, build_sprites.py, deliver.sh) and syncs to
     kind_robots.
-  updated: '2026-11-05T21:24:53Z'
+
+    All 151 sprites and 151 swimming clips in the one in-tank style are rendered, built and
+    bundled (canon art/LEDGER.md, 385 of 385 required renders done; last clips in canon #84,
+    content-hash builds so a fresh clone never re-cuts).
+  updated: '2026-11-21T09:49:23Z'
   claimed_by: 2026-11-05T212600Z-claude-t099-01L5NK
   claimed_at: '2026-11-05T21:24:53Z'
+  implementation_pr: 'silasfelinus/cthulhuquarium#84'
