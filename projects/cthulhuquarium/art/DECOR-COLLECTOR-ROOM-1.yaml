@@ -1,0 +1,140 @@
+# Cthulhuquarium painted decorations, the Roaming Collector and the room plate (conductor cthulhuquarium/t-110).
+# The canon's own submission (render_art.py, jobs 76383-76389) sat at queue priority 20 behind higher-priority
+# work, so the same eight renders go again here at 700; the canon adopts them by canon_key (render_art.py adopt
+# --ledger) and harvests them. Same prompts as canon ui/ui.yaml and story/plates.yaml. Private.
+round: cthulhuquarium-decor-collector-room-1
+project_slug: cthulhuquarium
+designer: Cthulhuquarium decor and collector (t-110)
+is_public: false
+is_mature: false
+cast_loras: false
+auto_submit: false
+priority: 700
+lanes:
+- key: ui
+  label: Krea 2, tank cut-out
+  engine: krea2
+  prompt: prose
+  suffix: a single object centred with space around it, vivid painted illustration for a dark comedy video game,
+    bold readable shapes, crisp inked outlines, rich saturated jewel-tone colour, glowing bioluminescent accents,
+    painterly texture, isolated on a plain flat pale grey studio backdrop, even soft light, strong crisp silhouette
+- key: plate
+  label: Krea 2, upgrade plate
+  engine: krea2
+  prompt: prose
+subjects:
+- key: decor-pebble-bed
+  lane: ui
+  title: decor-pebble-bed
+  canon_key: ui/decor-pebble-bed
+  size: 1024x1024
+  seed: 685764
+  prompt_prose: a low scatter of seven smooth rounded river pebbles in slate grey, sandstone and pale green, lying
+    together on a patch of fine sand, seen from a slight angle above
+  jobs:
+    ui: 76434
+  art:
+    ui:
+      status: DONE
+      art_image_id: 278002
+- key: decor-driftwood
+  lane: ui
+  title: decor-driftwood
+  canon_key: ui/decor-driftwood
+  size: 1024x1024
+  seed: 432539
+  prompt_prose: a weathered branch of pale silver-grey driftwood lying on its side, sanded smooth by water, two
+    forked limbs reaching up, a tuft of green moss in one crook
+  jobs:
+    ui: 76435
+  art:
+    ui:
+      status: DONE
+      art_image_id: 278003
+- key: decor-coral-spire
+  lane: ui
+  title: decor-coral-spire
+  canon_key: ui/decor-coral-spire
+  size: 1024x1024
+  seed: 199443
+  prompt_prose: one tall slender spire of bright coral in crimson and coral pink, branching near the top into three
+    knobbed tips, rising from a small rocky base
+  jobs:
+    ui: 76436
+  art:
+    ui:
+      status: DONE
+      art_image_id: 278004
+- key: decor-sunken-chest
+  lane: ui
+  title: decor-sunken-chest
+  canon_key: ui/decor-sunken-chest
+  size: 1024x1024
+  seed: 834464
+  prompt_prose: a small iron-banded wooden treasure chest with its lid shut and a heavy brass padlock, crusted with
+    white barnacles and green weed, half settled into sand
+  jobs:
+    ui: 76437
+  art:
+    ui:
+      status: DONE
+      art_image_id: 278005
+- key: decor-glow-kelp
+  lane: ui
+  title: decor-glow-kelp
+  canon_key: ui/decor-glow-kelp
+  size: 1024x1024
+  seed: 446823
+  prompt_prose: a single tall frond of kelp with long ribbon leaves rising from a holdfast on a pebble, its leaves
+    glowing a soft bioluminescent sea green along their edges
+  jobs:
+    ui: 76438
+  art:
+    ui:
+      status: DONE
+      art_image_id: 278006
+- key: decor-ceramic-ruin
+  lane: ui
+  title: decor-ceramic-ruin
+  canon_key: ui/decor-ceramic-ruin
+  size: 1024x1024
+  seed: 757787
+  prompt_prose: half a small glazed ceramic castle turret in cream and cobalt blue, cracked open on one side, its
+    crenellations chipped, soft moss growing over the broken edge
+  jobs:
+    ui: 76439
+  art:
+    ui:
+      status: DONE
+      art_image_id: 278007
+- key: swimmer-collector
+  lane: ui
+  title: swimmer-collector
+  canon_key: ui/swimmer-collector
+  size: 1024x1024
+  seed: 545981
+  prompt_prose: a small clockwork brass crab automaton with a round coin drum on its back with a slot in the lid,
+    two glass lens eyes on stalks, riveted brass claws held up ready, little winding key at its side, seen from
+    the side facing right
+  jobs:
+    ui: 76440
+  art:
+    ui:
+      status: DONE
+      art_image_id: 278008
+- key: upgrade-room
+  lane: plate
+  title: upgrade-room
+  canon_key: plates/upgrade-room
+  size: 1024x1024
+  seed: 334529
+  prompt_prose: a tall Victorian mahogany aquarium stand with a second glass tank being set onto a new brass-railed
+    upper shelf, a spirit level resting on the shelf and a coil of rubber tubing hanging from a hook, Victorian
+    trade-catalogue engraving, fine line engraving with hatched shading, isolated on white paper with a blank catalogue
+    margin beneath
+  jobs:
+    plate: 76441
+  art:
+    plate:
+      status: DONE
+      art_image_id: 278009

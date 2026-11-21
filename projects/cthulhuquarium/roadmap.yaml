@@ -2196,13 +2196,13 @@ tasks:
     so nothing is visible to players.
 - id: t-110
   title: 'Complete the game: music, a sound for every event, painted decor and collector, the 44 redesigned book cards, the room plate'
-  status: claimed
+  status: done
   milestone: m5
   stakes: reversible
   passes: 0
   playtest_iteration: true
   depends_on: []
-  updated: '2026-11-21T13:00:00Z'
+  updated: '2026-11-21T14:49:33Z'
   note: >-
     From the 2026-11-21 completeness audit Silas asked for ("Do we have everything for a full game? Do we
     have sound and music? All art and animations, etc?"), then: "Go ahead with all of it, synthesized
@@ -2213,5 +2213,16 @@ tasks:
     shipped. Code: kind_robots #5512 (synthesized floor themes, 23 effects, Music setting, painted decor
     hooks, eggs removed). Art: canon ui/decor-*, ui/swimmer-collector, plates/upgrade-room (render_art);
     cards via art/REDESIGNED-CARDS-1.yaml and scripts/deliver_cthulhuquarium_cards.py.
+
+    Done. Sound: kind_robots #5512 -- a synthesized music-box theme per floor (D dorian down
+    to a C# drone at the Bottom of Things), 23 effects for every game event, a Music
+    setting; verified live (phrases schedule, effects fire, Music off stops the theme). Art:
+    canon #92 + kind_robots #5514 -- six painted decorations and the clockwork-crab Roaming
+    Collector drawn in the tank, the public view and the Relics shop instead of emoji, the
+    room upgrade's own plate, and new book cards for the 44 redesigned species
+    (art/REDESIGNED-CARDS-1.yaml, scripts/deliver_cthulhuquarium_cards.py); the six unused
+    egg images removed. Canon art ledger 393 of 393. All reviewed on contact sheets and in
+    the running game.
   claimed_by: 2026-11-21T1300Z-cthq-complete-01L5NK
   claimed_at: '2026-11-21T13:00:00Z'
+  implementation_pr: 'silasfelinus/kind_robots#5512'
