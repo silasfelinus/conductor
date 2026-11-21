@@ -5696,3 +5696,9 @@ Claude-Session: https://claude.ai/code/session_01MkzND5ru8YGK1pZ76pGmm1
 **Kaizen task:** deferred — the suggested post-deployment route check is already covered by the scheduled responsive audit and this incident's recorded continuation; t-105's next bounded page slice remains the standing recurring task, with min_rest_hours 24 preserved. Avoid a duplicate monitoring task for the same audit.
 
 **Closeout:** Session-aware rearm queued after verified merge; confirm ready, owner cleared, 24-hour cap retained and projection source SHA. Gmail incident progress records prevent duplicate repair/notification while production verification is pending.
+
+## 2026-11-21 PT · Branch-medic: t-104 navigation artwork fallback (kind_robots #5519)
+
+- **Decision:** merged (33e6ed15) as a rescue of stranded `worker/interface-vision-t-104-nav-art-f71c` (16h, no PR). Real, scoped, reversible work: every referenced `public/` image exists, Mandarin's old card path was already gone from main, and the launcher contract test covers the new resolver.
+- **Finding:** the worker pushed and recorded "PR CI pending" in the task note without ever opening the PR, and the commit was not Prettier-formatted (the only red check on #5518). The Reviewer added a formatting-only commit; logic unchanged.
+- **Suggestion:** open the PR in the same step as the push, and run `npx prettier --check` on changed files first.

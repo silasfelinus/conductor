@@ -1776,11 +1776,9 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: review
+  status: ready
   owner: worker
-  claimed_by: '20261121T012243-iv-t104-nav-art-f71c'
-  claimed_at: '2026-11-21T01:23:16.159Z'
-  updated: '2026-11-21T01:26:03.502Z'
+  updated: '2026-11-21T18:04:48Z'
   passes: 0
   stakes: reversible
   recurring: true
@@ -1797,11 +1795,19 @@ tasks:
     2026-11-20 PT daily-delivery:2026-11-20/stale-share-description | PR: silasfelinus/kind_robots#5416 (merged 80196ac9) | app.vue's share description fell back to pageStore.subtitle even when the store described another page (default 'Welcome to Kind Robots'). The fallback is now routePageSubtitle, guarded by pageStore.describesPath like title and description; verifySharePreview.test.ts forbids the bare fallback.
 
     Scoped navigation artwork resilience: Kind Robots worker/interface-vision-t-104-nav-art-f71c commit 6c21614fc15bc017852309365dc96478907d248f adds robust fallback images, seven repo-owned image mappings and launcher regression tests. PR CI pending.
-  implementation_pr: 'silasfelinus/kind_robots#2912'
+
+    2026-11-21 PT branch-medic: worker branch worker/interface-vision-t-104-nav-art-f71c
+    (6c21614f) was stranded 16h with no PR. Opened kind_robots#5518; it failed only Changed-
+    file Prettier, so rescued as #5519 with a Prettier-only commit and merged (33e6ed15) on
+    all-green CI (TypeScript, contract shards, tablet-navigation, layout-contract).
+    Navigation tiles now fall back tab -> channel -> per-channel -> arcade art when an image
+    is empty or broken; seven channels gained image paths. Next cycle: CI check that every
+    channel image: resolves to a public/ file.
+  implementation_pr: 'silasfelinus/kind_robots#5519'
   retry_context: ''
   min_rest_hours: 24
   noop_streak: 0
-  rest_until: '2026-11-19T11:07:14Z'
+  rest_until: '2026-11-22T18:04:47Z'
 
 - id: t-123
   milestone: m5
