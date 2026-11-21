@@ -80,6 +80,47 @@ class EmperorArtInventoryTests(unittest.TestCase):
         self.assertEqual(report["summary"]["without_done_image"], 1)
         self.assertEqual(report["assets"][0]["render_records"][0]["status"], "NOT_SUBMITTED")
 
+    def test_prefix_asset_is_not_mistaken_for_longer_path(self):
+        self.ledger("a.yaml", [self.subject("short", "rooms/a", 10, 20),
+                               self.subject("long", "rooms/ab", 11, 21)])
+        (self.app / "utils/emperorOfDust/rooms.ts").write_text(
+            'const image = "/emperor-of-dust/rooms/ab.webp"', encoding="utf-8")
+        report = inventory(self.ledgers, self.app)
+        by_asset = {entry["asset"]: entry for entry in report["assets"]}
+        self.assertEqual(by_asset["rooms/a"]["reference_files"], [])
+        self.assertEqual(by_asset["rooms/ab"]["reference_class"], "static")
+
+    def test_dynamic_chance_builder_is_candidate_not_static_reference(self):
+        self.ledger("a.yaml", [self.subject("choice", "chance-events/rain/collect", 10, 20)])
+        source = self.app / "utils/emperorOfDust/fortress"
+        source.mkdir(parents=True)
+        (source / "chanceArt.ts").write_text(
+            'export function chanceArtCandidates(eventId, choiceId) { '
+            'return emperorMediaArtUrl(\`chance-events/\${eventId}/\${choiceId}\`) }',
+            encoding="utf-8")
+        media = self.app / "public/emperor-of-dust/chance-events/rain"
+        media.mkdir(parents=True)
+        (media / "collect.webp").write_bytes(b"RIFF\\x00\\x00\\x00\\x00WEBP")
+        report = inventory(self.ledgers, self.app)
+        asset = report["assets"][0]
+        self.assertEqual(asset["reference_class"], "runtime_candidate")
+        self.assertEqual(asset["reference_files"], [])
+        self.assertEqual(report["summary"]["exported_runtime_candidates"], 1)
+        self.assertEqual(report["summary"]["exported_without_known_reference"], 0)
+
+    def test_missing_builder_does_not_imply_runtime_reference(self):
+        self.ledger("a.yaml", [self.subject("choice", "chance-events/rain/collect", 10, 20)])
+        report = inventory(self.ledgers, self.app)
+        self.assertEqual(report["assets"][0]["reference_class"], "unreferenced")
+
+    def test_partial_builder_symbol_does_not_count_as_runtime_reference(self):
+        self.ledger("a.yaml", [self.subject("choice", "chance-events/rain/collect", 10, 20)])
+        source = self.app / "utils/emperorOfDust/fortress"
+        source.mkdir(parents=True)
+        (source / "chanceArt.ts").write_text("const chanceArtCandidatesExtra = true", encoding="utf-8")
+        report = inventory(self.ledgers, self.app)
+        self.assertEqual(report["assets"][0]["reference_class"], "unreferenced")
+
     def test_rejects_path_traversal(self):
         self.ledger("a.yaml", [{"key": "bad", "asset": "../secret"}])
         with self.assertRaises(ValueError):
