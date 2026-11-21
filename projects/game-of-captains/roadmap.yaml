@@ -282,9 +282,9 @@ tasks:
   - id: t-009
     milestone: m3
     title: "Deliver unique mission outcome, conversation and ending illustration coverage"
-    status: claimed
+    status: review
     owner: worker
-    updated: '2026-11-21T23:37:00Z'
+    updated: '2026-11-21T23:41:00Z'
     depends_on: t-007
     passes: 0
     stakes: reversible
@@ -340,6 +340,8 @@ tasks:
       2026-11-21 PT reviewer: merged #7769 (Chapter 9 outcome ledger, 12 distinct Krea 2
       prompts + contract test), green at exact head. Partial cycle; re-armed for ArtJob
       allocation, render inspection and wiring of the remaining outcome coverage.
+
+      Partial t-009 episode-art UX repair. App branch worker/game-of-captains-t-009-episode-ux-20261121-6f2b corrects three-choice success-image spoilers, casino venue failed-image fallback, post-refresh failed-image retry, and erroneous cast-choice prompts, with regression checks. Original-image acceptance and remaining art delivery are still open. Review handoff pending exact-head CI.
     implementation_pr: 'silasfelinus/conductor#7769'
     claimed_by: 20261121T233700Z-goc-t009-6f2b
     claimed_at: '2026-11-21T23:37:00Z'
