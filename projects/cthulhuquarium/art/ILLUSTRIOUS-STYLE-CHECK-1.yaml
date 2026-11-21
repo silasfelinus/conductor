@@ -1,0 +1,204 @@
+# Cthulhuquarium second art style, style check (conductor cthulhuquarium/t-107). Silas 2026-11-21: "we should
+# add a different art style. Something from illustrious probably. The user should be able to swap between them,
+# like we do with shifting desks." Six identical subjects, one fixed seed per subject, on three Illustrious
+# checkpoints; Silas picks from a contact sheet (with the shipped Classic render beside each) before any full
+# round is queued. Lessons from Shifting Desks' suspended Illustrious style: subject first, a short quality lead,
+# style words after the subject, and two fish (one plain, one abstract deep-floor) to test drift on non-humans.
+# Submitted directly with Silas's admin token, so auto_submit stays false. Private.
+round: cthulhuquarium-illustrious-style-check-1
+project_slug: cthulhuquarium
+designer: Cthulhuquarium second style (t-107)
+is_public: false
+is_mature: false
+cast_loras: false
+auto_submit: false
+lanes:
+- key: illustrij
+  label: Illustrij v2.1, anime visual novel
+  engine: comfy
+  checkpoint: Illustrious/illustrij_v21.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, very aesthetic
+  suffix: visual novel illustration, clean lineart, soft cel shading, gaslit victorian palette, deep sea greens
+    and warm sepia
+  steps: 28
+  cfg: 5
+  sampler: euler_ancestral
+- key: nova-comic
+  label: Nova Comic XL v2, western comic
+  engine: comfy
+  checkpoint: Illustrious/novaComicXL_v20.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality
+  suffix: western comic book (style), professional ink art, gothic victorian graphic novel, limited cel shaded palette
+  steps: 28
+  cfg: 5
+  sampler: euler_ancestral
+- key: painterly
+  label: ntrMIX Illustrious XL, painterly storybook
+  engine: comfy
+  checkpoint: Illustrious/ntrMIXIllustriousXL_xii.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, very aesthetic
+  suffix: painterly storybook illustration, oil painting (medium), visible brushwork, moody victorian lamplight
+  steps: 28
+  cfg: 5
+  sampler: euler_ancestral
+subjects:
+- key: charlotte-hero
+  title: Charlotte Fishmonger, hero plate
+  size: 832x1216
+  seed: 710301
+  prompt_prose: Charlotte Fishmonger, a grand gothic prima donna of seventy-eight with a deeply lined powdered face,
+    a towering silver-white pompadour pierced with jet hatpins, kohl-rimmed eyes, a beauty mark and oxblood lips,
+    beaming at the viewer in a high-necked black taffeta mourning gown with enormous sleeves, an octopus cameo at
+    her throat, black lace fingerless gloves and rings on every finger, one hand raised in a theatrical flourish
+    and the other on a silver cane with an eel's head handle, standing in her gaslit aquarium shop.
+  prompt_tags: 1girl, old woman, elderly, wrinkled face, powdered face, tall white pompadour, hatpins, aquiline
+    nose, kohl eyeliner, beauty mark, dark red lips, wide smile, black mourning gown, victorian dress, puffy sleeves,
+    high collar, cameo brooch, black lace fingerless gloves, many rings, holding cane, hand raised, full body, standing,
+    looking at viewer, gaslight, victorian shop interior, glowing aquariums in background
+  negative: young woman, youthful skin, child, text, logo, watermark, signature, lowres, bad anatomy, extra fingers
+  jobs:
+    illustrij: 76364
+    nova-comic: 76365
+    painterly: 76366
+  art:
+    illustrij:
+      status: PENDING
+      art_image_id: null
+    nova-comic:
+      status: PENDING
+      art_image_id: null
+    painterly:
+      status: PENDING
+      art_image_id: null
+- key: wilbur-explaining
+  title: Wilbur Stint, explaining (dialogue portrait)
+  size: 896x1152
+  seed: 710302
+  prompt_prose: Wilbur Stint, a weary stooped man with his right arm in a white plaster cast and sling, adhesive
+    bandages across his nose and forehead, a bald crown with long lank brown hair hanging past his shoulders, round
+    wire spectacles with one lens cracked and taped, a long droopy face with tired eyes and stubble, a shabby waistcoat
+    and rolled shirtsleeves, holding up a small brass tin of fish food to show it with eyebrows raised helpfully,
+    waist-up against a plain grey backdrop.
+  prompt_tags: 1man, middle-aged man, bald spot, long stringy brown hair, round glasses, cracked glasses, taped
+    glasses, stubble, tired eyes, droopy face, bandage on nose, bandage on forehead, arm cast, arm sling, bandaged
+    fingers, waistcoat, rolled sleeves, pencil behind ear, holding small tin can, raised eyebrows, upper body, looking
+    at viewer, simple background, grey background
+  negative: young man, handsome, muscular, full hair, text, logo, watermark, signature, lowres, bad anatomy, extra
+    fingers
+  jobs:
+    illustrij: 76367
+    nova-comic: 76368
+    painterly: 76369
+  art:
+    illustrij:
+      status: PENDING
+      art_image_id: null
+    nova-comic:
+      status: PENDING
+      art_image_id: null
+    painterly:
+      status: PENDING
+      art_image_id: null
+- key: arrival-plate
+  title: Scene plate, the arrival (screen-arrival)
+  size: 1344x768
+  seed: 710303
+  prompt_prose: The inside of a cramped Victorian curiosity shop seen from just inside its front door, rain streaming
+    down the door's glass at the edges, a dripping umbrella stand, a long aisle of glowing murky green aquarium
+    tanks stretching away into warm gaslight, stuffed fish in glass cases on the walls, and far down the aisle a
+    tall woman in a black gown with a towering white pompadour raising one arm in welcome.
+  prompt_tags: scenery, indoors, victorian curiosity shop, rain on window, umbrella stand, long aisle, many aquariums,
+    glowing green water, stuffed fish in glass case, gaslight, wide shot, depth of field, 1woman, distant figure,
+    black dress, white pompadour, waving
+  negative: close-up, text, logo, watermark, signature, lowres, modern furniture
+  jobs:
+    illustrij: 76370
+    nova-comic: 76371
+    painterly: 76372
+  art:
+    illustrij:
+      status: PENDING
+      art_image_id: null
+    nova-comic:
+      status: PENDING
+      art_image_id: null
+    painterly:
+      status: PENDING
+      art_image_id: null
+- key: parlour-background
+  title: Tank background, the parlour
+  size: 1344x768
+  seed: 710304
+  prompt_prose: The deep green inside of an old Victorian parlour aquarium seen through its front glass, tall tarnished
+    brass pipes and valves up the left side trailing bubbles, two old brass diving helmets half sunk in pale gravel
+    at the right, soft shafts of light slanting down from the surface, a bed of river gravel and cockle shells,
+    wide open clear green water through the middle.
+  prompt_tags: scenery, underwater, aquarium interior, brass pipes, valves, bubbles, diving helmet, pale gravel,
+    seashells, light rays, green water, empty middle, wide shot
+  negative: fish, people, text, logo, watermark, signature, lowres
+  jobs:
+    illustrij: 76373
+    nova-comic: 76374
+    painterly: 76375
+  art:
+    illustrij:
+      status: PENDING
+      art_image_id: null
+    nova-comic:
+      status: PENDING
+      art_image_id: null
+    painterly:
+      status: PENDING
+      art_image_id: null
+- key: lint-shrimp
+  title: Fish sprite, Lint Shrimp (floor I)
+  size: 1024x1024
+  seed: 710305
+  prompt_prose: A scruffy dusty grey-brown shrimp built out of matted fibre and grit, legs of different lengths,
+    a trail of loose fluff drifting behind it, a single creature in strict side profile facing right, the whole
+    body visible, isolated on a plain flat pale grey backdrop with even soft light.
+  prompt_tags: shrimp, creature, grey-brown, made of lint, fluffy, fibrous body, uneven legs, fluff trail, side
+    view, facing right, full body, simple background, grey background
+  negative: girl, humanoid, anthropomorphic, human face, text, logo, watermark, signature, lowres
+  jobs:
+    illustrij: 76376
+    nova-comic: 76377
+    painterly: 76378
+  art:
+    illustrij:
+      status: PENDING
+      art_image_id: null
+    nova-comic:
+      status: PENDING
+      art_image_id: null
+    painterly:
+      status: PENDING
+      art_image_id: null
+- key: the-concern
+  title: Fish sprite, The Concern (floor V)
+  size: 1024x1024
+  seed: 710306
+  prompt_prose: An immense hermit creature carrying a whole little Victorian shopfront as its shell, a glowing shop
+    window full of tiny aquarium tanks, a striped awning above it, many thin legs beneath, a single creature in
+    strict side profile facing right, the whole body visible, isolated on a plain flat pale grey backdrop with even
+    soft light.
+  prompt_tags: giant hermit crab, creature, victorian shopfront as shell, glowing shop window, tiny aquariums in
+    window, striped awning, many thin legs, side view, facing right, full body, simple background, grey background
+  negative: girl, humanoid, anthropomorphic, human face, text, logo, watermark, signature, lowres
+  jobs:
+    illustrij: 76379
+    nova-comic: 76380
+    painterly: 76381
+  art:
+    illustrij:
+      status: PENDING
+      art_image_id: null
+    nova-comic:
+      status: PENDING
+      art_image_id: null
+    painterly:
+      status: PENDING
+      art_image_id: null
