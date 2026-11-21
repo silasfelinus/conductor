@@ -181,3 +181,10 @@ Companion kind_robots#4764 was already on main, so merge order held. CI green on
 **Decision:** merged scoped, reversible Kind Robots PR #5466 (commit `0cd1dd50`) after all ten latest-head Actions workflows finished successfully. The diff stays within route discovery and earned outcome labels plus their regression fixture, with no fabricated guardian defeats. The code preserves undiscovered/partially settled routes and does not change game physics, ArtJobs or public permissions.
 
 **Caveat:** t-027 remains incomplete: discovered alternative routes still need independently navigable nodes, full persistent progression acceptance and standalone alternate-Act flights. The Pearl Warden (#5468) and Sunken Lighthouse X3 score (#5476) are separate t-028 contributions, not evidence of that end-to-end route-map handoff. The reviewer recommends a shared alternate-stage checkpoint adapter and tests before more presentation polish.
+
+
+## 2026-11-20 17:31 PT — Reviewer: Pearl Warden guardian (#5468)
+
+**Decision:** merged Kind Robots #5468 after all ten latest-head Actions workflows completed successfully at `8804b87a`; main merge `5972bc95`. The low Crown Reef shield-cache now has an independent guardian with rotating safe-gapped patterns, isolated route-spawn suppression, saved defeated/escaped verdict and backward-compatible checkpoint parsing. The added Rainbow cabinet workflow executes the actual one/four-seat regression; no generated art or public release was asserted.
+
+**Remaining scope:** this is a playable alternate **branch guardian inside Act VI**, not the independently selected and savable X3/X4 alternate Acts promised in `ROUTE-MAP.md`. Maintain t-028 as unfinished until playable stage nodes, proper art, and full-run QA are evidenced. Prefer an explicit multi-Act/alternate-stage save-state model over pretending an in-Act route is a standalone stage.
