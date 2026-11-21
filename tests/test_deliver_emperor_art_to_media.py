@@ -58,6 +58,25 @@ def test_two_competing_keepers_are_not_auto_selected():
     }]
 
 
+def test_actual_round_roots_and_dynamic_playbook_exclusion():
+    plan = delivery.build_plan([
+        record("chance-events/dust-weather-1/notice", 201, "keep: reviewed"),
+        record("talks/kiyo/kiyo-close-friendship", 202, "keep: reviewed"),
+        record("followers/F001/illustrated/happy", 203, "keep: reviewed"),
+        record("npcs/young-komodo/neutral", 204, "keep: reviewed"),
+        record("playbook/emperor-of-dust/aud:d01-toll", 205, "keep: reviewed"),
+    ])
+    assert plan["summary"]["keepers"] == 4
+    assert plan["summary"]["unsupported"] == 1
+    assert plan["unsupported"][0]["artImageId"] == 205
+    assert delivery.expected_media_url("followers/F001/illustrated/happy") == (
+        "/images/emperor-of-dust/cast/followers/F001/illustrated/happy.webp"
+    )
+    assert delivery.expected_media_url("npcs/young-komodo/neutral") == (
+        "/images/emperor-of-dust/cast/npcs/young-komodo/neutral.webp"
+    )
+
+
 def test_all_rejected_or_unfinished_inputs_never_export():
     plan = delivery.build_plan([
         record("quests/no", 99, "reject: human"),
