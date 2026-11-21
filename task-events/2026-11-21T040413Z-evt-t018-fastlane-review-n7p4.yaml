@@ -1,0 +1,20 @@
+version: 1
+project: every-villain-tactics
+task: t-018
+operation: review
+session: 20261121T040012Z-evt-t018-art-fastlane-n7p4
+updated: '2026-11-21T04:04:13Z'
+note: >-
+  Scoped submission infrastructure repair: the long Auto Art Generate workflow
+  only reaches general auto-submit after hundreds of earlier steps and recent
+  runs were cancelled without accepting the 12 Tactics one-hit telegraph jobs.
+  New short independent hourly and on-push GitHub Actions workflow
+  .github/workflows/prom-tactics-art-intake.yml with early authenticated
+  submission, deterministic request-key idempotency, immediate ArtJob receipt
+  checkpoints, status refresh, strict 12+24 accepted-ID gate and source-backed
+  regression tests. Implementation in branch
+  worker/every-villain-tactics-t-018-artjob-fastlane-n7p4 at
+  2660c85da1136c8f6328dff0ff18cff5cbf36f64.
+  CI and real ArtJob acceptance still pending; neither accepted IDs nor
+  rendered attachments are claimed. Continue t-018 afterwards for media
+  review, SPECIES Facets and UI attachment.
