@@ -1860,6 +1860,11 @@ tasks:
     'Register to unlock leaderboards, user navigation, jellybean tracking ... prompt retention'.
     content/register.md now reads 'Create a free account' and says what an account is for and
     that games stay free without one; pinned in verifyFrontDoorPolish.test.ts.
+
+    daily-delivery:2026-11-21/navigation-plain-copy | PR: silasfelinus/kind_robots#5513
+    (merged d142dd9) | The site map says what it is when shared. Live og:description
+    captured before the change; verifySharePreview.test.ts forbids the old line and pins the
+    new description.
   implementation_pr: 'silasfelinus/kind_robots#3073'
   approved_by_human: true
   min_rest_hours: 24
@@ -2426,6 +2431,11 @@ tasks:
     FRONT_DOOR_ALIASES now 302s them to /about (which carries the contact address), /art,
     /sanctuary and /giving. verifyFrontDoorRoutes.test.ts checks every target is real and
     requires /contact, /help and /gallery. Live redirects not yet re-checked after deploy.
+
+    daily-delivery:2026-11-21/art-gallery-light-share-card | PR:
+    silasfelinus/kind_robots#5513 (merged d142dd9) | Art gallery shares a light card. Live
+    og:image measured at 309736 bytes before; verifySharePreview.test.ts checks every
+    committed share card against the 250 KB budget.
   updated: '2026-10-26T22:16:18Z'
 
 - id: t-145
@@ -2596,6 +2606,11 @@ tasks:
     sim' blurb, both on the generic arcade splash. Both now have SHARE_PREVIEWS entries (title,
     blurb, game art) and so sitemap entries; content/play/ruler-hooked.md title/description
     match the arcade tab. Pinned in verifySharePreview.test.ts.
+
+    daily-delivery:2026-11-21/sitemap-missing-games | PR: silasfelinus/kind_robots#5513
+    (merged d142dd9) | Slime City, Monstrique and Hybridizer are in the sitemap. Live
+    /sitemap.xml had 26 URLs without them; verifySharePreview.test.ts now requires every
+    arcade tab backed by a play page to be in the sitemap.
   updated: '2026-11-18T11:07:17Z'
 
 - id: t-152
