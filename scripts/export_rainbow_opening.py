@@ -272,7 +272,7 @@ def title_layer():
     return layer
 
 
-def render(sources, last: list):
+def render(sources, last: list, accepted_clips: list | None = None):
     """Yield every output frame (PIL RGB, SIZE) of the cut; ``last[0]`` keeps the last frame before the title
     slams on, for the poster (the page sets its own title over it)."""
     from PIL import Image, ImageEnhance
@@ -285,6 +285,8 @@ def render(sources, last: list):
         start = round(elapsed_beats * beat * FPS)
         end = round((elapsed_beats + beats) * beat * FPS)
         frames = safe_clip_download(clip_id, key) if clip_id else None
+        if frames and accepted_clips is not None:
+            accepted_clips.append(key)
         still = None if frames else cover(Image.open(io.BytesIO(download(still_id))).convert("RGB"))
         last_shot = index == len(sources) - 1
         for n in range(end - start):
@@ -416,8 +418,9 @@ def main(argv=None):
             return EXIT_ERROR
         target = Path(args.out) if args.out else kind_robots / VIDEO_DIR / "opening.mp4"
         kept: list = []
-        frames = encode(render(sources, kept), audio, target, seconds)
-        clips = sum(1 for *_, clip in sources if clip)
+        accepted_clips: list[str] = []
+        frames = encode(render(sources, kept, accepted_clips), audio, target, seconds)
+        clips = len(accepted_clips)
         print(f"{target}: {frames} frames, {seconds}s, {clips}/{len(sources)} shots animated")
         poster = target.with_name("opening-poster.webp")
         kept[-1].save(poster, "WEBP", quality=88)
