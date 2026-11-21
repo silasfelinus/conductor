@@ -41,7 +41,7 @@ jobs:
         with:
           node-version: "22"
       - name: Install art intake dependencies
-        run: pip install pyyaml Pillow
+        run: pip install pyyaml Pillow pytest
       - name: Verify real authenticated ArtJob API
         run: |
           if [ -z "$KR_API_TOKEN" ]; then
@@ -57,9 +57,9 @@ jobs:
           fi
       - name: Verify approved private art intake contracts
         run: |
-          python -m unittest discover -s tests -p 'test_evt_one_hit_crew_tells.py'
-          python -m unittest discover -s tests -p 'test_prom_oct29_art_ledger.py'
-          python -m unittest discover -s tests -p 'test_prom_tactics_art_intake.py'
+          python -m pytest -q tests/test_evt_one_hit_crew_tells.py \
+            tests/test_prom_oct29_art_ledger.py \
+            tests/test_prom_tactics_art_intake.py
       # The server deduplicates each deterministic requestKey. If an earlier
       # job was accepted but its workflow cancelled, this returns its same ID.
       # Checkpoint partial successes even if later cells fail.
