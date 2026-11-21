@@ -12899,3 +12899,6 @@ Reviewed worker/slime-city-priority-20261109 (Silas, priority.yaml only, reversi
 
 - `worker/rainbow-t050-rejected-clips-k9v2` (#7764): merged on green CI after restoring the handoff template; close-out and kaizen t-051 in this PR.
 - `worker/emperor-of-dust-t-069-art-inventory-a7c2` and `worker/every-villain-tactics-art-api-health-20261121-0515`: both already superseded/rejected (#7762, #7755) yet still listed by select_role, so they kept re-routing sessions to `reviewer`. Dispatched `branch-janitor` with `force_delete_branches` for both. Re-probe: `kindrobots.org` 200, `kind-robots.vercel.app` 503.
+
+## 2026-11-21 PT — Reviewer pattern: path-filtered CI hid a red contract on main
+kind_robots #5517 (canon-art quarantine) made `comicIntroArt` return null for `mutant-earth`. The path-filtered "First Bell tactics" job never ran on that PR, so main carried a failing assertion that then blocked every Every Villain PR (#5522 looked red through no fault of its own). Fixed by kind_robots #5525 (test-only). Lesson: a PR that changes shared art lookups (`utils/cometAcademy/artSlots.ts`, `artQuality.ts`) should run every consumer's contract script locally, including path-filtered ones. Also: conductor #7768 (rainbow bounded decode) has a `b"\\x00"` test typo plus a missing handoff body; commented, left for the Worker.

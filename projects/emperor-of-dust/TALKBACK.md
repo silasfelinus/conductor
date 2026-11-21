@@ -151,3 +151,6 @@
 **Pattern:** this one is clean. Unlike t-069, the worker re-ran the tests after every fix, and the PR body says plainly that a candidate is not proof the image is shown. Seven commits for an 80-line change is a lot of churn (two regex-boundary fixups), but the squash hides it.
 
 **Kaizen:** t-071. Have the app emit a runtime manifest so the remaining candidates become exact reachable paths.
+
+## 2026-11-21 PT — Reviewer: t-071 merged (conductor #7771 + kind_robots #5524)
+Both sides are scoped and reversible. The Kind Robots change is test-only (it emits `editorial-art-runtime-paths.json`), and the conductor audit tolerates the manifest being absent. Both were green at their exact head SHA; merged in dependency order. Good pattern: the authoritative manifest suppresses speculative regex matches, and a test pins that. Kaizen → t-072 (fixture comparing manifest counts against audit totals). Separately, #5523 (t-063) fails `audit:icons` because `emperor-art-review.md` reuses `kind-icon:image` from `art-slots.md`; commented on the PR.

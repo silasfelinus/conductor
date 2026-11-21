@@ -64,3 +64,6 @@
 - **Finding:** the only red check was Validate Worker PR handoff: the body lacked the AGENTS.md headings for the third Space Couch PR running (#7736, #7740, #7753). The Reviewer rewrote the body; the diff was unchanged. Actionable, no pass spent.
 - **Pattern:** the connector Worker writes a prose body and skips the template. Its code was fine each time.
 - **Suggestion:** start every PR body from the AGENTS.md template and run `printf '%s' "$BODY" | python scripts/check_pr_handoff_template.py --head-ref <branch>` before opening. Kaizen t-044 extends the guard to kind_robots TypeScript.
+
+## 2026-11-21 PT — Reviewer: t-009 Chapter 9 outcome ledger merged (#7769)
+Twelve distinct private Krea 2 prompts (six success, six failure) with a contract test pinning uniqueness. Green at exact head; merged. The ledger correctly claims no ArtJobs or deliveries. t-009 re-armed to `ready` for allocation, render inspection and wiring.

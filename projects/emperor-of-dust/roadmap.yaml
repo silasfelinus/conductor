@@ -1608,3 +1608,12 @@ tasks:
     claimed_by: 2026-11-21T191720Z-eod-t071-manifest-8d6e91
     claimed_at: '2026-11-21T19:17:20Z'
     implementation_pr: 'silasfelinus/conductor#7771'
+  - id: t-072
+    milestone: m5
+    title: "Add a deterministic fixture that checks the inventory audit's builder-reachable counts against the Kind Robots runtime path manifest"
+    status: ready
+    stakes: reversible
+    passes: 0
+    depends_on: [t-071]
+    updated: '2026-11-21T20:05:00Z'
+    note: "Reviewer kaizen from conductor #7771 (2026-11-21 PT): pin a small manifest+ledger fixture so a drift between emitted runtime paths and audit builder_reachable totals fails CI instead of silently reclassifying assets as unreferenced."
