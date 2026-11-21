@@ -44,3 +44,10 @@
 - **Fix:** `ETHICAL-OUTCOMES-ROUND-1` and `SHIELD-POCKET-CONTINUITY-ROUND-1` lane suffixes ended "No text/lettering, logos, captions or watermarks." kind_robots' live contract rejects any text-noun negation on krea2 (cfg 1, negative prompt inert), so all 18 cells were skipped. Replaced with "Every surface bare and unmarked."; `check_art_prompts_live_contract.py --project game-of-captains` now 36/36.
 - **Review #7718 (t-009 chapter-nine scenes):** 0/12 cells would pass — every prompt carries "not ordinary humans or Earth animals" (people-negation) and "no readable text, no lettering, no logos" (text-exclusion), plus "without legible writing" on deposit-copy-reveal. Needs-changes, not a quality pass: rewrite as positive statements and run the live contract checker before handoff.
 - **Lesson:** run `python scripts/check_art_prompts_live_contract.py --kr-repo ../kind_robots --ref origin/main --project <slug>` on every new art ledger before opening the PR; the local builder's 4-noun pile limit is looser than the live server.
+
+## 2026-11-21 PT · Reviewer: conductor#7736 chapter-nine provenance guard (t-009)
+
+- **Decision:** fixed up and merged once green. Test-only, reversible, in scope.
+- **Finding:** CI was green on the stale base, but once merged with main the new test failed. The live art sweep (`22edc4e`) had just checkpointed all 12 chapter-nine jobs to `DONE` with ArtImage ids, and the guard's allow-list (`PENDING/REJECTED/ACCEPTED`) didn't include `DONE`. Actionable rather than quality, so no pass spent. The reviewer made a one-line adaptation: `DONE`/`ACCEPTED` need a positive ArtImage id, `PENDING`/`ERROR` need none, and `DONE` still doesn't imply visual acceptance. The PR body also lacked the handoff template (Validate Worker PR handoff was red); filled in.
+- **Pattern:** the worker understood the render-vs-accepted distinction, but hard-coded the status vocabulary from a snapshot of the ledger. Ledger statuses move under the branch hourly.
+- **Suggestion:** before handoff, run new ledger tests against a fresh `origin/main` merge, and source status names from one shared set (kaizen t-042).
