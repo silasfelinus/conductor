@@ -368,6 +368,27 @@ def main(argv=None):
     kind_robots = Path(args.kind_robots)
     ledger = yaml.safe_load(Path(args.ledger).read_text())
     sources = list(shot_sources(ledger, args.stills_only))
+    if ledger.get("round") == DOODLE_ROUND:
+        # The approved first-round review is the identity-lock authority.
+        approved = yaml.safe_load(
+            (LEDGER.parent / "DOODLE-SET-1-REVIEW.yaml").read_text()
+        )["decisions"]
+        first_round = yaml.safe_load(
+            (LEDGER.parent / "DOODLE-SET-1.yaml").read_text()
+        )
+        keep_ids = {
+            int(subject["art"][subject["lane"]]["art_image_id"])
+            for subject in first_round["subjects"]
+            if approved.get(subject.get("asset", "").removeprefix("rainbow-princess-art/doodle/")) == "keep"
+            and (subject.get("art") or {}).get(subject["lane"], {}).get("status") == "DONE"
+        }
+        checked = []
+        for key, beats, still_id, clip_id in sources:
+            if still_id not in keep_ids:
+                print(f"{key}: source ArtImage {still_id} is not an approved DOODLE-SET-1 keeper; refusing export", file=sys.stderr)
+                return EXIT_ERROR
+            checked.append((key, beats, still_id, clip_id))
+        sources = checked
     seconds = round(sum(beats for _, beats, _, _ in sources) * 60.0 / BPM, 3)
 
     with tempfile.TemporaryDirectory() as work:
