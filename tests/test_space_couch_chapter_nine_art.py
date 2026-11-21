@@ -4,6 +4,7 @@ from pathlib import Path
 import yaml
 
 from scripts.art_ledger_authoring import ledger_problems
+from scripts.art_ledger_status import provenance_errors
 from scripts.repair_negation_art_prompts import violations
 
 
@@ -63,13 +64,6 @@ def test_chapter_nine_submitted_jobs_are_traceable_without_fake_acceptance():
         assert isinstance(job_id, int) and job_id > 0
         job_ids.append(job_id)
 
-        art = subject["art"]["krea2"]
-        # DONE is the live sweep's "rendered" checkpoint, not visual acceptance.
-        assert art["status"] in {"PENDING", "DONE", "ERROR", "REJECTED", "ACCEPTED"}
-        if art["status"] in {"PENDING", "ERROR"}:
-            assert art.get("art_image_id") is None
-        elif art["status"] in {"DONE", "ACCEPTED"}:
-            assert isinstance(art["art_image_id"], int)
-            assert art["art_image_id"] > 0
+        assert provenance_errors(subject, "krea2") == [], subject["key"]
 
     assert len(set(job_ids)) == len(subjects)

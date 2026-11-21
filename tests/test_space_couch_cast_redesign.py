@@ -7,6 +7,7 @@ from pathlib import Path
 
 import yaml
 
+from scripts.art_ledger_status import provenance_errors
 from scripts.enqueue_art_requests import compose_prompt
 from scripts.repair_negation_art_prompts import violations
 
@@ -54,19 +55,12 @@ class SpaceCouchCastRedesignTests(unittest.TestCase):
             self.assertEqual(subject["asset"], expected)
             self.assertEqual(subject["lane"], "krea2")
             self.assertEqual(subject["size"], "1024x1024")
-            # The private art sweep legitimately transitions requests to DONE.
-            # Completed requests must have a submitted Job and an ArtImage.
-            # Incomplete requests cannot claim an image just by listing a key.
-            for lane, lane_art in subject.get("art", {}).items():
-                if lane_art.get("status") == "DONE":
-                    job_id = subject.get("jobs", {}).get(lane)
-                    image_id = lane_art.get("art_image_id")
-                    self.assertIsInstance(job_id, int)
-                    self.assertGreater(job_id, 0)
-                    self.assertIsInstance(image_id, int)
-                    self.assertGreater(image_id, 0)
-                else:
-                    self.assertIsNone(lane_art.get("art_image_id"))
+            for lane in subject.get("art", {}):
+                self.assertEqual(
+                    provenance_errors(subject, lane),
+                    [],
+                    subject["key"],
+                )
 
         expected = {
             (kind, identity, expression)
