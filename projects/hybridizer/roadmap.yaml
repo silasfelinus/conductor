@@ -128,30 +128,19 @@ tasks:
   - id: t-007
     milestone: m3
     title: "Pre-generate and verify curated 4,000 launch hybrids"
-    status: ready
+    status: review
     depends_on: t-004
     owner: worker
     passes: 0
     stakes: reversible
-    note: >-
-      Bias coverage to strong readable animal x animal and oddball combinations
-      without cross-product explosion; schedule batches with immutable pair
-      keys and explicit art-workflow provenance. Verify each delivered image,
-      not a submitted prompt count. Human-visible progress against 4,000.
+    note: |-
+      Bias coverage to strong readable animal x animal and oddball combinations without cross-product explosion; schedule batches with immutable pair keys and explicit art-workflow provenance. Verify each delivered image, not a submitted prompt count. Human-visible progress against 4,000.
+      2026-10-30 progress: launch pipeline live. kind_robots #4484 (art prompt: the hybrid itself as one blended creature or object on a plain backdrop, no jar/specimen/lab staging; admin POST /api/hybridizer/batch) and #4512 (batch priority 90: behind interactive 100 and project runtime art, ahead of bulk backfill). conductor #6815: deterministic 4,000-pair LAUNCH-PAIRS.json (36-pair showcase first, every starter used 35-75 times) and the 20-minute 'Hybridizer launch batch' workflow, which keeps a 60-render window full and marks a hybrid delivered only after its image URL answers. At close: 96/4,000 submitted, 36 verified delivered (the full showcase, reviewed on a contact sheet; Silas approved the look). The workflow keeps running unattended; reopen to done when the ledger reaches 4,000 verified.
 
-      2026-10-30 progress: launch pipeline live. kind_robots #4484 (art prompt: the hybrid
-      itself as one blended creature or object on a plain backdrop, no jar/specimen/lab
-      staging; admin POST /api/hybridizer/batch) and #4512 (batch priority 90: behind
-      interactive 100 and project runtime art, ahead of bulk backfill). conductor #6815:
-      deterministic 4,000-pair LAUNCH-PAIRS.json (36-pair showcase first, every starter used
-      35-75 times) and the 20-minute 'Hybridizer launch batch' workflow, which keeps a
-      60-render window full and marks a hybrid delivered only after its image URL answers. At
-      close: 96/4,000 submitted, 36 verified delivered (the full showcase, reviewed on a
-      contact sheet; Silas approved the look). The workflow keeps running unattended; reopen
-      to done when the ledger reaches 4,000 verified.
+      Curation round 1 (2026-11-21 PT). Silas set the acceptance bar this session: "While one pass for quality is warranted, after those are resubmitted, I'm happy as long as we have the hybridized fully working to react and resubmit bad hybrids in game." All 4,000 launch hybrids are rendered and delivered (live status READY for every pair; the ledger lagged by 1,004 because GitHub ran the 20-minute schedule only 3-4 times a day and each run refreshed only 400 entries; the workflow now refreshes every open entry). Every one was reviewed visually on labeled contact sheets: 1,856 FAIL (769 one ingredient only, 567 two separate creatures, 515 missing fruit/object ingredient, 5 other incl. an echidna+ninja IP lookalike), 398 WEAK, 1,746 PASS. Committed as projects/hybridizer/art/CURATION-ROUND-1.json. The launch batch workflow files one admin curation re-render per FAIL (new seed, fused-body guidance, priority 1, up to 1,000 per run), drops the ledger's verifiedAt until the new image answers, and refuses to post until the deployed server advertises the curation contract. kind_robots #5490 adds the in-game "Not a hybrid? Re-roll" for any signed-in player on public discoveries plus admin curation mode, a large phone reveal and requester-only ready toasts. Close as done once #5490 is live and the workflow reports the 1,856 curation resubmits filed; WEAK entries and any disappointing re-renders are handled by in-game re-roll.
     claimed_by: 20261030T112000Z-hybridizer-t007-q7h2
     claimed_at: '2026-10-30T11:41:43Z'
-    updated: '2026-10-30T21:34:04Z'
+    updated: '2026-11-21T04:30:00Z'
     implementation_pr: 'silasfelinus/kind_robots#4484'
   - id: t-008
     milestone: m2
@@ -172,7 +161,7 @@ tasks:
     owner: worker
     claimed_by: 20261102T102330Z-hybridizer-t-009-52ce
     claimed_at: '2026-11-02T10:26:43.508Z'
-    updated: '2026-11-02T10:48:37.131Z'
+    updated: '2026-11-21T04:31:00Z'
     depends_on: t-003
     passes: 0
     stakes: reversible
@@ -186,6 +175,8 @@ tasks:
       2026-11-02 PT: Scoped atlas/remix QA implementation is in progress. Correct global discovery totals, image status visibility, browsable saved hybrids, and custom-weight revisions. t-009 remains open after this slice for the larger adversarial and cross-width acceptance campaign.
 
       Scoped atlas/remix implementation in Kind Robots PR #4643. Data-backed atlas totals and pagination, reused-art badge, saved-hybrid gallery with rating and versions, editable-weight prompt resubmission. TypeScript, formatting, layout, visibility, architecture, migration, and other completed workflows green; four Contract Tests shards green. Auto-merge enabled after the queued Contract verifiers aggregator finishes. Not live until Unraid container deploy. Keep t-009 open for remaining private-upload coverage, adversarial art QA and rendered 390/768/1440/XL acceptance.
+
+      2026-11-21 PT rendered check of production /play/hybridizer (commit 0d422b75) at 390, 768 and 1440: no horizontal overflow, 30/30 images loaded, 0 broken. Found and fixed in kind_robots #5490: at <=820px container width the discovery reveal collapsed to a ~30px thumbnail and its actions were clipped (console now scrolls, reveal clamps 220-460px; verified by injecting the CSS on production at 390/768), and signed-out visitors received "X is illustrated!" toasts for shared launch renders they never requested (now only fusions, retries, remixes and re-rolls the player requested). Community re-roll adversarial contracts: injected direction/weight ignored, no escalation to curation, private discoveries stay creator-only. Remaining before handoff: t-008 private uploads (unbuilt) and a post-deploy recheck at 390/768/1440.
   - id: t-010
     milestone: m4
     title: "Authorize external public release separately"
