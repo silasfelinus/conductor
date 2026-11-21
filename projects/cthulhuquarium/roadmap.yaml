@@ -1654,8 +1654,8 @@ tasks:
 - id: t-084
   milestone: m4
   title: 'Staged schema cleanup: drop the breeding, egg and hidden-stat columns once t-082 is live'
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   stakes: reversible
   passes: 0
   depends_on:
@@ -1669,7 +1669,9 @@ tasks:
     plus any Monster evolution rows that only breeding could reach if Silas agrees. Check first that no
     deployed build still reads them (grep the running image's server bundle), call it out as
     schema-affecting, and confirm merged -> image published -> deployed -> schema verified.
-  updated: '2026-10-10T11:00:00Z'
+  updated: '2026-11-21T07:25:29Z'
+  claimed_by: 2026-11-21T1900Z-cthq-playtest-01L5NK
+  claimed_at: '2026-11-21T07:25:29Z'
 
 - id: t-085
   milestone: m4
