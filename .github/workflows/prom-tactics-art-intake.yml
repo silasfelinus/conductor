@@ -48,13 +48,21 @@ jobs:
             echo "::error::KR_API_TOKEN is missing; submission cannot proceed."
             exit 1
           fi
-          status="$(curl --silent --show-error --location --max-time 20 \
-            --output /dev/null --write-out '%{http_code}' \
-            "$KR_BASE_URL/api/health/database" || true)"
-          if [ "$status" != "200" ]; then
-            echo "::error::Kind Robots API health HTTP $status; no jobs submitted."
-            exit 1
-          fi
+          # Conductor's primary API is self-hosted, while older Kind Robots
+          # integrations use the Vercel API alias. Select only a verified 200.
+          primary="$KR_BASE_URL"
+          for origin in "$primary" "https://kind-robots.vercel.app"; do
+            status="$(curl --silent --show-error --location --max-time 20 \
+              --output /dev/null --write-out '%{http_code}' \
+              "$origin/api/health/database" || true)"
+            if [ "$status" = "200" ]; then
+              echo "KR_BASE_URL=$origin" >> "$GITHUB_ENV"
+              echo "::notice::Kind Robots ArtJob API healthy at $origin."
+              exit 0
+            fi
+          done
+          echo "::error::Neither approved Kind Robots API origin passed health; no jobs submitted."
+          exit 1
       - name: Verify approved private art intake contracts
         run: |
           python -m pytest -q tests/test_evt_one_hit_crew_tells.py \
