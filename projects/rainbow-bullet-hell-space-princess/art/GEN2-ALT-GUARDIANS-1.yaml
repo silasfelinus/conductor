@@ -1,0 +1,96 @@
+# Rainbow Space Princess X3 and cache guardians, 2026-11-20 PT.
+# Stage scenery for X3 is already in GEN2-ROUND-1/2; do not duplicate those
+# completed jobs. This request only covers missing character/collectible art.
+# Production use requires completed ArtJobs, ArtImage review, matte QA and
+# actual delivery in the private cabinet. Queued is not delivered.
+round: rainbow-gen2-alt-guardians-1
+project_slug: rainbow-bullet-hell-space-princess
+designer: Rainbow Space Princess art bay
+is_public: false
+is_mature: false
+cast_loras: false
+priority: 1000
+auto_submit: true
+lanes:
+  - key: krea2
+    label: Krea 2 original oceanic spaceship sprite paintings
+    engine: krea2
+    prompt: prose
+subjects:
+  - key: rb2-pearl-warden-guardian
+    lane: krea2
+    title: Pearl Warden, Act VI low shield-cache guardian
+    entity: stage-guardian
+    stage: S06-cache
+    asset: rainbow-princess-art/enemies/guardian-pearl-warden
+    size: 1216x832
+    seed: 961301
+    negative: >-
+      text, lettering, symbols, logo, watermark, words, digits, border,
+      panel, infographic, UI, photorealism, ordinary fish, human character,
+      clipped tail, cropped fin, cropped antennae, scenery, star field
+    prompt_prose: >-
+      One enormous pearl-armoured manta spacecraft seen from the left side,
+      flying toward the left. It has a broad flattened shell of overlapping
+      pearlescent oyster plates, two swept turquoise manta wings lined with
+      luminous pink pearls, six small articulated fin thrusters, and a
+      single large iridescent blue eye under a curved golden brow. Pink
+      bioluminescent crescents run down both wings; the underside is deep
+      indigo with aquamarine vent lights. Fierce but sympathetic face.
+      The entire creature-shaped mechanical ship is visible, compact and
+      centred with generous empty margin around every tip of the wings
+      and tail. Flat even pure bright green studio background, no scenery,
+      no ground shadow. Rich polished western animation linework, glossy
+      airbrush shading, saturated neon coral pink, aquamarine, violet and
+      pale gold, a delightful retro school-folder sticker illustration.
+  - key: rb2-drowned-bellkeeper-guardian
+    lane: krea2
+    title: Drowned Bellkeeper, X3 Sunken Lighthouse Ring guardian
+    entity: stage-guardian
+    stage: X3
+    asset: rainbow-princess-art/enemies/guardian-bellkeeper
+    size: 1216x832
+    seed: 961302
+    negative: >-
+      text, lettering, numbers, signage, logo, watermark, game HUD,
+      humans, ordinary squid, regular building, castle, crop, collage,
+      multiple views, panels, scenery, star field, hard outer glow
+    prompt_prose: >-
+      One massive otherworldly jellyfish-like mechanical spacecraft facing
+      left in side profile, a living guardian of drowned space lighthouses.
+      Its translucent bell-shaped helmet has layered violet glass and six
+      round luminous gold pearls suspended along its lower rim. Behind
+      the glass is a cobalt-blue expressive eye. Four articulated indigo
+      and rose-gold metal tendrils curve below the body, and two long
+      ribbon fins trail behind it like flowing sea grass. Tiny pearl
+      bubbles hang near its mouth but never obscure the silhouette.
+      Mysterious and protective, not cruel. The complete body and all
+      tendrils fit comfortably inside the view, with broad empty
+      margins on every side. Flat even pure bright green background,
+      no stars, no ocean, no scenery. Crisp confident western cartoon
+      outlines with radiant neon airbrushed pink, periwinkle, cyan and
+      gold shading, glossy vintage school-folder sticker aesthetic.
+  - key: rb2-lighthouse-lamp-pickup
+    lane: krea2
+    title: X3 Sunken Lighthouse lamp objective
+    entity: stage-collectible
+    stage: X3
+    asset: rainbow-princess-art/pickups/lighthouse-lamp
+    size: 768x768
+    seed: 961303
+    negative: >-
+      text, numbers, letters, typography, logo, watermark, game HUD,
+      people, photograph, realistic lighthouse tower, ocean scene,
+      solid glow covering the silhouette, cropped object, border
+    prompt_prose: >-
+      One small floating alien rescue beacon shaped like a rounded
+      pearl lantern, seen directly from the side. The polished violet
+      metal collar holds a warm golden bioluminescent sphere inside a
+      translucent turquoise glass shell. Three tiny pink star-shaped
+      metal fins point backward and one golden loop floats above the
+      lantern. Friendly delicate construction, unlit surroundings with
+      the centre sphere visibly bright. The complete object is centred
+      and isolated with generous empty space around every edge on an
+      evenly coloured pure bright green background. Bold clean western
+      animated illustration outlines, smooth glossy retro neon airbrush
+      shading, crisp silhouette readable at small video-game scale.
