@@ -2114,3 +2114,54 @@ tasks:
   claimed_by: 2026-11-05T212600Z-claude-t099-01L5NK
   claimed_at: '2026-11-05T21:24:53Z'
   implementation_pr: 'silasfelinus/cthulhuquarium#84'
+- id: t-107
+  title: 'A second, swappable art style: style registry, settings picker and per-file Classic fallback in kind_robots; a style dimension in the canon pipeline'
+  status: claimed
+  milestone: m5
+  stakes: reversible
+  passes: 0
+  playtest_iteration: true
+  depends_on: []
+  updated: '2026-11-21T11:00:00Z'
+  note: >-
+    Silas, 2026-11-21: "we should add a different art style. Something from illustrious probably. The
+    user should be able to swap between them, like we do with shifting desks." Decided in session:
+    every still (fish sprites, Charlotte and Wilbur portraits incl. floor variants, heroes, plates,
+    backgrounds, UI); a style-check round first (t-108); a swatch picker in settings and on the title
+    card, Classic the default, saved per browser. Code ships before any art and shows nothing until a
+    second style is available. Plan: /root plan "Cthulhuquarium: a second, swappable art style on
+    Illustrious" steps 2-3.
+  claimed_by: 2026-11-21T1100Z-cthq-styles-01L5NK
+  claimed_at: '2026-11-21T11:00:00Z'
+- id: t-108
+  title: 'Pick the second art style from the Illustrious style check'
+  status: waiting
+  milestone: m5
+  stakes: reversible
+  passes: 0
+  playtest_iteration: true
+  gate_human: true
+  gate_reason: creative-approval
+  depends_on: []
+  updated: '2026-11-21T11:00:00Z'
+  note: >-
+    art/ILLUSTRIOUS-STYLE-CHECK-1.yaml renders six subjects (Charlotte hero, Wilbur explaining, the
+    arrival plate, the parlour background, Lint Shrimp, The Concern) on three Illustrious checkpoints:
+    illustrij v2.1 (anime visual novel), Nova Comic XL v2 (western comic), ntrMIX (painterly storybook),
+    jobs 76364-76381. Silas picks one from the contact sheet beside the shipped Classic, or asks for
+    other checkpoints. Gates every render round (t-109).
+- id: t-109
+  title: 'Render the chosen second style for every still, round by round, reviewed before it ships'
+  status: waiting
+  milestone: m5
+  stakes: reversible
+  passes: 0
+  playtest_iteration: true
+  depends_on: [t-107, t-108]
+  updated: '2026-11-21T11:00:00Z'
+  note: >-
+    Rounds after the pick: characters (heroes, Charlotte 5 poses, Wilbur 5 base poses); Wilbur's 20
+    floor variants as Kontext edits of his styled base poses; 15 plates and 16 backgrounds; 13 UI; 151
+    fish sprites in floor batches, floor I reviewed first (non-human drift is the known Illustrious
+    risk). Each round: submit, harvest, build, contact-sheet review, withdraw and re-queue misses, canon
+    PR, kind_robots sync. The style turns available once characters, plates and backgrounds pass.
