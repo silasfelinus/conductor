@@ -949,30 +949,32 @@ tasks:
   - id: t-047
     milestone: m4
     title: "Make review_rainbow_doodle_art.py print an edge-risk summary so the DOODLE-SET-2 visual pass starts from the risky sprites"
-    status: review
+    status: done
     claimed_by: 2026-11-21T015230Z-rainbow-t047-edge-risk-k8h2
     claimed_at: '2026-11-21T01:52:30Z'
     depends_on: []
-    owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-11-21T01:54:07Z'
+    updated: '2026-11-21T03:52:20Z'
     note: |-
       Kaizen from the PR #7699 review. The sheet builder records edge_check per asset in visual-review.yaml but only prints a count. Print each edge-risk asset (rel path, ArtImage id) after the run and add a test that a non-green border appears in that list. Never change keeper verdicts.
 
       Added edge-risk sprite relative paths and ArtImage IDs to the private doodle review CLI, with an offline mixed-border regression. Implementation commit 7d936bc460c8dbcd1cbe8bf4127de541722476a0; review pending.
+
+      Edge-risk relative paths and ArtImage IDs shipped in merged Conductor PR #7709 (2026-11-20 18:06 PT), with offline mixed-border regression. Follow-up shared fixture landed in PR #7713; no keeper verdicts changed.
   - id: t-048
     milestone: m4
     title: "Share one tmp kind_robots + DOODLE ledger fixture between the Rainbow doodle export and review tests"
-    status: review
+    status: done
     claimed_by: 20261121T021811Z-rainbow-t048-fixture-p6k9
     claimed_at: '2026-11-21T02:18:11Z'
     depends_on: []
-    owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-11-21T02:19:29Z'
+    updated: '2026-11-21T03:51:04Z'
     note: |-
       Kaizen from the PR #7698 review. tests/test_export_rainbow_doodle_art.py and tests/test_review_rainbow_doodle_art.py each hand-build classic webps and ledgers with slightly different shapes (art.krea vs art.kontext, jobs present or not). Move the builder into one helper so both suites exercise the same ledger shape the real DOODLE-SET-2.yaml uses.
 
       Shared synthetic-but-valid 64x48 WebP and PNG DOODLE-SET-2-shaped fixtures between exporter and contact-sheet tests. Two original fixture builders eliminated. Regression checks assert per-lane jobs, ArtImage provenance and importer schema. Kind Robots game code untouched. Commit bcb4951b; CI required before merge.
+
+      Shared DOODLE-SET-2 export/review fixture merged in Conductor PR #7713 at 6867d7b3e08a1d4ae419cc42ffe1a20b79cfaf9a. Worker PR CI, Security Audit, handoff and task-events checks passed on resolved head 02629878253480c39f390c49d9fef58c03f49d93. No production art or game runtime changes.
