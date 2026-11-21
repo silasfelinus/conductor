@@ -1704,7 +1704,7 @@ tasks:
 - id: t-084
   milestone: m4
   title: 'Staged schema cleanup: drop the breeding, egg and hidden-stat columns once t-082 is live'
-  status: waiting
+  status: done
   owner: worker
   stakes: reversible
   passes: 0
@@ -1729,10 +1729,16 @@ tasks:
     deleting the pending marker in the same PR; merge only once
     https://kindrobots.org/api/version shows a commit containing #5499 (Silas approved
     shipping when verified, 2026-11-21).
-  updated: '2026-11-21T09:50:17Z'
+
+    Step 2 merged as kind_robots #5503 after production /api/version showed 66a0f65c
+    (contains #5499): AquariumStock.stat*/parentAId/parentBId, AquariumCodexEntry.bestStat*
+    and AquariumEgg dropped. Replayed on local MariaDB; exploit suite 26/26 and key play-
+    through 15/15 against the dropped schema. Production applies it on the next Force Update
+    (deploy-unraid runs migrate deploy before the container swap).
+  updated: '2026-11-21T10:14:22Z'
   claimed_by: 2026-11-21T1900Z-cthq-playtest-01L5NK
   claimed_at: '2026-11-21T07:25:29Z'
-  implementation_pr: 'silasfelinus/kind_robots#5499'
+  implementation_pr: 'silasfelinus/kind_robots#5503'
 
 - id: t-085
   milestone: m4
