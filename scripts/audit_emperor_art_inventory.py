@@ -60,8 +60,8 @@ RUNTIME_BUILDERS = (
     ("utils/emperorOfDust/fortress/chanceArt.ts", "chanceArtCandidates", re.compile(r"^chance-events/[a-z0-9-]+/[a-z0-9-]+$")),
     ("utils/emperorOfDust/fortress/audienceChoiceArt.ts", "audienceChoiceImages", re.compile(r"^audiences/[a-z0-9-]+/[a-z0-9-]+$")),
     ("utils/emperorOfDust/fortress/audienceChoiceArt.ts", "audienceChoiceImages", re.compile(r"^audiences/[a-z0-9-]+-(?:enter|[a-z0-9-]+)$")),
-    ("utils/emperorOfDust/fortress/talkArt.ts", "talkArt", re.compile(r"^talks/[a-z0-9-]+/[a-z0-9-]+$")),
-    ("utils/emperorOfDust/fortress/talkChoiceArt.ts", "talkChoice", re.compile(r"^talks/[a-z0-9-]+/[a-z0-9-]+$")),
+    ("utils/emperorOfDust/fortress/talkPlates.ts", "talkPlateUrl", re.compile(r"^talks/[a-z0-9-]+/[a-z0-9-]+$")),
+    ("utils/emperorOfDust/fortress/talkPlates.ts", "talkChoicePlateUrl", re.compile(r"^talks/[a-z0-9-]+/[a-z0-9-]+$")),
 )
 
 
