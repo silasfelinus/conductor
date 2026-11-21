@@ -1011,14 +1011,32 @@ tasks:
   - id: t-050
     milestone: m4
     title: "List the opening shots that fell back to stills in the delivery report so their WAN jobs can be re-queued"
-    status: claimed
+    status: done
     depends_on: []
     passes: 0
     stakes: reversible
-    updated: '2026-11-21T15:30:00Z'
+    updated: '2026-11-21T17:48:32Z'
     source: kaizen-pr-7752
     note: |-
       Reviewer kaizen from the 2026-11-21 PT merge of conductor#7752 (b7e0a00), which made the manifest count only validated animated shots. export_rainbow_opening.py now knows exactly which keys decoded (accepted_clips). Print and record the complement, the shot keys whose clip was DONE in the ledger but fell back to the still, in the manifest and delivery report, with a test, so a reviewer can re-queue exactly those WAN jobs.
+
+      2026-11-21 PT Reviewer: merged conductor#7764 (squash 852e731). render() records DONE
+      WAN clips that failed validation as rejected (pending shots excluded); export prints
+      them and writes opening-rejected-clips.json beside the media. 12 tests pass locally;
+      full CI green. Reviewer restored the PR body to the handoff template (the only red
+      check). Kaizen -> t-051.
     owner: worker
     claimed_by: 20261121T153000Z-rainbow-t050-p9q2
     claimed_at: '2026-11-21T15:30:00Z'
+    implementation_pr: 'silasfelinus/conductor#7764'
+  - id: t-051
+    milestone: m4
+    title: "Surface opening-rejected-clips.json in the opening manifest or delivery report so the WAN re-queue list is visible without re-running the export"
+    status: ready
+    depends_on: []
+    passes: 0
+    stakes: reversible
+    updated: '2026-11-21T17:55:00Z'
+    source: kaizen-pr-7764
+    note: |-
+      Reviewer kaizen from the 2026-11-21 PT merge of conductor#7764. t-050 writes the rejected shot keys to a sidecar opening-rejected-clips.json beside the media, but the manifest and delivery report the task named still do not show them. Read the sidecar (or pass the list directly) into the manifest/delivery report, with a test, and note the shot keys a reviewer should re-queue.

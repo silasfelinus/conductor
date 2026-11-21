@@ -210,3 +210,9 @@ Companion kind_robots#4764 was already on main, so merge order held. CI green on
 - **Decision:** merged (b7e0a00) on green exact-head CI. Small, reversible, in scope: the manifest now counts a shot as animated only when `safe_clip_download` actually decoded it, so a corrupt `DONE` clip that fell back to a still no longer inflates the count. Both tests (mixed and still-only) patch the network boundary and assert the accepted keys.
 - **Finding:** the only red check was Validate Worker PR handoff (prose body, no template headings). The Reviewer rewrote the body; the diff was unchanged. The PR also named no task id: it is an untracked follow-up to t-049.
 - **Suggestion:** open follow-ups as a task first (`next_free_task_id.py`) and use the handoff template. Kaizen t-050.
+
+## 2026-11-21 PT · Reviewer: t-050 rejected WAN shot list (#7764)
+
+- **Decision:** merged (852e731) on green CI. Small, reversible, in scope: `render()` records DONE clips that failed validation (pending shots correctly excluded), the export prints them and writes `opening-rejected-clips.json`. Both new tests patch the network boundary and assert the exact keys; 12 pass locally.
+- **Finding:** again the only red check was Validate Worker PR handoff — the body was prose with no template headings (third time in a row on this project). The Reviewer rewrote it; diff unchanged. The task asked for the list "in the manifest and delivery report"; a sidecar JSON was shipped instead, which is acceptable but leaves the report half (kaizen t-051).
+- **Suggestion:** run `check_pr_handoff_template.py` on the body before opening the PR.
