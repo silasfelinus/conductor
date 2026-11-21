@@ -178,6 +178,28 @@ class EmperorArtInventoryTests(unittest.TestCase):
         self.assertEqual(by_asset["rooms/ab"]["reference_class"],
                          "builder_reachable")
 
+    def test_exact_manifest_suppresses_unproven_builder_heuristic(self):
+        self.ledger("a.yaml", [
+            self.subject("unused", "chance-events/rain/unknown", 10, 20),
+        ])
+        builder = self.app / "utils/emperorOfDust/fortress/chanceArt.ts"
+        builder.parent.mkdir(parents=True, exist_ok=True)
+        builder.write_text(
+            "function chanceArtCandidates(eventId, choiceId) {}",
+            encoding="utf-8",
+        )
+        report = inventory(
+            self.ledgers, self.app,
+            self.manifest(["chance-events/rain/collect"]),
+        )
+        self.assertEqual(
+            report["assets"][0]["runtime_reference_candidates"],
+            ["utils/emperorOfDust/fortress/chanceArt.ts"],
+        )
+        self.assertEqual(
+            report["assets"][0]["reference_class"], "unreferenced",
+        )
+
     def test_invalid_runtime_manifest_fails_closed(self):
         self.ledger("a.yaml", [self.subject("a", "rooms/a", 10, 20)])
         malformed = self.manifest(["../../secret"])
