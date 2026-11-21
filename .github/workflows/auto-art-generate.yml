@@ -61,7 +61,7 @@ jobs:
     permissions:
       contents: write
     env:
-      KR_BASE_URL: https://kindrobots.org
+      KR_BASE_URL: https://kind-robots.vercel.app
       # Keep stdout/stderr in order in the tee'd logs art_queue_health.py parses.
       PYTHONUNBUFFERED: "1"
 
@@ -756,7 +756,7 @@ jobs:
         working-directory: conductor
         env:
           KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
-          KR_BASE_URL: https://kindrobots.org
+          KR_BASE_URL: https://kind-robots.vercel.app
         run: |
           python projects/shifting-desks/art/reconcile_delivery.py --live --write
           bash scripts/checkpoint_art_state.sh "chore: checkpoint Shifting Desks delivery evidence [skip ci]"
