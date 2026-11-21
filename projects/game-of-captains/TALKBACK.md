@@ -38,3 +38,9 @@
 - **Verification:** three-file change filters the Forge to Space Couch redshirt slots and keeps single-candidate review visible, with source-based regression assertions. Saved-game IDs, access control and image verdicts unchanged.
 - **Follow-up:** t-033 is still READY/partial, not art-delivered. The 23 portrait candidates and one power plate require actual image inspection, explicit selection and authenticated URL checks. The four older REVIEW tasks were inspected against main and queued for READY reconciliation; no completed gameplay/art scope was relabeled done.
 - **Lesson:** compare contemporaneous worker PRs before merging; an active review flag without recent work should not block independent next steps.
+
+## 2026-11-21 PT · art-medic: two Space Couch ledgers rejected by live prompt contract; #7718 sent back
+
+- **Fix:** `ETHICAL-OUTCOMES-ROUND-1` and `SHIELD-POCKET-CONTINUITY-ROUND-1` lane suffixes ended "No text/lettering, logos, captions or watermarks." kind_robots' live contract rejects any text-noun negation on krea2 (cfg 1, negative prompt inert), so all 18 cells were skipped. Replaced with "Every surface bare and unmarked."; `check_art_prompts_live_contract.py --project game-of-captains` now 36/36.
+- **Review #7718 (t-009 chapter-nine scenes):** 0/12 cells would pass — every prompt carries "not ordinary humans or Earth animals" (people-negation) and "no readable text, no lettering, no logos" (text-exclusion), plus "without legible writing" on deposit-copy-reveal. Needs-changes, not a quality pass: rewrite as positive statements and run the live contract checker before handoff.
+- **Lesson:** run `python scripts/check_art_prompts_live_contract.py --kr-repo ../kind_robots --ref origin/main --project <slug>` on every new art ledger before opening the PR; the local builder's 4-noun pile limit is looser than the live server.
