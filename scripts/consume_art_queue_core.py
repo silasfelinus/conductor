@@ -1073,6 +1073,20 @@ def wait_for_job(job_id, timeout):
     raise ArtJobTimeout(f"job {job_id} timed out after {timeout}s (still queued/running)")
 
 
+def fetch_image_file_authenticated(art_image_id):
+    """The image bytes from the owner-authenticated file route, or None."""
+    if not KR_API_TOKEN:
+        return None
+    request = urllib.request.Request(f"{KR_BASE_URL}/api/art/images/{art_image_id}/file")
+    request.add_header("Authorization", f"Bearer {KR_API_TOKEN}")
+    try:
+        with urllib.request.urlopen(request, timeout=180) as response:
+            data = response.read()
+            return data if response.status == 200 and data else None
+    except urllib.error.URLError:
+        return None
+
+
 def fetch_image_b64(art_image_id):
     status, resp = http_json(
         "GET",
@@ -1109,9 +1123,15 @@ def fetch_image_b64(art_image_id):
                 )
             raw_bytes = file_resp.read()
     except urllib.error.URLError as error:
-        raise RuntimeError(
-            f"ArtImage {art_image_id} has no imageData and its imagePath fallback fetch failed: {error}"
-        ) from error
+        # A private image (isPublic false) is not served at its public imagePath; the
+        # authenticated file route serves it to its owner (2026-11-21: every private
+        # Cthulhuquarium plate and Kontext edit 404'd here, so finished renders looked
+        # lost and were rendered again).
+        raw_bytes = fetch_image_file_authenticated(art_image_id)
+        if raw_bytes is None:
+            raise RuntimeError(
+                f"ArtImage {art_image_id} has no imageData and its imagePath fallback fetch failed: {error}"
+            ) from error
     if not raw_bytes:
         raise RuntimeError(f"ArtImage {art_image_id} has no imageData and its imagePath fallback was empty")
     return base64.b64encode(raw_bytes).decode("ascii")
