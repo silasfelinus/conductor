@@ -19,9 +19,11 @@ This script DOES NOT submit, rerender, delete or change any ArtImage or ArtJob.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import re
 import sys
+import urllib.request
 from collections import Counter
 from pathlib import Path
 
@@ -134,7 +136,37 @@ def chunks(items, count=MAX_BATCH):
         yield items[index:index + count]
 
 
-def reconcile(plan, write=False, http_json=None, base_url=None):
+def verify_delivered_media(url, sha256, base_url=None, opener=None):
+    """Verify the ACTUAL served WebP bytes; an API receipt is not delivery."""
+    if not isinstance(url, str) or not url.startswith("/images/emperor-of-dust/"):
+        return False
+    if not re.fullmatch(r"[0-9a-f]{64}", str(sha256 or "")):
+        return False
+    origin = (base_url or core.KR_BASE_URL).rstrip("/")
+    request = urllib.request.Request(origin + url, method="GET")
+    request.add_header("Accept", "image/webp")
+    try:
+        with (opener or urllib.request.urlopen)(request, timeout=45) as response:
+            if response.status != 200:
+                return False
+            mime = response.headers.get("Content-Type", "").split(";")[0].strip()
+            if mime != "image/webp":
+                return False
+            payload = response.read()
+    except (OSError, ValueError):
+        return False
+    if not (
+        len(payload) >= 20
+        and payload[:4] == b"RIFF"
+        and payload[8:12] == b"WEBP"
+    ):
+        return False
+    return hashlib.sha256(payload).hexdigest() == sha256
+
+
+def reconcile(
+    plan, write=False, http_json=None, base_url=None, verify_media=None
+):
     """Remote requests contain IDs/paths only, never art bytes or bearer tokens."""
     # Isolate conflicting render candidates so they cannot block unrelated
     # reviewed art. No candidate from a collision ever reaches the endpoint.
@@ -186,15 +218,25 @@ def reconcile(plan, write=False, http_json=None, base_url=None):
                 raise RuntimeError("Delivery receipt provenance mismatch.")
             if write and result.get("status") == "would-write":
                 raise RuntimeError("Server ignored an authenticated write request.")
+            state = result.get("status")
+            reason = result.get("reason")
+            if state in ("written", "already-delivered"):
+                verifier = verify_media or verify_delivered_media
+                if not verifier(
+                    result.get("url"), result.get("sha256"),
+                    base_url=base_url or core.KR_BASE_URL,
+                ):
+                    state = "http-verification-failed"
+                    reason = "Final HTTP image bytes did not match the API receipt."
             results.append({
                 "asset": candidate["asset"],
                 "artImageId": candidate["artImageId"],
                 "ledger": candidate["ledger"],
-                "status": result.get("status"),
+                "status": state,
                 "artJobId": result.get("artJobId"),
                 "sha256": result.get("sha256"),
                 "url": result.get("url"),
-                "reason": result.get("reason"),
+                "reason": reason,
             })
     return {
         "write": bool(write),
