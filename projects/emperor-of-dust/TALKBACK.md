@@ -133,3 +133,13 @@
 **Pattern:** good restraint. It separates genuinely new subjects from the ~1,149 slot count, so done renders aren't re-queued.
 
 **Suggestion:** kaizen t-069 (ArtJob → ArtImage → media → manifest-slot inventory) so future slot audits can't inflate queue counts.
+
+## 2026-11-21 PT | Reviewer | t-069 art inventory (worker/emperor-of-dust-t-069-art-inventory-a7c2)
+
+**Decision:** rescued and merged through the reviewer PR. The script and tests were well scoped (read-only, no network, path-traversal guard, DONE kept distinct from exported), but the worker's last commit (a3d2663, the WebP signature check) wrote literal `\n` escapes into the source, so the module raised `SyntaxError` on import and every test errored. Fixed in a small follow-up: `_is_webp()` reads the 12-byte RIFF/WEBP header with a closed handle. The reference scan also matched ~900 assets against every file under `server/` and `components/` and ran for minutes on a real checkout. It now skips files that never mention "emperor", which takes about 5s. Two tests added (non-WebP file is not an export; unrelated files are not evidence).
+
+**Real result (kind_robots 9a898029):** 923 unique assets; 15 with no DONE image; 538 with a DONE image but no valid export (this is the t-063 gap); 370 exported with no static reference; 217 assets with conflicting rerolled image ids.
+
+**Pattern:** the last commit was pushed without re-running the tests it shipped with. Run `python -m unittest <your test module>` after every amend, especially edits made through a string-escaping tool.
+
+**Kaizen:** t-070. Resolve runtime-built paths and whole-token matching so the 370 figure turns into a real orphan count.
