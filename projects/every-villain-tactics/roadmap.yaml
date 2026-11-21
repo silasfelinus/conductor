@@ -444,9 +444,9 @@ tasks:
     title: "One-hit henchmen and Picnic Panic one-shot encounter"
     status: review
     owner: worker
-    claimed_by: 20261121T040012Z-evt-t018-art-fastlane-n7p4
-    claimed_at: '2026-11-21T04:00:12Z'
-    updated: '2026-11-21T04:04:13Z'
+    claimed_by: 20261121T105711Z-evt-t018-tells-integration-p8f2
+    claimed_at: '2026-11-21T10:57:11.511Z'
+    updated: '2026-11-21T10:58:59.196Z'
     depends_on: [t-004, t-017]
     passes: 0
     stakes: reversible
@@ -462,6 +462,10 @@ tasks:
       Both scoped PRs landed: kind_robots #5486 merged as 0589272 after 7 of 7 latest-head workflows succeeded, and conductor #7715 merged as 39a1bae after 4 of 4 current workflows succeeded. The one-shot selector now shows the authenticated painted Picnic Plaza map; 12 private Krea2 crew warning/action/counter/portrait requests are on main. Source requests are not proven accepted or delivered. Complete SPECIES Facet records, actual ArtJob receipts, image attachments and visual QA before marking t-018 done.
 
       Scoped submission infrastructure repair: the long Auto Art Generate workflow only reaches general auto-submit after hundreds of earlier steps and recent runs were cancelled without accepting the 12 Tactics one-hit telegraph jobs. New short independent hourly and on-push GitHub Actions workflow .github/workflows/prom-tactics-art-intake.yml with early authenticated submission, deterministic request-key idempotency, immediate ArtJob receipt checkpoints, status refresh, strict 12+24 accepted-ID gate and source-backed regression tests. Implementation in branch worker/every-villain-tactics-t-018-artjob-fastlane-n7p4 at 2660c85da1136c8f6328dff0ff18cff5cbf36f64. CI and real ArtJob acceptance still pending; neither accepted IDs nor rendered attachments are claimed. Continue t-018 afterwards for media review, SPECIES Facets and UI attachment.
+
+      Previous t-018 painted Picnic Plaza gallery PR #5486 merged on 2026-11-21, but the twelve recorded ONE-HIT-CREW-TELEGRAPHS ArtImages 277786-277797 are not yet linked into tactical tells. Continue with authenticated art mapping and in-battle UI; preserve all existing ArtJob receipts and private access controls.
+
+      Partial art integration: map all twelve source-receipted Krea2 one-hit crew warning/action/counter/captain ArtImages 277786-277797 (jobs 74393-74404) and expose them as a private authenticated battle-gallery in the playable Tactics board, with responsive styling, provenance data IDs and source-backed regression assertions. The UI keeps the tactical warnings and does not publish private media. Still needed: inspect actual private image bytes, approve/reject art, live UI verification, SPECIES/Facet records and full-run QA. Code PR pending CI; do not mark t-018 done yet.
   - id: t-019
     milestone: m3
     title: "Deterministic post-battle points and earned scrapbook achievements"
