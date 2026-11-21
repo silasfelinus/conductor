@@ -143,3 +143,11 @@
 **Pattern:** the last commit was pushed without re-running the tests it shipped with. Run `python -m unittest <your test module>` after every amend, especially edits made through a string-escaping tool.
 
 **Kaizen:** t-070. Resolve runtime-built paths and whole-token matching so the 370 figure turns into a real orphan count.
+
+## 2026-11-21 PT | Reviewer | t-070 runtime-path inventory (#7766)
+
+**Decision:** merged as a3b5d4f (squash). Two files, read-only script and tests. All 24 checks green on head b634e14; the 11 inventory tests pass locally. Whole-token matching fixes the `rooms/a` vs `rooms/ab` prefix bug. Runtime-builder hits are reported as `runtime_candidate`, separately from static references, and never count as delivered.
+
+**Pattern:** this one is clean. Unlike t-069, the worker re-ran the tests after every fix, and the PR body says plainly that a candidate is not proof the image is shown. Seven commits for an 80-line change is a lot of churn (two regex-boundary fixups), but the squash hides it.
+
+**Kaizen:** t-071. Have the app emit a runtime manifest so the remaining candidates become exact reachable paths.
