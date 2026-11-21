@@ -959,13 +959,15 @@ tasks:
   - id: t-048
     milestone: m4
     title: "Share one tmp kind_robots + DOODLE ledger fixture between the Rainbow doodle export and review tests"
-    status: claimed
+    status: review
     claimed_by: 20261121T021811Z-rainbow-t048-fixture-p6k9
     claimed_at: '2026-11-21T02:18:11Z'
     depends_on: []
     owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-11-21T02:18:11Z'
+    updated: '2026-11-21T02:19:29Z'
     note: |-
       Kaizen from the PR #7698 review. tests/test_export_rainbow_doodle_art.py and tests/test_review_rainbow_doodle_art.py each hand-build classic webps and ledgers with slightly different shapes (art.krea vs art.kontext, jobs present or not). Move the builder into one helper so both suites exercise the same ledger shape the real DOODLE-SET-2.yaml uses.
+
+      Shared synthetic-but-valid 64x48 WebP and PNG DOODLE-SET-2-shaped fixtures between exporter and contact-sheet tests. Two original fixture builders eliminated. Regression checks assert per-lane jobs, ArtImage provenance and importer schema. Kind Robots game code untouched. Commit bcb4951b; CI required before merge.
