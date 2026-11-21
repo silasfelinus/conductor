@@ -40,7 +40,7 @@ def test_manifest_replaces_only_the_named_array(tmp_path):
     for name in ("followers/F001/portrait/neutral", "followers/F021/portrait/neutral"):
         path = root / f"{name}.webp"
         path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_bytes(b"x")
+        path.write_bytes(b"RIFF" + b"\\x10\\x00\\x00\\x00" + b"WEBP" + b"VP8 " + b"\\x00" * 8)
     ts = tmp_path / "castArt.ts"
     ts.write_text(
         "// header\nexport const CAST_ART: readonly string[] = [\n  'old',\n]\n\n"
@@ -188,3 +188,21 @@ def test_offline_audit_cli_never_fetches_render_bytes(tmp_path, capsys):
     assert report["counts"] == {"export-ready": 1}
     assert report["rows"][0]["art_job_ids"] == [68221]
     assert report["rows"][0]["art_image_id"] == 270431
+
+
+def test_plan_fails_closed_on_concurrent_conflicting_render_ids(tmp_path):
+    a = subject("endings/bell-restored", image=270430)
+    b = subject("endings/bell-restored", image=270531)
+    with pytest.raises(ValueError, match="Competing DONE renders"):
+        era.plan([a, b], tmp_path, "emperor-of-dust")
+    assert len(era.plan([a, dict(a)], tmp_path, "emperor-of-dust")) == 1
+
+
+def test_manifest_excludes_corrupted_files(tmp_path):
+    root = tmp_path / "public" / "emperor-of-dust" / "endings"
+    root.mkdir(parents=True)
+    (root / "missing.webp").write_bytes(b"corrupt")
+    (root / "valid.webp").write_bytes(
+        b"RIFF" + b"\\x10\\x00\\x00\\x00" + b"WEBP" + b"VP8 " + b"\\x00" * 8
+    )
+    assert era.manifest_entries(tmp_path, "emperor-of-dust/endings") == ["valid"]
