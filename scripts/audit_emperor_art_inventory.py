@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 from collections import defaultdict
 from pathlib import Path
 
@@ -51,6 +52,36 @@ def scan_references(app_root: Path):
     return hits
 
 
+# Runtime asset constructors verified against Kind Robots' fortress modules.
+# These are *potential* references, not evidence that a player reached the image.
+# Each pattern is enabled only when its corresponding builder is present in source.
+RUNTIME_BUILDERS = (
+    ("utils/emperorOfDust/fortress/questArt.ts", "questArtUrl", re.compile(r"^quests/[a-z0-9-]+$")),
+    ("utils/emperorOfDust/fortress/chanceArt.ts", "chanceArtCandidates", re.compile(r"^chance-events/[a-z0-9-]+/[a-z0-9-]+$")),
+    ("utils/emperorOfDust/fortress/audienceChoiceArt.ts", "audienceChoiceImages", re.compile(r"^audiences/[a-z0-9-]+/[a-z0-9-]+$")),
+    ("utils/emperorOfDust/fortress/audienceChoiceArt.ts", "audienceChoiceImages", re.compile(r"^audiences/[a-z0-9-]+-(?:enter|[a-z0-9-]+)$")),
+    ("utils/emperorOfDust/fortress/talkPlates.ts", "talkPlateUrl", re.compile(r"^talks/[a-z0-9-]+/[a-z0-9-]+$")),
+    ("utils/emperorOfDust/fortress/talkPlates.ts", "talkChoicePlateUrl", re.compile(r"^talks/[a-z0-9-]+/[a-z0-9-]+$")),
+)
+
+
+def _exact_reference(asset: str, content: str) -> bool:
+    """Avoid rooms/a matching rooms/ab or rooms/a-success."""
+    token = re.escape(asset)
+    return re.search(r"(?<![a-zA-Z0-9_-])" + token +
+                     r"(?![a-zA-Z0-9_/-])", content) is not None
+
+
+def runtime_reference_candidates(asset: str, references: dict[str, str]):
+    """Potential runtime URL paths, kept separate from exact static references."""
+    candidates = []
+    for source, symbol, pattern in RUNTIME_BUILDERS:
+        content = references.get(source, "")
+        if pattern.fullmatch(asset) and re.search(r"\b" + re.escape(symbol) + r"\b", content):
+            candidates.append(source)
+    return sorted(set(candidates))
+
+
 def _is_webp(path: Path) -> bool:
     """A nonempty file is not an export: require the RIFF....WEBP container signature."""
     if not path.is_file():
@@ -88,12 +119,16 @@ def inventory(ledger_dir: Path, app_root: Path | None = None):
         exported = _is_webp(file_path) if file_path else None
         # A dynamic path assembled at runtime will not be detected by static text search.
         matches = [name for name, content in references.items()
-                   if asset in content or f"/{asset}.webp" in content]
+                   if _exact_reference(asset, content)]
+        runtime_candidates = runtime_reference_candidates(asset, references) if app_root else []
         image_ids = sorted({str(e["art_image_id"]) for e in entries if e["art_image_id"] is not None})
         job_ids = sorted({str(e["job_id"]) for e in entries if e["job_id"] is not None})
         results.append({
             "asset": asset, "media_path": path, "exported": exported,
-            "reference_files": matches, "job_ids": job_ids, "art_image_ids": image_ids,
+            "reference_files": matches, "runtime_reference_candidates": runtime_candidates,
+            "reference_class": ("static" if matches else
+                                "runtime_candidate" if runtime_candidates else "unreferenced"),
+            "job_ids": job_ids, "art_image_ids": image_ids,
             "render_records": entries, "has_done_image": any(
                 e["status"] == "DONE" and e["art_image_id"] is not None for e in entries),
             "conflicting_image_ids": len(image_ids) > 1,
@@ -103,6 +138,8 @@ def inventory(ledger_dir: Path, app_root: Path | None = None):
         "without_done_image": sum(not x["has_done_image"] for x in results),
         "with_done_image_no_export": sum(x["has_done_image"] and x["exported"] is False for x in results),
         "exported_without_static_reference": sum(x["exported"] is True and not x["reference_files"] for x in results),
+        "exported_runtime_candidates": sum(x["exported"] is True and x["reference_class"] == "runtime_candidate" for x in results),
+        "exported_without_known_reference": sum(x["exported"] is True and x["reference_class"] == "unreferenced" for x in results),
         "conflicting_image_ids": sum(x["conflicting_image_ids"] for x in results),
         "export_verification_available": app_root is not None,
     }
