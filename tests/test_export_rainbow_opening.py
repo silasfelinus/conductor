@@ -136,7 +136,7 @@ class DoodleOpeningTests(unittest.TestCase):
         """Even inaccurate ffprobe metadata cannot trigger unbounded RGB output."""
         payload = b"0000ftyp" + b"video-payload"
         frame_bytes = opening.SIZE[0] * opening.SIZE[1] * 3
-        fake = subprocess.CompletedProcess([], 0, stdout=b"\\x00" * frame_bytes, stderr=b"")
+        fake = subprocess.CompletedProcess([], 0, stdout=b"\x00" * frame_bytes, stderr=b"")
         with patch.object(opening.subprocess, "run", return_value=fake) as run:
             frames = opening.clip_frames(payload)
         self.assertEqual(len(frames), 1)
