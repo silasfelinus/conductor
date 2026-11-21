@@ -1776,50 +1776,27 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: claimed
+  status: review
   owner: worker
   claimed_by: '20261121T012243-iv-t104-nav-art-f71c'
   claimed_at: '2026-11-21T01:23:16.159Z'
-  updated: '2026-11-21T01:23:16.159Z'
+  updated: '2026-11-21T01:26:03.502Z'
   passes: 0
   stakes: reversible
   recurring: true
   depends_on: t-103
-  note: >-
+  note: |-
     Recurring kr-* consistency umbrella (interface-vision). Full slice 1-234 history (395KB) archived to projects/interface-vision/T104-HISTORY.md -- see that file for the full archive pointer and what's established. Slice 236 merged as silasfelinus/kind_robots#2644. Named .kr-input-rounded-xl/.kr-input-rounded-2xl (the rounded-xl/rounded-2xl override shapes on the .kr-input family that .kr-input/.kr-input-sm/.kr-input-xs don't cover), dropping the dead input-bordered class; migrated 68 occurrences across 25 files via two new codemods (kr_input_rounded_xl_codemod.py, kr_input_rounded_2xl_codemod.py). No color/behavior/API/schema/route/geometry change. All kind_robots PR checks green. Return the recurring consistency umbrella to ready for the next bounded slice. Kaizen for the next slice: the btn/badge combos flagged by slice 235 (btn btn-primary btn-sm rounded-2xl, badge badge-sm rounded-xl) remain unclaimed -- a fresh full-repo class-frequency survey outside every closed family (now also kr-input-rounded-xl/-2xl) is the starting point. Keep this note short going forward -- append future slice history to T104-HISTORY.md, not here. Slice 237 merged as silasfelinus/kind_robots#2646. Named .kr-btn-primary-2xl (rounded-2xl sibling of .kr-btn-primary) and migrated 13 btn btn-primary btn-sm rounded-2xl occurrences across 12 files; migrated 13 badge badge-sm rounded-xl occurrences across 9 files onto the existing radius-less .kr-badge-sm primitive. No color/behavior/API/schema/route/geometry change. All 52 kind_robots PR checks green, mergeable_state clean before merge. Return the recurring consistency umbrella to ready for the next bounded slice. Kaizen for the next slice: no further exact-match btn- primary-sm-rounded-2xl or badge-sm-rounded-xl occurrences remain; the wider (still hand- rolled) badge badge-sm pool has other radius/utility variants (rounded-lg, shrink-0, absolute positioning -- see conductor/coat-dance-page.vue, storybook/storybook-life- run.vue) that a future slice could survey individually, similar to how .kr-badge-xs treated its more varied pool. Slice 238 (silasfelinus/kind_robots#2647): extended kr_badge_codemod.py's BOUNDED_EXTRAS["kr-badge-sm"] with shrink-0 and rounded-lg[+font-black], migrating 11 occurrences across 9 files. PR open, CI in progress. Slice 238 merged as silasfelinus/kind_robots#2647 (squash 4d0b6b2). [...]
-
     [Earlier history (5,771 chars) archived verbatim to projects/interface-vision/T104-HISTORY.md -- read it there only when you need a specific past cycle. Append new cycles below, one short paragraph each.]
-
     Silas requests sitewide application of the viewport-first interaction and fully-scrollable gallery rule. Audit route inventory, add sitewide regression protection, fix highest-impact shared shells and targeted surfaces in scoped PRs.
-
     Sitewide viewport-first initial implementation is ready for CI review: the scheduled responsive browser audit now records page-flow and clipped last gallery items across expanded public routes, plus bounded Ghost Trail/Pinball stages and collapsed Showdown controls with reference text in tutorial sidebar. Companion Conductor work specifies further public/gallery/admin batches and final screenshot atlas. Code awaiting PR and exact-head checks, no deploy.
-
     Sitewide viewport-first first batch shipped in Kind Robots PR #3673, merged as a97747b50b09f2f03edace24f9b4746a245550b1 from exact-head 0dd03c38ebfad96e3716057c659f8ad213f1497f after all 32 workflows completed successfully (including TypeScript, Layout, Contract Tests, Prettier, Workflow paths and branch janitor). Resolved two scoped CI quality issues without loosening checks: exact generated audit JSON path allowance and formatter-normalized Showdown disclosure. Added viewport owner/gallery reachability measurements and audit artifact, expanded public route scan, bounded Ghost Trail/Pinball stages, Showdown settings disclosure, and tutorial help. Companion Conductor PR #6165 merged as 89724c91c5f64080d00b0c216c12f66825553b52, tracking independent public, gallery, admin and final deployment/screenshot tasks t-143..t-146. No art job, game engine changes, database migration, public route moves, manual deployment or live three-device visual verification performed. Return t-104 to ready/resting for consistency fallback; specific finite sitewide work now belongs to t-143..t-146.
+    2026-11-16 PT daily-delivery:2026-11-16/route-scoped-tab-titles | PR: silasfelinus/kind_robots#5248 | app.vue uses the page-store title/description only when pageStore.describesPath(route) is true, so dedicated pages fall back to the site name instead of "Robots" or a stale content title; Build Bench and Shared with me set their own titles. Pinned by verifyFrontDoorPolish.test.ts.
+    2026-11-17 PT daily-delivery:2026-11-17/not-found-way-back | PR: silasfelinus/kind_robots#5279 | The not-found panel said 'No Nuxt Content page was found for /x' with no exit. It now explains the link may be old or mistyped and offers Play free games / Home / Support the mission buttons on the shared kr-panel; test forbids the framework jargon.
+    2026-11-18 PT daily-delivery:2026-11-18/site-name-tab-titles | PR: silasfelinus/kind_robots#5309 | Content pages showed bare tab titles (Storybook, Memory Dungeon, Support, Terrors on Crystal Street) while dedicated pages appended ' | Kind Robots' by hand. app.vue now sets titleTemplate via siteTabTitle() in utils/sharePreview.ts, which skips titles already naming the site; og:title unchanged. Pinned in verifySharePreview.test.ts. Live tab titles not yet re-checked after deploy.
+    2026-11-20 PT daily-delivery:2026-11-20/stale-share-description | PR: silasfelinus/kind_robots#5416 (merged 80196ac9) | app.vue's share description fell back to pageStore.subtitle even when the store described another page (default 'Welcome to Kind Robots'). The fallback is now routePageSubtitle, guarded by pageStore.describesPath like title and description; verifySharePreview.test.ts forbids the bare fallback.
 
-    2026-11-16 PT daily-delivery:2026-11-16/route-scoped-tab-titles | PR:
-    silasfelinus/kind_robots#5248 | app.vue uses the page-store title/description only when
-    pageStore.describesPath(route) is true, so dedicated pages fall back to the site name instead of
-    "Robots" or a stale content title; Build Bench and Shared with me set their own titles. Pinned
-    by verifyFrontDoorPolish.test.ts.
-
-    2026-11-17 PT daily-delivery:2026-11-17/not-found-way-back | PR: silasfelinus/kind_robots#5279 |
-    The not-found panel said 'No Nuxt Content page was found for /x' with no exit. It now explains
-    the link may be old or mistyped and offers Play free games / Home / Support the mission buttons
-    on the shared kr-panel; test forbids the framework jargon.
-
-    2026-11-18 PT daily-delivery:2026-11-18/site-name-tab-titles | PR:
-    silasfelinus/kind_robots#5309 | Content pages showed bare tab titles (Storybook, Memory
-    Dungeon, Support, Terrors on Crystal Street) while dedicated pages appended ' | Kind
-    Robots' by hand. app.vue now sets titleTemplate via siteTabTitle() in
-    utils/sharePreview.ts, which skips titles already naming the site; og:title unchanged.
-    Pinned in verifySharePreview.test.ts. Live tab titles not yet re-checked after deploy.
-
-    2026-11-20 PT daily-delivery:2026-11-20/stale-share-description | PR:
-    silasfelinus/kind_robots#5416 (merged 80196ac9) | app.vue's share description fell back to
-    pageStore.subtitle even when the store described another page (default 'Welcome to Kind
-    Robots'). The fallback is now routePageSubtitle, guarded by pageStore.describesPath like
-    title and description; verifySharePreview.test.ts forbids the bare fallback.
-  updated: '2026-11-18T11:07:14Z'
+    Scoped navigation artwork resilience: Kind Robots worker/interface-vision-t-104-nav-art-f71c commit 6c21614fc15bc017852309365dc96478907d248f adds robust fallback images, seven repo-owned image mappings and launcher regression tests. PR CI pending.
   implementation_pr: 'silasfelinus/kind_robots#2912'
   retry_context: ''
   min_rest_hours: 24
