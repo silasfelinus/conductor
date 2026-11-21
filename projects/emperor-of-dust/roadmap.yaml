@@ -1565,13 +1565,14 @@ tasks:
   - id: t-070
     milestone: m5
     title: "Separate runtime-built Emperor art paths from true orphans in the t-069 inventory's 370 exported-but-unreferenced images"
-    status: claimed
+    status: done
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-21T17:56:23Z'
+    updated: '2026-11-21T18:49:00Z'
     note: |-
       Reviewer kaizen from the 2026-11-21 PT review of t-069. Against kind_robots 9a898029 the inventory reports 538 DONE images with no valid WebP export (feeds t-063) and 370 exports with no static text reference. Static substring search cannot see paths assembled at runtime and also over-matches prefixes (rooms/a matches rooms/ab). Teach scripts/audit_emperor_art_inventory.py the path builders in utils/emperorOfDust (or read the generated manifest), match on whole path tokens, and report the remaining true orphans, with a test for each.
-    owner: worker
+
+      Completed by merged Conductor PR #7766 at a3b5d4f88ead1f30ded6c903c2c1b8f8e60e4bce. Exact-head Process task events, Worker PR handoff template, Security Audit, and Worker PR CI all completed successfully. Implemented whole-token static reference matching and dynamic candidate classifications for quest, chance, audience and talk URLs, plus four regression tests. Runtime candidates remain unverified until actual WebP media delivery. No new ArtJobs or exported image bytes are claimed. Keep t-063 and #4142 open.
     claimed_by: 20261121T1756Z-eod-t070-7e4c
     claimed_at: '2026-11-21T17:56:23Z'
