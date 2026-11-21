@@ -199,6 +199,13 @@ def main(argv=None) -> int:
         f"{len(manifest['assets'])} ArtImages for visual review in {args.output_dir}; "
         "no keeper verdicts changed"
     )
+    edge_risks = [
+        entry for entry in manifest["assets"] if entry["edge_check"] == "edge-risk"
+    ]
+    print(f"{len(edge_risks)} edge-risk sprite(s) need visual inspection:")
+    for entry in edge_risks:
+        rel = entry["asset"].split("/doodle/", 1)[1]
+        print(f"  {rel} (ArtImage {entry['art_image_id']})")
     return 0
 
 
