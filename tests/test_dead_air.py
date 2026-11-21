@@ -1,3 +1,4 @@
+import re
 """Dead Air's dates, motion requirements and resumable artist contract."""
 from pathlib import Path
 import sys
@@ -442,6 +443,23 @@ def test_yellow_television_reveal_is_not_in_visual_style():
             continue
         style = e["visual_style"].lower()
         assert not ("yellow" in style and ("television" in style or "eye" in style)), path.name
+
+
+def test_yellow_television_reveal_waits_for_the_reversal_shot():
+    """MV26 (The Ghost Exit Interview) spent its station reveal in s2: the brief itself
+    put "a yellow one-eyed square television" on the reception desk two shots before the
+    reversal. The visual_style guard can't catch that. Unrendered briefs must not paint the
+    yellow television into any shot before the one whose role is reversal."""
+    motif = re.compile(r"yellow[^.,;]*(television|tv\b|receiver)|one-eyed[^.,;]*television", re.I)
+    for path in sorted((ROOT / "projects/dead-air/episodes").glob("*.yaml")):
+        e = load_episode(path)
+        if e.get("status") != "authored" or e["date"] < "2026-11-21":
+            continue
+        roles = [s["role"] for s in e["shots"]]
+        if "reversal" not in roles:
+            continue
+        for shot in e["shots"][: roles.index("reversal")]:
+            assert not motif.search(shot["image_prompt"]), f"{path.name} {shot['id']}"
 
 
 def test_motion_prompts_are_lettering_guarded_like_stills():
