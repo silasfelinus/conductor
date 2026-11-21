@@ -1,0 +1,17 @@
+version: 1
+project: emperor-of-dust
+task: t-063
+operation: ready
+owner: worker
+session: 2026-11-21T065900Z-eod-t063-curation-6f71db
+updated: '2026-11-21T07:03:00Z'
+note: >-
+  Same-session release of the unconfirmed art-lane claim event after a blocked
+  credentials preflight. The only available execution environment has no
+  KR_API_TOKEN and no mounted repository checkout; the private original eight
+  ArtImage bytes therefore could not be fetched, visually curated or delivered,
+  and public media writes also retain an explicit human publication gate.
+  The rescued exporter/receipt scripts already landed through Conductor PR
+  #7726; no replacement code or image bytes are asserted by this attempt.
+  Do not leave a phantom claim while code review and exact-head CI for the
+  independently delivered t-062 story PR #5492 proceed. t-063 stays ready.
