@@ -464,7 +464,7 @@ def main(argv=None):
         )
         report = delivery_report(sources, accepted_clips, rejected_clips)
         target.with_name("opening-delivery-report.json").write_text(
-            json.dumps(report, indent=2) + "\\n"
+            json.dumps(report, indent=2) + "\n"
         )
         print(f"WAN re-queue shots: {', '.join(report['wan_requeue_shots']) or 'none'}")
         url = "/" + str(VIDEO_DIR.relative_to("public")).replace("\\", "/")
