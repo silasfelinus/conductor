@@ -263,14 +263,16 @@ tasks:
       Kaizen from t-042 review (#7695). Before the split, Worker PR CI took 219.02s for 4,859 tests (run 44810467441). Read the --durations output from the first completed post-merge PR CI run and from the first 'Daily art ledger loader parity' run. Write the measured delta in this note, and confirm the daily job really runs the parity test rather than skipping it when CSafeLoader is missing. If it skipped, fix the workflow so the comparison runs.
   - id: t-044
     title: "Replace verifyCapesStyleCheck's literal call-shape regexes for atlas art with a behaviour check that 48 hero and 47 villain identities resolve to shipped art"
-    status: ready
+    status: claimed
     owner: worker
-    updated: '2026-11-21T11:15:00Z'
+    updated: '2026-11-21T23:36:00Z'
     milestone: m3
     stakes: reversible
     passes: 0
     note: |-
       Kaizen from kind_robots#5505 (rescue of #5496): the test asserted `promArt(identityArtKey` in the atlas source, so a correct refactor to `identityArtwork` turned CI red for 3.6h. Assert resolved behaviour instead of source text.
+    claimed_by: 2026-11-21T233600Z-comet-city-academy-t-044-b7c4
+    claimed_at: '2026-11-21T23:36:00Z'
   - id: t-012
     milestone: m2
     title: "Promote the seven-day demo into Capes & Tassels name and genuine day/night map slice"
