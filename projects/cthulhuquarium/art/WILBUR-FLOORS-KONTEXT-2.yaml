@@ -1,0 +1,112 @@
+# Wilbur per-floor portraits, round 2 redo (conductor t-103/t-090). Review of round 2 (2026-11-21):
+# five of twenty edits were rejected. Four painted the "purple bruise" as a vivid magenta patch (greeting f3
+# and f4, wince f3 across both lenses, wince f5), and explaining f2 kept a pale bar under the figure. Same
+# sources and wording, with the bruise asked for in the photograph's own muted sepia, and new seeds.
+# Submitted directly with Silas's admin token, so auto_submit stays false; adopted by canon_key. Private.
+round: cthulhuquarium-wilbur-floors-kontext-2
+project_slug: cthulhuquarium
+designer: Cthulhuquarium descent (t-103)
+is_public: false
+is_mature: false
+cast_loras: false
+auto_submit: false
+lanes:
+- key: kontext-wilbur
+  label: Flux Kontext dev, Wilbur base poses edited per floor
+  engine: kontext
+  prompt: prose
+  steps: 20
+  guidance: 2.5
+subjects:
+- key: wilbur-explaining-f2-r2
+  lane: kontext-wilbur
+  entity: cthulhuquarium-portrait
+  title: Wilbur explaining, floor 2
+  canon_key: portraits/wilbur-stint-explaining-f2
+  size: 896x1152
+  seed: 895202
+  source_url: https://kindrobots.org/_nuxt/wilbur-stint-explaining.BQtV2_lp.webp
+  source_margin: 0.06
+  source_matte: '#d8d4cc'
+  prompt_prose: 'Add to the same man: a fresh square of white gauze taped over his left eyebrow and a second sticking
+    plaster across the bridge of his nose. Keep the same man exactly: his balding crown with long lank brown hair,
+    his beard and stubble, his round wire spectacles with the taped lens, his plaster cast, his rolled shirtsleeves
+    and waistcoat, his earnest concentrating face with eyebrows raised, holding up a small brass tin of fish food,
+    his pose, the same hand-tinted sepia photograph look and the plain pale grey studio backdrop.'
+  jobs:
+    kontext-wilbur: 76351
+- key: wilbur-greeting-f3-r2
+  lane: kontext-wilbur
+  entity: cthulhuquarium-portrait
+  title: Wilbur greeting, floor 3
+  canon_key: portraits/wilbur-stint-greeting-f3
+  size: 896x1152
+  seed: 895208
+  source_url: https://kindrobots.org/_nuxt/wilbur-stint-greeting.NISqOINt.webp
+  source_margin: 0.06
+  source_matte: '#d8d4cc'
+  prompt_prose: 'Add to the same man: a fresh square of white gauze taped over his left eyebrow and a second sticking
+    plaster across the bridge of his nose; a sticking plaster on each cheek and a faint brownish bruise, in the
+    same muted sepia tint as the rest of the photograph, under his right eye. Keep the same man exactly: his balding
+    crown with long lank brown hair, his beard and stubble, his round wire spectacles with the taped lens, his plaster
+    cast, his rolled shirtsleeves and waistcoat, his shy lopsided smile as he raises his bandaged left hand in a
+    small wave, his pose, the same hand-tinted sepia photograph look and the plain pale grey studio backdrop.'
+  jobs:
+    kontext-wilbur: 76352
+- key: wilbur-wince-f3-r2
+  lane: kontext-wilbur
+  entity: cthulhuquarium-portrait
+  title: Wilbur wince, floor 3
+  canon_key: portraits/wilbur-stint-wince-f3
+  size: 896x1152
+  seed: 895210
+  source_url: https://kindrobots.org/_nuxt/wilbur-stint-wince.VpgCLI70.webp
+  source_margin: 0.06
+  source_matte: '#d8d4cc'
+  prompt_prose: 'Add to the same man: a fresh square of white gauze taped over his left eyebrow and a second sticking
+    plaster across the bridge of his nose; a sticking plaster on each cheek and a faint brownish bruise, in the
+    same muted sepia tint as the rest of the photograph, under his right eye. Keep the same man exactly: his balding
+    crown with long lank brown hair, his beard and stubble, his round wire spectacles with the taped lens, his plaster
+    cast, his rolled shirtsleeves and waistcoat, his pained brave grimace with shoulders hunched up to his ears,
+    his pose, the same hand-tinted sepia photograph look and the plain pale grey studio backdrop.'
+  jobs:
+    kontext-wilbur: 76353
+- key: wilbur-greeting-f4-r2
+  lane: kontext-wilbur
+  entity: cthulhuquarium-portrait
+  title: Wilbur greeting, floor 4
+  canon_key: portraits/wilbur-stint-greeting-f4
+  size: 896x1152
+  seed: 895213
+  source_url: https://kindrobots.org/_nuxt/wilbur-stint-greeting.NISqOINt.webp
+  source_margin: 0.06
+  source_matte: '#d8d4cc'
+  prompt_prose: 'Add to the same man: a fresh square of white gauze taped over his left eyebrow and a second sticking
+    plaster across the bridge of his nose; a sticking plaster on each cheek and a faint brownish bruise, in the
+    same muted sepia tint as the rest of the photograph, under his right eye; a folded white gauze pad taped over
+    his left eye behind the cracked spectacles. Keep the same man exactly: his balding crown with long lank brown
+    hair, his beard and stubble, his round wire spectacles with the taped lens, his plaster cast, his rolled shirtsleeves
+    and waistcoat, his shy lopsided smile as he raises his bandaged left hand in a small wave, his pose, the same
+    hand-tinted sepia photograph look and the plain pale grey studio backdrop.'
+  jobs:
+    kontext-wilbur: 76354
+- key: wilbur-wince-f5-r2
+  lane: kontext-wilbur
+  entity: cthulhuquarium-portrait
+  title: Wilbur wince, floor 5
+  canon_key: portraits/wilbur-stint-wince-f5
+  size: 896x1152
+  seed: 895220
+  source_url: https://kindrobots.org/_nuxt/wilbur-stint-wince.VpgCLI70.webp
+  source_margin: 0.06
+  source_matte: '#d8d4cc'
+  prompt_prose: 'Add to the same man: a fresh square of white gauze taped over his left eyebrow and a second sticking
+    plaster across the bridge of his nose; a sticking plaster on each cheek and a faint brownish bruise, in the
+    same muted sepia tint as the rest of the photograph, under his right eye; a folded white gauze pad taped over
+    his left eye behind the cracked spectacles; a narrow strip of white bandage wrapped around his forehead and
+    tied at the side, his long lank hair hanging free below it. Keep the same man exactly: his balding crown with
+    long lank brown hair, his beard and stubble, his round wire spectacles with the taped lens, his plaster cast,
+    his rolled shirtsleeves and waistcoat, his pained brave grimace with shoulders hunched up to his ears, his pose,
+    the same hand-tinted sepia photograph look and the plain pale grey studio backdrop.'
+  jobs:
+    kontext-wilbur: 76355
