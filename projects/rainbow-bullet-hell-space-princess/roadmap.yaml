@@ -1008,3 +1008,17 @@ tasks:
     claimed_by: 20261121T111500Z-rainbow-t049-clipcheck-k7m4
     claimed_at: '2026-11-21T11:15:00Z'
     implementation_pr: 'silasfelinus/conductor#7749'
+  - id: t-050
+    milestone: m4
+    title: "List the opening shots that fell back to stills in the delivery report so their WAN jobs can be re-queued"
+    status: claimed
+    depends_on: []
+    passes: 0
+    stakes: reversible
+    updated: '2026-11-21T15:30:00Z'
+    source: kaizen-pr-7752
+    note: |-
+      Reviewer kaizen from the 2026-11-21 PT merge of conductor#7752 (b7e0a00), which made the manifest count only validated animated shots. export_rainbow_opening.py now knows exactly which keys decoded (accepted_clips). Print and record the complement, the shot keys whose clip was DONE in the ledger but fell back to the still, in the manifest and delivery report, with a test, so a reviewer can re-queue exactly those WAN jobs.
+    owner: worker
+    claimed_by: 20261121T153000Z-rainbow-t050-p9q2
+    claimed_at: '2026-11-21T15:30:00Z'

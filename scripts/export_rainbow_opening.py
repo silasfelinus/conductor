@@ -171,7 +171,7 @@ def clip_frames(payload: bytes):
                 f"crop={SIZE[0]}:{SIZE[1]}",
                 "-f", "rawvideo", "-pix_fmt", "rgb24", "pipe:1",
             ]
-            result = subprocess.run(command, capture_output=True, check=False)
+            result = subprocess.run(command, capture_output=True, check=False, timeout=90)
             if result.returncode:
                 raise RuntimeError(
                     f"WAN video decode failed: {result.stderr.decode(errors='replace')[-500:]}"
@@ -208,7 +208,7 @@ def validated_clip(payload: bytes, key: str, expected_size=(832, 480)) -> list |
             source.write_bytes(payload)
             probe = subprocess.run(
                 ["ffprobe", "-v", "error", "-select_streams", "v:0",
-                 "-show_entries", "stream=width,height,nb_frames",
+                 "-show_entries", "stream=width,height,nb_frames,duration:format=duration",
                  "-of", "json", str(source)],
                 capture_output=True, text=True, check=True, timeout=30,
             )
@@ -218,11 +218,18 @@ def validated_clip(payload: bytes, key: str, expected_size=(832, 480)) -> list |
             width, height = int(streams[0]["width"]), int(streams[0]["height"])
             if width < expected_size[0] or height < expected_size[1]:
                 raise ValueError(f"undersized video {width}x{height}")
+            # Bound untrusted WAN media before decoding full RGB frames into memory.
+            duration = streams[0].get("duration") or json.loads(probe.stdout).get("format", {}).get("duration")
+            if duration is None or not (0.5 <= float(duration) <= 20):
+                raise ValueError(f"invalid video duration {duration}")
+            frame_count = streams[0].get("nb_frames")
+            if frame_count not in (None, "N/A") and int(frame_count) > 480:
+                raise ValueError(f"excessive video frames {frame_count}")
         frames = clip_frames(payload)
         if len(frames) < 12 or not all(isinstance(frame, Image.Image) for frame in frames):
             raise ValueError(f"insufficient decoded frames ({len(frames)})")
         return frames
-    except (OSError, ValueError, KeyError, RuntimeError, subprocess.SubprocessError) as exc:
+    except (OSError, ValueError, KeyError, RuntimeError, OverflowError, subprocess.SubprocessError) as exc:
         print(f"{key}: invalid WAN clip ({exc}); using approved still", file=sys.stderr)
         return None
 
@@ -272,7 +279,7 @@ def title_layer():
     return layer
 
 
-def render(sources, last: list):
+def render(sources, last: list, accepted_clips: list | None = None):
     """Yield every output frame (PIL RGB, SIZE) of the cut; ``last[0]`` keeps the last frame before the title
     slams on, for the poster (the page sets its own title over it)."""
     from PIL import Image, ImageEnhance
@@ -285,6 +292,8 @@ def render(sources, last: list):
         start = round(elapsed_beats * beat * FPS)
         end = round((elapsed_beats + beats) * beat * FPS)
         frames = safe_clip_download(clip_id, key) if clip_id else None
+        if frames and accepted_clips is not None:
+            accepted_clips.append(key)
         still = None if frames else cover(Image.open(io.BytesIO(download(still_id))).convert("RGB"))
         last_shot = index == len(sources) - 1
         for n in range(end - start):
@@ -416,8 +425,9 @@ def main(argv=None):
             return EXIT_ERROR
         target = Path(args.out) if args.out else kind_robots / VIDEO_DIR / "opening.mp4"
         kept: list = []
-        frames = encode(render(sources, kept), audio, target, seconds)
-        clips = sum(1 for *_, clip in sources if clip)
+        accepted_clips: list[str] = []
+        frames = encode(render(sources, kept, accepted_clips), audio, target, seconds)
+        clips = len(accepted_clips)
         print(f"{target}: {frames} frames, {seconds}s, {clips}/{len(sources)} shots animated")
         poster = target.with_name("opening-poster.webp")
         kept[-1].save(poster, "WEBP", quality=88)

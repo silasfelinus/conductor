@@ -517,10 +517,10 @@ tasks:
   status: ready
   recurring: true
   daily_commitment: true
-  daily_last_checked: '2026-11-20'
+  daily_last_checked: '2026-11-21'
   passes: 0
   stakes: reversible
-  updated: '2026-11-18T11:13:51Z'
+  updated: '2026-11-21T13:17:53Z'
   note: |-
     HISTORICAL DAILY CONTRACT (Silas, 2026-10-02): every day's digest carries FIVE new project
     pitches, biased to free-to-play ideas that need no LLM at runtime (Kind Robots has a lot
@@ -645,8 +645,16 @@ tasks:
     tasks): t-144 guessable URL aliases, t-151 Chessweeper/Ruler share previews, t-104 stale
     share-description guard, t-105 plain /register copy, t-137 prettier ratchet 1047->930. Four
     audience-first.
-  daily_last_completed: '2026-11-20'
-  implementation_pr: 'silasfelinus/kind_robots#5150'
+
+    2026-11-21 PT: five shipped in silasfelinus/kind_robots#5513 (merged d142dd9, 13/13
+    checks green): interface-vision/t-151 three games added to sitemap with an arcade-tab
+    completeness guard, memory-dungeon/t-068 and chessweeper/t-003 light share cards
+    (643/582 KB -> 205/175 KB), interface-vision/t-144 light Art gallery card, t-105 plain
+    /navigation copy. All five audience-first. Ledger projects/dream-cycle/daily-
+    deliveries/2026-11-21.yaml.
+  daily_last_completed: '2026-11-21'
+  implementation_pr: 'silasfelinus/kind_robots#5513'
+  owner: reviewer
 - id: t-036
   milestone: m4
   title: 'Set PITCH_LINK_SECRET so digest pitch links work (Silas only)'

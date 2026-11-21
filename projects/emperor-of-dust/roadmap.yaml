@@ -121,7 +121,7 @@ tasks:
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-21T11:18:19.758Z'
+    updated: '2026-11-21T14:02:48Z'
     note: |-
       Silas 2026-11-11 PT, in session: "If there is unmade art it should definitely be added to the pipeline."
 
@@ -177,6 +177,21 @@ tasks:
       Recovered stale review: predecessor session 20261121T0419Z-eod-t063-api-client-4f2c left task in review after its PR #7723 was closed as rescued. Conductor PR #7726 already merged the reviewed delivery-client code and WebP fixture fix (squash c77133d977d44aaddf6ec615b732277e34f89055). PR #7723 explicitly says superseded via rescue; its branch is gone and no open Emperor-specific Conductor PR remains. This nonrecurring task is partial: no verified physical ArtImage exports, visually approved ending plates, dedicated asset manifest deliveries or cross-width in-app checks. Return t-063 to ready for authenticated curation and physical-media integration; do not treat queued/DONE ArtJobs or delivered scripts as shipped art.
 
       Partial art queue deduplication sprint 2026-11-21: audited historical Emperor ledgers (1214 DONE ArtImages in prior audit) and established that 879 audience-choice and 270 chance-choice slots are not 1149 unique unrendered requests. Conductor PR #7745 adds 15 genuinely new market-account story plates as an auto_submit private art ledger, with stable destination paths and unique prompts. Auto Art Generate on main will enqueue them only after merge and healthy API/render-box checks; no new ArtJob IDs are yet verified. Existing DONE ArtImages remain an authenticated physical-delivery and curation backlog, not a reason to regenerate. Keep t-063 ready and #4142 open; do not claim actual submission or media delivery from ledger authoring alone.
+
+      2026-11-21 PT partial (secret-talk plates + REDO-3): contact-sheet curation of all 33
+      SECRET-STORY-SCENES talk renders at full size kept 9 (nettle-2 notice/choice-a, tiller-1
+      notice, tiller-2 choice-a, sera-1 choice-a, sera-2 notice, tarn-1 notice, odo-1 notice,
+      odo-2 notice); 24 rejected (human figures/hands, feral mounts, generic desert off-
+      brief), verdicts in the ledger. kind_robots#5516 ships them under public/emperor-of-
+      dust/talks with a TALK_ART manifest, a notice scene plate in barracks talk dialogue and
+      dedicated choice plates leading answer cards, plus verifyEmperorTalkPlates. QUESTS-
+      MISSING-REDO-3 kept 0/2 (wagon on forest road; human-faced elf rider) and is rerolled in
+      QUESTS-MISSING-REDO-4.yaml (auto_submit, authoring check clean). NEXT: curate REDO-4
+      once it renders; reroll the 24 rejected talk plates leading with location/action; then
+      the chance-event secret F021-F025 plates and the audience/consequence/barracks/forge
+      backlog. No live 390/768/1440 screenshot (no PR preview). Released claim.
+    owner: reviewer
+    implementation_pr: 'silasfelinus/kind_robots#5516'
   - id: t-064
     title: 'Painted ending plates and a persistent Endings gallery / reign scrapbook'
     status: needs-human
@@ -1466,7 +1481,7 @@ tasks:
     status: ready
     stakes: reversible
     passes: 0
-    updated: '2026-11-21T11:59:00Z'
+    updated: '2026-11-21T12:57:22.092Z'
     source_issue: 'silasfelinus/kind_robots#4142'
     note: |-
       Silas 2026-11-02: comprehensively polish dialogue across all five acts and make consequential decisions echo in later scenes, quests, follower conversations and endings. Audit the current five-act playable dialogue and flag graph; implement distinct cross-act callbacks with honest costs, no dominant options, canon-consistent voices and clear choice labels. Preserve save/quest/flag identifiers, arrival chronology, true ambiguity about the Abbey and Komodo, and the established ending eligibility gates. Verify reachable conditional dialogue, save/load, quest aid, flag age, balance and adversarial campaigns. Track both the Tobin/Hollow Bell public-record thread and the bonded-runner thread across acts, and score every affected scene against the existing five-axis rubric. This is a dedicated cross-act story lane to coordinate work without claiming unrelated ongoing art tasks t-046 through t-052. Keep #4142 open until full game completion.
@@ -1514,6 +1529,8 @@ tasks:
       Merged Kind Robots PR #5506 at 2026-11-21T11:16:02Z into main commit 22d8c4901aefb600d676b66f81cf2caf297e215f; exact PR head e4470a9b12c31087477d12b98e3775182c7bdd48 passed all eight completed workflows: Emperor Dispatch, TypeScript, Contract Tests all four shards, Layout, Architecture, Schema parity, Ecotone and Fast formatting. New Day 8 -> 28 -> 37 -> 46 market-charter dialogue, six wartime gated outcomes, three exile settlements, conditional epilogues, brass and save regression, 42 campaign editorial screening. This is a PARTIAL t-062 increment; 437 editorial rows flagged, unfinished full continuity work, cross-width rendered QA and private ArtImage/ending plate delivery remain. Return nonrecurring t-062 to ready for the next production slice. Master issue #4142 stays open.
 
       Partial QA sprint: Kind Robots PR #5511 adds 54-path adversarial market-account narrative test covering all three Day 8 origins, three Day 28 policies, two policy-specific Day 37 routes and three Day 46 conclusions, plus branch exclusivity, brass affordability, earned epilogues and save encode/decode. It is wired into the Emperor Dispatch CI workflow. PR exact-head checks were still queued/running at release, so no test pass or merge is claimed; review and merge only after green. Separate Conductor #7745 merged as 45d52f3 with 15 genuinely new auto_submit market plates; live ArtJob receipts and physical exports are not yet verified. Wider five-act editorial and t-063/t-064 media work remain open.
+
+      2026-11-21 CI repair on kind_robots PR #5511: exact prior head a274789c38bb955c4a33c365f4793d6725da47d7 failed Emperor Dispatch Contract at verifyEmperorMarketAccountMatrix.test.ts:113 with refusing to save an invalid run. Root cause: matrix built a 46-day SaveBook with only three noncontiguous dawn snapshots (days 28, 37, 46), violating saves.ts validateBook requirement of one same-seed dawn for every day 1..current.day. Updated PR branch with commit 2e3512a34d6898171c959a69bb53f0d992b41677, constructing all 46 ordered dawns with earned branch flags; this repairs the test fixture without weakening save validation. Fresh exact-head CI started; architecture passed and other checks were still in progress at handoff. Do not merge until all required checks complete green. No art bytes delivered in this session; t-064 remains security-gated, and t-063 delivery remains open. Keep t-062 ready for follow-up after CI.
   - id: t-068
     milestone: m4
     title: "Add a validator that checks t-044 playtest reviewer-record YAMLs against the second-pass scoring protocol schema"

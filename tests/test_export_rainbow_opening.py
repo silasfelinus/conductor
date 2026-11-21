@@ -1,9 +1,11 @@
 import io
+import json
 import shutil
 import subprocess
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 from PIL import Image
 
@@ -31,6 +33,73 @@ class DoodleOpeningTests(unittest.TestCase):
         self.assertEqual(len(sources), 8)
         self.assertEqual([item[3] for item in sources], list(range(9000, 9008)))
         self.assertTrue(all(item[3] is None for item in opening.shot_sources(ledger, True)))
+
+    def test_manifest_clip_count_tracks_only_validated_video(self):
+        """A DONE ledger entry with corrupt bytes must not inflate the shipped clip count."""
+        accepted = []
+        still = io.BytesIO()
+        Image.new("RGB", (64, 36), "pink").save(still, "PNG")
+        good = [Image.new("RGB", opening.SIZE, "cyan") for _ in range(12)]
+        sources = [("valid", 1, 101, 201), ("corrupt", 1, 102, 202)]
+        with (
+            patch.object(opening, "safe_clip_download", side_effect=[good, None]),
+            patch.object(opening, "download", return_value=still.getvalue()),
+        ):
+            frames = list(opening.render(sources, [], accepted))
+        self.assertGreater(len(frames), 0)
+        self.assertEqual(accepted, ["valid"])
+        self.assertEqual(len(accepted), 1)
+
+    def test_still_only_opening_has_no_accepted_clips(self):
+        accepted = []
+        still = io.BytesIO()
+        Image.new("RGB", (64, 36), "pink").save(still, "PNG")
+        with patch.object(opening, "download", return_value=still.getvalue()):
+            frames = list(opening.render([("still", 1, 101, None)], [], accepted))
+        self.assertGreater(len(frames), 0)
+        self.assertEqual(accepted, [])
+
+    def test_rejects_long_wan_clip_before_rgb_decode(self):
+        payload = b"0000ftyp" + b"video-payload"
+        probe = subprocess.CompletedProcess(
+            [], 0, stdout=json.dumps({"streams": [{"width": 1280, "height": 720,
+                                                     "duration": "90.0", "nb_frames": "1440"}]}),
+            stderr="",
+        )
+        with (
+            patch.object(opening.subprocess, "run", return_value=probe),
+            patch.object(opening, "clip_frames") as decode,
+        ):
+            self.assertIsNone(opening.validated_clip(payload, "long-shot"))
+            decode.assert_not_called()
+
+    def test_rejects_excessive_frame_count_before_decode(self):
+        payload = b"0000ftyp" + b"video-payload"
+        probe = subprocess.CompletedProcess(
+            [], 0, stdout=json.dumps({"streams": [{"width": 1280, "height": 720,
+                                                     "duration": "10.0", "nb_frames": "900"}]}),
+            stderr="",
+        )
+        with (
+            patch.object(opening.subprocess, "run", return_value=probe),
+            patch.object(opening, "clip_frames") as decode,
+        ):
+            self.assertIsNone(opening.validated_clip(payload, "oversized-shot"))
+            decode.assert_not_called()
+
+    def test_accepts_bounded_clip(self):
+        payload = b"0000ftyp" + b"video-payload"
+        probe = subprocess.CompletedProcess(
+            [], 0, stdout=json.dumps({"streams": [{"width": 1280, "height": 720,
+                                                     "duration": "2.0", "nb_frames": "32"}]}),
+            stderr="",
+        )
+        frames = [Image.new("RGB", opening.SIZE, "pink") for _ in range(12)]
+        with (
+            patch.object(opening.subprocess, "run", return_value=probe),
+            patch.object(opening, "clip_frames", return_value=frames),
+        ):
+            self.assertEqual(opening.validated_clip(payload, "good-shot"), frames)
 
     def test_original_ledger_still_works(self):
         old = {

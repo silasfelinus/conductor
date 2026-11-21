@@ -972,10 +972,36 @@ tasks:
   - id: t-043
     milestone: m4
     title: "Fail CI on double-escaped byte literals in new scripts and tests"
-    status: ready
+    status: done
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-21T11:55:42Z'
+    updated: '2026-11-21T12:47:48Z'
     note: |-
       Reviewer kaizen from the 2026-11-21 PT rescue merge of conductor#7748 (fixture wrote escaped backslashes, so every WebP fixture was invalid; the same bug hit rainbow#7747's WebM magic check in production code). Add a small lint test over scripts/ and tests/ that flags a backslash-backslash-x sequence inside a bytes literal, with an allow-list for intentional cases, so the connector Worker's escaping habit is caught before CI runs the logic.
+
+      Implemented tokenize-based CI regression guard for double-escaped hex in bytes literals across scripts and tests, with detector cases and explicit exception hook. Worker branch worker/game-of-captains-t-043-bytes-lint-b7c29; pending exact-head CI and merge.
+
+      2026-11-21 PT Reviewer: merged conductor#7753 (118588e) once exact-head CI was green;
+      the only red check was the handoff template, fixed by rewriting the PR body. Kaizen
+      t-044.
+    owner: worker
+    claimed_by: 20261121T124100Z-goc-t043-b7c29
+    claimed_at: '2026-11-21T12:41:00Z'
+    implementation_pr: 'silasfelinus/conductor#7753'
+  - id: t-044
+    title: "Add a matching double-escaped byte-signature guard to kind_robots TypeScript tests"
+    status: review
+    updated: '2026-11-21T13:44:00Z'
+    milestone: m4
+    passes: 0
+    stakes: reversible
+    depends_on: []
+    source: kaizen-t-043
+    note: |-
+      Reviewer kaizen from the 2026-11-21 PT merge of conductor#7753 (t-043, Python-only guard). The rainbow#7747 WebM magic-check bug was the same double-escaped hex habit, in production code. Add a small Vitest guard in kind_robots that flags a double-backslash-x hex escape inside Uint8Array/Buffer signature literals in server/ and utils/, with an exact path:line allow-list.
+
+      Added TypeScript AST-based byte-signature escape guard and positive/negative fixtures in kind_robots branch worker/game-of-captains-t-044-20261121-c8e7; pending exact-head CI.
+    owner: worker
+    claimed_by: 2026-11-21T134100Z-goc-t044-c8e7
+    claimed_at: '2026-11-21T13:41:00Z'

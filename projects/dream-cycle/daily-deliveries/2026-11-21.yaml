@@ -1,0 +1,88 @@
+date: '2026-11-21'
+entries:
+- slug: sitemap-missing-games
+  title: Slime City, Monstrique and Hybridizer are in the sitemap
+  target: interface-vision
+  roadmap_task: t-151
+  kind: findability
+  summary: Three public games with their own page, arcade tab and link preview were missing from the sitemap, so
+    search engines were never told they exist; all three are now listed.
+  status: shipped
+  pull_request: https://github.com/silasfelinus/kind_robots/pull/5513
+  checks_url: https://github.com/silasfelinus/kind_robots/actions/runs/44907130373
+  checks: passed
+  merge_sha: d142dd965e7e0244814746ed49f072dbbc9232b3
+  verification: Live /sitemap.xml had 26 URLs without them; verifySharePreview.test.ts now requires every arcade
+    tab backed by a play page to be in the sitemap. Live result pending the next Force Update.
+  art:
+    status: not-required
+  preview_url: https://kindrobots.org/sitemap.xml
+- slug: memory-light-share-card
+  title: Memory Dungeon shares a light title card
+  target: memory-dungeon
+  roadmap_task: t-068
+  kind: share
+  summary: Memory Dungeon links shared a 643 KB full-size backdrop that chat apps skip; they now share a 1200px
+    205 KB card of the same title art, also used on the front-door directory.
+  status: shipped
+  pull_request: https://github.com/silasfelinus/kind_robots/pull/5513
+  checks_url: https://github.com/silasfelinus/kind_robots/actions/runs/44907130373
+  checks: passed
+  merge_sha: d142dd965e7e0244814746ed49f072dbbc9232b3
+  verification: Live og:image measured at 643088 bytes before; verifySharePreview.test.ts pins a 250 KB budget for
+    committed share cards and forbids the media-volume fallback for this route. Live result pending the next Force
+    Update.
+  art:
+    status: not-required
+  preview_url: https://kindrobots.org/play/memory
+- slug: chessweeper-light-share-card
+  title: Chessweeper shares a light title card
+  target: chessweeper
+  roadmap_task: t-003
+  kind: share
+  summary: Chessweeper links shared a 582 KB highlight image that chat apps skip; they now share a 1200px 175 KB
+    card of the same title art, also used on the front-door directory.
+  status: shipped
+  pull_request: https://github.com/silasfelinus/kind_robots/pull/5513
+  checks_url: https://github.com/silasfelinus/kind_robots/actions/runs/44907130373
+  checks: passed
+  merge_sha: d142dd965e7e0244814746ed49f072dbbc9232b3
+  verification: Live og:image measured at 582348 bytes before; the new card was viewed with its title intact and
+    the share-preview contract checks its size. Live result pending the next Force Update.
+  art:
+    status: not-required
+  preview_url: https://kindrobots.org/play/chessweeper
+- slug: art-gallery-light-share-card
+  title: Art gallery shares a light card
+  target: interface-vision
+  roadmap_task: t-144
+  kind: share
+  summary: The Art gallery and studio shared a 310 KB image; it now shares a 175 KB card of the same art, and the
+    Emperor of Dust and Zuzu Showdown fallbacks now match their light cards.
+  status: shipped
+  pull_request: https://github.com/silasfelinus/kind_robots/pull/5513
+  checks_url: https://github.com/silasfelinus/kind_robots/actions/runs/44907130373
+  checks: passed
+  merge_sha: d142dd965e7e0244814746ed49f072dbbc9232b3
+  verification: Live og:image measured at 309736 bytes before; verifySharePreview.test.ts checks every committed
+    share card against the 250 KB budget. Live result pending the next Force Update.
+  art:
+    status: not-required
+  preview_url: https://kindrobots.org/art
+- slug: navigation-plain-copy
+  title: The site map says what it is when shared
+  target: interface-vision
+  roadmap_task: t-105
+  kind: front-door
+  summary: The /navigation page shared as All roads lead to here, your central hub; it now says every Kind Robots
+    game, story and studio is on one map, free with no account.
+  status: shipped
+  pull_request: https://github.com/silasfelinus/kind_robots/pull/5513
+  checks_url: https://github.com/silasfelinus/kind_robots/actions/runs/44907130373
+  checks: passed
+  merge_sha: d142dd965e7e0244814746ed49f072dbbc9232b3
+  verification: Live og:description captured before the change; verifySharePreview.test.ts forbids the old line
+    and pins the new description. Live result pending the next Force Update.
+  art:
+    status: not-required
+  preview_url: https://kindrobots.org/navigation
