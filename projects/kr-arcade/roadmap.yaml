@@ -2741,12 +2741,14 @@ tasks:
   - id: t-165
     milestone: m10
     title: "Root-cause the intermittent verifyRescueRallyCabinet 'and not seat 1' failure in the cabinet browser contracts"
-    status: ready
+    status: done
     passes: 0
     stakes: reversible
-    updated: '2026-11-15T13:05:00Z'
+    updated: '2026-11-21T23:47:00Z'
     note: |-
       Reviewer kaizen from kind_robots#5211 (2026-11-15 PT). Job 132764631321 ("Seats, menus, aim and saves through the actual cabinet in Chromium") failed at utils/scripts/verifyRescueRallyCabinet.browser.test.mjs:344 ("and not seat 1"). The PR did not touch Rescue Rally, and the same job passed on the PR's previous head and on its single re-run. Make the test wait on the real seat-assignment state rather than on timing; never skip or quarantine it. A timing-hardening PR, kind_robots#5217, was opened by the recovery reviewer. If it lands with a root-cause explanation, record it here and close this task.
+
+      Verified kind_robots PR #5217 merged on 2026-11-15. Root cause was a Rescue Rally keyboard-seat test baseline sampled before KeyD release; the fix samples the released-key state before asserting ArrowUp moves only seat 2. The timing-hardening PR is merged; close this resolved task.
 
   - id: t-166
     milestone: m11
