@@ -206,7 +206,7 @@ def test_cli_offline_plan_and_write_guard(tmp_path, capsys):
 
 
 def test_http_verification_checks_actual_served_webp_sha():
-    payload = b"RIFF" + b"\\x14\\x00\\x00\\x00" + b"WEBP" + b"VP8 " + b"pixel-data"
+    payload = b"RIFF" + b"\x14\x00\x00\x00" + b"WEBP" + b"VP8 " + b"pixel-data"
     sha = hashlib.sha256(payload).hexdigest()
     class Response:
         status = 200
