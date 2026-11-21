@@ -116,12 +116,12 @@ tasks:
       These 100 anchors are outlines, not implemented daily script records.
   - id: t-063
     title: 'Export and wire the ~430 rendered Emperor images that never reached the game'
-    status: claimed
+    status: review
     milestone: m5
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-21T03:48:42.393Z'
+    updated: '2026-11-21T03:50:00.145Z'
     note: |-
       Silas 2026-11-11 PT, in session: "If there is unmade art it should definitely be added to the pipeline."
 
@@ -167,6 +167,8 @@ tasks:
       added to the negative; art_ledger_authoring reports 0 problems). NEXT: curate REDO-3
       once it renders, then the chance-event, audience/consequence/barracks/forge and secret-
       story plates. Released claim.
+
+      Partial export-backlog implementation in worker/emperor-of-dust-t-063-integrity-audit-c46e: offline per-ArtImage provenance/keeper/reject/delivery JSON audit, conflicting-render detection, path traversal refusal and corrupt-WebP recovery. Source DONE artwork bytes still need authenticated curation, physical export and game integration. Keep task open after partial merge.
     owner: worker
     implementation_pr: 'silasfelinus/kind_robots#5348'
     claimed_by: 20261121T0350Z-eod-t063-backlog-c46e
@@ -1262,11 +1264,8 @@ tasks:
   - id: t-052
     milestone: m5
     title: "Illustrated scene delivery and full 50-day choice-and-art coverage audit"
-    status: review
-    owner: worker
-    claimed_by: 20261121T0246Z-eod-t052-answer-art-bb73
-    claimed_at: '2026-11-21T02:46:47.211Z'
-    updated: '2026-11-21T02:49:08.581Z'
+    status: ready
+    updated: '2026-11-21T03:51:05.883Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -1303,6 +1302,8 @@ tasks:
       Implemented illustrated throne aftermath in worker/emperor-of-dust-t-052-illustrated-aftermaths-bb73: resolve final multi-beat audience option from durable chose flags; show shipped art candidate and exact authored response after save/reload, reset broken-image state across petitions and days. Added regression for multi-beat flag selection. Partial art-delivery task; remote painted binaries and complete visual acceptance remain outstanding.
 
       Partial illustrated-choice delivery increment in worker/emperor-of-dust-t-052-illustrated-aftermaths-bb73: reconstruct final throne answers and matching shipped art from existing persisted chose flags after reload/rewind, render a real image with resilient fallbacks alongside the result, illustrate all barracks choice cards using shipped follower expressions, and add full authored scene/talk physical-WebP coverage with true engine staged-choice and codec checks. Emperor CI integration submitted; exact-head checks and merge pending. No new ArtImage exports or curated ending plates, and independent cross-width browser QA remains outstanding. Return t-052 to ready after this partial merge rather than done.
+
+      Kind Robots PR #5484 merged as 305c0b3e183d830821c1e92f2063eb89317aae6e after all eight exact-head workflows on e5217d139e6729519e7a043b97bb38c714e0b5f5 completed success (Emperor Dispatch, four Contract Tests shards, TypeScript, formatting, architecture, schema parity, layout, Ecotone). Illustrated throne decision aftermaths persist across save/load and barracks choice cards use shipped art fallbacks. This is a partial t-052 slice; original ArtImage binary delivery and final 50-day visual acceptance remain uncompleted. Return to ready.
   - id: t-053
     milestone: m5
     title: "Prevent Young Komodo flashing through the startup splash before the introduction"

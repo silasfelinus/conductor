@@ -778,14 +778,11 @@ tasks:
     implementation_pr: 'silasfelinus/kind_robots#4815'
   - id: t-023
     title: "Prom of Doom: ingest Oct 29 larger-than-life NPCs and SPECIES henchmen with real art"
-    status: review
-    claimed_by: 20261121T023100Z-comet-t023-oct29-art-j8s6
-    claimed_at: '2026-11-21T02:31:00Z'
+    status: ready
     stakes: reversible
-    owner: worker
     passes: 0
     source_issue: "silasfelinus/kind_robots#4443"
-    updated: '2026-11-21T02:41:00Z'
+    updated: '2026-11-21T03:46:03.291Z'
     note: |-
       FROM GITHUB ISSUE silasfelinus/kind_robots#4443 (https://github.com/silasfelinus/kind_robots/issues/4443), opened by @silasfelinus on 2026-10-29. Imported by scripts/sync_github_issues.py. Reference the issue in the implementing PR (`Closes silasfelinus/kind_robots#4443`) so it closes on merge; the bridge closes it otherwise once this task is done.
 
@@ -821,7 +818,8 @@ tasks:
       real name Imani Calder overlaps student Imani Vale and Ash Calder.
 
       Authored and staged 24 unique private Krea 2 auto_submit illustration requests in art/OCT-29-CAST-KREA2-ROUND-1.yaml for all eight October 29 larger-than-life cast members: a portrait, splash, and encounter plate each, with literal production prompts, unique assets and seeds. Source-backed tests pin all 24 keys to existing runtime art slots. Worker branch worker/comet-city-academy-t-023-oct29-krea2-art-j8s6. This is a prepared art queue ledger only. No accepted ArtJob IDs, rendered ArtImages or linked Facet/Character database rows have been verified. The source issue #4443 and broader task remain open; return this nonrecurring task to ready for those separate durable work stages.
-    implementation_pr: 'silasfelinus/kind_robots#4508'
+
+      Conductor #7712 merged as 980378d9 after all 4 workflows passed; 24 unique Krea2 October supporting-cast requests and source-backed test on main. Original database Character/SPECIES Facets, accepted ArtJob IDs, rendered media, attachments and adversarial visual QA remain to deliver; task is partial.
   - id: t-024
     milestone: m3
     title: "Deploy 48 named one-hit villain henchman species in night patrol and Yearbook"
@@ -936,8 +934,8 @@ tasks:
   - id: t-031
     milestone: m3
     title: "HIGH PRIORITY · Begin private Unstable Diffusers production for canonical Prom/Tactics cast"
-    status: claimed
-    updated: '2026-11-21T03:41:39.215Z'
+    status: review
+    updated: '2026-11-21T03:45:08.961Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -964,6 +962,8 @@ tasks:
       keys. The t-007 export note still applies. Not done until images are in the game.
 
       Art export and production jobs were not accessed; no art state changed.
+
+      Private Capes production gallery staged on Kind Robots worker/comet-city-academy-t-031-canon-painted-gallery-k8f2 at f7e38a0. A source-backed catalog maps all fourteen DONE Unstable Diffusers ArtJobs and ArtImage IDs from the canonical Conductor ledger, grouped as Cornerstone, Backdraft and Dr Frog. A new admin gallery lazily loads authenticated previews through the existing art store and displays durable job/image provenance and visible failure fallback without claiming browser delivery. Cast identity keys, benchmark ArtJobs and game saves untouched. Regression checks added to verifyCapesStyleCheck.test.ts. Still pending CI, actual private image retrieval and visual QA; t-031 remains partial, not done.
     owner: worker
     claimed_by: 20261121T034139Z-prom-t031-art-review-k8f2
     claimed_at: '2026-11-21T03:41:39.215Z'
