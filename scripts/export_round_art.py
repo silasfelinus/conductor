@@ -154,12 +154,24 @@ def plan(subjects, kind_robots, prefix, only=None, force=False, require_keep=Fal
         if is_valid_webp(dest) and not force:
             continue
         out.append((subject, image_id, dest))
-    return out
+    unique = {}
+    for subject, image_id, dest in out:
+        previous = unique.get(dest)
+        if previous and previous[1] != image_id:
+            raise ValueError(
+                f"Competing DONE renders for {dest}: ArtImages "
+                f"{previous[1]} and {image_id}. Curate the ledger first."
+            )
+        unique[dest] = (subject, image_id, dest)
+    return list(unique.values())
 
 
 def manifest_entries(kind_robots, root):
     base = Path(kind_robots) / "public" / root.strip("/")
-    return sorted(str(p.relative_to(base).with_suffix("")) for p in base.rglob("*.webp"))
+    return sorted(
+        str(p.relative_to(base).with_suffix(""))
+        for p in base.rglob("*.webp") if is_valid_webp(p)
+    )
 
 
 def render_array(name, entries):
