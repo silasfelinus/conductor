@@ -2135,7 +2135,7 @@ tasks:
   claimed_at: '2026-11-21T11:00:00Z'
 - id: t-108
   title: 'Pick the second art style from the Illustrious style check'
-  status: waiting
+  status: needs-human
   milestone: m5
   stakes: reversible
   passes: 0
@@ -2143,13 +2143,22 @@ tasks:
   gate_human: true
   gate_reason: creative-approval
   depends_on: []
-  updated: '2026-11-21T11:00:00Z'
+  updated: '2026-11-21T11:20:39Z'
   note: >-
     art/ILLUSTRIOUS-STYLE-CHECK-1.yaml renders six subjects (Charlotte hero, Wilbur explaining, the
     arrival plate, the parlour background, Lint Shrimp, The Concern) on three Illustrious checkpoints:
     illustrij v2.1 (anime visual novel), Nova Comic XL v2 (western comic), ntrMIX (painterly storybook),
     jobs 76364-76381. Silas picks one from the contact sheet beside the shipped Classic, or asks for
     other checkpoints. Gates every render round (t-109).
+
+    FOR SILAS (2026-11-21): the style check is rendered -- art/style-check/ILLUSTRIOUS-
+    STYLE-CHECK-1.jpg shows the six subjects in Classic and three Illustrious checkpoints. A
+    illustrij (anime VN): Charlotte stays old, best arrival plate, fish drifted (furry Lint
+    Shrimp). B Nova Comic: strongest Wilbur, but Charlotte came out a young vampire and the
+    Lint Shrimp gained a girl. C ntrMIX (painterly): Charlotte old, calm plates, fish
+    closest to the brief. All three added a diver to the parlour and lost some of Wilbur's
+    look; both are prompt fixes before the full rounds. Pick A, B or C, or ask for other
+    checkpoints.
 - id: t-109
   title: 'Render the chosen second style for every still, round by round, reviewed before it ships'
   status: waiting
