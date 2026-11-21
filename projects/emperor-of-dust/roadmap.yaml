@@ -1590,11 +1590,13 @@ tasks:
   - id: t-071
     milestone: m5
     title: "Have Kind Robots emit an Emperor art runtime manifest so the inventory verifies exact reachable paths instead of builder-pattern candidates"
-    status: ready
+    status: claimed
     stakes: reversible
     passes: 0
     depends_on: [t-070]
-    updated: '2026-11-21T18:50:00Z'
+    updated: '2026-11-21T19:17:20Z'
     note: |-
       Reviewer kaizen from the 2026-11-21 PT review of t-070 (#7766). The inventory now tags quest/chance/audience/talk exports as reference_class=runtime_candidate when the builder exists, but that is only potential reachability. Generate a JSON manifest of every art path the fortress builders can produce from the game data (one build-time script in kind_robots), read it in scripts/audit_emperor_art_inventory.py when present, and promote candidates that appear in it to a reachable class, with a test for each class. Do not mark any DONE-but-unexported image as delivered; keep t-063 and kind_robots#4142 open.
     owner: worker
+    claimed_by: 2026-11-21T191720Z-eod-t071-manifest-8d6e91
+    claimed_at: '2026-11-21T19:17:20Z'
