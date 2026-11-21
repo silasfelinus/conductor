@@ -106,7 +106,7 @@ class DoodleOpeningTests(unittest.TestCase):
             output = target.with_name("opening-delivery-report.json")
             self.assertFalse(legacy.exists())
             self.assertEqual(json.loads(output.read_text()), report)
-            self.assertTrue(output.read_text().endswith("\\n"))
+            self.assertTrue(output.read_text().endswith("\n"))
             self.assertEqual(report["wan_requeue_shots"], ["rejected"])
             self.assertEqual(report["still_fallback_shots"], ["rejected", "pending"])
             self.assertEqual(
