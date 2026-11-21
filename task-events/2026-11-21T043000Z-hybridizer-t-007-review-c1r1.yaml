@@ -8,14 +8,17 @@ verify_pr: silasfelinus/kind_robots#5490
 note: >-
   Curation round 1 (2026-11-21 PT). Silas set the acceptance bar this session: "While one pass for
   quality is warranted, after those are resubmitted, I'm happy as long as we have the hybridized
-  fully working to react and resubmit bad hybrids in game." Every READY launch hybrid (2,996 of
-  4,000; 1,004 still queued at priority 1) was reviewed visually on labeled contact sheets:
-  1,411 FAIL (573 one ingredient only, 423 two separate creatures, 412 missing fruit/object
-  ingredient, 3 other incl. an echidna+ninja IP lookalike), 304 WEAK, 1,281 PASS. Committed as
-  projects/hybridizer/art/CURATION-ROUND-1.json. The Hybridizer launch batch workflow now files
-  one admin curation re-render per FAIL (new seed, fused-body guidance, priority 1), drops the
-  ledger's verifiedAt until the new image answers, and refuses to post until the deployed server
-  advertises the curation contract. kind_robots #5490 adds the in-game "Not a hybrid? Re-roll"
-  for any signed-in player on public discoveries plus admin curation mode, a large phone reveal
-  and requester-only ready toasts. Close as done once #5490 is live and the workflow reports the
-  1,411 curation resubmits filed; WEAK and later deliveries are handled by in-game re-roll.
+  fully working to react and resubmit bad hybrids in game." All 4,000 launch hybrids are rendered
+  and delivered (live status READY for every pair; the ledger lagged by 1,004 because GitHub ran
+  the 20-minute schedule only 3-4 times a day and each run refreshed only 400 entries; the
+  workflow now refreshes every open entry). Every one was reviewed visually on labeled contact
+  sheets: 1,856 FAIL (769 one ingredient only, 567 two separate creatures, 515 missing
+  fruit/object ingredient, 5 other incl. an echidna+ninja IP lookalike), 398 WEAK, 1,746 PASS.
+  Committed as projects/hybridizer/art/CURATION-ROUND-1.json. The launch batch workflow files one
+  admin curation re-render per FAIL (new seed, fused-body guidance, priority 1, up to 1,000 per
+  run), drops the ledger's verifiedAt until the new image answers, and refuses to post until the
+  deployed server advertises the curation contract. kind_robots #5490 adds the in-game "Not a
+  hybrid? Re-roll" for any signed-in player on public discoveries plus admin curation mode, a
+  large phone reveal and requester-only ready toasts. Close as done once #5490 is live and the
+  workflow reports the 1,856 curation resubmits filed; WEAK entries and any disappointing
+  re-renders are handled by in-game re-roll.

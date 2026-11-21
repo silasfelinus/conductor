@@ -241,7 +241,7 @@ def main() -> int:
     parser.add_argument("--summary", action="store_true")
     parser.add_argument("--max-batches", type=int, default=4)
     parser.add_argument("--refresh-limit", type=int, default=400)
-    parser.add_argument("--curation-limit", type=int, default=250)
+    parser.add_argument("--curation-limit", type=int, default=1000)
     args = parser.parse_args()
 
     pairs = json.loads(PAIRS.read_text())["pairs"]

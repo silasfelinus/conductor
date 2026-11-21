@@ -31,7 +31,10 @@ jobs:
       - name: Refresh delivery and submit the next launch pairs
         env:
           KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
-        run: python scripts/hybridizer_launch_batch.py --max-batches 100
+        # GitHub throttles this schedule to a few runs a day, so each run must refresh every
+        # open entry (all 4,000 if needed), not a 400-entry slice, or the ledger lags the
+        # server by days (2026-11-21: 1,004 delivered hybrids still read QUEUED).
+        run: python scripts/hybridizer_launch_batch.py --max-batches 100 --refresh-limit 4000
       - name: Checkpoint the launch ledger
         run: |
           git config user.name "conductor-bot"
