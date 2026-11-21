@@ -711,3 +711,9 @@ Filed 2026-11-21 PT from Silas's in-session direction (see the roadmap note). Pl
 <!-- note:begin t-104 -->
 Filed 2026-11-21 PT from Silas's in-session direction (see the roadmap note). Plan: floors + obtainable roster (t-102), staged scenes with replies and Wilbur floor portraits (t-103), Memory Book (t-104).
 <!-- note:end t-104 -->
+
+## t-105 — Pacing: canon rarity and floor keys
+
+<!-- note:begin t-105 -->
+Filed 2026-11-21 PT from Silas's answer to the pacing question (see the roadmap note).
+<!-- note:end t-105 -->

@@ -426,3 +426,20 @@ fun_loop:
   # faster than this many per second.
   sim_click_share: 0.8
   sim_max_clicks_per_second: 1.5
+
+# ---------------------------------------------------------------------------
+# floor_keys -- the descent (cthulhuquarium/t-102, t-105). Silas, 2026-11-21:
+# "canon rarity + slower floors". A floor opens when the player knows enough
+# species (10 / 25 / 50 / 95) AND has bought its key from Charlotte; keys go in
+# order and the Shop Floor needs none. Fish are priced and paid by their canon
+# rarity, not the highest stat rarity (a leftover of the removed hidden stats).
+# Chosen with data/simulate_descent.py; a casual player (two 10-minute sessions
+# a day) opens II in the first session, III on day 2, IV on day 5, V around
+# day 14 and fills the book in about two and a half weeks. Mirrored in
+# kind_robots utils/cthulhuquariumFloors.ts FLOOR_KEY_COSTS.
+# ---------------------------------------------------------------------------
+floor_keys:
+  2: 150
+  3: 3000
+  4: 30000
+  5: 400000
