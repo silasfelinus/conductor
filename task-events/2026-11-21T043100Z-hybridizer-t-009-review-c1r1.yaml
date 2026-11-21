@@ -1,0 +1,18 @@
+version: 1
+project: hybridizer
+task: t-009
+operation: review
+force: true
+session: 20261121T0330Z-hybridizer-curation-c1r1
+updated: '2026-11-21T04:31:00Z'
+verify_pr: silasfelinus/kind_robots#5490
+note: >-
+  2026-11-21 PT rendered check of production /play/hybridizer (commit 0d422b75) at 390, 768 and
+  1440: no horizontal overflow, 30/30 images loaded, 0 broken. Found and fixed in kind_robots
+  #5490: at <=820px container width the discovery reveal collapsed to a ~30px thumbnail and its
+  actions were clipped (console now scrolls, reveal clamps 220-460px; verified by injecting the
+  CSS on production at 390/768), and signed-out visitors received "X is illustrated!" toasts for
+  shared launch renders they never requested (now only fusions, retries, remixes and re-rolls the
+  player requested). Community re-roll adversarial contracts: injected direction/weight ignored,
+  no escalation to curation, private discoveries stay creator-only. Remaining before handoff:
+  t-008 private uploads (unbuilt) and a post-deploy recheck at 390/768/1440.

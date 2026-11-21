@@ -73,6 +73,21 @@ class FakeApi:
         return path == "/art/x.webp"
 
 
+class CurationApi:
+    def __init__(self, full=False, old=False):
+        self.full = full
+        self.old = old
+        self.posted = []
+
+    def call(self, method, path, body=None):
+        if method == "GET":
+            return {"success": True, "data": {"versions": [], "canEdit": True, **({} if self.old else {"canReroll": False})}}
+        if self.full:
+            return {"success": False, "statusCode": 429, "message": "window full"}
+        self.posted.append((path, body))
+        return {"success": True, "data": {"jobId": 99, "status": "QUEUED", "mode": "curation"}}
+
+
 class SubmitterTests(unittest.TestCase):
     def test_deferred_pairs_stay_unsubmitted_and_window_stops(self):
         ledger = {"version": 1, "entries": {}}
@@ -92,6 +107,54 @@ class SubmitterTests(unittest.TestCase):
         entry = ledger["entries"]["a+b"]
         self.assertEqual(entry["status"], "READY")
         self.assertIn("verifiedAt", entry)
+
+    def test_curation_fail_is_resubmitted_once_and_unverified(self):
+        ledger = {"version": 1, "entries": {
+            "a+b": {"fusionId": "f" * 64, "status": "READY", "artImageId": 5, "verifiedAt": "x"},
+            "a+c": {"fusionId": "e" * 64, "status": "QUEUED"},
+        }}
+        rows = [(1, "a+b", {"verdict": "FAIL", "reason": "two-creatures"}),
+                (1, "a+c", {"verdict": "FAIL", "reason": "one-only"}),
+                (1, "zz+zz", {"verdict": "FAIL", "reason": "one-only"})]
+        api = CurationApi()
+        report = batch.resubmit_curation(api, ledger, rows, limit=10)
+        self.assertEqual(report["resubmitted"], 1)
+        self.assertEqual(api.posted, [("/api/hybridizer/fusions/" + "f" * 64 + "/resubmit", {"curation": True})])
+        entry = ledger["entries"]["a+b"]
+        self.assertNotIn("verifiedAt", entry, "a curated-out image no longer counts as verified")
+        self.assertEqual(entry["curation"]["rejectedArtImageId"], 5)
+        self.assertEqual(entry["curation"]["resubmitJobId"], 99)
+        again = batch.resubmit_curation(api, ledger, rows, limit=10)
+        self.assertEqual(again["resubmitted"], 0, "each round resubmits a pair at most once")
+
+    def test_curation_stops_when_window_full(self):
+        ledger = {"version": 1, "entries": {
+            k: {"fusionId": "f" * 64, "status": "READY", "artImageId": 5} for k in ("a+b", "a+c")}}
+        rows = [(1, k, {"verdict": "FAIL"}) for k in ("a+b", "a+c")]
+        report = batch.resubmit_curation(CurationApi(full=True), ledger, rows, limit=10)
+        self.assertTrue(report["windowFull"])
+        self.assertEqual(report["resubmitted"], 0)
+        self.assertNotIn("curation", ledger["entries"]["a+b"])
+
+    def test_curation_waits_for_the_deployed_server(self):
+        ledger = {"version": 1, "entries": {"a+b": {"fusionId": "f" * 64, "status": "READY", "artImageId": 5}}}
+        api = CurationApi(old=True)
+        report = batch.resubmit_curation(api, ledger, [(1, "a+b", {"verdict": "FAIL"})], limit=10)
+        self.assertTrue(report["serverNotReady"])
+        self.assertEqual(api.posted, [], "nothing is posted to a server without curation mode")
+
+    def test_refresh_does_not_reverify_the_rejected_image(self):
+        ledger = {"version": 1, "entries": {"a+b": {
+            "fusionId": "f" * 64, "status": "QUEUED", "curation": {"round": 1, "rejectedArtImageId": 7}}}}
+        batch.refresh(FakeApi(cap_after=0), ledger, limit=10)
+        self.assertNotIn("verifiedAt", ledger["entries"]["a+b"])
+
+    def test_committed_curation_rounds_match_the_ledger(self):
+        rows = batch.load_curation()
+        ledger = batch.load_ledger()["entries"]
+        for _round, key, verdict in rows:
+            self.assertIn(key, ledger, f"{key} is not a launch pair")
+            self.assertIn(verdict.get("reason"), {"one-only", "two-creatures", "missing-ingredient", "other"})
 
     def test_missing_token_is_unresolved(self):
         with tempfile.TemporaryDirectory() as temp, mock.patch.dict("os.environ", {"KR_API_TOKEN": ""}), \

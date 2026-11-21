@@ -13,6 +13,12 @@ so one run submits every remaining pair and later runs only record what actually
 2. Submit: post the next unsubmitted pairs from projects/hybridizer/LAUNCH-PAIRS.json in
    batches of 50 until the server reports the pending window is full (DEFERRED).
 
+3. Curation (2026-11-21): delivered hybrids that a visual review judged NOT to be hybrids are
+   listed in projects/hybridizer/art/CURATION-ROUND-*.json. Each FAIL is resubmitted once through
+   the admin curation path (new seed, "both ingredients in one fused body" guidance, launch-batch
+   priority); its ledger entry drops verifiedAt so it only counts again after the new image
+   answers. The rejected ArtImage stays in the fusion's revision gallery.
+
 Ledger: projects/hybridizer/art/LAUNCH-LEDGER.json, keyed by canonical "left+right" pair key.
 
 Environment: KR_API_TOKEN (an admin token with generation:art), KR_BASE_URL (default
@@ -39,6 +45,7 @@ PAIRS = ROOT / "projects" / "hybridizer" / "LAUNCH-PAIRS.json"
 LEDGER = ROOT / "projects" / "hybridizer" / "art" / "LAUNCH-LEDGER.json"
 BATCH = 50
 TERMINAL = {"READY", "FAILED", "CANCELLED", "REJECTED"}
+CURATION_GLOB = "CURATION-ROUND-*.json"
 
 
 def now() -> str:
@@ -117,6 +124,9 @@ def refresh(api: Api, ledger: dict, limit: int) -> int:
         if status != entry.get("status"):
             entry["status"] = status
             changed += 1
+        rejected = (entry.get("curation") or {}).get("rejectedArtImageId")
+        if status == "READY" and rejected and data.get("artImageId") == rejected:
+            continue  # the curated-out image is still primary; wait for the re-render
         if status == "READY" and data.get("imagePath"):
             entry["imagePath"] = data["imagePath"]
             entry["artImageId"] = data.get("artImageId")
@@ -164,12 +174,74 @@ def submit(api: Api, ledger: dict, pairs: list, max_batches: int, dry_run: bool)
     return report
 
 
+def load_curation(art_dir: Path | None = None) -> list[tuple[int, str, dict]]:
+    """FAIL verdicts from every committed curation round, oldest round first."""
+    rows = []
+    for path in sorted((art_dir or LEDGER.parent).glob(CURATION_GLOB)):
+        data = json.loads(path.read_text())
+        for key, verdict in sorted(data.get("entries", {}).items()):
+            if verdict.get("verdict") == "FAIL":
+                rows.append((int(data["round"]), key, verdict))
+    return rows
+
+
+def resubmit_curation(api: Api, ledger: dict, rows: list, limit: int) -> dict:
+    """File one curation re-render per FAIL verdict; idempotent across runs via the ledger."""
+    report = {"resubmitted": 0, "skipped": 0}
+    if not rows:
+        return report
+    # Older servers treat {"curation": true} as an ordinary editor remix at interactive
+    # priority with no re-roll guidance. Only resubmit once the deployed versions route
+    # advertises the community re-roll contract that shipped alongside curation mode.
+    probe = next((e for _r, k, _v in rows if (e := ledger["entries"].get(k)) and e.get("fusionId")), None)
+    if probe:
+        meta = api.call("GET", f"/api/hybridizer/fusions/{probe['fusionId']}/versions")
+        if "canReroll" not in (meta.get("data") or {}):
+            report["serverNotReady"] = True
+            return report
+    for round_no, key, verdict in rows:
+        if report["resubmitted"] >= limit:
+            break
+        entry = ledger["entries"].get(key)
+        done = (entry or {}).get("curation") or {}
+        if not entry or not entry.get("fusionId") or done.get("round", 0) >= round_no:
+            report["skipped"] += 1
+            continue
+        # Only a delivered primary can be revised; undelivered pairs wait for a later run.
+        if entry.get("status") != "READY":
+            report["skipped"] += 1
+            continue
+        result = api.call("POST", f"/api/hybridizer/fusions/{entry['fusionId']}/resubmit", {"curation": True})
+        if result.get("success") and (result.get("data") or {}).get("mode") != "curation":
+            report.setdefault("errors", {})[key] = "server did not honour curation mode"
+            break
+        if not result.get("success"):
+            code = result.get("statusCode")
+            if code == 429:
+                report["windowFull"] = True
+                break
+            report.setdefault("errors", {})[key] = result.get("message") or str(code)
+            continue
+        entry["curation"] = {
+            "round": round_no,
+            "reason": verdict.get("reason"),
+            "rejectedArtImageId": entry.get("artImageId"),
+            "resubmitJobId": (result.get("data") or {}).get("jobId"),
+            "resubmittedAt": now(),
+        }
+        entry["status"] = "QUEUED"
+        entry.pop("verifiedAt", None)
+        report["resubmitted"] += 1
+    return report
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--dry-run", action="store_true")
     parser.add_argument("--summary", action="store_true")
     parser.add_argument("--max-batches", type=int, default=4)
     parser.add_argument("--refresh-limit", type=int, default=400)
+    parser.add_argument("--curation-limit", type=int, default=1000)
     args = parser.parse_args()
 
     pairs = json.loads(PAIRS.read_text())["pairs"]
@@ -185,9 +257,15 @@ def main() -> int:
 
     refreshed = 0 if args.dry_run else refresh(api, ledger, args.refresh_limit)
     report = submit(api, ledger, pairs, args.max_batches, args.dry_run)
+    curation = {} if args.dry_run else resubmit_curation(api, ledger, load_curation(), args.curation_limit)
     if not args.dry_run:
         save_ledger(ledger)
-    print(json.dumps({"refreshed": refreshed, "submit": report, "progress": summary(ledger, len(pairs))}))
+    print(json.dumps({
+        "refreshed": refreshed,
+        "submit": report,
+        "curation": curation,
+        "progress": summary(ledger, len(pairs)),
+    }))
     return 1 if report.get("error") else 0
 
 
