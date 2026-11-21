@@ -1,0 +1,20 @@
+version: 1
+project: hybridizer
+task: t-008
+operation: review
+session: 20261121T0600Z-hybridizer-uploads-up1
+updated: '2026-11-21T07:00:00Z'
+verify_pr: silasfelinus/kind_robots#5493
+note: >-
+  Silas, 2026-11-21 PT: "Just build the upload option." Implemented in kind_robots #5493:
+  signed-in players add their own picture as a private ingredient (name, optional description
+  for the illustrator, creature/object, explicit rights and consent checkbox). Never public:
+  private non-mature ArtImage owned by the uploader, no listing or sharing route, upload:<id>
+  keys resolve only for the active owner through one shared resolver used by fusion creation,
+  first render and revisions, and any fusion using an upload inherits isPublic=false. Magic-byte
+  sniffing (client MIME ignored), 5 MB and 128-6000 px bounds, full sharp decode and WebP
+  re-encode that strips EXIF/GPS (verified 0 EXIF bytes from a GPS-tagged JPEG), 10/day and
+  30-active limits, plain-text name/description that pass the art prompt contract, remove
+  deactivates the ingredient and its image. Additive HybridizerUpload migration. Contract tests,
+  vue-tsc and Prettier pass locally. Close as done when #5493 merges green; live behaviour is
+  rechecked with t-009's post-deploy 390/768/1440 pass.
