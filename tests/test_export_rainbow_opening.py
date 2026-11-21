@@ -90,6 +90,26 @@ class DoodleOpeningTests(unittest.TestCase):
         self.assertEqual(accepted, [])
         self.assertEqual(rejected, [])
 
+    def test_delivery_report_distinguishes_rejected_from_pending_stills(self):
+        sources = [
+            ("accepted", 1, 101, 201),
+            ("rejected", 1, 102, 202),
+            ("pending", 1, 103, None),
+        ]
+        report = opening.delivery_report(sources, ["accepted"], ["rejected"])
+        self.assertEqual(report["shots"], 3)
+        self.assertEqual(report["animated_shots"], 1)
+        self.assertEqual(report["accepted_shots"], ["accepted"])
+        self.assertEqual(report["rejected_shots"], ["rejected"])
+        self.assertEqual(report["wan_requeue_shots"], ["rejected"])
+        self.assertEqual(report["still_fallback_shots"], ["rejected", "pending"])
+
+    def test_delivery_report_stills_only_does_not_request_wan_rerender(self):
+        sources = [("still", 1, 101, None)]
+        report = opening.delivery_report(sources, [], [])
+        self.assertEqual(report["wan_requeue_shots"], [])
+        self.assertEqual(report["still_fallback_shots"], ["still"])
+
     def test_rejects_long_wan_clip_before_rgb_decode(self):
         payload = b"0000ftyp" + b"video-payload"
         probe = subprocess.CompletedProcess(

@@ -365,6 +365,20 @@ def encode(frames, audio: Path | None, mp4: Path, seconds: float):
     return count
 
 
+def delivery_report(sources, accepted_clips, rejected_clips):
+    """Give reviewers the exact failed WAN shots to re-queue after delivery."""
+    accepted = set(accepted_clips)
+    rejected = set(rejected_clips)
+    return {
+        "shots": len(sources),
+        "animated_shots": len(accepted),
+        "accepted_shots": [key for key, _, _, _ in sources if key in accepted],
+        "rejected_shots": [key for key, _, _, _ in sources if key in rejected],
+        "wan_requeue_shots": [key for key, _, _, _ in sources if key in rejected],
+        "still_fallback_shots": [key for key, _, _, _ in sources if key not in accepted],
+    }
+
+
 def write_manifest(kind_robots: Path, media: dict | None):
     path = kind_robots / MANIFEST
     text = path.read_text()
@@ -448,6 +462,11 @@ def main(argv=None):
         target.with_name("opening-rejected-clips.json").write_text(
             json.dumps({"rejected_shots": rejected_clips, "accepted_shots": accepted_clips}, indent=2) + "\n"
         )
+        report = delivery_report(sources, accepted_clips, rejected_clips)
+        target.with_name("opening-delivery-report.json").write_text(
+            json.dumps(report, indent=2) + "\n"
+        )
+        print(f"WAN re-queue shots: {', '.join(report['wan_requeue_shots']) or 'none'}")
         url = "/" + str(VIDEO_DIR.relative_to("public")).replace("\\", "/")
         write_manifest(kind_robots, {
             "webm": f"{url}/opening.webm", "mp4": f"{url}/opening.mp4", "poster": f"{url}/opening-poster.webp",
