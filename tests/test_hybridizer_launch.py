@@ -74,12 +74,15 @@ class FakeApi:
 
 
 class CurationApi:
-    def __init__(self, full=False, old=False):
+    def __init__(self, full=False, old=False, live_job=None):
         self.full = full
         self.old = old
+        self.live_job = live_job
         self.posted = []
 
     def call(self, method, path, body=None):
+        if method == "GET" and path.endswith("/status"):
+            return {"success": True, "data": {"status": "QUEUED", "artJobId": self.live_job} if self.live_job else {}}
         if method == "GET":
             return {"success": True, "data": {"versions": [], "canEdit": True, **({} if self.old else {"canReroll": False})}}
         if self.full:
@@ -135,6 +138,19 @@ class SubmitterTests(unittest.TestCase):
         self.assertTrue(report["windowFull"])
         self.assertEqual(report["resubmitted"], 0)
         self.assertNotIn("curation", ledger["entries"]["a+b"])
+
+    def test_curation_adopts_an_existing_newer_job_instead_of_resubmitting(self):
+        ledger = {"version": 1, "entries": {
+            "a+b": {"fusionId": "f" * 64, "status": "QUEUED", "artJobId": 10, "artImageId": 5, "verifiedAt": "x"}}}
+        api = CurationApi(live_job=77)
+        report = batch.resubmit_curation(api, ledger, [(1, "a+b", {"verdict": "FAIL", "artImageId": 5})], limit=10)
+        self.assertEqual(report.get("adopted"), 1)
+        self.assertEqual(report["resubmitted"], 0)
+        self.assertEqual(api.posted, [], "a pair already re-rendering is never resubmitted")
+        entry = ledger["entries"]["a+b"]
+        self.assertEqual(entry["curation"]["resubmitJobId"], 77)
+        self.assertEqual(entry["curation"]["rejectedArtImageId"], 5)
+        self.assertNotIn("verifiedAt", entry)
 
     def test_curation_waits_for_the_deployed_server(self):
         ledger = {"version": 1, "entries": {"a+b": {"fusionId": "f" * 64, "status": "READY", "artImageId": 5}}}

@@ -30,19 +30,19 @@ milestones:
   - id: m1
     title: "SHAPE — roster, concept art, data model"
     weight: 20
-    status: in-progress
+    status: done
   - id: m2
     title: "BUILD — fusion laboratory, cache and art queue"
     weight: 45
-    status: in-progress
+    status: done
   - id: m3
     title: "ART — image coverage, authored hybrids and ingestion"
     weight: 20
-    status: in-progress
+    status: done
   - id: m4
     title: "POLISH — accessibility, adversarial tests and human acceptance"
     weight: 15
-    status: not-started
+    status: in-progress
 tasks:
   - id: t-001
     milestone: m1
@@ -70,6 +70,12 @@ tasks:
       FOR SILAS: The draft 200-starter roster and initial fusion-lab visual
       direction are in DESIGN-BRIEF.md and STARTER-CATALOG.json. Provide
       creative changes if wanted. Nothing is blocked while agents build.
+
+      2026-11-21 PT reconciliation: this optional creative review is Silas's own decision (FOR
+      SILAS), so it is marked gate_human. It does not block the playtest handoff and can be
+      answered any time during playtesting.
+    updated: '2026-11-21T07:58:34Z'
+    gate_human: true
   - id: t-003
     milestone: m2
     title: "Build art-led one-screen Hybridizer prototype in Kind Robots Admin"
@@ -128,7 +134,7 @@ tasks:
   - id: t-007
     milestone: m3
     title: "Pre-generate and verify curated 4,000 launch hybrids"
-    status: review
+    status: done
     depends_on: t-004
     owner: worker
     passes: 0
@@ -138,14 +144,23 @@ tasks:
       2026-10-30 progress: launch pipeline live. kind_robots #4484 (art prompt: the hybrid itself as one blended creature or object on a plain backdrop, no jar/specimen/lab staging; admin POST /api/hybridizer/batch) and #4512 (batch priority 90: behind interactive 100 and project runtime art, ahead of bulk backfill). conductor #6815: deterministic 4,000-pair LAUNCH-PAIRS.json (36-pair showcase first, every starter used 35-75 times) and the 20-minute 'Hybridizer launch batch' workflow, which keeps a 60-render window full and marks a hybrid delivered only after its image URL answers. At close: 96/4,000 submitted, 36 verified delivered (the full showcase, reviewed on a contact sheet; Silas approved the look). The workflow keeps running unattended; reopen to done when the ledger reaches 4,000 verified.
 
       Curation round 1 (2026-11-21 PT). Silas set the acceptance bar this session: "While one pass for quality is warranted, after those are resubmitted, I'm happy as long as we have the hybridized fully working to react and resubmit bad hybrids in game." All 4,000 launch hybrids are rendered and delivered (live status READY for every pair; the ledger lagged by 1,004 because GitHub ran the 20-minute schedule only 3-4 times a day and each run refreshed only 400 entries; the workflow now refreshes every open entry). Every one was reviewed visually on labeled contact sheets: 1,856 FAIL (769 one ingredient only, 567 two separate creatures, 515 missing fruit/object ingredient, 5 other incl. an echidna+ninja IP lookalike), 398 WEAK, 1,746 PASS. Committed as projects/hybridizer/art/CURATION-ROUND-1.json. The launch batch workflow files one admin curation re-render per FAIL (new seed, fused-body guidance, priority 1, up to 1,000 per run), drops the ledger's verifiedAt until the new image answers, and refuses to post until the deployed server advertises the curation contract. kind_robots #5490 adds the in-game "Not a hybrid? Re-roll" for any signed-in player on public discoveries plus admin curation mode, a large phone reveal and requester-only ready toasts. Close as done once #5490 is live and the workflow reports the 1,856 curation resubmits filed; WEAK entries and any disappointing re-renders are handled by in-game re-roll.
+
+      Done 2026-11-21 PT against Silas's bar. kind_robots #5490 is live (production
+      4c22a520+). All 1,856 FAIL pairs have a curation re-render filed: launch-batch runs 87
+      and 89 recorded 1,002 in the ledger with job IDs; run 88 filed the other 854 but lost
+      its checkpoint, and every one of those 854 was confirmed QUEUED live under a newer job
+      (the server's one-revision-at-a-time guard rejected 990 duplicate attempts). The
+      conductor follow-up makes queued runs start from latest main and adopts already-running
+      re-renders so none is filed twice. 398 WEAK and any disappointing re-renders are handled
+      by the in-game re-roll.
     claimed_by: 20261030T112000Z-hybridizer-t007-q7h2
     claimed_at: '2026-10-30T11:41:43Z'
-    updated: '2026-11-21T04:30:00Z'
-    implementation_pr: 'silasfelinus/kind_robots#4484'
+    updated: '2026-11-21T07:58:28Z'
+    implementation_pr: 'silasfelinus/kind_robots#5490'
   - id: t-008
     milestone: m2
     title: "Accept user-submitted ingredient images securely"
-    status: review
+    status: done
     depends_on: t-004
     owner: null
     passes: 0
@@ -154,15 +169,20 @@ tasks:
       Auth/consent, ownership and visibility, allowed content, size and type validation, abuse controls, safety review, provenance and rights; user art must not silently become a public reusable input.
 
       Silas, 2026-11-21 PT: "Just build the upload option." Implemented in kind_robots #5493: signed-in players add their own picture as a private ingredient (name, optional description for the illustrator, creature/object, explicit rights and consent checkbox). Never public: private non-mature ArtImage owned by the uploader, no listing or sharing route, upload:<id> keys resolve only for the active owner through one shared resolver used by fusion creation, first render and revisions, and any fusion using an upload inherits isPublic=false. Magic-byte sniffing (client MIME ignored), 5 MB and 128-6000 px bounds, full sharp decode and WebP re-encode that strips EXIF/GPS (verified 0 EXIF bytes from a GPS-tagged JPEG), 10/day and 30-active limits, plain-text name/description that pass the art prompt contract, remove deactivates the ingredient and its image. Additive HybridizerUpload migration. Contract tests, vue-tsc and Prettier pass locally. Close as done when #5493 merges green; live behaviour is rechecked with t-009's post-deploy 390/768/1440 pass.
-    updated: '2026-11-21T07:00:00Z'
+
+      Merged green as kind_robots #5493 and live on production (b7a1821c, 2026-11-21 PT):
+      signed-out GET and POST /api/hybridizer/uploads return 401; the signed-out drawer shows
+      the sign-in-to-upload link and the MINE filter.
+    updated: '2026-11-21T07:58:14Z'
+    implementation_pr: 'silasfelinus/kind_robots#5493'
   - id: t-009
     milestone: m4
     title: "Adversarial QA, full-width layout review and final subjective acceptance"
-    status: review
+    status: done
     owner: worker
     claimed_by: 20261102T102330Z-hybridizer-t-009-52ce
     claimed_at: '2026-11-02T10:26:43.508Z'
-    updated: '2026-11-21T04:31:00Z'
+    updated: '2026-11-21T07:58:31Z'
     depends_on: t-003
     passes: 0
     stakes: reversible
@@ -178,6 +198,16 @@ tasks:
       Scoped atlas/remix implementation in Kind Robots PR #4643. Data-backed atlas totals and pagination, reused-art badge, saved-hybrid gallery with rating and versions, editable-weight prompt resubmission. TypeScript, formatting, layout, visibility, architecture, migration, and other completed workflows green; four Contract Tests shards green. Auto-merge enabled after the queued Contract verifiers aggregator finishes. Not live until Unraid container deploy. Keep t-009 open for remaining private-upload coverage, adversarial art QA and rendered 390/768/1440/XL acceptance.
 
       2026-11-21 PT rendered check of production /play/hybridizer (commit 0d422b75) at 390, 768 and 1440: no horizontal overflow, 30/30 images loaded, 0 broken. Found and fixed in kind_robots #5490: at <=820px container width the discovery reveal collapsed to a ~30px thumbnail and its actions were clipped (console now scrolls, reveal clamps 220-460px; verified by injecting the CSS on production at 390/768), and signed-out visitors received "X is illustrated!" toasts for shared launch renders they never requested (now only fusions, retries, remixes and re-rolls the player requested). Community re-roll adversarial contracts: injected direction/weight ignored, no escalation to curation, private discoveries stay creator-only. Remaining before handoff: t-008 private uploads (unbuilt) and a post-deploy recheck at 390/768/1440.
+
+      Agent QA complete 2026-11-21 PT on production b7a1821c (includes #5490 and #5493):
+      390/768/1440 no horizontal overflow, 0 broken images, reveal 326x256 / 678x460 / 531x373
+      (was a ~30px thumbnail on phones), no ready toasts for signed-out visitors, upload
+      endpoints 401 when signed out. Contract coverage: community re-roll cannot inject prompt
+      text or escalate to curation; private discoveries and uploads are owner-only; uploads
+      sniffed by magic bytes, re-encoded without EXIF/GPS, rate-limited. The subjective
+      fun/design verdict moves to human playtesting after handoff (GAME-PLAYTEST-
+      CLOSEOUT-2026-11-18), not this finite task.
+    implementation_pr: 'silasfelinus/kind_robots#5490'
   - id: t-010
     milestone: m4
     title: "Authorize external public release separately"
