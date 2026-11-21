@@ -1,4 +1,4 @@
-import importlib.util
+import hashlib
 import json
 import sys
 from pathlib import Path
@@ -105,6 +105,7 @@ def test_delivery_batches_keepers_only_and_checks_receipts(monkeypatch):
                 "artImageId": x["artImageId"],
                 "url": f"/images/emperor-of-dust/{x['asset']}.webp",
                 "status": "written",
+                "sha256": "a" * 64,
             } for x in payload["targets"]]},
         }
     plan = delivery.build_plan(
@@ -112,8 +113,15 @@ def test_delivery_batches_keepers_only_and_checks_receipts(monkeypatch):
          for i in range(26)]
         + [record("quests/unreviewed", 100)]
     )
-    report = delivery.reconcile(plan, write=True, http_json=request)
+    verified = []
+    def verify(url, sha256, base_url):
+        verified.append((url, sha256))
+        return True
+    report = delivery.reconcile(
+        plan, write=True, http_json=request, verify_media=verify,
+    )
     assert report["summary"] == {"written": 26}
+    assert len(verified) == 26
     assert len(calls) == 2
     assert [len(call["targets"]) for call in calls] == [24, 2]
     assert all(call["write"] is True and call["curated"] is True for call in calls)
@@ -158,3 +166,52 @@ def test_cli_offline_plan_and_write_guard(tmp_path, capsys):
     assert report["plan"]["summary"]["unreviewed"] == 1
     with pytest.raises(SystemExit):
         delivery.main(["--write", "--ledger-dir", str(path)])
+
+
+def test_http_verification_checks_actual_served_webp_sha():
+    payload = b"RIFF" + b"\\x14\\x00\\x00\\x00" + b"WEBP" + b"VP8 " + b"pixel-data"
+    sha = hashlib.sha256(payload).hexdigest()
+    class Response:
+        status = 200
+        headers = {"Content-Type": "image/webp"}
+        def __enter__(self):
+            return self
+        def __exit__(self, *args):
+            return False
+        def read(self):
+            return payload
+    class FakeOpener:
+        def __call__(self, request, timeout):
+            assert request.full_url.endswith("/images/emperor-of-dust/endings/open-roads.webp")
+            return Response()
+    args = (
+        "/images/emperor-of-dust/endings/open-roads.webp", sha,
+    )
+    assert delivery.verify_delivered_media(
+        *args, base_url="https://example.test", opener=FakeOpener(),
+    )
+    assert not delivery.verify_delivered_media(
+        args[0], "0" * 64, base_url="https://example.test", opener=FakeOpener(),
+    )
+    assert not delivery.verify_delivered_media(
+        "/other/secret.webp", sha, opener=FakeOpener(),
+    )
+
+
+def test_written_receipt_never_counts_as_delivered_if_http_bytes_fail(monkeypatch):
+    monkeypatch.setattr(delivery.core, "KR_API_TOKEN", "test-placeholder")
+    plan = delivery.build_plan([record("quests/accepted", 11, "keep")])
+    def claimed(method, url, payload, timeout):
+        return 200, {"success": True, "data": {"results": [{
+            "asset": "quests/accepted",
+            "artImageId": 11,
+            "url": "/images/emperor-of-dust/quests/accepted.webp",
+            "sha256": "f" * 64,
+            "status": "written",
+        }]}}
+    receipt = delivery.reconcile(
+        plan, write=True, http_json=claimed,
+        verify_media=lambda url, sha, base_url: False,
+    )
+    assert receipt["summary"] == {"http-verification-failed": 1}
+    assert "did not match" in receipt["results"][0]["reason"]
