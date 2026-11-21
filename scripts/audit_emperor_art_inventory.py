@@ -72,7 +72,7 @@ def inventory(ledger_dir: Path, app_root: Path | None = None):
     for asset, entries in sorted(grouped.items()):
         path = f"public/emperor-of-dust/{asset}.webp"
         file_path = app_root / path if app_root else None
-        exported = file_path.is_file() and file_path.stat().st_size > 0 if file_path else None
+        exported = (file_path.is_file() and file_path.stat().st_size >= 12\n                    and file_path.open("rb").read(4) == b"RIFF"\n                    and file_path.open("rb").read(12)[8:12] == b"WEBP") if file_path else None
         # A dynamic path assembled at runtime will not be detected by static text search.
         matches = [name for name, content in references.items()
                    if asset in content or f"/{asset}.webp" in content]
