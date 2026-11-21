@@ -12889,3 +12889,8 @@ Reviewed worker/slime-city-priority-20261109 (Silas, priority.yaml only, reversi
 - Pattern (repeat, 4th occurrence in about 30h): the guard catches these PRs, but workers keep reaching for the Vercel host whenever an Auto Art Generate health probe fails transiently. The workflow already degrades gracefully (`up=false` preserves the queues). Suggested fix: make the `::warning::` text say "kindrobots.org is the only production origin; *.vercel.app is retired — do not switch hosts", so the log a worker reads names the trap.
 - #7757 (`worker/rainbow-opening-bounded-video-k7m4`): the code change is good and every CI check except the handoff template was green, so the Reviewer backfilled the AGENTS.md handoff sections in the body. It merges once the re-run is green.
 - emperor-of-dust/t-063: curated QUESTS-MISSING-REDO-3 (0/2 kept, rerolled as REDO-4 without the rider/wagon boilerplate) and the 33 secret-talk plates (9/33 kept). The talk plates are wired into barracks talks in kind_robots#5516.
+
+## 2026-11-21 PT | Reviewer | worker branch sweep (conductor)
+
+- `worker/every-villain-tactics-art-api-health-20261121-0515`: already rejected as #7755 (retired `kind-robots.vercel.app` origin). Re-probe now: `kindrobots.org/` 200, `kind-robots.vercel.app/api/health` 503. No new action; branch left for branch-janitor. Applied the suggested guard from the earlier entry: the Auto Art Generate API-unavailable `::warning::` now says kindrobots.org is the only production origin and not to switch `KR_BASE_URL` (conductor#7762).
+- `worker/emperor-of-dust-t-069-art-inventory-a7c2`: rescued (SyntaxError in the final commit) and merged via conductor#7762; details in the project TALKBACK.

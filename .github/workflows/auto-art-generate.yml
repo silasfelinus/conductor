@@ -154,7 +154,7 @@ jobs:
             echo "::notice::Kind Robots API reachable — ArtJob repair/submission enabled."
           else
             echo "up=false" >> "$GITHUB_OUTPUT"
-            echo "::warning::Kind Robots API unavailable (HTTP ${STATUS:-000}) — preserving queues and skipping API-dependent art work this run."
+            echo "::warning::Kind Robots API unavailable (HTTP ${STATUS:-000}) — preserving queues and skipping API-dependent art work this run. kindrobots.org is the only production origin; *.vercel.app is retired (402/503 there is expected) — do not switch KR_BASE_URL, this is transient."
           fi
 
       # Before anything submits: record the job ids an earlier run or a killed
