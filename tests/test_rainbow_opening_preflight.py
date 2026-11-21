@@ -33,3 +33,8 @@ def test_rejects_short_decoded_video():
     probe = CompletedProcess([], 0, stdout='{"streams":[{"width":832,"height":480}]}')
     with patch.object(opening.subprocess, "run", return_value=probe), patch.object(opening, "clip_frames", return_value=[]):
         assert opening.validated_clip(b"\\x00\\x00\\x00\\x18ftypisom", "intro-solenne-halo") is None
+
+
+def test_failed_download_falls_back_to_still():
+    with patch.object(opening, "download", side_effect=OSError("404")):
+        assert opening.safe_clip_download(12345, "intro-cats-launch") is None
