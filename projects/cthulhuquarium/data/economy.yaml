@@ -435,11 +435,13 @@ fun_loop:
 # rarity, not the highest stat rarity (a leftover of the removed hidden stats).
 # Chosen with data/simulate_descent.py; a casual player (two 10-minute sessions
 # a day) opens II in the first session, III on day 2, IV on day 5, V around
-# day 14 and fills the book in about two and a half weeks. Mirrored in
+# day 10 and fills the book in about twelve and a half days. Silas 2026-11-21
+# halved the wait for the last key ("half the time sounds good"): 400,000 ->
+# 200,000, so the stretch with nothing new to buy is ~4 days, not ~8.5. Mirrored in
 # kind_robots utils/cthulhuquariumFloors.ts FLOOR_KEY_COSTS.
 # ---------------------------------------------------------------------------
 floor_keys:
   2: 150
   3: 3000
   4: 30000
-  5: 400000
+  5: 200000

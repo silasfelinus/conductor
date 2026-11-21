@@ -73,7 +73,7 @@ account** for parts 1–3 and your own tank for part 4.
 ## 5. Pacing (decided 2026-11-21: canon rarity + slower floors)
 
 Each fish is now priced and paid by its canon rarity, and each floor needs a
-one-time key: 150, 3,000, 30,000 and 400,000 coins. Tanks that reached a floor
+one-time key: 150, 3,000, 30,000 and 200,000 coins (the last halved on 2026-11-21). Tanks that reached a floor
 before the change keep it. The simulator (`ECONOMY-SUITE.md`) puts a casual
 player (two 10-minute visits a day) at:
 
@@ -82,13 +82,13 @@ player (two 10-minute visits a day) at:
 | II | 1 |
 | III | 2 |
 | IV | 5 |
-| V | about 14.5 |
-| Book complete | about 16 |
+| V | about 10 |
+| Book complete | about 12.5 |
 
-- [ ] *Question: does the long save for the floor V key drag?* Once floors I–IV are
-      bought out, a casual player waits about 8 days with no new species, only
-      decor, sets and upgrades to buy. If it drags, 250,000 shortens that to about
-      5 days. That's a one-constant change.
+- [ ] *Question: does the save for the floor V key still drag?* Once floors I–IV
+      are bought out, a casual player now waits about 4 days with no new species
+      (it was about 8.5 before the price was halved), with decor, sets and upgrades
+      to buy meanwhile.
 
 ## 6. Art to judge
 

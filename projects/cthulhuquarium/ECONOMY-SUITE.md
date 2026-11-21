@@ -8,7 +8,7 @@ production). Both are re-runnable:
     node projects/cthulhuquarium/data/api_exploit_suite.mjs        # local server on :3000
     node projects/cthulhuquarium/data/api_floor_keys_playthrough.mjs
 
-## 1. Strategies (canon rarity, keys 150 / 3,000 / 30,000 / 400,000)
+## 1. Strategies (canon rarity, keys 150 / 3,000 / 30,000 / 400,000 as first run; V now 200,000)
 
 ```
 151 species; rarity by canon rarity; floor keys {2: 150, 3: 3000, 4: 30000, 5: 400000}
@@ -65,12 +65,13 @@ and never clicks.
    | 250,000 | day 11 / day 13.5 | 5 d | 10 d |
    | 150,000 | day 9 / day 11.5 | 3 d | 6 d |
 
-   Recommendation: keep 400,000 for the first playtest, which is what was
-   decided. Ask playtesters about the stretch between the Conservatory and the
-   Bottom. If it drags, 250,000 is a one-constant change
-   (`FLOOR_KEY_COSTS`, plus `economy.yaml` `floor_keys`). The decor, sets and
-   upgrades shelves also give the saving player something to spend on, which
-   this simulator does not model, so the real wait is gentler than shown.
+   **Decided (Silas, 2026-11-21): halve it.** The V key is now **200,000**:
+   casual reaches floor V about day 10, the book about day 12.5, and the longest
+   wait with nothing new is about 4 days (daily player: 8 days; active: 2).
+   The decor, sets and upgrades shelves also give the saving player something to
+   spend on, which this simulator does not model, so the real wait is gentler
+   than shown. `tests/test_cthulhuquarium_descent_pacing.py` pins the casual
+   schedule and the kind_robots mirror.
 
 ## 2. Adversarial API checks: 26/26 pass
 
