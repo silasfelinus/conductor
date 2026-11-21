@@ -1,0 +1,7 @@
+version: 1
+project: emperor-of-dust
+task: t-062
+operation: ready
+updated: '2026-11-21T12:57:22.092Z'
+note: >-
+  2026-11-21 CI repair on kind_robots PR #5511: exact prior head a274789c38bb955c4a33c365f4793d6725da47d7 failed Emperor Dispatch Contract at verifyEmperorMarketAccountMatrix.test.ts:113 with refusing to save an invalid run. Root cause: matrix built a 46-day SaveBook with only three noncontiguous dawn snapshots (days 28, 37, 46), violating saves.ts validateBook requirement of one same-seed dawn for every day 1..current.day. Updated PR branch with commit 2e3512a34d6898171c959a69bb53f0d992b41677, constructing all 46 ordered dawns with earned branch flags; this repairs the test fixture without weakening save validation. Fresh exact-head CI started; architecture passed and other checks were still in progress at handoff. Do not merge until all required checks complete green. No art bytes delivered in this session; t-064 remains security-gated, and t-063 delivery remains open. Keep t-062 ready for follow-up after CI.
