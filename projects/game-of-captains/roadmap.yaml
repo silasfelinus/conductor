@@ -831,7 +831,7 @@ tasks:
   - id: t-033
     milestone: m3
     title: "Curate, re-render and ship the 100 redshirt portraits and secret-power plates"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 2026-11-21T104537Z-goc-t033-8d7c2
     claimed_at: '2026-11-21T10:45:37Z'
@@ -857,7 +857,7 @@ tasks:
       Scoped t-033 runtime art delivery safety fix on worker/game-of-captains-t-033-curation-scope-s9d2: only art slots genuinely owned by game-of-captains (or legacy canonical null-project slots) may override redshirt images; deterministic canonical-over-legacy precedence with public, liked and active fallback. Added ownership, order, legacy and source-contract regression tests. This is partial, not actual curation. 23 portraits and one power plate still require pixel-by-pixel original image acceptance, shipped URLs and responsive browser QA. No rendered asset was autoaccepted, and task t-033 must return to ready after merge.
 
       Kind Robots PR #5482 merged to main as 0d422b75df3f515f655587a1b5c39e2b3ad4f9f9 with all 12 exact-head workflow groups successful. Redshirt ArtSlot ownership and canonical/legacy precedence are guarded, with regression tests. Partial t-033: 23 portraits and one secret-power plate still need original image curation, accepted delivery, authenticated URLs and responsive verification. Return READY, not DONE.
-    updated: '2026-11-21T10:45:37Z'
+    updated: '2026-11-21T10:49:00Z'
   - id: t-034
     milestone: m4
     title: "Space Couch editorial readability pass: rotating transit prose, 30 success returns, sectioned final log"
