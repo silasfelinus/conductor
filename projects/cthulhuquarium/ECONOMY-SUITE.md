@@ -72,7 +72,7 @@ and never clicks.
    upgrades shelves also give the saving player something to spend on, which
    this simulator does not model, so the real wait is gentler than shown.
 
-## 2. Adversarial API checks: 21/21 pass
+## 2. Adversarial API checks: 26/26 pass
 
 Run on a fresh local account each time (`api_exploit_suite.mjs`):
 
@@ -90,6 +90,15 @@ Run on a fresh local account each time (`api_exploit_suite.mjs`):
 | Public tank JSON | no email, password, userId or token keys; email absent |
 | Private tank by URL | 404 |
 | Selling another tank's fish | refused |
+| Ten parallel ticks over one hour of absence (two tabs, a script) | settled once (row lock, stale snapshot settles nothing) |
+| Six parallel species buys with coins for one | one bought, coins never negative |
+| Six parallel species buys with room for one | the tank stops at its cap |
+| Three parallel finale buys | charged once |
+| A new tank that knows 30 species asks for grandfathered keys | none: only tanks the key system met already past a threshold keep their floors |
+
+The last five rows cover the races the release-candidate technical review
+traced in the code (see [RC-DOSSIER.md](RC-DOSSIER.md)); they pass against the
+RC-fixes build.
 
 The floor-key play-through (`api_floor_keys_playthrough.mjs`, 15/15) covers
 canon-rarity pricing, keys in order, the double-tap race (charged once under a

@@ -2,7 +2,9 @@
 
 For Silas, at `/play/aquarium` on kindrobots.org once the next Force Update has
 deployed kind_robots #5472, #5479, #5497 (canon rarity and floor keys), #5498
-(settings, title card, endings) and the QA-fixes PR that follows #5499. This is a handoff sheet, not a gate. It
+(settings, title card, endings), #5500 (cross-device fixes) and the RC-fixes PR
+(see [RC-DOSSIER.md](RC-DOSSIER.md), which also says how to reach the deep floors
+in a short session). This is a handoff sheet, not a gate. It
 lists what to look at and what each thing should feel like, so a verdict can
 be specific. Allow 20–30 minutes on a phone and 10 on a desktop. Use a **fresh
 account** for parts 1–3 and your own tank for part 4.
@@ -90,11 +92,9 @@ player (two 10-minute visits a day) at:
 
 ## 6. Art to judge
 
-- [ ] Wilbur's per-floor portraits: 15 of 20 are delivered (canon #86). Five were
-      rejected for a magenta "bruise" or a pale bar and are re-rendering
-      (`art/WILBUR-FLOORS-KONTEXT-2.yaml`). Until they land, those beats use his base
-      pose. He should look a little worse on each floor, and nobody should mention
-      it. *Question: is the escalation funny-dark or too much?*
+- [ ] Wilbur's per-floor portraits: all 20 are delivered (canon #86, #89). He should
+      look a little worse on each floor, and nobody should mention it.
+      *Question: does he stay sympathetic, never the joke?*
 - [ ] The floor scene plates, the post-finale plate and the Bottom of Things ending
       plate.
 - [ ] The five plates first rendered 2026-11-02 were never lost. They were private

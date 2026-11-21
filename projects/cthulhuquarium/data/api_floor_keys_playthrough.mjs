@@ -86,6 +86,8 @@ const tank2 = sql(`select id from Aquarium where userId=${uid2}`)
 const ids = sql(`select id from Monster where depth in (1,2) order by depth, id limit 30`).split('\n')
 for (const id of ids) sql(`insert into AquariumCodexEntry (userId, monsterId) values (${uid2}, ${id})`)
 sql(`insert into AquariumEvent (aquariumId, kind, occurredAt) values (${tank2}, 'milestone-bestiary_10', '2026-10-01'), (${tank2}, 'milestone-bestiary_25', '2026-10-02')`)
+// A tank from before keys has no key-system marker (new tanks get one at birth).
+sql(`delete from AquariumEvent where aquariumId=${tank2} and kind='floor-keys-introduced'`)
 await api('/api/aquarium/story/reconcile', {})
 story = await api('/api/aquarium/story')
 ok(

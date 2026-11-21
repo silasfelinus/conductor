@@ -75,8 +75,8 @@ async function freshPlayer() {
   const tank = sql(`select id from Aquarium where userId=${uid}`)
   sql(`update Aquarium set coins=100000 where id=${tank}`)
   sql(`update User set introDismissedAt=NOW() where id=${uid}`)
-  // Room for ten species of any size (a fixture, not a purchase).
-  sql(`update Aquarium set sizeCap=40 where id=${tank}`)
+  // Room for ten species (a fixture, not a purchase): two tank expansions.
+  sql(`update Aquarium set tankExpansions=2 where id=${tank}`)
   const shelf = (await api('/api/aquarium/catalog?take=60', null, token)).data
   let bought = 0
   const refused = []
@@ -86,7 +86,15 @@ async function freshPlayer() {
     if (r.success) bought++
     else refused.push(r.message)
   }
-  if (bought < 10) throw new Error(`fixture: only ${bought} species bought (${refused.slice(0, 3).join(' | ')})`)
+  // Today's rotation can stock fewer than ten: record the rest as known.
+  if (bought < 10) {
+    const extra = sql(
+      `select id from Monster where depth=1 and isActive=1 and id not in (select monsterId from AquariumCodexEntry where userId=${uid}) order by id limit ${10 - bought}`,
+    ).split('\n').filter(Boolean)
+    for (const id of extra) sql(`insert into AquariumCodexEntry (userId, monsterId) values (${uid}, ${id})`)
+    bought += extra.length
+  }
+  if (bought < 10) throw new Error(`fixture: only ${bought} species known (${refused.slice(0, 3).join(' | ')})`)
   await api('/api/aquarium/feed', {}, token)
   // Every scene seen except Below Stairs', which the key purchase plays.
   for (const id of SCENE_IDS) {
@@ -223,6 +231,10 @@ async function runViewport([vp, width, height]) {
     await stage.waitFor({ timeout: 15000 }).catch(() => {})
     check(vp, await stage.count(), 'buying the key plays the floor scene')
     await page.waitForTimeout(600)
+    const focusInScene = await page.evaluate(
+      () => !!document.activeElement?.closest('.cq-vn-stage'),
+    )
+    check(vp, focusInScene, 'the scene takes keyboard focus when it opens')
     await screen(page, vp, '05-scene')
     const walked = await walkScene(page, true)
     check(vp, walked.replied, 'a reply could be chosen')
