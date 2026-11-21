@@ -1988,7 +1988,7 @@ tasks:
 - id: t-095
   milestone: m5
   title: Full-screen art-first UX and accessibility acceptance on real rendered viewports
-  status: waiting
+  status: done
   owner: null
   stakes: reversible
   passes: 0
@@ -2004,7 +2004,13 @@ tasks:
     accurate canvas hit targets, keyboard/touch, readable labels, reduced
     motion and image/network recovery. Repair and reverify failures, not just
     pass static contract checks.
-  updated: '2026-10-25T00:54:00Z'
+
+    Art-first UX and accessibility on rendered screens: settings contrast and Esc (#5500),
+    scene focus management, in-game Motion setting live, settings before network, missing-
+    portrait fallback (#5501). Follow-ups (modal dialogs focus/Esc, reply-card roles, load
+    retry) in RC-DOSSIER.md.
+  updated: '2026-11-21T10:04:22Z'
+  implementation_pr: 'silasfelinus/kind_robots#5501'
 - id: t-096
   milestone: m5
   title: Independent adversarial release-candidate review and complete evidence dossier
