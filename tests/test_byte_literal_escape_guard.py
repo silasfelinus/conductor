@@ -45,11 +45,11 @@ def suspicious_literals(source: str) -> list[int]:
 @pytest.mark.parametrize(
     ("source", "expected"),
     [
-        ('value = b"\\\\x10"', []),
-        ('value = b"\\\\\\\\x10"', [1]),
-        ('# value = b"\\\\\\\\x10"', []),
-        ('description = "b\\\\\\\\x10"', []),
-        ('value = rb"\\\\\\\\x10"', [1]),
+        ('value = b"' + chr(92) + 'x10"', []),
+        ('value = b"' + chr(92) * 2 + 'x10"', [1]),
+        ('# value = b"' + chr(92) * 2 + 'x10"', []),
+        ('description = "b' + chr(92) * 2 + 'x10"', []),
+        ('value = rb"' + chr(92) * 2 + 'x10"', [1]),
     ],
 )
 def test_byte_escape_detector(source: str, expected: list[int]) -> None:
