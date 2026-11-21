@@ -31,12 +31,12 @@ def test_all_eight_original_ending_plates_are_rendered_in_canonical_ledger():
 def test_multi_lane_done_art_candidates_require_explicit_curation(tmp_path):
     ledger = tmp_path / "MULTI.yaml"
     ledger.write_text(
-        "subjects:\\n"
-        "- key: multi-lane\\n"
-        "  asset: audiences/d01-aqueduct-repair\\n"
-        "  art:\\n"
-        "    first: {status: DONE, art_image_id: 270430}\\n"
-        "    second: {status: DONE, art_image_id: 270999}\\n"
+        "subjects:\n"
+        "- key: multi-lane\n"
+        "  asset: audiences/d01-aqueduct-repair\n"
+        "  art:\n"
+        "    first: {status: DONE, art_image_id: 270430}\n"
+        "    second: {status: DONE, art_image_id: 270999}\n"
     )
     rows = delivery.load_ledger_entries(tmp_path)
     assert [row["artImageId"] for row in rows] == [270430, 270999]
