@@ -1032,17 +1032,19 @@ tasks:
   - id: t-051
     milestone: m4
     title: "Surface opening-rejected-clips.json in the opening manifest or delivery report so the WAN re-queue list is visible without re-running the export"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 20261121T213102Z-rainbow-t051-j7m4
     claimed_at: '2026-11-21T21:31:02Z'
     depends_on: []
     passes: 0
     stakes: reversible
-    updated: '2026-11-21T21:31:02Z'
+    updated: '2026-11-21T21:35:00Z'
     source: kaizen-pr-7764
     note: |-
       Reviewer kaizen from the 2026-11-21 PT merge of conductor#7764. t-050 writes the rejected shot keys to a sidecar opening-rejected-clips.json beside the media, but the manifest and delivery report the task named still do not show them. Read the sidecar (or pass the list directly) into the manifest/delivery report, with a test, and note the shot keys a reviewer should re-queue.
+
+      Opening exporter now writes opening-delivery-report.json with accepted, rejected, pending-still and exact WAN requeue shot keys; added two regression tests. Implementation PR pending checks.
   - id: t-052
     milestone: m4
     title: "Check each queued opening WAN job against the export clip budget (8s, 128 frames) at queue time so over-budget renders fail before spending GPU time"
