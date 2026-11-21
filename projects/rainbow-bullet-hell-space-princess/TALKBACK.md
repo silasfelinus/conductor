@@ -188,3 +188,12 @@ Companion kind_robots#4764 was already on main, so merge order held. CI green on
 **Decision:** merged Kind Robots #5468 after all ten latest-head Actions workflows completed successfully at `8804b87a`; main merge `5972bc95`. The low Crown Reef shield-cache now has an independent guardian with rotating safe-gapped patterns, isolated route-spawn suppression, saved defeated/escaped verdict and backward-compatible checkpoint parsing. The added Rainbow cabinet workflow executes the actual one/four-seat regression; no generated art or public release was asserted.
 
 **Remaining scope:** this is a playable alternate **branch guardian inside Act VI**, not the independently selected and savable X3/X4 alternate Acts promised in `ROUTE-MAP.md`. Maintain t-028 as unfinished until playable stage nodes, proper art, and full-run QA are evidenced. Prefer an explicit multi-Act/alternate-stage save-state model over pretending an in-Act route is a standalone stage.
+
+
+## 2026-11-21 01:05 PT — Reviewer: C.A.T.S. doodle WAN MP4 opening recut ledger (#7730)
+
+**Decision:** merged Conductor #7730 (squash `a48a792e`) after all 24 latest-head checks passed at `c2fb6a6a`. The scope is tight: one new private request ledger (`OPENING-CLIPS-2-DOODLE.yaml`, eight shots pinned to identity-locked DOODLE-SET-1 keepers, no DOGS, track 44644 reused), an exporter that picks the lane and shot list from the ledger's `round` and decodes MP4/WebM with ffmpeg, and tests. The historical 9-shot ledger still works through `--ledger`. The follow-up commit that removed forbidden prompt negations was the right catch before submission.
+
+**Caveat:** this is a request ledger, not delivered clips, so t-038 goes back to `ready` with the claim released rather than staying in `review`. This is the same partial-slice pattern flagged on #7694 and t-043. The PR body did say "partial" honestly, which helps. Next: confirm the auto-submitted ArtJob IDs, inspect the renders, then export and wire in the cut.
+
+**Kaizen:** t-049 (worker's suggestion): a fail-closed per-clip container, size and identity validator before composition.
