@@ -99,15 +99,14 @@ tasks:
       Full history: projects/comet-city-academy/HISTORY.md#t-001
   - id: t-034
     title: 'Main-game standard: audit and close the gaps for Prom of Doom'
-    status: review
-    claimed_by: 20261122T042000Z-prom-t034-export-qa-r7k2
-    claimed_at: '2026-11-22T04:20:00Z'
+    status: ready
+    claimed_by: ''
     owner: worker
     milestone: m4
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-22T04:22:00Z'
+    updated: '2026-11-22T04:50:10Z'
     note: |-
       Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -138,6 +137,9 @@ tasks:
       2026-11-21 PT reviewer: merged conductor#7793 (squash 7d36421), four private Krea 2
       four-arm Asha repaint candidates queued, all checks green. Candidates still need render,
       visual QA and slot attachment; umbrella returns to ready.
+
+      2026-11-21 PT reviewer: merged conductor#7802 (squash b66fa9c): Prom/Tactics ledgers now
+      force --require-keep on export. Partial; umbrella back to ready.
     implementation_pr: 'silasfelinus/conductor#7793'
   - id: t-035
     title: 'Prom of Doom achievement upgrade: 12 or more live achievements'
@@ -277,11 +279,11 @@ tasks:
     claimed_at: '2026-11-21T23:36:00Z'
   - id: t-045
     title: "Add a canon-anatomy guard that fails any Prom character art ledger prompt omitting a defining castLooks trait such as Asha's four arms"
-    status: review
+    status: done
     claimed_by: 2026-11-22T035158Z-comet-t045-canon-j4k9
     claimed_at: '2026-11-22T03:51:58Z'
     owner: worker
-    updated: '2026-11-22T03:56:00Z'
+    updated: '2026-11-22T04:49:10Z'
     milestone: m3
     stakes: reversible
     passes: 0
@@ -290,6 +292,23 @@ tasks:
       Kaizen from conductor#7793 review (t-034 Asha repaint). Asha's shipped hero and villain outcome art lost her four arms and was only caught by manual source-byte QA. Extract the defining physical traits per identity (castLooks.ts / identityArcs.json) into a small canon table and add one test that walks every comet-city-academy art ledger subject and asserts its prompt mentions each trait for the named identity. Generalizes the one-off test_prom_asha_four_arm_repaint.py checks.
 
       Implemented 48-identity castLooks anatomy/silhouette rule table and wired it into scripts/enqueue_art_requests.py contract_rules, so new Prom art cells lacking natural limbs, age, species morphology or signature silhouette are rejected before Krea ArtJob POST. Added comprehensive tests over every Prom ledger, preserving historic accepted ArtJob IDs even when legacy prompts predate the newer canon. PR pending CI; no production jobs submitted or existing art data mutated by this software-only fix.
+
+      2026-11-21 PT reviewer: merged conductor#7800 (squash 8fd09d9); all checks green.
+      Preflight is prompt-text only — generated pixels still need visual QA. Kaizen -> t-046.
+    implementation_pr: 'silasfelinus/conductor#7800'
+  - id: t-046
+    title: "Queue separately reviewed corrective ArtJobs for legacy Prom renders whose prompts predate the canon-anatomy guard (e.g. magic-earth, tech-genius)"
+    status: ready
+    owner: worker
+    milestone: m3
+    stakes: reversible
+    passes: 0
+    depends_on: []
+    note: |-
+      Kaizen from conductor#7800 review (t-045). The new preflight grandfathers already-accepted
+      lanes, so legacy mismatched identity renders remain as QA debt. Verify existing replacements
+      and actual media bytes first, then queue only the missing private corrective cells; never
+      bulk-requeue accepted work.
   - id: t-012
     milestone: m2
     title: "Promote the seven-day demo into Capes & Tassels name and genuine day/night map slice"
