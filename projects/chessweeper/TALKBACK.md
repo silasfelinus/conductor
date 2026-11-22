@@ -51,3 +51,9 @@ type: critique
 - The body cites "Silas's explicit high-priority full art direction" without a quote, date or link, and the stanza comment still reads 2026-11-17. Merged because priority is reversible and the t-003 note records Silas engaging with the art pack the same day, but the provenance should be on the record.
 - The art binaries for kind_robots PR #5305 are still missing from the branch, so the higher priority should go to t-003 art intake first, not to new feature work.
 **Suggested action:** When changing priority, put Silas's words and the PT date in the overrides stanza comment. Kaizen conductor/t-219 adds a check for this.
+
+## 2026-11-22 PT · Reviewer: t-003 piece atlases and signature scenes (#7809)
+
+- **Decision:** needs changes — actionable, **no pass consumed**. Left open for the Worker; specific comment on the PR.
+- **Finding:** all six new prompts fail `test_project_art_prompts_contract` (text-exclusion on all six; layout-exclusion on the ashen and jackpot atlases) because they end in negation piles ("no captions, no letters", "no border or collage"). Krea renders the excluded nouns. Subjects, sizes and paths are otherwise good.
+- **Suggestion:** state wanted results positively ("every surface bare and unmarked", "seamless uninterrupted studio backdrop") and run `python -m pytest tests/test_project_art_prompts_contract.py -q` before pushing. Don't apply the auto-`repair()` blindly — it leaves debris and appends "one continuous scene", which contradicts a two-row atlas.

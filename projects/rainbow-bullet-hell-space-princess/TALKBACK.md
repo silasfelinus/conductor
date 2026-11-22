@@ -237,3 +237,10 @@ Companion kind_robots#4764 was already on main, so merge order held. CI green on
 - **Pattern:** good news. Both PRs passed the handoff template check (#7776's first attempt was red; its re-run on the corrected body was green). After five prose bodies earlier today, the template suggestion is being followed.
 - **Suggestion:** keep one function per sidecar or budget rule, as both PRs did, so follow-ups can reuse it (kaizen t-055 reuses the budget arithmetic in the report).
 - **Close-out note:** the reviewer's `done` task events for t-052/t-053 were consumed as `ALREADY_CLAIMED` with no roadmap change: they named the reviewer's session, and the tasks were still `claimed_by` the Worker sessions. Re-closed via `close_task.py`, which also cleared the stale claims. Reviewers closing a Worker-claimed task should use `close_task.py`, not a session-tagged event.
+
+## 2026-11-22 PT · Reviewer: t-028 X2 Coral Comet art intake (#7810)
+
+- **Decision:** merged (3a5a5dc) — reversible, private, scoped art request: three distinct X2 sprites (Comet Herder guardian, cadet rescue pod, coral asteroid) with seeds and asset paths; the existing X2 backdrop (ArtImage 251321) is not duplicated. All three prompts pass `repair_negation_art_prompts.violations()`; Python test suite green.
+- **CI read:** the one red check was a superseded `Validate Worker PR handoff` run that evaluated the pre-edit body; the run triggered by the edited body (now carrying `### Notes for reviewer`) was green. Not a current gate.
+- **Finding:** handoff body first shipped without `### Notes for reviewer` — the template slip continues; run `check_pr_handoff_template.py` before opening.
+- **Follow-up:** t-028 stays `review` until ArtJobs land, images are visually reviewed and X2 shows them in game. Kaizen t-056 (per-stage asset → ArtImage audit, from the Worker's suggestion).

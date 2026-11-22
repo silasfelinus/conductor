@@ -94,81 +94,10 @@ tasks:
     stakes: reversible
     passes: 0
     depends_on: []
-    note: |-
-      Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
+    note: >-
+      Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ...
 
-      AUDIT DONE 2026-11-12: projects/game-of-captains/STANDARD-AUDIT-2026-11-12.md holds the Met/Partial/Missing table, a proposed achievement list with award points, character-fit notes and the three smallest next PRs. Start there.
-
-      Start with the audit table from docs/agents/main-game-standard.md (title screen; settings menu; save/load and persistent progress; 12+ achievements; scrapbook; multiple endings with painted plates; customizable characters; 3+ replay hooks), marking each Met / Partial / Missing with evidence (file, route, live record). Put the table in this note and the first PR. Then close each gap in small CI-tested PRs; queue any needed ending, scrapbook or portrait art in an auto_submit ledger.
-
-      Item 7 (customizable characters) applies "in most cases": if this genre makes it a poor fit, say so in the audit with the reason and leave it for Silas rather than skipping silently.
-
-      Achievements are tracked by their own task; this one covers everything else.
-
-      2026-11-15 PT daily-delivery:2026-11-15/space-couch-share-card | PR:
-      silasfelinus/kind_robots#5209 (merged c24cef2, CI green) | /play/game-of-captains now
-      unfurls with a designed 1200x630 Space Couch card (public/game-of-captains/link-
-      preview.webp) instead of the untitled splash; verifyGameLinkPreview.test.ts pins it.
-      Main-game audit itself still open.
-
-      2026-11-19 PT scoped main-game standards pass on worker/game-of-captains-t-041-20261119t2251-r7q9: title (Partial: Achievements button and live strip implemented pending CI); settings (Partial: title and Kit still split); save/load (Partial: local v1 voyage, account-backed alien guide only); achievements (Partial: 12+ catalog code, live award/API unverified); scrapbook (Partial: species, moments and endings, no completed voyage pages); multiple endings (Partial: paintings incomplete); characters (Met: captain, crew and origin choices); replay (Met: constellation, randomized episodes, collectible aliens and branching). This is the first small PR for title Achievements access; more t-041 work remains. Never close as done from this slice.
-
-      2026-11-19 PT: Kind Robots PR #5359 merged as 05a100315ab9c15ac5e9115f20ef84116703d77d. Seven of seven original exact-head workflow groups completed success, including all four contract shards; title Achievements access and existing global award display landed. Partial t-041 only. Remaining: persistent finished-voyage log, unified settings, save compatibility and delivery/visual acceptance.
-
-      2026-11-19 PT: next scoped t-041 improvement on worker/game-of-captains-t-041-voyage-ledger-k8p5. Added versioned and bounded completed-voyage archive with dedicated localStorage key, final-run dossiers covering captain, selected crew, decisions, losses, ending prose, saved log and play dates, plus safe v1 restore/duplicate handling. Existing voyage v1 save key and stable game identifiers unchanged. Added source and deterministic contract tests. Implementation PR, exact-head CI and merge pending. This is a partial standard improvement; settings, account-save checks, ending plates, visual QA and final t-041 are not complete.
-
-      2026-11-19 PT: Kind Robots PR #5363 merged as 3d5e54bdd09df54c0c8dd0ba0da5ccc9542afcab. All ten latest exact-head PR workflow groups completed success, including the full Space Couch adversarial voyages and all four Contract Tests shards. The completed-voyage archive records every finished run (captain, crew, outcomes, mission and consequence choices, fallen redshirts, final text and log) without changing the active v1 save key. Restored v1 completed runs backfill; duplicate, malformed-record and no-eviction regressions covered. Task remains partial: unify title/in-game settings, account-backed voyage saves, verify live 12+ achievements and delivered ending art/viewport checks; no playtest handoff yet.
-
-      2026-11-19 PT: scoped main-game quality slice on worker/game-of-captains-t-041-shared-settings-m5v7. Title screen now mounts the same PlaybookKitSettings panel as the in-voyage settings tab. Existing Space Couch largeText and reducedMotion flags are migrated on the first Kit save only; an existing saved Kit preference always wins, unreadable legacy data does not destroy Kit or voyage data, and the legacy key is never removed or rewritten. Visible typography/motion and opening reels read reactive Kit-derived settings. Deterministic test covers migration mapping and source wiring. CI, PR and visual QA remain to verify. t-041 remains PARTIAL after merge: account voyage sync, original paintings, live achievement awards and 390/768/1440 visual evidence remain.
-
-      2026-11-19 PT: Kind Robots PR #5368 merged into main as 98bec1780a071b1b3fdbc971c2f79e16a57136d1 after all nine exact-head GitHub Actions workflow groups COMPLETED/SUCCESS, including all four Contract Tests shards, Playbook Kit, TypeScript, layout, seeded gameplay and the full Space Couch adversarial voyages suite. Title Ship Settings now reuses the Kit settings sheet and same reactive text/motion preferences as the voyage. Legacy largeText/reducedMotion flags import only on a missing Kit save; stored Kit settings always win, old preferences remain untouched, and existing v1 voyage save keys and stable game IDs are unchanged. This is PARTIAL t-041 closure; remaining authenticated voyage/achievement records, real rendered painted ending URL checks and 390/768/1440 browser QA remain. No human approval implied.
-
-      2026-11-19 PT agent-owned main-game standard slice: implemented a reversible, versioned JSON backup for Space Couch current v1 voyage and finished-run history, accessible in Captain's Log. Explicit user-controlled import preview and confirm before replacing an active run; duplicate-safe completed-run merge; corrupted, oversized or wrong-game files rejected. Existing voyage save key, game slug and account-owned guide/achievements remain untouched. CI/PR and browser evidence pending. This does not assert authenticated cloud saves, original art approval, mobile QA or playtest DONE.
-
-      2026-11-19 PT: Kind Robots PR #5378 merged into main at a4de97d2e954c64926781b5c52653eb572b42734; all nine exact-head workflow groups completed SUCCESS, including TypeScript, Playbook Kit, formatting, seeded gameplay, the full adversarial Space Couch matrix and four contract shards. Added a user-controlled versioned JSON backup of active v1 voyage and completed-run history, staged import validation, explicit replace confirmation, duplicate-safe merge and rollback on failed storage writes. Existing save keys and account-owned achievement and alien-guide data preserved. Remaining t-041 scope includes authenticated cloud-save verification, real rendered art and viewport checks, not human subjective approval. Return to READY (partial), never DONE for this slice.
-
-      Scoped achievement threshold bug fix: collector badges now award only when a threshold is crossed, with regression tests. This is partial t-041, not completion.
-
-      Kind Robots PR #5391 merged as e0e535259aa6b60c3c0a6df7ed11cc2fae27e5ea; all nine exact-head workflow groups completed success. Alien collection achievement milestones now award only upon threshold crossing, with regression coverage. This is a partial t-041 improvement; art delivery, authenticated visual QA and final main-game standard remain unfinished.
-
-      Scoped replay-dossier fix in Kind Robots: retain distinct choice paths for same-seed same-ending replays, preserve legacy IDs, add regression coverage. Partial t-041; art and full readiness still open.
-
-      Reconciled stale review after prior scoped replay-dossier PR #5398 merged as a642f737. There is no open t-041 implementation PR or branch, and the task remains PARTIAL. Account-backed voyage saves, authenticated achievement/art delivery, viewport QA, and final main-game standard are still open. Return to READY for active follow-through, not DONE.
-
-      Submitted Kind Robots PR #5430 implementing private per-account Space Couch voyage backup with strict versioned payload validation and additive schema, optimistic revision-conflict rejection, explicit account inspect/save/stage-restore actions in Captain's Log. Existing v1 device saves, alien guide and achievements are untouched. Awaiting all exact-head GitHub Actions workflow groups before safe merge. This is PARTIAL main-game standard; authenticated production database, rendered paintings and viewport QA remain unverified.
-
-      pr-medic 2026-11-20: kind_robots#5430 (account voyage backup/restore slice) merged green
-      after replacing a temporary CI generate step with checked-in prisma generate output and
-      resolving main conflicts. Additive-only migration (CREATE TABLE SpaceCouchVoyageSave).
-      Partial slice: t-041 stays ready for remaining save/load and verification gates per the
-      PR.
-
-      Old review claim from 18:51 UTC had no new task activity; account-save PR #5430 and prior main-game standard slices are merged. Remaining authenticated browser, art and viewport standards are NOT done. Return to READY for the next worker, preserving prior contributions.
-
-      Scoped recovery fix in app commit 4132e315: a failed Space Couch backup import now restores both prior browser save keys, including writes that mutate before throwing; reports when rollback itself fails. Added functional failure-injection regression tests. This is PARTIAL t-041 only; signed-in server backup, art delivery, responsive/browser checks and master handoff remain unverified. Await exact-head CI and safe PR merge, then return READY, not DONE.
-
-      Kind Robots PR #5460 merged at bdbfc0e9a91dff37ee708a092ce5f64bc5ac4237 on 2026-11-20 PT after all nine exact-head gameplay, contract, typecheck, format, layout, schema and Space Couch adversarial workflows completed SUCCESS. Backups now roll back both browser save keys after partial writes, with failure-injection regression checks. PARTIAL t-041 only: authenticated browser restoration, art verification and 390/768/1440 QA remain. Return to READY; no human approval claimed.
-
-      Partial main-game QA: the scheduled real-browser responsive audit previously omitted /play/game-of-captains and lacked the required 768px tablet sample. Added Space Couch to the daily route sweep and the targeted 768px path alongside 390/1440 with a regression test. Implementation branch worker/game-of-captains-t-041-responsive-audit-20261120-f3a9. Review/merge after exact-head CI; still needs deployed screenshots, authenticated account/achievement/painted-art checks. Keep t-041 READY after partial merge, not DONE.
-
-      Partial main-game-standard backup reliability repair. App branch worker/game-of-captains-t-041-backup-race-20261121-7b9e protects asynchronous file selection from stale reads, invalidates cancelled/account-switched staging, guards oversized portable exports, and tests out-of-order selections and cancellations. Remaining authenticated cloud-save, painted-art, and browser-width verification remain open. Review/CI pending.
-
-      Partial t-041 delivered: kind_robots PR #5528 merged into main c2db243ea66e838ec022bd9525571c3d75f05cb2 at exact head e40d331ee238e48ff3e6981d52b58ebb22e41f98. All nine GitHub Actions workflow groups COMPLETED SUCCESS, including Space Couch full adversarial voyages, seeded game-playthroughs, TypeScript, Playbook Kit, formatting, architecture, layout, schema parity and all four contract shards. Generation-aware file staging eliminates stale async import races; cancellation/account switches invalidate stale reads; bounded portable backup generation rejects >8 MB exports with behavioral tests, and an existing source contract was repaired for the moved validation call. Old save keys, v1 format, account access and achievements preserved. Remaining t-041: authenticated live account backup/restore, accepted original painted-art URLs, 390/768/1440 browser layout and final human playtest readiness. Return to READY (partial), not DONE.
-
-      Partial achievement correctness fix: Personal Business now awards only on completion of a three-stop crew quest, with regression cases for unfinished first and second stops. Remaining t-041 acceptance work is not complete.
-
-      2026-11-22 PT closure evidence (Silas-directed session; no other workers). Remaining
-      t-041 criteria verified on live kindrobots.org: (1) painted-art URLs: all 342
-      onboarding/voyage/episode paintings serve 200 to a signed-in kind-session viewer and
-      correctly 404 to anonymous viewers (private-art publish gate intact); (2) 390/768/1440:
-      three complete signed-in voyages, one per width, played captain selection through
-      chapter 9 finale and ending, 72 screens each, every screen painted, 0 broken images, 0
-      console errors, 0 horizontal overflow; defects found (HUD spill under Kit icons, meter
-      fill overrun, phone cast clipping) fixed in kind_robots #5548 (merged eef3416); (3)
-      authenticated account backup: GET /api/game-of-captains/voyage-save returns 200 for a
-      signed-in viewer and 401 anonymously; write/restore paths remain covered by the merged
-      regression suites (not exercised live to avoid overwriting a real account backup). Final
-      human playtest verdict stays with t-012.
+      Full history: projects/game-of-captains/HISTORY.md#t-041
     implementation_pr: 'silasfelinus/kind_robots#5548'
 
   - id: t-040
@@ -270,44 +199,10 @@ tasks:
     updated: '2026-11-22T05:43:31Z'
     passes: 0
     stakes: reversible
-    note: |-
-      Deliver branded Space Couch project icon/card/hero, detailed red couch/force bubble/pocket room/starmap, original personnel and emotional portraits, Vox/Serendipity/Fluke continuity plates, twelve worlds and eight antagonist identities; verify final URLs, ArtJobs and render provenance rather than SVG/placeholders.
-      Canonical cast portrait redesign round submitted for code/art review. 66 new Krea2 requests in CAST-REDESIGN-ROUND-2.yaml, with a Kind Robots v2 art-slot preference and legacy fallback. This is only the first art tranche: rendered delivery, runtime exports, ship/world/outcome coverage and visual review remain open.
-      2026-10-27 PT cast redesign tranche merged: Conductor PR #6759 (9f39f1e849164660dedc42108cc277f029755fb8), app PR #4353 (d1ed41f468944a765edb58022f048ea14b6bdaff). All 4 Conductor and 17 Kind Robots current-head workflow groups passed. The 66 Krea2 canonical portraits (6 captains, 12 playable plus 4 future crew, three expressions each) are authored at CAST-REDESIGN-ROUND-2.yaml with auto_submit, versioned portraits/v2 keys and legacy fallback. Post-merge audit found 0/66 ArtJob IDs, 0/66 DONE and 0 exported v2 assets at that time. Continue via automatic art sweep, reconcile actual ArtJob IDs, inspect render quality, export .webp and update app generated art manifest, validate crops at phone/tablet/desktop, then finish remaining title/icon, couch room, 12 worlds, antagonists and story consequence art. No art-complete or human design gate.
-      Triage 2026-10-30: cheapest visible win is export, not generation. CAST-REDESIGN-ROUND-2 has 66/66 DONE v2 captain/crew portraits (ArtImage 257797+), but none are under kind_robots public/game-of-captains (only 21 legacy renders). Run scripts/export_round_art.py with --max-edge, rebuild utils/gameOfCaptains/artManifest.ts, then render the 12 worlds, 8 antagonists, couch, pocket room, starmap and 20 casino venues (t-027 handoff).
-      2026-10-30 PT art export (no new generation): kind_robots PR #4483 merged at fd9bd2396382fbe159d6fb1ecd0d44d4afe27e06, all 21 checks green. Shipped 18 CAST-REDESIGN- ROUND-2 v2 portraits (6 captains + 12 playable crew, 640px) that portraitArt() prefers over legacy faces, plus 10 RUNTIME-BEATS-ROUND-1 scenes (missions refugees/archive/bar, antagonists auditor/moth/curdle, 4 base endings, 960px); WARP_ART 21 -> 49. [...]
-      [Earlier history (2,679 chars) archived verbatim to projects/game-of-captains/T008-HISTORY.md -- read it there only when you need a specific past cycle. Append new cycles below, one short paragraph each.]
-      Scoped Space Couch art delivery: 44 DONE expression portraits are now served through the existing access-filtered ArtImage endpoint. Captain and crew dossiers expose three portraits, the away team shows defiant or vulnerable images based on assignment and injury, and briefing choices display the completed Holodeck, War Room and Infirmary artwork. Static contract tests include all unique keys. PR and CI pending. Do not mark the broader t-008 art campaign complete.
-      October 31 PT continuation merged Space Couch PR #4572 at fbd7f753a729e3c08da64147c7c084c540040eec with 20/20 exact-head workflow groups green. Delivered authenticated lookup for 44 completed Krea2 defiant/vulnerable portrait plates (CAST-REDESIGN-ROUND-2, ArtImage IDs 257798-257862, corresponding selected ArtJobs 50300-50364). Players can preview three expressions for each captain and crew member; away-team cards use defiant expressions, injured officers show vulnerable expressions. Pocket-room options display completed 09-holodeck, 10-war-room and 11-infirmary art; the selected room updates the briefing-stage painting. Main verified, branch deleted. Do not close t-008: final authenticated image reachability, responsive screenshots, couch/force-bubble/world art continuity and remaining illustrated consequences still need independent acceptance. No production deploy.
-      User requested continued Space Couch development. Connect the remaining 18 completed opening-title paintings to a full-screen player-stepped illustrated opening reel with original lines, accessible navigation, art fallbacks and contract tests; keep deployment and remaining t-008 art work separate.
-      Scoped delivery of 18 completed Space Couch OPENING-TITLES-ROUND-1 paintings: built accessible full-screen, player-stepped opening sequence inside existing main menu. Every frame has authored original dialogue, recorded art key and meaningful alt text; keyboard controls, reduced motion and image-failure fallback are covered by new static contracts. Game saves and private image access are unchanged. Opening PR/CI is in progress; larger t-008 art inventory remains unfinished.
-      Merged Kind Robots PR #4576 at c3b5d541401f76f81c4d27b67f72577e111da2e1 after all 17 exact-head GitHub workflow groups completed SUCCESS.  Added a playable 18-frame illustrated opening reel using the previously DONE OPENING-TITLES-ROUND-1 ArtImages 255479-255496 and original script; responsive full-screen presentation, player navigation, keyboard arrow/Escape support, reduced-motion handling, safe missing/private image fallback and clear exit/captain creation. No new ArtJobs, database changes or permission changes. Verified main commit and auto-deleted PR branch. Continue t-008 for ship/force-bubble art, authenticated image delivery and real 390/768/1440 visual checks; no self-hosted deployment or public release was authorized.
-      2026-11-02 PT curation: 5 crew pairs, 3 cast redesigns and the alt dashboard highlight are kept and shipped under public/game-of-captains (WARP_ART) in kind_robots#4661. 4 redo (gold delta badges read as a logo; Edda came out human), queued in art/GAME-OF- CAPTAINS-CURATION-REDO-1.yaml.
+    note: >-
+      Deliver branded Space Couch project icon/card/hero, detailed red couch/force bubble/pocket room/starmap, original personnel and emotional portraits, Vox/Serendipity/Fluke continuity plates, twelve worlds and eight antagonist identities; verify final URLs, ArtJobs and render prove
 
-      2026-11-12 PT, Silas: "whatever horoscope i get, there is no original art" and "there needs to be a wild break possible to avoid the horoscope, with at least 32 endings". Merged kind_robots#5082 (fc9ee12, 16/16 checks green): wired the 19 DONE COUCHSCOPE-AND-OPENING-ROUND-1 ArtImages 261262-261280 that had been rendered but never connected (all 12 constellation reveal plates, trolley question + 3 answers, red-couch mission cards for refugees/archive/bar, so The Last Lifeboat no longer shows the SVG title card). Added the Couchscope WILD BREAK: refuse the screening at any time, 4x2x4 branching escape through 13 scenes to 32 distinct endings, each with its own text, +1 starting perk and finale coda; launch unsigned, per-browser found-endings ledger; VoyageRun.wildBreak validated on restore. Queued 45 matching plates in conductor#7318 (WILD-BREAK-ROUND-1, priority 950), not yet submitted at merge time. Next: once DONE, curate a contact sheet and wire couchscope/wild/<scene> and couchscope/wild-end/<ending> ids into kind_robots utils/gameOfCaptains/onboardingArt.ts. Art remains incomplete; no deploy or human gate.
-
-      2026-11-13 PT: all 45 WILD-BREAK-ROUND-1 plates rendered DONE (ArtImages 270132-270176). Curated on a contact sheet: kept 43 (all 13 wild break scenes, 30 of 32 endings) and wired them into kind_robots utils/gameOfCaptains/onboardingArt.ts in kind_robots#5119. Rejected the-long-way-round (Nighthawks pastiche with legible lettering) and nothing-in-particular (legible GIFT sign); redos queued in art/WILD-BREAK-REDO-1.yaml, wire them under the same couchscope/wild-end keys once DONE. Remaining t-008 art scope is unchanged; no deploy or human gate.
-
-      Scoped artwork-recovery improvement: make failed alien, redshirt and voyage painting lookups retryable instead of permanently marked loaded. Add an accessible refresh control in Ship Settings and run a new regression in test:game-of-captains. Review only; authentic art URLs and visual curation still block completion.
-
-      Partial art-delivery reliability fix. Space Couch now has an explicit player control to refresh curated alien, redshirt and voyage paintings without resetting the voyage. Failed artwork fetches preserve already delivered images, pending refreshes cannot cross account changes, and the existing fallback remains. Branch worker/game-of-captains-t-008-art-refresh-z7p4n2. Do not mark t-008 DONE: painting acceptance, URL checks and 390/768/1440 browser evidence remain.
-
-      Old 12:46 UTC review claim is stale; legacy art-refresh PR #5437 was closed superseded, with retry handling merged through green PR #5442. Real painted asset acceptance and responsive URL checks remain. Return to READY, not DONE.
-
-      Eight new physically explicit red-couch shield and folding-pocket-room scene requests authored in SHIELD-POCKET-CONTINUITY-ROUND-1. Submission, original render review, accepted image IDs and runtime integration remain outstanding. This is partial t-008, not art delivery.
-
-      https://github.com/silasfelinus/conductor/pull/7707 merged to main as an authored private image-request ledger. This was a partial increment, NOT visually delivered art: authenticated original ArtImage review, ArtJob provenance, accepted render export, and actual playable UI integration remain open. Return finite art task to ready for curation.
-
-      Repaired shared art exporter to recognize curator ACCEPTED imagery and fail closed on REJECTED records even with contradictory legacy keeper text. Added strict-export and offline-audit regressions for Space Couch plate IDs. Branch commit adb4e69b71e200435906af42a540b9307bc474de; broader painted art delivery, authenticated inspection and 390/768/1440 checks remain open.
-
-      2026-11-22 PT closure (Silas-directed session; no other workers). All 8 SHIELD-POCKET-
-      CONTINUITY plates are curated keepers (6 from round 1; council and asteroid re-rendered
-      in CURATION-REDO-2 after round 1 showed franchise-style uniforms) and linked in the
-      access-filtered onboarding art (ArtImages 277779-277785, 278539-278540). The ship-prep
-      step shows them (Just-the-couch observation plate, infirmary pocket room, force-bubble
-      recharge) via kind_robots #5548 (eef3416) and #5553 (b6d4d05), both merged with all
-      exact-head checks SUCCESS. Painted couch/bubble identity confirmed across three full
-      signed-in voyages at 390/768/1440 (every screen painted, 0 broken images).
+      Full history: projects/game-of-captains/HISTORY.md#t-008
     implementation_pr: 'silasfelinus/kind_robots#5553'
   - id: t-009
     milestone: m3
@@ -737,92 +632,10 @@ tasks:
     stakes: reversible
     passes: 0
     source_issue: "silasfelinus/kind_robots#4592"
-    note: |-
-      FROM GITHUB ISSUE silasfelinus/kind_robots#4592 (https://github.com/silasfelinus/kind_robots/issues/4592), opened by @silasfelinus on 2026-11-01. Imported by scripts/sync_github_issues.py. Reference the issue in the implementing PR (`Closes silasfelinus/kind_robots#4592`) so it closes on merge; the bridge closes it otherwise once this task is done.
+    note: >-
+      FROM GITHUB ISSUE silasfelinus/kind_robots#4592 (https://github.com/silasfelinus/kind_robots/issues/4592), opened by @silasfelinus on 2026-11-01.
 
-      ## Direction (Silas, 2026-11-01 PT)
-      Space Couch needs a silly, low-friction **101-species Alien Scrapbook**. Discovery must be attached to ordinary solar-system, planetary, Serendipity, expedition and late-voyage experiences, with a reusable three-choice micro-encounter. **Never offer seven interaction options**: three distinct dramatic outcomes are the sweet spot. At least two routes can create the scrapbook record (e.g. an absolute-chaos accident and unexpected friendship); a third may cause the creature to flee. A failed encounter is funny, never punishing.
-
-      **101 species**: 12 zodiac/horoscope oddities, 24 two-Earth-creature mashups, 20 earth-creature + cosmic-condition hybrids, 20 emotional/social oddballs, 15 ecology/colony/symbiosis designs, 10 legendary exceptions. Intentionally vary age, size, mood, palettes, body plan, predator/prey, social arrangement, ecology, identity and habitat. Full-sized splash illustration for each species via traceable non-public ArtJobs. Art must appear in the collectible gallery, with dignified image-sized fallbacks while rendering.
-
-      **Sticky but merciful**: Some are hard to find, none require a pixel hunt or infinite rerolls. Seeded reproducible sightings, gentle rarity ramps/pity, discovery across voyages, clear hints and near-miss callbacks. At milestones (e.g. 5, 12, 25, 50, 75, 100) unlock genuinely new absurd encounters and world callbacks, not merely +1 counters. All three options have distinctive prose and an actual consequence.
-
-      ## Implementation slices
-      - First: authored 101 catalogue and art slots, seeded encounter/discovery logic, 3-choice modal and reachable 101-card scrapbook, persistence across new voyages; start with illustrated pilot batch.
-      - Then: attach to episode decks and other genuine encounter families, server-backed user account persistence where available, complete 101 ArtJobs and verified URL/art delivery, milestones and rare species rules, seeded adversarial tests and browser QA.
-      - Keep separate final narrative + balance red-team and human acceptance gate; no public publication.
-
-      Creative baseline for future games: **three high-contrast choices with distinct tones, at least two paths to narrative reward, and collection growth that mutates the world**. Prefer memorable authored consequences over choice count or grind.
-
-      project:game-of-captains
-
-      Follow-up collector slice: six playable three-choice collection milestone incidents with 18 distinct endings, persistent incident decisions, future-galaxy rumors and scrapbook discovery affordance. Kind Robots PR will be verified and merged only after exact-head CI. Still not complete: 101 painted assets, account-based cross-device persistence, full 101 bespoke story polish and authenticated viewport QA.
-
-      Substantial alien collector slices merged to kind_robots main: #4594 101 described species/three hidden emotional choices, #4603 six independent playable milestones with 18 written outcomes, #4605 107 real ArtJob IDs with viewer-gated DONE ArtImage loading, and #4617 user-owned versioned scrapbook persistence with cross-device monotonic merge and guest isolation. Kind Robots #4617 exact-head CI passed 25/25 and merged as 1032cf80. Conductor #6927 corrected 101 blocked prompts and queued six event illustrations; 107 ArtJobs exist, all currently PENDING, no DONE ArtImages verified. Remains partial: production schema deployment verification, authenticated device/viewport QA, finished image reconciliation, 101 fully individual encounter stories, and final human design gate. Return to ready, not done; do not close source issue #4592.
-
-      2026-11-01 PT: Space Couch adversarial QA slice on worker/game-of-captains-t-031-qa7f2: isolate transient encounter/collector overlays and viewer-scoped alien art across account switches; fix false synced status on remote read failure; stress-test all 101 cross-device discoveries, stale replay and merge idempotence. Art remains independent and t-031 stays open for deliverables and authenticated browser QA.
-
-      2026-11-01 PT: Follow-up reliability slice landed as kind_robots #4619 (fa398f7); all exact-head workflows passed. Cross-account alien encounter and artwork isolation, offline first-account guest import and 101-species merge stress covered. The species-writing, image-delivery, and authenticated viewport QA portions remain agent-owned; return to ready, not done.
-
-      Zodiac narrative increment: 12 original species incidents and 36 distinct bond/chaos/retreat results, using the existing 3-choice matrix and v1 saved guide without changing data shape. Regression contracts added. Full 101-species art, encounter writing, authenticated responsive verification and final creative acceptance remain open; return to ready after the scoped app PR merges.
-
-      Zodiac narrative slice merged to kind_robots main via #4723 at 5ec5ac71, all nine exact-head workflows successful. Twelve encounters carry individual incident, three mood cues and three outcomes each, with preservation of deterministic and version-one scrapbook contracts. Remaining 89 species story coverage, art delivery and authenticated visual QA still open; continue agent writing.
-
-      Completed authored coverage for the remaining 89 alien lifeforms: 89 individual situations, 267 mood-specific clues and 267 individual consequences (623 distinct pieces), bringing the 101-species catalogue to full 101/303/303 writing coverage. The existing three-choice matrix, rarity, seed selection and saved account guide remain intact. Programmatic source audit found zero missing species IDs, zero duplicate species keys, zero duplicate prose, and no underlength story fields. Open a scoped kind_robots PR and verify exact-head tests; art and authenticated device QA remain separate.
-
-      2026-11-03 PT: Merged the complete 89-species writing expansion to Kind Robots main through #4728 at b1d00de193bd31dfe7cbafffe274f73e7ac1007e, all nine exact-head workflow groups finished SUCCESS. Together with merged zodiac #4723, all 101 species now have unique incidents, three mood clues and three outcomes (101/303/303). Source audit found no missing IDs, duplicate keys, duplicate prose, or short fields; seeded gameplay, saved guide, rarity and emotional-choice matrix unchanged. User still awaits verified art delivery, authenticated phone/tablet/desktop QA and independent narrative acceptance. Do not close #4592 or park at final human gate yet.
-
-      Playtest and fun QA slice: sourced the prior exact-head 2,116-voyage complete matrix and found five archetypes locked to one ending family each plus 1,497/1,728 balanced-style runs with empty holds. Fixed all 101 bespoke alien outcomes so generic emotional prefaces no longer contradict specific lore; added a five-persona, 25-complete-voyage plus three cross-voyage 101-species collector marathon verifier, registered to game tests and full adversarial workflow. Await exact-head CI for run results. Narrative confidence/fun gate remains separate from art delivery and human approval.
-
-      2026-11-04 PT: Merged scoped Space Couch adversarial fun QA as kind_robots#4749 at 99ba5a548a5508b5d9934ed9eb314081d7be9219 after all 11 exact-head workflow groups completed SUCCESS. Ran 2,116 seeded full voyages, 25 additional full persona voyages and three cross-voyage 101-species collector marathons: 19 voyages/151 contacts for greeting, 21/162 for cycling, 13/101 for hidden-mood oracle. Fixed repetitive contradictory mood prefaces for all 101 bespoke species; added durable test coverage. Editorial fun verdict about 7/10, caveats include agency mismatch between chosen action and bespoke outcome, 101-word encounter preambles, slow collector completion, ending family predictability and widespread endgame supply depletion. Findings linked on kind_robots#4592 and #4182. Art, authenticated viewport QA, causal-choice polish and human acceptance still unfinished, so leave this task ready.
-
-      Space Couch player-agency and pacing increment: six representative aliens from all six species families now have all nine distinct mood-by-actual-choice written outcomes (54 authored causal scenes); keeps the original fair 3x3 matrix, saved scrapbook and species rarity. All 101 alien initial encounters remove repeated appearance/field-guide/callback scaffolding, keeping the authored problem and mood clue; prior same-family reports still live in the scrapbook and the collector radio milestones remain. Added regression checks for all 54 action branches, canonical species keys, nine-way coverage, unique scenes and average first-sighting reading budget, then re-ran prior full-voyage and collector test registration. Kind Robots PR to open and exact-head CI pending; remaining 95 species need action-specific review, art and authenticated UI QA remain open.
-
-      2026-11-04 PT: Merged Space Couch causal-choice and pacing improvement as Kind Robots #4753 at 68f4fa7399f857c7f498951764a09b95f85010b1; all nine exact-head workflow groups passed, including full 2,116-voyage matrix, 25 persona voyages and three 101-species collection marathons. All 101 introductions were trimmed from a verified 101-word mean to 52 words without sacrificing original dilemma/mood clues, and six creatures across all six families have 54 authored mood-by-actual-action outcomes. Saves, 3x3 hidden choices, rarity and collector counts remain identical. Leave 95 species action-causality coverage, ~19-21-voyage collector grind, endings and resource balance, unverified art/image/device QA and human acceptance open. Do not close source issue #4592. This event omits a manually guessed UTC timestamp so the processor can stamp actual time.
-
-      Completed all 95 remaining alien story records across zodiac (11), hybrid (23), cosmic (19), social (19), ecology (14) and legendary (9). Each records three original things the captain can actually do, three original mood interpretations and three outcome-specific consequences; the canonical Latin-square yields 855 unique action-by-mood narratives. The six full-form pilot encounters remain unchanged, bringing coverage to 909 unique alien paths across 101 species. Automated source audit confirmed no missing species, duplicate IDs, duplicate authored beats, undersized lines or missing player-action verbs. Added exact nine-way coverage regression. App PR and exact-head gameplay/format/type/contract CI remain to verify; retained save schema, rarity, choices and six collector milestones. Art, responsive live QA and human acceptance remain separate unfinished work.
-
-      2026-11-04 PT: Merged kind_robots#4760 at de69fbc5f79697be56a6276f31b005b279973a73 after all nine exact-head workflow groups completed SUCCESS. Completed action-specific stories for the remaining 95 species, with three original captain actions, three mood interpretations and three species outcomes per creature, combined into 855 unique branches. Along with the prior six full-form entries, all 101 alien species now have 909 unique mood-by-action outcomes. Source audit: zero missing IDs, duplicate entries, duplicate text or undersized beats. CI verified 101/101 species, 909/909 unique outcomes, saved scrapbook contract, hidden rock-paper-scissors balance, six milestones, full 2116-voyage matrix and collector/persona playthroughs. Original art queue and delivery, authenticated responsive art checks, human acceptance and collector grind/balance polish remain open; return task to ready, do not close kind_robots#4592. No ArtJobs submitted or production deployment performed.
-
-      2026-11-04 PT: Near-miss mercy slice opened as silasfelinus/kind_robots#4771 (head
-      266c2df on main 050b23e, unmerged). Escaped aliens now really do return. An unrecorded
-      runaway comes back on an even-numbered sighting after a different creature; odd
-      sightings keep the rare/legendary cadence. It returns with a short callback naming what
-      the crew tried. A second getaway still files a blurry near-miss record, and the
-      scrapbook names escaped species with a near-miss hint. Collector marathons: greet 19 ->
-      18 voyages, cycle 21 -> 18, oracle 13; every first escape returned once, longest wait 8
-      sightings; average scene words 52 -> 57. Save schema, 909 branches, rarity and
-      milestones unchanged. npm run test:game-of-captains passes all 20 files; strict tsc and
-      prettier clean. Open: art delivery, authenticated viewport QA, human acceptance, and
-      Silas's balance call on the blurry-record rule. Do not close #4592. Merged as
-      kind_robots #4771 (squash 0af1dad); back to ready for polish, species plates, device QA
-      and acceptance.
-
-      Silas, 2026-11-04 PT, in session: "Space couch two encounters give blurred is fine." The
-      blurry-photo record for a runaway that escapes twice (relaxing the two-of-three-choices-
-      record rule for returning runaways only) is accepted as designed.
-
-      Verified the original alien-ledger curation held 20 species and two milestone paintings. The original 22 rejected ArtJobs were still in the runtime mapping. On app branch worker/game-of-captains-t-031-alien-curation-20261119T044345Z-r8v5, removed those rejected jobs from viewer delivery, retained 85 curated original jobs, recorded 22 DONE redo candidates (ArtJobs 60625-60646, ArtImages 262131-262152), and added a regression test for complete coverage and review holds. Redos are not certified without actual pixel review; the existing fallback stays. CI pending.
-
-      Scoped safety fix quarantines 22 rejected original alien plates and holds 22 completed redo candidates for visual curation. Exact-head CI and PR review pending; t-031 is not done.
-
-      2026-11-18 PT: kind_robots PR #5333 merged at 4af5104 after nine exact-head Actions workflows completed success. Quarantined 20 rejected original species plates and two rejected milestone plates, retaining 85 approved mappings and 22 DONE redo candidates (ArtJobs 60625-60646) on review hold. Partial safety fix only: authenticated image URLs, visual curation, and responsive delivery still unverified; do not mark t-031 done or restore rejected originals.
-
-      2026-11-18 PT: Kind Robots PR #5333 merged at head 9be772479df783edd9952ce9c33a50f42d8c7afb; ten exact-head workflow runs completed successfully. Quarantine of 20 original species and two milestone plates remains intact. The 22 DONE Krea2 redo candidates (ArtJobs 60625-60646, ArtImages 262131-262152) are not visually accepted; authenticated URLs and creature anatomy remain unverified. This is READY partial, not DONE. Next independently inspect candidate images and promote only approved replacements.
-
-      Scoped visual-curation delivery path: authenticated curator-only registration of 22 ledger-pinned DONE alien redo candidates into unselected ArtSlots, plus liked-and-selected runtime overrides under existing viewer access checks. No candidate autoaccepted, no rejected original restored. App worker branch and exact-head PR CI are pending. This is PARTIAL t-031; original pixel acceptance and authenticated media checks remain open.
-
-      Merged Kind Robots PR #5422 as 708a0f8c893dead1bf31f897f9dfc2feefbb7bba, after all 12 exact-head Actions workflow groups completed SUCCESS including TypeScript, formatting, four contract shards, and Space Couch full adversarial voyages. Added curator-only registration of the 22 known DONE Krea2 alien redo candidates (ArtJobs 60625-60646; ArtImages 262131-262152), an admin Art Slots review entry, and liked-plus-selected runtime delivery respecting existing viewer image permissions. Rejected originals remain quarantined, and none of the 22 candidates were autoaccepted. This is PARTIAL t-031: physical pixels, authenticated image URLs, 390/768/1440 viewport QA and final visual curation remain unverified. Keep t-031 READY and source issue #4592 plus master #4182 open, no human approval.
-
-      Scoped partial alien scrapbook navigation upgrade: show recorded, escaped, and unseen counts with a four-mode filter, searchable known-name and stable catalogue-number index, private hidden species names, and useful empty states. Source and static Vue contracts plus regression cases added in Kind Robots worker/game-of-captains-t-031-scrapbook-shelf-b4e9. Original image curation, authenticated asset delivery, and 390/768/1440 live viewport QA remain open; t-031 is review partial, not done.
-
-      2026-11-22 PT closure. Alien art curation finished: of the 22 earlier redo candidates, 8
-      were accepted in Kind Robots Art Slots (liked + selected) and 14 that were still
-      ordinary Earth animals were re-rendered as true hybrids in CURATION-REDO-2, reviewed
-      full-size and kept, then linked through COUCH_ALIEN_ART_IDS (ArtImages 278518-278531) in
-      kind_robots #5553 (b6d4d05, all checks SUCCESS). Live alien-art endpoint already served
-      93 keys; the 14 missing keys are exactly those added, so all 107 alien art keys (101
-      species plus milestone plates) resolve after deploy.
+      Full history: projects/game-of-captains/HISTORY.md#t-031
     implementation_pr: 'silasfelinus/kind_robots#5553'
   - id: t-032
     title: "Space Couch | Master Red Sofa Starship Playbook Roadmap"
@@ -911,32 +724,10 @@ tasks:
     lane: art
     depends_on: [t-025]
     source: silas-2026-11-02
-    note: |-
-      Silas, 2026-11-02 PT, on the Forge's 100 Redshirts page showing 0 portraits: "do we still have redshirt art gens to do? ... yes go ahead". t-025 submitted all 200 cells on 2026-10-27 but no task owned review or delivery, so nothing reached the game. 2026-11-02 review of REDSHIRTS-200-ROUND-1 (195 DONE, 5 cancelled): keep 20 of 98 portraits and 39 of 97 power plates (verdict on every subject); nearly every miss is an ordinary human in the tunic, because the prompts led with a human name and asked for "the person ... individual face". REDSHIRTS-ROUND-2.yaml (auto_submit, 141 cells, all pass the live contract) re-renders the misses and the five cancelled cells creature-first. The 59 keepers ship to public/game-of-captains/redshirts/{portraits,secret-powers}/rs-NNN.webp, listed in WARP_ART, and the Forge redshirt page falls back to them. Next: curate ROUND-2 the same way, export keepers, then wire the portraits into the dispatch board (t-026 family) when it lands. Done when every rs-001..rs-100 has a shipped portrait and plate. 2026-11-11 PT: curated all 141 ROUND-2 renders on contact sheets. Kept 57 of 80 portraits and 60 of 61 plates. Portrait misses: 13 with a large gold arrowhead chest badge that reads as a franchise insignia, 7 ordinary animals or no creature, 2 near-human faces, 1 literal soft-drink trademark can; plate miss rs-007 (an ordinary dog). Shipped totals 77/100 portraits, 99/100 plates; the daily console's personnel cards now show the portrait when one has shipped (kind_robots PR follows #5026 on the session branch). REDSHIRTS-ROUND-3.yaml (auto_submit, 24 cells, 24/24 pass the live contract) re-renders the misses with an explicit ivory sofa-silhouette chest badge and 11 re-described creatures. Next: curate ROUND-3 and export keepers.
-      2026-11-11 PT: merged kind_robots#5028 as ef67f9da2826c334392b19aa21816ae12d217d04 after all 14 exact-head checks passed: 117 round-2 keepers shipped (77/100 portraits, 99/100 plates) and redshirt portraits now show on the daily console personnel cards. REDSHIRTS- ROUND-3.yaml (24 cells, auto_submit) is on main and awaits rendering. Back to ready: next session curates ROUND-3 on contact sheets (reject gold arrowhead chest badges, ordinary animals, human faces, trademarks), exports keepers with export_round_art.py --only, and closes when rs-001..rs-100 all ship both images.
+    note: >-
+      Silas, 2026-11-02 PT, on the Forge's 100 Redshirts page showing 0 portraits: "do we still have redshirt art gens to do?
 
-      2026-11-19 PT: scoped redshirt art delivery integration on worker/game-of-captains-t-033-curated-redshirt-slots-j8q4. The game's daily personnel deck now reads curator-selected ArtSlot images from a dedicated guest-safe endpoint, retaining the existing static portraits and glyph fallback on missing or broken URLs. An exact selected candidate MUST have verdict liked and its ArtImage must be public, active and non-mature. DONE ArtJobs are never autoaccepted; 24 uncurated Krea2 round-three cells and missing source WebPs remain REVIEW HOLD. Pure parser and source-level safety regression added to the seeded test suite. Await exact-head CI, manual rendered image review, and authenticated delivery checks; this is partial t-033, not DONE or human approval.
-
-      2026-11-19 PT: Kind Robots PR #5387 merged to main as a45ae0501aa77bca0358447429d1352f36136afb after all 14 exact-head GitHub Actions workflows completed SUCCESS, including TypeScript, seeded gameplay, full Space Couch adversarial voyages, image privacy regressions, PR-only container validation, and all four Contract Tests shards. Introduced publicly readable liked-plus-selected ArtSlot runtime art for redshirts with shipped-file and glyph fallback, plus 24 immutable DONE round-three ArtJob/ArtImage references and an explicit curator-only, idempotent registration action in the Forge. No render auto-liked, auto-selected or auto-published. The existing 77/100 shipped portraits and 99/100 plates remain; 23 new portraits and one plate are still unreviewed candidate renders. Actual source-image pixel acceptance, authenticated media URLs, and final shipment are unverified. Return t-033 to READY (partial), not DONE; no human approval implied. Replayed after unrelated emperor-of-dust roadmap duplicate-key repair.
-
-      Scoped redshirt review UX fix committed as app 04fe607: Forge links to the exact game-of-captains/redshirts/ ArtSlot set, with single-candidate slots visible instead of hidden by the default multiple-only filter. Added regression assertions. This is a PARTIAL t-033 implementation; 23 portraits and one power plate are still unapproved, and authenticated final image delivery remains unverified. Await PR and exact-head CI, then return this nonrecurring task to READY unless real artwork is independently accepted.
-
-      PR #5446 repairs the Forge redshirt curation link so 24 candidate slots appear even with one render. Artwork remains unapproved pending visual and authenticated delivery verification.
-
-      Partial: PR #5446 fixes redshirt curation deep-link, including single-candidate slots. Await exact-head CI and merge; 23 portrait renders and one secret-power plate still require actual visual acceptance and authenticated delivery before t-033 can be done.
-
-      Scoped t-033 runtime art delivery safety fix on worker/game-of-captains-t-033-curation-scope-s9d2: only art slots genuinely owned by game-of-captains (or legacy canonical null-project slots) may override redshirt images; deterministic canonical-over-legacy precedence with public, liked and active fallback. Added ownership, order, legacy and source-contract regression tests. This is partial, not actual curation. 23 portraits and one power plate still require pixel-by-pixel original image acceptance, shipped URLs and responsive browser QA. No rendered asset was autoaccepted, and task t-033 must return to ready after merge.
-
-      Kind Robots PR #5482 merged to main as 0d422b75df3f515f655587a1b5c39e2b3ad4f9f9 with all 12 exact-head workflow groups successful. Redshirt ArtSlot ownership and canonical/legacy precedence are guarded, with regression tests. Partial t-033: 23 portraits and one secret-power plate still need original image curation, accepted delivery, authenticated URLs and responsive verification. Return READY, not DONE.
-
-      Partial delivery verification increment: a deterministic 200-file redshirt WebP audit and three regression tests are in a scoped Conductor PR. Original-image visual acceptance and missing asset exports remain outstanding; do not mark DONE.
-
-      2026-11-22 PT closure. All 24 round-3 redshirt cells are curated and shipped: 17 kept
-      from REDSHIRTS-ROUND-3 (16 portraits plus the 100th secret-power plate) in kind_robots
-      #5548, and the 7 rejects (near-human faces, franchise-style delta insignia, ordinary owl
-      and bat, empty uniform) re-rendered in CURATION-REDO-2, kept and shipped in #5553.
-      WARP_ART now lists 100 portraits and 100 power plates; the guard test requires exactly
-      the curated keepers to ship.
+      Full history: projects/game-of-captains/HISTORY.md#t-033
     updated: '2026-11-22T05:43:48Z'
     implementation_pr: 'silasfelinus/kind_robots#5553'
   - id: t-034
@@ -1037,12 +828,10 @@ tasks:
     stakes: reversible
     depends_on: []
     source: kaizen-t-009
-    note: |-
-      Kaizen from review of conductor#7736 (2026-11-21 PT): the new chapter-nine provenance guard allowed only PENDING/REJECTED/ACCEPTED and broke as soon as the live art sweep checkpointed the jobs to DONE. Export the canonical ArtJob status set (PENDING, DONE, ERROR, plus curator verdicts) from one helper and use it in every Space Couch ledger test; keep DONE distinct from visual acceptance.
+    note: >-
+      Kaizen from review of conductor#7736 (2026-11-21 PT): the new chapter-nine provenance guard allowed only PENDING/REJECTED/ACCEPTED and broke as soon as the live art sweep checkpointed the jobs to DONE.
 
-      Shared source-aligned ArtJob/curator status validator, migrated Chapter 9 and cast ledger tests, and added synthetic provenance and acceptance coverage. Implementation commit 2edf6cae34246ee3983e9c59796e00188210b8b7 pending CI.
-
-      PR silasfelinus/conductor#7742 merged as dee98964e660c273928dc39d1fe56408a4b7bad4 after all four exact-head Actions workflows completed successfully. Shared ledger-status and provenance regression coverage landed; DONE remains distinct from visual acceptance.
+      Full history: projects/game-of-captains/HISTORY.md#t-042
   - id: t-043
     milestone: m4
     title: "Fail CI on double-escaped byte literals in new scripts and tests"
@@ -1051,14 +840,10 @@ tasks:
     passes: 0
     depends_on: []
     updated: '2026-11-21T12:47:48Z'
-    note: |-
-      Reviewer kaizen from the 2026-11-21 PT rescue merge of conductor#7748 (fixture wrote escaped backslashes, so every WebP fixture was invalid; the same bug hit rainbow#7747's WebM magic check in production code). Add a small lint test over scripts/ and tests/ that flags a backslash-backslash-x sequence inside a bytes literal, with an allow-list for intentional cases, so the connector Worker's escaping habit is caught before CI runs the logic.
+    note: >-
+      Reviewer kaizen from the 2026-11-21 PT rescue merge of conductor#7748 (fixture wrote escaped backslashes, so every WebP fixture was invalid; the same bug hit rainbow#7747's WebM magic check in production code).
 
-      Implemented tokenize-based CI regression guard for double-escaped hex in bytes literals across scripts and tests, with detector cases and explicit exception hook. Worker branch worker/game-of-captains-t-043-bytes-lint-b7c29; pending exact-head CI and merge.
-
-      2026-11-21 PT Reviewer: merged conductor#7753 (118588e) once exact-head CI was green;
-      the only red check was the handoff template, fixed by rewriting the PR body. Kaizen
-      t-044.
+      Full history: projects/game-of-captains/HISTORY.md#t-043
     owner: worker
     claimed_by: 20261121T124100Z-goc-t043-b7c29
     claimed_at: '2026-11-21T12:41:00Z'
@@ -1072,12 +857,10 @@ tasks:
     stakes: reversible
     depends_on: []
     source: kaizen-t-043
-    note: |-
-      Reviewer kaizen from the 2026-11-21 PT merge of conductor#7753 (t-043, Python-only guard). The rainbow#7747 WebM magic-check bug was the same double-escaped hex habit, in production code. Add a small Vitest guard in kind_robots that flags a double-backslash-x hex escape inside Uint8Array/Buffer signature literals in server/ and utils/, with an exact path:line allow-list.
+    note: >-
+      Reviewer kaizen from the 2026-11-21 PT merge of conductor#7753 (t-043, Python-only guard).
 
-      Added TypeScript AST-based byte-signature escape guard and positive/negative fixtures in kind_robots branch worker/game-of-captains-t-044-20261121-c8e7; pending exact-head CI.
-
-      Kind Robots PR #5515 merged as 11aced6d359ca93f10ab9a25c19ee2a62ad23169 after six exact-head workflows completed successfully on 6369d4cb15fff94e69117fd77d3be500c25ba609, including TypeScript and Contract Tests. The AST byte-signature regression guard is delivered.
+      Full history: projects/game-of-captains/HISTORY.md#t-044
     claimed_by: 2026-11-21T134100Z-goc-t044-c8e7
     claimed_at: '2026-11-21T13:41:00Z'
   - id: t-045
@@ -1092,19 +875,10 @@ tasks:
     stakes: reversible
     depends_on: []
     source: silas-2026-11-22
-    note: |-
-      Silas 2026-11-22 PT: "we have good large sized portraits for our fake zodiac, but then our captain selection looks a little lackluster. We really might need a redesign of that art, but in any case, it needs to be large and art first layouts." Live audit: six 55px circular thumbnails inside mostly empty cards, a 367px square hero, stats/copy dominating. Deliver tall painted 832x1216 captain portraits (art/CAPTAIN-SELECTION-ROUND-1.yaml, ArtJobs 76475-76486, two seeds per captain, curator keeps one) and a selection screen where paintings lead at 390/768/1440.
+    note: >-
+      Silas 2026-11-22 PT: "we have good large sized portraits for our fake zodiac, but then our captain selection looks a little lackluster.
 
-      2026-11-22 PT: curated one of two renders per captain (keeps 278424, 278426, 278429, 278431, 278433, 278435; Vale B rejected as resembling a film prop). New components/gameOfCaptains/captain-gallery.vue: painted full-length lineup with the chosen captain widened, a dossier beside it, and a phone swipe carousel. Screenshots at 1274x534 / 700x760 / 322x564 panel sizes; suites, vue-templates and vue-tsc pass. Kind Robots PR #5548 (combined with t-046).
-
-      2026-11-22 PT: Kind Robots PR #5548 merged as eef341634849bd9d4d03cacbcbc662e41cd42c85
-      after all 17 exact-head checks completed SUCCESS (TypeScript, four contract shards,
-      seeded playthroughs, all-captains adversarial matrix, layout, Playbook Kit, production
-      image). Captain selection is now an art-first gallery of six curated 832x1216 paintings
-      (ArtImages 278424/278426/278429/278431/278433/278435) with a phone snap carousel;
-      verified at live panel sizes 1274x534, 700x760 and 322x564. Same PR made the expedition
-      console art-first per Silas's follow-up note (full-bleed episode painting, glass panels,
-      painted officer cards).
+      Full history: projects/game-of-captains/HISTORY.md#t-045
     implementation_pr: 'silasfelinus/kind_robots#5548'
 
   - id: t-046
@@ -1119,17 +893,8 @@ tasks:
     stakes: reversible
     depends_on: []
     source: silas-2026-11-22
-    note: |-
-      Silas 2026-11-22 PT: "We never mentioned sound and music, but that should be expected." Ship original (procedural, rights-clean) title and voyage music, interface/event sound for choices, success, failure, redshirt loss and endings; start only after a user gesture, honor reduced motion/mute, persist music and effects volume in the shared settings sheet, and cover it with deterministic tests.
+    note: >-
+      Silas 2026-11-22 PT: "We never mentioned sound and music, but that should be expected." Ship original (procedural, rights-clean) title and voyage music, interface/event sound for choices, success, failure, redshirt loss and endings; start only after a user gesture, honor reduced .
 
-      2026-11-22 PT: utils/gameOfCaptains/sound.ts adds six original procedural lounge loops by voyage phase and twelve event cues from a pure run diff. Music/Effects sliders sit under the Kit settings, Kit Sound is the master switch, and nothing plays before a gesture. verifySpaceCouchSound.test.ts (9 checks); headless Chromium audio probe confirmed signal per mood, mute and suspend. Kind Robots PR #5548.
-
-      2026-11-22 PT: Kind Robots PR #5548 merged as eef341634849bd9d4d03cacbcbc662e41cd42c85
-      (all 17 exact-head checks SUCCESS). utils/gameOfCaptains/sound.ts: six original
-      procedural space-age lounge loops cross-fading by voyage phase, cues for
-      launch/warp/arrival/four results/fallen and hired redshirts/new crew/chapter/ending from
-      a pure run diff; Music and Effects sliders under the shared Kit settings; Kit Sound is
-      the master switch; silent until a gesture; pauses when hidden.
-      verifySpaceCouchSound.test.ts (9 checks) and a headless Chromium analyser probe (signal
-      in every mood, mute and suspend) passed.
+      Full history: projects/game-of-captains/HISTORY.md#t-046
     implementation_pr: 'silasfelinus/kind_robots#5548'
