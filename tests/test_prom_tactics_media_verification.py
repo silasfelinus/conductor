@@ -135,6 +135,51 @@ def test_workflow_probes_private_bytes_without_publishing():
     commands = "\n".join(step.get("run", "") for step in job["steps"])
     assert "verify_prom_tactics_media.py" in commands
     assert "--require-count 12" in commands
-    assert "--require-count 14" in commands
+    assert "--require-count 25" in commands
+    assert "--require-count 172" in commands
+    assert "CANON-OUTCOME-CORRECTIONS-2026-11-22.yaml" in commands
     assert "upload-artifact" not in str(flow)
     assert "art/enqueue" not in commands
+
+def test_original_art_must_match_requested_geometry_and_not_be_blank():
+    row = {
+        "project": "every-villain-tactics",
+        "key": "burrow-warning",
+        "asset": "every-villain-tactics/henchmen/tells/burrow-warning",
+        "job_id": 74393,
+        "image_id": 277786,
+        "expected_size": "768x768",
+        "reviewed": False,
+        "rejected": False,
+    }
+
+    wide = Image.new("RGB", (1024, 512), "blue")
+    wide.paste("orange", (0, 0, 512, 512))
+    _, wrong_geometry = verify([row], lambda _: wide, max_workers=1)
+    assert wrong_geometry == [
+        {"key": "burrow-warning", "image_id": 277786, "reason": "ValueError"}
+    ]
+
+    blank = Image.new("RGB", (768, 768), "white")
+    _, blank_media = verify([row], lambda _: blank, max_workers=1)
+    assert blank_media == wrong_geometry
+
+    painting = Image.new("RGB", (768, 768), "blue")
+    painting.paste("orange", (0, 0, 384, 384))
+    good, failures = verify([row], lambda _: painting, max_workers=1)
+    assert not failures
+    assert good[0]["width"] == good[0]["height"] == 768
+
+
+def test_source_ledger_passes_through_requested_image_size(tmp_path):
+    ledger = tmp_path / "unreleased.yaml"
+    ledger.write_text(
+        "project_slug: every-villain-tactics\n"
+        "subjects:\n"
+        "- key: burrow-warning\n"
+        "  asset: every-villain-tactics/henchmen/tells/burrow-warning\n"
+        "  size: 768x768\n"
+        "  jobs: {krea2: 74393}\n"
+        "  art: {krea2: {status: DONE, art_image_id: 277786}}\n"
+    )
+    assert candidates([ledger])[0]["expected_size"] == "768x768"

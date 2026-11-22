@@ -16,6 +16,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
 import yaml
+from PIL import ImageStat
 
 
 def candidates(paths):
@@ -52,6 +53,7 @@ def candidates(paths):
                         "asset": asset,
                         "job_id": job_id,
                         "image_id": image_id,
+                        "expected_size": subject.get("size"),
                         "reviewed": verdict.startswith(("keep", "reject"))
                         or status in {"ACCEPTED", "REJECTED"},
                         "rejected": verdict.startswith("reject")
@@ -68,6 +70,17 @@ def check_one(entry, load_image):
     if width < 128 or height < 128:
         raise ValueError("decoded image has implausible dimensions")
     image.load()
+    expected_size = entry.get("expected_size")
+    if expected_size:
+        expected_width, expected_height = map(int, expected_size.split("x"))
+        actual_ratio = width / height
+        expected_ratio = expected_width / expected_height
+        if abs(actual_ratio / expected_ratio - 1) > 0.20:
+            raise ValueError("rendered aspect ratio disagrees with art request")
+        thumbnail = image.convert("L")
+        thumbnail.thumbnail((48, 48))
+        if ImageStat.Stat(thumbnail).stddev[0] < 2:
+            raise ValueError("rendered media is blank or nearly monochrome")
     pixels = image.convert("RGB").tobytes()
     return {
         **entry,

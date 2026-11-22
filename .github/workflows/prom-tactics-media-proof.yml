@@ -17,6 +17,7 @@ on:
       - "projects/comet-city-academy/art/FRANCHISE-SAFE-RERENDERS-ROUND-1.yaml"
       - "projects/comet-city-academy/art/RUNTIME-REFILL-ROUND-1.yaml"
       - "projects/comet-city-academy/art/OCT-29-CAST-KREA2-ROUND-1.yaml"
+      - "projects/comet-city-academy/art/CANON-OUTCOME-CORRECTIONS-2026-11-22.yaml"
   workflow_dispatch:
   schedule:
     - cron: "41 15 * * *"
@@ -63,11 +64,16 @@ jobs:
           python scripts/verify_tactics_runtime_media.py \
             projects/every-villain-tactics/art/ONE-HIT-CREW-TELEGRAPHS-2026-11-20.yaml \
             --require-count 12
-      - name: Verify Prom candidate image downloads
+      - name: Prove twenty-five priority Prom candidates before broad backfill
         run: |
           python scripts/verify_prom_tactics_media.py \
             projects/comet-city-academy/art/UNSTABLE-PRODUCTION-FAMILY-ROUND-1.yaml \
             projects/comet-city-academy/art/FRANCHISE-SAFE-RERENDERS-ROUND-1.yaml \
+            projects/comet-city-academy/art/CANON-OUTCOME-CORRECTIONS-2026-11-22.yaml \
+            --require-count 25
+      - name: Verify Prom runtime and October cast refill images
+        run: |
+          python scripts/verify_prom_tactics_media.py \
             projects/comet-city-academy/art/RUNTIME-REFILL-ROUND-1.yaml \
             projects/comet-city-academy/art/OCT-29-CAST-KREA2-ROUND-1.yaml \
-            --require-count 14
+            --require-count 172
