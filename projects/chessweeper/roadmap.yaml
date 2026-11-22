@@ -63,11 +63,9 @@ tasks:
   - id: t-003
     milestone: m3
     title: "Queue, deliver and attach original illustrated art for all three mode identities"
-    status: review
+    status: ready
     owner: worker
-    claimed_by: 20261122T061919882Z-chessweeper-t003-pieces-w2n8
-    claimed_at: '2026-11-22T06:19:19.882Z'
-    updated: '2026-11-22T06:20:21.194Z'
+    updated: '2026-11-22T08:09:53Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -85,6 +83,13 @@ tasks:
       Chessweeper original art intake PR conductor#7792 merged 0e30002, and painted board loader with missing-icon and scrapbook fallbacks PR kind_robots#5536 merged ec2ac1c, with all required checks complete green. Eight traceable images are staged for rendering, not yet generated or attached; continue this task through ArtJob IDs, delivered media, verified image URLs, piece/scene artwork, and final visual QA. No art-completion or public-deployment claim.
 
       2026-11-21 PT: Staged six additional literal Krea2 art requests in projects/art-prompts.yaml, commit fc27cdf, for three 12-piece world atlases and original Sugar Rush, Last Stand, Double or Nothing action plates. ArtJobs and final URLs not yet assigned or delivered. Finite t-003 remains incomplete until generated assets are validated and integrated.
+
+      2026-11-22 PT reviewer: second art intake landed via rescue PR conductor#7817 (squash
+      ea1477e; Worker commit fc27cdf plus affirmative rewrites of the six negation clauses;
+      #7809 closed as superseded). Still partial: the six requests are only queued. Remaining:
+      confirm ArtJob ids, visually QA the renders, attach piece atlases and action plates.
+      Returned to ready; claim released.
+    implementation_pr: 'silasfelinus/conductor#7817'
   - id: t-004
     milestone: m4
     title: "Add deterministic tests, full playthroughs and 390/768/1440 viewport QA"
