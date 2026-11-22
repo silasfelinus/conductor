@@ -6,12 +6,16 @@ import yaml
 from scripts.verify_prom_tactics_media import candidates
 
 ROOT = Path(__file__).resolve().parents[1]
-ASHA = ROOT / "projects/comet-city-academy/art/CANON-ASHA-FOUR-ARM-REPAINT-2026-11-21.yaml"
-CORRECTIONS = ROOT / "projects/comet-city-academy/art/CANON-OUTCOME-CORRECTIONS-2026-11-22.yaml"
+ASHA = ROOT / (
+    "projects/comet-city-academy/art/CANON-ASHA-FOUR-ARM-REPAINT-2026-11-21.yaml"
+)
+CORRECTIONS = ROOT / (
+    "projects/comet-city-academy/art/CANON-OUTCOME-CORRECTIONS-2026-11-22.yaml"
+)
 WORKFLOW = ROOT / ".github/workflows/prom-canon-candidate-media-proof.yml"
 
 
-def test_four_ashe_repaints_are_done_candidates_not_shipped_art():
+def test_four_asha_repaints_are_done_candidates_not_shipped_art():
     records = candidates([ASHA])
     assert yaml.safe_load(ASHA.read_text())["is_public"] is False
     assert [(item["job_id"], item["image_id"]) for item in records] == [
@@ -21,7 +25,10 @@ def test_four_ashe_repaints_are_done_candidates_not_shipped_art():
         (76532, 278469),
     ]
     assert all(not item["reviewed"] for item in records)
-    assert all(item["asset"].startswith("comet-city-academy/identities/mutant-discipline/repaint/") for item in records)
+    assert all(
+        item["asset"].startswith("comet-city-academy/identities/mutant-discipline/repaint/")
+        for item in records
+    )
 
 
 def test_six_corrective_receipts_are_not_auto_approved():
@@ -51,7 +58,10 @@ def test_private_candidate_proof_fetches_source_and_exact_game_path():
     assert workflow["permissions"] == {"contents": "write"}
     steps = workflow["jobs"]["verify-private-candidates"]["steps"]
     commands = "\n".join(step.get("run", "") for step in steps)
-    assert workflow["jobs"]["verify-private-candidates"]["env"]["KR_API_TOKEN"] == "${{ secrets.KR_API_TOKEN }}"
+    assert (
+        workflow["jobs"]["verify-private-candidates"]["env"]["KR_API_TOKEN"]
+        == "${{ secrets.KR_API_TOKEN }}"
+    )
     assert commands.count("verify_prom_tactics_media.py") == 2
     assert commands.count("verify_tactics_runtime_media.py") == 2
     assert "--require-count 4 --write-evidence" in commands

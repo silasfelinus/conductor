@@ -56,11 +56,13 @@ jobs:
             --require-count 4 --write-evidence || source_status=1
           if [ "$source_status" -eq 0 ]; then
             python scripts/verify_tactics_runtime_media.py \
-              projects/comet-city-academy/art/CANON-ASHA-FOUR-ARM-REPAINT-2026-11-21.yaml --require-count 4 || runtime_status=1
+              projects/comet-city-academy/art/CANON-ASHA-FOUR-ARM-REPAINT-2026-11-21.yaml \
+              --require-count 4 || runtime_status=1
           else
             runtime_status=1
           fi
-          bash scripts/checkpoint_art_state.sh "chore: checkpoint four Asha candidate media receipts [skip ci]" || checkpoint_status=1
+          bash scripts/checkpoint_art_state.sh \
+            "chore: checkpoint four Asha candidate media receipts [skip ci]" || checkpoint_status=1
           test "$source_status" -eq 0 && test "$runtime_status" -eq 0 && test "$checkpoint_status" -eq 0
       - name: Fetch and prove six original canon-outcome replacements
         run: |
@@ -73,11 +75,13 @@ jobs:
             --require-count 6 --write-evidence || source_status=1
           if [ "$source_status" -eq 0 ]; then
             python scripts/verify_tactics_runtime_media.py \
-              projects/comet-city-academy/art/CANON-OUTCOME-CORRECTIONS-2026-11-22.yaml --require-count 6 || runtime_status=1
+              projects/comet-city-academy/art/CANON-OUTCOME-CORRECTIONS-2026-11-22.yaml \
+              --require-count 6 || runtime_status=1
           else
             runtime_status=1
           fi
-          bash scripts/checkpoint_art_state.sh "chore: checkpoint six canon-outcome candidate media receipts [skip ci]" || checkpoint_status=1
+          bash scripts/checkpoint_art_state.sh \
+            "chore: checkpoint six canon-outcome candidate media receipts [skip ci]" || checkpoint_status=1
           test "$source_status" -eq 0 && test "$runtime_status" -eq 0 && test "$checkpoint_status" -eq 0
       - name: Enforce private access for all ten original candidate images
         run: |
