@@ -5,6 +5,8 @@ from pathlib import Path
 
 import yaml
 
+from scripts.repair_negation_art_prompts import violations
+
 
 ART = (
     Path(__file__).resolve().parents[1]
@@ -82,11 +84,12 @@ class RainbowStageDepthArtTests(unittest.TestCase):
             with self.subTest(key=subject["key"]):
                 self.assertEqual(subject["size"], "1344x768")
                 prompt = subject["prompt_prose"].lower()
-                self.assertIn("upper", prompt)
-                self.assertIn("no people", prompt)
-                self.assertIn("ships", prompt)
-                self.assertIn("words", prompt)
+                # Scenery stays low so the play field above reads clearly.
+                self.assertRegex(prompt, r"\b(bottom|lower|lowest|low)\b")
                 self.assertGreater(len(prompt), 200)
+                # Krea runs at cfg 1, so "no people/ships/words" paints them;
+                # describe the open water instead (repair_negation_art_prompts).
+                self.assertEqual(violations(subject["prompt_prose"]), [])
 
 
 if __name__ == "__main__":
