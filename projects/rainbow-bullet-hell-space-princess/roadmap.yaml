@@ -840,11 +840,11 @@ tasks:
   - id: t-038
     milestone: m4
     title: "Recut the thrash-metal opening from the doodle art"
-    status: ready
+    status: claimed
     depends_on: [t-036]
     passes: 0
     stakes: reversible
-    updated: '2026-11-21T09:05:00Z'
+    updated: '2026-11-22T06:34:00Z'
     note: |-
       Silas chose to hold the old-style opening clips (44645-44653) and recut from new-style stills. New WAN clip ledger from t-035/t-036 keepers, then scripts/export_rainbow_opening.py with the new SHOTS; the thrash track (44644) stays.
 
@@ -853,6 +853,9 @@ tasks:
       2026-11-20 PT: Prepared eight approved DOODLE-SET-1 C.A.T.S. first/last-frame WAN MP4 opening clip requests, retaining ACE-Step ArtJob 44644. Conductor branch 7cafec3d stages auto-submit after green PR merge; no new ArtJob IDs yet, no rendered clips reviewed, no assembled intro. Partial t-038.
 
       2026-11-21 PT reviewer: Conductor PR #7730 merged (squash a48a792e) with all 24 latest-head checks green. It lands the eight-shot OPENING-CLIPS-2-DOODLE request ledger and the MP4/WebM-capable exporter (historical 9-shot ledger kept via --ledger). Still partial: returned to ready, claim released. Remaining: confirm the auto-submitted ArtJob IDs, inspect the rendered WAN MP4s for identity locks, then export the 15-second cut and wire it into the kind_robots cabinet.
+    owner: worker
+    claimed_by: 2026-11-22T063400Z-rainbow-t038-p8v2
+    claimed_at: '2026-11-22T06:34:00Z'
   - id: t-039
     milestone: m4
     title: "Remove the DOGS; Princess Kitty Power cut-ins; boss fire back to each creature's own look"
