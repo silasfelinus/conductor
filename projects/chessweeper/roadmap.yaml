@@ -40,11 +40,11 @@ tasks:
   - id: t-002
     milestone: m2
     title: "Deepen Sugarbomb, Ashen and Jackpot into three replayable campaigns"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 20261122T063034485Z-chessweeper-t002-branch-v8k4
     claimed_at: '2026-11-22T06:30:34.485Z'
-    updated: '2026-11-22T06:30:34.485Z'
+    updated: '2026-11-22T06:31:14.918Z'
     depends_on: t-001
     passes: 0
     stakes: reversible
@@ -58,6 +58,8 @@ tasks:
       Added twelve original, optional chapter mastery trials across Sugarbomb, Ashen and Jackpot, driven by actual win state and special-action events (Sugar Rush, Last Stand, wager/payout), plus persistent per-world mastery bitsets and best scores, a compact stage HUD, and deterministic mock-engine tests. Implementation branch worker/chessweeper-t002-mastery-trials-20261121-c2bd. Finite campaign t-002 remains incomplete: world narrative branching, authored endings, account/device saving and actual full-run balance QA still remain.
 
       2026-11-21 PT reviewer reconciliation: kind_robots PR #5550 merged at fb1ce3f76e569ccda031b98516894de241ea57a7, with all six required latest-head checks completed green, delivering twelve optional gameplay- earned chapter mastery trials, achievements events and per-world records. The full narrative branching, canonical account/device saving, endings and full-run acceptance are still incomplete. Return t-002 to ready.
+
+      2026-11-21 PT: Implemented real selectable world-specific risk contracts with meaningful chapter effects: Sugarbomb shelter vs extra blade/points, Ashen ember protection vs iron-wheel oath, and Jackpot insurance vs high-roller chip/blade gamble. Contracts persist per world and chapter, cannot change mid-run, reset deterministically on pre-turn switch, and are covered by mock-engine gameplay tests. Kind Robots commit 0a08168a; PR/CI pending. t-002 still needs authored branch outcomes, full campaign balance QA and account/device save integration.
   - id: t-003
     milestone: m3
     title: "Queue, deliver and attach original illustrated art for all three mode identities"
@@ -104,11 +106,11 @@ tasks:
   - id: t-006
     milestone: m4
     title: "Extract the chess/mine/disc rules engine from the static Play HTML into a seeded, unit-testable TypeScript module"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 20261122T062717000Z-chessweeper-t006-chesscore-p7v8
     claimed_at: '2026-11-22T06:27:17.000Z'
-    updated: '2026-11-22T06:27:17.000Z'
+    updated: '2026-11-22T06:28:58.178Z'
     depends_on: t-001
     passes: 0
     stakes: reversible
@@ -118,6 +120,8 @@ tasks:
       Partial, high-impact t-006 engine extraction in Kind Robots branch worker/chessweeper-t006-seeded-core-20261121-d7q8: typed seeded minefield generation, deterministic first-safe-probe relocation, disc boundary physics, reproducible bot tie breaks, URL ?seed replay and persisted RNG state in save checkpoints. Added CI regression suite. Full chess move-engine extraction remains unfinished: do not close t-006 done on this slice; return to ready after verified merge so another sprint can extract legal chess rules.
 
       2026-11-21 PT reviewer reconciliation: kind_robots PR #5540 (https://github.com/silasfelinus/kind_robots/pull/5540) merged at 22837bd0eb96d4709a4f12f7203f10aa822f68b1 with all completed checks green. The seeded mines/disc/RNG slice shipped, but complete chess move-rule extraction is still unfinished. Resume as ready, not done.
+
+      2026-11-21 PT: Extracted real legal chess rules from embedded Chessweeper page into typed utils/chessweeper/chessEngine.ts plus public/chessweeper/chess-engine.js, wired live game to shared browser rules, and extended seeded-engine contract tests for castling, en passant, promotion, checkmate, stalemate, material draw and JS/TS parity. Implementation commit b6e571e; CI and PR review pending. Keep t-006 unfinished until checks pass and full adversarial seeded QA is verified.
   - id: t-007
     milestone: m3
     title: "Deliver world-specific gameplay animation, cinematic transitions and responsive VFX"
