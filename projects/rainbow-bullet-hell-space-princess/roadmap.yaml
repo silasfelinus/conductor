@@ -654,11 +654,11 @@ tasks:
   - id: t-028
     milestone: m6
     title: "Gen-2 alternate stages: four branch stages with their own guardians"
-    status: claimed
+    status: review
     depends_on: [t-026]
     passes: 0
     stakes: reversible
-    updated: '2026-11-22T12:02:00Z'
+    updated: '2026-11-22T12:06:00Z'
     note: |-
       One stage per PR, authored to the existing Act pacing and fairness rules, each with a guardian.
 
@@ -696,6 +696,8 @@ tasks:
       Partial X1 Lantern Nursery standalone flight model on kind_robots commit 28d4c564: six contiguous sections, authored 20-wave score, earned rescued-Nemi/cleared-trench low-lane local co-op vote, exact checkpoint proof, and dedicated CI contract. The model is not yet wired to cabinet flight/render/save; X2 and art still remain.
 
       2026-11-22 PT: stale review claim dated 03:52Z (over eight hours old) with no open Rainbow implementation PR or matching worker branch in kind_robots. Preserved existing X1 flight-model commit and all prior X2-X4 integration; reopening only for the unblocked X1 art/gameplay follow-up.
+
+      X1 missing Gen-2 gameplay art is now authored in private auto-submit Krea 2 ledger GEN2-KELP-NEBULA-X1.yaml: idle/sweep/hurt Kelp Warden, Coral Choir rescue pod, and lashing frond hazard. The five subjects are queued for pipeline submission only after a green merge; none has a new ArtJob or reviewed ArtImage yet. Existing four-stage backdrops remain reused. This is partial t-028, which still needs rendered art review, export, runtime integration and route playtests.
     owner: worker
     claimed_by: 20261122T120200Z-rainbow-t028-k4t7
     claimed_at: '2026-11-22T12:02:00Z'
@@ -1121,11 +1123,10 @@ tasks:
   - id: t-056
     milestone: m6
     title: "Add a per-stage art audit that lists each Gen-2 stage's authored guardian/pickup/hazard asset paths with their completed ArtImage ids, flagging any still missing"
-    status: review
-    owner: worker
+    status: done
     claimed_by: 20261122T1154Z-rainbow-t056-a7k9
     claimed_at: '2026-11-22T11:54:15Z'
-    updated: '2026-11-22T11:56:00Z'
+    updated: '2026-11-22T12:07:00Z'
     depends_on: []
     passes: 0
     stakes: reversible
@@ -1134,6 +1135,8 @@ tasks:
       Reviewer kaizen from the 2026-11-22 PT merge of conductor#7810 (t-028 X2 art intake, Worker suggestion). Scope: read projects/rainbow-bullet-hell-space-princess/art/GEN2-*.yaml plus the art ledger and print, per stage (X1..X4), each subject asset path and its ArtImage id or MISSING; exit non-zero only with --strict. Pure local read, no API calls.
 
       Added read-only X1-X4 guardian/pickup/hazard ArtImage audit and five local passing tests on worker/rainbow-bullet-hell-space-princess-t056-stage-art-audit-20261122; app code and asset state unchanged. Await CI and merge.
+
+      Conductor #7831 merged as 78355632 with all four completed green workflows. Read-only X1-X4 ArtImage audit shipped with five locally passing regression tests; strict mode flags absent authored asset categories, invalid IDs and conflicts. No visual approval, direct art delivery or game integration is claimed.
   - id: t-057
     milestone: m4
     title: "Unit-test validate_shot_coverage in export_rainbow_opening.py and give coverage failures their own error prefix"
