@@ -10,108 +10,98 @@ cast_loras: false
 priority: 900
 auto_submit: true
 lanes:
-  - key: krea2
-    label: Krea 2 canonical replacement paintings
-    engine: krea2
-    prompt: prose
+- key: krea2
+  label: Krea 2 canonical replacement paintings
+  engine: krea2
+  prompt: prose
 subjects:
-  - key: pod-correction-granny-hero-20261122
-    lane: krea2
-    entity: identity-outcome
-    title: Mavis Mayhew heroic rescue candidate
-    asset: comet-city-academy/identities/magic-earth/outcomes/hero
-    size: 1344x768
-    seed: 9962201
-    prompt_prose: >-
-      A powerful elderly woman with rich brown skin, deep smile lines and silver hair
-      braided into two high buns stands on the roof of an old yellow school bus.
-      Mavis Mayhew wears a voluminous patchwork shawl over a red cardigan, sturdy
-      lace-up boots and a belt of glowing rune knitting needles. She uses giant
-      knitted rescue straps to lift three adult neighbors out of a cracked street
-      as the yellow school bus stops beside a collapsed apartment building.
-      Every one of her hands and the two silver hair buns are clearly visible.
-      Wide eye-level action view, violet evening sky, amber bus headlights, saturated
-      gouache color and strong inked outlines.
-  - key: pod-correction-granny-villain-20261122
-    lane: krea2
-    entity: identity-outcome
-    title: Mavis Mayhew quilted city candidate
-    asset: comet-city-academy/identities/magic-earth/outcomes/villain
-    size: 1344x768
-    seed: 9962202
-    prompt_prose: >-
-      A powerful elderly woman with rich brown skin, deep smile lines, silver hair
-      in two high buns and an imposing grin stands above a street crossing. Mavis
-      Mayhew wears a red cardigan beneath a voluminous patchwork shawl and raises
-      two luminous knitting needles. Cobblestone streets and small brick houses
-      stitch together into a huge quilt of city blocks behind her, with red
-      threads pulled taut across an intersection. Her old yellow school bus is
-      parked nearby. Wide action composition with readable mature facial features,
-      dusk lighting, saturated gouache colors and bold ink outlines.
-  - key: pod-correction-lionel-hero-20261122
-    lane: krea2
-    entity: identity-outcome
-    title: Lionel Marsh human rescue harness candidate
-    asset: comet-city-academy/identities/tech-genius/outcomes/hero
-    size: 1344x768
-    seed: 9962203
-    prompt_prose: >-
-      An adult human inventor with light brown skin, dark wavy hair, a sharp
-      curious face and oversized brass safety goggles leaps from a damaged
-      hospital rooftop in a green F.R.O.G. spring-loaded rescue harness.
-      Dr. Lionel Marsh remains visibly human, wearing an emerald lab coat over
-      a charcoal vest. His mechanical frog-footed boots grip the concrete edge
-      while a wide safety glider opens over two rescued adult civilians below.
-      A closed glass serum vial sits in a locked steel case on the roof.
-      Wide side view with clear human facial anatomy, amber floodlights,
-      turquoise night skyline and painted comic-book ink contours.
-  - key: pod-correction-lionel-villain-20261122
-    lane: krea2
-    entity: identity-outcome
-    title: Lionel Marsh transformed frog antagonist candidate
-    asset: comet-city-academy/identities/tech-genius/outcomes/villain
-    size: 1344x768
-    seed: 9962204
-    prompt_prose: >-
-      Dr. Lionel Marsh, formerly an adult human inventor, has transformed into
-      a gigantic emerald humanoid frog with a broad amphibian face, bulging amber
-      eyes, webbed hands and a curling tongue. His oversized brass safety goggles
-      still hang around his head above a torn pale-green laboratory coat.
-      He stands in a flooded research laboratory gripping a cracked glass
-      mutagen vessel while copper coils spark across submerged workbenches.
-      A frightened adult technician retreats through a lit doorway. Medium-wide
-      low-angle view, deep green highlights and saturated hand-painted ink style.
-  - key: pod-correction-asha-hero-20261122
-    lane: krea2
-    entity: identity-outcome
-    title: Asha Venkataraman four-arm rescue candidate
-    asset: comet-city-academy/identities/mutant-discipline/outcomes/hero
-    size: 1344x768
-    seed: 9962205
-    prompt_prose: >-
-      A poised young adult woman with medium brown skin, a long black braid and
-      four biological arms naturally connected to her torso catches falling
-      civilians beside a damaged elevated train platform. Asha Venkataraman wears
-      a maroon fitted dance top, loose black training trousers and brass ankle
-      bells. Her upper pair of arms supports a rescue cable and her lower pair
-      holds the weight of a second adult survivor; all four arms and shoulders
-      are clearly visible in one continuous full-body pose. The platform glows
-      with warm floodlights under a deep blue city sky. Wide painted superhero
-      action scene with strong silhouettes and bold ink outlines.
-  - key: pod-correction-asha-villain-20261122
-    lane: krea2
-    entity: identity-outcome
-    title: Asha Venkataraman four-arm weapons trade candidate
-    asset: comet-city-academy/identities/mutant-discipline/outcomes/villain
-    size: 1344x768
-    seed: 9962206
-    prompt_prose: >-
-      A poised adult woman with medium brown skin, a long black braid and four
-      biological arms naturally attached to her torso oversees an illicit
-      weapons exchange in a nighttime warehouse. Asha Venkataraman wears a
-      maroon dance top and loose black trousers. Her upper two hands check a
-      brass shipping manifest while her lower two hands hold a compact training
-      staff and unlatch a metal case of stolen academy equipment. All four
-      arms join visibly to her shoulders and torso, with clearly separate
-      natural elbows and hands. Two adult buyers watch from behind a table.
-      Saturated violet and gold spotlights, wide inked animation painting.
+- key: pod-correction-granny-hero-20261122
+  lane: krea2
+  entity: identity-outcome
+  title: Mavis Mayhew heroic rescue candidate
+  asset: comet-city-academy/identities/magic-earth/outcomes/hero
+  size: 1344x768
+  seed: 9962201
+  prompt_prose: A powerful elderly woman with rich brown skin, deep smile lines and silver hair braided into two
+    high buns stands on the roof of an old yellow school bus. Mavis Mayhew wears a voluminous patchwork shawl over
+    a red cardigan, sturdy lace-up boots and a belt of glowing rune knitting needles. She uses giant knitted rescue
+    straps to lift three adult neighbors out of a cracked street as the yellow school bus stops beside a collapsed
+    apartment building. Every one of her hands and the two silver hair buns are clearly visible. Wide eye-level
+    action view, violet evening sky, amber bus headlights, saturated gouache color and strong inked outlines.
+  jobs:
+    krea2: 76593
+- key: pod-correction-granny-villain-20261122
+  lane: krea2
+  entity: identity-outcome
+  title: Mavis Mayhew quilted city candidate
+  asset: comet-city-academy/identities/magic-earth/outcomes/villain
+  size: 1344x768
+  seed: 9962202
+  prompt_prose: A powerful elderly woman with rich brown skin, deep smile lines, silver hair in two high buns and
+    an imposing grin stands above a street crossing. Mavis Mayhew wears a red cardigan beneath a voluminous patchwork
+    shawl and raises two luminous knitting needles. Cobblestone streets and small brick houses stitch together into
+    a huge quilt of city blocks behind her, with red threads pulled taut across an intersection. Her old yellow
+    school bus is parked nearby. Wide action composition with readable mature facial features, dusk lighting, saturated
+    gouache colors and bold ink outlines.
+  jobs:
+    krea2: 76594
+- key: pod-correction-lionel-hero-20261122
+  lane: krea2
+  entity: identity-outcome
+  title: Lionel Marsh human rescue harness candidate
+  asset: comet-city-academy/identities/tech-genius/outcomes/hero
+  size: 1344x768
+  seed: 9962203
+  prompt_prose: An adult human inventor with light brown skin, dark wavy hair, a sharp curious face and oversized
+    brass safety goggles leaps from a damaged hospital rooftop in a green F.R.O.G. spring-loaded rescue harness.
+    Dr. Lionel Marsh remains visibly human, wearing an emerald lab coat over a charcoal vest. His mechanical frog-footed
+    boots grip the concrete edge while a wide safety glider opens over two rescued adult civilians below. A closed
+    glass serum vial sits in a locked steel case on the roof. Wide side view with clear human facial anatomy, amber
+    floodlights, turquoise night skyline and painted comic-book ink contours.
+  jobs:
+    krea2: 76595
+- key: pod-correction-lionel-villain-20261122
+  lane: krea2
+  entity: identity-outcome
+  title: Lionel Marsh transformed frog antagonist candidate
+  asset: comet-city-academy/identities/tech-genius/outcomes/villain
+  size: 1344x768
+  seed: 9962204
+  prompt_prose: Dr. Lionel Marsh, formerly an adult human inventor, has transformed into a gigantic emerald humanoid
+    frog with a broad amphibian face, bulging amber eyes, webbed hands and a curling tongue. His oversized brass
+    safety goggles still hang around his head above a torn pale-green laboratory coat. He stands in a flooded research
+    laboratory gripping a cracked glass mutagen vessel while copper coils spark across submerged workbenches. A
+    frightened adult technician retreats through a lit doorway. Medium-wide low-angle view, deep green highlights
+    and saturated hand-painted ink style.
+  jobs:
+    krea2: 76596
+- key: pod-correction-asha-hero-20261122
+  lane: krea2
+  entity: identity-outcome
+  title: Asha Venkataraman four-arm rescue candidate
+  asset: comet-city-academy/identities/mutant-discipline/outcomes/hero
+  size: 1344x768
+  seed: 9962205
+  prompt_prose: A poised young adult woman with medium brown skin, a long black braid and four biological arms naturally
+    connected to her torso catches falling civilians beside a damaged elevated train platform. Asha Venkataraman
+    wears a maroon fitted dance top, loose black training trousers and brass ankle bells. Her upper pair of arms
+    supports a rescue cable and her lower pair holds the weight of a second adult survivor; all four arms and shoulders
+    are clearly visible in one continuous full-body pose. The platform glows with warm floodlights under a deep
+    blue city sky. Wide painted superhero action scene with strong silhouettes and bold ink outlines.
+  jobs:
+    krea2: 76597
+- key: pod-correction-asha-villain-20261122
+  lane: krea2
+  entity: identity-outcome
+  title: Asha Venkataraman four-arm weapons trade candidate
+  asset: comet-city-academy/identities/mutant-discipline/outcomes/villain
+  size: 1344x768
+  seed: 9962206
+  prompt_prose: A poised adult woman with medium brown skin, a long black braid and four biological arms naturally
+    attached to her torso oversees an illicit weapons exchange in a nighttime warehouse. Asha Venkataraman wears
+    a maroon dance top and loose black trousers. Her upper two hands check a brass shipping manifest while her lower
+    two hands hold a compact training staff and unlatch a metal case of stolen academy equipment. All four arms
+    join visibly to her shoulders and torso, with clearly separate natural elbows and hands. Two adult buyers watch
+    from behind a table. Saturated violet and gold spotlights, wide inked animation painting.
+  jobs:
+    krea2: 76598
