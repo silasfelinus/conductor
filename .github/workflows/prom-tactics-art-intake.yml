@@ -9,6 +9,7 @@ on:
       - ".github/workflows/prom-tactics-art-intake.yml"
       - "projects/every-villain-tactics/art/ONE-HIT-CREW-TELEGRAPHS-2026-11-20.yaml"
       - "projects/comet-city-academy/art/OCT-29-CAST-KREA2-ROUND-1.yaml"
+      - "projects/comet-city-academy/art/CANON-OUTCOME-CORRECTIONS-2026-11-22.yaml"
   schedule:
     - cron: "17 * * * *"
   workflow_dispatch:
@@ -121,5 +122,60 @@ jobs:
           if [ "${{ steps.tactics.outcome }}" != "success" ] || \
              [ "${{ steps.prom.outcome }}" != "success" ]; then
             echo "::error::One or more art submission phases failed."
+            exit 1
+          fi
+
+      # This corrective round is opt-in to the generic sweep too, but the
+      # dedicated intake submits the same stable requestKeys immediately.
+      # ArtJob API deduplication makes either order safe; no duplicate renders.
+      - name: Submit six canonical Prom outcome corrections
+        id: canon
+        continue-on-error: true
+        run: |
+          set +e
+          python scripts/enqueue_art_requests.py \
+            projects/comet-city-academy/art/CANON-OUTCOME-CORRECTIONS-2026-11-22.yaml --live
+          enqueue_status=$?
+          bash scripts/checkpoint_art_state.sh \
+            "chore: record canonical Prom correction ArtJob receipts [skip ci]"
+          checkpoint_status=$?
+          if [ "$enqueue_status" -ne 0 ] || [ "$checkpoint_status" -ne 0 ]; then
+            echo "::error::Canonical Prom intake incomplete; checkpoint any accepted IDs before retry."
+            exit 1
+          fi
+      - name: Refresh canonical correction ArtImage receipts
+        if: steps.canon.outcome == 'success'
+        continue-on-error: true
+        run: |
+          python scripts/enqueue_art_requests.py \
+            projects/comet-city-academy/art/CANON-OUTCOME-CORRECTIONS-2026-11-22.yaml --status
+          bash scripts/checkpoint_art_state.sh \
+            "chore: refresh canonical Prom correction image receipts [skip ci]"
+      - name: Verify durable ArtJob acceptance for six corrections
+        if: always()
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import yaml
+
+          path = Path("projects/comet-city-academy/art/CANON-OUTCOME-CORRECTIONS-2026-11-22.yaml")
+          doc = yaml.safe_load(path.read_text(encoding="utf-8"))
+          subjects = doc.get("subjects", [])
+          accepted = [
+              (row["key"], (row.get("jobs") or {}).get("krea2"))
+              for row in subjects
+          ]
+          missing = [
+              key for key, job_id in accepted
+              if type(job_id) is not int or job_id <= 0
+          ]
+          print("Canonical correction receipts:", accepted)
+          if len(subjects) != 6 or missing:
+              raise SystemExit(
+                  f"Only {len(subjects) - len(missing)}/6 corrective ArtJobs recorded; missing: {missing}"
+              )
+          PY
+          if [ "${{ steps.canon.outcome }}" != "success" ]; then
+            echo "::error::Corrective art submission phase failed."
             exit 1
           fi
