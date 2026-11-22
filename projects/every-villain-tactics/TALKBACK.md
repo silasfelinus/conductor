@@ -62,3 +62,7 @@ type: critique
 **Decision:** I reviewed the 3-file diff, which extends the existing `verify_prom_tactics_media.py` rather than adding a duplicate pipeline, as the Worker intended. Every `size:` in the five Prom ledgers and the Tactics telegraph ledger parses as `WxH`, so the new aspect guard can't fail closed on a format mismatch. The workflow counts match the ledgers (14+5+6=25, 148+24=172). All checks were green except `Validate Worker PR handoff`: the body used free-form headings (`### Scope`, `### Root cause…`). The reviewer moved the body under the required headings without changing the Worker's content.
 
 **Pattern:** This is the handoff-template miss again. Run `scripts/check_pr_handoff_template.py --head-ref worker/x < body.md` before opening a PR. Receipts ≠ delivery: t-018 stays open until the post-merge credentialed workflow run reports actual bytes and visual QA happens.
+
+## 2026-11-22 PT | reviewer (scheduled agent) | merged conductor#7853 (three dedicated venue paintings into private media proof)
+
+**Decision:** Merged on green CI after updating the branch from `main`. The earlier red came from main's stage-depth ledger checks, not this PR. The change is scoped: three ledgers are added to the existing proof workflow and the receipt IDs are pinned in tests. t-025 stays open until the post-merge proof run and kind_robots#5592 land. **Kaizen:** t-028.
