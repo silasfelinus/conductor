@@ -50,3 +50,16 @@ def test_auto_art_submits_even_when_render_box_is_unavailable():
     checkpoint = "\n".join(lines[start + 12 : start + 28])
     assert "Checkpoint opted-in art ledger ArtJob receipts" in checkpoint
     assert "checkpoint_art_state.sh" in checkpoint
+
+
+def test_dedicated_prom_tactics_intake_submits_and_checkpoints_corrections():
+    intake = (
+        ROOT / ".github/workflows/prom-tactics-art-intake.yml"
+    ).read_text(encoding="utf-8")
+    name = "CANON-OUTCOME-CORRECTIONS-2026-11-22.yaml"
+    assert name in intake, "new ledger must trigger the fast intake on merge"
+    assert f"projects/comet-city-academy/art/{name} --live" in intake
+    assert f"projects/comet-city-academy/art/{name} --status" in intake
+    assert "record canonical Prom correction ArtJob receipts" in intake
+    assert "Verify durable ArtJob acceptance for six corrections" in intake
+    assert "steps.canon.outcome" in intake
