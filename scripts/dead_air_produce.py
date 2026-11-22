@@ -423,6 +423,20 @@ def should_skip_optional_clip(state: dict, elapsed: int, now: datetime | None = 
     return False
 
 
+def optional_clip_skip_reason(clip_ids: list[str], congested: bool, deadline_hit: bool) -> str | None:
+    """Say why an authored hero clip was not requested (MV27 hid a deadline skip).
+
+    The old boolean optional_clip_skipped_for_congestion read false when the
+    two-hour deadline, not congestion, dropped the clip, so a review could not
+    tell a deadline skip from a clip that was requested and never arrived.
+    """
+    if not clip_ids:
+        return None
+    if deadline_hit:
+        return "deadline"
+    return "congestion" if congested else None
+
+
 def ready_for_export(state: object, episode: dict, *, deadline_hit: bool) -> bool:
     """No clip may hold the morning film hostage past its production window."""
     if not hasattr(state, "doc") or not (state.doc.get("song") or {}).get("artImageId"):
@@ -574,7 +588,9 @@ def run_episode(e: dict, episode_path: Path, state: dict, state_file: Path, vide
     elapsed, deadline_hit = production_budget(state["episodes"][e["slug"]])
     # One optional hero clip, with a strict cutoff on *new* GPU submissions.
     # Keep all requested IDs for evidence even if the deadline has passed.
-    skip_clip = should_skip_optional_clip(state, elapsed) or deadline_hit
+    congested = should_skip_optional_clip(state, elapsed)
+    skip_clip = congested or deadline_hit
+    skip_reason = optional_clip_skip_reason(clip_ids, congested, deadline_hit)
     requestable_clip_ids = [] if skip_clip else clip_ids
     for start in range(0, len(requestable_clip_ids), 8):
         request = clips_to_request(state_now, requestable_clip_ids[start:start + 8])
@@ -608,7 +624,8 @@ def run_episode(e: dict, episode_path: Path, state: dict, state_file: Path, vide
     }
     record(state, episode_path, e, music_video_id=video_id, art_jobs=jobs,
            status="rendering", motion_clips_ready=len(ready_clips),
-           optional_clip_skipped_for_congestion=skip_clip and not deadline_hit)
+           optional_clip_skipped_for_congestion=skip_clip and not deadline_hit,
+           optional_clip_skip_reason=skip_reason)
     save_state(state_file, state)
     # A finished clip is a bonus, not a required second GPU pass. The
     # two-hour deadline allows the edit to finish from rendered stills.

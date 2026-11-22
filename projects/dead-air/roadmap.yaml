@@ -102,8 +102,8 @@ tasks:
     status: ready
     recurring: true
     daily_commitment: true
-    daily_last_checked: '2026-11-21'
-    daily_last_completed: '2026-11-21'
+    daily_last_checked: '2026-11-22'
+    daily_last_completed: '2026-11-22'
     stakes: reversible
     passes: 0
     depends_on: t-002
@@ -185,9 +185,20 @@ tasks:
       test_yellow_television_reveal_waits_for_the_reversal_shot guards unrendered briefs.
       daily_last_completed=2026-11-21 reflects MV26's verified completion. PR
       silasfelinus/conductor#7741.
+
+      2026-11-22 PT cycle: MusicVideo 27 (Silence by Mail, ArtImage 278942) completed private
+      at 09:02 PT after its stills sat PENDING 7.5h; downloaded, hash-verified and screened,
+      review log projects/dead-air/reviews/2026-11-22-screening.md. Peak -1.8 dBFS. First film
+      to hold the yellow-TV reveal for s4 from brief to render (MV26 guard worked); 1970s
+      mail-order look held in all five shots, no fake lettering. Defects: jar glow rendered as
+      literal candles, a second yellow TV in s4, s5 TV face lost, and the s4 clip was dropped
+      by the deadline while the state said not skipped. Fixed: producer records
+      optional_clip_skip_reason (deadline|congestion), with a test; MV27 backfilled.
+      daily_last_completed=2026-11-22 reflects MV27's verified completion. PR
+      silasfelinus/conductor#7854.
     owner: worker
-    updated: '2026-11-21T10:54:08Z'
-    implementation_pr: 'silasfelinus/conductor#7741'
+    updated: '2026-11-22T20:48:31Z'
+    implementation_pr: 'silasfelinus/conductor#7854'
   - id: t-005
     milestone: m3
     title: Create rights-aware reference and private production provenance review

@@ -470,3 +470,14 @@ def test_motion_prompts_are_lettering_guarded_like_stills():
     assert any("motion lettering: Subtitles" in e for e in validate(altered))
     for path in sorted((ROOT / "projects/dead-air/episodes").glob("*.yaml")):
         assert not [e for e in validate(load_episode(path)) if "motion lettering" in e], path.name
+
+
+def test_clip_skip_reason_names_the_deadline_not_just_congestion():
+    """MV27 lost its s4 clip to the two-hour deadline while the state said 'not skipped'."""
+    from dead_air_produce import optional_clip_skip_reason
+
+    assert optional_clip_skip_reason(["s4"], congested=True, deadline_hit=True) == "deadline"
+    assert optional_clip_skip_reason(["s4"], congested=False, deadline_hit=True) == "deadline"
+    assert optional_clip_skip_reason(["s4"], congested=True, deadline_hit=False) == "congestion"
+    assert optional_clip_skip_reason(["s4"], congested=False, deadline_hit=False) is None
+    assert optional_clip_skip_reason([], congested=True, deadline_hit=True) is None
