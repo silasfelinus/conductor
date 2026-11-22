@@ -226,7 +226,7 @@ tasks:
   - id: t-010
     milestone: m2
     title: "Complete achievements, permanent world scrapbook and progression records"
-    status: waiting
+    status: done
     depends_on: t-002
     passes: 0
     stakes: reversible
@@ -240,3 +240,13 @@ tasks:
       clipping), with explicit guest/device versus signed-in account semantics.
       Test unlock idempotence, save/restore, world isolation, last gallery entry,
       keyboard/touch interaction and non-spoiler locked content.
+
+      2026-11-22 PT done: kind_robots #5597 brings the game to 24 achievements, each awarded
+      only from a validated end state or campaign event and idempotent. The scrapbook has 12
+      replayable ending pages with non-spoiler hints, action-plate and piece-atlas pages,
+      chapter milestones with mastery stars, and the last 12 battles. Save semantics are
+      explicit: progress lives on the device for guests and signed-in players, and CW1
+      transfer codes merge between devices without loss. Also fixed: progression.js threw on
+      load (an undefined page-private helper), so on main this whole layer had been dead.
+    updated: '2026-11-22T23:16:25Z'
+    implementation_pr: 'silasfelinus/kind_robots#5597'
