@@ -289,6 +289,17 @@ tasks:
       Delivered and merged kind_robots PR #5527 (behavioral source-backed atlas art tests) and conductor PR #7782 (authenticated private ArtImage byte proof). All latest-head PR checks green before merges. Production workflow 44965615427 succeeded and decoded 12/12 Every Villain Tactics telegraphs plus 191/191 Prom candidate images with no failed downloads. This proves media access, not curator approval or runtime attachment. Review and agent QA of compositions remain in separate art tasks.
     claimed_by: 2026-11-21T233600Z-comet-city-academy-t-044-b7c4
     claimed_at: '2026-11-21T23:36:00Z'
+  - id: t-045
+    title: "Add a canon-anatomy guard that fails any Prom character art ledger prompt omitting a defining castLooks trait such as Asha's four arms"
+    status: ready
+    owner: worker
+    updated: '2026-11-22T02:50:00Z'
+    milestone: m3
+    stakes: reversible
+    passes: 0
+    depends_on: []
+    note: |-
+      Kaizen from conductor#7793 review (t-034 Asha repaint). Asha's shipped hero and villain outcome art lost her four arms and was only caught by manual source-byte QA. Extract the defining physical traits per identity (castLooks.ts / identityArcs.json) into a small canon table and add one test that walks every comet-city-academy art ledger subject and asserts its prompt mentions each trait for the named identity. Generalizes the one-off test_prom_asha_four_arm_repaint.py checks.
   - id: t-012
     milestone: m2
     title: "Promote the seven-day demo into Capes & Tassels name and genuine day/night map slice"

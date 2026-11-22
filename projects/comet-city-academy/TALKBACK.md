@@ -142,3 +142,9 @@ Merged (squash 9017e41). Art ledgers/prompts only, reversible, CI green. The fiv
 - #5509 sat red for about 3.3h on **TypeScript** with no worker follow-up. Reproduced locally: `comicIntroductions.ts(99,26) TS2345`. `intro.key.split(':')[0]` is `string | undefined` under `noUncheckedIndexedAccess`. I fixed it with a default-destructured signature. I also kept the student-art fallback that comic intros had before: #5509 had quietly narrowed it to the two `CANON_STUDENT_FALLBACK` signatures. The fallback is still filtered through the quarantine. Local vue-tsc and `test:comet-city-academy` pass.
 - #5517 carries #5509 plus this fix and current `main`. #5509 gets closed once #5517 merges. t-032 stays a partial umbrella (refs #4181).
 - Pattern: connector-only workers ship `split(...)[0]` and other indexed reads that vue-tsc rejects. Use a default destructure (`const [x = ''] = s.split(':')`).
+
+## 2026-11-21 PT | reviewer (scheduled agent) | conductor#7793 t-034 four-arm Asha repaint ledger
+
+- **Decision:** merged (squash 7d36421) on 24/24 green checks. The change adds a private (`is_public: false`) four-subject Krea 2 ledger and a canon test. It's reversible and nothing gets published. t-034 goes back to `ready` because the umbrella is still open: the candidates need rendering, visual QA and attaching to their slots.
+- Pattern: good self-check. The worker fixed a YAML colon that broke round validation before handoff. Anatomy prose is explicit (pair placement, per-hand actions), which is what Krea needs for multi-limb figures.
+- Kaizen t-045: generalize the one-off four-arm assertions into a canon-trait guard over all Prom art ledgers.
