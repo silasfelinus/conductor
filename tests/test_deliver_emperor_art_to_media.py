@@ -22,10 +22,11 @@ def test_all_eight_original_ending_plates_are_rendered_in_canonical_ledger():
     endings = [r for r in rows if r["ledger"] == "ENDINGS-ROUND-1.yaml"]
     assert len(endings) == 8
     assert {row["artImageId"] for row in endings} == set(range(270430, 270438))
-    assert not any(row["verdict"].startswith("keep") for row in endings)
+    # Curated on a contact sheet 2026-11-21 PT (t-063/t-064): all eight kept.
+    assert all(row["verdict"].startswith("keep") for row in endings)
     plan = delivery.build_plan(endings, only=r"^endings/")
-    assert plan["summary"]["unreviewed"] == 8
-    assert plan["summary"]["keepers"] == 0
+    assert plan["summary"]["unreviewed"] == 0
+    assert plan["summary"]["keepers"] == 8
 
 
 def test_multi_lane_done_art_candidates_require_explicit_curation(tmp_path):

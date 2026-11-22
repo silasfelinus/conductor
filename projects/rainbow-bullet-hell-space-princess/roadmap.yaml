@@ -650,12 +650,14 @@ tasks:
   - id: t-028
     milestone: m6
     title: "Gen-2 alternate stages: four branch stages with their own guardians"
-    status: ready
+    status: review
+    claimed_by: 20261122T010025Z-rainbow-t028-x3-f8c2
+    claimed_at: '2026-11-22T01:00:25.118Z'
     owner: worker
     depends_on: [t-026]
     passes: 0
     stakes: reversible
-    updated: '2026-11-21T23:06:14Z'
+    updated: '2026-11-22T01:03:29.425Z'
     note: |-
       One stage per PR, authored to the existing Act pacing and fairness rules, each with a guardian.
 
@@ -685,6 +687,8 @@ tasks:
       kind_robots#5495 (b7a1821c); no open t-028 PR or branch remains and the stale review
       claim (06:53Z) is released. Partial t-028: remaining alternate Acts and painted guardian
       art are still open; return to ready for the next slice.
+
+      Scoped X3 Sunken Lighthouse flight adapter committed to Kind Robots worker branch with earned relay/high-lane entry, 30 authored waves, six timed lane lamps, live Drowned Bellkeeper combat, three dialogue scenes, all four seats, checkpoint-safe save validation and restore, and new flight regression tests. Partial t-028: X1/X2 and final guardian art remain outstanding.
   - id: t-029
     milestone: m6
     title: "Gen-2 art round 1: route map, Palace Hangar and four alternate-stage backdrops"
@@ -1087,19 +1091,20 @@ tasks:
   - id: t-054
     milestone: m4
     title: "Run export_rainbow_opening.py --check-queue-budget in CI whenever the opening clip ledger changes so an over-budget WAN subject fails at PR time"
-    status: review
-    owner: worker
+    status: done
     claimed_by: 2026-11-21T233903Z-rainbow-t054-ci-b7e2
     claimed_at: '2026-11-21T23:39:03Z'
     depends_on: []
     passes: 0
     stakes: reversible
-    updated: '2026-11-21T23:43:00Z'
+    updated: '2026-11-22T00:35:00Z'
     source: kaizen-pr-7776
     note: |-
       Reviewer kaizen from the 2026-11-21 PT merge of conductor#7776 (t-052). The budget preflight exists, but nothing calls it before ArtJobs are submitted: there is no separate opening queue script, so an agent editing projects/rainbow-bullet-hell-space-princess/art/OPENING-CLIPS-2-DOODLE.yaml can still queue a 10s WAN subject. Add a path-filtered CI step (or extend an existing ledger guard) that runs the flag, with a test that an over-budget fixture fails. Open the PR with the AGENTS.md handoff headings.
 
       Added path-filtered opening WAN queue budget CI and three subprocess regression fixtures covering approved, over-duration and excessive-fps ledgers. Implementation branch worker/rainbow-bullet-hell-space-princess-t-054-budget-ci-b7e2.
+
+      The opening WAN budget CI workflow and three regression fixtures are present on Conductor main; the implementation PR #7781 is merged. Original PR handoff workflow failed on stale event payload despite corrected PR body. No gameplay or ArtJob delivery claimed.
   - id: t-055
     milestone: m4
     title: "Record each WAN shot's requested seconds, fps and frame headroom against the 8s/128-frame budget in opening-delivery-report.json"

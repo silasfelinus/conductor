@@ -85,8 +85,11 @@ tasks:
       Full history: projects/game-of-captains/HISTORY.md#t-001
   - id: t-041
     title: 'Main-game standard: audit and close the gaps for Space Couch'
-    status: ready
-    updated: '2026-11-22T00:09:55Z'
+    status: review
+    owner: worker
+    claimed_by: 2026-11-22T004825Z-game-of-captains-t-041-q7m4
+    claimed_at: '2026-11-22T00:48:25Z'
+    updated: '2026-11-22T00:51:00Z'
     milestone: m4
     stakes: reversible
     passes: 0
@@ -151,6 +154,8 @@ tasks:
       Partial main-game-standard backup reliability repair. App branch worker/game-of-captains-t-041-backup-race-20261121-7b9e protects asynchronous file selection from stale reads, invalidates cancelled/account-switched staging, guards oversized portable exports, and tests out-of-order selections and cancellations. Remaining authenticated cloud-save, painted-art, and browser-width verification remain open. Review/CI pending.
 
       Partial t-041 delivered: kind_robots PR #5528 merged into main c2db243ea66e838ec022bd9525571c3d75f05cb2 at exact head e40d331ee238e48ff3e6981d52b58ebb22e41f98. All nine GitHub Actions workflow groups COMPLETED SUCCESS, including Space Couch full adversarial voyages, seeded game-playthroughs, TypeScript, Playbook Kit, formatting, architecture, layout, schema parity and all four contract shards. Generation-aware file staging eliminates stale async import races; cancellation/account switches invalidate stale reads; bounded portable backup generation rejects >8 MB exports with behavioral tests, and an existing source contract was repaired for the moved validation call. Old save keys, v1 format, account access and achievements preserved. Remaining t-041: authenticated live account backup/restore, accepted original painted-art URLs, 390/768/1440 browser layout and final human playtest readiness. Return to READY (partial), not DONE.
+
+      Partial achievement correctness fix: Personal Business now awards only on completion of a three-stop crew quest, with regression cases for unfinished first and second stops. Remaining t-041 acceptance work is not complete.
 
   - id: t-040
     title: 'Space Couch achievement upgrade: 12 or more live achievements'
@@ -283,8 +288,11 @@ tasks:
   - id: t-009
     milestone: m3
     title: "Deliver unique mission outcome, conversation and ending illustration coverage"
-    status: ready
-    updated: '2026-11-21T23:54:30Z'
+    status: claimed
+    owner: worker
+    claimed_by: 20261122T011600Z-goc-t009-6d83
+    claimed_at: '2026-11-22T01:16:00Z'
+    updated: '2026-11-22T01:16:00Z'
     depends_on: t-007
     passes: 0
     stakes: reversible

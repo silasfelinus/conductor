@@ -5,6 +5,7 @@ from pathlib import Path
 import yaml
 
 from scripts.art_ledger_authoring import ledger_problems
+from scripts.art_ledger_receipts import receipt_problems
 from scripts.repair_negation_art_prompts import violations
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -50,11 +51,12 @@ def test_all_final_destinations_request_individually_painted_results():
     )
 
 
-def test_private_requests_do_not_claim_generated_or_accepted_art():
+def test_private_requests_preserve_provenance_after_queue_checkpoint():
     ledger = yaml.safe_load(LEDGER.read_text())
     for subject in ledger["subjects"]:
-        assert "jobs" not in subject
-        assert "art" not in subject
+        # A draft may not have receipts yet; the live workflow later adds real
+        # ArtJob IDs and ArtImage statuses without changing the authored prompt.
+        assert receipt_problems(subject) == [], subject["key"]
         assert subject["entity"] == "encounter-outcome"
         description = subject["prompt_prose"].lower()
         assert len(description) >= 420, subject["key"]

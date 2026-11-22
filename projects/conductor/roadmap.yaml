@@ -3336,21 +3336,18 @@ tasks:
 - id: t-221
   milestone: m1
   title: 'Catch draft-time "no receipts" ledger assertions that auto-submit checkpoints silently turn red on main'
-  status: ready
+  status: review
+  claimed_by: 2026-11-22T004300Z-conductor-t221-artreceipt-e6p2
+  claimed_at: '2026-11-22T00:43:00Z'
   stakes: reversible
   owner: worker
   passes: 0
   depends_on: []
-  updated: '2026-11-21T06:20:00Z'
-  note: >-
-    Reviewer kaizen 2026-11-21 PT from conductor#7726. The [skip ci] checkpoint commits
-    01282b3 and a08f9b9 wrote real ArtJob receipts into two ledgers. Their contract tests
-    (test_evt_one_hit_crew_tells, test_prom_oct29_art_ledger) asserted `"jobs" not in item`,
-    so main was red while showing green, and the failures were blamed on #7722. Pick one:
-    (a) add a meta-test that fails when a tests/ file asserts `"jobs" not in` /
-    `"art" not in` on a repo ledger subject, and point authors to a shared
-    receipt-shape helper; or (b) have the auto-submit checkpoint workflow run the
-    ledger-contract tests before committing. Acceptance: a unit test proves the chosen
-    guard catches the 2026-11-21 pattern.
+  updated: '2026-11-22T00:47:20Z'
+  note: |-
+    Reviewer kaizen 2026-11-21 PT from conductor#7726. The [skip ci] checkpoint commits 01282b3 and a08f9b9 wrote real ArtJob receipts into two ledgers. Their contract tests (test_evt_one_hit_crew_tells, test_prom_oct29_art_ledger) asserted `"jobs" not in item`, so main was red while showing green, and the failures were blamed on #7722. Pick one: (a) add a meta-test that fails when a tests/ file asserts `"jobs" not in` / `"art" not in` on a repo ledger subject, and point authors to a shared receipt-shape helper; or (b) have the auto-submit checkpoint workflow run the ledger-contract tests before committing. Acceptance: a unit test proves the chosen guard catches the 2026-11-21 pattern.
+
+    Implemented shared ArtJob/ArtImage receipt shape validation for draft, queued, running and DONE ledger states. Fixed a stale Space Couch Chapter Nine test that rejected live receipts, and added an AST-based repository meta-test which catches draft-only jobs/art absent assertions on source production ledgers. This is a scoped CI unblock for art delivery PR #7788. New regression tests cover the exact 2026-11-21 pattern; pending PR CI and merge.
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
+
