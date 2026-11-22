@@ -40,11 +40,11 @@ tasks:
   - id: t-002
     milestone: m2
     title: "Deepen Sugarbomb, Ashen and Jackpot into three replayable campaigns"
-    status: review
+    status: done
     owner: worker
     claimed_by: 20261122T063034485Z-chessweeper-t002-branch-v8k4
     claimed_at: '2026-11-22T06:30:34.485Z'
-    updated: '2026-11-22T06:31:14.918Z'
+    updated: '2026-11-22T23:16:16Z'
     depends_on: t-001
     passes: 0
     stakes: reversible
@@ -60,6 +60,15 @@ tasks:
       2026-11-21 PT reviewer reconciliation: kind_robots PR #5550 merged at fb1ce3f76e569ccda031b98516894de241ea57a7, with all six required latest-head checks completed green, delivering twelve optional gameplay- earned chapter mastery trials, achievements events and per-world records. The full narrative branching, canonical account/device saving, endings and full-run acceptance are still incomplete. Return t-002 to ready.
 
       2026-11-21 PT: Implemented real selectable world-specific risk contracts with meaningful chapter effects: Sugarbomb shelter vs extra blade/points, Ashen ember protection vs iron-wheel oath, and Jackpot insurance vs high-roller chip/blade gamble. Contracts persist per world and chapter, cannot change mid-run, reset deterministically on pre-turn switch, and are covered by mock-engine gameplay tests. Kind Robots commit 0a08168a; PR/CI pending. t-002 still needs authored branch outcomes, full campaign balance QA and account/device save integration.
+
+      2026-11-22 PT done (Silas-directed playtest session): kind_robots #5597 merged e41798a9
+      with all 15 checks green. Remaining scope closed: pact-aware narrative branches and
+      campaign-finale epilogues in every ending scene, explicit device saving with CW1
+      transfer codes (account sync deliberately out of scope and documented), and full-run
+      balance QA. Black AI now reads the blade forecast; before the fix Ashen and Jackpot
+      ended by passive arena kills at turn 18-28 on every seed. Evidence:
+      projects/chessweeper/qa/2026-11-22-playthrough.md.
+    implementation_pr: 'silasfelinus/kind_robots#5597'
   - id: t-003
     milestone: m3
     title: "Queue, deliver and attach original illustrated art for all three mode identities"
