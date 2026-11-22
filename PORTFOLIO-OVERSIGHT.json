@@ -1,31 +1,31 @@
 {
-  "generated_at": "2026-11-22T07:06:28.865170+00:00",
+  "generated_at": "2026-11-22T19:49:19.433759+00:00",
   "summary": {
-    "status": "semantic-review-upcoming",
+    "status": "clean",
     "roadmap_errors": 0,
-    "roadmap_warnings": 40,
+    "roadmap_warnings": 42,
     "project_forward_drift": 0,
     "project_reverse_orphans": 0,
     "project_unresolved": null,
     "openai_scheduled_agent_overdue": true,
     "openai_scheduled_agent_authoritative": false,
     "intent_review_due": false,
-    "intent_review_upcoming": true
+    "intent_review_upcoming": false
   },
   "openai_scheduled_agent": {
     "overdue": true,
     "last_activity": "2026-10-25T01:09:44+00:00",
-    "hours_since": 677.95,
+    "hours_since": 690.66,
     "stale_hours": 6.0,
     "marker": "openai-scheduled-",
     "note": "Legacy git diagnostic only: OPENAI-SCHEDULED-HEARTBEAT.json and coordination markers do not determine ChatGPT scheduler health. Native ChatGPT task metadata is authoritative for scheduler liveness."
   },
   "intent_review": {
     "due": false,
-    "upcoming": true,
-    "last_report": "INTENT-AUDIT-2026-11-20.md",
-    "days_since": 2,
-    "days_until_due": 1.0,
+    "upcoming": false,
+    "last_report": "INTENT-AUDIT-2026-11-22.md",
+    "days_since": 0,
+    "days_until_due": 3.0,
     "stale_days": 3.0,
     "failed_attempt": null
   },
@@ -35,20 +35,20 @@
     "unresolved": null
   },
   "roadmap_audit": {
-    "generated_at": "2026-11-22T07:06:28.865177+00:00",
+    "generated_at": "2026-11-22T19:49:19.433766+00:00",
     "summary": {
       "roadmaps": 98,
-      "active_projects": 15,
+      "active_projects": 14,
       "continuous_projects": 15,
-      "playtest_projects": 8,
-      "tasks": 3116,
-      "ready": 206,
-      "waiting": 190,
+      "playtest_projects": 9,
+      "tasks": 3123,
+      "ready": 205,
+      "waiting": 189,
       "needs_human": 35,
-      "in_progress": 49,
-      "done": 2555,
+      "in_progress": 46,
+      "done": 2566,
       "errors": 0,
-      "warnings": 40,
+      "warnings": 42,
       "info": 129
     },
     "errors": [],
@@ -83,6 +83,13 @@
       },
       {
         "severity": "warning",
+        "code": "STALE_IN_PROGRESS",
+        "project": "comet-city-academy",
+        "task": "t-033",
+        "message": "Task has remained review for 3 days."
+      },
+      {
+        "severity": "warning",
         "code": "POSSIBLY_UNNECESSARY_GATE",
         "project": "comic-film",
         "task": "t-009",
@@ -114,7 +121,7 @@
         "code": "STALE_IN_PROGRESS",
         "project": "every-villain-tactics",
         "task": "t-025",
-        "message": "Task has remained review for 7 days."
+        "message": "Task has remained review for 8 days."
       },
       {
         "severity": "warning",
@@ -135,21 +142,21 @@
         "code": "STALE_IN_PROGRESS",
         "project": "interface-vision",
         "task": "t-105",
-        "message": "Task has remained review for 9 days."
+        "message": "Task has remained review for 10 days."
       },
       {
         "severity": "warning",
         "code": "STALE_IN_PROGRESS",
         "project": "interface-vision",
         "task": "t-145",
-        "message": "Task has remained review for 6 days."
+        "message": "Task has remained review for 7 days."
       },
       {
         "severity": "warning",
         "code": "STALE_IN_PROGRESS",
         "project": "interface-vision",
         "task": "t-149",
-        "message": "Task has remained review for 32 days."
+        "message": "Task has remained review for 33 days."
       },
       {
         "severity": "warning",
@@ -237,6 +244,13 @@
       },
       {
         "severity": "warning",
+        "code": "DUPLICATE_YAML_KEY",
+        "project": "rainbow-bullet-hell-space-princess",
+        "task": null,
+        "message": "Duplicate key 'owner' at line 891 \u2014 YAML mapping semantics let the last occurrence silently win; check for a stale trailing owner/claimed_by/status value overriding the real one."
+      },
+      {
+        "severity": "warning",
         "code": "STALE_CLAIM_FIELDS",
         "project": "rainbow-bullet-hell-space-princess",
         "task": "t-022",
@@ -254,7 +268,7 @@
         "code": "STALE_IN_PROGRESS",
         "project": "ruler-hooked",
         "task": "t-057",
-        "message": "Task has remained review for 15 days."
+        "message": "Task has remained review for 16 days."
       },
       {
         "severity": "warning",
@@ -282,7 +296,7 @@
         "code": "STALE_IN_PROGRESS",
         "project": "save-the-plumber",
         "task": "t-028",
-        "message": "Task has remained review for 9 days."
+        "message": "Task has remained review for 10 days."
       },
       {
         "severity": "warning",
