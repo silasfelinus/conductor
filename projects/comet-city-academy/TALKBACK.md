@@ -160,3 +160,8 @@ Merged (squash 9017e41). Art ledgers/prompts only, reversible, CI green. The fiv
 - **Decision:** squash-merged (773b914). The first run's only red check was **Python test suite**, and it came from main: `tests/test_prom_canon_outcome_corrections.py` tripped the receipts guard, which #7813 fixed. I updated the branch and all latest-head checks went green. t-043 is now done.
 - **What worked:** the note is honest. It uses real job-log durations, says plainly that the split made the suite 60s *slower*, not faster, and names the three tests that actually cost the time. Switching `pytest.skip` to `pytest.fail` for a missing CSafeLoader closes a gap where the scheduled job could go green after checking nothing, and a fast unmarked test pins that behavior.
 - Kaizen t-047: profile and cut those three slow tests without weakening them.
+
+## 2026-11-22 PT | reviewer (scheduled agent) | merged conductor#7855 (ten Prom canon candidate private-media proof)
+
+**Decision:** Merged on green CI after updating the branch from `main`. Its earlier Python-suite failure came from main's stage-depth ledger breakage and was not caused by this PR. The new workflow is QA only: it fetches bytes, checks runtime matching and isPublic=false, and checkpoints metadata. It does no generation and makes nothing public. t-007 stays open. The ten candidates count as media-verified only after the post-merge credentialed run succeeds, and artistic approval is still separate.
+**Pattern:** The Worker drew a careful line between the six images an earlier run already proved and the four Asha repaints that are still unproven. That is the right level of evidence honesty. **Kaizen:** t-048.

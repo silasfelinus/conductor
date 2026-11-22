@@ -1134,3 +1134,13 @@ tasks:
       test_repo_ledgers_unsubmitted_cells_pass_negation_rules (37.07s). Find the repeated
       I/O or YAML parsing (e.g. a shared session-scoped ledger cache) and record before/after
       durations from real CI runs. Never skip, deselect or weaken those tests.
+  - id: t-048
+    milestone: m4
+    title: "Factor the duplicated private source/runtime/visibility media-proof steps into one ledger-list helper shared by the Prom canon and Tactics proof workflows"
+    status: ready
+    depends_on: []
+    owner: worker
+    passes: 0
+    stakes: reversible
+    note: |-
+      Kaizen from reviewer of conductor#7855 (2026-11-22). prom-canon-candidate-media-proof.yml repeats the verify_prom_tactics_media → verify_tactics_runtime_media → checkpoint → isPublic=false block per ledger, and prom-tactics-media-proof.yml carries the same shape. Move it into one script that takes a ledger list with expected counts, while keeping the explicit Krea2 receipt and `reviewed` boundaries. Never publish private art or flip is_public.

@@ -616,3 +616,13 @@ tasks:
       Kaizen from reviewer of conductor#7820 (2026-11-22). After the prom-tactics-media-proof workflow runs on main, record each Tactics telegraph ArtImage's actual result (downloaded bytes, aspect match, blank check) against its ledger receipt, so receipt-only rows stop counting as delivery. Never publish private art or switch is_public.
 
       Scoped art QA implementation: authenticated private byte length, decoded image dimensions, blank and aspect check, pixel checksum and safe per-image media_proof metadata on the twelve t-018 receipts. CI workflow checkpoints only metadata with exact ArtJob/ArtImage identities and preserves the original private images and is_public=false. Branch worker/every-villain-tactics-t027-private-media-evidence-20261122-k5r8; pending full CI, merge and production API-run evidence before completion.
+  - id: t-028
+    milestone: m4
+    title: "Generate the tactical arena receipt map from verified ledger keys so fallback paintings drop out once an original venue render is proven"
+    status: ready
+    depends_on: []
+    owner: worker
+    passes: 0
+    stakes: reversible
+    note: |-
+      Kaizen from reviewer of conductor#7853 (2026-11-22). The three dedicated venues (Last Order diner 71163/276806, Sunken Street 74323/277221, Valcourt Library 74324/277330) are pinned by hand in tests and the workflow. Source the arena→receipt map from ledgers whose media proof passed, and keep explicit art-review decisions separate, so a fallback painting cannot linger after an original render is verified.
