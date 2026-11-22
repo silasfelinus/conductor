@@ -282,3 +282,42 @@ def test_media_proof_refuses_unmeasured_bytes(tmp_path):
     with pytest.raises(ValueError, match="actual download byte count"):
         write_ledger_media_proof(source, entries, good, failures)
     assert source.read_text() == original
+
+
+def test_new_art_batches_reach_private_media_and_runtime_checks():
+    flow = yaml.safe_load(FLOW.read_text())
+    events = flow.get("on", flow.get(True, {}))
+    paths = events["push"]["paths"]
+    combat = ROOT / "projects/every-villain-tactics/art/ONE-HIT-CREW-COMBAT-STATES-2026-11-22.yaml"
+    emotions = ROOT / "projects/comet-city-academy/art/AUTHORED-RECRUITS-EMOTIONS-2026-11-22.yaml"
+    assert str(combat.relative_to(ROOT)) in paths
+    assert str(emotions.relative_to(ROOT)) in paths
+
+    combat_receipts = candidates([combat])
+    emotion_receipts = candidates([emotions])
+    assert len(combat_receipts) == 12
+    assert [row["job_id"] for row in combat_receipts] == list(range(76658, 76670))
+    assert [row["image_id"] for row in combat_receipts] == list(range(278823, 278835))
+    assert len(emotion_receipts) == 12
+    assert next(
+        row["image_id"] for row in emotion_receipts
+        if row["key"] == "recruit-femi-ilunga-angry-20261122"
+    ) == 279005
+    assert len({row["key"] for row in emotion_receipts}) == len(emotion_receipts)
+    assert len({row["image_id"] for row in emotion_receipts}) == len(emotion_receipts)
+    assert all(row["project"] in {"comet-city-academy", "every-villain-tactics"} for row in combat_receipts + emotion_receipts)
+
+    commands = "\n".join(
+        step.get("run", "")
+        for step in flow["jobs"]["verify-private-media"]["steps"]
+    )
+    assert "verify_tactics_runtime_media.py" in commands
+    for ledger in (combat, emotions):
+        assert str(ledger.relative_to(ROOT)) in commands
+    assert "--require-count 11 --write-evidence" not in commands
+    assert "--require-count 12 --write-evidence" in commands
+    assert "Verify all twelve Prom companion emotions" in FLOW.read_text()
+    assert commands.count("verify_tactics_runtime_media.py") >= 3
+    assert "--require-count 12 --write-evidence" in commands
+    assert "checkpoint_art_state.sh" in commands
+

@@ -560,7 +560,20 @@ def main(argv=None):
     if args.check_queue_budget:
         print("opening WAN queue budget: OK")
         return EXIT_DONE
+    if not args.out and args.stills_only:
+        print("--stills-only is a preview; provide --out to avoid replacing the live opening", file=sys.stderr)
+        return EXIT_ERROR
     sources = list(shot_sources(ledger, args.stills_only))
+    if not args.out:
+        pending = [key for key, _, _, clip_id in sources if clip_id is None]
+        if pending:
+            print(
+                "opening not published: WAN clips not DONE for "
+                + ", ".join(pending)
+                + " (use --out for a still-backed preview)",
+                file=sys.stderr,
+            )
+            return EXIT_RENDERING
     if ledger.get("round") == DOODLE_ROUND:
         # The approved first-round review is the identity-lock authority.
         approved = yaml.safe_load(
@@ -614,6 +627,14 @@ def main(argv=None):
         poster = staging.with_name("opening-poster.webp")
         kept[-1].save(poster, "WEBP", quality=88)
         clips = len(accepted_clips)
+        if not args.out and clips != len(sources):
+            print(
+                "opening not published: only "
+                f"{clips}/{len(sources)} WAN clips passed media validation; "
+                "use --out for a still-backed preview",
+                file=sys.stderr,
+            )
+            return EXIT_RENDERING
         print(f"{target}: {frames} frames, {seconds}s, {clips}/{len(sources)} shots animated")
         if rejected_clips:
             print("WAN clips rejected (stills substituted): " + ", ".join(rejected_clips), file=sys.stderr)

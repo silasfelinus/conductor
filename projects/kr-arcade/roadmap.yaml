@@ -1845,7 +1845,10 @@ tasks:
     milestone: m8
     title: "Repair Rampage depth slice 1: A city with something in it"
     status: review
-    updated: '2026-11-22T18:57:00Z'
+    owner: worker
+    claimed_by: 20261122T203555Z-kr-arcade-t110-tools-a9e3
+    claimed_at: '2026-11-22T20:35:55.781Z'
+    updated: '2026-11-22T20:39:27.437Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -1860,9 +1863,14 @@ tasks:
       Partial Repair Rampage depth pass: fix-chain multipliers, floor and tower completion rewards merged in kind_robots PR #5583 (173d818). Remaining campaign mechanics are still unimplemented; keep task ready.
 
       Partial window surprise slice: deterministic snack, toolbox and birthday cake pickups wired into broken windows with visible markers, charge and score rewards, and a 25-town contract test. Implementation PR pending CI; remaining t-110 mechanics still open.
-    owner: worker
-    claimed_by: 2026-11-22T185510Z-kr-arcade-t110-7f3c
-    claimed_at: '2026-11-22T18:55:10Z'
+
+      2026-11-22 PT: Repair Rampage deterministic window pickups merged in kind_robots#5586 (b050ac1); 14 checks passed and optional autofix skipped. Continue t-110 with rooftop systems, threats, reserves and music.
+
+      Partial slice 1: activated five rooftop systems and four telegraphed environmental threats for Repair Rampage, with deterministic town checks. Code commit 0d0610ccadfcdd5dd821886aa366be050e9dd950; verify CI before merge.
+
+      Merged powered rooftops, four telegraphed hazards and seeded attract pilot in kind_robots#5591 (33fd1ab0a9ad75335a2d495cdc9a2c8a9476ab6f); all nine latest-head GitHub Actions checks passed. Partial slice 1; toolbox abilities, reserves, missing window surprises and music remain.
+
+      Partial Repair Rampage slice 1: six usable toolbox powers, three backup robots with oil-break recovery, electricity windows, elevator column bonus, original chiptune loop and deterministic gameplay tests. Implementation PR opening; CI and browser verification required before merge. Remaining window scenarios and full campaign work remain open.
 
   - id: t-111
     milestone: m8
@@ -1912,7 +1920,10 @@ tasks:
   - id: t-114
     milestone: m8
     title: "Rain Catcher depth slice 1: Reading the sky"
-    status: ready
+    status: claimed
+    owner: worker
+    claimed_by: 20261122T205022Z-kr-arcade-t114-rain-c8f4
+    claimed_at: '2026-11-22T20:50:22.423Z'
     passes: 0
     stakes: reversible
     note: >-
@@ -1922,7 +1933,7 @@ tasks:
       applies. Code: kind_robots utils/arcade/games/ (registry slug rain-catcher). Silas, 2026-10-11: "I need
       an assessment done of the other arcade games. I want the same level of quality improvements, they should
       not just be thin veneers of the old games. But newer, better, even more awesome."
-    updated: '2026-11-22T00:04:00Z'
+    updated: '2026-11-22T20:50:22.423Z'
 
   - id: t-115
     milestone: m8

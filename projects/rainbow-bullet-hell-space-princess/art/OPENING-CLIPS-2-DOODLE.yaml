@@ -11,7 +11,7 @@ project_slug: rainbow-bullet-hell-space-princess
 designer: Rainbow C.A.T.S. opening
 is_public: false
 is_mature: false
-priority: 90
+priority: 1000
 auto_submit: true
 lanes:
 - key: wan-mp4
@@ -65,9 +65,6 @@ subjects:
       status: DONE
       art_image_id: 277955
 - key: intro-dolphin-armada
-  # 2026-11-22 PT t-038 review: the first render (ArtJob 76358 / ArtImage 277956, seed 894003) animated the
-  # dolphin enemy sprite (262123) on its flat chroma-green sheet, which read as a broken frame in the cut.
-  # Re-pinned to the approved stage-2 card (262204): the C.A.T.S. fleet over the neon jellyfish sea.
   lane: wan-mp4
   entity: cinematic
   title: The C.A.T.S. fleet surges over the neon jellyfish sea
@@ -77,11 +74,17 @@ subjects:
   last_image_id: 262204
   duration: 2
   loop: true
-  prompt_prose: The same four glossy cartoon starfighters streak left to right across a violet starry sky above a
-    glowing neon sea, their pastel exhaust trails stretching behind them. Translucent turquoise jellyfish drift
-    slowly upward, a green and pink aurora plume shimmers over the distant spire, and light ripples roll across the
-    water. Clean bold cartoon outlines and glossy neon airbrush reflections, the whole scene held in the same
+  prompt_prose: The same four glossy cartoon starfighters streak left to right across a violet starry sky above
+    a glowing neon sea, their pastel exhaust trails stretching behind them. Translucent turquoise jellyfish drift
+    slowly upward, a green and pink aurora plume shimmers over the distant spire, and light ripples roll across
+    the water. Clean bold cartoon outlines and glossy neon airbrush reflections, the whole scene held in the same
     exact composition.
+  jobs:
+    wan-mp4: 76687
+  art:
+    wan-mp4:
+      status: DONE
+      art_image_id: 279030
 - key: intro-maribel-bloom
   lane: wan-mp4
   entity: cinematic
