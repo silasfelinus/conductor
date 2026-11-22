@@ -442,11 +442,11 @@ tasks:
   - id: t-018
     milestone: m3
     title: "One-hit henchmen and Picnic Panic one-shot encounter"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 2026-11-22T040330Z-evt-t018-crew-portraits-f3x7
     claimed_at: '2026-11-22T04:03:30Z'
-    updated: '2026-11-22T04:03:30Z'
+    updated: '2026-11-22T04:10:30Z'
     depends_on: [t-004, t-017]
     passes: 0
     stakes: reversible
@@ -476,6 +476,8 @@ tasks:
       Scoped source-media to actual gameplay route proof: added read-only Tactics verifier which checks all 12 durable one-hit telegraph ArtImages through the exact /api/art/images/{id}/file endpoint the live game uses, compares decoded pixels with the ArtImage source, and verifies private anonymous-denial or intentional public visibility. Includes redirection and privacy regression tests and extends the authenticated Conductor Actions workflow. No new ArtJobs, public image exports or production DB writes. Other t-018 SPECIES, art curation and gameplay readiness work remains open.
 
       Read-only Tactics gameplay media URL and private-access verifier merged to Conductor main via #7788 at 65da7075542706d35d642b174fddf76a14ae9ebc, with all four latest-head checks green. Private-media push run 44976289684 is separate and requires 12/12 final media proof. t-018 remains incomplete for species/facet art curation and full gameplay integration; return READY.
+
+      Art-first t-018 scoped integration: the twelve original one-hit crew ArtImages had passed authenticated source bytes and actual game media URL verification (production workflow 44976289684, 12/12). However unitPortrait rendered each one-hit minion as its owner superhero. The Tactics code now preloads the 3 crew action paintings from those original private ArtImage receipts and uses them directly for their one-hit combat standees through the authenticated Pinia art store. Wrong-person fallback portraits are suppressed until the art loads; warnings remain operational. 3-action source attachments and tests are handed to PR review. Broader SPECIES and one-shot art curation work remains open; do not mark the umbrella task done.
   - id: t-019
     milestone: m3
     title: "Deterministic post-battle points and earned scrapbook achievements"
