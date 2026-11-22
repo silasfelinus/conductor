@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import re
 import sys
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
@@ -53,6 +54,7 @@ def candidates(paths):
                         "asset": asset,
                         "job_id": job_id,
                         "image_id": image_id,
+                        "lane": lane,
                         "expected_size": subject.get("size"),
                         "reviewed": verdict.startswith(("keep", "reject"))
                         or status in {"ACCEPTED", "REJECTED"},
@@ -86,6 +88,7 @@ def check_one(entry, load_image):
         **entry,
         "width": width,
         "height": height,
+        "downloaded_bytes": image.info.get("_downloaded_bytes"),
         "pixel_sha256": hashlib.sha256(pixels).hexdigest(),
     }
 
@@ -113,6 +116,80 @@ def verify(entries, load_image, max_workers=4):
     return sorted(results, key=lambda row: (row["project"], row["key"])), sorted(
         failures, key=lambda row: row["key"]
     )
+
+
+
+def write_ledger_media_proof(path, entries, results, failures):
+    """Update only metadata blocks on exact existing receipts, never private bytes."""
+    target = Path(path)
+    source = target.read_text(encoding="utf-8")
+    chunks = re.split(r"(?=^- key: )", source, flags=re.MULTILINE)
+    receipts = {row["key"]: row for row in entries}
+    verified = {row["key"]: row for row in results}
+    broken = {row["key"]: row for row in failures}
+    modified = 0
+
+    for index in range(1, len(chunks)):
+        match = re.match(r"- key: ([^\n]+)", chunks[index])
+        if not match:
+            continue
+        key = match.group(1).strip()
+        receipt = receipts.get(key)
+        if not receipt or (key not in verified and key not in broken):
+            continue
+
+        result = verified.get(key)
+        if result:
+            count = result.get("downloaded_bytes")
+            if type(count) is not int or count <= 0:
+                raise ValueError(f"{key}: verified image missing actual download byte count")
+            details = [
+                "      status: VERIFIED",
+                f"      art_job_id: {receipt['job_id']}",
+                f"      art_image_id: {receipt['image_id']}",
+                f"      downloaded_bytes: {count}",
+                f"      width: {result['width']}",
+                f"      height: {result['height']}",
+                "      aspect_match: true",
+                "      blank_check: PASS",
+                f"      pixel_sha256: {result['pixel_sha256']}",
+            ]
+        else:
+            details = [
+                "      status: FAILED",
+                f"      art_job_id: {receipt['job_id']}",
+                f"      art_image_id: {receipt['image_id']}",
+                f"      reason: {broken[key]['reason']}",
+            ]
+        block = "\n".join(
+            ["  media_proof:", f"    {receipt['lane']}:", *details, ""]
+        )
+        previous = chunks[index]
+        without_old = re.sub(
+            r"(?m)^  media_proof:\n(?: {4,}.*\n)*",
+            "",
+            previous,
+        )
+        updated = without_old.rstrip("\n") + "\n" + block
+        if previous != updated:
+            chunks[index] = updated
+            modified += 1
+
+    # Every provided receipt must still appear in the unmodified ledger's
+    # subject list. A stale result cannot silently attach to another person.
+    present = {
+        match.group(1).strip()
+        for chunk in chunks[1:]
+        if (match := re.match(r"- key: ([^\n]+)", chunk))
+    }
+    if any(key not in present for key in receipts):
+        raise ValueError("media proof receipt does not match source art ledger")
+    rebuilt = "".join(chunks)
+    if rebuilt != source:
+        target.write_text(rebuilt, encoding="utf-8")
+    print(f"MEDIA_PROOF_LEDGER_UPDATED={modified}")
+    return modified
+
 
 
 def report(entries, results, failures):
@@ -152,6 +229,7 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("ledgers", nargs="+")
     parser.add_argument("--require-count", type=int, default=0)
+    parser.add_argument("--write-evidence", action="store_true", help="record private media verification metadata against one source ledger")
     args = parser.parse_args(argv)
     entries = candidates(args.ledgers)
     if len(entries) < args.require_count:
@@ -164,6 +242,10 @@ def main(argv=None):
     from export_shifting_lands_cards import load_image
 
     results, failures = verify(entries, load_image)
+    if args.write_evidence:
+        if len(args.ledgers) != 1:
+            raise ValueError("--write-evidence requires exactly one ledger")
+        write_ledger_media_proof(args.ledgers[0], entries, results, failures)
     return report(entries, results, failures)
 
 

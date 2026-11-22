@@ -27,7 +27,7 @@ concurrency:
   cancel-in-progress: false
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   verify-private-media:
@@ -41,6 +41,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: main
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
@@ -54,11 +55,17 @@ jobs:
             echo "::error::Production media token is unavailable; no private images fetched."
             exit 1
           fi
-      - name: Verify twelve Tactics telegraph image downloads
+      - name: Verify and record twelve private Tactics telegraph downloads
         run: |
+          set +e
           python scripts/verify_prom_tactics_media.py \
             projects/every-villain-tactics/art/ONE-HIT-CREW-TELEGRAPHS-2026-11-20.yaml \
-            --require-count 12
+            --require-count 12 --write-evidence
+          verify_status=$?
+          bash scripts/checkpoint_art_state.sh "chore: checkpoint Tactics authenticated media proof [skip ci]"
+          checkpoint_status=$?
+          if [ "$checkpoint_status" -ne 0 ]; then exit "$checkpoint_status"; fi
+          exit "$verify_status"
       - name: Verify Tactics game-media URL and private access policy
         run: |
           python scripts/verify_tactics_runtime_media.py \
