@@ -1108,14 +1108,15 @@ tasks:
   - id: t-055
     milestone: m4
     title: "Record each WAN shot's requested seconds, fps and frame headroom against the 8s/128-frame budget in opening-delivery-report.json"
-    status: claimed
+    status: done
     depends_on: []
     passes: 0
     stakes: reversible
-    updated: '2026-11-22T01:46:02Z'
+    updated: '2026-11-22T01:54:31+00:00'
     source: kaizen-pr-7777
     note: |-
       Reviewer kaizen from the 2026-11-21 PT merge of conductor#7777 (t-053). opening-delivery-report.json is now the single review sidecar; reuse the t-052 budget arithmetic (validate_opening_queue_budget) so the report lists per-shot requested duration, fps, frames and remaining headroom. A reviewer can then see which re-queue shots are near the limit without reading the ledger. Assert exact values in a test.
-    owner: worker
+
+      opening-delivery-report.json now carries wan_shot_budgets (per WAN shot requested seconds, fps, frames, seconds_headroom, frame_headroom vs the 8s/128-frame budget), computed by wan_shot_budgets() which validate_opening_queue_budget now reuses. Exact values asserted in tests/test_rainbow_opening_queue_budget.py, including a tiny-overage (8.0001s) rejection regression guard.
     claimed_by: 2026-11-22T01:46:10Z-rbh055-k3
     claimed_at: '2026-11-22T01:46:02Z'
