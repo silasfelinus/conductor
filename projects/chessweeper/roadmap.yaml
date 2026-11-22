@@ -11,7 +11,7 @@ milestones:
   - id: m1
     title: "FOUNDATION — shared chess / mines / discs and complete three-style first playable"
     weight: 45
-    status: not-started
+    status: done
   - id: m2
     title: "PERSONALITY — each style's unique mechanics and game feel"
     weight: 20
@@ -28,11 +28,10 @@ tasks:
   - id: t-001
     milestone: m1
     title: "Build and wire the playable three-theme Chessweeper frontend at /play/chessweeper"
-    status: needs-human
+    status: done
     passes: 0
-    stakes: outward-facing
-    gate_human: true
-    gate_reason: publish
+    stakes: reversible
+    implementation_pr: silasfelinus/kind_robots#5305
     note: |-
       Source prototype: the user's standalone Chessweeper x Disc Room HTML5 game from ChatGPT (2026-11-17 PT). Bring the working chess/mine/disc loop to the actual Kind Robots frontend, register Play navigation, and make all three mode-specific rules playable: Sugar Rush freeze/combo, Ashen Last Stand, Jackpot Double-or-Nothing multiplier/multiball. Reversible code can be submitted to PR; public release/deployment needs an explicit human publication decision.
 
@@ -42,20 +41,19 @@ tasks:
 
       FOR SILAS: The three-mode HTML5 game is playable in PR kind_robots#5305, with the Play tab and /play/chessweeper route, Sugar Rush, Ashen Last Stand, and Jackpot wagering/multiball. Local browser tests passed with no JS errors or mobile horizontal overflow at 390px. GitHub checks passed formatting, TypeScript, layout, navigation, project architecture and schema; Contract Tests were still running on latest head when checked. This change is outward-facing, so PR is open and unmerged pending explicit public publication permission. Next action: once CI is fully green and the publishing gate is cleared, merge PR #5305; then continue t-002/003/004 for full game polish and painted art. Conductor project scaffolding PR #7565 was merged.
 
-      FOR SILAS: The three playable Chessweeper world implementations are in Kind Robots PR #5305, including route and Play tab. Local headless game-engine smoke tests passed (mode switching, mines, chess move, Sugar Rush freeze, Ashen Last Stand and Jackpot Double or Nothing). Branch CI architecture, layout, navigation, schema, TypeScript and formatting checks passed; final contract check status must be rechecked at review. PR is intentionally unmerged because t-001 is marked outward-facing/publish and requires a separate explicit release decision. No public deployment has occurred. The next action is to approve or reject the /play/chessweeper publication; PR remains available for review. Painted art, end-to-end browser QA, progression and Playtest handoff remain separate tasks.
-    claimed_by: 2026-11-18T084300Z-chessweeper-t001-q7m2
-    claimed_at: '2026-11-18T08:43:00Z'
-    updated: '2026-11-18T09:16:00Z'
-    soft_gate: false
+      FOR SILAS: The three playable Chessweeper world implementations are in Kind Robots PR #5305, including route and Play tab. Local headless game-engine smoke tests passed (mode switching, mines, chess move, Sugar Rush freeze, Ashen Last Stand and Jackpot Double or Nothing). Branch CI architecture, layout, navigation, schema, TypeScript and formatting checks passed; final contract check status must be rechecked at review. This was the original pre-merge gate note, retained as history. PR #5305 subsequently merged on 2026-11-19, and Silas removed the human requirement for this engineering task on 2026-11-21 PT. No new publication or deployment authorization is inferred; substantive production is still unfinished and belongs to t-002 onward.
+
+      2026-11-21 PT correction: t-001 is complete as a merged first-playable implementation (kind_robots#5305, merge 59c90d51); no human verdict is needed to finish agent-owned game development. Remove the obsolete publish gate here. NEVER use this as evidence that the full game is ready for human playtesting: completed animations, sound, music, authored illustrated ending scenes, real achievements and scrapbook, asset delivery and full-run QA remain mandatory before t-005. Public outreach and any separately gated production changes still need explicit permission.
+    updated: '2026-11-22T01:04:00Z'
   - id: t-002
     milestone: m2
     title: "Deepen Sugarbomb, Ashen and Jackpot into three replayable campaigns"
-    status: waiting
+    status: ready
     depends_on: t-001
     passes: 0
     stakes: reversible
     note: >-
-      Tune distinct pacing, scoring, hazards and world campaigns. Include at least four authored endings per world, end-state selection and scrapbook discovery; achievements for chess/mines/discs/world skills, persistent records, save/continue and settings. In-page meta systems first prototyped in kind_robots#5305 must be hardened, reviewed for account/device save semantics and migrated to canonical Kind Robots stores as appropriate. Balance with seeded trials and assess meaningful replayability.
+      Build three distinct complete campaigns, not recolors: authored escalating encounters, distinct enemies/board events, risk-versus-reward decisions, fully implemented Sugar Rush, Ashen Last Stand and Jackpot Double-or-Nothing abilities, branching victory/failure conditions and at least four meaningful ending routes per world (12 total). Own saved checkpoint/continue, per-world campaign records, challenge/seed/difficulty settings, no cross-world leakage, real options that persist and are honored. Use canonical Kind Robots stores for application persistence; account versus guest/device behavior must be explicit. Every route must be realistically obtainable and tested without cheating the game state. Ending presentation/illustration is t-009, progression achievements/gallery is t-010, music is t-008; no task is done solely on mock copy, UI shells or stubs.
   - id: t-003
     milestone: m3
     title: "Queue, deliver and attach original illustrated art for all three mode identities"
@@ -76,26 +74,95 @@ tasks:
     milestone: m4
     title: "Add deterministic tests, full playthroughs and 390/768/1440 viewport QA"
     status: waiting
-    depends_on: t-001
+    depends_on: [t-002, t-003, t-006, t-007, t-008, t-009, t-010]
     passes: 0
     stakes: reversible
     note: >-
-      Test legal special chess moves, checkmate/stalemate, mine first-probe behavior, clue cascade, collisions, ability recharge and all three unique mode mechanics. Add full runs for four endings per world, achievement triggers, saves/continue, settings persistence, scrapbook reachability, tutorial registration and all three Play/highlight surfaces. Screenshots and input QA at 390/768/1440, including keyboard and touch; test account/device semantics explicitly.
+      Final independent acceptance after production tasks t-002, t-003, t-006..t-010: run deterministic seeded full campaigns and actual browser-input paths across every world, including chess rules (castling, en passant, promotion, king safety, checkmate/stalemate), mine safety/clue cascade, disc collisions/powers, all twelve reachable ending branches, no impossible softlocks, loss/restart/checkpoint resume, achievements and scrapbook unlocks and last-item reachability, sound/music/mute and motion settings, visual effects, and real delivered art URLs. Test three viewport widths (390/768/1440), keyboard, mouse, touch and gamepad where supported, contrast, reduced-motion and audio gesture policy. Capture screenshots/video evidence and run actual CI typecheck, lint, tests, engine unit tests and full-run browser tests. A rendered page and a forced end-state fixture do NOT replace actual playthrough evidence.
   - id: t-005
     milestone: m4
     title: "Finish remaining finite roadmap, mark for human testing and set playtest/normal"
     status: waiting
-    depends_on: t-002
+    depends_on: [t-002, t-003, t-004, t-006, t-007, t-008, t-009, t-010]
     passes: 0
     stakes: reversible
     note: >-
-      Verify art, complete metagame systems, authored endings, tutorial/sidebar, highlight, tests and usable URL before handoff. At agent-owned completion, label master issue [FLAGGED FOR HUMAN TESTING], close it as completed, move to playtest/normal. Subjective playtesting and public publishing are separate human gates.
+      STRICT LAST TASK. The full substantive roadmap MUST be done, not merely t-001 first-playable or a share-ready page. Verify all prior dependency tasks are done with merged passing PRs and actual evidence: complete three-world campaigns, art and production animation, integrated sound and distinct music per world, twelve authored AND illustrated endings, achievements with real earn triggers, discoverable persistent scrapbook/records, settings and tutorial, save/load and complete seeded engine/full-run QA on phone/tablet/desktop. No queue placeholders, silent audio, static sketches, title-only endings, fake unlocks, inaccessible collection rows or unverified file paths count. Once all agent-owned work is truly complete and the game is usable on its existing route, update issue #5304 to [FLAGGED FOR HUMAN TESTING], close the indexed issue, and move Conductor to playtest/normal. Human trials and subjective verdict happen AFTER this handoff; no human gate is needed for agent build/QA. Separate public launch/promotion/deploy approvals remain separate and are never inferred from the handoff.
   - id: t-006
     milestone: m4
     title: "Extract the chess/mine/disc rules engine from the static Play HTML into a seeded, unit-testable TypeScript module"
-    status: waiting
+    status: ready
     depends_on: t-001
     passes: 0
     stakes: reversible
     note: >-
       Reviewer kaizen from conductor#7565 (2026-11-17 PT). The first Play build ships as public/chessweeper/index.html; t-004's deterministic tests need an importable engine with a seeded RNG for mine layouts and disc paths.
+  - id: t-007
+    milestone: m3
+    title: "Deliver world-specific gameplay animation, cinematic transitions and responsive VFX"
+    status: ready
+    depends_on: t-001
+    passes: 0
+    stakes: reversible
+    note: >-
+      Ship actual original animation, not CSS-only placeholders: animated chess pieces and
+      world-specific actions, meaningful move/capture/mine-reveal/disc trails and collisions,
+      Sugar Rush freeze/combo, Ashen Last Stand, Jackpot multiball and wager payoffs,
+      win/loss transitions, and cinematic lead-ins to all twelve ending scenes. Integrate
+      delivered sprite/scene art or an approved traceable animation pipeline; preserve
+      gameplay readability, hitboxes and deterministic simulation. Verify animation
+      timings and fallback behavior on phone/tablet/desktop with reduced-motion support.
+      Include real screenshots or recorded playback and tests before closing.
+
+  - id: t-008
+    milestone: m3
+    title: "Deliver original sound effects, looping music and a gesture-safe audio mixer"
+    status: ready
+    depends_on: t-001
+    passes: 0
+    stakes: reversible
+    note: >-
+      Deliver three distinct original musical identities (Sugarbomb playful synth,
+      Ashen dark atmospheric, Jackpot neon casino) and actual playable loops including
+      transitions, boss/endings cues and pause/resume; original SFX for chess, mines,
+      disc ricochets, damage, abilities, achievements, victories and defeats.
+      Use the existing art/audio job and asset pipeline with tracked IDs, final files
+      and verified URLs; temporary oscillator sounds are not the finished soundtrack.
+      Add gesture-safe audio start, mute/volume, per-category levels, persistence,
+      focus/route cleanup, and no autoplay before consent. Test browser playback,
+      crossfades, missing-audio fallback and accessibility; no silent game qualifies.
+
+  - id: t-009
+    milestone: m3
+    title: "Write, illustrate and integrate twelve distinct playable ending scenes"
+    status: waiting
+    depends_on: t-002
+    passes: 0
+    stakes: reversible
+    note: >-
+      Deliver a minimum of four genuinely distinct endings for each of the three
+      worlds: chess victory, minefield clear, arena/special route, and setback or
+      escape outcome. Author full consequence-aware scene prose, original illustrated
+      ending plates with durable art IDs and verified image URLs, appropriate
+      original audio/animation staging, clear route-to-outcome logic, and a
+      return/continue path. Different text on the same generic image is not twelve
+      finished scenes. Verify each ending is actually reachable from gameplay and
+      recorded for the scrapbook. No human creative signoff prerequisite.
+
+  - id: t-010
+    milestone: m2
+    title: "Complete achievements, permanent world scrapbook and progression records"
+    status: waiting
+    depends_on: t-002
+    passes: 0
+    stakes: reversible
+    note: >-
+      Real unlockable achievements across chess skill, Minesweeper deduction,
+      disc survival and all three signature world mechanics; award only on
+      validated gameplay events, persist and show unlock feedback. Build a full
+      scrapbook with all twelve illustrated endings, character/piece art,
+      achievements, campaign milestones, history, high scores and locked/unlocked
+      collection entries. Everything must remain reachable on a phone (no
+      clipping), with explicit guest/device versus signed-in account semantics.
+      Test unlock idempotence, save/restore, world isolation, last gallery entry,
+      keyboard/touch interaction and non-spoiler locked content.
