@@ -5,6 +5,7 @@ from pathlib import Path
 import yaml
 
 from scripts.art_ledger_authoring import ledger_problems
+from scripts.art_ledger_receipts import receipt_problems
 from scripts.repair_negation_art_prompts import violations
 
 LEDGER = (
@@ -38,8 +39,9 @@ def test_four_private_unique_repaint_requests_are_prepared_for_submission():
         assert subject["asset"].startswith(
             "comet-city-academy/identities/mutant-discipline/repaint/"
         )
-        assert "jobs" not in subject
-        assert "art" not in subject
+        # Auto Art Generate writes durable ArtJob and ArtImage receipts here
+        # after submission. Both a draft and a rendered cell must stay valid.
+        assert receipt_problems(subject) == [], subject["key"]
         prose = subject["prompt_prose"]
         assert len(prose) >= 500, subject["key"]
         assert "four" in prose.lower(), subject["key"]
