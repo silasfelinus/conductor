@@ -209,7 +209,7 @@ tasks:
   - id: t-009
     milestone: m3
     title: "Write, illustrate and integrate twelve distinct playable ending scenes"
-    status: waiting
+    status: done
     depends_on: t-002
     passes: 0
     stakes: reversible
@@ -222,6 +222,14 @@ tasks:
       return/continue path. Different text on the same generic image is not twelve
       finished scenes. Verify each ending is actually reachable from gameplay and
       recorded for the scrapbook. No human creative signoff prerequisite.
+
+      2026-11-22 PT done: 12 authored ending scenes (mate / minefield / arena / setback per
+      world). Each has two paragraphs of prose, a pact-aware 'Your run' epilogue, a campaign-
+      finale line, an illustrated plate (ArtJobs 76704-76715, five re-rendered after QA via
+      #7865), and Next / Scrapbook / Board actions. All 12 were reached by real play in the CI
+      playthrough and recorded in the scrapbook.
+    updated: '2026-11-22T23:16:28Z'
+    implementation_pr: 'silasfelinus/kind_robots#5597'
 
   - id: t-010
     milestone: m2
