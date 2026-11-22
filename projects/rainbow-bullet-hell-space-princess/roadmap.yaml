@@ -1123,14 +1123,17 @@ tasks:
   - id: t-057
     milestone: m4
     title: "Unit-test validate_shot_coverage in export_rainbow_opening.py and give coverage failures their own error prefix"
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
     depends_on: []
     source: reviewer-kaizen-2026-11-22
-    updated: '2026-11-22T07:55:54Z'
+    updated: '2026-11-22T10:47:00Z'
     note: >-
       Reviewer kaizen from the 2026-11-22 PT merge of conductor#7815. The new preflight
       shipped without tests; add cases for a missing shot, a duplicate key, a non-int or
       zero source_image_id, and both the doodle and legacy rounds. Failures currently print
       under the "opening WAN queue budget:" prefix; give coverage errors a distinct message.
+    owner: worker
+    claimed_by: 2026-11-22T104700Z-rainbow-t057-c8f3
+    claimed_at: '2026-11-22T10:47:00Z'
