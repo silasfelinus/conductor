@@ -56,3 +56,9 @@ type: critique
 **Pattern:** Battle payoff is stronger when chapter decisions change the next playable state rather than solely a narration paragraph. Prior transient unrelated Contract Tests failure was resolved by a successful rerun, not by weakening tests.
 
 **Next action:** Keep t-007 available for independent playable mission follow-up after review, test varied full-six-run histories, and do not count missing art as delivered.
+
+## 2026-11-22 PT | reviewer (scheduled agent) | conductor#7820 private media proof aspect/blank guard (t-018 partial)
+
+**Decision:** I reviewed the 3-file diff, which extends the existing `verify_prom_tactics_media.py` rather than adding a duplicate pipeline, as the Worker intended. Every `size:` in the five Prom ledgers and the Tactics telegraph ledger parses as `WxH`, so the new aspect guard can't fail closed on a format mismatch. The workflow counts match the ledgers (14+5+6=25, 148+24=172). All checks were green except `Validate Worker PR handoff`: the body used free-form headings (`### Scope`, `### Root cause…`). The reviewer moved the body under the required headings without changing the Worker's content.
+
+**Pattern:** This is the handoff-template miss again. Run `scripts/check_pr_handoff_template.py --head-ref worker/x < body.md` before opening a PR. Receipts ≠ delivery: t-018 stays open until the post-merge credentialed workflow run reports actual bytes and visual QA happens.

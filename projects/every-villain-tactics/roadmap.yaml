@@ -598,3 +598,17 @@ tasks:
       phone/tablet/desktop visual QA, and durable ArtJob/ArtImage
       provenance. Authoring records count as concepts, not maps or art.
       Keep human design and public-release gates separate.
+  - id: t-027
+    milestone: m4
+    title: "Record the post-merge media-proof run's per-image aspect/blank/bytes outcome on the t-018 art ledger"
+    status: ready
+    depends_on: []
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Kaizen from reviewer of conductor#7820 (2026-11-22). After the
+      prom-tactics-media-proof workflow runs on main, record each Tactics
+      telegraph ArtImage's actual result (downloaded bytes, aspect match,
+      blank check) against its ledger receipt, so receipt-only rows stop
+      counting as delivery. Never publish private art or switch is_public.

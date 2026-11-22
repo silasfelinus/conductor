@@ -842,7 +842,8 @@ tasks:
     title: "Recut the thrash-metal opening from the doodle art"
     status: ready
     depends_on: [t-036]
-    passes: 0
+    passes: 1
+    retry_context: 'pass 1 failed (quality): conductor#7823 stages the opening in a /tmp TemporaryDirectory and publishes with Path.replace (os.replace), which raises EXDEV (cross-device link) whenever /tmp and the kind_robots checkout are on different filesystems; it also writes opening-delivery-report.json ending in a literal backslash-n string instead of a real newline, and the PR body lacks the required handoff headings. Do differently: stage in a sibling dir under target.parent (tempfile.mkdtemp(dir=target.parent)) or use shutil.move; restore the real newline (or reuse write_delivery_report on the staged path); publish the --out WebM as target.with_suffix(''.webm''); add a main()-level test with mocked encode/ffprobe and a real tmp target.parent. Reuse branch worker/rainbow-bullet-hell-space-princess-t-038-export-verify-n9q2 and PR #7823. Review: https://github.com/silasfelinus/conductor/pull/7823#issuecomment-7077365743'
     stakes: reversible
     updated: '2026-11-22T08:09:32Z'
     note: |-
