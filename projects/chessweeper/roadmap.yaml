@@ -48,11 +48,11 @@ tasks:
   - id: t-002
     milestone: m2
     title: "Deepen Sugarbomb, Ashen and Jackpot into three replayable campaigns"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 20261122T035621Z-chessweeper-t002-mastery-c2bd
     claimed_at: '2026-11-22T03:56:21.881Z'
-    updated: '2026-11-22T03:56:21.881Z'
+    updated: '2026-11-22T03:58:49.977Z'
     depends_on: t-001
     passes: 0
     stakes: reversible
@@ -62,6 +62,8 @@ tasks:
       Partial implementation of all three authored four-chapter Chessweeper campaigns in worker/chessweeper-t002-authored-campaigns-20261121-p3x9: each world has distinct sequential named battles, mode-specific score, armor and hazard modifiers, campaign advancement only on earned victories, retry after loss, saved per-world progress, compact on-board chapter UI, and deterministic regression tests in the contract workflow. Remaining t-002 includes full narrative gameplay variation, difficulty tuning, canonical save/account semantics, full playthrough acceptance, and the twelve illustrated endings tracked in t-009. Do not mark done merely for these initial playable campaign rounds.
 
       Campaign chapter foundation merged in Kind Robots PR #5543 on 2026-11-21 PT. Four authored stages per world and verified contract checks; substantive campaign branch variety, progressive goals and device/account persistence remain. Return unfinished task to ready for the next implementation slice.
+
+      Added twelve original, optional chapter mastery trials across Sugarbomb, Ashen and Jackpot, driven by actual win state and special-action events (Sugar Rush, Last Stand, wager/payout), plus persistent per-world mastery bitsets and best scores, a compact stage HUD, and deterministic mock-engine tests. Implementation branch worker/chessweeper-t002-mastery-trials-20261121-c2bd. Finite campaign t-002 remains incomplete: world narrative branching, authored endings, account/device saving and actual full-run balance QA still remain.
   - id: t-003
     milestone: m3
     title: "Queue, deliver and attach original illustrated art for all three mode identities"
