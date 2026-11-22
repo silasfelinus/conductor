@@ -63,11 +63,11 @@ tasks:
   - id: t-003
     milestone: m3
     title: "Queue, deliver and attach original illustrated art for all three mode identities"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 20261122T113045Z-chessweeper-t003-art-delivery-q9n2
     claimed_at: '2026-11-22T11:30:45Z'
-    updated: '2026-11-22T11:30:45Z'
+    updated: '2026-11-22T11:40:00Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -91,6 +91,8 @@ tasks:
       #7809 closed as superseded). Still partial: the six requests are only queued. Remaining:
       confirm ArtJob ids, visually QA the renders, attach piece atlases and action plates.
       Returned to ready; claim released.
+
+      Integrated world-specific twelve-rank painted piece atlases into the live Chessweeper board with per-world asynchronous loading, stale-response isolation and readable glyph fallback. ArtJobs 76602-76604 are recorded in the art queue, but delivery and visual QA remain outstanding. Implementation PR pending.
     implementation_pr: 'silasfelinus/conductor#7817'
   - id: t-004
     milestone: m4
