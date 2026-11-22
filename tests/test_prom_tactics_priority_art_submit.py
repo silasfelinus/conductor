@@ -48,6 +48,33 @@ def test_priority_art_submission_precedes_long_memory_and_generic_sweeps():
     assert "scripts/checkpoint_art_state.sh" in save["run"]
 
 
+
+def test_independent_priority_workflow_can_enqueue_without_generic_backlog():
+    dedicated = ROOT / ".github/workflows/prom-tactics-priority-art.yml"
+    document = yaml.safe_load(dedicated.read_text(encoding="utf-8"))
+    steps = document["jobs"]["submit-private-art"]["steps"]
+    names = [step.get("name") for step in steps]
+    submit = steps[names.index("Submit approved private Krea2 requests with stable request keys")]
+    checkpoint = steps[names.index("Persist accepted ArtJob receipts before status checks")]
+    status = steps[names.index("Refresh private ArtJob status and ArtImage receipts")]
+
+    assert document["concurrency"]["cancel-in-progress"] is False
+    assert document["permissions"]["contents"] == "write"
+    assert "scripts/enqueue_art_requests.py" in submit["run"]
+    assert str(TACTICS_LEDGER.relative_to(ROOT)) in submit["run"]
+    assert str(PROM_LEDGER.relative_to(ROOT)) in submit["run"]
+    assert submit["env"]["KR_API_TOKEN"] == "${{ secrets.KR_API_TOKEN }}"
+    assert "always()" in checkpoint["if"]
+    assert "scripts/checkpoint_art_state.sh" in checkpoint["run"]
+    assert "--status" in status["run"]
+    assert names.index("Persist accepted ArtJob receipts before status checks") < names.index(
+        "Refresh private ArtJob status and ArtImage receipts"
+    )
+    keyed_script = (ROOT / "scripts/enqueue_art_requests.py").read_text(encoding="utf-8")
+    assert 'body["requestKey"] = cell_request_key(' in keyed_script
+
+
+
 def test_priority_tactics_art_requests_are_private_and_unique():
     art = yaml.safe_load(TACTICS_LEDGER.read_text(encoding="utf-8"))
     assert art["auto_submit"] is True
