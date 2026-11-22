@@ -189,6 +189,7 @@ import scripts.art_queue_health as art_queue_health
 import scripts.branch_janitor as branch_janitor
 import scripts.check_gate_legitimacy as check_gate_legitimacy
 import scripts.run_reviewer as run_reviewer
+import scripts.roadmap_claims as roadmap_claims
 import scripts.run_worker as run_worker
 
 GITHUB_API = 'https://api.github.com'
@@ -979,7 +980,7 @@ def find_stale_recurring_tasks(
                 continue
             if task.get('status') != 'ready':
                 continue
-            if run_worker.task_is_resting(task):
+            if roadmap_claims.task_is_resting(task):
                 # Deliberately resting after no-op cycles (close_task.py --noop);
                 # not stale, and waking it here would defeat the backoff.
                 continue
