@@ -1109,3 +1109,16 @@ tasks:
       Full history: projects/rainbow-bullet-hell-space-princess/HISTORY.md#t-055
     claimed_by: 2026-11-22T01:46:10Z-rbh055-k3
     claimed_at: '2026-11-22T01:46:02Z'
+  - id: t-056
+    milestone: m6
+    title: "Add a per-stage art audit that lists each Gen-2 stage's authored guardian/pickup/hazard asset paths with their completed ArtImage ids, flagging any still missing"
+    status: ready
+    depends_on: []
+    passes: 0
+    stakes: reversible
+    source: kaizen-pr-7810
+    note: >-
+      Reviewer kaizen from the 2026-11-22 PT merge of conductor#7810 (t-028 X2 art intake,
+      Worker suggestion). Scope: read projects/rainbow-bullet-hell-space-princess/art/GEN2-*.yaml
+      plus the art ledger and print, per stage (X1..X4), each subject asset path and its
+      ArtImage id or MISSING; exit non-zero only with --strict. Pure local read, no API calls.
