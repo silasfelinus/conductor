@@ -49,30 +49,31 @@ def test_priority_art_submission_precedes_long_memory_and_generic_sweeps():
 
 
 
-def test_independent_priority_workflow_can_enqueue_without_generic_backlog():
-    dedicated = ROOT / ".github/workflows/prom-tactics-priority-art.yml"
+def test_existing_fast_intake_queues_both_new_private_art_batches():
+    dedicated = ROOT / ".github/workflows/prom-tactics-art-intake.yml"
     document = yaml.safe_load(dedicated.read_text(encoding="utf-8"))
-    steps = document["jobs"]["submit-private-art"]["steps"]
+    steps = document["jobs"]["submit-approved-private-art"]["steps"]
     names = [step.get("name") for step in steps]
-    submit = steps[names.index("Submit approved private Krea2 requests with stable request keys")]
-    checkpoint = steps[names.index("Persist accepted ArtJob receipts before status checks")]
-    status = steps[names.index("Refresh private ArtJob status and ArtImage receipts")]
+    submit = steps[names.index("Submit new private combat and recruit emotion ArtJobs")]
+    status = steps[names.index("Refresh new private combat and recruit emotion receipts")]
+    proof = steps[names.index("Require durable ArtJob receipts for 24 priority paintings")]
 
     assert document["concurrency"]["cancel-in-progress"] is False
     assert document["permissions"]["contents"] == "write"
     assert "scripts/enqueue_art_requests.py" in submit["run"]
     assert str(TACTICS_LEDGER.relative_to(ROOT)) in submit["run"]
     assert str(PROM_LEDGER.relative_to(ROOT)) in submit["run"]
-    assert submit["env"]["KR_API_TOKEN"] == "${{ secrets.KR_API_TOKEN }}"
-    assert "always()" in checkpoint["if"]
-    assert "scripts/checkpoint_art_state.sh" in checkpoint["run"]
+    assert "scripts/checkpoint_art_state.sh" in submit["run"]
     assert "--status" in status["run"]
-    assert names.index("Persist accepted ArtJob receipts before status checks") < names.index(
-        "Refresh private ArtJob status and ArtImage receipts"
+    assert "len(subjects) != 12" in proof["run"]
+    assert names.index("Submit new private combat and recruit emotion ArtJobs") < names.index(
+        "Submit missing Tactics telegraphs and checkpoint ArtJob IDs"
     )
+    sources = document.get("on", document.get(True, {}))["push"]["paths"]
+    assert str(TACTICS_LEDGER.relative_to(ROOT)) in sources
+    assert str(PROM_LEDGER.relative_to(ROOT)) in sources
     keyed_script = (ROOT / "scripts/enqueue_art_requests.py").read_text(encoding="utf-8")
     assert 'body["requestKey"] = cell_request_key(' in keyed_script
-
 
 
 def test_priority_tactics_art_requests_are_private_and_unique():
