@@ -1,6 +1,5 @@
 """Proof helper must checkpoint partial receipts and preserve private media policy."""
 
-from pathlib import Path
 from types import SimpleNamespace
 
 import pytest
