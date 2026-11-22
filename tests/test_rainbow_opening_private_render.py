@@ -5,6 +5,7 @@ import unittest
 from pathlib import Path
 from unittest.mock import patch
 
+import yaml
 from PIL import Image
 
 from scripts import export_rainbow_opening as opening
@@ -12,6 +13,23 @@ from scripts import inspect_rainbow_opening_preview as preview
 
 
 class PrivateOpeningTests(unittest.TestCase):
+    def test_ci_installs_encoder_before_attempting_private_render(self):
+        workflow_path = (
+            Path(__file__).resolve().parents[1]
+            / ".github/workflows/rainbow-opening-private-render.yml"
+        )
+        workflow = yaml.safe_load(workflow_path.read_text())
+        steps = workflow["jobs"]["render-private-preview"]["steps"]
+        named = {step.get("name"): i for i, step in enumerate(steps)}
+        install = "Install deterministic video encoder"
+        prereq = "Check authenticated render prerequisites"
+        render = "Render all eight verified WAN clips with the original soundtrack"
+        self.assertLess(named[install], named[prereq])
+        self.assertLess(named[prereq], named[render])
+        self.assertIn("apt-get install -y ffmpeg", steps[named[install]]["run"])
+        self.assertIn("command -v ffmpeg", steps[named[prereq]]["run"])
+        self.assertIn("command -v ffprobe", steps[named[prereq]]["run"])
+
     def test_timeline_has_eight_shots_and_exact_fifteen_seconds(self):
         timeline = preview.shot_timeline()
         self.assertEqual(len(timeline), 8)
