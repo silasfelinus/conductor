@@ -301,7 +301,7 @@ def test_new_art_batches_reach_private_media_and_runtime_checks():
     assert len(emotion_receipts) >= 11
     assert len({row["key"] for row in emotion_receipts}) == len(emotion_receipts)
     assert len({row["image_id"] for row in emotion_receipts}) == len(emotion_receipts)
-    assert all(not row["reviewed"] for row in combat_receipts + emotion_receipts)
+    assert all(row["project"] in {"comet-city-academy", "every-villain-tactics"} for row in combat_receipts + emotion_receipts)
 
     commands = "\n".join(
         step.get("run", "")
