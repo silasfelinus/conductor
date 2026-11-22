@@ -55,7 +55,12 @@ def load_image(art_image_id):
     request = urllib.request.Request(f"{core.KR_BASE_URL}{image_path}")
     request.add_header("Authorization", f"Bearer {core.KR_API_TOKEN}")
     with urllib.request.urlopen(request, timeout=180) as file_resp:
-        return Image.open(io.BytesIO(file_resp.read())).convert("RGB")
+        encoded = file_resp.read()
+    image = Image.open(io.BytesIO(encoded)).convert("RGB")
+    # Only numeric size reaches downstream media-proof receipts, never the
+    # private payload or authenticated source URL.
+    image.info["_downloaded_bytes"] = len(encoded)
+    return image
 
 
 def contact_sheet(subjects, out, thumb=(448, 256)):
