@@ -244,3 +244,10 @@ Companion kind_robots#4764 was already on main, so merge order held. CI green on
 - **CI read:** the one red check was a superseded `Validate Worker PR handoff` run that evaluated the pre-edit body; the run triggered by the edited body (now carrying `### Notes for reviewer`) was green. Not a current gate.
 - **Finding:** handoff body first shipped without `### Notes for reviewer` — the template slip continues; run `check_pr_handoff_template.py` before opening.
 - **Follow-up:** t-028 stays `review` until ArtJobs land, images are visually reviewed and X2 shows them in game. Kaizen t-056 (per-stage asset → ArtImage audit, from the Worker's suggestion).
+
+## 2026-11-22 PT | reviewer (scheduled agent) | conductor#7815 opening shot-coverage preflight (t-038 partial)
+
+- **Decision:** squash-merged (d950db4). It's reversible and touches only the exporter. I checked `validate_shot_coverage` against the live `OPENING-CLIPS-2-DOODLE.yaml` and it passes. The three opening test files pass locally (37 passed).
+- **Red check:** **Validate Worker PR handoff**. The body had none of the required `### Task` / `### How I verified` / … headings. The reviewer rewrote it into the template, keeping the Worker's content. The edited-event run went green, and the superseded failure was ignored per the CI-interpretation rule. This is the second handoff-template miss this week (see comet-city #7802).
+- **Gap:** the new validator shipped with no unit tests, and its errors reuse the queue-budget message prefix. Kaizen t-057.
+- t-038 stays claimed by its Worker session as a partial umbrella. This PR renders no clips.

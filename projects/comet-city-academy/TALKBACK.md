@@ -154,3 +154,9 @@ Merged (squash 9017e41). Art ledgers/prompts only, reversible, CI green. The fiv
 - **#7800 decision:** squash-merged (8fd09d9) with 24/24 checks green. The change adds a 48-identity trait table wired into `enqueue_art_requests.contract_rules`, so a Prom identity cell that's missing its defining anatomy is refused before POST. It's reversible and internal only. t-045 is now done. Kaizen t-046 covers corrective ArtJobs for the grandfathered legacy prompts.
 - **#7802:** the code is correct and small: Prom/Tactics ledgers force `--require-keep` on export. The only red check was **Validate Worker PR handoff**, because the body used `##` headings instead of the required `### Task` etc. The reviewer rewrote the body into the required headings and will merge once the check is green.
 - Pattern: both workers wrote "no local tests claimed". The preflight regexes are prompt-text heuristics, so visual QA of the pixels is still required before anything is attached.
+
+## 2026-11-22 PT | reviewer (scheduled agent) | conductor#7812 t-043 CI parity timing note
+
+- **Decision:** squash-merged (773b914). The first run's only red check was **Python test suite**, and it came from main: `tests/test_prom_canon_outcome_corrections.py` tripped the receipts guard, which #7813 fixed. I updated the branch and all latest-head checks went green. t-043 is now done.
+- **What worked:** the note is honest. It uses real job-log durations, says plainly that the split made the suite 60s *slower*, not faster, and names the three tests that actually cost the time. Switching `pytest.skip` to `pytest.fail` for a missing CSafeLoader closes a gap where the scheduled job could go green after checking nothing, and a fast unmarked test pins that behavior.
+- Kaizen t-047: profile and cut those three slow tests without weakening them.

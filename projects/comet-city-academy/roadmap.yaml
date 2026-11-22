@@ -1112,3 +1112,20 @@ tasks:
 
       Scoped mission-hand copy correction in kind_robots branch worker/comet-city-academy-t-033-20261119-f82c; labels committed companions as allies, not heroes, for choice-driven villain routes. Broader card-interaction acceptance remains open.
 
+  - id: t-047
+    milestone: m3
+    title: "Profile and cut the three slowest Python CI tests (media wrapper 62s, ledger templated-cell and negation scans ~38s each) without dropping coverage"
+    status: ready
+    passes: 0
+    stakes: reversible
+    depends_on: []
+    source: reviewer-kaizen-2026-11-22
+    updated: '2026-11-22T07:55:54Z'
+    note: >-
+      Reviewer kaizen from the 2026-11-22 PT merge of conductor#7812 (t-043). The measured
+      post-#7695 suite was 60s slower, and --durations=10 named
+      test_media_wrapper_resolves_names_before_submitting (62.00s),
+      test_repo_ledgers_have_no_new_templated_cells (38.67s) and
+      test_repo_ledgers_unsubmitted_cells_pass_negation_rules (37.07s). Find the repeated
+      I/O or YAML parsing (e.g. a shared session-scoped ledger cache) and record before/after
+      durations from real CI runs. Never skip, deselect or weaken those tests.

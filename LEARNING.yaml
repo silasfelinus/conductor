@@ -19059,3 +19059,13 @@ records:
   failure_category: null
   lesson: A shared test-facing type derived from actual game exports prevents newly introduced modes from
     breaking independent verifier declarations.
+- date: '2026-11-22'
+  project: comet-city-academy
+  task: t-043
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: A scheduled audit that skips when its dependency is missing reports green while checking nothing;
+    fail instead, and pin that with a fast unmarked test that runs in PR CI.
