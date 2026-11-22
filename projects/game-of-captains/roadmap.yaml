@@ -890,7 +890,7 @@ tasks:
   - id: t-033
     milestone: m3
     title: "Curate, re-render and ship the 100 redshirt portraits and secret-power plates"
-    status: review
+    status: done
     owner: worker
     claimed_by: 2026-11-21T104537Z-goc-t033-8d7c2
     claimed_at: '2026-11-21T10:45:37Z'
@@ -918,7 +918,15 @@ tasks:
       Kind Robots PR #5482 merged to main as 0d422b75df3f515f655587a1b5c39e2b3ad4f9f9 with all 12 exact-head workflow groups successful. Redshirt ArtSlot ownership and canonical/legacy precedence are guarded, with regression tests. Partial t-033: 23 portraits and one secret-power plate still need original image curation, accepted delivery, authenticated URLs and responsive verification. Return READY, not DONE.
 
       Partial delivery verification increment: a deterministic 200-file redshirt WebP audit and three regression tests are in a scoped Conductor PR. Original-image visual acceptance and missing asset exports remain outstanding; do not mark DONE.
-    updated: '2026-11-21T10:49:00Z'
+
+      2026-11-22 PT closure. All 24 round-3 redshirt cells are curated and shipped: 17 kept
+      from REDSHIRTS-ROUND-3 (16 portraits plus the 100th secret-power plate) in kind_robots
+      #5548, and the 7 rejects (near-human faces, franchise-style delta insignia, ordinary owl
+      and bat, empty uniform) re-rendered in CURATION-REDO-2, kept and shipped in #5553.
+      WARP_ART now lists 100 portraits and 100 power plates; the guard test requires exactly
+      the curated keepers to ship.
+    updated: '2026-11-22T05:43:48Z'
+    implementation_pr: 'silasfelinus/kind_robots#5553'
   - id: t-034
     milestone: m4
     title: "Space Couch editorial readability pass: rotating transit prose, 30 success returns, sectioned final log"
