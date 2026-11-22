@@ -298,7 +298,11 @@ def test_new_art_batches_reach_private_media_and_runtime_checks():
     assert len(combat_receipts) == 12
     assert [row["job_id"] for row in combat_receipts] == list(range(76658, 76670))
     assert [row["image_id"] for row in combat_receipts] == list(range(278823, 278835))
-    assert len(emotion_receipts) >= 11
+    assert len(emotion_receipts) == 12
+    assert next(
+        row["image_id"] for row in emotion_receipts
+        if row["key"] == "recruit-femi-ilunga-angry-20261122"
+    ) == 279005
     assert len({row["key"] for row in emotion_receipts}) == len(emotion_receipts)
     assert len({row["image_id"] for row in emotion_receipts}) == len(emotion_receipts)
     assert all(row["project"] in {"comet-city-academy", "every-villain-tactics"} for row in combat_receipts + emotion_receipts)
@@ -310,10 +314,12 @@ def test_new_art_batches_reach_private_media_and_runtime_checks():
     assert "verify_tactics_runtime_media.py" in commands
     for ledger in (combat, emotions):
         assert str(ledger.relative_to(ROOT)) in commands
-    assert "--require-count 11 --write-evidence" in commands
+    assert "--require-count 11 --write-evidence" not in commands
+    assert "--require-count 12 --write-evidence" in commands
+    assert "Verify all twelve Prom companion emotions" in FLOW.read_text()
+    assert commands.count("verify_tactics_runtime_media.py") >= 3
     assert "--require-count 12 --write-evidence" in commands
     assert "checkpoint_art_state.sh" in commands
-
 
 
 def test_three_authentic_tactics_venue_paintings_have_private_gameplay_proof():
