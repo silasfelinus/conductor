@@ -132,6 +132,8 @@ tasks:
       Scoped original art and atlas integration correction. Direct visual comparison of committed image bytes showed that Asha Venkataraman's mutant-discipline hero outcome suppresses her defining four natural arms, while the existing student painting shows all four. Quarantine only the wrong hero blob SHA and substitute her genuine student artwork for her hero slot. Also attach the visibly verified Mei Lin psychic-discipline student portrait to her missing public villain display slot, preserving art IDs and old save identity keys. All character/cast changes have regression assertions. PR and CI are pending; broader game-standard audit and art backlog remain unfinished.
 
       Scoped four-arm Asha canon repair and Mei Lin villain-student portrait fallback merged to kind_robots main #5533, squash ddedf3131a43a40ab1896d060fbc27272b13f84c, with all eight checks green. The 48-identity main-game-standard umbrella still has other visual art and playtest-readiness gaps; return to ready, not done.
+
+      Scoped source-byte Asha art QA: directly inspected student, hero and villain WebPs against canonical naturally four-armed Asha; villain image still depicts only one anatomical pair with disconnected hovering guns. Kind Robots code quarantines the wrong villain blob and falls back to the genuine four-arm student portrait. Companion private Conductor art ledger prepares four literal Krea 2 outcome repaint candidates at priority 900, two for hero and two for villain, with distinct seeds and anatomy-focused tests. Images are only REQUESTED, not ArtJobs or rendered or curated; full t-034 remains open.
   - id: t-035
     title: 'Prom of Doom achievement upgrade: 12 or more live achievements'
     status: done
