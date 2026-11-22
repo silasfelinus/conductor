@@ -113,12 +113,24 @@ tasks:
   - id: t-004
     milestone: m4
     title: "Add deterministic tests, full playthroughs and 390/768/1440 viewport QA"
-    status: waiting
+    status: done
     depends_on: [t-002, t-003, t-006, t-007, t-008, t-009, t-010]
     passes: 0
     stakes: reversible
     note: >-
       Final independent acceptance after production tasks t-002, t-003, t-006..t-010: run deterministic seeded full campaigns and actual browser-input paths across every world, including chess rules (castling, en passant, promotion, king safety, checkmate/stalemate), mine safety/clue cascade, disc collisions/powers, all twelve reachable ending branches, no impossible softlocks, loss/restart/checkpoint resume, achievements and scrapbook unlocks and last-item reachability, sound/music/mute and motion settings, visual effects, and real delivered art URLs. Test three viewport widths (390/768/1440), keyboard, mouse, touch and gamepad where supported, contrast, reduced-motion and audio gesture policy. Capture screenshots/video evidence and run actual CI typecheck, lint, tests, engine unit tests and full-run browser tests. A rendered page and a forced end-state fixture do NOT replace actual playthrough evidence.
+
+      2026-11-22 PT done: verifyChessweeperPlaythrough.browser.test.mjs plays the game in real
+      Chromium through visible clicks. It covers all three 4-chapter campaigns, 12/12 endings
+      reached by play, scrapbook replay, save/resume, transfer merge and rejection of a bad
+      code, settings persistence, keyboard, touch, reduced motion, the audio gesture policy,
+      and 390/768/1440 layouts. It passed in CI on #5597 and now runs on every Chessweeper PR.
+      It found and fixed six defects, including the dead profile layer, the operations console
+      hidden on phones, and passive arena wins. Report:
+      projects/chessweeper/qa/2026-11-22-playthrough.md. The game has no gamepad bindings, so
+      gamepad was not tested.
+    updated: '2026-11-22T23:16:30Z'
+    implementation_pr: 'silasfelinus/kind_robots#5597'
   - id: t-005
     milestone: m4
     title: "Finish remaining finite roadmap, mark for human testing and set playtest/normal"
