@@ -1230,11 +1230,11 @@ tasks:
   - id: t-049
     milestone: m5
     title: "Act IV story and art pass: Days 31–40 Komodo loyalty and betrayal"
-    status: review
+    status: done
     owner: worker
     claimed_by: 20261120T115034Z-eod-t049-continuity-c52b
     claimed_at: '2026-11-20T11:50:34.075Z'
-    updated: '2026-11-20T11:53:14.935Z'
+    updated: '2026-11-22T00:22:33Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -1248,6 +1248,15 @@ tasks:
       approval and binding. Released from review to ready for that remainder.
 
       Partial Act IV continuity improvement: Day 40's offer of mercy, demand for an answer, promise to ask tomorrow, and investigative confrontation now each shape Day 41's betrayal explanation for every buyer. Updated Kind Robots betrayal.ts and full-engine regressions covering three buyer routes, real Day 40 -> Day 41 dawn and save validity. No mechanical effect or save schema changes. Exact-head PR CI still required. ArtImage curation/export, broader Act IV scene audit, and cross-width visual QA remain unfinished.
+
+      2026-11-22 PT: kind_robots#5529 shipped 293 curated plates (181 chance, 52 audience, 33
+      quest-consequence, 8 endings, 14 petitioners, 5 talk/quest) with keep/reject verdicts in
+      conductor#7785, which completes this act's outstanding scene-art delivery. Closed at the
+      playtest handoff (docs/agents/GAME-PLAYTEST-CLOSEOUT-2026-11-18.md): all 50 days
+      authored and route-tested in CI (adversarial seeds, eight real-play ending witnesses,
+      sixteen 50-day traces, market/refugee/water-debt route matrices). Further line-level
+      editorial judgement is subjective human-playtest feedback, outside the finite roadmap;
+      new fixes use playtest_iteration: true.
   - id: t-050
     milestone: m5
     title: "Act V finale and epilogue: polished branches and specific illustrated consequences"
