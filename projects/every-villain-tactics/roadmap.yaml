@@ -442,11 +442,11 @@ tasks:
   - id: t-018
     milestone: m3
     title: "One-hit henchmen and Picnic Panic one-shot encounter"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 2026-11-22T004310Z-evt-t018-live-media-n8f4
     claimed_at: '2026-11-22T00:43:10Z'
-    updated: '2026-11-22T00:43:10Z'
+    updated: '2026-11-22T00:46:40Z'
     depends_on: [t-004, t-017]
     passes: 0
     stakes: reversible
@@ -472,6 +472,8 @@ tasks:
       Scoped private-art crash repair on worker/every-villain-tactics-t-018-crew-guard-k9m4: filter unsupported one-hit crew kinds before art prefetch and gallery rendering; add prototype-key and unmapped-crew regression coverage. Existing ArtJob and ArtImage receipts untouched. This is partial t-018 scope; return to ready after merge for media QA and SPECIES records.
 
       Previous scoped painted crew-art guard delivered in Kind Robots PR #5522, squash merge de79e4d933a881f2deb64d82baed64180f784445 with eight passing latest-head checks. The broader art attachment, actual game media route verification and SPECIES Facets remain unfinished, so release for another agent-owned increment instead of marking this umbrella done.
+
+      Scoped source-media to actual gameplay route proof: added read-only Tactics verifier which checks all 12 durable one-hit telegraph ArtImages through the exact /api/art/images/{id}/file endpoint the live game uses, compares decoded pixels with the ArtImage source, and verifies private anonymous-denial or intentional public visibility. Includes redirection and privacy regression tests and extends the authenticated Conductor Actions workflow. No new ArtJobs, public image exports or production DB writes. Other t-018 SPECIES, art curation and gameplay readiness work remains open.
   - id: t-019
     milestone: m3
     title: "Deterministic post-battle points and earned scrapbook achievements"
