@@ -362,3 +362,22 @@ class OpeningPublishTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+@unittest.skipUnless(shutil.which("ffmpeg") and shutil.which("ffprobe"), "needs ffmpeg")
+class ShortTrackEncodeTests(unittest.TestCase):
+    def test_short_track_does_not_truncate_picture(self):
+        """A track shorter than the cut is padded, not used to cut the video short (2026-11-22)."""
+        seconds = 2.0
+        with tempfile.TemporaryDirectory() as work:
+            track = Path(work) / "track.mp3"
+            subprocess.run(
+                ["ffmpeg", "-y", "-loglevel", "error", "-f", "lavfi", "-i",
+                 "sine=frequency=440:duration=1.2", str(track)],
+                check=True,
+            )
+            frames = (Image.new("RGB", opening.SIZE, (200, 40, 160)) for _ in range(int(seconds * opening.FPS)))
+            mp4 = Path(work) / "opening.mp4"
+            count = opening.encode(frames, track, mp4, seconds)
+            self.assertEqual(count, int(seconds * opening.FPS))
+            opening.verify_encoded_media(mp4, seconds, require_audio=True)
