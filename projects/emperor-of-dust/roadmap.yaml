@@ -1173,3 +1173,26 @@ tasks:
       Silas 2026-11-21 PT, in session: sound and music were never mentioned but are needed for playtest.
 
       Full history: projects/emperor-of-dust/HISTORY.md#t-073
+  - id: t-074
+    milestone: m5
+    title: "Curate the 42 rerolls of rejected plates (secret talks, chance, audience, petitioner busts, Kiyo)"
+    status: ready
+    playtest_iteration: true
+    stakes: reversible
+    passes: 0
+    depends_on: []
+    updated: '2026-11-22T02:30:00Z'
+    note: "Queued 2026-11-22 PT (auto_submit): art/SECRET-STORY-SCENES-REDO-1.yaml (24 secret-talk plates, rewritten to lead with place and action in the house lane) and art/CURATION-REDO-2026-11-21.yaml (11 chance, 3 audience, 2 petitioner busts, 2 Kiyo plates rebound to kiyo-romance-2 choice-a and kiyo-close notice). Every slot already shows painted fallback art. Once DONE: contact-sheet curate, record keep/reject verdicts, export keepers with scripts/export_round_art.py (TALK_ART/CAST_ART manifests), re-run scripts/export_emperor_plate_bindings.py, and ship one kind_robots PR."
+  - id: t-075
+    milestone: m5
+    title: "Light ruler creator: name, style of address (Emperor/Empress/Sovereign), starting temperament"
+    status: claimed
+    playtest_iteration: true
+    stakes: reversible
+    passes: 0
+    depends_on: []
+    owner: worker
+    claimed_by: 20261122T023000Z-eod-t075-ruler-0bbc
+    claimed_at: '2026-11-22T02:30:00Z'
+    updated: '2026-11-22T02:30:00Z'
+    note: "Design call 2026-11-22 PT under notes_from_silas delegation (closes the t-067 / STANDARD-AUDIT item B question): build a light creator, no portrait (art shows the ruler only as a gloved forearm). Optional name, style of address shown in high-visibility UI (authored prose keeps Your Majesty), and a small balanced Day 1 temperament nudge; defaults reproduce today's start; old saves load as defaults. Implementation on kind_robots worker/emperor-of-dust-t-075-ruler-creator."
