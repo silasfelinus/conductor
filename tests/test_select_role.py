@@ -1496,6 +1496,24 @@ def test_find_stale_recurring_tasks_flags_overdue_ready_task():
     }]
 
 
+def test_find_stale_recurring_tasks_skips_resting_task():
+    # Regression: run_worker stopped re-exporting task_is_resting (#7783) and
+    # select_role crashed with AttributeError on any overdue recurring task.
+    roadmaps = [
+        _recurring_roadmap("dream-cycle", [
+            {
+                "id": "t-006",
+                "title": "Daily Dream maintenance",
+                "recurring": True,
+                "status": "ready",
+                "rest_until": "2999-01-01T00:00:00Z",
+                "note": "RAN 2026-08-09 (~x UTC): did the thing.",
+            }
+        ])
+    ]
+    assert select_role.find_stale_recurring_tasks(roadmaps, stale_days=3.0, today=date(2026, 8, 14)) == []
+
+
 def test_find_stale_recurring_tasks_ignores_fresh_task():
     roadmaps = [
         _recurring_roadmap("dream-cycle", [
