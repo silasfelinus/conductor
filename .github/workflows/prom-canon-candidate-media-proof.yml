@@ -1,0 +1,105 @@
+name: Prom Canon Candidate Private Media Proof
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/prom-canon-candidate-media-proof.yml"
+      - "scripts/verify_prom_tactics_media.py"
+      - "scripts/verify_tactics_runtime_media.py"
+      - "tests/test_prom_canon_candidate_media.py"
+      - "projects/comet-city-academy/art/CANON-ASHA-FOUR-ARM-REPAINT-2026-11-21.yaml"
+      - "projects/comet-city-academy/art/CANON-OUTCOME-CORRECTIONS-2026-11-22.yaml"
+  workflow_dispatch:
+
+concurrency:
+  group: prom-canon-candidate-media-proof
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  verify-private-candidates:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      KR_BASE_URL: https://kindrobots.org
+      KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+      PYTHONUNBUFFERED: "1"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install private media QA dependencies
+        run: pip install pyyaml pillow pytest
+      - name: Verify ten canonical replacement receipts and proof commands
+        run: python -m pytest -q tests/test_prom_canon_candidate_media.py
+      - name: Verify production API credential is configured
+        run: |
+          if [ -z "$KR_API_TOKEN" ]; then
+            echo "::error::Production art media credential unavailable; no private images fetched."
+            exit 1
+          fi
+      - name: Fetch and prove four original Asha repaint candidates
+        run: |
+          set +e
+          source_status=0
+          runtime_status=0
+          checkpoint_status=0
+          python scripts/verify_prom_tactics_media.py \
+            projects/comet-city-academy/art/CANON-ASHA-FOUR-ARM-REPAINT-2026-11-21.yaml \
+            --require-count 4 --write-evidence || source_status=1
+          if [ "$source_status" -eq 0 ]; then
+            python scripts/verify_tactics_runtime_media.py \
+              projects/comet-city-academy/art/CANON-ASHA-FOUR-ARM-REPAINT-2026-11-21.yaml --require-count 4 || runtime_status=1
+          else
+            runtime_status=1
+          fi
+          bash scripts/checkpoint_art_state.sh "chore: checkpoint four Asha candidate media receipts [skip ci]" || checkpoint_status=1
+          test "$source_status" -eq 0 && test "$runtime_status" -eq 0 && test "$checkpoint_status" -eq 0
+      - name: Fetch and prove six original canon-outcome replacements
+        run: |
+          set +e
+          source_status=0
+          runtime_status=0
+          checkpoint_status=0
+          python scripts/verify_prom_tactics_media.py \
+            projects/comet-city-academy/art/CANON-OUTCOME-CORRECTIONS-2026-11-22.yaml \
+            --require-count 6 --write-evidence || source_status=1
+          if [ "$source_status" -eq 0 ]; then
+            python scripts/verify_tactics_runtime_media.py \
+              projects/comet-city-academy/art/CANON-OUTCOME-CORRECTIONS-2026-11-22.yaml --require-count 6 || runtime_status=1
+          else
+            runtime_status=1
+          fi
+          bash scripts/checkpoint_art_state.sh "chore: checkpoint six canon-outcome candidate media receipts [skip ci]" || checkpoint_status=1
+          test "$source_status" -eq 0 && test "$runtime_status" -eq 0 && test "$checkpoint_status" -eq 0
+      - name: Enforce private access for all ten original candidate images
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          from scripts.verify_prom_tactics_media import candidates
+          from scripts import consume_art_queue_core as core
+
+          ledgers = [
+              Path("projects/comet-city-academy/art/CANON-ASHA-FOUR-ARM-REPAINT-2026-11-21.yaml"),
+              Path("projects/comet-city-academy/art/CANON-OUTCOME-CORRECTIONS-2026-11-22.yaml"),
+          ]
+          entries = candidates(ledgers)
+          if len(entries) != 10:
+              raise RuntimeError("Expected ten durable private art receipts")
+          for entry in entries:
+              status, payload = core.http_json(
+                  "GET",
+                  f"{core.KR_BASE_URL}/api/art/image/{entry['image_id']}",
+              )
+              private = ((payload or {}).get("data") or {}).get("isPublic")
+              if status != 200 or private is not False:
+                  raise RuntimeError("Private ArtImage visibility check failed")
+          print("PRIVATE_POLICY_VERIFIED=10")
+          PY
