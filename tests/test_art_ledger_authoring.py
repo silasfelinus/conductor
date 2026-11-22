@@ -116,9 +116,12 @@ def test_enqueue_refuses_templated_cells(tmp_path):
 def parsed_repo_ledgers():
     """One exhaustive YAML load for both independent repo-wide quality gates."""
     rows = []
+    # PyYAML's C SafeLoader is parity-tested for opted-in art ledgers; use it
+    # here when present, while retaining the pure-Python safe fallback.
+    loader = getattr(yaml, "CSafeLoader", yaml.SafeLoader)
     for path in auth.find_ledgers(ROOT):
         try:
-            ledger = yaml.safe_load(path.read_text())
+            ledger = yaml.load(path.read_text(), Loader=loader)
         except yaml.YAMLError:
             continue
         rows.append((path, ledger))
