@@ -210,6 +210,45 @@ class DoodleOpeningTests(unittest.TestCase):
             self.assertIsNone(opening.validated_clip(payload, "over-budget"))
             decode.assert_not_called()
 
+    def test_delivery_validation_checks_both_formats_and_soundtrack(self):
+        metadata = {
+            "format": {"duration": "15.04"},
+            "streams": [
+                {"codec_type": "video", "width": 1280, "height": 720},
+                {"codec_type": "audio"},
+            ],
+        }
+        probe = subprocess.CompletedProcess([], 0, stdout=json.dumps(metadata), stderr="")
+        with patch.object(opening.subprocess, "run", return_value=probe) as run:
+            opening.verify_encoded_media(Path("opening.mp4"), 15.0, True)
+        self.assertEqual(run.call_count, 2)
+        self.assertTrue(run.call_args_list[0].args[0][-1].endswith(".mp4"))
+        self.assertTrue(run.call_args_list[1].args[0][-1].endswith(".webm"))
+
+    def test_delivery_validation_rejects_missing_audio_and_short_webm(self):
+        good = {
+            "format": {"duration": "15.0"},
+            "streams": [
+                {"codec_type": "video", "width": 1280, "height": 720},
+                {"codec_type": "audio"},
+            ],
+        }
+        no_audio = {
+            "format": {"duration": "15.0"},
+            "streams": [{"codec_type": "video", "width": 1280, "height": 720}],
+        }
+        short = {**good, "format": {"duration": "2.0"}}
+        for broken in (no_audio, short):
+            responses = [
+                subprocess.CompletedProcess([], 0, stdout=json.dumps(good), stderr=""),
+                subprocess.CompletedProcess([], 0, stdout=json.dumps(broken), stderr=""),
+            ]
+            with self.subTest(broken=broken), patch.object(
+                opening.subprocess, "run", side_effect=responses
+            ):
+                with self.assertRaisesRegex(RuntimeError, "soundtrack missing|encoded duration"):
+                    opening.verify_encoded_media(Path("opening.mp4"), 15.0, True)
+
     def test_original_ledger_still_works(self):
         old = {
             "round": "opening-clips-1",
