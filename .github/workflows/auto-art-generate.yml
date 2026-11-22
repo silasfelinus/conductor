@@ -204,6 +204,26 @@ jobs:
         run: |
           bash scripts/checkpoint_art_state.sh "chore: checkpoint priority Prom and Tactics ArtJobs [skip ci]"
 
+      # Rainbow's 16 reviewed-card-based parallax requests must not sit behind
+      # the long all-project sweep. The enqueue script skips recorded ArtJobs;
+      # checkpoint receipts immediately so cancelled later steps cannot repost.
+      - name: Submit priority Rainbow stage-depth ArtJobs
+        id: rainbow_stage_depth_submit
+        if: ${{ steps.krhealth.outputs.up == 'true' }}
+        continue-on-error: true
+        working-directory: conductor
+        env:
+          KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+        run: |
+          python scripts/enqueue_art_requests.py \
+            projects/rainbow-bullet-hell-space-princess/art/DOODLE-STAGE-DEPTH-PLANES-2026-11-22.yaml --live
+
+      - name: Checkpoint priority Rainbow stage-depth ArtJob IDs
+        if: ${{ always() && steps.krhealth.outputs.up == 'true' }}
+        working-directory: conductor
+        run: |
+          bash scripts/checkpoint_art_state.sh "chore: checkpoint Rainbow stage-depth ArtJobs [skip ci]"
+
       # Memory Dungeon: preserve every request id/path and reuse jobs already on
       # the server. An earlier submit step had TWO slashes after --submit-only,
       # exited 2, and the broad consumer rendered serially until cancellation.
