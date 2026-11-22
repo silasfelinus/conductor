@@ -1,422 +1,242 @@
 {
-  "generated_at": "2026-11-21T15:00:01.990448+00:00",
+  "generated_at": "2026-11-22T15:00:01.996317+00:00",
   "host": "alexandria",
   "new": [
     {
       "baseline": null,
       "container": "jellyfin",
-      "count": 3776,
-      "fingerprint": "0adacf397c67",
-      "sample": "[h264 @ 0x1500cbccf500] Error splitting the input into NAL units.",
-      "severity": "error",
-      "skeleton": "[h264 @ <hex>] error splitting the input into nal units."
-    },
-    {
-      "baseline": null,
-      "container": "jellyfin",
-      "count": 3776,
-      "fingerprint": "7f642122dd3d",
-      "sample": "[vist#0:0/h264 @ 0x1500cbcb9480] [dec:h264 @ 0x1500cbc9d640] Error submitting packet to decoder: Invalid data found when processing input",
-      "severity": "error",
-      "skeleton": "[vist#<num>:<num>/h264 @ <hex>] [dec:h264 @ <hex>] error submitting packet to decoder: invalid data found when processing input"
-    },
-    {
-      "baseline": null,
-      "container": "critical-mass",
-      "count": 5,
-      "fingerprint": "1c0a2eb219a2",
-      "sample": "\"<REDACTED-BLOB>.log.gz\" has been deleted",
+      "count": 148,
+      "fingerprint": "8f92cd1794f2",
+      "sample": "[hevc @ 0x150bd0ecf500] Could not find ref with POC 100",
       "severity": "other",
-      "skeleton": "<str> has been deleted"
+      "skeleton": "[hevc @ <hex>] could not find ref with poc <num>"
     },
     {
       "baseline": null,
       "container": "jellyfin",
+      "count": 148,
+      "fingerprint": "1099497c765e",
+      "sample": "[hevc @ 0x150bd0ecf500] Error constructing the frame RPS.",
+      "severity": "error",
+      "skeleton": "[hevc @ <hex>] error constructing the frame rps."
+    },
+    {
+      "baseline": null,
+      "container": "jellyfin",
+      "count": 48,
+      "fingerprint": "de2a1a209ccb",
+      "sample": "[hevc @ 0x150bd0ecf500] Error splitting the input into NAL units.",
+      "severity": "error",
+      "skeleton": "[hevc @ <hex>] error splitting the input into nal units."
+    },
+    {
+      "baseline": null,
+      "container": "jellyfin",
+      "count": 48,
+      "fingerprint": "a95a6acca562",
+      "sample": "[vist#0:0/hevc @ 0x150bd0eb9600] [dec:hevc @ 0x150bd0e9d780] Error submitting packet to decoder: Invalid data found when processing input",
+      "severity": "error",
+      "skeleton": "[vist#<num>:<num>/hevc @ <hex>] [dec:hevc @ <hex>] error submitting packet to decoder: invalid data found when processing input"
+    },
+    {
+      "baseline": null,
+      "container": "kapowarr",
       "count": 3,
-      "fingerprint": "158f56b565ca",
-      "sample": "[16:35:46] [WRN] [84] Jellyfin.Server.Implementations.Trickplay.TrickplayManager: Media not found at /personal/silas/video/vids/CumSwappingSis-Molly.Little.Nikki.Nicole-Stepsisters.St.Pattys.Shenaniga",
-      "severity": "warn",
-      "skeleton": "[<ts>] [wrn] [<num>] jellyfin.server.implementations.trickplay.trickplaymanager: media not found at <path>"
+      "fingerprint": "ae6cac4c3272",
+      "sample": "\u001b[1;31:40m[04:31:09][ERROR] Exception on /api/pulllist/1438/action [POST]",
+      "severity": "error",
+      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][error] exception on <path>"
     },
     {
       "baseline": null,
-      "container": "jellyfin",
+      "container": "kapowarr",
+      "count": 3,
+      "fingerprint": "5a0cb9c37882",
+      "sample": "\u001b[1;31:40m[04:31:11][ERROR] Pull List client error [release action]: HTTP 500: InternalError",
+      "severity": "error",
+      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][error] pull list client error [release action]: http <num>: internalerror"
+    },
+    {
+      "baseline": null,
+      "container": "kapowarr",
       "count": 2,
-      "fingerprint": "71c4297110a3",
-      "sample": "[20:11:37] [WRN] [45] MediaBrowser.Controller.Entities.BaseItem: Library folder /config/data/playlists is inaccessible or empty, skipping",
-      "severity": "warn",
-      "skeleton": "[<ts>] [wrn] [<num>] mediabrowser.controller.entities.baseitem: library folder <path>"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "9b7e609bffe2",
-      "sample": "[2026-11-20 07:17:19.459] INFO: [SocketAuthority] Socket LPh9oIoXQ-9WbC-dAACI disconnected from client \"superkate\" after 145142ms (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket lph9oioxq-9wbc-daaci disconnected from client <str> after <num> (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "a272c378d439",
-      "sample": "[2026-11-20 08:11:19.662] INFO: [SocketAuthority] Socket HMRqYOC8W1NtrjKdAACM disconnected from client \"superkate\" after 145288ms (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket hmrqyoc8w1ntrjkdaacm disconnected from client <str> after <num> (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "9cc8cbb5dace",
-      "sample": "[2026-11-20 09:17:11.692] INFO: [SocketAuthority] Socket CMe0FBv6YTrXybFVAACO disconnected from client \"edanahurley\" after 170636ms (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket cme0fbv6ytrxybfvaaco disconnected from client <str> after <num> (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "4f85b6b338e3",
-      "sample": "[2026-11-20 09:24:44.278] INFO: [SocketAuthority] Socket Q5d3250AnpmHMO91AACQ disconnected from client \"edanahurley\" after 120596ms (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket q5d3250anpmhmo91aacq disconnected from client <str> after <num> (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "e53a975df5c4",
-      "sample": "[2026-11-20 09:30:02.769] INFO: [SocketAuthority] Socket 7Bpvk51o2C09mULHAACS disconnected from client \"edanahurley\" after 95643ms (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket 7bpvk51o2c09mulhaacs disconnected from client <str> after <num> (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "674f0b359c8c",
-      "sample": "[2026-11-20 09:35:01.773] INFO: [SocketAuthority] Socket 9bq_sRQz9DObbuFhAACU disconnected from client \"edanahurley\" after 95051ms (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket 9bq_srqz9dobbufhaacu disconnected from client <str> after <num> (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "9752110b9241",
-      "sample": "[2026-11-20 09:40:11.038] INFO: [SocketAuthority] Socket 8MdQmnMSJawe3L7xAACW disconnected from client \"edanahurley\" after 175870ms (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket 8mdqmnmsjawe3l7xaacw disconnected from client <str> after <num> (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "f8dfcdafe009",
-      "sample": "[2026-11-20 09:42:09.217] INFO: [SocketAuthority] Socket hR1NreXlticqHkAPAACY disconnected from client \"edanahurley\" after 95113ms (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket hr1nrexlticqhkapaacy disconnected from client <str> after <num> (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "33382a6b01ac",
-      "sample": "[2026-11-20 09:46:08.337] INFO: [SocketAuthority] Socket QjDY1kywkjkME4ZqAACa disconnected from client \"edanahurley\" after 95175ms (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket qjdy1kywkjkme4zqaaca disconnected from client <str> after <num> (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "2229b05db75a",
-      "sample": "[2026-11-20 09:50:00.148] INFO: [SocketAuthority] Socket zcnBiLxdkLLcEwf7AACc disconnected from client \"edanahurley\" after 95035ms (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket zcnbilxdkllcewf7aacc disconnected from client <str> after <num> (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "bfa17d3e97f5",
-      "sample": "[2026-11-20 10:07:10.283] INFO: [SocketAuthority] Socket 5H-LPTVg3M4OKVBwAACe disconnected from client \"edanahurley\" after 95040ms (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket <num>-lptvg3m4okvbwaace disconnected from client <str> after <num> (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "b2660b506a3e",
-      "sample": "[2026-11-20 10:15:43.034] INFO: [SocketAuthority] Socket hRFNGOs_x5zzq7SYAACg disconnected from client \"edanahurley\" after 120589ms (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket hrfngos_x5zzq7syaacg disconnected from client <str> after <num> (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "786bb8a50722",
-      "sample": "[2026-11-20 10:21:15.951] INFO: [SocketAuthority] Socket K9m4-kInwWS8sLvwAACi disconnected from client \"edanahurley\" after 95372ms (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket k9m4-kinwws8slvwaaci disconnected from client <str> after <num> (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "70b9db5367b3",
-      "sample": "[2026-11-20 12:27:47.500] INFO: [SocketAuthority] Socket CgjHYwtC-TdDUa36AACm disconnected from client \"superkate\" after 95180ms (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket cgjhywtc-tddua36aacm disconnected from client <str> after <num> (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "48157343dc06",
-      "sample": "[2026-11-20 12:41:08.859] INFO: [SocketAuthority] Socket PgqK1Ub4EphiOFSZAACo disconnected from client \"superkate\" after 197480ms (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket pgqk1ub4ephiofszaaco disconnected from client <str> after <num> (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "0a00ce3412bd",
-      "sample": "[2026-11-20 14:02:00.476] INFO: [SocketAuthority] Socket 3_Y6169SbvV064FjAACq disconnected from client \"edanahurley\" after 100386ms (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket 3_y6169sbvv064fjaacq disconnected from client <str> after <num> (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "95d0e22205d0",
-      "sample": "[2026-11-20 14:04:47.160] INFO: [SocketAuthority] Socket zTaz1-rjF5AGE6-XAACs disconnected from client \"edanahurley\" after 97851ms (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket ztaz1-rjf5age6-xaacs disconnected from client <str> after <num> (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "d85eb12ccac7",
-      "sample": "[2026-11-20 14:07:02.860] INFO: [SocketAuthority] Socket 1O44Yua5AVFA5ydCAACu disconnected from client \"edanahurley\" after 94991ms (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket 1o44yua5avfa5ydcaacu disconnected from client <str> after <num> (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "66710a7a8ee1",
-      "sample": "[2026-11-20 14:19:44.956] INFO: [SocketAuthority] Socket IVwrARA29wXVqzHfAACw disconnected from client \"edanahurley\" after 120217ms (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket ivwrara29wxvqzhfaacw disconnected from client <str> after <num> (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "5e378e4297cf",
-      "sample": "[2026-11-20 14:22:35.473] INFO: [SocketAuthority] Socket WiSkoNq-rBQ8OjooAACy disconnected from client \"edanahurley\" after 145231ms (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket wiskonq-rbq8ojooaacy disconnected from client <str> after <num> (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "cb2f6a8263ac",
-      "sample": "[2026-11-20 14:26:13.549] INFO: [SocketAuthority] Socket q5JFZ6AJ-F_jp8iLAAC0 disconnected from client \"edanahurley\" after 95236ms (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket q5jfz6aj-f_jp8ilaac0 disconnected from client <str> after <num> (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "b9fe199bfaee",
-      "sample": "[2026-11-20 14:40:56.864] INFO: [SocketAuthority] Socket Z2KMs1oPUVEMMVKAAAC2 disconnected from client \"edanahurley\" after 95144ms (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket z2kms1opuvemmvkaaac2 disconnected from client <str> after <num> (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "d0ed260eaf8e",
-      "sample": "[2026-11-20 14:45:32.103] INFO: [SocketAuthority] Socket 7UoV6nfAkJe_wzYvAAC4 disconnected from client \"edanahurley\" after 220871ms (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket 7uov6nfakje_wzyvaac4 disconnected from client <str> after <num> (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "053270016c2f",
-      "sample": "[2026-11-20 14:48:15.307] INFO: [SocketAuthority] Socket TOrYEez2FIXQoAUNAAC6 disconnected from client \"edanahurley\" after 95131ms (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket toryeez2fixqoaunaac6 disconnected from client <str> after <num> (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "e768b30d1811",
-      "sample": "[2026-11-20 14:51:56.956] INFO: [SocketAuthority] Socket UpK4c8MF3Y2ZNV3EAAC8 disconnected from client \"edanahurley\" after 95056ms (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket upk4c8mf3y2znv3eaac8 disconnected from client <str> after <num> (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "da6708bd72ee",
-      "sample": "[2026-11-20 15:53:06.288] INFO: [SocketAuthority] Socket GBaEAtPp41-NGgr0AAC- disconnected from client \"superkate\" after 145696ms (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket gbaeatpp41-nggr0aac- disconnected from client <str> after <num> (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "86d34517c4fc",
-      "sample": "[2026-11-20 15:56:35.157] INFO: [SocketAuthority] Socket 7f2G58Xbqtew76yUAADA disconnected from client \"superkate\" after 188751ms (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket 7f2g58xbqtew76yuaada disconnected from client <str> after <num> (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "faa53d315295",
-      "sample": "[2026-11-20 20:00:23.250] INFO: [SocketAuthority] Socket 3BHz6F-sTXiDLqcLAADE disconnected from client \"superkate\" after 95009ms (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket 3bhz6f-stxidlqclaade disconnected from client <str> after <num> (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "386810c1a97e",
-      "sample": "[2026-11-20 22:17:33.828] INFO: [SocketAuthority] Socket 8Pm59YIhzA6mNRIQAADG disconnected from client \"poopyloopy\" after 146811ms (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket 8pm59yihza6mnriqaadg disconnected from client <str> after <num> (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "402b61f8e5a8",
-      "sample": "[2026-11-21 06:49:44.456] INFO: [SocketAuthority] Socket e0Vy7crjg3oXltbqAADM disconnected from client \"superkate\" after 95219ms (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket e0vy7crjg3oxltbqaadm disconnected from client <str> after <num> (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "proxysql",
-      "count": 1,
-      "fingerprint": "9119c28722e8",
-      "sample": "2026-11-20 10:31:47 MySQL_Variables.cpp:415:validate_charset(): [WARNING] Server doesn't support collation (255) utf8mb4_0900_ai_ci. Replacing it with the configured default (33) utf8_general_ci. Clie",
-      "severity": "warn",
-      "skeleton": "<ts> mysql_variables.cpp<ip>validate_charset(): [warning] server doesn't support collation (<num>) utf8mb4_0900_ai_ci. replacing it with the configured default (<num>) utf8_general_ci. client <ip>"
-    },
-    {
-      "baseline": null,
-      "container": "jellyfin",
-      "count": 1,
-      "fingerprint": "3257712368d1",
-      "sample": "[vist#0:0/h264 @ 0x1500cbcb9480] [dec:h264 @ 0x1500cbc9d640] Decode error rate 0.790936 exceeds maximum 0.666667",
+      "fingerprint": "2d1ef9939933",
+      "sample": "\u001b[1;31:40m[04:45:36][ERROR] Publisher automation failed for dc comics|green lanterns: bad boys for light|1|2026-11-04",
       "severity": "error",
-      "skeleton": "[vist#<num>:<num>/h264 @ <hex>] [dec:h264 @ <hex>] decode error rate <num> exceeds maximum <num>"
+      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][error] publisher automation failed for dc comics|green lanterns: bad boys for light|<num>|<date>"
     },
     {
       "baseline": null,
-      "container": "jellyfin",
-      "count": 1,
-      "fingerprint": "abcdefc30a5b",
-      "sample": "[vist#0:0/h264 @ 0x1500cbcb9480] [dec:h264 @ 0x1500cbc9d640] Task finished with error code: -1145393733 (Error number -1145393733 occurred)",
+      "container": "kapowarr",
+      "count": 2,
+      "fingerprint": "fa68e2d4d215",
+      "sample": "\u001b[1;31:40m[04:45:39][ERROR] Publisher automation failed for dc comics|poison ivy in briarwood|1|2026-11-02",
       "severity": "error",
-      "skeleton": "[vist#<num>:<num>/h264 @ <hex>] [dec:h264 @ <hex>] task finished with error code: -<hex> (error number -<hex> occurred)"
+      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][error] publisher automation failed for dc comics|poison ivy in briarwood|<num>|<date>"
     },
     {
       "baseline": null,
-      "container": "jellyfin",
+      "container": "audiobookshelf",
       "count": 1,
-      "fingerprint": "dcb9bdd9e3d1",
-      "sample": "[vist#0:0/h264 @ 0x1500cbcb9480] [dec:h264 @ 0x1500cbc9d640] Terminating thread with return code -1145393733 (Error number -1145393733 occurred)",
-      "severity": "error",
-      "skeleton": "[vist#<num>:<num>/h264 @ <hex>] [dec:h264 @ <hex>] terminating thread with return code -<hex> (error number -<hex> occurred)"
-    },
-    {
-      "baseline": null,
-      "container": "jellyfin",
-      "count": 1,
-      "fingerprint": "5aac5dfc31cf",
-      "sample": "error while decoding block: 10 x 14 (5)",
-      "severity": "error",
-      "skeleton": "error while decoding block: <num> x <num> (<num>)"
-    },
-    {
-      "baseline": null,
-      "container": "jellyfin",
-      "count": 1,
-      "fingerprint": "ac5df41e0707",
-      "sample": "[msmpeg4 @ 0x151b2d4f7e00] Error at MB: 304",
-      "severity": "error",
-      "skeleton": "[msmpeg4 @ <hex>] error at mb: <num>"
-    },
-    {
-      "baseline": null,
-      "container": "jellyfin",
-      "count": 1,
-      "fingerprint": "22656f1d71aa",
-      "sample": "[vost#0:0/mjpeg @ 0x1497384b5b80] [enc:mjpeg @ 0x1497385e1380] Error while opening encoder - maybe incorrect parameters such as bit_rate, rate, width or height.",
-      "severity": "error",
-      "skeleton": "[vost#<num>:<num>/mjpeg @ <hex>] [enc:mjpeg @ <hex>] error while opening encoder - maybe incorrect parameters such as bit_rate, rate, width or height."
-    },
-    {
-      "baseline": null,
-      "container": "jellyfin",
-      "count": 1,
-      "fingerprint": "e5c5798183ce",
-      "sample": "[vf#0:0 @ 0x1497385cba00] Error sending frames to consumers: Invalid argument",
-      "severity": "error",
-      "skeleton": "[vf#<num>:<num> @ <hex>] error sending frames to consumers: invalid argument"
-    },
-    {
-      "baseline": null,
-      "container": "jellyfin",
-      "count": 1,
-      "fingerprint": "19eab899bf69",
-      "sample": "[vf#0:0 @ 0x1497385cba00] Task finished with error code: -22 (Invalid argument)",
-      "severity": "error",
-      "skeleton": "[vf#<num>:<num> @ <hex>] task finished with error code: -<num> (invalid argument)"
-    },
-    {
-      "baseline": null,
-      "container": "jellyfin",
-      "count": 1,
-      "fingerprint": "8c8a65c64715",
-      "sample": "[vost#0:0/mjpeg @ 0x1497384b5b80] [enc:mjpeg @ 0x1497385e1380] Could not open encoder before EOF",
+      "fingerprint": "3771d866b05c",
+      "sample": "[2026-11-21 17:09:26.614] INFO: [SocketAuthority] Socket oPIdLswcZJ2Os4JOAADO disconnected from client \"superkate\" after 95035ms (Reason: ping timeout)",
       "severity": "other",
-      "skeleton": "[vost#<num>:<num>/mjpeg @ <hex>] [enc:mjpeg @ <hex>] could not open encoder before eof"
+      "skeleton": "[<ts>] info: [socketauthority] socket opidlswczj2os4joaado disconnected from client <str> after <num> (reason: ping timeout)"
+    },
+    {
+      "baseline": null,
+      "container": "audiobookshelf",
+      "count": 1,
+      "fingerprint": "7d216dd2f2a2",
+      "sample": "[2026-11-21 17:09:40.957] INFO: [SocketAuthority] Socket j-pffKLmWhvfE0nQAADQ disconnected from client \"superkate\" after 44888ms (Reason: ping timeout)",
+      "severity": "other",
+      "skeleton": "[<ts>] info: [socketauthority] socket j-pffklmwhvfe0nqaadq disconnected from client <str> after <num> (reason: ping timeout)"
+    },
+    {
+      "baseline": null,
+      "container": "audiobookshelf",
+      "count": 1,
+      "fingerprint": "00172868551f",
+      "sample": "[2026-11-21 17:14:22.904] INFO: [SocketAuthority] Socket 1oYCYdtklOhNc4NlAADS disconnected from client \"superkate\" after 95161ms (Reason: ping timeout)",
+      "severity": "other",
+      "skeleton": "[<ts>] info: [socketauthority] socket 1oycydtklohnc4nlaads disconnected from client <str> after <num> (reason: ping timeout)"
+    },
+    {
+      "baseline": null,
+      "container": "audiobookshelf",
+      "count": 1,
+      "fingerprint": "570c7b070bcf",
+      "sample": "[2026-11-21 20:44:54.455] INFO: [SocketAuthority] Socket xtNKaS0nFaZz9ENPAADU disconnected from client \"poopyloopy\" after 223534ms (Reason: ping timeout)",
+      "severity": "other",
+      "skeleton": "[<ts>] info: [socketauthority] socket xtnkas0nfazz9enpaadu disconnected from client <str> after <num> (reason: ping timeout)"
+    },
+    {
+      "baseline": null,
+      "container": "kapowarr",
+      "count": 1,
+      "fingerprint": "dcea3b15898a",
+      "sample": "Invalid session NRvXDaPv8EkNQZm6AAAE (further occurrences of this error will be logged with level INFO)",
+      "severity": "error",
+      "skeleton": "invalid session nrvxdapv8eknqzm6aaae (further occurrences of this error will be logged with level info)"
+    },
+    {
+      "baseline": null,
+      "container": "kapowarr",
+      "count": 1,
+      "fingerprint": "1879c759a4ac",
+      "sample": "\u001b[1;31:40m[04:45:41][ERROR] Publisher automation failed for dynamite|thundercats: lynxana|1|2026-11-04",
+      "severity": "error",
+      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][error] publisher automation failed for dynamite|thundercats: lynxana|<num>|<date>"
+    },
+    {
+      "baseline": null,
+      "container": "kapowarr",
+      "count": 1,
+      "fingerprint": "7e2fa0cb9735",
+      "sample": "\u001b[1;31:40m[04:45:44][ERROR] Publisher automation failed for other|between light & dark|1|2026-11-12",
+      "severity": "error",
+      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][error] publisher automation failed for other|between light & dark|<num>|<date>"
+    },
+    {
+      "baseline": null,
+      "container": "kapowarr",
+      "count": 1,
+      "fingerprint": "544157a44c02",
+      "sample": "\u001b[1;31:40m[04:45:45][ERROR] Publisher automation failed for other|deathmetal|1|2026-11-10",
+      "severity": "error",
+      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][error] publisher automation failed for other|deathmetal|<num>|<date>"
+    },
+    {
+      "baseline": null,
+      "container": "kapowarr",
+      "count": 1,
+      "fingerprint": "f973eee3a5a2",
+      "sample": "\u001b[1;31:40m[04:45:55][ERROR] Publisher automation failed for dc comics|supergirl: accidental chef!|1|2026-11-09",
+      "severity": "error",
+      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][error] publisher automation failed for dc comics|supergirl: accidental chef!|<num>|<date>"
+    },
+    {
+      "baseline": null,
+      "container": "kapowarr",
+      "count": 1,
+      "fingerprint": "b48a613a56fc",
+      "sample": "\u001b[1;31:40m[04:45:57][ERROR] Publisher automation failed for ablaze|the lycan|2|2026-11-11",
+      "severity": "error",
+      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][error] publisher automation failed for ablaze|the lycan|<num>|<date>"
+    },
+    {
+      "baseline": null,
+      "container": "kapowarr",
+      "count": 1,
+      "fingerprint": "9601035b8c01",
+      "sample": "\u001b[1;31:40m[04:46:07][ERROR] Publisher automation failed for keenspot|the wonderland trials|1|2026-11-11",
+      "severity": "error",
+      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][error] publisher automation failed for keenspot|the wonderland trials|<num>|<date>"
+    },
+    {
+      "baseline": null,
+      "container": "kapowarr",
+      "count": 1,
+      "fingerprint": "caffcb3f31fc",
+      "sample": "\u001b[1;31:40m[04:46:11][ERROR] Publisher automation failed for rippaverse|yaira: exclave|1|2026-11-10",
+      "severity": "error",
+      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][error] publisher automation failed for rippaverse|yaira: exclave|<num>|<date>"
+    },
+    {
+      "baseline": null,
+      "container": "kapowarr",
+      "count": 1,
+      "fingerprint": "9fb96895ec3f",
+      "sample": "\u001b[1;31:40m[04:46:16][ERROR] Publisher automation failed for tokyopop|247 comics presents / spotlight|1|2026-11-18",
+      "severity": "error",
+      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][error] publisher automation failed for tokyopop|<num> comics presents / spotlight|<num>|<date>"
+    },
+    {
+      "baseline": null,
+      "container": "kapowarr",
+      "count": 1,
+      "fingerprint": "2bfc5f4f88b4",
+      "sample": "\u001b[1;31:40m[04:46:18][ERROR] Publisher automation failed for devil's due publishing|devil's due presents: drafted|1|2026-11-18",
+      "severity": "error",
+      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][error] publisher automation failed for devil's due publishing|devil's due presents: drafted|<num>|<date>"
+    },
+    {
+      "baseline": null,
+      "container": "kapowarr",
+      "count": 1,
+      "fingerprint": "df3196ef80d4",
+      "sample": "\u001b[1;31:40m[04:46:22][ERROR] Publisher automation failed for antarctic press|horror comics: hollywood|1|2026-11-18",
+      "severity": "error",
+      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][error] publisher automation failed for antarctic press|horror comics: hollywood|<num>|<date>"
+    },
+    {
+      "baseline": null,
+      "container": "kapowarr",
+      "count": 1,
+      "fingerprint": "66d364cbde8f",
+      "sample": "\u001b[1;31:40m[04:46:38][ERROR] Publisher automation failed for keenspot|pooh bear adventures christmas special|1|2026-11-18",
+      "severity": "error",
+      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][error] publisher automation failed for keenspot|pooh bear adventures christmas special|<num>|<date>"
+    },
+    {
+      "baseline": null,
+      "container": "jellyfin",
+      "count": 1,
+      "fingerprint": "159482f5a5cc",
+      "sample": "[h264 @ 0x14b99d2cf500] error while decoding MB 20 23, bytestream -16",
+      "severity": "error",
+      "skeleton": "[h264 @ <hex>] error while decoding mb <num> <num>, bytestream -<num>"
     }
   ],
   "quiet": [
     {
-      "baseline": 113.0,
-      "container": "requests",
+      "baseline": 10.0,
+      "container": "prowlarr",
       "count": 0,
-      "fingerprint": "b0b22d3dd961",
-      "sample": "2026-11-20T12:34:31.497Z [error][Sonarr Scan]: Failed to process Sonarr media {\"errorMessage\":\"[TMDB] Failed to get TV show using the external TVDB ID: No show returned from API for ID 351003\",\"title\"",
+      "fingerprint": "32387a50af4d",
+      "sample": "error code: 521",
       "severity": "error",
-      "skeleton": "<ts> [error][sonarr scan]: failed to process sonarr media {<str>:<str>,<str>:<str>}"
+      "skeleton": "error code: <num>"
     }
   ],
   "scan": {
@@ -424,18 +244,18 @@
     "containers_scanned": 45,
     "containers_total": 45,
     "high_cardinality": [],
-    "lines_matched": 26501,
-    "lines_read": 172140,
-    "signatures_total": 161,
+    "lines_matched": 24350,
+    "lines_read": 172274,
+    "signatures_total": 206,
     "truncated": []
   },
   "spiking": [
     {
       "baseline": 0.0,
       "container": "kapowarr",
-      "count": 15368,
+      "count": 13125,
       "fingerprint": "512bc9539252",
-      "sample": "\u001b[1;31:40m[12:58:18][WARNING] GET request failed for url https://comicvine.gamespot.<REDACTED-BLOB>.jpg (ConnectionTimeoutError: Connection timeout to host https://comicvine.gamespot.<REDACTED-BLOB>.j",
+      "sample": "\u001b[1;31:40m[17:01:19][WARNING] GET request failed for url https://comicvine.gamespot.<REDACTED-BLOB>.jpg (ConnectionTimeoutError: Connection timeout to host https://comicvine.gamespot.<REDACTED-BLOB>.j",
       "severity": "warn",
       "skeleton": "\u001b[<num>;<num>:<num>[<ts>][warning] get request failed for url <url> (connectiontimeouterror: connection timeout to host <url> retrying for round <num>..."
     },
@@ -444,43 +264,52 @@
       "container": "qbit",
       "count": 515,
       "fingerprint": "b51302f9d222",
-      "sample": "Fri Nov 20 07:00:45 2026 RESOLVE: Cannot resolve host address: us-california.privacy.network:1197 (Temporary failure in name resolution)",
+      "sample": "Sat Nov 21 07:00:24 2026 RESOLVE: Cannot resolve host address: us-california.privacy.network:1197 (Temporary failure in name resolution)",
       "severity": "error",
       "skeleton": "<ts> resolve: cannot resolve host address: us-california.privacy.network:<num> (temporary failure in name resolution)"
     },
     {
       "baseline": 0.0,
-      "container": "kapowarr",
-      "count": 306,
-      "fingerprint": "bdf55f360fff",
-      "sample": "\u001b[1;31:40m[13:02:32][WARNING] Refused by Cloudflare without a cf-mitigated: challenge header, so FlareSolverr was not asked. If this is a challenge, that header is what Kapowarr looks for.",
-      "severity": "warn",
-      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][warning] refused by cloudflare without a cf-mitigated: challenge header, so flaresolverr was not asked. if this is a challenge, that header is what kapowarr looks for."
-    },
-    {
-      "baseline": 0.0,
-      "container": "kapowarr",
-      "count": 306,
-      "fingerprint": "2cdf70273bde",
-      "sample": "\u001b[1;31:40m[13:02:32][WARNING] GET request to https://files1.comics.<REDACTED-BLOB>.jpg returned with code 403",
-      "severity": "warn",
-      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][warning] get request to <url> returned with code <num>"
-    },
-    {
-      "baseline": 0.0,
       "container": "qbit",
-      "count": 257,
+      "count": 258,
       "fingerprint": "d00417be0245",
-      "sample": "Fri Nov 20 07:01:03 2026 Could not determine IPv4/IPv6 protocol",
+      "sample": "Sat Nov 21 07:00:24 2026 Could not determine IPv4/IPv6 protocol",
       "severity": "other",
       "skeleton": "<ts> could not determine ipv4/ipv6 protocol"
     },
     {
       "baseline": 0.0,
       "container": "kapowarr",
-      "count": 108,
+      "count": 221,
+      "fingerprint": "bdf55f360fff",
+      "sample": "\u001b[1;31:40m[17:02:59][WARNING] Refused by Cloudflare without a cf-mitigated: challenge header, so FlareSolverr was not asked. If this is a challenge, that header is what Kapowarr looks for.",
+      "severity": "warn",
+      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][warning] refused by cloudflare without a cf-mitigated: challenge header, so flaresolverr was not asked. if this is a challenge, that header is what kapowarr looks for."
+    },
+    {
+      "baseline": 0.0,
+      "container": "kapowarr",
+      "count": 221,
+      "fingerprint": "2cdf70273bde",
+      "sample": "\u001b[1;31:40m[17:02:59][WARNING] GET request to https://files1.comics.<REDACTED-BLOB>.jpg returned with code 403",
+      "severity": "warn",
+      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][warning] get request to <url> returned with code <num>"
+    },
+    {
+      "baseline": 2.0,
+      "container": "kapowarr",
+      "count": 115,
+      "fingerprint": "9dfcdf588b86",
+      "sample": "Traceback (most recent call last):",
+      "severity": "error",
+      "skeleton": "traceback (most recent call last):"
+    },
+    {
+      "baseline": 0.0,
+      "container": "kapowarr",
+      "count": 84,
       "fingerprint": "aa4df17ab706",
-      "sample": "\u001b[1;31:40m[13:02:10][WARNING] Orphaned downloads:     e.g. /app/temp_downloads/Adam.Strange.01.21/Adam Strange #01.cbr",
+      "sample": "\u001b[1;31:40m[17:02:24][WARNING] Orphaned downloads:     e.g. /app/temp_downloads/Adam.Strange.01.21/Adam Strange #01.cbr",
       "severity": "warn",
       "skeleton": "\u001b[<num>;<num>:<num>[<ts>][warning] orphaned downloads: e.g. <path>"
     },
@@ -489,72 +318,54 @@
       "container": "komga",
       "count": 66,
       "fingerprint": "c4a56760173f",
-      "sample": "2026-11-20T07:33:51.919-08:00  WARN 1 --- [taskProcessor-5] org.apache.pdfbox.pdfparser.COSParser    : found wrong object number. expected [2] found [1]",
+      "sample": "2026-11-21T07:34:01.674-08:00  WARN 1 --- [taskProcessor-6] org.apache.pdfbox.pdfparser.COSParser    : found wrong object number. expected [2] found [1]",
       "severity": "warn",
       "skeleton": "<ts> warn <num> --- [taskprocessor-<num>] org.apache.pdfbox.pdfparser.cosparser : found wrong object number. expected [<num>] found [<num>]"
     },
     {
-      "baseline": 2.0,
+      "baseline": 0.0,
       "container": "kapowarr",
-      "count": 36,
-      "fingerprint": "9dfcdf588b86",
-      "sample": "Traceback (most recent call last):",
-      "severity": "error",
-      "skeleton": "traceback (most recent call last):"
-    },
-    {
-      "baseline": 0.0,
-      "container": "prowlarr",
-      "count": 21,
-      "fingerprint": "50644f7835da",
-      "sample": "[Warn] Cardigann: [torrentdownload] Invalid category for value: 'AdultPornDVD'",
+      "count": 30,
+      "fingerprint": "ff956128a2d9",
+      "sample": "\u001b[1;31:40m[02:03:24][WARNING] GET request failed for url https://www.comics.org/api/series/168939/overview/ (SocketTimeoutError: Timeout on reading data from socket). Retrying for round 2...",
       "severity": "warn",
-      "skeleton": "[warn] cardigann: [torrentdownload] invalid category for value: <str>"
-    },
-    {
-      "baseline": 0.0,
-      "container": "prowlarr",
-      "count": 21,
-      "fingerprint": "fbff6d0bedfc",
-      "sample": "[Warn] Cardigann: Invalid Release: '[REAL-572] The Fiendish Fellatio Inferno XXVIII - Kokoa Aisu and Riri Kuribayash..' from indexer: TorrentDownload. No categories provided.",
-      "severity": "warn",
-      "skeleton": "[warn] cardigann: invalid release: <str> from indexer: torrentdownload. no categories provided."
+      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][warning] get request failed for url <url> (sockettimeouterror: timeout on reading data from socket). retrying for round <num>..."
     }
   ],
   "top": [
     {
       "baseline": null,
       "container": "kapowarr",
-      "count": 15368,
+      "count": 13125,
       "fingerprint": "512bc9539252",
-      "sample": "\u001b[1;31:40m[12:58:18][WARNING] GET request failed for url https://comicvine.gamespot.<REDACTED-BLOB>.jpg (ConnectionTimeoutError: Connection timeout to host https://comicvine.gamespot.<REDACTED-BLOB>.j",
+      "sample": "\u001b[1;31:40m[17:01:19][WARNING] GET request failed for url https://comicvine.gamespot.<REDACTED-BLOB>.jpg (ConnectionTimeoutError: Connection timeout to host https://comicvine.gamespot.<REDACTED-BLOB>.j",
       "severity": "warn",
       "skeleton": "\u001b[<num>;<num>:<num>[<ts>][warning] get request failed for url <url> (connectiontimeouterror: connection timeout to host <url> retrying for round <num>..."
     },
     {
       "baseline": null,
       "container": "jellyfin",
-      "count": 3776,
+      "count": 3818,
       "fingerprint": "0adacf397c67",
-      "sample": "[h264 @ 0x1500cbccf500] Error splitting the input into NAL units.",
+      "sample": "[h264 @ 0x145ff1ecf500] Error splitting the input into NAL units.",
       "severity": "error",
       "skeleton": "[h264 @ <hex>] error splitting the input into nal units."
     },
     {
       "baseline": null,
       "container": "jellyfin",
-      "count": 3776,
+      "count": 3818,
       "fingerprint": "7f642122dd3d",
-      "sample": "[vist#0:0/h264 @ 0x1500cbcb9480] [dec:h264 @ 0x1500cbc9d640] Error submitting packet to decoder: Invalid data found when processing input",
+      "sample": "[vist#0:0/h264 @ 0x145ff1eb9480] [dec:h264 @ 0x145ff1e9d640] Error submitting packet to decoder: Invalid data found when processing input",
       "severity": "error",
       "skeleton": "[vist#<num>:<num>/h264 @ <hex>] [dec:h264 @ <hex>] error submitting packet to decoder: invalid data found when processing input"
     },
     {
       "baseline": null,
       "container": "proxysql",
-      "count": 575,
+      "count": 543,
       "fingerprint": "a9cfc33818b3",
-      "sample": "2026-11-20 09:30:54 MySQL_Thread.cpp:5131:ProcessAllSessions_Healthy0(): [WARNING] Closing unhealthy client connection 172.21.0.1:40852 , user 'kindrobot_migrate' , hostgroup 30 , connection 25116",
+      "sample": "2026-11-21 07:00:56 MySQL_Thread.cpp:5131:ProcessAllSessions_Healthy0(): [WARNING] Closing unhealthy client connection 172.21.0.1:39028 , user 'kindrobot_migrate' , hostgroup 30 , connection 65961",
       "severity": "warn",
       "skeleton": "<ts> mysql_thread.cpp<ip>processallsessions_healthy0(): [warning] closing unhealthy client connection <ip> , user <str> , hostgroup <num> , connection <num>"
     },
@@ -563,104 +374,77 @@
       "container": "qbit",
       "count": 515,
       "fingerprint": "b51302f9d222",
-      "sample": "Fri Nov 20 07:00:45 2026 RESOLVE: Cannot resolve host address: us-california.privacy.network:1197 (Temporary failure in name resolution)",
+      "sample": "Sat Nov 21 07:00:24 2026 RESOLVE: Cannot resolve host address: us-california.privacy.network:1197 (Temporary failure in name resolution)",
       "severity": "error",
       "skeleton": "<ts> resolve: cannot resolve host address: us-california.privacy.network:<num> (temporary failure in name resolution)"
     },
     {
       "baseline": null,
-      "container": "scoopspress",
-      "count": 358,
-      "fingerprint": "6497ddc377f6",
-      "sample": "[Fri Nov 20 07:19:51.483440 2026] [php:warn] [pid 451:tid 451] [client 38.246.112.104:0] PHP Warning:  Undefined variable $enable_postal_code in <REDACTED-BLOB>.cf7sa.front.action.php on line 90",
-      "severity": "warn",
-      "skeleton": "[<ts>] [php:warn] [pid <num>:tid <num>] [client <ip>] php warning: undefined variable $enable_postal_code in <redacted-blob>.cf7sa.front.action.php on line <num>"
+      "container": "qbit",
+      "count": 258,
+      "fingerprint": "d00417be0245",
+      "sample": "Sat Nov 21 07:00:24 2026 Could not determine IPv4/IPv6 protocol",
+      "severity": "other",
+      "skeleton": "<ts> could not determine ipv4/ipv6 protocol"
     },
     {
       "baseline": null,
       "container": "kapowarr",
-      "count": 306,
+      "count": 221,
       "fingerprint": "bdf55f360fff",
-      "sample": "\u001b[1;31:40m[13:02:32][WARNING] Refused by Cloudflare without a cf-mitigated: challenge header, so FlareSolverr was not asked. If this is a challenge, that header is what Kapowarr looks for.",
+      "sample": "\u001b[1;31:40m[17:02:59][WARNING] Refused by Cloudflare without a cf-mitigated: challenge header, so FlareSolverr was not asked. If this is a challenge, that header is what Kapowarr looks for.",
       "severity": "warn",
       "skeleton": "\u001b[<num>;<num>:<num>[<ts>][warning] refused by cloudflare without a cf-mitigated: challenge header, so flaresolverr was not asked. if this is a challenge, that header is what kapowarr looks for."
     },
     {
       "baseline": null,
       "container": "kapowarr",
-      "count": 306,
+      "count": 221,
       "fingerprint": "2cdf70273bde",
-      "sample": "\u001b[1;31:40m[13:02:32][WARNING] GET request to https://files1.comics.<REDACTED-BLOB>.jpg returned with code 403",
+      "sample": "\u001b[1;31:40m[17:02:59][WARNING] GET request to https://files1.comics.<REDACTED-BLOB>.jpg returned with code 403",
       "severity": "warn",
       "skeleton": "\u001b[<num>;<num>:<num>[<ts>][warning] get request to <url> returned with code <num>"
     },
     {
       "baseline": null,
-      "container": "qbit",
-      "count": 257,
-      "fingerprint": "d00417be0245",
-      "sample": "Fri Nov 20 07:01:03 2026 Could not determine IPv4/IPv6 protocol",
+      "container": "scoopspress",
+      "count": 163,
+      "fingerprint": "6497ddc377f6",
+      "sample": "[Sat Nov 21 07:15:10.840986 2026] [php:warn] [pid 1423:tid 1423] [client 66.249.65.130:0] PHP Warning:  Undefined variable $enable_postal_code in <REDACTED-BLOB>.cf7sa.front.action.php on line 90",
+      "severity": "warn",
+      "skeleton": "[<ts>] [php:warn] [pid <num>:tid <num>] [client <ip>] php warning: undefined variable $enable_postal_code in <redacted-blob>.cf7sa.front.action.php on line <num>"
+    },
+    {
+      "baseline": null,
+      "container": "jellyfin",
+      "count": 148,
+      "fingerprint": "8f92cd1794f2",
+      "sample": "[hevc @ 0x150bd0ecf500] Could not find ref with POC 100",
       "severity": "other",
-      "skeleton": "<ts> could not determine ipv4/ipv6 protocol"
+      "skeleton": "[hevc @ <hex>] could not find ref with poc <num>"
+    },
+    {
+      "baseline": null,
+      "container": "jellyfin",
+      "count": 148,
+      "fingerprint": "1099497c765e",
+      "sample": "[hevc @ 0x150bd0ecf500] Error constructing the frame RPS.",
+      "severity": "error",
+      "skeleton": "[hevc @ <hex>] error constructing the frame rps."
     },
     {
       "baseline": null,
       "container": "netdata",
-      "count": 126,
+      "count": 127,
       "fingerprint": "2107195e439a",
-      "sample": "2026-11-21T01:41:08.793209Z  WARN ThreadId(09) journal_registry::registry::monitor: 23: Failed to send file system event: receiver dropped (channel closed)",
+      "sample": "2026-11-22T01:41:07.293207Z  WARN ThreadId(09) journal_registry::registry::monitor: 23: Failed to send file system event: receiver dropped (channel closed)",
       "severity": "error",
       "skeleton": "<ts> warn threadid(<num>) journal_registry<ip>registry<ip>monitor: <num>: failed to send file system event: receiver dropped (channel closed)"
     },
     {
       "baseline": null,
       "container": "kapowarr",
-      "count": 108,
-      "fingerprint": "aa4df17ab706",
-      "sample": "\u001b[1;31:40m[13:02:10][WARNING] Orphaned downloads:     e.g. /app/temp_downloads/Adam.Strange.01.21/Adam Strange #01.cbr",
-      "severity": "warn",
-      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][warning] orphaned downloads: e.g. <path>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 95,
-      "fingerprint": "24756dae8afd",
-      "sample": "time=2026-11-20T17:41:18.393-08:00 comm=spawn-unnamed source=collector level=warning tid=3171710  msg=\"SPAWN SERVER: child with pid 3171711 (request 1) exited with exit code 1: /usr/libexec/netdata/pl",
-      "severity": "warn",
-      "skeleton": "time=<ts> comm=spawn-unnamed source=collector level=warning tid=<num> msg=\"spawn server: child with pid <num> (request <num>) exited with exit code <num>: <path>"
-    },
-    {
-      "baseline": null,
-      "container": "komga",
-      "count": 66,
-      "fingerprint": "c4a56760173f",
-      "sample": "2026-11-20T07:33:51.919-08:00  WARN 1 --- [taskProcessor-5] org.apache.pdfbox.pdfparser.COSParser    : found wrong object number. expected [2] found [1]",
-      "severity": "warn",
-      "skeleton": "<ts> warn <num> --- [taskprocessor-<num>] org.apache.pdfbox.pdfparser.cosparser : found wrong object number. expected [<num>] found [<num>]"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 42,
-      "fingerprint": "29a758d0ae5d",
-      "sample": "time=2026-11-20T17:41:06.160-08:00 comm=tc-qos-helper.sh source=collector level=warning tid=3169073 thread=tc-qos-helper request=\"'/usr/libexec/netdata/plugins.d/tc-qos-helper.sh' '1' \" msg=\"FireQOS i",
-      "severity": "warn",
-      "skeleton": "time=<ts> comm=tc-qos-helper.sh source=collector level=warning tid=<num> thread=tc-qos-helper request=\"'<path>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 42,
-      "fingerprint": "8ef3774a1987",
-      "sample": "time=2026-11-20T17:49:31.241-08:00 comm=apps.plugin source=collector level=error errno=\"3, No such process\" tid=3169007  msg=\"Cannot process /host/proc/3281201/cgroup (command 'btrfs')\"",
-      "severity": "error",
-      "skeleton": "time=<ts> comm=apps.plugin source=collector level=error errno=<str> tid=<num> msg=\"cannot process <path>"
-    },
-    {
-      "baseline": null,
-      "container": "kapowarr",
-      "count": 36,
+      "count": 115,
       "fingerprint": "9dfcdf588b86",
       "sample": "Traceback (most recent call last):",
       "severity": "error",
@@ -668,84 +452,111 @@
     },
     {
       "baseline": null,
+      "container": "requests",
+      "count": 109,
+      "fingerprint": "b0b22d3dd961",
+      "sample": "2026-11-22T12:34:28.866Z [error][Sonarr Scan]: Failed to process Sonarr media {\"errorMessage\":\"[TMDB] Failed to get TV show using the external TVDB ID: No show returned from API for ID 83631\",\"title\":",
+      "severity": "error",
+      "skeleton": "<ts> [error][sonarr scan]: failed to process sonarr media {<str>:<str>,<str>:<str>}"
+    },
+    {
+      "baseline": null,
+      "container": "netdata",
+      "count": 97,
+      "fingerprint": "24756dae8afd",
+      "sample": "time=2026-11-21T17:41:16.411-08:00 comm=spawn-unnamed source=collector level=warning tid=812159  msg=\"SPAWN SERVER: child with pid 812160 (request 1) exited with exit code 1: /usr/libexec/netdata/plug",
+      "severity": "warn",
+      "skeleton": "time=<ts> comm=spawn-unnamed source=collector level=warning tid=<num> msg=\"spawn server: child with pid <num> (request <num>) exited with exit code <num>: <path>"
+    },
+    {
+      "baseline": null,
+      "container": "kapowarr",
+      "count": 84,
+      "fingerprint": "aa4df17ab706",
+      "sample": "\u001b[1;31:40m[17:02:24][WARNING] Orphaned downloads:     e.g. /app/temp_downloads/Adam.Strange.01.21/Adam Strange #01.cbr",
+      "severity": "warn",
+      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][warning] orphaned downloads: e.g. <path>"
+    },
+    {
+      "baseline": null,
+      "container": "komga",
+      "count": 66,
+      "fingerprint": "c4a56760173f",
+      "sample": "2026-11-21T07:34:01.674-08:00  WARN 1 --- [taskProcessor-6] org.apache.pdfbox.pdfparser.COSParser    : found wrong object number. expected [2] found [1]",
+      "severity": "warn",
+      "skeleton": "<ts> warn <num> --- [taskprocessor-<num>] org.apache.pdfbox.pdfparser.cosparser : found wrong object number. expected [<num>] found [<num>]"
+    },
+    {
+      "baseline": null,
+      "container": "netdata",
+      "count": 50,
+      "fingerprint": "8ef3774a1987",
+      "sample": "time=2026-11-21T18:14:25.560-08:00 comm=apps.plugin source=collector level=error errno=\"3, No such process\" tid=809245  msg=\"Cannot process /host/proc/1244966/cmdline (command '')\"",
+      "severity": "error",
+      "skeleton": "time=<ts> comm=apps.plugin source=collector level=error errno=<str> tid=<num> msg=\"cannot process <path>"
+    },
+    {
+      "baseline": null,
+      "container": "jellyfin",
+      "count": 48,
+      "fingerprint": "de2a1a209ccb",
+      "sample": "[hevc @ 0x150bd0ecf500] Error splitting the input into NAL units.",
+      "severity": "error",
+      "skeleton": "[hevc @ <hex>] error splitting the input into nal units."
+    },
+    {
+      "baseline": null,
+      "container": "jellyfin",
+      "count": 48,
+      "fingerprint": "a95a6acca562",
+      "sample": "[vist#0:0/hevc @ 0x150bd0eb9600] [dec:hevc @ 0x150bd0e9d780] Error submitting packet to decoder: Invalid data found when processing input",
+      "severity": "error",
+      "skeleton": "[vist#<num>:<num>/hevc @ <hex>] [dec:hevc @ <hex>] error submitting packet to decoder: invalid data found when processing input"
+    },
+    {
+      "baseline": null,
+      "container": "netdata",
+      "count": 42,
+      "fingerprint": "29a758d0ae5d",
+      "sample": "time=2026-11-21T17:41:04.559-08:00 comm=tc-qos-helper.sh source=collector level=warning tid=809304 thread=tc-qos-helper request=\"'/usr/libexec/netdata/plugins.d/tc-qos-helper.sh' '1' \" msg=\"FireQOS is",
+      "severity": "warn",
+      "skeleton": "time=<ts> comm=tc-qos-helper.sh source=collector level=warning tid=<num> thread=tc-qos-helper request=\"'<path>"
+    },
+    {
+      "baseline": null,
       "container": "netdata",
       "count": 35,
       "fingerprint": "b4a4f3c0319b",
-      "sample": "time=2026-11-20T17:41:06.116-08:00 comm=spawn-plugins source=collector level=warning tid=3167737  msg=\"SPAWN SERVER: child with pid 3169050 (request 9) exited with exit code 1: /bin/sh -c \\\"exec /usr/",
+      "sample": "time=2026-11-21T17:41:04.519-08:00 comm=spawn-plugins source=collector level=warning tid=807919  msg=\"SPAWN SERVER: child with pid 809273 (request 8) exited with exit code 1: /bin/sh -c \\\"exec /usr/li",
       "severity": "warn",
       "skeleton": "time=<ts> comm=spawn-plugins source=collector level=warning tid=<num> msg=\"spawn server: child with pid <num> (request <num>) exited with exit code <num>: <path>"
+    },
+    {
+      "baseline": null,
+      "container": "subtitles",
+      "count": 30,
+      "fingerprint": "581e297308ed",
+      "sample": "2026-11-21 12:43:05,903 - root                             (150d82a25b30) :  ERROR (utils:55) - BAZARR Error ('.bin' is not a valid video extension) trying to get video information for this file: /pc/",
+      "severity": "error",
+      "skeleton": "<ts> - root (<hex>) : error (utils:<num>) - bazarr error (<str> is not a valid video extension) trying to get video information for this file: <path>"
+    },
+    {
+      "baseline": null,
+      "container": "kapowarr",
+      "count": 30,
+      "fingerprint": "ff956128a2d9",
+      "sample": "\u001b[1;31:40m[02:03:24][WARNING] GET request failed for url https://www.comics.org/api/series/168939/overview/ (SocketTimeoutError: Timeout on reading data from socket). Retrying for round 2...",
+      "severity": "warn",
+      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][warning] get request failed for url <url> (sockettimeouterror: timeout on reading data from socket). retrying for round <num>..."
     },
     {
       "baseline": null,
       "container": "proxysql",
       "count": 30,
       "fingerprint": "9caf510b320a",
-      "sample": "2026-11-20 10:08:40 MySQL_Session.cpp:6731:<REDACTED-BLOB>(): [WARNING] Error during query on (10,mariadb-kindrobots2,3306,25795): 1062, Duplicate entry 'compartmented-mourner' for key 'Facet_slug_key",
+      "sample": "2026-11-21 10:14:14 MySQL_Session.cpp:6731:<REDACTED-BLOB>(): [WARNING] Error during query on (10,mariadb-kindrobots2,3306,65819): 1062, Duplicate entry 'compartmented-mourner' for key 'Facet_slug_key",
       "severity": "warn",
       "skeleton": "<ts> mysql_session.cpp:<num>:<redacted-blob>(): [warning] error during query on (<num>,mariadb-kindrobots2,<num>,<num>): <num>, duplicate entry <str> for key <str>"
-    },
-    {
-      "baseline": null,
-      "container": "subtitles",
-      "count": 28,
-      "fingerprint": "581e297308ed",
-      "sample": "2026-11-20 12:12:13,097 - root                             (150d82a25b30) :  ERROR (utils:55) - BAZARR Error ('.bin' is not a valid video extension) trying to get video information for this file: /pc/",
-      "severity": "error",
-      "skeleton": "<ts> - root (<hex>) : error (utils:<num>) - bazarr error (<str> is not a valid video extension) trying to get video information for this file: <path>"
-    },
-    {
-      "baseline": null,
-      "container": "jellyfin",
-      "count": 24,
-      "fingerprint": "88ae24b890c7",
-      "sample": "[15:57:40] [ERR] [65] Jellyfin.Server.Implementations.Trickplay.TrickplayManager: Error creating trickplay images.",
-      "severity": "error",
-      "skeleton": "[<ts>] [err] [<num>] jellyfin.server.implementations.trickplay.trickplaymanager: error creating trickplay images."
-    },
-    {
-      "baseline": null,
-      "container": "jellyfin",
-      "count": 24,
-      "fingerprint": "c1a1d19b3cee",
-      "sample": "MediaBrowser.Common.FfmpegException: ffmpeg image extraction failed for /usr/lib/jellyfin-ffmpeg/ffmpeg -loglevel error -threads 1 -i file:\"/personal/silas/video/vids/badfamilypov.25.06.28.the.best.st",
-      "severity": "error",
-      "skeleton": "mediabrowser.common.ffmpegexception: ffmpeg image extraction failed for <path>"
-    },
-    {
-      "baseline": null,
-      "container": "jellyfin",
-      "count": 24,
-      "fingerprint": "1216e7532b7e",
-      "sample": "[15:57:40] [WRN] [65] Jellyfin.Server.Implementations.Trickplay.TrickplayManager: Pruning trickplay files for /personal/silas/video/vids/badfamilypov.25.06.28.the.best.stepdaughters.have.an.oral.fixat",
-      "severity": "warn",
-      "skeleton": "[<ts>] [wrn] [<num>] jellyfin.server.implementations.trickplay.trickplaymanager: pruning trickplay files for <path>"
-    },
-    {
-      "baseline": null,
-      "container": "jellyfin",
-      "count": 23,
-      "fingerprint": "baa3f4eb44ca",
-      "sample": "[vost#0:0/mjpeg @ 0x1465dc0b8100] Task finished with error code: -22 (Invalid argument)",
-      "severity": "error",
-      "skeleton": "[vost#<num>:<num>/mjpeg @ <hex>] task finished with error code: -<num> (invalid argument)"
-    },
-    {
-      "baseline": null,
-      "container": "jellyfin",
-      "count": 22,
-      "fingerprint": "aa2b230dac1a",
-      "sample": "[vost#0:0/mjpeg @ 0x1465dc0b8100] [enc:mjpeg @ 0x1465dc009480] Error submitting video frame to the encoder",
-      "severity": "error",
-      "skeleton": "[vost#<num>:<num>/mjpeg @ <hex>] [enc:mjpeg @ <hex>] error submitting video frame to the encoder"
-    },
-    {
-      "baseline": null,
-      "container": "jellyfin",
-      "count": 22,
-      "fingerprint": "62765883ae17",
-      "sample": "[vost#0:0/mjpeg @ 0x1465dc0b8100] [enc:mjpeg @ 0x1465dc009480] Error encoding a frame: Invalid argument",
-      "severity": "error",
-      "skeleton": "[vost#<num>:<num>/mjpeg @ <hex>] [enc:mjpeg @ <hex>] error encoding a frame: invalid argument"
     }
   ],
   "version": 1,
