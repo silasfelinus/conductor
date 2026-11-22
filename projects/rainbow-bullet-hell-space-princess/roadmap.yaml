@@ -844,11 +844,11 @@ tasks:
   - id: t-038
     milestone: m4
     title: "Recut the thrash-metal opening from the doodle art"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 20261122T1212Z-rainbow-t038-p7k9
     claimed_at: '2026-11-22T12:12:00Z'
-    updated: '2026-11-22T12:12:00Z'
+    updated: '2026-11-22T12:15:00Z'
     depends_on: [t-036]
     passes: 1
     retry_context: ''
@@ -869,6 +869,8 @@ tasks:
       and main()-level tests simulating a cross-device /tmp; retry_context items resolved.
       Still partial: confirm auto-submitted WAN ArtJob IDs, inspect rendered clips, export the
       15s cut and wire it into the kind_robots cabinet.
+
+      Partial opening-recut reliability slice: exporter now resolves original completed ACE-Step soundtrack by pinned ArtJob #44644 rather than only the most recent 200 queue jobs. Added five regression tests for DONE, pending, malformed, missing ArtImage and HTTP denial. Full opening visual review/render and kind_robots integration remain outstanding.
 
   - id: t-039
     milestone: m4
