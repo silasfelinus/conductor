@@ -679,7 +679,7 @@ tasks:
     milestone: m4
     title: "Final human design acceptance after all agent-owned QA and separate release authorization"
     status: waiting
-    depends_on: [t-010, t-018]
+    depends_on: [t-010, t-018, t-049]
     gate_human: true
     gate_reason: subjective-acceptance
     owner: null
@@ -1149,3 +1149,13 @@ tasks:
       Shared source/game/private media proof helper with evidence checkpoint per ledger implemented, both Prom canon and Tactics workflows refactored, failure and privacy regression tests added. Review via scoped worker PR; no new ArtJobs submitted and no existing reviewer approvals changed.
 
       Merged shared authenticated private-art media proof helper and per-ledger checkpointing in conductor#7863 at 5bdedd4ded2494f221d0dc55c4f2854fbfa27c11. Four latest-head CI workflows completed successfully, including Python tests, security audit, and Worker PR CI. This closes helper implementation only, not visual approval, artwork delivery, or final private URL checks for individual paintings.
+  - id: t-049
+    milestone: m4
+    title: "Deliver original adaptive music and event-driven sound effects with persistent accessible audio settings before Prom human playtests"
+    status: ready
+    depends_on: []
+    owner: worker
+    passes: 0
+    stakes: reversible
+    note: |-
+      Silas's explicit 2026-11-22 PT pre-playtest requirement. There was no music/SFX task in this roadmap or game-page implementation. Compose original licensed-safe title, school/day, patrol/tension and finale/ending cues; original navigational, recruit, investigation, injury, choice, success/failure and villain-reveal SFX; route real run transitions to cues rather than generic button-only beeps. Provide opt-in browser audio unlock, independently persisted master/music/SFX volume and mute, reduced-motion/accessible visual-equivalent behavior, cleanup on navigation and no SSR/autoplay crash. Add deterministic cue/state, settings migration, mute/unlock and source-level integration contract tests; test actual playback on the supported browser/mobile path before marking delivered. Music and SFX are required for agent-complete playtest readiness, not the later human verdict.
