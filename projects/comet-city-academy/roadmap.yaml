@@ -1002,8 +1002,8 @@ tasks:
   - id: t-031
     milestone: m3
     title: "HIGH PRIORITY · Begin private Unstable Diffusers production for canonical Prom/Tactics cast"
-    status: review
-    updated: '2026-11-21T03:45:08.961Z'
+    status: ready
+    updated: '2026-11-22T23:22:11Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -1032,9 +1032,8 @@ tasks:
       Art export and production jobs were not accessed; no art state changed.
 
       Private Capes production gallery staged on Kind Robots worker/comet-city-academy-t-031-canon-painted-gallery-k8f2 at f7e38a0. A source-backed catalog maps all fourteen DONE Unstable Diffusers ArtJobs and ArtImage IDs from the canonical Conductor ledger, grouped as Cornerstone, Backdraft and Dr Frog. A new admin gallery lazily loads authenticated previews through the existing art store and displays durable job/image provenance and visible failure fallback without claiming browser delivery. Cast identity keys, benchmark ArtJobs and game saves untouched. Regression checks added to verifyCapesStyleCheck.test.ts. Still pending CI, actual private image retrieval and visual QA; t-031 remains partial, not done.
-    owner: worker
-    claimed_by: 20261121T034139Z-prom-t031-art-review-k8f2
-    claimed_at: '2026-11-21T03:41:39.215Z'
+
+      Prior admin candidate gallery PR kind_robots#5488 merged on 2026-11-21 PT. This was a partial reversible art-intake slice, not final delivery. Return to ready for remaining authenticated media-proof and attachment work across the 14 original Unstable Diffusers production candidates and related private Prom art. Preserve all existing job/image receipts.
   - id: t-032
     title: "Prom of Doom (Capes & Tassels) | Master 30-Day Playbook Roadmap"
     status: review
