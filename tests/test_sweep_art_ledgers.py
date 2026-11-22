@@ -130,7 +130,7 @@ def test_all_opted_in_art_ledgers_have_identical_safe_loader_data():
 
     fast_loader = getattr(yaml, "CSafeLoader", None)
     if fast_loader is None:
-        pytest.skip("LibYAML CSafeLoader is not installed")
+        pytest.fail("LibYAML CSafeLoader unavailable: scheduled parity would be unverified")
 
     ledgers = sweep.find_ledgers(sweep.ROOT)
     assert ledgers, "expected at least one opted-in production art ledger"
