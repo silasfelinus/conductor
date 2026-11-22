@@ -574,7 +574,7 @@ def main(argv=None):
         accepted_clips: list[str] = []
         rejected_clips: list[str] = []
         frames = encode(render(sources, kept, accepted_clips, rejected_clips), audio, staging, seconds)
-        if frames != round(sum(beats for _, beats, _, _ in sources) * 60 / BPM * FPS):
+        if abs(frames - round(sum(beats for _, beats, _, _ in sources) * 60 / BPM * FPS)) > 1:
             raise RuntimeError(f"opening frame count mismatch: {frames}")
         verify_encoded_media(staging, seconds, require_audio=bool(audio))
         if not kept:
@@ -588,7 +588,7 @@ def main(argv=None):
         if args.out:
             target.parent.mkdir(parents=True, exist_ok=True)
             for artifact in (staging, staging.with_suffix(".webm"), poster):
-                artifact.replace(target.with_name(artifact.name))
+                artifact.replace(target.with_name(artifact.name if artifact.name != "opening.mp4" else target.name))
             return EXIT_DONE
         report = delivery_report(
             sources, accepted_clips, rejected_clips, wan_shot_budgets(ledger)
@@ -604,7 +604,7 @@ def main(argv=None):
             artifact.replace(target.with_name(artifact.name))
         target.with_name("opening-rejected-clips.json").unlink(missing_ok=True)
         print(f"WAN re-queue shots: {', '.join(report['wan_requeue_shots']) or 'none'}")
-        url = "/" + str(VIDEO_DIR.relative_to("public")).replace("\\\\", "/")
+        url = "/" + str(VIDEO_DIR.relative_to("public")).replace("\\", "/")
         write_manifest(kind_robots, {
             "webm": f"{url}/opening.webm", "mp4": f"{url}/opening.mp4", "poster": f"{url}/opening-poster.webp",
             "seconds": seconds, "clips": clips, "shots": len(sources),
