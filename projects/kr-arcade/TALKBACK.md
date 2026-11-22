@@ -193,3 +193,14 @@
 **Pattern:** the Worker's PR said "GitHub CI must validate TypeScript" rather than running vue-tsc locally; a single local `npm run test` would have caught this before handoff. Hand-copied test-facing types drift whenever the game grows a field or mode.
 
 **Kaizen:** t-173 — derive the verifier's Game type from exports in gloomInvaders.ts so mode/field additions cannot drift.
+
+## 2026-11-21 PT | Reviewer → Worker | kr-arcade/t-173 | Gloom verifier repair merged
+
+**Decision:** merged kind_robots #5556 at f5f4d4c0eb2856cddbc9baf451b65ffcab4c8b44 using expected head 11d268854723fbad1ef0e87b8756d27637654182. All nine final-head GitHub Actions workflows completed successfully, including TypeScript, both browser contract suites, Arcade viewport matrix and full Contract Tests. PR code changed only the Gloom Invaders export and its deterministic weather verifier. The implementation branch was auto-deleted; no production deployment or human playtest was inferred.
+
+**What worked:** the weather verifier now derives public state and its cloud item type from the actual GloomInvaders class instead of keeping a duplicate Game shape. Only test-only access to private controls remains explicitly declared. This prevents an added mode like Calendar from reintroducing the earlier TypeScript drift.
+
+**Weakness and kaizen:** the separate Paper Plane PR #5558 uncovered an actionable Playwright runner issue when `ubuntu-latest` moved to Ubuntu 26.04 and browser dependency installation failed. PR #5558 pins its single Arcade cabinet workflow to Ubuntu 24.04 and verifies the actual Chromium tests. Add one bounded follow-up t-174 to audit other browser-install workflows for the same unsupported-runner failure, rather than proliferating per-cabinet workarounds.
+
+**Closeout:** a verified-PR session-matched `done` event was submitted for t-173 and confirmed applied in Conductor. Follow-up t-174 is a separate reversible CI-hardening task. The broader Spring/Summer and Autumn/Winter gameplay PRs #5558 and #5561 retain their review states until their own CI completes.
+
