@@ -1,6 +1,5 @@
 """Private Rainbow opening cut: no partial previews or chroma-green false approval."""
 
-import io
 import tempfile
 import unittest
 from pathlib import Path
@@ -94,8 +93,6 @@ class PrivateOpeningTests(unittest.TestCase):
                 (key, beats, 262212, 9000 + index)
                 for index, (key, beats) in enumerate(opening.DOODLE_SHOTS)
             ]
-            still = io.BytesIO()
-            Image.new("RGB", (64, 36), "pink").save(still, "PNG")
 
             def render(sources, last, accepted, rejected):
                 last.append(Image.new("RGB", opening.SIZE, "pink"))
