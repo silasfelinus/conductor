@@ -8,6 +8,8 @@ on:
     paths:
       - ".github/workflows/prom-tactics-art-intake.yml"
       - "projects/every-villain-tactics/art/ONE-HIT-CREW-TELEGRAPHS-2026-11-20.yaml"
+      - "projects/every-villain-tactics/art/ONE-HIT-CREW-COMBAT-STATES-2026-11-22.yaml"
+      - "projects/comet-city-academy/art/AUTHORED-RECRUITS-EMOTIONS-2026-11-22.yaml"
       - "projects/comet-city-academy/art/OCT-29-CAST-KREA2-ROUND-1.yaml"
       - "projects/comet-city-academy/art/CANON-OUTCOME-CORRECTIONS-2026-11-22.yaml"
   schedule:
@@ -71,6 +73,62 @@ jobs:
             tests/test_prom_oct29_art_ledger.py \
             tests/test_prom_tactics_art_intake.py \
             tests/test_prom_canon_outcome_corrections.py
+      # This established fast-intake workflow already bypasses Auto Art Generate.
+      # Submit the newest private Prom/Tactics game-art batches before the older
+      # historical receipts so the 24 requested poses do not wait behind them.
+      - name: Submit new private combat and recruit emotion ArtJobs
+        id: priority_new_art
+        continue-on-error: true
+        run: |
+          failures=0
+          for ledger in \
+            projects/every-villain-tactics/art/ONE-HIT-CREW-COMBAT-STATES-2026-11-22.yaml \
+            projects/comet-city-academy/art/AUTHORED-RECRUITS-EMOTIONS-2026-11-22.yaml; do
+            python scripts/enqueue_art_requests.py "$ledger" --live || failures=1
+          done
+          bash scripts/checkpoint_art_state.sh \
+            "chore: checkpoint Prom and Tactics priority art receipts [skip ci]" || failures=1
+          exit "$failures"
+
+      - name: Refresh new private combat and recruit emotion receipts
+        if: steps.priority_new_art.outcome == 'success'
+        continue-on-error: true
+        run: |
+          for ledger in \
+            projects/every-villain-tactics/art/ONE-HIT-CREW-COMBAT-STATES-2026-11-22.yaml \
+            projects/comet-city-academy/art/AUTHORED-RECRUITS-EMOTIONS-2026-11-22.yaml; do
+            python scripts/enqueue_art_requests.py "$ledger" --status
+          done
+          bash scripts/checkpoint_art_state.sh \
+            "chore: refresh priority Prom and Tactics ArtImages [skip ci]"
+
+      - name: Require durable ArtJob receipts for 24 priority paintings
+        if: always()
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import yaml
+
+          paths = [
+              Path("projects/every-villain-tactics/art/ONE-HIT-CREW-COMBAT-STATES-2026-11-22.yaml"),
+              Path("projects/comet-city-academy/art/AUTHORED-RECRUITS-EMOTIONS-2026-11-22.yaml"),
+          ]
+          for path in paths:
+              ledger = yaml.safe_load(path.read_text(encoding="utf-8"))
+              subjects = ledger.get("subjects") or []
+              missing = [
+                  subject["key"] for subject in subjects
+                  if type((subject.get("jobs") or {}).get("krea2")) is not int
+              ]
+              print(f"{path}: {len(subjects) - len(missing)}/{len(subjects)} ArtJob receipts")
+              if len(subjects) != 12 or missing:
+                  raise SystemExit(f"ArtJob acceptance incomplete: {path}: {missing}")
+          PY
+          if [ "${{ steps.priority_new_art.outcome }}" != "success" ]; then
+            echo "::error::Priority new-art submission step failed."
+            exit 1
+          fi
+
       # The server deduplicates each deterministic requestKey. If an earlier
       # job was accepted but its workflow cancelled, this returns its same ID.
       # Checkpoint partial successes even if later cells fail.

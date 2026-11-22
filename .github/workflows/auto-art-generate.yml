@@ -173,6 +173,37 @@ jobs:
           python scripts/reconcile_unrecorded_art.py --apply || true
           bash scripts/checkpoint_art_state.sh "chore: record recovered ArtJob IDs [skip ci]"
 
+      # High-priority game art must not wait behind the long Memory Dungeon
+      # submission loop or the generic all-project sweep later in this workflow.
+      # enqueue_art_requests.py saves each accepted ArtJob ID under its exact
+      # subject key and skips cells that already have a receipt. These are
+      # private requests, not approval for publication or proof of rendered media.
+      - name: Submit priority Prom and Tactics ArtJobs
+        id: prom_tactics_priority_submit
+        if: ${{ steps.krhealth.outputs.up == 'true' }}
+        continue-on-error: true
+        working-directory: conductor
+        env:
+          KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+        run: |
+          set -e
+          for ledger in \
+            projects/every-villain-tactics/art/ONE-HIT-CREW-COMBAT-STATES-2026-11-22.yaml \
+            projects/comet-city-academy/art/AUTHORED-RECRUITS-EMOTIONS-2026-11-22.yaml; do
+            if [ -f "$ledger" ]; then
+              python scripts/enqueue_art_requests.py "$ledger" --live
+            fi
+          done
+
+      # Save accepted IDs before any unrelated lengthy art submissions start.
+      # Even a partially failed submission may have accepted earlier cells;
+      # the checkpoint therefore runs after the step regardless of its outcome.
+      - name: Checkpoint priority Prom and Tactics ArtJob IDs
+        if: ${{ always() && steps.krhealth.outputs.up == 'true' }}
+        working-directory: conductor
+        run: |
+          bash scripts/checkpoint_art_state.sh "chore: checkpoint priority Prom and Tactics ArtJobs [skip ci]"
+
       # Memory Dungeon: preserve every request id/path and reuse jobs already on
       # the server. An earlier submit step had TWO slashes after --submit-only,
       # exited 2, and the broad consumer rendered serially until cancellation.
