@@ -48,7 +48,10 @@ class RainbowStageDepthArtTests(unittest.TestCase):
             asset = subject.get("asset", "").removeprefix(
                 "rainbow-princess-art/doodle/"
             )
-            if self.review.get(asset) != "keep":
+            decision = self.review.get(asset)
+            if decision != "keep" and not (
+                isinstance(decision, dict) and "keep" in decision
+            ):
                 continue
             art = (subject.get("art") or {}).get(subject["lane"]) or {}
             if art.get("status") == "DONE":
