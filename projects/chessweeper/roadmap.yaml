@@ -110,23 +110,18 @@ tasks:
   - id: t-007
     milestone: m3
     title: "Deliver world-specific gameplay animation, cinematic transitions and responsive VFX"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 20261122T015302Z-chessweeper-t007-f5m9
     claimed_at: '2026-11-22T01:53:02.940Z'
-    updated: '2026-11-22T01:53:02.940Z'
+    updated: '2026-11-22T01:54:44.431Z'
     depends_on: t-001
     passes: 0
     stakes: reversible
-    note: >-
-      Ship actual original animation, not CSS-only placeholders: animated chess pieces and
-      world-specific actions, meaningful move/capture/mine-reveal/disc trails and collisions,
-      Sugar Rush freeze/combo, Ashen Last Stand, Jackpot multiball and wager payoffs,
-      win/loss transitions, and cinematic lead-ins to all twelve ending scenes. Integrate
-      delivered sprite/scene art or an approved traceable animation pipeline; preserve
-      gameplay readability, hitboxes and deterministic simulation. Verify animation
-      timings and fallback behavior on phone/tablet/desktop with reduced-motion support.
-      Include real screenshots or recorded playback and tests before closing.
+    note: |-
+      Ship actual original animation, not CSS-only placeholders: animated chess pieces and world-specific actions, meaningful move/capture/mine-reveal/disc trails and collisions, Sugar Rush freeze/combo, Ashen Last Stand, Jackpot multiball and wager payoffs, win/loss transitions, and cinematic lead-ins to all twelve ending scenes. Integrate delivered sprite/scene art or an approved traceable animation pipeline; preserve gameplay readability, hitboxes and deterministic simulation. Verify animation timings and fallback behavior on phone/tablet/desktop with reduced-motion support. Include real screenshots or recorded playback and tests before closing.
+
+      Partial animation implementation on worker/chessweeper-t007-gameplay-fx-20261121-f5m9: Eleven event-driven action effect hooks, three world color palettes, bounded particles, deterministic square placement, reduced-motion and settings-off behavior, and required CI regression assertions. This is a code-drawn VFX layer only. The approved art pipeline still must deliver character/piece sprite animations and twelve illustrated ending cinematics before t-007 can be closed done.
 
   - id: t-008
     milestone: m3
