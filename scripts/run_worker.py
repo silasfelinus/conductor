@@ -144,6 +144,20 @@ def find_ready_task(
 READY_TASKS_LIMIT = 8
 
 
+def roadmap_has_claimable_task(roadmap: dict[str, Any]) -> bool:
+    tasks = roadmap.get('tasks', [])
+    tasks_by_id = {
+        str(task.get('id')): task
+        for task in tasks
+        if isinstance(task, dict) and task.get('id')
+    }
+    return any(
+        task_is_claimable(task, tasks_by_id=tasks_by_id)
+        for task in tasks
+        if isinstance(task, dict)
+    )
+
+
 def build_queue_summary() -> dict[str, Any]:
     roadmaps = load_roadmaps()
     ready_tasks = list(islice(iter_ready_tasks(load_priority(), roadmaps), READY_TASKS_LIMIT))
@@ -160,17 +174,7 @@ def build_queue_summary() -> dict[str, Any]:
         'projects_with_ready_tasks': [
             roadmap.get('_project')
             for roadmap in roadmaps
-            if any(
-                task_is_claimable(
-                    task,
-                    tasks_by_id={
-                        str(sibling.get('id')): sibling
-                        for sibling in roadmap.get('tasks', [])
-                        if isinstance(sibling, dict) and sibling.get('id')
-                    },
-                )
-                for task in roadmap.get('tasks', [])
-            )
+            if roadmap_has_claimable_task(roadmap)
         ],
         'projects_needing_human': [
             roadmap.get('_project')
