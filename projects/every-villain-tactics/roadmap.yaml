@@ -442,11 +442,11 @@ tasks:
   - id: t-018
     milestone: m3
     title: "One-hit henchmen and Picnic Panic one-shot encounter"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 20261122T084738132Z-evt-t018-media-proof-m7q2
     claimed_at: '2026-11-22T08:48:24.566Z'
-    updated: '2026-11-22T08:48:24.566Z'
+    updated: '2026-11-22T08:50:14.736Z'
     depends_on: [t-004, t-017]
     passes: 0
     stakes: reversible
@@ -480,6 +480,8 @@ tasks:
       Art-first t-018 scoped integration: the twelve original one-hit crew ArtImages had passed authenticated source bytes and actual game media URL verification (production workflow 44976289684, 12/12). However unitPortrait rendered each one-hit minion as its owner superhero. The Tactics code now preloads the 3 crew action paintings from those original private ArtImage receipts and uses them directly for their one-hit combat standees through the authenticated Pinia art store. Wrong-person fallback portraits are suppressed until the art loads; warnings remain operational. 3-action source attachments and tests are handed to PR review. Broader SPECIES and one-shot art curation work remains open; do not mark the umbrella task done.
 
       Prior ArtImage attachment PR #5507 merged and no open t-018 implementation PR remains. Releasing its review-stage lease to continue authenticated byte QA and actual media proof; 12 recorded DONE receipts remain preserved, not newly accepted.
+
+      Authored credentialed production private-media proof on worker/every-villain-tactics-t-018-private-media-proof-m7q2. Checks real bytes, file geometry and duplicate hashes for 12 Tactics one-hit plus 14 Prom Unstable Diffusers receipt images, without exporting private art to this public repo. Acceptance/visual curation remain separate; implementation PR and CI still required.
   - id: t-019
     milestone: m3
     title: "Deterministic post-battle points and earned scrapbook achievements"
