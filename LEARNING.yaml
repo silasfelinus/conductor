@@ -19049,3 +19049,13 @@ records:
   failure_category: null
   lesson: Guard canon anatomy at enqueue time (before an ArtJob is spent), and grandfather only already-accepted
     lanes so historic receipts are never re-submitted.
+- date: '2026-11-22'
+  project: kr-arcade
+  task: t-173
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: A shared test-facing type derived from actual game exports prevents newly introduced modes from
+    breaking independent verifier declarations.
