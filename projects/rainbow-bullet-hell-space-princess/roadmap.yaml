@@ -654,14 +654,14 @@ tasks:
   - id: t-028
     milestone: m6
     title: "Gen-2 alternate stages: four branch stages with their own guardians"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 20261122T123200Z-rainbow-t028-kelp-flight-s8r4
     claimed_at: '2026-11-22T12:32:00Z'
     depends_on: [t-026]
     passes: 0
     stakes: reversible
-    updated: '2026-11-22T12:32:00Z'
+    updated: '2026-11-22T12:40:00Z'
     note: |-
       One stage per PR, authored to the existing Act pacing and fairness rules, each with a guardian.
 
@@ -703,6 +703,8 @@ tasks:
       X1 missing Gen-2 gameplay art is now authored in private auto-submit Krea 2 ledger GEN2-KELP-NEBULA-X1.yaml: idle/sweep/hurt Kelp Warden, Coral Choir rescue pod, and lashing frond hazard. The five subjects are queued for pipeline submission only after a green merge; none has a new ArtJob or reviewed ArtImage yet. Existing four-stage backdrops remain reused. This is partial t-028, which still needs rendered art review, export, runtime integration and route playtests.
 
       Partial scope: PR #7833 merged with five Krea 2 X1 production-art requests; reopen for remaining X1 gameplay, image review, actual ArtJob intake and four-route acceptance.
+
+      Scoped X1 Kelp Nebula canonical gameplay implementation is committed on worker/rainbow-bullet-hell-space-princess-t028-kelp-choir-20261122: Kelp Warden telegraphed four-tooth attack, five timed Choir rescue pods, checkpoint and save migration validation, one-to-four-seat regression updates and X1 HUD. Art is still pending and t-028 will remain partial after merge. Await CI and verification.
   - id: t-029
     milestone: m6
     title: "Gen-2 art round 1: route map, Palace Hangar and four alternate-stage backdrops"

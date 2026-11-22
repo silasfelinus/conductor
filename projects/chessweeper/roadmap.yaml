@@ -159,11 +159,11 @@ tasks:
   - id: t-008
     milestone: m3
     title: "Deliver original sound effects, looping music and a gesture-safe audio mixer"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 20261122T122428427Z-chessweeper-t008-arrangement-r5x9
     claimed_at: '2026-11-22T12:24:28.427Z'
-    updated: '2026-11-22T12:24:28.427Z'
+    updated: '2026-11-22T12:29:21.784Z'
     depends_on: t-001
     passes: 0
     stakes: reversible
@@ -173,6 +173,8 @@ tasks:
       Implemented a substantial synthesized audio slice: original 16-step multi-voice sugar, ashen, and jackpot music, gesture-safe WebAudio mixer, twelve combat/achievement SFX cues, scene-switch handling, visibility/pagehide suspension and cleanup, persistent music/effects toggles and volume sliders, and mock-AudioContext CI regression tests. Branch worker/chessweeper-t008-soundscape-20261121-h2c7. Full mastered soundtrack assets, ArtJob receipts, actual audible mobile browser playthroughs and final audio mix remain; do not close t-008 done on this PR.
 
       2026-11-22 PT reviewer: Kind Robots PR #5542 merged as dab7b1ab after eight latest-head checks completed successfully. Gesture-safe synthesized soundscape, unique world scores, SFX and persistent volume controls landed. Return unfinished finite task to ready: mastered audio assets, original mix, browser audible QA and delivered URLs remain.
+
+      2026-11-22 PT: Added six original deterministic WAV loops (stage and finale per world), reproducible score renderer, audio provenance manifest, browser-safe gesture-gated decoding/crossfades with oscillator fallback, and regression tests. Partial t-008: audible device QA, production mix validation and verified delivered URLs remain.
 
   - id: t-009
     milestone: m3
