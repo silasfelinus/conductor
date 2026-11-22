@@ -263,11 +263,11 @@ tasks:
   - id: t-008
     milestone: m3
     title: "Deliver Space Couch painted red-sofa ship, pocket-room, shield, crew and world art"
-    status: review
+    status: done
     owner: worker
     claimed_by: 20261121T105120Z-goc-t008-w9r2
     claimed_at: '2026-11-21T10:51:20.049Z'
-    updated: '2026-11-21T10:53:12.550Z'
+    updated: '2026-11-22T05:43:31Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -299,6 +299,16 @@ tasks:
       https://github.com/silasfelinus/conductor/pull/7707 merged to main as an authored private image-request ledger. This was a partial increment, NOT visually delivered art: authenticated original ArtImage review, ArtJob provenance, accepted render export, and actual playable UI integration remain open. Return finite art task to ready for curation.
 
       Repaired shared art exporter to recognize curator ACCEPTED imagery and fail closed on REJECTED records even with contradictory legacy keeper text. Added strict-export and offline-audit regressions for Space Couch plate IDs. Branch commit adb4e69b71e200435906af42a540b9307bc474de; broader painted art delivery, authenticated inspection and 390/768/1440 checks remain open.
+
+      2026-11-22 PT closure (Silas-directed session; no other workers). All 8 SHIELD-POCKET-
+      CONTINUITY plates are curated keepers (6 from round 1; council and asteroid re-rendered
+      in CURATION-REDO-2 after round 1 showed franchise-style uniforms) and linked in the
+      access-filtered onboarding art (ArtImages 277779-277785, 278539-278540). The ship-prep
+      step shows them (Just-the-couch observation plate, infirmary pocket room, force-bubble
+      recharge) via kind_robots #5548 (eef3416) and #5553 (b6d4d05), both merged with all
+      exact-head checks SUCCESS. Painted couch/bubble identity confirmed across three full
+      signed-in voyages at 390/768/1440 (every screen painted, 0 broken images).
+    implementation_pr: 'silasfelinus/kind_robots#5553'
   - id: t-009
     milestone: m3
     title: "Deliver unique mission outcome, conversation and ending illustration coverage"
