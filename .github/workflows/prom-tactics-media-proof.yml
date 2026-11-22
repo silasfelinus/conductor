@@ -14,6 +14,9 @@ on:
       - "tests/test_prom_tactics_media_verification.py"
       - "projects/every-villain-tactics/art/ONE-HIT-CREW-TELEGRAPHS-2026-11-20.yaml"
       - "projects/every-villain-tactics/art/ONE-HIT-CREW-COMBAT-STATES-2026-11-22.yaml"
+      - "projects/every-villain-tactics/art/LAST-ORDER-DINER-ROUND-1.yaml"
+      - "projects/every-villain-tactics/art/SUNKEN-STREET-ROUND-1.yaml"
+      - "projects/every-villain-tactics/art/VALCOURT-LIBRARY-ROUND-1.yaml"
       - "projects/comet-city-academy/art/AUTHORED-RECRUITS-EMOTIONS-2026-11-22.yaml"
       - "projects/comet-city-academy/art/UNSTABLE-PRODUCTION-FAMILY-ROUND-1.yaml"
       - "projects/comet-city-academy/art/FRANCHISE-SAFE-RERENDERS-ROUND-1.yaml"
@@ -86,6 +89,22 @@ jobs:
             projects/comet-city-academy/art/RUNTIME-REFILL-ROUND-1.yaml \
             projects/comet-city-academy/art/OCT-29-CAST-KREA2-ROUND-1.yaml \
             --require-count 172
+      - name: Verify original Tactics diner, sunken street and library arena paintings
+        run: |
+          set +e
+          failed=0
+          for ledger in \
+            projects/every-villain-tactics/art/LAST-ORDER-DINER-ROUND-1.yaml \
+            projects/every-villain-tactics/art/SUNKEN-STREET-ROUND-1.yaml \
+            projects/every-villain-tactics/art/VALCOURT-LIBRARY-ROUND-1.yaml
+          do
+            python scripts/verify_prom_tactics_media.py "$ledger" \
+              --require-count 1 --write-evidence || failed=1
+            python scripts/verify_tactics_runtime_media.py "$ledger" \
+              --require-count 1 || failed=1
+          done
+          bash scripts/checkpoint_art_state.sh "chore: checkpoint Tactics dedicated venue media proof [skip ci]" || failed=1
+          exit "$failed"
       - name: Verify newest Tactics combat states and private game URLs
         run: |
           set +e
