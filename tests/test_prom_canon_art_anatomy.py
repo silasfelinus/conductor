@@ -156,9 +156,17 @@ def test_all_prom_art_ledgers_have_no_unsubmitted_canon_anatomy_gaps():
             if not problems:
                 continue
             jobs = item.get("jobs") or {}
-            accepted = any(type(value) is int and value > 0 for value in jobs.values())
-            detail = f"{path.name}:{item.get('key')}:{','.join(problems)}"
-            (legacy_violations if accepted else new_violations).append(detail)
+            lanes = document.get("lanes") or []
+            for lane in lanes:
+                key = lane.get("key")
+                if item.get("lane") and item["lane"] != key:
+                    continue
+                accepted = type(jobs.get(key)) is int and jobs[key] > 0
+                detail = (
+                    f"{path.name}:{item.get('key')}[{key}]:"
+                    + ",".join(problems)
+                )
+                (legacy_violations if accepted else new_violations).append(detail)
     assert visited > 600
     assert matching >= 400
     assert not new_violations, (
