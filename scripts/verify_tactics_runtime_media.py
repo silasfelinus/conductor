@@ -20,7 +20,10 @@ from pathlib import Path
 
 from PIL import Image, ImageChops, ImageStat
 
-from verify_prom_tactics_media import candidates
+if __package__:
+    from .verify_prom_tactics_media import candidates
+else:
+    from verify_prom_tactics_media import candidates
 
 
 class SameOriginRedirect(urllib.request.HTTPRedirectHandler):
