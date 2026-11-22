@@ -104,15 +104,21 @@ jobs:
           bash scripts/checkpoint_art_state.sh "chore: checkpoint Tactics combat pose media proof [skip ci]"
           checkpoint_status=$?
           test "$source_status" -eq 0 && test "$runtime_status" -eq 0 && test "$checkpoint_status" -eq 0
-      - name: Verify newest Prom companion emotion media
+      - name: Verify all twelve Prom companion emotions and their private gameplay URLs
         run: |
           set +e
-          # One Femi expression is still rendering. Count every DONE candidate
-          # without requiring its pending job to have an ArtImage already.
           python scripts/verify_prom_tactics_media.py \
             projects/comet-city-academy/art/AUTHORED-RECRUITS-EMOTIONS-2026-11-22.yaml \
-            --require-count 11 --write-evidence
-          verify_status=$?
-          bash scripts/checkpoint_art_state.sh "chore: checkpoint Prom companion emotion media proof [skip ci]"
+            --require-count 12 --write-evidence
+          source_status=$?
+          if [ "$source_status" -eq 0 ]; then
+            python scripts/verify_tactics_runtime_media.py \
+              projects/comet-city-academy/art/AUTHORED-RECRUITS-EMOTIONS-2026-11-22.yaml \
+              --require-count 12
+            runtime_status=$?
+          else
+            runtime_status=1
+          fi
+          bash scripts/checkpoint_art_state.sh "chore: checkpoint all Prom companion emotion media proof [skip ci]"
           checkpoint_status=$?
-          test "$verify_status" -eq 0 && test "$checkpoint_status" -eq 0
+          test "$source_status" -eq 0 && test "$runtime_status" -eq 0 && test "$checkpoint_status" -eq 0
