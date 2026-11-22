@@ -674,7 +674,9 @@ jobs:
       # every ledger) and a timed-out run lost them.
       - name: Sweep opted-in art ledgers
         id: ledger_sweep
-        if: ${{ steps.boxhealth.outputs.up == 'true' && steps.krhealth.outputs.up == 'true' }}
+        # Submission is durable and independent of the local render host.
+        # Queue while it is offline; kr-relay will render accepted jobs on recovery.
+        if: ${{ steps.krhealth.outputs.up == 'true' }}
         continue-on-error: true
         working-directory: conductor
         env:
