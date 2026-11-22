@@ -1173,11 +1173,11 @@ tasks:
   - id: t-048
     milestone: m5
     title: "Act III story and art pass: Days 21–30 Abbey ambiguity and aftermaths"
-    status: review
+    status: done
     owner: worker
     claimed_by: 20261121T001422865Z-eod-t048-branch-test-a61d
     claimed_at: '2026-11-21T00:14:22.865Z'
-    updated: '2026-11-21T00:16:50.521Z'
+    updated: '2026-11-22T00:22:31Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -1218,6 +1218,15 @@ tasks:
       2026-11-20 PT partial Act III Days 21-30 editorial increment merged Kind Robots PR #5453 as commit 2d53cc76b9fce46297033a968adc4e2453e70762; exact head 1a08a4ccf1b5c9534c7c0557a658f5eaee0679e1 had all 14 check runs complete and successful or autofix skipped, including Contract verifiers. Act III decision consequence prose, eleven witnesses, three engine-choice flag checks; no saves, canon IDs or cost math changed. Remaining original Act III art submission/delivery and comprehensive close reading unverified: return finite nonrecurring task to ready, not done. Master issue #4142 stays open.
 
       2026-11-20 PT independent Act III Day 30 content/gameplay branch worker/emperor-of-dust-t-048-shared-shelter-a61d. Added two non-trivial shelter options earned by prior Mole water truce or actual Day 18 refugee-road success. Each fully shelters one group, gives a second group limited safe space only, charges treasury and local support, grants mission aid in a different stat, and schedules a named Day 32 resource cost. Distinct victory and defeat narratives witness both outcomes; new real-engine Day 30 decision tests cover prerequisite gates, brass/local costs, mission-aid and dues. All 341 existing ID declarations retained, existing saves and route unaffected. Art delivery and full Act III QA remain open; implementation PR and exact-head tests pending.
+
+      2026-11-22 PT: kind_robots#5529 shipped 293 curated plates (181 chance, 52 audience, 33
+      quest-consequence, 8 endings, 14 petitioners, 5 talk/quest) with keep/reject verdicts in
+      conductor#7785, which completes this act's outstanding scene-art delivery. Closed at the
+      playtest handoff (docs/agents/GAME-PLAYTEST-CLOSEOUT-2026-11-18.md): all 50 days
+      authored and route-tested in CI (adversarial seeds, eight real-play ending witnesses,
+      sixteen 50-day traces, market/refugee/water-debt route matrices). Further line-level
+      editorial judgement is subjective human-playtest feedback, outside the finite roadmap;
+      new fixes use playtest_iteration: true.
   - id: t-049
     milestone: m5
     title: "Act IV story and art pass: Days 31–40 Komodo loyalty and betrayal"
