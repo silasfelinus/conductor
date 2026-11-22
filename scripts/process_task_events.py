@@ -515,6 +515,24 @@ def prepare_learning(
     if missing:
         raise ValueError(f"learning is missing required fields: {', '.join(missing)}")
 
+    # 2026-11-22 PT: a mapping payload with `kind: creative` (and an unquoted
+    # YAML date) reached main through this path and redded
+    # test_committed_ledger_schema_conformance for every PR. Apply the same
+    # fallback as the bare-string path above: an out-of-enum kind takes the
+    # roadmap's kind (else "software"), out-of-enum stakes take the task's
+    # stakes (else "reversible"), and the date is always an ISO string.
+    if learning["kind"] not in {"software", "content", "proposal"}:
+        kind = roadmap.get("kind") if isinstance(roadmap, dict) else None
+        learning = {**learning, "kind": kind if kind in {"software", "content", "proposal"} else "software"}
+    if learning["stakes"] not in {"reversible", "outward-facing", "irreversible"}:
+        stakes = task.get("stakes") if isinstance(task, dict) else None
+        learning = {
+            **learning,
+            "stakes": stakes if stakes in {"reversible", "outward-facing", "irreversible"} else "reversible",
+        }
+    if isinstance(learning.get("date"), (dt.date, dt.datetime)):
+        learning = {**learning, "date": learning["date"].isoformat()[:10]}
+
     path = ROOT / "LEARNING.yaml"
     ledger = load_yaml(path) if path.is_file() else {"records": []}
     records = ledger.get("records") or []
