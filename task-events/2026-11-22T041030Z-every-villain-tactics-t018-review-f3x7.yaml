@@ -1,0 +1,18 @@
+version: 1
+project: every-villain-tactics
+task: t-018
+operation: review
+session: 2026-11-22T040330Z-evt-t018-crew-portraits-f3x7
+updated: '2026-11-22T04:10:30Z'
+note: >-
+  Art-first t-018 scoped integration: the twelve original one-hit crew
+  ArtImages had passed authenticated source bytes and actual game media
+  URL verification (production workflow 44976289684, 12/12). However
+  unitPortrait rendered each one-hit minion as its owner superhero.
+  The Tactics code now preloads the 3 crew action paintings from those
+  original private ArtImage receipts and uses them directly for their
+  one-hit combat standees through the authenticated Pinia art store.
+  Wrong-person fallback portraits are suppressed until the art loads;
+  warnings remain operational. 3-action source attachments and tests
+  are handed to PR review. Broader SPECIES and one-shot art curation
+  work remains open; do not mark the umbrella task done.
