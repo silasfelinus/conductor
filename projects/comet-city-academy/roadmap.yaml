@@ -1002,11 +1002,11 @@ tasks:
   - id: t-031
     milestone: m3
     title: "HIGH PRIORITY · Begin private Unstable Diffusers production for canonical Prom/Tactics cast"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 20261122T232430Z-prom-t031-runtime-proof-m7q9
     claimed_at: '2026-11-22T23:24:30Z'
-    updated: '2026-11-22T23:24:30Z'
+    updated: '2026-11-22T23:29:08Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -1037,6 +1037,8 @@ tasks:
       Private Capes production gallery staged on Kind Robots worker/comet-city-academy-t-031-canon-painted-gallery-k8f2 at f7e38a0. A source-backed catalog maps all fourteen DONE Unstable Diffusers ArtJobs and ArtImage IDs from the canonical Conductor ledger, grouped as Cornerstone, Backdraft and Dr Frog. A new admin gallery lazily loads authenticated previews through the existing art store and displays durable job/image provenance and visible failure fallback without claiming browser delivery. Cast identity keys, benchmark ArtJobs and game saves untouched. Regression checks added to verifyCapesStyleCheck.test.ts. Still pending CI, actual private image retrieval and visual QA; t-031 remains partial, not done.
 
       Prior admin candidate gallery PR kind_robots#5488 merged on 2026-11-21 PT. This was a partial reversible art-intake slice, not final delivery. Return to ready for remaining authenticated media-proof and attachment work across the 14 original Unstable Diffusers production candidates and related private Prom art. Preserve all existing job/image receipts.
+
+      Replaced receipt-only source checks for 14 original Unstable Diffusers and 5 franchise-safe corrective Prom ArtImages with authenticated private source/runtime media verification, privacy checks and per-ledger evidence checkpointing. Focused regression tests verify all 19 distinct ArtImage receipts, zero curator approvals, and no new enqueue. Worker implementation branch worker/comet-city-academy-t-031-private-capes-media-proof-m7q9 at e63017ccda4aa1c0fab70b3d9acef1724065f6b9. Pending CI, PR merge and main-triggered authenticated media evidence; t-031 remains partial pending visual review and game attachments.
   - id: t-032
     title: "Prom of Doom (Capes & Tassels) | Master 30-Day Playbook Roadmap"
     status: review
@@ -1118,20 +1120,19 @@ tasks:
   - id: t-047
     milestone: m3
     title: "Profile and cut the three slowest Python CI tests (media wrapper 62s, ledger templated-cell and negation scans ~38s each) without dropping coverage"
-    status: ready
+    status: review
+    owner: worker
+    claimed_by: 20261122T232600Z-comet-t047-ci-sweep-r8m4
+    claimed_at: '2026-11-22T23:25:34.188Z'
+    updated: '2026-11-22T23:26:58.398Z'
     passes: 0
     stakes: reversible
     depends_on: []
     source: reviewer-kaizen-2026-11-22
-    updated: '2026-11-22T07:55:54Z'
-    note: >-
-      Reviewer kaizen from the 2026-11-22 PT merge of conductor#7812 (t-043). The measured
-      post-#7695 suite was 60s slower, and --durations=10 named
-      test_media_wrapper_resolves_names_before_submitting (62.00s),
-      test_repo_ledgers_have_no_new_templated_cells (38.67s) and
-      test_repo_ledgers_unsubmitted_cells_pass_negation_rules (37.07s). Find the repeated
-      I/O or YAML parsing (e.g. a shared session-scoped ledger cache) and record before/after
-      durations from real CI runs. Never skip, deselect or weaken those tests.
+    note: |-
+      Reviewer kaizen from the 2026-11-22 PT merge of conductor#7812 (t-043). The measured post-#7695 suite was 60s slower, and --durations=10 named test_media_wrapper_resolves_names_before_submitting (62.00s), test_repo_ledgers_have_no_new_templated_cells (38.67s) and test_repo_ledgers_unsubmitted_cells_pass_negation_rules (37.07s). Find the repeated I/O or YAML parsing (e.g. a shared session-scoped ledger cache) and record before/after durations from real CI runs. Never skip, deselect or weaken those tests.
+
+      Initial scoped CI performance improvement caches a complete repository-wide safe YAML parse once for both templated-cell and negation tests, eliminating duplicate parse and double problem evaluation without changing their assertions. PR review and full CI pending. Third slow media-wrapper test and before/after timing verification remain unfinished, so this does not close the original t-047 production task.
   - id: t-048
     milestone: m4
     title: "Factor the duplicated private source/runtime/visibility media-proof steps into one ledger-list helper shared by the Prom canon and Tactics proof workflows"
