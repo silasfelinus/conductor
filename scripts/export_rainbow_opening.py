@@ -30,7 +30,9 @@ import argparse
 import io
 import json
 import math
+import os
 import re
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -489,6 +491,24 @@ def write_delivery_report(target: Path, sources, accepted_clips, rejected_clips,
     return report
 
 
+def publish_artifact(src: Path, dest: Path) -> None:
+    """Move a staged file into place without ever leaving a half-written dest.
+
+    Staging lives in a TemporaryDirectory (usually /tmp), which is often a
+    different filesystem from the kind_robots checkout, so a bare
+    ``Path.replace``/``os.replace`` raises EXDEV. Copy into a hidden sibling of
+    ``dest`` first, then rename within that directory (atomic, same device).
+    """
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    partial = dest.with_name(f".{dest.name}.partial")
+    try:
+        shutil.copyfile(src, partial)
+        os.replace(partial, dest)
+    finally:
+        partial.unlink(missing_ok=True)
+    src.unlink(missing_ok=True)
+
+
 def write_manifest(kind_robots: Path, media: dict | None):
     path = kind_robots / MANIFEST
     text = path.read_text()
@@ -586,9 +606,9 @@ def main(argv=None):
         if rejected_clips:
             print("WAN clips rejected (stills substituted): " + ", ".join(rejected_clips), file=sys.stderr)
         if args.out:
-            target.parent.mkdir(parents=True, exist_ok=True)
-            for artifact in (staging, staging.with_suffix(".webm"), poster):
-                artifact.replace(target.with_name(artifact.name if artifact.name != "opening.mp4" else target.name))
+            publish_artifact(staging, target)
+            publish_artifact(staging.with_suffix(".webm"), target.with_suffix(".webm"))
+            publish_artifact(poster, target.with_name(f"{target.stem}-poster.webp"))
             return EXIT_DONE
         report = delivery_report(
             sources, accepted_clips, rejected_clips, wan_shot_budgets(ledger)
@@ -599,9 +619,8 @@ def main(argv=None):
         manifest_path = kind_robots / MANIFEST
         if "export const RAINBOW_OPENING: RainbowOpeningMedia | null =" not in manifest_path.read_text():
             raise RuntimeError(f"{manifest_path}: RAINBOW_OPENING line not found")
-        target.parent.mkdir(parents=True, exist_ok=True)
         for artifact in (staging, staging.with_suffix(".webm"), poster, report_path):
-            artifact.replace(target.with_name(artifact.name))
+            publish_artifact(artifact, target.with_name(artifact.name))
         target.with_name("opening-rejected-clips.json").unlink(missing_ok=True)
         print(f"WAN re-queue shots: {', '.join(report['wan_requeue_shots']) or 'none'}")
         url = "/" + str(VIDEO_DIR.relative_to("public")).replace("\\", "/")
