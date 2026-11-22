@@ -48,16 +48,18 @@ tasks:
   - id: t-002
     milestone: m2
     title: "Deepen Sugarbomb, Ashen and Jackpot into three replayable campaigns"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 20261122T020339Z-chessweeper-t002-p3x9
     claimed_at: '2026-11-22T02:03:39.456Z'
-    updated: '2026-11-22T02:03:39.456Z'
+    updated: '2026-11-22T02:05:44.014Z'
     depends_on: t-001
     passes: 0
     stakes: reversible
-    note: >-
+    note: |-
       Build three distinct complete campaigns, not recolors: authored escalating encounters, distinct enemies/board events, risk-versus-reward decisions, fully implemented Sugar Rush, Ashen Last Stand and Jackpot Double-or-Nothing abilities, branching victory/failure conditions and at least four meaningful ending routes per world (12 total). Own saved checkpoint/continue, per-world campaign records, challenge/seed/difficulty settings, no cross-world leakage, real options that persist and are honored. Use canonical Kind Robots stores for application persistence; account versus guest/device behavior must be explicit. Every route must be realistically obtainable and tested without cheating the game state. Ending presentation/illustration is t-009, progression achievements/gallery is t-010, music is t-008; no task is done solely on mock copy, UI shells or stubs.
+
+      Partial implementation of all three authored four-chapter Chessweeper campaigns in worker/chessweeper-t002-authored-campaigns-20261121-p3x9: each world has distinct sequential named battles, mode-specific score, armor and hazard modifiers, campaign advancement only on earned victories, retry after loss, saved per-world progress, compact on-board chapter UI, and deterministic regression tests in the contract workflow. Remaining t-002 includes full narrative gameplay variation, difficulty tuning, canonical save/account semantics, full playthrough acceptance, and the twelve illustrated endings tracked in t-009. Do not mark done merely for these initial playable campaign rounds.
   - id: t-003
     milestone: m3
     title: "Queue, deliver and attach original illustrated art for all three mode identities"
