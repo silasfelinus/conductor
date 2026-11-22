@@ -1137,13 +1137,18 @@ tasks:
   - id: t-048
     milestone: m4
     title: "Factor the duplicated private source/runtime/visibility media-proof steps into one ledger-list helper shared by the Prom canon and Tactics proof workflows"
-    status: ready
+    status: review
     depends_on: []
     owner: worker
+    claimed_by: 20261122T224350Z-comet-t048-media-helper-h5v7
+    claimed_at: '2026-11-22T22:42:45.300Z'
+    updated: '2026-11-22T22:45:56.780Z'
     passes: 0
     stakes: reversible
     note: |-
       Kaizen from reviewer of conductor#7855 (2026-11-22). prom-canon-candidate-media-proof.yml repeats the verify_prom_tactics_media → verify_tactics_runtime_media → checkpoint → isPublic=false block per ledger, and prom-tactics-media-proof.yml carries the same shape. Move it into one script that takes a ledger list with expected counts, while keeping the explicit Krea2 receipt and `reviewed` boundaries. Never publish private art or flip is_public.
+
+      Shared source/game/private media proof helper with evidence checkpoint per ledger implemented, both Prom canon and Tactics workflows refactored, failure and privacy regression tests added. Review via scoped worker PR; no new ArtJobs submitted and no existing reviewer approvals changed.
   - id: t-049
     milestone: m4
     title: "Deliver original adaptive music and event-driven sound effects with persistent accessible audio settings before Prom human playtests"
