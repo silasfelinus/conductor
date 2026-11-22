@@ -2819,11 +2819,14 @@ tasks:
   - id: t-173
     milestone: m8
     title: "Gloom Invaders verifier imports the game's exported types instead of a hand-copied Game shape"
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
     depends_on: []
     source: reviewer-kaizen-2026-11-21
-    updated: '2026-11-22T04:20:00Z'
+    updated: '2026-11-22T05:54:00Z'
     note: |-
       Reviewer kaizen from kind_robots #5531 (kr-arcade/t-133), 2026-11-21 PT: the PR added GloomMode 'calendar' in utils/arcade/games/gloomInvaders.ts, but utils/scripts/verifyCabinetGloomInvadersWeather.test.ts keeps its own hand-written `type Game` with literal mode unions, so vue-tsc went red (TS2345) and the PR sat 3.5h. Export the game class/instance type (or a narrow test-facing interface) from gloomInvaders.ts and derive the verifier's Game type from it, so future mode/field additions cannot drift. Acceptance: no literal mode union remains in the verifier; npm run test (vue-tsc) and the verifier pass.
+    owner: worker
+    claimed_by: 2026-11-22T055400Z-kr-arcade-t173-c7e9
+    claimed_at: '2026-11-22T05:54:00Z'
