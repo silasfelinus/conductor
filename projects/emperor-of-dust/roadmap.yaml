@@ -1110,11 +1110,11 @@ tasks:
   - id: t-047
     milestone: m5
     title: "Act II story and art pass: Days 11–20 quests and court audiences"
-    status: review
+    status: done
     owner: worker
     claimed_by: 20261121T000954790Z-eod-t047-branch-impact-2fd7
     claimed_at: '2026-11-21T00:09:54.790Z'
-    updated: '2026-11-21T00:13:20.434Z'
+    updated: '2026-11-22T00:22:28Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -1161,6 +1161,15 @@ tasks:
       2026-11-20 PT Act II partial editorial increment merged as Kind Robots PR #5452, squash commit de729c299d42510bf9365d2f99f120ee4b9108b8, exact-head 26114a5ca34fe24bd2da8309bb6de17a802eaf77 with all 14 checks complete and green or autofix skipped, including aggregate Contract verifiers. Rewrote 17 aftermaths and added fourteen text assertions and one-day cistern regression. Act II remaining original scene/art delivery and full editorial acceptance still unfinished, so return this finite nonrecurring task to ready, not done. Master #4142 stays open.
 
       2026-11-20 PT substantial art-independent Days 18-21 refugee-road gameplay pass. Kind Robots worker/emperor-of-dust-t-047-refugee-choices-2fd7 adds paid water-wagon and watch-rider escort alternatives to all three Day 18 decision contexts; each posts the existing two-day refugee quest with different real stat-specific aid, costs, political costs and named delayed due reports. Day 19 mayoral voice and the town speech odds now distinguish an unaided promise from supplied carts or sentries. Engine regressions assert quest posting, mission aid, brass/Watch costs, both investigations, future dues and follow-through. No existing choice IDs, saves, schema or publishing changed. Implementation PR and exact-head CI pending. Further art and complete Act II editorial acceptance remain open.
+
+      2026-11-22 PT: kind_robots#5529 shipped 293 curated plates (181 chance, 52 audience, 33
+      quest-consequence, 8 endings, 14 petitioners, 5 talk/quest) with keep/reject verdicts in
+      conductor#7785, which completes this act's outstanding scene-art delivery. Closed at the
+      playtest handoff (docs/agents/GAME-PLAYTEST-CLOSEOUT-2026-11-18.md): all 50 days
+      authored and route-tested in CI (adversarial seeds, eight real-play ending witnesses,
+      sixteen 50-day traces, market/refugee/water-debt route matrices). Further line-level
+      editorial judgement is subjective human-playtest feedback, outside the finite roadmap;
+      new fixes use playtest_iteration: true.
   - id: t-048
     milestone: m5
     title: "Act III story and art pass: Days 21–30 Abbey ambiguity and aftermaths"
