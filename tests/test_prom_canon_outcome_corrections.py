@@ -4,6 +4,7 @@ from pathlib import Path
 
 import yaml
 
+from scripts.art_ledger_receipts import receipt_problems
 from scripts.prom_canon_art_anatomy import missing_canon_traits
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -30,8 +31,9 @@ def test_corrections_are_private_new_requests_with_stable_slot_keys():
     assert len({item["asset"] for item in subjects}) == len(subjects)
     actual = {}
     for item in subjects:
-        assert "jobs" not in item, "Requested is not an accepted ArtJob"
-        assert "art" not in item, "Unreviewed requests are not delivered art"
+        # Auto Art Generate checkpoints ArtJob/ArtImage receipts after submit;
+        # accept both unsubmitted requests and structurally valid receipts.
+        assert not receipt_problems(item), item["key"]
         assert item["lane"] == "krea2"
         assert item["size"] == "1344x768"
         assert not missing_canon_traits(item), item["key"]
