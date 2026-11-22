@@ -1293,7 +1293,7 @@ tasks:
   - id: t-076
     milestone: m8
     title: "Ribbon Riders depth slice 3: The last two fairgrounds and the endings"
-    status: review
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-075
@@ -1301,10 +1301,9 @@ tasks:
       CABINETS.md section 10, Ribbon Riders (Tron light cycles riff), slice 3 of 4: The last two fairgrounds and the endings. The upgrade is "The Lantern Festival Circuit". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read the game's section first; this slice's scope is item 3 under its '#### Slices', and 'Rules for every slice' at the top applies. Code: kind_robots utils/arcade/games/ (registry slug ribbon-riders). Silas, 2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality improvements, they should not just be thin veneers of the old games. But newer, better, even more awesome."
 
       Added ten authored late-circuit arenas and four rival steering profiles on worker/kr-arcade-t-076-fairgrounds-f4c9. Partial slice: bespoke marshals, hazards, ending and Encore still outstanding. Verify CI before merge.
-    updated: '2026-11-22T07:59:00Z'
-    owner: worker
-    claimed_by: 2026-11-22T075211Z-kr-arcade-t076-f4c9
-    claimed_at: '2026-11-22T07:52:11Z'
+
+      2026-11-22 PT: Kind Robots PR #5566 merged after all latest-head substantive checks completed green. Partial campaign slice delivered; remaining documented scope stays ready.
+    updated: '2026-11-22T09:55:00Z'
 
   - id: t-077
     milestone: m8
@@ -1518,11 +1517,8 @@ tasks:
   - id: t-090
     milestone: m8
     title: "Glitch Garden depth slice 3: Autumn and Winter"
-    status: review
-    owner: worker
-    claimed_by: 20261122T084350Z-kr-arcade-t090-pumpkin-8ac2
-    claimed_at: '2026-11-22T08:44:06.784Z'
-    updated: '2026-11-22T08:49:38.420Z'
+    status: ready
+    updated: '2026-11-22T09:55:00Z'
     passes: 0
     stakes: reversible
     depends_on: t-089
@@ -1534,6 +1530,8 @@ tasks:
       Leaf Pile Lane merged as a partial Autumn increment; remaining Pumpkin Patch, new foes and bosses, Winter gardens, campaign QA.
 
       Added the sixth authored Glitch Garden, Pumpkin Patch, with five waves, 2x2 breakable seed-sprouting gourds, collision-danger rollers, five-second slow-down inchworms, Great Pumpkin objective, autumn art palette and three-phase Gourd Hydra season boss. Expanded deterministic cabinet tests, campaign and pilot regressions. Branch worker/kr-arcade-t-090-pumpkin-20261122T084350Z-8ac2. Partial scope: Winter gardens 7-8, frost/snow foes, Frost Millipede and full eight-garden pacing/QA still remain. After merge return t-090 to ready, not done.
+
+      2026-11-22 PT: Kind Robots PR #5568 merged after all latest-head substantive checks completed green. Partial campaign slice delivered; remaining documented scope stays ready.
 
   - id: t-091
     milestone: m8
@@ -2840,11 +2838,10 @@ tasks:
   - id: t-174
     milestone: m8
     title: "Audit remaining Playwright CI workflows for Ubuntu runner compatibility and pin unsupported browser-install jobs"
-    status: review
-    owner: worker
+    status: done
     claimed_by: 20261122T085140Z-kr-arcade-t174-playwright-d2e4
     claimed_at: '2026-11-22T08:52:25.564Z'
-    updated: '2026-11-22T08:53:52.206Z'
+    updated: '2026-11-22T09:55:00Z'
     passes: 0
     stakes: reversible
     depends_on: []
@@ -2853,3 +2850,5 @@ tasks:
       Reviewer follow-up after the merged Gloom Invaders type repair (#5556) and the Paper Plane CI incident (#5558). Ubuntu 26.04 removed font packages required by Playwright's --with-deps Chromium installer, causing false-red arcade cabinet browser contracts. The single arcade-cabinet-contracts.yml workflow is already repaired in #5558; audit OTHER .github/workflows browser-install jobs (not that same file) for ubuntu-latest and incompatible dependencies, pin to a supported runner or otherwise fix the actual installation, then exercise the real browser checks. Do not skip tests or change unrelated app behavior.
 
       Audited seven remaining Playwright --with-deps workflows. Patched Arcade viewport, Rainbow shared-cabinet and Arcade share live cold-open jobs to use Ubuntu 24.04; unrelated gallery, navigation, Memory Dungeon and sitewide audits were inspected but deliberately left unchanged under Kind Arcade-only scope. Branch worker/kr-arcade-t-174-playwright-20261122T085140Z-d2e4. PR checks must confirm real Chromium installation; no tests were disabled. Remaining out-of-scope workflows should be handled by their owning projects rather than this Arcade task.
+
+      2026-11-22 PT: Kind Robots PR #5569 merged after all latest-head substantive checks completed green. Arcade Playwright runner compatibility audit completed; actual Chromium checks passed.
