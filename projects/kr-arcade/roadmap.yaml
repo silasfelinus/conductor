@@ -2875,3 +2875,5 @@ tasks:
     updated: '2026-11-22T12:56:00Z'
     note: |-
       Reviewer kaizen from the 2026-11-22 PT merge of kind_robots#5572 (t-090 winter slice). That merge added 236 lines of hand-drawn ASCII layouts with no structural test. Iterate over every exported Garden and assert its layout dimensions, its allowed glyph set (., o, C and any others in use), a non-empty intro, and that its wave speeds stay inside the established bounds. This catches a mistyped row before playtest.
+
+      Added an all-season layout and wave-bounds regression suite in kind_robots branch worker/kr-arcade-t175-garden-layout-20261122-k7p4. Awaiting PR CI; suite auto-discovers through runArcadeCabinetSuites.ts.
