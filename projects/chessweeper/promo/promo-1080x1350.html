@@ -1,0 +1,79 @@
+<!doctype html>
+<!-- Chessweeper social card source (1080x1350). Render with render-promo.mjs.
+     Art: live Kind Robots images; gameplay: real 2026-11-22 QA screenshot.
+     Not for posting until Silas approves sharing/promotion separately. -->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      * { box-sizing: border-box; margin: 0; }
+      body {
+        width: 1080px; height: 1350px; overflow: hidden;
+        font-family: 'Inter', system-ui, sans-serif; color: #f6f1ff;
+        background: radial-gradient(circle at 50% 0%, #3b1f78, #0b0a1e 70%);
+      }
+      .hero { position: relative; height: 560px; overflow: hidden; }
+      .hero img { width: 100%; height: 100%; object-fit: cover; }
+      .hero::after {
+        content: ''; position: absolute; inset: 0;
+        background: linear-gradient(180deg, transparent 55%, #0b0a1e 100%);
+      }
+      .title { position: absolute; left: 0; right: 0; bottom: 18px; z-index: 1; text-align: center; }
+      .title small {
+        display: block; font-size: 22px; font-weight: 900; letter-spacing: 0.24em;
+        color: #6ff2dc; text-shadow: 0 2px 10px #000;
+      }
+      .title h1 {
+        font-size: 104px; line-height: 0.95; font-weight: 950; letter-spacing: -0.02em;
+        text-shadow: 0 6px 24px #000c;
+      }
+      .row { display: flex; gap: 28px; padding: 20px 56px 0; }
+      .board {
+        width: 520px; height: 446px; border-radius: 24px; overflow: hidden;
+        border: 4px solid #f1b46a; box-shadow: 0 20px 50px #000a;
+      }
+      .board img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+      .worlds { flex: 1; display: grid; gap: 16px; }
+      .world {
+        position: relative; border-radius: 20px; overflow: hidden; height: 138px;
+        border: 3px solid #ffffff55;
+      }
+      .world img { width: 100%; height: 100%; object-fit: cover; }
+      .world span {
+        position: absolute; left: 14px; bottom: 10px; font-size: 24px; font-weight: 900;
+        text-shadow: 0 2px 8px #000, 0 0 2px #000;
+      }
+      .facts {
+        display: flex; flex-wrap: wrap; gap: 12px; padding: 30px 56px 0;
+      }
+      .facts b {
+        padding: 10px 18px; border-radius: 999px; font-size: 24px; font-weight: 850;
+        background: #ffffff14; border: 2px solid #ffffff33;
+      }
+      .cta {
+        position: absolute; left: 56px; right: 56px; bottom: 44px;
+        display: flex; justify-content: space-between; align-items: center;
+        font-size: 30px; font-weight: 900;
+      }
+      .cta em { font-style: normal; color: #ffd75e; }
+    </style>
+  </head>
+  <body>
+    <div class="hero">
+      <img src="https://kindrobots.org/images/chessweeper/highlight.webp" alt="" />
+      <div class="title"><small>CHESS × MINESWEEPER × SAWBLADES</small></div>
+    </div>
+    <div class="row">
+      <div class="board"><img src="gameplay-ashen.webp" alt="" /></div>
+      <div class="worlds">
+        <div class="world"><img src="https://kindrobots.org/images/chessweeper/sugarbomb-kingdom.webp" alt="" /><span>Sugarbomb Kingdom</span></div>
+        <div class="world"><img src="https://kindrobots.org/images/chessweeper/ashen-checkmate.webp" alt="" /><span>Ashen Checkmate</span></div>
+        <div class="world"><img src="https://kindrobots.org/images/chessweeper/jackpot-apocalypse.webp" alt="" /><span>Jackpot Apocalypse</span></div>
+      </div>
+    </div>
+    <div class="facts">
+      <b>3 worlds · 12 campaign battles</b><b>12 story endings</b><b>24 achievements</b><b>Free in your browser</b>
+    </div>
+    <div class="cta"><span>One cursed board. Three ways to win.</span><em>kindrobots.org/play/chessweeper</em></div>
+  </body>
+</html>
