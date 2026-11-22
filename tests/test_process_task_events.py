@@ -255,6 +255,31 @@ class TaskEventProcessorTests(unittest.TestCase):
         self.assertEqual(record["kind"], "software")
         self.assertEqual(record["stakes"], "reversible")
 
+    def test_mapping_learning_with_invalid_kind_and_date_is_normalized(self):
+        # 2026-11-22 PT: a mapping payload with `kind: creative` and an unquoted
+        # YAML date reached LEARNING.yaml and redded the schema-conformance test.
+        roadmap = self.roadmap()
+        roadmap["tasks"][0]["status"] = "review"
+        (self.root / "projects" / "demo" / "roadmap.yaml").write_text(
+            yaml.safe_dump(roadmap, sort_keys=False), encoding="utf-8"
+        )
+        event = self.root / "task-events" / "mapping-learning-invalid.yaml"
+        event.write_text(
+            "version: 1\nproject: demo\ntask: t-001\noperation: done\n"
+            "learning:\n  date: 2026-11-22\n  kind: creative\n  stakes: huge\n"
+            "  lesson: Normalize enum fields on every writer path.\n",
+            encoding="utf-8",
+        )
+
+        result = MODULE.process(event, dry_run=False)
+
+        self.assertEqual(result, "demo/t-001: done")
+        ledger = yaml.safe_load((self.root / "LEARNING.yaml").read_text(encoding="utf-8"))
+        record = ledger["records"][0]
+        self.assertEqual(record["kind"], "software")
+        self.assertEqual(record["stakes"], "reversible")
+        self.assertEqual(record["date"], "2026-11-22")
+
     def test_blank_string_learning_is_rejected(self):
         roadmap = self.roadmap()
         roadmap["tasks"][0]["status"] = "review"
