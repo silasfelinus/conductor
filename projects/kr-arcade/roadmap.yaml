@@ -2864,16 +2864,17 @@ tasks:
   - id: t-175
     milestone: m8
     title: "Add a Glitch Garden layout-contract test that every seasonal garden has 36 rows of 30 columns, legal glyphs and at least one wave"
-    status: review
-    owner: worker
+    status: done
     claimed_by: 2026-11-22T125300Z-kr-arcade-t175-k7p4
     claimed_at: '2026-11-22T12:53:00Z'
     passes: 0
     stakes: reversible
     depends_on: []
     source: reviewer-kaizen-2026-11-22
-    updated: '2026-11-22T12:56:00Z'
+    updated: '2026-11-22T13:54:00Z'
     note: |-
       Reviewer kaizen from the 2026-11-22 PT merge of kind_robots#5572 (t-090 winter slice). That merge added 236 lines of hand-drawn ASCII layouts with no structural test. Iterate over every exported Garden and assert its layout dimensions, its allowed glyph set (., o, C and any others in use), a non-empty intro, and that its wave speeds stay inside the established bounds. This catches a mistyped row before playtest.
 
       Added an all-season layout and wave-bounds regression suite in kind_robots branch worker/kr-arcade-t175-garden-layout-20261122-k7p4. Awaiting PR CI; suite auto-discovers through runArcadeCabinetSuites.ts.
+
+      Merged kind_robots#5579 as bc04d36; six latest-head GitHub Actions workflows completed successfully. Seasonal layout and wave regression contract landed.
