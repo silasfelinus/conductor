@@ -48,7 +48,7 @@ def test_priority_art_submission_precedes_long_memory_and_generic_sweeps():
     assert "scripts/checkpoint_art_state.sh" in save["run"]
 
 
-def test_priority_tactics_art_is_private_and_has_no_accepted_receipts_yet():
+def test_priority_tactics_art_requests_are_private_and_unique():
     art = yaml.safe_load(TACTICS_LEDGER.read_text(encoding="utf-8"))
     assert art["auto_submit"] is True
     assert art["is_public"] is False
