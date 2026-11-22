@@ -59,11 +59,11 @@ tasks:
   - id: t-003
     milestone: m3
     title: "Queue, deliver and attach original illustrated art for all three mode identities"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 20261122T061919882Z-chessweeper-t003-pieces-w2n8
     claimed_at: '2026-11-22T06:19:19.882Z'
-    updated: '2026-11-22T06:19:19.882Z'
+    updated: '2026-11-22T06:20:21.194Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -79,6 +79,8 @@ tasks:
       Submitted eight original Krea2 requests for previously absent Chessweeper highlight, world posters, icon and three boards, via projects/art-prompts.yaml on worker/chessweeper-t003-art-intake-20261121-kb4t. Assets are pending in the Conductor queue, not rendered or delivered; ArtJob IDs and live image URL verification remain outstanding. Do NOT mark task done; continue after this reversible art-staging PR merges.
 
       Chessweeper original art intake PR conductor#7792 merged 0e30002, and painted board loader with missing-icon and scrapbook fallbacks PR kind_robots#5536 merged ec2ac1c, with all required checks complete green. Eight traceable images are staged for rendering, not yet generated or attached; continue this task through ArtJob IDs, delivered media, verified image URLs, piece/scene artwork, and final visual QA. No art-completion or public-deployment claim.
+
+      2026-11-21 PT: Staged six additional literal Krea2 art requests in projects/art-prompts.yaml, commit fc27cdf, for three 12-piece world atlases and original Sugar Rush, Last Stand, Double or Nothing action plates. ArtJobs and final URLs not yet assigned or delivered. Finite t-003 remains incomplete until generated assets are validated and integrated.
   - id: t-004
     milestone: m4
     title: "Add deterministic tests, full playthroughs and 390/768/1440 viewport QA"
@@ -100,11 +102,8 @@ tasks:
   - id: t-006
     milestone: m4
     title: "Extract the chess/mine/disc rules engine from the static Play HTML into a seeded, unit-testable TypeScript module"
-    status: review
-    owner: worker
-    claimed_by: 20261122T014936Z-chessweeper-t006-d7q8
-    claimed_at: '2026-11-22T01:49:36.326Z'
-    updated: '2026-11-22T01:51:45.416Z'
+    status: ready
+    updated: '2026-11-22T06:23:03.595Z'
     depends_on: t-001
     passes: 0
     stakes: reversible
@@ -112,6 +111,8 @@ tasks:
       Reviewer kaizen from conductor#7565 (2026-11-17 PT). The first Play build ships as public/chessweeper/index.html; t-004's deterministic tests need an importable engine with a seeded RNG for mine layouts and disc paths.
 
       Partial, high-impact t-006 engine extraction in Kind Robots branch worker/chessweeper-t006-seeded-core-20261121-d7q8: typed seeded minefield generation, deterministic first-safe-probe relocation, disc boundary physics, reproducible bot tie breaks, URL ?seed replay and persisted RNG state in save checkpoints. Added CI regression suite. Full chess move-engine extraction remains unfinished: do not close t-006 done on this slice; return to ready after verified merge so another sprint can extract legal chess rules.
+
+      2026-11-21 PT reviewer reconciliation: kind_robots PR #5540 (https://github.com/silasfelinus/kind_robots/pull/5540) merged at 22837bd0eb96d4709a4f12f7203f10aa822f68b1 with all completed checks green. The seeded mines/disc/RNG slice shipped, but complete chess move-rule extraction is still unfinished. Resume as ready, not done.
   - id: t-007
     milestone: m3
     title: "Deliver world-specific gameplay animation, cinematic transitions and responsive VFX"

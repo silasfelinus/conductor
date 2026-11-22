@@ -1519,21 +1519,18 @@ tasks:
   - id: t-090
     milestone: m8
     title: "Glitch Garden depth slice 3: Autumn and Winter"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 20261122T061917Z-kr-arcade-t090-ae72
     claimed_at: '2026-11-22T06:19:17.701Z'
-    updated: '2026-11-22T06:19:17.701Z'
+    updated: '2026-11-22T06:23:00Z'
     passes: 0
     stakes: reversible
     depends_on: t-089
-    note: >-
-      CABINETS.md section 13, Glitch Garden (Centipede riff), slice 3 of 5: Autumn and Winter. The upgrade is
-      "The Four Seasons of the Glitch". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read the game's
-      section first; this slice's scope is item 3 under its '#### Slices', and 'Rules for every slice' at the
-      top applies. Code: kind_robots utils/arcade/games/ (registry slug glitch-garden). Silas, 2026-10-11: "I
-      need an assessment done of the other arcade games. I want the same level of quality improvements, they
-      should not just be thin veneers of the old games. But newer, better, even more awesome."
+    note: |-
+      CABINETS.md section 13, Glitch Garden (Centipede riff), slice 3 of 5: Autumn and Winter. The upgrade is "The Four Seasons of the Glitch". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read the game's section first; this slice's scope is item 3 under its '#### Slices', and 'Rules for every slice' at the top applies. Code: kind_robots utils/arcade/games/ (registry slug glitch-garden). Silas, 2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality improvements, they should not just be thin veneers of the old games. But newer, better, even more awesome."
+
+      Partial Autumn/Winter depth slice: authored Leaf Pile Lane with five increasingly difficult fronts, moving wind-blown leaf shields that soak shots, the Rake Up special objective with golden trowel, a distinctive autumn palette, refreshed progression/save tests, and seeded deterministic leaf-capture/regression tests. Implementation on worker/kr-arcade-t-090-20261122T061917Z-ae72. Remaining t-090: Pumpkin Patch, new Autumn/Winter foes and bosses, both winter gardens, full eight-garden pacing, visual QA. After this partial PR merges, return t-090 to ready rather than done.
 
   - id: t-091
     milestone: m8
