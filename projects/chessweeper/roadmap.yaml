@@ -95,16 +95,18 @@ tasks:
   - id: t-006
     milestone: m4
     title: "Extract the chess/mine/disc rules engine from the static Play HTML into a seeded, unit-testable TypeScript module"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 20261122T014936Z-chessweeper-t006-d7q8
     claimed_at: '2026-11-22T01:49:36.326Z'
-    updated: '2026-11-22T01:49:36.326Z'
+    updated: '2026-11-22T01:51:45.416Z'
     depends_on: t-001
     passes: 0
     stakes: reversible
-    note: >-
+    note: |-
       Reviewer kaizen from conductor#7565 (2026-11-17 PT). The first Play build ships as public/chessweeper/index.html; t-004's deterministic tests need an importable engine with a seeded RNG for mine layouts and disc paths.
+
+      Partial, high-impact t-006 engine extraction in Kind Robots branch worker/chessweeper-t006-seeded-core-20261121-d7q8: typed seeded minefield generation, deterministic first-safe-probe relocation, disc boundary physics, reproducible bot tie breaks, URL ?seed replay and persisted RNG state in save checkpoints. Added CI regression suite. Full chess move-engine extraction remains unfinished: do not close t-006 done on this slice; return to ready after verified merge so another sprint can extract legal chess rules.
   - id: t-007
     milestone: m3
     title: "Deliver world-specific gameplay animation, cinematic transitions and responsive VFX"
