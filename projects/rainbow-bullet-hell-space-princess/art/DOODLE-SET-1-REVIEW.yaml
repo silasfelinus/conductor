@@ -58,18 +58,18 @@ decisions:
   enemies/guardian-courier: keep
   enemies/guardian-herald: keep
   enemies/guardian-mirror: keep
-  enemies/brood: {fever: "zoomed in; only a fin shows"}
+  enemies/brood: {keep: "DOODLE-SET-2 re-render (2026-11-22 visual pass): whole"}
   enemies/coral: {fever: "cropped"}
   enemies/eel: {fever: "tail cropped"}
   enemies/harbinger: {fever: "zoomed in on the face"}
-  enemies/lantern: {fever: "zoomed in on the face"}
-  enemies/mirror: {fever: "cropped, and paints lettering (CAST-QA 6 applies to all art)"}
+  enemies/lantern: {keep: "DOODLE-SET-2 re-render (2026-11-22 visual pass): whole"}
+  enemies/mirror: {keep: "DOODLE-SET-2 re-render (2026-11-22 visual pass): whole, no lettering"}
   enemies/picket: {fever: "tail cropped"}
-  enemies/salvager: {fever: "zoomed in; only an eye shows"}
+  enemies/salvager: {keep: "DOODLE-SET-2 re-render (2026-11-22 visual pass): whole"}
   enemies/skate: {fever: "cropped"}
-  enemies/squid: {fever: "face cropped at the right edge"}
+  enemies/squid: {keep: "DOODLE-SET-2 re-render (2026-11-22 visual pass): whole"}
   enemies/turret: {fever: "zoomed in on one petal"}
-  enemies/guardian-bulwark: {fever: "cropped at the bottom right"}
+  enemies/guardian-bulwark: {keep: "DOODLE-SET-2 re-render (2026-11-22 visual pass): whole"}
   enemies/guardian-clawstrike: {fever: "zoomed in on the cannon"}
   enemies/guardian-lantern: {fever: "zoomed in"}
   enemies/guardian-salvager: {fever: "zoomed in"}
@@ -88,3 +88,11 @@ decisions:
   stages/fore: {fever: "the eight foreground strips were never rendered (8:1 is beyond Kontext's frame)"}
   hero-pearl-palace: {hold: "not shipped: Fever Dream's Pilots tab shows the key art instead, so the file would be unused weight"}
   key-art: keep  # exactly four cat ships in the four pilot colours; Fever Dream's Pilots-tab backdrop
+# DOODLE-SET-2 visual pass, 2026-11-22 PT (t-043; sheets from scripts/review_rainbow_doodle_art.py):
+#   keep  enemies brood, mirror, salvager, squid, lantern, guardian-bulwark: whole on the green margin, on-model.
+#   stay  portraits/p3-solenne (hair still navy, CAST-QA 2) and comms/solenne (skin magenta again, CAST-QA 5).
+#   stay  ships: prism-lance is purple/yellow not cyan, halo-fin cropped with cat ears, comet-crown magenta not lilac,
+#         so petal-wing stays fever too (all four ships share one treatment).
+#   stay  bosses b02/b04/b07/b09: at least one phase per boss still cropped at the right edge (b07-phase3 alone whole).
+#   stay  enemies coral, eel, harbinger, picket, skate, turret and guardians clawstrike/lantern/salvager/urchin; pickups
+#         charge and shield: still cropped at the right edge despite source_margin. The margin did not stop Kontext cropping.
