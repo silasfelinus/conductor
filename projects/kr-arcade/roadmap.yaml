@@ -2816,3 +2816,14 @@ tasks:
       Silas, 2026-11-15 PT: full parity with the whole roadmap may not be reasonable; finish the latest tasks and triage next steps that make publicly shared arcade links presentable. This milestone is that triage. The m8 depth pass (50 open slices) continues in the background and is not a gate for sharing.
 
       The only human gate in m11. Paste three showcase links into Messages or Discord, confirm the cards look right, tap one, play thirty seconds. Then the arcade is ready to share publicly. Agents do not post or announce anywhere.
+  - id: t-173
+    milestone: m8
+    title: "Gloom Invaders verifier imports the game's exported types instead of a hand-copied Game shape"
+    status: ready
+    passes: 0
+    stakes: reversible
+    depends_on: []
+    source: reviewer-kaizen-2026-11-21
+    updated: '2026-11-22T04:20:00Z'
+    note: |-
+      Reviewer kaizen from kind_robots #5531 (kr-arcade/t-133), 2026-11-21 PT: the PR added GloomMode 'calendar' in utils/arcade/games/gloomInvaders.ts, but utils/scripts/verifyCabinetGloomInvadersWeather.test.ts keeps its own hand-written `type Game` with literal mode unions, so vue-tsc went red (TS2345) and the PR sat 3.5h. Export the game class/instance type (or a narrow test-facing interface) from gloomInvaders.ts and derive the verifier's Game type from it, so future mode/field additions cannot drift. Acceptance: no literal mode union remains in the verifier; npm run test (vue-tsc) and the verifier pass.
