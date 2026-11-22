@@ -263,3 +263,8 @@ Companion kind_robots#4764 was already on main, so merge order held. CI green on
 - **Audit:** #7823 was squash-merged (b773e817) after the rejection. It fixed the report newline, added an ffprobe test for both formats, and fixed the PR body. It did **not** fix the EXDEV publish (`Path.replace` from a `/tmp` staging dir into the checkout), the `--out` WebM/poster naming, or add the requested `main()`-level publish test.
 - **Action:** the reviewer took the remaining retry_context items itself rather than spend pass 2. They were small, already spelled out, and the bug was already on main. #7825 adds `publish_artifact()` (copy to a hidden sibling, then same-directory `os.replace`) and three `main()`-level tests with a simulated cross-device `os.replace`. All three fail on main and pass with the fix.
 - **Pattern:** a retry merged against an explicit `retry_context` without addressing every point. Before merging a retry, diff it against each `retry_context` bullet, not only CI.
+
+## 2026-11-22 PT | reviewer | t-057 opening coverage tests PR #7827
+
+- **conductor#7827 merged** as `6c624755`. The code and tests were green from the start. The only red was `Validate Worker PR handoff`, because the body used Summary/Validation/Risk headings. I restructured the body onto the required `###` headings without changing its content, and the gate passed on re-run. A `done` event with `verify_pr` was queued.
+- Pattern: Workers keep the AGENTS.md handoff headings verbatim. Free-form PR bodies cost a review round-trip even when the code is fine. The kaizen is t-058, which pins the coverage prefix in the real opening-wan-budget CI job.

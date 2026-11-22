@@ -1149,3 +1149,14 @@ tasks:
       Conductor PR #7827 merged on 2026-11-22 PT (head 34613e7), shipping six coverage/error-label regression tests and distinct coverage preflight diagnostics.
     claimed_by: 2026-11-22T104700Z-rainbow-t057-c8f3
     claimed_at: '2026-11-22T10:47:00Z'
+  - id: t-058
+    milestone: m4
+    title: "Make the opening-wan-budget CI job assert the distinct 'opening shot coverage:' prefix against the live ledger"
+    status: ready
+    passes: 0
+    stakes: reversible
+    depends_on: []
+    source: reviewer-kaizen-2026-11-22
+    updated: '2026-11-22T11:50:00Z'
+    note: |-
+      Reviewer kaizen from the 2026-11-22 PT merge of conductor#7827 (t-057). Coverage and WAN-budget failures now have separate prefixes, but only unit tests pin that. Extend the opening-wan-budget workflow step (or a test it runs) so a coverage failure on the real ledger shows up under its own prefix in CI logs. No production data changes.

@@ -2859,3 +2859,14 @@ tasks:
       Audited seven remaining Playwright --with-deps workflows. Patched Arcade viewport, Rainbow shared-cabinet and Arcade share live cold-open jobs to use Ubuntu 24.04; unrelated gallery, navigation, Memory Dungeon and sitewide audits were inspected but deliberately left unchanged under Kind Arcade-only scope. Branch worker/kr-arcade-t-174-playwright-20261122T085140Z-d2e4. PR checks must confirm real Chromium installation; no tests were disabled. Remaining out-of-scope workflows should be handled by their owning projects rather than this Arcade task.
 
       2026-11-22 PT: Kind Robots PR #5569 merged after all latest-head substantive checks completed green. Arcade Playwright runner compatibility audit completed; actual Chromium checks passed.
+  - id: t-175
+    milestone: m8
+    title: "Add a Glitch Garden layout-contract test that every seasonal garden has 36 rows of 30 columns, legal glyphs and at least one wave"
+    status: ready
+    passes: 0
+    stakes: reversible
+    depends_on: []
+    source: reviewer-kaizen-2026-11-22
+    updated: '2026-11-22T11:50:00Z'
+    note: |-
+      Reviewer kaizen from the 2026-11-22 PT merge of kind_robots#5572 (t-090 winter slice). That merge added 236 lines of hand-drawn ASCII layouts with no structural test. Iterate over every exported Garden and assert its layout dimensions, its allowed glyph set (., o, C and any others in use), a non-empty intro, and that its wave speeds stay inside the established bounds. This catches a mistyped row before playtest.
