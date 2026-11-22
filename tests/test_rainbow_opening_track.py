@@ -78,10 +78,24 @@ class OpeningPinnedTrackTests(unittest.TestCase):
             {},
             {"data": {}},
             {"data": {"job": {"id": 9999, "status": "DONE", "artImageId": 1}}},
+            {"data": {"job": {"id": float(opening.TRACK_JOB_ID), "status": "DONE", "artImageId": 1}}},
         ):
             with self.subTest(response=response):
                 with self.assertRaisesRegex(RuntimeError, "unexpected queue response"):
                     self.lookup(200, response)
+
+    def test_failed_score_stays_failed_instead_of_falling_back(self):
+        self.assertEqual(
+            self.lookup(
+                200,
+                {"data": {"job": {
+                    "id": opening.TRACK_JOB_ID,
+                    "status": "FAILED",
+                    "artImageId": 0,
+                }}},
+            ),
+            ("FAILED", None),
+        )
 
     def test_http_error_reports_pinned_job_number(self):
         with self.assertRaisesRegex(RuntimeError, "queue/44644: HTTP 403"):

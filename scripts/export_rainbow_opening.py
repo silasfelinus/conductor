@@ -117,7 +117,7 @@ def track_image_id() -> tuple[str, int | None]:
         raise RuntimeError(f"GET /api/art/queue/{TRACK_JOB_ID}: HTTP {status}")
     data = (resp or {}).get("data")
     job = data.get("job") if isinstance(data, dict) else None
-    if not isinstance(job, dict) or job.get("id") != TRACK_JOB_ID:
+    if not isinstance(job, dict) or type(job.get("id")) is not int or job["id"] != TRACK_JOB_ID:
         raise RuntimeError(f"ArtJob {TRACK_JOB_ID}: unexpected queue response")
     if job.get("status") != "DONE":
         return str(job.get("status") or "UNKNOWN"), None
