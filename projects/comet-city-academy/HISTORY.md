@@ -274,6 +274,18 @@ t-040 work already merged in #7689) closed. Kaizen t-043 records the measured
 before/after suite time.
 <!-- note:end t-042 -->
 
+## t-043 — Record the before/after Python test-suite time from the first post-#7695 CI run and the first daily parity run in a short note
+
+<!-- note:begin t-043 -->
+Kaizen from t-042 review (#7695). Before the split, Worker PR CI took 219.02s for 4,859 tests (run 44810467441). Read the --durations output from the first completed post-merge PR CI run and from the first 'Daily art ledger loader parity' run. Write the measured delta in this note, and confirm the daily job really runs the parity test rather than skipping it when CSafeLoader is missing. If it skipped, fix the workflow so the comparison runs.
+
+CI measurement against real completed GitHub Actions logs: before #7695, Worker PR CI 44810467441 completed 4,859 passed, 8 skipped in 219.02 seconds; first post-merge PR CI 44831965912 completed 4,859 passed, 8 skipped, 1 art_parity deselected in 279.10 seconds, 60.08 seconds slower (+27.4%), so no speedup is established. First completed scheduled daily parity run 44948778718 executed actual SafeLoader-vs-CSafeLoader comparison (1 passed, 7 deselected in 19.03s; 18.95s test call). New PR guards missing CSafeLoader as hard failure, not a misleading green skip. Detailed evidence in projects/comet-city-academy/docs/CI-LEDGER-PARITY-TIMINGS-2026-11-22.md on worker/comet-city-academy-t-043-ci-parity-z3q7; awaiting checks.
+
+2026-11-22 PT reviewer: conductor PR #7812 squash-merged (773b914) on all-green latest-
+head checks after updating the branch past a main-side receipts test break fixed by
+#7813. Note doc + missing-CSafeLoader hard-fail guard landed. Kaizen t-047.
+<!-- note:end t-043 -->
+
 ## t-044 — Replace verifyCapesStyleCheck's literal call-shape regexes for atlas art with a behaviour check that 48 hero and 47 villain identities resolve to shipped art
 
 <!-- note:begin t-044 -->

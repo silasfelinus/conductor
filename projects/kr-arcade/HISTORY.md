@@ -924,3 +924,23 @@ Derived the Gloom Invaders verifier's Game and Cloud state from the real impleme
 
 Verified all nine completed final-head GitHub Actions workflows successful for Gloom Invaders verifier type fix; PR silasfelinus/kind_robots#5556 merged as f5f4d4c0eb2856cddbc9baf451b65ffcab4c8b44. The test now derives Game and Cloud state from the game implementation instead of duplicating fields and mode unions.
 <!-- note:end t-173 -->
+
+## t-174 — Audit remaining Playwright CI workflows for Ubuntu runner compatibility and pin unsupported browser-install jobs
+
+<!-- note:begin t-174 -->
+Reviewer follow-up after the merged Gloom Invaders type repair (#5556) and the Paper Plane CI incident (#5558). Ubuntu 26.04 removed font packages required by Playwright's --with-deps Chromium installer, causing false-red arcade cabinet browser contracts. The single arcade-cabinet-contracts.yml workflow is already repaired in #5558; audit OTHER .github/workflows browser-install jobs (not that same file) for ubuntu-latest and incompatible dependencies, pin to a supported runner or otherwise fix the actual installation, then exercise the real browser checks. Do not skip tests or change unrelated app behavior.
+
+Audited seven remaining Playwright --with-deps workflows. Patched Arcade viewport, Rainbow shared-cabinet and Arcade share live cold-open jobs to use Ubuntu 24.04; unrelated gallery, navigation, Memory Dungeon and sitewide audits were inspected but deliberately left unchanged under Kind Arcade-only scope. Branch worker/kr-arcade-t-174-playwright-20261122T085140Z-d2e4. PR checks must confirm real Chromium installation; no tests were disabled. Remaining out-of-scope workflows should be handled by their owning projects rather than this Arcade task.
+
+2026-11-22 PT: Kind Robots PR #5569 merged after all latest-head substantive checks completed green. Arcade Playwright runner compatibility audit completed; actual Chromium checks passed.
+<!-- note:end t-174 -->
+
+## t-175 — Add a Glitch Garden layout-contract test that every seasonal garden has 36 rows of 30 columns, legal glyphs and at least one wave
+
+<!-- note:begin t-175 -->
+Reviewer kaizen from the 2026-11-22 PT merge of kind_robots#5572 (t-090 winter slice). That merge added 236 lines of hand-drawn ASCII layouts with no structural test. Iterate over every exported Garden and assert its layout dimensions, its allowed glyph set (., o, C and any others in use), a non-empty intro, and that its wave speeds stay inside the established bounds. This catches a mistyped row before playtest.
+
+Added an all-season layout and wave-bounds regression suite in kind_robots branch worker/kr-arcade-t175-garden-layout-20261122-k7p4. Awaiting PR CI; suite auto-discovers through runArcadeCabinetSuites.ts.
+
+Merged kind_robots#5579 as bc04d36; six latest-head GitHub Actions workflows completed successfully. Seasonal layout and wave regression contract landed.
+<!-- note:end t-175 -->
