@@ -116,12 +116,12 @@ tasks:
       These 100 anchors are outlines, not implemented daily script records.
   - id: t-063
     title: 'Export and wire the ~430 rendered Emperor images that never reached the game'
-    status: review
+    status: done
     milestone: m5
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-21T19:14:35Z'
+    updated: '2026-11-22T00:22:46Z'
     note: |-
       Silas 2026-11-11 PT, in session: "If there is unmade art it should definitely be added to the pipeline."
 
@@ -192,8 +192,15 @@ tasks:
       backlog. No live 390/768/1440 screenshot (no PR preview). Released claim.
 
       Partial art-delivery increment: Kind Robots branch worker/emperor-of-dust-t-063-admin-art-review-7c84f2 adds a private admin-only original ArtImage preview endpoint, ending-image contact grid, and no-write durable media audit with regression coverage. The eight original completed ArtImage IDs are pinned; this reads real bytes only under admin authorization and never publishes or claims a delivered file. Exact-head CI and PR merge pending. Continue t-063 for actual curated source bytes, physical WebP export, and 390/768/1440 acceptance; #4142 remains open.
+
+      2026-11-22 PT: kind_robots#5529 shipped 293 curated plates (181 chance, 52 audience, 33
+      quest-consequence, 8 endings, 14 petitioners, 5 talk/quest) with keep/reject verdicts in
+      conductor#7785. Inventory with_done_image_no_export 553 -> 51; the 51 are the curated
+      rejects, 7 Playbook Forge previews and one rejected cave-forage plate, all with painted
+      fallbacks in game. 225 of the original 553 were a cast-folder audit bug (fixed). Sample
+      served 200 at 390/768/1440.
     owner: worker
-    implementation_pr: 'silasfelinus/kind_robots#5516'
+    implementation_pr: 'silasfelinus/kind_robots#5529'
     claimed_by: 2026-11-21T191050Z-eod-t063-review-7c84f2
     claimed_at: '2026-11-21T19:10:50Z'
   - id: t-064
