@@ -81,3 +81,9 @@
   proportions and the comix ink. Furrytoon exaggerates busts toward body-as-joke (worst on Albina) and humanizes
   Siobhan and Albina. Both rendered Cleo young-looking, against the lookbook. Realism-By (round 1) humanized four
   stars and crossed the genital-detail and gore lines.
+
+## 2026-11-22 PT — Lead redesign, act spine, bayou trailer park
+- Silas: the two leads were falling short. Iris is now jet-black hair with one white streak, a sassy, open-hearted, curious, brave streetwise broad. Norb is a little person drawn as a 1990s TV-cartoon grotesque, with mismatched bulging, heavy-lidded eyes and lenses that show them.
+- Root cause of the weak renders: series-bible portraits sent long prose to tag-trained Illustrious checkpoints and forced a smirk. The Kind Robots fix gives both leads identity tags, a signature expression and (for Norb) a caricature note.
+- STORY-BIBLE "Act spine": one former member per act. The bayou trailer park (Brine Bottoms) goes to Laguna, with tadpole-to-teen kids and adult daughters Delta and Cherie. The licensed-look-alike reconciliation with the album ledger is awaiting Silas.
+
