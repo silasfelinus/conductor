@@ -119,14 +119,14 @@ def track_image_id() -> tuple[str, int | None]:
 
 
 
-def validate_opening_queue_budget(ledger: dict) -> None:
-    """Reject WAN requests the opening exporter cannot decode before GPU enqueue.
+def wan_shot_budgets(ledger: dict) -> list[dict]:
+    """Per WAN shot: requested seconds, fps, frames and headroom vs the clip budget.
 
-    Queue callers may invoke this preflight without needing audio, ffmpeg, or
-    downloaded art. A finished clip's actual metadata is still checked at export.
+    Raises ValueError for malformed lanes/durations; does not enforce the limit,
+    so reviewers can see over-budget values. Returns [] for non-doodle ledgers.
     """
     if ledger.get("round") != DOODLE_ROUND:
-        return
+        return []
     lanes = {lane.get("key"): lane for lane in ledger.get("lanes", [])}
     lane = lanes.get("wan-mp4")
     if not lane:
@@ -134,6 +134,7 @@ def validate_opening_queue_budget(ledger: dict) -> None:
     fps = lane.get("fps")
     if type(fps) is not int or fps <= 0:
         raise ValueError(f"opening WAN lane has invalid fps: {fps!r}")
+    budgets = []
     for shot in ledger.get("subjects", []):
         if shot.get("lane") != "wan-mp4":
             continue
@@ -142,10 +143,28 @@ def validate_opening_queue_budget(ledger: dict) -> None:
                 not math.isfinite(duration) or duration <= 0):
             raise ValueError(f"{shot.get('key')}: invalid WAN duration {duration!r}")
         frames = math.ceil(duration * fps)
-        if duration > MAX_CLIP_SECONDS or frames > MAX_CLIP_FRAMES:
+        budgets.append({
+            "key": shot.get("key"),
+            "seconds": duration,
+            "fps": fps,
+            "frames": frames,
+            "seconds_headroom": round(MAX_CLIP_SECONDS - duration, 3),
+            "frame_headroom": MAX_CLIP_FRAMES - frames,
+        })
+    return budgets
+
+
+def validate_opening_queue_budget(ledger: dict) -> None:
+    """Reject WAN requests the opening exporter cannot decode before GPU enqueue.
+
+    Queue callers may invoke this preflight without needing audio, ffmpeg, or
+    downloaded art. A finished clip's actual metadata is still checked at export.
+    """
+    for budget in wan_shot_budgets(ledger):
+        if budget["seconds"] > MAX_CLIP_SECONDS or budget["frames"] > MAX_CLIP_FRAMES:
             raise ValueError(
-                f"{shot.get('key')}: WAN request {duration:g}s at {fps} fps "
-                f"({frames} frames) exceeds opening clip budget "
+                f"{budget['key']}: WAN request {budget['seconds']:g}s at {budget['fps']} fps "
+                f"({budget['frames']} frames) exceeds opening clip budget "
                 f"({MAX_CLIP_SECONDS}s, {MAX_CLIP_FRAMES} frames); do not enqueue"
             )
 
@@ -397,8 +416,12 @@ def encode(frames, audio: Path | None, mp4: Path, seconds: float):
     return count
 
 
-def delivery_report(sources, accepted_clips, rejected_clips):
-    """Give reviewers the exact failed WAN shots to re-queue after delivery."""
+def delivery_report(sources, accepted_clips, rejected_clips, budgets=None):
+    """Give reviewers the exact failed WAN shots to re-queue after delivery.
+
+    ``budgets`` (from wan_shot_budgets) adds each WAN shot's requested seconds,
+    fps, frames and headroom so near-limit re-queues are visible at a glance.
+    """
     accepted = set(accepted_clips)
     rejected = set(rejected_clips)
     return {
@@ -408,13 +431,14 @@ def delivery_report(sources, accepted_clips, rejected_clips):
         "rejected_shots": [key for key, _, _, _ in sources if key in rejected],
         "wan_requeue_shots": [key for key, _, _, _ in sources if key in rejected],
         "still_fallback_shots": [key for key, _, _, _ in sources if key not in accepted],
+        "wan_shot_budgets": list(budgets or []),
     }
 
 
 
-def write_delivery_report(target: Path, sources, accepted_clips, rejected_clips):
+def write_delivery_report(target: Path, sources, accepted_clips, rejected_clips, budgets=None):
     """Write the single authoritative review sidecar; remove legacy duplicates."""
-    report = delivery_report(sources, accepted_clips, rejected_clips)
+    report = delivery_report(sources, accepted_clips, rejected_clips, budgets)
     target.with_name("opening-delivery-report.json").write_text(
         json.dumps(report, indent=2) + "\n"
     )
@@ -511,7 +535,9 @@ def main(argv=None):
             print("WAN clips rejected (stills substituted): " + ", ".join(rejected_clips), file=sys.stderr)
         if args.out:
             return EXIT_DONE
-        report = write_delivery_report(target, sources, accepted_clips, rejected_clips)
+        report = write_delivery_report(
+            target, sources, accepted_clips, rejected_clips, wan_shot_budgets(ledger)
+        )
         print(f"WAN re-queue shots: {', '.join(report['wan_requeue_shots']) or 'none'}")
         url = "/" + str(VIDEO_DIR.relative_to("public")).replace("\\", "/")
         write_manifest(kind_robots, {
