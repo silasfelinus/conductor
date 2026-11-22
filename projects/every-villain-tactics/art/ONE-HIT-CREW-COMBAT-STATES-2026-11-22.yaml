@@ -1,0 +1,153 @@
+# Original PRIVATE Krea 2 tactical combat-state paintings for the three one-hit crews.
+# Separate from the 12 DONE telegraph/counter/captain ArtJobs 74393-74404;
+# do not re-enqueue those existing cells or replace ArtImages 277786-277797.
+# Four new per-crew states support idle, strike, hit and defeat animation staging.
+# Authored requests are NOT accepted ArtJobs; receipt and media QA follow the workflow.
+round: evt-one-hit-combat-states-20261122
+project_slug: every-villain-tactics
+designer: Every Villain Tactics original one-hit combat animation key poses
+is_public: false
+is_mature: false
+cast_loras: false
+auto_submit: true
+priority: 830
+lanes:
+- key: krea2
+  label: Krea 2 original painted western superhero combat poses
+  engine: krea2
+  prompt: prose
+  suffix: Original high-quality painted western superhero animation, bold clean ink contours,
+    richly saturated matte colors, clear single-character silhouette, consistent costume construction.
+subjects:
+- key: evt-t018-warren-idle-pose
+  lane: krea2
+  entity: combat-animation-pose
+  title: 'Ready stance on Picnic Plaza lawn'
+  asset: every-villain-tactics/henchmen/accident-earth/combat/idle
+  size: 1536x768
+  seed: 996200
+  prompt_prose: >-
+    One broad-shouldered rabbit-person tunnel worker with long dusty brown ears, square buck teeth, a dented yellow construction helmet, faded tan work coat, dark blue work trousers, thick gloves and rugged boots stands alone on the Picnic Plaza grass in a defensive crouch. His left paw grips a short spade, his right paw holds a yellow survey marker. A shallow exposed dirt circle at his boots and sunlit flagstones behind him. Entire body including ears and feet visible, wide clear silhouette, camera at waist height.
+  negative: text, lettering, labels, logos, watermarks, signatures, bad anatomy, extra limbs, duplicate creatures,
+    cropped feet, cropped ears, disconnected joints, generic franchise emblems
+- key: evt-t018-warren-strike-pose
+  lane: krea2
+  entity: combat-animation-pose
+  title: 'Close spade swing'
+  asset: every-villain-tactics/henchmen/accident-earth/combat/strike
+  size: 1536x768
+  seed: 996201
+  prompt_prose: >-
+    One broad-shouldered rabbit-person tunnel worker with long dusty brown ears, square buck teeth, dented yellow construction helmet, faded tan work coat, dark blue work trousers, thick gloves and rugged boots lunges sideways through a cloud of loosened picnic-lawn soil. Both paws swing a short steel spade toward an empty patch of stone pavement, with a clear visible arc of displaced dust. Entire body, helmet, spade and both feet visible, low three-quarter camera, strong midday sun.
+  negative: text, lettering, labels, logos, watermarks, signatures, bad anatomy, extra limbs, duplicate creatures,
+    cropped feet, cropped ears, disconnected joints, generic franchise emblems
+- key: evt-t018-warren-hit-pose
+  lane: krea2
+  entity: combat-animation-pose
+  title: 'Knocked back by a counter'
+  asset: every-villain-tactics/henchmen/accident-earth/combat/hit
+  size: 1536x768
+  seed: 996202
+  prompt_prose: >-
+    One broad-shouldered rabbit-person tunnel worker with long dusty brown ears, square buck teeth, a dented yellow construction helmet, faded tan work coat, dark blue trousers, thick gloves and rugged boots is knocked backwards from a freshly sealed molehill. His spade slips from one paw, his helmet tilts and pale dust explodes outward from the grass. Fully visible body leaning backward on one boot, exaggerated startled expression, no opposing person in view, camera at waist height.
+  negative: text, lettering, labels, logos, watermarks, signatures, bad anatomy, extra limbs, duplicate creatures,
+    cropped feet, cropped ears, disconnected joints, generic franchise emblems
+- key: evt-t018-warren-defeat-pose
+  lane: krea2
+  entity: combat-animation-pose
+  title: 'One-hit tumble to the turf'
+  asset: every-villain-tactics/henchmen/accident-earth/combat/defeat
+  size: 1536x768
+  seed: 996203
+  prompt_prose: >-
+    One broad-shouldered rabbit-person tunnel worker with long dusty brown ears, square buck teeth, a dented yellow construction helmet, faded tan work coat, dark blue work trousers and rugged boots lies sprawled safely on his back on a green picnic lawn beside a collapsed dirt-ring tunnel. His short steel spade rests on the grass and his yellow helmet sits crooked over one ear. Eyes dazed, limbs naturally connected, no blood or injury, whole body visible from a raised three-quarter view.
+  negative: text, lettering, labels, logos, watermarks, signatures, bad anatomy, extra limbs, duplicate creatures,
+    cropped feet, cropped ears, disconnected joints, generic franchise emblems
+- key: evt-t018-ronin-idle-pose
+  lane: krea2
+  entity: combat-animation-pose
+  title: 'Pocket-watch battle readiness'
+  asset: every-villain-tactics/henchmen/alien-discipline/combat/idle
+  size: 1536x768
+  seed: 996204
+  prompt_prose: >-
+    One compact brown-furred wombat ronin with a broad flat nose, tiny round ears, square black lacquered helmet, layered navy samurai-style training armor and small brass katana stands alone on a rain-dark rooftop. One paw holds a round glowing turquoise pocket watch and the other rests on the sword grip. A circular brass clock portal glows faintly behind his feet. Entire short furry body and all paws visible, front three-quarter camera, violet city lights.
+  negative: text, lettering, labels, logos, watermarks, signatures, bad anatomy, extra limbs, duplicate creatures,
+    cropped feet, cropped ears, disconnected joints, generic franchise emblems
+- key: evt-t018-ronin-strike-pose
+  lane: krea2
+  entity: combat-animation-pose
+  title: 'Short katana dash'
+  asset: every-villain-tactics/henchmen/alien-discipline/combat/strike
+  size: 1536x768
+  seed: 996205
+  prompt_prose: >-
+    One compact brown-furred wombat ronin with a broad flat nose, tiny round ears, square black lacquered helmet, layered navy training armor and small brass katana darts across wet rooftop stones from a circular glowing clock portal. He swings the short brass katana toward open empty rooftop space, one paw balanced behind him, rain droplets and turquoise light trailing his movement. Entire body and four limbs visible, low three-quarter camera, distant violet transit tower lights.
+  negative: text, lettering, labels, logos, watermarks, signatures, bad anatomy, extra limbs, duplicate creatures,
+    cropped feet, cropped ears, disconnected joints, generic franchise emblems
+- key: evt-t018-ronin-hit-pose
+  lane: krea2
+  entity: combat-animation-pose
+  title: 'Portal jam recoil'
+  asset: every-villain-tactics/henchmen/alien-discipline/combat/hit
+  size: 1536x768
+  seed: 996206
+  prompt_prose: >-
+    One compact brown-furred wombat ronin with a broad flat nose, tiny round ears, square black lacquered helmet, layered navy training armor and short brass katana stumbles backward as his turquoise pocket-watch portal snaps shut under a spiral of loose clock springs. The sword stays in his paw and the other paw shields his startled eyes. Wet rooftop stones, bright turquoise sparks, both feet and all body parts visible, clear three-quarter camera.
+  negative: text, lettering, labels, logos, watermarks, signatures, bad anatomy, extra limbs, duplicate creatures,
+    cropped feet, cropped ears, disconnected joints, generic franchise emblems
+- key: evt-t018-ronin-defeat-pose
+  lane: krea2
+  entity: combat-animation-pose
+  title: 'One-hit rooftop disarm'
+  asset: every-villain-tactics/henchmen/alien-discipline/combat/defeat
+  size: 1536x768
+  seed: 996207
+  prompt_prose: >-
+    One compact brown-furred wombat ronin with a broad flat nose, tiny round ears, square black lacquered helmet and layered navy training armor sits dazed on a wet rooftop after falling backward. His short brass katana lies beside one furry paw and his glowing pocket watch is shut. Both feet stretched forward, helmet tipped at a harmless angle, a closed brass clock ring visible on the stones behind. Entire body visible, no blood, raised three-quarter camera.
+  negative: text, lettering, labels, logos, watermarks, signatures, bad anatomy, extra limbs, duplicate creatures,
+    cropped feet, cropped ears, disconnected joints, generic franchise emblems
+- key: evt-t018-legends-idle-pose
+  lane: krea2
+  entity: combat-animation-pose
+  title: 'Wind-up mascot guarding seal'
+  asset: every-villain-tactics/henchmen/accident-birthright/combat/idle
+  size: 1536x768
+  seed: 996208
+  prompt_prose: >-
+    One squat brass clockwork hero mascot with a large winding key protruding from his back, burgundy velvet cape, round jointed metal arms, round steel boots and a plain circular enamel badge stands alone on a cyan-lit laboratory floor. He braces an oversized golden wax seal stamper in both hinged hands. Small gears are visible at his knees and elbows, full toy body and cape visible, front three-quarter view, dark blue laboratory cabinets behind.
+  negative: text, lettering, labels, logos, watermarks, signatures, bad anatomy, extra limbs, duplicate creatures,
+    cropped feet, cropped ears, disconnected joints, generic franchise emblems
+- key: evt-t018-legends-strike-pose
+  lane: krea2
+  entity: combat-animation-pose
+  title: 'Spring-loaded seal slam'
+  asset: every-villain-tactics/henchmen/accident-birthright/combat/strike
+  size: 1536x768
+  seed: 996209
+  prompt_prose: >-
+    One squat brass clockwork hero mascot with a large winding key at his back, burgundy velvet cape, round steel boots, hinged metal hands and plain circular enamel badge leaps from a laboratory step and swings an oversized golden stamp toward an empty slate floor. His cape stretches sideways and the brass joints flex visibly. Bright pink mechanical sparks trace the moving stamper, full body including winding key visible, low three-quarter camera.
+  negative: text, lettering, labels, logos, watermarks, signatures, bad anatomy, extra limbs, duplicate creatures,
+    cropped feet, cropped ears, disconnected joints, generic franchise emblems
+- key: evt-t018-legends-hit-pose
+  lane: krea2
+  entity: combat-animation-pose
+  title: 'Winding key disabled'
+  asset: every-villain-tactics/henchmen/accident-birthright/combat/hit
+  size: 1536x768
+  seed: 996210
+  prompt_prose: >-
+    One squat brass clockwork hero mascot with a burgundy velvet cape, round steel boots, hinged hands and circular enamel badge recoils as the large winding key in his back springs loose. His golden seal stamper drops from one hinged hand, tiny brass washers spin into the cyan laboratory light and his mechanical jaw opens in surprise. Entire small body and both boots visible, blue workbench behind, camera slightly above waist height.
+  negative: text, lettering, labels, logos, watermarks, signatures, bad anatomy, extra limbs, duplicate creatures,
+    cropped feet, cropped ears, disconnected joints, generic franchise emblems
+- key: evt-t018-legends-defeat-pose
+  lane: krea2
+  entity: combat-animation-pose
+  title: 'Clockwork mascot winds down'
+  asset: every-villain-tactics/henchmen/accident-birthright/combat/defeat
+  size: 1536x768
+  seed: 996211
+  prompt_prose: >-
+    One squat brass clockwork hero mascot with a burgundy velvet cape, round jointed metal arms, circular enamel badge and round steel boots rests seated harmlessly on a laboratory floor with both arms drooping. The winding key has stopped at his back and his golden stamp lies beside him; his metal jaw hangs open, eyes dim. All clockwork parts remain attached, entire body visible against cyan laboratory lighting, no debris shaped like other characters.
+  negative: text, lettering, labels, logos, watermarks, signatures, bad anatomy, extra limbs, duplicate creatures,
+    cropped feet, cropped ears, disconnected joints, generic franchise emblems
