@@ -255,6 +255,26 @@ harder if the player liked her.
 Every chapter returns to Room 205. The ghosts react to new evidence, contradict each other, and
 release the next Harker File.
 
+### Act spine: one former member per act (Silas, 2026-11-22 PT)
+
+Silas: *"Each act should deal with a former member of the band that might have had an issue with the
+agent."* Each chapter is built around one ex-member whose grudge against Odette is that act's motive,
+favour and Harker File. The rest of the cast stays supporting. **Proposed mapping**; clue placement in the
+table above is unchanged until the dependency charts are redrawn:
+
+| # | Featured ex-member | Grudge against Odette | Where |
+| --- | --- | --- | --- |
+| 1 | **Marta** (erased 1964 drummer, hidden) | her stolen Hexblade and her erased credit | Last Call Motor Lodge |
+| 2 | **Francesca Stein** (cut 1964) | Odette sold her Hexblade designs as merch | Bolt Street science-cinema, drive-in |
+| 3 | **Laguna Brine** (pushed out 1974) | her face sold to fish sticks and to a licensed 2017 look-alike | **Brine Bottoms bayou trailer park**, Velvet Crypt |
+| 4 | **Cleo Pappatra** (1986) and **Draculina** (1994) | billing erased; a possessive manager | couture house, mansion, hot tub |
+| 5 | **Siobhan** (2024) and **Albina** (1963) | an engineered feud; an erased founder | Pack dive bar, convention, sewers |
+| 6 | **Draculina**, unmasked | everything | motel, joke shop, mansion |
+
+Open question for Silas: Chapter 3's makeup clue ("the shade for people with no shade") sits at Cleo's
+couture house today. If the bayou takes Chapter 3, that clue moves to Chapter 4 alongside Cleo. The bayou
+cast and tone rules are in CHARACTER-LOOKBOOK.md "Laguna Brine and the bayou brood".
+
 ## Puzzle principles (Thimbleweed rules)
 
 - Keep a **dependency chart per chapter** in the engine tests. Every required clue has two routes.
@@ -267,6 +287,16 @@ release the next Harker File.
 
 ## Decided by Silas
 
+- 2026-11-22 PT: **The leads were falling short in the art.** *"The two leads are vitally important to the
+  flavor of the game, and both are falling short."* **Iris:** *"black hair with a white streak. She's got a
+  sassy tramp vibe, but positive, open hearted, curious, a sharp tongue, and brave."* **Norb:** *"a little
+  person, with ugly, misshapen features, wide open eyes, one larger than the other, heavy lids, a cross between
+  Quasimodo, Igor, and Peter Lorre drawn by animaniacs."* Redesign in CHARACTER-LOOKBOOK.md "The two leads"
+  and Kind Robots `characterModels.ts`. Prompts describe the look in plain words and never name the studio.
+- 2026-11-22 PT: **One former member per act**, each with a grudge against the agent (see "Act spine"). A
+  **bayou trailer park** where the fish lady lives: *"overweight, pregnant, with a bunch of younglings, in
+  various stages from teenager to tadpole. Southern white redneck tropes. She does have helpful adult
+  daughters that provide some of the T and A."* Children never appear in mature content.
 - 2026-11-11 PT: **Softcore unlocks in the mature edition.** *"I'm an adult. I want a lane for soft core
   nudity as possible unlocks."* Above the non-explicit pin-ups, the mature edition may offer optional,
   opt-in softcore nudity as gratitude and scrapbook unlocks. Adults only; nudity allowed; explicit sex acts
