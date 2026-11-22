@@ -1167,16 +1167,17 @@ tasks:
   - id: t-058
     milestone: m4
     title: "Make the opening-wan-budget CI job assert the distinct 'opening shot coverage:' prefix against the live ledger"
-    status: review
-    owner: worker
+    status: done
     claimed_by: 20261122T122800Z-rainbow-t058-b9j6
     claimed_at: '2026-11-22T12:28:00Z'
     passes: 0
     stakes: reversible
     depends_on: []
     source: reviewer-kaizen-2026-11-22
-    updated: '2026-11-22T12:30:00Z'
+    updated: '2026-11-22T12:43:00Z'
     note: |-
       Reviewer kaizen from the 2026-11-22 PT merge of conductor#7827 (t-057). Coverage and WAN-budget failures now have separate prefixes, but only unit tests pin that. Extend the opening-wan-budget workflow step (or a test it runs) so a coverage failure on the real ledger shows up under its own prefix in CI logs. No production data changes.
 
       Added live-ledger-mutated missing, duplicated, and invalid ArtImage tests in scripts/test_rainbow_opening_budget_ci.py, proving opening shot coverage errors have their own prefix in CI rather than being mislabeled WAN budget failures. Implementation commit dc226f7. Await CI and merge.
+
+      Conductor PR #7836 merged as dbc31dc, with Worker PR CI, Security Audit, opening WAN budget, event processing and handoff checks all completed green. Live-ledger missing/duplicate/invalid shot fixtures now require distinct coverage failure prefix.
