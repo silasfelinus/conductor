@@ -421,10 +421,18 @@ def _stub_comfy(monkeypatch, loras, posted):
     monkeypatch.setattr(relay, "GEN_TIMEOUT", 0)
     monkeypatch.setattr(media, "COMFY_PROMPT_TIMEOUT", 1)
     monkeypatch.setattr(media, "COMFY_RECOVERY_SECONDS", 0)
+    # This regression is about POSTing the *resolved* workflow, not rendering
+    # it. Stop at the first /history probe rather than waiting 60 seconds for
+    # a fictional Comfy job to finish and complete its queue handoff grace.
+    monkeypatch.setattr(media.time, "sleep", lambda _seconds: None)
 
     def fake_post(method, url, body=None, timeout=None):
-        posted.append(body)
-        return 200, {"prompt_id": "p1"}
+        if method == "POST" and url.endswith("/prompt"):
+            posted.append(body)
+            return 200, {"prompt_id": "p1"}
+        if method == "GET" and "/history/" in url:
+            raise RuntimeError("test stops immediately after confirmed submission")
+        raise AssertionError("unexpected Comfy request in resolver test")
 
     monkeypatch.setattr(relay, "http_json", fake_post)
 
