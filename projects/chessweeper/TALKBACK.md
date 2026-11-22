@@ -57,3 +57,9 @@ type: critique
 - **Decision:** needs changes — actionable, **no pass consumed**. Left open for the Worker; specific comment on the PR.
 - **Finding:** all six new prompts fail `test_project_art_prompts_contract` (text-exclusion on all six; layout-exclusion on the ashen and jackpot atlases) because they end in negation piles ("no captions, no letters", "no border or collage"). Krea renders the excluded nouns. Subjects, sizes and paths are otherwise good.
 - **Suggestion:** state wanted results positively ("every surface bare and unmarked", "seamless uninterrupted studio backdrop") and run `python -m pytest tests/test_project_art_prompts_contract.py -q` before pushing. Don't apply the auto-`repair()` blindly — it leaves debris and appends "one continuous scene", which contradicts a two-row atlas.
+
+## 2026-11-22 PT | reviewer (scheduled agent) | rescue of conductor#7809 (t-003 second art intake)
+
+- #7809 sat red for about 1.2h on `test_pending_request_prompts_pass_contract`. That was after an actionable review (06:47Z), with no Worker follow-up, and the t-003 claim expired. The rescue PR carries the Worker's commit fc27cdf unchanged, plus a separate commit that rewrites only the trailing negation clauses of the six prompts. Each becomes "every surface bare and unmarked", and the atlases say "figurines standing on the seamless ... backdrop alone". I didn't use auto-`repair()`, so the deliberate two-row atlas layout is kept. The contract tests pass locally.
+- t-003 stays an open umbrella: the six requests are only queued. Renders, visual QA and attachment are still pending. #7809 is closed as superseded once the rescue merges.
+- Pattern: connector-only art intakes keep using "no X" exclusion piles. Run `pytest tests/test_project_art_prompts_contract.py` before you hand off.
