@@ -177,11 +177,11 @@ tasks:
   - id: t-008
     milestone: m3
     title: "Deliver original sound effects, looping music and a gesture-safe audio mixer"
-    status: review
+    status: done
     owner: worker
     claimed_by: 2026-11-22T192636Z-chessweeper-t008-r8q6
     claimed_at: '2026-11-22T19:26:36Z'
-    updated: '2026-11-22T19:26:36Z'
+    updated: '2026-11-22T23:16:23Z'
     depends_on: t-001
     passes: 0
     stakes: reversible
@@ -197,6 +197,14 @@ tasks:
       2026-11-22 PT: Original six-loop soundtrack PR kind_robots#5577 merged at 5902a4b2a243d4d2152dcd3e04729eb66feecdad. This is partial scope: audible device QA, production mix validation, and final asset URL verification remain. Return finite task to ready.
 
       Partial audio lifecycle repair: retire sample loops on mute, resume decoded tracks on unmute, prevent audio recreation after pagehide, and add regression assertions. Full device mixing and delivery verification remain.
+
+      2026-11-22 PT done: lifecycle fix #5587 merged 2982e48 (12 checks green). All six
+      original loops are live and their sizes match the repo. Offline mix check: 22.05 kHz
+      mono, peak -2.8 dBFS on every track, RMS -10.5 to -13.7 dBFS, 0 clipped samples,
+      seamless loop points, and six distinct hashes. Browser QA confirms there is no
+      AudioContext before a gesture and one after. A listen on a phone speaker is in the human
+      playtest checklist, not an agent task.
+    implementation_pr: 'silasfelinus/kind_robots#5587'
 
   - id: t-009
     milestone: m3
