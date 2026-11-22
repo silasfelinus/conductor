@@ -1,0 +1,81 @@
+name: Rainbow opening private cinematic review
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/export_rainbow_opening.py'
+      - 'scripts/inspect_rainbow_opening_preview.py'
+      - 'tests/test_rainbow_opening_private_render.py'
+      - '.github/workflows/rainbow-opening-private-render.yml'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/rainbow-opening-private-render.yml'
+      - 'projects/rainbow-bullet-hell-space-princess/art/OPENING-CLIPS-2-DOODLE.yaml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: rainbow-opening-private-review
+  cancel-in-progress: false
+
+jobs:
+  contracts:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install offline test requirements
+        run: python -m pip install 'Pillow>=10,<13' 'PyYAML>=6,<7'
+      - name: Run cinematic validation and strict preview tests
+        run: |
+          python -m unittest discover -s tests -p 'test_rainbow_opening_private_render.py' -v
+          python scripts/export_rainbow_opening.py --check-queue-budget
+
+  render-private-preview:
+    if: github.event_name != 'pull_request'
+    needs: contracts
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    env:
+      KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+      KR_BASE_URL: https://kindrobots.org
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install private cut requirements
+        run: python -m pip install 'Pillow>=10,<13' 'PyYAML>=6,<7'
+      - name: Check authenticated render prerequisites
+        run: |
+          if [ -z "$KR_API_TOKEN" ]; then
+            echo '::error::KR_API_TOKEN is missing; no media was published.'
+            exit 1
+          fi
+          command -v ffmpeg
+          command -v ffprobe
+      - name: Render all eight verified WAN clips with the original soundtrack
+        run: |
+          mkdir -p "$RUNNER_TEMP/rainbow-preview"
+          python scripts/export_rainbow_opening.py \
+            --require-all-clips \
+            --out "$RUNNER_TEMP/rainbow-preview/opening.mp4"
+      - name: Inspect duration, sound, eight receipts and dolphin chroma
+        run: |
+          python scripts/inspect_rainbow_opening_preview.py \
+            --video "$RUNNER_TEMP/rainbow-preview/opening.mp4" \
+            --out "$RUNNER_TEMP/rainbow-preview"
+      - name: Preserve private preview and machine-readable review evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rainbow-cats-opening-private-review
+          path: ${{ runner.temp }}/rainbow-preview/
+          retention-days: 14
+          if-no-files-found: warn
