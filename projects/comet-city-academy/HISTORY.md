@@ -283,3 +283,14 @@ Replaced brittle atlas art call-shape assertions with runtime shipped and canon-
 
 Delivered and merged kind_robots PR #5527 (behavioral source-backed atlas art tests) and conductor PR #7782 (authenticated private ArtImage byte proof). All latest-head PR checks green before merges. Production workflow 44965615427 succeeded and decoded 12/12 Every Villain Tactics telegraphs plus 191/191 Prom candidate images with no failed downloads. This proves media access, not curator approval or runtime attachment. Review and agent QA of compositions remain in separate art tasks.
 <!-- note:end t-044 -->
+
+## t-045 — Add a canon-anatomy guard that fails any Prom character art ledger prompt omitting a defining castLooks trait such as Asha's four arms
+
+<!-- note:begin t-045 -->
+Kaizen from conductor#7793 review (t-034 Asha repaint). Asha's shipped hero and villain outcome art lost her four arms and was only caught by manual source-byte QA. Extract the defining physical traits per identity (castLooks.ts / identityArcs.json) into a small canon table and add one test that walks every comet-city-academy art ledger subject and asserts its prompt mentions each trait for the named identity. Generalizes the one-off test_prom_asha_four_arm_repaint.py checks.
+
+Implemented 48-identity castLooks anatomy/silhouette rule table and wired it into scripts/enqueue_art_requests.py contract_rules, so new Prom art cells lacking natural limbs, age, species morphology or signature silhouette are rejected before Krea ArtJob POST. Added comprehensive tests over every Prom ledger, preserving historic accepted ArtJob IDs even when legacy prompts predate the newer canon. PR pending CI; no production jobs submitted or existing art data mutated by this software-only fix.
+
+2026-11-21 PT reviewer: merged conductor#7800 (squash 8fd09d9); all checks green.
+Preflight is prompt-text only — generated pixels still need visual QA. Kaizen -> t-046.
+<!-- note:end t-045 -->

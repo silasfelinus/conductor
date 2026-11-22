@@ -295,13 +295,10 @@ tasks:
     stakes: reversible
     passes: 0
     depends_on: []
-    note: |-
-      Kaizen from conductor#7793 review (t-034 Asha repaint). Asha's shipped hero and villain outcome art lost her four arms and was only caught by manual source-byte QA. Extract the defining physical traits per identity (castLooks.ts / identityArcs.json) into a small canon table and add one test that walks every comet-city-academy art ledger subject and asserts its prompt mentions each trait for the named identity. Generalizes the one-off test_prom_asha_four_arm_repaint.py checks.
+    note: >-
+      Kaizen from conductor#7793 review (t-034 Asha repaint).
 
-      Implemented 48-identity castLooks anatomy/silhouette rule table and wired it into scripts/enqueue_art_requests.py contract_rules, so new Prom art cells lacking natural limbs, age, species morphology or signature silhouette are rejected before Krea ArtJob POST. Added comprehensive tests over every Prom ledger, preserving historic accepted ArtJob IDs even when legacy prompts predate the newer canon. PR pending CI; no production jobs submitted or existing art data mutated by this software-only fix.
-
-      2026-11-21 PT reviewer: merged conductor#7800 (squash 8fd09d9); all checks green.
-      Preflight is prompt-text only — generated pixels still need visual QA. Kaizen -> t-046.
+      Full history: projects/comet-city-academy/HISTORY.md#t-045
     implementation_pr: 'silasfelinus/conductor#7800'
   - id: t-046
     title: "Queue separately reviewed corrective ArtJobs for legacy Prom renders whose prompts predate the canon-anatomy guard (e.g. magic-earth, tech-genius)"
