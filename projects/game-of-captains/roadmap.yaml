@@ -303,11 +303,11 @@ tasks:
   - id: t-011
     milestone: m4
     title: "Independently red-team Space Couch humor, ethics and couch/force bubble visuals"
-    status: review
+    status: done
     owner: worker
     claimed_by: 20261121T001340974Z-goc-t011-ethics-8k4s
     claimed_at: '2026-11-21T00:13:40.974Z'
-    updated: '2026-11-21T00:14:53.209Z'
+    updated: '2026-11-22T08:58:27Z'
     depends_on: t-010
     passes: 0
     stakes: reversible
@@ -352,10 +352,30 @@ tasks:
       Old 06:53 UTC review claim is stale and forecast-fix commit 5b5576 is on main. Independent ethics, pacing, actual painting and browser viewport QA remain. Return to READY, not DONE.
 
       Opened Kind Robots PR #5462 at 39ea45b77fe47231f2562bcb030d76dcb3abd136: all ten live planetary successful override scenes now explicitly credit real rescue benefits while honoring local consent and follow-up costs, rather than uniformly scolding the player. Added a 10-case scenario-specific red-team assertion in the existing seeded gameplay suite. This is PARTIAL t-011; full original painted-art visual inspection, responsive/gamepad/touch QA and broader ethical review remain incomplete. Exact-head CI and merger still pending; return READY after green merge rather than DONE.
+
+      2026-11-22 PT closure (Silas-directed: 'make it so'). Completed the remaining
+      independent red-team: (1) independent subagent read of 14 seeded voyages (all 6
+      captains, 12 crews, aid/observe/intervene/mixed); MUST-FIX findings fixed in kind_robots
+      #5570: shared secret detours named an absent officer (36 of 53 lines), memorials printed
+      mission ids, found-off-the-map duplicated discoveries and boilerplate, the observe
+      ending contradicted active audits, franchise-lifted names (Holodeck -> Pocket Theater
+      with id unchanged; three redshirt names), a never-arriving next-of-kin decision, Fluke's
+      voice line read as a stutter gag. (2) Painted art and force-bubble continuity: every
+      Space Couch render curated today (t-008/t-009/t-031/t-033/t-045). (3) Responsive: three
+      full signed-in voyages at 390/768/1440, 0 broken images, 0 console errors. (4)
+      Save/load: mid-voyage reload keeps a byte-identical save and resumes at the same phase.
+      (5) Touch: tap/swipe on the captain gallery. (6) Gamepad: the Kit shell could not play
+      the stage with a pad; #5570 adds D-pad/stick focus and A to press. Recorded, not changed
+      (design calls): aid underperforms observe (aid voyages end with supplies at 0; 10
+      disasters vs observe's 17 successes over 27 calls), trust far exceeds the trust>=2 gate,
+      ending title tracks play style alone, intervene complaint lines repeat, Act II/III
+      galactic cards can repeat in one voyage (an earlier no-repeat attempt broke pinned
+      endings), and a Vue hydration-mismatch warning on reloading a saved voyage.
+    implementation_pr: 'silasfelinus/kind_robots#5570'
   - id: t-012
     milestone: m4
     title: "Final human design acceptance after completion; separate publish gate"
-    status: waiting
+    status: cancelled
     depends_on: t-011
     gate_human: true
     gate_reason: subjective-acceptance
@@ -366,6 +386,13 @@ tasks:
       Not a blocker today. Rename umbrella issue awaiting final human verdict only when no
       agent-actionable writing/art/engine/UX/tests remain. Silas approves or asks for rewrites; do
       not infer public release.
+
+      2026-11-22 PT: Silas, in-session: "Final design sendoff should not be a part of the
+      roadmap, that's post that task list." Cancelled from the finite roadmap per that
+      direction. Final design acceptance and any publish decision happen after the roadmap
+      ends, outside this task list; approved_by_human is not set and nothing is published.
+    updated: '2026-11-22T08:38:44Z'
+    cancelled_reason: silas-moved-post-roadmap
   - id: t-013
     milestone: m2
     title: "Replace Warp display identity with Space Couch across app and Project row"
@@ -639,11 +666,11 @@ tasks:
     implementation_pr: 'silasfelinus/kind_robots#5553'
   - id: t-032
     title: "Space Couch | Master Red Sofa Starship Playbook Roadmap"
-    status: review
+    status: done
     owner: worker
     claimed_by: 20261121T184500Z-goc-t032-windglass-archive-a8f7
     claimed_at: '2026-11-21T18:45:00Z'
-    updated: '2026-11-21T18:47:00Z'
+    updated: '2026-11-22T08:59:09Z'
     stakes: reversible
     passes: 0
     source_issue: "silasfelinus/kind_robots#4182"
@@ -712,6 +739,16 @@ tasks:
       Kind Robots #5491 merged as c0b6dbd4579d5e82f144ca58a5d67acb2b15b4c5; Hollow Lantern inquiry is playable. This is a partial chapter-nine slice; Windglass exodus and Tellurian Archive, visual art acceptance and responsive browser QA remain. Release old review handoff to READY for the next worker.
 
       Authored the two remaining Chapter 9 destinations on Kind Robots worker/game-of-captains-t-032-final-pair-a8f7: Windglass relocation and Tellurian Archive, six policies/choices and twelve outcomes, callback and deterministic save/regression tests. Ready for implementation PR and exact-head CI. This is partial t-032: art curation, real browser acceptance and finite master readiness remain.
+
+      2026-11-22 PT: master roadmap complete. Every finite task is done (t-001 through t-046)
+      and t-012 was cancelled by Silas as post-roadmap. The remaining master scope from
+      earlier notes is delivered: art curation across all Space Couch ledgers (t-008, t-009,
+      t-031, t-033, t-045), real signed-in browser acceptance at 390/768/1440 (t-041), and the
+      independent red-team (t-011). The project moves to playtest; the human playtest,
+      subjective verdict and any publication decision happen after this roadmap. Master issue
+      #4182 is flagged for human testing by the playtest sync, which implies no verdict and no
+      publish approval.
+    implementation_pr: 'silasfelinus/kind_robots#5570'
   - id: t-033
     milestone: m3
     title: "Curate, re-render and ship the 100 redshirt portraits and secret-power plates"
