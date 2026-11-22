@@ -16,7 +16,10 @@ from pathlib import Path
 
 import yaml
 
-from scripts.verify_prom_tactics_media import candidates
+if __package__:
+    from .verify_prom_tactics_media import candidates
+else:
+    from verify_prom_tactics_media import candidates
 
 
 def parse_ledger(value: str) -> tuple[Path, int]:
@@ -40,7 +43,10 @@ def verify_private_metadata(path: Path, expected: int, request=None) -> int:
     if len(rows) != expected:
         raise ValueError("private receipt count changed after verification")
     if request is None:
-        from scripts import consume_art_queue_core as core
+        if __package__:
+            from . import consume_art_queue_core as core
+        else:
+            import consume_art_queue_core as core
 
         def request(image_id):
             return core.http_json(
