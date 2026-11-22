@@ -18938,7 +18938,7 @@ records:
   failure_category: null
   lesson: "Pin a hand-verified fail-closed guard with tests that stub the slow/network step and
     assert both the exit code and that no partial output was written."
-- date: '2026-11-21'
+- date: 2026-11-21
   project: game-of-captains
   task: t-043
   kind: software
@@ -19039,3 +19039,13 @@ records:
   failure_category: null
   lesson: When refactoring a guard into a reporting helper, compare raw values, not rounded display fields,
     or tiny overages slip through.
+- date: 2026-11-21
+  project: comet-city-academy
+  task: t-045
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: Guard canon anatomy at enqueue time (before an ArtJob is spent), and grandfather only already-accepted
+    lanes so historic receipts are never re-submitted.

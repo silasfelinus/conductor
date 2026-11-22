@@ -294,6 +294,19 @@ tasks:
       2026-11-21 PT reviewer: merged conductor#7800 (squash 8fd09d9); all checks green.
       Preflight is prompt-text only — generated pixels still need visual QA. Kaizen -> t-046.
     implementation_pr: 'silasfelinus/conductor#7800'
+  - id: t-046
+    title: "Queue separately reviewed corrective ArtJobs for legacy Prom renders whose prompts predate the canon-anatomy guard (e.g. magic-earth, tech-genius)"
+    status: ready
+    owner: worker
+    milestone: m3
+    stakes: reversible
+    passes: 0
+    depends_on: []
+    note: |-
+      Kaizen from conductor#7800 review (t-045). The new preflight grandfathers already-accepted
+      lanes, so legacy mismatched identity renders remain as QA debt. Verify existing replacements
+      and actual media bytes first, then queue only the missing private corrective cells; never
+      bulk-requeue accepted work.
   - id: t-012
     milestone: m2
     title: "Promote the seven-day demo into Capes & Tassels name and genuine day/night map slice"

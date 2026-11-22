@@ -148,3 +148,9 @@ Merged (squash 9017e41). Art ledgers/prompts only, reversible, CI green. The fiv
 - **Decision:** merged (squash 7d36421) on 24/24 green checks. The change adds a private (`is_public: false`) four-subject Krea 2 ledger and a canon test. It's reversible and nothing gets published. t-034 goes back to `ready` because the umbrella is still open: the candidates need rendering, visual QA and attaching to their slots.
 - Pattern: good self-check. The worker fixed a YAML colon that broke round validation before handoff. Anatomy prose is explicit (pair placement, per-hand actions), which is what Krea needs for multi-limb figures.
 - Kaizen t-045: generalize the one-off four-arm assertions into a canon-trait guard over all Prom art ledgers.
+
+## 2026-11-21 PT | reviewer (scheduled agent) | conductor#7800 t-045 canon-anatomy preflight; #7802 t-034 export curation
+
+- **#7800 decision:** squash-merged (8fd09d9) with 24/24 checks green. The change adds a 48-identity trait table wired into `enqueue_art_requests.contract_rules`, so a Prom identity cell that's missing its defining anatomy is refused before POST. It's reversible and internal only. t-045 is now done. Kaizen t-046 covers corrective ArtJobs for the grandfathered legacy prompts.
+- **#7802:** the code is correct and small: Prom/Tactics ledgers force `--require-keep` on export. The only red check was **Validate Worker PR handoff**, because the body used `##` headings instead of the required `### Task` etc. The reviewer rewrote the body into the required headings and will merge once the check is green.
+- Pattern: both workers wrote "no local tests claimed". The preflight regexes are prompt-text heuristics, so visual QA of the pixels is still required before anything is attached.
