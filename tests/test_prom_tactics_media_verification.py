@@ -321,3 +321,31 @@ def test_new_art_batches_reach_private_media_and_runtime_checks():
     assert "--require-count 12 --write-evidence" in commands
     assert "checkpoint_art_state.sh" in commands
 
+
+def test_three_authentic_tactics_venue_paintings_have_private_gameplay_proof():
+    expected = {
+        "LAST-ORDER-DINER-ROUND-1.yaml": (71163, 276806),
+        "SUNKEN-STREET-ROUND-1.yaml": (74323, 277221),
+        "VALCOURT-LIBRARY-ROUND-1.yaml": (74324, 277330),
+    }
+    workflow = yaml.safe_load(FLOW.read_text())
+    events = workflow.get("on", workflow.get(True, {}))
+    paths = events["push"]["paths"]
+    commands = "\n".join(
+        step.get("run", "")
+        for step in workflow["jobs"]["verify-private-media"]["steps"]
+    )
+    for name, (job_id, image_id) in expected.items():
+        ledger = ROOT / "projects/every-villain-tactics/art" / name
+        receipts = candidates([ledger])
+        assert len(receipts) == 1, name
+        assert receipts[0]["job_id"] == job_id
+        assert receipts[0]["image_id"] == image_id
+        assert not receipts[0]["reviewed"], name
+        relative = str(ledger.relative_to(ROOT))
+        assert relative in paths
+        assert relative in commands
+    assert "Verify original Tactics diner, sunken street and library" in FLOW.read_text()
+    assert commands.count('--require-count 1 --write-evidence') >= 1
+    assert 'verify_tactics_runtime_media.py "$ledger"' in commands
+    assert "checkpoint_art_state.sh" in commands
