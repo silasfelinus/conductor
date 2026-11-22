@@ -126,24 +126,18 @@ tasks:
   - id: t-008
     milestone: m3
     title: "Deliver original sound effects, looping music and a gesture-safe audio mixer"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 20261122T015600Z-chessweeper-t008-h2c7
     claimed_at: '2026-11-22T01:56:00.682Z'
-    updated: '2026-11-22T01:56:00.682Z'
+    updated: '2026-11-22T01:58:04.282Z'
     depends_on: t-001
     passes: 0
     stakes: reversible
-    note: >-
-      Deliver three distinct original musical identities (Sugarbomb playful synth,
-      Ashen dark atmospheric, Jackpot neon casino) and actual playable loops including
-      transitions, boss/endings cues and pause/resume; original SFX for chess, mines,
-      disc ricochets, damage, abilities, achievements, victories and defeats.
-      Use the existing art/audio job and asset pipeline with tracked IDs, final files
-      and verified URLs; temporary oscillator sounds are not the finished soundtrack.
-      Add gesture-safe audio start, mute/volume, per-category levels, persistence,
-      focus/route cleanup, and no autoplay before consent. Test browser playback,
-      crossfades, missing-audio fallback and accessibility; no silent game qualifies.
+    note: |-
+      Deliver three distinct original musical identities (Sugarbomb playful synth, Ashen dark atmospheric, Jackpot neon casino) and actual playable loops including transitions, boss/endings cues and pause/resume; original SFX for chess, mines, disc ricochets, damage, abilities, achievements, victories and defeats. Use the existing art/audio job and asset pipeline with tracked IDs, final files and verified URLs; temporary oscillator sounds are not the finished soundtrack. Add gesture-safe audio start, mute/volume, per-category levels, persistence, focus/route cleanup, and no autoplay before consent. Test browser playback, crossfades, missing-audio fallback and accessibility; no silent game qualifies.
+
+      Implemented a substantial synthesized audio slice: original 16-step multi-voice sugar, ashen, and jackpot music, gesture-safe WebAudio mixer, twelve combat/achievement SFX cues, scene-switch handling, visibility/pagehide suspension and cleanup, persistent music/effects toggles and volume sliders, and mock-AudioContext CI regression tests. Branch worker/chessweeper-t008-soundscape-20261121-h2c7. Full mastered soundtrack assets, ArtJob receipts, actual audible mobile browser playthroughs and final audio mix remain; do not close t-008 done on this PR.
 
   - id: t-009
     milestone: m3
