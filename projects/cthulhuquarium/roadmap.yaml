@@ -1574,14 +1574,19 @@ tasks:
     Do not infer approval or close the umbrella issue on a CI pass.
 
     FOR SILAS (2026-11-21): every dependency is done and the project is in playtest. Play
-    /play/aquarium after the next Force Update (kind_robots #5501 and #5503 on main) using
+    /play/aquarium using
     projects/cthulhuquarium/PLAYTEST-CHECKLIST.md; RC-DOSSIER.md has the evidence, the three
     independent reviews and how to reach the deep floors in a short session. Approve the
     design, or request rewrites with direction.
 
-  updated: '2026-11-21T10:21:22Z'
+    2026-11-22 gate re-check: the release-candidate build is live now. Production
+    /api/version serves kind_robots 069ed788 (committed 2026-11-22), which contains
+    #5501 (fdec03c4) and #5503 (0490ec7e). No agent step remains; the only open step is
+    Silas's Approve Final Design / Request Rewrites verdict.
+
+  updated: '2026-11-22T23:55:00Z'
   gate_reason: subjective-acceptance
-  gate_rechecked: '2026-10-10'
+  gate_rechecked: '2026-11-22'
 
 - id: t-078
   milestone: m3
