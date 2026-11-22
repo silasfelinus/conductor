@@ -26,3 +26,18 @@ def test_ready_claimed_and_legacy_done_are_ignored() -> None:
 def test_quoted_remaining_in_completed_audit_is_not_a_live_gap() -> None:
     assert unresolved_done_tasks({"tasks": [task('Append a dated "remaining:" line to other tasks.')]}) == []
     assert unresolved_done_tasks({"tasks": [task("2026-11-11 PT remaining: artwork\n2026-11-12 PT remaining met: URLs checked")]}) == []
+
+
+def test_archived_note_body_is_consulted() -> None:
+    from scripts.check_memory_dungeon_acceptance import archived_notes
+
+    stub = "2026-11-11 PT remaining: gap\n\nFull history: projects/memory-dungeon/HISTORY.md#t-001"
+    history = (
+        "<!-- note:begin t-001 -->\n2026-11-11 PT remaining: gap\n"
+        "2026-11-20 PT remaining met: verified\n<!-- note:end t-001 -->\n"
+    )
+    archive = archived_notes(history)
+    assert unresolved_done_tasks({"tasks": [task(stub)]}) == ["t-001"]
+    assert unresolved_done_tasks({"tasks": [task(stub)]}, archive) == []
+    reopened = stub + "\n2026-11-25 PT remaining: new gap"
+    assert unresolved_done_tasks({"tasks": [task(reopened)]}, archive) == ["t-001"]
