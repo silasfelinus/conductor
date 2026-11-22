@@ -1027,3 +1027,25 @@ tasks:
       Kind Robots PR #5515 merged as 11aced6d359ca93f10ab9a25c19ee2a62ad23169 after six exact-head workflows completed successfully on 6369d4cb15fff94e69117fd77d3be500c25ba609, including TypeScript and Contract Tests. The AST byte-signature regression guard is delivered.
     claimed_by: 2026-11-21T134100Z-goc-t044-c8e7
     claimed_at: '2026-11-21T13:41:00Z'
+  - id: t-045
+    title: "Captain selection redesign: large painted portraits and an art-first layout"
+    status: ready
+    updated: '2026-11-22T03:10:00Z'
+    milestone: m3
+    passes: 0
+    stakes: reversible
+    depends_on: []
+    source: silas-2026-11-22
+    note: |-
+      Silas 2026-11-22 PT: "we have good large sized portraits for our fake zodiac, but then our captain selection looks a little lackluster. We really might need a redesign of that art, but in any case, it needs to be large and art first layouts." Live audit: six 55px circular thumbnails inside mostly empty cards, a 367px square hero, stats/copy dominating. Deliver tall painted 832x1216 captain portraits (art/CAPTAIN-SELECTION-ROUND-1.yaml, ArtJobs 76475-76486, two seeds per captain, curator keeps one) and a selection screen where paintings lead at 390/768/1440.
+  - id: t-046
+    title: "Space Couch sound and music: original score, interface and event sound, mixer settings"
+    status: ready
+    updated: '2026-11-22T03:10:00Z'
+    milestone: m3
+    passes: 0
+    stakes: reversible
+    depends_on: []
+    source: silas-2026-11-22
+    note: |-
+      Silas 2026-11-22 PT: "We never mentioned sound and music, but that should be expected." Ship original (procedural, rights-clean) title and voyage music, interface/event sound for choices, success, failure, redshirt loss and endings; start only after a user gesture, honor reduced motion/mute, persist music and effects volume in the shared settings sheet, and cover it with deterministic tests.
