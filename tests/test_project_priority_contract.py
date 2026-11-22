@@ -98,6 +98,10 @@ def test_lead_projects_are_the_ones_silas_named():
     on 2026-11-09 PT, leaves the lead for the playtest lifecycle. The focus group behind
     it keeps its order and now leads again; nothing else moves.
 
+    Updated 2026-11-22 PT on Silas's named playtest handoff for Emperor of Dust (session
+    2026-11-21 PT: "the kind robots project should be swapped to normal 'playtest'
+    priority"): it leaves the focus tier, which keeps its order and still leads.
+
     The point of this test is unchanged: an agent tidying priority.yaml must not quietly
     reorder the top, and changing it means editing this test with a named human decision
     in the docstring.
@@ -106,17 +110,17 @@ def test_lead_projects_are_the_ones_silas_named():
     order = data.get("order") or []
 
     focus = [
-        "emperor-of-dust",
         "rainbow-bullet-hell-space-princess",
         "save-the-plumber",
     ]
     # 2026-11-19 PT: slime-city (rank 1 from 2026-11-09) graduated to playtest; the
-    # named tier that sat behind it leads again, unchanged.
+    # named tier that sat behind it leads again, unchanged. 2026-11-22 PT:
+    # emperor-of-dust graduated the same way.
     assert len(order) >= 13
-    assert order[:3] == focus
-    assert order[3:7] == ["kind-pinball", "zuzu-lair", "kr-arcade", "zuzu-showdown"]
-    assert order[7] == "memory-dungeon"
-    assert order[8:10] == ["cthulhuquarium", "kind-economy"]
+    assert order[:2] == focus
+    assert order[2:6] == ["kind-pinball", "zuzu-lair", "kr-arcade", "zuzu-showdown"]
+    assert order[6] == "memory-dungeon"
+    assert order[7:9] == ["cthulhuquarium", "kind-economy"]
     assert order.index("shifting-desks") > order.index("zuzu-shifting-lands")
     assert order.index("weird-humboldt") > order.index("shifting-desks")
     assert order.index("slime-city") > order.index("weird-humboldt")
@@ -160,6 +164,21 @@ def test_slime_city_graduated_to_playtest_normal():
     assert overrides["slime-city"]["priority"] == "normal"
 
 
+def test_emperor_of_dust_graduated_to_playtest_normal():
+    """Silas 2026-10-21 put Emperor of Dust in the creative focus tier; in the 2026-11-21 PT
+    session he directed its playtest handoff once non-human work was done ("the kind robots
+    project should be swapped to normal 'playtest' priority")."""
+    priority = yaml.safe_load(PRIORITY.read_text(encoding="utf-8")) or {}
+    order = priority.get("order") or []
+    assert order.count("emperor-of-dust") == 1
+    assert order.index("emperor-of-dust") > order.index("slime-city")
+
+    raw = yaml.safe_load(OVERRIDES.read_text(encoding="utf-8")) or {}
+    overrides = {item["slug"]: item for item in raw.get("overrides", [])}
+    assert overrides["emperor-of-dust"]["status"] == "playtest"
+    assert overrides["emperor-of-dust"]["priority"] == "normal"
+
+
 def test_remaining_creative_focus_projects_are_active_and_high_priority():
     """2026-10-21: do not let creative focus silently become a label-only promise.
 
@@ -173,15 +192,16 @@ def test_remaining_creative_focus_projects_are_active_and_high_priority():
     ("switched to 'normal' and 'playtest'"). The remaining three stay.
     2026-11-19 PT: Slime City, which led the queue ahead of this tier, joins playtest on
     Silas's direction ("normal priority and set for 'playtest'"). The three stay and lead.
+    2026-11-22 PT: Emperor of Dust joins playtest on Silas's direction ("swapped to
+    normal 'playtest' priority"). The remaining two stay and lead.
     """
     focus = {
-        "emperor-of-dust",
         "rainbow-bullet-hell-space-princess",
         "save-the-plumber",
     }
     data = yaml.safe_load(PRIORITY.read_text(encoding="utf-8")) or {}
     # 2026-11-19 PT: slime-city no longer sits ahead of the tier (playtest handoff).
-    assert set(data["order"][0:3]) == focus
+    assert set(data["order"][0:2]) == focus
     raw = yaml.safe_load(OVERRIDES.read_text(encoding="utf-8")) or {}
     overrides = {row["slug"]: row for row in raw.get("overrides", [])}
     for slug in focus:
