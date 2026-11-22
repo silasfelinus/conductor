@@ -31,8 +31,8 @@ def test_corrections_are_private_new_requests_with_stable_slot_keys():
     assert len({item["asset"] for item in subjects}) == len(subjects)
     actual = {}
     for item in subjects:
-        # Auto Art Generate checkpoints ArtJob/ArtImage receipts after submit;
-        # accept both unsubmitted requests and structurally valid receipts.
+        # Auto Art Generate writes ArtJob/ArtImage receipts after submission;
+        # accept unsubmitted cells and well-formed durable receipts alike.
         assert not receipt_problems(item), item["key"]
         assert item["lane"] == "krea2"
         assert item["size"] == "1344x768"

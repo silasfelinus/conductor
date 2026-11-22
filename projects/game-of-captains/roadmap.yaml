@@ -207,8 +207,8 @@ tasks:
   - id: t-009
     milestone: m3
     title: "Deliver unique mission outcome, conversation and ending illustration coverage"
-    status: ready
-    updated: '2026-11-22T01:42:00Z'
+    status: done
+    updated: '2026-11-22T06:44:30Z'
     depends_on: t-007
     passes: 0
     stakes: reversible
@@ -272,6 +272,18 @@ tasks:
       Partial episode-art delivery reliability: Kind Robots worker branch worker/game-of-captains-t-009-cast-art-fallback-20261122-6d83 now replaces failed captain/crew/redshirt portrait images with their existing painted-card monograms on both the cast stack and scout comparison, rather than leaving a broken-image glyph. Existing artwork refresh clears failures and retries delivery. Added both-surface regression assertions. Exact-head CI and PR pending. Render curation and live media QA remain open.
 
       2026-11-21 PT: Merged Kind Robots #5537 as b73507a470b1a78e2dc0b7ab928ec242020f1728 after six latest-head workflows completed SUCCESS. Both cast roster and scout now show monograms on failed portrait media. Opened follow-on #5539 to try shipped legacy portraits after failed redesigned captain/crew URLs, before falling back to monograms; regression assertions added. #5539 exact-head CI and merge pending. ArtJob curation, authenticated image URLs and viewport QA remain incomplete. Partial t-009 only.
+
+      2026-11-22 PT closure (Silas-directed session; no other workers). Episode-deck
+      illustration coverage delivered: all 966 DONE renders from PLANET-CHOICE-OUTCOMES-
+      ROUND-1 and EPISODE-{REVEALS-ROUND-2,CHOICE-OUTCOMES-ROUND-1,FAILURES-ROUND-2} reviewed
+      on contact sheets (943 keep); 23 rejects (franchise-style uniforms, a real-chain spoof,
+      a blank composition) re-rendered in EPISODE-REDO-1 (ArtJobs 76570-76592), 21 kept. 964
+      of 966 slots now carry their own reveal and per-choice success/failure painting through
+      the access-filtered onboarding-art route (kind_robots #5554 merged 904ec05; #5565 adds
+      the 21 re-renders). The 2 still-rejected slots fall back to the episode backdrop. Casino
+      episodes (87) were already wired. Final signed-in visual check after the next Force
+      Update remains part of t-012.
+    implementation_pr: 'silasfelinus/kind_robots#5554'
   - id: t-010
     milestone: m4
     title: "Run antagonist-by-captain-by-crew adversarial and every-ending seeded traces"
