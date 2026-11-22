@@ -159,8 +159,8 @@ tasks:
   - id: t-008
     milestone: m3
     title: "Deliver original sound effects, looping music and a gesture-safe audio mixer"
-    status: ready
-    updated: '2026-11-22T17:05:11Z'
+    status: claimed
+    updated: '2026-11-22T17:31:04Z'
     depends_on: t-001
     passes: 0
     stakes: reversible
@@ -174,6 +174,9 @@ tasks:
       2026-11-22 PT: Added six original deterministic WAV loops (stage and finale per world), reproducible score renderer, audio provenance manifest, browser-safe gesture-gated decoding/crossfades with oscillator fallback, and regression tests. Partial t-008: audible device QA, production mix validation and verified delivered URLs remain.
 
       2026-11-22 PT: Original six-loop soundtrack PR kind_robots#5577 merged at 5902a4b2a243d4d2152dcd3e04729eb66feecdad. This is partial scope: audible device QA, production mix validation, and final asset URL verification remain. Return finite task to ready.
+    owner: worker
+    claimed_by: 2026-11-22T173104Z-chessweeper-t008-k7p4
+    claimed_at: '2026-11-22T17:31:04Z'
 
   - id: t-009
     milestone: m3
