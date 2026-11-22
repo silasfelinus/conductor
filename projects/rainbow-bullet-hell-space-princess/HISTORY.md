@@ -343,3 +343,108 @@ Live today: 0 Achievement record(s) with this game's triggerCode prefix (checked
 
 Achievement upgrade merged in kind_robots#5042 (d870dd3), all checks green: 17 live arcade-prefixed achievements (7 mastery goals, 3 endings, 7 deeds) via a drainFeats() queue and mastery backfill at cabinet start; fixed Every Ending never being earnable. Catalog run 43140875677 succeeded. Not added: an all-pilots achievement (needs a new mastery-ladder entry).
 <!-- note:end t-045 -->
+
+## t-046 — Add a pytest that pins the Fever Dream export's fail-closed boss-phase and key-art preflight
+
+<!-- note:begin t-046 -->
+Kaizen from the PR #7694 review. The guard was verified by hand only. Build a tmp kind_robots tree with three boss phase webps and key-art, feed ledgers with one phase unfinished, and assert main(--dry-run) exits 1 naming the missing phase; then with all phases DONE assert it gets past preflight (stub render_path so no PIL or network is needed).
+
+Added three pytest cases for incomplete boss phases, missing key art, and successful fully rendered dry-run export; PR and CI review still required.
+
+Reviewer 2026-11-20: merged PR #7698 (three pytest cases pin fail-closed boss-phase and
+key-art preflight; CI green). Done.
+<!-- note:end t-046 -->
+
+## t-047 — Make review_rainbow_doodle_art.py print an edge-risk summary so the DOODLE-SET-2 visual pass starts from the risky sprites
+
+<!-- note:begin t-047 -->
+Kaizen from the PR #7699 review. The sheet builder records edge_check per asset in visual-review.yaml but only prints a count. Print each edge-risk asset (rel path, ArtImage id) after the run and add a test that a non-green border appears in that list. Never change keeper verdicts.
+
+Added edge-risk sprite relative paths and ArtImage IDs to the private doodle review CLI, with an offline mixed-border regression. Implementation commit 7d936bc460c8dbcd1cbe8bf4127de541722476a0; review pending.
+
+Edge-risk relative paths and ArtImage IDs shipped in merged Conductor PR #7709 (2026-11-20 18:06 PT), with offline mixed-border regression. Follow-up shared fixture landed in PR #7713; no keeper verdicts changed.
+<!-- note:end t-047 -->
+
+## t-048 — Share one tmp kind_robots + DOODLE ledger fixture between the Rainbow doodle export and review tests
+
+<!-- note:begin t-048 -->
+Kaizen from the PR #7698 review. tests/test_export_rainbow_doodle_art.py and tests/test_review_rainbow_doodle_art.py each hand-build classic webps and ledgers with slightly different shapes (art.krea vs art.kontext, jobs present or not). Move the builder into one helper so both suites exercise the same ledger shape the real DOODLE-SET-2.yaml uses.
+
+Shared synthetic-but-valid 64x48 WebP and PNG DOODLE-SET-2-shaped fixtures between exporter and contact-sheet tests. Two original fixture builders eliminated. Regression checks assert per-lane jobs, ArtImage provenance and importer schema. Kind Robots game code untouched. Commit bcb4951b; CI required before merge.
+
+Shared DOODLE-SET-2 export/review fixture merged in Conductor PR #7713 at 6867d7b3e08a1d4ae419cc42ffe1a20b79cfaf9a. Worker PR CI, Security Audit, handoff and task-events checks passed on resolved head 02629878253480c39f390c49d9fef58c03f49d93. No production art or game runtime changes.
+<!-- note:end t-048 -->
+
+## t-049 — Validate each rendered opening clip's container, size and identity lock before the opening export composes it
+
+<!-- note:begin t-049 -->
+Kaizen from the PR #7730 review (worker suggestion). scripts/export_rainbow_opening.py now decodes WAN MP4/WebM via ffmpeg but trusts whatever bytes come back. Add a fail-closed per-clip check that runs before composition: magic-byte container type, minimum frame count and dimensions, and that the ledger subject's source_image_id still matches its DOODLE-SET-1 identity-locked keeper. Report bad clips by shot key and fall back to the pinned still instead of emitting a broken cut.
+
+Reviewer 2026-11-21 PT: rescued worker PR #7747 as #7749 (merged c8d204f) after fixing
+the double-escaped WebM magic literal and fixtures that never reached ffprobe; 11 tests
+pass and all 8 live recut-2 shots pass the keeper gate. #7747 closed as superseded.
+<!-- note:end t-049 -->
+
+## t-050 — List the opening shots that fell back to stills in the delivery report so their WAN jobs can be re-queued
+
+<!-- note:begin t-050 -->
+Reviewer kaizen from the 2026-11-21 PT merge of conductor#7752 (b7e0a00), which made the manifest count only validated animated shots. export_rainbow_opening.py now knows exactly which keys decoded (accepted_clips). Print and record the complement, the shot keys whose clip was DONE in the ledger but fell back to the still, in the manifest and delivery report, with a test, so a reviewer can re-queue exactly those WAN jobs.
+
+2026-11-21 PT Reviewer: merged conductor#7764 (squash 852e731). render() records DONE
+WAN clips that failed validation as rejected (pending shots excluded); export prints
+them and writes opening-rejected-clips.json beside the media. 12 tests pass locally;
+full CI green. Reviewer restored the PR body to the handoff template (the only red
+check). Kaizen -> t-051.
+<!-- note:end t-050 -->
+
+## t-051 — Surface opening-rejected-clips.json in the opening manifest or delivery report so the WAN re-queue list is visible without re-running the export
+
+<!-- note:begin t-051 -->
+Reviewer kaizen from the 2026-11-21 PT merge of conductor#7764. t-050 writes the rejected shot keys to a sidecar opening-rejected-clips.json beside the media, but the manifest and delivery report the task named still do not show them. Read the sidecar (or pass the list directly) into the manifest/delivery report, with a test, and note the shot keys a reviewer should re-queue.
+
+Opening exporter now writes opening-delivery-report.json with accepted, rejected, pending-still and exact WAN requeue shot keys; added two regression tests. Implementation PR pending checks.
+
+Reviewer merged conductor#7774 (e94f0e5) on green exact-head CI after rewriting the prose PR body into the handoff template; code unchanged. Kaizen t-053.
+<!-- note:end t-051 -->
+
+## t-052 — Check each queued opening WAN job against the export clip budget (8s, 128 frames) at queue time so over-budget renders fail before spending GPU time
+
+<!-- note:begin t-052 -->
+Reviewer kaizen from the 2026-11-21 PT merge of conductor#7768, which caps opening clip decode at MAX_CLIP_SECONDS=8 / MAX_CLIP_FRAMES=128 in scripts/export_rainbow_opening.py. A WAN job queued with a longer length would now render fine and then be rejected at export. Share the constants with the opening queue/ledger code and fail loudly at queue time, with a test.
+
+Added pre-enqueue WAN clip budget validator and tests for approved ledger, excessive duration, excessive frame rate and invalid inputs. PR pending CI; queue submission integration remains to verify.
+
+Reviewer 2026-11-21 PT: merged conductor#7776 (61a4f2a) on green exact-head CI.
+Preflight validate_opening_queue_budget() plus --check-queue-budget; no separate queue
+script exists, so kaizen t-054 wires the flag into CI.
+<!-- note:end t-052 -->
+
+## t-053 — Fold opening-rejected-clips.json into opening-delivery-report.json so the opening export writes one review sidecar instead of two overlapping ones
+
+<!-- note:begin t-053 -->
+Reviewer kaizen from the 2026-11-21 PT merge of conductor#7774. scripts/export_rainbow_opening.py now writes both opening-rejected-clips.json (t-050) and opening-delivery-report.json (t-051), and the report's rejected_shots/accepted_shots duplicate the older sidecar. Drop the older file (or make it a pointer), update any reader, and keep the tests asserting exact keys. Open the PR with the AGENTS.md handoff headings; five Worker PRs on this project today went red only on that check.
+
+Removed redundant opening-rejected-clips.json output, added single authoritative report writer, stale legacy sidecar cleanup and regression test. PR pending CI.
+
+Reviewer 2026-11-21 PT: merged conductor#7777 (00b602b) on green exact-head CI.
+write_delivery_report() is the only sidecar writer and removes stale opening-rejected-
+clips.json; no readers of the legacy file exist.
+<!-- note:end t-053 -->
+
+## t-054 — Run export_rainbow_opening.py --check-queue-budget in CI whenever the opening clip ledger changes so an over-budget WAN subject fails at PR time
+
+<!-- note:begin t-054 -->
+Reviewer kaizen from the 2026-11-21 PT merge of conductor#7776 (t-052). The budget preflight exists, but nothing calls it before ArtJobs are submitted: there is no separate opening queue script, so an agent editing projects/rainbow-bullet-hell-space-princess/art/OPENING-CLIPS-2-DOODLE.yaml can still queue a 10s WAN subject. Add a path-filtered CI step (or extend an existing ledger guard) that runs the flag, with a test that an over-budget fixture fails. Open the PR with the AGENTS.md handoff headings.
+
+Added path-filtered opening WAN queue budget CI and three subprocess regression fixtures covering approved, over-duration and excessive-fps ledgers. Implementation branch worker/rainbow-bullet-hell-space-princess-t-054-budget-ci-b7e2.
+
+The opening WAN budget CI workflow and three regression fixtures are present on Conductor main; the implementation PR #7781 is merged. Original PR handoff workflow failed on stale event payload despite corrected PR body. No gameplay or ArtJob delivery claimed.
+<!-- note:end t-054 -->
+
+## t-055 — Record each WAN shot's requested seconds, fps and frame headroom against the 8s/128-frame budget in opening-delivery-report.json
+
+<!-- note:begin t-055 -->
+Reviewer kaizen from the 2026-11-21 PT merge of conductor#7777 (t-053). opening-delivery-report.json is now the single review sidecar; reuse the t-052 budget arithmetic (validate_opening_queue_budget) so the report lists per-shot requested duration, fps, frames and remaining headroom. A reviewer can then see which re-queue shots are near the limit without reading the ledger. Assert exact values in a test.
+
+opening-delivery-report.json now carries wan_shot_budgets (per WAN shot requested seconds, fps, frames, seconds_headroom, frame_headroom vs the 8s/128-frame budget), computed by wan_shot_budgets() which validate_opening_queue_budget now reuses. Exact values asserted in tests/test_rainbow_opening_queue_budget.py, including a tiny-overage (8.0001s) rejection regression guard.
+<!-- note:end t-055 -->

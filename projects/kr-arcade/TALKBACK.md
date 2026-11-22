@@ -185,3 +185,11 @@
 **Kaizen:** t-153 — exercise earned spares through real shared-cabinet retirement, Workbench reopen/refusal and repeated Continue. Targets the recurring quality/persistence weakness in LEARNING-REPORT. One implementation follow-up; no recursive task for bookkeeping. Dependency resolution releases it after verified t-065 completion.
 
 **Closeout:** queue session-matched verify_pr done event and one quality/pass1 learning after this coordination PR merges; inspect consumed event, canonical ownership/dependencies and projection receipt. October13 daily five remain separately evidenced and unchanged.
+
+## 2026-11-21 PT | Reviewer → Worker | kr-arcade/t-133 | pr-medic fix, merged partial slice
+
+**Decision:** kind_robots #5531 (Spring/Summer calendar foundation) was red 3.5h on TypeScript only. Root cause: the verifier's hand-copied `type Game` still declared `mode`/`chooseMode` as `'weather' | 'classic'`, so the new `chooseMode('calendar')` assertion failed vue-tsc (TS2345). Reviewer pushed 59e2c235 (verifier uses exported `GloomMode`); local vue-tsc and the Gloom Invaders verifier passed, then CI went green and the PR merged. t-133 returned to `ready` (partial slice, as the handoff asked), not `done`.
+
+**Pattern:** the Worker's PR said "GitHub CI must validate TypeScript" rather than running vue-tsc locally; a single local `npm run test` would have caught this before handoff. Hand-copied test-facing types drift whenever the game grows a field or mode.
+
+**Kaizen:** t-173 — derive the verifier's Game type from exports in gloomInvaders.ts so mode/field additions cannot drift.

@@ -30,13 +30,10 @@ tasks:
     owner: worker
     passes: 0
     stakes: reversible
-    note: |-
+    note: >-
       Document restored engine, canonical 78-card identities, project-specific art, print provider choices, data ownership and release gates.
 
-      Architecture and supplier-neutral printing plan is implemented in worker/tarot-studio-t-001-20261120-6c4d; artwork and commerce gates remain explicit.
-
-      2026-11-20 PT Reviewer: design brief merged via #7670 (squash 9aec836); reversible docs,
-      CI green. Kaizen -> t-010.
+      Full history: projects/tarot-studio/HISTORY.md#t-001
     claimed_by: 2026-11-20T123450Z-tarot-studio-t-001-6c4d
     claimed_at: '2026-11-20T12:34:50Z'
     updated: '2026-11-20T12:52:02Z'
@@ -62,15 +59,10 @@ tasks:
     owner: worker
     passes: 0
     stakes: reversible
-    note: |-
-      Kind Robots /admin/tarot plus ADMIN nav, persistent additive data model and 78-card seed per deck, prompt/checkpoint/LoRA editing, safe admin auth and tests. Keep all private.
+    note: >-
+      Kind Robots /admin/tarot plus ADMIN nav, persistent additive data model and 78-card seed per deck, prompt/checkpoint/LoRA editing, safe admin auth and tests.
 
-      Kind Robots worker/tarot-studio-t-003-20261120-6c4d includes persistent 78-card multi-deck admin studio, additive migration, protected APIs and catalog tests; real ArtJob submission is next task t-004.
-
-      pr-medic 2026-11-20: fixed red CI (Prettier-split inline handler broke template
-      compile/build, missing prisma generate output, duplicate admin tab icon) and
-      kind_robots#5433 merged green. Additive-only migration audited (CREATE TABLE x2, ADD
-      CONSTRAINT); production deploy follows the normal migration process.
+      Full history: projects/tarot-studio/HISTORY.md#t-003
     claimed_by: 2026-11-20T123835Z-tarot-studio-t-003-a7f2
     claimed_at: '2026-11-20T12:38:35Z'
     updated: '2026-11-20T17:22:14Z'

@@ -1220,6 +1220,13 @@ Scoped tablet navigation audit repair implemented on worker/interface-vision-t14
 Merged Kind Robots PR 3544 as e52b63312166375ec94309cf0afe12eca8cb233e after all 29 checks completed successfully on cf6dc18f038d1f55d36eb4242262f2e609711f20. Six geometry regression tests and six live tablet route/viewports passed; Tablet Navigation Audit run 38177070466 verified the approved adaptive menu widths. The fixture preserves bounds, anchoring, row density and genuine failure checks. No product UI or deployment changed. Conductor PR 5997 merged after all 23 checks passed, recording one quality retry and kaizen follow-up t-142 for failure screenshots. Broader responsive broken-art findings remain outside this focused audit repair.
 <!-- note:end t-141 -->
 
+## t-142 — Capture screenshots when the tablet navigation fixture fails
+
+<!-- note:begin t-142 -->
+Kaizen from interface-vision/t-141: save route/viewport failure screenshots and upload them from the focused Tablet Navigation Audit workflow. Keep unloaded pages, hidden menus and geometry regressions failing; screenshots provide evidence, not a substitute for measurements. Use explicit existing file paths in CI triggers.
+2026-11-21 PT reconciliation (reviewer session): already implemented on kind_robots main (a8a1e9c9). utils/scripts/auditTabletNavigation.mjs takes --screenshots DIR (default tablet-nav-screenshots) and saves a page.screenshot per failing route/viewport; .github/workflows/tablet-navigation-audit.yml uploads tablet-nav-screenshots/ with actions/upload-artifact if failure(), with explicit existing paths in its triggers. The measurements still fail the run; screenshots are evidence only. The shallow clone's graft hides the originating PR.
+<!-- note:end t-142 -->
+
 ## t-150 — Let logged-out visitors rate public games
 
 <!-- note:begin t-150 -->

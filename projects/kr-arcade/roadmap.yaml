@@ -2187,11 +2187,9 @@ tasks:
   - id: t-133
     milestone: m8
     title: "Gloom Invaders depth slice 2: Spring and Summer"
-    status: review
+    status: ready
     owner: worker
-    claimed_by: 20261122T000452Z-arcade-t133-c49e
-    claimed_at: '2026-11-22T00:04:52.692Z'
-    updated: '2026-11-22T00:14:00Z'
+    updated: '2026-11-22T04:16:01Z'
     passes: 0
     stakes: reversible
     depends_on: t-132
@@ -2199,6 +2197,13 @@ tasks:
       CABINETS.md section 23, Gloom Invaders (Space Invaders riff), slice 2 of 4: Spring and Summer. The upgrade is "A Year of Weather". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read the game's section first; this slice's scope is item 2 under its '#### Slices', and 'Rules for every slice' at the top applies. Code: kind_robots utils/arcade/games/ (registry slug gloom-invaders). Silas, 2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality improvements, they should not just be thin veneers of the old games. But newer, better, even more awesome."
 
       2026-11-21 PT: Spring/Summer calendar foundation under review: six authored months, three fronts each, playable calendar select, two season-start checkpoints, and deterministic regression assertions. The Spring and Summer bosses, special-front goal mechanics, courier powers and Seed Shed remain to do; do not close t-133 as complete when this first slice merges.
+
+      2026-11-21 PT: Kind Robots PR #5531 (Spring/Summer calendar foundation) merged after
+      reviewer fix 59e2c235 widened the verifier's Game type to GloomMode (vue-tsc TS2345 on
+      chooseMode('calendar')). Partial slice: returned to ready. Remaining: April Shower
+      Mother and Cumulonimbus Rex bosses, special-front objective effects, May wind sock/kite
+      courier power-ups, between-season Seed Shed, full half-year QA/pacing.
+    implementation_pr: 'silasfelinus/kind_robots#5531'
 
   - id: t-134
     milestone: m8
@@ -2716,10 +2721,10 @@ tasks:
     passes: 0
     stakes: reversible
     updated: '2026-11-21T23:47:00Z'
-    note: |-
-      Reviewer kaizen from kind_robots#5211 (2026-11-15 PT). Job 132764631321 ("Seats, menus, aim and saves through the actual cabinet in Chromium") failed at utils/scripts/verifyRescueRallyCabinet.browser.test.mjs:344 ("and not seat 1"). The PR did not touch Rescue Rally, and the same job passed on the PR's previous head and on its single re-run. Make the test wait on the real seat-assignment state rather than on timing; never skip or quarantine it. A timing-hardening PR, kind_robots#5217, was opened by the recovery reviewer. If it lands with a root-cause explanation, record it here and close this task.
+    note: >-
+      Reviewer kaizen from kind_robots#5211 (2026-11-15 PT).
 
-      Verified kind_robots PR #5217 merged on 2026-11-15. Root cause was a Rescue Rally keyboard-seat test baseline sampled before KeyD release; the fix samples the released-key state before asserting ArrowUp moves only seat 2. The timing-hardening PR is merged; close this resolved task.
+      Full history: projects/kr-arcade/HISTORY.md#t-165
 
   - id: t-166
     milestone: m11
@@ -2767,37 +2772,10 @@ tasks:
     stakes: reversible
     depends_on: [t-168]
     updated: '2026-11-22T03:55:00Z'
-    note: |-
-      Silas, 2026-11-15 PT: full parity with the whole roadmap may not be reasonable; finish the latest tasks and triage next steps that make publicly shared arcade links presentable. This milestone is that triage. The m8 depth pass (50 open slices) continues in the background and is not a gate for sharing.
+    note: >-
+      Silas, 2026-11-15 PT: full parity with the whole roadmap may not be reasonable; finish the latest tasks and triage next steps that make publicly shared arcade links presentable.
 
-      A browser contract over the showcase set: direct-load /play/arcade?game=<slug> with a fresh context (no session, no localStorage) at 390x844 and 768x1024. Assert the cabinet is reachable in one tap, touch controls are visible, sound starts only after the first tap, there is no auth wall or console error, and the Arcade hall back link works. Scoped slice of t-164's device audit; do not duplicate t-164's viewport matrix, extend it.
-
-      2026-11-15 PT: ready now that t-168 is done. Use the 11 cabinets with `shelf: 'showcase'` as the set.
-
-      2026-11-16 PT daily-delivery:2026-11-16/showcase-cold-open-probe | PR:
-      silasfelinus/kind_robots#5248 | Added utils/scripts/checkArcadeColdOpenLive.mjs: fresh-context
-      ?game= cold opens for the 11 showcase cabinets at 390x844 and 768x1024 (canvas, START, no
-      redirect/auth wall, no console/page errors, no horizontal scroll). Production 2026-11-16: 22/22
-      clean. Remaining: tap-to-start sound assertion, touch-control visibility and hall back-link
-      check in a fixture-backed CI contract.
-
-      2026-11-17 PT daily-delivery:2026-11-17/play-hub-redirect | PR: silasfelinus/kind_robots#5279
-      | kindrobots.org/play and /games (the URLs a visitor types for the games hub) answered HTTP
-      200 with 'No Nuxt Content page was found for /play'; both now 302 to /play/arcade via
-      FRONT_DOOR_ALIASES, pinned by verifyFrontDoorRoutes.test.ts. Remaining t-169 work unchanged
-      (tap-to-start sound, touch controls, hall back-link contract).
-
-      2026-11-18 PT daily-delivery:2026-11-18/daily-cold-open-probe | PR:
-      silasfelinus/kind_robots#5309 | Live checkArcadeColdOpenLive.mjs from this session:
-      22/22 showcase cold opens clean on kindrobots.org (11 cabinets x 390x844 and 768x1024,
-      fresh context). arcade-share-live-check.yml gains a cold-open job running it daily, so a
-      login wall, page error, missing canvas or lost hall link on a shared cabinet link turns
-      the scheduled run red. Remaining t-169 work unchanged (tap-to-start sound, touch-control
-      and hall back-link fixture contract).
-
-      Built a 22-case guest cabinet cold-open browser suite with pre-gesture audio instrumentation, START, mobile controls and exit checks; expanded the daily production probe to verify those flows and Arcade hall return; wired PR screenshots into the viewport workflow. CI and live deployment still to verify.
-
-      Merged kind_robots#5546 at d4154bde9b7046ab34aa448db59ceaab1f184e3d after all 15 head checks passed, including Chromium cabinet flows, TypeScript, layout, viewport and contract shards.
+      Full history: projects/kr-arcade/HISTORY.md#t-169
   - id: t-170
     milestone: m11
     title: "Share my score: the game-over screen offers a one-tap share with the score and the cabinet link"
@@ -2838,3 +2816,14 @@ tasks:
       Silas, 2026-11-15 PT: full parity with the whole roadmap may not be reasonable; finish the latest tasks and triage next steps that make publicly shared arcade links presentable. This milestone is that triage. The m8 depth pass (50 open slices) continues in the background and is not a gate for sharing.
 
       The only human gate in m11. Paste three showcase links into Messages or Discord, confirm the cards look right, tap one, play thirty seconds. Then the arcade is ready to share publicly. Agents do not post or announce anywhere.
+  - id: t-173
+    milestone: m8
+    title: "Gloom Invaders verifier imports the game's exported types instead of a hand-copied Game shape"
+    status: ready
+    passes: 0
+    stakes: reversible
+    depends_on: []
+    source: reviewer-kaizen-2026-11-21
+    updated: '2026-11-22T04:20:00Z'
+    note: |-
+      Reviewer kaizen from kind_robots #5531 (kr-arcade/t-133), 2026-11-21 PT: the PR added GloomMode 'calendar' in utils/arcade/games/gloomInvaders.ts, but utils/scripts/verifyCabinetGloomInvadersWeather.test.ts keeps its own hand-written `type Game` with literal mode unions, so vue-tsc went red (TS2345) and the PR sat 3.5h. Export the game class/instance type (or a narrow test-facing interface) from gloomInvaders.ts and derive the verifier's Game type from it, so future mode/field additions cannot drift. Acceptance: no literal mode union remains in the verifier; npm run test (vue-tsc) and the verifier pass.

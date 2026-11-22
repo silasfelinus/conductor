@@ -203,3 +203,83 @@ Live today: 0 Achievement record(s) with this game's triggerCode prefix (checked
 
 Achievement upgrade merged in kind_robots#5039 (940bc59), all checks green: 18 live achievements, endings awarded in recordIdentity; load/import never award. Title-menu entry left for the standard task. Catalog seed succeeded.
 <!-- note:end t-035 -->
+
+## t-036 — Write accepted ArtJob IDs back into the Prom art ledger right after auto-submit so requests and renders are never conflated
+
+<!-- note:begin t-036 -->
+Kaizen from t-007 review of Conductor PR #7678 (AUTHORED-RECRUITS-PORTRAITS-2026-11-20.yaml). Several t-007 notes record merged request ledgers whose ArtJob IDs never appeared. Make the sweep/auto-submit path checkpoint each accepted ArtJob ID into the subject entry, and add a check that flags auto_submit ledgers older than a day with no recorded IDs.
+
+Added immediate durable receipt checkpoint after art ledger submission, stale no-receipt audit, and regression tests; implementation PR pending checks.
+
+Reviewer 2026-11-20: merged Conductor PR #7681 after fixing a workflow YAML plain-scalar colon (56d8e7e) and the PR handoff headings. Kaizen follow-up: t-037.
+<!-- note:end t-036 -->
+
+## t-037 — Surface the count of auto-submit art ledgers overdue for ArtJob receipts on the art health surface, not just in Actions logs
+
+<!-- note:begin t-037 -->
+Kaizen from t-036 review (Conductor PR #7681). scripts/check_auto_art_receipts.py currently only prints OVERDUE lines in the auto-art-generate run log. Feed its count into the existing art-queue health report or session sweep line so a missing-receipt ledger is visible without opening Actions.
+
+Added auto_art_receipts to the startup sweep and regression coverage; PR pending CI.
+
+Reviewer 2026-11-20 PT: merged Conductor PR #7683 (9d2248b) after updating the branch
+past main-side test drift and repairing the handoff headings. Kaizen follow-up: t-038
+(single-parse ledger scan; checker ~78s vs 90s sweep timeout without libyaml).
+<!-- note:end t-037 -->
+
+## t-038 — Make check_auto_art_receipts.py parse each art ledger once so its session-sweep row stays well under the 90s timeout
+
+<!-- note:begin t-038 -->
+Kaizen from t-037 review (Conductor PR #7683). In a sandbox without libyaml the checker took ~78s: sweep_art_ledgers.find_ledgers() pure-Python-parses ~240 YAML files (~60s), then missing_receipts() re-parses every match (~15s). The session sweep's per-check timeout is 90s, so the new auto_art_receipts row can flip to TIMEOUT under load. Reuse the parsed data (e.g. have find_ledgers optionally return (path, data) pairs, or prefer yaml.CSafeLoader when available) and add a test that each ledger is loaded once.
+
+Receipt audit now reuses discovery-parsed YAML, with regression coverage for one parse per opted-in ledger and backward-compatible path-only discovery. Merged as Conductor PR #7686 (reviewer repaired handoff headings). Reviewer timing in a libyaml-less sandbox: 85s on main vs 88s on the branch, so the second parse was not the bottleneck; discovery parsing of ~27 MB of art YAML was. Follow-up t-039 adds a text gate before the parse.
+<!-- note:end t-038 -->
+
+## t-039 — Skip the YAML parse for art files that never say auto_submit true so the receipt checker runs far under the sweep timeout
+
+<!-- note:begin t-039 -->
+Kaizen from t-038 review (PR #7686 did not move the measured runtime). sweep_art_ledgers.find_ledgers() now runs a loose, case-insensitive OPT_IN_HINT regex (quoted key, true/yes/on, comments count) before yaml.safe_load, so ~half of the 401 art YAML files (~13 MB) are never parsed. check_auto_art_receipts.py: ~85s to ~21s locally without libyaml. A one-time full-parse comparison found the same 240-ish opted-in ledgers with and without the gate; a unit test pins the skip and the YAML 1.1 "yes" case.
+<!-- note:end t-039 -->
+
+## t-040 — Load art ledgers with yaml.CSafeLoader when libyaml is available, keeping the pure-Python fallback and the parse-once tests
+
+<!-- note:begin t-040 -->
+Kaizen from t-039. GitHub runners usually ship libyaml, sandboxes do not. Route find_ledgers and the receipt checker through one loader helper so tests can still count parses.
+
+Implemented accelerated safe YAML ledger loading with fallback, shared receipt audit loader, and regression tests; branch worker/comet-city-academy-t-040-p8f4.
+
+Reviewed and merged by the reviewer role: load_ledger_yaml() picks yaml.CSafeLoader when present and yaml.SafeLoader otherwise; every ledger parse in sweep_art_ledgers and check_auto_art_receipts goes through it, and the parse-once test now counts calls to the helper. 9 tests pass locally (libyaml absent, fallback path). Kaizen t-041 pins loader equivalence on real ledgers.
+<!-- note:end t-040 -->
+
+## t-041 — Add a test that CSafeLoader and SafeLoader produce identical data for every opted-in art ledger when libyaml is installed
+
+<!-- note:begin t-041 -->
+Kaizen from t-040 review. CI runners use the C loader and sandboxes use the Python one, so a parser difference would pass locally and change behavior in Actions. Skip the test when yaml.CSafeLoader is missing; otherwise compare both parses of each find_ledgers() path.
+
+Reviewed and merged by the reviewer role (branch worker/comet-city-academy-t-041-loader-parity-p9f2): test_all_opted_in_art_ledgers_have_identical_safe_loader_data skips without libyaml and otherwise compares CSafeLoader and SafeLoader parses of every find_ledgers() path. Locally 9 pass, 1 skip. Cost note: the pure-Python parse of the 240 opted-in ledgers takes ~32s, so the test adds roughly that to CI. Kaizen t-042 measures it.
+<!-- note:end t-041 -->
+
+## t-042 — Measure the loader-parity test's CI runtime and move it to a scheduled lane if it adds more than 15 seconds to pytest
+
+<!-- note:begin t-042 -->
+Kaizen from t-041 review. SafeLoader takes ~32s locally on the 240 opted-in ledgers, and CI pays that on every PR. Read the pytest --durations output from a ci.yml run. If the test costs more than 15s, mark it slow and run it from a daily workflow, or compare only ledgers changed since the last run. Report the before and after numbers.
+
+Scoped CI increment: move the full 240-ledger C/Python YAML parity test from every PR to a daily and manually dispatchable Art Loader Parity workflow; retain all fast art-ledger tests on every PR and add a scheduling regression. Worker PR baseline: 4859 passed, 8 skipped in 219.02s on 2026-11-20; local slow test reported about 32s, exact individual CI duration not emitted by old command. New --durations flag will expose after-run timings. Staged in conductor fc0997c.
+
+Reviewed and merged by the reviewer role (2026-11-20 PT, #7695, squash e48d115). The
+full C/Python SafeLoader parity test is now marked art_parity. PR CI runs 'not
+art_parity', and the new 'Daily art ledger loader parity' workflow runs it daily at
+15:17 UTC and on manual dispatch. A scheduling regression test stops it from quietly
+returning to every PR. PR CI was green on fc0997c. Superseded #7688 (duplicate of the
+t-040 work already merged in #7689) closed. Kaizen t-043 records the measured
+before/after suite time.
+<!-- note:end t-042 -->
+
+## t-044 — Replace verifyCapesStyleCheck's literal call-shape regexes for atlas art with a behaviour check that 48 hero and 47 villain identities resolve to shipped art
+
+<!-- note:begin t-044 -->
+Kaizen from kind_robots#5505 (rescue of #5496): the test asserted `promArt(identityArtKey` in the atlas source, so a correct refactor to `identityArtwork` turned CI red for 3.6h. Assert resolved behaviour instead of source text.
+
+Replaced brittle atlas art call-shape assertions with runtime shipped and canon-safe resolution counts (48/47 physical and 47/46 accepted). Added credentialed private ArtImage media probe, synthetic tests and dedicated push/manual workflow on Conductor. Probe fetches and decodes real source media without persisting or publishing private image bytes. This is a review handoff; live proof awaits workflow execution and visual art QA remains separate.
+
+Delivered and merged kind_robots PR #5527 (behavioral source-backed atlas art tests) and conductor PR #7782 (authenticated private ArtImage byte proof). All latest-head PR checks green before merges. Production workflow 44965615427 succeeded and decoded 12/12 Every Villain Tactics telegraphs plus 191/191 Prom candidate images with no failed downloads. This proves media access, not curator approval or runtime attachment. Review and agent QA of compositions remain in separate art tasks.
+<!-- note:end t-044 -->

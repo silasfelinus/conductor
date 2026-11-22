@@ -1136,3 +1136,11 @@ Reviewer kaizen from conductor #7771 (2026-11-21 PT): pin a small manifest+ledge
 <!-- note:begin t-073 -->
 Silas 2026-11-21 PT, in session: sound and music were never mentioned but are needed for playtest. Merged kind_robots#5530 (e00f3d1): file-free WebAudio score (room styles x Act I-V, hideout and ending moods, crossfades), wind bed, 18 effects (brass, dispatch, results, injury, death, recruit, dawn bell, betrayal sting, achievement, save/rewind), master/music/effects volume + mute in Settings, backward-compatible prefs. verifyEmperorAudio in Emperor CI; browser smoke 2026-11-22: silent until first gesture, then one running AudioContext and 65 scheduled voices across rooms, no page errors; Sound panel checked at 390px. Mix levels not yet judged by ear (human playtest).
 <!-- note:end t-073 -->
+
+## t-075 — Light ruler creator: name, style of address (Emperor/Empress/Sovereign), starting temperament
+
+<!-- note:begin t-075 -->
+Design call 2026-11-22 PT under notes_from_silas delegation (closes the t-067 / STANDARD-AUDIT item B question): build a light creator, no portrait (art shows the ruler only as a gloved forearm). Optional name, style of address shown in high-visibility UI (authored prose keeps Your Majesty), and a small balanced Day 1 temperament nudge; defaults reproduce today's start; old saves load as defaults. Implementation on kind_robots worker/emperor-of-dust-t-075-ruler-creator.
+2026-11-22 PT: kind_robots#5545 open, all exact-head checks green.
+2026-11-22 PT: merged kind_robots#5545 (56f46be) after all exact-head checks passed. Creator on the first intro screen of an untouched reign: optional sanitized name, Emperor/Empress/Sovereign shown in header, splash, ending heading and scrapbook, and a Day 1 temperament nudge (Merciful, Iron, Cunning; None = today's start byte-for-byte). Old saves load as the nameless Emperor; rewind keeps identity without re-nudging. 14 policies x 2 seeds x 3 temperaments: at most 1/28 ending change. Checked at 390/768/1440.
+<!-- note:end t-075 -->
