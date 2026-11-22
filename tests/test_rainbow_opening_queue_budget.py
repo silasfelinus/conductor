@@ -48,3 +48,42 @@ def test_missing_or_invalid_lane_fps_is_rejected():
 
 def test_legacy_opening_is_unaffected():
     opening.validate_opening_queue_budget({"round": "original-opening"})
+
+
+def test_wan_shot_budgets_report_exact_headroom():
+    data = {
+        "round": opening.DOODLE_ROUND,
+        "lanes": [{"key": "wan-mp4", "fps": 16}],
+        "subjects": [
+            {"key": "a", "lane": "wan-mp4", "duration": 3},
+            {"key": "still", "lane": "flux-still"},
+            {"key": "b", "lane": "wan-mp4", "duration": 7.5},
+        ],
+    }
+    assert opening.wan_shot_budgets(data) == [
+        {"key": "a", "seconds": 3, "fps": 16, "frames": 48,
+         "seconds_headroom": 5, "frame_headroom": 80},
+        {"key": "b", "seconds": 7.5, "fps": 16, "frames": 120,
+         "seconds_headroom": 0.5, "frame_headroom": 8},
+    ]
+
+
+def test_tiny_overage_is_still_rejected():
+    with pytest.raises(ValueError, match="exceeds opening clip budget"):
+        opening.validate_opening_queue_budget(ledger(8.0001, 16))
+
+
+def test_actual_ledger_budgets_have_nonnegative_headroom():
+    budgets = opening.wan_shot_budgets(yaml.safe_load(opening.LEDGER.read_text()))
+    assert budgets and all(b["frame_headroom"] >= 0 and b["seconds_headroom"] >= 0 for b in budgets)
+    assert budgets[0] == {"key": budgets[0]["key"], "seconds": 3, "fps": 16, "frames": 48,
+                          "seconds_headroom": 5, "frame_headroom": 80}
+
+
+def test_delivery_report_carries_budgets():
+    sources = [("a", 4, 1, 2)]
+    budgets = [{"key": "a", "seconds": 3, "fps": 16, "frames": 48,
+                "seconds_headroom": 5, "frame_headroom": 80}]
+    report = opening.delivery_report(sources, [], ["a"], budgets)
+    assert report["wan_shot_budgets"] == budgets
+    assert opening.delivery_report(sources, [], [])["wan_shot_budgets"] == []
