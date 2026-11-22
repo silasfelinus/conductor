@@ -1518,11 +1518,8 @@ tasks:
   - id: t-090
     milestone: m8
     title: "Glitch Garden depth slice 3: Autumn and Winter"
-    status: review
-    owner: worker
-    claimed_by: 20261122T061917Z-kr-arcade-t090-ae72
-    claimed_at: '2026-11-22T06:19:17.701Z'
-    updated: '2026-11-22T06:23:00Z'
+    status: ready
+    updated: '2026-11-22T08:42:00Z'
     passes: 0
     stakes: reversible
     depends_on: t-089
@@ -1530,6 +1527,8 @@ tasks:
       CABINETS.md section 13, Glitch Garden (Centipede riff), slice 3 of 5: Autumn and Winter. The upgrade is "The Four Seasons of the Glitch". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read the game's section first; this slice's scope is item 3 under its '#### Slices', and 'Rules for every slice' at the top applies. Code: kind_robots utils/arcade/games/ (registry slug glitch-garden). Silas, 2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality improvements, they should not just be thin veneers of the old games. But newer, better, even more awesome."
 
       Partial Autumn/Winter depth slice: authored Leaf Pile Lane with five increasingly difficult fronts, moving wind-blown leaf shields that soak shots, the Rake Up special objective with golden trowel, a distinctive autumn palette, refreshed progression/save tests, and seeded deterministic leaf-capture/regression tests. Implementation on worker/kr-arcade-t-090-20261122T061917Z-ae72. Remaining t-090: Pumpkin Patch, new Autumn/Winter foes and bosses, both winter gardens, full eight-garden pacing, visual QA. After this partial PR merges, return t-090 to ready rather than done.
+
+      Leaf Pile Lane merged as a partial Autumn increment; remaining Pumpkin Patch, new foes and bosses, Winter gardens, campaign QA.
 
   - id: t-091
     milestone: m8
@@ -2187,11 +2186,8 @@ tasks:
   - id: t-133
     milestone: m8
     title: "Gloom Invaders depth slice 2: Spring and Summer"
-    status: review
-    owner: worker
-    claimed_by: 2026-11-22T060900Z-kr-arcade-t133-a47c
-    claimed_at: '2026-11-22T06:08:23Z'
-    updated: '2026-11-22T06:14:00Z'
+    status: ready
+    updated: '2026-11-22T08:42:00Z'
     passes: 0
     stakes: reversible
     depends_on: t-132
@@ -2207,7 +2203,8 @@ tasks:
       courier power-ups, between-season Seed Shed, full half-year QA/pacing.
 
       Partial Spring/Summer slice: implemented the Paper Plane courier in Calendar mode with five collectible power-ups, extra-beam and prism firing, umbrella repair, slowed rain, solar flare, HUD feedback, and a deterministic cabinet verifier. Branch worker/kr-arcade-t-133-20261122T060900Z-a47c. Remaining t-133 scope includes both bosses, special-front objective effects, Wind Sock, Seed Shed, and campaign QA; task must return to ready after this PR merges, not be marked done.
-    implementation_pr: 'silasfelinus/kind_robots#5531'
+
+      Paper Plane courier and five buffs merged as partial Spring/Summer increment; remaining April Shower Mother and Cumulonimbus Rex, special-front mechanics, Wind Sock, Seed Shed and campaign QA.
 
   - id: t-134
     milestone: m8
