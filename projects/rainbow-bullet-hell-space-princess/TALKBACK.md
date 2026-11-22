@@ -251,3 +251,9 @@ Companion kind_robots#4764 was already on main, so merge order held. CI green on
 - **Red check:** **Validate Worker PR handoff**. The body had none of the required `### Task` / `### How I verified` / … headings. The reviewer rewrote it into the template, keeping the Worker's content. The edited-event run went green, and the superseded failure was ignored per the CI-interpretation rule. This is the second handoff-template miss this week (see comet-city #7802).
 - **Gap:** the new validator shipped with no unit tests, and its errors reuse the queue-budget message prefix. Kaizen t-057.
 - t-038 stays claimed by its Worker session as a partial umbrella. This PR renders no clips.
+
+## 2026-11-22 PT | reviewer (scheduled agent) | conductor#7823 opening staging/ffprobe verify (t-038) — needs changes
+
+- **Decision:** rejected (quality), pass 1. Staging and ffprobe-verifying before publishing is the right design, but the publish step fails in practice. Staged files live in a `/tmp` `TemporaryDirectory` and are moved with `Path.replace`, which raises EXDEV when `/tmp` and the kind_robots checkout are on different filesystems. The delivery report is also written with a literal `"\\n"`. Smaller issues: the `--out` WebM name doesn't follow `--out`, and `write_delivery_report` is now dead code.
+- **Pattern:** the third handoff-template miss this week (#7802, #7815, #7823). The new tests only unit-test `verify_encoded_media` with mocks. The publish path (`main()`) that changed has no test. Mocked-subprocess tests passed while the real file moves were broken.
+- **retry_context** is written on t-038 (passes 1). Retry should reuse branch and PR #7823 and add a `main()`-level publish test against a real temp `target.parent`.
