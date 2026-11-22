@@ -253,8 +253,14 @@ def main(argv=None):
     args = parser.parse_args(argv)
 
     subjects = []
+    protected_projects = {"comet-city-academy", "every-villain-tactics"}
     for ledger in args.ledgers:
-        subjects += yaml.safe_load(Path(ledger).read_text()).get("subjects") or []
+        data = yaml.safe_load(Path(ledger).read_text()) or {}
+        subjects += data.get("subjects") or []
+        # A DONE receipt is not a visual approval. Never export Prom/Tactics
+        # candidates into gameplay before a curator has explicitly kept them.
+        if data.get("project_slug") in protected_projects:
+            args.require_keep = True
     if args.audit:
         print(json.dumps(
             audit(subjects, args.kind_robots, args.prefix, args.only,
