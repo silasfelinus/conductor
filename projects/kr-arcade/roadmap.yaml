@@ -1844,17 +1844,16 @@ tasks:
   - id: t-110
     milestone: m8
     title: "Repair Rampage depth slice 1: A city with something in it"
-    status: review
-    owner: worker
-    claimed_by: 2026-11-22T145200Z-kr-arcade-t-110-c7d9
-    claimed_at: '2026-11-22T14:52:00Z'
-    updated: '2026-11-22T14:57:00Z'
+    status: ready
+    updated: '2026-11-22T16:01:00Z'
     passes: 0
     stakes: reversible
     note: |-
       CABINETS.md section 18, Repair Rampage (Rampage riff), slice 1 of 4: A city with something in it. The upgrade is "The Big Fix Tour". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read the game's section first; this slice's scope is item 1 under its '#### Slices', and 'Rules for every slice' at the top applies. Code: kind_robots utils/arcade/games/ (registry slug repair-rampage). Silas, 2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality improvements, they should not just be thin veneers of the old games. But newer, better, even more awesome."
 
       Partial slice 1 implementation: 25 authored towns in five regions and skyline parameters wired to game; remaining window, threat, chain and power-up systems still required.
+
+      PR silasfelinus/kind_robots#5582 merged as e6e9b366da1fc3cca75fe2b491c9414a1c996afc; 25 authored towns, regions, weather, skyline parameters and validation landed. All 14 applicable latest-head checks succeeded (Prettier autofix skipped). Partial scope only: window interactions, fix chains, rooftops, power-ups, threats, reserve robots, music and gameplay verification remain. Return to ready for the next implementation slice.
 
   - id: t-111
     milestone: m8
