@@ -9,6 +9,8 @@ on:
     paths:
       - ".github/workflows/prom-tactics-media-proof.yml"
       - "scripts/verify_prom_tactics_media.py"
+      - "scripts/verify_tactics_runtime_media.py"
+      - "tests/test_tactics_runtime_media.py"
       - "tests/test_prom_tactics_media_verification.py"
       - "projects/every-villain-tactics/art/ONE-HIT-CREW-TELEGRAPHS-2026-11-20.yaml"
       - "projects/comet-city-academy/art/UNSTABLE-PRODUCTION-FAMILY-ROUND-1.yaml"
@@ -44,7 +46,7 @@ jobs:
       - name: Install media verification dependencies
         run: pip install pyyaml pillow pytest
       - name: Unit-test safe receipt and image verification
-        run: python -m pytest -q tests/test_prom_tactics_media_verification.py
+        run: python -m pytest -q tests/test_prom_tactics_media_verification.py tests/test_tactics_runtime_media.py
       - name: Verify production API credential is configured
         run: |
           if [ -z "$KR_API_TOKEN" ]; then
@@ -54,6 +56,11 @@ jobs:
       - name: Verify twelve Tactics telegraph image downloads
         run: |
           python scripts/verify_prom_tactics_media.py \
+            projects/every-villain-tactics/art/ONE-HIT-CREW-TELEGRAPHS-2026-11-20.yaml \
+            --require-count 12
+      - name: Verify Tactics game-media URL and private access policy
+        run: |
+          python scripts/verify_tactics_runtime_media.py \
             projects/every-villain-tactics/art/ONE-HIT-CREW-TELEGRAPHS-2026-11-20.yaml \
             --require-count 12
       - name: Verify Prom candidate image downloads
