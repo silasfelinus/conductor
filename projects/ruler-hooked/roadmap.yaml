@@ -855,7 +855,7 @@ tasks:
 - id: t-045
   milestone: m4
   title: Deepen kingdom quest arcs and connect decisions to fishing spots and species
-  status: claimed
+  status: review
   owner: worker
   claimed_by: 20261122T231925Z-ruler-hooked-t045-x7p4
   claimed_at: '2026-11-22T23:19:25.489Z'
@@ -863,14 +863,11 @@ tasks:
   passes: 0
   depends_on:
     - t-044
-  note: >-
-    Silas, 2026-10-23 PT: match Emperor of Dust's depth of kingdom incidents,
-    dilemma writing, faction tradeoffs, long-running consequences and NPC
-    follow-ups. Repeated choices must meaningfully transform the illustrated
-    world map, alter which fishing spots unlock or close and change the fish
-    available at each location. Keep the offline deterministic story engine and
-    add adversarial playtests for distinct player philosophies and replay paths.
-  updated: '2026-11-22T23:19:25.489Z'
+  note: |-
+    Silas, 2026-10-23 PT: match Emperor of Dust's depth of kingdom incidents, dilemma writing, faction tradeoffs, long-running consequences and NPC follow-ups. Repeated choices must meaningfully transform the illustrated world map, alter which fishing spots unlock or close and change the fish available at each location. Keep the offline deterministic story engine and add adversarial playtests for distinct player philosophies and replay paths.
+
+    First substantial branch: five canon-linked delayed petitions (weir, moat, border, marina, royal wedding) with ten distinct policy outcomes, map and fish ecology changes, authored art prompts, and legal-quest regression witnesses. kind_robots worker/ruler-hooked-t-045-20261122-x7p4; follow-up art queue and CI in progress. The broader story-depth task is not fully complete.
+  updated: '2026-11-22T23:22:17.383Z'
 
 - id: t-046
   milestone: m6
@@ -912,21 +909,17 @@ tasks:
 - id: t-048
   milestone: m6
   title: Fishing first-catch fairness, input edge cases and shop/economy adversarial suite
-  status: ready
-  owner: null
+  status: review
+  owner: worker
+  claimed_by: 20261122T232356Z-ruler-hooked-t048-p4v8
+  claimed_at: '2026-11-22T23:23:56.326Z'
   stakes: reversible
   passes: 0
-  note: >-
-    Master completion issue kind_robots#4144. Model the two moving-target
-    timing stops and tap/release reeling against newbie, careless, expert,
-    rapid spam, unlucky, assistive, latency, slow-device, shop-gear and
-    economy exploit personas. Verify common fish can reliably be caught by
-    a first-timer following visible cues; tune uncommon/rare difficulties
-    without untelegraphed failure. Test tension, slack, timed clicks, reel
-    pacing, species/gear modifiers, reward/saves, invalid state transitions
-    and input parity. Publish reproducible seeds and repair with regression
-    tests; run a fresh adversarial challenge after fixes.
-  updated: '2026-10-25T00:54:00Z'
+  note: |-
+    Master completion issue kind_robots#4144. Model the two moving-target timing stops and tap/release reeling against newbie, careless, expert, rapid spam, unlucky, assistive, latency, slow-device, shop-gear and economy exploit personas. Verify common fish can reliably be caught by a first-timer following visible cues; tune uncommon/rare difficulties without untelegraphed failure. Test tension, slack, timed clicks, reel pacing, species/gear modifiers, reward/saves, invalid state transitions and input parity. Publish reproducible seeds and repair with regression tests; run a fresh adversarial challenge after fixes.
+
+    Repaired a real simplified-fishing exploit: simultaneous max tension and catch progress now snaps the line instead of awarding a fish. Added deterministic adversarial coverage for 24 first-time seeds, 100 rapid slack inputs, invalid cast/hook positions, and terminal input idempotence. kind_robots commit 12d8fb1 on worker/ruler-hooked-t-048-20261122-p4v8; CI and broader economy matrix still pending.
+  updated: '2026-11-22T23:24:41.699Z'
 - id: t-049
   milestone: m6
   title: Full policy-matrix kingdom simulator and witnessed complete ending graph
