@@ -1119,20 +1119,19 @@ tasks:
   - id: t-056
     milestone: m6
     title: "Add a per-stage art audit that lists each Gen-2 stage's authored guardian/pickup/hazard asset paths with their completed ArtImage ids, flagging any still missing"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 20261122T1154Z-rainbow-t056-a7k9
     claimed_at: '2026-11-22T11:54:15Z'
-    updated: '2026-11-22T11:54:15Z'
+    updated: '2026-11-22T11:56:00Z'
     depends_on: []
     passes: 0
     stakes: reversible
     source: kaizen-pr-7810
-    note: >-
-      Reviewer kaizen from the 2026-11-22 PT merge of conductor#7810 (t-028 X2 art intake,
-      Worker suggestion). Scope: read projects/rainbow-bullet-hell-space-princess/art/GEN2-*.yaml
-      plus the art ledger and print, per stage (X1..X4), each subject asset path and its
-      ArtImage id or MISSING; exit non-zero only with --strict. Pure local read, no API calls.
+    note: |-
+      Reviewer kaizen from the 2026-11-22 PT merge of conductor#7810 (t-028 X2 art intake, Worker suggestion). Scope: read projects/rainbow-bullet-hell-space-princess/art/GEN2-*.yaml plus the art ledger and print, per stage (X1..X4), each subject asset path and its ArtImage id or MISSING; exit non-zero only with --strict. Pure local read, no API calls.
+
+      Added read-only X1-X4 guardian/pickup/hazard ArtImage audit and five local passing tests on worker/rainbow-bullet-hell-space-princess-t056-stage-art-audit-20261122; app code and asset state unchanged. Await CI and merge.
   - id: t-057
     milestone: m4
     title: "Unit-test validate_shot_coverage in export_rainbow_opening.py and give coverage failures their own error prefix"
