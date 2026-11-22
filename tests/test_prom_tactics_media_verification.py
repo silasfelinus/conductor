@@ -135,7 +135,7 @@ def test_workflow_probes_private_bytes_without_publishing():
     commands = "\n".join(step.get("run", "") for step in job["steps"])
     assert "verify_prom_tactics_media.py" in commands
     assert "--require-count 12" in commands
-    assert "--require-count 20" in commands
+    assert "--require-count 25" in commands
     assert "--require-count 172" in commands
     assert "CANON-OUTCOME-CORRECTIONS-2026-11-22.yaml" in commands
     assert "upload-artifact" not in str(flow)
