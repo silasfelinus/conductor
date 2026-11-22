@@ -1,4 +1,4 @@
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 
 import scripts.run_worker as run_worker
 
@@ -190,3 +190,37 @@ def test_find_ready_task_unaffected_by_unknown_delegate_id():
 
     assert result is not None
     assert result["task_id"] == "t-017"
+
+
+def test_worker_queue_reclaims_expired_claim_without_waiting_for_sweeper():
+    now = datetime(2026, 11, 21, 23, 56, tzinfo=timezone.utc)
+    stale = (now - timedelta(minutes=91)).isoformat()
+    roadmaps = [
+        roadmap(
+            "kr-arcade",
+            [
+                {
+                    "id": "t-076",
+                    "title": "Ribbon Riders",
+                    "status": "claimed",
+                    "claimed_by": "expired-session",
+                    "claimed_at": stale,
+                }
+            ],
+        )
+    ]
+    selected = run_worker.find_ready_task(["kr-arcade"], roadmaps, now=now)
+    assert selected is not None
+    assert selected["task_id"] == "t-076"
+
+
+def test_worker_queue_does_not_steal_live_claim():
+    now = datetime(2026, 11, 21, 23, 56, tzinfo=timezone.utc)
+    fresh = (now - timedelta(minutes=89)).isoformat()
+    roadmaps = [
+        roadmap(
+            "kr-arcade",
+            [{"id": "t-076", "status": "claimed", "claimed_at": fresh}],
+        )
+    ]
+    assert run_worker.find_ready_task(["kr-arcade"], roadmaps, now=now) is None
