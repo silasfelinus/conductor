@@ -99,14 +99,15 @@ tasks:
       Full history: projects/comet-city-academy/HISTORY.md#t-001
   - id: t-034
     title: 'Main-game standard: audit and close the gaps for Prom of Doom'
-    status: ready
-    claimed_by: ''
+    status: review
+    claimed_by: 2026-11-22T063500Z-comet-t034-scrapbook-v7k2
+    claimed_at: '2026-11-22T06:35:00Z'
     owner: worker
     milestone: m4
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-22T04:50:10Z'
+    updated: '2026-11-22T06:47:00Z'
     note: |-
       Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -140,6 +141,8 @@ tasks:
 
       2026-11-21 PT reviewer: merged conductor#7802 (squash b66fa9c): Prom/Tactics ledgers now
       force --require-keep on export. Partial; umbrella back to ready.
+
+      Partial main-game standard increment: a new separate versioned term archive records one permanent page per completed finale, including canonical identity, role, climax choice, mastermind, romance, contacts, patrols, battles, losses and clues. Visible from both title Yearbook and live Scrapbook, image-first, without touching existing save keys or wiping the archive on New Game. Adversarial persistence/reload/import/seed-divergence tests added to Academy CI. Implementation in kind_robots worker/comet-city-academy-t-034-term-archive-0635-v7k2; awaiting PR checks and merge. Broader main-game-standard scope is incomplete.
     implementation_pr: 'silasfelinus/conductor#7793'
   - id: t-035
     title: 'Prom of Doom achievement upgrade: 12 or more live achievements'
@@ -255,15 +258,19 @@ tasks:
     implementation_pr: 'silasfelinus/conductor#7695'
   - id: t-043
     title: "Record the before/after Python test-suite time from the first post-#7695 CI run and the first daily parity run in a short note"
-    status: ready
+    status: review
+    claimed_by: 2026-11-22T065000Z-comet-t043-ci-parity-z3q7
+    claimed_at: '2026-11-22T06:50:00Z'
     owner: worker
-    updated: '2026-11-20T22:50:00Z'
+    updated: '2026-11-22T06:55:00Z'
     milestone: m3
     stakes: reversible
     passes: 0
     depends_on: [t-042]
     note: |-
       Kaizen from t-042 review (#7695). Before the split, Worker PR CI took 219.02s for 4,859 tests (run 44810467441). Read the --durations output from the first completed post-merge PR CI run and from the first 'Daily art ledger loader parity' run. Write the measured delta in this note, and confirm the daily job really runs the parity test rather than skipping it when CSafeLoader is missing. If it skipped, fix the workflow so the comparison runs.
+
+      CI measurement against real completed GitHub Actions logs: before #7695, Worker PR CI 44810467441 completed 4,859 passed, 8 skipped in 219.02 seconds; first post-merge PR CI 44831965912 completed 4,859 passed, 8 skipped, 1 art_parity deselected in 279.10 seconds, 60.08 seconds slower (+27.4%), so no speedup is established. First completed scheduled daily parity run 44948778718 executed actual SafeLoader-vs-CSafeLoader comparison (1 passed, 7 deselected in 19.03s; 18.95s test call). New PR guards missing CSafeLoader as hard failure, not a misleading green skip. Detailed evidence in projects/comet-city-academy/docs/CI-LEDGER-PARITY-TIMINGS-2026-11-22.md on worker/comet-city-academy-t-043-ci-parity-z3q7; awaiting checks.
   - id: t-044
     title: "Replace verifyCapesStyleCheck's literal call-shape regexes for atlas art with a behaviour check that 48 hero and 47 villain identities resolve to shipped art"
     status: done
@@ -288,13 +295,10 @@ tasks:
     stakes: reversible
     passes: 0
     depends_on: []
-    note: |-
-      Kaizen from conductor#7793 review (t-034 Asha repaint). Asha's shipped hero and villain outcome art lost her four arms and was only caught by manual source-byte QA. Extract the defining physical traits per identity (castLooks.ts / identityArcs.json) into a small canon table and add one test that walks every comet-city-academy art ledger subject and asserts its prompt mentions each trait for the named identity. Generalizes the one-off test_prom_asha_four_arm_repaint.py checks.
+    note: >-
+      Kaizen from conductor#7793 review (t-034 Asha repaint).
 
-      Implemented 48-identity castLooks anatomy/silhouette rule table and wired it into scripts/enqueue_art_requests.py contract_rules, so new Prom art cells lacking natural limbs, age, species morphology or signature silhouette are rejected before Krea ArtJob POST. Added comprehensive tests over every Prom ledger, preserving historic accepted ArtJob IDs even when legacy prompts predate the newer canon. PR pending CI; no production jobs submitted or existing art data mutated by this software-only fix.
-
-      2026-11-21 PT reviewer: merged conductor#7800 (squash 8fd09d9); all checks green.
-      Preflight is prompt-text only — generated pixels still need visual QA. Kaizen -> t-046.
+      Full history: projects/comet-city-academy/HISTORY.md#t-045
     implementation_pr: 'silasfelinus/conductor#7800'
   - id: t-046
     title: "Queue separately reviewed corrective ArtJobs for legacy Prom renders whose prompts predate the canon-anatomy guard (e.g. magic-earth, tech-genius)"
