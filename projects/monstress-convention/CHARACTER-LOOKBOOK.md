@@ -63,6 +63,9 @@ has a *signature* expression, and Norb carries a per-character caricature note.
 ### Iris Quill · sassy, open-hearted, brave
 - **Read at 64 px:** a big messy mane of **jet-black hair with one thick white streak**, a rose trench
   belted tight, a press camera swinging on its strap, a plaster on her neck.
+- **Figure (Silas, 2026-11-22 PT: *"a little on the zaftig side. Not fat, but curvy, not thin."*):** a
+  full-figured hourglass with a full bust, wide hips, thick thighs and a soft little belly, the trench cinched
+  at the waist. She's well-padded and curvy, never model-thin and never fat.
 - **Face:** bright, wide, *curious* eyes with smudged black winged liner; arched, very mobile eyebrows; a
   wide crooked grin; berry lipstick. An open face, not a sultry pout. She looks like she's about to say
   something rude *and* do something kind.
