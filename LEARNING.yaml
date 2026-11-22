@@ -19069,3 +19069,12 @@ records:
   failure_category: null
   lesson: A scheduled audit that skips when its dependency is missing reports green while checking nothing;
     fail instead, and pin that with a fast unmarked test that runs in PR CI.
+- date: '2026-11-22'
+  project: chessweeper
+  task: t-006
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: quality
+  lesson: Strict indexed-access diagnostics must be checked before merging typed board-engine extractions.

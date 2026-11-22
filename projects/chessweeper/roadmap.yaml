@@ -111,11 +111,10 @@ tasks:
   - id: t-006
     milestone: m4
     title: "Extract the chess/mine/disc rules engine from the static Play HTML into a seeded, unit-testable TypeScript module"
-    status: review
-    owner: worker
+    status: done
     claimed_by: 20261122T062717000Z-chessweeper-t006-chesscore-p7v8
     claimed_at: '2026-11-22T06:27:17.000Z'
-    updated: '2026-11-22T06:28:58.178Z'
+    updated: '2026-11-22T09:03:00Z'
     depends_on: t-001
     passes: 0
     stakes: reversible
@@ -127,6 +126,8 @@ tasks:
       2026-11-21 PT reviewer reconciliation: kind_robots PR #5540 (https://github.com/silasfelinus/kind_robots/pull/5540) merged at 22837bd0eb96d4709a4f12f7203f10aa822f68b1 with all completed checks green. The seeded mines/disc/RNG slice shipped, but complete chess move-rule extraction is still unfinished. Resume as ready, not done.
 
       2026-11-21 PT: Extracted real legal chess rules from embedded Chessweeper page into typed utils/chessweeper/chessEngine.ts plus public/chessweeper/chess-engine.js, wired live game to shared browser rules, and extended seeded-engine contract tests for castling, en passant, promotion, checkmate, stalemate, material draw and JS/TS parity. Implementation commit b6e571e; CI and PR review pending. Keep t-006 unfinished until checks pass and full adversarial seeded QA is verified.
+
+      Legal chess extraction PR kind_robots#5562 merged as 42dce799 after strict TypeScript indexed-access repair 761528b1. All six latest-head checks passed: TypeScript, contracts, formatting, architecture, layout and schema. Seeded mines/disc core was previously merged in #5540. Final browser adversarial QA remains t-004.
   - id: t-007
     milestone: m3
     title: "Deliver world-specific gameplay animation, cinematic transitions and responsive VFX"
