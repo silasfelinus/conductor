@@ -140,13 +140,48 @@ def test_workflow_probes_private_bytes_without_publishing():
     commands = "\n".join(step.get("run", "") for step in job["steps"])
     assert "verify_prom_tactics_media.py" in commands
     assert "--require-count 12" in commands
-    assert "--require-count 25" in commands
+    assert "UNSTABLE-PRODUCTION-FAMILY-ROUND-1.yaml:14" in commands
+    assert "FRANCHISE-SAFE-RERENDERS-ROUND-1.yaml:5" in commands
     assert "--require-count 172" in commands
-    assert "CANON-OUTCOME-CORRECTIONS-2026-11-22.yaml" in commands
+    assert any(
+        path.endswith("CANON-OUTCOME-CORRECTIONS-2026-11-22.yaml")
+        for path in events["push"]["paths"]
+    )
     assert "upload-artifact" not in str(flow)
     assert "art/enqueue" not in commands
     assert "--write-evidence" in commands
     assert "scripts/checkpoint_art_state.sh" in commands
+
+
+def test_original_prom_capes_media_proof_keeps_every_source_receipt_private():
+    flow = yaml.safe_load(FLOW.read_text())
+    steps = flow["jobs"]["verify-private-media"]["steps"]
+    priority = next(
+        step for step in steps
+        if "nineteen private canonical Prom paintings" in step["name"]
+    )
+    command = priority["run"]
+    all_receipts = []
+    for name, count in [
+        ("UNSTABLE-PRODUCTION-FAMILY-ROUND-1.yaml", 14),
+        ("FRANCHISE-SAFE-RERENDERS-ROUND-1.yaml", 5),
+    ]:
+        path = ROOT / "projects/comet-city-academy/art" / name
+        ledger = yaml.safe_load(path.read_text())
+        receipts = candidates([path])
+        assert ledger["is_public"] is False
+        assert len(receipts) == count
+        assert all(not item["reviewed"] for item in receipts)
+        assert all(item["job_id"] > 0 and item["image_id"] > 0 for item in receipts)
+        assert f"{path.relative_to(ROOT)}:{count}" in command
+        all_receipts.extend(receipts)
+    assert len({item["image_id"] for item in all_receipts}) == 19
+    assert "scripts/prove_private_media_ledgers.py" in command
+    assert "--write-evidence --require-private" in command
+    assert "--checkpoint-message" in command
+    assert "art/enqueue" not in command
+    assert "upload-artifact" not in command
+
 
 def test_original_art_must_match_requested_geometry_and_not_be_blank():
     row = {
