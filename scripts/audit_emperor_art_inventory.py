@@ -17,6 +17,14 @@ import yaml
 ROOT = Path(__file__).resolve().parent.parent
 LEDGERS = ROOT / "projects/emperor-of-dust/art"
 MEDIA = Path("public/emperor-of-dust")
+CAST_GROUPS = ("followers/", "npcs/")
+
+
+def media_path(asset: str) -> str:
+    """Cast art (followers/, npcs/) ships under public/emperor-of-dust/cast/ (castArt.ts)."""
+    if asset.startswith(CAST_GROUPS):
+        return f"public/emperor-of-dust/cast/{asset}.webp"
+    return f"public/emperor-of-dust/{asset}.webp"
 REFERENCE_DIRS = ("utils/emperorOfDust", "pages", "components", "server", "content")
 
 
@@ -136,7 +144,7 @@ def inventory(ledger_dir: Path, app_root: Path | None = None,
     exact_runtime_assets = read_runtime_manifest(runtime_manifest)
     results = []
     for asset, entries in sorted(grouped.items()):
-        path = f"public/emperor-of-dust/{asset}.webp"
+        path = media_path(asset)
         file_path = app_root / path if app_root else None
         exported = _is_webp(file_path) if file_path else None
         # A dynamic path assembled at runtime will not be detected by static text search.

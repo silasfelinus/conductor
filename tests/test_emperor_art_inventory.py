@@ -214,3 +214,14 @@ class EmperorArtInventoryTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+def test_cast_assets_resolve_under_cast_folder():
+    """2026-11-21: followers/ and npcs/ ledger assets ship under public/emperor-of-dust/cast/."""
+    from scripts.audit_emperor_art_inventory import media_path
+
+    assert media_path("followers/F001/portrait/neutral") == (
+        "public/emperor-of-dust/cast/followers/F001/portrait/neutral.webp")
+    assert media_path("npcs/aldous-hopper/illustrated/neutral") == (
+        "public/emperor-of-dust/cast/npcs/aldous-hopper/illustrated/neutral.webp")
+    assert media_path("endings/long-night") == "public/emperor-of-dust/endings/long-night.webp"
