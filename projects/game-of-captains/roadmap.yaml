@@ -1029,11 +1029,11 @@ tasks:
     claimed_at: '2026-11-21T13:41:00Z'
   - id: t-045
     title: "Captain selection redesign: large painted portraits and an art-first layout"
-    status: review
+    status: done
     owner: reviewer
     claimed_by: 20261122T031000Z-goc-claude-elegant-galileo
     claimed_at: '2026-11-22T03:10:00Z'
-    updated: '2026-11-22T03:10:00Z'
+    updated: '2026-11-22T05:10:19Z'
     milestone: m3
     passes: 0
     stakes: reversible
@@ -1043,6 +1043,16 @@ tasks:
       Silas 2026-11-22 PT: "we have good large sized portraits for our fake zodiac, but then our captain selection looks a little lackluster. We really might need a redesign of that art, but in any case, it needs to be large and art first layouts." Live audit: six 55px circular thumbnails inside mostly empty cards, a 367px square hero, stats/copy dominating. Deliver tall painted 832x1216 captain portraits (art/CAPTAIN-SELECTION-ROUND-1.yaml, ArtJobs 76475-76486, two seeds per captain, curator keeps one) and a selection screen where paintings lead at 390/768/1440.
 
       2026-11-22 PT: curated one of two renders per captain (keeps 278424, 278426, 278429, 278431, 278433, 278435; Vale B rejected as resembling a film prop). New components/gameOfCaptains/captain-gallery.vue: painted full-length lineup with the chosen captain widened, a dossier beside it, and a phone swipe carousel. Screenshots at 1274x534 / 700x760 / 322x564 panel sizes; suites, vue-templates and vue-tsc pass. Kind Robots PR #5548 (combined with t-046).
+
+      2026-11-22 PT: Kind Robots PR #5548 merged as eef341634849bd9d4d03cacbcbc662e41cd42c85
+      after all 17 exact-head checks completed SUCCESS (TypeScript, four contract shards,
+      seeded playthroughs, all-captains adversarial matrix, layout, Playbook Kit, production
+      image). Captain selection is now an art-first gallery of six curated 832x1216 paintings
+      (ArtImages 278424/278426/278429/278431/278433/278435) with a phone snap carousel;
+      verified at live panel sizes 1274x534, 700x760 and 322x564. Same PR made the expedition
+      console art-first per Silas's follow-up note (full-bleed episode painting, glass panels,
+      painted officer cards).
+    implementation_pr: 'silasfelinus/kind_robots#5548'
 
   - id: t-046
     title: "Space Couch sound and music: original score, interface and event sound, mixer settings"
