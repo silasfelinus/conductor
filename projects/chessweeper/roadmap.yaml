@@ -48,11 +48,8 @@ tasks:
   - id: t-002
     milestone: m2
     title: "Deepen Sugarbomb, Ashen and Jackpot into three replayable campaigns"
-    status: review
-    owner: worker
-    claimed_by: 20261122T020339Z-chessweeper-t002-p3x9
-    claimed_at: '2026-11-22T02:03:39.456Z'
-    updated: '2026-11-22T02:05:44.014Z'
+    status: ready
+    updated: '2026-11-22T03:54:25.159Z'
     depends_on: t-001
     passes: 0
     stakes: reversible
@@ -60,6 +57,8 @@ tasks:
       Build three distinct complete campaigns, not recolors: authored escalating encounters, distinct enemies/board events, risk-versus-reward decisions, fully implemented Sugar Rush, Ashen Last Stand and Jackpot Double-or-Nothing abilities, branching victory/failure conditions and at least four meaningful ending routes per world (12 total). Own saved checkpoint/continue, per-world campaign records, challenge/seed/difficulty settings, no cross-world leakage, real options that persist and are honored. Use canonical Kind Robots stores for application persistence; account versus guest/device behavior must be explicit. Every route must be realistically obtainable and tested without cheating the game state. Ending presentation/illustration is t-009, progression achievements/gallery is t-010, music is t-008; no task is done solely on mock copy, UI shells or stubs.
 
       Partial implementation of all three authored four-chapter Chessweeper campaigns in worker/chessweeper-t002-authored-campaigns-20261121-p3x9: each world has distinct sequential named battles, mode-specific score, armor and hazard modifiers, campaign advancement only on earned victories, retry after loss, saved per-world progress, compact on-board chapter UI, and deterministic regression tests in the contract workflow. Remaining t-002 includes full narrative gameplay variation, difficulty tuning, canonical save/account semantics, full playthrough acceptance, and the twelve illustrated endings tracked in t-009. Do not mark done merely for these initial playable campaign rounds.
+
+      Campaign chapter foundation merged in Kind Robots PR #5543 on 2026-11-21 PT. Four authored stages per world and verified contract checks; substantive campaign branch variety, progressive goals and device/account persistence remain. Return unfinished task to ready for the next implementation slice.
   - id: t-003
     milestone: m3
     title: "Queue, deliver and attach original illustrated art for all three mode identities"
@@ -116,11 +115,8 @@ tasks:
   - id: t-007
     milestone: m3
     title: "Deliver world-specific gameplay animation, cinematic transitions and responsive VFX"
-    status: review
-    owner: worker
-    claimed_by: 20261122T015302Z-chessweeper-t007-f5m9
-    claimed_at: '2026-11-22T01:53:02.940Z'
-    updated: '2026-11-22T01:54:44.431Z'
+    status: ready
+    updated: '2026-11-22T03:54:25.159Z'
     depends_on: t-001
     passes: 0
     stakes: reversible
@@ -128,6 +124,8 @@ tasks:
       Ship actual original animation, not CSS-only placeholders: animated chess pieces and world-specific actions, meaningful move/capture/mine-reveal/disc trails and collisions, Sugar Rush freeze/combo, Ashen Last Stand, Jackpot multiball and wager payoffs, win/loss transitions, and cinematic lead-ins to all twelve ending scenes. Integrate delivered sprite/scene art or an approved traceable animation pipeline; preserve gameplay readability, hitboxes and deterministic simulation. Verify animation timings and fallback behavior on phone/tablet/desktop with reduced-motion support. Include real screenshots or recorded playback and tests before closing.
 
       Partial animation implementation on worker/chessweeper-t007-gameplay-fx-20261121-f5m9: Eleven event-driven action effect hooks, three world color palettes, bounded particles, deterministic square placement, reduced-motion and settings-off behavior, and required CI regression assertions. This is a code-drawn VFX layer only. The approved art pipeline still must deliver character/piece sprite animations and twelve illustrated ending cinematics before t-007 can be closed done.
+
+      Gameplay VFX and event hooks merged in Kind Robots PR #5541 on 2026-11-21 PT, required checks green. Full production sprite animations, cinematics and scene art still outstanding; return unfinished task to ready.
 
   - id: t-008
     milestone: m3
