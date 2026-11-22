@@ -56,12 +56,14 @@ import yaml
 try:
     from scripts import consume_art_queue_core as core
     from scripts.art_ledger_authoring import ledger_problems
+    from scripts.prom_canon_art_anatomy import missing_canon_traits
     from scripts.art_request_key import ledger_cell_key
     from scripts.check_art_prompts_live_contract import run_contract
     from scripts.repair_negation_art_prompts import violations
 except ImportError:  # pragma: no cover - direct script execution
     import consume_art_queue_core as core
     from art_ledger_authoring import ledger_problems
+    from prom_canon_art_anatomy import missing_canon_traits
     from art_request_key import ledger_cell_key
     from check_art_prompts_live_contract import run_contract
     from repair_negation_art_prompts import violations
@@ -343,8 +345,12 @@ def contract_rules(cells, live=None):
     (ArtJobs 40921, 40923, 40962; the rule is engine-specific, so the engine rides along).
     When a kind_robots checkout sits beside this repo its real artPromptContract.ts runs
     too; without one the mirror is all there is."""
+    cells = list(cells)
     rows = contract_rows(cells)
-    rules = [list(violations(row["prompt"])) for row in rows]
+    rules = [
+        list(violations(row["prompt"])) + missing_canon_traits(subject, row["prompt"])
+        for row, (subject, _lane) in zip(rows, cells)
+    ]
     if not rows:
         return rules
     results = (live or run_contract)(rows)
