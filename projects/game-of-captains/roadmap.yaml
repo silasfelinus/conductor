@@ -355,7 +355,7 @@ tasks:
   - id: t-012
     milestone: m4
     title: "Final human design acceptance after completion; separate publish gate"
-    status: waiting
+    status: cancelled
     depends_on: t-011
     gate_human: true
     gate_reason: subjective-acceptance
@@ -366,6 +366,13 @@ tasks:
       Not a blocker today. Rename umbrella issue awaiting final human verdict only when no
       agent-actionable writing/art/engine/UX/tests remain. Silas approves or asks for rewrites; do
       not infer public release.
+
+      2026-11-22 PT: Silas, in-session: "Final design sendoff should not be a part of the
+      roadmap, that's post that task list." Cancelled from the finite roadmap per that
+      direction. Final design acceptance and any publish decision happen after the roadmap
+      ends, outside this task list; approved_by_human is not set and nothing is published.
+    updated: '2026-11-22T08:38:44Z'
+    cancelled_reason: silas-moved-post-roadmap
   - id: t-013
     milestone: m2
     title: "Replace Warp display identity with Space Couch across app and Project row"
