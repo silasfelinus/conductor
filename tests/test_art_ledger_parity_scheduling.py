@@ -22,3 +22,5 @@ def test_art_ledger_parity_is_exhaustive_but_not_every_pr():
     )
     assert "yaml.SafeLoader" in test
     assert "fast_data == python_data" in test
+    assert "pytest.fail(" in test, "missing C loader must be a red scheduled result"
+    assert "test_scheduled_parity_refuses_to_skip_without_libyaml" in test
