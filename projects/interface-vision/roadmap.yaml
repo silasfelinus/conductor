@@ -1871,6 +1871,11 @@ tasks:
     (merged d142dd9) | The site map says what it is when shared. Live og:description
     captured before the change; verifySharePreview.test.ts forbids the old line and pins the
     new description.
+
+    daily-delivery:2026-11-22/showdown-real-description | PR: silasfelinus/kind_robots#5580
+    (merged de1be6c) | Zuzu Showdown's link preview went from 'Duels with Zuzu and friends.'
+    to a real 2D-fighter description. Considered retitling /about from 'Support' but
+    verifyNavigationConsolidation.ts pins it deliberately; left as is.
   implementation_pr: 'silasfelinus/kind_robots#3073'
   approved_by_human: true
   min_rest_hours: 24
@@ -2288,6 +2293,11 @@ tasks:
     confirmation.vue and re-recorded prettier-ratchet-baseline.json with prettier 3.9.10
     (lockfile): 1047 -> 930 unformatted files; most of the drop is files already clean but still
     listed. CI ratchet passed.
+
+    daily-delivery:2026-11-22/prettier-ratchet-pages-docs | PR:
+    silasfelinus/kind_robots#5580 (merged de1be6c) | Formatted the pages/ (3) and docs/ (13)
+    buckets, formatting-only per git diff -w; ratchet 930 -> 913. CI ratchet and
+    Changed-file Prettier passed.
   updated: '2026-09-21T17:25:00Z'
   implementation_pr: 'silasfelinus/kind_robots#2956'
 - id: t-138
@@ -2433,6 +2443,11 @@ tasks:
     silasfelinus/kind_robots#5513 (merged d142dd9) | Art gallery shares a light card. Live
     og:image measured at 309736 bytes before; verifySharePreview.test.ts checks every
     committed share card against the 250 KB budget.
+
+    daily-delivery:2026-11-22/art-browse-first-description | PR:
+    silasfelinus/kind_robots#5580 (merged de1be6c) | /art no longer shares 'Generate new
+    images first'; it says browse free, sign in free to make your own. Pinned in
+    verifyFrontDoorPolish.test.ts.
   updated: '2026-10-26T22:16:18Z'
 
 - id: t-145
@@ -2608,6 +2623,11 @@ tasks:
     (merged d142dd9) | Slime City, Monstrique and Hybridizer are in the sitemap. Live
     /sitemap.xml had 26 URLs without them; verifySharePreview.test.ts now requires every
     arcade tab backed by a play page to be in the sitemap.
+
+    daily-delivery:2026-11-22/aquarium-honest-signin | PR: silasfelinus/kind_robots#5580
+    (merged de1be6c) | Cthulhuquarium's share description now says browsing tanks is free
+    and raising one needs a free sign-in (the tutorial starts 'Sign in and...'). Pinned in
+    verifyFrontDoorPolish.test.ts.
   updated: '2026-11-18T11:07:17Z'
 
 - id: t-152
