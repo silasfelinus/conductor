@@ -1002,11 +1002,11 @@ tasks:
   - id: t-031
     milestone: m3
     title: "HIGH PRIORITY · Begin private Unstable Diffusers production for canonical Prom/Tactics cast"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 20261122T232430Z-prom-t031-runtime-proof-m7q9
     claimed_at: '2026-11-22T23:24:30Z'
-    updated: '2026-11-22T23:24:30Z'
+    updated: '2026-11-22T23:29:08Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -1037,6 +1037,8 @@ tasks:
       Private Capes production gallery staged on Kind Robots worker/comet-city-academy-t-031-canon-painted-gallery-k8f2 at f7e38a0. A source-backed catalog maps all fourteen DONE Unstable Diffusers ArtJobs and ArtImage IDs from the canonical Conductor ledger, grouped as Cornerstone, Backdraft and Dr Frog. A new admin gallery lazily loads authenticated previews through the existing art store and displays durable job/image provenance and visible failure fallback without claiming browser delivery. Cast identity keys, benchmark ArtJobs and game saves untouched. Regression checks added to verifyCapesStyleCheck.test.ts. Still pending CI, actual private image retrieval and visual QA; t-031 remains partial, not done.
 
       Prior admin candidate gallery PR kind_robots#5488 merged on 2026-11-21 PT. This was a partial reversible art-intake slice, not final delivery. Return to ready for remaining authenticated media-proof and attachment work across the 14 original Unstable Diffusers production candidates and related private Prom art. Preserve all existing job/image receipts.
+
+      Replaced receipt-only source checks for 14 original Unstable Diffusers and 5 franchise-safe corrective Prom ArtImages with authenticated private source/runtime media verification, privacy checks and per-ledger evidence checkpointing. Focused regression tests verify all 19 distinct ArtImage receipts, zero curator approvals, and no new enqueue. Worker implementation branch worker/comet-city-academy-t-031-private-capes-media-proof-m7q9 at e63017ccda4aa1c0fab70b3d9acef1724065f6b9. Pending CI, PR merge and main-triggered authenticated media evidence; t-031 remains partial pending visual review and game attachments.
   - id: t-032
     title: "Prom of Doom (Capes & Tassels) | Master 30-Day Playbook Roadmap"
     status: review
@@ -1127,7 +1129,6 @@ tasks:
     stakes: reversible
     depends_on: []
     source: reviewer-kaizen-2026-11-22
-    updated: '2026-11-22T07:55:54Z'
     note: >-
       Reviewer kaizen from the 2026-11-22 PT merge of conductor#7812 (t-043). The measured
       post-#7695 suite was 60s slower, and --durations=10 named
