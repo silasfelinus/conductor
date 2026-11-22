@@ -265,9 +265,8 @@ tasks:
       Kaizen from t-042 review (#7695). Before the split, Worker PR CI took 219.02s for 4,859 tests (run 44810467441). Read the --durations output from the first completed post-merge PR CI run and from the first 'Daily art ledger loader parity' run. Write the measured delta in this note, and confirm the daily job really runs the parity test rather than skipping it when CSafeLoader is missing. If it skipped, fix the workflow so the comparison runs.
   - id: t-044
     title: "Replace verifyCapesStyleCheck's literal call-shape regexes for atlas art with a behaviour check that 48 hero and 47 villain identities resolve to shipped art"
-    status: review
-    owner: worker
-    updated: '2026-11-21T23:41:00Z'
+    status: done
+    updated: '2026-11-22T00:30:00Z'
     milestone: m3
     stakes: reversible
     passes: 0
@@ -275,6 +274,8 @@ tasks:
       Kaizen from kind_robots#5505 (rescue of #5496): the test asserted `promArt(identityArtKey` in the atlas source, so a correct refactor to `identityArtwork` turned CI red for 3.6h. Assert resolved behaviour instead of source text.
 
       Replaced brittle atlas art call-shape assertions with runtime shipped and canon-safe resolution counts (48/47 physical and 47/46 accepted). Added credentialed private ArtImage media probe, synthetic tests and dedicated push/manual workflow on Conductor. Probe fetches and decodes real source media without persisting or publishing private image bytes. This is a review handoff; live proof awaits workflow execution and visual art QA remains separate.
+
+      Delivered and merged kind_robots PR #5527 (behavioral source-backed atlas art tests) and conductor PR #7782 (authenticated private ArtImage byte proof). All latest-head PR checks green before merges. Production workflow 44965615427 succeeded and decoded 12/12 Every Villain Tactics telegraphs plus 191/191 Prom candidate images with no failed downloads. This proves media access, not curator approval or runtime attachment. Review and agent QA of compositions remain in separate art tasks.
     claimed_by: 2026-11-21T233600Z-comet-city-academy-t-044-b7c4
     claimed_at: '2026-11-21T23:36:00Z'
   - id: t-012
