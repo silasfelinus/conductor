@@ -288,11 +288,11 @@ tasks:
   - id: t-009
     milestone: m3
     title: "Deliver unique mission outcome, conversation and ending illustration coverage"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 20261122T011600Z-goc-t009-6d83
     claimed_at: '2026-11-22T01:16:00Z'
-    updated: '2026-11-22T01:16:00Z'
+    updated: '2026-11-22T01:18:00Z'
     depends_on: t-007
     passes: 0
     stakes: reversible
@@ -352,6 +352,8 @@ tasks:
       Partial t-009 episode-art UX repair. App branch worker/game-of-captains-t-009-episode-ux-20261121-6f2b corrects three-choice success-image spoilers, casino venue failed-image fallback, post-refresh failed-image retry, and erroneous cast-choice prompts, with regression checks. Original-image acceptance and remaining art delivery are still open. Review handoff pending exact-head CI.
 
       Partial t-009 delivered in kind_robots PR #5526, merged main 07790d4f324bf61d16850252f4b56f4b4588c213 after all six exact-head workflow runs completed SUCCESS at head 5fb7c3ab118863bdb149a3f92036aee71987abe8, including four contract shards, TypeScript, formatting, layout, schema and architecture. Episode decision cards no longer spoil success outcomes; failed casino venue artwork falls back, image errors retry after refresh, selected cast prompts no longer contradict player choice. Regression assertions added. Unfinished t-009 still requires authentic original-art curation, accepted-art integration and authenticated live browser acceptance. Return to READY, not DONE.
+
+      Partial episode-art delivery reliability: Kind Robots worker branch worker/game-of-captains-t-009-cast-art-fallback-20261122-6d83 now replaces failed captain/crew/redshirt portrait images with their existing painted-card monograms on both the cast stack and scout comparison, rather than leaving a broken-image glyph. Existing artwork refresh clears failures and retries delivery. Added both-surface regression assertions. Exact-head CI and PR pending. Render curation and live media QA remain open.
   - id: t-010
     milestone: m4
     title: "Run antagonist-by-captain-by-crew adversarial and every-ending seeded traces"
