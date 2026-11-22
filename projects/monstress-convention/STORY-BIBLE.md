@@ -74,7 +74,8 @@ era location is where an erased star landed after Monstrique dropped her (FRANCH
 | Motel Row | **Last Call Motor Lodge** (hub), its hot-tub "losers' lounge", the sewers | Marta, Pip, Gavin, the hopefuls, **Albina / Allie Gator, erased 1963 founding Monstrique star** |
 | Hexwater Beach | **Starlite Drive-In**, where the 1964 *Beach Hex* films still play | the 1964 reels and prop invoices |
 | Bolt Street | **Francesca Stein's midnight science-cinema** | Francesca, cut in 1964, rehired in 1974 |
-| The Low End | **The Velvet Crypt**, a 1974 glam club turned gay bar | Laguna's film-score studio upstairs |
+| The Low End | **The Velvet Crypt**, a 1974 glam club turned gay bar | the 1974 sleeve; the licensed look-alike "Laguna" plays here |
+| Brine Bottoms | **Brine Bottoms Mobile Home Park**, the bait shop and airboat dock, the **Gator Bait Bar & Grill** | **Laguna Brine** (pushed out 1974), her brood, and adult daughters **Delta** and **Cherie** |
 | Fang Heights | **Draculina's Mansion** | Draculina, dropped in 1994, back in 2006 |
 | The Mile | **Cleo's couture house** | Cleo Pappatra, dropped in 1986, perfume empire |
 | Downtown | **Monstrique Convention Center**, NEXT idol stage | the 2024 *Six Decades of Screams* line-up |
@@ -233,8 +234,8 @@ harder if the player liked her.
 - **Norb is never a route.** He keeps a rebuff counter that escalates, and the elbow bump is his
   finale.
 - **Favor seeds:** Draculina wants a photo, since she hasn't seen her face since 1890 and Iris's
-  camera is silver-free. Roxie wants her stolen prop knife back from Gavin. Laguna's skin dries out
-  in the studio, and the motel ice machine helps. Cleo Pappatra wants her 1986 billing restored on a
+  camera is silver-free. Roxie wants her stolen prop knife back from Gavin. Laguna wants her
+  fish-stick royalties and her 1974 songwriting credit (the Lagoon Lass statement and the Velvet Crypt sleeve). Cleo Pappatra wants her 1986 billing restored on a
   reissue. Francesca wants credit for her props, so bring her the 1964 invoice. Blobzo wants one
   night solid (motel ice!). Vespa wants a date who can hold eye contact (Norb's spare glasses).
   Siobhan wants the Pack's masters. Allie wants an audition tape (Iris's camera). Violet wants her
@@ -247,8 +248,8 @@ harder if the player liked her.
 | --- | --- | --- | --- | --- |
 | 1 | **The Last Call** (playable vignette) | motel exterior, office, ice alcove, balcony, rooms, Room 205 | get into 205; document the scene; hear both ghosts; Odette hires you; Violet's fangs and fee | the knife is a 1964 *Beach Hex* prop; the city map opens |
 | 2 | **Beach Hex** | drive-in, Francesca's science-cinema | the 1964 reel and Francesca's prop invoice; the scratched-out sleeve | "I made five knives" |
-| 3 | **Velvet and Chrome** | Velvet Crypt, Cleo's couture house | the 1974 and 1986 credit erasures; identify the makeup | the shade for people with no shade |
-| 4 | **Silver Bite** | Draculina's mansion, the losers' lounge hot tub | Draculina's "on camera all night" alibi; Vespa and Blobzo's grievances; flirt with the Countess | the vampire seems cleared |
+| 3 | **Brine Bottoms** | Brine Bottoms bayou trailer park, Delta's bait shop and airboat, the Gator Bait Bar & Grill, the Velvet Crypt | the 1974 reversed songwriting credit; the Lagoon Lass fish-stick licensing statement; the 2017 look-alike contract (Cherie's gossip or Delta's boat route); Laguna's Hexblade pawned in the bait shop | the Laguna on stage isn't Laguna, her contract was countersigned at Fang Heights, and one Hexblade is accounted for |
+| 4 | **Silver Bite** | Cleo's couture house, Draculina's mansion, the losers' lounge hot tub | the 1986 credit erasure; identify the makeup; Draculina's "on camera all night" alibi; Vespa and Blobzo's grievances; flirt with the Countess | the shade for people with no shade, and yet the vampire seems cleared |
 | 5 | **Six Decades of Screams** | convention, NEXT stage, the Pack's dive bar, sewers | Siobhan's alibi; Allie and the hatch; the five Hexblades | everything points at Marta |
 | 6 | **Last Call Again** | motel, Hex & Giggles, Draculina's mansion, Room 205 | clear Marta, break the alibi tape, find the mist photo; confront the Countess | Draculina revealed; endings |
 
@@ -259,8 +260,8 @@ release the next Harker File.
 
 Silas: *"Each act should deal with a former member of the band that might have had an issue with the
 agent."* Each chapter is built around one ex-member whose grudge against Odette is that act's motive,
-favour and Harker File. The rest of the cast stays supporting. **Proposed mapping**; clue placement in the
-table above is unchanged until the dependency charts are redrawn:
+favour and Harker File. The rest of the cast stays supporting. The clue placement in the
+table above follows it (approved by Silas the same day, with free authority over clues and scenes):
 
 | # | Featured ex-member | Grudge against Odette | Where |
 | --- | --- | --- | --- |
@@ -271,9 +272,9 @@ table above is unchanged until the dependency charts are redrawn:
 | 5 | **Siobhan** (2024) and **Albina** (1963) | an engineered feud; an erased founder | Pack dive bar, convention, sewers |
 | 6 | **Draculina**, unmasked | everything | motel, joke shop, mansion |
 
-Open question for Silas: Chapter 3's makeup clue ("the shade for people with no shade") sits at Cleo's
-couture house today. If the bayou takes Chapter 3, that clue moves to Chapter 4 alongside Cleo. The bayou
-cast and tone rules are in CHARACTER-LOOKBOOK.md "Laguna Brine and the bayou brood".
+The makeup clue ("the shade for people with no shade") moved from Chapter 3 to Chapter 4 with Cleo, so it
+lands right before Draculina's alibi seems to clear her. The bayou cast and tone rules are in
+CHARACTER-LOOKBOOK.md "Laguna Brine and the bayou brood".
 
 ## Puzzle principles (Thimbleweed rules)
 
@@ -293,6 +294,9 @@ cast and tone rules are in CHARACTER-LOOKBOOK.md "Laguna Brine and the bayou bro
   person, with ugly, misshapen features, wide open eyes, one larger than the other, heavy lids, a cross between
   Quasimodo, Igor, and Peter Lorre drawn by animaniacs."* Redesign in CHARACTER-LOOKBOOK.md "The two leads"
   and Kind Robots `characterModels.ts`. Prompts describe the look in plain words and never name the studio.
+- 2026-11-22 PT: *"Yes, Laguna is fish lady. I approve absolutely all changes to clues and any scenes if it
+  helps the game, you have free authority at this point to use your discretion."* The bayou is Chapter 3, the
+  makeup clue moves to Chapter 4, and the licensed look-alike explains Laguna's 2017 and 2024 billing.
 - 2026-11-22 PT: **One former member per act**, each with a grudge against the agent (see "Act spine"). A
   **bayou trailer park** where the fish lady lives: *"overweight, pregnant, with a bunch of younglings, in
   various stages from teenager to tadpole. Southern white redneck tropes. She does have helpful adult

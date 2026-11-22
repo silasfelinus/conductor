@@ -1518,11 +1518,11 @@ tasks:
   - id: t-090
     milestone: m8
     title: "Glitch Garden depth slice 3: Autumn and Winter"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 20261122T084350Z-kr-arcade-t090-pumpkin-8ac2
     claimed_at: '2026-11-22T08:44:06.784Z'
-    updated: '2026-11-22T08:44:06.784Z'
+    updated: '2026-11-22T08:49:38.420Z'
     passes: 0
     stakes: reversible
     depends_on: t-089
@@ -1532,6 +1532,8 @@ tasks:
       Partial Autumn/Winter depth slice: authored Leaf Pile Lane with five increasingly difficult fronts, moving wind-blown leaf shields that soak shots, the Rake Up special objective with golden trowel, a distinctive autumn palette, refreshed progression/save tests, and seeded deterministic leaf-capture/regression tests. Implementation on worker/kr-arcade-t-090-20261122T061917Z-ae72. Remaining t-090: Pumpkin Patch, new Autumn/Winter foes and bosses, both winter gardens, full eight-garden pacing, visual QA. After this partial PR merges, return t-090 to ready rather than done.
 
       Leaf Pile Lane merged as a partial Autumn increment; remaining Pumpkin Patch, new foes and bosses, Winter gardens, campaign QA.
+
+      Added the sixth authored Glitch Garden, Pumpkin Patch, with five waves, 2x2 breakable seed-sprouting gourds, collision-danger rollers, five-second slow-down inchworms, Great Pumpkin objective, autumn art palette and three-phase Gourd Hydra season boss. Expanded deterministic cabinet tests, campaign and pilot regressions. Branch worker/kr-arcade-t-090-pumpkin-20261122T084350Z-8ac2. Partial scope: Winter gardens 7-8, frost/snow foes, Frost Millipede and full eight-garden pacing/QA still remain. After merge return t-090 to ready, not done.
 
   - id: t-091
     milestone: m8
@@ -2838,7 +2840,11 @@ tasks:
   - id: t-174
     milestone: m8
     title: "Audit remaining Playwright CI workflows for Ubuntu runner compatibility and pin unsupported browser-install jobs"
-    status: ready
+    status: claimed
+    owner: worker
+    claimed_by: 20261122T085140Z-kr-arcade-t174-playwright-d2e4
+    claimed_at: '2026-11-22T08:52:25.564Z'
+    updated: '2026-11-22T08:52:25.564Z'
     passes: 0
     stakes: reversible
     depends_on: []

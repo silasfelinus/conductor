@@ -87,3 +87,8 @@
 - Root cause of the weak renders: series-bible portraits sent long prose to tag-trained Illustrious checkpoints and forced a smirk. The Kind Robots fix gives both leads identity tags, a signature expression and (for Norb) a caricature note.
 - STORY-BIBLE "Act spine": one former member per act. The bayou trailer park (Brine Bottoms) goes to Laguna, with tadpole-to-teen kids and adult daughters Delta and Cherie. The licensed-look-alike reconciliation with the album ledger is awaiting Silas.
 
+## 2026-11-22 PT — Bayou confirmed; Chapter 3 is Brine Bottoms
+- Silas confirmed Laguna is the fish lady and gave free authority over clues and scenes. Chapter 3 is now **Brine Bottoms**: the reversed 1974 credit, the Lagoon Lass statement, the 2017 look-alike contract and Laguna's pawned Hexblade. The makeup clue moves to Chapter 4 with Cleo.
+- FRANCHISE-HISTORY continuity: from 2017 the billed "Laguna" is a licensed look-alike.
+- Kind Robots: Laguna's gameplay sheet is her pregnant bayou present, and her pin-ups keep the 1974 glamour. Delta and Cherie Brine have sheets with opt-in mature pin-ups. The children are never model sheets.
+

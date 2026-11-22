@@ -1,0 +1,17 @@
+version: 1
+project: kr-arcade
+task: t-174
+operation: review
+owner: worker
+session: 20261122T085140Z-kr-arcade-t174-playwright-d2e4
+updated: '2026-11-22T08:53:52.206Z'
+note: >-
+  Audited seven remaining Playwright --with-deps workflows. Patched
+  Arcade viewport, Rainbow shared-cabinet and Arcade share live
+  cold-open jobs to use Ubuntu 24.04; unrelated gallery, navigation,
+  Memory Dungeon and sitewide audits were inspected but deliberately
+  left unchanged under Kind Arcade-only scope. Branch
+  worker/kr-arcade-t-174-playwright-20261122T085140Z-d2e4.
+  PR checks must confirm real Chromium installation; no tests were
+  disabled. Remaining out-of-scope workflows should be handled by
+  their owning projects rather than this Arcade task.
