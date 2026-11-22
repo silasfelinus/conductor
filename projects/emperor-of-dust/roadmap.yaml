@@ -205,12 +205,12 @@ tasks:
     claimed_at: '2026-11-21T19:10:50Z'
   - id: t-064
     title: 'Painted ending plates and a persistent Endings gallery / reign scrapbook'
-    status: needs-human
+    status: done
     milestone: m5
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-19T10:46:25Z'
+    updated: '2026-11-22T00:22:48Z'
     note: |-
       Silas 2026-11-11 PT, in session: asked what happens at Day 50 and for "an ending scrapbook".
 
@@ -245,10 +245,17 @@ tasks:
       kind_robots#5276). Or, if you want the encrypted pattern, name the key holder and make
       it workflow_dispatch-only. Decision unblocks plate curation; Epilogue/Chronicle UI
       already merged (kind_robots#5334).
+
+      2026-11-22 PT: all eight painted ending plates curated and shipped at public/emperor-of-
+      dust/endings/ via export_round_art (the reviewer's recommended non-workflow path);
+      EmperorFortressEndingPlate already loads them first. Eight Fates/scrapbook UI merged
+      earlier (#5103, #5334). The security-sensitive encrypted-intake PR conductor#7616 is
+      superseded and not needed; Silas may close it.
     owner: worker
     claimed_by: 20261119T065426Z-eod-t064-art-a91c
     claimed_at: '2026-11-19T06:54:26Z'
     gate_reason: security
+    implementation_pr: 'silasfelinus/kind_robots#5529'
   - id: t-065
     title: 'Emperor of Dust achievements for endings and long-run play'
     status: done
