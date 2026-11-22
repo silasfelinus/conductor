@@ -1,0 +1,20 @@
+version: 1
+project: rainbow-bullet-hell-space-princess
+task: t-057
+operation: done
+session: 2026-11-22T1150Z-reviewer-tphstn
+verify_pr: silasfelinus/conductor#7827
+note: >-
+  Reviewer merged conductor#7827 (6c624755) after all latest-head checks were green.
+  The Worker PR handoff check initially failed on missing headings; the reviewer
+  restructured the PR body only. Coverage tests cover missing/duplicate shots, invalid
+  ArtImage IDs, both rounds and malformed subjects; coverage errors now print
+  "opening shot coverage:".
+learning:
+  date: 2026-11-22
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: Worker PR bodies must use the exact AGENTS.md handoff headings; free-form Summary/Validation sections fail the handoff gate even when the code is green.
