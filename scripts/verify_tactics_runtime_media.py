@@ -132,7 +132,10 @@ def main(argv=None):
     args = parser.parse_args(argv)
     entries = candidates([args.ledger])
     if len(entries) != args.require_count:
-        print(f"RECEIPT_COUNT_MISMATCH actual={len(entries)} expected={args.require_count}")
+        print(
+            f"RECEIPT_COUNT_MISMATCH actual={len(entries)} "
+            f"expected={args.require_count}"
+        )
         return 1
 
     import consume_art_queue_core as core
