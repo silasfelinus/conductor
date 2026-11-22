@@ -543,6 +543,7 @@ def main(argv=None):
     parser.add_argument("--allow-silent", action="store_true", help="preview cut with no track (never shipped)")
     parser.add_argument("--out", help="write the MP4 here instead of shipping into kind_robots (a preview)")
     parser.add_argument("--check-queue-budget", action="store_true", help="validate WAN duration/fps before submitting ArtJobs")
+    parser.add_argument("--require-all-clips", action="store_true", help="reject missing or undecodable WAN clips even for private preview cuts")
     args = parser.parse_args(argv)
 
     kind_robots = Path(args.kind_robots)
@@ -560,11 +561,11 @@ def main(argv=None):
     if args.check_queue_budget:
         print("opening WAN queue budget: OK")
         return EXIT_DONE
-    if not args.out and args.stills_only:
+    if (not args.out or args.require_all_clips) and args.stills_only:
         print("--stills-only is a preview; provide --out to avoid replacing the live opening", file=sys.stderr)
         return EXIT_ERROR
     sources = list(shot_sources(ledger, args.stills_only))
-    if not args.out:
+    if not args.out or args.require_all_clips:
         pending = [key for key, _, _, clip_id in sources if clip_id is None]
         if pending:
             print(
@@ -627,7 +628,7 @@ def main(argv=None):
         poster = staging.with_name("opening-poster.webp")
         kept[-1].save(poster, "WEBP", quality=88)
         clips = len(accepted_clips)
-        if not args.out and clips != len(sources):
+        if (not args.out or args.require_all_clips) and clips != len(sources):
             print(
                 "opening not published: only "
                 f"{clips}/{len(sources)} WAN clips passed media validation; "
