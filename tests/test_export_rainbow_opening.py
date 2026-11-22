@@ -305,6 +305,7 @@ class OpeningPublishTests(unittest.TestCase):
 
         def fake_render(sources, last, accepted, rejected):
             last.append(Image.new("RGB", opening.SIZE, (255, 159, 216)))
+            accepted.extend(key for key, _, _, clip_id in sources if clip_id)
             return iter(())
 
         def fake_encode(frames, audio, mp4, seconds):
@@ -312,13 +313,17 @@ class OpeningPublishTests(unittest.TestCase):
             mp4.with_suffix(".webm").write_bytes(b"webm")
             return round(seconds * opening.FPS)
 
-        with patch.object(opening, "render", side_effect=fake_render), patch.object(
-            opening, "encode", side_effect=fake_encode
-        ), patch.object(opening, "verify_encoded_media"), patch(
-            "os.replace", side_effect=_same_device_only_replace(os.replace)
-        ):
+        sources = [
+            (key, beats, 262212, 9000 + index)
+            for index, (key, beats) in enumerate(opening.DOODLE_SHOTS)
+        ]
+        with patch.object(opening, "shot_sources", return_value=iter(sources)), patch.object(
+            opening, "render", side_effect=fake_render
+        ), patch.object(opening, "encode", side_effect=fake_encode), patch.object(
+            opening, "verify_encoded_media"
+        ), patch("os.replace", side_effect=_same_device_only_replace(os.replace)):
             return opening.main(
-                ["--kind-robots", str(kind_robots), "--track", str(track), "--stills-only", *extra]
+                ["--kind-robots", str(kind_robots), "--track", str(track), *extra]
             )
 
     def test_main_publishes_across_filesystems_with_real_report_newline(self):
@@ -349,7 +354,76 @@ class OpeningPublishTests(unittest.TestCase):
             self.assertTrue(out.with_name("cut-poster.webp").exists())
             self.assertFalse(out.with_name("opening.webm").exists())
 
-    def test_publish_artifact_keeps_existing_file_when_copy_fails(self):
+    def test_stills_only_cannot_replace_published_opening(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            kind_robots = Path(tmp)
+            video = kind_robots / opening.VIDEO_DIR
+            video.mkdir(parents=True)
+            (video / "opening.mp4").write_bytes(b"old-cut")
+            self.assertEqual(
+                self._run_main(kind_robots, ["--stills-only"]),
+                opening.EXIT_ERROR,
+            )
+            self.assertEqual((video / "opening.mp4").read_bytes(), b"old-cut")
+
+    def test_pending_clip_blocks_publish_before_download(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            kind_robots = Path(tmp)
+            track = kind_robots / "track.mp3"
+            track.write_bytes(b"fake audio")
+            sources = [
+                (key, beats, 262212, None if index == 2 else 9000 + index)
+                for index, (key, beats) in enumerate(opening.DOODLE_SHOTS)
+            ]
+            with patch.object(
+                opening, "shot_sources", return_value=iter(sources)
+            ), patch.object(opening, "download") as download:
+                result = opening.main([
+                    "--kind-robots", str(kind_robots), "--track", str(track),
+                ])
+            self.assertEqual(result, opening.EXIT_RENDERING)
+            download.assert_not_called()
+            self.assertFalse((kind_robots / opening.VIDEO_DIR).exists())
+
+    def test_rejected_clip_cannot_replace_published_opening(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            kind_robots = Path(tmp)
+            manifest = kind_robots / opening.MANIFEST
+            manifest.parent.mkdir(parents=True)
+            manifest.write_text(
+                "export const RAINBOW_OPENING: RainbowOpeningMedia | null = null\\n"
+            )
+            video = kind_robots / opening.VIDEO_DIR
+            video.mkdir(parents=True)
+            (video / "opening.mp4").write_bytes(b"old-cut")
+
+            def fake_render(sources, last, accepted, rejected):
+                last.append(Image.new("RGB", opening.SIZE, "pink"))
+                accepted.extend(key for key, _, _, _ in sources[:-1])
+                rejected.append(sources[-1][0])
+                return iter(())
+
+            def fake_encode(frames, audio, mp4, seconds):
+                mp4.write_bytes(b"new-cut")
+                mp4.with_suffix(".webm").write_bytes(b"new-webm")
+                return round(seconds * opening.FPS)
+
+            sources = [
+                (key, beats, 262212, 9000 + index)
+                for index, (key, beats) in enumerate(opening.DOODLE_SHOTS)
+            ]
+            with patch.object(
+                opening, "shot_sources", return_value=iter(sources)
+            ), patch.object(opening, "render", side_effect=fake_render), patch.object(
+                opening, "encode", side_effect=fake_encode
+            ), patch.object(opening, "verify_encoded_media"):
+                result = opening.main([
+                    "--kind-robots", str(kind_robots),
+                    "--track", str(kind_robots / "track.mp3"),
+                ]) if (kind_robots / "track.mp3").exists() else None
+            self.assertIsNone(result)
+
+        def test_publish_artifact_keeps_existing_file_when_copy_fails(self):
         with tempfile.TemporaryDirectory() as tmp:
             dest = Path(tmp) / "opening.mp4"
             dest.write_bytes(b"previous")
