@@ -5,6 +5,9 @@ from pathlib import Path
 
 import yaml
 
+from scripts import art_ledger_authoring as authoring
+from scripts.repair_negation_art_prompts import violations
+
 
 ART = (
     Path(__file__).resolve().parents[1]
@@ -70,6 +73,31 @@ class RainbowStageDepthArtTests(unittest.TestCase):
                     f"{act}-{key.split('-')[-1]}",
                 )
 
+    def test_art_workflow_persists_priority_receipts_before_general_sweep(self):
+        workflow_path = (
+            Path(__file__).resolve().parents[1]
+            / ".github/workflows/auto-art-generate.yml"
+        )
+        workflow = yaml.safe_load(workflow_path.read_text())
+        steps = workflow["jobs"]["generate"]["steps"]
+        named = {step.get("name"): (index, step) for index, step in enumerate(steps)}
+        priority = "Submit priority Rainbow stage-depth ArtJobs"
+        checkpoint = "Checkpoint priority Rainbow stage-depth ArtJob IDs"
+        general = "Sweep opted-in art ledgers"
+        self.assertIn(priority, named)
+        self.assertIn(checkpoint, named)
+        self.assertIn(general, named)
+        self.assertLess(named[priority][0], named[checkpoint][0])
+        self.assertLess(named[checkpoint][0], named[general][0])
+        command = named[priority][1]["run"]
+        self.assertIn("enqueue_art_requests.py", command)
+        self.assertIn("DOODLE-STAGE-DEPTH-PLANES-2026-11-22.yaml", command)
+        self.assertIn("--live", command)
+        self.assertIn("KR_API_TOKEN", named[priority][1]["env"])
+        self.assertTrue(named[priority][1]["continue-on-error"])
+        self.assertIn("checkpoint_art_state.sh", named[checkpoint][1]["run"])
+        self.assertIn("always()", named[checkpoint][1]["if"])
+
     def test_high_priority_private_generation_and_readable_stage_planes(self):
         self.assertTrue(self.ledger["auto_submit"])
         self.assertEqual(self.ledger["priority"], 1000)
@@ -83,10 +111,10 @@ class RainbowStageDepthArtTests(unittest.TestCase):
                 self.assertEqual(subject["size"], "1344x768")
                 prompt = subject["prompt_prose"].lower()
                 self.assertIn("upper", prompt)
-                self.assertIn("no people", prompt)
-                self.assertIn("ships", prompt)
-                self.assertIn("words", prompt)
-                self.assertGreater(len(prompt), 200)
+                self.assertIn("upper", prompt)
+                self.assertGreater(len(prompt), 260)
+                self.assertEqual(violations(prompt), [])
+        self.assertEqual(authoring.ledger_problems(self.ledger), [])
 
 
 if __name__ == "__main__":
