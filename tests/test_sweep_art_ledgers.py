@@ -124,13 +124,20 @@ def test_loader_falls_back_to_python_safe_loader(monkeypatch):
     assert calls == [sweep.yaml.SafeLoader]
 
 
+def test_scheduled_parity_refuses_to_skip_without_libyaml(monkeypatch):
+    # This fast guard stays in PR CI even though the expensive parity run is daily.
+    monkeypatch.delattr(yaml, "CSafeLoader", raising=False)
+    with pytest.raises(pytest.fail.Exception, match="CSafeLoader unavailable"):
+        test_all_opted_in_art_ledgers_have_identical_safe_loader_data()
+
+
 @pytest.mark.art_parity
 def test_all_opted_in_art_ledgers_have_identical_safe_loader_data():
     """Scheduled parity audit: LibYAML and Python agree on production ledgers."""
 
     fast_loader = getattr(yaml, "CSafeLoader", None)
     if fast_loader is None:
-        pytest.skip("LibYAML CSafeLoader is not installed")
+        pytest.fail("LibYAML CSafeLoader unavailable: scheduled parity would be unverified")
 
     ledgers = sweep.find_ledgers(sweep.ROOT)
     assert ledgers, "expected at least one opted-in production art ledger"
