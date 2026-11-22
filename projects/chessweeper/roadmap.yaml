@@ -135,11 +135,11 @@ tasks:
   - id: t-007
     milestone: m3
     title: "Deliver world-specific gameplay animation, cinematic transitions and responsive VFX"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 2026-11-22T114500Z-chessweeper-t007-c8f2
     claimed_at: '2026-11-22T11:45:00Z'
-    updated: '2026-11-22T11:45:00Z'
+    updated: '2026-11-22T11:51:00Z'
     depends_on: t-001
     passes: 0
     stakes: reversible
@@ -153,6 +153,8 @@ tasks:
       2026-11-21 PT: Motion integration implementation pushed as kind_robots commit f59bec5a. Added actual chess-piece flight from move source to destination, capture effects, unique Sugar Rush/Ashen Last Stand/Jackpot impact choreography, bounded DOM and reduced-motion behavior plus regression assertions. Partial t-007 scope: delivered sprite artwork and final illustrated cinematics still outstanding.
 
       2026-11-22 PT reviewer: Kind Robots PR #5559 merged as e5c8030 after six latest-head checks completed successfully. Piece travel, capture impact and distinct world action choreography landed. Return unfinished finite task to ready: original rendered sprite animations, illustrated ending cinematics and three-viewport screenshot QA remain.
+
+      Partial cinematic transition slice: three world-specific animated win/loss interstitials, responsive CSS, reduced-motion opt-out and dismissal/cleanup. Sprite animation, illustrated ending cinematics and viewport playback QA remain.
 
   - id: t-008
     milestone: m3
