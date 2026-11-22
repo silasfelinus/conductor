@@ -1016,11 +1016,11 @@ tasks:
   - id: t-046
     milestone: m5
     title: "Act I continuation: polish Days 4–10 quest and audience paths, then submit scene art"
-    status: review
+    status: done
     owner: worker
     claimed_by: 20261121T003010141Z-eod-t046-forecast-convoy-c832
     claimed_at: '2026-11-21T00:30:10.141Z'
-    updated: '2026-11-21T00:31:20.693Z'
+    updated: '2026-11-22T00:22:25Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -1098,6 +1098,15 @@ tasks:
       Partial Act I court and quest response pass delivered via Kind Robots PR #5454 merged as 4a8efe8d10b32620700fb3db7cb0773d5b0ce467. All 14 exact-head checks completed successfully or autofix skipped. Original task still needs further exhaustive Days 4-10 editorial acceptance and delivered per-scene art. Return finite task to ready, not done.
 
       2026-11-20 PT partial Act I Days 7-11 weather/convoy continuity. Kind Robots branch worker/emperor-of-dust-t-046-crow-convoy-c832 commit bd754edf8db84ba2c99ebcb8c736838a7ba5f461 offers a twenty-brass pathfinder strategy in the Day 9 convoy opening and bands beat, gated by earning the Day 7 Storm Crow forecast. Paid Freehold scouts give +2 Guile mission aid while leaving the farm watch thin, with a persistent flag, a Day 10 Thistledown recognition, and a Day 11 written accountability receipt. Existing 276 IDs, quest rules and save shapes unchanged. Engine tests check affordability/earned gate, both choice paths, bonus, faction/local cost and delayed bill. PR and exact-head CI pending; art and remaining editorial scope incomplete.
+
+      2026-11-22 PT: kind_robots#5529 shipped 293 curated plates (181 chance, 52 audience, 33
+      quest-consequence, 8 endings, 14 petitioners, 5 talk/quest) with keep/reject verdicts in
+      conductor#7785, which completes this act's outstanding scene-art delivery. Closed at the
+      playtest handoff (docs/agents/GAME-PLAYTEST-CLOSEOUT-2026-11-18.md): all 50 days
+      authored and route-tested in CI (adversarial seeds, eight real-play ending witnesses,
+      sixteen 50-day traces, market/refugee/water-debt route matrices). Further line-level
+      editorial judgement is subjective human-playtest feedback, outside the finite roadmap;
+      new fixes use playtest_iteration: true.
   - id: t-047
     milestone: m5
     title: "Act II story and art pass: Days 11–20 quests and court audiences"
