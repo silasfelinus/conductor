@@ -852,7 +852,7 @@ tasks:
     owner: worker
     claimed_by: 2026-11-22T193332Z-rainbow-t038-k8v2
     claimed_at: '2026-11-22T19:33:32Z'
-    updated: '2026-11-22T18:58:38Z'
+    updated: '2026-11-22T19:36:00Z'
     depends_on: [t-036]
     passes: 1
     retry_context: ''
@@ -888,6 +888,8 @@ tasks:
       dolphin-armada clip is DONE, run export_rainbow_opening.py --kind-robots ../kind_robots,
       inspect, and open the kind_robots PR wiring opening mp4/webm and poster into the
       cabinet.
+
+      Partial opening integration resilience: video decode/playback failure now offers a focused retry instead of silently marking the opening watched. WAN dolphin clip and final export still outstanding; keep task incomplete.
 
   - id: t-039
     milestone: m4
