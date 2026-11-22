@@ -124,6 +124,91 @@ Direct friend invitations in internal preview, turn ownership, hidden-informatio
 RECONCILED 2026-11-11 PT: delivered by slime-city/t-055 (see its note for the seven merged kind_robots PRs): direct friend invitations, turn ownership, hidden-information redaction, server-validated atomic commands, 7-day invite / 30-day inactivity expiry, reconnect via saved duel id, participant-only forfeit, adversarial contract tests (npm run test:slime-city-pvp). Its t-008 dependency is reconciled in the same PR. Note for t-015: VS PLAYERS (friends, open challenges) is reachable by any signed-in player from /play/slime-city since #4985/#5003; there is still no external promotion or announcement.
 <!-- note:end t-011 -->
 
+## t-012 — Full card and campaign coverage, prototype evaluation and visual QA
+
+<!-- note:begin t-012 -->
+2026-11-18 PT owner closeout: all six authored crew campaigns are merged (t-009 is a deferred subjective fun verdict, not a QA prerequisite). Verify canonical CLASH 300-card evolution and full campaign branches, constructed-deck balance, real delivered ArtImages, CPU and PvP reconnect/forfeit/expiry and account security, resource exploits, gamepad/keyboard/touch, and rendered 390/768/1440/XL layouts. Produce reproducible multi-seed full-route tests and a player handoff checklist. This is agent-owned QA, not approval to publish.
+2026-11-19 PT partial: multi-seed full-route campaign QA added in kind_robots#5323 (verifySlimeCityFullRoutes.test.ts: 6 crews x 32 choice paths x 3 seeds through the real Blackout engine, ~4.1k fights, both endings reachable per crew, deterministic replay; in test:slime-city-lab). Player handoff checklist started at projects/slime-city/PLAYER- HANDOFF-CHECKLIST.md. Still open: CLASH 300 closeout (t-041), constructed balance re- run, two-browser reconnect, gamepad/keyboard/touch pass, current-main 390/768/1440/XL captures, delivered-ArtImage reconciliation.
+2026-11-18 PT partial (balance re-run): on kind_robots main be2745d, balance:slime-city-clash 4,500 CPU games put every crew inside 40-60% (catgirls 41.7% low edge, 11.9-pt spread, first seat 51.2%); constructed suite PASS (3,120 bouts, crews 43.6-54.4%). Open finding: specials archetype wins 26% (riot/specials 17.3%), below the 30% floor. Recorded in PLAYER-HANDOFF-CHECKLIST.md; re-run after t-041 lands.
+2026-11-19 PT partial (art reconciliation): kind_robots#5327 adds verifySlimeCityArtCoverage.test.ts to test:slime-city-lab. 300/300 base card art, 1,353 unique ArtImage ids, every L1-L3 branch resolves to the card's own painting; 66 cards still lack L2/L3 evolution renders (per-crew ratchet). Remaining: authenticated byte spot check, the 66 evolution renders, CLASH 300 closeout, specials balance, two-browser reconnect, input pass, current-main layout captures.
+2026-11-19 PT partial (layout captures): signed-in production (9f86056) /play/slime-city captured at 390/768/1440/2560, no overflow or broken images; Clash layout audit 390/768/1440 passed. XL splash title slid under the crew poster; fixed in kind_robots#5332 (title cap 7rem). Remaining: re-capture after #5332 deploys, the 66 evolution renders, CLASH 300 closeout, specials balance, two-browser reconnect, input pass.
+
+2026-11-19 PT partial (input pass): kind_robots#5335 adds audit:slime-city-clash-input, which plays whole CPU Clash matches keyboard-only (Tab/Enter) and touch-only (Pixel 7 taps). /play/slime-city is account-gated, and anonymous runs are redirected to /login mid-match, so the audit needs --storage-state from a signed-in QA browser and fails with SIGNED_OUT otherwise. Gamepad is unsupported because Clash has no Gamepad API binding, so it needs a binding or a scope decision. Remaining: a signed-in input run, gamepad, re-capture after #5332, the 66 evolution renders, CLASH 300 closeout, specials balance, two-browser reconnect. Released back to ready.
+
+2026-11-19 PT partial (gamepad): kind_robots#5336 (merged 1c191b7) adds a Gamepad API
+binding for Clash: D-pad/stick focus, A press, Start FIGHT/rematch, LB/RB hand, B
+report/hand, Y peek; verifySlimeCityClashGamepad.test.ts in test:slime-city-lab. Needs a
+by-hand check on a real controller (Playwright can't synthesize pads). Remaining:
+signed-in keyboard/touch input run, re-capture after #5332, the 66 evolution renders,
+CLASH 300 closeout (t-041), specials balance, two-browser reconnect. Released back to
+ready.
+
+2026-11-19 PT partial (balance reconciliation): kind_robots#5344 records head-to-head
+pairings in the Clash balance report and asserts the PROGRESSION-AND-SETS.md >30% worst-
+pairing target (worst catgirls>riot 35.3% on 150 seeds; exchange>undertow 35.0% on the
+40-seed CI sweep). The 26% specials archetype is a deck-builder probe weighed down by
+near-dead two-slot specials (t-041), not a pairing failure; ratcheted at a 25% floor.
+Remaining: signed-in keyboard/touch input run, real-controller gamepad check, re-capture
+after #5332, the 66 evolution renders, CLASH 300 closeout (t-041), two-browser
+reconnect. Released back to ready.
+
+2026-11-19 PT partial (two-browser reconnect): kind_robots#5345 (merged 86f1c14) adds
+verifySlimeCityPvpReconnect.test.ts to test:slime-city-pvp. It drives the real
+server/utils/slimeCityPvp.ts over an in-memory Prisma double with host laptop+phone and
+a guest: 40 turns, ~20 stale-tab 409s then reconnect to the identical board, same-
+revision races land exactly one move, outsiders refused, idempotent forfeit while the
+rival is offline, idle expiry 410. Mutation-checked against the revision guard and
+forfeit idempotency. Not covered: real MariaDB locks and cookie auth (needs a signed-in
+two-browser Playwright run). Remaining: signed-in keyboard/touch input run, real-
+controller gamepad check, re-capture after #5332, the 66 evolution renders, CLASH 300
+closeout (t-041). Released back to ready.
+2026-11-19 PT partial (evolution art queued): the 66 cards in verifySlimeCityArtCoverage's
+ratchet were never queued by the t-041 rounds (those cover the 230 redesigns plus the
+Catgirls pilot). Six auto_submit Krea 2 ledgers, projects/slime-city/art/EVOLUTIONS-
+REMAINING-{BLOODFAIRIES,IRONJAW,RIOT,UNDERTOW,EXCHANGE,MERCENARIES}-KREA.yaml, queue 132
+per-card L2/L3 prompts painting each card's clashTwists/evolution story (seeds 1119001+).
+art_ledger_authoring 0 problems; kind_robots live prompt contract 132/132. Next: curate
+DONE renders, wire SLIME_CITY_ART.evolutions['<id>@2'|'@3'], lower the ratchet baseline.
+Remaining: signed-in keyboard/touch input run, real-controller gamepad check, re-capture
+after #5332, CLASH 300 closeout (t-041). Released back to ready.
+
+2026-11-19 PT partial (evolution art wired): all 132 EVOLUTIONS-REMAINING Krea renders
+finished. Contact-sheet curation kept 130 and rejected s1-pocket-punk@2 (real soft-drink
+logo) and fusevest@2 (headless torso crop); verdicts recorded in the ledgers.
+kind_robots#5354 wires the 130 into SLIME_CITY_ART.evolutions and lowers the ratchet
+from 66 pending to 2 (298/300 cards with L2+L3 art). Remaining: rerender those two L2
+stages, signed-in keyboard/touch input run, real-controller gamepad check, re-capture
+after #5332, CLASH 300 closeout (t-041). Released back to ready.
+
+2026-11-19 PT partial (L2 rerenders curated): s1-pocket-punk@2 rerender 276544 kept
+(plain can) and wired in kind_robots#5356; the bloodfairies ratchet drops to 0, so
+299/300 cards now have L2+L3 art. fusevest@2 rerender 276545 rejected (no sparklers),
+and r3 is queued in EVOLUTIONS-REMAINING-RERENDER-KREA (seed 1119517). Remaining: curate
+and wire fusevest@2 r3, signed-in keyboard/touch input run, real-controller gamepad
+check, re-capture after #5332, CLASH 300 closeout (t-041). Released back to ready.
+
+2026-11-19 PT partial (L2 art complete): fusevest@2 r3 (ArtImage 276580) kept (full
+figure, face visible, lit sparklers) and wired in kind_robots#5357. Riot ratchet drops
+to 0, so 300/300 cards now have curated L2+L3 art; the fallback test now checks
+precedence across every card. Remaining: signed-in keyboard/touch input run, real-
+controller gamepad check, re-capture after #5332, CLASH 300 closeout (t-041). Released
+back to ready.
+
+2026-11-19 PT DONE. Every row of PLAYER-HANDOFF-CHECKLIST.md is closed with evidence,
+and the tester handoff is PLAYTEST-HANDOFF-2026-11-19.md. Merged this cycle on
+kind_robots: #5372 (a production build break in another game's page, plus a CI guard
+that compiles every Vue template), #5376 (six Clash defects found by a signed-in real-
+browser pass), #5379 (CPU play evidence for all 300 cards, device-journey import, art
+delivery audit, tutorial copy for CLASH) and #5380 (UNDO label cut off beside TAP).
+Measured on production build db5d615, signed in as a non-admin test account: Clash
+layout audit 21 of 21 cases, keyboard-only and touch-only full matches. Measured on
+production earlier the same day: art delivery 1,485 of 1,485 manifest slots, a two-
+account duel 18 of 18 checks, a Journey chapter and a Tower climb walked in the browser,
+title screen at 390/768/1440/2560 and all five tabs at 390 and 1440. Reported for human
+play, not gated: no physical gamepad has been tried; the CPU picks six two-slot cards in
+under 3% of bouts and plays 237 of 300 cards at level three. t-014 moves to needs-human.
+<!-- note:end t-012 -->
+
 ## t-013 — Optional scope/course correction, final rules chosen after prototype comparison
 
 <!-- note:begin t-013 -->
@@ -713,6 +798,20 @@ contract shards + verifiers, layout-contract, Prettier, verify x2, GitGuardian).
 kindrobots.org after the next Unraid Force Update. Redo-3 for the 9 rejected tokens is
 t-042.
 <!-- note:end t-040 -->
+
+## t-041 — CLASH 300: individually crafted L1/L2/L3 effects for every existing card
+
+<!-- note:begin t-041 -->
+Silas, 2026-11-07 PT: "The ultimate goal will be crafted redesigns of all 300 cards." The authoritative full inventory is projects/slime-city/CARD-REDESIGN-300.md. Each existing catalog identity must have an individually authored journey, not generic L2/L3 stats or duplicated effects. One interesting payoff per card, strategic counterplay, deterministic battle fixture and replay, and CPU reachability audits. Keep all 300 IDs and six distinct crew identities; do not add cards, faction-hate, economy mutations, art or a publication without authorization. Finish original t-037's 70 designs first, then this umbrella governs the remaining 230 redesigns, tracking progress against the full roster. 2026-11-08 PT: Silas reviewed a first data-driven pass (kind_robots branch claude/pensive-albattani-ibljzj, commits b5a4093/5e7659b, never PR'd) and rejected the approach: "doing it programmatically has a big risk of just giving stat boosts to later game cards ... Do some research on good ccg design before moving forward and creating a plan." Also: "We should have fresh art on the evolutions, not just frame effects." Plan with research, design rules (trajectories instead of a universal stat ramp, L2 = new decision, L3 = named transformation with counterplay, faction tool ownership), per-level Flux Kontext art for all 300, and a 10-card Catgirls pilot gate: projects/slime-city/CLASH-EVOLUTION-PLAN.md. Awaiting Silas's answers to the plan's open questions before the pilot starts; the parked branch keeps only its engine hooks for reuse. Audit checkpoint: kind_robots #4907 has 300 merged custom evolutions. The default CPU sweep only uses fixed 20-card decks, so this session adds 300-card constructed-deck matchup coverage, mirrored seeds, reachability, duplicate-mechanic reporting and deterministic replays on a worker PR. Continue per-card balance and fun QA before accepting the full catalog. 2026-11-08 PT: Audited the merged 300 custom evolution arcs and shipped reproducible 1,230-match constructed Solo/Alliance QA in Kind Robots #4908 (squash f2a7a6e, all eight final-head workflow runs green). Solo first seat 49.6%, Alliance first seat 40%; 279/300 cards used, 160 at L3, 21 never selected, two exact mechanical arc duplicates. Conductor #7176 (squash 2e88f66) updates the 300-row ledger to 70 MERGED and 230 LIVE_QA and records findings in CLASH-EVOLUTION-QA-2026-11-08.md. Remain ready: resolve unplayed cards and duplicate paths, assess CPU evolution valuation, run larger constructed matchups and bespoke 230-card payoff fixtures. Human fun acceptance, art delivery and production deployment not claimed. Tactical evolution increment in review: CPU now values actual board-relevant staged effects and lasting gear instead of a generic arrival bonus; Bloodfairy Banana Bouncer becomes a swarm encore rather than an Ironjaw boss/heal clone, and Undertow Backwater IOU becomes three-lane stun rather than an Exchange splash clone. [...]
+[Earlier history (18,423 chars) archived verbatim to projects/slime-city/T041-HISTORY.md -- read it there only when you need a specific past cycle. Append new cycles below, one short paragraph each.]
+2026-11-18 PT: kind_robots #5316 adds a near-dead ratchet to constructed CLASH QA. The dead-card ceiling of 0 only means played once: on suite seeds 18 two-slot cards are chosen in under 3% of their bouts (Dress Rehearsal Pyro, Breeding Hunger, Glitterglass Flood, Twin Omens, Mark of the Procession, Bone Tithe Sigil, Juggernaut, Chimera, others; many 1-3 of 208-416). Held-out families +5000/+9000 read 17/19, and Twin Omens and Spare Nine Lives drop to zero plays there. Suite now fails on any one-slot card under 3% (lowest: Floodlight Leak, 3.4-4.3%) and caps near-dead two-slot cards at 18. Tried and dropped: Dress Rehearsal Pyro L1 stages (Riot +/-0.3 pts); Twin Omens L1 second omen (2 to weakest foe) revives it off-suite but strands Breeding Hunger on suite seeds. The Exchange two-slot spells crowd each other out, so they need a design pass, not per-card nudges. Riot is 43.6% (45.8/44.9 held-out), inside the band. Next: a two- slot special redesign to push the 18 down. Back to ready.
+2026-11-19 PT: MERGED kind_robots#5347 (squash e894b7e, head aa521ae; all 12 checks green). CLASH_CPU_TWO_SLOT_MARGIN 2 -> 0: the margin, not the cards, was starving most two-slot specials once #5315 lifted Riot. Constructed QA 3,120 bouts: near-dead two-slot 18 -> 8; held-out +5000 dead 2 -> 0, near-dead 16 -> 7; +9000 dead 2 -> 0, near-dead 17 -> 6. Crews 43.3-55.0% (Riot 43.3%), first seat 52.3%; riot/heavy 32.2 -> 27.9% is the deck to watch; 4,500-game starter balance report unchanged; ceilings ratcheted (18->8, held-out 2->0, 16->7). Still near-dead: Juggernaut, Chimera, Grease Oracle, Spare Nine Lives, Glitterglass Flood, Breeding Hunger, Compound Notice, Acquisition Clause. Next: CLASH-only L1 stage sparing the caster's adjacent fighters for the self-splash blasts (Glitterglass Flood, Dress Rehearsal Pyro), then per-card passes on the rest. Back to ready.
+2026-11-19 PT: kind_robots#5349 (head e4a813ab) adds CLASH_L1_CLEAN_SPLASH: level-one Glitterglass Flood and Dress Rehearsal Pyro spare the caster's adjacent fighters; friendly splash returns at L2/L3 where crafted stages already cut allies. Resolver and CPU splash valuation share clashSplashHitsAllies. Constructed QA: suite near-dead two- slot 8 -> 7; held-out +5000 7 -> 5, +9000 6 -> 5; 0 dead; crews/first seat unchanged; ceilings ratcheted. Still near-dead: Juggernaut, Chimera, Grease Oracle, Spare Nine Lives, Acquisition Clause, both Compound Notices (next: the Exchange notice cluster). Awaiting exact-head CI.
+MERGED kind_robots#5349 (squash 004e373, head e4a813a; all 12 checks green). Back to ready for the remaining near-dead cards.
+2026-11-19 PT: MERGED kind_robots#5367 (squash f4ee2b9, head 5f726ea; all 12 checks green). Level-one Twin Omens (s3-exchange-compound-notice) gains 'The Second Omen': 1 damage to the target's adjacent foes, previewing the L3 cross default. Constructed QA 3,120 bouts: suite near-dead two-slot 7 -> 6 (Twin Omens off); held-out +5000 0 dead / 5 near-dead unchanged (Twin Omens still there); crews 43.4-55.1%; ceiling ratcheted 7 -> 6. Still near-dead: Juggernaut, Spare Nine Lives, Chimera, Grease Oracle, Acquisition Clause, Breeding Hunger. Next: Breeding Hunger/Acquisition Clause (Exchange two-slot cost-4/5 spells). Back to ready.
+2026-11-19 PT closeout pass (kind_robots#5379, in CI): cross-checking the two QA suites showed 298 of 300 cards with CPU play evidence. Reveal the Ledger was a dead draw without a rival trap and Secondhand Halo spent a whole turn on regen alone; each gets a level-one payoff (1 to the weakest foe; heal the target 1). The 300-card matchup suite now plays 294; the other six are fielded and proven played in the constructed suite, and both suites share lib/slimeCityCpuReach.ts so no card can lose its play evidence unnoticed. Constructed QA unchanged (3,120 bouts, 0 dead, 6 near-dead two-slot, held-out 0 dead and 5 near-dead). Finish line for this task: every card has a crafted journey run through the engine, an individual editorial review, L2 and L3 art, and CPU play evidence. The six cards the CPU picks in under 3% of bouts (Maw-9000, Madame Chimera, Spare Nine Lives, Grease Oracle, Mark of the Procession, Breeding Hunger) are reported in the playtest handoff as a question for human play, not held as agent work. In review until #5379 merges; the 300-row ledger is promoted in the same close-out.
+2026-11-19 PT: MERGED kind_robots#5379 (squash 5b715a7, head aab8f14; all 15 checks green). Reveal the Ledger and Secondhand Halo each have a level-one payoff, the 300-card matchup suite plays 294 cards, the constructed suite proves the other six, and both share lib/slimeCityCpuReach.ts. CARD-REDESIGN-300.md promotes the 230 LIVE_QA rows to QA_PASSED with the evidence and states what is not claimed: the CPU plays 237 of 300 at level three, six two-slot cards are picked in under 3% of bouts, and fun is t-009/t-014. Done. Further card tuning comes from human play as playtest_iteration tasks.
+<!-- note:end t-041 -->
 
 ## t-043 — Lizard people replace the ogres: reskin the Ironjaw crew's names, flavor and rules text
 
@@ -1454,6 +1553,159 @@ kind_robots#5159 as story['exchange/scene-the-closing-of-the-book']
 plates are now live; t-062 complete.
 <!-- note:end t-062 -->
 
+## t-063 — Main-game standard: audit and close the gaps for Slime City
+
+<!-- note:begin t-063 -->
+Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
+
+AUDIT DONE 2026-11-12: projects/slime-city/STANDARD-AUDIT-2026-11-12.md holds the Met/Partial/Missing table, a proposed achievement list with award points, character-fit notes and the three smallest next PRs. Start there.
+
+Start with the audit table from docs/agents/main-game-standard.md (title screen; settings menu; save/load and persistent progress; 12+ achievements; scrapbook; multiple endings with painted plates; customizable characters; 3+ replay hooks), marking each Met / Partial / Missing with evidence (file, route, live record). Put the table in this note and the first PR. Then close each gap in small CI-tested PRs; queue any needed ending, scrapbook or portrait art in an auto_submit ledger.
+
+Item 7 (customizable characters) applies "in most cases": if this genre makes it a poor fit, say so in the audit with the reason and leave it for Silas rather than skipping silently.
+
+Achievements are tracked by their own task; this one covers everything else.
+
+Guest story persistence implemented in kind_robots PR #5058 (validated device-local save and restore, corrupted/blocked storage tests). CI was queued at handoff, not merged. Continue title Continue control and settings after this PR is green; account import remains a separate design decision.
+
+2026-11-12 PT reconcile: kind_robots#5058 (guest story persistence) merged
+2026-11-12T04:43Z, one slice of this umbrella. Released the expired 02:52Z claim back to
+ready, not done: still open per the audit are the title-screen Continue control and the
+settings menu (plus any other Partial/Missing rows in STANDARD-AUDIT-2026-11-12.md).
+Next claimer: start at the Continue control.
+
+2026-11-12 PT, recovered stale review event: Added saved-Journey Continue control to the existing art-first title screen. It appears only after story hydration and a won chapter, preserves the saved crew when roster preview changes, and opens the existing campaign flow. Review PR CI and UI verification; main-game standard umbrella remains unfinished.
+
+2026-11-13 PT intent audit (INTENT-AUDIT-2026-11-13.md): status was review for ~36h with
+no open PR in kind_robots or conductor and remaining scope listed above; returned to
+ready so pickers can take the next slice. No work discarded.
+
+Added persistent, device-local default Clash deck format with invalid/blocked storage handling and Pinia regression coverage. Implementation branch worker/slime-city-t-063-default-format-7f4c9a; awaiting PR checks. Remaining main-game settings and acceptance work stays open.
+
+Slime City default Clash deck preference merged in kind_robots PR #5132 (squash ea92b51b50e685006642afa00fee26a48c985125) after six completed successful workflow runs on e19e7c1. Remaining t-063 settings and main-game standard gaps are not complete; return umbrella to ready for the next settings increment.
+
+2026-11-14 PT settings slice: persisted REDUCED MOTION toggle in Slime City settings
+(store-owned, device-local kr-slime-city-reduced-motion-v1; calms shell
+animations/transitions and uses the quicker Clash pace) in kind_robots#5156, store test
+extended; test:slime-city-lab fail 0. Still open per STANDARD-AUDIT-2026-11-12.md: text
+size, high contrast, reset progress with typed confirmation, an in-play settings entry,
+and the title-console Scrapbook/Achievements tiles.
+
+MERGED 2026-11-14 PT: kind_robots#5156 squash 06d6ce5 after 11/11 checks green. Umbrella
+stays ready for the next settings slice.
+
+2026-11-14 PT settings slice: persisted LARGE TEXT toggle (store-owned, device-local kr-
+slime-city-large-text-v1; zoom 1.15 on the console shell because type is rem-sized) in
+kind_robots#5163, store test extended. Still open per STANDARD-AUDIT-2026-11-12.md: high
+contrast, reset progress with typed confirmation, an in-play settings entry, and the
+title-console Scrapbook/Achievements tiles.
+
+2026-11-14 PT settings slice: persisted HIGH CONTRAST toggle (store-owned, device-local
+kr-slime-city-high-contrast-v1; black backdrop, muted body copy to white, solid control
+outlines, focus ring, no CSS filter) merged in kind_robots#5165 squash 5866568 after
+13/13 checks green; store test extended. Still open per STANDARD-AUDIT-2026-11-12.md:
+reset progress with typed confirmation, an in-play settings entry, and the title-console
+Scrapbook/Achievements tiles.
+
+2026-11-14 PT settings slice: RESET PROGRESS with typed RESET confirmation merged in
+kind_robots#5168 squash 8fcc214 after 13/13 checks green. Guests clear this device's
+journey (store-owned clearGuestSlimeStory + resetGuestJourney, rehydrates a fresh city);
+signed-in account saves are never reset here (server-side reset needs its own design).
+Guest-save and store tests extended; test:slime-city-lab exit 0. Still open per
+STANDARD-AUDIT-2026-11-12.md: an in-play settings entry and the title-console
+Scrapbook/Achievements tiles.
+
+2026-11-14 PT title-console slice: Achievements panel (slime-city GameAchievementStrip)
+and Scrapbook button (opens Journey endings gallery) added to the splash corner console
+beside Settings, in kind_robots#5169. Source contract in verifySlimeCityClash.test.ts.
+Local hydrated screenshots blocked: /play/slime-city redirects to /login without a DB.
+Still open per STANDARD-AUDIT-2026-11-12.md: an in-play settings entry (Clash HUD gear)
+and the remaining settings controls.
+
+2026-11-14 PT: kind_robots#5169 merged (squash 757b2a7) after all checks green. Re-armed
+ready for the next slice: in-play settings entry (Clash HUD gear) and remaining settings
+controls.
+
+2026-11-14 PT in-play settings slice: Clash HUD gear (components/slime-city-quick-
+settings.vue, beside LOG) opens a panel over the board with sound/music/effects/reduced
+motion/large text/high contrast, calling the same store setters as the title settings
+screen; never leaves or pauses the fight. Source contract in
+verifySlimeCityClash.test.ts. MERGED kind_robots#5171 squash 7260622 after 13/13 checks
+green. Still open per STANDARD-AUDIT-2026-11-12.md: reading/animation speed setting,
+mid-Clash Tower/VS resume on reload, account import of guest saves (design decision).
+
+2026-11-14 PT settings slice: persisted CLASH SPEED (relaxed 1.6x / normal / quick 0.4x;
+device-local kr-slime-city-clash-speed-v1) on the title settings screen and the in-play
+Clash HUD gear. Clash pace is now computed live, so changes apply on the next beat.
+Reduced motion still caps it at quick. MERGED kind_robots#5172 squash e364bf3 after all
+checks green; test:slime-city-lab exit 0 locally. Still open per STANDARD-
+AUDIT-2026-11-12.md: mid-Clash Tower/VS resume on reload, and account import of guest
+saves (design decision).
+
+2026-11-14 PT save/load slice: MID-FIGHT TOWER RESUME. Each Tower move is kept device-
+local (kr-slime-city-tower-bout-v1: launch + Clash command log, strictly validated).
+Reload keeps the floor in battle when the record matches account/run/floor, and RETURN
+TO BATTLE replays the moves onto the same deal. With no record (other device/cleared
+storage) it still forfeits. Rewarded bouts are still server-replayed. MERGED
+kind_robots#5173 squash 1626d0e after 12/12 checks green. Tests are in
+verifySlimeCityAllianceTower.test.ts and test:slime-city-lab exits 0. Still open per
+STANDARD-AUDIT-2026-11-12.md: CPU VS match resume on reload, and account import of guest
+saves (design decision for Silas).
+
+2026-11-14 PT save/load slice: VS CPU MATCH RESUME. Each VS practice/reward move is kept
+device-local (kr-slime-city-vs-bout-v1: frozen launch + command log, strictly validated,
+account-scoped, 24h server settlement window). The VS screen shows RESUME MATCH /
+ABANDON; resuming replays the moves onto the same deal, and reward matches are still
+paid only by the server's replay. MERGED kind_robots#5174 squash aa7fe71 after 14/14
+checks green; test:slime-city-lab exit 0 locally (new verifySlimeCityVsResume.test.ts).
+Still open per STANDARD-AUDIT-2026-11-12.md: account import of guest saves on sign-in
+(audit D1 proposes an offer-to-import prompt). That is the last save/load gap.
+
+2026-11-14 PT reconcile: title, settings and save/load slices are all merged (last:
+kind_robots#5174 VS resume). The only remaining t-063 gap is account import of guest
+saves on sign-in, which earlier slices flagged as Silas's call. QUESTION FOR SILAS: when
+a guest signs in with a device-local Slime City journey, should we (a) offer IMPORT only
+when the account story is still fresh (no chapters won), copying
+campaign/journey/endings/scrapbook/decks but NOT tower cinders/bestFloor (those are
+server-rewarded, so importing them would let guest play mint account currency); (b) also
+import tower meta; or (c) never import (guest stays device-only)? Recommendation: (a).
+Also open per audit section B: whether crew + deck choice counts as item 7 (customizable
+characters). Achievements (t-060) and scrapbook (t-059) are tracked separately.
+
+2026-11-15 gate-legitimacy triage (check_gate_legitimacy NO_GATE_BASIS): this is a direction question, not a hard gate. The only open item is guest-save import on sign-in. The question for Silas is in the note above: (a) offer import only into a fresh account story, without tower cinders or bestFloor (recommended); (b) also import tower meta; or (c) never import. Re-parked as a soft gate so it stops reading as a blocking hard gate with no basis. Every other audited title, settings and save slice is merged (last: kind_robots#5174). Achievements are t-060 and the scrapbook is t-059.
+
+2026-11-15 PT daily-delivery:2026-11-15/slime-city-duel-invite-card | PR:
+silasfelinus/kind_robots#5209 (merged c24cef2, CI green) | /play/slime-city-pvp (shared
+?duel= invite links) had no social meta; it now has a slime-city-pvp preview entry and a
+code-drawn 'You have been challenged' card that never promises no-account play; test
+wired. Gate unchanged.
+
+2026-11-16 PT daily-delivery:2026-11-16/honest-gated-share-cards | PR:
+silasfelinus/kind_robots#5248 | Slime City share card said 'free in your browser' but the route
+requires sign-in; card text and raster now say 'Sign in free to play'. Same pass relabels
+admin-only Tzaddik, Daily Pitches, Comic Studio, Art Archive and Butterfly Gallery cards as
+private preview; verifyFrontDoorPolish.test.ts derives gates from content frontmatter.
+
+2026-11-19 PT: back to ready. Silas has not picked (a), (b) or (c). In session today he
+made the session responsible for finishing every non-human Slime City task before
+playtest, so it is building the written recommendation (a): offer IMPORT only into a
+fresh account story; copy campaign, journey, endings, scrapbook and decks; never tower
+cinders or bestFloor. Reversible, and reported to him as an agent decision he can
+change. Item 7 is recorded as crew + deck choice plus the equipable card backs and
+titles (t-061, t-065).
+
+2026-11-19 PT: device-journey import built and MERGED in kind_robots#5379 (squash
+5b715a7; all 15 checks green; reviewed there with the other two commits). When an
+account's own story is fresh and this device holds a journey with progress, the title
+screen offers to copy it in: city, campaigns, journey seat, decks, endings, scrapbook
+and cosmetics. The Tower legacy and any Tower run are never copied, the device copy is
+untouched, and Not now hides the offer for the visit. verifySlimeCityGuestImport.test.ts
+is in test:slime-city-lab; a real-browser check on a local build confirmed the offer,
+the saved account story (2 wins, 1 ending, account Tower, account revision) and both
+cases where it must not appear. Every row of STANDARD-AUDIT-2026-11-12.md is now met, taking item 7 (customizable characters) as crew and deck choice plus the equipable card backs and titles.
+Done. Option (a) was an agent decision: Silas can ask for (b) or (c).
+<!-- note:end t-063 -->
+
 ## t-064 — CPU values PIERCE gear only against armor, then rebalance Undertow and Bloodfairies starters
 
 <!-- note:begin t-064 -->
@@ -1520,6 +1772,68 @@ Found 2026-11-15 PT during t-017 verification: at a 1440x900 viewport, VS-vs-CPU
 
 Reviewer 2026-11-15 PT: kind_robots#5210 squash-merged as 0c93ed7c5d345346cd4fde297f3635bf8675a45b after all six Actions workflows and all four Contract Test shards completed successfully. Diff limited to components/slime-city-clash.vue and utils/scripts/verifySlimeCityClash.test.ts. Source-level rail containment verified in regression test. Production is self-hosted: deployment and 390/768/1440 pixel screenshots remain unverified, not a blocking human gate.
 <!-- note:end t-068 -->
+
+## t-069 — Real-browser regression: FIGHT stays inside Clash sidebar at 390/768/1440
+
+<!-- note:begin t-069 -->
+Reviewer kaizen from slime-city/t-068, kind_robots#5210 (squash 0c93ed7). The 1440px control strip overflow is addressed by a CSS/source contract, but source matching cannot prove real DOM geometry. After the self-hosted production image includes the merged commit, run the sanctioned real-browser layout audit at 390, 768 and 1440 pixels on VS-vs-CPU Clash, with and without an available TAP ability. Assert data-testid=clash-pass stays fully inside .clash-console and the viewport, save screenshots, and regression-test the measured bounds in the existing Slime City layout/audit harness. Do not claim the result from static CSS checks or a Vercel preview (retired).
+
+2026-11-15 PT: Added Playwright audit that enters player VS-vs-CPU and measures FIGHT containment at 390/768/1440, plus an extra TAP-width layout fixture, screenshots, npm command, scheduled production workflow, and Clash contract guards. Implementation branch worker/slime-city-t-069-clash-browser-audit-20261115T1130Z-c4f27. CI and runtime browser audit have not yet completed; self-hosted deployment and actual pixel results must be verified separately.
+
+2026-11-15 PT intent audit (INTENT-AUDIT-2026-11-16.md): the harness merged in
+kind_robots#5212, but the production pixel check has never run. Every daily Responsive
+Layout Audit run since at least 11-12 PT (runs 43300254868, 43497639896, 43626817456,
+43750478367) hits the 60-minute job timeout in the 'Audit responsive layout' step, so
+'Audit Slime City Clash controls' is skipped. Released from a stale review claim to
+ready. Done when a real run of audit:slime-city-clash-layout against production passes
+at 390/768/1440. Run it via workflow_dispatch or a dedicated lane once interface-
+vision/t-154 (audit timeout) lands.
+
+2026-11-16 PT: the production Clash audit finally ran (Responsive Layout Audit run 43828805291, controls job, after interface-vision/t-154 / kind_robots#5239). Phone 390 passed with FIGHT inside the console (rail 153-374, fight 282-368; with TAP: tap 171-239, fight 282-368). Tablet 768 and desktop 1440 timed out waiting for slime-vs-tab / slime-vs-fight-cpu. Reproduced locally: /play/slime-city has requiredPermission: authenticated (content/channels/arcade/slime-city.md), and an anonymous browser is redirected to /login?redirect=/play/slime-city a few seconds after hydration at every width. Phone passed only because it finished before the redirect. Not a layout defect: the audit needs a signed-in session. Silas decision: provide a low-privilege production audit account (e.g. secrets KR_AUDIT_USERNAME/KR_AUDIT_PASSWORD) for auditSlimeCityClashLayout.mjs to sign in with, or allow anonymous play of Clash. The only existing credential is CYPRESS_BETA_ADMIN_TOKEN, and an admin token is deliberately not used against production. Phone geometry is not counted as a pass because the redirect raced it.
+
+2026-11-17 PT: Silas asked whether an API key works. It doesn't, as the code stands. A
+user apiKey authenticates API calls (server/utils/authGuard.ts validateUserApiKeyAuth),
+but /play/slime-city's authenticated guard needs a browser session: a JWT from
+/api/auth/login.post.ts (username + password), checked by /api/auth/validate/token.ts,
+which rejects anything that isn't a JWT. The ask is unchanged: a non-admin production
+account stored as kind_robots Actions secrets KR_AUDIT_USERNAME and KR_AUDIT_PASSWORD.
+After that, the agent work is: auditSlimeCityClashLayout.mjs signs in through
+/api/auth/login (it has no login step today), and the controls job in responsive-layout-
+audit.yml passes the two secrets through. Alternative with no secret: Silas allows
+anonymous Clash play.
+
+2026-11-19 PT re-triage: the done criterion (a real signed-in run of audit:slime-city-
+clash-layout against production at 390/768/1440) needs no new secret.
+docs/agents/frontend-verification.md documents the disposable cypress-* test-user sign-
+in, and kind_robots#5332's verification already used it. Back to ready so a session can
+add --storage-state to the layout audit, run it signed in against production and record
+the measurements. Whether the scheduled workflow gets its own signed-in session needs a
+secret, stays Silas's call and is not part of this task.
+
+2026-11-19 PT: signed-in production run done (build bf47039, disposable cypress-* test
+user, removed afterward). In-play controls pass at 390/768/1440 with and without TAP:
+rail 153-374 / 527-748 / 1083-1419, FIGHT 282-368 / 656-742 / 1284-1410. The same run
+found the result controls broken after a match: on phones BACK/REWARDS/REMATCH run the
+console to 20-491px in a 390px viewport and drag the board sideways; on the desktop rail
+all three labels clip. kind_robots#5376 fixes that, extends the audit to play a match
+and measure the result controls at all three widths, corrects the VICTORY!-on-a-loss
+banner and negative boss health, and lets the audits sign in (storage state or a non-
+admin KR_AUDIT_USERNAME/PASSWORD account; no admin token in the workflow). Fix verified
+on a local build at 390/412/768/1280/1440/2560; production re-run follows the next
+deploy. In review.
+
+2026-11-19 PT: MERGED kind_robots#5376 (squash 16fd717, head 02a923c; all 14 checks
+green, including the production image build). Six defects fixed: held card covering the
+middle alley on wide screens, crew powers sliding under the control strip at laptop
+heights, result buttons overflowing on phones and clipping on the rail, VICTORY! shown
+on a loss, negative boss life, and a sign-in prompt shown to a signed-in local-play
+account. The layout audit now also holds a card at each width, measures the rail at
+1440x780, 1366x768 and 1280x720, and plays a match to measure the result controls.
+Original criterion met on production bf47039 (FIGHT inside the console at 390/768/1440,
+with and without TAP). The new checks fail on that build, as they should, and pass on a
+local build of the merged code at up to ten sizes. Done; the production re-run of the
+extended audit follows the deploy of 16fd717 and is recorded on t-012.
+<!-- note:end t-069 -->
 
 ## t-070 — Mercenary L2-to-L3 tactical continuity and constructed-selection audit
 

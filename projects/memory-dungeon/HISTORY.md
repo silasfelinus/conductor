@@ -9,6 +9,13 @@ Each note below is the **verbatim** original — nothing is summarized or trimme
 markers delimit each note exactly; `archive_done_task_notes.py --verify-only` re-extracts
 every note and checks it byte-for-byte against what the roadmap recorded.
 
+## t-002 — Optional scope feedback on story and complexity
+
+<!-- note:begin t-002 -->
+FOR SILAS: nonblocking opportunity to steer The Forgotten Depths' setting, recurring cast and weapon geometry. Continue reversible work immediately; do not require approval as a prerequisite. This is not production deploy/public release approval.
+2026-11-21 PT gate-triage re-check: this optional, non-blocking request for story/complexity steering has been answered by Silas's later standing direction in CONTROL.md (2026-10-23 PT 16-overworld canon and build order; 2026-10-30 PT twelve- overworld production cap, e07/e08 Vesper/horror direction and reimaginer/Char canon). No outstanding human question remains, so the gate is closed as answered rather than re- stamped. Any future steering arrives through CONTROL.md; approved_by_human left unset.
+<!-- note:end t-002 -->
+
 ## t-006 — Spatial weapon combat specification and shape-playtest prototype
 
 <!-- note:begin t-006 -->
@@ -51,6 +58,38 @@ First Briar Camp vertical slice implemented on Kind Robots worker branch: fixed 
 kind_robots#4044 merged 2026-10-23T00:39Z (merge recorded under silasfelinus): Briar Camp 8x8 overworld with progressive reveal, named sites, Rootbound Vault gallery-image match rooms, Bramble Chime and east-gate payoff, versioned browser save/resume, and one shared deck launcher for Classic Match and the RPG. Classic Match preserved; verifyMemoryWorld.test.ts in contract CI. No production deploy claimed.
 <!-- note:end t-018 -->
 
+## t-020 — Finish playable prologue and current twelve-world start flow
+
+<!-- note:begin t-020 -->
+2026-11-13 PT ALPHA RESET: Silas confirms zero players. Stop legacy e13-e16 save migration, archival preservation and backwards-compatibility test work; resetting admin/test saves is acceptable. Focus on playable cinematic prologue, character choice, first meaningful action, current-version save/resume and Classic isolation. Do not erase production data without separate approval.
+2026-11-11 PT remaining: Verify intro/prologue and legacy e13–e16 archival saves, never treat old 16-world routing as current. Evidence: RESET-TASK-EVIDENCE-AUDIT-2026-11-10.md (t-020 row).
+Source: SIXTEEN-REALM-PRODUCTION.md. Replace former provisional Forgotten Depths opening with a modern Earth data-researcher life exchange with Morrow. Preserve Classic, BRIAR_START, gallery choices, existing 13 scenes and save keys or migrate them deliberately. Intro is skippable, cinematic and androgynous; first choice inside 90 seconds. Add verified character canon for mermaid twins Scylla/Char and Oren the permanently hooded headsman/logistics expert. Implement a playable opening on /play/memory, test save/Classic preservation, and create ArtJob requests or honest art placeholders.
+First playable modern-world Morrow prologue and Scylla/Char/Oren early scenes on kind_robots worker branch. Compatibility and restoration tests included. Full t-020 character/art work is staged to continue after this scoped slice.
+Kind Robots PR 4089 merged at 7c29e269 with a playable Morrow prologue, persisted origin choice, and Scylla/Char/Oren encounter callbacks. All 14 PR workflows passed. Remaining full character visuals, new ArtJobs and device QA are not done.
+Partial compatibility/adversarial increment: original House save restoration now requires earned Rootbound Warden clearance before accepting HD-33; regression tests cover forged connected visits, valid petitions, disconnected victories, and the independent HD-26 testimony shortcut. Kind Robots PR and exact-head CI follow. Character art, full t-020 canon visuals, and rendered acceptance remain outstanding.
+Merged Kind Robots PR #4433 (squash 7140e91432d009a1b33c9c3530395a9014582805): House save restoration now rejects HD-32 to HD-33 visits without Warden clearance, while preserving valid petitions and the independent HD-26 testimony bypass. Five scoped files changed. Exact head 309a29e9e2c1e14691fb592ccc63c4e7d3965124: all 14 Actions workflows succeeded, including four contract shards, TypeScript, formatting and Memory Dungeon browser interruption. Initial fixtures were repaired to encode legitimate earned Warden victories. No new ArtJobs or deployment. t-020 remains active: complete character art/portrait delivery, remaining compatibility inventory and 390/768/1440 rendered device acceptance.
+Scoped Dark Briar save-provenance repair prepared: mirrored scene choices now require visited sites, not merely revealed tiles. Regression tests cover forged witness, shortcut and courier choices and legitimate checkpoint restoration. Await exact-head CI and merge; character art and rendered acceptance remain open.
+2026-10-29 6:01 AM PT: Merged kind_robots PR #4434 (f5a1eaf2dfaba5a96648aff738564f08929fc0b1) fixing mirrored Dark Briar save restoration that accepted scene choices from revealed but never visited sites. [...]
+[Earlier history (4,470 chars) archived verbatim to projects/memory-dungeon/T020-HISTORY.md -- read it there only when you need a specific past cycle. Append new cycles below, one short paragraph each.]
+Scoped v1 Earth/sea save migration now preserves the recorded order of player decisions, validates replayed flags and resource totals, and retains all revealed side passages and final position. Focused Kind Robots PR and exact-head CI follow; character art and rendered device acceptance remain open.
+2026-10-31 PT: Merged Kind Robots PR #4571 (squash 426c459e74e6db74be424b6eccd66d10bb34f3d8) after all 14 exact-head workflows passed on 0715a51201ed64624214840a8fc2f0830837b807, including Contract Tests #41266874630 (four shards plus verifier), TypeScript #41266874631, changed-file formatting #41266874699 and Memory browser interruption #41266874668. Legacy v1 e03-e06 migration now replays decisions in original order rather than DFS map order, preserves all revealed branches/final position, and rejects changed flags or supplies/trust/evidence/danger. Four-reality adversarial tests cover reordered choices and tampered totals. No new ArtJobs, schema changes, deployment or rendered-device acceptance. Return READY for remaining character art, save compatibility inventory and 390/768/1440 acceptance; Memory Dungeon remains ACTIVE, master #4136 open.
+Focused legacy v1 Earth import integrity patch: reject snapshots whose normalization would discard saved coordinates, decisions, flags or resource totals, with chapter-local reset notice and four-reality adversarial regressions. Kind Robots worker PR and exact-head CI follow; character art and device QA remain open.
+2026-10-31 PT: Merged Kind Robots PR #4573 (squash 3c35faa549d265f055cede06654e6f2d8a4a8e48) after all 15 exact-head workflows passed on 4c7773796498d00fd1b96f9d144f72bc66a4d63e, including Contract Tests #41270496320 (all shards/verifier; verifyMemoryEarthAct executed), TypeScript #41270496310, formatting #41270496312 and Memory browser #41270496490. Legacy e03/e04 v1 snapshot validation now rejects normalization that would silently discard revealed coordinates, decisions, flags or resources, with chapter-local reset notice. Four-reality adversarial regressions added. Master issue #4136 updated (comment 6553091216). No new ArtJobs, deployment or visual acceptance. Return READY for character art, broader compatibility and rendered-device QA; project remains ACTIVE.
+2026-11-04 PT cleanup pass: released an expired claim (no activity since the claim, no open PR found for it); back to ready.
+
+Authored a twelve-world legacy-save compatibility matrix with nine executable acceptance cases, explicit e13-e16 archival retention, Rowan/Pip identity distinctions, Char causal lead selection, and Classic/Chronicle preservation. Conductor PR pending; runtime migration, artwork and browser QA remain unfinished.
+
+2026-11-20 PT: stale claim/review released to ready (Silas, in session: "you are likely
+the only agent working on this project currently, so any claimed roadmap items are
+likely stale"). Playtest-ready means the complete twelve-world game; see
+ASSESSMENT-2026-11-20.md for this task's gap.
+
+2026-11-20 PT remaining met: the twelve-world start flow is complete. kind_robots#5406
+adds the six-panel illustrated opening before the prologue choice; e01 to e12 are
+reachable in order, and e11/e12 open from the overworld (#5405). Verified on production
+at 390/820/1440 (HANDOFF-2026-11-20.md). Opening plates are queued in PART-4.
+<!-- note:end t-020 -->
+
 ## t-021 — Implement Briar Marches 64-square authored map and reachable graph
 
 <!-- note:begin t-021 -->
@@ -88,6 +127,23 @@ Added a reusable runtime realm-manifest validator and CI contract for all 64 Bri
 
 Completed reusable runtime content-manifest validation for all 64 Briar locations and 36 House rooms, covering duplicate coordinates/sites, unreachable nodes, choices and persistent outcome keys, scene-specific art briefs and honest pending/queued/delivered ArtJob claims. Broken-manifest regression fixtures are part of the required CI shard. Merged Kind Robots PR #4215 at e680afb0f7749fa7fa282bfa0115b0b11415174f; all 12 PR workflows, including four contract shards, TypeScript and Prettier, completed successfully. This uses executable Kind Robots registries instead of duplicating Conductor's editorial Markdown registry; editorial drift is a separate follow-up. No actual image delivery, visual QA or production deployment was verified.
 <!-- note:end t-032 -->
+
+## t-034 — Polish World One as a complete one-screen console with save slots
+
+<!-- note:begin t-034 -->
+2026-11-11 PT remaining: Confirm rendered single-screen 390/768/1440 UI, save slots and end-to-end World One acceptance. Evidence: RESET-TASK-EVIDENCE-AUDIT-2026-11-10.md (t-034 row). Play all four reveal waves through the 64 fixed-location forest and 36-room House while building a cinematic, responsive, art-led single-screen front end. Preserve Classic and existing saves. Add explicit new/save/load slots with guarded overwrite, first-play intro, accessible dialogue portrait stage, non-generic backgrounds, scene-to-fight transitions and stage navigation. Validate refresh during card turns, battles and branching outcomes. User must experience game screens, never nested webapp panels.
+Scoped interrupted-flip reload repair: recover one face-up card or settle a completed matching pair from a valid saved animation frame; close mismatches and reject malformed exposed faces. Three-file Kind Robots PR pending CI. World One save slots, visual acceptance and full campaign remain open.
+2026-10-27 PT: Kind Robots PR #4293 merged at 01439146cb408fce151608be47ca271e9a0f6e03 after all 13 workflows and 18 exact-head checks passed (head 18ec04636cec662bff43afa085aa24f54400e09f). Valid single map flips and already successful two-card reveals now survive browser reload; mismatches and malformed saves reset safely, without duplicate attempts. Tests cover replay, corrupted faces and wave completion. Master issue #4136 comment 6436707958 has evidence. No ArtJobs or deployment. Return READY: guarded save/load slots, browser animation/device tests and visual art acceptance remain. Not For Human Gate.
+Focused three-slot checkpoint implementation on worker/memory-dungeon-t-034-manual-checkpoints-f7d2c: versioned whole-expedition snapshots, overwrite/load confirmation, corruption rejection and source-backed regression tests. PR/CI pending; t-034 remains incomplete.
+2026-10-27 PT: Kind Robots PR #4294 merged at b4fbcb97fb80e406a24dd71f7ac4f11934596c4e after 18/18 exact-head check runs succeeded (head 230dec7c60d4c2a79ef37d04cb308600e975fdd9; contract shard 1 executed verifyMemoryWorld.test.ts, TypeScript and Prettier green). Three manual, versioned, guarded expedition slots now snapshot original/mirrored Briar, Houses, campaign and cross-map seals; Chronicle/gallery unlocks remain persistent. Initial formatting failure fixed and complete final-head checks passed. No new ArtJobs or deploy. [...]
+[Earlier history (3,639 chars) archived verbatim to projects/memory-dungeon/T034-HISTORY.md -- read it there only when you need a specific past cycle. Append new cycles below, one short paragraph each.]
+Scoped adversarial save-restoration hardening: reject inherited JavaScript prototype keys masquerading as original/mirrored House rooms. Both restore paths, room lookup and regression tests updated. Kind Robots PR and exact-head CI pending.
+2026-10-28 PT: Merged Kind Robots PR #4419 (82bd84f8457d98f1e15b4c79ad43175c574f3b8b) after all 14 exact-head workflows passed on 4ccdde8d011d657cd349de0cead7d3f6f9c01a1b. Both House save restorers and room lookup now reject inherited prototype-key fake room IDs; adversarial tests cover constructor, toString and __proto__, fake decisions and mirrored challenges. Master issue #4136 comment 6484865403 has evidence. Branch deleted. No new ArtJobs or deployment. Return READY for graph-aware traversal, House atlas delivery and rendered console QA; not For Human Gate.
+Focused graph-aware House save-restoration increment prepared in Kind Robots: original and mirrored chambers must connect through authored passages from HD-01; Scylla's earned service shortcut is preserved. Forged distant Hearth and mirrored verdicts are stripped, while adjacent legacy current rooms survive. Focused PR and exact-head CI verification follow. Full rendered device QA, painted House atlas delivery, and campaign acceptance remain open.
+2026-11-05 PT game-sprint: an adversarial World One store playtest found and fixed a save-loss bug. Players answer the four cross-world seal scenes (1,1 / 5,2 / 8,1 / 8,8) from the round-four sigil inspector, but restoreBriarSave dropped those answers on every reload or checkpoint load, because those squares are never revealed or visited. New utils/scripts/verifyMemoryWorldOnePlaytest.test.mjs drives the real Pinia store through every UI-reachable World One action with five seeded personas (20 runs, about 37k actions, about 2.4k reloads and checkpoint swaps). It found no softlocks and no negative or NaN resources; Briar and House saves restore unchanged; every speedrunner opens the gate; all three Hearth endings are reached. The Kind Robots patch (base 00cdc524) has gone to the coordinator, who will push it as branch worker/memory-dungeon-t-034-world- one-playtest-gs and open the PR. Still open for t-034: rendered phone/tablet/desktop console QA and acceptance of the painted House atlas. Next: run the t-036 personas on this harness once the t-035 art lands, or extend the harness to Dark Briar and the Dark House now.
+2026-11-04 PT: seal-answer save fix and World One adversarial store playtest merged as kind_robots #4776 (squash 8d1e8ed). Still in review pending rendered phone/tablet/desktop QA.
+2026-11-20 PT remaining met: single-screen World One console rendered at 390/820/1440 on production with no page scroll; manual save slots and reload -> Continue verified in the browser; npm run test:memory-world-one-playtest passes (20 seeded runs, 0 softlocks).
+<!-- note:end t-034 -->
 
 ## t-041 — Hoshimori e07 warm folklore: playable 16-site proof, Pip youth thread and first oven rooms
 
@@ -192,6 +248,32 @@ Scoped illustrated-fog, center-beacon and hidden-story-diamond changes prepared 
 
 2026-11-02 11:50 AM PT: Reviewer merged Kind Robots PR #4642 (squash 73f7f8004e69e24c66f863730c81a175d718a836) after seven completed exact-head green workflows on 37c06b07890e1ca90c5973617a0bd73c01b01ee7. Fog is a cohesive coordinate-aligned SVG fallback, action beacons are larger and centered, story diamonds removed, reduced motion retained; 390/768/1440px post-deploy pixel QA and production-painted map art remain in t-046/t-045. No ArtJobs or deployment.
 <!-- note:end t-048 -->
+
+## t-049 — Memory Dungeon character match deck erroneously reports zero images
+
+<!-- note:begin t-049 -->
+2026-11-11 PT remaining: Verify character with existing art displays actual matches in live UI, including no-art fallback and saved deck. Evidence: RESET-TASK-EVIDENCE-AUDIT-2026-11-10.md (t-049 row).
+FROM GITHUB ISSUE silasfelinus/kind_robots#4682 (https://github.com/silasfelinus/kind_robots/issues/4682), opened by @silasfelinus on 2026-11-02. Imported by scripts/sync_github_issues.py. Reference the issue in the implementing PR (`Closes silasfelinus/kind_robots#4682`) so it closes on merge; the bridge closes it otherwise once this task is done.
+
+User reproduced in `/play/memory` with Kind Robots > Characters and Non-mature: round 3 needs eight art faces but says zero despite populated Character artwork. Root source: `resolveMemoryDungeonDeck()` consumes `characterStore.characters` (small by-ID detail cache) instead of `browseCharacters` (full list). Its ArtImage verification also assumes every linked image is present in the artStore's partial/local image cache, silently excluding otherwise usable records. Fix both, preserve mature/private restrictions, validate browser loading, add regression tests. User screenshots from 2026-11-02 PT. Scope: reversible internal bug fix, not publication.
+
+Follow-up fixes a remaining zero-image path when an eligible Character has a linked ArtImage but no usable entity imagePath. Scoped Kind Robots branch changes resolver to prefer the eligible linked image URL and adds regression assertion; PR and exact-head CI to follow. No browser verification or ArtJobs.
+
+PR #4777 merged as 16dfea93909ef9fcc500e8df144792c462d2fbc8 after all six exact-head CI workflows passed on 388ba06ef6266cc680a64f52b1129ec7625734ff. The resolver now uses a visibility-checked linked ArtImage URL for Characters with missing primary image paths. Browser reproduction of round-three Character/Non-mature deck and later floors remains unverified; returning to ready for authenticated UI validation, not marking task done.
+
+2026-11-06 PT: Rechecked #4682 and current deck resolver. Earlier #4777 fix remains in main. The existing Chromium memory-world test stubs resolveMemoryDungeonDeck entirely, so its passing browser runs cannot validate the actual Characters / Non-mature round-three art fetch. No authenticated UI reproduction or new code delivered this session; return ready for a genuine browser/API fixture, not done.
+
+Partial Character deck hardening: isolate failed linked ArtImage lookups per candidate while preserving visibility checks; added source regression. Browser authenticated round-three validation and full art availability remain open. Kind Robots worker branch prepared for PR and CI.
+
+2026-11-20 PT: stale claim/review released to ready (Silas, in session: "you are likely
+the only agent working on this project currently, so any claimed roadmap items are
+likely stale"). Playtest-ready means the complete twelve-world game; see
+ASSESSMENT-2026-11-20.md for this task's gap.
+
+2026-11-20 PT remaining met: on production, the Kind Robots > Character non-mature deck
+dealt real Character portraits into the Briar overworld with 0 broken images, no alert
+and no page errors. Signed-in mature decks were not rechecked.
+<!-- note:end t-049 -->
 
 ## t-050 — Make Oren's House rest shortcut traversable and save-safe
 
@@ -438,3 +520,10 @@ Implemented typed witnessed-event ledger and adversarial save/replay tests in ki
 
 Merged kind_robots PR #5231 at 0ee7f1c1acd98a15d9c0753c6f9ad159b1f5edfc after all eight exact-head GitHub Actions workflow runs completed successfully on e66724b65a5543ac7c79d13023e9330a2c37155c. Typed commit-once ledger and adversarial restore tests shipped. Runtime binding remains follow-on work.
 <!-- note:end t-073 -->
+
+## t-074 — Display delivered event art: catalog art status is hard-coded 'placeholder', so e03-e10 scene plates never show
+
+<!-- note:begin t-074 -->
+2026-11-20 assessment: overworldEventCatalog.ts art() always returns status 'placeholder'; the e03-e10 stages render scene art only when status === 'delivered', so every site shows 'Illustration pending'. Add a generated, committed manifest of delivered event-art paths (verified by ranged GET; the media host 404s HEAD), read it in the catalog, and add a contract test. Then re-key or re-commission choice art whose paths moved when e03-e06 sites were rewritten (current paths: e03 4/127, e04 7/127, e05 7/131, e06 9/139 choice images present).
+2026-11-20 PT remaining met: kind_robots#5405 (merged c3ec947a) derives catalog art status from a committed delivered-art manifest (npm run memory:delivered-art, ranged GET probe); scene and choice plates now display when served. Contract in verifyMemoryOverworldEvents. Moved choice paths are re-commissioned in EVENT-OUTCOME- REQUESTS-PART-5.
+<!-- note:end t-074 -->

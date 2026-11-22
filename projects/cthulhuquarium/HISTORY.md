@@ -642,6 +642,21 @@ Implementation PR silasfelinus/kind_robots#3442 (open): HUD under the tank on ph
 Done 2026-10-10: silasfelinus/kind_robots#3442 merged (6048901). Known, not changed: the character dialogue sheet covers the bottom strip of the tank while open, so resting coins can't be tapped until it is dismissed.
 <!-- note:end t-083 -->
 
+## t-084 — Staged schema cleanup: drop the breeding, egg and hidden-stat columns once t-082 is live
+
+<!-- note:begin t-084 -->
+kind_robots. t-082 removed breeding, eggs and hidden stats from the game but deliberately left the schema in place (AGENTS.md: no destructive drop inside the auto-deploy window, because the old build still selects these columns during the handoff). Once the t-082 build is deployed and verified on Alexandria, ship a separate migration that drops AquariumStock.stat{Charm,Empathy,Grace,Luck,Might,Wits} and parentAId/parentBId (and their indexes), AquariumCodexEntry.bestStat*, and the AquariumEgg table, plus any Monster evolution rows that only breeding could reach if Silas agrees. Check first that no deployed build still reads them (grep the running image's server bundle), call it out as schema-affecting, and confirm merged -> image published -> deployed -> schema verified.
+Two-step drop: a one-step drop would break purchases between migrate deploy and the container swap (Prisma selects every declared column). Step 1 merged as kind_robots #5499 (fields out of schema and client; pending provenance marker prisma/migration- provenance/20261121080406_drop_aquarium_breeding_eggs_hidden_stats.pending.txt). Step 2 = projects/cthulhuquarium/data/t-084-step2-migration.sql as kind_robots prisma/migrations/20261121080406_drop_aquarium_breeding_eggs_hidden_stats/migration.sql, deleting the pending marker in the same PR; merge only once https://kindrobots.org/api/version shows a commit containing #5499 (Silas approved shipping when verified, 2026-11-21).
+Step 2 merged as kind_robots #5503 after production /api/version showed 66a0f65c (contains #5499): AquariumStock.stat*/parentAId/parentBId, AquariumCodexEntry.bestStat* and AquariumEgg dropped. Replayed on local MariaDB; exploit suite 26/26 and key play- through 15/15 against the dropped schema. Production applies it on the next Force Update (deploy-unraid runs migrate deploy before the container swap).
+<!-- note:end t-084 -->
+
+## t-085 — Give the first_evolution background a new way to unlock
+
+<!-- note:begin t-085 -->
+kind_robots. The first_evolution landmark (aquariumEconomy.ts FIRST_EVOLUTION_MILESTONE) unlocked a tank background, but it only ever fired from a breeding evolution, which t-082 removed -- so that background is unreachable and its picker hint was dropped. Re-home it on a fun-loop moment, e.g. the first tank expansion or the first 25-fish tank, firing once through the same milestone-event guard as first_full_tank, and restore a picker hint that names the new trigger. Keep the milestone id stable so tanks that already fired it keep the background.
+DONE 2026-11-21 PT: kind_robots#5479. The first room expansion fires first_evolution (id kept) and hands over the Hatchery with a rewritten Wilbur/Charlotte scene; reconcile back-grants it to tanks already expanded; picker hint 'Widen the tank once' and new toast copy. Verified via API: first expansion fires it, second fires nothing.
+<!-- note:end t-085 -->
+
 ## t-086 — One-screen play page, fullscreen toggle, readable prices, re-order fix
 
 <!-- note:begin t-086 -->
@@ -669,6 +684,78 @@ Implemented deterministic scattered food positions for all fed fish (capped on d
 Merged silasfelinus/kind_robots#4070 to main (afa131f5dd64fda81cd5eedea4784190eed63e1e) after all 14 CI workflows completed successfully including TypeScript, dedicated food self-test, formatting, layout, and all contract shards. Food now scatters around fed fish across the tank and nearby swimmers chase their closest morsels; server feedHungry authority remains intact. Art and production deployment were not changed. Cross-device visual acceptance and the earlier one-screen PR are tracked in t-089.
 <!-- note:end t-088 -->
 
+## t-089 — Verify single-screen console shell and collectible effects together
+
+<!-- note:begin t-089 -->
+Follow-up acceptance sweep for screenshots reported 2026-10-23. Repair existing PR #4067's layout contract and formatting failures; confirm no outer document scrolling in portrait, landscape, tablet and desktop, and that tank, buttons and bounded panel remain usable. Bring floating coin behavior from PR #4069 to main only after all CI is green. Add regression coverage for coins not pooling at the bottom, food appearing at varied locations and multi-fish feeding, along with reduced-motion, touch-target and keyboard behavior. Keep generated art/intro/story and server economy unchanged; report merge versus deployment separately.
+
+Updated kind_robots PR #4067 to use the existing non-scrolling kr-surface/kr-stage route instead of the generic project-front-page. The tank and all overlays now use parent-owned height, with admin curation as an overlay, and a source-level console layout regression workflow. Floating coins (#4069) and scattered feeding (#4070) are merged. PR CI and rendered desktop/mobile verification still pending.
+
+2026-11-04 PT cleanup pass: claim from 2026-10-23 expired; referenced kind_robots #4067
+(true single-screen tank with overlay rooms) merged 2026-10-23. The combined shell +
+collectible-effects verification itself was never recorded, so back to ready to do it.
+
+2026-11-05 PT: created original illustrated handheld-console visual mockups for the aquarium tank/feeding and Ruler Hooked fishing/petition, plus a review board and implementation map on worker/cthulhuquarium-t-089-handheld-20261105-6f7b. This is a design proof, not completion of the combined tank/layout/coin-input QA scope; follow-up verification remains outstanding.
+
+2026-11-05 PT: finished the requested pre-implementation visual mockups for Cthulhuquarium and Ruler Hooked in kind_robots PR #4812 (four 16:9 illustrated SVG screens, preview.html and implementation mapping). The PR remains open for visual acceptance and does not alter runtime. This existing task's actual console/coin/feeding QA is not complete; returning it to ready rather than falsely marking done.
+
+qa/acceptance.mjs verifies the console shell at six viewports (no outer scroll, every
+room, keyboard Q/E/Tab, canvas renders). Defects fixed in #5500 (HUD overflow at
+390/768) and #5501.
+<!-- note:end t-089 -->
+
+## t-090 — Prioritize full-screen Charlotte and Wilbur cinematic art delivery
+
+<!-- note:begin t-090 -->
+Silas, 2026-10-23: Cthulhuquarium is a visual-novel game as well as an aquarium. Prioritize large, striking illustrated/studio portraits of Charlotte Fishmonger and Wilbur Stint, opening and milestone scene plates, and restrained motion with visual continuity. This is ART DELIVERY rather than additional text or tiny overlay UI. Keep canonical character identity and art prompts in silasfelinus/cthulhuquarium/characters/*.yaml, scene descriptions in story/plates.yaml and video plans in videos/videos.yaml. Audit delivered assets before submitting duplicates: Kind Robots currently bundles 10 pose portraits, 7 moving webp scenes/characters, 4 plate assets and 16 illustrated aquarium backdrops. Render or improve missing high-res 832x1216+ hero stills and 16:9 milestone scenes for actual full-screen legibility, preserve Charlotte's elderly gothic prima donna appearance and Wilbur's injured, bespectacled balding silhouette, and deliver art through the established Kind Robots/Comfy pipeline with source linkage and verified fallback if a job fails. Track ArtJob IDs and delivery counts. Each first-run intro beat and authored story interstitial should have a suitable large image, with no placeholder portrait substituting for a queued missing scene. Art work should lead this project's next iteration.
+2026-11-21 PT (session 01L5NK, t-103): the dialogue is now a staged full-screen scene for every non-tutorial beat (kind_robots#5479), so plates and portraits fill the screen. Art submitted directly through canon render_art.py with Silas's admin token: 20 Wilbur per-floor portraits, 5 new scene plates, and 5 re-renders of the 2026-11-02 Forge plates (ArtImages 268216-268222 now 404 on the server). 30 jobs in canon art/jobs.yaml; next step is deliver.sh (harvest + build_story_art) and a kind_robots sync PR, then visual review. Caution: build_sprites.py judges staleness by mtime, which is wrong in a fresh clone; build named slugs only.
+All cinematic art delivered: Wilbur's 20 per-floor portraits (canon #86, #89; 5 rejected and re-rendered), the floor and ending plates incl. Bottom of Things, synced in kind_robots #5500/#5501. Canon art/LEDGER.md 385/385.
+<!-- note:end t-090 -->
+
+## t-091 — Image-first cinematic quality and cross-device acceptance for every room
+
+<!-- note:begin t-091 -->
+Silas, 2026-10-23: game boot shows only the aquarium except for the one-time full-screen authored NPC introduction. Every market, bestiary, roster, relic, decoration and scenery choice gets its own image-led console scene or full-stage mode, not a long website card list, side-sheet or stacked page. Ensure the aquarium continues filling the game host at 390px, 768px, 1024px portrait and 1440px, with accurate canvas hit-testing, main app navigation still reachable, no outer scrolling and keyboard and touch controls. Use image-forward fish purchasing, strong art for the bestiary and remaining rooms, cinematic milestone scene transitions, reduced-motion still fallback and native accessibility. Visually verify on the actual self-hosted deployment or a faithful rendered preview; source tests alone do not establish layout acceptance.
+Cross-device acceptance (qa/acceptance.mjs): 390x844, 768x1024, 1024x1366, 1366x1024, 1440x900, 1280x600 each 31/31, plus reduced motion with every portrait 404ing 4/4. Screenshot sheet qa/acceptance-2026-11-21.jpg. Remaining 320px / short-landscape gaps listed in RC-DOSSIER.md.
+<!-- note:end t-091 -->
+
+## t-092 — Comprehensive writing, event, fish/progression and canon editorial pass
+
+<!-- note:begin t-092 -->
+Master completion issue kind_robots#4140. Inventory the whole canonical fish/bestiary, currency/upgrade/room unlock progression, Charlotte/Wilbur character writing, visual-novel intro and all event/interstitial triggers. Correct stale breeding/egg/hidden-stat story beats without restoring those removed mechanics; revise generic/weak dialogue, lore and quest payoffs. Validate 20+ distinctive fish and review actual complete-session transcripts, including rare events, first-return flow and story replays. Deliver a machine-readable event/canon coverage report and a human-readable editorial verdict, then merge proven improvements.
+PROGRESS 2026-11-21 PT (released, not done): canon cthulhuquarium#82 rewrote the four floor-opening scenes (Below Stairs, The Flooded Wing, The Conservatory, The Bottom of Things) as 4-5 beat scenes with a key-and-lamp thread and one player reply each, added floor_first_2..5 and after_the_last_aquarium, gave every scene a Memory Book title, retired first_hatch/first_breed, re-homed first_evolution, and dropped the eggs bark pool. Silas's existing lines kept verbatim. kind_robots canon test now lints all 195 spoken lines for injury words. STILL OPEN: the machine-readable event/canon coverage report, a full complete-session transcript review including rare events and the first- return flow, the unused sets/decor/upgrades bark pools, and a review of the 151 species voices for stale breeding references.
+Coverage report (kind_robots #5498, coverage/report-2026-11-21.json: 23 scenes, 15 bark pools, 16 backgrounds, all reachable). Editorial passes canon #85 and #88 (RC review). Verdict: coverage/EDITORIAL-VERDICT.md.
+<!-- note:end t-092 -->
+
+## t-093 — Finish and visually verify every required aquarium art/scene asset
+
+<!-- note:begin t-093 -->
+Master completion issue kind_robots#4140. Produce the authoritative species/variant/background/menu/decor/portrait/expression/interstitial/outcome art ledger with canonical source, ArtJob, DONE render, reachable URL, binding and actual full-screen visual review. Commission, finish and integrate any missing critical assets, prioritizing cinematic Charlotte and Wilbur. Reject wrong characters, placeholder SVG, broken/low-res images and mismatched scenes. Queued or drafted prompts are not delivered art.
+canon scripts/art_ledger.py (#87) records every required render from prompt to its binding in the game; art/LEDGER.md shows 385 of 385 done (#90). Visual review: Wilbur floor contact sheet (5 of 20 rejected for a magenta bruise or pale bar, re-rendered and accepted in #89); QA screenshot sheet at qa/acceptance-2026-11-21.jpg.
+<!-- note:end t-093 -->
+
+## t-094 — Full adversarial aquarium, idle economy, persistence and exploit suite
+
+<!-- note:begin t-094 -->
+Master completion issue kind_robots#4140. Build deterministic multi-seed player simulations and report short/casual, idle 12h/24h/7d, rapid tap, extreme high-density tank, broke/spender, completionist, save reload, interrupted art, private/public tank and exploit-hunter strategies. Assert feeding scatter, fish targeting, tap pickups, economy balance, offline returns, privacy, race-safe rewards and legitimate unlocks. Independently critique actual FUN and pacing, fix all high-impact issues, then rerun the suite and publish action transcripts/defect evidence.
+2026-11-21 PT pacing finding (t-102): projects/cthulhuquarium/data/simulate_descent.py, an 80%-click collector against the real 151-species roster, opens floors II-V at 2/6/17 min and fills the book in about 1h20m. The server pays and prices each fish by its highest stat rarity (a leftover of the removed hidden stats), so 31 of 32 commons pay uncommon or rare coins at a 25-70 coin price. Pricing and paying by canon rarity gives 2/6/21/46 min and about 2h. This is a balance decision for Silas (see PLAYTEST- CHECKLIST.md section 5) and has not been retuned. API exploit checks already pass: a locked-floor purchase returns 403, and a forged or orphaned reply id returns 400.
+ECONOMY-SUITE.md: nine strategies over the roster; 26 adversarial API checks incl. concurrency (tick, buys, finale, grandfathering) after the row-lock fixes in #5501. Main pacing question (floor V key wait) handed to the playtest.
+<!-- note:end t-094 -->
+
+## t-095 — Full-screen art-first UX and accessibility acceptance on real rendered viewports
+
+<!-- note:begin t-095 -->
+Master completion issue kind_robots#4140. Verify the tank as the default one-screen stage plus all six illustrated game menus and full-screen cinematic dialogue on 375px phone, 768px tablet, landscape tablet, desktop and short-wide. Capture actual browser evidence, no outer scroll, accurate canvas hit targets, keyboard/touch, readable labels, reduced motion and image/network recovery. Repair and reverify failures, not just pass static contract checks.
+Art-first UX and accessibility on rendered screens: settings contrast and Esc (#5500), scene focus management, in-game Motion setting live, settings before network, missing- portrait fallback (#5501). Follow-ups (modal dialogs focus/Esc, reply-card roles, load retry) in RC-DOSSIER.md.
+<!-- note:end t-095 -->
+
+## t-096 — Independent adversarial release-candidate review and complete evidence dossier
+
+<!-- note:begin t-096 -->
+Master completion issue kind_robots#4140. Reconcile all existing game tasks, migrations/legacy content, PRs and ArtJobs, verify current-head CI fully green, no high/critical defects, no pending mandatory art or text improvements. Require independent creative, technical, economic and adversarial reviewers to challenge readiness; apply fixes and rerun. Publish source-backed art/scene coverage, economic seed logs, complete browser screenshots, gameplay verdict, job/PR/check links and exact unblocked final review instructions. No human approval request until this dossier and ALL other prereqs are done.
+RC-DOSSIER.md: three independent reviews (technical/economy, experience, front- end/a11y), every finding dispositioned; blocking ones fixed in kind_robots #5501 and canon #88; playtest instructions included.
+<!-- note:end t-096 -->
+
 ## t-097 — Playbook Forge upgrade: write the 16 empty thread beats and literal Krea 2 prompts for all 189 beats
 
 <!-- note:begin t-097 -->
@@ -684,6 +771,33 @@ Silas, 2026-11-05 PT, with four ChatGPT reference mockups (Tank, Feed, Creatures
 Console UI shipped on kind_robots main: bezel shell, top HUD capsules, care meters, five-tab command deck with L/R and button-prompt footer, Creatures and Market screens (kind_robots#4840). The 13 painted Krea 2 UI pieces (tab icons, coin, plinth, corner ornament, meter and HUD icons) replaced the SVG fallbacks via canon cthulhuquarium#80 and kind_robots#4862. Live after the next production Force Update. Follow-ups not in scope: portrait-phone tank crop and the logged-out shop-window intro restyle.
 <!-- note:end t-098 -->
 
+## t-099 — Fish roster redesign: one in-tank sprite style for all 151 species, new designs for the stock-fish, object and sheet-shaped ones
+
+<!-- note:begin t-099 -->
+Silas, 2026-11-05 PT: "a lot of the fish designs are boring" (same session as t-098). Audit of the 151 in-tank sprites: the sprite prompts inherited the eight book-plate lineages, so the tank mixes photoreal stock fish (lithograph commons), flat black scraperboard and gyotaku silhouettes, and literal objects (a cheese-like sediment block, a parcel, a ruled grid, a bowl). The book plates keep their lineages; the swimming sprite gets one house style chosen by a rendered style test, and every species whose concept is an object, a sheet layout or an unremarkable stock fish gets a new creature design that keeps its name, joke and field note. Work happens in the canon repo (fish/*.yaml sprite.prompt, scripts/render_art.py, build_sprites.py, deliver.sh) and syncs to kind_robots.
+All 151 sprites and 151 swimming clips in the one in-tank style are rendered, built and bundled (canon art/LEDGER.md, 385 of 385 required renders done; last clips in canon #84, content-hash builds so a fresh clone never re-cuts).
+<!-- note:end t-099 -->
+
+## t-100 — Main-game standard: audit and close the gaps for Cthulhuquarium
+
+<!-- note:begin t-100 -->
+Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
+
+DECIDED 2026-11-12 (Silas): "I think chthuquarium should have a soft ending but it theoretically should be endlessly playable." Soft ending(s) recorded in the scrapbook with plates; the tank never ends. The character-customization question is still open; the tank is the player's identity for now.
+
+AUDIT DONE 2026-11-12: projects/cthulhuquarium/STANDARD-AUDIT-2026-11-12.md holds the Met/Partial/Missing table, a proposed achievement list with award points, character-fit notes and the three smallest next PRs. Start there.
+
+Start with the audit table from docs/agents/main-game-standard.md (title screen; settings menu; save/load and persistent progress; 12+ achievements; scrapbook; multiple endings with painted plates; customizable characters; 3+ replay hooks), marking each Met / Partial / Missing with evidence (file, route, live record). Put the table in this note and the first PR. Then close each gap in small CI-tested PRs; queue any needed ending, scrapbook or portrait art in an auto_submit ledger.
+
+Item 7 (customizable characters) applies "in most cases": if this genre makes it a poor fit, say so in the audit with the reason and leave it for Silas rather than skipping silently.
+
+Achievements are tracked by their own task; this one covers everything else.
+
+Merged kind_robots #5498 (settings, title card, endings shelf) plus #5500/#5501 fixes.
+Re-audit: STANDARD-AUDIT-2026-11-21.md, every item Met except characters (left for
+Silas).
+<!-- note:end t-100 -->
+
 ## t-101 — Cthulhuquarium achievement upgrade: 12 or more live achievements
 
 <!-- note:begin t-101 -->
@@ -694,26 +808,47 @@ Live today: 0 Achievement record(s) with this game's triggerCode prefix (checked
 Achievement upgrade merged in kind_robots#5036 (8e4cdb0), all checks green: 18 live achievements awarded from cthulhuquariumTankStore. Catalog seed succeeded.
 <!-- note:end t-101 -->
 
-## t-102 — The descent: five floors gate the fish by tier
+## t-102 — The descent: five floors of the building gate the fish by canon tier, and every species is obtainable again
 
 <!-- note:begin t-102 -->
 Filed 2026-11-21 PT from Silas's in-session direction (see the roadmap note). Plan: floors + obtainable roster (t-102), staged scenes with replies and Wilbur floor portraits (t-103), Memory Book (t-104).
 <!-- note:end t-102 -->
 
-## t-103 — Visual-novel interstitials
+## t-103 — Visual-novel interstitials: full-screen staged scenes, typewriter text, floor-transition replies, Wilbur floor portraits
 
 <!-- note:begin t-103 -->
 Filed 2026-11-21 PT from Silas's in-session direction (see the roadmap note). Plan: floors + obtainable roster (t-102), staged scenes with replies and Wilbur floor portraits (t-103), Memory Book (t-104).
 <!-- note:end t-103 -->
 
-## t-104 — Memory Book
+## t-104 — Memory Book: rewatch every seen scene, plus the background gallery (main-game scrapbook)
 
 <!-- note:begin t-104 -->
 Filed 2026-11-21 PT from Silas's in-session direction (see the roadmap note). Plan: floors + obtainable roster (t-102), staged scenes with replies and Wilbur floor portraits (t-103), Memory Book (t-104).
 <!-- note:end t-104 -->
 
-## t-105 — Pacing: canon rarity and floor keys
+## t-105 — Pacing: price and pay by canon rarity, and sell each floor's key
 
 <!-- note:begin t-105 -->
 Filed 2026-11-21 PT from Silas's answer to the pacing question (see the roadmap note).
 <!-- note:end t-105 -->
+
+## t-106 — Pin simulate_descent.py casual-player floor-open days in a regression test so economy.yaml floor_keys can not drift silently
+
+<!-- note:begin t-106 -->
+Reviewer kaizen from PR #7731 (t-105 pacing). floor_keys (150 / 3,000 / 30,000 / 400,000) were tuned with data/simulate_descent.py to casual II day 1, III day 2, IV day 5, V ~day 14, and are mirrored in kind_robots utils/cthulhuquariumFloors.ts FLOOR_KEY_COSTS, but nothing asserts either. Add a fast test that runs the casual profile and checks the floor-open days stay within a band, plus a check that the TS mirror matches economy.yaml.
+tests/test_cthulhuquarium_descent_pacing.py pins casual floor-open days (II d1, III <=d2, IV d3-5, V wk1-2) from a committed roster snapshot, and checks kind_robots FLOOR_KEY_COSTS mirrors economy.yaml floor_keys.
+<!-- note:end t-106 -->
+
+## t-107 — A second, swappable art style: style registry, settings picker and per-file Classic fallback in kind_robots; a style dimension in the canon pipeline
+
+<!-- note:begin t-107 -->
+Silas, 2026-11-21: "we should add a different art style. Something from illustrious probably. The user should be able to swap between them, like we do with shifting desks." Decided in session: every still (fish sprites, Charlotte and Wilbur portraits incl. floor variants, heroes, plates, backgrounds, UI); a style-check round first (t-108); a swatch picker in settings and on the title card, Classic the default, saved per browser. Code ships before any art and shows nothing until a second style is available. Plan: /root plan "Cthulhuquarium: a second, swappable art style on Illustrious" steps 2-3.
+Merged kind_robots #5508 (style registry, per-file Classic fallback, reactive resolvers and canvas caches, swatch picker in settings and on the title card, sync of styles/<id>/built; verified live with a temporary tinted style) and canon #91 (art/styles.yaml, styled adopt-only jobs for all 227 stills, style_ledger.py, build_style.py, art_ledger --style). The style turns available once t-109's character, plate and background rounds pass review.
+<!-- note:end t-107 -->
+
+## t-110 — Complete the game: music, a sound for every event, painted decor and collector, the 44 redesigned book cards, the room plate
+
+<!-- note:begin t-110 -->
+From the 2026-11-21 completeness audit Silas asked for ("Do we have everything for a full game? Do we have sound and music? All art and animations, etc?"), then: "Go ahead with all of it, synthesized theme is fine." Gaps found: no music; buying, selling, cleaning, upgrades, the floor key, decor, sets, scenery, scenes, milestones and the endings were silent; the six decorations and the Roaming Collector were emoji; the room upgrade had no plate; the 44 species redesigned on 2026-11-05 still showed their old concept on the book card (several not creatures at all); six unused egg images shipped. Code: kind_robots #5512 (synthesized floor themes, 23 effects, Music setting, painted decor hooks, eggs removed). Art: canon ui/decor-*, ui/swimmer-collector, plates/upgrade-room (render_art); cards via art/REDESIGNED-CARDS-1.yaml and scripts/deliver_cthulhuquarium_cards.py.
+Done. Sound: kind_robots #5512 -- a synthesized music-box theme per floor (D dorian down to a C# drone at the Bottom of Things), 23 effects for every game event, a Music setting; verified live (phrases schedule, effects fire, Music off stops the theme). Art: canon #92 + kind_robots #5514 -- six painted decorations and the clockwork-crab Roaming Collector drawn in the tank, the public view and the Relics shop instead of emoji, the room upgrade's own plate, and new book cards for the 44 redesigned species (art/REDESIGNED-CARDS-1.yaml, scripts/deliver_cthulhuquarium_cards.py); the six unused egg images removed. Canon art ledger 393 of 393. All reviewed on contact sheets and in the running game.
+<!-- note:end t-110 -->

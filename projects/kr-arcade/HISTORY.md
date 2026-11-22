@@ -810,6 +810,14 @@ art/GHOST-TRAIL-GEN2-ROUND-1.yaml (8 subjects x Arthemy/Z-Image = 16 cells) subm
 2026-10-22: all 16 DONE and reviewed in the ledger. Z-Image is the overworld-map lane (real top-down maps); Arthemy turned 'map' into character vignettes and is kept only as concept art. Next: hand the Z-Image maps to t-160.
 <!-- note:end t-159 -->
 
+## t-165 — Root-cause the intermittent verifyRescueRallyCabinet 'and not seat 1' failure in the cabinet browser contracts
+
+<!-- note:begin t-165 -->
+Reviewer kaizen from kind_robots#5211 (2026-11-15 PT). Job 132764631321 ("Seats, menus, aim and saves through the actual cabinet in Chromium") failed at utils/scripts/verifyRescueRallyCabinet.browser.test.mjs:344 ("and not seat 1"). The PR did not touch Rescue Rally, and the same job passed on the PR's previous head and on its single re-run. Make the test wait on the real seat-assignment state rather than on timing; never skip or quarantine it. A timing-hardening PR, kind_robots#5217, was opened by the recovery reviewer. If it lands with a root-cause explanation, record it here and close this task.
+
+Verified kind_robots PR #5217 merged on 2026-11-15. Root cause was a Rescue Rally keyboard-seat test baseline sampled before KeyD release; the fix samples the released-key state before asserting ArrowUp moves only seat 2. The timing-hardening PR is merged; close this resolved task.
+<!-- note:end t-165 -->
+
 ## t-166 — Per-cabinet link previews: a shared ?game= link unfurls as that cabinet, not the generic hall card
 
 <!-- note:begin t-166 -->
@@ -845,6 +853,41 @@ As of 2026-11-15 these cabinets have every depth slice done: Pipe Pals, Prize Sh
 
 2026-11-15 PT: shipped in kind_robots#5222 (squash 9dfb49a), all checks green. Registry field `shelf` ('showcase' | 'growing'); 11 showcase, 17 growing (16 mid-depth + Zuzu Ghost Trail). arrangeArcadeHall orders showcase, standard, growing with ratings inside each shelf; Growing stamp; hall Share button; both share buttons go through arcadeStore.shareLink. Depth lanes: when a cabinet's last depth slice merges, flip its `shelf` to 'showcase' in the same PR. Merged is not deployed.
 <!-- note:end t-168 -->
+
+## t-169 — Cold open from a shared link on a phone: showcase cabinets load, start and play with no account at 390px and 768px
+
+<!-- note:begin t-169 -->
+Silas, 2026-11-15 PT: full parity with the whole roadmap may not be reasonable; finish the latest tasks and triage next steps that make publicly shared arcade links presentable. This milestone is that triage. The m8 depth pass (50 open slices) continues in the background and is not a gate for sharing.
+
+A browser contract over the showcase set: direct-load /play/arcade?game=<slug> with a fresh context (no session, no localStorage) at 390x844 and 768x1024. Assert the cabinet is reachable in one tap, touch controls are visible, sound starts only after the first tap, there is no auth wall or console error, and the Arcade hall back link works. Scoped slice of t-164's device audit; do not duplicate t-164's viewport matrix, extend it.
+
+2026-11-15 PT: ready now that t-168 is done. Use the 11 cabinets with `shelf: 'showcase'` as the set.
+
+2026-11-16 PT daily-delivery:2026-11-16/showcase-cold-open-probe | PR:
+silasfelinus/kind_robots#5248 | Added utils/scripts/checkArcadeColdOpenLive.mjs: fresh-context
+?game= cold opens for the 11 showcase cabinets at 390x844 and 768x1024 (canvas, START, no
+redirect/auth wall, no console/page errors, no horizontal scroll). Production 2026-11-16: 22/22
+clean. Remaining: tap-to-start sound assertion, touch-control visibility and hall back-link
+check in a fixture-backed CI contract.
+
+2026-11-17 PT daily-delivery:2026-11-17/play-hub-redirect | PR: silasfelinus/kind_robots#5279
+| kindrobots.org/play and /games (the URLs a visitor types for the games hub) answered HTTP
+200 with 'No Nuxt Content page was found for /play'; both now 302 to /play/arcade via
+FRONT_DOOR_ALIASES, pinned by verifyFrontDoorRoutes.test.ts. Remaining t-169 work unchanged
+(tap-to-start sound, touch controls, hall back-link contract).
+
+2026-11-18 PT daily-delivery:2026-11-18/daily-cold-open-probe | PR:
+silasfelinus/kind_robots#5309 | Live checkArcadeColdOpenLive.mjs from this session:
+22/22 showcase cold opens clean on kindrobots.org (11 cabinets x 390x844 and 768x1024,
+fresh context). arcade-share-live-check.yml gains a cold-open job running it daily, so a
+login wall, page error, missing canvas or lost hall link on a shared cabinet link turns
+the scheduled run red. Remaining t-169 work unchanged (tap-to-start sound, touch-control
+and hall back-link fixture contract).
+
+Built a 22-case guest cabinet cold-open browser suite with pre-gesture audio instrumentation, START, mobile controls and exit checks; expanded the daily production probe to verify those flows and Arcade hall return; wired PR screenshots into the viewport workflow. CI and live deployment still to verify.
+
+Merged kind_robots#5546 at d4154bde9b7046ab34aa448db59ceaab1f184e3d after all 15 head checks passed, including Chromium cabinet flows, TypeScript, layout, viewport and contract shards.
+<!-- note:end t-169 -->
 
 ## t-170 — Share my score: the game-over screen offers a one-tap share with the score and the cabinet link
 

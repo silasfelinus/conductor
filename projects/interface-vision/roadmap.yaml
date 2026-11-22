@@ -2360,18 +2360,9 @@ tasks:
   passes: 0
   stakes: reversible
   note: >-
-    Kaizen from interface-vision/t-141: save route/viewport failure screenshots and
-    upload them from the focused Tablet Navigation Audit workflow. Keep unloaded
-    pages, hidden menus and geometry regressions failing; screenshots provide evidence,
-    not a substitute for measurements. Use explicit existing file paths in CI triggers.
+    Kaizen from interface-vision/t-141: save route/viewport failure screenshots and upload them from the focused Tablet Navigation Audit workflow.
 
-    2026-11-21 PT reconciliation (reviewer session): already implemented on kind_robots main
-    (a8a1e9c9). utils/scripts/auditTabletNavigation.mjs takes --screenshots DIR (default
-    tablet-nav-screenshots) and saves a page.screenshot per failing route/viewport;
-    .github/workflows/tablet-navigation-audit.yml uploads tablet-nav-screenshots/ with
-    actions/upload-artifact if failure(), with explicit existing paths in its triggers. The
-    measurements still fail the run; screenshots are evidence only. The shallow clone's
-    graft hides the originating PR.
+    Full history: projects/interface-vision/HISTORY.md#t-142
   updated: '2026-11-21T13:18:04Z'
 
 - id: t-143

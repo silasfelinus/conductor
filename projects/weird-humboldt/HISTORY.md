@@ -1077,3 +1077,38 @@ Next: merge the kind_robots PR; export renders when done; close.
 exported 189 after review; three Comic outcomes withdrawn for unprompted creatures and
 fall back to Painted. All Ecotone suites green.
 <!-- note:end t-077 -->
+
+## t-078 — Ecotone: re-render the 3 withdrawn middle-encounter Comic outcomes with a no-creature negative so all 48 pictures ship in four styles
+
+<!-- note:begin t-078 -->
+Reviewer kaizen from t-077 (kind_robots#5337). Three Comic renders drew unprompted
+creatures and were withdrawn (mc-005/stay-close-failure, mc-006/open-survey-failure,
+mc-007/repaint-failure); they fall back to Painted. Add "creature, monster, giant" to the
+Comic-lane negative for these prompts, re-queue 3 ArtJobs via
+art/MIDDLE-ENCOUNTERS-2026-11-19.yaml, review the contact sheet, export and regenerate
+artManifest.ts. Done when all 48 middle-encounter pictures have four accepted styles.
+
+2026-11-19 PT: Silas asked to 'Redo the three art pieces.' mc-005 re-rendered clean on
+its first retry. mc-006 and mc-007 drew creatures again on their original seed and were
+retried with concrete daylight tags and new seeds (ArtJob 71154-71158; rejected renders
+kept on record in the ledger). Exported in kind_robots#5365. All 48 middle-encounter
+pictures now ship in four styles.
+<!-- note:end t-078 -->
+
+## t-079 — Ecotone: pre-playtest art completeness audit (every card, outcome and ending painted)
+
+<!-- note:begin t-079 -->
+Silas, 2026-11-19 PT: "Are we done done before human play tests?" A slot-by-slot audit of
+the default style found cards 163/171 and outcomes 160/680 (endings 84/84).
+Fixes: 542 rendered-but-unexported outcomes shipped (OUTCOMES-BACKLOG + MYSTERIES-ROUND-1,
+kind_robots#5343). 8 missing cards rendered in 4 styles (CARD-GAPS-2026-11-19.yaml, 32
+ArtJobs; 8 off-prompt tag-lane renders withdrawn). 194 final outcome pictures (182
+failure plates + 12 companion-time successes) written, validated and rendered
+(OUTCOMES-FINAL-2026-11-19.yaml), shipped in #5346 and #5358.
+Result: 171/171 cards, 680/680 outcomes, 84/84 endings. verifyEcotone enforces 100%
+coverage (WH-121 exempt); the Forge reports needsArt=0. t-007 was cancelled by Silas the
+same day. Nothing open before human tests except the Unraid Force Update.
+Flagged, not changed: WH-062 "The Casino of Lost Tuesdays" is set at a Blue Lake casino.
+Blue Lake's real casino is tribally owned. Silas may want to review it against
+EXCLUDED-CONTENT-2026-10-22.md.
+<!-- note:end t-079 -->

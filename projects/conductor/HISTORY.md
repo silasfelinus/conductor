@@ -2837,3 +2837,19 @@ Reviewer kaizen 2026-11-14 PT from conductor#7423 (shifting-desks/t-048 note fix
 Reviewer kaizen 2026-11-16 PT from conductor#7500 (slime-city/t-041 constructed checkpoint): the Worker had to hand-fix depends_on after close_task.py --set depends_on=[t-037, t-051] wrote a quoted string. normalize_scalar now renders a bracketed list of safe bare ids as a YAML flow sequence; unsafe items (YAML 1.1 bool words, timestamps, spaces) stay quoted. Tests in tests/test_set_task_field.py.
 2026-11-16 PT: merged conductor#7501 as 94ea951; all checks green. Done.
 <!-- note:end t-214 -->
+
+## t-220 — Route worker PRs whose CI never starts (zero check runs) to reviewer after a grace period
+
+<!-- note:begin t-220 -->
+Reviewer kaizen 2026-11-20 PT from conductor#7674 (continuous production pipeline). split_pending_worker_reviews treats commit_combined_state == 'pending' as "CI still running" and drops the PR from reviewer candidates, but commit_combined_state also returns 'pending' when a head has no check runs at all (workflows skipped, not triggered, or the head was pushed with [skip ci]). Such a PR would never re-enter the reviewer lane. Use the PR head commit age (or the newest check-run start time) so a "pending" state older than a grace period, for example 90 minutes, counts as actionable. Add a unit test alongside the three #7674 tests in tests/test_select_role.py. This also covers the worker's kaizen: an in-flight PR record should hand CI-complete PRs back for repair or merge before unrelated work.
+<!-- note:end t-220 -->
+
+## t-221 — Catch draft-time "no receipts" ledger assertions that auto-submit checkpoints silently turn red on main
+
+<!-- note:begin t-221 -->
+Reviewer kaizen 2026-11-21 PT from conductor#7726. The [skip ci] checkpoint commits 01282b3 and a08f9b9 wrote real ArtJob receipts into two ledgers. Their contract tests (test_evt_one_hit_crew_tells, test_prom_oct29_art_ledger) asserted `"jobs" not in item`, so main was red while showing green, and the failures were blamed on #7722. Pick one: (a) add a meta-test that fails when a tests/ file asserts `"jobs" not in` / `"art" not in` on a repo ledger subject, and point authors to a shared receipt-shape helper; or (b) have the auto-submit checkpoint workflow run the ledger-contract tests before committing. Acceptance: a unit test proves the chosen guard catches the 2026-11-21 pattern.
+
+Implemented shared ArtJob/ArtImage receipt shape validation for draft, queued, running and DONE ledger states. Fixed a stale Space Couch Chapter Nine test that rejected live receipts, and added an AST-based repository meta-test which catches draft-only jobs/art absent assertions on source production ledgers. This is a scoped CI unblock for art delivery PR #7788. New regression tests cover the exact 2026-11-21 pattern; pending PR CI and merge.
+
+Scoped receipt-transition meta-guard, live Space Couch ledger assertion repair, and canonical recurring-helper import merged to Conductor main in #7789, squash df19f1b7545a74136cf00c8a9ed70ab9f16739a0. Four required latest-head CI workflows completed successfully. This closes t-221.
+<!-- note:end t-221 -->

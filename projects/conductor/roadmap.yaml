@@ -3321,15 +3321,8 @@ tasks:
   updated: '2026-11-20T14:05:45Z'
   note: >-
     Reviewer kaizen 2026-11-20 PT from conductor#7674 (continuous production pipeline).
-    split_pending_worker_reviews treats commit_combined_state == 'pending' as "CI still
-    running" and drops the PR from reviewer candidates, but commit_combined_state also
-    returns 'pending' when a head has no check runs at all (workflows skipped, not
-    triggered, or the head was pushed with [skip ci]). Such a PR would never re-enter the
-    reviewer lane. Use the PR head commit age (or the newest check-run start time) so a
-    "pending" state older than a grace period, for example 90 minutes, counts as
-    actionable. Add a unit test alongside the three #7674 tests in tests/test_select_role.py.
-    This also covers the worker's kaizen: an in-flight PR record should hand CI-complete PRs
-    back for repair or merge before unrelated work.
+
+    Full history: projects/conductor/HISTORY.md#t-220
   claimed_by: 20261120T1400Z-t220-evoy7k
   claimed_at: '2026-11-20T13:56:49Z'
   implementation_pr: 'silasfelinus/conductor#7676'
@@ -3343,12 +3336,10 @@ tasks:
   passes: 0
   depends_on: []
   updated: '2026-11-22T01:16:00Z'
-  note: |-
-    Reviewer kaizen 2026-11-21 PT from conductor#7726. The [skip ci] checkpoint commits 01282b3 and a08f9b9 wrote real ArtJob receipts into two ledgers. Their contract tests (test_evt_one_hit_crew_tells, test_prom_oct29_art_ledger) asserted `"jobs" not in item`, so main was red while showing green, and the failures were blamed on #7722. Pick one: (a) add a meta-test that fails when a tests/ file asserts `"jobs" not in` / `"art" not in` on a repo ledger subject, and point authors to a shared receipt-shape helper; or (b) have the auto-submit checkpoint workflow run the ledger-contract tests before committing. Acceptance: a unit test proves the chosen guard catches the 2026-11-21 pattern.
+  note: >-
+    Reviewer kaizen 2026-11-21 PT from conductor#7726.
 
-    Implemented shared ArtJob/ArtImage receipt shape validation for draft, queued, running and DONE ledger states. Fixed a stale Space Couch Chapter Nine test that rejected live receipts, and added an AST-based repository meta-test which catches draft-only jobs/art absent assertions on source production ledgers. This is a scoped CI unblock for art delivery PR #7788. New regression tests cover the exact 2026-11-21 pattern; pending PR CI and merge.
-
-    Scoped receipt-transition meta-guard, live Space Couch ledger assertion repair, and canonical recurring-helper import merged to Conductor main in #7789, squash df19f1b7545a74136cf00c8a9ed70ab9f16739a0. Four required latest-head CI workflows completed successfully. This closes t-221.
+    Full history: projects/conductor/HISTORY.md#t-221
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
 
