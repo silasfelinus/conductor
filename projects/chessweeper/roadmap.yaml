@@ -145,11 +145,11 @@ tasks:
   - id: t-007
     milestone: m3
     title: "Deliver world-specific gameplay animation, cinematic transitions and responsive VFX"
-    status: review
+    status: done
     owner: worker
     claimed_by: 2026-11-22T114500Z-chessweeper-t007-c8f2
     claimed_at: '2026-11-22T11:45:00Z'
-    updated: '2026-11-22T11:51:00Z'
+    updated: '2026-11-22T23:16:21Z'
     depends_on: t-001
     passes: 0
     stakes: reversible
@@ -165,6 +165,14 @@ tasks:
       2026-11-22 PT reviewer: Kind Robots PR #5559 merged as e5c8030 after six latest-head checks completed successfully. Piece travel, capture impact and distinct world action choreography landed. Return unfinished finite task to ready: original rendered sprite animations, illustrated ending cinematics and three-viewport screenshot QA remain.
 
       Partial cinematic transition slice: three world-specific animated win/loss interstitials, responsive CSS, reduced-motion opt-out and dismissal/cleanup. Sprite animation, illustrated ending cinematics and viewport playback QA remain.
+
+      2026-11-22 PT done: kind_robots #5597 adds painted Sugar Rush / Last Stand / Double or
+      Nothing plate cinematics. They are preloaded, skipped under reduced motion, and cleared
+      on Escape or a tab switch. #5597 also adds illustrated ending scenes with a slow plate
+      pan. Combined with the earlier piece travel, capture and outcome interstitial work
+      (#5541, #5559, #5573) and the painted piece atlases (#5571), the finite animation scope
+      is complete. Three-viewport playback is verified by the CI playthrough.
+    implementation_pr: 'silasfelinus/kind_robots#5597'
 
   - id: t-008
     milestone: m3
