@@ -1,0 +1,15 @@
+version: 1
+project: chessweeper
+task: t-002
+operation: review
+session: 20261122T063034485Z-chessweeper-t002-branch-v8k4
+updated: '2026-11-22T06:31:14.918Z'
+note: >-
+  2026-11-21 PT: Implemented real selectable world-specific risk contracts
+  with meaningful chapter effects: Sugarbomb shelter vs extra blade/points,
+  Ashen ember protection vs iron-wheel oath, and Jackpot insurance
+  vs high-roller chip/blade gamble. Contracts persist per world and chapter,
+  cannot change mid-run, reset deterministically on pre-turn switch,
+  and are covered by mock-engine gameplay tests. Kind Robots commit
+  0a08168a; PR/CI pending. t-002 still needs authored branch outcomes,
+  full campaign balance QA and account/device save integration.
