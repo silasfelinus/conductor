@@ -5,6 +5,9 @@ from pathlib import Path
 
 import yaml
 
+from scripts import art_ledger_authoring as authoring
+from scripts.repair_negation_art_prompts import violations
+
 
 ART = (
     Path(__file__).resolve().parents[1]
@@ -108,10 +111,10 @@ class RainbowStageDepthArtTests(unittest.TestCase):
                 self.assertEqual(subject["size"], "1344x768")
                 prompt = subject["prompt_prose"].lower()
                 self.assertIn("upper", prompt)
-                self.assertIn("no people", prompt)
-                self.assertIn("ships", prompt)
-                self.assertIn("words", prompt)
-                self.assertGreater(len(prompt), 200)
+                self.assertIn("upper", prompt)
+                self.assertGreater(len(prompt), 260)
+                self.assertEqual(violations(prompt), [])
+        self.assertEqual(authoring.ledger_problems(self.ledger), [])
 
 
 if __name__ == "__main__":
