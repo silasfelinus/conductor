@@ -1,4 +1,11 @@
 # art-queue-health.yaml -- written by scripts/art_queue_health.py record at the
 # end of every Auto Art Generate run. Do not hand-edit: fix the cause (see
 # docs/agents/roles/art-medic.md) and the next run drops the entry.
-failures: []
+failures:
+- source: ledgers
+  target: projects/comet-city-academy/art/AUTHORED-RECRUITS-EMOTIONS-2026-11-22.yaml
+  kind: contract-rejected
+  rules:
+  - format-vocabulary
+  detail: 1 cell(s) skipped, e.g. recruit-femi-ilunga-angry-20261122 [krea2]
+  first_seen: '2026-11-22'
