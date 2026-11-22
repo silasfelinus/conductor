@@ -1,5 +1,7 @@
+import errno
 import io
 import json
+import os
 import shutil
 import subprocess
 import tempfile
@@ -283,6 +285,79 @@ class DoodleOpeningTests(unittest.TestCase):
             frames = opening.clip_frames(destination.read_bytes())
             self.assertGreaterEqual(len(frames), 4)
             self.assertEqual(frames[0].size, opening.SIZE)
+
+
+def _same_device_only_replace(real_replace):
+    """Simulate /tmp on a different filesystem: cross-directory renames fail."""
+
+    def replace(src, dst, *args, **kwargs):
+        if Path(src).resolve().parent != Path(dst).resolve().parent:
+            raise OSError(errno.EXDEV, "Invalid cross-device link")
+        return real_replace(src, dst, *args, **kwargs)
+
+    return replace
+
+
+class OpeningPublishTests(unittest.TestCase):
+    def _run_main(self, kind_robots: Path, extra: list[str]):
+        track = kind_robots / "track.mp3"
+        track.write_bytes(b"fake audio")
+
+        def fake_render(sources, last, accepted, rejected):
+            last.append(Image.new("RGB", opening.SIZE, (255, 159, 216)))
+            return iter(())
+
+        def fake_encode(frames, audio, mp4, seconds):
+            mp4.write_bytes(b"mp4")
+            mp4.with_suffix(".webm").write_bytes(b"webm")
+            return round(seconds * opening.FPS)
+
+        with patch.object(opening, "render", side_effect=fake_render), patch.object(
+            opening, "encode", side_effect=fake_encode
+        ), patch.object(opening, "verify_encoded_media"), patch(
+            "os.replace", side_effect=_same_device_only_replace(os.replace)
+        ):
+            return opening.main(
+                ["--kind-robots", str(kind_robots), "--track", str(track), "--stills-only", *extra]
+            )
+
+    def test_main_publishes_across_filesystems_with_real_report_newline(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            kind_robots = Path(tmp)
+            manifest = kind_robots / opening.MANIFEST
+            manifest.parent.mkdir(parents=True)
+            manifest.write_text(
+                "export const RAINBOW_OPENING: RainbowOpeningMedia | null = null\n"
+            )
+            self.assertEqual(self._run_main(kind_robots, []), opening.EXIT_DONE)
+            video = kind_robots / opening.VIDEO_DIR
+            self.assertEqual((video / "opening.mp4").read_bytes(), b"mp4")
+            self.assertEqual((video / "opening.webm").read_bytes(), b"webm")
+            self.assertTrue((video / "opening-poster.webp").stat().st_size > 0)
+            report = (video / "opening-delivery-report.json").read_text()
+            self.assertTrue(report.endswith("}\n"))
+            json.loads(report)
+            self.assertEqual(sorted(p.name for p in video.iterdir() if p.name.startswith(".")), [])
+            self.assertIn("webm: '/rainbow-princess-video/opening.webm'", manifest.read_text())
+
+    def test_preview_out_names_webm_and_poster_after_target(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            out = Path(tmp) / "previews" / "cut.mp4"
+            self.assertEqual(self._run_main(Path(tmp), ["--out", str(out)]), opening.EXIT_DONE)
+            self.assertEqual(out.read_bytes(), b"mp4")
+            self.assertEqual(out.with_suffix(".webm").read_bytes(), b"webm")
+            self.assertTrue(out.with_name("cut-poster.webp").exists())
+            self.assertFalse(out.with_name("opening.webm").exists())
+
+    def test_publish_artifact_keeps_existing_file_when_copy_fails(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            dest = Path(tmp) / "opening.mp4"
+            dest.write_bytes(b"previous")
+            with patch.object(opening.shutil, "copyfile", side_effect=OSError("disk full")):
+                with self.assertRaises(OSError):
+                    opening.publish_artifact(Path(tmp) / "missing.mp4", dest)
+            self.assertEqual(dest.read_bytes(), b"previous")
+            self.assertEqual([p.name for p in Path(tmp).iterdir()], ["opening.mp4"])
 
 
 if __name__ == "__main__":
