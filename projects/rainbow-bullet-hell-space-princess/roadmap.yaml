@@ -848,8 +848,8 @@ tasks:
   - id: t-038
     milestone: m4
     title: "Recut the thrash-metal opening from the doodle art"
-    status: claimed
-    updated: '2026-11-22T18:50:28Z'
+    status: ready
+    updated: '2026-11-22T18:58:38Z'
     depends_on: [t-036]
     passes: 1
     retry_context: ''
@@ -874,9 +874,18 @@ tasks:
       Partial opening-recut reliability slice: exporter now resolves original completed ACE-Step soundtrack by pinned ArtJob #44644 rather than only the most recent 200 queue jobs. Added five regression tests for DONE, pending, malformed, missing ArtImage and HTTP denial. Full opening visual review/render and kind_robots integration remain outstanding.
 
       Partial scope: PR #7834 merged with pinned soundtrack ArtJob #44644 resolver and regression tests; reopen for completed WAN clip visual review, final render and Kind Robots cabinet integration.
+
+      2026-11-22 PT worker: all eight WAN clips were DONE (ArtImages 277936-278013). Preview
+      export failed verification (14.68s vs 15s: the ACE-Step track is shorter than the cut
+      after silence trim and -shortest truncated the picture); fixed with apad plus a real-
+      ffmpeg regression test. Contact-sheet review: identities hold on all cast shots and the
+      title slam lands, but intro-dolphin-armada animated the dolphin sprite on flat chroma
+      green; re-pinned to approved stage-2 card 262204 and cleared its job so auto-submit
+      renders a new clip (the shot uses the still until then). Next: once the new intro-
+      dolphin-armada clip is DONE, run export_rainbow_opening.py --kind-robots ../kind_robots,
+      inspect, and open the kind_robots PR wiring opening mp4/webm and poster into the
+      cabinet.
     owner: worker
-    claimed_by: 2026-11-22T21:40:00Z-claude-ibtnxh
-    claimed_at: '2026-11-22T18:50:28Z'
 
   - id: t-039
     milestone: m4
