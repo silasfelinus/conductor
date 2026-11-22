@@ -70,6 +70,36 @@ class OpeningBudgetCI(unittest.TestCase):
         self.assertNotEqual(result.returncode, 0)
         self.assertIn("opening clip budget", result.stderr)
 
+    def test_missing_real_shot_has_coverage_prefix_not_budget_prefix(self):
+        ledger = copy.deepcopy(self.approved)
+        removed = ledger["subjects"].pop()
+        result = preflight(ledger)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("opening shot coverage:", result.stderr)
+        self.assertIn(removed["key"], result.stderr)
+        self.assertNotIn("opening WAN queue budget:", result.stderr)
+
+    def test_duplicate_real_shot_has_coverage_prefix(self):
+        ledger = copy.deepcopy(self.approved)
+        duplicate = copy.deepcopy(ledger["subjects"][0])
+        ledger["subjects"].append(duplicate)
+        result = preflight(ledger)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("opening shot coverage:", result.stderr)
+        self.assertIn(duplicate["key"], result.stderr)
+        self.assertNotIn("opening WAN queue budget:", result.stderr)
+
+    def test_invalid_real_source_id_has_coverage_prefix(self):
+        for source_id in (0, "invalid", None):
+            with self.subTest(source_id=source_id):
+                ledger = copy.deepcopy(self.approved)
+                ledger["subjects"][0]["source_image_id"] = source_id
+                result = preflight(ledger)
+                self.assertNotEqual(result.returncode, 0)
+                self.assertIn("opening shot coverage:", result.stderr)
+                self.assertIn("approved source ArtImage ID", result.stderr)
+                self.assertNotIn("opening WAN queue budget:", result.stderr)
+
 
 if __name__ == "__main__":
     unittest.main()
