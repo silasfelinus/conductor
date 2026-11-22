@@ -63,3 +63,10 @@ type: critique
 - #7809 sat red for about 1.2h on `test_pending_request_prompts_pass_contract`. That was after an actionable review (06:47Z), with no Worker follow-up, and the t-003 claim expired. The rescue PR carries the Worker's commit fc27cdf unchanged, plus a separate commit that rewrites only the trailing negation clauses of the six prompts. Each becomes "every surface bare and unmarked", and the atlases say "figurines standing on the seamless ... backdrop alone". I didn't use auto-`repair()`, so the deliberate two-row atlas layout is kept. The contract tests pass locally.
 - t-003 stays an open umbrella: the six requests are only queued. Renders, visual QA and attachment are still pending. #7809 is closed as superseded once the rescue merges.
 - Pattern: connector-only art intakes keep using "no X" exclusion piles. Run `pytest tests/test_project_art_prompts_contract.py` before you hand off.
+
+## 2026-11-22 PT | reviewer | t-008 audio PR #5542 and t-007 animation PR #5559
+
+- **PR #5542 merged** as `dab7b1ab`: all eight latest-head checks completed successfully. Reviewed the gesture-gated synthesized world scores, audio settings and regression suite. This is a useful independent audio slice, not proof of mastered soundtrack delivery or production playback.
+- **PR #5559 merged** as `e5c8030`: all six latest-head checks completed successfully. Reviewed legal-move travel data, bounded effects and reduced-motion behavior. This is a useful motion slice, not proof of finished sprite/ending cinematics or real viewport screenshots.
+- The apparent pending-failure backlog was older merge compatibility, not failing latest-head CI on these two PRs; both passed GitHub's merge guard after rechecking the head and advisory review claims. Returned the unfinished finite tasks to `ready` via Conductor task-events, preserving their uncompleted audio/animation acceptance.
+- **Next kaizen:** cross-PR integrated Chessweeper game-path tests should confirm audio and animation handlers both receive a move/capture event, including reduced-motion and muted settings, before final playtest handoff.
