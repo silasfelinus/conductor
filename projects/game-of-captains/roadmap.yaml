@@ -85,11 +85,11 @@ tasks:
       Full history: projects/game-of-captains/HISTORY.md#t-001
   - id: t-041
     title: 'Main-game standard: audit and close the gaps for Space Couch'
-    status: review
+    status: done
     owner: worker
     claimed_by: 2026-11-22T004825Z-game-of-captains-t-041-q7m4
     claimed_at: '2026-11-22T00:48:25Z'
-    updated: '2026-11-22T00:51:00Z'
+    updated: '2026-11-22T05:10:56Z'
     milestone: m4
     stakes: reversible
     passes: 0
@@ -156,6 +156,20 @@ tasks:
       Partial t-041 delivered: kind_robots PR #5528 merged into main c2db243ea66e838ec022bd9525571c3d75f05cb2 at exact head e40d331ee238e48ff3e6981d52b58ebb22e41f98. All nine GitHub Actions workflow groups COMPLETED SUCCESS, including Space Couch full adversarial voyages, seeded game-playthroughs, TypeScript, Playbook Kit, formatting, architecture, layout, schema parity and all four contract shards. Generation-aware file staging eliminates stale async import races; cancellation/account switches invalidate stale reads; bounded portable backup generation rejects >8 MB exports with behavioral tests, and an existing source contract was repaired for the moved validation call. Old save keys, v1 format, account access and achievements preserved. Remaining t-041: authenticated live account backup/restore, accepted original painted-art URLs, 390/768/1440 browser layout and final human playtest readiness. Return to READY (partial), not DONE.
 
       Partial achievement correctness fix: Personal Business now awards only on completion of a three-stop crew quest, with regression cases for unfinished first and second stops. Remaining t-041 acceptance work is not complete.
+
+      2026-11-22 PT closure evidence (Silas-directed session; no other workers). Remaining
+      t-041 criteria verified on live kindrobots.org: (1) painted-art URLs: all 342
+      onboarding/voyage/episode paintings serve 200 to a signed-in kind-session viewer and
+      correctly 404 to anonymous viewers (private-art publish gate intact); (2) 390/768/1440:
+      three complete signed-in voyages, one per width, played captain selection through
+      chapter 9 finale and ending, 72 screens each, every screen painted, 0 broken images, 0
+      console errors, 0 horizontal overflow; defects found (HUD spill under Kit icons, meter
+      fill overrun, phone cast clipping) fixed in kind_robots #5548 (merged eef3416); (3)
+      authenticated account backup: GET /api/game-of-captains/voyage-save returns 200 for a
+      signed-in viewer and 401 anonymously; write/restore paths remain covered by the merged
+      regression suites (not exercised live to avoid overwriting a real account backup). Final
+      human playtest verdict stays with t-012.
+    implementation_pr: 'silasfelinus/kind_robots#5548'
 
   - id: t-040
     title: 'Space Couch achievement upgrade: 12 or more live achievements'
@@ -1029,11 +1043,11 @@ tasks:
     claimed_at: '2026-11-21T13:41:00Z'
   - id: t-045
     title: "Captain selection redesign: large painted portraits and an art-first layout"
-    status: review
+    status: done
     owner: reviewer
     claimed_by: 20261122T031000Z-goc-claude-elegant-galileo
     claimed_at: '2026-11-22T03:10:00Z'
-    updated: '2026-11-22T03:10:00Z'
+    updated: '2026-11-22T05:10:19Z'
     milestone: m3
     passes: 0
     stakes: reversible
@@ -1044,13 +1058,23 @@ tasks:
 
       2026-11-22 PT: curated one of two renders per captain (keeps 278424, 278426, 278429, 278431, 278433, 278435; Vale B rejected as resembling a film prop). New components/gameOfCaptains/captain-gallery.vue: painted full-length lineup with the chosen captain widened, a dossier beside it, and a phone swipe carousel. Screenshots at 1274x534 / 700x760 / 322x564 panel sizes; suites, vue-templates and vue-tsc pass. Kind Robots PR #5548 (combined with t-046).
 
+      2026-11-22 PT: Kind Robots PR #5548 merged as eef341634849bd9d4d03cacbcbc662e41cd42c85
+      after all 17 exact-head checks completed SUCCESS (TypeScript, four contract shards,
+      seeded playthroughs, all-captains adversarial matrix, layout, Playbook Kit, production
+      image). Captain selection is now an art-first gallery of six curated 832x1216 paintings
+      (ArtImages 278424/278426/278429/278431/278433/278435) with a phone snap carousel;
+      verified at live panel sizes 1274x534, 700x760 and 322x564. Same PR made the expedition
+      console art-first per Silas's follow-up note (full-bleed episode painting, glass panels,
+      painted officer cards).
+    implementation_pr: 'silasfelinus/kind_robots#5548'
+
   - id: t-046
     title: "Space Couch sound and music: original score, interface and event sound, mixer settings"
-    status: review
+    status: done
     owner: reviewer
     claimed_by: 20261122T031000Z-goc-claude-elegant-galileo
     claimed_at: '2026-11-22T03:10:00Z'
-    updated: '2026-11-22T03:10:00Z'
+    updated: '2026-11-22T05:10:35Z'
     milestone: m3
     passes: 0
     stakes: reversible
@@ -1060,3 +1084,13 @@ tasks:
       Silas 2026-11-22 PT: "We never mentioned sound and music, but that should be expected." Ship original (procedural, rights-clean) title and voyage music, interface/event sound for choices, success, failure, redshirt loss and endings; start only after a user gesture, honor reduced motion/mute, persist music and effects volume in the shared settings sheet, and cover it with deterministic tests.
 
       2026-11-22 PT: utils/gameOfCaptains/sound.ts adds six original procedural lounge loops by voyage phase and twelve event cues from a pure run diff. Music/Effects sliders sit under the Kit settings, Kit Sound is the master switch, and nothing plays before a gesture. verifySpaceCouchSound.test.ts (9 checks); headless Chromium audio probe confirmed signal per mood, mute and suspend. Kind Robots PR #5548.
+
+      2026-11-22 PT: Kind Robots PR #5548 merged as eef341634849bd9d4d03cacbcbc662e41cd42c85
+      (all 17 exact-head checks SUCCESS). utils/gameOfCaptains/sound.ts: six original
+      procedural space-age lounge loops cross-fading by voyage phase, cues for
+      launch/warp/arrival/four results/fallen and hired redshirts/new crew/chapter/ending from
+      a pure run diff; Music and Effects sliders under the shared Kit settings; Kit Sound is
+      the master switch; silent until a gesture; pauses when hidden.
+      verifySpaceCouchSound.test.ts (9 checks) and a headless Chromium analyser probe (signal
+      in every mood, mute and suspend) passed.
+    implementation_pr: 'silasfelinus/kind_robots#5548'
