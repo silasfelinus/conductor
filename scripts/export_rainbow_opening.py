@@ -46,6 +46,7 @@ LEDGER = ROOT / "projects/rainbow-bullet-hell-space-princess/art/OPENING-CLIPS-2
 VIDEO_DIR = Path("public") / "rainbow-princess-video"
 MANIFEST = Path("utils") / "arcade" / "games" / "rainbowOpening.ts"
 TRACK_KEY = "rainbow-score:v1:opening"
+TRACK_JOB_ID = 44644  # original ACE-Step opening score; do not use a newer track
 
 BPM = 176
 FPS = 24
@@ -103,22 +104,27 @@ def download(art_image_id: int) -> bytes:
 
 
 def track_image_id() -> tuple[str, int | None]:
-    """The opening track job's status and its ArtImage once DONE."""
-    core = _core()
-    status, resp = core.http_json("GET", f"{core.KR_BASE_URL}/api/art/queue?projectSlug=kr-arcade&pageSize=200")
-    if status != 200:
-        raise RuntimeError(f"GET /api/art/queue: HTTP {status}")
-    data = (resp or {}).get("data")
-    jobs = data if isinstance(data, list) else (data or {}).get("jobs") or (data or {}).get("items") or []
-    mine = [job for job in jobs if TRACK_KEY in json.dumps(job.get("payload", "")).replace('\\"', '"')]
-    if not mine:
-        return "MISSING", None
-    done = [job for job in mine if job.get("status") == "DONE" and job.get("artImageId")]
-    if done:
-        latest = max(done, key=lambda job: job["id"])
-        return "DONE", int(latest["artImageId"])
-    return max(mine, key=lambda job: job["id"]).get("status", "?"), None
+    """Resolve the pinned opening score, even after thousands of newer art jobs.
 
+    The original track lives at ArtJob 44644. Searching only the newest 200
+    queue results silently lost that soundtrack and prevented the finished
+    eight-shot opening from exporting. Never substitute a different score.
+    """
+    core = _core()
+    url = f"{core.KR_BASE_URL}/api/art/queue/{TRACK_JOB_ID}"
+    status, resp = core.http_json("GET", url)
+    if status != 200:
+        raise RuntimeError(f"GET /api/art/queue/{TRACK_JOB_ID}: HTTP {status}")
+    data = (resp or {}).get("data")
+    job = data.get("job") if isinstance(data, dict) else None
+    if not isinstance(job, dict) or type(job.get("id")) is not int or job["id"] != TRACK_JOB_ID:
+        raise RuntimeError(f"ArtJob {TRACK_JOB_ID}: unexpected queue response")
+    if job.get("status") != "DONE":
+        return str(job.get("status") or "UNKNOWN"), None
+    image_id = job.get("artImageId")
+    if type(image_id) is not int or image_id <= 0:
+        return "DONE_WITHOUT_AUDIO", None
+    return "DONE", image_id
 
 
 def wan_shot_budgets(ledger: dict) -> list[dict]:

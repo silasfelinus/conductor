@@ -204,3 +204,8 @@
 
 **Closeout:** a verified-PR session-matched `done` event was submitted for t-173 and confirmed applied in Conductor. Follow-up t-174 is a separate reversible CI-hardening task. The broader Spring/Summer and Autumn/Winter gameplay PRs #5558 and #5561 retain their review states until their own CI completes.
 
+
+## 2026-11-22 PT | reviewer | t-090 Glitch Garden winter slice PR #5572
+
+- **kind_robots#5572 merged** as `d75deb72`: clean, all latest-head checks green, one file (`glitchGardenGardens.ts`, +236). It adds two winter layouts and ten waves. The scope is data only, and winter mechanics and bosses remain. A task-event returns t-090 to `ready`.
+- Pattern: large hand-drawn ASCII layouts land with no structural test. The kaizen is t-175, a layout-contract test over every exported Garden.

@@ -655,13 +655,10 @@ tasks:
     milestone: m6
     title: "Gen-2 alternate stages: four branch stages with their own guardians"
     status: review
-    owner: worker
-    claimed_by: 20261122T035214Z-rainbow-x1-nursery-r6p9
-    claimed_at: '2026-11-22T03:52:14Z'
     depends_on: [t-026]
     passes: 0
     stakes: reversible
-    updated: '2026-11-22T03:53:06Z'
+    updated: '2026-11-22T12:06:00Z'
     note: |-
       One stage per PR, authored to the existing Act pacing and fairness rules, each with a guardian.
 
@@ -697,6 +694,13 @@ tasks:
       2026-11-21 PT: X3 Sunken Lighthouse standalone flight PR silasfelinus/kind_robots#5535 merged as afdfef1023e9bc41eb00625c4b7e25d6e49a56e1 after all 11 latest-head GitHub workflow runs completed successfully, including TypeScript, full four-shard Contract Tests, Lighthouse score, browser cabinet, and viewport. Earned X3 entry, six lamps, 30 waves, Drowned Bellkeeper, three comms scenes, all local 1-4 seats, checkpoint persistence and regression are integrated on main. Partial t-028; two standalone alternate Acts X1/X2, finished guardian art, and full route replay/QA remain. Ready for next implementation slice.
 
       Partial X1 Lantern Nursery standalone flight model on kind_robots commit 28d4c564: six contiguous sections, authored 20-wave score, earned rescued-Nemi/cleared-trench low-lane local co-op vote, exact checkpoint proof, and dedicated CI contract. The model is not yet wired to cabinet flight/render/save; X2 and art still remain.
+
+      2026-11-22 PT: stale review claim dated 03:52Z (over eight hours old) with no open Rainbow implementation PR or matching worker branch in kind_robots. Preserved existing X1 flight-model commit and all prior X2-X4 integration; reopening only for the unblocked X1 art/gameplay follow-up.
+
+      X1 missing Gen-2 gameplay art is now authored in private auto-submit Krea 2 ledger GEN2-KELP-NEBULA-X1.yaml: idle/sweep/hurt Kelp Warden, Coral Choir rescue pod, and lashing frond hazard. The five subjects are queued for pipeline submission only after a green merge; none has a new ArtJob or reviewed ArtImage yet. Existing four-stage backdrops remain reused. This is partial t-028, which still needs rendered art review, export, runtime integration and route playtests.
+    owner: worker
+    claimed_by: 20261122T120200Z-rainbow-t028-k4t7
+    claimed_at: '2026-11-22T12:02:00Z'
   - id: t-029
     milestone: m6
     title: "Gen-2 art round 1: route map, Palace Hangar and four alternate-stage backdrops"
@@ -840,12 +844,15 @@ tasks:
   - id: t-038
     milestone: m4
     title: "Recut the thrash-metal opening from the doodle art"
-    status: ready
+    status: review
+    owner: worker
+    claimed_by: 20261122T1212Z-rainbow-t038-p7k9
+    claimed_at: '2026-11-22T12:12:00Z'
+    updated: '2026-11-22T12:15:00Z'
     depends_on: [t-036]
     passes: 1
     retry_context: ''
     stakes: reversible
-    updated: '2026-11-22T10:49:04Z'
     note: |-
       Silas chose to hold the old-style opening clips (44645-44653) and recut from new-style stills. New WAN clip ledger from t-035/t-036 keepers, then scripts/export_rainbow_opening.py with the new SHOTS; the thrash track (44644) stays.
 
@@ -862,7 +869,9 @@ tasks:
       and main()-level tests simulating a cross-device /tmp; retry_context items resolved.
       Still partial: confirm auto-submitted WAN ArtJob IDs, inspect rendered clips, export the
       15s cut and wire it into the kind_robots cabinet.
-    owner: reviewer
+
+      Partial opening-recut reliability slice: exporter now resolves original completed ACE-Step soundtrack by pinned ArtJob #44644 rather than only the most recent 200 queue jobs. Added five regression tests for DONE, pending, malformed, missing ArtImage and HTTP denial. Full opening visual review/render and kind_robots integration remain outstanding.
+
   - id: t-039
     milestone: m4
     title: "Remove the DOGS; Princess Kitty Power cut-ins; boss fire back to each creature's own look"
@@ -1119,20 +1128,20 @@ tasks:
   - id: t-056
     milestone: m6
     title: "Add a per-stage art audit that lists each Gen-2 stage's authored guardian/pickup/hazard asset paths with their completed ArtImage ids, flagging any still missing"
-    status: claimed
-    owner: worker
+    status: done
     claimed_by: 20261122T1154Z-rainbow-t056-a7k9
     claimed_at: '2026-11-22T11:54:15Z'
-    updated: '2026-11-22T11:54:15Z'
+    updated: '2026-11-22T12:07:00Z'
     depends_on: []
     passes: 0
     stakes: reversible
     source: kaizen-pr-7810
-    note: >-
-      Reviewer kaizen from the 2026-11-22 PT merge of conductor#7810 (t-028 X2 art intake,
-      Worker suggestion). Scope: read projects/rainbow-bullet-hell-space-princess/art/GEN2-*.yaml
-      plus the art ledger and print, per stage (X1..X4), each subject asset path and its
-      ArtImage id or MISSING; exit non-zero only with --strict. Pure local read, no API calls.
+    note: |-
+      Reviewer kaizen from the 2026-11-22 PT merge of conductor#7810 (t-028 X2 art intake, Worker suggestion). Scope: read projects/rainbow-bullet-hell-space-princess/art/GEN2-*.yaml plus the art ledger and print, per stage (X1..X4), each subject asset path and its ArtImage id or MISSING; exit non-zero only with --strict. Pure local read, no API calls.
+
+      Added read-only X1-X4 guardian/pickup/hazard ArtImage audit and five local passing tests on worker/rainbow-bullet-hell-space-princess-t056-stage-art-audit-20261122; app code and asset state unchanged. Await CI and merge.
+
+      Conductor #7831 merged as 78355632 with all four completed green workflows. Read-only X1-X4 ArtImage audit shipped with five locally passing regression tests; strict mode flags absent authored asset categories, invalid IDs and conflicts. No visual approval, direct art delivery or game integration is claimed.
   - id: t-057
     milestone: m4
     title: "Unit-test validate_shot_coverage in export_rainbow_opening.py and give coverage failures their own error prefix"
@@ -1141,12 +1150,25 @@ tasks:
     stakes: reversible
     depends_on: []
     source: reviewer-kaizen-2026-11-22
-    updated: '2026-11-22T11:54:35Z'
+    updated: '2026-11-22T12:04:50+00:00'
     note: |-
       Reviewer kaizen from the 2026-11-22 PT merge of conductor#7815. The new preflight shipped without tests; add cases for a missing shot, a duplicate key, a non-int or zero source_image_id, and both the doodle and legacy rounds. Failures currently print under the "opening WAN queue budget:" prefix; give coverage errors a distinct message.
 
       Added opening coverage regression tests and distinct preflight error classification on worker/rainbow-t057-coverage-20261122.
 
       Conductor PR #7827 merged on 2026-11-22 PT (head 34613e7), shipping six coverage/error-label regression tests and distinct coverage preflight diagnostics.
+
+      Reviewer merged conductor#7827 (6c624755) after all latest-head checks were green. The Worker PR handoff check initially failed on missing headings; the reviewer restructured the PR body only. Coverage tests cover missing/duplicate shots, invalid ArtImage IDs, both rounds and malformed subjects; coverage errors now print "opening shot coverage:".
     claimed_by: 2026-11-22T104700Z-rainbow-t057-c8f3
     claimed_at: '2026-11-22T10:47:00Z'
+  - id: t-058
+    milestone: m4
+    title: "Make the opening-wan-budget CI job assert the distinct 'opening shot coverage:' prefix against the live ledger"
+    status: ready
+    passes: 0
+    stakes: reversible
+    depends_on: []
+    source: reviewer-kaizen-2026-11-22
+    updated: '2026-11-22T11:50:00Z'
+    note: |-
+      Reviewer kaizen from the 2026-11-22 PT merge of conductor#7827 (t-057). Coverage and WAN-budget failures now have separate prefixes, but only unit tests pin that. Extend the opening-wan-budget workflow step (or a test it runs) so a coverage failure on the real ledger shows up under its own prefix in CI logs. No production data changes.
