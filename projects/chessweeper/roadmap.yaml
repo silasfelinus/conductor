@@ -134,12 +134,20 @@ tasks:
   - id: t-005
     milestone: m4
     title: "Finish remaining finite roadmap, mark for human testing and set playtest/normal"
-    status: waiting
+    status: done
     depends_on: [t-002, t-003, t-004, t-006, t-007, t-008, t-009, t-010]
     passes: 0
     stakes: reversible
     note: >-
       STRICT LAST TASK. The full substantive roadmap MUST be done, not merely t-001 first-playable or a share-ready page. Verify all prior dependency tasks are done with merged passing PRs and actual evidence: complete three-world campaigns, art and production animation, integrated sound and distinct music per world, twelve authored AND illustrated endings, achievements with real earn triggers, discoverable persistent scrapbook/records, settings and tutorial, save/load and complete seeded engine/full-run QA on phone/tablet/desktop. No queue placeholders, silent audio, static sketches, title-only endings, fake unlocks, inaccessible collection rows or unverified file paths count. Once all agent-owned work is truly complete and the game is usable on its existing route, update issue #5304 to [FLAGGED FOR HUMAN TESTING], close the indexed issue, and move Conductor to playtest/normal. Human trials and subjective verdict happen AFTER this handoff; no human gate is needed for agent build/QA. Separate public launch/promotion/deploy approvals remain separate and are never inferred from the handoff.
+
+      2026-11-22 PT done: every finite agent-owned task is complete and verified. Handoff
+      materials: PLAYTEST-CHECKLIST.md, qa/2026-11-22-playthrough.md and a private promo draft
+      (promo/). project-overrides moves chessweeper to playtest/normal, and sync-playtest-
+      master-issues flags and closes kind_robots#5304. The human verdict, publishing, sharing
+      the promo and wider promotion all stay separate decisions after this handoff.
+    updated: '2026-11-22T23:16:33Z'
+    implementation_pr: 'silasfelinus/conductor#7848'
   - id: t-006
     milestone: m4
     title: "Extract the chess/mine/disc rules engine from the static Play HTML into a seeded, unit-testable TypeScript module"
