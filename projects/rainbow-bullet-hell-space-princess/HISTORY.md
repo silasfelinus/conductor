@@ -334,6 +334,25 @@ Early lines speak the Motherland's "pacification" story; Acts III-V plant the ev
 Merged kind_robots#4105 (f1a1659): Acts I-V speak the Motherland pacification story and seed the evidence chain (beacons, lullaby, command codes and collar, colony ships, caretakers); verifyRainbowEvidence pins it.
 <!-- note:end t-041 -->
 
+## t-043 — Fever Dream look: review the doodle re-renders (DOODLE-SET-2) and ship the keepers
+
+<!-- note:begin t-043 -->
+Follow-up to t-036 (kind_robots#4764). art/DOODLE-SET-2.yaml (35 cells, auto_submit) re-renders what art/DOODLE-SET-1-REVIEW.yaml held: Solenne's portrait and comms (skin and hair lock), three ships (colour and silhouette lock), 12 boss phases (B02/B04/B07/B09), 17 enemies and guardians, and 2 pickups, each sprite on a source_margin green border so it stays whole. When the cells are DONE: contact-sheet them (portraits beside their CAST-MANIFEST identity locks; sprites keyed on dark, with the frame-edge check), flip the passing entries in DOODLE-SET-1-REVIEW.yaml to keep (a boss only with all three phases), re-run scripts/export_rainbow_doodle_art.py --kind-robots ../kind_robots, run utils/scripts/verifyRainbowFeverDream.test.ts, and PR the files. Once all four ships pass, also flip ships/petal-wing to keep.
+
+Added export fail-closed checks for incomplete curated boss phase groups and missing finished key art. Art inspection and integration remain outstanding; this is a partial safety increment.
+
+Reviewer 2026-11-20: export guard merged via PR #7694 (dry run passes on current ledgers; fails closed with exit 1 when a kept boss lacks finished phases). Back to ready, claim released: the contact-sheet review, keeper flips and the kind_robots export PR are still to do. All 12 DOODLE-SET-2 boss phases (b02/b04/b07/b09) already have finished renders. Kaizen t-046.
+
+2026-11-20 PT: Added private DOODLE-SET-2 comparison sheets, ArtJob/ArtImage provenance and four tests. Visual acceptance and actual export still open; scoped PR awaiting CI.
+
+Reviewer 2026-11-20: review-sheet builder merged via PR #7699
+(scripts/review_rainbow_doodle_art.py; verdicts stay PENDING_VISUAL_INSPECTION). Back to
+ready, claim released: generate sheets, do the visual pass, flip keepers in DOODLE-
+SET-1-REVIEW.yaml, export to kind_robots and PR.
+
+2026-11-22 PT visual pass of all 35 DOODLE-SET-2 renders (sheets from scripts/review_rainbow_doodle_art.py). Kept six whole enemy re-renders (brood, mirror, salvager, squid, lantern, guardian-bulwark) in DOODLE-SET-1-REVIEW.yaml (conductor#7841) and exported them to kind_robots (kind_robots#5584, Fever Dream verify test green). Held 29: Solenne portrait/comms fail CAST-QA 2/5; all ships fail colour lock or crop, so petal-wing stays fever; no boss has three whole phases; ten enemies/guardians and both pickups still cropped at the right edge. The source_margin green border did not stop Kontext cropping, so a further re-render round needs a different approach (txt2img lane or wider pad).
+<!-- note:end t-043 -->
+
 ## t-045 — Rainbow Bullet Hell Space Princess achievement upgrade: 12 or more live achievements
 
 <!-- note:begin t-045 -->
@@ -448,3 +467,35 @@ Reviewer kaizen from the 2026-11-21 PT merge of conductor#7777 (t-053). opening-
 
 opening-delivery-report.json now carries wan_shot_budgets (per WAN shot requested seconds, fps, frames, seconds_headroom, frame_headroom vs the 8s/128-frame budget), computed by wan_shot_budgets() which validate_opening_queue_budget now reuses. Exact values asserted in tests/test_rainbow_opening_queue_budget.py, including a tiny-overage (8.0001s) rejection regression guard.
 <!-- note:end t-055 -->
+
+## t-056 — Add a per-stage art audit that lists each Gen-2 stage's authored guardian/pickup/hazard asset paths with their completed ArtImage ids, flagging any still missing
+
+<!-- note:begin t-056 -->
+Reviewer kaizen from the 2026-11-22 PT merge of conductor#7810 (t-028 X2 art intake, Worker suggestion). Scope: read projects/rainbow-bullet-hell-space-princess/art/GEN2-*.yaml plus the art ledger and print, per stage (X1..X4), each subject asset path and its ArtImage id or MISSING; exit non-zero only with --strict. Pure local read, no API calls.
+
+Added read-only X1-X4 guardian/pickup/hazard ArtImage audit and five local passing tests on worker/rainbow-bullet-hell-space-princess-t056-stage-art-audit-20261122; app code and asset state unchanged. Await CI and merge.
+
+Conductor #7831 merged as 78355632 with all four completed green workflows. Read-only X1-X4 ArtImage audit shipped with five locally passing regression tests; strict mode flags absent authored asset categories, invalid IDs and conflicts. No visual approval, direct art delivery or game integration is claimed.
+<!-- note:end t-056 -->
+
+## t-057 — Unit-test validate_shot_coverage in export_rainbow_opening.py and give coverage failures their own error prefix
+
+<!-- note:begin t-057 -->
+Reviewer kaizen from the 2026-11-22 PT merge of conductor#7815. The new preflight shipped without tests; add cases for a missing shot, a duplicate key, a non-int or zero source_image_id, and both the doodle and legacy rounds. Failures currently print under the "opening WAN queue budget:" prefix; give coverage errors a distinct message.
+
+Added opening coverage regression tests and distinct preflight error classification on worker/rainbow-t057-coverage-20261122.
+
+Conductor PR #7827 merged on 2026-11-22 PT (head 34613e7), shipping six coverage/error-label regression tests and distinct coverage preflight diagnostics.
+
+Reviewer merged conductor#7827 (6c624755) after all latest-head checks were green. The Worker PR handoff check initially failed on missing headings; the reviewer restructured the PR body only. Coverage tests cover missing/duplicate shots, invalid ArtImage IDs, both rounds and malformed subjects; coverage errors now print "opening shot coverage:".
+<!-- note:end t-057 -->
+
+## t-058 — Make the opening-wan-budget CI job assert the distinct 'opening shot coverage:' prefix against the live ledger
+
+<!-- note:begin t-058 -->
+Reviewer kaizen from the 2026-11-22 PT merge of conductor#7827 (t-057). Coverage and WAN-budget failures now have separate prefixes, but only unit tests pin that. Extend the opening-wan-budget workflow step (or a test it runs) so a coverage failure on the real ledger shows up under its own prefix in CI logs. No production data changes.
+
+Added live-ledger-mutated missing, duplicated, and invalid ArtImage tests in scripts/test_rainbow_opening_budget_ci.py, proving opening shot coverage errors have their own prefix in CI rather than being mislabeled WAN budget failures. Implementation commit dc226f7. Await CI and merge.
+
+Conductor PR #7836 merged as dbc31dc, with Worker PR CI, Security Audit, opening WAN budget, event processing and handoff checks all completed green. Live-ledger missing/duplicate/invalid shot fixtures now require distinct coverage failure prefix.
+<!-- note:end t-058 -->

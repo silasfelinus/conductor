@@ -311,14 +311,16 @@ def test_new_art_batches_reach_private_media_and_runtime_checks():
         step.get("run", "")
         for step in flow["jobs"]["verify-private-media"]["steps"]
     )
-    assert "verify_tactics_runtime_media.py" in commands
+    helper = (ROOT / "scripts/prove_private_media_ledgers.py").read_text()
+    assert "scripts/prove_private_media_ledgers.py" in commands
     for ledger in (combat, emotions):
-        assert str(ledger.relative_to(ROOT)) in commands
-    assert "--require-count 11 --write-evidence" not in commands
-    assert "--require-count 12 --write-evidence" in commands
+        assert str(ledger.relative_to(ROOT)) + ":12" in commands
+    assert ":11" not in commands
     assert "Verify all twelve Prom companion emotions" in FLOW.read_text()
-    assert commands.count("verify_tactics_runtime_media.py") >= 3
-    assert "--require-count 12 --write-evidence" in commands
+    assert commands.count("--write-evidence --require-private") >= 3
+    assert "scripts/verify_prom_tactics_media.py" in helper
+    assert "scripts/verify_tactics_runtime_media.py" in helper
+    assert "scripts/checkpoint_art_state.sh" in helper
     assert "checkpoint_art_state.sh" in commands
 
 
@@ -346,6 +348,8 @@ def test_three_authentic_tactics_venue_paintings_have_private_gameplay_proof():
         assert relative in paths
         assert relative in commands
     assert "Verify original Tactics diner, sunken street and library" in FLOW.read_text()
-    assert commands.count('--require-count 1 --write-evidence') >= 1
-    assert 'verify_tactics_runtime_media.py "$ledger"' in commands
+    for name in expected:
+        assert "projects/every-villain-tactics/art/" + name + ":1" in commands
+    assert "--write-evidence --require-private" in commands
+    assert "scripts/prove_private_media_ledgers.py" in commands
     assert "checkpoint_art_state.sh" in commands

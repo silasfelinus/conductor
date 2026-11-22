@@ -113,3 +113,48 @@ User-directed Video Generator readability, prompt-only WAN TI2V, concurrent subm
 
 Merged silasfelinus/kind_robots#3969 (c9f6216eb25cfcdc3ad4a994a7a6d5a4bdb68dd6) after all 23 of 23 workflows passed. Video generator styling and readability, device-local settings, concurrent rendering submissions, image-free WAN 5B prompts, current-image maturity privacy and Both/Mature/SFW recent filters landed on main. Ready for the next recurring interface polish slice.
 <!-- note:end t-105 round 2 -->
+
+## Round 3 (archived 2026-11-22)
+
+<!-- note:begin t-105 round 3 -->
+This is the deliberately subjective third phase that prior work mostly skipped. Apply the chosen Storybook design language where appropriate: clean hierarchy, generous useful art, friendly controls, minimal container nesting, calm spacing, readable narrative/text areas, and intentional empty/loading/error states. Produce reviewable screenshots rather than closing from source inspection alone. Polish the Coloring Book curation surface from the live screenshot: use the available workspace width and present Color and B&W candidates as equal-size, equal-height comparison peers instead of a primary image with a small inset. Preserve production actions and responsive behavior. Coloring Book curation polish is ready for CI review. The curation studio now uses the full workspace width, proposal cards use a 540px responsive minimum, and Color/B&W candidates render as permanent 50/50 peers in matching 17:22 frames with object-contain rather than a large primary plus B&W inset. Missing variants retain an equal-size placeholder. Production actions and data behavior are unchanged. Merged silasfelinus/kind_robots#2091 as 75eb077e0d423528b4470808f1a41b6aa546409c from exact head c79bb189bc4e2c2abc3570cfc31cc4d023771f7d after every returned exact-head workflow completed successfully, including TypeScript, Layout Contract, Facet Catalog, Schema Migration Parity, and all 298 Contract Tests stages. Coloring Book curation now uses the full workspace width and presents Color and B&W candidates as equal 17:22 comparison peers with object-contain. Screenshot-driven Coloring Book curation polish is complete and merged as silasfelinus/kind_robots#2091. Return the reusable page-polish task to ready for the next visual review slice. Slice: polished Build Bench (/build-bench, admin-only A/B image-generation build comparison tool). Prior state was hand-rolled relative to established precedent: an emoji h1 with no header hierarchy, an ad-hoc kr-note-warning missing the base kr-note class, and a corner-radius scale drifting between rounded-3xl/2xl/xl/lg across sibling elements with no visual reason; the idle result slot was bare 50%-opacity text with no visual weight. [...] [Earlier history (43,562 chars) archived verbatim to projects/interface-vision/T105-HISTORY.md -- read it there only when you need a specific past cycle. Append new cycles below, one short paragraph each.] Screenshot-directed Art Generator density and SDXL image-to-image repair. [...]
+[Earlier history (7,339 chars) archived verbatim to projects/interface-vision/T105-HISTORY.md -- read it there only when you need a specific past cycle. Append new cycles below, one short paragraph each.]
+[Kept from the archived history because other scripts read it:] RAN 2026-10-11 PT: merged kind_robots#3571 at 45d6e72c56e58dea872f7fb0cb050c6ade81ad79 after all 32 checks succeeded on 108a2e6b210add5a65e38ed1e1cf948553f0ebb4, including the actual-component browser regression and full Contract Tests.
+Scoped viewport-first polish of private Emperor of Dust: one-screen court shell, five bounded content panels with full follower/relic reachability, map-and-orders focus, explanatory copy moved to tutorial, global AGENTS UI contract and targeted regression test. Awaiting GitHub PR CI and exact-head review; no deploy or public /play change.
+Delivered the viewport-first layout standard and private Emperor of Dust retrofit in kind_robots PR #3670, merged as 478b7e36935b5dd82a83fada2f0b696e84bb0e3b after all 32 exact-head workflows completed successfully, including TypeScript, Layout Contract, Emperor Dispatch Contract, Prettier/ESLint and Contract Tests. Replaced full-page scrolling with a one-screen court, compact persistent stats and clock, five bounded content sections with complete follower/relic galleries and contextual guidance in the tutorial sidebar. The temporary formatter workflow was removed. No public /play route, production deployment, database or game-engine changes. Resume the recurring wider-gallery audit on other pages; 390/768/1440 live visual verification remains to be done on the self-hosted deployment.
+User-reported mobile LoRA Triage contrast, Resources discovery, and clipped gallery regression.
+LoRA Triage now exposes model Library/Discover navigation, opaque actions, compact mobile stats, and a bounded scroll owner. Changes on Kind Robots worker/interface-vision-t105-lora-triage-20261020-4d91c2, awaiting PR checks.
+Merged silasfelinus/kind_robots#3909 as cef8fd03f8bcbc27c2d198410a8e2cbb5238b6bd. All 16 exact-head GitHub Actions completed successfully, including Navigation Consolidation, Layout, MDC Scroll Ownership, Changed-file Prettier, TypeScript and all Contract Tests shards. Admin LoRA Triage exposes Library and Discover/download links, toolbar gains opaque backing, and bounded scrolling makes gallery rows reachable. No database/API changes or manual deployment. Return recurring page-polish task to ready.
+User-directed Video Generator readability, prompt-only WAN TI2V, concurrent submissions, local settings, recent-image maturity filters and preview guards implemented in worker/interface-vision-t105-video-ui-c74a. Reviewing CI before merge.
+Merged silasfelinus/kind_robots#3969 (c9f6216eb25cfcdc3ad4a994a7a6d5a4bdb68dd6) after all 23 of 23 workflows passed. Video generator styling and readability, device-local settings, concurrent rendering submissions, image-free WAN 5B prompts, current-image maturity privacy and Both/Mature/SFW recent filters landed on main. Ready for the next recurring interface polish slice.
+
+Silas-directed five-game collection/menu pass: unify Prom Yearbook/Scrapbook, consolidate Shifting Desks Personnel Archive, add Emperor Chronicle title menu, expose Shifting Lands Trail Ledger and Zuzu Gamebook Bell Ledger. Source changes and targeted contracts prepared on worker/interface-vision-t-105-game-archives-u7r4.
+
+Silas-directed five-game collection/menu consolidation merged as silasfelinus/kind_robots#4663 (8e6502f52a07a2026bdc5717f877893f66073f2e). Prom Yearbook subsumes Scrapbook; Shifting Desks Personnel Archive replaces redundant Gallery; Emperor Chronicle title option; Shifting Lands Trail Ledger; Zuzu Gamebook Bell Ledger. All 10 exact-head CI workflows completed successful, including four contract shards plus verifier. No deployment to Unraid.
+
+One illustrated launcher now names the active tab and icon at every breakpoint. Removed the second desktop tab-picker mount; updated navigation and tablet geometry contracts. Implementation PR and CI verification pending.
+
+Merged silasfelinus/kind_robots#4688 as c55fb9ddd978faa65af55b16f84248d3d2f5d1f8 after eight successful CI runs. Unified navigation now labels the active tab. Self-hosted deploy not verified.
+
+2026-11-19 PT daily-delivery:2026-11-19/website-site-name | PR:
+silasfelinus/kind_robots#5340 | Home page now emits schema.org WebSite JSON-LD
+(buildWebsiteJsonLd in utils/sharePreview.ts) so search results can label the site 'Kind
+Robots'; emitted only on /, pinned in verifySharePreview.test.ts. Not yet checked with a
+live rich-results test.
+
+2026-11-20 PT daily-delivery:2026-11-20/register-plain-copy | PR:
+silasfelinus/kind_robots#5416 (merged 80196ac9) | /register shared as 'Registration' /
+'Register to unlock leaderboards, user navigation, jellybean tracking ... prompt retention'.
+content/register.md now reads 'Create a free account' and says what an account is for and
+that games stay free without one; pinned in verifyFrontDoorPolish.test.ts.
+
+daily-delivery:2026-11-21/navigation-plain-copy | PR: silasfelinus/kind_robots#5513
+(merged d142dd9) | The site map says what it is when shared. Live og:description
+captured before the change; verifySharePreview.test.ts forbids the old line and pins the
+new description.
+
+daily-delivery:2026-11-22/showdown-real-description | PR: silasfelinus/kind_robots#5580
+(merged de1be6c) | Zuzu Showdown's link preview went from 'Duels with Zuzu and friends.'
+to a real 2D-fighter description. Considered retitling /about from 'Support' but
+verifyNavigationConsolidation.ts pins it deliberately; left as is.
+<!-- note:end t-105 round 3 -->
