@@ -121,7 +121,7 @@ Silas, 2026-11-22 PT: *"One of the scenes is a bayou trailer park, where the fis
 a trailer, overweight, pregnant, with a bunch of younglings, in various stages from teenager to tadpole.
 Southern white redneck tropes. She does have helpful adult daughters that provide some of the T and A."*
 
-**Proposed reconciliation, to confirm with Silas:** the fish lady is Laguna Brine, the only amphibian star.
+**Confirmed by Silas, 2026-11-22 PT:** the fish lady is Laguna Brine, the only amphibian star.
 FRANCHISE-HISTORY lists "Laguna" in the 2017 and 2024 line-ups, and the album ledger stays authoritative. So
 since 2017 the Laguna on stage has been a **licensed likeness**: a younger look-alike in a luxury
 "amphibian rebrand" that Odette cast and controlled. The real Laguna has lived on the bayou since she was
@@ -156,5 +156,10 @@ pushed out in 1974, and has never seen a cent from either Laguna. That's her gru
 - **Tone guard:** affectionate Southern-redneck tropes (mudding, cutoffs, crawdads, porch music). It never
   punches at poverty, weight or species, and has no hate symbols. The punchline is the agent who got rich off
   the family.
-- **Model sheets:** add `delta` and `cherie` to `characterModels.ts`, and add a then/now split for Laguna,
-  once Silas confirms the reconciliation above. Until then, Laguna's existing sheet and pin-ups are unchanged.
+- **Model sheets (Kind Robots `characterModels.ts`):** Laguna's gameplay sheet is her pregnant bayou
+  present. Her pin-ups use `pinupIdentity`, her 1974 glamour, so no pin-up is ever pregnant. `delta` and
+  `cherie` have their own sheets and opt-in mature pin-ups through the `pinups` flag. The children never get
+  a model sheet: they're painted as scenery in background and scene art only, always fully clothed and kid-safe.
+- **Chapter 3 "Brine Bottoms"** (STORY-BIBLE chapter plan) has four evidence threads: the reversed 1974
+  credit, the Lagoon Lass statement, the 2017 look-alike contract (countersigned at Fang Heights, which points
+  the player to Chapter 4) and Laguna's Hexblade pawned at Delta's bait shop.
