@@ -1,0 +1,88 @@
+date: '2026-11-22'
+entries:
+- slug: memory-plain-description
+  title: Memory Dungeon says what it is in one line
+  target: memory-dungeon
+  roadmap_task: t-068
+  kind: share
+  summary: Memory Dungeon links shared a 250-character pitch ending in "claim creative rewards from the prompt
+    and art modeller"; they now say it is a memory card dungeon crawl, free in the browser with no account.
+  status: shipped
+  pull_request: https://github.com/silasfelinus/kind_robots/pull/5580
+  checks_url: https://github.com/silasfelinus/kind_robots/actions/runs/45024768044
+  checks: passed
+  merge_sha: de1be6c6e1fff72cf66394bc4ef370b37eb31080
+  verification: Live og:description captured before the change (2026-11-22 PT sitemap audit of all 29 URLs);
+    verifyFrontDoorPolish.test.ts section 5 caps it at 160 characters, forbids "modeller"/"roguelite" and
+    requires "free". Live result pending the next deploy.
+  art:
+    status: not-required
+  preview_url: https://kindrobots.org/play/memory
+- slug: art-browse-first-description
+  title: The Art page leads with what a visitor can do
+  target: interface-vision
+  roadmap_task: t-144
+  kind: front-door
+  summary: The /art page shared an instruction, "Generate new images first"; it now says visitors can browse the
+    robot-made gallery free with no account and sign in free to make their own.
+  status: shipped
+  pull_request: https://github.com/silasfelinus/kind_robots/pull/5580
+  checks_url: https://github.com/silasfelinus/kind_robots/actions/runs/45024768044
+  checks: passed
+  merge_sha: de1be6c6e1fff72cf66394bc4ef370b37eb31080
+  verification: Live og:description captured before the change; verifyFrontDoorPolish.test.ts forbids a leading
+    "Generate" and requires the sign-in wording. Live result pending the next deploy.
+  art:
+    status: not-required
+  preview_url: https://kindrobots.org/art
+- slug: aquarium-honest-signin
+  title: Cthulhuquarium says playing needs a free sign-in
+  target: interface-vision
+  roadmap_task: t-151
+  kind: front-door
+  summary: Cthulhuquarium links promised a coin-dropping aquarium without saying a tank needs an account; they now
+    say browsing players' tanks is free and raising your own needs a free sign-in.
+  status: shipped
+  pull_request: https://github.com/silasfelinus/kind_robots/pull/5580
+  checks_url: https://github.com/silasfelinus/kind_robots/actions/runs/45024768044
+  checks: passed
+  merge_sha: de1be6c6e1fff72cf66394bc4ef370b37eb31080
+  verification: The in-page tutorial opens with "Sign in and Charlotte Fishmonger gives you your first creature";
+    verifyFrontDoorPolish.test.ts now requires "sign in" in the page description. Live result pending the next
+    deploy.
+  art:
+    status: not-required
+  preview_url: https://kindrobots.org/play/aquarium
+- slug: showdown-real-description
+  title: Zuzu Showdown's link preview describes the game
+  target: interface-vision
+  roadmap_task: t-105
+  kind: share
+  summary: Zuzu Showdown shared only "Duels with Zuzu and friends."; it now names a 2D fighter with nine fighters,
+    Story mode, versus and training, playable with keyboard, gamepad or touch.
+  status: shipped
+  pull_request: https://github.com/silasfelinus/kind_robots/pull/5580
+  checks_url: https://github.com/silasfelinus/kind_robots/actions/runs/45024768044
+  checks: passed
+  merge_sha: de1be6c6e1fff72cf66394bc4ef370b37eb31080
+  verification: Live og:description captured before the change; verifyGameLinkPreview length rules pass and
+    verifyFrontDoorPolish.test.ts forbids the old line and requires "fighter". Live result pending the next deploy.
+  art:
+    status: not-required
+  preview_url: https://kindrobots.org/play/zuzu-showdown
+- slug: prettier-ratchet-pages-docs
+  title: Prettier ratchet clears the pages and docs buckets
+  target: interface-vision
+  roadmap_task: t-137
+  kind: quality
+  summary: Formatted the three remaining pages/ files and thirteen docs/ files and re-recorded the shrink-only
+    Prettier ratchet from 930 to 913 unformatted files.
+  status: shipped
+  pull_request: https://github.com/silasfelinus/kind_robots/pull/5580
+  checks_url: https://github.com/silasfelinus/kind_robots/actions/runs/45024768044
+  checks: passed
+  merge_sha: de1be6c6e1fff72cf66394bc4ef370b37eb31080
+  verification: git diff -w shows only line wrapping; verifyPrettierRatchet.ts passes locally and Changed-file
+    Prettier, TypeScript and all contract shards passed in CI.
+  art:
+    status: not-required
