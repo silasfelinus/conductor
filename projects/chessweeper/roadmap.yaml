@@ -112,11 +112,11 @@ tasks:
   - id: t-007
     milestone: m3
     title: "Deliver world-specific gameplay animation, cinematic transitions and responsive VFX"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 20261122T060851958Z-chessweeper-t007-k7f3
     claimed_at: '2026-11-22T06:08:51.958Z'
-    updated: '2026-11-22T06:08:51.958Z'
+    updated: '2026-11-22T06:10:54.197Z'
     depends_on: t-001
     passes: 0
     stakes: reversible
@@ -126,6 +126,8 @@ tasks:
       Partial animation implementation on worker/chessweeper-t007-gameplay-fx-20261121-f5m9: Eleven event-driven action effect hooks, three world color palettes, bounded particles, deterministic square placement, reduced-motion and settings-off behavior, and required CI regression assertions. This is a code-drawn VFX layer only. The approved art pipeline still must deliver character/piece sprite animations and twelve illustrated ending cinematics before t-007 can be closed done.
 
       Gameplay VFX and event hooks merged in Kind Robots PR #5541 on 2026-11-21 PT, required checks green. Full production sprite animations, cinematics and scene art still outstanding; return unfinished task to ready.
+
+      2026-11-21 PT: Motion integration implementation pushed as kind_robots commit f59bec5a. Added actual chess-piece flight from move source to destination, capture effects, unique Sugar Rush/Ashen Last Stand/Jackpot impact choreography, bounded DOM and reduced-motion behavior plus regression assertions. Partial t-007 scope: delivered sprite artwork and final illustrated cinematics still outstanding.
 
   - id: t-008
     milestone: m3

@@ -298,10 +298,10 @@ tasks:
     implementation_pr: 'silasfelinus/conductor#7800'
   - id: t-046
     title: "Queue separately reviewed corrective ArtJobs for legacy Prom renders whose prompts predate the canon-anatomy guard (e.g. magic-earth, tech-genius)"
-    status: claimed
+    status: review
     claimed_by: 2026-11-22T061300Z-comet-t046-artq-g6r2
     claimed_at: '2026-11-22T06:13:00Z'
-    updated: '2026-11-22T06:13:00Z'
+    updated: '2026-11-22T06:22:00Z'
     owner: worker
     milestone: m3
     stakes: reversible
@@ -312,6 +312,8 @@ tasks:
       lanes, so legacy mismatched identity renders remain as QA debt. Verify existing replacements
       and actual media bytes first, then queue only the missing private corrective cells; never
       bulk-requeue accepted work.
+
+      ArtJob delivery work in review: six canon-specific private replacement candidates (Granny Mayhem hero/villain, human Lionel Marsh hero and transformed Dr. Frog villain, four-armed Asha hero/villain) with stable outcome slot keys and unique seeds; corrected Auto Art Generate ledger sweep to enqueue when the Kind Robots API is healthy even if the render box is offline. Await actual accepted ArtJob receipts and candidate media QA before marking complete. No new accepted IDs verified yet.
   - id: t-012
     milestone: m2
     title: "Promote the seven-day demo into Capes & Tassels name and genuine day/night map slice"
