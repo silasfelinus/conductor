@@ -1,0 +1,83 @@
+name: Prom and Tactics Priority Art Submission
+
+# Ship private approved game-art requests without waiting behind the 150-minute
+# all-project Auto Art Generate workflow. Each subject uses a stable requestKey:
+# the ArtJob API returns an existing job on retry instead of rerendering it.
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/prom-tactics-priority-art.yml"
+      - "projects/every-villain-tactics/art/ONE-HIT-CREW-COMBAT-STATES-2026-11-22.yaml"
+      - "projects/comet-city-academy/art/AUTHORED-RECRUITS-EMOTIONS-2026-11-22.yaml"
+  workflow_dispatch:
+
+concurrency:
+  group: prom-tactics-priority-art
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  submit-private-art:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      KR_BASE_URL: https://kindrobots.org
+      PYTHONUNBUFFERED: "1"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install art queue requirements
+        run: pip install pyyaml Pillow
+      - name: Check Kind Robots production ArtJob API health
+        run: |
+          curl --fail --silent --show-error --location --max-time 15 \
+            --output /dev/null "$KR_BASE_URL/api/health/database"
+      - name: Submit approved private Krea2 requests with stable request keys
+        id: submit
+        continue-on-error: true
+        env:
+          KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+        run: |
+          set -e
+          if [ -z "$KR_API_TOKEN" ]; then
+            echo "::error::ArtJob API token not configured in GitHub Actions"
+            exit 1
+          fi
+          for ledger in \
+            projects/every-villain-tactics/art/ONE-HIT-CREW-COMBAT-STATES-2026-11-22.yaml \
+            projects/comet-city-academy/art/AUTHORED-RECRUITS-EMOTIONS-2026-11-22.yaml; do
+            if [ -f "$ledger" ]; then
+              python scripts/enqueue_art_requests.py "$ledger" --live
+            fi
+          done
+      # A cancelled longer workflow must not lose durable ArtJob receipts.
+      # Checkpoint even after a partial failure: each successful POST wrote its ID.
+      - name: Persist accepted ArtJob receipts before status checks
+        if: ${{ always() }}
+        run: |
+          bash scripts/checkpoint_art_state.sh "chore: checkpoint priority Prom and Tactics ArtJob IDs [skip ci]"
+      - name: Refresh private ArtJob status and ArtImage receipts
+        if: ${{ steps.submit.outcome == 'success' }}
+        continue-on-error: true
+        env:
+          KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+        run: |
+          for ledger in \
+            projects/every-villain-tactics/art/ONE-HIT-CREW-COMBAT-STATES-2026-11-22.yaml \
+            projects/comet-city-academy/art/AUTHORED-RECRUITS-EMOTIONS-2026-11-22.yaml; do
+            if [ -f "$ledger" ]; then
+              python scripts/enqueue_art_requests.py "$ledger" --status
+            fi
+          done
+          bash scripts/checkpoint_art_state.sh "chore: refresh priority Prom and Tactics art statuses [skip ci]"
+      - name: Require successful enqueue
+        if: ${{ steps.submit.outcome != 'success' }}
+        run: exit 1
