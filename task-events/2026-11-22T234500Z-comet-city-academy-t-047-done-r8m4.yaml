@@ -1,0 +1,26 @@
+version: 1
+project: comet-city-academy
+task: t-047
+operation: done
+session: 20261122T232600Z-comet-t047-ci-sweep-r8m4
+verify_pr: silasfelinus/conductor#7869
+updated: '2026-11-22T23:45:44.697Z'
+note: >-
+  CI speed fix merged via conductor#7869, SHA
+  5a3996d988892ae83f279d1cf64574065948e9c9. Latest-head Python suite
+  completed success: 5086 passed, 11 skipped, 1 deselected in 159.06s;
+  test_media_wrapper_resolves_names_before_submitting no longer appears in
+  ten slowest calls after eliminating its fake 60s Comfy grace wait.
+  Exhaustive art ledger parse now shared with the parity-tested C SafeLoader,
+  setup measured 4.75s versus historical 38.67s and 37.07s duplicate scans.
+  Tests and all negation/templating assertions remain enabled; no dropped QA.
+learning:
+  date: 2026-11-22
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    Avoid leaving test doubles inside production polling and grace-period
+    loops; share one immutable parsed corpus for repeated exhaustive QA.
