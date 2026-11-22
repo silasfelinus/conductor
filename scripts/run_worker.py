@@ -40,7 +40,7 @@ except ImportError:
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from daily_gate import already_recorded_today  # noqa: E402
-from roadmap_claims import remaining_scope_delegate_open, task_is_resting  # noqa: E402
+from roadmap_claims import task_is_claimable  # noqa: E402
 from roadmap_deps import zero_diff_close_hint  # noqa: E402
 from project_lifecycle import (  # noqa: E402
     WORKABLE_PROJECT_STATUSES,
@@ -114,12 +114,9 @@ def iter_ready_tasks(
             str(task.get('id')): task for task in tasks if isinstance(task, dict) and task.get('id')
         }
         for task in tasks:
-            if task.get('status') != 'ready':
-                continue
-            if remaining_scope_delegate_open(task, tasks_by_id):
-                continue
-            if task_is_resting(task, now=now):
-                # Recurring task resting after a no-op cycle (roadmap_claims.NOOP_REST_HOURS).
+            # Expired claims are pickable after the shared 90-minute TTL, not
+            # only after an hourly reconciliation rewrites them to ready.
+            if not task_is_claimable(task, tasks_by_id=tasks_by_id, now=now):
                 continue
             if already_recorded_today(task, now=now):
                 # Same-day-gated recurring task (e.g. mermaids-of-venice/t-013) whose
@@ -147,6 +144,20 @@ def find_ready_task(
 READY_TASKS_LIMIT = 8
 
 
+def roadmap_has_claimable_task(roadmap: dict[str, Any]) -> bool:
+    tasks = roadmap.get('tasks', [])
+    tasks_by_id = {
+        str(task.get('id')): task
+        for task in tasks
+        if isinstance(task, dict) and task.get('id')
+    }
+    return any(
+        task_is_claimable(task, tasks_by_id=tasks_by_id)
+        for task in tasks
+        if isinstance(task, dict)
+    )
+
+
 def build_queue_summary() -> dict[str, Any]:
     roadmaps = load_roadmaps()
     ready_tasks = list(islice(iter_ready_tasks(load_priority(), roadmaps), READY_TASKS_LIMIT))
@@ -163,7 +174,7 @@ def build_queue_summary() -> dict[str, Any]:
         'projects_with_ready_tasks': [
             roadmap.get('_project')
             for roadmap in roadmaps
-            if any(task.get('status') == 'ready' for task in roadmap.get('tasks', []))
+            if roadmap_has_claimable_task(roadmap)
         ],
         'projects_needing_human': [
             roadmap.get('_project')

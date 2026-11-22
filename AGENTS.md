@@ -165,7 +165,10 @@ Full procedure, with the history behind each step: [`docs/agents/picking-work.md
    <worker|reviewer> --session <iso-timestamp-with-seconds-plus-suffix>`. It checks `origin/main` and
    pushes one atomic claim commit. `ALREADY_CLAIMED` → pick the next task. Claims expire after 90
    minutes. Connector-only Workers use `task-events` with a non-empty session
-   (`docs/github-connector-worker.md`).
+   (`docs/github-connector-worker.md`). The hourly `Process task events` writer also
+   reconciles expired `claimed` entries back to `ready` (or `waiting` if their
+   dependencies are unfinished), clearing abandoned ownership fields. This is
+   cleanup of expired ownership, not proof of task completion.
 7. **Set `status: review` before opening the PR**, every session:
    `python scripts/close_task.py <project> <task-id> review --session <id>` (own small PR, never a
    direct push). After merge, `close_task.py ... done`. Both transitions may share one PR. State
