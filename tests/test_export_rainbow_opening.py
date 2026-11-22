@@ -388,6 +388,8 @@ class OpeningPublishTests(unittest.TestCase):
     def test_rejected_clip_cannot_replace_published_opening(self):
         with tempfile.TemporaryDirectory() as tmp:
             kind_robots = Path(tmp)
+            track = kind_robots / "track.mp3"
+            track.write_bytes(b"fake audio")
             manifest = kind_robots / opening.MANIFEST
             manifest.parent.mkdir(parents=True)
             manifest.write_text(
@@ -418,12 +420,13 @@ class OpeningPublishTests(unittest.TestCase):
                 opening, "encode", side_effect=fake_encode
             ), patch.object(opening, "verify_encoded_media"):
                 result = opening.main([
-                    "--kind-robots", str(kind_robots),
-                    "--track", str(kind_robots / "track.mp3"),
-                ]) if (kind_robots / "track.mp3").exists() else None
-            self.assertIsNone(result)
+                    "--kind-robots", str(kind_robots), "--track", str(track),
+                ])
+            self.assertEqual(result, opening.EXIT_RENDERING)
+            self.assertEqual((video / "opening.mp4").read_bytes(), b"old-cut")
+            self.assertIn("= null", manifest.read_text())
 
-        def test_publish_artifact_keeps_existing_file_when_copy_fails(self):
+    def test_publish_artifact_keeps_existing_file_when_copy_fails(self):
         with tempfile.TemporaryDirectory() as tmp:
             dest = Path(tmp) / "opening.mp4"
             dest.write_bytes(b"previous")
