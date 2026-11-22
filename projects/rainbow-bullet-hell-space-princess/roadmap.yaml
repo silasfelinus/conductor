@@ -654,11 +654,11 @@ tasks:
   - id: t-028
     milestone: m6
     title: "Gen-2 alternate stages: four branch stages with their own guardians"
-    status: review
+    status: ready
     depends_on: [t-026]
     passes: 0
     stakes: reversible
-    updated: '2026-11-22T12:06:00Z'
+    updated: '2026-11-22T12:26:00Z'
     note: |-
       One stage per PR, authored to the existing Act pacing and fairness rules, each with a guardian.
 
@@ -698,9 +698,8 @@ tasks:
       2026-11-22 PT: stale review claim dated 03:52Z (over eight hours old) with no open Rainbow implementation PR or matching worker branch in kind_robots. Preserved existing X1 flight-model commit and all prior X2-X4 integration; reopening only for the unblocked X1 art/gameplay follow-up.
 
       X1 missing Gen-2 gameplay art is now authored in private auto-submit Krea 2 ledger GEN2-KELP-NEBULA-X1.yaml: idle/sweep/hurt Kelp Warden, Coral Choir rescue pod, and lashing frond hazard. The five subjects are queued for pipeline submission only after a green merge; none has a new ArtJob or reviewed ArtImage yet. Existing four-stage backdrops remain reused. This is partial t-028, which still needs rendered art review, export, runtime integration and route playtests.
-    owner: worker
-    claimed_by: 20261122T120200Z-rainbow-t028-k4t7
-    claimed_at: '2026-11-22T12:02:00Z'
+
+      Partial scope: PR #7833 merged with five Krea 2 X1 production-art requests; reopen for remaining X1 gameplay, image review, actual ArtJob intake and four-route acceptance.
   - id: t-029
     milestone: m6
     title: "Gen-2 art round 1: route map, Palace Hangar and four alternate-stage backdrops"
@@ -844,11 +843,8 @@ tasks:
   - id: t-038
     milestone: m4
     title: "Recut the thrash-metal opening from the doodle art"
-    status: review
-    owner: worker
-    claimed_by: 20261122T1212Z-rainbow-t038-p7k9
-    claimed_at: '2026-11-22T12:12:00Z'
-    updated: '2026-11-22T12:15:00Z'
+    status: ready
+    updated: '2026-11-22T12:26:00Z'
     depends_on: [t-036]
     passes: 1
     retry_context: ''
@@ -871,6 +867,8 @@ tasks:
       15s cut and wire it into the kind_robots cabinet.
 
       Partial opening-recut reliability slice: exporter now resolves original completed ACE-Step soundtrack by pinned ArtJob #44644 rather than only the most recent 200 queue jobs. Added five regression tests for DONE, pending, malformed, missing ArtImage and HTTP denial. Full opening visual review/render and kind_robots integration remain outstanding.
+
+      Partial scope: PR #7834 merged with pinned soundtrack ArtJob #44644 resolver and regression tests; reopen for completed WAN clip visual review, final render and Kind Robots cabinet integration.
 
   - id: t-039
     milestone: m4
