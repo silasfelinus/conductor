@@ -1056,11 +1056,11 @@ tasks:
 
   - id: t-046
     title: "Space Couch sound and music: original score, interface and event sound, mixer settings"
-    status: review
+    status: done
     owner: reviewer
     claimed_by: 20261122T031000Z-goc-claude-elegant-galileo
     claimed_at: '2026-11-22T03:10:00Z'
-    updated: '2026-11-22T03:10:00Z'
+    updated: '2026-11-22T05:10:35Z'
     milestone: m3
     passes: 0
     stakes: reversible
@@ -1070,3 +1070,13 @@ tasks:
       Silas 2026-11-22 PT: "We never mentioned sound and music, but that should be expected." Ship original (procedural, rights-clean) title and voyage music, interface/event sound for choices, success, failure, redshirt loss and endings; start only after a user gesture, honor reduced motion/mute, persist music and effects volume in the shared settings sheet, and cover it with deterministic tests.
 
       2026-11-22 PT: utils/gameOfCaptains/sound.ts adds six original procedural lounge loops by voyage phase and twelve event cues from a pure run diff. Music/Effects sliders sit under the Kit settings, Kit Sound is the master switch, and nothing plays before a gesture. verifySpaceCouchSound.test.ts (9 checks); headless Chromium audio probe confirmed signal per mood, mute and suspend. Kind Robots PR #5548.
+
+      2026-11-22 PT: Kind Robots PR #5548 merged as eef341634849bd9d4d03cacbcbc662e41cd42c85
+      (all 17 exact-head checks SUCCESS). utils/gameOfCaptains/sound.ts: six original
+      procedural space-age lounge loops cross-fading by voyage phase, cues for
+      launch/warp/arrival/four results/fallen and hired redshirts/new crew/chapter/ending from
+      a pure run diff; Music and Effects sliders under the shared Kit settings; Kit Sound is
+      the master switch; silent until a gesture; pauses when hidden.
+      verifySpaceCouchSound.test.ts (9 checks) and a headless Chromium analyser probe (signal
+      in every mood, mute and suspend) passed.
+    implementation_pr: 'silasfelinus/kind_robots#5548'
