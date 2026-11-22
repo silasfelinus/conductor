@@ -840,12 +840,12 @@ tasks:
   - id: t-038
     milestone: m4
     title: "Recut the thrash-metal opening from the doodle art"
-    status: ready
+    status: claimed
     depends_on: [t-036]
     passes: 1
     retry_context: 'pass 1 failed (quality): conductor#7823 stages the opening in a /tmp TemporaryDirectory and publishes with Path.replace (os.replace), which raises EXDEV (cross-device link) whenever /tmp and the kind_robots checkout are on different filesystems; it also writes opening-delivery-report.json ending in a literal backslash-n string instead of a real newline, and the PR body lacks the required handoff headings. Do differently: stage in a sibling dir under target.parent (tempfile.mkdtemp(dir=target.parent)) or use shutil.move; restore the real newline (or reuse write_delivery_report on the staged path); publish the --out WebM as target.with_suffix(''.webm''); add a main()-level test with mocked encode/ffprobe and a real tmp target.parent. Reuse branch worker/rainbow-bullet-hell-space-princess-t-038-export-verify-n9q2 and PR #7823. Review: https://github.com/silasfelinus/conductor/pull/7823#issuecomment-7077365743'
     stakes: reversible
-    updated: '2026-11-22T08:09:32Z'
+    updated: '2026-11-22T10:48:51Z'
     note: |-
       Silas chose to hold the old-style opening clips (44645-44653) and recut from new-style stills. New WAN clip ledger from t-035/t-036 keepers, then scripts/export_rainbow_opening.py with the new SHOTS; the thrash track (44644) stays.
 
@@ -854,6 +854,9 @@ tasks:
       2026-11-20 PT: Prepared eight approved DOODLE-SET-1 C.A.T.S. first/last-frame WAN MP4 opening clip requests, retaining ACE-Step ArtJob 44644. Conductor branch 7cafec3d stages auto-submit after green PR merge; no new ArtJob IDs yet, no rendered clips reviewed, no assembled intro. Partial t-038.
 
       2026-11-21 PT reviewer: Conductor PR #7730 merged (squash a48a792e) with all 24 latest-head checks green. It lands the eight-shot OPENING-CLIPS-2-DOODLE request ledger and the MP4/WebM-capable exporter (historical 9-shot ledger kept via --ledger). Still partial: returned to ready, claim released. Remaining: confirm the auto-submitted ArtJob IDs, inspect the rendered WAN MP4s for identity locks, then export the 15-second cut and wire it into the kind_robots cabinet.
+    owner: reviewer
+    claimed_by: 2026-11-22T11:05:00Z-session_01L5NKxZ
+    claimed_at: '2026-11-22T10:48:51Z'
   - id: t-039
     milestone: m4
     title: "Remove the DOGS; Princess Kitty Power cut-ins; boss fire back to each creature's own look"
