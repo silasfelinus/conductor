@@ -2840,22 +2840,16 @@ tasks:
   - id: t-174
     milestone: m8
     title: "Audit remaining Playwright CI workflows for Ubuntu runner compatibility and pin unsupported browser-install jobs"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 20261122T085140Z-kr-arcade-t174-playwright-d2e4
     claimed_at: '2026-11-22T08:52:25.564Z'
-    updated: '2026-11-22T08:52:25.564Z'
+    updated: '2026-11-22T08:53:52.206Z'
     passes: 0
     stakes: reversible
     depends_on: []
     source: reviewer-kaizen-2026-11-21
-    note: >-
-      Reviewer follow-up after the merged Gloom Invaders type repair (#5556)
-      and the Paper Plane CI incident (#5558). Ubuntu 26.04 removed font
-      packages required by Playwright's --with-deps Chromium installer,
-      causing false-red arcade cabinet browser contracts. The single
-      arcade-cabinet-contracts.yml workflow is already repaired in #5558;
-      audit OTHER .github/workflows browser-install jobs (not that same file)
-      for ubuntu-latest and incompatible dependencies, pin to a supported
-      runner or otherwise fix the actual installation, then exercise the
-      real browser checks. Do not skip tests or change unrelated app behavior.
+    note: |-
+      Reviewer follow-up after the merged Gloom Invaders type repair (#5556) and the Paper Plane CI incident (#5558). Ubuntu 26.04 removed font packages required by Playwright's --with-deps Chromium installer, causing false-red arcade cabinet browser contracts. The single arcade-cabinet-contracts.yml workflow is already repaired in #5558; audit OTHER .github/workflows browser-install jobs (not that same file) for ubuntu-latest and incompatible dependencies, pin to a supported runner or otherwise fix the actual installation, then exercise the real browser checks. Do not skip tests or change unrelated app behavior.
+
+      Audited seven remaining Playwright --with-deps workflows. Patched Arcade viewport, Rainbow shared-cabinet and Arcade share live cold-open jobs to use Ubuntu 24.04; unrelated gallery, navigation, Memory Dungeon and sitewide audits were inspected but deliberately left unchanged under Kind Arcade-only scope. Branch worker/kr-arcade-t-174-playwright-20261122T085140Z-d2e4. PR checks must confirm real Chromium installation; no tests were disabled. Remaining out-of-scope workflows should be handled by their owning projects rather than this Arcade task.
