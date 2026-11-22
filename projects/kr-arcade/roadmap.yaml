@@ -1844,11 +1844,8 @@ tasks:
   - id: t-110
     milestone: m8
     title: "Repair Rampage depth slice 1: A city with something in it"
-    status: review
-    owner: worker
-    claimed_by: 2026-11-22T165343Z-kr-arcade-t110-fixchain-6c91
-    claimed_at: '2026-11-22T16:53:43Z'
-    updated: '2026-11-22T16:57:00Z'
+    status: ready
+    updated: '2026-11-22T18:01:00Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -1859,6 +1856,8 @@ tasks:
       PR silasfelinus/kind_robots#5582 merged as e6e9b366da1fc3cca75fe2b491c9414a1c996afc; 25 authored towns, regions, weather, skyline parameters and validation landed. All 14 applicable latest-head checks succeeded (Prettier autofix skipped). Partial scope only: window interactions, fix chains, rooftops, power-ups, threats, reserve robots, music and gameplay verification remain. Return to ready for the next implementation slice.
 
       Added chain multipliers, floor completion bonuses and tower restoration rewards to Repair Rampage; partial slice, pending CI and further mechanics.
+
+      Partial Repair Rampage depth pass: fix-chain multipliers, floor and tower completion rewards merged in kind_robots PR #5583 (173d818). Remaining campaign mechanics are still unimplemented; keep task ready.
 
   - id: t-111
     milestone: m8
