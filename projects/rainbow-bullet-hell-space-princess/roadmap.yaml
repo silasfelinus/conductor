@@ -102,7 +102,7 @@ tasks:
       not rendered assets, and no playable implementation is claimed.
   - id: t-044
     title: 'Main-game standard: audit and close the gaps for Rainbow Bullet Hell Space Princess'
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 20261122T024121Z-rainbow-t044-ending-archive-q7m4
     claimed_at: '2026-11-22T02:41:21Z'
@@ -110,7 +110,7 @@ tasks:
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-22T02:41:21Z'
+    updated: '2026-11-22T02:43:05Z'
     note: |-
       Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -129,6 +129,8 @@ tasks:
       Added a scoped ending scrapbook to the Rainbow cabinet, tracking only the three actually earned finale choices and keeping unearned endings locked. Distinct Motherland-road variant recording, incomplete ending illustrations, and remaining main-game-standard acceptance remain open.
 
       2026-11-21 PT recovery: prior scrapbook review claim is over 24 hours old, no open t-044 PR or active branch remains; existing logbook/ending scrapbook work is preserved. Reopen for real allegiance-specific ending scrapbook unlocks without falsely attributing historical generic choice feats.
+
+      Partial t-044: standalone app PR silasfelinus/kind_robots#5547 (commit 0090f25d) records six exact Motherland rebel/loyal ending roads in existing mastery persistence, adds distinct nine-slot scrapbook with safe legacy generic-choice records, and full choice/road regression. Last-head CI and merge required. Additional polished ending art, full main-game standard acceptance and live device verification remain open.
   - id: t-045
     title: 'Rainbow Bullet Hell Space Princess achievement upgrade: 12 or more live achievements'
     status: done
@@ -652,14 +654,11 @@ tasks:
   - id: t-028
     milestone: m6
     title: "Gen-2 alternate stages: four branch stages with their own guardians"
-    status: review
-    claimed_by: 20261122T010025Z-rainbow-t028-x3-f8c2
-    claimed_at: '2026-11-22T01:00:25.118Z'
-    owner: worker
+    status: ready
     depends_on: [t-026]
     passes: 0
     stakes: reversible
-    updated: '2026-11-22T01:03:29.425Z'
+    updated: '2026-11-22T02:44:06Z'
     note: |-
       One stage per PR, authored to the existing Act pacing and fairness rules, each with a guardian.
 
@@ -691,6 +690,8 @@ tasks:
       art are still open; return to ready for the next slice.
 
       Scoped X3 Sunken Lighthouse flight adapter committed to Kind Robots worker branch with earned relay/high-lane entry, 30 authored waves, six timed lane lamps, live Drowned Bellkeeper combat, three dialogue scenes, all four seats, checkpoint-safe save validation and restore, and new flight regression tests. Partial t-028: X1/X2 and final guardian art remain outstanding.
+
+      2026-11-21 PT: X3 Sunken Lighthouse standalone flight PR silasfelinus/kind_robots#5535 merged as afdfef1023e9bc41eb00625c4b7e25d6e49a56e1 after all 11 latest-head GitHub workflow runs completed successfully, including TypeScript, full four-shard Contract Tests, Lighthouse score, browser cabinet, and viewport. Earned X3 entry, six lamps, 30 waves, Drowned Bellkeeper, three comms scenes, all local 1-4 seats, checkpoint persistence and regression are integrated on main. Partial t-028; two standalone alternate Acts X1/X2, finished guardian art, and full route replay/QA remain. Ready for next implementation slice.
   - id: t-029
     milestone: m6
     title: "Gen-2 art round 1: route map, Palace Hangar and four alternate-stage backdrops"
