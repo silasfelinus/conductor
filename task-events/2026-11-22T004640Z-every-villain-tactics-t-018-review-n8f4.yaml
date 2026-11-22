@@ -1,0 +1,15 @@
+version: 1
+project: every-villain-tactics
+task: t-018
+operation: review
+session: 2026-11-22T004310Z-evt-t018-live-media-n8f4
+updated: '2026-11-22T00:46:40Z'
+note: >-
+  Scoped source-media to actual gameplay route proof: added read-only Tactics
+  verifier which checks all 12 durable one-hit telegraph ArtImages through the
+  exact /api/art/images/{id}/file endpoint the live game uses, compares decoded
+  pixels with the ArtImage source, and verifies private anonymous-denial or
+  intentional public visibility. Includes redirection and privacy regression
+  tests and extends the authenticated Conductor Actions workflow. No new
+  ArtJobs, public image exports or production DB writes. Other t-018 SPECIES,
+  art curation and gameplay readiness work remains open.
