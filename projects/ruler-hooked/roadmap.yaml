@@ -1110,20 +1110,18 @@ tasks:
 - id: t-060
   milestone: m6
   title: 'Grow the Town Crier: more daily proclamations, a few tied to fish runs and the reign'
-  status: claimed
+  status: review
   gate_human: false
   owner: worker
   claimed_by: 2026-11-22T194600Z-ruler-hooked-t060-q7m2
   claimed_at: '2026-11-22T19:55:21.829Z'
   stakes: reversible
   passes: 0
-  note: >-
-    dailyEvents.ts ships 10 proclamations, so a long reign repeats within a couple of weeks of
-    in-game days. Add 15-20 more in the cast's voices, let a few nudge species odds for that day,
-    and sour their tone with a failing reign (t-054's Broadside: blunter edicts). Hold the
-    pillar: nothing expires, nothing gates a fish, card or ending, so console.selftest.ts's
-    "nudges, not gates" check keeps passing.
-  updated: '2026-11-22T19:55:21.829Z'
+  note: |-
+    dailyEvents.ts ships 10 proclamations, so a long reign repeats within a couple of weeks of in-game days. Add 15-20 more in the cast's voices, let a few nudge species odds for that day, and sour their tone with a failing reign (t-054's Broadside: blunter edicts). Hold the pillar: nothing expires, nothing gates a fish, card or ending, so console.selftest.ts's "nudges, not gates" check keeps passing.
+
+    Implemented an 18-event Town Crier expansion (28 total), decline-sensitive dialogue, and persisted day-scoped boosts to eligible fish encounter weights; code and regression assertions committed to kind_robots worker/ruler-hooked-t-060-20261122-q7m2 at 810a25b. CI and live verification pending; master issue #4144 remains open.
+  updated: '2026-11-22T19:58:11.396Z'
 - id: t-061
   milestone: m6
   title: 'Post-deploy visual QA of the console at phone, tablet and desktop widths'
