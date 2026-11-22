@@ -423,9 +423,11 @@ def encode(frames, audio: Path | None, mp4: Path, seconds: float):
     cmd = ["ffmpeg", "-y", "-loglevel", "error", "-f", "rawvideo", "-pix_fmt", "rgb24",
            "-s", f"{SIZE[0]}x{SIZE[1]}", "-r", str(FPS), "-i", "-"]
     if audio:
+        # apad: a track shorter than the cut once its leading silence is removed must not let
+        # -shortest truncate the picture (2026-11-22: 14.68s cut of a 15s edit failed verification).
         fade = max(0.0, seconds - 0.35)
         cmd += ["-i", str(audio), "-filter:a",
-                f"silenceremove=start_periods=1:start_threshold=-45dB,atrim=0:{seconds:.3f},afade=t=out:st={fade:.3f}:d=0.35",
+                f"silenceremove=start_periods=1:start_threshold=-45dB,apad,atrim=0:{seconds:.3f},afade=t=out:st={fade:.3f}:d=0.35",
                 "-c:a", "aac", "-b:a", "192k", "-shortest"]
     cmd += ["-c:v", "libx264", "-pix_fmt", "yuv420p", "-crf", "20", "-preset", "slow", "-movflags", "+faststart", str(mp4)]
     proc = subprocess.Popen(cmd, stdin=subprocess.PIPE)
