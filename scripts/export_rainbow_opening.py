@@ -437,6 +437,28 @@ def encode(frames, audio: Path | None, mp4: Path, seconds: float):
     return count
 
 
+def verify_encoded_media(mp4: Path, expected_seconds: float, require_audio: bool) -> None:
+    """Reject truncated or silent deliverables before publishing any files."""
+    for path in (mp4, mp4.with_suffix(".webm")):
+        probe = subprocess.run(
+            ["ffprobe", "-v", "error", "-show_entries",
+             "format=duration:stream=codec_type,width,height",
+             "-of", "json", str(path)],
+            capture_output=True, text=True, check=True, timeout=30,
+        )
+        metadata = json.loads(probe.stdout)
+        duration = float(metadata.get("format", {}).get("duration", 0))
+        streams = metadata.get("streams") or []
+        video = [stream for stream in streams if stream.get("codec_type") == "video"]
+        audio = [stream for stream in streams if stream.get("codec_type") == "audio"]
+        if not video or (video[0].get("width"), video[0].get("height")) != SIZE:
+            raise RuntimeError(f"{path}: encoded video stream missing or wrong dimensions")
+        if abs(duration - expected_seconds) > 0.3:
+            raise RuntimeError(f"{path}: encoded duration {duration:.2f}s differs from {expected_seconds:.2f}s")
+        if require_audio and not audio:
+            raise RuntimeError(f"{path}: original soundtrack missing")
+
+
 def delivery_report(sources, accepted_clips, rejected_clips, budgets=None):
     """Give reviewers the exact failed WAN shots to re-queue after delivery.
 
@@ -545,21 +567,42 @@ def main(argv=None):
             print("a silent cut is a preview only: pass --out")
             return EXIT_ERROR
         target = Path(args.out) if args.out else kind_robots / VIDEO_DIR / "opening.mp4"
+        # Render and inspect off to the side: an ffmpeg failure must never corrupt
+        # the last playable opening or its cabinet manifest.
+        staging = Path(work) / "opening.mp4"
         kept: list = []
         accepted_clips: list[str] = []
         rejected_clips: list[str] = []
-        frames = encode(render(sources, kept, accepted_clips, rejected_clips), audio, target, seconds)
+        frames = encode(render(sources, kept, accepted_clips, rejected_clips), audio, staging, seconds)
+        if abs(frames - round(sum(beats for _, beats, _, _ in sources) * 60 / BPM * FPS)) > 1:
+            raise RuntimeError(f"opening frame count mismatch: {frames}")
+        verify_encoded_media(staging, seconds, require_audio=bool(audio))
+        if not kept:
+            raise RuntimeError("opening render produced no poster frame")
+        poster = staging.with_name("opening-poster.webp")
+        kept[-1].save(poster, "WEBP", quality=88)
         clips = len(accepted_clips)
         print(f"{target}: {frames} frames, {seconds}s, {clips}/{len(sources)} shots animated")
-        poster = target.with_name("opening-poster.webp")
-        kept[-1].save(poster, "WEBP", quality=88)
         if rejected_clips:
             print("WAN clips rejected (stills substituted): " + ", ".join(rejected_clips), file=sys.stderr)
         if args.out:
+            target.parent.mkdir(parents=True, exist_ok=True)
+            for artifact in (staging, staging.with_suffix(".webm"), poster):
+                artifact.replace(target.with_name(artifact.name if artifact.name != "opening.mp4" else target.name))
             return EXIT_DONE
-        report = write_delivery_report(
-            target, sources, accepted_clips, rejected_clips, wan_shot_budgets(ledger)
+        report = delivery_report(
+            sources, accepted_clips, rejected_clips, wan_shot_budgets(ledger)
         )
+        report_path = staging.with_name("opening-delivery-report.json")
+        report_path.write_text(json.dumps(report, indent=2) + "\n")
+        # Validate the manifest target before publishing anything.
+        manifest_path = kind_robots / MANIFEST
+        if "export const RAINBOW_OPENING: RainbowOpeningMedia | null =" not in manifest_path.read_text():
+            raise RuntimeError(f"{manifest_path}: RAINBOW_OPENING line not found")
+        target.parent.mkdir(parents=True, exist_ok=True)
+        for artifact in (staging, staging.with_suffix(".webm"), poster, report_path):
+            artifact.replace(target.with_name(artifact.name))
+        target.with_name("opening-rejected-clips.json").unlink(missing_ok=True)
         print(f"WAN re-queue shots: {', '.join(report['wan_requeue_shots']) or 'none'}")
         url = "/" + str(VIDEO_DIR.relative_to("public")).replace("\\", "/")
         write_manifest(kind_robots, {
