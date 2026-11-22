@@ -594,7 +594,7 @@ def main(argv=None):
             sources, accepted_clips, rejected_clips, wan_shot_budgets(ledger)
         )
         report_path = staging.with_name("opening-delivery-report.json")
-        report_path.write_text(json.dumps(report, indent=2) + "\\n")
+        report_path.write_text(json.dumps(report, indent=2) + "\n")
         # Validate the manifest target before publishing anything.
         manifest_path = kind_robots / MANIFEST
         if "export const RAINBOW_OPENING: RainbowOpeningMedia | null =" not in manifest_path.read_text():
