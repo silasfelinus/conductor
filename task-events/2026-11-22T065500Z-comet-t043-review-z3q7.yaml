@@ -1,0 +1,19 @@
+version: 1
+project: comet-city-academy
+task: t-043
+operation: review
+owner: worker
+session: 2026-11-22T065000Z-comet-t043-ci-parity-z3q7
+updated: '2026-11-22T06:55:00Z'
+note: >-
+  CI measurement against real completed GitHub Actions logs:
+  before #7695, Worker PR CI 44810467441 completed 4,859 passed, 8 skipped
+  in 219.02 seconds; first post-merge PR CI 44831965912 completed 4,859
+  passed, 8 skipped, 1 art_parity deselected in 279.10 seconds,
+  60.08 seconds slower (+27.4%), so no speedup is established.
+  First completed scheduled daily parity run 44948778718 executed actual
+  SafeLoader-vs-CSafeLoader comparison (1 passed, 7 deselected in 19.03s;
+  18.95s test call). New PR guards missing CSafeLoader as hard failure,
+  not a misleading green skip. Detailed evidence in
+  projects/comet-city-academy/docs/CI-LEDGER-PARITY-TIMINGS-2026-11-22.md
+  on worker/comet-city-academy-t-043-ci-parity-z3q7; awaiting checks.
