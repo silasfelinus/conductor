@@ -169,6 +169,27 @@ def validate_opening_queue_budget(ledger: dict) -> None:
             )
 
 
+def validate_shot_coverage(ledger: dict) -> None:
+    """Reject incomplete or ambiguous cuts before downloading expensive media."""
+    subjects = ledger.get("subjects")
+    if not isinstance(subjects, list):
+        raise ValueError("opening ledger must contain a subjects list")
+    expected = DOODLE_SHOTS if ledger.get("round") == DOODLE_ROUND else SHOTS
+    keys = [subject.get("key") for subject in subjects if isinstance(subject, dict)]
+    for key, _ in expected:
+        matches = [
+            subject for subject in subjects
+            if isinstance(subject, dict) and subject.get("key") == key
+        ]
+        if len(matches) != 1:
+            raise ValueError(f"{key}: expected exactly one opening shot, found {len(matches)}")
+        source_id = matches[0].get("source_image_id")
+        if type(source_id) is not int or source_id <= 0:
+            raise ValueError(f"{key}: missing valid approved source ArtImage ID")
+    if len(keys) != len(set(keys)):
+        raise ValueError("opening ledger contains duplicate shot keys")
+
+
 def shot_sources(ledger: dict, stills_only: bool):
     """Per shot: (key, beats, source still id, delivered clip id or None)."""
     by_key = {subject["key"]: subject for subject in ledger["subjects"]}
@@ -478,6 +499,7 @@ def main(argv=None):
     ledger = yaml.safe_load(Path(args.ledger).read_text())
     try:
         validate_opening_queue_budget(ledger)
+        validate_shot_coverage(ledger)
     except ValueError as exc:
         print(f"opening WAN queue budget: {exc}", file=sys.stderr)
         return EXIT_ERROR
