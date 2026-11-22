@@ -541,9 +541,13 @@ def main(argv=None):
     ledger = yaml.safe_load(Path(args.ledger).read_text())
     try:
         validate_opening_queue_budget(ledger)
-        validate_shot_coverage(ledger)
     except ValueError as exc:
         print(f"opening WAN queue budget: {exc}", file=sys.stderr)
+        return EXIT_ERROR
+    try:
+        validate_shot_coverage(ledger)
+    except ValueError as exc:
+        print(f"opening shot coverage: {exc}", file=sys.stderr)
         return EXIT_ERROR
     if args.check_queue_budget:
         print("opening WAN queue budget: OK")
