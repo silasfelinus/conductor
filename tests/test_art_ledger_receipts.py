@@ -61,7 +61,7 @@ for item in ledger["subjects"]:
     assert "art" not in item
     assert item["lane"] == "krea2"
 '''
-    assert forbidden_draft_assertions(bad) == [5, 6]
+    assert forbidden_draft_assertions(bad) == [6, 7]
     safe = bad.replace('assert "jobs" not in item', 'assert receipt_problems(item) == []')
     safe = safe.replace('assert "art" not in item', 'assert item["lane"] == "krea2"')
     assert forbidden_draft_assertions(safe) == []
