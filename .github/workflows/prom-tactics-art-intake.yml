@@ -77,7 +77,7 @@ jobs:
       # Submit the newest private Prom/Tactics game-art batches before the older
       # historical receipts so the 24 requested poses do not wait behind them.
       - name: Submit new private combat and recruit emotion ArtJobs
-        id: priority-new-art
+        id: priority_new_art
         continue-on-error: true
         run: |
           failures=0
@@ -91,7 +91,7 @@ jobs:
           exit "$failures"
 
       - name: Refresh new private combat and recruit emotion receipts
-        if: steps.priority-new-art.outcome == 'success'
+        if: steps.priority_new_art.outcome == 'success'
         continue-on-error: true
         run: |
           for ledger in \
@@ -124,7 +124,7 @@ jobs:
               if len(subjects) != 12 or missing:
                   raise SystemExit(f"ArtJob acceptance incomplete: {path}: {missing}")
           PY
-          if [ "${{ steps.priority-new-art.outcome }}" != "success" ]; then
+          if [ "${{ steps.priority_new_art.outcome }}" != "success" ]; then
             echo "::error::Priority new-art submission step failed."
             exit 1
           fi
