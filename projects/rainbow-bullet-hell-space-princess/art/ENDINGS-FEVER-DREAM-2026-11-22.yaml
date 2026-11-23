@@ -1,0 +1,77 @@
+# Rainbow Space Princess ending plates in the Fever Dream look, 2026-11-22 PT (gap matrix item 8, t-044).
+# Visual review of REDO-ENDINGS-2026-11-12 (see verdicts there): 270453 (C15 evacuate) painted a serene haloed
+# jellyfish over an intact palace, with no Aurora Mercy, no convoy and no crew: mismatched scene. 270454 (C16 sever)
+# has the right quiet lantern mood but the gold-suited pilot has a teal bob, not Solenne's twists: CAST-QA fail.
+# Both, and the shipped C14 restore plate, are also the retired pastel look while the game plays in Fever Dream.
+# These three plates share one look. Pilots are named by CAST-BIBLE.md look, seen small and mostly from behind or
+# in profile, so a full-size face is never what carries identity. No DOG content (withdrawn).
+# Private. auto_submit: true. Queued is not rendered: review each at full size and in the cabinet before shipping.
+round: rainbow-endings-fever-dream-2026-11-22
+project_slug: rainbow-bullet-hell-space-princess
+designer: Rainbow Space Princess art bay
+is_public: false
+is_mature: false
+cast_loras: false
+priority: 1000
+auto_submit: true
+lanes:
+- key: krea2
+  label: Krea 2 Fever Dream ending plates
+  engine: krea2
+  prompt: prose
+subjects:
+- key: fd-ending-restore
+  lane: krea2
+  title: C14 restore ending, Fever Dream
+  entity: cinematic
+  asset: rainbow-princess-art/doodle/endings/restore
+  size: 1344x768
+  seed: 1122141
+  negative: text, lettering, logo, watermark, words, border, frame, white page, inset picture, dog, photorealism
+  prompt_prose: Ending illustration in 1980s neon rainbow airbrush school-folder sticker art, glossy soft airbrushed
+    shading, clean confident outlines, glitter sparkles, four-point twinkles and little hearts. Dawn breaks over
+    a living rainbow ocean in space; the great machine crown that once ruled it now floats open and quiet, its prism
+    shards glowing gentle pink and turquoise. Freed sea-creature starships, a seahorse, jellyfish, dolphins and
+    a huge manta, swim up through the light. Four small cat-shaped starfighters, rose pink, powder cyan, sunny gold
+    and lilac, glide side by side in front of the sunrise with rainbow exhaust trails. Edge-to-edge scene, hopeful
+    and warm.
+  jobs:
+    krea2: 76726
+- key: fd-ending-evacuate
+  lane: krea2
+  title: C15 evacuate ending, Fever Dream
+  entity: cinematic
+  asset: rainbow-princess-art/doodle/endings/evacuate
+  size: 1344x768
+  seed: 1122151
+  negative: text, lettering, logo, watermark, words, border, frame, white page, inset picture, halo over a palace,
+    intact palace, empty sky, dog, photorealism
+  prompt_prose: Ending illustration in 1980s neon rainbow airbrush school-folder sticker art, glossy soft airbrushed
+    shading, clean confident outlines, glitter sparkles and four-point twinkles. In the background a vast crown-shaped
+    space palace is crumbling, its prism towers cracking apart into drifting glowing shards. In the foreground a
+    huge pearl-white rescue mothership with a rainbow aurora sail leads a long convoy away to the right, with rescue
+    pods, small civilian ships and freed sea-creature starships, jellyfish, seahorses and dolphins, all streaming
+    out of danger in a single bright line. Four small cat-shaped starfighters, rose pink, powder cyan, sunny gold
+    and lilac, fly escort along the convoy. Edge-to-edge dramatic scene, relief and urgency together.
+  jobs:
+    krea2: 76727
+- key: fd-ending-sever
+  lane: krea2
+  title: C16 sever ending (bittersweet), Fever Dream
+  entity: cinematic
+  asset: rainbow-princess-art/doodle/endings/sever
+  size: 1344x768
+  seed: 1122161
+  negative: text, lettering, logo, watermark, words, border, frame, white page, inset picture, extra people, children,
+    identical bodies, dog, photorealism
+  prompt_prose: Ending illustration in 1980s neon rainbow airbrush school-folder sticker art, glossy soft airbrushed
+    shading, clean confident outlines, glitter sparkles. Night on a still mirror-calm cosmic sea under dark broken
+    prism shards. Four adult women stand at the water's edge seen from behind, each releasing a glowing paper lantern
+    that rises to join hundreds of others; a calm pearl-glass synthetic person with gold eyes stands with them.
+    From left to right, a short wiry woman with cropped copper hair in a pink flight jacket; a tall slender woman
+    with a long black braid in a powder-cyan coat; a broad, visibly muscular dark-skinned Black woman with natural
+    hair in twists, in a butter-yellow and gold flight suit; a curvy woman with a shaved-side undercut and lilac-streaked
+    dark hair in a lilac jacket. Four small cats sit at their feet. Bittersweet, quiet and tender, lantern light
+    reflected in the water.
+  jobs:
+    krea2: 76728
