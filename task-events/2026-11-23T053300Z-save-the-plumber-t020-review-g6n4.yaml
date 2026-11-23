@@ -1,0 +1,8 @@
+version: 1
+project: save-the-plumber
+task: t-020
+operation: review
+session: 2026-11-23T052741Z-save-the-plumber-t020-g6n4
+updated: '2026-11-23T05:33:00Z'
+note: >-
+  Fixed x-only checkpoint activation: pennants now require physical proximity, preventing distant upper routes from silently changing respawn. Added a deterministic upper-route bypass/contact replay in verifySavePlumberMovementReplay.test.ts. This is a partial t-020 slice; subrooms, secret exits and campaign switches remain. CI pending.
