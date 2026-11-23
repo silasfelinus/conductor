@@ -278,3 +278,27 @@ tasks:
       load (an undefined page-private helper), so on main this whole layer had been dead.
     updated: '2026-11-22T23:16:25Z'
     implementation_pr: 'silasfelinus/kind_robots#5597'
+
+  - id: t-011
+    milestone: m4
+    title: "Triple Threat: simultaneous quad-panel chess, minesweeper, WASD disc survival and global scores"
+    status: ready
+    playtest_iteration: true
+    passes: 0
+    stakes: reversible
+    note: >-
+      Silas, 2026-11-22 PT: evolve Chessweeper to a four-quadrant interface.
+      The first quadrant holds title, shared timer, settings, score, status,
+      controls and leaderboard. The other three are separate, simultaneously
+      active chess versus CPU, real Minesweeper and real-time WASD disc-room
+      survival. No mode should freeze merely because another has focus; the
+      shared timer measures the whole run. Scoring should reward maintaining
+      all three games, not farming one. Implement an actual persistent GLOBAL
+      all-time and today leaderboard, support guests' initials and signed-in
+      usernames using the existing ArcadeScore API, and guard implausible
+      submissions. Preserve the complete original three-world campaigns as
+      a playable Classic mode instead of overwriting them. Visually verify
+      desktop, tablet and phone; test all three independently and together,
+      time-out, death, input, accessibility, leaderboard and failure states.
+      Do not publish or force-deploy. This is a scoped playtest iteration
+      on top of the completed finite roadmap.
