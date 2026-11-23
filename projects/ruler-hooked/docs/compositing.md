@@ -2,10 +2,31 @@
 
 date: 2026-07-16
 task: ruler-hooked/t-005
-status: spec complete (no code; design doc only)
+status: historical alpha-stack proposal; current runtime uses selectable opaque vistas
 related: docs/data-model.md (t-004 — region states live in the save state),
 docs/art-direction.md (t-008 — how the layer prompts are written),
 DESIGN-BRIEF.md (core loop, time pillar)
+
+> **2026-11-22 PT implementation decision, t-059 (supersedes the transparent-stack
+> runtime assumptions in sections 1, 5 and 6):** The 36 delivered 1344x768 region
+> paintings are opaque RGB full-scene vistas, not images with an alpha-cut band.
+> Drawing all seven over one another hides every painting except the last one.
+> Until verified transparent assets exist, the game must render **one whole-scene
+> vista at a time**. The kingdom view exposes keyboard/touch-accessible region
+> choices showing each region's actual resolved state. Following a decree, it
+> spotlights the highest-priority changed region; saved state, pins, time
+> variants and asset fallback ladders remain deterministic. Do not fake a merge
+> with CSS clipping, translucent full-frame overlays or SVG placeholders.
+>
+> This is a truthful **vistas browser**, not fulfillment of the original
+> simultaneous independent-band compositing ambition. Region-by-region painted
+> states remain meaningful and inspectable; a future return to a unified
+> one-painting scene per complete state combination would need an intentionally
+> bounded asset matrix, while true layered compositing requires real alpha
+> masks and verified matching framing. Both are separate art/engine work,
+> never something to assert from today's opaque renders. Per t-047 and t-061,
+> delivered-art and real-device visual QA still require independent evidence.
+> The first-person no-visible-ruler rule remains absolute after coronation.
 
 ## 0. What this spec is
 
