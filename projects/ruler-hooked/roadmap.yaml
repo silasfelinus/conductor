@@ -1289,7 +1289,7 @@ tasks:
 - id: t-073
   milestone: m6
   title: Make the ruler-hooked art-queue generator print a one-line per-roster count summary so reviewers can spot dropped rows at a glance
-  status: review
+  status: done
   stakes: reversible
   passes: 0
   depends_on: []
@@ -1297,7 +1297,17 @@ tasks:
     Kaizen from reviewer of conductor#7912 (t-072, 2026-11-23 PT). Duplicate ids now fail loudly; the remaining silent-loss mode is a roster that parses to fewer rows than authored. Print e.g. "cast 12 · fish 36 · cards 84 · regions 13" on every run and cover the format with a hermetic test. Output-only; no queue content changes.
 
     Committed source roster census and hermetic count-format regression at 7d9c515. PR CI and reviewer verification pending.
-  updated: '2026-11-23T10:43:00Z'
-  owner: worker
-  claimed_by: 2026-11-23T103600Z-ruler-hooked-t073-6e9b
-  claimed_at: '2026-11-23T10:36:00Z'
+
+    Reviewer 2026-11-23 PT: #7914 was red (6 fixture failures from stubbing read_cast/read_regions to None). Rescued in conductor#7916 with empty-roster stubs (mechanical drift, no pass consumed), plus a main bug fix: t-072's duplicate guard crashed every live --check with KeyError 'outcomeKey'. Live census against kind_robots 4c0f092b: cast 11 · fish 36 · cards 57 · regions 8. Kaizen: t-074.
+  updated: '2026-11-23T11:10:00Z'
+  implementation_pr: 'silasfelinus/conductor#7916'
+- id: t-074
+  milestone: m6
+  title: Review and restage the 8 ruler-hooked card prompts that drifted from upstream card text
+  status: ready
+  stakes: reversible
+  passes: 0
+  depends_on: []
+  note: |-
+    Kaizen from reviewer of conductor#7916 (t-073, 2026-11-23 PT). Once the outcomeKey crash was fixed, live `build_ruler_hooked_art_queue.py --check` reported 0 missing and 8 stale card rows (e.g. card-marina-family-charter, card-water-rights-hearing) because kind_robots card text changed. Check each prompt diff against the art-prompt contract, then `--write --restage --lane card` so --check exits clean. Art-queue only.
+  updated: '2026-11-23T11:10:00Z'
