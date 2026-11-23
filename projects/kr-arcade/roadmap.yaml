@@ -78,6 +78,11 @@ milestones:
     weight: 25
     status: in-progress
 
+  - id: m12
+    title: "SUPERKATE'S SPECTRUM — complete bubble-puzzle story campaign and high-priority art"
+    weight: 80
+    status: in-progress
+
 tasks:
   - id: t-001
     milestone: m1
@@ -2895,3 +2900,85 @@ tasks:
       Reviewer kaizen from the 2026-11-22 PT merge of kind_robots#5572 (t-090 winter slice).
 
       Full history: projects/kr-arcade/HISTORY.md#t-175
+
+  - id: t-176
+    milestone: m12
+    title: "Superkate Spectrum: ship playable hex-grid color shooter, cascade, pressure, score, saves and accessibility glyphs"
+    status: review
+    owner: worker
+    claimed_by: 2026-11-23T032800Z-kr-arcade-t-176-superkate-progression-p8q2
+    claimed_at: '2026-11-23T03:28:00Z'
+    updated: '2026-11-23T03:33:20.249Z'
+    passes: 0
+    stakes: reversible
+    note: |-
+      Silas requested the game 2026-11-22 PT with Superkate as the protagonist. Implementation PR is open; this first playable slice is not the completed campaign.
+
+      2026-11-22 PT: extended open Kind Robots PR #5624 with versioned permanent career saves (XP, Color Rank, stage unlocks, best stars, lifetime pops), replayable Story, endless Classic mode, four earned bubble looks, Prism/Burst/Ribbon mechanics, sparkle animations and new regression checks. Local device save survives game-over; user requested cross-device memory too. Companion Conductor PR adds t-185 cloud sync and t-186 star-map polish; neither is implemented yet. PR remains gated for Kate's consent to public portrait likeness and must pass all final-head CI before merging.
+  - id: t-177
+    milestone: m12
+    title: "Superkate Spectrum: deliver high-priority hero, title, icon, character portraits, six backdrops and six boss illustrations"
+    status: ready
+    passes: 0
+    stakes: reversible
+    depends_on: []
+    note: >-
+      Three initial high-priority Krea 2 queue requests are in projects/art-prompts.yaml.
+      Require recorded ArtJob IDs and delivered files, not queue-only claims.
+      Stylized character based on user-provided photos; public portrait likeness needs Kate's consent.
+  - id: t-178
+    milestone: m12
+    title: "Superkate Spectrum: author 30 curated boards with three special bubble types and six distinct chapter mechanics"
+    status: ready
+    passes: 0
+    stakes: reversible
+    depends_on: [t-176]
+  - id: t-179
+    milestone: m12
+    title: "Superkate Spectrum: six interactive bosses with telegraphed patterns and tested fair collision"
+    status: waiting
+    passes: 0
+    stakes: reversible
+    depends_on: [t-178]
+  - id: t-180
+    milestone: m12
+    title: "Superkate Spectrum: story scenes, character dialogue, three meaningful choices and three endings"
+    status: ready
+    passes: 0
+    stakes: reversible
+    depends_on: []
+  - id: t-181
+    milestone: m12
+    title: "Superkate Spectrum: touch aim, aim assist, colorblind/high-contrast modes, calm motion and full controller support"
+    status: ready
+    passes: 0
+    stakes: reversible
+    depends_on: [t-176]
+  - id: t-182
+    milestone: m12
+    title: "Superkate Spectrum: original salon and six-region music themes, matching sound effects and accessible audio settings"
+    status: claimed
+    owner: worker
+    claimed_by: 2026-11-23T040118Z-kr-arcade-t-182-superkate-audio-n4p6
+    claimed_at: '2026-11-23T04:01:18Z'
+    updated: '2026-11-23T04:01:18Z'
+    passes: 0
+    stakes: reversible
+    depends_on: []
+  - id: t-183
+    milestone: m12
+    title: "Superkate Spectrum: endless, puzzle atelier, cooperative relay, achievements and ranked leaderboard fairness"
+    status: waiting
+    passes: 0
+    stakes: reversible
+    depends_on: [t-178]
+  - id: t-184
+    milestone: m12
+    title: "Superkate Spectrum: adversarial full campaign playthrough, mobile QA, save/retry/ending tests and visual acceptance"
+    status: waiting
+    passes: 0
+    stakes: reversible
+    depends_on: [t-177, t-178, t-179, t-180, t-181, t-182, t-183]
+    note: >-
+      Keep the game on the growing shelf until the entire finite scope is complete.
+      Public use of a recognisable real-person likeness requires Kate's explicit consent.
