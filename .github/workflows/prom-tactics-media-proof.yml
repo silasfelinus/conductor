@@ -85,12 +85,13 @@ jobs:
             --ledger projects/comet-city-academy/art/FRANCHISE-SAFE-RERENDERS-ROUND-1.yaml:5 \
             --write-evidence --require-private \
             --checkpoint-message "chore: checkpoint nineteen priority Prom private game-media proofs [skip ci]"
-      - name: Verify Prom runtime and October cast refill images
+      - name: Verify and checkpoint 172 original private Prom refill and cast paintings
         run: |
-          python scripts/verify_prom_tactics_media.py \
-            projects/comet-city-academy/art/RUNTIME-REFILL-ROUND-1.yaml \
-            projects/comet-city-academy/art/OCT-29-CAST-KREA2-ROUND-1.yaml \
-            --require-count 172
+          python scripts/prove_private_media_ledgers.py \
+            --ledger projects/comet-city-academy/art/RUNTIME-REFILL-ROUND-1.yaml:148 \
+            --ledger projects/comet-city-academy/art/OCT-29-CAST-KREA2-ROUND-1.yaml:24 \
+            --write-evidence --require-private \
+            --checkpoint-message "chore: checkpoint private Prom refill and October cast media proof [skip ci]"
       - name: Verify original Tactics diner, sunken street and library arena paintings
         run: |
           python scripts/prove_private_media_ledgers.py \
