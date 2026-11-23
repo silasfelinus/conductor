@@ -74,7 +74,7 @@ def test_failed_game_image_is_reported_by_exact_id_without_leaking_url(tmp_path)
     output = formatted_report(report)
     assert "image=258175" in output and "reason=HTTPError" in output
     assert "image=258176" not in output
-    assert "http" not in output.lower()
+    assert "https://" not in output
     assert "258175" in markdown_report(report)
 
 
