@@ -102,10 +102,8 @@ tasks:
       not rendered assets, and no playable implementation is claimed.
   - id: t-044
     title: 'Main-game standard: audit and close the gaps for Rainbow Bullet Hell Space Princess'
-    status: review
+    status: ready
     owner: worker
-    claimed_by: 20261122T024121Z-rainbow-t044-ending-archive-q7m4
-    claimed_at: '2026-11-22T02:41:21Z'
     milestone: m6
     stakes: reversible
     passes: 0
@@ -131,6 +129,8 @@ tasks:
       2026-11-21 PT recovery: prior scrapbook review claim is over 24 hours old, no open t-044 PR or active branch remains; existing logbook/ending scrapbook work is preserved. Reopen for real allegiance-specific ending scrapbook unlocks without falsely attributing historical generic choice feats.
 
       Partial t-044: standalone app PR silasfelinus/kind_robots#5547 (commit 0090f25d) records six exact Motherland rebel/loyal ending roads in existing mastery persistence, adds distinct nine-slot scrapbook with safe legacy generic-choice records, and full choice/road regression. Last-head CI and merge required. Additional polished ending art, full main-game standard acceptance and live device verification remain open.
+
+      2026-11-22 PT recovery: the 02:41Z review handoff is past its TTL with no open t-044 PR or branch (#5547 merged). Returned to ready; nothing discarded. Ending plates: Fever Dream restore 279195 and evacuate 279196 passed review and ship in the next kind_robots PR; sever 279197 failed CAST-QA and re-renders as ArtJob 76729 (ENDINGS-FEVER-DREAM-2026-11-22). Remaining main-game-standard scope per PLAYTEST-GAP-MATRIX-2026-11-22: sever plate, settings (comms, contrast, remap, erase flight log), call sign/paint.
   - id: t-045
     title: 'Rainbow Bullet Hell Space Princess achievement upgrade: 12 or more live achievements'
     status: done
@@ -843,9 +843,9 @@ tasks:
   - id: t-038
     milestone: m4
     title: "Recut the thrash-metal opening from the doodle art"
-    status: review
+    status: done
     owner: reviewer
-    updated: '2026-11-23T01:50:57Z'
+    updated: '2026-11-23T02:03:50Z'
     depends_on: [t-036]
     passes: 1
     retry_context: ''
@@ -891,6 +891,10 @@ tasks:
       Contact sheet and Chromium playback (15.03 s, 1280x720) checked. RAINBOW_OPENING wired
       in kind_robots#5618, which also fixes verifyRainbowOpening's double-escaped gamepad
       regex (failed on main).
+
+      2026-11-22 PT done: kind_robots#5618 merged as e816817b after all checks completed green
+      (TypeScript, all four contract shards, Rainbow cabinet Chromium jobs, cabinet-viewport).
+      The opening now plays in the cabinet.
     claimed_by: 20261123T015000Z-rainbow-t038-opening-c4r7
     claimed_at: '2026-11-23T01:46:10Z'
     implementation_pr: 'silasfelinus/kind_robots#5618'
@@ -1240,17 +1244,25 @@ tasks:
   - id: t-062
     milestone: m5
     title: "Run verifyRainbowSaveBytes and verifyRainbowSeasLogbook in CI"
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
     depends_on: []
     source: playtest-gap-matrix-2026-11-22
-    updated: '2026-11-23T01:51:21Z'
+    updated: '2026-11-23T02:13:13Z'
     note: >-
       PLAYTEST-GAP-MATRIX-2026-11-22 item 19. Both kind_robots tests exist on main but no workflow or package script runs them, so save-capacity and flight-log regressions can land silently. Add them to the Rainbow save/route workflow (or test:arcade-engine) and confirm a green run.
+
+      2026-11-22 PT: Both tests added to rainbow-alternate-route-memory.yml (PR-gating), with
+      path triggers for rainbowSaveSlots.ts and arcade/saves.ts. Both pass locally.
+      kind_robots#5619.
+
+      2026-11-22 PT done: kind_robots#5619 merged as fd2ee42e after all checks completed
+      green; the route-memory job ran both new steps successfully.
     owner: reviewer
     claimed_by: 20261123T020500Z-rainbow-t062-ci-c4r7
     claimed_at: '2026-11-23T01:51:21Z'
+    implementation_pr: 'silasfelinus/kind_robots#5619'
   - id: t-063
     milestone: m5
     title: "Rainbow at 360x640 in the viewport suite, with a minimum rendered size for hostile shots"
