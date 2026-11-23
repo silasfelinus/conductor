@@ -1236,12 +1236,14 @@ tasks:
 - id: t-070
   milestone: m6
   title: Add a CI check that flags any ruler-hooked region asset without an alpha channel before it is treated as a stack layer
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
+  claimed_by: 20261123T031924663Z-ruler-hooked-t070-h9k2
+  claimed_at: '2026-11-23T03:19:24.663Z'
   stakes: reversible
   passes: 0
   depends_on: []
-  updated: '2026-11-23T02:55:00Z'
+  updated: '2026-11-23T03:19:24.663Z'
   note: >-
     Kaizen from reviewer of kind_robots#5622 / conductor#7881 (t-059, 2026-11-22 PT).
     The alpha-stack contract drifted for weeks because nothing checked that the 36
