@@ -1,0 +1,123 @@
+# Rainbow Space Princess t-064, 2026-11-23 PT: a second phase-2 take for B09 on the rebel road. The first Krea 2
+# take (279299) was rejected: not battered, clamps not sprung, hull colours drifted from phase 1. These takes edit
+# the shipped phase-1 painting (279298) with Flux Kontext so the hull, palette and framing stay locked, and only
+# the damage, the sprung clamps and the loose Crown change. Two seeds; review at game scale against the clamp-core
+# hit geometry and ship only if one beats phase 1 plus the code-drawn clamp cues. Private; queued is not delivered.
+round: rainbow-motherland-flagship-phase2-2026-11-23
+project_slug: rainbow-bullet-hell-space-princess
+designer: Rainbow Space Princess art bay
+is_public: false
+is_mature: false
+cast_loras: false
+priority: 1000
+auto_submit: true
+lanes:
+- key: kontext
+  label: Flux Kontext edit of the shipped phase-1 flagship (279298)
+  engine: kontext
+  prompt: prose
+  steps: 24
+  guidance: 2.5
+subjects:
+- key: flagship-phase2-kontext-a
+  verdict: 'hold: 2026-11-23 PT review, hull, palette and framing match phase 1 and the blast holes and sparks read
+    as battered at game scale, but a second loose rainbow ring floats mid-deck while the Crown stays clamped at
+    the prow. The engine draws its own ring at the painted Crown and the real phase-2 target is the drifting heart,
+    so a painted decoy ring would read as a target that cannot be hit. Cleaned in take C.'
+  lane: kontext
+  title: Motherland flagship, clamps sprung, the Crown breaking loose (Kontext take A)
+  entity: boss
+  asset: rainbow-princess-art/bosses/flagship-phase2
+  size: 1344x768
+  seed: 1123641
+  source_image_id: 279298
+  negative: text, lettering, logo, watermark, words, fish, creature, eyes, face, scenery, star field
+  prompt_prose: Keep this exact warship, its side view, prow to the left, white enamel and gold colours, size and
+    position unchanged. Now it is badly damaged in battle. The two gold clamps at its prow are sprung wide open,
+    bent outward away from the crown-ring, and the glowing rainbow crown-ring floats free between them, its pink
+    heart blazing brighter. Black scorch marks and jagged cracks run across the white hull, orange sparks spill
+    from the seams, one gold crest spike is snapped off. Keep the flat pure bright green background and the same
+    glossy airbrushed sticker art style with bold outlines.
+  jobs:
+    kontext: 76830
+  art:
+    kontext:
+      status: DONE
+      art_image_id: 279486
+- key: flagship-phase2-kontext-b
+  verdict: 'reject: 2026-11-23 PT review, the Crown is set on fire (reads as a new hazard), the clamps are not sprung,
+    and the hairline cracks lose their read at game scale.'
+  lane: kontext
+  title: Motherland flagship, clamps sprung, the Crown breaking loose (Kontext take B)
+  entity: boss
+  asset: rainbow-princess-art/bosses/flagship-phase2
+  size: 1344x768
+  seed: 1123642
+  source_image_id: 279298
+  negative: text, lettering, logo, watermark, words, fish, creature, eyes, face, scenery, star field
+  prompt_prose: Keep this exact warship, its side view, prow to the left, white enamel and gold colours, size and
+    position unchanged. Now it is badly damaged in battle. The two gold clamps at its prow are sprung wide open,
+    bent outward away from the crown-ring, and the glowing rainbow crown-ring floats free between them, its pink
+    heart blazing brighter. Black scorch marks and jagged cracks run across the white hull, orange sparks spill
+    from the seams, one gold crest spike is snapped off. Keep the flat pure bright green background and the same
+    glossy airbrushed sticker art style with bold outlines.
+  jobs:
+    kontext: 76831
+  art:
+    kontext:
+      status: DONE
+      art_image_id: 279487
+- key: flagship-phase2-kontext-c
+  verdict: 'reject: 2026-11-23 PT review, the stray ring is gone but the ship is reframed larger, the Crown is clipped
+    at the left edge and the keel at the bottom, so it cannot key or anchor to the phase-1 Crown point. Hand-patching
+    take A from phase-1 pixels left ring fragments visible at game scale; not shipped.'
+  lane: kontext
+  title: Motherland flagship, battered (take A with the stray ring removed)
+  entity: boss
+  asset: rainbow-princess-art/bosses/flagship-phase2
+  size: 1344x768
+  seed: 1123643
+  source_image_id: 279486
+  negative: text, lettering, logo, watermark, words, fish, creature, eyes, face, scenery, star field
+  prompt_prose: Remove the loose glowing rainbow ring floating above the middle of the deck, painting the deck,
+    railings and green background behind it as they would be. Keep everything else exactly the same, the battered
+    white and gold warship, its scorch holes and sparks, the crown at its prow, its size, position and colours,
+    the flat pure bright green background and the glossy airbrushed sticker art style with bold outlines.
+  jobs:
+    kontext: 76832
+  art:
+    kontext:
+      status: DONE
+      art_image_id: 279491
+- key: flagship-phase2-kontext-d
+  lane: kontext
+  title: Motherland flagship, battered (take A with the stray ring removed, framing locked, seed 1123644)
+  entity: boss
+  asset: rainbow-princess-art/bosses/flagship-phase2
+  size: 1344x768
+  seed: 1123644
+  source_image_id: 279486
+  negative: text, lettering, logo, watermark, words, fish, creature, eyes, face, scenery, star field, zoom, crop
+  prompt_prose: Remove only the loose glowing rainbow ring floating above the middle of the deck, painting the deck,
+    railings and green background behind it as they would be. Do not zoom, crop or move anything. The whole warship
+    stays exactly where it is with the same wide green margin on every side, the crown fully visible at its prow
+    on the left. Keep the battered white and gold hull, its scorch holes and sparks, its colours, the flat pure
+    bright green background and the glossy airbrushed sticker art style with bold outlines.
+  jobs:
+    kontext: 76833
+- key: flagship-phase2-kontext-e
+  lane: kontext
+  title: Motherland flagship, battered (take A with the stray ring removed, framing locked, seed 1123645)
+  entity: boss
+  asset: rainbow-princess-art/bosses/flagship-phase2
+  size: 1344x768
+  seed: 1123645
+  source_image_id: 279486
+  negative: text, lettering, logo, watermark, words, fish, creature, eyes, face, scenery, star field, zoom, crop
+  prompt_prose: Remove only the loose glowing rainbow ring floating above the middle of the deck, painting the deck,
+    railings and green background behind it as they would be. Do not zoom, crop or move anything. The whole warship
+    stays exactly where it is with the same wide green margin on every side, the crown fully visible at its prow
+    on the left. Keep the battered white and gold hull, its scorch holes and sparks, its colours, the flat pure
+    bright green background and the glossy airbrushed sticker art style with bold outlines.
+  jobs:
+    kontext: 76834

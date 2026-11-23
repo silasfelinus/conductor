@@ -1442,21 +1442,18 @@ tasks:
   - id: t-085
     milestone: m8
     title: "Pixel Hop depth slice 3: Glacier Moon and Clockwork Planet"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 20261123T104431Z-kr-arcade-t085-pixelhop-n6q4
     claimed_at: '2026-11-23T10:44:31.850Z'
     passes: 0
     stakes: reversible
     depends_on: t-084
-    note: >-
-      CABINETS.md section 12, Pixel Hop (Q*bert riff), slice 3 of 5: Glacier Moon and Clockwork Planet. The
-      upgrade is "The Painted Planets". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read the game's
-      section first; this slice's scope is item 3 under its '#### Slices', and 'Rules for every slice' at the
-      top applies. Code: kind_robots utils/arcade/games/ (registry slug pixel-hop). Silas, 2026-10-11: "I need
-      an assessment done of the other arcade games. I want the same level of quality improvements, they should
-      not just be thin veneers of the old games. But newer, better, even more awesome."
-    updated: '2026-11-23T10:44:31.850Z'
+    note: |-
+      CABINETS.md section 12, Pixel Hop (Q*bert riff), slice 3 of 5: Glacier Moon and Clockwork Planet. The upgrade is "The Painted Planets". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read the game's section first; this slice's scope is item 3 under its '#### Slices', and 'Rules for every slice' at the top applies. Code: kind_robots utils/arcade/games/ (registry slug pixel-hop). Silas, 2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality improvements, they should not just be thin veneers of the old games. But newer, better, even more awesome."
+
+      Partial slice 3: Glacier Moon authored with six stages, ice-slide mechanics, twin-peak topology, snowy foes, snowflake picture, 4-crack Snow Globe boss, new score and HUD cues, and regression probes. Clockwork Planet remains. Code branch worker/kr-arcade-t-085-glacier-clockwork-n6q4, PR to follow. Keep this finite task ready after partial merge.
+    updated: '2026-11-23T10:51:07.665Z'
 
   - id: t-086
     milestone: m8
@@ -2583,31 +2580,19 @@ tasks:
   - id: t-155
     milestone: m8
     title: "Turn on ACE arcade soundtrack generation, ingest the first approved track, and listen to it in a cabinet"
-    status: ready
+    status: review
+    owner: worker
+    claimed_by: 2026-11-23T105816Z-kr-arcade-t-155-k8q4
+    claimed_at: '2026-11-23T10:58:16Z'
+    updated: '2026-11-23T11:01:00Z'
     passes: 0
     stakes: reversible
     approved_by_human: true
-    note: >-
-      Silas, 2026-10-19, verbatim: "generating better audio should absolutely not require human
-      approval, fyi". The money gate is lifted: agents queue ACE-Step renders themselves through
-      /api/art/enqueue (enqueueArcadeSoundtrack.ts, enqueueRainbowScore.ts; Rainbow's 21 score cues
-      went in as ArtJobs #40796-#40816 the same day while the render box's queue was idle). Remaining
-      agent work: drop the per-cue approval and ARCADE_AUDIO_JOBS_ENABLED gates from POST
-      /api/arcade/audio-jobs (or retire it for the direct path), then ingest renders as below. A
-      production env var still only Silas sets; nothing here needs one any more.
+    note: |-
+      Silas, 2026-10-19, verbatim: "generating better audio should absolutely not require human approval, fyi". The money gate is lifted: agents queue ACE-Step renders themselves through /api/art/enqueue (enqueueArcadeSoundtrack.ts, enqueueRainbowScore.ts; Rainbow's 21 score cues went in as ArtJobs #40796-#40816 the same day while the render box's queue was idle). Remaining agent work: drop the per-cue approval and ARCADE_AUDIO_JOBS_ENABLED gates from POST /api/arcade/audio-jobs (or retire it for the direct path), then ingest renders as below. A production env var still only Silas sets; nothing here needs one any more.
+      Remainder of silasfelinus/kind_robots#3606 that needs Silas. Human steps: confirm the kr-relay build advertises supportsAudio with the ACE-Step model installed (GET /api/arcade/audio-jobs then reports the relay ready), and set ARCADE_AUDIO_JOBS_ENABLED=true on production. After that an agent can: approve one test cue (gloom-invaders/level), confirm the worker returns a readable file, and ingest it: check duration and format, set the loop point, trim cue renders from 10s, transcode, record the SHA-256, ArtJob id and approval/verified dates, publish under /images/arcade/audio/<game|shared>/<cue>.<ext>, confirm it fetches from production, and add it to VERIFIED_ARCADE_AUDIO_ASSETS. Then approve the remaining priority-cabinet cues. Done when someone has heard at least one ACE recording in a cabinet, including the crossfade, ducking and oscillator fallback.
 
-      Remainder of silasfelinus/kind_robots#3606 that needs Silas. Human steps:
-      confirm the kr-relay build advertises supportsAudio with the ACE-Step model
-      installed (GET /api/arcade/audio-jobs then reports the relay ready), and set
-      ARCADE_AUDIO_JOBS_ENABLED=true on production. After that an agent can: approve
-      one test cue (gloom-invaders/level), confirm the worker returns a readable
-      file, and ingest it: check duration and format, set the loop point, trim cue
-      renders from 10s, transcode, record the SHA-256, ArtJob id and approval/verified
-      dates, publish under /images/arcade/audio/<game|shared>/<cue>.<ext>, confirm it
-      fetches from production, and add it to VERIFIED_ARCADE_AUDIO_ASSETS. Then approve
-      the remaining priority-cabinet cues. Done when someone has heard at least one
-      ACE recording in a cabinet, including the crossfade, ducking and oscillator
-      fallback.
+      Removed the obsolete per-cue approval, environment flag and relay-readiness gates from the admin audio enqueue route. The PR retains job deduplication and uses the existing ACE-Step ArtJob pipeline. Render ingestion and audible verification remain open.
   - id: t-156
     milestone: m8
     title: "Achievements: three per game with badge art, an achievements section, and a refreshed jellybean catalog"

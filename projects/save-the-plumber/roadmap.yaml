@@ -516,21 +516,17 @@ tasks:
   - id: t-025
     milestone: m6
     title: "Gen-2 animation: pose-to-pose WAN sprite clips, atlases and animated cinematics"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 2026-11-23T104930Z-save-the-plumber-t025-sprites-p8h3
     claimed_at: '2026-11-23T10:49:30Z'
-    updated: '2026-11-23T10:49:30Z'
+    updated: '2026-11-23T10:50:35Z'
     passes: 0
     stakes: reversible
-    updated: '2026-10-22T10:30:00Z'
-    note: >-
-      GEN2-STANDARD.md sections 5-6. art/GEN2-CLIPS-1.yaml already animates the four cutscene stills
-      as WAN first/last-frame loops (submitted 2026-10-22). Next: from the reviewed Pip key poses in
-      GEN2-ROUND-1, queue WAN first/last clips between pose pairs (idle loop, run cycle, jump, skid,
-      climb, hurt), matte the white, normalize pivots and pack an atlas (the zuzu-pinball T019 croc
-      tool is the template), then wire the atlas into the engine with the code-drawn heroine as the
-      fallback. Then the other seven roster heroines and the enemy families. Target 12 fps or better.
+    note: |-
+      GEN2-STANDARD.md sections 5-6. art/GEN2-CLIPS-1.yaml already animates the four cutscene stills as WAN first/last-frame loops (submitted 2026-10-22). Next: from the reviewed Pip key poses in GEN2-ROUND-1, queue WAN first/last clips between pose pairs (idle loop, run cycle, jump, skid, climb, hurt), matte the white, normalize pivots and pack an atlas (the zuzu-pinball T019 croc tool is the template), then wire the atlas into the engine with the code-drawn heroine as the fallback. Then the other seven roster heroines and the enemy families. Target 12 fps or better.
+
+      2026-11-23 PT: Staged six WAN A14B first/last-image Pip animation source requests from reviewed Krea 2 ArtImages (idle, forward/reverse run, rise/fall, landing, climb) in art/GEN2-PIP-MOTION-1.yaml. Auto-submit is requested, but no new ArtJob IDs or delivered assets claimed. Pending render/curation, matte, pivot/atlas, runtime wiring and seven other heroines; keep t-025 in progress after the PR.
   - id: t-026
     title: "Save the Plumber: ship WAN opening cinematic and animated heroine in handheld title"
     status: ready

@@ -29,8 +29,8 @@ def _entries(lane, ids):
 def hermetic(monkeypatch, tmp_path):
     """CI has no kind_robots checkout, so stub every source of entries."""
     monkeypatch.setattr(bruq, "find_content_bundle", lambda: tmp_path / "content.ts")
-    monkeypatch.setattr(bruq, "read_cast", lambda ts: None)
-    monkeypatch.setattr(bruq, "read_regions", lambda ts: None)
+    monkeypatch.setattr(bruq, "read_cast", lambda ts: [])
+    monkeypatch.setattr(bruq, "read_regions", lambda ts: {})
     stub_art_entry_factories(
         monkeypatch,
         bruq,
