@@ -3,7 +3,8 @@
 from collections import Counter
 import json
 from pathlib import Path
-import re
+import subprocess
+import sys
 
 import pytest
 import yaml
@@ -13,6 +14,10 @@ ROSTER = ROOT / 'projects/ruler-hooked/fish/vertical-slice.yaml'
 REQUESTS = ROOT / 'projects/art-prompts.yaml'
 PREFIX = 'ruler-hooked-fish-'
 RUNTIME_FIXTURE = ROOT / 'tests/fixtures/ruler_hooked_runtime_fish.json'
+REFRESH_SCRIPT = ROOT / 'scripts/refresh_ruler_hooked_runtime_fish.py'
+
+sys.path.insert(0, str(ROOT / 'scripts'))
+from refresh_ruler_hooked_runtime_fish import parse_runtime_fish_slugs, snapshot_text
 
 
 def assert_valid_staged_fish_ids(roster_slugs, request_ids):
@@ -52,19 +57,6 @@ def test_queue_diagnoses_orphan_and_duplicate():
         assert_valid_staged_fish_ids(['a'], [PREFIX + 'a', PREFIX + 'z'])
     with pytest.raises(AssertionError, match='duplicate=.*fish-a'):
         assert_valid_staged_fish_ids(['a'], [PREFIX + 'a', PREFIX + 'a'])
-
-
-def parse_runtime_fish_slugs(source):
-    """Return RULER_HOOKED_FISH slugs, failing closed on a missing or empty array."""
-    match = re.search(
-        r'export\s+const\s+RULER_HOOKED_FISH\s*:[^=]*=\s*\[(.*?)^\]',
-        source,
-        re.MULTILINE | re.DOTALL,
-    )
-    assert match, 'RULER_HOOKED_FISH array declaration not found'
-    slugs = re.findall(r"^\s+slug:\s*'([^']+)'", match.group(1), re.MULTILINE)
-    assert slugs, 'RULER_HOOKED_FISH array contains no parsed slugs'
-    return slugs
 
 
 def test_runtime_parser_rejects_missing_or_empty_roster():
@@ -122,3 +114,63 @@ def test_runtime_fish_slugs_match_when_app_checkout_is_present():
     assert Counter(runtime_slugs) == Counter(roster_slugs), (
         'runtime fish differ from Conductor roster'
     )
+
+
+def test_runtime_parser_rejects_duplicates():
+    source = (
+        'export const RULER_HOOKED_FISH: Fish[] = [\n'
+        "  {\n    slug: 'same-fish',\n  },\n"
+        "  {\n    slug: 'same-fish',\n  },\n"
+        ']\n'
+    )
+    with pytest.raises(AssertionError, match='duplicate runtime fish slugs'):
+        parse_runtime_fish_slugs(source)
+
+
+def test_refresh_runtime_snapshot_cli(tmp_path):
+    app = tmp_path / 'app'
+    runtime = app / 'utils/rulerHooked/fish.ts'
+    runtime.parent.mkdir(parents=True)
+    fixture = tmp_path / 'fixtures/runtime.json'
+    fixture.parent.mkdir()
+    fixture.write_text(snapshot_text(['old-fish']), encoding='utf-8')
+    runtime.write_text(
+        'export const RULER_HOOKED_FISH: Fish[] = [\n'
+        "  {\n    slug: 'rainbow-trout',\n  },\n"
+        "  {\n    slug: 'moon-carp',\n  },\n"
+        ']\n',
+        encoding='utf-8',
+    )
+
+    def run(mode):
+        return subprocess.run(
+            [
+                sys.executable, str(REFRESH_SCRIPT), mode,
+                '--app-root', str(app), '--fixture', str(fixture),
+            ],
+            cwd=tmp_path,
+            capture_output=True,
+            text=True,
+        )
+
+    original = fixture.read_bytes()
+    stale = run('--check')
+    assert stale.returncode == 1
+    assert 'stale' in stale.stderr
+    assert fixture.read_bytes() == original
+    assert run('--write').returncode == 0
+    assert fixture.read_text(encoding='utf-8') == snapshot_text(
+        ['rainbow-trout', 'moon-carp']
+    )
+    assert run('--check').returncode == 0
+    refreshed = fixture.read_bytes()
+    modified_at = fixture.stat().st_mtime_ns
+    assert run('--write').returncode == 0
+    assert fixture.stat().st_mtime_ns == modified_at
+
+    runtime.write_text('export const OTHER = []\n', encoding='utf-8')
+    assert run('--write').returncode == 2
+    assert fixture.read_bytes() == refreshed
+    runtime.unlink()
+    assert run('--check').returncode == 2
+    assert fixture.read_bytes() == refreshed
