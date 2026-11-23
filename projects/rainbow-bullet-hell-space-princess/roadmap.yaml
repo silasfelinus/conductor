@@ -641,14 +641,11 @@ tasks:
   - id: t-028
     milestone: m6
     title: "Gen-2 alternate stages: four branch stages with their own guardians"
-    status: review
-    owner: worker
-    claimed_by: 20261122T221135Z-rainbow-t028-x2save-f6k2
-    claimed_at: '2026-11-22T22:11:35Z'
+    status: ready
     depends_on: [t-026]
     passes: 0
     stakes: reversible
-    updated: '2026-11-22T22:15:15Z'
+    updated: '2026-11-23T00:18:09Z'
     note: |-
       One stage per PR, authored to the existing Act pacing and fairness rules, each with a guardian.
 
@@ -696,6 +693,8 @@ tasks:
       Previous X1 partial-work review claimed 2026-11-22T12:32Z has no open Rainbow implementation PR or matching branch at 22:09Z; X1 is on main. Releasing stale review ownership for X2 checkpoint-rescue integrity and live four-seat replay validation.
 
       Implemented X2 temporal cadet-mask and guardian-outcome validation in kind_robots worker branch worker/rainbow-bullet-hell-space-princess-t-028-comet-saveguard-f6k2, plus exhaustive bitmask / section boundaries and corrupt-save replay assertions. Partial t-028; guardian art and independent campaign QA remain.
+
+      2026-11-22 PT: Prior X2 checkpoint-review claim from 22:11Z is past the documented 90-minute TTL; no active t-028 PR or branch remains. Its X2 save protection is merged on main (#5601). Reopen for independent alternate-stage QA and gameplay implementation.
   - id: t-029
     milestone: m6
     title: "Gen-2 art round 1: route map, Palace Hangar and four alternate-stage backdrops"
