@@ -1,4 +1,31 @@
 # art-queue-health.yaml -- written by scripts/art_queue_health.py record at the
 # end of every Auto Art Generate run. Do not hand-edit: fix the cause (see
 # docs/agents/roles/art-medic.md) and the next run drops the entry.
-failures: []
+failures:
+- source: requests
+  target: public/images/arcade/games/superkate-spectrum-hero.webp
+  kind: contract-rejected
+  rules:
+  - text-exclusion-pile
+  detail: 'enqueue failed: HTTP 422 Art prompt rejected by the prompt contract (1 violation): [text-exclusion-pile]
+    no visible writing names text on an engine whose negative prompt is inert, so the word lands in POSITIVE
+    conditioning on a model from …'
+  first_seen: '2026-11-23'
+- source: requests
+  target: public/images/arcade/games/superkate-spectrum-icon.webp
+  kind: contract-rejected
+  rules:
+  - text-exclusion-pile
+  detail: 'enqueue failed: HTTP 422 Art prompt rejected by the prompt contract (1 violation): [text-exclusion-pile]
+    no writing names text on an engine whose negative prompt is inert, so the word lands in POSITIVE conditioning
+    on a model from the stro…'
+  first_seen: '2026-11-23'
+- source: requests
+  target: public/images/arcade/games/superkate-spectrum-title.webp
+  kind: contract-rejected
+  rules:
+  - text-exclusion-pile
+  detail: 'enqueue failed: HTTP 422 Art prompt rejected by the prompt contract (1 violation): [text-exclusion-pile]
+    No writing names text on an engine whose negative prompt is inert, so the word lands in POSITIVE conditioning
+    on a model from the stro…'
+  first_seen: '2026-11-23'
