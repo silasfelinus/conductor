@@ -3012,3 +3012,40 @@ tasks:
       powers (Prism, Burst, Ribbon). Build a polished illustrated stage map,
       level-specific medal/replay interactions, clear unlock celebrations,
       power tutorials and mobile-friendly navigation; verify 390/768/1440.
+
+  - id: t-187
+    milestone: m12
+    title: "Superkate Spectrum: integrate retro-modern Arcade hub with Play, Classic, Scrapbook, Achievements and Settings"
+    status: waiting
+    passes: 0
+    stakes: reversible
+    depends_on: [t-176]
+    note: >-
+      Silas, 2026-11-22 PT: preserve old-school game character but wrap
+      it in premium modern presentation. No second disconnected route:
+      provide a cohesive console-first cabinet home with illustrated
+      stage-map cards, classic/story mode selection, collected bubble
+      cosmetics, chapter and character scrapbook, earned trophies,
+      music/effects/volume and accessibility settings, and a visible
+      account/device cloud-save state. Foundation is in app PR #5624:
+      in-canvas four-tab menu with story stars, local scrapbook,
+      achievement list and aim/animation/high-contrast toggles.
+      Remaining: delivered art, accessible touch interaction, responsive
+      polish, readable one-screen layout at 390/768/1440, input QA and
+      full UI playback validation.
+  - id: t-188
+    milestone: m12
+    title: "Superkate Spectrum: finish audio production and collectible scrapbook portraits with account-safe achievements"
+    status: waiting
+    passes: 0
+    stakes: reversible
+    depends_on: [t-177, t-180, t-182, t-185]
+    note: >-
+      Implement six published region themes, Classic loop and music
+      transitions, finale stingers and bubble SFX with independent
+      music/effects volumes. The existing WebAudio prototype supplies
+      playable oscillator loops but no verified recorded assets.
+      Ship album memories, character portraits, best stars,
+      cosmetic displays and earned globally seeded achievements.
+      Validate replay, sign-in, account switch, offline save and
+      old-save migration, retaining progress across every device.
