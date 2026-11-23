@@ -14,6 +14,7 @@ from scripts.verify_tactics_runtime_media import (
     average_thumbnail_delta,
     check_visibility,
     read_game_image,
+    retry_transient,
     runtime_url,
     verify,
 )
@@ -143,3 +144,82 @@ def test_metadata_visibility_must_be_boolean():
     )
     assert ok == []
     assert failed == [("k", 2, "ValueError")]
+
+def test_transient_429_and_source_metadata_503_recover_without_new_artjobs():
+    attempts = []
+    pauses = []
+
+    def fetch():
+        attempts.append(len(attempts))
+        if len(attempts) == 1:
+            raise RuntimeError("ArtImage 258175: HTTP 503, no imagePath")
+        if len(attempts) == 2:
+            raise urllib.error.HTTPError(
+                "https://kindrobots.org/api/art/images/258175/file",
+                429,
+                "Too Many Requests",
+                {},
+                None,
+            )
+        return "verified"
+
+    assert retry_transient(fetch, pause=pauses.append) == "verified"
+    assert len(attempts) == 3
+    assert pauses == [2, 4]
+
+
+def test_persistent_404_and_bad_image_are_not_retried():
+    for error in [
+        urllib.error.HTTPError("https://kindrobots.org/file", 404, "Missing", {}, None),
+        ValueError("Gameplay image differs from its source"),
+        RuntimeError("ArtImage 258175: HTTP 404, no imagePath"),
+    ]:
+        calls = []
+        with pytest.raises(type(error)):
+            retry_transient(
+                lambda: (calls.append(1), (_ for _ in ()).throw(error))[1],
+                pause=lambda _: (_ for _ in ()).throw(AssertionError("slept")),
+            )
+        assert calls == [1]
+
+
+def test_verifier_recovers_transient_reference_and_game_url_failures():
+    calls = {"source": 0, "runtime": 0, "policy": 0}
+
+    def retry_now(action):
+        return retry_transient(action, pause=lambda _: None)
+
+    def source(_):
+        calls["source"] += 1
+        if calls["source"] == 1:
+            raise RuntimeError("ArtImage 258175: HTTP 429, no imagePath")
+        return Image.new("RGB", (256, 256))
+
+    def runtime(_):
+        calls["runtime"] += 1
+        if calls["runtime"] == 1:
+            raise urllib.error.HTTPError(
+                "https://kindrobots.org/file", 503, "Unavailable", {}, None
+            )
+        return Image.new("RGB", (256, 256))
+
+    def visibility(_, public):
+        calls["policy"] += 1
+        assert public is False
+        if calls["policy"] == 1:
+            raise urllib.error.HTTPError(
+                "https://kindrobots.org/file", 429, "Throttled", {}, None
+            )
+        return "PRIVATE_DENIED"
+
+    good, failed = verify(
+        [{"key": "magic-discipline-hero", "job_id": 50768, "image_id": 258175}],
+        source,
+        runtime,
+        visibility,
+        lambda _: False,
+        retry=retry_now,
+    )
+    assert failed == []
+    assert len(good) == 1
+    assert calls == {"source": 2, "runtime": 2, "policy": 2}
