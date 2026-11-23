@@ -682,14 +682,14 @@ tasks:
   - id: t-028
     milestone: m6
     title: "Gen-2 alternate stages: four branch stages with their own guardians"
-    status: review
+    status: done
     owner: worker
     claimed_by: 20261123T001912Z-rainbow-t028-stageqa-h5n8
     claimed_at: '2026-11-23T00:19:12Z'
     depends_on: [t-026]
     passes: 0
     stakes: reversible
-    updated: '2026-11-23T00:22:50Z'
+    updated: '2026-11-23T23:23:21Z'
     note: |-
       One stage per PR, authored to the existing Act pacing and fairness rules, each with a guardian.
 
@@ -741,6 +741,16 @@ tasks:
       2026-11-22 PT: Prior X2 checkpoint-review claim from 22:11Z is past the documented 90-minute TTL; no active t-028 PR or branch remains. Its X2 save protection is merged on main (#5601). Reopen for independent alternate-stage QA and gameplay implementation.
 
       2026-11-22 PT: Independent four-detour completion progress on worker/rainbow-bullet-hell-space-princess-t-028-detour-clears-h5n8. X1-X4 route clears now record only after genuine alternate Act exits; checkpoints and decoder persist and validate separate discovery/completion bits. Exhaustive corruption and one-to-four-seat X2 exit tests added. Partial t-028; production art and full alternate guardian replay/visual QA remain.
+
+      2026-11-23 PT: kind_robots#5685 merged as 5923d73d after all 23 checks completed green.
+      X1-X4 now fly their own reviewed painted skies and keyed far/mid/near bands
+      (GEN2-ROUND-2 Krea 2; X2/X4 mids refused because moving asteroids/fish read as enemies),
+      X2 scrap is the coral asteroid (278622), kelp fronds (278928) mark the Kelp Warden comb
+      lanes, and the Armory Siren flies its own painting (ARMORY-SIREN-2026-11-23, 279830).
+      With #5614 clears, the guardians from t-059 and the per-detour flight/replay verifiers
+      now gated in CI by rainbow-verifier-suite, all four branch stages and their guardians
+      ship. Verdicts recorded in the ledgers.
+    implementation_pr: 'silasfelinus/kind_robots#5685'
   - id: t-029
     milestone: m6
     title: "Gen-2 art round 1: route map, Palace Hangar and four alternate-stage backdrops"
