@@ -1226,18 +1226,18 @@ tasks:
 - id: t-069
   milestone: m6
   title: Add a CI guard that every new ruler-hooked quest card id has a matching art-prompts.yaml request row
-  status: ready
-  owner: null
+  status: review
+  owner: worker
+  claimed_by: 2026-11-23T040900Z-ruler-hooked-t069-c8d2af
+  claimed_at: '2026-11-23T04:09:00Z'
   stakes: reversible
   passes: 0
   depends_on: []
-  updated: '2026-11-23T00:49:29Z'
-  note: >-
-    Kaizen from reviewer of conductor#7867 (2026-11-22 PT). Card art for
-    the t-045 aftershocks was staged by hand in a separate PR from the kind_robots
-    content (#5605). Add a guard that diffs the card ids in the ruler-hooked deck
-    against the ruler-hooked-card-* rows in projects/art-prompts.yaml and names any
-    card that has no art request. Reports only: no enqueue, no render.
+  updated: '2026-11-23T04:13:15Z'
+  note: |-
+    Kaizen from reviewer of conductor#7867 (2026-11-22 PT). Card art for the t-045 aftershocks was staged by hand in a separate PR from the kind_robots content (#5605). Add a guard that diffs the card ids in the ruler-hooked deck against the ruler-hooked-card-* rows in projects/art-prompts.yaml and names any card that has no art request. Reports only: no enqueue, no render.
+
+    Implemented an automated cross-repository quest-card-art-request guard, checks all authored cards, art mapping, queue IDs and paths, with positive and negative Python fixtures in Worker CI. The guard reports missing staged prompts only; it never claims that painting was delivered or inspected. Branch worker/ruler-hooked-t-069-20261123-c8d2af also fixes a duplicated owner field introduced during connector claim bookkeeping.
 - id: t-070
   milestone: m6
   title: Add a CI check that flags any ruler-hooked region asset without an alpha channel before it is treated as a stack layer
