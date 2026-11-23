@@ -8,16 +8,19 @@ goal: >-
   Back button, daily and weekly quests, achievements, very long branching maps with multiple
   pathways and unique endings, character select, sound and music, three save slots with
   export/import, settings, and a scrapbook. Painted original art, region-specific mechanics,
-  full browser playthrough QA at 390/768/1440, then a playtest handoff. Public /play promotion
-  is separately gated.
+  full browser playthrough QA at 390/768/1440, then a playtest handoff. It lives as a
+  standalone front-end Play page (/play/hopeful-hues) with a home highlight entry and a Play
+  link, each with its own art; it is not an Arcade cabinet.
 notes_from_silas: |-
+  Silas, 2026-11-22 PT (verbatim): "This game should not be an arcade game. For the record. It should exist as a front end page, with highlight entry and link in play. Art for each of course"
+  Done in t-008: /play/hopeful-hues front page, Play channel tab, home highlight entry and share card, each with interim code-rendered art; painted replacements are queued in t-002. Never add it to the Arcade cabinet hall or the advert cabinet posters.
   Silas, 2026-11-22 PT (verbatim): "New project, a desired clone of candy crush, but with a back button. Themed on superkate, kind robots, and general good vibes. I expect daily and weekly quests, achievements, loooooooong maps, sound, music, save load settings, scrapbook, character select, multiple pathways, unique endings, and an overall rainbow and colorful aesthetic. Hopecore. Cutecore."
   Build an original game in the match-three genre. Do not copy Candy Crush names, characters, art, music, level layouts or look. Design brief: projects/hopeful-hues/DESIGN-BRIEF.md.
 milestones:
   - id: m1
     title: "FOUNDATION: complete playable match-three, 130-level branching map and full meta"
     weight: 40
-    status: done
+    status: in-progress
   - id: m2
     title: "PERSONALITY: region mechanics, authored set pieces and richer story"
     weight: 25
@@ -48,12 +51,12 @@ tasks:
     implementation_pr: 'silasfelinus/kind_robots#5648'
   - id: t-002
     milestone: m3
-    title: "Queue and integrate painted original art: icon, card, hero, title screen, region backdrops, heroes and link preview"
+    title: "Deliver painted art for the Play page, home highlight and Play link, then the in-game art"
     status: ready
     passes: 0
     stakes: reversible
     note: >-
-      Prompts start in ART-PROMPTS.md (Hopeful Hues section). Use durable ArtJobs with recorded ids. Integrate delivered art on the title screen, map region bands, hero select and scrapbook, keeping the current SVG art as the fallback. Code-drawn tiles stay unless painted tiles clearly read better at 40px.
+      Silas 2026-11-22 PT asked for art for the page, the highlight entry and the Play link. Interim code-rendered art ships at kind_robots public/hopeful-hues/front/{splash,highlight,link-preview,tutorial,icon}.webp (rendered from front/keyart.html). Painted requests are queued in projects/art-prompts.yaml (hopeful-hues-t002-*), targeting public/images/hopeful-hues/. Once ArtJobs deliver, verify each image, then point the Play tab image, home highlight, title-screen backdrop and header icon at the painted files, regenerating the share card under 250 KB. Then add region backdrops and hero portraits for the map, hero select and scrapbook, keeping the SVG art as fallback.
   - id: t-003
     milestone: m2
     title: "Give each far region a signature mechanic and authored set-piece levels"
@@ -95,4 +98,12 @@ tasks:
     passes: 0
     stakes: reversible
     note: >-
-      Reconcile the goal against the product, then set lifecycle to playtest. Promotion from /admin to a public /play route is a separate publish decision for Silas.
+      Reconcile the goal against the product, then set lifecycle to playtest.
+  - id: t-008
+    milestone: m1
+    title: "Move Hopeful Hues to a standalone Play front page with a home highlight and Play link, each with art"
+    status: review
+    passes: 0
+    stakes: reversible
+    note: >-
+      Silas 2026-11-22 PT: not an Arcade game; a front-end page with a highlight entry and a Play link, art for each. Moved /admin/hopeful-hues to /play/hopeful-hues, added the public Play channel tab with splash and tutorial art, a home highlight entry, a share card and a header icon, all rendered from the game's own SVG art in public/hopeful-hues/front/. No Arcade cabinet or advert poster.
