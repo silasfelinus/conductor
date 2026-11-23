@@ -126,7 +126,7 @@ PAGE_URL = "https://kindrobots.org/plan/projects/ruler-hooked"
 # Every lane value an *_entries() function can hand to make_entry() -- kept as one
 # set so --lane's choices and this being out of sync fail loudly instead of
 # silently accepting a lane that never matches anything.
-LANES = {"concept", "fish", "ruler", "reward", "ending", "card", "layer", "console"}
+LANES = {"concept", "fish", "ruler", "reward", "ending", "card", "layer", "console", "expression"}
 MEDIA_ORIGIN = "https://media.acrocatranch.com"
 
 # Concept art goes ahead of the mandarin-tutor curriculum backlog (priority 80)
@@ -1039,6 +1039,57 @@ def concept_entries(cast: list[dict[str, str]]) -> list[dict]:
             )
         )
 
+    return entries
+
+
+# t-058: a portrait response for each named visitor and Quill, not another
+# neutral bust. These are real high-priority Krea 2 render requests, not a
+# claim that an uninspected file is delivered.
+EXPRESSION_DIRECTIONS = {
+    "neutral": "calm attentive gaze, quiet confident face",
+    "pleased": "broad approving smile, softened eyes, bright amused eyebrows",
+    "concerned": "furrowed brows, worried mouth, leaning forward",
+    "alarmed": "wide startled eyes, raised eyebrows, shoulders pulled back",
+}
+EXPRESSION_STYLE = (
+    "psychedelic rainbow fantasy illustration, vivid liquid color fields, "
+    "expressive hand-inked contour lines, electric magenta, hot coral, cyan, "
+    "turquoise, violet, chartreuse and sunflower yellow, fine screenprint "
+    "grain and slightly misregistered inks"
+)
+
+
+def expression_entries(cast: list[dict[str, str]]) -> list[dict]:
+    actors = [
+        {"slug": "steward-quill", "name": "Quill", "honorific": "the Steward"},
+        *cast,
+    ]
+    entries: list[dict] = []
+    for actor in actors:
+        slug = actor["slug"]
+        look = STEWARD_LOOK if slug == "steward-quill" else CAST_LOOK.get(slug)
+        if not look:
+            raise SystemExit(f"missing expression visual canon for {slug}")
+        for mood, direction in EXPRESSION_DIRECTIONS.items():
+            prompt = (
+                f"{look}. {direction}. A single three-quarter portrait of "
+                f"this same person, head and torso visible and face large, "
+                f"clean deep-ultramarine background. {EXPRESSION_STYLE}. "
+                f"{NO_TEXT}"
+            )
+            entries.append(
+                make_entry(
+                    request_id=f"ruler-hooked-expression-{slug}-{mood}",
+                    image_path=(
+                        f"public/images/ruler-hooked/character-{slug}-{mood}.webp"
+                    ),
+                    label=f"Ruler Hooked expression: {actor['name']} ({mood})",
+                    size=PORTRAIT,
+                    prompt=prompt,
+                    priority=1000,
+                    lane="expression",
+                )
+            )
     return entries
 
 
@@ -2105,6 +2156,7 @@ def main() -> int:
     cast = read_cast(content_ts)
     entries = (
         concept_entries(cast)
+        + expression_entries(cast)
         + alt_vista_entries()
         + ruler_entries()
         + fish_entries()

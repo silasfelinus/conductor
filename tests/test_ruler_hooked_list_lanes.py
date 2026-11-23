@@ -31,6 +31,7 @@ def hermetic(monkeypatch, tmp_path):
     monkeypatch.setattr(bruq, "read_regions", lambda ts: None)
     monkeypatch.setattr(bruq, "alt_vista_entries", lambda: [])
     monkeypatch.setattr(bruq, "concept_entries", lambda cast: _entries("concept", FAKE["concept"]))
+    monkeypatch.setattr(bruq, "expression_entries", lambda cast: [])
     monkeypatch.setattr(bruq, "ruler_entries", lambda: _entries("ruler", FAKE["ruler"]))
     monkeypatch.setattr(bruq, "fish_entries", lambda: _entries("fish", FAKE["fish"]))
     monkeypatch.setattr(bruq, "reward_entries", lambda ts: [])
