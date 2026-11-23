@@ -66,19 +66,55 @@ def verify_private_metadata(
                 "GET", f"{core.KR_BASE_URL}/api/art/image/{image_id}"
             )
 
+    class MetadataPolicyError(PermissionError):
+        def __init__(self, reason: str):
+            self.reason = reason
+            super().__init__(reason)
+
     def verify_one(image_id):
         status, payload = request(image_id)
         if status in RETRYABLE_HTTP_CODES:
             raise TransientMediaError("Transient private ArtImage metadata response")
+        if status != 200:
+            raise MetadataPolicyError("MetadataUnavailable")
         flag = ((payload or {}).get("data") or {}).get("isPublic")
-        if status != 200 or flag is not False:
-            raise PermissionError("ArtImage visibility is not private")
+        if flag is True:
+            raise MetadataPolicyError("ReportedPublic")
+        if flag is not False:
+            raise MetadataPolicyError("UnknownVisibility")
 
+    verified = 0
+    failed = 0
     for index, row in enumerate(rows):
         if index and pace_seconds > 0:
             pause(pace_seconds)
-        retry_transient(lambda: verify_one(row["image_id"]), pause=pause)
-    return len(rows)
+        try:
+            retry_transient(lambda: verify_one(row["image_id"]), pause=pause)
+        except Exception as exc:
+            if isinstance(exc, MetadataPolicyError):
+                reason = exc.reason
+            elif isinstance(exc, TransientMediaError):
+                reason = "TransientExhausted"
+            else:
+                reason = type(exc).__name__
+            print(
+                f"PRIVATE_POLICY_IMAGE_FAILED ledger={path.name} "
+                f"image={row['image_id']} reason={reason}"
+            )
+            failed += 1
+        else:
+            print(
+                f"PRIVATE_POLICY_IMAGE_OK ledger={path.name} "
+                f"image={row['image_id']}"
+            )
+            verified += 1
+    print(
+        f"PRIVATE_POLICY_IMAGES_CHECKED={len(rows)} "
+        f"ledger={path.name} verified={verified} failed={failed}"
+    )
+    if failed:
+        raise PermissionError("Private ArtImage metadata policy check failed")
+    return verified
 
 
 def prove_ledger(
