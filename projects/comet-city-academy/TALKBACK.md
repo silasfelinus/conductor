@@ -165,3 +165,9 @@ Merged (squash 9017e41). Art ledgers/prompts only, reversible, CI green. The fiv
 
 **Decision:** Merged on green CI after updating the branch from `main`. Its earlier Python-suite failure came from main's stage-depth ledger breakage and was not caused by this PR. The new workflow is QA only: it fetches bytes, checks runtime matching and isPublic=false, and checkpoints metadata. It does no generation and makes nothing public. t-007 stays open. The ten candidates count as media-verified only after the post-merge credentialed run succeeds, and artistic approval is still separate.
 **Pattern:** The Worker drew a careful line between the six images an earlier run already proved and the four Asha repaints that are still unproven. That is the right level of evidence honesty. **Kaizen:** t-048.
+
+## 2026-11-22 PT | reviewer (scheduled agent) | merged conductor#7871 (t-031 172-image private gameplay-route proof)
+
+- **Decision:** Squash-merged (a778a6e) on green latest-head CI. Merged cleanly with main. 99 focused tests pass in the merged state. It reuses the shared `prove_private_media_ledgers.py` helper and adds no enqueue, upload or public step.
+- **Pattern:** The Worker keeps "bytes match" separate from "artist-approved". That is the right line to hold. The 172 images count as media-verified only after the post-merge run's LEDGER_MEDIA_PROOF summary is green.
+- **Reconciliation:** t-031 goes back to `ready` as a partial slice. **Kaizen:** t-050, a per-ArtImage failure summarizer over the checkpointed evidence.
