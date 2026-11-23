@@ -564,11 +564,8 @@ tasks:
       Related: PR #4080, issue #4062, conductor/save-the-plumber t-025.
   - id: t-027
     title: "Save the Plumber Maker: playable level editor, saves, sharing, ratings, Mario Maker and Geometry Dash parity"
-    status: review
-    owner: worker
-    claimed_by: 2026-11-23T183043Z-save-the-plumber-t027-m8r6
-    claimed_at: '2026-11-23T18:30:43Z'
-    updated: '2026-11-23T18:40:00Z'
+    status: ready
+    updated: '2026-11-23T19:29:00Z'
     stakes: reversible
     passes: 0
     source_issue: "silasfelinus/kind_robots#4347"
@@ -613,3 +610,5 @@ tasks:
       2026-11-23 PT: Atomic Maker settings fix merged as kind_robots#5673 at 46820f8 after all eight latest-head CI workflows completed successfully. Invalid settings no longer corrupt undo history and unchanged settings do not create undo steps. This is partial Maker work; advanced editing and community publishing remain unfinished.
 
       Fixed out-of-order Maker review loads, stale network errors and request busy-state races; added regression contract assertions. Partial Maker scope; PR pending CI.
+
+      PR silasfelinus/kind_robots#5675 merged at ee0ac4b9 after all eight latest-head workflows passed. Fixed stale asynchronous Maker review results and busy/error races. Partial Maker scope; advanced editing, publication and community lifecycle remain.
