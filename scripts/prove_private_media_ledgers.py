@@ -12,14 +12,25 @@ from __future__ import annotations
 import argparse
 import subprocess
 import sys
+import time
 from pathlib import Path
 
 import yaml
 
 if __package__:
     from .verify_prom_tactics_media import candidates
+    from .verify_tactics_runtime_media import (
+        RETRYABLE_HTTP_CODES,
+        TransientMediaError,
+        retry_transient,
+    )
 else:
     from verify_prom_tactics_media import candidates
+    from verify_tactics_runtime_media import (
+        RETRYABLE_HTTP_CODES,
+        TransientMediaError,
+        retry_transient,
+    )
 
 
 def parse_ledger(value: str) -> tuple[Path, int]:
@@ -34,8 +45,10 @@ def parse_ledger(value: str) -> tuple[Path, int]:
     return path, count
 
 
-def verify_private_metadata(path: Path, expected: int, request=None) -> int:
-    """Confirm every accepted receipt remains private, without leaking API details."""
+def verify_private_metadata(
+    path: Path, expected: int, request=None, *, pause=time.sleep, pace_seconds=0.2
+) -> int:
+    """Verify each private image with bounded transient retries and request pacing."""
     document = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
     if document.get("is_public") is not False:
         raise ValueError("private candidate ledger has incorrect visibility")
@@ -53,11 +66,18 @@ def verify_private_metadata(path: Path, expected: int, request=None) -> int:
                 "GET", f"{core.KR_BASE_URL}/api/art/image/{image_id}"
             )
 
-    for row in rows:
-        status, payload = request(row["image_id"])
+    def verify_one(image_id):
+        status, payload = request(image_id)
+        if status in RETRYABLE_HTTP_CODES:
+            raise TransientMediaError("Transient private ArtImage metadata response")
         flag = ((payload or {}).get("data") or {}).get("isPublic")
         if status != 200 or flag is not False:
             raise PermissionError("ArtImage visibility is not private")
+
+    for index, row in enumerate(rows):
+        if index and pace_seconds > 0:
+            pause(pace_seconds)
+        retry_transient(lambda: verify_one(row["image_id"]), pause=pause)
     return len(rows)
 
 
