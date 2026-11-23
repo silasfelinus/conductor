@@ -102,13 +102,13 @@ tasks:
       not rendered assets, and no playable implementation is claimed.
   - id: t-044
     title: 'Main-game standard: audit and close the gaps for Rainbow Bullet Hell Space Princess'
-    status: ready
+    status: review
     owner: reviewer
     milestone: m6
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-23T12:09:23Z'
+    updated: '2026-11-23T21:50:19Z'
     note: |-
       Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -155,7 +155,16 @@ tasks:
       contrast (bold) enemy shots, erase-a-slot flight log (two-tap), and per-game key remap
       for A/B/X/Y, with pure + real-cabinet Chromium tests. Remaining t-044 scope: call sign
       (comms + credits) and three medal-unlocked paint schemes per ship.
-    implementation_pr: 'silasfelinus/kind_robots#5670'
+
+      2026-11-23 PT: kind_robots#5679 merged as de0e1b51 after all 23 checks completed green:
+      call sign (Hangar, comms header, credits) and three paint schemes per ship (Factory;
+      Tide at three silver-or-better medals; Nova at three golds), drawing only; credits now
+      name the pilots actually flown. With #5670 (comms/contrast/erase slot/key remap), #5628
+      (all three ending plates), #5547 (nine-slot ending scrapbook) and the existing title,
+      saves, replay hooks and achievements task, every main-game-standard row from STANDARD-
+      AUDIT-2026-11-12 now has shipped work. Ready for review against docs/agents/main-game-
+      standard.md; the final verdict stays with Silas (t-014).
+    implementation_pr: 'silasfelinus/kind_robots#5679'
   - id: t-045
     title: 'Rainbow Bullet Hell Space Princess achievement upgrade: 12 or more live achievements'
     status: done
