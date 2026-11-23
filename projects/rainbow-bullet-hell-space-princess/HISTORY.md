@@ -580,3 +580,19 @@ PLAYTEST-GAP-MATRIX-2026-11-22 item 19. Both kind_robots tests exist on main but
 2026-11-22 PT: Both tests added to rainbow-alternate-route-memory.yml (PR-gating), with path triggers for rainbowSaveSlots.ts and arcade/saves.ts. Both pass locally. kind_robots#5619.
 2026-11-22 PT done: kind_robots#5619 merged as fd2ee42e after all checks completed green; the route-memory job ran both new steps successfully.
 <!-- note:end t-062 -->
+
+## t-063 — Rainbow at 360x640 in the viewport suite, with a minimum rendered size for hostile shots
+
+<!-- note:begin t-063 -->
+PLAYTEST-GAP-MATRIX-2026-11-22 item 20 (issue #4146 section 8). verifyArcadeViewport covers Rainbow at 390x844 and wider but not 360x640, and reports sprite CSS px without asserting a floor for hostile bullets. Add the size and an assertion that hostile projectiles render at or above the readability floor at DPR 1/2/3.
+2026-11-23 PT: kind_robots#5666 adds Rainbow 360x640 at DPR 1/2/3 to verifyArcadeViewport and asserts every hostile pellet body renders >= 8 CSS px (9.4 px at 360x640; halo larger; backing px >= CSS px), using the engine's exported RAINBOW_SHOT_BODY_RADIUS/HALO_RADIUS. Same PR adds rainbow-verifier-suite.yml so every verifyRainbow*.test.ts runs on Rainbow PRs. Merge when all checks complete green.
+2026-11-23 PT: kind_robots#5666 merged as 23cedefd after all 23 checks completed green (incl. the new Every Rainbow verifier suite and cabinet-viewport at 360x640).
+<!-- note:end t-063 -->
+
+## t-064 — Re-render the Motherland flagship phase-2 painting so the sprung clamps and battered hull read in game
+
+<!-- note:begin t-064 -->
+Kaizen from the conductor#7897 review (t-061). ArtImage 279299 was rejected (not battered, clamps not sprung, hull colours drift), so phase 2 of the flagship fight reuses the phase-1 painting 279298 with code-drawn cues. Queue a new Krea 2 take seeded from 279298's composition (same hull palette, clamps visibly open, scorch and sparks), review it at game scale against the clamp-core hit geometry, and swap bosses/flagship phase 2 in kind_robots only if it beats the code cues.
+2026-11-23 PT: Kontext take D (279493, ledger MOTHERLAND-FLAGSHIP-PHASE2-2026-11-23) beats phase 1 + code cues: battered hull, same palette/framing, no decoy ring. kind_robots#5670 swaps bosses/flagship-phase2 in both looks at phase 2 with its own Crown point (0.049, 0.257), checked at game scale against the 44 px ring. Merge when all checks complete green.
+2026-11-23 PT: kind_robots#5670 merged as 86f62a5f after all 23 checks completed green; the rebel-road flagship turns battered (279493) when its clamps spring, in both looks.
+<!-- note:end t-064 -->
