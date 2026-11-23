@@ -2729,11 +2729,11 @@ tasks:
   - id: t-164
     milestone: m10
     title: "Cross-game responsive resolution, render-budget and character-readability contract (issue #4062)"
-    status: claimed
+    status: review
     passes: 0
     stakes: reversible
     source_issue: silasfelinus/kind_robots#4062
-    updated: '2026-11-23T13:58:03Z'
+    updated: '2026-11-23T14:01:00Z'
     note: |-
       Silas-directed 2026-10-23. Begin with shared Arcade display fit and backing-pixel budget, actual height/width responsive bounds and regression tests at phone landscape/portrait, tablet and desktop DPRs. Follow with genre-specific camera and sprite legibility improvements for Save the Plumber, Rainbow Princess, Ghost Trail, Zuzu Showdown, classic cabinets and Memory Dungeon, without changing deterministic gameplay or forcing square memory boards into 16:9. Full acceptance and per-game follow-up specification: kind_robots issue #4062.
 
@@ -2763,6 +2763,8 @@ tasks:
       Reviewer (scheduled, 2026-11-23 PT): kind_robots#5668 merged on all-green CI (925afff6)
       and #5623 is closed. The adaptive HD render budget is on main. Cross-game viewport and
       readability QA (issue #4062) remains, so t-164 goes back to ready.
+
+      Responsive display safety slice: reject invalid resize measurements before they reach the canvas backing store; regression matrix covers zero, negative and nonfinite viewport inputs. Broader issue #4062 remains open.
     owner: worker
     claimed_by: 2026-11-23T135803Z-kr-arcade-t-164-k8f2
     claimed_at: '2026-11-23T13:58:03Z'
