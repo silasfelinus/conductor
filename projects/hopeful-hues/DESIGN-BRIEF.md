@@ -5,7 +5,7 @@
 **Static game:** `kind_robots/public/hopeful-hues/` (vanilla JS, no build step)
 **Master issue:** [Kind Robots #5649](https://github.com/silasfelinus/kind_robots/issues/5649)
 
-## Direction (Silas, 2026-11-23 PT, verbatim)
+## Direction (Silas, 2026-11-22 PT, verbatim)
 
 > New project, a desired clone of candy crush, but with a back button. Themed on superkate, kind
 > robots, and general good vibes. I expect daily and weekly quests, achievements, loooooooong maps,
