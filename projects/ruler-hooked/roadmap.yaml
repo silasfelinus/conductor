@@ -581,7 +581,10 @@ tasks:
 - id: t-031
   milestone: m4
   title: Grow the fish roster past the 15-species vertical slice
-  status: ready
+  status: review
+  owner: worker
+  claimed_by: 20261123T054114Z-ruler-hooked-t031-7c92ef
+  claimed_at: '2026-11-23T05:41:14.702Z'
   gate_human: false
   stakes: reversible
   passes: 0
@@ -604,7 +607,11 @@ tasks:
     recorded under CONTROL.md's human gate clearance rule): Shipped fish catalog target:
     40-60 species. Expand toward it in art-backed, style-consistent batches, starting with
     the 18 species shared with Cthulhuquarium.
-  updated: '2026-09-30T07:00:00Z'
+
+    Partial roster expansion from 18 to 27 species (nine new balanced ecology entries) submitted in kind_robots#5638 with regression tests; companion art-generator roster in conductor#7899. Both PRs remain open awaiting completed CI; t-031 is not complete because final target is 40-60 fish.
+
+    Expanded Kind Robots fish catalog from 18 to 36 species in app PR #5638, with ecological gating, balanced affinities and fish art prompt coverage. Conductor #7899 merged 21 high-priority pending Krea 2 art requests; Conductor #7900 is the corrective follow-up to remove nine merged duplicate catalog entries. This is partial t-031; final approved target remains 40-60 illustrated species. Await completed green CI on #5638 and #7900, then rearm as ready for the remaining catalog and art work.
+  updated: '2026-11-23T05:50:17.954Z'
   implementation_pr: 'silasfelinus/kind_robots#2927'
   soft_gate: true
   gate_rechecked: '2026-09-30'
@@ -1226,18 +1233,19 @@ tasks:
 - id: t-069
   milestone: m6
   title: Add a CI guard that every new ruler-hooked quest card id has a matching art-prompts.yaml request row
-  status: review
-  owner: worker
+  status: done
   claimed_by: 2026-11-23T040900Z-ruler-hooked-t069-c8d2af
   claimed_at: '2026-11-23T04:09:00Z'
   stakes: reversible
   passes: 0
   depends_on: []
-  updated: '2026-11-23T04:13:15Z'
+  updated: '2026-11-23T05:34:04Z'
   note: |-
     Kaizen from reviewer of conductor#7867 (2026-11-22 PT). Card art for the t-045 aftershocks was staged by hand in a separate PR from the kind_robots content (#5605). Add a guard that diffs the card ids in the ruler-hooked deck against the ruler-hooked-card-* rows in projects/art-prompts.yaml and names any card that has no art request. Reports only: no enqueue, no render.
 
     Implemented an automated cross-repository quest-card-art-request guard, checks all authored cards, art mapping, queue IDs and paths, with positive and negative Python fixtures in Worker CI. The guard reports missing staged prompts only; it never claims that painting was delivered or inspected. Branch worker/ruler-hooked-t-069-20261123-c8d2af also fixes a duplicated owner field introduced during connector claim bookkeeping.
+
+    Ruler Hooked cross-repository card-art request guard merged via silasfelinus/conductor#7893 commit cd6eed183ba518ae956e5c2e37c2d3a6b51a3288. All four latest-head checks passed: Worker PR CI, Security Audit, Worker PR handoff template, Process task events. Guard covers staged requests, not rendered or visually inspected paintings.
 - id: t-070
   milestone: m6
   title: Add a CI check that flags any ruler-hooked region asset without an alpha channel before it is treated as a stack layer
@@ -1260,17 +1268,15 @@ tasks:
 - id: t-071
   milestone: m6
   title: Make the ruler-hooked art-queue hermetic test fixtures fail loudly when a new *_entries lane is added without a stub
-  status: ready
-  owner: null
-  claimed_by: null
-  claimed_at: null
+  status: review
+  owner: worker
+  claimed_by: 2026-11-23T053300Z-ruler-hooked-t071-9e3b7c
+  claimed_at: '2026-11-23T05:33:00Z'
   stakes: reversible
   passes: 0
   depends_on: []
-  note: >-
-    Kaizen from reviewer of conductor#7886 (t-058, 2026-11-22 PT). Adding
-    expression_entries() broke six tests in test_ruler_hooked_list_lanes.py and
-    test_ruler_hooked_restyle.py because each fixture stubs every *_entries
-    function by hand and read_cast returns None. Share one fixture helper that
-    stubs every *_entries callable main() uses, or assert that coverage, so the
-    next lane can't break the suite again.
+  note: |-
+    Kaizen from reviewer of conductor#7886 (t-058, 2026-11-22 PT). Adding expression_entries() broke six tests in test_ruler_hooked_list_lanes.py and test_ruler_hooked_restyle.py because each fixture stubs every *_entries function by hand and read_cast returns None. Share one fixture helper that stubs every *_entries callable main() uses, or assert that coverage, so the next lane can't break the suite again.
+
+    Shared art-entry fixture helper and unknown/missing-lane regressions merged in conductor#7898 commit 9f8282cd991accba05ea5a1c8893055e1522861e. Three checks successful, Worker PR CI remained queued when merged; completion awaits a real successful CI run. This supersedes the stale earlier review event stamped before the claim timestamp.
+  updated: '2026-11-23T05:40:17.143Z'

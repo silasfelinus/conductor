@@ -6,6 +6,8 @@ import yaml
 
 import scripts.build_ruler_hooked_art_queue as bruq
 
+from ruler_hooked_art_entry_stubs import stub_art_entry_factories
+
 
 # --- house styles ----------------------------------------------------------
 
@@ -152,14 +154,7 @@ def staged(monkeypatch, tmp_path):
     ]
     monkeypatch.setattr(bruq, "find_content_bundle", lambda: tmp_path / "content.ts")
     monkeypatch.setattr(bruq, "read_cast", lambda ts: None)
-    monkeypatch.setattr(bruq, "concept_entries", lambda cast: [])
-    monkeypatch.setattr(bruq, "expression_entries", lambda cast: [])
-    monkeypatch.setattr(bruq, "ruler_entries", lambda: [])
-    monkeypatch.setattr(bruq, "fish_entries", lambda: [])
-    monkeypatch.setattr(bruq, "reward_entries", lambda ts: [])
-    monkeypatch.setattr(bruq, "ending_entries", lambda ts: [])
-    monkeypatch.setattr(bruq, "card_entries", lambda ts: [dict(e) for e in built])
-    monkeypatch.setattr(bruq, "console_entries", lambda cast: [])
+    stub_art_entry_factories(monkeypatch, bruq, {"card_entries": built})
     monkeypatch.setattr(bruq, "assert_contract", lambda entries: None)
     art = tmp_path / "art-prompts.yaml"
     art.write_text(

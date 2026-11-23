@@ -12,14 +12,25 @@ from __future__ import annotations
 import argparse
 import subprocess
 import sys
+import time
 from pathlib import Path
 
 import yaml
 
 if __package__:
     from .verify_prom_tactics_media import candidates
+    from .verify_tactics_runtime_media import (
+        RETRYABLE_HTTP_CODES,
+        TransientMediaError,
+        retry_transient,
+    )
 else:
     from verify_prom_tactics_media import candidates
+    from verify_tactics_runtime_media import (
+        RETRYABLE_HTTP_CODES,
+        TransientMediaError,
+        retry_transient,
+    )
 
 
 def parse_ledger(value: str) -> tuple[Path, int]:
@@ -34,8 +45,10 @@ def parse_ledger(value: str) -> tuple[Path, int]:
     return path, count
 
 
-def verify_private_metadata(path: Path, expected: int, request=None) -> int:
-    """Confirm every accepted receipt remains private, without leaking API details."""
+def verify_private_metadata(
+    path: Path, expected: int, request=None, *, pause=time.sleep, pace_seconds=0.2
+) -> int:
+    """Verify each private image with bounded transient retries and request pacing."""
     document = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
     if document.get("is_public") is not False:
         raise ValueError("private candidate ledger has incorrect visibility")
@@ -53,12 +66,55 @@ def verify_private_metadata(path: Path, expected: int, request=None) -> int:
                 "GET", f"{core.KR_BASE_URL}/api/art/image/{image_id}"
             )
 
-    for row in rows:
-        status, payload = request(row["image_id"])
+    class MetadataPolicyError(PermissionError):
+        def __init__(self, reason: str):
+            self.reason = reason
+            super().__init__(reason)
+
+    def verify_one(image_id):
+        status, payload = request(image_id)
+        if status in RETRYABLE_HTTP_CODES:
+            raise TransientMediaError("Transient private ArtImage metadata response")
+        if status != 200:
+            raise MetadataPolicyError("MetadataUnavailable")
         flag = ((payload or {}).get("data") or {}).get("isPublic")
-        if status != 200 or flag is not False:
-            raise PermissionError("ArtImage visibility is not private")
-    return len(rows)
+        if flag is True:
+            raise MetadataPolicyError("ReportedPublic")
+        if flag is not False:
+            raise MetadataPolicyError("UnknownVisibility")
+
+    verified = 0
+    failed = 0
+    for index, row in enumerate(rows):
+        if index and pace_seconds > 0:
+            pause(pace_seconds)
+        try:
+            retry_transient(lambda: verify_one(row["image_id"]), pause=pause)
+        except Exception as exc:
+            if isinstance(exc, MetadataPolicyError):
+                reason = exc.reason
+            elif isinstance(exc, TransientMediaError):
+                reason = "TransientExhausted"
+            else:
+                reason = type(exc).__name__
+            print(
+                f"PRIVATE_POLICY_IMAGE_FAILED ledger={path.name} "
+                f"image={row['image_id']} reason={reason}"
+            )
+            failed += 1
+        else:
+            print(
+                f"PRIVATE_POLICY_IMAGE_OK ledger={path.name} "
+                f"image={row['image_id']}"
+            )
+            verified += 1
+    print(
+        f"PRIVATE_POLICY_IMAGES_CHECKED={len(rows)} "
+        f"ledger={path.name} verified={verified} failed={failed}"
+    )
+    if failed:
+        raise PermissionError("Private ArtImage metadata policy check failed")
+    return verified
 
 
 def prove_ledger(

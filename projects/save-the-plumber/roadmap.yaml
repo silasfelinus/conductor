@@ -439,18 +439,17 @@ tasks:
   - id: t-020
     milestone: m6
     title: "Gen-2 level engine: sub-areas, vertical rooms, midpoints, secret exits, campaign-wide switches"
-    status: ready
-    owner: null
+    status: review
+    owner: worker
+    claimed_by: 2026-11-23T052741Z-save-the-plumber-t020-g6n4
+    claimed_at: '2026-11-23T05:27:41Z'
     passes: 0
     stakes: reversible
-    updated: '2026-10-22T10:30:00Z'
-    note: >-
-      GEN2-STANDARD.md section 2. Doors, pipes and ladders into sub-rooms with their own camera
-      bounds; vertical shafts and climbs; a midpoint checkpoint per level; a second, hidden exit type
-      that reports `secret` to the overworld (t-011); Valve Chapel switch state read by every level
-      so pressed switches make outlined blocks solid campaign-wide; auto-scroll and haunted-maze
-      (Hush House) exit logic. Deterministic replay tests for each: secret exit reachable, sub-room
-      return position, switch persistence across levels and save/reload.
+    updated: '2026-11-23T05:33:00Z'
+    note: |-
+      GEN2-STANDARD.md section 2. Doors, pipes and ladders into sub-rooms with their own camera bounds; vertical shafts and climbs; a midpoint checkpoint per level; a second, hidden exit type that reports `secret` to the overworld (t-011); Valve Chapel switch state read by every level so pressed switches make outlined blocks solid campaign-wide; auto-scroll and haunted-maze (Hush House) exit logic. Deterministic replay tests for each: secret exit reachable, sub-room return position, switch persistence across levels and save/reload.
+
+      Fixed x-only checkpoint activation: pennants now require physical proximity, preventing distant upper routes from silently changing respawn. Added a deterministic upper-route bypass/contact replay in verifySavePlumberMovementReplay.test.ts. This is a partial t-020 slice; subrooms, secret exits and campaign switches remain. CI pending.
   - id: t-021
     milestone: m6
     title: "Gen-2 World 1: re-author Bluebell Pipeworks as a full SMB3/SMW-class world"
@@ -566,12 +565,14 @@ tasks:
       Related: PR #4080, issue #4062, conductor/save-the-plumber t-025.
   - id: t-027
     title: "Save the Plumber Maker: playable level editor, saves, sharing, ratings, Mario Maker and Geometry Dash parity"
-    status: ready
+    status: review
     stakes: reversible
-    owner: null
+    owner: worker
+    claimed_by: 2026-11-23T054500Z-save-the-plumber-t027-m7q9
+    claimed_at: '2026-11-23T05:45:00Z'
     passes: 0
     source_issue: "silasfelinus/kind_robots#4347"
-    updated: '2026-10-28'
+    updated: '2026-11-23T05:52:00Z'
     note: |-
       FROM GITHUB ISSUE silasfelinus/kind_robots#4347 (https://github.com/silasfelinus/kind_robots/issues/4347), opened by @silasfelinus on 2026-10-27. Imported by scripts/sync_github_issues.py. Reference the issue in the implementing PR (`Closes silasfelinus/kind_robots#4347`) so it closes on merge; the bridge closes it otherwise once this task is done.
 
@@ -593,3 +594,5 @@ tasks:
       Persist and restore three drafts without corrupting campa
 
       [... truncated; read the full issue at https://github.com/silasfelinus/kind_robots/issues/4347]
+
+      2026-11-22 PT: Maker route replay slice on kind_robots branch worker/save-the-plumber-t-027-seeded-replay-m7q9: seeded RNG per exact level revision, bit-packed held/press inputs, 10-minute bounded capture, editor replay controls, blur/visibility input release, deterministic physics replay regression. Remaining Maker roadmap scope stays open after this incremental PR.

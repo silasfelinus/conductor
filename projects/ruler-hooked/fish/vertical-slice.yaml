@@ -1,7 +1,7 @@
 version: 1
 project: ruler-hooked
 purpose: >
-  First playable fish roster for the full-game vertical slice. Every entry must be
+  First game slice and its post-slice fish catalog expansion. Every entry must be
   visually distinct, fantastical, mechanically legible, and tied to kingdom state or
   authored choices strongly enough that the catch roster becomes a record of the reign.
 
@@ -362,6 +362,754 @@ fish:
     consequence_reveal: >
       Appeared after the far shore became valuable enough that nobody asked what the new
       shoreline attraction was standing on.
+
+  - slug: reedglass-darter
+    name: Reedglass Darter
+    source: ruler-hooked
+    affinity: GOOD
+    rarity: COMMON
+    habitats: [near_bank, lake]
+    silhouette: slim jade darter with transparent leaf-shaped fins and tiny silver seed-like spots
+    distinction: >-
+      Its translucent fins resemble young reeds, and its shadow breaks into a spray of green light.
+    unlock:
+      { all: [{ flags: ['shallowsNursery'], sliders: { nature: { gte: 55 } } }], closes: [{ flags: ['shallowsDredged'] }] }
+    catch_behavior: >-
+      Darts through reeds in quick zigzags; brief taps work better than a long pull.
+    fishopedia_note: >-
+      The nursery has taught it to hide in plain sight. It is a poor student of staying still.
+    consequence_reveal: >-
+      Returned when the shallows were protected as a nursery instead of dredged for boats.
+
+  - slug: commons-bellfin
+    name: Commons Bellfin
+    source: ruler-hooked
+    affinity: GOOD
+    rarity: RARE
+    habitats: [village_edge, near_bank]
+    silhouette: round cobalt fish with two broad bronze bell-shaped fins and a pale green belly
+    distinction: >-
+      The bell fins ring softly when river current passes through their hollow ribs.
+    unlock:
+      { all: [{ flags: ['riverCommons'], sliders: { joy: { gte: 55 } } }], closes: [{ flags: ['exclusivePier'] }] }
+    catch_behavior: >-
+      Follows a steady current and only bites when the line is held still.
+    fishopedia_note: >-
+      No one owns its song, though several officials have tried to collect royalties.
+    consequence_reveal: >-
+      Gathered in the public river commons once fishers could share the water without private tolls.
+
+  - slug: oathscale-minnow
+    name: Oathscale Minnow
+    source: ruler-hooked
+    affinity: GOOD
+    rarity: UNCOMMON
+    habitats: [castle_grounds, near_bank]
+    silhouette: tiny turquoise minnow with overlapping pearly scales shaped like interlocking hands
+    distinction: >-
+      The scales shimmer in pairs, as though the whole shoal has made a promise.
+    unlock:
+      { all: [{ flags: ['publicTrust'], sliders: { nature: { gte: 45 } } }], closes: [{ flags: ['moatFishedOut'] }] }
+    catch_behavior: >-
+      Bites twice in a heartbeat, then waits for the angler to stop tugging.
+    fishopedia_note: >-
+      Its shoals hold together even when the water is muddy. The court calls that disloyalty.
+    consequence_reveal: >-
+      Flourished when the moat was restored as a public trust rather than a royal pantry.
+
+  - slug: treaty-sailfish
+    name: Treaty Sailfish
+    source: ruler-hooked
+    affinity: NEUTRAL
+    rarity: RARE
+    habitats: [far_shore, lake]
+    silhouette: sleek indigo freshwater sailfish with a tall patchwork sail of copper and lilac membranes
+    distinction: >-
+      Its sail bears irregular natural color patches that shift as it crosses the border currents.
+    unlock:
+      { all: [{ flags: ['envoyTreatySigned'], sliders: { prosperity: { gte: 50 } } }] }
+    catch_behavior: >-
+      Changes direction when the line crosses a current seam; controlled slack preserves the catch.
+    fishopedia_note: >-
+      It crosses every border without papers. The border guards pretend not to notice.
+    consequence_reveal: >-
+      Appeared after the envoy treaty reopened the waterway to unfamiliar travelers.
+
+  - slug: marina-mirrorling
+    name: Marina Mirrorling
+    source: ruler-hooked
+    affinity: NEUTRAL
+    rarity: COMMON
+    habitats: [far_shore, lake]
+    silhouette: flat silver-blue fish with mirror-bright flank plates and a narrow fan tail
+    distinction: >-
+      Its sides reflect boat hulls in miniature, making the fish appear to carry a fleet.
+    unlock:
+      { all: [{ flags: ['marinaCleaned'] }] }
+    catch_behavior: >-
+      Follows the lure's reflection instead of the lure; a pause brings it close.
+    fishopedia_note: >-
+      A marina is just a forest of upside-down boats, according to this species.
+    consequence_reveal: >-
+      Settled among cleaned marina pilings once the water stopped tasting of bilge.
+
+  - slug: concession-coinfin
+    name: Concession Coinfin
+    source: ruler-hooked
+    affinity: NEUTRAL
+    rarity: UNCOMMON
+    habitats: [village_edge, near_bank]
+    silhouette: bright copper fish with circular coinlike pectoral fins and a long ribbon tail
+    distinction: >-
+      Its fins rotate like tiny wheels, flashing copper whenever the current turns.
+    unlock:
+      { all: [{ flags: ['riverConcession'], sliders: { treasury: { gte: 50 } } }] }
+    catch_behavior: >-
+      Steals loose bait, then returns for a second bite if the hook stays motionless.
+    fishopedia_note: >-
+      A fish that charges admission to its own feeding grounds would be popular at court.
+    consequence_reveal: >-
+      Followed the merchants when the river concession turned the bank into a trading corridor.
+
+  - slug: pierlock-eel
+    name: Pierlock Eel
+    source: ruler-hooked
+    affinity: EVIL
+    rarity: UNCOMMON
+    habitats: [near_bank, castle_grounds]
+    silhouette: long charcoal eel with brass padlock-shaped bony plates along its spine
+    distinction: >-
+      Each spine plate closes over the next like a row of locked gates.
+    unlock:
+      { all: [{ flags: ['exclusivePier'], sliders: { joy: { lte: 50 } } }] }
+    catch_behavior: >-
+      Wraps the line around pier supports; a quick release of tension frees it.
+    fishopedia_note: >-
+      It has never paid a toll. It has collected several.
+    consequence_reveal: >-
+      Thrived beneath the exclusive pier when public access was traded for private revenue.
+
+  - slug: sluice-ghost
+    name: Sluice Ghost
+    source: ruler-hooked
+    affinity: EVIL
+    rarity: RARE
+    habitats: [village_edge, lake]
+    silhouette: pale translucent fish with a ragged veil tail and black empty-looking eye sockets
+    distinction: >-
+      Its nearly invisible body trails white silt that gathers into little spectral ribbons.
+    unlock:
+      { all: [{ flags: ['runBlocked'], sliders: { nature: { lte: 45 } } }], closes: [{ flags: ['sluiceOpened'] }] }
+    catch_behavior: >-
+      Only becomes visible when the lure drifts into still water behind a blocked sluice.
+    fishopedia_note: >-
+      It remembers the river as it used to run. The river no longer returns its calls.
+    consequence_reveal: >-
+      Gathered where the blocked millrace left a stagnant pocket of water.
+
+  - slug: gallows-gudgeon
+    name: Gallows Gudgeon
+    source: ruler-hooked
+    affinity: EVIL
+    rarity: EPIC
+    habitats: [far_shore, castle_grounds]
+    silhouette: deep crimson gudgeon with a hooked black dorsal spine and dangling pale whiskers
+    distinction: >-
+      Its dorsal spine bends like a crooked gallows while its whiskers knot around reeds.
+    unlock:
+      { all: [{ sliders: { order: { gte: 80 }, joy: { lte: 30 } } }] }
+    catch_behavior: >-
+      Feigns a snapped line before a sudden heavy pull; waiting one beat saves the catch.
+    fishopedia_note: >-
+      The court has prohibited its name. The fish is thriving under the publicity.
+    consequence_reveal: >-
+      Appeared when high order and miserable subjects turned the far shore into a place of punishment.
+
+  - slug: stairclimber-trout
+    name: Stairclimber Trout
+    source: ruler-hooked
+    affinity: GOOD
+    rarity: UNCOMMON
+    habitats: [village_edge, near_bank]
+    silhouette: >-
+      lean silver-green trout with a row of small stair-step ridges down its back
+    distinction: >-
+      Climbs fish ladders one pool at a time and rests on each step for exactly one breath.
+    frame_override: >-
+      one complete fish shown clearly in side profile on clean open water
+    style_override: >-
+      psychedelic rainbow fantasy, vibrant cyan magenta lime violet and coral, energetic hand-drawn black contour lines, delicate worn screenprint grain, vividly painted creature against deep ultramarine water
+    unlock:
+      all:
+        - flags: [weirLadder]
+          sliders: { nature: { gte: 45 } }
+    catch_behavior: >-
+      Jumps upward in short hops; reeling in rhythm with the hops lands it, pulling between
+      them loses it.
+    fishopedia_note: >-
+      Has never once used a waterfall. Prefers stairs, and expects them to be maintained.
+    consequence_reveal: >-
+      Appeared after the millrace weir was built with a fish ladder, and the trout found a
+      road that went somewhere.
+
+  - slug: mooring-mullet
+    name: Mooring Mullet
+    source: ruler-hooked
+    affinity: NEUTRAL
+    rarity: COMMON
+    habitats: [near_bank, lake]
+    silhouette: >-
+      fat blunt grey mullet with a crust-brown belly and round sleepy eyes
+    distinction: >-
+      Lives under moored hulls and eats whatever falls off them, which is mostly bread.
+    frame_override: >-
+      one complete fish shown clearly in side profile on clean open water
+    style_override: >-
+      psychedelic rainbow fantasy, vibrant cyan magenta lime violet and coral, energetic hand-drawn black contour lines, delicate worn screenprint grain, vividly painted creature against deep ultramarine water
+    unlock:
+      all:
+        - flags: [shallowsDredged]
+    catch_behavior: >-
+      Barely fights, then bolts without warning for the nearest hull to hide under.
+    fishopedia_note: >-
+      Has not swum more than a boat-length in its life. Has not needed to.
+    consequence_reveal: >-
+      Appeared once the north cove was dredged into a marina and the pleasure boats began
+      feeding everything underneath them.
+
+  - slug: barebone-roach
+    name: Barebone Roach
+    source: ruler-hooked
+    affinity: EVIL
+    rarity: COMMON
+    habitats: [castle_grounds, village_edge]
+    silhouette: >-
+      thin grey roach so lean its ribs show through translucent skin, with an oversized
+      mouth
+    distinction: >-
+      Travels in thin shoals that strip a bait in seconds and then look around for more.
+    frame_override: >-
+      one complete fish shown clearly in side profile on clean open water
+    style_override: >-
+      psychedelic rainbow fantasy, vibrant cyan magenta lime violet and coral, energetic hand-drawn black contour lines, delicate worn screenprint grain, vividly painted creature against deep ultramarine water
+    unlock:
+      all:
+        - flags: [moatFishedOut]
+      closes:
+        - flags: [moatHonour]
+    catch_behavior: >-
+      Strikes instantly and repeatedly; the fight is short and the hook often comes back
+      bare.
+    fishopedia_note: >-
+      Thrives wherever everything else was caught first. Is never full.
+    consequence_reveal: >-
+      Appeared after the castle moat was fished without rules until only the hungriest thing
+      was left in it.
+
+  - slug: dewbell-tench
+    name: Dewbell Tench
+    source: ruler-hooked
+    affinity: GOOD
+    rarity: UNCOMMON
+    habitats: [near_bank, lake]
+    silhouette: >-
+      plump lilac tench covered in overlapping lily pad scales with three translucent
+      dew-drop bells along its dorsal fin
+    distinction: >-
+      Each glassy bell holds a single bead of water and shakes out rainbow droplets when the
+      fish turns.
+    frame_override: >-
+      one complete fish shown clearly in side profile on clean open water
+    style_override: >-
+      psychedelic rainbow fantasy, vibrant cyan magenta lime violet and coral, energetic hand-drawn black contour lines, delicate worn screenprint grain, vividly painted creature against deep ultramarine water
+    unlock:
+      all:
+        - flags: [shallowsNursery]
+          sliders: { nature: { gte: 55 } }
+      closes:
+        - flags: [shallowsDredged]
+    catch_behavior: >-
+      Lingers among nursery reeds and bites in three soft taps before diving under the
+      lilies.
+    fishopedia_note: >-
+      The nursery committee nominated it as a mascot. The tench has not attended a meeting.
+    consequence_reveal: >-
+      A living nursery returned the dewbell to waters where young fish can shelter.
+
+  - slug: commons-kitebream
+    name: Commons Kitebream
+    source: ruler-hooked
+    affinity: GOOD
+    rarity: RARE
+    habitats: [far_shore, near_bank]
+    silhouette: >-
+      wide silver and coral bream with two enormous translucent kite-shaped pectoral fins
+      and long green reed tassels
+    distinction: >-
+      A moving rainbow pennant on the current, with each fin stretched taut by flowing
+      water.
+    frame_override: >-
+      one complete fish shown clearly in side profile on clean open water
+    style_override: >-
+      psychedelic rainbow fantasy, vibrant cyan magenta lime violet and coral, energetic hand-drawn black contour lines, delicate worn screenprint grain, vividly painted creature against deep ultramarine water
+    unlock:
+      all:
+        - flags: [riverCommons]
+          sliders: { nature: { gte: 55 }, order: { gte: 45 } }
+      closes:
+        - flags: [riverConcession]
+    catch_behavior: >-
+      Rises into clean currents and makes long lateral sails whenever tension pulls it off
+      course.
+    fishopedia_note: >-
+      Its fins fly freely over the commons. A previous council tried to license the wind.
+    consequence_reveal: >-
+      The shared river crossing left enough current for kitebream to make their aerial
+      turns.
+
+  - slug: oaththread-dace
+    name: Oaththread Dace
+    source: ruler-hooked
+    affinity: GOOD
+    rarity: COMMON
+    habitats: [castle_grounds, village_edge]
+    silhouette: >-
+      slender ice-blue dace with long braided golden algae trailing from both cheeks and a
+      violet forked tail
+    distinction: >-
+      Its trailing algae form a neat knot whenever two fish meet nose to nose.
+    frame_override: >-
+      one complete fish shown clearly in side profile on clean open water
+    style_override: >-
+      psychedelic rainbow fantasy, vibrant cyan magenta lime violet and coral, energetic hand-drawn black contour lines, delicate worn screenprint grain, vividly painted creature against deep ultramarine water
+    unlock:
+      all:
+        - flags: [publicTrust]
+          sliders: { nature: { gte: 45 }, joy: { gte: 45 } }
+    catch_behavior: >-
+      Never pulls against a partner; a hooked dace circles back toward its shoal.
+    fishopedia_note: >-
+      Two dace can tie a knot in water. The treaty scribes envy their handwriting.
+    consequence_reveal: >-
+      The crown made water a public trust and the tiny witnesses returned to the moat.
+
+  - slug: clockwork-riffle-loach
+    name: Clockwork Riffle Loach
+    source: ruler-hooked
+    affinity: NEUTRAL
+    rarity: UNCOMMON
+    habitats: [village_edge, near_bank]
+    silhouette: >-
+      long olive loach with copper gear-shaped fin edges and a round striped belly
+      resembling a waterwheel
+    distinction: >-
+      Its paddle-like fins rotate independently as it rests in fast-running mill channels.
+    frame_override: >-
+      one complete fish shown clearly in side profile on clean open water
+    style_override: >-
+      psychedelic rainbow fantasy, vibrant cyan magenta lime violet and coral, energetic hand-drawn black contour lines, delicate worn screenprint grain, vividly painted creature against deep ultramarine water
+    unlock:
+      all:
+        - flags: [weirLadder]
+          sliders: { prosperity: { gte: 45 } }
+    catch_behavior: >-
+      Shifts one pool upstream at a time, pausing between narrow bursts of current.
+    fishopedia_note: >-
+      Keeps the mill on schedule despite never having signed the maintenance contract.
+    consequence_reveal: >-
+      The weir ladder created little racing channels and the loach discovered a new
+      livelihood.
+
+  - slug: chroma-cuttle
+    name: Chroma Cuttle
+    source: ruler-hooked
+    affinity: NEUTRAL
+    rarity: RARE
+    habitats: [near_bank, lake]
+    silhouette: >-
+      freshwater cuttlefish with eight delicate curling turquoise arms and an oval back
+      striped in vivid magenta lime and gold
+    distinction: >-
+      Bright mineral ink streams from its arms in translucent ribbons that drift between
+      dock pilings.
+    frame_override: >-
+      one complete fish shown clearly in side profile on clean open water
+    style_override: >-
+      psychedelic rainbow fantasy, vibrant cyan magenta lime violet and coral, energetic hand-drawn black contour lines, delicate worn screenprint grain, vividly painted creature against deep ultramarine water
+    unlock:
+      all:
+        - flags: [workingWaterfront]
+          sliders: { prosperity: { gte: 45 } }
+      closes:
+        - flags: [exclusivePier]
+    catch_behavior: >-
+      Pulses colored ink around moored boats and hides its outline before a sudden sideways
+      dash.
+    fishopedia_note: >-
+      The harbor painters swear it copied their colors. It swears the harbor painters copied
+      its.
+    consequence_reveal: >-
+      The public working waterfront left sheltered pilings and safe moorings for wild color
+      to gather.
+
+  - slug: parcelglass-eel
+    name: Parcelglass Eel
+    source: ruler-hooked
+    affinity: NEUTRAL
+    rarity: EPIC
+    habitats: [far_shore, village_edge]
+    silhouette: >-
+      long transparent amber eel with rounded blue eyes and small copper ring-shaped scales
+      enclosing bright pearl beads along its spine
+    distinction: >-
+      Every scale protects one colored pearl, and the pearls change places as the eel swims.
+    frame_override: >-
+      one complete fish shown clearly in side profile on clean open water
+    style_override: >-
+      psychedelic rainbow fantasy, vibrant cyan magenta lime violet and coral, energetic hand-drawn black contour lines, delicate worn screenprint grain, vividly painted creature against deep ultramarine water
+    unlock:
+      all:
+        - flags: [envoyTreatySigned]
+          sliders: { prosperity: { gte: 55 } }
+    catch_behavior: >-
+      Slips between river barges, abruptly changing depth whenever a bell sounds.
+    fishopedia_note: >-
+      Moves valuables across the border with remarkable discretion. The customs office
+      dislikes it.
+    consequence_reveal: >-
+      Cross-border trade brought pearl-carrying eels to the new shipping lanes.
+
+  - slug: smokedglass-flounder
+    name: Smokedglass Flounder
+    source: ruler-hooked
+    affinity: EVIL
+    rarity: COMMON
+    habitats: [near_bank, lake]
+    silhouette: >-
+      flat charcoal flounder with one enormous amber eye and sharp translucent smoked-glass
+      fins
+    distinction: >-
+      Its mirror-dark scales reflect tiny distorted dock lamps and oil-slick rainbow colors.
+    frame_override: >-
+      one complete fish shown clearly in side profile on clean open water
+    style_override: >-
+      psychedelic rainbow fantasy, vibrant cyan magenta lime violet and coral, energetic hand-drawn black contour lines, delicate worn screenprint grain, vividly painted creature against deep ultramarine water
+    unlock:
+      all:
+        - flags: [shallowsDredged]
+          sliders: { nature: { lte: 50 } }
+      closes:
+        - flags: [shallowsNursery]
+    catch_behavior: >-
+      Burrows into dredged silt and runs flat along the lake bottom when disturbed.
+    fishopedia_note: >-
+      Looks like a cracked window. It only appears where the lake has lost its own
+      reflection.
+    consequence_reveal: >-
+      The dredged pleasure marina left black silt and scraps of glass where spawning grass
+      once grew.
+
+  - slug: turnstile-tetra
+    name: Turnstile Tetra
+    source: ruler-hooked
+    affinity: EVIL
+    rarity: UNCOMMON
+    habitats: [village_edge, far_shore]
+    silhouette: >-
+      bright brass-green tetra with six rigid radial fins revolving around its midsection
+      like a small turnstile
+    distinction: >-
+      Its rotating fins click against a copper ring of bony scales while it patrols narrow
+      channels.
+    frame_override: >-
+      one complete fish shown clearly in side profile on clean open water
+    style_override: >-
+      psychedelic rainbow fantasy, vibrant cyan magenta lime violet and coral, energetic hand-drawn black contour lines, delicate worn screenprint grain, vividly painted creature against deep ultramarine water
+    unlock:
+      all:
+        - flags: [riverConcession]
+          sliders: { treasury: { gte: 55 } }
+    catch_behavior: >-
+      Rushes every opening and changes direction the instant a current lets it through.
+    fishopedia_note: >-
+      Refuses to enter a tributary until someone moves first. Its ancestors were never like
+      this.
+    consequence_reveal: >-
+      Private river concessions divided once-open waterways into regulated narrow passages.
+
+  - slug: lockjaw-burbot
+    name: Lockjaw Burbot
+    source: ruler-hooked
+    affinity: EVIL
+    rarity: RARE
+    habitats: [far_shore, lake]
+    silhouette: >-
+      heavy ink-black burbot with an oversized squared iron-colored jaw and paired rigid
+      bar-like whiskers
+    distinction: >-
+      Its mouth closes into a perfect grid of pale metallic teeth, like a miniature sluice
+      gate.
+    frame_override: >-
+      one complete fish shown clearly in side profile on clean open water
+    style_override: >-
+      psychedelic rainbow fantasy, vibrant cyan magenta lime violet and coral, energetic hand-drawn black contour lines, delicate worn screenprint grain, vividly painted creature against deep ultramarine water
+    unlock:
+      all:
+        - flags: [runBlocked]
+          sliders: { order: { gte: 50 } }
+    catch_behavior: >-
+      Freezes beneath blocked water then surges against the line in one heavy burst.
+    fishopedia_note: >-
+      Has inherited every closed gate in the river and regards the keys as personal
+      property.
+    consequence_reveal: >-
+      Blocked migration gates and stagnant weir water gave the burbot territory with nowhere
+      to go.
+
+  - slug: reedglass-darter
+    name: Reedglass Darter
+    source: ruler-hooked
+    affinity: GOOD
+    rarity: COMMON
+    habitats: [near_bank, lake]
+    silhouette: >-
+      slim jade darter with transparent leaf-shaped fins and tiny silver seed-like spots
+    distinction: >-
+      Its translucent fins resemble young reeds, and its shadow breaks into a spray of green
+      light.
+    frame_override: >-
+      one complete fish shown clearly in side profile on clean open water
+    style_override: >-
+      psychedelic rainbow fantasy, vibrant cyan magenta lime violet and coral, energetic hand-drawn black contour lines, delicate worn screenprint grain, vividly painted creature against deep ultramarine water
+    unlock:
+      all:
+        - flags: [shallowsNursery]
+          sliders: { nature: { gte: 55 } }
+      closes:
+        - flags: [shallowsDredged]
+    catch_behavior: >-
+      Darts through reeds in quick zigzags; brief taps work better than a long pull.
+    fishopedia_note: >-
+      The nursery has taught it to hide in plain sight. It is a poor student of staying
+      still.
+    consequence_reveal: >-
+      Returned when the shallows were protected as a nursery instead of dredged for boats.
+
+  - slug: commons-bellfin
+    name: Commons Bellfin
+    source: ruler-hooked
+    affinity: GOOD
+    rarity: RARE
+    habitats: [village_edge, near_bank]
+    silhouette: >-
+      round cobalt fish with two broad bronze bell-shaped fins and a pale green belly
+    distinction: >-
+      The bell fins ring softly when river current passes through their hollow ribs.
+    frame_override: >-
+      one complete fish shown clearly in side profile on clean open water
+    style_override: >-
+      psychedelic rainbow fantasy, vibrant cyan magenta lime violet and coral, energetic hand-drawn black contour lines, delicate worn screenprint grain, vividly painted creature against deep ultramarine water
+    unlock:
+      all:
+        - flags: [riverCommons]
+          sliders: { joy: { gte: 55 } }
+      closes:
+        - flags: [exclusivePier]
+    catch_behavior: >-
+      Follows a steady current and only bites when the line is held still.
+    fishopedia_note: >-
+      No one owns its song, though several officials have tried to collect royalties.
+    consequence_reveal: >-
+      Gathered in the public river commons once fishers could share the water without
+      private tolls.
+
+  - slug: oathscale-minnow
+    name: Oathscale Minnow
+    source: ruler-hooked
+    affinity: GOOD
+    rarity: UNCOMMON
+    habitats: [castle_grounds, near_bank]
+    silhouette: >-
+      tiny turquoise minnow with overlapping pearly scales shaped like interlocking hands
+    distinction: >-
+      The scales shimmer in pairs, as though the whole shoal has made a promise.
+    frame_override: >-
+      one complete fish shown clearly in side profile on clean open water
+    style_override: >-
+      psychedelic rainbow fantasy, vibrant cyan magenta lime violet and coral, energetic hand-drawn black contour lines, delicate worn screenprint grain, vividly painted creature against deep ultramarine water
+    unlock:
+      all:
+        - flags: [publicTrust]
+          sliders: { nature: { gte: 45 } }
+      closes:
+        - flags: [moatFishedOut]
+    catch_behavior: >-
+      Bites twice in a heartbeat, then waits for the angler to stop tugging.
+    fishopedia_note: >-
+      Its shoals hold together even when the water is muddy. The court calls that
+      disloyalty.
+    consequence_reveal: >-
+      Flourished when the moat was restored as a public trust rather than a royal pantry.
+
+  - slug: treaty-sailfish
+    name: Treaty Sailfish
+    source: ruler-hooked
+    affinity: NEUTRAL
+    rarity: RARE
+    habitats: [far_shore, lake]
+    silhouette: >-
+      sleek indigo freshwater sailfish with a tall patchwork sail of copper and lilac
+      membranes
+    distinction: >-
+      Its sail bears irregular natural color patches that shift as it crosses the border
+      currents.
+    frame_override: >-
+      one complete fish shown clearly in side profile on clean open water
+    style_override: >-
+      psychedelic rainbow fantasy, vibrant cyan magenta lime violet and coral, energetic hand-drawn black contour lines, delicate worn screenprint grain, vividly painted creature against deep ultramarine water
+    unlock:
+      all:
+        - flags: [envoyTreatySigned]
+          sliders: { prosperity: { gte: 50 } }
+    catch_behavior: >-
+      Changes direction when the line crosses a current seam; controlled slack preserves the
+      catch.
+    fishopedia_note: >-
+      It crosses every border without papers. The border guards pretend not to notice.
+    consequence_reveal: >-
+      Appeared after the envoy treaty reopened the waterway to unfamiliar travelers.
+
+  - slug: marina-mirrorling
+    name: Marina Mirrorling
+    source: ruler-hooked
+    affinity: NEUTRAL
+    rarity: COMMON
+    habitats: [far_shore, lake]
+    silhouette: >-
+      flat silver-blue fish with mirror-bright flank plates and a narrow fan tail
+    distinction: >-
+      Its sides reflect boat hulls in miniature, making the fish appear to carry a fleet.
+    frame_override: >-
+      one complete fish shown clearly in side profile on clean open water
+    style_override: >-
+      psychedelic rainbow fantasy, vibrant cyan magenta lime violet and coral, energetic hand-drawn black contour lines, delicate worn screenprint grain, vividly painted creature against deep ultramarine water
+    unlock:
+      all:
+        - flags: [marinaCleaned]
+    catch_behavior: >-
+      Follows the lure's reflection instead of the lure; a pause brings it close.
+    fishopedia_note: >-
+      A marina is just a forest of upside-down boats, according to this species.
+    consequence_reveal: >-
+      Settled among cleaned marina pilings once the water stopped tasting of bilge.
+
+  - slug: concession-coinfin
+    name: Concession Coinfin
+    source: ruler-hooked
+    affinity: NEUTRAL
+    rarity: UNCOMMON
+    habitats: [village_edge, near_bank]
+    silhouette: >-
+      bright copper fish with circular coinlike pectoral fins and a long ribbon tail
+    distinction: >-
+      Its fins rotate like tiny wheels, flashing copper whenever the current turns.
+    frame_override: >-
+      one complete fish shown clearly in side profile on clean open water
+    style_override: >-
+      psychedelic rainbow fantasy, vibrant cyan magenta lime violet and coral, energetic hand-drawn black contour lines, delicate worn screenprint grain, vividly painted creature against deep ultramarine water
+    unlock:
+      all:
+        - flags: [riverConcession]
+          sliders: { treasury: { gte: 50 } }
+    catch_behavior: >-
+      Steals loose bait, then returns for a second bite if the hook stays motionless.
+    fishopedia_note: >-
+      A fish that charges admission to its own feeding grounds would be popular at court.
+    consequence_reveal: >-
+      Followed the merchants when the river concession turned the bank into a trading
+      corridor.
+
+  - slug: pierlock-eel
+    name: Pierlock Eel
+    source: ruler-hooked
+    affinity: EVIL
+    rarity: UNCOMMON
+    habitats: [near_bank, castle_grounds]
+    silhouette: >-
+      long charcoal eel with brass padlock-shaped bony plates along its spine
+    distinction: >-
+      Each spine plate closes over the next like a row of locked gates.
+    frame_override: >-
+      one complete fish shown clearly in side profile on clean open water
+    style_override: >-
+      psychedelic rainbow fantasy, vibrant cyan magenta lime violet and coral, energetic hand-drawn black contour lines, delicate worn screenprint grain, vividly painted creature against deep ultramarine water
+    unlock:
+      all:
+        - flags: [exclusivePier]
+          sliders: { joy: { lte: 50 } }
+    catch_behavior: >-
+      Wraps the line around pier supports; a quick release of tension frees it.
+    fishopedia_note: >-
+      It has never paid a toll. It has collected several.
+    consequence_reveal: >-
+      Thrived beneath the exclusive pier when public access was traded for private revenue.
+
+  - slug: sluice-ghost
+    name: Sluice Ghost
+    source: ruler-hooked
+    affinity: EVIL
+    rarity: RARE
+    habitats: [village_edge, lake]
+    silhouette: >-
+      pale translucent fish with a ragged veil tail and black empty-looking eye sockets
+    distinction: >-
+      Its nearly invisible body trails white silt that gathers into little spectral ribbons.
+    frame_override: >-
+      one complete fish shown clearly in side profile on clean open water
+    style_override: >-
+      psychedelic rainbow fantasy, vibrant cyan magenta lime violet and coral, energetic hand-drawn black contour lines, delicate worn screenprint grain, vividly painted creature against deep ultramarine water
+    unlock:
+      all:
+        - flags: [runBlocked]
+          sliders: { nature: { lte: 45 } }
+      closes:
+        - flags: [sluiceOpened]
+    catch_behavior: >-
+      Only becomes visible when the lure drifts into still water behind a blocked sluice.
+    fishopedia_note: >-
+      It remembers the river as it used to run. The river no longer returns its calls.
+    consequence_reveal: >-
+      Gathered where the blocked millrace left a stagnant pocket of water.
+
+  - slug: gallows-gudgeon
+    name: Gallows Gudgeon
+    source: ruler-hooked
+    affinity: EVIL
+    rarity: EPIC
+    habitats: [far_shore, castle_grounds]
+    silhouette: >-
+      deep crimson gudgeon with a hooked black dorsal spine and dangling pale whiskers
+    distinction: >-
+      Its dorsal spine bends like a crooked gallows while its whiskers knot around reeds.
+    frame_override: >-
+      one complete fish shown clearly in side profile on clean open water
+    style_override: >-
+      psychedelic rainbow fantasy, vibrant cyan magenta lime violet and coral, energetic hand-drawn black contour lines, delicate worn screenprint grain, vividly painted creature against deep ultramarine water
+    unlock:
+      all:
+        - sliders: { order: { gte: 80 }, joy: { lte: 30 } }
+    catch_behavior: >-
+      Feigns a snapped line before a sudden heavy pull; waiting one beat saves the catch.
+    fishopedia_note: >-
+      The court has prohibited its name. The fish is thriving under the publicity.
+    consequence_reveal: >-
+      Appeared when high order and miserable subjects turned the far shore into a place of
+      punishment.
+
+# Historical acceptance applies to the first 15 fish, not the expanded catalog.
+# The approved shipping target is 40-60 illustrated species.
+catalog_target: { minimum: 40, maximum: 60, approved: '2026-09-30' }
+expanded_roster: { total: 36, GOOD: 12, NEUTRAL: 12, EVIL: 12 }
 
 slice_acceptance:
   counts: { total: 15, GOOD: 5, NEUTRAL: 5, EVIL: 5 }
