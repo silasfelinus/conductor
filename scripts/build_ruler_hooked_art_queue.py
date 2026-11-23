@@ -707,6 +707,18 @@ PORTRAIT_FRAME = (
 )
 
 
+def assert_unique_ids(values, label):
+    """Reject duplicate authored IDs before a dict or set silently erases them."""
+    seen = set()
+    duplicates = set()
+    for value in values:
+        if value in seen:
+            duplicates.add(value)
+        seen.add(value)
+    if duplicates:
+        raise SystemExit(f"{label}: duplicate ids: {', '.join(sorted(duplicates))}")
+
+
 def expect_all(parsed, block_text, label, source, key="slug"):
     """Fail when a regex matched only SOME of a block's entries.
 
@@ -734,6 +746,7 @@ def expect_all(parsed, block_text, label, source, key="slug"):
             f"{len(parsed)}. Unmatched: {', '.join(missing)}. The upstream formatting "
             f"changed -- fix the pattern rather than shipping a partial batch."
         )
+    assert_unique_ids([entry[key] for entry in parsed], label)
     return parsed
 
 
@@ -838,6 +851,8 @@ def read_regions(content_ts: Path) -> dict[str, dict[str, list[str]]]:
             r"ramp: \[(.*?)\]", chunk, re.S
         )
         times = re.search(r"times: \[(.*?)\]", chunk, re.S)
+        if key in regions:
+            raise SystemExit(f"regions: duplicate ids: {key}")
         regions[key] = {
             "states": re.findall(r"'([^']+)'", states.group(1)) if states else [],
             "times": re.findall(r"'([^']+)'", times.group(1)) if times else [],
@@ -1127,6 +1142,7 @@ def fish_entries() -> list[dict]:
     if not fish:
         raise SystemExit(f"{FISH_ROSTER} parsed to zero fish")
 
+    assert_unique_ids([str(species["slug"]) for species in fish], "fish")
     entries: list[dict] = []
     for species in fish:
         slug = str(species["slug"])
@@ -1367,8 +1383,12 @@ def read_cards(content_ts: Path) -> list[dict[str, str]]:
         block = re.search(rf"\n  {key}: \[(.*?)\n  \],\n", text, re.S)
         if not block:
             raise SystemExit(f"no {key}: [...] block found in {content_ts}")
+        block_seen: set[str] = set()
         for m in CARD_RE.finditer(block.group(1)):
             card = m.groupdict()
+            if card["id"] in block_seen:
+                raise SystemExit(f"{key}: duplicate ids: {card['id']}")
+            block_seen.add(card["id"])
             if card["id"] in seen:
                 continue
             seen.add(card["id"])
