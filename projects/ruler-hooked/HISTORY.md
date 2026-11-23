@@ -739,3 +739,36 @@ Shared art-entry fixture helper and unknown/missing-lane regressions merged in c
 
 Reviewer (scheduled, 2026-11-23): conductor#7898 merged (9f8282cd). Its fixture lane-coverage tests passed in the full green Python suite of conductor#7900, which ran on top of #7898, so the CI evidence it was waiting on is in.
 <!-- note:end t-071 -->
+
+## t-072 — Guard every ruler-hooked YAML roster (cast, cards, quests, regions) against duplicate ids with a test that names the duplicates
+
+<!-- note:begin t-072 -->
+Kaizen from reviewer of conductor#7900 (t-031, 2026-11-23). A merge of two parallel fish batches left nine duplicate slugs in fish/vertical-slice.yaml and turned main's Python suite red (45 != 36) for every open PR. The fish test now names duplicate slugs. Do the same for every other roster the art-queue generator reads, so a merge that duplicates a row fails with the offending ids instead of a count mismatch. Test-only; no art or content changes.
+
+Added duplicate-id rejection for cast, fish, per-deck cards and region manifests, with hermetic regression fixtures. Cross-deck shared card references remain legal. PR and CI verification pending.
+
+Reviewer 2026-11-23 PT: squash-merged conductor#7912 (c102a01) on all-green latest-head
+checks after restructuring the PR body to the required handoff headings. Kaizen: t-073.
+<!-- note:end t-072 -->
+
+## t-073 — Make the ruler-hooked art-queue generator print a one-line per-roster count summary so reviewers can spot dropped rows at a glance
+
+<!-- note:begin t-073 -->
+Kaizen from reviewer of conductor#7912 (t-072, 2026-11-23 PT). Duplicate ids now fail loudly; the remaining silent-loss mode is a roster that parses to fewer rows than authored. Print e.g. "cast 12 · fish 36 · cards 84 · regions 13" on every run and cover the format with a hermetic test. Output-only; no queue content changes.
+
+Committed source roster census and hermetic count-format regression at 7d9c515. PR CI and reviewer verification pending.
+
+Reviewer 2026-11-23 PT: #7914 was red (6 fixture failures from stubbing read_cast/read_regions to None). Rescued in conductor#7916 with empty-roster stubs (mechanical drift, no pass consumed), plus a main bug fix: t-072's duplicate guard crashed every live --check with KeyError 'outcomeKey'. Live census against kind_robots 4c0f092b: cast 11 · fish 36 · cards 57 · regions 8. Kaizen: t-074.
+<!-- note:end t-073 -->
+
+## t-075 — Test that the fish roster slugs, Kind Robots runtime fish and staged art-request ids stay one-to-one
+
+<!-- note:begin t-075 -->
+Kaizen from the reviewer of conductor#7915 / kind_robots#5657 (t-031, 2026-11-23 PT). The 42-fish batch was hand-matched across `projects/ruler-hooked/fish/vertical-slice.yaml`, `projects/art-prompts.yaml` (`ruler-hooked-fish-<slug>`) and kind_robots `utils/rulerHooked/fish.ts` and `artPrompts.ts`. Earlier the same hand-matching left nine duplicate rows (#7900). Add a conductor test that every roster slug has exactly one art request and none is orphaned. If a kind_robots checkout or a fixture snapshot of `fish.ts` slugs is available, also check that the roster matches it.
+
+Added exact fish roster to staged art request parity tests and optional runtime fish comparison; CI pending.
+
+Reviewer 2026-11-23 PT: worker branch had no PR; rescued as conductor#7927 with a fix
+(the runtime array split used a literal backslash-n and never matched). 3 passed locally
+incl. runtime comparison vs kind_robots main (42 fish). Kaizen: t-076.
+<!-- note:end t-075 -->
