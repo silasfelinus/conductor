@@ -1092,22 +1092,18 @@ tasks:
 - id: t-059
   milestone: m6
   title: 'Reconcile the compositing contract with the opaque region layers that actually rendered'
-  status: claimed
+  status: review
   owner: worker
   claimed_by: 20261123T0224Z-ruler-hooked-t059-c3f8
   claimed_at: '2026-11-23T02:24:00Z'
   gate_human: false
   stakes: reversible
   passes: 0
-  note: >-
-    Found 2026-11-05 (t-056): all 36 rendered region layers are opaque RGB 1344x768 paintings,
-    not alpha-cut depth bands, so ruler-hooked-stage.vue's full-frame z-stack (still used by the
-    Chronicle-of-the-reign kingdom view) only ever shows its top layer, near_bank-grassy. The
-    console sidesteps this by treating layers as whole-scene vistas. This blocks t-054's
-    lake/near_bank/sky decay ramps as specified. Before rendering ramp layers, decide: render
-    with real transparency (or mask in a build step), or retire the stack model in
-    compositing.md for whole-scene vistas per state combination.
-  updated: '2026-11-23T02:24:00Z'
+  note: |-
+    Found 2026-11-05 (t-056): all 36 rendered region layers are opaque RGB 1344x768 paintings, not alpha-cut depth bands, so ruler-hooked-stage.vue's full-frame z-stack (still used by the Chronicle-of-the-reign kingdom view) only ever shows its top layer, near_bank-grassy. The console sidesteps this by treating layers as whole-scene vistas. This blocks t-054's lake/near_bank/sky decay ramps as specified. Before rendering ramp layers, decide: render with real transparency (or mask in a build step), or retire the stack model in compositing.md for whole-scene vistas per state combination.
+
+    Corrected the legacy stage: opaque region images display as selectable full-scene vistas instead of covering each other in a z-stack. Changed-region spotlight, accessibility and regression checks are in the worker implementation branch; the compositing design contract is explicitly superseded by truthful vista rendering. Review PR and CI to follow; no claim of rendered art or live QA.
+  updated: '2026-11-23T02:26:00Z'
 - id: t-060
   milestone: m6
   title: 'Grow the Town Crier: more daily proclamations, a few tied to fish runs and the reign'

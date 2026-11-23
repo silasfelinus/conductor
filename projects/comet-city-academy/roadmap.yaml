@@ -1002,11 +1002,11 @@ tasks:
   - id: t-031
     milestone: m3
     title: "HIGH PRIORITY · Begin private Unstable Diffusers production for canonical Prom/Tactics cast"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 20261123T022310Z-comet-t031-art-proof-p8x6
     claimed_at: '2026-11-23T02:23:10Z'
-    updated: '2026-11-23T00:49:14Z'
+    updated: '2026-11-23T02:26:15Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -1041,6 +1041,8 @@ tasks:
       Replaced receipt-only source checks for 14 original Unstable Diffusers and 5 franchise-safe corrective Prom ArtImages with authenticated private source/runtime media verification, privacy checks and per-ledger evidence checkpointing. Focused regression tests verify all 19 distinct ArtImage receipts, zero curator approvals, and no new enqueue. Worker implementation branch worker/comet-city-academy-t-031-private-capes-media-proof-m7q9 at e63017ccda4aa1c0fab70b3d9acef1724065f6b9. Pending CI, PR merge and main-triggered authenticated media evidence; t-031 remains partial pending visual review and game attachments.
 
       2026-11-22 PT reviewer: merged conductor#7871 (a778a6e). It upgrades the 148 runtime-refill and 24 Oct-29 cast private ArtImages from source-only receipts to an authenticated gameplay-route proof with per-ledger checkpoints, plus regression tests for all 172 distinct ids. The images count as media-verified only after the post-merge prom-tactics-media-proof run succeeds; check its LEDGER_MEDIA_PROOF summary. This is a partial slice. Composition review, canonical export and gameplay attachment remain, so the task goes back to ready.
+
+      Partial private-art media QA repair, commit 0fc86421746ebff794b40b5e2788ac9d3c999b0d. The Nov 22 PT workflow #45090898266 verified 148/148 refill sources but only 135/148 game routes; thirteen errors followed throttling/HTTP failures at magic-discipline onward. Retry only transient HTTP metadata and game-route errors, pace the 148-cell check, and regression-test no duplicate ArtJobs or false private-media approvals. Await CI and a new authenticated full proof run after merge; original t-031 art curation/attachments remain unfinished.
   - id: t-032
     title: "Prom of Doom (Capes & Tassels) | Master 30-Day Playbook Roadmap"
     status: review
