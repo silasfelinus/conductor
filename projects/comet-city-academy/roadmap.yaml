@@ -1163,3 +1163,18 @@ tasks:
     stakes: reversible
     note: |-
       Silas's explicit 2026-11-22 PT pre-playtest requirement. There was no music/SFX task in this roadmap or game-page implementation. Compose original licensed-safe title, school/day, patrol/tension and finale/ending cues; original navigational, recruit, investigation, injury, choice, success/failure and villain-reveal SFX; route real run transitions to cues rather than generic button-only beeps. Provide opt-in browser audio unlock, independently persisted master/music/SFX volume and mute, reduced-motion/accessible visual-equivalent behavior, cleanup on navigation and no SSR/autoplay crash. Add deterministic cue/state, settings migration, mute/unlock and source-level integration contract tests; test actual playback on the supported browser/mobile path before marking delivered. Music and SFX are required for agent-complete playtest readiness, not the later human verdict.
+  - id: t-050
+    milestone: m4
+    title: "Summarize post-merge Prom LEDGER_MEDIA_PROOF results per ArtImage into the ledger without re-enqueueing failures"
+    status: ready
+    owner: null
+    depends_on: []
+    passes: 0
+    stakes: reversible
+    updated: '2026-11-23T00:49:29Z'
+    note: >-
+      Kaizen from reviewer of conductor#7871 (2026-11-22 PT). Many proof
+      workflows now checkpoint per-ledger evidence, but no single report says
+      which ArtImage ids failed source, game-route or privacy checks. Add a
+      read-only summarizer that consumes the checkpointed evidence and lists
+      failures per ArtImage, with tests. Never re-enqueue, approve or publish.

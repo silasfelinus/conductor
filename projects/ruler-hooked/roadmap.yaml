@@ -1213,3 +1213,19 @@ tasks:
 
     Conductor: Silas's 2026-11-08 instruction releases the #7122 hold. build_ruler_hooked_art_queue.py --include-layers --write --restage rewrote all 169 stale rows (165 held + 4 done whose prompts changed) to pending, force: true, with the rainbow prompts; --check is clean. read_regions now parses t-054 ramp states and the trailing pins block (it exited on the layer lane before), with a regression test. Renders and in-game visual verification still to follow.
   updated: '2026-11-08T00:30:00Z'
+
+- id: t-069
+  milestone: m6
+  title: Add a CI guard that every new ruler-hooked quest card id has a matching art-prompts.yaml request row
+  status: ready
+  owner: null
+  stakes: reversible
+  passes: 0
+  depends_on: []
+  updated: '2026-11-23T00:49:29Z'
+  note: >-
+    Kaizen from reviewer of conductor#7867 (2026-11-22 PT). Card art for
+    the t-045 aftershocks was staged by hand in a separate PR from the kind_robots
+    content (#5605). Add a guard that diffs the card ids in the ruler-hooked deck
+    against the ruler-hooked-card-* rows in projects/art-prompts.yaml and names any
+    card that has no art request. Reports only: no enqueue, no render.
