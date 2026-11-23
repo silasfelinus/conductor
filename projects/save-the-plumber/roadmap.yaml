@@ -446,13 +446,10 @@ tasks:
     passes: 0
     stakes: reversible
     updated: '2026-11-23T05:33:00Z'
-    note: >-
-      GEN2-STANDARD.md section 2. Doors, pipes and ladders into sub-rooms with their own camera
-      bounds; vertical shafts and climbs; a midpoint checkpoint per level; a second, hidden exit type
-      that reports `secret` to the overworld (t-011); Valve Chapel switch state read by every level
-      so pressed switches make outlined blocks solid campaign-wide; auto-scroll and haunted-maze
-      (Hush House) exit logic. Deterministic replay tests for each: secret exit reachable, sub-room
-      return position, switch persistence across levels and save/reload.
+    note: |-
+      GEN2-STANDARD.md section 2. Doors, pipes and ladders into sub-rooms with their own camera bounds; vertical shafts and climbs; a midpoint checkpoint per level; a second, hidden exit type that reports `secret` to the overworld (t-011); Valve Chapel switch state read by every level so pressed switches make outlined blocks solid campaign-wide; auto-scroll and haunted-maze (Hush House) exit logic. Deterministic replay tests for each: secret exit reachable, sub-room return position, switch persistence across levels and save/reload.
+
+      Fixed x-only checkpoint activation: pennants now require physical proximity, preventing distant upper routes from silently changing respawn. Added a deterministic upper-route bypass/contact replay in verifySavePlumberMovementReplay.test.ts. This is a partial t-020 slice; subrooms, secret exits and campaign switches remain. CI pending.
   - id: t-021
     milestone: m6
     title: "Gen-2 World 1: re-author Bluebell Pipeworks as a full SMB3/SMW-class world"
