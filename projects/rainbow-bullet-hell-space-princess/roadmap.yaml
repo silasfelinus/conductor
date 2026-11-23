@@ -588,14 +588,11 @@ tasks:
   - id: t-027
     milestone: m6
     title: "Gen-2 memory: save slots, route map screen, medals and the persistent Palace Hangar"
-    status: review
-    owner: worker
-    claimed_by: 20261122T221720Z-rainbow-t027-route-memory-w3q8
-    claimed_at: '2026-11-22T22:17:20Z'
+    status: ready
     depends_on: [t-026]
     passes: 0
     stakes: reversible
-    updated: '2026-11-22T22:23:45Z'
+    updated: '2026-11-23T00:13:00Z'
     note: |-
       2026-11-20T11:21:42Z connector recovery: prior claim 2026-11-20T05:40:00Z expired after 341 minutes, no open Rainbow PR or branch; implementing Palace Hangar on a scoped worker branch.
 
@@ -634,6 +631,8 @@ tasks:
       Stale review claim from 2026-11-21T00:34Z has no open matching Rainbow PR or branch; existing partial map/Hangar work is on main. Releasing ownership for a scoped four-detour route discovery persistence and Seas-map pass.
 
       Created four durable per-save-slot alternate-route discovery bits on entry into X1-X4 flight, restoring exact checkpoint proof on resume and continue and rejecting forged route-history masks in save decoder. Added accessible inspectable Seas map detour nodes and route-logbook regression. App branch worker/rainbow-bullet-hell-space-princess-t-027-detour-map-w3q8; partial t-027 pending CI and fuller route replay acceptance.
+
+      2026-11-22 PT: The prior review handoff is over 90 minutes old and no open Rainbow PR remains after #5607 merged. Preserve merged map/Hangar work and reopen t-027 for playable alternate-route navigation, without touching other review lanes.
   - id: t-028
     milestone: m6
     title: "Gen-2 alternate stages: four branch stages with their own guardians"
