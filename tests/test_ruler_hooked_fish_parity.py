@@ -1,4 +1,4 @@
-"""Keep every Ruler Hooked fish in the authored roster and art queue exactly once."""
+"""Validate queued Ruler Hooked fish art without rejecting delivered assets."""
 
 from collections import Counter
 from pathlib import Path
@@ -13,17 +13,17 @@ REQUESTS = ROOT / 'projects/art-prompts.yaml'
 PREFIX = 'ruler-hooked-fish-'
 
 
-def assert_exact_fish_ids(roster_slugs, request_ids):
-    expected = Counter(PREFIX + slug for slug in roster_slugs)
+def assert_valid_staged_fish_ids(roster_slugs, request_ids):
+    expected = set(PREFIX + slug for slug in roster_slugs)
     actual = Counter(request_ids)
-    missing = sorted((expected - actual).elements())
-    extra = sorted((actual - expected).elements())
-    assert not missing and not extra, (
-        f'fish art parity: missing={missing}, extra_or_duplicate={extra}'
+    extra = sorted(id for id in actual if id not in expected)
+    duplicates = sorted(id for id, count in actual.items() if count > 1)
+    assert not extra and not duplicates, (
+        f'fish art queue: orphan={extra}, duplicate={duplicates}'
     )
 
 
-def test_roster_and_staged_fish_requests_are_bijective():
+def test_staged_fish_requests_are_unique_and_belong_to_roster():
     fish = yaml.safe_load(ROSTER.read_text(encoding='utf-8'))['fish']
     slugs = [row['slug'] for row in fish]
     assert len(slugs) == len(set(slugs)), 'duplicate fish roster slugs'
@@ -32,20 +32,24 @@ def test_roster_and_staged_fish_requests_are_bijective():
         row for row in staged
         if row.get('id', '').startswith(PREFIX)
     ]
-    assert_exact_fish_ids(slugs, [row['id'] for row in requests])
+    assert_valid_staged_fish_ids(slugs, [row['id'] for row in requests])
     for row in requests:
         assert row.get('source') == 'ruler-hooked', row['id']
         assert row.get('lane') == 'fish', row['id']
         assert row.get('target_repo') == 'silasfelinus/kind_robots', row['id']
 
 
-def test_fish_parity_diagnoses_missing_orphan_and_duplicate():
-    with pytest.raises(AssertionError, match='missing=.*fish-b'):
-        assert_exact_fish_ids(['a', 'b'], [PREFIX + 'a'])
-    with pytest.raises(AssertionError, match='extra_or_duplicate=.*fish-z'):
-        assert_exact_fish_ids(['a'], [PREFIX + 'a', PREFIX + 'z'])
-    with pytest.raises(AssertionError, match='extra_or_duplicate=.*fish-a'):
-        assert_exact_fish_ids(['a'], [PREFIX + 'a', PREFIX + 'a'])
+def test_queue_accepts_pruned_requests_after_delivery():
+    # Completed art requests are removed from art-prompts.yaml by design.
+    assert_valid_staged_fish_ids(['a', 'b'], [PREFIX + 'a'])
+    assert_valid_staged_fish_ids(['a', 'b'], [])
+
+
+def test_queue_diagnoses_orphan_and_duplicate():
+    with pytest.raises(AssertionError, match='orphan=.*fish-z'):
+        assert_valid_staged_fish_ids(['a'], [PREFIX + 'a', PREFIX + 'z'])
+    with pytest.raises(AssertionError, match='duplicate=.*fish-a'):
+        assert_valid_staged_fish_ids(['a'], [PREFIX + 'a', PREFIX + 'a'])
 
 
 def test_runtime_fish_slugs_match_when_app_checkout_is_present():
