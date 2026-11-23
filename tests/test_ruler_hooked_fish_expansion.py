@@ -10,12 +10,18 @@ def test_expanded_fish_stays_balanced_and_staged():
     roster = yaml.safe_load(queue.FISH_ROSTER.read_text(encoding="utf-8"))
     fish = roster["fish"]
     entries = queue.fish_entries()
-    assert len(fish) == len(entries) == 36
+    slugs = [f["slug"] for f in fish]
+    duplicates = sorted({slug for slug in slugs if slugs.count(slug) > 1})
+    assert duplicates == [], f"duplicate fish roster slugs: {duplicates}"
+    # Approved shipped catalog target is 40-60 species (t-031); the roster may
+    # grow in batches toward it without editing this test each time.
+    assert 36 <= len(fish) <= 60
+    assert len(fish) == len(entries)
     assert {f["slug"] for f in fish} == {
         entry["id"].removeprefix("ruler-hooked-fish-") for entry in entries
     }
     for affinity in ("GOOD", "NEUTRAL", "EVIL"):
-        assert sum(f["affinity"] == affinity for f in fish) == 12
+        assert sum(f["affinity"] == affinity for f in fish) * 3 == len(fish)
 
     staged = yaml.safe_load(
         (Path(__file__).resolve().parent.parent / "projects" / "art-prompts.yaml").read_text()

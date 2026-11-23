@@ -1,0 +1,16 @@
+version: 1
+project: ruler-hooked
+task: t-071
+operation: done
+note: >-
+  Reviewer (scheduled, 2026-11-23): conductor#7898 merged (9f8282cd). Its fixture
+  lane-coverage tests passed in the full green Python suite of conductor#7900,
+  which ran on top of #7898, so the CI evidence it was waiting on is in.
+learning:
+  date: 2026-11-23
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: Fixture coverage should fail loudly on unknown lanes so a new art lane cannot silently skip hermetic tests.
