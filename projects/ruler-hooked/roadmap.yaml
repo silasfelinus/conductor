@@ -1226,32 +1226,51 @@ tasks:
 - id: t-069
   milestone: m6
   title: Add a CI guard that every new ruler-hooked quest card id has a matching art-prompts.yaml request row
-  status: claimed
+  status: review
   owner: worker
   claimed_by: 2026-11-23T040900Z-ruler-hooked-t069-c8d2af
   claimed_at: '2026-11-23T04:09:00Z'
   stakes: reversible
   passes: 0
   depends_on: []
-  updated: '2026-11-23T04:09:00Z'
-  note: >-
-    Kaizen from reviewer of conductor#7867 (2026-11-22 PT). Card art for
-    the t-045 aftershocks was staged by hand in a separate PR from the kind_robots
-    content (#5605). Add a guard that diffs the card ids in the ruler-hooked deck
-    against the ruler-hooked-card-* rows in projects/art-prompts.yaml and names any
-    card that has no art request. Reports only: no enqueue, no render.
+  updated: '2026-11-23T04:13:15Z'
+  note: |-
+    Kaizen from reviewer of conductor#7867 (2026-11-22 PT). Card art for the t-045 aftershocks was staged by hand in a separate PR from the kind_robots content (#5605). Add a guard that diffs the card ids in the ruler-hooked deck against the ruler-hooked-card-* rows in projects/art-prompts.yaml and names any card that has no art request. Reports only: no enqueue, no render.
+
+    Implemented an automated cross-repository quest-card-art-request guard, checks all authored cards, art mapping, queue IDs and paths, with positive and negative Python fixtures in Worker CI. The guard reports missing staged prompts only; it never claims that painting was delivered or inspected. Branch worker/ruler-hooked-t-069-20261123-c8d2af also fixes a duplicated owner field introduced during connector claim bookkeeping.
 - id: t-070
   milestone: m6
   title: Add a CI check that flags any ruler-hooked region asset without an alpha channel before it is treated as a stack layer
-  status: review
+  status: done
   owner: worker
-  claimed_by: 20261123T031924663Z-ruler-hooked-t070-h9k2
+  claimed_by: null
   claimed_at: '2026-11-23T03:19:24.663Z'
   stakes: reversible
   passes: 0
   depends_on: []
-  updated: '2026-11-23T03:20:56.337Z'
+  updated: '2026-11-23T04:54:56Z'
   note: |-
     Kaizen from reviewer of kind_robots#5622 / conductor#7881 (t-059, 2026-11-22 PT). The alpha-stack contract drifted for weeks because nothing checked that the 36 delivered region WebPs were opaque RGB. Add a report-only check that reads each /images/ruler-hooked/{region}-{state}[-{time}].webp header and names files with no alpha channel, so any future return to layered compositing fails loudly instead of silently showing only the top layer. No render, no enqueue.
 
     Added a report-only WebP header auditor for delivered ruler-hooked region assets, validates the alpha bit on VP8X/VP8L and flags opaque VP8 layers. Added synthetic header and manifest tests plus GitHub Actions report artifact. No artwork was rendered or changed; green CI and merge review remain.
+
+    Reviewer (scheduled agent, 2026-11-22 PT): merged conductor#7888 (squash 1bad1e45) on
+    all-green latest-head CI. Locally the 5 alpha tests pass and a live run reports 52
+    delivered region WebPs, all opaque, report-only as specified. Kaizen: t-071.
+- id: t-071
+  milestone: m6
+  title: Make the ruler-hooked art-queue hermetic test fixtures fail loudly when a new *_entries lane is added without a stub
+  status: ready
+  owner: null
+  claimed_by: null
+  claimed_at: null
+  stakes: reversible
+  passes: 0
+  depends_on: []
+  note: >-
+    Kaizen from reviewer of conductor#7886 (t-058, 2026-11-22 PT). Adding
+    expression_entries() broke six tests in test_ruler_hooked_list_lanes.py and
+    test_ruler_hooked_restyle.py because each fixture stubs every *_entries
+    function by hand and read_cast returns None. Share one fixture helper that
+    stubs every *_entries callable main() uses, or assert that coverage, so the
+    next lane can't break the suite again.

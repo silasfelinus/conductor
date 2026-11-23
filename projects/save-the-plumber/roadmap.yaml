@@ -168,7 +168,10 @@ tasks:
   - id: t-005
     milestone: m2
     title: "Implement enemy interaction, held objects and powerup systems"
-    status: ready
+    status: review
+    owner: worker
+    claimed_by: 2026-11-23T051100Z-save-the-plumber-t005-stage-k4v2
+    claimed_at: '2026-11-23T05:11:00Z'
     depends_on: [t-003]
     passes: 0
     stakes: reversible
@@ -190,8 +193,9 @@ tasks:
       Remaining: placing ladders and keys in campaign stages (with Levels/Gears reachability),
       slopes, carrying enemies, the Gen-2 powers, the reserve item and the ride creature. Back
       to ready.
-    updated: '2026-11-23T02:03:43Z'
-    owner: null
+
+      Implemented a new authored World 1-2 optional high route: a floor-level brass key at column 35, a seven-rung ladder at column 39, and a padlocked upper passage at column 42. The existing fast lower corridor remains unobstructed. Added real PlumberRun campaign replay assertions for key collection, climb-to-top, bolt unlock, key consumption and lower-route accessibility. Source branch worker/save-the-plumber-t-005-campaign-route-k4v2. Remaining scope includes slopes, carryable enemies, Gen-2 reserve/powers/companion, plus further campaign gadget placements; t-005 is not fully done.
+    updated: '2026-11-23T05:21:00Z'
   - id: t-006
     milestone: m3
     title: "Build World 1: four complete garden/pipeworks levels and boss"
@@ -282,24 +286,18 @@ tasks:
   - id: t-012
     milestone: m4
     title: "Produce illustrated world art, enemy animation, sound and cinematics"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 2026-11-23T040400Z-save-the-plumber-t-012-au7m
     claimed_at: '2026-11-23T04:04:00Z'
-    updated: '2026-11-23T04:04:00Z'
+    updated: '2026-11-23T04:07:00.392Z'
     depends_on: [t-002, t-006]
     passes: 0
     stakes: reversible
-    note: >-
-      Rich original illustrated world/background/foreground layers,
-      heroine animation states, bosses and props; evocative palette
-      families and art-readable collision planes, original music/sfx,
-      skippable intro and world transitions, rescue/ending credits,
-      subtitles and reduced-motion support. Track ArtJob IDs and
-      delivered asset URLs, never call queued art done.
-      2026-10-13: 84 in-game assets queued (32 stage plates, 8 ground
-      tiles, 14 enemies, 8 bosses x idle/tell, Teo sprites, 8 items, 4
-      cutscenes); see ART-PLAN.md. Queued, not yet verified delivered.
+    note: |-
+      Rich original illustrated world/background/foreground layers, heroine animation states, bosses and props; evocative palette families and art-readable collision planes, original music/sfx, skippable intro and world transitions, rescue/ending credits, subtitles and reduced-motion support. Track ArtJob IDs and delivered asset URLs, never call queued art done. 2026-10-13: 84 in-game assets queued (32 stage plates, 8 ground tiles, 14 enemies, 8 bosses x idle/tell, Teo sprites, 8 items, 4 cutscenes); see ART-PLAN.md. Queued, not yet verified delivered.
+
+      Original per-world chiptune score (eight distinct motifs) and a boss theme, using the existing gesture-unlocked Arcade cabinet mixer, are committed to worker/save-the-plumber-t-012-music-20261123T0404-au7m. Added score and scene-transition assertions to the existing preview test. Scope is partial: rendered soundtrack, unique effects, remaining art, cinematics and integration verification still require work.
   - id: t-013
     milestone: m5
     title: "Whole-campaign playtests, fairness and device verification"
@@ -336,10 +334,13 @@ tasks:
   - id: t-015
     milestone: m2
     title: "Prove the movement lab replay and real shared-cabinet controls"
-    status: ready
+    status: review
+    owner: worker
+    claimed_by: 2026-11-23T042700Z-save-the-plumber-t015-lookahead-k7p9
+    claimed_at: '2026-11-23T04:27:00Z'
     passes: 0
     stakes: reversible
-    updated: '2026-11-23T04:01:00Z'
+    updated: '2026-11-23T04:29:00Z'
     note: |-
       Reviewer kaizen after kind_robots#3564: add deterministic input replays asserting coyote time, buffered jumps, landing/camera bounds and respawn; exercise real shared ArcadeCabinet keyboard/gamepad/touch controls and visible Admin help at phone/tablet/desktop widths. Use browser fixtures with actual consumers rather than source-field matches. Keep public registry and score exclusions. Initial isolated engine pixels are not shared-cabinet/auth integration or full campaign acceptance.
 
@@ -373,6 +374,8 @@ tasks:
       Partial movement-feel slice: sharpened opposite-direction ground braking while preserving running momentum, with deterministic reversal replay. Implementation branch worker/save-the-plumber-t-015-turn-response-m7q4. Remaining t-015 shared-cabinet cross-width/browser acceptance; do not mark done.
 
       PR silasfelinus/kind_robots#5627 merged at 2026-11-23T03:46:24Z. The responsive-ground-turnaround movement replay slice shipped; the shared-cabinet real-device and camera-look-ahead acceptance remains, so return this nonrecurring task to ready rather than marking it done.
+
+      Added velocity-aware, bounded, smoothed bidirectional camera look-ahead with neutral centering, arena clamp, stage-start and pipe-teleport resets in worker/save-the-plumber-t-015-camera-lead-k7p9. Extended deterministic movement replays to prove visibility lead in both directions, smooth reversals, bounds, collision safety and restart reset. This is an incremental movement slice; real shared-cabinet keyboard/gamepad/touch and viewport browser fixtures remain required before the full t-015 task is done.
 
   - id: t-016
     milestone: m4

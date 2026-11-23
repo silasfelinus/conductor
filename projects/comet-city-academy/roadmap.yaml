@@ -1003,10 +1003,7 @@ tasks:
     milestone: m3
     title: "HIGH PRIORITY · Begin private Unstable Diffusers production for canonical Prom/Tactics cast"
     status: review
-    owner: worker
-    claimed_by: 20261123T022310Z-comet-t031-art-proof-p8x6
-    claimed_at: '2026-11-23T02:23:10Z'
-    updated: '2026-11-23T02:26:15Z'
+    updated: '2026-11-23T05:05:00Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -1043,6 +1040,13 @@ tasks:
       2026-11-22 PT reviewer: merged conductor#7871 (a778a6e). It upgrades the 148 runtime-refill and 24 Oct-29 cast private ArtImages from source-only receipts to an authenticated gameplay-route proof with per-ledger checkpoints, plus regression tests for all 172 distinct ids. The images count as media-verified only after the post-merge prom-tactics-media-proof run succeeds; check its LEDGER_MEDIA_PROOF summary. This is a partial slice. Composition review, canonical export and gameplay attachment remain, so the task goes back to ready.
 
       Partial private-art media QA repair, commit 0fc86421746ebff794b40b5e2788ac9d3c999b0d. The Nov 22 PT workflow #45090898266 verified 148/148 refill sources but only 135/148 game routes; thirteen errors followed throttling/HTTP failures at magic-discipline onward. Retry only transient HTTP metadata and game-route errors, pace the 148-cell check, and regression-test no duplicate ArtJobs or false private-media approvals. Await CI and a new authenticated full proof run after merge; original t-031 art curation/attachments remain unfinished.
+
+      Reopened incomplete private Prom art proof after prior implementing PRs #7880 and #7882 merged and no live Prom art PR was found. Earlier proof run 45090898266 verified all 24 Oct-29 source/game/private media, but the 148-cell refill had transient game-route failures. Continue with new authenticated evidence; preserve every accepted ArtJob.
+
+      Scoped private art delivery QA: retried transient 429/5xx ArtImage visibility metadata, preserved fail-closed 403/404/public-image policy, paced per-image checks and added regressions. Extended the authenticated source/game/privacy workflow and per-ArtImage Actions summary to include the six DONE canonical correction ArtJobs 76593-76598 and ArtImages 278587-278592. Pending PR CI and post-merge actual media proof. Main art t-031 remains partial; no render approval or publication.
+    owner: worker
+    claimed_by: 20261123T045550Z-comet-t031-private-policy-k9c4
+    claimed_at: '2026-11-23T04:55:50Z'
   - id: t-032
     title: "Prom of Doom (Capes & Tassels) | Master 30-Day Playbook Roadmap"
     status: review

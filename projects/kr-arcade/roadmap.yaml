@@ -2919,17 +2919,25 @@ tasks:
     milestone: m12
     title: "Superkate Spectrum: deliver high-priority hero, title, icon, character portraits, six backdrops and six boss illustrations"
     status: ready
+    owner: worker
+    updated: '2026-11-23T05:11:33Z'
     passes: 0
     stakes: reversible
     depends_on: []
-    note: >-
-      Three initial high-priority Krea 2 queue requests are in projects/art-prompts.yaml.
-      Require recorded ArtJob IDs and delivered files, not queue-only claims.
-      Stylized character based on user-provided photos; public portrait likeness needs Kate's consent.
+    note: |-
+      Three initial high-priority Krea 2 queue requests are in projects/art-prompts.yaml. Require recorded ArtJob IDs and delivered files, not queue-only claims. Stylized character based on user-provided photos; public portrait likeness needs Kate's consent.
+
+      2026-11-22 PT: six high-priority Krea 2 adversary portrait requests committed in companion Conductor PR #7889: Greyscale Dryer, Pruner, Neon Inspector, Archivist, Sorting Machine, and Palette Keeper. Nine previous title, hero, icon and chapter scrapbook queue requests remain in the same PR. All requests are pending; no ArtJob IDs, rendered assets or delivered art were verified. User-facing Kate likeness still requires Kate's consent. Return to ready after this queue slice merges so the remaining actual artwork delivery can continue. Do not mark t-177 done.
+
+      Reviewer (scheduled agent, 2026-11-22 PT): the six Superkate boss requests and nine
+      title/hero/icon/scrapbook requests landed on main via conductor#7895 (rescue of #7889),
+      with prompts rephrased to the affirmative no-text form. All pending, none rendered. Back
+      to ready for actual art delivery, as the worker's review note asked.
+    implementation_pr: 'silasfelinus/conductor#7895'
   - id: t-178
     milestone: m12
     title: "Superkate Spectrum: author 30 curated boards with three special bubble types and six distinct chapter mechanics"
-    status: ready
+    status: waiting
     passes: 0
     stakes: reversible
     depends_on: [t-176]
@@ -2943,14 +2951,18 @@ tasks:
   - id: t-180
     milestone: m12
     title: "Superkate Spectrum: story scenes, character dialogue, three meaningful choices and three endings"
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
     depends_on: []
+    owner: worker
+    claimed_by: 2026-11-23T051630Z-kr-arcade-t-180-x7v4
+    claimed_at: '2026-11-23T05:16:30Z'
+    updated: '2026-11-23T05:16:30Z'
   - id: t-181
     milestone: m12
     title: "Superkate Spectrum: touch aim, aim assist, colorblind/high-contrast modes, calm motion and full controller support"
-    status: ready
+    status: waiting
     passes: 0
     stakes: reversible
     depends_on: [t-176]
@@ -2961,17 +2973,14 @@ tasks:
     owner: worker
     claimed_by: 2026-11-23T040118Z-kr-arcade-t-182-superkate-audio-n4p6
     claimed_at: '2026-11-23T04:01:18Z'
-    updated: '2026-11-23T04:06:19Z'
+    updated: '2026-11-23T04:06:19.489Z'
     passes: 0
     stakes: reversible
     depends_on: []
-    note: >-
-      2026-11-22 PT: audio-slice submitted on Kind Robots PR #5624:
-      six region music loops, six finale arrangements, Classic and menu,
-      source-free synthesized chiptunes, shared Arcade mixer mute/volume,
-      independently saved music and effect toggles, and tests. Missing
-      recorded mastered audio, completed final-head CI and real playback
-      acceptance. Leave as review, not done.
+    note: |-
+      2026-11-22 PT: audio-slice submitted on Kind Robots PR #5624: six region music loops, six finale arrangements, Classic and menu, source-free synthesized chiptunes, shared Arcade mixer mute/volume, independently saved music and effect toggles, and tests. Missing recorded mastered audio, completed final-head CI and real playback acceptance. Leave as review, not done.
+
+      2026-11-22 PT: substantial implemented audio slice in Kind Robots PR #5624: a shared Arcade audio bridge for in-game master mute and volume, separately saved original music and effects toggles, six neighborhood chiptunes plus six chapter-finale variations, Classic and menu music, responsive preset SFX, and regression tests for music, options and Classic stage 35. The current PR is unmerged; final-head CI and actual playback verification remain pending. Recorded mastered soundtrack, mobile balance and audio QA are unfinished, so keep this task in review rather than marking full t-182 complete.
 
   - id: t-183
     milestone: m12
@@ -2980,6 +2989,11 @@ tasks:
     passes: 0
     stakes: reversible
     depends_on: [t-178]
+    note: >-
+      Silas, 2026-11-22 PT: Classic mode is now included in the first
+      playable prototype; ranked Story and Classic scoreboards must be
+      separately keyed before public competition, without erasing
+      device-local best Classic score or Story stars.
   - id: t-184
     milestone: m12
     title: "Superkate Spectrum: adversarial full campaign playthrough, mobile QA, save/retry/ending tests and visual acceptance"
@@ -2990,3 +3004,69 @@ tasks:
     note: >-
       Keep the game on the growing shelf until the entire finite scope is complete.
       Public use of a recognisable real-person likeness requires Kate's explicit consent.
+  - id: t-185
+    milestone: m12
+    title: "Superkate Spectrum: durable cross-device account saves with safe guest migration and conflict-aware career merge"
+    status: waiting
+    passes: 0
+    stakes: reversible
+    depends_on: [t-176]
+    note: >-
+      Silas, 2026-11-22 PT: wants Candy Crush-style permanent memory,
+      where progress continues across many play sessions. Initial implementation
+      is a versioned, device-local Arcade save with 30 star ratings,
+      Color Rank, XP, highest unlocked stage and Classic records. This
+      task adds authenticated cloud sync, guest-to-account adoption, race-safe
+      merges using max stage/best stars/highest ranked records, and a clear
+      account/device state indicator. No purchase or energy gates.
+  - id: t-186
+    milestone: m12
+    title: "Superkate Spectrum: navigable 30-level star map, cosmetic bubble collection and earned animated effects"
+    status: waiting
+    passes: 0
+    stakes: reversible
+    depends_on: [t-176]
+    note: >-
+      Silas, 2026-11-22 PT: visual Candy Crush-style long-term progression
+      without monetization. Existing menu has a numeric stage picker, earned
+      styles (glass, candy, starlight, prismatic), XP meter and three special
+      powers (Prism, Burst, Ribbon). Build a polished illustrated stage map,
+      level-specific medal/replay interactions, clear unlock celebrations,
+      power tutorials and mobile-friendly navigation; verify 390/768/1440.
+
+  - id: t-187
+    milestone: m12
+    title: "Superkate Spectrum: integrate retro-modern Arcade hub with Play, Classic, Scrapbook, Achievements and Settings"
+    status: waiting
+    passes: 0
+    stakes: reversible
+    depends_on: [t-176]
+    note: >-
+      Silas, 2026-11-22 PT: preserve old-school game character but wrap
+      it in premium modern presentation. No second disconnected route:
+      provide a cohesive console-first cabinet home with illustrated
+      stage-map cards, classic/story mode selection, collected bubble
+      cosmetics, chapter and character scrapbook, earned trophies,
+      music/effects/volume and accessibility settings, and a visible
+      account/device cloud-save state. Foundation is in app PR #5624:
+      in-canvas four-tab menu with story stars, local scrapbook,
+      achievement list and aim/animation/high-contrast toggles.
+      Remaining: delivered art, accessible touch interaction, responsive
+      polish, readable one-screen layout at 390/768/1440, input QA and
+      full UI playback validation.
+  - id: t-188
+    milestone: m12
+    title: "Superkate Spectrum: finish audio production and collectible scrapbook portraits with account-safe achievements"
+    status: waiting
+    passes: 0
+    stakes: reversible
+    depends_on: [t-177, t-180, t-182, t-185]
+    note: >-
+      Implement six published region themes, Classic loop and music
+      transitions, finale stingers and bubble SFX with independent
+      music/effects volumes. The existing WebAudio prototype supplies
+      playable oscillator loops but no verified recorded assets.
+      Ship album memories, character portraits, best stars,
+      cosmetic displays and earned globally seeded achievements.
+      Validate replay, sign-in, account switch, offline save and
+      old-save migration, retaining progress across every device.

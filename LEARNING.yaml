@@ -19118,3 +19118,13 @@ records:
   failure_category: null
   lesson: Check delivered art's real pixel format (alpha vs opaque) before building a compositor around
     a spec; an opaque z-stack silently shows only its top layer.
+- date: '2026-11-22'
+  project: ruler-hooked
+  task: t-070
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: A report-only header probe pinned to one trusted media host turns a silent art-format
+    assumption into a visible CI artifact without blocking delivery.

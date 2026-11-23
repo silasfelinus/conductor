@@ -153,6 +153,7 @@ def staged(monkeypatch, tmp_path):
     monkeypatch.setattr(bruq, "find_content_bundle", lambda: tmp_path / "content.ts")
     monkeypatch.setattr(bruq, "read_cast", lambda ts: None)
     monkeypatch.setattr(bruq, "concept_entries", lambda cast: [])
+    monkeypatch.setattr(bruq, "expression_entries", lambda cast: [])
     monkeypatch.setattr(bruq, "ruler_entries", lambda: [])
     monkeypatch.setattr(bruq, "fish_entries", lambda: [])
     monkeypatch.setattr(bruq, "reward_entries", lambda ts: [])

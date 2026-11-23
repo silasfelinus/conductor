@@ -19,6 +19,52 @@ Visual reference supplied by Silas: three photos of Kate with short multicolor r
 - 30 deterministic-seeded-style stages (seeded by the Arcade RNG), six chapters of five stages. Chapter completion grants a heart; local saves record the stage, score and hearts. Scoreboards use the existing Arcade three-initial flow.
 - Scoring: 100 per matched bubble, 175 per dropped bubble, 75 extra per matched bubble beyond three, plus stage/chapter completion bonuses. Achievements for a five-bubble cascade, a six-match, chapter finishes, and all 30 stages.
 
+
+## Permanent career: the player never loses their history (Silas, 2026-11-22 PT)
+
+The game is a long-term color adventure, not a one-off high-score arcade loop.
+Its **career profile** is separate from any single run. A failed board never
+takes away previously unlocked levels, best star ratings, earned rank or
+cosmetic bubble styles. The first implementation is a versioned Arcade save
+on the current browser/device, including backwards compatibility with the
+previous version-1 checkpoint. **Cloud/account sync is a separate remaining
+task and is not yet delivered**; guest saves need a safe account-claim migration.
+
+- Story's 30 chapters/boards remain unlocked permanently once completed. The
+  level selector can replay any unlocked stage and keeps the best of 1–3 stars
+  earned on that level. Stars are awarded based on shots used, with reruns
+  allowing improved medals. Later, the scrolling map should show all 30
+  locations, best star ratings and milestones, not just a numeric selector.
+- All popped and dropped bubbles grant Color XP. Clearing a stage grants
+  additional XP and stars. A permanent **Color Rank** rises on a gradually
+  growing XP curve, and unlocks cosmetic bubble looks: glass (1), candy (4),
+  starlight (9), and prismatic (15). Cosmetic unlocks do not change the
+  underlying collision mechanics or force spending.
+- A durable profile records career XP, highest unlocked story stage, 30 best
+  star ratings, lifetime bubble rescues, best Classic score and Classic runs.
+  It survives game-over and voluntary exits. A board itself is recreated from
+  the stage upon resume; mid-shot state is not yet saved.
+- **Classic Mode:** select an infinite bubble-shooter run with pressure rising
+  after shots, original matching, no special power bubbles, separate local
+  personal best and runs played. A Classic loss never rewinds Story. Per-mode
+  online leaderboard partitioning is still required before ranked competition.
+- **Special orbs:** earn a Prism that mimics a helpful adjacent hue, a Burst
+  that clears local neighbors, and a Ribbon that clears a row. Unlocked by
+  Color Rank and earned through clearing bubbles, not purchasable. Classic
+  mode disables them. These effects are drawn with distinct pulsing rings
+  and sparkle fragments; bigger authored animations, sound and effects
+  remain on the finite art/audio roadmap.
+- **Never add Candy Crush-style predatory energy, timed heart refills or
+  currency purchase gates.** The good part to borrow is visible lasting
+  progress, better mastery, replayable levels and surprise rewards, not
+  dark-pattern spending loops.
+
+**Save invariant:** after game-over, `save` must still return the career
+snapshot (not `null`), because the Arcade store interprets null as erasure.
+A saved v1 checkpoint must migrate to v2 without losing its unlocked stage.
+Validate and bound every untrusted save field; old saves and failed shots
+must not erase more recent star/rank progress.
+
 ## The full campaign (build requirements beyond the first slice)
 
 | Chapter | Stages | Story beat | New mechanic | Boss or finale |
@@ -47,6 +93,64 @@ Before stages 10, 20 and 30, choose one of two acts of care: repair the neighbor
 - **The Rainbow Riot:** restore all districts but choose to shut the Sorter down; the city celebrates its freedom.
 - **The Listening Machine:** help the Sorter learn to ask permission; it becomes a voluntary color consultant.
 - **Every Shade Belongs (true ending):** rescue all three lost citizen stories, complete the six chapters without erasing anyone, and give the Sorter a non-coercive role. Superkate hosts a community color party; everyone chooses their own look.
+
+### Audio delivery status: original adaptive music, not final mastered tracks
+
+The Kind Robots game PR now contains six original synthesized neighborhood
+themes, six faster chapter-showdown arrangements (stage 5/10/15/20/25/30),
+a dedicated Classic loop and a calmer title/menu loop, plus responsive shoot,
+bubble-pop, row-blast, stage-clear and lost-life sound effects. The native
+Settings screen can independently toggle music, effects, animation and
+contrast, while its master volume and mute drive the *same* Arcade audio
+mixer used by the surrounding cabinet. The settings live in the versioned
+Spectrum career save; the Arcade-wide volume remains the shared source.
+
+Important remaining deliverables: authored, approved and delivered mastered
+music stems for each chapter, real audio balance tests on mobile and desktop,
+mute/unmute transitions, chapter-boss reveal sequences and final QA. Synth
+fallbacks are playable original music, not proof that the recorded soundtrack
+was produced. Task t-182 remains partial until these checks are green.
+
+## Retro-modern presentation contract (Silas, 2026-11-22 PT)
+
+**The game is the interface.** The player enters Superkate's Spectrum through
+the existing Arcade console cabinet, not through a stack of independent admin
+pages. The cabinet silhouette, original chiptunes, score displays and joyful
+precision of the classic puzzle-shooter era remain the DNA, while the actual
+interaction behaves like a current polished game: tactile high-resolution
+bubbles, bold animated feedback, modern accessible controls and a visually
+legible, responsive one-screen stage.
+
+The game home is a single connected place for:
+
+- **Play:** Story map and the separate pressure-driven Classic mode.
+- **Scrapbook:** saved progress for all 30 stage stars, citizen and character
+  memories, six neighborhoods, three ending illustrations, collectible
+  orb styles and gameplay discoveries. Locked entries tease the next reward.
+- **Achievements:** three global Arcade awards and meaningful chapter
+  milestones. Trophies earned in-game display in the user's scrapbook and
+  global achievement shelf; locked trophies expose helpful hints.
+- **Settings:** volume, music/effects mixing, CRT/pixel/HD preferences,
+  reduced animation, high contrast, glyphs, aim-guide assistance and input
+  help. Share ownership with existing Arcade settings, do not duplicate the
+  actual audio source of truth.
+- **Account:** explicit device versus account-save state, signed-in cloud
+  backup and guest progression adoption without silently losing either
+  version. Revision conflicts merge monotonically and retry safely.
+
+Controller/keyboard and large touch targets must reach these screens from
+within the cabinet. Keep gameplay and hub visually coherent and one screen,
+including mobile portrait 390px. UI chrome should use polished glass, enamel
+and candy color, not tiny pixel-font walls of instructions. The *playfield* can
+remain retro-inspired without making the interface feel like a museum exhibit.
+
+**Production distinction:** The initial PR implements an in-canvas hub,
+private account-save model/endpoints, original 6-region oscillator themes,
+Classic track and three global achievement definitions. Authenticated
+cross-device workflow requires final CI, schema deployment, direct sign-in
+and account-switch tests before it can be called verified. Premium album
+portraits, published recordings, mobile touch polish and final menu
+presentation remain incomplete. No image-queue request constitutes delivery.
 
 ## Game modes and replay
 
