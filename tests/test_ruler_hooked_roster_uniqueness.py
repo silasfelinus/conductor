@@ -61,3 +61,14 @@ def test_cross_deck_card_reference_remains_legal(tmp_path):
         encoding="utf-8",
     )
     assert [entry["id"] for entry in queue.read_cards(content)] == ["royal-weir"]
+
+
+def test_roster_summary_counts_source_rows_not_art_variants():
+    cast = [{"slug":f"visitor-{i}"} for i in range(12)]
+    fish = [{"slug":f"fish-{i}"} for i in range(36)]
+    cards = [{"id":f"card-{i}"} for i in range(84)]
+    regions = {f"region-{i}": {} for i in range(13)}
+
+    assert queue.roster_summary(cast, fish, cards, regions) == (
+        "rosters: cast 12 · fish 36 · cards 84 · regions 13"
+    )

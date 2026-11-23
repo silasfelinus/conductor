@@ -2120,6 +2120,14 @@ def render_block(entries: list[dict]) -> str:
     )
 
 
+def roster_summary(cast: list[dict], fish: list[dict], cards: list[dict], regions: dict) -> str:
+    """Source roster census, independent of art variants and selected lanes."""
+    return (
+        f"rosters: cast {len(cast)} · fish {len(fish)} · "
+        f"cards {len(cards)} · regions {len(regions)}"
+    )
+
+
 def lane_counts(entries: list[dict], existing: set[str]) -> list[tuple[str, int, int]]:
     """(lane, staged, unstaged) for every lane in LANES, sorted by lane name."""
     rows = []
@@ -2175,19 +2183,23 @@ def main() -> int:
 
     content_ts = find_content_bundle()
     cast = read_cast(content_ts)
+    fish = fish_entries()
+    cards = card_entries(content_ts)
+    regions = read_regions(content_ts)
+    print(roster_summary(cast, fish, cards, regions))
     entries = (
         concept_entries(cast)
         + expression_entries(cast)
         + alt_vista_entries()
         + ruler_entries()
-        + fish_entries()
+        + fish
         + reward_entries(content_ts)
         + ending_entries(content_ts)
-        + card_entries(content_ts)
+        + cards
         + console_entries(cast)
     )
     if args.include_layers:
-        entries += layer_entries(read_regions(content_ts))
+        entries += layer_entries(regions)
     assert_contract(entries)
 
     text = ART_PROMPTS.read_text(encoding="utf-8")
