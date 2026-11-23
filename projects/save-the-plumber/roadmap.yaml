@@ -611,3 +611,5 @@ tasks:
       Partial Maker settings atomicity fix: validate before undo mutation, ignore unchanged settings, and surface invalid settings without corrupting editing history. PR pending CI. Advanced Maker and community scope remains.
 
       2026-11-23 PT: Atomic Maker settings fix merged as kind_robots#5673 at 46820f8 after all eight latest-head CI workflows completed successfully. Invalid settings no longer corrupt undo history and unchanged settings do not create undo steps. This is partial Maker work; advanced editing and community publishing remain unfinished.
+
+      Fixed out-of-order Maker review loads, stale network errors and request busy-state races; added regression contract assertions. Partial Maker scope; PR pending CI.
