@@ -1,0 +1,82 @@
+date: '2026-11-23'
+entries:
+- slug: not-found-plain-title
+  title: The 404 page says Page not found
+  target: interface-vision
+  roadmap_task: t-151
+  kind: front-door
+  summary: A visitor who hit a missing page saw a browser tab reading 'Direction | Kind Robots'; it now reads 'Page
+    not found' and links the site map.
+  status: in-progress
+  pull_request: https://github.com/silasfelinus/kind_robots/pull/5654
+  checks_url: https://github.com/silasfelinus/kind_robots/actions/runs/45142660780
+  next_step: 'Auto-merge (squash) is enabled on kind_robots#5654; it lands once required CI checks pass. Record
+    merge_sha and checks: passed after it merges.'
+  art: &id001
+    status: not-required
+  verification: 'Locally: verifyFrontDoorPolish.test.ts section 6 pins the title and the /navigation link; verifyNoShadowedContentRoutes
+    passes.'
+  preview_url: https://kindrobots.org/this-page-does-not-exist
+- slug: login-plain-copy
+  title: The login page says what an account is for
+  target: interface-vision
+  roadmap_task: t-105
+  kind: front-door
+  summary: The login page promised a 'suite of AI-enhanced tools'; it now says a free account saves game progress
+    and art, and games stay free without one.
+  status: in-progress
+  pull_request: https://github.com/silasfelinus/kind_robots/pull/5654
+  checks_url: https://github.com/silasfelinus/kind_robots/actions/runs/45142660780
+  next_step: 'Auto-merge (squash) is enabled on kind_robots#5654; it lands once required CI checks pass. Record
+    merge_sha and checks: passed after it merges.'
+  art: *id001
+  verification: 'Locally: verifyFrontDoorPolish.test.ts forbids ''AI-enhanced''/''suite of'' and requires ''free''
+    and ''without one''.'
+  preview_url: https://kindrobots.org/login
+- slug: sitemap-trust-pages
+  title: Who-made-this, privacy and sign-up pages are in the sitemap
+  target: interface-vision
+  roadmap_task: t-144
+  kind: findability
+  summary: The public /silas, /privacy and /register pages were missing from sitemap.xml, so search engines were
+    never told about them.
+  status: in-progress
+  pull_request: https://github.com/silasfelinus/kind_robots/pull/5654
+  checks_url: https://github.com/silasfelinus/kind_robots/actions/runs/45142660780
+  next_step: 'Auto-merge (squash) is enabled on kind_robots#5654; it lands once required CI checks pass. Record
+    merge_sha and checks: passed after it merges.'
+  art: *id001
+  verification: 'Locally: verifySharePreview.test.ts requires all three in the sitemap and backed by real content
+    pages.'
+  preview_url: https://kindrobots.org/sitemap.xml
+- slug: signed-in-pages-say-so
+  title: Chats and Themes describe themselves plainly
+  target: interface-vision
+  roadmap_task: t-104
+  kind: front-door
+  summary: Chats claimed 'curated messages from across our digital domains' though it needs a sign-in; it now says
+    so, and Themes drops filler copy.
+  status: in-progress
+  pull_request: https://github.com/silasfelinus/kind_robots/pull/5654
+  checks_url: https://github.com/silasfelinus/kind_robots/actions/runs/45142660780
+  next_step: 'Auto-merge (squash) is enabled on kind_robots#5654; it lands once required CI checks pass. Record
+    merge_sha and checks: passed after it merges.'
+  art: *id001
+  verification: 'Locally: verifyFrontDoorPolish.test.ts requires ''sign in free'' on Chats and forbids the old filler
+    on Themes.'
+  preview_url: https://kindrobots.org/themes
+- slug: jellybeans-signin-honest
+  title: The Jellybeans page says how the hunt works
+  target: kr-arcade
+  roadmap_task: t-156
+  kind: front-door
+  summary: The signed-in Jellybeans page described a delightful quest; it now says to find hidden jellybeans, earn
+    three per game, and sign in free to track them.
+  status: in-progress
+  pull_request: https://github.com/silasfelinus/kind_robots/pull/5654
+  checks_url: https://github.com/silasfelinus/kind_robots/actions/runs/45142660780
+  next_step: 'Auto-merge (squash) is enabled on kind_robots#5654; it lands once required CI checks pass. Record
+    merge_sha and checks: passed after it merges.'
+  art: *id001
+  verification: 'Locally: verifyFrontDoorPolish.test.ts requires ''sign in free'' and forbids ''delightful quest''.'
+  preview_url: https://kindrobots.org/achievements
