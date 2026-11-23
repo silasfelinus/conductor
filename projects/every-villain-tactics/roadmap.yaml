@@ -646,15 +646,14 @@ tasks:
   - id: t-029
     milestone: m4
     title: "Ship original tactical music and contextual combat SFX with accessible persistent mixer before human playtests"
-    status: review
-    claimed_by: 20261122T233800Z-evt-t029-original-sound-q7m2
-    claimed_at: '2026-11-22T23:37:16.606Z'
-    updated: '2026-11-22T23:40:00.134Z'
+    status: ready
+    updated: '2026-11-23T05:52:50Z'
     depends_on: []
-    owner: worker
     passes: 0
     stakes: reversible
     note: |-
       Silas's explicit 2026-11-22 PT pre-playtest requirement. Dedicated audio was absent from the finite tactical roadmap and page implementation. Compose original title, planning, action, danger, victory/defeat and cinematic/ending themes without borrowed franchise material. Hook meaningful sound to selecting, moving, shooting, ability counters, hit, damage, defeat, rescue, objectives, turn change, villain-reveal and mission outcomes; keep gameplay deterministic and never play during headless tests. Offer separately persisted master/music/SFX levels, mute, browser gesture unlock, SSR/hidden-tab cleanup and accessible visual equivalents. Verify cue mapping and preferences with tests plus at least one real browser playback, mobile mute/resume and cross-route cleanup check. Before claiming completion confirm original score and audible assets/oscillators are actually usable in the live game.
 
       Original seven-mood WebAudio score and 13 context-mapped tactical sound effects implemented on a scoped Kind Robots worker branch. The game now unlocks playback from real gestures, follows battle/scene/turn/impact state with pure deterministic cues, persists master/music/effects/mute controls, pauses on hidden tabs, and disposes the player on route exit. Dedicated Node regression and source integration checks are included in the Tactics test command. PR CI and real post-merge browser/mobile playback proof are pending, so t-029 remains in review rather than being marked delivered.
+
+      Merged original sound implementation Kind Robots #5608 as 91f146a048a1188fa253c4f2df1f1c58b492b214 after all ten required latest-head workflows completed successfully. Seven original synthesized score themes, 13 contextual cues, gesture unlock, persistent mixer and reduced-interruption route cleanup are on main. Final self-hosted deployment, actual playback, phone mute/resume and speaker audition remain unverified; t-029 is partial and must return ready, not done.
