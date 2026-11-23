@@ -2568,13 +2568,15 @@ tasks:
     owner: worker
     claimed_by: 2026-11-23T081000Z-kr-arcade-t154-r6m2
     claimed_at: '2026-11-23T08:10:00Z'
-    updated: '2026-11-23T08:18:00Z'
+    updated: '2026-11-23T08:22:00Z'
     passes: 0
     stakes: reversible
     note: |-
       Follow-up to silasfelinus/kind_robots#3606 (closed by kind_robots#3681, which shipped the soundtrack manifest, the gesture-safe mixer and admin-only GET/POST /api/arcade/audio-jobs). (1) Add an admin page plus a content/channels/admin/*.md tab (requiredRole ADMIN) over those endpoints: list briefs per cabinet/cue, relay readiness, existing jobs, and an Approve button that POSTs {game, cue, approve: true}. (2) Have Gloom Invaders, Ghost Trail and Prize Show Panic set musicScene ('boss' / 'level-2') so the cabinet crossfades between tracks, and call playCue for the shared cues where it fits. (3) Check in a real browser at 390/768/1440 and with a gamepad: no sound before the first gesture, mute and the Vol slider work, and music stops on cabinet exit and route change. Does not enable generation; that is t-155.
 
       2026-11-23 PT: implemented an admin-only Arcade Soundtrack Studio page with channel registration, per-cue brief list, relay readiness and existing ArtJob status, explicit approve/retry actions using the existing secured API, and client-side gating that cannot bypass server authorization. Added unit and source contract coverage to verifyArcadeSoundtrackBriefs. Kind Robots worker PR awaits final-head CI. Remaining t-154 scope includes Gloom Invaders, Ghost Trail, and Prize Show Panic soundtrack scene-switching and post-deploy browser/audio-device verification; do not mark full task done on this UI slice alone.
+
+      Follow-up on open Kind Robots PR #5652 (commit 7ebdf2e): added musicScene getters to Gloom Invaders, Prize Show Panic and Zuzu Ghost Trail for pressure-based level-2 transitions, later-episode themes and live boss cues; source contracts now assert those hooks. Still pending CI, verified rendered/ingested recordings, shared playCue integration and real browser/gamepad/audio QA. No generation enabled, no publication or deployment.
   - id: t-155
     milestone: m8
     title: "Turn on ACE arcade soundtrack generation, ingest the first approved track, and listen to it in a cabinet"
