@@ -944,10 +944,170 @@ fish:
       Appeared when high order and miserable subjects turned the far shore into a place of
       punishment.
 
+  - slug: lilypad-chorister
+    name: Lilypad Chorister
+    source: ruler-hooked
+    affinity: GOOD
+    rarity: COMMON
+    habitats: [near_bank, lake]
+    silhouette: >-
+      small pearl-white fish with a crown of five flat green lily petals around its head and a tiny pink throat pouch
+    distinction: >-
+      The petal crown opens like a floating flower as the throat pouch swells into a bright violet singing bubble.
+    frame_override: >-
+      one complete fish shown clearly in side profile on clean open water
+    style_override: >-
+      psychedelic rainbow fantasy, vibrant cyan magenta lime violet and coral, energetic hand-drawn black contour lines, delicate worn screenprint grain, vividly painted creature against deep ultramarine water
+    unlock:
+      all:
+        - flags: [shallowsNursery]
+          sliders: { nature: { gte: 60 } }
+      closes:
+        - flags: [shallowsDredged]
+    catch_behavior: >-
+      Travels in a singing shoal and takes the lure only between two synchronized ripples.
+    fishopedia_note: >-
+      It has never missed a festival rehearsal. The musicians refuse to admit it has perfect pitch.
+    consequence_reveal: >-
+      The protected nursery brought back shallow lily beds where these tiny choristers gather.
+
+  - slug: covenant-glimmerfin
+    name: Covenant Glimmerfin
+    source: ruler-hooked
+    affinity: GOOD
+    rarity: RARE
+    habitats: [castle_grounds, near_bank]
+    silhouette: >-
+      slender cobalt shad with an oversized translucent fan tail split into seven radiant coral and gold rays
+    distinction: >-
+      Its seven tail rays overlap into a bright sunburst when two fish circle each other in clear moat water.
+    frame_override: >-
+      one complete fish shown clearly in side profile on clean open water
+    style_override: >-
+      psychedelic rainbow fantasy, vibrant cyan magenta lime violet and coral, energetic hand-drawn black contour lines, delicate worn screenprint grain, vividly painted creature against deep ultramarine water
+    unlock:
+      all:
+        - flags: [publicTrust]
+          sliders: { joy: { gte: 55 } }
+      closes:
+        - flags: [moatFishedOut]
+    catch_behavior: >-
+      Circles the float in wide arcs and settles when the angler lets the line go slack.
+    fishopedia_note: >-
+      The court tried to appoint it keeper of promises. It declined the chain of office.
+    consequence_reveal: >-
+      The public moat trust made room for shimmering schools instead of a private royal fish pantry.
+
+  - slug: border-accordionfish
+    name: Border Accordionfish
+    source: ruler-hooked
+    affinity: NEUTRAL
+    rarity: UNCOMMON
+    habitats: [far_shore, lake]
+    silhouette: >-
+      long jade pipefish with alternating wide and narrow body rings in turquoise orange and rose and a curled brass-colored snout
+    distinction: >-
+      Its concertina body flexes into a zigzag as it slips between two differently colored currents.
+    frame_override: >-
+      one complete fish shown clearly in side profile on clean open water
+    style_override: >-
+      psychedelic rainbow fantasy, vibrant cyan magenta lime violet and coral, energetic hand-drawn black contour lines, delicate worn screenprint grain, vividly painted creature against deep ultramarine water
+    unlock:
+      all:
+        - flags: [envoyTreatySigned]
+          sliders: { prosperity: { gte: 60 } }
+    catch_behavior: >-
+      Folds into the trade current on a pause, then springs forward in three short pulls.
+    fishopedia_note: >-
+      It crosses the border twice per breath and still has no opinion on tariffs.
+    consequence_reveal: >-
+      The treaty opened a braided river route that these strange travelers could follow.
+
+  - slug: millwhistle-rudd
+    name: Millwhistle Rudd
+    source: ruler-hooked
+    affinity: NEUTRAL
+    rarity: COMMON
+    habitats: [village_edge, near_bank]
+    silhouette: >-
+      rounded silver rudd with two spinning copper pinwheel fins and a narrow upward-pointing lavender mouth
+    distinction: >-
+      Each wheel fin holds four clean curved blades that scatter rainbow droplets in the millrace.
+    frame_override: >-
+      one complete fish shown clearly in side profile on clean open water
+    style_override: >-
+      psychedelic rainbow fantasy, vibrant cyan magenta lime violet and coral, energetic hand-drawn black contour lines, delicate worn screenprint grain, vividly painted creature against deep ultramarine water
+    unlock:
+      all:
+        - flags: [weirLadder]
+          sliders: { prosperity: { gte: 50 } }
+      closes:
+        - flags: [runBlocked]
+    catch_behavior: >-
+      Moves in measured bursts with the waterwheel; holding the line steady catches it between turns.
+    fishopedia_note: >-
+      The miller says it keeps better time than his clock. The clock has lodged an appeal.
+    consequence_reveal: >-
+      A working fish ladder gave the millrace enough current for spinning-fin rudd.
+
+  - slug: tarflower-catfish
+    name: Tarflower Catfish
+    source: ruler-hooked
+    affinity: EVIL
+    rarity: RARE
+    habitats: [village_edge, lake]
+    silhouette: >-
+      broad midnight-blue catfish with four thick magenta whiskers ending in oily five-petal black flowers
+    distinction: >-
+      Each flower leaves a thin iridescent oil ring when the catfish brushes the water surface.
+    frame_override: >-
+      one complete fish shown clearly in side profile on clean open water
+    style_override: >-
+      psychedelic rainbow fantasy, vibrant cyan magenta lime violet and coral, energetic hand-drawn black contour lines, delicate worn screenprint grain, vividly painted creature against deep ultramarine water
+    unlock:
+      all:
+        - flags: [riverConcession]
+          sliders: { treasury: { gte: 60 }, nature: { lte: 45 } }
+      closes:
+        - flags: [riverCommons]
+    catch_behavior: >-
+      Stays motionless in the shadow of barges before one powerful dive under a floating slick.
+    fishopedia_note: >-
+      The concession clerk described it as a growth industry and had to wipe his boots afterward.
+    consequence_reveal: >-
+      Industrial toll barges left stagnant oily corners where tarflowers spread.
+
+  - slug: ironmandate-skate
+    name: Ironmandate Skate
+    source: ruler-hooked
+    affinity: EVIL
+    rarity: EPIC
+    habitats: [far_shore, castle_grounds]
+    silhouette: >-
+      wide dark-violet freshwater skate with squared brass-studded wings and a long crimson tail ending in a blunt iron paddle
+    distinction: >-
+      Its wing studs form two rows of raised geometric squares that flash copper as it rolls above the lakebed.
+    frame_override: >-
+      one complete fish shown clearly in side profile on clean open water
+    style_override: >-
+      psychedelic rainbow fantasy, vibrant cyan magenta lime violet and coral, energetic hand-drawn black contour lines, delicate worn screenprint grain, vividly painted creature against deep ultramarine water
+    unlock:
+      all:
+        - flags: [exclusivePier]
+          sliders: { order: { gte: 60 }, joy: { lte: 45 } }
+      closes:
+        - flags: [workingWaterfront]
+    catch_behavior: >-
+      Pins itself to the silty bottom and releases in one violent sideways sweep when the line tightens.
+    fishopedia_note: >-
+      Its territory has posted opening hours. The lake does not recognize them.
+    consequence_reveal: >-
+      Guarded private docks created the quiet fenced shallows where ironmandate skates now lurk.
+
 # Historical acceptance applies to the first 15 fish, not the expanded catalog.
 # The approved shipping target is 40-60 illustrated species.
 catalog_target: { minimum: 40, maximum: 60, approved: '2026-09-30' }
-expanded_roster: { total: 36, GOOD: 12, NEUTRAL: 12, EVIL: 12 }
+expanded_roster: { total: 42, GOOD: 14, NEUTRAL: 14, EVIL: 14 }
 
 slice_acceptance:
   counts: { total: 15, GOOD: 5, NEUTRAL: 5, EVIL: 5 }
