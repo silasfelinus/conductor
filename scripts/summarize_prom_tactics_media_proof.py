@@ -19,7 +19,8 @@ import yaml
 
 TOKEN = re.compile(r"([a-z_]+)=([A-Za-z0-9._/-]+)")
 GAME_EVENT = re.compile(r"\b(GAME_PATH_OK|GAME_PATH_FAILED|VERIFIED|FAILED)\s")
-PRIVATE_EVENT = re.compile(r"\bPRIVATE_POLICY_(VERIFIED|FAILED)(?:=([0-9]+))?\s+ledger=([A-Za-z0-9._-]+)")
+PRIVATE_OK = re.compile(r"\bPRIVATE_POLICY_VERIFIED=([0-9]+)\s+ledger=([A-Za-z0-9._-]+)")
+PRIVATE_FAILURE = re.compile(r"\bPRIVATE_POLICY_FAILED=([A-Za-z0-9._-]+)")
 SAFE_REASON = re.compile(r"^[A-Za-z]+(?:Error|Exception)$")
 STATUS = ("verified", "failed", "unknown")
 
@@ -72,6 +73,7 @@ def apply_log(rows, log_text):
     """Join only exact whitelisted keys/ArtImages from the current Actions log."""
     by_key = {(row["key"], row["image_id"]): row for row in rows.values()}
     private_groups = {}
+    failed_groups = set()
     for line in log_text.splitlines():
         match = GAME_EVENT.search(line)
         if match:
@@ -102,13 +104,13 @@ def apply_log(rows, log_text):
                     raw_reason if SAFE_REASON.fullmatch(raw_reason)
                     else "RuntimeCheckFailed"
                 )
-        private_event = PRIVATE_EVENT.search(line)
-        if private_event:
-            _, count, ledger = private_event.groups()
-            if private_event.group(1) == "VERIFIED" and count:
-                private_groups[ledger] = int(count)
-            elif private_event.group(1) == "FAILED":
-                private_groups[ledger] = -1
+        private_ok = PRIVATE_OK.search(line)
+        if private_ok:
+            count, ledger = private_ok.groups()
+            private_groups[ledger] = int(count)
+        private_failed = PRIVATE_FAILURE.search(line)
+        if private_failed:
+            failed_groups.add(private_failed.group(1))
     for ledger, count in private_groups.items():
         group = [row for row in rows.values() if row["ledger"] == ledger]
         if count == len(group) and group and all(
@@ -117,10 +119,11 @@ def apply_log(rows, log_text):
         ):
             for row in group:
                 row["private"] = "verified"
-        elif count == -1:
-            for row in group:
-                if row["private"] != "failed":
-                    row["private"] = "unknown"
+    for ledger in failed_groups:
+        for row in rows.values():
+            if row["ledger"] == ledger:
+                row["private"] = "unknown"
+                row["private_group_failed"] = True
     return rows
 
 
@@ -130,7 +133,13 @@ def summarize(rows):
         phase: {status: sum(row[phase] == status for row in ordered) for status in STATUS}
         for phase in ("source", "runtime", "private")
     }
-    return {"total": len(ordered), "counts": counts, "rows": ordered}
+    failed_groups = sorted({
+        row["ledger"] for row in ordered if row.get("private_group_failed")
+    })
+    return {
+        "total": len(ordered), "counts": counts,
+        "private_group_failures": failed_groups, "rows": ordered,
+    }
 
 
 def formatted_report(report, *, all_rows=False):
@@ -143,6 +152,8 @@ def formatted_report(report, *, all_rows=False):
             for status in STATUS
         ),
     ]
+    for ledger in report["private_group_failures"]:
+        lines.append(f"PRIVATE_POLICY_GROUP_FAILED ledger={ledger}")
     for row in report["rows"]:
         if not all_rows and all(row[field] == "verified" for field in ("source", "runtime", "private")):
             continue
@@ -181,7 +192,14 @@ def markdown_report(report):
             f"{row['runtime']} | {row['private']} | {row['reason'] or '-'} |"
         )
     if not failing:
-        lines.append("| - | No explicit failures recorded | - | - | - | - |")
+        lines.append("| - | No explicit per-image failures recorded | - | - | - | - |")
+    if report["private_group_failures"]:
+        lines.extend([
+            "",
+            "Private policy metadata failed for one or more ArtImages in: "
+            + ", ".join(report["private_group_failures"])
+            + ". The exact offending image is not identified; individual statuses remain UNKNOWN.",
+        ])
     lines.extend(["", "Recorded receipts do not certify composition review, character canon or gameplay attachment."])
     return "\n".join(lines) + "\n"
 
