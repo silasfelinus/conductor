@@ -1736,18 +1736,18 @@ tasks:
   - id: t-103
     milestone: m8
     title: "Hedgehog Crossing depth slice 2: Leg 1 and the scrolling engine"
-    status: ready
+    status: review
     passes: 0
     stakes: reversible
+    owner: worker
+    claimed_by: 2026-11-23T001630Z-kr-arcade-t-103-j2q9
+    claimed_at: '2026-11-23T00:16:30Z'
     depends_on: t-102
-    note: >-
-      CABINETS.md section 16, Hedgehog Crossing (Frogger riff), slice 2 of 4: Leg 1 and the scrolling engine.
-      The upgrade is "The Long Way Home". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read the game's
-      section first; this slice's scope is item 2 under its '#### Slices', and 'Rules for every slice' at the
-      top applies. Code: kind_robots utils/arcade/games/ (registry slug hedgehog-crossing). Silas, 2026-10-11:
-      "I need an assessment done of the other arcade games. I want the same level of quality improvements,
-      they should not just be thin veneers of the old games. But newer, better, even more awesome."
-    updated: '2026-11-22T00:04:00Z'
+    note: |-
+      CABINETS.md section 16, Hedgehog Crossing (Frogger riff), slice 2 of 4: Leg 1 and the scrolling engine. The upgrade is "The Long Way Home". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read the game's section first; this slice's scope is item 2 under its '#### Slices', and 'Rules for every slice' at the top applies. Code: kind_robots utils/arcade/games/ (registry slug hedgehog-crossing). Silas, 2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality improvements, they should not just be thin veneers of the old games. But newer, better, even more awesome."
+
+      2026-11-22 PT: partial Leg 1 implementation under worker/kr-arcade-t-103-market-crossings-j2q9. Park Lane levels 1-5 and Market Day levels 6-10 now have separate data-defined lane rosters; Market Day introduces shopper crowds, rolling barrels and floating canal crates with new visual silhouettes and collision contracts. Added seeded-layout and ride/bonk regression assertions to test:arcade-engine. Big Crossing vertical scrolling, special objectives, music transitions, pantry and saves are still unimplemented and this nonrecurring task must return to ready after merge.
+    updated: '2026-11-23T00:19:08.698Z'
 
   - id: t-104
     milestone: m8
@@ -2719,11 +2719,11 @@ tasks:
   - id: t-164
     milestone: m10
     title: "Cross-game responsive resolution, render-budget and character-readability contract (issue #4062)"
-    status: ready
+    status: review
     passes: 0
     stakes: reversible
     source_issue: silasfelinus/kind_robots#4062
-    updated: '2026-11-15T13:31:00Z'
+    updated: '2026-11-23T00:15:00Z'
     note: |-
       Silas-directed 2026-10-23. Begin with shared Arcade display fit and backing-pixel budget, actual height/width responsive bounds and regression tests at phone landscape/portrait, tablet and desktop DPRs. Follow with genre-specific camera and sprite legibility improvements for Save the Plumber, Rainbow Princess, Ghost Trail, Zuzu Showdown, classic cabinets and Memory Dungeon, without changing deterministic gameplay or forcing square memory boards into 16:9. Full acceptance and per-game follow-up specification: kind_robots issue #4062.
 
@@ -2742,6 +2742,11 @@ tasks:
       2026-11-15 PT: Brick Bloom follow-up touch ergonomics committed as f5f882c on worker/kr-arcade-t-164-paddle-slide-lane-a73c09. Adds dedicated full-width finger lane beneath the playable canvas with portrait/landscape sizing, keeps canvas drag available, and extends real Chromium viewport matrix to phone/tablet/landscape with lane geometry and paddle-direction checks. Requeue broader kr-arcade/t-164 viewport audit after safe PR merge.
 
       Brick Bloom thumb-slide lane follow-up merged 2026-11-15 PT as silasfelinus/kind_robots#5220 (squash c4f0a1948b95473f6dd3f7a0c48a5cd1d50fc835). The game now reserves a full-width, generously tall finger strip below the scaled playfield, maintains canvas dragging, and adjusts strip size for landscape. Real Chromium browser test exercised 390x844, 768x1024, 1024x1366 and 844x390 at DPR 1/2/3, verified unobstructed layout and paddle travel; screenshot artifact 14163208317 visually inspected. All 15 substantive PR checks green; optional Prettier autofix skipped. No deployment attempted. Keep broader cross-game issue #4062 open and return t-164 to ready for remaining viewport/readability/QA work.
+
+      2026-11-22 PT: implementation slice on worker/kr-arcade-t-164-adaptive-render-k7m2: HD Arcade canvas now samples actual render cost and adjusts backing-store budget in measured windows; Pixel mode and deterministic simulation unchanged. Added regression tests for slow frames, recovery, spike rejection and backing-size safety. The cross-game viewport/legibility issue #4062 remains open for browser QA.
+    owner: worker
+    claimed_by: 2026-11-22T232000Z-kr-arcade-t-164-k7m2
+    claimed_at: '2026-11-22T23:20:00Z'
 
   - id: t-165
     milestone: m10

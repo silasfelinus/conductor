@@ -1,6 +1,7 @@
 """Template-filled art ledgers are refused before they reach Krea (slime-city, 2026-11-02, #6951)."""
 from pathlib import Path
 
+import pytest
 import yaml
 
 from scripts import art_ledger_authoring as auth
@@ -111,19 +112,33 @@ def test_enqueue_refuses_templated_cells(tmp_path):
     assert result == (0, len(cells))
 
 
-def test_repo_ledgers_have_no_new_templated_cells():
-    failing = {}
+@pytest.fixture(scope="module")
+def parsed_repo_ledgers():
+    """One exhaustive YAML load for both independent repo-wide quality gates."""
+    rows = []
+    # PyYAML's C SafeLoader is parity-tested for opted-in art ledgers; use it
+    # here when present, while retaining the pure-Python safe fallback.
+    loader = getattr(yaml, "CSafeLoader", yaml.SafeLoader)
     for path in auth.find_ledgers(ROOT):
         try:
-            ledger = yaml.safe_load(path.read_text())
+            ledger = yaml.load(path.read_text(), Loader=loader)
         except yaml.YAMLError:
             continue
-        if isinstance(ledger, dict) and auth.ledger_problems(ledger):
-            failing[str(path.relative_to(ROOT))] = len(auth.ledger_problems(ledger))
+        rows.append((path, ledger))
+    return tuple(rows)
+
+
+def test_repo_ledgers_have_no_new_templated_cells(parsed_repo_ledgers):
+    failing = {}
+    for path, ledger in parsed_repo_ledgers:
+        if isinstance(ledger, dict):
+            problems = auth.ledger_problems(ledger)
+            if problems:
+                failing[str(path.relative_to(ROOT))] = len(problems)
     assert set(failing) <= HELD, {k: v for k, v in failing.items() if k not in HELD}
 
 
-def test_repo_ledgers_unsubmitted_cells_pass_negation_rules():
+def test_repo_ledgers_unsubmitted_cells_pass_negation_rules(parsed_repo_ledgers):
     """Unsubmitted prose cells must not carry negations Kind Robots' prompt contract 422s.
 
     zuzu-shifting-lands ROUND-11/12 (2026-11-13 PT) shipped 19 cells with "No other figures." and
@@ -132,17 +147,16 @@ def test_repo_ledgers_unsubmitted_cells_pass_negation_rules():
     from scripts.repair_negation_art_prompts import violations
 
     failing = {}
-    for path in auth.find_ledgers(ROOT):
-        try:
-            ledger = yaml.safe_load(path.read_text())
-        except yaml.YAMLError:
-            continue
+    for path, ledger in parsed_repo_ledgers:
         if not isinstance(ledger, dict) or not isinstance(ledger.get("subjects"), list):
             continue
         for subject in ledger["subjects"]:
             if not isinstance(subject, dict) or subject.get("jobs"):
                 continue
             prose = subject.get("prompt_prose")
-            if isinstance(prose, str) and violations(prose):
-                failing[f"{path.relative_to(ROOT)}::{subject.get('key')}"] = violations(prose)
+            if not isinstance(prose, str):
+                continue
+            problems = violations(prose)
+            if problems:
+                failing[f"{path.relative_to(ROOT)}::{subject.get('key')}"] = problems
     assert not failing, failing

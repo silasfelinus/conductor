@@ -62,12 +62,17 @@ def test_private_candidate_proof_fetches_source_and_exact_game_path():
         workflow["jobs"]["verify-private-candidates"]["env"]["KR_API_TOKEN"]
         == "${{ secrets.KR_API_TOKEN }}"
     )
-    assert commands.count("verify_prom_tactics_media.py") == 2
-    assert commands.count("verify_tactics_runtime_media.py") == 2
-    assert "--require-count 4 --write-evidence" in commands
-    assert "--require-count 6 --write-evidence" in commands
-    assert commands.count("checkpoint_art_state.sh") == 2
-    assert "PRIVATE_POLICY_VERIFIED=10" in commands
-    assert 'private is not False' in commands
+    helper = ROOT / "scripts/prove_private_media_ledgers.py"
+    helper_text = helper.read_text()
+    assert "scripts/prove_private_media_ledgers.py" in commands
+    assert str(ASHA.relative_to(ROOT)) + ":4" in commands
+    assert str(CORRECTIONS.relative_to(ROOT)) + ":6" in commands
+    assert commands.count("--write-evidence --require-private") == 2
+    assert commands.count("--checkpoint-message") == 2
+    assert "verify_prom_tactics_media.py" in helper_text
+    assert "verify_tactics_runtime_media.py" in helper_text
+    assert "scripts/checkpoint_art_state.sh" in helper_text
+    assert "PRIVATE_POLICY_VERIFIED=" in helper_text
+    assert "isPublic" in helper_text
     assert "upload-artifact" not in source
     assert "art/enqueue" not in source

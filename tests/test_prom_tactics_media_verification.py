@@ -140,13 +140,48 @@ def test_workflow_probes_private_bytes_without_publishing():
     commands = "\n".join(step.get("run", "") for step in job["steps"])
     assert "verify_prom_tactics_media.py" in commands
     assert "--require-count 12" in commands
-    assert "--require-count 25" in commands
+    assert "UNSTABLE-PRODUCTION-FAMILY-ROUND-1.yaml:14" in commands
+    assert "FRANCHISE-SAFE-RERENDERS-ROUND-1.yaml:5" in commands
     assert "--require-count 172" in commands
-    assert "CANON-OUTCOME-CORRECTIONS-2026-11-22.yaml" in commands
+    assert any(
+        path.endswith("CANON-OUTCOME-CORRECTIONS-2026-11-22.yaml")
+        for path in events["push"]["paths"]
+    )
     assert "upload-artifact" not in str(flow)
     assert "art/enqueue" not in commands
     assert "--write-evidence" in commands
     assert "scripts/checkpoint_art_state.sh" in commands
+
+
+def test_original_prom_capes_media_proof_keeps_every_source_receipt_private():
+    flow = yaml.safe_load(FLOW.read_text())
+    steps = flow["jobs"]["verify-private-media"]["steps"]
+    priority = next(
+        step for step in steps
+        if "nineteen private canonical Prom paintings" in step.get("name", "")
+    )
+    command = priority["run"]
+    all_receipts = []
+    for name, count in [
+        ("UNSTABLE-PRODUCTION-FAMILY-ROUND-1.yaml", 14),
+        ("FRANCHISE-SAFE-RERENDERS-ROUND-1.yaml", 5),
+    ]:
+        path = ROOT / "projects/comet-city-academy/art" / name
+        ledger = yaml.safe_load(path.read_text())
+        receipts = candidates([path])
+        assert ledger["is_public"] is False
+        assert len(receipts) == count
+        assert all(not item["reviewed"] for item in receipts)
+        assert all(item["job_id"] > 0 and item["image_id"] > 0 for item in receipts)
+        assert f"{path.relative_to(ROOT)}:{count}" in command
+        all_receipts.extend(receipts)
+    assert len({item["image_id"] for item in all_receipts}) == 19
+    assert "scripts/prove_private_media_ledgers.py" in command
+    assert "--write-evidence --require-private" in command
+    assert "--checkpoint-message" in command
+    assert "art/enqueue" not in command
+    assert "upload-artifact" not in command
+
 
 def test_original_art_must_match_requested_geometry_and_not_be_blank():
     row = {
@@ -311,14 +346,16 @@ def test_new_art_batches_reach_private_media_and_runtime_checks():
         step.get("run", "")
         for step in flow["jobs"]["verify-private-media"]["steps"]
     )
-    assert "verify_tactics_runtime_media.py" in commands
+    helper = (ROOT / "scripts/prove_private_media_ledgers.py").read_text()
+    assert "scripts/prove_private_media_ledgers.py" in commands
     for ledger in (combat, emotions):
-        assert str(ledger.relative_to(ROOT)) in commands
-    assert "--require-count 11 --write-evidence" not in commands
-    assert "--require-count 12 --write-evidence" in commands
+        assert str(ledger.relative_to(ROOT)) + ":12" in commands
+    assert ":11" not in commands
     assert "Verify all twelve Prom companion emotions" in FLOW.read_text()
-    assert commands.count("verify_tactics_runtime_media.py") >= 3
-    assert "--require-count 12 --write-evidence" in commands
+    assert commands.count("--write-evidence --require-private") >= 3
+    assert "scripts/verify_prom_tactics_media.py" in helper
+    assert "scripts/verify_tactics_runtime_media.py" in helper
+    assert "scripts/checkpoint_art_state.sh" in helper
     assert "checkpoint_art_state.sh" in commands
 
 
@@ -346,6 +383,8 @@ def test_three_authentic_tactics_venue_paintings_have_private_gameplay_proof():
         assert relative in paths
         assert relative in commands
     assert "Verify original Tactics diner, sunken street and library" in FLOW.read_text()
-    assert commands.count('--require-count 1 --write-evidence') >= 1
-    assert 'verify_tactics_runtime_media.py "$ledger"' in commands
+    for name in expected:
+        assert "projects/every-villain-tactics/art/" + name + ":1" in commands
+    assert "--write-evidence --require-private" in commands
+    assert "scripts/prove_private_media_ledgers.py" in commands
     assert "checkpoint_art_state.sh" in commands
