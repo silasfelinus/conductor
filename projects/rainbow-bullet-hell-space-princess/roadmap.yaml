@@ -1244,12 +1244,12 @@ tasks:
   - id: t-063
     milestone: m5
     title: "Rainbow at 360x640 in the viewport suite, with a minimum rendered size for hostile shots"
-    status: review
+    status: done
     passes: 0
     stakes: reversible
     depends_on: []
     source: playtest-gap-matrix-2026-11-22
-    updated: '2026-11-23T11:29:42Z'
+    updated: '2026-11-23T12:08:50Z'
     note: >-
       PLAYTEST-GAP-MATRIX-2026-11-22 item 20 (issue #4146 section 8). verifyArcadeViewport covers Rainbow at 390x844 and wider but not 360x640, and reports sprite CSS px without asserting a floor for hostile bullets. Add the size and an assertion that hostile projectiles render at or above the readability floor at DPR 1/2/3.
 
@@ -1258,6 +1258,9 @@ tasks:
       at 360x640; halo larger; backing px >= CSS px), using the engine's exported
       RAINBOW_SHOT_BODY_RADIUS/HALO_RADIUS. Same PR adds rainbow-verifier-suite.yml so every
       verifyRainbow*.test.ts runs on Rainbow PRs. Merge when all checks complete green.
+
+      2026-11-23 PT: kind_robots#5666 merged as 23cedefd after all 23 checks completed green
+      (incl. the new Every Rainbow verifier suite and cabinet-viewport at 360x640).
     owner: reviewer
     claimed_by: session_01L5NKxaUAWmNr7wxdToBdp3
     claimed_at: '2026-11-23T10:59:22Z'
