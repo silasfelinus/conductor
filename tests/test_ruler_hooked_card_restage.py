@@ -24,7 +24,9 @@ def test_restaged_cards_retain_original_art_job_provenance():
         assert request.get("force") is True, card_id
         assert request.get("auto_submit") is True, card_id
         assert request.get("superseded_art_job_id"), card_id
-        assert not request.get("last_art_job_id"), card_id
+        # Enqueue records the new job id while the request is still pending
+        # (submitted, not yet rendered); it must never point back at the old job.
+        assert request.get("last_art_job_id") != request.get("superseded_art_job_id"), card_id
         assert request.get("page_url") == queue.PAGE_URL, card_id
         assert "psychedelic rainbow" in request["prompt"], card_id
 
