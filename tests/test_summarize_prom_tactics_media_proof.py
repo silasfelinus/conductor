@@ -70,7 +70,7 @@ def test_failed_game_image_is_reported_by_exact_id_without_leaking_url(tmp_path)
     assert report["counts"]["runtime"] == {"verified": 1, "failed": 1, "unknown": 0}
     assert rows[258175]["source"] == "verified"
     assert rows[258175]["private"] == "unknown"
-    assert rows[258176]["private"] == "verified"
+    assert rows[258176]["private"] == "unknown"
     output = formatted_report(report)
     assert "image=258175" in output and "reason=HTTPError" in output
     assert "image=258176" not in output
@@ -136,3 +136,59 @@ def test_duplicate_art_image_id_is_rejected(tmp_path):
     replacement.write_bytes(original.read_bytes())
     with pytest.raises(ValueError, match="reused"):
         checkpointed_receipts([original, replacement])
+
+
+def test_private_metadata_failure_names_exact_artimage_without_group_erasure(tmp_path):
+    rows = checkpointed_receipts([sample_ledger(tmp_path)])
+    apply_log(
+        rows,
+        "GAME_PATH_OK key=prom-identities-magic-discipline-hero "
+        "job=50768 image=258175 anonymous=PRIVATE_DENIED\n"
+        "GAME_PATH_OK key=prom-identities-magic-discipline-villain "
+        "job=50769 image=258176 anonymous=PRIVATE_DENIED\n"
+        "PRIVATE_POLICY_IMAGE_FAILED ledger=private-ledger.yaml "
+        "image=258175 reason=ReportedPublic\n"
+        "PRIVATE_POLICY_IMAGE_OK ledger=private-ledger.yaml image=258176\n"
+        "PRIVATE_POLICY_FAILED=private-ledger.yaml type=PermissionError\n",
+    )
+    report = summarize(rows)
+    assert report["counts"]["private"] == {
+        "verified": 1,
+        "failed": 1,
+        "unknown": 0,
+    }
+    assert rows[258175]["reason"] == "ReportedPublic"
+    assert rows[258175]["private"] == "failed"
+    assert rows[258176]["private"] == "verified"
+    assert report["private_group_failures"] == ["private-ledger.yaml"]
+    output = formatted_report(report)
+    assert "image=258175" in output
+    assert "reason=ReportedPublic" in output
+    assert "image=258176" not in output
+    assert "ReportedPublic" in markdown_report(report)
+
+
+def test_forged_private_metadata_proof_does_not_approve_wrong_image(tmp_path):
+    rows = checkpointed_receipts([sample_ledger(tmp_path)])
+    apply_log(
+        rows,
+        "GAME_PATH_OK key=prom-identities-magic-discipline-hero "
+        "job=50768 image=258175 anonymous=PRIVATE_DENIED\n"
+        "PRIVATE_POLICY_IMAGE_OK ledger=other-ledger.yaml image=258175\n"
+        "PRIVATE_POLICY_IMAGE_OK ledger=private-ledger.yaml image=123456\n"
+        "PRIVATE_POLICY_FAILED=private-ledger.yaml type=PermissionError\n",
+    )
+    assert rows[258175]["runtime"] == "verified"
+    assert rows[258175]["private"] == "unknown"
+
+
+def test_anonymous_exposure_remains_failed_even_when_metadata_private(tmp_path):
+    rows = checkpointed_receipts([sample_ledger(tmp_path)])
+    apply_log(
+        rows,
+        "GAME_PATH_OK key=prom-identities-magic-discipline-hero "
+        "job=50768 image=258175 anonymous=PUBLIC_OK\n"
+        "PRIVATE_POLICY_IMAGE_OK ledger=private-ledger.yaml image=258175\n",
+    )
+    assert rows[258175]["private"] == "failed"
+    assert rows[258175]["reason"] == "AnonymousMediaExposure"
