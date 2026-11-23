@@ -1339,13 +1339,15 @@ tasks:
 - id: t-076
   milestone: m4
   title: Snapshot the kind_robots runtime fish slugs into a fixture so the roster-runtime parity check runs in CI instead of skipping
-  status: claimed
+  status: review
   stakes: reversible
   passes: 0
   depends_on: []
   note: |-
     Kaizen from the reviewer of conductor#7927 (t-075, 2026-11-23 PT). `test_runtime_fish_slugs_match_when_app_checkout_is_present` skips on conductor CI because there is no sibling kind_robots checkout, so the runtime half of the parity contract only runs on agent machines. Add a committed fixture of `RULER_HOOKED_FISH` slugs (refreshed by the art-queue generator or a small script) and compare against it in CI; keep the live-checkout comparison as the drift detector for the fixture itself.
-  updated: '2026-11-23T20:48:27Z'
+
+    Added a 42-slug committed Kind Robots runtime snapshot and CI-enforced parity; sibling checkout also validates snapshot freshness. PR pending checks.
+  updated: '2026-11-23T20:51:00Z'
   owner: worker
   claimed_by: 2026-11-23T204827Z-ruler-hooked-t076-x9c2
   claimed_at: '2026-11-23T20:48:27Z'
