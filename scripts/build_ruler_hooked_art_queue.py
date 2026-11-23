@@ -1383,10 +1383,14 @@ def read_cards(content_ts: Path) -> list[dict[str, str]]:
         block = re.search(rf"\n  {key}: \[(.*?)\n  \],\n", text, re.S)
         if not block:
             raise SystemExit(f"no {key}: [...] block found in {content_ts}")
+        block_seen: set[str] = set()
         for m in CARD_RE.finditer(block.group(1)):
             card = m.groupdict()
+            if card["id"] in block_seen:
+                raise SystemExit(f"{key}: duplicate ids: {card['id']}")
+            block_seen.add(card["id"])
             if card["id"] in seen:
-                raise SystemExit(f"cards: duplicate ids: {card['id']}")
+                continue
             seen.add(card["id"])
             # Which cast members this card stages, so they are drawn the same
             # way here as in their own portrait -- Vex should look like Vex on
