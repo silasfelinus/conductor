@@ -1283,3 +1283,13 @@ tasks:
     Reviewer 2026-11-23 PT: squash-merged conductor#7912 (c102a01) on all-green latest-head
     checks after restructuring the PR body to the required handoff headings. Kaizen: t-073.
   implementation_pr: 'silasfelinus/conductor#7912'
+- id: t-073
+  milestone: m6
+  title: Make the ruler-hooked art-queue generator print a one-line per-roster count summary so reviewers can spot dropped rows at a glance
+  status: ready
+  stakes: reversible
+  passes: 0
+  depends_on: []
+  note: >-
+    Kaizen from reviewer of conductor#7912 (t-072, 2026-11-23 PT). Duplicate ids now fail loudly; the remaining silent-loss mode is a roster that parses to fewer rows than authored. Print e.g. "cast 12 · fish 36 · cards 84 · regions 13" on every run and cover the format with a hermetic test. Output-only; no queue content changes.
+  updated: '2026-11-23T09:55:00Z'
