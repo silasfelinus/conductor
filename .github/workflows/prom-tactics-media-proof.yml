@@ -78,13 +78,13 @@ jobs:
           python scripts/verify_tactics_runtime_media.py \
             projects/every-villain-tactics/art/ONE-HIT-CREW-TELEGRAPHS-2026-11-20.yaml \
             --require-count 12
-      - name: Prove twenty-five priority Prom candidates before broad backfill
+      - name: Verify and checkpoint nineteen private canonical Prom paintings
         run: |
-          python scripts/verify_prom_tactics_media.py \
-            projects/comet-city-academy/art/UNSTABLE-PRODUCTION-FAMILY-ROUND-1.yaml \
-            projects/comet-city-academy/art/FRANCHISE-SAFE-RERENDERS-ROUND-1.yaml \
-            projects/comet-city-academy/art/CANON-OUTCOME-CORRECTIONS-2026-11-22.yaml \
-            --require-count 25
+          python scripts/prove_private_media_ledgers.py \
+            --ledger projects/comet-city-academy/art/UNSTABLE-PRODUCTION-FAMILY-ROUND-1.yaml:14 \
+            --ledger projects/comet-city-academy/art/FRANCHISE-SAFE-RERENDERS-ROUND-1.yaml:5 \
+            --write-evidence --require-private \
+            --checkpoint-message "chore: checkpoint nineteen priority Prom private game-media proofs [skip ci]"
       - name: Verify Prom runtime and October cast refill images
         run: |
           python scripts/verify_prom_tactics_media.py \
