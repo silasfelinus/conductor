@@ -1,4 +1,13 @@
 # art-queue-health.yaml -- written by scripts/art_queue_health.py record at the
 # end of every Auto Art Generate run. Do not hand-edit: fix the cause (see
 # docs/agents/roles/art-medic.md) and the next run drops the entry.
-failures: []
+failures:
+- source: requests
+  target: public/images/ruler-hooked/fish/border-accordionfish/bestiary.webp
+  kind: contract-rejected
+  rules:
+  - frame-noun
+  detail: 'enqueue failed: HTTP 422 Art prompt rejected by the prompt contract (1 violation): [frame-noun]
+    "exactly one single short pipefish, head to tail fully inside the frame with open water on every side,
+    shown clearly in side profile on clean o…'
+  first_seen: '2026-11-23'
