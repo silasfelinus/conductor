@@ -94,6 +94,23 @@ Before stages 10, 20 and 30, choose one of two acts of care: repair the neighbor
 - **The Listening Machine:** help the Sorter learn to ask permission; it becomes a voluntary color consultant.
 - **Every Shade Belongs (true ending):** rescue all three lost citizen stories, complete the six chapters without erasing anyone, and give the Sorter a non-coercive role. Superkate hosts a community color party; everyone chooses their own look.
 
+### Audio delivery status: original adaptive music, not final mastered tracks
+
+The Kind Robots game PR now contains six original synthesized neighborhood
+themes, six faster chapter-showdown arrangements (stage 5/10/15/20/25/30),
+a dedicated Classic loop and a calmer title/menu loop, plus responsive shoot,
+bubble-pop, row-blast, stage-clear and lost-life sound effects. The native
+Settings screen can independently toggle music, effects, animation and
+contrast, while its master volume and mute drive the *same* Arcade audio
+mixer used by the surrounding cabinet. The settings live in the versioned
+Spectrum career save; the Arcade-wide volume remains the shared source.
+
+Important remaining deliverables: authored, approved and delivered mastered
+music stems for each chapter, real audio balance tests on mobile and desktop,
+mute/unmute transitions, chapter-boss reveal sequences and final QA. Synth
+fallbacks are playable original music, not proof that the recorded soundtrack
+was produced. Task t-182 remains partial until these checks are green.
+
 ## Retro-modern presentation contract (Silas, 2026-11-22 PT)
 
 **The game is the interface.** The player enters Superkate's Spectrum through
