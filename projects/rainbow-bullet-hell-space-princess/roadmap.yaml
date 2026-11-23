@@ -1244,14 +1244,17 @@ tasks:
   - id: t-063
     milestone: m5
     title: "Rainbow at 360x640 in the viewport suite, with a minimum rendered size for hostile shots"
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
     depends_on: []
     source: playtest-gap-matrix-2026-11-22
-    updated: '2026-11-23T02:00:00Z'
+    updated: '2026-11-23T10:59:22Z'
     note: >-
       PLAYTEST-GAP-MATRIX-2026-11-22 item 20 (issue #4146 section 8). verifyArcadeViewport covers Rainbow at 390x844 and wider but not 360x640, and reports sprite CSS px without asserting a floor for hostile bullets. Add the size and an assertion that hostile projectiles render at or above the readability floor at DPR 1/2/3.
+    owner: reviewer
+    claimed_by: session_01L5NKxaUAWmNr7wxdToBdp3
+    claimed_at: '2026-11-23T10:59:22Z'
   - id: t-064
     milestone: m4
     title: "Re-render the Motherland flagship phase-2 painting so the sprung clamps and battered hull read in game"
