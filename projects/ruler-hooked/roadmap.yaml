@@ -581,7 +581,7 @@ tasks:
 - id: t-031
   milestone: m4
   title: Grow the fish roster past the 15-species vertical slice
-  status: ready
+  status: claimed
   gate_human: false
   stakes: reversible
   passes: 0
@@ -610,9 +610,12 @@ tasks:
     Expanded Kind Robots fish catalog from 18 to 36 species in app PR #5638, with ecological gating, balanced affinities and fish art prompt coverage. Conductor #7899 merged 21 high-priority pending Krea 2 art requests; Conductor #7900 is the corrective follow-up to remove nine merged duplicate catalog entries. This is partial t-031; final approved target remains 40-60 illustrated species. Await completed green CI on #5638 and #7900, then rearm as ready for the remaining catalog and art work.
 
     Reviewer (scheduled, 2026-11-23): kind_robots#5638 (36-species catalog) and conductor#7900 (dedupe of nine duplicate roster rows, keeping the copies that carry frame/style overrides) are both merged on green CI. Partial delivery; approved target is 40-60 illustrated species, so the task returns to ready for the next art-backed batch. The roster test now names duplicate slugs and accepts 36-60 species instead of pinning exactly 36.
-  updated: '2026-11-23T06:55:46+00:00'
+  updated: '2026-11-23T10:46:00Z'
   gate_rechecked: '2026-09-30'
   approved_by_human: true
+  owner: worker
+  claimed_by: 2026-11-23T104600Z-ruler-hooked-t031-b4a2
+  claimed_at: '2026-11-23T10:46:00Z'
 - id: t-032
   milestone: m4
   title: 'FINAL HUMAN GATE ONLY: approve Ruler Hooked final design or request rewrites'
