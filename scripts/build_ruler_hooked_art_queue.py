@@ -2185,8 +2185,8 @@ def main() -> int:
     cast = read_cast(content_ts)
     fish = fish_entries()
     cards = card_entries(content_ts)
-    regions = read_regions(content_ts)
-    print(roster_summary(cast, fish, cards, regions))
+    regions = read_regions(content_ts) if args.include_layers or content_ts.is_file() else {}
+    print(roster_summary(cast or [], fish, cards, regions or {}))
     entries = (
         concept_entries(cast)
         + expression_entries(cast)
