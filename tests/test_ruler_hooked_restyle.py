@@ -153,7 +153,8 @@ def staged(monkeypatch, tmp_path):
          "prompt": "fresh b"},
     ]
     monkeypatch.setattr(bruq, "find_content_bundle", lambda: tmp_path / "content.ts")
-    monkeypatch.setattr(bruq, "read_cast", lambda ts: None)
+    monkeypatch.setattr(bruq, "read_cast", lambda ts: [])
+    monkeypatch.setattr(bruq, "read_regions", lambda ts: {})
     stub_art_entry_factories(monkeypatch, bruq, {"card_entries": built})
     monkeypatch.setattr(bruq, "assert_contract", lambda entries: None)
     art = tmp_path / "art-prompts.yaml"

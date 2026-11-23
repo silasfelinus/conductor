@@ -746,7 +746,11 @@ def expect_all(parsed, block_text, label, source, key="slug"):
             f"{len(parsed)}. Unmatched: {', '.join(missing)}. The upstream formatting "
             f"changed -- fix the pattern rather than shipping a partial batch."
         )
-    assert_unique_ids([entry[key] for entry in parsed], label)
+    # Some parsers capture the id under the named group `key` while the source
+    # field is spelled differently (endings: `outcomeKey`), so accept either.
+    assert_unique_ids(
+        [entry[key] if key in entry else entry["key"] for entry in parsed], label
+    )
     return parsed
 
 

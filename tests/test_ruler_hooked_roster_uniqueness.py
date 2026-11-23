@@ -72,3 +72,17 @@ def test_roster_summary_counts_source_rows_not_art_variants():
     assert queue.roster_summary(cast, fish, cards, regions) == (
         "rosters: cast 12 · fish 36 · cards 84 · regions 13"
     )
+
+
+def test_expect_all_accepts_named_group_key_for_differently_spelled_field():
+    # endings capture `outcomeKey` under the regex group `key`; this crashed
+    # every live --check/--write run with KeyError: 'outcomeKey'.
+    block = "outcomeKey: 'a',\noutcomeKey: 'b',\n"
+    parsed = [{"key": "a"}, {"key": "b"}]
+    assert queue.expect_all(parsed, block, "endings", "content.ts", key="outcomeKey") == parsed
+
+
+def test_expect_all_names_duplicate_named_group_keys():
+    block = "outcomeKey: 'a',\noutcomeKey: 'a',\n"
+    with pytest.raises(SystemExit, match="a"):
+        queue.expect_all([{"key": "a"}, {"key": "a"}], block, "endings", "content.ts", key="outcomeKey")
