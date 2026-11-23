@@ -2918,11 +2918,9 @@ tasks:
   - id: t-177
     milestone: m12
     title: "Superkate Spectrum: deliver high-priority hero, title, icon, character portraits, six backdrops and six boss illustrations"
-    status: review
+    status: ready
     owner: worker
-    claimed_by: 20261123T044829Z-kr-arcade-t-177-superkate-boss-art-v8m3
-    claimed_at: '2026-11-23T04:48:29Z'
-    updated: '2026-11-23T04:50:33.105Z'
+    updated: '2026-11-23T05:11:33Z'
     passes: 0
     stakes: reversible
     depends_on: []
@@ -2930,6 +2928,12 @@ tasks:
       Three initial high-priority Krea 2 queue requests are in projects/art-prompts.yaml. Require recorded ArtJob IDs and delivered files, not queue-only claims. Stylized character based on user-provided photos; public portrait likeness needs Kate's consent.
 
       2026-11-22 PT: six high-priority Krea 2 adversary portrait requests committed in companion Conductor PR #7889: Greyscale Dryer, Pruner, Neon Inspector, Archivist, Sorting Machine, and Palette Keeper. Nine previous title, hero, icon and chapter scrapbook queue requests remain in the same PR. All requests are pending; no ArtJob IDs, rendered assets or delivered art were verified. User-facing Kate likeness still requires Kate's consent. Return to ready after this queue slice merges so the remaining actual artwork delivery can continue. Do not mark t-177 done.
+
+      Reviewer (scheduled agent, 2026-11-22 PT): the six Superkate boss requests and nine
+      title/hero/icon/scrapbook requests landed on main via conductor#7895 (rescue of #7889),
+      with prompts rephrased to the affirmative no-text form. All pending, none rendered. Back
+      to ready for actual art delivery, as the worker's review note asked.
+    implementation_pr: 'silasfelinus/conductor#7895'
   - id: t-178
     milestone: m12
     title: "Superkate Spectrum: author 30 curated boards with three special bubble types and six distinct chapter mechanics"
