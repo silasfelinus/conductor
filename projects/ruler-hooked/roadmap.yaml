@@ -581,10 +581,7 @@ tasks:
 - id: t-031
   milestone: m4
   title: Grow the fish roster past the 15-species vertical slice
-  status: review
-  owner: worker
-  claimed_by: 20261123T054114Z-ruler-hooked-t031-7c92ef
-  claimed_at: '2026-11-23T05:41:14.702Z'
+  status: ready
   gate_human: false
   stakes: reversible
   passes: 0
@@ -611,9 +608,9 @@ tasks:
     Partial roster expansion from 18 to 27 species (nine new balanced ecology entries) submitted in kind_robots#5638 with regression tests; companion art-generator roster in conductor#7899. Both PRs remain open awaiting completed CI; t-031 is not complete because final target is 40-60 fish.
 
     Expanded Kind Robots fish catalog from 18 to 36 species in app PR #5638, with ecological gating, balanced affinities and fish art prompt coverage. Conductor #7899 merged 21 high-priority pending Krea 2 art requests; Conductor #7900 is the corrective follow-up to remove nine merged duplicate catalog entries. This is partial t-031; final approved target remains 40-60 illustrated species. Await completed green CI on #5638 and #7900, then rearm as ready for the remaining catalog and art work.
-  updated: '2026-11-23T05:50:17.954Z'
-  implementation_pr: 'silasfelinus/kind_robots#2927'
-  soft_gate: true
+
+    Reviewer (scheduled, 2026-11-23): kind_robots#5638 (36-species catalog) and conductor#7900 (dedupe of nine duplicate roster rows, keeping the copies that carry frame/style overrides) are both merged on green CI. Partial delivery; approved target is 40-60 illustrated species, so the task returns to ready for the next art-backed batch. The roster test now names duplicate slugs and accepts 36-60 species instead of pinning exactly 36.
+  updated: '2026-11-23T06:55:46+00:00'
   gate_rechecked: '2026-09-30'
   approved_by_human: true
 - id: t-032
@@ -1268,8 +1265,7 @@ tasks:
 - id: t-071
   milestone: m6
   title: Make the ruler-hooked art-queue hermetic test fixtures fail loudly when a new *_entries lane is added without a stub
-  status: review
-  owner: worker
+  status: done
   claimed_by: 2026-11-23T053300Z-ruler-hooked-t071-9e3b7c
   claimed_at: '2026-11-23T05:33:00Z'
   stakes: reversible
@@ -1279,7 +1275,9 @@ tasks:
     Kaizen from reviewer of conductor#7886 (t-058, 2026-11-22 PT). Adding expression_entries() broke six tests in test_ruler_hooked_list_lanes.py and test_ruler_hooked_restyle.py because each fixture stubs every *_entries function by hand and read_cast returns None. Share one fixture helper that stubs every *_entries callable main() uses, or assert that coverage, so the next lane can't break the suite again.
 
     Shared art-entry fixture helper and unknown/missing-lane regressions merged in conductor#7898 commit 9f8282cd991accba05ea5a1c8893055e1522861e. Three checks successful, Worker PR CI remained queued when merged; completion awaits a real successful CI run. This supersedes the stale earlier review event stamped before the claim timestamp.
-  updated: '2026-11-23T05:40:17.143Z'
+
+    Reviewer (scheduled, 2026-11-23): conductor#7898 merged (9f8282cd). Its fixture lane-coverage tests passed in the full green Python suite of conductor#7900, which ran on top of #7898, so the CI evidence it was waiting on is in.
+  updated: '2026-11-23T06:55:47+00:00'
 - id: t-072
   milestone: m6
   title: Guard every ruler-hooked YAML roster (cast, cards, quests, regions) against duplicate ids with a test that names the duplicates
