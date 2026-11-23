@@ -1,7 +1,7 @@
 # Hopeful Hues: Superkate & the Kind Robots
 
 **Project slug:** `hopeful-hues`
-**Frontend:** `/admin/hopeful-hues` (admin preview; public `/play` promotion is a separate human gate)
+**Frontend:** `/play/hopeful-hues`, a standalone front page with a Play tab, home highlight and share card, each with art. Not an Arcade cabinet (Silas, 2026-11-22 PT).
 **Static game:** `kind_robots/public/hopeful-hues/` (vanilla JS, no build step)
 **Master issue:** [Kind Robots #5649](https://github.com/silasfelinus/kind_robots/issues/5649)
 
