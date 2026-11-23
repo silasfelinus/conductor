@@ -2967,6 +2967,12 @@ tasks:
     passes: 0
     stakes: reversible
     depends_on: [t-178]
+    note: >-
+      Silas, 2026-11-22 PT: Classic mode is now included in the first
+      playable prototype; ranked Story and Classic scoreboards must be
+      separately keyed before public competition, without erasing
+      device-local best Classic score or Story stars.
+
   - id: t-184
     milestone: m12
     title: "Superkate Spectrum: adversarial full campaign playthrough, mobile QA, save/retry/ending tests and visual acceptance"
@@ -2977,3 +2983,33 @@ tasks:
     note: >-
       Keep the game on the growing shelf until the entire finite scope is complete.
       Public use of a recognisable real-person likeness requires Kate's explicit consent.
+
+  - id: t-185
+    milestone: m12
+    title: "Superkate Spectrum: durable cross-device account saves with safe guest migration and conflict-aware career merge"
+    status: waiting
+    passes: 0
+    stakes: reversible
+    depends_on: [t-176]
+    note: >-
+      Silas, 2026-11-22 PT: wants Candy Crush-style permanent memory,
+      where progress continues across many play sessions. Initial implementation
+      is a versioned, device-local Arcade save with 30 star ratings,
+      Color Rank, XP, highest unlocked stage and Classic records. This
+      task adds authenticated cloud sync, guest-to-account adoption, race-safe
+      merges using max stage/best stars/highest ranked records, and a clear
+      account/device state indicator. No purchase or energy gates.
+  - id: t-186
+    milestone: m12
+    title: "Superkate Spectrum: navigable 30-level star map, cosmetic bubble collection and earned animated effects"
+    status: waiting
+    passes: 0
+    stakes: reversible
+    depends_on: [t-176]
+    note: >-
+      Silas, 2026-11-22 PT: visual Candy Crush-style long-term progression
+      without monetization. Existing menu has a numeric stage picker, earned
+      styles (glass, candy, starlight, prismatic), XP meter and three special
+      powers (Prism, Burst, Ribbon). Build a polished illustrated stage map,
+      level-specific medal/replay interactions, clear unlock celebrations,
+      power tutorials and mobile-friendly navigation; verify 390/768/1440.
