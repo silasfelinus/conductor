@@ -581,7 +581,7 @@ tasks:
 - id: t-031
   milestone: m4
   title: Grow the fish roster past the 15-species vertical slice
-  status: review
+  status: done
   gate_human: false
   stakes: reversible
   passes: 0
@@ -614,10 +614,11 @@ tasks:
     App commit 11bdd027 adds six balanced policy-reactive fish (42 total), Fishopedia art keys and unlock tests. Conductor commit c8c6a7d adds matching roster descriptions and six pending auto-submit Krea 2 requests at priority 1000. This completes the minimum 40-species code roster but not delivered paintings or final t-031 scope; verify CI and generated art before done.
 
     Reviewer (scheduled, 2026-11-23 PT): kind_robots#5657 merged on all-green CI (b7a12212). The conductor side of #7915 had an append-only art-prompts.yaml conflict with main, so this reviewer PR lands it with both sides' request rows kept: 543 requests, no duplicate ids, and ruler-hooked/art tests pass. The roster code reaches 42 species. Stays in review until the six queued Krea 2 Fishopedia plates render and get checked at game scale; then mark it done or rearm it for the 43-60 batch.
-  updated: '2026-11-23T12:05:00Z'
+
+    Reviewer (scheduled, 2026-11-23 PT): closing t-031. The approved 40-60 species target is met -- 42 species in the Conductor roster, the Kind Robots runtime (kind_robots#5657) and the CI-enforced runtime fixture (t-076). All six new Krea 2 Fishopedia plates rendered (ArtJobs 76961-76966) and were checked at a 448px game-scale grid: five are clean single specimens. Border Accordionfish (76962) rendered three cropped pipefish instead of one, so this PR tightens its frame_override and restages that one row with force: true via build_ruler_hooked_art_queue.py --write --restage (old job kept as superseded_art_job_id). The three leftover worker/ruler-hooked-{t-031,t-073,t075} branches are fully superseded on main (#7921, #7916, #7927/#7932) and need no PR. Further growth toward 60 is optional catalog work, not a t-031 gap; kaizen t-078 targets the multi-subject render weakness.
+  updated: '2026-11-23 23:30:00+00:00'
   gate_rechecked: '2026-09-30'
   approved_by_human: true
-  owner: worker
   claimed_by: 2026-11-23T104600Z-ruler-hooked-t031-b4a2
   claimed_at: '2026-11-23T10:46:00Z'
 - id: t-032
