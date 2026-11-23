@@ -2904,16 +2904,17 @@ tasks:
   - id: t-176
     milestone: m12
     title: "Superkate Spectrum: ship playable hex-grid color shooter, cascade, pressure, score, saves and accessibility glyphs"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 2026-11-23T032800Z-kr-arcade-t-176-superkate-progression-p8q2
     claimed_at: '2026-11-23T03:28:00Z'
-    updated: '2026-11-23T03:28:00Z'
+    updated: '2026-11-23T03:33:20.249Z'
     passes: 0
     stakes: reversible
-    note: >-
-      Silas requested the game 2026-11-22 PT with Superkate as the protagonist.
-      Implementation PR is open; this first playable slice is not the completed campaign.
+    note: |-
+      Silas requested the game 2026-11-22 PT with Superkate as the protagonist. Implementation PR is open; this first playable slice is not the completed campaign.
+
+      2026-11-22 PT: extended open Kind Robots PR #5624 with versioned permanent career saves (XP, Color Rank, stage unlocks, best stars, lifetime pops), replayable Story, endless Classic mode, four earned bubble looks, Prism/Burst/Ribbon mechanics, sparkle animations and new regression checks. Local device save survives game-over; user requested cross-device memory too. Companion Conductor PR adds t-185 cloud sync and t-186 star-map polish; neither is implemented yet. PR remains gated for Kate's consent to public portrait likeness and must pass all final-head CI before merging.
   - id: t-177
     milestone: m12
     title: "Superkate Spectrum: deliver high-priority hero, title, icon, character portraits, six backdrops and six boss illustrations"
@@ -2928,7 +2929,7 @@ tasks:
   - id: t-178
     milestone: m12
     title: "Superkate Spectrum: author 30 curated boards with three special bubble types and six distinct chapter mechanics"
-    status: waiting
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: [t-176]
@@ -2949,25 +2950,35 @@ tasks:
   - id: t-181
     milestone: m12
     title: "Superkate Spectrum: touch aim, aim assist, colorblind/high-contrast modes, calm motion and full controller support"
-    status: waiting
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: [t-176]
   - id: t-182
     milestone: m12
     title: "Superkate Spectrum: original salon and six-region music themes, matching sound effects and accessible audio settings"
-    status: ready
+    status: review
+    owner: worker
+    claimed_by: 2026-11-23T040118Z-kr-arcade-t-182-superkate-audio-n4p6
+    claimed_at: '2026-11-23T04:01:18Z'
+    updated: '2026-11-23T04:06:19Z'
     passes: 0
     stakes: reversible
-    depends_on: []
+    depends_on: []    note: >-
+      2026-11-22 PT: audio-slice submitted on Kind Robots PR #5624:
+      six region music loops, six finale arrangements, Classic and menu,
+      source-free synthesized chiptunes, shared Arcade mixer mute/volume,
+      independently saved music and effect toggles, and tests. Missing
+      recorded mastered audio, completed final-head CI and real playback
+      acceptance. Leave as review, not done.
+
   - id: t-183
     milestone: m12
     title: "Superkate Spectrum: endless, puzzle atelier, cooperative relay, achievements and ranked leaderboard fairness"
     status: waiting
     passes: 0
     stakes: reversible
-    depends_on: [t-178]
-    note: >-
+    depends_on: [t-178]    note: >-
       Silas, 2026-11-22 PT: Classic mode is now included in the first
       playable prototype; ranked Story and Classic scoreboards must be
       separately keyed before public competition, without erasing

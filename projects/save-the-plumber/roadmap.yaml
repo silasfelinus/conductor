@@ -282,9 +282,12 @@ tasks:
   - id: t-012
     milestone: m4
     title: "Produce illustrated world art, enemy animation, sound and cinematics"
-    status: ready
+    status: claimed
+    owner: worker
+    claimed_by: 2026-11-23T040400Z-save-the-plumber-t-012-au7m
+    claimed_at: '2026-11-23T04:04:00Z'
+    updated: '2026-11-23T04:04:00Z'
     depends_on: [t-002, t-006]
-    owner: null
     passes: 0
     stakes: reversible
     note: >-
@@ -333,13 +336,10 @@ tasks:
   - id: t-015
     milestone: m2
     title: "Prove the movement lab replay and real shared-cabinet controls"
-    status: review
-    owner: worker
-    claimed_by: 2026-11-23T034000Z-save-the-plumber-t-015-m7q4
-    claimed_at: '2026-11-23T03:40:00Z'
+    status: ready
     passes: 0
     stakes: reversible
-    updated: '2026-11-23T03:40:00Z'
+    updated: '2026-11-23T04:01:00Z'
     note: |-
       Reviewer kaizen after kind_robots#3564: add deterministic input replays asserting coyote time, buffered jumps, landing/camera bounds and respawn; exercise real shared ArcadeCabinet keyboard/gamepad/touch controls and visible Admin help at phone/tablet/desktop widths. Use browser fixtures with actual consumers rather than source-field matches. Keep public registry and score exclusions. Initial isolated engine pixels are not shared-cabinet/auth integration or full campaign acceptance.
 
@@ -369,10 +369,10 @@ tasks:
       Screen regex and an unused-var lint regression. Back to ready for the browser half:
       shared-cabinet keyboard/gamepad/touch fixtures and Admin help at 390/768/1440. Pre-
       existing: verifyArcadeEngine zuzu-pinball 2D-draw assertion still fails on main.
-    owner: worker
-    claimed_by: 2026-11-05T015400Z-save-the-plumber-gs
-    claimed_at: '2026-11-05T01:55:21Z'
-    implementation_pr: 'silasfelinus/kind_robots#4775'
+
+      Partial movement-feel slice: sharpened opposite-direction ground braking while preserving running momentum, with deterministic reversal replay. Implementation branch worker/save-the-plumber-t-015-turn-response-m7q4. Remaining t-015 shared-cabinet cross-width/browser acceptance; do not mark done.
+
+      PR silasfelinus/kind_robots#5627 merged at 2026-11-23T03:46:24Z. The responsive-ground-turnaround movement replay slice shipped; the shared-cabinet real-device and camera-look-ahead acceptance remains, so return this nonrecurring task to ready rather than marking it done.
 
   - id: t-016
     milestone: m4
