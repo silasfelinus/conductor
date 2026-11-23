@@ -168,7 +168,7 @@ tasks:
   - id: t-005
     milestone: m2
     title: "Implement enemy interaction, held objects and powerup systems"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 2026-11-23T051100Z-save-the-plumber-t005-stage-k4v2
     claimed_at: '2026-11-23T05:11:00Z'
@@ -193,7 +193,9 @@ tasks:
       Remaining: placing ladders and keys in campaign stages (with Levels/Gears reachability),
       slopes, carrying enemies, the Gen-2 powers, the reserve item and the ride creature. Back
       to ready.
-    updated: '2026-11-23T05:11:00Z'
+
+      Implemented a new authored World 1-2 optional high route: a floor-level brass key at column 35, a seven-rung ladder at column 39, and a padlocked upper passage at column 42. The existing fast lower corridor remains unobstructed. Added real PlumberRun campaign replay assertions for key collection, climb-to-top, bolt unlock, key consumption and lower-route accessibility. Source branch worker/save-the-plumber-t-005-campaign-route-k4v2. Remaining scope includes slopes, carryable enemies, Gen-2 reserve/powers/companion, plus further campaign gadget placements; t-005 is not fully done.
+    updated: '2026-11-23T05:21:00Z'
   - id: t-006
     milestone: m3
     title: "Build World 1: four complete garden/pipeworks levels and boss"

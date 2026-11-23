@@ -90,15 +90,12 @@ tasks:
       Full history: projects/every-villain-tactics/HISTORY.md#t-001
   - id: t-025
     title: 'Main-game standard: audit and close the gaps for Every Villain Tactics'
-    status: review
-    owner: worker
-    claimed_by: 20261123T035000Z-evt-t025-captain-art-w7k9
-    claimed_at: '2026-11-23T03:50:00Z'
+    status: ready
     milestone: m4
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-23T04:08:00Z'
+    updated: '2026-11-23T05:06:50Z'
     note: |-
       Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -141,6 +138,8 @@ tasks:
       Scoped original-art battle integration PR silasfelinus/kind_robots#5626 merged after all 8 latest-head checks completed green at c1c64583fe109c13f2e09571b2d966f8c7896781. The battle UI now attaches all 12 existing one-hit crew warning/action/counter/captain ArtImage receipts, authenticates bytes, decodes nonzero image sizes, retries transient media failures, and keeps the tactical board accessible. Broader t-025 main-game standard is still incomplete; release for another independent art-first increment. No new ArtJobs or visual approvals claimed.
 
       Scoped original-art repair ready for review: the three canonical one-hit SPECIES captains (Foreman Thumpkin, Lieutenant Teakettle, Sir Cap-Permission) now resolve to their actual commissioned ArtImages 277789, 277793, 277797 (ArtJobs 74396, 74400, 74404) in tactical unit portraits, rather than generic minion art. Keep generic action art for normal one-hit minions and strike/hit/defeat art for captains during impacts; preload private captain images for each active crew. Add provenance and regression checks. Kind Robots branch worker/every-villain-tactics-t-025-captain-portraits-20261123-w7k9. Existing DONE receipts reused without new ArtJob submission or unverified artistic approval. Main-game standard t-025 remains an umbrella task; return to ready after successful merge for the next independent scope.
+
+      Reviewed and merged scoped captain art attachment kind_robots PR #5631 as b15a4afe65d8e5302f02d123752d0530721dba00 after all eight latest-head workflows completed successfully. Original private ArtImages 277789, 277793 and 277797 now resolve for named Foreman Thumpkin, Lieutenant Teakettle and Sir Cap-Permission battlefield idle portraits; regular one-hit minions and combat poses remain correct. Three source ArtJob IDs 74396, 74400 and 74404 reused; no new enqueue. Broader t-025 main-game standard incomplete. Production deployment, subjective image QA and human playtest remain unverified.
   - id: t-026
     title: 'Every Villain Tactics achievement upgrade: 12 or more live achievements'
     status: done
