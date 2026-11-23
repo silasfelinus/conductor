@@ -2224,8 +2224,11 @@ tasks:
   - id: t-133
     milestone: m8
     title: "Gloom Invaders depth slice 2: Spring and Summer"
-    status: ready
-    updated: '2026-11-22T08:42:00Z'
+    status: review
+    owner: worker
+    claimed_by: 2026-11-23T120120Z-kr-arcade-t-133-k7m2
+    claimed_at: '2026-11-23T12:01:20Z'
+    updated: '2026-11-23T12:03:20Z'
     passes: 0
     stakes: reversible
     depends_on: t-132
@@ -2243,6 +2246,8 @@ tasks:
       Partial Spring/Summer slice: implemented the Paper Plane courier in Calendar mode with five collectible power-ups, extra-beam and prism firing, umbrella repair, slowed rain, solar flare, HUD feedback, and a deterministic cabinet verifier. Branch worker/kr-arcade-t-133-20261122T060900Z-a47c. Remaining t-133 scope includes both bosses, special-front objective effects, Wind Sock, Seed Shed, and campaign QA; task must return to ready after this PR merges, not be marked done.
 
       Paper Plane courier and five buffs merged as partial Spring/Summer increment; remaining April Shower Mother and Cumulonimbus Rex, special-front mechanics, Wind Sock, Seed Shed and campaign QA.
+
+      April Rainbow Hour now awards a prism shot every fourth cheered cloud during its special front; the counter resets on each front. Partial slice, with bosses, Seed Shed and other objectives remaining.
 
   - id: t-134
     milestone: m8
