@@ -843,9 +843,9 @@ tasks:
   - id: t-038
     milestone: m4
     title: "Recut the thrash-metal opening from the doodle art"
-    status: review
+    status: done
     owner: reviewer
-    updated: '2026-11-23T01:50:57Z'
+    updated: '2026-11-23T02:03:50Z'
     depends_on: [t-036]
     passes: 1
     retry_context: ''
@@ -891,6 +891,10 @@ tasks:
       Contact sheet and Chromium playback (15.03 s, 1280x720) checked. RAINBOW_OPENING wired
       in kind_robots#5618, which also fixes verifyRainbowOpening's double-escaped gamepad
       regex (failed on main).
+
+      2026-11-22 PT done: kind_robots#5618 merged as e816817b after all checks completed green
+      (TypeScript, all four contract shards, Rainbow cabinet Chromium jobs, cabinet-viewport).
+      The opening now plays in the cabinet.
     claimed_by: 20261123T015000Z-rainbow-t038-opening-c4r7
     claimed_at: '2026-11-23T01:46:10Z'
     implementation_pr: 'silasfelinus/kind_robots#5618'
