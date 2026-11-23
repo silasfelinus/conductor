@@ -168,57 +168,18 @@ tasks:
   - id: t-005
     milestone: m2
     title: "Implement enemy interaction, held objects and powerup systems"
-    status: claimed
+    status: ready
     depends_on: [t-003]
-    owner: worker
     passes: 0
     stakes: reversible
-    note: >-
-      Patrol/chase/ambush/flyer AI, jump/throw/carry interaction with
-      original enemies, moving platforms, slopes, ladders/lifts, switches,
-      destructibles, three meaningful powerup tracks, damage/knockback,
-      invulnerability frames, lives/continues and checkpoint semantics.
-      Source-verified deterministic collision and softlock tests.
+    note: |-
+      Patrol/chase/ambush/flyer AI, jump/throw/carry interaction with original enemies, moving platforms, slopes, ladders/lifts, switches, destructibles, three meaningful powerup tracks, damage/knockback, invulnerability frames, lives/continues and checkpoint semantics. Source-verified deterministic collision and softlock tests.
+      2026-10-22 Gen-2 scope addition (GEN2-STANDARD.md section 4): grow from three tracks to 5-7 powers with movement consequences (glide or flight, a water or fire suit, a heavy form, carry), an SMW-style reserve item, map-usable item inventory, and an original ride/companion creature that changes traversal. Remaining Gen-1 items (slopes, ladders, carrying enemies and keys) still apply.
+      2026-10-16 progress: the three powerup tracks shipped and merged (silasfelinus/kind_robots#3758). Springstep gives a higher jump and a float. Bottled Storm adds a ranged gust that strikes foes, valves, crates and open bosses. Pocket Lift lifts and throws crates, which land as new steps. Water hearts restore a heart, and a hit costs the power before a heart. Also in place from Worlds 1 to 8: patrol, chase, ambush and flyer foes; moving pistons, lifts, rafts and cargo; valve switches; destructible crates; knockback, i-frames, lives and checkpoints; and an autopilot that finishes all 32 stages. Still to build: slopes and ladders, carrying enemies and keys, and dedicated softlock tests.
+      2026-11-04 PT adversarial interaction slice: added verifySavePlumberInteractions.test.ts (in test:arcade-engine). It has scripted regressions plus a seeded fuzz of about 674k frames that drops the heroine beside foes, crates, valves, lifts and pickups with random powers across all 32 stages, and a guard that nothing adds height at a closed valve gate. The hunt found and fixed eight interaction defects in savePlumberPreview.ts. A flat moss lantern knocked out by a thrown crate or kicked shell, or cleared when a boss arena locked, left an invisible floor. Glass gulls and gull gliders that stole tokens flew off the stage for good, breaking "catch it and it drops them all". Fleeing gulls are now cornered at the edge, thief gliders patrol edge to edge, and all 10 campaign gliders are proven catchable with no power. An arena lock dropped a stray thief's tokens. Tokens from crates, gusts and thieves could pass 99 without giving a life. A jump pressed while falling into a pit fired as a phantom hop on respawn. A Bottled Storm gust turned valves on other floors through the ground. No closed-gate crossing turned up, so row 0 was left open. An offline powered-reachability probe found no trap pockets in any stage. Remaining: slopes, ladders/climbing and carrying keys or enemies are still unbuilt, so they have no adversarial coverage yet. The Gen-2 powers, reserve item and ride creature are also still to build. The Gears suite (about 6.5 minutes) could snapshot tiles so trap analysis could run in CI.  Merged as kind_robots #4804; back to ready for the remaining scope.
 
-      2026-10-22 Gen-2 scope addition (GEN2-STANDARD.md section 4): grow from three
-      tracks to 5-7 powers with movement consequences (glide or flight, a water or fire
-      suit, a heavy form, carry), an SMW-style reserve item, map-usable item inventory, and
-      an original ride/companion creature that changes traversal. Remaining Gen-1 items
-      (slopes, ladders, carrying enemies and keys) still apply.
-
-      2026-10-16 progress: the three powerup tracks shipped and merged
-      (silasfelinus/kind_robots#3758). Springstep gives a higher jump and a float. Bottled
-      Storm adds a ranged gust that strikes foes, valves, crates and open bosses. Pocket Lift
-      lifts and throws crates, which land as new steps. Water hearts restore a heart, and a
-      hit costs the power before a heart. Also in place from Worlds 1 to 8: patrol, chase,
-      ambush and flyer foes; moving pistons, lifts, rafts and cargo; valve switches;
-      destructible crates; knockback, i-frames, lives and checkpoints; and an autopilot that
-      finishes all 32 stages. Still to build: slopes and ladders, carrying enemies and keys,
-      and dedicated softlock tests.
-
-      2026-11-04 PT adversarial interaction slice: added verifySavePlumberInteractions.test.ts
-      (in test:arcade-engine). It has scripted regressions plus a seeded fuzz of about 674k
-      frames that drops the heroine beside foes, crates, valves, lifts and pickups with random
-      powers across all 32 stages, and a guard that nothing adds height at a closed valve
-      gate. The hunt found and fixed eight interaction defects in savePlumberPreview.ts. A
-      flat moss lantern knocked out by a thrown crate or kicked shell, or cleared when a boss
-      arena locked, left an invisible floor. Glass gulls and gull gliders that stole tokens
-      flew off the stage for good, breaking "catch it and it drops them all". Fleeing gulls
-      are now cornered at the edge, thief gliders patrol edge to edge, and all 10 campaign
-      gliders are proven catchable with no power. An arena lock dropped a stray thief's
-      tokens. Tokens from crates, gusts and thieves could pass 99 without giving a life. A
-      jump pressed while falling into a pit fired as a phantom hop on respawn. A Bottled Storm
-      gust turned valves on other floors through the ground. No closed-gate crossing turned
-      up, so row 0 was left open. An offline powered-reachability probe found no trap pockets
-      in any stage. Remaining: slopes, ladders/climbing and carrying keys or enemies are still
-      unbuilt, so they have no adversarial coverage yet. The Gen-2 powers, reserve item and
-      ride creature are also still to build. The Gears suite (about 6.5 minutes) could
-      snapshot tiles so trap analysis could run in CI.  Merged as kind_robots #4804; back to
-      ready for the remaining scope.
-    updated: '2026-11-23T00:50:47Z'
-    claimed_by: 20261123T005200Z-stp-t005-ladders-b3qx
-    claimed_at: '2026-11-23T00:50:47Z'
-    implementation_pr: 'silasfelinus/kind_robots#4804'
+      2026-11-22 PT: Rope ladders and climbing shipped in kind_robots#5615 (1f9ac06). The new | glyph (SOLID_LADDER) works like this: up or down grabs the ladder, including mid-jump. There is no gravity while she holds on, left/right shuffles and A hops off. The top rung is a one-way ledge, and climbing down onto a floor lets go. She hangs flush to a wall beside the ladder, because her 18px hitbox is wider than a 16px tile. The glyph is in the Maker palette. verifySavePlumberLadders.test.ts covers ten scripted cases plus a seeded 40k-frame fuzz and is wired into test:arcade-engine. All 16 save-plumber suites pass, Gears included, and CI was green. Remaining: placing ladders in campaign stages (with Levels/Gears reachability), slopes, carrying keys or enemies, the Gen-2 powers, the reserve item and the ride creature. Back to ready.
+    updated: '2026-11-23T01:11:25Z'
   - id: t-006
     milestone: m3
     title: "Build World 1: four complete garden/pipeworks levels and boss"

@@ -1,7 +1,0 @@
-version: 1
-project: save-the-plumber
-task: t-005
-operation: ready
-updated: '2026-11-23T01:11:25Z'
-note: >-
-  2026-11-22 PT: Rope ladders and climbing shipped in kind_robots#5615 (1f9ac06). The new | glyph (SOLID_LADDER) works like this: up or down grabs the ladder, including mid-jump. There is no gravity while she holds on, left/right shuffles and A hops off. The top rung is a one-way ledge, and climbing down onto a floor lets go. She hangs flush to a wall beside the ladder, because her 18px hitbox is wider than a 16px tile. The glyph is in the Maker palette. verifySavePlumberLadders.test.ts covers ten scripted cases plus a seeded 40k-frame fuzz and is wired into test:arcade-engine. All 16 save-plumber suites pass, Gears included, and CI was green. Remaining: placing ladders in campaign stages (with Levels/Gears reachability), slopes, carrying keys or enemies, the Gen-2 powers, the reserve item and the ride creature. Back to ready.
