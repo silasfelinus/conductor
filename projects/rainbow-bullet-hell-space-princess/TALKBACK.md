@@ -268,3 +268,10 @@ Companion kind_robots#4764 was already on main, so merge order held. CI green on
 
 - **conductor#7827 merged** as `6c624755`. The code and tests were green from the start. The only red was `Validate Worker PR handoff`, because the body used Summary/Validation/Risk headings. I restructured the body onto the required `###` headings without changing its content, and the gate passed on re-run. A `done` event with `verify_pr` was queued.
 - Pattern: Workers keep the AGENTS.md handoff headings verbatim. Free-form PR bodies cost a review round-trip even when the code is fine. The kaizen is t-058, which pins the coverage prefix in the real opening-wan-budget CI job.
+
+## 2026-11-22 PT | reviewer (scheduled agent) | conductor#7897 t-060/t-061 close-out → rescue PR
+
+- **Decision:** accepted the content. Both implementations merged green in kind_robots: #5634 (`2123a7cd`, t-060) and #5640 (`1bb732fb`, t-061). The art ledgers record ArtJobs 76735–76737 and the keep/reject verdicts, and the Fever Dream decisions are consistent with the t-059 precedent.
+- **Why a rescue PR:** #7897 went `dirty` against main. The hourly task-events writer had reset both expired claims (claimed at 05:11Z/05:24Z, more than 90 minutes old) back to `ready` on main, while the `review`/`done` transitions sat only on the PR branch. I resolved the conflict to `done`, because both implementation PRs are merged, and moved the result to the reviewer session branch. #7897's branch is superseded.
+- **Pattern:** close-out commits that stay on a long-lived conductor PR branch race the claim-expiry reconciler. Land the `review` checkpoint on main (its own small PR, merged) before starting a second task on the same branch.
+- **Kaizen:** t-064, a phase-2 flagship re-render to replace the rejected 279299.

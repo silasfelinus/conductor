@@ -876,51 +876,10 @@ tasks:
     passes: 1
     retry_context: ''
     stakes: reversible
-    note: |-
-      Silas chose to hold the old-style opening clips (44645-44653) and recut from new-style stills. New WAN clip ledger from t-035/t-036 keepers, then scripts/export_rainbow_opening.py with the new SHOTS; the thrash track (44644) stays.
+    note: >-
+      Silas chose to hold the old-style opening clips (44645-44653) and recut from new-style stills.
 
-      Stale claim recovery: no matching open Rainbow PR or implementation branch; opening recut remains an actual undelivered requirement, not proof of active work.
-
-      2026-11-20 PT: Prepared eight approved DOODLE-SET-1 C.A.T.S. first/last-frame WAN MP4 opening clip requests, retaining ACE-Step ArtJob 44644. Conductor branch 7cafec3d stages auto-submit after green PR merge; no new ArtJob IDs yet, no rendered clips reviewed, no assembled intro. Partial t-038.
-
-      2026-11-21 PT reviewer: Conductor PR #7730 merged (squash a48a792e) with all 24 latest-head checks green. It lands the eight-shot OPENING-CLIPS-2-DOODLE request ledger and the MP4/WebM-capable exporter (historical 9-shot ledger kept via --ledger). Still partial: returned to ready, claim released. Remaining: confirm the auto-submitted ArtJob IDs, inspect the rendered WAN MP4s for identity locks, then export the 15-second cut and wire it into the kind_robots cabinet.
-
-      2026-11-22 PT reviewer: PR #7823 (squash b773e817) merged by another session with the
-      report-newline fix but still publishing staged /tmp media via Path.replace (EXDEV cross-
-      device) and misnaming --out WebM/poster. Follow-up conductor PR on claude/focused-
-      johnson-yxvq84 adds publish_artifact() (copy to hidden sibling + same-dir os.replace)
-      and main()-level tests simulating a cross-device /tmp; retry_context items resolved.
-      Still partial: confirm auto-submitted WAN ArtJob IDs, inspect rendered clips, export the
-      15s cut and wire it into the kind_robots cabinet.
-
-      Partial opening-recut reliability slice: exporter now resolves original completed ACE-Step soundtrack by pinned ArtJob #44644 rather than only the most recent 200 queue jobs. Added five regression tests for DONE, pending, malformed, missing ArtImage and HTTP denial. Full opening visual review/render and kind_robots integration remain outstanding.
-
-      Partial scope: PR #7834 merged with pinned soundtrack ArtJob #44644 resolver and regression tests; reopen for completed WAN clip visual review, final render and Kind Robots cabinet integration.
-
-      2026-11-22 PT worker: all eight WAN clips were DONE (ArtImages 277936-278013). Preview
-      export failed verification (14.68s vs 15s: the ACE-Step track is shorter than the cut
-      after silence trim and -shortest truncated the picture); fixed with apad plus a real-
-      ffmpeg regression test. Contact-sheet review: identities hold on all cast shots and the
-      title slam lands, but intro-dolphin-armada animated the dolphin sprite on flat chroma
-      green; re-pinned to approved stage-2 card 262204 and cleared its job so auto-submit
-      renders a new clip (the shot uses the still until then). Next: once the new intro-
-      dolphin-armada clip is DONE, run export_rainbow_opening.py --kind-robots ../kind_robots,
-      inspect, and open the kind_robots PR wiring opening mp4/webm and poster into the
-      cabinet.
-
-      Partial opening integration resilience: video decode/playback failure now offers a focused retry instead of silently marking the opening watched. WAN dolphin clip and final export still outstanding; keep task incomplete.
-
-      2026-11-22 PT recovery: the 19:33Z review handoff is past its TTL with no open t-038 PR or branch. The blocking intro-dolphin-armada re-render is DONE (ArtImage 279030), so the remaining step is the export and cabinet wiring (RAINBOW_OPENING is still null). Returned to ready; no prior work discarded.
-
-      2026-11-22 PT: Ran export_rainbow_opening.py: 15.0 s, 8/8 shots animated from the DONE
-      doodle clips (dolphin 279030) to track 252834; no rejected or still-fallback shots.
-      Contact sheet and Chromium playback (15.03 s, 1280x720) checked. RAINBOW_OPENING wired
-      in kind_robots#5618, which also fixes verifyRainbowOpening's double-escaped gamepad
-      regex (failed on main).
-
-      2026-11-22 PT done: kind_robots#5618 merged as e816817b after all checks completed green
-      (TypeScript, all four contract shards, Rainbow cabinet Chromium jobs, cabinet-viewport).
-      The opening now plays in the cabinet.
+      Full history: projects/rainbow-bullet-hell-space-princess/HISTORY.md#t-038
     claimed_by: 20261123T015000Z-rainbow-t038-opening-c4r7
     claimed_at: '2026-11-23T01:46:10Z'
     implementation_pr: 'silasfelinus/kind_robots#5618'
@@ -1226,47 +1185,45 @@ tasks:
     source: silas-session-2026-11-22-playtest-push
     updated: '2026-11-23T01:45:00Z'
     note: >-
-      Silas, 2026-11-22 PT in-session: bring Rainbow to playtest readiness. 19 Gen-2
-      renders sit DONE in GEN2-KELP-NEBULA-X1, GEN2-CORAL-COMET-X2, GEN2-ALT-GUARDIANS-1
-      and MIRROR-SHOAL-X4, but none ships under kind_robots public/rainbow-princess-art;
-      the Pearl Warden draws the Bulwark, the Bellkeeper draws the Mirror Eel and the
-      Herder/Shoal Koi fall back to a scaled scout. Visually review each render, key the
-      green matte, export the keepers and wire guardians, pods and lamp with code-drawn
-      fallbacks. Kelp Warden sweep/hurt poses and the X4 parallax planes are reviewed
-      separately (identity drift / grey horizon band).
+      Silas, 2026-11-22 PT in-session: bring Rainbow to playtest readiness.
 
-      2026-11-22 PT: Reviewed all 19 Gen-2 renders; shipped 8 (five X1-X4 guardians as their
-      own paintings, X1/X2 rescue pods, X3 lighthouse lamp) with Fever Dream twins via
-      scripts/export_rainbow_gen2_art.py (new muted-matte key; Krea paints the green matte too
-      dull for key_green). Held: Kelp Warden sweep/hurt (identity drift), Shoal Koi pose
-      frames and both hazards (no runtime hook), X4 planes (far plane grey band).
-      Implementation kind_robots#5616.
-
-      2026-11-22 PT done: kind_robots#5616 merged as bf6b6ad8 after all checks completed green (incl. TypeScript, Contract verifiers, Rainbow cabinet Chromium jobs); conductor#7874 merged as 7137b5da. Follow-ups stay on the gap matrix: hazards (item 2), X1-X4 planes (item 4).
+      Full history: projects/rainbow-bullet-hell-space-princess/HISTORY.md#t-059
     implementation_pr: 'silasfelinus/kind_robots#5616'
 
   - id: t-060
     milestone: m4
     title: "Rebel road changes the fight: Acts VI-VIII waves react to the flown allegiance"
-    status: ready
+    status: done
     passes: 0
     stakes: reversible
     depends_on: []
     source: playtest-gap-matrix-2026-11-22
-    updated: '2026-11-23T06:48:56Z'
+    updated: '2026-11-23T07:47:21Z'
     note: >-
-      PLAYTEST-GAP-MATRIX-2026-11-22 item 9 (issue #4146 section 5). The flown rebel/loyal choice currently changes only dialogue and ending titles (rainbowAllegiance.ts:56-92). On the rebel road Ocean craft hold fire and Motherland drones join Acts VI-VIII waves per PLOT-MOTHERLAND.md; loyal keeps the current waves. Deterministic seeded tests for both roads and 1-4 seats; save/continue preserves the road.
+      PLAYTEST-GAP-MATRIX-2026-11-22 item 9 (issue #4146 section 5).
+
+      Full history: projects/rainbow-bullet-hell-space-princess/HISTORY.md#t-060
+    owner: reviewer
+    claimed_by: 20261123T050000Z-rainbow-t060-rebelwaves-c4r7
+    claimed_at: '2026-11-23T05:11:23Z'
+    implementation_pr: 'silasfelinus/kind_robots#5634'
   - id: t-061
     milestone: m4
     title: "Allegiance-specific finale: Motherland flagship vs Ocean heart, with the loyal late stand-down"
-    status: ready
+    status: done
     passes: 0
     stakes: reversible
     depends_on: []
     source: playtest-gap-matrix-2026-11-22
-    updated: '2026-11-23T06:55:45Z'
+    updated: '2026-11-23T07:47:21Z'
     note: >-
-      PLAYTEST-GAP-MATRIX-2026-11-22 item 10 (issue #4146 section 5). Rebel road fights the Motherland flagship, loyal road the Ocean heart, with the late course-correction PLOT-MOTHERLAND.md:43-50 describes. Distinct fights, not retitled ones; prove all six ending roads are reachable by flown input. Builds on rainbowEclipseFinale.ts.
+      PLAYTEST-GAP-MATRIX-2026-11-22 item 10 (issue #4146 section 5).
+
+      Full history: projects/rainbow-bullet-hell-space-princess/HISTORY.md#t-061
+    implementation_pr: 'silasfelinus/kind_robots#5640'
+    owner: reviewer
+    claimed_by: 20261123T055000Z-rainbow-t061-finale-c4r7
+    claimed_at: '2026-11-23T05:24:18Z'
   - id: t-062
     milestone: m5
     title: "Run verifyRainbowSaveBytes and verifyRainbowSeasLogbook in CI"
@@ -1277,14 +1234,9 @@ tasks:
     source: playtest-gap-matrix-2026-11-22
     updated: '2026-11-23T02:13:13Z'
     note: >-
-      PLAYTEST-GAP-MATRIX-2026-11-22 item 19. Both kind_robots tests exist on main but no workflow or package script runs them, so save-capacity and flight-log regressions can land silently. Add them to the Rainbow save/route workflow (or test:arcade-engine) and confirm a green run.
+      PLAYTEST-GAP-MATRIX-2026-11-22 item 19.
 
-      2026-11-22 PT: Both tests added to rainbow-alternate-route-memory.yml (PR-gating), with
-      path triggers for rainbowSaveSlots.ts and arcade/saves.ts. Both pass locally.
-      kind_robots#5619.
-
-      2026-11-22 PT done: kind_robots#5619 merged as fd2ee42e after all checks completed
-      green; the route-memory job ran both new steps successfully.
+      Full history: projects/rainbow-bullet-hell-space-princess/HISTORY.md#t-062
     owner: reviewer
     claimed_by: 20261123T020500Z-rainbow-t062-ci-c4r7
     claimed_at: '2026-11-23T01:51:21Z'
@@ -1300,3 +1252,18 @@ tasks:
     updated: '2026-11-23T02:00:00Z'
     note: >-
       PLAYTEST-GAP-MATRIX-2026-11-22 item 20 (issue #4146 section 8). verifyArcadeViewport covers Rainbow at 390x844 and wider but not 360x640, and reports sprite CSS px without asserting a floor for hostile bullets. Add the size and an assertion that hostile projectiles render at or above the readability floor at DPR 1/2/3.
+  - id: t-064
+    milestone: m4
+    title: "Re-render the Motherland flagship phase-2 painting so the sprung clamps and battered hull read in game"
+    status: ready
+    passes: 0
+    stakes: reversible
+    depends_on: []
+    source: reviewer-kaizen-conductor-7897
+    updated: '2026-11-23T07:47:21Z'
+    note: >-
+      Kaizen from the conductor#7897 review (t-061). ArtImage 279299 was rejected (not battered, clamps
+      not sprung, hull colours drift), so phase 2 of the flagship fight reuses the phase-1 painting
+      279298 with code-drawn cues. Queue a new Krea 2 take seeded from 279298's composition (same hull
+      palette, clamps visibly open, scorch and sparks), review it at game scale against the clamp-core
+      hit geometry, and swap bosses/flagship phase 2 in kind_robots only if it beats the code cues.
