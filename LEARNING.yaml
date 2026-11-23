@@ -19108,3 +19108,13 @@ records:
   failure_category: null
   lesson: Avoid leaving test doubles inside production polling and grace-period loops; share one immutable
     parsed corpus for repeated exhaustive QA.
+- date: '2026-11-22'
+  project: ruler-hooked
+  task: t-059
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: Check delivered art's real pixel format (alpha vs opaque) before building a compositor around
+    a spec; an opaque z-stack silently shows only its top layer.
