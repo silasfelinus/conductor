@@ -243,6 +243,19 @@ jobs:
 
       - name: Check ruler-hooked docs vocabulary + art-prompts inspirations
         run: python scripts/check_ruler_hooked_docs.py
+      - name: Checkout the Ruler Hooked content canon from Kind Robots
+        uses: actions/checkout@v4
+        with:
+          repository: silasfelinus/kind_robots
+          ref: main
+          path: kind_robots
+          persist-credentials: false
+
+      - name: Require art requests for every authored Ruler Hooked quest card
+        run: |
+          python scripts/check_ruler_hooked_card_art_coverage.py \
+            --content kind_robots/utils/rulerHooked/content.ts \
+            --queue projects/art-prompts.yaml
 
 
   build-ts-projects:
