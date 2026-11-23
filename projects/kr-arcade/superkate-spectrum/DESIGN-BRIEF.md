@@ -94,6 +94,47 @@ Before stages 10, 20 and 30, choose one of two acts of care: repair the neighbor
 - **The Listening Machine:** help the Sorter learn to ask permission; it becomes a voluntary color consultant.
 - **Every Shade Belongs (true ending):** rescue all three lost citizen stories, complete the six chapters without erasing anyone, and give the Sorter a non-coercive role. Superkate hosts a community color party; everyone chooses their own look.
 
+## Retro-modern presentation contract (Silas, 2026-11-22 PT)
+
+**The game is the interface.** The player enters Superkate's Spectrum through
+the existing Arcade console cabinet, not through a stack of independent admin
+pages. The cabinet silhouette, original chiptunes, score displays and joyful
+precision of the classic puzzle-shooter era remain the DNA, while the actual
+interaction behaves like a current polished game: tactile high-resolution
+bubbles, bold animated feedback, modern accessible controls and a visually
+legible, responsive one-screen stage.
+
+The game home is a single connected place for:
+
+- **Play:** Story map and the separate pressure-driven Classic mode.
+- **Scrapbook:** saved progress for all 30 stage stars, citizen and character
+  memories, six neighborhoods, three ending illustrations, collectible
+  orb styles and gameplay discoveries. Locked entries tease the next reward.
+- **Achievements:** three global Arcade awards and meaningful chapter
+  milestones. Trophies earned in-game display in the user's scrapbook and
+  global achievement shelf; locked trophies expose helpful hints.
+- **Settings:** volume, music/effects mixing, CRT/pixel/HD preferences,
+  reduced animation, high contrast, glyphs, aim-guide assistance and input
+  help. Share ownership with existing Arcade settings, do not duplicate the
+  actual audio source of truth.
+- **Account:** explicit device versus account-save state, signed-in cloud
+  backup and guest progression adoption without silently losing either
+  version. Revision conflicts merge monotonically and retry safely.
+
+Controller/keyboard and large touch targets must reach these screens from
+within the cabinet. Keep gameplay and hub visually coherent and one screen,
+including mobile portrait 390px. UI chrome should use polished glass, enamel
+and candy color, not tiny pixel-font walls of instructions. The *playfield* can
+remain retro-inspired without making the interface feel like a museum exhibit.
+
+**Production distinction:** The initial PR implements an in-canvas hub,
+private account-save model/endpoints, original 6-region oscillator themes,
+Classic track and three global achievement definitions. Authenticated
+cross-device workflow requires final CI, schema deployment, direct sign-in
+and account-switch tests before it can be called verified. Premium album
+portraits, published recordings, mobile touch polish and final menu
+presentation remain incomplete. No image-queue request constitutes delivery.
+
 ## Game modes and replay
 
 Story (30 authored puzzle boards), Arcade Endless (rising ceiling pressure and seeded weekly palettes), Puzzle Atelier (handcrafted challenge layouts with medal par), two-person Color Relay (alternate shots, joint combo meter), and accessible Practice (no ceiling pressure). Scoreboards separate modes and difficulties; never mix accessibility settings with ranked score submission.
