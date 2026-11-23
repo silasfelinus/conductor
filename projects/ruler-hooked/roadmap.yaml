@@ -1344,13 +1344,16 @@ tasks:
 - id: t-077
   milestone: m4
   title: Add a one-command refresh script for the ruler-hooked runtime fish fixture that rewrites it from a kind_robots checkout and fails CI-style when it is stale
-  status: ready
+  status: claimed
   stakes: reversible
   passes: 0
   depends_on: []
   note: |-
     Kaizen from the reviewer of conductor#7932 (t-076, 2026-11-23 PT). `tests/fixtures/ruler_hooked_runtime_fish.json` is hand-maintained; the Worker suggested refreshing it whenever runtime fish change. Add `scripts/refresh_ruler_hooked_runtime_fish.py` (`--write` / `--check`) that reuses the test's fail-closed `RULER_HOOKED_FISH` parser so the next fish batch (43-60) updates the snapshot in one step.
-  updated: '2026-11-23T22:00:00Z'
+  updated: '2026-11-23T23:17:08Z'
+  owner: worker
+  claimed_by: 20261123T231708Z-ruler-hooked-t077-a9c4
+  claimed_at: '2026-11-23T23:17:08Z'
 
 - id: t-078
   milestone: m4
