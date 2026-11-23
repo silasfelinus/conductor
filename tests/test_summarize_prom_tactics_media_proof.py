@@ -102,6 +102,9 @@ def test_source_failure_and_incomplete_privacy_group_fail_closed(tmp_path):
     assert rows[258175]["runtime"] == "unknown"
     assert rows[258176]["runtime"] == "verified"
     assert rows[258175]["private"] == "unknown"
+    report = summarize(rows)
+    assert report["private_group_failures"] == ["private-ledger.yaml"]
+    assert "PRIVATE_POLICY_GROUP_FAILED ledger=private-ledger.yaml" in formatted_report(report)
 
 
 def test_read_only_cli_joins_logs_and_writes_step_summary(tmp_path, capsys):
