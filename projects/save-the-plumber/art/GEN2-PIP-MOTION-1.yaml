@@ -1,0 +1,100 @@
+# Save the Plumber, t-025: first original Pip sprite-motion source round.
+# Approved Krea 2 pose ArtImages from GEN2-ROUND-1.yaml: idle 251351,
+# run-contact 251352, run-passing 251353, jump-rise 251354, jump-fall
+# 251355, climb 251357. Skid/hurt fixes are not used until curated.
+# Private motion sources only; not an exported sprite atlas or a delivered game animation.
+# Sequence: render WAN 14B first+last; review anatomy/motion; matte white;
+# align foot pivots and silhouettes; encode/pack a >=12fps atlas; wire game.
+round: save-the-plumber-gen2-pip-motion-1
+project_slug: save-the-plumber
+designer: Save the Plumber art bay
+is_public: false
+is_mature: false
+auto_submit: true
+lanes:
+- key: wan-clips
+  label: WAN 2.2 first/last-image animation, A14B
+  engine: wan
+  prompt: prose
+  fps: 16
+  output_format: webp
+  negative: camera pan, zoom, tilt, cut, view rotation, angle change, morphing, face drift, off-model hair, outfit change, missing limb, extra limb, extra fingers, duplicated body, text, letters, watermark, photo, 3d render, blur, background scenery, heavy shadow, cropping
+subjects:
+- key: gen2-pip-motion-idle
+  entity: heroine-animation
+  title: Pip idle breathing, seamless loop
+  size: 640x640
+  seed: 82601
+  source_image_id: 251351
+  last_image_id: 251351
+  duration: 2
+  loop: true
+  prompt_prose: Pip, a young adult woman with a magenta bob, brass goggles, mustard overalls, lavender shirt and
+    white scarf, stands facing right in profile on a plain white background. Her shoulders rise and fall softly
+    as she breathes, the scarf tip gently sways and her expression stays steady. Her boots remain fixed at the
+    same position. Complete body stays visible, camera and white background do not move.
+- key: gen2-pip-motion-run-forward
+  entity: heroine-animation
+  title: Pip run cycle, foot contact to passing
+  size: 640x640
+  seed: 82602
+  source_image_id: 251352
+  last_image_id: 251353
+  duration: 1
+  loop: false
+  prompt_prose: Pip runs toward the right in side view on a flat white background, moving from a forward foot
+    strike to the legs passing under her body. Her navy boots alternate support, arms pump naturally in opposition,
+    body leans forward and her white scarf streams backward. The body remains centred and the ground contact
+    stays at a consistent height. Her magenta bob, goggles and yellow overalls keep their exact appearance.
+- key: gen2-pip-motion-run-return
+  entity: heroine-animation
+  title: Pip run cycle, passing to foot contact
+  size: 640x640
+  seed: 82603
+  source_image_id: 251353
+  last_image_id: 251352
+  duration: 1
+  loop: false
+  prompt_prose: Pip runs toward the right in exact side profile on a plain white background, continuing from
+    the passing stride into the next forward foot strike. Legs and arms move in a coordinated alternating run;
+    her scarf follows her motion while the torso and hip anchor remain level. The magenta hair, brass goggles,
+    lavender shirt, yellow overalls and boots remain unchanged. The camera stays still.
+- key: gen2-pip-motion-jump
+  entity: heroine-animation
+  title: Pip airborne rise to descending pose
+  size: 640x640
+  seed: 82604
+  source_image_id: 251354
+  last_image_id: 251355
+  duration: 1
+  loop: false
+  prompt_prose: Pip in exact right-facing side view rises from a knee-tucked leap, then stretches her legs and
+    boots downward in preparation to land. Her white scarf changes from trailing below her shoulders to
+    floating above them while her arms rebalance in mid-air. Her face, magenta bob, goggles and outfit remain
+    perfectly consistent. Her whole body is visible against a fixed pure white background.
+- key: gen2-pip-motion-landing
+  entity: heroine-animation
+  title: Pip landing recovery to idle
+  size: 640x640
+  seed: 82605
+  source_image_id: 251355
+  last_image_id: 251351
+  duration: 1
+  loop: false
+  prompt_prose: Pip descends in side profile facing right, her boots meet the same ground plane and her knees
+    bend gently to absorb the landing before she stands upright. Her scarf settles and her brass goggles remain
+    on her head. Keep her body proportions, magenta bob, mustard overalls and lavender shirt constant.
+    Plain white background, full character in view, stationary camera.
+- key: gen2-pip-motion-climb
+  entity: heroine-animation
+  title: Pip ladder-climbing alternation, seamless loop
+  size: 640x640
+  seed: 82606
+  source_image_id: 251357
+  last_image_id: 251357
+  duration: 2
+  loop: true
+  prompt_prose: Pip climbs a fixed narrow rope ladder in exact right-facing side view, slowly alternating
+    her hands up the rails and lifting one navy boot then the other. Her mustard overalls and magenta hair stay
+    consistent and the ladder remains perfectly vertical and immobile. Her body stays centred without shifting
+    along the image, her scarf sways slightly. White background and stationary camera.
