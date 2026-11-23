@@ -1,0 +1,54 @@
+# Rainbow Space Princess t-061, 2026-11-22 PT: B09 on the rebel road, the Motherland flagship that holds the Eclipse
+# Crown in its forward clamps (PLOT-MOTHERLAND.md "Finale target"). The empire's machine, never a sea creature:
+# white enamel and gold, faceted, regal, the luminous crown-ring caught in two gold clamps at its prow. Two takes:
+# clamps closed (phase 1) and clamps sprung open with the ring breaking loose (phase 2). Green matte for keying.
+# Private; queued is not delivered.
+round: rainbow-motherland-flagship-2026-11-22
+project_slug: rainbow-bullet-hell-space-princess
+designer: Rainbow Space Princess art bay
+is_public: false
+is_mature: false
+cast_loras: false
+priority: 1000
+auto_submit: true
+lanes:
+- key: krea2
+  label: Krea 2 Motherland flagship boss
+  engine: krea2
+  prompt: prose
+subjects:
+- key: flagship-phase1
+  lane: krea2
+  title: Motherland flagship, clamps closed on the Crown
+  entity: boss
+  asset: rainbow-princess-art/bosses/flagship-phase1
+  size: 1344x768
+  seed: 1122611
+  negative: text, lettering, logo, watermark, words, fish, animal, creature, eyes, face, fins, tentacles, scenery,
+    star field, photorealism
+  prompt_prose: One enormous imperial warship seen from the side, its prow pointing to the left. A long faceted
+    hull of polished white enamel banded with bright gold, a tall golden crown crest along its spine, rows of small
+    gold gun ports, and twin hot pink thrusters at the stern. At the prow two heavy gold clamps grip a glowing pastel
+    rainbow crown-ring of stained glass with a pink heart of light at its centre, held captive. Cold, regal, mechanical,
+    the flagship of a glittering empire. The whole ship is visible, centred, with generous empty margin around it.
+    1980s neon airbrush school-folder sticker art, glossy airbrushed shading, clean bold outlines. Flat even pure
+    bright green studio background.
+  jobs:
+    krea2: 76736
+- key: flagship-phase2
+  lane: krea2
+  title: Motherland flagship, clamps sprung, the Crown breaking loose
+  entity: boss
+  asset: rainbow-princess-art/bosses/flagship-phase2
+  size: 1344x768
+  seed: 1122612
+  negative: text, lettering, logo, watermark, words, fish, animal, creature, eyes, face, fins, tentacles, scenery,
+    star field, photorealism
+  prompt_prose: The same enormous imperial warship seen from the side, prow to the left, now battered. Its polished
+    white enamel and gold hull is cracked and scorched, sparks spill from its seams, and the two heavy gold clamps
+    at its prow have sprung wide open; the glowing pastel rainbow crown-ring of stained glass breaks free between
+    them, its pink heart of light blazing. Twin hot pink thrusters sputter at the stern. The whole ship is visible,
+    centred, with generous empty margin around it. 1980s neon airbrush school-folder sticker art, glossy airbrushed
+    shading, clean bold outlines. Flat even pure bright green studio background.
+  jobs:
+    krea2: 76737
