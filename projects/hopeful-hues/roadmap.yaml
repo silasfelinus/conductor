@@ -34,11 +34,18 @@ tasks:
   - id: t-001
     milestone: m1
     title: "Build the playable Hopeful Hues admin preview with Back, quests, achievements, routes, endings, saves and scrapbook"
-    status: review
+    status: done
     passes: 0
     stakes: reversible
     note: |-
       2026-11-23 PT (Silas-directed session): first playable slice built in kind_robots public/hopeful-hues/ and framed at /admin/hopeful-hues (admin tab, requiredRole ADMIN). Engine with specials, combos, Gloom, Tangles, robot buddies, cascades and seeded RNG; exact unlimited Back a move; 7 regions / 130 levels with two forks; 4 heroes with perks; 4 route endings plus a secret fifth; daily and weekly quests; 32 achievements; 5-tab scrapbook; 3 save slots with export/import; settings; WebAudio SFX and procedural music; SVG art. Verified: npm run test:hopeful-hues (greedy bot wins all 130 levels without gifts), channel-content, layout and nav contracts, eslint/prettier, Chromium play-through of fork, finale, ending, scrapbook, quests, routes and reload persistence at 390/768/1440 and landscape.
+
+      2026-11-22 PT done: kind_robots #5648 merged 9f67cbc with all 15 checks complete (14
+      success, 1 skipped); the CI contract shard printed 'Hopeful Hues contract OK: 130
+      levels, 130 won without gifts'. Roadmap registered via conductor #7903 (4c46115). Master
+      issue kind_robots#5649. Next: t-002 art, t-003 region mechanics.
+    updated: '2026-11-23T07:50:10Z'
+    implementation_pr: 'silasfelinus/kind_robots#5648'
   - id: t-002
     milestone: m3
     title: "Queue and integrate painted original art: icon, card, hero, title screen, region backdrops, heroes and link preview"
