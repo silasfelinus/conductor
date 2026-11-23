@@ -565,11 +565,11 @@ tasks:
       Related: PR #4080, issue #4062, conductor/save-the-plumber t-025.
   - id: t-027
     title: "Save the Plumber Maker: playable level editor, saves, sharing, ratings, Mario Maker and Geometry Dash parity"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 2026-11-23T104330Z-save-the-plumber-t027-time-trial-n4x8
     claimed_at: '2026-11-23T10:43:30Z'
-    updated: '2026-11-23T10:43:30Z'
+    updated: '2026-11-23T10:50:00Z'
     stakes: reversible
     passes: 0
     source_issue: "silasfelinus/kind_robots#4347"
@@ -598,3 +598,5 @@ tasks:
       2026-11-22 PT: Maker route replay slice on kind_robots branch worker/save-the-plumber-t-027-seeded-replay-m7q9: seeded RNG per exact level revision, bit-packed held/press inputs, 10-minute bounded capture, editor replay controls, blur/visibility input release, deterministic physics replay regression. Remaining Maker roadmap scope stays open after this incremental PR.
 
       PR silasfelinus/kind_robots#5639 merged at 28d0c86: deterministic Maker replay and focus-safe controls, with all ten latest-head CI workflows passing. This is a partial t-027 slice. Community publishing, ratings and advanced editor tools remain; return to ready for subsequent work.
+
+      2026-11-23 PT: Maker timed-course and pause safety PR in kind_robots, branch worker/save-the-plumber-t-027-timetrial-n4x8. Adds per-course personal bests, frame-accurate timing, P/R shortcuts, background pause and adversarial validation. Partial t-027 delivery; editor community and advanced tools remain.
