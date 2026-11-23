@@ -12,6 +12,7 @@ goal: >-
   standalone front-end Play page (/play/hopeful-hues) with a home highlight entry and a Play
   link, each with its own art; it is not an Arcade cabinet.
 notes_from_silas: |-
+  Silas, 2026-11-23 PT (verbatim): "And a quick tutorial. What does candy crush do? Are we art gameplay feature parity?" Tutorial shipped with t-002 art in kind_robots #5662 (guided salon-1 swap, goal and Back highlights, one-time tips per element, Settings > Replay tutorial). Parity gap audit recorded as t-009..t-013. Deliberate differences stay: no lives, no timers, no purchases, and an unlimited Back button.
   Silas, 2026-11-23 PT (verbatim): "All of the intro bits need real art. Character select screen, intro, etc." Queued 31 painted requests (4 hero portraits, 7 region intros, 15 story beats, 5 endings) under public/images/hopeful-hues/{heroes,regions,story,endings}/; the game shows each as soon as it is delivered and falls back to its SVG art until then.
   Silas, 2026-11-22 PT (verbatim): "This game should not be an arcade game. For the record. It should exist as a front end page, with highlight entry and link in play. Art for each of course"
   Done in t-008: /play/hopeful-hues front page, Play channel tab, home highlight entry and share card, each with interim code-rendered art; painted replacements are queued in t-002. Never add it to the Arcade cabinet hall or the advert cabinet posters.
@@ -115,3 +116,44 @@ tasks:
       t-002.
     updated: '2026-11-23T08:38:14Z'
     implementation_pr: 'silasfelinus/kind_robots#5653'
+  - id: t-009
+    milestone: m2
+    title: "Genre-parity blockers: spreading Gloom, ribbon locks, 3-5 layer Tangles, rain-cloud countdowns, conveyors, portals and buddy dispensers"
+    status: ready
+    passes: 0
+    stakes: reversible
+    note: >-
+      Parity audit 2026-11-23 PT. The engine has only static Gloom (1-2 layers), static Tangles (1-2 hp) and randomly spawned buddies. Genre-standard match-three boards also use a spreading blocker that grows each move nothing clears it, locks that pin a tile until matched, thick multi-layer blockers, countdown tiles, conveyor rows, portals and fixed dispensers. Build these as engine features with hopecore framing (the countdown tile should drizzle Gloom, never end the level), introduce each through the t-002 tip system, assign them across regions together with t-003, and keep the bot proving all 130 levels winnable.
+  - id: t-010
+    milestone: m2
+    title: "Order goals and end-of-level Kindness Overflow that fires specials"
+    status: ready
+    passes: 0
+    stakes: reversible
+    note: >-
+      Parity audit 2026-11-23 PT. Goals cover score, colors, Gloom, Tangles and buddies only. Add order goals for specials and combos (make 3 Glitter Bombs, swap 2 specials together) and mixed orders. Kindness Overflow currently converts leftover moves into plain points; make it turn leftover moves into Rainbow Combs that fire across the board with a celebratory animation, the genre-standard finish. No timed levels.
+  - id: t-011
+    milestone: m2
+    title: "Helper tools and pre-level boosts: Sparkle Wand, Free Swap, Comb Brush, start-with-special boosts and a daily gift"
+    status: ready
+    passes: 0
+    stakes: reversible
+    note: >-
+      Parity audit 2026-11-23 PT. The game has only +5 moves and Shuffle. Add in-level tools (clear any one tile, swap any two tiles, paint a tile into a comb) and pre-level boosts chosen on the level intro card (start with a Glitter Bomb or Rainbow Dye), earned through quests, achievements and a gentle daily gift, never purchases. Respect the Back button (a tool use is one Back step) and record usage in quests.
+  - id: t-012
+    milestone: m2
+    title: "Hand-authored level layouts for every sixth level, forks and finales"
+    status: ready
+    passes: 0
+    stakes: reversible
+    note: >-
+      Parity audit 2026-11-23 PT. All 130 levels are seeded generations with themed parameters; genre leaders hand-design boards. Add a compact authored-layout format (mask, blockers, starting specials, goals, moves) and author at least one in six levels plus both forks and all four finales, keeping deterministic winnability tests. Overlaps t-003; do the format first and let t-003 consume it.
+  - id: t-013
+    milestone: m3
+    title: "Visual parity: painted map backdrops per region, painted tile set trial, richer match and special effects"
+    status: ready
+    passes: 0
+    stakes: reversible
+    note: >-
+      Parity audit 2026-11-23 PT. Intro art is painted (t-002), but the map is gradient bands with SVG motifs, tiles are SVG, and effects are simple lines, rings and pops. Queue painted map backdrops for the seven regions and integrate them behind the path, trial a painted tile atlas at 40px and keep whichever reads better, and add particle sparkles, special-creation flourishes and combo flashes that respect reduced motion.
+
