@@ -3,6 +3,7 @@
 **Project slug:** `hopeful-hues`
 **Frontend:** `/admin/hopeful-hues` (admin preview; public `/play` promotion is a separate human gate)
 **Static game:** `kind_robots/public/hopeful-hues/` (vanilla JS, no build step)
+**Master issue:** [Kind Robots #5649](https://github.com/silasfelinus/kind_robots/issues/5649)
 
 ## Direction (Silas, 2026-11-23 PT, verbatim)
 
