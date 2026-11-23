@@ -102,13 +102,13 @@ tasks:
       not rendered assets, and no playable implementation is claimed.
   - id: t-044
     title: 'Main-game standard: audit and close the gaps for Rainbow Bullet Hell Space Princess'
-    status: review
+    status: ready
     owner: reviewer
     milestone: m6
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-23T03:35:05Z'
+    updated: '2026-11-23T03:53:34Z'
     note: |-
       Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -146,6 +146,10 @@ tasks:
       passes CAST-QA and ships in kind_robots#5628, completing all three ending plates.
       Remaining t-044 scope: settings (comms/contrast/remap/erase flight log), call
       sign/paint.
+
+      2026-11-22 PT: kind_robots#5628 merged as c5129034 after all checks completed green; all
+      three endings (restore, evacuate, sever) now show Fever Dream plates. Released for
+      remaining scope: settings (comms/contrast/remap/erase flight log), call sign/paint.
     implementation_pr: 'silasfelinus/kind_robots#5628'
   - id: t-045
     title: 'Rainbow Bullet Hell Space Princess achievement upgrade: 12 or more live achievements'
