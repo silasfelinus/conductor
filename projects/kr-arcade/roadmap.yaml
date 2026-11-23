@@ -2918,7 +2918,11 @@ tasks:
   - id: t-177
     milestone: m12
     title: "Superkate Spectrum: deliver high-priority hero, title, icon, character portraits, six backdrops and six boss illustrations"
-    status: ready
+    status: claimed
+    owner: worker
+    claimed_by: 20261123T044829Z-kr-arcade-t-177-superkate-boss-art-v8m3
+    claimed_at: '2026-11-23T04:48:29Z'
+    updated: '2026-11-23T04:48:29Z'
     passes: 0
     stakes: reversible
     depends_on: []
@@ -2961,17 +2965,14 @@ tasks:
     owner: worker
     claimed_by: 2026-11-23T040118Z-kr-arcade-t-182-superkate-audio-n4p6
     claimed_at: '2026-11-23T04:01:18Z'
-    updated: '2026-11-23T04:06:19Z'
+    updated: '2026-11-23T04:06:19.489Z'
     passes: 0
     stakes: reversible
     depends_on: []
-    note: >-
-      2026-11-22 PT: audio-slice submitted on Kind Robots PR #5624:
-      six region music loops, six finale arrangements, Classic and menu,
-      source-free synthesized chiptunes, shared Arcade mixer mute/volume,
-      independently saved music and effect toggles, and tests. Missing
-      recorded mastered audio, completed final-head CI and real playback
-      acceptance. Leave as review, not done.
+    note: |-
+      2026-11-22 PT: audio-slice submitted on Kind Robots PR #5624: six region music loops, six finale arrangements, Classic and menu, source-free synthesized chiptunes, shared Arcade mixer mute/volume, independently saved music and effect toggles, and tests. Missing recorded mastered audio, completed final-head CI and real playback acceptance. Leave as review, not done.
+
+      2026-11-22 PT: substantial implemented audio slice in Kind Robots PR #5624: a shared Arcade audio bridge for in-game master mute and volume, separately saved original music and effects toggles, six neighborhood chiptunes plus six chapter-finale variations, Classic and menu music, responsive preset SFX, and regression tests for music, options and Classic stage 35. The current PR is unmerged; final-head CI and actual playback verification remain pending. Recorded mastered soundtrack, mobile balance and audio QA are unfinished, so keep this task in review rather than marking full t-182 complete.
 
   - id: t-183
     milestone: m12
@@ -2985,6 +2986,7 @@ tasks:
       playable prototype; ranked Story and Classic scoreboards must be
       separately keyed before public competition, without erasing
       device-local best Classic score or Story stars.
+
   - id: t-184
     milestone: m12
     title: "Superkate Spectrum: adversarial full campaign playthrough, mobile QA, save/retry/ending tests and visual acceptance"
