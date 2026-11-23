@@ -15,6 +15,7 @@ from __future__ import annotations
 import argparse
 from concurrent.futures import ThreadPoolExecutor
 import json
+from http.client import HTTPException
 from pathlib import Path
 from urllib.parse import urlparse
 from urllib.request import Request, urlopen
@@ -86,7 +87,7 @@ def inspect(row: dict, *, remote: bool) -> dict:
         with urlopen(request, timeout=4) as response:
             data = response.read(MAX_BYTES)
         result["result"] = webp_alpha(data)
-    except (OSError, ValueError, TimeoutError) as exc:
+    except (OSError, ValueError, TimeoutError, HTTPException) as exc:
         result["error"] = type(exc).__name__
     return result
 
