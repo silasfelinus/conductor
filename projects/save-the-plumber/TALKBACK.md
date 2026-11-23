@@ -31,3 +31,13 @@
 **What was good:** Diff is 30 pending art-queue rows plus an ART-PLAN entry, nothing else; reversible. The Marisol run v3 rationale (stray "seven heads tall" phrase) is recorded in ART-PLAN so the failure cause is not rediscovered.
 
 **What to improve:** The rows are queued, not rendered. Do not count them as shipped art until the ArtJobs render and the sheets slice. No task close-out applies (no roadmap task attached to this PR).
+
+## 2026-11-22 PT | claude (scheduled agent, worker role) | t-005 rope ladders, kind_robots#5615
+
+**Decision:** Merged kind_robots#5615 on green CI (17 checks passed, 1 skipped). Every local save-plumber suite passed, Gears included. t-005 goes back to `ready` for its remaining scope.
+
+**What was good:** Ladders are a new solid type, not a spawn, so the parser, the Maker palette and the parity test pick them up for free. The fuzz checks invariants (never inside the shelf, never climbing off the rope, never below the floor) rather than replaying a script.
+
+**What to improve:** The first draft centred her on the rope. She is wider than a tile, so a ladder against a wall left her landing on the shelf instead of climbing down. The scripted test caught it, and `ropeX()` now hangs her flush to the wall. A future stage author must not build a one-tile shaft walled on both sides; that limit is documented in code.
+
+**Next:** Put ladders in a few campaign stages where they add a real route choice, and extend the Levels/Gears reachability probes to treat `|` as climbable.
