@@ -1442,10 +1442,10 @@ tasks:
   - id: t-085
     milestone: m8
     title: "Pixel Hop depth slice 3: Glacier Moon and Clockwork Planet"
-    status: review
-    owner: worker
-    claimed_by: 20261123T104431Z-kr-arcade-t085-pixelhop-n6q4
-    claimed_at: '2026-11-23T10:44:31.850Z'
+    status: ready
+    owner: null
+    claimed_by: null
+    claimed_at: null
     passes: 0
     stakes: reversible
     depends_on: t-084
@@ -1453,7 +1453,12 @@ tasks:
       CABINETS.md section 12, Pixel Hop (Q*bert riff), slice 3 of 5: Glacier Moon and Clockwork Planet. The upgrade is "The Painted Planets". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read the game's section first; this slice's scope is item 3 under its '#### Slices', and 'Rules for every slice' at the top applies. Code: kind_robots utils/arcade/games/ (registry slug pixel-hop). Silas, 2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality improvements, they should not just be thin veneers of the old games. But newer, better, even more awesome."
 
       Partial slice 3: Glacier Moon authored with six stages, ice-slide mechanics, twin-peak topology, snowy foes, snowflake picture, 4-crack Snow Globe boss, new score and HUD cues, and regression probes. Clockwork Planet remains. Code branch worker/kr-arcade-t-085-glacier-clockwork-n6q4, PR to follow. Keep this finite task ready after partial merge.
-    updated: '2026-11-23T10:51:07.665Z'
+
+      Reviewer (scheduled, 2026-11-23 PT): kind_robots#5659 (Glacier Moon, six stages, Snow
+      Globe boss) merged on all-green CI (8582ac25). Clockwork Planet remains, so t-085 goes
+      back to ready.
+    updated: '2026-11-23T11:55:01Z'
+    implementation_pr: 'silasfelinus/kind_robots#5659'
 
   - id: t-086
     milestone: m8
@@ -2580,11 +2585,11 @@ tasks:
   - id: t-155
     milestone: m8
     title: "Turn on ACE arcade soundtrack generation, ingest the first approved track, and listen to it in a cabinet"
-    status: review
-    owner: worker
-    claimed_by: 2026-11-23T105816Z-kr-arcade-t-155-k8q4
-    claimed_at: '2026-11-23T10:58:16Z'
-    updated: '2026-11-23T11:01:00Z'
+    status: ready
+    owner: null
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-11-23T11:55:03Z'
     passes: 0
     stakes: reversible
     approved_by_human: true
@@ -2593,6 +2598,13 @@ tasks:
       Remainder of silasfelinus/kind_robots#3606 that needs Silas. Human steps: confirm the kr-relay build advertises supportsAudio with the ACE-Step model installed (GET /api/arcade/audio-jobs then reports the relay ready), and set ARCADE_AUDIO_JOBS_ENABLED=true on production. After that an agent can: approve one test cue (gloom-invaders/level), confirm the worker returns a readable file, and ingest it: check duration and format, set the loop point, trim cue renders from 10s, transcode, record the SHA-256, ArtJob id and approval/verified dates, publish under /images/arcade/audio/<game|shared>/<cue>.<ext>, confirm it fetches from production, and add it to VERIFIED_ARCADE_AUDIO_ASSETS. Then approve the remaining priority-cabinet cues. Done when someone has heard at least one ACE recording in a cabinet, including the crossfade, ducking and oscillator fallback.
 
       Removed the obsolete per-cue approval, environment flag and relay-readiness gates from the admin audio enqueue route. The PR retains job deduplication and uses the existing ACE-Step ArtJob pipeline. Render ingestion and audible verification remain open.
+
+      Reviewer (scheduled, 2026-11-23 PT): kind_robots#5663 merged on all-green CI (989b6f37).
+      The admin audio enqueue now submits deduplicated ACE-Step jobs without the retired
+      approval, env-flag and relay gates, and it stays admin-guarded. Ingesting renders, an
+      audible cabinet check and cue activation remain, so t-155 goes back to ready. The new
+      path only works on production after a Force Update.
+    implementation_pr: 'silasfelinus/kind_robots#5663'
   - id: t-156
     milestone: m8
     title: "Achievements: three per game with badge art, an achievements section, and a refreshed jellybean catalog"
@@ -2737,6 +2749,11 @@ tasks:
       Brick Bloom thumb-slide lane follow-up merged 2026-11-15 PT as silasfelinus/kind_robots#5220 (squash c4f0a1948b95473f6dd3f7a0c48a5cd1d50fc835). The game now reserves a full-width, generously tall finger strip below the scaled playfield, maintains canvas dragging, and adjusts strip size for landscape. Real Chromium browser test exercised 390x844, 768x1024, 1024x1366 and 844x390 at DPR 1/2/3, verified unobstructed layout and paddle travel; screenshot artifact 14163208317 visually inspected. All 15 substantive PR checks green; optional Prettier autofix skipped. No deployment attempted. Keep broader cross-game issue #4062 open and return t-164 to ready for remaining viewport/readability/QA work.
 
       2026-11-22 PT: implementation slice on worker/kr-arcade-t-164-adaptive-render-k7m2: HD Arcade canvas now samples actual render cost and adjusts backing-store budget in measured windows; Pixel mode and deterministic simulation unchanged. Added regression tests for slow frames, recovery, spike rejection and backing-size safety. The cross-game viewport/legibility issue #4062 remains open for browser QA.
+
+      Reviewer (scheduled, 2026-11-23 PT): #5623 conflicted with main on package.json
+      test:arcade-engine. It is rescued as kind_robots#5668 with the same four files: main's
+      test list plus the adaptive-budget test, which passes locally. #5623 closes as
+      superseded once #5668 merges green.
     owner: worker
     claimed_by: 2026-11-22T232000Z-kr-arcade-t-164-k7m2
     claimed_at: '2026-11-22T23:20:00Z'
