@@ -87,15 +87,12 @@ tasks:
     direction, and the offline-at-runtime rule.
 - id: t-067
   title: 'Main-game standard: audit and close the gaps for The Ruler Is Hooked'
-  status: review
-  owner: worker
-  claimed_by: 2026-11-22T204400Z-ruler-hooked-t067-8f32
-  claimed_at: '2026-11-22T20:44:00Z'
+  status: ready
   milestone: m6
   stakes: reversible
   passes: 0
   depends_on: []
-  updated: '2026-11-22T20:45:00Z'
+  updated: '2026-11-23T23:45:00Z'
   note: |-
     Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -108,6 +105,8 @@ tasks:
     Achievements are tracked by their own task; this one covers everything else.
 
     Fixed Playbook Studio ending art path to match the four delivered runtime ending plates. This is a partial main-game standards fix; settings, scrapbook, music and other finite scope remain.
+
+    Reconciled merged kind_robots#5595 at 702fb25c after verifying all nine returned workflows successful on head 124fbc5e. Ending Studio path fix is delivered, but main-game settings, scrapbook and audio remain incomplete. Return to ready for the next implementation slice.
 - id: t-068
   title: 'The Ruler Is Hooked achievement upgrade: 12 or more live achievements'
   status: done
@@ -1344,7 +1343,7 @@ tasks:
 - id: t-077
   milestone: m4
   title: Add a one-command refresh script for the ruler-hooked runtime fish fixture that rewrites it from a kind_robots checkout and fails CI-style when it is stale
-  status: review
+  status: done
   stakes: reversible
   passes: 0
   depends_on: []
@@ -1352,8 +1351,9 @@ tasks:
     Kaizen from the reviewer of conductor#7932 (t-076, 2026-11-23 PT). `tests/fixtures/ruler_hooked_runtime_fish.json` is hand-maintained; the Worker suggested refreshing it whenever runtime fish change. Add `scripts/refresh_ruler_hooked_runtime_fish.py` (`--write` / `--check`) that reuses the test's fail-closed `RULER_HOOKED_FISH` parser so the next fish batch (43-60) updates the snapshot in one step.
 
     Added a shared runtime roster parser, deterministic --write/--check snapshot CLI, duplicate and failure guards, and CLI regression tests in worker/ruler-hooked-t-077-20261123-a9c4 at b5c037d2. CI pending; no game runtime changes.
-  updated: '2026-11-23T23:17:08Z'
-  owner: worker
+
+    Merged conductor#7938 at 55e7e233 after all latest-head workflows passed, including corrected handoff template run 45289867898. Shared parser and refresh/check command with regression coverage delivered.
+  updated: '2026-11-23T23:45:00Z'
   claimed_by: 20261123T231708Z-ruler-hooked-t077-a9c4
   claimed_at: '2026-11-23T23:17:08Z'
 
