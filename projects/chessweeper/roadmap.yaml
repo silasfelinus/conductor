@@ -15,15 +15,15 @@ milestones:
   - id: m2
     title: "PERSONALITY — each style's unique mechanics and game feel"
     weight: 20
-    status: not-started
+    status: done
   - id: m3
     title: "ART & POLISH — three painted identities, audio, settings, records"
     weight: 20
-    status: not-started
+    status: done
   - id: m4
     title: "QUALITY — deterministic tests, devices, playtest-ready handoff"
     weight: 15
-    status: in-progress
+    status: done
 tasks:
   - id: t-001
     milestone: m1
@@ -40,11 +40,11 @@ tasks:
   - id: t-002
     milestone: m2
     title: "Deepen Sugarbomb, Ashen and Jackpot into three replayable campaigns"
-    status: review
+    status: done
     owner: worker
     claimed_by: 20261122T063034485Z-chessweeper-t002-branch-v8k4
     claimed_at: '2026-11-22T06:30:34.485Z'
-    updated: '2026-11-22T06:31:14.918Z'
+    updated: '2026-11-22T23:16:16Z'
     depends_on: t-001
     passes: 0
     stakes: reversible
@@ -60,14 +60,23 @@ tasks:
       2026-11-21 PT reviewer reconciliation: kind_robots PR #5550 merged at fb1ce3f76e569ccda031b98516894de241ea57a7, with all six required latest-head checks completed green, delivering twelve optional gameplay- earned chapter mastery trials, achievements events and per-world records. The full narrative branching, canonical account/device saving, endings and full-run acceptance are still incomplete. Return t-002 to ready.
 
       2026-11-21 PT: Implemented real selectable world-specific risk contracts with meaningful chapter effects: Sugarbomb shelter vs extra blade/points, Ashen ember protection vs iron-wheel oath, and Jackpot insurance vs high-roller chip/blade gamble. Contracts persist per world and chapter, cannot change mid-run, reset deterministically on pre-turn switch, and are covered by mock-engine gameplay tests. Kind Robots commit 0a08168a; PR/CI pending. t-002 still needs authored branch outcomes, full campaign balance QA and account/device save integration.
+
+      2026-11-22 PT done (Silas-directed playtest session): kind_robots #5597 merged e41798a9
+      with all 15 checks green. Remaining scope closed: pact-aware narrative branches and
+      campaign-finale epilogues in every ending scene, explicit device saving with CW1
+      transfer codes (account sync deliberately out of scope and documented), and full-run
+      balance QA. Black AI now reads the blade forecast; before the fix Ashen and Jackpot
+      ended by passive arena kills at turn 18-28 on every seed. Evidence:
+      projects/chessweeper/qa/2026-11-22-playthrough.md.
+    implementation_pr: 'silasfelinus/kind_robots#5597'
   - id: t-003
     milestone: m3
     title: "Queue, deliver and attach original illustrated art for all three mode identities"
-    status: review
+    status: done
     owner: worker
     claimed_by: 20261122T113045Z-chessweeper-t003-art-delivery-q9n2
     claimed_at: '2026-11-22T11:30:45Z'
-    updated: '2026-11-22T11:40:00Z'
+    updated: '2026-11-22T23:16:18Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -93,25 +102,52 @@ tasks:
       Returned to ready; claim released.
 
       Integrated world-specific twelve-rank painted piece atlases into the live Chessweeper board with per-world asynchronous loading, stale-response isolation and readable glyph fallback. ArtJobs 76602-76604 are recorded in the art queue, but delivery and visual QA remain outstanding. Implementation PR pending.
-    implementation_pr: 'silasfelinus/conductor#7817'
+
+      2026-11-22 PT done: every planned image is delivered and verified live (HTTP 200
+      image/webp) at kindrobots.org/images/chessweeper/. That covers the world art, 3 boards
+      (ArtJobs 76472-76474), 3 piece atlases (76602-76604), 3 action plates (76605-76607, now
+      wired into the special-move cinematics by kind_robots #5597) and 12 ending plates
+      (#7848, 76704-76715, five re-rendered via #7865 after visual QA). art-pack.json records
+      delivered versus requested.
+    implementation_pr: 'silasfelinus/conductor#7848'
   - id: t-004
     milestone: m4
     title: "Add deterministic tests, full playthroughs and 390/768/1440 viewport QA"
-    status: waiting
+    status: done
     depends_on: [t-002, t-003, t-006, t-007, t-008, t-009, t-010]
     passes: 0
     stakes: reversible
     note: >-
       Final independent acceptance after production tasks t-002, t-003, t-006..t-010: run deterministic seeded full campaigns and actual browser-input paths across every world, including chess rules (castling, en passant, promotion, king safety, checkmate/stalemate), mine safety/clue cascade, disc collisions/powers, all twelve reachable ending branches, no impossible softlocks, loss/restart/checkpoint resume, achievements and scrapbook unlocks and last-item reachability, sound/music/mute and motion settings, visual effects, and real delivered art URLs. Test three viewport widths (390/768/1440), keyboard, mouse, touch and gamepad where supported, contrast, reduced-motion and audio gesture policy. Capture screenshots/video evidence and run actual CI typecheck, lint, tests, engine unit tests and full-run browser tests. A rendered page and a forced end-state fixture do NOT replace actual playthrough evidence.
+
+      2026-11-22 PT done: verifyChessweeperPlaythrough.browser.test.mjs plays the game in real
+      Chromium through visible clicks. It covers all three 4-chapter campaigns, 12/12 endings
+      reached by play, scrapbook replay, save/resume, transfer merge and rejection of a bad
+      code, settings persistence, keyboard, touch, reduced motion, the audio gesture policy,
+      and 390/768/1440 layouts. It passed in CI on #5597 and now runs on every Chessweeper PR.
+      It found and fixed six defects, including the dead profile layer, the operations console
+      hidden on phones, and passive arena wins. Report:
+      projects/chessweeper/qa/2026-11-22-playthrough.md. The game has no gamepad bindings, so
+      gamepad was not tested.
+    updated: '2026-11-22T23:16:30Z'
+    implementation_pr: 'silasfelinus/kind_robots#5597'
   - id: t-005
     milestone: m4
     title: "Finish remaining finite roadmap, mark for human testing and set playtest/normal"
-    status: waiting
+    status: done
     depends_on: [t-002, t-003, t-004, t-006, t-007, t-008, t-009, t-010]
     passes: 0
     stakes: reversible
     note: >-
       STRICT LAST TASK. The full substantive roadmap MUST be done, not merely t-001 first-playable or a share-ready page. Verify all prior dependency tasks are done with merged passing PRs and actual evidence: complete three-world campaigns, art and production animation, integrated sound and distinct music per world, twelve authored AND illustrated endings, achievements with real earn triggers, discoverable persistent scrapbook/records, settings and tutorial, save/load and complete seeded engine/full-run QA on phone/tablet/desktop. No queue placeholders, silent audio, static sketches, title-only endings, fake unlocks, inaccessible collection rows or unverified file paths count. Once all agent-owned work is truly complete and the game is usable on its existing route, update issue #5304 to [FLAGGED FOR HUMAN TESTING], close the indexed issue, and move Conductor to playtest/normal. Human trials and subjective verdict happen AFTER this handoff; no human gate is needed for agent build/QA. Separate public launch/promotion/deploy approvals remain separate and are never inferred from the handoff.
+
+      2026-11-22 PT done: every finite agent-owned task is complete and verified. Handoff
+      materials: PLAYTEST-CHECKLIST.md, qa/2026-11-22-playthrough.md and a private promo draft
+      (promo/). project-overrides moves chessweeper to playtest/normal, and sync-playtest-
+      master-issues flags and closes kind_robots#5304. The human verdict, publishing, sharing
+      the promo and wider promotion all stay separate decisions after this handoff.
+    updated: '2026-11-22T23:16:33Z'
+    implementation_pr: 'silasfelinus/conductor#7848'
   - id: t-006
     milestone: m4
     title: "Extract the chess/mine/disc rules engine from the static Play HTML into a seeded, unit-testable TypeScript module"
@@ -129,11 +165,11 @@ tasks:
   - id: t-007
     milestone: m3
     title: "Deliver world-specific gameplay animation, cinematic transitions and responsive VFX"
-    status: review
+    status: done
     owner: worker
     claimed_by: 2026-11-22T114500Z-chessweeper-t007-c8f2
     claimed_at: '2026-11-22T11:45:00Z'
-    updated: '2026-11-22T11:51:00Z'
+    updated: '2026-11-22T23:16:21Z'
     depends_on: t-001
     passes: 0
     stakes: reversible
@@ -150,14 +186,22 @@ tasks:
 
       Partial cinematic transition slice: three world-specific animated win/loss interstitials, responsive CSS, reduced-motion opt-out and dismissal/cleanup. Sprite animation, illustrated ending cinematics and viewport playback QA remain.
 
+      2026-11-22 PT done: kind_robots #5597 adds painted Sugar Rush / Last Stand / Double or
+      Nothing plate cinematics. They are preloaded, skipped under reduced motion, and cleared
+      on Escape or a tab switch. #5597 also adds illustrated ending scenes with a slow plate
+      pan. Combined with the earlier piece travel, capture and outcome interstitial work
+      (#5541, #5559, #5573) and the painted piece atlases (#5571), the finite animation scope
+      is complete. Three-viewport playback is verified by the CI playthrough.
+    implementation_pr: 'silasfelinus/kind_robots#5597'
+
   - id: t-008
     milestone: m3
     title: "Deliver original sound effects, looping music and a gesture-safe audio mixer"
-    status: review
+    status: done
     owner: worker
     claimed_by: 2026-11-22T192636Z-chessweeper-t008-r8q6
     claimed_at: '2026-11-22T19:26:36Z'
-    updated: '2026-11-22T19:26:36Z'
+    updated: '2026-11-22T23:16:23Z'
     depends_on: t-001
     passes: 0
     stakes: reversible
@@ -174,10 +218,18 @@ tasks:
 
       Partial audio lifecycle repair: retire sample loops on mute, resume decoded tracks on unmute, prevent audio recreation after pagehide, and add regression assertions. Full device mixing and delivery verification remain.
 
+      2026-11-22 PT done: lifecycle fix #5587 merged 2982e48 (12 checks green). All six
+      original loops are live and their sizes match the repo. Offline mix check: 22.05 kHz
+      mono, peak -2.8 dBFS on every track, RMS -10.5 to -13.7 dBFS, 0 clipped samples,
+      seamless loop points, and six distinct hashes. Browser QA confirms there is no
+      AudioContext before a gesture and one after. A listen on a phone speaker is in the human
+      playtest checklist, not an agent task.
+    implementation_pr: 'silasfelinus/kind_robots#5587'
+
   - id: t-009
     milestone: m3
     title: "Write, illustrate and integrate twelve distinct playable ending scenes"
-    status: waiting
+    status: done
     depends_on: t-002
     passes: 0
     stakes: reversible
@@ -191,10 +243,18 @@ tasks:
       finished scenes. Verify each ending is actually reachable from gameplay and
       recorded for the scrapbook. No human creative signoff prerequisite.
 
+      2026-11-22 PT done: 12 authored ending scenes (mate / minefield / arena / setback per
+      world). Each has two paragraphs of prose, a pact-aware 'Your run' epilogue, a campaign-
+      finale line, an illustrated plate (ArtJobs 76704-76715, five re-rendered after QA via
+      #7865), and Next / Scrapbook / Board actions. All 12 were reached by real play in the CI
+      playthrough and recorded in the scrapbook.
+    updated: '2026-11-22T23:16:28Z'
+    implementation_pr: 'silasfelinus/kind_robots#5597'
+
   - id: t-010
     milestone: m2
     title: "Complete achievements, permanent world scrapbook and progression records"
-    status: waiting
+    status: done
     depends_on: t-002
     passes: 0
     stakes: reversible
@@ -208,3 +268,13 @@ tasks:
       clipping), with explicit guest/device versus signed-in account semantics.
       Test unlock idempotence, save/restore, world isolation, last gallery entry,
       keyboard/touch interaction and non-spoiler locked content.
+
+      2026-11-22 PT done: kind_robots #5597 brings the game to 24 achievements, each awarded
+      only from a validated end state or campaign event and idempotent. The scrapbook has 12
+      replayable ending pages with non-spoiler hints, action-plate and piece-atlas pages,
+      chapter milestones with mastery stars, and the last 12 battles. Save semantics are
+      explicit: progress lives on the device for guests and signed-in players, and CW1
+      transfer codes merge between devices without loss. Also fixed: progression.js threw on
+      load (an undefined page-private helper), so on main this whole layer had been dead.
+    updated: '2026-11-22T23:16:25Z'
+    implementation_pr: 'silasfelinus/kind_robots#5597'
