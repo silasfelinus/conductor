@@ -89,6 +89,13 @@ jobs:
             --ledger projects/comet-city-academy/art/FRANCHISE-SAFE-RERENDERS-ROUND-1.yaml:5 \
             --write-evidence --require-private \
             --checkpoint-message "chore: checkpoint nineteen priority Prom private game-media proofs [skip ci]" 2>&1 | tee -a "$RUNNER_TEMP/prom-tactics-proof.log"
+      - name: Verify six canonical Prom replacement paintings through private game URLs
+        run: |
+          set -o pipefail
+          python scripts/prove_private_media_ledgers.py \
+            --ledger projects/comet-city-academy/art/CANON-OUTCOME-CORRECTIONS-2026-11-22.yaml:6 \
+            --write-evidence --require-private \
+            --checkpoint-message "chore: checkpoint six Prom canon-correction private game-media proofs [skip ci]" 2>&1 | tee -a "$RUNNER_TEMP/prom-tactics-proof.log"
       - name: Verify and checkpoint 172 original private Prom refill and cast paintings
         run: |
           set -o pipefail
@@ -124,4 +131,4 @@ jobs:
         if: always()
         continue-on-error: true
         run: |
-          python scripts/summarize_prom_tactics_media_proof.py --log "$RUNNER_TEMP/prom-tactics-proof.log" --summary "$GITHUB_STEP_SUMMARY" --ledger projects/every-villain-tactics/art/ONE-HIT-CREW-TELEGRAPHS-2026-11-20.yaml --ledger projects/every-villain-tactics/art/ONE-HIT-CREW-COMBAT-STATES-2026-11-22.yaml --ledger projects/every-villain-tactics/art/LAST-ORDER-DINER-ROUND-1.yaml --ledger projects/every-villain-tactics/art/SUNKEN-STREET-ROUND-1.yaml --ledger projects/every-villain-tactics/art/VALCOURT-LIBRARY-ROUND-1.yaml --ledger projects/comet-city-academy/art/AUTHORED-RECRUITS-EMOTIONS-2026-11-22.yaml --ledger projects/comet-city-academy/art/UNSTABLE-PRODUCTION-FAMILY-ROUND-1.yaml --ledger projects/comet-city-academy/art/FRANCHISE-SAFE-RERENDERS-ROUND-1.yaml --ledger projects/comet-city-academy/art/RUNTIME-REFILL-ROUND-1.yaml --ledger projects/comet-city-academy/art/OCT-29-CAST-KREA2-ROUND-1.yaml
+          python scripts/summarize_prom_tactics_media_proof.py --log "$RUNNER_TEMP/prom-tactics-proof.log" --summary "$GITHUB_STEP_SUMMARY" --ledger projects/every-villain-tactics/art/ONE-HIT-CREW-TELEGRAPHS-2026-11-20.yaml --ledger projects/every-villain-tactics/art/ONE-HIT-CREW-COMBAT-STATES-2026-11-22.yaml --ledger projects/every-villain-tactics/art/LAST-ORDER-DINER-ROUND-1.yaml --ledger projects/every-villain-tactics/art/SUNKEN-STREET-ROUND-1.yaml --ledger projects/every-villain-tactics/art/VALCOURT-LIBRARY-ROUND-1.yaml --ledger projects/comet-city-academy/art/AUTHORED-RECRUITS-EMOTIONS-2026-11-22.yaml --ledger projects/comet-city-academy/art/UNSTABLE-PRODUCTION-FAMILY-ROUND-1.yaml --ledger projects/comet-city-academy/art/FRANCHISE-SAFE-RERENDERS-ROUND-1.yaml --ledger projects/comet-city-academy/art/RUNTIME-REFILL-ROUND-1.yaml --ledger projects/comet-city-academy/art/OCT-29-CAST-KREA2-ROUND-1.yaml --ledger projects/comet-city-academy/art/CANON-OUTCOME-CORRECTIONS-2026-11-22.yaml
