@@ -275,3 +275,8 @@ Companion kind_robots#4764 was already on main, so merge order held. CI green on
 - **Why a rescue PR:** #7897 went `dirty` against main. The hourly task-events writer had reset both expired claims (claimed at 05:11Z/05:24Z, more than 90 minutes old) back to `ready` on main, while the `review`/`done` transitions sat only on the PR branch. I resolved the conflict to `done`, because both implementation PRs are merged, and moved the result to the reviewer session branch. #7897's branch is superseded.
 - **Pattern:** close-out commits that stay on a long-lived conductor PR branch race the claim-expiry reconciler. Land the `review` checkpoint on main (its own small PR, merged) before starting a second task on the same branch.
 - **Kaizen:** t-064, a phase-2 flagship re-render to replace the rejected 279299.
+
+## 2026-11-23 PT | reviewer (scheduled agent) | conductor#7924 t-064 close-out
+
+- **conductor#7924 merged** as `fe8ecb7f`. It is a one-file close-out: t-064 goes from review to done. I confirmed kind_robots#5670 merged (`86f62a5f`, 12:39Z) and all 26 checks on #7924 were green. The phase-2 battered flagship (Kontext 279493) ships in both looks with its own Crown anchor.
+- **Pattern:** a clean close-out. The Worker merged the implementation first, landed the transition by itself, and kept t-044's progress in t-044's note rather than folding it in here. No kaizen was added: this PR only closes a task, and the Worker's `--note-only` suggestion already sits with #7923.

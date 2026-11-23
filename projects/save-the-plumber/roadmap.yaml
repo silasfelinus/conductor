@@ -564,11 +564,11 @@ tasks:
       Related: PR #4080, issue #4062, conductor/save-the-plumber t-025.
   - id: t-027
     title: "Save the Plumber Maker: playable level editor, saves, sharing, ratings, Mario Maker and Geometry Dash parity"
-    status: ready
-    owner: null
-    claimed_by: null
-    claimed_at: null
-    updated: '2026-11-23T11:55:00Z'
+    status: review
+    owner: worker
+    claimed_by: 2026-11-23T133133Z-save-the-plumber-t027-q8n4
+    claimed_at: '2026-11-23T13:31:33Z'
+    updated: '2026-11-23T13:38:00Z'
     stakes: reversible
     passes: 0
     source_issue: "silasfelinus/kind_robots#4347"
@@ -603,4 +603,6 @@ tasks:
       Reviewer (scheduled, 2026-11-23 PT): kind_robots#5656 (timed speed routes, personal
       bests, safe pause) merged on all-green CI (ed110e56). This is a partial slice. Community
       publishing, ratings and advanced editor tools remain, so t-027 goes back to ready.
+
+      Maker revision-bound review state now invalidates on paint, undo, redo and settings changes, with regression contract assertions. Implementation branch worker/save-the-plumber-t-027-review-undo-q8n4. Remaining Maker scope stays open.
     implementation_pr: 'silasfelinus/kind_robots#5656'

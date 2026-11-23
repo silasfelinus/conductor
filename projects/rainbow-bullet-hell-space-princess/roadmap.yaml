@@ -1280,12 +1280,12 @@ tasks:
   - id: t-064
     milestone: m4
     title: "Re-render the Motherland flagship phase-2 painting so the sprung clamps and battered hull read in game"
-    status: review
+    status: done
     passes: 0
     stakes: reversible
     depends_on: []
     source: reviewer-kaizen-conductor-7897
-    updated: '2026-11-23T12:08:53Z'
+    updated: '2026-11-23T12:39:35Z'
     note: >-
       Kaizen from the conductor#7897 review (t-061). ArtImage 279299 was rejected (not battered, clamps
       not sprung, hull colours drift), so phase 2 of the flagship fight reuses the phase-1 painting
@@ -1298,6 +1298,9 @@ tasks:
       kind_robots#5670 swaps bosses/flagship-phase2 in both looks at phase 2 with its own
       Crown point (0.049, 0.257), checked at game scale against the 44 px ring. Merge when all
       checks complete green.
+
+      2026-11-23 PT: kind_robots#5670 merged as 86f62a5f after all 23 checks completed green;
+      the rebel-road flagship turns battered (279493) when its clamps spring, in both looks.
     owner: reviewer
     claimed_by: session_01L5NKxaUAWmNr7wxdToBdp3
     claimed_at: '2026-11-23T11:00:11Z'
