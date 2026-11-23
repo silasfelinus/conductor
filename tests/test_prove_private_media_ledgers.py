@@ -189,7 +189,7 @@ def test_private_metadata_exhausts_retry_budget_and_fails_closed(tmp_path):
         calls.append(image_id)
         return 503, {}
 
-    with pytest.raises(RuntimeError, match="Transient private ArtImage"):
+    with pytest.raises(PermissionError, match="Private ArtImage metadata"):
         verify_private_metadata(
             path, 1, request=request, pause=pauses.append
         )
@@ -218,3 +218,51 @@ def test_private_metadata_paces_between_images_not_after_last(tmp_path):
     ) == 2
     assert calls == [456, 457]
     assert pauses == [0.125]
+
+
+def test_private_metadata_reports_exact_failed_image_and_continues(tmp_path, capsys):
+    path = ledger(tmp_path)
+    document = yaml.safe_load(path.read_text())
+    second = dict(document["subjects"][0])
+    second["key"] = "distinct-crew"
+    second["jobs"] = {"krea2": 124}
+    second["art"] = {"krea2": {"status": "DONE", "art_image_id": 457}}
+    document["subjects"].append(second)
+    path.write_text(yaml.safe_dump(document))
+    calls = []
+
+    def request(image_id):
+        calls.append(image_id)
+        return 200, {"data": {"isPublic": image_id == 456}}
+
+    with pytest.raises(PermissionError, match="Private ArtImage metadata"):
+        verify_private_metadata(path, 2, request=request, pace_seconds=0)
+    output = capsys.readouterr().out
+    assert calls == [456, 457]
+    assert (
+        "PRIVATE_POLICY_IMAGE_FAILED ledger=private.yaml "
+        "image=456 reason=ReportedPublic"
+    ) in output
+    assert "PRIVATE_POLICY_IMAGE_OK ledger=private.yaml image=457" in output
+    assert (
+        "PRIVATE_POLICY_IMAGES_CHECKED=2 ledger=private.yaml "
+        "verified=1 failed=1"
+    ) in output
+    assert "http" not in output.lower()
+    assert "Authorization" not in output
+
+
+def test_missing_visibility_and_denied_metadata_have_distinct_failures(
+    tmp_path, capsys
+):
+    path = ledger(tmp_path)
+    for status, payload, expected_reason in [
+        (200, {"data": {}}, "UnknownVisibility"),
+        (404, {}, "MetadataUnavailable"),
+    ]:
+        with pytest.raises(PermissionError):
+            verify_private_metadata(
+                path, 1, request=lambda _: (status, payload), pace_seconds=0
+            )
+        output = capsys.readouterr().out
+        assert "image=456 reason=" + expected_reason in output
