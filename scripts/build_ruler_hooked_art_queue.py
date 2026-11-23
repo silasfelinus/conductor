@@ -121,7 +121,7 @@ PORTRAIT = "768x1024"
 SQUARE = "1024x1024"
 
 TARGET_REPO = "silasfelinus/kind_robots"
-PAGE_URL = "https://kindrobots.org/plan/projects/ruler-hooked"
+PAGE_URL = "https://kindrobots.org/play/ruler-hooked"
 
 # Every lane value an *_entries() function can hand to make_entry() -- kept as one
 # set so --lane's choices and this being out of sync fail loudly instead of
