@@ -1,0 +1,83 @@
+date: '2026-11-23'
+entries:
+- slug: not-found-plain-title
+  title: The 404 page says Page not found
+  target: interface-vision
+  roadmap_task: t-151
+  kind: front-door
+  summary: A visitor who hit a missing page saw a browser tab reading 'Direction | Kind Robots'; it now reads 'Page
+    not found' and links the site map.
+  status: shipped
+  pull_request: https://github.com/silasfelinus/kind_robots/pull/5654
+  checks_url: https://github.com/silasfelinus/kind_robots/actions/runs/45142660780
+  art: &id001
+    status: not-required
+  verification: 'CI (Contract Tests run 45142660780) and locally: verifyFrontDoorPolish.test.ts section 6 pins the
+    title and the /navigation link; verifyNoShadowedContentRoutes passes. Live result pending the next deploy.'
+  preview_url: https://kindrobots.org/this-page-does-not-exist
+  checks: passed
+  merge_sha: 77bb91d155562e81213e1177ed01168a64483c29
+- slug: login-plain-copy
+  title: The login page says what an account is for
+  target: interface-vision
+  roadmap_task: t-105
+  kind: front-door
+  summary: The login page promised a 'suite of AI-enhanced tools'; it now says a free account saves game progress
+    and art, and games stay free without one.
+  status: shipped
+  pull_request: https://github.com/silasfelinus/kind_robots/pull/5654
+  checks_url: https://github.com/silasfelinus/kind_robots/actions/runs/45142660780
+  art: *id001
+  verification: 'CI (Contract Tests run 45142660780) and locally: verifyFrontDoorPolish.test.ts forbids ''AI-enhanced''/''suite
+    of'' and requires ''free'' and ''without one''. Live result pending the next deploy.'
+  preview_url: https://kindrobots.org/login
+  checks: passed
+  merge_sha: 77bb91d155562e81213e1177ed01168a64483c29
+- slug: sitemap-trust-pages
+  title: Who-made-this, privacy and sign-up pages are in the sitemap
+  target: interface-vision
+  roadmap_task: t-144
+  kind: findability
+  summary: The public /silas, /privacy and /register pages were missing from sitemap.xml, so search engines were
+    never told about them.
+  status: shipped
+  pull_request: https://github.com/silasfelinus/kind_robots/pull/5654
+  checks_url: https://github.com/silasfelinus/kind_robots/actions/runs/45142660780
+  art: *id001
+  verification: 'CI (Contract Tests run 45142660780) and locally: verifySharePreview.test.ts requires all three
+    in the sitemap and backed by real content pages. Live result pending the next deploy.'
+  preview_url: https://kindrobots.org/sitemap.xml
+  checks: passed
+  merge_sha: 77bb91d155562e81213e1177ed01168a64483c29
+- slug: signed-in-pages-say-so
+  title: Chats and Themes describe themselves plainly
+  target: interface-vision
+  roadmap_task: t-104
+  kind: front-door
+  summary: Chats claimed 'curated messages from across our digital domains' though it needs a sign-in; it now says
+    so, and Themes drops filler copy.
+  status: shipped
+  pull_request: https://github.com/silasfelinus/kind_robots/pull/5654
+  checks_url: https://github.com/silasfelinus/kind_robots/actions/runs/45142660780
+  art: *id001
+  verification: 'CI (Contract Tests run 45142660780) and locally: verifyFrontDoorPolish.test.ts requires ''sign
+    in free'' on Chats and forbids the old filler on Themes. Live result pending the next deploy.'
+  preview_url: https://kindrobots.org/themes
+  checks: passed
+  merge_sha: 77bb91d155562e81213e1177ed01168a64483c29
+- slug: jellybeans-signin-honest
+  title: The Jellybeans page says how the hunt works
+  target: kr-arcade
+  roadmap_task: t-156
+  kind: front-door
+  summary: The signed-in Jellybeans page described a delightful quest; it now says to find hidden jellybeans, earn
+    three per game, and sign in free to track them.
+  status: shipped
+  pull_request: https://github.com/silasfelinus/kind_robots/pull/5654
+  checks_url: https://github.com/silasfelinus/kind_robots/actions/runs/45142660780
+  art: *id001
+  verification: 'CI (Contract Tests run 45142660780) and locally: verifyFrontDoorPolish.test.ts requires ''sign
+    in free'' and forbids ''delightful quest''. Live result pending the next deploy.'
+  preview_url: https://kindrobots.org/achievements
+  checks: passed
+  merge_sha: 77bb91d155562e81213e1177ed01168a64483c29
