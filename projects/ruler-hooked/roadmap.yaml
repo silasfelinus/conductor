@@ -1303,13 +1303,16 @@ tasks:
 - id: t-074
   milestone: m6
   title: Review and restage the 8 ruler-hooked card prompts that drifted from upstream card text
-  status: ready
+  status: claimed
+  owner: worker
+  claimed_by: 20261123T214450Z-ruler-hooked-t074-k9v3
+  claimed_at: '2026-11-23T21:44:50Z'
   stakes: reversible
   passes: 0
   depends_on: []
   note: |-
     Kaizen from reviewer of conductor#7916 (t-073, 2026-11-23 PT). Once the outcomeKey crash was fixed, live `build_ruler_hooked_art_queue.py --check` reported 0 missing and 8 stale card rows (e.g. card-marina-family-charter, card-water-rights-hearing) because kind_robots card text changed. Check each prompt diff against the art-prompt contract, then `--write --restage --lane card` so --check exits clean. Art-queue only.
-  updated: '2026-11-23T11:10:00Z'
+  updated: '2026-11-23T21:44:50Z'
 - id: t-075
   milestone: m4
   title: Test that the fish roster slugs, Kind Robots runtime fish and staged art-request ids stay one-to-one
