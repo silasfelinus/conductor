@@ -1318,7 +1318,7 @@ tasks:
 - id: t-075
   milestone: m4
   title: Test that the fish roster slugs, Kind Robots runtime fish and staged art-request ids stay one-to-one
-  status: review
+  status: done
   owner: openai-worker
   claimed_by: 2026-11-23T124525Z-ruler-hooked-t075-k7m9
   claimed_at: '2026-11-23T12:45:25Z'
@@ -1329,4 +1329,20 @@ tasks:
     Kaizen from the reviewer of conductor#7915 / kind_robots#5657 (t-031, 2026-11-23 PT). The 42-fish batch was hand-matched across `projects/ruler-hooked/fish/vertical-slice.yaml`, `projects/art-prompts.yaml` (`ruler-hooked-fish-<slug>`) and kind_robots `utils/rulerHooked/fish.ts` and `artPrompts.ts`. Earlier the same hand-matching left nine duplicate rows (#7900). Add a conductor test that every roster slug has exactly one art request and none is orphaned. If a kind_robots checkout or a fixture snapshot of `fish.ts` slugs is available, also check that the roster matches it.
 
     Added exact fish roster to staged art request parity tests and optional runtime fish comparison; CI pending.
-  updated: '2026-11-23T12:51:00Z'
+
+    Reviewer 2026-11-23 PT: worker branch had no PR; rescued as conductor#7927 with a fix
+    (the runtime array split used a literal backslash-n and never matched). 3 passed locally
+    incl. runtime comparison vs kind_robots main (42 fish). Kaizen: t-076.
+  updated: '2026-11-23T13:49:22Z'
+  implementation_pr: 'silasfelinus/conductor#7927'
+
+- id: t-076
+  milestone: m4
+  title: Snapshot the kind_robots runtime fish slugs into a fixture so the roster-runtime parity check runs in CI instead of skipping
+  status: ready
+  stakes: reversible
+  passes: 0
+  depends_on: []
+  note: |-
+    Kaizen from the reviewer of conductor#7927 (t-075, 2026-11-23 PT). `test_runtime_fish_slugs_match_when_app_checkout_is_present` skips on conductor CI because there is no sibling kind_robots checkout, so the runtime half of the parity contract only runs on agent machines. Add a committed fixture of `RULER_HOOKED_FISH` slugs (refreshed by the art-queue generator or a small script) and compare against it in CI; keep the live-checkout comparison as the drift detector for the fixture itself.
+  updated: '2026-11-23T13:52:00Z'
