@@ -1,4 +1,14 @@
 # art-queue-health.yaml -- written by scripts/art_queue_health.py record at the
 # end of every Auto Art Generate run. Do not hand-edit: fix the cause (see
 # docs/agents/roles/art-medic.md) and the next run drops the entry.
-failures: []
+failures:
+- source: requests
+  target: public/images/hopeful-hues/splash.webp
+  kind: timeout
+  detail: job 76826 timed out after 300s (still queued/running)
+  first_seen: '2026-11-23'
+- source: requests
+  target: public/images/hopeful-hues/title-hero.webp
+  kind: error
+  detail: 'project art sync failed: HTTP 404 Project title not found.'
+  first_seen: '2026-11-23'
