@@ -1,4 +1,4 @@
-# Hopeful Hues: original hopecore match-three with a Back button. Silas, 2026-11-23 PT.
+# Hopeful Hues: original hopecore match-three with a Back button. Silas, 2026-11-22 PT.
 project: hopeful-hues
 kind: software
 autonomous: true
@@ -11,13 +11,13 @@ goal: >-
   full browser playthrough QA at 390/768/1440, then a playtest handoff. Public /play promotion
   is separately gated.
 notes_from_silas: |-
-  Silas, 2026-11-23 PT (verbatim): "New project, a desired clone of candy crush, but with a back button. Themed on superkate, kind robots, and general good vibes. I expect daily and weekly quests, achievements, loooooooong maps, sound, music, save load settings, scrapbook, character select, multiple pathways, unique endings, and an overall rainbow and colorful aesthetic. Hopecore. Cutecore."
+  Silas, 2026-11-22 PT (verbatim): "New project, a desired clone of candy crush, but with a back button. Themed on superkate, kind robots, and general good vibes. I expect daily and weekly quests, achievements, loooooooong maps, sound, music, save load settings, scrapbook, character select, multiple pathways, unique endings, and an overall rainbow and colorful aesthetic. Hopecore. Cutecore."
   Build an original game in the match-three genre. Do not copy Candy Crush names, characters, art, music, level layouts or look. Design brief: projects/hopeful-hues/DESIGN-BRIEF.md.
 milestones:
   - id: m1
     title: "FOUNDATION: complete playable match-three, 130-level branching map and full meta"
     weight: 40
-    status: in-progress
+    status: done
   - id: m2
     title: "PERSONALITY: region mechanics, authored set pieces and richer story"
     weight: 25
@@ -34,11 +34,18 @@ tasks:
   - id: t-001
     milestone: m1
     title: "Build the playable Hopeful Hues admin preview with Back, quests, achievements, routes, endings, saves and scrapbook"
-    status: review
+    status: done
     passes: 0
     stakes: reversible
     note: |-
-      2026-11-23 PT (Silas-directed session): first playable slice built in kind_robots public/hopeful-hues/ and framed at /admin/hopeful-hues (admin tab, requiredRole ADMIN). Engine with specials, combos, Gloom, Tangles, robot buddies, cascades and seeded RNG; exact unlimited Back a move; 7 regions / 130 levels with two forks; 4 heroes with perks; 4 route endings plus a secret fifth; daily and weekly quests; 32 achievements; 5-tab scrapbook; 3 save slots with export/import; settings; WebAudio SFX and procedural music; SVG art. Verified: npm run test:hopeful-hues (greedy bot wins all 130 levels without gifts), channel-content, layout and nav contracts, eslint/prettier, Chromium play-through of fork, finale, ending, scrapbook, quests, routes and reload persistence at 390/768/1440 and landscape.
+      2026-11-22 PT (Silas-directed session): first playable slice built in kind_robots public/hopeful-hues/ and framed at /admin/hopeful-hues (admin tab, requiredRole ADMIN). Engine with specials, combos, Gloom, Tangles, robot buddies, cascades and seeded RNG; exact unlimited Back a move; 7 regions / 130 levels with two forks; 4 heroes with perks; 4 route endings plus a secret fifth; daily and weekly quests; 32 achievements; 5-tab scrapbook; 3 save slots with export/import; settings; WebAudio SFX and procedural music; SVG art. Verified: npm run test:hopeful-hues (greedy bot wins all 130 levels without gifts), channel-content, layout and nav contracts, eslint/prettier, Chromium play-through of fork, finale, ending, scrapbook, quests, routes and reload persistence at 390/768/1440 and landscape.
+
+      2026-11-22 PT done: kind_robots #5648 merged 9f67cbc with all 15 checks complete (14
+      success, 1 skipped); the CI contract shard printed 'Hopeful Hues contract OK: 130
+      levels, 130 won without gifts'. Roadmap registered via conductor #7903 (4c46115). Master
+      issue kind_robots#5649. Next: t-002 art, t-003 region mechanics.
+    updated: '2026-11-23T07:50:10Z'
+    implementation_pr: 'silasfelinus/kind_robots#5648'
   - id: t-002
     milestone: m3
     title: "Queue and integrate painted original art: icon, card, hero, title screen, region backdrops, heroes and link preview"
