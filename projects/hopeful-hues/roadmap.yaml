@@ -1,0 +1,91 @@
+# Hopeful Hues: original hopecore match-three with a Back button. Silas, 2026-11-23 PT.
+project: hopeful-hues
+kind: software
+autonomous: true
+goal: >-
+  Ship Hopeful Hues to a human-testable complete game in Kind Robots: an original rainbow
+  hopecore/cutecore match-three starring Superkate and the Kind Robots, with an exact unlimited
+  Back button, daily and weekly quests, achievements, very long branching maps with multiple
+  pathways and unique endings, character select, sound and music, three save slots with
+  export/import, settings, and a scrapbook. Painted original art, region-specific mechanics,
+  full browser playthrough QA at 390/768/1440, then a playtest handoff. Public /play promotion
+  is separately gated.
+notes_from_silas: |-
+  Silas, 2026-11-23 PT (verbatim): "New project, a desired clone of candy crush, but with a back button. Themed on superkate, kind robots, and general good vibes. I expect daily and weekly quests, achievements, loooooooong maps, sound, music, save load settings, scrapbook, character select, multiple pathways, unique endings, and an overall rainbow and colorful aesthetic. Hopecore. Cutecore."
+  Build an original game in the match-three genre. Do not copy Candy Crush names, characters, art, music, level layouts or look. Design brief: projects/hopeful-hues/DESIGN-BRIEF.md.
+milestones:
+  - id: m1
+    title: "FOUNDATION: complete playable match-three, 130-level branching map and full meta"
+    weight: 40
+    status: in-progress
+  - id: m2
+    title: "PERSONALITY: region mechanics, authored set pieces and richer story"
+    weight: 25
+    status: not-started
+  - id: m3
+    title: "ART & SOUND: painted original art, composed music, ending illustrations"
+    weight: 20
+    status: not-started
+  - id: m4
+    title: "QUALITY: browser playthroughs, accessibility, devices, playtest handoff"
+    weight: 15
+    status: not-started
+tasks:
+  - id: t-001
+    milestone: m1
+    title: "Build the playable Hopeful Hues admin preview with Back, quests, achievements, routes, endings, saves and scrapbook"
+    status: review
+    passes: 0
+    stakes: reversible
+    note: |-
+      2026-11-23 PT (Silas-directed session): first playable slice built in kind_robots public/hopeful-hues/ and framed at /admin/hopeful-hues (admin tab, requiredRole ADMIN). Engine with specials, combos, Gloom, Tangles, robot buddies, cascades and seeded RNG; exact unlimited Back a move; 7 regions / 130 levels with two forks; 4 heroes with perks; 4 route endings plus a secret fifth; daily and weekly quests; 32 achievements; 5-tab scrapbook; 3 save slots with export/import; settings; WebAudio SFX and procedural music; SVG art. Verified: npm run test:hopeful-hues (greedy bot wins all 130 levels without gifts), channel-content, layout and nav contracts, eslint/prettier, Chromium play-through of fork, finale, ending, scrapbook, quests, routes and reload persistence at 390/768/1440 and landscape.
+  - id: t-002
+    milestone: m3
+    title: "Queue and integrate painted original art: icon, card, hero, title screen, region backdrops, heroes and link preview"
+    status: ready
+    passes: 0
+    stakes: reversible
+    note: >-
+      Prompts start in ART-PROMPTS.md (Hopeful Hues section). Use durable ArtJobs with recorded ids. Integrate delivered art on the title screen, map region bands, hero select and scrapbook, keeping the current SVG art as the fallback. Code-drawn tiles stay unless painted tiles clearly read better at 40px.
+  - id: t-003
+    milestone: m2
+    title: "Give each far region a signature mechanic and authored set-piece levels"
+    status: ready
+    passes: 0
+    stakes: reversible
+    note: >-
+      Currently all regions share Gloom, Tangles and buddies with seeded layouts. Add one mechanic per tier-two region (for example Moonbeam fireflies that light a column, Carnival conveyor rows, Arcade portals, Lighthouse letters that drop like buddies), hand-author at least the four finales and the two fork levels, and keep npm run test:hopeful-hues proving every level winnable.
+  - id: t-004
+    milestone: m3
+    title: "Compose region music and polish sound design"
+    status: ready
+    passes: 0
+    stakes: reversible
+    note: >-
+      Music is procedural WebAudio per region. Replace or augment with short original loops per region plus title and ending themes, gesture-safe, honoring the music and SFX sliders.
+  - id: t-005
+    milestone: m3
+    title: "Illustrate the five endings and the story-beat scrapbook pages"
+    status: ready
+    passes: 0
+    stakes: reversible
+    note: >-
+      Ending screens and scrapbook polaroids use code-drawn motifs. Add original illustrated plates for the five endings and the 25 story beats, with the current SVG as fallback.
+  - id: t-006
+    milestone: m4
+    title: "Browser playthrough harness, accessibility pass and device QA"
+    status: waiting
+    depends_on: [t-002, t-003, t-004, t-005]
+    passes: 0
+    stakes: reversible
+    note: >-
+      Add a Chromium playthrough test that plays real levels through visible input, takes a fork, reaches an ending, uses Back, claims a quest, exports and imports a save, and checks 390/768/1440 layouts, keyboard play, reduced motion and the audio gesture policy. Run it in CI.
+  - id: t-007
+    milestone: m4
+    title: "Finish the finite roadmap and hand off for human playtest"
+    status: waiting
+    depends_on: [t-002, t-003, t-004, t-005, t-006]
+    passes: 0
+    stakes: reversible
+    note: >-
+      Reconcile the goal against the product, then set lifecycle to playtest. Promotion from /admin to a public /play route is a separate publish decision for Silas.

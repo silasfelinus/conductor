@@ -278,3 +278,21 @@ tasks:
       load (an undefined page-private helper), so on main this whole layer had been dead.
     updated: '2026-11-22T23:16:25Z'
     implementation_pr: 'silasfelinus/kind_robots#5597'
+
+  - id: t-011
+    milestone: m4
+    title: "Triple Threat: 1x3 simultaneous chess, minesweeper, WASD survival and global scores"
+    status: review
+    owner: worker
+    claimed_by: 20261123T065830Z-chessweeper-t011-8k5p
+    claimed_at: '2026-11-23T06:58:30Z'
+    updated: '2026-11-23T07:16:50Z'
+    playtest_iteration: true
+    passes: 0
+    stakes: reversible
+    note: |-
+      Silas, 2026-11-22 PT: evolve Chessweeper into a three-panel simultaneous game. Use ONE horizontal 1x3 row of large, equal gameplay panes (chess versus CPU, real Minesweeper, real-time WASD disc-room survival), not an always-visible 2x2 quad. Keep title, options and leaderboard in the START overlay only; during play show a small bottom HUD strip with score/timer and clickable icons to reopen secondary panels. No gameplay freezes when the player attends another pane; one shared game clock governs the run. Scoring must reward engaging all three games rather than farming a single pane. Persist a genuine GLOBAL all-time/today leaderboard, guests' initials and signed-in usernames using the established ArcadeScore endpoints, with plausible submission guards. Keep the existing original three-world campaigns as playable Classic rather than replacing them. Verify desktop/tablet/phone, independent and concurrent play, timers, death, inputs, accessibility, leaderboards and errors. No publish or force-deploy; this is an explicitly scoped playtest iteration.
+
+      Triple Threat 1x3 original playtest iteration implemented in kind_robots branch worker/chessweeper-t011-triple-threat-20261123-m8x2. Adds parallel chess, Minesweeper and real-time WASD disc survival on one clock, start-only title/settings, bottom HUD, Classic campaign access, and live global all-time/today rankings via the existing ArcadeScore API. Ranked Standard is fixed at 120 seconds for fairness; other durations are practice. Dedicated three-viewport Chromium test and workflow included. PR and CI pending; do not declare done until tests are green and code merged.
+
+      2026-11-23 PT addendum: Silas requested Easy, Medium, Hard and Catastrophic. Each tier changes chess CPU, mine density, starting discs/speed/spawn rate, shared hearts, movement and invulnerability. Difficulty is chosen from the opening overlay, never on the three-panel stage. Every tier has its own 120-second global all-time/today ranking bracket.

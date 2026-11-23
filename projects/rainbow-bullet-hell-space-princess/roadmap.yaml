@@ -1253,7 +1253,7 @@ tasks:
     stakes: reversible
     depends_on: []
     source: playtest-gap-matrix-2026-11-22
-    updated: '2026-11-23T05:56:49Z'
+    updated: '2026-11-23T07:47:21Z'
     note: >-
       PLAYTEST-GAP-MATRIX-2026-11-22 item 9 (issue #4146 section 5). The flown rebel/loyal choice currently changes only dialogue and ending titles (rainbowAllegiance.ts:56-92). On the rebel road Ocean craft hold fire and Motherland drones join Acts VI-VIII waves per PLOT-MOTHERLAND.md; loyal keeps the current waves. Deterministic seeded tests for both roads and 1-4 seats; save/continue preserves the road.
 
@@ -1277,7 +1277,7 @@ tasks:
     stakes: reversible
     depends_on: []
     source: playtest-gap-matrix-2026-11-22
-    updated: '2026-11-23T06:17:51Z'
+    updated: '2026-11-23T07:47:21Z'
     note: >-
       PLAYTEST-GAP-MATRIX-2026-11-22 item 10 (issue #4146 section 5). Rebel road fights the Motherland flagship, loyal road the Ocean heart, with the late course-correction PLOT-MOTHERLAND.md:43-50 describes. Distinct fights, not retitled ones; prove all six ending roads are reachable by flown input. Builds on rainbowEclipseFinale.ts.
 
@@ -1327,3 +1327,18 @@ tasks:
     updated: '2026-11-23T02:00:00Z'
     note: >-
       PLAYTEST-GAP-MATRIX-2026-11-22 item 20 (issue #4146 section 8). verifyArcadeViewport covers Rainbow at 390x844 and wider but not 360x640, and reports sprite CSS px without asserting a floor for hostile bullets. Add the size and an assertion that hostile projectiles render at or above the readability floor at DPR 1/2/3.
+  - id: t-064
+    milestone: m4
+    title: "Re-render the Motherland flagship phase-2 painting so the sprung clamps and battered hull read in game"
+    status: ready
+    passes: 0
+    stakes: reversible
+    depends_on: []
+    source: reviewer-kaizen-conductor-7897
+    updated: '2026-11-23T07:47:21Z'
+    note: >-
+      Kaizen from the conductor#7897 review (t-061). ArtImage 279299 was rejected (not battered, clamps
+      not sprung, hull colours drift), so phase 2 of the flagship fight reuses the phase-1 painting
+      279298 with code-drawn cues. Queue a new Krea 2 take seeded from 279298's composition (same hull
+      palette, clamps visibly open, scorch and sparks), review it at game scale against the clamp-core
+      hit geometry, and swap bosses/flagship phase 2 in kind_robots only if it beats the code cues.

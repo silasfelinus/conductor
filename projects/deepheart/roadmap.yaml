@@ -97,8 +97,10 @@ tasks:
   - id: t-006
     milestone: m2
     title: "Main-game standard: title, settings, save/load, 20 achievements, chronicle; verify one award live"
-    status: ready
-    owner: null
+    status: review
+    owner: worker
+    claimed_by: 2026-11-23T07:26:38Z-deepheart-t006-help-6f3a
+    claimed_at: '2026-11-23T07:26:38Z'
     passes: 0
     stakes: reversible
     implementation_pr: 'silasfelinus/kind_robots#5257'
@@ -107,6 +109,9 @@ tasks:
       3 versioned slots, chronicle (run pages, delvers met, endings, supports), 20 achievements
       awarded through rewardAchievementByCode. Remaining: seed the catalog rows and verify one
       award live after deploy.
+
+      Scoped Deepheart user-reported tutorial fix in Kind Robots: register /admin/deepheart/bible as a hidden Admin content tab with its own image and contextual help; repair the outdated main-game tutorial copy; add a route resolution regression test against the prior ArtJob tab. The remaining task t-006 live achievement award audit is not complete: return t-006 to ready after the scoped PR merges.
+    updated: '2026-11-23T07:32:00Z'
   - id: t-007
     milestone: m3
     title: "Two-tier support scenes for all 35 pairs; three campfire beats per romance and oath"
@@ -177,8 +182,8 @@ tasks:
     title: "Every picture rendered, delivered, URL-verified and wired (set src / RENDERED_ART)"
     status: review
     owner: worker
-    claimed_by: 2026-11-23T060900Z-deepheart-t012-chat-bc71d
-    claimed_at: '2026-11-23T06:09:00Z'
+    claimed_by: 20261123T071300Z-deepheart-discovery-fd82c
+    claimed_at: '2026-11-23T07:13:00Z'
     depends_on: t-011
     passes: 0
     stakes: reversible
@@ -198,7 +203,11 @@ tasks:
       Silas selected Krea 2 for every standard Deepheart picture and Furrytoon Mix XL v3 for separate mature romantic unlocks. Conductor PR #7564 merged at 35249a4 after green CI and Kind Robots PR #5303 merged at 8edab70 after seven green checks. The auto-art workflow #44256987440 accepted 94 new Krea 2 ArtJobs (69761-69854) and 41 private mature Furrytoon ArtJobs (69855-69895), recorded on Conductor main. No final render delivery URLs or completed ArtImage IDs have been verified. After-hours candidate assets are still isolated from runtime; verify mature-only romance unlock enforcement, delivery and image display before marking t-012 done. Previous pre-anthro pictures are not accepted replacements.
 
       Art-first Deepheart app branch adds 122 approved normal-art references, a session-authenticated admin image endpoint, portrait/room/title/ending art bindings, and builder preference/romance discovery gating. Runtime final image delivery and the full t-012 gallery audit remain unverified. App PR is pending and t-012 must return ready after scoped merge.
-    updated: '2026-11-23T06:19:00Z'
+
+      Deepheart art-first PR kind_robots#5641 merged and verified green. The approved ArtImage IDs are referenced by the preview, but end-to-end media delivery and visual review remain outstanding. Return t-012 to ready, and address the next discovery-knowledge leak in the optimizer so hidden pair histories and romance matches do not appear before being earned.
+
+      Scoped Deepheart knowledge-and-synergy integration: choice reactions now explicitly reveal first-time likes/dislikes; the party optimizer only scores and explains learned relationship supports, known romances and discovered preference clashes. Actual combat, support scenes and romance mechanics are unchanged. Test cases added for hidden and revealed optimizer output and durable chronicle records. Art-delivery audit remains pending, so t-012 must return ready after the app PR merges.
+    updated: '2026-11-23T07:20:00Z'
   - id: t-013
     milestone: m4
     title: "Adversarial seeded playthroughs and 390/768/1440 px checks"
