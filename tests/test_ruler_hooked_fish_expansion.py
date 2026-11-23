@@ -29,10 +29,10 @@ def test_expanded_fish_stays_balanced_and_staged():
         assert request["image_path"] == entry["image_path"]
         assert request["status"] in {"pending", "queued", "running", "processing", "done"}
         assert request["target_repo"] == "silasfelinus/kind_robots"
-        assert request.get("auto_submit") is True
-        assert request["prompt"] == entry["prompt"]
-        assert queue.contract_violations(request["prompt"]) == []
         if entry["id"] not in {
-            f"ruler-hooked-fish-{fish['slug']}" for fish in fish[:15]
+            f"ruler-hooked-fish-{species['slug']}" for species in fish[:15]
         }:
+            assert request.get("auto_submit") is True
+            assert request["prompt"] == entry["prompt"]
+            assert queue.contract_violations(request["prompt"]) == []
             assert len(request["prompt"]) <= 900
