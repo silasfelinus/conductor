@@ -19,6 +19,52 @@ Visual reference supplied by Silas: three photos of Kate with short multicolor r
 - 30 deterministic-seeded-style stages (seeded by the Arcade RNG), six chapters of five stages. Chapter completion grants a heart; local saves record the stage, score and hearts. Scoreboards use the existing Arcade three-initial flow.
 - Scoring: 100 per matched bubble, 175 per dropped bubble, 75 extra per matched bubble beyond three, plus stage/chapter completion bonuses. Achievements for a five-bubble cascade, a six-match, chapter finishes, and all 30 stages.
 
+
+## Permanent career: the player never loses their history (Silas, 2026-11-22 PT)
+
+The game is a long-term color adventure, not a one-off high-score arcade loop.
+Its **career profile** is separate from any single run. A failed board never
+takes away previously unlocked levels, best star ratings, earned rank or
+cosmetic bubble styles. The first implementation is a versioned Arcade save
+on the current browser/device, including backwards compatibility with the
+previous version-1 checkpoint. **Cloud/account sync is a separate remaining
+task and is not yet delivered**; guest saves need a safe account-claim migration.
+
+- Story's 30 chapters/boards remain unlocked permanently once completed. The
+  level selector can replay any unlocked stage and keeps the best of 1–3 stars
+  earned on that level. Stars are awarded based on shots used, with reruns
+  allowing improved medals. Later, the scrolling map should show all 30
+  locations, best star ratings and milestones, not just a numeric selector.
+- All popped and dropped bubbles grant Color XP. Clearing a stage grants
+  additional XP and stars. A permanent **Color Rank** rises on a gradually
+  growing XP curve, and unlocks cosmetic bubble looks: glass (1), candy (4),
+  starlight (9), and prismatic (15). Cosmetic unlocks do not change the
+  underlying collision mechanics or force spending.
+- A durable profile records career XP, highest unlocked story stage, 30 best
+  star ratings, lifetime bubble rescues, best Classic score and Classic runs.
+  It survives game-over and voluntary exits. A board itself is recreated from
+  the stage upon resume; mid-shot state is not yet saved.
+- **Classic Mode:** select an infinite bubble-shooter run with pressure rising
+  after shots, original matching, no special power bubbles, separate local
+  personal best and runs played. A Classic loss never rewinds Story. Per-mode
+  online leaderboard partitioning is still required before ranked competition.
+- **Special orbs:** earn a Prism that mimics a helpful adjacent hue, a Burst
+  that clears local neighbors, and a Ribbon that clears a row. Unlocked by
+  Color Rank and earned through clearing bubbles, not purchasable. Classic
+  mode disables them. These effects are drawn with distinct pulsing rings
+  and sparkle fragments; bigger authored animations, sound and effects
+  remain on the finite art/audio roadmap.
+- **Never add Candy Crush-style predatory energy, timed heart refills or
+  currency purchase gates.** The good part to borrow is visible lasting
+  progress, better mastery, replayable levels and surprise rewards, not
+  dark-pattern spending loops.
+
+**Save invariant:** after game-over, `save` must still return the career
+snapshot (not `null`), because the Arcade store interprets null as erasure.
+A saved v1 checkpoint must migrate to v2 without losing its unlocked stage.
+Validate and bound every untrusted save field; old saves and failed shots
+must not erase more recent star/rank progress.
+
 ## The full campaign (build requirements beyond the first slice)
 
 | Chapter | Stages | Story beat | New mechanic | Boss or finale |
