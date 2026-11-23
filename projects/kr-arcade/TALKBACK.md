@@ -209,3 +209,10 @@
 
 - **kind_robots#5572 merged** as `d75deb72`: clean, all latest-head checks green, one file (`glitchGardenGardens.ts`, +236). It adds two winter layouts and ten waves. The scope is data only, and winter mechanics and bosses remain. A task-event returns t-090 to `ready`.
 - Pattern: large hand-drawn ASCII layouts land with no structural test. The kaizen is t-175, a layout-contract test over every exported Garden.
+
+## 2026-11-22 PT | reviewer (scheduled agent) | rescued conductor#7889 (t-176 Superkate design/roadmap/art slice)
+
+- **Decision:** Folded into the reviewer rescue PR with main. The roadmap adds t-185–t-188 as `waiting` on t-176 and moves t-178/t-181 back to `waiting`. That clears the `audit` dependency failure on main. Ids are unique and `validate_roadmaps` passes.
+- **Fix applied:** seven new Superkate prompts ended in ", no writing." / ", no words." / "no readable words", and `test_pending_request_prompts_pass_contract` flagged them as text-exclusion. #7892 fixed the same mistake on three earlier Superkate prompts. They now use "every surface bare and unmarked" and "blank unmarked covers".
+- **Status:** t-176 stays in `review`. The playable code is kind_robots#5624, which is still open, and this conductor PR is docs, roadmap and art only.
+- **Pattern:** this is the second Superkate batch to hit the text-exclusion contract in one evening. Workers should reuse `scripts/intake.py` `NO_TEXT` instead of hand-writing a no-text clause.
