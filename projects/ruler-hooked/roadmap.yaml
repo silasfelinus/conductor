@@ -1261,17 +1261,15 @@ tasks:
 - id: t-071
   milestone: m6
   title: Make the ruler-hooked art-queue hermetic test fixtures fail loudly when a new *_entries lane is added without a stub
-  status: claimed
+  status: review
   owner: worker
   claimed_by: 2026-11-23T053300Z-ruler-hooked-t071-9e3b7c
   claimed_at: '2026-11-23T05:33:00Z'
   stakes: reversible
   passes: 0
   depends_on: []
-  note: >-
-    Kaizen from reviewer of conductor#7886 (t-058, 2026-11-22 PT). Adding
-    expression_entries() broke six tests in test_ruler_hooked_list_lanes.py and
-    test_ruler_hooked_restyle.py because each fixture stubs every *_entries
-    function by hand and read_cast returns None. Share one fixture helper that
-    stubs every *_entries callable main() uses, or assert that coverage, so the
-    next lane can't break the suite again.
+  note: |-
+    Kaizen from reviewer of conductor#7886 (t-058, 2026-11-22 PT). Adding expression_entries() broke six tests in test_ruler_hooked_list_lanes.py and test_ruler_hooked_restyle.py because each fixture stubs every *_entries function by hand and read_cast returns None. Share one fixture helper that stubs every *_entries callable main() uses, or assert that coverage, so the next lane can't break the suite again.
+
+    Shared art-entry fixture helper and unknown/missing-lane regressions merged in conductor#7898 commit 9f8282cd991accba05ea5a1c8893055e1522861e. Three checks successful, Worker PR CI remained queued when merged; completion awaits a real successful CI run. This supersedes the stale earlier review event stamped before the claim timestamp.
+  updated: '2026-11-23T05:40:17.143Z'
