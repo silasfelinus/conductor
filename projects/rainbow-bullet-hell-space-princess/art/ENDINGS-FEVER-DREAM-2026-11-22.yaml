@@ -19,6 +19,12 @@ lanes:
   label: Krea 2 Fever Dream ending plates
   engine: krea2
   prompt: prose
+- key: kontext
+  label: Flux Kontext dev, targeted fix of a reviewed plate
+  engine: kontext
+  prompt: prose
+  steps: 20
+  guidance: 2.5
 subjects:
 - key: fd-ending-restore
   verdict: 'keep: 2026-11-22 PT review, open Crown over a sunrise of freed sea-ships and the four cat ships; shipped
@@ -120,3 +126,19 @@ subjects:
     krea2:
       status: DONE
       art_image_id: 279201
+- key: fd-ending-sever-3
+  lane: kontext
+  title: C16 sever ending, Kontext fix of 279201 (Maribel as an adult)
+  entity: cinematic
+  asset: rainbow-princess-art/doodle/endings/sever
+  size: 1344x768
+  seed: 1122163
+  source_image_id: 279201
+  prompt_prose: Make the short copper-haired woman on the far left in the pink flight jacket a grown adult woman
+    in her thirties, with adult body proportions, a smaller head relative to her body, longer legs and a strong,
+    wiry build; she stands about as tall as the shoulders of the tall woman with the long black braid beside her.
+    Keep her cropped copper hair, pink jacket, boots, pose and lantern. Keep every other woman, the four cats, the
+    lanterns, the sea, the sky, the prism shards, the composition and the 1980s neon airbrush school-folder sticker
+    style exactly the same.
+  jobs:
+    kontext: 76730
