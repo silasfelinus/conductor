@@ -5,6 +5,8 @@ import pytest
 
 import scripts.build_ruler_hooked_art_queue as bruq
 
+from ruler_hooked_art_entry_stubs import stub_art_entry_factories
+
 REAL_CONSOLE_ENTRIES = bruq.console_entries
 
 FAKE = {
@@ -29,16 +31,19 @@ def hermetic(monkeypatch, tmp_path):
     monkeypatch.setattr(bruq, "find_content_bundle", lambda: tmp_path / "content.ts")
     monkeypatch.setattr(bruq, "read_cast", lambda ts: None)
     monkeypatch.setattr(bruq, "read_regions", lambda ts: None)
-    monkeypatch.setattr(bruq, "alt_vista_entries", lambda: [])
-    monkeypatch.setattr(bruq, "concept_entries", lambda cast: _entries("concept", FAKE["concept"]))
-    monkeypatch.setattr(bruq, "expression_entries", lambda cast: [])
-    monkeypatch.setattr(bruq, "ruler_entries", lambda: _entries("ruler", FAKE["ruler"]))
-    monkeypatch.setattr(bruq, "fish_entries", lambda: _entries("fish", FAKE["fish"]))
-    monkeypatch.setattr(bruq, "reward_entries", lambda ts: [])
-    monkeypatch.setattr(bruq, "ending_entries", lambda ts: _entries("ending", FAKE["ending"]))
-    monkeypatch.setattr(bruq, "card_entries", lambda ts: _entries("card", FAKE["card"]))
-    monkeypatch.setattr(bruq, "console_entries", lambda cast: _entries("console", ["u1"]))
-    monkeypatch.setattr(bruq, "layer_entries", lambda regions: _entries("layer", ["l1", "l2"]))
+    stub_art_entry_factories(
+        monkeypatch,
+        bruq,
+        {
+            "concept_entries": _entries("concept", FAKE["concept"]),
+            "ruler_entries": _entries("ruler", FAKE["ruler"]),
+            "fish_entries": _entries("fish", FAKE["fish"]),
+            "ending_entries": _entries("ending", FAKE["ending"]),
+            "card_entries": _entries("card", FAKE["card"]),
+            "console_entries": _entries("console", ["u1"]),
+            "layer_entries": _entries("layer", ["l1", "l2"]),
+        },
+    )
     monkeypatch.setattr(bruq, "assert_contract", lambda entries: None)
     monkeypatch.setattr(bruq, "staged_ids", lambda text: set(STAGED))
     art = tmp_path / "art-prompts.yaml"
@@ -105,6 +110,20 @@ def test_list_lanes_layer_row_reflects_include_layers(monkeypatch, capsys):
     _, out = _run(monkeypatch, capsys, "--include-layers", "--list-lanes")
     assert _rows(out)["layer"] == (2, 0, 2)
     assert _rows(out)["console"] == (1, 0, 1)
+
+
+def test_hermetic_fixture_rejects_unregistered_entry_factory(monkeypatch):
+    with monkeypatch.context() as m:
+        m.setattr(bruq, "new_biome_entries", lambda: [], raising=False)
+        with pytest.raises(AssertionError, match="new_biome_entries"):
+            stub_art_entry_factories(m, bruq)
+
+
+def test_hermetic_fixture_rejects_removed_entry_factory(monkeypatch):
+    with monkeypatch.context() as m:
+        m.delattr(bruq, "expression_entries")
+        with pytest.raises(AssertionError, match="expression_entries"):
+            stub_art_entry_factories(m, bruq)
 
 
 # The console lane's image_path keys are a contract with the kind_robots UI
