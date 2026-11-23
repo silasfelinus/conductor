@@ -843,9 +843,9 @@ tasks:
   - id: t-038
     milestone: m4
     title: "Recut the thrash-metal opening from the doodle art"
-    status: ready
-    owner: worker
-    updated: '2026-11-22T19:36:00Z'
+    status: claimed
+    owner: reviewer
+    updated: '2026-11-23T01:46:10Z'
     depends_on: [t-036]
     passes: 1
     retry_context: ''
@@ -885,6 +885,8 @@ tasks:
       Partial opening integration resilience: video decode/playback failure now offers a focused retry instead of silently marking the opening watched. WAN dolphin clip and final export still outstanding; keep task incomplete.
 
       2026-11-22 PT recovery: the 19:33Z review handoff is past its TTL with no open t-038 PR or branch. The blocking intro-dolphin-armada re-render is DONE (ArtImage 279030), so the remaining step is the export and cabinet wiring (RAINBOW_OPENING is still null). Returned to ready; no prior work discarded.
+    claimed_by: 20261123T015000Z-rainbow-t038-opening-c4r7
+    claimed_at: '2026-11-23T01:46:10Z'
 
   - id: t-039
     milestone: m4
