@@ -1272,14 +1272,21 @@ tasks:
   - id: t-061
     milestone: m4
     title: "Allegiance-specific finale: Motherland flagship vs Ocean heart, with the loyal late stand-down"
-    status: ready
+    status: review
     passes: 0
     stakes: reversible
     depends_on: []
     source: playtest-gap-matrix-2026-11-22
-    updated: '2026-11-23T02:00:00Z'
+    updated: '2026-11-23T05:56:52Z'
     note: >-
       PLAYTEST-GAP-MATRIX-2026-11-22 item 10 (issue #4146 section 5). Rebel road fights the Motherland flagship, loyal road the Ocean heart, with the late course-correction PLOT-MOTHERLAND.md:43-50 describes. Distinct fights, not retitled ones; prove all six ending roads are reachable by flown input. Builds on rainbowEclipseFinale.ts.
+
+      2026-11-22 PT: Rebel road fights the Motherland flagship (lane lances, drone launches,
+      bridge weak point; clamps open below half; painting 279298); loyal road fights the
+      Crown, which pleads 7 s when its heart breaks loose — flying high stands down to the
+      rebel road. All six road endings + the stand-down flown from real Act IX saves in
+      verifyRainbowFinaleRoads. kind_robots#5640.
+    implementation_pr: 'silasfelinus/kind_robots#5640'
   - id: t-062
     milestone: m5
     title: "Run verifyRainbowSaveBytes and verifyRainbowSeasLogbook in CI"
