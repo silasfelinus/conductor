@@ -1350,3 +1350,14 @@ tasks:
   note: |-
     Kaizen from the reviewer of conductor#7932 (t-076, 2026-11-23 PT). `tests/fixtures/ruler_hooked_runtime_fish.json` is hand-maintained; the Worker suggested refreshing it whenever runtime fish change. Add `scripts/refresh_ruler_hooked_runtime_fish.py` (`--write` / `--check`) that reuses the test's fail-closed `RULER_HOOKED_FISH` parser so the next fish batch (43-60) updates the snapshot in one step.
   updated: '2026-11-23T22:00:00Z'
+
+- id: t-078
+  milestone: m4
+  title: Make the ruler-hooked fish art frame name exactly one fully-framed specimen for long thin body plans, with a generator test
+  status: ready
+  stakes: reversible
+  passes: 0
+  depends_on: []
+  note: |-
+    Kaizen from the reviewer closing t-031 (2026-11-23 PT). Border Accordionfish (ArtJob 76962) rendered three cropped pipefish under the shared "one complete fish shown clearly in side profile" frame; the reviewer patched only that species' frame_override. Make the default fish frame in scripts/build_ruler_hooked_art_queue.py (or a body-plan-aware override for pipefish/eel/serpentine silhouettes) say "exactly one ... head to tail fully inside the frame ... no other fish", add a test that every fish prompt carries the single-specimen wording, and restage only rows whose prompt actually changes.
+  updated: '2026-11-23T23:30:00Z'
