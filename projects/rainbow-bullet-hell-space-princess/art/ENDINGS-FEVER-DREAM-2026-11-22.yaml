@@ -19,6 +19,12 @@ lanes:
   label: Krea 2 Fever Dream ending plates
   engine: krea2
   prompt: prose
+- key: kontext
+  label: Flux Kontext dev, targeted fix of a reviewed plate
+  engine: kontext
+  prompt: prose
+  steps: 20
+  guidance: 2.5
 subjects:
 - key: fd-ending-restore
   verdict: 'keep: 2026-11-22 PT review, open Crown over a sunrise of freed sea-ships and the four cat ships; shipped
@@ -120,3 +126,51 @@ subjects:
     krea2:
       status: DONE
       art_image_id: 279201
+- key: fd-ending-sever-3
+  verdict: 'reject: 2026-11-22 PT review, Kontext barely changed Maribel (still childlike) and dropped her lantern;
+    worse than 279201.'
+  lane: kontext
+  title: C16 sever ending, Kontext fix of 279201 (Maribel as an adult)
+  entity: cinematic
+  asset: rainbow-princess-art/doodle/endings/sever
+  size: 1344x768
+  seed: 1122163
+  source_image_id: 279201
+  prompt_prose: Make the short copper-haired woman on the far left in the pink flight jacket a grown adult woman
+    in her thirties, with adult body proportions, a smaller head relative to her body, longer legs and a strong,
+    wiry build; she stands about as tall as the shoulders of the tall woman with the long black braid beside her.
+    Keep her cropped copper hair, pink jacket, boots, pose and lantern. Keep every other woman, the four cats, the
+    lanterns, the sea, the sky, the prism shards, the composition and the 1980s neon airbrush school-folder sticker
+    style exactly the same.
+  jobs:
+    kontext: 76730
+  art:
+    kontext:
+      status: DONE
+      art_image_id: 279237
+- key: fd-ending-sever-4
+  verdict: "keep: 2026-11-22 PT review, all four pilots read as themselves (Maribel an athletic adult), four cats, lanterns, prism shards; shipped as endings/sever in kind_robots#5628."
+  lane: krea2
+  title: C16 sever ending (bittersweet), Fever Dream, fourth take
+  entity: cinematic
+  asset: rainbow-princess-art/doodle/endings/sever
+  size: 1344x768
+  seed: 1122164
+  negative: text, lettering, logo, watermark, words, border, frame, white page, inset picture, child, kid, boy,
+    girl, teenager, small person, short person, oversized head, nude, mannequin, gold humanoid, extra people, dog,
+    photorealism
+  prompt_prose: Ending illustration in 1980s neon rainbow airbrush school-folder sticker art, glossy soft airbrushed
+    shading, clean confident outlines, glitter sparkles. Night on a still mirror-calm cosmic sea under dark broken
+    prism shards. Four grown women of about the same height, all in their thirties, stand shoulder to shoulder at
+    the water's edge, seen from behind, each lifting a glowing paper lantern that rises to join hundreds of others.
+    From left to right, an athletic broad-shouldered woman with cropped copper hair in a pink flight jacket and
+    work boots; a tall slender woman with a long black braid in a powder-cyan coat; a broad, visibly muscular dark-skinned
+    Black woman with natural hair in twists, in a butter-yellow and gold flight suit; a curvy woman with a shaved-side
+    undercut and lilac-streaked dark hair in a lilac jacket. Four small cats sit at their feet. Bittersweet, quiet
+    and tender, lantern light reflected in the water.
+  jobs:
+    krea2: 76731
+  art:
+    krea2:
+      status: DONE
+      art_image_id: 279239
