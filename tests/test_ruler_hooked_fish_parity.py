@@ -54,7 +54,7 @@ def test_runtime_fish_slugs_match_when_app_checkout_is_present():
         pytest.skip('kind_robots sibling checkout unavailable in this runner')
     source = runtime.read_text(encoding='utf-8')
     array = source.split('export const RULER_HOOKED_FISH:', 1)[1].split(
-        '\\n]', 1
+        '\n]', 1
     )[0]
     runtime_slugs = re.findall(r"^    slug: '([^']+)'", array, re.MULTILINE)
     roster_slugs = [
