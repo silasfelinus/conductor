@@ -1267,15 +1267,29 @@ tasks:
 - id: t-072
   milestone: m6
   title: Guard every ruler-hooked YAML roster (cast, cards, quests, regions) against duplicate ids with a test that names the duplicates
-  status: review
+  status: done
   owner: worker
   claimed_by: 20261123T093537Z-ruler-hooked-t072-b9e2
   claimed_at: '2026-11-23T09:35:37Z'
   stakes: reversible
   passes: 0
   depends_on: []
-  updated: '2026-11-23T09:40:00Z'
+  updated: '2026-11-23T09:50:03Z'
   note: |-
     Kaizen from reviewer of conductor#7900 (t-031, 2026-11-23). A merge of two parallel fish batches left nine duplicate slugs in fish/vertical-slice.yaml and turned main's Python suite red (45 != 36) for every open PR. The fish test now names duplicate slugs. Do the same for every other roster the art-queue generator reads, so a merge that duplicates a row fails with the offending ids instead of a count mismatch. Test-only; no art or content changes.
 
     Added duplicate-id rejection for cast, fish, per-deck cards and region manifests, with hermetic regression fixtures. Cross-deck shared card references remain legal. PR and CI verification pending.
+
+    Reviewer 2026-11-23 PT: squash-merged conductor#7912 (c102a01) on all-green latest-head
+    checks after restructuring the PR body to the required handoff headings. Kaizen: t-073.
+  implementation_pr: 'silasfelinus/conductor#7912'
+- id: t-073
+  milestone: m6
+  title: Make the ruler-hooked art-queue generator print a one-line per-roster count summary so reviewers can spot dropped rows at a glance
+  status: ready
+  stakes: reversible
+  passes: 0
+  depends_on: []
+  note: >-
+    Kaizen from reviewer of conductor#7912 (t-072, 2026-11-23 PT). Duplicate ids now fail loudly; the remaining silent-loss mode is a roster that parses to fewer rows than authored. Print e.g. "cast 12 · fish 36 · cards 84 · regions 13" on every run and cover the format with a hermetic test. Output-only; no queue content changes.
+  updated: '2026-11-23T09:55:00Z'
