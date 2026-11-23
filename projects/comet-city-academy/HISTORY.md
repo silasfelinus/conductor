@@ -306,3 +306,23 @@ Implemented 48-identity castLooks anatomy/silhouette rule table and wired it int
 2026-11-21 PT reviewer: merged conductor#7800 (squash 8fd09d9); all checks green.
 Preflight is prompt-text only — generated pixels still need visual QA. Kaizen -> t-046.
 <!-- note:end t-045 -->
+
+## t-047 — Profile and cut the three slowest Python CI tests (media wrapper 62s, ledger templated-cell and negation scans ~38s each) without dropping coverage
+
+<!-- note:begin t-047 -->
+Reviewer kaizen from the 2026-11-22 PT merge of conductor#7812 (t-043). The measured post-#7695 suite was 60s slower, and --durations=10 named test_media_wrapper_resolves_names_before_submitting (62.00s), test_repo_ledgers_have_no_new_templated_cells (38.67s) and test_repo_ledgers_unsubmitted_cells_pass_negation_rules (37.07s). Find the repeated I/O or YAML parsing (e.g. a shared session-scoped ledger cache) and record before/after durations from real CI runs. Never skip, deselect or weaken those tests.
+
+Initial scoped CI performance improvement caches a complete repository-wide safe YAML parse once for both templated-cell and negation tests, eliminating duplicate parse and double problem evaluation without changing their assertions. PR review and full CI pending. Third slow media-wrapper test and before/after timing verification remain unfinished, so this does not close the original t-047 production task.
+
+CI speed fix merged via conductor#7869, SHA 5a3996d988892ae83f279d1cf64574065948e9c9. Latest-head Python suite completed success: 5086 passed, 11 skipped, 1 deselected in 159.06s; test_media_wrapper_resolves_names_before_submitting no longer appears in ten slowest calls after eliminating its fake 60s Comfy grace wait. Exhaustive art ledger parse now shared with the parity-tested C SafeLoader, setup measured 4.75s versus historical 38.67s and 37.07s duplicate scans. Tests and all negation/templating assertions remain enabled; no dropped QA.
+<!-- note:end t-047 -->
+
+## t-048 — Factor the duplicated private source/runtime/visibility media-proof steps into one ledger-list helper shared by the Prom canon and Tactics proof workflows
+
+<!-- note:begin t-048 -->
+Kaizen from reviewer of conductor#7855 (2026-11-22). prom-canon-candidate-media-proof.yml repeats the verify_prom_tactics_media → verify_tactics_runtime_media → checkpoint → isPublic=false block per ledger, and prom-tactics-media-proof.yml carries the same shape. Move it into one script that takes a ledger list with expected counts, while keeping the explicit Krea2 receipt and `reviewed` boundaries. Never publish private art or flip is_public.
+
+Shared source/game/private media proof helper with evidence checkpoint per ledger implemented, both Prom canon and Tactics workflows refactored, failure and privacy regression tests added. Review via scoped worker PR; no new ArtJobs submitted and no existing reviewer approvals changed.
+
+Merged shared authenticated private-art media proof helper and per-ledger checkpointing in conductor#7863 at 5bdedd4ded2494f221d0dc55c4f2854fbfa27c11. Four latest-head CI workflows completed successfully, including Python tests, security audit, and Worker PR CI. This closes helper implementation only, not visual approval, artwork delivery, or final private URL checks for individual paintings.
+<!-- note:end t-048 -->
