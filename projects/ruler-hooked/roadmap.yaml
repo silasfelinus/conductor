@@ -1092,7 +1092,7 @@ tasks:
 - id: t-059
   milestone: m6
   title: 'Reconcile the compositing contract with the opaque region layers that actually rendered'
-  status: review
+  status: done
   owner: worker
   claimed_by: 20261123T0224Z-ruler-hooked-t059-c3f8
   claimed_at: '2026-11-23T02:24:00Z'
@@ -1103,7 +1103,14 @@ tasks:
     Found 2026-11-05 (t-056): all 36 rendered region layers are opaque RGB 1344x768 paintings, not alpha-cut depth bands, so ruler-hooked-stage.vue's full-frame z-stack (still used by the Chronicle-of-the-reign kingdom view) only ever shows its top layer, near_bank-grassy. The console sidesteps this by treating layers as whole-scene vistas. This blocks t-054's lake/near_bank/sky decay ramps as specified. Before rendering ramp layers, decide: render with real transparency (or mask in a build step), or retire the stack model in compositing.md for whole-scene vistas per state combination.
 
     Corrected the legacy stage: opaque region images display as selectable full-scene vistas instead of covering each other in a z-stack. Changed-region spotlight, accessibility and regression checks are in the worker implementation branch; the compositing design contract is explicitly superseded by truthful vista rendering. Review PR and CI to follow; no claim of rendered art or live QA.
-  updated: '2026-11-23T02:26:00Z'
+
+    2026-11-22 PT reviewer: kind_robots#5622 merged (c0e63a0) on all-green latest-head
+    checks; conductor#7881 (compositing.md supersession) merged (de95904). Stage now shows
+    one opaque vista at a time with accessible region picker and decree spotlight. Pre-merge
+    verification was CI-only (no preview); post-deploy visual/device QA remains with
+    t-047/t-061.
+  updated: '2026-11-23T02:47:33Z'
+  implementation_pr: 'silasfelinus/kind_robots#5622'
 - id: t-060
   milestone: m6
   title: 'Grow the Town Crier: more daily proclamations, a few tied to fish runs and the reign'
@@ -1226,3 +1233,19 @@ tasks:
     content (#5605). Add a guard that diffs the card ids in the ruler-hooked deck
     against the ruler-hooked-card-* rows in projects/art-prompts.yaml and names any
     card that has no art request. Reports only: no enqueue, no render.
+- id: t-070
+  milestone: m6
+  title: Add a CI check that flags any ruler-hooked region asset without an alpha channel before it is treated as a stack layer
+  status: ready
+  owner: null
+  stakes: reversible
+  passes: 0
+  depends_on: []
+  updated: '2026-11-23T02:55:00Z'
+  note: >-
+    Kaizen from reviewer of kind_robots#5622 / conductor#7881 (t-059, 2026-11-22 PT).
+    The alpha-stack contract drifted for weeks because nothing checked that the 36
+    delivered region WebPs were opaque RGB. Add a report-only check that reads each
+    /images/ruler-hooked/{region}-{state}[-{time}].webp header and names files with no
+    alpha channel, so any future return to layered compositing fails loudly instead
+    of silently showing only the top layer. No render, no enqueue.
