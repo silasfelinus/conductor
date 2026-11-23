@@ -843,10 +843,8 @@ tasks:
   - id: t-038
     milestone: m4
     title: "Recut the thrash-metal opening from the doodle art"
-    status: review
+    status: ready
     owner: worker
-    claimed_by: 2026-11-22T193332Z-rainbow-t038-k8v2
-    claimed_at: '2026-11-22T19:33:32Z'
     updated: '2026-11-22T19:36:00Z'
     depends_on: [t-036]
     passes: 1
@@ -885,6 +883,8 @@ tasks:
       cabinet.
 
       Partial opening integration resilience: video decode/playback failure now offers a focused retry instead of silently marking the opening watched. WAN dolphin clip and final export still outstanding; keep task incomplete.
+
+      2026-11-22 PT recovery: the 19:33Z review handoff is past its TTL with no open t-038 PR or branch. The blocking intro-dolphin-armada re-render is DONE (ArtImage 279030), so the remaining step is the export and cabinet wiring (RAINBOW_OPENING is still null). Returned to ready; no prior work discarded.
 
   - id: t-039
     milestone: m4
@@ -1177,7 +1177,7 @@ tasks:
   - id: t-059
     milestone: m4
     title: "Ship the reviewed Gen-2 alternate-Act renders (X1-X4 guardians, rescue pods, lighthouse lamp) into the cabinet"
-    status: review
+    status: done
     owner: reviewer
     claimed_by: 20261123T012900Z-rainbow-t059-gen2art-c4r7
     claimed_at: '2026-11-23T01:29:00Z'
@@ -1185,7 +1185,7 @@ tasks:
     stakes: reversible
     depends_on: []
     source: silas-session-2026-11-22-playtest-push
-    updated: '2026-11-23T01:28:57Z'
+    updated: '2026-11-23T01:45:00Z'
     note: >-
       Silas, 2026-11-22 PT in-session: bring Rainbow to playtest readiness. 19 Gen-2
       renders sit DONE in GEN2-KELP-NEBULA-X1, GEN2-CORAL-COMET-X2, GEN2-ALT-GUARDIANS-1
@@ -1202,4 +1202,51 @@ tasks:
       dull for key_green). Held: Kelp Warden sweep/hurt (identity drift), Shoal Koi pose
       frames and both hazards (no runtime hook), X4 planes (far plane grey band).
       Implementation kind_robots#5616.
+
+      2026-11-22 PT done: kind_robots#5616 merged as bf6b6ad8 after all checks completed green (incl. TypeScript, Contract verifiers, Rainbow cabinet Chromium jobs); conductor#7874 merged as 7137b5da. Follow-ups stay on the gap matrix: hazards (item 2), X1-X4 planes (item 4).
     implementation_pr: 'silasfelinus/kind_robots#5616'
+
+  - id: t-060
+    milestone: m4
+    title: "Rebel road changes the fight: Acts VI-VIII waves react to the flown allegiance"
+    status: ready
+    passes: 0
+    stakes: reversible
+    depends_on: []
+    source: playtest-gap-matrix-2026-11-22
+    updated: '2026-11-23T02:00:00Z'
+    note: >-
+      PLAYTEST-GAP-MATRIX-2026-11-22 item 9 (issue #4146 section 5). The flown rebel/loyal choice currently changes only dialogue and ending titles (rainbowAllegiance.ts:56-92). On the rebel road Ocean craft hold fire and Motherland drones join Acts VI-VIII waves per PLOT-MOTHERLAND.md; loyal keeps the current waves. Deterministic seeded tests for both roads and 1-4 seats; save/continue preserves the road.
+  - id: t-061
+    milestone: m4
+    title: "Allegiance-specific finale: Motherland flagship vs Ocean heart, with the loyal late stand-down"
+    status: ready
+    passes: 0
+    stakes: reversible
+    depends_on: []
+    source: playtest-gap-matrix-2026-11-22
+    updated: '2026-11-23T02:00:00Z'
+    note: >-
+      PLAYTEST-GAP-MATRIX-2026-11-22 item 10 (issue #4146 section 5). Rebel road fights the Motherland flagship, loyal road the Ocean heart, with the late course-correction PLOT-MOTHERLAND.md:43-50 describes. Distinct fights, not retitled ones; prove all six ending roads are reachable by flown input. Builds on rainbowEclipseFinale.ts.
+  - id: t-062
+    milestone: m5
+    title: "Run verifyRainbowSaveBytes and verifyRainbowSeasLogbook in CI"
+    status: ready
+    passes: 0
+    stakes: reversible
+    depends_on: []
+    source: playtest-gap-matrix-2026-11-22
+    updated: '2026-11-23T02:00:00Z'
+    note: >-
+      PLAYTEST-GAP-MATRIX-2026-11-22 item 19. Both kind_robots tests exist on main but no workflow or package script runs them, so save-capacity and flight-log regressions can land silently. Add them to the Rainbow save/route workflow (or test:arcade-engine) and confirm a green run.
+  - id: t-063
+    milestone: m5
+    title: "Rainbow at 360x640 in the viewport suite, with a minimum rendered size for hostile shots"
+    status: ready
+    passes: 0
+    stakes: reversible
+    depends_on: []
+    source: playtest-gap-matrix-2026-11-22
+    updated: '2026-11-23T02:00:00Z'
+    note: >-
+      PLAYTEST-GAP-MATRIX-2026-11-22 item 20 (issue #4146 section 8). verifyArcadeViewport covers Rainbow at 390x844 and wider but not 360x640, and reports sprite CSS px without asserting a floor for hostile bullets. Add the size and an assertion that hostile projectiles render at or above the readability floor at DPR 1/2/3.
