@@ -19178,3 +19178,13 @@ records:
   failure_category: null
   lesson: Hermetic tests that stub the content bundle hid a live KeyError for a whole cycle; after
     any art-queue parser change, also run the generator once against a real kind_robots checkout.
+- date: '2026-11-23'
+  project: ruler-hooked
+  task: t-075
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: Escaped literals in Python string splits ('\\n]') silently match nothing and the test
+    still passes; assert the split delimiter was actually found.

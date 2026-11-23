@@ -12921,3 +12921,9 @@ kind_robots #5517 (canon-art quarantine) made `comicIntroArt` return null for `m
 - **Rescues:** #5623 (kr-arcade t-164) conflicted on the hot one-line `test:arcade-engine` script in package.json and is rescued as kind_robots#5668. conductor#7915 conflicted on append-only `projects/art-prompts.yaml` and is rescued as conductor#7921.
 - **Pattern:** two conflicts in one hour, both on hot single-line or append-only files. Workers should merge main into the branch right before they open the PR.
 - **Left open:** #5665 (Deepheart) and #5666 (Rainbow t-063): both are still fresh and their own sessions own them.
+
+## 2026-11-23 PT | reviewer (scheduled agent) | ruler-hooked worker branches: rescued t-075 as #7927; t-031/t-073 branches superseded
+
+- `worker/ruler-hooked-t075-20261123-k7m9` had no PR. Rescued as conductor#7927 (merged main in). Its follow-up commit "split runtime fish array at its closing bracket" used `'\\n]'`, a literal backslash-n, so the split never matched and the regex scanned the rest of `fish.ts`; it passed by accident. Fixed with `partition('\n]')` plus asserts that the export and closer exist. Verified against kind_robots main: 42 runtime fish == 42 roster slugs == 42 art requests. t-075 done; kaizen t-076 (CI fixture so the runtime check stops skipping).
+- `worker/ruler-hooked-t-031-…-b4a2` and `worker/ruler-hooked-t-073-…-6e9b`: content already on main via #7921 and #7916 (main is strictly ahead of both). Stale branches only; they keep routing sessions to `reviewer`. Left for branch-janitor.
+- Pattern: workers push a branch, a reviewer rescues it into another PR, and the original branch stays behind. Rescue PRs should janitor the source branch in the same run.
