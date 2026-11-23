@@ -108,7 +108,7 @@ tasks:
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-23T03:53:34Z'
+    updated: '2026-11-23T12:09:23Z'
     note: |-
       Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -150,7 +150,12 @@ tasks:
       2026-11-22 PT: kind_robots#5628 merged as c5129034 after all checks completed green; all
       three endings (restore, evacuate, sever) now show Fever Dream plates. Released for
       remaining scope: settings (comms/contrast/remap/erase flight log), call sign/paint.
-    implementation_pr: 'silasfelinus/kind_robots#5628'
+
+      2026-11-23 PT: kind_robots#5670 ships the settings gaps: comms full/story/off, high-
+      contrast (bold) enemy shots, erase-a-slot flight log (two-tap), and per-game key remap
+      for A/B/X/Y, with pure + real-cabinet Chromium tests. Remaining t-044 scope: call sign
+      (comms + credits) and three medal-unlocked paint schemes per ship.
+    implementation_pr: 'silasfelinus/kind_robots#5670'
   - id: t-045
     title: 'Rainbow Bullet Hell Space Princess achievement upgrade: 12 or more live achievements'
     status: done
@@ -400,6 +405,13 @@ tasks:
       desktop UI snapshots. Record measured median completion duration
       and test all endings; never assert parity to commercial classics
       based solely on an encounter list.
+
+      2026-11-23 PT QA groundwork: four Rainbow verifiers had drifted red on main because most
+      verifyRainbow*.test.ts never ran in CI. kind_robots#5661 brought them in line with the
+      canonical X1-X4 detours; kind_robots#5666 added rainbow-verifier-suite.yml so every
+      Rainbow verifier (60) runs on Rainbow PRs, wall-clock CoopLoad alone. The full suite is
+      now a trustworthy base for the campaign QA pass.
+    updated: '2026-11-23T12:09:27Z'
   - id: t-014
     milestone: m5
     title: "Human-approved public /play Arcade launch and final quality verdict"
@@ -1244,12 +1256,12 @@ tasks:
   - id: t-063
     milestone: m5
     title: "Rainbow at 360x640 in the viewport suite, with a minimum rendered size for hostile shots"
-    status: review
+    status: done
     passes: 0
     stakes: reversible
     depends_on: []
     source: playtest-gap-matrix-2026-11-22
-    updated: '2026-11-23T11:29:42Z'
+    updated: '2026-11-23T12:08:50Z'
     note: >-
       PLAYTEST-GAP-MATRIX-2026-11-22 item 20 (issue #4146 section 8). verifyArcadeViewport covers Rainbow at 390x844 and wider but not 360x640, and reports sprite CSS px without asserting a floor for hostile bullets. Add the size and an assertion that hostile projectiles render at or above the readability floor at DPR 1/2/3.
 
@@ -1258,6 +1270,9 @@ tasks:
       at 360x640; halo larger; backing px >= CSS px), using the engine's exported
       RAINBOW_SHOT_BODY_RADIUS/HALO_RADIUS. Same PR adds rainbow-verifier-suite.yml so every
       verifyRainbow*.test.ts runs on Rainbow PRs. Merge when all checks complete green.
+
+      2026-11-23 PT: kind_robots#5666 merged as 23cedefd after all 23 checks completed green
+      (incl. the new Every Rainbow verifier suite and cabinet-viewport at 360x640).
     owner: reviewer
     claimed_by: session_01L5NKxaUAWmNr7wxdToBdp3
     claimed_at: '2026-11-23T10:59:22Z'
@@ -1265,18 +1280,25 @@ tasks:
   - id: t-064
     milestone: m4
     title: "Re-render the Motherland flagship phase-2 painting so the sprung clamps and battered hull read in game"
-    status: claimed
+    status: review
     passes: 0
     stakes: reversible
     depends_on: []
     source: reviewer-kaizen-conductor-7897
-    updated: '2026-11-23T11:00:11Z'
+    updated: '2026-11-23T12:08:53Z'
     note: >-
       Kaizen from the conductor#7897 review (t-061). ArtImage 279299 was rejected (not battered, clamps
       not sprung, hull colours drift), so phase 2 of the flagship fight reuses the phase-1 painting
       279298 with code-drawn cues. Queue a new Krea 2 take seeded from 279298's composition (same hull
       palette, clamps visibly open, scorch and sparks), review it at game scale against the clamp-core
       hit geometry, and swap bosses/flagship phase 2 in kind_robots only if it beats the code cues.
+
+      2026-11-23 PT: Kontext take D (279493, ledger MOTHERLAND-FLAGSHIP-PHASE2-2026-11-23)
+      beats phase 1 + code cues: battered hull, same palette/framing, no decoy ring.
+      kind_robots#5670 swaps bosses/flagship-phase2 in both looks at phase 2 with its own
+      Crown point (0.049, 0.257), checked at game scale against the 44 px ring. Merge when all
+      checks complete green.
     owner: reviewer
     claimed_by: session_01L5NKxaUAWmNr7wxdToBdp3
     claimed_at: '2026-11-23T11:00:11Z'
+    implementation_pr: 'silasfelinus/kind_robots#5670'
