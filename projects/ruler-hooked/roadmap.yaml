@@ -1280,3 +1280,16 @@ tasks:
 
     Shared art-entry fixture helper and unknown/missing-lane regressions merged in conductor#7898 commit 9f8282cd991accba05ea5a1c8893055e1522861e. Three checks successful, Worker PR CI remained queued when merged; completion awaits a real successful CI run. This supersedes the stale earlier review event stamped before the claim timestamp.
   updated: '2026-11-23T05:40:17.143Z'
+- id: t-072
+  milestone: m6
+  title: Guard every ruler-hooked YAML roster (cast, cards, quests, regions) against duplicate ids with a test that names the duplicates
+  status: ready
+  owner: null
+  claimed_by: null
+  claimed_at: null
+  stakes: reversible
+  passes: 0
+  depends_on: []
+  updated: '2026-11-23T06:35:00Z'
+  note: |-
+    Kaizen from reviewer of conductor#7900 (t-031, 2026-11-23). A merge of two parallel fish batches left nine duplicate slugs in fish/vertical-slice.yaml and turned main's Python suite red (45 != 36) for every open PR. The fish test now names duplicate slugs. Do the same for every other roster the art-queue generator reads, so a merge that duplicates a row fails with the offending ids instead of a count mismatch. Test-only; no art or content changes.
