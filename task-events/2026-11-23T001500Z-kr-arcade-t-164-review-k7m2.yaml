@@ -1,0 +1,13 @@
+version: 1
+project: kr-arcade
+task: t-164
+operation: review
+owner: worker
+session: 2026-11-22T232000Z-kr-arcade-t-164-k7m2
+updated: '2026-11-23T00:15:00Z'
+note: >-
+  2026-11-22 PT: implementation slice on worker/kr-arcade-t-164-adaptive-render-k7m2:
+  HD Arcade canvas now samples actual render cost and adjusts backing-store budget
+  in measured windows; Pixel mode and deterministic simulation unchanged. Added
+  regression tests for slow frames, recovery, spike rejection and backing-size safety.
+  The cross-game viewport/legibility issue #4062 remains open for browser QA.
