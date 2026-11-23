@@ -52,15 +52,42 @@ def test_queue_diagnoses_orphan_and_duplicate():
         assert_valid_staged_fish_ids(['a'], [PREFIX + 'a', PREFIX + 'a'])
 
 
+def parse_runtime_fish_slugs(source):
+    match = re.search(
+        r'export\\s+const\\s+RULER_HOOKED_FISH\\s*:[^=]*=\\s*\\[([\\s\\S]*?)^\\s*\\]',
+        source,
+        re.MULTILINE,
+    )
+    assert match, 'runtime fish array declaration not found'
+    slugs = re.findall(r"^\\s+slug:\\s*'([^']+)'", match.group(1), re.MULTILINE)
+    assert slugs, 'runtime fish array contains no parsed slugs'
+    return slugs
+
+
+def test_runtime_parser_rejects_missing_or_empty_roster():
+    with pytest.raises(AssertionError, match='declaration not found'):
+        parse_runtime_fish_slugs('export const OTHER = []')
+    with pytest.raises(AssertionError, match='no parsed slugs'):
+        parse_runtime_fish_slugs('export const RULER_HOOKED_FISH: Fish[] = [\\n]')
+
+
+def test_runtime_parser_reads_multiline_fish_objects():
+    source = """export const RULER_HOOKED_FISH: Fish[] = [
+  { slug: 'rainbow-trout', rarity: 1 },
+  {
+    slug: 'moon-carp',
+    rarity: 2,
+  },
+]
+export const OTHER = [{ slug: 'not-a-fish' }]"""
+    assert parse_runtime_fish_slugs(source) == ['rainbow-trout', 'moon-carp']
+
+
 def test_runtime_fish_slugs_match_when_app_checkout_is_present():
     runtime = ROOT.parent / 'kind_robots/utils/rulerHooked/fish.ts'
     if not runtime.is_file():
         pytest.skip('kind_robots sibling checkout unavailable in this runner')
-    source = runtime.read_text(encoding='utf-8')
-    array = source.split('export const RULER_HOOKED_FISH:', 1)[1].split(
-        '\n]', 1
-    )[0]
-    runtime_slugs = re.findall(r"^    slug: '([^']+)'", array, re.MULTILINE)
+    runtime_slugs = parse_runtime_fish_slugs(runtime.read_text(encoding='utf-8'))
     roster_slugs = [
         row['slug']
         for row in yaml.safe_load(ROSTER.read_text(encoding='utf-8'))['fish']
