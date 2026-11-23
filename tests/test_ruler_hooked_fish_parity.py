@@ -53,9 +53,10 @@ def test_runtime_fish_slugs_match_when_app_checkout_is_present():
     if not runtime.is_file():
         pytest.skip('kind_robots sibling checkout unavailable in this runner')
     source = runtime.read_text(encoding='utf-8')
-    array = source.split('export const RULER_HOOKED_FISH:', 1)[1].split(
-        '\\n]', 1
-    )[0]
+    head, marker, tail = source.partition('export const RULER_HOOKED_FISH:')
+    assert marker, 'RULER_HOOKED_FISH export not found in fish.ts'
+    array, closer, _ = tail.partition('\n]')
+    assert closer, 'RULER_HOOKED_FISH array has no closing bracket line'
     runtime_slugs = re.findall(r"^    slug: '([^']+)'", array, re.MULTILINE)
     roster_slugs = [
         row['slug']
