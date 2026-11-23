@@ -12,6 +12,8 @@ on:
       - "scripts/verify_tactics_runtime_media.py"
       - "scripts/prove_private_media_ledgers.py"
       - "tests/test_prove_private_media_ledgers.py"
+      - "scripts/summarize_prom_tactics_media_proof.py"
+      - "tests/test_summarize_prom_tactics_media_proof.py"
       - "tests/test_tactics_runtime_media.py"
       - "tests/test_prom_tactics_media_verification.py"
       - "projects/every-villain-tactics/art/ONE-HIT-CREW-TELEGRAPHS-2026-11-20.yaml"
@@ -55,7 +57,7 @@ jobs:
       - name: Install media verification dependencies
         run: pip install pyyaml pillow pytest
       - name: Unit-test safe receipt and image verification
-        run: python -m pytest -q tests/test_prom_tactics_media_verification.py tests/test_tactics_runtime_media.py tests/test_prove_private_media_ledgers.py
+        run: python -m pytest -q tests/test_prom_tactics_media_verification.py tests/test_tactics_runtime_media.py tests/test_prove_private_media_ledgers.py tests/test_summarize_prom_tactics_media_proof.py
       - name: Verify production API credential is configured
         run: |
           if [ -z "$KR_API_TOKEN" ]; then
@@ -67,48 +69,59 @@ jobs:
           set +e
           python scripts/verify_prom_tactics_media.py \
             projects/every-villain-tactics/art/ONE-HIT-CREW-TELEGRAPHS-2026-11-20.yaml \
-            --require-count 12 --write-evidence
-          verify_status=$?
+            --require-count 12 --write-evidence 2>&1 | tee -a "$RUNNER_TEMP/prom-tactics-proof.log"
+          verify_status=${PIPESTATUS[0]}
           bash scripts/checkpoint_art_state.sh "chore: checkpoint Tactics authenticated media proof [skip ci]"
           checkpoint_status=$?
           if [ "$checkpoint_status" -ne 0 ]; then exit "$checkpoint_status"; fi
           exit "$verify_status"
       - name: Verify Tactics game-media URL and private access policy
         run: |
+          set -o pipefail
           python scripts/verify_tactics_runtime_media.py \
             projects/every-villain-tactics/art/ONE-HIT-CREW-TELEGRAPHS-2026-11-20.yaml \
-            --require-count 12
+            --require-count 12 2>&1 | tee -a "$RUNNER_TEMP/prom-tactics-proof.log"
       - name: Verify and checkpoint nineteen private canonical Prom paintings
         run: |
+          set -o pipefail
           python scripts/prove_private_media_ledgers.py \
             --ledger projects/comet-city-academy/art/UNSTABLE-PRODUCTION-FAMILY-ROUND-1.yaml:14 \
             --ledger projects/comet-city-academy/art/FRANCHISE-SAFE-RERENDERS-ROUND-1.yaml:5 \
             --write-evidence --require-private \
-            --checkpoint-message "chore: checkpoint nineteen priority Prom private game-media proofs [skip ci]"
+            --checkpoint-message "chore: checkpoint nineteen priority Prom private game-media proofs [skip ci]" 2>&1 | tee -a "$RUNNER_TEMP/prom-tactics-proof.log"
       - name: Verify and checkpoint 172 original private Prom refill and cast paintings
         run: |
+          set -o pipefail
           python scripts/prove_private_media_ledgers.py \
             --ledger projects/comet-city-academy/art/RUNTIME-REFILL-ROUND-1.yaml:148 \
             --ledger projects/comet-city-academy/art/OCT-29-CAST-KREA2-ROUND-1.yaml:24 \
             --write-evidence --require-private \
-            --checkpoint-message "chore: checkpoint private Prom refill and October cast media proof [skip ci]"
+            --checkpoint-message "chore: checkpoint private Prom refill and October cast media proof [skip ci]" 2>&1 | tee -a "$RUNNER_TEMP/prom-tactics-proof.log"
       - name: Verify original Tactics diner, sunken street and library arena paintings
         run: |
+          set -o pipefail
           python scripts/prove_private_media_ledgers.py \
             --ledger projects/every-villain-tactics/art/LAST-ORDER-DINER-ROUND-1.yaml:1 \
             --ledger projects/every-villain-tactics/art/SUNKEN-STREET-ROUND-1.yaml:1 \
             --ledger projects/every-villain-tactics/art/VALCOURT-LIBRARY-ROUND-1.yaml:1 \
             --write-evidence --require-private \
-            --checkpoint-message "chore: checkpoint Tactics dedicated venue media proof [skip ci]"
+            --checkpoint-message "chore: checkpoint Tactics dedicated venue media proof [skip ci]" 2>&1 | tee -a "$RUNNER_TEMP/prom-tactics-proof.log"
       - name: Verify newest Tactics combat states and private game URLs
         run: |
+          set -o pipefail
           python scripts/prove_private_media_ledgers.py \
             --ledger projects/every-villain-tactics/art/ONE-HIT-CREW-COMBAT-STATES-2026-11-22.yaml:12 \
             --write-evidence --require-private \
-            --checkpoint-message "chore: checkpoint Tactics combat pose media proof [skip ci]"
+            --checkpoint-message "chore: checkpoint Tactics combat pose media proof [skip ci]" 2>&1 | tee -a "$RUNNER_TEMP/prom-tactics-proof.log"
       - name: Verify all twelve Prom companion emotions and their private gameplay URLs
         run: |
+          set -o pipefail
           python scripts/prove_private_media_ledgers.py \
             --ledger projects/comet-city-academy/art/AUTHORED-RECRUITS-EMOTIONS-2026-11-22.yaml:12 \
             --write-evidence --require-private \
-            --checkpoint-message "chore: checkpoint all Prom companion emotion media proof [skip ci]"
+            --checkpoint-message "chore: checkpoint all Prom companion emotion media proof [skip ci]" 2>&1 | tee -a "$RUNNER_TEMP/prom-tactics-proof.log"
+      - name: Summarize private ArtImage source, game URL and visibility evidence
+        if: always()
+        continue-on-error: true
+        run: |
+          python scripts/summarize_prom_tactics_media_proof.py --log "$RUNNER_TEMP/prom-tactics-proof.log" --summary "$GITHUB_STEP_SUMMARY" --ledger projects/every-villain-tactics/art/ONE-HIT-CREW-TELEGRAPHS-2026-11-20.yaml --ledger projects/every-villain-tactics/art/ONE-HIT-CREW-COMBAT-STATES-2026-11-22.yaml --ledger projects/every-villain-tactics/art/LAST-ORDER-DINER-ROUND-1.yaml --ledger projects/every-villain-tactics/art/SUNKEN-STREET-ROUND-1.yaml --ledger projects/every-villain-tactics/art/VALCOURT-LIBRARY-ROUND-1.yaml --ledger projects/comet-city-academy/art/AUTHORED-RECRUITS-EMOTIONS-2026-11-22.yaml --ledger projects/comet-city-academy/art/UNSTABLE-PRODUCTION-FAMILY-ROUND-1.yaml --ledger projects/comet-city-academy/art/FRANCHISE-SAFE-RERENDERS-ROUND-1.yaml --ledger projects/comet-city-academy/art/RUNTIME-REFILL-ROUND-1.yaml --ledger projects/comet-city-academy/art/OCT-29-CAST-KREA2-ROUND-1.yaml
