@@ -1244,17 +1244,22 @@ tasks:
   - id: t-062
     milestone: m5
     title: "Run verifyRainbowSaveBytes and verifyRainbowSeasLogbook in CI"
-    status: claimed
+    status: review
     passes: 0
     stakes: reversible
     depends_on: []
     source: playtest-gap-matrix-2026-11-22
-    updated: '2026-11-23T01:51:21Z'
+    updated: '2026-11-23T02:03:53Z'
     note: >-
       PLAYTEST-GAP-MATRIX-2026-11-22 item 19. Both kind_robots tests exist on main but no workflow or package script runs them, so save-capacity and flight-log regressions can land silently. Add them to the Rainbow save/route workflow (or test:arcade-engine) and confirm a green run.
+
+      2026-11-22 PT: Both tests added to rainbow-alternate-route-memory.yml (PR-gating), with
+      path triggers for rainbowSaveSlots.ts and arcade/saves.ts. Both pass locally.
+      kind_robots#5619.
     owner: reviewer
     claimed_by: 20261123T020500Z-rainbow-t062-ci-c4r7
     claimed_at: '2026-11-23T01:51:21Z'
+    implementation_pr: 'silasfelinus/kind_robots#5619'
   - id: t-063
     milestone: m5
     title: "Rainbow at 360x640 in the viewport suite, with a minimum rendered size for hostile shots"
