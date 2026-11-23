@@ -1803,6 +1803,8 @@ tasks:
     Navigation tiles now fall back tab -> channel -> per-channel -> arcade art when an image
     is empty or broken; seven channels gained image paths. Next cycle: CI check that every
     channel image: resolves to a public/ file.
+
+    daily-delivery:2026-11-23/signed-in-pages-say-so | PR: silasfelinus/kind_robots#5654 (merged 77bb91d) | Consistent sign-in wording across home-channel pages: /chats (requiredPermission: authenticated) described 'curated messages from across our digital domains' and now says it shows your conversations after a free sign-in; /themes drops 'plethora... find your vibe' for what it does. Pinned in verifyFrontDoorPolish.test.ts section 6.
   implementation_pr: 'silasfelinus/kind_robots#5519'
   retry_context: ''
   min_rest_hours: 24
@@ -1872,6 +1874,8 @@ tasks:
     (merged de1be6c) | Zuzu Showdown's link preview went from 'Duels with Zuzu and friends.'
     to a real 2D-fighter description. Considered retitling /about from 'Support' but
     verifyNavigationConsolidation.ts pins it deliberately; left as is.
+
+    daily-delivery:2026-11-23/login-plain-copy | PR: silasfelinus/kind_robots#5654 (merged 77bb91d) | /login described itself as 'Login to get access to our suite of AI-enhanced tools'; it now says what a free account is for and that games and stories stay free without one, matching /register. Pinned in verifyFrontDoorPolish.test.ts section 6.
   implementation_pr: 'silasfelinus/kind_robots#3073'
   approved_by_human: true
   min_rest_hours: 24
@@ -2444,6 +2448,8 @@ tasks:
     silasfelinus/kind_robots#5580 (merged de1be6c) | /art no longer shares 'Generate new
     images first'; it says browse free, sign in free to make your own. Pinned in
     verifyFrontDoorPolish.test.ts.
+
+    daily-delivery:2026-11-23/sitemap-trust-pages | PR: silasfelinus/kind_robots#5654 (merged 77bb91d) | /silas, /privacy and /register are public ungated content pages that were missing from sitemap.xml; SITEMAP_PATHS now lists them and verifySharePreview.test.ts requires each to be listed and backed by a real content page.
   updated: '2026-10-26T22:16:18Z'
 
 - id: t-145
@@ -2624,6 +2630,8 @@ tasks:
     (merged de1be6c) | Cthulhuquarium's share description now says browsing tanks is free
     and raising one needs a free sign-in (the tutorial starts 'Sign in and...'). Pinned in
     verifyFrontDoorPolish.test.ts.
+
+    daily-delivery:2026-11-23/not-found-plain-title | PR: silasfelinus/kind_robots#5654 (merged 77bb91d) | The 404 room's tab read 'Direction | Kind Robots'; content/error.md now titles it 'Page not found' and links the /navigation site map beside home. Pinned in verifyFrontDoorPolish.test.ts section 6.
   updated: '2026-11-18T11:07:17Z'
 
 - id: t-152

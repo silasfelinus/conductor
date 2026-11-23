@@ -166,3 +166,13 @@ Live today: 0 Achievement record(s) with this game's triggerCode prefix (checked
 
 Achievement upgrade merged in kind_robots#5037 (aff3ebd), all checks green: 17 live achievements awarded from one scrapbook diff in recordMoments() on live saves only (never on load), plus the stage-studio award in saveDraft(). Catalog seed workflow run 43138740407 succeeded. Contract test verifyEveryVillainAchievements.
 <!-- note:end t-026 -->
+
+## t-028 — Generate the tactical arena receipt map from verified ledger keys so fallback paintings drop out once an original venue render is proven
+
+<!-- note:begin t-028 -->
+Kaizen from reviewer of conductor#7853 (2026-11-22). The three dedicated venues (Last Order diner 71163/276806, Sunken Street 74323/277221, Valcourt Library 74324/277330) are pinned by hand in tests and the workflow. Source the arena→receipt map from ledgers whose media proof passed, and keep explicit art-review decisions separate, so a fallback painting cannot linger after an original render is verified.
+
+Proof-backed generator, generated receipt map and runtime override implemented on scoped Conductor and Kind Robots worker branches. Existing 71163/276806, 74323/277221 and 74324/277330 authenticated media receipts are reused, not resubmitted. Cross-repo PRs and CI validation follow; no new jobs.
+
+Implementation and verification contracts merged: conductor#7862 at e472637135cb06dac9b18b46c533ec736cd8d370, kind_robots#5604 at ec7e0988651e60d42767ea0282f9556d67e5c87b. Tactics' stage lookup now consumes generated proof-backed private receipt records for last-order, sunken-street and unlicensed-rescue, and preserves all other existing maps. Both original PR heads completed every relevant CI check green. No new ArtJobs, no invented visual-curator approvals. Self-hosted rollout and final browser proof remain separate from this generator task.
+<!-- note:end t-028 -->

@@ -171,3 +171,9 @@ Merged (squash 9017e41). Art ledgers/prompts only, reversible, CI green. The fiv
 - **Decision:** Squash-merged (a778a6e) on green latest-head CI. Merged cleanly with main. 99 focused tests pass in the merged state. It reuses the shared `prove_private_media_ledgers.py` helper and adds no enqueue, upload or public step.
 - **Pattern:** The Worker keeps "bytes match" separate from "artist-approved". That is the right line to hold. The 172 images count as media-verified only after the post-merge run's LEDGER_MEDIA_PROOF summary is green.
 - **Reconciliation:** t-031 goes back to `ready` as a partial slice. **Kaizen:** t-050, a per-ArtImage failure summarizer over the checkpointed evidence.
+
+## 2026-11-23 PT | reviewer (scheduled agent) | merged conductor#7906 (t-051 crew telegraph atlas QA scope)
+
+- **Decision:** Squash-merged (5376517) on green latest-head CI. An earlier attempt of the "Validate Worker PR handoff" check failed, but a later rerun on the same head passed. The PR only adds `t-051` (ready, reversible, id checked free with `next_free_task_id.py`) to the roadmap. It changes no code, enqueues nothing and publishes nothing.
+- **Pattern:** The scope is right. It reuses the existing receipts for ArtImages 277786-277797, keeps the atlas admin-only, and says outright that a successful byte fetch is not artistic approval.
+- **Kaizen:** none was added. This PR was itself a scoping PR, so a follow-on task would only duplicate t-051. The Worker's implementation PR is where the kaizen belongs.

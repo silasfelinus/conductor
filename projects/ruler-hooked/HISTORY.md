@@ -644,6 +644,20 @@ Delivered via silasfelinus/kind_robots#4837, merged squash SHA 2f2bae82c5868bbe7
 2026-11-05 PT, Silas in session with four ChatGPT concept screens (Lake, Map, Court, Fishopedia): "We need a massive overhaul of the ruler is hooked. The current version looks like a janky webapp. This concept art ... is a little too shiny freeware style, but it's a lot closer to what we want in terms of an illustrated, art heavy design that doesn't look like a webapp. We need a significant redesign, fish, backgrounds, plus tutorial, daily kingdom events, illustrated characters, etc." ROOT CAUSE FIRST: 126 of 150 planned renders existed on media.acrocatranch.com but every /images/ruler-hooked/* request 404'd on kindrobots.org, because the image route only remote-fell-back for academy/ (fixed by kind_robots#4828, merged). SHIPPED (kind_robots#4834, merged, CI green): a full-bleed console with HUD meters, painted tabs, a first-person lake, court petitions with presenter portraits and effect-chip choice cards, a postcard Kingdom Atlas, gear, a Fishopedia plate and carousel, Quill's situational tutorial (utils/rulerHooked/tutorial.ts), and the Town Crier's daily proclamations (utils/rulerHooked/dailyEvents.ts: per in-game day, never expire, nudges not gates). Verified with vue-tsc, lint, the layout contract, 13 selftests and a local Chromium playthrough at 1440 and 390 widths. Built in the storybook palette BEFORE the same day's Chronicle + Broadside decision (t-054). That decision supersedes the look; t-054 owns the restyle and builds on this structure. Needs a Force Update to reach kindrobots.org.
 <!-- note:end t-056 -->
 
+## t-059 — Reconcile the compositing contract with the opaque region layers that actually rendered
+
+<!-- note:begin t-059 -->
+Found 2026-11-05 (t-056): all 36 rendered region layers are opaque RGB 1344x768 paintings, not alpha-cut depth bands, so ruler-hooked-stage.vue's full-frame z-stack (still used by the Chronicle-of-the-reign kingdom view) only ever shows its top layer, near_bank-grassy. The console sidesteps this by treating layers as whole-scene vistas. This blocks t-054's lake/near_bank/sky decay ramps as specified. Before rendering ramp layers, decide: render with real transparency (or mask in a build step), or retire the stack model in compositing.md for whole-scene vistas per state combination.
+
+Corrected the legacy stage: opaque region images display as selectable full-scene vistas instead of covering each other in a z-stack. Changed-region spotlight, accessibility and regression checks are in the worker implementation branch; the compositing design contract is explicitly superseded by truthful vista rendering. Review PR and CI to follow; no claim of rendered art or live QA.
+
+2026-11-22 PT reviewer: kind_robots#5622 merged (c0e63a0) on all-green latest-head
+checks; conductor#7881 (compositing.md supersession) merged (de95904). Stage now shows
+one opaque vista at a time with accessible region picker and decree spotlight. Pre-merge
+verification was CI-only (no preview); post-deploy visual/device QA remains with
+t-047/t-061.
+<!-- note:end t-059 -->
+
 ## t-062 — Mandarin animal-only fishing quiz and post-answer illustrated word reference
 
 <!-- note:begin t-062 -->
@@ -693,3 +707,35 @@ Live today: 0 Achievement record(s) with this game's triggerCode prefix (checked
 
 Achievement upgrade merged in kind_robots#5051 (a68b5a6), all checks green: 18 live achievements awarded at the deed in rulerHookedStore and rulerHookedQuizStore (catches, story arcs, all 4 endings, gear, quiz totals); init/loadSlot never award; strip on the title's reign archive. Catalog seed run succeeded.
 <!-- note:end t-068 -->
+
+## t-069 — Add a CI guard that every new ruler-hooked quest card id has a matching art-prompts.yaml request row
+
+<!-- note:begin t-069 -->
+Kaizen from reviewer of conductor#7867 (2026-11-22 PT). Card art for the t-045 aftershocks was staged by hand in a separate PR from the kind_robots content (#5605). Add a guard that diffs the card ids in the ruler-hooked deck against the ruler-hooked-card-* rows in projects/art-prompts.yaml and names any card that has no art request. Reports only: no enqueue, no render.
+
+Implemented an automated cross-repository quest-card-art-request guard, checks all authored cards, art mapping, queue IDs and paths, with positive and negative Python fixtures in Worker CI. The guard reports missing staged prompts only; it never claims that painting was delivered or inspected. Branch worker/ruler-hooked-t-069-20261123-c8d2af also fixes a duplicated owner field introduced during connector claim bookkeeping.
+
+Ruler Hooked cross-repository card-art request guard merged via silasfelinus/conductor#7893 commit cd6eed183ba518ae956e5c2e37c2d3a6b51a3288. All four latest-head checks passed: Worker PR CI, Security Audit, Worker PR handoff template, Process task events. Guard covers staged requests, not rendered or visually inspected paintings.
+<!-- note:end t-069 -->
+
+## t-070 — Add a CI check that flags any ruler-hooked region asset without an alpha channel before it is treated as a stack layer
+
+<!-- note:begin t-070 -->
+Kaizen from reviewer of kind_robots#5622 / conductor#7881 (t-059, 2026-11-22 PT). The alpha-stack contract drifted for weeks because nothing checked that the 36 delivered region WebPs were opaque RGB. Add a report-only check that reads each /images/ruler-hooked/{region}-{state}[-{time}].webp header and names files with no alpha channel, so any future return to layered compositing fails loudly instead of silently showing only the top layer. No render, no enqueue.
+
+Added a report-only WebP header auditor for delivered ruler-hooked region assets, validates the alpha bit on VP8X/VP8L and flags opaque VP8 layers. Added synthetic header and manifest tests plus GitHub Actions report artifact. No artwork was rendered or changed; green CI and merge review remain.
+
+Reviewer (scheduled agent, 2026-11-22 PT): merged conductor#7888 (squash 1bad1e45) on
+all-green latest-head CI. Locally the 5 alpha tests pass and a live run reports 52
+delivered region WebPs, all opaque, report-only as specified. Kaizen: t-071.
+<!-- note:end t-070 -->
+
+## t-071 — Make the ruler-hooked art-queue hermetic test fixtures fail loudly when a new *_entries lane is added without a stub
+
+<!-- note:begin t-071 -->
+Kaizen from reviewer of conductor#7886 (t-058, 2026-11-22 PT). Adding expression_entries() broke six tests in test_ruler_hooked_list_lanes.py and test_ruler_hooked_restyle.py because each fixture stubs every *_entries function by hand and read_cast returns None. Share one fixture helper that stubs every *_entries callable main() uses, or assert that coverage, so the next lane can't break the suite again.
+
+Shared art-entry fixture helper and unknown/missing-lane regressions merged in conductor#7898 commit 9f8282cd991accba05ea5a1c8893055e1522861e. Three checks successful, Worker PR CI remained queued when merged; completion awaits a real successful CI run. This supersedes the stale earlier review event stamped before the claim timestamp.
+
+Reviewer (scheduled, 2026-11-23): conductor#7898 merged (9f8282cd). Its fixture lane-coverage tests passed in the full green Python suite of conductor#7900, which ran on top of #7898, so the CI evidence it was waiting on is in.
+<!-- note:end t-071 -->

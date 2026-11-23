@@ -1,0 +1,88 @@
+"""Duplicate roster IDs must fail before art queue generation silently drops rows."""
+
+import pytest
+
+from scripts import build_ruler_hooked_art_queue as queue
+
+
+def test_duplicate_cast_ids_name_the_offender():
+    entries = [{"slug": "quill"}, {"slug": "quill"}]
+    block = "    slug: 'quill'\n    slug: 'quill'\n"
+    with pytest.raises(SystemExit, match="characters: duplicate ids: quill"):
+        queue.expect_all(entries, block, "characters", "fixture")
+
+
+def test_duplicate_fish_and_quest_ids_are_named():
+    with pytest.raises(SystemExit, match="fish: duplicate ids: koi"):
+        queue.assert_unique_ids(["koi", "trout", "koi"], "fish")
+    with pytest.raises(SystemExit, match="quests: duplicate ids: moat"):
+        queue.assert_unique_ids(["moat", "moat"], "quests")
+
+
+def test_duplicate_region_keys_are_not_overwritten(tmp_path):
+    content = tmp_path / "content.ts"
+    content.write_text(
+        "\n  regions: {\n    regions: {\n"
+        "      lake: { states: ['clear'], times: ['day'] },\n"
+        "      lake: { states: ['murky'], times: ['night'] },\n"
+        "    },\n",
+        encoding="utf-8",
+    )
+    with pytest.raises(SystemExit, match="regions: duplicate ids: lake"):
+        queue.read_regions(content)
+
+
+def test_duplicate_cards_within_deck_are_not_silently_deduplicated(tmp_path):
+    content = tmp_path / "content.ts"
+    card = (
+        "    { id: 'royal-weir',\n"
+        "      title: 'The Weir',\n"
+        "      body: 'A petition arrives.', },\n"
+    )
+    content.write_text(
+        "\n  decks: [\n" + card + card + "  ],\n"
+        "  arcs: [\n" + card + "  ],\n",
+        encoding="utf-8",
+    )
+    with pytest.raises(SystemExit, match="decks: duplicate ids: royal-weir"):
+        queue.read_cards(content)
+
+
+def test_cross_deck_card_reference_remains_legal(tmp_path):
+    content = tmp_path / "content.ts"
+    card = (
+        "    { id: 'royal-weir',\n"
+        "      title: 'The Weir',\n"
+        "      body: 'A petition arrives.', },\n"
+    )
+    content.write_text(
+        "\n  decks: [\n" + card + "  ],\n"
+        "  arcs: [\n" + card + "  ],\n",
+        encoding="utf-8",
+    )
+    assert [entry["id"] for entry in queue.read_cards(content)] == ["royal-weir"]
+
+
+def test_roster_summary_counts_source_rows_not_art_variants():
+    cast = [{"slug":f"visitor-{i}"} for i in range(12)]
+    fish = [{"slug":f"fish-{i}"} for i in range(36)]
+    cards = [{"id":f"card-{i}"} for i in range(84)]
+    regions = {f"region-{i}": {} for i in range(13)}
+
+    assert queue.roster_summary(cast, fish, cards, regions) == (
+        "rosters: cast 12 · fish 36 · cards 84 · regions 13"
+    )
+
+
+def test_expect_all_accepts_named_group_key_for_differently_spelled_field():
+    # endings capture `outcomeKey` under the regex group `key`; this crashed
+    # every live --check/--write run with KeyError: 'outcomeKey'.
+    block = "outcomeKey: 'a',\noutcomeKey: 'b',\n"
+    parsed = [{"key": "a"}, {"key": "b"}]
+    assert queue.expect_all(parsed, block, "endings", "content.ts", key="outcomeKey") == parsed
+
+
+def test_expect_all_names_duplicate_named_group_keys():
+    block = "outcomeKey: 'a',\noutcomeKey: 'a',\n"
+    with pytest.raises(SystemExit, match="a"):
+        queue.expect_all([{"key": "a"}, {"key": "a"}], block, "endings", "content.ts", key="outcomeKey")

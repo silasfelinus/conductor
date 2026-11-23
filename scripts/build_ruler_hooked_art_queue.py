@@ -707,6 +707,18 @@ PORTRAIT_FRAME = (
 )
 
 
+def assert_unique_ids(values, label):
+    """Reject duplicate authored IDs before a dict or set silently erases them."""
+    seen = set()
+    duplicates = set()
+    for value in values:
+        if value in seen:
+            duplicates.add(value)
+        seen.add(value)
+    if duplicates:
+        raise SystemExit(f"{label}: duplicate ids: {', '.join(sorted(duplicates))}")
+
+
 def expect_all(parsed, block_text, label, source, key="slug"):
     """Fail when a regex matched only SOME of a block's entries.
 
@@ -734,6 +746,11 @@ def expect_all(parsed, block_text, label, source, key="slug"):
             f"{len(parsed)}. Unmatched: {', '.join(missing)}. The upstream formatting "
             f"changed -- fix the pattern rather than shipping a partial batch."
         )
+    # Some parsers capture the id under the named group `key` while the source
+    # field is spelled differently (endings: `outcomeKey`), so accept either.
+    assert_unique_ids(
+        [entry[key] if key in entry else entry["key"] for entry in parsed], label
+    )
     return parsed
 
 
@@ -838,6 +855,8 @@ def read_regions(content_ts: Path) -> dict[str, dict[str, list[str]]]:
             r"ramp: \[(.*?)\]", chunk, re.S
         )
         times = re.search(r"times: \[(.*?)\]", chunk, re.S)
+        if key in regions:
+            raise SystemExit(f"regions: duplicate ids: {key}")
         regions[key] = {
             "states": re.findall(r"'([^']+)'", states.group(1)) if states else [],
             "times": re.findall(r"'([^']+)'", times.group(1)) if times else [],
@@ -1127,6 +1146,7 @@ def fish_entries() -> list[dict]:
     if not fish:
         raise SystemExit(f"{FISH_ROSTER} parsed to zero fish")
 
+    assert_unique_ids([str(species["slug"]) for species in fish], "fish")
     entries: list[dict] = []
     for species in fish:
         slug = str(species["slug"])
@@ -1367,8 +1387,12 @@ def read_cards(content_ts: Path) -> list[dict[str, str]]:
         block = re.search(rf"\n  {key}: \[(.*?)\n  \],\n", text, re.S)
         if not block:
             raise SystemExit(f"no {key}: [...] block found in {content_ts}")
+        block_seen: set[str] = set()
         for m in CARD_RE.finditer(block.group(1)):
             card = m.groupdict()
+            if card["id"] in block_seen:
+                raise SystemExit(f"{key}: duplicate ids: {card['id']}")
+            block_seen.add(card["id"])
             if card["id"] in seen:
                 continue
             seen.add(card["id"])
@@ -2100,6 +2124,14 @@ def render_block(entries: list[dict]) -> str:
     )
 
 
+def roster_summary(cast: list[dict], fish: list[dict], cards: list[dict], regions: dict) -> str:
+    """Source roster census, independent of art variants and selected lanes."""
+    return (
+        f"rosters: cast {len(cast)} · fish {len(fish)} · "
+        f"cards {len(cards)} · regions {len(regions)}"
+    )
+
+
 def lane_counts(entries: list[dict], existing: set[str]) -> list[tuple[str, int, int]]:
     """(lane, staged, unstaged) for every lane in LANES, sorted by lane name."""
     rows = []
@@ -2155,19 +2187,23 @@ def main() -> int:
 
     content_ts = find_content_bundle()
     cast = read_cast(content_ts)
+    fish = fish_entries()
+    cards = card_entries(content_ts)
+    regions = read_regions(content_ts)
+    print(roster_summary(cast, fish, cards, regions))
     entries = (
         concept_entries(cast)
         + expression_entries(cast)
         + alt_vista_entries()
         + ruler_entries()
-        + fish_entries()
+        + fish
         + reward_entries(content_ts)
         + ending_entries(content_ts)
-        + card_entries(content_ts)
+        + cards
         + console_entries(cast)
     )
     if args.include_layers:
-        entries += layer_entries(read_regions(content_ts))
+        entries += layer_entries(regions)
     assert_contract(entries)
 
     text = ART_PROMPTS.read_text(encoding="utf-8")

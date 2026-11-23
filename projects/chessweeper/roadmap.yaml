@@ -48,26 +48,10 @@ tasks:
     depends_on: t-001
     passes: 0
     stakes: reversible
-    note: |-
-      Build three distinct complete campaigns, not recolors: authored escalating encounters, distinct enemies/board events, risk-versus-reward decisions, fully implemented Sugar Rush, Ashen Last Stand and Jackpot Double-or-Nothing abilities, branching victory/failure conditions and at least four meaningful ending routes per world (12 total). Own saved checkpoint/continue, per-world campaign records, challenge/seed/difficulty settings, no cross-world leakage, real options that persist and are honored. Use canonical Kind Robots stores for application persistence; account versus guest/device behavior must be explicit. Every route must be realistically obtainable and tested without cheating the game state. Ending presentation/illustration is t-009, progression achievements/gallery is t-010, music is t-008; no task is done solely on mock copy, UI shells or stubs.
+    note: >-
+      Build three distinct complete campaigns, not recolors: authored escalating encounters, distinct enemies/board events, risk-versus-reward decisions, fully implemented Sugar Rush, Ashen Last Stand and Jackpot Double-or-Nothing abilities, branching victory/failure conditions and at .
 
-      Partial implementation of all three authored four-chapter Chessweeper campaigns in worker/chessweeper-t002-authored-campaigns-20261121-p3x9: each world has distinct sequential named battles, mode-specific score, armor and hazard modifiers, campaign advancement only on earned victories, retry after loss, saved per-world progress, compact on-board chapter UI, and deterministic regression tests in the contract workflow. Remaining t-002 includes full narrative gameplay variation, difficulty tuning, canonical save/account semantics, full playthrough acceptance, and the twelve illustrated endings tracked in t-009. Do not mark done merely for these initial playable campaign rounds.
-
-      Campaign chapter foundation merged in Kind Robots PR #5543 on 2026-11-21 PT. Four authored stages per world and verified contract checks; substantive campaign branch variety, progressive goals and device/account persistence remain. Return unfinished task to ready for the next implementation slice.
-
-      Added twelve original, optional chapter mastery trials across Sugarbomb, Ashen and Jackpot, driven by actual win state and special-action events (Sugar Rush, Last Stand, wager/payout), plus persistent per-world mastery bitsets and best scores, a compact stage HUD, and deterministic mock-engine tests. Implementation branch worker/chessweeper-t002-mastery-trials-20261121-c2bd. Finite campaign t-002 remains incomplete: world narrative branching, authored endings, account/device saving and actual full-run balance QA still remain.
-
-      2026-11-21 PT reviewer reconciliation: kind_robots PR #5550 merged at fb1ce3f76e569ccda031b98516894de241ea57a7, with all six required latest-head checks completed green, delivering twelve optional gameplay- earned chapter mastery trials, achievements events and per-world records. The full narrative branching, canonical account/device saving, endings and full-run acceptance are still incomplete. Return t-002 to ready.
-
-      2026-11-21 PT: Implemented real selectable world-specific risk contracts with meaningful chapter effects: Sugarbomb shelter vs extra blade/points, Ashen ember protection vs iron-wheel oath, and Jackpot insurance vs high-roller chip/blade gamble. Contracts persist per world and chapter, cannot change mid-run, reset deterministically on pre-turn switch, and are covered by mock-engine gameplay tests. Kind Robots commit 0a08168a; PR/CI pending. t-002 still needs authored branch outcomes, full campaign balance QA and account/device save integration.
-
-      2026-11-22 PT done (Silas-directed playtest session): kind_robots #5597 merged e41798a9
-      with all 15 checks green. Remaining scope closed: pact-aware narrative branches and
-      campaign-finale epilogues in every ending scene, explicit device saving with CW1
-      transfer codes (account sync deliberately out of scope and documented), and full-run
-      balance QA. Black AI now reads the blade forecast; before the fix Ashen and Jackpot
-      ended by passive arena kills at turn 18-28 on every seed. Evidence:
-      projects/chessweeper/qa/2026-11-22-playthrough.md.
+      Full history: projects/chessweeper/HISTORY.md#t-002
     implementation_pr: 'silasfelinus/kind_robots#5597'
   - id: t-003
     milestone: m3
@@ -79,36 +63,10 @@ tasks:
     updated: '2026-11-22T23:16:18Z'
     passes: 0
     stakes: reversible
-    note: |-
-      Use durable Kind Robots ArtJobs with exact IDs, variants and target paths. Create a polished home/highlight and Advert Studio image, original project icon, card and hero, and three independently art-directed hero/board/piece sets. Attach images to actual Play, highlight, tutorial and scrapbook surfaces. Verify delivery and final visible image URLs; queued or CSS/SVG placeholder artwork does not count. First art prompts are in ART-PROMPTS.md.
+    note: >-
+      Use durable Kind Robots ArtJobs with exact IDs, variants and target paths.
 
-      2026-11-18 PT: User confirms copied Chessweeper five-image WebP pack into public/images/chessweeper/ (highlight, sugar, ashen, jackpot, icon). Integrated exact paths in the existing publication-gated Kind Robots PR #5305: illustrated mode picker, board and result ambience, scrapbook world art, home highlights, Play header icon, and full Advert Studio poster with three world cards. Added art-pack.json with exact source dimensions and SHA-256 checksums. Static reference/syntax checks passed; image pack independently validated. IMPORTANT: five image binaries are still absent from the GitHub PR branch, with no durable ArtJob ids or verified deployed URLs. Do not call t-003 complete. Next task: track/commit source binaries via the normal art intake and verify final rendered URLs; finish world-specific board/piece art and illustration attachment before playtest. Publication authorization remains gated at t-001.
-
-      daily-delivery:2026-11-21/chessweeper-light-share-card | PR:
-      silasfelinus/kind_robots#5513 (merged d142dd9) | Chessweeper shares a light title card.
-      Live og:image measured at 582348 bytes before; the new card was viewed with its title
-      intact and the share-preview contract checks its size.
-
-      Submitted eight original Krea2 requests for previously absent Chessweeper highlight, world posters, icon and three boards, via projects/art-prompts.yaml on worker/chessweeper-t003-art-intake-20261121-kb4t. Assets are pending in the Conductor queue, not rendered or delivered; ArtJob IDs and live image URL verification remain outstanding. Do NOT mark task done; continue after this reversible art-staging PR merges.
-
-      Chessweeper original art intake PR conductor#7792 merged 0e30002, and painted board loader with missing-icon and scrapbook fallbacks PR kind_robots#5536 merged ec2ac1c, with all required checks complete green. Eight traceable images are staged for rendering, not yet generated or attached; continue this task through ArtJob IDs, delivered media, verified image URLs, piece/scene artwork, and final visual QA. No art-completion or public-deployment claim.
-
-      2026-11-21 PT: Staged six additional literal Krea2 art requests in projects/art-prompts.yaml, commit fc27cdf, for three 12-piece world atlases and original Sugar Rush, Last Stand, Double or Nothing action plates. ArtJobs and final URLs not yet assigned or delivered. Finite t-003 remains incomplete until generated assets are validated and integrated.
-
-      2026-11-22 PT reviewer: second art intake landed via rescue PR conductor#7817 (squash
-      ea1477e; Worker commit fc27cdf plus affirmative rewrites of the six negation clauses;
-      #7809 closed as superseded). Still partial: the six requests are only queued. Remaining:
-      confirm ArtJob ids, visually QA the renders, attach piece atlases and action plates.
-      Returned to ready; claim released.
-
-      Integrated world-specific twelve-rank painted piece atlases into the live Chessweeper board with per-world asynchronous loading, stale-response isolation and readable glyph fallback. ArtJobs 76602-76604 are recorded in the art queue, but delivery and visual QA remain outstanding. Implementation PR pending.
-
-      2026-11-22 PT done: every planned image is delivered and verified live (HTTP 200
-      image/webp) at kindrobots.org/images/chessweeper/. That covers the world art, 3 boards
-      (ArtJobs 76472-76474), 3 piece atlases (76602-76604), 3 action plates (76605-76607, now
-      wired into the special-move cinematics by kind_robots #5597) and 12 ending plates
-      (#7848, 76704-76715, five re-rendered via #7865 after visual QA). art-pack.json records
-      delivered versus requested.
+      Full history: projects/chessweeper/HISTORY.md#t-003
     implementation_pr: 'silasfelinus/conductor#7848'
   - id: t-004
     milestone: m4
@@ -118,17 +76,9 @@ tasks:
     passes: 0
     stakes: reversible
     note: >-
-      Final independent acceptance after production tasks t-002, t-003, t-006..t-010: run deterministic seeded full campaigns and actual browser-input paths across every world, including chess rules (castling, en passant, promotion, king safety, checkmate/stalemate), mine safety/clue cascade, disc collisions/powers, all twelve reachable ending branches, no impossible softlocks, loss/restart/checkpoint resume, achievements and scrapbook unlocks and last-item reachability, sound/music/mute and motion settings, visual effects, and real delivered art URLs. Test three viewport widths (390/768/1440), keyboard, mouse, touch and gamepad where supported, contrast, reduced-motion and audio gesture policy. Capture screenshots/video evidence and run actual CI typecheck, lint, tests, engine unit tests and full-run browser tests. A rendered page and a forced end-state fixture do NOT replace actual playthrough evidence.
+      Final independent acceptance after production tasks t-002, t-003, t-006..t-010: run deterministic seeded full campaigns and actual browser-input paths across every world, including chess rules (castling, en passant, promotion, king safety, checkmate/stalemate), mine safety/clue c
 
-      2026-11-22 PT done: verifyChessweeperPlaythrough.browser.test.mjs plays the game in real
-      Chromium through visible clicks. It covers all three 4-chapter campaigns, 12/12 endings
-      reached by play, scrapbook replay, save/resume, transfer merge and rejection of a bad
-      code, settings persistence, keyboard, touch, reduced motion, the audio gesture policy,
-      and 390/768/1440 layouts. It passed in CI on #5597 and now runs on every Chessweeper PR.
-      It found and fixed six defects, including the dead profile layer, the operations console
-      hidden on phones, and passive arena wins. Report:
-      projects/chessweeper/qa/2026-11-22-playthrough.md. The game has no gamepad bindings, so
-      gamepad was not tested.
+      Full history: projects/chessweeper/HISTORY.md#t-004
     updated: '2026-11-22T23:16:30Z'
     implementation_pr: 'silasfelinus/kind_robots#5597'
   - id: t-005
@@ -139,13 +89,9 @@ tasks:
     passes: 0
     stakes: reversible
     note: >-
-      STRICT LAST TASK. The full substantive roadmap MUST be done, not merely t-001 first-playable or a share-ready page. Verify all prior dependency tasks are done with merged passing PRs and actual evidence: complete three-world campaigns, art and production animation, integrated sound and distinct music per world, twelve authored AND illustrated endings, achievements with real earn triggers, discoverable persistent scrapbook/records, settings and tutorial, save/load and complete seeded engine/full-run QA on phone/tablet/desktop. No queue placeholders, silent audio, static sketches, title-only endings, fake unlocks, inaccessible collection rows or unverified file paths count. Once all agent-owned work is truly complete and the game is usable on its existing route, update issue #5304 to [FLAGGED FOR HUMAN TESTING], close the indexed issue, and move Conductor to playtest/normal. Human trials and subjective verdict happen AFTER this handoff; no human gate is needed for agent build/QA. Separate public launch/promotion/deploy approvals remain separate and are never inferred from the handoff.
+      STRICT LAST TASK.
 
-      2026-11-22 PT done: every finite agent-owned task is complete and verified. Handoff
-      materials: PLAYTEST-CHECKLIST.md, qa/2026-11-22-playthrough.md and a private promo draft
-      (promo/). project-overrides moves chessweeper to playtest/normal, and sync-playtest-
-      master-issues flags and closes kind_robots#5304. The human verdict, publishing, sharing
-      the promo and wider promotion all stay separate decisions after this handoff.
+      Full history: projects/chessweeper/HISTORY.md#t-005
     updated: '2026-11-22T23:16:33Z'
     implementation_pr: 'silasfelinus/conductor#7848'
   - id: t-006
@@ -173,25 +119,10 @@ tasks:
     depends_on: t-001
     passes: 0
     stakes: reversible
-    note: |-
-      Ship actual original animation, not CSS-only placeholders: animated chess pieces and world-specific actions, meaningful move/capture/mine-reveal/disc trails and collisions, Sugar Rush freeze/combo, Ashen Last Stand, Jackpot multiball and wager payoffs, win/loss transitions, and cinematic lead-ins to all twelve ending scenes. Integrate delivered sprite/scene art or an approved traceable animation pipeline; preserve gameplay readability, hitboxes and deterministic simulation. Verify animation timings and fallback behavior on phone/tablet/desktop with reduced-motion support. Include real screenshots or recorded playback and tests before closing.
+    note: >-
+      Ship actual original animation, not CSS-only placeholders: animated chess pieces and world-specific actions, meaningful move/capture/mine-reveal/disc trails and collisions, Sugar Rush freeze/combo, Ashen Last Stand, Jackpot multiball and wager payoffs, win/loss transitions, and c
 
-      Partial animation implementation on worker/chessweeper-t007-gameplay-fx-20261121-f5m9: Eleven event-driven action effect hooks, three world color palettes, bounded particles, deterministic square placement, reduced-motion and settings-off behavior, and required CI regression assertions. This is a code-drawn VFX layer only. The approved art pipeline still must deliver character/piece sprite animations and twelve illustrated ending cinematics before t-007 can be closed done.
-
-      Gameplay VFX and event hooks merged in Kind Robots PR #5541 on 2026-11-21 PT, required checks green. Full production sprite animations, cinematics and scene art still outstanding; return unfinished task to ready.
-
-      2026-11-21 PT: Motion integration implementation pushed as kind_robots commit f59bec5a. Added actual chess-piece flight from move source to destination, capture effects, unique Sugar Rush/Ashen Last Stand/Jackpot impact choreography, bounded DOM and reduced-motion behavior plus regression assertions. Partial t-007 scope: delivered sprite artwork and final illustrated cinematics still outstanding.
-
-      2026-11-22 PT reviewer: Kind Robots PR #5559 merged as e5c8030 after six latest-head checks completed successfully. Piece travel, capture impact and distinct world action choreography landed. Return unfinished finite task to ready: original rendered sprite animations, illustrated ending cinematics and three-viewport screenshot QA remain.
-
-      Partial cinematic transition slice: three world-specific animated win/loss interstitials, responsive CSS, reduced-motion opt-out and dismissal/cleanup. Sprite animation, illustrated ending cinematics and viewport playback QA remain.
-
-      2026-11-22 PT done: kind_robots #5597 adds painted Sugar Rush / Last Stand / Double or
-      Nothing plate cinematics. They are preloaded, skipped under reduced motion, and cleared
-      on Escape or a tab switch. #5597 also adds illustrated ending scenes with a slow plate
-      pan. Combined with the earlier piece travel, capture and outcome interstitial work
-      (#5541, #5559, #5573) and the painted piece atlases (#5571), the finite animation scope
-      is complete. Three-viewport playback is verified by the CI playthrough.
+      Full history: projects/chessweeper/HISTORY.md#t-007
     implementation_pr: 'silasfelinus/kind_robots#5597'
 
   - id: t-008
@@ -205,25 +136,10 @@ tasks:
     depends_on: t-001
     passes: 0
     stakes: reversible
-    note: |-
-      Deliver three distinct original musical identities (Sugarbomb playful synth, Ashen dark atmospheric, Jackpot neon casino) and actual playable loops including transitions, boss/endings cues and pause/resume; original SFX for chess, mines, disc ricochets, damage, abilities, achievements, victories and defeats. Use the existing art/audio job and asset pipeline with tracked IDs, final files and verified URLs; temporary oscillator sounds are not the finished soundtrack. Add gesture-safe audio start, mute/volume, per-category levels, persistence, focus/route cleanup, and no autoplay before consent. Test browser playback, crossfades, missing-audio fallback and accessibility; no silent game qualifies.
+    note: >-
+      Deliver three distinct original musical identities (Sugarbomb playful synth, Ashen dark atmospheric, Jackpot neon casino) and actual playable loops including transitions, boss/endings cues and pause/resume; original SFX for chess, mines, disc ricochets, damage, abilities, achieve
 
-      Implemented a substantial synthesized audio slice: original 16-step multi-voice sugar, ashen, and jackpot music, gesture-safe WebAudio mixer, twelve combat/achievement SFX cues, scene-switch handling, visibility/pagehide suspension and cleanup, persistent music/effects toggles and volume sliders, and mock-AudioContext CI regression tests. Branch worker/chessweeper-t008-soundscape-20261121-h2c7. Full mastered soundtrack assets, ArtJob receipts, actual audible mobile browser playthroughs and final audio mix remain; do not close t-008 done on this PR.
-
-      2026-11-22 PT reviewer: Kind Robots PR #5542 merged as dab7b1ab after eight latest-head checks completed successfully. Gesture-safe synthesized soundscape, unique world scores, SFX and persistent volume controls landed. Return unfinished finite task to ready: mastered audio assets, original mix, browser audible QA and delivered URLs remain.
-
-      2026-11-22 PT: Added six original deterministic WAV loops (stage and finale per world), reproducible score renderer, audio provenance manifest, browser-safe gesture-gated decoding/crossfades with oscillator fallback, and regression tests. Partial t-008: audible device QA, production mix validation and verified delivered URLs remain.
-
-      2026-11-22 PT: Original six-loop soundtrack PR kind_robots#5577 merged at 5902a4b2a243d4d2152dcd3e04729eb66feecdad. This is partial scope: audible device QA, production mix validation, and final asset URL verification remain. Return finite task to ready.
-
-      Partial audio lifecycle repair: retire sample loops on mute, resume decoded tracks on unmute, prevent audio recreation after pagehide, and add regression assertions. Full device mixing and delivery verification remain.
-
-      2026-11-22 PT done: lifecycle fix #5587 merged 2982e48 (12 checks green). All six
-      original loops are live and their sizes match the repo. Offline mix check: 22.05 kHz
-      mono, peak -2.8 dBFS on every track, RMS -10.5 to -13.7 dBFS, 0 clipped samples,
-      seamless loop points, and six distinct hashes. Browser QA confirms there is no
-      AudioContext before a gesture and one after. A listen on a phone speaker is in the human
-      playtest checklist, not an agent task.
+      Full history: projects/chessweeper/HISTORY.md#t-008
     implementation_pr: 'silasfelinus/kind_robots#5587'
 
   - id: t-009
@@ -234,20 +150,9 @@ tasks:
     passes: 0
     stakes: reversible
     note: >-
-      Deliver a minimum of four genuinely distinct endings for each of the three
-      worlds: chess victory, minefield clear, arena/special route, and setback or
-      escape outcome. Author full consequence-aware scene prose, original illustrated
-      ending plates with durable art IDs and verified image URLs, appropriate
-      original audio/animation staging, clear route-to-outcome logic, and a
-      return/continue path. Different text on the same generic image is not twelve
-      finished scenes. Verify each ending is actually reachable from gameplay and
-      recorded for the scrapbook. No human creative signoff prerequisite.
+      Deliver a minimum of four genuinely distinct endings for each of the three worlds: chess victory, minefield clear, arena/special route, and setback or escape outcome.
 
-      2026-11-22 PT done: 12 authored ending scenes (mate / minefield / arena / setback per
-      world). Each has two paragraphs of prose, a pact-aware 'Your run' epilogue, a campaign-
-      finale line, an illustrated plate (ArtJobs 76704-76715, five re-rendered after QA via
-      #7865), and Next / Scrapbook / Board actions. All 12 were reached by real play in the CI
-      playthrough and recorded in the scrapbook.
+      Full history: projects/chessweeper/HISTORY.md#t-009
     updated: '2026-11-22T23:16:28Z'
     implementation_pr: 'silasfelinus/kind_robots#5597'
 
@@ -259,22 +164,26 @@ tasks:
     passes: 0
     stakes: reversible
     note: >-
-      Real unlockable achievements across chess skill, Minesweeper deduction,
-      disc survival and all three signature world mechanics; award only on
-      validated gameplay events, persist and show unlock feedback. Build a full
-      scrapbook with all twelve illustrated endings, character/piece art,
-      achievements, campaign milestones, history, high scores and locked/unlocked
-      collection entries. Everything must remain reachable on a phone (no
-      clipping), with explicit guest/device versus signed-in account semantics.
-      Test unlock idempotence, save/restore, world isolation, last gallery entry,
-      keyboard/touch interaction and non-spoiler locked content.
+      Real unlockable achievements across chess skill, Minesweeper deduction, disc survival and all three signature world mechanics; award only on validated gameplay events, persist and show unlock feedback.
 
-      2026-11-22 PT done: kind_robots #5597 brings the game to 24 achievements, each awarded
-      only from a validated end state or campaign event and idempotent. The scrapbook has 12
-      replayable ending pages with non-spoiler hints, action-plate and piece-atlas pages,
-      chapter milestones with mastery stars, and the last 12 battles. Save semantics are
-      explicit: progress lives on the device for guests and signed-in players, and CW1
-      transfer codes merge between devices without loss. Also fixed: progression.js threw on
-      load (an undefined page-private helper), so on main this whole layer had been dead.
+      Full history: projects/chessweeper/HISTORY.md#t-010
     updated: '2026-11-22T23:16:25Z'
     implementation_pr: 'silasfelinus/kind_robots#5597'
+
+  - id: t-011
+    milestone: m4
+    title: "Triple Threat: 1x3 simultaneous chess, minesweeper, WASD survival and global scores"
+    status: review
+    owner: worker
+    claimed_by: 20261123T065830Z-chessweeper-t011-8k5p
+    claimed_at: '2026-11-23T06:58:30Z'
+    updated: '2026-11-23T07:16:50Z'
+    playtest_iteration: true
+    passes: 0
+    stakes: reversible
+    note: |-
+      Silas, 2026-11-22 PT: evolve Chessweeper into a three-panel simultaneous game. Use ONE horizontal 1x3 row of large, equal gameplay panes (chess versus CPU, real Minesweeper, real-time WASD disc-room survival), not an always-visible 2x2 quad. Keep title, options and leaderboard in the START overlay only; during play show a small bottom HUD strip with score/timer and clickable icons to reopen secondary panels. No gameplay freezes when the player attends another pane; one shared game clock governs the run. Scoring must reward engaging all three games rather than farming a single pane. Persist a genuine GLOBAL all-time/today leaderboard, guests' initials and signed-in usernames using the established ArcadeScore endpoints, with plausible submission guards. Keep the existing original three-world campaigns as playable Classic rather than replacing them. Verify desktop/tablet/phone, independent and concurrent play, timers, death, inputs, accessibility, leaderboards and errors. No publish or force-deploy; this is an explicitly scoped playtest iteration.
+
+      Triple Threat 1x3 original playtest iteration implemented in kind_robots branch worker/chessweeper-t011-triple-threat-20261123-m8x2. Adds parallel chess, Minesweeper and real-time WASD disc survival on one clock, start-only title/settings, bottom HUD, Classic campaign access, and live global all-time/today rankings via the existing ArcadeScore API. Ranked Standard is fixed at 120 seconds for fairness; other durations are practice. Dedicated three-viewport Chromium test and workflow included. PR and CI pending; do not declare done until tests are green and code merged.
+
+      2026-11-23 PT addendum: Silas requested Easy, Medium, Hard and Catastrophic. Each tier changes chess CPU, mine density, starting discs/speed/spawn rate, shared hearts, movement and invulnerability. Difficulty is chosen from the opening overlay, never on the three-panel stage. Every tier has its own 120-second global all-time/today ranking bracket.

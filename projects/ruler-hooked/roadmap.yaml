@@ -582,9 +582,6 @@ tasks:
   milestone: m4
   title: Grow the fish roster past the 15-species vertical slice
   status: review
-  owner: worker
-  claimed_by: 20261123T054114Z-ruler-hooked-t031-7c92ef
-  claimed_at: '2026-11-23T05:41:14.702Z'
   gate_human: false
   stakes: reversible
   passes: 0
@@ -611,11 +608,16 @@ tasks:
     Partial roster expansion from 18 to 27 species (nine new balanced ecology entries) submitted in kind_robots#5638 with regression tests; companion art-generator roster in conductor#7899. Both PRs remain open awaiting completed CI; t-031 is not complete because final target is 40-60 fish.
 
     Expanded Kind Robots fish catalog from 18 to 36 species in app PR #5638, with ecological gating, balanced affinities and fish art prompt coverage. Conductor #7899 merged 21 high-priority pending Krea 2 art requests; Conductor #7900 is the corrective follow-up to remove nine merged duplicate catalog entries. This is partial t-031; final approved target remains 40-60 illustrated species. Await completed green CI on #5638 and #7900, then rearm as ready for the remaining catalog and art work.
-  updated: '2026-11-23T05:50:17.954Z'
-  implementation_pr: 'silasfelinus/kind_robots#2927'
-  soft_gate: true
+
+    Reviewer (scheduled, 2026-11-23): kind_robots#5638 (36-species catalog) and conductor#7900 (dedupe of nine duplicate roster rows, keeping the copies that carry frame/style overrides) are both merged on green CI. Partial delivery; approved target is 40-60 illustrated species, so the task returns to ready for the next art-backed batch. The roster test now names duplicate slugs and accepts 36-60 species instead of pinning exactly 36.
+
+    App commit 11bdd027 adds six balanced policy-reactive fish (42 total), Fishopedia art keys and unlock tests. Conductor commit c8c6a7d adds matching roster descriptions and six pending auto-submit Krea 2 requests at priority 1000. This completes the minimum 40-species code roster but not delivered paintings or final t-031 scope; verify CI and generated art before done.
+  updated: '2026-11-23T10:51:00Z'
   gate_rechecked: '2026-09-30'
   approved_by_human: true
+  owner: worker
+  claimed_by: 2026-11-23T104600Z-ruler-hooked-t031-b4a2
+  claimed_at: '2026-11-23T10:46:00Z'
 - id: t-032
   milestone: m4
   title: 'FINAL HUMAN GATE ONLY: approve Ruler Hooked final design or request rewrites'
@@ -1111,16 +1113,10 @@ tasks:
   gate_human: false
   stakes: reversible
   passes: 0
-  note: |-
-    Found 2026-11-05 (t-056): all 36 rendered region layers are opaque RGB 1344x768 paintings, not alpha-cut depth bands, so ruler-hooked-stage.vue's full-frame z-stack (still used by the Chronicle-of-the-reign kingdom view) only ever shows its top layer, near_bank-grassy. The console sidesteps this by treating layers as whole-scene vistas. This blocks t-054's lake/near_bank/sky decay ramps as specified. Before rendering ramp layers, decide: render with real transparency (or mask in a build step), or retire the stack model in compositing.md for whole-scene vistas per state combination.
+  note: >-
+    Found 2026-11-05 (t-056): all 36 rendered region layers are opaque RGB 1344x768 paintings, not alpha-cut depth bands, so ruler-hooked-stage.vue's full-frame z-stack (still used by the Chronicle-of-the-reign kingdom view) only ever shows its top layer, near_bank-grassy.
 
-    Corrected the legacy stage: opaque region images display as selectable full-scene vistas instead of covering each other in a z-stack. Changed-region spotlight, accessibility and regression checks are in the worker implementation branch; the compositing design contract is explicitly superseded by truthful vista rendering. Review PR and CI to follow; no claim of rendered art or live QA.
-
-    2026-11-22 PT reviewer: kind_robots#5622 merged (c0e63a0) on all-green latest-head
-    checks; conductor#7881 (compositing.md supersession) merged (de95904). Stage now shows
-    one opaque vista at a time with accessible region picker and decree spotlight. Pre-merge
-    verification was CI-only (no preview); post-deploy visual/device QA remains with
-    t-047/t-061.
+    Full history: projects/ruler-hooked/HISTORY.md#t-059
   updated: '2026-11-23T02:47:33Z'
   implementation_pr: 'silasfelinus/kind_robots#5622'
 - id: t-060
@@ -1240,12 +1236,10 @@ tasks:
   passes: 0
   depends_on: []
   updated: '2026-11-23T05:34:04Z'
-  note: |-
-    Kaizen from reviewer of conductor#7867 (2026-11-22 PT). Card art for the t-045 aftershocks was staged by hand in a separate PR from the kind_robots content (#5605). Add a guard that diffs the card ids in the ruler-hooked deck against the ruler-hooked-card-* rows in projects/art-prompts.yaml and names any card that has no art request. Reports only: no enqueue, no render.
+  note: >-
+    Kaizen from reviewer of conductor#7867 (2026-11-22 PT).
 
-    Implemented an automated cross-repository quest-card-art-request guard, checks all authored cards, art mapping, queue IDs and paths, with positive and negative Python fixtures in Worker CI. The guard reports missing staged prompts only; it never claims that painting was delivered or inspected. Branch worker/ruler-hooked-t-069-20261123-c8d2af also fixes a duplicated owner field introduced during connector claim bookkeeping.
-
-    Ruler Hooked cross-repository card-art request guard merged via silasfelinus/conductor#7893 commit cd6eed183ba518ae956e5c2e37c2d3a6b51a3288. All four latest-head checks passed: Worker PR CI, Security Audit, Worker PR handoff template, Process task events. Guard covers staged requests, not rendered or visually inspected paintings.
+    Full history: projects/ruler-hooked/HISTORY.md#t-069
 - id: t-070
   milestone: m6
   title: Add a CI check that flags any ruler-hooked region asset without an alpha channel before it is treated as a stack layer
@@ -1257,26 +1251,65 @@ tasks:
   passes: 0
   depends_on: []
   updated: '2026-11-23T04:54:56Z'
-  note: |-
-    Kaizen from reviewer of kind_robots#5622 / conductor#7881 (t-059, 2026-11-22 PT). The alpha-stack contract drifted for weeks because nothing checked that the 36 delivered region WebPs were opaque RGB. Add a report-only check that reads each /images/ruler-hooked/{region}-{state}[-{time}].webp header and names files with no alpha channel, so any future return to layered compositing fails loudly instead of silently showing only the top layer. No render, no enqueue.
+  note: >-
+    Kaizen from reviewer of kind_robots#5622 / conductor#7881 (t-059, 2026-11-22 PT).
 
-    Added a report-only WebP header auditor for delivered ruler-hooked region assets, validates the alpha bit on VP8X/VP8L and flags opaque VP8 layers. Added synthetic header and manifest tests plus GitHub Actions report artifact. No artwork was rendered or changed; green CI and merge review remain.
-
-    Reviewer (scheduled agent, 2026-11-22 PT): merged conductor#7888 (squash 1bad1e45) on
-    all-green latest-head CI. Locally the 5 alpha tests pass and a live run reports 52
-    delivered region WebPs, all opaque, report-only as specified. Kaizen: t-071.
+    Full history: projects/ruler-hooked/HISTORY.md#t-070
 - id: t-071
   milestone: m6
   title: Make the ruler-hooked art-queue hermetic test fixtures fail loudly when a new *_entries lane is added without a stub
-  status: review
-  owner: worker
+  status: done
   claimed_by: 2026-11-23T053300Z-ruler-hooked-t071-9e3b7c
   claimed_at: '2026-11-23T05:33:00Z'
   stakes: reversible
   passes: 0
   depends_on: []
-  note: |-
-    Kaizen from reviewer of conductor#7886 (t-058, 2026-11-22 PT). Adding expression_entries() broke six tests in test_ruler_hooked_list_lanes.py and test_ruler_hooked_restyle.py because each fixture stubs every *_entries function by hand and read_cast returns None. Share one fixture helper that stubs every *_entries callable main() uses, or assert that coverage, so the next lane can't break the suite again.
+  note: >-
+    Kaizen from reviewer of conductor#7886 (t-058, 2026-11-22 PT).
 
-    Shared art-entry fixture helper and unknown/missing-lane regressions merged in conductor#7898 commit 9f8282cd991accba05ea5a1c8893055e1522861e. Three checks successful, Worker PR CI remained queued when merged; completion awaits a real successful CI run. This supersedes the stale earlier review event stamped before the claim timestamp.
-  updated: '2026-11-23T05:40:17.143Z'
+    Full history: projects/ruler-hooked/HISTORY.md#t-071
+  updated: '2026-11-23T06:55:47+00:00'
+- id: t-072
+  milestone: m6
+  title: Guard every ruler-hooked YAML roster (cast, cards, quests, regions) against duplicate ids with a test that names the duplicates
+  status: done
+  owner: worker
+  claimed_by: 20261123T093537Z-ruler-hooked-t072-b9e2
+  claimed_at: '2026-11-23T09:35:37Z'
+  stakes: reversible
+  passes: 0
+  depends_on: []
+  updated: '2026-11-23T09:50:03Z'
+  note: |-
+    Kaizen from reviewer of conductor#7900 (t-031, 2026-11-23). A merge of two parallel fish batches left nine duplicate slugs in fish/vertical-slice.yaml and turned main's Python suite red (45 != 36) for every open PR. The fish test now names duplicate slugs. Do the same for every other roster the art-queue generator reads, so a merge that duplicates a row fails with the offending ids instead of a count mismatch. Test-only; no art or content changes.
+
+    Added duplicate-id rejection for cast, fish, per-deck cards and region manifests, with hermetic regression fixtures. Cross-deck shared card references remain legal. PR and CI verification pending.
+
+    Reviewer 2026-11-23 PT: squash-merged conductor#7912 (c102a01) on all-green latest-head
+    checks after restructuring the PR body to the required handoff headings. Kaizen: t-073.
+  implementation_pr: 'silasfelinus/conductor#7912'
+- id: t-073
+  milestone: m6
+  title: Make the ruler-hooked art-queue generator print a one-line per-roster count summary so reviewers can spot dropped rows at a glance
+  status: done
+  stakes: reversible
+  passes: 0
+  depends_on: []
+  note: |-
+    Kaizen from reviewer of conductor#7912 (t-072, 2026-11-23 PT). Duplicate ids now fail loudly; the remaining silent-loss mode is a roster that parses to fewer rows than authored. Print e.g. "cast 12 · fish 36 · cards 84 · regions 13" on every run and cover the format with a hermetic test. Output-only; no queue content changes.
+
+    Committed source roster census and hermetic count-format regression at 7d9c515. PR CI and reviewer verification pending.
+
+    Reviewer 2026-11-23 PT: #7914 was red (6 fixture failures from stubbing read_cast/read_regions to None). Rescued in conductor#7916 with empty-roster stubs (mechanical drift, no pass consumed), plus a main bug fix: t-072's duplicate guard crashed every live --check with KeyError 'outcomeKey'. Live census against kind_robots 4c0f092b: cast 11 · fish 36 · cards 57 · regions 8. Kaizen: t-074.
+  updated: '2026-11-23T11:10:00Z'
+  implementation_pr: 'silasfelinus/conductor#7916'
+- id: t-074
+  milestone: m6
+  title: Review and restage the 8 ruler-hooked card prompts that drifted from upstream card text
+  status: ready
+  stakes: reversible
+  passes: 0
+  depends_on: []
+  note: |-
+    Kaizen from reviewer of conductor#7916 (t-073, 2026-11-23 PT). Once the outcomeKey crash was fixed, live `build_ruler_hooked_art_queue.py --check` reported 0 missing and 8 stale card rows (e.g. card-marina-family-charter, card-water-rights-hearing) because kind_robots card text changed. Check each prompt diff against the art-prompt contract, then `--write --restage --lane card` so --check exits clean. Art-queue only.
+  updated: '2026-11-23T11:10:00Z'

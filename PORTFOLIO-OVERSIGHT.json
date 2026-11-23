@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-11-22T19:49:19.433759+00:00",
+  "generated_at": "2026-11-23T07:51:50.140206+00:00",
   "summary": {
     "status": "clean",
     "roadmap_errors": 0,
-    "roadmap_warnings": 42,
+    "roadmap_warnings": 39,
     "project_forward_drift": 0,
     "project_reverse_orphans": 0,
     "project_unresolved": null,
@@ -15,7 +15,7 @@
   "openai_scheduled_agent": {
     "overdue": true,
     "last_activity": "2026-10-25T01:09:44+00:00",
-    "hours_since": 690.66,
+    "hours_since": 702.7,
     "stale_hours": 6.0,
     "marker": "openai-scheduled-",
     "note": "Legacy git diagnostic only: OPENAI-SCHEDULED-HEARTBEAT.json and coordination markers do not determine ChatGPT scheduler health. Native ChatGPT task metadata is authoritative for scheduler liveness."
@@ -24,8 +24,8 @@
     "due": false,
     "upcoming": false,
     "last_report": "INTENT-AUDIT-2026-11-22.md",
-    "days_since": 0,
-    "days_until_due": 3.0,
+    "days_since": 1,
+    "days_until_due": 2.0,
     "stale_days": 3.0,
     "failed_attempt": null
   },
@@ -35,20 +35,20 @@
     "unresolved": null
   },
   "roadmap_audit": {
-    "generated_at": "2026-11-22T19:49:19.433766+00:00",
+    "generated_at": "2026-11-23T07:51:50.140213+00:00",
     "summary": {
-      "roadmaps": 98,
+      "roadmaps": 99,
       "active_projects": 14,
       "continuous_projects": 15,
-      "playtest_projects": 9,
-      "tasks": 3123,
-      "ready": 205,
-      "waiting": 189,
+      "playtest_projects": 10,
+      "tasks": 3158,
+      "ready": 199,
+      "waiting": 196,
       "needs_human": 35,
-      "in_progress": 46,
-      "done": 2566,
+      "in_progress": 61,
+      "done": 2584,
       "errors": 0,
-      "warnings": 42,
+      "warnings": 39,
       "info": 129
     },
     "errors": [],
@@ -85,6 +85,13 @@
         "severity": "warning",
         "code": "STALE_IN_PROGRESS",
         "project": "comet-city-academy",
+        "task": "t-004",
+        "message": "Task has remained review for 3 days."
+      },
+      {
+        "severity": "warning",
+        "code": "STALE_IN_PROGRESS",
+        "project": "comet-city-academy",
         "task": "t-033",
         "message": "Task has remained review for 3 days."
       },
@@ -107,7 +114,7 @@
         "code": "STALE_IN_PROGRESS",
         "project": "dead-air",
         "task": "t-003",
-        "message": "Task has remained review for 7 days."
+        "message": "Task has remained review for 8 days."
       },
       {
         "severity": "warning",
@@ -118,10 +125,10 @@
       },
       {
         "severity": "warning",
-        "code": "STALE_IN_PROGRESS",
-        "project": "every-villain-tactics",
-        "task": "t-025",
-        "message": "Task has remained review for 8 days."
+        "code": "IN_PROGRESS_WITHOUT_TIMESTAMP",
+        "project": "hopeful-hues",
+        "task": "t-001",
+        "message": "Claimed/review task has no parseable updated timestamp."
       },
       {
         "severity": "warning",
@@ -163,7 +170,7 @@
         "code": "STALE_IN_PROGRESS",
         "project": "interface-vision",
         "task": "t-156",
-        "message": "Task has remained review for 4 days."
+        "message": "Task has remained review for 5 days."
       },
       {
         "severity": "warning",
@@ -244,24 +251,10 @@
       },
       {
         "severity": "warning",
-        "code": "DUPLICATE_YAML_KEY",
-        "project": "rainbow-bullet-hell-space-princess",
-        "task": null,
-        "message": "Duplicate key 'owner' at line 891 \u2014 YAML mapping semantics let the last occurrence silently win; check for a stale trailing owner/claimed_by/status value overriding the real one."
-      },
-      {
-        "severity": "warning",
-        "code": "STALE_CLAIM_FIELDS",
-        "project": "rainbow-bullet-hell-space-princess",
-        "task": "t-022",
-        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
-      },
-      {
-        "severity": "warning",
         "code": "STALE_IN_PROGRESS",
         "project": "rainbow-bullet-hell-space-princess",
-        "task": "t-034",
-        "message": "Task has remained review for 28 days."
+        "task": "t-012",
+        "message": "Task has remained review for 3 days."
       },
       {
         "severity": "warning",
@@ -275,21 +268,7 @@
         "code": "STALE_IN_PROGRESS",
         "project": "ruler-hooked",
         "task": "t-066",
-        "message": "Task has remained review for 14 days."
-      },
-      {
-        "severity": "warning",
-        "code": "STALE_CLAIM_FIELDS",
-        "project": "save-the-plumber",
-        "task": "t-005",
-        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
-      },
-      {
-        "severity": "warning",
-        "code": "STALE_CLAIM_FIELDS",
-        "project": "save-the-plumber",
-        "task": "t-015",
-        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
+        "message": "Task has remained review for 15 days."
       },
       {
         "severity": "warning",
@@ -303,14 +282,14 @@
         "code": "STALE_IN_PROGRESS",
         "project": "shifting-desks",
         "task": "t-046",
-        "message": "Task has remained review for 6 days."
+        "message": "Task has remained review for 7 days."
       },
       {
         "severity": "warning",
         "code": "STALE_IN_PROGRESS",
         "project": "shifting-desks",
         "task": "t-049",
-        "message": "Task has remained review for 4 days."
+        "message": "Task has remained review for 5 days."
       },
       {
         "severity": "warning",

@@ -1004,9 +1004,9 @@ tasks:
     title: "HIGH PRIORITY · Begin private Unstable Diffusers production for canonical Prom/Tactics cast"
     status: review
     owner: worker
-    claimed_by: 20261123T054050Z-comet-t031-canon-safe-art-v3h7
-    claimed_at: '2026-11-23T05:40:50Z'
-    updated: '2026-11-23T05:44:00Z'
+    claimed_by: 20261123T104850Z-comet-t031-battle-art-q8v3
+    claimed_at: '2026-11-23T10:48:50Z'
+    updated: '2026-11-23T10:49:02Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -1051,6 +1051,10 @@ tasks:
       Scoped production private-media QA repair merged in Conductor PR #7894 at 0734fbf8fc6c50b0ef45d4334c42d41a47bbe22d. New authenticated proof run 45118667491 queued; six canonical corrections remain candidate images pending image QA. Main t-031 art curation/attachment remains open. Reopen for independent canon-safe Tactics fallback integration.
 
       Scoped cross-game canon-art quarantine: existing checked-in identity artwork QA identified erroneous portraits for Lionel Marsh/Dr Frog, Granny Mayhem, four-armed Asha and Zuzu. Runtime Tactics dialogue and hero/villain selection now call the reviewed Prom art fallback instead of direct promArt() for quarantined assets, preserving all 48 permanent signatures and save continuity. Added test cases for seven rejected story emotions and art-selection contracts. Kind Robots worker/comet-city-academy-t-031-canon-safe-tactics-art-v3h7 pending PR and CI. This does not certify new private renders or final art curation; keep t-031 incomplete after merge.
+
+      Prior cross-game rejected-art quarantine PR kind_robots#5637 merged at 169688a293f0fe52fb92fdeb01b9e6093147b52e, and no active t-031 PR remains. This was partial art QA and not full candidate approval or delivery. Return the original private Prom/Tactics production art task to READY so another worker can claim the remaining visual QA and attachment work. Do not resubmit the already DONE jobs.
+
+      New independent private canon-art quarantine increment: remove direct, unreviewed Prom outcome image lookups from actual tactical board unit portraits, speaker cards, and hero/villain/defeat aftermath. Route every identity image through reviewedIdentityArtwork or identityArtwork, with original private crew combat ArtImages still preferred. Preserve all 48 signatures, roles, saves and production ArtJob receipts. Added static and behavioral regressions for seven known rejected identity paintings. Kind Robots worker commit 756885012485b8581af40b1d835675b958955613. No new images approved or generated. More visual QA, export and attachment remain, so t-031 should return ready after fully-green merge.
   - id: t-032
     title: "Prom of Doom (Capes & Tassels) | Master 30-Day Playbook Roadmap"
     status: review
@@ -1140,12 +1144,10 @@ tasks:
     stakes: reversible
     depends_on: []
     source: reviewer-kaizen-2026-11-22
-    note: |-
-      Reviewer kaizen from the 2026-11-22 PT merge of conductor#7812 (t-043). The measured post-#7695 suite was 60s slower, and --durations=10 named test_media_wrapper_resolves_names_before_submitting (62.00s), test_repo_ledgers_have_no_new_templated_cells (38.67s) and test_repo_ledgers_unsubmitted_cells_pass_negation_rules (37.07s). Find the repeated I/O or YAML parsing (e.g. a shared session-scoped ledger cache) and record before/after durations from real CI runs. Never skip, deselect or weaken those tests.
+    note: >-
+      Reviewer kaizen from the 2026-11-22 PT merge of conductor#7812 (t-043).
 
-      Initial scoped CI performance improvement caches a complete repository-wide safe YAML parse once for both templated-cell and negation tests, eliminating duplicate parse and double problem evaluation without changing their assertions. PR review and full CI pending. Third slow media-wrapper test and before/after timing verification remain unfinished, so this does not close the original t-047 production task.
-
-      CI speed fix merged via conductor#7869, SHA 5a3996d988892ae83f279d1cf64574065948e9c9. Latest-head Python suite completed success: 5086 passed, 11 skipped, 1 deselected in 159.06s; test_media_wrapper_resolves_names_before_submitting no longer appears in ten slowest calls after eliminating its fake 60s Comfy grace wait. Exhaustive art ledger parse now shared with the parity-tested C SafeLoader, setup measured 4.75s versus historical 38.67s and 37.07s duplicate scans. Tests and all negation/templating assertions remain enabled; no dropped QA.
+      Full history: projects/comet-city-academy/HISTORY.md#t-047
   - id: t-048
     milestone: m4
     title: "Factor the duplicated private source/runtime/visibility media-proof steps into one ledger-list helper shared by the Prom canon and Tactics proof workflows"
@@ -1156,12 +1158,10 @@ tasks:
     updated: '2026-11-22T23:20:31Z'
     passes: 0
     stakes: reversible
-    note: |-
-      Kaizen from reviewer of conductor#7855 (2026-11-22). prom-canon-candidate-media-proof.yml repeats the verify_prom_tactics_media → verify_tactics_runtime_media → checkpoint → isPublic=false block per ledger, and prom-tactics-media-proof.yml carries the same shape. Move it into one script that takes a ledger list with expected counts, while keeping the explicit Krea2 receipt and `reviewed` boundaries. Never publish private art or flip is_public.
+    note: >-
+      Kaizen from reviewer of conductor#7855 (2026-11-22).
 
-      Shared source/game/private media proof helper with evidence checkpoint per ledger implemented, both Prom canon and Tactics workflows refactored, failure and privacy regression tests added. Review via scoped worker PR; no new ArtJobs submitted and no existing reviewer approvals changed.
-
-      Merged shared authenticated private-art media proof helper and per-ledger checkpointing in conductor#7863 at 5bdedd4ded2494f221d0dc55c4f2854fbfa27c11. Four latest-head CI workflows completed successfully, including Python tests, security audit, and Worker PR CI. This closes helper implementation only, not visual approval, artwork delivery, or final private URL checks for individual paintings.
+      Full history: projects/comet-city-academy/HISTORY.md#t-048
   - id: t-049
     milestone: m4
     title: "Deliver original adaptive music and event-driven sound effects with persistent accessible audio settings before Prom human playtests"
@@ -1190,3 +1190,18 @@ tasks:
       Kaizen from reviewer of conductor#7871 (2026-11-22 PT). Many proof workflows now checkpoint per-ledger evidence, but no single report says which ArtImage ids failed source, game-route or privacy checks. Add a read-only summarizer that consumes the checkpointed evidence and lists failures per ArtImage, with tests. Never re-enqueue, approve or publish.
 
       Independent private media proof evidence implementation: add read-only checkpointed ArtJob/ArtImage ledger plus current Actions log summarizer, exact-key and image-id reconciliation, fail-closed unknown runtime and privacy status, and six focused tests. Extend the Prom and Tactics proof workflow to tee each stage's sanitized output and write the per-ArtImage source/game-url/privacy failure report to its Actions summary even if an earlier stage fails. No re-enqueue, art publishing or curator approval. Code handoff for CI review; source receipts do not certify visual QA.
+  - id: t-051
+    milestone: m4
+    title: "Review and attach 12 verified private one-hit crew telegraph renders to the shared Prom cast atlas"
+    status: review
+    owner: worker
+    claimed_by: 20261123T104120Z-comet-t051-crew-atlas-art-q8v3
+    claimed_at: '2026-11-23T10:41:20Z'
+    updated: '2026-11-23T10:44:07Z'
+    depends_on: []
+    passes: 0
+    stakes: reversible
+    note: |-
+      The 2026-11-22 PT authenticated Prom and Tactics media proof verified ArtImages 277786-277797 through the runtime URL with private access preserved, but the shared admin cast atlas currently shows these three canonical crew families as art planned. Reuse the immutable art key, job and image receipts from crewTelegraphArt.ts; show all warning/action/counter/captain paintings under the correct 3 SPECIES families, loaded through the existing authenticated art store. Keep this an admin-only visual QA surface until composition is separately reviewed; never count a successful byte fetch as an artistic approval or publish private ArtImages. Add source-level and receipt-mapping regression checks; do not re-enqueue any job.
+
+      Implemented 12 exact private ArtImage/ArtJob crew telegraph mappings in the admin-only shared Prom cast atlas, with three canonical SPECIES tabs, four original combat beats each, authenticated browser image loading, retry, and candidate-only labels. Private original captain closeups also appear against the three matching stable identities. Kind Robots worker branch commit e8cb0dfab35e8eab9d2d398084e3e542c27afb5c. Source regression checks added; PR CI and runtime UI proof remain required. No images published, exported, or artistically approved. Task remains partial until art is visually reviewed and verified on the intended UI.

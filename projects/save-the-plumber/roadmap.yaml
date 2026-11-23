@@ -516,18 +516,17 @@ tasks:
   - id: t-025
     milestone: m6
     title: "Gen-2 animation: pose-to-pose WAN sprite clips, atlases and animated cinematics"
-    status: ready
-    owner: null
+    status: review
+    owner: worker
+    claimed_by: 2026-11-23T104930Z-save-the-plumber-t025-sprites-p8h3
+    claimed_at: '2026-11-23T10:49:30Z'
+    updated: '2026-11-23T10:50:35Z'
     passes: 0
     stakes: reversible
-    updated: '2026-10-22T10:30:00Z'
-    note: >-
-      GEN2-STANDARD.md sections 5-6. art/GEN2-CLIPS-1.yaml already animates the four cutscene stills
-      as WAN first/last-frame loops (submitted 2026-10-22). Next: from the reviewed Pip key poses in
-      GEN2-ROUND-1, queue WAN first/last clips between pose pairs (idle loop, run cycle, jump, skid,
-      climb, hurt), matte the white, normalize pivots and pack an atlas (the zuzu-pinball T019 croc
-      tool is the template), then wire the atlas into the engine with the code-drawn heroine as the
-      fallback. Then the other seven roster heroines and the enemy families. Target 12 fps or better.
+    note: |-
+      GEN2-STANDARD.md sections 5-6. art/GEN2-CLIPS-1.yaml already animates the four cutscene stills as WAN first/last-frame loops (submitted 2026-10-22). Next: from the reviewed Pip key poses in GEN2-ROUND-1, queue WAN first/last clips between pose pairs (idle loop, run cycle, jump, skid, climb, hurt), matte the white, normalize pivots and pack an atlas (the zuzu-pinball T019 croc tool is the template), then wire the atlas into the engine with the code-drawn heroine as the fallback. Then the other seven roster heroines and the enemy families. Target 12 fps or better.
+
+      2026-11-23 PT: Staged six WAN A14B first/last-image Pip animation source requests from reviewed Krea 2 ArtImages (idle, forward/reverse run, rise/fall, landing, climb) in art/GEN2-PIP-MOTION-1.yaml. Auto-submit is requested, but no new ArtJob IDs or delivered assets claimed. Pending render/curation, matte, pivot/atlas, runtime wiring and seven other heroines; keep t-025 in progress after the PR.
   - id: t-026
     title: "Save the Plumber: ship WAN opening cinematic and animated heroine in handheld title"
     status: ready
@@ -565,11 +564,14 @@ tasks:
       Related: PR #4080, issue #4062, conductor/save-the-plumber t-025.
   - id: t-027
     title: "Save the Plumber Maker: playable level editor, saves, sharing, ratings, Mario Maker and Geometry Dash parity"
-    status: ready
+    status: review
+    owner: worker
+    claimed_by: 2026-11-23T104330Z-save-the-plumber-t027-time-trial-n4x8
+    claimed_at: '2026-11-23T10:43:30Z'
+    updated: '2026-11-23T10:50:00Z'
     stakes: reversible
     passes: 0
     source_issue: "silasfelinus/kind_robots#4347"
-    updated: '2026-11-23T06:35:00Z'
     note: |-
       FROM GITHUB ISSUE silasfelinus/kind_robots#4347 (https://github.com/silasfelinus/kind_robots/issues/4347), opened by @silasfelinus on 2026-10-27. Imported by scripts/sync_github_issues.py. Reference the issue in the implementing PR (`Closes silasfelinus/kind_robots#4347`) so it closes on merge; the bridge closes it otherwise once this task is done.
 
@@ -595,3 +597,5 @@ tasks:
       2026-11-22 PT: Maker route replay slice on kind_robots branch worker/save-the-plumber-t-027-seeded-replay-m7q9: seeded RNG per exact level revision, bit-packed held/press inputs, 10-minute bounded capture, editor replay controls, blur/visibility input release, deterministic physics replay regression. Remaining Maker roadmap scope stays open after this incremental PR.
 
       PR silasfelinus/kind_robots#5639 merged at 28d0c86: deterministic Maker replay and focus-safe controls, with all ten latest-head CI workflows passing. This is a partial t-027 slice. Community publishing, ratings and advanced editor tools remain; return to ready for subsequent work.
+
+      2026-11-23 PT: Maker timed-course and pause safety PR in kind_robots, branch worker/save-the-plumber-t-027-timetrial-n4x8. Adds per-course personal bests, frame-accurate timing, P/R shortcuts, background pause and adversarial validation. Partial t-027 delivery; editor community and advanced tools remain.
