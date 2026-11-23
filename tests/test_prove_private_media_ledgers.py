@@ -140,3 +140,81 @@ def test_runtime_failure_never_counts_as_verified_or_skips_checkpoint(tmp_path):
     )
     assert len(calls) == 3
     assert calls[2][1] == "scripts/checkpoint_art_state.sh"
+
+
+
+def test_private_metadata_retries_429_and_503_then_verifies(tmp_path):
+    path = ledger(tmp_path)
+    statuses = [429, 503, 200]
+    calls = []
+    pauses = []
+
+    def request(image_id):
+        assert image_id == 456
+        calls.append(image_id)
+        status = statuses.pop(0)
+        return status, {"data": {"isPublic": False}}
+
+    assert verify_private_metadata(
+        path, 1, request=request, pause=pauses.append, pace_seconds=0
+    ) == 1
+    assert calls == [456, 456, 456]
+    assert pauses == [2, 4]
+
+
+def test_private_metadata_never_retries_revoked_visibility_or_missing_id(tmp_path):
+    path = ledger(tmp_path)
+    for status, public in [(403, False), (404, False), (200, True)]:
+        calls = []
+        pauses = []
+
+        def request(image_id):
+            calls.append(image_id)
+            return status, {"data": {"isPublic": public}}
+
+        with pytest.raises(PermissionError):
+            verify_private_metadata(
+                path, 1, request=request, pause=pauses.append
+            )
+        assert calls == [456]
+        assert pauses == []
+
+
+def test_private_metadata_exhausts_retry_budget_and_fails_closed(tmp_path):
+    path = ledger(tmp_path)
+    calls = []
+    pauses = []
+
+    def request(image_id):
+        calls.append(image_id)
+        return 503, {}
+
+    with pytest.raises(RuntimeError, match="Transient private ArtImage"):
+        verify_private_metadata(
+            path, 1, request=request, pause=pauses.append
+        )
+    assert calls == [456] * 4
+    assert pauses == [2, 4, 8]
+
+
+def test_private_metadata_paces_between_images_not_after_last(tmp_path):
+    path = ledger(tmp_path)
+    document = yaml.safe_load(path.read_text())
+    other = dict(document["subjects"][0])
+    other["key"] = "second-canonical"
+    other["jobs"] = {"krea2": 124}
+    other["art"] = {"krea2": {"status": "DONE", "art_image_id": 457}}
+    document["subjects"].append(other)
+    path.write_text(yaml.safe_dump(document))
+    calls = []
+    pauses = []
+
+    def request(image_id):
+        calls.append(image_id)
+        return 200, {"data": {"isPublic": False}}
+
+    assert verify_private_metadata(
+        path, 2, request=request, pause=pauses.append, pace_seconds=0.125
+    ) == 2
+    assert calls == [456, 457]
+    assert pauses == [0.125]
