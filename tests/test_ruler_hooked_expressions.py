@@ -1,10 +1,13 @@
 """The expression queue must cover every canonical presenter in each mood."""
+from pathlib import Path
 import unittest
 
 from scripts.build_ruler_hooked_art_queue import (
     CAST_LOOK,
     assert_contract,
     expression_entries,
+    staged_rows,
+    stale_rows,
 )
 
 
@@ -32,6 +35,18 @@ class RulerHookedExpressionQueueTests(unittest.TestCase):
             self.assertIn("psychedelic rainbow", row["prompt"])
             self.assertIn("screenprint", row["prompt"])
         assert_contract(rows)
+        staged = staged_rows(
+            Path("projects/art-prompts.yaml").read_text(encoding="utf-8")
+        )
+        self.assertFalse(
+            {row["id"] for row in rows} - set(staged),
+            "a requested expression is missing from the real art queue",
+        )
+        self.assertEqual(
+            stale_rows(rows, staged),
+            [],
+            "staged prompts have drifted from the canonical generator",
+        )
 
 
 if __name__ == "__main__":
