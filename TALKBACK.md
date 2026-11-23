@@ -12915,3 +12915,9 @@ kind_robots #5517 (canon-art quarantine) made `comicIntroArt` return null for `m
 - Pattern: two sessions independently repaired the same broken ledger within minutes. A fix PR that says "unbreak main" should first check whether `main` has already moved on the same file (`git log origin/main -- <file>`).
 - `art_queue_health` still lists the stage-depth ledger as contract-rejected. That record predates #7857, and the next Auto Art Generate run drops it. I did not hand-edit it.
 - Kaizen: comet-city-academy/t-048 (shared media-proof helper), every-villain-tactics/t-028 (receipt map generated from verified ledgers).
+
+## 2026-11-23 PT, reviewer (scheduled): kind_robots worker PR sweep
+- **Merged on all-green latest-head CI:** kind_robots#5657 (ruler-hooked t-031), #5660 (comet t-031), #5655 (comet t-051), #5656 (save-the-plumber t-027), #5659 (kr-arcade t-085) and #5663 (kr-arcade t-155, whose gate removal the roadmap note directs). Every one is a partial slice, so each task goes back to `ready` with `implementation_pr` set and claims cleared.
+- **Rescues:** #5623 (kr-arcade t-164) conflicted on the hot one-line `test:arcade-engine` script in package.json and is rescued as kind_robots#5668. conductor#7915 conflicted on append-only `projects/art-prompts.yaml` and is rescued as conductor#7921.
+- **Pattern:** two conflicts in one hour, both on hot single-line or append-only files. Workers should merge main into the branch right before they open the PR.
+- **Left open:** #5665 (Deepheart) and #5666 (Rainbow t-063): both are still fresh and their own sessions own them.

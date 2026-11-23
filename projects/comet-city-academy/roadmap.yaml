@@ -1002,11 +1002,11 @@ tasks:
   - id: t-031
     milestone: m3
     title: "HIGH PRIORITY · Begin private Unstable Diffusers production for canonical Prom/Tactics cast"
-    status: review
-    owner: worker
-    claimed_by: 20261123T104850Z-comet-t031-battle-art-q8v3
-    claimed_at: '2026-11-23T10:48:50Z'
-    updated: '2026-11-23T10:49:02Z'
+    status: ready
+    owner: null
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-11-23T11:54:59Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -1055,6 +1055,12 @@ tasks:
       Prior cross-game rejected-art quarantine PR kind_robots#5637 merged at 169688a293f0fe52fb92fdeb01b9e6093147b52e, and no active t-031 PR remains. This was partial art QA and not full candidate approval or delivery. Return the original private Prom/Tactics production art task to READY so another worker can claim the remaining visual QA and attachment work. Do not resubmit the already DONE jobs.
 
       New independent private canon-art quarantine increment: remove direct, unreviewed Prom outcome image lookups from actual tactical board unit portraits, speaker cards, and hero/villain/defeat aftermath. Route every identity image through reviewedIdentityArtwork or identityArtwork, with original private crew combat ArtImages still preferred. Preserve all 48 signatures, roles, saves and production ArtJob receipts. Added static and behavioral regressions for seven known rejected identity paintings. Kind Robots worker commit 756885012485b8581af40b1d835675b958955613. No new images approved or generated. More visual QA, export and attachment remain, so t-031 should return ready after fully-green merge.
+
+      Reviewer (scheduled, 2026-11-23 PT): kind_robots#5660 merged on all-green CI (7f08c9b0).
+      Battlefield, speaker and aftermath portraits now go through the rejected-art resolver.
+      The scoped repair is done, so per the PR handoff t-031 goes back to ready for the
+      remaining Unstable Diffusers, franchise-safe and runtime-refill curation.
+    implementation_pr: 'silasfelinus/kind_robots#5660'
   - id: t-032
     title: "Prom of Doom (Capes & Tassels) | Master 30-Day Playbook Roadmap"
     status: review
@@ -1193,11 +1199,11 @@ tasks:
   - id: t-051
     milestone: m4
     title: "Review and attach 12 verified private one-hit crew telegraph renders to the shared Prom cast atlas"
-    status: review
-    owner: worker
-    claimed_by: 20261123T104120Z-comet-t051-crew-atlas-art-q8v3
-    claimed_at: '2026-11-23T10:41:20Z'
-    updated: '2026-11-23T10:44:07Z'
+    status: ready
+    owner: null
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-11-23T11:55:00Z'
     depends_on: []
     passes: 0
     stakes: reversible
@@ -1205,3 +1211,9 @@ tasks:
       The 2026-11-22 PT authenticated Prom and Tactics media proof verified ArtImages 277786-277797 through the runtime URL with private access preserved, but the shared admin cast atlas currently shows these three canonical crew families as art planned. Reuse the immutable art key, job and image receipts from crewTelegraphArt.ts; show all warning/action/counter/captain paintings under the correct 3 SPECIES families, loaded through the existing authenticated art store. Keep this an admin-only visual QA surface until composition is separately reviewed; never count a successful byte fetch as an artistic approval or publish private ArtImages. Add source-level and receipt-mapping regression checks; do not re-enqueue any job.
 
       Implemented 12 exact private ArtImage/ArtJob crew telegraph mappings in the admin-only shared Prom cast atlas, with three canonical SPECIES tabs, four original combat beats each, authenticated browser image loading, retry, and candidate-only labels. Private original captain closeups also appear against the three matching stable identities. Kind Robots worker branch commit e8cb0dfab35e8eab9d2d398084e3e542c27afb5c. Source regression checks added; PR CI and runtime UI proof remain required. No images published, exported, or artistically approved. Task remains partial until art is visually reviewed and verified on the intended UI.
+
+      Reviewer (scheduled, 2026-11-23 PT): kind_robots#5655 merged on all-green CI (2c956aae).
+      The 12 private crew illustrations now show in the admin cast atlas, labelled as not
+      curator-approved. Per the handoff, t-051 goes back to ready (partial) until independent
+      visual art QA and post-deploy browser verification are done.
+    implementation_pr: 'silasfelinus/kind_robots#5655'
