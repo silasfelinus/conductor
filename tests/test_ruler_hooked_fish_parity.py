@@ -52,16 +52,50 @@ def test_queue_diagnoses_orphan_and_duplicate():
         assert_valid_staged_fish_ids(['a'], [PREFIX + 'a', PREFIX + 'a'])
 
 
+def parse_runtime_fish_slugs(source):
+    """Return RULER_HOOKED_FISH slugs, failing closed on a missing or empty array."""
+    match = re.search(
+        r'export\s+const\s+RULER_HOOKED_FISH\s*:[^=]*=\s*\[(.*?)^\]',
+        source,
+        re.MULTILINE | re.DOTALL,
+    )
+    assert match, 'RULER_HOOKED_FISH array declaration not found'
+    slugs = re.findall(r"^\s+slug:\s*'([^']+)'", match.group(1), re.MULTILINE)
+    assert slugs, 'RULER_HOOKED_FISH array contains no parsed slugs'
+    return slugs
+
+
+def test_runtime_parser_rejects_missing_or_empty_roster():
+    with pytest.raises(AssertionError, match='declaration not found'):
+        parse_runtime_fish_slugs('export const OTHER = []\n')
+    with pytest.raises(AssertionError, match='no parsed slugs'):
+        parse_runtime_fish_slugs('export const RULER_HOOKED_FISH: Fish[] = [\n]\n')
+
+
+def test_runtime_parser_reads_only_the_fish_array():
+    source = (
+        'export const RULER_HOOKED_FISH: Fish[] = [\n'
+        '  {\n'
+        "    slug: 'rainbow-trout',\n"
+        "    habitat: { slug: 'nested-not-a-fish' },\n"
+        '  },\n'
+        '  {\n'
+        "    slug: 'moon-carp',\n"
+        '    tags: [1, 2],\n'
+        '  },\n'
+        ']\n'
+        'export const OTHER = [\n'
+        "  { slug: 'not-a-fish' },\n"
+        ']\n'
+    )
+    assert parse_runtime_fish_slugs(source) == ['rainbow-trout', 'moon-carp']
+
+
 def test_runtime_fish_slugs_match_when_app_checkout_is_present():
     runtime = ROOT.parent / 'kind_robots/utils/rulerHooked/fish.ts'
     if not runtime.is_file():
         pytest.skip('kind_robots sibling checkout unavailable in this runner')
-    source = runtime.read_text(encoding='utf-8')
-    head, marker, tail = source.partition('export const RULER_HOOKED_FISH:')
-    assert marker, 'RULER_HOOKED_FISH export not found in fish.ts'
-    array, closer, _ = tail.partition('\n]')
-    assert closer, 'RULER_HOOKED_FISH array has no closing bracket line'
-    runtime_slugs = re.findall(r"^    slug: '([^']+)'", array, re.MULTILINE)
+    runtime_slugs = parse_runtime_fish_slugs(runtime.read_text(encoding='utf-8'))
     roster_slugs = [
         row['slug']
         for row in yaml.safe_load(ROSTER.read_text(encoding='utf-8'))['fish']
