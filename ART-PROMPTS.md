@@ -696,3 +696,9 @@ Verify provenance of finished generated assets before claiming coverage; keep pr
 - chessweeper-sugarbomb-hero.webp: original bubblegum kawaii maximalist illustration with toy candy pieces, rainbow leopard motifs, sticky glitter and giant rotating lollipop hazards; avoid copying existing licensed sticker-brand graphics.
 - chessweeper-ashen-hero.webp: dark medieval cathedral board, ghostly armored pieces, carved stone clues, cursed mines, rusted execution saws, embers and crumbling spires; bespoke visual identity, readable silhouettes.
 - chessweeper-jackpot-hero.webp: chrome neon 1980s casino pinball arena, jackpot multiplier signage, two endangered chess kings, bladed silver pinballs, fuchsia/cobalt/gold carnival lighting, original artwork without existing game/trademark logos.
+
+## Hopeful Hues — original hopecore match-three (2026-11-23 PT)
+- hopeful-hues-icon.webp (256x256): original icon, a glossy rainbow arc over a small violet heart with a sparkle; soft pastel cutecore, thick rounded shapes, readable at tiny scale; no lettering.
+- hopeful-hues-card.webp (512x768): original vertical game-box illustration; a smiling rainbow-haired stylist hero and a round friendly robot pour rainbow dye from a salon bottle onto a grey street that blooms into color; floating hearts, stars and suns; pastel hopecore palette; no existing franchise characters, candies or logos.
+- hopeful-hues-hero.webp (1280x720): wide hopecore landscape; a long winding rainbow path climbs from a cheerful salon street through a glittering butterfly grove and a sunflower robot workshop toward a moonlit meadow, a seaside carnival, a cloud arcade and a lighthouse; a small grey raincloud watches shyly; soft light, cutecore, no text.
+
