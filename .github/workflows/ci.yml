@@ -204,7 +204,7 @@ jobs:
           python-version: "3.12"
 
       - name: Install pytest and image-test dependencies
-        run: python -m pip install pytest pyyaml "Pillow>=10,<13"
+        run: python -m pip install pytest pyyaml "Pillow>=10,<13" "numpy>=1.26,<3"
 
       - name: Run full pytest suite
         run: pytest -m "not art_parity" tests/ --durations=10
