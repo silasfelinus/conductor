@@ -1,0 +1,516 @@
+# Rainbow Space Princess t-030, 2026-11-23 PT (GEN2-STANDARD sections 5-6): real frame animation for the default
+# Fever Dream look. WAN 2.2 first-and-last-frame loops (A14B, same still at both ends) from approved doodle
+# stills: idle cycles for the eight main enemy families (cut to frames, matted and packed into atlases) and the
+# eight Act title cards brought to life as the Act intro interludes. Kontext hit and victory poses for the four
+# pilots from each CAST-QA identity lock (CAST-QA lines 2 and 5: same face, hair, skin and build). Private;
+# queued is not delivered.
+round: rainbow-t030-animation-2026-11-23
+project_slug: rainbow-bullet-hell-space-princess
+designer: Rainbow Space Princess art bay
+is_public: false
+is_mature: false
+priority: 1000
+auto_submit: true
+lanes:
+- key: wan-mp4
+  label: WAN 2.2 first and last frame loop of an approved doodle still
+  engine: wan
+  prompt: prose
+  fps: 16
+  output_format: mp4
+  negative: morphing, melting, extra limbs, extra creatures, duplicated craft, changing colours, changing shape,
+    camera movement, zoom, new objects, lettering, words, logos, watermarks, photorealism, flicker
+- key: kontext
+  label: Flux Kontext pose edit of a pilot identity lock
+  engine: kontext
+  prompt: prose
+  steps: 24
+  guidance: 2.5
+subjects:
+- key: t030-idle-picket
+  lane: wan-mp4
+  entity: enemy-animation
+  title: picket idle cycle
+  asset: rainbow-princess-art/doodle/anim/picket-idle
+  size: 832x480
+  seed: 1130089
+  source_image_id: 263297
+  last_image_id: 263297
+  duration: 2
+  loop: true
+  prompt_prose: A seahorse picket scout with a glowing curled tail sways its tail in slow S-curves, its snout tilting
+    as if sniffing the current, the tail light brightening and dimming. The camera does not move and the flat background
+    colour stays exactly the same. Only the craft moves a little; its shape, colours and outline never change. Neon
+    airbrushed 1980s school-folder doodle cartoon.
+  jobs:
+    wan-mp4: 76980
+  art:
+    wan-mp4:
+      status: RUNNING
+      art_image_id: null
+- key: t030-idle-spiral
+  lane: wan-mp4
+  entity: enemy-animation
+  title: spiral idle cycle
+  asset: rainbow-princess-art/doodle/anim/spiral-idle
+  size: 832x480
+  seed: 1130982
+  source_image_id: 262196
+  last_image_id: 262196
+  duration: 2
+  loop: true
+  prompt_prose: A seahorse spiral scout coils and uncoils its curled dorsal fin, turning a little on the spot as
+    though winding up a spin, its fin ridges rippling one after another. The camera does not move and the flat background
+    colour stays exactly the same. Only the craft moves a little; its shape, colours and outline never change. Neon
+    airbrushed 1980s school-folder doodle cartoon.
+  jobs:
+    wan-mp4: 76981
+  art:
+    wan-mp4:
+      status: PENDING
+      art_image_id: null
+- key: t030-idle-anchor
+  lane: wan-mp4
+  entity: enemy-animation
+  title: anchor idle cycle
+  asset: rainbow-princess-art/doodle/anim/anchor-idle
+  size: 832x480
+  seed: 1130900
+  source_image_id: 262114
+  last_image_id: 262114
+  duration: 2
+  loop: true
+  prompt_prose: A seahorse anchor craft dips its heavy beaded chin, a pearl bead swinging gently beneath it on its
+    chain while its little side fins paddle to hold position. The camera does not move and the flat background colour
+    stays exactly the same. Only the craft moves a little; its shape, colours and outline never change. Neon airbrushed
+    1980s school-folder doodle cartoon.
+  jobs:
+    wan-mp4: 76982
+  art:
+    wan-mp4:
+      status: PENDING
+      art_image_id: null
+- key: t030-idle-urchin
+  lane: wan-mp4
+  entity: enemy-animation
+  title: urchin idle cycle
+  asset: rainbow-princess-art/doodle/anim/urchin-idle
+  size: 832x480
+  seed: 1130985
+  source_image_id: 262199
+  last_image_id: 262199
+  duration: 2
+  loop: true
+  prompt_prose: A pearl urchin breathes, its ring of bristles fanning outward and settling back, the pearl at its
+    heart glinting with each slow breath, spines trembling at the tips. The camera does not move and the flat background
+    colour stays exactly the same. Only the craft moves a little; its shape, colours and outline never change. Neon
+    airbrushed 1980s school-folder doodle cartoon.
+  jobs:
+    wan-mp4: 76983
+  art:
+    wan-mp4:
+      status: PENDING
+      art_image_id: null
+- key: t030-idle-lantern
+  lane: wan-mp4
+  entity: enemy-animation
+  title: lantern idle cycle
+  asset: rainbow-princess-art/doodle/anim/lantern-idle
+  size: 832x480
+  seed: 1130087
+  source_image_id: 263295
+  last_image_id: 263295
+  duration: 2
+  loop: true
+  prompt_prose: A moonjelly lantern's translucent bell slowly swells and contracts, its glowing heart charging brighter
+    on each swell, long ribbon tendrils trailing and curling below. The camera does not move and the flat background
+    colour stays exactly the same. Only the craft moves a little; its shape, colours and outline never change. Neon
+    airbrushed 1980s school-folder doodle cartoon.
+  jobs:
+    wan-mp4: 76984
+  art:
+    wan-mp4:
+      status: PENDING
+      art_image_id: null
+- key: t030-idle-relay
+  lane: wan-mp4
+  entity: enemy-animation
+  title: relay idle cycle
+  asset: rainbow-princess-art/doodle/anim/relay-idle
+  size: 832x480
+  seed: 1130978
+  source_image_id: 262192
+  last_image_id: 262192
+  duration: 2
+  loop: true
+  prompt_prose: A moonjelly relay's paired tentacles drift apart and back together, a faint spark jumping between
+    their tips each time they meet, its bell bobbing above them. The camera does not move and the flat background
+    colour stays exactly the same. Only the craft moves a little; its shape, colours and outline never change. Neon
+    airbrushed 1980s school-folder doodle cartoon.
+  jobs:
+    wan-mp4: 76985
+  art:
+    wan-mp4:
+      status: PENDING
+      art_image_id: null
+- key: t030-idle-skimmer
+  lane: wan-mp4
+  entity: enemy-animation
+  title: skimmer idle cycle
+  asset: rainbow-princess-art/doodle/anim/skimmer-idle
+  size: 832x480
+  seed: 1130981
+  source_image_id: 262195
+  last_image_id: 262195
+  duration: 2
+  loop: true
+  prompt_prose: A moonjelly skimmer folds its bell inward and opens it again like an umbrella, little electric beads
+    shimmering along its rim as it flutters in place. The camera does not move and the flat background colour stays
+    exactly the same. Only the craft moves a little; its shape, colours and outline never change. Neon airbrushed
+    1980s school-folder doodle cartoon.
+  jobs:
+    wan-mp4: 76986
+  art:
+    wan-mp4:
+      status: PENDING
+      art_image_id: null
+- key: t030-idle-coral
+  lane: wan-mp4
+  entity: enemy-animation
+  title: coral idle cycle
+  asset: rainbow-princess-art/doodle/anim/coral-idle
+  size: 832x480
+  seed: 1130079
+  source_image_id: 263287
+  last_image_id: 263287
+  duration: 2
+  loop: true
+  prompt_prose: A coral drifter's knobbly branches sway in a slow current while its inner chambers flash softly
+    in turn, tiny polyps opening and closing along its arms. The camera does not move and the flat background colour
+    stays exactly the same. Only the craft moves a little; its shape, colours and outline never change. Neon airbrushed
+    1980s school-folder doodle cartoon.
+  jobs:
+    wan-mp4: 76987
+  art:
+    wan-mp4:
+      status: PENDING
+      art_image_id: null
+- key: t030-card-s01
+  lane: wan-mp4
+  entity: cinematic
+  title: s01 title card interlude
+  asset: rainbow-princess-video/interludes/s01
+  size: 832x480
+  seed: 1131989
+  source_image_id: 262203
+  last_image_id: 262203
+  duration: 3
+  loop: true
+  prompt_prose: In the Pinkwake Estuary the pink cloud sea rolls in slow waves, glass buoys bob and catch the light,
+    and a pearly shoal glitters across the water. Nothing new appears, nothing is removed, and every ship, creature
+    and building stays exactly on model. Neon airbrushed 1980s school-folder doodle cartoon.
+  jobs:
+    wan-mp4: 76988
+  art:
+    wan-mp4:
+      status: PENDING
+      art_image_id: null
+- key: t030-card-s02
+  lane: wan-mp4
+  entity: cinematic
+  title: s02 title card interlude
+  asset: rainbow-princess-video/interludes/s02
+  size: 832x480
+  seed: 1131990
+  source_image_id: 262204
+  last_image_id: 262204
+  duration: 3
+  loop: true
+  prompt_prose: In the Moonjelly Fields translucent nebula mist drifts, floating bell towers sway on their tethers
+    and charged tendrils flicker with soft violet light. Nothing new appears, nothing is removed, and every ship,
+    creature and building stays exactly on model. Neon airbrushed 1980s school-folder doodle cartoon.
+  jobs:
+    wan-mp4: 76989
+  art:
+    wan-mp4:
+      status: PENDING
+      art_image_id: null
+- key: t030-card-s03
+  lane: wan-mp4
+  entity: cinematic
+  title: s03 title card interlude
+  asset: rainbow-princess-video/interludes/s03
+  size: 832x480
+  seed: 1131991
+  source_image_id: 262205
+  last_image_id: 262205
+  duration: 3
+  loop: true
+  prompt_prose: In the Chromatic Trench volcanic vents breathe warm orange light up the indigo rock ribs, and glowing
+    embers rise past the abandoned vault doors. Nothing new appears, nothing is removed, and every ship, creature
+    and building stays exactly on model. Neon airbrushed 1980s school-folder doodle cartoon.
+  jobs:
+    wan-mp4: 76990
+  art:
+    wan-mp4:
+      status: PENDING
+      art_image_id: null
+- key: t030-card-s04
+  lane: wan-mp4
+  entity: cinematic
+  title: s04 title card interlude
+  asset: rainbow-princess-video/interludes/s04
+  size: 832x480
+  seed: 1131992
+  source_image_id: 262206
+  last_image_id: 262206
+  duration: 3
+  loop: true
+  prompt_prose: On the Rosefin Express aurora ribbons stream across the sky, transit rings pulse in sequence and
+    the light rails shimmer as if a train just passed. Nothing new appears, nothing is removed, and every ship,
+    creature and building stays exactly on model. Neon airbrushed 1980s school-folder doodle cartoon.
+  jobs:
+    wan-mp4: 76991
+  art:
+    wan-mp4:
+      status: PENDING
+      art_image_id: null
+- key: t030-card-s05
+  lane: wan-mp4
+  entity: cinematic
+  title: s05 title card interlude
+  asset: rainbow-princess-video/interludes/s05
+  size: 832x480
+  seed: 1131993
+  source_image_id: 262207
+  last_image_id: 262207
+  duration: 3
+  loop: true
+  prompt_prose: In the Blossom Wreckyard petal-shaped hull wrecks creak and settle, dock cranes sway slowly against
+    the rust sky and drifting petals tumble past. Nothing new appears, nothing is removed, and every ship, creature
+    and building stays exactly on model. Neon airbrushed 1980s school-folder doodle cartoon.
+  jobs:
+    wan-mp4: 76992
+  art:
+    wan-mp4:
+      status: PENDING
+      art_image_id: null
+- key: t030-card-s06
+  lane: wan-mp4
+  entity: cinematic
+  title: s06 title card interlude
+  asset: rainbow-princess-video/interludes/s06
+  size: 832x480
+  seed: 1131994
+  source_image_id: 262208
+  last_image_id: 262208
+  duration: 3
+  loop: true
+  prompt_prose: In the Crown Reef the gold nebula glows and breathes, bioluminescent arches pulse with light and
+    the branching coral tendrils wave gently. Nothing new appears, nothing is removed, and every ship, creature
+    and building stays exactly on model. Neon airbrushed 1980s school-folder doodle cartoon.
+  jobs:
+    wan-mp4: 76993
+  art:
+    wan-mp4:
+      status: PENDING
+      art_image_id: null
+- key: t030-card-s07
+  lane: wan-mp4
+  entity: cinematic
+  title: s07 title card interlude
+  asset: rainbow-princess-video/interludes/s07
+  size: 832x480
+  seed: 1131995
+  source_image_id: 262209
+  last_image_id: 262209
+  duration: 3
+  loop: true
+  prompt_prose: In the Glass Current mirrored canyon walls catch moving glints, crystalline strata sparkle and fractured
+    light beams slowly sweep across the glass. Nothing new appears, nothing is removed, and every ship, creature
+    and building stays exactly on model. Neon airbrushed 1980s school-folder doodle cartoon.
+  jobs:
+    wan-mp4: 76994
+  art:
+    wan-mp4:
+      status: PENDING
+      art_image_id: null
+- key: t030-card-s08
+  lane: wan-mp4
+  entity: cinematic
+  title: s08 title card interlude
+  asset: rainbow-princess-video/interludes/s08
+  size: 832x480
+  seed: 1131996
+  source_image_id: 262210
+  last_image_id: 262210
+  duration: 3
+  loop: true
+  prompt_prose: At the Eclipse Palace the eclipse corona flares and ripples, heart-shaped spire lights pulse and
+    the captive armada glimmers far below. Nothing new appears, nothing is removed, and every ship, creature and
+    building stays exactly on model. Neon airbrushed 1980s school-folder doodle cartoon.
+  jobs:
+    wan-mp4: 76995
+  art:
+    wan-mp4:
+      status: PENDING
+      art_image_id: null
+- key: t030-pose-maribel-hit
+  lane: kontext
+  entity: pilot-pose
+  title: maribel hit pose
+  asset: rainbow-princess-art/poses/maribel-hit
+  size: 832x1216
+  seed: 1132768
+  source_image_id: 246030
+  negative: text, lettering, logo, watermark, words, extra people, different face, changed hair colour, changed
+    hairstyle, changed skin tone, slimmer build, changed outfit
+  prompt_prose: Maribel, the pink-themed pilot, recoils from a hit in her petal-pink cockpit, eyes squeezed shut,
+    one forearm raised, sparks of pink light bursting beside her. Keep this exact same face, hairstyle, hair colour,
+    skin tone, body build and flight outfit, the same framing and background, and the same polished western animation
+    style with bold outlines.
+  jobs:
+    kontext: 76996
+  art:
+    kontext:
+      status: PENDING
+      art_image_id: null
+- key: t030-pose-maribel-victory
+  lane: kontext
+  entity: pilot-pose
+  title: maribel victory pose
+  asset: rainbow-princess-art/poses/maribel-victory
+  size: 832x1216
+  seed: 1132769
+  source_image_id: 246030
+  negative: text, lettering, logo, watermark, words, extra people, different face, changed hair colour, changed
+    hairstyle, changed skin tone, slimmer build, changed outfit
+  prompt_prose: Maribel, the pink-themed pilot, grins wide and pumps one fist up beside her petal-pink cockpit after
+    a hard-won fight, cheeks flushed and eyes bright. Keep this exact same face, hairstyle, hair colour, skin tone,
+    body build and flight outfit, the same framing and background, and the same polished western animation style
+    with bold outlines.
+  jobs:
+    kontext: 76997
+  art:
+    kontext:
+      status: PENDING
+      art_image_id: null
+- key: t030-pose-azure-hit
+  lane: kontext
+  entity: pilot-pose
+  title: azure hit pose
+  asset: rainbow-princess-art/poses/azure-hit
+  size: 832x1216
+  seed: 1132769
+  source_image_id: 246031
+  negative: text, lettering, logo, watermark, words, extra people, different face, changed hair colour, changed
+    hairstyle, changed skin tone, slimmer build, changed outfit
+  prompt_prose: Azure, the cyan-themed pilot, flinches from a jolt beside her cyan instrument glow, wincing, one
+    hand gripping the edge of the console as blue sparks fly. Keep this exact same face, hairstyle, hair colour,
+    skin tone, body build and flight outfit, the same framing and background, and the same polished western animation
+    style with bold outlines.
+  jobs:
+    kontext: 76998
+  art:
+    kontext:
+      status: PENDING
+      art_image_id: null
+- key: t030-pose-azure-victory
+  lane: kontext
+  entity: pilot-pose
+  title: azure victory pose
+  asset: rainbow-princess-art/poses/azure-victory
+  size: 832x1216
+  seed: 1132770
+  source_image_id: 246031
+  negative: text, lettering, logo, watermark, words, extra people, different face, changed hair colour, changed
+    hairstyle, changed skin tone, slimmer build, changed outfit
+  prompt_prose: Azure, the cyan-themed pilot, throws back her head in a delighted laugh and raises one hand in a
+    victory sign, cyan console light shining on her face. Keep this exact same face, hairstyle, hair colour, skin
+    tone, body build and flight outfit, the same framing and background, and the same polished western animation
+    style with bold outlines.
+  jobs:
+    kontext: 76999
+  art:
+    kontext:
+      status: PENDING
+      art_image_id: null
+- key: t030-pose-solenne-hit
+  lane: kontext
+  entity: pilot-pose
+  title: solenne hit pose
+  asset: rainbow-princess-art/poses/solenne-hit
+  size: 832x1216
+  seed: 1132770
+  source_image_id: 246032
+  negative: text, lettering, logo, watermark, words, extra people, different face, changed hair colour, changed
+    hairstyle, changed skin tone, slimmer build, changed outfit
+  prompt_prose: Solenne, the gold-themed pilot, braces her broad muscular shoulders against a jolt, jaw set and
+    eyes narrowed, golden sparks scattering past her strong arms. Keep this exact same face, hairstyle, hair colour,
+    skin tone, body build and flight outfit, the same framing and background, and the same polished western animation
+    style with bold outlines.
+  jobs:
+    kontext: 77000
+  art:
+    kontext:
+      status: PENDING
+      art_image_id: null
+- key: t030-pose-solenne-victory
+  lane: kontext
+  entity: pilot-pose
+  title: solenne victory pose
+  asset: rainbow-princess-art/poses/solenne-victory
+  size: 832x1216
+  seed: 1132771
+  source_image_id: 246032
+  negative: text, lettering, logo, watermark, words, extra people, different face, changed hair colour, changed
+    hairstyle, changed skin tone, slimmer build, changed outfit
+  prompt_prose: Solenne, the gold-themed pilot, flexes one strong arm and smiles proudly after a hard battle, her
+    golden visor pushed up into her updo of twists. Keep this exact same face, hairstyle, hair colour, skin tone,
+    body build and flight outfit, the same framing and background, and the same polished western animation style
+    with bold outlines.
+  jobs:
+    kontext: 77001
+  art:
+    kontext:
+      status: PENDING
+      art_image_id: null
+- key: t030-pose-vivi-hit
+  lane: kontext
+  entity: pilot-pose
+  title: vivi hit pose
+  asset: rainbow-princess-art/poses/vivi-hit
+  size: 832x1216
+  seed: 1132771
+  source_image_id: 246033
+  negative: text, lettering, logo, watermark, words, extra people, different face, changed hair colour, changed
+    hairstyle, changed skin tone, slimmer build, changed outfit
+  prompt_prose: Vivi, the lilac-themed pilot, yelps and ducks from a jolt, both hands over her head, lilac sparks
+    crackling around her cockpit headset. Keep this exact same face, hairstyle, hair colour, skin tone, body build
+    and flight outfit, the same framing and background, and the same polished western animation style with bold
+    outlines.
+  jobs:
+    kontext: 77002
+  art:
+    kontext:
+      status: PENDING
+      art_image_id: null
+- key: t030-pose-vivi-victory
+  lane: kontext
+  entity: pilot-pose
+  title: vivi victory pose
+  asset: rainbow-princess-art/poses/vivi-victory
+  size: 832x1216
+  seed: 1132772
+  source_image_id: 246033
+  negative: text, lettering, logo, watermark, words, extra people, different face, changed hair colour, changed
+    hairstyle, changed skin tone, slimmer build, changed outfit
+  prompt_prose: Vivi, the lilac-themed pilot, beams and gives two thumbs up, headset askew, lilac lights twinkling
+    around her in a burst of glee. Keep this exact same face, hairstyle, hair colour, skin tone, body build and
+    flight outfit, the same framing and background, and the same polished western animation style with bold outlines.
+  jobs:
+    kontext: 77003
+  art:
+    kontext:
+      status: PENDING
+      art_image_id: null
