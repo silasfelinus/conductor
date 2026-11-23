@@ -1189,23 +1189,15 @@ tasks:
   - id: t-051
     milestone: m4
     title: "Review and attach 12 verified private one-hit crew telegraph renders to the shared Prom cast atlas"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 20261123T104120Z-comet-t051-crew-atlas-art-q8v3
     claimed_at: '2026-11-23T10:41:20Z'
-    updated: '2026-11-23T10:41:20Z'
+    updated: '2026-11-23T10:44:07Z'
     depends_on: []
     passes: 0
     stakes: reversible
-    note: >-
-      The 2026-11-22 PT authenticated Prom and Tactics media proof verified
-      ArtImages 277786-277797 through the runtime URL with private access
-      preserved, but the shared admin cast atlas currently shows these
-      three canonical crew families as art planned. Reuse the immutable
-      art key, job and image receipts from crewTelegraphArt.ts; show all
-      warning/action/counter/captain paintings under the correct 3 SPECIES
-      families, loaded through the existing authenticated art store.
-      Keep this an admin-only visual QA surface until composition is
-      separately reviewed; never count a successful byte fetch as
-      an artistic approval or publish private ArtImages. Add source-level
-      and receipt-mapping regression checks; do not re-enqueue any job.
+    note: |-
+      The 2026-11-22 PT authenticated Prom and Tactics media proof verified ArtImages 277786-277797 through the runtime URL with private access preserved, but the shared admin cast atlas currently shows these three canonical crew families as art planned. Reuse the immutable art key, job and image receipts from crewTelegraphArt.ts; show all warning/action/counter/captain paintings under the correct 3 SPECIES families, loaded through the existing authenticated art store. Keep this an admin-only visual QA surface until composition is separately reviewed; never count a successful byte fetch as an artistic approval or publish private ArtImages. Add source-level and receipt-mapping regression checks; do not re-enqueue any job.
+
+      Implemented 12 exact private ArtImage/ArtJob crew telegraph mappings in the admin-only shared Prom cast atlas, with three canonical SPECIES tabs, four original combat beats each, authenticated browser image loading, retry, and candidate-only labels. Private original captain closeups also appear against the three matching stable identities. Kind Robots worker branch commit e8cb0dfab35e8eab9d2d398084e3e542c27afb5c. Source regression checks added; PR CI and runtime UI proof remain required. No images published, exported, or artistically approved. Task remains partial until art is visually reviewed and verified on the intended UI.
