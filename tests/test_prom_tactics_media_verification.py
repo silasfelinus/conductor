@@ -142,7 +142,8 @@ def test_workflow_probes_private_bytes_without_publishing():
     assert "--require-count 12" in commands
     assert "UNSTABLE-PRODUCTION-FAMILY-ROUND-1.yaml:14" in commands
     assert "FRANCHISE-SAFE-RERENDERS-ROUND-1.yaml:5" in commands
-    assert "--require-count 172" in commands
+    assert "RUNTIME-REFILL-ROUND-1.yaml:148" in commands
+    assert "OCT-29-CAST-KREA2-ROUND-1.yaml:24" in commands
     assert any(
         path.endswith("CANON-OUTCOME-CORRECTIONS-2026-11-22.yaml")
         for path in events["push"]["paths"]
@@ -176,6 +177,36 @@ def test_original_prom_capes_media_proof_keeps_every_source_receipt_private():
         assert f"{path.relative_to(ROOT)}:{count}" in command
         all_receipts.extend(receipts)
     assert len({item["image_id"] for item in all_receipts}) == 19
+    assert "scripts/prove_private_media_ledgers.py" in command
+    assert "--write-evidence --require-private" in command
+    assert "--checkpoint-message" in command
+    assert "art/enqueue" not in command
+    assert "upload-artifact" not in command
+
+
+
+def test_full_private_prom_refill_and_october_cast_media_receive_game_route_proof():
+    flow = yaml.safe_load(FLOW.read_text())
+    proof = next(
+        step for step in flow["jobs"]["verify-private-media"]["steps"]
+        if "172 original private Prom refill and cast" in step.get("name", "")
+    )
+    command = proof["run"]
+    all_images = []
+    for name, expected in [
+        ("RUNTIME-REFILL-ROUND-1.yaml", 148),
+        ("OCT-29-CAST-KREA2-ROUND-1.yaml", 24),
+    ]:
+        path = ROOT / "projects/comet-city-academy/art" / name
+        ledger = yaml.safe_load(path.read_text())
+        rows = candidates([path])
+        assert ledger["is_public"] is False
+        assert len(rows) == expected
+        assert all(not entry["reviewed"] for entry in rows)
+        assert all(entry["job_id"] > 0 for entry in rows)
+        assert f"{path.relative_to(ROOT)}:{expected}" in command
+        all_images.extend(entry["image_id"] for entry in rows)
+    assert len(set(all_images)) == 172
     assert "scripts/prove_private_media_ledgers.py" in command
     assert "--write-evidence --require-private" in command
     assert "--checkpoint-message" in command
