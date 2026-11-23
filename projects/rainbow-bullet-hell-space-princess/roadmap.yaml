@@ -1248,17 +1248,24 @@ tasks:
   - id: t-060
     milestone: m4
     title: "Rebel road changes the fight: Acts VI-VIII waves react to the flown allegiance"
-    status: claimed
+    status: review
     passes: 0
     stakes: reversible
     depends_on: []
     source: playtest-gap-matrix-2026-11-22
-    updated: '2026-11-23T05:11:23Z'
+    updated: '2026-11-23T05:23:59Z'
     note: >-
       PLAYTEST-GAP-MATRIX-2026-11-22 item 9 (issue #4146 section 5). The flown rebel/loyal choice currently changes only dialogue and ending titles (rainbowAllegiance.ts:56-92). On the rebel road Ocean craft hold fire and Motherland drones join Acts VI-VIII waves per PLOT-MOTHERLAND.md; loyal keeps the current waves. Deterministic seeded tests for both roads and 1-4 seats; save/continue preserves the road.
+
+      2026-11-22 PT: rainbowRebelRoad.ts: every third Ocean school per Act (aimed-volley kinds
+      only) holds a truce (no fire, no ram, untouchable, dimmed under a heart); a Motherland
+      drone pair launches a beat after each in its lane. New motherdrone kind + Krea art
+      279290. Seeded flight both roads: rebel 274 volleys held, drones seen; loyal unchanged.
+      New PR workflow rainbow-rebel-road.yml. kind_robots#5634.
     owner: reviewer
     claimed_by: 20261123T050000Z-rainbow-t060-rebelwaves-c4r7
     claimed_at: '2026-11-23T05:11:23Z'
+    implementation_pr: 'silasfelinus/kind_robots#5634'
   - id: t-061
     milestone: m4
     title: "Allegiance-specific finale: Motherland flagship vs Ocean heart, with the loyal late stand-down"
