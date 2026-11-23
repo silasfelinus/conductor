@@ -158,7 +158,7 @@ def test_original_prom_capes_media_proof_keeps_every_source_receipt_private():
     steps = flow["jobs"]["verify-private-media"]["steps"]
     priority = next(
         step for step in steps
-        if "nineteen private canonical Prom paintings" in step["name"]
+        if "nineteen private canonical Prom paintings" in step.get("name", "")
     )
     command = priority["run"]
     all_receipts = []
