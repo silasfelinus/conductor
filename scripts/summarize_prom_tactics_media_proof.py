@@ -21,6 +21,13 @@ TOKEN = re.compile(r"([a-z_]+)=([A-Za-z0-9._/-]+)")
 GAME_EVENT = re.compile(r"\b(GAME_PATH_OK|GAME_PATH_FAILED|VERIFIED|FAILED)\s")
 PRIVATE_OK = re.compile(r"\bPRIVATE_POLICY_VERIFIED=([0-9]+)\s+ledger=([A-Za-z0-9._-]+)")
 PRIVATE_FAILURE = re.compile(r"\bPRIVATE_POLICY_FAILED=([A-Za-z0-9._-]+)")
+PRIVATE_IMAGE = re.compile(
+    r"\bPRIVATE_POLICY_IMAGE_(OK|FAILED)\s+ledger=([A-Za-z0-9._-]+)"
+    r"\s+image=([0-9]+)(?:\s+reason=([A-Za-z]+))?"
+)
+PRIVATE_REASONS = frozenset(
+    {"ReportedPublic", "MetadataUnavailable", "UnknownVisibility", "TransientExhausted"}
+)
 SAFE_REASON = re.compile(r"^[A-Za-z]+(?:Error|Exception)$")
 STATUS = ("verified", "failed", "unknown")
 
@@ -74,6 +81,8 @@ def apply_log(rows, log_text):
     by_key = {(row["key"], row["image_id"]): row for row in rows.values()}
     private_groups = {}
     failed_groups = set()
+    verified_images = set()
+    failed_images = {}
     for line in log_text.splitlines():
         match = GAME_EVENT.search(line)
         if match:
@@ -92,11 +101,12 @@ def apply_log(rows, log_text):
                 if attrs.get("job") != str(row["job_id"]):
                     continue
                 row["runtime"] = "verified"
-                if row["private_requested"]:
-                    row["private"] = (
-                        "verified" if attrs.get("anonymous") == "PRIVATE_DENIED"
-                        else "failed"
-                    )
+                if (
+                    row["private_requested"]
+                    and attrs.get("anonymous") != "PRIVATE_DENIED"
+                ):
+                    row["private"] = "failed"
+                    row["reason"] = "AnonymousMediaExposure"
             else:
                 row["runtime"] = "failed"
                 raw_reason = attrs.get("reason", "")
@@ -104,6 +114,19 @@ def apply_log(rows, log_text):
                     raw_reason if SAFE_REASON.fullmatch(raw_reason)
                     else "RuntimeCheckFailed"
                 )
+        image_policy = PRIVATE_IMAGE.search(line)
+        if image_policy:
+            verdict, ledger, image_text, reason = image_policy.groups()
+            image_id = int(image_text)
+            row = rows.get(image_id)
+            if row and row["ledger"] == ledger and row["private_requested"]:
+                if verdict == "OK":
+                    verified_images.add(image_id)
+                else:
+                    failed_images[image_id] = (
+                        reason if reason in PRIVATE_REASONS
+                        else "PrivateMetadataFailed"
+                    )
         private_ok = PRIVATE_OK.search(line)
         if private_ok:
             count, ledger = private_ok.groups()
@@ -118,12 +141,27 @@ def apply_log(rows, log_text):
             for row in group
         ):
             for row in group:
-                row["private"] = "verified"
-    for ledger in failed_groups:
-        for row in rows.values():
-            if row["ledger"] == ledger:
+                if row["private"] != "failed":
+                    row["private"] = "verified"
+    for row in rows.values():
+        image_id = row["image_id"]
+        if image_id in failed_images:
+            row["private"] = "failed"
+            row["reason"] = failed_images[image_id]
+        elif (
+            image_id in verified_images
+            and row["runtime"] == "verified"
+            and row["private"] != "failed"
+        ):
+            row["private"] = "verified"
+        if row["ledger"] in failed_groups:
+            row["private_group_failed"] = True
+            if (
+                image_id not in failed_images
+                and image_id not in verified_images
+                and row["private"] != "failed"
+            ):
                 row["private"] = "unknown"
-                row["private_group_failed"] = True
     return rows
 
 
