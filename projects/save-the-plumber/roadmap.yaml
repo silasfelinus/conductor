@@ -565,14 +565,14 @@ tasks:
       Related: PR #4080, issue #4062, conductor/save-the-plumber t-025.
   - id: t-027
     title: "Save the Plumber Maker: playable level editor, saves, sharing, ratings, Mario Maker and Geometry Dash parity"
-    status: claimed
+    status: review
     stakes: reversible
     owner: worker
     claimed_by: 2026-11-23T054500Z-save-the-plumber-t027-m7q9
     claimed_at: '2026-11-23T05:45:00Z'
     passes: 0
     source_issue: "silasfelinus/kind_robots#4347"
-    updated: '2026-10-28'
+    updated: '2026-11-23T05:52:00Z'
     note: |-
       FROM GITHUB ISSUE silasfelinus/kind_robots#4347 (https://github.com/silasfelinus/kind_robots/issues/4347), opened by @silasfelinus on 2026-10-27. Imported by scripts/sync_github_issues.py. Reference the issue in the implementing PR (`Closes silasfelinus/kind_robots#4347`) so it closes on merge; the bridge closes it otherwise once this task is done.
 
@@ -594,3 +594,5 @@ tasks:
       Persist and restore three drafts without corrupting campa
 
       [... truncated; read the full issue at https://github.com/silasfelinus/kind_robots/issues/4347]
+
+      2026-11-22 PT: Maker route replay slice on kind_robots branch worker/save-the-plumber-t-027-seeded-replay-m7q9: seeded RNG per exact level revision, bit-packed held/press inputs, 10-minute bounded capture, editor replay controls, blur/visibility input release, deterministic physics replay regression. Remaining Maker roadmap scope stays open after this incremental PR.
