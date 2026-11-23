@@ -1077,20 +1077,18 @@ tasks:
 - id: t-058
   milestone: m6
   title: 'Presenter expression sets for the cast and Quill'
-  status: claimed
+  status: review
   gate_human: false
   owner: worker
   claimed_by: 20261123T031335727Z-ruler-hooked-t058-v4b7
   claimed_at: '2026-11-23T03:13:35.727Z'
   stakes: reversible
   passes: 0
-  note: >-
-    The court now stands the presenting character's portrait beside each petition, and Quill
-    coaches the tutorial from a portrait, but each character has one neutral render.
-    characterArt.ts already defines character-<slug>-<expression>.webp keys and advisor.ts
-    computes moods. Render neutral/pleased/concerned/alarmed in the t-054 Chronicle style, have
-    the court portrait react to the chosen decree and the coach follow advisor mood.
-  updated: '2026-11-23T03:13:35.727Z'
+  note: |-
+    The court now stands the presenting character's portrait beside each petition, and Quill coaches the tutorial from a portrait, but each character has one neutral render. characterArt.ts already defines character-<slug>-<expression>.webp keys and advisor.ts computes moods. Render neutral/pleased/concerned/alarmed in the t-054 Chronicle style, have the court portrait react to the chosen decree and the coach follow advisor mood.
+
+    Implemented mood-aware presenter art lookups, Quill tutorial reactions and ten authored decree expression outcomes in the Kind Robots worker branch. Staged 48 high-priority Krea2 neutral/pleased/concerned/alarmed portrait requests for the full 12-character cast through the canonical YAML queue. Paints are pending and not counted as rendered; branch PRs and CI follow.
+  updated: '2026-11-23T03:17:47.962Z'
 - id: t-059
   milestone: m6
   title: 'Reconcile the compositing contract with the opaque region layers that actually rendered'
