@@ -1134,6 +1134,7 @@ def fish_entries() -> list[dict]:
         # use them verbatim rather than paraphrasing, so the roster stays the single
         # source and an edit there reaches the art without passing through a person.
         frame = species.get("frame_override") or FISH_FRAME
+        style = species.get("style_override") or rainbow_style("pristine", "specimen")
         body = (
             f"{species['name']}, a fantastical freshwater fish of a lakeside fantasy "
             f"kingdom: {species['silhouette']}. "
@@ -1146,7 +1147,7 @@ def fish_entries() -> list[dict]:
                 image_path=f"public/images/ruler-hooked/fish/{slug}/bestiary.webp",
                 label=f"Ruler Hooked fish: {species['name']} ({species['affinity']}, {species['rarity']})",
                 size=WIDE,
-                prompt=f"{body}. {rainbow_style('pristine', 'specimen')}. {NO_TEXT}",
+                prompt=f"{body}. {style}. {NO_TEXT}",
                 priority=CONCEPT_PRIORITY,
                 lane="fish",
             )
