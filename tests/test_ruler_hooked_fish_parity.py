@@ -1,6 +1,7 @@
 """Validate queued Ruler Hooked fish art without rejecting delivered assets."""
 
 from collections import Counter
+import json
 from pathlib import Path
 import re
 
@@ -11,6 +12,7 @@ ROOT = Path(__file__).resolve().parents[1]
 ROSTER = ROOT / 'projects/ruler-hooked/fish/vertical-slice.yaml'
 REQUESTS = ROOT / 'projects/art-prompts.yaml'
 PREFIX = 'ruler-hooked-fish-'
+RUNTIME_FIXTURE = ROOT / 'tests/fixtures/ruler_hooked_runtime_fish.json'
 
 
 def assert_valid_staged_fish_ids(roster_slugs, request_ids):
@@ -52,6 +54,17 @@ def test_queue_diagnoses_orphan_and_duplicate():
         assert_valid_staged_fish_ids(['a'], [PREFIX + 'a', PREFIX + 'a'])
 
 
+def test_committed_runtime_fish_fixture_matches_roster():
+    runtime_slugs = json.loads(RUNTIME_FIXTURE.read_text(encoding='utf-8'))['slugs']
+    roster_slugs = [
+        row['slug']
+        for row in yaml.safe_load(ROSTER.read_text(encoding='utf-8'))['fish']
+    ]
+    assert Counter(runtime_slugs) == Counter(roster_slugs), (
+        'committed runtime fish fixture differs from Conductor roster'
+    )
+
+
 def test_runtime_fish_slugs_match_when_app_checkout_is_present():
     runtime = ROOT.parent / 'kind_robots/utils/rulerHooked/fish.ts'
     if not runtime.is_file():
@@ -66,8 +79,9 @@ def test_runtime_fish_slugs_match_when_app_checkout_is_present():
         row['slug']
         for row in yaml.safe_load(ROSTER.read_text(encoding='utf-8'))['fish']
     ]
-    assert Counter(runtime_slugs) == Counter(roster_slugs), (
-        f'runtime fish differ from roster: '
-        f'missing={sorted((Counter(roster_slugs) - Counter(runtime_slugs)).elements())}, '
-        f'extra={sorted((Counter(runtime_slugs) - Counter(roster_slugs)).elements())}'
+    fixture_slugs = json.loads(RUNTIME_FIXTURE.read_text(encoding='utf-8'))['slugs']
+    assert Counter(runtime_slugs) == Counter(fixture_slugs), (
+        f'runtime fish differ from committed fixture: '
+        f'missing={sorted((Counter(fixture_slugs) - Counter(runtime_slugs)).elements())}, '
+        f'extra={sorted((Counter(runtime_slugs) - Counter(fixture_slugs)).elements())}'
     )
