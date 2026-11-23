@@ -1268,18 +1268,25 @@ tasks:
   - id: t-064
     milestone: m4
     title: "Re-render the Motherland flagship phase-2 painting so the sprung clamps and battered hull read in game"
-    status: claimed
+    status: review
     passes: 0
     stakes: reversible
     depends_on: []
     source: reviewer-kaizen-conductor-7897
-    updated: '2026-11-23T11:00:11Z'
+    updated: '2026-11-23T12:08:53Z'
     note: >-
       Kaizen from the conductor#7897 review (t-061). ArtImage 279299 was rejected (not battered, clamps
       not sprung, hull colours drift), so phase 2 of the flagship fight reuses the phase-1 painting
       279298 with code-drawn cues. Queue a new Krea 2 take seeded from 279298's composition (same hull
       palette, clamps visibly open, scorch and sparks), review it at game scale against the clamp-core
       hit geometry, and swap bosses/flagship phase 2 in kind_robots only if it beats the code cues.
+
+      2026-11-23 PT: Kontext take D (279493, ledger MOTHERLAND-FLAGSHIP-PHASE2-2026-11-23)
+      beats phase 1 + code cues: battered hull, same palette/framing, no decoy ring.
+      kind_robots#5670 swaps bosses/flagship-phase2 in both looks at phase 2 with its own
+      Crown point (0.049, 0.257), checked at game scale against the 44 px ring. Merge when all
+      checks complete green.
     owner: reviewer
     claimed_by: session_01L5NKxaUAWmNr7wxdToBdp3
     claimed_at: '2026-11-23T11:00:11Z'
+    implementation_pr: 'silasfelinus/kind_robots#5670'
