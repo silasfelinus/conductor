@@ -12,7 +12,9 @@ from __future__ import annotations
 
 import argparse
 import io
+import re
 import sys
+import time
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -24,6 +26,13 @@ if __package__:
     from .verify_prom_tactics_media import candidates
 else:
     from verify_prom_tactics_media import candidates
+
+
+RETRYABLE_HTTP_CODES = frozenset({429, 500, 502, 503, 504})
+
+
+class TransientMediaError(RuntimeError):
+    """A retryable server response, without recording private URL details."""
 
 
 class SameOriginRedirect(urllib.request.HTTPRedirectHandler):
@@ -85,6 +94,8 @@ def check_visibility(image_id: int, base_url: str, public: bool, opener=None):
     except urllib.error.HTTPError as error:
         if not public and error.code in (403, 404):
             return "PRIVATE_DENIED"
+        if error.code in RETRYABLE_HTTP_CODES:
+            raise
         raise ValueError("Unexpected anonymous gameplay media status") from None
 
 
@@ -99,20 +110,61 @@ def average_thumbnail_delta(a: Image.Image, b: Image.Image) -> float:
     return sum(ImageStat.Stat(differences).mean) / 3
 
 
-def verify(entries, read_reference, read_runtime, visibility, fetch_public):
+def retry_transient(action, *, pause=time.sleep, attempts=4):
+    """Retry transient media/API failures, never bad pixels, privacy, or 4xx IDs.
+
+    The source loader reports non-200 metadata as RuntimeError("HTTP NNN"),
+    while the browser URL and anonymous check raise HTTPError directly.
+    Bounded exponential backoff avoids re-submitting an ArtJob or mistaking
+    production throttling for lost artwork. Callers print exception *types*
+    only, never URLs, headers or response bodies.
+    """
+    for index in range(attempts):
+        try:
+            return action()
+        except Exception as error:
+            if isinstance(error, urllib.error.HTTPError):
+                transient = error.code in RETRYABLE_HTTP_CODES
+            elif isinstance(error, (urllib.error.URLError, TimeoutError, ConnectionError)):
+                transient = True
+            elif isinstance(error, TransientMediaError):
+                transient = True
+            elif isinstance(error, RuntimeError):
+                transient = bool(
+                    re.search(r"\bHTTP (?:429|500|502|503|504)\b", str(error))
+                )
+            else:
+                transient = False
+            if not transient or index == attempts - 1:
+                raise
+            pause(2 ** (index + 1))
+    raise AssertionError("unreachable retry loop")
+
+
+def verify(
+    entries,
+    read_reference,
+    read_runtime,
+    visibility,
+    fetch_public,
+    *,
+    retry=retry_transient,
+    pace_seconds=0,
+    pause=time.sleep,
+):
     passed, failed = [], []
     for entry in entries:
         try:
             image_id = entry["image_id"]
-            source = read_reference(image_id)
-            runtime = read_runtime(image_id)
+            source = retry(lambda: read_reference(image_id))
+            runtime = retry(lambda: read_runtime(image_id))
             delta = average_thumbnail_delta(source, runtime)
             if delta > 18:
                 raise ValueError("Gameplay image differs from its source")
-            public = fetch_public(image_id)
+            public = retry(lambda: fetch_public(image_id))
             if type(public) is not bool:
                 raise ValueError("ArtImage visibility metadata missing")
-            status = visibility(image_id, public)
+            status = retry(lambda: visibility(image_id, public))
             if status != ("PUBLIC_OK" if public else "PRIVATE_DENIED"):
                 raise PermissionError("Unexpected anonymous media access")
             passed.append(
@@ -122,6 +174,9 @@ def verify(entries, read_reference, read_runtime, visibility, fetch_public):
             # Do not log str(exc): HTTP and network errors can contain signed
             # image paths, private URLs and authorization headers.
             failed.append((entry["key"], entry["image_id"], type(exc).__name__))
+        finally:
+            if pace_seconds > 0:
+                pause(pace_seconds)
     return passed, failed
 
 
@@ -129,6 +184,7 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("ledger", type=Path)
     parser.add_argument("--require-count", type=int, default=12)
+    parser.add_argument("--pace-seconds", type=float, default=0.25)
     args = parser.parse_args(argv)
     entries = candidates([args.ledger])
     if len(entries) != args.require_count:
@@ -149,6 +205,8 @@ def main(argv=None):
         status, payload = core.http_json(
             "GET", f"{core.KR_BASE_URL}/api/art/image/{image_id}"
         )
+        if status in RETRYABLE_HTTP_CODES:
+            raise TransientMediaError("Transient ArtImage metadata response")
         if status != 200:
             raise ValueError("ArtImage metadata cannot be fetched")
         return ((payload or {}).get("data") or {}).get("isPublic")
@@ -163,6 +221,7 @@ def main(argv=None):
             image_id, core.KR_BASE_URL, public
         ),
         fetch_public=fetch_public,
+        pace_seconds=max(0.0, args.pace_seconds),
     )
     print(f"RUNTIME_MEDIA_VERIFIED={len(passed)}")
     print(f"RUNTIME_MEDIA_FAILED={len(failed)}")
