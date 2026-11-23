@@ -1286,13 +1286,15 @@ tasks:
 - id: t-073
   milestone: m6
   title: Make the ruler-hooked art-queue generator print a one-line per-roster count summary so reviewers can spot dropped rows at a glance
-  status: claimed
+  status: review
   stakes: reversible
   passes: 0
   depends_on: []
-  note: >-
+  note: |-
     Kaizen from reviewer of conductor#7912 (t-072, 2026-11-23 PT). Duplicate ids now fail loudly; the remaining silent-loss mode is a roster that parses to fewer rows than authored. Print e.g. "cast 12 · fish 36 · cards 84 · regions 13" on every run and cover the format with a hermetic test. Output-only; no queue content changes.
-  updated: '2026-11-23T10:36:00Z'
+
+    Committed source roster census and hermetic count-format regression at 7d9c515. PR CI and reviewer verification pending.
+  updated: '2026-11-23T10:43:00Z'
   owner: worker
   claimed_by: 2026-11-23T103600Z-ruler-hooked-t073-6e9b
   claimed_at: '2026-11-23T10:36:00Z'
