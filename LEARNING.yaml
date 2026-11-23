@@ -19188,3 +19188,13 @@ records:
   failure_category: null
   lesson: Escaped literals in Python string splits ('\\n]') silently match nothing and the test
     still passes; assert the split delimiter was actually found.
+- date: '2026-11-23'
+  project: ruler-hooked
+  task: t-076
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: A parity test that skips in CI is not a contract; commit a snapshot fixture and keep the
+    live checkout only as the fixture's own drift detector.

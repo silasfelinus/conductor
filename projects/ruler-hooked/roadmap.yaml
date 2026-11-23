@@ -1328,15 +1328,25 @@ tasks:
 - id: t-076
   milestone: m4
   title: Snapshot the kind_robots runtime fish slugs into a fixture so the roster-runtime parity check runs in CI instead of skipping
-  status: review
+  status: done
   stakes: reversible
   passes: 0
   depends_on: []
   note: |-
     Kaizen from the reviewer of conductor#7927 (t-075, 2026-11-23 PT). `test_runtime_fish_slugs_match_when_app_checkout_is_present` skips on conductor CI because there is no sibling kind_robots checkout, so the runtime half of the parity contract only runs on agent machines. Add a committed fixture of `RULER_HOOKED_FISH` slugs (refreshed by the art-queue generator or a small script) and compare against it in CI; keep the live-checkout comparison as the drift detector for the fixture itself.
 
-    Added a 42-slug committed Kind Robots runtime snapshot and CI-enforced parity; sibling checkout also validates snapshot freshness. PR pending checks.
-  updated: '2026-11-23T20:51:00Z'
+    Added a 42-slug committed Kind Robots runtime snapshot and CI-enforced parity; sibling checkout also validates snapshot freshness.
+
+    Reviewer 2026-11-23 PT: squash-merged conductor#7932 (bb1748d6) on all-green latest-head checks; fixture matches the 42-slug Conductor roster. Done.
+  updated: '2026-11-23T22:00:00Z'
   owner: worker
-  claimed_by: 2026-11-23T204827Z-ruler-hooked-t076-x9c2
-  claimed_at: '2026-11-23T20:48:27Z'
+- id: t-077
+  milestone: m4
+  title: Add a one-command refresh script for the ruler-hooked runtime fish fixture that rewrites it from a kind_robots checkout and fails CI-style when it is stale
+  status: ready
+  stakes: reversible
+  passes: 0
+  depends_on: []
+  note: |-
+    Kaizen from the reviewer of conductor#7932 (t-076, 2026-11-23 PT). `tests/fixtures/ruler_hooked_runtime_fish.json` is hand-maintained; the Worker suggested refreshing it whenever runtime fish change. Add `scripts/refresh_ruler_hooked_runtime_fish.py` (`--write` / `--check`) that reuses the test's fail-closed `RULER_HOOKED_FISH` parser so the next fish batch (43-60) updates the snapshot in one step.
+  updated: '2026-11-23T22:00:00Z'
