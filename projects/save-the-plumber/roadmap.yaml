@@ -564,8 +564,8 @@ tasks:
       Related: PR #4080, issue #4062, conductor/save-the-plumber t-025.
   - id: t-027
     title: "Save the Plumber Maker: playable level editor, saves, sharing, ratings, Mario Maker and Geometry Dash parity"
-    status: claimed
-    updated: '2026-11-23T20:31:35Z'
+    status: review
+    updated: '2026-11-23T20:36:00Z'
     stakes: reversible
     passes: 0
     source_issue: "silasfelinus/kind_robots#4347"
@@ -612,6 +612,8 @@ tasks:
       Fixed out-of-order Maker review loads, stale network errors and request busy-state races; added regression contract assertions. Partial Maker scope; PR pending CI.
 
       PR silasfelinus/kind_robots#5675 merged at ee0ac4b9 after all eight latest-head workflows passed. Fixed stale asynchronous Maker review results and busy/error races. Partial Maker scope; advanced editing, publication and community lifecycle remain.
+
+      Maker course edits now invalidate pending review fetch generations and clear stale loading state; regression contracts added. Partial Maker scope; PR pending CI.
     owner: worker
     claimed_by: 2026-11-23T203135Z-save-the-plumber-t027-k9p2
     claimed_at: '2026-11-23T20:31:35Z'
