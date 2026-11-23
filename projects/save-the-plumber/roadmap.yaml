@@ -334,10 +334,10 @@ tasks:
   - id: t-015
     milestone: m2
     title: "Prove the movement lab replay and real shared-cabinet controls"
-    status: review
+    status: ready
     passes: 0
     stakes: reversible
-    updated: '2026-11-23T21:50:00Z'
+    updated: '2026-11-23T22:42:35Z'
     note: |-
       Reviewer kaizen after kind_robots#3564: add deterministic input replays asserting coyote time, buffered jumps, landing/camera bounds and respawn; exercise real shared ArcadeCabinet keyboard/gamepad/touch controls and visible Admin help at phone/tablet/desktop widths. Use browser fixtures with actual consumers rather than source-field matches. Keep public registry and score exclusions. Initial isolated engine pixels are not shared-cabinet/auth integration or full campaign acceptance.
 
@@ -377,9 +377,8 @@ tasks:
       PR #5632 (bidirectional camera look-ahead) was verified merged at 2026-11-23T04:57:58Z and no Save the Plumber implementation PR remains open. Restoring the nonrecurring movement-lab task to ready for remaining shared-cabinet/browser verification and responsiveness tuning; no human gate.
 
       Implemented immediate landing-tick buffered jumps in worker/save-the-plumber-t-015-landing-buffer-j6m8, preserving spring priority, eliminating redundant landing audio, and adding deterministic replay cases for 0-5 frame buffers and held-button nonrepeat. CI pending; shared-cabinet keyboard/gamepad/touch cross-width browser verification remains on t-015.
-    owner: worker
-    claimed_by: 2026-11-23T214515Z-save-the-plumber-t015-turnbuffer-j6m8
-    claimed_at: '2026-11-23T21:45:15Z'
+
+      Merged kind_robots#5680 at c97fb087 after all eleven exact-head workflows passed, including the actual Chromium cabinet keyboard, gamepad and touch test (run 45275834533). Landing-tick jump buffering and replay regressions shipped. Remaining scope includes visible tutorial/help verification at all three widths and further movement acceptance; keep ready rather than claiming complete.
 
   - id: t-016
     milestone: m4
