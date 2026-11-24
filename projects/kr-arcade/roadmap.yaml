@@ -3023,22 +3023,18 @@ tasks:
   - id: t-185
     milestone: m12
     title: "Superkate Spectrum: durable cross-device account saves with safe guest migration and conflict-aware career merge"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 2026-11-24T050800Z-kr-arcade-t185-8fa19c
     claimed_at: '2026-11-24T05:08:00Z'
-    updated: '2026-11-24T05:08:00Z'
+    updated: '2026-11-24T05:11:00Z'
     passes: 0
     stakes: reversible
     depends_on: [t-176]
-    note: >-
-      Silas, 2026-11-22 PT: wants Candy Crush-style permanent memory,
-      where progress continues across many play sessions. Initial implementation
-      is a versioned, device-local Arcade save with 30 star ratings,
-      Color Rank, XP, highest unlocked stage and Classic records. This
-      task adds authenticated cloud sync, guest-to-account adoption, race-safe
-      merges using max stage/best stars/highest ranked records, and a clear
-      account/device state indicator. No purchase or energy gates.
+    note: |-
+      Silas, 2026-11-22 PT: wants Candy Crush-style permanent memory, where progress continues across many play sessions. Initial implementation is a versioned, device-local Arcade save with 30 star ratings, Color Rank, XP, highest unlocked stage and Classic records. This task adds authenticated cloud sync, guest-to-account adoption, race-safe merges using max stage/best stars/highest ranked records, and a clear account/device state indicator. No purchase or energy gates.
+
+      Fixed cloud conflict retries to merge latest local career rather than stale request snapshots, isolated concurrent uploads by sync generation, made saving status truthful, and retired active cabinet instances on account change. Added VM regression exercising actual store functions with deferred PUTs, 409, and account switch. Branch worker/kr-arcade-t185-save-race-8fa19c. CI and real two-device QA pending.
   - id: t-186
     milestone: m12
     title: "Superkate Spectrum: navigable 30-level star map, cosmetic bubble collection and earned animated effects"

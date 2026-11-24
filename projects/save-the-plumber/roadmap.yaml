@@ -286,11 +286,8 @@ tasks:
   - id: t-012
     milestone: m4
     title: "Produce illustrated world art, enemy animation, sound and cinematics"
-    status: review
-    owner: worker
-    claimed_by: 2026-11-23T040400Z-save-the-plumber-t-012-au7m
-    claimed_at: '2026-11-23T04:04:00Z'
-    updated: '2026-11-23T04:07:00.392Z'
+    status: ready
+    updated: '2026-11-24T05:13:20Z'
     depends_on: [t-002, t-006]
     passes: 0
     stakes: reversible
@@ -298,6 +295,8 @@ tasks:
       Rich original illustrated world/background/foreground layers, heroine animation states, bosses and props; evocative palette families and art-readable collision planes, original music/sfx, skippable intro and world transitions, rescue/ending credits, subtitles and reduced-motion support. Track ArtJob IDs and delivered asset URLs, never call queued art done. 2026-10-13: 84 in-game assets queued (32 stage plates, 8 ground tiles, 14 enemies, 8 bosses x idle/tell, Teo sprites, 8 items, 4 cutscenes); see ART-PLAN.md. Queued, not yet verified delivered.
 
       Original per-world chiptune score (eight distinct motifs) and a boss theme, using the existing gesture-unlocked Arcade cabinet mixer, are committed to worker/save-the-plumber-t-012-music-20261123T0404-au7m. Added score and scene-transition assertions to the existing preview test. Scope is partial: rendered soundtrack, unique effects, remaining art, cinematics and integration verification still require work.
+
+      Verified original world and boss music PR #5630 merged at 75e06c20; jump and landing cues are delivered. Return remaining original effect and audio integration work to ready, not done.
   - id: t-013
     milestone: m5
     title: "Whole-campaign playtests, fairness and device verification"
