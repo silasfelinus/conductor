@@ -1341,7 +1341,7 @@ tasks:
 - id: t-078
   milestone: m4
   title: Make the ruler-hooked fish art frame name exactly one fully-framed specimen for long thin body plans, with a generator test
-  status: claimed
+  status: review
   owner: worker
   claimed_by: 20261124T045400Z-ruler-hooked-t078-a91e6
   claimed_at: '2026-11-24T04:54:00Z'
@@ -1350,4 +1350,6 @@ tasks:
   depends_on: []
   note: |-
     Kaizen from the reviewer closing t-031 (2026-11-23 PT). Border Accordionfish (ArtJob 76962) rendered three cropped pipefish under the shared "one complete fish shown clearly in side profile" frame; the reviewer patched only that species' frame_override. Make the default fish frame in scripts/build_ruler_hooked_art_queue.py (or a body-plan-aware override for pipefish/eel/serpentine silhouettes) say "exactly one ... head to tail fully inside the frame ... no other fish", add a test that every fish prompt carries the single-specimen wording, and restage only rows whose prompt actually changes.
+
+    Branch worker/ruler-hooked-t-078-a91e6 at 66aef366: body-plan-aware single-specimen direction for elongated fish; ten changed request rows force-restaged with prior job IDs retained, Choirfish and existing Accordionfish override preserved; generator regression added. Source and 42-row census verified, pytest/CI pending. New renders remain t-047 verification work.
   updated: '2026-11-24T04:54:00Z'
