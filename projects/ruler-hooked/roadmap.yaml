@@ -87,7 +87,7 @@ tasks:
     direction, and the offline-at-runtime rule.
 - id: t-067
   title: 'Main-game standard: audit and close the gaps for The Ruler Is Hooked'
-  status: claimed
+  status: review
   owner: worker
   claimed_by: 20261124T095300Z-ruler-hooked-t067-cloud-4bf92
   claimed_at: '2026-11-24T09:53:00Z'
@@ -124,6 +124,8 @@ tasks:
     Kind Robots branch worker/ruler-hooked-t-067-access-9bc42 at 256d299a adds validated device-persistent reading size, contrast and motion preferences, title and in-game settings, title achievements access, per-reign deletion confirmation and display preference regression cases. Story reading remains manual. Partial t-067; account-backed saves and deployed device checks remain. Exact-head CI pending.
 
     PR #5723 merged at 091c06dcf9ef3f4c06661fce66820a15800d54a0 after all 13 non-skipped exact-head checks passed, including four contract shards. Partial accessibility and safe deletion scope delivered; account-backed saves and deployed device verification remain.
+
+    App commit fceb638f on worker/ruler-hooked-t-067-cloud-4bf92 adds explicit private account backup and restore of reign slots and scrapbook, using existing revision-guarded ArcadeCabinetSave storage, strict bounded parsing, latest-timestamp merging and device-only custom portraits. Added regression assertions. CI and live account/device verification pending; no automatic upload or schema migration.
 
 - id: t-068
   title: 'The Ruler Is Hooked achievement upgrade: 12 or more live achievements'
