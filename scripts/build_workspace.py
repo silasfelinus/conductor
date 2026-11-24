@@ -279,9 +279,15 @@ def normalize_art_requests(data):
 
         normalized = dict(request)
         normalized["id"] = str(normalized.get("id") or image_path or source_url).strip()
+        # A request that survives the complete-filter while already `done` is
+        # being HELD (delivery not yet confirmed, or round evidence pending),
+        # not reopened. Resetting it to pending re-arms it for submission and
+        # drops the render-done fact: 2026-11-24, one distribute_images.py
+        # prune flipped 448 done ruler-hooked/kr-arcade rows back to pending
+        # because a shared staged filename kept them all "incomplete".
         normalized["status"] = (
-            "done" if is_round_request(request)
-            and str(request.get("status") or "").strip().lower() == "done"
+            "done"
+            if str(request.get("status") or "").strip().lower() == "done"
             else "pending"
         )
         if image_path:

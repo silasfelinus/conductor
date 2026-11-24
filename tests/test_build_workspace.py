@@ -71,3 +71,32 @@ def test_pending_kind_robots_request_is_not_complete():
         "image_path": "public/images/serendipity/a-fox.webp",
     }
     assert bw.request_is_complete(request) is False
+
+
+def test_normalize_keeps_held_done_requests_done(tmp_path, monkeypatch):
+    """A done kind_robots request held back from pruning (its staged render
+    is still in projects/process/) must stay done, never be reopened as
+    pending -- 2026-11-24 a single prune flipped 448 done rows to pending."""
+    process_dir = tmp_path / "process"
+    process_dir.mkdir()
+    monkeypatch.setattr(bw, "PROCESS_DIR", process_dir)
+
+    request = {
+        "id": "ruler-hooked-card-moat-reckoning",
+        "status": "done",
+        "project_slug": "ruler-hooked",
+        "variant": "image",
+        "target_repo": "silasfelinus/kind_robots",
+        "image_path": "public/images/ruler-hooked/card-moat-reckoning.webp",
+    }
+    pending = {
+        "id": "kr-new-request",
+        "target_repo": "silasfelinus/kind_robots",
+        "image_path": "public/images/new.webp",
+    }
+    from scripts.consume_art_queue_core import staged_filename
+
+    (process_dir / staged_filename(request)).write_bytes(b"x")
+    normalized = {r["id"]: r for r in bw.normalize_art_requests({"requests": [request, pending]})}
+    assert normalized["ruler-hooked-card-moat-reckoning"]["status"] == "done"
+    assert normalized["kr-new-request"]["status"] == "pending"
