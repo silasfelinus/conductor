@@ -1,0 +1,8 @@
+version: 1
+project: interface-vision
+task: t-143
+operation: review
+session: 20261124T083500Z-tablet-rotation-8d71
+updated: '2026-11-24T08:38:00Z'
+note: >-
+  Silas reported the Arcade header and content retaining portrait width after rotating an iPad to landscape. Scoped shared-shell fix sizes width directly from dynamic viewport units with a legacy vw fallback. Added same-document WebKit portrait/landscape/portrait regression to the existing responsive audit, checks viewport/shell/header/main/hall geometry and card grid reflow, and tests the stale-width failure fixture. Kind Robots commit 11dcf17314fc846996a5d705d659e104026c8ee1; CI and post-deploy actual WebKit proof pending. No gameplay, schema or deployment changes. Partial t-143; return to ready after merge.
