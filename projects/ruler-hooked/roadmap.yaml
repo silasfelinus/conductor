@@ -87,7 +87,7 @@ tasks:
     direction, and the offline-at-runtime rule.
 - id: t-067
   title: 'Main-game standard: audit and close the gaps for The Ruler Is Hooked'
-  status: claimed
+  status: review
   owner: worker
   claimed_by: 20261124T082500Z-ruler-hooked-t067-access-9bc42
   claimed_at: '2026-11-24T08:25:00Z'
@@ -120,6 +120,8 @@ tasks:
     Implemented separate local cross-reign Royal Scrapbook ledger, legacy slot backfill and pre-delete archival, idempotent fish totals and monotonic ending/character unlocks, illustrated spoiler-safe collections for fish/characters/endings and historic reign records, reachable from title/save selection and in-game Chronicle. Added regression assertions to console.selftest.ts. App branch worker/ruler-hooked-t-067-scrapbook-83ce at ad67ac2d; local git DNS unavailable, CI and deployed browser QA pending. Partial t-067; account sync/general settings remain.
 
     Reconciled Royal Scrapbook #5701 merged at 7ac6fc5d and its subsequent layout correction #5702 merged at 77314f54, all eight workflows on the corrective head passed (layout 45323561499, gameplay 45323561893). Permanent scrapbook is implemented; accessibility settings and account-backed progress remain. Return to ready for the next standards slice; no rendered-device or deployment acceptance claimed.
+
+    Kind Robots branch worker/ruler-hooked-t-067-access-9bc42 at 256d299a adds validated device-persistent reading size, contrast and motion preferences, title and in-game settings, title achievements access, per-reign deletion confirmation and display preference regression cases. Story reading remains manual. Partial t-067; account-backed saves and deployed device checks remain. Exact-head CI pending.
 
 - id: t-068
   title: 'The Ruler Is Hooked achievement upgrade: 12 or more live achievements'
