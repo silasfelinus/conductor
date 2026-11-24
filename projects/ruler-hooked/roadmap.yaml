@@ -87,7 +87,7 @@ tasks:
     direction, and the offline-at-runtime rule.
 - id: t-067
   title: 'Main-game standard: audit and close the gaps for The Ruler Is Hooked'
-  status: claimed
+  status: review
   owner: worker
   claimed_by: 20261124T013900Z-ruler-hooked-t067-f6d2
   claimed_at: '2026-11-24T01:39:00Z'
@@ -110,6 +110,8 @@ tasks:
     Fixed Playbook Studio ending art path to match the four delivered runtime ending plates. This is a partial main-game standards fix; settings, scrapbook, music and other finite scope remain.
 
     Reconciled merged kind_robots#5595 at 702fb25c after verifying all nine returned workflows successful on head 124fbc5e. Ending Studio path fix is delivered, but main-game settings, scrapbook and audio remain incomplete. Return to ready for the next implementation slice.
+
+    Authored five original scene-specific synthesized music themes and six gameplay cues, gesture-safe playback with route teardown and hidden-tab silence, learning-mode music suppression, independently persisted music/effects levels and mute, sound controls at coronation and in-game settings, and score/preferences regression assertions. App branch worker/ruler-hooked-t-067-audio-f6d2 at ee7afd79. Partial t-067; CI and actual audio/browser QA pending. Scrapbook and other general settings remain.
 - id: t-068
   title: 'The Ruler Is Hooked achievement upgrade: 12 or more live achievements'
   status: done
