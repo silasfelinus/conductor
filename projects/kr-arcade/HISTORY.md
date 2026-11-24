@@ -955,6 +955,14 @@ Silas requested the game 2026-11-22 PT with Superkate as the protagonist. Implem
 Verified kind_robots#5624 merged at 00e264dc667b9c212253c867247a0d6f42d3e7bc with completed successful latest-head CI. Current main contains the playable hex-grid shooter, match/cascade/pressure logic, score, career saves, accessibility glyphs and registered regression suite. Close only this engine foundation; art, authored campaign boards, live cross-device QA and publication permission remain separate.
 <!-- note:end t-176 -->
 
+## t-178 — Superkate Spectrum: author 30 curated boards with three special bubble types and six distinct chapter mechanics
+
+<!-- note:begin t-178 -->
+Added 25 fixed Story layouts (30 total), six chapter-specific pressure/reward rules, workshop special rotation, pressure HUD and stale-ammunition repair; Classic retains procedural boards. Connector-side topology and discrete-shot probe confirmed all 25 new layouts are anchored and have matching openings. Regression suite extended; actual CI and full-board solvability/playthrough remain to verify. Branch worker/kr-arcade-t-178-campaign-cd83a7.
+
+2026-11-23 PT: Kind Robots #5706 merged f1187eba038f0d0f14f73752632fdb52f5adb396 after nine completed successful workflows on head de3dcfafdb8df714951a0d68bd69453c9d50b1ce. All 30 authored boards, six chapter rules, special rotation and pressure HUD are implemented and regression-tested. Full campaign solvability/device QA remains t-184; interactive bosses remain t-179. No deployment or publication triggered.
+<!-- note:end t-178 -->
+
 ## t-180 — Superkate Spectrum: story scenes, character dialogue, three meaningful choices and three endings
 
 <!-- note:begin t-180 -->
