@@ -339,7 +339,7 @@ tasks:
   - id: t-011
     milestone: m4
     title: "Build lavish stage parallax, readable effects and character animation"
-    status: claimed
+    status: ready
     depends_on: [t-002, t-007]
     passes: 0
     stakes: reversible
@@ -390,11 +390,21 @@ tasks:
       a fifth), shared BOSS_TELEGRAPH_FRAMES. PR silasfelinus/kind_robots#5748 merged as
       3e8c39c6 after 21 checks passed. Still open: painted stage planes, sprite rigs and
       atlases, and visual acceptance. Stays ready and unclaimed.
-    updated: '2026-11-24T17:46:35Z'
-    implementation_pr: 'silasfelinus/kind_robots#5748'
+
+      2026-11-24 PT eel/ray windup increment: B07 Glass Eel (true body only) and B06 Lantern
+      Ray now wind up across their own warning lengths with the shared rainbowBossWindup;
+      nurseries, beacon, outline and rings stay on the hitbox. New exports
+      glassEelWarningFrames/lanternRayWarningFrames, assertions in verifyRainbowEffects. PR
+      silasfelinus/kind_robots#5752, CI pending. Branch-medic in the same run opened
+      kind_robots#5749-5751 to land the three round-1 critic reports. Still open: painted
+      stage planes, sprite rigs and atlases, and visual acceptance.
+
+      PR silasfelinus/kind_robots#5752 merged as 2492afc8. The B07/B06 windup is live on main.
+      Still open: painted stage planes, sprite rigs and atlases, and visual acceptance. Stays
+      ready and unclaimed.
+    updated: '2026-11-24T18:05:58Z'
+    implementation_pr: 'silasfelinus/kind_robots#5752'
     owner: worker
-    claimed_by: 2026-11-24T17-46-35Z-focused-johnson
-    claimed_at: '2026-11-24T17:46:35Z'
   - id: t-012
     milestone: m4
     title: "Produce opening, between-stage dialogue, endings, sound and score"
