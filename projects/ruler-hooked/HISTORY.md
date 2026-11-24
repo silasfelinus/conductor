@@ -827,3 +827,13 @@ Added a shared runtime roster parser, deterministic --write/--check snapshot CLI
 
 Merged conductor#7938 at 55e7e233 after all latest-head workflows passed, including corrected handoff template run 45289867898. Shared parser and refresh/check command with regression coverage delivered.
 <!-- note:end t-077 -->
+
+## t-078 — Make the ruler-hooked fish art frame name exactly one fully-framed specimen for long thin body plans, with a generator test
+
+<!-- note:begin t-078 -->
+Kaizen from the reviewer closing t-031 (2026-11-23 PT). Border Accordionfish (ArtJob 76962) rendered three cropped pipefish under the shared "one complete fish shown clearly in side profile" frame; the reviewer patched only that species' frame_override. Make the default fish frame in scripts/build_ruler_hooked_art_queue.py (or a body-plan-aware override for pipefish/eel/serpentine silhouettes) say "exactly one ... head to tail fully inside the frame ... no other fish", add a test that every fish prompt carries the single-specimen wording, and restage only rows whose prompt actually changes.
+
+Branch worker/ruler-hooked-t-078-a91e6 at 66aef366: body-plan-aware single-specimen direction for elongated fish; ten changed request rows force-restaged with prior job IDs retained, Choirfish and existing Accordionfish override preserved; generator regression added. Source and 42-row census verified, pytest/CI pending. New renders remain t-047 verification work.
+
+Conductor PR #7949 merged at 8f86bf76 after all latest checks passed, including 5154 pytest cases and both fish expansion tests. Ten changed specimen prompts restaged with original job provenance; actual render delivery and visual inspection remain under t-047. Handoff template failure corrected in PR metadata and replacement run 45332052984 passed.
+<!-- note:end t-078 -->

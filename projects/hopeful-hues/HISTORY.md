@@ -47,6 +47,23 @@ Implemented special-creation and two-special swap orders, mixed regional objecti
 Special orders and animated Kindness Overflow merged; all six CI workflows green. Live interaction acceptance remains in t-006. Implementation PR silasfelinus/kind_robots#5683.
 <!-- note:end t-010 -->
 
+## t-011 — Helper tools and pre-level boosts: Sparkle Wand, Free Swap, Comb Brush, start-with-special boosts and a daily gift
+
+<!-- note:begin t-011 -->
+Parity audit 2026-11-23 PT. The game has only +5 moves and Shuffle. Add in-level tools (clear any one tile, swap any two tiles, paint a tile into a comb) and pre-level boosts chosen on the level intro card (start with a Glitter Bomb or Rainbow Dye), earned through quests, achievements and a gentle daily gift, never purchases. Respect the Back button (a tool use is one Back step) and record usage in quests.
+
+Implemented three in-level tools, optional starting specials, daily gifts, quest and achievement rewards, and inventory-aware Back snapshots including Shuffle and extra moves. Added deterministic tool and daily gift contract tests. CI and browser acceptance pending.
+
+2026-11-24 PT (pr-medic): CI was red on a cross-realm test artifact (vm E.clone()
+objects vs test-realm fixture tiles failed deepStrictEqual on prototype, JSON
+identical). Fixed in e5e471df by re-cloning the crafted fixture in the engine realm; all
+12 checks green; merged kind_robots#5688 as 4897c0c9. Verified: contract (495 levels),
+changed-file Prettier, TypeScript, layout-contract, plus a local Chromium load of
+/hopeful-hues/ at 390px with zero page/console errors. Not verified: full in-browser
+tool selection/reward/Back flows (no preview; post-deploy check on kindrobots.org after
+Force Update).
+<!-- note:end t-011 -->
+
 ## t-012 — Hand-authored level layouts for every sixth level, forks and finales
 
 <!-- note:begin t-012 -->

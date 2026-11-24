@@ -944,3 +944,21 @@ Added an all-season layout and wave-bounds regression suite in kind_robots branc
 
 Merged kind_robots#5579 as bc04d36; six latest-head GitHub Actions workflows completed successfully. Seasonal layout and wave regression contract landed.
 <!-- note:end t-175 -->
+
+## t-176 — Superkate Spectrum: ship playable hex-grid color shooter, cascade, pressure, score, saves and accessibility glyphs
+
+<!-- note:begin t-176 -->
+Silas requested the game 2026-11-22 PT with Superkate as the protagonist. Implementation PR is open; this first playable slice is not the completed campaign.
+
+2026-11-22 PT: extended open Kind Robots PR #5624 with versioned permanent career saves (XP, Color Rank, stage unlocks, best stars, lifetime pops), replayable Story, endless Classic mode, four earned bubble looks, Prism/Burst/Ribbon mechanics, sparkle animations and new regression checks. Local device save survives game-over; user requested cross-device memory too. Companion Conductor PR adds t-185 cloud sync and t-186 star-map polish; neither is implemented yet. PR remains gated for Kate's consent to public portrait likeness and must pass all final-head CI before merging.
+
+Verified kind_robots#5624 merged at 00e264dc667b9c212253c867247a0d6f42d3e7bc with completed successful latest-head CI. Current main contains the playable hex-grid shooter, match/cascade/pressure logic, score, career saves, accessibility glyphs and registered regression suite. Close only this engine foundation; art, authored campaign boards, live cross-device QA and publication permission remain separate.
+<!-- note:end t-176 -->
+
+## t-180 — Superkate Spectrum: story scenes, character dialogue, three meaningful choices and three endings
+
+<!-- note:begin t-180 -->
+2026-11-22 PT: added playable three-decision branching scenes, six neighborhood dialogue voices, three outcome-specific endings, chapter rewards, local/cloud-persisted decisions and ending memories on open Kind Robots PR #5624 (head 58ec2fb). Regression coverage checks pause-and-choose input, special/heart rewards, replay avoidance, cloud merges and forged-save rejection. CI is pending; Kate likeness publication consent and main-branch merge remain gated.
+
+Verified kind_robots#5624 merged at 00e264dc667b9c212253c867247a0d6f42d3e7bc with successful final-head Contract Tests. Current main includes six chapter voices, three interactive decisions with consequences and three saved endings in story.ts and superkateSpectrum.ts; regression assertions cover choices and ending persistence. Close authored story/choice slice only; full campaign QA and public likeness consent remain separate.
+<!-- note:end t-180 -->

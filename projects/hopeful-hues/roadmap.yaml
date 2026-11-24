@@ -159,19 +159,10 @@ tasks:
     updated: '2026-11-24T05:04:49Z'
     passes: 0
     stakes: reversible
-    note: |-
-      Parity audit 2026-11-23 PT. The game has only +5 moves and Shuffle. Add in-level tools (clear any one tile, swap any two tiles, paint a tile into a comb) and pre-level boosts chosen on the level intro card (start with a Glitter Bomb or Rainbow Dye), earned through quests, achievements and a gentle daily gift, never purchases. Respect the Back button (a tool use is one Back step) and record usage in quests.
+    note: >-
+      Parity audit 2026-11-23 PT.
 
-      Implemented three in-level tools, optional starting specials, daily gifts, quest and achievement rewards, and inventory-aware Back snapshots including Shuffle and extra moves. Added deterministic tool and daily gift contract tests. CI and browser acceptance pending.
-
-      2026-11-24 PT (pr-medic): CI was red on a cross-realm test artifact (vm E.clone()
-      objects vs test-realm fixture tiles failed deepStrictEqual on prototype, JSON
-      identical). Fixed in e5e471df by re-cloning the crafted fixture in the engine realm; all
-      12 checks green; merged kind_robots#5688 as 4897c0c9. Verified: contract (495 levels),
-      changed-file Prettier, TypeScript, layout-contract, plus a local Chromium load of
-      /hopeful-hues/ at 390px with zero page/console errors. Not verified: full in-browser
-      tool selection/reward/Back flows (no preview; post-deploy check on kindrobots.org after
-      Force Update).
+      Full history: projects/hopeful-hues/HISTORY.md#t-011
     implementation_pr: 'silasfelinus/kind_robots#5688'
   - id: t-012
     milestone: m2
