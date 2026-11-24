@@ -42,3 +42,37 @@ def test_expanded_fish_stays_balanced_and_staged():
             assert request["prompt"] == entry["prompt"]
             assert queue.contract_violations(request["prompt"]) == []
             assert len(request["prompt"]) <= 900
+
+
+def test_long_fish_prompts_show_exactly_one_complete_specimen():
+    roster = yaml.safe_load(queue.FISH_ROSTER.read_text(encoding="utf-8"))["fish"]
+    staged = queue.staged_rows(queue.ART_PROMPTS.read_text(encoding="utf-8"))
+    entries = {
+        entry["id"].removeprefix("ruler-hooked-fish-"): entry
+        for entry in queue.fish_entries()
+    }
+    elongated = {
+        "bridgeback-sturgeon", "crown-of-reeds-pike", "tollbell-sturgeon",
+        "ashbelly-gar", "tithe-lamprey", "clockwork-riffle-loach",
+        "parcelglass-eel", "lockjaw-burbot", "treaty-sailfish",
+        "pierlock-eel", "border-accordionfish",
+    }
+    assert elongated <= entries.keys()
+    for species in roster:
+        slug = species["slug"]
+        entry = entries[slug]
+        prompt = entry["prompt"]
+        if slug == "choirfish":
+            assert "all three fish of the trio" in prompt
+            assert "exactly one single fish" not in prompt
+        elif slug in elongated or queue.LONG_FISH_BODY.search(species["silhouette"]):
+            assert "exactly one single" in prompt, slug
+            assert "head to tail fully visible" in prompt, slug
+            assert "no other fish" in prompt, slug
+            assert " ".join(staged[entry["id"]]["prompt"].split()) == prompt, slug
+        else:
+            assert (
+                "the whole creature clearly visible in profile" in prompt
+                or "one complete fish shown clearly in side profile" in prompt
+            ), slug
+        assert queue.contract_violations(prompt) == [], slug

@@ -1135,6 +1135,27 @@ FISH_FRAME = (
     "a clean specimen study, the whole creature clearly visible in profile "
     "against soft open water, nothing else competing for attention"
 )
+LONG_FISH_BODY = re.compile(
+    r"\b(?:eel|lamprey|pipefish|gar|loach|sturgeon|pike|burbot|sailfish)\b",
+    re.IGNORECASE,
+)
+LONG_FISH_FRAME = (
+    "exactly one single fish, head to tail fully visible with open water on every "
+    "side, shown clearly in side profile, no other fish"
+)
+GENERIC_FISH_OVERRIDE = "one complete fish shown clearly in side profile on clean open water"
+
+
+def fish_frame(species: dict) -> str:
+    """Protect elongated specimens from multi-fish and cropped compositions."""
+    override = species.get("frame_override")
+    # Preserve authored exceptions, including Choirfish's three-body design and
+    # Border Accordionfish's specifically shortened pipefish pose.
+    if override and " ".join(str(override).split()) != GENERIC_FISH_OVERRIDE:
+        return override
+    if LONG_FISH_BODY.search(str(species["silhouette"])):
+        return LONG_FISH_FRAME
+    return override or FISH_FRAME
 
 
 def fish_entries() -> list[dict]:
@@ -1153,7 +1174,7 @@ def fish_entries() -> list[dict]:
         # `silhouette` and `distinction` are already written as visual direction --
         # use them verbatim rather than paraphrasing, so the roster stays the single
         # source and an edit there reaches the art without passing through a person.
-        frame = species.get("frame_override") or FISH_FRAME
+        frame = fish_frame(species)
         style = species.get("style_override") or rainbow_style("pristine", "specimen")
         body = (
             f"{species['name']}, a fantastical freshwater fish of a lakeside fantasy "
