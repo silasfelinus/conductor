@@ -397,7 +397,14 @@ tasks:
       Merged Kind Robots PR #5360 as 0635f88902e2cd7aef0b27c4eb89239d1d821e9c after all 10 latest workflow checks passed. The 15 pilot-set reveal and ending tracks are integrated, but comms settings, cinematic boards and audio remain. Release claim for continued implementation.
 
       Implemented independent local 1-4 player C.A.T.S. crew selection and checkpoint-safe ordered pilot rosters, making the 15 previously merged authored dialogue masks reachable in real play. PR pending. Audio, subtitle controls, full cinematics and 15-mask runtime QA remain open; this review is a partial implementation, not task completion.
-    updated: '2026-11-20T00:44:03Z'
+
+      2026-11-24 PT: kind_robots#5687 (merged 12868a79) adds four orchestral detour themes
+      rendered offline by scripts/rainbow-score (levels matched to the Act cues), distinct SFX
+      for super/shield/hurt/boss phase/route fork/stinger, and the route stingers. With comms
+      full/story/off (#5670) and the 15 party masks, t-012's remaining scope is the animated
+      cinematics, tracked under t-030.
+    updated: '2026-11-24T00:25:18Z'
+    implementation_pr: 'silasfelinus/kind_robots#5687'
   - id: t-013
     milestone: m5
     title: "Deterministic combat fairness, multiplayer soak and campaign QA"
