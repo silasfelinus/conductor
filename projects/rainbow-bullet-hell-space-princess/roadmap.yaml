@@ -1297,7 +1297,7 @@ tasks:
     stakes: reversible
     depends_on: []
     source: independent-review-round-1-2026-11-23
-    updated: '2026-11-24T07:34:00Z'
+    updated: '2026-11-24T10:52:49Z'
     note: >-
       From the independent gameplay critic (REVIEW-ROUND-1-2026-11-23.md, D1-D3, D5-D9, P-15): super on a short B tap only (hold stays focus); cut the kill refund, a radius wipe, boss damage as a share of max HP; co-op boss HP about 2.5 + 2(n-1); per-kind guardian movement, HP tier by Act, aimed fans that close the aimed line, varied arrival; Crown spoke and ring jitter or an aimed spoke so no ray is safe; Act-specific launchers; boss returns to the start of its phase on continue (D8 default, owner may override); optional seeded variations. Extend verifyRainbowBossCamping to every boss and the persona matrix as regression evidence.
 
@@ -1313,7 +1313,10 @@ tasks:
       Remaining: D7 Act-specific launchers, D9 seeded variation (optional), P-15 Leviathan
       burst, and the camping audit's other flagged phases (Delphion 2, Lantern Ray, Glass Eel,
       Leviathan 3) to confirm in-engine.
-    implementation_pr: 'silasfelinus/kind_robots#5713'
+
+      2026-11-24 PT: D7 (eight Act-specific mortar shells) and P-15 (the Leviathan burst
+      spawns as two rings) fixed in kind_robots#5737. Left: D9 (optional seed variation).
+    implementation_pr: 'silasfelinus/kind_robots#5737'
   - id: t-066
     milestone: m4
     title: 'Story critic round 1: choice-specific endings, spoken Crown plea, real crew exchanges, per-pilot Act voices, Lilt agency'
