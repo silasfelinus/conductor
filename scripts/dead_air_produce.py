@@ -67,6 +67,26 @@ def lettering_surface_problems(prompt: str) -> list[str]:
     return [f"lettering-surface: {m.group(0).strip()}" for m in LETTERING_SURFACES.finditer(prompt)]
 
 
+# MV29 (Hold Music Day Spa) painted the spa's peach walls, wicker chairs, ferns and armrest
+# telephones into the s1 office "before" shot and the s4 back-room switchboard, because
+# `visual_style` becomes the styleBible appended to every still prompt. The style bible
+# should name era, medium, palette, light and film texture; each shot's image_prompt
+# carries its own location, props and wardrobe.
+STYLE_BIBLE_SET_DRESSING = re.compile(
+    r"\b(?:kitchens?|dining rooms?|living rooms?|lounges?|interiors?|walls?|windows?|"
+    r"shelves|floors?|linoleum|refrigerators?|chairs?|chaises?|sofas?|tables?|counters?|"
+    r"armrests?|wicker|ferns?|telephones?|phones?|headphones?|cornfields?|sidewalks?|"
+    r"streets?|depots?|storefronts?|offices?|awnings?|coats?|scarves|vests?|sweaters?|"
+    r"cardigans?|keys|clocks?|dishes|packets?|tinsel|turkey)\b",
+    re.I,
+)
+
+
+def style_bible_set_dressing_problems(style: str) -> list[str]:
+    """Location, prop and wardrobe nouns that would bleed into every shot's still."""
+    return [f"style-bible-set-dressing: {m.group(0)}" for m in STYLE_BIBLE_SET_DRESSING.finditer(style)]
+
+
 def paint_prompt_problems(prompt: str) -> list[str]:
     errors = [f"{name}: {found.group(0)}" for name, pattern in PAINT_GUARDS.items()
               if (found := pattern.search(prompt))]

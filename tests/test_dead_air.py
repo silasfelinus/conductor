@@ -502,3 +502,25 @@ def test_unrendered_briefs_give_the_painter_no_lettering_surface():
         painted = [e["visual_style"]] + [s["image_prompt"] for s in e["shots"]]
         found = [p for text in painted for p in lettering_surface_problems(text)]
         assert not found, f"{path.name}: {found}"
+
+
+def test_unrendered_style_bibles_carry_look_not_set_dressing():
+    """MV29 painted the spa's walls, wicker chairs, ferns and armrest telephones into its
+    office hook and back-room reversal: `visual_style` is appended to every still prompt.
+    Unrendered briefs keep era, medium, palette, light and texture there; locations,
+    props and wardrobe belong in each shot's image_prompt."""
+    from dead_air_produce import style_bible_set_dressing_problems
+
+    assert style_bible_set_dressing_problems(
+        "peach and seafoam pastel walls, wicker chairs, potted ferns, "
+        "beige corded telephones on every armrest")
+    assert style_bible_set_dressing_problems("mid-century modern dining rooms with starburst wall clocks")
+    assert not style_bible_set_dressing_problems(
+        "Original late-1980s commercial painting, tangerine, teal and cream palette, "
+        "pale Sunday-morning snow light, soft videotape bloom with gentle chroma bleed")
+    for path in sorted((ROOT / "projects/dead-air/episodes").glob("*.yaml")):
+        e = load_episode(path)
+        if e.get("status") != "authored" or e["date"] < "2026-11-24":
+            continue
+        found = style_bible_set_dressing_problems(e["visual_style"])
+        assert not found, f"{path.name}: {found}"
