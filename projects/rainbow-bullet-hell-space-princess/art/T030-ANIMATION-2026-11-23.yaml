@@ -28,6 +28,7 @@ lanes:
   guidance: 2.5
 subjects:
 - key: t030-idle-picket
+  verdict: 'reject: 2026-11-24 PT review, WAN rendered the tight-cropped still at 832x480 and crop-zoomed it (craft cut at the frame edge); replaced by the framed -v2 cell'
   lane: wan-mp4
   entity: enemy-animation
   title: picket idle cycle
@@ -49,6 +50,7 @@ subjects:
       status: DONE
       art_image_id: 279849
 - key: t030-idle-spiral
+  verdict: 'reject: 2026-11-24 PT review, WAN rendered the tight-cropped still at 832x480 and crop-zoomed it (craft cut at the frame edge); replaced by the framed -v2 cell'
   lane: wan-mp4
   entity: enemy-animation
   title: spiral idle cycle
@@ -70,6 +72,7 @@ subjects:
       status: DONE
       art_image_id: 279850
 - key: t030-idle-anchor
+  verdict: 'reject: 2026-11-24 PT review, WAN rendered the tight-cropped still at 832x480 and crop-zoomed it (craft cut at the frame edge); replaced by the framed -v2 cell'
   lane: wan-mp4
   entity: enemy-animation
   title: anchor idle cycle
@@ -88,9 +91,10 @@ subjects:
     wan-mp4: 76982
   art:
     wan-mp4:
-      status: RUNNING
-      art_image_id: null
+      status: DONE
+      art_image_id: 279851
 - key: t030-idle-urchin
+  verdict: 'reject: 2026-11-24 PT review, WAN rendered the tight-cropped still at 832x480 and crop-zoomed it (craft cut at the frame edge); replaced by the framed -v2 cell'
   lane: wan-mp4
   entity: enemy-animation
   title: urchin idle cycle
@@ -109,8 +113,8 @@ subjects:
     wan-mp4: 76983
   art:
     wan-mp4:
-      status: PENDING
-      art_image_id: null
+      status: DONE
+      art_image_id: 279852
 - key: t030-idle-lantern
   lane: wan-mp4
   entity: enemy-animation
@@ -130,7 +134,7 @@ subjects:
     wan-mp4: 76984
   art:
     wan-mp4:
-      status: PENDING
+      status: RUNNING
       art_image_id: null
 - key: t030-idle-relay
   lane: wan-mp4
@@ -514,3 +518,160 @@ subjects:
     kontext:
       status: PENDING
       art_image_id: null
+- key: t030-idle-picket-v2
+  lane: wan-mp4
+  entity: enemy-animation
+  title: picket idle cycle, framed
+  asset: rainbow-princess-art/doodle/anim/picket-idle
+  size: 688x576
+  seed: 1130096
+  source_image_id: 263297
+  last_image_id: 263297
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: A seahorse picket scout with a glowing curled tail sways its tail in slow S-curves, its snout tilting
+    as if sniffing the current, the tail light brightening and dimming. The camera does not move and the flat background
+    colour stays exactly the same. Only the craft moves a little; its shape, colours and outline never change. Neon
+    airbrushed 1980s school-folder doodle cartoon. The whole craft stays small in the middle with green space all
+    around it.
+  jobs:
+    wan-mp4: 77005
+- key: t030-idle-spiral-v2
+  lane: wan-mp4
+  entity: enemy-animation
+  title: spiral idle cycle, framed
+  asset: rainbow-princess-art/doodle/anim/spiral-idle
+  size: 768x528
+  seed: 1130989
+  source_image_id: 262196
+  last_image_id: 262196
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: A seahorse spiral scout coils and uncoils its curled dorsal fin, turning a little on the spot as
+    though winding up a spin, its fin ridges rippling one after another. The camera does not move and the flat background
+    colour stays exactly the same. Only the craft moves a little; its shape, colours and outline never change. Neon
+    airbrushed 1980s school-folder doodle cartoon. The whole craft stays small in the middle with green space all
+    around it.
+  jobs:
+    wan-mp4: 77006
+- key: t030-idle-anchor-v2
+  lane: wan-mp4
+  entity: enemy-animation
+  title: anchor idle cycle, framed
+  asset: rainbow-princess-art/doodle/anim/anchor-idle
+  size: 816x480
+  seed: 1130907
+  source_image_id: 262114
+  last_image_id: 262114
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: A seahorse anchor craft dips its heavy beaded chin, a pearl bead swinging gently beneath it on its
+    chain while its little side fins paddle to hold position. The camera does not move and the flat background colour
+    stays exactly the same. Only the craft moves a little; its shape, colours and outline never change. Neon airbrushed
+    1980s school-folder doodle cartoon. The whole craft stays small in the middle with green space all around it.
+  jobs:
+    wan-mp4: 77007
+- key: t030-idle-urchin-v2
+  lane: wan-mp4
+  entity: enemy-animation
+  title: urchin idle cycle, framed
+  asset: rainbow-princess-art/doodle/anim/urchin-idle
+  size: 736x528
+  seed: 1130992
+  source_image_id: 262199
+  last_image_id: 262199
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: A pearl urchin breathes, its ring of bristles fanning outward and settling back, the pearl at its
+    heart glinting with each slow breath, spines trembling at the tips. The camera does not move and the flat background
+    colour stays exactly the same. Only the craft moves a little; its shape, colours and outline never change. Neon
+    airbrushed 1980s school-folder doodle cartoon. The whole craft stays small in the middle with green space all
+    around it.
+  jobs:
+    wan-mp4: 77008
+- key: t030-idle-lantern-v2
+  lane: wan-mp4
+  entity: enemy-animation
+  title: lantern idle cycle, framed
+  asset: rainbow-princess-art/doodle/anim/lantern-idle
+  size: 608x672
+  seed: 1130094
+  source_image_id: 263295
+  last_image_id: 263295
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: A moonjelly lantern's translucent bell slowly swells and contracts, its glowing heart charging brighter
+    on each swell, long ribbon tendrils trailing and curling below. The camera does not move and the flat background
+    colour stays exactly the same. Only the craft moves a little; its shape, colours and outline never change. Neon
+    airbrushed 1980s school-folder doodle cartoon. The whole craft stays small in the middle with green space all
+    around it.
+  jobs:
+    wan-mp4: 77009
+- key: t030-idle-relay-v2
+  lane: wan-mp4
+  entity: enemy-animation
+  title: relay idle cycle, framed
+  asset: rainbow-princess-art/doodle/anim/relay-idle
+  size: 624x640
+  seed: 1130985
+  source_image_id: 262192
+  last_image_id: 262192
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: A moonjelly relay's paired tentacles drift apart and back together, a faint spark jumping between
+    their tips each time they meet, its bell bobbing above them. The camera does not move and the flat background
+    colour stays exactly the same. Only the craft moves a little; its shape, colours and outline never change. Neon
+    airbrushed 1980s school-folder doodle cartoon. The whole craft stays small in the middle with green space all
+    around it.
+  jobs:
+    wan-mp4: 77010
+- key: t030-idle-skimmer-v2
+  lane: wan-mp4
+  entity: enemy-animation
+  title: skimmer idle cycle, framed
+  asset: rainbow-princess-art/doodle/anim/skimmer-idle
+  size: 592x656
+  seed: 1130988
+  source_image_id: 262195
+  last_image_id: 262195
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: A moonjelly skimmer folds its bell inward and opens it again like an umbrella, little electric beads
+    shimmering along its rim as it flutters in place. The camera does not move and the flat background colour stays
+    exactly the same. Only the craft moves a little; its shape, colours and outline never change. Neon airbrushed
+    1980s school-folder doodle cartoon. The whole craft stays small in the middle with green space all around it.
+  jobs:
+    wan-mp4: 77011
+- key: t030-idle-coral-v2
+  lane: wan-mp4
+  entity: enemy-animation
+  title: coral idle cycle, framed
+  asset: rainbow-princess-art/doodle/anim/coral-idle
+  size: 672x592
+  seed: 1130086
+  source_image_id: 263287
+  last_image_id: 263287
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: A coral drifter's knobbly branches sway in a slow current while its inner chambers flash softly
+    in turn, tiny polyps opening and closing along its arms. The camera does not move and the flat background colour
+    stays exactly the same. Only the craft moves a little; its shape, colours and outline never change. Neon airbrushed
+    1980s school-folder doodle cartoon. The whole craft stays small in the middle with green space all around it.
+  jobs:
+    wan-mp4: 77012

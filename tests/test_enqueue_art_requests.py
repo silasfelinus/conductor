@@ -952,3 +952,60 @@ def test_dry_run_uses_body_size_except_for_targeted_edits(tmp_path, monkeypatch,
     assert 'full-frame [standard] 1536x768 "' in output
     assert 'third-arm [targeted] 832x1216 "' in output
     assert "explicit target regions via /api/art/inpaint-targets" in output
+
+
+def test_a_framed_loop_closes_on_its_framed_first_frame(tmp_path):
+    """Rainbow t-030: an idle loop names one still as both ends. With a margin or matte the first frame is
+    reframed, so the last must be the same reframed image, not the raw still, or the loop cannot close."""
+    import base64
+    import io
+
+    from PIL import Image
+
+    buffer = io.BytesIO()
+    Image.new("RGBA", (40, 20), (255, 0, 0, 255)).save(buffer, "PNG")
+    raw = "data:image/png;base64," + base64.b64encode(buffer.getvalue()).decode()
+    ledger = {
+        "project_slug": "rainbow-bullet-hell-space-princess",
+        "lanes": [{"key": "wan-mp4", "engine": "wan", "prompt": "prose", "fps": 16}],
+        "subjects": [
+            {
+                "key": "idle",
+                "size": "640x640",
+                "source_image_id": 7,
+                "last_image_id": 7,
+                "source_matte": "#00ff00",
+                "source_margin": 0.25,
+                "duration": 2,
+                "loop": True,
+                "prompt_prose": "a little craft bobs in place",
+                "lane": "wan-mp4",
+            },
+            {
+                "key": "pair",
+                "size": "640x640",
+                "source_image_id": 7,
+                "last_image_id": 8,
+                "source_margin": 0.25,
+                "duration": 2,
+                "prompt_prose": "a little craft turns to face the other way",
+                "lane": "wan-mp4",
+            },
+        ],
+    }
+    path = tmp_path / "loops.yaml"
+    path.write_text(yaml.safe_dump(ledger, sort_keys=False))
+    header, loaded = enq.load_ledger(path)
+    sent = []
+
+    def post(body):
+        sent.append(body)
+        return 200, {"data": {"jobId": 700 + len(sent)}}
+
+    enq.submit(path, header, loaded, list(enq.iter_cells(loaded)), post=post, fetch_source=lambda i: raw)
+    first, second = sent[0]["firstImageBase64"], sent[0]["secondImageBase64"]
+    assert first == second, "a loop's two ends are the same framed image"
+    assert first != raw, "the margin and matte were applied"
+    framed = Image.open(io.BytesIO(base64.b64decode(first.split(",", 1)[1])))
+    assert framed.size == (60, 40) and framed.getpixel((0, 0))[:3] == (0, 255, 0)
+    assert sent[1]["secondImageBase64"] == raw, "a different last image is still fetched as it is"
