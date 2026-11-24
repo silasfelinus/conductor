@@ -1,0 +1,1461 @@
+# Rainbow Space Princess animation backlog, 2026-11-24 PT (presentation critic P-01, P-03, P-07; Silas: "submit it
+# all now"). Framed idle loops (green matte, 0.2 margin, first frame = last) for every enemy, guardian, player ship
+# and boss phase without one (spiral, relay, coral and skimmer stay stills after three failed takes; B02 phases 2-3
+# wait for their P-12 redraw); one-shot motion for the six ending plates; a Fever Dream S09 card. Private.
+round: rainbow-anim-backlog-2026-11-24
+project_slug: rainbow-bullet-hell-space-princess
+designer: Rainbow Space Princess art bay
+is_public: false
+is_mature: false
+cast_loras: false
+priority: 1000
+auto_submit: true
+lanes:
+- key: wan-mp4
+  label: WAN 2.2 idle loops and one-shot plates
+  engine: wan
+  prompt: prose
+  fps: 16
+  output_format: mp4
+  negative: morphing, melting, extra limbs, extra creatures, duplicated craft, changing colours, changing shape,
+    camera movement, zoom, new objects, lettering, words, logos, watermarks, photorealism, flicker, turning toward
+    the camera, cropping
+- key: kontext
+  label: Flux Kontext dev, restyle of reviewed key art
+  engine: kontext
+  prompt: prose
+  steps: 20
+  guidance: 2.5
+subjects:
+- key: idle-angler
+  lane: wan-mp4
+  entity: sprite-animation
+  title: angler idle loop
+  asset: rainbow-princess-art/doodle/anim/angler-idle
+  size: 832x672
+  seed: 1124700
+  source_image_id: 262115
+  last_image_id: 262115
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: 'Gently, a round neon anglerfish craft with a glowing lure idles in place: its lure bobs and glows
+    brighter and dimmer while its fins ripple. The view stays fixed on it. Its outline, colours and shape stay identical.
+    The flat green matte is unchanged. 1980s neon sticker cartoon style.'
+  jobs:
+    wan-mp4: 77133
+- key: idle-brood
+  lane: wan-mp4
+  entity: sprite-animation
+  title: brood idle loop
+  asset: rainbow-princess-art/doodle/anim/brood-idle
+  size: 672x832
+  seed: 1124701
+  source_image_id: 262116
+  last_image_id: 262116
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: 'Softly, a small four-point star brood spore idles in place: it spins a quarter turn and pulses
+    with light. A locked-off view. Colours and outline remain constant. A plain green field surrounds it. School-folder
+    airbrush cartoon.'
+  jobs:
+    wan-mp4: 77134
+- key: idle-bulwark
+  lane: wan-mp4
+  entity: sprite-animation
+  title: bulwark idle loop
+  asset: rainbow-princess-art/doodle/anim/bulwark-idle
+  size: 832x624
+  seed: 1124702
+  source_image_id: 262117
+  last_image_id: 262117
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: 'Over two seconds, an armoured spiral-shelled fish idles in place: its fins paddle steadily and
+    the spiral on its shell glints. The shot is static. Its outline, colours and shape stay identical. The flat
+    green matte is unchanged. Neon airbrushed 1980s school-folder doodle.'
+  jobs:
+    wan-mp4: 77135
+- key: idle-clawstrike
+  lane: wan-mp4
+  entity: sprite-animation
+  title: clawstrike idle loop
+  asset: rainbow-princess-art/doodle/anim/clawstrike-idle
+  size: 832x480
+  seed: 1124703
+  source_image_id: 262119
+  last_image_id: 262119
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: 'Softly, a long cannon-armed shrimp craft idles in place: its legs paddle and its antennae twitch.
+    The view stays fixed on it. Same silhouette and palette in every frame. The flat green matte is unchanged. School-folder
+    airbrush cartoon.'
+  jobs:
+    wan-mp4: 77136
+- key: idle-courier
+  lane: wan-mp4
+  entity: sprite-animation
+  title: courier idle loop
+  asset: rainbow-princess-art/doodle/anim/courier-idle
+  size: 832x496
+  seed: 1124704
+  source_image_id: 262121
+  last_image_id: 262121
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: 'In a calm loop, a sleek violet courier fish idles in place: its tail sweeps from side to side and
+    its fins flutter. The view stays fixed on it. Every detail of the design is preserved. Green margin on every
+    side. Glossy neon doodle art.'
+  jobs:
+    wan-mp4: 77137
+- key: idle-cutter
+  lane: wan-mp4
+  entity: sprite-animation
+  title: cutter idle loop
+  asset: rainbow-princess-art/doodle/anim/cutter-idle
+  size: 832x544
+  seed: 1124705
+  source_image_id: 262122
+  last_image_id: 262122
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: 'Softly, a toothy shark-jawed cutter fish idles in place: its jaws snap open and shut and its tail
+    flicks. The viewpoint is steady. Its outline, colours and shape stay identical. The green backdrop stays flat
+    and even. Bright 80s doodle sticker look.'
+  jobs:
+    wan-mp4: 77138
+- key: idle-dolphin
+  lane: wan-mp4
+  entity: sprite-animation
+  title: dolphin idle loop
+  asset: rainbow-princess-art/doodle/anim/dolphin-idle
+  size: 832x560
+  seed: 1124706
+  source_image_id: 262123
+  last_image_id: 262123
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: 'In a calm loop, a smiling pink and blue dolphin idles in place: its tail fluke pumps and it bobs
+    gently. Framing stays locked. Colours and outline remain constant. Green margin on every side. Glossy neon doodle
+    art.'
+  jobs:
+    wan-mp4: 77139
+- key: idle-eel
+  lane: wan-mp4
+  entity: sprite-animation
+  title: eel idle loop
+  asset: rainbow-princess-art/doodle/anim/eel-idle
+  size: 832x560
+  seed: 1124707
+  source_image_id: 262124
+  last_image_id: 262124
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: 'Gently, a glassy blue mirror eel idles in place: its body ripples in a slow wave from head to tail.
+    The viewpoint is steady. The design holds steady, frame to frame. The flat green matte is unchanged. Glossy
+    neon doodle art.'
+  jobs:
+    wan-mp4: 77140
+- key: idle-hammerhead
+  lane: wan-mp4
+  entity: sprite-animation
+  title: hammerhead idle loop
+  asset: rainbow-princess-art/doodle/anim/hammerhead-idle
+  size: 832x544
+  seed: 1124708
+  source_image_id: 262186
+  last_image_id: 262186
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: 'In a calm loop, a magenta hammerhead shark idles in place: its tail sweeps and its head turns slightly
+    side to side. The camera stays put. The design holds steady, frame to frame. A plain green field surrounds it.
+    Bright 80s doodle sticker look.'
+  jobs:
+    wan-mp4: 77176
+- key: idle-harbinger
+  lane: wan-mp4
+  entity: sprite-animation
+  title: harbinger idle loop
+  asset: rainbow-princess-art/doodle/anim/harbinger-idle
+  size: 832x832
+  seed: 1124709
+  source_image_id: 262187
+  last_image_id: 262187
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: 'In a calm loop, a round blue sea-urchin harbinger with a gold star idles in place: its spines pulse
+    outward and the star twinkles. The view stays fixed on it. It keeps its exact design and colours. The green
+    backdrop stays flat and even. 1980s neon sticker cartoon style.'
+  jobs:
+    wan-mp4: 77141
+- key: idle-mirror
+  lane: wan-mp4
+  entity: sprite-animation
+  title: mirror idle loop
+  asset: rainbow-princess-art/doodle/anim/mirror-idle
+  size: 832x624
+  seed: 1124710
+  source_image_id: 262189
+  last_image_id: 262189
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: 'A toothy magenta mirror fish idles in place: its fins wave and its jaw works open and closed. The
+    viewpoint is steady. The design holds steady, frame to frame. It floats centred on even green. School-folder
+    airbrush cartoon.'
+  jobs:
+    wan-mp4: 77142
+- key: idle-motherdrone
+  lane: wan-mp4
+  entity: sprite-animation
+  title: motherdrone idle loop
+  asset: rainbow-princess-art/doodle/anim/motherdrone-idle
+  size: 832x544
+  seed: 1124711
+  source_image_id: 279290
+  last_image_id: 279290
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: 'Over two seconds, a white and gold arrowhead drone idles in place: its engine glow flickers and
+    it rocks gently. Hold the same framing throughout. Every detail of the design is preserved. Green margin on
+    every side. Bright 80s doodle sticker look.'
+  jobs:
+    wan-mp4: 77143
+- key: idle-pistol
+  lane: wan-mp4
+  entity: sprite-animation
+  title: pistol idle loop
+  asset: rainbow-princess-art/doodle/anim/pistol-idle
+  size: 832x704
+  seed: 1124712
+  source_image_id: 262191
+  last_image_id: 262191
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: 'Steadily, a round blue pistol shrimp with a yellow claw idles in place: its claw pumps open and
+    closed and its body sways. Hold the same framing throughout. Same silhouette and palette in every frame. Flat
+    green all around it. 1980s neon sticker cartoon style.'
+  jobs:
+    wan-mp4: 77144
+- key: idle-salvager
+  lane: wan-mp4
+  entity: sprite-animation
+  title: salvager idle loop
+  asset: rainbow-princess-art/doodle/anim/salvager-idle
+  size: 832x736
+  seed: 1124713
+  source_image_id: 262193
+  last_image_id: 262193
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: 'Gently, a domed purple salvager with dangling tentacles idles in place: its tentacles curl and
+    uncurl beneath its dome. The camera holds still. Same silhouette and palette in every frame. It floats centred
+    on even green. School-folder airbrush cartoon.'
+  jobs:
+    wan-mp4: 77145
+- key: idle-skate
+  lane: wan-mp4
+  entity: sprite-animation
+  title: skate idle loop
+  asset: rainbow-princess-art/doodle/anim/skate-idle
+  size: 832x672
+  seed: 1124714
+  source_image_id: 262194
+  last_image_id: 262194
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: 'Gently, a pale glass skate ray idles in place: its wing tips flap in a slow beat. The camera holds
+    still. Colours and outline remain constant. A plain green field surrounds it. Bright 80s doodle sticker look.'
+  jobs:
+    wan-mp4: 77146
+- key: idle-squid
+  lane: wan-mp4
+  entity: sprite-animation
+  title: squid idle loop
+  asset: rainbow-princess-art/doodle/anim/squid-idle
+  size: 832x816
+  seed: 1124715
+  source_image_id: 262197
+  last_image_id: 262197
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: 'Over two seconds, a diamond-shaped crystal squid idles in place: its trailing tendrils sway and
+    its eye glows. Hold the same framing throughout. Colours and outline remain constant. The green backdrop stays
+    flat and even. School-folder airbrush cartoon.'
+  jobs:
+    wan-mp4: 77147
+- key: idle-turret
+  lane: wan-mp4
+  entity: sprite-animation
+  title: turret idle loop
+  asset: rainbow-princess-art/doodle/anim/turret-idle
+  size: 688x832
+  seed: 1124716
+  source_image_id: 262198
+  last_image_id: 262198
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: 'A pink flower turret on a teal stalk idles in place: its petals open and close and the stalk sways.
+    A locked-off view. Colours and outline remain constant. Green margin on every side. Neon airbrushed 1980s school-folder
+    doodle.'
+  jobs:
+    wan-mp4: 77148
+- key: idle-guardian-armory-siren
+  lane: wan-mp4
+  entity: sprite-animation
+  title: guardian-armory-siren idle loop
+  asset: rainbow-princess-art/doodle/anim/guardian-armory-siren-idle
+  size: 832x672
+  seed: 1124717
+  source_image_id: 279830
+  last_image_id: 279830
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: 'A golden spiral-shell siren with flowing fins idles in place: its fins flow and the shell glints.
+    A locked-off view. Same silhouette and palette in every frame. Green margin on every side. Glossy neon doodle
+    art.'
+  jobs:
+    wan-mp4: 77149
+- key: idle-guardian-bellkeeper
+  lane: wan-mp4
+  entity: sprite-animation
+  title: guardian-bellkeeper idle loop
+  asset: rainbow-princess-art/doodle/anim/guardian-bellkeeper-idle
+  size: 832x640
+  seed: 1124718
+  source_image_id: 277699
+  last_image_id: 277699
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: 'Over two seconds, a glassy jellyfish bellkeeper idles in place: its bell pulses and its tentacles
+    drift. Framing stays locked. Every detail of the design is preserved. A plain green field surrounds it. School-folder
+    airbrush cartoon.'
+  jobs:
+    wan-mp4: 77150
+- key: idle-guardian-bulwark
+  lane: wan-mp4
+  entity: sprite-animation
+  title: guardian-bulwark idle loop
+  asset: rainbow-princess-art/doodle/anim/guardian-bulwark-idle
+  size: 832x688
+  seed: 1124719
+  source_image_id: 262125
+  last_image_id: 262125
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: 'Steadily, a striped armoured fish guardian idles in place: its fins beat and its armour bands shimmer.
+    The camera stays put. Its outline, colours and shape stay identical. Flat green all around it. School-folder
+    airbrush cartoon.'
+  jobs:
+    wan-mp4: 77151
+- key: idle-guardian-clawstrike
+  lane: wan-mp4
+  entity: sprite-animation
+  title: guardian-clawstrike idle loop
+  asset: rainbow-princess-art/doodle/anim/guardian-clawstrike-idle
+  size: 832x640
+  seed: 1124720
+  source_image_id: 262126
+  last_image_id: 262126
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: 'Over two seconds, a blue armoured crab gunner idles in place: its legs shift and its cannon arm
+    adjusts its aim. The camera stays put. The design holds steady, frame to frame. The flat green matte is unchanged.
+    Glossy neon doodle art.'
+  jobs:
+    wan-mp4: 77152
+- key: idle-guardian-comet-herder
+  lane: wan-mp4
+  entity: sprite-animation
+  title: guardian-comet-herder idle loop
+  asset: rainbow-princess-art/doodle/anim/guardian-comet-herder-idle
+  size: 832x656
+  seed: 1124721
+  source_image_id: 278620
+  last_image_id: 278620
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: 'Softly, a pink manta comet herder idles in place: its broad wings rise and fall. The camera holds
+    still. Its outline, colours and shape stay identical. The green backdrop stays flat and even. 1980s neon sticker
+    cartoon style.'
+  jobs:
+    wan-mp4: 77153
+- key: idle-guardian-courier
+  lane: wan-mp4
+  entity: sprite-animation
+  title: guardian-courier idle loop
+  asset: rainbow-princess-art/doodle/anim/guardian-courier-idle
+  size: 832x512
+  seed: 1124722
+  source_image_id: 262127
+  last_image_id: 262127
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: 'Softly, a magenta courier guardian fish idles in place: its tail sweeps and its fins ripple. The
+    viewpoint is steady. Same silhouette and palette in every frame. The flat green matte is unchanged. School-folder
+    airbrush cartoon.'
+  jobs:
+    wan-mp4: 77154
+- key: idle-guardian-herald
+  lane: wan-mp4
+  entity: sprite-animation
+  title: guardian-herald idle loop
+  asset: rainbow-princess-art/doodle/anim/guardian-herald-idle
+  size: 832x512
+  seed: 1124723
+  source_image_id: 262128
+  last_image_id: 262128
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: 'Softly, a magenta zeppelin-fish herald wearing a gold crown idles in place: it bobs and its fins
+    flutter. The camera holds still. Same silhouette and palette in every frame. The green backdrop stays flat and
+    even. School-folder airbrush cartoon.'
+  jobs:
+    wan-mp4: 77155
+- key: idle-guardian-kelp-warden
+  lane: wan-mp4
+  entity: sprite-animation
+  title: guardian-kelp-warden idle loop
+  asset: rainbow-princess-art/doodle/anim/guardian-kelp-warden-idle
+  size: 832x576
+  seed: 1124724
+  source_url: /rainbow-princess-art/doodle/enemies/guardian-kelp-warden.webp
+  last_image_id: /rainbow-princess-art/doodle/enemies/guardian-kelp-warden.webp
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: 'A frilled kelp warden fish idles in place: its frilled fins wave like kelp. The view stays fixed
+    on it. It keeps its exact design and colours. It floats centred on even green. Glossy neon doodle art.'
+  jobs:
+    wan-mp4: 77156
+- key: idle-guardian-lantern
+  lane: wan-mp4
+  entity: sprite-animation
+  title: guardian-lantern idle loop
+  asset: rainbow-princess-art/doodle/anim/guardian-lantern-idle
+  size: 784x832
+  seed: 1124725
+  source_image_id: 262129
+  last_image_id: 262129
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: 'Steadily, a heart-lantern jellyfish guardian idles in place: its heart glows brighter and dimmer
+    and its tentacles sway. A locked-off view. Colours and outline remain constant. A plain green field surrounds
+    it. School-folder airbrush cartoon.'
+  jobs:
+    wan-mp4: 77157
+- key: idle-guardian-mirror
+  lane: wan-mp4
+  entity: sprite-animation
+  title: guardian-mirror idle loop
+  asset: rainbow-princess-art/doodle/anim/guardian-mirror-idle
+  size: 832x576
+  seed: 1124726
+  source_image_id: 262130
+  last_image_id: 262130
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: 'Gently, a spiny red and blue mirror fish guardian idles in place: its spines flex and its jaw opens
+    and closes. The shot is static. Colours and outline remain constant. Flat green all around it. 1980s neon sticker
+    cartoon style.'
+  jobs:
+    wan-mp4: 77158
+- key: idle-guardian-pearl-warden
+  lane: wan-mp4
+  entity: sprite-animation
+  title: guardian-pearl-warden idle loop
+  asset: rainbow-princess-art/doodle/anim/guardian-pearl-warden-idle
+  size: 832x608
+  seed: 1124727
+  source_image_id: 277698
+  last_image_id: 277698
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: 'In a calm loop, a pearl-studded manta warden idles in place: its wings undulate slowly. The camera
+    stays put. It keeps its exact design and colours. The green backdrop stays flat and even. Glossy neon doodle
+    art.'
+  jobs:
+    wan-mp4: 77159
+- key: idle-guardian-salvager
+  lane: wan-mp4
+  entity: sprite-animation
+  title: guardian-salvager idle loop
+  asset: rainbow-princess-art/doodle/anim/guardian-salvager-idle
+  size: 832x720
+  seed: 1124728
+  source_image_id: 262184
+  last_image_id: 262184
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: 'A grey diving-helmet salvager with tentacles idles in place: its tentacles curl and its eye lamps
+    blink. A locked-off view. It keeps its exact design and colours. Green margin on every side. School-folder airbrush
+    cartoon.'
+  jobs:
+    wan-mp4: 77160
+- key: idle-guardian-shoal-koi
+  lane: wan-mp4
+  entity: sprite-animation
+  title: guardian-shoal-koi idle loop
+  asset: rainbow-princess-art/doodle/anim/guardian-shoal-koi-idle
+  size: 832x608
+  seed: 1124729
+  source_url: /rainbow-princess-art/doodle/enemies/guardian-shoal-koi.webp
+  last_image_id: /rainbow-princess-art/doodle/enemies/guardian-shoal-koi.webp
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: 'Steadily, a white scaled koi idles in place: its tail and fins swish. The view stays fixed on it.
+    Every detail of the design is preserved. A plain green field surrounds it. 1980s neon sticker cartoon style.'
+  jobs:
+    wan-mp4: 77177
+- key: idle-guardian-urchin
+  lane: wan-mp4
+  entity: sprite-animation
+  title: guardian-urchin idle loop
+  asset: rainbow-princess-art/doodle/anim/guardian-urchin-idle
+  size: 832x752
+  seed: 1124730
+  source_image_id: 262185
+  last_image_id: 262185
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: 'Steadily, an armoured urchin knight idles in place: its spines bristle and its glowing eye blinks.
+    The shot is static. Same silhouette and palette in every frame. Green margin on every side. School-folder airbrush
+    cartoon.'
+  jobs:
+    wan-mp4: 77161
+- key: idle-comet-crown
+  lane: wan-mp4
+  entity: sprite-animation
+  title: comet-crown idle loop
+  asset: rainbow-princess-art/doodle/anim/comet-crown-idle
+  size: 832x720
+  seed: 1124731
+  source_image_id: 262083
+  last_image_id: 262083
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: 'Gently, a lilac three-pronged starfighter idles in place: its engine flame flickers and the hull
+    bobs gently. The view stays fixed on it. Every detail of the design is preserved. Green margin on every side.
+    1980s neon sticker cartoon style.'
+  jobs:
+    wan-mp4: 77162
+- key: idle-halo-fin
+  lane: wan-mp4
+  entity: sprite-animation
+  title: halo-fin idle loop
+  asset: rainbow-princess-art/doodle/anim/halo-fin-idle
+  size: 832x576
+  seed: 1124732
+  source_image_id: 262084
+  last_image_id: 262084
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: 'Steadily, a gold flying-saucer starfighter with a cyan dome idles in place: its ring rotates and
+    its dome glints. The view stays fixed on it. Every detail of the design is preserved. Flat green all around
+    it. Neon airbrushed 1980s school-folder doodle.'
+  jobs:
+    wan-mp4: 77163
+- key: idle-petal-wing
+  lane: wan-mp4
+  entity: sprite-animation
+  title: petal-wing idle loop
+  asset: rainbow-princess-art/doodle/anim/petal-wing-idle
+  size: 832x464
+  seed: 1124733
+  source_image_id: 262085
+  last_image_id: 262085
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: 'Steadily, a rose-gold swallowtail starfighter idles in place: its engine glow flickers and it banks
+    a little. Hold the same framing throughout. Colours and outline remain constant. Flat green all around it. Bright
+    80s doodle sticker look.'
+  jobs:
+    wan-mp4: 77164
+- key: idle-prism-lance
+  lane: wan-mp4
+  entity: sprite-animation
+  title: prism-lance idle loop
+  asset: rainbow-princess-art/doodle/anim/prism-lance-idle
+  size: 832x464
+  seed: 1124734
+  source_image_id: 262086
+  last_image_id: 262086
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: 'In a calm loop, a long cyan needle starfighter idles in place: its engine glow flickers and it
+    bobs gently. The shot is static. Its outline, colours and shape stay identical. Flat green all around it. Bright
+    80s doodle sticker look.'
+  jobs:
+    wan-mp4: 77165
+- key: idle-b01-phase1
+  lane: wan-mp4
+  entity: sprite-animation
+  title: b01-phase1 idle loop
+  asset: rainbow-princess-art/doodle/anim/b01-phase1-idle
+  size: 832x640
+  seed: 1124735
+  source_image_id: 262087
+  last_image_id: 262087
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: The neon seahorse serpent coils and uncoils its long ringed body, its curled snout lifting while
+    the yellow spines along its back ripple like a flag. Framing locked; same palette and outline; flat green surround;
+    glossy neon doodle.
+  jobs:
+    wan-mp4: 77178
+- key: idle-b01-phase2
+  lane: wan-mp4
+  entity: sprite-animation
+  title: b01-phase2 idle loop
+  asset: rainbow-princess-art/doodle/anim/b01-phase2-idle
+  size: 832x672
+  seed: 1124736
+  source_image_id: 262088
+  last_image_id: 262088
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: Snarling, the scuffed serpent writhes its ribbed coils tighter, crest bristling and its tail tip
+    flicking back and forth. Framing locked; same palette and outline; flat green surround; glossy neon doodle.
+  jobs:
+    wan-mp4: 77179
+- key: idle-b01-phase3
+  lane: wan-mp4
+  entity: sprite-animation
+  title: b01-phase3 idle loop
+  asset: rainbow-princess-art/doodle/anim/b01-phase3-idle
+  size: 832x672
+  seed: 1124737
+  source_image_id: 262089
+  last_image_id: 262089
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: Furious and scarred, the dragon-headed serpent bares its fangs, its loops heaving as if catching
+    breath and its glowing eye flaring. Framing locked; same palette and outline; flat green surround; glossy neon
+    doodle.
+  jobs:
+    wan-mp4: 77180
+- key: idle-b02-phase1
+  lane: wan-mp4
+  entity: sprite-animation
+  title: b02-phase1 idle loop
+  asset: rainbow-princess-art/doodle/anim/b02-phase1-idle
+  size: 832x832
+  seed: 1124738
+  source_image_id: 262090
+  last_image_id: 262090
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: A towering glassy jellyfish swells and relaxes its pink bell, the hot pink curtain of tentacles
+    beneath it drifting in a slow sway. Framing locked; same palette and outline; flat green surround; glossy neon
+    doodle.
+  jobs:
+    wan-mp4: 77181
+- key: idle-b03-phase1
+  lane: wan-mp4
+  entity: sprite-animation
+  title: b03-phase1 idle loop
+  asset: rainbow-princess-art/doodle/anim/b03-phase1-idle
+  size: 832x640
+  seed: 1124739
+  source_image_id: 262093
+  last_image_id: 262093
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: The purple submarine whale rumbles in place, its propeller glow pulsing, periscope fin nodding and
+    portholes blinking one after another. Framing locked; same palette and outline; flat green surround; glossy
+    neon doodle.
+  jobs:
+    wan-mp4: 77182
+- key: idle-b03-phase2
+  lane: wan-mp4
+  entity: sprite-animation
+  title: b03-phase2 idle loop
+  asset: rainbow-princess-art/doodle/anim/b03-phase2-idle
+  size: 832x608
+  seed: 1124740
+  source_image_id: 262094
+  last_image_id: 262094
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: Dented and sparking, the submarine whale lurches gently, a thruster sputtering blue fire while its
+    hatch rattles. Framing locked; same palette and outline; flat green surround; glossy neon doodle.
+  jobs:
+    wan-mp4: 77183
+- key: idle-b03-phase3
+  lane: wan-mp4
+  entity: sprite-animation
+  title: b03-phase3 idle loop
+  asset: rainbow-princess-art/doodle/anim/b03-phase3-idle
+  size: 832x640
+  seed: 1124741
+  source_image_id: 262095
+  last_image_id: 262095
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: Battered hull smoking, the whale-sub strains forward against its own weight, jaw grinding and its
+    exhaust flaring orange. Framing locked; same palette and outline; flat green surround; glossy neon doodle.
+  jobs:
+    wan-mp4: 77184
+- key: idle-b04-phase1
+  lane: wan-mp4
+  entity: sprite-animation
+  title: b04-phase1 idle loop
+  asset: rainbow-princess-art/doodle/anim/b04-phase1-idle
+  size: 832x608
+  seed: 1124742
+  source_image_id: 262096
+  last_image_id: 262096
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: The sleek blue robot shark hovers on its thrusters, tail fin scything slowly while its metal plates
+    catch passing light. Framing locked; same palette and outline; flat green surround; glossy neon doodle.
+  jobs:
+    wan-mp4: 77185
+- key: idle-b04-phase2
+  lane: wan-mp4
+  entity: sprite-animation
+  title: b04-phase2 idle loop
+  asset: rainbow-princess-art/doodle/anim/b04-phase2-idle
+  size: 832x608
+  seed: 1124743
+  source_image_id: 262097
+  last_image_id: 262097
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: Its armour cracked, the mechanical shark flexes its jointed tail, sparks skittering from a seam
+    and one eye light flickering. Framing locked; same palette and outline; flat green surround; glossy neon doodle.
+  jobs:
+    wan-mp4: 77186
+- key: idle-b04-phase3
+  lane: wan-mp4
+  entity: sprite-animation
+  title: b04-phase3 idle loop
+  asset: rainbow-princess-art/doodle/anim/b04-phase3-idle
+  size: 832x624
+  seed: 1124744
+  source_image_id: 262098
+  last_image_id: 262098
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: Leaking a bright glowing core, the robo-shark twitches its broken fins, the exposed core throbbing
+    like a heart. Framing locked; same palette and outline; flat green surround; glossy neon doodle.
+  jobs:
+    wan-mp4: 77187
+- key: idle-b05-phase1
+  lane: wan-mp4
+  entity: sprite-animation
+  title: b05-phase1 idle loop
+  asset: rainbow-princess-art/doodle/anim/b05-phase1-idle
+  size: 832x528
+  seed: 1124745
+  source_image_id: 262099
+  last_image_id: 262099
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: The striped purple shark glides on the spot, its tall dorsal fin swaying and gill slits fluttering
+    with each breath. Framing locked; same palette and outline; flat green surround; glossy neon doodle.
+  jobs:
+    wan-mp4: 77188
+- key: idle-b05-phase2
+  lane: wan-mp4
+  entity: sprite-animation
+  title: b05-phase2 idle loop
+  asset: rainbow-princess-art/doodle/anim/b05-phase2-idle
+  size: 832x560
+  seed: 1124746
+  source_image_id: 262100
+  last_image_id: 262100
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: Angry now, the striped shark snaps its toothy jaw open and closed, tail lashing in short strokes.
+    Framing locked; same palette and outline; flat green surround; glossy neon doodle.
+  jobs:
+    wan-mp4: 77189
+- key: idle-b05-phase3
+  lane: wan-mp4
+  entity: sprite-animation
+  title: b05-phase3 idle loop
+  asset: rainbow-princess-art/doodle/anim/b05-phase3-idle
+  size: 832x544
+  seed: 1124747
+  source_image_id: 262101
+  last_image_id: 262101
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: Wounded and wild, the striped predator shudders from nose to tail, jaw agape and a sparkle of light
+    escaping a gash. Framing locked; same palette and outline; flat green surround; glossy neon doodle.
+  jobs:
+    wan-mp4: 77190
+- key: idle-b06-phase1
+  lane: wan-mp4
+  entity: sprite-animation
+  title: b06-phase1 idle loop
+  asset: rainbow-princess-art/doodle/anim/b06-phase1-idle
+  size: 832x464
+  seed: 1124748
+  source_image_id: 262102
+  last_image_id: 262102
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: A long glittering magenta tuna treads water, its forked tail beating evenly and the gold stripe
+    along its side shimmering. Framing locked; same palette and outline; flat green surround; glossy neon doodle.
+  jobs:
+    wan-mp4: 77191
+- key: idle-b06-phase2
+  lane: wan-mp4
+  entity: sprite-animation
+  title: b06-phase2 idle loop
+  asset: rainbow-princess-art/doodle/anim/b06-phase2-idle
+  size: 832x560
+  seed: 1124749
+  source_image_id: 262103
+  last_image_id: 262103
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: 'Softly, a long magenta tuna boss, battle-damaged idles in place: it breathes and sways, lights
+    pulsing along its body. The view stays fixed on it. Colours and outline remain constant. It floats centred on
+    even green. Glossy neon doodle art.'
+  jobs:
+    wan-mp4: 77166
+- key: idle-b06-phase3
+  lane: wan-mp4
+  entity: sprite-animation
+  title: b06-phase3 idle loop
+  asset: rainbow-princess-art/doodle/anim/b06-phase3-idle
+  size: 832x512
+  seed: 1124750
+  source_image_id: 262104
+  last_image_id: 262104
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: Exhausted after the battle, the cracked magenta tuna hangs nearly motionless, its mouth opening
+    and closing slowly, gills flaring wide while jagged lightning-bright fissures crawl and flicker over its golden-striped
+    flank and its tail droops. Framing locked; same palette and outline; flat green surround; glossy neon doodle.
+  jobs:
+    wan-mp4: 77200
+- key: idle-b07-phase1
+  lane: wan-mp4
+  entity: sprite-animation
+  title: b07-phase1 idle loop
+  asset: rainbow-princess-art/doodle/anim/b07-phase1-idle
+  size: 832x560
+  seed: 1124751
+  source_image_id: 262105
+  last_image_id: 262105
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: A glassy wireframe eel undulates in an S-curve, light racing along its mesh lines from head to tail.
+    Framing locked; same palette and outline; flat green surround; glossy neon doodle.
+  jobs:
+    wan-mp4: 77192
+- key: idle-b07-phase2
+  lane: wan-mp4
+  entity: sprite-animation
+  title: b07-phase2 idle loop
+  asset: rainbow-princess-art/doodle/anim/b07-phase2-idle
+  size: 832x560
+  seed: 1124752
+  source_image_id: 262106
+  last_image_id: 262106
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: The mesh eel twists, a few wires sparking loose, its glow stuttering as the curve travels down its
+    length. Framing locked; same palette and outline; flat green surround; glossy neon doodle.
+  jobs:
+    wan-mp4: 77193
+- key: idle-b07-phase3
+  lane: wan-mp4
+  entity: sprite-animation
+  title: b07-phase3 idle loop
+  asset: rainbow-princess-art/doodle/anim/b07-phase3-idle
+  size: 832x560
+  seed: 1124753
+  source_image_id: 262107
+  last_image_id: 262107
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: 'In a calm loop, a glassy wireframe eel boss, battle-damaged idles in place: its tail sweeps and
+    its eyes glow. The viewpoint is steady. It keeps its exact design and colours. It floats centred on even green.
+    Glossy neon doodle art.'
+  jobs:
+    wan-mp4: 77167
+- key: idle-b08-phase1
+  lane: wan-mp4
+  entity: sprite-animation
+  title: b08-phase1 idle loop
+  asset: rainbow-princess-art/doodle/anim/b08-phase1-idle
+  size: 832x576
+  seed: 1124754
+  source_image_id: 262108
+  last_image_id: 262108
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: The pink and violet marlin hangs in the current, its long bill tilting and its sail fin rising and
+    falling. Framing locked; same palette and outline; flat green surround; glossy neon doodle.
+  jobs:
+    wan-mp4: 77194
+- key: idle-b08-phase2
+  lane: wan-mp4
+  entity: sprite-animation
+  title: b08-phase2 idle loop
+  asset: rainbow-princess-art/doodle/anim/b08-phase2-idle
+  size: 832x576
+  seed: 1124755
+  source_image_id: 262109
+  last_image_id: 262109
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: Scorched along one side, the marlin rolls its eye and flicks its crescent tail, embers drifting
+    off its fin. Framing locked; same palette and outline; flat green surround; glossy neon doodle.
+  jobs:
+    wan-mp4: 77195
+- key: idle-b08-phase3
+  lane: wan-mp4
+  entity: sprite-animation
+  title: b08-phase3 idle loop
+  asset: rainbow-princess-art/doodle/anim/b08-phase3-idle
+  size: 832x592
+  seed: 1124756
+  source_image_id: 262110
+  last_image_id: 262110
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: Snarling with a broken bill, the marlin shakes its head, its sail torn and quivering. Framing locked;
+    same palette and outline; flat green surround; glossy neon doodle.
+  jobs:
+    wan-mp4: 77196
+- key: idle-b09-phase1
+  lane: wan-mp4
+  entity: sprite-animation
+  title: b09-phase1 idle loop
+  asset: rainbow-princess-art/doodle/anim/b09-phase1-idle
+  size: 832x592
+  seed: 1124757
+  source_image_id: 262111
+  last_image_id: 262111
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: The dark crystal leviathan breathes slowly, ridged spines along its back glinting and its tail sweeping
+    in a wide arc. Framing locked; same palette and outline; flat green surround; glossy neon doodle.
+  jobs:
+    wan-mp4: 77197
+- key: idle-b09-phase2
+  lane: wan-mp4
+  entity: sprite-animation
+  title: b09-phase2 idle loop
+  asset: rainbow-princess-art/doodle/anim/b09-phase2-idle
+  size: 832x592
+  seed: 1124758
+  source_image_id: 262112
+  last_image_id: 262112
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: Its crystal hide cracking, the leviathan heaves, shards lifting from its back and settling again.
+    Framing locked; same palette and outline; flat green surround; glossy neon doodle.
+  jobs:
+    wan-mp4: 77198
+- key: idle-b09-phase3
+  lane: wan-mp4
+  entity: sprite-animation
+  title: b09-phase3 idle loop
+  asset: rainbow-princess-art/doodle/anim/b09-phase3-idle
+  size: 832x592
+  seed: 1124759
+  source_image_id: 262113
+  last_image_id: 262113
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: Its golden heart exposed, the leviathan convulses gently, the heart light beating and fractured
+    spines trembling. Framing locked; same palette and outline; flat green surround; glossy neon doodle.
+  jobs:
+    wan-mp4: 77199
+- key: ending-motion-restore
+  lane: wan-mp4
+  entity: cinematic
+  title: restore ending plate, one-shot motion
+  asset: rainbow-princess-video/endings/restore
+  size: 832x480
+  seed: 1124800
+  source_image_id: 279195
+  duration: 4
+  loop: false
+  prompt_prose: Dawn light swells over the open prism Crown, the freed sea-creature ships glide upward through the
+    glow and the four little cat ships drift across the sunrise. The view stays fixed on it. Its outline, colours
+    and shape stay identical. Neon airbrushed 1980s school-folder doodle.
+  jobs:
+    wan-mp4: 77168
+- key: ending-motion-evacuate
+  lane: wan-mp4
+  entity: cinematic
+  title: evacuate ending plate, one-shot motion
+  asset: rainbow-princess-video/endings/evacuate
+  size: 832x480
+  seed: 1124801
+  source_image_id: 279196
+  duration: 4
+  loop: false
+  prompt_prose: The rainbow-sailed mothership leads the convoy steadily rightward while palace shards crumble and
+    drift apart behind it and the escort ships weave alongside. The camera holds still. Same silhouette and palette
+    in every frame. 1980s neon sticker cartoon style.
+  jobs:
+    wan-mp4: 77169
+- key: ending-motion-sever-open
+  lane: wan-mp4
+  entity: cinematic
+  title: sever-open ending plate, one-shot motion
+  asset: rainbow-princess-video/endings/sever-open
+  size: 832x480
+  seed: 1124802
+  source_image_id: 279935
+  duration: 4
+  loop: false
+  prompt_prose: Paper lanterns rise slowly into the night, their reflections shimmering on the mirror sea, while
+    the dark prism shards turn overhead. Framing stays locked. It keeps its exact design and colours. Glossy neon
+    doodle art.
+  jobs:
+    wan-mp4: 77170
+- key: ending-motion-loyal-restore
+  lane: wan-mp4
+  entity: cinematic
+  title: loyal-restore ending plate, one-shot motion
+  asset: rainbow-princess-video/endings/loyal-restore
+  size: 832x480
+  seed: 1124803
+  source_image_id: 279938
+  duration: 4
+  loop: false
+  prompt_prose: The warship cordon sits still as the prism Crown glows and the resting sea creatures stir a little
+    in their orderly rows. The shot is static. Colours and outline remain constant. School-folder airbrush cartoon.
+  jobs:
+    wan-mp4: 77171
+- key: ending-motion-loyal-evacuate
+  lane: wan-mp4
+  entity: cinematic
+  title: loyal-evacuate ending plate, one-shot motion
+  asset: rainbow-princess-video/endings/loyal-evacuate
+  size: 832x480
+  seed: 1124804
+  source_image_id: 279933
+  duration: 4
+  loop: false
+  prompt_prose: The banner ripples on the bare reef, the last rescue pods shrink toward the horizon and the small
+    cat ships hover beside the warship. The viewpoint is steady. The design holds steady, frame to frame. Bright
+    80s doodle sticker look.
+  jobs:
+    wan-mp4: 77172
+- key: ending-motion-loyal-sever
+  lane: wan-mp4
+  entity: cinematic
+  title: loyal-sever ending plate, one-shot motion
+  asset: rainbow-princess-video/endings/loyal-sever
+  size: 832x480
+  seed: 1124805
+  source_image_id: 279939
+  duration: 4
+  loop: false
+  prompt_prose: The cat squadron peels away to the right with streaming exhaust as the searchlights sweep and the
+    Crown shards dim one by one. The camera stays put. Every detail of the design is preserved. Neon airbrushed
+    1980s school-folder doodle.
+  jobs:
+    wan-mp4: 77173
+- key: s09-card-fever-1
+  lane: kontext
+  entity: stage-card
+  title: S09 Eclipse Crown finale title card, Fever Dream
+  asset: rainbow-princess-art/doodle/stages/s09-card
+  size: 1344x768
+  seed: 1124901
+  source_image_id: 247508
+  prompt_prose: 'Keep the same four small starships flying in formation, and set them inside a vast crystal machine
+    crown in 1980s neon rainbow airbrush school-folder sticker art: long corridors of tall prism shards in hot pink,
+    electric purple and turquoise converge on a glowing heart core, with glossy airbrushed shading, bold clean outlines,
+    glitter sparkles and four-point twinkles.'
+  jobs:
+    kontext: 77174
+- key: s09-card-fever-2
+  lane: kontext
+  entity: stage-card
+  title: S09 Eclipse Crown finale title card, Fever Dream
+  asset: rainbow-princess-art/doodle/stages/s09-card
+  size: 1344x768
+  seed: 1124902
+  source_image_id: 247508
+  prompt_prose: 'Place these four small starships deep inside a giant glowing prism crown, drawn as glossy neon
+    1980s school-folder doodle art: crystal corridors radiating toward a bright heart at the centre, hot pink and
+    turquoise light, thick confident outlines, hearts and twinkles scattered in the air.'
+  jobs:
+    kontext: 77175
+- key: idle-spiral-v4
+  lane: wan-mp4
+  entity: sprite-animation
+  title: spiral idle loop
+  asset: rainbow-princess-art/doodle/anim/spiral-idle
+  size: 832x592
+  seed: 1125000
+  source_url: /rainbow-princess-art/doodle/enemies/spiral.webp
+  last_image_id: /rainbow-princess-art/doodle/enemies/spiral.webp
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: Seen side-on the whole time, the blue spiral fish keeps its profile toward the left while its orange
+    crest fans open and shut and its tail flicks hard. Steady framing, flat green margin, same colours, glossy neon
+    doodle.
+  jobs:
+    wan-mp4: 77201
+- key: idle-relay-v4
+  lane: wan-mp4
+  entity: sprite-animation
+  title: relay idle loop
+  asset: rainbow-princess-art/doodle/anim/relay-idle
+  size: 736x832
+  seed: 1125001
+  source_url: /rainbow-princess-art/doodle/enemies/relay.webp
+  last_image_id: /rainbow-princess-art/doodle/enemies/relay.webp
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: The jellyfish relay drone pulses strongly, its bell squeezing and expanding while its long magenta
+    tendrils whip in big lazy curls and its beacon blinks. Camera fixed; identical outline and palette; even green
+    surround; 80s sticker art.
+  jobs:
+    wan-mp4: 77202
+- key: idle-coral-v4
+  lane: wan-mp4
+  entity: sprite-animation
+  title: coral idle loop
+  asset: rainbow-princess-art/doodle/anim/coral-idle
+  size: 832x688
+  seed: 1125002
+  source_url: /rainbow-princess-art/doodle/enemies/coral.webp
+  last_image_id: /rainbow-princess-art/doodle/enemies/coral.webp
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: The coral-crowned whale craft rocks bow to stern, the frilly coral crown on its back waving like
+    seaweed in a strong current. Static shot on plain green; the design stays exact; airbrushed neon cartoon.
+  jobs:
+    wan-mp4: 77203
+- key: idle-skimmer-v4
+  lane: wan-mp4
+  entity: sprite-animation
+  title: skimmer idle loop
+  asset: rainbow-princess-art/doodle/anim/skimmer-idle
+  size: 768x832
+  seed: 1125003
+  source_url: /rainbow-princess-art/doodle/enemies/skimmer.webp
+  last_image_id: /rainbow-princess-art/doodle/enemies/skimmer.webp
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: The tall pink jellyfish skimmer bobs up and down, its bell pumping and its fringe of tentacles streaming
+    and settling. Steady framing, flat green margin, same colours, glossy neon doodle.
+  jobs:
+    wan-mp4: 77204
+- key: idle-captive
+  lane: wan-mp4
+  entity: sprite-animation
+  title: captive idle loop
+  asset: rainbow-princess-art/doodle/anim/captive-idle
+  size: 832x576
+  seed: 1125004
+  source_image_id: 262118
+  last_image_id: 262118
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: A trapped little creature in a bubble cage wriggles and taps at the bars, the cage shimmering. Camera
+    fixed; identical outline and palette; even green surround; 80s sticker art.
+  jobs:
+    wan-mp4: 77205
+- key: idle-coral-asteroid
+  lane: wan-mp4
+  entity: sprite-animation
+  title: coral-asteroid idle loop
+  asset: rainbow-princess-art/doodle/anim/coral-asteroid-idle
+  size: 768x832
+  seed: 1125005
+  source_image_id: 278622
+  last_image_id: 278622
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: A tumbling coral asteroid turns slowly about its centre, its pink coral branches catching glints
+    of light. Static shot on plain green; the design stays exact; airbrushed neon cartoon.
+  jobs:
+    wan-mp4: 77206
+- key: idle-flagship
+  lane: wan-mp4
+  entity: sprite-animation
+  title: flagship idle loop
+  asset: rainbow-princess-art/doodle/anim/flagship-idle
+  size: 832x544
+  seed: 1125006
+  source_image_id: 279298
+  last_image_id: 279298
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: The white and gold Motherland flagship hangs in space, its deck lights blinking in sequence and
+    its gun turrets panning. Steady framing, flat green margin, same colours, glossy neon doodle.
+  jobs:
+    wan-mp4: 77207
+- key: idle-flagship-phase2
+  lane: wan-mp4
+  entity: sprite-animation
+  title: flagship-phase2 idle loop
+  asset: rainbow-princess-art/doodle/anim/flagship-phase2-idle
+  size: 832x560
+  seed: 1125007
+  source_image_id: 279493
+  last_image_id: 279493
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: The battered flagship lists slightly, fires flickering along its broken deck and smoke curling from
+    its stacks. Camera fixed; identical outline and palette; even green surround; 80s sticker art.
+  jobs:
+    wan-mp4: 77208
+- key: idle-kelp-frond
+  lane: wan-mp4
+  entity: sprite-animation
+  title: kelp-frond idle loop
+  asset: rainbow-princess-art/doodle/anim/kelp-frond-idle
+  size: 640x832
+  seed: 1125008
+  source_url: /rainbow-princess-art/doodle/hazards/kelp-frond.webp
+  last_image_id: /rainbow-princess-art/doodle/hazards/kelp-frond.webp
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: A tall kelp frond sways from its root, its leaves rippling in the current. Static shot on plain
+    green; the design stays exact; airbrushed neon cartoon.
+  jobs:
+    wan-mp4: 77209
+- key: idle-charge
+  lane: wan-mp4
+  entity: sprite-animation
+  title: charge idle loop
+  asset: rainbow-princess-art/doodle/anim/charge-idle
+  size: 832x832
+  seed: 1125009
+  source_url: /rainbow-princess-art/doodle/pickups/charge.webp
+  last_image_id: /rainbow-princess-art/doodle/pickups/charge.webp
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: A glowing charge orb spins and sparkles, its light swelling and fading. Steady framing, flat green
+    margin, same colours, glossy neon doodle.
+  jobs:
+    wan-mp4: 77210
+- key: idle-power
+  lane: wan-mp4
+  entity: sprite-animation
+  title: power idle loop
+  asset: rainbow-princess-art/doodle/anim/power-idle
+  size: 832x672
+  seed: 1125010
+  source_url: /rainbow-princess-art/doodle/pickups/power.webp
+  last_image_id: /rainbow-princess-art/doodle/pickups/power.webp
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: A power-up gem rotates on the spot, flashing as its facets turn. Camera fixed; identical outline
+    and palette; even green surround; 80s sticker art.
+  jobs:
+    wan-mp4: 77211
+- key: idle-shield
+  lane: wan-mp4
+  entity: sprite-animation
+  title: shield idle loop
+  asset: rainbow-princess-art/doodle/anim/shield-idle
+  size: 832x832
+  seed: 1125011
+  source_url: /rainbow-princess-art/doodle/pickups/shield.webp
+  last_image_id: /rainbow-princess-art/doodle/pickups/shield.webp
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: A shield bubble emblem pulses and shimmers, a highlight sliding across it. Static shot on plain
+    green; the design stays exact; airbrushed neon cartoon.
+  jobs:
+    wan-mp4: 77212
+- key: idle-comet-cadet-pod
+  lane: wan-mp4
+  entity: sprite-animation
+  title: comet-cadet-pod idle loop
+  asset: rainbow-princess-art/doodle/anim/comet-cadet-pod-idle
+  size: 832x688
+  seed: 1125012
+  source_url: /rainbow-princess-art/doodle/pickups/comet-cadet-pod.webp
+  last_image_id: /rainbow-princess-art/doodle/pickups/comet-cadet-pod.webp
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: A tiny rescue pod bobs gently, its window light blinking. Steady framing, flat green margin, same
+    colours, glossy neon doodle.
+  jobs:
+    wan-mp4: 77213
+- key: idle-coral-choir-pod
+  lane: wan-mp4
+  entity: sprite-animation
+  title: coral-choir-pod idle loop
+  asset: rainbow-princess-art/doodle/anim/coral-choir-pod-idle
+  size: 832x768
+  seed: 1125013
+  source_url: /rainbow-princess-art/doodle/pickups/coral-choir-pod.webp
+  last_image_id: /rainbow-princess-art/doodle/pickups/coral-choir-pod.webp
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: A small coral choir pod wobbles, music notes of light flickering around it. Camera fixed; identical
+    outline and palette; even green surround; 80s sticker art.
+  jobs:
+    wan-mp4: 77214
+- key: idle-lighthouse-lamp
+  lane: wan-mp4
+  entity: sprite-animation
+  title: lighthouse-lamp idle loop
+  asset: rainbow-princess-art/doodle/anim/lighthouse-lamp-idle
+  size: 624x832
+  seed: 1125014
+  source_url: /rainbow-princess-art/doodle/pickups/lighthouse-lamp.webp
+  last_image_id: /rainbow-princess-art/doodle/pickups/lighthouse-lamp.webp
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: A little lighthouse lamp rotates its beam and glows. Static shot on plain green; the design stays
+    exact; airbrushed neon cartoon.
+  jobs:
+    wan-mp4: 77215

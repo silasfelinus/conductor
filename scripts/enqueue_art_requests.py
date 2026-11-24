@@ -760,7 +760,9 @@ def submit(path, header, ledger, cells, post=None, fetch_source=None, live=None)
             # (matte, margin, pad), or the clip's two ends would not match (Rainbow t-030 idle loops).
             last = (
                 source
-                if source and subject.get("last_image_id") == subject.get("source_image_id")
+                if source
+                and subject.get("last_image_id")
+                in (subject.get("source_image_id"), subject.get("source_url"))
                 else fetch(subject["last_image_id"])
             )
         if lane["engine"] == "sdxl-targeted":

@@ -1009,3 +1009,46 @@ def test_a_framed_loop_closes_on_its_framed_first_frame(tmp_path):
     framed = Image.open(io.BytesIO(base64.b64decode(first.split(",", 1)[1])))
     assert framed.size == (60, 40) and framed.getpixel((0, 0))[:3] == (0, 255, 0)
     assert sent[1]["secondImageBase64"] == raw, "a different last image is still fetched as it is"
+
+
+def test_a_framed_loop_from_a_site_file_closes_on_its_framed_first_frame(tmp_path):
+    """Rainbow P-01: a sprite with no ArtImage of its own loops from its shipped file (source_url). Naming the
+    same path as the last frame must reuse the framed first frame, exactly as an ArtImage id does."""
+    import base64
+    import io
+
+    from PIL import Image
+
+    buffer = io.BytesIO()
+    Image.new("RGBA", (40, 20), (255, 0, 0, 255)).save(buffer, "PNG")
+    raw = "data:image/png;base64," + base64.b64encode(buffer.getvalue()).decode()
+    url = "/rainbow-princess-art/doodle/enemies/guardian-kelp-warden.webp"
+    ledger = {
+        "project_slug": "rainbow-bullet-hell-space-princess",
+        "lanes": [{"key": "wan-mp4", "engine": "wan", "prompt": "prose", "fps": 16}],
+        "subjects": [
+            {
+                "key": "idle",
+                "size": "640x640",
+                "source_url": url,
+                "last_image_id": url,
+                "source_matte": "#00ff00",
+                "source_margin": 0.25,
+                "duration": 2,
+                "loop": True,
+                "prompt_prose": "a frilled fish waves its fins in place",
+                "lane": "wan-mp4",
+            }
+        ],
+    }
+    path = tmp_path / "url-loop.yaml"
+    path.write_text(yaml.safe_dump(ledger, sort_keys=False))
+    header, loaded = enq.load_ledger(path)
+    sent = []
+
+    def post(body):
+        sent.append(body)
+        return 200, {"data": {"jobId": 800 + len(sent)}}
+
+    enq.submit(path, header, loaded, list(enq.iter_cells(loaded)), post=post, fetch_source=lambda i: raw)
+    assert sent[0]["firstImageBase64"] == sent[0]["secondImageBase64"] != raw
