@@ -3340,6 +3340,29 @@ tasks:
     Reviewer kaizen 2026-11-21 PT from conductor#7726.
 
     Full history: projects/conductor/HISTORY.md#t-221
+- id: t-222
+  milestone: m1
+  title: 'Restore Kind Robots projection headroom: inactive-project roadmaps are ~46% of the payload'
+  status: ready
+  stakes: reversible
+  passes: 0
+  depends_on: []
+  updated: '2026-11-24T00:00:00Z'
+  note: >-
+    Filed 2026-11-24 PT by a scheduled agent run. check_roadmap_note_size.py reports the
+    projection payload at 3,225,785 / 4,000,000 bytes (80.6%), past the 80% warn line, and the
+    prescribed fix (archive_done_task_notes.py --all) now frees 0 bytes: every done note >=400
+    bytes is already archived. Measured breakdown: roadmaps 2,844,226, pitches 305,685, image
+    versions 29,716. Roadmap bytes by project-overrides status: active 781,570, finished
+    686,413, playtest 422,505, paused 381,005, continuous 285,358, retired 220,706 -- inactive
+    (finished+paused+retired) is 1,288,124. Archive pointer notes on done tasks are 2,373 x ~203
+    bytes = 481,725. No single note exceeds 25KB. Acceptance: check what Kind Robots actually
+    reads from inactive-project roadmaps in the projection (components/conductor, the
+    conductor sync API), then pick the smallest reversible change that buys >=500KB headroom --
+    e.g. send only a summary (title/status/milestones) for finished/retired projects, or
+    trim pointer notes to the archive reference where backfill_learning.py does not need the
+    first sentence -- with a test pinning the new payload shape, and update the advisory text
+    in check_roadmap_note_size.py so it no longer points at a script that cannot help.
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
 
