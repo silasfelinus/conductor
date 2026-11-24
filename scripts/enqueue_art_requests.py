@@ -756,7 +756,13 @@ def submit(path, header, ledger, cells, post=None, fetch_source=None, live=None)
         ):
             source = compose_source(subject, fetch)
         if lane["engine"] in VIDEO_ENGINES and subject.get("last_image_id"):
-            last = fetch(subject["last_image_id"])
+            # A loop's last frame is its first: when it names the same image, frame it the same way
+            # (matte, margin, pad), or the clip's two ends would not match (Rainbow t-030 idle loops).
+            last = (
+                source
+                if source and subject.get("last_image_id") == subject.get("source_image_id")
+                else fetch(subject["last_image_id"])
+            )
         if lane["engine"] == "sdxl-targeted":
             body = build_targeted_request(ledger, lane, subject, source)
         elif source and subject.get("mask_box"):
