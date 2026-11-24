@@ -1,0 +1,148 @@
+# Rainbow Space Princess t-030, presentation critic P-02 (blocker, 2026-11-23 PT): the living interludes barely move
+# (mean luma difference 0.6-2.6) because a first-and-last-frame loop pins the scene. The intro splash plays each card
+# once, so these are one-shot clips from each reviewed Fever Dream card (first frame only, loop false) in which the
+# squadron flies forward across the sky while the Act's own scenery moves. Review each at full size: ships stay on
+# model, nothing new appears, no smearing; then ship as rainbow-princess-video/interludes/sNN.mp4 with the engine
+# restarting the clip at each splash. Private. auto_submit: true. Queued is not rendered.
+round: rainbow-t030-motion-2026-11-24
+project_slug: rainbow-bullet-hell-space-princess
+designer: Rainbow Space Princess art bay
+is_public: false
+is_mature: false
+cast_loras: false
+priority: 1000
+auto_submit: true
+lanes:
+- key: wan-mp4
+  label: WAN 2.2 one-shot Act card clips
+  engine: wan
+  prompt: prose
+  fps: 16
+  output_format: mp4
+  negative: morphing, melting, extra creatures, duplicated craft, changing colours, changing shape, camera movement,
+    zoom, lettering, words, logos, watermarks, photorealism, flicker, grain, blur, smearing
+subjects:
+- key: motion-card-s01
+  lane: wan-mp4
+  entity: cinematic
+  title: s01 one-shot card clip, the squadron crosses the sky
+  asset: rainbow-princess-video/interludes/s01
+  size: 832x480
+  seed: 1124201
+  source_image_id: 262203
+  duration: 3
+  loop: false
+  prompt_prose: 'The squadron of small cartoon starfighters in the sky flies forward together, sweeping from the
+    upper left across the picture toward the right with long rainbow engine trails streaming behind them, while
+    below them the pink cloud sea rolls in waves, glass buoys bob and the tower on the horizon glows. The camera
+    holds still. The painting stays crisp: bold outlines, flat bright colours. Every ship keeps its exact shape
+    and colours. Neon airbrushed 1980s school-folder doodle cartoon.'
+  jobs:
+    wan-mp4: 77043
+- key: motion-card-s02
+  lane: wan-mp4
+  entity: cinematic
+  title: s02 one-shot card clip, the squadron crosses the sky
+  asset: rainbow-princess-video/interludes/s02
+  size: 832x480
+  seed: 1124202
+  source_image_id: 262204
+  duration: 3
+  loop: false
+  prompt_prose: Three little rocket ships swoop out of the upper left and race toward the right edge, rainbow exhaust
+    curling behind them. Jellyfish pulse and float upward through the violet mist and the bright column of light
+    ripples over the calm water. Steady framing, crisp neon school-folder cartoon.
+  jobs:
+    wan-mp4: 77045
+- key: motion-card-s03
+  lane: wan-mp4
+  entity: cinematic
+  title: s03 one-shot card clip, the squadron crosses the sky
+  asset: rainbow-princess-video/interludes/s03
+  size: 832x480
+  seed: 1124203
+  source_image_id: 262205
+  duration: 3
+  loop: false
+  prompt_prose: A pink jet, a cyan rocket and a golden saucer dive from the top left corner down the canyon and
+    shoot off to the right. The lava vents in the purple cliffs flare orange and the glowing stream winds and sparkles.
+    Fixed viewpoint; bold outlines and flat bright colours throughout.
+  jobs:
+    wan-mp4: 77046
+- key: motion-card-s04
+  lane: wan-mp4
+  entity: cinematic
+  title: s04 one-shot card clip, the squadron crosses the sky
+  asset: rainbow-princess-video/interludes/s04
+  size: 832x480
+  seed: 1124204
+  source_image_id: 279904
+  duration: 3
+  loop: false
+  prompt_prose: 'The squadron of small cartoon starfighters in the sky flies forward together, sweeping from the
+    upper left across the picture toward the right with long rainbow engine trails streaming behind them, while
+    the aurora swirls across the starry sky and light runs along the windows of the trains below. The camera holds
+    still. The painting stays crisp: bold outlines, flat bright colours. Every ship keeps its exact shape and colours.
+    Neon airbrushed 1980s school-folder doodle cartoon.'
+  jobs:
+    wan-mp4: 77044
+- key: motion-card-s05
+  lane: wan-mp4
+  entity: cinematic
+  title: s05 one-shot card clip, the squadron crosses the sky
+  asset: rainbow-princess-video/interludes/s05
+  size: 832x480
+  seed: 1124205
+  source_image_id: 262207
+  duration: 3
+  loop: false
+  prompt_prose: Our starfighters bank hard over the scrapyard, crossing from left to right with glittering trails.
+    Pink petals tumble on the wind past the rusty crane while the cute ghost-shaped gravestones glow green. Still
+    camera; sharp inked doodle style.
+  jobs:
+    wan-mp4: 77047
+- key: motion-card-s06
+  lane: wan-mp4
+  entity: cinematic
+  title: s06 one-shot card clip, the squadron crosses the sky
+  asset: rainbow-princess-video/interludes/s06
+  size: 832x480
+  seed: 1124206
+  source_image_id: 262208
+  duration: 3
+  loop: false
+  prompt_prose: The trio of fighters cuts across the reef sky toward the right, contrails glowing pink and gold.
+    The bonfire at the centre leaps higher and the tall neon arches pulse brighter and dimmer. Locked-off shot with
+    clean line art and saturated airbrushed colour.
+  jobs:
+    wan-mp4: 77048
+- key: motion-card-s07
+  lane: wan-mp4
+  entity: cinematic
+  title: s07 one-shot card clip, the squadron crosses the sky
+  asset: rainbow-princess-video/interludes/s07
+  size: 832x480
+  seed: 1124207
+  source_image_id: 262209
+  duration: 3
+  loop: false
+  prompt_prose: Like comets, the three craft rocket out of the upper left and zoom off the right side of the scene.
+    Sparks burst upward from the shining gap between the glass spires and their mirror images shiver on the water.
+    Stationary view; hand-drawn neon cartoon look.
+  jobs:
+    wan-mp4: 77049
+- key: motion-card-s08
+  lane: wan-mp4
+  entity: cinematic
+  title: s08 one-shot card clip, the squadron crosses the sky
+  asset: rainbow-princess-video/interludes/s08
+  size: 832x480
+  seed: 1124208
+  source_image_id: 262210
+  duration: 3
+  loop: false
+  prompt_prose: Flying in formation, the jets and saucer glide past the castle toward the right, trailing ribbons
+    of colour. Golden palace windows twinkle and the dark eclipse arc glows along its rim. Camera does not move;
+    crisp 80s airbrushed sticker art.
+  jobs:
+    wan-mp4: 77050
