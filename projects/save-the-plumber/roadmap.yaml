@@ -286,11 +286,8 @@ tasks:
   - id: t-012
     milestone: m4
     title: "Produce illustrated world art, enemy animation, sound and cinematics"
-    status: review
-    owner: worker
-    claimed_by: 2026-11-24T051635Z-save-the-plumber-t012-effects-b8m6
-    claimed_at: '2026-11-24T05:16:35Z'
-    updated: '2026-11-24T05:20:10Z'
+    status: ready
+    updated: '2026-11-24T06:03:00Z'
     depends_on: [t-002, t-006]
     passes: 0
     stakes: reversible
@@ -302,6 +299,8 @@ tasks:
       Verified original world and boss music PR #5630 merged at 75e06c20; jump and landing cues are delivered. Return remaining original effect and audio integration work to ready, not done.
 
       Implemented 15 original action cues for pickups, keys, bolts, checkpoints, health, powers, gears, springs, portals, tools, boss hits, damage, death and extra lives. Added actual interaction replay, cue fallback and non-stacking damage tests in cabinet CI. Commit 5763d97e, worker/save-the-plumber-t-012-effects-b8m6. CI pending; remaining cinematic, rendered asset and full audio acceptance remain.
+
+      2026-11-23 PT: PR kind_robots#5708 merged at 86ca2f4 after all 11 reported exact-head workflows completed successfully, including Arcade Cabinet Browser Contracts run 45333362973. Fifteen original responsive cues and deterministic trigger regression shipped. Music settings, device audition and remaining cinematic/art delivery still need verification; this is partial t-012 work.
   - id: t-013
     milestone: m5
     title: "Whole-campaign playtests, fairness and device verification"
