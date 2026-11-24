@@ -2943,19 +2943,21 @@ tasks:
   - id: t-178
     milestone: m12
     title: "Superkate Spectrum: author 30 curated boards with three special bubble types and six distinct chapter mechanics"
-    status: review
-    owner: worker
+    status: done
     claimed_by: 2026-11-24T050000Z-kr-arcade-t178-cd83a7
     claimed_at: '2026-11-24T05:00:00Z'
-    updated: '2026-11-24T05:04:00Z'
+    updated: '2026-11-24T06:09:00Z'
     passes: 0
     stakes: reversible
     depends_on: [t-176]
-    note: 'Added 25 fixed Story layouts (30 total), six chapter-specific pressure/reward rules, workshop special rotation, pressure HUD and stale-ammunition repair; Classic retains procedural boards. Connector-side topology and discrete-shot probe confirmed all 25 new layouts are anchored and have matching openings. Regression suite extended; actual CI and full-board solvability/playthrough remain to verify. Branch worker/kr-arcade-t-178-campaign-cd83a7.'
+    note: |-
+      Added 25 fixed Story layouts (30 total), six chapter-specific pressure/reward rules, workshop special rotation, pressure HUD and stale-ammunition repair; Classic retains procedural boards. Connector-side topology and discrete-shot probe confirmed all 25 new layouts are anchored and have matching openings. Regression suite extended; actual CI and full-board solvability/playthrough remain to verify. Branch worker/kr-arcade-t-178-campaign-cd83a7.
+
+      2026-11-23 PT: Kind Robots #5706 merged f1187eba038f0d0f14f73752632fdb52f5adb396 after nine completed successful workflows on head de3dcfafdb8df714951a0d68bd69453c9d50b1ce. All 30 authored boards, six chapter rules, special rotation and pressure HUD are implemented and regression-tested. Full campaign solvability/device QA remains t-184; interactive bosses remain t-179. No deployment or publication triggered.
   - id: t-179
     milestone: m12
     title: "Superkate Spectrum: six interactive bosses with telegraphed patterns and tested fair collision"
-    status: waiting
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: [t-178]
@@ -2983,11 +2985,8 @@ tasks:
   - id: t-182
     milestone: m12
     title: "Superkate Spectrum: original salon and six-region music themes, matching sound effects and accessible audio settings"
-    status: review
-    owner: worker
-    claimed_by: 2026-11-23T040118Z-kr-arcade-t-182-superkate-audio-n4p6
-    claimed_at: '2026-11-23T04:01:18Z'
-    updated: '2026-11-23T04:06:19.489Z'
+    status: ready
+    updated: '2026-11-24T06:09:00Z'
     passes: 0
     stakes: reversible
     depends_on: []
@@ -2996,10 +2995,12 @@ tasks:
 
       2026-11-22 PT: substantial implemented audio slice in Kind Robots PR #5624: a shared Arcade audio bridge for in-game master mute and volume, separately saved original music and effects toggles, six neighborhood chiptunes plus six chapter-finale variations, Classic and menu music, responsive preset SFX, and regression tests for music, options and Classic stage 35. The current PR is unmerged; final-head CI and actual playback verification remain pending. Recorded mastered soundtrack, mobile balance and audio QA are unfinished, so keep this task in review rather than marking full t-182 complete.
 
+      2026-11-23 PT: reconciled previously merged Kind Robots #5624 (00e264dc667b9c212253c867247a0d6f42d3e7bc); final-head CI completed successfully. Existing synthesized music and SFX are implemented. Recorded/mastered tracks, playback and mobile audio QA remain; requeue, not done.
+
   - id: t-183
     milestone: m12
     title: "Superkate Spectrum: endless, puzzle atelier, cooperative relay, achievements and ranked leaderboard fairness"
-    status: waiting
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: [t-178]
@@ -3021,11 +3022,8 @@ tasks:
   - id: t-185
     milestone: m12
     title: "Superkate Spectrum: durable cross-device account saves with safe guest migration and conflict-aware career merge"
-    status: review
-    owner: worker
-    claimed_by: 2026-11-24T050800Z-kr-arcade-t185-8fa19c
-    claimed_at: '2026-11-24T05:08:00Z'
-    updated: '2026-11-24T05:11:00Z'
+    status: ready
+    updated: '2026-11-24T06:09:00Z'
     passes: 0
     stakes: reversible
     depends_on: [t-176]
@@ -3033,6 +3031,8 @@ tasks:
       Silas, 2026-11-22 PT: wants Candy Crush-style permanent memory, where progress continues across many play sessions. Initial implementation is a versioned, device-local Arcade save with 30 star ratings, Color Rank, XP, highest unlocked stage and Classic records. This task adds authenticated cloud sync, guest-to-account adoption, race-safe merges using max stage/best stars/highest ranked records, and a clear account/device state indicator. No purchase or energy gates.
 
       Fixed cloud conflict retries to merge latest local career rather than stale request snapshots, isolated concurrent uploads by sync generation, made saving status truthful, and retired active cabinet instances on account change. Added VM regression exercising actual store functions with deferred PUTs, 409, and account switch. Branch worker/kr-arcade-t185-save-race-8fa19c. CI and real two-device QA pending.
+
+      2026-11-23 PT: Kind Robots #5707 merged b5b6df1a3dd4777e5ac4570020f95ea57a6f884b after ten completed successful workflows on head 2e694b27b14752766067b89c64c010e1b7572f4b. Save conflict/account-generation races regression-tested. Requeue remaining actual guest/offline/two-device QA; no production account writes or deployment.
   - id: t-186
     milestone: m12
     title: "Superkate Spectrum: navigable 30-level star map, cosmetic bubble collection and earned animated effects"
