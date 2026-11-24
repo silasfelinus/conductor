@@ -517,10 +517,10 @@ tasks:
   status: ready
   recurring: true
   daily_commitment: true
-  daily_last_checked: '2026-11-22'
+  daily_last_checked: '2026-11-23'
   passes: 0
   stakes: reversible
-  updated: '2026-11-22T13:08:58Z'
+  updated: '2026-11-24T07:50:10Z'
   note: >-
     HISTORICAL DAILY CONTRACT (Silas, 2026-10-02): every day's digest carries FIVE new project
     pitches, biased to free-to-play ideas that need no LLM at runtime (Kind Robots has a lot
@@ -592,7 +592,13 @@ tasks:
     Cthulhuquarium says a tank needs a free sign-in, t-105 real Zuzu Showdown preview, t-137
     Prettier ratchet 930->913. Four audience-first. Ledger projects/dream-cycle/daily-
     deliveries/2026-11-22.yaml (--check valid).
-  daily_last_completed: '2026-11-22'
+
+    2026-11-23 PT reconciliation: projects/dream-cycle/daily-deliveries/2026-11-23.yaml is
+    on main with five shipped entries (all with merge SHAs and passing checks), and
+    daily_project_deliveries.py --check reports them valid. The daily dates were not
+    advanced when it landed; this sets both to 2026-11-23. Done in the dead-air/t-004
+    session, PR silasfelinus/conductor#7959.
+  daily_last_completed: '2026-11-23'
   implementation_pr: 'silasfelinus/kind_robots#5580'
   owner: reviewer
 - id: t-036
