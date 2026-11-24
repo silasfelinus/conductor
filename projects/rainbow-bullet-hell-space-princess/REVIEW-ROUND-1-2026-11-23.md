@@ -43,14 +43,14 @@ Silas's decision; it stays as it is until he decides).
 | --- | --- | --- | --- | --- |
 | S1 | blocker | absent pilots speak in the X1–X4 detours | t-012 | fixed in kind_robots#5709 |
 | S2 | blocker | the road epilogues never play, and the party line contradicts loyal endings | t-012 | fixed in kind_robots#5709 |
-| S3 | major | the final choice only re-titles the ending (same escape, resolution, epilogue, send-off) | t-066 | open |
+| S3 | major | the final choice only re-titles the ending (same escape, resolution, epilogue, send-off) | t-066 | fixed in kind_robots#5738 (the escape, Lilt's resolution and the rebel send-off answer the choice) |
 | S4 | major | the Crown's plea is a HUD countdown with no dialogue, and a stand-down is never acknowledged | t-066 | fixed in kind_robots#5721 (A09.PLEA scene; stand-down TURN, AFTER and credits) |
 | S5 | major | the 15 combination lines are single non-sequiturs with no setup | t-066 | fixed in #5737 (15 three-line exchanges among the pilots flying, built on established pilot hooks; reveal grows to five lines) |
 | S6 | major | Vivi speaks for 8 of the 15 crews | t-066 | fixed in #5737 (speakers spread; each pilot has 8+ lines across the combinations) |
 | S7 | major | seat renaming hands one pilot's role to another | t-066 | partly fixed in #5709 (four-pilot finale line); the general case is open |
 | S8 | major | the princesses are interchangeable in the Acts | t-066 | open |
 | S9 | major | middle seats in 3–4-pilot crews barely speak | t-066 | partly fixed in #5737 (every pilot of a two- or three-pilot crew speaks in the reveal exchange); Act scenes stay seat-keyed, with S8 |
-| S10 | major | Lilt-7's agency is a refrain of "I will not choose for you" | t-066 | open |
+| S10 | major | Lilt-7's agency is a refrain of "I will not choose for you" | t-066 | fixed in #5738 (Lilt states a view and acts: closes Command's channel on the loyal road, spends a memory on the clamps on the rebel road; X3 memory line) |
 | S11 | major | ending plates ignore the road and the crew size | t-030 / t-066 | open (with P-03) |
 | S12 | minor | the safe trench route knows about the vault's locks | t-012 | fixed in #5709 |
 | S13 | minor | the credits contradict the flagship fight | t-012 | fixed in #5709 |
@@ -69,7 +69,7 @@ Silas's decision; it stays as it is until he decides).
 | id | sev | finding | task | status |
 | --- | --- | --- | --- | --- |
 | P-01 | blocker | no frame animation for any enemy, boss, ship or pilot | t-030 | partly fixed in kind_robots#5717 (picket and urchin idle atlases); poses, bosses, ships and the other enemies open |
-| P-02 | blocker | the living interludes barely move (mean luma difference 0.6–2.6); S03, S04 and S08 have none | t-030 | partly: S08 added in #5717; S03 and S04 retakes and real subject motion open |
+| P-02 | blocker | the living interludes barely move (mean luma difference 0.6–2.6); S03, S04 and S08 have none | t-030 | partly: S08 added in #5717, S03 in #5731, S04 in #5738 (all eight Acts now live); real subject motion open |
 | P-03 | blocker | the endings are 3 still plates with no Fever Dream version; sever is in a different style | t-030 | open |
 | P-04 | blocker | main Acts have 1–2 painted planes, not 4+; the top half of X3, Act VIII and the finale does not scroll; there is no s09 art | t-022 / t-011 | open |
 | P-05 | major | four touch pads cover the play area at 1024×768 | t-067 | open |
