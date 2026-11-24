@@ -1,0 +1,8 @@
+version: 1
+project: kr-arcade
+task: t-185
+operation: review
+session: 2026-11-24T050800Z-kr-arcade-t185-8fa19c
+updated: '2026-11-24T05:11:00Z'
+note: >-
+  Fixed cloud conflict retries to merge latest local career rather than stale request snapshots, isolated concurrent uploads by sync generation, made saving status truthful, and retired active cabinet instances on account change. Added VM regression exercising actual store functions with deferred PUTs, 409, and account switch. Branch worker/kr-arcade-t185-save-race-8fa19c. CI and real two-device QA pending.
