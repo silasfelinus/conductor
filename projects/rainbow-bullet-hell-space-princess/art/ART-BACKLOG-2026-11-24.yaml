@@ -528,6 +528,7 @@ subjects:
       status: DONE
       art_image_id: 280257
 - key: s04-far-classic
+  verdict: 'keep: 2026-11-24 PT review, transit rings marching over a dusky sea, scenery only'
   lane: krea2
   title: S04 Rosefin Express far plane, Classic
   entity: stage-plane
@@ -550,6 +551,7 @@ subjects:
       status: DONE
       art_image_id: 280258
 - key: s04-mid-classic
+  verdict: 'keep: 2026-11-24 PT review, an elevated rail trestle on a dark sky'
   lane: krea2
   title: S04 Rosefin Express mid plane, Classic
   entity: stage-plane
@@ -571,6 +573,7 @@ subjects:
       status: DONE
       art_image_id: 280259
 - key: s04-sky-fever
+  verdict: 'keep: 2026-11-24 PT review, pink aurora ribbons over a starry sky'
   lane: krea2
   title: S04 Rosefin Express sky plane, Fever Dream
   entity: stage-plane
@@ -592,6 +595,7 @@ subjects:
       status: DONE
       art_image_id: 280260
 - key: s04-far-fever
+  verdict: 'keep: 2026-11-24 PT review, transit rings and a curving rail over the sea'
   lane: krea2
   title: S04 Rosefin Express far plane, Fever Dream
   entity: stage-plane
@@ -614,6 +618,7 @@ subjects:
       status: DONE
       art_image_id: 280261
 - key: s04-mid-fever
+  verdict: 'keep: 2026-11-24 PT review, a glowing rail trestle on a dark sky'
   lane: krea2
   title: S04 Rosefin Express mid plane, Fever Dream
   entity: stage-plane
@@ -635,6 +640,8 @@ subjects:
       status: DONE
       art_image_id: 280262
 - key: s05-sky-classic
+  verdict: 'reject: 2026-11-24 PT review, bright pink petals scattered across the sky are pellet-sized at game scale
+    and could read as hostile fire (P-10); retaken as s05-sky-classic-2'
   lane: krea2
   title: S05 Blossom Wreckyard sky plane, Classic
   entity: stage-plane
@@ -656,6 +663,7 @@ subjects:
       status: DONE
       art_image_id: 280263
 - key: s05-far-classic
+  verdict: 'keep: 2026-11-24 PT review, petal-hull wrecks and crane silhouettes on the horizon'
   lane: krea2
   title: S05 Blossom Wreckyard far plane, Classic
   entity: stage-plane
@@ -677,6 +685,7 @@ subjects:
       status: DONE
       art_image_id: 280264
 - key: s05-mid-classic
+  verdict: 'keep: 2026-11-24 PT review, rusty cranes and petal hulls on a teal-slimed ground'
   lane: krea2
   title: S05 Blossom Wreckyard mid plane, Classic
   entity: stage-plane
@@ -698,6 +707,7 @@ subjects:
       status: DONE
       art_image_id: 280265
 - key: s05-sky-fever
+  verdict: 'reject: 2026-11-24 PT review, the same bright pink petals read as pellets; retaken as s05-sky-fever-2'
   lane: krea2
   title: S05 Blossom Wreckyard sky plane, Fever Dream
   entity: stage-plane
@@ -716,9 +726,10 @@ subjects:
     krea2: 77083
   art:
     krea2:
-      status: RUNNING
-      art_image_id: null
+      status: DONE
+      art_image_id: 280266
 - key: s05-far-fever
+  verdict: 'keep: 2026-11-24 PT review, wreck silhouettes on the horizon'
   lane: krea2
   title: S05 Blossom Wreckyard far plane, Fever Dream
   entity: stage-plane
@@ -738,9 +749,10 @@ subjects:
     krea2: 77084
   art:
     krea2:
-      status: PENDING
-      art_image_id: null
+      status: DONE
+      art_image_id: 280267
 - key: s05-mid-fever
+  verdict: 'keep: 2026-11-24 PT review, rusty cranes and petal hulls with teal moss'
   lane: krea2
   title: S05 Blossom Wreckyard mid plane, Fever Dream
   entity: stage-plane
@@ -759,9 +771,10 @@ subjects:
     krea2: 77085
   art:
     krea2:
-      status: PENDING
-      art_image_id: null
+      status: DONE
+      art_image_id: 280268
 - key: s06-sky-classic
+  verdict: 'keep: 2026-11-24 PT review, gold nebula over green haze with elongated drifting gold streaks (not pellet-shaped)'
   lane: krea2
   title: S06 Crown Reef sky plane, Classic
   entity: stage-plane
@@ -780,8 +793,8 @@ subjects:
     krea2: 77086
   art:
     krea2:
-      status: PENDING
-      art_image_id: null
+      status: DONE
+      art_image_id: 280269
 - key: s06-far-classic
   lane: krea2
   title: S06 Crown Reef far plane, Classic
@@ -802,7 +815,7 @@ subjects:
     krea2: 77087
   art:
     krea2:
-      status: PENDING
+      status: RUNNING
       art_image_id: null
 - key: s06-mid-classic
   lane: krea2
@@ -1692,3 +1705,37 @@ subjects:
     kontext:
       status: PENDING
       art_image_id: null
+- key: s05-sky-classic-2
+  lane: krea2
+  title: S05 Blossom Wreckyard sky plane, Classic, second take
+  entity: stage-plane
+  asset: rainbow-princess-art/stages/s05-sky
+  size: 1344x768
+  seed: 1124406
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame, characters, people, faces, spaceships,
+    starships, rockets, jets, aircraft, vehicles, trains, boats, fish, jellyfish, creatures, animals, sun, moon,
+    planets, bright white, petals, leaves, flowers, confetti, particles, sparks, debris, floating objects
+  prompt_prose: 'Painted western-cartoon backdrop with soft gradients and gentle clouds: the dusk sky over the Blossom
+    Wreckyard, a wide calm gradient from deep plum at the top to warm rust and faded rose near the horizon, long
+    soft layered cloud banks, a scattering of tiny faint stars, nothing drifting in the air. Empty sky only, edge
+    to edge.'
+  jobs:
+    krea2: 77131
+- key: s05-sky-fever-2
+  lane: krea2
+  title: S05 Blossom Wreckyard sky plane, Fever Dream, second take
+  entity: stage-plane
+  asset: rainbow-princess-art/doodle/stages/s05-sky
+  size: 1344x768
+  seed: 1124409
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame, characters, people, faces, spaceships,
+    starships, rockets, jets, aircraft, vehicles, trains, boats, fish, jellyfish, creatures, animals, sun, moon,
+    planets, bright white, petals, leaves, flowers, confetti, particles, sparks, debris, floating objects
+  prompt_prose: '1980s neon airbrush school-folder backdrop with glossy gradients and a few four-point twinkles:
+    the dusk sky over the Blossom Wreckyard, a wide calm gradient from deep plum at the top to warm rust and faded
+    rose near the horizon, long soft layered cloud banks, a scattering of tiny faint stars, nothing drifting in
+    the air. Empty sky only, edge to edge.'
+  jobs:
+    krea2: 77132
