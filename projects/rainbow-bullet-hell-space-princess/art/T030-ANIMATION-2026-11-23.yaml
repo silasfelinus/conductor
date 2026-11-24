@@ -377,6 +377,10 @@ subjects:
       status: DONE
       art_image_id: 279863
 - key: t030-card-s08
+  verdict: 'keep: 2026-11-24 PT review, the palace and ships hold steady while the rainbow band and stars shimmer
+    (19% of pixels move); source frame dropped plus a 12-frame crossfade; encoded at 640 px to stay under budget'
+  shipped_as:
+  - rainbow-princess-video/interludes/s08
   lane: wan-mp4
   entity: cinematic
   title: s08 title card interlude
@@ -556,6 +560,10 @@ subjects:
       status: PENDING
       art_image_id: null
 - key: t030-idle-picket-v2
+  verdict: 'keep: 2026-11-24 PT review, framing holds the whole craft; fin flutter and eye glint (6% of pixels move);
+    8 evenly spaced raw frames, matte keyed, centred and packed as the picket idle atlas'
+  shipped_as:
+  - rainbow-princess-art/doodle/anim/picket-idle
   lane: wan-mp4
   entity: enemy-animation
   title: picket idle cycle, framed
@@ -580,6 +588,8 @@ subjects:
       status: DONE
       art_image_id: 279865
 - key: t030-idle-spiral-v2
+  verdict: 'reject: 2026-11-24 PT review, mid-loop the craft turns to face the camera and back, which reads wrong
+    for a side-on sprite; replaced by t030-idle-spiral-v3'
   lane: wan-mp4
   entity: enemy-animation
   title: spiral idle cycle, framed
@@ -604,6 +614,8 @@ subjects:
       status: DONE
       art_image_id: 279866
 - key: t030-idle-anchor-v2
+  verdict: 'reject: 2026-11-24 PT review, near-static (2% of pixels move), adds nothing over the still; replaced
+    by t030-idle-anchor-v3'
   lane: wan-mp4
   entity: enemy-animation
   title: anchor idle cycle, framed
@@ -627,6 +639,10 @@ subjects:
       status: DONE
       art_image_id: 279867
 - key: t030-idle-urchin-v2
+  verdict: 'keep: 2026-11-24 PT review, the urchin puffs, blinks and its thruster flickers (7% of pixels move) with
+    no morphing; packed as the urchin idle atlas'
+  shipped_as:
+  - rainbow-princess-art/doodle/anim/urchin-idle
   lane: wan-mp4
   entity: enemy-animation
   title: urchin idle cycle, framed
@@ -648,9 +664,11 @@ subjects:
     wan-mp4: 77008
   art:
     wan-mp4:
-      status: RUNNING
-      art_image_id: null
+      status: DONE
+      art_image_id: 279868
 - key: t030-idle-lantern-v2
+  verdict: 'reject: 2026-11-24 PT review, the jelly drifts across the frame and its tentacles come back with opaque
+    green matte streaks; replaced by t030-idle-lantern-v3'
   lane: wan-mp4
   entity: enemy-animation
   title: lantern idle cycle, framed
@@ -672,9 +690,10 @@ subjects:
     wan-mp4: 77009
   art:
     wan-mp4:
-      status: PENDING
-      art_image_id: null
+      status: DONE
+      art_image_id: 279869
 - key: t030-idle-relay-v2
+  verdict: 'reject: 2026-11-24 PT review, near-static (0.1% of pixels move); replaced by t030-idle-relay-v3'
   lane: wan-mp4
   entity: enemy-animation
   title: relay idle cycle, framed
@@ -696,9 +715,11 @@ subjects:
     wan-mp4: 77010
   art:
     wan-mp4:
-      status: PENDING
-      art_image_id: null
+      status: DONE
+      art_image_id: 279870
 - key: t030-idle-skimmer-v2
+  verdict: 'reject: 2026-11-24 PT review, the source still itself is cut at its right edge, so the loop shows a
+    sliced bell; needs a re-cut source still before another take'
   lane: wan-mp4
   entity: enemy-animation
   title: skimmer idle cycle, framed
@@ -719,8 +740,8 @@ subjects:
     wan-mp4: 77011
   art:
     wan-mp4:
-      status: PENDING
-      art_image_id: null
+      status: DONE
+      art_image_id: 279871
 - key: t030-idle-coral-v2
   lane: wan-mp4
   entity: enemy-animation
@@ -742,5 +763,85 @@ subjects:
     wan-mp4: 77012
   art:
     wan-mp4:
-      status: PENDING
+      status: RUNNING
       art_image_id: null
+- key: t030-idle-spiral-v3
+  lane: wan-mp4
+  entity: enemy-animation
+  title: spiral idle cycle, framed, third take
+  asset: rainbow-princess-art/doodle/anim/spiral-idle
+  size: 768x528
+  seed: 1130996
+  source_image_id: 262196
+  last_image_id: 262196
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: The craft stays in side profile the whole time, facing left, and never turns toward the viewer.
+    A seahorse spiral scout coils and uncoils its curled dorsal fin, turning a little on the spot as though winding
+    up a spin, its fin ridges rippling one after another. The camera does not move and the flat background colour
+    stays exactly the same. Only the craft moves a little; its shape, colours and outline never change. Neon airbrushed
+    1980s school-folder doodle cartoon. The whole craft stays small in the middle with green space all around it.
+  jobs:
+    wan-mp4: 77023
+- key: t030-idle-anchor-v3
+  lane: wan-mp4
+  entity: enemy-animation
+  title: anchor idle cycle, framed, third take
+  asset: rainbow-princess-art/doodle/anim/anchor-idle
+  size: 816x480
+  seed: 1130914
+  source_image_id: 262114
+  last_image_id: 262114
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: 'The motion is clearly visible: the bead swings in a wide arc and the fins beat steadily. A seahorse
+    anchor craft dips its heavy beaded chin, a pearl bead swinging gently beneath it on its chain while its little
+    side fins paddle to hold position. The camera does not move and the flat background colour stays exactly the
+    same. Only the craft moves a little; its shape, colours and outline never change. Neon airbrushed 1980s school-folder
+    doodle cartoon. The whole craft stays small in the middle with green space all around it.'
+  jobs:
+    wan-mp4: 77024
+- key: t030-idle-relay-v3
+  lane: wan-mp4
+  entity: enemy-animation
+  title: relay idle cycle, framed, third take
+  asset: rainbow-princess-art/doodle/anim/relay-idle
+  size: 624x640
+  seed: 1130992
+  source_image_id: 262192
+  last_image_id: 262192
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: 'The motion is clearly visible: its lights pulse bright and dim and its fins ripple the whole time.
+    A moonjelly relay''s paired tentacles drift apart and back together, a faint spark jumping between their tips
+    each time they meet, its bell bobbing above them. The camera does not move and the flat background colour stays
+    exactly the same. Only the craft moves a little; its shape, colours and outline never change. Neon airbrushed
+    1980s school-folder doodle cartoon. The whole craft stays small in the middle with green space all around it.'
+  jobs:
+    wan-mp4: 77025
+- key: t030-idle-lantern-v3
+  lane: wan-mp4
+  entity: enemy-animation
+  title: lantern idle cycle, framed, third take
+  asset: rainbow-princess-art/doodle/anim/lantern-idle
+  size: 608x672
+  seed: 1130101
+  source_image_id: 263295
+  last_image_id: 263295
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: The jelly stays in the centre and only pulses; its tentacles keep their own blue and pink colours.
+    A moonjelly lantern's translucent bell slowly swells and contracts, its glowing heart charging brighter on each
+    swell, long ribbon tendrils trailing and curling below. The camera does not move and the flat background colour
+    stays exactly the same. Only the craft moves a little; its shape, colours and outline never change. Neon airbrushed
+    1980s school-folder doodle cartoon. The whole craft stays small in the middle with green space all around it.
+  jobs:
+    wan-mp4: 77026
