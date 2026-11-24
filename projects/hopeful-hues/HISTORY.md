@@ -20,12 +20,42 @@ levels, 130 won without gifts'. Roadmap registered via conductor #7903 (4c46115)
 issue kind_robots#5649. Next: t-002 art, t-003 region mechanics.
 <!-- note:end t-001 -->
 
+## t-004 — Compose region music and polish sound design
+
+<!-- note:begin t-004 -->
+Music is procedural WebAudio per region. Replace or augment with short original loops per region plus title and ending themes, gesture-safe, honoring the music and SFX sliders.
+
+Authored nine world motifs with three region arrangements each, separate title and ending themes, and gesture-safe music scheduling with mute recovery. Contract assertions added; pending CI and browser audio verification.
+
+Original world and region music, title/ending themes, and gesture-safe playback merged; all six CI workflows green. Live audio acceptance is explicitly tracked in t-006. Implementation PR silasfelinus/kind_robots#5682.
+<!-- note:end t-004 -->
+
 ## t-008 — Move Hopeful Hues to a standalone Play front page with a home highlight and Play link, each with art
 
 <!-- note:begin t-008 -->
 Silas 2026-11-22 PT: not an Arcade game; a front-end page with a highlight entry and a Play link, art for each. Moved /admin/hopeful-hues to /play/hopeful-hues, added the public Play channel tab with splash and tutorial art, a home highlight entry, a share card and a header icon, all rendered from the game's own SVG art in public/hopeful-hues/front/. No Arcade cabinet or advert poster.
 2026-11-23 PT done: kind_robots #5653 merged 2fce484 with all 14 checks complete (13 success, 1 skipped). /play/hopeful-hues front page, Play tab with splash and tutorial art, home highlight, share card and header icon are on main. Painted replacements remain t-002.
 <!-- note:end t-008 -->
+
+## t-010 — Order goals and end-of-level Kindness Overflow that fires specials
+
+<!-- note:begin t-010 -->
+Parity audit 2026-11-23 PT. Goals cover score, colors, Gloom, Tangles and buddies only. Add order goals for specials and combos (make 3 Glitter Bombs, swap 2 specials together) and mixed orders. Kindness Overflow currently converts leftover moves into plain points; make it turn leftover moves into Rainbow Combs that fire across the board with a celebratory animation, the genre-standard finish. No timed levels.
+
+Implemented special-creation and two-special swap orders, mixed regional objectives, actual victory comb cascades, themed goal presentation, and contract assertions. Awaiting CI and browser verification.
+
+Special orders and animated Kindness Overflow merged; all six CI workflows green. Live interaction acceptance remains in t-006. Implementation PR silasfelinus/kind_robots#5683.
+<!-- note:end t-010 -->
+
+## t-012 — Hand-authored level layouts for every sixth level, forks and finales
+
+<!-- note:begin t-012 -->
+Parity audit 2026-11-23 PT. All 130 levels are seeded generations with themed parameters; genre leaders hand-design boards. Add a compact authored-layout format (mask, blockers, starting specials, goals, moves) and author at least one in six levels plus both forks and all four finales, keeping deterministic winnability tests. Overlaps t-003; do the format first and let t-003 consume it.
+
+Added 36 explicit world board diagrams, quarter-turn chapter variants, authored blockers and starting specials, mixed goals, and 90 set-piece placements across 495 levels. Checked all 180 diagram rows are five cells wide; full bot and browser acceptance pending. Nine finale boards replace the superseded four-finale plan; no actual fork levels remain in the nine-world structure.
+
+90 authored levels including all nine finales merged; all six CI workflows green, including Hopeful Hues contract. Browser acceptance remains in t-006. Implementation PR silasfelinus/kind_robots#5684.
+<!-- note:end t-012 -->
 
 ## t-014 — Nine hero-led worlds: unique jewels, blockers, effects, music, maps, story, quests, achievements, endings and art
 

@@ -32,7 +32,7 @@ milestones:
   - id: m3
     title: "ART & SOUND: painted original art, composed music, ending illustrations"
     weight: 20
-    status: not-started
+    status: in-progress
   - id: m4
     title: "QUALITY: browser playthroughs, accessibility, devices, playtest handoff"
     weight: 15
@@ -75,12 +75,10 @@ tasks:
     updated: '2026-11-24T01:38:00Z'
     passes: 0
     stakes: reversible
-    note: |-
-      Music is procedural WebAudio per region. Replace or augment with short original loops per region plus title and ending themes, gesture-safe, honoring the music and SFX sliders.
+    note: >-
+      Music is procedural WebAudio per region.
 
-      Authored nine world motifs with three region arrangements each, separate title and ending themes, and gesture-safe music scheduling with mute recovery. Contract assertions added; pending CI and browser audio verification.
-
-      Original world and region music, title/ending themes, and gesture-safe playback merged; all six CI workflows green. Live audio acceptance is explicitly tracked in t-006. Implementation PR silasfelinus/kind_robots#5682.
+      Full history: projects/hopeful-hues/HISTORY.md#t-004
   - id: t-005
     milestone: m3
     title: "Illustrate the five endings and the story-beat scrapbook pages"
@@ -142,12 +140,10 @@ tasks:
     updated: '2026-11-24T01:38:00Z'
     passes: 0
     stakes: reversible
-    note: |-
-      Parity audit 2026-11-23 PT. Goals cover score, colors, Gloom, Tangles and buddies only. Add order goals for specials and combos (make 3 Glitter Bombs, swap 2 specials together) and mixed orders. Kindness Overflow currently converts leftover moves into plain points; make it turn leftover moves into Rainbow Combs that fire across the board with a celebratory animation, the genre-standard finish. No timed levels.
+    note: >-
+      Parity audit 2026-11-23 PT.
 
-      Implemented special-creation and two-special swap orders, mixed regional objectives, actual victory comb cascades, themed goal presentation, and contract assertions. Awaiting CI and browser verification.
-
-      Special orders and animated Kindness Overflow merged; all six CI workflows green. Live interaction acceptance remains in t-006. Implementation PR silasfelinus/kind_robots#5683.
+      Full history: projects/hopeful-hues/HISTORY.md#t-010
   - id: t-011
     milestone: m2
     title: "Helper tools and pre-level boosts: Sparkle Wand, Free Swap, Comb Brush, start-with-special boosts and a daily gift"
@@ -171,12 +167,10 @@ tasks:
     updated: '2026-11-24T01:38:00Z'
     passes: 0
     stakes: reversible
-    note: |-
-      Parity audit 2026-11-23 PT. All 130 levels are seeded generations with themed parameters; genre leaders hand-design boards. Add a compact authored-layout format (mask, blockers, starting specials, goals, moves) and author at least one in six levels plus both forks and all four finales, keeping deterministic winnability tests. Overlaps t-003; do the format first and let t-003 consume it.
+    note: >-
+      Parity audit 2026-11-23 PT.
 
-      Added 36 explicit world board diagrams, quarter-turn chapter variants, authored blockers and starting specials, mixed goals, and 90 set-piece placements across 495 levels. Checked all 180 diagram rows are five cells wide; full bot and browser acceptance pending. Nine finale boards replace the superseded four-finale plan; no actual fork levels remain in the nine-world structure.
-
-      90 authored levels including all nine finales merged; all six CI workflows green, including Hopeful Hues contract. Browser acceptance remains in t-006. Implementation PR silasfelinus/kind_robots#5684.
+      Full history: projects/hopeful-hues/HISTORY.md#t-012
   - id: t-013
     milestone: m3
     title: "Visual parity: painted map backdrops per region, painted tile set trial, richer match and special effects"

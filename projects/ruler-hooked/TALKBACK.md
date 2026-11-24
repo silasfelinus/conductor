@@ -642,3 +642,14 @@ they are safe for branch-janitor.
 **Suggestion:** "verify generated art" means looking at it. A shared frame sentence that
 is fine for round-bodied fish tiles long thin ones — kaizen t-078 makes the generator's
 fish frame body-plan aware.
+
+## 2026-11-24 — Reviewer (scheduled): stale worker branches cleared
+
+select_role again routed to `reviewer` for the same three `worker/ruler-hooked-{t-031,t-073,t075}`
+branches the 2026-11-23 reviewer already judged superseded (#7921, #7916, #7927/#7932). Re-checked:
+all three tasks are `done`, the 42-species roster and fish-parity test are on main, and no PR is open.
+Decision: no merge, no PR; dispatched `branch-janitor` with `force_delete_branches` for all three.
+
+**Pattern:** a reviewer that judges a branch superseded should dispatch the janitor in the same
+session (AGENTS.md: "A rescue PR deletes the branch it supersedes in the same session"); writing
+"safe for branch-janitor" without running it cost a second review cycle.
