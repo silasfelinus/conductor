@@ -1277,7 +1277,7 @@ tasks:
   - id: t-076
     milestone: m8
     title: "Ribbon Riders depth slice 3: The last two fairgrounds and the endings"
-    status: review
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-075
@@ -1289,10 +1289,9 @@ tasks:
       2026-11-22 PT: Kind Robots PR #5566 merged after all latest-head substantive checks completed green. Partial campaign slice delivered; remaining documented scope stays ready.
 
       2026-11-23 PT: implemented six-second comet trail expiry and champion-unlocked mirrored Encore with compatible saves on worker/kr-arcade-t-076-comet-encore-9d3f6b. Partial slice; Rainbow Spool and remaining hazards still outstanding. CI pending.
-    updated: '2026-11-24T02:12:00Z'
-    owner: worker
-    claimed_by: 2026-11-24T020900Z-kr-arcade-t076-9d3f6b
-    claimed_at: '2026-11-24T02:09:00Z'
+
+      PR kind_robots#5694 merged at fe3406648447fdfcdd4189adc26315327dfab57b; eight final-head workflows passed. Comet trail expiry and Encore shipped. Rainbow Spool, remaining hazards and campaign QA remain.
+    updated: '2026-11-24T04:55:00Z'
 
   - id: t-077
     milestone: m8
@@ -1362,11 +1361,8 @@ tasks:
   - id: t-081
     milestone: m8
     title: "Brick Bloom depth slice 4: Night Bloom House, the Conservatory and the endings"
-    status: review
-    owner: worker
-    claimed_by: 2026-11-24T022700Z-kr-arcade-t081-night-7e4b19
-    claimed_at: '2026-11-24T02:27:00Z'
-    updated: '2026-11-24T02:33:00Z'
+    status: ready
+    updated: '2026-11-24T04:55:00Z'
     passes: 0
     stakes: reversible
     depends_on: t-080
@@ -1374,6 +1370,8 @@ tasks:
       CABINETS.md section 11, Brick Bloom (Breakout / Arkanoid riff), slice 4 of 5: Night Bloom House, the Conservatory and the endings. The upgrade is "The Glasshouse Grand Tour". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read the game's section first; this slice's scope is item 4 under its '#### Slices', and 'Rules for every slice' at the top applies. Code: kind_robots utils/arcade/games/ (registry slug brick-bloom). Silas, 2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality improvements, they should not just be thin veneers of the old games. But newer, better, even more awesome."
 
       Added nine authored Night Bloom walls with branching vents, fifth golden seed vault, lantern and glow lighting, three-phase Gloom Bloom with four guards, timed shutters and bed-smothering cloud attacks, updated existing route tests and new regression suite. Branch worker/kr-arcade-t081-night-7e4b19. Switch crates, moth, secret Conservatory/Thorn, endings and Second Bloom remain; requeue after CI and merge.
+
+      PR kind_robots#5698 merged at 5a43a5faa6d5f658b830120555b8053177303afd; nine final-head workflows passed. Night Bloom House and Gloom Bloom shipped. Switch crates, moth, secret Conservatory/Thorn, endings and Second Bloom remain.
 
   - id: t-082
     milestone: m8
