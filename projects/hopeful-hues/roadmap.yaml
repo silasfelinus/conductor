@@ -32,7 +32,7 @@ milestones:
   - id: m3
     title: "ART & SOUND: painted original art, composed music, ending illustrations"
     weight: 20
-    status: not-started
+    status: in-progress
   - id: m4
     title: "QUALITY: browser playthroughs, accessibility, devices, playtest handoff"
     weight: 15
@@ -69,17 +69,16 @@ tasks:
   - id: t-004
     milestone: m3
     title: "Compose region music and polish sound design"
-    status: review
-    owner: worker
+    status: done
     claimed_by: 2026-11-23T224700Z-hopeful-hues-t-004-5b9d2
     claimed_at: '2026-11-23T22:47:00Z'
-    updated: '2026-11-23T22:47:01Z'
+    updated: '2026-11-24T01:38:00Z'
     passes: 0
     stakes: reversible
-    note: |-
-      Music is procedural WebAudio per region. Replace or augment with short original loops per region plus title and ending themes, gesture-safe, honoring the music and SFX sliders.
+    note: >-
+      Music is procedural WebAudio per region.
 
-      Authored nine world motifs with three region arrangements each, separate title and ending themes, and gesture-safe music scheduling with mute recovery. Contract assertions added; pending CI and browser audio verification.
+      Full history: projects/hopeful-hues/HISTORY.md#t-004
   - id: t-005
     milestone: m3
     title: "Illustrate the five endings and the story-beat scrapbook pages"
@@ -121,25 +120,30 @@ tasks:
   - id: t-009
     milestone: m2
     title: "Genre-parity blockers: spreading Gloom, ribbon locks, 3-5 layer Tangles, rain-cloud countdowns, conveyors, portals and buddy dispensers"
-    status: ready
-    passes: 0
-    stakes: reversible
-    note: >-
-      Parity audit 2026-11-23 PT. The engine has only static Gloom (1-2 layers), static Tangles (1-2 hp) and randomly spawned buddies. Genre-standard match-three boards also use a spreading blocker that grows each move nothing clears it, locks that pin a tile until matched, thick multi-layer blockers, countdown tiles, conveyor rows, portals and fixed dispensers. Build these as engine features with hopecore framing (the countdown tile should drizzle Gloom, never end the level), introduce each through the t-002 tip system, assign them across regions together with t-003, and keep the bot proving all 130 levels winnable.
-  - id: t-010
-    milestone: m2
-    title: "Order goals and end-of-level Kindness Overflow that fires specials"
     status: review
     owner: worker
-    claimed_by: 2026-11-23T225100Z-hopeful-hues-t-010-7c48e
-    claimed_at: '2026-11-23T22:51:00Z'
-    updated: '2026-11-23T22:51:01Z'
+    claimed_by: 2026-11-24T013300Z-hopeful-hues-t-009-c6f21
+    claimed_at: '2026-11-24T01:33:00Z'
+    updated: '2026-11-24T01:33:01Z'
     passes: 0
     stakes: reversible
     note: |-
-      Parity audit 2026-11-23 PT. Goals cover score, colors, Gloom, Tangles and buddies only. Add order goals for specials and combos (make 3 Glitter Bombs, swap 2 specials together) and mixed orders. Kindness Overflow currently converts leftover moves into plain points; make it turn leftover moves into Rainbow Combs that fire across the board with a celebratory animation, the genre-standard finish. No timed levels.
+      Parity audit 2026-11-23 PT. The engine has only static Gloom (1-2 layers), static Tangles (1-2 hp) and randomly spawned buddies. Genre-standard match-three boards also use a spreading blocker that grows each move nothing clears it, locks that pin a tile until matched, thick multi-layer blockers, countdown tiles, conveyor rows, portals and fixed dispensers. Build these as engine features with hopecore framing (the countdown tile should drizzle Gloom, never end the level), introduce each through the t-002 tip system, assign them across regions together with t-003, and keep the bot proving all 130 levels winnable.
 
-      Implemented special-creation and two-special swap orders, mixed regional objectives, actual victory comb cascades, themed goal presentation, and contract assertions. Awaiting CI and browser verification.
+      First advanced-blocker slice adds ribbon locks, capped deterministic spreading Gloom, countdown rain clouds, and three/five-layer Tangles to late chapter boards, with tips, countdown display and replay regression tests. Conveyors, portals and fixed dispensers remain for a subsequent slice. CI pending.
+  - id: t-010
+    milestone: m2
+    title: "Order goals and end-of-level Kindness Overflow that fires specials"
+    status: done
+    claimed_by: 2026-11-23T225100Z-hopeful-hues-t-010-7c48e
+    claimed_at: '2026-11-23T22:51:00Z'
+    updated: '2026-11-24T01:38:00Z'
+    passes: 0
+    stakes: reversible
+    note: >-
+      Parity audit 2026-11-23 PT.
+
+      Full history: projects/hopeful-hues/HISTORY.md#t-010
   - id: t-011
     milestone: m2
     title: "Helper tools and pre-level boosts: Sparkle Wand, Free Swap, Comb Brush, start-with-special boosts and a daily gift"
@@ -157,17 +161,16 @@ tasks:
   - id: t-012
     milestone: m2
     title: "Hand-authored level layouts for every sixth level, forks and finales"
-    status: review
-    owner: worker
+    status: done
     claimed_by: 2026-11-23T225600Z-hopeful-hues-t-012-a8d31
     claimed_at: '2026-11-23T22:56:00Z'
-    updated: '2026-11-23T22:56:01Z'
+    updated: '2026-11-24T01:38:00Z'
     passes: 0
     stakes: reversible
-    note: |-
-      Parity audit 2026-11-23 PT. All 130 levels are seeded generations with themed parameters; genre leaders hand-design boards. Add a compact authored-layout format (mask, blockers, starting specials, goals, moves) and author at least one in six levels plus both forks and all four finales, keeping deterministic winnability tests. Overlaps t-003; do the format first and let t-003 consume it.
+    note: >-
+      Parity audit 2026-11-23 PT.
 
-      Added 36 explicit world board diagrams, quarter-turn chapter variants, authored blockers and starting specials, mixed goals, and 90 set-piece placements across 495 levels. Checked all 180 diagram rows are five cells wide; full bot and browser acceptance pending. Nine finale boards replace the superseded four-finale plan; no actual fork levels remain in the nine-world structure.
+      Full history: projects/hopeful-hues/HISTORY.md#t-012
   - id: t-013
     milestone: m3
     title: "Visual parity: painted map backdrops per region, painted tile set trial, richer match and special effects"

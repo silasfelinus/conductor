@@ -177,3 +177,20 @@ Merged (squash 9017e41). Art ledgers/prompts only, reversible, CI green. The fiv
 - **Decision:** Squash-merged (5376517) on green latest-head CI. An earlier attempt of the "Validate Worker PR handoff" check failed, but a later rerun on the same head passed. The PR only adds `t-051` (ready, reversible, id checked free with `next_free_task_id.py`) to the roadmap. It changes no code, enqueues nothing and publishes nothing.
 - **Pattern:** The scope is right. It reuses the existing receipts for ArtImages 277786-277797, keeps the atlas admin-only, and says outright that a successful byte fetch is not artistic approval.
 - **Kaizen:** none was added. This PR was itself a scoping PR, so a follow-on task would only duplicate t-051. The Worker's implementation PR is where the kaizen belongs.
+
+## 2026-11-24 — pr-medic (scheduled): rescued kind_robots#5681 via #5693
+
+**Failure:** kind_robots#5681 (t-031 art quarantine) was red on TypeScript for 3+ hours while main
+was green. The cause was TS7053 at `verifyCometCityAcademy.test.ts:2807`: a template-literal key
+built from an `as const` tuple widens to `string` and can't index the `as const` rejected-art
+registry. **Category:** actionable (not quality/scope); no pass consumed.
+
+**Action:** reproduced with local `vue-tsc` and fixed it with `as const` on the key. Claude can't
+push to `worker/*`, so the fix went out as rescue PR #5693 (the worker's six commits unchanged).
+All checks passed and it is merged. Collision: the worker pushed an equivalent fix (920aa8b7) to
+#5681 at 02:14 UTC while the rescue CI was running; the rescue merged first. #5681 has a comment
+recommending close.
+
+**Suggestion for the Worker:** the PR body said "Node/TypeScript tests … pending". Run
+`npm run test` (vue-tsc) before opening, or at least before leaving a PR overnight. A PR left red
+for hours draws a medic rescue, and medic and worker fixes then race.
