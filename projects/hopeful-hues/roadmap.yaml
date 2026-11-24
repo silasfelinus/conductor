@@ -69,17 +69,18 @@ tasks:
   - id: t-004
     milestone: m3
     title: "Compose region music and polish sound design"
-    status: review
-    owner: worker
+    status: done
     claimed_by: 2026-11-23T224700Z-hopeful-hues-t-004-5b9d2
     claimed_at: '2026-11-23T22:47:00Z'
-    updated: '2026-11-23T22:47:01Z'
+    updated: '2026-11-24T01:38:00Z'
     passes: 0
     stakes: reversible
     note: |-
       Music is procedural WebAudio per region. Replace or augment with short original loops per region plus title and ending themes, gesture-safe, honoring the music and SFX sliders.
 
       Authored nine world motifs with three region arrangements each, separate title and ending themes, and gesture-safe music scheduling with mute recovery. Contract assertions added; pending CI and browser audio verification.
+
+      Original world and region music, title/ending themes, and gesture-safe playback merged; all six CI workflows green. Live audio acceptance is explicitly tracked in t-006. Implementation PR silasfelinus/kind_robots#5682.
   - id: t-005
     milestone: m3
     title: "Illustrate the five endings and the story-beat scrapbook pages"
@@ -135,17 +136,18 @@ tasks:
   - id: t-010
     milestone: m2
     title: "Order goals and end-of-level Kindness Overflow that fires specials"
-    status: review
-    owner: worker
+    status: done
     claimed_by: 2026-11-23T225100Z-hopeful-hues-t-010-7c48e
     claimed_at: '2026-11-23T22:51:00Z'
-    updated: '2026-11-23T22:51:01Z'
+    updated: '2026-11-24T01:38:00Z'
     passes: 0
     stakes: reversible
     note: |-
       Parity audit 2026-11-23 PT. Goals cover score, colors, Gloom, Tangles and buddies only. Add order goals for specials and combos (make 3 Glitter Bombs, swap 2 specials together) and mixed orders. Kindness Overflow currently converts leftover moves into plain points; make it turn leftover moves into Rainbow Combs that fire across the board with a celebratory animation, the genre-standard finish. No timed levels.
 
       Implemented special-creation and two-special swap orders, mixed regional objectives, actual victory comb cascades, themed goal presentation, and contract assertions. Awaiting CI and browser verification.
+
+      Special orders and animated Kindness Overflow merged; all six CI workflows green. Live interaction acceptance remains in t-006. Implementation PR silasfelinus/kind_robots#5683.
   - id: t-011
     milestone: m2
     title: "Helper tools and pre-level boosts: Sparkle Wand, Free Swap, Comb Brush, start-with-special boosts and a daily gift"
@@ -163,17 +165,18 @@ tasks:
   - id: t-012
     milestone: m2
     title: "Hand-authored level layouts for every sixth level, forks and finales"
-    status: review
-    owner: worker
+    status: done
     claimed_by: 2026-11-23T225600Z-hopeful-hues-t-012-a8d31
     claimed_at: '2026-11-23T22:56:00Z'
-    updated: '2026-11-23T22:56:01Z'
+    updated: '2026-11-24T01:38:00Z'
     passes: 0
     stakes: reversible
     note: |-
       Parity audit 2026-11-23 PT. All 130 levels are seeded generations with themed parameters; genre leaders hand-design boards. Add a compact authored-layout format (mask, blockers, starting specials, goals, moves) and author at least one in six levels plus both forks and all four finales, keeping deterministic winnability tests. Overlaps t-003; do the format first and let t-003 consume it.
 
       Added 36 explicit world board diagrams, quarter-turn chapter variants, authored blockers and starting specials, mixed goals, and 90 set-piece placements across 495 levels. Checked all 180 diagram rows are five cells wide; full bot and browser acceptance pending. Nine finale boards replace the superseded four-finale plan; no actual fork levels remain in the nine-world structure.
+
+      90 authored levels including all nine finales merged; all six CI workflows green, including Hopeful Hues contract. Browser acceptance remains in t-006. Implementation PR silasfelinus/kind_robots#5684.
   - id: t-013
     milestone: m3
     title: "Visual parity: painted map backdrops per region, painted tile set trial, richer match and special effects"
