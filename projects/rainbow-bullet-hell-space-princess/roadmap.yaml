@@ -403,8 +403,16 @@ tasks:
       for super/shield/hurt/boss phase/route fork/stinger, and the route stingers. With comms
       full/story/off (#5670) and the 15 party masks, t-012's remaining scope is the animated
       cinematics, tracked under t-030.
-    updated: '2026-11-24T00:25:18Z'
-    implementation_pr: 'silasfelinus/kind_robots#5687'
+
+      2026-11-23 PT: kind_robots#5709 (merged 66b6caa8) fixes the independent story critic's
+      blockers (REVIEW-ROUND-1-2026-11-23.md): S1 only the crew speaks on comms, detours
+      included (crewLine maps unflown authored seats onto the crew); S2 the rebel and loyal
+      road epilogues play (loyal crews no longer hear a rebel-toned party line); plus S7 four-
+      pilot finale roles, S12 safe-route continuity, S13 credits, S14 plurals, S18 solo
+      address, S19 rebel log, S22 loyal verdict. verifyRainbowCrewVoices pins them. Story
+      majors S3-S11 and the remaining minors are t-066.
+    updated: '2026-11-24T06:11:21Z'
+    implementation_pr: 'silasfelinus/kind_robots#5709'
   - id: t-013
     milestone: m5
     title: "Deterministic combat fairness, multiplayer soak and campaign QA"
@@ -446,7 +454,16 @@ tasks:
       art/motion/access/devices (session_01L5NKxc2Uyg6NvXB3Cv7jdw, claude/rainbow-review-
       presentation). Read-only; each pushes a defect report. Repeat the passes after the last
       significant art/animation change (t-030) before #4146's final verification.
-    updated: '2026-11-24T05:08:55Z'
+
+      2026-11-23 PT: kind_robots#5709 (merged 66b6caa8) adds utils/scripts/rainbowPersonas.ts,
+      scripted fail-and-retry players (idle, novice, typical, no-super, expert, camper) flying
+      the real engine with damage on and continues on or off, deciding only from the snapshot.
+      First matrix (seed 7): solo typical reaches THE END in 62.8 min with 3 continues (no
+      continues: dies in Act VII); solo expert finishes in 48.4 min with no continues; idle
+      and novice loop in Act I with continues. It found a Delphion phase-3 stalemate (a parked
+      four-pilot crew never hit and never hitting for an hour), fixed with aimed twin fans and
+      pinned by verifyRainbowBossCamping.
+    updated: '2026-11-24T06:11:23Z'
     implementation_pr: 'silasfelinus/kind_robots#5689'
   - id: t-014
     milestone: m5
