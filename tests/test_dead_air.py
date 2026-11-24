@@ -481,3 +481,24 @@ def test_clip_skip_reason_names_the_deadline_not_just_congestion():
     assert optional_clip_skip_reason(["s4"], congested=True, deadline_hit=False) == "congestion"
     assert optional_clip_skip_reason(["s4"], congested=False, deadline_hit=False) is None
     assert optional_clip_skip_reason([], congested=True, deadline_hit=True) is None
+
+
+def test_unrendered_briefs_give_the_painter_no_lettering_surface():
+    """MV28 painted garbled neon words into four of five shots because the brief asked
+    for a "neon window sign". Briefs not yet rendered must not name signs, marquees,
+    labels, banners or "reading ..." text in anything the still model paints."""
+    from dead_air_produce import lettering_surface_problems
+
+    assert lettering_surface_problems("a teal and pink neon window sign")
+    assert lettering_surface_problems("a sandwich board reading SHOP SMALL SATURDAY")
+    assert lettering_surface_problems("a rain check that reads 'one evening'")
+    assert lettering_surface_problems("foil packets labeled in marker")
+    assert not lettering_surface_problems(
+        "reading glasses, a broadcast antenna signal, a panel stamped with a tower symbol")
+    for path in sorted((ROOT / "projects/dead-air/episodes").glob("*.yaml")):
+        e = load_episode(path)
+        if e.get("status") != "authored" or e["date"] < "2026-11-23":
+            continue
+        painted = [e["visual_style"]] + [s["image_prompt"] for s in e["shots"]]
+        found = [p for text in painted for p in lettering_surface_problems(text)]
+        assert not found, f"{path.name}: {found}"

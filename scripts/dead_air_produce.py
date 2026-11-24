@@ -49,6 +49,24 @@ PAINT_GUARDS = {
 }
 
 
+# MV28 (Rerun Laundromat) painted garbled neon words ("BIATNIGHT", "ORIGINAL NIGH-HIFT")
+# into four of five shots: the brief asked for a "neon window sign", and Krea fills any
+# sign-like surface with letters, borrowing words from the prompt itself. Quoted or
+# all-caps "reading ..." text garbles the same way. Name a picture, symbol or pattern
+# instead; the compositor's overlay carries the words.
+LETTERING_SURFACES = re.compile(
+    r"\b(?:signs?|signboards?|marquees?|billboards?|placards?|banners?|stickers?|"
+    r"sandwich boards?|label(?:l)?ed|labels?|(?:hand-)?lettered)\b"
+    r"|\breads?\s+['\"]|\breading\s+['\"]|(?-i:\breads?\s+[A-Z]{2,}|\breading\s+[A-Z]{2,})",
+    re.I,
+)
+
+
+def lettering_surface_problems(prompt: str) -> list[str]:
+    """Phrases that hand the still model a surface to fill with fake words."""
+    return [f"lettering-surface: {m.group(0).strip()}" for m in LETTERING_SURFACES.finditer(prompt)]
+
+
 def paint_prompt_problems(prompt: str) -> list[str]:
     errors = [f"{name}: {found.group(0)}" for name, pattern in PAINT_GUARDS.items()
               if (found := pattern.search(prompt))]
