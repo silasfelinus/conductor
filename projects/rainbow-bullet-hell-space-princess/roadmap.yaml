@@ -1297,7 +1297,7 @@ tasks:
     stakes: reversible
     depends_on: []
     source: independent-review-round-1-2026-11-23
-    updated: '2026-11-24T07:34:00Z'
+    updated: '2026-11-24T10:52:49Z'
     note: >-
       From the independent gameplay critic (REVIEW-ROUND-1-2026-11-23.md, D1-D3, D5-D9, P-15): super on a short B tap only (hold stays focus); cut the kill refund, a radius wipe, boss damage as a share of max HP; co-op boss HP about 2.5 + 2(n-1); per-kind guardian movement, HP tier by Act, aimed fans that close the aimed line, varied arrival; Crown spoke and ring jitter or an aimed spoke so no ray is safe; Act-specific launchers; boss returns to the start of its phase on continue (D8 default, owner may override); optional seeded variations. Extend verifyRainbowBossCamping to every boss and the persona matrix as regression evidence.
 
@@ -1313,7 +1313,10 @@ tasks:
       Remaining: D7 Act-specific launchers, D9 seeded variation (optional), P-15 Leviathan
       burst, and the camping audit's other flagged phases (Delphion 2, Lantern Ray, Glass Eel,
       Leviathan 3) to confirm in-engine.
-    implementation_pr: 'silasfelinus/kind_robots#5713'
+
+      2026-11-24 PT: D7 (eight Act-specific mortar shells) and P-15 (the Leviathan burst
+      spawns as two rings) fixed in kind_robots#5737. Left: D9 (optional seed variation).
+    implementation_pr: 'silasfelinus/kind_robots#5737'
   - id: t-066
     milestone: m4
     title: 'Story critic round 1: choice-specific endings, spoken Crown plea, real crew exchanges, per-pilot Act voices, Lilt agency'
@@ -1322,7 +1325,7 @@ tasks:
     stakes: reversible
     depends_on: []
     source: independent-review-round-1-2026-11-23
-    updated: '2026-11-24T09:52:08Z'
+    updated: '2026-11-24T10:52:52Z'
     note: >-
       From the independent story critic (REVIEW-ROUND-1-2026-11-23.md, S3-S11, S15-S17, S20, S21; the blockers S1/S2 and S12-S14, S18, S19, S22 shipped in kind_robots#5709): give each final choice its own escape beat, Lilt resolution and crew line; an A09.PLEA scene and stand-down variants (TURN, AFTER, credits, archive); rewrite the 15 combination lines as 2-3 line exchanges with planted setup and spread speakers; role-true lines by pilot identity, not seat; at least one pilot-keyed line per present pilot per Act carrying her arc, and a third-voice slot for middle seats; one consequential act for Lilt-7 per road; one rescue tally everywhere; continue/defeat lines; speaker-only comms headers; in-world archive copy and a stand-down entry; branch the cadet epilogue on cadetsHome.
 
@@ -1330,7 +1333,13 @@ tasks:
       Crown's 7 s plea (the Crown asks, Lilt names the turn, the lead answers), and a stood-
       down crew hears the turn in A09.TURN, Lilt's resolution and the credits (THE ROAD:
       TURNED AT THE CROWN). Remaining: S3, S5-S11, S15-S17, S20, S21.
-    implementation_pr: 'silasfelinus/kind_robots#5721'
+
+      2026-11-24 PT: S5, S6, S17, S20, S21 fixed and S9 partly fixed in kind_robots#5737 (crew
+      exchanges, speaker-only comms header, in-world scrapbook plus a stood-down page). S3 and
+      S10 (choice-shaped escape and resolution; Lilt acts) are in kind_robots#5738. Left: S8
+      (pilot-keyed Act beats), S9 in Act scenes, S11 (road- and crew-aware ending plates, with
+      P-03).
+    implementation_pr: 'silasfelinus/kind_robots#5737'
   - id: t-067
     milestone: m5
     title: 'Presentation critic round 1: co-op HUD and touch pads off the playfield, phone and large-screen layout, pellet readability'

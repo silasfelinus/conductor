@@ -32,7 +32,7 @@ Silas's decision; it stays as it is until he decides).
 | D4 | major | the 2–4p HUD panel hides live pellets (10.8% of 4p combat frames) and clips the boss bar | t-067 | fixed in kind_robots#5716 (every status inside the HUD bar) |
 | D5 | major | guardians share one AI and body; a frozen ship takes 0 hits from the Act II guardian; all arrive at frame 6300 | t-065 | partly fixed in #5713 (per-kind motion; aimed fans close the open lane on alternate volleys); arrival timing and per-Act HP open (the HP tier made late guardians escape) |
 | D6 | major | the Eclipse Crown's 20° spoke steps leave permanent safe pockets that still deal damage | t-065 | fixed in #5713 (alternate volleys aim a spoke; verifyRainbowBossCamping) |
-| D7 | minor | the mortar is reused across 7 Acts and a detour | t-065 | open |
+| D7 | minor | the mortar is reused across 7 Acts and a detour | t-065 | fixed in kind_robots#5737 (one launcher, eight Act shells: own burst pattern and colours, 6-16 pellets each) |
 | D8 | minor | infinite continues plus boss-HP carry-over remove the fail state for a parked co-op party | t-065 | **owner call, unchanged**: the phase-reset default was tried and reverted (B01 became unbeatable for the solo test bot), so the kinder carry-over stays until Silas decides |
 | D9 | minor | the seed changes nothing | t-065 | open (optional: seeded authored variations, same-seed replay exact) |
 | (persona QA) | major | Delphion phase 3: a parked crew is never hit and never hits, so the fight stalls (found by the t-013 personas) | t-013 | fixed in kind_robots#5709 (aimed twin fans) plus `verifyRainbowBossCamping` |
@@ -45,11 +45,11 @@ Silas's decision; it stays as it is until he decides).
 | S2 | blocker | the road epilogues never play, and the party line contradicts loyal endings | t-012 | fixed in kind_robots#5709 |
 | S3 | major | the final choice only re-titles the ending (same escape, resolution, epilogue, send-off) | t-066 | open |
 | S4 | major | the Crown's plea is a HUD countdown with no dialogue, and a stand-down is never acknowledged | t-066 | fixed in kind_robots#5721 (A09.PLEA scene; stand-down TURN, AFTER and credits) |
-| S5 | major | the 15 combination lines are single non-sequiturs with no setup | t-066 | open |
-| S6 | major | Vivi speaks for 8 of the 15 crews | t-066 | open |
+| S5 | major | the 15 combination lines are single non-sequiturs with no setup | t-066 | fixed in #5737 (15 three-line exchanges among the pilots flying, built on established pilot hooks; reveal grows to five lines) |
+| S6 | major | Vivi speaks for 8 of the 15 crews | t-066 | fixed in #5737 (speakers spread; each pilot has 8+ lines across the combinations) |
 | S7 | major | seat renaming hands one pilot's role to another | t-066 | partly fixed in #5709 (four-pilot finale line); the general case is open |
 | S8 | major | the princesses are interchangeable in the Acts | t-066 | open |
-| S9 | major | middle seats in 3–4-pilot crews barely speak | t-066 | open |
+| S9 | major | middle seats in 3–4-pilot crews barely speak | t-066 | partly fixed in #5737 (every pilot of a two- or three-pilot crew speaks in the reveal exchange); Act scenes stay seat-keyed, with S8 |
 | S10 | major | Lilt-7's agency is a refrain of "I will not choose for you" | t-066 | open |
 | S11 | major | ending plates ignore the road and the crew size | t-030 / t-066 | open (with P-03) |
 | S12 | minor | the safe trench route knows about the vault's locks | t-012 | fixed in #5709 |
@@ -57,11 +57,11 @@ Silas's decision; it stays as it is until he decides).
 | S14 | minor | plurals at 1 | t-012 | fixed in #5709 |
 | S15 | minor | the rescue tally means different things on different screens; the Act I failure line mentions the Eclipse | t-066 | open |
 | S16 | minor | the continue beat has no writing | t-066 | open |
-| S17 | minor | internal scene ids appear in the comms header | t-066 | open |
+| S17 | minor | internal scene ids appear in the comms header | t-066 | fixed in #5737 (speaker and call sign only; the scene id moves to snapshot.comms) |
 | S18 | minor | solo crews are addressed as a group | t-012 | fixed in #5709 |
 | S19 | minor | the rebel flight log says the Crown instead of the Motherland | t-012 | fixed in #5709 |
-| S20 | minor | developer prose in the ending archive; stand-down is not archived | t-066 | open |
-| S21 | minor | the cadet epilogue ignores whether the cadets came home | t-066 | open |
+| S20 | minor | developer prose in the ending archive; stand-down is not archived | t-066 | fixed in #5737 (in-world choice pages; a "Turned at the Crown" page for a stood-down crew) |
+| S21 | minor | the cadet epilogue ignores whether the cadets came home | t-066 | fixed in #5737 (no combination leans on cadets, academy records or other unplanted beats) |
 | S22 | minor | the verdict is road-blind | t-012 | fixed in #5709 (loyal verdict) |
 
 ## Presentation (presentation critic)
@@ -82,7 +82,7 @@ Silas's decision; it stays as it is until he decides).
 | P-12 | major | B02 changes creature between phases | t-030 | open (art regen from the phase-1 reference) |
 | P-13 | major | the Act V wreck frames are 1-px outlines | t-067 | fixed in kind_robots#5719 (solid crane silhouettes) |
 | P-14 | minor | the detour planes have no Fever Dream twins; the X3 footer has no plate | t-022 | open |
-| P-15 | minor | Leviathan's gem-open burst is an illegible clump | t-065 | open |
+| P-15 | minor | Leviathan's gem-open burst is an illegible clump | t-065 | fixed in #5737 (the two rings spawn 16 px and 28 px out along their spokes) |
 | P-16 | major | the stage uses about 27% of a 1920×1080 screen | t-067 | fixed in kind_robots#5720 (stage 1446x813 at 1920x1080, about 57%) |
 | P-17 | minor | the settings panel scrolls at 360×640 | t-067 | open |
 | P-18 | minor | Seas on phone is text only; the route map is a 40 px strip | t-067 | open |
