@@ -1002,8 +1002,8 @@ tasks:
   - id: t-031
     milestone: m3
     title: "HIGH PRIORITY · Begin private Unstable Diffusers production for canonical Prom/Tactics cast"
-    status: claimed
-    updated: '2026-11-24T06:13:00Z'
+    status: review
+    updated: '2026-11-24T06:14:00Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -1069,6 +1069,8 @@ tasks:
       Added 44 existing private paintings (24 October cast, 12 recruit emotion, 8 neutral/injured recruit) to 12 production QA groups. All 44 exact stable asset keys and Job/Image IDs match existing runtime receipts; 36 have recorded media proof, 8 remain DONE without byte proof. Gallery now 221 candidates, with direct group selection and regression checks for cross-surface identity. Kind Robots commit c0287e7db28363416431a2d131ea3cada8c54a07. No fresh visual approvals or live media retrieval claimed. Partial scope.
 
       Confirmed Kind Robots #5699 merged at a8fa6fad9bb6b3e4b822374135bdcc67975335e7. The 44 candidate mappings are partial; actual curation, source retrieval and gameplay attachment remain outstanding.
+
+      Fetched and visually inspected actual committed WebP bytes for 14 Cornerstone and Backdraft paintings. Retain all six Cornerstone student/outcome images and seven Backdraft student/villain/outcome images for existing use; quarantine Backdraft hero splash blob 226bb5540aefd1e1232a79e2a53dc9cd672b4ed7 because the red suit and circular lightning emblem evoke a recognizable franchise costume. Use actual original heat-shield rescue outcome blob 5b81b78f893365062473adee37781216bd4e7e5c in shared hero resolver. Kind Robots commit d6ee5a83d047a3e7981ffba771380aaa83ab7831. Regression coverage added; CI pending. Private ArtImage access unavailable in session (DNS failure, token absent); no new private candidate approval or ArtJob submission. Partial, return to ready after merge.
     owner: worker
     claimed_by: 20261124T061300Z-comet-t031-visual-qa-e83b
     claimed_at: '2026-11-24T06:13:00Z'
