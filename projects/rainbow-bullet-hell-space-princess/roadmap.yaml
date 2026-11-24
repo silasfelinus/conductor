@@ -339,7 +339,7 @@ tasks:
   - id: t-011
     milestone: m4
     title: "Build lavish stage parallax, readable effects and character animation"
-    status: review
+    status: ready
     depends_on: [t-002, t-007]
     passes: 0
     stakes: reversible
@@ -359,10 +359,9 @@ tasks:
       Added two distant painted parallax depths to every main Act using its integrated reviewed scenery strips, with subdued alpha, independent scroll speeds, calm-motion scaling and regression assertions. Implementation commit 0a4553aa7b8040b8b523521fc03971750edf7364; broader original painted scenery and sprite-artist scope remains.
 
       Additional scoped visual-effects increment in silasfelinus/kind_robots#5428: two-frame-budgeted localized boss glow, capped alpha and radius, under hostile bullet halos, suppressed entirely in calm mode; regression coverage for budgets and draw order. PR and latest-head CI pending; full t-011 art and atlas scope remains unfinished. Do not mark done until delivered assets and visual QA.
-    updated: '2026-11-20T11:52:46.241Z'
-    owner: worker
-    claimed_by: 2026-11-20T095100Z-rainbow-t011-k7m4
-    claimed_at: '2026-11-20T09:51:00Z'
+
+      2026-11-24 PT intent audit: the increment's PR silasfelinus/kind_robots#5428 merged; the claim from 2026-11-20 was never released and the note says the wider scope is still partial. Returned to ready with the claim cleared so the next worker can pick it up. No scope change.
+    updated: '2026-11-24T06:56:42+00:00'
   - id: t-012
     milestone: m4
     title: "Produce opening, between-stage dialogue, endings, sound and score"
@@ -928,12 +927,11 @@ tasks:
     implementation_pr: 'silasfelinus/kind_robots#4105'
   - id: t-042
     title: "Rainbow Bullet Hell Space Princess — Master Roadmap to Final Creative Approval"
-    status: review
+    status: ready
     stakes: reversible
-    owner: worker
     passes: 0
     source_issue: "silasfelinus/kind_robots#4146"
-    updated: '2026-11-21T10:40:00Z'
+    updated: '2026-11-24T06:56:43+00:00'
     note: |-
       FROM GITHUB ISSUE silasfelinus/kind_robots#4146 (https://github.com/silasfelinus/kind_robots/issues/4146), opened by @silasfelinus on 2026-10-25. Imported by scripts/sync_github_issues.py. Reference the canonical roadmap in implementation PRs with `Refs silasfelinus/kind_robots#4146`, never `Closes`. Keep #4146 open throughout finite build, art and QA work. Only the verified playtest handoff workflow may prefix `[FLAGGED FOR HUMAN TESTING]` and close the single master issue after Conductor lifecycle, priority, evidence and genuine `needs-human` subjective-acceptance gate are confirmed; closing the issue is not human approval or permission to publish.
 
@@ -957,8 +955,8 @@ tasks:
       [... truncated; read the full issue at https://github.com/silasfelinus/kind_robots/issues/4146]
 
       Implemented byte-accurate Arcade save capacity and fail-closed serialization with Rainbow three-slot regression. Partial master roadmap scope; return to ready after merge.
-    claimed_by: 20261121T103409Z-rainbow-t042-savebytes-k7m2
-    claimed_at: '2026-11-21T10:34:09Z'
+
+      2026-11-24 PT intent audit: the increment's PR silasfelinus/kind_robots#5504 merged; the claim from 2026-11-21 was never released and the note says the wider scope is still partial. Returned to ready with the claim cleared so the next worker can pick it up. No scope change.
   - id: t-043
     milestone: m4
     title: "Fever Dream look: review the doodle re-renders (DOODLE-SET-2) and ship the keepers"

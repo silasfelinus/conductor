@@ -91,15 +91,12 @@ tasks:
       images asserted as live.
   - id: t-028
     title: 'Main-game standard: audit and close the gaps for Save the Plumber'
-    status: review
-    owner: worker
-    claimed_by: 2026-11-12T100700Z-save-the-plumber-t028-p7k2
-    claimed_at: '2026-11-12T10:07:00Z'
+    status: ready
     milestone: m6
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-12T10:11:00Z'
+    updated: '2026-11-24T06:56:43+00:00'
     note: |-
       Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -112,6 +109,8 @@ tasks:
       Achievements are tracked by their own task; this one covers everything else.
 
       Added first progress-aware world scrapbook slice: per-world cleared stages, collected Golden Gears and discovered secret exits, derived from the active versioned save. Further settings, endings and art remain.
+
+      2026-11-24 PT intent audit: the increment's PR silasfelinus/kind_robots#5076 merged; the claim from 2026-11-12 was never released and the note says the wider scope is still partial. Returned to ready with the claim cleared so the next worker can pick it up. No scope change.
   - id: t-029
     title: 'Save the Plumber achievement upgrade: 12 or more live achievements'
     status: done
