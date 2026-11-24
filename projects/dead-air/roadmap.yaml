@@ -102,8 +102,8 @@ tasks:
     status: ready
     recurring: true
     daily_commitment: true
-    daily_last_checked: '2026-11-22'
-    daily_last_completed: '2026-11-22'
+    daily_last_checked: '2026-11-23'
+    daily_last_completed: '2026-11-23'
     stakes: reversible
     passes: 0
     depends_on: t-002
@@ -196,9 +196,20 @@ tasks:
       optional_clip_skip_reason (deadline|congestion), with a test; MV27 backfilled.
       daily_last_completed=2026-11-22 reflects MV27's verified completion. PR
       silasfelinus/conductor#7854.
+
+      2026-11-23 PT cycle: MusicVideo 28 (Rerun Laundromat, ArtImage 279777) completed private
+      at 13:08 PT after its stills sat PENDING 12.2h. Downloaded, hash-verified and screened;
+      review log projects/dead-air/reviews/2026-11-23-screening.md. Peak -1.8 dBFS. Reveal
+      held for s4 and the s5 TV shows the rerun payoff. Defects: garbled neon words in 4/5
+      shots (a 'neon window sign' in visual_style), s3 memories rendered as literal towels,
+      photoreal people, no s4 lint-trap frames, clip dropped by the deadline. Fixed:
+      lettering_surface_problems plus a test over unrendered briefs; rewrote signs, labels,
+      marquees and 'reading X' text in the 11-24/26/27/28/29 briefs.
+      daily_last_completed=2026-11-23 reflects MV28's verified completion. PR
+      silasfelinus/conductor#7959.
     owner: worker
-    updated: '2026-11-22T20:48:31Z'
-    implementation_pr: 'silasfelinus/conductor#7854'
+    updated: '2026-11-24T07:49:40Z'
+    implementation_pr: 'silasfelinus/conductor#7959'
   - id: t-005
     milestone: m3
     title: Create rights-aware reference and private production provenance review
