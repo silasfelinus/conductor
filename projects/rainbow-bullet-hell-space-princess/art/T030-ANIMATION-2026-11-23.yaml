@@ -899,6 +899,8 @@ subjects:
       status: DONE
       art_image_id: 279876
 - key: t030-pose-solenne-hit-v2
+  verdict: 'reject: 2026-11-24 PT review, identity holds but she reads as joyful (an open-mouth grin), not hit;
+    replaced by t030-pose-solenne-hit-v3'
   lane: kontext
   entity: pilot-pose
   title: solenne hit pose, second take
@@ -914,6 +916,10 @@ subjects:
     outfit, the same framing and background, and the same polished western animation style with bold outlines.'
   jobs:
     kontext: 77032
+  art:
+    kontext:
+      status: DONE
+      art_image_id: 279903
 - key: t030-card-s03-v2
   lane: wan-mp4
   entity: cinematic
@@ -931,7 +937,15 @@ subjects:
     on model. Neon airbrushed 1980s school-folder doodle cartoon.'
   jobs:
     wan-mp4: 77033
+  art:
+    wan-mp4:
+      status: RUNNING
+      art_image_id: null
 - key: t030-still-s04-clean
+  verdict: 'keep: 2026-11-24 PT review, the painted logo is gone and the sky corner is seamless aurora; ships, trains
+    and colours unchanged; shipped as the Fever Dream S04 card'
+  shipped_as:
+  - rainbow-princess-art/doodle/stages/s04-card
   lane: kontext
   entity: card-still
   title: s04 title card without the painted logo
@@ -945,3 +959,39 @@ subjects:
     trains, the tracks, the colours, the framing and the neon airbrushed doodle style with bold outlines.'
   jobs:
     kontext: 77034
+  art:
+    kontext:
+      status: DONE
+      art_image_id: 279904
+- key: t030-pose-solenne-hit-v3
+  lane: kontext
+  entity: pilot-pose
+  title: solenne hit pose, third take
+  asset: rainbow-princess-art/poses/solenne-hit
+  size: 832x1216
+  seed: 1132799
+  source_image_id: 246032
+  negative: text, lettering, logo, watermark, words, extra people, different face, changed hair colour, changed
+    hairstyle, changed skin tone, slimmer build, changed outfit, smiling, grinning, laughing, happy expression
+  prompt_prose: 'Solenne, the gold-themed pilot, is knocked back by a blast: her eyes are wide with alarm, her mouth
+    open in a sharp gasp, her brows drawn together, and her whole body twists away from a burst of golden sparks
+    striking her shoulder plate. She is startled and hurt, not happy. Keep this exact same face, hairstyle, hair
+    colour, skin tone, body build and flight outfit, the same framing and background, and the same polished western
+    animation style with bold outlines.'
+  jobs:
+    kontext: 77035
+- key: t030-card-s04-v2
+  lane: wan-mp4
+  entity: cinematic
+  title: s04 title card interlude from the clean still
+  asset: rainbow-princess-video/interludes/s04
+  size: 832x480
+  seed: 1132009
+  source_image_id: 279904
+  last_image_id: 279904
+  duration: 3
+  loop: true
+  prompt_prose: 'The three ships glide along their flight paths with flickering engine trails, the aurora swirls
+    slowly across the starry sky and light runs along the train windows. The painting stays crisp: bold outlines,
+    flat bright colours, no grain and no smearing. Nothing new appears, no lettering or logos, and every ship stays
+    exactly on model. Neon airbrushed 1980s school-folder doodle cartoon.'
