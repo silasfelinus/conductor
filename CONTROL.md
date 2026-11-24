@@ -62,7 +62,7 @@ This is not permission for a public launch, billing, or irreversible changes.
 
 **Priority order this week:** rainbow-bullet-hell-space-princess → save-the-plumber →
 kind-pinball → zuzu-lair → kr-arcade → zuzu-showdown → memory-dungeon →
-cthulhuquarium → kind-economy → comet-city-academy → game-of-captains → butterfly-gallery → art-archive.
+cthulhuquarium → kind-economy → comet-city-academy → butterfly-gallery → art-archive.
 
 <!-- Historical priority record: 2026-10-19 elevated Ecotone behind the four
 2026-10-07 arcade/Zuzu leaders. Superseded for ordinary project selection by
@@ -863,6 +863,8 @@ with persistent aquariums, a collectible monster-fish bestiary, and browsable pu
 **New project (Silas, 2026-10-25 PT):** ACTIVE, HIGH priority superhero-school playbook, working title "Comet City Academy: Final Exam". The player selects power sets with mechanically unique solutions, chooses hero or villain allegiances through action, builds relationships with student/faculty NPCs, assigns 1-3 volunteers to Dispatch-style *training simulations* each day, draws location cards around school and Comet City, and lives through a graduation/prom crisis that can threaten the world. The daily experience must be rich, replayable, illustrated and a full-screen console game rather than a standard web form. Canonical scope in `projects/comet-city-academy/DESIGN-BRIEF.md` and roadmap; master issue kind_robots#4181. Internal development and art are agent-owned; final full design acceptance and public publication are separate human gates.
 
 ### game-of-captains (software)
+
+**LATEST Game of Captains lifecycle (2026-11-24 PT intent audit, from Silas's 2026-11-22 PT playtest handoff, conductor#7822):** `playtest`/`normal`. The finite roadmap is complete and t-012 final design acceptance moved post-roadmap by Silas. New fixes ship as `playtest_iteration` tasks; public release stays separately gated. The ACTIVE/HIGH wording below is the original brief, kept for history.
 
 **2026-10-25 latest revision:** Display brand **This Means Warp**, retain `game-of-captains` slug and compatible `/play/game-of-captains` route. Full crew-command and intervention playbook unchanged except official name, with a specifically authored captain/crew/ethical-mission/antagonist first voyage followed by three acts, twelve systems, eight antagonists and sixteen earned outcomes. Respect Vox (tardigrade narrator), sentient Serendipity (separate narrator) and Fluke (Improbability Starcruiser narrator) seed identities. The playable Play first slice lives in existing kind_robots PR #4185; avoid conflicting edits while it is in review. Once it merges, agent-owned t-013 updates title, Play tab, dashboard highlight and Project presentation without breaking saves or links. See definitive DESIGN-BRIEF.md.
 
