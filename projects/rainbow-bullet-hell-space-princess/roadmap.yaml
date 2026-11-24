@@ -339,7 +339,7 @@ tasks:
   - id: t-011
     milestone: m4
     title: "Build lavish stage parallax, readable effects and character animation"
-    status: claimed
+    status: review
     depends_on: [t-002, t-007]
     passes: 0
     stakes: reversible
@@ -373,8 +373,14 @@ tasks:
       PR silasfelinus/kind_robots#5746 merged as 0d7a9d09 after 23 checks passed. The hurt-
       craft flinch is live on main. Still open: painted stage planes, sprite rigs and atlases,
       and visual acceptance. Stays ready and unclaimed.
-    updated: '2026-11-24T15:48:28Z'
-    implementation_pr: 'silasfelinus/kind_robots#5746'
+
+      2026-11-24 PT surge-lean increment: the pilot craft now stretches when surging forward
+      and squats when backing off, on top of the bank, via the pure helper rainbowShipPose
+      (draw-only, hitbox unmoved). Calm motion now damps the bank too. PR
+      silasfelinus/kind_robots#5747, CI pending. Still open: painted stage planes, sprite rigs
+      and atlases, and visual acceptance.
+    updated: '2026-11-24T15:54:33Z'
+    implementation_pr: 'silasfelinus/kind_robots#5747'
     owner: worker
     claimed_by: 2026-11-24T15:52:00Z-focused-johnson
     claimed_at: '2026-11-24T15:48:28Z'
