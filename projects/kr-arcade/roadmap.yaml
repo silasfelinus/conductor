@@ -2983,14 +2983,15 @@ tasks:
   - id: t-181
     milestone: m12
     title: "Superkate Spectrum: touch aim, aim assist, colorblind/high-contrast modes, calm motion and full controller support"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 2026-11-24T215311Z-spectrum-touch-e917b2
     claimed_at: '2026-11-24T21:53:11Z'
-    updated: '2026-11-24T21:53:11Z'
+    updated: '2026-11-24T21:56:00Z'
     passes: 0
     stakes: reversible
     depends_on: [t-176]
+    note: '2026-11-24 PT: implemented opt-in cabinet stage pointer capture, Spectrum drag-to-aim/release-to-fire, cancellation and out-of-field guards, tap-to-play unlocked stage nodes, cosmetic selection, next-bubble swap and story choices. The aim preview uses actual projectile movement and collision. Added engine regressions for all 30 nodes, locked cosmetics/stages, gesture cancellation and shot exclusion. Pending CI and rendered device/controller QA; partial scope only.'
   - id: t-182
     milestone: m12
     title: "Superkate Spectrum: original salon and six-region music themes, matching sound effects and accessible audio settings"
