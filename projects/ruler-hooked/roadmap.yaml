@@ -89,13 +89,13 @@ tasks:
   title: 'Main-game standard: audit and close the gaps for The Ruler Is Hooked'
   status: review
   owner: worker
-  claimed_by: 20261124T082500Z-ruler-hooked-t067-access-9bc42
-  claimed_at: '2026-11-24T08:25:00Z'
+  claimed_by: 20261124T095300Z-ruler-hooked-t067-cloud-4bf92
+  claimed_at: '2026-11-24T09:53:00Z'
   milestone: m6
   stakes: reversible
   passes: 0
   depends_on: []
-  updated: '2026-11-24T08:25:00Z'
+  updated: '2026-11-24T09:53:00Z'
   note: |-
     Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -122,6 +122,10 @@ tasks:
     Reconciled Royal Scrapbook #5701 merged at 7ac6fc5d and its subsequent layout correction #5702 merged at 77314f54, all eight workflows on the corrective head passed (layout 45323561499, gameplay 45323561893). Permanent scrapbook is implemented; accessibility settings and account-backed progress remain. Return to ready for the next standards slice; no rendered-device or deployment acceptance claimed.
 
     Kind Robots branch worker/ruler-hooked-t-067-access-9bc42 at 256d299a adds validated device-persistent reading size, contrast and motion preferences, title and in-game settings, title achievements access, per-reign deletion confirmation and display preference regression cases. Story reading remains manual. Partial t-067; account-backed saves and deployed device checks remain. Exact-head CI pending.
+
+    PR #5723 merged at 091c06dcf9ef3f4c06661fce66820a15800d54a0 after all 13 non-skipped exact-head checks passed, including four contract shards. Partial accessibility and safe deletion scope delivered; account-backed saves and deployed device verification remain.
+
+    App commit fceb638f on worker/ruler-hooked-t-067-cloud-4bf92 adds explicit private account backup and restore of reign slots and scrapbook, using existing revision-guarded ArcadeCabinetSave storage, strict bounded parsing, latest-timestamp merging and device-only custom portraits. Added regression assertions. CI and live account/device verification pending; no automatic upload or schema migration.
 
 - id: t-068
   title: 'The Ruler Is Hooked achievement upgrade: 12 or more live achievements'

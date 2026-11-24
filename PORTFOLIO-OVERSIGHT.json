@@ -1,31 +1,31 @@
 {
-  "generated_at": "2026-11-24T00:02:39.307511+00:00",
+  "generated_at": "2026-11-24T10:07:06.808487+00:00",
   "summary": {
-    "status": "semantic-review-upcoming",
+    "status": "clean",
     "roadmap_errors": 0,
-    "roadmap_warnings": 42,
+    "roadmap_warnings": 46,
     "project_forward_drift": 0,
     "project_reverse_orphans": 0,
     "project_unresolved": null,
     "openai_scheduled_agent_overdue": true,
     "openai_scheduled_agent_authoritative": false,
     "intent_review_due": false,
-    "intent_review_upcoming": true
+    "intent_review_upcoming": false
   },
   "openai_scheduled_agent": {
     "overdue": true,
     "last_activity": "2026-10-25T01:09:44+00:00",
-    "hours_since": 718.88,
+    "hours_since": 728.96,
     "stale_hours": 6.0,
     "marker": "openai-scheduled-",
     "note": "Legacy git diagnostic only: OPENAI-SCHEDULED-HEARTBEAT.json and coordination markers do not determine ChatGPT scheduler health. Native ChatGPT task metadata is authoritative for scheduler liveness."
   },
   "intent_review": {
     "due": false,
-    "upcoming": true,
-    "last_report": "INTENT-AUDIT-2026-11-22.md",
-    "days_since": 2,
-    "days_until_due": 1.0,
+    "upcoming": false,
+    "last_report": "INTENT-AUDIT-2026-11-24.md",
+    "days_since": 0,
+    "days_until_due": 3.0,
     "stale_days": 3.0,
     "failed_attempt": null
   },
@@ -35,20 +35,20 @@
     "unresolved": null
   },
   "roadmap_audit": {
-    "generated_at": "2026-11-24T00:02:39.307517+00:00",
+    "generated_at": "2026-11-24T10:07:06.808494+00:00",
     "summary": {
       "roadmaps": 99,
       "active_projects": 14,
       "continuous_projects": 15,
       "playtest_projects": 10,
-      "tasks": 3174,
-      "ready": 192,
-      "waiting": 196,
+      "tasks": 3178,
+      "ready": 200,
+      "waiting": 188,
       "needs_human": 35,
-      "in_progress": 70,
-      "done": 2598,
+      "in_progress": 64,
+      "done": 2608,
       "errors": 0,
-      "warnings": 42,
+      "warnings": 46,
       "info": 129
     },
     "errors": [],
@@ -85,7 +85,21 @@
         "severity": "warning",
         "code": "STALE_IN_PROGRESS",
         "project": "comet-city-academy",
+        "task": "t-002",
+        "message": "Task has remained review for 3 days."
+      },
+      {
+        "severity": "warning",
+        "code": "STALE_IN_PROGRESS",
+        "project": "comet-city-academy",
         "task": "t-004",
+        "message": "Task has remained review for 4 days."
+      },
+      {
+        "severity": "warning",
+        "code": "STALE_IN_PROGRESS",
+        "project": "comet-city-academy",
+        "task": "t-016",
         "message": "Task has remained review for 3 days."
       },
       {
@@ -93,6 +107,27 @@
         "code": "STALE_IN_PROGRESS",
         "project": "comet-city-academy",
         "task": "t-021",
+        "message": "Task has remained review for 3 days."
+      },
+      {
+        "severity": "warning",
+        "code": "STALE_IN_PROGRESS",
+        "project": "comet-city-academy",
+        "task": "t-022",
+        "message": "Task has remained review for 3 days."
+      },
+      {
+        "severity": "warning",
+        "code": "STALE_IN_PROGRESS",
+        "project": "comet-city-academy",
+        "task": "t-023",
+        "message": "Task has remained review for 3 days."
+      },
+      {
+        "severity": "warning",
+        "code": "STALE_IN_PROGRESS",
+        "project": "comet-city-academy",
+        "task": "t-024",
         "message": "Task has remained review for 3 days."
       },
       {
@@ -132,10 +167,24 @@
       },
       {
         "severity": "warning",
+        "code": "STALE_IN_PROGRESS",
+        "project": "every-villain-tactics",
+        "task": "t-011",
+        "message": "Task has remained review for 3 days."
+      },
+      {
+        "severity": "warning",
         "code": "POSSIBLY_UNNECESSARY_GATE",
         "project": "every-villain-tactics",
         "task": "t-014",
         "message": "Reversible software task is human-gated without an obvious hard-gate reason in its note."
+      },
+      {
+        "severity": "warning",
+        "code": "STALE_IN_PROGRESS",
+        "project": "every-villain-tactics",
+        "task": "t-019",
+        "message": "Task has remained review for 3 days."
       },
       {
         "severity": "warning",
@@ -163,7 +212,7 @@
         "code": "STALE_IN_PROGRESS",
         "project": "interface-vision",
         "task": "t-105",
-        "message": "Task has remained review for 11 days."
+        "message": "Task has remained review for 12 days."
       },
       {
         "severity": "warning",
@@ -184,7 +233,7 @@
         "code": "STALE_IN_PROGRESS",
         "project": "interface-vision",
         "task": "t-156",
-        "message": "Task has remained review for 5 days."
+        "message": "Task has remained review for 6 days."
       },
       {
         "severity": "warning",
@@ -266,20 +315,6 @@
       {
         "severity": "warning",
         "code": "STALE_IN_PROGRESS",
-        "project": "rainbow-bullet-hell-space-princess",
-        "task": "t-011",
-        "message": "Task has remained review for 3 days."
-      },
-      {
-        "severity": "warning",
-        "code": "STALE_IN_PROGRESS",
-        "project": "rainbow-bullet-hell-space-princess",
-        "task": "t-012",
-        "message": "Task has remained review for 3 days."
-      },
-      {
-        "severity": "warning",
-        "code": "STALE_IN_PROGRESS",
         "project": "ruler-hooked",
         "task": "t-057",
         "message": "Task has remained review for 17 days."
@@ -289,28 +324,21 @@
         "code": "STALE_IN_PROGRESS",
         "project": "ruler-hooked",
         "task": "t-066",
-        "message": "Task has remained review for 15 days."
-      },
-      {
-        "severity": "warning",
-        "code": "STALE_IN_PROGRESS",
-        "project": "save-the-plumber",
-        "task": "t-028",
-        "message": "Task has remained review for 11 days."
+        "message": "Task has remained review for 16 days."
       },
       {
         "severity": "warning",
         "code": "STALE_IN_PROGRESS",
         "project": "shifting-desks",
         "task": "t-046",
-        "message": "Task has remained review for 7 days."
+        "message": "Task has remained review for 8 days."
       },
       {
         "severity": "warning",
         "code": "STALE_IN_PROGRESS",
         "project": "shifting-desks",
         "task": "t-049",
-        "message": "Task has remained review for 5 days."
+        "message": "Task has remained review for 6 days."
       },
       {
         "severity": "warning",

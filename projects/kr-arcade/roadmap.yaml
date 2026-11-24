@@ -2957,15 +2957,15 @@ tasks:
   - id: t-179
     milestone: m12
     title: "Superkate Spectrum: six interactive bosses with telegraphed patterns and tested fair collision"
-    status: review
-    owner: worker
-    claimed_by: 2026-11-24T082510Z-spectrum-boss-f37e92
-    claimed_at: '2026-11-24T08:25:10Z'
-    updated: '2026-11-24T08:29:00Z'
+    status: ready
+    updated: '2026-11-24T09:53:10Z'
     passes: 0
     stakes: reversible
     depends_on: [t-178]
-    note: '2026-11-24 PT: implemented six post-puzzle boss core encounters on worker/kr-arcade-t-179-spectrum-boss-f37e92, with distinct target sequences, bank-only inspector, visible miss budgets, chapter rewards gated on victory and actual projectile regression tests. Pending CI, art and encounter polish; do not mark complete yet.'
+    note: |-
+      2026-11-24 PT: implemented six post-puzzle boss core encounters on worker/kr-arcade-t-179-spectrum-boss-f37e92, with distinct target sequences, bank-only inspector, visible miss budgets, chapter rewards gated on victory and actual projectile regression tests. Pending CI, art and encounter polish; do not mark complete yet.
+
+      2026-11-24 PT: verified Kind Robots #5724 merged 306e097a33b1d5685963ff6981cb08ee7476faf9. Six core sequences and victory-gated progression landed. Requeue for further distinctive boss attacks, illustrated presentation and device QA, not done.
   - id: t-180
     milestone: m12
     title: "Superkate Spectrum: story scenes, character dialogue, three meaningful choices and three endings"
@@ -3041,17 +3041,18 @@ tasks:
   - id: t-186
     milestone: m12
     title: "Superkate Spectrum: navigable 30-level star map, cosmetic bubble collection and earned animated effects"
-    status: ready
+    status: review
+    owner: worker
+    claimed_by: 2026-11-24T095310Z-spectrum-map-6cb4e8
+    claimed_at: '2026-11-24T09:53:10Z'
+    updated: '2026-11-24T09:55:00Z'
     passes: 0
     stakes: reversible
     depends_on: [t-176]
-    note: >-
-      Silas, 2026-11-22 PT: visual Candy Crush-style long-term progression
-      without monetization. Existing menu has a numeric stage picker, earned
-      styles (glass, candy, starlight, prismatic), XP meter and three special
-      powers (Prism, Burst, Ribbon). Build a polished illustrated stage map,
-      level-specific medal/replay interactions, clear unlock celebrations,
-      power tutorials and mobile-friendly navigation; verify 390/768/1440.
+    note: |-
+      Silas, 2026-11-22 PT: visual Candy Crush-style long-term progression without monetization. Existing menu has a numeric stage picker, earned styles (glass, candy, starlight, prismatic), XP meter and three special powers (Prism, Burst, Ribbon). Build a polished illustrated stage map, level-specific medal/replay interactions, clear unlock celebrations, power tutorials and mobile-friendly navigation; verify 390/768/1440.
+
+      2026-11-24 PT: implemented a six-district serpentine 30-stage map with individual stars, locked nodes, selected replay, total medals and four cosmetic previews with rank locks on worker/kr-arcade-t-186-spectrum-map-6cb4e8. Added traversal and replay regression tests. CI, delivered illustrated art, touch input and unlock celebrations remain pending; partial slice.
 
   - id: t-187
     milestone: m12

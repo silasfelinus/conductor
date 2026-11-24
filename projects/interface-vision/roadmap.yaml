@@ -1805,6 +1805,8 @@ tasks:
     channel image: resolves to a public/ file.
 
     daily-delivery:2026-11-23/signed-in-pages-say-so | PR: silasfelinus/kind_robots#5654 (merged 77bb91d) | Consistent sign-in wording across home-channel pages: /chats (requiredPermission: authenticated) described 'curated messages from across our digital domains' and now says it shows your conversations after a free sign-in; /themes drops 'plethora... find your vibe' for what it does. Pinned in verifyFrontDoorPolish.test.ts section 6.
+
+    daily-delivery:2026-11-24/bots-plain-description | PR: silasfelinus/kind_robots#5728 (merged 98ef87d) | /bots described itself as 'View the many promptbots at Kind Robots' (internal jargon); it now says meet the chatbots, each with its own personality, and pick one to talk to. Pinned in verifyFrontDoorPolish.test.ts section 7.
   implementation_pr: 'silasfelinus/kind_robots#5519'
   retry_context: ''
   min_rest_hours: 24
@@ -1876,6 +1878,8 @@ tasks:
     verifyNavigationConsolidation.ts pins it deliberately; left as is.
 
     daily-delivery:2026-11-23/login-plain-copy | PR: silasfelinus/kind_robots#5654 (merged 77bb91d) | /login described itself as 'Login to get access to our suite of AI-enhanced tools'; it now says what a free account is for and that games and stories stay free without one, matching /register. Pinned in verifyFrontDoorPolish.test.ts section 6.
+
+    daily-delivery:2026-11-24/login-placeholder-copy | PR: silasfelinus/kind_robots#5728 (merged 98ef87d) | /login still had placeholder subtitle 'Login here' and tooltip 'login and registration link here'; now 'Welcome back' and 'Sign in, or create a free account from here.' Pinned in verifyFrontDoorPolish.test.ts section 7.
   implementation_pr: 'silasfelinus/kind_robots#3073'
   approved_by_human: true
   min_rest_hours: 24
@@ -2455,6 +2459,8 @@ tasks:
     verifyFrontDoorPolish.test.ts.
 
     daily-delivery:2026-11-23/sitemap-trust-pages | PR: silasfelinus/kind_robots#5654 (merged 77bb91d) | /silas, /privacy and /register are public ungated content pages that were missing from sitemap.xml; SITEMAP_PATHS now lists them and verifySharePreview.test.ts requires each to be listed and backed by a real content page.
+
+    daily-delivery:2026-11-24/dashboard-plain-description | PR: silasfelinus/kind_robots#5728 (merged 98ef87d) | The private /dashboard, which holds art sharing settings and galleries, described itself only as 'This is your space!'; it now names the profile, art sharing settings and galleries and says to sign in free. Pinned in verifyFrontDoorPolish.test.ts section 7.
   updated: '2026-10-26T22:16:18Z'
 
 - id: t-145
@@ -2637,6 +2643,8 @@ tasks:
     verifyFrontDoorPolish.test.ts.
 
     daily-delivery:2026-11-23/not-found-plain-title | PR: silasfelinus/kind_robots#5654 (merged 77bb91d) | The 404 room's tab read 'Direction | Kind Robots'; content/error.md now titles it 'Page not found' and links the /navigation site map beside home. Pinned in verifyFrontDoorPolish.test.ts section 6.
+
+    daily-delivery:2026-11-24/stories-plain-description | PR: silasfelinus/kind_robots#5728 (merged 98ef87d) | /stories is linked from the home page but described itself as 'A surreal odyssey powered by ChatGPT. Craft worlds, weave narratives...'; it now says you browse story scenarios and turn one into an illustrated Storybook story. Pinned in verifyFrontDoorPolish.test.ts section 7 (contract shards green on ceb7afa).
   updated: '2026-11-18T11:07:17Z'
 
 - id: t-152

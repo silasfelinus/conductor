@@ -458,10 +458,13 @@ tasks:
   - id: t-020
     milestone: m6
     title: "Gen-2 level engine: sub-areas, vertical rooms, midpoints, secret exits, campaign-wide switches"
-    status: ready
+    status: review
+    owner: worker
+    claimed_by: 2026-11-24T094540Z-save-the-plumber-t020-r8c4
+    claimed_at: '2026-11-24T09:45:40Z'
     passes: 0
     stakes: reversible
-    updated: '2026-11-24T08:21:10Z'
+    updated: '2026-11-24T09:47:40Z'
     note: |-
       GEN2-STANDARD.md section 2. Doors, pipes and ladders into sub-rooms with their own camera bounds; vertical shafts and climbs; a midpoint checkpoint per level; a second, hidden exit type that reports `secret` to the overworld (t-011); Valve Chapel switch state read by every level so pressed switches make outlined blocks solid campaign-wide; auto-scroll and haunted-maze (Hush House) exit logic. Deterministic replay tests for each: secret exit reachable, sub-room return position, switch persistence across levels and save/reload.
 
@@ -472,6 +475,8 @@ tasks:
       Implemented the first authored alternate exit on Buried Meter (1-3), requiring deliberate grounded Down on the upper gear route, recording secret clears independently and unlocking Verdigris Chapel on the overworld. Added campaign reachability and save/reload regression assertions. Commit a62c6930, worker/save-the-plumber-t-020-secret-exit-n4b7. CI pending; subrooms, additional secret exits, switches and the chapel course itself remain incomplete.
 
       PR kind_robots#5705 merged at 7e8b705 after all 11 exact-head workflows passed, including secret route footing, overworld, movement and save regressions. First alternate exit works; further rooms and switches remain.
+
+      Authored six additional secret exits in existing courses 3-2, 3-3, 4-3, 5-2, 6-2 and 7-3, opening their existing map links to three chapels and three Upstream Sky entrances. Added real stage clear/save roundtrip assertions and existing reachability flood covers all six. Branch worker/save-the-plumber-t-020-orchard-exits-r8c4 head 60cc223. CI pending; destination courses, subrooms and switches remain.
   - id: t-021
     milestone: m6
     title: "Gen-2 World 1: re-author Bluebell Pipeworks as a full SMB3/SMW-class world"
