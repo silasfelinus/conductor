@@ -2925,8 +2925,7 @@ tasks:
     milestone: m12
     title: "Superkate Spectrum: deliver high-priority hero, title, icon, character portraits, six backdrops and six boss illustrations"
     status: ready
-    owner: worker
-    updated: '2026-11-23T05:11:33Z'
+    updated: '2026-11-24T21:59:46+00:00'
     passes: 0
     stakes: reversible
     depends_on: []
@@ -2939,7 +2938,8 @@ tasks:
       title/hero/icon/scrapbook requests landed on main via conductor#7895 (rescue of #7889),
       with prompts rephrased to the affirmative no-text form. All pending, none rendered. Back
       to ready for actual art delivery, as the worker's review note asked.
-    implementation_pr: 'silasfelinus/conductor#7895'
+
+      2026-11-24 PT art-medic: all 15 queued Superkate renders exist (ArtJobs 76732-76734, 76805-76816; ids and paths in projects/kr-arcade/art/RECOVERED-2026-11-24.yaml). Title is live in games.ts; hero, icon, bosses and scrapbook still need wiring, plus portraits and Kate's likeness consent. Do not re-submit.
   - id: t-178
     milestone: m12
     title: "Superkate Spectrum: author 30 curated boards with three special bubble types and six distinct chapter mechanics"
@@ -2995,11 +2995,11 @@ tasks:
   - id: t-182
     milestone: m12
     title: "Superkate Spectrum: original salon and six-region music themes, matching sound effects and accessible audio settings"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 2026-11-24T215642Z-spectrum-audio-79c4ad
     claimed_at: '2026-11-24T21:56:42Z'
-    updated: '2026-11-24T21:56:42Z'
+    updated: '2026-11-24T22:00:00Z'
     passes: 0
     stakes: reversible
     depends_on: []
@@ -3009,6 +3009,8 @@ tasks:
       2026-11-22 PT: substantial implemented audio slice in Kind Robots PR #5624: a shared Arcade audio bridge for in-game master mute and volume, separately saved original music and effects toggles, six neighborhood chiptunes plus six chapter-finale variations, Classic and menu music, responsive preset SFX, and regression tests for music, options and Classic stage 35. The current PR is unmerged; final-head CI and actual playback verification remain pending. Recorded mastered soundtrack, mobile balance and audio QA are unfinished, so keep this task in review rather than marking full t-182 complete.
 
       2026-11-23 PT: reconciled previously merged Kind Robots #5624 (00e264dc667b9c212253c867247a0d6f42d3e7bc); final-head CI completed successfully. Existing synthesized music and SFX are implemented. Recorded/mastered tracks, playback and mobile audio QA remain; requeue, not done.
+
+      2026-11-24 PT: expanded six regional scores to two contrasting phrases and added harmonies, extended finale percussion, rendered 14 original mastered WAV loops (six regions, six boss arrangements, Classic, menu) with deterministic offline synthesis. Committed all binary masters, runtime recorded paths with existing oscillator fallback, reproducible renderer and audio header/duration/peak/RMS regression tests. Generated audio measured peak at most 0.54 and RMS 0.109–0.145; CI and real playback, individual effects balance and mobile acceptance remain. Partial scope; no deployment.
 
   - id: t-183
     milestone: m12

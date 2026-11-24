@@ -91,15 +91,12 @@ tasks:
       images asserted as live.
   - id: t-028
     title: 'Main-game standard: audit and close the gaps for Save the Plumber'
-    status: review
-    owner: worker
-    claimed_by: 2026-11-24T082115Z-save-the-plumber-t028-settings-v6m2
-    claimed_at: '2026-11-24T08:21:15Z'
+    status: ready
     milestone: m6
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-24T08:23:00Z'
+    updated: '2026-11-24T21:56:00Z'
     note: |-
       Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -116,6 +113,8 @@ tasks:
       2026-11-24 PT intent audit: the increment's PR silasfelinus/kind_robots#5076 merged; the claim from 2026-11-12 was never released and the note says the wider scope is still partial. Returned to ready with the claim cleared so the next worker can pick it up. No scope change.
 
       Added title settings, shared saved audio preferences, functional still-camera option and high-contrast terrain edges with regression tests. Branch worker/save-the-plumber-t-028-settings-v6m2, head d494f77. Partial main-game standard scope; CI and visual acceptance pending.
+
+      Merged kind_robots#5722 at 964816b after 12/12 exact-head workflows passed. Settings and contrast shipped; remaining main-game standards and visual verification. Return to ready.
   - id: t-029
     title: 'Save the Plumber achievement upgrade: 12 or more live achievements'
     status: done
@@ -172,10 +171,7 @@ tasks:
   - id: t-005
     milestone: m2
     title: "Implement enemy interaction, held objects and powerup systems"
-    status: review
-    owner: worker
-    claimed_by: 2026-11-23T051100Z-save-the-plumber-t005-stage-k4v2
-    claimed_at: '2026-11-23T05:11:00Z'
+    status: ready
     depends_on: [t-003]
     passes: 0
     stakes: reversible
@@ -199,7 +195,9 @@ tasks:
       to ready.
 
       Implemented a new authored World 1-2 optional high route: a floor-level brass key at column 35, a seven-rung ladder at column 39, and a padlocked upper passage at column 42. The existing fast lower corridor remains unobstructed. Added real PlumberRun campaign replay assertions for key collection, climb-to-top, bolt unlock, key consumption and lower-route accessibility. Source branch worker/save-the-plumber-t-005-campaign-route-k4v2. Remaining scope includes slopes, carryable enemies, Gen-2 reserve/powers/companion, plus further campaign gadget placements; t-005 is not fully done.
-    updated: '2026-11-23T05:21:00Z'
+
+      Verified kind_robots#5633 merged at 4c0f092b. Brass-key ladder route shipped; remaining slopes, carryables and powers. Return to ready.
+    updated: '2026-11-24T21:56:00Z'
   - id: t-006
     milestone: m3
     title: "Build World 1: four complete garden/pipeworks levels and boss"
@@ -345,13 +343,10 @@ tasks:
   - id: t-015
     milestone: m2
     title: "Prove the movement lab replay and real shared-cabinet controls"
-    status: review
-    owner: worker
-    claimed_by: 2026-11-24T021815Z-save-the-plumber-t015-airflow-v4n9
-    claimed_at: '2026-11-24T02:18:15Z'
+    status: ready
     passes: 0
     stakes: reversible
-    updated: '2026-11-24T02:20:50Z'
+    updated: '2026-11-24T21:56:00Z'
     note: |-
       Reviewer kaizen after kind_robots#3564: add deterministic input replays asserting coyote time, buffered jumps, landing/camera bounds and respawn; exercise real shared ArcadeCabinet keyboard/gamepad/touch controls and visible Admin help at phone/tablet/desktop widths. Use browser fixtures with actual consumers rather than source-field matches. Keep public registry and score exclusions. Initial isolated engine pixels are not shared-cabinet/auth integration or full campaign acceptance.
 
@@ -395,6 +390,8 @@ tasks:
       Merged kind_robots#5680 at c97fb087 after all eleven exact-head workflows passed, including the actual Chromium cabinet keyboard, gamepad and touch test (run 45275834533). Landing-tick jump buffering and replay regressions shipped. Remaining scope includes visible tutorial/help verification at all three widths and further movement acceptance; keep ready rather than claiming complete.
 
       Implemented neutral-air momentum retention without changing ground or ice braking, speed caps or directional steering. Deterministic two-direction sprint-jump replay asserts retained speed, two-tile travel, reversal and collision safety. Branch worker/save-the-plumber-t-015-airflow-v4n9, head 7c839cf2. CI pending; task remains partial.
+
+      Verified kind_robots#5695 merged at efec50ae. Neutral-air momentum shipped; remaining movement and cross-width verification. Return to ready.
 
   - id: t-016
     milestone: m4
@@ -458,13 +455,10 @@ tasks:
   - id: t-020
     milestone: m6
     title: "Gen-2 level engine: sub-areas, vertical rooms, midpoints, secret exits, campaign-wide switches"
-    status: review
-    owner: worker
-    claimed_by: 2026-11-24T094540Z-save-the-plumber-t020-r8c4
-    claimed_at: '2026-11-24T09:45:40Z'
+    status: ready
     passes: 0
     stakes: reversible
-    updated: '2026-11-24T09:47:40Z'
+    updated: '2026-11-24T21:56:00Z'
     note: |-
       GEN2-STANDARD.md section 2. Doors, pipes and ladders into sub-rooms with their own camera bounds; vertical shafts and climbs; a midpoint checkpoint per level; a second, hidden exit type that reports `secret` to the overworld (t-011); Valve Chapel switch state read by every level so pressed switches make outlined blocks solid campaign-wide; auto-scroll and haunted-maze (Hush House) exit logic. Deterministic replay tests for each: secret exit reachable, sub-room return position, switch persistence across levels and save/reload.
 
@@ -477,6 +471,8 @@ tasks:
       PR kind_robots#5705 merged at 7e8b705 after all 11 exact-head workflows passed, including secret route footing, overworld, movement and save regressions. First alternate exit works; further rooms and switches remain.
 
       Authored six additional secret exits in existing courses 3-2, 3-3, 4-3, 5-2, 6-2 and 7-3, opening their existing map links to three chapels and three Upstream Sky entrances. Added real stage clear/save roundtrip assertions and existing reachability flood covers all six. Branch worker/save-the-plumber-t-020-orchard-exits-r8c4 head 60cc223. CI pending; destination courses, subrooms and switches remain.
+
+      Merged kind_robots#5732 at 5ad37ebb after 10/10 exact-head workflows passed. Seven secret exits implemented; remaining persistent switches, destination courses and subrooms. Return to ready.
   - id: t-021
     milestone: m6
     title: "Gen-2 World 1: re-author Bluebell Pipeworks as a full SMB3/SMW-class world"
@@ -591,8 +587,8 @@ tasks:
       Related: PR #4080, issue #4062, conductor/save-the-plumber t-025.
   - id: t-027
     title: "Save the Plumber Maker: playable level editor, saves, sharing, ratings, Mario Maker and Geometry Dash parity"
-    status: review
-    updated: '2026-11-23T20:36:00Z'
+    status: ready
+    updated: '2026-11-24T21:56:00Z'
     stakes: reversible
     passes: 0
     source_issue: "silasfelinus/kind_robots#4347"
@@ -641,6 +637,5 @@ tasks:
       PR silasfelinus/kind_robots#5675 merged at ee0ac4b9 after all eight latest-head workflows passed. Fixed stale asynchronous Maker review results and busy/error races. Partial Maker scope; advanced editing, publication and community lifecycle remain.
 
       Maker course edits now invalidate pending review fetch generations and clear stale loading state; regression contracts added. Partial Maker scope; PR pending CI.
-    owner: worker
-    claimed_by: 2026-11-23T203135Z-save-the-plumber-t027-k9p2
-    claimed_at: '2026-11-23T20:31:35Z'
+
+      Verified kind_robots#5677 merged at e1668063. Maker review loading fix shipped; remaining advanced Maker scope. Return to ready.
