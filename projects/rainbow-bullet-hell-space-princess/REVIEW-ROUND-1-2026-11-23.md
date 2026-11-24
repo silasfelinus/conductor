@@ -19,22 +19,21 @@ kind_robots `main` at `4897c0c9`. Each one pushed a defect report to its own kin
 #4146 stays open until these are fixed, and the passes will be repeated after the last significant art and
 animation change.
 
-Every finding maps to one task below. Status values are **fixed** (with its PR), **open**, or **default
-taken**. Default taken means the reviewer called it an owner decision and an agent took a reversible default
-that Silas can override.
+Every finding maps to one task below. Status values are **fixed** (with its PR), **open**, or **owner call** (the reviewer named it
+Silas's decision; it stays as it is until he decides).
 
 ## Gameplay (gameplay critic)
 
 | id | sev | finding | task | status |
 | --- | --- | --- | --- | --- |
-| D1 | major | B is both focus and super, and a pilot sits at full charge 91% of the time, so focusing spends the super | t-065 | open: super on a short tap only, hold stays focus |
-| D2 | major | supers are spam-able screen wipes, 3.5 per pilot-minute (refund of 12 per kill) | t-065 | open: cut the kill refund, make the wipe a radius, make boss damage a share of max HP |
-| D3 | major | co-op boss HP scales 5.8× at 4p, so 4p fights take as long or longer (finale 4.7 vs 2.7 min) | t-065 | open |
+| D1 | major | B is both focus and super, and a pilot sits at full charge 91% of the time, so focusing spends the super | t-065 | fixed in kind_robots#5713 (hold to focus, tap to fire the super) |
+| D2 | major | supers are spam-able screen wipes, 3.5 per pilot-minute (refund of 12 per kill) | t-065 | fixed in #5713 (refund 4, boss damage is a share of the hull; the whole-screen wipe stays because the cut-in covers the comms band) |
+| D3 | major | co-op boss HP scales 5.8× at 4p, so 4p fights take as long or longer (finale 4.7 vs 2.7 min) | t-065 | fixed in #5713 (3.4× at 4p) |
 | D4 | major | the 2–4p HUD panel hides live pellets (10.8% of 4p combat frames) and clips the boss bar | t-067 | open (same as P-08) |
-| D5 | major | guardians share one AI and body; a frozen ship takes 0 hits from the Act II guardian; all arrive at frame 6300 | t-065 | open |
-| D6 | major | the Eclipse Crown's 20° spoke steps leave permanent safe pockets that still deal damage | t-065 | open (the camping audit flags B09) |
+| D5 | major | guardians share one AI and body; a frozen ship takes 0 hits from the Act II guardian; all arrive at frame 6300 | t-065 | partly fixed in #5713 (per-kind motion; aimed fans close the open lane on alternate volleys); arrival timing and per-Act HP open (the HP tier made late guardians escape) |
+| D6 | major | the Eclipse Crown's 20° spoke steps leave permanent safe pockets that still deal damage | t-065 | fixed in #5713 (alternate volleys aim a spoke; verifyRainbowBossCamping) |
 | D7 | minor | the mortar is reused across 7 Acts and a detour | t-065 | open |
-| D8 | minor | infinite continues plus boss-HP carry-over remove the fail state for a parked co-op party | t-065 | default taken: keep infinite continues; a continue returns the boss to the start of its current phase |
+| D8 | minor | infinite continues plus boss-HP carry-over remove the fail state for a parked co-op party | t-065 | **owner call, unchanged**: the phase-reset default was tried and reverted (B01 became unbeatable for the solo test bot), so the kinder carry-over stays until Silas decides |
 | D9 | minor | the seed changes nothing | t-065 | open (optional: seeded authored variations, same-seed replay exact) |
 | (persona QA) | major | Delphion phase 3: a parked crew is never hit and never hits, so the fight stalls (found by the t-013 personas) | t-013 | fixed in kind_robots#5709 (aimed twin fans) plus `verifyRainbowBossCamping` |
 
