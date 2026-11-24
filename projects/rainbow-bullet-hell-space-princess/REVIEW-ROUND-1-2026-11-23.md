@@ -51,7 +51,7 @@ Silas's decision; it stays as it is until he decides).
 | S8 | major | the princesses are interchangeable in the Acts | t-066 | fixed in kind_robots#5740 (a pilot-keyed arc beat after each of Acts I-VIII, 32 lines carrying each hook) |
 | S9 | major | middle seats in 3–4-pilot crews barely speak | t-066 | fixed in #5737 (reveal exchange) and #5740 (the arc beat moves through the seats Act by Act) |
 | S10 | major | Lilt-7's agency is a refrain of "I will not choose for you" | t-066 | fixed in #5738 (Lilt states a view and acts: closes Command's channel on the loyal road, spends a memory on the clamps on the rebel road; X3 memory line) |
-| S11 | major | ending plates ignore the road and the crew size | t-030 / t-066 | open (with P-03) |
+| S11 | major | ending plates ignore the road and the crew size | t-030 / t-066 | fixed in kind_robots#5741 (three loyal-road plates; the sever plate fits any crew) |
 | S12 | minor | the safe trench route knows about the vault's locks | t-012 | fixed in #5709 |
 | S13 | minor | the credits contradict the flagship fight | t-012 | fixed in #5709 |
 | S14 | minor | plurals at 1 | t-012 | fixed in #5709 |
@@ -70,24 +70,24 @@ Silas's decision; it stays as it is until he decides).
 | --- | --- | --- | --- | --- |
 | P-01 | blocker | no frame animation for any enemy, boss, ship or pilot | t-030 | partly fixed: picket and urchin (#5717) and anchor and lantern (#5727) idle atlases; hit and victory poses for all four pilots (#5727, #5738); bosses, ships and the other enemies open |
 | P-02 | blocker | the living interludes barely move (mean luma difference 0.6–2.6); S03, S04 and S08 have none | t-030 | partly: S08 added in #5717, S03 in #5731, S04 in #5738 (all eight Acts now live); real subject motion open |
-| P-03 | blocker | the endings are 3 still plates with no Fever Dream version; sever is in a different style | t-030 | open |
+| P-03 | blocker | the endings are 3 still plates with no Fever Dream version; sever is in a different style | t-030 | partly fixed in #5741 (loyal plates, a house-style sever plate; all plates are Fever Dream); motion endings open |
 | P-04 | blocker | main Acts have 1–2 painted planes, not 4+; the top half of X3, Act VIII and the finale does not scroll; there is no s09 art | t-022 / t-011 | open |
-| P-05 | major | four touch pads cover the play area at 1024×768 | t-067 | open |
-| P-06 | major | the P2 pad covers the boss at 844×390 | t-067 | open |
+| P-05 | major | four touch pads cover the play area at 1024×768 | t-067 | fixed in #5741 (touch controls in a band below the stage at 1024x768) |
+| P-06 | major | the P2 pad covers the boss at 844×390 | t-067 | fixed in #5741 (side rails at 844x390; no pad over the stage) |
 | P-07 | major | the finale reuses Act VIII's card and backdrop | t-022 | open |
 | P-08 | major | the 4-pilot HUD covers the boss bar | t-067 | fixed in kind_robots#5716 |
-| P-09 | major | phone portrait wastes about 75% of the screen; HUD text is unreadable | t-067 | open |
+| P-09 | major | phone portrait wastes about 75% of the screen; HUD text is unreadable | t-067 | partly fixed in #5741 (chips off the canvas, a turn-sideways prompt); a portrait HUD is open |
 | P-10 | major | Classic background bubbles look like bullets | t-067 | fixed in kind_robots#5719 (two faint far planes) |
 | P-11 | major | pink pellets blend into pink scenes in Fever Dream unless bold shots are on | t-067 | fixed in kind_robots#5716 (firmer default halo and ring) |
 | P-12 | major | B02 changes creature between phases | t-030 | open (art regen from the phase-1 reference) |
 | P-13 | major | the Act V wreck frames are 1-px outlines | t-067 | fixed in kind_robots#5719 (solid crane silhouettes) |
-| P-14 | minor | the detour planes have no Fever Dream twins; the X3 footer has no plate | t-022 | open |
+| P-14 | minor | the detour planes have no Fever Dream twins; the X3 footer has no plate | t-022 | partly fixed in #5741 (status footers on a plate); Fever Dream detour twins open (art batch awaiting Silas) |
 | P-15 | minor | Leviathan's gem-open burst is an illegible clump | t-065 | fixed in #5737 (the two rings spawn 16 px and 28 px out along their spokes) |
 | P-16 | major | the stage uses about 27% of a 1920×1080 screen | t-067 | fixed in kind_robots#5720 (stage 1446x813 at 1920x1080, about 57%) |
-| P-17 | minor | the settings panel scrolls at 360×640 | t-067 | open |
+| P-17 | minor | the settings panel scrolls at 360×640 | t-067 | fixed in #5741 (one Settings pop-over on short screens) |
 | P-18 | minor | Seas on phone is text only; the route map is a 40 px strip | t-067 | open |
 | P-19 | minor | Solenne has no Fever Dream portrait | t-030 | open |
 | P-20 | minor | the Fever Dream Acts blur together (violet plus a rainbow band) | t-067 | fixed in #5740 (a colour key and aurora per Act; the full rainbow opens and closes the flight) |
 | P-21 | minor | the HUD control legend stays up for the whole run | t-067 | fixed in kind_robots#5716 (legend in Act I only) |
 | P-22 | minor | seat numbers collide with ships | t-067 | fixed in kind_robots#5716 (seat tag behind the tail) |
-| P-23 | major | the short-landscape title screen is 190×107 px | t-067 | open |
+| P-23 | major | the short-landscape title screen is 190×107 px | t-067 | fixed in #5741 (the title screen at 844x390 grows to 341x192) |
