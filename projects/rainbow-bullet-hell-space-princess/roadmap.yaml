@@ -339,7 +339,7 @@ tasks:
   - id: t-011
     milestone: m4
     title: "Build lavish stage parallax, readable effects and character animation"
-    status: claimed
+    status: ready
     depends_on: [t-002, t-007]
     passes: 0
     stakes: reversible
@@ -429,11 +429,18 @@ tasks:
       guardian windups are live on main; every boss and guardian now telegraphs with its body.
       Still open: painted stage planes, sprite rigs and atlases, and visual acceptance. Stays
       ready and unclaimed.
-    updated: '2026-11-24T22:46:58Z'
-    implementation_pr: 'silasfelinus/kind_robots#5755'
+
+      2026-11-24 PT boss-recoil increment: every boss body (B01-B08, moon colony) and guardian
+      now rocks back about 2.5px and squashes slightly when a shot lands, then settles over 8
+      frames. The recoil is added on top of the windup via the pure helpers
+      rainbowBossRecoil/stackRainbowBossPose. It only changes drawing: hitboxes stay put, and
+      calm motion keeps the body still. Hit times are kept in a WeakMap, so no boss type
+      changed. PR silasfelinus/kind_robots#5763 merged as c3c41e43 after 23 checks passed.
+      Still open: painted stage planes, sprite rigs and atlases, and visual acceptance. Stays
+      ready and unclaimed.
+    updated: '2026-11-24T23:11:17Z'
+    implementation_pr: 'silasfelinus/kind_robots#5763'
     owner: worker
-    claimed_by: focused-johnson-h3utj3
-    claimed_at: '2026-11-24T22:46:58Z'
   - id: t-012
     milestone: m4
     title: "Produce opening, between-stage dialogue, endings, sound and score"
