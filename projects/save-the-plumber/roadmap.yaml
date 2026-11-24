@@ -447,19 +447,21 @@ tasks:
   - id: t-020
     milestone: m6
     title: "Gen-2 level engine: sub-areas, vertical rooms, midpoints, secret exits, campaign-wide switches"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 2026-11-24T045900Z-save-the-plumber-t020-secret-exit-n4b7
     claimed_at: '2026-11-24T04:59:00Z'
     passes: 0
     stakes: reversible
-    updated: '2026-11-24T04:59:00Z'
+    updated: '2026-11-24T05:02:10Z'
     note: |-
       GEN2-STANDARD.md section 2. Doors, pipes and ladders into sub-rooms with their own camera bounds; vertical shafts and climbs; a midpoint checkpoint per level; a second, hidden exit type that reports `secret` to the overworld (t-011); Valve Chapel switch state read by every level so pressed switches make outlined blocks solid campaign-wide; auto-scroll and haunted-maze (Hush House) exit logic. Deterministic replay tests for each: secret exit reachable, sub-room return position, switch persistence across levels and save/reload.
 
       Fixed x-only checkpoint activation: pennants now require physical proximity, preventing distant upper routes from silently changing respawn. Added a deterministic upper-route bypass/contact replay in verifySavePlumberMovementReplay.test.ts. This is a partial t-020 slice; subrooms, secret exits and campaign switches remain. CI pending.
 
       Verified checkpoint contact PR #5635 merged at dfa809b2; no open Plumber PR found. Reopen remaining Gen-2 room and secret-exit work, not complete.
+
+      Implemented the first authored alternate exit on Buried Meter (1-3), requiring deliberate grounded Down on the upper gear route, recording secret clears independently and unlocking Verdigris Chapel on the overworld. Added campaign reachability and save/reload regression assertions. Commit a62c6930, worker/save-the-plumber-t-020-secret-exit-n4b7. CI pending; subrooms, additional secret exits, switches and the chapel course itself remain incomplete.
   - id: t-021
     milestone: m6
     title: "Gen-2 World 1: re-author Bluebell Pipeworks as a full SMB3/SMW-class world"
