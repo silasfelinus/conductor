@@ -1328,9 +1328,18 @@ tasks:
     stakes: reversible
     depends_on: []
     source: independent-review-round-1-2026-11-23
-    updated: '2026-11-24T06:48:02Z'
+    updated: '2026-11-24T07:27:03Z'
     note: >-
       From the independent presentation critic and the gameplay critic (REVIEW-ROUND-1-2026-11-23.md, D4, P-05, P-06, P-08 to P-11, P-13, P-16 to P-18, P-20 to P-23): move the 2-4p status panel off the playfield (top bar or bottom edge) and never over the boss bar; keep touch pads out of the stage (gutters, or no four touch seats on one tablet); a portrait-tuned HUD or rotate prompt and corner chips off the canvas on phones; size the stage from content height on large screens; collapse the switches on short screens; ambient bubbles never bullet-sized in the play band; a hostile pellet hue no scene uses (or bold by default); painted Act V wreck frames; per-Act colour keys; fade the control legend after Act I; seat tags off the hull; Seas cards keep art on phones and the route map is a real map. Verify in the real cabinet at 360x640, 390x844, 768x1024, 1024x768, 844x390, 1440x900 and 1920x1080, 1-4 seats.
+
+      2026-11-24 PT: kind_robots#5716 (merged af529b34) puts every pilot's status inside the
+      29 px HUD bar (D4/P-08: no panel over the playfield or the boss bar), shows the button
+      legend in Act I only (P-21), firms the default pellet halo with a faint ring (P-11) and
+      moves seat numbers behind the hull (P-22). kind_robots#5719 (open) makes the Act V
+      cranes solid (P-13) and Classic's motes faint (P-10). Remaining: touch pads over the
+      stage (P-05/P-06), phone portrait and short-landscape layout (P-09/P-23/P-17), large-
+      screen stage size (P-16), per-Act colour keys (P-20), Seas on phone (P-18).
     owner: worker
     claimed_by: session_01L5NKxaUAWmNr7wxdToBdp3
     claimed_at: '2026-11-24T06:48:02Z'
+    implementation_pr: 'silasfelinus/kind_robots#5716'
