@@ -23,6 +23,8 @@ lanes:
     zoom, lettering, words, logos, watermarks, photorealism, flicker, grain, blur, smearing
 subjects:
 - key: motion-card-s01
+  verdict: 'keep: 2026-11-24 PT review, the squadron flies right and the rocket climbs, the sea and tower stay crisp
+    and on model (5% of pixels change first to last vs 1-2% for the loops)'
   lane: wan-mp4
   entity: cinematic
   title: s01 one-shot card clip, the squadron crosses the sky
@@ -44,6 +46,8 @@ subjects:
       status: DONE
       art_image_id: 279947
 - key: motion-card-s02
+  verdict: 'keep: 2026-11-24 PT review, the ships cross toward the right edge and the jellies drift up, everything
+    on model (21% change)'
   lane: wan-mp4
   entity: cinematic
   title: s02 one-shot card clip, the squadron crosses the sky
@@ -63,6 +67,7 @@ subjects:
       status: DONE
       art_image_id: 279949
 - key: motion-card-s03
+  verdict: 'keep: 2026-11-24 PT review, the ships fly down-canyon to the right and the vents flare, crisp (6% change)'
   lane: wan-mp4
   entity: cinematic
   title: s03 one-shot card clip, the squadron crosses the sky
@@ -82,6 +87,8 @@ subjects:
       status: DONE
       art_image_id: 279950
 - key: motion-card-s04
+  verdict: 'keep: 2026-11-24 PT review, the squadron moves right in formation over the trains under the swirling
+    aurora; the saucer turns but keeps its shape (13% change)'
   lane: wan-mp4
   entity: cinematic
   title: s04 one-shot card clip, the squadron crosses the sky
@@ -103,6 +110,8 @@ subjects:
       status: DONE
       art_image_id: 279948
 - key: motion-card-s05
+  verdict: 'reject: 2026-11-24 PT review, the frame shrinks inside a white border and a pink jet nose-dives into
+    the graveyard; retaken as motion-card-s05-2'
   lane: wan-mp4
   entity: cinematic
   title: s05 one-shot card clip, the squadron crosses the sky
@@ -122,6 +131,8 @@ subjects:
       status: DONE
       art_image_id: 279951
 - key: motion-card-s06
+  verdict: 'keep: 2026-11-24 PT review, the squadron flies right over the reef fire and the arches glow, ships on
+    model (22% change)'
   lane: wan-mp4
   entity: cinematic
   title: s06 one-shot card clip, the squadron crosses the sky
@@ -141,6 +152,8 @@ subjects:
       status: DONE
       art_image_id: 279952
 - key: motion-card-s07
+  verdict: 'reject: 2026-11-24 PT review, the ships fade to ghosts and vanish mid-clip instead of flying out; retaken
+    as motion-card-s07-2'
   lane: wan-mp4
   entity: cinematic
   title: s07 one-shot card clip, the squadron crosses the sky
@@ -160,6 +173,7 @@ subjects:
       status: DONE
       art_image_id: 279953
 - key: motion-card-s08
+  verdict: 'keep: 2026-11-24 PT review, the squadron climbs right past the palace towers, all on model (10% change)'
   lane: wan-mp4
   entity: cinematic
   title: s08 one-shot card clip, the squadron crosses the sky
@@ -178,3 +192,48 @@ subjects:
     wan-mp4:
       status: DONE
       art_image_id: 279954
+- key: motion-card-s05-2
+  verdict: 'keep: 2026-11-24 PT review, the ships cruise level to the right over the wreckyard with no crash and
+    no border (the soft rounded corners are the source card''s own) (7% change)'
+  lane: wan-mp4
+  entity: cinematic
+  title: s05 one-shot card clip, second take
+  asset: rainbow-princess-video/interludes/s05
+  size: 832x480
+  seed: 1124299
+  source_image_id: 262207
+  duration: 3
+  loop: false
+  negative: white border, frame, white page, inset picture, shrinking picture, crash, falling ship
+  prompt_prose: High over the wreckyard the pink jets, the cyan rocket and the gold saucer cruise steadily toward
+    the right, level and in formation, leaving glittering ribbons. Petals swirl past the rusty crane and the friendly
+    ghost graves glow softly. The full picture fills the frame edge to edge; the view stays fixed. Inked neon doodle
+    style.
+  jobs:
+    wan-mp4: 77051
+  art:
+    wan-mp4:
+      status: DONE
+      art_image_id: 279955
+- key: motion-card-s07-2
+  verdict: 'keep: 2026-11-24 PT review, the ships stay solid and on model above the glass peaks, but drift only a little (3%
+    change, vs about 2% for the loop); shipped for consistency with the other one-shot cards'
+  lane: wan-mp4
+  entity: cinematic
+  title: s07 one-shot card clip, second take
+  asset: rainbow-princess-video/interludes/s07
+  size: 832x480
+  seed: 1124307
+  source_image_id: 262209
+  duration: 3
+  loop: false
+  negative: fading, transparent ships, dissolving, disappearing ships, ghosting, double exposure
+  prompt_prose: Solid and bright the whole time, the red jets, the green rocket and the gold saucer glide steadily
+    rightward above the jagged blue glass peaks, staying fully visible as they go. Glints spark in the glowing canyon
+    gap and the mirror lake shimmers. View fixed; crisp outlined neon doodle painting.
+  jobs:
+    wan-mp4: 77052
+  art:
+    wan-mp4:
+      status: DONE
+      art_image_id: 279956
