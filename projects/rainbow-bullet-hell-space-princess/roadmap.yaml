@@ -397,11 +397,18 @@ tasks:
       Merged Kind Robots PR #5360 as 0635f88902e2cd7aef0b27c4eb89239d1d821e9c after all 10 latest workflow checks passed. The 15 pilot-set reveal and ending tracks are integrated, but comms settings, cinematic boards and audio remain. Release claim for continued implementation.
 
       Implemented independent local 1-4 player C.A.T.S. crew selection and checkpoint-safe ordered pilot rosters, making the 15 previously merged authored dialogue masks reachable in real play. PR pending. Audio, subtitle controls, full cinematics and 15-mask runtime QA remain open; this review is a partial implementation, not task completion.
-    updated: '2026-11-20T00:44:03Z'
+
+      2026-11-24 PT: kind_robots#5687 (merged 12868a79) adds four orchestral detour themes
+      rendered offline by scripts/rainbow-score (levels matched to the Act cues), distinct SFX
+      for super/shield/hurt/boss phase/route fork/stinger, and the route stingers. With comms
+      full/story/off (#5670) and the 15 party masks, t-012's remaining scope is the animated
+      cinematics, tracked under t-030.
+    updated: '2026-11-24T00:25:18Z'
+    implementation_pr: 'silasfelinus/kind_robots#5687'
   - id: t-013
     milestone: m5
     title: "Deterministic combat fairness, multiplayer soak and campaign QA"
-    status: waiting
+    status: review
     depends_on: [t-009, t-010, t-011, t-012]
     owner: null
     passes: 0
@@ -420,7 +427,18 @@ tasks:
       canonical X1-X4 detours; kind_robots#5666 added rainbow-verifier-suite.yml so every
       Rainbow verifier (60) runs on Rainbow PRs, wall-clock CoopLoad alone. The full suite is
       now a trustworthy base for the campaign QA pass.
-    updated: '2026-11-23T12:09:27Z'
+
+      2026-11-24 PT: kind_robots#5689 (merged cf90e9d7): verifyRainbowCampaignMatrix flies 16
+      fresh campaigns (crews 1-4, two seeds, dock self/early) to THE END; canonical Act order
+      with each detour in its slot; together every detour, both sides of every fork, both
+      roads, the stand-down and all three choices; deterministic replay; median clean campaign
+      51.6 min (45.3-58.3). verifyRainbowPerformance.browser: four pilots in Act I's boss
+      fight with real art served, engine p50/p95 0.2/0.4 ms, frame pacing p50/p95 16.7/16.7
+      ms, heap 58 MB. All 64 Rainbow verifiers gate every Rainbow PR. Remaining for an
+      independent reviewer: scripted fail/retry personas (the autopilot never loses a ship)
+      and blind critic passes.
+    updated: '2026-11-24T00:25:20Z'
+    implementation_pr: 'silasfelinus/kind_robots#5689'
   - id: t-014
     milestone: m5
     title: "Human-approved public /play Arcade launch and final quality verdict"
@@ -636,14 +654,14 @@ tasks:
   - id: t-027
     milestone: m6
     title: "Gen-2 memory: save slots, route map screen, medals and the persistent Palace Hangar"
-    status: review
+    status: done
     owner: worker
     claimed_by: 20261123T001700Z-rainbow-t027-mapnav-v8c4
     claimed_at: '2026-11-23T00:17:00Z'
     depends_on: [t-026]
     passes: 0
     stakes: reversible
-    updated: '2026-11-23T00:21:00Z'
+    updated: '2026-11-24T00:25:15Z'
     note: |-
       2026-11-20T11:21:42Z connector recovery: prior claim 2026-11-20T05:40:00Z expired after 341 minutes, no open Rainbow PR or branch; implementing Palace Hangar on a scoped worker branch.
 
@@ -686,6 +704,16 @@ tasks:
       2026-11-22 PT: The prior review handoff is over 90 minutes old and no open Rainbow PR remains after #5607 merged. Preserve merged map/Hangar work and reopen t-027 for playable alternate-route navigation, without touching other review lanes.
 
       2026-11-22 PT: Scoped four-route Seas map navigation on worker/rainbow-bullet-hell-space-princess-t-027-detour-approach-v8c4. Charted detours launch isolated replay of their authored origin Acts without overwriting campaign slots; 1-4-seat and locked-route regression added. Partial t-027 until full campaign progression and route QA are verified.
+
+      2026-11-24 PT: route-map art (gen2/route-map, 251317) and Hangar art (gen2/hangar,
+      251298) ship on the play page (kind_robots#5685, merged 5923d73d); ROUTE-MAP section 5
+      scene variants and section 6 stingers ship (kind_robots#5687, merged 12868a79): nine
+      route beats replace one named line each, liltMemoryRecovered/crownEcho derive from saved
+      fields, THE ROUTE credits and stinger fanfare. Slot-memory 'X found' hints were not
+      built (past-run discovery, superseded by the canonical detour order). With the three
+      slots, Hangar, medals and four-route Seas navigation already merged, t-027's scope
+      ships.
+    implementation_pr: 'silasfelinus/kind_robots#5687'
   - id: t-028
     milestone: m6
     title: "Gen-2 alternate stages: four branch stages with their own guardians"
