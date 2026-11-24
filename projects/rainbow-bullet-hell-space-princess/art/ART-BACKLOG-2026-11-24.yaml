@@ -1,0 +1,1741 @@
+# Rainbow Space Princess art backlog, 2026-11-24 PT: the presentation reviewer's P-04, P-07, P-12, P-14 and P-19
+# (REVIEW-ROUND-1-2026-11-23.md). P-07: an s09 finale card, sky, far, mid and foreground strip (the Crown heart and
+# its prism corridors) in both looks, so the finale stops reusing Act VIII. P-04: a painted sky (drifting slowly) and
+# far and mid planes for every main Act in both looks. P-12: B02 phases 2 and 3 redrawn from the phase-1 sprite as
+# damage states. P-14: Fever Dream twins of the X1-X4 detour planes. P-19: a Fever Dream Solenne portrait from her
+# identity lock 246032 (CAST-QA). Lesson from DOODLE-STAGE-DEPTH-PLANES-2026-11-22: Kontext planes made from Act cards
+# kept the cards' ships, which read as enemies, and one carried a watermark; so every new main-Act plane here is a
+# text-only Krea 2 render of pure scenery, with craft, creatures and lettering in the negative prompt. Kontext is used
+# only where the source is itself pure scenery (the shipped detour planes), a sprite (B02) or a pilot lock.
+# Private. auto_submit: true. Queued is not rendered: every keeper is reviewed at full size before it ships.
+round: rainbow-art-backlog-2026-11-24
+project_slug: rainbow-bullet-hell-space-princess
+designer: Rainbow Space Princess art bay
+is_public: false
+is_mature: false
+cast_loras: false
+priority: 1000
+auto_submit: true
+lanes:
+- key: krea2
+  label: Krea 2, text-only scenery planes and strips
+  engine: krea2
+  prompt: prose
+- key: kontext
+  label: Flux Kontext dev, edits of a reviewed card, sprite, pilot lock or detour plane
+  engine: kontext
+  prompt: prose
+  steps: 20
+  guidance: 2.5
+subjects:
+- key: s09-card-classic-1
+  lane: kontext
+  title: S09 Eclipse Crown finale title card, Classic
+  entity: stage-card
+  asset: rainbow-princess-art/stages/s09-card
+  size: 1344x768
+  seed: 1124301
+  source_image_id: 247508
+  prompt_prose: 'Keep the same four small starships flying in formation, and change the setting around them to the
+    inside of a vast crystal machine crown: long corridors of tall prism shards glowing soft pink and turquoise
+    converge on a glowing heart core, with rings of fractured stained glass overhead, as a wide establishing shot
+    for the start of a level. Keep the same flat-colour western cartoon art style with clean bold outlines, like
+    a modern animated series.'
+  jobs:
+    kontext: 77053
+  art:
+    kontext:
+      status: PENDING
+      art_image_id: null
+- key: s09-card-classic-2
+  lane: kontext
+  title: S09 Eclipse Crown finale title card, Classic
+  entity: stage-card
+  asset: rainbow-princess-art/stages/s09-card
+  size: 1344x768
+  seed: 1124302
+  source_image_id: 247508
+  prompt_prose: 'Keep the same four small starships flying in formation, and change the setting around them to the
+    inside of a vast crystal machine crown: long corridors of tall prism shards glowing soft pink and turquoise
+    converge on a glowing heart core, with rings of fractured stained glass overhead, as a wide establishing shot
+    for the start of a level. Keep the same flat-colour western cartoon art style with clean bold outlines, like
+    a modern animated series.'
+  jobs:
+    kontext: 77054
+  art:
+    kontext:
+      status: PENDING
+      art_image_id: null
+- key: s09-fore-classic
+  verdict: 'keep: 2026-11-24 PT review, crown and crystal shards along the foot of a flat magenta key colour; keys
+    clean into a tiling strip'
+  lane: krea2
+  title: S09 foreground strip of crown fragments, Classic
+  entity: stage-strip
+  asset: rainbow-princess-art/stages/s09-fore
+  size: 1344x768
+  seed: 1124303
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame, characters, people, faces, spaceships,
+    starships, rockets, jets, aircraft, vehicles, trains, boats, fish, jellyfish, creatures, animals, sun, moon,
+    planets, bright white
+  prompt_prose: 'Wide side-scrolling shooter foreground strip: a long low row of broken prism crystal shards and
+    fallen crown fragments in pink, turquoise and gold lying along the bottom quarter, set against a flat solid
+    magenta background filling the whole upper part, scenery only, flat-colour western cartoon art style with clean
+    bold outlines and soft cel shading, like a modern animated series.'
+  jobs:
+    krea2: 77055
+  art:
+    krea2:
+      status: DONE
+      art_image_id: 280238
+- key: s01-sky-classic
+  verdict: 'keep: 2026-11-24 PT review, pure pink cloud sea, glass buoys, coral scenery for the sky plane, no craft,
+    creatures or lettering'
+  lane: krea2
+  title: S01 Pinkwake Estuary sky plane, Classic
+  entity: stage-plane
+  asset: rainbow-princess-art/stages/s01-sky
+  size: 1344x768
+  seed: 1124311
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame, characters, people, faces, spaceships,
+    starships, rockets, jets, aircraft, vehicles, trains, boats, fish, jellyfish, creatures, animals, sun, moon,
+    planets, bright white
+  prompt_prose: 'Wide side-scrolling shooter sky layer for Pinkwake Estuary: a pink cloud sea, soft rolling rose
+    and lavender cloud banks drifting low under a deep violet night sky, faint scattered stars higher up. Dark and
+    calm through the middle, low contrast, soft haze, scenery only, flat-colour western cartoon art style with clean
+    bold outlines and soft cel shading, like a modern animated series.'
+  jobs:
+    krea2: 77056
+  art:
+    krea2:
+      status: DONE
+      art_image_id: 280239
+- key: s01-far-classic
+  verdict: 'keep: 2026-11-24 PT review, pure pink cloud sea, glass buoys, coral scenery for the far plane, no craft,
+    creatures or lettering'
+  lane: krea2
+  title: S01 Pinkwake Estuary far plane, Classic
+  entity: stage-plane
+  asset: rainbow-princess-art/stages/s01-far
+  size: 1344x768
+  seed: 1124312
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame, characters, people, faces, spaceships,
+    starships, rockets, jets, aircraft, vehicles, trains, boats, fish, jellyfish, creatures, animals, sun, moon,
+    planets, bright white
+  prompt_prose: 'Wide side-scrolling shooter far parallax scene for Pinkwake Estuary: glass buoys bobbing on a calm
+    pink estuary horizon among slender blush coral towers, small and distant along the lower third, beneath a broad
+    calm dark sky that fills the upper two thirds. Soft atmospheric haze, scenery only, flat-colour western cartoon
+    art style with clean bold outlines and soft cel shading, like a modern animated series.'
+  jobs:
+    krea2: 77057
+  art:
+    krea2:
+      status: DONE
+      art_image_id: 280240
+- key: s01-mid-classic
+  verdict: 'keep: 2026-11-24 PT review, pure pink cloud sea, glass buoys, coral scenery for the mid plane, no craft,
+    creatures or lettering'
+  lane: krea2
+  title: S01 Pinkwake Estuary mid plane, Classic
+  entity: stage-plane
+  asset: rainbow-princess-art/stages/s01-mid
+  size: 1344x768
+  seed: 1124313
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame, characters, people, faces, spaceships,
+    starships, rockets, jets, aircraft, vehicles, trains, boats, fish, jellyfish, creatures, animals, sun, moon,
+    planets, bright white
+  prompt_prose: 'Wide side-scrolling shooter middle parallax scene for Pinkwake Estuary: a pearly shoal of rounded
+    pearl-white rocks and scalloped pink reef arches rising from the lower third, spaced with wide dark water channels,
+    with a dark open sky above. Scenery only, flat-colour western cartoon art style with clean bold outlines and
+    soft cel shading, like a modern animated series.'
+  jobs:
+    krea2: 77058
+  art:
+    krea2:
+      status: DONE
+      art_image_id: 280241
+- key: s01-sky-fever
+  verdict: 'keep: 2026-11-24 PT review, pure pink cloud sea, glass buoys, coral scenery for the sky plane, no craft,
+    creatures or lettering'
+  lane: krea2
+  title: S01 Pinkwake Estuary sky plane, Fever Dream
+  entity: stage-plane
+  asset: rainbow-princess-art/doodle/stages/s01-sky
+  size: 1344x768
+  seed: 1124314
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame, characters, people, faces, spaceships,
+    starships, rockets, jets, aircraft, vehicles, trains, boats, fish, jellyfish, creatures, animals, sun, moon,
+    planets, bright white
+  prompt_prose: 'Wide side-scrolling shooter sky layer for Pinkwake Estuary: a pink cloud sea, soft rolling rose
+    and lavender cloud banks drifting low under a deep violet night sky, faint scattered stars higher up. Dark and
+    calm through the middle, low contrast, soft haze, scenery only, 1980s neon rainbow airbrush school-folder sticker
+    art, glossy soft airbrushed shading, clean bold outlines, glitter sparkles and four-point twinkles.'
+  jobs:
+    krea2: 77059
+  art:
+    krea2:
+      status: DONE
+      art_image_id: 280242
+- key: s01-far-fever
+  verdict: 'keep: 2026-11-24 PT review, pure pink cloud sea, glass buoys, coral scenery for the far plane, no craft,
+    creatures or lettering'
+  lane: krea2
+  title: S01 Pinkwake Estuary far plane, Fever Dream
+  entity: stage-plane
+  asset: rainbow-princess-art/doodle/stages/s01-far
+  size: 1344x768
+  seed: 1124315
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame, characters, people, faces, spaceships,
+    starships, rockets, jets, aircraft, vehicles, trains, boats, fish, jellyfish, creatures, animals, sun, moon,
+    planets, bright white
+  prompt_prose: 'Wide side-scrolling shooter far parallax scene for Pinkwake Estuary: glass buoys bobbing on a calm
+    pink estuary horizon among slender blush coral towers, small and distant along the lower third, beneath a broad
+    calm dark sky that fills the upper two thirds. Soft atmospheric haze, scenery only, 1980s neon rainbow airbrush
+    school-folder sticker art, glossy soft airbrushed shading, clean bold outlines, glitter sparkles and four-point
+    twinkles.'
+  jobs:
+    krea2: 77060
+  art:
+    krea2:
+      status: DONE
+      art_image_id: 280243
+- key: s01-mid-fever
+  verdict: 'keep: 2026-11-24 PT review, pure pink cloud sea, glass buoys, coral scenery for the mid plane, no craft,
+    creatures or lettering'
+  lane: krea2
+  title: S01 Pinkwake Estuary mid plane, Fever Dream
+  entity: stage-plane
+  asset: rainbow-princess-art/doodle/stages/s01-mid
+  size: 1344x768
+  seed: 1124316
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame, characters, people, faces, spaceships,
+    starships, rockets, jets, aircraft, vehicles, trains, boats, fish, jellyfish, creatures, animals, sun, moon,
+    planets, bright white
+  prompt_prose: 'Wide side-scrolling shooter middle parallax scene for Pinkwake Estuary: a pearly shoal of rounded
+    pearl-white rocks and scalloped pink reef arches rising from the lower third, spaced with wide dark water channels,
+    with a dark open sky above. Scenery only, 1980s neon rainbow airbrush school-folder sticker art, glossy soft
+    airbrushed shading, clean bold outlines, glitter sparkles and four-point twinkles.'
+  jobs:
+    krea2: 77061
+  art:
+    krea2:
+      status: DONE
+      art_image_id: 280244
+- key: s02-sky-classic
+  verdict: 'keep: 2026-11-24 PT review, pure aurora sky, floating bell lanterns, teal kelp scenery for the sky plane,
+    no craft, creatures or lettering'
+  lane: krea2
+  title: S02 Moonjelly Fields sky plane, Classic
+  entity: stage-plane
+  asset: rainbow-princess-art/stages/s02-sky
+  size: 1344x768
+  seed: 1124317
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame, characters, people, faces, spaceships,
+    starships, rockets, jets, aircraft, vehicles, trains, boats, fish, jellyfish, creatures, animals, sun, moon,
+    planets, bright white
+  prompt_prose: 'Wide side-scrolling shooter sky layer for Moonjelly Fields: a translucent teal and cyan nebula
+    drifting in soft veils across a dark navy starfield. Dark and calm through the middle, low contrast, soft haze,
+    scenery only, flat-colour western cartoon art style with clean bold outlines and soft cel shading, like a modern
+    animated series.'
+  jobs:
+    krea2: 77062
+  art:
+    krea2:
+      status: DONE
+      art_image_id: 280245
+- key: s02-far-classic
+  verdict: 'keep: 2026-11-24 PT review, pure aurora sky, floating bell lanterns, teal kelp scenery for the far plane,
+    no craft, creatures or lettering'
+  lane: krea2
+  title: S02 Moonjelly Fields far plane, Classic
+  entity: stage-plane
+  asset: rainbow-princess-art/stages/s02-far
+  size: 1344x768
+  seed: 1124318
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame, characters, people, faces, spaceships,
+    starships, rockets, jets, aircraft, vehicles, trains, boats, fish, jellyfish, creatures, animals, sun, moon,
+    planets, bright white
+  prompt_prose: 'Wide side-scrolling shooter far parallax scene for Moonjelly Fields: a row of tall floating bell
+    towers of pale glass hovering over a distant blue lagoon horizon, small and far away along the lower third,
+    beneath a broad calm dark sky that fills the upper two thirds. Soft atmospheric haze, scenery only, flat-colour
+    western cartoon art style with clean bold outlines and soft cel shading, like a modern animated series.'
+  jobs:
+    krea2: 77063
+  art:
+    krea2:
+      status: DONE
+      art_image_id: 280246
+- key: s02-mid-classic
+  verdict: 'keep: 2026-11-24 PT review, pure aurora sky, floating bell lanterns, teal kelp scenery for the mid plane,
+    no craft, creatures or lettering'
+  lane: krea2
+  title: S02 Moonjelly Fields mid plane, Classic
+  entity: stage-plane
+  asset: rainbow-princess-art/stages/s02-mid
+  size: 1344x768
+  seed: 1124319
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame, characters, people, faces, spaceships,
+    starships, rockets, jets, aircraft, vehicles, trains, boats, fish, jellyfish, creatures, animals, sun, moon,
+    planets, bright white
+  prompt_prose: 'Wide side-scrolling shooter middle parallax scene for Moonjelly Fields: a low cyan coral shelf
+    with glowing sea-grass ribbons and pale bell-shaped coral cups along the lower third, with broad dark navy pockets
+    between them, with a dark open sky above. Scenery only, flat-colour western cartoon art style with clean bold
+    outlines and soft cel shading, like a modern animated series.'
+  jobs:
+    krea2: 77064
+  art:
+    krea2:
+      status: DONE
+      art_image_id: 280247
+- key: s02-sky-fever
+  verdict: 'keep: 2026-11-24 PT review, pure aurora sky, floating bell lanterns, teal kelp scenery for the sky plane,
+    no craft, creatures or lettering'
+  lane: krea2
+  title: S02 Moonjelly Fields sky plane, Fever Dream
+  entity: stage-plane
+  asset: rainbow-princess-art/doodle/stages/s02-sky
+  size: 1344x768
+  seed: 1124320
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame, characters, people, faces, spaceships,
+    starships, rockets, jets, aircraft, vehicles, trains, boats, fish, jellyfish, creatures, animals, sun, moon,
+    planets, bright white
+  prompt_prose: 'Wide side-scrolling shooter sky layer for Moonjelly Fields: a translucent teal and cyan nebula
+    drifting in soft veils across a dark navy starfield. Dark and calm through the middle, low contrast, soft haze,
+    scenery only, 1980s neon rainbow airbrush school-folder sticker art, glossy soft airbrushed shading, clean bold
+    outlines, glitter sparkles and four-point twinkles.'
+  jobs:
+    krea2: 77065
+  art:
+    krea2:
+      status: DONE
+      art_image_id: 280248
+- key: s02-far-fever
+  verdict: 'keep: 2026-11-24 PT review, pure aurora sky, floating bell lanterns, teal kelp scenery for the far plane,
+    no craft, creatures or lettering'
+  lane: krea2
+  title: S02 Moonjelly Fields far plane, Fever Dream
+  entity: stage-plane
+  asset: rainbow-princess-art/doodle/stages/s02-far
+  size: 1344x768
+  seed: 1124321
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame, characters, people, faces, spaceships,
+    starships, rockets, jets, aircraft, vehicles, trains, boats, fish, jellyfish, creatures, animals, sun, moon,
+    planets, bright white
+  prompt_prose: 'Wide side-scrolling shooter far parallax scene for Moonjelly Fields: a row of tall floating bell
+    towers of pale glass hovering over a distant blue lagoon horizon, small and far away along the lower third,
+    beneath a broad calm dark sky that fills the upper two thirds. Soft atmospheric haze, scenery only, 1980s neon
+    rainbow airbrush school-folder sticker art, glossy soft airbrushed shading, clean bold outlines, glitter sparkles
+    and four-point twinkles.'
+  jobs:
+    krea2: 77066
+  art:
+    krea2:
+      status: DONE
+      art_image_id: 280249
+- key: s02-mid-fever
+  verdict: 'keep: 2026-11-24 PT review, pure aurora sky, floating bell lanterns, teal kelp scenery for the mid plane,
+    no craft, creatures or lettering'
+  lane: krea2
+  title: S02 Moonjelly Fields mid plane, Fever Dream
+  entity: stage-plane
+  asset: rainbow-princess-art/doodle/stages/s02-mid
+  size: 1344x768
+  seed: 1124322
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame, characters, people, faces, spaceships,
+    starships, rockets, jets, aircraft, vehicles, trains, boats, fish, jellyfish, creatures, animals, sun, moon,
+    planets, bright white
+  prompt_prose: 'Wide side-scrolling shooter middle parallax scene for Moonjelly Fields: a low cyan coral shelf
+    with glowing sea-grass ribbons and pale bell-shaped coral cups along the lower third, with broad dark navy pockets
+    between them, with a dark open sky above. Scenery only, 1980s neon rainbow airbrush school-folder sticker art,
+    glossy soft airbrushed shading, clean bold outlines, glitter sparkles and four-point twinkles.'
+  jobs:
+    krea2: 77067
+  art:
+    krea2:
+      status: DONE
+      art_image_id: 280250
+- key: s03-sky-classic
+  verdict: 'keep: 2026-11-24 PT review, pure volcanic ridges, lava vents, stone arches scenery for the sky plane,
+    no craft, creatures or lettering'
+  lane: krea2
+  title: S03 Chromatic Trench sky plane, Classic
+  entity: stage-plane
+  asset: rainbow-princess-art/stages/s03-sky
+  size: 1344x768
+  seed: 1124323
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame, characters, people, faces, spaceships,
+    starships, rockets, jets, aircraft, vehicles, trains, boats, fish, jellyfish, creatures, animals, sun, moon,
+    planets, bright white
+  prompt_prose: 'Wide side-scrolling shooter sky layer for Chromatic Trench: an indigo void with faint violet mineral
+    glows and slow drifting purple haze, a few cold blue stars. Dark and calm through the middle, low contrast,
+    soft haze, scenery only, flat-colour western cartoon art style with clean bold outlines and soft cel shading,
+    like a modern animated series.'
+  jobs:
+    krea2: 77068
+  art:
+    krea2:
+      status: DONE
+      art_image_id: 280251
+- key: s03-far-classic
+  verdict: 'keep: 2026-11-24 PT review, pure volcanic ridges, lava vents, stone arches scenery for the far plane,
+    no craft, creatures or lettering'
+  lane: krea2
+  title: S03 Chromatic Trench far plane, Classic
+  entity: stage-plane
+  asset: rainbow-princess-art/stages/s03-far
+  size: 1344x768
+  seed: 1124324
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame, characters, people, faces, spaceships,
+    starships, rockets, jets, aircraft, vehicles, trains, boats, fish, jellyfish, creatures, animals, sun, moon,
+    planets, bright white
+  prompt_prose: 'Wide side-scrolling shooter far parallax scene for Chromatic Trench: a distant range of jagged
+    obsidian ridges with small glowing orange volcanic vents, low along the lower third, beneath a broad calm dark
+    sky that fills the upper two thirds. Soft atmospheric haze, scenery only, flat-colour western cartoon art style
+    with clean bold outlines and soft cel shading, like a modern animated series.'
+  jobs:
+    krea2: 77069
+  art:
+    krea2:
+      status: DONE
+      art_image_id: 280252
+- key: s03-mid-classic
+  verdict: 'keep: 2026-11-24 PT review, pure volcanic ridges, lava vents, stone arches scenery for the mid plane,
+    no craft, creatures or lettering'
+  lane: krea2
+  title: S03 Chromatic Trench mid plane, Classic
+  entity: stage-plane
+  asset: rainbow-princess-art/stages/s03-mid
+  size: 1344x768
+  seed: 1124325
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame, characters, people, faces, spaceships,
+    starships, rockets, jets, aircraft, vehicles, trains, boats, fish, jellyfish, creatures, animals, sun, moon,
+    planets, bright white
+  prompt_prose: 'Wide side-scrolling shooter middle parallax scene for Chromatic Trench: abandoned stone vaults
+    and broken arches half buried among purple-black rock banks with thin amber crystal seams, rising from the lower
+    third, with a dark open sky above. Scenery only, flat-colour western cartoon art style with clean bold outlines
+    and soft cel shading, like a modern animated series.'
+  jobs:
+    krea2: 77070
+  art:
+    krea2:
+      status: DONE
+      art_image_id: 280253
+- key: s03-sky-fever
+  verdict: 'keep: 2026-11-24 PT review, pure volcanic ridges, lava vents, stone arches scenery for the sky plane,
+    no craft, creatures or lettering'
+  lane: krea2
+  title: S03 Chromatic Trench sky plane, Fever Dream
+  entity: stage-plane
+  asset: rainbow-princess-art/doodle/stages/s03-sky
+  size: 1344x768
+  seed: 1124326
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame, characters, people, faces, spaceships,
+    starships, rockets, jets, aircraft, vehicles, trains, boats, fish, jellyfish, creatures, animals, sun, moon,
+    planets, bright white
+  prompt_prose: 'Wide side-scrolling shooter sky layer for Chromatic Trench: an indigo void with faint violet mineral
+    glows and slow drifting purple haze, a few cold blue stars. Dark and calm through the middle, low contrast,
+    soft haze, scenery only, 1980s neon rainbow airbrush school-folder sticker art, glossy soft airbrushed shading,
+    clean bold outlines, glitter sparkles and four-point twinkles.'
+  jobs:
+    krea2: 77071
+  art:
+    krea2:
+      status: DONE
+      art_image_id: 280254
+- key: s03-far-fever
+  verdict: 'keep: 2026-11-24 PT review, pure volcanic ridges, lava vents, stone arches scenery for the far plane,
+    no craft, creatures or lettering'
+  lane: krea2
+  title: S03 Chromatic Trench far plane, Fever Dream
+  entity: stage-plane
+  asset: rainbow-princess-art/doodle/stages/s03-far
+  size: 1344x768
+  seed: 1124327
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame, characters, people, faces, spaceships,
+    starships, rockets, jets, aircraft, vehicles, trains, boats, fish, jellyfish, creatures, animals, sun, moon,
+    planets, bright white
+  prompt_prose: 'Wide side-scrolling shooter far parallax scene for Chromatic Trench: a distant range of jagged
+    obsidian ridges with small glowing orange volcanic vents, low along the lower third, beneath a broad calm dark
+    sky that fills the upper two thirds. Soft atmospheric haze, scenery only, 1980s neon rainbow airbrush school-folder
+    sticker art, glossy soft airbrushed shading, clean bold outlines, glitter sparkles and four-point twinkles.'
+  jobs:
+    krea2: 77072
+  art:
+    krea2:
+      status: DONE
+      art_image_id: 280255
+- key: s03-mid-fever
+  verdict: 'keep: 2026-11-24 PT review, pure volcanic ridges, lava vents, stone arches scenery for the mid plane,
+    no craft, creatures or lettering'
+  lane: krea2
+  title: S03 Chromatic Trench mid plane, Fever Dream
+  entity: stage-plane
+  asset: rainbow-princess-art/doodle/stages/s03-mid
+  size: 1344x768
+  seed: 1124328
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame, characters, people, faces, spaceships,
+    starships, rockets, jets, aircraft, vehicles, trains, boats, fish, jellyfish, creatures, animals, sun, moon,
+    planets, bright white
+  prompt_prose: 'Wide side-scrolling shooter middle parallax scene for Chromatic Trench: abandoned stone vaults
+    and broken arches half buried among purple-black rock banks with thin amber crystal seams, rising from the lower
+    third, with a dark open sky above. Scenery only, 1980s neon rainbow airbrush school-folder sticker art, glossy
+    soft airbrushed shading, clean bold outlines, glitter sparkles and four-point twinkles.'
+  jobs:
+    krea2: 77073
+  art:
+    krea2:
+      status: DONE
+      art_image_id: 280256
+- key: s04-sky-classic
+  verdict: 'keep: 2026-11-24 PT review, a pink aurora ribbon over a dark starry sky, scenery only'
+  lane: krea2
+  title: S04 Rosefin Express sky plane, Classic
+  entity: stage-plane
+  asset: rainbow-princess-art/stages/s04-sky
+  size: 1344x768
+  seed: 1124329
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame, characters, people, faces, spaceships,
+    starships, rockets, jets, aircraft, vehicles, trains, boats, fish, jellyfish, creatures, animals, sun, moon,
+    planets, bright white
+  prompt_prose: 'Wide side-scrolling shooter sky layer for Rosefin Express: long streaming aurora ribbons of rose,
+    peach and violet flowing gently across a dark sapphire sky. Dark and calm through the middle, low contrast,
+    soft haze, scenery only, flat-colour western cartoon art style with clean bold outlines and soft cel shading,
+    like a modern animated series.'
+  jobs:
+    krea2: 77074
+  art:
+    krea2:
+      status: DONE
+      art_image_id: 280257
+- key: s04-far-classic
+  verdict: 'keep: 2026-11-24 PT review, transit rings marching over a dusky sea, scenery only'
+  lane: krea2
+  title: S04 Rosefin Express far plane, Classic
+  entity: stage-plane
+  asset: rainbow-princess-art/stages/s04-far
+  size: 1344x768
+  seed: 1124330
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame, characters, people, faces, spaceships,
+    starships, rockets, jets, aircraft, vehicles, trains, boats, fish, jellyfish, creatures, animals, sun, moon,
+    planets, bright white
+  prompt_prose: 'Wide side-scrolling shooter far parallax scene for Rosefin Express: great copper hoops of distant
+    transit rings standing in a long curving line across a twilight seabed horizon, linked by thin glowing rose
+    current streams, small and far away along the lower third, beneath a broad calm dark sky that fills the upper
+    two thirds. Soft atmospheric haze, scenery only, flat-colour western cartoon art style with clean bold outlines
+    and soft cel shading, like a modern animated series.'
+  jobs:
+    krea2: 77075
+  art:
+    krea2:
+      status: DONE
+      art_image_id: 280258
+- key: s04-mid-classic
+  verdict: 'keep: 2026-11-24 PT review, an elevated rail trestle on a dark sky'
+  lane: krea2
+  title: S04 Rosefin Express mid plane, Classic
+  entity: stage-plane
+  asset: rainbow-princess-art/stages/s04-mid
+  size: 1344x768
+  seed: 1124331
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame, characters, people, faces, spaceships,
+    starships, rockets, jets, aircraft, vehicles, trains, boats, fish, jellyfish, creatures, animals, sun, moon,
+    planets, bright white
+  prompt_prose: 'Wide side-scrolling shooter middle parallax scene for Rosefin Express: a curving elevated light-rail
+    track on slender copper pylons with glowing rose rails, spaced along the lower third, with a dark open sky above.
+    Scenery only, flat-colour western cartoon art style with clean bold outlines and soft cel shading, like a modern
+    animated series.'
+  jobs:
+    krea2: 77076
+  art:
+    krea2:
+      status: DONE
+      art_image_id: 280259
+- key: s04-sky-fever
+  verdict: 'keep: 2026-11-24 PT review, pink aurora ribbons over a starry sky'
+  lane: krea2
+  title: S04 Rosefin Express sky plane, Fever Dream
+  entity: stage-plane
+  asset: rainbow-princess-art/doodle/stages/s04-sky
+  size: 1344x768
+  seed: 1124332
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame, characters, people, faces, spaceships,
+    starships, rockets, jets, aircraft, vehicles, trains, boats, fish, jellyfish, creatures, animals, sun, moon,
+    planets, bright white
+  prompt_prose: 'Wide side-scrolling shooter sky layer for Rosefin Express: long streaming aurora ribbons of rose,
+    peach and violet flowing gently across a dark sapphire sky. Dark and calm through the middle, low contrast,
+    soft haze, scenery only, 1980s neon rainbow airbrush school-folder sticker art, glossy soft airbrushed shading,
+    clean bold outlines, glitter sparkles and four-point twinkles.'
+  jobs:
+    krea2: 77077
+  art:
+    krea2:
+      status: DONE
+      art_image_id: 280260
+- key: s04-far-fever
+  verdict: 'keep: 2026-11-24 PT review, transit rings and a curving rail over the sea'
+  lane: krea2
+  title: S04 Rosefin Express far plane, Fever Dream
+  entity: stage-plane
+  asset: rainbow-princess-art/doodle/stages/s04-far
+  size: 1344x768
+  seed: 1124333
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame, characters, people, faces, spaceships,
+    starships, rockets, jets, aircraft, vehicles, trains, boats, fish, jellyfish, creatures, animals, sun, moon,
+    planets, bright white
+  prompt_prose: 'Wide side-scrolling shooter far parallax scene for Rosefin Express: great copper hoops of distant
+    transit rings standing in a long curving line across a twilight seabed horizon, linked by thin glowing rose
+    current streams, small and far away along the lower third, beneath a broad calm dark sky that fills the upper
+    two thirds. Soft atmospheric haze, scenery only, 1980s neon rainbow airbrush school-folder sticker art, glossy
+    soft airbrushed shading, clean bold outlines, glitter sparkles and four-point twinkles.'
+  jobs:
+    krea2: 77078
+  art:
+    krea2:
+      status: DONE
+      art_image_id: 280261
+- key: s04-mid-fever
+  verdict: 'keep: 2026-11-24 PT review, a glowing rail trestle on a dark sky'
+  lane: krea2
+  title: S04 Rosefin Express mid plane, Fever Dream
+  entity: stage-plane
+  asset: rainbow-princess-art/doodle/stages/s04-mid
+  size: 1344x768
+  seed: 1124334
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame, characters, people, faces, spaceships,
+    starships, rockets, jets, aircraft, vehicles, trains, boats, fish, jellyfish, creatures, animals, sun, moon,
+    planets, bright white
+  prompt_prose: 'Wide side-scrolling shooter middle parallax scene for Rosefin Express: a curving elevated light-rail
+    track on slender copper pylons with glowing rose rails, spaced along the lower third, with a dark open sky above.
+    Scenery only, 1980s neon rainbow airbrush school-folder sticker art, glossy soft airbrushed shading, clean bold
+    outlines, glitter sparkles and four-point twinkles.'
+  jobs:
+    krea2: 77079
+  art:
+    krea2:
+      status: DONE
+      art_image_id: 280262
+- key: s05-sky-classic
+  verdict: 'reject: 2026-11-24 PT review, bright pink petals scattered across the sky are pellet-sized at game scale
+    and could read as hostile fire (P-10); retaken as s05-sky-classic-2'
+  lane: krea2
+  title: S05 Blossom Wreckyard sky plane, Classic
+  entity: stage-plane
+  asset: rainbow-princess-art/stages/s05-sky
+  size: 1344x768
+  seed: 1124335
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame, characters, people, faces, spaceships,
+    starships, rockets, jets, aircraft, vehicles, trains, boats, fish, jellyfish, creatures, animals, sun, moon,
+    planets, bright white
+  prompt_prose: 'Wide side-scrolling shooter sky layer for Blossom Wreckyard: a dim starfield over a quiet blue-black
+    sea, pale pink blossom petals drifting through soft haze. Dark and calm through the middle, low contrast, soft
+    haze, scenery only, flat-colour western cartoon art style with clean bold outlines and soft cel shading, like
+    a modern animated series.'
+  jobs:
+    krea2: 77080
+  art:
+    krea2:
+      status: DONE
+      art_image_id: 280263
+- key: s05-far-classic
+  verdict: 'keep: 2026-11-24 PT review, petal-hull wrecks and crane silhouettes on the horizon'
+  lane: krea2
+  title: S05 Blossom Wreckyard far plane, Classic
+  entity: stage-plane
+  asset: rainbow-princess-art/stages/s05-far
+  size: 1344x768
+  seed: 1124336
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame, characters, people, faces, spaceships,
+    starships, rockets, jets, aircraft, vehicles, trains, boats, fish, jellyfish, creatures, animals, sun, moon,
+    planets, bright white
+  prompt_prose: 'Wide side-scrolling shooter far parallax scene for Blossom Wreckyard: a distant scrapyard of half-sunken
+    petal-shaped metal slabs and broken girders on a low horizon, small and quiet along the lower third, beneath
+    a broad calm dark sky that fills the upper two thirds. Soft atmospheric haze, scenery only, flat-colour western
+    cartoon art style with clean bold outlines and soft cel shading, like a modern animated series.'
+  jobs:
+    krea2: 77081
+  art:
+    krea2:
+      status: DONE
+      art_image_id: 280264
+- key: s05-mid-classic
+  verdict: 'keep: 2026-11-24 PT review, rusty cranes and petal hulls on a teal-slimed ground'
+  lane: krea2
+  title: S05 Blossom Wreckyard mid plane, Classic
+  entity: stage-plane
+  asset: rainbow-princess-art/stages/s05-mid
+  size: 1344x768
+  seed: 1124337
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame, characters, people, faces, spaceships,
+    starships, rockets, jets, aircraft, vehicles, trains, boats, fish, jellyfish, creatures, animals, sun, moon,
+    planets, bright white
+  prompt_prose: 'Wide side-scrolling shooter middle parallax scene for Blossom Wreckyard: rusted dock cranes and
+    broken girders leaning over half-buried petal-shaped metal slabs overgrown with turquoise algae, along the lower
+    third, with a dark open sky above. Scenery only, flat-colour western cartoon art style with clean bold outlines
+    and soft cel shading, like a modern animated series.'
+  jobs:
+    krea2: 77082
+  art:
+    krea2:
+      status: DONE
+      art_image_id: 280265
+- key: s05-sky-fever
+  verdict: 'reject: 2026-11-24 PT review, the same bright pink petals read as pellets; retaken as s05-sky-fever-2'
+  lane: krea2
+  title: S05 Blossom Wreckyard sky plane, Fever Dream
+  entity: stage-plane
+  asset: rainbow-princess-art/doodle/stages/s05-sky
+  size: 1344x768
+  seed: 1124338
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame, characters, people, faces, spaceships,
+    starships, rockets, jets, aircraft, vehicles, trains, boats, fish, jellyfish, creatures, animals, sun, moon,
+    planets, bright white
+  prompt_prose: 'Wide side-scrolling shooter sky layer for Blossom Wreckyard: a dim starfield over a quiet blue-black
+    sea, pale pink blossom petals drifting through soft haze. Dark and calm through the middle, low contrast, soft
+    haze, scenery only, 1980s neon rainbow airbrush school-folder sticker art, glossy soft airbrushed shading, clean
+    bold outlines, glitter sparkles and four-point twinkles.'
+  jobs:
+    krea2: 77083
+  art:
+    krea2:
+      status: DONE
+      art_image_id: 280266
+- key: s05-far-fever
+  verdict: 'keep: 2026-11-24 PT review, wreck silhouettes on the horizon'
+  lane: krea2
+  title: S05 Blossom Wreckyard far plane, Fever Dream
+  entity: stage-plane
+  asset: rainbow-princess-art/doodle/stages/s05-far
+  size: 1344x768
+  seed: 1124339
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame, characters, people, faces, spaceships,
+    starships, rockets, jets, aircraft, vehicles, trains, boats, fish, jellyfish, creatures, animals, sun, moon,
+    planets, bright white
+  prompt_prose: 'Wide side-scrolling shooter far parallax scene for Blossom Wreckyard: a distant scrapyard of half-sunken
+    petal-shaped metal slabs and broken girders on a low horizon, small and quiet along the lower third, beneath
+    a broad calm dark sky that fills the upper two thirds. Soft atmospheric haze, scenery only, 1980s neon rainbow
+    airbrush school-folder sticker art, glossy soft airbrushed shading, clean bold outlines, glitter sparkles and
+    four-point twinkles.'
+  jobs:
+    krea2: 77084
+  art:
+    krea2:
+      status: DONE
+      art_image_id: 280267
+- key: s05-mid-fever
+  verdict: 'keep: 2026-11-24 PT review, rusty cranes and petal hulls with teal moss'
+  lane: krea2
+  title: S05 Blossom Wreckyard mid plane, Fever Dream
+  entity: stage-plane
+  asset: rainbow-princess-art/doodle/stages/s05-mid
+  size: 1344x768
+  seed: 1124340
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame, characters, people, faces, spaceships,
+    starships, rockets, jets, aircraft, vehicles, trains, boats, fish, jellyfish, creatures, animals, sun, moon,
+    planets, bright white
+  prompt_prose: 'Wide side-scrolling shooter middle parallax scene for Blossom Wreckyard: rusted dock cranes and
+    broken girders leaning over half-buried petal-shaped metal slabs overgrown with turquoise algae, along the lower
+    third, with a dark open sky above. Scenery only, 1980s neon rainbow airbrush school-folder sticker art, glossy
+    soft airbrushed shading, clean bold outlines, glitter sparkles and four-point twinkles.'
+  jobs:
+    krea2: 77085
+  art:
+    krea2:
+      status: DONE
+      art_image_id: 280268
+- key: s06-sky-classic
+  verdict: 'keep: 2026-11-24 PT review, gold nebula over green haze with elongated drifting gold streaks (not pellet-shaped)'
+  lane: krea2
+  title: S06 Crown Reef sky plane, Classic
+  entity: stage-plane
+  asset: rainbow-princess-art/stages/s06-sky
+  size: 1344x768
+  seed: 1124341
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame, characters, people, faces, spaceships,
+    starships, rockets, jets, aircraft, vehicles, trains, boats, fish, jellyfish, creatures, animals, sun, moon,
+    planets, bright white
+  prompt_prose: 'Wide side-scrolling shooter sky layer for Crown Reef: a warm gold nebula glowing softly over a
+    dark emerald and indigo sea, fine floating gold plankton. Dark and calm through the middle, low contrast, soft
+    haze, scenery only, flat-colour western cartoon art style with clean bold outlines and soft cel shading, like
+    a modern animated series.'
+  jobs:
+    krea2: 77086
+  art:
+    krea2:
+      status: DONE
+      art_image_id: 280269
+- key: s06-far-classic
+  lane: krea2
+  title: S06 Crown Reef far plane, Classic
+  entity: stage-plane
+  asset: rainbow-princess-art/stages/s06-far
+  size: 1344x768
+  seed: 1124342
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame, characters, people, faces, spaceships,
+    starships, rockets, jets, aircraft, vehicles, trains, boats, fish, jellyfish, creatures, animals, sun, moon,
+    planets, bright white
+  prompt_prose: 'Wide side-scrolling shooter far parallax scene for Crown Reef: distant golden coral megastructures,
+    branching tangerine towers and a winding green glow path on a pale jade underwater meadow, small and far away
+    along the lower third, beneath a broad calm dark sky that fills the upper two thirds. Soft atmospheric haze,
+    scenery only, flat-colour western cartoon art style with clean bold outlines and soft cel shading, like a modern
+    animated series.'
+  jobs:
+    krea2: 77087
+  art:
+    krea2:
+      status: RUNNING
+      art_image_id: null
+- key: s06-mid-classic
+  lane: krea2
+  title: S06 Crown Reef mid plane, Classic
+  entity: stage-plane
+  asset: rainbow-princess-art/stages/s06-mid
+  size: 1344x768
+  seed: 1124343
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame, characters, people, faces, spaceships,
+    starships, rockets, jets, aircraft, vehicles, trains, boats, fish, jellyfish, creatures, animals, sun, moon,
+    planets, bright white
+  prompt_prose: 'Wide side-scrolling shooter middle parallax scene for Crown Reef: bioluminescent tangerine coral
+    arches with glowing blue sea plants rising from a jade seabed along the lower third, dark ocean passages between
+    them, with a dark open sky above. Scenery only, flat-colour western cartoon art style with clean bold outlines
+    and soft cel shading, like a modern animated series.'
+  jobs:
+    krea2: 77088
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+- key: s06-sky-fever
+  lane: krea2
+  title: S06 Crown Reef sky plane, Fever Dream
+  entity: stage-plane
+  asset: rainbow-princess-art/doodle/stages/s06-sky
+  size: 1344x768
+  seed: 1124344
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame, characters, people, faces, spaceships,
+    starships, rockets, jets, aircraft, vehicles, trains, boats, fish, jellyfish, creatures, animals, sun, moon,
+    planets, bright white
+  prompt_prose: 'Wide side-scrolling shooter sky layer for Crown Reef: a warm gold nebula glowing softly over a
+    dark emerald and indigo sea, fine floating gold plankton. Dark and calm through the middle, low contrast, soft
+    haze, scenery only, 1980s neon rainbow airbrush school-folder sticker art, glossy soft airbrushed shading, clean
+    bold outlines, glitter sparkles and four-point twinkles.'
+  jobs:
+    krea2: 77089
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+- key: s06-far-fever
+  lane: krea2
+  title: S06 Crown Reef far plane, Fever Dream
+  entity: stage-plane
+  asset: rainbow-princess-art/doodle/stages/s06-far
+  size: 1344x768
+  seed: 1124345
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame, characters, people, faces, spaceships,
+    starships, rockets, jets, aircraft, vehicles, trains, boats, fish, jellyfish, creatures, animals, sun, moon,
+    planets, bright white
+  prompt_prose: 'Wide side-scrolling shooter far parallax scene for Crown Reef: distant golden coral megastructures,
+    branching tangerine towers and a winding green glow path on a pale jade underwater meadow, small and far away
+    along the lower third, beneath a broad calm dark sky that fills the upper two thirds. Soft atmospheric haze,
+    scenery only, 1980s neon rainbow airbrush school-folder sticker art, glossy soft airbrushed shading, clean bold
+    outlines, glitter sparkles and four-point twinkles.'
+  jobs:
+    krea2: 77090
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+- key: s06-mid-fever
+  lane: krea2
+  title: S06 Crown Reef mid plane, Fever Dream
+  entity: stage-plane
+  asset: rainbow-princess-art/doodle/stages/s06-mid
+  size: 1344x768
+  seed: 1124346
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame, characters, people, faces, spaceships,
+    starships, rockets, jets, aircraft, vehicles, trains, boats, fish, jellyfish, creatures, animals, sun, moon,
+    planets, bright white
+  prompt_prose: 'Wide side-scrolling shooter middle parallax scene for Crown Reef: bioluminescent tangerine coral
+    arches with glowing blue sea plants rising from a jade seabed along the lower third, dark ocean passages between
+    them, with a dark open sky above. Scenery only, 1980s neon rainbow airbrush school-folder sticker art, glossy
+    soft airbrushed shading, clean bold outlines, glitter sparkles and four-point twinkles.'
+  jobs:
+    krea2: 77091
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+- key: s07-sky-classic
+  lane: krea2
+  title: S07 Glass Current sky plane, Classic
+  entity: stage-plane
+  asset: rainbow-princess-art/stages/s07-sky
+  size: 1344x768
+  seed: 1124347
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame, characters, people, faces, spaceships,
+    starships, rockets, jets, aircraft, vehicles, trains, boats, fish, jellyfish, creatures, animals, sun, moon,
+    planets, bright white
+  prompt_prose: 'Wide side-scrolling shooter sky layer for Glass Current: a mirrored starry canyon sky of deep blue
+    with long faint refracted light streaks and cool lavender haze. Dark and calm through the middle, low contrast,
+    soft haze, scenery only, flat-colour western cartoon art style with clean bold outlines and soft cel shading,
+    like a modern animated series.'
+  jobs:
+    krea2: 77092
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+- key: s07-far-classic
+  lane: krea2
+  title: S07 Glass Current far plane, Classic
+  entity: stage-plane
+  asset: rainbow-princess-art/stages/s07-far
+  size: 1344x768
+  seed: 1124348
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame, characters, people, faces, spaceships,
+    starships, rockets, jets, aircraft, vehicles, trains, boats, fish, jellyfish, creatures, animals, sun, moon,
+    planets, bright white
+  prompt_prose: 'Wide side-scrolling shooter far parallax scene for Glass Current: a distant canyon of crystalline
+    strata, ice-blue faceted cliffs low on the horizon along the lower third, beneath a broad calm dark sky that
+    fills the upper two thirds. Soft atmospheric haze, scenery only, flat-colour western cartoon art style with
+    clean bold outlines and soft cel shading, like a modern animated series.'
+  jobs:
+    krea2: 77093
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+- key: s07-mid-classic
+  lane: krea2
+  title: S07 Glass Current mid plane, Classic
+  entity: stage-plane
+  asset: rainbow-princess-art/stages/s07-mid
+  size: 1344x768
+  seed: 1124349
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame, characters, people, faces, spaceships,
+    starships, rockets, jets, aircraft, vehicles, trains, boats, fish, jellyfish, creatures, animals, sun, moon,
+    planets, bright white
+  prompt_prose: 'Wide side-scrolling shooter middle parallax scene for Glass Current: rows of faceted glass pinnacles
+    and broken prism pylons rising from a dark floor along the lower third, open blue channels between them, with
+    a dark open sky above. Scenery only, flat-colour western cartoon art style with clean bold outlines and soft
+    cel shading, like a modern animated series.'
+  jobs:
+    krea2: 77094
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+- key: s07-sky-fever
+  lane: krea2
+  title: S07 Glass Current sky plane, Fever Dream
+  entity: stage-plane
+  asset: rainbow-princess-art/doodle/stages/s07-sky
+  size: 1344x768
+  seed: 1124350
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame, characters, people, faces, spaceships,
+    starships, rockets, jets, aircraft, vehicles, trains, boats, fish, jellyfish, creatures, animals, sun, moon,
+    planets, bright white
+  prompt_prose: 'Wide side-scrolling shooter sky layer for Glass Current: a mirrored starry canyon sky of deep blue
+    with long faint refracted light streaks and cool lavender haze. Dark and calm through the middle, low contrast,
+    soft haze, scenery only, 1980s neon rainbow airbrush school-folder sticker art, glossy soft airbrushed shading,
+    clean bold outlines, glitter sparkles and four-point twinkles.'
+  jobs:
+    krea2: 77095
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+- key: s07-far-fever
+  lane: krea2
+  title: S07 Glass Current far plane, Fever Dream
+  entity: stage-plane
+  asset: rainbow-princess-art/doodle/stages/s07-far
+  size: 1344x768
+  seed: 1124351
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame, characters, people, faces, spaceships,
+    starships, rockets, jets, aircraft, vehicles, trains, boats, fish, jellyfish, creatures, animals, sun, moon,
+    planets, bright white
+  prompt_prose: 'Wide side-scrolling shooter far parallax scene for Glass Current: a distant canyon of crystalline
+    strata, ice-blue faceted cliffs low on the horizon along the lower third, beneath a broad calm dark sky that
+    fills the upper two thirds. Soft atmospheric haze, scenery only, 1980s neon rainbow airbrush school-folder sticker
+    art, glossy soft airbrushed shading, clean bold outlines, glitter sparkles and four-point twinkles.'
+  jobs:
+    krea2: 77096
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+- key: s07-mid-fever
+  lane: krea2
+  title: S07 Glass Current mid plane, Fever Dream
+  entity: stage-plane
+  asset: rainbow-princess-art/doodle/stages/s07-mid
+  size: 1344x768
+  seed: 1124352
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame, characters, people, faces, spaceships,
+    starships, rockets, jets, aircraft, vehicles, trains, boats, fish, jellyfish, creatures, animals, sun, moon,
+    planets, bright white
+  prompt_prose: 'Wide side-scrolling shooter middle parallax scene for Glass Current: rows of faceted glass pinnacles
+    and broken prism pylons rising from a dark floor along the lower third, open blue channels between them, with
+    a dark open sky above. Scenery only, 1980s neon rainbow airbrush school-folder sticker art, glossy soft airbrushed
+    shading, clean bold outlines, glitter sparkles and four-point twinkles.'
+  jobs:
+    krea2: 77097
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+- key: s08-sky-classic
+  lane: krea2
+  title: S08 Eclipse Palace sky plane, Classic
+  entity: stage-plane
+  asset: rainbow-princess-art/stages/s08-sky
+  size: 1344x768
+  seed: 1124353
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame, characters, people, faces, spaceships,
+    starships, rockets, jets, aircraft, vehicles, trains, boats, fish, jellyfish, creatures, animals, sun, moon,
+    planets, bright white
+  prompt_prose: 'Wide side-scrolling shooter sky layer for Eclipse Palace: a dark violet sky with a faint rose glow
+    along the horizon and slow drifting pearly particles. Dark and calm through the middle, low contrast, soft haze,
+    scenery only, flat-colour western cartoon art style with clean bold outlines and soft cel shading, like a modern
+    animated series.'
+  jobs:
+    krea2: 77098
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+- key: s08-far-classic
+  lane: krea2
+  title: S08 Eclipse Palace far plane, Classic
+  entity: stage-plane
+  asset: rainbow-princess-art/stages/s08-far
+  size: 1344x768
+  seed: 1124354
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame, characters, people, faces, spaceships,
+    starships, rockets, jets, aircraft, vehicles, trains, boats, fish, jellyfish, creatures, animals, sun, moon,
+    planets, bright white
+  prompt_prose: 'Wide side-scrolling shooter far parallax scene for Eclipse Palace: a distant pearl palace of rose-gold
+    heart-shaped spires, stepped pearlescent terraces and slender lavender stairways on a deep violet horizon, small
+    and far away along the lower third, beneath a broad calm dark sky that fills the upper two thirds. Soft atmospheric
+    haze, scenery only, flat-colour western cartoon art style with clean bold outlines and soft cel shading, like
+    a modern animated series.'
+  jobs:
+    krea2: 77099
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+- key: s08-mid-classic
+  lane: krea2
+  title: S08 Eclipse Palace mid plane, Classic
+  entity: stage-plane
+  asset: rainbow-princess-art/stages/s08-mid
+  size: 1344x768
+  seed: 1124355
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame, characters, people, faces, spaceships,
+    starships, rockets, jets, aircraft, vehicles, trains, boats, fish, jellyfish, creatures, animals, sun, moon,
+    planets, bright white
+  prompt_prose: 'Wide side-scrolling shooter middle parallax scene for Eclipse Palace: low heart-shaped pearl spires
+    and cracked pearl parapets with lilac shell lamps along the lower third, wide dark gaps between them, with a
+    dark open sky above. Scenery only, flat-colour western cartoon art style with clean bold outlines and soft cel
+    shading, like a modern animated series.'
+  jobs:
+    krea2: 77100
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+- key: s08-sky-fever
+  lane: krea2
+  title: S08 Eclipse Palace sky plane, Fever Dream
+  entity: stage-plane
+  asset: rainbow-princess-art/doodle/stages/s08-sky
+  size: 1344x768
+  seed: 1124356
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame, characters, people, faces, spaceships,
+    starships, rockets, jets, aircraft, vehicles, trains, boats, fish, jellyfish, creatures, animals, sun, moon,
+    planets, bright white
+  prompt_prose: 'Wide side-scrolling shooter sky layer for Eclipse Palace: a dark violet sky with a faint rose glow
+    along the horizon and slow drifting pearly particles. Dark and calm through the middle, low contrast, soft haze,
+    scenery only, 1980s neon rainbow airbrush school-folder sticker art, glossy soft airbrushed shading, clean bold
+    outlines, glitter sparkles and four-point twinkles.'
+  jobs:
+    krea2: 77101
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+- key: s08-far-fever
+  lane: krea2
+  title: S08 Eclipse Palace far plane, Fever Dream
+  entity: stage-plane
+  asset: rainbow-princess-art/doodle/stages/s08-far
+  size: 1344x768
+  seed: 1124357
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame, characters, people, faces, spaceships,
+    starships, rockets, jets, aircraft, vehicles, trains, boats, fish, jellyfish, creatures, animals, sun, moon,
+    planets, bright white
+  prompt_prose: 'Wide side-scrolling shooter far parallax scene for Eclipse Palace: a distant pearl palace of rose-gold
+    heart-shaped spires, stepped pearlescent terraces and slender lavender stairways on a deep violet horizon, small
+    and far away along the lower third, beneath a broad calm dark sky that fills the upper two thirds. Soft atmospheric
+    haze, scenery only, 1980s neon rainbow airbrush school-folder sticker art, glossy soft airbrushed shading, clean
+    bold outlines, glitter sparkles and four-point twinkles.'
+  jobs:
+    krea2: 77102
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+- key: s08-mid-fever
+  lane: krea2
+  title: S08 Eclipse Palace mid plane, Fever Dream
+  entity: stage-plane
+  asset: rainbow-princess-art/doodle/stages/s08-mid
+  size: 1344x768
+  seed: 1124358
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame, characters, people, faces, spaceships,
+    starships, rockets, jets, aircraft, vehicles, trains, boats, fish, jellyfish, creatures, animals, sun, moon,
+    planets, bright white
+  prompt_prose: 'Wide side-scrolling shooter middle parallax scene for Eclipse Palace: low heart-shaped pearl spires
+    and cracked pearl parapets with lilac shell lamps along the lower third, wide dark gaps between them, with a
+    dark open sky above. Scenery only, 1980s neon rainbow airbrush school-folder sticker art, glossy soft airbrushed
+    shading, clean bold outlines, glitter sparkles and four-point twinkles.'
+  jobs:
+    krea2: 77103
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+- key: s09-sky-classic
+  lane: krea2
+  title: S09 the Eclipse Crown heart sky plane, Classic
+  entity: stage-plane
+  asset: rainbow-princess-art/stages/s09-sky
+  size: 1344x768
+  seed: 1124359
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame, characters, people, faces, spaceships,
+    starships, rockets, jets, aircraft, vehicles, trains, boats, fish, jellyfish, creatures, animals, sun, moon,
+    planets, bright white
+  prompt_prose: 'Wide side-scrolling shooter sky layer for the Eclipse Crown heart: the dark interior of a vast
+    crystal machine crown, faint rings of fractured stained glass in pink, turquoise and gold glowing dimly in deep
+    violet darkness. Dark and calm through the middle, low contrast, soft haze, scenery only, flat-colour western
+    cartoon art style with clean bold outlines and soft cel shading, like a modern animated series.'
+  jobs:
+    krea2: 77104
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+- key: s09-far-classic
+  lane: krea2
+  title: S09 the Eclipse Crown heart far plane, Classic
+  entity: stage-plane
+  asset: rainbow-princess-art/stages/s09-far
+  size: 1344x768
+  seed: 1124360
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame, characters, people, faces, spaceships,
+    starships, rockets, jets, aircraft, vehicles, trains, boats, fish, jellyfish, creatures, animals, sun, moon,
+    planets, bright white
+  prompt_prose: 'Wide side-scrolling shooter far parallax scene for the Eclipse Crown heart: converging corridors
+    of tall prism shards glowing soft pink and turquoise, leading toward a distant glowing heart core low on the
+    horizon, small and far away, beneath a broad calm dark sky that fills the upper two thirds. Soft atmospheric
+    haze, scenery only, flat-colour western cartoon art style with clean bold outlines and soft cel shading, like
+    a modern animated series.'
+  jobs:
+    krea2: 77105
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+- key: s09-mid-classic
+  lane: krea2
+  title: S09 the Eclipse Crown heart mid plane, Classic
+  entity: stage-plane
+  asset: rainbow-princess-art/stages/s09-mid
+  size: 1344x768
+  seed: 1124361
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame, characters, people, faces, spaceships,
+    starships, rockets, jets, aircraft, vehicles, trains, boats, fish, jellyfish, creatures, animals, sun, moon,
+    planets, bright white
+  prompt_prose: 'Wide side-scrolling shooter middle parallax scene for the Eclipse Crown heart: tall broken prism
+    crystal pillars and standing crown fragments lining a prism corridor along the lower third, with dark violet
+    gaps between them, with a dark open sky above. Scenery only, flat-colour western cartoon art style with clean
+    bold outlines and soft cel shading, like a modern animated series.'
+  jobs:
+    krea2: 77106
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+- key: s09-sky-fever
+  lane: krea2
+  title: S09 the Eclipse Crown heart sky plane, Fever Dream
+  entity: stage-plane
+  asset: rainbow-princess-art/doodle/stages/s09-sky
+  size: 1344x768
+  seed: 1124362
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame, characters, people, faces, spaceships,
+    starships, rockets, jets, aircraft, vehicles, trains, boats, fish, jellyfish, creatures, animals, sun, moon,
+    planets, bright white
+  prompt_prose: 'Wide side-scrolling shooter sky layer for the Eclipse Crown heart: the dark interior of a vast
+    crystal machine crown, faint rings of fractured stained glass in pink, turquoise and gold glowing dimly in deep
+    violet darkness. Dark and calm through the middle, low contrast, soft haze, scenery only, 1980s neon rainbow
+    airbrush school-folder sticker art, glossy soft airbrushed shading, clean bold outlines, glitter sparkles and
+    four-point twinkles.'
+  jobs:
+    krea2: 77107
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+- key: s09-far-fever
+  lane: krea2
+  title: S09 the Eclipse Crown heart far plane, Fever Dream
+  entity: stage-plane
+  asset: rainbow-princess-art/doodle/stages/s09-far
+  size: 1344x768
+  seed: 1124363
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame, characters, people, faces, spaceships,
+    starships, rockets, jets, aircraft, vehicles, trains, boats, fish, jellyfish, creatures, animals, sun, moon,
+    planets, bright white
+  prompt_prose: 'Wide side-scrolling shooter far parallax scene for the Eclipse Crown heart: converging corridors
+    of tall prism shards glowing soft pink and turquoise, leading toward a distant glowing heart core low on the
+    horizon, small and far away, beneath a broad calm dark sky that fills the upper two thirds. Soft atmospheric
+    haze, scenery only, 1980s neon rainbow airbrush school-folder sticker art, glossy soft airbrushed shading, clean
+    bold outlines, glitter sparkles and four-point twinkles.'
+  jobs:
+    krea2: 77108
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+- key: s09-mid-fever
+  lane: krea2
+  title: S09 the Eclipse Crown heart mid plane, Fever Dream
+  entity: stage-plane
+  asset: rainbow-princess-art/doodle/stages/s09-mid
+  size: 1344x768
+  seed: 1124364
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame, characters, people, faces, spaceships,
+    starships, rockets, jets, aircraft, vehicles, trains, boats, fish, jellyfish, creatures, animals, sun, moon,
+    planets, bright white
+  prompt_prose: 'Wide side-scrolling shooter middle parallax scene for the Eclipse Crown heart: tall broken prism
+    crystal pillars and standing crown fragments lining a prism corridor along the lower third, with dark violet
+    gaps between them, with a dark open sky above. Scenery only, 1980s neon rainbow airbrush school-folder sticker
+    art, glossy soft airbrushed shading, clean bold outlines, glitter sparkles and four-point twinkles.'
+  jobs:
+    krea2: 77109
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+- key: b02-phase2-classic-1
+  lane: kontext
+  title: B02 Aurelia Array phase2 damage state from phase 1
+  entity: boss-sprite
+  asset: rainbow-princess-art/bosses/b02-phase2
+  size: 512x512
+  seed: 1124401
+  source_url: /rainbow-princess-art/bosses/b02-phase1.webp
+  source_matte: '#00ff00'
+  source_min_edge: 512
+  source_margin: 0.2
+  prompt_prose: 'Show this exact jellyfish boss damaged in battle: the same glassy blue and lilac bell, curly antenna
+    and hot pink curtain of tentacles in the same pose, size and colours, now with a few dark cracks across the
+    bell, two torn tentacle ribbons, small sparks and a slightly dimmer glow. Keep the same art style, clean outlines
+    and the plain green background, and keep the whole creature inside the frame.'
+  jobs:
+    kontext: 77110
+  art:
+    kontext:
+      status: PENDING
+      art_image_id: null
+- key: b02-phase2-classic-2
+  lane: kontext
+  title: B02 Aurelia Array phase2 damage state from phase 1
+  entity: boss-sprite
+  asset: rainbow-princess-art/bosses/b02-phase2
+  size: 512x512
+  seed: 1124402
+  source_url: /rainbow-princess-art/bosses/b02-phase1.webp
+  source_matte: '#00ff00'
+  source_min_edge: 512
+  source_margin: 0.2
+  prompt_prose: 'Show this exact jellyfish boss damaged in battle: the same glassy blue and lilac bell, curly antenna
+    and hot pink curtain of tentacles in the same pose, size and colours, now with a few dark cracks across the
+    bell, two torn tentacle ribbons, small sparks and a slightly dimmer glow. Keep the same art style, clean outlines
+    and the plain green background, and keep the whole creature inside the frame.'
+  jobs:
+    kontext: 77111
+  art:
+    kontext:
+      status: PENDING
+      art_image_id: null
+- key: b02-phase3-classic-1
+  lane: kontext
+  title: B02 Aurelia Array phase3 damage state from phase 1
+  entity: boss-sprite
+  asset: rainbow-princess-art/bosses/b02-phase3
+  size: 512x512
+  seed: 1124403
+  source_url: /rainbow-princess-art/bosses/b02-phase1.webp
+  source_matte: '#00ff00'
+  source_min_edge: 512
+  source_margin: 0.2
+  prompt_prose: 'Show this exact jellyfish boss badly damaged near defeat: the same glassy blue and lilac bell,
+    curly antenna and hot pink curtain of tentacles in the same pose, size and colours, now with the bell split
+    by a long glowing crack that shows a bright gold core inside, the tentacles shredded shorter and ragged, sparks
+    and wisps of smoke around it. Keep the same art style, clean outlines and the plain green background, and keep
+    the whole creature inside the frame.'
+  jobs:
+    kontext: 77112
+  art:
+    kontext:
+      status: PENDING
+      art_image_id: null
+- key: b02-phase3-classic-2
+  lane: kontext
+  title: B02 Aurelia Array phase3 damage state from phase 1
+  entity: boss-sprite
+  asset: rainbow-princess-art/bosses/b02-phase3
+  size: 512x512
+  seed: 1124404
+  source_url: /rainbow-princess-art/bosses/b02-phase1.webp
+  source_matte: '#00ff00'
+  source_min_edge: 512
+  source_margin: 0.2
+  prompt_prose: 'Show this exact jellyfish boss badly damaged near defeat: the same glassy blue and lilac bell,
+    curly antenna and hot pink curtain of tentacles in the same pose, size and colours, now with the bell split
+    by a long glowing crack that shows a bright gold core inside, the tentacles shredded shorter and ragged, sparks
+    and wisps of smoke around it. Keep the same art style, clean outlines and the plain green background, and keep
+    the whole creature inside the frame.'
+  jobs:
+    kontext: 77113
+  art:
+    kontext:
+      status: PENDING
+      art_image_id: null
+- key: p3-solenne-fever-1
+  lane: kontext
+  title: Solenne menu portrait, Fever Dream (CAST-QA against lock 246032)
+  entity: pilot-portrait
+  asset: rainbow-princess-art/doodle/portraits/p3-solenne
+  size: 832x1216
+  seed: 1124501
+  source_image_id: 246032
+  prompt_prose: 'Turn the background behind this exact woman into 1980s neon rainbow airbrush school-folder sticker
+    art: a sunny gold rainbow gradient full of hearts, stars, glitter sparkles and four-point twinkles, with a huge
+    fluffy golden Maine Coon cat, her cat co-pilot, perched on her shoulder. Give the picture clean confident outlines
+    and glossy soft airbrushed highlights on her gold armour. She keeps her exact face, her natural deep brown skin,
+    her jet black hair in its high braided bun, her broad muscular shoulders and arms, her navy tunic and her gold
+    armour, all in their original colours.'
+  jobs:
+    kontext: 77114
+  art:
+    kontext:
+      status: PENDING
+      art_image_id: null
+- key: p3-solenne-fever-2
+  lane: kontext
+  title: Solenne menu portrait, Fever Dream (CAST-QA against lock 246032)
+  entity: pilot-portrait
+  asset: rainbow-princess-art/doodle/portraits/p3-solenne
+  size: 832x1216
+  seed: 1124502
+  source_image_id: 246032
+  prompt_prose: 'Turn the background behind this exact woman into 1980s neon rainbow airbrush school-folder sticker
+    art: a sunny gold rainbow gradient full of hearts, stars, glitter sparkles and four-point twinkles, with a huge
+    fluffy golden Maine Coon cat, her cat co-pilot, perched on her shoulder. Give the picture clean confident outlines
+    and glossy soft airbrushed highlights on her gold armour. She keeps her exact face, her natural deep brown skin,
+    her jet black hair in its high braided bun, her broad muscular shoulders and arms, her navy tunic and her gold
+    armour, all in their original colours.'
+  jobs:
+    kontext: 77115
+  art:
+    kontext:
+      status: PENDING
+      art_image_id: null
+- key: p3-solenne-fever-3
+  lane: kontext
+  title: Solenne menu portrait, Fever Dream (CAST-QA against lock 246032)
+  entity: pilot-portrait
+  asset: rainbow-princess-art/doodle/portraits/p3-solenne
+  size: 832x1216
+  seed: 1124503
+  source_image_id: 246032
+  prompt_prose: 'Turn the background behind this exact woman into 1980s neon rainbow airbrush school-folder sticker
+    art: a sunny gold rainbow gradient full of hearts, stars, glitter sparkles and four-point twinkles, with a huge
+    fluffy golden Maine Coon cat, her cat co-pilot, perched on her shoulder. Give the picture clean confident outlines
+    and glossy soft airbrushed highlights on her gold armour. She keeps her exact face, her natural deep brown skin,
+    her jet black hair in its high braided bun, her broad muscular shoulders and arms, her navy tunic and her gold
+    armour, all in their original colours.'
+  jobs:
+    kontext: 77116
+  art:
+    kontext:
+      status: PENDING
+      art_image_id: null
+- key: doodle-alt-x1-sky
+  lane: kontext
+  title: x1-sky detour plane, Fever Dream twin
+  entity: stage-plane
+  asset: rainbow-princess-art/doodle/alt/x1-sky
+  size: 1344x752
+  seed: 1124601
+  source_url: /rainbow-princess-art/alt/x1-sky.webp
+  prompt_prose: 'Redraw this exact night sky, the Kelp Nebula sky, a deep violet nebula current swirling across
+    a starfield with soft streams of glowing particles, as 1980s neon rainbow airbrush school-folder sticker art:
+    glossy soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise and
+    sunshine yellow, glitter sparkles and four-point twinkles. Keep the same layout, the dark sky and every shape
+    in the same place.'
+  jobs:
+    kontext: 77117
+  art:
+    kontext:
+      status: PENDING
+      art_image_id: null
+- key: doodle-alt-x1-far
+  lane: kontext
+  title: x1-far detour plane, Fever Dream twin
+  entity: stage-plane
+  asset: rainbow-princess-art/doodle/alt/x1-far
+  size: 1344x768
+  seed: 1124602
+  source_url: /rainbow-princess-art/alt/x1-far.webp
+  prompt_prose: 'Redraw this exact scenery band, a distant forest of tall kelp stalks standing over a row of rounded
+    pastel rocks, a turquoise pool and a golden sandbar below, as 1980s neon rainbow airbrush school-folder sticker
+    art: glossy soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise
+    and sunshine yellow, glitter sparkles. Keep the same layout, horizon and every shape in the same place, and
+    keep the flat solid magenta background plain and even.'
+  source_matte: '#ff00ff'
+  jobs:
+    kontext: 77118
+  art:
+    kontext:
+      status: PENDING
+      art_image_id: null
+- key: doodle-alt-x1-mid
+  lane: kontext
+  title: x1-mid detour plane, Fever Dream twin
+  entity: stage-plane
+  asset: rainbow-princess-art/doodle/alt/x1-mid
+  size: 1344x512
+  seed: 1124603
+  source_url: /rainbow-princess-art/alt/x1-mid.webp
+  prompt_prose: 'Redraw this exact scenery band, tall branching kelp fronds with amber and lilac leaves, hung with
+    round glowing pink, mint and lilac seed pods, standing in loose clumps, as 1980s neon rainbow airbrush school-folder
+    sticker art: glossy soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple,
+    turquoise and sunshine yellow, glitter sparkles. Keep the same layout, horizon and every shape in the same place,
+    and keep the flat solid magenta background plain and even.'
+  source_matte: '#ff00ff'
+  jobs:
+    kontext: 77119
+  art:
+    kontext:
+      status: PENDING
+      art_image_id: null
+- key: doodle-alt-x1-near
+  lane: kontext
+  title: x1-near detour plane, Fever Dream twin
+  entity: stage-plane
+  asset: rainbow-princess-art/doodle/alt/x1-near
+  size: 1344x336
+  seed: 1124604
+  source_url: /rainbow-princess-art/alt/x1-near.webp
+  prompt_prose: 'Redraw this exact scenery band, a heap of rounded pastel boulders and glossy egg-shaped pods between
+    two bare brown branching corals, as 1980s neon rainbow airbrush school-folder sticker art: glossy soft airbrushed
+    shading, clean confident outlines, saturated hot pink, electric purple, turquoise and sunshine yellow, glitter
+    sparkles. Keep the same layout, horizon and every shape in the same place, and keep the flat solid magenta background
+    plain and even.'
+  source_matte: '#ff00ff'
+  jobs:
+    kontext: 77120
+  art:
+    kontext:
+      status: PENDING
+      art_image_id: null
+- key: doodle-alt-x2-sky
+  lane: kontext
+  title: x2-sky detour plane, Fever Dream twin
+  entity: stage-plane
+  asset: rainbow-princess-art/doodle/alt/x2-sky
+  size: 1344x752
+  seed: 1124605
+  source_url: /rainbow-princess-art/alt/x2-sky.webp
+  prompt_prose: 'Redraw this exact night sky, the Coral Comet sky, the long glowing tail of a comet sweeping through
+    a pastel starfield with soft dust clouds, as 1980s neon rainbow airbrush school-folder sticker art: glossy soft
+    airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise and sunshine yellow,
+    glitter sparkles and four-point twinkles. Keep the same layout, the dark sky and every shape in the same place.'
+  jobs:
+    kontext: 77121
+  art:
+    kontext:
+      status: PENDING
+      art_image_id: null
+- key: doodle-alt-x2-far
+  lane: kontext
+  title: x2-far detour plane, Fever Dream twin
+  entity: stage-plane
+  asset: rainbow-princess-art/doodle/alt/x2-far
+  size: 1344x352
+  seed: 1124606
+  source_url: /rainbow-princess-art/alt/x2-far.webp
+  prompt_prose: 'Redraw this exact scenery band, a wide pastel plain of pink, teal, lilac and amber patches dotted
+    with tiny half-buried pebbles and faint glitter, as 1980s neon rainbow airbrush school-folder sticker art: glossy
+    soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise and sunshine
+    yellow, glitter sparkles. Keep the same layout, horizon and every shape in the same place, and keep the flat
+    solid magenta background plain and even.'
+  source_matte: '#ff00ff'
+  jobs:
+    kontext: 77122
+  art:
+    kontext:
+      status: PENDING
+      art_image_id: null
+- key: doodle-alt-x2-near
+  lane: kontext
+  title: x2-near detour plane, Fever Dream twin
+  entity: stage-plane
+  asset: rainbow-princess-art/doodle/alt/x2-near
+  size: 1344x464
+  seed: 1124607
+  source_url: /rainbow-princess-art/alt/x2-near.webp
+  prompt_prose: 'Redraw this exact scenery band, a row of pink branching corals on a crumbly reef ledge in front
+    of rolling rainbow hills, as 1980s neon rainbow airbrush school-folder sticker art: glossy soft airbrushed shading,
+    clean confident outlines, saturated hot pink, electric purple, turquoise and sunshine yellow, glitter sparkles.
+    Keep the same layout, horizon and every shape in the same place, and keep the flat solid magenta background
+    plain and even.'
+  source_matte: '#ff00ff'
+  jobs:
+    kontext: 77123
+  art:
+    kontext:
+      status: PENDING
+      art_image_id: null
+- key: doodle-alt-x3-sky
+  lane: kontext
+  title: x3-sky detour plane, Fever Dream twin
+  entity: stage-plane
+  asset: rainbow-princess-art/doodle/alt/x3-sky
+  size: 1344x752
+  seed: 1124608
+  source_url: /rainbow-princess-art/alt/x3-sky.webp
+  prompt_prose: 'Redraw this exact night sky, the Sunken Lighthouse sky, a dark cratered moon in an indigo starfield
+    above pastel clouds and a broad crossing rainbow, as 1980s neon rainbow airbrush school-folder sticker art:
+    glossy soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise and
+    sunshine yellow, glitter sparkles and four-point twinkles. Keep the same layout, the dark sky and every shape
+    in the same place.'
+  jobs:
+    kontext: 77124
+  art:
+    kontext:
+      status: PENDING
+      art_image_id: null
+- key: doodle-alt-x3-far
+  lane: kontext
+  title: x3-far detour plane, Fever Dream twin
+  entity: stage-plane
+  asset: rainbow-princess-art/doodle/alt/x3-far
+  size: 1344x416
+  seed: 1124609
+  source_url: /rainbow-princess-art/alt/x3-far.webp
+  prompt_prose: 'Redraw this exact scenery band, a far shore of tiny pastel rocks and coral tufts along a calm horizon,
+    sandbars and turquoise shallows spreading toward the viewer, as 1980s neon rainbow airbrush school-folder sticker
+    art: glossy soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise
+    and sunshine yellow, glitter sparkles. Keep the same layout, horizon and every shape in the same place, and
+    keep the flat solid magenta background plain and even.'
+  source_matte: '#ff00ff'
+  jobs:
+    kontext: 77125
+  art:
+    kontext:
+      status: PENDING
+      art_image_id: null
+- key: doodle-alt-x3-mid
+  lane: kontext
+  title: x3-mid detour plane, Fever Dream twin
+  entity: stage-plane
+  asset: rainbow-princess-art/doodle/alt/x3-mid
+  size: 1344x400
+  seed: 1124610
+  source_url: /rainbow-princess-art/alt/x3-mid.webp
+  prompt_prose: 'Redraw this exact scenery band, a row of six tall tilted lighthouses painted in pink, mint, lilac
+    and amber patches, with dark arched windows and lantern rooms, standing on small crystal clusters, as 1980s
+    neon rainbow airbrush school-folder sticker art: glossy soft airbrushed shading, clean confident outlines, saturated
+    hot pink, electric purple, turquoise and sunshine yellow, glitter sparkles. Keep the same layout, horizon and
+    every shape in the same place, and keep the flat solid magenta background plain and even.'
+  source_matte: '#ff00ff'
+  jobs:
+    kontext: 77126
+  art:
+    kontext:
+      status: PENDING
+      art_image_id: null
+- key: doodle-alt-x3-near
+  lane: kontext
+  title: x3-near detour plane, Fever Dream twin
+  entity: stage-plane
+  asset: rainbow-princess-art/doodle/alt/x3-near
+  size: 1344x208
+  seed: 1124611
+  source_url: /rainbow-princess-art/alt/x3-near.webp
+  prompt_prose: 'Redraw this exact scenery band, a long sunken stone pipe and a rusted lantern housing lying among
+    dark boulders and glowing pastel crystals, as 1980s neon rainbow airbrush school-folder sticker art: glossy
+    soft airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise and sunshine
+    yellow, glitter sparkles. Keep the same layout, horizon and every shape in the same place, and keep the flat
+    solid magenta background plain and even.'
+  source_matte: '#ff00ff'
+  jobs:
+    kontext: 77127
+  art:
+    kontext:
+      status: PENDING
+      art_image_id: null
+- key: doodle-alt-x4-sky
+  lane: kontext
+  title: x4-sky detour plane, Fever Dream twin
+  entity: stage-plane
+  asset: rainbow-princess-art/doodle/alt/x4-sky
+  size: 1344x752
+  seed: 1124612
+  source_url: /rainbow-princess-art/alt/x4-sky.webp
+  prompt_prose: 'Redraw this exact night sky, the Mirror Shoal sky, a calm mirrored starfield over pastel haze and
+    faint prism glints, as 1980s neon rainbow airbrush school-folder sticker art: glossy soft airbrushed shading,
+    clean confident outlines, saturated hot pink, electric purple, turquoise and sunshine yellow, glitter sparkles
+    and four-point twinkles. Keep the same layout, the dark sky and every shape in the same place.'
+  jobs:
+    kontext: 77128
+  art:
+    kontext:
+      status: PENDING
+      art_image_id: null
+- key: doodle-alt-x4-far
+  lane: kontext
+  title: x4-far detour plane, Fever Dream twin
+  entity: stage-plane
+  asset: rainbow-princess-art/doodle/alt/x4-far
+  size: 1344x384
+  seed: 1124613
+  source_url: /rainbow-princess-art/alt/x4-far.webp
+  prompt_prose: 'Redraw this exact scenery band, a thin line of pastel rock islets with coral tufts mirrored on
+    a glassy rainbow sea, as 1980s neon rainbow airbrush school-folder sticker art: glossy soft airbrushed shading,
+    clean confident outlines, saturated hot pink, electric purple, turquoise and sunshine yellow, glitter sparkles.
+    Keep the same layout, horizon and every shape in the same place, and keep the flat solid magenta background
+    plain and even.'
+  source_matte: '#ff00ff'
+  jobs:
+    kontext: 77129
+  art:
+    kontext:
+      status: PENDING
+      art_image_id: null
+- key: doodle-alt-x4-near
+  lane: kontext
+  title: x4-near detour plane, Fever Dream twin
+  entity: stage-plane
+  asset: rainbow-princess-art/doodle/alt/x4-near
+  size: 1344x368
+  seed: 1124614
+  source_url: /rainbow-princess-art/alt/x4-near.webp
+  prompt_prose: 'Redraw this exact scenery band, tall pastel crystal prisms in pink, amber, lilac and mint rising
+    in front of a shimmering lavender sea, as 1980s neon rainbow airbrush school-folder sticker art: glossy soft
+    airbrushed shading, clean confident outlines, saturated hot pink, electric purple, turquoise and sunshine yellow,
+    glitter sparkles. Keep the same layout, horizon and every shape in the same place, and keep the flat solid magenta
+    background plain and even.'
+  source_matte: '#ff00ff'
+  jobs:
+    kontext: 77130
+  art:
+    kontext:
+      status: PENDING
+      art_image_id: null
+- key: s05-sky-classic-2
+  lane: krea2
+  title: S05 Blossom Wreckyard sky plane, Classic, second take
+  entity: stage-plane
+  asset: rainbow-princess-art/stages/s05-sky
+  size: 1344x768
+  seed: 1124406
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame, characters, people, faces, spaceships,
+    starships, rockets, jets, aircraft, vehicles, trains, boats, fish, jellyfish, creatures, animals, sun, moon,
+    planets, bright white, petals, leaves, flowers, confetti, particles, sparks, debris, floating objects
+  prompt_prose: 'Painted western-cartoon backdrop with soft gradients and gentle clouds: the dusk sky over the Blossom
+    Wreckyard, a wide calm gradient from deep plum at the top to warm rust and faded rose near the horizon, long
+    soft layered cloud banks, a scattering of tiny faint stars, nothing drifting in the air. Empty sky only, edge
+    to edge.'
+  jobs:
+    krea2: 77131
+- key: s05-sky-fever-2
+  lane: krea2
+  title: S05 Blossom Wreckyard sky plane, Fever Dream, second take
+  entity: stage-plane
+  asset: rainbow-princess-art/doodle/stages/s05-sky
+  size: 1344x768
+  seed: 1124409
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame, characters, people, faces, spaceships,
+    starships, rockets, jets, aircraft, vehicles, trains, boats, fish, jellyfish, creatures, animals, sun, moon,
+    planets, bright white, petals, leaves, flowers, confetti, particles, sparks, debris, floating objects
+  prompt_prose: '1980s neon airbrush school-folder backdrop with glossy gradients and a few four-point twinkles:
+    the dusk sky over the Blossom Wreckyard, a wide calm gradient from deep plum at the top to warm rust and faded
+    rose near the horizon, long soft layered cloud banks, a scattering of tiny faint stars, nothing drifting in
+    the air. Empty sky only, edge to edge.'
+  jobs:
+    krea2: 77132
