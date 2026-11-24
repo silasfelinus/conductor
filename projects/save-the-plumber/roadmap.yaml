@@ -286,11 +286,11 @@ tasks:
   - id: t-012
     milestone: m4
     title: "Produce illustrated world art, enemy animation, sound and cinematics"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 2026-11-24T051635Z-save-the-plumber-t012-effects-b8m6
     claimed_at: '2026-11-24T05:16:35Z'
-    updated: '2026-11-24T05:16:35Z'
+    updated: '2026-11-24T05:20:10Z'
     depends_on: [t-002, t-006]
     passes: 0
     stakes: reversible
@@ -300,6 +300,8 @@ tasks:
       Original per-world chiptune score (eight distinct motifs) and a boss theme, using the existing gesture-unlocked Arcade cabinet mixer, are committed to worker/save-the-plumber-t-012-music-20261123T0404-au7m. Added score and scene-transition assertions to the existing preview test. Scope is partial: rendered soundtrack, unique effects, remaining art, cinematics and integration verification still require work.
 
       Verified original world and boss music PR #5630 merged at 75e06c20; jump and landing cues are delivered. Return remaining original effect and audio integration work to ready, not done.
+
+      Implemented 15 original action cues for pickups, keys, bolts, checkpoints, health, powers, gears, springs, portals, tools, boss hits, damage, death and extra lives. Added actual interaction replay, cue fallback and non-stacking damage tests in cabinet CI. Commit 5763d97e, worker/save-the-plumber-t-012-effects-b8m6. CI pending; remaining cinematic, rendered asset and full audio acceptance remain.
   - id: t-013
     milestone: m5
     title: "Whole-campaign playtests, fairness and device verification"

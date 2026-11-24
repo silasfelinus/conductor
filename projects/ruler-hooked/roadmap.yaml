@@ -87,15 +87,12 @@ tasks:
     direction, and the offline-at-runtime rule.
 - id: t-067
   title: 'Main-game standard: audit and close the gaps for The Ruler Is Hooked'
-  status: review
-  owner: worker
-  claimed_by: 20261124T030200Z-ruler-hooked-t067-scrapbook-83ce
-  claimed_at: '2026-11-24T03:02:00Z'
+  status: ready
   milestone: m6
   stakes: reversible
   passes: 0
   depends_on: []
-  updated: '2026-11-24T03:02:00Z'
+  updated: '2026-11-24T05:16:00Z'
   note: |-
     Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -118,6 +115,8 @@ tasks:
     Royal Scrapbook implemented at ad67ac2d: separate persistent local ledger, legacy save backfill, cumulative fish records, spoiler-safe character/ending art and reign history, accessible from title and Chronicle. Regression assertions added; CI pending; account sync and general settings remain.
 
     Implemented separate local cross-reign Royal Scrapbook ledger, legacy slot backfill and pre-delete archival, idempotent fish totals and monotonic ending/character unlocks, illustrated spoiler-safe collections for fish/characters/endings and historic reign records, reachable from title/save selection and in-game Chronicle. Added regression assertions to console.selftest.ts. App branch worker/ruler-hooked-t-067-scrapbook-83ce at ad67ac2d; local git DNS unavailable, CI and deployed browser QA pending. Partial t-067; account sync/general settings remain.
+
+    Reconciled Royal Scrapbook #5701 merged at 7ac6fc5d and its subsequent layout correction #5702 merged at 77314f54, all eight workflows on the corrective head passed (layout 45323561499, gameplay 45323561893). Permanent scrapbook is implemented; accessibility settings and account-backed progress remain. Return to ready for the next standards slice; no rendered-device or deployment acceptance claimed.
 
 - id: t-068
   title: 'The Ruler Is Hooked achievement upgrade: 12 or more live achievements'
@@ -1341,8 +1340,7 @@ tasks:
 - id: t-078
   milestone: m4
   title: Make the ruler-hooked fish art frame name exactly one fully-framed specimen for long thin body plans, with a generator test
-  status: review
-  owner: worker
+  status: done
   claimed_by: 20261124T045400Z-ruler-hooked-t078-a91e6
   claimed_at: '2026-11-24T04:54:00Z'
   stakes: reversible
@@ -1352,4 +1350,6 @@ tasks:
     Kaizen from the reviewer closing t-031 (2026-11-23 PT). Border Accordionfish (ArtJob 76962) rendered three cropped pipefish under the shared "one complete fish shown clearly in side profile" frame; the reviewer patched only that species' frame_override. Make the default fish frame in scripts/build_ruler_hooked_art_queue.py (or a body-plan-aware override for pipefish/eel/serpentine silhouettes) say "exactly one ... head to tail fully inside the frame ... no other fish", add a test that every fish prompt carries the single-specimen wording, and restage only rows whose prompt actually changes.
 
     Branch worker/ruler-hooked-t-078-a91e6 at 66aef366: body-plan-aware single-specimen direction for elongated fish; ten changed request rows force-restaged with prior job IDs retained, Choirfish and existing Accordionfish override preserved; generator regression added. Source and 42-row census verified, pytest/CI pending. New renders remain t-047 verification work.
-  updated: '2026-11-24T04:54:00Z'
+
+    Conductor PR #7949 merged at 8f86bf76 after all latest checks passed, including 5154 pytest cases and both fish expansion tests. Ten changed specimen prompts restaged with original job provenance; actual render delivery and visual inspection remain under t-047. Handoff template failure corrected in PR metadata and replacement run 45332052984 passed.
+  updated: '2026-11-24T05:17:00Z'
