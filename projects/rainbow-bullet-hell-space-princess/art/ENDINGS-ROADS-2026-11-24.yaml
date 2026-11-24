@@ -1,0 +1,90 @@
+# Rainbow Space Princess ending plates that answer the road and the crew size, 2026-11-24 PT (t-066 S11, t-030
+# P-03; independent story critic, 2026-11-23 PT: "The ending art ignores the road and the crew size").
+# Three loyal-road plates (PEACE BY ORDER, AN EMPTY OCEAN, ORDERS BROKEN), and a sever plate with no pilots in shot,
+# so a solo or duo sever ending never shows four pilots. Rebel and unsworn restore and evacuate keep their plates
+# (the crew there is four small ships, read as a squadron). No faces carry identity here, so no CAST-QA risk; the
+# Motherland look follows the shipped flagship (white and gold). Same Fever Dream look as ENDINGS-FEVER-DREAM.
+# Private. auto_submit: true. Queued is not rendered: review each at full size and in the cabinet before shipping.
+round: rainbow-endings-roads-2026-11-24
+project_slug: rainbow-bullet-hell-space-princess
+designer: Rainbow Space Princess art bay
+is_public: false
+is_mature: false
+cast_loras: false
+priority: 1000
+auto_submit: true
+lanes:
+- key: krea2
+  label: Krea 2 Fever Dream ending plates
+  engine: krea2
+  prompt: prose
+subjects:
+- key: road-ending-loyal-restore
+  lane: krea2
+  title: PEACE BY ORDER, loyal restore ending
+  entity: cinematic
+  asset: rainbow-princess-art/endings/loyal-restore
+  size: 1344x768
+  seed: 1124141
+  negative: text, lettering, logo, watermark, words, border, frame, white page, inset picture, people, faces, dog,
+    photorealism, sunrise celebration, fireworks
+  prompt_prose: Ending illustration in 1980s neon rainbow airbrush school-folder sticker art, glossy soft airbrushed
+    shading, clean confident outlines, a few cool sparkles. A great machine crown floats over a living cosmic ocean,
+    awake again but wrapped in white-and-gold imperial banners and ringed by a neat cordon of white-and-gold warships
+    in rigid formation. The rainbow sea below has gone still and muted, its sea-creature starships, jellyfish and
+    dolphins, resting quietly in orderly rows. A small squadron of cat-shaped starfighters in rose pink, powder
+    cyan, sunny gold and lilac holds formation at the edge of the cordon, small against the scene. Cool silvery
+    dawn light, calm and orderly with a bittersweet hush. Edge-to-edge scene.
+  jobs:
+    krea2: 77037
+- key: road-ending-loyal-evacuate
+  lane: krea2
+  title: AN EMPTY OCEAN, loyal evacuate ending
+  entity: cinematic
+  asset: rainbow-princess-art/endings/loyal-evacuate
+  size: 1344x768
+  seed: 1124151
+  negative: text, lettering, logo, watermark, words, border, frame, white page, inset picture, people, faces, dog,
+    photorealism, crowds of creatures, convoy
+  prompt_prose: Ending illustration in 1980s neon rainbow airbrush school-folder sticker art, glossy soft airbrushed
+    shading, clean confident outlines, a few faint sparkles. A vast cosmic ocean lies empty and glassy, its rainbow
+    colours faded to soft lavender and grey. Far away on the horizon the last tiny rescue pods are dots of light
+    disappearing. In the foreground a huge white-and-gold imperial warship plants a tall white-and-gold banner on
+    a bare floating reef. A small squadron of cat-shaped starfighters in rose pink, powder cyan, sunny gold and
+    lilac hovers beside it, small and still. Wide, quiet and lonely, a hollow victory. Edge-to-edge scene.
+  jobs:
+    krea2: 77038
+- key: road-ending-loyal-sever
+  lane: krea2
+  title: ORDERS BROKEN, loyal sever ending
+  entity: cinematic
+  asset: rainbow-princess-art/endings/loyal-sever
+  size: 1344x768
+  seed: 1124161
+  negative: text, lettering, logo, watermark, words, border, frame, white page, inset picture, people, faces, dog,
+    photorealism
+  prompt_prose: Ending illustration in 1980s neon rainbow airbrush school-folder sticker art, glossy soft airbrushed
+    shading, clean confident outlines, glitter sparkles. A great machine crown has been cut loose and drifts apart
+    over a cosmic ocean, its prism shards going dark one by one while the freed sea glows rainbow again around them.
+    On the left a huge white-and-gold imperial warship sits with its searchlights sweeping. On the right a small
+    squadron of cat-shaped starfighters in rose pink, powder cyan, sunny gold and lilac peels away from it, turning
+    toward the open glowing sea with rainbow exhaust trails. Defiant and bittersweet. Edge-to-edge scene.
+  jobs:
+    krea2: 77039
+- key: road-ending-sever-open
+  lane: krea2
+  title: Sever ending without a fixed crew (rebel and unsworn)
+  entity: cinematic
+  asset: rainbow-princess-art/endings/sever
+  size: 1344x768
+  seed: 1124171
+  negative: text, lettering, logo, watermark, words, border, frame, white page, inset picture, people, person, woman,
+    girl, faces, hands, dog, photorealism
+  prompt_prose: Ending illustration in 1980s neon rainbow airbrush school-folder sticker art, glossy soft airbrushed
+    shading, clean confident outlines, glitter sparkles. Night on a still mirror-calm cosmic sea under dark broken
+    prism shards drifting overhead. Hundreds of glowing paper lanterns rise from the water's edge into the sky,
+    their warm light doubled in the mirror sea. Small cat-shaped starfighters in rose pink, powder cyan, sunny gold
+    and lilac rest on the calm water among the lanterns, their canopies glowing softly. Bittersweet, quiet and tender.
+    Edge-to-edge scene.
+  jobs:
+    krea2: 77040
