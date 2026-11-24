@@ -120,17 +120,22 @@ tasks:
   - id: t-009
     milestone: m2
     title: "Genre-parity blockers: spreading Gloom, ribbon locks, 3-5 layer Tangles, rain-cloud countdowns, conveyors, portals and buddy dispensers"
-    status: review
+    status: ready
     owner: worker
-    claimed_by: 2026-11-24T013300Z-hopeful-hues-t-009-c6f21
-    claimed_at: '2026-11-24T01:33:00Z'
-    updated: '2026-11-24T01:33:01Z'
+    updated: '2026-11-24T05:27:19Z'
     passes: 0
     stakes: reversible
     note: |-
       Parity audit 2026-11-23 PT. The engine has only static Gloom (1-2 layers), static Tangles (1-2 hp) and randomly spawned buddies. Genre-standard match-three boards also use a spreading blocker that grows each move nothing clears it, locks that pin a tile until matched, thick multi-layer blockers, countdown tiles, conveyor rows, portals and fixed dispensers. Build these as engine features with hopecore framing (the countdown tile should drizzle Gloom, never end the level), introduce each through the t-002 tip system, assign them across regions together with t-003, and keep the bot proving all 130 levels winnable.
 
       First advanced-blocker slice adds ribbon locks, capped deterministic spreading Gloom, countdown rain clouds, and three/five-layer Tangles to late chapter boards, with tips, countdown display and replay regression tests. Conveyors, portals and fixed dispensers remain for a subsequent slice. CI pending.
+
+      2026-11-24 PT (pr-medic): slice 1 (ribbon locks, spreading Gloom, countdown clouds,
+      3/5-layer Tangles) merged as kind_robots#5691 -> 13bcffba after fixing a cross-realm
+      deepStrictEqual test artifact and merging main (#5688 boosters): resolved engine/test
+      conflicts, and useTool('swap') now refuses ribbon-pinned jewels (contract test added).
+      All 12 checks green; local Chromium load clean. Back to ready for remaining scope:
+      conveyor rows, portals, fixed buddy dispensers.
   - id: t-010
     milestone: m2
     title: "Order goals and end-of-level Kindness Overflow that fires specials"
