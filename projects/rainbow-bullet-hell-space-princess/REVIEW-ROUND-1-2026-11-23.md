@@ -55,8 +55,8 @@ Silas's decision; it stays as it is until he decides).
 | S12 | minor | the safe trench route knows about the vault's locks | t-012 | fixed in #5709 |
 | S13 | minor | the credits contradict the flagship fight | t-012 | fixed in #5709 |
 | S14 | minor | plurals at 1 | t-012 | fixed in #5709 |
-| S15 | minor | the rescue tally means different things on different screens; the Act I failure line mentions the Eclipse | t-066 | open |
-| S16 | minor | the continue beat has no writing | t-066 | open |
+| S15 | minor | the rescue tally means different things on different screens; the Act I failure line mentions the Eclipse | t-066 | partly fixed in kind_robots#5729 (the Act I-II failure line names the region, not the Eclipse); the rescue-tally wording across screens is open |
+| S16 | minor | the continue beat has no writing | t-066 | fixed in kind_robots#5729 (Lilt speaks a continue line per Act; a BACK IN THE FIGHT cue on resume) |
 | S17 | minor | internal scene ids appear in the comms header | t-066 | fixed in #5737 (speaker and call sign only; the scene id moves to snapshot.comms) |
 | S18 | minor | solo crews are addressed as a group | t-012 | fixed in #5709 |
 | S19 | minor | the rebel flight log says the Crown instead of the Motherland | t-012 | fixed in #5709 |
@@ -68,7 +68,7 @@ Silas's decision; it stays as it is until he decides).
 
 | id | sev | finding | task | status |
 | --- | --- | --- | --- | --- |
-| P-01 | blocker | no frame animation for any enemy, boss, ship or pilot | t-030 | partly fixed in kind_robots#5717 (picket and urchin idle atlases); poses, bosses, ships and the other enemies open |
+| P-01 | blocker | no frame animation for any enemy, boss, ship or pilot | t-030 | partly fixed: picket and urchin (#5717) and anchor and lantern (#5727) idle atlases; hit and victory poses for all four pilots (#5727, #5738); bosses, ships and the other enemies open |
 | P-02 | blocker | the living interludes barely move (mean luma difference 0.6–2.6); S03, S04 and S08 have none | t-030 | partly: S08 added in #5717, S03 in #5731, S04 in #5738 (all eight Acts now live); real subject motion open |
 | P-03 | blocker | the endings are 3 still plates with no Fever Dream version; sever is in a different style | t-030 | open |
 | P-04 | blocker | main Acts have 1–2 painted planes, not 4+; the top half of X3, Act VIII and the finale does not scroll; there is no s09 art | t-022 / t-011 | open |
