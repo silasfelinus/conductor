@@ -401,8 +401,8 @@ subjects:
       status: DONE
       art_image_id: 279864
 - key: t030-pose-maribel-hit
-  verdict: 'keep: 2026-11-24 PT review, CAST-QA face, hair, skin and build match the lock; a wince amid sparks; cropped to
-    a 256 px head-and-shoulders square'
+  verdict: 'keep: 2026-11-24 PT review, CAST-QA face, hair, skin and build match the lock; a wince amid sparks;
+    cropped to a 256 px head-and-shoulders square'
   shipped_as:
   - rainbow-princess-art/poses/maribel-hit
   lane: kontext
@@ -494,8 +494,8 @@ subjects:
       status: DONE
       art_image_id: 279881
 - key: t030-pose-solenne-hit
-  verdict: 'reject: 2026-11-24 PT review, identity holds but the pose barely differs from the lock: no hit reaction; needs
-    a retake'
+  verdict: 'reject: 2026-11-24 PT review, identity holds but the pose barely differs from the lock: no hit reaction;
+    needs a retake'
   lane: kontext
   entity: pilot-pose
   title: solenne hit pose
@@ -791,8 +791,8 @@ subjects:
       status: DONE
       art_image_id: 279872
 - key: t030-idle-spiral-v3
-  verdict: 'reject: 2026-11-24 PT review, turned to face the camera again despite the side-profile prompt; the source pose
-    invites the turn, so spiral keeps its still'
+  verdict: 'reject: 2026-11-24 PT review, turned to face the camera again despite the side-profile prompt; the source
+    pose invites the turn, so spiral keeps its still'
   lane: wan-mp4
   entity: enemy-animation
   title: spiral idle cycle, framed, third take
@@ -817,8 +817,8 @@ subjects:
       status: DONE
       art_image_id: 279873
 - key: t030-idle-anchor-v3
-  verdict: 'keep: 2026-11-24 PT review, the fins paddle and the bead swings (9% of pixels move); 8 raw frames, keyed, centred,
-    packed as the anchor idle atlas'
+  verdict: 'keep: 2026-11-24 PT review, the fins paddle and the bead swings (9% of pixels move); 8 raw frames, keyed,
+    centred, packed as the anchor idle atlas'
   shipped_as:
   - rainbow-princess-art/doodle/anim/anchor-idle
   lane: wan-mp4
@@ -845,7 +845,8 @@ subjects:
       status: DONE
       art_image_id: 279874
 - key: t030-idle-relay-v3
-  verdict: 'reject: 2026-11-24 PT review, still near-static (0.3% of pixels move) after the firmer prompt; the still stays'
+  verdict: 'reject: 2026-11-24 PT review, still near-static (0.3% of pixels move) after the firmer prompt; the still
+    stays'
   lane: wan-mp4
   entity: enemy-animation
   title: relay idle cycle, framed, third take
@@ -870,8 +871,8 @@ subjects:
       status: DONE
       art_image_id: 279875
 - key: t030-idle-lantern-v3
-  verdict: 'keep: 2026-11-24 PT review, the jelly pulses in place (7% of pixels move); its green matte spill was recoloured
-    into the tentacles'' blue (0% green after, as in the still)'
+  verdict: 'keep: 2026-11-24 PT review, the jelly pulses in place (7% of pixels move); its green matte spill was
+    recoloured into the tentacles'' blue (0% green after, as in the still)'
   shipped_as:
   - rainbow-princess-art/doodle/anim/lantern-idle
   lane: wan-mp4
@@ -897,3 +898,50 @@ subjects:
     wan-mp4:
       status: DONE
       art_image_id: 279876
+- key: t030-pose-solenne-hit-v2
+  lane: kontext
+  entity: pilot-pose
+  title: solenne hit pose, second take
+  asset: rainbow-princess-art/poses/solenne-hit
+  size: 832x1216
+  seed: 1132781
+  source_image_id: 246032
+  negative: text, lettering, logo, watermark, words, extra people, different face, changed hair colour, changed
+    hairstyle, changed skin tone, slimmer build, changed outfit
+  prompt_prose: 'Solenne, the gold-themed pilot, recoils hard from an impact: her head snaps to one side, eyes squeezed
+    shut, teeth gritted, one gold-armoured forearm thrown up to shield her face while bright golden sparks burst
+    across her shoulder plates. Keep this exact same face, hairstyle, hair colour, skin tone, body build and flight
+    outfit, the same framing and background, and the same polished western animation style with bold outlines.'
+  jobs:
+    kontext: 77032
+- key: t030-card-s03-v2
+  lane: wan-mp4
+  entity: cinematic
+  title: s03 title card interlude, second take
+  asset: rainbow-princess-video/interludes/s03
+  size: 832x480
+  seed: 1132004
+  source_image_id: 262205
+  last_image_id: 262205
+  duration: 3
+  loop: true
+  prompt_prose: 'The three ships glide steadily along their flight paths, engine trails flickering, while volcanic
+    vents in the Chromatic Trench pulse warm orange light up the indigo rock ribs. The painting stays crisp: bold
+    outlines, flat bright colours, no grain, no blur, no smearing. Nothing new appears and every ship stays exactly
+    on model. Neon airbrushed 1980s school-folder doodle cartoon.'
+  jobs:
+    wan-mp4: 77033
+- key: t030-still-s04-clean
+  lane: kontext
+  entity: card-still
+  title: s04 title card without the painted logo
+  asset: rainbow-princess-art/doodle/stages/s04-card
+  size: 1344x768
+  seed: 1134404
+  source_image_id: 262206
+  negative: text, lettering, logo, watermark, words, signature, emblem
+  prompt_prose: 'Remove the small logo emblem and its lettering from the top right corner of the sky and paint that
+    corner as more of the same starry swirling aurora. Keep everything else exactly the same: the three ships, the
+    trains, the tracks, the colours, the framing and the neon airbrushed doodle style with bold outlines.'
+  jobs:
+    kontext: 77034
