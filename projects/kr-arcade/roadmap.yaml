@@ -1383,22 +1383,18 @@ tasks:
   - id: t-081
     milestone: m8
     title: "Brick Bloom depth slice 4: Night Bloom House, the Conservatory and the endings"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 2026-11-24T022700Z-kr-arcade-t081-night-7e4b19
     claimed_at: '2026-11-24T02:27:00Z'
-    updated: '2026-11-24T02:27:00Z'
+    updated: '2026-11-24T02:33:00Z'
     passes: 0
     stakes: reversible
     depends_on: t-080
-    note: >-
-      CABINETS.md section 11, Brick Bloom (Breakout / Arkanoid riff), slice 4 of 5: Night Bloom House, the
-      Conservatory and the endings. The upgrade is "The Glasshouse Grand Tour". Spec:
-      projects/kr-arcade/depth-pass/CABINETS.md -- read the game's section first; this slice's scope is item 4
-      under its '#### Slices', and 'Rules for every slice' at the top applies. Code: kind_robots
-      utils/arcade/games/ (registry slug brick-bloom). Silas, 2026-10-11: "I need an assessment done of the
-      other arcade games. I want the same level of quality improvements, they should not just be thin veneers
-      of the old games. But newer, better, even more awesome."
+    note: |-
+      CABINETS.md section 11, Brick Bloom (Breakout / Arkanoid riff), slice 4 of 5: Night Bloom House, the Conservatory and the endings. The upgrade is "The Glasshouse Grand Tour". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read the game's section first; this slice's scope is item 4 under its '#### Slices', and 'Rules for every slice' at the top applies. Code: kind_robots utils/arcade/games/ (registry slug brick-bloom). Silas, 2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality improvements, they should not just be thin veneers of the old games. But newer, better, even more awesome."
+
+      Added nine authored Night Bloom walls with branching vents, fifth golden seed vault, lantern and glow lighting, three-phase Gloom Bloom with four guards, timed shutters and bed-smothering cloud attacks, updated existing route tests and new regression suite. Branch worker/kr-arcade-t081-night-7e4b19. Switch crates, moth, secret Conservatory/Thorn, endings and Second Bloom remain; requeue after CI and merge.
 
   - id: t-082
     milestone: m8
