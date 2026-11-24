@@ -131,6 +131,8 @@ subjects:
       status: DONE
       art_image_id: 279951
 - key: motion-card-s06
+  verdict: 'keep: 2026-11-24 PT review, the squadron flies right over the reef fire and the arches glow, ships on
+    model (22% change)'
   lane: wan-mp4
   entity: cinematic
   title: s06 one-shot card clip, the squadron crosses the sky
@@ -147,9 +149,11 @@ subjects:
     wan-mp4: 77048
   art:
     wan-mp4:
-      status: RUNNING
-      art_image_id: null
+      status: DONE
+      art_image_id: 279952
 - key: motion-card-s07
+  verdict: 'reject: 2026-11-24 PT review, the ships fade to ghosts and vanish mid-clip instead of flying out; retaken
+    as motion-card-s07-2'
   lane: wan-mp4
   entity: cinematic
   title: s07 one-shot card clip, the squadron crosses the sky
@@ -166,8 +170,8 @@ subjects:
     wan-mp4: 77049
   art:
     wan-mp4:
-      status: PENDING
-      art_image_id: null
+      status: DONE
+      art_image_id: 279953
 - key: motion-card-s08
   lane: wan-mp4
   entity: cinematic
@@ -185,7 +189,7 @@ subjects:
     wan-mp4: 77050
   art:
     wan-mp4:
-      status: PENDING
+      status: RUNNING
       art_image_id: null
 - key: motion-card-s05-2
   lane: wan-mp4
@@ -204,3 +208,23 @@ subjects:
     style.
   jobs:
     wan-mp4: 77051
+  art:
+    wan-mp4:
+      status: PENDING
+      art_image_id: null
+- key: motion-card-s07-2
+  lane: wan-mp4
+  entity: cinematic
+  title: s07 one-shot card clip, second take
+  asset: rainbow-princess-video/interludes/s07
+  size: 832x480
+  seed: 1124307
+  source_image_id: 262209
+  duration: 3
+  loop: false
+  negative: fading, transparent ships, dissolving, disappearing ships, ghosting, double exposure
+  prompt_prose: Solid and bright the whole time, the red jets, the green rocket and the gold saucer glide steadily
+    rightward above the jagged blue glass peaks, staying fully visible as they go. Glints spark in the glowing canyon
+    gap and the mirror lake shimmers. View fixed; crisp outlined neon doodle painting.
+  jobs:
+    wan-mp4: 77052
