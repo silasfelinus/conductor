@@ -505,6 +505,41 @@ Implemented the remaining kingdom-view and populace-presence slice on the Kind R
 Completed the remaining kingdom-view and populace-presence slice. Kind Robots PR #3035 merged as 51d2eda94d6671ebdecacff75f27b1b0978b1c21 after the final head 8eb760a4111b066f9519e737adfeaa814f69defc passed Contract Tests, Ruler Hooked, Layout Contract, TypeScript, Schema Migration Parity, Project Architecture, and all other observed head workflows. The existing Your reign surface now centers the live composited realm, highlights pressure points, shows populace portraits/roles with fallbacks, and recent decision consequences.
 <!-- note:end t-030 -->
 
+## t-031 — Grow the fish roster past the 15-species vertical slice
+
+<!-- note:begin t-031 -->
+Silas, 2026-09-11: "only fifteen fishes?"
+Verified: utils/rulerHooked/fish.ts holds exactly 15 species, and the Fishopedia's "0/15 discovered" surfaces that number directly to the player. FULL-GAME-GAP-AUDIT.md set 12-20 as a deliberate VERTICAL SLICE target -- "deliberately smaller than the final catalog" -- so 15 is the plan working as intended, not an oversight. What went wrong is that the slice number reached the player as if it were the game.
+DO: (1) Decide the real catalog target for a shipped game and record it, so "how many fish" stops being an open question every time someone looks at the Fishopedia. (2) Expand the roster toward it, in style-consistent batches with art (t-027) rather than as name-only rows -- 15 species with plates beats 60 without. (3) While the roster is small, stop displaying the raw slice count as a completion denominator; a Fishopedia that says 0/15 invites exactly the reaction Silas had.
+Cross-check before adding: 18 species in the shared bestiary are tagged for both this game and Cthulhuquarium, and cthulhuquarium/t-065 delivered 119 fish plates. Some of the roster this task would commission may already be drawn, and the two games are supposed to share a bestiary -- cthulhuquarium/t-022 is the open handshake task.
+Shipped item (3) this cycle: silasfelinus/kind_robots#2927 replaces the Fishopedia badge's raw '0/15 discovered' denominator with a discovered-only count label, so the vertical-slice roster size no longer reads as an unfinished catalog. Verified: eslint, prettier, full-project vue-tsc, test:layout-contract, and test:kr-class-coverage all clean; no browser/visual check possible in this non-interactive session. Items (1) decide the real catalog target and (2) expand the roster with art remain open -- (2) is blocked on t-027's art dependency (t-019's species-design renders) and (1) is a product decision for Silas, not something this slice should force. Re-arming to ready for the remaining scope.
+
+FOR SILAS: the Fishopedia no longer exposes the 15-species vertical-slice count as if it were the final catalog (kind_robots#2927 already shipped that fix), and the existing 15-species art set is complete. The remaining work is choosing the shipped-game fish catalog target, then expanding toward it in art-backed batches. The roadmap explicitly records that target size as a product decision for Silas rather than an agent guess. TO APPROVE: choose a target catalog size (or a target range) for the shipped game and return this task to ready. This is a soft gate only; it does not block t-030 or other Ruler Hooked work.
+
+GATE TRIAGE 2026-09-30 (session 20260930T0600Z-gate-triage, requested by Silas in
+session): Reversible product decision with a written recommendation. Recommended: a
+40-60 species shipped catalog. The 18 species already shared with Cthulhuquarium's
+151-species bible make the 40s cheap to reach. Under the proposed default-recommendation
+policy, agents adopt this if Silas has not answered within 7 days.
+
+APPROVED by silasfelinus in session 20260930T0600Z-gate-triage (Claude Code, 2026-09-30;
+recorded under CONTROL.md's human gate clearance rule): Shipped fish catalog target:
+40-60 species. Expand toward it in art-backed, style-consistent batches, starting with
+the 18 species shared with Cthulhuquarium.
+
+Partial roster expansion from 18 to 27 species (nine new balanced ecology entries) submitted in kind_robots#5638 with regression tests; companion art-generator roster in conductor#7899. Both PRs remain open awaiting completed CI; t-031 is not complete because final target is 40-60 fish.
+
+Expanded Kind Robots fish catalog from 18 to 36 species in app PR #5638, with ecological gating, balanced affinities and fish art prompt coverage. Conductor #7899 merged 21 high-priority pending Krea 2 art requests; Conductor #7900 is the corrective follow-up to remove nine merged duplicate catalog entries. This is partial t-031; final approved target remains 40-60 illustrated species. Await completed green CI on #5638 and #7900, then rearm as ready for the remaining catalog and art work.
+
+Reviewer (scheduled, 2026-11-23): kind_robots#5638 (36-species catalog) and conductor#7900 (dedupe of nine duplicate roster rows, keeping the copies that carry frame/style overrides) are both merged on green CI. Partial delivery; approved target is 40-60 illustrated species, so the task returns to ready for the next art-backed batch. The roster test now names duplicate slugs and accepts 36-60 species instead of pinning exactly 36.
+
+App commit 11bdd027 adds six balanced policy-reactive fish (42 total), Fishopedia art keys and unlock tests. Conductor commit c8c6a7d adds matching roster descriptions and six pending auto-submit Krea 2 requests at priority 1000. This completes the minimum 40-species code roster but not delivered paintings or final t-031 scope; verify CI and generated art before done.
+
+Reviewer (scheduled, 2026-11-23 PT): kind_robots#5657 merged on all-green CI (b7a12212). The conductor side of #7915 had an append-only art-prompts.yaml conflict with main, so this reviewer PR lands it with both sides' request rows kept: 543 requests, no duplicate ids, and ruler-hooked/art tests pass. The roster code reaches 42 species. Stays in review until the six queued Krea 2 Fishopedia plates render and get checked at game scale; then mark it done or rearm it for the 43-60 batch.
+
+Reviewer (scheduled, 2026-11-23 PT): closing t-031. The approved 40-60 species target is met -- 42 species in the Conductor roster, the Kind Robots runtime (kind_robots#5657) and the CI-enforced runtime fixture (t-076). All six new Krea 2 Fishopedia plates rendered (ArtJobs 76961-76966) and were checked at a 448px game-scale grid: five are clean single specimens. Border Accordionfish (76962) rendered three cropped pipefish instead of one, so this PR tightens its frame_override and restages that one row with force: true via build_ruler_hooked_art_queue.py --write --restage (old job kept as superseded_art_job_id). The three leftover worker/ruler-hooked-{t-031,t-073,t075} branches are fully superseded on main (#7921, #7916, #7927/#7932) and need no PR. Further growth toward 60 is optional catalog work, not a t-031 gap; kaizen t-078 targets the multi-subject render weakness.
+<!-- note:end t-031 -->
+
 ## t-033 — Per-species visual theming of the timing bar
 
 <!-- note:begin t-033 -->
@@ -772,3 +807,23 @@ Reviewer 2026-11-23 PT: worker branch had no PR; rescued as conductor#7927 with 
 (the runtime array split used a literal backslash-n and never matched). 3 passed locally
 incl. runtime comparison vs kind_robots main (42 fish). Kaizen: t-076.
 <!-- note:end t-075 -->
+
+## t-076 — Snapshot the kind_robots runtime fish slugs into a fixture so the roster-runtime parity check runs in CI instead of skipping
+
+<!-- note:begin t-076 -->
+Kaizen from the reviewer of conductor#7927 (t-075, 2026-11-23 PT). `test_runtime_fish_slugs_match_when_app_checkout_is_present` skips on conductor CI because there is no sibling kind_robots checkout, so the runtime half of the parity contract only runs on agent machines. Add a committed fixture of `RULER_HOOKED_FISH` slugs (refreshed by the art-queue generator or a small script) and compare against it in CI; keep the live-checkout comparison as the drift detector for the fixture itself.
+
+Added a 42-slug committed Kind Robots runtime snapshot and CI-enforced parity; sibling checkout also validates snapshot freshness.
+
+Reviewer 2026-11-23 PT: squash-merged conductor#7932 (bb1748d6) on all-green latest-head checks; fixture matches the 42-slug Conductor roster. Done.
+<!-- note:end t-076 -->
+
+## t-077 — Add a one-command refresh script for the ruler-hooked runtime fish fixture that rewrites it from a kind_robots checkout and fails CI-style when it is stale
+
+<!-- note:begin t-077 -->
+Kaizen from the reviewer of conductor#7932 (t-076, 2026-11-23 PT). `tests/fixtures/ruler_hooked_runtime_fish.json` is hand-maintained; the Worker suggested refreshing it whenever runtime fish change. Add `scripts/refresh_ruler_hooked_runtime_fish.py` (`--write` / `--check`) that reuses the test's fail-closed `RULER_HOOKED_FISH` parser so the next fish batch (43-60) updates the snapshot in one step.
+
+Added a shared runtime roster parser, deterministic --write/--check snapshot CLI, duplicate and failure guards, and CLI regression tests in worker/ruler-hooked-t-077-20261123-a9c4 at b5c037d2. CI pending; no game runtime changes.
+
+Merged conductor#7938 at 55e7e233 after all latest-head workflows passed, including corrected handoff template run 45289867898. Shared parser and refresh/check command with regression coverage delivered.
+<!-- note:end t-077 -->
