@@ -1002,11 +1002,11 @@ tasks:
   - id: t-031
     milestone: m3
     title: "HIGH PRIORITY · Begin private Unstable Diffusers production for canonical Prom/Tactics cast"
-    status: review
+    status: claimed
     owner: worker
-    claimed_by: 2026-11-23T214600Z-comet-t031-c8f2
-    claimed_at: '2026-11-23T21:46:00Z'
-    updated: '2026-11-23T21:52:00Z'
+    claimed_by: 20261124T023100Z-comet-t031-refill-catalog-3d8a
+    claimed_at: '2026-11-24T02:29:15.478Z'
+    updated: '2026-11-24T02:29:15.478Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -1063,13 +1063,14 @@ tasks:
 
       Inspected committed original source WebP bytes for Hattie Nkemelu, four-armed Asha Venkataraman and koala Zuzu. Found nine previously unquarantined noncanonical outcome paintings (three per identity), recorded immutable source blob SHAs, quarantined each through the shared reviewed art resolver and repaired direct Yearbook, comic and console image bypasses in Kind Robots commit efd8c55090cd6fc226471ee3aff07d70afe158a0. Added canon/route regression coverage. No ArtJobs were re-enqueued or private media approved; broader t-031 art curation and export remain open.
 
+      The nine-image canon quarantine and all six runtime/test file changes are already on kind_robots main (ancestor 83fc29d472c556e016a9edc9b6e55915def018ee); main has an equivalent typed receipt assertion from 465df1828117a8c74f74386a1b30def6a780e78c. Closed redundant conflicting PR #5681; no new merge claimed. Return to ready for remaining original private candidate curation and attachment.
+
       pr-medic (2026-11-24 PT): kind_robots#5681 (nine off-canon outcome paintings
       quarantined) was red on TypeScript (TS7053, widened receipt key). Rescued via
       kind_robots#5693 with the worker's commits unchanged plus `as const`; all checks green,
       merged 07219847. #5681 is superseded (the worker's later equivalent fix 920aa8b7 would
       conflict); a comment recommends closing it. Umbrella task stays open for remaining art
       curation.
-    implementation_pr: 'silasfelinus/kind_robots#5681'
   - id: t-032
     title: "Prom of Doom (Capes & Tassels) | Master 30-Day Playbook Roadmap"
     status: review
@@ -1208,11 +1209,11 @@ tasks:
   - id: t-051
     milestone: m4
     title: "Review and attach 12 verified private one-hit crew telegraph renders to the shared Prom cast atlas"
-    status: ready
-    owner: null
-    claimed_by: null
-    claimed_at: null
-    updated: '2026-11-23T11:55:00Z'
+    status: review
+    owner: worker
+    claimed_by: 20261124T022200Z-comet-t051-combat-atlas-f7c9
+    claimed_at: '2026-11-24T02:21:40.266Z'
+    updated: '2026-11-24T02:22:23.648Z'
     depends_on: []
     passes: 0
     stakes: reversible
@@ -1225,4 +1226,6 @@ tasks:
       The 12 private crew illustrations now show in the admin cast atlas, labelled as not
       curator-approved. Per the handoff, t-051 goes back to ready (partial) until independent
       visual art QA and post-deploy browser verification are done.
-    implementation_pr: 'silasfelinus/kind_robots#5655'
+
+      Added all 12 existing DONE private combat poses ArtJobs 76658–76669 / ArtImages 278823–278834 to the shared admin cast atlas, alongside 12 original telegraphs. Exact source-backed species/pose receipt tests, authenticated lazy retrieval and retry, admin permission-change handling. Kind Robots commit 82711669493ddda35ba116577ae1358ff3583184. Source mapping and existing ledger media proof are not fresh visual approval; browser proof and artistic review remain open.
+    implementation_pr: 'silasfelinus/kind_robots#5696'
