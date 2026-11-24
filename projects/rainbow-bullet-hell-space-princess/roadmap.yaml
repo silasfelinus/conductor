@@ -729,7 +729,7 @@ tasks:
     claimed_at: '2026-11-22T02:41:00Z'
     passes: 0
     stakes: reversible
-    updated: '2026-11-24T04:40:29Z'
+    updated: '2026-11-24T07:27:00Z'
     note: |-
       GEN2-STANDARD.md sections 5-6. WAN first/last-frame clips from the delivered cutscene stills (ART-ROUND-19) and pilot cut-ins, then enemy idle/attack cycles packed into atlases. Bullets stay crisp code-drawn shapes; animation is for craft, pilots and scenes.
 
@@ -743,7 +743,16 @@ tasks:
       -v2 cells and the eight pilot hit/victory poses are still rendering
       (T030-ANIMATION-2026-11-23.yaml). Remaining: enemy atlases, poses + hit-pose HUD card,
       S08.
-    implementation_pr: 'silasfelinus/kind_robots#5703'
+
+      2026-11-24 PT: kind_robots#5717 (merged 73cc425e) ships the first enemy frame animation,
+      Fever Dream idle atlases for picket and urchin (8 raw WAN frames each, matte keyed,
+      centred, 4 fps; calm holds cell 0), and the S08 living title card (640 px loop), so Acts
+      I, II, V-VIII now have living interludes. Rejected in review: spiral (turns to camera),
+      anchor and relay (near-static), lantern (green tentacle streaks), skimmer (source still
+      cut); third takes queued as jobs 77023-77026. Still open: those retakes, coral, S03/S04
+      card retakes, the eight pilot poses and hit-pose HUD card, boss/ship motion, and moving
+      endings (presentation critic P-01 to P-03).
+    implementation_pr: 'silasfelinus/kind_robots#5717'
   - id: t-031
     milestone: m6
     title: "Resume at the last checkpoint: the cabinet keeps every checkpoint, not just Act starts"
@@ -1319,9 +1328,18 @@ tasks:
     stakes: reversible
     depends_on: []
     source: independent-review-round-1-2026-11-23
-    updated: '2026-11-24T06:48:02Z'
+    updated: '2026-11-24T07:27:03Z'
     note: >-
       From the independent presentation critic and the gameplay critic (REVIEW-ROUND-1-2026-11-23.md, D4, P-05, P-06, P-08 to P-11, P-13, P-16 to P-18, P-20 to P-23): move the 2-4p status panel off the playfield (top bar or bottom edge) and never over the boss bar; keep touch pads out of the stage (gutters, or no four touch seats on one tablet); a portrait-tuned HUD or rotate prompt and corner chips off the canvas on phones; size the stage from content height on large screens; collapse the switches on short screens; ambient bubbles never bullet-sized in the play band; a hostile pellet hue no scene uses (or bold by default); painted Act V wreck frames; per-Act colour keys; fade the control legend after Act I; seat tags off the hull; Seas cards keep art on phones and the route map is a real map. Verify in the real cabinet at 360x640, 390x844, 768x1024, 1024x768, 844x390, 1440x900 and 1920x1080, 1-4 seats.
+
+      2026-11-24 PT: kind_robots#5716 (merged af529b34) puts every pilot's status inside the
+      29 px HUD bar (D4/P-08: no panel over the playfield or the boss bar), shows the button
+      legend in Act I only (P-21), firms the default pellet halo with a faint ring (P-11) and
+      moves seat numbers behind the hull (P-22). kind_robots#5719 (open) makes the Act V
+      cranes solid (P-13) and Classic's motes faint (P-10). Remaining: touch pads over the
+      stage (P-05/P-06), phone portrait and short-landscape layout (P-09/P-23/P-17), large-
+      screen stage size (P-16), per-Act colour keys (P-20), Seas on phone (P-18).
     owner: worker
     claimed_by: session_01L5NKxaUAWmNr7wxdToBdp3
     claimed_at: '2026-11-24T06:48:02Z'
+    implementation_pr: 'silasfelinus/kind_robots#5716'
