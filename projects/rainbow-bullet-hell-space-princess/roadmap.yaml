@@ -636,14 +636,14 @@ tasks:
   - id: t-027
     milestone: m6
     title: "Gen-2 memory: save slots, route map screen, medals and the persistent Palace Hangar"
-    status: review
+    status: done
     owner: worker
     claimed_by: 20261123T001700Z-rainbow-t027-mapnav-v8c4
     claimed_at: '2026-11-23T00:17:00Z'
     depends_on: [t-026]
     passes: 0
     stakes: reversible
-    updated: '2026-11-23T00:21:00Z'
+    updated: '2026-11-24T00:25:15Z'
     note: |-
       2026-11-20T11:21:42Z connector recovery: prior claim 2026-11-20T05:40:00Z expired after 341 minutes, no open Rainbow PR or branch; implementing Palace Hangar on a scoped worker branch.
 
@@ -686,6 +686,16 @@ tasks:
       2026-11-22 PT: The prior review handoff is over 90 minutes old and no open Rainbow PR remains after #5607 merged. Preserve merged map/Hangar work and reopen t-027 for playable alternate-route navigation, without touching other review lanes.
 
       2026-11-22 PT: Scoped four-route Seas map navigation on worker/rainbow-bullet-hell-space-princess-t-027-detour-approach-v8c4. Charted detours launch isolated replay of their authored origin Acts without overwriting campaign slots; 1-4-seat and locked-route regression added. Partial t-027 until full campaign progression and route QA are verified.
+
+      2026-11-24 PT: route-map art (gen2/route-map, 251317) and Hangar art (gen2/hangar,
+      251298) ship on the play page (kind_robots#5685, merged 5923d73d); ROUTE-MAP section 5
+      scene variants and section 6 stingers ship (kind_robots#5687, merged 12868a79): nine
+      route beats replace one named line each, liltMemoryRecovered/crownEcho derive from saved
+      fields, THE ROUTE credits and stinger fanfare. Slot-memory 'X found' hints were not
+      built (past-run discovery, superseded by the canonical detour order). With the three
+      slots, Hangar, medals and four-route Seas navigation already merged, t-027's scope
+      ships.
+    implementation_pr: 'silasfelinus/kind_robots#5687'
   - id: t-028
     milestone: m6
     title: "Gen-2 alternate stages: four branch stages with their own guardians"
