@@ -18,8 +18,17 @@ lanes:
   label: Krea 2 Fever Dream ending plates
   engine: krea2
   prompt: prose
+- key: kontext
+  label: Flux Kontext dev, targeted fix of a reviewed plate
+  engine: kontext
+  prompt: prose
+  steps: 20
+  guidance: 2.5
 subjects:
 - key: road-ending-loyal-restore
+  verdict: 'hold: 2026-11-24 PT review, the cordon of white-and-gold warships around the Crown reads as peace by
+    order and the cat squadron is small at the edge, but the Crown is a jewelled royal crown, off-model for the
+    prism Crown; fixed by road-ending-loyal-restore-2'
   lane: krea2
   title: PEACE BY ORDER, loyal restore ending
   entity: cinematic
@@ -37,7 +46,15 @@ subjects:
     dawn light, calm and orderly with a bittersweet hush. Edge-to-edge scene.
   jobs:
     krea2: 77037
+  art:
+    krea2:
+      status: DONE
+      art_image_id: 279932
 - key: road-ending-loyal-evacuate
+  verdict: 'keep: 2026-11-24 PT review, an empty grey-lavender sea, a white-and-gold warship planting its banner
+    on a bare reef, the last pods dots on the horizon, the cat squadron small beside it: a hollow victory'
+  shipped_as:
+  - rainbow-princess-art/endings/loyal-evacuate
   lane: krea2
   title: AN EMPTY OCEAN, loyal evacuate ending
   entity: cinematic
@@ -54,7 +71,13 @@ subjects:
     lilac hovers beside it, small and still. Wide, quiet and lonely, a hollow victory. Edge-to-edge scene.
   jobs:
     krea2: 77038
+  art:
+    krea2:
+      status: DONE
+      art_image_id: 279933
 - key: road-ending-loyal-sever
+  verdict: 'hold: 2026-11-24 PT review, the warship sweeps its searchlights while the cat squadron peels away over
+    a glowing sea of dark shards, but the Crown is a gold jewelled crown; fixed by road-ending-loyal-sever-2'
   lane: krea2
   title: ORDERS BROKEN, loyal sever ending
   entity: cinematic
@@ -71,7 +94,15 @@ subjects:
     toward the open glowing sea with rainbow exhaust trails. Defiant and bittersweet. Edge-to-edge scene.
   jobs:
     krea2: 77039
+  art:
+    krea2:
+      status: DONE
+      art_image_id: 279934
 - key: road-ending-sever-open
+  verdict: 'keep: 2026-11-24 PT review, lanterns rising over the mirror sea under dark prism shards, cat-shaped
+    ships resting on the water, no pilots in shot, so it fits any crew size'
+  shipped_as:
+  - rainbow-princess-art/endings/sever-open
   lane: krea2
   title: Sever ending without a fixed crew (rebel and unsworn)
   entity: cinematic
@@ -88,3 +119,37 @@ subjects:
     Edge-to-edge scene.
   jobs:
     krea2: 77040
+  art:
+    krea2:
+      status: DONE
+      art_image_id: 279935
+- key: road-ending-loyal-restore-2
+  lane: kontext
+  title: PEACE BY ORDER, prism Crown fix
+  entity: cinematic
+  asset: rainbow-princess-art/endings/loyal-restore
+  size: 1344x768
+  seed: 1124142
+  source_image_id: 279932
+  negative: text, lettering, logo, watermark, words, jewels, velvet, royal crown, rubies
+  prompt_prose: 'Replace the jewelled royal crown with the great Crown of this ocean: a huge translucent crystal
+    crown built from tall prism shards glowing soft pink and turquoise, with light inside it. Keep everything else
+    exactly the same: the ships, the cat-shaped starfighters, the sea, the colours, the framing and the neon airbrushed
+    cartoon style with bold outlines.'
+  jobs:
+    kontext: 77041
+- key: road-ending-loyal-sever-2
+  lane: kontext
+  title: ORDERS BROKEN, prism Crown fix
+  entity: cinematic
+  asset: rainbow-princess-art/endings/loyal-sever
+  size: 1344x768
+  seed: 1124162
+  source_image_id: 279934
+  negative: text, lettering, logo, watermark, words, jewels, velvet, royal crown, gold crown
+  prompt_prose: 'Replace the jewelled royal crown with the great Crown of this ocean: a huge translucent crystal
+    crown built from tall prism shards going dark one by one, a few still glowing pink and turquoise. Keep everything
+    else exactly the same: the ships, the cat-shaped starfighters, the sea, the colours, the framing and the neon
+    airbrushed cartoon style with bold outlines.'
+  jobs:
+    kontext: 77042
