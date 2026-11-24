@@ -48,8 +48,8 @@ Silas's decision; it stays as it is until he decides).
 | S5 | major | the 15 combination lines are single non-sequiturs with no setup | t-066 | fixed in #5737 (15 three-line exchanges among the pilots flying, built on established pilot hooks; reveal grows to five lines) |
 | S6 | major | Vivi speaks for 8 of the 15 crews | t-066 | fixed in #5737 (speakers spread; each pilot has 8+ lines across the combinations) |
 | S7 | major | seat renaming hands one pilot's role to another | t-066 | partly fixed in #5709 (four-pilot finale line); the general case is open |
-| S8 | major | the princesses are interchangeable in the Acts | t-066 | open |
-| S9 | major | middle seats in 3–4-pilot crews barely speak | t-066 | partly fixed in #5737 (every pilot of a two- or three-pilot crew speaks in the reveal exchange); Act scenes stay seat-keyed, with S8 |
+| S8 | major | the princesses are interchangeable in the Acts | t-066 | fixed in kind_robots#5740 (a pilot-keyed arc beat after each of Acts I-VIII, 32 lines carrying each hook) |
+| S9 | major | middle seats in 3–4-pilot crews barely speak | t-066 | fixed in #5737 (reveal exchange) and #5740 (the arc beat moves through the seats Act by Act) |
 | S10 | major | Lilt-7's agency is a refrain of "I will not choose for you" | t-066 | fixed in #5738 (Lilt states a view and acts: closes Command's channel on the loyal road, spends a memory on the clamps on the rebel road; X3 memory line) |
 | S11 | major | ending plates ignore the road and the crew size | t-030 / t-066 | open (with P-03) |
 | S12 | minor | the safe trench route knows about the vault's locks | t-012 | fixed in #5709 |
@@ -87,7 +87,7 @@ Silas's decision; it stays as it is until he decides).
 | P-17 | minor | the settings panel scrolls at 360×640 | t-067 | open |
 | P-18 | minor | Seas on phone is text only; the route map is a 40 px strip | t-067 | open |
 | P-19 | minor | Solenne has no Fever Dream portrait | t-030 | open |
-| P-20 | minor | the Fever Dream Acts blur together (violet plus a rainbow band) | t-067 | open |
+| P-20 | minor | the Fever Dream Acts blur together (violet plus a rainbow band) | t-067 | fixed in #5740 (a colour key and aurora per Act; the full rainbow opens and closes the flight) |
 | P-21 | minor | the HUD control legend stays up for the whole run | t-067 | fixed in kind_robots#5716 (legend in Act I only) |
 | P-22 | minor | seat numbers collide with ships | t-067 | fixed in kind_robots#5716 (seat tag behind the tail) |
 | P-23 | major | the short-landscape title screen is 190×107 px | t-067 | open |
