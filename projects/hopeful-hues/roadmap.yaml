@@ -143,11 +143,17 @@ tasks:
   - id: t-011
     milestone: m2
     title: "Helper tools and pre-level boosts: Sparkle Wand, Free Swap, Comb Brush, start-with-special boosts and a daily gift"
-    status: ready
+    status: review
+    owner: worker
+    claimed_by: 2026-11-23T230700Z-hopeful-hues-t-011-9b41
+    claimed_at: '2026-11-23T23:07:00Z'
+    updated: '2026-11-23T23:07:01Z'
     passes: 0
     stakes: reversible
-    note: >-
+    note: |-
       Parity audit 2026-11-23 PT. The game has only +5 moves and Shuffle. Add in-level tools (clear any one tile, swap any two tiles, paint a tile into a comb) and pre-level boosts chosen on the level intro card (start with a Glitter Bomb or Rainbow Dye), earned through quests, achievements and a gentle daily gift, never purchases. Respect the Back button (a tool use is one Back step) and record usage in quests.
+
+      Implemented three in-level tools, optional starting specials, daily gifts, quest and achievement rewards, and inventory-aware Back snapshots including Shuffle and extra moves. Added deterministic tool and daily gift contract tests. CI and browser acceptance pending.
   - id: t-012
     milestone: m2
     title: "Hand-authored level layouts for every sixth level, forks and finales"
