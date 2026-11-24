@@ -1282,12 +1282,26 @@ tasks:
     stakes: reversible
     depends_on: []
     source: independent-review-round-1-2026-11-23
-    updated: '2026-11-24T05:59:08Z'
+    updated: '2026-11-24T06:44:06Z'
     note: >-
       From the independent gameplay critic (REVIEW-ROUND-1-2026-11-23.md, D1-D3, D5-D9, P-15): super on a short B tap only (hold stays focus); cut the kill refund, a radius wipe, boss damage as a share of max HP; co-op boss HP about 2.5 + 2(n-1); per-kind guardian movement, HP tier by Act, aimed fans that close the aimed line, varied arrival; Crown spoke and ring jitter or an aimed spoke so no ray is safe; Act-specific launchers; boss returns to the start of its phase on continue (D8 default, owner may override); optional seeded variations. Extend verifyRainbowBossCamping to every boss and the persona matrix as regression evidence.
+
+      2026-11-24 PT: kind_robots#5713 (merged 5b589b7b) ships D1 (B hold focus, tap super
+      within 12 frames), D2 (kill refund 4, was 12; supers take 3.5%/5% of a boss hull; whole-
+      screen wipe kept because the cut-in covers the comms band), D3 (2 base shares per extra
+      pilot, was 4: 3.4x solo hull at four pilots), D5 (per-kind guardian motion; alternate
+      aimed-fan volleys close the open lane with one slow pellet; a per-Act hull tier was
+      tried and dropped because late guardians escaped), D6 (alternate Crown volleys aim a
+      spoke; phase-2 pair closes on alternate volleys; verifyRainbowBossCamping covers Crown
+      phase 1). D8 was tried (boss back to its phase start on continue) and reverted: it made
+      B01 unbeatable for the solo test bot within its budget, so it stays Silas's call.
+      Remaining: D7 Act-specific launchers, D9 seeded variation (optional), P-15 Leviathan
+      burst, and the camping audit's other flagged phases (Delphion 2, Lantern Ray, Glass Eel,
+      Leviathan 3) to confirm in-engine.
     owner: worker
     claimed_by: session_01L5NKxaUAWmNr7wxdToBdp3
     claimed_at: '2026-11-24T05:59:08Z'
+    implementation_pr: 'silasfelinus/kind_robots#5713'
   - id: t-066
     milestone: m4
     title: 'Story critic round 1: choice-specific endings, spoken Crown plea, real crew exchanges, per-pilot Act voices, Lilt agency'
