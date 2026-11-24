@@ -87,15 +87,12 @@ tasks:
     direction, and the offline-at-runtime rule.
 - id: t-067
   title: 'Main-game standard: audit and close the gaps for The Ruler Is Hooked'
-  status: review
-  owner: worker
-  claimed_by: 20261124T095300Z-ruler-hooked-t067-cloud-4bf92
-  claimed_at: '2026-11-24T09:53:00Z'
+  status: ready
   milestone: m6
   stakes: reversible
   passes: 0
   depends_on: []
-  updated: '2026-11-24T09:53:00Z'
+  updated: '2026-11-24T21:50:51Z'
   note: |-
     Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -126,6 +123,8 @@ tasks:
     PR #5723 merged at 091c06dcf9ef3f4c06661fce66820a15800d54a0 after all 13 non-skipped exact-head checks passed, including four contract shards. Partial accessibility and safe deletion scope delivered; account-backed saves and deployed device verification remain.
 
     App commit fceb638f on worker/ruler-hooked-t-067-cloud-4bf92 adds explicit private account backup and restore of reign slots and scrapbook, using existing revision-guarded ArcadeCabinetSave storage, strict bounded parsing, latest-timestamp merging and device-only custom portraits. Added regression assertions. CI and live account/device verification pending; no automatic upload or schema migration.
+
+    Account backup/restore kind_robots#5735 merged at 1fb504ce4b942857339534a1f94b524627f06cd1; exact-head Ruler Hooked 45370921048 and Contract Tests 45370921234 passed. Audio, scrapbook and display settings are also merged. Return to ready for actual deployed signed-in backup/restore and full standards verification; no production data writes or visual pass claimed.
 
 - id: t-068
   title: 'The Ruler Is Hooked achievement upgrade: 12 or more live achievements'
@@ -859,10 +858,7 @@ tasks:
 - id: t-045
   milestone: m4
   title: Deepen kingdom quest arcs and connect decisions to fishing spots and species
-  status: review
-  owner: worker
-  claimed_by: 2026-11-23T040110Z-ruler-hooked-t045-b8e4c9
-  claimed_at: '2026-11-23T04:01:10Z'
+  status: ready
   stakes: reversible
   passes: 0
   depends_on:
@@ -875,7 +871,9 @@ tasks:
     2026-11-22 PT reviewer: merged kind_robots#5605 (five delayed petitions, ten policy outcomes, map/fish ecology changes) and conductor#7867 (five pending Krea 2 card requests for weir, moat, treaty, marina and wedding aftershocks; staged, not rendered). This was one slice: the broader Emperor-of-Dust-depth quest work is still incomplete, so the task goes back to ready for the next slice. Art counts as delivered only after the renders are inspected and bound in game (t-047).
 
     Second authored story slice: three cross-faction late petitions and six distinct policy endings with map, fish-ecology and resource consequences, choice-path regression witnesses, and three high-priority pending Krea 2 card paintings. Kind Robots worker/ruler-hooked-t-045-20261123-b8e4c9 and Conductor worker/ruler-hooked-t-045-art-20261123-b8e4c9. This is partial t-045 scope: further depth and delivered/inspected art remain.
-  updated: '2026-11-23T04:04:25Z'
+
+    Second quest-depth slice kind_robots#5629 merged at 4b94c8bc49d117cc6c82b348b6311a1bbebc17ee; exact-head Ruler Hooked 45113826983 and Contract Tests 45113826977 passed. Return to ready for remaining interconnected quest writing rather than duplicate the three new petitions. Art delivery remains t-047.
+  updated: '2026-11-24T21:50:51Z'
 
 - id: t-046
   milestone: m6
@@ -910,17 +908,16 @@ tasks:
 - id: t-048
   milestone: m6
   title: Fishing first-catch fairness, input edge cases and shop/economy adversarial suite
-  status: review
-  owner: worker
-  claimed_by: 20261122T232356Z-ruler-hooked-t048-p4v8
-  claimed_at: '2026-11-22T23:23:56.326Z'
+  status: ready
   stakes: reversible
   passes: 0
   note: |-
     Master completion issue kind_robots#4144. Model the two moving-target timing stops and tap/release reeling against newbie, careless, expert, rapid spam, unlucky, assistive, latency, slow-device, shop-gear and economy exploit personas. Verify common fish can reliably be caught by a first-timer following visible cues; tune uncommon/rare difficulties without untelegraphed failure. Test tension, slack, timed clicks, reel pacing, species/gear modifiers, reward/saves, invalid state transitions and input parity. Publish reproducible seeds and repair with regression tests; run a fresh adversarial challenge after fixes.
 
     Repaired a real simplified-fishing exploit: simultaneous max tension and catch progress now snaps the line instead of awarding a fish. Added deterministic adversarial coverage for 24 first-time seeds, 100 rapid slack inputs, invalid cast/hook positions, and terminal input idempotence. kind_robots commit 12d8fb1 on worker/ruler-hooked-t-048-20261122-p4v8; CI and broader economy matrix still pending.
-  updated: '2026-11-22T23:24:41.699Z'
+
+    Fishing fix kind_robots#5606 merged at 5082bcfc822ec955c3b29a97701e6e4939a0e6df; exact-head Ruler Hooked 45083510690 and Contract Tests 45083510668 passed. Return to ready for the remaining gear/economy, latency, keyboard/touch and long-run adversarial matrix. The cancelled post-merge branch-janitor run is not a gameplay check.
+  updated: '2026-11-24T21:50:51Z'
 - id: t-049
   milestone: m6
   title: Full policy-matrix kingdom simulator and witnessed complete ending graph
@@ -1110,9 +1107,8 @@ tasks:
 - id: t-060
   milestone: m6
   title: 'Grow the Town Crier: more daily proclamations, a few tied to fish runs and the reign'
-  status: review
+  status: done
   gate_human: false
-  owner: worker
   claimed_by: 2026-11-22T194600Z-ruler-hooked-t060-q7m2
   claimed_at: '2026-11-22T19:55:21.829Z'
   stakes: reversible
@@ -1121,7 +1117,9 @@ tasks:
     dailyEvents.ts ships 10 proclamations, so a long reign repeats within a couple of weeks of in-game days. Add 15-20 more in the cast's voices, let a few nudge species odds for that day, and sour their tone with a failing reign (t-054's Broadside: blunter edicts). Hold the pillar: nothing expires, nothing gates a fish, card or ending, so console.selftest.ts's "nudges, not gates" check keeps passing.
 
     Implemented an 18-event Town Crier expansion (28 total), decline-sensitive dialogue, and persisted day-scoped boosts to eligible fish encounter weights; code and regression assertions committed to kind_robots worker/ruler-hooked-t-060-20261122-q7m2 at 810a25b. CI and live verification pending; master issue #4144 remains open.
-  updated: '2026-11-22T19:58:11.396Z'
+
+    2026-11-24 PT reconciliation: kind_robots#5590 merged at 193aefb450a3ab36a5697f021d72e0de1519b782. Verified current main has 28 proclamations, decline-aware text and day-scoped 1.5x boosts only for already eligible fish. Exact-head Ruler Hooked run 45067668250, Contract Tests run 45067668181 (four shards and verifiers), TypeScript and formatting passed. Device rendering remains tracked under t-061/t-050; no live browser QA claimed.
+  updated: '2026-11-24T21:50:51Z'
 - id: t-061
   milestone: m6
   title: 'Post-deploy visual QA of the console at phone, tablet and desktop widths'
