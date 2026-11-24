@@ -339,7 +339,7 @@ tasks:
   - id: t-011
     milestone: m4
     title: "Build lavish stage parallax, readable effects and character animation"
-    status: claimed
+    status: review
     depends_on: [t-002, t-007]
     passes: 0
     stakes: reversible
@@ -417,8 +417,15 @@ tasks:
       charge; ring, jaw and cannon stay on the hitboxes; calm keeps a fifth. PR
       silasfelinus/kind_robots#5754 merged as 706d0d36 after CI passed. Still open: painted
       stage planes, sprite rigs and atlases, and visual acceptance. Stays ready and unclaimed.
-    updated: '2026-11-24T20:46:50Z'
-    implementation_pr: 'silasfelinus/kind_robots#5754'
+
+      2026-11-24 PT B02/guardian windup increment: B02 Aurelia Array (the last boss without a
+      body tell) and every act guardian now wind up across their 36-frame cues with the shared
+      rainbowBossWindup (new MOONJELLY_WARNING_FRAMES export; a leaving guardian rests).
+      Rings, lanes, HP bars and hitboxes stay put; calm keeps a fifth. PR
+      silasfelinus/kind_robots#5755, CI pending. Still open: painted stage planes, sprite rigs
+      and atlases, and visual acceptance.
+    updated: '2026-11-24T20:53:33Z'
+    implementation_pr: 'silasfelinus/kind_robots#5755'
     owner: worker
     claimed_by: 2026-11-24T20:46:50Z-avgphh
     claimed_at: '2026-11-24T20:46:50Z'
