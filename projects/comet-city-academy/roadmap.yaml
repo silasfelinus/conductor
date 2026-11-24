@@ -1002,11 +1002,8 @@ tasks:
   - id: t-031
     milestone: m3
     title: "HIGH PRIORITY · Begin private Unstable Diffusers production for canonical Prom/Tactics cast"
-    status: review
-    owner: worker
-    claimed_by: 20261124T025700Z-comet-t031-cast-recruit-qa-9b2f
-    claimed_at: '2026-11-24T02:56:50.843Z'
-    updated: '2026-11-24T02:57:45.431Z'
+    status: claimed
+    updated: '2026-11-24T06:13:00Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -1070,6 +1067,11 @@ tasks:
       142 additional runtime refill candidates merged on all-green CI; all 148 now available in private production QA. kind_robots#5697, squash 64e233d0ba52faf32c1c6daeb50bc1d8576ccad0. Partial scope; actual visual curation, media verification and approval remain outstanding.
 
       Added 44 existing private paintings (24 October cast, 12 recruit emotion, 8 neutral/injured recruit) to 12 production QA groups. All 44 exact stable asset keys and Job/Image IDs match existing runtime receipts; 36 have recorded media proof, 8 remain DONE without byte proof. Gallery now 221 candidates, with direct group selection and regression checks for cross-surface identity. Kind Robots commit c0287e7db28363416431a2d131ea3cada8c54a07. No fresh visual approvals or live media retrieval claimed. Partial scope.
+
+      Confirmed Kind Robots #5699 merged at a8fa6fad9bb6b3e4b822374135bdcc67975335e7. The 44 candidate mappings are partial; actual curation, source retrieval and gameplay attachment remain outstanding.
+    owner: worker
+    claimed_by: 20261124T061300Z-comet-t031-visual-qa-e83b
+    claimed_at: '2026-11-24T06:13:00Z'
   - id: t-032
     title: "Prom of Doom (Capes & Tassels) | Master 30-Day Playbook Roadmap"
     status: review
@@ -1208,11 +1210,8 @@ tasks:
   - id: t-051
     milestone: m4
     title: "Review and attach 12 verified private one-hit crew telegraph renders to the shared Prom cast atlas"
-    status: review
-    owner: worker
-    claimed_by: 20261124T030400Z-comet-t051-crew-curation-7ac1
-    claimed_at: '2026-11-24T03:01:21.817Z'
-    updated: '2026-11-24T03:02:15.191Z'
+    status: ready
+    updated: '2026-11-24T06:12:01Z'
     depends_on: []
     passes: 0
     stakes: reversible
@@ -1231,3 +1230,5 @@ tasks:
       12 combat pose mappings merged on all-green CI; 24 crew candidate views are implemented. kind_robots#5696, squash 4affb536b098136766287b8f2371add32570b2b8. Partial scope; actual visual curation, media verification and approval remain outstanding.
 
       Added per-image review notes, accept/reject decisions and JSON handoff for all 24 crew telegraph/combat paintings. Exact stable source key, ArtJob and ArtImage matching; decisions require authenticated administrator and decoded private bytes. Session changes clear draft decisions; export is explicitly not production approval or publication. Kind Robots commit b4b4cfad80b81bee4acfc32544c26c8a1abea036. Regression coverage for 24 immutable receipts and invalid review attempts. No private images were actually inspected or approved in this session. Partial scope.
+
+      Confirmed Kind Robots #5700 merged at eaa9d6e5c848184df356030303b526eef47a5027. Review controls shipped, but no actual curator decisions or gameplay attachment verified. Preserve all 24 ArtJob and ArtImage receipts.
