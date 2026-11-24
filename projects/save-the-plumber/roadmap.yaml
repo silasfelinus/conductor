@@ -447,10 +447,13 @@ tasks:
   - id: t-020
     milestone: m6
     title: "Gen-2 level engine: sub-areas, vertical rooms, midpoints, secret exits, campaign-wide switches"
-    status: ready
+    status: claimed
+    owner: worker
+    claimed_by: 2026-11-24T045900Z-save-the-plumber-t020-secret-exit-n4b7
+    claimed_at: '2026-11-24T04:59:00Z'
     passes: 0
     stakes: reversible
-    updated: '2026-11-24T04:56:30Z'
+    updated: '2026-11-24T04:59:00Z'
     note: |-
       GEN2-STANDARD.md section 2. Doors, pipes and ladders into sub-rooms with their own camera bounds; vertical shafts and climbs; a midpoint checkpoint per level; a second, hidden exit type that reports `secret` to the overworld (t-011); Valve Chapel switch state read by every level so pressed switches make outlined blocks solid campaign-wide; auto-scroll and haunted-maze (Hush House) exit logic. Deterministic replay tests for each: secret exit reachable, sub-room return position, switch persistence across levels and save/reload.
 
