@@ -455,10 +455,10 @@ tasks:
   - id: t-020
     milestone: m6
     title: "Gen-2 level engine: sub-areas, vertical rooms, midpoints, secret exits, campaign-wide switches"
-    status: claimed
+    status: review
     passes: 0
     stakes: reversible
-    updated: '2026-11-24T22:10:37Z'
+    updated: '2026-11-24T22:12:02Z'
     note: |-
       GEN2-STANDARD.md section 2. Doors, pipes and ladders into sub-rooms with their own camera bounds; vertical shafts and climbs; a midpoint checkpoint per level; a second, hidden exit type that reports `secret` to the overworld (t-011); Valve Chapel switch state read by every level so pressed switches make outlined blocks solid campaign-wide; auto-scroll and haunted-maze (Hush House) exit logic. Deterministic replay tests for each: secret exit reachable, sub-room return position, switch persistence across levels and save/reload.
 
@@ -473,6 +473,8 @@ tasks:
       Authored six additional secret exits in existing courses 3-2, 3-3, 4-3, 5-2, 6-2 and 7-3, opening their existing map links to three chapels and three Upstream Sky entrances. Added real stage clear/save roundtrip assertions and existing reachability flood covers all six. Branch worker/save-the-plumber-t-020-orchard-exits-r8c4 head 60cc223. CI pending; destination courses, subrooms and switches remain.
 
       Merged kind_robots#5732 at 5ad37ebb after 10/10 exact-head workflows passed. Seven secret exits implemented; remaining persistent switches, destination courses and subrooms. Return to ready.
+
+      Added a playable Verdigris Chapel branch course and per-slot persistent solid switch blocks in Rainy Courtyard and Copper Greenhouses, using the existing normal-clear node memory without changing campaign indices or save format. Added map, goal-contact, reload and slot isolation regression assertions. Branch worker/save-the-plumber-t-020-valves-6f8c head b485c045. Partial engine scope; CI and further chapels/subrooms remain.
     owner: worker
     claimed_by: 20261124T221037Z-plumber-t020-valves-6f8c
     claimed_at: '2026-11-24T22:10:37Z'
