@@ -68,13 +68,13 @@ Silas's decision; it stays as it is until he decides).
 
 | id | sev | finding | task | status |
 | --- | --- | --- | --- | --- |
-| P-01 | blocker | no frame animation for any enemy, boss, ship or pilot | t-030 | partly fixed: picket and urchin (#5717) and anchor and lantern (#5727) idle atlases; hit and victory poses for all four pilots (#5727, #5738); bosses, ships and the other enemies open |
+| P-01 | blocker | no frame animation for any enemy, boss, ship or pilot | t-030 | partly fixed: picket, urchin, anchor and lantern atlases (#5717, #5727), all pilot poses (#5727, #5738); the idle-atlas clock (#5767); loops for every other sprite are rendering (ANIM-BACKLOG-2026-11-24) |
 | P-02 | blocker | the living interludes barely move (mean luma difference 0.6–2.6); S03, S04 and S08 have none | t-030 | fixed in kind_robots#5743 and #5744 (every Act card is a one-shot clip in which the squadron crosses the sky; 3-22% of pixels change vs 1-2% for the loops) |
-| P-03 | blocker | the endings are 3 still plates with no Fever Dream version; sever is in a different style | t-030 | partly fixed in #5741 (loyal plates, a house-style sever plate; all plates are Fever Dream); motion endings open |
-| P-04 | blocker | main Acts have 1–2 painted planes, not 4+; the top half of X3, Act VIII and the finale does not scroll; there is no s09 art | t-022 / t-011 | partly fixed in #5742 (X1-X4 skies drift; Act-to-stage mapping and a painted-sky depth ready for s09 and sky art); painted planes and the s09 art await the art batch (Silas) |
+| P-03 | blocker | the endings are 3 still plates with no Fever Dream version; sever is in a different style | t-030 | partly fixed: loyal-road plates and a house-style sever plate (#5741); moving-ending support (#5767); the six plate clips are rendering (ANIM-BACKLOG-2026-11-24) |
+| P-04 | blocker | main Acts have 1–2 painted planes, not 4+; the top half of X3, Act VIII and the finale does not scroll; there is no s09 art | t-022 / t-011 | mostly fixed: painted sky, far and mid planes for all eight main Acts in both looks (kind_robots#5761, #5762, #5764, #5767) and the finale (#5767); detour skies drift (#5742); the s09 card lands with P-07 |
 | P-05 | major | four touch pads cover the play area at 1024×768 | t-067 | fixed in #5741 (touch controls in a band below the stage at 1024x768) |
 | P-06 | major | the P2 pad covers the boss at 844×390 | t-067 | fixed in #5741 (side rails at 844x390; no pad over the stage) |
-| P-07 | major | the finale reuses Act VIII's card and backdrop | t-022 | open |
+| P-07 | major | the finale reuses Act VIII's card and backdrop | t-022 | partly fixed: the finale planes and stage switch (#5767); the s09 card and strip are rendering (ART-BACKLOG-2026-11-24) |
 | P-08 | major | the 4-pilot HUD covers the boss bar | t-067 | fixed in kind_robots#5716 |
 | P-09 | major | phone portrait wastes about 75% of the screen; HUD text is unreadable | t-067 | partly fixed in #5741 (chips off the canvas, a turn-sideways prompt); a portrait HUD is open |
 | P-10 | major | Classic background bubbles look like bullets | t-067 | fixed in kind_robots#5719 (two faint far planes) |
