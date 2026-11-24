@@ -102,8 +102,8 @@ tasks:
     status: ready
     recurring: true
     daily_commitment: true
-    daily_last_checked: '2026-11-23'
-    daily_last_completed: '2026-11-23'
+    daily_last_checked: '2026-11-24'
+    daily_last_completed: '2026-11-24'
     stakes: reversible
     passes: 0
     depends_on: t-002
@@ -207,9 +207,21 @@ tasks:
       marquees and 'reading X' text in the 11-24/26/27/28/29 briefs.
       daily_last_completed=2026-11-23 reflects MV28's verified completion. PR
       silasfelinus/conductor#7959.
+
+      2026-11-24 PT cycle: MusicVideo 29 (Hold Music Day Spa, ArtImage 280005) completed
+      private at 05:46 PT on this session's --daily resume after its stills sat PENDING 5.5h.
+      Downloaded, hash-verified and screened; review log projects/dead-
+      air/reviews/2026-11-24-screening.md. Peak -1.8 dBFS. The lettering fix held (no garbled
+      words), and the reveal held for s4. Defects: visual_style set dressing (walls, wicker,
+      ferns, phones) bled into the s1 office hook and the s4 switchboard; the s3 worker came
+      out as a different person; the s5 TV shows text instead of an eye; clip dropped by the
+      deadline. Fixed: style_bible_set_dressing_problems plus a test over unrendered briefs;
+      rewrote the 11-24..11-30 visual_style lines to look-only.
+      daily_last_completed=2026-11-24 reflects MV29's verified completion. PR
+      silasfelinus/conductor#7971.
     owner: worker
-    updated: '2026-11-24T07:49:40Z'
-    implementation_pr: 'silasfelinus/conductor#7959'
+    updated: '2026-11-24T13:50:34Z'
+    implementation_pr: 'silasfelinus/conductor#7971'
   - id: t-005
     milestone: m3
     title: Create rights-aware reference and private production provenance review
