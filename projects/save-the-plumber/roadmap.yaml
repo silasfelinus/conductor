@@ -196,7 +196,7 @@ tasks:
   - id: t-005
     milestone: m2
     title: "Implement enemy interaction, held objects and powerup systems"
-    status: review
+    status: ready
     depends_on: [t-003]
     passes: 0
     stakes: reversible
@@ -236,11 +236,9 @@ tasks:
       suit, heavy form), map-usable inventory, ride companion. Return to ready.
 
       Added Down + Wrench pickup of stunned regular Rivet Rollers, carried-state isolation, directional throw using existing kicked-roller collision, blocked overhead release, damage return and death cleanup, plus guide and movement regressions. Isolated committed-method tests passed. App branch worker/save-the-plumber-t-005-roller-j8w2 head 282a4762; full CI pending. Partial scope; remaining expanded powers, inventory and ride companion.
-    updated: '2026-11-25T22:12:43.126Z'
-    owner: worker
-    claimed_by: 20261125T221031Z-plumber-reserve-j8w2
-    claimed_at: '2026-11-25T22:10:31.909Z'
-    implementation_pr: 'silasfelinus/kind_robots#5833'
+
+      Reviewed and merged kind_robots#5840 at 69d3e262 after all 12 workflows on c6c1b6c6 completed successfully. Carry and throw stunned Rivet Rollers, blocked release and cleanup regressions shipped. Partial scope only; expanded powers, map inventory and ride companion remain. Production deployment unverified.
+    updated: '2026-11-25T23:09:08Z'
   - id: t-006
     milestone: m3
     title: "Build World 1: four complete garden/pipeworks levels and boss"
@@ -386,7 +384,7 @@ tasks:
   - id: t-015
     milestone: m2
     title: "Prove the movement lab replay and real shared-cabinet controls"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 20261125T231100Z-plumber-air-steering-p7m4
     claimed_at: '2026-11-25T23:11:00Z'
@@ -438,6 +436,8 @@ tasks:
       Implemented neutral-air momentum retention without changing ground or ice braking, speed caps or directional steering. Deterministic two-direction sprint-jump replay asserts retained speed, two-tile travel, reversal and collision safety. Branch worker/save-the-plumber-t-015-airflow-v4n9, head 7c839cf2. CI pending; task remains partial.
 
       Verified kind_robots#5695 merged at efec50ae. Neutral-air momentum shipped; remaining movement and cross-width verification. Return to ready.
+
+      Independent movement-tuning slice: Springstep preserves momentum during held descent with normal drag restored on release, and deterministic bilateral comparison and counter-steering regressions. App branch worker/save-the-plumber-t-015-air-steering-p7m4 head 45a6a53d; full CI pending. Distinct Gen-2 glide power remains t-005 scope; shared-cabinet browser acceptance remains t-015 scope.
 
   - id: t-016
     milestone: m4

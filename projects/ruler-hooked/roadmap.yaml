@@ -863,7 +863,7 @@ tasks:
 - id: t-045
   milestone: m4
   title: Deepen kingdom quest arcs and connect decisions to fishing spots and species
-  status: claimed
+  status: review
   owner: worker
   claimed_by: 20261125T230900Z-ruler-hooked-t045-c9a7
   claimed_at: '2026-11-25T23:09:00Z'
@@ -900,7 +900,9 @@ tasks:
     Added an independent royal-family reconciliation path that recognizes the marriage without forcing a return to the palace, with a distinct political and treasury cost and a later wedding petition. Added six seeded legal family route witnesses and focused estrangement tests. App branch worker/ruler-hooked-t045-family-autonomy-f8e2 at 0833288e; existing scene art reused for the same petition, no new render claimed. CI pending; partial t-045.
 
     Verified family autonomy PR kind_robots#5842 merged at e374e546; all eight PR workflows and Branch janitor completed successfully. Six seeded family routes passed. Partial quest depth; return to ready for remaining work.
-  updated: '2026-11-25T23:09:00Z'
+
+    Fixed divergence between actual gameplay and headless quest witnesses: the pure choice reducer now owns resolved petition accounting, excluding deferrals. Quiet fishing turns can offer an eligible finale without requiring another court interruption. Added threshold, deferral and dismissal regression assertions. App branch worker/ruler-hooked-t045-finale-accounting-c9a7 at 46a35f49. Partial quest/ending integrity work, CI pending; no art or visual QA claim.
+  updated: '2026-11-25T23:11:00Z'
 
 - id: t-046
   milestone: m6
