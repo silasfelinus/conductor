@@ -179,7 +179,7 @@ tasks:
   - id: t-005
     milestone: m2
     title: "Implement enemy interaction, held objects and powerup systems"
-    status: review
+    status: ready
     depends_on: [t-003]
     passes: 0
     stakes: reversible
@@ -207,10 +207,9 @@ tasks:
       Verified kind_robots#5633 merged at 4c0f092b. Brass-key ladder route shipped; remaining slopes, carryables and powers. Return to ready.
 
       Implemented one-way 45-degree walkable ramps, bounded grounded slope adhesion, flat transitions, slope landing, foe traversal, contrast edges, Maker palette and first World 1-1 ramp pair. Added bidirectional sprint replay assertions for height, contact, collision and momentum. App branch worker/save-the-plumber-t-005-slopes-q8m4 head 67d1d06e. Full CI pending; remaining powers, carryables and expanded slope placements remain.
-    updated: '2026-11-25T05:59:28.316Z'
-    owner: worker
-    claimed_by: 20261125T055257Z-plumber-slopes-q8m4
-    claimed_at: '2026-11-25T05:52:57.124Z'
+
+      Merged kind_robots#5806 at 67315e6f after 11/11 latest-head workflows passed, including full contracts and Maker browser coverage. Ramps, slope adhesion, terrain rendering and first campaign hill delivered. Return to ready for carrying enemies, Gen-2 powers, reserve item and companion. Production deployment unverified.
+    updated: '2026-11-25T07:35:14.584Z'
   - id: t-006
     milestone: m3
     title: "Build World 1: four complete garden/pipeworks levels and boss"
@@ -468,10 +467,10 @@ tasks:
   - id: t-020
     milestone: m6
     title: "Gen-2 level engine: sub-areas, vertical rooms, midpoints, secret exits, campaign-wide switches"
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
-    updated: '2026-11-25T05:52:32.813Z'
+    updated: '2026-11-25T07:35:24.738Z'
     note: |-
       GEN2-STANDARD.md section 2. Doors, pipes and ladders into sub-rooms with their own camera bounds; vertical shafts and climbs; a midpoint checkpoint per level; a second, hidden exit type that reports `secret` to the overworld (t-011); Valve Chapel switch state read by every level so pressed switches make outlined blocks solid campaign-wide; auto-scroll and haunted-maze (Hush House) exit logic. Deterministic replay tests for each: secret exit reachable, sub-room return position, switch persistence across levels and save/reload.
 
@@ -490,6 +489,9 @@ tasks:
       Added a playable Verdigris Chapel branch course and per-slot persistent solid switch blocks in Rainy Courtyard and Copper Greenhouses, using the existing normal-clear node memory without changing campaign indices or save format. Added map, goal-contact, reload and slot isolation regression assertions. Branch worker/save-the-plumber-t-020-valves-6f8c head b485c045. Partial engine scope; CI and further chapels/subrooms remain.
 
       Verified kind_robots#5769 merged 2026-11-24 PT. Verdigris Chapel and persistent switch blocks delivered; remaining chapels, subrooms and vertical stages. Return partial scope to ready.
+    owner: worker
+    claimed_by: 20261125T073524Z-plumber-chapels-r9j2
+    claimed_at: '2026-11-25T07:35:24.738Z'
   - id: t-021
     milestone: m6
     title: "Gen-2 World 1: re-author Bluebell Pipeworks as a full SMB3/SMW-class world"
