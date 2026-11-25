@@ -1052,3 +1052,15 @@ def test_a_framed_loop_from_a_site_file_closes_on_its_framed_first_frame(tmp_pat
 
     enq.submit(path, header, loaded, list(enq.iter_cells(loaded)), post=post, fetch_source=lambda i: raw)
     assert sent[0]["firstImageBase64"] == sent[0]["secondImageBase64"] != raw
+
+
+def test_kontext_cells_are_judged_as_flux_like_claim_does():
+    """Claim infers "flux" from a Kontext graph's FluxGuidance node, so the preflight must
+    send "flux" too: as "kontext" the frame-noun rule never ran and ArtJobs 77110-77113
+    failed at claim on "keep the whole creature inside the frame"."""
+    cells = [({"key": "b", "prompt_prose": "keep the whole creature inside the frame."},
+              {"key": "kontext", "engine": "kontext"}),
+             ({"key": "k", "prompt_prose": "a dune"}, {"key": "krea2", "engine": "krea2"})]
+    seen = []
+    enq.contract_rules(cells, live=lambda rows: seen.extend(rows) or [])
+    assert [r["engine"] for r in seen] == ["flux", "krea2"]
